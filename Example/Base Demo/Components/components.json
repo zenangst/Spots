@@ -1,0 +1,34 @@
+{
+ "components" : [
+  {
+    "type" : "list",
+    "title" : "Contact list",
+    "items" : [
+      {
+        "type"     : "contact",
+        "image"    : "https://avatar.me",
+        "title"    : "Vadym Markov",
+        "subtitle" : "iOS Developer",
+        "target"   : {
+          "uri" : "components:contact:1"
+        }
+      }
+    ]
+  },
+  {
+    "type" : "list",
+    "title" : "Contact list",
+    "items" : [
+      {
+        "type"     : "contact",
+        "image"    : "https://avatar.me",
+        "title"    : "Vadym Markov",
+        "subtitle" : "iOS Developer",
+        "target"   : {
+          "uri" : "components:contact:1"
+        }
+      }
+    ]
+  }
+  ]
+}

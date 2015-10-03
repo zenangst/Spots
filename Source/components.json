@@ -1,0 +1,28 @@
+{
+ "components" : [
+  {
+    "type" : "list",
+    "title" : "Contact list",
+    "items" : [
+      {
+        "type"     : "contact",
+        "image"    : "https://hyper-production.s3.amazonaws.com/uploads/user/alternate_photo/62/forealz__B2P7135_1.jpg",
+        "title"    : "Vadym Markov",
+        "subtitle" : "iOS Developer",
+        "target"   : {
+          "uri" : "components:contact:1"
+        }
+      },
+      {
+        "type"     : "contact",
+        "image"    : "https://hyper-production.s3.amazonaws.com/uploads/user/alternate_photo/67/forealz__B2P7125_1.jpg",
+        "title"    : "Ramon Gilabert Llop",
+        "subtitle" : "iOS Developer",
+        "target"   : {
+          "uri" : "components:contact:1"
+        }
+      }
+    ]
+  }
+  ]
+}
