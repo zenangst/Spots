@@ -20,14 +20,6 @@ struct ListItem {
     self.type <- json.property("type")
     self.uri <- json.property("uri")
   }
-
-  init(title: String, subtitle: String, image: String, type: String, uri: String? = nil) {
-    self.title = title
-    self.subtitle = subtitle
-    self.image = image
-    self.type = type
-    self.uri = uri
-  }
 }
 
 class ListComponent: NSObject, Component {
