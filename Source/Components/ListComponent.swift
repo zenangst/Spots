@@ -1,20 +1,31 @@
 import UIKit
 import Tailor
 import Sugar
+import GoldenRetriever
 
 protocol ComponentSizeDelegate: class {
   func sizeDidUpdate()
 }
 
-protocol Listable {
-
-}
+protocol Listable { }
 
 protocol ComponentContainer: class {
   weak var sizeDelegate: ComponentSizeDelegate? { get set }
   var component: Component { get set }
 
   func render() -> UIView
+}
+
+class ListComponentCell: UITableViewCell {
+
+  override init(style: UITableViewCellStyle, reuseIdentifier: String!) {
+    super.init(style: .Subtitle, reuseIdentifier: reuseIdentifier)
+  }
+
+  required init?(coder aDecoder: NSCoder) {
+      fatalError("init(coder:) has not been implemented")
+  }
+
 }
 
 class ListComponent: NSObject, ComponentContainer {
@@ -38,7 +49,7 @@ class ListComponent: NSObject, ComponentContainer {
     self.component = component
     super.init()
     for item in component.items {
-      self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "ListCell\(item.type)")
+      self.tableView.registerClass(ListComponentCell.self, forCellReuseIdentifier: "ListCell\(item.type)")
     }
   }
 
@@ -84,6 +95,18 @@ extension ListComponent: UITableViewDataSource {
     cell!.textLabel!.textColor = .blackColor()
     cell!.detailTextLabel?.text = item.subtitle
     cell!.detailTextLabel?.textColor = .blackColor()
+
+    if item.image != "" {
+      let resource = item.image
+      let fido = GoldenRetriever()
+      fido.fetch(resource) { data, error in
+        guard let data = data else { return }
+        let image = UIImage(data: data)
+        cell!.imageView!.image = image
+      }
+    } else {
+      cell!.imageView!.image = nil
+    }
 
     return cell!
   }
