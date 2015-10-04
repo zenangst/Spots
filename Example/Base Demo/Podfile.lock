@@ -1,0 +1,27 @@
+PODS:
+  - Sugar (0.1.0)
+  - Tailor (0.2.0)
+
+DEPENDENCIES:
+  - Sugar (from `https://github.com/hyperoslo/Sugar`)
+  - Tailor (from `https://github.com/zenangst/Tailor`)
+
+EXTERNAL SOURCES:
+  Sugar:
+    :git: https://github.com/hyperoslo/Sugar
+  Tailor:
+    :git: https://github.com/zenangst/Tailor
+
+CHECKOUT OPTIONS:
+  Sugar:
+    :commit: 964d31e847af1498a019e3d8a0cd94885e4c2d4d
+    :git: https://github.com/hyperoslo/Sugar
+  Tailor:
+    :commit: 6caa8930227fe3c1e62030989bba2df9870dfff5
+    :git: https://github.com/zenangst/Tailor
+
+SPEC CHECKSUMS:
+  Sugar: d33f2a3ae10e40c14eb49a2e859f12e82e614817
+  Tailor: 214469e948557ac67a0d3d93674aeaa686f74e4f
+
+COCOAPODS: 0.39.0.beta.4

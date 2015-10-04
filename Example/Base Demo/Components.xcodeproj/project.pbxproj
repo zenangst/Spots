@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A802709A14B2B09B40B27C24 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28622753AFF41826673AFB29 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		BD6973671BBFE4FB001DC32F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6973661BBFE4FB001DC32F /* AppDelegate.swift */; };
 		BD69736E1BBFE4FB001DC32F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BD69736D1BBFE4FB001DC32F /* Assets.xcassets */; };
 		BD6973711BBFE4FB001DC32F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BD69736F1BBFE4FB001DC32F /* LaunchScreen.storyboard */; };
-		BD6F81A31BC02DFE006ADA1D /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = BD6F819E1BC02DFE006ADA1D /* .gitkeep */; settings = {ASSET_TAGS = (); }; };
 		BD6F81A41BC02DFE006ADA1D /* ComponentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6F819F1BC02DFE006ADA1D /* ComponentController.swift */; settings = {ASSET_TAGS = (); }; };
 		BD6F81A51BC02DFE006ADA1D /* components.json in Resources */ = {isa = PBXBuildFile; fileRef = BD6F81A01BC02DFE006ADA1D /* components.json */; settings = {ASSET_TAGS = (); }; };
 		BD6F81A61BC02DFE006ADA1D /* ListComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6F81A11BC02DFE006ADA1D /* ListComponent.swift */; settings = {ASSET_TAGS = (); }; };
@@ -27,12 +27,22 @@
 		BD6973701BBFE4FB001DC32F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BD6973721BBFE4FB001DC32F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BD6973781BBFE56D001DC32F /* components.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = components.json; sourceTree = "<group>"; };
-		BD6F819E1BC02DFE006ADA1D /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		BD6F819F1BC02DFE006ADA1D /* ComponentController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentController.swift; sourceTree = "<group>"; };
 		BD6F81A01BC02DFE006ADA1D /* components.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = components.json; sourceTree = "<group>"; };
 		BD6F81A11BC02DFE006ADA1D /* ListComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListComponent.swift; sourceTree = "<group>"; };
 		BD6F81A21BC02DFE006ADA1D /* Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E0AF9B8B55A2D13A348A0B23 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A802709A14B2B09B40B27C24 /* Pods.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		BD69735A1BBFE4FB001DC32F = {
@@ -69,7 +79,6 @@
 		BD6F819D1BC02DFE006ADA1D /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				BD6F819E1BC02DFE006ADA1D /* .gitkeep */,
 				BD6F819F1BC02DFE006ADA1D /* ComponentController.swift */,
 				BD6F81A01BC02DFE006ADA1D /* components.json */,
 				BD6F81A11BC02DFE006ADA1D /* ListComponent.swift */,
@@ -103,8 +112,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BD6973751BBFE4FB001DC32F /* Build configuration list for PBXNativeTarget "Components" */;
 			buildPhases = (
+				3A1DBEB5A38CEFA65588E4F9 /* Check Pods Manifest.lock */,
 				BD69735F1BBFE4FB001DC32F /* Sources */,
 				BD6973611BBFE4FB001DC32F /* Resources */,
+				E0AF9B8B55A2D13A348A0B23 /* Frameworks */,
+				20C7BFE4D4EDD01FD2F3C432 /* Embed Pods Frameworks */,
+				D5F866A6FE97C76B984066C5 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -155,11 +168,58 @@
 				BD6F81A51BC02DFE006ADA1D /* components.json in Resources */,
 				BD6973711BBFE4FB001DC32F /* LaunchScreen.storyboard in Resources */,
 				BD69736E1BBFE4FB001DC32F /* Assets.xcassets in Resources */,
-				BD6F81A31BC02DFE006ADA1D /* .gitkeep in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		20C7BFE4D4EDD01FD2F3C432 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3A1DBEB5A38CEFA65588E4F9 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		D5F866A6FE97C76B984066C5 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		BD69735F1BBFE4FB001DC32F /* Sources */ = {
