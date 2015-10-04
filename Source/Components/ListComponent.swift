@@ -29,7 +29,7 @@ class ListComponent: NSObject, Component {
       self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: item.type)
     }
 
-    tableView.frame = CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, itemHeight * CGFloat(items.count))
+    tableView.frame.size.width = UIScreen.mainScreen().bounds.width
   }
 
   func render() -> UIView
@@ -58,6 +58,10 @@ extension ListComponent: UITableViewDataSource {
   }
 
   func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    if tableView.frame.size.height != tableView.contentSize.height {
+      tableView.frame.size.height = tableView.contentSize.height
+    }
+
     return items.count
   }
 
