@@ -24,6 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     let components = Parser.parse(json as! [String : AnyObject])
     let componentController = ComponentsController(views: components)
+    componentController.view.backgroundColor = .whiteColor()
 
     navigationController = UINavigationController(rootViewController: componentController)
     window?.rootViewController = navigationController
