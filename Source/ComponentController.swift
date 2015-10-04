@@ -10,6 +10,7 @@ class ComponentsController: UIViewController {
     let collectionView = UICollectionView(frame: UIScreen.mainScreen().bounds, collectionViewLayout: layout)
     collectionView.dataSource = self
     collectionView.delegate = self
+    collectionView.alwaysBounceVertical = true
     collectionView.autoresizingMask = [.FlexibleRightMargin, .FlexibleLeftMargin, .FlexibleBottomMargin, .FlexibleTopMargin, .FlexibleHeight, .FlexibleWidth]
     collectionView.autoresizesSubviews = true
     collectionView.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
