@@ -52,12 +52,12 @@
 		BD4A623B1BC1A47D0037C380 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				BD4A62491BC1A4BB0037C380 /* Models */,
 				BD4A623C1BC1A47D0037C380 /* .gitkeep */,
 				BD4A623D1BC1A47D0037C380 /* ComponentController.swift */,
 				BD4A623E1BC1A47D0037C380 /* Components */,
 				BD4A62401BC1A47D0037C380 /* components.json */,
 				BD4A62411BC1A47D0037C380 /* Library */,
+				BD4A62491BC1A4BB0037C380 /* Models */,
 				BD4A62431BC1A47D0037C380 /* Protocols */,
 			);
 			name = Source;
