@@ -2,7 +2,7 @@ import UIKit
 
 class ComponentsController: UIViewController {
 
-  private let components: [Component]
+  private let componentViews: [ComponentView]
 
   lazy var collectionView: UICollectionView = { [unowned self] in
     let layout = UICollectionViewFlowLayout()
@@ -15,8 +15,8 @@ class ComponentsController: UIViewController {
     return collectionView
   }()
 
-  required init(components: [Component]) {
-    self.components = components
+  required init(views: [ComponentView]) {
+    self.componentViews = views
     super.init(nibName: nil, bundle: nil)
     self.view.addSubview(collectionView)
   }
@@ -29,11 +29,11 @@ class ComponentsController: UIViewController {
 extension ComponentsController: UICollectionViewDataSource {
 
   func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return components.count
+    return componentViews.count
   }
 
   func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-    let view = components[indexPath.item]
+    let view = componentViews[indexPath.item]
     let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ComponentCell", forIndexPath: indexPath)
     cell.contentView.addSubview(view.render())
     return cell

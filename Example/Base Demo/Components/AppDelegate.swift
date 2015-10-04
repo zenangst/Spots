@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let json = try! NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments)
 
     let components = Parser.parse(json as! [String : AnyObject])
-    let componentController = ComponentsController(components: components)
+    let componentController = ComponentsController(views: components)
 
     navigationController = UINavigationController(rootViewController: componentController)
     window?.rootViewController = navigationController

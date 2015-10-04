@@ -2,7 +2,7 @@ import UIKit
 import Tailor
 import Sugar
 
-protocol Component {
+protocol ComponentView {
   func render() -> UIView
 }
 
@@ -22,7 +22,7 @@ struct ListItem {
   }
 }
 
-class ListComponent: NSObject, Component {
+class ListComponent: NSObject, ComponentView {
 
   lazy var tableView: UITableView = { [unowned self] in
     let tableView = UITableView()
