@@ -2,7 +2,7 @@
  "components" : [
   {
     "type" : "list",
-    "title" : "Contact list",
+    "title" : "iOS Developers",
     "items" : [
       {
         "type"     : "contact",
@@ -18,6 +18,30 @@
         "image"    : "https://hyper-production.s3.amazonaws.com/uploads/user/alternate_photo/67/forealz__B2P7125_1.jpg",
         "title"    : "Ramon Gilabert Llop",
         "subtitle" : "iOS Developer",
+        "target"   : {
+          "uri" : "components:contact:1"
+        }
+      }
+    ]
+  },
+  {
+    "type" : "list",
+    "title" : "Android Developers",
+    "items" : [
+      {
+        "type"     : "contact",
+        "image"    : "https://hyper-production.s3.amazonaws.com/uploads/user/alternate_photo/31/forealz_hyperportrait_espena_alt.jpg",
+        "title"    : "Espen Almdahl",
+        "subtitle" : "Android Developer",
+        "target"   : {
+          "uri" : "components:contact:1"
+        }
+      },
+      {
+        "type"     : "contact",
+        "image"    : "https://hyper-production.s3.amazonaws.com/uploads/user/alternate_photo/69/forealz__B2P7321_1.jpg",
+        "title"    : "Damian Lopata",
+        "subtitle" : "Android Developer",
         "target"   : {
           "uri" : "components:contact:1"
         }
