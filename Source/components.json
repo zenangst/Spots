@@ -21,6 +21,15 @@
         "target"   : {
           "uri" : "components:contact:1"
         }
+      },
+      {
+        "type"     : "contact",
+        "image"    : "https://hyper-production.s3.amazonaws.com/uploads/user/alternate_photo/45/forealz_hyperportrait_christoffer_alt.jpg",
+        "title"    : "Christoffer Winterkvist",
+        "subtitle" : "iOS Developer",
+        "target"   : {
+          "uri" : "components:contact:1"
+        }
       }
     ]
   },
@@ -41,6 +50,24 @@
         "type"     : "contact",
         "image"    : "https://hyper-production.s3.amazonaws.com/uploads/user/alternate_photo/69/forealz__B2P7321_1.jpg",
         "title"    : "Damian Lopata",
+        "subtitle" : "Android Developer",
+        "target"   : {
+          "uri" : "components:contact:1"
+        }
+      },
+      {
+        "type"     : "contact",
+        "image"    : "https://hyper-production.s3.amazonaws.com/uploads/user/alternate_photo/70/forealz__B2P7269_1.jpg",
+        "title"    : "Jean Tuffier",
+        "subtitle" : "Android Developer",
+        "target"   : {
+          "uri" : "components:contact:1"
+        }
+      },
+      {
+        "type"     : "contact",
+        "image"    : "https://hyper-production.s3.amazonaws.com/uploads/user/alternate_photo/65/forealz_hyperportraits_chang.jpg",
+        "title"    : "Chang Xiangzhong",
         "subtitle" : "Android Developer",
         "target"   : {
           "uri" : "components:contact:1"
