@@ -2,11 +2,11 @@ import UIKit
 import Tailor
 import Sugar
 
-protocol ComponentView {
+protocol Component {
   func render() -> UIView
 }
 
-class ListComponent: NSObject, ComponentView {
+class ListComponent: NSObject, Component {
 
   lazy var tableView: UITableView = { [unowned self] in
     let tableView = UITableView()

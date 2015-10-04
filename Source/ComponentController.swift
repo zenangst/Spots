@@ -2,7 +2,7 @@ import UIKit
 
 class ComponentsController: UIViewController {
 
-  private let componentViews: [ComponentView]
+  private let Components: [Component]
   static let reuseIdentifier = "ComponentCell"
 
   lazy var collectionView: UICollectionView = { [unowned self] in
@@ -16,8 +16,8 @@ class ComponentsController: UIViewController {
     return collectionView
   }()
 
-  required init(views: [ComponentView]) {
-    self.componentViews = views
+  required init(views: [Component]) {
+    self.Components = views
     super.init(nibName: nil, bundle: nil)
     self.view.addSubview(collectionView)
   }
@@ -30,11 +30,11 @@ class ComponentsController: UIViewController {
 extension ComponentsController: UICollectionViewDataSource {
 
   func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return componentViews.count
+    return Components.count
   }
 
   func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-    let view = componentViews[indexPath.item]
+    let view = Components[indexPath.item]
     let cell = collectionView.dequeueReusableCellWithReuseIdentifier(ComponentsController.reuseIdentifier, forIndexPath: indexPath)
     cell.contentView.addSubview(view.render())
     return cell
