@@ -1,4 +1,6 @@
 import UIKit
+import Tailor
+import Sugar
 
 protocol Component {
   func render() -> UIView
@@ -10,13 +12,13 @@ struct ListItem {
   var image = ""
   var type = ""
   var uri: String?
-
-  init(title: String, subtitle: String, image: String, type: String, uri: String? = nil) {
-    self.title = title
-    self.subtitle = subtitle
-    self.image = image
-    self.type = type
-    self.uri = uri
+  
+  init(json: JSONDictionary) {
+    self.title <- json.property("title")
+    self.subtitle <- json.property("subtitle")
+    self.image <- json.property("image")
+    self.type <- json.property("type")
+    self.uri <- json.property("uri")
   }
 }
 
