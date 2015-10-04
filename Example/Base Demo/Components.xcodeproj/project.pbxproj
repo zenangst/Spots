@@ -38,7 +38,6 @@
 		BD69736D1BBFE4FB001DC32F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BD6973701BBFE4FB001DC32F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BD6973721BBFE4FB001DC32F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		BD6973781BBFE56D001DC32F /* components.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = components.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,7 +122,6 @@
 		BD6973651BBFE4FB001DC32F /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				BD6973781BBFE56D001DC32F /* components.json */,
 				BD6973661BBFE4FB001DC32F /* AppDelegate.swift */,
 				BD69736D1BBFE4FB001DC32F /* Assets.xcassets */,
 				BD69736F1BBFE4FB001DC32F /* LaunchScreen.storyboard */,
