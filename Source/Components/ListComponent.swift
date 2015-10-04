@@ -8,6 +8,11 @@ protocol Component {
 
 class ListComponent: NSObject, Component {
 
+  let itemHeight: CGFloat = 44
+  let title: String
+
+  var items = [ListItem]()
+
   lazy var tableView: UITableView = { [unowned self] in
     let tableView = UITableView()
     tableView.delegate = self
@@ -16,10 +21,8 @@ class ListComponent: NSObject, Component {
     return tableView
   }()
 
-  var items = [ListItem]()
-  let itemHeight: CGFloat = 44
-
-  init(items: [ListItem]) {
+  init(title: String, items: [ListItem]) {
+    self.title = title
     self.items = items
     super.init()
     for item in items {
@@ -50,6 +53,10 @@ extension ListComponent: UITableViewDelegate {
 }
 
 extension ListComponent: UITableViewDataSource {
+
+  func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    return title
+  }
 
   func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return items.count
