@@ -1,7 +1,7 @@
 import Tailor
 import Sugar
 
-struct ListItem: Mappable {
+struct ListItem: Mappable, Listable {
   var title = ""
   var subtitle = ""
   var image = ""
