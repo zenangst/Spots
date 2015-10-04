@@ -3,9 +3,9 @@ import Sugar
 
 struct Parser {
 
-  static func parse(json: JSONDictionary) -> [Component] {
-    guard let components = json["components"] as? JSONArray else { return [Component]() }
-    var views = [Component]()
+  static func parse(json: JSONDictionary) -> [ComponentView] {
+    guard let components = json["components"] as? JSONArray else { return [ComponentView]() }
+    var views = [ComponentView]()
     for component in components {
       if let type = component["type"] as? String,
       items = component["items"] as? [AnyObject] where type == "list" {
