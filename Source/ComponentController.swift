@@ -34,9 +34,11 @@ extension ComponentsController: UICollectionViewDataSource {
   }
 
   func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-    let view = Components[indexPath.item]
+    let component = Components[indexPath.item]
     let cell = collectionView.dequeueReusableCellWithReuseIdentifier(ComponentsController.reuseIdentifier, forIndexPath: indexPath)
-    cell.contentView.addSubview(view.render())
+
+    cell.contentView.addSubview(component.render())
+    
     return cell
   }
 }
