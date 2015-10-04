@@ -8,18 +8,16 @@ struct Parser {
     var views = [ComponentView]()
     for component in components {
       if let type = component["type"] as? String,
-      items = component["items"] as? [AnyObject] where type == "list" {
+      items = component["items"] as? [JSONDictionary] where type == "list" {
         var componentItems = [ListItem]()
-        for item in items {
-          guard let json = item as? JSONDictionary else { continue }
+        for json in items {
           componentItems.append(ListItem(json: json))
         }
 
         views.append(ListComponent(items: componentItems))
       }
     }
-
+    
     return views
   }
-
 }
