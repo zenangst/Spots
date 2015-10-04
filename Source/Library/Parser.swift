@@ -1,24 +1,26 @@
 import UIKit
 import Sugar
 
+enum ContainerType: String {
+  case List = "list"
+}
+
 struct Parser {
 
-  static func parse(json: JSONDictionary) -> [Component] {
-    guard let components = json["components"] as? JSONArray else { return [Component]() }
-    var views = [Component]()
-    for component in components {
-      if let title = component["title"] as? String,
-      type = component["type"] as? String,
-      items = component["items"] as? [JSONDictionary] where type == "list" {
-        var componentItems = [ListItem]()
-        for json in items {
-          componentItems.append(ListItem(json: json))
-        }
+  static func parse(json: JSONDictionary) -> [ComponentContainer] {
+    guard let components = json["components"] as? JSONArray else { return [ComponentContainer]() }
+    var containers = [ComponentContainer]()
 
-        views.append(ListComponent(title: title, items: componentItems))
+    for json in components {
+      let component = Component(json)
+      switch ContainerType(rawValue: component.type) {
+      case .List?:
+        containers.append(ListComponent(component: component))
+      default:
+        break
       }
     }
     
-    return views
+    return containers
   }
 }
