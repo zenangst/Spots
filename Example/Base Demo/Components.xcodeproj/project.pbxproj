@@ -11,7 +11,6 @@
 		BD6973671BBFE4FB001DC32F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6973661BBFE4FB001DC32F /* AppDelegate.swift */; };
 		BD69736E1BBFE4FB001DC32F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BD69736D1BBFE4FB001DC32F /* Assets.xcassets */; };
 		BD6973711BBFE4FB001DC32F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BD69736F1BBFE4FB001DC32F /* LaunchScreen.storyboard */; };
-		BD6F81A31BC02DFE006ADA1D /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = BD6F819E1BC02DFE006ADA1D /* .gitkeep */; settings = {ASSET_TAGS = (); }; };
 		BD6F81A41BC02DFE006ADA1D /* ComponentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6F819F1BC02DFE006ADA1D /* ComponentController.swift */; settings = {ASSET_TAGS = (); }; };
 		BD6F81A51BC02DFE006ADA1D /* components.json in Resources */ = {isa = PBXBuildFile; fileRef = BD6F81A01BC02DFE006ADA1D /* components.json */; settings = {ASSET_TAGS = (); }; };
 		BD6F81A61BC02DFE006ADA1D /* ListComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6F81A11BC02DFE006ADA1D /* ListComponent.swift */; settings = {ASSET_TAGS = (); }; };
@@ -28,7 +27,6 @@
 		BD6973701BBFE4FB001DC32F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BD6973721BBFE4FB001DC32F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BD6973781BBFE56D001DC32F /* components.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = components.json; sourceTree = "<group>"; };
-		BD6F819E1BC02DFE006ADA1D /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		BD6F819F1BC02DFE006ADA1D /* ComponentController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentController.swift; sourceTree = "<group>"; };
 		BD6F81A01BC02DFE006ADA1D /* components.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = components.json; sourceTree = "<group>"; };
 		BD6F81A11BC02DFE006ADA1D /* ListComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListComponent.swift; sourceTree = "<group>"; };
@@ -81,7 +79,6 @@
 		BD6F819D1BC02DFE006ADA1D /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				BD6F819E1BC02DFE006ADA1D /* .gitkeep */,
 				BD6F819F1BC02DFE006ADA1D /* ComponentController.swift */,
 				BD6F81A01BC02DFE006ADA1D /* components.json */,
 				BD6F81A11BC02DFE006ADA1D /* ListComponent.swift */,
@@ -171,7 +168,6 @@
 				BD6F81A51BC02DFE006ADA1D /* components.json in Resources */,
 				BD6973711BBFE4FB001DC32F /* LaunchScreen.storyboard in Resources */,
 				BD69736E1BBFE4FB001DC32F /* Assets.xcassets in Resources */,
-				BD6F81A31BC02DFE006ADA1D /* .gitkeep in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
