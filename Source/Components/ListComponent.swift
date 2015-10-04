@@ -34,7 +34,6 @@ class ListComponent: NSObject, Component {
 
   func render() -> UIView
   {
-    tableView.backgroundColor = .yellowColor()
     return tableView
   }
 }
