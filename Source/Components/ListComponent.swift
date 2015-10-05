@@ -93,8 +93,12 @@ extension ListComponent: UITableViewDataSource {
 
     cell!.textLabel!.text = item.title
     cell!.textLabel!.textColor = .blackColor()
-    cell!.detailTextLabel?.text = item.subtitle
-    cell!.detailTextLabel?.textColor = .blackColor()
+    
+    if !item.subtitle.isEmpty {
+      cell!.detailTextLabel?.text = item.subtitle
+      cell!.detailTextLabel?.textColor = .blackColor()
+    }
+
 
     if item.image != "" {
       let resource = item.image
@@ -102,6 +106,7 @@ extension ListComponent: UITableViewDataSource {
       fido.fetch(resource) { data, error in
         guard let data = data else { return }
         let image = UIImage(data: data)
+        cell!.imageView!.contentMode = .ScaleAspectFill
         cell!.imageView!.image = image
       }
     } else {
