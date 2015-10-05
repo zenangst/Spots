@@ -1,4 +1,5 @@
 import UIKit
+import GoldenRetriever
 
 class GridComponent: NSObject, ComponentContainer {
 
@@ -48,13 +49,23 @@ extension GridComponent: UICollectionViewDataSource {
     let item = component.items[indexPath.item]
 
     let cell = collectionView.dequeueReusableCellWithReuseIdentifier("GridCell\(item.type)", forIndexPath: indexPath)
-    cell.backgroundColor = UIColor.lightGrayColor()
+
+    if item.image != "" {
+      let resource = item.image
+      let fido = GoldenRetriever()
+      fido.fetch(resource) { data, error in
+        guard let data = data else { return }
+        let image = UIImage(data: data)
+        cell.backgroundColor = UIColor(patternImage: image!)
+      }
+    } else {
+      cell.backgroundColor = UIColor.lightGrayColor()
+    }
 
     let label = UILabel(frame: CGRect(x: 0,y: 0,width: 88,height: 88))
     label.text = item.title
     label.textAlignment = .Center
     cell.addSubview(label)
-
 
     return cell
   }
