@@ -2,7 +2,13 @@ import UIKit
 import Tailor
 import Sugar
 
-protocol Component {
+protocol ComponentSizeDelegate: class {
+  func sizeDidUpdate()
+}
+
+protocol Component: class {
+  weak var sizeDelegate: ComponentSizeDelegate? { get set }
+
   func render() -> UIView
 }
 
@@ -12,11 +18,14 @@ class ListComponent: NSObject, Component {
   let title: String
 
   var items = [ListItem]()
+  weak var sizeDelegate: ComponentSizeDelegate?
 
   lazy var tableView: UITableView = { [unowned self] in
     let tableView = UITableView()
     tableView.delegate = self
     tableView.dataSource = self
+    tableView.scrollEnabled = false
+    tableView.frame.size.width = UIScreen.mainScreen().bounds.width
 
     return tableView
   }()
@@ -28,8 +37,6 @@ class ListComponent: NSObject, Component {
     for item in items {
       self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: item.type)
     }
-
-    tableView.frame.size.width = UIScreen.mainScreen().bounds.width
   }
 
   func render() -> UIView
@@ -60,6 +67,7 @@ extension ListComponent: UITableViewDataSource {
   func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     if tableView.frame.size.height != tableView.contentSize.height {
       tableView.frame.size.height = tableView.contentSize.height
+      sizeDelegate?.sizeDidUpdate()
     }
 
     return items.count
