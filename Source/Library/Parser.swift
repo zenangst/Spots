@@ -2,7 +2,9 @@ import UIKit
 import Sugar
 
 enum ContainerType: String {
-  case List = "list"
+  case
+  List = "list",
+  Grid = "grid"
 }
 
 struct Parser {
@@ -16,6 +18,8 @@ struct Parser {
       switch ContainerType(rawValue: component.type) {
       case .List?:
         containers.append(ListComponent(component: component))
+      case .Grid?:
+        containers.append(GridComponent(component: component))
       default:
         break
       }

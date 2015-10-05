@@ -6,8 +6,13 @@ protocol ComponentSizeDelegate: class {
   func sizeDidUpdate()
 }
 
+protocol Listable {
+
+}
+
 protocol ComponentContainer: class {
   weak var sizeDelegate: ComponentSizeDelegate? { get set }
+  var component: Component { get set }
 
   func render() -> UIView
 }
@@ -15,9 +20,8 @@ protocol ComponentContainer: class {
 class ListComponent: NSObject, ComponentContainer {
 
   let itemHeight: CGFloat = 44
-  let title: String
 
-  var items = [ListItem]()
+  var component: Component
   weak var sizeDelegate: ComponentSizeDelegate?
 
   lazy var tableView: UITableView = { [unowned self] in
@@ -31,11 +35,10 @@ class ListComponent: NSObject, ComponentContainer {
   }()
 
   init(component: Component) {
-    self.title = component.title
-    self.items = component.items
+    self.component = component
     super.init()
-    for item in items {
-      self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: item.type)
+    for item in component.items {
+      self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "ListCell\(item.type)")
     }
   }
 
@@ -48,7 +51,7 @@ class ListComponent: NSObject, ComponentContainer {
 extension ListComponent: UITableViewDelegate {
 
   func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    let item = items[indexPath.row]
+    let item = component.items[indexPath.row]
     guard let uri = item.uri, url = NSURL(string: uri) else { return }
     UIApplication.sharedApplication().openURL(url)
   }
@@ -61,7 +64,7 @@ extension ListComponent: UITableViewDelegate {
 extension ListComponent: UITableViewDataSource {
 
   func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    return title
+    return component.title
   }
 
   func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -70,12 +73,12 @@ extension ListComponent: UITableViewDataSource {
       sizeDelegate?.sizeDidUpdate()
     }
 
-    return items.count
+    return component.items.count
   }
 
   func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    let item = items[indexPath.row]
-    let cell = tableView.dequeueReusableCellWithIdentifier(item.type)
+    let item = component.items[indexPath.row]
+    let cell = tableView.dequeueReusableCellWithIdentifier("ListCell\(item.type)")
 
     cell!.textLabel!.text = item.title
     cell!.textLabel!.textColor = .blackColor()

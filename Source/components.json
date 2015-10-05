@@ -1,6 +1,39 @@
 {
  "components" : [
   {
+    "type" : "grid",
+    "title" : "Teams",
+    "items" : [
+      {
+        "type"     : "team",
+        "image"    : "",
+        "title"    : "iOS",
+        "subtitle" : "",
+        "target"   : {
+          "uri" : "components:contact:1"
+        }
+      },
+      {
+        "type"     : "team",
+        "image"    : "",
+        "title"    : "Android",
+        "subtitle" : "",
+        "target"   : {
+          "uri" : "components:contact:1"
+        }
+      },
+      {
+        "type"     : "team",
+        "image"    : "",
+        "title"    : "Web",
+        "subtitle" : "",
+        "target"   : {
+          "uri" : "components:contact:1"
+        }
+      }
+    ]
+  },
+  {
     "type" : "list",
     "title" : "iOS Developers",
     "items" : [
