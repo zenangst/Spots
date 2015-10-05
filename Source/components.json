@@ -6,7 +6,7 @@
     "items" : [
       {
         "type"     : "team",
-        "image"    : "",
+        "image"    : "https://yt3.ggpht.com/-sdYRgnzMKQo/AAAAAAAAAAI/AAAAAAAAAAA/PcWKh9RtL-k/s88-c-k-no/photo.jpg",
         "title"    : "iOS",
         "subtitle" : "",
         "target"   : {
@@ -15,7 +15,7 @@
       },
       {
         "type"     : "team",
-        "image"    : "",
+        "image"    : "https://yt3.ggpht.com/-V3muCop10ak/AAAAAAAAAAI/AAAAAAAAAAA/9sn6Kui6XaU/s88-c-k-no/photo.jpg",
         "title"    : "Android",
         "subtitle" : "",
         "target"   : {
@@ -24,7 +24,7 @@
       },
       {
         "type"     : "team",
-        "image"    : "",
+        "image"    : "https://yt3.ggpht.com/-eXJvAofQMLE/AAAAAAAAAAI/AAAAAAAAAAA/g-vfWPo7MHs/s88-c-k-no/photo.jpg",
         "title"    : "Web",
         "subtitle" : "",
         "target"   : {
@@ -35,6 +35,21 @@
   },
   {
     "type" : "list",
+    "title" : "",
+    "items" : [
+      {
+        "type"     : "contact",
+        "image"    : "",
+        "title"    : "Contact us",
+        "subtitle" : "",
+        "target"   : {
+          "uri" : "components:contact:1"
+        }
+      }
+    ]
+  },
+  {
+    "type" : "grid",
     "title" : "iOS Developers",
     "items" : [
       {
