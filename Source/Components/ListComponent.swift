@@ -6,13 +6,13 @@ protocol ComponentSizeDelegate: class {
   func sizeDidUpdate()
 }
 
-protocol Component: class {
+protocol ComponentContainer: class {
   weak var sizeDelegate: ComponentSizeDelegate? { get set }
 
   func render() -> UIView
 }
 
-class ListComponent: NSObject, Component {
+class ListComponent: NSObject, ComponentContainer {
 
   let itemHeight: CGFloat = 44
   let title: String
@@ -30,9 +30,9 @@ class ListComponent: NSObject, Component {
     return tableView
   }()
 
-  init(title: String, items: [ListItem]) {
-    self.title = title
-    self.items = items
+  init(component: Component) {
+    self.title = component.title
+    self.items = component.items
     super.init()
     for item in items {
       self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: item.type)

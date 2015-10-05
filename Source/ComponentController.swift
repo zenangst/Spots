@@ -2,7 +2,7 @@ import UIKit
 
 class ComponentsController: UIViewController {
 
-  private let components: [Component]
+  private let components: [ComponentContainer]
   static let reuseIdentifier = "ComponentCell"
 
   lazy var collectionView: UICollectionView = { [unowned self] in
@@ -18,8 +18,8 @@ class ComponentsController: UIViewController {
     return collectionView
   }()
 
-  required init(views: [Component]) {
-    self.components = views
+  required init(containers: [ComponentContainer]) {
+    self.components = containers
     super.init(nibName: nil, bundle: nil)
     self.view.addSubview(collectionView)
     self.view.autoresizingMask = [.FlexibleRightMargin, .FlexibleLeftMargin, .FlexibleBottomMargin, .FlexibleTopMargin, .FlexibleHeight, .FlexibleWidth]

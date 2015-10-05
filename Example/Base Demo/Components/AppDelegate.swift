@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let json = try! NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments)
 
     let components = Parser.parse(json as! [String : AnyObject])
-    let componentController = ComponentsController(views: components)
+    let componentController = ComponentsController(containers: components)
     componentController.view.backgroundColor = .whiteColor()
 
     navigationController = UINavigationController(rootViewController: componentController)
