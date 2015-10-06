@@ -32,8 +32,7 @@ class ListComponent: NSObject, ComponentContainer {
     }
   }
 
-  func render() -> UIView
-  {
+  func render() -> UIView {
     return tableView
   }
 }
