@@ -3,31 +3,6 @@ import Tailor
 import Sugar
 import GoldenRetriever
 
-protocol ComponentSizeDelegate: class {
-  func sizeDidUpdate()
-}
-
-protocol Listable { }
-
-protocol ComponentContainer: class {
-  weak var sizeDelegate: ComponentSizeDelegate? { get set }
-  var component: Component { get set }
-
-  func render() -> UIView
-}
-
-class ListComponentCell: UITableViewCell {
-
-  override init(style: UITableViewCellStyle, reuseIdentifier: String!) {
-    super.init(style: .Subtitle, reuseIdentifier: reuseIdentifier)
-  }
-
-  required init?(coder aDecoder: NSCoder) {
-      fatalError("init(coder:) has not been implemented")
-  }
-
-}
-
 class ListComponent: NSObject, ComponentContainer {
 
   static var cells = [String: UITableViewCell.Type]()
