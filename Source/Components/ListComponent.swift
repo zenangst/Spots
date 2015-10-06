@@ -30,6 +30,8 @@ class ListComponentCell: UITableViewCell {
 
 class ListComponent: NSObject, ComponentContainer {
 
+  static var cells = [String: UITableViewCell.Type]()
+
   let itemHeight: CGFloat = 44
 
   var component: Component
@@ -49,7 +51,9 @@ class ListComponent: NSObject, ComponentContainer {
     self.component = component
     super.init()
     for item in component.items {
-      self.tableView.registerClass(ListComponentCell.self, forCellReuseIdentifier: "ListCell\(item.type)")
+      let componentCellClass = ListComponent.cells[item.type] ?? ListComponentCell.self
+      self.tableView.registerClass(componentCellClass,
+        forCellReuseIdentifier: "ListCell\(item.type)")
     }
   }
 
