@@ -16,8 +16,8 @@
 		BD6973671BBFE4FB001DC32F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6973661BBFE4FB001DC32F /* AppDelegate.swift */; };
 		BD69736E1BBFE4FB001DC32F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BD69736D1BBFE4FB001DC32F /* Assets.xcassets */; };
 		BD6973711BBFE4FB001DC32F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BD69736F1BBFE4FB001DC32F /* LaunchScreen.storyboard */; };
-		D51DF1671BC490CA00EAB122 /* ComponentContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51DF1661BC490CA00EAB122 /* ComponentContainer.swift */; settings = {ASSET_TAGS = (); }; };
-		D51DF1691BC490F500EAB122 /* ComponentSizeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51DF1681BC490F500EAB122 /* ComponentSizeDelegate.swift */; settings = {ASSET_TAGS = (); }; };
+		D51DF1671BC490CA00EAB122 /* Spotable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51DF1661BC490CA00EAB122 /* Spotable.swift */; settings = {ASSET_TAGS = (); }; };
+		D51DF1691BC490F500EAB122 /* SpotSizeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51DF1681BC490F500EAB122 /* SpotSizeDelegate.swift */; settings = {ASSET_TAGS = (); }; };
 		D55B0AC01BC5BA200003595C /* GridComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B0ABC1BC5BA200003595C /* GridComponent.swift */; settings = {ASSET_TAGS = (); }; };
 		D55B0AC11BC5BA200003595C /* ListSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B0ABE1BC5BA200003595C /* ListSpot.swift */; settings = {ASSET_TAGS = (); }; };
 		D55B0AC21BC5BA200003595C /* ListSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B0ABF1BC5BA200003595C /* ListSpotCell.swift */; settings = {ASSET_TAGS = (); }; };
@@ -37,8 +37,8 @@
 		BD69736D1BBFE4FB001DC32F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BD6973701BBFE4FB001DC32F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BD6973721BBFE4FB001DC32F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D51DF1661BC490CA00EAB122 /* ComponentContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentContainer.swift; sourceTree = "<group>"; };
-		D51DF1681BC490F500EAB122 /* ComponentSizeDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentSizeDelegate.swift; sourceTree = "<group>"; };
+		D51DF1661BC490CA00EAB122 /* Spotable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spotable.swift; sourceTree = "<group>"; };
+		D51DF1681BC490F500EAB122 /* SpotSizeDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotSizeDelegate.swift; sourceTree = "<group>"; };
 		D55B0ABC1BC5BA200003595C /* GridComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridComponent.swift; sourceTree = "<group>"; };
 		D55B0ABE1BC5BA200003595C /* ListSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListSpot.swift; sourceTree = "<group>"; };
 		D55B0ABF1BC5BA200003595C /* ListSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListSpotCell.swift; sourceTree = "<group>"; };
@@ -73,8 +73,8 @@
 			isa = PBXGroup;
 			children = (
 				BD4A62421BC1A47D0037C380 /* Parser.swift */,
-				D51DF1661BC490CA00EAB122 /* ComponentContainer.swift */,
-				D51DF1681BC490F500EAB122 /* ComponentSizeDelegate.swift */,
+				D51DF1661BC490CA00EAB122 /* Spotable.swift */,
+				D51DF1681BC490F500EAB122 /* SpotSizeDelegate.swift */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -284,13 +284,13 @@
 			files = (
 				BD4A624B1BC1A4D20037C380 /* ListItem.swift in Sources */,
 				D55B0AC21BC5BA200003595C /* ListSpotCell.swift in Sources */,
-				D51DF1671BC490CA00EAB122 /* ComponentContainer.swift in Sources */,
+				D51DF1671BC490CA00EAB122 /* Spotable.swift in Sources */,
 				BD4A624D1BC1B9CA0037C380 /* Component.swift in Sources */,
 				BD4A62481BC1A47D0037C380 /* Parser.swift in Sources */,
 				BD6973671BBFE4FB001DC32F /* AppDelegate.swift in Sources */,
 				D55B0AC11BC5BA200003595C /* ListSpot.swift in Sources */,
 				BD4A62451BC1A47D0037C380 /* ComponentController.swift in Sources */,
-				D51DF1691BC490F500EAB122 /* ComponentSizeDelegate.swift in Sources */,
+				D51DF1691BC490F500EAB122 /* SpotSizeDelegate.swift in Sources */,
 				D55B0AC01BC5BA200003595C /* GridComponent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
