@@ -1,5 +1,6 @@
 import UIKit
 import GoldenRetriever
+import Sugar
 
 class GridSpot: NSObject, Spotable {
 
@@ -56,10 +57,14 @@ extension GridSpot: UICollectionViewDataSource {
     if item.image != "" {
       let resource = item.image
       let fido = GoldenRetriever()
-      fido.fetch(resource) { data, error in
-        guard let data = data else { return }
-        let image = UIImage(data: data)
-        cell.backgroundColor = UIColor(patternImage: image!)
+      let qualityOfServiceClass = QOS_CLASS_BACKGROUND
+      let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
+      dispatch(backgroundQueue) {
+        fido.fetch(resource) { data, error in
+          guard let data = data else { return }
+          let image = UIImage(data: data)
+          cell.backgroundColor = UIColor(patternImage: image!)
+        }
       }
     } else {
       cell.backgroundColor = UIColor.lightGrayColor()
