@@ -3,7 +3,7 @@ import GoldenRetriever
 
 class GridComponent: NSObject, ComponentContainer {
 
-  static let reuseIdentifier = "ComponentCell"
+  static var cells = [String: UICollectionViewCell.Type]()
 
   var component: Component
   weak var sizeDelegate: ComponentSizeDelegate?
@@ -28,7 +28,8 @@ class GridComponent: NSObject, ComponentContainer {
     self.component = component
     super.init()
     for item in component.items {
-      self.collectionView.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: "GridCell\(item.type)")
+      let componentCellClass = GridComponent.cells[item.type] ?? UICollectionViewCell.self
+      self.collectionView.registerClass(componentCellClass, forCellWithReuseIdentifier: "GridCell\(item.type)")
     }
   }
 

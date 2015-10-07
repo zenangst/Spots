@@ -1,7 +1,8 @@
 PODS:
   - GoldenRetriever (0.1.1)
   - Sugar (0.1.0)
-  - Tailor (0.2.0)
+  - Tailor (0.2.0):
+    - Sugar
 
 DEPENDENCIES:
   - GoldenRetriever (from `https://github.com/zenangst/GoldenRetriever`)
@@ -24,12 +25,12 @@ CHECKOUT OPTIONS:
     :commit: 964d31e847af1498a019e3d8a0cd94885e4c2d4d
     :git: https://github.com/hyperoslo/Sugar
   Tailor:
-    :commit: 6caa8930227fe3c1e62030989bba2df9870dfff5
+    :commit: 085f59593e5833532efa4d94b192e7bed49ce817
     :git: https://github.com/zenangst/Tailor
 
 SPEC CHECKSUMS:
   GoldenRetriever: 68256f443f35eaeb90b58e2f64bc8f5b255738ba
   Sugar: d33f2a3ae10e40c14eb49a2e859f12e82e614817
-  Tailor: 214469e948557ac67a0d3d93674aeaa686f74e4f
+  Tailor: acba14dba2fb854cdf2550c1a3dfd603f6b59dbc
 
-COCOAPODS: 0.39.0.beta.4
+COCOAPODS: 0.39.0.beta.5

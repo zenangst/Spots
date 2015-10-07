@@ -1,6 +1,8 @@
 import Tailor
 import Sugar
 
+protocol Listable { }
+
 struct ListItem: Mappable, Listable {
   var title = ""
   var subtitle = ""
