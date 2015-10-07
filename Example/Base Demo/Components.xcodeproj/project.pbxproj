@@ -17,11 +17,11 @@
 		BD6973671BBFE4FB001DC32F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6973661BBFE4FB001DC32F /* AppDelegate.swift */; };
 		BD69736E1BBFE4FB001DC32F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BD69736D1BBFE4FB001DC32F /* Assets.xcassets */; };
 		BD6973711BBFE4FB001DC32F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BD69736F1BBFE4FB001DC32F /* LaunchScreen.storyboard */; };
-		D51DF1611BC48FDE00EAB122 /* GridComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51DF1601BC48FDE00EAB122 /* GridComponent.swift */; settings = {ASSET_TAGS = (); }; };
-		D51DF1631BC48FE500EAB122 /* ListComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51DF1621BC48FE500EAB122 /* ListComponent.swift */; settings = {ASSET_TAGS = (); }; };
-		D51DF1651BC4904B00EAB122 /* ListComponentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51DF1641BC4904B00EAB122 /* ListComponentCell.swift */; settings = {ASSET_TAGS = (); }; };
 		D51DF1671BC490CA00EAB122 /* ComponentContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51DF1661BC490CA00EAB122 /* ComponentContainer.swift */; settings = {ASSET_TAGS = (); }; };
 		D51DF1691BC490F500EAB122 /* ComponentSizeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51DF1681BC490F500EAB122 /* ComponentSizeDelegate.swift */; settings = {ASSET_TAGS = (); }; };
+		D55B0AC01BC5BA200003595C /* GridComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B0ABC1BC5BA200003595C /* GridComponent.swift */; settings = {ASSET_TAGS = (); }; };
+		D55B0AC11BC5BA200003595C /* ListComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B0ABE1BC5BA200003595C /* ListComponent.swift */; settings = {ASSET_TAGS = (); }; };
+		D55B0AC21BC5BA200003595C /* ListComponentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B0ABF1BC5BA200003595C /* ListComponentCell.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,11 +39,11 @@
 		BD69736D1BBFE4FB001DC32F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BD6973701BBFE4FB001DC32F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BD6973721BBFE4FB001DC32F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D51DF1601BC48FDE00EAB122 /* GridComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridComponent.swift; sourceTree = "<group>"; };
-		D51DF1621BC48FE500EAB122 /* ListComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListComponent.swift; sourceTree = "<group>"; };
-		D51DF1641BC4904B00EAB122 /* ListComponentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListComponentCell.swift; sourceTree = "<group>"; };
 		D51DF1661BC490CA00EAB122 /* ComponentContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentContainer.swift; sourceTree = "<group>"; };
 		D51DF1681BC490F500EAB122 /* ComponentSizeDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentSizeDelegate.swift; sourceTree = "<group>"; };
+		D55B0ABC1BC5BA200003595C /* GridComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridComponent.swift; sourceTree = "<group>"; };
+		D55B0ABE1BC5BA200003595C /* ListComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListComponent.swift; sourceTree = "<group>"; };
+		D55B0ABF1BC5BA200003595C /* ListComponentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListComponentCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,24 +61,15 @@
 		BD4A623B1BC1A47D0037C380 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				D55B0ABA1BC5BA200003595C /* Spots */,
 				BD4A623C1BC1A47D0037C380 /* .gitkeep */,
 				BD4A623D1BC1A47D0037C380 /* ComponentController.swift */,
-				BD4A623E1BC1A47D0037C380 /* Components */,
 				BD4A62401BC1A47D0037C380 /* components.json */,
 				BD4A62411BC1A47D0037C380 /* Library */,
 				BD4A62491BC1A4BB0037C380 /* Models */,
 			);
 			name = Source;
 			path = ../../Source;
-			sourceTree = "<group>";
-		};
-		BD4A623E1BC1A47D0037C380 /* Components */ = {
-			isa = PBXGroup;
-			children = (
-				D51DF15F1BC48FC100EAB122 /* Grid */,
-				D51DF15E1BC48FB600EAB122 /* List */,
-			);
-			path = Components;
 			sourceTree = "<group>";
 		};
 		BD4A62411BC1A47D0037C380 /* Library */ = {
@@ -130,21 +121,30 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
-		D51DF15E1BC48FB600EAB122 /* List */ = {
+		D55B0ABA1BC5BA200003595C /* Spots */ = {
 			isa = PBXGroup;
 			children = (
-				D51DF1621BC48FE500EAB122 /* ListComponent.swift */,
-				D51DF1641BC4904B00EAB122 /* ListComponentCell.swift */,
+				D55B0ABB1BC5BA200003595C /* Grid */,
+				D55B0ABD1BC5BA200003595C /* List */,
 			);
-			path = List;
+			path = Spots;
 			sourceTree = "<group>";
 		};
-		D51DF15F1BC48FC100EAB122 /* Grid */ = {
+		D55B0ABB1BC5BA200003595C /* Grid */ = {
 			isa = PBXGroup;
 			children = (
-				D51DF1601BC48FDE00EAB122 /* GridComponent.swift */,
+				D55B0ABC1BC5BA200003595C /* GridComponent.swift */,
 			);
 			path = Grid;
+			sourceTree = "<group>";
+		};
+		D55B0ABD1BC5BA200003595C /* List */ = {
+			isa = PBXGroup;
+			children = (
+				D55B0ABE1BC5BA200003595C /* ListComponent.swift */,
+				D55B0ABF1BC5BA200003595C /* ListComponentCell.swift */,
+			);
+			path = List;
 			sourceTree = "<group>";
 		};
 		DC20B8ABF3750CE9A8F94AD8 /* Pods */ = {
@@ -287,15 +287,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				BD4A624B1BC1A4D20037C380 /* ListItem.swift in Sources */,
-				D51DF1651BC4904B00EAB122 /* ListComponentCell.swift in Sources */,
-				D51DF1631BC48FE500EAB122 /* ListComponent.swift in Sources */,
+				D55B0AC21BC5BA200003595C /* ListComponentCell.swift in Sources */,
 				D51DF1671BC490CA00EAB122 /* ComponentContainer.swift in Sources */,
 				BD4A624D1BC1B9CA0037C380 /* Component.swift in Sources */,
 				BD4A62481BC1A47D0037C380 /* Parser.swift in Sources */,
-				D51DF1611BC48FDE00EAB122 /* GridComponent.swift in Sources */,
 				BD6973671BBFE4FB001DC32F /* AppDelegate.swift in Sources */,
+				D55B0AC11BC5BA200003595C /* ListComponent.swift in Sources */,
 				BD4A62451BC1A47D0037C380 /* ComponentController.swift in Sources */,
 				D51DF1691BC490F500EAB122 /* ComponentSizeDelegate.swift in Sources */,
+				D55B0AC01BC5BA200003595C /* GridComponent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
