@@ -26,7 +26,7 @@ class ListSpot: NSObject, Spotable {
     self.component = component
     super.init()
     for item in component.items {
-      let componentCellClass = ListSpot.cells[item.type] ?? ListComponentCell.self
+      let componentCellClass = ListSpot.cells[item.type] ?? ListSpotCell.self
       self.tableView.registerClass(componentCellClass,
         forCellReuseIdentifier: "ListCell\(item.type)")
     }
