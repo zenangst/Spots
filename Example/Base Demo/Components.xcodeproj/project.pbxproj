@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		A802709A14B2B09B40B27C24 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28622753AFF41826673AFB29 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		BD4A62441BC1A47D0037C380 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = BD4A623C1BC1A47D0037C380 /* .gitkeep */; settings = {ASSET_TAGS = (); }; };
 		BD4A62451BC1A47D0037C380 /* ComponentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4A623D1BC1A47D0037C380 /* ComponentController.swift */; settings = {ASSET_TAGS = (); }; };
 		BD4A62471BC1A47D0037C380 /* components.json in Resources */ = {isa = PBXBuildFile; fileRef = BD4A62401BC1A47D0037C380 /* components.json */; settings = {ASSET_TAGS = (); }; };
 		BD4A62481BC1A47D0037C380 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4A62421BC1A47D0037C380 /* Parser.swift */; settings = {ASSET_TAGS = (); }; };
@@ -28,7 +27,6 @@
 		28622753AFF41826673AFB29 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E70EB4CC092C66A8663C4B9 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		87CF5208C24D6284F4E697DD /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
-		BD4A623C1BC1A47D0037C380 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		BD4A623D1BC1A47D0037C380 /* ComponentController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentController.swift; sourceTree = "<group>"; };
 		BD4A62401BC1A47D0037C380 /* components.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = components.json; sourceTree = "<group>"; };
 		BD4A62421BC1A47D0037C380 /* Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
@@ -62,7 +60,6 @@
 			isa = PBXGroup;
 			children = (
 				D55B0ABA1BC5BA200003595C /* Spots */,
-				BD4A623C1BC1A47D0037C380 /* .gitkeep */,
 				BD4A623D1BC1A47D0037C380 /* ComponentController.swift */,
 				BD4A62401BC1A47D0037C380 /* components.json */,
 				BD4A62411BC1A47D0037C380 /* Library */,
@@ -224,7 +221,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BD4A62441BC1A47D0037C380 /* .gitkeep in Resources */,
 				BD4A62471BC1A47D0037C380 /* components.json in Resources */,
 				BD6973711BBFE4FB001DC32F /* LaunchScreen.storyboard in Resources */,
 				BD69736E1BBFE4FB001DC32F /* Assets.xcassets in Resources */,
