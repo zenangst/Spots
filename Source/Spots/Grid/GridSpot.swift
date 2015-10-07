@@ -1,12 +1,13 @@
 import UIKit
 import GoldenRetriever
+import Sugar
 
-class GridComponent: NSObject, ComponentContainer {
+class GridSpot: NSObject, Spotable {
 
   static var cells = [String: UICollectionViewCell.Type]()
 
   var component: Component
-  weak var sizeDelegate: ComponentSizeDelegate?
+  weak var sizeDelegate: SpotSizeDelegate?
 
   lazy var layout: UICollectionViewFlowLayout = {
     let size = UIScreen.mainScreen().bounds.width / CGFloat(self.component.span)
@@ -31,19 +32,18 @@ class GridComponent: NSObject, ComponentContainer {
     self.component = component
     super.init()
     for item in component.items {
-      let componentCellClass = GridComponent.cells[item.type] ?? UICollectionViewCell.self
+      let componentCellClass = GridSpot.cells[item.type] ?? UICollectionViewCell.self
       self.collectionView.registerClass(componentCellClass, forCellWithReuseIdentifier: "GridCell\(item.type)")
     }
   }
 
-  func render() -> UIView
-  {
+  func render() -> UIView {
     collectionView.frame.size.height = layout.collectionViewContentSize().height
     return collectionView
   }
 }
 
-extension GridComponent: UICollectionViewDataSource {
+extension GridSpot: UICollectionViewDataSource {
 
   func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     return component.items.count
@@ -57,10 +57,17 @@ extension GridComponent: UICollectionViewDataSource {
     if item.image != "" {
       let resource = item.image
       let fido = GoldenRetriever()
-      fido.fetch(resource) { data, error in
-        guard let data = data else { return }
-        let image = UIImage(data: data)
-        cell.backgroundColor = UIColor(patternImage: image!)
+      let qualityOfServiceClass = QOS_CLASS_BACKGROUND
+      let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
+
+      dispatch(backgroundQueue) {
+        fido.fetch(resource) { data, error in
+          guard let data = data else { return }
+          let image = UIImage(data: data)
+          dispatch {
+            cell.backgroundColor = UIColor(patternImage: image!)
+          }
+        }
       }
     } else {
       cell.backgroundColor = UIColor.lightGrayColor()

@@ -9,22 +9,22 @@ enum ContainerType: String {
 
 struct Parser {
 
-  static func parse(json: JSONDictionary) -> [ComponentContainer] {
-    guard let components = json["components"] as? JSONArray else { return [ComponentContainer]() }
-    var containers = [ComponentContainer]()
+  static func parse(json: JSONDictionary) -> [Spotable] {
+    guard let components = json["components"] as? JSONArray else { return [] }
+    var spots = [Spotable]()
 
     for json in components {
       let component = Component(json)
       switch ContainerType(rawValue: component.type) {
       case .List?:
-        containers.append(ListComponent(component: component))
+        spots.append(ListSpot(component: component))
       case .Grid?:
-        containers.append(GridComponent(component: component))
+        spots.append(GridSpot(component: component))
       default:
         break
       }
     }
     
-    return containers
+    return spots
   }
 }

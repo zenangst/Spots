@@ -1,6 +1,6 @@
 import UIKit
 
-class ListComponentCell: UITableViewCell {
+class ListSpotCell: UITableViewCell {
 
   override init(style: UITableViewCellStyle, reuseIdentifier: String!) {
     super.init(style: .Subtitle, reuseIdentifier: reuseIdentifier)
