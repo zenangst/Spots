@@ -1,3 +1,3 @@
-protocol ComponentSizeDelegate: class {
+protocol SpotSizeDelegate: class {
   func sizeDidUpdate()
 }

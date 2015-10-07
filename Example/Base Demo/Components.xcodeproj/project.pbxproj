@@ -59,9 +59,9 @@
 		BD4A623B1BC1A47D0037C380 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				D55B0ABA1BC5BA200003595C /* Spots */,
 				BD4A623D1BC1A47D0037C380 /* ComponentController.swift */,
 				BD4A62401BC1A47D0037C380 /* components.json */,
+				D55B0ABA1BC5BA200003595C /* Spots */,
 				BD4A62411BC1A47D0037C380 /* Library */,
 				BD4A62491BC1A4BB0037C380 /* Models */,
 			);

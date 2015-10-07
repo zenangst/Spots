@@ -2,7 +2,7 @@ import UIKit
 
 class ComponentsController: UIViewController {
 
-  private let components: [ComponentContainer]
+  private let spots: [Spotable]
   static let reuseIdentifier = "ComponentCell"
 
   lazy var collectionView: UICollectionView = { [unowned self] in
@@ -19,8 +19,8 @@ class ComponentsController: UIViewController {
     return collectionView
   }()
 
-  required init(containers: [ComponentContainer]) {
-    self.components = containers
+  required init(spots: [Spotable]) {
+    self.spots = spots
     super.init(nibName: nil, bundle: nil)
     self.view.addSubview(collectionView)
     self.view.autoresizingMask = [.FlexibleRightMargin, .FlexibleLeftMargin, .FlexibleBottomMargin, .FlexibleTopMargin, .FlexibleHeight, .FlexibleWidth]
@@ -35,15 +35,15 @@ class ComponentsController: UIViewController {
 extension ComponentsController: UICollectionViewDataSource {
 
   func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return components.count
+    return spots.count
   }
 
   func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-    let component = components[indexPath.item]
-    component.sizeDelegate = self
+    let spot = spots[indexPath.item]
+    spot.sizeDelegate = self
 
     let cell = collectionView.dequeueReusableCellWithReuseIdentifier(ComponentsController.reuseIdentifier, forIndexPath: indexPath)
-    cell.contentView.addSubview(component.render())
+    cell.contentView.addSubview(spot.render())
     
     return cell
   }
@@ -52,8 +52,8 @@ extension ComponentsController: UICollectionViewDataSource {
 extension ComponentsController: UICollectionViewDelegateFlowLayout {
 
   func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-    let component = components[indexPath.item]
-    return component.render().frame.size
+    let spot = spots[indexPath.item]
+    return spot.render().frame.size
   }
 
   func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
@@ -61,7 +61,7 @@ extension ComponentsController: UICollectionViewDelegateFlowLayout {
   }
 }
 
-extension ComponentsController: ComponentSizeDelegate {
+extension ComponentsController: SpotSizeDelegate {
 
   func sizeDidUpdate() {
     collectionView.collectionViewLayout.invalidateLayout()

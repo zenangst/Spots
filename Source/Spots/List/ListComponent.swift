@@ -3,14 +3,14 @@ import Tailor
 import Sugar
 import GoldenRetriever
 
-class ListComponent: NSObject, ComponentContainer {
+class ListComponent: NSObject, Spotable {
 
   static var cells = [String: UITableViewCell.Type]()
 
   let itemHeight: CGFloat = 44
 
   var component: Component
-  weak var sizeDelegate: ComponentSizeDelegate?
+  weak var sizeDelegate: SpotSizeDelegate?
 
   lazy var tableView: UITableView = { [unowned self] in
     let tableView = UITableView()

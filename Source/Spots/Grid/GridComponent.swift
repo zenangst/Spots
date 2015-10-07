@@ -1,12 +1,12 @@
 import UIKit
 import GoldenRetriever
 
-class GridComponent: NSObject, ComponentContainer {
+class GridComponent: NSObject, Spotable {
 
   static var cells = [String: UICollectionViewCell.Type]()
 
   var component: Component
-  weak var sizeDelegate: ComponentSizeDelegate?
+  weak var sizeDelegate: SpotSizeDelegate?
 
   lazy var layout: UICollectionViewFlowLayout = {
     let size = UIScreen.mainScreen().bounds.width / CGFloat(self.component.span)
