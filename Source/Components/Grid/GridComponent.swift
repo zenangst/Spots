@@ -15,8 +15,6 @@ class GridComponent: NSObject, ComponentContainer {
     layout.minimumInteritemSpacing = 0
     layout.itemSize = CGSize(width: floor(size), height: 88)
 
-    print(size)
-
     return layout
     }()
 
