@@ -3,7 +3,7 @@ import Tailor
 import Sugar
 import GoldenRetriever
 
-class ListComponent: NSObject, Spotable {
+class ListSpot: NSObject, Spotable {
 
   static var cells = [String: UITableViewCell.Type]()
 
@@ -26,7 +26,7 @@ class ListComponent: NSObject, Spotable {
     self.component = component
     super.init()
     for item in component.items {
-      let componentCellClass = ListComponent.cells[item.type] ?? ListComponentCell.self
+      let componentCellClass = ListSpot.cells[item.type] ?? ListComponentCell.self
       self.tableView.registerClass(componentCellClass,
         forCellReuseIdentifier: "ListCell\(item.type)")
     }
@@ -37,7 +37,7 @@ class ListComponent: NSObject, Spotable {
   }
 }
 
-extension ListComponent: UITableViewDelegate {
+extension ListSpot: UITableViewDelegate {
 
   func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     let item = component.items[indexPath.row]
@@ -50,7 +50,7 @@ extension ListComponent: UITableViewDelegate {
   }
 }
 
-extension ListComponent: UITableViewDataSource {
+extension ListSpot: UITableViewDataSource {
 
   func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
     return component.title
