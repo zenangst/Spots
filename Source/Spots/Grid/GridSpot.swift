@@ -59,11 +59,14 @@ extension GridSpot: UICollectionViewDataSource {
       let fido = GoldenRetriever()
       let qualityOfServiceClass = QOS_CLASS_BACKGROUND
       let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
+
       dispatch(backgroundQueue) {
         fido.fetch(resource) { data, error in
           guard let data = data else { return }
           let image = UIImage(data: data)
-          cell.backgroundColor = UIColor(patternImage: image!)
+          dispatch {
+            cell.backgroundColor = UIColor(patternImage: image!)
+          }
         }
       }
     } else {

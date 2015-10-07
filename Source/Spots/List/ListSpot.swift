@@ -81,11 +81,19 @@ extension ListSpot: UITableViewDataSource {
     if item.image != "" {
       let resource = item.image
       let fido = GoldenRetriever()
-      fido.fetch(resource) { data, error in
-        guard let data = data else { return }
-        let image = UIImage(data: data)
-        cell!.imageView!.contentMode = .ScaleAspectFill
-        cell!.imageView!.image = image
+      let qualityOfServiceClass = QOS_CLASS_BACKGROUND
+      let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
+
+      dispatch(backgroundQueue) {
+        fido.fetch(resource) { data, error in
+          guard let data = data else { return }
+          let image = UIImage(data: data)
+          dispatch {
+            cell!.imageView!.contentMode = .ScaleAspectFill
+            cell!.imageView!.image = image
+            cell?.layoutSubviews()
+          }
+        }
       }
     } else {
       cell!.imageView!.image = nil
