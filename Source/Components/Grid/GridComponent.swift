@@ -9,8 +9,11 @@ class GridComponent: NSObject, ComponentContainer {
   weak var sizeDelegate: ComponentSizeDelegate?
 
   lazy var layout: UICollectionViewFlowLayout = {
+    let size = UIScreen.mainScreen().bounds.width / CGFloat(self.component.span)
     let layout = UICollectionViewFlowLayout()
-    layout.itemSize = CGSize(width: 88, height: 88)
+    layout.minimumLineSpacing = 0
+    layout.minimumInteritemSpacing = 0
+    layout.itemSize = CGSize(width: floor(size), height: 88)
 
     return layout
     }()
@@ -63,7 +66,7 @@ extension GridComponent: UICollectionViewDataSource {
       cell.backgroundColor = UIColor.lightGrayColor()
     }
 
-    let label = UILabel(frame: CGRect(x: 0,y: 0,width: 88,height: 88))
+    let label = UILabel(frame: CGRect(x: 0,y: 0,width: layout.itemSize.width, height: layout.itemSize.height))
     label.text = item.title
     label.textAlignment = .Center
     cell.addSubview(label)

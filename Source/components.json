@@ -3,10 +3,11 @@
   {
     "type" : "grid",
     "title" : "Teams",
+    "span" : 2,
     "items" : [
       {
         "type"     : "team",
-        "image"    : "https://yt3.ggpht.com/-sdYRgnzMKQo/AAAAAAAAAAI/AAAAAAAAAAA/PcWKh9RtL-k/s88-c-k-no/photo.jpg",
+        "image"    : "http://static1.squarespace.com/static/50c25455e4b0ef5720704c6b/t/541b0254e4b05046224444fa/1411056212194/",
         "title"    : "iOS",
         "subtitle" : "",
         "target"   : {
@@ -15,7 +16,7 @@
       },
       {
         "type"     : "team",
-        "image"    : "https://yt3.ggpht.com/-V3muCop10ak/AAAAAAAAAAI/AAAAAAAAAAA/9sn6Kui6XaU/s88-c-k-no/photo.jpg",
+        "image"    : "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Android_Studio_icon.svg/512px-Android_Studio_icon.svg.png",
         "title"    : "Android",
         "subtitle" : "",
         "target"   : {
@@ -24,8 +25,17 @@
       },
       {
         "type"     : "team",
-        "image"    : "https://yt3.ggpht.com/-eXJvAofQMLE/AAAAAAAAAAI/AAAAAAAAAAA/g-vfWPo7MHs/s88-c-k-no/photo.jpg",
+        "image"    : "http://www.mobilechatgroups.com/uploads/group_pictures/14/ruby-icon-1005094329.png",
         "title"    : "Web",
+        "subtitle" : "",
+        "target"   : {
+          "uri" : "components:contact:1"
+        }
+      },
+      {
+        "type"     : "team",
+        "image"    : "http://www.sketchapp.com/static/images/home/app-icon.png",
+        "title"    : "Design",
         "subtitle" : "",
         "target"   : {
           "uri" : "components:contact:1"
@@ -49,7 +59,7 @@
     ]
   },
   {
-    "type" : "grid",
+    "type" : "list",
     "title" : "iOS Developers",
     "items" : [
       {
