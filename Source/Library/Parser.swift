@@ -19,7 +19,7 @@ struct Parser {
       case .List?:
         spots.append(ListSpot(component: component))
       case .Grid?:
-        spots.append(GridComponent(component: component))
+        spots.append(GridSpot(component: component))
       default:
         break
       }

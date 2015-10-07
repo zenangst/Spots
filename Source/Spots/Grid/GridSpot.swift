@@ -1,7 +1,7 @@
 import UIKit
 import GoldenRetriever
 
-class GridComponent: NSObject, Spotable {
+class GridSpot: NSObject, Spotable {
 
   static var cells = [String: UICollectionViewCell.Type]()
 
@@ -31,19 +31,18 @@ class GridComponent: NSObject, Spotable {
     self.component = component
     super.init()
     for item in component.items {
-      let componentCellClass = GridComponent.cells[item.type] ?? UICollectionViewCell.self
+      let componentCellClass = GridSpot.cells[item.type] ?? UICollectionViewCell.self
       self.collectionView.registerClass(componentCellClass, forCellWithReuseIdentifier: "GridCell\(item.type)")
     }
   }
 
-  func render() -> UIView
-  {
+  func render() -> UIView {
     collectionView.frame.size.height = layout.collectionViewContentSize().height
     return collectionView
   }
 }
 
-extension GridComponent: UICollectionViewDataSource {
+extension GridSpot: UICollectionViewDataSource {
 
   func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     return component.items.count
