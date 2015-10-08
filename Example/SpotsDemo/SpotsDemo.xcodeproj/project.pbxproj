@@ -22,6 +22,7 @@
 		D55B0AC01BC5BA200003595C /* GridSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B0ABC1BC5BA200003595C /* GridSpot.swift */; settings = {ASSET_TAGS = (); }; };
 		D55B0AC11BC5BA200003595C /* ListSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B0ABE1BC5BA200003595C /* ListSpot.swift */; settings = {ASSET_TAGS = (); }; };
 		D55B0AC21BC5BA200003595C /* ListSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B0ABF1BC5BA200003595C /* ListSpotCell.swift */; settings = {ASSET_TAGS = (); }; };
+		D5883A281BC720B900BF2FFF /* SpotFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5883A271BC720B900BF2FFF /* SpotFactory.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 		D55B0ABC1BC5BA200003595C /* GridSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridSpot.swift; sourceTree = "<group>"; };
 		D55B0ABE1BC5BA200003595C /* ListSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListSpot.swift; sourceTree = "<group>"; };
 		D55B0ABF1BC5BA200003595C /* ListSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListSpotCell.swift; sourceTree = "<group>"; };
+		D5883A271BC720B900BF2FFF /* SpotFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotFactory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +78,7 @@
 				BD4A62421BC1A47D0037C380 /* Parser.swift */,
 				D51DF1661BC490CA00EAB122 /* Spotable.swift */,
 				D51DF1681BC490F500EAB122 /* SpotSizeDelegate.swift */,
+				D5883A271BC720B900BF2FFF /* SpotFactory.swift */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -303,6 +306,7 @@
 				BD4A62451BC1A47D0037C380 /* SpotsController.swift in Sources */,
 				D51DF1691BC490F500EAB122 /* SpotSizeDelegate.swift in Sources */,
 				BD7697361BC6458700DB119D /* AppDelegate.swift in Sources */,
+				D5883A281BC720B900BF2FFF /* SpotFactory.swift in Sources */,
 				D55B0AC01BC5BA200003595C /* GridSpot.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -3,16 +3,16 @@ import Tailor
 import Sugar
 import GoldenRetriever
 
-class ListSpot: NSObject, Spotable {
+public class ListSpot: NSObject, Spotable {
 
-  static var cells = [String: UITableViewCell.Type]()
+  public static var cells = [String: UITableViewCell.Type]()
 
-  let itemHeight: CGFloat = 44
+  public let itemHeight: CGFloat = 44
 
-  var component: Component
-  weak var sizeDelegate: SpotSizeDelegate?
+  public var component: Component
+  public weak var sizeDelegate: SpotSizeDelegate?
 
-  lazy var tableView: UITableView = { [unowned self] in
+  public lazy var tableView: UITableView = { [unowned self] in
     let tableView = UITableView()
     tableView.delegate = self
     tableView.dataSource = self
@@ -24,42 +24,42 @@ class ListSpot: NSObject, Spotable {
     return tableView
   }()
 
-  init(component: Component) {
+  public required init(component: Component) {
     self.component = component
     super.init()
 
     for item in component.items {
-      let componentCellClass = ListSpot.cells[item.type] ?? ListSpotCell.self
+      let componentCellClass = ListSpot.cells[item.kind] ?? ListSpotCell.self
       self.tableView.registerClass(componentCellClass,
-        forCellReuseIdentifier: "ListCell\(item.type)")
+        forCellReuseIdentifier: "ListCell\(item.kind)")
     }
   }
 
-  func render() -> UIView {
+  public func render() -> UIView {
     return tableView
   }
 }
 
 extension ListSpot: UITableViewDelegate {
 
-  func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+  public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     let item = component.items[indexPath.row]
     guard let uri = item.uri, url = NSURL(string: uri) else { return }
     UIApplication.sharedApplication().openURL(url)
   }
 
-  func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+  public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
     return itemHeight
   }
 }
 
 extension ListSpot: UITableViewDataSource {
 
-  func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+  public func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
     return component.title
   }
 
-  func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+  public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     if tableView.frame.size.height != tableView.contentSize.height {
       tableView.frame.size.height = tableView.contentSize.height
       sizeDelegate?.sizeDidUpdate()
@@ -68,9 +68,9 @@ extension ListSpot: UITableViewDataSource {
     return component.items.count
   }
 
-  func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+  public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     let item = component.items[indexPath.row]
-    let cell = tableView.dequeueReusableCellWithIdentifier("ListCell\(item.type)")
+    let cell = tableView.dequeueReusableCellWithIdentifier("ListCell\(item.kind)")
 
     cell!.textLabel!.text = item.title
     cell!.textLabel!.textColor = .blackColor()
@@ -79,7 +79,6 @@ extension ListSpot: UITableViewDataSource {
       cell!.detailTextLabel?.text = item.subtitle
       cell!.detailTextLabel?.textColor = .blackColor()
     }
-
 
     if item.image != "" {
       let resource = item.image

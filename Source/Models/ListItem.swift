@@ -1,20 +1,20 @@
 import Tailor
 import Sugar
 
-protocol Listable { }
+public protocol Listable { }
 
-struct ListItem: Mappable, Listable {
-  var title = ""
-  var subtitle = ""
-  var image = ""
-  var type = ""
-  var uri: String?
+public struct ListItem: Mappable, Listable {
+  public var title = ""
+  public var subtitle = ""
+  public var image = ""
+  public var kind = ""
+  public var uri: String?
 
-  init(_ map: JSONDictionary) {
-    self.title <- map.property("title")
-    self.subtitle <- map.property("subtitle")
-    self.image <- map.property("image")
-    self.type <- map.property("type")
-    self.uri <- map.property("uri")
+  public init(_ map: JSONDictionary) {
+    title    <- map.property("title")
+    subtitle <- map.property("subtitle")
+    image    <- map.property("image")
+    kind     <- map.property("type")
+    uri      <- map.property("uri")
   }
 }
