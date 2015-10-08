@@ -60,6 +60,8 @@ extension GridSpot: UICollectionViewDataSource {
 
     let cell = collectionView.dequeueReusableCellWithReuseIdentifier("GridCell\(item.type)", forIndexPath: indexPath)
 
+    for view in cell.contentView.subviews { view.removeFromSuperview() }
+
     if item.image != "" {
       let resource = item.image
       let fido = GoldenRetriever()
