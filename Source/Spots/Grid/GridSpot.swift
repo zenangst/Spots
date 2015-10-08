@@ -68,7 +68,7 @@ extension GridSpot: UICollectionViewDataSource {
 
   public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
     let item = component.items[indexPath.item]
-    let cell = collectionView.dequeueReusableCellWithReuseIdentifier("\(cellPrefix)\(item.type.capitalizedString)", forIndexPath: indexPath)
+    let cell = collectionView.dequeueReusableCellWithReuseIdentifier("\(cellPrefix)\(item.kind.capitalizedString)", forIndexPath: indexPath)
 
     if let grid = cell as? Gridable {
       grid.configure(item)
