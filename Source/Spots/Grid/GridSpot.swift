@@ -51,8 +51,6 @@ public class GridSpot: NSObject, Spotable {
 extension GridSpot: UICollectionViewDelegateFlowLayout {
 
   public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-    collectionView.collectionViewLayout.invalidateLayout()
-    
     let height: CGFloat = 88
     let newSize = collectionView.frame.width / CGFloat(self.component.span)
 
