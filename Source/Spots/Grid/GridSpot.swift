@@ -24,6 +24,7 @@ class GridSpot: NSObject, Spotable {
     collectionView.frame.size.width = UIScreen.mainScreen().bounds.width
     collectionView.dataSource = self
     collectionView.backgroundColor = UIColor.whiteColor()
+    collectionView.delegate = self
 
     return collectionView
     }()
@@ -32,8 +33,8 @@ class GridSpot: NSObject, Spotable {
     self.component = component
     super.init()
     for item in component.items {
-      let componentCellClass = GridSpot.cells[item.type] ?? UICollectionViewCell.self
-      self.collectionView.registerClass(componentCellClass, forCellWithReuseIdentifier: "GridCell\(item.type)")
+      let componentCellClass = GridSpot.cells[item.type] ?? GridSpotCell.self
+      self.collectionView.registerClass(componentCellClass, forCellWithReuseIdentifier: "GridSpotCell\(item.type.capitalizedString)")
     }
   }
 
@@ -43,9 +44,23 @@ class GridSpot: NSObject, Spotable {
   }
 
   func layout(size: CGSize) {
-    let newSize = size.width / CGFloat(self.component.span)
-    flowLayout.itemSize = CGSize(width: floor(newSize), height: 88)
     collectionView.frame.size.width = size.width
+    collectionView.collectionViewLayout.invalidateLayout()
+  }
+}
+
+extension GridSpot: UICollectionViewDelegateFlowLayout {
+  func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+    let cell = self.collectionView.cellForItemAtIndexPath(indexPath)
+
+    var height: CGFloat = 88
+    if let grid = cell as? Gridable {
+      height = grid.size.height
+    }
+
+    let newSize = collectionView.frame.width / CGFloat(self.component.span) - 2
+
+    return CGSize(width: floor(newSize), height: height)
   }
 }
 
@@ -58,35 +73,11 @@ extension GridSpot: UICollectionViewDataSource {
   func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
     let item = component.items[indexPath.item]
 
-    let cell = collectionView.dequeueReusableCellWithReuseIdentifier("GridCell\(item.type)", forIndexPath: indexPath)
+    let cell = collectionView.dequeueReusableCellWithReuseIdentifier("GridSpotCell\(item.type.capitalizedString)", forIndexPath: indexPath)
 
-    for view in cell.contentView.subviews { view.removeFromSuperview() }
-
-    if item.image != "" {
-      let resource = item.image
-      let fido = GoldenRetriever()
-      let qualityOfServiceClass = QOS_CLASS_BACKGROUND
-      let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
-
-      dispatch(backgroundQueue) {
-        fido.fetch(resource) { data, error in
-          guard let data = data else { return }
-          let image = UIImage(data: data)
-          dispatch {
-            cell.backgroundColor = UIColor(patternImage: image!)
-          }
-        }
-      }
-    } else {
-      cell.backgroundColor = UIColor.lightGrayColor()
+    if let grid = cell as? Gridable {
+      grid.configure(item)
     }
-
-    let label = UILabel(frame: CGRect(x: 0, y: 0,
-      width: flowLayout.itemSize.width,
-      height: flowLayout.itemSize.height))
-    label.text = item.title
-    label.textAlignment = .Center
-    cell.addSubview(label)
 
     return cell
   }
