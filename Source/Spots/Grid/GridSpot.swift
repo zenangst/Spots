@@ -33,7 +33,7 @@ public class GridSpot: NSObject, Spotable {
     super.init()
     for item in component.items {
       let componentCellClass = GridSpot.cells[item.kind] ?? UICollectionViewCell.self
-      self.collectionView.registerClass(componentCellClass, forCellWithReuseIdentifier: "\(cellPrefix)\(item.type.capitalizedString)")
+      self.collectionView.registerClass(componentCellClass, forCellWithReuseIdentifier: "\(cellPrefix)\(item.kind.capitalizedString)")
     }
   }
 
@@ -42,7 +42,7 @@ public class GridSpot: NSObject, Spotable {
     return collectionView
   }
 
-  func layout(size: CGSize) {
+  public func layout(size: CGSize) {
     collectionView.frame.size.width = size.width
     collectionView.collectionViewLayout.invalidateLayout()
   }
@@ -50,7 +50,7 @@ public class GridSpot: NSObject, Spotable {
 
 extension GridSpot: UICollectionViewDelegateFlowLayout {
 
-  func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+  public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
     collectionView.collectionViewLayout.invalidateLayout()
     
     let height: CGFloat = 88
