@@ -9,15 +9,7 @@ struct Parser {
 
     for json in components {
       let component = Component(json)
-      switch component.type {
-      case "carousel":
-        spots.append(CarouselSpot(component: component))
-      case "list":
-        spots.append(ListSpot(component: component))
-      default:
-        spots.append(GridSpot(component: component))
-        break
-      }
+      spots.append(SpotFactory.resolve(component))
     }
     
     return spots
