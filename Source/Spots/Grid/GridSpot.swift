@@ -5,7 +5,7 @@ import Sugar
 class GridSpot: NSObject, Spotable {
 
   static var cells = [String: UICollectionViewCell.Type]()
-
+  let cellPrefix = "GridSpotCell"
   var component: Component
   weak var sizeDelegate: SpotSizeDelegate?
 
@@ -14,7 +14,6 @@ class GridSpot: NSObject, Spotable {
     let layout = UICollectionViewFlowLayout()
     layout.minimumLineSpacing = 0
     layout.minimumInteritemSpacing = 0
-    layout.itemSize = CGSize(width: floor(size), height: 88)
 
     return layout
     }()
@@ -33,12 +32,13 @@ class GridSpot: NSObject, Spotable {
     self.component = component
     super.init()
     for item in component.items {
-      let componentCellClass = GridSpot.cells[item.type] ?? GridSpotCell.self
-      self.collectionView.registerClass(componentCellClass, forCellWithReuseIdentifier: "GridSpotCell\(item.type.capitalizedString)")
+      let componentCellClass = GridSpot.cells[item.type.capitalizedString] ?? GridSpotCell.self
+      self.collectionView.registerClass(componentCellClass, forCellWithReuseIdentifier: "\(cellPrefix)\(item.type.capitalizedString)")
     }
   }
 
   func render() -> UIView {
+    collectionView.collectionViewLayout.invalidateLayout()
     collectionView.frame.size.height = flowLayout.collectionViewContentSize().height
     return collectionView
   }
@@ -50,15 +50,17 @@ class GridSpot: NSObject, Spotable {
 }
 
 extension GridSpot: UICollectionViewDelegateFlowLayout {
-  func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-    let cell = self.collectionView.cellForItemAtIndexPath(indexPath)
 
-    var height: CGFloat = 88
-    if let grid = cell as? Gridable {
-      height = grid.size.height
+  func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+    collectionView.collectionViewLayout.invalidateLayout()
+    if let cell = collectionView.cellForItemAtIndexPath(indexPath) {
+      print(cell)
     }
 
-    let newSize = collectionView.frame.width / CGFloat(self.component.span) - 2
+    let item = component.items[indexPath.item]
+    let height: CGFloat = 88
+
+    let newSize = collectionView.frame.width / CGFloat(self.component.span)
 
     return CGSize(width: floor(newSize), height: height)
   }
@@ -73,7 +75,7 @@ extension GridSpot: UICollectionViewDataSource {
   func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
     let item = component.items[indexPath.item]
 
-    let cell = collectionView.dequeueReusableCellWithReuseIdentifier("GridSpotCell\(item.type.capitalizedString)", forIndexPath: indexPath)
+    let cell = collectionView.dequeueReusableCellWithReuseIdentifier("\(cellPrefix)\(item.type.capitalizedString)", forIndexPath: indexPath)
 
     if let grid = cell as? Gridable {
       grid.configure(item)

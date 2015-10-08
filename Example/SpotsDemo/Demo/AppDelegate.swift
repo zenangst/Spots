@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     controller.title = "Spots".uppercaseString
     controller.view.backgroundColor = .whiteColor()
 
-    GridSpot.cells["GridSpotCellHeader"] = HeaderSpot.self
+    GridSpot.cells["GridSpotCellHeader"] = GridSpotHeader.self
 
     navigationController = UINavigationController(rootViewController: controller)
     window?.rootViewController = navigationController
