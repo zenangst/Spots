@@ -32,7 +32,7 @@ public class GridSpot: NSObject, Spotable {
     self.component = component
     super.init()
     for item in component.items {
-      let componentCellClass = GridSpot.cells[item.kind] ?? UICollectionViewCell.self
+      let componentCellClass = GridSpot.cells[item.kind] ?? GridSpotCell.self
       self.collectionView.registerClass(componentCellClass, forCellWithReuseIdentifier: "\(cellPrefix)\(item.kind.capitalizedString)")
     }
   }
