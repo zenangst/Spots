@@ -9,7 +9,7 @@ class GridSpot: NSObject, Spotable {
   var component: Component
   weak var sizeDelegate: SpotSizeDelegate?
 
-  lazy var layout: UICollectionViewFlowLayout = {
+  lazy var flowLayout: UICollectionViewFlowLayout = {
     let size = UIScreen.mainScreen().bounds.width / CGFloat(self.component.span)
     let layout = UICollectionViewFlowLayout()
     layout.minimumLineSpacing = 0
@@ -20,7 +20,7 @@ class GridSpot: NSObject, Spotable {
     }()
 
   lazy var collectionView: UICollectionView = { [unowned self] in
-    let collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: self.layout)
+    let collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: self.flowLayout)
     collectionView.frame.size.width = UIScreen.mainScreen().bounds.width
     collectionView.dataSource = self
     collectionView.backgroundColor = UIColor.whiteColor()
@@ -38,7 +38,7 @@ class GridSpot: NSObject, Spotable {
   }
 
   func render() -> UIView {
-    collectionView.frame.size.height = layout.collectionViewContentSize().height
+    collectionView.frame.size.height = flowLayout.collectionViewContentSize().height
     return collectionView
   }
 }
