@@ -60,7 +60,7 @@ extension CarouselSpot: UICollectionViewDataSource {
   func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
     let item = component.items[indexPath.item]
 
-    let cell = collectionView.dequeueReusableCellWithReuseIdentifier("GridCell\(item.type)", forIndexPath: indexPath)
+    let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CarouselCell\(item.type)", forIndexPath: indexPath)
 
     for view in cell.contentView.subviews { view.removeFromSuperview() }
 
