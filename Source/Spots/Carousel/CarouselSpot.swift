@@ -34,7 +34,7 @@ class CarouselSpot: NSObject, Spotable {
     super.init()
     for item in component.items {
       let componentCellClass = GridSpot.cells[item.type] ?? UICollectionViewCell.self
-      self.collectionView.registerClass(componentCellClass, forCellWithReuseIdentifier: "GridCell\(item.type)")
+      self.collectionView.registerClass(componentCellClass, forCellWithReuseIdentifier: "CarouselCell\(item.type)")
     }
   }
 
