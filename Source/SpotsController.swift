@@ -4,10 +4,15 @@ class SpotsController: UIViewController {
 
   private let spots: [Spotable]
   static let reuseIdentifier = "ComponentCell"
+  static let minimumLineSpacing: CGFloat = 1
+
+  lazy var layout: UICollectionViewLayout = {
+    let layout = UICollectionViewFlowLayout()
+    return layout
+  }()
 
   lazy var collectionView: UICollectionView = { [unowned self] in
-    let layout = UICollectionViewFlowLayout()
-    let collectionView = UICollectionView(frame: UIScreen.mainScreen().bounds, collectionViewLayout: layout)
+    let collectionView = UICollectionView(frame: UIScreen.mainScreen().bounds, collectionViewLayout: self.layout)
     collectionView.dataSource = self
     collectionView.delegate = self
     collectionView.alwaysBounceVertical = true
@@ -30,6 +35,13 @@ class SpotsController: UIViewController {
   required init?(coder aDecoder: NSCoder) {
       fatalError("init(coder:) has not been implemented")
   }
+
+  override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+    super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+
+    for spot in spots { spot.layout(size) }
+    layout.invalidateLayout()
+  }
 }
 
 extension SpotsController: UICollectionViewDataSource {
@@ -39,12 +51,13 @@ extension SpotsController: UICollectionViewDataSource {
   }
 
   func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-    let spot = spots[indexPath.item]
-    spot.sizeDelegate = self
-
     let cell = collectionView.dequeueReusableCellWithReuseIdentifier(SpotsController.reuseIdentifier, forIndexPath: indexPath)
+    let spot = spots[indexPath.item]
+
+    spot.render().removeFromSuperview()
+    spot.sizeDelegate = self
     cell.contentView.addSubview(spot.render())
-    
+
     return cell
   }
 }
@@ -53,11 +66,14 @@ extension SpotsController: UICollectionViewDelegateFlowLayout {
 
   func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
     let spot = spots[indexPath.item]
-    return spot.render().frame.size
+    var frame = spot.render().frame
+    frame.size.width = UIScreen.mainScreen().bounds.width
+    frame.size.width -= SpotsController.minimumLineSpacing * 2
+    return frame.size
   }
 
   func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
-    return 1
+    return SpotsController.minimumLineSpacing
   }
 }
 

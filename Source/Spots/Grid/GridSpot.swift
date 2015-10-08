@@ -9,7 +9,7 @@ class GridSpot: NSObject, Spotable {
   var component: Component
   weak var sizeDelegate: SpotSizeDelegate?
 
-  lazy var layout: UICollectionViewFlowLayout = {
+  lazy var flowLayout: UICollectionViewFlowLayout = {
     let size = UIScreen.mainScreen().bounds.width / CGFloat(self.component.span)
     let layout = UICollectionViewFlowLayout()
     layout.minimumLineSpacing = 0
@@ -20,7 +20,7 @@ class GridSpot: NSObject, Spotable {
     }()
 
   lazy var collectionView: UICollectionView = { [unowned self] in
-    let collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: self.layout)
+    let collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: self.flowLayout)
     collectionView.frame.size.width = UIScreen.mainScreen().bounds.width
     collectionView.dataSource = self
     collectionView.backgroundColor = UIColor.whiteColor()
@@ -38,8 +38,14 @@ class GridSpot: NSObject, Spotable {
   }
 
   func render() -> UIView {
-    collectionView.frame.size.height = layout.collectionViewContentSize().height
+    collectionView.frame.size.height = flowLayout.collectionViewContentSize().height
     return collectionView
+  }
+
+  func layout(size: CGSize) {
+    let newSize = size.width / CGFloat(self.component.span)
+    flowLayout.itemSize = CGSize(width: floor(newSize), height: 88)
+    collectionView.frame.size.width = size.width
   }
 }
 
@@ -73,7 +79,9 @@ extension GridSpot: UICollectionViewDataSource {
       cell.backgroundColor = UIColor.lightGrayColor()
     }
 
-    let label = UILabel(frame: CGRect(x: 0,y: 0,width: layout.itemSize.width, height: layout.itemSize.height))
+    let label = UILabel(frame: CGRect(x: 0, y: 0,
+      width: flowLayout.itemSize.width,
+      height: flowLayout.itemSize.height))
     label.text = item.title
     label.textAlignment = .Center
     cell.addSubview(label)
