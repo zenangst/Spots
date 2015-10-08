@@ -1,13 +1,13 @@
 import Tailor
 import Sugar
 
-struct Component: Mappable {
-  var title = ""
-  var kind = ""
-  var span = 1
-  var items = [ListItem]()
+public struct Component: Mappable {
+  public var title = ""
+  public var kind = ""
+  public var span = 1
+  public var items = [ListItem]()
 
-  init(_ map: JSONDictionary) {
+  public init(_ map: JSONDictionary) {
     title <- map.property("title")
     kind  <- map.property("type")
     span  <- map.property("span")

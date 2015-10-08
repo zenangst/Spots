@@ -1,4 +1,4 @@
-class SpotFactory {
+public class SpotFactory {
 
   private static var spots: [String: Spotable.Type] = [
     "carousel": CarouselSpot.self,

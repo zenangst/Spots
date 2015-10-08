@@ -1,6 +1,6 @@
 import UIKit
 
-protocol Spotable: class {
+public protocol Spotable: class {
   weak var sizeDelegate: SpotSizeDelegate? { get set }
   var component: Component { get set }
 
@@ -9,6 +9,6 @@ protocol Spotable: class {
   func layout(size: CGSize)
 }
 
-extension Spotable {
+public extension Spotable {
   func layout(size: CGSize) { }
 }
