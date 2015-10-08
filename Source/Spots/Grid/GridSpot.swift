@@ -2,14 +2,14 @@ import UIKit
 import GoldenRetriever
 import Sugar
 
-class GridSpot: NSObject, Spotable {
+public class GridSpot: NSObject, Spotable {
 
-  static var cells = [String: UICollectionViewCell.Type]()
+  public static var cells = [String: UICollectionViewCell.Type]()
   let cellPrefix = "GridSpotCell"
-  var component: Component
-  weak var sizeDelegate: SpotSizeDelegate?
+  public var component: Component
+  public weak var sizeDelegate: SpotSizeDelegate?
 
-  lazy var flowLayout: UICollectionViewFlowLayout = {
+  public lazy var flowLayout: UICollectionViewFlowLayout = {
     let size = UIScreen.mainScreen().bounds.width / CGFloat(self.component.span)
     let layout = UICollectionViewFlowLayout()
     layout.minimumLineSpacing = 0
@@ -18,7 +18,7 @@ class GridSpot: NSObject, Spotable {
     return layout
     }()
 
-  lazy var collectionView: UICollectionView = { [unowned self] in
+  public lazy var collectionView: UICollectionView = { [unowned self] in
     let collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: self.flowLayout)
     collectionView.frame.size.width = UIScreen.mainScreen().bounds.width
     collectionView.dataSource = self
@@ -28,17 +28,16 @@ class GridSpot: NSObject, Spotable {
     return collectionView
     }()
 
-  required init(component: Component) {
+  public required init(component: Component) {
     self.component = component
     super.init()
     for item in component.items {
-      let componentCellClass = GridSpot.cells[item.type.capitalizedString] ?? GridSpotCell.self
+      let componentCellClass = GridSpot.cells[item.kind] ?? UICollectionViewCell.self
       self.collectionView.registerClass(componentCellClass, forCellWithReuseIdentifier: "\(cellPrefix)\(item.type.capitalizedString)")
     }
   }
 
-  func render() -> UIView {
-    collectionView.collectionViewLayout.invalidateLayout()
+  public func render() -> UIView {
     collectionView.frame.size.height = flowLayout.collectionViewContentSize().height
     return collectionView
   }
@@ -63,13 +62,12 @@ extension GridSpot: UICollectionViewDelegateFlowLayout {
 
 extension GridSpot: UICollectionViewDataSource {
 
-  func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+  public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     return component.items.count
   }
 
-  func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+  public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
     let item = component.items[indexPath.item]
-
     let cell = collectionView.dequeueReusableCellWithReuseIdentifier("\(cellPrefix)\(item.type.capitalizedString)", forIndexPath: indexPath)
 
     if let grid = cell as? Gridable {

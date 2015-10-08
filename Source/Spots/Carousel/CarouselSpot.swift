@@ -2,14 +2,14 @@ import UIKit
 import GoldenRetriever
 import Sugar
 
-class CarouselSpot: NSObject, Spotable {
+public class CarouselSpot: NSObject, Spotable {
 
-  static var cells = [String: UICollectionViewCell.Type]()
+  public static var cells = [String: UICollectionViewCell.Type]()
 
-  var component: Component
-  weak var sizeDelegate: SpotSizeDelegate?
+  public var component: Component
+  public weak var sizeDelegate: SpotSizeDelegate?
 
-  lazy var flowLayout: UICollectionViewFlowLayout = {
+  public lazy var flowLayout: UICollectionViewFlowLayout = {
     let size = UIScreen.mainScreen().bounds.width / CGFloat(self.component.span)
     let layout = UICollectionViewFlowLayout()
     layout.minimumLineSpacing = 0
@@ -20,7 +20,7 @@ class CarouselSpot: NSObject, Spotable {
     return layout
     }()
 
-  lazy var collectionView: UICollectionView = { [unowned self] in
+  public lazy var collectionView: UICollectionView = { [unowned self] in
     let collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: self.flowLayout)
     collectionView.frame.size.width = UIScreen.mainScreen().bounds.width
     collectionView.dataSource = self
@@ -29,22 +29,22 @@ class CarouselSpot: NSObject, Spotable {
     return collectionView
     }()
 
-  required init(component: Component) {
+  public required init(component: Component) {
     self.component = component
     super.init()
     for item in component.items {
-      let componentCellClass = GridSpot.cells[item.type] ?? UICollectionViewCell.self
-      self.collectionView.registerClass(componentCellClass, forCellWithReuseIdentifier: "CarouselCell\(item.type)")
+      let componentCellClass = GridSpot.cells[item.kind] ?? UICollectionViewCell.self
+      self.collectionView.registerClass(componentCellClass, forCellWithReuseIdentifier: "CarouselCell\(item.kind)")
     }
   }
 
-  func render() -> UIView {
+  public func render() -> UIView {
     collectionView.frame.size.height = flowLayout.itemSize.height
 
     return collectionView
   }
 
-  func layout(size: CGSize) {
+  public func layout(size: CGSize) {
     let newSize = size.width / CGFloat(self.component.span)
     flowLayout.itemSize = CGSize(width: floor(newSize), height: flowLayout.itemSize.height)
     collectionView.frame.size.width = size.width
@@ -53,14 +53,14 @@ class CarouselSpot: NSObject, Spotable {
 
 extension CarouselSpot: UICollectionViewDataSource {
 
-  func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+  public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     return component.items.count
   }
 
-  func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+  public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
     let item = component.items[indexPath.item]
 
-    let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CarouselCell\(item.type)", forIndexPath: indexPath)
+    let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CarouselCell\(item.kind)", forIndexPath: indexPath)
 
     for view in cell.contentView.subviews { view.removeFromSuperview() }
 
