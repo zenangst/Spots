@@ -1,11 +1,3 @@
-//
-//  AppDelegate.swift
-//  Components
-//
-//  Created by Christoffer Winterkvist on 10/3/15.
-//  Copyright © 2015 Hyper. All rights reserved.
-//
-
 import UIKit
 
 @UIApplicationMain
@@ -23,10 +15,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let json = try! NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments)
 
     let components = Parser.parse(json as! [String : AnyObject])
-    let componentController = ComponentsController(spots: components)
-    componentController.view.backgroundColor = .whiteColor()
+    let controller = SpotsController(spots: components)
+    controller.title = "Spots".uppercaseString
+    controller.view.backgroundColor = .whiteColor()
 
-    navigationController = UINavigationController(rootViewController: componentController)
+    navigationController = UINavigationController(rootViewController: controller)
     window?.rootViewController = navigationController
     window?.makeKeyAndVisible()
     

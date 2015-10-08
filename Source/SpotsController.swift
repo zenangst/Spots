@@ -1,6 +1,6 @@
 import UIKit
 
-class ComponentsController: UIViewController {
+class SpotsController: UIViewController {
 
   private let spots: [Spotable]
   static let reuseIdentifier = "ComponentCell"
@@ -32,7 +32,7 @@ class ComponentsController: UIViewController {
   }
 }
 
-extension ComponentsController: UICollectionViewDataSource {
+extension SpotsController: UICollectionViewDataSource {
 
   func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     return spots.count
@@ -42,14 +42,14 @@ extension ComponentsController: UICollectionViewDataSource {
     let spot = spots[indexPath.item]
     spot.sizeDelegate = self
 
-    let cell = collectionView.dequeueReusableCellWithReuseIdentifier(ComponentsController.reuseIdentifier, forIndexPath: indexPath)
+    let cell = collectionView.dequeueReusableCellWithReuseIdentifier(SpotsController.reuseIdentifier, forIndexPath: indexPath)
     cell.contentView.addSubview(spot.render())
     
     return cell
   }
 }
 
-extension ComponentsController: UICollectionViewDelegateFlowLayout {
+extension SpotsController: UICollectionViewDelegateFlowLayout {
 
   func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
     let spot = spots[indexPath.item]
@@ -61,7 +61,7 @@ extension ComponentsController: UICollectionViewDelegateFlowLayout {
   }
 }
 
-extension ComponentsController: SpotSizeDelegate {
+extension SpotsController: SpotSizeDelegate {
 
   func sizeDidUpdate() {
     collectionView.collectionViewLayout.invalidateLayout()
