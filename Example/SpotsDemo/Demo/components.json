@@ -1,9 +1,9 @@
 {
  "components" : [
   {
-    "type" : "grid",
+    "type" : "carousel",
     "title" : "Teams",
-    "span" : 2,
+    "span"  : 1,
     "items" : [
       {
         "type"     : "team",
@@ -59,8 +59,9 @@
     ]
   },
   {
-    "type" : "list",
+    "type" : "grid",
     "title" : "iOS Developers",
+    "span"  : 3,
     "items" : [
       {
         "type"     : "contact",
