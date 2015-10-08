@@ -2,7 +2,7 @@ import UIKit
 import GoldenRetriever
 import Sugar
 
-class GridSpot: NSObject, Spotable {
+class CarouselSpot: NSObject, Spotable {
 
   static var cells = [String: UICollectionViewCell.Type]()
 
@@ -14,7 +14,8 @@ class GridSpot: NSObject, Spotable {
     let layout = UICollectionViewFlowLayout()
     layout.minimumLineSpacing = 0
     layout.minimumInteritemSpacing = 0
-    layout.itemSize = CGSize(width: floor(size), height: 88)
+    layout.itemSize = CGSize(width: floor(size), height: 125)
+    layout.scrollDirection = .Horizontal
 
     return layout
     }()
@@ -38,18 +39,19 @@ class GridSpot: NSObject, Spotable {
   }
 
   func render() -> UIView {
-    collectionView.frame.size.height = flowLayout.collectionViewContentSize().height
+    collectionView.frame.size.height = flowLayout.itemSize.height
+
     return collectionView
   }
 
   func layout(size: CGSize) {
     let newSize = size.width / CGFloat(self.component.span)
-    flowLayout.itemSize = CGSize(width: floor(newSize), height: 88)
+    flowLayout.itemSize = CGSize(width: floor(newSize), height: flowLayout.itemSize.height)
     collectionView.frame.size.width = size.width
   }
 }
 
-extension GridSpot: UICollectionViewDataSource {
+extension CarouselSpot: UICollectionViewDataSource {
 
   func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     return component.items.count
@@ -81,12 +83,12 @@ extension GridSpot: UICollectionViewDataSource {
       cell.backgroundColor = UIColor.lightGrayColor()
     }
 
-    let label = UILabel(frame: CGRect(x: 0, y: 0,
+    let label = UILabel(frame: CGRect(x: 0,y: 0,
       width: flowLayout.itemSize.width,
       height: flowLayout.itemSize.height))
     label.text = item.title
     label.textAlignment = .Center
-    cell.addSubview(label)
+    cell.contentView.addSubview(label)
 
     return cell
   }

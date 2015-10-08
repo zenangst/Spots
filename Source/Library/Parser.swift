@@ -3,8 +3,9 @@ import Sugar
 
 enum ContainerType: String {
   case
-  List = "list",
-  Grid = "grid"
+  Carousel = "carousel",
+  Grid = "grid",
+  List = "list"
 }
 
 struct Parser {
@@ -16,10 +17,12 @@ struct Parser {
     for json in components {
       let component = Component(json)
       switch ContainerType(rawValue: component.type) {
-      case .List?:
-        spots.append(ListSpot(component: component))
+      case .Carousel?:
+        spots.append(CarouselSpot(component: component))
       case .Grid?:
         spots.append(GridSpot(component: component))
+      case .List?:
+        spots.append(ListSpot(component: component))
       default:
         break
       }
