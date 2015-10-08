@@ -79,7 +79,7 @@ extension GridSpot: UICollectionViewDataSource {
       cell.backgroundColor = UIColor.lightGrayColor()
     }
 
-    let label = UILabel(frame: CGRect(x: 0,y: 0,
+    let label = UILabel(frame: CGRect(x: 0, y: 0,
       width: flowLayout.itemSize.width,
       height: flowLayout.itemSize.height))
     label.text = item.title
