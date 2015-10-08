@@ -53,13 +53,8 @@ extension GridSpot: UICollectionViewDelegateFlowLayout {
 
   func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
     collectionView.collectionViewLayout.invalidateLayout()
-    if let cell = collectionView.cellForItemAtIndexPath(indexPath) {
-      print(cell)
-    }
-
-    let item = component.items[indexPath.item]
+    
     let height: CGFloat = 88
-
     let newSize = collectionView.frame.width / CGFloat(self.component.span)
 
     return CGSize(width: floor(newSize), height: height)
