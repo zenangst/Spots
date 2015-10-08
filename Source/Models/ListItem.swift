@@ -7,14 +7,14 @@ struct ListItem: Mappable, Listable {
   var title = ""
   var subtitle = ""
   var image = ""
-  var type = ""
+  var kind = ""
   var uri: String?
 
   init(_ map: JSONDictionary) {
-    self.title <- map.property("title")
-    self.subtitle <- map.property("subtitle")
-    self.image <- map.property("image")
-    self.type <- map.property("type")
-    self.uri <- map.property("uri")
+    title    <- map.property("title")
+    subtitle <- map.property("subtitle")
+    image    <- map.property("image")
+    kind     <- map.property("type")
+    uri      <- map.property("uri")
   }
 }

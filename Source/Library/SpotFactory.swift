@@ -6,12 +6,12 @@ class SpotFactory {
     "grid": GridSpot.self
   ]
 
-  static func register<T: Spotable>(key: String, spot: T.Type) {
-    spots[key] = spot
+  static func register<T: Spotable>(kind: String, spot: T.Type) {
+    spots[kind] = spot
   }
 
   static func resolve(component: Component) -> Spotable {
-    let Spot: Spotable.Type = spots[component.type] ?? GridSpot.self
+    let Spot: Spotable.Type = spots[component.kind] ?? GridSpot.self
     return Spot.init(component: component)
   }
 }

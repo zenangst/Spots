@@ -29,9 +29,9 @@ class ListSpot: NSObject, Spotable {
     super.init()
 
     for item in component.items {
-      let componentCellClass = ListSpot.cells[item.type] ?? ListSpotCell.self
+      let componentCellClass = ListSpot.cells[item.kind] ?? ListSpotCell.self
       self.tableView.registerClass(componentCellClass,
-        forCellReuseIdentifier: "ListCell\(item.type)")
+        forCellReuseIdentifier: "ListCell\(item.kind)")
     }
   }
 
@@ -70,7 +70,7 @@ extension ListSpot: UITableViewDataSource {
 
   func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     let item = component.items[indexPath.row]
-    let cell = tableView.dequeueReusableCellWithIdentifier("ListCell\(item.type)")
+    let cell = tableView.dequeueReusableCellWithIdentifier("ListCell\(item.kind)")
 
     cell!.textLabel!.text = item.title
     cell!.textLabel!.textColor = .blackColor()

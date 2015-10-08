@@ -33,8 +33,8 @@ class CarouselSpot: NSObject, Spotable {
     self.component = component
     super.init()
     for item in component.items {
-      let componentCellClass = GridSpot.cells[item.type] ?? UICollectionViewCell.self
-      self.collectionView.registerClass(componentCellClass, forCellWithReuseIdentifier: "CarouselCell\(item.type)")
+      let componentCellClass = GridSpot.cells[item.kind] ?? UICollectionViewCell.self
+      self.collectionView.registerClass(componentCellClass, forCellWithReuseIdentifier: "CarouselCell\(item.kind)")
     }
   }
 
@@ -60,7 +60,7 @@ extension CarouselSpot: UICollectionViewDataSource {
   func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
     let item = component.items[indexPath.item]
 
-    let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CarouselCell\(item.type)", forIndexPath: indexPath)
+    let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CarouselCell\(item.kind)", forIndexPath: indexPath)
 
     for view in cell.contentView.subviews { view.removeFromSuperview() }
 
