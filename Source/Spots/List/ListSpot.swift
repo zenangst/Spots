@@ -16,8 +16,10 @@ class ListSpot: NSObject, Spotable {
     let tableView = UITableView()
     tableView.delegate = self
     tableView.dataSource = self
-    tableView.scrollEnabled = false
     tableView.frame.size.width = UIScreen.mainScreen().bounds.width
+    tableView.scrollEnabled = false
+    tableView.autoresizingMask = [.FlexibleWidth]
+    tableView.autoresizesSubviews = true
 
     return tableView
   }()
