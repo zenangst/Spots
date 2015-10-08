@@ -41,6 +41,12 @@ class GridSpot: NSObject, Spotable {
     collectionView.frame.size.height = flowLayout.collectionViewContentSize().height
     return collectionView
   }
+
+  func layout(size: CGSize) {
+    let newSize = size.width / CGFloat(self.component.span)
+    flowLayout.itemSize = CGSize(width: floor(newSize), height: 88)
+    collectionView.frame.size.width = size.width
+  }
 }
 
 extension GridSpot: UICollectionViewDataSource {
@@ -73,7 +79,9 @@ extension GridSpot: UICollectionViewDataSource {
       cell.backgroundColor = UIColor.lightGrayColor()
     }
 
-    let label = UILabel(frame: CGRect(x: 0,y: 0,width: layout.itemSize.width, height: layout.itemSize.height))
+    let label = UILabel(frame: CGRect(x: 0,y: 0,
+      width: flowLayout.itemSize.width,
+      height: flowLayout.itemSize.height))
     label.text = item.title
     label.textAlignment = .Center
     cell.addSubview(label)
