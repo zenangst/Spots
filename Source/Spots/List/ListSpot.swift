@@ -24,7 +24,7 @@ class ListSpot: NSObject, Spotable {
     return tableView
   }()
 
-  init(component: Component) {
+  required init(component: Component) {
     self.component = component
     super.init()
 
