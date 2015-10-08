@@ -1,13 +1,6 @@
 import UIKit
 import Sugar
 
-enum ContainerType: String {
-  case
-  Carousel = "carousel",
-  Grid = "grid",
-  List = "list"
-}
-
 struct Parser {
 
   static func parse(json: JSONDictionary) -> [Spotable] {
@@ -16,14 +9,13 @@ struct Parser {
 
     for json in components {
       let component = Component(json)
-      switch ContainerType(rawValue: component.type) {
-      case .Carousel?:
+      switch component.type {
+      case "carousel":
         spots.append(CarouselSpot(component: component))
-      case .Grid?:
-        spots.append(GridSpot(component: component))
-      case .List?:
+      case "list":
         spots.append(ListSpot(component: component))
       default:
+        spots.append(GridSpot(component: component))
         break
       }
     }
