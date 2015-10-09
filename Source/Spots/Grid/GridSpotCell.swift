@@ -13,6 +13,12 @@ class GridSpotCell: UICollectionViewCell, Gridable {
       return label
   }()
 
+  lazy var imageView: UIImageView = {
+    let imageView = UIImageView()
+    imageView.contentMode = .ScaleAspectFill
+    return imageView
+    }()
+
   func configure(item: ListItem) {
     if item.image != "" {
       let resource = item.image
@@ -25,12 +31,17 @@ class GridSpotCell: UICollectionViewCell, Gridable {
           guard let data = data else { return }
           let image = UIImage(data: data)
           dispatch {
-            self.backgroundColor = UIColor(patternImage: image!)
+            self.imageView.image = image
           }
         }
       }
     } else {
       backgroundColor = UIColor.lightGrayColor()
+    }
+
+    if imageView.superview == nil {
+      imageView.frame = frame
+      addSubview(imageView)
     }
 
     label.text = item.title
