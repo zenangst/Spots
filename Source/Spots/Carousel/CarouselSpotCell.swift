@@ -16,6 +16,7 @@ class CarouselSpotCell: UICollectionViewCell, Gridable {
   lazy var imageView: UIImageView = {
     let imageView = UIImageView()
     imageView.contentMode = .ScaleAspectFill
+    imageView.autoresizingMask = [.FlexibleWidth]
     return imageView
     }()
 
@@ -38,14 +39,14 @@ class CarouselSpotCell: UICollectionViewCell, Gridable {
     }
 
     if imageView.superview == nil {
-      imageView.frame = frame
-      addSubview(imageView)
+      imageView.frame = contentView.frame
+      contentView.addSubview(imageView)
     }
 
     label.text = item.title
 
     if label.superview == nil {
-      addSubview(label)
+      contentView.addSubview(label)
     }
   }
 }

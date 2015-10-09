@@ -8,6 +8,7 @@ class GridSpotHeader : UICollectionViewCell, Gridable {
   lazy var imageView: UIImageView = {
     let imageView = UIImageView()
     imageView.contentMode = .ScaleAspectFill
+    imageView.autoresizingMask = [.FlexibleWidth]
     return imageView
     }()
 
@@ -27,13 +28,11 @@ class GridSpotHeader : UICollectionViewCell, Gridable {
           }
         }
       }
-    } else {
-      backgroundColor = UIColor.lightGrayColor()
     }
 
     if imageView.superview == nil {
-      imageView.frame = frame
-      addSubview(imageView)
+      imageView.frame = contentView.frame
+      contentView.addSubview(imageView)
     }
   }
 

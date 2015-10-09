@@ -9,13 +9,15 @@ class GridSpotCell: UICollectionViewCell, Gridable {
     let label = UILabel(frame: CGRect(x: 0, y: 0,
       width: 200,
       height: 200))
-      label.textAlignment = .Center
-      return label
-  }()
+    label.textAlignment = .Center
+    label.autoresizingMask = [.FlexibleWidth]
+    return label
+    }()
 
   lazy var imageView: UIImageView = {
     let imageView = UIImageView()
     imageView.contentMode = .ScaleAspectFill
+    imageView.autoresizingMask = [.FlexibleWidth]
     return imageView
     }()
 
@@ -35,19 +37,17 @@ class GridSpotCell: UICollectionViewCell, Gridable {
           }
         }
       }
-    } else {
-      backgroundColor = UIColor.lightGrayColor()
     }
 
     if imageView.superview == nil {
-      imageView.frame = frame
-      addSubview(imageView)
+      imageView.frame = contentView.frame
+      contentView.addSubview(imageView)
     }
 
     label.text = item.title
 
     if label.superview == nil {
-      addSubview(label)
+      contentView.addSubview(label)
     }
   }
 }
