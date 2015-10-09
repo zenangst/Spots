@@ -37,9 +37,9 @@ public class GridSpot: NSObject, Spotable {
       let componentCellClass = GridSpot.cells[item.kind] ?? GridSpotCell.self
       collectionView.registerClass(componentCellClass, forCellWithReuseIdentifier: "\(cellPrefix)\(item.kind.capitalizedString)")
 
-      if let gridItem = componentCellClass.init() as? Gridable {
+      if let gridCell = componentCellClass.init() as? Gridable {
         self.component.items[index].size.width = collectionView.frame.width / CGFloat(component.span)
-        self.component.items[index].size.height = gridItem.size.height
+        self.component.items[index].size.height = gridCell.size.height
       }
     }
   }
