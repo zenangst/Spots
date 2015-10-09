@@ -2,7 +2,7 @@ import UIKit
 import GoldenRetriever
 import Sugar
 
-class CarouselSpotCell: UICollectionViewCell, Gridable {
+class CarouselSpotCell: UICollectionViewCell, Itemble {
 
   var size = CGSize(width: 88, height: 88)
   var label: UILabel = {
@@ -20,7 +20,7 @@ class CarouselSpotCell: UICollectionViewCell, Gridable {
     return imageView
     }()
 
-  func configure(item: ListItem) {
+  func configure(inout item: ListItem) {
     if !item.image.isEmpty {
       let qualityOfServiceClass = QOS_CLASS_BACKGROUND
       let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)

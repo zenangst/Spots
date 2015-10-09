@@ -37,7 +37,7 @@ public class GridSpot: NSObject, Spotable {
       let componentCellClass = GridSpot.cells[item.kind] ?? GridSpotCell.self
       collectionView.registerClass(componentCellClass, forCellWithReuseIdentifier: "\(cellPrefix)\(item.kind.capitalizedString)")
 
-      if let gridCell = componentCellClass.init() as? Gridable {
+      if let gridCell = componentCellClass.init() as? Itemble {
         self.component.items[index].size.width = collectionView.frame.width / CGFloat(component.span)
         self.component.items[index].size.height = gridCell.size.height
       }
@@ -72,11 +72,12 @@ extension GridSpot: UICollectionViewDataSource {
   }
 
   public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-    let item = component.items[indexPath.item]
+    var item = component.items[indexPath.item]
     let cell = collectionView.dequeueReusableCellWithReuseIdentifier("\(cellPrefix)\(item.kind.capitalizedString)", forIndexPath: indexPath)
 
-    if let grid = cell as? Gridable {
-      grid.configure(item)
+    if let grid = cell as? Itemble {
+      grid.configure(&item)
+      component.items[indexPath.item] = item
     }
 
     return cell

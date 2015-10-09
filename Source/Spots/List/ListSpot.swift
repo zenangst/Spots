@@ -8,6 +8,7 @@ public class ListSpot: NSObject, Spotable {
   public static var cells = [String: UITableViewCell.Type]()
 
   public let itemHeight: CGFloat = 44
+  public let headerHeight: CGFloat = 44
 
   public var component: Component
   public weak var sizeDelegate: SpotSizeDelegate?
@@ -20,6 +21,7 @@ public class ListSpot: NSObject, Spotable {
     tableView.scrollEnabled = false
     tableView.autoresizingMask = [.FlexibleWidth]
     tableView.autoresizesSubviews = true
+    tableView.rowHeight = UITableViewAutomaticDimension
 
     return tableView
   }()
@@ -28,10 +30,15 @@ public class ListSpot: NSObject, Spotable {
     self.component = component
     super.init()
 
-    for item in component.items {
+    let items = component.items
+    for (index, item) in items.enumerate() {
       let componentCellClass = ListSpot.cells[item.kind] ?? ListSpotCell.self
       self.tableView.registerClass(componentCellClass,
         forCellReuseIdentifier: "ListCell\(item.kind)")
+
+      if let listCell = componentCellClass.init() as? Itemble {
+          self.component.items[index].size.height = listCell.size.height
+      }
     }
   }
 
@@ -49,31 +56,39 @@ extension ListSpot: UITableViewDelegate {
   }
 
   public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-    return itemHeight
+    var newHeight = component.items.reduce(0, combine: { $0 + $1.size.height })
+    if !component.title.isEmpty {
+      newHeight += headerHeight
+    }
+
+    tableView.frame.size.height = newHeight
+    sizeDelegate?.sizeDidUpdate()
+    let item = component.items[indexPath.item]
+    return item.size.height
   }
 }
 
 extension ListSpot: UITableViewDataSource {
+
+  public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    return !component.title.isEmpty ? headerHeight : 0
+  }
 
   public func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
     return component.title
   }
 
   public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    if tableView.frame.size.height != tableView.contentSize.height {
-      tableView.frame.size.height = tableView.contentSize.height
-      sizeDelegate?.sizeDidUpdate()
-    }
-
     return component.items.count
   }
 
   public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    let item = component.items[indexPath.row]
+    var item = component.items[indexPath.row]
     let cell = tableView.dequeueReusableCellWithIdentifier("ListCell\(item.kind)")
 
     cell!.textLabel!.text = item.title
     cell!.textLabel!.textColor = .blackColor()
+    cell!.textLabel!.numberOfLines = 0
     
     if !item.subtitle.isEmpty {
       cell!.detailTextLabel?.text = item.subtitle
@@ -99,6 +114,11 @@ extension ListSpot: UITableViewDataSource {
       }
     } else {
       cell!.imageView!.image = nil
+    }
+
+    if let list = cell as? Itemble {
+      list.configure(&item)
+      component.items[indexPath.item] = item
     }
 
     return cell!

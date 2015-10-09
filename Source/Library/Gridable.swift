@@ -1,7 +1,7 @@
 import UIKit
 
-protocol Gridable: class {
+protocol Itemble: class {
   var size: CGSize { get set }
 
-  func configure(item: ListItem)
+  func configure(inout item: ListItem)
 }

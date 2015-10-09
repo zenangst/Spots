@@ -2,7 +2,7 @@ import UIKit
 import GoldenRetriever
 import Sugar
 
-class GridSpotCell: UICollectionViewCell, Gridable {
+class GridSpotCell: UICollectionViewCell, Itemble {
 
   var size = CGSize(width: 88, height: 88)
   var label: UILabel = {
@@ -21,7 +21,7 @@ class GridSpotCell: UICollectionViewCell, Gridable {
     return imageView
     }()
 
-  func configure(item: ListItem) {
+  func configure(inout item: ListItem) {
     if item.image != "" {
       let resource = item.image
       let fido = GoldenRetriever()
