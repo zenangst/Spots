@@ -33,8 +33,8 @@ public class CarouselSpot: NSObject, Spotable {
     self.component = component
     super.init()
     for item in component.items {
-      let componentCellClass = GridSpot.cells[item.kind] ?? UICollectionViewCell.self
-      self.collectionView.registerClass(componentCellClass, forCellWithReuseIdentifier: "CarouselCell\(item.kind)")
+      let componentCellClass = GridSpot.cells[item.kind] ?? CarouselSpotCell.self
+      self.collectionView.registerClass(componentCellClass, forCellWithReuseIdentifier: "CarouselCell\(item.kind.capitalizedString)")
     }
   }
 
@@ -58,37 +58,13 @@ extension CarouselSpot: UICollectionViewDataSource {
   }
 
   public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-    let item = component.items[indexPath.item]
+    var item = component.items[indexPath.item]
+    let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CarouselCell\(item.kind.capitalizedString)", forIndexPath: indexPath)
 
-    let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CarouselCell\(item.kind)", forIndexPath: indexPath)
-
-    for view in cell.contentView.subviews { view.removeFromSuperview() }
-
-    if item.image != "" {
-      let resource = item.image
-      let fido = GoldenRetriever()
-      let qualityOfServiceClass = QOS_CLASS_BACKGROUND
-      let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
-
-      dispatch(backgroundQueue) {
-        fido.fetch(resource) { data, error in
-          guard let data = data else { return }
-          let image = UIImage(data: data)
-          dispatch {
-            cell.backgroundColor = UIColor(patternImage: image!)
-          }
-        }
-      }
-    } else {
-      cell.backgroundColor = UIColor.lightGrayColor()
+    if let grid = cell as? Itemble {
+      grid.configure(&item)
+      component.items[indexPath.item] = item
     }
-
-    let label = UILabel(frame: CGRect(x: 0,y: 0,
-      width: flowLayout.itemSize.width,
-      height: flowLayout.itemSize.height))
-    label.text = item.title
-    label.textAlignment = .Center
-    cell.contentView.addSubview(label)
 
     return cell
   }
