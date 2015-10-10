@@ -13,8 +13,5 @@ public class ListSpotCell: UITableViewCell, Itemble {
   }
 
   public func configure(inout item: ListItem) {
-    if item.title == "Espen Almdahl" {
-      item.size.height = 200
-    }
   }
 }
