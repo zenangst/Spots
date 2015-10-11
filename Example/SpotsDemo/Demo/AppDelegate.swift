@@ -7,25 +7,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var navigationController: UINavigationController?
 
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-
     window = UIWindow(frame: UIScreen.mainScreen().bounds)
     
     GridSpot.cells["header"] = GridSpotHeader.self
 
-    let bundlePath = NSBundle.mainBundle().pathForResource("components", ofType: "json")
-    let data = NSFileManager.defaultManager().contentsAtPath(bundlePath!)
-    let json = try! NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments)
-    let components = Parser.parse(json as! [String : AnyObject])
-    let controller = SpotsController(spots: components)
-    
+    let controller = JSONController()
+
     controller.title = "Spots".uppercaseString
-    controller.view.backgroundColor = .whiteColor()
 
     navigationController = UINavigationController(rootViewController: controller)
     window?.rootViewController = navigationController
+
+    applyStyles()
+    
     window?.makeKeyAndVisible()
     
     return true
+  }
+
+  func applyStyles() {
+    UIApplication.sharedApplication().statusBarStyle = .LightContent
+
+    let navigationBar = UINavigationBar.appearance()
+    navigationBar.barTintColor = UIColor(red:0.000, green:0.000, blue:0.000, alpha: 1)
+    navigationBar.tintColor = UIColor(red:1.000, green:1.000, blue:1.000, alpha: 1)
+    navigationBar.shadowImage = UIImage()
+    navigationBar.titleTextAttributes = [
+      NSForegroundColorAttributeName: UIColor(red:1.000, green:1.000, blue:1.000, alpha: 1)
+    ]
   }
 }
 
