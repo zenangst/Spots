@@ -4,40 +4,63 @@ import Sugar
 
 public class PagesSpot: NSObject, Spotable {
 
-  public static var controllers = [String: UIViewController.Type]()
-  public static var height: CGFloat = 125
+  public static var controllers = [String: UIViewController]()
+  public static var height: CGFloat = 320
 
   public var component: Component
   public weak var sizeDelegate: SpotSizeDelegate?
 
   public private(set) var currentIndex = 0
 
-  private var pageViewController: UIPageViewController!
+  private lazy var pageViewController: UIPageViewController = {
+    let pageViewController = UIPageViewController(transitionStyle: .Scroll,
+      navigationOrientation: .Horizontal, options: nil)
+    pageViewController.view.frame = CGRect(x: 0, y: 0,
+      width: UIScreen.mainScreen().bounds.width, height: PagesSpot.height)
+    pageViewController.view.autoresizingMask = [.FlexibleWidth]
+    pageViewController.view.autoresizesSubviews = true
+    pageViewController.delegate = self
+    pageViewController.dataSource = self
+
+    pageViewController.view.backgroundColor = .clearColor()
+
+    return pageViewController
+  }()
+
   lazy private var pages = Array<UIViewController>()
 
   public required init(component: Component) {
     self.component = component
     super.init()
 
-    pageViewController = UIPageViewController(transitionStyle: .Scroll, navigationOrientation: .Horizontal, options: nil)
-    pageViewController.delegate = self
-    pageViewController.dataSource = self
+    let pageControl = UIPageControl.appearanceWhenContainedInInstancesOfClasses(
+      [UIPageViewController.self])
+    pageControl.backgroundColor = .blackColor()
 
-    for item in component.items {
-      let controllerClass = PagesSpot.controllers[item.kind] ?? UIViewController.self
-      // Itemble
+    for (index, _) in component.items.enumerate() {
+      var item = component.items[index]
 
+      let controller = PagesSpot.controllers[item.kind] ?? PageController()
+      if let itembleController = controller as? Itemble {
+        itembleController.configure(&item)
+      }
+
+      pages.append(controller)
     }
+
     goTo(0)
   }
 
   public func render() -> UIView {
+    pageViewController.view.frame.size.height = PagesSpot.height
     return pageViewController.view
   }
 
   public func layout(size: CGSize) {
-    pageViewController.view.frame.size.width = UIScreen.mainScreen().bounds.width
+    pages[currentIndex].view.frame.size.width = size.width
     pageViewController.view.frame.size.height = PagesSpot.height
+    pages[currentIndex].view.layoutIfNeeded()
+    pageViewController.view.layoutIfNeeded()
   }
 }
 
@@ -47,7 +70,8 @@ extension PagesSpot {
 
   public func goTo(index: Int) {
     if index >= 0 && index < pages.count {
-      let direction: UIPageViewControllerNavigationDirection = (index > currentIndex) ? .Forward : .Reverse
+      let direction: UIPageViewControllerNavigationDirection = (index > currentIndex)
+        ? .Forward : .Reverse
       let viewController = pages[index]
       currentIndex = index
       pageViewController.setViewControllers([viewController],
@@ -55,6 +79,8 @@ extension PagesSpot {
         animated: true,
         completion: nil)
     }
+
+    sizeDelegate?.sizeDidUpdate()
   }
 
   public func next() {
@@ -96,11 +122,11 @@ extension PagesSpot : UIPageViewControllerDelegate {
 
   public func pageViewController(pageViewController: UIPageViewController, didFinishAnimating finished: Bool,
     previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
-      if completed {
-        if let viewController = pageViewController.viewControllers?.last,
-          index = pages.indexOf(viewController) {
-            currentIndex = index
-        }
+      if !completed { return }
+
+      if let viewController = pageViewController.viewControllers?.last,
+        index = pages.indexOf(viewController) {
+          currentIndex = index
       }
   }
 }
