@@ -16,6 +16,30 @@
     ]
   },
   {
+    "type" : "pages",
+    "span"  : 1,
+    "items" : [
+      {
+        "type"     : "pages",
+        "image"    : "http://hyper.no/assets/about-us-top-f59eec81e5470547a81c36612084e0cf.jpg",
+        "title"    : "",
+        "subtitle" : "",
+        "target"   : {
+          "uri" : "components:page:1"
+        }
+     }
+     {
+       "type"     : "pages",
+       "image"    : "http://hyper.no/assets/about-us-top-f59eec81e5470547a81c36612084e0cf.jpg",
+       "title"    : "",
+       "subtitle" : "",
+       "target"   : {
+         "uri" : "components:page:1"
+       }
+     }
+    ]
+  },
+  {
     "type" : "carousel",
     "title" : "Teams",
     "span"  : 1,
