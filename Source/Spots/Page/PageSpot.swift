@@ -57,10 +57,8 @@ public class PagesSpot: NSObject, Spotable {
   }
 
   public func layout(size: CGSize) {
-    pages[currentIndex].view.frame.size.width = size.width
     pageViewController.view.frame.size.height = PagesSpot.height
-    pages[currentIndex].view.layoutIfNeeded()
-    pageViewController.view.layoutIfNeeded()
+    goTo(currentIndex)
   }
 }
 

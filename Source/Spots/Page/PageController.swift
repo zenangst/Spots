@@ -10,7 +10,7 @@ public class PageController: UIViewController, Itemble {
     let imageView = UIImageView()
     imageView.backgroundColor = .redColor()
     imageView.contentMode = .ScaleAspectFill
-    //imageView.autoresizingMask = [.FlexibleWidth]
+    imageView.autoresizingMask = [.FlexibleWidth]
     return imageView
     }()
 
