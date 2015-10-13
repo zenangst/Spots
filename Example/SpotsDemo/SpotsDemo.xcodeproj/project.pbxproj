@@ -27,6 +27,8 @@
 		D55B0AC01BC5BA200003595C /* GridSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B0ABC1BC5BA200003595C /* GridSpot.swift */; settings = {ASSET_TAGS = (); }; };
 		D55B0AC11BC5BA200003595C /* ListSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B0ABE1BC5BA200003595C /* ListSpot.swift */; settings = {ASSET_TAGS = (); }; };
 		D55B0AC21BC5BA200003595C /* ListSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B0ABF1BC5BA200003595C /* ListSpotCell.swift */; settings = {ASSET_TAGS = (); }; };
+		D57E08671BCD20CE007CBB80 /* PageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57E08651BCD20CE007CBB80 /* PageController.swift */; settings = {ASSET_TAGS = (); }; };
+		D57E08681BCD20CE007CBB80 /* PageSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57E08661BCD20CE007CBB80 /* PageSpot.swift */; settings = {ASSET_TAGS = (); }; };
 		D5883A281BC720B900BF2FFF /* SpotFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5883A271BC720B900BF2FFF /* SpotFactory.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
@@ -55,6 +57,8 @@
 		D55B0ABC1BC5BA200003595C /* GridSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridSpot.swift; sourceTree = "<group>"; };
 		D55B0ABE1BC5BA200003595C /* ListSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListSpot.swift; sourceTree = "<group>"; };
 		D55B0ABF1BC5BA200003595C /* ListSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListSpotCell.swift; sourceTree = "<group>"; };
+		D57E08651BCD20CE007CBB80 /* PageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageController.swift; sourceTree = "<group>"; };
+		D57E08661BCD20CE007CBB80 /* PageSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageSpot.swift; sourceTree = "<group>"; };
 		D5883A271BC720B900BF2FFF /* SpotFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotFactory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -156,6 +160,7 @@
 		D55B0ABA1BC5BA200003595C /* Spots */ = {
 			isa = PBXGroup;
 			children = (
+				D57E08641BCD20CE007CBB80 /* Pages */,
 				BD8BD36D1BC6F02C00509FF3 /* Carousel */,
 				D55B0ABB1BC5BA200003595C /* Grid */,
 				D55B0ABD1BC5BA200003595C /* List */,
@@ -179,6 +184,15 @@
 				D55B0ABF1BC5BA200003595C /* ListSpotCell.swift */,
 			);
 			path = List;
+			sourceTree = "<group>";
+		};
+		D57E08641BCD20CE007CBB80 /* Pages */ = {
+			isa = PBXGroup;
+			children = (
+				D57E08651BCD20CE007CBB80 /* PageController.swift */,
+				D57E08661BCD20CE007CBB80 /* PageSpot.swift */,
+			);
+			path = Pages;
 			sourceTree = "<group>";
 		};
 		DC20B8ABF3750CE9A8F94AD8 /* Pods */ = {
@@ -321,6 +335,7 @@
 			files = (
 				BD4A624B1BC1A4D20037C380 /* ListItem.swift in Sources */,
 				D55B0AC21BC5BA200003595C /* ListSpotCell.swift in Sources */,
+				D57E08671BCD20CE007CBB80 /* PageController.swift in Sources */,
 				D51DF1671BC490CA00EAB122 /* Spotable.swift in Sources */,
 				BD4A624D1BC1B9CA0037C380 /* Component.swift in Sources */,
 				BD4A62481BC1A47D0037C380 /* Parser.swift in Sources */,
@@ -336,6 +351,7 @@
 				BDECFBDA1BC70EAF0066C57B /* HeaderSpot.swift in Sources */,
 				D5883A281BC720B900BF2FFF /* SpotFactory.swift in Sources */,
 				D55B0AC01BC5BA200003595C /* GridSpot.swift in Sources */,
+				D57E08681BCD20CE007CBB80 /* PageSpot.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
