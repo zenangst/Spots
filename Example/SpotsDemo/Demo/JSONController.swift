@@ -67,7 +67,7 @@ class JSONController: UIViewController {
 
   // MARK: Action methods
 
-  func submitButtonDidPress(button: UIButton) {
+  func submitButtonDidPress(button: UIButton? = nil) {
     if let data = textView.text.dataUsingEncoding(NSUTF8StringEncoding) {
 
       do {
