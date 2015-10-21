@@ -37,9 +37,8 @@ public class PagesSpot: NSObject, Spotable {
       [UIPageViewController.self])
     pageControl.backgroundColor = .blackColor()
 
-    for index in 0..<component.items.count {
-      var item = component.items[index]
-
+    for item in component.items {
+      var item = item
       let controller = PagesSpot.controllers[item.kind] ?? PageController()
       if let itembleController = controller as? Itemble {
         itembleController.configure(&item)
