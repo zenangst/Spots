@@ -15,14 +15,14 @@ public class PagesSpot: NSObject, Spotable {
   private lazy var pageViewController: UIPageViewController = {
     let pageViewController = UIPageViewController(transitionStyle: .Scroll,
       navigationOrientation: .Horizontal, options: nil)
-    pageViewController.view.frame = CGRect(x: 0, y: 0,
-      width: UIScreen.mainScreen().bounds.width, height: PagesSpot.height)
-    pageViewController.view.autoresizingMask = [.FlexibleWidth]
-    pageViewController.view.autoresizesSubviews = true
     pageViewController.delegate = self
     pageViewController.dataSource = self
-
+    pageViewController.view.autoresizingMask = [.FlexibleWidth]
+    pageViewController.view.autoresizesSubviews = true
     pageViewController.view.backgroundColor = .clearColor()
+    pageViewController.view.frame = CGRect(x: 0, y: 0,
+      width: UIScreen.mainScreen().bounds.width, height: PagesSpot.height)
+
 
     return pageViewController
   }()
@@ -37,9 +37,8 @@ public class PagesSpot: NSObject, Spotable {
       [UIPageViewController.self])
     pageControl.backgroundColor = .blackColor()
 
-    for index in 0..<component.items.count {
-      var item = component.items[index]
-
+    for item in component.items {
+      var item = item
       let controller = PagesSpot.controllers[item.kind] ?? PageController()
       if let itembleController = controller as? Itemble {
         itembleController.configure(&item)
@@ -95,7 +94,6 @@ extension PagesSpot {
 extension PagesSpot: UIPageViewControllerDataSource {
 
   public func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
-
     let index = pages.indexOf(viewController)?.predecessor()
     return pages.at(index)
   }
@@ -132,10 +130,8 @@ extension PagesSpot : UIPageViewControllerDelegate {
 extension Array {
 
   func at(index: Int?) -> Element? {
-    if let index = index where index >= 0 && index < endIndex {
-      return self[index]
-    } else {
-      return nil
-    }
+    guard let index = index where index >= 0 && index < endIndex
+      else { return nil }
+    return self[index]
   }
 }

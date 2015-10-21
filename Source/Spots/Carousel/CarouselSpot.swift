@@ -12,9 +12,9 @@ public class CarouselSpot: NSObject, Spotable {
   public lazy var flowLayout: UICollectionViewFlowLayout = {
     let size = UIScreen.mainScreen().bounds.width / CGFloat(self.component.span)
     let layout = UICollectionViewFlowLayout()
-    layout.minimumLineSpacing = 0
-    layout.minimumInteritemSpacing = 0
     layout.itemSize = CGSize(width: floor(size), height: 125)
+    layout.minimumInteritemSpacing = 0
+    layout.minimumLineSpacing = 0
     layout.scrollDirection = .Horizontal
 
     return layout

@@ -19,7 +19,7 @@ public class ListSpot: NSObject, Spotable {
     tableView.dataSource = self
     tableView.frame.size.width = UIScreen.mainScreen().bounds.width
     tableView.scrollEnabled = false
-    tableView.autoresizingMask = [.FlexibleWidth]
+    tableView.autoresizingMask = [.FlexibleWidth, .FlexibleRightMargin, .FlexibleLeftMargin]
     tableView.autoresizesSubviews = true
     tableView.rowHeight = UITableViewAutomaticDimension
 
@@ -43,7 +43,13 @@ public class ListSpot: NSObject, Spotable {
   }
 
   public func render() -> UIView {
+    tableView.frame.size.width = UIScreen.mainScreen().bounds.width
     return tableView
+  }
+
+  public func layout(size: CGSize) {
+    tableView.frame.size.width = size.width
+    tableView.layoutIfNeeded()
   }
 }
 

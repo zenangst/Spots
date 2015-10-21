@@ -14,16 +14,18 @@ public class GridSpot: NSObject, Spotable {
     let layout = UICollectionViewFlowLayout()
     layout.minimumLineSpacing = 0
     layout.minimumInteritemSpacing = 0
+    layout.sectionInset = UIEdgeInsetsZero
 
     return layout
     }()
 
   public lazy var collectionView: UICollectionView = { [unowned self] in
     let collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: self.flowLayout)
-    collectionView.frame.size.width = UIScreen.mainScreen().bounds.width
-    collectionView.dataSource = self
+
     collectionView.backgroundColor = UIColor.whiteColor()
+    collectionView.dataSource = self
     collectionView.delegate = self
+    collectionView.frame.size.width = UIScreen.mainScreen().bounds.width
 
     return collectionView
     }()
@@ -45,14 +47,14 @@ public class GridSpot: NSObject, Spotable {
   }
 
   public func render() -> UIView {
-    collectionView.frame.size.width = flowLayout.collectionViewContentSize().width
     collectionView.frame.size.height = flowLayout.collectionViewContentSize().height
+    collectionView.frame.size.width = flowLayout.collectionViewContentSize().width
     return collectionView
   }
 
   public func layout(size: CGSize) {
-    collectionView.frame.size.width = size.width
     collectionView.collectionViewLayout.invalidateLayout()
+    collectionView.frame.size.width = size.width
   }
 }
 
