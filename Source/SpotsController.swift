@@ -57,7 +57,7 @@ extension SpotsController: UICollectionViewDataSource {
     let cell = collectionView.dequeueReusableCellWithReuseIdentifier(SpotsController.reuseIdentifier, forIndexPath: indexPath)
     let spot = spots[indexPath.item]
 
-    spot.render().removeFromSuperview()
+    cell.contentView.subviews.forEach { $0.removeFromSuperview() }
     spot.sizeDelegate = self
     cell.contentView.addSubview(spot.render())
 
