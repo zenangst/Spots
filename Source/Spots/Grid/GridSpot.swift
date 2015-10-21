@@ -26,6 +26,7 @@ public class GridSpot: NSObject, Spotable {
     collectionView.dataSource = self
     collectionView.delegate = self
     collectionView.frame.size.width = UIScreen.mainScreen().bounds.width
+    collectionView.scrollEnabled = false
 
     return collectionView
     }()
