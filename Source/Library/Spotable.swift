@@ -8,7 +8,3 @@ public protocol Spotable: class {
   func render() -> UIView
   func layout(size: CGSize)
 }
-
-public extension Spotable {
-  func layout(size: CGSize) { }
-}
