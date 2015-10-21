@@ -94,7 +94,6 @@ extension PagesSpot {
 extension PagesSpot: UIPageViewControllerDataSource {
 
   public func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
-
     let index = pages.indexOf(viewController)?.predecessor()
     return pages.at(index)
   }
@@ -131,10 +130,8 @@ extension PagesSpot : UIPageViewControllerDelegate {
 extension Array {
 
   func at(index: Int?) -> Element? {
-    if let index = index where index >= 0 && index < endIndex {
-      return self[index]
-    } else {
-      return nil
-    }
+    guard let index = index where index >= 0 && index < endIndex
+      else { return nil }
+    return self[index]
   }
 }
