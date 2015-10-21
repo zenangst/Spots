@@ -53,8 +53,8 @@ public class GridSpot: NSObject, Spotable {
   }
 
   public func layout(size: CGSize) {
-    collectionView.frame.size.width = size.width
     collectionView.collectionViewLayout.invalidateLayout()
+    collectionView.frame.size.width = size.width
   }
 }
 
