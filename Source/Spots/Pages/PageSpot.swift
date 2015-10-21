@@ -15,14 +15,14 @@ public class PagesSpot: NSObject, Spotable {
   private lazy var pageViewController: UIPageViewController = {
     let pageViewController = UIPageViewController(transitionStyle: .Scroll,
       navigationOrientation: .Horizontal, options: nil)
-    pageViewController.view.frame = CGRect(x: 0, y: 0,
-      width: UIScreen.mainScreen().bounds.width, height: PagesSpot.height)
-    pageViewController.view.autoresizingMask = [.FlexibleWidth]
-    pageViewController.view.autoresizesSubviews = true
     pageViewController.delegate = self
     pageViewController.dataSource = self
-
+    pageViewController.view.autoresizingMask = [.FlexibleWidth]
+    pageViewController.view.autoresizesSubviews = true
     pageViewController.view.backgroundColor = .clearColor()
+    pageViewController.view.frame = CGRect(x: 0, y: 0,
+      width: UIScreen.mainScreen().bounds.width, height: PagesSpot.height)
+
 
     return pageViewController
   }()
