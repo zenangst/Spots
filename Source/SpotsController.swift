@@ -72,10 +72,6 @@ extension SpotsController: UICollectionViewDelegateFlowLayout {
     frame.size.width = UIScreen.mainScreen().bounds.width
     return frame.size
   }
-
-  public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
-    return 0
-  }
 }
 
 extension SpotsController: SpotSizeDelegate {
