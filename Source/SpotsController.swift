@@ -4,22 +4,25 @@ public class SpotsController: UIViewController {
 
   private let spots: [Spotable]
   static let reuseIdentifier = "ComponentCell"
-  static let minimumLineSpacing: CGFloat = 1
 
   lazy var layout: UICollectionViewLayout = {
     let layout = UICollectionViewFlowLayout()
+    layout.minimumInteritemSpacing = 0
+    layout.minimumLineSpacing = 0
+    layout.sectionInset = UIEdgeInsetsZero
     return layout
   }()
 
   lazy var collectionView: UICollectionView = { [unowned self] in
     let collectionView = UICollectionView(frame: UIScreen.mainScreen().bounds, collectionViewLayout: self.layout)
+
+    collectionView.alwaysBounceVertical = true
+    collectionView.autoresizesSubviews = true
+    collectionView.autoresizingMask = [.FlexibleRightMargin, .FlexibleLeftMargin, .FlexibleBottomMargin, .FlexibleTopMargin, .FlexibleHeight, .FlexibleWidth]
+    collectionView.backgroundColor = UIColor.whiteColor()
     collectionView.dataSource = self
     collectionView.delegate = self
-    collectionView.alwaysBounceVertical = true
-    collectionView.autoresizingMask = [.FlexibleRightMargin, .FlexibleLeftMargin, .FlexibleBottomMargin, .FlexibleTopMargin, .FlexibleHeight, .FlexibleWidth]
-    collectionView.autoresizesSubviews = true
     collectionView.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-    collectionView.backgroundColor = UIColor.whiteColor()
 
     return collectionView
   }()
@@ -28,18 +31,18 @@ public class SpotsController: UIViewController {
     self.spots = spots
     super.init(nibName: nil, bundle: nil)
     self.view.addSubview(collectionView)
-    self.view.autoresizingMask = [.FlexibleRightMargin, .FlexibleLeftMargin, .FlexibleBottomMargin, .FlexibleTopMargin, .FlexibleHeight, .FlexibleWidth]
     self.view.autoresizesSubviews = true
+    self.view.autoresizingMask = [.FlexibleRightMargin, .FlexibleLeftMargin, .FlexibleBottomMargin, .FlexibleTopMargin, .FlexibleHeight, .FlexibleWidth]
   }
 
   public required init?(coder aDecoder: NSCoder) {
-      fatalError("init(coder:) has not been implemented")
+    fatalError("init(coder:) has not been implemented")
   }
 
   public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
     super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
 
-    for spot in spots { spot.layout(size) }
+    spots.forEach { $0.layout(size) }
     layout.invalidateLayout()
   }
 }
@@ -65,15 +68,13 @@ extension SpotsController: UICollectionViewDataSource {
 extension SpotsController: UICollectionViewDelegateFlowLayout {
 
   public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-    let spot = spots[indexPath.item]
-    var frame = spot.render().frame
+    var frame = spots[indexPath.item].render().frame
     frame.size.width = UIScreen.mainScreen().bounds.width
-    frame.size.width -= SpotsController.minimumLineSpacing * 2
     return frame.size
   }
 
   public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
-    return SpotsController.minimumLineSpacing
+    return 0
   }
 }
 
