@@ -57,6 +57,8 @@ class JSONController: UIViewController {
     textView.text = json
 
     setupFrames()
+
+    submitButtonDidPress()
   }
 
   override func viewDidLayoutSubviews() {
