@@ -10,6 +10,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     window = UIWindow(frame: UIScreen.mainScreen().bounds)
     
     GridSpot.cells["header"] = GridSpotHeader.self
+    GridSpot.cells["titles"] = GridSpotCellTitles.self
+    GridSpot.cells["contact"] = GridSpotCellContact.self
 
     let controller = JSONController()
 
