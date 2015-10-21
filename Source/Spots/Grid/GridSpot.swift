@@ -81,6 +81,8 @@ extension GridSpot: UICollectionViewDataSource {
     if let grid = cell as? Itemble {
       grid.configure(&item)
       component.items[indexPath.item] = item
+      collectionView.collectionViewLayout.invalidateLayout()
+      collectionView.layoutIfNeeded()
     }
 
     return cell
