@@ -12,161 +12,53 @@
         "target"   : {
           "uri" : "components:contact:1"
         }
+      },
+      {
+        "type"     : "titles",
+        "title"    : "TURNING IDEAS INTO BUSINESS",
+        "subtitle" : "Hyper is a full-service digital agency with 60 employees based in Oslo, Norway.",
+        "target"   : {
+          "uri" : "components:contact:1"
+        }
       }
     ]
   },
   {
-    "type" : "pages",
-    "span"  : 1,
+    "type" : "key-points",
+    "span"  : 2,
     "items" : [
       {
-        "type"     : "pages",
+        "type"     : "contact",
         "image"    : "http://hyper.no/assets/about-us-top-f59eec81e5470547a81c36612084e0cf.jpg",
-        "title"    : "",
-        "subtitle" : "",
-        "target"   : {
-          "uri" : "components:page:1"
-        }
-     },
-     {
-       "type"     : "pages",
-       "image"    : "http://hyper.no/assets/about-us-top-f59eec81e5470547a81c36612084e0cf.jpg",
-       "title"    : "",
-       "subtitle" : "",
-       "target"   : {
-         "uri" : "components:page:1"
-       }
-     }
-    ]
-  },
-  {
-    "type" : "carousel",
-    "title" : "Teams",
-    "span"  : 1,
-    "items" : [
-      {
-        "type"     : "team",
-        "image"    : "http://static1.squarespace.com/static/50c25455e4b0ef5720704c6b/t/541b0254e4b05046224444fa/1411056212194/",
-        "title"    : "iOS",
+        "title"    : "WHAT WE DO",
         "subtitle" : "",
         "target"   : {
           "uri" : "components:contact:1"
         }
       },
       {
-        "type"     : "team",
-        "image"    : "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Android_Studio_icon.svg/512px-Android_Studio_icon.svg.png",
-        "title"    : "Android",
+        "type"     : "contact",
+        "image"    : "http://hyper.no/assets/about-us-top-f59eec81e5470547a81c36612084e0cf.jpg",
+        "title"    : "WHAT WE DELIVER",
         "subtitle" : "",
         "target"   : {
           "uri" : "components:contact:1"
         }
       },
       {
-        "type"     : "team",
-        "image"    : "http://www.mobilechatgroups.com/uploads/group_pictures/14/ruby-icon-1005094329.png",
-        "title"    : "Web",
+        "type"     : "contact",
+        "image"    : "http://hyper.no/assets/about-us-top-f59eec81e5470547a81c36612084e0cf.jpg",
+        "title"    : "HOW WE WORK",
         "subtitle" : "",
         "target"   : {
           "uri" : "components:contact:1"
         }
       },
       {
-        "type"     : "team",
-        "image"    : "http://www.sketchapp.com/static/images/home/app-icon.png",
-        "title"    : "Design",
+        "type"     : "contact",
+        "image"    : "http://hyper.no/assets/about-us-top-f59eec81e5470547a81c36612084e0cf.jpg",
+        "title"    : "WHAT WE STRIVE FOR",
         "subtitle" : "",
-        "target"   : {
-          "uri" : "components:contact:1"
-        }
-      }
-    ]
-  },
-  {
-    "type" : "list",
-    "title" : "",
-    "items" : [
-      {
-        "type"     : "contact",
-        "image"    : "",
-        "title"    : "Contact us",
-        "subtitle" : "",
-        "target"   : {
-          "uri" : "components:contact:1"
-        }
-      }
-    ]
-  },
-  {
-    "type" : "grid",
-    "title" : "iOS Developers",
-    "span"  : 3,
-    "items" : [
-      {
-        "type"     : "contact",
-        "image"    : "https://hyper-production.s3.amazonaws.com/uploads/user/alternate_photo/62/forealz__B2P7135_1.jpg",
-        "title"    : "Vadym Markov",
-        "subtitle" : "iOS Developer",
-        "target"   : {
-          "uri" : "components:contact:1"
-        }
-      },
-      {
-        "type"     : "contact",
-        "image"    : "https://hyper-production.s3.amazonaws.com/uploads/user/alternate_photo/67/forealz__B2P7125_1.jpg",
-        "title"    : "Ramon Gilabert Llop",
-        "subtitle" : "iOS Developer",
-        "target"   : {
-          "uri" : "components:contact:1"
-        }
-      },
-      {
-        "type"     : "contact",
-        "image"    : "https://hyper-production.s3.amazonaws.com/uploads/user/alternate_photo/45/forealz_hyperportrait_christoffer_alt.jpg",
-        "title"    : "Christoffer Winterkvist",
-        "subtitle" : "iOS Developer",
-        "target"   : {
-          "uri" : "components:contact:1"
-        }
-      }
-    ]
-  },
-  {
-    "type" : "list",
-    "title" : "Android Developers",
-    "items" : [
-      {
-        "type"     : "contact",
-        "image"    : "https://hyper-production.s3.amazonaws.com/uploads/user/alternate_photo/31/forealz_hyperportrait_espena_alt.jpg",
-        "title"    : "Espen Almdahl",
-        "subtitle" : "Android Developer",
-        "target"   : {
-          "uri" : "components:contact:1"
-        }
-      },
-      {
-        "type"     : "contact",
-        "image"    : "https://hyper-production.s3.amazonaws.com/uploads/user/alternate_photo/69/forealz__B2P7321_1.jpg",
-        "title"    : "Damian Lopata",
-        "subtitle" : "Android Developer",
-        "target"   : {
-          "uri" : "components:contact:1"
-        }
-      },
-      {
-        "type"     : "contact",
-        "image"    : "https://hyper-production.s3.amazonaws.com/uploads/user/alternate_photo/70/forealz__B2P7269_1.jpg",
-        "title"    : "Jean Tuffier",
-        "subtitle" : "Android Developer",
-        "target"   : {
-          "uri" : "components:contact:1"
-        }
-      },
-      {
-        "type"     : "contact",
-        "image"    : "https://hyper-production.s3.amazonaws.com/uploads/user/alternate_photo/65/forealz_hyperportraits_chang.jpg",
-        "title"    : "Chang Xiangzhong",
-        "subtitle" : "Android Developer",
         "target"   : {
           "uri" : "components:contact:1"
         }
