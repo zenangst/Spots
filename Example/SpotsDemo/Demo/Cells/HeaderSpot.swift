@@ -13,6 +13,8 @@ class GridSpotHeader : UICollectionViewCell, Itemble {
     }()
 
   func configure(inout item: ListItem) {
+    clipsToBounds = true
+
     if item.image != "" {
       let resource = item.image
       let fido = GoldenRetriever()
@@ -30,8 +32,9 @@ class GridSpotHeader : UICollectionViewCell, Itemble {
       }
     }
 
+    imageView.frame = frame
+
     if imageView.superview == nil {
-      imageView.frame = contentView.frame
       contentView.addSubview(imageView)
     }
   }
