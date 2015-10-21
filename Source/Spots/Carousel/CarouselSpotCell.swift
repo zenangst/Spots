@@ -15,8 +15,8 @@ class CarouselSpotCell: UICollectionViewCell, Itemble {
 
   lazy var imageView: UIImageView = {
     let imageView = UIImageView()
-    imageView.contentMode = .ScaleAspectFill
     imageView.autoresizingMask = [.FlexibleWidth]
+    imageView.contentMode = .ScaleAspectFill
     return imageView
     }()
 
