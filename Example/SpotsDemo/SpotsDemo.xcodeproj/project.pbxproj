@@ -22,7 +22,7 @@
 		BDB6DF811BC7A46E00877280 /* CarouselSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB6DF801BC7A46E00877280 /* CarouselSpotCell.swift */; settings = {ASSET_TAGS = (); }; };
 		BDBF83A71BD8127200939A0B /* GridSpotCellContact.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDBF83A51BD8127200939A0B /* GridSpotCellContact.swift */; settings = {ASSET_TAGS = (); }; };
 		BDBF83A81BD8127200939A0B /* GridSpotTitles.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDBF83A61BD8127200939A0B /* GridSpotTitles.swift */; settings = {ASSET_TAGS = (); }; };
-		BDECFBDA1BC70EAF0066C57B /* HeaderSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDECFBD91BC70EAF0066C57B /* HeaderSpot.swift */; settings = {ASSET_TAGS = (); }; };
+		BDECFBDA1BC70EAF0066C57B /* GridSpotHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDECFBD91BC70EAF0066C57B /* GridSpotHeader.swift */; settings = {ASSET_TAGS = (); }; };
 		BDECFBDC1BC710230066C57B /* Gridable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDECFBDB1BC710230066C57B /* Gridable.swift */; settings = {ASSET_TAGS = (); }; };
 		D51DF1671BC490CA00EAB122 /* Spotable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51DF1661BC490CA00EAB122 /* Spotable.swift */; settings = {ASSET_TAGS = (); }; };
 		D51DF1691BC490F500EAB122 /* SpotSizeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51DF1681BC490F500EAB122 /* SpotSizeDelegate.swift */; settings = {ASSET_TAGS = (); }; };
@@ -54,7 +54,7 @@
 		BDB6DF801BC7A46E00877280 /* CarouselSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselSpotCell.swift; sourceTree = "<group>"; };
 		BDBF83A51BD8127200939A0B /* GridSpotCellContact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridSpotCellContact.swift; sourceTree = "<group>"; };
 		BDBF83A61BD8127200939A0B /* GridSpotTitles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridSpotTitles.swift; sourceTree = "<group>"; };
-		BDECFBD91BC70EAF0066C57B /* HeaderSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderSpot.swift; sourceTree = "<group>"; };
+		BDECFBD91BC70EAF0066C57B /* GridSpotHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridSpotHeader.swift; sourceTree = "<group>"; };
 		BDECFBDB1BC710230066C57B /* Gridable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gridable.swift; sourceTree = "<group>"; };
 		D51DF1661BC490CA00EAB122 /* Spotable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spotable.swift; sourceTree = "<group>"; };
 		D51DF1681BC490F500EAB122 /* SpotSizeDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotSizeDelegate.swift; sourceTree = "<group>"; };
@@ -158,7 +158,7 @@
 			children = (
 				BDBF83A51BD8127200939A0B /* GridSpotCellContact.swift */,
 				BDBF83A61BD8127200939A0B /* GridSpotTitles.swift */,
-				BDECFBD91BC70EAF0066C57B /* HeaderSpot.swift */,
+				BDECFBD91BC70EAF0066C57B /* GridSpotHeader.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -356,7 +356,7 @@
 				BD7697361BC6458700DB119D /* AppDelegate.swift in Sources */,
 				BD3893D21BC9838F002E929B /* JSONController.swift in Sources */,
 				BDECFBDC1BC710230066C57B /* Gridable.swift in Sources */,
-				BDECFBDA1BC70EAF0066C57B /* HeaderSpot.swift in Sources */,
+				BDECFBDA1BC70EAF0066C57B /* GridSpotHeader.swift in Sources */,
 				D5883A281BC720B900BF2FFF /* SpotFactory.swift in Sources */,
 				D55B0AC01BC5BA200003595C /* GridSpot.swift in Sources */,
 				D57E08681BCD20CE007CBB80 /* PageSpot.swift in Sources */,
