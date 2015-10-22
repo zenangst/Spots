@@ -82,7 +82,7 @@ extension GridSpot: UICollectionViewDataSource {
       grid.configure(&item)
       component.items[indexPath.item] = item
       collectionView.collectionViewLayout.invalidateLayout()
-      collectionView.layoutIfNeeded()
+      sizeDelegate?.sizeDidUpdate()
     }
 
     return cell
