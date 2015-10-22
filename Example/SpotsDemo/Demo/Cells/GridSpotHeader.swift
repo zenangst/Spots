@@ -38,5 +38,4 @@ class GridSpotHeader : UICollectionViewCell, Itemble {
       contentView.addSubview(imageView)
     }
   }
-
 }
