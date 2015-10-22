@@ -1,11 +1,13 @@
 PODS:
   - GoldenRetriever (0.1.1)
+  - Hex (2.0)
   - Sugar (0.1.0)
   - Tailor (0.2.0):
     - Sugar
 
 DEPENDENCIES:
   - GoldenRetriever (from `https://github.com/zenangst/GoldenRetriever`)
+  - Hex
   - Sugar (from `https://github.com/hyperoslo/Sugar`)
   - Tailor (from `https://github.com/zenangst/Tailor`)
 
@@ -30,6 +32,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   GoldenRetriever: 68256f443f35eaeb90b58e2f64bc8f5b255738ba
+  Hex: 1800bd20206b93b10422d2289baa3787698825ad
   Sugar: d33f2a3ae10e40c14eb49a2e859f12e82e614817
   Tailor: acba14dba2fb854cdf2550c1a3dfd603f6b59dbc
 
