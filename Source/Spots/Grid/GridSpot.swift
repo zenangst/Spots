@@ -1,6 +1,7 @@
 import UIKit
 import GoldenRetriever
 import Sugar
+import Hex
 
 public class GridSpot: NSObject, Spotable {
 
@@ -44,6 +45,10 @@ public class GridSpot: NSObject, Spotable {
         self.component.items[index].size.width = collectionView.frame.width / CGFloat(component.span)
         self.component.items[index].size.height = gridCell.size.height
       }
+    }
+
+    if let backgroundColor = component.meta["background-color"] {
+      collectionView.backgroundColor = UIColor(hex: backgroundColor)
     }
   }
 
