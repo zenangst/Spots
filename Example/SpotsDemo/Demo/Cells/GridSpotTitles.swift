@@ -43,6 +43,6 @@ class GridSpotCellTitles : UICollectionViewCell, Itemble {
       addSubview(subtitleLabel)
     }
 
-    item.size.height = titleLabel.frame.height + subtitleLabel.frame.height
+    item.size.height = subtitleLabel.frame.origin.y + subtitleLabel.frame.height
   }
 }

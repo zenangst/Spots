@@ -11,7 +11,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     GridSpot.cells["header"] = GridSpotHeader.self
     GridSpot.cells["titles"] = GridSpotCellTitles.self
-    GridSpot.cells["contact"] = GridSpotCellContact.self
+    GridSpot.cells["circle"] = GridSpotCellCircle.self
 
     let controller = JSONController()
 

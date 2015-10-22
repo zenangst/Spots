@@ -28,7 +28,7 @@
     "span"  : 2,
     "items" : [
       {
-        "type"     : "contact",
+        "type"     : "circle",
         "image"    : "http://hyper.no/assets/about-us-top-f59eec81e5470547a81c36612084e0cf.jpg",
         "title"    : "WHAT WE DO",
         "subtitle" : "",
@@ -37,7 +37,7 @@
         }
       },
       {
-        "type"     : "contact",
+        "type"     : "circle",
         "image"    : "http://hyper.no/assets/about-us-top-f59eec81e5470547a81c36612084e0cf.jpg",
         "title"    : "WHAT WE DELIVER",
         "subtitle" : "",
@@ -46,7 +46,7 @@
         }
       },
       {
-        "type"     : "contact",
+        "type"     : "circle",
         "image"    : "http://hyper.no/assets/about-us-top-f59eec81e5470547a81c36612084e0cf.jpg",
         "title"    : "HOW WE WORK",
         "subtitle" : "",

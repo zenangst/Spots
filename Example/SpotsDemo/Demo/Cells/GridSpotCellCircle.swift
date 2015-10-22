@@ -2,7 +2,7 @@ import UIKit
 import GoldenRetriever
 import Sugar
 
-class GridSpotCellContact : UICollectionViewCell, Itemble {
+class GridSpotCellCircle : UICollectionViewCell, Itemble {
 
   var size = CGSize(width: 88, height: 120)
 
