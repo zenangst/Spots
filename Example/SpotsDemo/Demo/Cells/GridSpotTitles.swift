@@ -44,7 +44,6 @@ class GridSpotCellTitles : UICollectionViewCell, Itemble {
     }()
 
   func configure(inout item: ListItem) {
-
     if let textColor = item.meta["text-color"] {
       titleLabel.textColor = UIColor(hex: textColor)
     }
