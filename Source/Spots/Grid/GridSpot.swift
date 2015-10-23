@@ -1,6 +1,7 @@
 import UIKit
 import GoldenRetriever
 import Sugar
+import Hex
 
 public class GridSpot: NSObject, Spotable {
 
@@ -26,6 +27,7 @@ public class GridSpot: NSObject, Spotable {
     collectionView.dataSource = self
     collectionView.delegate = self
     collectionView.frame.size.width = UIScreen.mainScreen().bounds.width
+    collectionView.scrollEnabled = false
 
     return collectionView
     }()
@@ -43,6 +45,10 @@ public class GridSpot: NSObject, Spotable {
         self.component.items[index].size.width = collectionView.frame.width / CGFloat(component.span)
         self.component.items[index].size.height = gridCell.size.height
       }
+    }
+
+    if let backgroundColor = component.meta["background-color"] {
+      collectionView.backgroundColor = UIColor(hex: backgroundColor)
     }
   }
 
@@ -80,6 +86,8 @@ extension GridSpot: UICollectionViewDataSource {
     if let grid = cell as? Itemble {
       grid.configure(&item)
       component.items[indexPath.item] = item
+      collectionView.collectionViewLayout.invalidateLayout()
+      sizeDelegate?.sizeDidUpdate()
     }
 
     return cell

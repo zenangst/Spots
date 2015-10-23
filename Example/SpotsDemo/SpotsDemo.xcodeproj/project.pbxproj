@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A802709A14B2B09B40B27C24 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28622753AFF41826673AFB29 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		A802709A14B2B09B40B27C24 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28622753AFF41826673AFB29 /* Pods.framework */; };
 		BD3893D21BC9838F002E929B /* JSONController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3893D11BC9838F002E929B /* JSONController.swift */; settings = {ASSET_TAGS = (); }; };
 		BD4A62451BC1A47D0037C380 /* SpotsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4A623D1BC1A47D0037C380 /* SpotsController.swift */; settings = {ASSET_TAGS = (); }; };
 		BD4A62481BC1A47D0037C380 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4A62421BC1A47D0037C380 /* Parser.swift */; settings = {ASSET_TAGS = (); }; };
@@ -20,7 +20,9 @@
 		BD76973F1BC6460600DB119D /* components.json in Resources */ = {isa = PBXBuildFile; fileRef = BD76973E1BC6460600DB119D /* components.json */; settings = {ASSET_TAGS = (); }; };
 		BD8BD36F1BC6F02C00509FF3 /* CarouselSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8BD36E1BC6F02C00509FF3 /* CarouselSpot.swift */; settings = {ASSET_TAGS = (); }; };
 		BDB6DF811BC7A46E00877280 /* CarouselSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB6DF801BC7A46E00877280 /* CarouselSpotCell.swift */; settings = {ASSET_TAGS = (); }; };
-		BDECFBDA1BC70EAF0066C57B /* HeaderSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDECFBD91BC70EAF0066C57B /* HeaderSpot.swift */; settings = {ASSET_TAGS = (); }; };
+		BDBF83A71BD8127200939A0B /* GridSpotCellCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDBF83A51BD8127200939A0B /* GridSpotCellCircle.swift */; settings = {ASSET_TAGS = (); }; };
+		BDBF83A81BD8127200939A0B /* GridSpotTitles.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDBF83A61BD8127200939A0B /* GridSpotTitles.swift */; settings = {ASSET_TAGS = (); }; };
+		BDECFBDA1BC70EAF0066C57B /* GridSpotHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDECFBD91BC70EAF0066C57B /* GridSpotHeader.swift */; settings = {ASSET_TAGS = (); }; };
 		BDECFBDC1BC710230066C57B /* Gridable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDECFBDB1BC710230066C57B /* Gridable.swift */; settings = {ASSET_TAGS = (); }; };
 		D51DF1671BC490CA00EAB122 /* Spotable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51DF1661BC490CA00EAB122 /* Spotable.swift */; settings = {ASSET_TAGS = (); }; };
 		D51DF1691BC490F500EAB122 /* SpotSizeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51DF1681BC490F500EAB122 /* SpotSizeDelegate.swift */; settings = {ASSET_TAGS = (); }; };
@@ -50,7 +52,9 @@
 		BD76973E1BC6460600DB119D /* components.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = components.json; sourceTree = "<group>"; };
 		BD8BD36E1BC6F02C00509FF3 /* CarouselSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselSpot.swift; sourceTree = "<group>"; };
 		BDB6DF801BC7A46E00877280 /* CarouselSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselSpotCell.swift; sourceTree = "<group>"; };
-		BDECFBD91BC70EAF0066C57B /* HeaderSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderSpot.swift; sourceTree = "<group>"; };
+		BDBF83A51BD8127200939A0B /* GridSpotCellCircle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridSpotCellCircle.swift; sourceTree = "<group>"; };
+		BDBF83A61BD8127200939A0B /* GridSpotTitles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridSpotTitles.swift; sourceTree = "<group>"; };
+		BDECFBD91BC70EAF0066C57B /* GridSpotHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridSpotHeader.swift; sourceTree = "<group>"; };
 		BDECFBDB1BC710230066C57B /* Gridable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gridable.swift; sourceTree = "<group>"; };
 		D51DF1661BC490CA00EAB122 /* Spotable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spotable.swift; sourceTree = "<group>"; };
 		D51DF1681BC490F500EAB122 /* SpotSizeDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotSizeDelegate.swift; sourceTree = "<group>"; };
@@ -152,7 +156,9 @@
 		BDECFBD81BC70EA00066C57B /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				BDECFBD91BC70EAF0066C57B /* HeaderSpot.swift */,
+				BDBF83A51BD8127200939A0B /* GridSpotCellCircle.swift */,
+				BDBF83A61BD8127200939A0B /* GridSpotTitles.swift */,
+				BDECFBD91BC70EAF0066C57B /* GridSpotHeader.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -339,8 +345,10 @@
 				D51DF1671BC490CA00EAB122 /* Spotable.swift in Sources */,
 				BD4A624D1BC1B9CA0037C380 /* Component.swift in Sources */,
 				BD4A62481BC1A47D0037C380 /* Parser.swift in Sources */,
+				BDBF83A81BD8127200939A0B /* GridSpotTitles.swift in Sources */,
 				BDB6DF811BC7A46E00877280 /* CarouselSpotCell.swift in Sources */,
 				BD8BD36F1BC6F02C00509FF3 /* CarouselSpot.swift in Sources */,
+				BDBF83A71BD8127200939A0B /* GridSpotCellCircle.swift in Sources */,
 				D55B0AC11BC5BA200003595C /* ListSpot.swift in Sources */,
 				BD4A62451BC1A47D0037C380 /* SpotsController.swift in Sources */,
 				D51DF1691BC490F500EAB122 /* SpotSizeDelegate.swift in Sources */,
@@ -348,7 +356,7 @@
 				BD7697361BC6458700DB119D /* AppDelegate.swift in Sources */,
 				BD3893D21BC9838F002E929B /* JSONController.swift in Sources */,
 				BDECFBDC1BC710230066C57B /* Gridable.swift in Sources */,
-				BDECFBDA1BC70EAF0066C57B /* HeaderSpot.swift in Sources */,
+				BDECFBDA1BC70EAF0066C57B /* GridSpotHeader.swift in Sources */,
 				D5883A281BC720B900BF2FFF /* SpotFactory.swift in Sources */,
 				D55B0AC01BC5BA200003595C /* GridSpot.swift in Sources */,
 				D57E08681BCD20CE007CBB80 /* PageSpot.swift in Sources */,
