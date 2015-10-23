@@ -12,7 +12,6 @@ public class CarouselSpot: NSObject, Spotable {
   public lazy var flowLayout: UICollectionViewFlowLayout = {
     let size = UIScreen.mainScreen().bounds.width / CGFloat(self.component.span)
     let layout = UICollectionViewFlowLayout()
-    layout.itemSize = CGSize(width: floor(size), height: 125)
     layout.minimumInteritemSpacing = 0
     layout.minimumLineSpacing = 0
     layout.scrollDirection = .Horizontal
@@ -22,32 +21,47 @@ public class CarouselSpot: NSObject, Spotable {
 
   public lazy var collectionView: UICollectionView = { [unowned self] in
     let collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: self.flowLayout)
-    collectionView.frame.size.width = UIScreen.mainScreen().bounds.width
-    collectionView.dataSource = self
     collectionView.backgroundColor = UIColor.whiteColor()
-
+    collectionView.dataSource = self
+    collectionView.delegate = self
+    collectionView.frame.size.width = UIScreen.mainScreen().bounds.width
     return collectionView
     }()
 
   public required init(component: Component) {
     self.component = component
     super.init()
-    for item in component.items {
+
+    let items = component.items
+    for (index, item) in items.enumerate() {
       let componentCellClass = GridSpot.cells[item.kind] ?? CarouselSpotCell.self
       self.collectionView.registerClass(componentCellClass, forCellWithReuseIdentifier: "CarouselCell\(item.kind.capitalizedString)")
+
+      if let gridCell = componentCellClass.init() as? Itemble {
+        self.component.items[index].size.width = collectionView.frame.width / CGFloat(component.span)
+        self.component.items[index].size.height = gridCell.size.height
+      }
     }
   }
 
   public func render() -> UIView {
-    collectionView.frame.size.height = flowLayout.itemSize.height
+    collectionView.frame.size.height = self.component.items.first!.size.height
 
     return collectionView
   }
 
   public func layout(size: CGSize) {
-    let newSize = size.width / CGFloat(self.component.span)
-    flowLayout.itemSize = CGSize(width: floor(newSize), height: flowLayout.itemSize.height)
+    collectionView.collectionViewLayout.invalidateLayout()
     collectionView.frame.size.width = size.width
+  }
+}
+
+extension CarouselSpot: UICollectionViewDelegateFlowLayout {
+
+  public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+    component.items[indexPath.item].size.width = collectionView.frame.width
+    let item = component.items[indexPath.item]
+    return CGSize(width: item.size.width, height: item.size.height)
   }
 }
 
@@ -65,6 +79,7 @@ extension CarouselSpot: UICollectionViewDataSource {
       grid.configure(&item)
       component.items[indexPath.item] = item
       collectionView.collectionViewLayout.invalidateLayout()
+      sizeDelegate?.sizeDidUpdate()
     }
 
     return cell
