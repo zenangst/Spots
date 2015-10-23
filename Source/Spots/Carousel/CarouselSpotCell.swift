@@ -34,12 +34,11 @@ class CarouselSpotCell: UICollectionViewCell, Itemble {
           }
         }
       }
-    } else {
-      backgroundColor = UIColor.lightGrayColor()
     }
+    
+    imageView.frame = contentView.frame
 
     if imageView.superview == nil {
-      imageView.frame = contentView.frame
       contentView.addSubview(imageView)
     }
 
