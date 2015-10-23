@@ -14,8 +14,9 @@ class GridSpotHeader : UICollectionViewCell, Itemble {
 
   func configure(inout item: ListItem) {
     clipsToBounds = true
-
-    if item.image != "" {
+    
+    if !item.image.isEmpty {
+      self.imageView.image = nil
       let resource = item.image
       let fido = GoldenRetriever()
       let qualityOfServiceClass = QOS_CLASS_BACKGROUND
@@ -31,11 +32,13 @@ class GridSpotHeader : UICollectionViewCell, Itemble {
         }
       }
     }
-
-    imageView.frame = frame
+    
+    imageView.frame = contentView.frame
 
     if imageView.superview == nil {
       contentView.addSubview(imageView)
     }
+
+    item.size.height = 320
   }
 }
