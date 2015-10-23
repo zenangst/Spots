@@ -95,7 +95,5 @@ class GridSpotCellCircle : UICollectionViewCell, Itemble {
     subtitleLabel.frame.origin.y = titleLabel.frame.size.height + titleLabel.frame.origin.y
     subtitleLabel.frame.size.width = contentView.frame.width
     subtitleLabel.frame.size.height += 10
-
   }
-
 }
