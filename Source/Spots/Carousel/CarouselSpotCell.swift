@@ -20,6 +20,17 @@ class CarouselSpotCell: UICollectionViewCell, Itemble {
     return imageView
     }()
 
+  override init(frame: CGRect) {
+    super.init(frame: frame)
+
+    contentView.addSubview(imageView)
+    contentView.addSubview(label)
+  }
+
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
   func configure(inout item: ListItem) {
     if !item.image.isEmpty {
       let qualityOfServiceClass = QOS_CLASS_BACKGROUND
@@ -37,15 +48,6 @@ class CarouselSpotCell: UICollectionViewCell, Itemble {
     }
     
     imageView.frame = contentView.frame
-
-    if imageView.superview == nil {
-      contentView.addSubview(imageView)
-    }
-
     label.text = item.title
-
-    if label.superview == nil {
-      contentView.addSubview(label)
-    }
   }
 }

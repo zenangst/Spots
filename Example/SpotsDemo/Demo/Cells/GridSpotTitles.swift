@@ -43,6 +43,18 @@ class GridSpotCellTitles : UICollectionViewCell, Itemble {
     return style
     }()
 
+  override init(frame: CGRect) {
+    super.init(frame: frame)
+
+    contentView.addSubview(titleLabel)
+    contentView.addSubview(subtitleLabel)
+    contentView.addSubview(metaText)
+  }
+
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
   func configure(inout item: ListItem) {
     if let textColor = item.meta["text-color"] {
       titleLabel.textColor = UIColor(hex: textColor)
@@ -54,10 +66,6 @@ class GridSpotCellTitles : UICollectionViewCell, Itemble {
     metaText.attributedText = NSAttributedString(string: item.meta.property("text") ?? "",
       attributes: [NSParagraphStyleAttributeName : paddedStyle])
     metaText.textColor = UIColor(hex: item.meta.property("text-color") ?? "000000")
-
-    [titleLabel, subtitleLabel, metaText].forEach {
-      if $0.superview == nil { contentView.addSubview($0) }
-    }
 
     layoutSubviews()
 
