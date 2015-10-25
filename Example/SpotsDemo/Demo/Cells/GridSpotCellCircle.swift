@@ -33,6 +33,16 @@ class GridSpotCellCircle : UICollectionViewCell, Itemble {
     return label
     }()
 
+  override init(frame: CGRect) {
+    super.init(frame: frame)
+
+    [titleLabel, subtitleLabel, imageView].forEach{ contentView.addSubview($0) }
+  }
+
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
   func configure(inout item: ListItem) {
     self.imageView.frame.size.height = 88
     if !item.image.isEmpty {
@@ -51,20 +61,9 @@ class GridSpotCellCircle : UICollectionViewCell, Itemble {
         }
       }
     }
-
-    if imageView.superview == nil {
-      contentView.addSubview(imageView)
-    }
-
-    if titleLabel.superview == nil {
-      titleLabel.text = item.title
-      contentView.addSubview(titleLabel)
-    }
-
-    if subtitleLabel.superview == nil {
-      subtitleLabel.text = item.subtitle
-      contentView.addSubview(subtitleLabel)
-    }
+    
+    titleLabel.text = item.title
+    subtitleLabel.text = item.subtitle
 
     layoutSubviews()
 

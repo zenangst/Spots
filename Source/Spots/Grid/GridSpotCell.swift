@@ -21,6 +21,16 @@ class GridSpotCell: UICollectionViewCell, Itemble {
     return imageView
     }()
 
+  override init(frame: CGRect) {
+    super.init(frame: frame)
+
+    [imageView, label].forEach { contentView.addSubview($0) }
+  }
+
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
   func configure(inout item: ListItem) {
     if item.image != "" {
       let resource = item.image
@@ -39,15 +49,7 @@ class GridSpotCell: UICollectionViewCell, Itemble {
       }
     }
 
-    if imageView.superview == nil {
-      imageView.frame = contentView.frame
-      contentView.addSubview(imageView)
-    }
-
+    imageView.frame = contentView.frame
     label.text = item.title
-
-    if label.superview == nil {
-      contentView.addSubview(label)
-    }
   }
 }

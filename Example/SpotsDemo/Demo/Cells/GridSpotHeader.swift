@@ -12,10 +12,21 @@ class GridSpotHeader : UICollectionViewCell, Itemble {
     return imageView
     }()
 
+  override init(frame: CGRect) {
+    super.init(frame: frame)
+
+    contentView.addSubview(imageView)
+  }
+
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
   func configure(inout item: ListItem) {
     clipsToBounds = true
-
-    if item.image != "" {
+    
+    if !item.image.isEmpty {
+      imageView.image = nil
       let resource = item.image
       let fido = GoldenRetriever()
       let qualityOfServiceClass = QOS_CLASS_BACKGROUND
@@ -31,11 +42,8 @@ class GridSpotHeader : UICollectionViewCell, Itemble {
         }
       }
     }
-
-    imageView.frame = frame
-
-    if imageView.superview == nil {
-      contentView.addSubview(imageView)
-    }
+    
+    imageView.frame = contentView.frame
+    item.size.height = 320
   }
 }
