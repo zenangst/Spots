@@ -26,7 +26,7 @@ class GridSpotHeader : UICollectionViewCell, Itemble {
     clipsToBounds = true
     
     if !item.image.isEmpty {
-      self.imageView.image = nil
+      imageView.image = nil
       let resource = item.image
       let fido = GoldenRetriever()
       let qualityOfServiceClass = QOS_CLASS_BACKGROUND

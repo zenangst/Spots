@@ -45,7 +45,7 @@ public class CarouselSpot: NSObject, Spotable {
   }
 
   public func render() -> UIView {
-    collectionView.frame.size.height = self.component.items.first!.size.height
+    collectionView.frame.size.height = component.items.first!.size.height
 
     return collectionView
   }
