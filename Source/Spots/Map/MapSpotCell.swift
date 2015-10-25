@@ -1,10 +1,10 @@
 import UIKit
-import GoldenRetriever
 import Sugar
+import MapKit
 
-class GridSpotCell: UICollectionViewCell, Itemble {
+class MapSpotCell: UICollectionViewCell, Itemble {
 
-  var size = CGSize(width: 88, height: 88)
+  var size = CGSize(width: 88, height: 360)
   var label: UILabel = {
     let label = UILabel(frame: CGRect(x: 0, y: 0,
       width: 200,
@@ -14,18 +14,18 @@ class GridSpotCell: UICollectionViewCell, Itemble {
     return label
     }()
 
-  lazy var imageView: UIImageView = {
-    let imageView = UIImageView()
-    imageView.contentMode = .ScaleAspectFill
-    imageView.autoresizingMask = [.FlexibleWidth]
-    return imageView
+  lazy var mapView: MKMapView = {
+    let mapView = MKMapView()
+    mapView.contentMode = .ScaleAspectFill
+    mapView.autoresizingMask = [.FlexibleWidth]
+    mapView.scrollEnabled = false
+    return mapView
     }()
 
   override init(frame: CGRect) {
     super.init(frame: frame)
 
-    contentView.addSubview(imageView)
-    contentView.addSubview(label)
+    contentView.addSubview(mapView)
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -33,24 +33,16 @@ class GridSpotCell: UICollectionViewCell, Itemble {
   }
 
   func configure(inout item: ListItem) {
-    if item.image != "" {
-      let resource = item.image
-      let fido = GoldenRetriever()
-      let qualityOfServiceClass = QOS_CLASS_BACKGROUND
-      let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
-
-      dispatch(backgroundQueue) {
-        fido.fetch(resource) { data, error in
-          guard let data = data else { return }
-          let image = UIImage(data: data)
-          dispatch {
-            self.imageView.image = image
-          }
-        }
-      }
-    }
-
-    imageView.frame = contentView.frame
+    mapView.frame = contentView.frame
     label.text = item.title
+
+    let latitude = item.meta.property("latitude") ?? 0.0
+    let longitude = item.meta.property("longitude") ?? 0.0
+
+    mapView.centerCoordinate = CLLocationCoordinate2DMake(Double(latitude), Double(longitude))
+
+    let span = MKCoordinateSpanMake(1, 1)
+    let region = MKCoordinateRegion(center: mapView.centerCoordinate, span: span)
+    mapView.setRegion(region, animated: false)
   }
 }

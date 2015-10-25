@@ -20,7 +20,7 @@ public struct ListItem: Mappable, Listable {
   public var kind = ""
   public var uri: String?
   public var size = ListSize()
-  public var meta = [String : String]()
+  public var meta = [String : AnyObject]()
 
   public init(_ map: JSONDictionary) {
     title    <- map.property("title")
