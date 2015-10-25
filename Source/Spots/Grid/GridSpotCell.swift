@@ -24,12 +24,11 @@ class GridSpotCell: UICollectionViewCell, Itemble {
   override init(frame: CGRect) {
     super.init(frame: frame)
 
-    contentView.addSubview(imageView)
-    contentView.addSubview(label)
+    [imageView, label].forEach { contentView.addSubview($0) }
   }
 
   required init?(coder aDecoder: NSCoder) {
-      fatalError("init(coder:) has not been implemented")
+    fatalError("init(coder:) has not been implemented")
   }
 
   func configure(inout item: ListItem) {
