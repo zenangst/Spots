@@ -36,9 +36,7 @@ class GridSpotCellCircle : UICollectionViewCell, Itemble {
   override init(frame: CGRect) {
     super.init(frame: frame)
 
-    contentView.addSubview(titleLabel)
-    contentView.addSubview(subtitleLabel)
-    contentView.addSubview(imageView)
+    [titleLabel, subtitleLabel, imageView].forEach{ contentView.addSubview($0) }
   }
 
   required init?(coder aDecoder: NSCoder) {
