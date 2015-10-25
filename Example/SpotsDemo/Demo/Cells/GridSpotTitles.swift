@@ -46,9 +46,7 @@ class GridSpotCellTitles : UICollectionViewCell, Itemble {
   override init(frame: CGRect) {
     super.init(frame: frame)
 
-    contentView.addSubview(titleLabel)
-    contentView.addSubview(subtitleLabel)
-    contentView.addSubview(metaText)
+    [titleLabel, subtitleLabel, metaText].forEach { contentView.addSubview($0) }
   }
 
   required init?(coder aDecoder: NSCoder) {
