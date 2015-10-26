@@ -33,6 +33,8 @@ class GridSpotCell: UICollectionViewCell, Itemble {
 
   func configure(inout item: ListItem) {
     if item.image != "" {
+      layer.shouldRasterize = true
+      layer.rasterizationScale = UIScreen.mainScreen().scale
       let resource = item.image
       let fido = GoldenRetriever()
       let qualityOfServiceClass = QOS_CLASS_BACKGROUND

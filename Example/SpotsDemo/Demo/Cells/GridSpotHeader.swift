@@ -26,6 +26,8 @@ class GridSpotHeader : UICollectionViewCell, Itemble {
     clipsToBounds = true
     
     if !item.image.isEmpty {
+      layer.shouldRasterize = true
+      layer.rasterizationScale = UIScreen.mainScreen().scale
       imageView.image = nil
       let resource = item.image
       let fido = GoldenRetriever()
