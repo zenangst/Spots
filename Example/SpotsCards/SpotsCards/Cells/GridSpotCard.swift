@@ -24,6 +24,7 @@ class GridSpotCard : UICollectionViewCell, Itemble {
     label.autoresizingMask = [.FlexibleWidth]
     label.font = UIFont(name: "AvenirNext-Bold", size: 22)
     label.numberOfLines = 2
+
     return label
     }()
 
@@ -34,6 +35,7 @@ class GridSpotCard : UICollectionViewCell, Itemble {
     label.textColor = UIColor(red:0.933, green:0.459, blue:0.200, alpha: 1)
     label.font = UIFont.systemFontOfSize(15)
     label.numberOfLines = 0
+
     return label
     }()
 
@@ -41,6 +43,7 @@ class GridSpotCard : UICollectionViewCell, Itemble {
     let imageView = UIImageView()
     imageView.contentMode = .ScaleAspectFill
     imageView.autoresizingMask = [.FlexibleWidth]
+
     return imageView
     }()
 
@@ -115,6 +118,5 @@ class GridSpotCard : UICollectionViewCell, Itemble {
 
     titleLabel.frame.origin.y = 30
     subtitleLabel.frame.origin.y = titleLabel.frame.size.height + titleLabel.frame.origin.y
-
   }
 }
