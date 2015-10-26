@@ -9,7 +9,7 @@ public class CarouselSpot: NSObject, Spotable {
   public var component: Component
   public weak var sizeDelegate: SpotSizeDelegate?
 
-  public lazy var flowLayout: UICollectionViewFlowLayout = {
+  public lazy var flowLayout: UICollectionViewFlowLayout = { [unowned self] in
     let size = UIScreen.mainScreen().bounds.width / CGFloat(self.component.span)
     let layout = UICollectionViewFlowLayout()
     layout.minimumInteritemSpacing = 0
