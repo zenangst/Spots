@@ -48,6 +48,10 @@ public class CarouselSpot: NSObject, Spotable {
     if let first = component.items.first {
       collectionView.frame.size.height = first.size.height
     }
+    
+    if let backgroundColor = component.meta["background-color"] {
+      collectionView.backgroundColor = UIColor(hex: backgroundColor)
+    }
 
     return collectionView
   }

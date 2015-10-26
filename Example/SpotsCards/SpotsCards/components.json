@@ -1,0 +1,54 @@
+{
+ "components" : [
+  {
+    "meta" : {
+       "background-color" : "252525"
+     },
+    "type" : "carousel",
+    "items" : [
+      {
+        "type"     : "card",
+        "title" : "@thuygia",
+        "subtitle" : "I held an inspirational talk yesterday at Norges Krestive Høyskole for around 50 students about BEING A CREATOR and what it took and what possibilities it gave me as a designer. What a rush it was! #hyperoslo #kreativhoyskole #nkh #norgeskreativehøyskole @norgeskreativehoyskole @hyper_oslo"
+      },
+      {
+        "type"     : "card",
+        "title" : "@mattibernitz",
+        "subtitle" : "Det dukker stadig opp gamle prosjekter i arbeidet med ny nettside www.bernitz.no. Throwback til 2002, fra et kokebok og utstillingsprosjekt med #hyperoslo og @superkjos. #bluefish #flashphotography #foodphotography #canonphotos #canon20d"
+      }
+    ]
+  },
+  {
+    "meta" : {
+       "background-color" : "252525"
+     },
+    "type" : "grid",
+    "items" : [
+      {
+        "type"     : "card",
+        "title" : "@superkjos",
+        "subtitle" : "#dagensdittto at #hyperoslo",
+        "meta" : {
+         "foreground-color" : "FFFFFF",
+         "background-color" : "F06723"
+         }
+      },
+      {
+        "type"     : "card",
+        "title" : "@superkjos",
+        "subtitle" : "@madsfrantzen enjoying work. And life. #hyperoslo",
+
+      },
+      {
+        "type"     : "card",
+        "title" : "@superkjos",
+        "subtitle" : "Dukkefilm in the making hos #hyperoslo #hyperlab #hyperfilm",
+        "meta" : {
+         "foreground-color" : "FFFFFF",
+         "background-color" : "555555"
+         }
+      }
+    ]
+  }
+ ]
+}
