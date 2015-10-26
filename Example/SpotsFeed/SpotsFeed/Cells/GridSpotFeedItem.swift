@@ -14,7 +14,7 @@ class GridSpotFeedItem : UICollectionViewCell, Itemble {
     view.clipsToBounds = true
     
     return view
-  }()
+    }()
 
   lazy var titleLabel: UILabel = { [unowned self] in
     let label = UILabel(frame: self.contentView.frame)
@@ -23,6 +23,7 @@ class GridSpotFeedItem : UICollectionViewCell, Itemble {
     label.autoresizingMask = [.FlexibleWidth]
     label.font = UIFont(name: "AvenirNext-Bold", size: 22)
     label.numberOfLines = 2
+
     return label
     }()
 
@@ -33,6 +34,7 @@ class GridSpotFeedItem : UICollectionViewCell, Itemble {
     label.textColor = UIColor(red:0.933, green:0.459, blue:0.200, alpha: 1)
     label.font = UIFont.systemFontOfSize(15)
     label.numberOfLines = 0
+
     return label
     }()
 
@@ -40,6 +42,7 @@ class GridSpotFeedItem : UICollectionViewCell, Itemble {
     let imageView = UIImageView()
     imageView.contentMode = .ScaleAspectFill
     imageView.autoresizingMask = [.FlexibleWidth]
+
     return imageView
     }()
 
@@ -49,6 +52,7 @@ class GridSpotFeedItem : UICollectionViewCell, Itemble {
     style.firstLineHeadIndent = 10.0
     style.headIndent = 10.0
     style.tailIndent = -30.0
+
     return style
     }()
 

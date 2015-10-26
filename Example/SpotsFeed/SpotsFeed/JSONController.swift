@@ -19,6 +19,7 @@ class JSONController: UIViewController {
   lazy var textView: UITextView = {
     let textView = UITextView()
     textView.font = UIFont(name: "Menlo", size: 13)
+
     return textView
   }()
 
@@ -92,7 +93,6 @@ class JSONController: UIViewController {
 
   func setupFrames() {
     let totalSize = UIScreen.mainScreen().bounds
-
 
     if [.Portrait, .PortraitUpsideDown].contains(UIApplication.sharedApplication().statusBarOrientation) {
       titleLabel.frame.origin = CGPoint(x: (totalSize.width - titleLabel.frame.width) / 2, y: 90)
