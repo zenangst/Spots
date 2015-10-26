@@ -1,0 +1,42 @@
+{
+ "components" : [
+  {
+    "meta" : {
+       "background-color" : "F4F4F4"
+     },
+    "type" : "grid",
+    "items" : [
+      {
+        "type"     : "feed",
+        "image"    : "https://scontent.cdninstagram.com/hphotos-xfa1/t51.2885-15/s640x640/sh0.08/e35/12071108_202963850034610_1433238476_n.jpg",
+        "title" : "@thuygia",
+        "subtitle" : "I held an inspirational talk yesterday at Norges Krestive Høyskole for around 50 students about BEING A CREATOR and what it took and what possibilities it gave me as a designer. What a rush it was! #hyperoslo #kreativhoyskole #nkh #norgeskreativehøyskole @norgeskreativehoyskole @hyper_oslo"
+      },
+      {
+        "type"     : "feed",
+        "image"    : "https://scontent.cdninstagram.com/hphotos-xaf1/t51.2885-15/s640x640/sh0.08/e35/12063168_543192055832255_1767153854_n.jpg",
+        "title" : "@mattibernitz",
+        "subtitle" : "Det dukker stadig opp gamle prosjekter i arbeidet med ny nettside www.bernitz.no. Throwback til 2002, fra et kokebok og utstillingsprosjekt med #hyperoslo og @superkjos. #bluefish #flashphotography #foodphotography #canonphotos #canon20d"
+      },
+      {
+        "type"     : "feed",
+        "image"    : "https://scontent.cdninstagram.com/hphotos-xfa1/t51.2885-15/s640x640/sh0.08/e35/12120218_609844019155861_1768349798_n.jpg",
+        "title" : "@superkjos",
+        "subtitle" : "#dagensdittto at #hyperoslo"
+      },
+      {
+        "type"     : "feed",
+        "image"    : "https://scontent.cdninstagram.com/hphotos-xaf1/t51.2885-15/s640x640/sh0.08/e35/12105079_108230929534445_669438279_n.jpg",
+        "title" : "@superkjos",
+        "subtitle" : "@madsfrantzen enjoying work. And life. #hyperoslo"
+      },
+      {
+        "type"     : "feed",
+        "image"    : "https://scontent.cdninstagram.com/hphotos-xaf1/t51.2885-15/s640x640/sh0.08/e35/11312193_1488341608135931_850317294_n.jpg",
+        "title" : "@superkjos",
+        "subtitle" : "Dukkefilm in the making hos #hyperoslo #hyperlab #hyperfilm"
+      }
+    ]
+  }
+ ]
+}
