@@ -19,8 +19,9 @@ class JSONController: UIViewController {
   lazy var textView: UITextView = {
     let textView = UITextView()
     textView.font = UIFont(name: "Menlo", size: 13)
+
     return textView
-  }()
+    }()
 
   lazy var submitButton: UIButton = { [unowned self] in
     let button = UIButton()
