@@ -94,7 +94,6 @@ class JSONController: UIViewController {
   func setupFrames() {
     let totalSize = UIScreen.mainScreen().bounds
 
-
     if [.Portrait, .PortraitUpsideDown].contains(UIApplication.sharedApplication().statusBarOrientation) {
       titleLabel.frame.origin = CGPoint(x: (totalSize.width - titleLabel.frame.width) / 2, y: 90)
       textView.frame = CGRect(x: 25, y: titleLabel.frame.maxY + 25, width: totalSize.width - 25 * 2, height: 350)
