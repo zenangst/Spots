@@ -31,7 +31,10 @@ class CarouselSpotCell: UICollectionViewCell, Itemble {
   }
 
   func configure(inout item: ListItem) {
+    optimize()
+  
     if !item.image.isEmpty {
+      rasterize()
       let qualityOfServiceClass = QOS_CLASS_BACKGROUND
       let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
 
@@ -39,8 +42,8 @@ class CarouselSpotCell: UICollectionViewCell, Itemble {
         GoldenRetriever().fetch(item.image) { data, error in
           guard let data = data else { return }
           let image = UIImage(data: data)
-          dispatch {
-            self.imageView.image = image
+          dispatch { [weak self] in
+            self?.imageView.image = image
           }
         }
       }

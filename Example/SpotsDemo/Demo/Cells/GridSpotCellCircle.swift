@@ -44,8 +44,12 @@ class GridSpotCellCircle : UICollectionViewCell, Itemble {
   }
 
   func configure(inout item: ListItem) {
-    self.imageView.frame.size.height = 88
+    optimize()
+
+    imageView.frame.size.height = 88
+    
     if !item.image.isEmpty {
+      rasterize()
       let resource = item.image
       let fido = GoldenRetriever()
       let qualityOfServiceClass = QOS_CLASS_BACKGROUND
@@ -55,8 +59,8 @@ class GridSpotCellCircle : UICollectionViewCell, Itemble {
         fido.fetch(resource) { data, error in
           guard let data = data else { return }
           let image = UIImage(data: data)
-          dispatch {
-            self.imageView.image = image
+          dispatch { [weak self] in
+            self?.imageView.image = image
           }
         }
       }

@@ -3,10 +3,10 @@ import GoldenRetriever
 import Sugar
 import Hex
 
-public class GridSpot: NSObject, Spotable {
+public class MapSpot: NSObject, Spotable {
 
   public static var cells = [String: UICollectionViewCell.Type]()
-  let cellPrefix = "GridSpotCell"
+  let cellPrefix = "MapSpotCell"
   public var component: Component
   public weak var sizeDelegate: SpotSizeDelegate?
 
@@ -38,7 +38,7 @@ public class GridSpot: NSObject, Spotable {
 
     let items = component.items
     for (index, item) in items.enumerate() {
-      let componentCellClass = GridSpot.cells[item.kind] ?? GridSpotCell.self
+      let componentCellClass = MapSpot.cells[item.kind] ?? MapSpotCell.self
       collectionView.registerClass(componentCellClass, forCellWithReuseIdentifier: "\(cellPrefix)\(item.kind.capitalizedString)")
 
       if let gridCell = componentCellClass.init() as? Itemble {
@@ -64,7 +64,7 @@ public class GridSpot: NSObject, Spotable {
   }
 }
 
-extension GridSpot: UICollectionViewDelegateFlowLayout {
+extension MapSpot: UICollectionViewDelegateFlowLayout {
 
   public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
     component.items[indexPath.item].size.width = collectionView.frame.width / CGFloat(component.span)
@@ -73,7 +73,7 @@ extension GridSpot: UICollectionViewDelegateFlowLayout {
   }
 }
 
-extension GridSpot: UICollectionViewDataSource {
+extension MapSpot: UICollectionViewDataSource {
 
   public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     return component.items.count

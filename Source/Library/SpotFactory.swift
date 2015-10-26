@@ -4,7 +4,8 @@ public class SpotFactory {
     "carousel": CarouselSpot.self,
     "list" : ListSpot.self,
     "grid": GridSpot.self,
-    "pages": PagesSpot.self
+    "pages": PagesSpot.self,
+    "map": MapSpot.self
   ]
 
   static func register<T: Spotable>(kind: String, spot: T.Type) {
