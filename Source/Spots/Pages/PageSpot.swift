@@ -12,7 +12,7 @@ public class PagesSpot: NSObject, Spotable {
 
   public private(set) var currentIndex = 0
 
-  private lazy var pageViewController: UIPageViewController = {
+  private lazy var pageViewController: UIPageViewController = { [unowned self] in
     let pageViewController = UIPageViewController(transitionStyle: .Scroll,
       navigationOrientation: .Horizontal, options: nil)
     pageViewController.delegate = self
