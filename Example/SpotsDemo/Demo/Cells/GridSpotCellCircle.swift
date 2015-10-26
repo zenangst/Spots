@@ -55,8 +55,8 @@ class GridSpotCellCircle : UICollectionViewCell, Itemble {
         fido.fetch(resource) { data, error in
           guard let data = data else { return }
           let image = UIImage(data: data)
-          dispatch {
-            self.imageView.image = image
+          dispatch { [weak self] in
+            self?.imageView.image = image
           }
         }
       }
