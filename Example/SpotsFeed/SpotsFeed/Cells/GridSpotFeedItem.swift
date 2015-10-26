@@ -14,7 +14,7 @@ class GridSpotFeedItem : UICollectionViewCell, Itemble {
     view.clipsToBounds = true
     
     return view
-  }()
+    }()
 
   lazy var titleLabel: UILabel = { [unowned self] in
     let label = UILabel(frame: self.contentView.frame)
