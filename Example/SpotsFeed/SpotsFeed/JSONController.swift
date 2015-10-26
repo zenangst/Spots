@@ -19,6 +19,7 @@ class JSONController: UIViewController {
   lazy var textView: UITextView = {
     let textView = UITextView()
     textView.font = UIFont(name: "Menlo", size: 13)
+
     return textView
   }()
 
