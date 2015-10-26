@@ -44,7 +44,7 @@ class GridSpotCellCircle : UICollectionViewCell, Itemble {
   }
 
   func configure(inout item: ListItem) {
-    self.imageView.frame.size.height = 88
+    imageView.frame.size.height = 88
     if !item.image.isEmpty {
       let resource = item.image
       let fido = GoldenRetriever()
