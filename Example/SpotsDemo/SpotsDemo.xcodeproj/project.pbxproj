@@ -15,6 +15,7 @@
 		BD4A624D1BC1B9CA0037C380 /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4A624C1BC1B9CA0037C380 /* Component.swift */; settings = {ASSET_TAGS = (); }; };
 		BD4BCCBC1BDD05BD00466C0F /* MapSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4BCCBA1BDD05BD00466C0F /* MapSpot.swift */; settings = {ASSET_TAGS = (); }; };
 		BD4BCCBD1BDD05BD00466C0F /* MapSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4BCCBB1BDD05BD00466C0F /* MapSpotCell.swift */; settings = {ASSET_TAGS = (); }; };
+		BD4BCCBF1BDE017000466C0F /* Optimize+UICollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4BCCBE1BDE017000466C0F /* Optimize+UICollectionViewCell.swift */; settings = {ASSET_TAGS = (); }; };
 		BD61D8C71BC711C50069A96F /* GridSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD61D8C61BC711C50069A96F /* GridSpotCell.swift */; settings = {ASSET_TAGS = (); }; };
 		BD7697361BC6458700DB119D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD76972D1BC6458700DB119D /* AppDelegate.swift */; settings = {ASSET_TAGS = (); }; };
 		BD7697371BC6458700DB119D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BD76972E1BC6458700DB119D /* Assets.xcassets */; settings = {ASSET_TAGS = (); }; };
@@ -47,6 +48,7 @@
 		BD4A624C1BC1B9CA0037C380 /* Component.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
 		BD4BCCBA1BDD05BD00466C0F /* MapSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapSpot.swift; sourceTree = "<group>"; };
 		BD4BCCBB1BDD05BD00466C0F /* MapSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapSpotCell.swift; sourceTree = "<group>"; };
+		BD4BCCBE1BDE017000466C0F /* Optimize+UICollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Optimize+UICollectionViewCell.swift"; sourceTree = "<group>"; };
 		BD61D8C61BC711C50069A96F /* GridSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridSpotCell.swift; sourceTree = "<group>"; };
 		BD6973631BBFE4FB001DC32F /* SpotsDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpotsDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD76972D1BC6458700DB119D /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -102,6 +104,7 @@
 				D51DF1681BC490F500EAB122 /* SpotSizeDelegate.swift */,
 				BDECFBDB1BC710230066C57B /* Gridable.swift */,
 				D5883A271BC720B900BF2FFF /* SpotFactory.swift */,
+				BD4BCCBE1BDE017000466C0F /* Optimize+UICollectionViewCell.swift */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -360,6 +363,7 @@
 				BD4A624D1BC1B9CA0037C380 /* Component.swift in Sources */,
 				BD4A62481BC1A47D0037C380 /* Parser.swift in Sources */,
 				BDBF83A81BD8127200939A0B /* GridSpotTitles.swift in Sources */,
+				BD4BCCBF1BDE017000466C0F /* Optimize+UICollectionViewCell.swift in Sources */,
 				BDB6DF811BC7A46E00877280 /* CarouselSpotCell.swift in Sources */,
 				BD8BD36F1BC6F02C00509FF3 /* CarouselSpot.swift in Sources */,
 				BDBF83A71BD8127200939A0B /* GridSpotCellCircle.swift in Sources */,

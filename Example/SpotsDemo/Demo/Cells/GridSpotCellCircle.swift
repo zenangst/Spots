@@ -44,10 +44,12 @@ class GridSpotCellCircle : UICollectionViewCell, Itemble {
   }
 
   func configure(inout item: ListItem) {
+    optimize()
+
     imageView.frame.size.height = 88
+    
     if !item.image.isEmpty {
-      layer.shouldRasterize = true
-      layer.rasterizationScale = UIScreen.mainScreen().scale
+      rasterize()
       let resource = item.image
       let fido = GoldenRetriever()
       let qualityOfServiceClass = QOS_CLASS_BACKGROUND

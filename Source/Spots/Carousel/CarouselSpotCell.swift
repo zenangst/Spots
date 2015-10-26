@@ -31,9 +31,10 @@ class CarouselSpotCell: UICollectionViewCell, Itemble {
   }
 
   func configure(inout item: ListItem) {
+    optimize()
+  
     if !item.image.isEmpty {
-      layer.shouldRasterize = true
-      layer.rasterizationScale = UIScreen.mainScreen().scale
+      rasterize()
       let qualityOfServiceClass = QOS_CLASS_BACKGROUND
       let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
 
