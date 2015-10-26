@@ -55,6 +55,7 @@ public class GridSpot: NSObject, Spotable {
   public func render() -> UIView {
     collectionView.frame.size.height = flowLayout.collectionViewContentSize().height
     collectionView.frame.size.width = flowLayout.collectionViewContentSize().width
+
     return collectionView
   }
 

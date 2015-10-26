@@ -1,27 +1,11 @@
 {
  "components" : [
   {
-    "type" : "carousel",
+    "type" : "header",
     "items" : [
       {
         "type"     : "header",
         "image"    : "http://hyper.no/assets/about-us-top-f59eec81e5470547a81c36612084e0cf.jpg"
-      },
-      {
-        "type"     : "header",
-        "image"    : "https://hyper-production.s3.amazonaws.com/uploads/projects/project/banner_photo/43/Kia_bannerbilde_1920x500.jpg"
-      },
-      {
-        "type"     : "header",
-        "image"    : "https://hyper-production.s3.amazonaws.com/uploads/projects/project/banner_photo/42/Inndrager.jpg"
-      },
-      {
-        "type"     : "header",
-        "image"    : "https://hyper-production.s3.amazonaws.com/uploads/projects/project/banner_photo/38/1920x500_copy_2.png"
-      },
-      {
-        "type"     : "header",
-        "image"    : "https://hyper-production.s3.amazonaws.com/uploads/projects/project/banner_photo/39/unnamed.jpg"
       }
     ]
   },

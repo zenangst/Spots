@@ -32,7 +32,7 @@ class CarouselSpotCell: UICollectionViewCell, Itemble {
 
   func configure(inout item: ListItem) {
     optimize()
-  
+
     if !item.image.isEmpty {
       rasterize()
       let qualityOfServiceClass = QOS_CLASS_BACKGROUND

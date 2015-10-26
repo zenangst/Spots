@@ -101,11 +101,14 @@ class GridSpotCard : UICollectionViewCell, Itemble {
 
     layoutSubviews()
 
-    canvasView.frame = CGRect(x: 20, y: 10,
-      width: contentView.frame.width - 40,
-      height: 320)
+    canvasView.frame = CGRect(
+      x: 0,
+      y: 10,
+      width: 325,
+      height: 420)
 
-    item.size.height = 340
+    item.size.width = contentView.frame.width - 40
+    item.size.height = 430
   }
 
   override func layoutSubviews() {

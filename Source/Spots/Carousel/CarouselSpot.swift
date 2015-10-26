@@ -15,6 +15,7 @@ public class CarouselSpot: NSObject, Spotable {
     layout.minimumInteritemSpacing = 0
     layout.minimumLineSpacing = 0
     layout.scrollDirection = .Horizontal
+    layout.sectionInset = UIEdgeInsetsMake(25, 25, 25, 25)
 
     return layout
     }()
@@ -25,6 +26,8 @@ public class CarouselSpot: NSObject, Spotable {
     collectionView.dataSource = self
     collectionView.delegate = self
     collectionView.frame.size.width = UIScreen.mainScreen().bounds.width
+    collectionView.showsHorizontalScrollIndicator = false
+
     return collectionView
     }()
 
@@ -62,12 +65,34 @@ public class CarouselSpot: NSObject, Spotable {
   }
 }
 
+extension CarouselSpot: UIScrollViewDelegate {
+
+  public func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+    let pageWidth: CGFloat = collectionView.frame.width - 40
+    let currentOffset = scrollView.contentOffset.x
+    let targetOffset = targetContentOffset.memory.x
+    
+    var newTargetOffset: CGFloat = targetOffset > currentOffset
+      ? ceil(currentOffset / pageWidth) * pageWidth
+      : floor(currentOffset / pageWidth) * pageWidth
+
+    if (newTargetOffset < 0) {
+      newTargetOffset = 0
+    } else if (newTargetOffset > scrollView.contentSize.width) {
+      newTargetOffset = scrollView.contentSize.width
+    }
+
+    targetContentOffset.memory.x = currentOffset;
+    scrollView.setContentOffset(CGPoint(x: newTargetOffset, y:0), animated: true)
+  }
+}
+
 extension CarouselSpot: UICollectionViewDelegateFlowLayout {
 
   public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
     component.items[indexPath.item].size.width = collectionView.frame.width
     let item = component.items[indexPath.item]
-    return CGSize(width: item.size.width, height: item.size.height)
+    return CGSize(width: item.size.width - 40, height: item.size.height)
   }
 }
 
