@@ -1,6 +1,7 @@
 import UIKit
 import GoldenRetriever
 import Sugar
+import Tailor
 
 public class CarouselSpot: NSObject, Spotable {
 
@@ -10,7 +11,6 @@ public class CarouselSpot: NSObject, Spotable {
   public weak var sizeDelegate: SpotSizeDelegate?
 
   public lazy var flowLayout: UICollectionViewFlowLayout = { [unowned self] in
-    let size = UIScreen.mainScreen().bounds.width / CGFloat(self.component.span)
     let layout = UICollectionViewFlowLayout()
     layout.minimumInteritemSpacing = 0
     layout.minimumLineSpacing = 0
@@ -40,21 +40,16 @@ public class CarouselSpot: NSObject, Spotable {
       let componentCellClass = GridSpot.cells[item.kind] ?? CarouselSpotCell.self
       self.collectionView.registerClass(componentCellClass, forCellWithReuseIdentifier: "CarouselCell\(item.kind.capitalizedString)")
 
-      if let gridCell = componentCellClass.init() as? Itemble {
-        self.component.items[index].size.width = collectionView.frame.width / CGFloat(component.span)
-        self.component.items[index].size.height = gridCell.size.height
-      }
+      guard let gridCell = componentCellClass.init() as? Itemble else { return }
+      self.component.items[index].size.width = collectionView.frame.width / CGFloat(component.span)
+      self.component.items[index].size.height = gridCell.size.height
     }
   }
 
   public func render() -> UIView {
-    if let first = component.items.first {
-      collectionView.frame.size.height = first.size.height
-    }
-    
-    if let backgroundColor = component.meta["background-color"] {
-      collectionView.backgroundColor = UIColor(hex: backgroundColor)
-    }
+    collectionView.frame.size.height = component.items.first?.size.height ?? 0
+    collectionView.backgroundColor = UIColor(hex:
+      component.meta.property("background-color") ?? "FFFFFF")
 
     return collectionView
   }
@@ -76,10 +71,10 @@ extension CarouselSpot: UIScrollViewDelegate {
       ? ceil(currentOffset / pageWidth) * pageWidth
       : floor(currentOffset / pageWidth) * pageWidth
 
-    if (newTargetOffset < 0) {
-      newTargetOffset = 0
-    } else if (newTargetOffset > scrollView.contentSize.width) {
+    if newTargetOffset > scrollView.contentSize.width {
       newTargetOffset = scrollView.contentSize.width
+    } else if newTargetOffset < 0 {
+      newTargetOffset = 0
     }
 
     targetContentOffset.memory.x = currentOffset;
