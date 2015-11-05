@@ -7,10 +7,7 @@ public struct Parser {
     guard let components = json["components"] as? JSONArray else { return [] }
     var spots = [Spotable]()
 
-    for json in components {
-      let component = Component(json)
-      spots.append(SpotFactory.resolve(component))
-    }
+    components.forEach { spots.append(SpotFactory.resolve(Component($0)))  }
     
     return spots
   }
