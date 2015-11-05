@@ -1,5 +1,7 @@
 public class SpotFactory {
 
+  static var DefaultAppSpot = GridSpot.self
+
   private static var spots: [String: Spotable.Type] = [
     "carousel": CarouselSpot.self,
     "list" : ListSpot.self,
@@ -11,7 +13,7 @@ public class SpotFactory {
   }
 
   static func resolve(component: Component) -> Spotable {
-    let Spot: Spotable.Type = spots[component.kind] ?? GridSpot.self
+    let Spot: Spotable.Type = spots[component.kind] ?? DefaultAppSpot
     return Spot.init(component: component)
   }
 }
