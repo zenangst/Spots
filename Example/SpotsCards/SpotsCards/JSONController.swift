@@ -76,6 +76,8 @@ class JSONController: UIViewController {
       do {
         let json = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments) as? [String : AnyObject]
         if let json = json {
+          SpotFactory.DefaultSpot = ListSpot.self
+        
           let components = Parser.parse(json)
           let controller = SpotsController(spots: components)
           navigationController?.pushViewController(controller, animated: true)
