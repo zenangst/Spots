@@ -12,7 +12,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SpotsDelegate {
     ListSpot.headers["list"] = ListHeaderView.self
     GridSpot.cells["topic"] = GridTopicCell.self
 
-    var suggestedChannels = Component(["span" : 3])
+    var suggestedChannels = Component(span: 3)
     suggestedChannels.items = [
       ListItem(title: "Business", kind: "topic"),
       ListItem(title: "Software", kind: "topic"),
