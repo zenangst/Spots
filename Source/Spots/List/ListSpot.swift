@@ -44,6 +44,11 @@ public class ListSpot: NSObject, Spotable {
     }
   }
 
+  public convenience init(title: String, kind: String = "list") {
+    let component = Component(title: title, kind: kind)
+    self.init(component: component)
+  }
+
   public func render() -> UIView {
     tableView.frame.size.width = UIScreen.mainScreen().bounds.width
 
