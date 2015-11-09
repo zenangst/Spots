@@ -16,7 +16,7 @@ public struct Component: Mappable {
     meta  <- map.property("meta")
   }
 
-  public init(title: String = "", kind: String = "", span: Int = 1, items: [ListItem] = [ListItem](), meta: [String : String] = [:]) {
+  public init(title: String = "", kind: String = "", span: Int = 1, items: [ListItem] = [], meta: [String : String] = [:]) {
     self.title = title
     self.kind = kind
     self.span = span
