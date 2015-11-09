@@ -9,6 +9,7 @@ public class GridSpot: NSObject, Spotable {
   let cellPrefix = "GridSpotCell"
   public var component: Component
   public weak var sizeDelegate: SpotSizeDelegate?
+  public weak var spotDelegate: SpotsDelegate?
 
   public lazy var flowLayout: UICollectionViewFlowLayout = { [unowned self] in
     let size = UIScreen.mainScreen().bounds.width / CGFloat(self.component.span)
@@ -69,7 +70,14 @@ extension GridSpot: UICollectionViewDelegateFlowLayout {
   public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
     component.items[indexPath.item].size.width = collectionView.frame.width / CGFloat(component.span)
     let item = component.items[indexPath.item]
-    return CGSize(width: item.size.width, height: item.size.height)
+    return CGSize(width: item.size.width - flowLayout.sectionInset.left, height: item.size.height)
+  }
+}
+
+extension GridSpot: UICollectionViewDelegate {
+  public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    let item = component.items[indexPath.item]
+    spotDelegate?.spotDidSelectItem(self, item: item)
   }
 }
 

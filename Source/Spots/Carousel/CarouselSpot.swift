@@ -9,13 +9,11 @@ public class CarouselSpot: NSObject, Spotable {
 
   public var component: Component
   public weak var sizeDelegate: SpotSizeDelegate?
+  public weak var spotDelegate: SpotsDelegate?
 
   public lazy var flowLayout: UICollectionViewFlowLayout = { [unowned self] in
     let layout = UICollectionViewFlowLayout()
-    layout.minimumInteritemSpacing = 0
-    layout.minimumLineSpacing = 0
     layout.scrollDirection = .Horizontal
-    layout.sectionInset = UIEdgeInsetsMake(25, 25, 25, 25)
 
     return layout
     }()
@@ -46,11 +44,23 @@ public class CarouselSpot: NSObject, Spotable {
     }
   }
 
+  public convenience init(_ component: Component, top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0, itemSpacing: CGFloat = 0) {
+    self.init(component: component)
+    
+    flowLayout.sectionInset = UIEdgeInsetsMake(top, left, bottom, right)
+    flowLayout.minimumInteritemSpacing = itemSpacing
+  }
+
   public func render() -> UIView {
-    collectionView.frame.size.height = component.items.first?.size.height ?? 0
     collectionView.backgroundColor = UIColor(hex:
       component.meta.property("background-color") ?? "FFFFFF")
-
+    if collectionView.contentSize.height > 0 {
+      collectionView.frame.size.height = collectionView.contentSize.height
+    } else {
+      collectionView.frame.size.height = component.items.first?.size.height ?? 0
+      collectionView.frame.size.height += flowLayout.sectionInset.top + flowLayout.sectionInset.bottom
+    }
+    
     return collectionView
   }
 
@@ -63,7 +73,7 @@ public class CarouselSpot: NSObject, Spotable {
 extension CarouselSpot: UIScrollViewDelegate {
 
   public func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-    let pageWidth: CGFloat = collectionView.frame.width - 40
+    let pageWidth: CGFloat = collectionView.frame.width  - flowLayout.sectionInset.left * 2
     let currentOffset = scrollView.contentOffset.x
     let targetOffset = targetContentOffset.memory.x
     
@@ -85,9 +95,19 @@ extension CarouselSpot: UIScrollViewDelegate {
 extension CarouselSpot: UICollectionViewDelegateFlowLayout {
 
   public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-    component.items[indexPath.item].size.width = collectionView.frame.width
+    component.items[indexPath.item].size.width = collectionView.frame.width / CGFloat(component.span)
+    component.items[indexPath.item].size.width -= flowLayout.sectionInset.left
     let item = component.items[indexPath.item]
-    return CGSize(width: item.size.width - 40, height: item.size.height)
+
+    return CGSize(width: item.size.width, height: item.size.height)
+  }
+}
+
+extension CarouselSpot: UICollectionViewDelegate {
+
+  public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    let item = component.items[indexPath.item]
+    spotDelegate?.spotDidSelectItem(self, item: item)
   }
 }
 

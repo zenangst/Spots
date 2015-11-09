@@ -4,6 +4,8 @@ public class SpotsController: UIViewController {
 
   private let spots: [Spotable]
   static let reuseIdentifier = "ComponentCell"
+  
+  weak public var spotDelegate: SpotsDelegate?
 
   lazy var layout: UICollectionViewLayout = {
     let layout = UICollectionViewFlowLayout()
@@ -56,6 +58,7 @@ extension SpotsController: UICollectionViewDataSource {
   public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCellWithReuseIdentifier(SpotsController.reuseIdentifier, forIndexPath: indexPath)
     let spot = spots[indexPath.item]
+    spot.spotDelegate = spotDelegate
 
     cell.contentView.subviews.forEach { $0.removeFromSuperview() }
     cell.contentView.addSubview(spot.render())
