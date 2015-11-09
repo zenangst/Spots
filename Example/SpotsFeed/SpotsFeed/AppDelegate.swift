@@ -14,19 +14,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     let feedComponent = Component(span: 1, items: generateItems(0, to: 3))
     let feedSpot = ListSpot(component: feedComponent)
-
-    var browse = Component(title: "Browse", kind: "list")
-    browse.items = [
-      ListItem(title: "News"),
-      ListItem(title: "Business"),
-      ListItem(title: "Politics"),
-      ListItem(title: "Travel"),
-      ListItem(title: "Technology"),
-      ListItem(title: "Sports"),
-      ListItem(title: "Science"),
-      ListItem(title: "Entertainment"),
-      ListItem(title: "Food")
-    ]
+    let browse = Component(title: "Browse",
+      kind: "list",
+      items: [
+        ListItem(title: "News"),
+        ListItem(title: "Business"),
+        ListItem(title: "Politics"),
+        ListItem(title: "Travel")
+      ]
+    )
 
     let components: [Spotable] = [
       feedSpot,
@@ -35,9 +31,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     let controller = SpotsController(spots: components)
     controller.title = "Feed"
+
+    applyStyles()
+    
     navigationController = UINavigationController(rootViewController: controller)
     window?.rootViewController = navigationController
-
     window?.makeKeyAndVisible()
 
     return true
