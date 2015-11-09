@@ -11,9 +11,9 @@ public class ListHeaderView: UIView, Componentable {
   lazy var paddedStyle: NSParagraphStyle = {
     let style = NSMutableParagraphStyle()
     style.alignment = .Left
-    style.firstLineHeadIndent = 10.0
-    style.headIndent = 10.0
-    style.tailIndent = -10.0
+    style.firstLineHeadIndent = 15.0
+    style.headIndent = 15.0
+    style.tailIndent = -15.0
     return style
     }()
 
