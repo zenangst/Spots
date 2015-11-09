@@ -18,7 +18,7 @@ public struct ListItem: Mappable, Listable {
   public var subtitle = ""
   public var image = ""
   public var kind = ""
-  public var uri: String?
+  public var urn: String?
   public var size = ListSize()
   public var meta = [String : AnyObject]()
 
@@ -27,15 +27,16 @@ public struct ListItem: Mappable, Listable {
     subtitle <- map.property("subtitle")
     image    <- map.property("image")
     kind     <- map.property("type")
-    uri      <- map.property("uri")
+    urn      <- map.property("urn")
     size     <- map.property("size")
     meta     <- map.property("meta")
   }
 
-  public init(title: String, subtitle: String = "", image: String = "", kind: String = "") {
+  public init(title: String, subtitle: String = "", image: String = "", kind: String = "", urn: String? = "") {
     self.title = title
     self.subtitle = subtitle
     self.image = image
     self.kind = kind
+    self.urn = urn
   }
 }
