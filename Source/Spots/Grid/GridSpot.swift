@@ -47,14 +47,14 @@ public class GridSpot: NSObject, Spotable {
       }
     }
 
-    if let backgroundColor = component.meta["background-color"] {
-      collectionView.backgroundColor = UIColor(hex: backgroundColor)
-    }
+    collectionView.backgroundColor = UIColor(hex:
+      component.meta.property("background-color") ?? "FFFFFF")
   }
 
   public func render() -> UIView {
     collectionView.frame.size.height = flowLayout.collectionViewContentSize().height
     collectionView.frame.size.width = flowLayout.collectionViewContentSize().width
+
     return collectionView
   }
 

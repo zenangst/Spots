@@ -25,10 +25,6 @@
 		BD4BCD591BDE0F6A00466C0F /* GridSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4BCD431BDE0F6A00466C0F /* GridSpotCell.swift */; settings = {ASSET_TAGS = (); }; };
 		BD4BCD5A1BDE0F6A00466C0F /* ListSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4BCD451BDE0F6A00466C0F /* ListSpot.swift */; settings = {ASSET_TAGS = (); }; };
 		BD4BCD5B1BDE0F6A00466C0F /* ListSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4BCD461BDE0F6A00466C0F /* ListSpotCell.swift */; settings = {ASSET_TAGS = (); }; };
-		BD4BCD5C1BDE0F6A00466C0F /* MapSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4BCD481BDE0F6A00466C0F /* MapSpot.swift */; settings = {ASSET_TAGS = (); }; };
-		BD4BCD5D1BDE0F6A00466C0F /* MapSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4BCD491BDE0F6A00466C0F /* MapSpotCell.swift */; settings = {ASSET_TAGS = (); }; };
-		BD4BCD5E1BDE0F6A00466C0F /* PageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4BCD4B1BDE0F6A00466C0F /* PageController.swift */; settings = {ASSET_TAGS = (); }; };
-		BD4BCD5F1BDE0F6A00466C0F /* PageSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4BCD4C1BDE0F6A00466C0F /* PageSpot.swift */; settings = {ASSET_TAGS = (); }; };
 		BD4BCD601BDE0F6A00466C0F /* SpotsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4BCD4D1BDE0F6A00466C0F /* SpotsController.swift */; settings = {ASSET_TAGS = (); }; };
 		BD4BCD621BDE0F9800466C0F /* components.json in Resources */ = {isa = PBXBuildFile; fileRef = BD4BCD611BDE0F9800466C0F /* components.json */; settings = {ASSET_TAGS = (); }; };
 		BD4BCD641BDE101100466C0F /* JSONController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4BCD631BDE101100466C0F /* JSONController.swift */; settings = {ASSET_TAGS = (); }; };
@@ -58,10 +54,6 @@
 		BD4BCD431BDE0F6A00466C0F /* GridSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridSpotCell.swift; sourceTree = "<group>"; };
 		BD4BCD451BDE0F6A00466C0F /* ListSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListSpot.swift; sourceTree = "<group>"; };
 		BD4BCD461BDE0F6A00466C0F /* ListSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListSpotCell.swift; sourceTree = "<group>"; };
-		BD4BCD481BDE0F6A00466C0F /* MapSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapSpot.swift; sourceTree = "<group>"; };
-		BD4BCD491BDE0F6A00466C0F /* MapSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapSpotCell.swift; sourceTree = "<group>"; };
-		BD4BCD4B1BDE0F6A00466C0F /* PageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageController.swift; sourceTree = "<group>"; };
-		BD4BCD4C1BDE0F6A00466C0F /* PageSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageSpot.swift; sourceTree = "<group>"; };
 		BD4BCD4D1BDE0F6A00466C0F /* SpotsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsController.swift; sourceTree = "<group>"; };
 		BD4BCD611BDE0F9800466C0F /* components.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = components.json; sourceTree = "<group>"; };
 		BD4BCD631BDE101100466C0F /* JSONController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONController.swift; sourceTree = "<group>"; };
@@ -162,8 +154,6 @@
 				BD4BCD3E1BDE0F6A00466C0F /* Carousel */,
 				BD4BCD411BDE0F6A00466C0F /* Grid */,
 				BD4BCD441BDE0F6A00466C0F /* List */,
-				BD4BCD471BDE0F6A00466C0F /* Map */,
-				BD4BCD4A1BDE0F6A00466C0F /* Pages */,
 			);
 			path = Spots;
 			sourceTree = "<group>";
@@ -193,24 +183,6 @@
 				BD4BCD461BDE0F6A00466C0F /* ListSpotCell.swift */,
 			);
 			path = List;
-			sourceTree = "<group>";
-		};
-		BD4BCD471BDE0F6A00466C0F /* Map */ = {
-			isa = PBXGroup;
-			children = (
-				BD4BCD481BDE0F6A00466C0F /* MapSpot.swift */,
-				BD4BCD491BDE0F6A00466C0F /* MapSpotCell.swift */,
-			);
-			path = Map;
-			sourceTree = "<group>";
-		};
-		BD4BCD4A1BDE0F6A00466C0F /* Pages */ = {
-			isa = PBXGroup;
-			children = (
-				BD4BCD4B1BDE0F6A00466C0F /* PageController.swift */,
-				BD4BCD4C1BDE0F6A00466C0F /* PageSpot.swift */,
-			);
-			path = Pages;
 			sourceTree = "<group>";
 		};
 		BD4BCD651BDE105400466C0F /* Cells */ = {
@@ -358,20 +330,16 @@
 				BD4BCD511BDE0F6A00466C0F /* Spotable.swift in Sources */,
 				BD4BCD561BDE0F6A00466C0F /* CarouselSpot.swift in Sources */,
 				BD4BCD671BDE106D00466C0F /* GridSpotCard.swift in Sources */,
-				BD4BCD5D1BDE0F6A00466C0F /* MapSpotCell.swift in Sources */,
 				BD4BCD501BDE0F6A00466C0F /* Parser.swift in Sources */,
 				BD4BCD591BDE0F6A00466C0F /* GridSpotCell.swift in Sources */,
 				BD4BCD641BDE101100466C0F /* JSONController.swift in Sources */,
 				BD4BCD601BDE0F6A00466C0F /* SpotsController.swift in Sources */,
 				BD4BCD531BDE0F6A00466C0F /* SpotSizeDelegate.swift in Sources */,
-				BD4BCD5F1BDE0F6A00466C0F /* PageSpot.swift in Sources */,
 				BD4BCD581BDE0F6A00466C0F /* GridSpot.swift in Sources */,
 				BD4BCD211BDE0F5A00466C0F /* AppDelegate.swift in Sources */,
-				BD4BCD5C1BDE0F6A00466C0F /* MapSpot.swift in Sources */,
 				BD4BCD4F1BDE0F6A00466C0F /* Optimize+UICollectionViewCell.swift in Sources */,
 				BD4BCD5A1BDE0F6A00466C0F /* ListSpot.swift in Sources */,
 				BD4BCD5B1BDE0F6A00466C0F /* ListSpotCell.swift in Sources */,
-				BD4BCD5E1BDE0F6A00466C0F /* PageController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

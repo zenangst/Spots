@@ -1,11 +1,11 @@
 public class SpotFactory {
 
+  static var DefaultSpot: Spotable.Type = GridSpot.self
+
   private static var spots: [String: Spotable.Type] = [
     "carousel": CarouselSpot.self,
     "list" : ListSpot.self,
-    "grid": GridSpot.self,
-    "pages": PagesSpot.self,
-    "map": MapSpot.self
+    "grid": GridSpot.self
   ]
 
   static func register<T: Spotable>(kind: String, spot: T.Type) {
@@ -13,7 +13,7 @@ public class SpotFactory {
   }
 
   static func resolve(component: Component) -> Spotable {
-    let Spot: Spotable.Type = spots[component.kind] ?? GridSpot.self
+    let Spot: Spotable.Type = spots[component.kind] ?? DefaultSpot
     return Spot.init(component: component)
   }
 }

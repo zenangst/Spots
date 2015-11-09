@@ -27,10 +27,6 @@
 		BD4BCD091BDE058200466C0F /* GridSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4BCCF31BDE058200466C0F /* GridSpotCell.swift */; settings = {ASSET_TAGS = (); }; };
 		BD4BCD0A1BDE058200466C0F /* ListSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4BCCF51BDE058200466C0F /* ListSpot.swift */; settings = {ASSET_TAGS = (); }; };
 		BD4BCD0B1BDE058200466C0F /* ListSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4BCCF61BDE058200466C0F /* ListSpotCell.swift */; settings = {ASSET_TAGS = (); }; };
-		BD4BCD0C1BDE058200466C0F /* MapSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4BCCF81BDE058200466C0F /* MapSpot.swift */; settings = {ASSET_TAGS = (); }; };
-		BD4BCD0D1BDE058200466C0F /* MapSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4BCCF91BDE058200466C0F /* MapSpotCell.swift */; settings = {ASSET_TAGS = (); }; };
-		BD4BCD0E1BDE058200466C0F /* PageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4BCCFB1BDE058200466C0F /* PageController.swift */; settings = {ASSET_TAGS = (); }; };
-		BD4BCD0F1BDE058200466C0F /* PageSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4BCCFC1BDE058200466C0F /* PageSpot.swift */; settings = {ASSET_TAGS = (); }; };
 		BD4BCD101BDE058200466C0F /* SpotsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4BCCFD1BDE058200466C0F /* SpotsController.swift */; settings = {ASSET_TAGS = (); }; };
 		BD4BCD131BDE05F100466C0F /* GridSpotFeedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4BCD121BDE05F100466C0F /* GridSpotFeedItem.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
@@ -60,10 +56,6 @@
 		BD4BCCF31BDE058200466C0F /* GridSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridSpotCell.swift; sourceTree = "<group>"; };
 		BD4BCCF51BDE058200466C0F /* ListSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListSpot.swift; sourceTree = "<group>"; };
 		BD4BCCF61BDE058200466C0F /* ListSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListSpotCell.swift; sourceTree = "<group>"; };
-		BD4BCCF81BDE058200466C0F /* MapSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapSpot.swift; sourceTree = "<group>"; };
-		BD4BCCF91BDE058200466C0F /* MapSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapSpotCell.swift; sourceTree = "<group>"; };
-		BD4BCCFB1BDE058200466C0F /* PageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageController.swift; sourceTree = "<group>"; };
-		BD4BCCFC1BDE058200466C0F /* PageSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageSpot.swift; sourceTree = "<group>"; };
 		BD4BCCFD1BDE058200466C0F /* SpotsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsController.swift; sourceTree = "<group>"; };
 		BD4BCD121BDE05F100466C0F /* GridSpotFeedItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridSpotFeedItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -170,8 +162,6 @@
 				BD4BCCEE1BDE058200466C0F /* Carousel */,
 				BD4BCCF11BDE058200466C0F /* Grid */,
 				BD4BCCF41BDE058200466C0F /* List */,
-				BD4BCCF71BDE058200466C0F /* Map */,
-				BD4BCCFA1BDE058200466C0F /* Pages */,
 			);
 			path = Spots;
 			sourceTree = "<group>";
@@ -201,24 +191,6 @@
 				BD4BCCF61BDE058200466C0F /* ListSpotCell.swift */,
 			);
 			path = List;
-			sourceTree = "<group>";
-		};
-		BD4BCCF71BDE058200466C0F /* Map */ = {
-			isa = PBXGroup;
-			children = (
-				BD4BCCF81BDE058200466C0F /* MapSpot.swift */,
-				BD4BCCF91BDE058200466C0F /* MapSpotCell.swift */,
-			);
-			path = Map;
-			sourceTree = "<group>";
-		};
-		BD4BCCFA1BDE058200466C0F /* Pages */ = {
-			isa = PBXGroup;
-			children = (
-				BD4BCCFB1BDE058200466C0F /* PageController.swift */,
-				BD4BCCFC1BDE058200466C0F /* PageSpot.swift */,
-			);
-			path = Pages;
 			sourceTree = "<group>";
 		};
 		BD4BCD111BDE05C300466C0F /* Cells */ = {
@@ -355,8 +327,6 @@
 				BD4BCD0B1BDE058200466C0F /* ListSpotCell.swift in Sources */,
 				BD4BCD061BDE058200466C0F /* CarouselSpot.swift in Sources */,
 				BD4BCD131BDE05F100466C0F /* GridSpotFeedItem.swift in Sources */,
-				BD4BCD0F1BDE058200466C0F /* PageSpot.swift in Sources */,
-				BD4BCD0E1BDE058200466C0F /* PageController.swift in Sources */,
 				BD4BCCFF1BDE058200466C0F /* Optimize+UICollectionViewCell.swift in Sources */,
 				BD4BCD021BDE058200466C0F /* SpotFactory.swift in Sources */,
 				BD4BCD071BDE058200466C0F /* CarouselSpotCell.swift in Sources */,
@@ -366,11 +336,9 @@
 				BD4BCD031BDE058200466C0F /* SpotSizeDelegate.swift in Sources */,
 				BD4BCD0A1BDE058200466C0F /* ListSpot.swift in Sources */,
 				BD4BCCDF1BDE04E000466C0F /* JSONController.swift in Sources */,
-				BD4BCD0C1BDE058200466C0F /* MapSpot.swift in Sources */,
 				BD4BCD101BDE058200466C0F /* SpotsController.swift in Sources */,
 				BD4BCCCD1BDE04AA00466C0F /* AppDelegate.swift in Sources */,
 				BD4BCCFE1BDE058200466C0F /* Gridable.swift in Sources */,
-				BD4BCD0D1BDE058200466C0F /* MapSpotCell.swift in Sources */,
 				BD4BCD041BDE058200466C0F /* Component.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
