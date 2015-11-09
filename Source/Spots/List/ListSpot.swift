@@ -120,36 +120,6 @@ extension ListSpot: UITableViewDataSource {
     var item = component.items[indexPath.row]
     let cell = tableView.dequeueReusableCellWithIdentifier("ListCell\(item.kind)")
 
-    cell!.textLabel!.text = item.title
-    cell!.textLabel!.textColor = .blackColor()
-    cell!.textLabel!.numberOfLines = 0
-    
-    if !item.subtitle.isEmpty {
-      cell!.detailTextLabel?.text = item.subtitle
-      cell!.detailTextLabel?.textColor = .blackColor()
-    }
-
-    if item.image != "" {
-      let resource = item.image
-      let fido = GoldenRetriever()
-      let qualityOfServiceClass = QOS_CLASS_BACKGROUND
-      let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
-
-      dispatch(backgroundQueue) {
-        fido.fetch(resource) { data, error in
-          guard let data = data else { return }
-          let image = UIImage(data: data)
-          dispatch {
-            cell!.imageView!.contentMode = .ScaleAspectFill
-            cell!.imageView!.image = image
-            cell?.layoutSubviews()
-          }
-        }
-      }
-    } else {
-      cell!.imageView!.image = nil
-    }
-
     if let list = cell as? Itemble {
       list.configure(&item)
       component.items[indexPath.item] = item

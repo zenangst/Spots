@@ -8,6 +8,7 @@ extension UICollectionViewCell {
   }
 
   func rasterize() {
+    layer.drawsAsynchronously = true
     layer.shouldRasterize = true
     layer.rasterizationScale = UIScreen.mainScreen().scale
   }

@@ -16,5 +16,7 @@ public class ListSpotCell: UITableViewCell, Itemble {
     accessoryType = item.urn?.isEmpty ?? false
       ? .DisclosureIndicator
       : .None
+    textLabel?.text = item.title
+    detailTextLabel?.text = item.subtitle
   }
 }

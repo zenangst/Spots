@@ -1,4 +1,5 @@
 import UIKit
+import Fakery
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -9,16 +10,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
     window = UIWindow(frame: UIScreen.mainScreen().bounds)
 
-    GridSpot.cells["feed"] = GridSpotFeedItem.self
+    ListSpot.cells["feed"] = PostTableViewCell.self
 
-    let controller = JSONController()
+    let feedComponent = Component(span: 1, items: [
+      ListItem(title: "Apple", kind: "feed", image: "http://lorempixel.com/125/160/?type=attachment&id=1"),
+      ListItem(title: "Spotify", kind: "feed",image: "http://lorempixel.com/125/160/?type=attachment&id=2"),
+      ListItem(title: "Google", kind: "feed", image: "http://lorempixel.com/125/160/?type=attachment&id=3")
+      ])
 
-    controller.title = "Spots Feed".uppercaseString
+    let feedSpot = ListSpot(component: feedComponent)
 
+    var browse = Component(title: "Browse", kind: "list")
+    browse.items = [
+      ListItem(title: "News"),
+      ListItem(title: "Business"),
+      ListItem(title: "Politics"),
+      ListItem(title: "Travel"),
+      ListItem(title: "Technology"),
+      ListItem(title: "Sports"),
+      ListItem(title: "Science"),
+      ListItem(title: "Entertainment"),
+      ListItem(title: "Food")
+    ]
+
+    let components: [Spotable] = [
+      TitleSpot(title: "Featured items"),
+      feedSpot,
+      ListSpot(component: browse)
+    ]
+
+    let controller = SpotsController(spots: components)
+    controller.title = "Explore"
     navigationController = UINavigationController(rootViewController: controller)
     window?.rootViewController = navigationController
-
-    applyStyles()
 
     window?.makeKeyAndVisible()
 

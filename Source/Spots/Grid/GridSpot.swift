@@ -52,6 +52,14 @@ public class GridSpot: NSObject, Spotable {
       component.meta.property("background-color") ?? "FFFFFF")
   }
 
+  public convenience init(_ component: Component, top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0, itemSpacing: CGFloat = 0) {
+
+    self.init(component: component)
+
+    self.flowLayout.sectionInset = UIEdgeInsetsMake(top, left, bottom, right)
+    self.flowLayout.minimumInteritemSpacing = itemSpacing
+  }
+
   public func render() -> UIView {
     collectionView.frame.size.height = flowLayout.collectionViewContentSize().height
     collectionView.frame.size.width = flowLayout.collectionViewContentSize().width
