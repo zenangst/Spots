@@ -105,18 +105,6 @@
         }
       }
     ]
-  },
-     {
-    "type" : "map",
-    "items" : [
-      {
-        "type"     : "map",
-         "meta"     : {
-           "latitude" : 59.9327167,
-           "longitude" : 10.7574005
-         }
-      }
-    ]
   }
   ]
 }
