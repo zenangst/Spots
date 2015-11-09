@@ -37,7 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SpotsDelegate {
     carousel.flowLayout.minimumInteritemSpacing = 15
 
     let components: [Spotable] = [
-      ListSpot(component: Component(["title" : "Suggested Topics", "type" : "list"])),
+      ListSpot(component: Component(title: "Suggested Topics", kind: "list")),
       carousel,
       ListSpot(component: browse)
     ]
