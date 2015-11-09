@@ -12,11 +12,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     ListSpot.cells["feed"] = PostTableViewCell.self
 
-    let feedComponent = Component(span: 1, items: [
-      ListItem(title: "Apple", kind: "feed", image: "http://lorempixel.com/125/160/?type=attachment&id=1"),
-      ListItem(title: "Spotify", kind: "feed",image: "http://lorempixel.com/125/160/?type=attachment&id=2"),
-      ListItem(title: "Google", kind: "feed", image: "http://lorempixel.com/125/160/?type=attachment&id=3")
-      ])
+    var feedComponent = Component(span: 1)
+    feedComponent.items = generateItems(0, to: 3)
 
     let feedSpot = ListSpot(component: feedComponent)
 
@@ -34,19 +31,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     ]
 
     let components: [Spotable] = [
-      TitleSpot(title: "Featured items"),
       feedSpot,
       ListSpot(component: browse)
     ]
 
     let controller = SpotsController(spots: components)
-    controller.title = "Explore"
+    controller.title = "Feed"
     navigationController = UINavigationController(rootViewController: controller)
     window?.rootViewController = navigationController
 
     window?.makeKeyAndVisible()
 
     return true
+  }
+
+  func generateItems(from: Int, to: Int) -> [ListItem] {
+    var items = [ListItem]()
+      for i in from...to {
+        autoreleasepool({
+          let sencenceCount = Int(arc4random_uniform(8) + 1)
+          let subtitle = Faker().lorem.sentences(amount: sencenceCount) + " " + Faker().internet.url()
+          items.append(
+            ListItem(title: Faker().name.name(),
+              subtitle: subtitle,
+              kind: "feed",
+              image: "http://lorempixel.com/250/250/?type=attachment&id=\(i)",
+              meta: ["avatar" : "http://lorempixel.com/75/75?type=avatar&id=\(i)"])
+          )
+        })
+      }
+    return items
   }
 
   func applyStyles() {
