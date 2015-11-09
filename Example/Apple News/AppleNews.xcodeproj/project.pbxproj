@@ -186,12 +186,12 @@
 		BD9142C21BF086300062BFCB /* AppleNews */ = {
 			isa = PBXGroup;
 			children = (
-				BD9142D01BF099000062BFCB /* Headers */,
+				BD9142C81BF086300062BFCB /* Info.plist */,
 				BD9142C31BF086300062BFCB /* AppDelegate.swift */,
 				BD9142C41BF086300062BFCB /* Assets.xcassets */,
-				BD9142C51BF086300062BFCB /* LaunchScreen.storyboard */,
 				BD9142C71BF086300062BFCB /* Cells */,
-				BD9142C81BF086300062BFCB /* Info.plist */,
+				BD9142D01BF099000062BFCB /* Headers */,
+				BD9142C51BF086300062BFCB /* LaunchScreen.storyboard */,
 			);
 			path = AppleNews;
 			sourceTree = "<group>";
