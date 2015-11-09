@@ -1,5 +1,4 @@
 import UIKit
-import Fakery
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, SpotsDelegate {
