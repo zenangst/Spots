@@ -5,6 +5,7 @@ public class ListHeaderView: UIView, Componentable {
   lazy var label: UILabel = { [unowned self] in
     let label = UILabel(frame: self.frame)
     label.font = UIFont.boldSystemFontOfSize(11)
+
     return label
   }()
 
