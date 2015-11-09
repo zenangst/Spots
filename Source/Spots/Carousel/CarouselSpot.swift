@@ -9,13 +9,11 @@ public class CarouselSpot: NSObject, Spotable {
 
   public var component: Component
   public weak var sizeDelegate: SpotSizeDelegate?
+  public weak var spotDelegate: SpotsDelegate?
 
   public lazy var flowLayout: UICollectionViewFlowLayout = { [unowned self] in
     let layout = UICollectionViewFlowLayout()
-    layout.minimumInteritemSpacing = 0
-    layout.minimumLineSpacing = 0
     layout.scrollDirection = .Horizontal
-    layout.sectionInset = UIEdgeInsetsMake(25, 25, 25, 25)
 
     return layout
     }()
@@ -63,7 +61,7 @@ public class CarouselSpot: NSObject, Spotable {
 extension CarouselSpot: UIScrollViewDelegate {
 
   public func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-    let pageWidth: CGFloat = collectionView.frame.width - 40
+    let pageWidth: CGFloat = collectionView.frame.width  - flowLayout.sectionInset.left * 2
     let currentOffset = scrollView.contentOffset.x
     let targetOffset = targetContentOffset.memory.x
     
@@ -85,9 +83,18 @@ extension CarouselSpot: UIScrollViewDelegate {
 extension CarouselSpot: UICollectionViewDelegateFlowLayout {
 
   public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-    component.items[indexPath.item].size.width = collectionView.frame.width
     let item = component.items[indexPath.item]
-    return CGSize(width: item.size.width - 40, height: item.size.height)
+    component.items[indexPath.item].size.width = collectionView.frame.width / CGFloat(component.span)
+    component.items[indexPath.item].size.width -= flowLayout.sectionInset.left
+    return CGSize(width: item.size.width, height: item.size.height)
+  }
+}
+
+extension CarouselSpot: UICollectionViewDelegate {
+
+  public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    let item = component.items[indexPath.item]
+    spotDelegate?.spotDidSelectItem(self, item: item)
   }
 }
 
