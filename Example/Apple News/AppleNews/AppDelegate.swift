@@ -12,14 +12,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SpotsDelegate {
     ListSpot.headers["list"] = ListHeaderView.self
     GridSpot.cells["topic"] = GridTopicCell.self
 
-    var suggestedChannels = Component(span: 3)
-    suggestedChannels.items = [
+    var suggestedTopics = Component(title: "Suggested topics", span: 3)
+    suggestedTopics.items = [
       ListItem(title: "Business", kind: "topic"),
       ListItem(title: "Software", kind: "topic"),
       ListItem(title: "News", kind: "topic"),
     ]
 
-    var browse = Component(["title" : "Browse", "type" : "list"])
+    var browse = Component(title: "Browse", kind: "list")
     browse.items = [
       ListItem(title: "News"),
       ListItem(title: "Business"),
@@ -30,15 +30,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SpotsDelegate {
       ListItem(title: "Science"),
       ListItem(title: "Entertainment"),
       ListItem(title: "Food")
-    ]
+      ]
 
-    let carousel = CarouselSpot(component: suggestedChannels)
-    carousel.flowLayout.sectionInset = UIEdgeInsetsMake(15, 15, 15, 15)
-    carousel.flowLayout.minimumInteritemSpacing = 15
+    let suggestedTopicsSpot = CarouselSpot(suggestedTopics,
+      top: 15, left: 15, bottom: 15, right: 15, itemSpacing: 15)
 
     let components: [Spotable] = [
-      ListSpot(component: Component(title: "Suggested Topics", kind: "list")),
-      carousel,
+      TitleSpot(title: "Suggested Topics"),
+      suggestedTopicsSpot,
       ListSpot(component: browse)
     ]
 
