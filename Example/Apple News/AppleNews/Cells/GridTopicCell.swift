@@ -12,6 +12,7 @@ class GridTopicCell: UICollectionViewCell, Itemble {
     label.numberOfLines = 4
     label.textAlignment = .Center
     label.autoresizingMask = [.FlexibleWidth]
+    label.textColor = UIColor.whiteColor()
     return label
     }()
 
@@ -31,6 +32,7 @@ class GridTopicCell: UICollectionViewCell, Itemble {
     
     label.attributedText = NSAttributedString(string: item.title,
       attributes: [NSParagraphStyleAttributeName : paddedStyle])
+    label.frame.origin.y = 88
     label.frame.size.height = 88
     label.frame.size.width = size.width
   }
