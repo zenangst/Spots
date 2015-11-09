@@ -3,6 +3,8 @@ import Tailor
 import Sugar
 import GoldenRetriever
 
+typealias TitleSpot = ListSpot
+
 public class ListSpot: NSObject, Spotable {
 
   public static var cells = [String : UITableViewCell.Type]()
