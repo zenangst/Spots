@@ -34,6 +34,6 @@ class GridTopicCell: UICollectionViewCell, Itemble {
       attributes: [NSParagraphStyleAttributeName : paddedStyle])
     label.frame.origin.y = 88
     label.frame.size.height = 88
-    label.frame.size.width = size.width
+    label.frame.size.width = contentView.frame.size.width
   }
 }
