@@ -32,11 +32,13 @@ public struct ListItem: Mappable, Listable {
     meta     <- map.property("meta")
   }
 
-  public init(title: String, subtitle: String = "", image: String = "", kind: String = "", urn: String? = "") {
+  public init(title: String, subtitle: String = "", image: String = "", kind: String = "", urn: String? = "", size: ListSize = ListSize(), meta: [String : String] = [:]) {
     self.title = title
     self.subtitle = subtitle
     self.image = image
     self.kind = kind
     self.urn = urn
+    self.size = size
+    self.meta = meta
   }
 }
