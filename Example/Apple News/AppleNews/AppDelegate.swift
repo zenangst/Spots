@@ -1,4 +1,5 @@
 import UIKit
+import Fakery
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, SpotsDelegate {
@@ -33,7 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SpotsDelegate {
       ]
 
     let suggestedTopicsSpot = CarouselSpot(suggestedTopics,
-      top: 15, left: 15, bottom: 15, right: 15, itemSpacing: 15)
+      top: 5, left: 15, bottom: 5, right: 15, itemSpacing: 15)
 
     let components: [Spotable] = [
       TitleSpot(title: "Suggested Topics"),
