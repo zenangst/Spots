@@ -14,6 +14,7 @@ public class ListHeaderView: UIView, Componentable {
     style.firstLineHeadIndent = 15.0
     style.headIndent = 15.0
     style.tailIndent = -15.0
+
     return style
     }()
 
