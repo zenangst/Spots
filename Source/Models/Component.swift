@@ -15,4 +15,12 @@ public struct Component: Mappable {
     items <- map.objects("items")
     meta  <- map.property("meta")
   }
+
+  public init(title: String = "", kind: String = "", span: Int = 1, items: [ListItem] = [ListItem](), meta: [String : String] = [:]) {
+    self.title = title
+    self.kind = kind
+    self.span = span
+    self.items = items
+    self.meta = meta
+  }
 }
