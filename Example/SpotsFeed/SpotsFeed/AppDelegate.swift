@@ -12,9 +12,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     ListSpot.cells["feed"] = PostTableViewCell.self
 
-    var feedComponent = Component(span: 1)
-    feedComponent.items = generateItems(0, to: 3)
-
+    let feedComponent = Component(span: 1, items: generateItems(0, to: 3))
     let feedSpot = ListSpot(component: feedComponent)
 
     var browse = Component(title: "Browse", kind: "list")
