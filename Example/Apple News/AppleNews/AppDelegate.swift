@@ -1,7 +1,7 @@
 import UIKit
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, SpotsDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate {
 
   var window: UIWindow?
   var navigationController: UINavigationController?
@@ -52,7 +52,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SpotsDelegate {
     ]
 
     let controller = SpotsController(spots: components)
-    controller.spotDelegate = self
     controller.title = "Explore"
     navigationController = UINavigationController(rootViewController: controller)
     window?.rootViewController = navigationController
@@ -60,11 +59,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SpotsDelegate {
     window?.makeKeyAndVisible()
 
     return true
-  }
-
-  func spotDidSelectItem(spot: Spotable, item: ListItem) {
-    print(spot)
-    print(item)
   }
 }
 
