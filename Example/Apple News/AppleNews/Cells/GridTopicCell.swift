@@ -14,6 +14,7 @@ class GridTopicCell: UICollectionViewCell, Itemble {
     label.numberOfLines = 4
     label.textAlignment = .Center
     label.autoresizingMask = [.FlexibleWidth]
+
     return label
     }()
     
@@ -34,6 +35,7 @@ class GridTopicCell: UICollectionViewCell, Itemble {
     button.font = UIFont(name: "Menlo", size: 16)
     button.text = "+"
     button.textAlignment = .Center
+
     return button
   }()
 
@@ -47,6 +49,7 @@ class GridTopicCell: UICollectionViewCell, Itemble {
   lazy var paddedStyle: NSParagraphStyle = {
     let style = NSMutableParagraphStyle()
     style.alignment = .Center
+
     return style
     }()
 
