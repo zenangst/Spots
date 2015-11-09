@@ -12,5 +12,9 @@ public class ListSpotCell: UITableViewCell, Itemble {
     fatalError("init(coder:) has not been implemented")
   }
 
-  public func configure(inout item: ListItem) {}
+  public func configure(inout item: ListItem) {
+    accessoryType = item.urn?.isEmpty ?? false
+      ? .DisclosureIndicator
+      : .None
+  }
 }
