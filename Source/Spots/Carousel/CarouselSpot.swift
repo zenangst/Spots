@@ -53,10 +53,15 @@ public class CarouselSpot: NSObject, Spotable {
   }
 
   public func render() -> UIView {
-    collectionView.frame.size.height = component.items.first?.size.height ?? 0
     collectionView.backgroundColor = UIColor(hex:
       component.meta.property("background-color") ?? "FFFFFF")
-
+    if collectionView.contentSize.height > 0 {
+      collectionView.frame.size.height = collectionView.contentSize.height
+    } else {
+      collectionView.frame.size.height = component.items.first?.size.height ?? 0
+      collectionView.frame.size.height += flowLayout.sectionInset.top + flowLayout.sectionInset.bottom
+    }
+    
     return collectionView
   }
 
@@ -91,9 +96,10 @@ extension CarouselSpot: UIScrollViewDelegate {
 extension CarouselSpot: UICollectionViewDelegateFlowLayout {
 
   public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-    let item = component.items[indexPath.item]
     component.items[indexPath.item].size.width = collectionView.frame.width / CGFloat(component.span)
     component.items[indexPath.item].size.width -= flowLayout.sectionInset.left
+    let item = component.items[indexPath.item]
+
     return CGSize(width: item.size.width, height: item.size.height)
   }
 }
