@@ -13,8 +13,6 @@
 		BD4A62481BC1A47D0037C380 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4A62421BC1A47D0037C380 /* Parser.swift */; settings = {ASSET_TAGS = (); }; };
 		BD4A624B1BC1A4D20037C380 /* ListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4A624A1BC1A4D20037C380 /* ListItem.swift */; settings = {ASSET_TAGS = (); }; };
 		BD4A624D1BC1B9CA0037C380 /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4A624C1BC1B9CA0037C380 /* Component.swift */; settings = {ASSET_TAGS = (); }; };
-		BD4BCCBC1BDD05BD00466C0F /* MapSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4BCCBA1BDD05BD00466C0F /* MapSpot.swift */; settings = {ASSET_TAGS = (); }; };
-		BD4BCCBD1BDD05BD00466C0F /* MapSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4BCCBB1BDD05BD00466C0F /* MapSpotCell.swift */; settings = {ASSET_TAGS = (); }; };
 		BD4BCCBF1BDE017000466C0F /* Optimize+UICollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4BCCBE1BDE017000466C0F /* Optimize+UICollectionViewCell.swift */; settings = {ASSET_TAGS = (); }; };
 		BD61D8C71BC711C50069A96F /* GridSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD61D8C61BC711C50069A96F /* GridSpotCell.swift */; settings = {ASSET_TAGS = (); }; };
 		BD7697361BC6458700DB119D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD76972D1BC6458700DB119D /* AppDelegate.swift */; settings = {ASSET_TAGS = (); }; };
@@ -32,8 +30,6 @@
 		D55B0AC01BC5BA200003595C /* GridSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B0ABC1BC5BA200003595C /* GridSpot.swift */; settings = {ASSET_TAGS = (); }; };
 		D55B0AC11BC5BA200003595C /* ListSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B0ABE1BC5BA200003595C /* ListSpot.swift */; settings = {ASSET_TAGS = (); }; };
 		D55B0AC21BC5BA200003595C /* ListSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B0ABF1BC5BA200003595C /* ListSpotCell.swift */; settings = {ASSET_TAGS = (); }; };
-		D57E08671BCD20CE007CBB80 /* PageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57E08651BCD20CE007CBB80 /* PageController.swift */; settings = {ASSET_TAGS = (); }; };
-		D57E08681BCD20CE007CBB80 /* PageSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57E08661BCD20CE007CBB80 /* PageSpot.swift */; settings = {ASSET_TAGS = (); }; };
 		D5883A281BC720B900BF2FFF /* SpotFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5883A271BC720B900BF2FFF /* SpotFactory.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
@@ -46,8 +42,6 @@
 		BD4A62421BC1A47D0037C380 /* Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
 		BD4A624A1BC1A4D20037C380 /* ListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListItem.swift; sourceTree = "<group>"; };
 		BD4A624C1BC1B9CA0037C380 /* Component.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
-		BD4BCCBA1BDD05BD00466C0F /* MapSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapSpot.swift; sourceTree = "<group>"; };
-		BD4BCCBB1BDD05BD00466C0F /* MapSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapSpotCell.swift; sourceTree = "<group>"; };
 		BD4BCCBE1BDE017000466C0F /* Optimize+UICollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Optimize+UICollectionViewCell.swift"; sourceTree = "<group>"; };
 		BD61D8C61BC711C50069A96F /* GridSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridSpotCell.swift; sourceTree = "<group>"; };
 		BD6973631BBFE4FB001DC32F /* SpotsDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpotsDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -67,8 +61,6 @@
 		D55B0ABC1BC5BA200003595C /* GridSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridSpot.swift; sourceTree = "<group>"; };
 		D55B0ABE1BC5BA200003595C /* ListSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListSpot.swift; sourceTree = "<group>"; };
 		D55B0ABF1BC5BA200003595C /* ListSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListSpotCell.swift; sourceTree = "<group>"; };
-		D57E08651BCD20CE007CBB80 /* PageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageController.swift; sourceTree = "<group>"; };
-		D57E08661BCD20CE007CBB80 /* PageSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageSpot.swift; sourceTree = "<group>"; };
 		D5883A271BC720B900BF2FFF /* SpotFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotFactory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -116,15 +108,6 @@
 				BD4A624C1BC1B9CA0037C380 /* Component.swift */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		BD4BCCB91BDD058C00466C0F /* Map */ = {
-			isa = PBXGroup;
-			children = (
-				BD4BCCBA1BDD05BD00466C0F /* MapSpot.swift */,
-				BD4BCCBB1BDD05BD00466C0F /* MapSpotCell.swift */,
-			);
-			path = Map;
 			sourceTree = "<group>";
 		};
 		BD69735A1BBFE4FB001DC32F = {
@@ -182,8 +165,6 @@
 		D55B0ABA1BC5BA200003595C /* Spots */ = {
 			isa = PBXGroup;
 			children = (
-				BD4BCCB91BDD058C00466C0F /* Map */,
-				D57E08641BCD20CE007CBB80 /* Pages */,
 				BD8BD36D1BC6F02C00509FF3 /* Carousel */,
 				D55B0ABB1BC5BA200003595C /* Grid */,
 				D55B0ABD1BC5BA200003595C /* List */,
@@ -207,15 +188,6 @@
 				D55B0ABF1BC5BA200003595C /* ListSpotCell.swift */,
 			);
 			path = List;
-			sourceTree = "<group>";
-		};
-		D57E08641BCD20CE007CBB80 /* Pages */ = {
-			isa = PBXGroup;
-			children = (
-				D57E08651BCD20CE007CBB80 /* PageController.swift */,
-				D57E08661BCD20CE007CBB80 /* PageSpot.swift */,
-			);
-			path = Pages;
 			sourceTree = "<group>";
 		};
 		DC20B8ABF3750CE9A8F94AD8 /* Pods */ = {
@@ -358,7 +330,6 @@
 			files = (
 				BD4A624B1BC1A4D20037C380 /* ListItem.swift in Sources */,
 				D55B0AC21BC5BA200003595C /* ListSpotCell.swift in Sources */,
-				D57E08671BCD20CE007CBB80 /* PageController.swift in Sources */,
 				D51DF1671BC490CA00EAB122 /* Spotable.swift in Sources */,
 				BD4A624D1BC1B9CA0037C380 /* Component.swift in Sources */,
 				BD4A62481BC1A47D0037C380 /* Parser.swift in Sources */,
@@ -372,14 +343,11 @@
 				D51DF1691BC490F500EAB122 /* SpotSizeDelegate.swift in Sources */,
 				BD61D8C71BC711C50069A96F /* GridSpotCell.swift in Sources */,
 				BD7697361BC6458700DB119D /* AppDelegate.swift in Sources */,
-				BD4BCCBD1BDD05BD00466C0F /* MapSpotCell.swift in Sources */,
 				BD3893D21BC9838F002E929B /* JSONController.swift in Sources */,
 				BDECFBDC1BC710230066C57B /* Gridable.swift in Sources */,
 				BDECFBDA1BC70EAF0066C57B /* GridSpotHeader.swift in Sources */,
 				D5883A281BC720B900BF2FFF /* SpotFactory.swift in Sources */,
 				D55B0AC01BC5BA200003595C /* GridSpot.swift in Sources */,
-				BD4BCCBC1BDD05BD00466C0F /* MapSpot.swift in Sources */,
-				D57E08681BCD20CE007CBB80 /* PageSpot.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
