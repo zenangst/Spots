@@ -12,12 +12,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SpotsDelegate {
     ListSpot.headers["list"] = ListHeaderView.self
     GridSpot.cells["topic"] = GridTopicCell.self
 
-    var suggestedTopics = Component(title: "Suggested topics", span: 3)
-    suggestedTopics.items = [
-      ListItem(title: "Business", kind: "topic"),
-      ListItem(title: "Software", kind: "topic"),
-      ListItem(title: "News", kind: "topic"),
-    ]
+    let suggestedChannels = Component(span: 3, items: [
+      ListItem(title: "Apple", kind: "topic", image: "http://lorempixel.com/125/160/?type=attachment&id=1"),
+      ListItem(title: "Spotify", kind: "topic",image: "http://lorempixel.com/125/160/?type=attachment&id=2"),
+      ListItem(title: "Google", kind: "topic", image: "http://lorempixel.com/125/160/?type=attachment&id=3")
+      ])
+
+    let suggestedTopics = Component(span: 3, items: [
+      ListItem(title: "Business", kind: "topic", meta: ["background-color" : "5A0E20"]),
+      ListItem(title: "Software", kind: "topic", meta: ["background-color" : "760D26"]),
+      ListItem(title: "News", kind: "topic", meta: ["background-color" : "2266B5"]),
+      ListItem(title: "iOS", kind: "topic", meta: ["background-color" : "4CBCFB"])
+      ])
+
+    let suggestedChannelSpot = CarouselSpot(suggestedChannels,
+      top: 5, left: 15, bottom: 5, right: 15, itemSpacing: 15)
+    let suggestedTopicsSpot = CarouselSpot(suggestedTopics,
+      top: 5, left: 15, bottom: 5, right: 15, itemSpacing: 15)
 
     var browse = Component(title: "Browse", kind: "list")
     browse.items = [
@@ -32,10 +43,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SpotsDelegate {
       ListItem(title: "Food")
       ]
 
-    let suggestedTopicsSpot = CarouselSpot(suggestedTopics,
-      top: 5, left: 15, bottom: 5, right: 15, itemSpacing: 15)
-
     let components: [Spotable] = [
+      TitleSpot(title: "Suggested Channels"),
+      suggestedChannelSpot,
       TitleSpot(title: "Suggested Topics"),
       suggestedTopicsSpot,
       ListSpot(component: browse)
@@ -47,8 +57,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SpotsDelegate {
     navigationController = UINavigationController(rootViewController: controller)
     window?.rootViewController = navigationController
 
-    applyStyles()
-
     window?.makeKeyAndVisible()
 
     return true
@@ -57,18 +65,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SpotsDelegate {
   func spotDidSelectItem(spot: Spotable, item: ListItem) {
     print(spot)
     print(item)
-  }
-
-  func applyStyles() {
-    UIApplication.sharedApplication().statusBarStyle = .LightContent
-
-    let navigationBar = UINavigationBar.appearance()
-    navigationBar.barTintColor = UIColor(red:0.000, green:0.000, blue:0.000, alpha: 1)
-    navigationBar.tintColor = UIColor(red:1.000, green:1.000, blue:1.000, alpha: 1)
-    navigationBar.shadowImage = UIImage()
-    navigationBar.titleTextAttributes = [
-      NSForegroundColorAttributeName: UIColor(red:1.000, green:1.000, blue:1.000, alpha: 1)
-    ]
   }
 }
 
