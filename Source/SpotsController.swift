@@ -56,12 +56,11 @@ extension SpotsController: UICollectionViewDataSource {
   }
 
   public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCellWithReuseIdentifier(SpotsController.reuseIdentifier, forIndexPath: indexPath)
     let spot = spots[indexPath.item]
+    let cell = collectionView.dequeueReusableCellWithReuseIdentifier(SpotsController.reuseIdentifier, forIndexPath: indexPath)
     spot.spotDelegate = spotDelegate
 
     cell.optimize()
-    cell.rasterize()
 
     if spot.render().superview == nil {
       cell.contentView.subviews.forEach { $0.removeFromSuperview() }
@@ -76,9 +75,14 @@ extension SpotsController: UICollectionViewDataSource {
 extension SpotsController: UICollectionViewDelegateFlowLayout {
 
   public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-    var frame = spots[indexPath.item].render().frame
-    frame.size.width = UIScreen.mainScreen().bounds.width
-    return frame.size
+    var component = spots[indexPath.item].component
+    if component.size == nil {
+      var frame = spots[indexPath.item].render().frame
+      frame.size.width = UIScreen.mainScreen().bounds.width
+      component.size = ComponentSize(width: UIScreen.mainScreen().bounds.width, height: frame.height)
+    }
+
+    return component.size!.coreGraphicsSize()
   }
 }
 
@@ -86,5 +90,9 @@ extension SpotsController: SpotSizeDelegate {
 
   public func sizeDidUpdate() {
     collectionView.collectionViewLayout.invalidateLayout()
+  }
+
+  public func contentOffset() -> CGPoint {
+    return collectionView.contentOffset
   }
 }

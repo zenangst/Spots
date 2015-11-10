@@ -69,10 +69,7 @@ class GridSpotCard : UICollectionViewCell, Itemble {
   }
 
   func configure(inout item: ListItem) {
-    optimize()
-
     if !item.image.isEmpty {
-      rasterize()
       imageView.image = nil
       let resource = item.image
       let fido = GoldenRetriever()

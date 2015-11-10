@@ -6,6 +6,7 @@ import Hex
 class GridSpotFeedItem : UICollectionViewCell, Itemble {
 
   var size = CGSize(width: 0, height: 320)
+  var item: ListItem?
 
   lazy var canvasView: UIView = {
     let view = UIView()
@@ -69,10 +70,7 @@ class GridSpotFeedItem : UICollectionViewCell, Itemble {
   }
 
   func configure(inout item: ListItem) {
-    optimize()
-
     if !item.image.isEmpty {
-      rasterize()
       imageView.image = nil
       let resource = item.image
       let fido = GoldenRetriever()

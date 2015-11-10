@@ -71,7 +71,6 @@ class GridTopicCell: UICollectionViewCell, Itemble {
   func configure(inout item: ListItem) {
     if !item.image.isEmpty {
       imageView.frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
-      rasterize()
       imageView.image = nil
       let resource = item.image
       let fido = GoldenRetriever()

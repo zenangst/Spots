@@ -12,21 +12,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     ListSpot.cells["feed"] = PostTableViewCell.self
 
-    let feedComponent = Component(span: 1, items: generateItems(0, to: 50))
+    let feedComponent = Component(span: 1, items: generateItems(0, to: 10))
     let feedSpot = ListSpot(component: feedComponent)
-    let browse = Component(title: "Browse",
-      kind: "list",
-      items: [
-        ListItem(title: "News"),
-        ListItem(title: "Business"),
-        ListItem(title: "Politics"),
-        ListItem(title: "Travel")
-      ]
-    )
-
     let components: [Spotable] = [
       feedSpot,
-      ListSpot(component: browse)
     ]
 
     let controller = SpotsController(spots: components)

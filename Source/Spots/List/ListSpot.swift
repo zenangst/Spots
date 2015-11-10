@@ -8,6 +8,7 @@ typealias TitleSpot = ListSpot
 public class ListSpot: NSObject, Spotable {
 
   public static var cells = [String : UITableViewCell.Type]()
+  private var cachedCells = [String : Itemble]()
   public static var headers = [String : UIView.Type]()
 
   public let itemHeight: CGFloat = 44
@@ -37,13 +38,16 @@ public class ListSpot: NSObject, Spotable {
     let items = component.items
     for (index, item) in items.enumerate() {
       let componentCellClass = ListSpot.cells[item.kind] ?? ListSpotCell.self
-      self.tableView.registerClass(componentCellClass,
-        forCellReuseIdentifier: "ListCell\(item.kind)")
-
-      if let listCell = componentCellClass.init() as? Itemble {
-          self.component.items[index].size.height = listCell.size.height
+      if let cachedCell = cachedCells[item.kind] {
+        cachedCell.configure(&self.component.items[index])
+      } else if let listCell = componentCellClass.init() as? Itemble {
+        self.tableView.registerClass(componentCellClass,
+          forCellReuseIdentifier: "ListCell\(item.kind)")
+        listCell.configure(&self.component.items[index])
+        cachedCells[item.kind] = listCell
       }
     }
+    cachedCells.removeAll()
   }
 
   public convenience init(title: String, kind: String = "list") {
@@ -52,13 +56,14 @@ public class ListSpot: NSObject, Spotable {
   }
 
   public func render() -> UIView {
-    tableView.frame.size.width = UIScreen.mainScreen().bounds.width
+    if component.size == nil {
+      var newHeight = component.items.reduce(0, combine: { $0 + $1.size.height })
+      if !component.title.isEmpty { newHeight += headerHeight }
 
-    var newHeight = component.items.reduce(0, combine: { $0 + $1.size.height })
-    if !component.title.isEmpty {
-      newHeight += headerHeight
+      tableView.frame.size.width = UIScreen.mainScreen().bounds.width
+      tableView.frame.size.height = newHeight
+      component.size = ComponentSize(width: tableView.frame.width, height: tableView.frame.height)
     }
-    tableView.frame.size.height = newHeight
     
     return tableView
   }
@@ -72,21 +77,18 @@ public class ListSpot: NSObject, Spotable {
 extension ListSpot: UITableViewDelegate {
 
   public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    let item = component.items[indexPath.row]
     tableView.deselectRowAtIndexPath(indexPath, animated: true)
-    spotDelegate?.spotDidSelectItem(self, item: item)
+    spotDelegate?.spotDidSelectItem(self, item: component.items[indexPath.row])
   }
 
   public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
     var newHeight = component.items.reduce(0, combine: { $0 + $1.size.height })
-    if !component.title.isEmpty {
-      newHeight += headerHeight
-    }
-
+    if !component.title.isEmpty { newHeight += headerHeight }
     tableView.frame.size.height = newHeight
+    component.size = ComponentSize(width: tableView.frame.width, height: tableView.frame.height)
     sizeDelegate?.sizeDidUpdate()
-    let item = component.items[indexPath.item]
-    return item.size.height
+
+    return component.items[indexPath.item].size.height
   }
 }
 
@@ -117,16 +119,20 @@ extension ListSpot: UITableViewDataSource {
   }
 
   public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    var item = component.items[indexPath.row]
-    let cell = tableView.dequeueReusableCellWithIdentifier("ListCell\(item.kind)")
-    cell?.optimize()
-    cell?.rasterize()
+    let cell: UITableViewCell
 
-    if let list = cell as? Itemble {
-      list.configure(&item)
-      component.items[indexPath.item] = item
+    if let tableViewCell = cachedCells[self.component.items[indexPath.item].kind] as? UITableViewCell {
+      cell = tableViewCell
+    } else {
+      cell = tableView.dequeueReusableCellWithIdentifier("ListCell\(self.component.items[indexPath.item].kind)", forIndexPath: indexPath)
     }
 
-    return cell!
+    cell.optimize()
+
+    if let itemable = cell as? Itemble {
+      itemable.configure(&self.component.items[indexPath.item])
+    }
+
+    return cell
   }
 }

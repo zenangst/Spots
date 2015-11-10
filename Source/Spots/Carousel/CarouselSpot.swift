@@ -6,7 +6,6 @@ import Tailor
 public class CarouselSpot: NSObject, Spotable {
 
   public static var cells = [String: UICollectionViewCell.Type]()
-
   public var component: Component
   public weak var sizeDelegate: SpotSizeDelegate?
   public weak var spotDelegate: SpotsDelegate?
@@ -120,8 +119,6 @@ extension CarouselSpot: UICollectionViewDataSource {
   public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
     var item = component.items[indexPath.item]
     let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CarouselCell\(item.kind.capitalizedString)", forIndexPath: indexPath)
-    cell.optimize()
-    cell.rasterize()
 
     if let grid = cell as? Itemble {
       grid.configure(&item)

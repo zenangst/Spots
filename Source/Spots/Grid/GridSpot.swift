@@ -2,6 +2,7 @@ import UIKit
 import GoldenRetriever
 import Sugar
 import Hex
+import Compass
 
 public class GridSpot: NSObject, Spotable {
 
@@ -99,7 +100,6 @@ extension GridSpot: UICollectionViewDataSource {
     var item = component.items[indexPath.item]
     let cell = collectionView.dequeueReusableCellWithReuseIdentifier("\(cellPrefix)\(item.kind.capitalizedString)", forIndexPath: indexPath)
     cell.optimize()
-    cell.rasterize()
 
     if let grid = cell as? Itemble {
       grid.configure(&item)

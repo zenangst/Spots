@@ -1,11 +1,26 @@
 import Tailor
 import Sugar
 
+public struct ComponentSize {
+  public var height: CGFloat
+  public var width: CGFloat
+
+  init(width: CGFloat = 0, height: CGFloat = 0) {
+    self.width = width
+    self.height = height
+  }
+
+  func coreGraphicsSize() -> CGSize {
+    return CGSize(width: self.width, height: self.height)
+  }
+}
+
 public struct Component: Mappable {
   public var title = ""
   public var kind = ""
   public var span = 1
   public var items = [ListItem]()
+  public var size: ComponentSize?
   public var meta = [String : String]()
 
   public init(_ map: JSONDictionary) {

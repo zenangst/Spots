@@ -21,7 +21,8 @@ public class PostTableViewCell: WallTableViewCell, Itemble {
 
   public static let reusableIdentifier = "PostTableViewCell"
 
-  public override class func height(post: Post) -> CGFloat {
+  public class func height(item: ListItem) -> CGFloat {
+    let post = PostTableViewCell.itemToPost(item)
     let postText = post.text as NSString
     let textFrame = postText.boundingRectWithSize(CGSize(width: UIScreen.mainScreen().bounds.width - 40,
       height: CGFloat.max), options: .UsesLineFragmentOrigin,
@@ -103,10 +104,8 @@ public class PostTableViewCell: WallTableViewCell, Itemble {
 
     [authorView, postMediaView, textView,
       informationView, actionBarView, bottomSeparator].forEach {
-        addSubview($0)
-        $0.opaque = true
-        $0.backgroundColor = UIColor.whiteColor()
-        $0.layer.drawsAsynchronously = true
+        contentView.addSubview($0)
+        backgroundColor = UIColor.whiteColor()
     }
 
     bottomSeparator.backgroundColor = ColorList.Basis.tableViewBackground
@@ -118,18 +117,23 @@ public class PostTableViewCell: WallTableViewCell, Itemble {
     fatalError("init(coder:) has not been implemented")
   }
 
-  // MARK: - Setup
+  private class func itemToPost(item: ListItem) -> Post {
+    let avatarURL = NSURL(string: item.image)!
+    let author = Author(name: item.title, avatar: avatarURL)
 
-  public override func drawRect(rect: CGRect) {
-    super.drawRect(rect)
-
-    guard let post = post else { return }
-    calculateHeight(post)
+    var mediaItems = [Media]()
+    if let strings = item.meta["media"] as? [String] {
+      for mediaString in strings {
+        let url = NSURL(string: mediaString)!
+        let media = Media(kind: Media.Kind.Image, source: url)
+        mediaItems.append(media)
+      }
+    }
+    return Post(id: 0, text: item.subtitle, publishDate: "", author: author, media: mediaItems)
   }
 
-  private func calculateHeight(post: Post) {
-    guard let author = post.author else { return }
-
+  public func setupViews(item: ListItem) -> CGFloat {
+    let post = PostTableViewCell.itemToPost(item)
     var imageHeight: CGFloat = 0
     var imageTop: CGFloat = 50
     if !post.media.isEmpty {
@@ -152,7 +156,7 @@ public class PostTableViewCell: WallTableViewCell, Itemble {
     actionBarView.frame.size = CGSize(width: UIScreen.mainScreen().bounds.width, height: 44)
     bottomSeparator.frame = CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: 20)
 
-    authorView.configureView(author, date: post.publishDate)
+    authorView.configureView(post.author!, date: post.publishDate)
     informationView.configureView(post.likeCount, comments: post.commentCount, seen: post.seenCount)
     actionBarView.configureView(post.liked)
 
@@ -165,25 +169,18 @@ public class PostTableViewCell: WallTableViewCell, Itemble {
     informationView.frame.origin = CGPoint(x: 0, y: CGRectGetMaxY(textView.frame))
     actionBarView.frame.origin = CGPoint(x: 0, y: CGRectGetMaxY(informationView.frame))
     bottomSeparator.frame.origin.y = CGRectGetMaxY(actionBarView.frame)
+
+    return bottomSeparator.frame.origin.y
   }
 
   public func configure(inout item: ListItem) {
-    let avatarURL = NSURL(string: item.image)!
-    let author = Author(name: item.title, avatar: avatarURL)
-
-    var mediaItems = [Media]()
-    if let strings = item.meta["media"] as? [String] {
-      for mediaString in strings {
-        let url = NSURL(string: mediaString)!
-        let media = Media(kind: Media.Kind.Image, source: url)
-        mediaItems.append(media)
-      }
+    let post = PostTableViewCell.itemToPost(item)
+    if bottomSeparator.frame.origin.y == 0.0 {
+      item.size.width = contentView.frame.width
+      item.size.height = setupViews(item)
+    } else {
+      item.size.height = PostTableViewCell.height(item)
     }
-
-    let post = Post(id: 0, text: item.subtitle, publishDate: "", author: author, media: mediaItems, reusableIdentifier: reuseIdentifier)
-
-    calculateHeight(post)
-    item.size.height = PostTableViewCell.height(post)
   }
 }
 

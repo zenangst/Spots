@@ -1,3 +1,4 @@
+import UIKit
 import Tailor
 import Sugar
 
@@ -10,6 +11,10 @@ public struct ListSize {
   init(width: CGFloat = 0, height: CGFloat = 0) {
     self.width = width
     self.height = height
+  }
+
+  func coreGraphicsSize() -> CGSize {
+    return CGSize(width: self.width, height: self.height)
   }
 }
 

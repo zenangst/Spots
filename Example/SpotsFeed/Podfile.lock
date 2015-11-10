@@ -1,4 +1,5 @@
 PODS:
+  - Compass (0.1.0)
   - Fakery (1.0.0):
     - SwiftyJSON (~> 2.3.0)
   - GoldenRetriever (0.1.1)
@@ -12,6 +13,7 @@ PODS:
     - Sugar
 
 DEPENDENCIES:
+  - Compass (from `https://github.com/hyperoslo/Compass`)
   - Fakery
   - GoldenRetriever (from `https://github.com/zenangst/GoldenRetriever`)
   - Hex
@@ -20,6 +22,8 @@ DEPENDENCIES:
   - Tailor (from `https://github.com/zenangst/Tailor`)
 
 EXTERNAL SOURCES:
+  Compass:
+    :git: https://github.com/hyperoslo/Compass
   GoldenRetriever:
     :git: https://github.com/zenangst/GoldenRetriever
   Sugar:
@@ -28,6 +32,9 @@ EXTERNAL SOURCES:
     :git: https://github.com/zenangst/Tailor
 
 CHECKOUT OPTIONS:
+  Compass:
+    :commit: 6d95d5c457fd3cbca3f251a872c528002ec78bed
+    :git: https://github.com/hyperoslo/Compass
   GoldenRetriever:
     :commit: bfee4c7e1097b86bf1ad3cc2ca6bdaa1156fd877
     :git: https://github.com/zenangst/GoldenRetriever
@@ -39,6 +46,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/zenangst/Tailor
 
 SPEC CHECKSUMS:
+  Compass: e01188a61ec071d122ca607202a21eb9b52ea0b9
   Fakery: a8c99f35643a6fe396ee30a14fbcd466dbd098dd
   GoldenRetriever: 68256f443f35eaeb90b58e2f64bc8f5b255738ba
   Hex: ee430da9c4412d9196366ae5327f279021dc03eb

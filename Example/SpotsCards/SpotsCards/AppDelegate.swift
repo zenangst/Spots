@@ -9,6 +9,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
     window = UIWindow(frame: UIScreen.mainScreen().bounds)
 
+    SpotFactory.register("cards", spot: CardSpot.self)
     GridSpot.cells["card"] = GridSpotCard.self
 
     let controller = JSONController()

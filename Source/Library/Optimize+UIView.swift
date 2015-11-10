@@ -7,9 +7,4 @@ extension UIView {
     clipsToBounds = true
     layer.drawsAsynchronously = true
   }
-
-  func rasterize() {
-    layer.shouldRasterize = true
-    layer.rasterizationScale = UIScreen.mainScreen().scale
-  }
 }
