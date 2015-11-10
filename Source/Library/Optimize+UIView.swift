@@ -1,14 +1,14 @@
 import UIKit
 
-extension UICollectionViewCell {
+extension UIView {
 
   func optimize() {
     opaque = true
     clipsToBounds = true
+    layer.drawsAsynchronously = true
   }
 
   func rasterize() {
-    layer.drawsAsynchronously = true
     layer.shouldRasterize = true
     layer.rasterizationScale = UIScreen.mainScreen().scale
   }

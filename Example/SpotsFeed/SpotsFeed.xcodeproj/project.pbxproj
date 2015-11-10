@@ -10,7 +10,7 @@
 		145247EBAD739548A6D374E9 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4130076C870CD84B2DA65854 /* Pods.framework */; };
 		BD18A1711BF12A3A003E1BD1 /* Componentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD18A15B1BF12A3A003E1BD1 /* Componentable.swift */; settings = {ASSET_TAGS = (); }; };
 		BD18A1721BF12A3A003E1BD1 /* Itemble.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD18A15C1BF12A3A003E1BD1 /* Itemble.swift */; settings = {ASSET_TAGS = (); }; };
-		BD18A1731BF12A3A003E1BD1 /* Optimize+UICollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD18A15D1BF12A3A003E1BD1 /* Optimize+UICollectionViewCell.swift */; settings = {ASSET_TAGS = (); }; };
+		BD18A1731BF12A3A003E1BD1 /* Optimize+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD18A15D1BF12A3A003E1BD1 /* Optimize+UIView.swift */; settings = {ASSET_TAGS = (); }; };
 		BD18A1741BF12A3A003E1BD1 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD18A15E1BF12A3A003E1BD1 /* Parser.swift */; settings = {ASSET_TAGS = (); }; };
 		BD18A1751BF12A3A003E1BD1 /* Spotable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD18A15F1BF12A3A003E1BD1 /* Spotable.swift */; settings = {ASSET_TAGS = (); }; };
 		BD18A1761BF12A3A003E1BD1 /* SpotFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD18A1601BF12A3A003E1BD1 /* SpotFactory.swift */; settings = {ASSET_TAGS = (); }; };
@@ -49,7 +49,7 @@
 		B2B953F991D64F708394529D /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		BD18A15B1BF12A3A003E1BD1 /* Componentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Componentable.swift; sourceTree = "<group>"; };
 		BD18A15C1BF12A3A003E1BD1 /* Itemble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Itemble.swift; sourceTree = "<group>"; };
-		BD18A15D1BF12A3A003E1BD1 /* Optimize+UICollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Optimize+UICollectionViewCell.swift"; sourceTree = "<group>"; };
+		BD18A15D1BF12A3A003E1BD1 /* Optimize+UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Optimize+UIView.swift"; sourceTree = "<group>"; };
 		BD18A15E1BF12A3A003E1BD1 /* Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
 		BD18A15F1BF12A3A003E1BD1 /* Spotable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spotable.swift; sourceTree = "<group>"; };
 		BD18A1601BF12A3A003E1BD1 /* SpotFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotFactory.swift; sourceTree = "<group>"; };
@@ -130,7 +130,7 @@
 			children = (
 				BD18A15B1BF12A3A003E1BD1 /* Componentable.swift */,
 				BD18A15C1BF12A3A003E1BD1 /* Itemble.swift */,
-				BD18A15D1BF12A3A003E1BD1 /* Optimize+UICollectionViewCell.swift */,
+				BD18A15D1BF12A3A003E1BD1 /* Optimize+UIView.swift */,
 				BD18A15E1BF12A3A003E1BD1 /* Parser.swift */,
 				BD18A15F1BF12A3A003E1BD1 /* Spotable.swift */,
 				BD18A1601BF12A3A003E1BD1 /* SpotFactory.swift */,
@@ -379,7 +379,7 @@
 				BD18A1921BF137B0003E1BD1 /* PostInformationBarView.swift in Sources */,
 				BD18A1971BF137E4003E1BD1 /* FontList.swift in Sources */,
 				BD18A1791BF12A3A003E1BD1 /* Component.swift in Sources */,
-				BD18A1731BF12A3A003E1BD1 /* Optimize+UICollectionViewCell.swift in Sources */,
+				BD18A1731BF12A3A003E1BD1 /* Optimize+UIView.swift in Sources */,
 				BD18A19C1BF137FD003E1BD1 /* Author.swift in Sources */,
 				BD18A1911BF137B0003E1BD1 /* PostAuthorView.swift in Sources */,
 				BD18A18F1BF137B0003E1BD1 /* WallTableViewCell.swift in Sources */,
