@@ -5,11 +5,10 @@ import Hex
 
 class GridSpotCard : UICollectionViewCell, Itemble {
 
-  var size = CGSize(width: 0, height: 320)
+  var size = CGSize(width: 320, height: 430)
 
   lazy var canvasView: UIView = {
     let view = UIView()
-    view.autoresizingMask = [.FlexibleWidth]
     view.backgroundColor = UIColor.whiteColor()
     view.clipsToBounds = true
     view.layer.cornerRadius = 8
@@ -104,7 +103,6 @@ class GridSpotCard : UICollectionViewCell, Itemble {
       width: 325,
       height: 420)
 
-    item.size.width = contentView.frame.width - 40
     item.size.height = 430
   }
 
