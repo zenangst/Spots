@@ -80,6 +80,7 @@ class JSONController: UIViewController {
         
           let components = Parser.parse(json)
           let controller = SpotsController(spots: components)
+          controller.collectionView.backgroundColor = UIColor(hex: "252525")
           navigationController?.pushViewController(controller, animated: true)
         }
       } catch {
