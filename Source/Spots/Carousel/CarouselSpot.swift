@@ -72,7 +72,7 @@ public class CarouselSpot: NSObject, Spotable {
 extension CarouselSpot: UIScrollViewDelegate {
 
   public func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-    let pageWidth: CGFloat = collectionView.frame.width  - flowLayout.sectionInset.left * 2
+    let pageWidth: CGFloat = collectionView.frame.width - flowLayout.sectionInset.left + flowLayout.minimumLineSpacing
     let currentOffset = scrollView.contentOffset.x
     let targetOffset = targetContentOffset.memory.x
     
@@ -105,8 +105,7 @@ extension CarouselSpot: UICollectionViewDelegateFlowLayout {
 extension CarouselSpot: UICollectionViewDelegate {
 
   public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-    let item = component.items[indexPath.item]
-    spotDelegate?.spotDidSelectItem(self, item: item)
+    spotDelegate?.spotDidSelectItem(self, item: component.items[indexPath.item])
   }
 }
 

@@ -5,7 +5,7 @@ import Hex
 
 class GridSpotCard : UICollectionViewCell, Itemble {
 
-  var size = CGSize(width: 320, height: 430)
+  var size = CGSize(width: 325, height: 430)
 
   lazy var canvasView: UIView = {
     let view = UIView()

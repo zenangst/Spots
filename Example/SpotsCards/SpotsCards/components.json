@@ -27,7 +27,7 @@
     "meta" : {
        "background-color" : "252525"
      },
-    "type" : "carousel",
+    "type" : "cards",
     "items" : [
       {
         "type"     : "card",
@@ -44,7 +44,7 @@
     "meta" : {
        "background-color" : "252525"
      },
-    "type" : "carousel",
+    "type" : "cards",
     "items" : [
       {
         "type"     : "card",
@@ -58,7 +58,7 @@
     "meta" : {
        "background-color" : "252525"
      },
-    "type" : "carousel",
+    "type" : "cards",
     "items" : [
       {
         "type"     : "card",
