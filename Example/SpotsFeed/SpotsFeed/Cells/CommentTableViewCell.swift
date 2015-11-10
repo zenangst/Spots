@@ -5,9 +5,12 @@ public protocol CommentTableViewCellDelegate: class {
   func commentAuthorDidTap(commentID: Int)
 }
 
-public class CommentTableViewCell: WallTableViewCell {
+public class CommentTableViewCell: WallTableViewCell, Itemble {
 
-  public override class func height(post: Post) -> CGFloat {
+  public var size = CGSize(width: 0, height: 44)
+
+  public class func height(item: ListItem) -> CGFloat {
+    let post = CommentTableViewCell.itemToPost(item)
     let postText = post.text as NSString
     let textFrame = postText.boundingRectWithSize(CGSize(
       width: UIScreen.mainScreen().bounds.width - Dimensions.textOffset - Dimensions.sideOffset,
@@ -122,6 +125,21 @@ public class CommentTableViewCell: WallTableViewCell {
   public required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
+  
+  private class func itemToPost(item: ListItem) -> Post {
+    let avatarURL = NSURL(string: item.image)!
+    let author = Author(name: item.title, avatar: avatarURL)
+
+    var mediaItems = [Media]()
+    if let strings = item.meta["media"] as? [String] {
+      for mediaString in strings {
+        let url = NSURL(string: mediaString)!
+        let media = Media(kind: Media.Kind.Image, source: url)
+        mediaItems.append(media)
+      }
+    }
+    return Post(id: 0, text: item.subtitle, publishDate: "", author: author, media: mediaItems)
+  }
 
   // MARK: - Actions
 
@@ -132,21 +150,21 @@ public class CommentTableViewCell: WallTableViewCell {
 
   // MARK: - Setup
 
-  public override func drawRect(rect: CGRect) {
-    super.drawRect(rect)
+  public func setupViews(item: ListItem) -> CGFloat {
+    post = CommentTableViewCell.itemToPost(item)
+    guard let post = post else { return 0 }
 
-    guard let post = post, author = post.author else { return }
     let totalWidth = UIScreen.mainScreen().bounds.width
 
     avatarImageView.frame = CGRect(x: Dimensions.sideOffset, y: Dimensions.sideOffset,
       width: Dimensions.avatarSize, height: Dimensions.avatarSize)
-    if let avatarURL = author.avatar {
+    if let avatarURL = post.author!.avatar {
       avatarImageView.sd_setImageWithURL(avatarURL)
     }
 
     authorLabel.frame = CGRect(x: Dimensions.textOffset, y: Dimensions.nameTopOffset,
       width: totalWidth - 70, height: 20)
-    authorLabel.text = author.name
+    authorLabel.text = post.author!.name
 
     textView.text = post.text
     textView.frame.size.width = totalWidth - Dimensions.textOffset - Dimensions.sideOffset
@@ -159,6 +177,18 @@ public class CommentTableViewCell: WallTableViewCell {
     dateLabel.text = post.publishDate
 
     bottomSeparator.frame = CGRect(x: 0, y: dateLabel.frame.maxY + 8, width: totalWidth, height: 0.5)
+
+    return bottomSeparator.frame.origin.y
+  }
+
+  public func configure(inout item: ListItem) {
+    if bottomSeparator.frame.origin.y == 0.0 {
+      item.size.width = contentView.frame.width
+      item.size.height = setupViews(item)
+    } else {
+      post = CommentTableViewCell.itemToPost(item)
+      item.size.height = CommentTableViewCell.height(item)
+    }
   }
 }
 

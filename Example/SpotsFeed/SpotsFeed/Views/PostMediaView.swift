@@ -50,7 +50,6 @@ public class PostMediaView: UIView {
       thirdTapGestureRecognizer, fourthTapGestureRecognizer].forEach {
         $0.addTarget(self, action: "handleGestureRecognizer:")
     }
-
     firstImageView.addGestureRecognizer(firstTapGestureRecognizer)
     secondImageView.addGestureRecognizer(secondTapGestureRecognizer)
     thirdImageView.addGestureRecognizer(thirdTapGestureRecognizer)
@@ -73,7 +72,6 @@ public class PostMediaView: UIView {
     } else if gesture == secondTapGestureRecognizer {
       index = 1
     }
-
     delegate?.mediaDidTap(index)
   }
 
@@ -89,7 +87,7 @@ public class PostMediaView: UIView {
       addSubview(viewsArray[index])
       viewsArray[index].sd_setImageWithURL(element.thumbnail)
     }
-    
+
     switch media.count {
     case 1:
       firstImageView.frame = CGRect(x: Dimensions.containerOffset, y: 0,

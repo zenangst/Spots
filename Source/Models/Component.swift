@@ -39,3 +39,7 @@ public struct Component: Mappable {
     self.meta = meta
   }
 }
+
+func ==(lhs: Component, rhs: Component) -> Bool {
+  return lhs.title == rhs.title && lhs.kind == rhs.kind && lhs.span == rhs.span && lhs.meta == rhs.meta
+}

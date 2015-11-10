@@ -111,6 +111,7 @@ public class PostTableViewCell: WallTableViewCell, Itemble {
     bottomSeparator.backgroundColor = ColorList.Basis.tableViewBackground
     opaque = true
     selectionStyle = .None
+    addGestureRecognizer(tapGestureRecognizer)
   }
 
   public required init?(coder aDecoder: NSCoder) {
@@ -174,13 +175,9 @@ public class PostTableViewCell: WallTableViewCell, Itemble {
   }
 
   public func configure(inout item: ListItem) {
-    let post = PostTableViewCell.itemToPost(item)
-    if bottomSeparator.frame.origin.y == 0.0 {
-      item.size.width = contentView.frame.width
-      item.size.height = setupViews(item)
-    } else {
-      item.size.height = PostTableViewCell.height(item)
-    }
+    item.size.width = contentView.frame.width
+    item.size.height = setupViews(item)
+    item.size.height = PostTableViewCell.height(item)
   }
 }
 
@@ -218,6 +215,12 @@ extension PostTableViewCell: PostInformationBarViewDelegate {
 extension PostTableViewCell: PostActionBarViewDelegate {
 
   public func likeButtonDidPress(liked: Bool) {
+    if liked {
+      action("feed:action:like:1")
+    } else {
+      action("feed:action:unlike:1")
+    }
+
     guard let post = post else { return }
 
     post.liked = liked
@@ -226,12 +229,10 @@ extension PostTableViewCell: PostActionBarViewDelegate {
     informationView.configureLikes(post.likeCount)
     informationView.configureComments(post.commentCount)
     delegate?.updateCellSize(post.id, liked: liked)
-    actionDelegate?.likeButtonDidPress(post.id)
   }
 
   public func commentButtonDidPress() {
-    guard let post = post else { return }
-    actionDelegate?.commentsButtonDidPress(post.id)
+    action("feed:comment:1")
   }
 }
 
@@ -240,15 +241,13 @@ extension PostTableViewCell: PostActionBarViewDelegate {
 extension PostTableViewCell: PostAuthorViewDelegate {
 
   public func authorDidTap() {
-    guard let post = post else { return }
-    informationDelegate?.authorDidTap(post.id)
+    action("feed:author:1")
   }
 }
 
 extension PostTableViewCell: PostMediaViewDelegate {
 
   public func mediaDidTap(index: Int) {
-    guard let post = post, firstMedia = post.media.first else { return }
-    informationDelegate?.mediaDidTap(post.id, kind: firstMedia.kind, index: index)
+    action("feed:media:1")
   }
 }

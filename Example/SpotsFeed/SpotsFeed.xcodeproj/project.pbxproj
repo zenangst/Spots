@@ -38,6 +38,8 @@
 		BD18A19C1BF137FD003E1BD1 /* Author.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD18A1991BF137FD003E1BD1 /* Author.swift */; settings = {ASSET_TAGS = (); }; };
 		BD18A19D1BF137FD003E1BD1 /* Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD18A19A1BF137FD003E1BD1 /* Media.swift */; settings = {ASSET_TAGS = (); }; };
 		BD18A19E1BF137FD003E1BD1 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD18A19B1BF137FD003E1BD1 /* Post.swift */; settings = {ASSET_TAGS = (); }; };
+		BD286A821BF27E9D004E2F37 /* FeedSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD286A801BF27E9D004E2F37 /* FeedSpot.swift */; settings = {ASSET_TAGS = (); }; };
+		BD286A831BF27E9D004E2F37 /* FeedSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD286A811BF27E9D004E2F37 /* FeedSpotCell.swift */; settings = {ASSET_TAGS = (); }; };
 		BD4BCCCD1BDE04AA00466C0F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4BCCCC1BDE04AA00466C0F /* AppDelegate.swift */; };
 		BD4BCCD41BDE04AA00466C0F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BD4BCCD31BDE04AA00466C0F /* Assets.xcassets */; };
 		BD4BCCD71BDE04AA00466C0F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BD4BCCD51BDE04AA00466C0F /* LaunchScreen.storyboard */; };
@@ -77,6 +79,8 @@
 		BD18A1991BF137FD003E1BD1 /* Author.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Author.swift; sourceTree = "<group>"; };
 		BD18A19A1BF137FD003E1BD1 /* Media.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Media.swift; sourceTree = "<group>"; };
 		BD18A19B1BF137FD003E1BD1 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		BD286A801BF27E9D004E2F37 /* FeedSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedSpot.swift; sourceTree = "<group>"; };
+		BD286A811BF27E9D004E2F37 /* FeedSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedSpotCell.swift; sourceTree = "<group>"; };
 		BD4BCCC91BDE04AA00466C0F /* SpotsFeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpotsFeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD4BCCCC1BDE04AA00466C0F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BD4BCCD31BDE04AA00466C0F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -152,6 +156,7 @@
 		BD18A1661BF12A3A003E1BD1 /* Spots */ = {
 			isa = PBXGroup;
 			children = (
+				BD286A7F1BF27E9D004E2F37 /* Feed */,
 				BD18A1671BF12A3A003E1BD1 /* Carousel */,
 				BD18A16A1BF12A3A003E1BD1 /* Grid */,
 				BD18A16D1BF12A3A003E1BD1 /* List */,
@@ -216,6 +221,15 @@
 				BD18A19B1BF137FD003E1BD1 /* Post.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		BD286A7F1BF27E9D004E2F37 /* Feed */ = {
+			isa = PBXGroup;
+			children = (
+				BD286A801BF27E9D004E2F37 /* FeedSpot.swift */,
+				BD286A811BF27E9D004E2F37 /* FeedSpotCell.swift */,
+			);
+			path = Feed;
 			sourceTree = "<group>";
 		};
 		BD4BCCC01BDE04AA00466C0F = {
@@ -376,6 +390,7 @@
 				BD18A1961BF137E4003E1BD1 /* ColorList.swift in Sources */,
 				BD18A1811BF12A3A003E1BD1 /* SpotsController.swift in Sources */,
 				BD18A1931BF137B0003E1BD1 /* PostMediaView.swift in Sources */,
+				BD286A821BF27E9D004E2F37 /* FeedSpot.swift in Sources */,
 				BD18A1921BF137B0003E1BD1 /* PostInformationBarView.swift in Sources */,
 				BD18A1971BF137E4003E1BD1 /* FontList.swift in Sources */,
 				BD18A1791BF12A3A003E1BD1 /* Component.swift in Sources */,
@@ -388,6 +403,7 @@
 				BD18A17C1BF12A3A003E1BD1 /* CarouselSpotCell.swift in Sources */,
 				BD18A17D1BF12A3A003E1BD1 /* GridSpot.swift in Sources */,
 				BD18A19D1BF137FD003E1BD1 /* Media.swift in Sources */,
+				BD286A831BF27E9D004E2F37 /* FeedSpotCell.swift in Sources */,
 				BD18A1751BF12A3A003E1BD1 /* Spotable.swift in Sources */,
 				BD18A1781BF12A3A003E1BD1 /* SpotSizeDelegate.swift in Sources */,
 				BD18A1711BF12A3A003E1BD1 /* Componentable.swift in Sources */,

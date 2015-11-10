@@ -42,7 +42,6 @@ public class WallTableViewCell: UITableViewCell {
   // MARK: - Actions
 
   public func handleTapGestureRecognizer() {
-    guard let post = post else { return }
-    delegate?.cellDidTap(post.id)
+    action("feed:post:1")
   }
 }
