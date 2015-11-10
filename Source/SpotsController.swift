@@ -60,9 +60,14 @@ extension SpotsController: UICollectionViewDataSource {
     let spot = spots[indexPath.item]
     spot.spotDelegate = spotDelegate
 
-    cell.contentView.subviews.forEach { $0.removeFromSuperview() }
-    cell.contentView.addSubview(spot.render())
-    spot.sizeDelegate = self
+    cell.optimize()
+    cell.rasterize()
+
+    if spot.render().superview == nil {
+      cell.contentView.subviews.forEach { $0.removeFromSuperview() }
+      cell.contentView.addSubview(spot.render())
+      spot.sizeDelegate = self
+    }
 
     return cell
   }
