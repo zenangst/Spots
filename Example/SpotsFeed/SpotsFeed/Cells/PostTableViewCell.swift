@@ -168,11 +168,19 @@ public class PostTableViewCell: WallTableViewCell, Itemble {
   }
 
   public func configure(inout item: ListItem) {
-    let url = NSURL(string: item.image)!
-    let media = Media(kind: Media.Kind.Image, source: url)
-    let avatarURL = NSURL(string: item.meta["avatar"] as! String)!
+    let avatarURL = NSURL(string: item.image)!
     let author = Author(name: item.title, avatar: avatarURL)
-    let post = Post(id: 0, text: item.subtitle, publishDate: "", author: author, media: [media], reusableIdentifier: reuseIdentifier)
+
+    var mediaItems = [Media]()
+    if let strings = item.meta["media"] as? [String] {
+      for mediaString in strings {
+        let url = NSURL(string: mediaString)!
+        let media = Media(kind: Media.Kind.Image, source: url)
+        mediaItems.append(media)
+      }
+    }
+
+    let post = Post(id: 0, text: item.subtitle, publishDate: "", author: author, media: mediaItems, reusableIdentifier: reuseIdentifier)
 
     calculateHeight(post)
     item.size.height = PostTableViewCell.height(post)

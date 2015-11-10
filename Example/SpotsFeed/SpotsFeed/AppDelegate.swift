@@ -12,7 +12,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     ListSpot.cells["feed"] = PostTableViewCell.self
 
-    let feedComponent = Component(span: 1, items: generateItems(0, to: 3))
+    let feedComponent = Component(span: 1, items: generateItems(0, to: 50))
     let feedSpot = ListSpot(component: feedComponent)
     let browse = Component(title: "Browse",
       kind: "list",
@@ -51,8 +51,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             ListItem(title: Faker().name.name(),
               subtitle: subtitle,
               kind: "feed",
-              image: "http://lorempixel.com/250/250/?type=attachment&id=\(i)",
-              meta: ["avatar" : "http://lorempixel.com/75/75?type=avatar&id=\(i)"])
+              image: "http://lorempixel.com/75/75?type=avatar&id=\(i)",
+              meta: ["media" : ["http://lorempixel.com/250/250/?type=attachment&id=\(i)"]])
           )
         })
       }
