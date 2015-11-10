@@ -119,12 +119,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         autoreleasepool({
           let sencenceCount = Int(arc4random_uniform(8) + 1)
           let subtitle = Faker().lorem.sentences(amount: sencenceCount) + " " + Faker().internet.url()
+
+          let mediaCount = Int(arc4random_uniform(5) + 1)
+          var mediaStrings = [String]()
+          for x in 0..<mediaCount {
+            mediaStrings.append("http://lorempixel.com/250/250/?type=attachment&id=\(i)\(x)")
+          }
+
           items.append(
             ListItem(title: Faker().name.name(),
               subtitle: subtitle,
               kind: kind,
               image: "http://lorempixel.com/75/75?type=avatar&id=\(i)",
-              meta: ["media" : ["http://lorempixel.com/250/250/?type=attachment&id=\(i)"]])
+              meta: ["media" : mediaStrings])
           )
         })
       }
