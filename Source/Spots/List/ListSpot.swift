@@ -119,6 +119,8 @@ extension ListSpot: UITableViewDataSource {
   public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     var item = component.items[indexPath.row]
     let cell = tableView.dequeueReusableCellWithIdentifier("ListCell\(item.kind)")
+    cell?.optimize()
+    cell?.rasterize()
 
     if let list = cell as? Itemble {
       list.configure(&item)
