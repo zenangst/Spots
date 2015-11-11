@@ -3,7 +3,7 @@ import UIKit
 public class SpotsController: UIViewController {
 
   private let spots: [Spotable]
-  static let reuseIdentifier = "ComponentCell"
+  static let reuseIdentifier = "SpotReuseIdentifier"
   
   weak public var spotDelegate: SpotsDelegate?
 
@@ -32,9 +32,9 @@ public class SpotsController: UIViewController {
   public required init(spots: [Spotable]) {
     self.spots = spots
     super.init(nibName: nil, bundle: nil)
-    self.view.addSubview(collectionView)
-    self.view.autoresizesSubviews = true
-    self.view.autoresizingMask = [.FlexibleRightMargin, .FlexibleLeftMargin, .FlexibleBottomMargin, .FlexibleTopMargin, .FlexibleHeight, .FlexibleWidth]
+    view.addSubview(collectionView)
+    view.autoresizesSubviews = true
+    view.autoresizingMask = [.FlexibleRightMargin, .FlexibleLeftMargin, .FlexibleBottomMargin, .FlexibleTopMargin, .FlexibleHeight, .FlexibleWidth]
   }
 
   public required init?(coder aDecoder: NSCoder) {
@@ -56,13 +56,16 @@ extension SpotsController: UICollectionViewDataSource {
   }
 
   public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCellWithReuseIdentifier(SpotsController.reuseIdentifier, forIndexPath: indexPath)
     let spot = spots[indexPath.item]
-    spot.spotDelegate = spotDelegate
+    let cell = collectionView.dequeueReusableCellWithReuseIdentifier(SpotsController.reuseIdentifier, forIndexPath: indexPath)
 
-    cell.contentView.subviews.forEach { $0.removeFromSuperview() }
-    cell.contentView.addSubview(spot.render())
-    spot.sizeDelegate = self
+    if spot.render().superview == nil {
+      cell.contentView.subviews.forEach { $0.removeFromSuperview() }
+      cell.contentView.addSubview(spot.render())
+      cell.optimize()
+      spot.sizeDelegate = self
+      spot.spotDelegate = spotDelegate
+    }
 
     return cell
   }
@@ -71,9 +74,15 @@ extension SpotsController: UICollectionViewDataSource {
 extension SpotsController: UICollectionViewDelegateFlowLayout {
 
   public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-    var frame = spots[indexPath.item].render().frame
-    frame.size.width = UIScreen.mainScreen().bounds.width
-    return frame.size
+    var component = spots[indexPath.item].component
+    if component.size == nil {
+      spots[indexPath.item].setup()
+      component.size = CGSize(
+        width: UIScreen.mainScreen().bounds.width,
+        height: spots[indexPath.item].render().frame.height)
+    }
+
+    return component.size!
   }
 }
 
@@ -81,5 +90,33 @@ extension SpotsController: SpotSizeDelegate {
 
   public func sizeDidUpdate() {
     collectionView.collectionViewLayout.invalidateLayout()
+  }
+
+  public func scrollToPreviousCell(component: Component) {
+    for (index, spot) in spots.enumerate() {
+      if spot.component == component {
+        UIView.animateWithDuration(0.5, delay: 0.0, options: [.AllowUserInteraction, .BeginFromCurrentState], animations: {
+          let prevIndex = index - 1
+          if prevIndex >= 0 {
+            self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: prevIndex, inSection: 0), atScrollPosition: UICollectionViewScrollPosition.CenteredVertically, animated: false)
+          }
+        }, completion: nil)
+        break
+      }
+    }
+  }
+
+  public func scrollToNextCell(component: Component) {
+    for (index, spot) in spots.enumerate() {
+      if spot.component == component {
+        UIView.animateWithDuration(0.5, delay: 0.0, options: [.AllowUserInteraction, .BeginFromCurrentState], animations: {
+          let nextIndex = index + 1
+          if nextIndex < self.spots.count {
+            self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: nextIndex, inSection: 0), atScrollPosition: UICollectionViewScrollPosition.CenteredVertically, animated: false)
+          }
+          }, completion: nil)
+        break
+      }
+    }
   }
 }

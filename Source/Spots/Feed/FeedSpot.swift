@@ -1,13 +1,15 @@
 import UIKit
+import Tailor
+import Sugar
 
-typealias TitleSpot = ListSpot
+public class FeedSpot: NSObject, Spotable {
 
-public class ListSpot: NSObject, Spotable {
+  private var cachedCells = [String : Itemble]()
+  private var lastContentOffset = CGPoint()
 
   public static var cells = [String : UITableViewCell.Type]()
-  private var cachedCells = [String : Itemble]()
   public static var headers = [String : UIView.Type]()
-
+  
   public let itemHeight: CGFloat = 44
   public let headerHeight: CGFloat = 44
 
@@ -20,7 +22,6 @@ public class ListSpot: NSObject, Spotable {
     tableView.delegate = self
     tableView.dataSource = self
     tableView.frame.size.width = UIScreen.mainScreen().bounds.width
-    tableView.scrollEnabled = false
     tableView.autoresizingMask = [.FlexibleWidth, .FlexibleRightMargin, .FlexibleLeftMargin]
     tableView.autoresizesSubviews = true
     tableView.rowHeight = UITableViewAutomaticDimension
@@ -34,32 +35,29 @@ public class ListSpot: NSObject, Spotable {
 
     let items = component.items
     for (index, item) in items.enumerate() {
-      let componentCellClass = ListSpot.cells[item.kind] ?? ListSpotCell.self
+      let componentCellClass = FeedSpot.cells[item.kind] ?? FeedSpotCell.self
       if let cachedCell = cachedCells[item.kind] {
         cachedCell.configure(&self.component.items[index])
       } else if let listCell = componentCellClass.init() as? Itemble {
         self.tableView.registerClass(componentCellClass,
-          forCellReuseIdentifier: "ListCell\(item.kind)")
+          forCellReuseIdentifier: "FeedCell\(item.kind)")
         listCell.configure(&self.component.items[index])
         cachedCells[item.kind] = listCell
       }
     }
-    cachedCells.removeAll()
-  }
 
-  public convenience init(title: String, kind: String = "list") {
-    let component = Component(title: title, kind: kind)
-    self.init(component: component)
+    cachedCells.removeAll()
   }
 
   public func setup() {
     if component.size == nil {
       var newHeight = component.items.reduce(0, combine: { $0 + $1.size.height })
       if !component.title.isEmpty { newHeight += headerHeight }
-
       tableView.frame.size.width = UIScreen.mainScreen().bounds.width
-      tableView.frame.size.height = newHeight
-      component.size = CGSize(width: tableView.frame.width, height: tableView.frame.height)
+      tableView.frame.size.height = UIScreen.mainScreen().bounds.height - 64
+      tableView.contentSize = CGSize(width: tableView.frame.width, height: newHeight - tableView.contentInset.top - tableView.contentInset.bottom)
+    } else {
+      tableView.scrollEnabled = false
     }
   }
 
@@ -73,7 +71,28 @@ public class ListSpot: NSObject, Spotable {
   }
 }
 
-extension ListSpot: UITableViewDelegate {
+extension FeedSpot: UIScrollViewDelegate {
+
+  public func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    lastContentOffset = scrollView.contentOffset
+  }
+
+  public func scrollViewDidScroll(scrollView: UIScrollView) {
+    if scrollView.contentOffset.y < 0.0 {
+      tableView.scrollEnabled = false
+      sizeDelegate?.scrollToPreviousCell(component)
+    } else if scrollView.contentOffset.y == 0.0 {
+      tableView.scrollEnabled = true
+    } else if scrollView.contentOffset.y >= tableView.contentSize.height + tableView.contentInset.bottom - tableView.bounds.height {
+      sizeDelegate?.scrollToNextCell(component)
+    } else if lastContentOffset.y > scrollView.contentOffset.y {
+      sizeDelegate?.scrollToPreviousCell(component)
+      lastContentOffset = CGPoint(x: 0, y: 0)
+    }
+  }
+}
+
+extension FeedSpot: UITableViewDelegate {
 
   public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     tableView.deselectRowAtIndexPath(indexPath, animated: true)
@@ -83,7 +102,6 @@ extension ListSpot: UITableViewDelegate {
   public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
     var newHeight = component.items.reduce(0, combine: { $0 + $1.size.height })
     if !component.title.isEmpty { newHeight += headerHeight }
-    tableView.frame.size.height = newHeight
     component.size = CGSize(width: tableView.frame.width, height: tableView.frame.height)
     sizeDelegate?.sizeDidUpdate()
 
@@ -91,46 +109,21 @@ extension ListSpot: UITableViewDelegate {
   }
 }
 
-extension ListSpot: UITableViewDataSource {
-
-  public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    return !component.title.isEmpty ? headerHeight : 0
-  }
-
-  public func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    return component.title
-  }
+extension FeedSpot: UITableViewDataSource {
 
   public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return component.items.count
   }
 
-  public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-    if let header = ListSpot.headers[component.kind] {
-      let header = header.init(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: headerHeight))
-      if let configurable = header as? Componentable {
-        configurable.configure(component)
-      }
-      return header
-    }
-
-    return nil
-  }
-
   public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     let cell: UITableViewCell
 
-    if let tableViewCell = cachedCells[component.items[indexPath.item].kind] as? UITableViewCell {
-      cell = tableViewCell
-    } else {
-      cell = tableView.dequeueReusableCellWithIdentifier("ListCell\(component.items[indexPath.item].kind)", forIndexPath: indexPath)
-    }
-
+    cell = tableView.dequeueReusableCellWithIdentifier("FeedCell\(self.component.items[indexPath.item].kind)", forIndexPath: indexPath)
     cell.optimize()
 
-    if let itemable = cell as? Itemble {
-      itemable.configure(&component.items[indexPath.item])
-    }
+    guard let itemable = cell as? Itemble else { return cell }
+    
+    itemable.configure(&self.component.items[indexPath.item])
 
     return cell
   }

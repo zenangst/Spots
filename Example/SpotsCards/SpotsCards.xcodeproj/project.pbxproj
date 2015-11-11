@@ -11,24 +11,29 @@
 		BD4BCD211BDE0F5A00466C0F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4BCD201BDE0F5A00466C0F /* AppDelegate.swift */; };
 		BD4BCD281BDE0F5A00466C0F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BD4BCD271BDE0F5A00466C0F /* Assets.xcassets */; };
 		BD4BCD2B1BDE0F5A00466C0F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BD4BCD291BDE0F5A00466C0F /* LaunchScreen.storyboard */; };
-		BD4BCD4E1BDE0F6A00466C0F /* Gridable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4BCD341BDE0F6A00466C0F /* Gridable.swift */; settings = {ASSET_TAGS = (); }; };
-		BD4BCD4F1BDE0F6A00466C0F /* Optimize+UICollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4BCD351BDE0F6A00466C0F /* Optimize+UICollectionViewCell.swift */; settings = {ASSET_TAGS = (); }; };
-		BD4BCD501BDE0F6A00466C0F /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4BCD361BDE0F6A00466C0F /* Parser.swift */; settings = {ASSET_TAGS = (); }; };
-		BD4BCD511BDE0F6A00466C0F /* Spotable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4BCD371BDE0F6A00466C0F /* Spotable.swift */; settings = {ASSET_TAGS = (); }; };
-		BD4BCD521BDE0F6A00466C0F /* SpotFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4BCD381BDE0F6A00466C0F /* SpotFactory.swift */; settings = {ASSET_TAGS = (); }; };
-		BD4BCD531BDE0F6A00466C0F /* SpotSizeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4BCD391BDE0F6A00466C0F /* SpotSizeDelegate.swift */; settings = {ASSET_TAGS = (); }; };
-		BD4BCD541BDE0F6A00466C0F /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4BCD3B1BDE0F6A00466C0F /* Component.swift */; settings = {ASSET_TAGS = (); }; };
-		BD4BCD551BDE0F6A00466C0F /* ListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4BCD3C1BDE0F6A00466C0F /* ListItem.swift */; settings = {ASSET_TAGS = (); }; };
-		BD4BCD561BDE0F6A00466C0F /* CarouselSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4BCD3F1BDE0F6A00466C0F /* CarouselSpot.swift */; settings = {ASSET_TAGS = (); }; };
-		BD4BCD571BDE0F6A00466C0F /* CarouselSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4BCD401BDE0F6A00466C0F /* CarouselSpotCell.swift */; settings = {ASSET_TAGS = (); }; };
-		BD4BCD581BDE0F6A00466C0F /* GridSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4BCD421BDE0F6A00466C0F /* GridSpot.swift */; settings = {ASSET_TAGS = (); }; };
-		BD4BCD591BDE0F6A00466C0F /* GridSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4BCD431BDE0F6A00466C0F /* GridSpotCell.swift */; settings = {ASSET_TAGS = (); }; };
-		BD4BCD5A1BDE0F6A00466C0F /* ListSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4BCD451BDE0F6A00466C0F /* ListSpot.swift */; settings = {ASSET_TAGS = (); }; };
-		BD4BCD5B1BDE0F6A00466C0F /* ListSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4BCD461BDE0F6A00466C0F /* ListSpotCell.swift */; settings = {ASSET_TAGS = (); }; };
-		BD4BCD601BDE0F6A00466C0F /* SpotsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4BCD4D1BDE0F6A00466C0F /* SpotsController.swift */; settings = {ASSET_TAGS = (); }; };
 		BD4BCD621BDE0F9800466C0F /* components.json in Resources */ = {isa = PBXBuildFile; fileRef = BD4BCD611BDE0F9800466C0F /* components.json */; settings = {ASSET_TAGS = (); }; };
 		BD4BCD641BDE101100466C0F /* JSONController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4BCD631BDE101100466C0F /* JSONController.swift */; settings = {ASSET_TAGS = (); }; };
 		BD4BCD671BDE106D00466C0F /* GridSpotCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4BCD661BDE106D00466C0F /* GridSpotCard.swift */; settings = {ASSET_TAGS = (); }; };
+		BD8C6EA61BF2458D00B35D3D /* CardSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8C6EA51BF2458D00B35D3D /* CardSpot.swift */; settings = {ASSET_TAGS = (); }; };
+		BDC1F62D1BF3D603008A25FE /* Componentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC1F6141BF3D603008A25FE /* Componentable.swift */; settings = {ASSET_TAGS = (); }; };
+		BDC1F62E1BF3D603008A25FE /* Itemble.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC1F6151BF3D603008A25FE /* Itemble.swift */; settings = {ASSET_TAGS = (); }; };
+		BDC1F62F1BF3D603008A25FE /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC1F6161BF3D603008A25FE /* Parser.swift */; settings = {ASSET_TAGS = (); }; };
+		BDC1F6301BF3D603008A25FE /* Spotable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC1F6171BF3D603008A25FE /* Spotable.swift */; settings = {ASSET_TAGS = (); }; };
+		BDC1F6311BF3D603008A25FE /* SpotFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC1F6181BF3D603008A25FE /* SpotFactory.swift */; settings = {ASSET_TAGS = (); }; };
+		BDC1F6321BF3D603008A25FE /* SpotsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC1F6191BF3D603008A25FE /* SpotsDelegate.swift */; settings = {ASSET_TAGS = (); }; };
+		BDC1F6331BF3D603008A25FE /* SpotSizeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC1F61A1BF3D603008A25FE /* SpotSizeDelegate.swift */; settings = {ASSET_TAGS = (); }; };
+		BDC1F6341BF3D603008A25FE /* UIView+Optimize.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC1F61B1BF3D603008A25FE /* UIView+Optimize.swift */; settings = {ASSET_TAGS = (); }; };
+		BDC1F6351BF3D603008A25FE /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC1F61D1BF3D603008A25FE /* Component.swift */; settings = {ASSET_TAGS = (); }; };
+		BDC1F6361BF3D603008A25FE /* ListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC1F61E1BF3D603008A25FE /* ListItem.swift */; settings = {ASSET_TAGS = (); }; };
+		BDC1F6371BF3D603008A25FE /* CarouselSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC1F6211BF3D603008A25FE /* CarouselSpot.swift */; settings = {ASSET_TAGS = (); }; };
+		BDC1F6381BF3D603008A25FE /* CarouselSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC1F6221BF3D603008A25FE /* CarouselSpotCell.swift */; settings = {ASSET_TAGS = (); }; };
+		BDC1F6391BF3D603008A25FE /* FeedSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC1F6241BF3D603008A25FE /* FeedSpot.swift */; settings = {ASSET_TAGS = (); }; };
+		BDC1F63A1BF3D603008A25FE /* FeedSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC1F6251BF3D603008A25FE /* FeedSpotCell.swift */; settings = {ASSET_TAGS = (); }; };
+		BDC1F63B1BF3D603008A25FE /* GridSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC1F6271BF3D603008A25FE /* GridSpot.swift */; settings = {ASSET_TAGS = (); }; };
+		BDC1F63C1BF3D603008A25FE /* GridSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC1F6281BF3D603008A25FE /* GridSpotCell.swift */; settings = {ASSET_TAGS = (); }; };
+		BDC1F63D1BF3D603008A25FE /* ListSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC1F62A1BF3D603008A25FE /* ListSpot.swift */; settings = {ASSET_TAGS = (); }; };
+		BDC1F63E1BF3D603008A25FE /* ListSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC1F62B1BF3D603008A25FE /* ListSpotCell.swift */; settings = {ASSET_TAGS = (); }; };
+		BDC1F63F1BF3D603008A25FE /* SpotsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC1F62C1BF3D603008A25FE /* SpotsController.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,24 +45,29 @@
 		BD4BCD271BDE0F5A00466C0F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BD4BCD2A1BDE0F5A00466C0F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BD4BCD2C1BDE0F5A00466C0F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		BD4BCD341BDE0F6A00466C0F /* Gridable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gridable.swift; sourceTree = "<group>"; };
-		BD4BCD351BDE0F6A00466C0F /* Optimize+UICollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Optimize+UICollectionViewCell.swift"; sourceTree = "<group>"; };
-		BD4BCD361BDE0F6A00466C0F /* Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
-		BD4BCD371BDE0F6A00466C0F /* Spotable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spotable.swift; sourceTree = "<group>"; };
-		BD4BCD381BDE0F6A00466C0F /* SpotFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotFactory.swift; sourceTree = "<group>"; };
-		BD4BCD391BDE0F6A00466C0F /* SpotSizeDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotSizeDelegate.swift; sourceTree = "<group>"; };
-		BD4BCD3B1BDE0F6A00466C0F /* Component.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
-		BD4BCD3C1BDE0F6A00466C0F /* ListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListItem.swift; sourceTree = "<group>"; };
-		BD4BCD3F1BDE0F6A00466C0F /* CarouselSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselSpot.swift; sourceTree = "<group>"; };
-		BD4BCD401BDE0F6A00466C0F /* CarouselSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselSpotCell.swift; sourceTree = "<group>"; };
-		BD4BCD421BDE0F6A00466C0F /* GridSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridSpot.swift; sourceTree = "<group>"; };
-		BD4BCD431BDE0F6A00466C0F /* GridSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridSpotCell.swift; sourceTree = "<group>"; };
-		BD4BCD451BDE0F6A00466C0F /* ListSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListSpot.swift; sourceTree = "<group>"; };
-		BD4BCD461BDE0F6A00466C0F /* ListSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListSpotCell.swift; sourceTree = "<group>"; };
-		BD4BCD4D1BDE0F6A00466C0F /* SpotsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsController.swift; sourceTree = "<group>"; };
 		BD4BCD611BDE0F9800466C0F /* components.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = components.json; sourceTree = "<group>"; };
 		BD4BCD631BDE101100466C0F /* JSONController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONController.swift; sourceTree = "<group>"; };
 		BD4BCD661BDE106D00466C0F /* GridSpotCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridSpotCard.swift; sourceTree = "<group>"; };
+		BD8C6EA51BF2458D00B35D3D /* CardSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardSpot.swift; sourceTree = "<group>"; };
+		BDC1F6141BF3D603008A25FE /* Componentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Componentable.swift; sourceTree = "<group>"; };
+		BDC1F6151BF3D603008A25FE /* Itemble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Itemble.swift; sourceTree = "<group>"; };
+		BDC1F6161BF3D603008A25FE /* Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
+		BDC1F6171BF3D603008A25FE /* Spotable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spotable.swift; sourceTree = "<group>"; };
+		BDC1F6181BF3D603008A25FE /* SpotFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotFactory.swift; sourceTree = "<group>"; };
+		BDC1F6191BF3D603008A25FE /* SpotsDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsDelegate.swift; sourceTree = "<group>"; };
+		BDC1F61A1BF3D603008A25FE /* SpotSizeDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotSizeDelegate.swift; sourceTree = "<group>"; };
+		BDC1F61B1BF3D603008A25FE /* UIView+Optimize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Optimize.swift"; sourceTree = "<group>"; };
+		BDC1F61D1BF3D603008A25FE /* Component.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
+		BDC1F61E1BF3D603008A25FE /* ListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListItem.swift; sourceTree = "<group>"; };
+		BDC1F6211BF3D603008A25FE /* CarouselSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselSpot.swift; sourceTree = "<group>"; };
+		BDC1F6221BF3D603008A25FE /* CarouselSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselSpotCell.swift; sourceTree = "<group>"; };
+		BDC1F6241BF3D603008A25FE /* FeedSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedSpot.swift; sourceTree = "<group>"; };
+		BDC1F6251BF3D603008A25FE /* FeedSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedSpotCell.swift; sourceTree = "<group>"; };
+		BDC1F6271BF3D603008A25FE /* GridSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridSpot.swift; sourceTree = "<group>"; };
+		BDC1F6281BF3D603008A25FE /* GridSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridSpotCell.swift; sourceTree = "<group>"; };
+		BDC1F62A1BF3D603008A25FE /* ListSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListSpot.swift; sourceTree = "<group>"; };
+		BDC1F62B1BF3D603008A25FE /* ListSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListSpotCell.swift; sourceTree = "<group>"; };
+		BDC1F62C1BF3D603008A25FE /* SpotsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,7 +94,7 @@
 		BD4BCD141BDE0F5A00466C0F = {
 			isa = PBXGroup;
 			children = (
-				BD4BCD321BDE0F6A00466C0F /* Source */,
+				BDC1F6121BF3D603008A25FE /* Source */,
 				BD4BCD1F1BDE0F5A00466C0F /* SpotsCards */,
 				BD4BCD1E1BDE0F5A00466C0F /* Products */,
 				9D00D11A9E7F722C3375B039 /* Pods */,
@@ -103,6 +113,7 @@
 		BD4BCD1F1BDE0F5A00466C0F /* SpotsCards */ = {
 			isa = PBXGroup;
 			children = (
+				BD8C6EA41BF2458500B35D3D /* Spots */,
 				BD4BCD651BDE105400466C0F /* Cells */,
 				BD4BCD631BDE101100466C0F /* JSONController.swift */,
 				BD4BCD611BDE0F9800466C0F /* components.json */,
@@ -114,83 +125,103 @@
 			path = SpotsCards;
 			sourceTree = "<group>";
 		};
-		BD4BCD321BDE0F6A00466C0F /* Source */ = {
-			isa = PBXGroup;
-			children = (
-				BD4BCD331BDE0F6A00466C0F /* Library */,
-				BD4BCD3A1BDE0F6A00466C0F /* Models */,
-				BD4BCD3D1BDE0F6A00466C0F /* Spots */,
-				BD4BCD4D1BDE0F6A00466C0F /* SpotsController.swift */,
-			);
-			name = Source;
-			path = ../../Source;
-			sourceTree = "<group>";
-		};
-		BD4BCD331BDE0F6A00466C0F /* Library */ = {
-			isa = PBXGroup;
-			children = (
-				BD4BCD341BDE0F6A00466C0F /* Gridable.swift */,
-				BD4BCD351BDE0F6A00466C0F /* Optimize+UICollectionViewCell.swift */,
-				BD4BCD361BDE0F6A00466C0F /* Parser.swift */,
-				BD4BCD371BDE0F6A00466C0F /* Spotable.swift */,
-				BD4BCD381BDE0F6A00466C0F /* SpotFactory.swift */,
-				BD4BCD391BDE0F6A00466C0F /* SpotSizeDelegate.swift */,
-			);
-			path = Library;
-			sourceTree = "<group>";
-		};
-		BD4BCD3A1BDE0F6A00466C0F /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				BD4BCD3B1BDE0F6A00466C0F /* Component.swift */,
-				BD4BCD3C1BDE0F6A00466C0F /* ListItem.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
-		BD4BCD3D1BDE0F6A00466C0F /* Spots */ = {
-			isa = PBXGroup;
-			children = (
-				BD4BCD3E1BDE0F6A00466C0F /* Carousel */,
-				BD4BCD411BDE0F6A00466C0F /* Grid */,
-				BD4BCD441BDE0F6A00466C0F /* List */,
-			);
-			path = Spots;
-			sourceTree = "<group>";
-		};
-		BD4BCD3E1BDE0F6A00466C0F /* Carousel */ = {
-			isa = PBXGroup;
-			children = (
-				BD4BCD3F1BDE0F6A00466C0F /* CarouselSpot.swift */,
-				BD4BCD401BDE0F6A00466C0F /* CarouselSpotCell.swift */,
-			);
-			path = Carousel;
-			sourceTree = "<group>";
-		};
-		BD4BCD411BDE0F6A00466C0F /* Grid */ = {
-			isa = PBXGroup;
-			children = (
-				BD4BCD421BDE0F6A00466C0F /* GridSpot.swift */,
-				BD4BCD431BDE0F6A00466C0F /* GridSpotCell.swift */,
-			);
-			path = Grid;
-			sourceTree = "<group>";
-		};
-		BD4BCD441BDE0F6A00466C0F /* List */ = {
-			isa = PBXGroup;
-			children = (
-				BD4BCD451BDE0F6A00466C0F /* ListSpot.swift */,
-				BD4BCD461BDE0F6A00466C0F /* ListSpotCell.swift */,
-			);
-			path = List;
-			sourceTree = "<group>";
-		};
 		BD4BCD651BDE105400466C0F /* Cells */ = {
 			isa = PBXGroup;
 			children = (
 				BD4BCD661BDE106D00466C0F /* GridSpotCard.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		BD8C6EA41BF2458500B35D3D /* Spots */ = {
+			isa = PBXGroup;
+			children = (
+				BD8C6EA51BF2458D00B35D3D /* CardSpot.swift */,
+			);
+			path = Spots;
+			sourceTree = "<group>";
+		};
+		BDC1F6121BF3D603008A25FE /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				BDC1F6131BF3D603008A25FE /* Library */,
+				BDC1F61C1BF3D603008A25FE /* Models */,
+				BDC1F61F1BF3D603008A25FE /* Spots */,
+				BDC1F62C1BF3D603008A25FE /* SpotsController.swift */,
+			);
+			name = Source;
+			path = ../../Source;
+			sourceTree = "<group>";
+		};
+		BDC1F6131BF3D603008A25FE /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				BDC1F6141BF3D603008A25FE /* Componentable.swift */,
+				BDC1F6151BF3D603008A25FE /* Itemble.swift */,
+				BDC1F6161BF3D603008A25FE /* Parser.swift */,
+				BDC1F6171BF3D603008A25FE /* Spotable.swift */,
+				BDC1F6181BF3D603008A25FE /* SpotFactory.swift */,
+				BDC1F6191BF3D603008A25FE /* SpotsDelegate.swift */,
+				BDC1F61A1BF3D603008A25FE /* SpotSizeDelegate.swift */,
+				BDC1F61B1BF3D603008A25FE /* UIView+Optimize.swift */,
+			);
+			path = Library;
+			sourceTree = "<group>";
+		};
+		BDC1F61C1BF3D603008A25FE /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				BDC1F61D1BF3D603008A25FE /* Component.swift */,
+				BDC1F61E1BF3D603008A25FE /* ListItem.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		BDC1F61F1BF3D603008A25FE /* Spots */ = {
+			isa = PBXGroup;
+			children = (
+				BDC1F6201BF3D603008A25FE /* Carousel */,
+				BDC1F6231BF3D603008A25FE /* Feed */,
+				BDC1F6261BF3D603008A25FE /* Grid */,
+				BDC1F6291BF3D603008A25FE /* List */,
+			);
+			path = Spots;
+			sourceTree = "<group>";
+		};
+		BDC1F6201BF3D603008A25FE /* Carousel */ = {
+			isa = PBXGroup;
+			children = (
+				BDC1F6211BF3D603008A25FE /* CarouselSpot.swift */,
+				BDC1F6221BF3D603008A25FE /* CarouselSpotCell.swift */,
+			);
+			path = Carousel;
+			sourceTree = "<group>";
+		};
+		BDC1F6231BF3D603008A25FE /* Feed */ = {
+			isa = PBXGroup;
+			children = (
+				BDC1F6241BF3D603008A25FE /* FeedSpot.swift */,
+				BDC1F6251BF3D603008A25FE /* FeedSpotCell.swift */,
+			);
+			path = Feed;
+			sourceTree = "<group>";
+		};
+		BDC1F6261BF3D603008A25FE /* Grid */ = {
+			isa = PBXGroup;
+			children = (
+				BDC1F6271BF3D603008A25FE /* GridSpot.swift */,
+				BDC1F6281BF3D603008A25FE /* GridSpotCell.swift */,
+			);
+			path = Grid;
+			sourceTree = "<group>";
+		};
+		BDC1F6291BF3D603008A25FE /* List */ = {
+			isa = PBXGroup;
+			children = (
+				BDC1F62A1BF3D603008A25FE /* ListSpot.swift */,
+				BDC1F62B1BF3D603008A25FE /* ListSpotCell.swift */,
+			);
+			path = List;
 			sourceTree = "<group>";
 		};
 		E18DAD6705D29D987259DB2E /* Frameworks */ = {
@@ -322,24 +353,29 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BD4BCD551BDE0F6A00466C0F /* ListItem.swift in Sources */,
-				BD4BCD571BDE0F6A00466C0F /* CarouselSpotCell.swift in Sources */,
-				BD4BCD521BDE0F6A00466C0F /* SpotFactory.swift in Sources */,
-				BD4BCD541BDE0F6A00466C0F /* Component.swift in Sources */,
-				BD4BCD4E1BDE0F6A00466C0F /* Gridable.swift in Sources */,
-				BD4BCD511BDE0F6A00466C0F /* Spotable.swift in Sources */,
-				BD4BCD561BDE0F6A00466C0F /* CarouselSpot.swift in Sources */,
+				BDC1F62E1BF3D603008A25FE /* Itemble.swift in Sources */,
 				BD4BCD671BDE106D00466C0F /* GridSpotCard.swift in Sources */,
-				BD4BCD501BDE0F6A00466C0F /* Parser.swift in Sources */,
-				BD4BCD591BDE0F6A00466C0F /* GridSpotCell.swift in Sources */,
+				BDC1F62D1BF3D603008A25FE /* Componentable.swift in Sources */,
+				BDC1F63E1BF3D603008A25FE /* ListSpotCell.swift in Sources */,
+				BDC1F6301BF3D603008A25FE /* Spotable.swift in Sources */,
+				BDC1F6371BF3D603008A25FE /* CarouselSpot.swift in Sources */,
+				BDC1F6381BF3D603008A25FE /* CarouselSpotCell.swift in Sources */,
+				BDC1F6331BF3D603008A25FE /* SpotSizeDelegate.swift in Sources */,
+				BDC1F6341BF3D603008A25FE /* UIView+Optimize.swift in Sources */,
+				BDC1F63D1BF3D603008A25FE /* ListSpot.swift in Sources */,
+				BDC1F6351BF3D603008A25FE /* Component.swift in Sources */,
 				BD4BCD641BDE101100466C0F /* JSONController.swift in Sources */,
-				BD4BCD601BDE0F6A00466C0F /* SpotsController.swift in Sources */,
-				BD4BCD531BDE0F6A00466C0F /* SpotSizeDelegate.swift in Sources */,
-				BD4BCD581BDE0F6A00466C0F /* GridSpot.swift in Sources */,
+				BDC1F6361BF3D603008A25FE /* ListItem.swift in Sources */,
+				BDC1F63B1BF3D603008A25FE /* GridSpot.swift in Sources */,
 				BD4BCD211BDE0F5A00466C0F /* AppDelegate.swift in Sources */,
-				BD4BCD4F1BDE0F6A00466C0F /* Optimize+UICollectionViewCell.swift in Sources */,
-				BD4BCD5A1BDE0F6A00466C0F /* ListSpot.swift in Sources */,
-				BD4BCD5B1BDE0F6A00466C0F /* ListSpotCell.swift in Sources */,
+				BDC1F6321BF3D603008A25FE /* SpotsDelegate.swift in Sources */,
+				BDC1F63A1BF3D603008A25FE /* FeedSpotCell.swift in Sources */,
+				BD8C6EA61BF2458D00B35D3D /* CardSpot.swift in Sources */,
+				BDC1F6391BF3D603008A25FE /* FeedSpot.swift in Sources */,
+				BDC1F63C1BF3D603008A25FE /* GridSpotCell.swift in Sources */,
+				BDC1F63F1BF3D603008A25FE /* SpotsController.swift in Sources */,
+				BDC1F6311BF3D603008A25FE /* SpotFactory.swift in Sources */,
+				BDC1F62F1BF3D603008A25FE /* Parser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -6,6 +6,7 @@ public struct Component: Mappable {
   public var kind = ""
   public var span = 1
   public var items = [ListItem]()
+  public var size: CGSize?
   public var meta = [String : String]()
 
   public init(_ map: JSONDictionary) {
@@ -23,4 +24,8 @@ public struct Component: Mappable {
     self.items = items
     self.meta = meta
   }
+}
+
+func ==(lhs: Component, rhs: Component) -> Bool {
+  return lhs.title == rhs.title && lhs.kind == rhs.kind && lhs.span == rhs.span && lhs.meta == rhs.meta
 }

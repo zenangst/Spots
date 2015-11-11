@@ -6,6 +6,7 @@ public protocol Spotable: class {
   var component: Component { get set }
 
   init(component: Component)
+  func setup()
   func render() -> UIView
   func layout(size: CGSize)
 }

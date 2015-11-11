@@ -49,7 +49,6 @@ class GridSpotCellCircle : UICollectionViewCell, Itemble {
     imageView.frame.size.height = 88
     
     if !item.image.isEmpty {
-      rasterize()
       let resource = item.image
       let fido = GoldenRetriever()
       let qualityOfServiceClass = QOS_CLASS_BACKGROUND

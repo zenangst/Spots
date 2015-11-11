@@ -5,6 +5,8 @@ import Sugar
 class CarouselSpotCell: UICollectionViewCell, Itemble {
 
   var size = CGSize(width: 88, height: 88)
+  var item: ListItem?
+  
   var label: UILabel = {
     let label = UILabel(frame: CGRect(x: 0, y: 0,
       width: 200,
@@ -31,10 +33,7 @@ class CarouselSpotCell: UICollectionViewCell, Itemble {
   }
 
   func configure(inout item: ListItem) {
-    optimize()
-
     if !item.image.isEmpty {
-      rasterize()
       let qualityOfServiceClass = QOS_CLASS_BACKGROUND
       let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
 
