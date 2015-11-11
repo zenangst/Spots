@@ -19,7 +19,6 @@ public class ListSpotCell: UITableViewCell, Itemble {
       : .None
     textLabel?.text = item.title
     detailTextLabel?.text = item.subtitle
-
     item.size.height = size.height
   }
 }
