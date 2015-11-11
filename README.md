@@ -1,4 +1,4 @@
-![Spots logo](https://raw.githubusercontent.com/hyperoslo/Spots/feature/logo/Images/logo_v1.png)
+![Spots logo](https://raw.githubusercontent.com/hyperoslo/Spots/feature/logo/Images/logo_v2.png)
 
 [![CI Status](http://img.shields.io/travis/hyperoslo/Components.svg?style=flat)](https://travis-ci.org/hyperoslo/Components)
 [![Version](https://img.shields.io/cocoapods/v/Components.svg?style=flat)](http://cocoadocs.org/docsets/Components)
