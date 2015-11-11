@@ -66,12 +66,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     return true
   }
 
-  @available(iOS 8.0, *)
-  func application(application: UIApplication, handleOpenURL url: NSURL) -> Bool {
-    return handleURL(url)
-  }
-
-  @available(iOS 9.0, *)
   func application(app: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
     return handleURL(url)
   }
