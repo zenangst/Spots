@@ -121,16 +121,16 @@ extension ListSpot: UITableViewDataSource {
   public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     let cell: UITableViewCell
 
-    if let tableViewCell = cachedCells[self.component.items[indexPath.item].kind] as? UITableViewCell {
+    if let tableViewCell = cachedCells[component.items[indexPath.item].kind] as? UITableViewCell {
       cell = tableViewCell
     } else {
-      cell = tableView.dequeueReusableCellWithIdentifier("ListCell\(self.component.items[indexPath.item].kind)", forIndexPath: indexPath)
+      cell = tableView.dequeueReusableCellWithIdentifier("ListCell\(component.items[indexPath.item].kind)", forIndexPath: indexPath)
     }
 
     cell.optimize()
 
     if let itemable = cell as? Itemble {
-      itemable.configure(&self.component.items[indexPath.item])
+      itemable.configure(&component.items[indexPath.item])
     }
 
     return cell
