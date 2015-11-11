@@ -50,7 +50,7 @@ public class FeedSpot: NSObject, Spotable {
     cachedCells.removeAll()
   }
 
-  public func render() -> UIView {
+  public func setup() {
     if component.size == nil {
       var newHeight = component.items.reduce(0, combine: { $0 + $1.size.height })
       if !component.title.isEmpty { newHeight += headerHeight }
@@ -60,7 +60,9 @@ public class FeedSpot: NSObject, Spotable {
     } else {
       tableView.scrollEnabled = false
     }
-    
+  }
+
+  public func render() -> UIView {
     return tableView
   }
 

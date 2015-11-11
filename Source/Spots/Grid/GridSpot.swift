@@ -60,10 +60,12 @@ public class GridSpot: NSObject, Spotable {
     layout.minimumInteritemSpacing = itemSpacing
   }
 
-  public func render() -> UIView {
+  public func setup() {
     collectionView.frame.size.height = layout.collectionViewContentSize().height
     collectionView.frame.size.width = layout.collectionViewContentSize().width
+  }
 
+  public func render() -> UIView {
     return collectionView
   }
 

@@ -50,7 +50,7 @@ public class CarouselSpot: NSObject, Spotable {
     layout.minimumInteritemSpacing = itemSpacing
   }
 
-  public func render() -> UIView {
+  public func setup() {
     collectionView.backgroundColor = UIColor(hex:
       component.meta.property("background-color") ?? "FFFFFF")
     if collectionView.contentSize.height > 0 {
@@ -59,7 +59,9 @@ public class CarouselSpot: NSObject, Spotable {
       collectionView.frame.size.height = component.items.first?.size.height ?? 0
       collectionView.frame.size.height += layout.sectionInset.top + layout.sectionInset.bottom
     }
-    
+  }
+
+  public func render() -> UIView {
     return collectionView
   }
 

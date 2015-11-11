@@ -55,7 +55,7 @@ public class ListSpot: NSObject, Spotable {
     self.init(component: component)
   }
 
-  public func render() -> UIView {
+  public func setup() {
     if component.size == nil {
       var newHeight = component.items.reduce(0, combine: { $0 + $1.size.height })
       if !component.title.isEmpty { newHeight += headerHeight }
@@ -64,7 +64,9 @@ public class ListSpot: NSObject, Spotable {
       tableView.frame.size.height = newHeight
       component.size = ComponentSize(width: tableView.frame.width, height: tableView.frame.height)
     }
-    
+  }
+
+  public func render() -> UIView {
     return tableView
   }
 

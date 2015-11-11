@@ -76,9 +76,10 @@ extension SpotsController: UICollectionViewDelegateFlowLayout {
   public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
     var component = spots[indexPath.item].component
     if component.size == nil {
-      var frame = spots[indexPath.item].render().frame
-      frame.size.width = UIScreen.mainScreen().bounds.width
-      component.size = ComponentSize(width: UIScreen.mainScreen().bounds.width, height: frame.height)
+      spots[indexPath.item].setup()
+      component.size = ComponentSize(
+        width: UIScreen.mainScreen().bounds.width,
+        height: spots[indexPath.item].render().frame.height)
     }
 
     return component.size!.coreGraphicsSize()
