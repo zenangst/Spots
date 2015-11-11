@@ -10,7 +10,7 @@ public class CarouselSpot: NSObject, Spotable {
   public weak var sizeDelegate: SpotSizeDelegate?
   public weak var spotDelegate: SpotsDelegate?
 
-  public lazy var flowLayout: UICollectionViewFlowLayout = { [unowned self] in
+  public lazy var layout: UICollectionViewFlowLayout = { [unowned self] in
     let layout = UICollectionViewFlowLayout()
     layout.scrollDirection = .Horizontal
 
@@ -18,7 +18,7 @@ public class CarouselSpot: NSObject, Spotable {
     }()
 
   public lazy var collectionView: UICollectionView = { [unowned self] in
-    let collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: self.flowLayout)
+    let collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: self.layout)
     collectionView.backgroundColor = UIColor.whiteColor()
     collectionView.dataSource = self
     collectionView.delegate = self
@@ -46,8 +46,8 @@ public class CarouselSpot: NSObject, Spotable {
   public convenience init(_ component: Component, top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0, itemSpacing: CGFloat = 0) {
     self.init(component: component)
     
-    flowLayout.sectionInset = UIEdgeInsetsMake(top, left, bottom, right)
-    flowLayout.minimumInteritemSpacing = itemSpacing
+    layout.sectionInset = UIEdgeInsetsMake(top, left, bottom, right)
+    layout.minimumInteritemSpacing = itemSpacing
   }
 
   public func render() -> UIView {
@@ -57,7 +57,7 @@ public class CarouselSpot: NSObject, Spotable {
       collectionView.frame.size.height = collectionView.contentSize.height
     } else {
       collectionView.frame.size.height = component.items.first?.size.height ?? 0
-      collectionView.frame.size.height += flowLayout.sectionInset.top + flowLayout.sectionInset.bottom
+      collectionView.frame.size.height += layout.sectionInset.top + layout.sectionInset.bottom
     }
     
     return collectionView
@@ -72,7 +72,7 @@ public class CarouselSpot: NSObject, Spotable {
 extension CarouselSpot: UIScrollViewDelegate {
 
   public func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-    let pageWidth: CGFloat = collectionView.frame.width - flowLayout.sectionInset.left + flowLayout.minimumLineSpacing
+    let pageWidth: CGFloat = collectionView.frame.width - layout.sectionInset.left + layout.minimumLineSpacing
     let currentOffset = scrollView.contentOffset.x
     let targetOffset = targetContentOffset.memory.x
     
@@ -95,7 +95,7 @@ extension CarouselSpot: UICollectionViewDelegateFlowLayout {
 
   public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
     component.items[indexPath.item].size.width = collectionView.frame.width / CGFloat(component.span)
-    component.items[indexPath.item].size.width -= flowLayout.sectionInset.left
+    component.items[indexPath.item].size.width -= layout.sectionInset.left
     let item = component.items[indexPath.item]
 
     return CGSize(width: item.size.width, height: item.size.height)
