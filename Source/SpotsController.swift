@@ -32,9 +32,9 @@ public class SpotsController: UIViewController {
   public required init(spots: [Spotable]) {
     self.spots = spots
     super.init(nibName: nil, bundle: nil)
-    self.view.addSubview(collectionView)
-    self.view.autoresizesSubviews = true
-    self.view.autoresizingMask = [.FlexibleRightMargin, .FlexibleLeftMargin, .FlexibleBottomMargin, .FlexibleTopMargin, .FlexibleHeight, .FlexibleWidth]
+    view.addSubview(collectionView)
+    view.autoresizesSubviews = true
+    view.autoresizingMask = [.FlexibleRightMargin, .FlexibleLeftMargin, .FlexibleBottomMargin, .FlexibleTopMargin, .FlexibleHeight, .FlexibleWidth]
   }
 
   public required init?(coder aDecoder: NSCoder) {
