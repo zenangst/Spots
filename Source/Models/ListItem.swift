@@ -4,19 +4,6 @@ import Sugar
 
 public protocol Listable { }
 
-public struct ListSize {
-  public var height: CGFloat
-  public var width: CGFloat
-
-  init(width: CGFloat = 0, height: CGFloat = 0) {
-    self.width = width
-    self.height = height
-  }
-
-  func coreGraphicsSize() -> CGSize {
-    return CGSize(width: self.width, height: self.height)
-  }
-}
 
 public struct ListItem: Mappable, Listable {
   public var title = ""
@@ -24,7 +11,7 @@ public struct ListItem: Mappable, Listable {
   public var image = ""
   public var kind = ""
   public var urn: String?
-  public var size = ListSize()
+  public var size = CGSize(width: 0, height: 0)
   public var meta = [String : AnyObject]()
 
   public init(_ map: JSONDictionary) {
@@ -37,7 +24,7 @@ public struct ListItem: Mappable, Listable {
     meta     <- map.property("meta")
   }
 
-  public init(title: String, subtitle: String = "", image: String = "", kind: String = "", urn: String? = "", size: ListSize = ListSize(), meta: [String : AnyObject] = [:]) {
+  public init(title: String, subtitle: String = "", image: String = "", kind: String = "", urn: String? = "", size: CGSize = CGSize(width: 0, height: 0), meta: [String : AnyObject] = [:]) {
     self.title = title
     self.subtitle = subtitle
     self.image = image

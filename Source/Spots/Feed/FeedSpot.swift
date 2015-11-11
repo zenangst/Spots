@@ -102,7 +102,7 @@ extension FeedSpot: UITableViewDelegate {
   public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
     var newHeight = component.items.reduce(0, combine: { $0 + $1.size.height })
     if !component.title.isEmpty { newHeight += headerHeight }
-    component.size = ComponentSize(width: tableView.frame.width, height: tableView.frame.height)
+    component.size = CGSize(width: tableView.frame.width, height: tableView.frame.height)
     sizeDelegate?.sizeDidUpdate()
 
     return component.items[indexPath.item].size.height

@@ -77,12 +77,12 @@ extension SpotsController: UICollectionViewDelegateFlowLayout {
     var component = spots[indexPath.item].component
     if component.size == nil {
       spots[indexPath.item].setup()
-      component.size = ComponentSize(
+      component.size = CGSize(
         width: UIScreen.mainScreen().bounds.width,
         height: spots[indexPath.item].render().frame.height)
     }
 
-    return component.size!.coreGraphicsSize()
+    return component.size!
   }
 }
 

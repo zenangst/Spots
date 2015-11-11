@@ -59,7 +59,7 @@ public class ListSpot: NSObject, Spotable {
 
       tableView.frame.size.width = UIScreen.mainScreen().bounds.width
       tableView.frame.size.height = newHeight
-      component.size = ComponentSize(width: tableView.frame.width, height: tableView.frame.height)
+      component.size = CGSize(width: tableView.frame.width, height: tableView.frame.height)
     }
   }
 
@@ -84,7 +84,7 @@ extension ListSpot: UITableViewDelegate {
     var newHeight = component.items.reduce(0, combine: { $0 + $1.size.height })
     if !component.title.isEmpty { newHeight += headerHeight }
     tableView.frame.size.height = newHeight
-    component.size = ComponentSize(width: tableView.frame.width, height: tableView.frame.height)
+    component.size = CGSize(width: tableView.frame.width, height: tableView.frame.height)
     sizeDelegate?.sizeDidUpdate()
 
     return component.items[indexPath.item].size.height
