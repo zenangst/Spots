@@ -1,7 +1,6 @@
 import UIKit
 import Tailor
 import Sugar
-import GoldenRetriever
 
 public class FeedSpot: NSObject, Spotable {
 
@@ -92,8 +91,6 @@ extension FeedSpot: UIScrollViewDelegate {
     }
   }
 }
-
-
 
 extension FeedSpot: UITableViewDelegate {
 

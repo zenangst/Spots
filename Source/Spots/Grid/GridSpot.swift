@@ -1,8 +1,5 @@
 import UIKit
-import GoldenRetriever
-import Sugar
 import Hex
-import Compass
 
 public class GridSpot: NSObject, Spotable {
 

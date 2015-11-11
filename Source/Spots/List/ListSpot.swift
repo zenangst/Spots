@@ -1,7 +1,4 @@
 import UIKit
-import Tailor
-import Sugar
-import GoldenRetriever
 
 typealias TitleSpot = ListSpot
 

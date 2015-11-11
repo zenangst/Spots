@@ -1,7 +1,4 @@
 import UIKit
-import GoldenRetriever
-import Sugar
-import Tailor
 
 public class CarouselSpot: NSObject, Spotable {
 
