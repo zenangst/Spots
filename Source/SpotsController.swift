@@ -3,7 +3,7 @@ import UIKit
 public class SpotsController: UIViewController {
 
   private let spots: [Spotable]
-  static let reuseIdentifier = "ComponentCell"
+  static let reuseIdentifier = "SpotReuseIdentifier"
   
   weak public var spotDelegate: SpotsDelegate?
 
