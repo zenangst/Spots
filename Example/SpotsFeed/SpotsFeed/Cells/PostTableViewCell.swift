@@ -22,7 +22,7 @@ public class PostTableViewCell: WallTableViewCell, Itemble {
   public static let reusableIdentifier = "PostTableViewCell"
 
   public class func height(item: ListItem) -> CGFloat {
-    let post = PostTableViewCell.itemToPost(item)
+    let post = item.post
     let postText = post.text as NSString
     let textFrame = postText.boundingRectWithSize(CGSize(width: UIScreen.mainScreen().bounds.width - 40,
       height: CGFloat.max), options: .UsesLineFragmentOrigin,
@@ -118,23 +118,8 @@ public class PostTableViewCell: WallTableViewCell, Itemble {
     fatalError("init(coder:) has not been implemented")
   }
 
-  private class func itemToPost(item: ListItem) -> Post {
-    let avatarURL = NSURL(string: item.image)!
-    let author = Author(name: item.title, avatar: avatarURL)
-
-    var mediaItems = [Media]()
-    if let strings = item.meta["media"] as? [String] {
-      for mediaString in strings {
-        let url = NSURL(string: mediaString)!
-        let media = Media(kind: Media.Kind.Image, source: url)
-        mediaItems.append(media)
-      }
-    }
-    return Post(id: 0, text: item.subtitle, publishDate: "", author: author, media: mediaItems)
-  }
-
   public func setupViews(item: ListItem) -> CGFloat {
-    let post = PostTableViewCell.itemToPost(item)
+    let post = item.post
     var imageHeight: CGFloat = 0
     var imageTop: CGFloat = 50
     if !post.media.isEmpty {

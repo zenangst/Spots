@@ -43,6 +43,7 @@
 		BD4BCCCD1BDE04AA00466C0F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4BCCCC1BDE04AA00466C0F /* AppDelegate.swift */; };
 		BD4BCCD41BDE04AA00466C0F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BD4BCCD31BDE04AA00466C0F /* Assets.xcassets */; };
 		BD4BCCD71BDE04AA00466C0F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BD4BCCD51BDE04AA00466C0F /* LaunchScreen.storyboard */; };
+		BDEA321C1BF3F1E500F07364 /* ListItem+Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA321B1BF3F1E500F07364 /* ListItem+Post.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -86,6 +87,7 @@
 		BD4BCCD31BDE04AA00466C0F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BD4BCCD61BDE04AA00466C0F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BD4BCCD81BDE04AA00466C0F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BDEA321B1BF3F1E500F07364 /* ListItem+Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ListItem+Post.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -263,6 +265,7 @@
 				BD4BCCD31BDE04AA00466C0F /* Assets.xcassets */,
 				BD4BCCD51BDE04AA00466C0F /* LaunchScreen.storyboard */,
 				BD4BCCD81BDE04AA00466C0F /* Info.plist */,
+				BDEA321B1BF3F1E500F07364 /* ListItem+Post.swift */,
 			);
 			path = SpotsFeed;
 			sourceTree = "<group>";
@@ -405,6 +408,7 @@
 				BD18A19D1BF137FD003E1BD1 /* Media.swift in Sources */,
 				BD286A831BF27E9D004E2F37 /* FeedSpotCell.swift in Sources */,
 				BD18A1751BF12A3A003E1BD1 /* Spotable.swift in Sources */,
+				BDEA321C1BF3F1E500F07364 /* ListItem+Post.swift in Sources */,
 				BD18A1781BF12A3A003E1BD1 /* SpotSizeDelegate.swift in Sources */,
 				BD18A1711BF12A3A003E1BD1 /* Componentable.swift in Sources */,
 				BD18A1771BF12A3A003E1BD1 /* SpotsDelegate.swift in Sources */,
