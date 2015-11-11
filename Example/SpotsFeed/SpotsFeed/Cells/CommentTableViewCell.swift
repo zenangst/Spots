@@ -30,8 +30,6 @@ public class CommentTableViewCell: WallTableViewCell, Itemble {
     public static let dateTopOffset: CGFloat = 30
   }
 
-  public let nodeAttributesURL = "nodeAttributesURL"
-
   public lazy var avatarImageView: UIImageView = {
     let imageView = UIImageView()
     imageView.layer.cornerRadius = Dimensions.avatarSize / 2
