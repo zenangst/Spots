@@ -66,7 +66,7 @@ public class CarouselSpot: NSObject, Spotable {
       let componentCellClass = CarouselSpot.cells[item.kind] ?? CarouselSpotCell.self
       if let listCell = componentCellClass.init() as? Itemble {
         component.items[index].index = index
-        listCell.configure(&self.component.items[index])
+        listCell.configure(&component.items[index])
       }
     }
 
