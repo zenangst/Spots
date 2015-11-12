@@ -72,9 +72,11 @@ public class GridSpot: NSObject, Spotable {
         component.items[index].index = index
         listCell.configure(&self.component.items[index])
       }
-
-      collectionView.reloadData()
     }
+
+    collectionView.collectionViewLayout.invalidateLayout()
+    collectionView.reloadData()
+    setup()
   }
 
   public func render() -> UIView {
