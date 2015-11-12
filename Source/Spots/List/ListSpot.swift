@@ -37,11 +37,13 @@ public class ListSpot: NSObject, Spotable {
       let componentCellClass = ListSpot.cells[item.kind] ?? ListSpotCell.self
       if let cachedCell = cachedCells[item.kind] {
         cachedCell.configure(&self.component.items[index])
-      } else if let listCell = componentCellClass.init() as? Itemble {
+      } else {
         self.tableView.registerClass(componentCellClass,
-          forCellReuseIdentifier: "ListCell\(item.kind.uppercaseString)")
-        listCell.configure(&self.component.items[index])
-        cachedCells[item.kind] = listCell
+          forCellReuseIdentifier: "ListCell\(item.kind.capitalizedString)")
+        if let listCell = componentCellClass.init() as? Itemble {
+          listCell.configure(&self.component.items[index])
+          cachedCells[item.kind] = listCell
+        }
       }
     }
     cachedCells.removeAll()
@@ -123,7 +125,7 @@ extension ListSpot: UITableViewDataSource {
     if let tableViewCell = cachedCells[component.items[indexPath.item].kind] as? UITableViewCell {
       cell = tableViewCell
     } else {
-      cell = tableView.dequeueReusableCellWithIdentifier("ListCell\(component.items[indexPath.item].kind.uppercaseString)", forIndexPath: indexPath)
+      cell = tableView.dequeueReusableCellWithIdentifier("ListCell\(component.items[indexPath.item].kind.capitalizedString)", forIndexPath: indexPath)
     }
 
     cell.optimize()
