@@ -93,13 +93,11 @@ extension SpotsController: UICollectionViewDataSource {
   public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCellWithReuseIdentifier(SpotsController.reuseIdentifier, forIndexPath: indexPath)
 
-    if spots[indexPath.item].render().superview == nil {
-      cell.contentView.subviews.forEach { $0.removeFromSuperview() }
-      cell.contentView.addSubview(spots[indexPath.item].render())
-      cell.optimize()
-      spots[indexPath.item].sizeDelegate = self
-      spots[indexPath.item].spotDelegate = spotDelegate
-    }
+    cell.contentView.subviews.forEach { $0.removeFromSuperview() }
+    cell.contentView.addSubview(spots[indexPath.item].render())
+    cell.optimize()
+    spots[indexPath.item].sizeDelegate = self
+    spots[indexPath.item].spotDelegate = spotDelegate
 
     return cell
   }
