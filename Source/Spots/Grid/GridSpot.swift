@@ -3,6 +3,7 @@ import Hex
 
 public class GridSpot: NSObject, Spotable {
 
+  public var index: Int = 0
   public static var cells = [String: UICollectionViewCell.Type]()
   let cellPrefix = "GridSpotCell"
   public var component: Component
@@ -37,6 +38,7 @@ public class GridSpot: NSObject, Spotable {
 
     let items = component.items
     for (index, item) in items.enumerate() {
+      self.component.index = index
       let componentCellClass = GridSpot.cells[item.kind] ?? GridSpotCell.self
       collectionView.registerClass(componentCellClass, forCellWithReuseIdentifier: "\(cellPrefix)\(item.kind.capitalizedString)")
 
@@ -60,6 +62,19 @@ public class GridSpot: NSObject, Spotable {
   public func setup() {
     collectionView.frame.size.height = layout.collectionViewContentSize().height
     collectionView.frame.size.width = layout.collectionViewContentSize().width
+  }
+
+  public func reload() {
+    let items = component.items
+    for (index, item) in items.enumerate() {
+      let componentCellClass = GridSpot.cells[item.kind] ?? GridSpotCell.self
+      if let listCell = componentCellClass.init() as? Itemble {
+        component.items[index].index = index
+        listCell.configure(&self.component.items[index])
+      }
+
+      collectionView.reloadData()
+    }
   }
 
   public func render() -> UIView {
@@ -95,13 +110,13 @@ extension GridSpot: UICollectionViewDataSource {
   }
 
   public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-    var item = component.items[indexPath.item]
-    let cell = collectionView.dequeueReusableCellWithReuseIdentifier("\(cellPrefix)\(item.kind.capitalizedString)", forIndexPath: indexPath)
+    component.items[indexPath.item].index = indexPath.row
+    
+    let cell = collectionView.dequeueReusableCellWithReuseIdentifier("\(cellPrefix)\(component.items[indexPath.item].kind.capitalizedString)", forIndexPath: indexPath)
     cell.optimize()
 
     if let grid = cell as? Itemble {
-      grid.configure(&item)
-      component.items[indexPath.item] = item
+      grid.configure(&component.items[indexPath.item])
       collectionView.collectionViewLayout.invalidateLayout()
       sizeDelegate?.sizeDidUpdate()
     }

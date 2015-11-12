@@ -54,8 +54,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let controller = SpotsController(spots: components)
     controller.title = "Explore"
     navigationController = UINavigationController(rootViewController: controller)
-    window?.rootViewController = navigationController
 
+    window?.rootViewController = navigationController
     window?.makeKeyAndVisible()
 
     return true

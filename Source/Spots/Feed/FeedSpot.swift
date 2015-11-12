@@ -4,6 +4,8 @@ import Sugar
 
 public class FeedSpot: NSObject, Spotable {
 
+  public var index = 0
+
   private var cachedCells = [String : Itemble]()
   private var lastContentOffset = CGPoint()
 
@@ -35,6 +37,7 @@ public class FeedSpot: NSObject, Spotable {
 
     let items = component.items
     for (index, item) in items.enumerate() {
+      self.component.index = index
       let componentCellClass = FeedSpot.cells[item.kind] ?? FeedSpotCell.self
       if let cachedCell = cachedCells[item.kind] {
         cachedCell.configure(&self.component.items[index])
@@ -58,6 +61,19 @@ public class FeedSpot: NSObject, Spotable {
       tableView.contentSize = CGSize(width: tableView.frame.width, height: newHeight - tableView.contentInset.top - tableView.contentInset.bottom)
     } else {
       tableView.scrollEnabled = false
+    }
+  }
+
+  public func reload() {
+    let items = component.items
+    for (index, item) in items.enumerate() {
+      let componentCellClass = FeedSpot.cells[item.kind] ?? FeedSpotCell.self
+      if let listCell = componentCellClass.init() as? Itemble {
+        component.items[index].index = index
+        listCell.configure(&self.component.items[index])
+      }
+
+      tableView.reloadData()
     }
   }
 
@@ -116,14 +132,15 @@ extension FeedSpot: UITableViewDataSource {
   }
 
   public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    let cell: UITableViewCell
+    component.items[indexPath.item].index = indexPath.row
 
+    let cell: UITableViewCell
     cell = tableView.dequeueReusableCellWithIdentifier("FeedCell\(self.component.items[indexPath.item].kind)", forIndexPath: indexPath)
     cell.optimize()
 
     guard let itemable = cell as? Itemble else { return cell }
     
-    itemable.configure(&self.component.items[indexPath.item])
+    itemable.configure(&component.items[indexPath.item])
 
     return cell
   }
