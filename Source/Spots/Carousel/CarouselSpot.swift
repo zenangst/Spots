@@ -33,7 +33,7 @@ public class CarouselSpot: NSObject, Spotable {
     let items = component.items
     for (index, item) in items.enumerate() {
       self.component.index = index
-      let componentCellClass = GridSpot.cells[item.kind] ?? CarouselSpotCell.self
+      let componentCellClass = CarouselSpot.cells[item.kind] ?? CarouselSpotCell.self
       self.collectionView.registerClass(componentCellClass, forCellWithReuseIdentifier: "CarouselCell\(item.kind.capitalizedString)")
 
       guard let gridCell = componentCellClass.init() as? Itemble else { return }
@@ -63,7 +63,7 @@ public class CarouselSpot: NSObject, Spotable {
   public func reload() {
     let items = component.items
     for (index, item) in items.enumerate() {
-      let componentCellClass = GridSpot.cells[item.kind] ?? CarouselSpotCell.self
+      let componentCellClass = CarouselSpot.cells[item.kind] ?? CarouselSpotCell.self
       if let listCell = componentCellClass.init() as? Itemble {
         component.items[index].index = index
         listCell.configure(&self.component.items[index])
