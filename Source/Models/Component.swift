@@ -2,6 +2,7 @@ import Tailor
 import Sugar
 
 public struct Component: Mappable {
+  public var index = 0
   public var title = ""
   public var kind = ""
   public var span = 1

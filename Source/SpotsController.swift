@@ -2,7 +2,7 @@ import UIKit
 
 public class SpotsController: UIViewController {
 
-  private let spots: [Spotable]
+  public private(set) var spots: [Spotable]
   static let reuseIdentifier = "SpotReuseIdentifier"
   
   weak public var spotDelegate: SpotsDelegate?
@@ -35,6 +35,10 @@ public class SpotsController: UIViewController {
     view.addSubview(collectionView)
     view.autoresizesSubviews = true
     view.autoresizingMask = [.FlexibleRightMargin, .FlexibleLeftMargin, .FlexibleBottomMargin, .FlexibleTopMargin, .FlexibleHeight, .FlexibleWidth]
+
+    for (index, _) in spots.enumerate() {
+      self.spots[index].index = index
+    }
   }
 
   public required init?(coder aDecoder: NSCoder) {
@@ -47,6 +51,43 @@ public class SpotsController: UIViewController {
     spots.forEach { $0.layout(size) }
     layout.invalidateLayout()
   }
+
+  public func spotAtIndex(index: Int) -> Spotable? {
+    let spot = spots.filter { $0.index == index }.first
+    return spot
+  }
+
+  public func updateSpotAtIndex(index: Int, closure: (spot: Spotable) -> Spotable) {
+    if let spot = spotAtIndex(index) {
+      spots[spot.index] = closure(spot: spot)
+      spots[spot.index].reload()
+      collectionView.reloadData()
+      collectionView.collectionViewLayout.invalidateLayout()
+    }
+  }
+
+  public func append(item: ListItem, spotIndex: Int) {
+    if let spot = spotAtIndex(spotIndex) {
+      spot.component.items.append(item)
+      spots[spot.index].reload()
+      collectionView.reloadData()
+      collectionView.collectionViewLayout.invalidateLayout()
+    }
+  }
+
+  public func insert(item: ListItem, atIndex index: Int, spotIndex: Int) {
+    if let spot = spotAtIndex(spotIndex) {
+      if index > spot.component.items.count {
+        append(item, spotIndex: spotIndex)
+      } else {
+        spot.component.items.insert(item, atIndex: index)
+      }
+
+      spots[spot.index].reload()
+      collectionView.reloadData()
+      collectionView.collectionViewLayout.invalidateLayout()
+    }
+  }
 }
 
 extension SpotsController: UICollectionViewDataSource {
@@ -56,16 +97,13 @@ extension SpotsController: UICollectionViewDataSource {
   }
 
   public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-    let spot = spots[indexPath.item]
     let cell = collectionView.dequeueReusableCellWithReuseIdentifier(SpotsController.reuseIdentifier, forIndexPath: indexPath)
 
-    if spot.render().superview == nil {
-      cell.contentView.subviews.forEach { $0.removeFromSuperview() }
-      cell.contentView.addSubview(spot.render())
-      cell.optimize()
-      spot.sizeDelegate = self
-      spot.spotDelegate = spotDelegate
-    }
+    cell.contentView.subviews.forEach { $0.removeFromSuperview() }
+    cell.contentView.addSubview(spots[indexPath.item].render())
+    cell.optimize()
+    spots[indexPath.item].sizeDelegate = self
+    spots[indexPath.item].spotDelegate = spotDelegate
 
     return cell
   }

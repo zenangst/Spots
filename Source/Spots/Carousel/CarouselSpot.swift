@@ -2,6 +2,7 @@ import UIKit
 
 public class CarouselSpot: NSObject, Spotable {
 
+  public var index = 0
   public static var cells = [String: UICollectionViewCell.Type]()
   public var component: Component
   public weak var sizeDelegate: SpotSizeDelegate?
@@ -31,7 +32,8 @@ public class CarouselSpot: NSObject, Spotable {
 
     let items = component.items
     for (index, item) in items.enumerate() {
-      let componentCellClass = GridSpot.cells[item.kind] ?? CarouselSpotCell.self
+      self.component.index = index
+      let componentCellClass = CarouselSpot.cells[item.kind] ?? CarouselSpotCell.self
       self.collectionView.registerClass(componentCellClass, forCellWithReuseIdentifier: "CarouselCell\(item.kind.capitalizedString)")
 
       guard let gridCell = componentCellClass.init() as? Itemble else { return }
@@ -56,6 +58,21 @@ public class CarouselSpot: NSObject, Spotable {
       collectionView.frame.size.height = component.items.first?.size.height ?? 0
       collectionView.frame.size.height += layout.sectionInset.top + layout.sectionInset.bottom
     }
+  }
+
+  public func reload() {
+    let items = component.items
+    for (index, item) in items.enumerate() {
+      let componentCellClass = CarouselSpot.cells[item.kind] ?? CarouselSpotCell.self
+      if let listCell = componentCellClass.init() as? Itemble {
+        component.items[index].index = index
+        listCell.configure(&component.items[index])
+      }
+    }
+
+    collectionView.collectionViewLayout.invalidateLayout()
+    collectionView.reloadData()
+    setup()
   }
 
   public func render() -> UIView {
@@ -115,12 +132,11 @@ extension CarouselSpot: UICollectionViewDataSource {
   }
 
   public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-    var item = component.items[indexPath.item]
-    let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CarouselCell\(item.kind.capitalizedString)", forIndexPath: indexPath)
+    component.items[indexPath.item].index = indexPath.item
 
+    let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CarouselCell\(component.items[indexPath.item].kind.capitalizedString)", forIndexPath: indexPath)
     if let grid = cell as? Itemble {
-      grid.configure(&item)
-      component.items[indexPath.item] = item
+      grid.configure(&component.items[indexPath.item])
       collectionView.collectionViewLayout.invalidateLayout()
       sizeDelegate?.sizeDidUpdate()
     }

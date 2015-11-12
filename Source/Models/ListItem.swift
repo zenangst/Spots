@@ -6,6 +6,7 @@ public protocol Listable { }
 
 
 public struct ListItem: Mappable, Listable {
+  public var index = 0
   public var title = ""
   public var subtitle = ""
   public var image = ""

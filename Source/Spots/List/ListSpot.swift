@@ -4,6 +4,7 @@ typealias TitleSpot = ListSpot
 
 public class ListSpot: NSObject, Spotable {
 
+  public var index = 0
   public static var cells = [String : UITableViewCell.Type]()
   private var cachedCells = [String : Itemble]()
   public static var headers = [String : UIView.Type]()
@@ -62,6 +63,22 @@ public class ListSpot: NSObject, Spotable {
       tableView.frame.size.width = UIScreen.mainScreen().bounds.width
       tableView.frame.size.height = newHeight
       component.size = CGSize(width: tableView.frame.width, height: tableView.frame.height)
+      sizeDelegate?.sizeDidUpdate()
+    }
+  }
+
+  public func reload() {
+    let items = component.items
+    for (index, item) in items.enumerate() {
+      let componentCellClass = ListSpot.cells[item.kind] ?? ListSpotCell.self
+      tableView.registerClass(componentCellClass,
+        forCellReuseIdentifier: "ListCell\(item.kind.capitalizedString)")
+      if let listCell = componentCellClass.init() as? Itemble {
+        component.items[index].index = index
+        listCell.configure(&component.items[index])
+      }
+
+      tableView.reloadData()
     }
   }
 
@@ -121,7 +138,6 @@ extension ListSpot: UITableViewDataSource {
 
   public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     let cell: UITableViewCell
-
     if let tableViewCell = cachedCells[component.items[indexPath.item].kind] as? UITableViewCell {
       cell = tableViewCell
     } else {

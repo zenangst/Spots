@@ -10,7 +10,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     window = UIWindow(frame: UIScreen.mainScreen().bounds)
 
     ListSpot.headers["list"] = ListHeaderView.self
-    GridSpot.cells["topic"] = GridTopicCell.self
+    CarouselSpot.cells["topic"] = GridTopicCell.self
 
     let suggestedChannels = Component(span: 3, items: [
       ListItem(title: "Apple", kind: "topic", image: "http://lorempixel.com/125/160/?type=attachment&id=1"),
@@ -54,8 +54,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let controller = SpotsController(spots: components)
     controller.title = "Explore"
     navigationController = UINavigationController(rootViewController: controller)
-    window?.rootViewController = navigationController
 
+    window?.rootViewController = navigationController
     window?.makeKeyAndVisible()
 
     return true
