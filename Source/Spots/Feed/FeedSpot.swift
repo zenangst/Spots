@@ -70,7 +70,7 @@ public class FeedSpot: NSObject, Spotable {
       let componentCellClass = FeedSpot.cells[item.kind] ?? FeedSpotCell.self
       if let listCell = componentCellClass.init() as? Itemble {
         component.items[index].index = index
-        listCell.configure(&self.component.items[index])
+        listCell.configure(&component.items[index])
       }
 
       tableView.reloadData()
