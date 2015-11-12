@@ -2,7 +2,7 @@ import UIKit
 
 public class CarouselSpot: NSObject, Spotable {
 
-  public var index: Int = 0
+  public var index = 0
   public static var cells = [String: UICollectionViewCell.Type]()
   public var component: Component
   public weak var sizeDelegate: SpotSizeDelegate?
