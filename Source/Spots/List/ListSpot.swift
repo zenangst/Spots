@@ -39,7 +39,7 @@ public class ListSpot: NSObject, Spotable {
         cachedCell.configure(&self.component.items[index])
       } else if let listCell = componentCellClass.init() as? Itemble {
         self.tableView.registerClass(componentCellClass,
-          forCellReuseIdentifier: "ListCell\(item.kind)")
+          forCellReuseIdentifier: "ListCell\(item.kind.uppercaseString)")
         listCell.configure(&self.component.items[index])
         cachedCells[item.kind] = listCell
       }
@@ -123,7 +123,7 @@ extension ListSpot: UITableViewDataSource {
     if let tableViewCell = cachedCells[component.items[indexPath.item].kind] as? UITableViewCell {
       cell = tableViewCell
     } else {
-      cell = tableView.dequeueReusableCellWithIdentifier("ListCell\(component.items[indexPath.item].kind)", forIndexPath: indexPath)
+      cell = tableView.dequeueReusableCellWithIdentifier("ListCell\(component.items[indexPath.item].kind.uppercaseString)", forIndexPath: indexPath)
     }
 
     cell.optimize()
