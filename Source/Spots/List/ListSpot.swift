@@ -71,11 +71,11 @@ public class ListSpot: NSObject, Spotable {
     let items = component.items
     for (index, item) in items.enumerate() {
       let componentCellClass = ListSpot.cells[item.kind] ?? ListSpotCell.self
-      self.tableView.registerClass(componentCellClass,
+      tableView.registerClass(componentCellClass,
         forCellReuseIdentifier: "ListCell\(item.kind.capitalizedString)")
       if let listCell = componentCellClass.init() as? Itemble {
         component.items[index].index = index
-        listCell.configure(&self.component.items[index])
+        listCell.configure(&component.items[index])
       }
 
       tableView.reloadData()

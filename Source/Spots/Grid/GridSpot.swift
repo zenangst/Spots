@@ -3,7 +3,7 @@ import Hex
 
 public class GridSpot: NSObject, Spotable {
 
-  public var index: Int = 0
+  public var index = 0
   public static var cells = [String: UICollectionViewCell.Type]()
   let cellPrefix = "GridSpotCell"
   public var component: Component
@@ -70,7 +70,7 @@ public class GridSpot: NSObject, Spotable {
       let componentCellClass = GridSpot.cells[item.kind] ?? GridSpotCell.self
       if let listCell = componentCellClass.init() as? Itemble {
         component.items[index].index = index
-        listCell.configure(&self.component.items[index])
+        listCell.configure(&component.items[index])
       }
     }
 
