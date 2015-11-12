@@ -107,16 +107,16 @@ extension FeedSpot: UIScrollViewDelegate {
   }
 
   public func scrollViewDidScroll(scrollView: UIScrollView) {
-//    if scrollView.contentOffset.y < 0.0 {
-//      sizeDelegate?.scrollToPreviousCell(component)
-//    } else if scrollView.contentOffset.y == 0.0 {
-//      tableView.scrollEnabled = true
-//    } else if scrollView.contentOffset.y >= tableView.contentSize.height + tableView.contentInset.bottom - tableView.bounds.height {
-//      sizeDelegate?.scrollToNextCell(component)
-//    } else if lastContentOffset.y > scrollView.contentOffset.y {
-//      sizeDelegate?.scrollToPreviousCell(component)
-//      lastContentOffset = CGPoint(x: 0, y: 0)
-//    }
+    if scrollView.contentOffset.y < 0.0 {
+      sizeDelegate?.scrollToPreviousCell(component)
+    } else if scrollView.contentOffset.y == 0.0 {
+      tableView.scrollEnabled = true
+    } else if scrollView.contentOffset.y >= tableView.contentSize.height + tableView.contentInset.bottom - tableView.bounds.height {
+      sizeDelegate?.scrollToNextCell(component)
+    } else if lastContentOffset.y > scrollView.contentOffset.y {
+      sizeDelegate?.scrollToPreviousCell(component)
+      lastContentOffset = CGPoint(x: 0, y: 0)
+    }
   }
 }
 
