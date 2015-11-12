@@ -54,6 +54,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     ]
 
     let controller = SpotsController(spots: components)
+
+    controller.spotDelegate = self
     controller.title = "Feed"
     controller.collectionView.scrollEnabled = false
 
@@ -111,25 +113,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var items = [ListItem]()
       for i in from...to {
         autoreleasepool({
-          let sencenceCount = Int(arc4random_uniform(8) + 1)
-          let subtitle = Faker().lorem.sentences(amount: sencenceCount) + " " + Faker().internet.url()
-
-          let mediaCount = Int(arc4random_uniform(5) + 1)
-          var mediaStrings = [String]()
-          for x in 0..<mediaCount {
-            mediaStrings.append("http://lorempixel.com/250/250/?type=attachment&id=\(i)\(x)")
-          }
-
-          items.append(
-            ListItem(title: Faker().name.name(),
-              subtitle: subtitle,
-              kind: kind,
-              image: "http://lorempixel.com/75/75?type=avatar&id=\(i)",
-              meta: ["media" : mediaStrings])
-          )
+          items.append(generateItem(i))
         })
       }
     return items
+  }
+
+  func generateItem(index: Int, kind: String = "feed") -> ListItem {
+    let sencenceCount = Int(arc4random_uniform(8) + 1)
+    let subtitle = Faker().lorem.sentences(amount: sencenceCount) + " " + Faker().internet.url()
+
+    let mediaCount = Int(arc4random_uniform(5) + 1)
+    var mediaStrings = [String]()
+    for x in 0..<mediaCount {
+      mediaStrings.append("http://lorempixel.com/250/250/?type=attachment&id=\(index)\(x)")
+    }
+
+    return ListItem(title: Faker().name.name(),
+      subtitle: subtitle,
+      kind: kind,
+      image: "http://lorempixel.com/75/75?type=avatar&id=\(index)",
+      meta: ["media" : mediaStrings])
   }
 
   func applyStyles() {
@@ -143,5 +147,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       NSForegroundColorAttributeName: UIColor(red:1.000, green:1.000, blue:1.000, alpha: 1)
     ]
   }
+}
+
+extension AppDelegate: SpotsDelegate {
+
+  func spotDidRefresh(spot: Spotable, refreshControl: UIRefreshControl) {
+    delay(0.5) {
+      refreshControl.endRefreshing()
+
+      if let controller = self.navigationController?.visibleViewController as? SpotsController {
+        controller.updateSpotAtIndex(0, closure: { (spot: Spotable) -> Spotable in
+          spot.component.items.insert(self.generateItem(10), atIndex: 0)
+          return spot
+        })
+      }
+    }
+  }
+
+  func spotDidSelectItem(spot: Spotable, item: ListItem) { }
+
 }
 

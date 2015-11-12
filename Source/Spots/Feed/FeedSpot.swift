@@ -31,6 +31,12 @@ public class FeedSpot: NSObject, Spotable {
     return tableView
   }()
 
+  public lazy var refreshControl: UIRefreshControl = { [unowned self] in
+    let refreshControl = UIRefreshControl()
+    refreshControl.addTarget(self, action: Selector("refreshSpot:"), forControlEvents: .ValueChanged)
+    return refreshControl
+    }()
+
   public required init(component: Component) {
     self.component = component
     super.init()
@@ -50,6 +56,7 @@ public class FeedSpot: NSObject, Spotable {
     }
 
     cachedCells.removeAll()
+    tableView.addSubview(refreshControl)
   }
 
   public func setup() {
@@ -75,7 +82,7 @@ public class FeedSpot: NSObject, Spotable {
         listCell.configure(&component.items[index])
       }
 
-      tableView.reloadData()
+      tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
     }
   }
 
@@ -87,6 +94,10 @@ public class FeedSpot: NSObject, Spotable {
     tableView.frame.size.width = size.width
     tableView.layoutIfNeeded()
   }
+
+  func refreshSpot(refreshControl: UIRefreshControl) {
+    spotDelegate?.spotDidRefresh(self, refreshControl: refreshControl)
+  }
 }
 
 extension FeedSpot: UIScrollViewDelegate {
@@ -96,17 +107,16 @@ extension FeedSpot: UIScrollViewDelegate {
   }
 
   public func scrollViewDidScroll(scrollView: UIScrollView) {
-    if scrollView.contentOffset.y < 0.0 {
-      tableView.scrollEnabled = false
-      sizeDelegate?.scrollToPreviousCell(component)
-    } else if scrollView.contentOffset.y == 0.0 {
-      tableView.scrollEnabled = true
-    } else if scrollView.contentOffset.y >= tableView.contentSize.height + tableView.contentInset.bottom - tableView.bounds.height {
-      sizeDelegate?.scrollToNextCell(component)
-    } else if lastContentOffset.y > scrollView.contentOffset.y {
-      sizeDelegate?.scrollToPreviousCell(component)
-      lastContentOffset = CGPoint(x: 0, y: 0)
-    }
+//    if scrollView.contentOffset.y < 0.0 {
+//      sizeDelegate?.scrollToPreviousCell(component)
+//    } else if scrollView.contentOffset.y == 0.0 {
+//      tableView.scrollEnabled = true
+//    } else if scrollView.contentOffset.y >= tableView.contentSize.height + tableView.contentInset.bottom - tableView.bounds.height {
+//      sizeDelegate?.scrollToNextCell(component)
+//    } else if lastContentOffset.y > scrollView.contentOffset.y {
+//      sizeDelegate?.scrollToPreviousCell(component)
+//      lastContentOffset = CGPoint(x: 0, y: 0)
+//    }
   }
 }
 

@@ -29,6 +29,11 @@ public class ListSpot: NSObject, Spotable {
     return tableView
   }()
 
+  public lazy var refreshControl: UIRefreshControl = {
+    let refreshControl = UIRefreshControl()
+    return refreshControl
+    }()
+
   public required init(component: Component) {
     self.component = component
     super.init()
@@ -53,6 +58,7 @@ public class ListSpot: NSObject, Spotable {
   public convenience init(title: String, kind: String = "list") {
     let component = Component(title: title, kind: kind)
     self.init(component: component)
+    tableView.addSubview(refreshControl)
   }
 
   public func setup() {
@@ -78,7 +84,7 @@ public class ListSpot: NSObject, Spotable {
         listCell.configure(&component.items[index])
       }
 
-      tableView.reloadData()
+      tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
     }
   }
 
