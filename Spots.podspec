@@ -11,5 +11,6 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   s.source_files = 'Source/**/*'
   s.dependency 'Sugar'
+  s.dependency 'Tailor'
   s.dependency 'GoldenRetriever'
 end
