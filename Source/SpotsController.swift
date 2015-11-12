@@ -61,6 +61,8 @@ public class SpotsController: UIViewController {
     if let spot = spotAtIndex(index) {
       spots[spot.index] = closure(spot: spot)
       spots[spot.index].reload()
+      collectionView.reloadData()
+      collectionView.collectionViewLayout.invalidateLayout()
     }
   }
 
@@ -68,6 +70,8 @@ public class SpotsController: UIViewController {
     if let spot = spotAtIndex(spotIndex) {
       spot.component.items.append(item)
       spots[spot.index].reload()
+      collectionView.reloadData()
+      collectionView.collectionViewLayout.invalidateLayout()
     }
   }
 
@@ -80,6 +84,8 @@ public class SpotsController: UIViewController {
       }
 
       spots[spot.index].reload()
+      collectionView.reloadData()
+      collectionView.collectionViewLayout.invalidateLayout()
     }
   }
 }
