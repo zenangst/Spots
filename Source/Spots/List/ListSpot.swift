@@ -31,6 +31,7 @@ public class ListSpot: NSObject, Spotable {
 
   public lazy var refreshControl: UIRefreshControl = {
     let refreshControl = UIRefreshControl()
+    refreshControl.addTarget(self, action: Selector("refreshSpot:"), forControlEvents: .ValueChanged)
     return refreshControl
     }()
 
@@ -94,6 +95,10 @@ public class ListSpot: NSObject, Spotable {
   public func layout(size: CGSize) {
     tableView.frame.size.width = size.width
     tableView.layoutIfNeeded()
+  }
+
+  func refreshSpot(refreshControl: UIRefreshControl) {
+    spotDelegate?.spotDidRefresh(self, refreshControl: refreshControl)
   }
 }
 
