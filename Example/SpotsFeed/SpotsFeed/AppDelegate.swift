@@ -53,11 +53,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       feedSpot
     ]
 
-    let controller = SpotsController(spots: components)
+    let controller = SpotsController(spots: components,refreshable: false)
 
     controller.spotDelegate = self
     controller.title = "Feed"
-    //controller.collectionView.scrollEnabled = false
+    controller.collectionView.scrollEnabled = false
 
     applyStyles()
     
@@ -151,7 +151,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 extension AppDelegate: SpotsDelegate {
 
-  func spotDidReload(refreshControl: UIRefreshControl) {
+  func spotsDidReload(refreshControl: UIRefreshControl) {
     delay(0.5) {
       refreshControl.endRefreshing()
 
