@@ -10,7 +10,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     window = UIWindow(frame: UIScreen.mainScreen().bounds)
 
     SpotFactory.register("cards", spot: CardSpot.self)
-    GridSpot.cells["card"] = GridSpotCard.self
+    CarouselSpot.cells["card"] = GridSpotCard.self
 
     let controller = JSONController()
 

@@ -1,4 +1,5 @@
 import UIKit
+import Sugar
 
 public class SpotsController: UIViewController {
 
@@ -29,10 +30,22 @@ public class SpotsController: UIViewController {
     return collectionView
   }()
 
-  public required init(spots: [Spotable]) {
+  public lazy var refreshControl: UIRefreshControl = {
+    let refreshControl = UIRefreshControl()
+    refreshControl.addTarget(self, action: "refreshSpots:", forControlEvents: .ValueChanged)
+
+    return refreshControl
+    }()
+
+  public required init(spots: [Spotable], refreshable: Bool = true) {
     self.spots = spots
     super.init(nibName: nil, bundle: nil)
+
     view.addSubview(collectionView)
+    if refreshable {
+      collectionView.addSubview(refreshControl)
+    }
+
     view.autoresizesSubviews = true
     view.autoresizingMask = [.FlexibleRightMargin, .FlexibleLeftMargin, .FlexibleBottomMargin, .FlexibleTopMargin, .FlexibleHeight, .FlexibleWidth]
 
@@ -57,12 +70,20 @@ public class SpotsController: UIViewController {
     return spot
   }
 
+  public func reloadSpots() {
+    spots.forEach { $0.reload() }
+  }
+
   public func updateSpotAtIndex(index: Int, closure: (spot: Spotable) -> Spotable) {
     if let spot = spotAtIndex(index) {
       spots[spot.index] = closure(spot: spot)
       spots[spot.index].reload()
-      collectionView.reloadData()
-      collectionView.collectionViewLayout.invalidateLayout()
+
+      collectionView.performBatchUpdates({
+        self.collectionView.reloadItemsAtIndexPaths([NSIndexPath(forItem: index, inSection: 0)])
+        }, completion: { _ in
+          self.collectionView.collectionViewLayout.invalidateLayout()
+      })
     }
   }
 
@@ -70,8 +91,12 @@ public class SpotsController: UIViewController {
     if let spot = spotAtIndex(spotIndex) {
       spot.component.items.append(item)
       spots[spot.index].reload()
-      collectionView.reloadData()
-      collectionView.collectionViewLayout.invalidateLayout()
+
+      collectionView.performBatchUpdates({
+        self.collectionView.reloadItemsAtIndexPaths([NSIndexPath(forItem: spotIndex, inSection: 0)])
+        }, completion: { _ in
+          self.collectionView.collectionViewLayout.invalidateLayout()
+      })
     }
   }
 
@@ -84,8 +109,21 @@ public class SpotsController: UIViewController {
       }
 
       spots[spot.index].reload()
-      collectionView.reloadData()
-      collectionView.collectionViewLayout.invalidateLayout()
+      collectionView.performBatchUpdates({
+        self.collectionView.reloadItemsAtIndexPaths([NSIndexPath(forItem: index, inSection: 0)])
+        }, completion: { _ in
+          self.collectionView.collectionViewLayout.invalidateLayout()
+      })
+    }
+  }
+
+  public func refreshSpots(refreshControl: UIRefreshControl) {
+    if let spotDelegate = spotDelegate {
+      spotDelegate.spotsDidReload(refreshControl)
+    } else {
+      delay(0.5) { [weak self] in
+        self?.refreshControl.endRefreshing()
+      }
     }
   }
 }

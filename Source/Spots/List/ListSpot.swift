@@ -27,7 +27,7 @@ public class ListSpot: NSObject, Spotable {
     tableView.rowHeight = UITableViewAutomaticDimension
 
     return tableView
-  }()
+    }()
 
   public required init(component: Component) {
     self.component = component
@@ -77,9 +77,8 @@ public class ListSpot: NSObject, Spotable {
         component.items[index].index = index
         listCell.configure(&component.items[index])
       }
-
-      tableView.reloadData()
     }
+    tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
   }
 
   public func render() -> UIView {

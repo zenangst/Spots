@@ -75,7 +75,7 @@ public class FeedSpot: NSObject, Spotable {
         listCell.configure(&component.items[index])
       }
 
-      tableView.reloadData()
+      tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
     }
   }
 
@@ -97,7 +97,6 @@ extension FeedSpot: UIScrollViewDelegate {
 
   public func scrollViewDidScroll(scrollView: UIScrollView) {
     if scrollView.contentOffset.y < 0.0 {
-      tableView.scrollEnabled = false
       sizeDelegate?.scrollToPreviousCell(component)
     } else if scrollView.contentOffset.y == 0.0 {
       tableView.scrollEnabled = true
