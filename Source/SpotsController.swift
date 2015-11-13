@@ -32,7 +32,6 @@ public class SpotsController: UIViewController {
 
   public lazy var refreshControl: UIRefreshControl = {
     let refreshControl = UIRefreshControl()
-    refreshControl.tintColor = .grayColor()
     refreshControl.addTarget(self, action: "refreshSpots:", forControlEvents: .ValueChanged)
 
     return refreshControl
