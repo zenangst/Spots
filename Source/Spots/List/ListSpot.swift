@@ -27,12 +27,6 @@ public class ListSpot: NSObject, Spotable {
     tableView.rowHeight = UITableViewAutomaticDimension
 
     return tableView
-  }()
-
-  public lazy var refreshControl: UIRefreshControl = {
-    let refreshControl = UIRefreshControl()
-    refreshControl.addTarget(self, action: Selector("refreshSpot:"), forControlEvents: .ValueChanged)
-    return refreshControl
     }()
 
   public required init(component: Component) {
@@ -59,7 +53,6 @@ public class ListSpot: NSObject, Spotable {
   public convenience init(title: String, kind: String = "list") {
     let component = Component(title: title, kind: kind)
     self.init(component: component)
-    tableView.addSubview(refreshControl)
   }
 
   public func setup() {
@@ -95,10 +88,6 @@ public class ListSpot: NSObject, Spotable {
   public func layout(size: CGSize) {
     tableView.frame.size.width = size.width
     tableView.layoutIfNeeded()
-  }
-
-  func refreshSpot(refreshControl: UIRefreshControl) {
-    spotDelegate?.spotDidRefresh(self, refreshControl: refreshControl)
   }
 }
 

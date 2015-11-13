@@ -31,12 +31,6 @@ public class FeedSpot: NSObject, Spotable {
     return tableView
   }()
 
-  public lazy var refreshControl: UIRefreshControl = { [unowned self] in
-    let refreshControl = UIRefreshControl()
-    refreshControl.addTarget(self, action: Selector("refreshSpot:"), forControlEvents: .ValueChanged)
-    return refreshControl
-    }()
-
   public required init(component: Component) {
     self.component = component
     super.init()
@@ -56,7 +50,6 @@ public class FeedSpot: NSObject, Spotable {
     }
 
     cachedCells.removeAll()
-    tableView.addSubview(refreshControl)
   }
 
   public func setup() {
@@ -93,10 +86,6 @@ public class FeedSpot: NSObject, Spotable {
   public func layout(size: CGSize) {
     tableView.frame.size.width = size.width
     tableView.layoutIfNeeded()
-  }
-
-  func refreshSpot(refreshControl: UIRefreshControl) {
-    spotDelegate?.spotDidRefresh(self, refreshControl: refreshControl)
   }
 }
 
