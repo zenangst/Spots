@@ -83,9 +83,8 @@ public class ListSpot: NSObject, Spotable {
         component.items[index].index = index
         listCell.configure(&component.items[index])
       }
-
-      tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
     }
+    tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
   }
 
   public func render() -> UIView {
