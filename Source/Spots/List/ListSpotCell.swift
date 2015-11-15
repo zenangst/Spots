@@ -17,8 +17,13 @@ public class ListSpotCell: UITableViewCell, Itemble {
     accessoryType = item.urn?.isEmpty ?? false
       ? .DisclosureIndicator
       : .None
-    textLabel?.text = item.title
     detailTextLabel?.text = item.subtitle
+    textLabel?.text = item.title
+    
+    if !item.image.isEmpty {
+      imageView?.image = UIImage(named: item.image)
+    }
+
     item.size.height = item.size.height > 0.0 ? item.size.height : size.height
   }
 }
