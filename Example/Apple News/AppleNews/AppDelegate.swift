@@ -10,6 +10,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     window = UIWindow(frame: UIScreen.mainScreen().bounds)
 
     ListSpot.headers["list"] = ListHeaderView.self
+    ListSpot.configure = { tableView in
+      tableView.tableFooterView = UIView(frame: CGRect.zero)
+    }
+
     CarouselSpot.cells["topic"] = GridTopicCell.self
 
     let suggestedChannels = Component(span: 3, items: [
