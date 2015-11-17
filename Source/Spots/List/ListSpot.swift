@@ -7,7 +7,6 @@ public class ListSpot: NSObject, Spotable {
   public static var cells = [String : UITableViewCell.Type]()
   public static var headers = [String : UIView.Type]()
   public static var defaultCell: UITableViewCell.Type = ListSpotCell.self
-
   public static var configure: ((view: UITableView) -> Void)?
 
   public var index = 0
