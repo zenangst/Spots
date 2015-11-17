@@ -4,21 +4,20 @@ import Sugar
 
 public class FeedSpot: NSObject, Spotable {
 
-  public var index = 0
-
-  private var cachedCells = [String : Itemble]()
-  private var lastContentOffset = CGPoint()
-
   public static var cells = [String : UITableViewCell.Type]()
   public static var headers = [String : UIView.Type]()
   public static var defaultCell: UITableViewCell.Type = FeedSpotCell.self
-  
+  public static var configure: ((view: UITableView) -> Void)?
+
+  public var index = 0
   public let itemHeight: CGFloat = 44
   public let headerHeight: CGFloat = 44
-
   public var component: Component
   public weak var sizeDelegate: SpotSizeDelegate?
   public weak var spotDelegate: SpotsDelegate?
+
+  private var cachedCells = [String : Itemble]()
+  private var lastContentOffset = CGPoint()
 
   public lazy var tableView: UITableView = { [unowned self] in
     let tableView = UITableView()
@@ -63,6 +62,8 @@ public class FeedSpot: NSObject, Spotable {
     } else {
       tableView.scrollEnabled = false
     }
+
+    FeedSpot.configure?(view: tableView)
   }
 
   public func reload() {

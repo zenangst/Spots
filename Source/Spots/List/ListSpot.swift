@@ -66,9 +66,9 @@ public class ListSpot: NSObject, Spotable {
       tableView.frame.size.height = newHeight
       component.size = CGSize(width: tableView.frame.width, height: tableView.frame.height)
       sizeDelegate?.sizeDidUpdate()
-
-      ListSpot.configure?(view: tableView)
     }
+
+    ListSpot.configure?(view: tableView)
   }
 
   public func reload() {
