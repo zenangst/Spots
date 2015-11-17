@@ -9,6 +9,7 @@ public class GridSpot: NSObject, Spotable {
   public var component: Component
   public weak var sizeDelegate: SpotSizeDelegate?
   public weak var spotDelegate: SpotsDelegate?
+  public static var defaultCell: UICollectionViewCell.Type = GridSpotCell.self
 
   public lazy var layout: UICollectionViewFlowLayout = { [unowned self] in
     let size = UIScreen.mainScreen().bounds.width / CGFloat(self.component.span)
@@ -39,7 +40,7 @@ public class GridSpot: NSObject, Spotable {
     let items = component.items
     for (index, item) in items.enumerate() {
       self.component.index = index
-      let componentCellClass = GridSpot.cells[item.kind] ?? GridSpotCell.self
+      let componentCellClass = GridSpot.cells[item.kind] ?? GridSpot.defaultCell
       collectionView.registerClass(componentCellClass, forCellWithReuseIdentifier: "\(cellPrefix)\(item.kind.capitalizedString)")
 
       if let gridCell = componentCellClass.init() as? Itemble {

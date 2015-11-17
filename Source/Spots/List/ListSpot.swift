@@ -11,6 +11,7 @@ public class ListSpot: NSObject, Spotable {
 
   public let itemHeight: CGFloat = 44
   public let headerHeight: CGFloat = 44
+  public static var defaultCell: UITableViewCell.Type = ListSpotCell.self
 
   public var component: Component
   public weak var sizeDelegate: SpotSizeDelegate?
@@ -35,7 +36,7 @@ public class ListSpot: NSObject, Spotable {
 
     let items = component.items
     for (index, item) in items.enumerate() {
-      let componentCellClass = ListSpot.cells[item.kind] ?? ListSpotCell.self
+      let componentCellClass = ListSpot.cells[item.kind] ?? ListSpot.defaultCell
       if let cachedCell = cachedCells[item.kind] {
         cachedCell.configure(&self.component.items[index])
       } else {
