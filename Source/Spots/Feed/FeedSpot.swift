@@ -68,7 +68,7 @@ public class FeedSpot: NSObject, Spotable {
   public func reload() {
     let items = component.items
     for (index, item) in items.enumerate() {
-      let componentCellClass = FeedSpot.cells[item.kind] ?? FeedSpotCell.self
+      let componentCellClass = FeedSpot.cells[item.kind] ?? FeedSpot.defaultCell
       tableView.registerClass(componentCellClass,
         forCellReuseIdentifier: "FeedCell\(item.kind.capitalizedString)")
       if let listCell = componentCellClass.init() as? Itemble {
