@@ -8,6 +8,8 @@ public class ListSpot: NSObject, Spotable {
   public static var headers = [String : UIView.Type]()
   public static var defaultCell: UITableViewCell.Type = ListSpotCell.self
 
+  public static var configure: ((view: UITableView) -> Void)?
+
   public var index = 0
   public let itemHeight: CGFloat = 44
   public let headerHeight: CGFloat = 44
@@ -65,6 +67,8 @@ public class ListSpot: NSObject, Spotable {
       tableView.frame.size.height = newHeight
       component.size = CGSize(width: tableView.frame.width, height: tableView.frame.height)
       sizeDelegate?.sizeDidUpdate()
+
+      ListSpot.configure?(view: tableView)
     }
   }
 
