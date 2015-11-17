@@ -2,12 +2,14 @@ import UIKit
 
 public class CarouselSpot: NSObject, Spotable {
 
-  public var index = 0
   public static var cells = [String: UICollectionViewCell.Type]()
+  public static var defaultCell: UICollectionViewCell.Type = CarouselSpotCell.self
+  public static var configure: ((view: UICollectionView) -> Void)?
+
+  public var index = 0
   public var component: Component
   public weak var sizeDelegate: SpotSizeDelegate?
   public weak var spotDelegate: SpotsDelegate?
-  public static var defaultCell: UICollectionViewCell.Type = CarouselSpotCell.self
 
   public lazy var layout: UICollectionViewFlowLayout = { [unowned self] in
     let layout = UICollectionViewFlowLayout()
@@ -59,6 +61,8 @@ public class CarouselSpot: NSObject, Spotable {
       collectionView.frame.size.height = component.items.first?.size.height ?? 0
       collectionView.frame.size.height += layout.sectionInset.top + layout.sectionInset.bottom
     }
+
+    CarouselSpot.configure?(view: collectionView)
   }
 
   public func reload() {

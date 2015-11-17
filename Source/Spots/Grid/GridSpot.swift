@@ -3,13 +3,16 @@ import Hex
 
 public class GridSpot: NSObject, Spotable {
 
-  public var index = 0
   public static var cells = [String: UICollectionViewCell.Type]()
-  let cellPrefix = "GridSpotCell"
+  public static var defaultCell: UICollectionViewCell.Type = GridSpotCell.self
+  public static var configure: ((view: UICollectionView) -> Void)?
+
+  public var index = 0
   public var component: Component
   public weak var sizeDelegate: SpotSizeDelegate?
   public weak var spotDelegate: SpotsDelegate?
-  public static var defaultCell: UICollectionViewCell.Type = GridSpotCell.self
+
+  let cellPrefix = "GridSpotCell"
 
   public lazy var layout: UICollectionViewFlowLayout = { [unowned self] in
     let size = UIScreen.mainScreen().bounds.width / CGFloat(self.component.span)
@@ -63,6 +66,8 @@ public class GridSpot: NSObject, Spotable {
   public func setup() {
     collectionView.frame.size.height = layout.collectionViewContentSize().height
     collectionView.frame.size.width = layout.collectionViewContentSize().width
+
+    GridSpot.configure?(view: collectionView)
   }
 
   public func reload() {

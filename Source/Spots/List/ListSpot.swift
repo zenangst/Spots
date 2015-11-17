@@ -4,18 +4,19 @@ typealias TitleSpot = ListSpot
 
 public class ListSpot: NSObject, Spotable {
 
-  public var index = 0
   public static var cells = [String : UITableViewCell.Type]()
-  private var cachedCells = [String : Itemble]()
   public static var headers = [String : UIView.Type]()
+  public static var defaultCell: UITableViewCell.Type = ListSpotCell.self
+  public static var configure: ((view: UITableView) -> Void)?
 
+  public var index = 0
   public let itemHeight: CGFloat = 44
   public let headerHeight: CGFloat = 44
-  public static var defaultCell: UITableViewCell.Type = ListSpotCell.self
-
   public var component: Component
   public weak var sizeDelegate: SpotSizeDelegate?
   public weak var spotDelegate: SpotsDelegate?
+
+  private var cachedCells = [String : Itemble]()
 
   public lazy var tableView: UITableView = { [unowned self] in
     let tableView = UITableView()
@@ -66,6 +67,8 @@ public class ListSpot: NSObject, Spotable {
       component.size = CGSize(width: tableView.frame.width, height: tableView.frame.height)
       sizeDelegate?.sizeDidUpdate()
     }
+
+    ListSpot.configure?(view: tableView)
   }
 
   public func reload() {
