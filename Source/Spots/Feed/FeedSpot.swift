@@ -11,6 +11,7 @@ public class FeedSpot: NSObject, Spotable {
 
   public static var cells = [String : UITableViewCell.Type]()
   public static var headers = [String : UIView.Type]()
+  public static var defaultCell: UITableViewCell.Type = FeedSpotCell.self
   
   public let itemHeight: CGFloat = 44
   public let headerHeight: CGFloat = 44
@@ -38,7 +39,7 @@ public class FeedSpot: NSObject, Spotable {
     let items = component.items
     for (index, item) in items.enumerate() {
       self.component.index = index
-      let componentCellClass = FeedSpot.cells[item.kind] ?? FeedSpotCell.self
+      let componentCellClass = FeedSpot.cells[item.kind] ?? FeedSpot.defaultCell
       if let cachedCell = cachedCells[item.kind] {
         cachedCell.configure(&self.component.items[index])
       } else if let listCell = componentCellClass.init() as? Itemble {
