@@ -3,13 +3,15 @@ import Hex
 
 public class GridSpot: NSObject, Spotable {
 
-  public var index = 0
   public static var cells = [String: UICollectionViewCell.Type]()
-  let cellPrefix = "GridSpotCell"
+  public static var defaultCell: UICollectionViewCell.Type = GridSpotCell.self
+
+  public var index = 0
   public var component: Component
   public weak var sizeDelegate: SpotSizeDelegate?
   public weak var spotDelegate: SpotsDelegate?
-  public static var defaultCell: UICollectionViewCell.Type = GridSpotCell.self
+
+  let cellPrefix = "GridSpotCell"
 
   public lazy var layout: UICollectionViewFlowLayout = { [unowned self] in
     let size = UIScreen.mainScreen().bounds.width / CGFloat(self.component.span)
