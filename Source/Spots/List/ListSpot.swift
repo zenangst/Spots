@@ -139,12 +139,13 @@ extension ListSpot: UITableViewDataSource {
   }
 
   public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-    if let header = ListSpot.headers[component.kind] {
-      let header = header.init(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: headerHeight))
-      if let configurable = header as? Componentable {
-        configurable.configure(component)
+    if let cachedHeader = cachedHeaders[component.kind] {
+      return cachedHeader as? UIView
+    } else {
+      if let header = ListSpot.headers[component.kind] {
+        let header = header.init(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: headerHeight))
+        return header
       }
-      return header
     }
 
     return nil
