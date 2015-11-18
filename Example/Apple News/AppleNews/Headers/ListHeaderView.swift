@@ -2,6 +2,8 @@ import UIKit
 
 public class ListHeaderView: UIView, Componentable {
 
+  public var height: CGFloat = 44
+
   lazy var label: UILabel = { [unowned self] in
     let label = UILabel(frame: self.frame)
     label.font = UIFont.boldSystemFontOfSize(11)

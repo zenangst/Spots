@@ -11,12 +11,13 @@ public class ListSpot: NSObject, Spotable {
 
   public var index = 0
   public let itemHeight: CGFloat = 44
-  public let headerHeight: CGFloat = 44
+  public var headerHeight: CGFloat = 44
   public var component: Component
   public weak var sizeDelegate: SpotSizeDelegate?
   public weak var spotDelegate: SpotsDelegate?
 
   private var cachedCells = [String : Itemble]()
+  private var cachedHeaders = [String : Componentable]()
 
   public lazy var tableView: UITableView = { [unowned self] in
     let tableView = UITableView()
@@ -49,6 +50,16 @@ public class ListSpot: NSObject, Spotable {
         }
       }
     }
+
+    if let headerType = ListSpot.headers[component.kind] {
+      let header = headerType.init(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: headerHeight))
+      if let configurable = header as? Componentable {
+        configurable.configure(component)
+        cachedHeaders[component.kind] = configurable
+        headerHeight = configurable.height
+      }
+    }
+
     cachedCells.removeAll()
   }
 
@@ -128,11 +139,10 @@ extension ListSpot: UITableViewDataSource {
   }
 
   public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-    if let header = ListSpot.headers[component.kind] {
+    if let cachedHeader = cachedHeaders[component.kind] {
+      return cachedHeader as? UIView
+    } else if let header = ListSpot.headers[component.kind] {
       let header = header.init(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: headerHeight))
-      if let configurable = header as? Componentable {
-        configurable.configure(component)
-      }
       return header
     }
 
