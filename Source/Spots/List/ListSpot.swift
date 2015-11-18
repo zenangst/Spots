@@ -141,11 +141,9 @@ extension ListSpot: UITableViewDataSource {
   public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
     if let cachedHeader = cachedHeaders[component.kind] {
       return cachedHeader as? UIView
-    } else {
-      if let header = ListSpot.headers[component.kind] {
-        let header = header.init(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: headerHeight))
-        return header
-      }
+    } else if let header = ListSpot.headers[component.kind] {
+      let header = header.init(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: headerHeight))
+      return header
     }
 
     return nil
