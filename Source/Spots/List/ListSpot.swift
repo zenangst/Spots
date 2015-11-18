@@ -11,7 +11,7 @@ public class ListSpot: NSObject, Spotable {
 
   public var index = 0
   public let itemHeight: CGFloat = 44
-  public let headerHeight: CGFloat = 44
+  public var headerHeight: CGFloat = 44
   public var component: Component
   public weak var sizeDelegate: SpotSizeDelegate?
   public weak var spotDelegate: SpotsDelegate?
