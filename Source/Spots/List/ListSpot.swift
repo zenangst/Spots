@@ -17,6 +17,7 @@ public class ListSpot: NSObject, Spotable {
   public weak var spotDelegate: SpotsDelegate?
 
   private var cachedCells = [String : Itemble]()
+  private var cachedHeaders = [String : Componentable]()
 
   public lazy var tableView: UITableView = { [unowned self] in
     let tableView = UITableView()
@@ -49,6 +50,16 @@ public class ListSpot: NSObject, Spotable {
         }
       }
     }
+
+    if let headerType = ListSpot.headers[component.kind] {
+      let header = headerType.init(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: headerHeight))
+      if let configurable = header as? Componentable {
+        configurable.configure(component)
+        cachedHeaders[component.kind] = configurable
+        headerHeight = configurable.height
+      }
+    }
+
     cachedCells.removeAll()
   }
 
