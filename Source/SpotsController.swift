@@ -73,66 +73,57 @@ public class SpotsController: UIViewController {
   public func reloadSpots() {
     dispatch { [weak self] in
       guard let weakSelf = self else { return }
-      weakSelf.spots.forEach { $0.reload() }
+      weakSelf.spots.forEach { $0.reload([]) {} }
     }
   }
 
-  public func updateSpotAtIndex(index: Int, closure: (spot: Spotable) -> Spotable) {
+  public func updateSpotAtIndex(index: Int, closure: (spot: Spotable) -> Spotable, completion: (() -> Void)? = nil) {
     if let spot = spotAtIndex(index) {
       spots[spot.index] = closure(spot: spot)
 
       dispatch { [weak self] in
         guard let weakSelf = self else { return }
 
-        weakSelf.spots[spot.index].reload()
-
-        weakSelf.collectionView.performBatchUpdates({
-          weakSelf.collectionView.reloadItemsAtIndexPaths([NSIndexPath(forItem: index, inSection: 0)])
-          }, completion: { _ in
-            weakSelf.collectionView.collectionViewLayout.invalidateLayout()
-        })
+        weakSelf.spots[spot.index].reload([index]) {
+          weakSelf.collectionView.performBatchUpdates({
+            weakSelf.collectionView.reloadItemsAtIndexPaths([NSIndexPath(forItem: index, inSection: 0)])
+            }, completion: { _ in
+              weakSelf.collectionView.collectionViewLayout.invalidateLayout()
+              completion?()
+          })
+        }
       }
     }
   }
 
-  public func append(item: ListItem, spotIndex: Int) {
-    if let spot = spotAtIndex(spotIndex) {
-      spot.component.items.append(item)
-
-      dispatch { [weak self] in
-        guard let weakSelf = self else { return }
-      
-        weakSelf.spots[spot.index].reload()
-
-        weakSelf.collectionView.performBatchUpdates({
-          weakSelf.collectionView.reloadItemsAtIndexPaths([NSIndexPath(forItem: spotIndex, inSection: 0)])
-          }, completion: { _ in
-            weakSelf.collectionView.collectionViewLayout.invalidateLayout()
-        })
-      }
-    }
+  public func append(item: ListItem, spotIndex: Int, completion: (() -> Void)? = nil) {
+    guard let spot = spotAtIndex(spotIndex) else { return }
+    spot.append(item) { completion?() }
+  }
+  
+  public func append(items: [ListItem], spotIndex: Int, completion: (() -> Void)? = nil) {
+    guard let spot = spotAtIndex(spotIndex) else { return }
+    spot.append(items) { completion?() }
   }
 
-  public func insert(item: ListItem, atIndex index: Int, spotIndex: Int) {
-    if let spot = spotAtIndex(spotIndex) {
-      if index > spot.component.items.count {
-        append(item, spotIndex: spotIndex)
-      } else {
-        spot.component.items.insert(item, atIndex: index)
-      }
+  public func insert(item: ListItem, index: Int, spotIndex: Int, completion: (() -> Void)? = nil) {
+    guard let spot = spotAtIndex(spotIndex) else { return }
+    spot.insert(item, index: index)  { completion?() }
+  }
 
-      dispatch { [weak self] in
-        guard let weakSelf = self else { return }
-      
-        weakSelf.spots[spot.index].reload()
+  public func update(item: ListItem, index: Int, spotIndex: Int, completion: (() -> Void)? = nil) {
+    guard let spot = spotAtIndex(spotIndex) else { return }
+    spot.update(item, index: index)  { completion?() }
+  }
 
-        weakSelf.collectionView.performBatchUpdates({
-          weakSelf.collectionView.reloadItemsAtIndexPaths([NSIndexPath(forItem: index, inSection: 0)])
-          }, completion: { _ in
-            weakSelf.collectionView.collectionViewLayout.invalidateLayout()
-        })
-      }
-    }
+  public func delete(index: Int, spotIndex: Int, completion: (() -> Void)? = nil) {
+    guard let spot = spotAtIndex(spotIndex) else { return }
+    spot.delete(index) { completion?() }
+  }
+
+  public func delete(indexes indexes: [Int], spotIndex: Int, completion: (() -> Void)? = nil) {
+    guard let spot = spotAtIndex(spotIndex) else { return }
+    spot.delete(indexes) { completion?() }
   }
 
   public func refreshSpots(refreshControl: UIRefreshControl) {
