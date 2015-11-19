@@ -65,7 +65,7 @@ public class CarouselSpot: NSObject, Spotable {
     CarouselSpot.configure?(view: collectionView)
   }
 
-  public func reload() {
+  public func reload(indexes: [Int] = [], completion: (() -> Void)?) {
     let items = component.items
     for (index, item) in items.enumerate() {
       let componentCellClass = CarouselSpot.cells[item.kind] ?? CarouselSpotCell.self
@@ -78,6 +78,7 @@ public class CarouselSpot: NSObject, Spotable {
     collectionView.collectionViewLayout.invalidateLayout()
     collectionView.reloadData()
     setup()
+    completion?()
   }
 
   public func render() -> UIView {

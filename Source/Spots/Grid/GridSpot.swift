@@ -70,7 +70,7 @@ public class GridSpot: NSObject, Spotable {
     GridSpot.configure?(view: collectionView)
   }
 
-  public func reload() {
+  public func reload(indexes: [Int] = [], completion: (() -> Void)?) {
     let items = component.items
     for (index, item) in items.enumerate() {
       let componentCellClass = GridSpot.cells[item.kind] ?? GridSpotCell.self
@@ -83,6 +83,7 @@ public class GridSpot: NSObject, Spotable {
     collectionView.collectionViewLayout.invalidateLayout()
     collectionView.reloadData()
     setup()
+    completion?()
   }
 
   public func render() -> UIView {
