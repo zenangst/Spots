@@ -193,7 +193,7 @@ extension FeedSpot: UIScrollViewDelegate {
     let bounds = scrollView.bounds
     let size = scrollView.contentSize
     let inset = scrollView.contentInset
-    let shouldFetch = offset.y + bounds.size.height - inset.bottom > size.height + headerHeight
+    let shouldFetch = offset.y + bounds.size.height - inset.bottom > size.height - headerHeight - itemHeight
       && size.height > bounds.size.height
       && !fetching
 
