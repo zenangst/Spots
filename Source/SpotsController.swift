@@ -71,32 +71,45 @@ public class SpotsController: UIViewController {
   }
 
   public func reloadSpots() {
-    spots.forEach { $0.reload() }
+    dispatch { [weak self] in
+      guard let weakSelf = self else { return }
+      weakSelf.spots.forEach { $0.reload() }
+    }
   }
 
   public func updateSpotAtIndex(index: Int, closure: (spot: Spotable) -> Spotable) {
     if let spot = spotAtIndex(index) {
       spots[spot.index] = closure(spot: spot)
-      spots[spot.index].reload()
 
-      collectionView.performBatchUpdates({
-        self.collectionView.reloadItemsAtIndexPaths([NSIndexPath(forItem: index, inSection: 0)])
-        }, completion: { _ in
-          self.collectionView.collectionViewLayout.invalidateLayout()
-      })
+      dispatch { [weak self] in
+        guard let weakSelf = self else { return }
+
+        weakSelf.spots[spot.index].reload()
+
+        weakSelf.collectionView.performBatchUpdates({
+          weakSelf.collectionView.reloadItemsAtIndexPaths([NSIndexPath(forItem: index, inSection: 0)])
+          }, completion: { _ in
+            weakSelf.collectionView.collectionViewLayout.invalidateLayout()
+        })
+      }
     }
   }
 
   public func append(item: ListItem, spotIndex: Int) {
     if let spot = spotAtIndex(spotIndex) {
       spot.component.items.append(item)
-      spots[spot.index].reload()
 
-      collectionView.performBatchUpdates({
-        self.collectionView.reloadItemsAtIndexPaths([NSIndexPath(forItem: spotIndex, inSection: 0)])
-        }, completion: { _ in
-          self.collectionView.collectionViewLayout.invalidateLayout()
-      })
+      dispatch { [weak self] in
+        guard let weakSelf = self else { return }
+      
+        weakSelf.spots[spot.index].reload()
+
+        weakSelf.collectionView.performBatchUpdates({
+          weakSelf.collectionView.reloadItemsAtIndexPaths([NSIndexPath(forItem: spotIndex, inSection: 0)])
+          }, completion: { _ in
+            weakSelf.collectionView.collectionViewLayout.invalidateLayout()
+        })
+      }
     }
   }
 
@@ -108,21 +121,28 @@ public class SpotsController: UIViewController {
         spot.component.items.insert(item, atIndex: index)
       }
 
-      spots[spot.index].reload()
-      collectionView.performBatchUpdates({
-        self.collectionView.reloadItemsAtIndexPaths([NSIndexPath(forItem: index, inSection: 0)])
-        }, completion: { _ in
-          self.collectionView.collectionViewLayout.invalidateLayout()
-      })
+      dispatch { [weak self] in
+        guard let weakSelf = self else { return }
+      
+        weakSelf.spots[spot.index].reload()
+
+        weakSelf.collectionView.performBatchUpdates({
+          weakSelf.collectionView.reloadItemsAtIndexPaths([NSIndexPath(forItem: index, inSection: 0)])
+          }, completion: { _ in
+            weakSelf.collectionView.collectionViewLayout.invalidateLayout()
+        })
+      }
     }
   }
 
   public func refreshSpots(refreshControl: UIRefreshControl) {
-    if let spotDelegate = spotDelegate {
-      spotDelegate.spotsDidReload(refreshControl)
-    } else {
-      delay(0.5) { [weak self] in
-        self?.refreshControl.endRefreshing()
+    dispatch { [weak self] in
+      if let weakSelf = self, spotDelegate = weakSelf.spotDelegate {
+        spotDelegate.spotsDidReload(refreshControl)
+      } else {
+        delay(0.5) { [weak self] in
+          self?.refreshControl.endRefreshing()
+        }
       }
     }
   }
