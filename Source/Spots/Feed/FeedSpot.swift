@@ -44,9 +44,9 @@ public class FeedSpot: NSObject, Spotable {
       if cache(component.items[index].kind) {
         cachedCells[item.kind]!.configure(&self.component.items[index])
       } else {
-        if let listCell = componentCellClass.init() as? Itemble {
-          listCell.configure(&self.component.items[index])
-          cachedCells[item.kind] = listCell
+        if let cell = componentCellClass.init() as? Itemble {
+          cell.configure(&self.component.items[index])
+          cachedCells[item.kind] = cell
         }
       }
     }
@@ -70,6 +70,10 @@ public class FeedSpot: NSObject, Spotable {
     if !cellIsCached(identifier) {
       let componentCellClass = FeedSpot.cells[identifier] ?? FeedSpot.defaultCell
       tableView.registerClass(componentCellClass, forCellReuseIdentifier: component.items[index].kind)
+      
+      if let feedCell = componentCellClass.init() as? Itemble {
+        cachedCells[identifier] = feedCell
+      }
       return false
     } else {
       return true
@@ -154,6 +158,7 @@ public class FeedSpot: NSObject, Spotable {
   public func reload(indexes: [Int] = [], completion: (() -> Void)? = nil) {
     let items = component.items
     for (index, item) in items.enumerate() {
+      cache(item.kind)
       let componentCellClass = FeedSpot.cells[item.kind] ?? FeedSpot.defaultCell
       tableView.registerClass(componentCellClass,
         forCellReuseIdentifier: component.items[index].kind)
