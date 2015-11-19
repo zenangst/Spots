@@ -1,4 +1,5 @@
 import UIKit
+import Sugar
 
 typealias TitleSpot = ListSpot
 
@@ -82,7 +83,79 @@ public class ListSpot: NSObject, Spotable {
     ListSpot.configure?(view: tableView)
   }
 
-  public func reload() {
+  public func append(item: ListItem, completion: (() -> Void)? = nil) {
+    var indexPaths = [NSIndexPath]()
+    indexPaths.append(NSIndexPath(forRow: component.items.count, inSection: 0))
+    component.items.append(item)
+
+    dispatch { [weak self] in
+      guard let weakSelf = self else { return }
+
+      weakSelf.tableView.beginUpdates()
+      weakSelf.tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .None)
+      weakSelf.tableView.endUpdates()
+
+      completion?()
+    }
+  }
+
+  public func append(items: [ListItem], completion: (() -> Void)? = nil) {
+    var indexPaths = [NSIndexPath]()
+    let count = component.items.count
+
+    for (index, item) in items.enumerate() {
+      indexPaths.append(NSIndexPath(forRow: count + index, inSection: 0))
+      component.items.append(item)
+    }
+
+    dispatch { [weak self] in
+      guard let weakSelf = self else { return }
+
+      weakSelf.tableView.beginUpdates()
+      weakSelf.tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .None)
+      weakSelf.tableView.endUpdates()
+
+      completion?()
+    }
+  }
+
+  public func delete(item: ListItem, completion: (() -> Void)? = nil) {
+    var indexPaths = [NSIndexPath]()
+    indexPaths.append(NSIndexPath(forRow: component.items.count, inSection: 0))
+    component.items.append(item)
+
+    dispatch { [weak self] in
+      guard let weakSelf = self else { return }
+
+      weakSelf.tableView.beginUpdates()
+      weakSelf.tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .None)
+      weakSelf.tableView.endUpdates()
+
+      completion?()
+    }
+  }
+
+  public func delete(items: [ListItem], completion: (() -> Void)? = nil) {
+    var indexPaths = [NSIndexPath]()
+    let count = component.items.count
+
+    for (index, item) in items.enumerate() {
+      indexPaths.append(NSIndexPath(forRow: count + index, inSection: 0))
+      component.items.append(item)
+    }
+
+    dispatch { [weak self] in
+      guard let weakSelf = self else { return }
+
+      weakSelf.tableView.beginUpdates()
+      weakSelf.tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .None)
+      weakSelf.tableView.endUpdates()
+      
+      completion?()
+    }
+  }
+
+  public func reload(indexes: [Int] = [], completion: (() -> Void)? = nil) {
     let items = component.items
     for (index, item) in items.enumerate() {
       let componentCellClass = ListSpot.cells[item.kind] ?? ListSpot.defaultCell
@@ -93,7 +166,10 @@ public class ListSpot: NSObject, Spotable {
         listCell.configure(&component.items[index])
       }
     }
+    tableView.beginUpdates()
     tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
+    tableView.endUpdates()
+    completion?()
   }
 
   public func render() -> UIView {

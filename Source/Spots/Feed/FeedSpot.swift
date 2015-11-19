@@ -18,6 +18,7 @@ public class FeedSpot: NSObject, Spotable {
 
   private var cachedCells = [String : Itemble]()
   private var lastContentOffset = CGPoint()
+  private var fetching = false
 
   public lazy var tableView: UITableView = { [unowned self] in
     let tableView = UITableView()
@@ -66,7 +67,79 @@ public class FeedSpot: NSObject, Spotable {
     FeedSpot.configure?(view: tableView)
   }
 
-  public func reload() {
+  public func append(item: ListItem, completion: (() -> Void)? = nil) {
+    var indexPaths = [NSIndexPath]()
+    indexPaths.append(NSIndexPath(forRow: component.items.count, inSection: 0))
+    component.items.append(item)
+
+    dispatch { [weak self] in
+      guard let weakSelf = self else { return }
+
+      weakSelf.tableView.beginUpdates()
+      weakSelf.tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .None)
+      weakSelf.tableView.endUpdates()
+
+      completion?()
+    }
+  }
+
+  public func append(items: [ListItem], completion: (() -> Void)? = nil) {
+    var indexPaths = [NSIndexPath]()
+    let count = component.items.count
+
+    for (index, item) in items.enumerate() {
+      indexPaths.append(NSIndexPath(forRow: count + index, inSection: 0))
+      component.items.append(item)
+    }
+
+    dispatch { [weak self] in
+      guard let weakSelf = self else { return }
+
+      weakSelf.tableView.beginUpdates()
+      weakSelf.tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .None)
+      weakSelf.tableView.endUpdates()
+
+      completion?()
+    }
+  }
+
+  public func delete(item: ListItem, completion: (() -> Void)? = nil) {
+    var indexPaths = [NSIndexPath]()
+    indexPaths.append(NSIndexPath(forRow: component.items.count, inSection: 0))
+    component.items.append(item)
+
+    dispatch { [weak self] in
+      guard let weakSelf = self else { return }
+
+      weakSelf.tableView.beginUpdates()
+      weakSelf.tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .None)
+      weakSelf.tableView.endUpdates()
+
+      completion?()
+    }
+  }
+
+  public func delete(items: [ListItem], completion: (() -> Void)? = nil) {
+    var indexPaths = [NSIndexPath]()
+    let count = component.items.count
+
+    for (index, item) in items.enumerate() {
+      indexPaths.append(NSIndexPath(forRow: count + index, inSection: 0))
+      component.items.append(item)
+    }
+
+    dispatch { [weak self] in
+      guard let weakSelf = self else { return }
+
+      weakSelf.tableView.beginUpdates()
+      weakSelf.tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .None)
+      weakSelf.tableView.endUpdates()
+
+      completion?()
+    }
+  }
+
+  public func reload(indexes: [Int] = [], completion: (() -> Void)? = nil) {
     let items = component.items
     for (index, item) in items.enumerate() {
       let componentCellClass = FeedSpot.cells[item.kind] ?? FeedSpot.defaultCell
@@ -76,9 +149,10 @@ public class FeedSpot: NSObject, Spotable {
         component.items[index].index = index
         listCell.configure(&component.items[index])
       }
-
-      tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
     }
+    
+    tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
+    completion?()
   }
 
   public func render() -> UIView {
@@ -98,6 +172,15 @@ extension FeedSpot: UIScrollViewDelegate {
   }
 
   public func scrollViewDidScroll(scrollView: UIScrollView) {
+    let offset = scrollView.contentOffset
+    let bounds = scrollView.bounds
+    let size = scrollView.contentSize
+    let inset = scrollView.contentInset
+    let shouldFetch = offset.y + bounds.size.height - inset.bottom > size.height + headerHeight
+      && size.height > bounds.size.height
+      && !fetching
+
+
     if scrollView.contentOffset.y < 0.0 {
       sizeDelegate?.scrollToPreviousCell(component)
     } else if scrollView.contentOffset.y == 0.0 {
@@ -107,6 +190,13 @@ extension FeedSpot: UIScrollViewDelegate {
     } else if lastContentOffset.y > scrollView.contentOffset.y {
       sizeDelegate?.scrollToPreviousCell(component)
       lastContentOffset = CGPoint(x: 0, y: 0)
+    }
+
+    if shouldFetch && !fetching {
+      fetching = true
+      spotDelegate?.spotDidReachEnd {
+        self.fetching = false
+      }
     }
   }
 }
