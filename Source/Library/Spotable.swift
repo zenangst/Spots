@@ -23,7 +23,7 @@ public protocol Spotable: class {
   func layout(size: CGSize)
 }
 
-extension Spotable {
+public extension Spotable {
 
   public func append(item: ListItem, completion: (() -> Void)? = nil) {}
   public func append(items: [ListItem], completion: (() -> Void)? = nil) {}
