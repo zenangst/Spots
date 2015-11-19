@@ -116,6 +116,7 @@ public extension Spotable where Self : Listable {
 
   public func reload(indexes: [Int] = [], completion: (() -> Void)? = nil) {
     let items = component.items
+
     for (index, item) in items.enumerate() {
       let componentCellClass = ListSpot.cells[item.kind] ?? ListSpot.defaultCell
       tableView.registerClass(componentCellClass,
@@ -125,6 +126,7 @@ public extension Spotable where Self : Listable {
         listCell.configure(&component.items[index])
       }
     }
+
     tableView.beginUpdates()
     tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
     tableView.endUpdates()
