@@ -31,6 +31,14 @@ extension Spotable {
   public func update(item: ListItem, index: Int, completion: (() -> Void)? = nil) {}
   public func delete(index: Int, completion: (() -> Void)? = nil) {}
   public func delete(indexs: [Int], completion: (() -> Void)? = nil) {}
+  
+  public func sanitizeItems() {
+    let unsantizedItems = component.items.filter { $0.kind.isEmpty }
+
+    for (index, _) in unsantizedItems.enumerate() {
+      self.component.items[index].kind = component.kind
+    }
+  }
 
   public func cellIsCached(kind: String) -> Bool {
     return cachedCells[kind] != nil
