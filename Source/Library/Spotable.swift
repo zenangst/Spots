@@ -34,7 +34,7 @@ public extension Spotable {
   public func update(item: ListItem, index: Int, completion: (() -> Void)? = nil) {}
   public func delete(index: Int, completion: (() -> Void)? = nil) {}
   public func delete(indexs: [Int], completion: (() -> Void)? = nil) {}
-  
+
   public func sanitizeItems() {
     let unsantizedItems = component.items.filter { $0.kind.isEmpty }
 

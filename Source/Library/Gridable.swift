@@ -10,11 +10,11 @@ public extension Spotable where Self : Gridable {
     for (index, item) in component.items.enumerate() {
       sanitizeItems()
       self.component.index = index
-      let componentCellClass = T.cells[item.kind] ?? T.defaultCell
-      collectionView.registerClass(componentCellClass,
+      let cellClass = T.cells[item.kind] ?? T.defaultCell
+      collectionView.registerClass(cellClass,
         forCellWithReuseIdentifier: component.items[index].kind)
 
-      if let cell = componentCellClass.init() as? Itemble {
+      if let cell = cellClass.init() as? Itemble {
         self.component.items[index].size.width = collectionView.frame.width / CGFloat(component.span)
         self.component.items[index].size.height = cell.size.height
       }
@@ -24,10 +24,10 @@ public extension Spotable where Self : Gridable {
   public func reload(indexes: [Int] = [], completion: (() -> Void)?) {
     let items = component.items
     for (index, item) in items.enumerate() {
-      let componentCellClass = self.dynamicType.cells[item.kind] ?? self.dynamicType.defaultCell
-      if let listCell = componentCellClass.init() as? Itemble {
+      let cellClass = self.dynamicType.cells[item.kind] ?? self.dynamicType.defaultCell
+      if let cell = cellClass.init() as? Itemble {
         component.items[index].index = index
-        listCell.configure(&component.items[index])
+        cell.configure(&component.items[index])
       }
     }
 

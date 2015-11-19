@@ -10,9 +10,8 @@ public extension Spotable where Self : Listable {
   public func prepareSpot<T: Spotable>(spot: T) {
     for (index, item) in component.items.enumerate() {
       sanitizeItems()
-
+      self.component.index = index
       let componentCellClass = T.cells[item.kind] ?? T.defaultCell
-
       if cellIsCached(component.items[index].kind) {
         cachedCells[item.kind]!.configure(&self.component.items[index])
       } else {
@@ -27,11 +26,11 @@ public extension Spotable where Self : Listable {
   
   private func cache<T: Spotable>(spot: T, identifier: String) -> Bool {
     if !cellIsCached(identifier) {
-      let componentCellClass = T.cells[identifier] ?? T.defaultCell
-      tableView.registerClass(componentCellClass, forCellReuseIdentifier: component.items[index].kind)
+      let cellClass = T.cells[identifier] ?? T.defaultCell
+      tableView.registerClass(cellClass, forCellReuseIdentifier: component.items[index].kind)
       
-      if let feedCell = componentCellClass.init() as? Itemble {
-        cachedCells[identifier] = feedCell
+      if let cell = cellClass.init() as? Itemble {
+        cachedCells[identifier] = cell
       }
       return false
     } else {
@@ -118,12 +117,12 @@ public extension Spotable where Self : Listable {
     let items = component.items
 
     for (index, item) in items.enumerate() {
-      let componentCellClass = self.dynamicType.cells[item.kind] ?? self.dynamicType.defaultCell
-      tableView.registerClass(componentCellClass,
+      let cellClass = self.dynamicType.cells[item.kind] ?? self.dynamicType.defaultCell
+      tableView.registerClass(cellClass,
         forCellReuseIdentifier: component.items[index].kind)
-      if let listCell = componentCellClass.init() as? Itemble {
+      if let cell = cellClass.init() as? Itemble {
         component.items[index].index = index
-        listCell.configure(&component.items[index])
+        cell.configure(&component.items[index])
       }
     }
 
