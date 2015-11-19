@@ -13,18 +13,7 @@ public class FeedController: SpotsController, SpotsDelegate {
       fatalError("init(coder:) has not been implemented")
   }
 
-  public func spotsDidReload(refreshControl: UIRefreshControl) {
-//    delay(0.5) {
-//      refreshControl.endRefreshing()
-//
-//      if let controller = self.navigationController?.visibleViewController as? SpotsController {
-//        controller.updateSpotAtIndex(0, closure: { (spot: Spotable) -> Spotable in
-//          spot.component.items.insert(FeedController.generateItem(2), atIndex: 0)
-//          return spot
-//        })
-//      }
-//    }
-  }
+  public func spotsDidReload(refreshControl: UIRefreshControl) { }
 
   public func spotDidSelectItem(spot: Spotable, item: ListItem) { }
 
