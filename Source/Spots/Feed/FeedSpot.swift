@@ -13,7 +13,22 @@ public class FeedSpot: NSObject, Spotable {
   public let headerHeight: CGFloat = 44
   
   public var index = 0
-  public var component: Component
+  public var component: Component {
+    didSet {
+      let items = component.items
+      for (index, item) in items.enumerate() {
+        let componentCellClass = FeedSpot.cells[item.kind] ?? FeedSpot.defaultCell
+        if cache(component.items[index].kind) {
+          cachedCells[item.kind]!.configure(&self.component.items[index])
+        } else {
+          if let cell = componentCellClass.init() as? Itemble {
+            cell.configure(&self.component.items[index])
+            cachedCells[item.kind] = cell
+          }
+        }
+      }
+    }
+  }
   
   public weak var sizeDelegate: SpotSizeDelegate?
   public weak var spotDelegate: SpotsDelegate?
@@ -37,19 +52,6 @@ public class FeedSpot: NSObject, Spotable {
   public required init(component: Component) {
     self.component = component
     super.init()
-
-    let items = component.items
-    for (index, item) in items.enumerate() {
-      let componentCellClass = FeedSpot.cells[item.kind] ?? FeedSpot.defaultCell
-      if cache(component.items[index].kind) {
-        cachedCells[item.kind]!.configure(&self.component.items[index])
-      } else {
-        if let cell = componentCellClass.init() as? Itemble {
-          cell.configure(&self.component.items[index])
-          cachedCells[item.kind] = cell
-        }
-      }
-    }
   }
 
   public func setup() {
