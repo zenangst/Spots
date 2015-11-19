@@ -118,7 +118,7 @@ public extension Spotable where Self : Listable {
     let items = component.items
 
     for (index, item) in items.enumerate() {
-      let componentCellClass = ListSpot.cells[item.kind] ?? ListSpot.defaultCell
+      let componentCellClass = self.dynamicType.cells[item.kind] ?? self.dynamicType.defaultCell
       tableView.registerClass(componentCellClass,
         forCellReuseIdentifier: component.items[index].kind)
       if let listCell = componentCellClass.init() as? Itemble {
