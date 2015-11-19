@@ -14,7 +14,7 @@ public class FeedSpotCell: UITableViewCell, Itemble {
   }
 
   public func configure(inout item: ListItem) {
-    accessoryType = item.urn?.isEmpty ?? false
+    accessoryType = item.action?.isEmpty ?? false
       ? .DisclosureIndicator
       : .None
     textLabel?.text = item.title

@@ -9,15 +9,18 @@ public class FeedSpot: NSObject, Spotable {
   public static var defaultCell: UITableViewCell.Type = FeedSpotCell.self
   public static var configure: ((view: UITableView) -> Void)?
 
-  public var index = 0
   public let itemHeight: CGFloat = 44
   public let headerHeight: CGFloat = 44
+  
+  public var index = 0
   public var component: Component
+  
   public weak var sizeDelegate: SpotSizeDelegate?
   public weak var spotDelegate: SpotsDelegate?
 
-  private var cachedCells = [String : Itemble]()
+  public var cachedCells = [String : Itemble]()
   private var lastContentOffset = CGPoint()
+  private var fetching = false
 
   public lazy var tableView: UITableView = { [unowned self] in
     let tableView = UITableView()
@@ -37,19 +40,16 @@ public class FeedSpot: NSObject, Spotable {
 
     let items = component.items
     for (index, item) in items.enumerate() {
-      self.component.index = index
       let componentCellClass = FeedSpot.cells[item.kind] ?? FeedSpot.defaultCell
-      if let cachedCell = cachedCells[item.kind] {
-        cachedCell.configure(&self.component.items[index])
-      } else if let listCell = componentCellClass.init() as? Itemble {
-        self.tableView.registerClass(componentCellClass,
-          forCellReuseIdentifier: "FeedCell\(item.kind)")
-        listCell.configure(&self.component.items[index])
-        cachedCells[item.kind] = listCell
+      if cache(component.items[index].kind) {
+        cachedCells[item.kind]!.configure(&self.component.items[index])
+      } else {
+        if let cell = componentCellClass.init() as? Itemble {
+          cell.configure(&self.component.items[index])
+          cachedCells[item.kind] = cell
+        }
       }
     }
-
-    cachedCells.removeAll()
   }
 
   public func setup() {
@@ -66,19 +66,110 @@ public class FeedSpot: NSObject, Spotable {
     FeedSpot.configure?(view: tableView)
   }
 
-  public func reload() {
+  private func cache(identifier: String) -> Bool {
+    if !cellIsCached(identifier) {
+      let componentCellClass = FeedSpot.cells[identifier] ?? FeedSpot.defaultCell
+      tableView.registerClass(componentCellClass, forCellReuseIdentifier: component.items[index].kind)
+      
+      if let feedCell = componentCellClass.init() as? Itemble {
+        cachedCells[identifier] = feedCell
+      }
+      return false
+    } else {
+      return true
+    }
+  }
+
+  public func append(item: ListItem, completion: (() -> Void)? = nil) {
+    cache(item.kind)
+
+    var indexPaths = [NSIndexPath]()
+    indexPaths.append(NSIndexPath(forRow: component.items.count, inSection: 0))
+    component.items.append(item)
+
+    dispatch { [weak self] in
+      guard let weakSelf = self else { return }
+
+      weakSelf.tableView.beginUpdates()
+      weakSelf.tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .None)
+      weakSelf.tableView.endUpdates()
+
+      completion?()
+    }
+  }
+
+  public func append(items: [ListItem], completion: (() -> Void)? = nil) {
+    var indexPaths = [NSIndexPath]()
+    let count = component.items.count
+
+    for (index, item) in items.enumerate() {
+      cache(item.kind)
+      indexPaths.append(NSIndexPath(forRow: count + index, inSection: 0))
+      component.items.append(item)
+    }
+
+    dispatch { [weak self] in
+      guard let weakSelf = self else { return }
+
+      weakSelf.tableView.beginUpdates()
+      weakSelf.tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .None)
+      weakSelf.tableView.endUpdates()
+
+      completion?()
+    }
+  }
+
+  public func delete(item: ListItem, completion: (() -> Void)? = nil) {
+    var indexPaths = [NSIndexPath]()
+    indexPaths.append(NSIndexPath(forRow: component.items.count, inSection: 0))
+    component.items.append(item)
+
+    dispatch { [weak self] in
+      guard let weakSelf = self else { return }
+
+      weakSelf.tableView.beginUpdates()
+      weakSelf.tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .None)
+      weakSelf.tableView.endUpdates()
+
+      completion?()
+    }
+  }
+
+  public func delete(items: [ListItem], completion: (() -> Void)? = nil) {
+    var indexPaths = [NSIndexPath]()
+    let count = component.items.count
+
+    for (index, item) in items.enumerate() {
+      indexPaths.append(NSIndexPath(forRow: count + index, inSection: 0))
+      component.items.append(item)
+    }
+
+    dispatch { [weak self] in
+      guard let weakSelf = self else { return }
+
+      weakSelf.tableView.beginUpdates()
+      weakSelf.tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .None)
+      weakSelf.tableView.endUpdates()
+
+      completion?()
+    }
+  }
+
+  public func reload(indexes: [Int] = [], completion: (() -> Void)? = nil) {
     let items = component.items
     for (index, item) in items.enumerate() {
+      cache(item.kind)
       let componentCellClass = FeedSpot.cells[item.kind] ?? FeedSpot.defaultCell
       tableView.registerClass(componentCellClass,
-        forCellReuseIdentifier: "FeedCell\(item.kind.capitalizedString)")
+        forCellReuseIdentifier: component.items[index].kind)
       if let listCell = componentCellClass.init() as? Itemble {
         component.items[index].index = index
         listCell.configure(&component.items[index])
       }
-
-      tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
     }
+    
+    tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
+    completion?()
   }
 
   public func render() -> UIView {
@@ -98,6 +189,15 @@ extension FeedSpot: UIScrollViewDelegate {
   }
 
   public func scrollViewDidScroll(scrollView: UIScrollView) {
+    let offset = scrollView.contentOffset
+    let bounds = scrollView.bounds
+    let size = scrollView.contentSize
+    let inset = scrollView.contentInset
+    let shouldFetch = offset.y + bounds.size.height - inset.bottom > size.height - headerHeight - itemHeight
+      && size.height > bounds.size.height
+      && !fetching
+
+
     if scrollView.contentOffset.y < 0.0 {
       sizeDelegate?.scrollToPreviousCell(component)
     } else if scrollView.contentOffset.y == 0.0 {
@@ -107,6 +207,13 @@ extension FeedSpot: UIScrollViewDelegate {
     } else if lastContentOffset.y > scrollView.contentOffset.y {
       sizeDelegate?.scrollToPreviousCell(component)
       lastContentOffset = CGPoint(x: 0, y: 0)
+    }
+
+    if shouldFetch && !fetching {
+      fetching = true
+      spotDelegate?.spotDidReachEnd {
+        self.fetching = false
+      }
     }
   }
 }
@@ -120,7 +227,9 @@ extension FeedSpot: UITableViewDelegate {
 
   public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
     var newHeight = component.items.reduce(0, combine: { $0 + $1.size.height })
+
     if !component.title.isEmpty { newHeight += headerHeight }
+    
     component.size = CGSize(width: tableView.frame.width, height: tableView.frame.height)
     sizeDelegate?.sizeDidUpdate()
 
@@ -138,8 +247,7 @@ extension FeedSpot: UITableViewDataSource {
     component.items[indexPath.item].index = indexPath.row
 
     let cell: UITableViewCell
-    cell = tableView.dequeueReusableCellWithIdentifier("FeedCell\(self.component.items[indexPath.item].kind)", forIndexPath: indexPath)
-    cell.optimize()
+    cell = tableView.dequeueReusableCellWithIdentifier(component.items[indexPath.item].kind, forIndexPath: indexPath)
 
     guard let itemable = cell as? Itemble else { return cell }
     

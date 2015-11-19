@@ -1,4 +1,5 @@
 import UIKit
+import Sugar
 
 typealias TitleSpot = ListSpot
 
@@ -9,14 +10,16 @@ public class ListSpot: NSObject, Spotable {
   public static var defaultCell: UITableViewCell.Type = ListSpotCell.self
   public static var configure: ((view: UITableView) -> Void)?
 
-  public var index = 0
   public let itemHeight: CGFloat = 44
+
+  public var index = 0
   public var headerHeight: CGFloat = 44
   public var component: Component
+
   public weak var sizeDelegate: SpotSizeDelegate?
   public weak var spotDelegate: SpotsDelegate?
 
-  private var cachedCells = [String : Itemble]()
+  public var cachedCells = [String : Itemble]()
   private var cachedHeaders = [String : Componentable]()
 
   public lazy var tableView: UITableView = { [unowned self] in
@@ -39,11 +42,10 @@ public class ListSpot: NSObject, Spotable {
     let items = component.items
     for (index, item) in items.enumerate() {
       let componentCellClass = ListSpot.cells[item.kind] ?? ListSpot.defaultCell
-      if let cachedCell = cachedCells[item.kind] {
-        cachedCell.configure(&self.component.items[index])
+      if cellIsCached(component.items[index].kind) {
+        cachedCells[item.kind]!.configure(&self.component.items[index])
       } else {
-        self.tableView.registerClass(componentCellClass,
-          forCellReuseIdentifier: "ListCell\(item.kind.capitalizedString)")
+        tableView.registerClass(componentCellClass, forCellReuseIdentifier: component.items[index].kind)
         if let listCell = componentCellClass.init() as? Itemble {
           listCell.configure(&self.component.items[index])
           cachedCells[item.kind] = listCell
@@ -82,18 +84,93 @@ public class ListSpot: NSObject, Spotable {
     ListSpot.configure?(view: tableView)
   }
 
-  public func reload() {
+  public func append(item: ListItem, completion: (() -> Void)? = nil) {
+    var indexPaths = [NSIndexPath]()
+    indexPaths.append(NSIndexPath(forRow: component.items.count, inSection: 0))
+    component.items.append(item)
+
+    dispatch { [weak self] in
+      guard let weakSelf = self else { return }
+
+      weakSelf.tableView.beginUpdates()
+      weakSelf.tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .None)
+      weakSelf.tableView.endUpdates()
+
+      completion?()
+    }
+  }
+
+  public func append(items: [ListItem], completion: (() -> Void)? = nil) {
+    var indexPaths = [NSIndexPath]()
+    let count = component.items.count
+
+    for (index, item) in items.enumerate() {
+      indexPaths.append(NSIndexPath(forRow: count + index, inSection: 0))
+      component.items.append(item)
+    }
+
+    dispatch { [weak self] in
+      guard let weakSelf = self else { return }
+
+      weakSelf.tableView.beginUpdates()
+      weakSelf.tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .None)
+      weakSelf.tableView.endUpdates()
+
+      completion?()
+    }
+  }
+
+  public func delete(item: ListItem, completion: (() -> Void)? = nil) {
+    var indexPaths = [NSIndexPath]()
+    indexPaths.append(NSIndexPath(forRow: component.items.count, inSection: 0))
+    component.items.append(item)
+
+    dispatch { [weak self] in
+      guard let weakSelf = self else { return }
+
+      weakSelf.tableView.beginUpdates()
+      weakSelf.tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .None)
+      weakSelf.tableView.endUpdates()
+
+      completion?()
+    }
+  }
+
+  public func delete(items: [ListItem], completion: (() -> Void)? = nil) {
+    var indexPaths = [NSIndexPath]()
+    let count = component.items.count
+
+    for (index, item) in items.enumerate() {
+      indexPaths.append(NSIndexPath(forRow: count + index, inSection: 0))
+      component.items.append(item)
+    }
+
+    dispatch { [weak self] in
+      guard let weakSelf = self else { return }
+
+      weakSelf.tableView.beginUpdates()
+      weakSelf.tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .None)
+      weakSelf.tableView.endUpdates()
+      
+      completion?()
+    }
+  }
+
+  public func reload(indexes: [Int] = [], completion: (() -> Void)? = nil) {
     let items = component.items
     for (index, item) in items.enumerate() {
       let componentCellClass = ListSpot.cells[item.kind] ?? ListSpot.defaultCell
       tableView.registerClass(componentCellClass,
-        forCellReuseIdentifier: "ListCell\(item.kind.capitalizedString)")
+        forCellReuseIdentifier: component.items[index].kind)
       if let listCell = componentCellClass.init() as? Itemble {
         component.items[index].index = index
         listCell.configure(&component.items[index])
       }
     }
+    tableView.beginUpdates()
     tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
+    tableView.endUpdates()
+    completion?()
   }
 
   public func render() -> UIView {
@@ -155,7 +232,7 @@ extension ListSpot: UITableViewDataSource {
     if let tableViewCell = cachedCells[component.items[indexPath.item].kind] as? UITableViewCell {
       cell = tableViewCell
     } else {
-      cell = tableView.dequeueReusableCellWithIdentifier("ListCell\(component.items[indexPath.item].kind.capitalizedString)", forIndexPath: indexPath)
+      cell = tableView.dequeueReusableCellWithIdentifier(component.items[indexPath.item].kind, forIndexPath: indexPath)
     }
 
     cell.optimize()

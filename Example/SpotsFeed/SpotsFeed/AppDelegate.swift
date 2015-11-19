@@ -35,27 +35,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     FeedSpot.cells["feed"] = PostTableViewCell.self
     FeedSpot.cells["comment"] = CommentTableViewCell.self
 
-    let feedComponent = Component(span: 1, items: generateItems(0, to: 20))
-    var browse = Component(title: "Quick links", kind: "list")
-    browse.items = [
-      ListItem(title: "News"),
-      ListItem(title: "Business"),
-      ListItem(title: "Politics"),
-      ListItem(title: "Travel"),
-      ListItem(title: "Technology"),
-      ListItem(title: "Sports"),
-      ListItem(title: "Science"),
-      ListItem(title: "Entertainment"),
-      ListItem(title: "Food")
-    ]
+    let feedComponent = Component(span: 1, items: FeedController.generateItems(0, to: 3))
     let feedSpot = FeedSpot(component: feedComponent)
     let components: [Spotable] = [
       feedSpot
     ]
 
-    let controller = SpotsController(spots: components,refreshable: false)
-
-    controller.spotDelegate = self
+    let controller = FeedController(spots: components,refreshable: false)
     controller.title = "Feed"
     controller.collectionView.scrollEnabled = false
 
@@ -93,7 +79,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             kind: "feed",
             image: "http://lorempixel.com/75/75?type=avatar&id=1",
             meta: ["media" : ["http://lorempixel.com/250/250/?type=attachment&id=1"]])
-        let comments = self.generateItems(0, to: 10, kind: "comment")
+        let comments = FeedController.generateItems(0, to: 10, kind: "comment")
 
         var content = [post]
         content.appendContentsOf(comments)
@@ -109,33 +95,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
   }
 
-  func generateItems(from: Int, to: Int, kind: String = "feed") -> [ListItem] {
-    var items = [ListItem]()
-      for i in from...to {
-        autoreleasepool({
-          items.append(generateItem(i))
-        })
-      }
-    return items
-  }
-
-  func generateItem(index: Int, kind: String = "feed") -> ListItem {
-    let sencenceCount = Int(arc4random_uniform(8) + 1)
-    let subtitle = Faker().lorem.sentences(amount: sencenceCount) + " " + Faker().internet.url()
-
-    let mediaCount = Int(arc4random_uniform(5) + 1)
-    var mediaStrings = [String]()
-    for x in 0..<mediaCount {
-      mediaStrings.append("http://lorempixel.com/250/250/?type=attachment&id=\(index)\(x)")
-    }
-
-    return ListItem(title: Faker().name.name(),
-      subtitle: subtitle,
-      kind: kind,
-      image: "http://lorempixel.com/75/75?type=avatar&id=\(index)",
-      meta: ["media" : mediaStrings])
-  }
-
   func applyStyles() {
     UIApplication.sharedApplication().statusBarStyle = .LightContent
 
@@ -147,24 +106,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       NSForegroundColorAttributeName: UIColor(red:1.000, green:1.000, blue:1.000, alpha: 1)
     ]
   }
-}
-
-extension AppDelegate: SpotsDelegate {
-
-  func spotsDidReload(refreshControl: UIRefreshControl) {
-    delay(0.5) {
-      refreshControl.endRefreshing()
-
-      if let controller = self.navigationController?.visibleViewController as? SpotsController {
-        controller.updateSpotAtIndex(0, closure: { (spot: Spotable) -> Spotable in
-          spot.component.items.insert(self.generateItem(10), atIndex: 0)
-          return spot
-        })
-      }
-    }
-  }
-
-  func spotDidSelectItem(spot: Spotable, item: ListItem) { }
-
 }
 

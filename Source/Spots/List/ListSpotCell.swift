@@ -14,7 +14,7 @@ public class ListSpotCell: UITableViewCell, Itemble {
   }
 
   public func configure(inout item: ListItem) {
-    accessoryType = item.urn?.isEmpty ?? false
+    accessoryType = item.action?.isEmpty ?? false
       ? .DisclosureIndicator
       : .None
     detailTextLabel?.text = item.subtitle
