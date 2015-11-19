@@ -8,36 +8,40 @@
 
 /* Begin PBXBuildFile section */
 		145247EBAD739548A6D374E9 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4130076C870CD84B2DA65854 /* Pods.framework */; };
-		BD9142C91BF086300062BFCB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9142C31BF086300062BFCB /* AppDelegate.swift */; settings = {ASSET_TAGS = (); }; };
-		BD9142CA1BF086300062BFCB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BD9142C41BF086300062BFCB /* Assets.xcassets */; settings = {ASSET_TAGS = (); }; };
-		BD9142CB1BF086300062BFCB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BD9142C51BF086300062BFCB /* LaunchScreen.storyboard */; settings = {ASSET_TAGS = (); }; };
-		BD9142CE1BF0904D0062BFCB /* GridTopicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9142CD1BF0904D0062BFCB /* GridTopicCell.swift */; settings = {ASSET_TAGS = (); }; };
-		BD9142D21BF099080062BFCB /* ListHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9142D11BF099080062BFCB /* ListHeaderView.swift */; settings = {ASSET_TAGS = (); }; };
-		BDEA32081BF3DE6700F07364 /* Componentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA31EF1BF3DE6700F07364 /* Componentable.swift */; settings = {ASSET_TAGS = (); }; };
-		BDEA32091BF3DE6700F07364 /* Itemble.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA31F01BF3DE6700F07364 /* Itemble.swift */; settings = {ASSET_TAGS = (); }; };
-		BDEA320A1BF3DE6700F07364 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA31F11BF3DE6700F07364 /* Parser.swift */; settings = {ASSET_TAGS = (); }; };
-		BDEA320B1BF3DE6700F07364 /* Spotable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA31F21BF3DE6700F07364 /* Spotable.swift */; settings = {ASSET_TAGS = (); }; };
-		BDEA320C1BF3DE6700F07364 /* SpotFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA31F31BF3DE6700F07364 /* SpotFactory.swift */; settings = {ASSET_TAGS = (); }; };
-		BDEA320D1BF3DE6700F07364 /* SpotsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA31F41BF3DE6700F07364 /* SpotsDelegate.swift */; settings = {ASSET_TAGS = (); }; };
-		BDEA320E1BF3DE6700F07364 /* SpotSizeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA31F51BF3DE6700F07364 /* SpotSizeDelegate.swift */; settings = {ASSET_TAGS = (); }; };
-		BDEA320F1BF3DE6700F07364 /* UIView+Optimize.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA31F61BF3DE6700F07364 /* UIView+Optimize.swift */; settings = {ASSET_TAGS = (); }; };
-		BDEA32101BF3DE6700F07364 /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA31F81BF3DE6700F07364 /* Component.swift */; settings = {ASSET_TAGS = (); }; };
-		BDEA32111BF3DE6700F07364 /* ListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA31F91BF3DE6700F07364 /* ListItem.swift */; settings = {ASSET_TAGS = (); }; };
-		BDEA32121BF3DE6700F07364 /* CarouselSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA31FC1BF3DE6700F07364 /* CarouselSpot.swift */; settings = {ASSET_TAGS = (); }; };
-		BDEA32131BF3DE6700F07364 /* CarouselSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA31FD1BF3DE6700F07364 /* CarouselSpotCell.swift */; settings = {ASSET_TAGS = (); }; };
-		BDEA32141BF3DE6700F07364 /* FeedSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA31FF1BF3DE6700F07364 /* FeedSpot.swift */; settings = {ASSET_TAGS = (); }; };
-		BDEA32151BF3DE6700F07364 /* FeedSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA32001BF3DE6700F07364 /* FeedSpotCell.swift */; settings = {ASSET_TAGS = (); }; };
-		BDEA32161BF3DE6700F07364 /* GridSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA32021BF3DE6700F07364 /* GridSpot.swift */; settings = {ASSET_TAGS = (); }; };
-		BDEA32171BF3DE6700F07364 /* GridSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA32031BF3DE6700F07364 /* GridSpotCell.swift */; settings = {ASSET_TAGS = (); }; };
-		BDEA32181BF3DE6700F07364 /* ListSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA32051BF3DE6700F07364 /* ListSpot.swift */; settings = {ASSET_TAGS = (); }; };
-		BDEA32191BF3DE6700F07364 /* ListSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA32061BF3DE6700F07364 /* ListSpotCell.swift */; settings = {ASSET_TAGS = (); }; };
-		BDEA321A1BF3DE6700F07364 /* SpotsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA32071BF3DE6700F07364 /* SpotsController.swift */; settings = {ASSET_TAGS = (); }; };
+		BD2CB5CE1BFE876C0075C299 /* Gridable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2CB5CD1BFE876C0075C299 /* Gridable.swift */; };
+		BD2CB5D01BFE8A3D0075C299 /* Listable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2CB5CF1BFE8A3D0075C299 /* Listable.swift */; };
+		BD9142C91BF086300062BFCB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9142C31BF086300062BFCB /* AppDelegate.swift */; };
+		BD9142CA1BF086300062BFCB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BD9142C41BF086300062BFCB /* Assets.xcassets */; };
+		BD9142CB1BF086300062BFCB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BD9142C51BF086300062BFCB /* LaunchScreen.storyboard */; };
+		BD9142CE1BF0904D0062BFCB /* GridTopicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9142CD1BF0904D0062BFCB /* GridTopicCell.swift */; };
+		BD9142D21BF099080062BFCB /* ListHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9142D11BF099080062BFCB /* ListHeaderView.swift */; };
+		BDEA32081BF3DE6700F07364 /* Componentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA31EF1BF3DE6700F07364 /* Componentable.swift */; };
+		BDEA32091BF3DE6700F07364 /* Itemble.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA31F01BF3DE6700F07364 /* Itemble.swift */; };
+		BDEA320A1BF3DE6700F07364 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA31F11BF3DE6700F07364 /* Parser.swift */; };
+		BDEA320B1BF3DE6700F07364 /* Spotable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA31F21BF3DE6700F07364 /* Spotable.swift */; };
+		BDEA320C1BF3DE6700F07364 /* SpotFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA31F31BF3DE6700F07364 /* SpotFactory.swift */; };
+		BDEA320D1BF3DE6700F07364 /* SpotsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA31F41BF3DE6700F07364 /* SpotsDelegate.swift */; };
+		BDEA320E1BF3DE6700F07364 /* SpotSizeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA31F51BF3DE6700F07364 /* SpotSizeDelegate.swift */; };
+		BDEA320F1BF3DE6700F07364 /* UIView+Optimize.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA31F61BF3DE6700F07364 /* UIView+Optimize.swift */; };
+		BDEA32101BF3DE6700F07364 /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA31F81BF3DE6700F07364 /* Component.swift */; };
+		BDEA32111BF3DE6700F07364 /* ListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA31F91BF3DE6700F07364 /* ListItem.swift */; };
+		BDEA32121BF3DE6700F07364 /* CarouselSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA31FC1BF3DE6700F07364 /* CarouselSpot.swift */; };
+		BDEA32131BF3DE6700F07364 /* CarouselSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA31FD1BF3DE6700F07364 /* CarouselSpotCell.swift */; };
+		BDEA32141BF3DE6700F07364 /* FeedSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA31FF1BF3DE6700F07364 /* FeedSpot.swift */; };
+		BDEA32151BF3DE6700F07364 /* FeedSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA32001BF3DE6700F07364 /* FeedSpotCell.swift */; };
+		BDEA32161BF3DE6700F07364 /* GridSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA32021BF3DE6700F07364 /* GridSpot.swift */; };
+		BDEA32171BF3DE6700F07364 /* GridSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA32031BF3DE6700F07364 /* GridSpotCell.swift */; };
+		BDEA32181BF3DE6700F07364 /* ListSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA32051BF3DE6700F07364 /* ListSpot.swift */; };
+		BDEA32191BF3DE6700F07364 /* ListSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA32061BF3DE6700F07364 /* ListSpotCell.swift */; };
+		BDEA321A1BF3DE6700F07364 /* SpotsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA32071BF3DE6700F07364 /* SpotsController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		4130076C870CD84B2DA65854 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		64DC7B3AA5E98213C1480AC4 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		B2B953F991D64F708394529D /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		BD2CB5CD1BFE876C0075C299 /* Gridable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gridable.swift; sourceTree = "<group>"; };
+		BD2CB5CF1BFE8A3D0075C299 /* Listable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Listable.swift; sourceTree = "<group>"; };
 		BD4BCCC91BDE04AA00466C0F /* AppleNews.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppleNews.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD9142C31BF086300062BFCB /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BD9142C41BF086300062BFCB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -166,6 +170,8 @@
 				BDEA31F41BF3DE6700F07364 /* SpotsDelegate.swift */,
 				BDEA31F51BF3DE6700F07364 /* SpotSizeDelegate.swift */,
 				BDEA31F61BF3DE6700F07364 /* UIView+Optimize.swift */,
+				BD2CB5CD1BFE876C0075C299 /* Gridable.swift */,
+				BD2CB5CF1BFE8A3D0075C299 /* Listable.swift */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -347,6 +353,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BDEA32191BF3DE6700F07364 /* ListSpotCell.swift in Sources */,
+				BD2CB5D01BFE8A3D0075C299 /* Listable.swift in Sources */,
 				BDEA320B1BF3DE6700F07364 /* Spotable.swift in Sources */,
 				BDEA32101BF3DE6700F07364 /* Component.swift in Sources */,
 				BDEA32151BF3DE6700F07364 /* FeedSpotCell.swift in Sources */,
@@ -360,6 +367,7 @@
 				BDEA32171BF3DE6700F07364 /* GridSpotCell.swift in Sources */,
 				BDEA320A1BF3DE6700F07364 /* Parser.swift in Sources */,
 				BDEA32081BF3DE6700F07364 /* Componentable.swift in Sources */,
+				BD2CB5CE1BFE876C0075C299 /* Gridable.swift in Sources */,
 				BD9142C91BF086300062BFCB /* AppDelegate.swift in Sources */,
 				BDEA320E1BF3DE6700F07364 /* SpotSizeDelegate.swift in Sources */,
 				BDEA32111BF3DE6700F07364 /* ListItem.swift in Sources */,
