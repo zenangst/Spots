@@ -71,32 +71,38 @@ public class SpotsController: UIViewController {
   }
 
   public func reloadSpots() {
-    spots.forEach { $0.reload() }
+    dispatch { self.spots.forEach { $0.reload() } }
   }
 
   public func updateSpotAtIndex(index: Int, closure: (spot: Spotable) -> Spotable) {
     if let spot = spotAtIndex(index) {
       spots[spot.index] = closure(spot: spot)
-      spots[spot.index].reload()
 
-      collectionView.performBatchUpdates({
-        self.collectionView.reloadItemsAtIndexPaths([NSIndexPath(forItem: index, inSection: 0)])
-        }, completion: { _ in
-          self.collectionView.collectionViewLayout.invalidateLayout()
-      })
+      dispatch {
+        self.spots[spot.index].reload()
+
+        self.collectionView.performBatchUpdates({
+          self.collectionView.reloadItemsAtIndexPaths([NSIndexPath(forItem: index, inSection: 0)])
+          }, completion: { _ in
+            self.collectionView.collectionViewLayout.invalidateLayout()
+        })
+      }
     }
   }
 
   public func append(item: ListItem, spotIndex: Int) {
     if let spot = spotAtIndex(spotIndex) {
       spot.component.items.append(item)
-      spots[spot.index].reload()
 
-      collectionView.performBatchUpdates({
-        self.collectionView.reloadItemsAtIndexPaths([NSIndexPath(forItem: spotIndex, inSection: 0)])
-        }, completion: { _ in
-          self.collectionView.collectionViewLayout.invalidateLayout()
-      })
+      dispatch {
+        self.spots[spot.index].reload()
+
+        self.collectionView.performBatchUpdates({
+          self.collectionView.reloadItemsAtIndexPaths([NSIndexPath(forItem: spotIndex, inSection: 0)])
+          }, completion: { _ in
+            self.collectionView.collectionViewLayout.invalidateLayout()
+        })
+      }
     }
   }
 
@@ -108,21 +114,25 @@ public class SpotsController: UIViewController {
         spot.component.items.insert(item, atIndex: index)
       }
 
-      spots[spot.index].reload()
-      collectionView.performBatchUpdates({
-        self.collectionView.reloadItemsAtIndexPaths([NSIndexPath(forItem: index, inSection: 0)])
-        }, completion: { _ in
-          self.collectionView.collectionViewLayout.invalidateLayout()
-      })
+      dispatch {
+        self.spots[spot.index].reload()
+        self.collectionView.performBatchUpdates({
+          self.collectionView.reloadItemsAtIndexPaths([NSIndexPath(forItem: index, inSection: 0)])
+          }, completion: { _ in
+            self.collectionView.collectionViewLayout.invalidateLayout()
+        })
+      }
     }
   }
 
   public func refreshSpots(refreshControl: UIRefreshControl) {
-    if let spotDelegate = spotDelegate {
-      spotDelegate.spotsDidReload(refreshControl)
-    } else {
-      delay(0.5) { [weak self] in
-        self?.refreshControl.endRefreshing()
+    dispatch {
+      if let spotDelegate = self.spotDelegate {
+        spotDelegate.spotsDidReload(refreshControl)
+      } else {
+        delay(0.5) { [weak self] in
+          self?.refreshControl.endRefreshing()
+        }
       }
     }
   }
