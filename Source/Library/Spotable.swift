@@ -2,13 +2,14 @@ import UIKit
 
 public protocol Spotable: class {
 
+  static var cells: [String : UIView.Type] { get set }
+  static var defaultCell: UIView.Type { get set }
+
   weak var sizeDelegate: SpotSizeDelegate? { get set }
   weak var spotDelegate: SpotsDelegate? { get set }
 
   var index: Int { get set }
   var component: Component { get set }
-  static var cells: [String : UIView.Type] { get set }
-  static var defaultCell: UIView.Type { get set }
   var cachedCells: [String : Itemble] { get set }
 
   init(component: Component)
