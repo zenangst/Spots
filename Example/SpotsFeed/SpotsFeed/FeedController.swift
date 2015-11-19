@@ -18,8 +18,13 @@ public class FeedController: SpotsController, SpotsDelegate {
   public func spotDidSelectItem(spot: Spotable, item: ListItem) { }
 
   public func spotDidReachEnd(completion: (() -> Void)?) {
-    append(FeedController.generateItems(0, to: 10), spotIndex: 0) {
-      completion?()
+
+    let backgroundQueue = dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)
+    dispatch(backgroundQueue) { [weak self] in
+      guard let weakSelf = self else { return }
+      weakSelf.append(FeedController.generateItems(0, to: 10), spotIndex: 0) {
+        completion?()
+      }
     }
   }
 
