@@ -25,9 +25,9 @@ public extension Spotable where Self : Listable {
     }
   }
   
-  private func cache(identifier: String) -> Bool {
+  private func cache<T: Spotable>(spot: T, identifier: String) -> Bool {
     if !cellIsCached(identifier) {
-      let componentCellClass = FeedSpot.cells[identifier] ?? FeedSpot.defaultCell
+      let componentCellClass = T.cells[identifier] ?? T.defaultCell
       tableView.registerClass(componentCellClass, forCellReuseIdentifier: component.items[index].kind)
       
       if let feedCell = componentCellClass.init() as? Itemble {
@@ -40,7 +40,7 @@ public extension Spotable where Self : Listable {
   }
 
   public func append(item: ListItem, completion: (() -> Void)? = nil) {
-    cache(item.kind)
+    cache(self, identifier: item.kind)
 
     var indexPaths = [NSIndexPath]()
     indexPaths.append(NSIndexPath(forRow: component.items.count, inSection: 0))
@@ -62,7 +62,7 @@ public extension Spotable where Self : Listable {
     let count = component.items.count
 
     for (index, item) in items.enumerate() {
-      cache(item.kind)
+      cache(self, identifier: item.kind)
       indexPaths.append(NSIndexPath(forRow: count + index, inSection: 0))
       component.items.append(item)
     }
