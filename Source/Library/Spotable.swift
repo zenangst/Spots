@@ -2,12 +2,15 @@ import UIKit
 
 public protocol Spotable: class {
 
-  var index: Int { get set }
   weak var sizeDelegate: SpotSizeDelegate? { get set }
   weak var spotDelegate: SpotsDelegate? { get set }
+
+  var index: Int { get set }
   var component: Component { get set }
+  var cachedCells: [String : Itemble] { get set }
 
   init(component: Component)
+
   func setup()
   func append(item: ListItem, completion: (() -> Void)?)
   func append(items: [ListItem], completion: (() -> Void)?)
@@ -29,4 +32,7 @@ extension Spotable {
   public func delete(index: Int, completion: (() -> Void)? = nil) {}
   public func delete(indexs: [Int], completion: (() -> Void)? = nil) {}
 
+  public func cellIsCached(kind: String) -> Bool {
+    return cachedCells[kind] != nil
+  }
 }

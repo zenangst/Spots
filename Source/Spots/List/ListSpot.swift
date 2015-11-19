@@ -10,14 +10,16 @@ public class ListSpot: NSObject, Spotable {
   public static var defaultCell: UITableViewCell.Type = ListSpotCell.self
   public static var configure: ((view: UITableView) -> Void)?
 
-  public var index = 0
   public let itemHeight: CGFloat = 44
+
+  public var index = 0
   public var headerHeight: CGFloat = 44
   public var component: Component
+
   public weak var sizeDelegate: SpotSizeDelegate?
   public weak var spotDelegate: SpotsDelegate?
 
-  private var cachedCells = [String : Itemble]()
+  public var cachedCells = [String : Itemble]()
   private var cachedHeaders = [String : Componentable]()
 
   public lazy var tableView: UITableView = { [unowned self] in
@@ -40,11 +42,10 @@ public class ListSpot: NSObject, Spotable {
     let items = component.items
     for (index, item) in items.enumerate() {
       let componentCellClass = ListSpot.cells[item.kind] ?? ListSpot.defaultCell
-      if let cachedCell = cachedCells[item.kind] {
-        cachedCell.configure(&self.component.items[index])
+      if cellIsCached(component.items[index].kind) {
+        cachedCells[item.kind]!.configure(&self.component.items[index])
       } else {
-        self.tableView.registerClass(componentCellClass,
-          forCellReuseIdentifier: "ListCell\(item.kind.capitalizedString)")
+        tableView.registerClass(componentCellClass, forCellReuseIdentifier: component.items[index].kind)
         if let listCell = componentCellClass.init() as? Itemble {
           listCell.configure(&self.component.items[index])
           cachedCells[item.kind] = listCell
@@ -160,7 +161,7 @@ public class ListSpot: NSObject, Spotable {
     for (index, item) in items.enumerate() {
       let componentCellClass = ListSpot.cells[item.kind] ?? ListSpot.defaultCell
       tableView.registerClass(componentCellClass,
-        forCellReuseIdentifier: "ListCell\(item.kind.capitalizedString)")
+        forCellReuseIdentifier: component.items[index].kind)
       if let listCell = componentCellClass.init() as? Itemble {
         component.items[index].index = index
         listCell.configure(&component.items[index])
@@ -231,7 +232,7 @@ extension ListSpot: UITableViewDataSource {
     if let tableViewCell = cachedCells[component.items[indexPath.item].kind] as? UITableViewCell {
       cell = tableViewCell
     } else {
-      cell = tableView.dequeueReusableCellWithIdentifier("ListCell\(component.items[indexPath.item].kind.capitalizedString)", forIndexPath: indexPath)
+      cell = tableView.dequeueReusableCellWithIdentifier(component.items[indexPath.item].kind, forIndexPath: indexPath)
     }
 
     cell.optimize()

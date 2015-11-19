@@ -9,14 +9,16 @@ public class FeedSpot: NSObject, Spotable {
   public static var defaultCell: UITableViewCell.Type = FeedSpotCell.self
   public static var configure: ((view: UITableView) -> Void)?
 
-  public var index = 0
   public let itemHeight: CGFloat = 44
   public let headerHeight: CGFloat = 44
+  
+  public var index = 0
   public var component: Component
+  
   public weak var sizeDelegate: SpotSizeDelegate?
   public weak var spotDelegate: SpotsDelegate?
 
-  private var cachedCells = [String : Itemble]()
+  public var cachedCells = [String : Itemble]()
   private var lastContentOffset = CGPoint()
   private var fetching = false
 
@@ -38,19 +40,16 @@ public class FeedSpot: NSObject, Spotable {
 
     let items = component.items
     for (index, item) in items.enumerate() {
-      self.component.index = index
       let componentCellClass = FeedSpot.cells[item.kind] ?? FeedSpot.defaultCell
-      if let cachedCell = cachedCells[item.kind] {
-        cachedCell.configure(&self.component.items[index])
-      } else if let listCell = componentCellClass.init() as? Itemble {
-        self.tableView.registerClass(componentCellClass,
-          forCellReuseIdentifier: "FeedCell\(item.kind)")
-        listCell.configure(&self.component.items[index])
-        cachedCells[item.kind] = listCell
+      if cache(component.items[index].kind) {
+        cachedCells[item.kind]!.configure(&self.component.items[index])
+      } else {
+        if let listCell = componentCellClass.init() as? Itemble {
+          listCell.configure(&self.component.items[index])
+          cachedCells[item.kind] = listCell
+        }
       }
     }
-
-    cachedCells.removeAll()
   }
 
   public func setup() {
@@ -67,7 +66,19 @@ public class FeedSpot: NSObject, Spotable {
     FeedSpot.configure?(view: tableView)
   }
 
+  private func cache(identifier: String) -> Bool {
+    if !cellIsCached(identifier) {
+      let componentCellClass = FeedSpot.cells[identifier] ?? FeedSpot.defaultCell
+      tableView.registerClass(componentCellClass, forCellReuseIdentifier: component.items[index].kind)
+      return false
+    } else {
+      return true
+    }
+  }
+
   public func append(item: ListItem, completion: (() -> Void)? = nil) {
+    cache(item.kind)
+
     var indexPaths = [NSIndexPath]()
     indexPaths.append(NSIndexPath(forRow: component.items.count, inSection: 0))
     component.items.append(item)
@@ -88,6 +99,7 @@ public class FeedSpot: NSObject, Spotable {
     let count = component.items.count
 
     for (index, item) in items.enumerate() {
+      cache(item.kind)
       indexPaths.append(NSIndexPath(forRow: count + index, inSection: 0))
       component.items.append(item)
     }
@@ -144,7 +156,7 @@ public class FeedSpot: NSObject, Spotable {
     for (index, item) in items.enumerate() {
       let componentCellClass = FeedSpot.cells[item.kind] ?? FeedSpot.defaultCell
       tableView.registerClass(componentCellClass,
-        forCellReuseIdentifier: "FeedCell\(item.kind.capitalizedString)")
+        forCellReuseIdentifier: component.items[index].kind)
       if let listCell = componentCellClass.init() as? Itemble {
         component.items[index].index = index
         listCell.configure(&component.items[index])
@@ -210,7 +222,9 @@ extension FeedSpot: UITableViewDelegate {
 
   public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
     var newHeight = component.items.reduce(0, combine: { $0 + $1.size.height })
+
     if !component.title.isEmpty { newHeight += headerHeight }
+    
     component.size = CGSize(width: tableView.frame.width, height: tableView.frame.height)
     sizeDelegate?.sizeDidUpdate()
 
@@ -228,8 +242,7 @@ extension FeedSpot: UITableViewDataSource {
     component.items[indexPath.item].index = indexPath.row
 
     let cell: UITableViewCell
-    cell = tableView.dequeueReusableCellWithIdentifier("FeedCell\(self.component.items[indexPath.item].kind)", forIndexPath: indexPath)
-    cell.optimize()
+    cell = tableView.dequeueReusableCellWithIdentifier(component.items[indexPath.item].kind, forIndexPath: indexPath)
 
     guard let itemable = cell as? Itemble else { return cell }
     

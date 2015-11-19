@@ -8,6 +8,8 @@ public class CarouselSpot: NSObject, Spotable {
 
   public var index = 0
   public var component: Component
+  public var cachedCells = [String : Itemble]()
+
   public weak var sizeDelegate: SpotSizeDelegate?
   public weak var spotDelegate: SpotsDelegate?
 
@@ -37,7 +39,7 @@ public class CarouselSpot: NSObject, Spotable {
     for (index, item) in items.enumerate() {
       self.component.index = index
       let componentCellClass = CarouselSpot.cells[item.kind] ?? CarouselSpot.defaultCell
-      self.collectionView.registerClass(componentCellClass, forCellWithReuseIdentifier: "CarouselCell\(item.kind.capitalizedString)")
+      self.collectionView.registerClass(componentCellClass, forCellWithReuseIdentifier: component.items[index].kind)
 
       guard let gridCell = componentCellClass.init() as? Itemble else { return }
       self.component.items[index].size.width = collectionView.frame.width / CGFloat(component.span)
@@ -140,7 +142,7 @@ extension CarouselSpot: UICollectionViewDataSource {
   public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
     component.items[indexPath.item].index = indexPath.item
 
-    let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CarouselCell\(component.items[indexPath.item].kind.capitalizedString)", forIndexPath: indexPath)
+    let cell = collectionView.dequeueReusableCellWithReuseIdentifier(component.items[indexPath.item].kind, forIndexPath: indexPath)
     if let grid = cell as? Itemble {
       grid.configure(&component.items[indexPath.item])
       collectionView.collectionViewLayout.invalidateLayout()

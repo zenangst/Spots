@@ -9,10 +9,11 @@ public class GridSpot: NSObject, Spotable {
 
   public var index = 0
   public var component: Component
+  public var cachedCells = [String : Itemble]()
+
   public weak var sizeDelegate: SpotSizeDelegate?
   public weak var spotDelegate: SpotsDelegate?
 
-  let cellPrefix = "GridSpotCell"
 
   public lazy var layout: UICollectionViewFlowLayout = { [unowned self] in
     let size = UIScreen.mainScreen().bounds.width / CGFloat(self.component.span)
@@ -44,7 +45,8 @@ public class GridSpot: NSObject, Spotable {
     for (index, item) in items.enumerate() {
       self.component.index = index
       let componentCellClass = GridSpot.cells[item.kind] ?? GridSpot.defaultCell
-      collectionView.registerClass(componentCellClass, forCellWithReuseIdentifier: "\(cellPrefix)\(item.kind.capitalizedString)")
+      collectionView.registerClass(componentCellClass,
+        forCellWithReuseIdentifier: component.items[index].kind)
 
       if let gridCell = componentCellClass.init() as? Itemble {
         self.component.items[index].size.width = collectionView.frame.width / CGFloat(component.span)
@@ -121,7 +123,7 @@ extension GridSpot: UICollectionViewDataSource {
   public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
     component.items[indexPath.item].index = indexPath.row
     
-    let cell = collectionView.dequeueReusableCellWithReuseIdentifier("\(cellPrefix)\(component.items[indexPath.item].kind.capitalizedString)", forIndexPath: indexPath)
+    let cell = collectionView.dequeueReusableCellWithReuseIdentifier(component.items[indexPath.item].kind, forIndexPath: indexPath)
     cell.optimize()
 
     if let grid = cell as? Itemble {
