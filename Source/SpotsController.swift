@@ -125,6 +125,7 @@ public class SpotsController: UIViewController {
         guard let weakSelf = self else { return }
       
         weakSelf.spots[spot.index].reload()
+
         weakSelf.collectionView.performBatchUpdates({
           weakSelf.collectionView.reloadItemsAtIndexPaths([NSIndexPath(forItem: index, inSection: 0)])
           }, completion: { _ in
