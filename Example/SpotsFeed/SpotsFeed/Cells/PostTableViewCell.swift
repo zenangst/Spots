@@ -162,7 +162,7 @@ public class PostTableViewCell: WallTableViewCell, Itemble {
   public func configure(inout item: ListItem) {
     item.size.width = contentView.frame.width
     item.size.height = setupViews(item)
-    item.size.height = PostTableViewCell.height(item)
+    item.size.height = ceil(PostTableViewCell.height(item))
   }
 }
 

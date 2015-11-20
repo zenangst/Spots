@@ -2,6 +2,9 @@ import UIKit
 
 public protocol Spotable: class {
 
+  static var cells: [String : UIView.Type] { get set }
+  static var defaultCell: UIView.Type { get set }
+
   weak var sizeDelegate: SpotSizeDelegate? { get set }
   weak var spotDelegate: SpotsDelegate? { get set }
 
@@ -23,7 +26,7 @@ public protocol Spotable: class {
   func layout(size: CGSize)
 }
 
-extension Spotable {
+public extension Spotable {
 
   public func append(item: ListItem, completion: (() -> Void)? = nil) {}
   public func append(items: [ListItem], completion: (() -> Void)? = nil) {}
@@ -31,6 +34,14 @@ extension Spotable {
   public func update(item: ListItem, index: Int, completion: (() -> Void)? = nil) {}
   public func delete(index: Int, completion: (() -> Void)? = nil) {}
   public func delete(indexs: [Int], completion: (() -> Void)? = nil) {}
+
+  public func sanitizeItems() {
+    let unsantizedItems = component.items.filter { $0.kind.isEmpty }
+
+    for (index, _) in unsantizedItems.enumerate() {
+      self.component.items[index].kind = component.kind
+    }
+  }
 
   public func cellIsCached(kind: String) -> Bool {
     return cachedCells[kind] != nil

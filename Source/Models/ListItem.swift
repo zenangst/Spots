@@ -2,10 +2,7 @@ import UIKit
 import Tailor
 import Sugar
 
-public protocol Listable { }
-
-
-public struct ListItem: Mappable, Listable {
+public struct ListItem: Mappable {
   public var index = 0
   public var title = ""
   public var subtitle = ""

@@ -1,9 +1,9 @@
 import UIKit
 
-public class CarouselSpot: NSObject, Spotable {
+public class CarouselSpot: NSObject, Spotable, Gridable {
 
-  public static var cells = [String: UICollectionViewCell.Type]()
-  public static var defaultCell: UICollectionViewCell.Type = CarouselSpotCell.self
+  public static var cells = [String: UIView.Type]()
+  public static var defaultCell: UIView.Type = CarouselSpotCell.self
   public static var configure: ((view: UICollectionView) -> Void)?
 
   public var index = 0
@@ -34,17 +34,7 @@ public class CarouselSpot: NSObject, Spotable {
   public required init(component: Component) {
     self.component = component
     super.init()
-
-    let items = component.items
-    for (index, item) in items.enumerate() {
-      self.component.index = index
-      let componentCellClass = CarouselSpot.cells[item.kind] ?? CarouselSpot.defaultCell
-      self.collectionView.registerClass(componentCellClass, forCellWithReuseIdentifier: component.items[index].kind)
-
-      guard let gridCell = componentCellClass.init() as? Itemble else { return }
-      self.component.items[index].size.width = collectionView.frame.width / CGFloat(component.span)
-      self.component.items[index].size.height = gridCell.size.height
-    }
+    prepareSpot(self)
   }
 
   public convenience init(_ component: Component, top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0, itemSpacing: CGFloat = 0) {
@@ -65,31 +55,6 @@ public class CarouselSpot: NSObject, Spotable {
     }
 
     CarouselSpot.configure?(view: collectionView)
-  }
-
-  public func reload(indexes: [Int] = [], completion: (() -> Void)?) {
-    let items = component.items
-    for (index, item) in items.enumerate() {
-      let componentCellClass = CarouselSpot.cells[item.kind] ?? CarouselSpotCell.self
-      if let listCell = componentCellClass.init() as? Itemble {
-        component.items[index].index = index
-        listCell.configure(&component.items[index])
-      }
-    }
-
-    collectionView.collectionViewLayout.invalidateLayout()
-    collectionView.reloadData()
-    setup()
-    completion?()
-  }
-
-  public func render() -> UIView {
-    return collectionView
-  }
-
-  public func layout(size: CGSize) {
-    collectionView.collectionViewLayout.invalidateLayout()
-    collectionView.frame.size.width = size.width
   }
 }
 
@@ -148,6 +113,8 @@ extension CarouselSpot: UICollectionViewDataSource {
       collectionView.collectionViewLayout.invalidateLayout()
       sizeDelegate?.sizeDidUpdate()
     }
+    
+    cell.optimize()
 
     return cell
   }

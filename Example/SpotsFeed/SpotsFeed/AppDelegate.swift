@@ -35,11 +35,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     FeedSpot.cells["feed"] = PostTableViewCell.self
     FeedSpot.cells["comment"] = CommentTableViewCell.self
 
-    let feedComponent = Component(span: 1, items: FeedController.generateItems(0, to: 3))
+    let feedComponent = Component(span: 1, items: FeedController.generateItems(0, to: 10))
     let feedSpot = FeedSpot(component: feedComponent)
-    let components: [Spotable] = [
-      feedSpot
-    ]
+    let components: [Spotable] = [ feedSpot ]
 
     let controller = FeedController(spots: components,refreshable: false)
     controller.title = "Feed"
@@ -79,7 +77,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             kind: "feed",
             image: "http://lorempixel.com/75/75?type=avatar&id=1",
             meta: ["media" : ["http://lorempixel.com/250/250/?type=attachment&id=1"]])
-        let comments = FeedController.generateItems(0, to: 10, kind: "comment")
+        let comments = FeedController.generateItems(0, to: 20, kind: "comment")
 
         var content = [post]
         content.appendContentsOf(comments)

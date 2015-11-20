@@ -1,10 +1,10 @@
 import UIKit
 import Hex
 
-public class GridSpot: NSObject, Spotable {
+public class GridSpot: NSObject, Spotable, Gridable {
 
-  public static var cells = [String: UICollectionViewCell.Type]()
-  public static var defaultCell: UICollectionViewCell.Type = GridSpotCell.self
+  public static var cells = [String: UIView.Type]()
+  public static var defaultCell: UIView.Type = GridSpotCell.self
   public static var configure: ((view: UICollectionView) -> Void)?
 
   public var index = 0
@@ -13,7 +13,6 @@ public class GridSpot: NSObject, Spotable {
 
   public weak var sizeDelegate: SpotSizeDelegate?
   public weak var spotDelegate: SpotsDelegate?
-
 
   public lazy var layout: UICollectionViewFlowLayout = { [unowned self] in
     let size = UIScreen.mainScreen().bounds.width / CGFloat(self.component.span)
@@ -41,18 +40,7 @@ public class GridSpot: NSObject, Spotable {
     self.component = component
     super.init()
 
-    let items = component.items
-    for (index, item) in items.enumerate() {
-      self.component.index = index
-      let componentCellClass = GridSpot.cells[item.kind] ?? GridSpot.defaultCell
-      collectionView.registerClass(componentCellClass,
-        forCellWithReuseIdentifier: component.items[index].kind)
-
-      if let gridCell = componentCellClass.init() as? Itemble {
-        self.component.items[index].size.width = collectionView.frame.width / CGFloat(component.span)
-        self.component.items[index].size.height = gridCell.size.height
-      }
-    }
+    prepareSpot(self)
 
     collectionView.backgroundColor = UIColor(hex:
       component.meta.property("background-color") ?? "FFFFFF")
@@ -70,31 +58,6 @@ public class GridSpot: NSObject, Spotable {
     collectionView.frame.size.width = layout.collectionViewContentSize().width
 
     GridSpot.configure?(view: collectionView)
-  }
-
-  public func reload(indexes: [Int] = [], completion: (() -> Void)?) {
-    let items = component.items
-    for (index, item) in items.enumerate() {
-      let componentCellClass = GridSpot.cells[item.kind] ?? GridSpotCell.self
-      if let listCell = componentCellClass.init() as? Itemble {
-        component.items[index].index = index
-        listCell.configure(&component.items[index])
-      }
-    }
-
-    collectionView.collectionViewLayout.invalidateLayout()
-    collectionView.reloadData()
-    setup()
-    completion?()
-  }
-
-  public func render() -> UIView {
-    return collectionView
-  }
-
-  public func layout(size: CGSize) {
-    collectionView.collectionViewLayout.invalidateLayout()
-    collectionView.frame.size.width = size.width
   }
 }
 

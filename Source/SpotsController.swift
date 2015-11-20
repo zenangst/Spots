@@ -25,7 +25,7 @@ public class SpotsController: UIViewController {
     collectionView.backgroundColor = UIColor.whiteColor()
     collectionView.dataSource = self
     collectionView.delegate = self
-    collectionView.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+    collectionView.registerClass(SpotCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 
     return collectionView
   }()
@@ -148,8 +148,10 @@ extension SpotsController: UICollectionViewDataSource {
   public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCellWithReuseIdentifier(SpotsController.reuseIdentifier, forIndexPath: indexPath)
 
-    cell.contentView.subviews.forEach { $0.removeFromSuperview() }
-    cell.contentView.addSubview(spots[indexPath.item].render())
+    if let spotCell = cell as? SpotCell {
+      spotCell.spotView = spots[indexPath.item].render()
+    }
+
     cell.optimize()
     spots[indexPath.item].sizeDelegate = self
     spots[indexPath.item].spotDelegate = spotDelegate

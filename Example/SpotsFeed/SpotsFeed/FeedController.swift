@@ -3,6 +3,8 @@ import Fakery
 
 public class FeedController: SpotsController, SpotsDelegate {
 
+  public static let faker = Faker()
+
   public required init(spots: [Spotable], refreshable: Bool) {
     super.init(spots: spots)
 
@@ -19,10 +21,11 @@ public class FeedController: SpotsController, SpotsDelegate {
 
   public func spotDidReachEnd(completion: (() -> Void)?) {
 
-    let backgroundQueue = dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)
+    let backgroundQueue = dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0)
     dispatch(backgroundQueue) { [weak self] in
       guard let weakSelf = self else { return }
-      weakSelf.append(FeedController.generateItems(0, to: 10), spotIndex: 0) {
+      let items = FeedController.generateItems(0, to: 10)
+      weakSelf.append(items, spotIndex: 0) {
         completion?()
       }
     }
@@ -30,7 +33,7 @@ public class FeedController: SpotsController, SpotsDelegate {
 
   public static func generateItem(index: Int, kind: String = "feed") -> ListItem {
     let sencenceCount = Int(arc4random_uniform(8) + 1)
-    let subtitle = Faker().lorem.sentences(amount: sencenceCount) + " " + Faker().internet.url()
+    let subtitle = faker.lorem.sentences(amount: sencenceCount) + " " + faker.internet.url()
 
     let mediaCount = Int(arc4random_uniform(5) + 1)
     var mediaStrings = [String]()
@@ -38,11 +41,13 @@ public class FeedController: SpotsController, SpotsDelegate {
       mediaStrings.append("http://lorempixel.com/250/250/?type=attachment&id=\(index)\(x)")
     }
 
-    return ListItem(title: Faker().name.name(),
+    let item = ListItem(title: faker.name.name(),
       subtitle: subtitle,
       kind: kind,
       image: "http://lorempixel.com/75/75?type=avatar&id=\(index)",
       meta: ["media" : mediaStrings])
+
+    return item
   }
 
   public static func generateItems(from: Int, to: Int, kind: String = "feed") -> [ListItem] {
