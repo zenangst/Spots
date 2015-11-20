@@ -123,6 +123,7 @@ extension FeedSpot: UITableViewDataSource {
 
     let cell: UITableViewCell
     cell = tableView.dequeueReusableCellWithIdentifier(component.items[indexPath.item].kind, forIndexPath: indexPath)
+    cell.optimize()
 
     guard let itemable = cell as? Itemble else { return cell }
     
