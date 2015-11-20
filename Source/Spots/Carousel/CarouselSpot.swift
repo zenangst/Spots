@@ -113,6 +113,8 @@ extension CarouselSpot: UICollectionViewDataSource {
       collectionView.collectionViewLayout.invalidateLayout()
       sizeDelegate?.sizeDidUpdate()
     }
+    
+    cell.optimize()
 
     return cell
   }
