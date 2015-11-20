@@ -6,5 +6,6 @@ extension UIView {
     opaque = true
     clipsToBounds = true
     layer.drawsAsynchronously = true
+    backgroundColor = UIColor.whiteColor()
   }
 }
