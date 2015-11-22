@@ -149,6 +149,21 @@ public class SpotsController: UIViewController {
   }
 }
 
+extension SpotsController {
+
+  private func component(indexPath: NSIndexPath) -> Component {
+    return spot(indexPath).component
+  }
+
+  private func spot(indexPath: NSIndexPath) -> Spotable {
+    return spots[indexPath.item]
+  }
+
+  private func spot(index: Int) -> Spotable {
+    return spots[index]
+  }
+}
+
 extension SpotsController: UICollectionViewDataSource {
 
   public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
