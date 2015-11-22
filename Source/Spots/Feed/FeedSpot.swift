@@ -38,7 +38,7 @@ public class FeedSpot: NSObject, Spotable, Listable {
     return tableView
   }()
 
-  public lazy var refreshControl: UIRefreshControl = {
+  public lazy var refreshControl: UIRefreshControl = { [unowned self] in
     let refreshControl = UIRefreshControl()
     refreshControl.addTarget(self, action: "refreshSpot:", forControlEvents: .ValueChanged)
 
