@@ -64,9 +64,7 @@ public class SpotsController: UIViewController {
       .FlexibleWidth
     ]
 
-    for (index, _) in spots.enumerate() {
-      self.spots[index].index = index
-    }
+    spots.enumerate().forEach { spot($0.index).index = $0.index }
   }
 
   public required init?(coder aDecoder: NSCoder) {
