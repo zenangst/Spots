@@ -79,8 +79,7 @@ public class SpotsController: UIViewController {
   }
 
   public func spotAtIndex(index: Int) -> Spotable? {
-    let spot = spots.filter { $0.index == index }.first
-    return spot
+    return spots.filter { $0.index == index }.first
   }
 
   public func reloadSpots() {
