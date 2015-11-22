@@ -113,6 +113,10 @@ public class SpotsController: UIViewController {
   public func append(items: [ListItem], spotIndex: Int, completion: (() -> Void)? = nil) {
     spotAtIndex(spotIndex)?.append(items) { completion?() }
   }
+  
+  public func prepend(items: [ListItem], spotIndex: Int, completion: (() -> Void)? = nil) {
+    spotAtIndex(spotIndex)?.prepend(items)  { completion?() }
+  }
 
   public func insert(item: ListItem, index: Int, spotIndex: Int, completion: (() -> Void)? = nil) {
     spotAtIndex(spotIndex)?.insert(item, index: index)  { completion?() }

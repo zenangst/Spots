@@ -77,6 +77,26 @@ public extension Spotable where Self : Listable {
     }
   }
 
+  public func prepend(items: [ListItem], completion: (() -> Void)? = nil) {
+    var indexPaths = [NSIndexPath]()
+
+    for (index, item) in items.enumerate() {
+      cache(self, identifier: item.kind)
+      indexPaths.append(NSIndexPath(forRow: index, inSection: 0))
+      component.items.insert(item, atIndex: index)
+    }
+
+    dispatch { [weak self] in
+      guard let weakSelf = self else { return }
+
+      weakSelf.tableView.beginUpdates()
+      weakSelf.tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .None)
+      weakSelf.tableView.endUpdates()
+
+      completion?()
+    }
+  }
+
   public func delete(item: ListItem, completion: (() -> Void)? = nil) {
     var indexPaths = [NSIndexPath]()
     indexPaths.append(NSIndexPath(forRow: component.items.count, inSection: 0))

@@ -17,6 +17,7 @@ public protocol Spotable: class {
   func setup()
   func append(item: ListItem, completion: (() -> Void)?)
   func append(items: [ListItem], completion: (() -> Void)?)
+  func prepend(items: [ListItem], completion: (() -> Void)?)
   func insert(item: ListItem, index: Int, completion: (() -> Void)?)
   func update(item: ListItem, index: Int, completion: (() -> Void)?)
   func delete(index: Int, completion: (() -> Void)?)
@@ -30,6 +31,7 @@ public extension Spotable {
 
   public func append(item: ListItem, completion: (() -> Void)? = nil) {}
   public func append(items: [ListItem], completion: (() -> Void)? = nil) {}
+  public func prepend(items: [ListItem], completion: (() -> Void)? = nil) {}
   public func insert(item: ListItem, index: Int, completion: (() -> Void)? = nil) {}
   public func update(item: ListItem, index: Int, completion: (() -> Void)? = nil) {}
   public func delete(index: Int, completion: (() -> Void)? = nil) {}
