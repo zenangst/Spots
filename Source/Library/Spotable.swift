@@ -48,4 +48,12 @@ public extension Spotable {
   public func cellIsCached(kind: String) -> Bool {
     return cachedCells[kind] != nil
   }
+
+  public func item(index: Int) -> ListItem {
+    return component.items[index]
+  }
+
+  public func item(indexPath: NSIndexPath) -> ListItem {
+    return component.items[indexPath.item]
+  }
 }
