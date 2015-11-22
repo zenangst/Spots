@@ -190,7 +190,7 @@ extension SpotsController: UICollectionViewDelegateFlowLayout {
       spot(indexPath).setup()
       spot(indexPath).component.size = CGSize(
         width: collectionView.frame.width,
-        height: spot(indexPath).render().frame.height)
+        height: ceil(spot(indexPath).render().frame.height))
     }
 
     return component(indexPath).size!
