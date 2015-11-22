@@ -89,20 +89,19 @@ public class SpotsController: UIViewController {
   }
 
   public func updateSpotAtIndex(index: Int, closure: (spot: Spotable) -> Spotable, completion: (() -> Void)? = nil) {
-    if let spot = spotAtIndex(index) {
+    guard let spot = spotAtIndex(index) else { return }
       spots[spot.index] = closure(spot: spot)
 
-      dispatch { [weak self] in
-        guard let weakSelf = self else { return }
+    dispatch { [weak self] in
+      guard let weakSelf = self else { return }
 
-        weakSelf.spots[spot.index].reload([index]) {
-          weakSelf.collectionView.performBatchUpdates({
-            weakSelf.collectionView.reloadItemsAtIndexPaths([NSIndexPath(forItem: index, inSection: 0)])
-            }, completion: { _ in
-              weakSelf.collectionView.collectionViewLayout.invalidateLayout()
-              completion?()
-          })
-        }
+      weakSelf.spot(spot.index).reload([index]) {
+        weakSelf.collectionView.performBatchUpdates({
+          weakSelf.collectionView.reloadItemsAtIndexPaths([NSIndexPath(forItem: index, inSection: 0)])
+          }, completion: { _ in
+            weakSelf.collectionView.collectionViewLayout.invalidateLayout()
+            completion?()
+        })
       }
     }
   }
