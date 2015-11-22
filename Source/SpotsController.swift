@@ -44,7 +44,7 @@ public class SpotsController: UIViewController {
     return refreshControl
     }()
 
-  public required init(spots: [Spotable], refreshable: Bool = true) {
+  public required init(spots: [Spotable] = [], refreshable: Bool = true) {
     self.spots = spots
     super.init(nibName: nil, bundle: nil)
 
