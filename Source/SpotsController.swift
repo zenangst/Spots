@@ -173,13 +173,11 @@ extension SpotsController: UICollectionViewDataSource {
   public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCellWithReuseIdentifier(SpotsController.reuseIdentifier, forIndexPath: indexPath)
 
-    if let spotCell = cell as? SpotCell {
-      spotCell.spotView = spots[indexPath.item].render()
-    }
-
+    (cell as? SpotCell)?.spotView = spot(indexPath.item).render()
     cell.optimize()
-    spots[indexPath.item].sizeDelegate = self
-    spots[indexPath.item].spotDelegate = spotDelegate
+
+    spot(indexPath).sizeDelegate = self
+    spot(indexPath).spotDelegate = spotDelegate
 
     return cell
   }
@@ -188,15 +186,14 @@ extension SpotsController: UICollectionViewDataSource {
 extension SpotsController: UICollectionViewDelegateFlowLayout {
 
   public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-    var component = spots[indexPath.item].component
-    if component.size == nil {
-      spots[indexPath.item].setup()
-      component.size = CGSize(
-        width: UIScreen.mainScreen().bounds.width,
-        height: spots[indexPath.item].render().frame.height)
+    if component(indexPath).size == nil {
+      spot(indexPath).setup()
+      spot(indexPath).component.size = CGSize(
+        width: collectionView.frame.width,
+        height: spot(indexPath).render().frame.height)
     }
 
-    return component.size!
+    return component(indexPath).size!
   }
 }
 
