@@ -90,7 +90,7 @@ public class SpotsController: UIViewController {
 
   public func updateSpotAtIndex(index: Int, closure: (spot: Spotable) -> Spotable, completion: (() -> Void)? = nil) {
     guard let spot = spotAtIndex(index) else { return }
-      spots[spot.index] = closure(spot: spot)
+    spots[spot.index] = closure(spot: spot)
 
     dispatch { [weak self] in
       guard let weakSelf = self else { return }
