@@ -84,8 +84,7 @@ public class SpotsController: UIViewController {
 
   public func reloadSpots() {
     dispatch { [weak self] in
-      guard let weakSelf = self else { return }
-      weakSelf.spots.forEach { $0.reload([]) {} }
+      self?.spots.forEach { $0.reload([]) {} }
     }
   }
 
