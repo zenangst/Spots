@@ -38,10 +38,10 @@ public extension Spotable {
   public func delete(indexs: [Int], completion: (() -> Void)? = nil) {}
 
   public func sanitizeItems() {
-    let unsantizedItems = component.items.filter { $0.kind.isEmpty }
-
-    for (index, _) in unsantizedItems.enumerate() {
-      self.component.items[index].kind = component.kind
+    component.items
+      .filter { $0.kind.isEmpty }
+      .enumerate().forEach {
+        component.items[$0.index].kind = component.kind
     }
   }
 
