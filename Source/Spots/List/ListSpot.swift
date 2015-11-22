@@ -6,31 +6,35 @@ typealias TitleSpot = ListSpot
 public class ListSpot: NSObject, Spotable, Listable {
 
   public static var cells = [String : UIView.Type]()
-  public static var headers = [String : UIView.Type]()
-  public static var defaultCell: UIView.Type = ListSpotCell.self
   public static var configure: ((view: UITableView) -> Void)?
+  public static var defaultCell: UIView.Type = ListSpotCell.self
+  public static var headers = [String : UIView.Type]()
 
   public let itemHeight: CGFloat = 44
 
-  public var index = 0
-  public var headerHeight: CGFloat = 44
+  public var cachedCells = [String : Itemble]()
   public var component: Component
+  public var headerHeight: CGFloat = 44
+  public var index = 0
 
   public weak var sizeDelegate: SpotSizeDelegate?
   public weak var spotDelegate: SpotsDelegate?
 
-  public var cachedCells = [String : Itemble]()
   private var cachedHeaders = [String : Componentable]()
 
   public lazy var tableView: UITableView = { [unowned self] in
     let tableView = UITableView()
-    tableView.delegate = self
-    tableView.dataSource = self
-    tableView.frame.size.width = UIScreen.mainScreen().bounds.width
-    tableView.scrollEnabled = false
-    tableView.autoresizingMask = [.FlexibleWidth, .FlexibleRightMargin, .FlexibleLeftMargin]
     tableView.autoresizesSubviews = true
+    tableView.autoresizingMask = [
+      .FlexibleLeftMargin,
+      .FlexibleRightMargin,
+      .FlexibleWidth
+    ]
+    tableView.dataSource = self
+    tableView.delegate = self
+    tableView.frame.size.width = UIScreen.mainScreen().bounds.width
     tableView.rowHeight = UITableViewAutomaticDimension
+    tableView.scrollEnabled = false
 
     return tableView
     }()
@@ -59,13 +63,15 @@ public class ListSpot: NSObject, Spotable, Listable {
 
   public func setup() {
     if component.size == nil {
-      var newHeight = component.items.reduce(0, combine: { $0 + $1.size.height })
+      var height = component.items.reduce(0, combine: { $0 + $1.size.height })
 
-      if !component.title.isEmpty { newHeight += headerHeight }
+      if !component.title.isEmpty { height += headerHeight }
 
       tableView.frame.size.width = UIScreen.mainScreen().bounds.width
-      tableView.frame.size.height = newHeight
-      component.size = CGSize(width: tableView.frame.width, height: tableView.frame.height)
+      tableView.frame.size.height = height
+      component.size = CGSize(
+        width: tableView.frame.width,
+        height: tableView.frame.height)
       sizeDelegate?.sizeDidUpdate()
     }
 
@@ -77,17 +83,19 @@ extension ListSpot: UITableViewDelegate {
 
   public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     tableView.deselectRowAtIndexPath(indexPath, animated: true)
-    spotDelegate?.spotDidSelectItem(self, item: component.items[indexPath.row])
+    spotDelegate?.spotDidSelectItem(self, item: item(indexPath))
   }
 
   public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-    var newHeight = component.items.reduce(0, combine: { $0 + $1.size.height })
-    if !component.title.isEmpty { newHeight += headerHeight }
-    tableView.frame.size.height = newHeight
-    component.size = CGSize(width: tableView.frame.width, height: tableView.frame.height)
+    var height = component.items.reduce(0, combine: { $0 + $1.size.height })
+    if !component.title.isEmpty { height += headerHeight }
+    tableView.frame.size.height = height
+    component.size = CGSize(
+      width: tableView.frame.width,
+      height: tableView.frame.height)
     sizeDelegate?.sizeDidUpdate()
 
-    return component.items[indexPath.item].size.height
+    return item(indexPath).size.height
   }
 }
 
@@ -119,10 +127,10 @@ extension ListSpot: UITableViewDataSource {
 
   public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     let cell: UITableViewCell
-    if let tableViewCell = cachedCells[component.items[indexPath.item].kind] as? UITableViewCell {
+    if let tableViewCell = cachedCells[item(indexPath).kind] as? UITableViewCell {
       cell = tableViewCell
     } else {
-      cell = tableView.dequeueReusableCellWithIdentifier(component.items[indexPath.item].kind, forIndexPath: indexPath)
+      cell = tableView.dequeueReusableCellWithIdentifier(item(indexPath).kind, forIndexPath: indexPath)
     }
 
     cell.optimize()
