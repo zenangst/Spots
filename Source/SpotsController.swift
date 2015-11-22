@@ -49,6 +49,7 @@ public class SpotsController: UIViewController {
     super.init(nibName: nil, bundle: nil)
 
     view.addSubview(collectionView)
+
     if refreshable {
       collectionView.addSubview(refreshControl)
     }
