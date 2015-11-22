@@ -21,7 +21,14 @@ public class SpotsController: UIViewController {
 
     collectionView.alwaysBounceVertical = true
     collectionView.autoresizesSubviews = true
-    collectionView.autoresizingMask = [.FlexibleRightMargin, .FlexibleLeftMargin, .FlexibleBottomMargin, .FlexibleTopMargin, .FlexibleHeight, .FlexibleWidth]
+    collectionView.autoresizingMask = [
+      .FlexibleRightMargin,
+      .FlexibleLeftMargin,
+      .FlexibleBottomMargin,
+      .FlexibleTopMargin,
+      .FlexibleHeight,
+      .FlexibleWidth
+    ]
     collectionView.backgroundColor = UIColor.whiteColor()
     collectionView.dataSource = self
     collectionView.delegate = self
@@ -47,7 +54,14 @@ public class SpotsController: UIViewController {
     }
 
     view.autoresizesSubviews = true
-    view.autoresizingMask = [.FlexibleRightMargin, .FlexibleLeftMargin, .FlexibleBottomMargin, .FlexibleTopMargin, .FlexibleHeight, .FlexibleWidth]
+    view.autoresizingMask = [
+      .FlexibleBottomMargin,
+      .FlexibleHeight,
+      .FlexibleLeftMargin,
+      .FlexibleRightMargin,
+      .FlexibleTopMargin,
+      .FlexibleWidth
+    ]
 
     for (index, _) in spots.enumerate() {
       self.spots[index].index = index
