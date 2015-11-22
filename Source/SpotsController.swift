@@ -22,11 +22,11 @@ public class SpotsController: UIViewController {
     collectionView.alwaysBounceVertical = true
     collectionView.autoresizesSubviews = true
     collectionView.autoresizingMask = [
-      .FlexibleRightMargin,
-      .FlexibleLeftMargin,
       .FlexibleBottomMargin,
-      .FlexibleTopMargin,
       .FlexibleHeight,
+      .FlexibleLeftMargin,
+      .FlexibleRightMargin,
+      .FlexibleTopMargin,
       .FlexibleWidth
     ]
     collectionView.backgroundColor = UIColor.whiteColor()
