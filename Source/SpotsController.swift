@@ -21,7 +21,14 @@ public class SpotsController: UIViewController {
 
     collectionView.alwaysBounceVertical = true
     collectionView.autoresizesSubviews = true
-    collectionView.autoresizingMask = [.FlexibleRightMargin, .FlexibleLeftMargin, .FlexibleBottomMargin, .FlexibleTopMargin, .FlexibleHeight, .FlexibleWidth]
+    collectionView.autoresizingMask = [
+      .FlexibleBottomMargin,
+      .FlexibleHeight,
+      .FlexibleLeftMargin,
+      .FlexibleRightMargin,
+      .FlexibleTopMargin,
+      .FlexibleWidth
+    ]
     collectionView.backgroundColor = UIColor.whiteColor()
     collectionView.dataSource = self
     collectionView.delegate = self
@@ -37,21 +44,27 @@ public class SpotsController: UIViewController {
     return refreshControl
     }()
 
-  public required init(spots: [Spotable], refreshable: Bool = true) {
+  public required init(spots: [Spotable] = [], refreshable: Bool = true) {
     self.spots = spots
     super.init(nibName: nil, bundle: nil)
 
     view.addSubview(collectionView)
+
     if refreshable {
       collectionView.addSubview(refreshControl)
     }
 
     view.autoresizesSubviews = true
-    view.autoresizingMask = [.FlexibleRightMargin, .FlexibleLeftMargin, .FlexibleBottomMargin, .FlexibleTopMargin, .FlexibleHeight, .FlexibleWidth]
+    view.autoresizingMask = [
+      .FlexibleBottomMargin,
+      .FlexibleHeight,
+      .FlexibleLeftMargin,
+      .FlexibleRightMargin,
+      .FlexibleTopMargin,
+      .FlexibleWidth
+    ]
 
-    for (index, _) in spots.enumerate() {
-      self.spots[index].index = index
-    }
+    spots.enumerate().forEach { spot($0.index).index = $0.index }
   }
 
   public required init?(coder aDecoder: NSCoder) {
@@ -66,64 +79,55 @@ public class SpotsController: UIViewController {
   }
 
   public func spotAtIndex(index: Int) -> Spotable? {
-    let spot = spots.filter { $0.index == index }.first
-    return spot
+    return spots.filter { $0.index == index }.first
   }
 
   public func reloadSpots() {
     dispatch { [weak self] in
-      guard let weakSelf = self else { return }
-      weakSelf.spots.forEach { $0.reload([]) {} }
+      self?.spots.forEach { $0.reload([]) {} }
     }
   }
 
   public func updateSpotAtIndex(index: Int, closure: (spot: Spotable) -> Spotable, completion: (() -> Void)? = nil) {
-    if let spot = spotAtIndex(index) {
+    guard let spot = spotAtIndex(index) else { return }
       spots[spot.index] = closure(spot: spot)
 
-      dispatch { [weak self] in
-        guard let weakSelf = self else { return }
+    dispatch { [weak self] in
+      guard let weakSelf = self else { return }
 
-        weakSelf.spots[spot.index].reload([index]) {
-          weakSelf.collectionView.performBatchUpdates({
-            weakSelf.collectionView.reloadItemsAtIndexPaths([NSIndexPath(forItem: index, inSection: 0)])
-            }, completion: { _ in
-              weakSelf.collectionView.collectionViewLayout.invalidateLayout()
-              completion?()
-          })
-        }
+      weakSelf.spot(spot.index).reload([index]) {
+        weakSelf.collectionView.performBatchUpdates({
+          weakSelf.collectionView.reloadItemsAtIndexPaths([NSIndexPath(forItem: index, inSection: 0)])
+          }, completion: { _ in
+            weakSelf.collectionView.collectionViewLayout.invalidateLayout()
+            completion?()
+        })
       }
     }
   }
 
   public func append(item: ListItem, spotIndex: Int, completion: (() -> Void)? = nil) {
-    guard let spot = spotAtIndex(spotIndex) else { return }
-    spot.append(item) { completion?() }
+    spotAtIndex(spotIndex)?.append(item) { completion?() }
   }
   
   public func append(items: [ListItem], spotIndex: Int, completion: (() -> Void)? = nil) {
-    guard let spot = spotAtIndex(spotIndex) else { return }
-    spot.append(items) { completion?() }
+    spotAtIndex(spotIndex)?.append(items) { completion?() }
   }
 
   public func insert(item: ListItem, index: Int, spotIndex: Int, completion: (() -> Void)? = nil) {
-    guard let spot = spotAtIndex(spotIndex) else { return }
-    spot.insert(item, index: index)  { completion?() }
+    spotAtIndex(spotIndex)?.insert(item, index: index)  { completion?() }
   }
 
   public func update(item: ListItem, index: Int, spotIndex: Int, completion: (() -> Void)? = nil) {
-    guard let spot = spotAtIndex(spotIndex) else { return }
-    spot.update(item, index: index)  { completion?() }
+    spotAtIndex(spotIndex)?.update(item, index: index)  { completion?() }
   }
 
   public func delete(index: Int, spotIndex: Int, completion: (() -> Void)? = nil) {
-    guard let spot = spotAtIndex(spotIndex) else { return }
-    spot.delete(index) { completion?() }
+    spotAtIndex(spotIndex)?.delete(index) { completion?() }
   }
 
   public func delete(indexes indexes: [Int], spotIndex: Int, completion: (() -> Void)? = nil) {
-    guard let spot = spotAtIndex(spotIndex) else { return }
-    spot.delete(indexes) { completion?() }
+    spotAtIndex(spotIndex)?.delete(indexes) { completion?() }
   }
 
   public func refreshSpots(refreshControl: UIRefreshControl) {
@@ -139,6 +143,21 @@ public class SpotsController: UIViewController {
   }
 }
 
+extension SpotsController {
+
+  private func component(indexPath: NSIndexPath) -> Component {
+    return spot(indexPath).component
+  }
+
+  private func spot(indexPath: NSIndexPath) -> Spotable {
+    return spots[indexPath.item]
+  }
+
+  private func spot(index: Int) -> Spotable {
+    return spots[index]
+  }
+}
+
 extension SpotsController: UICollectionViewDataSource {
 
   public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -148,13 +167,11 @@ extension SpotsController: UICollectionViewDataSource {
   public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCellWithReuseIdentifier(SpotsController.reuseIdentifier, forIndexPath: indexPath)
 
-    if let spotCell = cell as? SpotCell {
-      spotCell.spotView = spots[indexPath.item].render()
-    }
-
+    (cell as? SpotCell)?.spotView = spot(indexPath.item).render()
     cell.optimize()
-    spots[indexPath.item].sizeDelegate = self
-    spots[indexPath.item].spotDelegate = spotDelegate
+
+    spot(indexPath).sizeDelegate = self
+    spot(indexPath).spotDelegate = spotDelegate
 
     return cell
   }
@@ -163,15 +180,14 @@ extension SpotsController: UICollectionViewDataSource {
 extension SpotsController: UICollectionViewDelegateFlowLayout {
 
   public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-    var component = spots[indexPath.item].component
-    if component.size == nil {
-      spots[indexPath.item].setup()
-      component.size = CGSize(
-        width: UIScreen.mainScreen().bounds.width,
-        height: spots[indexPath.item].render().frame.height)
+    if component(indexPath).size == nil {
+      spot(indexPath).setup()
+      spot(indexPath).component.size = CGSize(
+        width: collectionView.frame.width,
+        height: ceil(spot(indexPath).render().frame.height))
     }
 
-    return component.size!
+    return component(indexPath).size!
   }
 }
 
