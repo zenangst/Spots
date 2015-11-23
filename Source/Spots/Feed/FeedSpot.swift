@@ -20,7 +20,6 @@ public class FeedSpot: NSObject, Spotable, Listable {
   public weak var spotDelegate: SpotsDelegate?
 
   private var fetching = false
-  private var lastContentOffset = CGPoint()
 
   public lazy var tableView: UITableView = { [unowned self] in
     let tableView = UITableView()
@@ -72,10 +71,6 @@ public class FeedSpot: NSObject, Spotable, Listable {
 
 extension FeedSpot: UIScrollViewDelegate {
 
-  public func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-    lastContentOffset = scrollView.contentOffset
-  }
-
   public func scrollViewDidScroll(scrollView: UIScrollView) {
     let bounds = scrollView.bounds
     let inset = scrollView.contentInset
@@ -84,18 +79,6 @@ extension FeedSpot: UIScrollViewDelegate {
     let shouldFetch = offset.y + bounds.size.height - inset.bottom > size.height - headerHeight - itemHeight
       && size.height > bounds.size.height
       && !fetching
-
-
-    if scrollView.contentOffset.y < 0.0 {
-      sizeDelegate?.scrollToPreviousCell(component)
-    } else if scrollView.contentOffset.y == 0.0 {
-      tableView.scrollEnabled = true
-    } else if scrollView.contentOffset.y >= tableView.contentSize.height + tableView.contentInset.bottom - tableView.bounds.height {
-      sizeDelegate?.scrollToNextCell(component)
-    } else if lastContentOffset.y > scrollView.contentOffset.y {
-      sizeDelegate?.scrollToPreviousCell(component)
-      lastContentOffset = CGPoint(x: 0, y: 0)
-    }
 
     if shouldFetch && !fetching {
       fetching = true
