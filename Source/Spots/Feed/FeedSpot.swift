@@ -49,6 +49,7 @@ public class FeedSpot: NSObject, Spotable, Listable {
     self.component = component
     super.init()
     prepareSpot(self)
+    tableView.addSubview(refreshControl)
   }
 
   public func setup() {
@@ -62,7 +63,6 @@ public class FeedSpot: NSObject, Spotable, Listable {
       tableView.contentSize = CGSize(
         width: tableView.frame.width,
         height: height - tableView.contentInset.top - tableView.contentInset.bottom)
-      tableView.addSubview(refreshControl)
     } else {
       tableView.scrollEnabled = false
     }
