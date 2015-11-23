@@ -32,7 +32,6 @@ public class ListSpot: NSObject, Spotable, Listable {
     ]
     tableView.dataSource = self
     tableView.delegate = self
-    tableView.frame.size.width = UIScreen.mainScreen().bounds.width
     tableView.rowHeight = UITableViewAutomaticDimension
     tableView.scrollEnabled = false
 
@@ -61,13 +60,13 @@ public class ListSpot: NSObject, Spotable, Listable {
     self.init(component: Component(title: title, kind: kind))
   }
 
-  public func setup() {
+  public func setup(size: CGSize) {
     if component.size == nil {
       var height = component.items.reduce(0, combine: { $0 + $1.size.height })
 
       if !component.title.isEmpty { height += headerHeight }
 
-      tableView.frame.size.width = UIScreen.mainScreen().bounds.width
+      tableView.frame.size = size
       tableView.frame.size.height = height
       component.size = CGSize(
         width: tableView.frame.width,

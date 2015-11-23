@@ -32,7 +32,6 @@ public class FeedSpot: NSObject, Spotable, Listable {
     ]
     tableView.dataSource = self
     tableView.delegate = self
-    tableView.frame.size.width = UIScreen.mainScreen().bounds.width
     tableView.rowHeight = UITableViewAutomaticDimension
 
     return tableView
@@ -52,14 +51,14 @@ public class FeedSpot: NSObject, Spotable, Listable {
     tableView.addSubview(refreshControl)
   }
 
-  public func setup() {
+  public func setup(size: CGSize) {
     if component.size == nil {
       var height = component.items.reduce(0, combine: { $0 + $1.size.height })
 
       if !component.title.isEmpty { height += headerHeight }
 
-      tableView.frame.size.width = UIScreen.mainScreen().bounds.width
-      tableView.frame.size.height = UIScreen.mainScreen().bounds.height - 64
+      tableView.frame.size = size
+      tableView.frame.size.height = size.height - 64
       tableView.contentSize = CGSize(
         width: tableView.frame.width,
         height: height - tableView.contentInset.top - tableView.contentInset.bottom)

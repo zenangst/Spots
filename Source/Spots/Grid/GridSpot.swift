@@ -15,7 +15,6 @@ public class GridSpot: NSObject, Spotable, Gridable {
   public weak var spotDelegate: SpotsDelegate?
 
   public lazy var layout: UICollectionViewFlowLayout = { [unowned self] in
-    let size = UIScreen.mainScreen().bounds.width / CGFloat(self.component.span)
     let layout = UICollectionViewFlowLayout()
     layout.minimumLineSpacing = 0
     layout.minimumInteritemSpacing = 0
@@ -29,7 +28,6 @@ public class GridSpot: NSObject, Spotable, Gridable {
     collectionView.backgroundColor = UIColor.whiteColor()
     collectionView.dataSource = self
     collectionView.delegate = self
-    collectionView.frame.size.width = UIScreen.mainScreen().bounds.width
     collectionView.scrollEnabled = false
 
     return collectionView
@@ -52,10 +50,8 @@ public class GridSpot: NSObject, Spotable, Gridable {
     layout.minimumInteritemSpacing = itemSpacing
   }
 
-  public func setup() {
-    collectionView.frame.size.height = layout.collectionViewContentSize().height
-    collectionView.frame.size.width = layout.collectionViewContentSize().width
-
+  public func setup(size: CGSize) {
+    collectionView.frame.size = size
     GridSpot.configure?(view: collectionView)
   }
 }

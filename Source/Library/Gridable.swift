@@ -33,7 +33,7 @@ public extension Spotable where Self : Gridable {
 
     collectionView.collectionViewLayout.invalidateLayout()
     collectionView.reloadData()
-    setup()
+    setup(collectionView.bounds.size)
     completion?()
   }
 
