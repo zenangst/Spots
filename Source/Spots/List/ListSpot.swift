@@ -32,7 +32,6 @@ public class ListSpot: NSObject, Spotable, Listable {
     ]
     tableView.dataSource = self
     tableView.delegate = self
-    tableView.frame.size.width = UIScreen.mainScreen().bounds.width
     tableView.rowHeight = UITableViewAutomaticDimension
     tableView.scrollEnabled = false
 
@@ -46,7 +45,9 @@ public class ListSpot: NSObject, Spotable, Listable {
     prepareSpot(self)
 
     if let headerType = ListSpot.headers[component.kind] {
-      let header = headerType.init(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: headerHeight))
+      let header = headerType.init(frame: CGRect(x: 0, y: 0,
+        width: UIScreen.mainScreen().bounds.width, height: headerHeight))
+
       if let configurable = header as? Componentable {
         configurable.configure(component)
         cachedHeaders[component.kind] = configurable
@@ -61,13 +62,13 @@ public class ListSpot: NSObject, Spotable, Listable {
     self.init(component: Component(title: title, kind: kind))
   }
 
-  public func setup() {
+  public func setup(size: CGSize) {
     if component.size == nil {
       var height = component.items.reduce(0, combine: { $0 + $1.size.height })
 
       if !component.title.isEmpty { height += headerHeight }
 
-      tableView.frame.size.width = UIScreen.mainScreen().bounds.width
+      tableView.frame.size = size
       tableView.frame.size.height = height
       component.size = CGSize(
         width: tableView.frame.width,
@@ -118,7 +119,7 @@ extension ListSpot: UITableViewDataSource {
       cachedHeader.configure(component)
       return cachedHeader as? UIView
     } else if let header = ListSpot.headers[component.kind] {
-      let header = header.init(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: headerHeight))
+      let header = header.init(frame: CGRect(x: 0, y: 0, width: tableView.bounds.width, height: headerHeight))
       return header
     }
 
@@ -126,19 +127,15 @@ extension ListSpot: UITableViewDataSource {
   }
 
   public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    let cell: UITableViewCell
-    if let tableViewCell = cachedCells[item(indexPath).kind] as? UITableViewCell {
-      cell = tableViewCell
-    } else {
-      cell = tableView.dequeueReusableCellWithIdentifier(item(indexPath).kind, forIndexPath: indexPath)
-    }
+    let cell: UITableViewCell? = cachedCells[item(indexPath).kind] as? UITableViewCell
+      ?? tableView.dequeueReusableCellWithIdentifier(item(indexPath).kind, forIndexPath: indexPath)
 
-    cell.optimize()
+    cell?.optimize()
 
     if let itemable = cell as? Itemble {
       itemable.configure(&component.items[indexPath.item])
     }
 
-    return cell
+    return cell!
   }
 }

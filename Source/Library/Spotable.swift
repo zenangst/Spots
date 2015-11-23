@@ -14,7 +14,7 @@ public protocol Spotable: class {
 
   init(component: Component)
 
-  func setup()
+  func setup(size: CGSize)
   func append(item: ListItem, completion: (() -> Void)?)
   func append(items: [ListItem], completion: (() -> Void)?)
   func prepend(items: [ListItem], completion: (() -> Void)?)

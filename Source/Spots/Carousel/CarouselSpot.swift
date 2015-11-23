@@ -25,7 +25,6 @@ public class CarouselSpot: NSObject, Spotable, Gridable {
     collectionView.backgroundColor = UIColor.whiteColor()
     collectionView.dataSource = self
     collectionView.delegate = self
-    collectionView.frame.size.width = UIScreen.mainScreen().bounds.width
     collectionView.showsHorizontalScrollIndicator = false
 
     return collectionView
@@ -44,9 +43,9 @@ public class CarouselSpot: NSObject, Spotable, Gridable {
     layout.minimumInteritemSpacing = itemSpacing
   }
 
-  public func setup() {
-    collectionView.backgroundColor = UIColor(hex:
-      component.meta.property("background-color") ?? "FFFFFF")
+  public func setup(size: CGSize) {
+    collectionView.frame.size = size
+
     if collectionView.contentSize.height > 0 {
       collectionView.frame.size.height = collectionView.contentSize.height
     } else {

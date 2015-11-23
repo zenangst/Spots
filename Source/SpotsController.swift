@@ -17,7 +17,7 @@ public class SpotsController: UIViewController {
   }()
 
   lazy var collectionView: UICollectionView = { [unowned self] in
-    let collectionView = UICollectionView(frame: UIScreen.mainScreen().bounds, collectionViewLayout: self.layout)
+    let collectionView = UICollectionView(frame: self.view.bounds, collectionViewLayout: self.layout)
 
     collectionView.alwaysBounceVertical = true
     collectionView.autoresizesSubviews = true
@@ -185,7 +185,7 @@ extension SpotsController: UICollectionViewDelegateFlowLayout {
 
   public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
     if component(indexPath).size == nil {
-      spot(indexPath).setup()
+      spot(indexPath).setup(view.bounds.size)
       spot(indexPath).component.size = CGSize(
         width: collectionView.frame.width,
         height: ceil(spot(indexPath).render().frame.height))
