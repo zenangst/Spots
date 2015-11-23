@@ -4,12 +4,12 @@ import Hex
 public class GridSpot: NSObject, Spotable, Gridable {
 
   public static var cells = [String: UIView.Type]()
-  public static var defaultCell: UIView.Type = GridSpotCell.self
   public static var configure: ((view: UICollectionView) -> Void)?
+  public static var defaultCell: UIView.Type = GridSpotCell.self
 
-  public var index = 0
-  public var component: Component
   public var cachedCells = [String : Itemble]()
+  public var component: Component
+  public var index = 0
 
   public weak var sizeDelegate: SpotSizeDelegate?
   public weak var spotDelegate: SpotsDelegate?
@@ -26,7 +26,6 @@ public class GridSpot: NSObject, Spotable, Gridable {
 
   public lazy var collectionView: UICollectionView = { [unowned self] in
     let collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: self.layout)
-
     collectionView.backgroundColor = UIColor.whiteColor()
     collectionView.dataSource = self
     collectionView.delegate = self
@@ -65,15 +64,15 @@ extension GridSpot: UICollectionViewDelegateFlowLayout {
 
   public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
     component.items[indexPath.item].size.width = collectionView.frame.width / CGFloat(component.span)
-    let item = component.items[indexPath.item]
-    return CGSize(width: item.size.width - layout.sectionInset.left, height: item.size.height)
+    return CGSize(
+      width: item(indexPath).size.width - layout.sectionInset.left,
+      height: item(indexPath).size.height)
   }
 }
 
 extension GridSpot: UICollectionViewDelegate {
   public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-    let item = component.items[indexPath.item]
-    spotDelegate?.spotDidSelectItem(self, item: item)
+    spotDelegate?.spotDidSelectItem(self, item: item(indexPath))
   }
 }
 
@@ -86,7 +85,7 @@ extension GridSpot: UICollectionViewDataSource {
   public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
     component.items[indexPath.item].index = indexPath.row
     
-    let cell = collectionView.dequeueReusableCellWithReuseIdentifier(component.items[indexPath.item].kind, forIndexPath: indexPath)
+    let cell = collectionView.dequeueReusableCellWithReuseIdentifier(item(indexPath.item).kind, forIndexPath: indexPath)
     cell.optimize()
 
     if let grid = cell as? Itemble {

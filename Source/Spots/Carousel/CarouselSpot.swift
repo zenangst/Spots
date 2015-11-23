@@ -3,12 +3,12 @@ import UIKit
 public class CarouselSpot: NSObject, Spotable, Gridable {
 
   public static var cells = [String: UIView.Type]()
-  public static var defaultCell: UIView.Type = CarouselSpotCell.self
   public static var configure: ((view: UICollectionView) -> Void)?
+  public static var defaultCell: UIView.Type = CarouselSpotCell.self
 
-  public var index = 0
-  public var component: Component
   public var cachedCells = [String : Itemble]()
+  public var component: Component
+  public var index = 0
 
   public weak var sizeDelegate: SpotSizeDelegate?
   public weak var spotDelegate: SpotsDelegate?
@@ -85,16 +85,17 @@ extension CarouselSpot: UICollectionViewDelegateFlowLayout {
   public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
     component.items[indexPath.item].size.width = collectionView.frame.width / CGFloat(component.span)
     component.items[indexPath.item].size.width -= layout.sectionInset.left
-    let item = component.items[indexPath.item]
 
-    return CGSize(width: item.size.width, height: item.size.height)
+    return CGSize(
+      width: item(indexPath).size.width,
+      height: item(indexPath).size.height)
   }
 }
 
 extension CarouselSpot: UICollectionViewDelegate {
 
   public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-    spotDelegate?.spotDidSelectItem(self, item: component.items[indexPath.item])
+    spotDelegate?.spotDidSelectItem(self, item: item(indexPath))
   }
 }
 
@@ -107,7 +108,8 @@ extension CarouselSpot: UICollectionViewDataSource {
   public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
     component.items[indexPath.item].index = indexPath.item
 
-    let cell = collectionView.dequeueReusableCellWithReuseIdentifier(component.items[indexPath.item].kind, forIndexPath: indexPath)
+    let cell = collectionView.dequeueReusableCellWithReuseIdentifier(item(indexPath).kind, forIndexPath: indexPath)
+
     if let grid = cell as? Itemble {
       grid.configure(&component.items[indexPath.item])
       collectionView.collectionViewLayout.invalidateLayout()

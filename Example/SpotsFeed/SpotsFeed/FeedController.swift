@@ -15,7 +15,19 @@ public class FeedController: SpotsController, SpotsDelegate {
       fatalError("init(coder:) has not been implemented")
   }
 
-  public func spotsDidReload(refreshControl: UIRefreshControl) { }
+  public func spotsDidReload(refreshControl: UIRefreshControl) {
+    let backgroundQueue = dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0)
+    dispatch(backgroundQueue) { [weak self] in
+      guard let spot = self?.spotAtIndex(0) else { return }
+      
+      let items = FeedController.generateItems(spot.component.items.count,
+        to: 2)
+      
+      self?.prepend(items, spotIndex: 0) {
+        dispatch { refreshControl.endRefreshing() }
+      }
+    }
+  }
 
   public func spotDidSelectItem(spot: Spotable, item: ListItem) { }
 
@@ -52,7 +64,7 @@ public class FeedController: SpotsController, SpotsDelegate {
 
   public static func generateItems(from: Int, to: Int, kind: String = "feed") -> [ListItem] {
     var items = [ListItem]()
-    for i in from...to {
+    for i in from...from+to {
       autoreleasepool({
         items.append(generateItem(i))
       })
