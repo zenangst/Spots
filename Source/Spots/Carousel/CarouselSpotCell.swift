@@ -34,10 +34,7 @@ class CarouselSpotCell: UICollectionViewCell, Itemble {
 
   func configure(inout item: ListItem) {
     if !item.image.isEmpty {
-      let qualityOfServiceClass = QOS_CLASS_BACKGROUND
-      let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
-
-      dispatch(backgroundQueue) {
+      dispatch(queue: .Interactive) {
         GoldenRetriever().fetch(item.image) { data, error in
           guard let data = data else { return }
           let image = UIImage(data: data)

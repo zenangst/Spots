@@ -1,5 +1,5 @@
 PODS:
-  - Compass (1.0.0)
+  - Compass (1.1.0)
   - GoldenRetriever (0.1.1)
   - Hex (3.0.0)
   - Sugar (0.1.0)
@@ -25,20 +25,20 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   Compass:
-    :commit: 6d02ff3d88d7a82811ec15018caf4e5dd4732341
+    :commit: e4ec0ff6e6dd64da0e07a4ab6214086d2e2cd2b8
     :git: https://github.com/hyperoslo/compass
   GoldenRetriever:
     :commit: bfee4c7e1097b86bf1ad3cc2ca6bdaa1156fd877
     :git: https://github.com/zenangst/GoldenRetriever
   Sugar:
-    :commit: 7c566fa479f18ae5443c30bca870ec5ef543f26a
+    :commit: 2b662b6d728d0d6483694a18c1b152da75f28012
     :git: https://github.com/hyperoslo/Sugar
   Tailor:
     :commit: 085f59593e5833532efa4d94b192e7bed49ce817
     :git: https://github.com/zenangst/Tailor
 
 SPEC CHECKSUMS:
-  Compass: 93442f625765b1a87beb51694ec15cc864374bc9
+  Compass: 884465fe6cd5f809a4e6640f7933de31331e0d38
   GoldenRetriever: 68256f443f35eaeb90b58e2f64bc8f5b255738ba
   Hex: ee430da9c4412d9196366ae5327f279021dc03eb
   Sugar: d33f2a3ae10e40c14eb49a2e859f12e82e614817

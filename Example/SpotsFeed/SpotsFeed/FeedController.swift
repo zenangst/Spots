@@ -16,8 +16,7 @@ public class FeedController: SpotsController, SpotsDelegate {
   }
 
   public func spotsDidReload(refreshControl: UIRefreshControl) {
-    let backgroundQueue = dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0)
-    dispatch(backgroundQueue) { [weak self] in
+    dispatch(queue: .Interactive) { [weak self] in
       guard let spot = self?.spotAtIndex(0) else { return }
       
       let items = FeedController.generateItems(spot.component.items.count,
@@ -32,9 +31,7 @@ public class FeedController: SpotsController, SpotsDelegate {
   public func spotDidSelectItem(spot: Spotable, item: ListItem) { }
 
   public func spotDidReachEnd(completion: (() -> Void)?) {
-
-    let backgroundQueue = dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0)
-    dispatch(backgroundQueue) { [weak self] in
+    dispatch(queue: .Interactive) { [weak self] in
       guard let weakSelf = self else { return }
       let items = FeedController.generateItems(0, to: 10)
       weakSelf.append(items, spotIndex: 0) {
