@@ -8,6 +8,8 @@ public protocol Listable: Spotable {
 public extension Spotable where Self : Listable {
 
   public func prepareSpot<T: Spotable>(spot: T) {
+    if component.kind.isEmpty { component.kind = "list" }
+
     if !component.items.isEmpty {
       for (index, item) in component.items.enumerate() {
         sanitizeItems()

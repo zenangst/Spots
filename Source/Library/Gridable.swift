@@ -7,17 +7,25 @@ public protocol Gridable: Spotable {
 public extension Spotable where Self : Gridable {
 
   public func prepareSpot<T: Spotable>(spot: T) {
-    for (index, item) in component.items.enumerate() {
-      sanitizeItems()
-      self.component.index = index
-      let cellClass = T.cells[item.kind] ?? T.defaultCell
+    if component.kind.isEmpty { component.kind = "grid" }
+
+    if !component.items.isEmpty {
+      for (index, item) in component.items.enumerate() {
+        sanitizeItems()
+        self.component.index = index
+        let cellClass = T.cells[item.kind] ?? T.defaultCell
+        collectionView.registerClass(cellClass,
+          forCellWithReuseIdentifier: component.items[index].kind)
+
+        if let cell = cellClass.init() as? Itemble {
+          self.component.items[index].size.width = collectionView.frame.width / CGFloat(component.span)
+          self.component.items[index].size.height = cell.size.height
+        }
+      }
+    } else {
+      let cellClass = T.cells[component.kind] ?? T.defaultCell
       collectionView.registerClass(cellClass,
         forCellWithReuseIdentifier: component.items[index].kind)
-
-      if let cell = cellClass.init() as? Itemble {
-        self.component.items[index].size.width = collectionView.frame.width / CGFloat(component.span)
-        self.component.items[index].size.height = cell.size.height
-      }
     }
   }
 
