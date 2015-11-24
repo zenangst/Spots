@@ -18,11 +18,15 @@ public struct ListItem: Mappable {
     image    <- map.property("image")
     kind     <- map.property("type")
     action   <- map.property("action")
-    size     <- map.property("size")
     meta     <- map.property("meta")
+
+    size = CGSize(
+      width:  ((map["size"] as? JSONDictionary)?["width"] as? Int) ?? 0,
+      height: ((map["size"] as? JSONDictionary)?["width"] as? Int) ?? 0
+    )
   }
 
-  public init(title: String, subtitle: String = "", image: String = "", kind: String = "", action: String? = "", size: CGSize = CGSize(width: 0, height: 0), meta: [String : AnyObject] = [:]) {
+  public init(title: String, subtitle: String = "", image: String = "", kind: String = "", action: String? = nil, size: CGSize = CGSize(width: 0, height: 0), meta: JSONDictionary = [:]) {
     self.title = title
     self.subtitle = subtitle
     self.image = image
