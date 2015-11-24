@@ -38,7 +38,7 @@ public class CarouselSpot: NSObject, Spotable, Gridable {
 
   public convenience init(_ component: Component, top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0, itemSpacing: CGFloat = 0) {
     self.init(component: component)
-    
+
     layout.sectionInset = UIEdgeInsetsMake(top, left, bottom, right)
     layout.minimumInteritemSpacing = itemSpacing
   }
@@ -63,7 +63,7 @@ extension CarouselSpot: UIScrollViewDelegate {
     let pageWidth: CGFloat = collectionView.frame.width - layout.sectionInset.left + layout.minimumLineSpacing
     let currentOffset = scrollView.contentOffset.x
     let targetOffset = targetContentOffset.memory.x
-    
+
     var newTargetOffset: CGFloat = targetOffset > currentOffset
       ? ceil(currentOffset / pageWidth) * pageWidth
       : floor(currentOffset / pageWidth) * pageWidth
@@ -107,7 +107,9 @@ extension CarouselSpot: UICollectionViewDataSource {
   public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
     component.items[indexPath.item].index = indexPath.item
 
-    let cell = collectionView.dequeueReusableCellWithReuseIdentifier(item(indexPath).kind, forIndexPath: indexPath)
+    let reuseIdentifier = !item(indexPath).kind.isEmpty ? item(indexPath).kind : component.kind
+    let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath)
+    cell.optimize()
 
     if let grid = cell as? Itemble {
       grid.configure(&component.items[indexPath.item])
@@ -115,8 +117,6 @@ extension CarouselSpot: UICollectionViewDataSource {
       sizeDelegate?.sizeDidUpdate()
     }
     
-    cell.optimize()
-
     return cell
   }
 }
