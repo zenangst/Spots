@@ -39,7 +39,7 @@ CHECKOUT OPTIONS:
     :commit: bfee4c7e1097b86bf1ad3cc2ca6bdaa1156fd877
     :git: https://github.com/zenangst/GoldenRetriever
   Sugar:
-    :commit: 2b662b6d728d0d6483694a18c1b152da75f28012
+    :commit: 727030701559a44af59645880ec00c93932bf070
     :git: https://github.com/hyperoslo/Sugar
   Tailor:
     :commit: 085f59593e5833532efa4d94b192e7bed49ce817
