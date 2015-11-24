@@ -127,8 +127,9 @@ extension ListSpot: UITableViewDataSource {
   }
 
   public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    let cell: UITableViewCell? = cachedCells[item(indexPath).kind] as? UITableViewCell
-      ?? tableView.dequeueReusableCellWithIdentifier(item(indexPath).kind, forIndexPath: indexPath)
+    let reuseIdentifier = !item(indexPath).kind.isEmpty ? item(indexPath).kind : component.kind
+    let cell: UITableViewCell? = cachedCells[reuseIdentifier] as? UITableViewCell
+      ?? tableView.dequeueReusableCellWithIdentifier(reuseIdentifier, forIndexPath: indexPath)
 
     cell?.optimize()
 

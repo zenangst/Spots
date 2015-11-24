@@ -80,8 +80,9 @@ extension GridSpot: UICollectionViewDataSource {
 
   public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
     component.items[indexPath.item].index = indexPath.row
-    
-    let cell = collectionView.dequeueReusableCellWithReuseIdentifier(item(indexPath.item).kind, forIndexPath: indexPath)
+
+    let reuseIdentifier = !item(indexPath).kind.isEmpty ? item(indexPath).kind : component.kind
+    let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath)
     cell.optimize()
 
     if let grid = cell as? Itemble {
