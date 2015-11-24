@@ -13,14 +13,14 @@ public extension Spotable where Self : Listable {
     if !component.items.isEmpty {
       for (index, item) in component.items.enumerate() {
         sanitizeItems()
-        self.component.index = index
+        component.index = index
         let componentCellClass = T.cells[item.kind] ?? T.defaultCell
         if cellIsCached(component.items[index].kind) {
-          cachedCells[item.kind]!.configure(&self.component.items[index])
+          cachedCells[item.kind]!.configure(&component.items[index])
         } else {
           tableView.registerClass(componentCellClass, forCellReuseIdentifier: component.items[index].kind)
           if let cell = componentCellClass.init() as? Itemble {
-            cell.configure(&self.component.items[index])
+            cell.configure(&component.items[index])
             cachedCells[item.kind] = cell
           }
         }
