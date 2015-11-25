@@ -1,5 +1,4 @@
 import Foundation
-import Spots
 import XCTest
 import Fakery
 
