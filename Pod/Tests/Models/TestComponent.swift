@@ -1,4 +1,5 @@
 import Foundation
+import Spots
 import XCTest
 
 class ComponentTests : XCTestCase {

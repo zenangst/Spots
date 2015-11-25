@@ -27,7 +27,7 @@ public struct Component: Mappable {
   }
 }
 
-func ==(lhs: Component, rhs: Component) -> Bool {
+public func ==(lhs: Component, rhs: Component) -> Bool {
   return lhs.title == rhs.title &&
     lhs.kind == rhs.kind &&
     lhs.span == rhs.span &&

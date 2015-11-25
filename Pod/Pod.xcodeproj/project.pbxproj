@@ -8,28 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		8510A4F5A6A1DA7056A6080B /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47C20DD9DEFE20C747501850 /* Pods.framework */; };
-		BDFECC3A1C04EA3000049FE2 /* Componentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFECC1D1C04EA3000049FE2 /* Componentable.swift */; settings = {ASSET_TAGS = (); }; };
-		BDFECC3B1C04EA3000049FE2 /* Gridable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFECC1E1C04EA3000049FE2 /* Gridable.swift */; settings = {ASSET_TAGS = (); }; };
-		BDFECC3C1C04EA3000049FE2 /* Itemble.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFECC1F1C04EA3000049FE2 /* Itemble.swift */; settings = {ASSET_TAGS = (); }; };
-		BDFECC3D1C04EA3000049FE2 /* Listable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFECC201C04EA3000049FE2 /* Listable.swift */; settings = {ASSET_TAGS = (); }; };
-		BDFECC3E1C04EA3000049FE2 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFECC211C04EA3000049FE2 /* Parser.swift */; settings = {ASSET_TAGS = (); }; };
-		BDFECC3F1C04EA3000049FE2 /* Spotable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFECC221C04EA3000049FE2 /* Spotable.swift */; settings = {ASSET_TAGS = (); }; };
-		BDFECC401C04EA3000049FE2 /* SpotFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFECC231C04EA3000049FE2 /* SpotFactory.swift */; settings = {ASSET_TAGS = (); }; };
-		BDFECC411C04EA3000049FE2 /* SpotsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFECC241C04EA3000049FE2 /* SpotsDelegate.swift */; settings = {ASSET_TAGS = (); }; };
-		BDFECC421C04EA3000049FE2 /* SpotSizeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFECC251C04EA3000049FE2 /* SpotSizeDelegate.swift */; settings = {ASSET_TAGS = (); }; };
-		BDFECC431C04EA3000049FE2 /* UIView+Optimize.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFECC261C04EA3000049FE2 /* UIView+Optimize.swift */; settings = {ASSET_TAGS = (); }; };
-		BDFECC441C04EA3000049FE2 /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFECC281C04EA3000049FE2 /* Component.swift */; settings = {ASSET_TAGS = (); }; };
-		BDFECC451C04EA3000049FE2 /* ListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFECC291C04EA3000049FE2 /* ListItem.swift */; settings = {ASSET_TAGS = (); }; };
-		BDFECC461C04EA3000049FE2 /* CarouselSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFECC2C1C04EA3000049FE2 /* CarouselSpot.swift */; settings = {ASSET_TAGS = (); }; };
-		BDFECC471C04EA3000049FE2 /* CarouselSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFECC2D1C04EA3000049FE2 /* CarouselSpotCell.swift */; settings = {ASSET_TAGS = (); }; };
-		BDFECC481C04EA3000049FE2 /* FeedSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFECC2F1C04EA3000049FE2 /* FeedSpot.swift */; settings = {ASSET_TAGS = (); }; };
-		BDFECC491C04EA3000049FE2 /* FeedSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFECC301C04EA3000049FE2 /* FeedSpotCell.swift */; settings = {ASSET_TAGS = (); }; };
-		BDFECC4A1C04EA3000049FE2 /* GridSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFECC321C04EA3000049FE2 /* GridSpot.swift */; settings = {ASSET_TAGS = (); }; };
-		BDFECC4B1C04EA3000049FE2 /* GridSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFECC331C04EA3000049FE2 /* GridSpotCell.swift */; settings = {ASSET_TAGS = (); }; };
-		BDFECC4C1C04EA3000049FE2 /* ListSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFECC351C04EA3000049FE2 /* ListSpot.swift */; settings = {ASSET_TAGS = (); }; };
-		BDFECC4D1C04EA3000049FE2 /* ListSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFECC361C04EA3000049FE2 /* ListSpotCell.swift */; settings = {ASSET_TAGS = (); }; };
-		BDFECC4E1C04EA3000049FE2 /* SpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFECC381C04EA3000049FE2 /* SpotCell.swift */; settings = {ASSET_TAGS = (); }; };
-		BDFECC4F1C04EA3000049FE2 /* SpotsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFECC391C04EA3000049FE2 /* SpotsController.swift */; settings = {ASSET_TAGS = (); }; };
 		BDFECC531C04EA7800049FE2 /* TestComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFECC521C04EA7800049FE2 /* TestComponent.swift */; settings = {ASSET_TAGS = (); }; };
 		BDFECC551C04F6B600049FE2 /* TestListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFECC541C04F6B600049FE2 /* TestListItem.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
@@ -43,28 +21,6 @@
 		14C136541AB784B200B7B07A /* LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = LICENSE.md; path = ../LICENSE.md; sourceTree = "<group>"; };
 		14C136551AB784B200B7B07A /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		47C20DD9DEFE20C747501850 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		BDFECC1D1C04EA3000049FE2 /* Componentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Componentable.swift; sourceTree = "<group>"; };
-		BDFECC1E1C04EA3000049FE2 /* Gridable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gridable.swift; sourceTree = "<group>"; };
-		BDFECC1F1C04EA3000049FE2 /* Itemble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Itemble.swift; sourceTree = "<group>"; };
-		BDFECC201C04EA3000049FE2 /* Listable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Listable.swift; sourceTree = "<group>"; };
-		BDFECC211C04EA3000049FE2 /* Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
-		BDFECC221C04EA3000049FE2 /* Spotable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spotable.swift; sourceTree = "<group>"; };
-		BDFECC231C04EA3000049FE2 /* SpotFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotFactory.swift; sourceTree = "<group>"; };
-		BDFECC241C04EA3000049FE2 /* SpotsDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsDelegate.swift; sourceTree = "<group>"; };
-		BDFECC251C04EA3000049FE2 /* SpotSizeDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotSizeDelegate.swift; sourceTree = "<group>"; };
-		BDFECC261C04EA3000049FE2 /* UIView+Optimize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Optimize.swift"; sourceTree = "<group>"; };
-		BDFECC281C04EA3000049FE2 /* Component.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
-		BDFECC291C04EA3000049FE2 /* ListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListItem.swift; sourceTree = "<group>"; };
-		BDFECC2C1C04EA3000049FE2 /* CarouselSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselSpot.swift; sourceTree = "<group>"; };
-		BDFECC2D1C04EA3000049FE2 /* CarouselSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselSpotCell.swift; sourceTree = "<group>"; };
-		BDFECC2F1C04EA3000049FE2 /* FeedSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedSpot.swift; sourceTree = "<group>"; };
-		BDFECC301C04EA3000049FE2 /* FeedSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedSpotCell.swift; sourceTree = "<group>"; };
-		BDFECC321C04EA3000049FE2 /* GridSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridSpot.swift; sourceTree = "<group>"; };
-		BDFECC331C04EA3000049FE2 /* GridSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridSpotCell.swift; sourceTree = "<group>"; };
-		BDFECC351C04EA3000049FE2 /* ListSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListSpot.swift; sourceTree = "<group>"; };
-		BDFECC361C04EA3000049FE2 /* ListSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListSpotCell.swift; sourceTree = "<group>"; };
-		BDFECC381C04EA3000049FE2 /* SpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotCell.swift; sourceTree = "<group>"; };
-		BDFECC391C04EA3000049FE2 /* SpotsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsController.swift; sourceTree = "<group>"; };
 		BDFECC521C04EA7800049FE2 /* TestComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestComponent.swift; sourceTree = "<group>"; };
 		BDFECC541C04F6B600049FE2 /* TestListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestListItem.swift; sourceTree = "<group>"; };
 		DF3E6AE599FE50FEBFE8B94E /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -88,7 +44,6 @@
 			children = (
 				14C136501AB7849300B7B07A /* Metadata */,
 				146D72941AB782920058798C /* Products */,
-				BDFECC1B1C04EA3000049FE2 /* Source */,
 				146D72AF1AB782920058798C /* Tests */,
 				72F7C6928F025B787C49A947 /* Pods */,
 				87A3B7C7ACAA69A4A1A0544E /* Frameworks */,
@@ -149,100 +104,6 @@
 				47C20DD9DEFE20C747501850 /* Pods.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		BDFECC1B1C04EA3000049FE2 /* Source */ = {
-			isa = PBXGroup;
-			children = (
-				BDFECC1C1C04EA3000049FE2 /* Library */,
-				BDFECC271C04EA3000049FE2 /* Models */,
-				BDFECC2A1C04EA3000049FE2 /* Spots */,
-				BDFECC391C04EA3000049FE2 /* SpotsController.swift */,
-			);
-			name = Source;
-			path = ../Source;
-			sourceTree = "<group>";
-		};
-		BDFECC1C1C04EA3000049FE2 /* Library */ = {
-			isa = PBXGroup;
-			children = (
-				BDFECC1D1C04EA3000049FE2 /* Componentable.swift */,
-				BDFECC1E1C04EA3000049FE2 /* Gridable.swift */,
-				BDFECC1F1C04EA3000049FE2 /* Itemble.swift */,
-				BDFECC201C04EA3000049FE2 /* Listable.swift */,
-				BDFECC211C04EA3000049FE2 /* Parser.swift */,
-				BDFECC221C04EA3000049FE2 /* Spotable.swift */,
-				BDFECC231C04EA3000049FE2 /* SpotFactory.swift */,
-				BDFECC241C04EA3000049FE2 /* SpotsDelegate.swift */,
-				BDFECC251C04EA3000049FE2 /* SpotSizeDelegate.swift */,
-				BDFECC261C04EA3000049FE2 /* UIView+Optimize.swift */,
-			);
-			path = Library;
-			sourceTree = "<group>";
-		};
-		BDFECC271C04EA3000049FE2 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				BDFECC281C04EA3000049FE2 /* Component.swift */,
-				BDFECC291C04EA3000049FE2 /* ListItem.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
-		BDFECC2A1C04EA3000049FE2 /* Spots */ = {
-			isa = PBXGroup;
-			children = (
-				BDFECC2B1C04EA3000049FE2 /* Carousel */,
-				BDFECC2E1C04EA3000049FE2 /* Feed */,
-				BDFECC311C04EA3000049FE2 /* Grid */,
-				BDFECC341C04EA3000049FE2 /* List */,
-				BDFECC371C04EA3000049FE2 /* Spots */,
-			);
-			path = Spots;
-			sourceTree = "<group>";
-		};
-		BDFECC2B1C04EA3000049FE2 /* Carousel */ = {
-			isa = PBXGroup;
-			children = (
-				BDFECC2C1C04EA3000049FE2 /* CarouselSpot.swift */,
-				BDFECC2D1C04EA3000049FE2 /* CarouselSpotCell.swift */,
-			);
-			path = Carousel;
-			sourceTree = "<group>";
-		};
-		BDFECC2E1C04EA3000049FE2 /* Feed */ = {
-			isa = PBXGroup;
-			children = (
-				BDFECC2F1C04EA3000049FE2 /* FeedSpot.swift */,
-				BDFECC301C04EA3000049FE2 /* FeedSpotCell.swift */,
-			);
-			path = Feed;
-			sourceTree = "<group>";
-		};
-		BDFECC311C04EA3000049FE2 /* Grid */ = {
-			isa = PBXGroup;
-			children = (
-				BDFECC321C04EA3000049FE2 /* GridSpot.swift */,
-				BDFECC331C04EA3000049FE2 /* GridSpotCell.swift */,
-			);
-			path = Grid;
-			sourceTree = "<group>";
-		};
-		BDFECC341C04EA3000049FE2 /* List */ = {
-			isa = PBXGroup;
-			children = (
-				BDFECC351C04EA3000049FE2 /* ListSpot.swift */,
-				BDFECC361C04EA3000049FE2 /* ListSpotCell.swift */,
-			);
-			path = List;
-			sourceTree = "<group>";
-		};
-		BDFECC371C04EA3000049FE2 /* Spots */ = {
-			isa = PBXGroup;
-			children = (
-				BDFECC381C04EA3000049FE2 /* SpotCell.swift */,
-			);
-			path = Spots;
 			sourceTree = "<group>";
 		};
 		BDFECC511C04EA6600049FE2 /* Models */ = {
@@ -373,30 +234,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BDFECC461C04EA3000049FE2 /* CarouselSpot.swift in Sources */,
-				BDFECC451C04EA3000049FE2 /* ListItem.swift in Sources */,
-				BDFECC401C04EA3000049FE2 /* SpotFactory.swift in Sources */,
-				BDFECC4D1C04EA3000049FE2 /* ListSpotCell.swift in Sources */,
-				BDFECC431C04EA3000049FE2 /* UIView+Optimize.swift in Sources */,
-				BDFECC3C1C04EA3000049FE2 /* Itemble.swift in Sources */,
-				BDFECC411C04EA3000049FE2 /* SpotsDelegate.swift in Sources */,
-				BDFECC441C04EA3000049FE2 /* Component.swift in Sources */,
-				BDFECC4B1C04EA3000049FE2 /* GridSpotCell.swift in Sources */,
-				BDFECC491C04EA3000049FE2 /* FeedSpotCell.swift in Sources */,
-				BDFECC481C04EA3000049FE2 /* FeedSpot.swift in Sources */,
 				BDFECC531C04EA7800049FE2 /* TestComponent.swift in Sources */,
-				BDFECC471C04EA3000049FE2 /* CarouselSpotCell.swift in Sources */,
-				BDFECC3F1C04EA3000049FE2 /* Spotable.swift in Sources */,
-				BDFECC4C1C04EA3000049FE2 /* ListSpot.swift in Sources */,
-				BDFECC3D1C04EA3000049FE2 /* Listable.swift in Sources */,
 				BDFECC551C04F6B600049FE2 /* TestListItem.swift in Sources */,
-				BDFECC421C04EA3000049FE2 /* SpotSizeDelegate.swift in Sources */,
-				BDFECC4A1C04EA3000049FE2 /* GridSpot.swift in Sources */,
-				BDFECC4F1C04EA3000049FE2 /* SpotsController.swift in Sources */,
-				BDFECC3E1C04EA3000049FE2 /* Parser.swift in Sources */,
-				BDFECC4E1C04EA3000049FE2 /* SpotCell.swift in Sources */,
-				BDFECC3A1C04EA3000049FE2 /* Componentable.swift in Sources */,
-				BDFECC3B1C04EA3000049FE2 /* Gridable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
