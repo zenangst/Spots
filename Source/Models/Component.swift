@@ -28,18 +28,9 @@ public struct Component: Mappable {
 }
 
 func ==(lhs: Component, rhs: Component) -> Bool {
-  var equal = lhs.title == rhs.title &&
+  return lhs.title == rhs.title &&
     lhs.kind == rhs.kind &&
     lhs.span == rhs.span &&
-    lhs.meta == rhs.meta
-
-  if lhs.items.count != rhs.items.count { return false }
-
-  if equal {
-    for (index, litem) in lhs.items.enumerate() {
-      if litem != rhs.items[index] { equal = false; break }
-    }
-  }
-
-  return equal
+    lhs.meta == rhs.meta &&
+    lhs.items == rhs.items
 }

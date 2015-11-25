@@ -37,6 +37,18 @@ public struct ListItem: Mappable {
   }
 }
 
+func ==(lhs: [ListItem], rhs: [ListItem]) -> Bool {
+  var equal = lhs.count == rhs.count
+  
+  if !equal { return false }
+
+  for (index, item) in lhs.enumerate() {
+    if item != rhs[index] { equal = false; break }
+  }
+
+  return equal
+}
+
 func ==(lhs: ListItem, rhs: ListItem) -> Bool {
   let equal = lhs.title == rhs.title &&
     lhs.subtitle == rhs.subtitle &&
