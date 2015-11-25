@@ -51,9 +51,6 @@ public extension Spotable where Self : Listable {
   }
 
   public func append(item: ListItem, completion: (() -> Void)? = nil) {
-    var item = item
-    if item.kind.isEmpty { item.kind = component.kind }
-
     component.items.append(item)
     cache(self, identifier: item.kind ?? component.kind)
 
@@ -76,8 +73,6 @@ public extension Spotable where Self : Listable {
     let count = component.items.count
 
     for (index, item) in items.enumerate() {
-      var item = item
-      if item.kind.isEmpty { item.kind = component.kind }
       component.items.append(item)
       cache(self, identifier: item.kind)
       indexPaths.append(NSIndexPath(forRow: count + index, inSection: 0))
@@ -98,8 +93,6 @@ public extension Spotable where Self : Listable {
     var indexPaths = [NSIndexPath]()
 
     for (index, item) in items.enumerate() {
-      var item = item
-      if item.kind.isEmpty { item.kind = component.kind }
       indexPaths.append(NSIndexPath(forRow: index, inSection: 0))
       component.items.insert(item, atIndex: index)
       cache(self, identifier: item.kind)
