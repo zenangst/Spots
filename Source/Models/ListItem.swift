@@ -54,6 +54,16 @@ public func ==(lhs: ListItem, rhs: ListItem) -> Bool {
     lhs.subtitle == rhs.subtitle &&
     lhs.image == rhs.image &&
     lhs.kind == rhs.kind &&
+    lhs.action == rhs.action
+
+  return equal
+}
+
+public func ===(lhs: ListItem, rhs: ListItem) -> Bool {
+  let equal = lhs.title == rhs.title &&
+    lhs.subtitle == rhs.subtitle &&
+    lhs.image == rhs.image &&
+    lhs.kind == rhs.kind &&
     lhs.action == rhs.action &&
     lhs.size == rhs.size
 
