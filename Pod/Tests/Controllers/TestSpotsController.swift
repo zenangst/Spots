@@ -95,6 +95,7 @@ class SpotsControllerTests : XCTestCase {
     spotController?.prepend(items, spotIndex: 0)
 
     XCTAssert(spotController?.spotAtIndex(0)?.component.items.count == 2)
+
     if let testItems = spotController?.spotAtIndex(0)?.component.items {
       XCTAssert(testItems == items)
     }
