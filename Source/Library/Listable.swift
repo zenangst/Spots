@@ -17,9 +17,11 @@ public extension Spotable where Self : Listable {
     if component.kind.isEmpty { component.kind = "list" }
 
     if !component.items.isEmpty {
-      for (index, item) in component.items.enumerate() {
-        component.index = index
+      for (index, item) in component.items.enumerate() where !item.kind.isEmpty {
         let componentCellClass = T.cells[item.kind] ?? T.defaultCell
+
+        component.items[index].index = index
+
         if cellIsCached(component.items[index].kind) {
           cachedCells[item.kind]!.configure(&component.items[index])
         } else {
@@ -38,8 +40,9 @@ public extension Spotable where Self : Listable {
   
   private func cache<T: Spotable>(spot: T, identifier: String) -> Bool {
     if !cellIsCached(identifier) {
+      let reuseIdentifier = !identifier.isEmpty ? identifier : component.kind
       let cellClass = T.cells[identifier] ?? T.defaultCell
-      tableView.registerClass(cellClass, forCellReuseIdentifier: component.items[index].kind)
+      tableView.registerClass(cellClass, forCellReuseIdentifier: reuseIdentifier)
       
       if let cell = cellClass.init() as? Itemble {
         cachedCells[identifier] = cell

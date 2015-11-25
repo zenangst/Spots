@@ -10,11 +10,11 @@ public extension Spotable where Self : Gridable {
     if component.kind.isEmpty { component.kind = "grid" }
 
     if !component.items.isEmpty {
-      for (index, item) in component.items.enumerate() {
-        component.index = index
+      for (index, item) in component.items.enumerate() where !item.kind.isEmpty {
         let cellClass = T.cells[item.kind] ?? T.defaultCell
-        collectionView.registerClass(cellClass,
-          forCellWithReuseIdentifier: component.items[index].kind)
+
+        component.items[index].index = index
+        collectionView.registerClass(cellClass, forCellWithReuseIdentifier: item.kind)
 
         if let cell = cellClass.init() as? Itemble {
           component.items[index].size.width = collectionView.frame.width / CGFloat(component.span)
