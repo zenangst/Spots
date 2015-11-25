@@ -17,7 +17,7 @@ class SpotFactoryTests : XCTestCase {
     let component = Component(json)
     var spot = SpotFactory.resolve(component)
 
-    XCTAssertTrue(spot.component === component)
+    XCTAssertTrue(spot.component == component)
     XCTAssertTrue(spot is CarouselSpot)
 
     SpotFactory.register("merry-go-round", spot: GridSpot.self)
