@@ -78,7 +78,7 @@ class SpotsControllerTests : XCTestCase {
       ListItem(title: "title4")
       ], spotIndex: 0)
 
-    XCTAssert(spotController?.spotAtIndex(0)?.component.items.count == 4)
+    XCTAssertEqual(spotController?.spotAtIndex(0)?.component.items.count, 4)
     XCTAssertEqual(spotController?.spotAtIndex(0)?.component.items[2].kind, component.kind)
     XCTAssertEqual(spotController?.spotAtIndex(0)?.component.items[3].kind, component.kind)
   }
@@ -94,7 +94,7 @@ class SpotsControllerTests : XCTestCase {
     ]
     spotController?.prepend(items, spotIndex: 0)
 
-    XCTAssert(spotController?.spotAtIndex(0)?.component.items.count == 2)
+    XCTAssertEqual(spotController?.spotAtIndex(0)?.component.items.count, 2)
 
     if let testItems = spotController?.spotAtIndex(0)?.component.items {
       XCTAssert(testItems == items)
@@ -127,10 +127,10 @@ class SpotsControllerTests : XCTestCase {
     listSpot.delete(component.items.first!) {
       let lastItem = self.spotController?.spotAtIndex(0)?.component.items.first
 
-      XCTAssert(self.spotController?.spotAtIndex(0)?.component.items.count == 1)
       XCTAssertNotEqual(lastItem?.title, "title1")
-      XCTAssertEqual(lastItem?.title, "title2")
       XCTAssertEqual(lastItem?.index, 0)
+      XCTAssertEqual(lastItem?.title, "title2")
+      XCTAssertEqual(self.spotController?.spotAtIndex(0)?.component.items.count, 1)
     }
   }
 }
