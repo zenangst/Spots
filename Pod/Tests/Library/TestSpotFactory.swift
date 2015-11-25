@@ -11,5 +11,21 @@ class SpotFactoryTests : XCTestCase {
     "items" : [["title" : "item1"]]
   ]
 
+  func testRegisterAndResolve() {
+    SpotFactory.register("merry-go-round", spot: CarouselSpot.self)
+
+    let component = Component(json)
+    var spot = SpotFactory.resolve(component)
+
+    XCTAssertTrue(spot.component === component)
+    XCTAssertTrue(spot is CarouselSpot)
+
+    SpotFactory.register("merry-go-round", spot: GridSpot.self)
+    spot = SpotFactory.resolve(component)
+
+    XCTAssertTrue(spot.component == component)
+    XCTAssertTrue(spot is GridSpot)
+  }
+
   
 }
