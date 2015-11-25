@@ -69,4 +69,5 @@ if let rootPath = NSProcessInfo.processInfo().environment["PWD"] {
     }
   } catch {}
   NSFileManager().changeCurrentDirectoryPath("\(rootPath)/Pod")
+  System.execute("pod", "update")
 }
