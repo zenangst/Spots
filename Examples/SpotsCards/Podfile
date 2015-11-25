@@ -1,10 +1,13 @@
+source 'https://github.com/CocoaPods/Specs.git'
+
 platform :ios, '8.0'
+
 use_frameworks!
+inhibit_all_warnings!
 
 pod 'Compass', git: 'https://github.com/hyperoslo/compass'
-pod 'Fakery'
 pod 'GoldenRetriever', git: 'https://github.com/zenangst/GoldenRetriever'
 pod 'Hex'
-pod 'Spots', path: '../'
+pod 'Spots', path: '../../'
 pod 'Sugar', git: 'https://github.com/hyperoslo/Sugar'
 pod 'Tailor', git: 'https://github.com/zenangst/Tailor'

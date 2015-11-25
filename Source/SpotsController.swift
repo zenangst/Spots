@@ -16,7 +16,7 @@ public class SpotsController: UIViewController {
     return layout
   }()
 
-  lazy var collectionView: UICollectionView = { [unowned self] in
+  public lazy var collectionView: UICollectionView = { [unowned self] in
     let collectionView = UICollectionView(frame: self.view.bounds, collectionViewLayout: self.layout)
 
     collectionView.alwaysBounceVertical = true

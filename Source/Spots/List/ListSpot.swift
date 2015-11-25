@@ -1,7 +1,7 @@
 import UIKit
 import Sugar
 
-typealias TitleSpot = ListSpot
+public typealias TitleSpot = ListSpot
 
 public class ListSpot: NSObject, Spotable, Listable {
 
