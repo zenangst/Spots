@@ -18,11 +18,15 @@ public struct ListItem: Mappable {
     image    <- map.property("image")
     kind     <- map.property("type")
     action   <- map.property("action")
-    size     <- map.property("size")
     meta     <- map.property("meta")
+
+    size = CGSize(
+      width:  ((map["size"] as? JSONDictionary)?["width"] as? Int) ?? 0,
+      height: ((map["size"] as? JSONDictionary)?["height"] as? Int) ?? 0
+    )
   }
 
-  public init(title: String, subtitle: String = "", image: String = "", kind: String = "", action: String? = "", size: CGSize = CGSize(width: 0, height: 0), meta: [String : AnyObject] = [:]) {
+  public init(title: String, subtitle: String = "", image: String = "", kind: String = "", action: String? = nil, size: CGSize = CGSize(width: 0, height: 0), meta: JSONDictionary = [:]) {
     self.title = title
     self.subtitle = subtitle
     self.image = image
@@ -31,4 +35,31 @@ public struct ListItem: Mappable {
     self.size = size
     self.meta = meta
   }
+}
+
+func ==(lhs: [ListItem], rhs: [ListItem]) -> Bool {
+  var equal = lhs.count == rhs.count
+  
+  if !equal { return false }
+
+  for (index, item) in lhs.enumerate() {
+    if item != rhs[index] { equal = false; break }
+  }
+
+  return equal
+}
+
+func ==(lhs: ListItem, rhs: ListItem) -> Bool {
+  let equal = lhs.title == rhs.title &&
+    lhs.subtitle == rhs.subtitle &&
+    lhs.image == rhs.image &&
+    lhs.kind == rhs.kind &&
+    lhs.action == rhs.action &&
+    lhs.size == rhs.size
+
+  return equal
+}
+
+func !=(lhs: ListItem, rhs: ListItem) -> Bool {
+  return !(lhs == rhs)
 }
