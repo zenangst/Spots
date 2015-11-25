@@ -105,9 +105,12 @@ public extension Spotable where Self : Listable {
   }
 
   public func delete(item: ListItem, completion: (() -> Void)? = nil) {
+    guard let index = component.items.indexOf({ $0 == item})
+      else { completion?(); return }
+
     var indexPaths = [NSIndexPath]()
     indexPaths.append(NSIndexPath(forRow: component.items.count, inSection: 0))
-    component.items.append(item)
+    component.items.removeAtIndex(index)
 
     dispatch { [weak self] in
       guard let weakSelf = self else { return }
