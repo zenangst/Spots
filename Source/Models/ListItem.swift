@@ -37,7 +37,7 @@ public struct ListItem: Mappable {
   }
 }
 
-func ==(lhs: [ListItem], rhs: [ListItem]) -> Bool {
+public func ==(lhs: [ListItem], rhs: [ListItem]) -> Bool {
   var equal = lhs.count == rhs.count
   
   if !equal { return false }
@@ -49,7 +49,7 @@ func ==(lhs: [ListItem], rhs: [ListItem]) -> Bool {
   return equal
 }
 
-func ==(lhs: ListItem, rhs: ListItem) -> Bool {
+public func ==(lhs: ListItem, rhs: ListItem) -> Bool {
   let equal = lhs.title == rhs.title &&
     lhs.subtitle == rhs.subtitle &&
     lhs.image == rhs.image &&
@@ -60,6 +60,6 @@ func ==(lhs: ListItem, rhs: ListItem) -> Bool {
   return equal
 }
 
-func !=(lhs: ListItem, rhs: ListItem) -> Bool {
+public func !=(lhs: ListItem, rhs: ListItem) -> Bool {
   return !(lhs == rhs)
 }
