@@ -27,5 +27,13 @@ class SpotFactoryTests : XCTestCase {
     XCTAssertTrue(spot is GridSpot)
   }
 
-  
+  func testDefaultResolve() {
+    json["type"] = "weirdo"
+
+    let component = Component(json)
+    let spot = SpotFactory.resolve(component)
+
+    XCTAssertTrue(spot.component == component)
+    XCTAssertTrue(spot is GridSpot)
+  }
 }
