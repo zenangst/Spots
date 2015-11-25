@@ -51,7 +51,7 @@ class SpotsControllerTests : XCTestCase {
     XCTAssert(spotController?.spotAtIndex(0)?.component.items.count == 2)
 
     if let testItem = spotController?.spotAtIndex(0)?.component.items[1] {
-      XCTAssertEqual(testItem.kind, component.kind)
+      XCTAssertEqual(testItem.title, "title2")
     }
   }
 
@@ -79,8 +79,8 @@ class SpotsControllerTests : XCTestCase {
       ], spotIndex: 0)
 
     XCTAssertEqual(spotController?.spotAtIndex(0)?.component.items.count, 4)
-    XCTAssertEqual(spotController?.spotAtIndex(0)?.component.items[2].kind, component.kind)
-    XCTAssertEqual(spotController?.spotAtIndex(0)?.component.items[3].kind, component.kind)
+    XCTAssertEqual(spotController?.spotAtIndex(0)?.component.items[2].title, "title3")
+    XCTAssertEqual(spotController?.spotAtIndex(0)?.component.items[3].title, "title4")
   }
 
   func testPrependItems() {
@@ -105,8 +105,8 @@ class SpotsControllerTests : XCTestCase {
       ListItem(title: "title4")
       ], spotIndex: 0)
 
-    XCTAssertEqual(spotController?.spotAtIndex(0)?.component.items[0].kind, component.kind)
-    XCTAssertEqual(spotController?.spotAtIndex(0)?.component.items[1].kind, component.kind)
+    XCTAssertEqual(spotController?.spotAtIndex(0)?.component.items[0].title, "title3")
+    XCTAssertEqual(spotController?.spotAtIndex(0)?.component.items[1].title, "title4")
   }
 
   func testDeleteItem() {
