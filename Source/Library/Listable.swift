@@ -18,7 +18,6 @@ public extension Spotable where Self : Listable {
 
     if !component.items.isEmpty {
       for (index, item) in component.items.enumerate() {
-        sanitizeItems()
         component.index = index
         let componentCellClass = T.cells[item.kind] ?? T.defaultCell
         if cellIsCached(component.items[index].kind) {

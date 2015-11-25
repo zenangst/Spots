@@ -11,7 +11,6 @@ public extension Spotable where Self : Gridable {
 
     if !component.items.isEmpty {
       for (index, item) in component.items.enumerate() {
-        sanitizeItems()
         component.index = index
         let cellClass = T.cells[item.kind] ?? T.defaultCell
         collectionView.registerClass(cellClass,
