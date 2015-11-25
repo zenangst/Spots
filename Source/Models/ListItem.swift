@@ -22,7 +22,7 @@ public struct ListItem: Mappable {
 
     size = CGSize(
       width:  ((map["size"] as? JSONDictionary)?["width"] as? Int) ?? 0,
-      height: ((map["size"] as? JSONDictionary)?["width"] as? Int) ?? 0
+      height: ((map["size"] as? JSONDictionary)?["height"] as? Int) ?? 0
     )
   }
 
