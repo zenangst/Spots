@@ -8,6 +8,28 @@
 
 /* Begin PBXBuildFile section */
 		8510A4F5A6A1DA7056A6080B /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47C20DD9DEFE20C747501850 /* Pods.framework */; };
+		BDC308501C05F8280091579D /* Componentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC308341C05F8280091579D /* Componentable.swift */; settings = {ASSET_TAGS = (); }; };
+		BDC308511C05F8280091579D /* Gridable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC308351C05F8280091579D /* Gridable.swift */; settings = {ASSET_TAGS = (); }; };
+		BDC308521C05F8280091579D /* Itemble.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC308361C05F8280091579D /* Itemble.swift */; settings = {ASSET_TAGS = (); }; };
+		BDC308531C05F8280091579D /* Listable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC308371C05F8280091579D /* Listable.swift */; settings = {ASSET_TAGS = (); }; };
+		BDC308541C05F8280091579D /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC308381C05F8280091579D /* Parser.swift */; settings = {ASSET_TAGS = (); }; };
+		BDC308551C05F8280091579D /* Spotable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC308391C05F8280091579D /* Spotable.swift */; settings = {ASSET_TAGS = (); }; };
+		BDC308561C05F8280091579D /* SpotFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC3083A1C05F8280091579D /* SpotFactory.swift */; settings = {ASSET_TAGS = (); }; };
+		BDC308571C05F8280091579D /* SpotsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC3083B1C05F8280091579D /* SpotsDelegate.swift */; settings = {ASSET_TAGS = (); }; };
+		BDC308581C05F8280091579D /* SpotSizeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC3083C1C05F8280091579D /* SpotSizeDelegate.swift */; settings = {ASSET_TAGS = (); }; };
+		BDC308591C05F8280091579D /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC3083E1C05F8280091579D /* Component.swift */; settings = {ASSET_TAGS = (); }; };
+		BDC3085A1C05F8280091579D /* ListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC3083F1C05F8280091579D /* ListItem.swift */; settings = {ASSET_TAGS = (); }; };
+		BDC3085B1C05F8280091579D /* CarouselSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC308421C05F8280091579D /* CarouselSpot.swift */; settings = {ASSET_TAGS = (); }; };
+		BDC3085C1C05F8280091579D /* CarouselSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC308431C05F8280091579D /* CarouselSpotCell.swift */; settings = {ASSET_TAGS = (); }; };
+		BDC3085D1C05F8280091579D /* FeedSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC308451C05F8280091579D /* FeedSpot.swift */; settings = {ASSET_TAGS = (); }; };
+		BDC3085E1C05F8280091579D /* FeedSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC308461C05F8280091579D /* FeedSpotCell.swift */; settings = {ASSET_TAGS = (); }; };
+		BDC3085F1C05F8280091579D /* GridSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC308481C05F8280091579D /* GridSpot.swift */; settings = {ASSET_TAGS = (); }; };
+		BDC308601C05F8280091579D /* GridSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC308491C05F8280091579D /* GridSpotCell.swift */; settings = {ASSET_TAGS = (); }; };
+		BDC308611C05F8280091579D /* ListSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC3084B1C05F8280091579D /* ListSpot.swift */; settings = {ASSET_TAGS = (); }; };
+		BDC308621C05F8280091579D /* ListSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC3084C1C05F8280091579D /* ListSpotCell.swift */; settings = {ASSET_TAGS = (); }; };
+		BDC308631C05F8280091579D /* SpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC3084E1C05F8280091579D /* SpotCell.swift */; settings = {ASSET_TAGS = (); }; };
+		BDC308641C05F8280091579D /* SpotsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC3084F1C05F8280091579D /* SpotsController.swift */; settings = {ASSET_TAGS = (); }; };
+		BDD6FA2C1C05EDDF007C442D /* TestSpotsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD6FA2B1C05EDDF007C442D /* TestSpotsController.swift */; settings = {ASSET_TAGS = (); }; };
 		BDFECC531C04EA7800049FE2 /* TestComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFECC521C04EA7800049FE2 /* TestComponent.swift */; settings = {ASSET_TAGS = (); }; };
 		BDFECC551C04F6B600049FE2 /* TestListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFECC541C04F6B600049FE2 /* TestListItem.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
@@ -21,6 +43,28 @@
 		14C136541AB784B200B7B07A /* LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = LICENSE.md; path = ../LICENSE.md; sourceTree = "<group>"; };
 		14C136551AB784B200B7B07A /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		47C20DD9DEFE20C747501850 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BDC308341C05F8280091579D /* Componentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Componentable.swift; sourceTree = "<group>"; };
+		BDC308351C05F8280091579D /* Gridable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gridable.swift; sourceTree = "<group>"; };
+		BDC308361C05F8280091579D /* Itemble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Itemble.swift; sourceTree = "<group>"; };
+		BDC308371C05F8280091579D /* Listable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Listable.swift; sourceTree = "<group>"; };
+		BDC308381C05F8280091579D /* Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
+		BDC308391C05F8280091579D /* Spotable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spotable.swift; sourceTree = "<group>"; };
+		BDC3083A1C05F8280091579D /* SpotFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotFactory.swift; sourceTree = "<group>"; };
+		BDC3083B1C05F8280091579D /* SpotsDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsDelegate.swift; sourceTree = "<group>"; };
+		BDC3083C1C05F8280091579D /* SpotSizeDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotSizeDelegate.swift; sourceTree = "<group>"; };
+		BDC3083E1C05F8280091579D /* Component.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
+		BDC3083F1C05F8280091579D /* ListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListItem.swift; sourceTree = "<group>"; };
+		BDC308421C05F8280091579D /* CarouselSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselSpot.swift; sourceTree = "<group>"; };
+		BDC308431C05F8280091579D /* CarouselSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselSpotCell.swift; sourceTree = "<group>"; };
+		BDC308451C05F8280091579D /* FeedSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedSpot.swift; sourceTree = "<group>"; };
+		BDC308461C05F8280091579D /* FeedSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedSpotCell.swift; sourceTree = "<group>"; };
+		BDC308481C05F8280091579D /* GridSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridSpot.swift; sourceTree = "<group>"; };
+		BDC308491C05F8280091579D /* GridSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridSpotCell.swift; sourceTree = "<group>"; };
+		BDC3084B1C05F8280091579D /* ListSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListSpot.swift; sourceTree = "<group>"; };
+		BDC3084C1C05F8280091579D /* ListSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListSpotCell.swift; sourceTree = "<group>"; };
+		BDC3084E1C05F8280091579D /* SpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotCell.swift; sourceTree = "<group>"; };
+		BDC3084F1C05F8280091579D /* SpotsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsController.swift; sourceTree = "<group>"; };
+		BDD6FA2B1C05EDDF007C442D /* TestSpotsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TestSpotsController.swift; path = Controllers/TestSpotsController.swift; sourceTree = "<group>"; };
 		BDFECC521C04EA7800049FE2 /* TestComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestComponent.swift; sourceTree = "<group>"; };
 		BDFECC541C04F6B600049FE2 /* TestListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestListItem.swift; sourceTree = "<group>"; };
 		DF3E6AE599FE50FEBFE8B94E /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -42,6 +86,7 @@
 		146D728A1AB782920058798C = {
 			isa = PBXGroup;
 			children = (
+				BDC308321C05F8280091579D /* Source */,
 				14C136501AB7849300B7B07A /* Metadata */,
 				146D72941AB782920058798C /* Products */,
 				146D72AF1AB782920058798C /* Tests */,
@@ -63,6 +108,7 @@
 		146D72AF1AB782920058798C /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				BDD6FA291C05EDC2007C442D /* Controllers */,
 				BDFECC511C04EA6600049FE2 /* Models */,
 				146D72B01AB782920058798C /* Supporting Files */,
 				14A139B21AEFC72B00AD732F /* Tests-Bridging-Header.h */,
@@ -104,6 +150,107 @@
 				47C20DD9DEFE20C747501850 /* Pods.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BDC308321C05F8280091579D /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				BDC308331C05F8280091579D /* Library */,
+				BDC3083D1C05F8280091579D /* Models */,
+				BDC308401C05F8280091579D /* Spots */,
+				BDC3084F1C05F8280091579D /* SpotsController.swift */,
+			);
+			name = Source;
+			path = ../Source;
+			sourceTree = "<group>";
+		};
+		BDC308331C05F8280091579D /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				BDC308341C05F8280091579D /* Componentable.swift */,
+				BDC308351C05F8280091579D /* Gridable.swift */,
+				BDC308361C05F8280091579D /* Itemble.swift */,
+				BDC308371C05F8280091579D /* Listable.swift */,
+				BDC308381C05F8280091579D /* Parser.swift */,
+				BDC308391C05F8280091579D /* Spotable.swift */,
+				BDC3083A1C05F8280091579D /* SpotFactory.swift */,
+				BDC3083B1C05F8280091579D /* SpotsDelegate.swift */,
+				BDC3083C1C05F8280091579D /* SpotSizeDelegate.swift */,
+			);
+			path = Library;
+			sourceTree = "<group>";
+		};
+		BDC3083D1C05F8280091579D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				BDC3083E1C05F8280091579D /* Component.swift */,
+				BDC3083F1C05F8280091579D /* ListItem.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		BDC308401C05F8280091579D /* Spots */ = {
+			isa = PBXGroup;
+			children = (
+				BDC308411C05F8280091579D /* Carousel */,
+				BDC308441C05F8280091579D /* Feed */,
+				BDC308471C05F8280091579D /* Grid */,
+				BDC3084A1C05F8280091579D /* List */,
+				BDC3084D1C05F8280091579D /* Spots */,
+			);
+			path = Spots;
+			sourceTree = "<group>";
+		};
+		BDC308411C05F8280091579D /* Carousel */ = {
+			isa = PBXGroup;
+			children = (
+				BDC308421C05F8280091579D /* CarouselSpot.swift */,
+				BDC308431C05F8280091579D /* CarouselSpotCell.swift */,
+			);
+			path = Carousel;
+			sourceTree = "<group>";
+		};
+		BDC308441C05F8280091579D /* Feed */ = {
+			isa = PBXGroup;
+			children = (
+				BDC308451C05F8280091579D /* FeedSpot.swift */,
+				BDC308461C05F8280091579D /* FeedSpotCell.swift */,
+			);
+			path = Feed;
+			sourceTree = "<group>";
+		};
+		BDC308471C05F8280091579D /* Grid */ = {
+			isa = PBXGroup;
+			children = (
+				BDC308481C05F8280091579D /* GridSpot.swift */,
+				BDC308491C05F8280091579D /* GridSpotCell.swift */,
+			);
+			path = Grid;
+			sourceTree = "<group>";
+		};
+		BDC3084A1C05F8280091579D /* List */ = {
+			isa = PBXGroup;
+			children = (
+				BDC3084B1C05F8280091579D /* ListSpot.swift */,
+				BDC3084C1C05F8280091579D /* ListSpotCell.swift */,
+			);
+			path = List;
+			sourceTree = "<group>";
+		};
+		BDC3084D1C05F8280091579D /* Spots */ = {
+			isa = PBXGroup;
+			children = (
+				BDC3084E1C05F8280091579D /* SpotCell.swift */,
+			);
+			path = Spots;
+			sourceTree = "<group>";
+		};
+		BDD6FA291C05EDC2007C442D /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				BDD6FA2B1C05EDDF007C442D /* TestSpotsController.swift */,
+			);
+			name = Controllers;
 			sourceTree = "<group>";
 		};
 		BDFECC511C04EA6600049FE2 /* Models */ = {
@@ -234,8 +381,30 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BDC308561C05F8280091579D /* SpotFactory.swift in Sources */,
+				BDC308521C05F8280091579D /* Itemble.swift in Sources */,
+				BDC308571C05F8280091579D /* SpotsDelegate.swift in Sources */,
+				BDC308621C05F8280091579D /* ListSpotCell.swift in Sources */,
 				BDFECC531C04EA7800049FE2 /* TestComponent.swift in Sources */,
+				BDC308641C05F8280091579D /* SpotsController.swift in Sources */,
+				BDC3085B1C05F8280091579D /* CarouselSpot.swift in Sources */,
+				BDC3085C1C05F8280091579D /* CarouselSpotCell.swift in Sources */,
+				BDC308501C05F8280091579D /* Componentable.swift in Sources */,
+				BDC308581C05F8280091579D /* SpotSizeDelegate.swift in Sources */,
+				BDC308611C05F8280091579D /* ListSpot.swift in Sources */,
+				BDC308591C05F8280091579D /* Component.swift in Sources */,
+				BDC308511C05F8280091579D /* Gridable.swift in Sources */,
+				BDC3085A1C05F8280091579D /* ListItem.swift in Sources */,
+				BDC3085F1C05F8280091579D /* GridSpot.swift in Sources */,
+				BDC308541C05F8280091579D /* Parser.swift in Sources */,
 				BDFECC551C04F6B600049FE2 /* TestListItem.swift in Sources */,
+				BDC3085E1C05F8280091579D /* FeedSpotCell.swift in Sources */,
+				BDC308631C05F8280091579D /* SpotCell.swift in Sources */,
+				BDD6FA2C1C05EDDF007C442D /* TestSpotsController.swift in Sources */,
+				BDC3085D1C05F8280091579D /* FeedSpot.swift in Sources */,
+				BDC308601C05F8280091579D /* GridSpotCell.swift in Sources */,
+				BDC308551C05F8280091579D /* Spotable.swift in Sources */,
+				BDC308531C05F8280091579D /* Listable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
