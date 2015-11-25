@@ -17,10 +17,11 @@ public extension Spotable where Self : Listable {
     if component.kind.isEmpty { component.kind = "list" }
 
     if !component.items.isEmpty {
-      for (index, item) in component.items.enumerate() {
-        sanitizeItems()
-        component.index = index
+      for (index, item) in component.items.enumerate() where !item.kind.isEmpty {
         let componentCellClass = T.cells[item.kind] ?? T.defaultCell
+
+        component.items[index].index = index
+
         if cellIsCached(component.items[index].kind) {
           cachedCells[item.kind]!.configure(&component.items[index])
         } else {
@@ -39,8 +40,9 @@ public extension Spotable where Self : Listable {
   
   private func cache<T: Spotable>(spot: T, identifier: String) -> Bool {
     if !cellIsCached(identifier) {
+      let reuseIdentifier = !identifier.isEmpty ? identifier : component.kind
       let cellClass = T.cells[identifier] ?? T.defaultCell
-      tableView.registerClass(cellClass, forCellReuseIdentifier: component.items[index].kind)
+      tableView.registerClass(cellClass, forCellReuseIdentifier: reuseIdentifier)
       
       if let cell = cellClass.init() as? Itemble {
         cachedCells[identifier] = cell
@@ -52,9 +54,6 @@ public extension Spotable where Self : Listable {
   }
 
   public func append(item: ListItem, completion: (() -> Void)? = nil) {
-    var item = item
-    if item.kind.isEmpty { item.kind = component.kind }
-
     component.items.append(item)
     cache(self, identifier: item.kind ?? component.kind)
 
@@ -77,8 +76,6 @@ public extension Spotable where Self : Listable {
     let count = component.items.count
 
     for (index, item) in items.enumerate() {
-      var item = item
-      if item.kind.isEmpty { item.kind = component.kind }
       component.items.append(item)
       cache(self, identifier: item.kind)
       indexPaths.append(NSIndexPath(forRow: count + index, inSection: 0))
@@ -99,8 +96,6 @@ public extension Spotable where Self : Listable {
     var indexPaths = [NSIndexPath]()
 
     for (index, item) in items.enumerate() {
-      var item = item
-      if item.kind.isEmpty { item.kind = component.kind }
       indexPaths.append(NSIndexPath(forRow: index, inSection: 0))
       component.items.insert(item, atIndex: index)
       cache(self, identifier: item.kind)

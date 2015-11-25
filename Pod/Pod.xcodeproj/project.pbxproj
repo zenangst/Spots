@@ -32,6 +32,7 @@
 		BDD6FA2C1C05EDDF007C442D /* TestSpotsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD6FA2B1C05EDDF007C442D /* TestSpotsController.swift */; settings = {ASSET_TAGS = (); }; };
 		BDFECC531C04EA7800049FE2 /* TestComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFECC521C04EA7800049FE2 /* TestComponent.swift */; settings = {ASSET_TAGS = (); }; };
 		BDFECC551C04F6B600049FE2 /* TestListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFECC541C04F6B600049FE2 /* TestListItem.swift */; settings = {ASSET_TAGS = (); }; };
+		D5BD1E4C1C06104200582666 /* TestSpotFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BD1E4B1C06104200582666 /* TestSpotFactory.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -67,6 +68,7 @@
 		BDD6FA2B1C05EDDF007C442D /* TestSpotsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TestSpotsController.swift; path = Controllers/TestSpotsController.swift; sourceTree = "<group>"; };
 		BDFECC521C04EA7800049FE2 /* TestComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestComponent.swift; sourceTree = "<group>"; };
 		BDFECC541C04F6B600049FE2 /* TestListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestListItem.swift; sourceTree = "<group>"; };
+		D5BD1E4B1C06104200582666 /* TestSpotFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSpotFactory.swift; sourceTree = "<group>"; };
 		DF3E6AE599FE50FEBFE8B94E /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		E1CCFD12E9084BA90CE6766D /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -108,6 +110,7 @@
 		146D72AF1AB782920058798C /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				D5BD1E4A1C06103400582666 /* Library */,
 				BDD6FA291C05EDC2007C442D /* Controllers */,
 				BDFECC511C04EA6600049FE2 /* Models */,
 				146D72B01AB782920058798C /* Supporting Files */,
@@ -262,6 +265,14 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		D5BD1E4A1C06103400582666 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				D5BD1E4B1C06104200582666 /* TestSpotFactory.swift */,
+			);
+			path = Library;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -392,6 +403,7 @@
 				BDC308501C05F8280091579D /* Componentable.swift in Sources */,
 				BDC308581C05F8280091579D /* SpotSizeDelegate.swift in Sources */,
 				BDC308611C05F8280091579D /* ListSpot.swift in Sources */,
+				D5BD1E4C1C06104200582666 /* TestSpotFactory.swift in Sources */,
 				BDC308591C05F8280091579D /* Component.swift in Sources */,
 				BDC308511C05F8280091579D /* Gridable.swift in Sources */,
 				BDC3085A1C05F8280091579D /* ListItem.swift in Sources */,
