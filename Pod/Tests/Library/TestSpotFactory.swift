@@ -3,7 +3,7 @@ import XCTest
 
 class SpotFactoryTests : XCTestCase {
 
-  var json: [String : AnyObject] = [
+  let json: [String : AnyObject] = [
     "title" : "title1",
     "type" : "merry-go-round",
     "span" : 1,
@@ -28,9 +28,10 @@ class SpotFactoryTests : XCTestCase {
   }
 
   func testDefaultResolve() {
-    json["type"] = "weirdo"
+    var newJson = json
+    newJson["type"] = "weirdo"
 
-    let component = Component(json)
+    let component = Component(newJson)
     let spot = SpotFactory.resolve(component)
 
     XCTAssertTrue(spot.component == component)
