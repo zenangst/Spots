@@ -46,11 +46,14 @@ public extension Spotable where Self : Listable {
   }
 
   public func append(item: ListItem, completion: (() -> Void)? = nil) {
-    cache(self, identifier: item.kind)
+    var item = item
+    if item.kind.isEmpty { item.kind = component.kind }
+
+    component.items.append(item)
+    cache(self, identifier: item.kind ?? component.kind)
 
     var indexPaths = [NSIndexPath]()
     indexPaths.append(NSIndexPath(forRow: component.items.count, inSection: 0))
-    component.items.append(item)
 
     dispatch { [weak self] in
       guard let weakSelf = self else { return }
@@ -68,9 +71,11 @@ public extension Spotable where Self : Listable {
     let count = component.items.count
 
     for (index, item) in items.enumerate() {
+      var item = item
+      if item.kind.isEmpty { item.kind = component.kind }
+      component.items.append(item)
       cache(self, identifier: item.kind)
       indexPaths.append(NSIndexPath(forRow: count + index, inSection: 0))
-      component.items.append(item)
     }
 
     dispatch { [weak self] in
@@ -88,9 +93,11 @@ public extension Spotable where Self : Listable {
     var indexPaths = [NSIndexPath]()
 
     for (index, item) in items.enumerate() {
-      cache(self, identifier: item.kind)
+      var item = item
+      if item.kind.isEmpty { item.kind = component.kind }
       indexPaths.append(NSIndexPath(forRow: index, inSection: 0))
       component.items.insert(item, atIndex: index)
+      cache(self, identifier: item.kind)
     }
 
     dispatch { [weak self] in
