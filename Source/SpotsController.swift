@@ -200,32 +200,4 @@ extension SpotsController: SpotSizeDelegate {
   public func sizeDidUpdate() {
     collectionView.collectionViewLayout.invalidateLayout()
   }
-
-  public func scrollToPreviousCell(component: Component) {
-    for (index, spot) in spots.enumerate() {
-      if spot.component == component {
-        UIView.animateWithDuration(0.5, delay: 0.0, options: [.AllowUserInteraction, .BeginFromCurrentState], animations: {
-          let prevIndex = index - 1
-          if prevIndex >= 0 {
-            self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: prevIndex, inSection: 0), atScrollPosition: UICollectionViewScrollPosition.CenteredVertically, animated: false)
-          }
-        }, completion: nil)
-        break
-      }
-    }
-  }
-
-  public func scrollToNextCell(component: Component) {
-    for (index, spot) in spots.enumerate() {
-      if spot.component == component {
-        UIView.animateWithDuration(0.5, delay: 0.0, options: [.AllowUserInteraction, .BeginFromCurrentState], animations: {
-          let nextIndex = index + 1
-          if nextIndex < self.spots.count {
-            self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: nextIndex, inSection: 0), atScrollPosition: UICollectionViewScrollPosition.CenteredVertically, animated: false)
-          }
-          }, completion: nil)
-        break
-      }
-    }
-  }
 }
