@@ -6,7 +6,9 @@ import Spots
 
 class GridSpotCard : UICollectionViewCell, Itemble {
 
-  var size = CGSize(width: 325, height: 430)
+  var size = CGSize(
+    width: 325,
+    height: ceil(UIScreen.mainScreen().bounds.height / 1.4))
 
   lazy var canvasView: UIView = {
     let view = UIView()
@@ -100,10 +102,10 @@ class GridSpotCard : UICollectionViewCell, Itemble {
       x: 0,
       y: 10,
       width: frame.width - 25,
-      height: 420)
+      height: frame.height - 25)
 
     item.size.width = canvasView.frame.width
-    item.size.height = 430
+    item.size.height = frame.height
   }
 
   override func layoutSubviews() {
