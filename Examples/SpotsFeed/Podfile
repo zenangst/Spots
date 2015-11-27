@@ -11,3 +11,5 @@ pod 'Hex'
 pod 'Spots', path: '../../'
 pod 'Sugar', git: 'https://github.com/hyperoslo/Sugar'
 pod 'Tailor', git: 'https://github.com/zenangst/Tailor'
+pod 'SDWebImage'
+pod "Fakery"
