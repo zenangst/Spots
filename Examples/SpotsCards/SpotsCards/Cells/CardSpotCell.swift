@@ -101,8 +101,8 @@ class CardSpotCell : UICollectionViewCell, Itemble {
     canvasView.frame = CGRect(
       x: 0,
       y: 10,
-      width: frame.width - 25,
-      height: frame.height - 25)
+      width: frame.width - CardSpot.padding,
+      height: frame.height - CardSpot.padding)
 
     item.size.width = canvasView.frame.width
     item.size.height = frame.height
