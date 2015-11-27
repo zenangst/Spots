@@ -99,9 +99,10 @@ class GridSpotCard : UICollectionViewCell, Itemble {
     canvasView.frame = CGRect(
       x: 0,
       y: 10,
-      width: 325,
+      width: frame.width - 25,
       height: 420)
 
+    item.size.width = canvasView.frame.width
     item.size.height = 430
   }
 
