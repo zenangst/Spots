@@ -13,7 +13,7 @@
 		BD4BCD2B1BDE0F5A00466C0F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BD4BCD291BDE0F5A00466C0F /* LaunchScreen.storyboard */; };
 		BD4BCD621BDE0F9800466C0F /* components.json in Resources */ = {isa = PBXBuildFile; fileRef = BD4BCD611BDE0F9800466C0F /* components.json */; };
 		BD4BCD641BDE101100466C0F /* JSONController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4BCD631BDE101100466C0F /* JSONController.swift */; };
-		BD4BCD671BDE106D00466C0F /* GridSpotCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4BCD661BDE106D00466C0F /* GridSpotCard.swift */; };
+		BD4BCD671BDE106D00466C0F /* CardSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4BCD661BDE106D00466C0F /* CardSpotCell.swift */; };
 		BD8C6EA61BF2458D00B35D3D /* CardSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8C6EA51BF2458D00B35D3D /* CardSpot.swift */; };
 /* End PBXBuildFile section */
 
@@ -28,7 +28,7 @@
 		BD4BCD2C1BDE0F5A00466C0F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BD4BCD611BDE0F9800466C0F /* components.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = components.json; sourceTree = "<group>"; };
 		BD4BCD631BDE101100466C0F /* JSONController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONController.swift; sourceTree = "<group>"; };
-		BD4BCD661BDE106D00466C0F /* GridSpotCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridSpotCard.swift; sourceTree = "<group>"; };
+		BD4BCD661BDE106D00466C0F /* CardSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardSpotCell.swift; sourceTree = "<group>"; };
 		BD8C6EA51BF2458D00B35D3D /* CardSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardSpot.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -89,7 +89,7 @@
 		BD4BCD651BDE105400466C0F /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				BD4BCD661BDE106D00466C0F /* GridSpotCard.swift */,
+				BD4BCD661BDE106D00466C0F /* CardSpotCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -231,7 +231,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BD4BCD671BDE106D00466C0F /* GridSpotCard.swift in Sources */,
+				BD4BCD671BDE106D00466C0F /* CardSpotCell.swift in Sources */,
 				BD4BCD641BDE101100466C0F /* JSONController.swift in Sources */,
 				BD4BCD211BDE0F5A00466C0F /* AppDelegate.swift in Sources */,
 				BD8C6EA61BF2458D00B35D3D /* CardSpot.swift in Sources */,

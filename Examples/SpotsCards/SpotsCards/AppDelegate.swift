@@ -11,7 +11,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     window = UIWindow(frame: UIScreen.mainScreen().bounds)
 
     SpotFactory.register("cards", spot: CardSpot.self)
-    CarouselSpot.cells["card"] = GridSpotCard.self
+    CarouselSpot.cells["card"] = CardSpotCell.self
 
     CarouselSpot.configure = { collectionView in
       collectionView.backgroundColor = UIColor(red:0.110, green:0.110, blue:0.110, alpha: 1)

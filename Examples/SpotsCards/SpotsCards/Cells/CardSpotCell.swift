@@ -4,7 +4,7 @@ import Sugar
 import Hex
 import Spots
 
-class GridSpotCard : UICollectionViewCell, Itemble {
+class CardSpotCell : UICollectionViewCell, Itemble {
 
   var size = CGSize(
     width: 325,
