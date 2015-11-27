@@ -1,5 +1,4 @@
 import UIKit
-import Hex
 
 public class GridSpot: NSObject, Spotable, Gridable {
 
@@ -38,9 +37,6 @@ public class GridSpot: NSObject, Spotable, Gridable {
     super.init()
 
     prepareSpot(self)
-
-    collectionView.backgroundColor = UIColor(hex:
-      component.meta.property("background-color") ?? "FFFFFF")
   }
 
   public convenience init(_ component: Component, top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0, itemSpacing: CGFloat = 0) {
