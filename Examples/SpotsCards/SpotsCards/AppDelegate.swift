@@ -13,6 +13,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     SpotFactory.register("cards", spot: CardSpot.self)
     CarouselSpot.cells["card"] = GridSpotCard.self
 
+    CarouselSpot.configure = { collectionView in
+      collectionView.backgroundColor = UIColor(red:0.110, green:0.110, blue:0.110, alpha: 1)
+    }
+
     let controller = JSONController()
 
     controller.title = "Spots Cards".uppercaseString
