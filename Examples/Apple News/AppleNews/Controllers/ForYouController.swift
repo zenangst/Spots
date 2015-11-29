@@ -47,7 +47,7 @@ class ForYouController: SpotsController, SpotsDelegate {
   func spotDidSelectItem(spot: Spotable, item: ListItem) { }
 
   static func generateItem(index: Int, kind: String = "feed") -> ListItem {
-    let sencenceCount = Int(arc4random_uniform(4) + 1)
+    let sencenceCount = Int(arc4random_uniform(4) + 2)
 
     let item = ListItem(title: faker.lorem.sentences(amount: sencenceCount),
       subtitle: faker.lorem.sentences(amount: 1),
