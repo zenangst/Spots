@@ -24,6 +24,7 @@ public class ListHeaderView: UIView, Componentable {
 
   public override init(frame: CGRect) {
     super.init(frame: frame)
+    addSubview(label)
   }
 
   public required init?(coder aDecoder: NSCoder) {
@@ -35,7 +36,5 @@ public class ListHeaderView: UIView, Componentable {
 
     label.attributedText = NSAttributedString(string: component.title.uppercaseString,
       attributes: [NSParagraphStyleAttributeName : paddedStyle])
-    addSubview(label)
   }
-
 }
