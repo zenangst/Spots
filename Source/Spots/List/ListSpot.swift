@@ -12,7 +12,6 @@ public class ListSpot: NSObject, Spotable, Listable {
 
   public let itemHeight: CGFloat = 44
 
-  public var cachedCells = [String : Itemble]()
   public var cachedHeaders = [String : Componentable]()
   public var component: Component
   public var headerHeight: CGFloat = 44
@@ -54,8 +53,6 @@ public class ListSpot: NSObject, Spotable, Listable {
         headerHeight = configurable.height
       }
     }
-
-    cachedCells.removeAll()
   }
 
   public convenience init(title: String, kind: String = "list") {
@@ -129,8 +126,7 @@ extension ListSpot: UITableViewDataSource {
 
   public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     let reuseIdentifier = !item(indexPath).kind.isEmpty ? item(indexPath).kind : component.kind
-    let cell: UITableViewCell? = cachedCells[reuseIdentifier] as? UITableViewCell
-      ?? tableView.dequeueReusableCellWithIdentifier(reuseIdentifier, forIndexPath: indexPath)
+    let cell: UITableViewCell? = tableView.dequeueReusableCellWithIdentifier(reuseIdentifier, forIndexPath: indexPath)
 
     cell?.optimize()
 
