@@ -13,14 +13,13 @@ public class ListSpot: NSObject, Spotable, Listable {
   public let itemHeight: CGFloat = 44
 
   public var cachedCells = [String : Itemble]()
+  public var cachedHeaders = [String : Componentable]()
   public var component: Component
   public var headerHeight: CGFloat = 44
   public var index = 0
 
   public weak var sizeDelegate: SpotSizeDelegate?
   public weak var spotDelegate: SpotsDelegate?
-
-  private var cachedHeaders = [String : Componentable]()
 
   public lazy var tableView: UITableView = { [unowned self] in
     let tableView = UITableView()
