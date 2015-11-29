@@ -16,29 +16,13 @@ public extension Spotable where Self : Listable {
   public func prepareSpot<T: Spotable>(spot: T) {
     if component.kind.isEmpty { component.kind = "list" }
 
-    if !component.items.isEmpty {
-      for (index, item) in component.items.enumerate() {
-        let reuseIdentifer = item.kind.isEmpty ? component.kind : item.kind
-        let componentCellClass = T.cells[reuseIdentifer] ?? T.defaultCell
-
-        component.items[index].index = index
-
-        if cellIsCached(component.items[index].kind) {
-          cachedCells[reuseIdentifer]!.configure(&component.items[index])
-        } else {
-          tableView.registerClass(componentCellClass, forCellReuseIdentifier: reuseIdentifer)
-          if let cell = componentCellClass.init() as? Itemble {
-            cell.configure(&component.items[index])
-            cachedCells[reuseIdentifer] = cell
-          }
-        }
-      }
-    } else {
-      let componentCellClass = T.cells[component.kind] ?? T.defaultCell
-      tableView.registerClass(componentCellClass, forCellReuseIdentifier: component.kind)
+    for (reuseIdentifier, classType) in T.cells {
+      tableView.registerClass(classType, forCellReuseIdentifier: reuseIdentifier)
     }
-  }
-  
+
+    if !T.cells.keys.contains(component.kind) {
+      tableView.registerClass(T.defaultCell, forCellReuseIdentifier: component.kind)
+    }
 
     for (index, item) in component.items.enumerate() {
       let reuseIdentifer = item.kind.isEmpty ? component.kind : item.kind
@@ -81,9 +65,13 @@ public extension Spotable where Self : Listable {
     dispatch { [weak self] in
       guard let weakSelf = self else { return }
 
-      weakSelf.tableView.beginUpdates()
-      weakSelf.tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .None)
-      weakSelf.tableView.endUpdates()
+      if count > 0 {
+        weakSelf.tableView.beginUpdates()
+        weakSelf.tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .None)
+        weakSelf.tableView.endUpdates()
+      } else {
+        weakSelf.tableView.reloadData()
+      }
 
       completion?()
     }

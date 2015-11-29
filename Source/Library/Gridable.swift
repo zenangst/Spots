@@ -17,23 +17,23 @@ public extension Spotable where Self : Gridable {
   public func prepareSpot<T: Spotable>(spot: T) {
     if component.kind.isEmpty { component.kind = "grid" }
 
-    if !component.items.isEmpty {
-      for (index, item) in component.items.enumerate() {
-        let reuseIdentifer = item.kind.isEmpty ? component.kind : item.kind
-        let cellClass = T.cells[reuseIdentifer] ?? T.defaultCell
+    for (reuseIdentifier, classType) in T.cells {
+      collectionView.registerClass(classType, forCellWithReuseIdentifier: reuseIdentifier)
+    }
 
-        component.items[index].index = index
-        collectionView.registerClass(cellClass, forCellWithReuseIdentifier: reuseIdentifer)
+    if !T.cells.keys.contains(component.kind) {
+      collectionView.registerClass(T.defaultCell, forCellWithReuseIdentifier: component.kind)
+    }
 
-        if let cell = cellClass.init() as? Itemble {
-          component.items[index].size.width = collectionView.frame.width / CGFloat(component.span)
-          component.items[index].size.height = cell.size.height
-        }
+    for (index, item) in component.items.enumerate() {
+      let reuseIdentifer = item.kind.isEmpty ? component.kind : item.kind
+      let componentCellClass = T.cells[reuseIdentifer] ?? T.defaultCell
+
+      component.items[index].index = index
+
+      if let cell = componentCellClass.init() as? Itemble {
+        cell.configure(&component.items[index])
       }
-    } else {
-      let cellClass = T.cells[component.kind] ?? T.defaultCell
-      collectionView.registerClass(cellClass,
-        forCellWithReuseIdentifier: component.kind)
     }
   }
 
