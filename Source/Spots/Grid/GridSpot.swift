@@ -15,9 +15,6 @@ public class GridSpot: NSObject, Spotable, Gridable {
 
   public lazy var layout: UICollectionViewFlowLayout = { [unowned self] in
     let layout = UICollectionViewFlowLayout()
-    layout.minimumLineSpacing = 0
-    layout.minimumInteritemSpacing = 0
-    layout.sectionInset = UIEdgeInsetsZero
 
     return layout
     }()
