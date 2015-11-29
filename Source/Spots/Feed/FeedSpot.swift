@@ -114,9 +114,10 @@ extension FeedSpot: UITableViewDelegate {
   }
 
   public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-    var height = component.items.reduce(0, combine: { $0 + $1.size.height })
-
-    if !component.title.isEmpty { height += headerHeight }
+    if let spotsController = sizeDelegate as? SpotsController {
+      tableView.contentInset.top = spotsController.layout.sectionInset.top
+      tableView.contentInset.bottom = spotsController.layout.sectionInset.bottom
+    }
 
     component.size = CGSize(
       width: tableView.frame.width,
