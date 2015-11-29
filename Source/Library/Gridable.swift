@@ -1,6 +1,7 @@
 import UIKit
 
 public protocol Gridable: Spotable {
+  var layout: UICollectionViewFlowLayout { get }
   var collectionView: UICollectionView { get }
 }
 
