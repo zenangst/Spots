@@ -39,24 +39,21 @@ public extension Spotable where Self : Listable {
     }
   }
   
-  private func cache<T: Spotable>(spot: T, identifier: String) -> Bool {
-    if !cellIsCached(identifier) {
-      let reuseIdentifier = !identifier.isEmpty ? identifier : component.kind
-      let cellClass = T.cells[identifier] ?? T.defaultCell
-      tableView.registerClass(cellClass, forCellReuseIdentifier: reuseIdentifier)
-      
-      if let cell = cellClass.init() as? Itemble {
-        cachedCells[identifier] = cell
+
+    for (index, item) in component.items.enumerate() {
+      let reuseIdentifer = item.kind.isEmpty ? component.kind : item.kind
+      let componentCellClass = T.cells[reuseIdentifer] ?? T.defaultCell
+
+      component.items[index].index = index
+
+      if let cell = componentCellClass.init() as? Itemble {
+        cell.configure(&component.items[index])
       }
-      return false
-    } else {
-      return true
     }
   }
 
   public func append(item: ListItem, completion: (() -> Void)? = nil) {
     component.items.append(item)
-    cache(self, identifier: item.kind ?? component.kind)
 
     var indexPaths = [NSIndexPath]()
     indexPaths.append(NSIndexPath(forRow: component.items.count, inSection: 0))
@@ -78,7 +75,6 @@ public extension Spotable where Self : Listable {
 
     for (index, item) in items.enumerate() {
       component.items.append(item)
-      cache(self, identifier: item.kind)
       indexPaths.append(NSIndexPath(forRow: count + index, inSection: 0))
     }
 
@@ -99,7 +95,6 @@ public extension Spotable where Self : Listable {
     for (index, item) in items.enumerate() {
       indexPaths.append(NSIndexPath(forRow: index, inSection: 0))
       component.items.insert(item, atIndex: index)
-      cache(self, identifier: item.kind)
     }
 
     dispatch { [weak self] in
