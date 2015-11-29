@@ -106,27 +106,27 @@ public class SpotsController: UIViewController {
     }
   }
 
-  public func append(item: ListItem, spotIndex: Int, completion: (() -> Void)? = nil) {
+  public func append(item: ListItem, spotIndex: Int = 0, completion: (() -> Void)? = nil) {
     spotAtIndex(spotIndex)?.append(item) { completion?() }
   }
   
-  public func append(items: [ListItem], spotIndex: Int, completion: (() -> Void)? = nil) {
+  public func append(items: [ListItem], spotIndex: Int = 0, completion: (() -> Void)? = nil) {
     spotAtIndex(spotIndex)?.append(items) { completion?() }
   }
   
-  public func prepend(items: [ListItem], spotIndex: Int, completion: (() -> Void)? = nil) {
+  public func prepend(items: [ListItem], spotIndex: Int = 0, completion: (() -> Void)? = nil) {
     spotAtIndex(spotIndex)?.prepend(items)  { completion?() }
   }
 
-  public func insert(item: ListItem, index: Int, spotIndex: Int, completion: (() -> Void)? = nil) {
+  public func insert(item: ListItem, index: Int = 0, spotIndex: Int, completion: (() -> Void)? = nil) {
     spotAtIndex(spotIndex)?.insert(item, index: index)  { completion?() }
   }
 
-  public func update(item: ListItem, index: Int, spotIndex: Int, completion: (() -> Void)? = nil) {
+  public func update(item: ListItem, index: Int = 0, spotIndex: Int, completion: (() -> Void)? = nil) {
     spotAtIndex(spotIndex)?.update(item, index: index)  { completion?() }
   }
 
-  public func delete(index: Int, spotIndex: Int, completion: (() -> Void)? = nil) {
+  public func delete(index: Int, spotIndex: Int = 0, completion: (() -> Void)? = nil) {
     spotAtIndex(spotIndex)?.delete(index) { completion?() }
   }
 
