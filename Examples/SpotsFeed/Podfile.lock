@@ -1,19 +1,27 @@
 PODS:
   - Compass (1.1.0)
+  - Fakery (1.1.0):
+    - SwiftyJSON
   - GoldenRetriever (0.1.1)
   - Hex (3.0.0)
+  - SDWebImage (3.7.3):
+    - SDWebImage/Core (= 3.7.3)
+  - SDWebImage/Core (3.7.3)
   - Spots (0.1.0):
     - GoldenRetriever
     - Sugar
     - Tailor
   - Sugar (0.1.0)
+  - SwiftyJSON (2.3.1)
   - Tailor (0.2.0):
     - Sugar
 
 DEPENDENCIES:
   - Compass (from `https://github.com/hyperoslo/compass`)
+  - Fakery
   - GoldenRetriever (from `https://github.com/zenangst/GoldenRetriever`)
   - Hex
+  - SDWebImage
   - Spots (from `../../`)
   - Sugar (from `https://github.com/hyperoslo/Sugar`)
   - Tailor (from `https://github.com/zenangst/Tailor`)
@@ -46,10 +54,13 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Compass: 884465fe6cd5f809a4e6640f7933de31331e0d38
+  Fakery: 593389814fb7c42fe7f0801e76c8ae55b95505e7
   GoldenRetriever: 68256f443f35eaeb90b58e2f64bc8f5b255738ba
   Hex: ee430da9c4412d9196366ae5327f279021dc03eb
+  SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
   Spots: defa9f77e864c4fbcdd834dfed9e37f1c2682480
   Sugar: d33f2a3ae10e40c14eb49a2e859f12e82e614817
+  SwiftyJSON: 592b53bee5ef3dd9b3bebc6b9cb7ee35426ae8c3
   Tailor: acba14dba2fb854cdf2550c1a3dfd603f6b59dbc
 
 COCOAPODS: 0.39.0

@@ -4,9 +4,11 @@ import Sugar
 import Hex
 import Spots
 
-class GridSpotCard : UICollectionViewCell, Itemble {
+class CardSpotCell : UICollectionViewCell, Itemble {
 
-  var size = CGSize(width: 325, height: 430)
+  var size = CGSize(
+    width: 325,
+    height: ceil(UIScreen.mainScreen().bounds.height / 1.4))
 
   lazy var canvasView: UIView = {
     let view = UIView()
@@ -99,10 +101,11 @@ class GridSpotCard : UICollectionViewCell, Itemble {
     canvasView.frame = CGRect(
       x: 0,
       y: 10,
-      width: 325,
-      height: 420)
+      width: frame.width - CardSpot.padding,
+      height: frame.height - CardSpot.padding)
 
-    item.size.height = 430
+    item.size.width = canvasView.frame.width
+    item.size.height = frame.height
   }
 
   override func layoutSubviews() {

@@ -2,7 +2,6 @@ import UIKit
 import GoldenRetriever
 import Sugar
 import Tailor
-import Hex
 import Spots
 
 class GridTopicCell: UICollectionViewCell, Itemble {
@@ -86,8 +85,6 @@ class GridTopicCell: UICollectionViewCell, Itemble {
         }
       }
     }
-  
-    contentView.backgroundColor = UIColor(hex: item.meta.property("background-color") ?? "EEEEEE")
 
     label.attributedText = NSAttributedString(string: item.title,
       attributes: [NSParagraphStyleAttributeName : paddedStyle])

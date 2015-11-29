@@ -17,18 +17,19 @@ public extension Spotable where Self : Listable {
     if component.kind.isEmpty { component.kind = "list" }
 
     if !component.items.isEmpty {
-      for (index, item) in component.items.enumerate() where !item.kind.isEmpty {
-        let componentCellClass = T.cells[item.kind] ?? T.defaultCell
+      for (index, item) in component.items.enumerate() {
+        let reuseIdentifer = item.kind.isEmpty ? component.kind : item.kind
+        let componentCellClass = T.cells[reuseIdentifer] ?? T.defaultCell
 
         component.items[index].index = index
 
         if cellIsCached(component.items[index].kind) {
-          cachedCells[item.kind]!.configure(&component.items[index])
+          cachedCells[reuseIdentifer]!.configure(&component.items[index])
         } else {
-          tableView.registerClass(componentCellClass, forCellReuseIdentifier: component.items[index].kind)
+          tableView.registerClass(componentCellClass, forCellReuseIdentifier: reuseIdentifer)
           if let cell = componentCellClass.init() as? Itemble {
             cell.configure(&component.items[index])
-            cachedCells[item.kind] = cell
+            cachedCells[reuseIdentifer] = cell
           }
         }
       }

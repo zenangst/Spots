@@ -44,13 +44,14 @@ public class ListSpot: NSObject, Spotable, Listable {
 
     prepareSpot(self)
 
-    if let headerType = ListSpot.headers[component.kind] {
+    let reuseIdentifer = component.kind.isEmpty ? "list" : component.kind
+    if let headerType = ListSpot.headers[reuseIdentifer] {
       let header = headerType.init(frame: CGRect(x: 0, y: 0,
         width: UIScreen.mainScreen().bounds.width, height: headerHeight))
 
       if let configurable = header as? Componentable {
         configurable.configure(component)
-        cachedHeaders[component.kind] = configurable
+        cachedHeaders[reuseIdentifer] = configurable
         headerHeight = configurable.height
       }
     }
@@ -115,10 +116,11 @@ extension ListSpot: UITableViewDataSource {
   }
 
   public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-    if let cachedHeader = cachedHeaders[component.kind] {
+    let reuseIdentifer = component.kind.isEmpty ? "list" : component.kind
+    if let cachedHeader = cachedHeaders[reuseIdentifer] {
       cachedHeader.configure(component)
       return cachedHeader as? UIView
-    } else if let header = ListSpot.headers[component.kind] {
+    } else if let header = ListSpot.headers[reuseIdentifer] {
       let header = header.init(frame: CGRect(x: 0, y: 0, width: tableView.bounds.width, height: headerHeight))
       return header
     }

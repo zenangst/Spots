@@ -137,12 +137,11 @@ extension FeedSpot: UITableViewDataSource {
     component.items[indexPath.item].index = indexPath.row
 
     let reuseIdentifier = !item(indexPath).kind.isEmpty ? item(indexPath).kind : component.kind
-    let cell: UITableViewCell? = cachedCells[reuseIdentifier] as? UITableViewCell
-      ?? tableView.dequeueReusableCellWithIdentifier(reuseIdentifier, forIndexPath: indexPath)
-    cell?.optimize()
+    let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier(reuseIdentifier, forIndexPath: indexPath)
+    cell.optimize()
 
     (cell as? Itemble)?.configure(&component.items[indexPath.item])
 
-    return cell!
+    return cell
   }
 }

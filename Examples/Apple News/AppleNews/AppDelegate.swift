@@ -1,9 +1,11 @@
 import UIKit
 import Spots
+import Fakery
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+  var faker = Faker()
   var window: UIWindow?
   var navigationController: UINavigationController?
 
@@ -14,29 +16,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     ListSpot.configure = { tableView in
       tableView.tableFooterView = UIView(frame: CGRect.zero)
     }
-
     CarouselSpot.cells["topic"] = GridTopicCell.self
 
     let suggestedChannels = Component(span: 3, items: [
-      ListItem(title: "Apple", kind: "topic", image: "http://lorempixel.com/125/160/?type=attachment&id=1"),
-      ListItem(title: "Spotify", kind: "topic",image: "http://lorempixel.com/125/160/?type=attachment&id=2"),
-      ListItem(title: "Google", kind: "topic", image: "http://lorempixel.com/125/160/?type=attachment&id=3")
+      ListItem(title: "Apple",   kind: "topic", image: suggestedImage(1)),
+      ListItem(title: "Spotify", kind: "topic", image: suggestedImage(2)),
+      ListItem(title: "Google",  kind: "topic", image: suggestedImage(3))
       ])
 
     let suggestedTopics = Component(span: 3, items: [
-      ListItem(title: "Business", kind: "topic", meta: ["background-color" : "5A0E20"]),
-      ListItem(title: "Software", kind: "topic", meta: ["background-color" : "760D26"]),
-      ListItem(title: "News", kind: "topic", meta: ["background-color" : "2266B5"]),
-      ListItem(title: "iOS", kind: "topic", meta: ["background-color" : "4CBCFB"])
+      ListItem(title: "Business", kind: "topic", image: topicImage("5A0E20", id: 1)),
+      ListItem(title: "Software", kind: "topic", image: topicImage("760D26", id: 2)),
+      ListItem(title: "News",     kind: "topic", image: topicImage("2266B5", id: 3)),
+      ListItem(title: "iOS",      kind: "topic", image: topicImage("4CBCFB", id: 4))
       ])
 
-    let suggestedChannelSpot = CarouselSpot(suggestedChannels,
-      top: 5, left: 15, bottom: 5, right: 15, itemSpacing: 15)
-    let suggestedTopicsSpot = CarouselSpot(suggestedTopics,
-      top: 5, left: 15, bottom: 5, right: 15, itemSpacing: 15)
-
-    var browse = Component(title: "Browse", kind: "list")
-    browse.items = [
+    let browse = Component(title: "Browse", items: [
       ListItem(title: "News"),
       ListItem(title: "Business"),
       ListItem(title: "Politics"),
@@ -46,17 +41,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       ListItem(title: "Science"),
       ListItem(title: "Entertainment"),
       ListItem(title: "Food")
-      ]
+      ])
 
     let components: [Spotable] = [
       TitleSpot(title: "Suggested Channels"),
-      suggestedChannelSpot,
+      CarouselSpot(suggestedChannels,
+        top: 5, left: 15, bottom: 5, right: 15, itemSpacing: 15),
       TitleSpot(title: "Suggested Topics"),
-      suggestedTopicsSpot,
+      CarouselSpot(suggestedTopics,
+        top: 5, left: 15, bottom: 5, right: 15, itemSpacing: 15),
       ListSpot(component: browse)
     ]
 
-    let controller = SpotsController(spots: components)
+    let controller = SpotsController(spots: components, refreshable: false)
     controller.title = "Explore"
     navigationController = UINavigationController(rootViewController: controller)
 
@@ -64,6 +61,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     window?.makeKeyAndVisible()
 
     return true
+  }
+
+  func suggestedImage(id: Int) -> String {
+    return faker.internet.image(width: 125, height: 160) + "?item=\(id)"
+  }
+
+  func topicImage(hex: String, id: Int) -> String {
+    return faker.internet.templateImage(width: 125, height: 160, backColorHex: hex, frontColorHex: hex) + "?item=\(id)"
   }
 }
 
