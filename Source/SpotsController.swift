@@ -8,7 +8,7 @@ public class SpotsController: UIViewController {
   
   weak public var spotDelegate: SpotsDelegate?
 
-  lazy var layout: UICollectionViewLayout = {
+  public lazy var layout: UICollectionViewFlowLayout = {
     let layout = UICollectionViewFlowLayout()
     layout.minimumInteritemSpacing = 0
     layout.minimumLineSpacing = 0
