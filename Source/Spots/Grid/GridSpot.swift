@@ -41,6 +41,8 @@ public class GridSpot: NSObject, Spotable, Gridable {
 
     layout.sectionInset = UIEdgeInsetsMake(top, left, bottom, right)
     layout.minimumInteritemSpacing = itemSpacing
+
+    prepareSpot(self)
   }
 
   public func setup(size: CGSize) {
