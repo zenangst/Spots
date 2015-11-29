@@ -7,6 +7,13 @@ public protocol Gridable: Spotable {
 
 public extension Spotable where Self : Gridable {
 
+  public init(_ component: Component, top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0, itemSpacing: CGFloat = 0) {
+    self.init(component: component)
+
+    layout.sectionInset = UIEdgeInsetsMake(top, left, bottom, right)
+    layout.minimumInteritemSpacing = itemSpacing
+  }
+
   public func prepareSpot<T: Spotable>(spot: T) {
     if component.kind.isEmpty { component.kind = "grid" }
 
