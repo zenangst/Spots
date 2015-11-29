@@ -71,6 +71,14 @@ public class SpotsController: UIViewController {
     fatalError("init(coder:) has not been implemented")
   }
 
+  public override func viewWillAppear(animated: Bool) {
+    super.viewWillAppear(animated)
+
+    if let tabBarController = parentViewController as? UITabBarController {
+      layout.sectionInset.bottom = tabBarController.tabBar.frame.height
+    }
+  }
+
   public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
     super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
 
