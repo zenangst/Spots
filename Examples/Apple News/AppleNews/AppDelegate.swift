@@ -41,7 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarDelegate {
       searchController,
       savedController
     ]
-    tabBarController.selectedIndex = 3
+    tabBarController.selectedIndex = 0
 
     navigationController = UINavigationController(rootViewController: tabBarController)
 
