@@ -36,13 +36,6 @@ public class CarouselSpot: NSObject, Spotable, Gridable {
     prepareSpot(self)
   }
 
-  public convenience init(_ component: Component, top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0, itemSpacing: CGFloat = 0) {
-    self.init(component: component)
-
-    layout.sectionInset = UIEdgeInsetsMake(top, left, bottom, right)
-    layout.minimumInteritemSpacing = itemSpacing
-  }
-
   public func setup(size: CGSize) {
     collectionView.frame.size = size
 
