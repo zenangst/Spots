@@ -44,7 +44,6 @@ class FeedItemCell: UITableViewCell, Itemble {
           guard let data = data else { return }
           let image = UIImage(data: data)
           dispatch { [weak self] in
-
             self?.customImageView.image = image
           }
         }
