@@ -10,7 +10,6 @@ public protocol Spotable: class {
 
   var index: Int { get set }
   var component: Component { get set }
-  var cachedCells: [String : Itemble] { get set }
 
   init(component: Component)
 
@@ -36,10 +35,6 @@ public extension Spotable {
   public func update(item: ListItem, index: Int, completion: (() -> Void)? = nil) {}
   public func delete(index: Int, completion: (() -> Void)? = nil) {}
   public func delete(indexs: [Int], completion: (() -> Void)? = nil) {}
-
-  public func cellIsCached(kind: String) -> Bool {
-    return cachedCells[kind] != nil
-  }
 
   public func item(index: Int) -> ListItem {
     return component.items[index]

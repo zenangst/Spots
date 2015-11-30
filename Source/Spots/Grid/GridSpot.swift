@@ -15,9 +15,6 @@ public class GridSpot: NSObject, Spotable, Gridable {
 
   public lazy var layout: UICollectionViewFlowLayout = { [unowned self] in
     let layout = UICollectionViewFlowLayout()
-    layout.minimumLineSpacing = 0
-    layout.minimumInteritemSpacing = 0
-    layout.sectionInset = UIEdgeInsetsZero
 
     return layout
     }()
@@ -44,6 +41,8 @@ public class GridSpot: NSObject, Spotable, Gridable {
 
     layout.sectionInset = UIEdgeInsetsMake(top, left, bottom, right)
     layout.minimumInteritemSpacing = itemSpacing
+
+    prepareSpot(self)
   }
 
   public func setup(size: CGSize) {
@@ -55,9 +54,12 @@ public class GridSpot: NSObject, Spotable, Gridable {
 extension GridSpot: UICollectionViewDelegateFlowLayout {
 
   public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-    component.items[indexPath.item].size.width = collectionView.frame.width / CGFloat(component.span)
+    if component.span > 0 {
+      component.items[indexPath.item].size.width = collectionView.frame.width / CGFloat(component.span)
+    }
+
     return CGSize(
-      width: item(indexPath).size.width - layout.sectionInset.left,
+      width: item(indexPath).size.width - layout.sectionInset.left - layout.sectionInset.right,
       height: item(indexPath).size.height)
   }
 }

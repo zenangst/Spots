@@ -93,5 +93,7 @@ class GridTopicCell: UICollectionViewCell, Itemble {
     blurView.frame.size.width = contentView.frame.size.width
     blurView.frame.size.height = 48
     blurView.frame.origin.y = 120
+
+    item.size.height = 155
   }
 }
