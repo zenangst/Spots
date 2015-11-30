@@ -19,7 +19,7 @@ public class SearchHeaderView: UIView, Componentable {
     view.frame.origin.y = 44
 
     return view
-  }()
+    }()
 
   public lazy var searchField: UITextField = { [unowned self] in
     let searchField = UITextField(frame: self.frame)
@@ -30,7 +30,7 @@ public class SearchHeaderView: UIView, Componentable {
     searchField.font = UIFont.systemFontOfSize(18)
 
     return searchField
-  }()
+    }()
 
   lazy var paddedStyle: NSParagraphStyle = {
     let style = NSMutableParagraphStyle()
