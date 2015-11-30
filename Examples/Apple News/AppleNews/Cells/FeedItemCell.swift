@@ -57,8 +57,14 @@ class FeedItemCell: UITableViewCell, Itemble {
 
     [textLabel, detailTextLabel].forEach { $0?.sizeToFit() }
 
-    let textFrame = item.title.boundingRectWithSize(frame.size, options: .UsesLineFragmentOrigin, attributes: [NSParagraphStyleAttributeName : paddedStyle], context: nil)
-    let detailTextFrame = item.subtitle.boundingRectWithSize(frame.size, options: .UsesLineFragmentOrigin, attributes: [NSParagraphStyleAttributeName : paddedStyle], context: nil)
+    let textFrame = item.title.boundingRectWithSize(frame.size,
+      options: .UsesLineFragmentOrigin,
+      attributes: [NSParagraphStyleAttributeName : paddedStyle],
+      context: nil)
+    let detailTextFrame = item.subtitle.boundingRectWithSize(frame.size,
+      options: .UsesLineFragmentOrigin,
+      attributes: [NSParagraphStyleAttributeName : paddedStyle],
+      context: nil)
 
     item.size.height = textFrame.size.height + detailTextFrame.size.height + 120
   }
