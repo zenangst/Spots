@@ -38,7 +38,6 @@ class FeedItemCell: UITableViewCell, Itemble {
   }
 
   func configure(inout item: ListItem) {
-
     if !item.image.isEmpty {
       dispatch(queue: .Interactive) {
         GoldenRetriever().fetch(item.image) { data, error in
