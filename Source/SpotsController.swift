@@ -74,7 +74,7 @@ public class SpotsController: UIViewController {
   public override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
 
-    if let tabBarController = parentViewController as? UITabBarController {
+    if let tabBarController = tabBarController {
       layout.sectionInset.bottom = tabBarController.tabBar.frame.height
     }
   }
