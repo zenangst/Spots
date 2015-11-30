@@ -25,16 +25,9 @@ class FavoritesController: SpotsController {
   }
 
   static func generateItem(index: Int, kind: String = "topic") -> ListItem {
-    let mediaCount = Int(arc4random_uniform(5) + 1)
-    var mediaStrings = [String]()
-    for x in 0..<mediaCount {
-      mediaStrings.append("http://lorempixel.com/250/250/?type=attachment&id=\(index)\(x)")
-    }
-
     let item = ListItem(title: faker.commerce.department(),
       kind: kind,
-      image: "http://lorempixel.com/125/160?type=avatar&id=\(index)",
-      meta: ["media" : mediaStrings])
+      image: faker.internet.image(width: 125, height: 160) + "?type=avatar&id=\(index)")
 
     return item
   }
