@@ -52,7 +52,7 @@ class ForYouController: SpotsController, SpotsDelegate {
     let item = ListItem(title: faker.lorem.sentences(amount: sencenceCount),
       subtitle: faker.lorem.sentences(amount: 1),
       kind: kind,
-      image: "http://lorempixel.com/180/180?type=avatar&id=\(index)")
+      image: faker.internet.image(width: 180, height: 180) + "?type=avatar&id=\(index)")
 
     return item
   }
