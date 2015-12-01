@@ -133,4 +133,19 @@ class SpotsControllerTests : XCTestCase {
       XCTAssertEqual(self.spotController?.spotAtIndex(0)?.component.items.count, 1)
     }
   }
+
+  func testComputedPropertiesOnSpotable() {
+    let component = Component(title: "Component", kind: "list", items: [
+      ListItem(title: "title1", kind: "list"),
+      ListItem(title: "title2", kind: "list")
+      ])
+    let spot = ListSpot(component: component)
+
+    XCTAssert(spot.items == component.items)
+
+    let newItems = [ListItem(title: "title3", kind: "list")]
+    spot.items = newItems
+    XCTAssertFalse(spot.items == component.items)
+    XCTAssert(spot.items == newItems)
+  }
 }
