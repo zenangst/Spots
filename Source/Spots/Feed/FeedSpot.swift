@@ -71,7 +71,6 @@ public class FeedSpot: NSObject, Spotable, Listable {
       if !component.title.isEmpty { height += headerHeight }
 
       tableView.frame.size = size
-      tableView.frame.size.height = size.height - 64
       tableView.contentSize = CGSize(
         width: tableView.frame.width,
         height: height - tableView.contentInset.top - tableView.contentInset.bottom)
