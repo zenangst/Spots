@@ -9,9 +9,11 @@ public class FeedSpot: NSObject, Spotable, Listable {
   public static var defaultCell: UIView.Type = FeedSpotCell.self
   public static var headers = [String : UIView.Type]()
 
+  public var cachedHeaders = [String : Componentable]()
   public var cachedCells = [String : Itemble]()
+  public var headerHeight: CGFloat = 44
+
   public let itemHeight: CGFloat = 44
-  public let headerHeight: CGFloat = 44
 
   public var component: Component
   public var index = 0
@@ -48,6 +50,18 @@ public class FeedSpot: NSObject, Spotable, Listable {
     super.init()
     prepareSpot(self)
     tableView.addSubview(refreshControl)
+
+    let reuseIdentifer = component.kind.isEmpty ? "feed" : component.kind
+    if let headerType = ListSpot.headers[reuseIdentifer] {
+      let header = headerType.init(frame: CGRect(x: 0, y: 0,
+        width: UIScreen.mainScreen().bounds.width, height: headerHeight))
+
+      if let configurable = header as? Componentable {
+        configurable.configure(component)
+        cachedHeaders[reuseIdentifer] = configurable
+        headerHeight = configurable.height
+      }
+    }
   }
 
   public func setup(size: CGSize) {
@@ -57,7 +71,6 @@ public class FeedSpot: NSObject, Spotable, Listable {
       if !component.title.isEmpty { height += headerHeight }
 
       tableView.frame.size = size
-      tableView.frame.size.height = size.height - 64
       tableView.contentSize = CGSize(
         width: tableView.frame.width,
         height: height - tableView.contentInset.top - tableView.contentInset.bottom)
@@ -108,17 +121,33 @@ extension FeedSpot {
 
 extension FeedSpot: UITableViewDelegate {
 
+  public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    return !component.title.isEmpty ? headerHeight : 0
+  }
+
+  public func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    return component.title
+  }
+
   public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     tableView.deselectRowAtIndexPath(indexPath, animated: true)
     spotDelegate?.spotDidSelectItem(self, item: item(indexPath))
   }
 
-  public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-    if let spotsController = sizeDelegate as? SpotsController {
-      tableView.contentInset.top = spotsController.layout.sectionInset.top
-      tableView.contentInset.bottom = spotsController.layout.sectionInset.bottom
+  public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    let reuseIdentifer = component.kind.isEmpty ? "feed" : component.kind
+    if let cachedHeader = cachedHeaders[reuseIdentifer] {
+      cachedHeader.configure(component)
+      return cachedHeader as? UIView
+    } else if let header = ListSpot.headers[reuseIdentifer] {
+      let header = header.init(frame: CGRect(x: 0, y: 0, width: tableView.bounds.width, height: headerHeight))
+      return header
     }
 
+    return nil
+  }
+
+  public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
     component.size = CGSize(
       width: tableView.frame.width,
       height: tableView.frame.height)

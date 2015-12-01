@@ -16,7 +16,7 @@ class ComponentTests : XCTestCase {
     let jsonComponent = Component(json)
     XCTAssertEqual(jsonComponent.title, json["title"] as? String)
     XCTAssertEqual(jsonComponent.kind,  json["type"] as? String)
-    XCTAssertEqual(jsonComponent.span,  json["span"] as? Float)
+    XCTAssertEqual(jsonComponent.span,  json["span"] as? CGFloat)
     XCTAssertEqual(jsonComponent.meta,  json["meta"] as! [String : String])
     XCTAssert(jsonComponent.items.count == 1)
     XCTAssertEqual(jsonComponent.items.first?.title, "item1")
@@ -25,13 +25,13 @@ class ComponentTests : XCTestCase {
     let codeComponent = Component(
       title: json["title"] as! String,
       kind: json["type"] as! String,
-      span: json["span"] as! Float,
+      span: json["span"] as! CGFloat,
       meta: json["meta"] as! [String : String],
       items: [ListItem(title: "item1")])
       
     XCTAssertEqual(codeComponent.title, json["title"] as? String)
     XCTAssertEqual(codeComponent.kind,  json["type"] as? String)
-    XCTAssertEqual(codeComponent.span,  json["span"] as? Float)
+    XCTAssertEqual(codeComponent.span,  json["span"] as? CGFloat)
     XCTAssertEqual(codeComponent.meta,  json["meta"] as! [String : String])
     XCTAssert(codeComponent.items.count == 1)
 
@@ -44,7 +44,7 @@ class ComponentTests : XCTestCase {
     var codeComponent = Component(
       title: json["title"] as! String,
       kind: json["type"] as! String,
-      span: json["span"] as! Float,
+      span: json["span"] as! CGFloat,
       meta: json["meta"] as! [String : String])
     XCTAssertFalse(jsonComponent == codeComponent)
 
