@@ -28,6 +28,15 @@ public protocol Spotable: class {
 
 public extension Spotable {
 
+  var items: [ListItem] {
+    set(items) {
+      component.items = items
+    }
+    get {
+      return component.items
+    }
+  }
+
   public func append(item: ListItem, completion: (() -> Void)? = nil) {}
   public func append(items: [ListItem], completion: (() -> Void)? = nil) {}
   public func prepend(items: [ListItem], completion: (() -> Void)? = nil) {}
