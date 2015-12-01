@@ -73,10 +73,6 @@ public class SpotsController: UIViewController {
 
   public override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
-
-    if let tabBarController = tabBarController {
-      layout.sectionInset.bottom = tabBarController.tabBar.frame.height
-    }
   }
 
   public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
