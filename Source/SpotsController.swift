@@ -193,7 +193,15 @@ extension SpotsController: UICollectionViewDelegateFlowLayout {
 
   public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
     if component(indexPath).size == nil {
-      spot(indexPath).setup(view.bounds.size)
+      var size = collectionView.frame.size
+      size.height -= collectionView.contentInset.top
+
+      spot(indexPath).setup(size)
+      if let tabBarController = tabBarController,
+        tableView = spot(indexPath).render() as? UITableView {
+          tableView.contentInset.bottom = tabBarController.tabBar.frame.height
+      }
+
       spot(indexPath).component.size = CGSize(
         width: collectionView.frame.width,
         height: ceil(spot(indexPath).render().frame.height))
