@@ -194,7 +194,8 @@ extension SpotsController: UICollectionViewDelegateFlowLayout {
 
       spot(indexPath).setup(size)
       if let tabBarController = tabBarController,
-        tableView = spot(indexPath).render() as? UITableView {
+        tableView = spot(indexPath).render() as? UITableView
+        where tabBarController.tabBar.translucent {
           tableView.contentInset.bottom = tabBarController.tabBar.frame.height
       }
 
