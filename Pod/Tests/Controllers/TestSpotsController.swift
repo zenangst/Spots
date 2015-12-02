@@ -154,12 +154,12 @@ class SpotsControllerTests : XCTestCase {
     let gridSpot = ListSpot(component: Component(title: "GridSpot", items: [ListItem(title: "ListItem")]))
     spotController = SpotsController(spots: [listSpot, gridSpot], refreshable: true)
 
-    XCTAssertNotNil(spotController?.spot { $1.component.title == "ListSpot" })
-    XCTAssertNotNil(spotController?.spot { $1.component.title == "GridSpot" })
-    XCTAssertNotNil(spotController?.spot { $1 is Listable })
-    XCTAssertNotNil(spotController?.spot { $1.items.filter{ $0.title == "ListItem" }.first != nil })
-    XCTAssertEqual(spotController?.spot { $0.index == 0 }?.component.title, "ListSpot")
-    XCTAssertEqual(spotController?.spot { $0.index == 1 }?.component.title, "GridSpot")
+    XCTAssertNotNil(spotController?.find { $1.component.title == "ListSpot" })
+    XCTAssertNotNil(spotController?.find { $1.component.title == "GridSpot" })
+    XCTAssertNotNil(spotController?.find { $1 is Listable })
+    XCTAssertNotNil(spotController?.find { $1.items.filter{ $0.title == "ListItem" }.first != nil })
+    XCTAssertEqual(spotController?.find { $0.index == 0 }?.component.title, "ListSpot")
+    XCTAssertEqual(spotController?.find { $0.index == 1 }?.component.title, "GridSpot")
 
   }
 }
