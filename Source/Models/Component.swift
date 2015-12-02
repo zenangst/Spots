@@ -2,6 +2,15 @@ import Tailor
 import Sugar
 
 infix operator + {}
+
+public func + (inout left: Component, right: ListItem) {
+  left.items.append(right)
+}
+
+public func + (inout left: Component, right: [ListItem]) {
+  left.items.appendContentsOf(right)
+}
+
 public struct Component: Mappable {
   public var index = 0
   public var title = ""
