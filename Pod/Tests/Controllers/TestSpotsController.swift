@@ -148,4 +148,13 @@ class SpotsControllerTests : XCTestCase {
     XCTAssertFalse(spot.items == component.items)
     XCTAssert(spot.items == newItems)
   }
+
+  func testSpotAtIndexWithInferredType() {
+    let component = Component(title: "Component")
+    let listSpot = ListSpot(component: component)
+    spotController = SpotsController(spots: [listSpot], refreshable: true)
+
+    let foundComponent = spotController?.spot(NSPredicate(format: "SELF.component.title = '%@'", component.title))
+    print(foundComponent)
+  }
 }
