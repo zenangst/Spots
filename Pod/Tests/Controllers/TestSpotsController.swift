@@ -149,12 +149,17 @@ class SpotsControllerTests : XCTestCase {
     XCTAssert(spot.items == newItems)
   }
 
-  func testSpotAtIndexWithInferredType() {
-    let component = Component(title: "Component")
-    let listSpot = ListSpot(component: component)
-    spotController = SpotsController(spots: [listSpot], refreshable: true)
+  func testFindSpotWithClosure() {
+    let listSpot = ListSpot(component: Component(title: "ListSpot"))
+    let gridSpot = ListSpot(component: Component(title: "GridSpot", items: [ListItem(title: "ListItem")]))
+    spotController = SpotsController(spots: [listSpot, gridSpot], refreshable: true)
 
-    let foundComponent = spotController?.spot(NSPredicate(format: "SELF.component.title = '%@'", component.title))
-    print(foundComponent)
+    XCTAssertNotNil(spotController?.spot { $1.component.title == "ListSpot" })
+    XCTAssertNotNil(spotController?.spot { $1.component.title == "GridSpot" })
+    XCTAssertNotNil(spotController?.spot { $1 is Listable })
+    XCTAssertNotNil(spotController?.spot { $1.items.filter{ $0.title == "ListItem" }.first != nil })
+    XCTAssertEqual(spotController?.spot { $0.index == 0 }?.component.title, "ListSpot")
+    XCTAssertEqual(spotController?.spot { $0.index == 1 }?.component.title, "GridSpot")
+
   }
 }
