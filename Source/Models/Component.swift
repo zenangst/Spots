@@ -1,6 +1,7 @@
 import Tailor
 import Sugar
 
+infix operator + {}
 public struct Component: Mappable {
   public var index = 0
   public var title = ""
