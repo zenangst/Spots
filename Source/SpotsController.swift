@@ -87,8 +87,10 @@ public class SpotsController: UIViewController {
   }
 
   public func spot(closure: (index: Int, spot: Spotable) -> Bool) -> Spotable? {
-    for (index, spot) in spots.enumerate() where closure(index: index, spot: spot)
-    { return spot }
+    for (index, spot) in spots.enumerate()
+      where closure(index: index, spot: spot) {
+        return spot
+    }
     return nil
   }
 
