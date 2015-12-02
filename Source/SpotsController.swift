@@ -190,15 +190,18 @@ extension SpotsController: UICollectionViewDelegateFlowLayout {
   public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
     if component(indexPath).size == nil {
       var size = collectionView.frame.size
-      size.height -= collectionView.contentInset.top
 
-      spot(indexPath).setup(size)
-      if let tabBarController = tabBarController,
-        tableView = spot(indexPath).render() as? UITableView
+      if let tabBarController = tabBarController
         where tabBarController.tabBar.translucent {
-          tableView.contentInset.bottom = tabBarController.tabBar.frame.height
+          (spot(indexPath).render() as? UITableView)?.contentInset.bottom = tabBarController.tabBar.frame.height
+          layout.sectionInset.bottom = tabBarController.tabBar.frame.height
+          size.height -= collectionView.contentInset.top
+      } else if let _ = navigationController {
+        (spot(indexPath).render() as? UIScrollView)?.contentInset.bottom = collectionView.contentInset.top
+        layout.sectionInset.bottom = 0
       }
 
+      spot(indexPath).setup(size)
       spot(indexPath).component.size = CGSize(
         width: collectionView.frame.width,
         height: ceil(spot(indexPath).render().frame.height))
