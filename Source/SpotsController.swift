@@ -83,7 +83,19 @@ public class SpotsController: UIViewController {
   }
 
   public func spotAtIndex(index: Int) -> Spotable? {
-    return spots.filter { $0.index == index }.first
+    return spots.filter{ $0.index == index }.first
+  }
+
+  public func spot(closure: (index: Int, spot: Spotable) -> Bool) -> Spotable? {
+    for (index, spot) in spots.enumerate()
+      where closure(index: index, spot: spot) {
+        return spot
+    }
+    return nil
+  }
+
+  public func filter(@noescape includeElement: (Spotable) -> Bool) -> [Spotable] {
+    return spots.filter(includeElement)
   }
 
   public func reloadSpots() {
