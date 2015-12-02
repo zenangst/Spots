@@ -92,6 +92,10 @@ public class SpotsController: UIViewController {
     return nil
   }
 
+  public func filter(@noescape includeElement: (Spotable) -> Bool) -> [Spotable] {
+    return spots.filter(includeElement)
+  }
+
   public func reloadSpots() {
     dispatch { [weak self] in
       self?.spots.forEach { $0.reload([]) {} }
