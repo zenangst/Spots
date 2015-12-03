@@ -49,7 +49,7 @@ public class FeedSpot: NSObject, Spotable, Listable {
     self.component = component
     super.init()
     prepareSpot(self)
-    tableView.addSubview(refreshControl)
+    tableView.insertSubview(refreshControl, atIndex: 0)
 
     let reuseIdentifer = component.kind.isEmpty ? "feed" : component.kind
     if let headerType = ListSpot.headers[reuseIdentifer] {

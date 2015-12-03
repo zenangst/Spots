@@ -51,7 +51,7 @@ public class SpotsController: UIViewController {
     view.addSubview(collectionView)
 
     if refreshable {
-      collectionView.addSubview(refreshControl)
+      collectionView.insertSubview(refreshControl, atIndex: 0)
     }
 
     view.autoresizesSubviews = true
