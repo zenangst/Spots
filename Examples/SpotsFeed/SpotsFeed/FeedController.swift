@@ -17,14 +17,16 @@ public class FeedController: SpotsController, SpotsDelegate {
   }
 
   public func spotsDidReload(refreshControl: UIRefreshControl) {
-    dispatch(queue: .Interactive) { [weak self] in
-      guard let spot = self?.spotAtIndex(0) else { return }
-      
-      let items = FeedController.generateItems(spot.component.items.count,
-        to: 2)
-      
-      self?.prepend(items, spotIndex: 0) {
-        dispatch { refreshControl.endRefreshing() }
+    delay(1.0) {
+      dispatch(queue: .Interactive) { [weak self] in
+        guard let spot = self?.spotAtIndex(0) else { return }
+
+        let items = FeedController.generateItems(spot.component.items.count,
+          to: 2)
+
+        self?.prepend(items, spotIndex: 0) {
+          dispatch { refreshControl.endRefreshing() }
+        }
       }
     }
   }
