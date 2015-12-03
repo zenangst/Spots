@@ -51,24 +51,4 @@ class ComponentTests : XCTestCase {
     codeComponent.items.append(ListItem(title: "item2"))
     XCTAssertFalse(jsonComponent == codeComponent)
   }
-
-  func testInfixOperator() {
-    var component = Component()
-    let listItem = ListItem(title: "item1")
-
-    component + listItem
-    
-    XCTAssert(component.items.count == 1)
-
-    let listItems = [
-      ListItem(title: "item2"),
-      ListItem(title: "item3")
-    ]
-
-    component + listItems
-
-    XCTAssert(component.items.count == 3)
-    XCTAssert(component.items[1] == listItems[0])
-    XCTAssert(component.items[2] == listItems[1])
-  }
 }
