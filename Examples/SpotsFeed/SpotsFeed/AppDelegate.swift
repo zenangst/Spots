@@ -38,11 +38,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     let feedComponent = Component(span: 1, items: FeedController.generateItems(0, to: 10))
     let feedSpot = FeedSpot(component: feedComponent)
-    let components: [Spotable] = [ feedSpot ]
+    let listSpot = TitleSpot(title: "The Feed")
+    let components: [Spotable] = [ listSpot, feedSpot ]
 
     let controller = FeedController(spots: components,refreshable: false)
     controller.title = "Feed"
-    controller.collectionView.scrollEnabled = false
 
     applyStyles()
     

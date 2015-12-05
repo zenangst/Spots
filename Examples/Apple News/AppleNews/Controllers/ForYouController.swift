@@ -13,7 +13,6 @@ class ForYouController: SpotsController, SpotsDelegate {
     
     self.title = title
     spotDelegate = self
-    collectionView.scrollEnabled = false
 
     dispatch(queue: .Interactive) { [weak self] in
       let items = ForYouController.generateItems(0, to: 10)

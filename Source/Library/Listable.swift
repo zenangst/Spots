@@ -157,7 +157,7 @@ public extension Spotable where Self : Listable {
     completion?()
   }
 
-  public func render() -> UIView {
+  public func render() -> UIScrollView {
     return tableView
   }
 

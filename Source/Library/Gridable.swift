@@ -53,7 +53,7 @@ public extension Spotable where Self : Gridable {
     completion?()
   }
 
-  public func render() -> UIView {
+  public func render() -> UIScrollView {
     return collectionView
   }
 

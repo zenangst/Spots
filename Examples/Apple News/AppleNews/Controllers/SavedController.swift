@@ -12,7 +12,6 @@ class SavedController: SpotsController {
     self.init(spots: [feedSpot], refreshable: false)
 
     self.title = title
-    collectionView.scrollEnabled = false
 
     dispatch(queue: .Interactive) { [weak self] in
       let items = ForYouController.generateItems(0, to: 2)

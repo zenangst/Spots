@@ -34,6 +34,7 @@ public class FeedSpot: NSObject, Spotable, Listable {
     tableView.dataSource = self
     tableView.delegate = self
     tableView.rowHeight = UITableViewAutomaticDimension
+    tableView.scrollEnabled = false
 
     return tableView
     }()

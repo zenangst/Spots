@@ -2,6 +2,7 @@ import UIKit
 import GoldenRetriever
 import Sugar
 import Spots
+import Hex
 
 class GridSpotCellTitles : UICollectionViewCell, Itemble {
 
