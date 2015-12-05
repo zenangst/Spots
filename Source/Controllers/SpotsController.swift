@@ -11,6 +11,7 @@ public class SpotsController: UIViewController {
     let container = SpotScrollView(frame: self.view.bounds)
     container.backgroundColor = UIColor.whiteColor()
     container.clipsToBounds = true
+    container.alwaysBounceVertical = true
 
     return container
   }()
