@@ -94,7 +94,7 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
   }
 
   public func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-    guard let refreshControl.refreshing else { return }
+    guard refreshControl.refreshing else { return }
     let defaultRefreshContentInset = self.tableView.contentInset.top
     container.contentInset.top = -scrollView.contentOffset.y
 
