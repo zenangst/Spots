@@ -1,5 +1,5 @@
 import UIKit
-import GoldenRetriever
+import Imaginary
 import Sugar
 import Hex
 import Spots
@@ -73,18 +73,8 @@ class GridSpotFeedItem : UICollectionViewCell, Itemble {
   func configure(inout item: ListItem) {
     if !item.image.isEmpty {
       imageView.image = nil
-      let resource = item.image
-      let fido = GoldenRetriever()
-
-      dispatch(queue: .Interactive) { [weak self] in
-        fido.fetch(resource) { data, error in
-          guard let data = data else { return }
-          let image = UIImage(data: data)
-          dispatch { [weak self] in
-            self?.imageView.image = image
-          }
-        }
-      }
+      let URL = NSURL(string: item.image)
+      imageView.setImage(URL)
     }
 
     titleLabel.attributedText = NSAttributedString(string: item.title.uppercaseString,
