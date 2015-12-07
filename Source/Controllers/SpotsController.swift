@@ -2,7 +2,7 @@ import UIKit
 import Sugar
 import Pods
 
-public class SpotsController: UIViewController {
+public class SpotsController: UIViewController, UIScrollViewDelegate {
 
   public private(set) var spots: [Spotable]
 
