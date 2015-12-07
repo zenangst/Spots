@@ -11,6 +11,7 @@ public class SpotsController: UIViewController {
     container.alwaysBounceVertical = true
     container.backgroundColor = UIColor.whiteColor()
     container.clipsToBounds = true
+    container.delegate = self
 
     return container
   }()
