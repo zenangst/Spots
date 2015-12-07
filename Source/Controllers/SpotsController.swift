@@ -8,9 +8,9 @@ public class SpotsController: UIViewController {
 
   lazy private var container: SpotScrollView = { [unowned self] in
     let container = SpotScrollView(frame: self.view.bounds)
+    container.alwaysBounceVertical = true
     container.backgroundColor = UIColor.whiteColor()
     container.clipsToBounds = true
-    container.alwaysBounceVertical = true
 
     return container
   }()
