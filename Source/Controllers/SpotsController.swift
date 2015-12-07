@@ -95,8 +95,10 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     // Infinite scrolling
     if shouldFetch && !fetching {
       fetching = true
-      spotDelegate?.spotDidReachEnd {
-        self.fetching = false
+      delay(0.2) {
+        spotDelegate?.spotDidReachEnd {
+          self.fetching = false
+        }
       }
     }
   }
