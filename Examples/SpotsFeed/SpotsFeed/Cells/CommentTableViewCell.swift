@@ -141,7 +141,7 @@ public class CommentTableViewCell: WallTableViewCell, Itemble {
     avatarImageView.frame = CGRect(x: Dimensions.sideOffset, y: Dimensions.sideOffset,
       width: Dimensions.avatarSize, height: Dimensions.avatarSize)
     if let avatarURL = post.author!.avatar {
-      avatarImageView.sd_setImageWithURL(avatarURL)
+      avatarImageView.setImage(avatarURL)
     }
 
     authorLabel.frame = CGRect(x: Dimensions.textOffset, y: Dimensions.nameTopOffset,

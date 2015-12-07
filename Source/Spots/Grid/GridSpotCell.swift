@@ -1,5 +1,5 @@
 import UIKit
-import GoldenRetriever
+import Imaginary
 import Sugar
 
 class GridSpotCell: UICollectionViewCell, Itemble {
@@ -35,18 +35,8 @@ class GridSpotCell: UICollectionViewCell, Itemble {
 
   func configure(inout item: ListItem) {
     if item.image != "" {
-      let resource = item.image
-      let fido = GoldenRetriever()
-
-      dispatch(queue: .Interactive) {
-        fido.fetch(resource) { data, error in
-          guard let data = data else { return }
-          let image = UIImage(data: data)
-          dispatch { [weak self] in
-            self?.imageView.image = image
-          }
-        }
-      }
+      let URL = NSURL(string: item.image)
+      imageView.setImage(URL)
     }
 
     imageView.frame = contentView.frame

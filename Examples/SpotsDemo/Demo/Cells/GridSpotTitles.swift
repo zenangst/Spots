@@ -1,5 +1,5 @@
 import UIKit
-import GoldenRetriever
+import Imaginary
 import Sugar
 import Spots
 import Hex

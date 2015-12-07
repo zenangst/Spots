@@ -1,5 +1,5 @@
 import UIKit
-import SDWebImage
+import Imaginary
 
 public protocol PostAuthorViewDelegate: class {
 
@@ -95,7 +95,7 @@ public class PostAuthorView: UIView {
 
   public func configureView(author: Author, date: String) {
     if let avatarURL = author.avatar {
-      avatarImageView.sd_setImageWithURL(avatarURL)
+      avatarImageView.setImage(avatarURL)
     }
 
     authorLabel.text = author.name

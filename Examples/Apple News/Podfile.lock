@@ -1,10 +1,12 @@
 PODS:
+  - Cache (0.1.0)
   - Compass (1.1.0)
   - Fakery (1.1.0):
     - SwiftyJSON
-  - GoldenRetriever (0.1.1)
+  - Imaginary (0.1.0):
+    - Cache
   - Spots (0.1.0):
-    - GoldenRetriever
+    - Imaginary
     - Sugar
     - Tailor
   - Sugar (0.1.0)
@@ -13,32 +15,38 @@ PODS:
     - Sugar
 
 DEPENDENCIES:
+  - Cache (from `https://github.com/hyperoslo/Cache`)
   - Compass (from `https://github.com/hyperoslo/compass`)
   - Fakery
-  - GoldenRetriever (from `https://github.com/zenangst/GoldenRetriever`)
+  - Imaginary (from `https://github.com/hyperoslo/Imaginary`)
   - Spots (from `../../`)
   - Sugar (from `https://github.com/hyperoslo/Sugar`)
   - Tailor (from `https://github.com/zenangst/Tailor`)
 
 EXTERNAL SOURCES:
+  Cache:
+    :git: https://github.com/hyperoslo/Cache
   Compass:
     :git: https://github.com/hyperoslo/compass
-  GoldenRetriever:
-    :git: https://github.com/zenangst/GoldenRetriever
+  Imaginary:
+    :git: https://github.com/hyperoslo/Imaginary
   Spots:
-    :path: "../../"
+    :path: ../../
   Sugar:
     :git: https://github.com/hyperoslo/Sugar
   Tailor:
     :git: https://github.com/zenangst/Tailor
 
 CHECKOUT OPTIONS:
+  Cache:
+    :commit: d30fb21cf1ac136b876dc09976b54125d1ae364b
+    :git: https://github.com/hyperoslo/Cache
   Compass:
     :commit: e4ec0ff6e6dd64da0e07a4ab6214086d2e2cd2b8
     :git: https://github.com/hyperoslo/compass
-  GoldenRetriever:
-    :commit: bfee4c7e1097b86bf1ad3cc2ca6bdaa1156fd877
-    :git: https://github.com/zenangst/GoldenRetriever
+  Imaginary:
+    :commit: 1bc0d4536d827ffb6053585c68c4e694ce9d2d2e
+    :git: https://github.com/hyperoslo/Imaginary
   Sugar:
     :commit: a0e393888f13948d9178984bb6762ca7afccf122
     :git: https://github.com/hyperoslo/Sugar
@@ -47,10 +55,11 @@ CHECKOUT OPTIONS:
     :git: https://github.com/zenangst/Tailor
 
 SPEC CHECKSUMS:
+  Cache: 59ea9dbb71dfa1ba68a6efe295e907603b3066da
   Compass: 884465fe6cd5f809a4e6640f7933de31331e0d38
   Fakery: 593389814fb7c42fe7f0801e76c8ae55b95505e7
-  GoldenRetriever: 68256f443f35eaeb90b58e2f64bc8f5b255738ba
-  Spots: defa9f77e864c4fbcdd834dfed9e37f1c2682480
+  Imaginary: feaea646440c68a9b6ed66a46597d548b9a44207
+  Spots: 4b88253385d63745cf5239037c9d2f89f78a1ee7
   Sugar: d33f2a3ae10e40c14eb49a2e859f12e82e614817
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   Tailor: acba14dba2fb854cdf2550c1a3dfd603f6b59dbc
