@@ -1,5 +1,5 @@
 import UIKit
-import GoldenRetriever
+import Imaginary
 import Sugar
 import Spots
 
@@ -50,18 +50,8 @@ class GridSpotCellCircle : UICollectionViewCell, Itemble {
     imageView.frame.size.height = 88
     
     if !item.image.isEmpty {
-      let resource = item.image
-      let fido = GoldenRetriever()
-
-      dispatch(queue: .Interactive) {
-        fido.fetch(resource) { data, error in
-          guard let data = data else { return }
-          let image = UIImage(data: data)
-          dispatch { [weak self] in
-            self?.imageView.image = image
-          }
-        }
-      }
+      let URL = NSURL(string: item.image)
+      imageView.setImage(URL)
     }
     
     titleLabel.text = item.title
