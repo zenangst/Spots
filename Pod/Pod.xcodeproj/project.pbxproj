@@ -11,7 +11,6 @@
 		BD2EF3251C13428B00F0B960 /* SpotsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2EF3241C13428B00F0B960 /* SpotsController.swift */; settings = {ASSET_TAGS = (); }; };
 		BD2EF3361C13474D00F0B960 /* SpotScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2EF3351C13474D00F0B960 /* SpotScrollView.swift */; settings = {ASSET_TAGS = (); }; };
 		BD2EF3381C135F5C00F0B960 /* SpotContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2EF3371C135F5C00F0B960 /* SpotContentView.swift */; settings = {ASSET_TAGS = (); }; };
-		BD551E2E1C13895500771AC2 /* SpotSwizzling.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD551E2D1C13895500771AC2 /* SpotSwizzling.swift */; settings = {ASSET_TAGS = (); }; };
 		BDC308501C05F8280091579D /* Componentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC308341C05F8280091579D /* Componentable.swift */; settings = {ASSET_TAGS = (); }; };
 		BDC308511C05F8280091579D /* Gridable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC308351C05F8280091579D /* Gridable.swift */; settings = {ASSET_TAGS = (); }; };
 		BDC308521C05F8280091579D /* Itemble.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC308361C05F8280091579D /* Itemble.swift */; settings = {ASSET_TAGS = (); }; };
@@ -20,13 +19,10 @@
 		BDC308551C05F8280091579D /* Spotable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC308391C05F8280091579D /* Spotable.swift */; settings = {ASSET_TAGS = (); }; };
 		BDC308561C05F8280091579D /* SpotFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC3083A1C05F8280091579D /* SpotFactory.swift */; settings = {ASSET_TAGS = (); }; };
 		BDC308571C05F8280091579D /* SpotsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC3083B1C05F8280091579D /* SpotsDelegate.swift */; settings = {ASSET_TAGS = (); }; };
-		BDC308581C05F8280091579D /* SpotSizeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC3083C1C05F8280091579D /* SpotSizeDelegate.swift */; settings = {ASSET_TAGS = (); }; };
 		BDC308591C05F8280091579D /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC3083E1C05F8280091579D /* Component.swift */; settings = {ASSET_TAGS = (); }; };
 		BDC3085A1C05F8280091579D /* ListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC3083F1C05F8280091579D /* ListItem.swift */; settings = {ASSET_TAGS = (); }; };
 		BDC3085B1C05F8280091579D /* CarouselSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC308421C05F8280091579D /* CarouselSpot.swift */; settings = {ASSET_TAGS = (); }; };
 		BDC3085C1C05F8280091579D /* CarouselSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC308431C05F8280091579D /* CarouselSpotCell.swift */; settings = {ASSET_TAGS = (); }; };
-		BDC3085D1C05F8280091579D /* FeedSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC308451C05F8280091579D /* FeedSpot.swift */; settings = {ASSET_TAGS = (); }; };
-		BDC3085E1C05F8280091579D /* FeedSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC308461C05F8280091579D /* FeedSpotCell.swift */; settings = {ASSET_TAGS = (); }; };
 		BDC3085F1C05F8280091579D /* GridSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC308481C05F8280091579D /* GridSpot.swift */; settings = {ASSET_TAGS = (); }; };
 		BDC308601C05F8280091579D /* GridSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC308491C05F8280091579D /* GridSpotCell.swift */; settings = {ASSET_TAGS = (); }; };
 		BDC308611C05F8280091579D /* ListSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC3084B1C05F8280091579D /* ListSpot.swift */; settings = {ASSET_TAGS = (); }; };
@@ -50,7 +46,6 @@
 		BD2EF3241C13428B00F0B960 /* SpotsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsController.swift; sourceTree = "<group>"; };
 		BD2EF3351C13474D00F0B960 /* SpotScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotScrollView.swift; sourceTree = "<group>"; };
 		BD2EF3371C135F5C00F0B960 /* SpotContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotContentView.swift; sourceTree = "<group>"; };
-		BD551E2D1C13895500771AC2 /* SpotSwizzling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotSwizzling.swift; sourceTree = "<group>"; };
 		BDC308341C05F8280091579D /* Componentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Componentable.swift; sourceTree = "<group>"; };
 		BDC308351C05F8280091579D /* Gridable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gridable.swift; sourceTree = "<group>"; };
 		BDC308361C05F8280091579D /* Itemble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Itemble.swift; sourceTree = "<group>"; };
@@ -59,13 +54,10 @@
 		BDC308391C05F8280091579D /* Spotable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spotable.swift; sourceTree = "<group>"; };
 		BDC3083A1C05F8280091579D /* SpotFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotFactory.swift; sourceTree = "<group>"; };
 		BDC3083B1C05F8280091579D /* SpotsDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsDelegate.swift; sourceTree = "<group>"; };
-		BDC3083C1C05F8280091579D /* SpotSizeDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotSizeDelegate.swift; sourceTree = "<group>"; };
 		BDC3083E1C05F8280091579D /* Component.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
 		BDC3083F1C05F8280091579D /* ListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListItem.swift; sourceTree = "<group>"; };
 		BDC308421C05F8280091579D /* CarouselSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselSpot.swift; sourceTree = "<group>"; };
 		BDC308431C05F8280091579D /* CarouselSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselSpotCell.swift; sourceTree = "<group>"; };
-		BDC308451C05F8280091579D /* FeedSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedSpot.swift; sourceTree = "<group>"; };
-		BDC308461C05F8280091579D /* FeedSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedSpotCell.swift; sourceTree = "<group>"; };
 		BDC308481C05F8280091579D /* GridSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridSpot.swift; sourceTree = "<group>"; };
 		BDC308491C05F8280091579D /* GridSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridSpotCell.swift; sourceTree = "<group>"; };
 		BDC3084B1C05F8280091579D /* ListSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListSpot.swift; sourceTree = "<group>"; };
@@ -178,14 +170,6 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		BD551E2C1C1388EF00771AC2 /* Swizzling */ = {
-			isa = PBXGroup;
-			children = (
-				BD551E2D1C13895500771AC2 /* SpotSwizzling.swift */,
-			);
-			path = Swizzling;
-			sourceTree = "<group>";
-		};
 		BDC308321C05F8280091579D /* Source */ = {
 			isa = PBXGroup;
 			children = (
@@ -193,7 +177,6 @@
 				BDC308331C05F8280091579D /* Library */,
 				BDC3083D1C05F8280091579D /* Models */,
 				BDC308401C05F8280091579D /* Spots */,
-				BD551E2C1C1388EF00771AC2 /* Swizzling */,
 				BD2EF3341C13473F00F0B960 /* Views */,
 			);
 			name = Source;
@@ -211,7 +194,6 @@
 				BDC308391C05F8280091579D /* Spotable.swift */,
 				BDC3083A1C05F8280091579D /* SpotFactory.swift */,
 				BDC3083B1C05F8280091579D /* SpotsDelegate.swift */,
-				BDC3083C1C05F8280091579D /* SpotSizeDelegate.swift */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -229,7 +211,6 @@
 			isa = PBXGroup;
 			children = (
 				BDC308411C05F8280091579D /* Carousel */,
-				BDC308441C05F8280091579D /* Feed */,
 				BDC308471C05F8280091579D /* Grid */,
 				BDC3084A1C05F8280091579D /* List */,
 				BDC3084D1C05F8280091579D /* Spots */,
@@ -244,15 +225,6 @@
 				BDC308431C05F8280091579D /* CarouselSpotCell.swift */,
 			);
 			path = Carousel;
-			sourceTree = "<group>";
-		};
-		BDC308441C05F8280091579D /* Feed */ = {
-			isa = PBXGroup;
-			children = (
-				BDC308451C05F8280091579D /* FeedSpot.swift */,
-				BDC308461C05F8280091579D /* FeedSpotCell.swift */,
-			);
-			path = Feed;
 			sourceTree = "<group>";
 		};
 		BDC308471C05F8280091579D /* Grid */ = {
@@ -433,23 +405,19 @@
 				BDC3085B1C05F8280091579D /* CarouselSpot.swift in Sources */,
 				BDC3085C1C05F8280091579D /* CarouselSpotCell.swift in Sources */,
 				BDC308501C05F8280091579D /* Componentable.swift in Sources */,
-				BDC308581C05F8280091579D /* SpotSizeDelegate.swift in Sources */,
 				BDC308611C05F8280091579D /* ListSpot.swift in Sources */,
 				BD2EF3251C13428B00F0B960 /* SpotsController.swift in Sources */,
 				D5BD1E4C1C06104200582666 /* TestSpotFactory.swift in Sources */,
 				BDC308591C05F8280091579D /* Component.swift in Sources */,
-				BD551E2E1C13895500771AC2 /* SpotSwizzling.swift in Sources */,
 				BDC308511C05F8280091579D /* Gridable.swift in Sources */,
 				BDC3085A1C05F8280091579D /* ListItem.swift in Sources */,
 				BDC3085F1C05F8280091579D /* GridSpot.swift in Sources */,
 				BDC308541C05F8280091579D /* Parser.swift in Sources */,
 				BD2EF3361C13474D00F0B960 /* SpotScrollView.swift in Sources */,
 				BDFECC551C04F6B600049FE2 /* TestListItem.swift in Sources */,
-				BDC3085E1C05F8280091579D /* FeedSpotCell.swift in Sources */,
 				BDC308631C05F8280091579D /* SpotCell.swift in Sources */,
 				BDD6FA2C1C05EDDF007C442D /* TestSpotsController.swift in Sources */,
 				BD2EF3381C135F5C00F0B960 /* SpotContentView.swift in Sources */,
-				BDC3085D1C05F8280091579D /* FeedSpot.swift in Sources */,
 				BDC308601C05F8280091579D /* GridSpotCell.swift in Sources */,
 				BDC308551C05F8280091579D /* Spotable.swift in Sources */,
 				BDC308531C05F8280091579D /* Listable.swift in Sources */,
