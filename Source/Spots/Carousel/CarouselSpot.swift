@@ -10,7 +10,6 @@ public class CarouselSpot: NSObject, Spotable, Gridable {
   public var component: Component
   public var index = 0
 
-  public weak var sizeDelegate: SpotSizeDelegate?
   public weak var spotDelegate: SpotsDelegate?
 
   public lazy var layout: UICollectionViewFlowLayout = { [unowned self] in
@@ -33,7 +32,6 @@ public class CarouselSpot: NSObject, Spotable, Gridable {
   public required init(component: Component) {
     self.component = component
     super.init()
-    prepareSpot(self)
   }
 
   public func setup(size: CGSize) {
@@ -53,7 +51,8 @@ public class CarouselSpot: NSObject, Spotable, Gridable {
 extension CarouselSpot: UIScrollViewDelegate {
 
   public func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-    let pageWidth: CGFloat = collectionView.frame.width - layout.sectionInset.left + layout.minimumLineSpacing
+    let pageWidth: CGFloat = collectionView.frame.width - layout.sectionInset.right
+     + layout.sectionInset.left + layout.minimumLineSpacing
     let currentOffset = scrollView.contentOffset.x
     let targetOffset = targetContentOffset.memory.x
 
@@ -79,8 +78,8 @@ extension CarouselSpot: UICollectionViewDelegateFlowLayout {
     component.items[indexPath.item].size.width -= layout.sectionInset.left
 
     return CGSize(
-      width: item(indexPath).size.width,
-      height: item(indexPath).size.height)
+      width: ceil(item(indexPath).size.width),
+      height: ceil(item(indexPath).size.height))
   }
 }
 
@@ -107,7 +106,6 @@ extension CarouselSpot: UICollectionViewDataSource {
     if let grid = cell as? Itemble {
       grid.configure(&component.items[indexPath.item])
       collectionView.collectionViewLayout.invalidateLayout()
-      sizeDelegate?.sizeDidUpdate()
     }
     
     return cell
