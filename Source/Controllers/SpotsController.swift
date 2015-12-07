@@ -62,6 +62,40 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
         height: ceil(spot.render().frame.height))
     }
   }
+
+  public func scrollViewDidScroll(scrollView: UIScrollView) {
+    let bounds = scrollView.bounds
+    let inset = scrollView.contentInset
+    let offset = scrollView.contentOffset
+    let size = scrollView.contentSize
+    let shouldFetch = offset.y + bounds.size.height - inset.bottom > size.height
+      && size.height > bounds.size.height
+      && !fetching
+
+    // Refreshable
+    tableView.contentOffset.y = scrollView.contentOffset.y + 64
+    if refreshControl.superview != nil && scrollView.contentOffset.y < -64 * 2 && !refreshControl.refreshing {
+      let contentInsetTop = container.contentInset.top
+      UIView.animateWithDuration(0.6, delay: 0, options: .BeginFromCurrentState, animations: {
+        self.container.contentInset.top = contentInsetTop * 2.0
+        self.container.contentOffset.y = -self.container.contentInset.top
+      }, completion: nil)
+
+      refreshControl.beginRefreshing()
+      spotDelegate?.spotsDidReload(refreshControl) { [weak self] in
+        UIView.animateWithDuration(0.1) {
+          self?.container.contentInset.top = contentInsetTop
+        }
+        self?.refreshControl.endRefreshing()
+      }
+    }
+
+    // Infinite scrolling
+    if shouldFetch && !fetching {
+      fetching = true
+      spotDelegate?.spotDidReachEnd {
+        self.fetching = false
+      }
     }
   }
 
