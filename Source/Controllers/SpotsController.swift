@@ -57,6 +57,10 @@ public class SpotsController: UIViewController {
 
   public override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
+    for spot in self.spots {
+      spot.render().layoutSubviews()
+      spot.render().setNeedsDisplay()
+    }
   }
 
   public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
