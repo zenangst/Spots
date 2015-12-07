@@ -6,7 +6,8 @@ use_frameworks!
 inhibit_all_warnings!
 
 pod 'Compass', git: 'https://github.com/hyperoslo/compass'
-pod 'GoldenRetriever', git: 'https://github.com/zenangst/GoldenRetriever'
+pod 'Imaginary', git: 'https://github.com/hyperoslo/Imaginary'
+pod 'Cache', git: 'https://github.com/hyperoslo/Cache'
 pod 'Spots', path: '../../'
 pod 'Sugar', git: 'https://github.com/hyperoslo/Sugar'
 pod 'Tailor', git: 'https://github.com/zenangst/Tailor'
