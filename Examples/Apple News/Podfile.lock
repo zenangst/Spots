@@ -31,7 +31,7 @@ EXTERNAL SOURCES:
   Imaginary:
     :git: https://github.com/hyperoslo/Imaginary
   Spots:
-    :path: ../../
+    :path: "../../"
   Sugar:
     :git: https://github.com/hyperoslo/Sugar
   Tailor:
@@ -39,7 +39,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   Cache:
-    :commit: d30fb21cf1ac136b876dc09976b54125d1ae364b
+    :commit: 1de72cb2c07e8bce81a2c6599b8e08122922b737
     :git: https://github.com/hyperoslo/Cache
   Compass:
     :commit: e4ec0ff6e6dd64da0e07a4ab6214086d2e2cd2b8
