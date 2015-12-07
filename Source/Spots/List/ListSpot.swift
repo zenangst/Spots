@@ -32,18 +32,10 @@ public class ListSpot: NSObject, Spotable, Listable {
     return tableView
     }()
 
-  public lazy var refreshControl: UIRefreshControl = { [unowned self] in
-    let refreshControl = UIRefreshControl()
-    refreshControl.addTarget(self, action: "refreshSpot:", forControlEvents: .ValueChanged)
-
-    return refreshControl
-    }()
-
   public required init(component: Component) {
     self.component = component
     super.init()
     prepareSpot(self)
-    tableView.insertSubview(refreshControl, atIndex: 0)
 
     let reuseIdentifer = component.kind.isEmpty ? "list" : component.kind
     if let headerType = ListSpot.headers[reuseIdentifer] {
@@ -75,43 +67,6 @@ public class ListSpot: NSObject, Spotable, Listable {
     }
 
     ListSpot.configure?(view: tableView)
-  }
-}
-
-extension ListSpot: UIScrollViewDelegate {
-
-  public func scrollViewDidScroll(scrollView: UIScrollView) {
-    let bounds = scrollView.bounds
-    let inset = scrollView.contentInset
-    let offset = scrollView.contentOffset
-    let size = scrollView.contentSize
-    let shouldFetch = offset.y + bounds.size.height - inset.bottom > size.height - headerHeight - itemHeight
-      && size.height > bounds.size.height
-      && !fetching
-
-    if shouldFetch && !fetching {
-      fetching = true
-      spotDelegate?.spotDidReachEnd {
-        self.fetching = false
-      }
-    }
-  }
-}
-
-// MARK: - Refresh
-
-extension ListSpot {
-
-  public func refreshSpot(refreshControl: UIRefreshControl) {
-    dispatch { [weak self] in
-      if let weakSelf = self, spotDelegate = weakSelf.spotDelegate {
-        spotDelegate.spotsDidReload(refreshControl) {}
-      } else {
-        delay(0.5) { [weak self] in
-          self?.refreshControl.endRefreshing()
-        }
-      }
-    }
   }
 }
 
