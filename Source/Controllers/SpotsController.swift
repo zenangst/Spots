@@ -52,8 +52,6 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
   public override func viewDidLoad() {
     super.viewDidLoad()
 
-    view.addSubview(container)
-
     for spot in spots {
       spot.render().optimize()
 
