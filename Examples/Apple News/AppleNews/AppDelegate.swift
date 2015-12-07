@@ -11,12 +11,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarDelegate {
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
     window = UIWindow(frame: UIScreen.mainScreen().bounds)
 
-    FeedSpot.configure = { tableView in tableView.tableFooterView = UIView(frame: CGRect.zero) }
-    FeedSpot.cells["feed"] = FeedItemCell.self
-
     ListSpot.headers["search"] = SearchHeaderView.self
     ListSpot.headers["list"] = ListHeaderView.self
     ListSpot.configure = { tableView in tableView.tableFooterView = UIView(frame: CGRect.zero) }
+    ListSpot.cells["feed"] = FeedItemCell.self
 
     CarouselSpot.cells["topic"] = GridTopicCell.self
     GridSpot.cells["topic"] = GridTopicCell.self

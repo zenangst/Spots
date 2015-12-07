@@ -33,15 +33,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     window = UIWindow(frame: UIScreen.mainScreen().bounds)
 
-    FeedSpot.cells["feed"] = PostTableViewCell.self
-    FeedSpot.cells["comment"] = CommentTableViewCell.self
+    ListSpot.cells["feed"] = PostTableViewCell.self
+    ListSpot.cells["comment"] = CommentTableViewCell.self
 
-    let feedComponent = Component(span: 1, items: FeedController.generateItems(0, to: 10))
-    let feedSpot = FeedSpot(component: feedComponent)
-    let listSpot = TitleSpot(title: "The Feed")
-    let components: [Spotable] = [ listSpot, feedSpot ]
+    let feedComponent = Component(span: 1, items: FeedController.generateItems(0, to: 3))
+    let feedSpot = ListSpot(component: feedComponent)
+    let components: [Spotable] = [feedSpot]
 
-    let controller = FeedController(spots: components,refreshable: false)
+    let controller = FeedController(spots: components, refreshable: true)
     controller.title = "Feed"
 
     applyStyles()
@@ -84,7 +83,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         content.appendContentsOf(comments)
         
         let feedComponent = Component(span: 1, items: content)
-        let feedSpot = FeedSpot(component: feedComponent)
+        let feedSpot = ListSpot(component: feedComponent)
         let controller = SpotsController(spots: [feedSpot])
         controller.title = "Feed"
         self.navigationController?.pushViewController(controller, animated: true)

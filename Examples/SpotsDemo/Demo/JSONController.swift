@@ -60,6 +60,12 @@ class JSONController: UIViewController {
     setupFrames()
   }
 
+  override func viewDidAppear(animated: Bool) {
+    super.viewDidAppear(animated)
+
+    submitButtonDidPress()
+  }
+
   override func viewDidLayoutSubviews() {
     super.viewDidLayoutSubviews()
 
@@ -74,8 +80,8 @@ class JSONController: UIViewController {
       do {
         let json = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments) as? [String : AnyObject]
         if let json = json {
-          let components = Parser.parse(json)
-          let controller = SpotsController(spots: components)
+          let spots = Parser.parse(json)
+          let controller = SpotsController(spots: spots)
           navigationController?.pushViewController(controller, animated: true)
         }
       } catch {

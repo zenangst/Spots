@@ -9,7 +9,6 @@ class GridSpotHeader : UICollectionViewCell, Itemble {
   lazy var imageView: UIImageView = {
     let imageView = UIImageView()
     imageView.contentMode = .ScaleAspectFill
-    imageView.autoresizingMask = [.FlexibleWidth]
     return imageView
     }()
 
@@ -44,5 +43,6 @@ class GridSpotHeader : UICollectionViewCell, Itemble {
     
     imageView.frame = contentView.frame
     item.size.height = 320
+    item.size.width = UIScreen.mainScreen().bounds.width
   }
 }

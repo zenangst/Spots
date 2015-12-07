@@ -7,7 +7,7 @@ public class FeedController: SpotsController, SpotsDelegate {
   public static let faker = Faker()
 
   public required init(spots: [Spotable], refreshable: Bool) {
-    super.init(spots: spots)
+    super.init(spots: spots, refreshable: refreshable)
 
     spotDelegate = self
   }
@@ -16,7 +16,7 @@ public class FeedController: SpotsController, SpotsDelegate {
       fatalError("init(coder:) has not been implemented")
   }
 
-  public func spotsDidReload(refreshControl: UIRefreshControl) {
+  public func spotsDidReload(refreshControl: UIRefreshControl, completion: (() -> Void)?) {
     delay(1.0) {
       dispatch(queue: .Interactive) { [weak self] in
         guard let spot = self?.spotAtIndex(0) else { return }
@@ -25,7 +25,10 @@ public class FeedController: SpotsController, SpotsDelegate {
           to: 2)
 
         self?.prepend(items, spotIndex: 0) {
-          dispatch { refreshControl.endRefreshing() }
+          dispatch {
+            refreshControl.endRefreshing()
+            completion?()
+          }
         }
       }
     }
@@ -36,10 +39,9 @@ public class FeedController: SpotsController, SpotsDelegate {
   public func spotDidReachEnd(completion: (() -> Void)?) {
     dispatch(queue: .Interactive) { [weak self] in
       guard let weakSelf = self else { return }
-      let items = FeedController.generateItems(0, to: 10)
-      weakSelf.append(items, spotIndex: 0) {
-        completion?()
-      }
+      guard let spot = weakSelf.spotAtIndex(0) else { return }
+      let items = FeedController.generateItems(spot.component.items.count, to: 3)
+      weakSelf.append(items) { completion?() }
     }
   }
 

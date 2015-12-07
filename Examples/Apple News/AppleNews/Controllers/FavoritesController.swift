@@ -9,7 +9,7 @@ class FavoritesController: SpotsController {
   convenience init(title: String) {
     let favorites = Component(span: 3)
     let spots: [Spotable] = [
-      GridSpot(favorites, top: 10, left: 5, bottom: 20, right: 5, itemSpacing: 5)
+      GridSpot(favorites, top: 10, left: 10, bottom: 20, right: 10, itemSpacing: -5)
     ]
 
     self.init(spots: spots, refreshable: false)

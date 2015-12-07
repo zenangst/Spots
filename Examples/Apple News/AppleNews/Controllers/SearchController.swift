@@ -48,21 +48,12 @@ extension SearchController: UITextFieldDelegate {
       string.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0 {
 
         dispatch(queue: .Interactive) { [weak self] in
-          self?.updateSpotAtIndex(1, closure: { (spot) -> Spotable in
-            spot.component.title = ""
-            spot.component.items = []
-            return spot
-          })
-        }
-
-        dispatch(queue: .Interactive) { [weak self] in
           let items = FavoritesController.generateItems(0, to: 11)
-          self?.updateSpotAtIndex(0, closure: { (spot) -> Spotable in
+          self?.updateSpotAtIndex(1, closure: { (spot) -> Spotable in
+            spot.component.title = "Results"
             spot.component.items = items
             return spot
-            }) {
-              textField.becomeFirstResponder()
-          }
+          })
         }
     }
 
