@@ -17,6 +17,19 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     return container
   }()
 
+  public lazy var tableView: UITableView = { [unowned self] in
+    let tableView = UITableView(frame: CGRect(x: 0, y: -64, width: UIScreen.mainScreen().bounds.width, height: 64))
+    tableView.userInteractionEnabled = false
+    return tableView
+  }()
+
+  public lazy var refreshControl: UIRefreshControl = { [unowned self] in
+    let refreshControl = UIRefreshControl()
+    refreshControl.addTarget(self, action: "refreshSpot:", forControlEvents: .ValueChanged)
+
+    return refreshControl
+    }()
+
   weak public var spotDelegate: SpotsDelegate?
 
   public required init(spots: [Spotable] = [], refreshable: Bool = true) {
