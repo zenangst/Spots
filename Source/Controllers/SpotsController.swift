@@ -97,7 +97,7 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     if shouldFetch && !fetching {
       fetching = true
       delay(0.2) {
-        spotDelegate?.spotDidReachEnd {
+        self.spotDelegate?.spotDidReachEnd {
           self.fetching = false
         }
       }
