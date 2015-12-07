@@ -77,7 +77,7 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
 
     // Refreshable
     tableView.contentOffset.y = scrollView.contentOffset.y + tableView.frame.height
-    if refreshControl.superview != nil && scrollView.contentOffset.y < -tableView.frame.height * 2 && !refreshControl.refreshing {
+    if refreshControl.superview != nil && scrollView.contentOffset.y < tableView.frame.origin.y * 2 && !refreshControl.refreshing {
       let contentInsetTop = container.contentInset.top
       UIView.animateWithDuration(0.6, delay: 0, options: .BeginFromCurrentState, animations: {
         self.container.contentInset.top = contentInsetTop * 2.0
