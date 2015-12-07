@@ -1,8 +1,8 @@
 import UIKit
-import GoldenRetriever
 import Sugar
 import Tailor
 import Spots
+import Imaginary
 
 class GridTopicCell: UICollectionViewCell, Itemble {
 
@@ -70,18 +70,8 @@ class GridTopicCell: UICollectionViewCell, Itemble {
     if !item.image.isEmpty {
       imageView.frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
       imageView.image = nil
-      let resource = item.image
-      let fido = GoldenRetriever()
-
-      dispatch(queue: .Interactive) {
-        fido.fetch(resource) { data, error in
-          guard let data = data else { return }
-          let image = UIImage(data: data)
-          dispatch { [weak self] in
-            self?.imageView.image = image
-          }
-        }
-      }
+      let URL = NSURL(string: item.image)
+      imageView.setImage(URL)
     }
 
     label.attributedText = NSAttributedString(string: item.title,

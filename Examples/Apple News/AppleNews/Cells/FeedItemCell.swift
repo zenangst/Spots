@@ -1,6 +1,6 @@
 import Spots
-import GoldenRetriever
 import Sugar
+import Imaginary
 
 class FeedItemCell: UITableViewCell, Itemble {
 
@@ -39,15 +39,8 @@ class FeedItemCell: UITableViewCell, Itemble {
 
   func configure(inout item: ListItem) {
     if !item.image.isEmpty {
-      dispatch(queue: .Interactive) {
-        GoldenRetriever().fetch(item.image) { data, error in
-          guard let data = data else { return }
-          let image = UIImage(data: data)
-          dispatch { [weak self] in
-            self?.customImageView.image = image
-          }
-        }
-      }
+      let URL = NSURL(string: item.image)
+      customImageView.setImage(URL)
     }
 
     textLabel?.attributedText = NSAttributedString(string: item.title,
