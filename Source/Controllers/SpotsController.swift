@@ -177,7 +177,7 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
   public func refreshSpots(refreshControl: UIRefreshControl) {
     dispatch { [weak self] in
       if let weakSelf = self, spotDelegate = weakSelf.spotDelegate {
-        spotDelegate.spotsDidReload(refreshControl)
+        spotDelegate.spotsDidReload(refreshControl) { }
       }
     }
   }
