@@ -60,6 +60,7 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
       spot.component.size = CGSize(
         width: view.frame.width,
         height: ceil(spot.render().frame.height))
+      spot.spotDelegate = spotDelegate
     }
   }
 
