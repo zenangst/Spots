@@ -14,6 +14,10 @@ public extension Spotable where Self : Gridable {
     layout.minimumInteritemSpacing = itemSpacing
   }
 
+  public func prepare() {
+    prepareSpot(self)
+  }
+
   public func prepareSpot<T: Spotable>(spot: T) {
     if component.kind.isEmpty { component.kind = "grid" }
 
