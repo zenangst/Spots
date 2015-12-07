@@ -36,6 +36,7 @@ public extension Spotable where Self : Gridable {
       component.items[index].index = index
 
       if let cell = componentCellClass.init() as? Itemble {
+        component.items[index].size.width = UIScreen.mainScreen().bounds.size.width / CGFloat(component.span)
         cell.configure(&component.items[index])
       }
     }
@@ -64,5 +65,7 @@ public extension Spotable where Self : Gridable {
   public func layout(size: CGSize) {
     collectionView.collectionViewLayout.invalidateLayout()
     collectionView.frame.size.width = size.width
+    guard let componentSize = component.size else { return }
+    collectionView.frame.size.height = componentSize.height
   }
 }
