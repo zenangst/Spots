@@ -99,11 +99,6 @@ public class SpotScrollView: UIScrollView {
           frame.origin.y = self.contentOffset.y
         }
 
-        let remainingBoundsHeight = fmax(CGRectGetMaxY(bounds) - CGRectGetMinY(frame), 0.0)
-        let remainingContentHeight = fmax(scrollView.contentSize.height - contentOffset.y, 0.0)
-        
-// Do we need this?
-//        frame.size.height = ceil(fmin(remainingBoundsHeight, remainingContentHeight)) + 1.0
         frame.size.width = ceil(contentView.frame.size.width)
 
         scrollView.frame = frame
