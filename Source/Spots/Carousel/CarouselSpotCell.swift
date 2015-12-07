@@ -34,15 +34,8 @@ class CarouselSpotCell: UICollectionViewCell, Itemble {
 
   func configure(inout item: ListItem) {
     if !item.image.isEmpty {
-      dispatch(queue: .Interactive) {
-        GoldenRetriever().fetch(item.image) { data, error in
-          guard let data = data else { return }
-          let image = UIImage(data: data)
-          dispatch { [weak self] in
-            self?.imageView.image = image
-          }
-        }
-      }
+      let URL = NSURL(string: item.image)
+      imageView.setImage(URL)
     }
     
     imageView.frame = contentView.frame
