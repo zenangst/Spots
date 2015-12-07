@@ -16,8 +16,7 @@ public class FeedController: SpotsController, SpotsDelegate {
       dispatch(queue: .Interactive) { [weak self] in
         guard let spot = self?.spotAtIndex(0) else { return }
 
-        let items = FeedController.generateItems(spot.component.items.count,
-          to: 2)
+        let items = FeedController.generateItems(spot.component.items.count, to: 10)
 
         self?.prepend(items, spotIndex: 0) {
           dispatch {
