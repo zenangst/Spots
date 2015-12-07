@@ -5,7 +5,6 @@ import Pods
 public class SpotsController: UIViewController {
 
   public private(set) var spots: [Spotable]
-  static let reuseIdentifier = "SpotReuseIdentifier"
 
   lazy private var container: SpotScrollView = { [unowned self] in
     let container = SpotScrollView(frame: self.view.bounds)
