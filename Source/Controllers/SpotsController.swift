@@ -20,6 +20,7 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
   public lazy var tableView: UITableView = { [unowned self] in
     let tableView = UITableView(frame: CGRect(x: 0, y: -64, width: UIScreen.mainScreen().bounds.width, height: 64))
     tableView.userInteractionEnabled = false
+    tableView.tableFooterView = UIView(frame: CGRect.zero)
     return tableView
     }()
 
