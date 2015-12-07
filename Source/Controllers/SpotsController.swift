@@ -78,7 +78,7 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     // Refreshable
     tableView.contentOffset.y = scrollView.contentOffset.y + tableView.frame.height
 
-    if refreshControl.superview != nil && scrollView.contentOffset.y < tableView.frame.origin.y * 2 && !refreshControl.refreshing && !refreshing {
+    if refreshControl.superview != nil && scrollView.contentOffset.y < tableView.frame.origin.y * 2 && !refreshControl.refreshing {
       refreshControl.beginRefreshing()
     }
 
