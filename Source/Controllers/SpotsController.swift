@@ -95,21 +95,16 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
 
   public func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
     guard refreshControl.refreshing else { return }
-    let defaultRefreshContentInset = self.tableView.contentInset.top
+    let defaultContainerOffset = self.container.contentOffset
+    let defaultContainerInset = self.container.contentInset.top
     container.contentInset.top = -scrollView.contentOffset.y
 
     delay(0.1) {
-      UIView.animateWithDuration(0.25, delay: 0, options: [.BeginFromCurrentState], animations: {
-        self.tableView.contentInset.top = self.refreshControl.frame.height - 1
-        self.container.contentInset.top = self.tableView.frame.height
-        self.container.contentOffset.y = -self.container.contentInset.top
-        }, completion: nil)
-
       delay(1.0) {
         self.spotDelegate?.spotsDidReload(self.refreshControl) { [weak self] in
           UIView.animateWithDuration(0.3, animations: {
-            self?.container.contentInset.top = 0.0
-            self?.tableView.contentInset.top = defaultRefreshContentInset
+            self?.container.contentOffset = defaultContainerOffset
+            self?.container.contentInset.top = defaultContainerInset
             }, completion: { _ in
               self?.refreshing = false
               self?.refreshControl.endRefreshing()
