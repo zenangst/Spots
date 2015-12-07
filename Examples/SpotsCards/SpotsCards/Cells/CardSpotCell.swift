@@ -104,8 +104,7 @@ class CardSpotCell : UICollectionViewCell, Itemble {
       width: frame.width - CardSpot.padding,
       height: frame.height - CardSpot.padding)
 
-    item.size.width = canvasView.frame.width
-    item.size.height = frame.height
+    item.size.height = ceil(UIScreen.mainScreen().bounds.height / 1.4)
   }
 
   override func layoutSubviews() {

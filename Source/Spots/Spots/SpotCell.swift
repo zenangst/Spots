@@ -2,6 +2,8 @@ import UIKit
 
 public class SpotCell: UICollectionViewCell {
 
+  var spot: Spotable?
+
   public var spotView: UIView? {
     didSet {
       guard let spotView = spotView else { return }

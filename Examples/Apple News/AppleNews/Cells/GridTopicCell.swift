@@ -13,7 +13,6 @@ class GridTopicCell: UICollectionViewCell, Itemble {
     label.font = UIFont.boldSystemFontOfSize(11)
     label.numberOfLines = 4
     label.textAlignment = .Center
-    label.autoresizingMask = [.FlexibleWidth]
 
     return label
     }()
@@ -21,7 +20,6 @@ class GridTopicCell: UICollectionViewCell, Itemble {
   lazy var imageView: UIImageView = {
     let imageView = UIImageView()
     imageView.contentMode = .ScaleAspectFill
-    imageView.autoresizingMask = [.FlexibleWidth]
 
     return imageView
     }()
@@ -39,9 +37,9 @@ class GridTopicCell: UICollectionViewCell, Itemble {
     return button
   }()
 
-  lazy var blurView: UIVisualEffectView = {
-    let view = UIVisualEffectView()
-    view.effect = UIBlurEffect(style: .Light)
+  lazy var blurView: UIView = {
+    let view = UIView()
+    view.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
 
     return view
   }()

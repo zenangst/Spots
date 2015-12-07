@@ -2,6 +2,7 @@ import UIKit
 import GoldenRetriever
 import Sugar
 import Spots
+import Hex
 
 class GridSpotCellTitles : UICollectionViewCell, Itemble {
 
@@ -70,6 +71,7 @@ class GridSpotCellTitles : UICollectionViewCell, Itemble {
     layoutSubviews()
 
     item.size.height = metaText.frame.origin.y + metaText.frame.height + 20
+    item.size.width = UIScreen.mainScreen().bounds.width
   }
 
   override func layoutSubviews() {

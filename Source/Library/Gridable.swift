@@ -14,6 +14,10 @@ public extension Spotable where Self : Gridable {
     layout.minimumInteritemSpacing = itemSpacing
   }
 
+  public func prepare() {
+    prepareSpot(self)
+  }
+
   public func prepareSpot<T: Spotable>(spot: T) {
     if component.kind.isEmpty { component.kind = "grid" }
 
@@ -32,6 +36,7 @@ public extension Spotable where Self : Gridable {
       component.items[index].index = index
 
       if let cell = componentCellClass.init() as? Itemble {
+        component.items[index].size.width = UIScreen.mainScreen().bounds.size.width / CGFloat(component.span)
         cell.configure(&component.items[index])
       }
     }
@@ -53,12 +58,14 @@ public extension Spotable where Self : Gridable {
     completion?()
   }
 
-  public func render() -> UIView {
+  public func render() -> UIScrollView {
     return collectionView
   }
 
   public func layout(size: CGSize) {
     collectionView.collectionViewLayout.invalidateLayout()
     collectionView.frame.size.width = size.width
+    guard let componentSize = component.size else { return }
+    collectionView.frame.size.height = componentSize.height
   }
 }

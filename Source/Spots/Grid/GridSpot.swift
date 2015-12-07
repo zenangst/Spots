@@ -10,12 +10,10 @@ public class GridSpot: NSObject, Spotable, Gridable {
   public var component: Component
   public var index = 0
 
-  public weak var sizeDelegate: SpotSizeDelegate?
   public weak var spotDelegate: SpotsDelegate?
 
   public lazy var layout: UICollectionViewFlowLayout = { [unowned self] in
     let layout = UICollectionViewFlowLayout()
-
     return layout
     }()
 
@@ -32,8 +30,6 @@ public class GridSpot: NSObject, Spotable, Gridable {
   public required init(component: Component) {
     self.component = component
     super.init()
-
-    prepareSpot(self)
   }
 
   public convenience init(_ component: Component, top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0, itemSpacing: CGFloat = 0) {
@@ -41,8 +37,6 @@ public class GridSpot: NSObject, Spotable, Gridable {
 
     layout.sectionInset = UIEdgeInsetsMake(top, left, bottom, right)
     layout.minimumInteritemSpacing = itemSpacing
-
-    prepareSpot(self)
   }
 
   public func setup(size: CGSize) {
@@ -55,12 +49,12 @@ extension GridSpot: UICollectionViewDelegateFlowLayout {
 
   public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
     if component.span > 0 {
-      component.items[indexPath.item].size.width = collectionView.frame.width / CGFloat(component.span)
+      component.items[indexPath.item].size.width = collectionView.frame.width / CGFloat(component.span) - layout.minimumInteritemSpacing
     }
 
     return CGSize(
-      width: item(indexPath).size.width - layout.sectionInset.left - layout.sectionInset.right,
-      height: item(indexPath).size.height)
+      width: ceil(item(indexPath).size.width - layout.sectionInset.left - layout.sectionInset.right),
+      height: ceil(item(indexPath).size.height))
   }
 }
 
@@ -86,7 +80,6 @@ extension GridSpot: UICollectionViewDataSource {
     if let grid = cell as? Itemble {
       grid.configure(&component.items[indexPath.item])
       collectionView.collectionViewLayout.invalidateLayout()
-      sizeDelegate?.sizeDidUpdate()
     }
 
     return cell

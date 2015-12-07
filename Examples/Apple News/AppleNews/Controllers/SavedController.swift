@@ -8,11 +8,10 @@ class SavedController: SpotsController {
 
   convenience init(title: String) {
     let component = Component()
-    let feedSpot = FeedSpot(component: component)
+    let feedSpot = ListSpot(component: component)
     self.init(spots: [feedSpot], refreshable: false)
 
     self.title = title
-    collectionView.scrollEnabled = false
 
     dispatch(queue: .Interactive) { [weak self] in
       let items = ForYouController.generateItems(0, to: 2)

@@ -5,7 +5,6 @@ public protocol Spotable: class {
   static var cells: [String : UIView.Type] { get set }
   static var defaultCell: UIView.Type { get set }
 
-  weak var sizeDelegate: SpotSizeDelegate? { get set }
   weak var spotDelegate: SpotsDelegate? { get set }
 
   var index: Int { get set }
@@ -22,8 +21,9 @@ public protocol Spotable: class {
   func delete(index: Int, completion: (() -> Void)?)
   func delete(indexes: [Int], completion: (() -> Void)?)
   func reload(indexes: [Int], completion: (() -> Void)?)
-  func render() -> UIView
+  func render() -> UIScrollView
   func layout(size: CGSize)
+  func prepare()
 }
 
 public extension Spotable {
@@ -52,4 +52,6 @@ public extension Spotable {
   public func item(indexPath: NSIndexPath) -> ListItem {
     return component.items[indexPath.item]
   }
+
+  public func prepare() { }
 }

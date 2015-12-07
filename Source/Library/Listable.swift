@@ -13,6 +13,10 @@ public protocol Listable: Spotable {
 
 public extension Spotable where Self : Listable {
 
+  public func prepare() {
+    prepareSpot(self)
+  }
+
   public func prepareSpot<T: Spotable>(spot: T) {
     if component.kind.isEmpty { component.kind = "list" }
 
@@ -154,10 +158,12 @@ public extension Spotable where Self : Listable {
     tableView.beginUpdates()
     tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
     tableView.endUpdates()
+    tableView.setNeedsLayout()
+    tableView.layoutIfNeeded()
     completion?()
   }
 
-  public func render() -> UIView {
+  public func render() -> UIScrollView {
     return tableView
   }
 

@@ -8,12 +8,11 @@ class ForYouController: SpotsController, SpotsDelegate {
 
   convenience init(title: String) {
     let component = Component()
-    let feedSpot = FeedSpot(component: component)
-    self.init(spots: [feedSpot], refreshable: false)
+    let feedSpot = ListSpot(component: component)
+    self.init(spots: [feedSpot], refreshable: true)
     
     self.title = title
     spotDelegate = self
-    collectionView.scrollEnabled = false
 
     dispatch(queue: .Interactive) { [weak self] in
       let items = ForYouController.generateItems(0, to: 10)
@@ -24,12 +23,12 @@ class ForYouController: SpotsController, SpotsDelegate {
     }
   }
 
-  func spotsDidReload(refreshControl: UIRefreshControl) {
+  func spotsDidReload(refreshControl: UIRefreshControl, completion: (() -> Void)?) {
     if let spot = spotAtIndex(0) {
       let items = ForYouController.generateItems(spot.component.items.count, to: 10)
-      prepend(items)
       delay(0.5) {
-        refreshControl.endRefreshing()
+        self.prepend(items)
+        completion?()
       }
     }
   }
