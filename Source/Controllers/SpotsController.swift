@@ -15,13 +15,13 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     container.delegate = self
 
     return container
-  }()
+    }()
 
   public lazy var tableView: UITableView = { [unowned self] in
     let tableView = UITableView(frame: CGRect(x: 0, y: -64, width: UIScreen.mainScreen().bounds.width, height: 64))
     tableView.userInteractionEnabled = false
     return tableView
-  }()
+    }()
 
   public lazy var refreshControl: UIRefreshControl = { [unowned self] in
     let refreshControl = UIRefreshControl()
@@ -80,7 +80,7 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
       UIView.animateWithDuration(0.6, delay: 0, options: .BeginFromCurrentState, animations: {
         self.container.contentInset.top = contentInsetTop * 2.0
         self.container.contentOffset.y = -self.container.contentInset.top
-      }, completion: nil)
+        }, completion: nil)
 
       refreshControl.beginRefreshing()
       spotDelegate?.spotsDidReload(refreshControl) { [weak self] in
@@ -150,11 +150,11 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
   public func append(item: ListItem, spotIndex: Int = 0, completion: (() -> Void)? = nil) {
     spotAtIndex(spotIndex)?.append(item) { completion?() }
   }
-  
+
   public func append(items: [ListItem], spotIndex: Int = 0, completion: (() -> Void)? = nil) {
     spotAtIndex(spotIndex)?.append(items) { completion?() }
   }
-  
+
   public func prepend(items: [ListItem], spotIndex: Int = 0, completion: (() -> Void)? = nil) {
     spotAtIndex(spotIndex)?.prepend(items)  { completion?() }
   }
@@ -193,7 +193,7 @@ extension SpotsController {
   private func spot(indexPath: NSIndexPath) -> Spotable {
     return spots[indexPath.item]
   }
-
+  
   private func spot(index: Int) -> Spotable {
     return spots[index]
   }
