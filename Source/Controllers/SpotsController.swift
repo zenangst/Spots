@@ -1,6 +1,5 @@
 import UIKit
 import Sugar
-import Pods
 
 public class SpotsController: UIViewController, UIScrollViewDelegate {
 
