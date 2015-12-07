@@ -5,6 +5,7 @@ import Pods
 public class SpotsController: UIViewController, UIScrollViewDelegate {
 
   public private(set) var spots: [Spotable]
+  private var fetching = false
 
   lazy private var container: SpotScrollView = { [unowned self] in
     let container = SpotScrollView(frame: self.view.bounds)
