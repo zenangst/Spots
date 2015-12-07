@@ -99,17 +99,16 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     let defaultContainerInset = container.contentInset.top
     container.contentInset.top = -scrollView.contentOffset.y
 
-    delay(0.1) {
-      delay(1.0) {
-        self.spotDelegate?.spotsDidReload(self.refreshControl) { [weak self] in
-          UIView.animateWithDuration(0.3, animations: {
-            self?.container.contentOffset = defaultContainerOffset
-            self?.container.contentInset.top = defaultContainerInset
-            }, completion: { _ in
-              self?.refreshing = false
-              self?.refreshControl.endRefreshing()
-          })
-        }
+    
+    delay(1.0) {
+      self.spotDelegate?.spotsDidReload(self.refreshControl) { [weak self] in
+        UIView.animateWithDuration(0.3, animations: {
+          self?.container.contentOffset = defaultContainerOffset
+          self?.container.contentInset.top = defaultContainerInset
+          }, completion: { _ in
+            self?.refreshing = false
+            self?.refreshControl.endRefreshing()
+        })
       }
     }
   }
