@@ -66,7 +66,7 @@ class GridSpotCellTitles : UICollectionViewCell, Itemble {
       attributes: [NSParagraphStyleAttributeName : paddedStyle])
     metaText.attributedText = NSAttributedString(string: item.meta.property("text") ?? "",
       attributes: [NSParagraphStyleAttributeName : paddedStyle])
-    metaText.textColor = UIColor(hex: "000000" ?? "000000")
+    metaText.textColor = UIColor(hex: item.meta.property("text-color") ?? "000000")
 
     layoutSubviews()
 
