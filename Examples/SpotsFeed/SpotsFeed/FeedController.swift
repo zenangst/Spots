@@ -5,15 +5,10 @@ import Spots
 public class FeedController: SpotsController, SpotsDelegate {
 
   public static let faker = Faker()
-
-  public required init(spots: [Spotable], refreshable: Bool) {
-    super.init(spots: spots, refreshable: refreshable)
-
-    spotDelegate = self
-  }
-
-  public required init?(coder aDecoder: NSCoder) {
-      fatalError("init(coder:) has not been implemented")
+  
+  public override func viewDidLoad() {
+    self.spotDelegate = self
+    super.viewDidLoad()
   }
 
   public func spotsDidReload(refreshControl: UIRefreshControl, completion: (() -> Void)?) {
