@@ -54,22 +54,14 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
 
     for spot in spots {
       spot.render().optimize()
-
-      var size = view.frame.size
-
-      if let tabBarController = tabBarController
-        where tabBarController.tabBar.translucent {
-          (spot.render() as? UITableView)?.contentInset.bottom = tabBarController.tabBar.frame.height
-          size.height -= container.contentInset.top
-      } else if let _ = navigationController {
-        spot.render().contentInset.bottom = container.contentInset.top
-      }
-
-      spot.setup(size)
+      container.contentView.addSubview(spot.render())
+      spot.prepare()
+      spot.setup(container.frame.size)
       spot.component.size = CGSize(
         width: view.frame.width,
         height: ceil(spot.render().frame.height))
-      container.contentView.addSubview(spot.render())
+    }
+  }
     }
   }
 
