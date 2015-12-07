@@ -35,6 +35,8 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
   public required init(spots: [Spotable] = [], refreshable: Bool = false) {
     self.spots = spots
     super.init(nibName: nil, bundle: nil)
+    view.addSubview(container)
+
 
     spots.enumerate().forEach { spot($0.index).index = $0.index }
   }
