@@ -7,8 +7,8 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
   public private(set) var spots: [Spotable]
   private var fetching = false
 
-  lazy private var container: SpotScrollView = { [unowned self] in
-    let container = SpotScrollView(frame: self.view.bounds)
+  lazy public var container: SpotScrollView = { [unowned self] in
+    let container = SpotScrollView(frame: self.view.frame)
     container.alwaysBounceVertical = true
     container.backgroundColor = UIColor.whiteColor()
     container.clipsToBounds = true
