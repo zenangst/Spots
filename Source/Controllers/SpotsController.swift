@@ -4,7 +4,7 @@ import Sugar
 public class SpotsController: UIViewController, UIScrollViewDelegate {
 
   public private(set) var spots: [Spotable]
-  private var fetching = false
+  private var refreshing = false
 
   lazy public var container: SpotScrollView = { [unowned self] in
     let container = SpotScrollView(frame: self.view.frame)
@@ -17,9 +17,10 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     }()
 
   public lazy var tableView: UITableView = { [unowned self] in
-    let tableView = UITableView(frame: CGRect(x: 0, y: -64, width: UIScreen.mainScreen().bounds.width, height: 64))
+    let tableView = UITableView(frame: CGRect(x: 0, y: -60, width: UIScreen.mainScreen().bounds.width, height: 60))
     tableView.userInteractionEnabled = false
     tableView.tableFooterView = UIView(frame: CGRect.zero)
+    tableView.backgroundColor = UIColor.clearColor()
 
     return tableView
     }()
@@ -72,32 +73,47 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     let size = scrollView.contentSize
     let shouldFetch = offset.y + bounds.size.height - inset.bottom > size.height
       && size.height > bounds.size.height
-      && !fetching
+      && !refreshing
 
     // Refreshable
     tableView.contentOffset.y = scrollView.contentOffset.y + tableView.frame.height
-    if refreshControl.superview != nil && scrollView.contentOffset.y < tableView.frame.origin.y * 2 && !refreshControl.refreshing {
-      let contentInsetTop = container.contentInset.top
-      UIView.animateWithDuration(0.6, delay: 0, options: .BeginFromCurrentState, animations: {
-        self.container.contentInset.top = contentInsetTop * 2.0
-        self.container.contentOffset.y = -self.container.contentInset.top
-        }, completion: nil)
 
+    if refreshControl.superview != nil && scrollView.contentOffset.y < tableView.frame.origin.y * 2 && !refreshControl.refreshing {
       refreshControl.beginRefreshing()
-      spotDelegate?.spotsDidReload(refreshControl) { [weak self] in
-        UIView.animateWithDuration(0.1) {
-          self?.container.contentInset.top = contentInsetTop
-        }
-        self?.refreshControl.endRefreshing()
-      }
     }
 
     // Infinite scrolling
-    if shouldFetch && !fetching {
-      fetching = true
+    if shouldFetch && !refreshing {
+      refreshing = false
       delay(0.2) {
         self.spotDelegate?.spotDidReachEnd {
-          self.fetching = false
+          self.refreshing = false
+        }
+      }
+    }
+  }
+
+  public func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    guard let refreshControl.refreshing else { return }
+    let defaultRefreshContentInset = self.tableView.contentInset.top
+    container.contentInset.top = -scrollView.contentOffset.y
+
+    delay(0.1) {
+      UIView.animateWithDuration(0.25, delay: 0, options: [.BeginFromCurrentState], animations: {
+        self.tableView.contentInset.top = self.refreshControl.frame.height - 1
+        self.container.contentInset.top = self.tableView.frame.height
+        self.container.contentOffset.y = -self.container.contentInset.top
+        }, completion: nil)
+
+      delay(1.0) {
+        self.spotDelegate?.spotsDidReload(self.refreshControl) { [weak self] in
+          UIView.animateWithDuration(0.3, animations: {
+            self?.container.contentInset.top = 0.0
+            self?.tableView.contentInset.top = defaultRefreshContentInset
+            }, completion: { _ in
+              self?.refreshing = false
+              self?.refreshControl.endRefreshing()
+          })
         }
       }
     }

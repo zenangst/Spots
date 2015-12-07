@@ -10,7 +10,7 @@ public class SpotScrollView: UIScrollView {
   lazy public var contentView: SpotContentView = { [unowned self] in
     let view = SpotContentView(frame: self.frame)
     return view
-  }()
+    }()
 
   deinit {
     contentView.subviews.forEach { $0.removeFromSuperview() }
@@ -22,7 +22,7 @@ public class SpotScrollView: UIScrollView {
   }
 
   required public init?(coder aDecoder: NSCoder) {
-      fatalError("init(coder:) has not been implemented")
+    fatalError("init(coder:) has not been implemented")
   }
 
   func didAddSubviewToContainer(subview: UIView) {
@@ -39,7 +39,7 @@ public class SpotScrollView: UIScrollView {
         where layout.scrollDirection == .Horizontal  {
           scrollView.scrollEnabled = true
       }
-      
+
       scrollView.addObserver(self, forKeyPath: "contentSize", options: .Old, context: KVOContext)
     }
 
@@ -60,11 +60,11 @@ public class SpotScrollView: UIScrollView {
   public override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
     if let change = change where context == KVOContext {
       if let scrollView = object as? UIScrollView,
-      oldContentSize = change[NSKeyValueChangeOldKey] as? CGSize {
-        if scrollView.contentSize != oldContentSize {
-          setNeedsLayout()
-          layoutIfNeeded()
-        }
+        oldContentSize = change[NSKeyValueChangeOldKey] as? CGSize {
+          if scrollView.contentSize != oldContentSize {
+            setNeedsLayout()
+            layoutIfNeeded()
+          }
       } else if let view = object as? UIView,
         oldContentSize = change[NSKeyValueChangeOldKey] as? CGRect {
           if view.frame != oldContentSize {
