@@ -23,6 +23,7 @@ public protocol Spotable: class {
   func reload(indexes: [Int], completion: (() -> Void)?)
   func render() -> UIScrollView
   func layout(size: CGSize)
+  func prepare()
 }
 
 public extension Spotable {
@@ -51,4 +52,6 @@ public extension Spotable {
   public func item(indexPath: NSIndexPath) -> ListItem {
     return component.items[indexPath.item]
   }
+
+  public func prepare() { }
 }
