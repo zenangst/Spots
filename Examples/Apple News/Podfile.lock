@@ -8,7 +8,7 @@ PODS:
     - Sugar
     - Tailor
   - Sugar (0.1.0)
-  - SwiftyJSON (2.3.1)
+  - SwiftyJSON (2.3.2)
   - Tailor (0.2.0):
     - Sugar
 
@@ -52,7 +52,7 @@ SPEC CHECKSUMS:
   GoldenRetriever: 68256f443f35eaeb90b58e2f64bc8f5b255738ba
   Spots: defa9f77e864c4fbcdd834dfed9e37f1c2682480
   Sugar: d33f2a3ae10e40c14eb49a2e859f12e82e614817
-  SwiftyJSON: 592b53bee5ef3dd9b3bebc6b9cb7ee35426ae8c3
+  SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   Tailor: acba14dba2fb854cdf2550c1a3dfd603f6b59dbc
 
 COCOAPODS: 0.39.0
