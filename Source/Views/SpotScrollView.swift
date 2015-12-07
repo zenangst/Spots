@@ -9,7 +9,6 @@ public class SpotScrollView: UIScrollView {
 
   lazy public var contentView: SpotContentView = { [unowned self] in
     let view = SpotContentView(frame: self.frame)
-
     return view
   }()
 
