@@ -32,7 +32,7 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
 
   weak public var spotDelegate: SpotsDelegate?
 
-  public required init(spots: [Spotable] = [], refreshable: Bool = true) {
+  public required init(spots: [Spotable] = [], refreshable: Bool = false) {
     self.spots = spots
     super.init(nibName: nil, bundle: nil)
 
