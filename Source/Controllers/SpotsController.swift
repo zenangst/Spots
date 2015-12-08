@@ -3,7 +3,7 @@ import Sugar
 
 public class SpotsController: UIViewController, UIScrollViewDelegate {
 
-  public static var configure: ((container: SpotScrollView) -> Void)?
+  public static var configure: ((container: SpotsScrollView) -> Void)?
 
   public private(set) var initialContentInset: UIEdgeInsets = UIEdgeInsetsZero
   public private(set) var spots: [Spotable]
@@ -20,8 +20,8 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     }
   }
 
-  lazy public var container: SpotScrollView = { [unowned self] in
-    let container = SpotScrollView(frame: self.view.frame)
+  lazy public var container: SpotsScrollView = { [unowned self] in
+    let container = SpotsScrollView(frame: self.view.frame)
     container.alwaysBounceVertical = true
     container.backgroundColor = UIColor.whiteColor()
     container.clipsToBounds = true

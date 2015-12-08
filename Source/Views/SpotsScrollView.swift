@@ -1,14 +1,14 @@
 import UIKit
 import QuartzCore
 
-public class SpotScrollView: UIScrollView {
+public class SpotsScrollView: UIScrollView {
 
   let KVOContext = UnsafeMutablePointer<()>()
 
   private var subviewsInLayoutOrder = [UIView?]()
 
-  lazy public var contentView: SpotContentView = { [unowned self] in
-    let view = SpotContentView(frame: self.frame)
+  lazy public var contentView: SpotsContentView = { [unowned self] in
+    let view = SpotsContentView(frame: self.frame)
     return view
     }()
 
