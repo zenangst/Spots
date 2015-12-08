@@ -114,12 +114,6 @@ public class SpotScrollView: UIScrollView {
       }
     }
 
-    if let navigationController = UIApplication.sharedApplication().keyWindow?.rootViewController as? UINavigationController,
-      tabBarController = navigationController.viewControllers.first as? UITabBarController
-      where tabBarController.tabBar.translucent {
-        contentInset.bottom = tabBarController.tabBar.frame.height
-    }
-
     let minimumContentHeight = bounds.height - (contentInset.top + contentInset.bottom)
     let initialContentOffset = contentOffset
     contentSize = CGSize(width: bounds.size.width, height: fmax(yOffsetOfCurrentSubview, minimumContentHeight))

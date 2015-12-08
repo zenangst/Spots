@@ -4,7 +4,14 @@ import Sugar
 public class SpotsController: UIViewController, UIScrollViewDelegate {
 
   public private(set) var spots: [Spotable]
-  private var refreshing = false
+  private var refreshing = false {
+    didSet {
+      if !refreshing {
+        refreshControl.endRefreshing()
+      }
+    }
+  }
+  private var initialContentInset: UIEdgeInsets = UIEdgeInsetsZero
 
   lazy public var container: SpotScrollView = { [unowned self] in
     let container = SpotScrollView(frame: self.view.frame)
@@ -66,6 +73,27 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     }
   }
 
+  public override func viewWillAppear(animated: Bool) {
+    super.viewWillAppear(animated)
+
+    container.frame = UIScreen.mainScreen().bounds
+    container.frame.size.height -= ceil(container.contentInset.top + container.contentOffset.y)
+    container.contentInset.bottom = tabBarController?.tabBar.frame.height ?? container.contentInset.bottom
+
+    initialContentInset = container.contentInset
+
+    spots.forEach { spot in
+      spot.render().layoutSubviews()
+      spot.render().setNeedsDisplay()
+    }
+  }
+
+  public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+    super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+
+    spots.forEach { $0.layout(size) }
+  }
+
   public func scrollViewDidScroll(scrollView: UIScrollView) {
     let bounds = scrollView.bounds
     let inset = scrollView.contentInset
@@ -95,35 +123,16 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
 
   public func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
     guard refreshControl.refreshing else { return }
-    let defaultContainerOffset = container.contentOffset
-    let defaultContainerInset = container.contentInset.top
     container.contentInset.top = -scrollView.contentOffset.y
 
-    delay(1.0) {
-      self.spotDelegate?.spotsDidReload(refreshControl) { [weak self] in
-        UIView.animateWithDuration(0.3, animations: {
-          self?.container.contentOffset = defaultContainerOffset
-          self?.container.contentInset.top = defaultContainerInset
-          }, completion: { _ in
-            self?.refreshing = false
-            self?.refreshControl.endRefreshing()
-        })
-      }
+    self.spotDelegate?.spotsDidReload(refreshControl) { [weak self] in
+      guard let weakSelf = self else { return }
+      UIView.animateWithDuration(0.3, animations: {
+        weakSelf.container.contentInset = weakSelf.initialContentInset
+        }, completion: { _ in
+          weakSelf.refreshing = false
+      })
     }
-  }
-
-  public override func viewWillAppear(animated: Bool) {
-    super.viewWillAppear(animated)
-    for spot in self.spots {
-      spot.render().layoutSubviews()
-      spot.render().setNeedsDisplay()
-    }
-  }
-
-  public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-    super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
-
-    spots.forEach { $0.layout(size) }
   }
 
   public func spotAtIndex(index: Int) -> Spotable? {
