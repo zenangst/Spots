@@ -3,6 +3,8 @@ import Sugar
 
 public class SpotsController: UIViewController, UIScrollViewDelegate {
 
+  public static var configure: ((container: SpotScrollView) -> Void)?
+
   public private(set) var initialContentInset: UIEdgeInsets = UIEdgeInsetsZero
   public private(set) var spots: [Spotable]
 
@@ -82,6 +84,8 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     container.frame = UIScreen.mainScreen().bounds
     container.frame.size.height -= ceil(container.contentInset.top + container.contentOffset.y)
     container.contentInset.bottom = tabBarController?.tabBar.frame.height ?? container.contentInset.bottom
+
+    SpotsController.configure?(container: container)
 
     initialContentInset = container.contentInset
 
