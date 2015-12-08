@@ -35,7 +35,7 @@ public class ListSpot: NSObject, Spotable, Listable {
   public required init(component: Component) {
     self.component = component
     super.init()
-    prepareSpot(self)
+    prepare()
 
     let reuseIdentifer = component.kind.isEmpty ? "list" : component.kind
     if let headerType = ListSpot.headers[reuseIdentifer] {

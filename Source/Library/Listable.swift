@@ -17,7 +17,7 @@ public extension Spotable where Self : Listable {
     prepareSpot(self)
   }
 
-  public func prepareSpot<T: Spotable>(spot: T) {
+  private func prepareSpot<T: Spotable>(spot: T) {
     if component.kind.isEmpty { component.kind = "list" }
 
     for (reuseIdentifier, classType) in T.cells {

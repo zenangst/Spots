@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8510A4F5A6A1DA7056A6080B /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47C20DD9DEFE20C747501850 /* Pods.framework */; };
+		BD09693C1C16E59A00916E7C /* SpotsController+UIScrollViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD09693B1C16E59A00916E7C /* SpotsController+UIScrollViewDelegate.swift */; settings = {ASSET_TAGS = (); }; };
 		BD2EF3251C13428B00F0B960 /* SpotsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2EF3241C13428B00F0B960 /* SpotsController.swift */; settings = {ASSET_TAGS = (); }; };
 		BD2EF3361C13474D00F0B960 /* SpotScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2EF3351C13474D00F0B960 /* SpotScrollView.swift */; settings = {ASSET_TAGS = (); }; };
 		BD2EF3381C135F5C00F0B960 /* SpotContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2EF3371C135F5C00F0B960 /* SpotContentView.swift */; settings = {ASSET_TAGS = (); }; };
@@ -43,6 +44,7 @@
 		14C136541AB784B200B7B07A /* LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = LICENSE.md; path = ../LICENSE.md; sourceTree = "<group>"; };
 		14C136551AB784B200B7B07A /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		47C20DD9DEFE20C747501850 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BD09693B1C16E59A00916E7C /* SpotsController+UIScrollViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SpotsController+UIScrollViewDelegate.swift"; sourceTree = "<group>"; };
 		BD2EF3241C13428B00F0B960 /* SpotsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsController.swift; sourceTree = "<group>"; };
 		BD2EF3351C13474D00F0B960 /* SpotScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotScrollView.swift; sourceTree = "<group>"; };
 		BD2EF3371C135F5C00F0B960 /* SpotContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotContentView.swift; sourceTree = "<group>"; };
@@ -157,6 +159,7 @@
 			isa = PBXGroup;
 			children = (
 				BD2EF3241C13428B00F0B960 /* SpotsController.swift */,
+				BD09693B1C16E59A00916E7C /* SpotsController+UIScrollViewDelegate.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -400,6 +403,7 @@
 				BDC308561C05F8280091579D /* SpotFactory.swift in Sources */,
 				BDC308521C05F8280091579D /* Itemble.swift in Sources */,
 				BDC308571C05F8280091579D /* SpotsDelegate.swift in Sources */,
+				BD09693C1C16E59A00916E7C /* SpotsController+UIScrollViewDelegate.swift in Sources */,
 				BDC308621C05F8280091579D /* ListSpotCell.swift in Sources */,
 				BDFECC531C04EA7800049FE2 /* TestComponent.swift in Sources */,
 				BDC3085B1C05F8280091579D /* CarouselSpot.swift in Sources */,
