@@ -18,7 +18,7 @@ public extension Spotable where Self : Gridable {
     prepareSpot(self)
   }
 
-  public func prepareSpot<T: Spotable>(spot: T) {
+  private func prepareSpot<T: Spotable>(spot: T) {
     if component.kind.isEmpty { component.kind = "grid" }
 
     for (reuseIdentifier, classType) in T.cells {
