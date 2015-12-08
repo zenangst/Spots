@@ -1,5 +1,5 @@
 PODS:
-  - Cache (0.1.0)
+  - Cache (1.0.0)
   - Compass (1.1.0)
   - Fakery (1.1.0):
     - SwiftyJSON
@@ -41,7 +41,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   Cache:
-    :commit: 1de72cb2c07e8bce81a2c6599b8e08122922b737
+    :commit: 66f8748a71fedc2036ed98f994d76cba1840fdeb
     :git: https://github.com/hyperoslo/Cache
   Compass:
     :commit: e4ec0ff6e6dd64da0e07a4ab6214086d2e2cd2b8
@@ -57,7 +57,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/zenangst/Tailor
 
 SPEC CHECKSUMS:
-  Cache: 59ea9dbb71dfa1ba68a6efe295e907603b3066da
+  Cache: 5f381cc23cb2c69bc70b8cd2a5e260d006b03b6d
   Compass: 884465fe6cd5f809a4e6640f7933de31331e0d38
   Fakery: 593389814fb7c42fe7f0801e76c8ae55b95505e7
   Hex: ee430da9c4412d9196366ae5327f279021dc03eb
