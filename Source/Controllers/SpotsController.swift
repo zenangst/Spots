@@ -66,6 +66,25 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     }
   }
 
+  public override func viewWillAppear(animated: Bool) {
+    super.viewWillAppear(animated)
+
+    container.frame = UIScreen.mainScreen().bounds
+    container.frame.size.height -= ceil(tabBarController?.tabBar.frame.height ?? 0)
+    container.frame.size.height -= ceil(CGRectGetMaxY(navigationController?.navigationBar.frame ?? CGRectZero))
+
+    for spot in self.spots {
+      spot.render().layoutSubviews()
+      spot.render().setNeedsDisplay()
+    }
+  }
+
+  public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+    super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+
+    spots.forEach { $0.layout(size) }
+  }
+
   public func scrollViewDidScroll(scrollView: UIScrollView) {
     let bounds = scrollView.bounds
     let inset = scrollView.contentInset
@@ -110,20 +129,6 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
         })
       }
     }
-  }
-
-  public override func viewWillAppear(animated: Bool) {
-    super.viewWillAppear(animated)
-    for spot in self.spots {
-      spot.render().layoutSubviews()
-      spot.render().setNeedsDisplay()
-    }
-  }
-
-  public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-    super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
-
-    spots.forEach { $0.layout(size) }
   }
 
   public func spotAtIndex(index: Int) -> Spotable? {
