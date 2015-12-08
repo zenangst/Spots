@@ -5,6 +5,7 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
 
   public private(set) var spots: [Spotable]
   private var refreshing = false
+  private var initialContentInset: UIEdgeInsets = UIEdgeInsetsZero
 
   lazy public var container: SpotScrollView = { [unowned self] in
     let container = SpotScrollView(frame: self.view.frame)
@@ -72,6 +73,7 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     container.frame = UIScreen.mainScreen().bounds
     container.frame.size.height -= ceil(tabBarController?.tabBar.frame.height ?? 0)
     container.frame.size.height -= ceil(CGRectGetMaxY(navigationController?.navigationBar.frame ?? CGRectZero))
+    initialContentInset = container.contentInset
 
     for spot in self.spots {
       spot.render().layoutSubviews()
