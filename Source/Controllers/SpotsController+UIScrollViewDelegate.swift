@@ -33,13 +33,15 @@ extension SpotsController {
     guard refreshControl.refreshing else { return }
     container.contentInset.top = -scrollView.contentOffset.y
 
-    self.spotDelegate?.spotsDidReload(refreshControl) { [weak self] in
-      guard let weakSelf = self else { return }
-      UIView.animateWithDuration(0.3, animations: {
-        weakSelf.container.contentInset = weakSelf.initialContentInset
-        }, completion: { _ in
-          weakSelf.refreshing = false
-      })
+    delay(0.5) {
+      self.spotDelegate?.spotsDidReload(refreshControl) { [weak self] in
+        guard let weakSelf = self else { return }
+        UIView.animateWithDuration(0.3, animations: {
+          weakSelf.container.contentInset = weakSelf.initialContentInset
+          }, completion: { _ in
+            weakSelf.refreshing = false
+        })
+      }
     }
   }
 }
