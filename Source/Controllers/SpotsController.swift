@@ -11,6 +11,9 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
       if !refreshing { refreshControl.endRefreshing() }
     }
   }
+
+  weak public var spotDelegate: SpotsDelegate?
+
   lazy public var container: SpotScrollView = { [unowned self] in
     let container = SpotScrollView(frame: self.view.frame)
     container.alwaysBounceVertical = true
@@ -36,8 +39,6 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
 
     return refreshControl
     }()
-
-  weak public var spotDelegate: SpotsDelegate?
 
   // MARK: Initializer
 
