@@ -3,16 +3,14 @@ import Sugar
 
 public class SpotsController: UIViewController, UIScrollViewDelegate {
 
+  public private(set) var initialContentInset: UIEdgeInsets = UIEdgeInsetsZero
   public private(set) var spots: [Spotable]
-  private var refreshing = false {
+
+  public var refreshing = false {
     didSet {
-      if !refreshing {
-        refreshControl.endRefreshing()
-      }
+      if !refreshing { refreshControl.endRefreshing() }
     }
   }
-  private var initialContentInset: UIEdgeInsets = UIEdgeInsetsZero
-
   lazy public var container: SpotScrollView = { [unowned self] in
     let container = SpotScrollView(frame: self.view.frame)
     container.alwaysBounceVertical = true
@@ -41,6 +39,8 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
 
   weak public var spotDelegate: SpotsDelegate?
 
+  // MARK: Initializer
+
   public required init(spots: [Spotable] = [], refreshable: Bool = false) {
     self.spots = spots
     super.init(nibName: nil, bundle: nil)
@@ -57,6 +57,8 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
   public required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
+
+  //MARK: - View Life Cycle
 
   public override func viewDidLoad() {
     super.viewDidLoad()
@@ -93,47 +95,11 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
 
     spots.forEach { $0.layout(size) }
   }
+}
 
-  public func scrollViewDidScroll(scrollView: UIScrollView) {
-    let bounds = scrollView.bounds
-    let inset = scrollView.contentInset
-    let offset = scrollView.contentOffset
-    let size = scrollView.contentSize
-    let shouldFetch = offset.y + bounds.size.height - inset.bottom > size.height
-      && size.height > bounds.size.height
-      && !refreshing
+// MARK: - Public SpotController methods
 
-    // Refreshable
-    tableView.contentOffset.y = scrollView.contentOffset.y + tableView.frame.height
-
-    if refreshControl.superview != nil && scrollView.contentOffset.y < tableView.frame.origin.y * 2 && !refreshControl.refreshing {
-      refreshControl.beginRefreshing()
-    }
-
-    // Infinite scrolling
-    if shouldFetch && !refreshing {
-      refreshing = false
-      delay(0.2) {
-        self.spotDelegate?.spotDidReachEnd {
-          self.refreshing = false
-        }
-      }
-    }
-  }
-
-  public func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-    guard refreshControl.refreshing else { return }
-    container.contentInset.top = -scrollView.contentOffset.y
-
-    self.spotDelegate?.spotsDidReload(refreshControl) { [weak self] in
-      guard let weakSelf = self else { return }
-      UIView.animateWithDuration(0.3, animations: {
-        weakSelf.container.contentInset = weakSelf.initialContentInset
-        }, completion: { _ in
-          weakSelf.refreshing = false
-      })
-    }
-  }
+extension SpotsController {
 
   public func spotAtIndex(index: Int) -> Spotable? {
     return spots.filter{ $0.index == index }.first
@@ -204,6 +170,8 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     }
   }
 }
+
+// MARK: - Private methods
 
 extension SpotsController {
 
