@@ -71,8 +71,9 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     super.viewWillAppear(animated)
 
     container.frame = UIScreen.mainScreen().bounds
-    container.frame.size.height -= ceil(tabBarController?.tabBar.frame.height ?? 0)
-    container.frame.size.height -= ceil(CGRectGetMaxY(navigationController?.navigationBar.frame ?? CGRectZero))
+    container.frame.size.height -= ceil(container.contentInset.top + container.contentOffset.y)
+    container.contentInset.bottom = tabBarController?.tabBar.frame.height ?? container.contentInset.bottom
+
     initialContentInset = container.contentInset
 
     for spot in self.spots {
