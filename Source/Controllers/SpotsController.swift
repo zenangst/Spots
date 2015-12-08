@@ -4,7 +4,13 @@ import Sugar
 public class SpotsController: UIViewController, UIScrollViewDelegate {
 
   public private(set) var spots: [Spotable]
-  private var refreshing = false
+  private var refreshing = false {
+    didSet {
+      if !refreshing {
+        refreshControl.endRefreshing()
+      }
+    }
+  }
   private var initialContentInset: UIEdgeInsets = UIEdgeInsetsZero
 
   lazy public var container: SpotScrollView = { [unowned self] in
@@ -125,7 +131,6 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
         weakSelf.container.contentInset = weakSelf.initialContentInset
         }, completion: { _ in
           weakSelf.refreshing = false
-          weakSelf.refreshControl.endRefreshing()
       })
     }
   }
