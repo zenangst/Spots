@@ -114,18 +114,16 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
 
   public func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
     guard refreshControl.refreshing else { return }
-    let defaultContainerOffset = container.contentOffset
-    let defaultContainerInset = container.contentInset.top
     container.contentInset.top = -scrollView.contentOffset.y
 
     delay(1.0) {
       self.spotDelegate?.spotsDidReload(refreshControl) { [weak self] in
+        guard let weakSelf = self else { return }
         UIView.animateWithDuration(0.3, animations: {
-          self?.container.contentOffset = defaultContainerOffset
-          self?.container.contentInset.top = defaultContainerInset
+          weakSelf.container.contentInset = weakSelf.initialContentInset
           }, completion: { _ in
-            self?.refreshing = false
-            self?.refreshControl.endRefreshing()
+            weakSelf.refreshing = false
+            weakSelf.refreshControl.endRefreshing()
         })
       }
     }
