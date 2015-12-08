@@ -14,7 +14,11 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     }
   }
 
-  weak public var spotDelegate: SpotsDelegate?
+  weak public var spotDelegate: SpotsDelegate? {
+    didSet {
+      spots.forEach { $0.spotDelegate = spotDelegate }
+    }
+  }
 
   lazy public var container: SpotScrollView = { [unowned self] in
     let container = SpotScrollView(frame: self.view.frame)
