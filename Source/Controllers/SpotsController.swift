@@ -85,6 +85,22 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
   public override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
 
+    if !container.configured {
+      configureContainer()
+    }
+  }
+
+  public override func viewDidAppear(animated: Bool) {
+    container.configured = true
+  }
+
+  public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+    super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+
+    spots.forEach { $0.layout(size) }
+  }
+
+  private func configureContainer() {
     container.frame = UIScreen.mainScreen().bounds
     container.frame.size.height -= ceil(container.contentInset.top + container.contentOffset.y)
     container.contentInset.bottom = tabBarController?.tabBar.frame.height ?? container.contentInset.bottom
@@ -97,12 +113,6 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
       spot.render().layoutSubviews()
       spot.render().setNeedsDisplay()
     }
-  }
-
-  public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-    super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
-
-    spots.forEach { $0.layout(size) }
   }
 }
 
