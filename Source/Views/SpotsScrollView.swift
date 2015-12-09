@@ -81,6 +81,7 @@ public class SpotsScrollView: UIScrollView {
   public override func layoutSubviews() {
     super.layoutSubviews()
 
+    guard configured else { return }
 
     contentView.frame = bounds
     contentView.bounds = CGRect(origin: contentOffset, size: bounds.size)
