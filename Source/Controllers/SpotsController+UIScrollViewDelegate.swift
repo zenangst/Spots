@@ -34,7 +34,7 @@ extension SpotsController {
     container.contentInset.top = -scrollView.contentOffset.y
 
     delay(0.5) {
-      self.spotDelegate?.spotsDidReload(self.refreshControl) { [weak self] in
+      self.spotsScrollDelegate?.spotsDidReload(self.refreshControl) { [weak self] in
         guard let weakSelf = self else { return }
         UIView.animateWithDuration(0.3, animations: {
           weakSelf.container.contentInset = weakSelf.initialContentInset

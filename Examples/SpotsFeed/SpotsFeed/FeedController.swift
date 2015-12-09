@@ -2,12 +2,13 @@ import Sugar
 import Fakery
 import Spots
 
-public class FeedController: SpotsController, SpotsDelegate {
+public class FeedController: SpotsController, SpotsDelegate, SpotsScrollDelegate {
 
   public static let faker = Faker()
   
   public override func viewDidLoad() {
     self.spotDelegate = self
+    self.spotsScrollDelegate = self
     super.viewDidLoad()
   }
 

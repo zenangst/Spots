@@ -20,6 +20,8 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     }
   }
 
+  weak public var spotsScrollDelegate: SpotsScrollDelegate?
+
   lazy public var container: SpotsScrollView = { [unowned self] in
     let container = SpotsScrollView(frame: self.view.frame)
     container.alwaysBounceVertical = true
@@ -183,8 +185,8 @@ extension SpotsController {
 
   public func refreshSpots(refreshControl: UIRefreshControl) {
     dispatch { [weak self] in
-      if let weakSelf = self, spotDelegate = weakSelf.spotDelegate {
-        spotDelegate.spotsDidReload(refreshControl) { }
+      if let weakSelf = self {
+        weakSelf.spotsScrollDelegate?.spotsDidReload(refreshControl) { }
       }
     }
   }
