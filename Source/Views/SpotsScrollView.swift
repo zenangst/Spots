@@ -104,7 +104,6 @@ public class SpotsScrollView: UIScrollView {
         if subview is UITableView {
           let remainingBoundsHeight = fmax(CGRectGetMaxY(bounds) - CGRectGetMinY(frame), 0.0)
           let remainingContentHeight = fmax(scrollView.contentSize.height - contentOffset.y, 0.0)
-
           let newHeight = ceil(fmin(remainingBoundsHeight, remainingContentHeight))
           if newHeight > 0.0 || configured {
             frame.size.height = ceil(fmin(remainingBoundsHeight, remainingContentHeight))
