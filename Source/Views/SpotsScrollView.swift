@@ -6,6 +6,7 @@ public class SpotsScrollView: UIScrollView {
   let KVOContext = UnsafeMutablePointer<()>()
 
   private var subviewsInLayoutOrder = [UIView?]()
+  public var configured = false
 
   lazy public var contentView: SpotsContentView = { [unowned self] in
     let view = SpotsContentView(frame: self.frame)
@@ -103,7 +104,10 @@ public class SpotsScrollView: UIScrollView {
         if subview is UITableView {
           let remainingBoundsHeight = fmax(CGRectGetMaxY(bounds) - CGRectGetMinY(frame), 0.0)
           let remainingContentHeight = fmax(scrollView.contentSize.height - contentOffset.y, 0.0)
-          frame.size.height = ceil(fmin(remainingBoundsHeight, remainingContentHeight))
+          let newHeight = ceil(fmin(remainingBoundsHeight, remainingContentHeight))
+          if newHeight > 0.0 || configured {
+            frame.size.height = ceil(fmin(remainingBoundsHeight, remainingContentHeight))
+          }
         }
 
         frame.size.width = ceil(contentView.frame.size.width)
