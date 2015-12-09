@@ -129,7 +129,7 @@ public class SpotsScrollView: UIScrollView {
     let minimumContentHeight = bounds.height - (contentInset.top + contentInset.bottom)
     let initialContentOffset = contentOffset
     contentSize = CGSize(width: bounds.size.width, height: fmax(yOffsetOfCurrentSubview, minimumContentHeight))
-    
+
     if initialContentOffset != contentOffset {
       setNeedsLayout()
       layoutIfNeeded()
