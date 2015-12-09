@@ -80,7 +80,6 @@ public class SpotsScrollView: UIScrollView {
   public override func layoutSubviews() {
     super.layoutSubviews()
 
-    guard dragging else { return }
 
     contentView.frame = bounds
     contentView.bounds = CGRect(origin: contentOffset, size: bounds.size)
@@ -98,6 +97,14 @@ public class SpotsScrollView: UIScrollView {
         } else {
           contentOffset.y = self.contentOffset.y - yOffsetOfCurrentSubview
           frame.origin.y = self.contentOffset.y
+        }
+
+        // TODO: Fix this properly...
+        // This should also apply for UICollectionView but I haven't figured out a way to resize them properly without it going ape-shit over that the layout is incorrect.
+        if subview is UITableView {
+          let remainingBoundsHeight = fmax(CGRectGetMaxY(bounds) - CGRectGetMinY(frame), 0.0)
+          let remainingContentHeight = fmax(scrollView.contentSize.height - contentOffset.y, 0.0)
+          frame.size.height = ceil(fmin(remainingBoundsHeight, remainingContentHeight))
         }
 
         frame.size.width = ceil(contentView.frame.size.width)
@@ -119,7 +126,7 @@ public class SpotsScrollView: UIScrollView {
     let minimumContentHeight = bounds.height - (contentInset.top + contentInset.bottom)
     let initialContentOffset = contentOffset
     contentSize = CGSize(width: bounds.size.width, height: fmax(yOffsetOfCurrentSubview, minimumContentHeight))
-
+    
     if initialContentOffset != contentOffset {
       setNeedsLayout()
       layoutIfNeeded()
