@@ -81,8 +81,6 @@ public class SpotsScrollView: UIScrollView {
   public override func layoutSubviews() {
     super.layoutSubviews()
 
-    guard configured else { return }
-
     contentView.frame = bounds
     contentView.bounds = CGRect(origin: contentOffset, size: bounds.size)
 
@@ -106,7 +104,11 @@ public class SpotsScrollView: UIScrollView {
         if subview is UITableView {
           let remainingBoundsHeight = fmax(CGRectGetMaxY(bounds) - CGRectGetMinY(frame), 0.0)
           let remainingContentHeight = fmax(scrollView.contentSize.height - contentOffset.y, 0.0)
-          frame.size.height = ceil(fmin(remainingBoundsHeight, remainingContentHeight))
+
+          let newHeight = ceil(fmin(remainingBoundsHeight, remainingContentHeight))
+          if newHeight > 0.0 || configured {
+            frame.size.height = ceil(fmin(remainingBoundsHeight, remainingContentHeight))
+          }
         }
 
         frame.size.width = ceil(contentView.frame.size.width)
