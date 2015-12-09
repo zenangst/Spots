@@ -20,7 +20,7 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     }
   }
 
-  weak public var spotScrollDelegate: SpotScrollDelegate?
+  weak public var spotsScrollDelegate: SpotsScrollDelegate?
 
   lazy public var container: SpotsScrollView = { [unowned self] in
     let container = SpotsScrollView(frame: self.view.frame)
@@ -186,7 +186,7 @@ extension SpotsController {
   public func refreshSpots(refreshControl: UIRefreshControl) {
     dispatch { [weak self] in
       if let weakSelf = self {
-        weakSelf.spotScrollDelegate?.spotsDidReload(refreshControl) { }
+        weakSelf.spotsScrollDelegate?.spotsDidReload(refreshControl) { }
       }
     }
   }
