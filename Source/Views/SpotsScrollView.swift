@@ -6,6 +6,7 @@ public class SpotsScrollView: UIScrollView {
   let KVOContext = UnsafeMutablePointer<()>()
 
   private var subviewsInLayoutOrder = [UIView?]()
+  public var configured = false
 
   lazy public var contentView: SpotsContentView = { [unowned self] in
     let view = SpotsContentView(frame: self.frame)
