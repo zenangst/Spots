@@ -2,7 +2,7 @@ import Spots
 import Sugar
 import Fakery
 
-class ForYouController: SpotsController, SpotsDelegate {
+class ForYouController: SpotsController, SpotsDelegate, SpotsScrollDelegate {
 
   static let faker = Faker()
 
@@ -13,6 +13,7 @@ class ForYouController: SpotsController, SpotsDelegate {
     
     self.title = title
     spotDelegate = self
+    spotsScrollDelegate = self
 
     dispatch(queue: .Interactive) { [weak self] in
       let items = ForYouController.generateItems(0, to: 10)
