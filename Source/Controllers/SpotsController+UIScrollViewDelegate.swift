@@ -20,7 +20,7 @@ extension SpotsController {
 
     // Infinite scrolling
     if shouldFetch && !refreshing {
-      refreshing = false
+      refreshing = true
       delay(0.2) {
         self.spotsScrollDelegate?.spotDidReachEnd {
           self.refreshing = false
