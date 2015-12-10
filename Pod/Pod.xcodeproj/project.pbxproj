@@ -19,7 +19,7 @@
 		BDC308541C05F8280091579D /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC308381C05F8280091579D /* Parser.swift */; };
 		BDC308551C05F8280091579D /* Spotable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC308391C05F8280091579D /* Spotable.swift */; };
 		BDC308561C05F8280091579D /* SpotFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC3083A1C05F8280091579D /* SpotFactory.swift */; };
-		BDC308571C05F8280091579D /* SpotsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC3083B1C05F8280091579D /* SpotsDelegate.swift */; };
+		BDC308571C05F8280091579D /* SpotsDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC3083B1C05F8280091579D /* SpotsDelegates.swift */; };
 		BDC308591C05F8280091579D /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC3083E1C05F8280091579D /* Component.swift */; };
 		BDC3085A1C05F8280091579D /* ListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC3083F1C05F8280091579D /* ListItem.swift */; };
 		BDC3085B1C05F8280091579D /* CarouselSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC308421C05F8280091579D /* CarouselSpot.swift */; };
@@ -55,7 +55,7 @@
 		BDC308381C05F8280091579D /* Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
 		BDC308391C05F8280091579D /* Spotable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spotable.swift; sourceTree = "<group>"; };
 		BDC3083A1C05F8280091579D /* SpotFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotFactory.swift; sourceTree = "<group>"; };
-		BDC3083B1C05F8280091579D /* SpotsDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsDelegate.swift; sourceTree = "<group>"; };
+		BDC3083B1C05F8280091579D /* SpotsDelegates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsDelegates.swift; sourceTree = "<group>"; };
 		BDC3083E1C05F8280091579D /* Component.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
 		BDC3083F1C05F8280091579D /* ListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListItem.swift; sourceTree = "<group>"; };
 		BDC308421C05F8280091579D /* CarouselSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselSpot.swift; sourceTree = "<group>"; };
@@ -196,7 +196,7 @@
 				BDC308381C05F8280091579D /* Parser.swift */,
 				BDC308391C05F8280091579D /* Spotable.swift */,
 				BDC3083A1C05F8280091579D /* SpotFactory.swift */,
-				BDC3083B1C05F8280091579D /* SpotsDelegate.swift */,
+				BDC3083B1C05F8280091579D /* SpotsDelegates.swift */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -402,7 +402,7 @@
 			files = (
 				BDC308561C05F8280091579D /* SpotFactory.swift in Sources */,
 				BDC308521C05F8280091579D /* Itemble.swift in Sources */,
-				BDC308571C05F8280091579D /* SpotsDelegate.swift in Sources */,
+				BDC308571C05F8280091579D /* SpotsDelegates.swift in Sources */,
 				BD09693C1C16E59A00916E7C /* SpotsController+UIScrollViewDelegate.swift in Sources */,
 				BDC308621C05F8280091579D /* ListSpotCell.swift in Sources */,
 				BDFECC531C04EA7800049FE2 /* TestComponent.swift in Sources */,
