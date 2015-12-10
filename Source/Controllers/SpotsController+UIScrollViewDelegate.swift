@@ -22,7 +22,7 @@ extension SpotsController {
     if shouldFetch && !refreshing {
       refreshing = false
       delay(0.2) {
-        self.spotsDelegate?.spotDidReachEnd {
+        self.spotsScrollDelegate?.spotDidReachEnd {
           self.refreshing = false
         }
       }
