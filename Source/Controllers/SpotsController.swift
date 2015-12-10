@@ -148,6 +148,8 @@ extension SpotsController {
   public func updateSpotAtIndex(index: Int, closure: (spot: Spotable) -> Spotable, completion: (() -> Void)? = nil) {
     guard let spot = spotAtIndex(index) else { return }
     spots[spot.index] = closure(spot: spot)
+    spot.prepare()
+    spot.setup(container.bounds.size)
 
     dispatch { [weak self] in
       guard let weakSelf = self else { return }
