@@ -10,7 +10,7 @@ public class CarouselSpot: NSObject, Spotable, Gridable {
   public var component: Component
   public var index = 0
 
-  public weak var spotDelegate: SpotsDelegate?
+  public weak var spotsDelegate: SpotsDelegate?
 
   public lazy var layout: UICollectionViewFlowLayout = { [unowned self] in
     let layout = UICollectionViewFlowLayout()
@@ -86,7 +86,7 @@ extension CarouselSpot: UICollectionViewDelegateFlowLayout {
 extension CarouselSpot: UICollectionViewDelegate {
 
   public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-    spotDelegate?.spotDidSelectItem(self, item: item(indexPath))
+    spotsDelegate?.spotDidSelectItem(self, item: item(indexPath))
   }
 }
 
