@@ -2,43 +2,18 @@ import Sugar
 import Fakery
 import Spots
 
-public class FeedController: SpotsController, SpotsDelegate, SpotsScrollDelegate {
+public class FeedController: SpotsController, SpotsDelegate {
 
   public static let faker = Faker()
   
   public override func viewDidLoad() {
-    self.spotDelegate = self
+    self.spotsDelegate = self
     self.spotsScrollDelegate = self
+    self.spotsRefreshDelegate = self
     super.viewDidLoad()
   }
 
-  public func spotsDidReload(refreshControl: UIRefreshControl, completion: (() -> Void)?) {
-    delay(1.0) {
-      dispatch(queue: .Interactive) { [weak self] in
-        guard let spot = self?.spotAtIndex(0) else { return }
-
-        let items = FeedController.generateItems(spot.component.items.count, to: 10)
-
-        self?.prepend(items, spotIndex: 0) {
-          dispatch {
-            refreshControl.endRefreshing()
-            completion?()
-          }
-        }
-      }
-    }
-  }
-
   public func spotDidSelectItem(spot: Spotable, item: ListItem) { }
-
-  public func spotDidReachEnd(completion: (() -> Void)?) {
-    dispatch(queue: .Interactive) { [weak self] in
-      guard let weakSelf = self else { return }
-      guard let spot = weakSelf.spotAtIndex(0) else { return }
-      let items = FeedController.generateItems(spot.component.items.count, to: 3)
-      weakSelf.append(items) { completion?() }
-    }
-  }
 
   public static func generateItem(index: Int, kind: String = "feed") -> ListItem {
     let sencenceCount = Int(arc4random_uniform(8) + 1)
@@ -67,5 +42,37 @@ public class FeedController: SpotsController, SpotsDelegate, SpotsScrollDelegate
       })
     }
     return items
+  }
+}
+
+extension FeedController: SpotsRefreshDelegate {
+
+  public func spotsDidReload(refreshControl: UIRefreshControl, completion: (() -> Void)?) {
+    delay(1.0) {
+      dispatch(queue: .Interactive) { [weak self] in
+        guard let spot = self?.spotAtIndex(0) else { return }
+
+        let items = FeedController.generateItems(spot.component.items.count, to: 10)
+
+        self?.prepend(items, spotIndex: 0) {
+          dispatch {
+            refreshControl.endRefreshing()
+            completion?()
+          }
+        }
+      }
+    }
+  }
+}
+
+extension FeedController: SpotsScrollDelegate {
+
+  public func spotDidReachEnd(completion: (() -> Void)?) {
+    dispatch(queue: .Interactive) { [weak self] in
+      guard let weakSelf = self else { return }
+      guard let spot = weakSelf.spotAtIndex(0) else { return }
+      let items = FeedController.generateItems(spot.component.items.count, to: 3)
+      weakSelf.append(items) { completion?() }
+    }
   }
 }

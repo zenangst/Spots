@@ -2,7 +2,7 @@ import Spots
 import Sugar
 import Fakery
 
-class ForYouController: SpotsController, SpotsDelegate, SpotsScrollDelegate {
+class ForYouController: SpotsController, SpotsDelegate {
 
   static let faker = Faker()
 
@@ -14,6 +14,7 @@ class ForYouController: SpotsController, SpotsDelegate, SpotsScrollDelegate {
     self.title = title
     spotsDelegate = self
     spotsScrollDelegate = self
+    spotsRefreshDelegate = self
 
     dispatch(queue: .Interactive) { [weak self] in
       let items = ForYouController.generateItems(0, to: 10)
@@ -21,26 +22,6 @@ class ForYouController: SpotsController, SpotsDelegate, SpotsScrollDelegate {
         spot.component.items = items
         return spot
       })
-    }
-  }
-
-  func spotsDidReload(refreshControl: UIRefreshControl, completion: (() -> Void)?) {
-    if let spot = spotAtIndex(0) {
-      let items = ForYouController.generateItems(spot.component.items.count, to: 10)
-      delay(0.5) {
-        self.prepend(items)
-        completion?()
-      }
-    }
-  }
-
-  func spotDidReachEnd(completion: (() -> Void)?) {
-    if let spot = spotAtIndex(0) {
-      if spot.component.items.count < 100 {
-        let items = ForYouController.generateItems(spot.component.items.count, to: 10)
-        append(items)
-      }
-      delay(0.3) { completion?() }
     }
   }
 
@@ -65,5 +46,31 @@ class ForYouController: SpotsController, SpotsDelegate, SpotsScrollDelegate {
       })
     }
     return items
+  }
+}
+
+extension ForYouController: SpotsRefreshDelegate {
+
+  func spotsDidReload(refreshControl: UIRefreshControl, completion: (() -> Void)?) {
+    if let spot = spotAtIndex(0) {
+      let items = ForYouController.generateItems(spot.component.items.count, to: 10)
+      delay(0.5) {
+        self.prepend(items)
+        completion?()
+      }
+    }
+  }
+}
+
+extension ForYouController: SpotsScrollDelegate {
+
+  func spotDidReachEnd(completion: (() -> Void)?) {
+    if let spot = spotAtIndex(0) {
+      if spot.component.items.count < 100 {
+        let items = ForYouController.generateItems(spot.component.items.count, to: 10)
+        append(items)
+      }
+      delay(0.3) { completion?() }
+    }
   }
 }
