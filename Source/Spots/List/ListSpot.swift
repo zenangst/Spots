@@ -55,16 +55,15 @@ public class ListSpot: NSObject, Spotable, Listable {
   }
 
   public func setup(size: CGSize) {
-    if component.size == nil {
-      var height = component.items.reduce(0, combine: { $0 + $1.size.height })
+    prepare()
+    var height = component.items.reduce(0, combine: { $0 + $1.size.height })
 
-      if !component.title.isEmpty { height += headerHeight }
+    if !component.title.isEmpty { height += headerHeight }
 
-      tableView.frame.size = size
-      tableView.contentSize = CGSize(
-        width: tableView.frame.width,
-        height: height - tableView.contentInset.top - tableView.contentInset.bottom)
-    }
+    tableView.frame.size = size
+    tableView.contentSize = CGSize(
+      width: tableView.frame.width,
+      height: height - tableView.contentInset.top - tableView.contentInset.bottom)
 
     ListSpot.configure?(view: tableView)
   }
