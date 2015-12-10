@@ -6,6 +6,7 @@ public protocol SpotsDelegate: class {
 }
 
 public protocol SpotsRefreshDelegate: class {
+
   func spotsDidReload(refreshControl: UIRefreshControl, completion: (() -> Void)?)
 }
 
