@@ -19,7 +19,7 @@ public class ListSpot: NSObject, Spotable, Listable {
   public var component: Component
   public var index = 0
 
-  public weak var spotDelegate: SpotsDelegate?
+  public weak var spotsDelegate: SpotsDelegate?
 
   private var fetching = false
 
@@ -82,7 +82,7 @@ extension ListSpot: UITableViewDelegate {
 
   public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     tableView.deselectRowAtIndexPath(indexPath, animated: true)
-    spotDelegate?.spotDidSelectItem(self, item: item(indexPath))
+    spotsDelegate?.spotDidSelectItem(self, item: item(indexPath))
   }
 
   public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

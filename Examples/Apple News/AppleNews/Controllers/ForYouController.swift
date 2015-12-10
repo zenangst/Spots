@@ -12,7 +12,7 @@ class ForYouController: SpotsController, SpotsDelegate, SpotsScrollDelegate {
     self.init(spots: [feedSpot], refreshable: true)
     
     self.title = title
-    spotDelegate = self
+    spotsDelegate = self
     spotsScrollDelegate = self
 
     dispatch(queue: .Interactive) { [weak self] in

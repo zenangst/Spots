@@ -5,7 +5,7 @@ public protocol Spotable: class {
   static var cells: [String : UIView.Type] { get set }
   static var defaultCell: UIView.Type { get set }
 
-  weak var spotDelegate: SpotsDelegate? { get set }
+  weak var spotsDelegate: SpotsDelegate? { get set }
 
   var index: Int { get set }
   var component: Component { get set }

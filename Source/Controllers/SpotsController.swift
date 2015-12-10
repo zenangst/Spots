@@ -14,9 +14,9 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     }
   }
 
-  weak public var spotDelegate: SpotsDelegate? {
+  weak public var spotsDelegate: SpotsDelegate? {
     didSet {
-      spots.forEach { $0.spotDelegate = spotDelegate }
+      spots.forEach { $0.spotsDelegate = spotsDelegate }
     }
   }
 
@@ -80,7 +80,7 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
       spot.component.size = CGSize(
         width: view.frame.width,
         height: ceil(spot.render().frame.height))
-      spot.spotDelegate = spotDelegate
+      spot.spotsDelegate = spotsDelegate
     }
   }
 
