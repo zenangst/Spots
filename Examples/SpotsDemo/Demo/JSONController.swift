@@ -109,5 +109,4 @@ class JSONController: UIViewController {
       submitButton.frame = CGRect(x: 50, y: textView.frame.maxY + 50, width: totalSize.width - 100, height: 50)
     }
   }
-
 }
