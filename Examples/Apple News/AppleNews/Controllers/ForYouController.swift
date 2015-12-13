@@ -9,8 +9,8 @@ class ForYouController: SpotsController, SpotsDelegate {
   convenience init(title: String) {
     let component = Component()
     let feedSpot = ListSpot(component: component)
-    self.init(spots: [feedSpot], refreshable: true)
-    
+    self.init(spots: [feedSpot])
+
     self.title = title
     spotsDelegate = self
     spotsScrollDelegate = self

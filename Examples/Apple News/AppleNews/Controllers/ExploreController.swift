@@ -39,7 +39,7 @@ class ExploreController: SpotsController {
       ListSpot(component: browse)
     ]
 
-    self.init(spots: spots, refreshable: false)
+    self.init(spots: spots)
     self.title = title
   }
 

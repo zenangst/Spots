@@ -20,8 +20,19 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     }
   }
 
+  weak public var spotsRefreshDelegate: SpotsRefreshDelegate? {
+    didSet {
+      if spotsRefreshDelegate != nil {
+        tableView.addSubview(refreshControl)
+        container.addSubview(tableView)
+      } else {
+        refreshControl.removeFromSuperview()
+        tableView.removeFromSuperview()
+      }
+    }
+  }
+
   weak public var spotsScrollDelegate: SpotsScrollDelegate?
-  weak public var spotsRefreshDelegate: SpotsRefreshDelegate?
 
   lazy public var container: SpotsScrollView = { [unowned self] in
     let container = SpotsScrollView(frame: self.view.frame)
@@ -51,15 +62,10 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
 
   // MARK: Initializer
 
-  public required init(spots: [Spotable] = [], refreshable: Bool = false) {
+  public required init(spots: [Spotable] = []) {
     self.spots = spots
     super.init(nibName: nil, bundle: nil)
     view.addSubview(container)
-
-    if refreshable {
-      tableView.addSubview(refreshControl)
-      container.addSubview(tableView)
-    }
 
     spots.enumerate().forEach { spot($0.index).index = $0.index }
   }
@@ -81,7 +87,6 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
       spot.component.size = CGSize(
         width: view.frame.width,
         height: ceil(spot.render().frame.height))
-      spot.spotsDelegate = spotsDelegate
     }
   }
 

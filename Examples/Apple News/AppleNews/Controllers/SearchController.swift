@@ -12,7 +12,7 @@ class SearchController: SpotsController {
       TitleSpot(title: "Suggestions")
     ]
 
-    self.init(spots: spots, refreshable: false)
+    self.init(spots: spots)
     self.title = title
 
     dispatch(queue: .Interactive) { [weak self] in

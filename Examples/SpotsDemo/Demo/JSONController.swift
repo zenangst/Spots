@@ -31,10 +31,16 @@ class JSONController: UIViewController {
     return button
     }()
 
+  lazy var tapGesture: UITapGestureRecognizer = { [weak self] in
+    let tapGesture = UITapGestureRecognizer(target: self, action: "backgroundTapped:")
+    return tapGesture
+  }()
+
   override func viewDidLoad() {
     super.viewDidLoad()
 
     view.backgroundColor = UIColor.whiteColor()
+    view.addGestureRecognizer(tapGesture)
 
     navigationItem.backBarButtonItem = UIBarButtonItem(title: nil, style: .Plain, target: nil, action: nil)
 
@@ -58,12 +64,6 @@ class JSONController: UIViewController {
     textView.text = json
 
     setupFrames()
-  }
-
-  override func viewDidAppear(animated: Bool) {
-    super.viewDidAppear(animated)
-
-    submitButtonDidPress()
   }
 
   override func viewDidLayoutSubviews() {
@@ -93,6 +93,10 @@ class JSONController: UIViewController {
     }
   }
 
+  func backgroundTapped(gesture: UITapGestureRecognizer) {
+    textView.resignFirstResponder()
+  }
+
   // MARK - Configuration
 
   func setupFrames() {
@@ -109,5 +113,4 @@ class JSONController: UIViewController {
       submitButton.frame = CGRect(x: 50, y: textView.frame.maxY + 50, width: totalSize.width - 100, height: 50)
     }
   }
-
 }

@@ -40,11 +40,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let feedSpot = ListSpot(component: feedComponent)
     let components: [Spotable] = [feedSpot]
 
-    let controller = FeedController(spots: components, refreshable: true)
+    let controller = FeedController(spots: components)
     controller.title = "Feed"
 
     applyStyles()
-    
+
     navigationController = UINavigationController(rootViewController: controller)
     window?.rootViewController = navigationController
     window?.makeKeyAndVisible()
@@ -81,7 +81,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         var content = [post]
         content.appendContentsOf(comments)
-        
+
         let feedComponent = Component(span: 1, items: content)
         let feedSpot = ListSpot(component: feedComponent)
         let controller = SpotsController(spots: [feedSpot])
