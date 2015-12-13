@@ -51,15 +51,10 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
 
   // MARK: Initializer
 
-  public required init(spots: [Spotable] = [], refreshable: Bool = false) {
+  public required init(spots: [Spotable] = []) {
     self.spots = spots
     super.init(nibName: nil, bundle: nil)
     view.addSubview(container)
-
-    if refreshable {
-      tableView.addSubview(refreshControl)
-      container.addSubview(tableView)
-    }
 
     spots.enumerate().forEach { spot($0.index).index = $0.index }
   }

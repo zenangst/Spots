@@ -9,7 +9,7 @@ class SavedController: SpotsController {
   convenience init(title: String) {
     let component = Component()
     let feedSpot = ListSpot(component: component)
-    self.init(spots: [feedSpot], refreshable: false)
+    self.init(spots: [feedSpot])
 
     self.title = title
 

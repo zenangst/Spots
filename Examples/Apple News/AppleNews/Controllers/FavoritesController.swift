@@ -12,7 +12,7 @@ class FavoritesController: SpotsController {
       GridSpot(favorites, top: 10, left: 10, bottom: 20, right: 10, itemSpacing: -5)
     ]
 
-    self.init(spots: spots, refreshable: false)
+    self.init(spots: spots)
     self.title = title
 
     dispatch(queue: .Interactive) { [weak self] in
