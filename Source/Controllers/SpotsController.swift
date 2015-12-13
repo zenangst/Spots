@@ -20,8 +20,19 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     }
   }
 
+  weak public var spotsRefreshDelegate: SpotsRefreshDelegate? {
+    didSet {
+      if spotsRefreshDelegate != nil {
+        tableView.addSubview(refreshControl)
+        container.addSubview(tableView)
+      } else {
+        refreshControl.removeFromSuperview()
+        tableView.removeFromSuperview()
+      }
+    }
+  }
+
   weak public var spotsScrollDelegate: SpotsScrollDelegate?
-  weak public var spotsRefreshDelegate: SpotsRefreshDelegate?
 
   lazy public var container: SpotsScrollView = { [unowned self] in
     let container = SpotsScrollView(frame: self.view.frame)
