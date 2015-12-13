@@ -206,7 +206,7 @@ extension SpotsController {
   private func spot(indexPath: NSIndexPath) -> Spotable {
     return spots[indexPath.item]
   }
-  
+
   private func spot(index: Int) -> Spotable {
     return spots[index]
   }

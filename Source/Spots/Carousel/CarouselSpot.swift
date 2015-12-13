@@ -107,7 +107,7 @@ extension CarouselSpot: UICollectionViewDataSource {
       grid.configure(&component.items[indexPath.item])
       collectionView.collectionViewLayout.invalidateLayout()
     }
-    
+
     return cell
   }
 }

@@ -39,7 +39,7 @@ public struct ListItem: Mappable {
 
 public func ==(lhs: [ListItem], rhs: [ListItem]) -> Bool {
   var equal = lhs.count == rhs.count
-  
+
   if !equal { return false }
 
   for (index, item) in lhs.enumerate() {

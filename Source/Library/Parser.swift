@@ -8,7 +8,7 @@ public struct Parser {
     var spots = [Spotable]()
 
     components.forEach { spots.append(SpotFactory.resolve(Component($0)))  }
-    
+
     return spots
   }
 }

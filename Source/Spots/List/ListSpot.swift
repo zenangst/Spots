@@ -120,7 +120,7 @@ extension ListSpot: UITableViewDataSource {
     cell.optimize()
 
     (cell as? Itemble)?.configure(&component.items[indexPath.item])
-    
+
     return cell
   }
 }

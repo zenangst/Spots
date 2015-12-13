@@ -19,7 +19,7 @@ public class ListSpotCell: UITableViewCell, Itemble {
       : .None
     detailTextLabel?.text = item.subtitle
     textLabel?.text = item.title
-    
+
     if !item.image.isEmpty {
       imageView?.image = UIImage(named: item.image)
     }
