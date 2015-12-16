@@ -5,21 +5,10 @@ extension SPTSession: Cachable {
   public typealias CacheType = SPTSession
 
   public static func decode(data: NSData) -> CacheType? {
-    var object: SPTSession?
-    do {
-      object = try DefaultCacheConverter<SPTSession>().decode(data)
-    } catch {}
-
-    return object
+    return NSKeyedUnarchiver.unarchiveObjectWithData(data) as? SPTSession
   }
 
   public func encode() -> NSData? {
-    var data: NSData?
-
-    do {
-      data = try DefaultCacheConverter<SPTSession>().encode(self)
-    } catch {}
-
-    return data
+    return NSKeyedArchiver.archivedDataWithRootObject(self)
   }
 }

@@ -52,41 +52,48 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       tableView.separatorColor = UIColor.darkGrayColor()
       tableView.tableFooterView = UIView(frame: CGRect.zero)
     }
+    ListSpot.headers["list"] = ListHeaderView.self
+
+    ListSpot.cells["default"] = DefaultListSpotCell.self
     ListSpot.cells["playlist"] = PlaylistSpotCell.self
+    ListSpot.defaultCell = DefaultListSpotCell.self
 
     Compass.scheme = Application.mainScheme!
-    Compass.routes = ["auth", "callback", "playlist:{uri}", "play:{uri}", "stop"]
+    Compass.routes = [
+      "auth",
+      "callback",
+      "play:{uri}",
+      "playlist:{uri}",
+      "playlists",
+      "stop"
+    ]
 
-    SPTAuth.defaultInstance().clientID = NSProcessInfo.processInfo().environment["spotifyClientID"]
+    SPTAuth.defaultInstance().clientID = "a73161d177934f639fe3b3506d5a1005"
     SPTAuth.defaultInstance().redirectURL = NSURL(string: "spots://callback")
     SPTAuth.defaultInstance().requestedScopes = [SPTAuthPlaylistModifyPrivateScope, SPTAuthPlaylistReadPrivateScope, SPTAuthStreamingScope]
 
     window = UIWindow(frame: UIScreen.mainScreen().bounds)
 
-    session = SPTSession(userName: NSProcessInfo.processInfo().environment["spotifyUsername"],
+    session = SPTSession(userName: "oprah_noodlemantra",
       accessToken: Keychain.password(forAccount: keychainAccount),
       expirationDate: nil)
 
-//    cache.object("session") { (session: SPTSession?) -> Void in
-//      if let session = session {
-//        print("yeap")
-//      }
-//    }
+    let controller = AuthController(spots: [ListSpot(component:
+      Component(items:
+        [ListItem(title: "Auth", action: "auth", kind: "playlist", size: CGSize(width: 120, height: 88))])
+      )
+      ])
+    controller.title = "Spotify".uppercaseString
+    navigationController = UINavigationController(rootViewController: controller)
+    window?.rootViewController = navigationController
 
-    print(session?.isValid())
-
-    if Keychain.password(forAccount: keychainAccount).isEmpty {
-      let controller = AuthController(spots: [ListSpot(component:
-        Component(items:
-          [ListItem(title: "Auth", action: "auth", kind: "playlist", size: CGSize(width: 120, height: 88))])
-        )
-        ])
-      controller.title = "Spotify".uppercaseString
-      controller.spotsDelegate = controller
-      navigationController = UINavigationController(rootViewController: controller)
-      window?.rootViewController = navigationController
-    } else {
-      window?.rootViewController = mainController
+    cache.object("session") { (session: SPTSession?) -> Void in
+      dispatch {
+        if let session = session {
+          self.session = session
+          self.window?.rootViewController = self.mainController
+        }
+      }
     }
 
     applyStyles()
@@ -127,6 +134,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
             self.window?.rootViewController = self.mainController
           }
+        case "playlists":
+          let controller = PlaylistController(playlistID: nil)
+          controller.title = "Playlists"
+          self.mainController.pushViewController(controller, animated: true)
         case "playlist:{uri}":
           if let playlist = arguments["uri"] {
             let controller = PlaylistController(playlistID: playlist)
@@ -140,13 +151,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
               fromIndex: 0,
               callback: { (error) -> Void in })
           }
-          break
         case "stop":
           if self.player.isPlaying {
             self.player.stop({ (error) -> Void in })
           }
           break
-        default: break
+        default:
+          print("\(route) is not registered")
         }
       }
   }

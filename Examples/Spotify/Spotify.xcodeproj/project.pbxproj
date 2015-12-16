@@ -15,11 +15,13 @@
 		BD231CAA1C1E107200D93449 /* AuthController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD231CA91C1E107200D93449 /* AuthController.swift */; };
 		BD231CAF1C1E110900D93449 /* Spotify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD231CAE1C1E110900D93449 /* Spotify.framework */; };
 		BD231CB11C1E113500D93449 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD231CB01C1E113500D93449 /* AVFoundation.framework */; };
-		BD231CB51C1E153900D93449 /* SpotsController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD231CB41C1E153900D93449 /* SpotsController+Extension.swift */; };
 		BD231CB71C20916800D93449 /* PlaylistController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD231CB61C20916800D93449 /* PlaylistController.swift */; };
 		BD231CBA1C20AB3E00D93449 /* PlaylistSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD231CB91C20AB3E00D93449 /* PlaylistSpotCell.swift */; };
 		BD231CBC1C20B88A00D93449 /* UIImage+Transparent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD231CBB1C20B88A00D93449 /* UIImage+Transparent.swift */; };
 		BD231CBE1C21465300D93449 /* SPTSession+Cachable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD231CBD1C21465300D93449 /* SPTSession+Cachable.swift */; };
+		BDAA75281C21683700E49759 /* FeaturedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAA75271C21683700E49759 /* FeaturedController.swift */; };
+		BDAA752A1C2169B900E49759 /* DefaultListSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAA75291C2169B900E49759 /* DefaultListSpotCell.swift */; };
+		BDED39E31C216CB700AC6383 /* ListHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDED39E21C216CB700AC6383 /* ListHeaderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,12 +37,14 @@
 		BD231CAE1C1E110900D93449 /* Spotify.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Spotify.framework; sourceTree = "<group>"; };
 		BD231CB01C1E113500D93449 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		BD231CB21C1E116B00D93449 /* Spotify-BridgingHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Spotify-BridgingHeader.h"; sourceTree = "<group>"; };
-		BD231CB41C1E153900D93449 /* SpotsController+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SpotsController+Extension.swift"; sourceTree = "<group>"; };
 		BD231CB61C20916800D93449 /* PlaylistController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistController.swift; sourceTree = "<group>"; };
 		BD231CB91C20AB3E00D93449 /* PlaylistSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistSpotCell.swift; sourceTree = "<group>"; };
 		BD231CBB1C20B88A00D93449 /* UIImage+Transparent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Transparent.swift"; sourceTree = "<group>"; };
 		BD231CBD1C21465300D93449 /* SPTSession+Cachable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SPTSession+Cachable.swift"; sourceTree = "<group>"; };
 		BD6973631BBFE4FB001DC32F /* Spotify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Spotify.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BDAA75271C21683700E49759 /* FeaturedController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeaturedController.swift; sourceTree = "<group>"; };
+		BDAA75291C2169B900E49759 /* DefaultListSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultListSpotCell.swift; sourceTree = "<group>"; };
+		BDED39E21C216CB700AC6383 /* ListHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListHeaderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +82,7 @@
 				BD231CA91C1E107200D93449 /* AuthController.swift */,
 				BD231CA71C1E0DCB00D93449 /* MainController.swift */,
 				BD231CB61C20916800D93449 /* PlaylistController.swift */,
+				BDAA75271C21683700E49759 /* FeaturedController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -94,7 +99,6 @@
 		BD231CB31C1E152B00D93449 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				BD231CB41C1E153900D93449 /* SpotsController+Extension.swift */,
 				BD231CBB1C20B88A00D93449 /* UIImage+Transparent.swift */,
 				BD231CBD1C21465300D93449 /* SPTSession+Cachable.swift */,
 			);
@@ -104,7 +108,9 @@
 		BD231CB81C20A7D300D93449 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				BDED39E21C216CB700AC6383 /* ListHeaderView.swift */,
 				BD231CB91C20AB3E00D93449 /* PlaylistSpotCell.swift */,
+				BDAA75291C2169B900E49759 /* DefaultListSpotCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -272,7 +278,9 @@
 				BD231CB71C20916800D93449 /* PlaylistController.swift in Sources */,
 				BD231CBE1C21465300D93449 /* SPTSession+Cachable.swift in Sources */,
 				BD231C9C1C1E0D6C00D93449 /* AppDelegate.swift in Sources */,
-				BD231CB51C1E153900D93449 /* SpotsController+Extension.swift in Sources */,
+				BDAA75281C21683700E49759 /* FeaturedController.swift in Sources */,
+				BDED39E31C216CB700AC6383 /* ListHeaderView.swift in Sources */,
+				BDAA752A1C2169B900E49759 /* DefaultListSpotCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
