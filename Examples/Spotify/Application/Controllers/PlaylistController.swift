@@ -7,6 +7,7 @@ class PlaylistController: SpotsController, SpotsDelegate {
 
   let accessToken = Keychain.password(forAccount: keychainAccount)
   var playlistID: String?
+  var offset = 0
 
   convenience init(playlistID: String?) {
     let listSpot = ListSpot(component: Component())
