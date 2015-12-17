@@ -52,8 +52,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       tableView.separatorColor = UIColor.darkGrayColor()
       tableView.tableFooterView = UIView(frame: CGRect.zero)
     }
-    ListSpot.headers["list"] = ListHeaderView.self
 
+    ListSpot.headers["list"] = ListHeaderView.self
     ListSpot.cells["default"] = DefaultListSpotCell.self
     ListSpot.cells["playlist"] = PlaylistSpotCell.self
     ListSpot.defaultCell = DefaultListSpotCell.self
@@ -77,6 +77,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     session = SPTSession(userName: "oprah_noodlemantra",
       accessToken: Keychain.password(forAccount: keychainAccount),
       expirationDate: nil)
+
+    if session?.isValid() == false {
+      cache.remove("session")
+    }
 
     let controller = AuthController(spots: [ListSpot(component:
       Component(items:

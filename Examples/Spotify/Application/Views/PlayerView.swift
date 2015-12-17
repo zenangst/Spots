@@ -7,8 +7,8 @@ class PlayerView: UIView {
   var initialOrigin: CGFloat = UIScreen.mainScreen().bounds.height - 60
 
   lazy var albumCover: UIImageView = { [unowned self] in
-    let size = UIScreen.mainScreen().bounds.width - 40
-    let imageView = UIImageView(frame: CGRect(x: 20, y: 80, width: size, height: size))
+    let size = UIScreen.mainScreen().bounds.width
+    let imageView = UIImageView(frame: CGRect(x: 0, y: 60, width: size, height: size))
     imageView.backgroundColor = UIColor.darkGrayColor().colorWithAlphaComponent(0.7)
 
     return imageView
@@ -16,7 +16,7 @@ class PlayerView: UIView {
 
   lazy var albumTrack: UILabel = { [unowned self] in
     let size = UIScreen.mainScreen().bounds.width - 40
-    let label = UILabel(frame: CGRect(x: 20, y: CGRectGetMaxY(self.albumCover.frame) + 20,
+    let label = UILabel(frame: CGRect(x: 20, y: CGRectGetMaxY(self.albumCover.frame) + 0,
       width: size, height: 60))
     label.font = UIFont.systemFontOfSize(24)
     label.textColor = UIColor.whiteColor()
@@ -85,9 +85,9 @@ class PlayerView: UIView {
   let stopButton: UIImage? = UIImage(named: "stopButton")?.imageWithRenderingMode(.AlwaysTemplate)
 
   override init(frame: CGRect) {
-    let frame = CGRect(x: 0, y: self.initialOrigin,
-      width: screenBounds.width, height: screenBounds.height)
     super.init(frame: frame)
+
+    self.frame.size.height += 60
 
     backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.9)
 
@@ -100,12 +100,12 @@ class PlayerView: UIView {
     NSNotificationCenter.defaultCenter().addObserver(self, selector: "updatePlayer:", name: "updatePlayer", object: nil)
   }
 
-  deinit {
-    NSNotificationCenter.defaultCenter().removeObserver(self)
-  }
-
   required init?(coder aDecoder: NSCoder) {
       fatalError("init(coder:) has not been implemented")
+  }
+
+  deinit {
+    NSNotificationCenter.defaultCenter().removeObserver(self)
   }
 
   func updatePlayer(notification: NSNotification) {
@@ -134,7 +134,7 @@ class PlayerView: UIView {
   }
 
   func handlePanGesture(gesture: UIPanGestureRecognizer) {
-    let minimumY: CGFloat = 60
+    let minimumY: CGFloat = -60
     let maximumY: CGFloat = UIScreen.mainScreen().bounds.height - 60
     let translation = gesture.translationInView(self)
     let velocity = gesture.velocityInView(self)
@@ -159,7 +159,9 @@ class PlayerView: UIView {
 
       UIView.animateWithDuration(NSTimeInterval(time), delay: 0, options: [.AllowUserInteraction], animations: {
         self.frame.origin.y = endY
-        }, completion: nil)
+        UIApplication.sharedApplication().statusBarHidden = endY == minimumY
+        }, completion: { _ in
+      })
 
     default: break
     }

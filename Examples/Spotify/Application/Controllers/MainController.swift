@@ -4,20 +4,14 @@ import Compass
 
 class MainController: UINavigationController {
 
-  lazy var recentController: FeaturedController = {
-    let controller = FeaturedController(title: "Your music".uppercaseString)
-    return controller
-  }()
-
-  lazy var player: PlayerView = {
-    let view = PlayerView()
-    return view
-  }()
+  lazy var featuredController = FeaturedController(title: "Featured music".uppercaseString)
+  lazy var player = PlayerView(frame: UIScreen.mainScreen().bounds)
 
   override func viewDidLoad() {
-    viewControllers = [recentController]
-    recentController.container.contentInset.bottom = 44
+    viewControllers = [featuredController]
+    featuredController.container.contentInset.bottom = 44
 
+    player.frame.origin.y = UIScreen.mainScreen().bounds.height - 60
     view.addSubview(player)
   }
 }
