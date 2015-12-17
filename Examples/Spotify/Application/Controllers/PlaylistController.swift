@@ -3,7 +3,7 @@ import Keychain
 import Whisper
 import Compass
 
-class PlaylistController: SpotsController, SpotsDelegate {
+class PlaylistController: SpotsController {
 
   let accessToken = Keychain.password(forAccount: keychainAccount)
   var playlistID: String?
@@ -93,6 +93,9 @@ class PlaylistController: SpotsController, SpotsDelegate {
 
     container.contentInset.bottom = 44
   }
+}
+
+extension PlaylistController: SpotsDelegate {
 
   func spotDidSelectItem(spot: Spotable, item: ListItem) {
     guard let urn = item.action else { return }
