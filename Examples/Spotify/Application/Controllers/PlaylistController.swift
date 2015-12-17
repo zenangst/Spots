@@ -54,7 +54,7 @@ class PlaylistController: SpotsController {
         }
       })
     } else {
-      SPTPlaylistList.playlistsForUser("oprah_noodlemantra", withAccessToken: accessToken) { (error, object) -> Void in
+      SPTPlaylistList.playlistsForUser(username, withAccessToken: accessToken) { (error, object) -> Void in
         if let object = object as? SPTPlaylistList {
           var listItems = [ListItem]()
           for item in object.items {

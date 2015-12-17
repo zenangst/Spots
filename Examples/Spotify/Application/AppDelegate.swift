@@ -6,22 +6,23 @@ import Keychain
 import Cache
 
 let keychainAccount = "spots-accessToken"
+var username: String? {
+  set(value) {
+    NSUserDefaults.standardUserDefaults().setValue(value, forKey: "username")
+    NSUserDefaults.standardUserDefaults().synchronize()
+  }
+  get {
+    return NSUserDefaults.standardUserDefaults().valueForKey("username") as? String
+  }
+}
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
   var window: UIWindow?
   var navigationController: UINavigationController?
-
-  lazy var mainController: MainController = {
-    let controller = MainController()
-    return controller
-  }()
-
-  lazy var cache: Cache<SPTSession> = {
-    let cache = Cache<SPTSession>(name: "Spotify")
-    return cache
-  }()
+  lazy var mainController: MainController = MainController()
+  lazy var cache = Cache<SPTSession>(name: "Spotify")
 
   var session: SPTSession? {
     didSet {
@@ -74,7 +75,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     window = UIWindow(frame: UIScreen.mainScreen().bounds)
 
-    session = SPTSession(userName: "oprah_noodlemantra",
+    session = SPTSession(userName: username,
       accessToken: Keychain.password(forAccount: keychainAccount),
       expirationDate: nil)
 
@@ -134,6 +135,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             SPTAuth.defaultInstance().handleAuthCallbackWithTriggeredAuthURL(url, callback: { (error, session) -> Void in
               self.session = session
               self.cache.add("session", object: session)
+
+              SPTUser.requestCurrentUserWithAccessToken(accessToken, callback: { (error, user) -> Void in
+                guard error != nil else { return }
+                username = user.canonicalUserName
+              })
             })
 
             self.window?.rootViewController = self.mainController
