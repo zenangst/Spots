@@ -24,6 +24,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   lazy var mainController: MainController = MainController()
   lazy var cache = Cache<SPTSession>(name: "Spotify")
 
+  let configurators: [Configurator.Type] = [
+    SpotifyConfigurator.self,
+    CompassConfigurator.self,
+    SpotsConfigurator.self
+  ]
+
   var session: SPTSession? {
     didSet {
       if let session = session {
@@ -44,34 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 
-    ListSpot.configure = { tableView in
-      tableView.backgroundColor = UIColor.blackColor()
-      tableView.separatorInset = UIEdgeInsets(
-        top: 0, left: 7.5,
-        bottom: 0, right: 7.5)
-      tableView.layoutMargins = UIEdgeInsetsZero
-      tableView.separatorColor = UIColor.darkGrayColor()
-      tableView.tableFooterView = UIView(frame: CGRect.zero)
-    }
-
-    ListSpot.headers["list"] = ListHeaderView.self
-    ListSpot.cells["default"] = DefaultListSpotCell.self
-    ListSpot.cells["playlist"] = PlaylistSpotCell.self
-    ListSpot.defaultCell = DefaultListSpotCell.self
-
-    Compass.scheme = Application.mainScheme!
-    Compass.routes = [
-      "auth",
-      "callback",
-      "play:{uri}",
-      "playlist:{uri}",
-      "playlists",
-      "stop"
-    ]
-
-    SPTAuth.defaultInstance().clientID = "a73161d177934f639fe3b3506d5a1005"
-    SPTAuth.defaultInstance().redirectURL = NSURL(string: "spots://callback")
-    SPTAuth.defaultInstance().requestedScopes = [SPTAuthPlaylistModifyPrivateScope, SPTAuthPlaylistReadPrivateScope, SPTAuthStreamingScope]
+    configurators.forEach { $0.configure() }
 
     window = UIWindow(frame: UIScreen.mainScreen().bounds)
 

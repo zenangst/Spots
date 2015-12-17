@@ -21,6 +21,9 @@
 		BD231CBC1C20B88A00D93449 /* UIImage+Transparent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD231CBB1C20B88A00D93449 /* UIImage+Transparent.swift */; };
 		BD231CBE1C21465300D93449 /* SPTSession+Cachable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD231CBD1C21465300D93449 /* SPTSession+Cachable.swift */; };
 		BD4F5BF61C236AFA00424FE1 /* Configurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4F5BF51C236AFA00424FE1 /* Configurator.swift */; };
+		BD4F5BF81C236B2500424FE1 /* SpotsConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4F5BF71C236B2500424FE1 /* SpotsConfigurator.swift */; };
+		BD4F5BFA1C236B5200424FE1 /* CompassConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4F5BF91C236B5200424FE1 /* CompassConfigurator.swift */; };
+		BD4F5BFC1C236B8400424FE1 /* SpotifyConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4F5BFB1C236B8400424FE1 /* SpotifyConfigurator.swift */; };
 		BDAA75281C21683700E49759 /* FeaturedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAA75271C21683700E49759 /* FeaturedController.swift */; };
 		BDAA752A1C2169B900E49759 /* DefaultListSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAA75291C2169B900E49759 /* DefaultListSpotCell.swift */; };
 		BDED39E31C216CB700AC6383 /* ListHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDED39E21C216CB700AC6383 /* ListHeaderView.swift */; };
@@ -45,6 +48,9 @@
 		BD231CBB1C20B88A00D93449 /* UIImage+Transparent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Transparent.swift"; sourceTree = "<group>"; };
 		BD231CBD1C21465300D93449 /* SPTSession+Cachable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SPTSession+Cachable.swift"; sourceTree = "<group>"; };
 		BD4F5BF51C236AFA00424FE1 /* Configurator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configurator.swift; sourceTree = "<group>"; };
+		BD4F5BF71C236B2500424FE1 /* SpotsConfigurator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsConfigurator.swift; sourceTree = "<group>"; };
+		BD4F5BF91C236B5200424FE1 /* CompassConfigurator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompassConfigurator.swift; sourceTree = "<group>"; };
+		BD4F5BFB1C236B8400424FE1 /* SpotifyConfigurator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotifyConfigurator.swift; sourceTree = "<group>"; };
 		BD6973631BBFE4FB001DC32F /* Spotify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Spotify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDAA75271C21683700E49759 /* FeaturedController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeaturedController.swift; sourceTree = "<group>"; };
 		BDAA75291C2169B900E49759 /* DefaultListSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultListSpotCell.swift; sourceTree = "<group>"; };
@@ -133,6 +139,9 @@
 		BD4F5BF31C236AE500424FE1 /* Configurators */ = {
 			isa = PBXGroup;
 			children = (
+				BD4F5BF71C236B2500424FE1 /* SpotsConfigurator.swift */,
+				BD4F5BF91C236B5200424FE1 /* CompassConfigurator.swift */,
+				BD4F5BFB1C236B8400424FE1 /* SpotifyConfigurator.swift */,
 			);
 			path = Configurators;
 			sourceTree = "<group>";
@@ -303,6 +312,9 @@
 			files = (
 				BD231CA81C1E0DCB00D93449 /* MainController.swift in Sources */,
 				BD231CBC1C20B88A00D93449 /* UIImage+Transparent.swift in Sources */,
+				BD4F5BF81C236B2500424FE1 /* SpotsConfigurator.swift in Sources */,
+				BD4F5BFC1C236B8400424FE1 /* SpotifyConfigurator.swift in Sources */,
+				BD4F5BFA1C236B5200424FE1 /* CompassConfigurator.swift in Sources */,
 				BD231CBA1C20AB3E00D93449 /* PlaylistSpotCell.swift in Sources */,
 				BD010AAF1C23355C00A908E9 /* PlayerView.swift in Sources */,
 				BD4F5BF61C236AFA00424FE1 /* Configurator.swift in Sources */,

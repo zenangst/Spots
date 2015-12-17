@@ -1,3 +1,3 @@
 protocol Configurator {
-  func configure()
+  static func configure()
 }
