@@ -1,9 +1,5 @@
-//
-//  Routing.swift
-//  Spotify
-//
-//  Created by Vadym Markov on 18/12/15.
-//  Copyright © 2015 Hyper. All rights reserved.
-//
+import UIKit
 
-import Foundation
+public protocol Routing {
+  func navigate(url: NSURL, navigationController: UINavigationController) -> Bool
+}
