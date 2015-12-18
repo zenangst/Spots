@@ -7,13 +7,13 @@ import Cache
 
 let keychainAccount = "spots-accessToken"
 var username: String? {
-  set(value) {
-    NSUserDefaults.standardUserDefaults().setValue(value, forKey: "username")
-    NSUserDefaults.standardUserDefaults().synchronize()
-  }
-  get {
-    return NSUserDefaults.standardUserDefaults().valueForKey("username") as? String
-  }
+set(value) {
+  NSUserDefaults.standardUserDefaults().setValue(value, forKey: "username")
+  NSUserDefaults.standardUserDefaults().synchronize()
+}
+get {
+  return NSUserDefaults.standardUserDefaults().valueForKey("username") as? String
+}
 }
 
 @UIApplicationMain
@@ -43,6 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   lazy var player: SPTAudioStreamingController = {
     let player = SPTAudioStreamingController(clientId: SPTAuth.defaultInstance().clientID)
+    player.playbackDelegate = self
 
     return player
   }()
@@ -139,28 +140,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
               SPTPlaylistSnapshot.playlistWithURI(NSURL(string: realPlaylist), accessToken: Keychain.password(forAccount: keychainAccount), callback: { (error, object) -> Void in
                 guard let object = object as? SPTPlaylistSnapshot else { return }
-                var trackObject: SPTPartialTrack!
                 var urls = [NSURL]()
 
-                object.firstTrackPage.items.enumerate().forEach {
-                  if Int32($0.0) == track {
-                    trackObject = $0.1 as! SPTPartialTrack
-                  }
-                  urls.append($0.1.uri)
+                object.firstTrackPage.items.forEach {
+                  urls.append($0.uri)
                 }
 
                 self.player.playURIs(urls,
                   fromIndex: track,
                   callback: { (error) -> Void in })
-
-                NSNotificationCenter.defaultCenter().postNotificationName("updatePlayer",
-                  object: nil,
-                  userInfo: [
-                    "title" : trackObject.name,
-                    "image" : trackObject.album.largestCover.imageURL.absoluteString ?? "",
-                    "artist" :trackObject.artists.first?.name ?? "",
-                    "track" : trackObject.name
-                  ])
               })
           }
         case "stop":
@@ -177,3 +165,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
 }
 
+extension AppDelegate: SPTAudioStreamingPlaybackDelegate {
+
+  func audioStreaming(audioStreaming: SPTAudioStreamingController!, didChangeToTrack trackMetadata: [NSObject : AnyObject]!) {
+
+    guard let name = trackMetadata["SPTAudioStreamingMetadataArtistName"] as? String,
+    artist = trackMetadata["SPTAudioStreamingMetadataArtistName"] as? String,
+    track = trackMetadata["SPTAudioStreamingMetadataTrackName"] as? String,
+    uri = trackMetadata["SPTAudioStreamingMetadataAlbumURI"] as? String
+      else { return }
+
+    SPTAlbum.albumWithURI(NSURL(string: uri), accessToken: Keychain.password(forAccount: keychainAccount), market: nil) { (error, object) -> Void in
+      guard let album = object as? SPTPartialAlbum else { return }
+
+      NSNotificationCenter.defaultCenter().postNotificationName("updatePlayer",
+        object: nil,
+        userInfo: [
+          "title" : name,
+          "image" : album.largestCover.imageURL.absoluteString,
+          "artist" :artist,
+          "track" : track
+        ])
+
+    }
+  }
+
+}
