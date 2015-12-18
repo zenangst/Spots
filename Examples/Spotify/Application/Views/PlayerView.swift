@@ -62,8 +62,28 @@ class PlayerView: UIView {
 
   lazy var actionButton: UIButton = { [unowned self] in
     let button = UIButton(frame: CGRect(x: 0, y: 5, width: 44, height: 44))
-    button.setImage(self.stopButton, forState: .Normal)
+    button.setImage(self.stopImage, forState: .Normal)
     button.addTarget(self, action: "stop", forControlEvents: .TouchUpInside)
+    button.tintColor = UIColor.whiteColor()
+
+    return button
+    }()
+
+  lazy var previousButton: UIButton = { [unowned self] in
+    let bounds = UIScreen.mainScreen().bounds
+    let button = UIButton(frame: CGRect(x: 0, y: self.albumArtist.frame.origin.y + 20, width: 88, height: 88))
+    button.setImage(self.previousImage, forState: .Normal)
+    button.addTarget(self, action: "previous", forControlEvents: .TouchUpInside)
+    button.tintColor = UIColor.whiteColor()
+
+    return button
+    }()
+
+  lazy var nextButton: UIButton = { [unowned self] in
+    let bounds = UIScreen.mainScreen().bounds
+    let button = UIButton(frame: CGRect(x: bounds.size.width - 88, y: self.albumArtist.frame.origin.y + 20, width: 88, height: 88))
+    button.setImage(self.nextImage, forState: .Normal)
+    button.addTarget(self, action: "next", forControlEvents: .TouchUpInside)
     button.tintColor = UIColor.whiteColor()
 
     return button
@@ -81,8 +101,10 @@ class PlayerView: UIView {
     return recognizer
     }()
 
-  let playButton: UIImage? = UIImage(named: "playButton")?.imageWithRenderingMode(.AlwaysTemplate)
-  let stopButton: UIImage? = UIImage(named: "stopButton")?.imageWithRenderingMode(.AlwaysTemplate)
+  let playImage: UIImage? = UIImage(named: "playButton")?.imageWithRenderingMode(.AlwaysTemplate)
+  let stopImage: UIImage? = UIImage(named: "stopButton")?.imageWithRenderingMode(.AlwaysTemplate)
+  let previousImage: UIImage? = UIImage(named: "previousButton")?.imageWithRenderingMode(.AlwaysTemplate)
+  let nextImage: UIImage? = UIImage(named: "nextButton")?.imageWithRenderingMode(.AlwaysTemplate)
 
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -92,7 +114,7 @@ class PlayerView: UIView {
     backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.9)
 
     [panRecognizer, tapRecognizer].forEach { addGestureRecognizer($0) }
-    [actionButton, albumCover, albumTrack, albumArtist, smallAlbumTrack, smallAlbumArtist]
+    [actionButton, albumCover, albumTrack, albumArtist, smallAlbumTrack, smallAlbumArtist, previousButton, nextButton]
       .forEach {
         addSubview($0)
     }
@@ -169,5 +191,13 @@ class PlayerView: UIView {
 
   func stop() {
     Compass.navigate("stop")
+  }
+
+  func next() {
+    Compass.navigate("next")
+  }
+
+  func previous() {
+    Compass.navigate("previous")
   }
 }

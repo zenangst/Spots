@@ -11,7 +11,9 @@ struct CompassConfigurator: Configurator {
       "play:{uri}:{track}",
       "playlist:{uri}",
       "playlists",
-      "stop"
+      "stop",
+      "next",
+      "previous"
     ]
   }
 }

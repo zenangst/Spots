@@ -106,15 +106,6 @@ extension PlaylistController: SpotsDelegate {
         backgroundColor: UIColor(red:0.063, green:0.063, blue:0.063, alpha: 1),
         titleColor: UIColor.whiteColor())
       Whistle(murmur)
-
-      NSNotificationCenter.defaultCenter().postNotificationName("updatePlayer",
-        object: nil,
-        userInfo: [
-          "title" : item.title,
-          "image" : item.meta["image"] ?? "",
-          "artist" : item.meta["artist"] ?? "",
-          "track" : item.meta["track"] ?? ""
-        ])
     }
   }
 }

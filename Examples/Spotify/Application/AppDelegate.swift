@@ -139,23 +139,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
               SPTPlaylistSnapshot.playlistWithURI(NSURL(string: realPlaylist), accessToken: Keychain.password(forAccount: keychainAccount), callback: { (error, object) -> Void in
                 guard let object = object as? SPTPlaylistSnapshot else { return }
+                var trackObject: SPTPartialTrack!
                 var urls = [NSURL]()
-                object.firstTrackPage.items.forEach {
-                  urls.append($0.uri)
+
+                object.firstTrackPage.items.enumerate().forEach {
+                  if Int32($0.0) == track {
+                    trackObject = $0.1 as! SPTPartialTrack
+                  }
+                  urls.append($0.1.uri)
                 }
 
                 self.player.playURIs(urls,
                   fromIndex: track,
                   callback: { (error) -> Void in })
+
+                NSNotificationCenter.defaultCenter().postNotificationName("updatePlayer",
+                  object: nil,
+                  userInfo: [
+                    "title" : trackObject.name,
+                    "image" : trackObject.album.largestCover.imageURL.absoluteString ?? "",
+                    "artist" :trackObject.artists.first?.name ?? "",
+                    "track" : trackObject.name
+                  ])
               })
-
-
           }
         case "stop":
-          if self.player.isPlaying {
-            self.player.stop({ (error) -> Void in })
-          }
-          break
+          guard self.player.isPlaying else { return }
+          self.player.stop({ (error) -> Void in })
+        case "next":
+          self.player.skipNext({ (error) -> Void in })
+        case "previous":
+          self.player.skipPrevious({ (error) -> Void in })
         default:
           print("\(route) is not registered")
         }
