@@ -8,6 +8,7 @@ import Cache
 let keychainAccount = "spots-accessToken"
 var username: String? {
   set(value) {
+    print(value)
     NSUserDefaults.standardUserDefaults().setValue(value, forKey: "username")
     NSUserDefaults.standardUserDefaults().synchronize()
   }
@@ -32,13 +33,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   var session: SPTSession? {
     didSet {
-      if let session = session {
-        player.loginWithSession(session, callback: { (error) -> Void in
-          if let error = error {
-            print(error)
-          }
-        })
-      }
+      guard let session = session else { return }
+      player.loginWithSession(session, callback: { (error) -> Void in
+        if let error = error {
+          print(error)
+        }
+      })
     }
   }
 
@@ -57,10 +57,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     session = SPTSession(userName: username,
       accessToken: Keychain.password(forAccount: keychainAccount),
       expirationDate: nil)
-
-    if session?.isValid() == false {
-      cache.remove("session")
-    }
 
     let controller = AuthController(spots: [ListSpot(component:
       Component(items:
@@ -111,13 +107,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
           if let accessToken = arguments["access_token"] {
             Keychain.setPassword(accessToken, forAccount: keychainAccount)
 
-            SPTAuth.defaultInstance().handleAuthCallbackWithTriggeredAuthURL(url, callback: { (error, session) -> Void in
-              self.session = session
-              self.cache.add("session", object: session)
+            SPTUser.requestCurrentUserWithAccessToken(accessToken, callback: { (error, user) -> Void in
 
-              SPTUser.requestCurrentUserWithAccessToken(accessToken, callback: { (error, user) -> Void in
-                guard error != nil else { return }
-                username = user.canonicalUserName
+              if let error = error {
+                print(error)
+              }
+
+              username = user.canonicalUserName
+
+              SPTAuth.defaultInstance().handleAuthCallbackWithTriggeredAuthURL(url, callback: { (error, session) -> Void in
+                self.session = session
+                self.cache.add("session", object: session)
               })
             })
 
