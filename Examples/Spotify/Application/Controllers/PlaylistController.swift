@@ -27,7 +27,7 @@ class PlaylistController: SpotsController {
 
           var listItems = [ListItem]()
 
-          for item in object.firstTrackPage.items {
+          for (index, item) in object.firstTrackPage.items.enumerate() {
             let uri = (item.uri as NSURL).absoluteString
               .stringByReplacingOccurrencesOfString(":", withString: "-")
 
@@ -37,7 +37,7 @@ class PlaylistController: SpotsController {
               title: item.name,
               subtitle:  "\(((item.artists as! [SPTPartialArtist]).first)!.name) - \((item.album as SPTPartialAlbum).name)",
               kind: "playlist",
-              action: "play:\(uri)",
+              action: "play:\(playlistID):\(index)",
               meta: [
                 "notification" : "\(item.name) by \(((item.artists as! [SPTPartialArtist]).first)!.name)",
                 "track" : item.name,

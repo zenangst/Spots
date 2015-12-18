@@ -8,7 +8,6 @@ import Cache
 let keychainAccount = "spots-accessToken"
 var username: String? {
   set(value) {
-    print(value)
     NSUserDefaults.standardUserDefaults().setValue(value, forKey: "username")
     NSUserDefaults.standardUserDefaults().synchronize()
   }
@@ -132,13 +131,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let controller = PlaylistController(playlistID: playlist)
             self.mainController.pushViewController(controller, animated: true)
           }
-        case "play:{uri}":
-          if let track = arguments["uri"] {
-            let realTrack = track.stringByReplacingOccurrencesOfString("-", withString: ":")
+        case "play:{uri}:{track}":
+          if let playlist = arguments["uri"],
+            trackString = arguments["track"],
+            track = Int32(trackString) {
+              let realPlaylist = playlist.stringByReplacingOccurrencesOfString("-", withString: ":")
 
-            self.player.playURIs([NSURL(string: realTrack)!],
-              fromIndex: 0,
-              callback: { (error) -> Void in })
+              SPTPlaylistSnapshot.playlistWithURI(NSURL(string: realPlaylist), accessToken: Keychain.password(forAccount: keychainAccount), callback: { (error, object) -> Void in
+                guard let object = object as? SPTPlaylistSnapshot else { return }
+                var urls = [NSURL]()
+                object.firstTrackPage.items.forEach {
+                  urls.append($0.uri)
+                }
+
+                self.player.playURIs(urls,
+                  fromIndex: track,
+                  callback: { (error) -> Void in })
+              })
+
+
           }
         case "stop":
           if self.player.isPlaying {
