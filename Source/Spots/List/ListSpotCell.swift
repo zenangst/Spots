@@ -26,7 +26,6 @@ public class ListSpotCell: UITableViewCell, Itemble {
 
     if !item.image.isEmpty {
       if let url = NSURL(string: item.image) {
-        print(url)
         imageView?.setImage(url, placeholder: UIImage(named: "ImagePlaceholder"))
       } else {
         imageView?.image = UIImage(named: item.image)
