@@ -8,18 +8,18 @@ class SpotsControllerTests : XCTestCase {
   func testSpotAtIndex() {
     let component = Component(title: "Component")
     let listSpot = ListSpot(component: component)
-    spotController = SpotsController(spots: [listSpot], refreshable: true)
+    spotController = SpotsController(spot: listSpot)
 
     XCTAssertEqual(spotController?.spotAtIndex(0) as? ListSpot, listSpot)
   }
-  
+
   func testUpdateSpotAtIndex() {
     let component = Component(title: "Component")
     let listSpot = ListSpot(component: component)
-    spotController = SpotsController(spots: [listSpot], refreshable: true)
+    spotController = SpotController(spot: listSpot)
 
     let items = [ListItem(title: "item1")]
-    spotController?.updateSpotAtIndex(0, closure: { spot -> Spotable in
+    spotController?.update(0, closure: { spot -> Spotable in
       spot.component.items = items
       return spot
     })
@@ -32,7 +32,7 @@ class SpotsControllerTests : XCTestCase {
   func testAppendItem() {
     let component = Component(title: "Component", kind: "list")
     let listSpot = ListSpot(component: component)
-    spotController = SpotsController(spots: [listSpot], refreshable: true)
+    spotController = SpotController(spot: listSpot)
 
     XCTAssert(spotController?.spotAtIndex(0)?.component.items.count == 0)
 
@@ -58,7 +58,7 @@ class SpotsControllerTests : XCTestCase {
   func testAppendItems() {
     let component = Component(title: "Component", kind: "list")
     let listSpot = ListSpot(component: component)
-    spotController = SpotsController(spots: [listSpot], refreshable: true)
+    spotController = SpotsController(spot: listSpot)
 
     let items = [
       ListItem(title: "title1", kind: "list"),
@@ -86,7 +86,7 @@ class SpotsControllerTests : XCTestCase {
   func testPrependItems() {
     let component = Component(title: "Component", kind: "list")
     let listSpot = ListSpot(component: component)
-    spotController = SpotsController(spots: [listSpot], refreshable: true)
+    spotController = SpotController(spot: listSpot)
 
     let items = [
       ListItem(title: "title1", kind: "list"),
@@ -116,7 +116,7 @@ class SpotsControllerTests : XCTestCase {
       ])
     let initialListSpot = ListSpot(component: component)
 
-    spotController = SpotsController(spots: [initialListSpot], refreshable: true)
+    spotController = SpotController(spot: initialListSpot)
 
     let firstItem = spotController?.spotAtIndex(0)?.component.items.first
 
@@ -153,7 +153,7 @@ class SpotsControllerTests : XCTestCase {
     let listSpot = ListSpot(component: Component(title: "ListSpot"))
     let listSpot2 = ListSpot(component: Component(title: "ListSpot2"))
     let gridSpot = GridSpot(component: Component(title: "GridSpot", items: [ListItem(title: "ListItem")]))
-    let spotController = SpotsController(spots: [listSpot, listSpot2, gridSpot], refreshable: true)
+    let spotController = SpotsController(spots: [listSpot, listSpot2, gridSpot])
 
     XCTAssertNotNil(spotController.spot{ $1.component.title == "ListSpot" })
     XCTAssertNotNil(spotController.spot{ $1.component.title == "GridSpot" })
