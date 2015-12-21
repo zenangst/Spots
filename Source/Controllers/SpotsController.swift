@@ -183,6 +183,7 @@ extension SpotsController {
   }
 
   public func insert(item: ListItem, index: Int = 0, spotIndex: Int, completion: (() -> Void)? = nil) {
+    spot(spotIndex)?.insert(item, index: index)  { completion?() }
   }
 
   public func update(item: ListItem, index: Int = 0, spotIndex: Int, completion: (() -> Void)? = nil) {
