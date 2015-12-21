@@ -9,7 +9,8 @@ class SearchController: SpotsController {
 
     let spots: [Spotable] = [
       ListSpot(component: results),
-      ListSpot(title: "Suggestions")
+      ListSpot(title: "Suggestions"),
+      ListSpot()
     ]
 
     self.init(spots: spots)
@@ -17,7 +18,7 @@ class SearchController: SpotsController {
 
     dispatch(queue: .Interactive) { [weak self] in
       let items = FavoritesController.generateItems(0, to: 4)
-      self?.update(spotAtIndex: 1, closure: { (spot) -> Spotable in
+      self?.update(spotAtIndex: 2, closure: { (spot) -> Spotable in
         spot.component.items = items
         return spot
       })
@@ -38,8 +39,15 @@ extension SearchController: UITextFieldDelegate {
 
         dispatch(queue: .Interactive) { [weak self] in
           let items = FavoritesController.generateItems(0, to: 4)
-          self?.update(spotAtIndex: 1, closure: { (spot) -> Spotable in
-            spot.component.title = "Suggestions"
+
+          if self?.spot(1)?.component.title == "Results" {
+            self?.update(spotAtIndex: 1, closure: { (spot) -> Spotable in
+              spot.component.title = "Suggestions"
+              return spot
+            })
+          }
+
+          self?.update(spotAtIndex: 2, closure: { (spot) -> Spotable in
             spot.component.items = items
             return spot
           })
@@ -48,9 +56,16 @@ extension SearchController: UITextFieldDelegate {
       string.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0 {
 
         dispatch(queue: .Interactive) { [weak self] in
+
+          if self?.spot(1)?.component.title == "Suggestions" {
+            self?.update(spotAtIndex: 1, closure: { (spot) -> Spotable in
+              spot.component.title = "Results"
+              return spot
+            })
+          }
+
           let items = FavoritesController.generateItems(0, to: 11)
-          self?.update(spotAtIndex: 1, closure: { (spot) -> Spotable in
-            spot.component.title = "Results"
+          self?.update(spotAtIndex: 2, closure: { (spot) -> Spotable in
             spot.component.items = items
             return spot
           })

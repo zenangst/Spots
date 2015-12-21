@@ -47,7 +47,7 @@ public class ListSpot: NSObject, Spotable, Listable {
     }
   }
 
-  public convenience init(title: String, kind: String = "list") {
+  public convenience init(title: String = "", kind: String = "list") {
     self.init(component: Component(title: title, kind: kind))
   }
 
