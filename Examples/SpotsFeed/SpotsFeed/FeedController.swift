@@ -2,7 +2,7 @@ import Sugar
 import Fakery
 import Spots
 
-public class FeedController: SpotsController, SpotsDelegate {
+public class FeedController: SpotController, SpotsDelegate {
 
   public static let faker = Faker()
 
