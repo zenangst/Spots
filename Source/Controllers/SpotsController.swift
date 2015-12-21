@@ -17,9 +17,7 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
   }
 
   public var spot: Spotable {
-    get {
-      return spot(0)!
-    }
+    get { return spot(0)! }
   }
 
   weak public var spotsRefreshDelegate: SpotsRefreshDelegate? {
@@ -36,13 +34,13 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
   weak public var spotsScrollDelegate: SpotsScrollDelegate?
 
   lazy public var spotsScrollView: SpotsScrollView = { [unowned self] in
-    let container = SpotsScrollView(frame: self.view.frame)
-    container.alwaysBounceVertical = true
-    container.backgroundColor = UIColor.whiteColor()
-    container.clipsToBounds = true
-    container.delegate = self
+    let scrollView = SpotsScrollView(frame: self.view.frame)
+    scrollView.alwaysBounceVertical = true
+    scrollView.backgroundColor = UIColor.whiteColor()
+    scrollView.clipsToBounds = true
+    scrollView.delegate = self
 
-    return container
+    return scrollView
     }()
 
   public lazy var tableView: UITableView = { [unowned self] in
@@ -155,7 +153,7 @@ extension SpotsController {
     }
   }
 
-  public func update(spotAtIndex index: Int = 0, closure: (spot: Spotable) -> Spotable, completion: (() -> Void)? = nil) {
+  public func update(spotAtIndex index: Int = 0, _ closure: (spot: Spotable) -> Spotable) {
     guard let spot = spot(index) else { return }
     spots[spot.index] = closure(spot: spot)
     spot.prepare()
