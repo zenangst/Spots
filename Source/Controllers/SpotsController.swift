@@ -151,7 +151,7 @@ extension SpotsController {
     return spots.filter(includeElement)
   }
 
-  public func reloadSpots() {
+  public func reload() {
     dispatch { [weak self] in
       self?.spots.forEach { $0.reload([]) {} }
     }
