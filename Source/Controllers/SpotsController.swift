@@ -72,6 +72,11 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     spots.enumerate().forEach { spot($0.index).index = $0.index }
   }
 
+  public convenience init(spot: Spotable)  {
+    self.init(spots: [spot])
+    view.addSubview(container)
+  }
+
   public required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
