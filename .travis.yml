@@ -9,5 +9,5 @@ before_install:
 - pod install --project-directory=Pod
 
 script: 
-- xctool clean build -project Pod.xcworkspace -scheme SwiftSortsRelease
-- xctool test -project Pod.xcworkspace -scheme SwiftSortsTests
+- xctool clean build -workspace Pod.xcworkspace -scheme Tests
+- xctool test -workspace Pod.xcworkspace -scheme Tests
