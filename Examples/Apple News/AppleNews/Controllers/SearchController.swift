@@ -9,7 +9,7 @@ class SearchController: SpotsController {
 
     let spots: [Spotable] = [
       ListSpot(component: results),
-      TitleSpot(title: "Suggestions")
+      ListSpot(title: "Suggestions")
     ]
 
     self.init(spots: spots)

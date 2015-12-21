@@ -1,8 +1,6 @@
 import UIKit
 import Sugar
 
-public typealias TitleSpot = ListSpot
-
 public class ListSpot: NSObject, Spotable, Listable {
 
   public static var cells = [String : UIView.Type]()
