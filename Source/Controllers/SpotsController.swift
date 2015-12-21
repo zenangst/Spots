@@ -158,7 +158,7 @@ extension SpotsController {
   }
 
   public func update(index: Int = 0, closure: (spot: Spotable) -> Spotable, completion: (() -> Void)? = nil) {
-    guard let spot = spotAtIndex(index) else { return }
+    guard let spot = spot(index) else { return }
     spots[spot.index] = closure(spot: spot)
     spot.prepare()
     spot.setup(container.bounds.size)
@@ -166,36 +166,36 @@ extension SpotsController {
     dispatch { [weak self] in
       guard let weakSelf = self else { return }
 
-      weakSelf.spot(spot.index).reload([index]) { }
+      weakSelf.spot(spot.index)?.reload([index]) { }
     }
   }
 
   public func append(item: ListItem, spotIndex: Int = 0, completion: (() -> Void)? = nil) {
-    spotAtIndex(spotIndex)?.append(item) { completion?() }
+    spot(spotIndex)?.append(item) { completion?() }
   }
 
   public func append(items: [ListItem], spotIndex: Int = 0, completion: (() -> Void)? = nil) {
-    spotAtIndex(spotIndex)?.append(items) { completion?() }
+    spot(spotIndex)?.append(items) { completion?() }
   }
 
   public func prepend(items: [ListItem], spotIndex: Int = 0, completion: (() -> Void)? = nil) {
-    spotAtIndex(spotIndex)?.prepend(items)  { completion?() }
+    spot(spotIndex)?.prepend(items)  { completion?() }
   }
 
   public func insert(item: ListItem, index: Int = 0, spotIndex: Int, completion: (() -> Void)? = nil) {
-    spotAtIndex(spotIndex)?.insert(item, index: index)  { completion?() }
   }
 
   public func update(item: ListItem, index: Int = 0, spotIndex: Int, completion: (() -> Void)? = nil) {
     spotAtIndex(spotIndex)?.update(item, index: index)  { completion?() }
+    spot(spotIndex)?.insert(item, index: index)  { completion?() }
   }
 
   public func delete(index: Int, spotIndex: Int = 0, completion: (() -> Void)? = nil) {
-    spotAtIndex(spotIndex)?.delete(index) { completion?() }
+    spot(spotIndex)?.delete(index) { completion?() }
   }
 
   public func delete(indexes indexes: [Int], spotIndex: Int, completion: (() -> Void)? = nil) {
-    spotAtIndex(spotIndex)?.delete(indexes) { completion?() }
+    spot(spotIndex)?.delete(indexes) { completion?() }
   }
 
   public func refreshSpots(refreshControl: UIRefreshControl) {
