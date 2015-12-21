@@ -6,7 +6,7 @@ class SpotsControllerTests : XCTestCase {
   func testSpotAtIndex() {
     let component = Component(title: "Component")
     let listSpot = ListSpot(component: component)
-    let spotController = SpotController(spot: listSpot)
+    let spotController = SpotsController(spot: listSpot)
 
     XCTAssertEqual(spotController.spot as? ListSpot, listSpot)
   }
@@ -14,7 +14,7 @@ class SpotsControllerTests : XCTestCase {
   func testUpdateSpotAtIndex() {
     let component = Component(title: "Component")
     let listSpot = ListSpot(component: component)
-    let spotController = SpotController(spot: listSpot)
+    let spotController = SpotsController(spot: listSpot)
 
     let items = [ListItem(title: "item1")]
 
@@ -29,7 +29,7 @@ class SpotsControllerTests : XCTestCase {
   func testAppendItem() {
     let component = Component(title: "Component", kind: "list")
     let listSpot = ListSpot(component: component)
-    let spotController = SpotController(spot: listSpot)
+    let spotController = SpotsController(spot: listSpot)
 
     XCTAssert(spotController.spot.component.items.count == 0)
 
@@ -52,7 +52,7 @@ class SpotsControllerTests : XCTestCase {
   func testAppendItems() {
     let component = Component(title: "Component", kind: "list")
     let listSpot = ListSpot(component: component)
-    let spotController = SpotController(spot: listSpot)
+    let spotController = SpotsController(spot: listSpot)
 
     let items = [
       ListItem(title: "title1", kind: "list"),
@@ -77,7 +77,7 @@ class SpotsControllerTests : XCTestCase {
   func testPrependItems() {
     let component = Component(title: "Component", kind: "list")
     let listSpot = ListSpot(component: component)
-    let spotController = SpotController(spot: listSpot)
+    let spotController = SpotsController(spot: listSpot)
 
     let items = [
       ListItem(title: "title1", kind: "list"),
@@ -104,7 +104,7 @@ class SpotsControllerTests : XCTestCase {
       ])
     let initialListSpot = ListSpot(component: component)
 
-    let spotController = SpotController(spot: initialListSpot)
+    let spotController = SpotsController(spot: initialListSpot)
 
     let firstItem = spotController.spot.component.items.first
 

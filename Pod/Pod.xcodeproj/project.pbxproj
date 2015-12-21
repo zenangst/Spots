@@ -29,7 +29,6 @@
 		BDC308611C05F8280091579D /* ListSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC3084B1C05F8280091579D /* ListSpot.swift */; };
 		BDC308621C05F8280091579D /* ListSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC3084C1C05F8280091579D /* ListSpotCell.swift */; };
 		BDC308631C05F8280091579D /* SpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC3084E1C05F8280091579D /* SpotCell.swift */; };
-		BDCC275B1C27F6DC0029CF77 /* SpotController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCC275A1C27F6DB0029CF77 /* SpotController.swift */; };
 		BDD6FA2C1C05EDDF007C442D /* TestSpotsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD6FA2B1C05EDDF007C442D /* TestSpotsController.swift */; };
 		BDFECC531C04EA7800049FE2 /* TestComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFECC521C04EA7800049FE2 /* TestComponent.swift */; };
 		BDFECC551C04F6B600049FE2 /* TestListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFECC541C04F6B600049FE2 /* TestListItem.swift */; };
@@ -66,7 +65,6 @@
 		BDC3084B1C05F8280091579D /* ListSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListSpot.swift; sourceTree = "<group>"; };
 		BDC3084C1C05F8280091579D /* ListSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListSpotCell.swift; sourceTree = "<group>"; };
 		BDC3084E1C05F8280091579D /* SpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotCell.swift; sourceTree = "<group>"; };
-		BDCC275A1C27F6DB0029CF77 /* SpotController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotController.swift; sourceTree = "<group>"; };
 		BDD6FA2B1C05EDDF007C442D /* TestSpotsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TestSpotsController.swift; path = Controllers/TestSpotsController.swift; sourceTree = "<group>"; };
 		BDFECC521C04EA7800049FE2 /* TestComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestComponent.swift; sourceTree = "<group>"; };
 		BDFECC541C04F6B600049FE2 /* TestListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestListItem.swift; sourceTree = "<group>"; };
@@ -162,7 +160,6 @@
 			children = (
 				BD2EF3241C13428B00F0B960 /* SpotsController.swift */,
 				BD09693B1C16E59A00916E7C /* SpotsController+UIScrollViewDelegate.swift */,
-				BDCC275A1C27F6DB0029CF77 /* SpotController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -412,7 +409,6 @@
 				BDC3085B1C05F8280091579D /* CarouselSpot.swift in Sources */,
 				BDC3085C1C05F8280091579D /* CarouselSpotCell.swift in Sources */,
 				BDC308501C05F8280091579D /* Componentable.swift in Sources */,
-				BDCC275B1C27F6DC0029CF77 /* SpotController.swift in Sources */,
 				BDC308611C05F8280091579D /* ListSpot.swift in Sources */,
 				BD2EF3251C13428B00F0B960 /* SpotsController.swift in Sources */,
 				D5BD1E4C1C06104200582666 /* TestSpotFactory.swift in Sources */,
