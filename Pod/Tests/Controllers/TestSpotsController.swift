@@ -17,9 +17,8 @@ class SpotsControllerTests : XCTestCase {
     let spotController = SpotsController(spot: listSpot)
     let items = [ListItem(title: "item1")]
 
-    spotController.update { (spot) -> Spotable in
+    spotController.update { spot in
       spot.component.items = items
-      return spot
     }
 
     XCTAssert(spotController.spot.component.items == items)

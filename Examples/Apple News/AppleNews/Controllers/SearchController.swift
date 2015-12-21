@@ -18,9 +18,8 @@ class SearchController: SpotsController {
 
     dispatch(queue: .Interactive) { [weak self] in
       let items = FavoritesController.generateItems(0, to: 4)
-      self?.update(spotAtIndex: 2) { (spot) -> Spotable in
+      self?.update(spotAtIndex: 2) { spot in
         spot.component.items = items
-        return spot
       }
     }
 
@@ -41,15 +40,13 @@ extension SearchController: UITextFieldDelegate {
           let items = FavoritesController.generateItems(0, to: 4)
 
           if self?.spot(1)?.component.title == "Results" {
-            self?.update(spotAtIndex: 1) { (spot) -> Spotable in
+            self?.update(spotAtIndex: 1) { spot in
               spot.component.title = "Suggestions"
-              return spot
             }
           }
 
-          self?.update(spotAtIndex: 2) { (spot) -> Spotable in
+          self?.update(spotAtIndex: 2) { spot in
             spot.component.items = items
-            return spot
           }
         }
     } else if textField.text?.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0 ||
@@ -58,16 +55,14 @@ extension SearchController: UITextFieldDelegate {
         dispatch(queue: .Interactive) { [weak self] in
 
           if self?.spot(1)?.component.title == "Suggestions" {
-            self?.update(spotAtIndex: 1) { (spot) -> Spotable in
+            self?.update(spotAtIndex: 1) { spot in
               spot.component.title = "Results"
-              return spot
             }
           }
 
           let items = FavoritesController.generateItems(0, to: 11)
-          self?.update(spotAtIndex: 2) { (spot) -> Spotable in
+          self?.update(spotAtIndex: 2) { spot in
             spot.component.items = items
-            return spot
           }
         }
     }
