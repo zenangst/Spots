@@ -17,9 +17,7 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
   }
 
   public var spot: Spotable {
-    get {
-      return spot(0)!
-    }
+    get { return spot(0)! }
   }
 
   weak public var spotsRefreshDelegate: SpotsRefreshDelegate? {
