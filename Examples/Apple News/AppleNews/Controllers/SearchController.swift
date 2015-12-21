@@ -23,7 +23,7 @@ class SearchController: SpotsController {
       })
     }
 
-    if let spot = spot(0) as? ListSpot,
+    if let spot = spot as? ListSpot,
       searchHeader = spot.cachedHeaders["search"] as? SearchHeaderView {
         searchHeader.searchField.delegate = self
     }
