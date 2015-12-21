@@ -80,7 +80,7 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
   public override func viewDidLoad() {
     super.viewDidLoad()
 
-    for spot in spots {
+    spots.forEach { spot in
       spot.render().optimize()
       container.contentView.addSubview(spot.render())
       spot.prepare()
