@@ -13,10 +13,10 @@ class FavoritesController: SpotsController {
 
     dispatch(queue: .Interactive) { [weak self] in
       let items = FavoritesController.generateItems(0, to: 11)
-      self?.update(closure: { (spot) -> Spotable in
+      self?.update { (spot) -> Spotable in
         spot.component.items = items
         return spot
-      })
+      }
     }
   }
 
