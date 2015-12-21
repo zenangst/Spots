@@ -6,7 +6,7 @@ class SpotsControllerTests : XCTestCase {
   func testSpotAtIndex() {
     let component = Component(title: "Component")
     let listSpot = ListSpot(component: component)
-    let spotController = SpotsController(spot: listSpot)
+    let spotController = SpotController(spot: listSpot)
 
     XCTAssertEqual(spotController.spot as? ListSpot, listSpot)
   }
@@ -52,7 +52,7 @@ class SpotsControllerTests : XCTestCase {
   func testAppendItems() {
     let component = Component(title: "Component", kind: "list")
     let listSpot = ListSpot(component: component)
-    let spotController = SpotsController(spot: listSpot)
+    let spotController = SpotController(spot: listSpot)
 
     let items = [
       ListItem(title: "title1", kind: "list"),

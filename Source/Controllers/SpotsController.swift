@@ -1,8 +1,6 @@
 import UIKit
 import Sugar
 
-public typealias SpotController = SpotsController
-
 public class SpotsController: UIViewController, UIScrollViewDelegate {
 
   public static var configure: ((container: SpotsScrollView) -> Void)?
@@ -71,10 +69,6 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     view.addSubview(spotsScrollView)
 
     spots.enumerate().forEach { spot($0.index)?.index = $0.index }
-  }
-
-  public convenience init(spot: Spotable)  {
-    self.init(spots: [spot])
   }
 
   public required init?(coder aDecoder: NSCoder) {
