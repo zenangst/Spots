@@ -1,6 +1,8 @@
 import UIKit
 import Sugar
 
+public typealias SpotController = SpotsController
+
 public class SpotsController: UIViewController, UIScrollViewDelegate {
 
   public static var configure: ((container: SpotsScrollView) -> Void)?
