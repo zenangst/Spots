@@ -11,15 +11,11 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
   public private(set) var spots: [Spotable]
 
   public var refreshing = false {
-    didSet {
-      if !refreshing { refreshControl.endRefreshing() }
-    }
+    didSet { if !refreshing { refreshControl.endRefreshing() } }
   }
 
   weak public var spotsDelegate: SpotsDelegate? {
-    didSet {
-      spots.forEach { $0.spotsDelegate = spotsDelegate }
-    }
+    didSet { spots.forEach { $0.spotsDelegate = spotsDelegate } }
   }
 
   weak public var spotsRefreshDelegate: SpotsRefreshDelegate? {
@@ -28,8 +24,7 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
         tableView.addSubview(refreshControl)
         container.addSubview(tableView)
       } else {
-        refreshControl.removeFromSuperview()
-        tableView.removeFromSuperview()
+        [refreshControl, tableView].forEach { $0.removeFromSuperview() }
       }
     }
   }
