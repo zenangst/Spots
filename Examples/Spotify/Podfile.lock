@@ -12,7 +12,7 @@ PODS:
   - Sugar (0.1.0)
   - Tailor (0.2.0):
     - Sugar
-  - Whisper (0.1.0)
+  - Whisper (1.0.0)
 
 DEPENDENCIES:
   - Cache (from `https://github.com/hyperoslo/Cache`)
@@ -43,13 +43,13 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   Cache:
-    :commit: 85ce8be63c92ffc57fc1576d0653ac8ad3826577
+    :commit: e7d5f655412821de6f6a22e026f55ac81a6215d4
     :git: https://github.com/hyperoslo/Cache
   Imaginary:
     :commit: 1bc0d4536d827ffb6053585c68c4e694ce9d2d2e
     :git: https://github.com/hyperoslo/Imaginary
   Keychain:
-    :commit: ee464722a3326e3b658470167f67cd6e73144836
+    :commit: 5364a222b5ff0886c69cb1ce425ca821a7f0ed74
     :git: https://github.com/hyperoslo/Keychain
   Sugar:
     :commit: 6119312bce6daafb319de80708769a952db2624f
@@ -58,7 +58,7 @@ CHECKOUT OPTIONS:
     :commit: 085f59593e5833532efa4d94b192e7bed49ce817
     :git: https://github.com/zenangst/Tailor
   Whisper:
-    :commit: ad86e12cbe850f99c13910becae560f1ab378447
+    :commit: 2f1db1814444c704b1a04b607566d73e93a73a02
     :git: https://github.com/hyperoslo/Whisper
 
 SPEC CHECKSUMS:
@@ -70,6 +70,6 @@ SPEC CHECKSUMS:
   Spots: 9de65acd79cebc15b9f9756a86f7cab0104bc8fe
   Sugar: d33f2a3ae10e40c14eb49a2e859f12e82e614817
   Tailor: acba14dba2fb854cdf2550c1a3dfd603f6b59dbc
-  Whisper: abe5fb037164042d2e7069fc6af6a788db611d81
+  Whisper: 7da96cacd120f2202079ee47fe07bd356815d438
 
 COCOAPODS: 0.39.0

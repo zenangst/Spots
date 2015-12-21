@@ -9,7 +9,7 @@ class ForYouController: SpotsController, SpotsDelegate {
   convenience init(title: String) {
     let component = Component()
     let feedSpot = ListSpot(component: component)
-    self.init(spots: [feedSpot])
+    self.init(spot: feedSpot)
 
     self.title = title
     spotsDelegate = self
@@ -18,10 +18,9 @@ class ForYouController: SpotsController, SpotsDelegate {
 
     dispatch(queue: .Interactive) { [weak self] in
       let items = ForYouController.generateItems(0, to: 10)
-      self?.updateSpotAtIndex(0, closure: { (spot) -> Spotable in
+      self?.update { spot in
         spot.component.items = items
-        return spot
-      })
+      }
     }
   }
 
@@ -52,12 +51,10 @@ class ForYouController: SpotsController, SpotsDelegate {
 extension ForYouController: SpotsRefreshDelegate {
 
   func spotsDidReload(refreshControl: UIRefreshControl, completion: (() -> Void)?) {
-    if let spot = spotAtIndex(0) {
-      let items = ForYouController.generateItems(spot.component.items.count, to: 10)
-      delay(0.5) {
-        self.prepend(items)
-        completion?()
-      }
+    let items = ForYouController.generateItems(spot.component.items.count, to: 10)
+    delay(0.5) {
+      self.prepend(items)
+      completion?()
     }
   }
 }
@@ -65,12 +62,10 @@ extension ForYouController: SpotsRefreshDelegate {
 extension ForYouController: SpotsScrollDelegate {
 
   func spotDidReachEnd(completion: (() -> Void)?) {
-    if let spot = spotAtIndex(0) {
-      if spot.component.items.count < 100 {
-        let items = ForYouController.generateItems(spot.component.items.count, to: 10)
-        append(items)
-      }
-      delay(0.3) { completion?() }
+    if spot.component.items.count < 100 {
+      let items = ForYouController.generateItems(spot.component.items.count, to: 10)
+      append(items)
     }
+    delay(0.3) { completion?() }
   }
 }
