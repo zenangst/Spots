@@ -18,9 +18,8 @@ class ForYouController: SpotsController, SpotsDelegate {
 
     dispatch(queue: .Interactive) { [weak self] in
       let items = ForYouController.generateItems(0, to: 10)
-      self?.update { (spot) -> Spotable in
+      self?.update { spot in
         spot.component.items = items
-        return spot
       }
     }
   }
