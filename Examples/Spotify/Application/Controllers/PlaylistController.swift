@@ -14,7 +14,7 @@ class PlaylistController: SpotsController {
 
     self.init(spots: [listSpot])
     self.view.backgroundColor = UIColor.blackColor()
-    self.container.backgroundColor = UIColor.blackColor()
+    self.spotsScrollView.backgroundColor = UIColor.blackColor()
 
     if let playlistID = playlistID {
       let uri = playlistID.stringByReplacingOccurrencesOfString("-", withString: ":")
@@ -47,10 +47,7 @@ class PlaylistController: SpotsController {
               ))
           }
 
-          self.updateSpotAtIndex(0, closure: { spot -> Spotable in
-            spot.items = listItems
-            return spot
-          })
+          self.update { $0.items = listItems }
         }
       })
     } else {
@@ -72,10 +69,7 @@ class PlaylistController: SpotsController {
               ))
           }
 
-          self.updateSpotAtIndex(0, closure: { spot -> Spotable in
-            spot.items = listItems
-            return spot
-          })
+          self.update { $0.items = listItems }
         }
       }
     }
@@ -86,12 +80,11 @@ class PlaylistController: SpotsController {
 
     spotsDelegate = self
 
-    updateSpotAtIndex(0, closure: { spot -> Spotable in
-      spot.items = [ListItem(title: "Loading...", kind: "playlist", size: CGSize(width: 44, height: 44))]
-      return spot
-    })
+    self.update {
+      $0.items = [ListItem(title: "Loading...", kind: "playlist", size: CGSize(width: 44, height: 44))]
+    }
 
-    container.contentInset.bottom = 44
+    spotsScrollView.contentInset.bottom = 44
   }
 }
 

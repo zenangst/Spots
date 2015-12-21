@@ -9,7 +9,7 @@ class MainController: UINavigationController {
 
   override func viewDidLoad() {
     viewControllers = [featuredController]
-    featuredController.container.contentInset.bottom = 44
+    featuredController.spotsScrollView.contentInset.bottom = 44
 
     player.frame.origin.y = UIScreen.mainScreen().bounds.height - 60
     view.addSubview(player)
