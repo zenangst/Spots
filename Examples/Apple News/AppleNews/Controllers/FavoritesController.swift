@@ -2,7 +2,7 @@ import Spots
 import Fakery
 import Sugar
 
-class FavoritesController: SpotsController {
+class FavoritesController: SpotController {
 
   static let faker = Faker()
 
