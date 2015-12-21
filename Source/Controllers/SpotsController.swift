@@ -70,7 +70,7 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     super.init(nibName: nil, bundle: nil)
     view.addSubview(container)
 
-    spots.enumerate().forEach { spot($0.index).index = $0.index }
+    spots.enumerate().forEach { spot($0.index)?.index = $0.index }
   }
 
   public convenience init(spot: Spotable)  {
@@ -186,8 +186,7 @@ extension SpotsController {
   }
 
   public func update(item: ListItem, index: Int = 0, spotIndex: Int, completion: (() -> Void)? = nil) {
-    spotAtIndex(spotIndex)?.update(item, index: index)  { completion?() }
-    spot(spotIndex)?.insert(item, index: index)  { completion?() }
+    spot(spotIndex)?.update(item, index: index)  { completion?() }
   }
 
   public func delete(index: Int, spotIndex: Int = 0, completion: (() -> Void)? = nil) {
