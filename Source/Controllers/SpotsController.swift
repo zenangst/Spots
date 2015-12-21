@@ -69,7 +69,6 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
 
   public convenience init(spot: Spotable)  {
     self.init(spots: [spot])
-    view.addSubview(container)
   }
 
   public required init?(coder aDecoder: NSCoder) {
