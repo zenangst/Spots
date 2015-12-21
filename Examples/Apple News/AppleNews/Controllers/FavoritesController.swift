@@ -8,16 +8,12 @@ class FavoritesController: SpotsController {
 
   convenience init(title: String) {
     let favorites = Component(span: 3)
-    let spots: [Spotable] = [
-      GridSpot(favorites, top: 10, left: 10, bottom: 20, right: 10, itemSpacing: -5)
-    ]
-
-    self.init(spots: spots)
+    self.init(spot: GridSpot(favorites, top: 10, left: 10, bottom: 20, right: 10, itemSpacing: -5))
     self.title = title
 
     dispatch(queue: .Interactive) { [weak self] in
       let items = FavoritesController.generateItems(0, to: 11)
-      self?.updateSpotAtIndex(0, closure: { (spot) -> Spotable in
+      self?.update(closure: { (spot) -> Spotable in
         spot.component.items = items
         return spot
       })

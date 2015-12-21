@@ -30,10 +30,10 @@ class ExploreController: SpotsController {
       ])
 
     let spots: [Spotable] = [
-      TitleSpot(title: "Suggested Channels"),
+      ListSpot(title: "Suggested Channels"),
       CarouselSpot(suggestedChannels,
         top: 5, left: 15, bottom: 5, right: 15, itemSpacing: 15),
-      TitleSpot(title: "Suggested Topics"),
+      ListSpot(title: "Suggested Topics"),
       CarouselSpot(suggestedTopics,
         top: 5, left: 15, bottom: 5, right: 15, itemSpacing: 15),
       ListSpot(component: browse)
