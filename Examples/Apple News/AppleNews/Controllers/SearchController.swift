@@ -17,13 +17,13 @@ class SearchController: SpotsController {
 
     dispatch(queue: .Interactive) { [weak self] in
       let items = FavoritesController.generateItems(0, to: 4)
-      self?.updateSpotAtIndex(1, closure: { (spot) -> Spotable in
+      self?.update(spotAtIndex: 1, closure: { (spot) -> Spotable in
         spot.component.items = items
         return spot
       })
     }
 
-    if let spot = spotAtIndex(0) as? ListSpot,
+    if let spot = spot(0) as? ListSpot,
       searchHeader = spot.cachedHeaders["search"] as? SearchHeaderView {
         searchHeader.searchField.delegate = self
     }
@@ -38,7 +38,7 @@ extension SearchController: UITextFieldDelegate {
 
         dispatch(queue: .Interactive) { [weak self] in
           let items = FavoritesController.generateItems(0, to: 4)
-          self?.updateSpotAtIndex(1, closure: { (spot) -> Spotable in
+          self?.update(spotAtIndex: 1, closure: { (spot) -> Spotable in
             spot.component.title = "Suggestions"
             spot.component.items = items
             return spot
@@ -49,7 +49,7 @@ extension SearchController: UITextFieldDelegate {
 
         dispatch(queue: .Interactive) { [weak self] in
           let items = FavoritesController.generateItems(0, to: 11)
-          self?.updateSpotAtIndex(1, closure: { (spot) -> Spotable in
+          self?.update(spotAtIndex: 1, closure: { (spot) -> Spotable in
             spot.component.title = "Results"
             spot.component.items = items
             return spot
