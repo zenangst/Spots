@@ -18,7 +18,7 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     didSet { spots.forEach { $0.spotsDelegate = spotsDelegate } }
   }
 
-  var spot: Spotable {
+  public var spot: Spotable {
     get {
       return spot(0)!
     }
