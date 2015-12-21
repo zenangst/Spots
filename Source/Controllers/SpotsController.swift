@@ -157,7 +157,7 @@ extension SpotsController {
     }
   }
 
-  public func updateSpotAtIndex(index: Int, closure: (spot: Spotable) -> Spotable, completion: (() -> Void)? = nil) {
+  public func update(index: Int = 0, closure: (spot: Spotable) -> Spotable, completion: (() -> Void)? = nil) {
     guard let spot = spotAtIndex(index) else { return }
     spots[spot.index] = closure(spot: spot)
     spot.prepare()
