@@ -6,4 +6,4 @@ before_install:
 - if brew outdated | grep -qx xctool; then brew upgrade xctool; fi
 
 # Use when you don't have third party dependencies
-script: xctool -project Pod/Pod.xcodeproj -scheme Tests -sdk iphonesimulator build test GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES clean test
+script: xctool -workspace Pod/Pod.xcworkspace -scheme Tests -sdk iphonesimulator build test GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES clean test
