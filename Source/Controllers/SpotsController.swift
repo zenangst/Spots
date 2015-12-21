@@ -135,7 +135,7 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
 
 extension SpotsController {
 
-  public func spotAtIndex(index: Int) -> Spotable? {
+  public func spot(index: Int = 0) -> Spotable? {
     return spots.filter{ $0.index == index }.first
   }
 
