@@ -20,9 +20,22 @@ get {
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
   var window: UIWindow?
-  var navigationController: UINavigationController?
-  lazy var mainController: MainController = MainController()
   lazy var cache = Cache<SPTSession>(name: "Spotify")
+
+  lazy var mainController: MainController = MainController()
+
+  lazy var authController: UINavigationController = {
+    let controller = AuthController(spots: [ListSpot(component:
+      Component(items:
+        [ListItem(title: "Auth", action: "auth", kind: "playlist", size: CGSize(width: 120, height: 88))])
+      )
+      ])
+    let navigationController = UINavigationController(rootViewController: controller)
+
+    controller.title = "Spotify".uppercaseString
+
+    return navigationController
+  }()
 
   let configurators: [Configurator.Type] = [
     SpotifyConfigurator.self,
@@ -49,23 +62,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }()
 
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-
     configurators.forEach { $0.configure() }
-
     window = UIWindow(frame: UIScreen.mainScreen().bounds)
 
-    session = SPTSession(userName: username,
-      accessToken: Keychain.password(forAccount: keychainAccount),
-      expirationDate: nil)
-
-    let controller = AuthController(spots: [ListSpot(component:
-      Component(items:
-        [ListItem(title: "Auth", action: "auth", kind: "playlist", size: CGSize(width: 120, height: 88))])
-      )
-      ])
-    controller.title = "Spotify".uppercaseString
-    navigationController = UINavigationController(rootViewController: controller)
-    window?.rootViewController = navigationController
+    window?.rootViewController = authController
 
     cache.object("session") { (session: SPTSession?) -> Void in
       dispatch {
@@ -98,70 +98,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(app: UIApplication,
     openURL url: NSURL,
     options: [String : AnyObject]) -> Bool {
-
-      return Compass.parse(url) { route, arguments in
-        switch route {
-        case "auth":
-          UIApplication.sharedApplication().openURL(SPTAuth.defaultInstance().loginURL)
-        case "callback":
-          if let accessToken = arguments["access_token"] {
-            Keychain.setPassword(accessToken, forAccount: keychainAccount)
-
-            SPTUser.requestCurrentUserWithAccessToken(accessToken, callback: { (error, user) -> Void in
-
-              if let error = error {
-                print(error)
-              }
-
-              username = user.canonicalUserName
-
-              SPTAuth.defaultInstance().handleAuthCallbackWithTriggeredAuthURL(url, callback: { (error, session) -> Void in
-                self.session = session
-                self.cache.add("session", object: session)
-              })
-            })
-
-            self.window?.rootViewController = self.mainController
-          }
-        case "playlists":
-          let controller = PlaylistController(playlistID: nil)
-          controller.title = "Playlists"
-          self.mainController.pushViewController(controller, animated: true)
-        case "playlist:{uri}":
-          if let playlist = arguments["uri"] {
-            let controller = PlaylistController(playlistID: playlist)
-            self.mainController.pushViewController(controller, animated: true)
-          }
-        case "play:{uri}:{track}":
-          if let playlist = arguments["uri"],
-            trackString = arguments["track"],
-            track = Int32(trackString) {
-              let realPlaylist = playlist.stringByReplacingOccurrencesOfString("-", withString: ":")
-
-              SPTPlaylistSnapshot.playlistWithURI(NSURL(string: realPlaylist), accessToken: Keychain.password(forAccount: keychainAccount), callback: { (error, object) -> Void in
-                guard let object = object as? SPTPlaylistSnapshot else { return }
-                var urls = [NSURL]()
-
-                object.firstTrackPage.items.forEach {
-                  urls.append($0.uri)
-                }
-
-                self.player.playURIs(urls,
-                  fromIndex: track,
-                  callback: { (error) -> Void in })
-              })
-          }
-        case "stop":
-          guard self.player.isPlaying else { return }
-          self.player.stop({ (error) -> Void in })
-        case "next":
-          self.player.skipNext({ (error) -> Void in })
-        case "previous":
-          self.player.skipPrevious({ (error) -> Void in })
-        default:
-          print("\(route) is not registered")
-        }
+      if session == nil {
+        return PreLoginRouter().navigate(url, navigationController: authController)
       }
+
+      guard let tabBarController = mainController.tabBarController,
+        navigationController = tabBarController.selectedViewController as? UINavigationController
+        else { return false }
+
+      return PostLoginRouter().navigate(url, navigationController: navigationController)
   }
 }
 
@@ -186,8 +131,6 @@ extension AppDelegate: SPTAudioStreamingPlaybackDelegate {
           "artist" :artist,
           "track" : track
         ])
-
     }
   }
-
 }
