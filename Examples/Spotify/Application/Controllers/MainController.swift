@@ -10,6 +10,7 @@ class MainController: UITabBarController {
     let controller = PlaylistController(playlistID: nil)
     let navigationController = UINavigationController(rootViewController: controller)
     controller.title = localizedString("My Music")
+    controller.tabBarItem.image = UIImage(named: "iconMyMusic")
 
     return navigationController
     }()
@@ -17,6 +18,7 @@ class MainController: UITabBarController {
   lazy var featuredController: UINavigationController = {
     let controller = FeaturedController(title: localizedString("Featured"))
     let navigationController = UINavigationController(rootViewController: controller)
+    controller.tabBarItem.image = UIImage(named: "iconFeatured")
     //featuredController.container.contentInset.bottom = 44
 
     return navigationController
@@ -31,14 +33,16 @@ class MainController: UITabBarController {
   }
 
   func setupTabBar() {
+    tabBar.translucent = false
+
+    let navigationBar = UITabBar.appearance()
+    navigationBar.barTintColor = UIColor(red:0.000, green:0.000, blue:0.000, alpha: 1)
+    navigationBar.tintColor = UIColor(red:1.000, green:1.000, blue:1.000, alpha: 1)
+
     viewControllers = [
       featuredController,
       myMusicController
     ]
-
-    tabBar.translucent = false
-    tabBar.backgroundColor = .blackColor()
-    tabBar.tintColor = UIColor.blackColor()
 
     selectedIndex = 0
   }
