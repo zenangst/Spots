@@ -100,8 +100,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return PreLoginRouter().navigate(url, navigationController: authController)
       }
 
-      guard let tabBarController = mainController.tabBarController,
-        navigationController = tabBarController.selectedViewController as? UINavigationController
+      guard let navigationController = mainController.selectedViewController as? UINavigationController
         else { return false }
 
       return PostLoginRouter().navigate(url, navigationController: navigationController)
