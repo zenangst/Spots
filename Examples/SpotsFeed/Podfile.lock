@@ -1,10 +1,6 @@
 PODS:
   - Cache (1.0.0)
-<<<<<<< HEAD
-  - Compass (1.2.1)
-=======
-  - Compass (1.2.2)
->>>>>>> feature/spotify-demo
+  - Compass (1.2.4)
   - Fakery (1.1.0):
     - SwiftyJSON
   - Hex (3.0.0)
@@ -45,49 +41,29 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   Cache:
-<<<<<<< HEAD
-    :commit: e7d5f655412821de6f6a22e026f55ac81a6215d4
-    :git: https://github.com/hyperoslo/Cache
-  Compass:
-    :commit: babfd8df61c8effc5278c403805e922552603fec
-=======
     :commit: ae5f3ceb0124a4183d4d2ecfa59652109612906c
     :git: https://github.com/hyperoslo/Cache
   Compass:
-    :commit: 8a26687cb6bb88700ab62e5c08f3f0eceec0b20c
->>>>>>> feature/spotify-demo
+    :commit: aa963fac1d59e4c6e12610ecfd2f8cb2a7bec06c
     :git: https://github.com/hyperoslo/compass
   Imaginary:
     :commit: 1bc0d4536d827ffb6053585c68c4e694ce9d2d2e
     :git: https://github.com/hyperoslo/Imaginary
   Sugar:
-<<<<<<< HEAD
-    :commit: 6119312bce6daafb319de80708769a952db2624f
-=======
-    :commit: e7b5d05cd9d340e8b16e5dcb3397f24ace052438
->>>>>>> feature/spotify-demo
+    :commit: e68523d9bac4fe05ac521726451e5738cfe5fb96
     :git: https://github.com/hyperoslo/Sugar
   Tailor:
     :commit: 085f59593e5833532efa4d94b192e7bed49ce817
     :git: https://github.com/zenangst/Tailor
 
 SPEC CHECKSUMS:
-<<<<<<< HEAD
-  Cache: 5f381cc23cb2c69bc70b8cd2a5e260d006b03b6d
-  Compass: 90e965c47940c29d3794df2922bbc5c7865ae686
-=======
   Cache: 78f58bc008313c7a1182967a2ebcb3de9fddecd4
-  Compass: ea943059904499f1aeb29f4d825869872518749e
->>>>>>> feature/spotify-demo
+  Compass: b7ce9d4c22226a4b22609c4acbcba6f1bcb53cfd
   Fakery: 593389814fb7c42fe7f0801e76c8ae55b95505e7
   Hex: ee430da9c4412d9196366ae5327f279021dc03eb
   Imaginary: feaea646440c68a9b6ed66a46597d548b9a44207
   Spots: 9de65acd79cebc15b9f9756a86f7cab0104bc8fe
-<<<<<<< HEAD
-  Sugar: d33f2a3ae10e40c14eb49a2e859f12e82e614817
-=======
   Sugar: 5587fc71169b7fbfb753db86136514c80ecb9a28
->>>>>>> feature/spotify-demo
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   Tailor: acba14dba2fb854cdf2550c1a3dfd603f6b59dbc
 
