@@ -7,14 +7,13 @@ import Cache
 
 let keychainAccount = "spots-accessToken"
 var username: String? {
-  set(value) {
-    print(value)
-    NSUserDefaults.standardUserDefaults().setValue(value, forKey: "username")
-    NSUserDefaults.standardUserDefaults().synchronize()
-  }
-  get {
-    return NSUserDefaults.standardUserDefaults().valueForKey("username") as? String
-  }
+set(value) {
+  NSUserDefaults.standardUserDefaults().setValue(value, forKey: "username")
+  NSUserDefaults.standardUserDefaults().synchronize()
+}
+get {
+  return NSUserDefaults.standardUserDefaults().valueForKey("username") as? String
+}
 }
 
 @UIApplicationMain
@@ -57,6 +56,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   lazy var player: SPTAudioStreamingController = {
     let player = SPTAudioStreamingController(clientId: SPTAuth.defaultInstance().clientID)
+    player.playbackDelegate = self
 
     return player
   }()
@@ -110,3 +110,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
 }
 
+extension AppDelegate: SPTAudioStreamingPlaybackDelegate {
+
+  func audioStreaming(audioStreaming: SPTAudioStreamingController!, didChangeToTrack trackMetadata: [NSObject : AnyObject]!) {
+
+    guard let name = trackMetadata["SPTAudioStreamingMetadataArtistName"] as? String,
+    artist = trackMetadata["SPTAudioStreamingMetadataArtistName"] as? String,
+    track = trackMetadata["SPTAudioStreamingMetadataTrackName"] as? String,
+    uri = trackMetadata["SPTAudioStreamingMetadataAlbumURI"] as? String
+      else { return }
+
+    SPTAlbum.albumWithURI(NSURL(string: uri), accessToken: Keychain.password(forAccount: keychainAccount), market: nil) { (error, object) -> Void in
+      guard let album = object as? SPTPartialAlbum else { return }
+
+      NSNotificationCenter.defaultCenter().postNotificationName("updatePlayer",
+        object: nil,
+        userInfo: [
+          "title" : name,
+          "image" : album.largestCover.imageURL.absoluteString,
+          "artist" :artist,
+          "track" : track
+        ])
+    }
+  }
+}

@@ -10,23 +10,41 @@ public struct PostLoginRouter: Routing {
 
     return Compass.parse(url) { route, arguments in
       switch route {
+      case "playlists":
+        let controller = PlaylistController(playlistID: nil)
+        controller.title = "Playlists"
+        navigationController.pushViewController(controller, animated: true)
       case "playlist:{uri}":
         if let playlist = arguments["uri"] {
           let controller = PlaylistController(playlistID: playlist)
           navigationController.pushViewController(controller, animated: true)
         }
-      case "play:{uri}":
-        if let track = arguments["uri"] {
-          let realTrack = track.stringByReplacingOccurrencesOfString("-", withString: ":")
+      case "play:{uri}:{track}":
+        if let playlist = arguments["uri"],
+          trackString = arguments["track"],
+          track = Int32(trackString) {
+            let realPlaylist = playlist.stringByReplacingOccurrencesOfString("-", withString: ":")
 
-          applicationDelegate.player.playURIs([NSURL(string: realTrack)!],
-            fromIndex: 0,
-            callback: { (error) -> Void in })
+            SPTPlaylistSnapshot.playlistWithURI(NSURL(string: realPlaylist), accessToken: Keychain.password(forAccount: keychainAccount), callback: { (error, object) -> Void in
+              guard let object = object as? SPTPlaylistSnapshot else { return }
+              var urls = [NSURL]()
+
+              object.firstTrackPage.items.forEach {
+                urls.append($0.uri)
+              }
+
+              self.player.playURIs(urls,
+                fromIndex: track,
+                callback: { (error) -> Void in })
+            })
         }
       case "stop":
-        if applicationDelegate.player.isPlaying {
-          applicationDelegate.player.stop({ (error) -> Void in })
-        }
+        guard self.player.isPlaying else { return }
+        applicationDelegate.player.stop({ (error) -> Void in })
+      case "next":
+        applicationDelegate.player.skipNext({ (error) -> Void in })
+      case "previous":
+        applicationDelegate.player.skipPrevious({ (error) -> Void in })
       default:
         break
       }

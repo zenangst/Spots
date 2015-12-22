@@ -1,8 +1,6 @@
 import UIKit
 import Sugar
 
-public typealias TitleSpot = ListSpot
-
 public class ListSpot: NSObject, Spotable, Listable {
 
   public static var cells = [String : UIView.Type]()
@@ -10,14 +8,13 @@ public class ListSpot: NSObject, Spotable, Listable {
   public static var defaultCell: UIView.Type = ListSpotCell.self
   public static var headers = [String : UIView.Type]()
 
+  public var index = 0
+  public var headerHeight: CGFloat = 44
+  public var component: Component
   public var cachedHeaders = [String : Componentable]()
   public var cachedCells = [String : Itemble]()
-  public var headerHeight: CGFloat = 44
 
   public let itemHeight: CGFloat = 44
-
-  public var component: Component
-  public var index = 0
 
   public weak var spotsDelegate: SpotsDelegate?
 
@@ -50,7 +47,7 @@ public class ListSpot: NSObject, Spotable, Listable {
     }
   }
 
-  public convenience init(title: String, kind: String = "list") {
+  public convenience init(title: String = "", kind: String = "list") {
     self.init(component: Component(title: title, kind: kind))
   }
 

@@ -14,7 +14,7 @@ class PlaylistController: SpotsController {
 
     self.init(spots: [listSpot])
     self.view.backgroundColor = UIColor.blackColor()
-    self.container.backgroundColor = UIColor.blackColor()
+    self.spotsScrollView.backgroundColor = UIColor.blackColor()
 
     if let playlistID = playlistID {
       let uri = playlistID.stringByReplacingOccurrencesOfString("-", withString: ":")
@@ -22,61 +22,51 @@ class PlaylistController: SpotsController {
 
       self.title = "Loading..."
       SPTPlaylistSnapshot.playlistWithURI(url, accessToken: accessToken, callback: { (error, object) -> Void in
-        if let object = object as? SPTPlaylistSnapshot {
-          self.title = object.name
+        guard let object = object as? SPTPlaylistSnapshot else { return }
 
-          var listItems = [ListItem]()
+        self.title = object.name
 
-          for item in object.firstTrackPage.items {
-            let uri = (item.uri as NSURL).absoluteString
-              .stringByReplacingOccurrencesOfString(":", withString: "-")
+        var listItems = [ListItem]()
+        for (index, item) in object.firstTrackPage.items.enumerate() {
+          let image: String = (item.album as SPTPartialAlbum).largestCover.imageURL.absoluteString
 
-            let image: String = (item.album as SPTPartialAlbum).largestCover.imageURL.absoluteString
-
-            listItems.append(ListItem(
-              title: item.name,
-              subtitle:  "\(((item.artists as! [SPTPartialArtist]).first)!.name) - \((item.album as SPTPartialAlbum).name)",
-              kind: "playlist",
-              action: "play:\(uri)",
-              meta: [
-                "notification" : "\(item.name) by \(((item.artists as! [SPTPartialArtist]).first)!.name)",
-                "track" : item.name,
-                "artist" : ((item.artists as! [SPTPartialArtist]).first)!.name,
-                "image" : image
-              ]
-              ))
-          }
-
-          self.updateSpotAtIndex(0, closure: { spot -> Spotable in
-            spot.items = listItems
-            return spot
-          })
+          listItems.append(ListItem(
+            title: item.name,
+            subtitle:  "\(((item.artists as! [SPTPartialArtist]).first)!.name) - \((item.album as SPTPartialAlbum).name)",
+            kind: "playlist",
+            action: "play:\(playlistID):\(index)",
+            meta: [
+              "notification" : "\(item.name) by \(((item.artists as! [SPTPartialArtist]).first)!.name)",
+              "track" : item.name,
+              "artist" : ((item.artists as! [SPTPartialArtist]).first)!.name,
+              "image" : image
+            ]
+            ))
         }
+
+        self.update { $0.items = listItems }
       })
     } else {
       SPTPlaylistList.playlistsForUser(username, withAccessToken: accessToken) { (error, object) -> Void in
-        if let object = object as? SPTPlaylistList {
-          var listItems = [ListItem]()
-          for item in object.items {
-            let uri = (item.uri as NSURL).absoluteString
-              .stringByReplacingOccurrencesOfString(":", withString: "-")
+        guard let object = object as? SPTPlaylistList else { return }
+        
+        var listItems = [ListItem]()
+        for item in object.items {
+          let uri = (item.uri as NSURL).absoluteString
+            .stringByReplacingOccurrencesOfString(":", withString: "-")
 
-            let image: String = (item.largestImage as SPTImage).imageURL.absoluteString
+          let image: String = (item.largestImage as SPTImage).imageURL.absoluteString
 
-            listItems.append(ListItem(
-              title: item.name,
-              subtitle: "\(item.trackCount) songs",
-              image: image,
-              kind: "playlist",
-              action: "playlist:" + uri
-              ))
-          }
-
-          self.updateSpotAtIndex(0, closure: { spot -> Spotable in
-            spot.items = listItems
-            return spot
-          })
+          listItems.append(ListItem(
+            title: item.name,
+            subtitle: "\(item.trackCount) songs",
+            image: image,
+            kind: "playlist",
+            action: "playlist:" + uri
+            ))
         }
+
+        self.update { $0.items = listItems }
       }
     }
   }
@@ -86,12 +76,11 @@ class PlaylistController: SpotsController {
 
     spotsDelegate = self
 
-    updateSpotAtIndex(0, closure: { spot -> Spotable in
-      spot.items = [ListItem(title: "Loading...", kind: "playlist", size: CGSize(width: 44, height: 44))]
-      return spot
-    })
+    self.update {
+      $0.items = [ListItem(title: "Loading...", kind: "playlist", size: CGSize(width: 44, height: 44))]
+    }
 
-    container.contentInset.bottom = 44
+    spotsScrollView.contentInset.bottom = 44
   }
 }
 
@@ -106,15 +95,6 @@ extension PlaylistController: SpotsDelegate {
         backgroundColor: UIColor(red:0.063, green:0.063, blue:0.063, alpha: 1),
         titleColor: UIColor.whiteColor())
       Whistle(murmur)
-
-      NSNotificationCenter.defaultCenter().postNotificationName("updatePlayer",
-        object: nil,
-        userInfo: [
-          "title" : item.title,
-          "image" : item.meta["image"] ?? "",
-          "artist" : item.meta["artist"] ?? "",
-          "track" : item.meta["track"] ?? ""
-        ])
     }
   }
 }

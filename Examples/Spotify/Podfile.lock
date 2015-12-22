@@ -1,10 +1,10 @@
 PODS:
   - Cache (1.0.0)
-  - Compass (1.2.1)
+  - Compass (1.2.2)
   - Hex (3.0.0)
   - Imaginary (0.1.0):
     - Cache
-  - Keychain (0.1.0)
+  - Keychain (1.0.0)
   - Spots (0.1.0):
     - Imaginary
     - Sugar
@@ -43,32 +43,44 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   Cache:
+<<<<<<< HEAD
     :commit: e7d5f655412821de6f6a22e026f55ac81a6215d4
+=======
+    :commit: ae5f3ceb0124a4183d4d2ecfa59652109612906c
+>>>>>>> feature/spotify-demo
     :git: https://github.com/hyperoslo/Cache
   Imaginary:
     :commit: 1bc0d4536d827ffb6053585c68c4e694ce9d2d2e
     :git: https://github.com/hyperoslo/Imaginary
   Keychain:
+<<<<<<< HEAD
     :commit: 5364a222b5ff0886c69cb1ce425ca821a7f0ed74
+=======
+    :commit: 21e6f607394e112229a7f30bebe2f832a4d43c48
+>>>>>>> feature/spotify-demo
     :git: https://github.com/hyperoslo/Keychain
   Sugar:
-    :commit: 6119312bce6daafb319de80708769a952db2624f
+    :commit: e7b5d05cd9d340e8b16e5dcb3397f24ace052438
     :git: https://github.com/hyperoslo/Sugar
   Tailor:
     :commit: 085f59593e5833532efa4d94b192e7bed49ce817
     :git: https://github.com/zenangst/Tailor
   Whisper:
+<<<<<<< HEAD
     :commit: 71a27453e94cc578d737154629093ac65e9d3a08
+=======
+    :commit: 2f1db1814444c704b1a04b607566d73e93a73a02
+>>>>>>> feature/spotify-demo
     :git: https://github.com/hyperoslo/Whisper
 
 SPEC CHECKSUMS:
-  Cache: 5f381cc23cb2c69bc70b8cd2a5e260d006b03b6d
-  Compass: 90e965c47940c29d3794df2922bbc5c7865ae686
+  Cache: 78f58bc008313c7a1182967a2ebcb3de9fddecd4
+  Compass: ea943059904499f1aeb29f4d825869872518749e
   Hex: ee430da9c4412d9196366ae5327f279021dc03eb
   Imaginary: feaea646440c68a9b6ed66a46597d548b9a44207
-  Keychain: e3888030585bb01efd686a077885e1f807d9bec5
+  Keychain: 50cb247cab32e774422741b118af9b598a3fb5b2
   Spots: 9de65acd79cebc15b9f9756a86f7cab0104bc8fe
-  Sugar: d33f2a3ae10e40c14eb49a2e859f12e82e614817
+  Sugar: 5587fc71169b7fbfb753db86136514c80ecb9a28
   Tailor: acba14dba2fb854cdf2550c1a3dfd603f6b59dbc
   Whisper: 7da96cacd120f2202079ee47fe07bd356815d438
 

@@ -5,7 +5,7 @@ import Spots
 public class FeedController: SpotsController, SpotsDelegate {
 
   public static let faker = Faker()
-  
+
   public override func viewDidLoad() {
     self.spotsDelegate = self
     self.spotsScrollDelegate = self
@@ -50,16 +50,10 @@ extension FeedController: SpotsRefreshDelegate {
   public func spotsDidReload(refreshControl: UIRefreshControl, completion: (() -> Void)?) {
     delay(1.0) {
       dispatch(queue: .Interactive) { [weak self] in
-        guard let spot = self?.spotAtIndex(0) else { return }
+        guard let weakSelf = self else { return }
+        let items = FeedController.generateItems(weakSelf.spot.component.items.count, to: 10)
 
-        let items = FeedController.generateItems(spot.component.items.count, to: 10)
-
-        self?.prepend(items, spotIndex: 0) {
-          dispatch {
-            refreshControl.endRefreshing()
-            completion?()
-          }
-        }
+        weakSelf.prepend(items) { completion?() }
       }
     }
   }
@@ -70,8 +64,7 @@ extension FeedController: SpotsScrollDelegate {
   public func spotDidReachEnd(completion: (() -> Void)?) {
     dispatch(queue: .Interactive) { [weak self] in
       guard let weakSelf = self else { return }
-      guard let spot = weakSelf.spotAtIndex(0) else { return }
-      let items = FeedController.generateItems(spot.component.items.count, to: 3)
+      let items = FeedController.generateItems(weakSelf.spot.component.items.count, to: 3)
       weakSelf.append(items) { completion?() }
     }
   }

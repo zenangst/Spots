@@ -38,9 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     let feedComponent = Component(span: 1, items: FeedController.generateItems(0, to: 3))
     let feedSpot = ListSpot(component: feedComponent)
-    let components: [Spotable] = [feedSpot]
-
-    let controller = FeedController(spots: components)
+    let controller = FeedController(spot: feedSpot)
     controller.title = "Feed"
 
     applyStyles()

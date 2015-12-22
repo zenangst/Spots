@@ -9,7 +9,8 @@ class SearchController: SpotsController {
 
     let spots: [Spotable] = [
       ListSpot(component: results),
-      TitleSpot(title: "Suggestions")
+      ListSpot(title: "Suggestions"),
+      ListSpot()
     ]
 
     self.init(spots: spots)
@@ -17,13 +18,12 @@ class SearchController: SpotsController {
 
     dispatch(queue: .Interactive) { [weak self] in
       let items = FavoritesController.generateItems(0, to: 4)
-      self?.updateSpotAtIndex(1, closure: { (spot) -> Spotable in
+      self?.update(spotAtIndex: 2) { spot in
         spot.component.items = items
-        return spot
-      })
+      }
     }
 
-    if let spot = spotAtIndex(0) as? ListSpot,
+    if let spot = spot as? ListSpot,
       searchHeader = spot.cachedHeaders["search"] as? SearchHeaderView {
         searchHeader.searchField.delegate = self
     }
@@ -38,22 +38,32 @@ extension SearchController: UITextFieldDelegate {
 
         dispatch(queue: .Interactive) { [weak self] in
           let items = FavoritesController.generateItems(0, to: 4)
-          self?.updateSpotAtIndex(1, closure: { (spot) -> Spotable in
-            spot.component.title = "Suggestions"
+
+          if self?.spot(1)?.component.title == "Results" {
+            self?.update(spotAtIndex: 1) { spot in
+              spot.component.title = "Suggestions"
+            }
+          }
+
+          self?.update(spotAtIndex: 2) { spot in
             spot.component.items = items
-            return spot
-          })
+          }
         }
     } else if textField.text?.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0 ||
       string.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0 {
 
         dispatch(queue: .Interactive) { [weak self] in
+
+          if self?.spot(1)?.component.title == "Suggestions" {
+            self?.update(spotAtIndex: 1) { spot in
+              spot.component.title = "Results"
+            }
+          }
+
           let items = FavoritesController.generateItems(0, to: 11)
-          self?.updateSpotAtIndex(1, closure: { (spot) -> Spotable in
-            spot.component.title = "Results"
+          self?.update(spotAtIndex: 2) { spot in
             spot.component.items = items
-            return spot
-          })
+          }
         }
     }
 

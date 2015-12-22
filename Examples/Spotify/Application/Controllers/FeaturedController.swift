@@ -40,10 +40,7 @@ class FeaturedController: SpotsController, SpotsDelegate {
             ))
         }
 
-        self.updateSpotAtIndex(1, closure: { spot -> Spotable in
-          spot.items = listItems
-          return spot
-        })
+        self.update(spotAtIndex: 1) { $0.items = listItems }
       }
     }
   }
@@ -51,7 +48,7 @@ class FeaturedController: SpotsController, SpotsDelegate {
   override func viewDidLoad() {
     super.viewDidLoad()
     self.view.backgroundColor = UIColor.blackColor()
-    self.container.backgroundColor = UIColor.blackColor()
+    self.spotsScrollView.backgroundColor = UIColor.blackColor()
   }
 
   func spotDidSelectItem(spot: Spotable, item: ListItem) {

@@ -9,39 +9,38 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
   public private(set) var spots: [Spotable]
 
   public var refreshing = false {
-    didSet {
-      if !refreshing { refreshControl.endRefreshing() }
-    }
+    didSet { if !refreshing { refreshControl.endRefreshing() } }
   }
 
   weak public var spotsDelegate: SpotsDelegate? {
-    didSet {
-      spots.forEach { $0.spotsDelegate = spotsDelegate }
-    }
+    didSet { spots.forEach { $0.spotsDelegate = spotsDelegate } }
+  }
+
+  public var spot: Spotable {
+    get { return spot(0)! }
   }
 
   weak public var spotsRefreshDelegate: SpotsRefreshDelegate? {
     didSet {
       if spotsRefreshDelegate != nil {
         tableView.addSubview(refreshControl)
-        container.addSubview(tableView)
+        spotsScrollView.addSubview(tableView)
       } else {
-        refreshControl.removeFromSuperview()
-        tableView.removeFromSuperview()
+        [refreshControl, tableView].forEach { $0.removeFromSuperview() }
       }
     }
   }
 
   weak public var spotsScrollDelegate: SpotsScrollDelegate?
 
-  lazy public var container: SpotsScrollView = { [unowned self] in
-    let container = SpotsScrollView(frame: self.view.frame)
-    container.alwaysBounceVertical = true
-    container.backgroundColor = UIColor.whiteColor()
-    container.clipsToBounds = true
-    container.delegate = self
+  lazy public var spotsScrollView: SpotsScrollView = { [unowned self] in
+    let scrollView = SpotsScrollView(frame: self.view.frame)
+    scrollView.alwaysBounceVertical = true
+    scrollView.backgroundColor = UIColor.whiteColor()
+    scrollView.clipsToBounds = true
+    scrollView.delegate = self
 
-    return container
+    return scrollView
     }()
 
   public lazy var tableView: UITableView = { [unowned self] in
@@ -65,9 +64,13 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
   public required init(spots: [Spotable] = []) {
     self.spots = spots
     super.init(nibName: nil, bundle: nil)
-    view.addSubview(container)
+    view.addSubview(spotsScrollView)
 
-    spots.enumerate().forEach { spot($0.index).index = $0.index }
+    spots.enumerate().forEach { spots[$0.index].index = $0.index }
+  }
+
+  public convenience init(spot: Spotable)  {
+    self.init(spots: [spot])
   }
 
   public required init?(coder aDecoder: NSCoder) {
@@ -79,11 +82,11 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
   public override func viewDidLoad() {
     super.viewDidLoad()
 
-    for spot in spots {
+    spots.forEach { spot in
       spot.render().optimize()
-      container.contentView.addSubview(spot.render())
+      spotsScrollView.contentView.addSubview(spot.render())
       spot.prepare()
-      spot.setup(container.frame.size)
+      spot.setup(spotsScrollView.frame.size)
       spot.component.size = CGSize(
         width: view.frame.width,
         height: ceil(spot.render().frame.height))
@@ -93,13 +96,13 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
   public override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
 
-    if !container.configured {
+    if !spotsScrollView.configured {
       configureContainer()
     }
   }
 
   public override func viewDidAppear(animated: Bool) {
-    container.configured = true
+    spotsScrollView.configured = true
   }
 
   public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
@@ -109,13 +112,13 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
   }
 
   private func configureContainer() {
-    container.frame = UIScreen.mainScreen().bounds
-    container.frame.size.height -= ceil(container.contentInset.top + container.contentOffset.y)
-    container.contentInset.bottom = tabBarController?.tabBar.frame.height ?? container.contentInset.bottom
+    spotsScrollView.frame = UIScreen.mainScreen().bounds
+    spotsScrollView.frame.size.height -= ceil(spotsScrollView.contentInset.top + spotsScrollView.contentOffset.y)
+    spotsScrollView.contentInset.bottom = tabBarController?.tabBar.frame.height ?? spotsScrollView.contentInset.bottom
 
-    SpotsController.configure?(container: container)
+    SpotsController.configure?(container: spotsScrollView)
 
-    initialContentInset = container.contentInset
+    initialContentInset = spotsScrollView.contentInset
 
     spots.forEach { spot in
       spot.render().layoutSubviews()
@@ -128,7 +131,7 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
 
 extension SpotsController {
 
-  public func spotAtIndex(index: Int) -> Spotable? {
+  public func spot(index: Int = 0) -> Spotable? {
     return spots.filter{ $0.index == index }.first
   }
 
@@ -144,51 +147,51 @@ extension SpotsController {
     return spots.filter(includeElement)
   }
 
-  public func reloadSpots() {
+  public func reload() {
     dispatch { [weak self] in
       self?.spots.forEach { $0.reload([]) {} }
     }
   }
 
-  public func updateSpotAtIndex(index: Int, closure: (spot: Spotable) -> Spotable, completion: (() -> Void)? = nil) {
-    guard let spot = spotAtIndex(index) else { return }
-    spots[spot.index] = closure(spot: spot)
+  public func update(spotAtIndex index: Int = 0, _ closure: (spot: Spotable) -> Void) {
+    guard let spot = spot(index) else { return }
+    closure(spot: spot)
     spot.prepare()
-    spot.setup(container.bounds.size)
+    spot.setup(spotsScrollView.bounds.size)
 
     dispatch { [weak self] in
       guard let weakSelf = self else { return }
 
-      weakSelf.spot(spot.index).reload([index]) { }
+      weakSelf.spot(spot.index)?.reload([index]) { }
     }
   }
 
   public func append(item: ListItem, spotIndex: Int = 0, completion: (() -> Void)? = nil) {
-    spotAtIndex(spotIndex)?.append(item) { completion?() }
+    spot(spotIndex)?.append(item) { completion?() }
   }
 
   public func append(items: [ListItem], spotIndex: Int = 0, completion: (() -> Void)? = nil) {
-    spotAtIndex(spotIndex)?.append(items) { completion?() }
+    spot(spotIndex)?.append(items) { completion?() }
   }
 
   public func prepend(items: [ListItem], spotIndex: Int = 0, completion: (() -> Void)? = nil) {
-    spotAtIndex(spotIndex)?.prepend(items)  { completion?() }
+    spot(spotIndex)?.prepend(items)  { completion?() }
   }
 
   public func insert(item: ListItem, index: Int = 0, spotIndex: Int, completion: (() -> Void)? = nil) {
-    spotAtIndex(spotIndex)?.insert(item, index: index)  { completion?() }
+    spot(spotIndex)?.insert(item, index: index)  { completion?() }
   }
 
   public func update(item: ListItem, index: Int = 0, spotIndex: Int, completion: (() -> Void)? = nil) {
-    spotAtIndex(spotIndex)?.update(item, index: index)  { completion?() }
+    spot(spotIndex)?.update(item, index: index)  { completion?() }
   }
 
   public func delete(index: Int, spotIndex: Int = 0, completion: (() -> Void)? = nil) {
-    spotAtIndex(spotIndex)?.delete(index) { completion?() }
+    spot(spotIndex)?.delete(index) { completion?() }
   }
 
   public func delete(indexes indexes: [Int], spotIndex: Int, completion: (() -> Void)? = nil) {
-    spotAtIndex(spotIndex)?.delete(indexes) { completion?() }
+    spot(spotIndex)?.delete(indexes) { completion?() }
   }
 
   public func refreshSpots(refreshControl: UIRefreshControl) {
@@ -210,9 +213,5 @@ extension SpotsController {
 
   private func spot(indexPath: NSIndexPath) -> Spotable {
     return spots[indexPath.item]
-  }
-
-  private func spot(index: Int) -> Spotable {
-    return spots[index]
   }
 }
