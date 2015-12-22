@@ -33,13 +33,13 @@ public struct PostLoginRouter: Routing {
                 urls.append($0.uri)
               }
 
-              self.player.playURIs(urls,
+              applicationDelegate.player.playURIs(urls,
                 fromIndex: track,
                 callback: { (error) -> Void in })
             })
         }
       case "stop":
-        guard self.player.isPlaying else { return }
+        guard applicationDelegate.player.isPlaying else { return }
         applicationDelegate.player.stop({ (error) -> Void in })
       case "next":
         applicationDelegate.player.skipNext({ (error) -> Void in })
