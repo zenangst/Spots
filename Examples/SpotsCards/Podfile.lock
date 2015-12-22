@@ -37,7 +37,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   Cache:
-    :commit: e7d5f655412821de6f6a22e026f55ac81a6215d4
+    :commit: ae5f3ceb0124a4183d4d2ecfa59652109612906c
     :git: https://github.com/hyperoslo/Cache
   Compass:
     :commit: 3acfc7d48b9efa13cfd0c70983e5042081c1d52a
@@ -53,7 +53,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/zenangst/Tailor
 
 SPEC CHECKSUMS:
-  Cache: 5f381cc23cb2c69bc70b8cd2a5e260d006b03b6d
+  Cache: 78f58bc008313c7a1182967a2ebcb3de9fddecd4
   Compass: 90e965c47940c29d3794df2922bbc5c7865ae686
   Hex: ee430da9c4412d9196366ae5327f279021dc03eb
   Imaginary: feaea646440c68a9b6ed66a46597d548b9a44207
