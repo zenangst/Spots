@@ -22,52 +22,51 @@ class PlaylistController: SpotsController {
 
       self.title = "Loading..."
       SPTPlaylistSnapshot.playlistWithURI(url, accessToken: accessToken, callback: { (error, object) -> Void in
-        if let object = object as? SPTPlaylistSnapshot {
-          self.title = object.name
+        guard let object = object as? SPTPlaylistSnapshot else { return }
 
-          var listItems = [ListItem]()
+        self.title = object.name
 
-          for (index, item) in object.firstTrackPage.items.enumerate() {
-            let image: String = (item.album as SPTPartialAlbum).largestCover.imageURL.absoluteString
+        var listItems = [ListItem]()
+        for (index, item) in object.firstTrackPage.items.enumerate() {
+          let image: String = (item.album as SPTPartialAlbum).largestCover.imageURL.absoluteString
 
-            listItems.append(ListItem(
-              title: item.name,
-              subtitle:  "\(((item.artists as! [SPTPartialArtist]).first)!.name) - \((item.album as SPTPartialAlbum).name)",
-              kind: "playlist",
-              action: "play:\(playlistID):\(index)",
-              meta: [
-                "notification" : "\(item.name) by \(((item.artists as! [SPTPartialArtist]).first)!.name)",
-                "track" : item.name,
-                "artist" : ((item.artists as! [SPTPartialArtist]).first)!.name,
-                "image" : image
-              ]
-              ))
-          }
-
-          self.update { $0.items = listItems }
+          listItems.append(ListItem(
+            title: item.name,
+            subtitle:  "\(((item.artists as! [SPTPartialArtist]).first)!.name) - \((item.album as SPTPartialAlbum).name)",
+            kind: "playlist",
+            action: "play:\(playlistID):\(index)",
+            meta: [
+              "notification" : "\(item.name) by \(((item.artists as! [SPTPartialArtist]).first)!.name)",
+              "track" : item.name,
+              "artist" : ((item.artists as! [SPTPartialArtist]).first)!.name,
+              "image" : image
+            ]
+            ))
         }
+
+        self.update { $0.items = listItems }
       })
     } else {
       SPTPlaylistList.playlistsForUser(username, withAccessToken: accessToken) { (error, object) -> Void in
-        if let object = object as? SPTPlaylistList {
-          var listItems = [ListItem]()
-          for item in object.items {
-            let uri = (item.uri as NSURL).absoluteString
-              .stringByReplacingOccurrencesOfString(":", withString: "-")
+        guard let object = object as? SPTPlaylistList else { return }
+        
+        var listItems = [ListItem]()
+        for item in object.items {
+          let uri = (item.uri as NSURL).absoluteString
+            .stringByReplacingOccurrencesOfString(":", withString: "-")
 
-            let image: String = (item.largestImage as SPTImage).imageURL.absoluteString
+          let image: String = (item.largestImage as SPTImage).imageURL.absoluteString
 
-            listItems.append(ListItem(
-              title: item.name,
-              subtitle: "\(item.trackCount) songs",
-              image: image,
-              kind: "playlist",
-              action: "playlist:" + uri
-              ))
-          }
-
-          self.update { $0.items = listItems }
+          listItems.append(ListItem(
+            title: item.name,
+            subtitle: "\(item.trackCount) songs",
+            image: image,
+            kind: "playlist",
+            action: "playlist:" + uri
+            ))
         }
+
+        self.update { $0.items = listItems }
       }
     }
   }
