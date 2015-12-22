@@ -47,8 +47,8 @@ class FeaturedController: SpotsController, SpotsDelegate {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    self.view.backgroundColor = UIColor.blackColor()
-    self.spotsScrollView.backgroundColor = UIColor.blackColor()
+    view.backgroundColor = UIColor.blackColor()
+    spotsScrollView.backgroundColor = UIColor.blackColor()
   }
 
   func spotDidSelectItem(spot: Spotable, item: ListItem) {
