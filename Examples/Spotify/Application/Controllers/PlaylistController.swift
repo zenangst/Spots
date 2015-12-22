@@ -29,8 +29,6 @@ class PlaylistController: SpotsController {
         var listItems = [ListItem]()
 
         object.firstTrackPage.items.enumerate().forEach { index, item in
-          let image: String = (item.album as SPTPartialAlbum).largestCover.imageURL.absoluteString
-
           listItems.append(ListItem(
             title: item.name,
             subtitle:  "\(((item.artists as! [SPTPartialArtist]).first)!.name) - \((item.album as SPTPartialAlbum).name)",
@@ -40,7 +38,7 @@ class PlaylistController: SpotsController {
               "notification" : "\(item.name) by \(((item.artists as! [SPTPartialArtist]).first)!.name)",
               "track" : item.name,
               "artist" : ((item.artists as! [SPTPartialArtist]).first)!.name,
-              "image" : image
+              "image" : (item.album as SPTPartialAlbum).largestCover.imageURL.absoluteString
             ]
             ))
         }
@@ -50,23 +48,16 @@ class PlaylistController: SpotsController {
     } else {
       SPTPlaylistList.playlistsForUser(username, withAccessToken: accessToken) { (error, object) -> Void in
         guard let object = object as? SPTPlaylistList else { return }
-        
-        var listItems = [ListItem]()
 
-        object.items.forEach { item in
-          let uri = (item.uri as NSURL).absoluteString.replace(":", with: "-")
-          let image: String = (item.largestImage as SPTImage).imageURL.absoluteString
-
-          listItems.append(ListItem(
+        self.update { $0.items = object.items.map { item in
+          ListItem(
             title: item.name,
             subtitle: "\(item.trackCount) songs",
-            image: image,
+            image: (item.largestImage as SPTImage).imageURL.absoluteString,
             kind: "playlist",
-            action: "playlist:" + uri
-            ))
+            action: "playlist:" + (item.uri as NSURL).absoluteString.replace(":", with: "-"))
+          }
         }
-
-        self.update { $0.items = listItems }
       }
     }
   }
