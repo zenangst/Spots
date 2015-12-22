@@ -76,7 +76,7 @@ class PlaylistController: SpotsController {
 
     spotsDelegate = self
 
-    self.update {
+    update {
       $0.items = [ListItem(title: "Loading...", kind: "playlist", size: CGSize(width: 44, height: 44))]
     }
   }
