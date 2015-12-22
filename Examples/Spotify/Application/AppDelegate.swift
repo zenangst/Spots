@@ -69,10 +69,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     cache.object("session") { (session: SPTSession?) -> Void in
       dispatch {
-        if let session = session {
-          self.session = session
-          self.window?.rootViewController = self.mainController
-        }
+        guard let session = session else { return }
+        self.session = session
+        self.window?.rootViewController = self.mainController
       }
     }
 

@@ -1,59 +1,75 @@
 PODS:
   - Cache (1.0.0)
   - Compass (1.2.4)
-  - Fakery (1.1.0):
-    - SwiftyJSON
+  - Hex (3.0.0)
   - Imaginary (0.1.0):
     - Cache
+  - Keychain (1.0.0)
+  - Spots (0.1.0):
+    - Imaginary
+    - Sugar
+    - Tailor
   - Sugar (0.1.0)
-  - SwiftyJSON (2.3.2)
   - Tailor (0.2.0):
     - Sugar
+  - Whisper (1.0.0)
 
 DEPENDENCIES:
   - Cache (from `https://github.com/hyperoslo/Cache`)
-  - Compass (from `https://github.com/hyperoslo/compass`)
-  - Fakery
+  - Compass
+  - Hex
   - Imaginary (from `https://github.com/hyperoslo/Imaginary`)
+  - Keychain (from `https://github.com/hyperoslo/Keychain`)
+  - Spots (from `../../`)
   - Sugar (from `https://github.com/hyperoslo/Sugar`)
   - Tailor (from `https://github.com/zenangst/Tailor`)
+  - Whisper (from `https://github.com/hyperoslo/Whisper`)
 
 EXTERNAL SOURCES:
   Cache:
     :git: https://github.com/hyperoslo/Cache
-  Compass:
-    :git: https://github.com/hyperoslo/compass
   Imaginary:
     :git: https://github.com/hyperoslo/Imaginary
+  Keychain:
+    :git: https://github.com/hyperoslo/Keychain
+  Spots:
+    :path: "../../"
   Sugar:
     :git: https://github.com/hyperoslo/Sugar
   Tailor:
     :git: https://github.com/zenangst/Tailor
+  Whisper:
+    :git: https://github.com/hyperoslo/Whisper
 
 CHECKOUT OPTIONS:
   Cache:
     :commit: ae5f3ceb0124a4183d4d2ecfa59652109612906c
     :git: https://github.com/hyperoslo/Cache
-  Compass:
-    :commit: aa963fac1d59e4c6e12610ecfd2f8cb2a7bec06c
-    :git: https://github.com/hyperoslo/compass
   Imaginary:
     :commit: 1bc0d4536d827ffb6053585c68c4e694ce9d2d2e
     :git: https://github.com/hyperoslo/Imaginary
+  Keychain:
+    :commit: 21e6f607394e112229a7f30bebe2f832a4d43c48
+    :git: https://github.com/hyperoslo/Keychain
   Sugar:
     :commit: e68523d9bac4fe05ac521726451e5738cfe5fb96
     :git: https://github.com/hyperoslo/Sugar
   Tailor:
     :commit: 085f59593e5833532efa4d94b192e7bed49ce817
     :git: https://github.com/zenangst/Tailor
+  Whisper:
+    :commit: 2f1db1814444c704b1a04b607566d73e93a73a02
+    :git: https://github.com/hyperoslo/Whisper
 
 SPEC CHECKSUMS:
   Cache: 78f58bc008313c7a1182967a2ebcb3de9fddecd4
   Compass: b7ce9d4c22226a4b22609c4acbcba6f1bcb53cfd
-  Fakery: 593389814fb7c42fe7f0801e76c8ae55b95505e7
+  Hex: ee430da9c4412d9196366ae5327f279021dc03eb
   Imaginary: feaea646440c68a9b6ed66a46597d548b9a44207
+  Keychain: 50cb247cab32e774422741b118af9b598a3fb5b2
+  Spots: 9de65acd79cebc15b9f9756a86f7cab0104bc8fe
   Sugar: 5587fc71169b7fbfb753db86136514c80ecb9a28
-  SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   Tailor: acba14dba2fb854cdf2550c1a3dfd603f6b59dbc
+  Whisper: 7da96cacd120f2202079ee47fe07bd356815d438
 
 COCOAPODS: 0.39.0
