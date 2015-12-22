@@ -51,6 +51,11 @@ class FeaturedController: SpotsController, SpotsDelegate {
     spotsScrollView.backgroundColor = UIColor.blackColor()
   }
 
+  override func viewDidAppear(animated: Bool) {
+    super.viewDidAppear(animated)
+    spotsScrollView.contentInset.bottom = 120
+  }
+
   func spotDidSelectItem(spot: Spotable, item: ListItem) {
     guard let urn = item.action else { return }
     Compass.navigate(urn)

@@ -79,8 +79,11 @@ class PlaylistController: SpotsController {
     self.update {
       $0.items = [ListItem(title: "Loading...", kind: "playlist", size: CGSize(width: 44, height: 44))]
     }
+  }
 
-    spotsScrollView.contentInset.bottom = 44
+  override func viewDidAppear(animated: Bool) {
+    super.viewDidAppear(animated)
+    spotsScrollView.contentInset.bottom = 120
   }
 }
 
