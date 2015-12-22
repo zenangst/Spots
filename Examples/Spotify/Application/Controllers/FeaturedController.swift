@@ -7,14 +7,9 @@ class FeaturedController: SpotsController, SpotsDelegate {
   let accessToken = Keychain.password(forAccount: keychainAccount)
 
   convenience init(title: String) {
-    let navigation = ListSpot(component: Component(items:[
-      ListItem(title: "Playlists", image: "playlist", action: "playlists")
-      ]))
-    let recentlyPlayed = ListSpot(component: Component(title: "Featured playlists", items: [
-      ListItem(title: "Loading...")
-      ]))
+    let featuredPlaylists = ListSpot(component: Component(title: "Featured playlists", items: [ListItem(title: "Loading...")]))
 
-    self.init(spots: [navigation, recentlyPlayed])
+    self.init(spot: featuredPlaylists)
     self.spotsDelegate = self
     self.title = title
 
