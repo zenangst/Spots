@@ -2,6 +2,7 @@ import Spots
 import Keychain
 import Whisper
 import Compass
+import Sugar
 
 class PlaylistController: SpotsController {
 
@@ -17,17 +18,17 @@ class PlaylistController: SpotsController {
     self.spotsScrollView.backgroundColor = UIColor.blackColor()
 
     if let playlistID = playlistID {
-      let uri = playlistID.stringByReplacingOccurrencesOfString("-", withString: ":")
-      let url = NSURL(string:uri)
+      let uri = playlistID.replace("-", with: ":")
 
       self.title = "Loading..."
-      SPTPlaylistSnapshot.playlistWithURI(url, accessToken: accessToken, callback: { (error, object) -> Void in
+      SPTPlaylistSnapshot.playlistWithURI(NSURL(string:uri), accessToken: accessToken, callback: { (error, object) -> Void in
         guard let object = object as? SPTPlaylistSnapshot else { return }
 
         self.title = object.name
 
         var listItems = [ListItem]()
-        for (index, item) in object.firstTrackPage.items.enumerate() {
+
+        object.firstTrackPage.items.enumerate().forEach { index, item in
           let image: String = (item.album as SPTPartialAlbum).largestCover.imageURL.absoluteString
 
           listItems.append(ListItem(
@@ -51,10 +52,9 @@ class PlaylistController: SpotsController {
         guard let object = object as? SPTPlaylistList else { return }
         
         var listItems = [ListItem]()
-        for item in object.items {
-          let uri = (item.uri as NSURL).absoluteString
-            .stringByReplacingOccurrencesOfString(":", withString: "-")
 
+        object.items.forEach { item in
+          let uri = (item.uri as NSURL).absoluteString.replace(":", with: "-")
           let image: String = (item.largestImage as SPTImage).imageURL.absoluteString
 
           listItems.append(ListItem(
