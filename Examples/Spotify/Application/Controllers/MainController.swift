@@ -19,7 +19,15 @@ class MainController: UITabBarController {
     let controller = FeaturedController(title: localizedString("Featured"))
     let navigationController = UINavigationController(rootViewController: controller)
     controller.tabBarItem.image = UIImage(named: "iconFeatured")
-    //featuredController.container.contentInset.bottom = 44
+
+    return navigationController
+    }()
+
+  lazy var settingsController: UINavigationController = {
+    let controller = UIViewController()
+    let navigationController = UINavigationController(rootViewController: controller)
+    controller.tabBarItem.image = UIImage(named: "iconSettings")
+    controller.title = localizedString("Settings")
 
     return navigationController
     }()
@@ -28,12 +36,13 @@ class MainController: UITabBarController {
     super.viewDidLoad()
     setupTabBar()
 
-    player.frame.origin.y = UIScreen.mainScreen().bounds.height - 60
-    //view.addSubview(player)
+    player.frame.origin.y = UIScreen.mainScreen().bounds.height - 110
+    featuredController.view.addSubview(player)
   }
 
   func setupTabBar() {
-    tabBar.translucent = false
+    delegate = self
+    tabBar.translucent = true
 
     let navigationBar = UITabBar.appearance()
     navigationBar.barTintColor = UIColor(red:0.000, green:0.000, blue:0.000, alpha: 1)
@@ -41,9 +50,18 @@ class MainController: UITabBarController {
 
     viewControllers = [
       featuredController,
-      myMusicController
+      myMusicController,
+      settingsController
     ]
 
     selectedIndex = 0
+  }
+}
+
+extension MainController: UITabBarControllerDelegate {
+
+  func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
+    player.removeFromSuperview()
+    viewController.view.addSubview(player)
   }
 }
