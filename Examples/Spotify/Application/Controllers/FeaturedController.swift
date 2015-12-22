@@ -18,24 +18,17 @@ class FeaturedController: SpotsController, SpotsDelegate {
       if let error = error {
         print(error)
       }
-      if let object = object as? SPTFeaturedPlaylistList {
-        var listItems = [ListItem]()
-        for item in object.items {
-          let uri = (item.uri as NSURL).absoluteString
-            .stringByReplacingOccurrencesOfString(":", withString: "-")
 
-          let image: String = (item.largestImage as SPTImage).imageURL.absoluteString
+      guard let object = object as? SPTFeaturedPlaylistList else { return }
 
-          listItems.append(ListItem(
-            title: item.name,
-            subtitle: "\(item.trackCount) songs",
-            image: image,
-            kind: "playlist",
-            action: "playlist:" + uri
-            ))
+      self.update { $0.items = object.items.map { item in
+        ListItem(
+          title: item.name,
+          subtitle: "\(item.trackCount) songs",
+          image: (item.largestImage as SPTImage).imageURL.absoluteString,
+          kind: "playlist",
+          action: "playlist:" + (item.uri as NSURL).absoluteString.replace(":", with: "-"))
         }
-
-        self.update(spotAtIndex: 1) { $0.items = listItems }
       }
     }
   }
