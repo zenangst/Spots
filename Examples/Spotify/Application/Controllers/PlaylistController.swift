@@ -28,9 +28,6 @@ class PlaylistController: SpotsController {
           var listItems = [ListItem]()
 
           for (index, item) in object.firstTrackPage.items.enumerate() {
-            let uri = (item.uri as NSURL).absoluteString
-              .stringByReplacingOccurrencesOfString(":", withString: "-")
-
             let image: String = (item.album as SPTPartialAlbum).largestCover.imageURL.absoluteString
 
             listItems.append(ListItem(
