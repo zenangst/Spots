@@ -21,7 +21,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   var window: UIWindow?
   lazy var cache = Cache<SPTSession>(name: "Spotify")
-
   lazy var mainController: MainController = MainController()
 
   lazy var authController: UINavigationController = {
