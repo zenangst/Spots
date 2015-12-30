@@ -4,7 +4,7 @@ import Compass
 class PlayerView: UIView {
 
   let screenBounds = UIScreen.mainScreen().bounds
-  var initialOrigin: CGFloat = UIScreen.mainScreen().bounds.height - 110
+  var initialOrigin: CGFloat = UIScreen.mainScreen().bounds.height - 100
 
   lazy var albumCover: UIImageView = { [unowned self] in
     let size = UIScreen.mainScreen().bounds.width
@@ -146,7 +146,7 @@ class PlayerView: UIView {
 
   func handleTapGesture(gesture: UITapGestureRecognizer) {
     let minimumY: CGFloat = 60
-    let maximumY: CGFloat = UIScreen.mainScreen().bounds.height - 110
+    let maximumY: CGFloat = UIScreen.mainScreen().bounds.height - 100
 
     if frame.origin.y == maximumY {
       UIView.animateWithDuration(0.2, delay: 0, options: [.AllowUserInteraction], animations: {
@@ -157,7 +157,7 @@ class PlayerView: UIView {
 
   func handlePanGesture(gesture: UIPanGestureRecognizer) {
     let minimumY: CGFloat = -60
-    let maximumY: CGFloat = UIScreen.mainScreen().bounds.height - 110
+    let maximumY: CGFloat = UIScreen.mainScreen().bounds.height - 100
     let translation = gesture.translationInView(self)
     let velocity = gesture.velocityInView(self)
 
