@@ -1,5 +1,7 @@
 import UIKit
 import Compass
+import Hue
+import Sugar
 
 class PlayerView: UIView {
 
@@ -141,6 +143,28 @@ class PlayerView: UIView {
         albumCover.setImage(NSURL(string: image))
         albumTrack.text = track
         albumArtist.text = artist
+
+        dispatch(queue: .Interactive) {
+          if let data = NSData(contentsOfURL: NSURL(string: image)!),
+            image = UIImage(data: data) {
+              let (background, primary, secondary, detail) = image.colors()
+
+              dispatch { [weak self] in
+                UIView.animateWithDuration(0.3) {
+                  self?.backgroundColor = background
+                  self?.albumTrack.textColor = primary
+                  self?.albumArtist.textColor = secondary
+
+                  self?.smallAlbumTrack.textColor = primary
+                  self?.smallAlbumArtist.textColor = secondary
+
+                  self?.actionButton.tintColor = detail
+                  self?.nextButton.tintColor = detail
+                  self?.previousButton.tintColor = detail
+                }
+              }
+          }
+        }
     }
   }
 
