@@ -27,6 +27,7 @@
 		BD4F5BFC1C236B8400424FE1 /* SpotifyConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4F5BFB1C236B8400424FE1 /* SpotifyConfigurator.swift */; };
 		BDAA75281C21683700E49759 /* FeaturedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAA75271C21683700E49759 /* FeaturedController.swift */; };
 		BDAA752A1C2169B900E49759 /* DefaultListSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAA75291C2169B900E49759 /* DefaultListSpotCell.swift */; };
+		BDADDD931C35A8DB0023D135 /* FeaturedGridSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDADDD921C35A8DB0023D135 /* FeaturedGridSpotCell.swift */; };
 		BDED39E31C216CB700AC6383 /* ListHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDED39E21C216CB700AC6383 /* ListHeaderView.swift */; };
 		D5291C031C24558300B702C9 /* PreLoginRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5291C021C24558300B702C9 /* PreLoginRouter.swift */; };
 		D5291C051C24559900B702C9 /* Routing.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5291C041C24559900B702C9 /* Routing.swift */; };
@@ -59,6 +60,7 @@
 		BD6973631BBFE4FB001DC32F /* Spotify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Spotify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDAA75271C21683700E49759 /* FeaturedController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeaturedController.swift; sourceTree = "<group>"; };
 		BDAA75291C2169B900E49759 /* DefaultListSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultListSpotCell.swift; sourceTree = "<group>"; };
+		BDADDD921C35A8DB0023D135 /* FeaturedGridSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeaturedGridSpotCell.swift; sourceTree = "<group>"; };
 		BDED39E21C216CB700AC6383 /* ListHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListHeaderView.swift; sourceTree = "<group>"; };
 		D5291C021C24558300B702C9 /* PreLoginRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreLoginRouter.swift; sourceTree = "<group>"; };
 		D5291C041C24559900B702C9 /* Routing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Routing.swift; sourceTree = "<group>"; };
@@ -90,17 +92,17 @@
 		BD231C901C1E0D6C00D93449 /* Application */ = {
 			isa = PBXGroup;
 			children = (
-				D5291C011C24557B00B702C9 /* Routes */,
-				BD4F5BF41C236AF200424FE1 /* Protocols */,
-				BD4F5BF31C236AE500424FE1 /* Configurators */,
+				BD231CB21C1E116B00D93449 /* Spotify-BridgingHeader.h */,
+				BD231C9A1C1E0D6C00D93449 /* Info.plist */,
 				BD231C911C1E0D6C00D93449 /* AppDelegate.swift */,
 				BD231C921C1E0D6C00D93449 /* Assets.xcassets */,
 				BD231CB81C20A7D300D93449 /* Cells */,
+				BD4F5BF31C236AE500424FE1 /* Configurators */,
 				BD231CA61C1E0DB400D93449 /* Controllers */,
 				BD231CB31C1E152B00D93449 /* Extensions */,
-				BD231C9A1C1E0D6C00D93449 /* Info.plist */,
 				BD231C931C1E0D6C00D93449 /* LaunchScreen.storyboard */,
-				BD231CB21C1E116B00D93449 /* Spotify-BridgingHeader.h */,
+				BD4F5BF41C236AF200424FE1 /* Protocols */,
+				D5291C011C24557B00B702C9 /* Routes */,
 				BD010AAD1C23354E00A908E9 /* Views */,
 			);
 			path = Application;
@@ -142,6 +144,7 @@
 				BD231CB91C20AB3E00D93449 /* PlaylistListSpotCell.swift */,
 				BDAA75291C2169B900E49759 /* DefaultListSpotCell.swift */,
 				BD00A3781C35827B00C984F3 /* PlaylistGridSpotCell.swift */,
+				BDADDD921C35A8DB0023D135 /* FeaturedGridSpotCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -347,6 +350,7 @@
 				BD231CBE1C21465300D93449 /* SPTSession+Cachable.swift in Sources */,
 				BD231C9C1C1E0D6C00D93449 /* AppDelegate.swift in Sources */,
 				BDAA75281C21683700E49759 /* FeaturedController.swift in Sources */,
+				BDADDD931C35A8DB0023D135 /* FeaturedGridSpotCell.swift in Sources */,
 				BDED39E31C216CB700AC6383 /* ListHeaderView.swift in Sources */,
 				BDAA752A1C2169B900E49759 /* DefaultListSpotCell.swift in Sources */,
 			);
