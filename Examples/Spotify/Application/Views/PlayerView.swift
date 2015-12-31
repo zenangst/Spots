@@ -169,12 +169,13 @@ class PlayerView: UIView {
   }
 
   func handleTapGesture(gesture: UITapGestureRecognizer) {
-    let minimumY: CGFloat = 60
+    let minimumY: CGFloat = -60
     let maximumY: CGFloat = UIScreen.mainScreen().bounds.height - 100
 
     if frame.origin.y == maximumY {
       UIView.animateWithDuration(0.2, delay: 0, options: [.AllowUserInteraction], animations: {
         self.frame.origin.y = minimumY
+        UIApplication.sharedApplication().statusBarHidden = true
         }, completion: nil)
     }
   }
