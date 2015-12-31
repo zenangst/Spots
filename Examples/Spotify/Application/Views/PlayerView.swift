@@ -122,6 +122,8 @@ class PlayerView: UIView {
     }
 
     NSNotificationCenter.defaultCenter().addObserver(self, selector: "updatePlayer:", name: "updatePlayer", object: nil)
+
+    albumCover.addObserver(self, forKeyPath: "image", options: [.New, .Old], context: nil)
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -132,6 +134,42 @@ class PlayerView: UIView {
     NSNotificationCenter.defaultCenter().removeObserver(self)
   }
 
+  override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+    if let imageView = object as? UIImageView,
+      image = imageView.image
+      where keyPath == "image" {
+        dispatch(queue: .Interactive) {
+          let (background, primary, secondary, detail) = image.colors(CGSize(width: 128, height: 128))
+          dispatch { [weak self] in
+
+            guard let background = background,
+              primary = primary,
+              secondary = secondary,
+              detail = detail
+              else { return }
+
+            self?.albumTrack.textColor = primary
+            self?.albumArtist.textColor = detail
+            self?.backgroundColor = background
+            self?.smallAlbumTrack.textColor = primary
+            self?.smallAlbumArtist.textColor = secondary
+            self?.actionButton.tintColor = secondary
+            self?.nextButton.tintColor = secondary
+            self?.previousButton.tintColor = secondary
+
+            NSNotificationCenter.defaultCenter().postNotificationName("updateUI",
+              object: nil,
+              userInfo: [
+                "background" : background,
+                "primary" : primary,
+                "secondary" : secondary,
+                "detail" : detail
+              ])
+          }
+        }
+    }
+  }
+
   func updatePlayer(notification: NSNotification) {
     if let userInfo = notification.userInfo,
       track = userInfo["track"] as? String,
@@ -139,32 +177,9 @@ class PlayerView: UIView {
       image = userInfo["image"] as? String {
         smallAlbumTrack.text = track
         smallAlbumArtist.text = artist
-
         albumCover.setImage(NSURL(string: image))
         albumTrack.text = track
         albumArtist.text = artist
-
-        dispatch(queue: .Interactive) {
-          if let data = NSData(contentsOfURL: NSURL(string: image)!),
-            image = UIImage(data: data) {
-              let (background, primary, secondary, detail) = image.colors()
-
-              dispatch { [weak self] in
-                UIView.animateWithDuration(0.3) {
-                  self?.backgroundColor = background
-                  self?.albumTrack.textColor = primary
-                  self?.albumArtist.textColor = secondary
-
-                  self?.smallAlbumTrack.textColor = primary
-                  self?.smallAlbumArtist.textColor = secondary
-
-                  self?.actionButton.tintColor = detail
-                  self?.nextButton.tintColor = detail
-                  self?.previousButton.tintColor = detail
-                }
-              }
-          }
-        }
     }
   }
 
