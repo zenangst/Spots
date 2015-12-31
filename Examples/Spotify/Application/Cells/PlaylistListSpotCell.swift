@@ -1,7 +1,7 @@
 import Spots
 import Imaginary
 
-public class PlaylistSpotCell: UITableViewCell, Itemble {
+public class PlaylistListSpotCell: UITableViewCell, Itemble {
 
   public var size = CGSize(width: 0, height: 60)
   public var item: ListItem?
