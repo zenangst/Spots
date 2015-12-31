@@ -18,7 +18,7 @@ class PlayerView: UIView {
 
   lazy var albumTrack: UILabel = { [unowned self] in
     let size = UIScreen.mainScreen().bounds.width - 40
-    let label = UILabel(frame: CGRect(x: 20, y: CGRectGetMaxY(self.albumCover.frame) + 0,
+    let label = UILabel(frame: CGRect(x: 20, y: CGRectGetMaxY(self.albumCover.frame) + 10,
       width: size, height: 60))
     label.font = UIFont.systemFontOfSize(24)
     label.textColor = UIColor.whiteColor()
@@ -29,8 +29,8 @@ class PlayerView: UIView {
 
   lazy var albumArtist: UILabel = { [unowned self] in
     let size = UIScreen.mainScreen().bounds.width - 40
-    let label = UILabel(frame: CGRect(x: 20, y: CGRectGetMaxY(self.albumTrack.frame),
-      width: size, height: 60))
+    let label = UILabel(frame: CGRect(x: 20, y: CGRectGetMaxY(self.albumTrack.frame) - 10,
+      width: size, height: 30))
     label.font = UIFont.systemFontOfSize(16)
     label.textColor = UIColor.whiteColor()
     label.textAlignment = .Center
