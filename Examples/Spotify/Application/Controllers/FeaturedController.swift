@@ -7,7 +7,7 @@ class FeaturedController: SpotsController, SpotsDelegate {
   let accessToken = Keychain.password(forAccount: keychainAccount)
 
   convenience init(title: String) {
-    let featuredPlaylists = ListSpot(component: Component(title: "Featured playlists", items: [ListItem(title: "Loading...")]))
+    let featuredPlaylists = GridSpot(component: Component(title: "Featured playlists", span: 3, items: [ListItem(title: "Loading...")]))
 
     self.init(spot: featuredPlaylists)
     self.spotsDelegate = self
@@ -26,7 +26,7 @@ class FeaturedController: SpotsController, SpotsDelegate {
           title: item.name,
           subtitle: "\(item.trackCount) songs",
           image: (item.largestImage as SPTImage).imageURL.absoluteString,
-          kind: "playlist",
+          kind: "featured",
           action: "playlist:" + (item.uri as NSURL).absoluteString.replace(":", with: "-"))
         }
       }
