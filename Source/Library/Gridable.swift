@@ -55,6 +55,7 @@ public extension Spotable where Self : Gridable {
     collectionView.collectionViewLayout.invalidateLayout()
     collectionView.reloadData()
     setup(collectionView.bounds.size)
+    collectionView.layoutIfNeeded()
     completion?()
   }
 
