@@ -23,7 +23,7 @@ class PlaylistController: SpotsController {
       let uri = playlistID.replace("-", with: ":")
 
       self.title = "Loading..."
-      
+
       SPTPlaylistSnapshot.playlistWithURI(NSURL(string:uri), accessToken: accessToken, callback: { (error, object) -> Void in
         guard let object = object as? SPTPlaylistSnapshot else { return }
 
@@ -91,7 +91,6 @@ class PlaylistController: SpotsController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-
     spotsDelegate = self
   }
 
