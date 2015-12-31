@@ -473,7 +473,7 @@
 					"\"Tailor\"",
 					"-ObjC",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.SpotsDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.Spotify;
 				PRODUCT_NAME = Spotify;
 				SWIFT_OBJC_BRIDGING_HEADER = "Application/Spotify-BridgingHeader.h";
 			};
@@ -509,7 +509,7 @@
 					"\"Tailor\"",
 					"-ObjC",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.SpotsDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.Spotify;
 				PRODUCT_NAME = Spotify;
 				SWIFT_OBJC_BRIDGING_HEADER = "Application/Spotify-BridgingHeader.h";
 			};
