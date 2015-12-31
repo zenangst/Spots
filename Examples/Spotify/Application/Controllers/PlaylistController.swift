@@ -12,9 +12,10 @@ class PlaylistController: SpotsController {
   var offset = 0
 
   convenience init(playlistID: String?) {
-    let listSpot = ListSpot(component: Component())
+    let listSpot = ListSpot(component: Component(items: [ListItem(title: "Loading...", kind: "playlist", size: CGSize(width: 44, height: 44))]))
+    let gridSpot = GridSpot(component: Component(span: 1))
 
-    self.init(spots: [listSpot])
+    self.init(spots: [gridSpot, listSpot])
     self.view.backgroundColor = UIColor.blackColor()
     self.spotsScrollView.backgroundColor = UIColor.blackColor()
 
@@ -22,6 +23,7 @@ class PlaylistController: SpotsController {
       let uri = playlistID.replace("-", with: ":")
 
       self.title = "Loading..."
+      
       SPTPlaylistSnapshot.playlistWithURI(NSURL(string:uri), accessToken: accessToken, callback: { (error, object) -> Void in
         guard let object = object as? SPTPlaylistSnapshot else { return }
 
@@ -59,15 +61,22 @@ class PlaylistController: SpotsController {
               listItems[$0.index].meta["detail"] = detail
             }
           }
-        }
 
-        self.update { $0.items = listItems }
+          self.update(spotAtIndex: 1) { $0.items = listItems }
+
+          var top = first
+          top.image = object.largestImage.imageURL.absoluteString
+
+          self.update(spotAtIndex: 0) { $0.items.insert(top, atIndex: 0) }
+        } else {
+          self.update(spotAtIndex: 1) { $0.items = listItems }
+        }
       })
     } else {
       SPTPlaylistList.playlistsForUser(username, withAccessToken: accessToken) { (error, object) -> Void in
         guard let object = object as? SPTPlaylistList else { return }
 
-        self.update { $0.items = object.items.map { item in
+        self.update(spotAtIndex: 1) { $0.items = object.items.map { item in
           ListItem(
             title: item.name,
             subtitle: "\(item.trackCount) songs",
@@ -84,10 +93,6 @@ class PlaylistController: SpotsController {
     super.viewDidLoad()
 
     spotsDelegate = self
-
-    update {
-      $0.items = [ListItem(title: "Loading...", kind: "playlist", size: CGSize(width: 44, height: 44))]
-    }
   }
 
   override func viewDidAppear(animated: Bool) {
