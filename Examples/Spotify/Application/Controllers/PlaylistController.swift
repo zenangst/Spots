@@ -68,8 +68,6 @@ class PlaylistController: SpotsController {
           top.image = object.largestImage.imageURL.absoluteString
 
           self.update(spotAtIndex: 0) { $0.items.insert(top, atIndex: 0) }
-        } else {
-          self.update(spotAtIndex: 1) { $0.items = listItems }
         }
       })
     } else {
