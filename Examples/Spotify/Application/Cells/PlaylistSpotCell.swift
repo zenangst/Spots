@@ -29,7 +29,15 @@ public class PlaylistSpotCell: UITableViewCell, Itemble {
   public func configure(inout item: ListItem) {
     backgroundColor = UIColor.blackColor()
     textLabel?.textColor = UIColor.whiteColor()
-    detailTextLabel?.textColor = UIColor.grayColor()
+    detailTextLabel?.textColor = UIColor.whiteColor()
+
+    if let textColor = item.meta["background"] as? UIColor where !textColor.isDarkColor {
+      textLabel?.textColor = textColor
+    }
+
+    if let subtitleColor = item.meta["secondary"] as? UIColor where !subtitleColor.isDarkColor {
+      detailTextLabel?.textColor = subtitleColor
+    }
 
     if let action = item.action where !action.isEmpty {
       accessoryType = .DisclosureIndicator
