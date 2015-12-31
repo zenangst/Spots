@@ -13,9 +13,15 @@ struct SpotsConfigurator: Configurator {
       tableView.tableFooterView = UIView(frame: CGRect.zero)
     }
 
+    GridSpot.configure = { collectionView in
+      collectionView.backgroundColor = UIColor.blackColor()
+    }
+
     ListSpot.headers["list"] = ListHeaderView.self
     ListSpot.cells["default"] = DefaultListSpotCell.self
-    ListSpot.cells["playlist"] = PlaylistSpotCell.self
+    ListSpot.cells["playlist"] = PlaylistListSpotCell.self
     ListSpot.defaultCell = DefaultListSpotCell.self
+
+    GridSpot.cells["playlist"] = PlaylistGridSpotCell.self
   }
 }
