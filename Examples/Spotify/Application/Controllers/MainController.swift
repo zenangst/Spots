@@ -37,7 +37,7 @@ class MainController: UITabBarController {
     setupTabBar()
 
     player.frame.origin.y = UIScreen.mainScreen().bounds.height - 100
-    featuredController.view.addSubview(player)
+    myMusicController.view.addSubview(player)
   }
 
   func setupTabBar() {
@@ -49,8 +49,8 @@ class MainController: UITabBarController {
     navigationBar.tintColor = UIColor(red:1.000, green:1.000, blue:1.000, alpha: 1)
 
     viewControllers = [
-      featuredController,
       myMusicController,
+      featuredController,
       settingsController
     ]
 
