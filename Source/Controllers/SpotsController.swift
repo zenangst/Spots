@@ -162,7 +162,10 @@ extension SpotsController {
     dispatch { [weak self] in
       guard let weakSelf = self else { return }
 
-      weakSelf.spot(spot.index)?.reload([index]) { }
+      weakSelf.spot(spot.index)?.reload([index]) {
+        weakSelf.spotsScrollView.setNeedsDisplay()
+        weakSelf.spotsScrollView.forceUpdate = true
+      }
     }
   }
 
