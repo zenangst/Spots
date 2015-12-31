@@ -3,6 +3,7 @@ import Keychain
 import Whisper
 import Compass
 import Sugar
+import Hue
 
 class PlaylistController: SpotsController {
 
@@ -41,6 +42,23 @@ class PlaylistController: SpotsController {
               "image" : (item.album as SPTPartialAlbum).largestCover.imageURL.absoluteString
             ]
             ))
+        }
+
+        if let first = listItems.first,
+          imageString = first.meta["image"] as? String,
+          url = NSURL(string: imageString),
+          data = NSData(contentsOfURL: url),
+          image = UIImage(data: data)
+        {
+          let (background, primary, secondary, detail) = image.colors(CGSize(width: 128, height: 128))
+          if let background = background, primary = primary, secondary = secondary, detail = detail {
+            listItems.enumerate().forEach {
+              listItems[$0.index].meta["background"] = background
+              listItems[$0.index].meta["primary"] = primary
+              listItems[$0.index].meta["secondary"] = secondary
+              listItems[$0.index].meta["detail"] = detail
+            }
+          }
         }
 
         self.update { $0.items = listItems }
