@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A802709A14B2B09B40B27C24 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28622753AFF41826673AFB29 /* Pods.framework */; };
+		BD00A3791C35827B00C984F3 /* PlaylistGridSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD00A3781C35827B00C984F3 /* PlaylistGridSpotCell.swift */; };
 		BD010AAF1C23355C00A908E9 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD010AAE1C23355C00A908E9 /* PlayerView.swift */; };
 		BD231C9C1C1E0D6C00D93449 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD231C911C1E0D6C00D93449 /* AppDelegate.swift */; };
 		BD231C9D1C1E0D6C00D93449 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BD231C921C1E0D6C00D93449 /* Assets.xcassets */; };
@@ -17,7 +18,7 @@
 		BD231CAF1C1E110900D93449 /* Spotify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD231CAE1C1E110900D93449 /* Spotify.framework */; };
 		BD231CB11C1E113500D93449 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD231CB01C1E113500D93449 /* AVFoundation.framework */; };
 		BD231CB71C20916800D93449 /* PlaylistController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD231CB61C20916800D93449 /* PlaylistController.swift */; };
-		BD231CBA1C20AB3E00D93449 /* PlaylistSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD231CB91C20AB3E00D93449 /* PlaylistSpotCell.swift */; };
+		BD231CBA1C20AB3E00D93449 /* PlaylistListSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD231CB91C20AB3E00D93449 /* PlaylistListSpotCell.swift */; };
 		BD231CBC1C20B88A00D93449 /* UIImage+Transparent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD231CBB1C20B88A00D93449 /* UIImage+Transparent.swift */; };
 		BD231CBE1C21465300D93449 /* SPTSession+Cachable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD231CBD1C21465300D93449 /* SPTSession+Cachable.swift */; };
 		BD4F5BF61C236AFA00424FE1 /* Configurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4F5BF51C236AFA00424FE1 /* Configurator.swift */; };
@@ -36,6 +37,7 @@
 		28622753AFF41826673AFB29 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E70EB4CC092C66A8663C4B9 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		87CF5208C24D6284F4E697DD /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		BD00A3781C35827B00C984F3 /* PlaylistGridSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistGridSpotCell.swift; sourceTree = "<group>"; };
 		BD010AAE1C23355C00A908E9 /* PlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
 		BD231C911C1E0D6C00D93449 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BD231C921C1E0D6C00D93449 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -47,7 +49,7 @@
 		BD231CB01C1E113500D93449 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		BD231CB21C1E116B00D93449 /* Spotify-BridgingHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Spotify-BridgingHeader.h"; sourceTree = "<group>"; };
 		BD231CB61C20916800D93449 /* PlaylistController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistController.swift; sourceTree = "<group>"; };
-		BD231CB91C20AB3E00D93449 /* PlaylistSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistSpotCell.swift; sourceTree = "<group>"; };
+		BD231CB91C20AB3E00D93449 /* PlaylistListSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistListSpotCell.swift; sourceTree = "<group>"; };
 		BD231CBB1C20B88A00D93449 /* UIImage+Transparent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Transparent.swift"; sourceTree = "<group>"; };
 		BD231CBD1C21465300D93449 /* SPTSession+Cachable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SPTSession+Cachable.swift"; sourceTree = "<group>"; };
 		BD4F5BF51C236AFA00424FE1 /* Configurator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configurator.swift; sourceTree = "<group>"; };
@@ -137,8 +139,9 @@
 			isa = PBXGroup;
 			children = (
 				BDED39E21C216CB700AC6383 /* ListHeaderView.swift */,
-				BD231CB91C20AB3E00D93449 /* PlaylistSpotCell.swift */,
+				BD231CB91C20AB3E00D93449 /* PlaylistListSpotCell.swift */,
 				BDAA75291C2169B900E49759 /* DefaultListSpotCell.swift */,
+				BD00A3781C35827B00C984F3 /* PlaylistGridSpotCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -333,9 +336,10 @@
 				D5291C051C24559900B702C9 /* Routing.swift in Sources */,
 				BD231CBC1C20B88A00D93449 /* UIImage+Transparent.swift in Sources */,
 				BD4F5BF81C236B2500424FE1 /* SpotsConfigurator.swift in Sources */,
+				BD00A3791C35827B00C984F3 /* PlaylistGridSpotCell.swift in Sources */,
 				BD4F5BFC1C236B8400424FE1 /* SpotifyConfigurator.swift in Sources */,
 				BD4F5BFA1C236B5200424FE1 /* CompassConfigurator.swift in Sources */,
-				BD231CBA1C20AB3E00D93449 /* PlaylistSpotCell.swift in Sources */,
+				BD231CBA1C20AB3E00D93449 /* PlaylistListSpotCell.swift in Sources */,
 				BD010AAF1C23355C00A908E9 /* PlayerView.swift in Sources */,
 				BD4F5BF61C236AFA00424FE1 /* Configurator.swift in Sources */,
 				BD231CAA1C1E107200D93449 /* AuthController.swift in Sources */,
