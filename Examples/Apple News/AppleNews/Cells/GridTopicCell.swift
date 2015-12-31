@@ -7,7 +7,7 @@ import Imaginary
 class GridTopicCell: UICollectionViewCell, Itemble {
 
   var size = CGSize(width: 125, height: 160)
-  
+
   lazy var label: UILabel = { [unowned self] in
     let label = UILabel(frame: CGRectZero)
     label.font = UIFont.boldSystemFontOfSize(11)
@@ -16,7 +16,7 @@ class GridTopicCell: UICollectionViewCell, Itemble {
 
     return label
     }()
-    
+
   lazy var imageView: UIImageView = {
     let imageView = UIImageView()
     imageView.contentMode = .ScaleAspectFill
@@ -63,7 +63,7 @@ class GridTopicCell: UICollectionViewCell, Itemble {
   }
 
   required init?(coder aDecoder: NSCoder) {
-      fatalError("init(coder:) has not been implemented")
+    fatalError("init(coder:) has not been implemented")
   }
 
   func configure(inout item: ListItem) {
