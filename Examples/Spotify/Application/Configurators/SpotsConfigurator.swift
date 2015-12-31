@@ -23,5 +23,6 @@ struct SpotsConfigurator: Configurator {
     ListSpot.defaultCell = DefaultListSpotCell.self
 
     GridSpot.cells["playlist"] = PlaylistGridSpotCell.self
+    GridSpot.cells["featured"] = FeaturedGridSpotCell.self
   }
 }
