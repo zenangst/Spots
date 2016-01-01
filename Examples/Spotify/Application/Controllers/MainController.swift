@@ -36,7 +36,7 @@ class MainController: UITabBarController {
     super.viewDidLoad()
     setupTabBar()
 
-    player.frame.origin.y = UIScreen.mainScreen().bounds.height - 100
+    player.frame.origin.y = UIScreen.mainScreen().bounds.height
     myMusicController.view.addSubview(player)
   }
 
