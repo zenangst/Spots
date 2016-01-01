@@ -122,6 +122,7 @@ class PlayerView: UIView {
     }
 
     NSNotificationCenter.defaultCenter().addObserver(self, selector: "updatePlayer:", name: "updatePlayer", object: nil)
+    NSNotificationCenter.defaultCenter().addObserver(self, selector: "hidePlayer", name: "hidePlayer", object: nil)
 
     albumCover.addObserver(self, forKeyPath: "image", options: [.New, .Old], context: nil)
   }
@@ -156,15 +157,6 @@ class PlayerView: UIView {
             self?.actionButton.tintColor = secondary
             self?.nextButton.tintColor = secondary
             self?.previousButton.tintColor = secondary
-
-            NSNotificationCenter.defaultCenter().postNotificationName("updateUI",
-              object: nil,
-              userInfo: [
-                "background" : background,
-                "primary" : primary,
-                "secondary" : secondary,
-                "detail" : detail
-              ])
           }
         }
     }
@@ -181,11 +173,7 @@ class PlayerView: UIView {
         albumTrack.text = track
         albumArtist.text = artist
 
-        if frame.origin.y == UIScreen.mainScreen().bounds.height {
-          UIView.animateWithDuration(0.3) {
-            self.frame.origin.y -= 100
-          }
-        }
+        showPlayer()
     }
   }
 
@@ -237,19 +225,6 @@ class PlayerView: UIView {
 
   func stop() {
     Compass.navigate("stop")
-
-    UIView.animateWithDuration(0.3) {
-      [self.smallAlbumTrack, self.smallAlbumArtist].forEach {
-        $0.textColor = UIColor.whiteColor()
-        $0.text = ""
-      }
-
-      [self.actionButton, self.nextButton, self.previousButton].forEach {
-        $0.tintColor = UIColor.blackColor().colorWithAlphaComponent(0.9)
-      }
-
-      self.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.9)
-    }
   }
 
   func next() {
@@ -258,5 +233,19 @@ class PlayerView: UIView {
 
   func previous() {
     Compass.navigate("previous")
+  }
+
+  func showPlayer() {
+    if frame.origin.y == UIScreen.mainScreen().bounds.height {
+      UIView.animateWithDuration(0.3) {
+        self.frame.origin.y -= 100
+      }
+    }
+  }
+
+  func hidePlayer() {
+    UIView.animateWithDuration(0.3) {
+      self.frame.origin.y = UIScreen.mainScreen().bounds.height
+    }
   }
 }
