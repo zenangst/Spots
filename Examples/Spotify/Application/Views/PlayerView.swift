@@ -237,6 +237,19 @@ class PlayerView: UIView {
 
   func stop() {
     Compass.navigate("stop")
+
+    UIView.animateWithDuration(0.3) {
+      [self.smallAlbumTrack, self.smallAlbumArtist].forEach {
+        $0.textColor = UIColor.whiteColor()
+        $0.text = ""
+      }
+
+      [self.actionButton, self.nextButton, self.previousButton].forEach {
+        $0.tintColor = UIColor.blackColor().colorWithAlphaComponent(0.9)
+      }
+
+      self.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.9)
+    }
   }
 
   func next() {
