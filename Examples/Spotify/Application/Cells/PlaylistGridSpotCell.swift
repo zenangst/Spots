@@ -4,7 +4,7 @@ import Sugar
 
 public class PlaylistGridSpotCell: UICollectionViewCell, Itemble {
 
-  public var size = CGSize(width: 100, height: 180)
+  public var size = CGSize(width: 125, height: 160)
 
   lazy var imageView: UIImageView = {
     let imageView = UIImageView()
