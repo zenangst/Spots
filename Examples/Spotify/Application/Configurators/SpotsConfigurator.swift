@@ -3,6 +3,20 @@ import Spots
 struct SpotsConfigurator: Configurator {
 
   static func configure() {
+    CarouselSpot.configure = { collectionView in
+      collectionView.backgroundColor = UIColor.blackColor()
+    }
+
+    CarouselSpot.cells["playlist"] = PlaylistGridSpotCell.self
+    CarouselSpot.cells["featured"] = FeaturedGridSpotCell.self
+
+    GridSpot.configure = { collectionView in
+      collectionView.backgroundColor = UIColor.blackColor()
+    }
+
+    GridSpot.cells["playlist"] = PlaylistGridSpotCell.self
+    GridSpot.cells["featured"] = FeaturedGridSpotCell.self
+
     ListSpot.configure = { tableView in
       tableView.backgroundColor = UIColor.blackColor()
       tableView.separatorInset = UIEdgeInsets(
@@ -13,16 +27,11 @@ struct SpotsConfigurator: Configurator {
       tableView.tableFooterView = UIView(frame: CGRect.zero)
     }
 
-    GridSpot.configure = { collectionView in
-      collectionView.backgroundColor = UIColor.blackColor()
-    }
+
 
     ListSpot.headers["list"] = ListHeaderView.self
     ListSpot.cells["default"] = DefaultListSpotCell.self
     ListSpot.cells["playlist"] = PlaylistListSpotCell.self
     ListSpot.defaultCell = DefaultListSpotCell.self
-
-    GridSpot.cells["playlist"] = PlaylistGridSpotCell.self
-    GridSpot.cells["featured"] = FeaturedGridSpotCell.self
   }
 }
