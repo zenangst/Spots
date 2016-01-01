@@ -41,7 +41,10 @@ public class CarouselSpot: NSObject, Spotable, Gridable {
       collectionView.frame.size.height = collectionView.contentSize.height
     } else {
       collectionView.frame.size.height = component.items.first?.size.height ?? 0
-      collectionView.frame.size.height += layout.sectionInset.top + layout.sectionInset.bottom
+
+      if collectionView.frame.size.height > 0 {
+        collectionView.frame.size.height += layout.sectionInset.top + layout.sectionInset.bottom
+      }
     }
 
     CarouselSpot.configure?(view: collectionView)
