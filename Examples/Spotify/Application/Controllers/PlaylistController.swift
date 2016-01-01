@@ -113,6 +113,16 @@ class PlaylistController: SpotsController {
     super.viewDidAppear(animated)
     spotsScrollView.contentInset.bottom = 120
   }
+
+  override func scrollViewDidScroll(scrollView: UIScrollView) {
+    print(scrollView.contentOffset)
+    super.scrollViewDidScroll(scrollView)
+    print(scrollView.contentOffset)
+
+    if let delegate = UIApplication.sharedApplication().delegate as? AppDelegate where !delegate.player.isPlaying {
+      NSNotificationCenter.defaultCenter().postNotificationName("hidePlayer", object: nil)
+    }
+  }
 }
 
 extension PlaylistController: SpotsDelegate {
