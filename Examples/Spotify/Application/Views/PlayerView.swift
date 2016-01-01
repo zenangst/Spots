@@ -40,8 +40,8 @@ class PlayerView: UIView {
 
   lazy var smallAlbumTrack: UILabel = { [unowned self] in
     let size = UIScreen.mainScreen().bounds.width - 40
-    let label = UILabel(frame: CGRect(x: 20, y: 0,
-      width: size, height: 40))
+    let label = UILabel(frame: CGRect(x: 20, y: 2.5,
+      width: size, height: 30))
     label.font = UIFont.boldSystemFontOfSize(12)
     label.textColor = UIColor.whiteColor()
     label.textAlignment = .Center
@@ -52,7 +52,7 @@ class PlayerView: UIView {
 
   lazy var smallAlbumArtist: UILabel = { [unowned self] in
     let size = UIScreen.mainScreen().bounds.width - 40
-    let label = UILabel(frame: CGRect(x: 20, y: 30,
+    let label = UILabel(frame: CGRect(x: 20, y: 25,
       width: size, height: 20))
     label.font = UIFont.systemFontOfSize(10)
     label.textColor = UIColor.whiteColor()
@@ -63,7 +63,7 @@ class PlayerView: UIView {
     }()
 
   lazy var actionButton: UIButton = { [unowned self] in
-    let button = UIButton(frame: CGRect(x: 0, y: 5, width: 44, height: 44))
+    let button = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
     button.setImage(self.stopImage, forState: .Normal)
     button.addTarget(self, action: "stop", forControlEvents: .TouchUpInside)
     button.tintColor = UIColor.whiteColor()
@@ -180,6 +180,12 @@ class PlayerView: UIView {
         albumCover.setImage(NSURL(string: image))
         albumTrack.text = track
         albumArtist.text = artist
+
+        if frame.origin.y == UIScreen.mainScreen().bounds.height {
+          UIView.animateWithDuration(0.3) {
+            self.frame.origin.y -= 100
+          }
+        }
     }
   }
 
