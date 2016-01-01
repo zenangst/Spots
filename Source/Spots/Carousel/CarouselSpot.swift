@@ -9,6 +9,7 @@ public class CarouselSpot: NSObject, Spotable, Gridable {
   public var cachedCells = [String : Itemble]()
   public var component: Component
   public var index = 0
+  public var paginate = false
 
   public weak var spotsDelegate: SpotsDelegate?
 
@@ -54,6 +55,8 @@ public class CarouselSpot: NSObject, Spotable, Gridable {
 extension CarouselSpot: UIScrollViewDelegate {
 
   public func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+    guard paginate else { return }
+
     let pageWidth: CGFloat = collectionView.frame.width - layout.sectionInset.right
      + layout.sectionInset.left + layout.minimumLineSpacing
     let currentOffset = scrollView.contentOffset.x
