@@ -13,9 +13,10 @@ class PlaylistController: SpotsController {
 
   convenience init(playlistID: String?) {
     let listSpot = ListSpot(component: Component(items: [ListItem(title: "Loading...", kind: "playlist", size: CGSize(width: 44, height: 44))]))
+    let featuredSpot = CarouselSpot(Component(span: 2), top: 5, left: 15, bottom: 5, right: 15, itemSpacing: 15)
     let gridSpot = GridSpot(component: Component(span: 1))
 
-    self.init(spots: [gridSpot, listSpot])
+    self.init(spots: [gridSpot, featuredSpot, listSpot])
     self.view.backgroundColor = UIColor.blackColor()
     self.spotsScrollView.backgroundColor = UIColor.blackColor()
 
@@ -62,7 +63,7 @@ class PlaylistController: SpotsController {
             }
           }
 
-          self.update(spotAtIndex: 1) { $0.items = listItems }
+          self.update(spotAtIndex: 2) { $0.items = listItems }
 
           var top = first
           top.image = object.largestImage.imageURL.absoluteString
@@ -74,15 +75,31 @@ class PlaylistController: SpotsController {
       SPTPlaylistList.playlistsForUser(username, withAccessToken: accessToken) { (error, object) -> Void in
         guard let object = object as? SPTPlaylistList else { return }
 
-        self.update(spotAtIndex: 1) { $0.items = object.items.map { item in
+        var items = object.items.map { item in
           ListItem(
             title: item.name,
             subtitle: "\(item.trackCount) songs",
             image: (item.largestImage as SPTImage).imageURL.absoluteString,
             kind: "playlist",
             action: "playlist:" + (item.uri as NSURL).absoluteString.replace(":", with: "-"))
-          }
         }
+
+        var featured = items.filter {
+          $0.title.lowercaseString.containsString("top") ||
+          $0.title.lowercaseString.containsString("starred") ||
+          $0.title.lowercaseString.containsString("discover")
+        }
+
+        featured.enumerate().forEach { (index, item) in
+          if let index = items.indexOf({ $0 == item }) {
+            items.removeAtIndex(index)
+          }
+
+          featured[index].size = CGSize(width: 120, height: 140)
+        }
+
+        self.update(spotAtIndex: 2) { $0.items = items }
+        self.update(spotAtIndex: 1) { $0.items = featured }
       }
     }
   }
