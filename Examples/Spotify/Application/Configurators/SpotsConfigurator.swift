@@ -18,16 +18,17 @@ struct SpotsConfigurator: Configurator {
     GridSpot.cells["featured"] = FeaturedGridSpotCell.self
 
     ListSpot.configure = { tableView in
+      let inset: CGFloat = 15
+
       tableView.backgroundColor = UIColor.blackColor()
-      tableView.separatorInset = UIEdgeInsets(
-        top: 0, left: 7.5,
-        bottom: 0, right: 7.5)
       tableView.layoutMargins = UIEdgeInsetsZero
-      tableView.separatorColor = UIColor.darkGrayColor()
       tableView.tableFooterView = UIView(frame: CGRect.zero)
+      tableView.separatorInset = UIEdgeInsets(top: inset,
+        left: inset,
+        bottom: inset,
+        right: inset)
+      tableView.separatorColor = UIColor(red: 255, green: 255, blue: 255, alpha: 0.2)
     }
-
-
 
     ListSpot.headers["list"] = ListHeaderView.self
     ListSpot.cells["default"] = DefaultListSpotCell.self
