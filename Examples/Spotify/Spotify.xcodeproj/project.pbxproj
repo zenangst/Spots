@@ -28,6 +28,7 @@
 		BDAA75281C21683700E49759 /* FeaturedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAA75271C21683700E49759 /* FeaturedController.swift */; };
 		BDAA752A1C2169B900E49759 /* DefaultListSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAA75291C2169B900E49759 /* DefaultListSpotCell.swift */; };
 		BDADDD931C35A8DB0023D135 /* FeaturedGridSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDADDD921C35A8DB0023D135 /* FeaturedGridSpotCell.swift */; };
+		BDAF155E1C36F9060008A5D6 /* PlayerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAF155D1C36F9050008A5D6 /* PlayerController.swift */; };
 		BDED39E31C216CB700AC6383 /* ListHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDED39E21C216CB700AC6383 /* ListHeaderView.swift */; };
 		D5291C031C24558300B702C9 /* PreLoginRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5291C021C24558300B702C9 /* PreLoginRouter.swift */; };
 		D5291C051C24559900B702C9 /* Routing.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5291C041C24559900B702C9 /* Routing.swift */; };
@@ -61,6 +62,7 @@
 		BDAA75271C21683700E49759 /* FeaturedController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeaturedController.swift; sourceTree = "<group>"; };
 		BDAA75291C2169B900E49759 /* DefaultListSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultListSpotCell.swift; sourceTree = "<group>"; };
 		BDADDD921C35A8DB0023D135 /* FeaturedGridSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeaturedGridSpotCell.swift; sourceTree = "<group>"; };
+		BDAF155D1C36F9050008A5D6 /* PlayerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerController.swift; sourceTree = "<group>"; };
 		BDED39E21C216CB700AC6383 /* ListHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListHeaderView.swift; sourceTree = "<group>"; };
 		D5291C021C24558300B702C9 /* PreLoginRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreLoginRouter.swift; sourceTree = "<group>"; };
 		D5291C041C24559900B702C9 /* Routing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Routing.swift; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 				BD231CA71C1E0DCB00D93449 /* MainController.swift */,
 				BD231CB61C20916800D93449 /* PlaylistController.swift */,
 				BDAA75271C21683700E49759 /* FeaturedController.swift */,
+				BDAF155D1C36F9050008A5D6 /* PlayerController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -350,6 +353,7 @@
 				BD231CBE1C21465300D93449 /* SPTSession+Cachable.swift in Sources */,
 				BD231C9C1C1E0D6C00D93449 /* AppDelegate.swift in Sources */,
 				BDAA75281C21683700E49759 /* FeaturedController.swift in Sources */,
+				BDAF155E1C36F9060008A5D6 /* PlayerController.swift in Sources */,
 				BDADDD931C35A8DB0023D135 /* FeaturedGridSpotCell.swift in Sources */,
 				BDED39E31C216CB700AC6383 /* ListHeaderView.swift in Sources */,
 				BDAA752A1C2169B900E49759 /* DefaultListSpotCell.swift in Sources */,
