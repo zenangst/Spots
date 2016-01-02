@@ -11,6 +11,7 @@ public class CarouselSpot: NSObject, Spotable, Gridable {
   public var index = 0
   public var paginate = false
 
+  public weak var carouselScrollDelegate: SpotsCarouselScrollDelegate?
   public weak var spotsDelegate: SpotsDelegate?
 
   public lazy var layout: UICollectionViewFlowLayout = { [unowned self] in
@@ -74,6 +75,22 @@ extension CarouselSpot: UIScrollViewDelegate {
 
     targetContentOffset.memory.x = currentOffset;
     scrollView.setContentOffset(CGPoint(x: newTargetOffset, y:0), animated: true)
+
+    let index: Int = Int(floor(newTargetOffset / scrollView.contentSize.width * 100))
+    if index >= 0 && index <= items.count {
+      let item = items[index]
+      carouselScrollDelegate?.spotDidEndScrolling(self, item: item)
+    }
+  }
+
+  public func scrollTo(predicate: (ListItem) -> Bool) {
+    if let index = items.indexOf(predicate) {
+      let pageWidth: CGFloat = collectionView.frame.width - layout.sectionInset.right
+        + layout.sectionInset.left + layout.minimumLineSpacing
+      let newTargetOffset = pageWidth * CGFloat(index)
+
+      collectionView.setContentOffset(CGPoint(x: newTargetOffset, y:0), animated: true)
+    }
   }
 }
 
