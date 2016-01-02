@@ -13,7 +13,8 @@ struct CompassConfigurator: Configurator {
       "playlists",
       "stop",
       "next",
-      "previous"
+      "previous",
+      "openPlayer"
     ]
   }
 }
