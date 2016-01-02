@@ -4,6 +4,15 @@ import Compass
 
 class MainController: UITabBarController {
 
+  lazy var playerController = PlayerController(spots: [
+    ListSpot(),
+    CarouselSpot(Component(span: 1)),
+    ListSpot(component: Component(items: [
+      ListItem(title: "Previous", action: "previous"),
+      ListItem(title: "Stop", action: "stop"),
+      ListItem(title: "Next", action: "next")
+      ]))
+    ])
   lazy var player = PlayerView(frame: UIScreen.mainScreen().bounds)
 
   lazy var myMusicController: UINavigationController = {
@@ -36,8 +45,9 @@ class MainController: UITabBarController {
     super.viewDidLoad()
     setupTabBar()
 
-    player.frame.origin.y = UIScreen.mainScreen().bounds.height
-    myMusicController.view.addSubview(player)
+    playerController.view.frame.size.height = UIScreen.mainScreen().bounds.height + 60
+    playerController.view.frame.origin.y = UIScreen.mainScreen().bounds.height
+    myMusicController.view.addSubview(playerController.view)
   }
 
   func setupTabBar() {
@@ -61,7 +71,7 @@ class MainController: UITabBarController {
 extension MainController: UITabBarControllerDelegate {
 
   func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
-    player.removeFromSuperview()
-    viewController.view.addSubview(player)
+    playerController.view.removeFromSuperview()
+    viewController.view.addSubview(playerController.view)
   }
 }
