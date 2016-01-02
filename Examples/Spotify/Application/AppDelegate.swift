@@ -47,7 +47,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       guard let session = session else { return }
       player.loginWithSession(session, callback: { (error) -> Void in
         if let error = error {
-          print(error)
+          self.session = nil
+          self.cache.remove("session")
+          self.window?.rootViewController = self.authController
         }
       })
     }
