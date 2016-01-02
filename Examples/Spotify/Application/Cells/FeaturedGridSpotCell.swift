@@ -50,7 +50,9 @@ public class FeaturedGridSpotCell: UICollectionViewCell, Itemble {
       imageView.frame.size = frame.size
     }
 
-    item.size = size
+    if item.size.height == 0 {
+      item.size = size
+    }
   }
 
 }
