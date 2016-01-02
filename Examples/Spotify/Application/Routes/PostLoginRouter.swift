@@ -45,6 +45,8 @@ public struct PostLoginRouter: Routing {
         applicationDelegate.player.skipNext({ (error) -> Void in })
       case "previous":
         applicationDelegate.player.skipPrevious({ (error) -> Void in })
+      case "openPlayer":
+        applicationDelegate.mainController.playerController.openPlayer()
       default:
         break
       }
