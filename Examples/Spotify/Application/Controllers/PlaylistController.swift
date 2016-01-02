@@ -36,6 +36,7 @@ class PlaylistController: SpotsController {
           listItems.append(ListItem(
             title: item.name,
             subtitle:  "\(((item.artists as! [SPTPartialArtist]).first)!.name) - \((item.album as SPTPartialAlbum).name)",
+            image: (item.album as SPTPartialAlbum).largestCover.imageURL.absoluteString,
             kind: "playlist",
             action: "play:\(playlistID):\(index)",
             meta: [
@@ -111,13 +112,11 @@ class PlaylistController: SpotsController {
 
   override func viewDidAppear(animated: Bool) {
     super.viewDidAppear(animated)
-    spotsScrollView.contentInset.bottom = 120
+    spotsScrollView.contentInset.bottom = 60
   }
 
   override func scrollViewDidScroll(scrollView: UIScrollView) {
-    print(scrollView.contentOffset)
     super.scrollViewDidScroll(scrollView)
-    print(scrollView.contentOffset)
 
     if let delegate = UIApplication.sharedApplication().delegate as? AppDelegate where !delegate.player.isPlaying {
       NSNotificationCenter.defaultCenter().postNotificationName("hidePlayer", object: nil)
@@ -130,6 +129,28 @@ extension PlaylistController: SpotsDelegate {
   func spotDidSelectItem(spot: Spotable, item: ListItem) {
     guard let urn = item.action else { return }
     Compass.navigate(urn)
+
+    if let delegate = UIApplication.sharedApplication().delegate as? AppDelegate,
+      playList = spot as? ListSpot {
+        delegate.mainController.playerController.update(spotAtIndex: 1) {
+          $0.items = playList.items.map {
+            ListItem(title: $0.title,
+              subtitle: $0.subtitle,
+              image: $0.image,
+              kind: "featured",
+              action: $0.action,
+              size: CGSize(
+                width: UIScreen.mainScreen().bounds.width,
+                height: UIScreen.mainScreen().bounds.width)
+            )
+          }
+        }
+
+        if let carouselSpot = delegate.mainController.playerController.spot(1) as? CarouselSpot {
+          delegate.mainController.playerController.lastItem = item
+          carouselSpot.scrollTo({ item.action == $0.action })
+        }
+    }
 
     if let notification = item.meta["notification"] as? String {
       let murmur = Murmur(title: notification,
