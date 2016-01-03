@@ -9,42 +9,43 @@ public struct PostLoginRouter: Routing {
       else { return false }
 
     return Compass.parse(url) { route, arguments in
+
+      let player = applicationDelegate.mainController.playerController.player
+
       switch route {
       case "playlists":
         let controller = PlaylistController(playlistID: nil)
         controller.title = "Playlists"
         navigationController.pushViewController(controller, animated: true)
       case "playlist:{uri}":
-        if let playlist = arguments["uri"] {
-          let controller = PlaylistController(playlistID: playlist)
-          navigationController.pushViewController(controller, animated: true)
-        }
+        guard let playlist = arguments["uri"] else { return }
+        let controller = PlaylistController(playlistID: playlist)
+        navigationController.pushViewController(controller, animated: true)
       case "play:{uri}:{track}":
-        if let playlist = arguments["uri"],
+        guard let playlist = arguments["uri"],
           trackString = arguments["track"],
-          track = Int32(trackString) {
-            let realPlaylist = playlist.stringByReplacingOccurrencesOfString("-", withString: ":")
+          track = Int32(trackString) else { return }
+        let realPlaylist = playlist.stringByReplacingOccurrencesOfString("-", withString: ":")
 
-            SPTPlaylistSnapshot.playlistWithURI(NSURL(string: realPlaylist), accessToken: Keychain.password(forAccount: keychainAccount), callback: { (error, object) -> Void in
-              guard let object = object as? SPTPlaylistSnapshot else { return }
-              var urls = [NSURL]()
+        SPTPlaylistSnapshot.playlistWithURI(NSURL(string: realPlaylist), accessToken: Keychain.password(forAccount: keychainAccount), callback: { (error, object) -> Void in
+          guard let object = object as? SPTPlaylistSnapshot else { return }
+          var urls = [NSURL]()
 
-              object.firstTrackPage.items.forEach {
-                urls.append($0.uri)
-              }
+          object.firstTrackPage.items.forEach {
+            urls.append($0.uri)
+          }
 
-              applicationDelegate.player.playURIs(urls,
-                fromIndex: track,
-                callback: { (error) -> Void in })
-            })
-        }
+          player.playURIs(urls,
+            fromIndex: track,
+            callback: { (error) -> Void in })
+        })
       case "stop":
-        guard applicationDelegate.player.isPlaying else { return }
-        applicationDelegate.player.stop({ (error) -> Void in })
+        guard player.isPlaying else { return }
+        player.stop({ (error) -> Void in })
       case "next":
-        applicationDelegate.player.skipNext({ (error) -> Void in })
+        player.skipNext({ (error) -> Void in })
       case "previous":
-        applicationDelegate.player.skipPrevious({ (error) -> Void in })
+        player.skipPrevious({ (error) -> Void in })
       case "openPlayer":
         applicationDelegate.mainController.playerController.openPlayer()
       default:

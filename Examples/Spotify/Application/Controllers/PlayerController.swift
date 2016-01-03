@@ -1,5 +1,6 @@
 import Spots
 import Compass
+import Keychain
 
 class PlayerController: SpotsController {
 
@@ -10,6 +11,13 @@ class PlayerController: SpotsController {
 
   lazy var panRecognizer: UIPanGestureRecognizer = UIPanGestureRecognizer(target: self, action: "handlePanGesture:")
   lazy var tapRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "handleTapGesture:")
+
+  lazy var player: SPTAudioStreamingController = {
+    let player = SPTAudioStreamingController(clientId: SPTAuth.defaultInstance().clientID)
+    player.playbackDelegate = self
+
+    return player
+  }()
 
   required init(spots: [Spotable]) {
     super.init(spots: spots)
@@ -51,10 +59,7 @@ class PlayerController: SpotsController {
       track = userInfo["track"] as? String,
       artist = userInfo["artist"] as? String {
 
-        self.update {
-          $0.items = [ListItem(title: track, subtitle: artist, action: "openPlayer")]
-        }
-
+        self.update { $0.items = [ListItem(title: track, subtitle: artist, action: "openPlayer")] }
         self.update(ListItem(title: track, subtitle: artist), index: 0, spotIndex: 2)
 
         showPlayer()
@@ -140,14 +145,12 @@ extension PlayerController: SpotsDelegate {
         var newIndex = currentIndex
 
         switch urn {
-        case "next":
-          newIndex = newIndex + 1
-        case "previous":
-          newIndex = newIndex - 1
+        case "next":     newIndex = newIndex + 1
+        case "previous": newIndex = newIndex - 1
         default: break
         }
 
-        if newIndex >= 0 && newIndex <= carouselSpot.items.count {
+        if newIndex >= 0 && newIndex < carouselSpot.items.count {
           let item = carouselSpot.items[newIndex]
           carouselSpot.scrollTo({ item.action == $0.action })
           self.lastItem = item
@@ -159,9 +162,36 @@ extension PlayerController: SpotsDelegate {
 extension PlayerController: SpotsCarouselScrollDelegate {
 
   func spotDidEndScrolling(spot: Spotable, item: ListItem) {
-    guard let urn = item.action else { return }
-    if let lastItem = lastItem where item.action == lastItem.action { return }
+    guard let urn = item.action, lastItem = lastItem
+      where item.action != lastItem.action
+      else { return }
+
     Compass.navigate(urn)
-    lastItem = item
+    self.lastItem = item
+  }
+}
+
+extension PlayerController: SPTAudioStreamingPlaybackDelegate {
+
+  func audioStreaming(audioStreaming: SPTAudioStreamingController!, didChangeToTrack trackMetadata: [NSObject : AnyObject]!) {
+
+    guard let name = trackMetadata["SPTAudioStreamingMetadataArtistName"] as? String,
+      artist = trackMetadata["SPTAudioStreamingMetadataArtistName"] as? String,
+      track = trackMetadata["SPTAudioStreamingMetadataTrackName"] as? String,
+      uri = trackMetadata["SPTAudioStreamingMetadataAlbumURI"] as? String
+      else { return }
+
+    SPTAlbum.albumWithURI(NSURL(string: uri), accessToken: Keychain.password(forAccount: keychainAccount), market: nil) { (error, object) -> Void in
+      guard let album = object as? SPTPartialAlbum else { return }
+
+      NSNotificationCenter.defaultCenter().postNotificationName("updatePlayer",
+        object: nil,
+        userInfo: [
+          "title" : name,
+          "image" : album.largestCover.imageURL.absoluteString,
+          "artist" :artist,
+          "track" : track
+        ])
+    }
   }
 }

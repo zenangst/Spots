@@ -45,7 +45,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var session: SPTSession? {
     didSet {
       guard let session = session else { return }
-      player.loginWithSession(session, callback: { (error) -> Void in
+
+      mainController.playerController.player.loginWithSession(session, callback: { (error) -> Void in
         if let error = error {
           self.session = nil
           self.cache.remove("session")
@@ -54,13 +55,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       })
     }
   }
-
-  lazy var player: SPTAudioStreamingController = {
-    let player = SPTAudioStreamingController(clientId: SPTAuth.defaultInstance().clientID)
-    player.playbackDelegate = self
-
-    return player
-  }()
 
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
     configurators.forEach { $0.configure() }
@@ -106,30 +100,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         else { return false }
 
       return PostLoginRouter().navigate(url, navigationController: navigationController)
-  }
-}
-
-extension AppDelegate: SPTAudioStreamingPlaybackDelegate {
-
-  func audioStreaming(audioStreaming: SPTAudioStreamingController!, didChangeToTrack trackMetadata: [NSObject : AnyObject]!) {
-
-    guard let name = trackMetadata["SPTAudioStreamingMetadataArtistName"] as? String,
-    artist = trackMetadata["SPTAudioStreamingMetadataArtistName"] as? String,
-    track = trackMetadata["SPTAudioStreamingMetadataTrackName"] as? String,
-    uri = trackMetadata["SPTAudioStreamingMetadataAlbumURI"] as? String
-      else { return }
-
-    SPTAlbum.albumWithURI(NSURL(string: uri), accessToken: Keychain.password(forAccount: keychainAccount), market: nil) { (error, object) -> Void in
-      guard let album = object as? SPTPartialAlbum else { return }
-
-      NSNotificationCenter.defaultCenter().postNotificationName("updatePlayer",
-        object: nil,
-        userInfo: [
-          "title" : name,
-          "image" : album.largestCover.imageURL.absoluteString,
-          "artist" :artist,
-          "track" : track
-        ])
-    }
   }
 }
