@@ -14,7 +14,6 @@ class MainController: UITabBarController {
       ListItem(title: "Next", action: "next")
       ]))
     ])
-  lazy var player = PlayerView(frame: UIScreen.mainScreen().bounds)
 
   lazy var myMusicController: UINavigationController = {
     let controller = PlaylistController(playlistID: nil)
