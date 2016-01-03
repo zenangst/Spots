@@ -143,11 +143,11 @@
 		BD231CB81C20A7D300D93449 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				BDED39E21C216CB700AC6383 /* ListHeaderView.swift */,
-				BD231CB91C20AB3E00D93449 /* PlaylistListSpotCell.swift */,
 				BDAA75291C2169B900E49759 /* DefaultListSpotCell.swift */,
-				BD00A3781C35827B00C984F3 /* PlaylistGridSpotCell.swift */,
 				BDADDD921C35A8DB0023D135 /* FeaturedGridSpotCell.swift */,
+				BDED39E21C216CB700AC6383 /* ListHeaderView.swift */,
+				BD00A3781C35827B00C984F3 /* PlaylistGridSpotCell.swift */,
+				BD231CB91C20AB3E00D93449 /* PlaylistListSpotCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
