@@ -19,7 +19,31 @@ class PlaylistController: SpotsController {
     self.init(spots: [gridSpot, featuredSpot, listSpot])
     self.view.backgroundColor = UIColor.blackColor()
     self.spotsScrollView.backgroundColor = UIColor.blackColor()
+    self.spotsRefreshDelegate = self
+    self.playlistID = playlistID
 
+    refreshData()
+  }
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    spotsDelegate = self
+  }
+
+  override func viewDidAppear(animated: Bool) {
+    super.viewDidAppear(animated)
+  }
+
+  override func scrollViewDidScroll(scrollView: UIScrollView) {
+    super.scrollViewDidScroll(scrollView)
+
+    if let delegate = UIApplication.sharedApplication().delegate as? AppDelegate
+      where !delegate.mainController.playerController.player.isPlaying {
+        NSNotificationCenter.defaultCenter().postNotificationName("hidePlayer", object: nil)
+    }
+  }
+
+  func refreshData(closure: (() -> Void)? = nil) {
     if let playlistID = playlistID {
       let uri = playlistID.replace("-", with: ":")
 
@@ -69,7 +93,8 @@ class PlaylistController: SpotsController {
           var top = first
           top.image = object.largestImage.imageURL.absoluteString
 
-          self.update(spotAtIndex: 0) { $0.items.insert(top, atIndex: 0) }
+          self.update(spotAtIndex: 0) { $0.items = [top] }
+          closure?()
         }
       })
     } else {
@@ -87,8 +112,8 @@ class PlaylistController: SpotsController {
 
         var featured = items.filter {
           $0.title.lowercaseString.containsString("top") ||
-          $0.title.lowercaseString.containsString("starred") ||
-          $0.title.lowercaseString.containsString("discover")
+            $0.title.lowercaseString.containsString("starred") ||
+            $0.title.lowercaseString.containsString("discover")
         }
 
         featured.enumerate().forEach { (index, item) in
@@ -101,25 +126,18 @@ class PlaylistController: SpotsController {
 
         self.update(spotAtIndex: 2) { $0.items = items }
         self.update(spotAtIndex: 1) { $0.items = featured }
+        closure?()
       }
     }
   }
+}
 
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    spotsDelegate = self
-  }
+extension PlaylistController: SpotsRefreshDelegate {
 
-  override func viewDidAppear(animated: Bool) {
-    super.viewDidAppear(animated)
-    spotsScrollView.contentInset.bottom = 60
-  }
-
-  override func scrollViewDidScroll(scrollView: UIScrollView) {
-    super.scrollViewDidScroll(scrollView)
-
-    if let delegate = UIApplication.sharedApplication().delegate as? AppDelegate where !delegate.player.isPlaying {
-      NSNotificationCenter.defaultCenter().postNotificationName("hidePlayer", object: nil)
+  func spotsDidReload(refreshControl: UIRefreshControl, completion: (() -> Void)?) {
+    refreshData {
+      refreshControl.endRefreshing()
+      completion?()
     }
   }
 }
