@@ -139,6 +139,27 @@ public extension Spotable where Self : Listable {
     }
   }
 
+  public func update(item: ListItem, index: Int, completion: (() -> Void)? = nil) {
+    items[index] = item
+
+    let cellClass = self.dynamicType.cells[item.kind] ?? self.dynamicType.defaultCell
+    let reuseIdentifier = !component.items[index].kind.isEmpty
+      ? component.items[index].kind
+      : component.kind
+
+    tableView.registerClass(cellClass, forCellReuseIdentifier: reuseIdentifier)
+    if let cell = cellClass.init() as? Itemble {
+      component.items[index].index = index
+      cell.configure(&component.items[index])
+    }
+
+    tableView.beginUpdates()
+    tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: .Automatic)
+    tableView.endUpdates()
+
+    completion?()
+  }
+
   public func reload(indexes: [Int] = [], completion: (() -> Void)? = nil) {
     let items = component.items
 
