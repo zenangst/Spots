@@ -8,6 +8,7 @@ class MainController: UITabBarController {
     ListSpot(),
     CarouselSpot(Component(span: 1)),
     ListSpot(component: Component(items: [
+      ListItem(title: ""),
       ListItem(title: "Previous", action: "previous"),
       ListItem(title: "Stop", action: "stop"),
       ListItem(title: "Next", action: "next")
