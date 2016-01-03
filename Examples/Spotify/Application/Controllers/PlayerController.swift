@@ -49,13 +49,7 @@ class PlayerController: SpotsController {
   func updatePlayer(notification: NSNotification) {
     if let userInfo = notification.userInfo,
       track = userInfo["track"] as? String,
-      artist = userInfo["artist"] as? String,
-      image = userInfo["image"] as? String {
-//        smallAlbumTrack.text = track
-//        smallAlbumArtist.text = artist
-//        albumCover.setImage(NSURL(string: image))
-//        albumTrack.text = track
-//        albumArtist.text = artist
+      artist = userInfo["artist"] as? String {
 
         self.update {
           $0.items = [ListItem(title: track, subtitle: artist, action: "openPlayer")]
