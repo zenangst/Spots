@@ -26,7 +26,7 @@ public struct ListItem: Mappable {
     )
   }
 
-  public init(title: String, subtitle: String = "", image: String = "", kind: String = "", action: String? = nil, size: CGSize = CGSize(width: 0, height: 0), meta: JSONDictionary = [:]) {
+  public init(title: String = "", subtitle: String = "", image: String = "", kind: String = "", action: String? = nil, size: CGSize = CGSize(width: 0, height: 0), meta: JSONDictionary = [:]) {
     self.title = title
     self.subtitle = subtitle
     self.image = image
