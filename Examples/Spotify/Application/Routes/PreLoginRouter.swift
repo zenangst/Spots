@@ -1,6 +1,7 @@
 import UIKit
 import Keychain
 import Compass
+import Sugar
 
 public struct PreLoginRouter: Routing {
 
@@ -11,7 +12,9 @@ public struct PreLoginRouter: Routing {
     return Compass.parse(url) { route, arguments in
       switch route {
       case "auth":
-        UIApplication.sharedApplication().openURL(SPTAuth.defaultInstance().loginURL)
+        dispatch {
+          UIApplication.sharedApplication().openURL(SPTAuth.defaultInstance().loginURL)
+        }
       case "callback":
         if let accessToken = arguments["access_token"] {
           Keychain.setPassword(accessToken, forAccount: keychainAccount)

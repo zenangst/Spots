@@ -137,7 +137,11 @@ extension PlayerController: SpotsDelegate {
 
   func spotDidSelectItem(spot: Spotable, item: ListItem) {
     guard let urn = item.action else { return }
-    Compass.navigate(urn)
+
+    if !["next", "previous"].contains(urn) {
+      Compass.navigate(urn)
+      return
+    }
 
     if let carouselSpot = self.spot(1) as? CarouselSpot,
       lastItem = lastItem {
@@ -154,6 +158,9 @@ extension PlayerController: SpotsDelegate {
           let item = carouselSpot.items[newIndex]
           carouselSpot.scrollTo({ item.action == $0.action })
           self.lastItem = item
+          if let urn = item.action {
+            Compass.navigate(urn)
+          }
         }
     }
   }
