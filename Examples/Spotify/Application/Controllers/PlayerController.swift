@@ -61,6 +61,8 @@ class PlayerController: SpotsController {
           $0.items = [ListItem(title: track, subtitle: artist, action: "openPlayer")]
         }
 
+        self.update(ListItem(title: track, subtitle: artist), index: 0, spotIndex: 2)
+
         showPlayer()
     }
   }
