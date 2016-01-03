@@ -8,9 +8,7 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
   public private(set) var initialContentInset: UIEdgeInsets = UIEdgeInsetsZero
   public private(set) var spots: [Spotable]
 
-  public var refreshing = false {
-    didSet { if !refreshing { refreshControl.endRefreshing() } }
-  }
+  public var refreshing = false
 
   weak public var spotsDelegate: SpotsDelegate? {
     didSet { spots.forEach { $0.spotsDelegate = spotsDelegate } }
@@ -199,9 +197,8 @@ extension SpotsController {
 
   public func refreshSpots(refreshControl: UIRefreshControl) {
     dispatch { [weak self] in
-      if let weakSelf = self {
-        weakSelf.spotsRefreshDelegate?.spotsDidReload(refreshControl) { }
-      }
+      guard let weakSelf = self else { return }
+      weakSelf.spotsRefreshDelegate?.spotsDidReload(refreshControl) { }
     }
   }
 }
