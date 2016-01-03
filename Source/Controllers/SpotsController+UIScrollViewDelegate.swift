@@ -37,7 +37,18 @@ extension SpotsController {
       self.spotsRefreshDelegate?.spotsDidReload(self.refreshControl) { [weak self] in
         guard let weakSelf = self else { return }
         UIView.animateWithDuration(0.3, animations: {
-          weakSelf.spotsScrollView.contentInset = weakSelf.initialContentInset
+          var newContentInset = weakSelf.initialContentInset
+
+          if let navigationController = weakSelf.navigationController
+            where !navigationController.navigationBar.opaque {
+              newContentInset.top = navigationController.navigationBar.frame.height + 20
+          }
+
+          if let tabBarController = weakSelf.tabBarController {
+            newContentInset.bottom = tabBarController.tabBar.frame.height ?? weakSelf.spotsScrollView.contentInset.bottom
+          }
+
+          weakSelf.spotsScrollView.contentInset = newContentInset
           }, completion: { _ in
             weakSelf.refreshing = false
         })
