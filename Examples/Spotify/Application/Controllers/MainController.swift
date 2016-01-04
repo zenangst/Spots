@@ -5,9 +5,7 @@ import Compass
 class MainController: UITabBarController {
 
   lazy var playerController = PlayerController(spots: [
-    ListSpot(component: Component(items: [
-      ListItem(kind: "player", action: "openPlayer")
-      ])),
+    ListSpot().then { $0.items = [ListItem(kind: "player", action: "openPlayer")] },
     CarouselSpot(Component(span: 1)),
     ListSpot(component: Component(items: [
       ListItem(kind: "player")

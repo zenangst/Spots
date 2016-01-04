@@ -14,11 +14,6 @@ class FeaturedController: SpotsController, SpotsDelegate {
     self.title = title
 
     SPTBrowse.requestFeaturedPlaylistsForCountry("NO", limit: 50, offset: 0, locale: nil, timestamp: nil, accessToken: accessToken) { (error, object) -> Void in
-
-      if let error = error {
-        print(error)
-      }
-
       guard let object = object as? SPTFeaturedPlaylistList else { return }
 
       self.update { $0.items = object.items.map { item in
@@ -31,12 +26,6 @@ class FeaturedController: SpotsController, SpotsDelegate {
         }
       }
     }
-  }
-
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    view.backgroundColor = UIColor.blackColor()
-    spotsScrollView.backgroundColor = UIColor.blackColor()
   }
 
   override func viewDidAppear(animated: Bool) {

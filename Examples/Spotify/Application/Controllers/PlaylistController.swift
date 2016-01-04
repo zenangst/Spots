@@ -12,7 +12,9 @@ class PlaylistController: SpotsController {
   var offset = 0
 
   convenience init(playlistID: String?) {
-    let listSpot = ListSpot(component: Component(items: [ListItem(title: "Loading...", kind: "playlist", size: CGSize(width: 44, height: 44))]))
+    let listSpot = ListSpot().then {
+      $0.items = [ListItem(title: "Loading...", kind: "playlist", size: CGSize(width: 44, height: 44))]
+    }
     let featuredSpot = CarouselSpot(Component(span: 2), top: 5, left: 15, bottom: 5, right: 15, itemSpacing: 15)
     let gridSpot = GridSpot(component: Component(span: 1))
 

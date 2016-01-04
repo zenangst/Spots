@@ -227,17 +227,15 @@ extension PlayerController: SpotsDelegate {
         default: break
         }
 
-        if newIndex >= 0 && newIndex < carouselSpot.items.count {
-          let item = carouselSpot.items[newIndex]
-          carouselSpot.scrollTo({ item.action == $0.action })
-          self.lastItem = item
-          if let urn = item.action {
-            Compass.navigate(urn)
+        guard newIndex >= 0 && newIndex < carouselSpot.items.count  else { return }
+        let item = carouselSpot.items[newIndex]
+        carouselSpot.scrollTo({ item.action == $0.action })
+        self.lastItem = item
+        guard let urn = item.action else { return }
+        Compass.navigate(urn)
 
-            if !item.image.isEmpty {
-              currentAlbum.setImage(NSURL(string: item.image)!)
-            }
-          }
+        if !item.image.isEmpty {
+          currentAlbum.setImage(NSURL(string: item.image)!)
         }
     }
   }
@@ -252,7 +250,6 @@ extension PlayerController: SpotsCarouselScrollDelegate {
 
     Compass.navigate(urn)
     self.lastItem = item
-
 
     if !item.image.isEmpty {
       currentAlbum.setImage(NSURL(string: item.image)!)
