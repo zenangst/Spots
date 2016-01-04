@@ -80,13 +80,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func applyStyles() {
     UIApplication.sharedApplication().statusBarStyle = .LightContent
 
-    let navigationBar = UINavigationBar.appearance()
-    navigationBar.barTintColor = UIColor(red:0.000, green:0.000, blue:0.000, alpha: 1)
-    navigationBar.tintColor = UIColor(red:1.000, green:1.000, blue:1.000, alpha: 1)
-    navigationBar.shadowImage = UIImage()
-    navigationBar.titleTextAttributes = [
-      NSForegroundColorAttributeName: UIColor(red:1.000, green:1.000, blue:1.000, alpha: 1)
-    ]
+    UINavigationBar.appearance().then {
+      $0.barTintColor = UIColor(red:0.000, green:0.000, blue:0.000, alpha: 1)
+      $0.tintColor = UIColor(red:1.000, green:1.000, blue:1.000, alpha: 1)
+      $0.shadowImage = UIImage()
+      $0.titleTextAttributes = [
+        NSForegroundColorAttributeName: UIColor(red:1.000, green:1.000, blue:1.000, alpha: 1)
+      ]
+    }
   }
 
   func application(app: UIApplication,
