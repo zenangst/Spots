@@ -57,7 +57,7 @@ CHECKOUT OPTIONS:
     :commit: 21e6f607394e112229a7f30bebe2f832a4d43c48
     :git: https://github.com/hyperoslo/Keychain
   Sugar:
-    :commit: e68523d9bac4fe05ac521726451e5738cfe5fb96
+    :commit: 7814da21e9f9450c08805706f51ee498e1514bc8
     :git: https://github.com/hyperoslo/Sugar
   Tailor:
     :commit: 085f59593e5833532efa4d94b192e7bed49ce817
@@ -71,7 +71,7 @@ SPEC CHECKSUMS:
   Imaginary: feaea646440c68a9b6ed66a46597d548b9a44207
   Keychain: 50cb247cab32e774422741b118af9b598a3fb5b2
   Spots: 9de65acd79cebc15b9f9756a86f7cab0104bc8fe
-  Sugar: 5587fc71169b7fbfb753db86136514c80ecb9a28
+  Sugar: 41ef7630a1568447e9ce1d30939cc732fdc65542
   Tailor: acba14dba2fb854cdf2550c1a3dfd603f6b59dbc
   Whisper: ff61e107efbd684f064ad47446c6462a97aeb794
 
