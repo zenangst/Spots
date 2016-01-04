@@ -51,8 +51,7 @@ public class PlaylistGridSpotCell: UICollectionViewCell, Itemble {
       albumView.frame.origin.x = (frame.width - albumView.frame.width) / 2
       albumView.frame.origin.y = (frame.height - albumView.frame.height) / 2
     }
-    
+
     item.size = size
   }
-  
 }

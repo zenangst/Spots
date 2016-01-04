@@ -32,5 +32,4 @@ public class FeaturedGridSpotCell: UICollectionViewCell, Itemble {
       item.size = size
     }
   }
-
 }

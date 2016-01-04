@@ -55,5 +55,4 @@ public class PlayerGridSpotCell: UICollectionViewCell, Itemble {
 
     item.size = size
   }
-
 }
