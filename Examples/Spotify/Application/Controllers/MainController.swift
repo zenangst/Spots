@@ -5,10 +5,12 @@ import Compass
 class MainController: UITabBarController {
 
   lazy var playerController = PlayerController(spots: [
-    ListSpot(),
+    ListSpot(component: Component(items: [
+      ListItem()
+      ])),
     CarouselSpot(Component(span: 1)),
     ListSpot(component: Component(items: [
-      ListItem(title: "")
+      ListItem()
       ])),
     GridSpot(component: Component(span: 3, kind: "player" ,items: [
       ListItem(title: "Previous", image: "previousButton", action: "previous"),
