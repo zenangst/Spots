@@ -24,11 +24,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   lazy var mainController: MainController = MainController()
 
   lazy var authController: UINavigationController = {
-    let controller = AuthController(spots: [ListSpot(component:
-      Component(items:
-        [ListItem(title: "Auth", action: "auth", kind: "playlist", size: CGSize(width: 120, height: 88))])
-      )
-      ])
+    let controller = AuthController(spot: ListSpot().then {
+      $0.items = [ListItem(title: "Auth", action: "auth", kind: "playlist", size: CGSize(width: 120, height: 88))]
+      }
+    )
     let navigationController = UINavigationController(rootViewController: controller)
 
     controller.title = "Spotify".uppercaseString
