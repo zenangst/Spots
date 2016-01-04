@@ -38,10 +38,10 @@ class MainController: UITabBarController {
     return navigationController
     }()
 
-  lazy var settingsController: UINavigationController = {
-    let controller = SettingsController(title: localizedString("Settings"))
+  lazy var profileController: UINavigationController = {
+    let controller = ProfileController(title: localizedString("Profile"))
     let navigationController = UINavigationController(rootViewController: controller)
-    controller.tabBarItem.image = UIImage(named: "iconSettings")
+    controller.tabBarItem.image = UIImage(named: "iconProfile")
 
     return navigationController
     }()
@@ -66,7 +66,7 @@ class MainController: UITabBarController {
     viewControllers = [
       myMusicController,
       featuredController,
-      settingsController
+      profileController
     ]
 
     selectedIndex = 0

@@ -2,7 +2,7 @@ import Spots
 import Compass
 import Keychain
 
-class SettingsController: SpotsController {
+class ProfileController: SpotsController {
 
   let accessToken = Keychain.password(forAccount: keychainAccount)
 
@@ -41,7 +41,7 @@ class SettingsController: SpotsController {
   }
 }
 
-extension SettingsController: SpotsDelegate {
+extension ProfileController: SpotsDelegate {
 
   func spotDidSelectItem(spot: Spotable, item: ListItem) {
     guard let urn = item.action else { return }
