@@ -53,19 +53,24 @@ class PlaylistController: SpotsController {
         self.title = object.name
 
         var listItems = [ListItem]()
-
         object.firstTrackPage.items.enumerate().forEach { index, item in
+
+          guard let artists = item.artists as? [SPTPartialArtist],
+            artist = artists.first,
+            album = item.album
+            else { return }
+
           listItems.append(ListItem(
             title: item.name,
-            subtitle:  "\(((item.artists as! [SPTPartialArtist]).first)!.name) - \((item.album as SPTPartialAlbum).name)",
-            image: (item.album as SPTPartialAlbum).largestCover.imageURL.absoluteString,
+            subtitle:  "\(artist.name) - \(album.name)",
+            image: album.largestCover.imageURL.absoluteString,
             kind: "playlist",
             action: "play:\(playlistID):\(index)",
             meta: [
-              "notification" : "\(item.name) by \(((item.artists as! [SPTPartialArtist]).first)!.name)",
+              "notification" : "\(item.name) by \(artist.name)",
               "track" : item.name,
-              "artist" : ((item.artists as! [SPTPartialArtist]).first)!.name,
-              "image" : (item.album as SPTPartialAlbum).largestCover.imageURL.absoluteString
+              "artist" : artist.name,
+              "image" : album.largestCover.imageURL.absoluteString
             ]
             ))
         }
@@ -99,13 +104,19 @@ class PlaylistController: SpotsController {
       SPTPlaylistList.playlistsForUser(username, withAccessToken: accessToken) { (error, object) -> Void in
         guard let object = object as? SPTPlaylistList else { return }
 
-        var items = object.items.map { item in
-          ListItem(
+        var items = [ListItem]()
+        for item in object.items {
+          guard let image = item.largestImage,
+            uri = item.uri
+            else { return }
+
+          items.append(ListItem(
             title: item.name,
             subtitle: "\(item.trackCount) songs",
-            image: (item.largestImage as SPTImage).imageURL.absoluteString,
+            image: image.imageURL.absoluteString,
             kind: "playlist",
-            action: "playlist:" + (item.uri as NSURL).absoluteString.replace(":", with: "-"))
+            action: "playlist:" + uri.absoluteString.replace(":", with: "-"))
+          )
         }
 
         var featured = items.filter {
