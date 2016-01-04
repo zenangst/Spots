@@ -4,7 +4,7 @@ import Sugar
 
 public class PlayerGridSpotCell: UICollectionViewCell, Itemble {
 
-  public var size = CGSize(width: 125, height: 80)
+  public var size = CGSize(width: 125, height: 100)
 
   lazy var imageView: UIImageView = {
     let imageView = UIImageView()
@@ -14,49 +14,44 @@ public class PlayerGridSpotCell: UICollectionViewCell, Itemble {
     return imageView
   }()
 
+  lazy var textLabel = UILabel().then {
+    $0.textColor = UIColor.whiteColor()
+    $0.textAlignment = .Center
+    $0.font = UIFont.systemFontOfSize(14)
+  }
+
   override init(frame: CGRect) {
     super.init(frame: frame)
 
-    addSubview(imageView)
-    imageView.addObserver(self, forKeyPath: "image", options: [.New, .Old], context: nil)
-  }
-
-  deinit {
-    imageView.removeObserver(self, forKeyPath: "image")
+    [imageView, textLabel].forEach { addSubview($0) }
   }
 
   required public init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 
-  public override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
-
-    if let imageView = object as? UIImageView,
-      image = imageView.image
-      where keyPath == "image" {
-        dispatch(queue: .Interactive) {
-          let (background, _, _, _) = image.colors(CGSize(width: 128, height: 128))
-          dispatch { [weak self] in
-            guard let background = background else { return }
-            self?.backgroundColor = background
-          }
-        }
-    }
-  }
-
   public func configure(inout item: ListItem) {
-    backgroundColor = UIColor.redColor()
+    backgroundColor = UIColor.clearColor()
 
     if !item.image.isEmpty {
+      imageView.frame.size = CGSize(width: 32, height: 32)
+      imageView.frame.origin.x = (frame.size.width - imageView.frame.width) / 2
+      imageView.frame.origin.y = (frame.size.height - imageView.frame.height) / 2
       imageView.image = UIImage(named: item.image)?.imageWithRenderingMode(.AlwaysTemplate)
-//      imageView.setImage(NSURL(string: item.image))
-//      imageView.frame.size = frame.size
-//      blurView.frame.size = frame.size
-//      albumView.setImage(NSURL(string: item.image))
-//      albumView.frame.size = CGSize(width: 128, height: 128)
-//      albumView.frame.origin.x = (frame.width - albumView.frame.width) / 2
-//      albumView.frame.origin.y = (frame.height - albumView.frame.height) / 2
+      textLabel.frame.origin.y = imageView.frame.origin.y + 20
     }
+
+    if let tintColor = item.meta["tintColor"] as? UIColor {
+      imageView.tintColor = tintColor
+    }
+
+    if let textColor = item.meta["textColor"] as? UIColor {
+      textLabel.textColor = textColor
+    }
+
+    textLabel.text = item.title
+    textLabel.frame.size.width = frame.size.width
+    textLabel.frame.size.height = 48
 
     item.size = size
   }
