@@ -1,17 +1,23 @@
 import Spots
+import Hue
 
 struct SpotsConfigurator: Configurator {
 
   static func configure() {
+
+    SpotsController.configure = { scrollView in
+      scrollView.backgroundColor = UIColor.blackColor()
+    }
+
     CarouselSpot.configure = { collectionView in
-      collectionView.backgroundColor = UIColor.blackColor()
+      collectionView.backgroundColor = UIColor.clearColor()
     }
 
     CarouselSpot.cells["playlist"] = PlaylistGridSpotCell.self
     CarouselSpot.cells["featured"] = FeaturedGridSpotCell.self
 
     GridSpot.configure = { collectionView in
-      collectionView.backgroundColor = UIColor.blackColor()
+      collectionView.backgroundColor = UIColor.clearColor()
     }
 
     GridSpot.cells["player"] = PlayerGridSpotCell.self
@@ -21,7 +27,7 @@ struct SpotsConfigurator: Configurator {
     ListSpot.configure = { tableView in
       let inset: CGFloat = 15
 
-      tableView.backgroundColor = UIColor.blackColor()
+      tableView.backgroundColor = UIColor.clearColor()
       tableView.layoutMargins = UIEdgeInsetsZero
       tableView.tableFooterView = UIView(frame: CGRect.zero)
       tableView.separatorInset = UIEdgeInsets(top: inset,
