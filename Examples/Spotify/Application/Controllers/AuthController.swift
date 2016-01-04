@@ -7,8 +7,6 @@ class AuthController: SpotsController, SpotsDelegate {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    self.view.backgroundColor = UIColor.blackColor()
-    self.spotsScrollView.backgroundColor = UIColor.blackColor()
     self.spotsDelegate = self
   }
 
