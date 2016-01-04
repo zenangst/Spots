@@ -40,6 +40,7 @@ struct SpotsConfigurator: Configurator {
     ListSpot.headers["list"] = ListHeaderView.self
     ListSpot.cells["default"] = DefaultListSpotCell.self
     ListSpot.cells["playlist"] = PlaylistListSpotCell.self
+    ListSpot.cells["player"] = PlayerListSpotCell.self
     ListSpot.defaultCell = DefaultListSpotCell.self
   }
 }
