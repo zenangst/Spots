@@ -67,9 +67,10 @@ class MainController: UITabBarController {
     delegate = self
     tabBar.translucent = true
 
-    let navigationBar = UITabBar.appearance()
-    navigationBar.barTintColor = UIColor(red:0.000, green:0.000, blue:0.000, alpha: 1)
-    navigationBar.tintColor = UIColor(red:1.000, green:1.000, blue:1.000, alpha: 1)
+    UITabBar.appearance().then {
+      $0.barTintColor = UIColor(red:0.000, green:0.000, blue:0.000, alpha: 1)
+      $0.tintColor = UIColor(red:1.000, green:1.000, blue:1.000, alpha: 1)
+    }
 
     viewControllers = [
       myMusicController,
