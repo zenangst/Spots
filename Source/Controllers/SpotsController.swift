@@ -8,7 +8,9 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
   public private(set) var initialContentInset: UIEdgeInsets = UIEdgeInsetsZero
   public private(set) var spots: [Spotable]
 
-  public var refreshing = false
+  public var refreshing = false {
+    didSet { if !refreshing { refreshControl.endRefreshing() } }
+  }
 
   weak public var spotsDelegate: SpotsDelegate? {
     didSet { spots.forEach { $0.spotsDelegate = spotsDelegate } }
