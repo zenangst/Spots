@@ -10,6 +10,7 @@ class PlaylistController: SpotsController {
   let accessToken = Keychain.password(forAccount: keychainAccount)
   var playlistID: String?
   var offset = 0
+  var playlistPage: SPTListPage?
 
   convenience init(playlistID: String?) {
     let listSpot = ListSpot().then {
@@ -22,6 +23,7 @@ class PlaylistController: SpotsController {
     self.view.backgroundColor = UIColor.blackColor()
     self.spotsScrollView.backgroundColor = UIColor.blackColor()
     self.spotsRefreshDelegate = self
+    self.spotsScrollDelegate = self
     self.playlistID = playlistID
 
     refreshData()
@@ -97,12 +99,15 @@ class PlaylistController: SpotsController {
           top.image = object.largestImage.imageURL.absoluteString
 
           self.update(spotAtIndex: 0) { $0.items = [top] }
+
           closure?()
         }
       })
     } else {
       SPTPlaylistList.playlistsForUser(username, withAccessToken: accessToken) { (error, object) -> Void in
-        guard let object = object as? SPTPlaylistList else { return }
+        guard let object = object as? SPTPlaylistList
+          where object.items != nil
+          else { return }
 
         var items = [ListItem]()
         for item in object.items {
@@ -136,6 +141,12 @@ class PlaylistController: SpotsController {
         self.update(spotAtIndex: 2) { $0.items = items }
         self.update(spotAtIndex: 1) { $0.items = featured }
         closure?()
+
+        if object.hasNextPage {
+          self.playlistPage = object
+        } else {
+          self.playlistPage = nil
+        }
       }
     }
   }
@@ -148,6 +159,63 @@ extension PlaylistController: SpotsRefreshDelegate {
       refreshControl.endRefreshing()
       completion?()
     }
+  }
+}
+
+extension PlaylistController: SpotsScrollDelegate {
+
+  func spotDidReachEnd(completion: (() -> Void)?) {
+    guard let playlistPage = playlistPage else { return }
+
+    playlistPage.requestNextPageWithAccessToken(accessToken, callback: { (error, object) -> Void in
+      guard let object = object as? SPTListPage
+        where object.items != nil
+        else {
+          completion?()
+          return
+      }
+
+      var items = [ListItem]()
+      for item in object.items {
+        guard let image = item.largestImage,
+          uri = item.uri
+          where image != nil
+          else { return }
+
+        items.append(ListItem(
+          title: item.name,
+          subtitle: "\(item.trackCount) songs",
+          image: image.imageURL.absoluteString,
+          kind: "playlist",
+          action: "playlist:" + uri.absoluteString.replace(":", with: "-"))
+        )
+      }
+
+      var featured = items.filter {
+        $0.title.lowercaseString.containsString("top") ||
+          $0.title.lowercaseString.containsString("starred") ||
+          $0.title.lowercaseString.containsString("discover")
+      }
+
+      featured.enumerate().forEach { (index, item) in
+        if let index = items.indexOf({ $0 == item }) {
+          items.removeAtIndex(index)
+        }
+
+        featured[index].size = CGSize(width: 120, height: 140)
+      }
+
+      self.append(items, spotIndex: 2)
+      self.append(featured, spotIndex: 1)
+
+      if object.hasNextPage {
+        self.playlistPage = object
+      } else {
+        self.playlistPage = nil
+      }
+
+      completion?()
+    })
   }
 }
 
