@@ -14,6 +14,7 @@ struct SpotsConfigurator: Configurator {
       collectionView.backgroundColor = UIColor.blackColor()
     }
 
+    GridSpot.cells["player"] = PlayerGridSpotCell.self
     GridSpot.cells["playlist"] = PlaylistGridSpotCell.self
     GridSpot.cells["featured"] = FeaturedGridSpotCell.self
 

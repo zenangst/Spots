@@ -8,10 +8,12 @@ class MainController: UITabBarController {
     ListSpot(),
     CarouselSpot(Component(span: 1)),
     ListSpot(component: Component(items: [
-      ListItem(title: ""),
-      ListItem(title: "Previous", action: "previous"),
-      ListItem(title: "Stop", action: "stop"),
-      ListItem(title: "Next", action: "next")
+      ListItem(title: "")
+      ])),
+    GridSpot(component: Component(span: 3, kind: "player" ,items: [
+      ListItem(title: "Previous", image: "previousButton", action: "previous"),
+      ListItem(title: "Stop", image: "stopButton", action: "stop"),
+      ListItem(title: "Next", image: "nextButton", action: "next")
       ]))
     ])
 
