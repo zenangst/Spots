@@ -6,12 +6,9 @@ public class PlaylistListSpotCell: UITableViewCell, Itemble {
   public var size = CGSize(width: 0, height: 60)
   public var item: ListItem?
 
-  lazy var selectedView: UIView = {
-    let view = UIView()
-    view.backgroundColor = UIColor.darkGrayColor().colorWithAlphaComponent(0.4)
-
-    return view
-  }()
+  lazy var selectedView = UIView().then {
+    $0.backgroundColor = UIColor.darkGrayColor().colorWithAlphaComponent(0.4)
+  }
 
   lazy var transparentImage: UIImage = {
     return UIImage.transparentImage(CGSize(width: 48, height: 48))
