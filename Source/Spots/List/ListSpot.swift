@@ -20,14 +20,11 @@ public class ListSpot: NSObject, Spotable, Listable {
 
   private var fetching = false
 
-  public lazy var tableView: UITableView = { [unowned self] in
-    let tableView = UITableView()
-    tableView.dataSource = self
-    tableView.delegate = self
-    tableView.rowHeight = UITableViewAutomaticDimension
-
-    return tableView
-    }()
+  public lazy var tableView: UITableView = UITableView().then { [unowned self] in
+    $0.dataSource = self
+    $0.delegate = self
+    $0.rowHeight = UITableViewAutomaticDimension
+  }
 
   public required init(component: Component) {
     self.component = component

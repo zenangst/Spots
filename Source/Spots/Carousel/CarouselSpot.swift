@@ -14,12 +14,9 @@ public class CarouselSpot: NSObject, Spotable, Gridable {
   public weak var carouselScrollDelegate: SpotsCarouselScrollDelegate?
   public weak var spotsDelegate: SpotsDelegate?
 
-  public lazy var layout: UICollectionViewFlowLayout = { [unowned self] in
-    let layout = UICollectionViewFlowLayout()
-    layout.scrollDirection = .Horizontal
-
-    return layout
-    }()
+  public lazy var layout = UICollectionViewFlowLayout().then {
+    $0.scrollDirection = .Horizontal
+  }
 
   public lazy var collectionView: UICollectionView = { [unowned self] in
     let collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: self.layout)

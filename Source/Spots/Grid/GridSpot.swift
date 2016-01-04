@@ -12,10 +12,7 @@ public class GridSpot: NSObject, Spotable, Gridable {
 
   public weak var spotsDelegate: SpotsDelegate?
 
-  public lazy var layout: UICollectionViewFlowLayout = { [unowned self] in
-    let layout = UICollectionViewFlowLayout()
-    return layout
-    }()
+  public lazy var layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
 
   public lazy var collectionView: UICollectionView = { [unowned self] in
     let collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: self.layout)
