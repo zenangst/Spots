@@ -65,10 +65,17 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     self.spots = spots
     super.init(nibName: nil, bundle: nil)
     view.addSubview(spotsScrollView)
+<<<<<<< HEAD
 
     spots.enumerate().forEach { spots[$0.index].index = $0.index }
   }
 
+=======
+
+    spots.enumerate().forEach { spots[$0.index].index = $0.index }
+  }
+
+>>>>>>> master
   public convenience init(spot: Spotable)  {
     self.init(spots: [spot])
   }
