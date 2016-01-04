@@ -12,7 +12,9 @@ public struct PreLoginRouter: Routing {
     return Compass.parse(url) { route, arguments in
       switch route {
       case "auth":
-        dispatch {
+        // Add a small delay to remove freeze
+        // http://stackoverflow.com/questions/19356488/openurl-freezes-app-for-over-10-seconds
+        delay(0.1) {
           UIApplication.sharedApplication().openURL(SPTAuth.defaultInstance().loginURL)
         }
       case "callback":
