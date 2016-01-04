@@ -13,10 +13,9 @@ public class SpotsScrollView: UIScrollView {
     }
   }
 
-  lazy public var contentView: SpotsContentView = { [unowned self] in
-    let view = SpotsContentView(frame: self.frame)
-    return view
-    }()
+  lazy public var contentView: SpotsContentView = SpotsContentView().then { [unowned self] in
+    $0.frame = self.frame
+  }
 
   deinit {
     contentView.subviews.forEach { $0.removeFromSuperview() }
