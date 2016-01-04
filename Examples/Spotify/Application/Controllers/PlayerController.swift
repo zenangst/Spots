@@ -1,6 +1,8 @@
 import Spots
 import Compass
 import Keychain
+import Imaginary
+import Sugar
 
 class PlayerController: SpotsController {
 
@@ -11,6 +13,8 @@ class PlayerController: SpotsController {
 
   lazy var panRecognizer: UIPanGestureRecognizer = UIPanGestureRecognizer(target: self, action: "handlePanGesture:")
   lazy var tapRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "handleTapGesture:")
+
+  lazy var currentAlbum = UIImageView()
 
   lazy var player: SPTAudioStreamingController = {
     let player = SPTAudioStreamingController(clientId: SPTAuth.defaultInstance().clientID)
@@ -39,6 +43,8 @@ class PlayerController: SpotsController {
 
     NSNotificationCenter.defaultCenter().addObserver(self, selector: "updatePlayer:", name: "updatePlayer", object: nil)
     NSNotificationCenter.defaultCenter().addObserver(self, selector: "hidePlayer", name: "hidePlayer", object: nil)
+
+    currentAlbum.addObserver(self, forKeyPath: "image", options: [.New, .Old], context: nil)
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -47,6 +53,56 @@ class PlayerController: SpotsController {
 
   deinit {
     NSNotificationCenter.defaultCenter().removeObserver(self)
+  }
+
+  override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+    if let imageView = object as? UIImageView,
+      image = imageView.image
+      where keyPath == "image" {
+        dispatch(queue: .Interactive) {
+          let (background, primary, secondary, detail) = image.colors(CGSize(width: 128, height: 128))
+          dispatch { [weak self] in
+            guard let background = background else { return }
+
+            if let listSpot = self?.spot(0) as? ListSpot {
+              var item = listSpot.items[0]
+
+              item.meta["background"] = background
+              item.meta["textColor"] = primary
+              item.meta["secondary"] = secondary
+
+              self?.update(item, index: 0, spotIndex: 0)
+            }
+
+            if let listSpot = self?.spot(2) as? ListSpot {
+              var item = listSpot.items[0]
+
+              item.meta["background"] = background
+              item.meta["textColor"] = primary
+              item.meta["secondary"] = secondary
+
+              self?.update(item, index: 0, spotIndex: 2)
+            }
+
+            if let gridSpot = self?.spot(3) as? GridSpot {
+              var items = gridSpot.items
+              items.enumerate().forEach {
+                items[$0.index].meta["textColor"] = secondary
+                items[$0.index].meta["tintColor"] = detail
+              }
+
+              self?.update(spotAtIndex: 3, {
+                $0.items = items
+              })
+            }
+
+            UIView.animateWithDuration(0.3) {
+              self?.spotsScrollView.backgroundColor = background
+              self?.view.backgroundColor = background
+            }
+          }
+        }
+    }
   }
 
   override func viewDidLoad() {
@@ -59,8 +115,21 @@ class PlayerController: SpotsController {
       track = userInfo["track"] as? String,
       artist = userInfo["artist"] as? String {
 
-        self.update { $0.items = [ListItem(title: track, subtitle: artist, action: "openPlayer")] }
-        self.update(ListItem(title: track, subtitle: artist), index: 0, spotIndex: 2)
+        var newListItem: ListItem
+        if let spot = spot(0), item = spot.items.first {
+          newListItem = item
+          newListItem.title = track
+          newListItem.subtitle = artist
+          update(newListItem, index: 0, spotIndex: 0)
+          newListItem.action = nil
+          update(newListItem, index: 0, spotIndex: 2)
+        } else {
+          newListItem = ListItem(title: track, subtitle: artist, action: "openPlayer")
+
+          insert(newListItem, index: 0, spotIndex: 0)
+          newListItem.action = nil
+          insert(newListItem, index: 0, spotIndex: 2)
+        }
 
         showPlayer()
     }
@@ -123,6 +192,10 @@ class PlayerController: SpotsController {
       UIView.animateWithDuration(0.3) {
         self.view.frame.origin.y -= self.offset
       }
+
+      if let lastItem = lastItem where !lastItem.image.isEmpty {
+        currentAlbum.setImage(NSURL(string: lastItem.image)!)
+      }
     }
   }
 
@@ -160,6 +233,10 @@ extension PlayerController: SpotsDelegate {
           self.lastItem = item
           if let urn = item.action {
             Compass.navigate(urn)
+
+            if !item.image.isEmpty {
+              currentAlbum.setImage(NSURL(string: item.image)!)
+            }
           }
         }
     }
@@ -175,6 +252,11 @@ extension PlayerController: SpotsCarouselScrollDelegate {
 
     Compass.navigate(urn)
     self.lastItem = item
+
+
+    if !item.image.isEmpty {
+      currentAlbum.setImage(NSURL(string: item.image)!)
+    }
   }
 }
 
