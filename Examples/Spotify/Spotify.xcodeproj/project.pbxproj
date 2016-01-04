@@ -31,6 +31,7 @@
 		BDADDD931C35A8DB0023D135 /* FeaturedGridSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDADDD921C35A8DB0023D135 /* FeaturedGridSpotCell.swift */; };
 		BDAF155E1C36F9060008A5D6 /* PlayerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAF155D1C36F9050008A5D6 /* PlayerController.swift */; };
 		BDB9E98F1C3A88A100E5654E /* PlayerListSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB9E98E1C3A88A100E5654E /* PlayerListSpotCell.swift */; };
+		BDDC21741C3A9B8400ABD671 /* SearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDC21731C3A9B8400ABD671 /* SearchController.swift */; };
 		BDED39E31C216CB700AC6383 /* ListHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDED39E21C216CB700AC6383 /* ListHeaderView.swift */; };
 		D5291C031C24558300B702C9 /* PreLoginRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5291C021C24558300B702C9 /* PreLoginRouter.swift */; };
 		D5291C051C24559900B702C9 /* Routing.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5291C041C24559900B702C9 /* Routing.swift */; };
@@ -67,6 +68,7 @@
 		BDADDD921C35A8DB0023D135 /* FeaturedGridSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeaturedGridSpotCell.swift; sourceTree = "<group>"; };
 		BDAF155D1C36F9050008A5D6 /* PlayerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerController.swift; sourceTree = "<group>"; };
 		BDB9E98E1C3A88A100E5654E /* PlayerListSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerListSpotCell.swift; sourceTree = "<group>"; };
+		BDDC21731C3A9B8400ABD671 /* SearchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchController.swift; sourceTree = "<group>"; };
 		BDED39E21C216CB700AC6383 /* ListHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListHeaderView.swift; sourceTree = "<group>"; };
 		D5291C021C24558300B702C9 /* PreLoginRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreLoginRouter.swift; sourceTree = "<group>"; };
 		D5291C041C24559900B702C9 /* Routing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Routing.swift; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 				BDAA75271C21683700E49759 /* FeaturedController.swift */,
 				BDAF155D1C36F9050008A5D6 /* PlayerController.swift */,
 				BD999D1B1C3A946100556846 /* ProfileController.swift */,
+				BDDC21731C3A9B8400ABD671 /* SearchController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -353,6 +356,7 @@
 				BD231C9C1C1E0D6C00D93449 /* AppDelegate.swift in Sources */,
 				BDAA75281C21683700E49759 /* FeaturedController.swift in Sources */,
 				BDAF155E1C36F9060008A5D6 /* PlayerController.swift in Sources */,
+				BDDC21741C3A9B8400ABD671 /* SearchController.swift in Sources */,
 				BDADDD931C35A8DB0023D135 /* FeaturedGridSpotCell.swift in Sources */,
 				BD999D1C1C3A946100556846 /* ProfileController.swift in Sources */,
 				BDED39E31C216CB700AC6383 /* ListHeaderView.swift in Sources */,
