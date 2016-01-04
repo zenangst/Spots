@@ -7,6 +7,8 @@ class SearchController: SpotsController {
 
   let accessToken = Keychain.password(forAccount: keychainAccount)
 
+  lazy var serialQueue = dispatch_queue_create("serialQueue", DISPATCH_QUEUE_SERIAL)
+
   convenience init(title: String) {
     let component = Component(title: "Search", kind: "search")
     let spots: [Spotable] = [
@@ -83,38 +85,40 @@ extension SearchController: UITextFieldDelegate {
 
         guard let text = textField.text else { return true }
 
-        SPTSearch.performSearchWithQuery("\(text)\(string)", queryType: .QueryTypeTrack, accessToken: accessToken, callback: { (error, object) -> Void in
-          if let object = object {
-            guard let object = object as? SPTListPage
-              where object.items != nil && object.items.count > 0
-              else { return }
-
-            var listItems = [ListItem]()
-
-            object.items.enumerate().forEach { index, item in
-              guard let item = item as? SPTPartialTrack else { return }
-
-              guard let artist = ((item.artists as! [SPTPartialArtist]).first)?.name,
-                image = (item.album as SPTPartialAlbum).largestCover
+        dispatch(queue: .Custom(serialQueue)) {
+          SPTSearch.performSearchWithQuery("\(text)\(string)", queryType: .QueryTypeTrack, accessToken: self.accessToken, callback: { (error, object) -> Void in
+            if let object = object {
+              guard let object = object as? SPTListPage
+                where object.items != nil && object.items.count > 0
                 else { return }
 
-              listItems.append(ListItem(
-                title: item.name,
-                subtitle:  "\(artist) - \((item.album as SPTPartialAlbum).name)",
-                image: image.imageURL.absoluteString,
-                kind: "playlist",
-                action: "song:" + item.playableUri.absoluteString.replace(":", with: "_"),
-                meta: [
-                  "notification" : "\(item.name) by \(artist)",
-                  "track" : item.name,
-                  "artist" : artist,
-                  "image" : image.imageURL.absoluteString
-                ]
-                ))
+              var listItems = [ListItem]()
+
+              object.items.enumerate().forEach { index, item in
+                guard let item = item as? SPTPartialTrack else { return }
+
+                guard let artist = ((item.artists as! [SPTPartialArtist]).first)?.name,
+                  image = (item.album as SPTPartialAlbum).largestCover
+                  else { return }
+
+                listItems.append(ListItem(
+                  title: item.name,
+                  subtitle:  "\(artist) - \((item.album as SPTPartialAlbum).name)",
+                  image: image.imageURL.absoluteString,
+                  kind: "playlist",
+                  action: "song:" + item.playableUri.absoluteString.replace(":", with: "_"),
+                  meta: [
+                    "notification" : "\(item.name) by \(artist)",
+                    "track" : item.name,
+                    "artist" : artist,
+                    "image" : image.imageURL.absoluteString
+                  ]
+                  ))
+              }
+              self.update(spotAtIndex: 2) { $0.items = listItems }
             }
-            self.update(spotAtIndex: 2) { $0.items = listItems }
-          }
-        })
+          })
+        }
     }
 
     return true
