@@ -1,6 +1,7 @@
 import UIKit
 import Keychain
 import Compass
+import Cache
 
 public struct PostLoginRouter: Routing {
 
@@ -48,6 +49,11 @@ public struct PostLoginRouter: Routing {
         player.stop({ (error) -> Void in })
       case "openPlayer":
         applicationDelegate.mainController.playerController.openPlayer()
+      case "logout":
+        username = nil
+        applicationDelegate.session = nil
+        applicationDelegate.cache.remove("session")
+        applicationDelegate.window?.rootViewController = applicationDelegate.authController
       default: break
       }
     }

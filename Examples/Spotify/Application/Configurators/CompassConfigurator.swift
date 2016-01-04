@@ -15,7 +15,8 @@ struct CompassConfigurator: Configurator {
       "stop",
       "next",
       "previous",
-      "openPlayer"
+      "openPlayer",
+      "logout"
     ]
   }
 }
