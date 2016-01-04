@@ -46,6 +46,14 @@ class MainController: UITabBarController {
     return navigationController
     }()
 
+  lazy var searchController: UINavigationController = {
+    let controller = SearchController(title: localizedString("Search"))
+    let navigationController = UINavigationController(rootViewController: controller)
+    controller.tabBarItem.image = UIImage(named: "iconSearch")
+
+    return navigationController
+    }()
+
   override func viewDidLoad() {
     super.viewDidLoad()
     setupTabBar()
@@ -66,6 +74,7 @@ class MainController: UITabBarController {
     viewControllers = [
       myMusicController,
       featuredController,
+      searchController,
       profileController
     ]
 

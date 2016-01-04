@@ -37,7 +37,9 @@ struct SpotsConfigurator: Configurator {
       tableView.separatorColor = UIColor(red: 255, green: 255, blue: 255, alpha: 0.2)
     }
 
+    ListSpot.headers["search"] = SearchHeaderView.self
     ListSpot.headers["list"] = ListHeaderView.self
+
     ListSpot.cells["default"] = DefaultListSpotCell.self
     ListSpot.cells["playlist"] = PlaylistListSpotCell.self
     ListSpot.cells["player"] = PlayerListSpotCell.self

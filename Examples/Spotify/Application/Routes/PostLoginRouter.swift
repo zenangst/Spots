@@ -21,6 +21,10 @@ public struct PostLoginRouter: Routing {
         guard let playlist = arguments["uri"] else { return }
         let controller = PlaylistController(playlistID: playlist)
         navigationController.pushViewController(controller, animated: true)
+      case "song:{uri}":
+        guard let uri = arguments["uri"] else { return }
+
+        player.playURIs([NSURL(string: uri.replace("_", with: ":"))!], fromIndex: 0, callback: { (error) -> Void in })
       case "play:{uri}:{track}":
         guard let playlist = arguments["uri"],
           trackString = arguments["track"],
@@ -44,8 +48,7 @@ public struct PostLoginRouter: Routing {
         player.stop({ (error) -> Void in })
       case "openPlayer":
         applicationDelegate.mainController.playerController.openPlayer()
-      default:
-        break
+      default: break
       }
     }
   }

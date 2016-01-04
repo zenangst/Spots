@@ -99,7 +99,7 @@ extension ListSpot: UITableViewDelegate {
       width: tableView.frame.width,
       height: tableView.frame.height)
 
-    return item(indexPath).size.height
+    return indexPath.item < component.items.count ? item(indexPath).size.height : 0.0
   }
 }
 
@@ -110,13 +110,18 @@ extension ListSpot: UITableViewDataSource {
   }
 
   public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    component.items[indexPath.item].index = indexPath.row
+    if indexPath.item < component.items.count {
+      component.items[indexPath.item].index = indexPath.row
+    }
 
-    let reuseIdentifier = !item(indexPath).kind.isEmpty ? item(indexPath).kind : component.kind
+    let reuseIdentifier = indexPath.item < component.items.count && !item(indexPath).kind.isEmpty
+      ? item(indexPath).kind : component.kind
     let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier(reuseIdentifier, forIndexPath: indexPath)
     cell.optimize()
 
-    (cell as? Itemble)?.configure(&component.items[indexPath.item])
+    if indexPath.item < component.items.count {
+      (cell as? Itemble)?.configure(&component.items[indexPath.item])
+    }
 
     return cell
   }

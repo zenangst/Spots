@@ -9,6 +9,7 @@ struct CompassConfigurator: Configurator {
       "auth",
       "callback",
       "play:{uri}:{track}",
+      "song:{uri}",
       "playlist:{uri}",
       "playlists",
       "stop",
