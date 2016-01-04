@@ -39,7 +39,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   let configurators: [Configurator.Type] = [
     SpotifyConfigurator.self,
     CompassConfigurator.self,
-    SpotsConfigurator.self
+    SpotsConfigurator.self,
+    ImaginaryConfigurator.self
   ]
 
   var session: SPTSession? {
