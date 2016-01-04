@@ -6,7 +6,7 @@ class MainController: UITabBarController {
 
   lazy var playerController = PlayerController(spots: [
     ListSpot(component: Component(items: [
-      ListItem()
+      ListItem(kind: "player", action: "openPlayer")
       ])),
     CarouselSpot(Component(span: 1)),
     ListSpot(component: Component(items: [
