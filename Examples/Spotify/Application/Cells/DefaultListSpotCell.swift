@@ -20,6 +20,7 @@ public class DefaultListSpotCell: UITableViewCell, Itemble {
   public override init(style: UITableViewCellStyle, reuseIdentifier: String!) {
     super.init(style: .Subtitle, reuseIdentifier: reuseIdentifier)
     selectedBackgroundView = selectedView
+    backgroundColor = UIColor.clearColor()
   }
 
   public required init?(coder aDecoder: NSCoder) {
@@ -27,14 +28,33 @@ public class DefaultListSpotCell: UITableViewCell, Itemble {
   }
 
   public func configure(inout item: ListItem) {
-    backgroundColor = UIColor.blackColor()
     textLabel?.textColor = UIColor.whiteColor()
     detailTextLabel?.textColor = UIColor.grayColor()
 
+    if let textColor = item.meta["textColor"] as? UIColor where !textColor.isDarkColor {
+      textLabel?.textColor = textColor
+    }
+
+    if let background = item.meta["background"] as? UIColor {
+      if !background.isDarkColor {
+        textLabel?.textColor = UIColor.darkGrayColor()
+      }
+    }
+
+    if let subtitleColor = item.meta["secondary"] as? UIColor where !subtitleColor.isDarkColor {
+      detailTextLabel?.textColor = subtitleColor
+
+      if let backgroundColor = backgroundColor where !backgroundColor.isDarkColor {
+        detailTextLabel?.textColor = UIColor.darkGrayColor()
+      }
+    }
+
     if let action = item.action where !action.isEmpty {
       accessoryType = .DisclosureIndicator
+      selectedBackgroundView = selectedView
     } else {
       accessoryType = .None
+      selectedBackgroundView = nil
     }
 
     detailTextLabel?.text = item.subtitle
