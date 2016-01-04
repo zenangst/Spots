@@ -54,6 +54,7 @@ public struct PostLoginRouter: Routing {
         applicationDelegate.session = nil
         applicationDelegate.cache.remove("session")
         applicationDelegate.window?.rootViewController = applicationDelegate.authController
+        Keychain.deletePassword(forAccount: keychainAccount)
       default: break
       }
     }

@@ -50,12 +50,14 @@ class PlaylistController: SpotsController {
       self.title = "Loading..."
 
       SPTPlaylistSnapshot.playlistWithURI(NSURL(string:uri), accessToken: accessToken, callback: { (error, object) -> Void in
-        guard let object = object as? SPTPlaylistSnapshot else { return }
+        guard let object = object as? SPTPlaylistSnapshot,
+        firstTrackPage = object.firstTrackPage
+          else { return }
 
         self.title = object.name
 
         var listItems = [ListItem]()
-        object.firstTrackPage.items.enumerate().forEach { index, item in
+        firstTrackPage.items.enumerate().forEach { index, item in
 
           guard let artists = item.artists as? [SPTPartialArtist],
             artist = artists.first,
@@ -100,6 +102,12 @@ class PlaylistController: SpotsController {
 
           self.update(spotAtIndex: 0) { $0.items = [top] }
 
+          if object.firstTrackPage.hasNextPage {
+            self.playlistPage = object.firstTrackPage
+          } else {
+            self.playlistPage = nil
+          }
+
           closure?()
         }
       })
@@ -113,7 +121,7 @@ class PlaylistController: SpotsController {
         for item in object.items {
           guard let image = item.largestImage,
             uri = item.uri
-            else { return }
+            else { continue }
 
           items.append(ListItem(
             title: item.name,
@@ -176,37 +184,77 @@ extension PlaylistController: SpotsScrollDelegate {
       }
 
       var items = [ListItem]()
+      var index = self.spot(2)!.items.count
       for item in object.items {
-        guard let image = item.largestImage,
-          uri = item.uri
-          where image != nil
-          else { return }
+        if let playlistID = self.playlistID {
+          guard let artists = item.artists as? [SPTPartialArtist],
+            artist = artists.first,
+            album = item.album
+            else {
+              completion?()
+              return
+          }
 
-        items.append(ListItem(
-          title: item.name,
-          subtitle: "\(item.trackCount) songs",
-          image: image.imageURL.absoluteString,
-          kind: "playlist",
-          action: "playlist:" + uri.absoluteString.replace(":", with: "-"))
-        )
+          if let firstItem = self.spot(2)!.items.first {
+            items.append(ListItem(
+              title: item.name,
+              subtitle:  "\(artist.name) - \(album.name)",
+              image: album.largestCover.imageURL.absoluteString,
+              kind: "playlist",
+              action: "play:\(playlistID):\(index)",
+              meta: [
+                "notification" : "\(item.name) by \(artist.name)",
+                "track" : item.name,
+                "artist" : artist.name,
+                "image" : album.largestCover.imageURL.absoluteString,
+                "background" : firstItem.meta["background"] ?? "",
+                "primary" : firstItem.meta["primary"] ?? "",
+                "secondary" : firstItem.meta["secondary"] ?? "",
+                "detail" : firstItem.meta["detail"] ?? ""
+              ])
+            )
+            index++
+          }
+
+
+        } else {
+          guard let image = item.largestImage,
+            uri = item.uri
+            else {
+              completion?()
+              return
+          }
+
+          items.append(ListItem(
+            title: item.name,
+            subtitle: "\(item.trackCount) songs",
+            image: image.imageURL.absoluteString,
+            kind: "playlist",
+            action: "playlist:" + uri.absoluteString.replace(":", with: "-"))
+          )
+        }
       }
 
-      var featured = items.filter {
-        $0.title.lowercaseString.containsString("top") ||
-          $0.title.lowercaseString.containsString("starred") ||
-          $0.title.lowercaseString.containsString("discover")
-      }
-
-      featured.enumerate().forEach { (index, item) in
-        if let index = items.indexOf({ $0 == item }) {
-          items.removeAtIndex(index)
+      if self.playlistID != nil {
+        self.append(items, spotIndex: 2)
+      } else {
+        var featured = items.filter {
+          $0.title.lowercaseString.containsString("top") ||
+            $0.title.lowercaseString.containsString("starred") ||
+            $0.title.lowercaseString.containsString("discover")
         }
 
-        featured[index].size = CGSize(width: 120, height: 140)
-      }
+        featured.enumerate().forEach { (index, item) in
+          if let index = items.indexOf({ $0 == item }) {
+            items.removeAtIndex(index)
+          }
 
-      self.append(items, spotIndex: 2)
-      self.append(featured, spotIndex: 1)
+          featured[index].size = CGSize(width: 120, height: 140)
+        }
+
+        self.append(items, spotIndex: 2)
+        self.append(featured, spotIndex: 1)
+      }
 
       if object.hasNextPage {
         self.playlistPage = object
