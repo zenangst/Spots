@@ -43,7 +43,7 @@ CHECKOUT OPTIONS:
     :commit: aa963fac1d59e4c6e12610ecfd2f8cb2a7bec06c
     :git: https://github.com/hyperoslo/compass
   Imaginary:
-    :commit: 1bc0d4536d827ffb6053585c68c4e694ce9d2d2e
+    :commit: 265eb5ddd1df41bbcc9f0f860e33649e831868d4
     :git: https://github.com/hyperoslo/Imaginary
   Sugar:
     :commit: 7814da21e9f9450c08805706f51ee498e1514bc8

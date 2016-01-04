@@ -51,7 +51,7 @@ CHECKOUT OPTIONS:
     :commit: 1fcddfad166e60e5af3d5d3496f3e5dbceaf474c
     :git: https://github.com/hyperoslo/Hue
   Imaginary:
-    :commit: 1bc0d4536d827ffb6053585c68c4e694ce9d2d2e
+    :commit: 265eb5ddd1df41bbcc9f0f860e33649e831868d4
     :git: https://github.com/hyperoslo/Imaginary
   Keychain:
     :commit: 21e6f607394e112229a7f30bebe2f832a4d43c48
