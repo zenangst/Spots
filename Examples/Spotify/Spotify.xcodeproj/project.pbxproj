@@ -115,10 +115,10 @@
 			isa = PBXGroup;
 			children = (
 				BD231CA91C1E107200D93449 /* AuthController.swift */,
-				BD231CA71C1E0DCB00D93449 /* MainController.swift */,
-				BD231CB61C20916800D93449 /* PlaylistController.swift */,
 				BDAA75271C21683700E49759 /* FeaturedController.swift */,
+				BD231CA71C1E0DCB00D93449 /* MainController.swift */,
 				BDAF155D1C36F9050008A5D6 /* PlayerController.swift */,
+				BD231CB61C20916800D93449 /* PlaylistController.swift */,
 				BD999D1B1C3A946100556846 /* ProfileController.swift */,
 				BDDC21731C3A9B8400ABD671 /* SearchController.swift */,
 			);
@@ -146,14 +146,14 @@
 		BD231CB81C20A7D300D93449 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				BDDC21751C3A9D8600ABD671 /* SearchHeaderView.swift */,
 				BDAA75291C2169B900E49759 /* DefaultListSpotCell.swift */,
 				BDADDD921C35A8DB0023D135 /* FeaturedGridSpotCell.swift */,
 				BDED39E21C216CB700AC6383 /* ListHeaderView.swift */,
-				BD00A3781C35827B00C984F3 /* PlaylistGridSpotCell.swift */,
-				BD231CB91C20AB3E00D93449 /* PlaylistListSpotCell.swift */,
 				BD520AAC1C39600800252165 /* PlayerGridSpotCell.swift */,
 				BDB9E98E1C3A88A100E5654E /* PlayerListSpotCell.swift */,
+				BD00A3781C35827B00C984F3 /* PlaylistGridSpotCell.swift */,
+				BD231CB91C20AB3E00D93449 /* PlaylistListSpotCell.swift */,
+				BDDC21751C3A9D8600ABD671 /* SearchHeaderView.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -161,10 +161,10 @@
 		BD4F5BF31C236AE500424FE1 /* Configurators */ = {
 			isa = PBXGroup;
 			children = (
-				BD4F5BF71C236B2500424FE1 /* SpotsConfigurator.swift */,
 				BD4F5BF91C236B5200424FE1 /* CompassConfigurator.swift */,
-				BD4F5BFB1C236B8400424FE1 /* SpotifyConfigurator.swift */,
 				BD64499B1C3ABB4400CE1778 /* ImaginaryConfigurator.swift */,
+				BD4F5BFB1C236B8400424FE1 /* SpotifyConfigurator.swift */,
+				BD4F5BF71C236B2500424FE1 /* SpotsConfigurator.swift */,
 			);
 			path = Configurators;
 			sourceTree = "<group>";
@@ -199,9 +199,9 @@
 		D5291C011C24557B00B702C9 /* Routes */ = {
 			isa = PBXGroup;
 			children = (
-				D5291C041C24559900B702C9 /* Routing.swift */,
-				D5291C021C24558300B702C9 /* PreLoginRouter.swift */,
 				D5291C061C2457E800B702C9 /* PostLoginRouter.swift */,
+				D5291C021C24558300B702C9 /* PreLoginRouter.swift */,
+				D5291C041C24559900B702C9 /* Routing.swift */,
 			);
 			path = Routes;
 			sourceTree = "<group>";
