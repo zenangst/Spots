@@ -65,63 +65,56 @@ extension SearchController: UITextFieldDelegate {
   func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
     if textField.text?.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) == 1 &&
       string.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) == 0 {
-
-        dispatch(queue: .Interactive) { [weak self] in
-
-          if self?.spot(1)?.component.title == "Results" {
-            self?.update(spotAtIndex: 1) { spot in
-              spot.component.title = ""
-            }
+        if spot(1)?.component.title == "Results" {
+          update(spotAtIndex: 1) { spot in
+            spot.component.title = ""
           }
+
+          update(spotAtIndex: 2) { $0.items = [] }
         }
     } else if textField.text?.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0 ||
       string.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0 {
 
-        dispatch(queue: .Interactive) { [weak self] in
-
-          guard let weakSelf = self else { return }
-
-          if weakSelf.spot(1)?.component.title == "" {
-            weakSelf.update(spotAtIndex: 1) { spot in
-              spot.component.title = "Results"
-            }
+        if spot(1)?.component.title == "" {
+          update(spotAtIndex: 1) { spot in
+            spot.component.title = "Results"
           }
+        }
 
-          guard let text = textField.text else { return }
+        guard let text = textField.text else { return true }
 
-          SPTSearch.performSearchWithQuery("\(text)\(string)", queryType: .QueryTypeTrack, accessToken: weakSelf.accessToken, callback: { (error, object) -> Void in
-            if let object = object {
-              guard let object = object as? SPTListPage
-                where object.items != nil && object.items.count > 0
+        SPTSearch.performSearchWithQuery("\(text)\(string)", queryType: .QueryTypeTrack, accessToken: accessToken, callback: { (error, object) -> Void in
+          if let object = object {
+            guard let object = object as? SPTListPage
+              where object.items != nil && object.items.count > 0
+              else { return }
+
+            var listItems = [ListItem]()
+
+            object.items.enumerate().forEach { index, item in
+              guard let item = item as? SPTPartialTrack else { return }
+
+              guard let artist = ((item.artists as! [SPTPartialArtist]).first)?.name,
+                image = (item.album as SPTPartialAlbum).largestCover
                 else { return }
 
-              var listItems = [ListItem]()
-
-              object.items.enumerate().forEach { index, item in
-                guard let item = item as? SPTPartialTrack else { return }
-
-                guard let artist = ((item.artists as! [SPTPartialArtist]).first)?.name,
-                image = (item.album as SPTPartialAlbum).largestCover
-                  else { return }
-
-                listItems.append(ListItem(
-                  title: item.name,
-                  subtitle:  "\(artist) - \((item.album as SPTPartialAlbum).name)",
-                  image: image.imageURL.absoluteString,
-                  kind: "playlist",
-                  action: "song:" + item.playableUri.absoluteString.replace(":", with: "_"),
-                  meta: [
-                    "notification" : "\(item.name) by \(artist)",
-                    "track" : item.name,
-                    "artist" : artist,
-                    "image" : image.imageURL.absoluteString
-                  ]
-                  ))
-              }
-              weakSelf.update(spotAtIndex: 2) { $0.items = listItems }
+              listItems.append(ListItem(
+                title: item.name,
+                subtitle:  "\(artist) - \((item.album as SPTPartialAlbum).name)",
+                image: image.imageURL.absoluteString,
+                kind: "playlist",
+                action: "song:" + item.playableUri.absoluteString.replace(":", with: "_"),
+                meta: [
+                  "notification" : "\(item.name) by \(artist)",
+                  "track" : item.name,
+                  "artist" : artist,
+                  "image" : image.imageURL.absoluteString
+                ]
+                ))
             }
-          })
-        }
+            self.update(spotAtIndex: 2) { $0.items = listItems }
+          }
+        })
     }
 
     return true
