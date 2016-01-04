@@ -39,10 +39,9 @@ class MainController: UITabBarController {
     }()
 
   lazy var settingsController: UINavigationController = {
-    let controller = UIViewController()
+    let controller = SettingsController(title: localizedString("Settings"))
     let navigationController = UINavigationController(rootViewController: controller)
     controller.tabBarItem.image = UIImage(named: "iconSettings")
-    controller.title = localizedString("Settings")
 
     return navigationController
     }()

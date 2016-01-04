@@ -25,6 +25,7 @@
 		BD4F5BFA1C236B5200424FE1 /* CompassConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4F5BF91C236B5200424FE1 /* CompassConfigurator.swift */; };
 		BD4F5BFC1C236B8400424FE1 /* SpotifyConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4F5BFB1C236B8400424FE1 /* SpotifyConfigurator.swift */; };
 		BD520AAD1C39600800252165 /* PlayerGridSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD520AAC1C39600800252165 /* PlayerGridSpotCell.swift */; };
+		BD999D1C1C3A946100556846 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD999D1B1C3A946100556846 /* SettingsController.swift */; };
 		BDAA75281C21683700E49759 /* FeaturedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAA75271C21683700E49759 /* FeaturedController.swift */; };
 		BDAA752A1C2169B900E49759 /* DefaultListSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAA75291C2169B900E49759 /* DefaultListSpotCell.swift */; };
 		BDADDD931C35A8DB0023D135 /* FeaturedGridSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDADDD921C35A8DB0023D135 /* FeaturedGridSpotCell.swift */; };
@@ -60,6 +61,7 @@
 		BD4F5BFB1C236B8400424FE1 /* SpotifyConfigurator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotifyConfigurator.swift; sourceTree = "<group>"; };
 		BD520AAC1C39600800252165 /* PlayerGridSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerGridSpotCell.swift; sourceTree = "<group>"; };
 		BD6973631BBFE4FB001DC32F /* Spotify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Spotify.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BD999D1B1C3A946100556846 /* SettingsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		BDAA75271C21683700E49759 /* FeaturedController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeaturedController.swift; sourceTree = "<group>"; };
 		BDAA75291C2169B900E49759 /* DefaultListSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultListSpotCell.swift; sourceTree = "<group>"; };
 		BDADDD921C35A8DB0023D135 /* FeaturedGridSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeaturedGridSpotCell.swift; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 				BD231CB61C20916800D93449 /* PlaylistController.swift */,
 				BDAA75271C21683700E49759 /* FeaturedController.swift */,
 				BDAF155D1C36F9050008A5D6 /* PlayerController.swift */,
+				BD999D1B1C3A946100556846 /* SettingsController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -351,6 +354,7 @@
 				BDAA75281C21683700E49759 /* FeaturedController.swift in Sources */,
 				BDAF155E1C36F9060008A5D6 /* PlayerController.swift in Sources */,
 				BDADDD931C35A8DB0023D135 /* FeaturedGridSpotCell.swift in Sources */,
+				BD999D1C1C3A946100556846 /* SettingsController.swift in Sources */,
 				BDED39E31C216CB700AC6383 /* ListHeaderView.swift in Sources */,
 				BDAA752A1C2169B900E49759 /* DefaultListSpotCell.swift in Sources */,
 			);

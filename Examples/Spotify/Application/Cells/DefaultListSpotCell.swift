@@ -8,14 +8,11 @@ public class DefaultListSpotCell: UITableViewCell, Itemble {
 
   lazy var selectedView: UIView = {
     let view = UIView()
-    view.backgroundColor = UIColor.darkGrayColor().colorWithAlphaComponent(0.4)
 
     return view
   }()
 
-  lazy var transparentImage: UIImage = {
-    return UIImage.transparentImage(CGSize(width: 60, height: 60))
-  }()
+  lazy var transparentImage = UIImage.transparentImage(CGSize(width: 60, height: 60))
 
   public override init(style: UITableViewCellStyle, reuseIdentifier: String!) {
     super.init(style: .Subtitle, reuseIdentifier: reuseIdentifier)
@@ -51,10 +48,10 @@ public class DefaultListSpotCell: UITableViewCell, Itemble {
 
     if let action = item.action where !action.isEmpty {
       accessoryType = .DisclosureIndicator
-      selectedBackgroundView = selectedView
+      selectedView.backgroundColor = UIColor.darkGrayColor().colorWithAlphaComponent(0.4)
     } else {
       accessoryType = .None
-      selectedBackgroundView = nil
+      selectedView.backgroundColor = UIColor.clearColor()
     }
 
     detailTextLabel?.text = item.subtitle
