@@ -30,10 +30,6 @@ class PlaylistController: SpotsController {
     spotsDelegate = self
   }
 
-  override func viewDidAppear(animated: Bool) {
-    super.viewDidAppear(animated)
-  }
-
   override func scrollViewDidScroll(scrollView: UIScrollView) {
     super.scrollViewDidScroll(scrollView)
 
@@ -166,7 +162,7 @@ extension PlaylistController: SpotsDelegate {
 
         if let carouselSpot = delegate.mainController.playerController.spot(1) as? CarouselSpot {
           delegate.mainController.playerController.lastItem = item
-          carouselSpot.scrollTo({ item.action == $0.action })
+          carouselSpot.scrollTo { item.action == $0.action }
         }
     }
 
