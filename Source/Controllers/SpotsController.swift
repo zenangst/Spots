@@ -33,31 +33,25 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
 
   weak public var spotsScrollDelegate: SpotsScrollDelegate?
 
-  lazy public var spotsScrollView: SpotsScrollView = { [unowned self] in
-    let scrollView = SpotsScrollView(frame: self.view.frame)
-    scrollView.alwaysBounceVertical = true
-    scrollView.backgroundColor = UIColor.whiteColor()
-    scrollView.clipsToBounds = true
-    scrollView.delegate = self
+  lazy public var spotsScrollView: SpotsScrollView = SpotsScrollView().then { [unowned self] in
+    $0.frame = self.view.frame
+    $0.alwaysBounceVertical = true
+    $0.backgroundColor = UIColor.whiteColor()
+    $0.clipsToBounds = true
+    $0.delegate = self
+  }
 
-    return scrollView
-    }()
 
-  public lazy var tableView: UITableView = { [unowned self] in
-    let tableView = UITableView(frame: CGRect(x: 0, y: -60, width: UIScreen.mainScreen().bounds.width, height: 60))
-    tableView.userInteractionEnabled = false
-    tableView.tableFooterView = UIView(frame: CGRect.zero)
-    tableView.backgroundColor = UIColor.clearColor()
+  public lazy var tableView = UITableView().then {
+    $0.frame = CGRect(x: 0, y: -60, width: UIScreen.mainScreen().bounds.width, height: 60)
+    $0.userInteractionEnabled = false
+    $0.tableFooterView = UIView(frame: CGRect.zero)
+    $0.backgroundColor = UIColor.clearColor()
+  }
 
-    return tableView
-    }()
-
-  public lazy var refreshControl: UIRefreshControl = { [unowned self] in
-    let refreshControl = UIRefreshControl()
-    refreshControl.addTarget(self, action: "refreshSpot:", forControlEvents: .ValueChanged)
-
-    return refreshControl
-    }()
+  public lazy var refreshControl: UIRefreshControl = UIRefreshControl().then { [unowned self] in
+    $0.addTarget(self, action: "refreshSpot:", forControlEvents: .ValueChanged)
+  }
 
   // MARK: Initializer
 
