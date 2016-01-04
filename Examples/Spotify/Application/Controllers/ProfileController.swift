@@ -24,7 +24,6 @@ class ProfileController: SpotsController {
   }
 
   func refreshData() {
-
     SPTUser.requestUser(username, withAccessToken: accessToken) { (error, object) -> Void in
       guard let user = object as? SPTUser else { return }
       let image = user.largestImage.imageURL.absoluteString
