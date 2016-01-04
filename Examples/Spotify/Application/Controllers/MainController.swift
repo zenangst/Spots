@@ -10,8 +10,10 @@ class MainController: UITabBarController {
       ])),
     CarouselSpot(Component(span: 1)),
     ListSpot(component: Component(items: [
-      ListItem()
-      ])),
+      ListItem(kind: "player")
+      ])).then {
+        $0.tableView.separatorStyle = .None
+    },
     GridSpot(component: Component(span: 3, kind: "player" ,items: [
       ListItem(title: "Previous", image: "previousButton", action: "previous"),
       ListItem(title: "Stop", image: "stopButton", action: "stop"),
