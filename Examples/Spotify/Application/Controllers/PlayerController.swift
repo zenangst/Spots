@@ -42,7 +42,6 @@ class PlayerController: SpotsController {
     view.addGestureRecognizer(panRecognizer)
 
     NSNotificationCenter.defaultCenter().addObserver(self, selector: "updatePlayer:", name: "updatePlayer", object: nil)
-    NSNotificationCenter.defaultCenter().addObserver(self, selector: "hidePlayer", name: "hidePlayer", object: nil)
 
     currentAlbum.addObserver(self, forKeyPath: "image", options: [.New, .Old], context: nil)
   }

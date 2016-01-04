@@ -37,7 +37,7 @@ class PlaylistController: SpotsController {
 
     if let delegate = UIApplication.sharedApplication().delegate as? AppDelegate
       where !delegate.mainController.playerController.player.isPlaying {
-        NSNotificationCenter.defaultCenter().postNotificationName("hidePlayer", object: nil)
+        delegate.mainController.playerController.hidePlayer()
     }
   }
 
