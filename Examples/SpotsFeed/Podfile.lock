@@ -33,7 +33,7 @@ EXTERNAL SOURCES:
   Imaginary:
     :git: https://github.com/hyperoslo/Imaginary
   Spots:
-    :path: ../../
+    :path: "../../"
   Sugar:
     :git: https://github.com/hyperoslo/Sugar
   Tailor:
@@ -50,7 +50,7 @@ CHECKOUT OPTIONS:
     :commit: 1bc0d4536d827ffb6053585c68c4e694ce9d2d2e
     :git: https://github.com/hyperoslo/Imaginary
   Sugar:
-    :commit: e68523d9bac4fe05ac521726451e5738cfe5fb96
+    :commit: 7814da21e9f9450c08805706f51ee498e1514bc8
     :git: https://github.com/hyperoslo/Sugar
   Tailor:
     :commit: 085f59593e5833532efa4d94b192e7bed49ce817
@@ -63,7 +63,7 @@ SPEC CHECKSUMS:
   Hex: ee430da9c4412d9196366ae5327f279021dc03eb
   Imaginary: feaea646440c68a9b6ed66a46597d548b9a44207
   Spots: 9de65acd79cebc15b9f9756a86f7cab0104bc8fe
-  Sugar: 5587fc71169b7fbfb753db86136514c80ecb9a28
+  Sugar: 41ef7630a1568447e9ce1d30939cc732fdc65542
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   Tailor: acba14dba2fb854cdf2550c1a3dfd603f6b59dbc
 
