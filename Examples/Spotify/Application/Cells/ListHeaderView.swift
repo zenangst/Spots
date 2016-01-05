@@ -5,22 +5,17 @@ public class ListHeaderView: UIView, Componentable {
 
   public var height: CGFloat = 44
 
-  lazy var label: UILabel = { [unowned self] in
-    let label = UILabel(frame: self.frame)
-    label.font = UIFont.boldSystemFontOfSize(11)
+  lazy var label: UILabel = UILabel().then { [unowned self] in
+    $0.frame = self.frame
+    $0.font = UIFont.boldSystemFontOfSize(11)
+  }
 
-    return label
-    }()
-
-  lazy var paddedStyle: NSParagraphStyle = {
-    let style = NSMutableParagraphStyle()
-    style.alignment = .Left
-    style.firstLineHeadIndent = 15.0
-    style.headIndent = 15.0
-    style.tailIndent = -15.0
-
-    return style
-  }()
+  lazy var paddedStyle: NSParagraphStyle = NSMutableParagraphStyle().then {
+    $0.alignment = .Left
+    $0.firstLineHeadIndent = 15.0
+    $0.headIndent = 15.0
+    $0.tailIndent = -15.0
+  }
 
   public override init(frame: CGRect) {
     super.init(frame: frame)
@@ -32,9 +27,7 @@ public class ListHeaderView: UIView, Componentable {
   }
 
   public func configure(component: Component) {
-    backgroundColor = UIColor.blackColor()
     label.textColor = UIColor.grayColor()
-
     label.attributedText = NSAttributedString(string: component.title.uppercaseString,
       attributes: [NSParagraphStyleAttributeName : paddedStyle])
   }
