@@ -215,7 +215,6 @@ extension PlaylistController: SpotsScrollDelegate {
             index = index + 1
           }
 
-
         } else {
           guard let image = item.largestImage,
             uri = item.uri
@@ -224,10 +223,12 @@ extension PlaylistController: SpotsScrollDelegate {
               return
           }
 
+          let imageURL = image != nil ? image.imageURL.absoluteString : ""
+
           items.append(ListItem(
             title: item.name,
             subtitle: "\(item.trackCount) songs",
-            image: image.imageURL.absoluteString,
+            image: imageURL,
             kind: "playlist",
             action: "playlist:" + uri.absoluteString.replace(":", with: "-"))
           )
