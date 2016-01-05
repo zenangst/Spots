@@ -100,8 +100,8 @@ class PlaylistController: SpotsController {
 
         var featured = items.filter {
           $0.title.lowercaseString.containsString("top") ||
-            $0.title.lowercaseString.containsString("starred") ||
-            $0.title.lowercaseString.containsString("discover")
+          $0.title.lowercaseString.containsString("starred") ||
+          $0.title.lowercaseString.containsString("discover")
         }
 
         featured.enumerate().forEach { (index, item) in
