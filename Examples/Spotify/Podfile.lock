@@ -1,7 +1,6 @@
 PODS:
   - Cache (1.0.0)
   - Compass (1.2.4)
-  - Hex (3.0.0)
   - Hue (0.1.0)
   - Imaginary (0.1.0):
     - Cache
@@ -18,7 +17,6 @@ PODS:
 DEPENDENCIES:
   - Cache (from `https://github.com/hyperoslo/Cache`)
   - Compass
-  - Hex
   - Hue (from `https://github.com/hyperoslo/Hue`)
   - Imaginary (from `https://github.com/hyperoslo/Imaginary`)
   - Keychain (from `https://github.com/hyperoslo/Keychain`)
@@ -66,7 +64,6 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Cache: 78f58bc008313c7a1182967a2ebcb3de9fddecd4
   Compass: b7ce9d4c22226a4b22609c4acbcba6f1bcb53cfd
-  Hex: ee430da9c4412d9196366ae5327f279021dc03eb
   Hue: 236ca79bd7426ab735bf0436589b8e505611a3fa
   Imaginary: feaea646440c68a9b6ed66a46597d548b9a44207
   Keychain: 50cb247cab32e774422741b118af9b598a3fb5b2
