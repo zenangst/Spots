@@ -28,8 +28,8 @@ public extension Spotable where Self : Listable {
 
       component.items[index].index = index
 
-      if let cell = componentCellClass.init() as? Itemble {
-        cell.configure(&component.items[index])
+      componentCellClass.init().then {
+        ($0 as? Itemble)?.configure(&component.items[index])
       }
     }
   }
@@ -37,40 +37,26 @@ public extension Spotable where Self : Listable {
   public func append(item: ListItem, completion: (() -> Void)? = nil) {
     component.items.append(item)
 
-    var indexPaths = [NSIndexPath]()
-    indexPaths.append(NSIndexPath(forRow: component.items.count, inSection: 0))
-
     dispatch { [weak self] in
       guard let weakSelf = self else { return }
 
-      weakSelf.tableView.beginUpdates()
-      weakSelf.tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .None)
-      weakSelf.tableView.endUpdates()
-
+      weakSelf.tableView.insert([weakSelf.component.items.count])
       completion?()
     }
   }
 
   public func append(items: [ListItem], completion: (() -> Void)? = nil) {
-    var indexPaths = [NSIndexPath]()
+    var indexes = [Int]()
     let count = component.items.count
 
     for (index, item) in items.enumerate() {
       component.items.append(item)
-      indexPaths.append(NSIndexPath(forRow: count + index, inSection: 0))
+      indexes.append(count + index)
     }
 
     dispatch { [weak self] in
       guard let weakSelf = self else { return }
-
-      if count > 0 {
-        weakSelf.tableView.beginUpdates()
-        weakSelf.tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .None)
-        weakSelf.tableView.endUpdates()
-      } else {
-        weakSelf.tableView.reloadData()
-      }
-
+      weakSelf.tableView.insert(indexes)
       completion?()
     }
   }
@@ -78,35 +64,24 @@ public extension Spotable where Self : Listable {
   public func insert(item: ListItem, index: Int, completion: (() -> Void)? = nil) {
     component.items.insert(item, atIndex: index)
 
-    var indexPaths = [NSIndexPath]()
-    indexPaths.append(NSIndexPath(forRow: index, inSection: 0))
-
     dispatch { [weak self] in
       guard let weakSelf = self else { return }
-
-      weakSelf.tableView.beginUpdates()
-      weakSelf.tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .None)
-      weakSelf.tableView.endUpdates()
-
+      weakSelf.tableView.insert([index])
       completion?()
     }
   }
 
   public func prepend(items: [ListItem], completion: (() -> Void)? = nil) {
-    var indexPaths = [NSIndexPath]()
+    var indexes = [Int]()
 
     for (index, item) in items.enumerate() {
-      indexPaths.append(NSIndexPath(forRow: index, inSection: 0))
-      component.items.insert(item, atIndex: index)
+      indexes.append(items.count - index)
+      component.items.insert(item, atIndex: 0)
     }
 
     dispatch { [weak self] in
       guard let weakSelf = self else { return }
-
-      weakSelf.tableView.beginUpdates()
-      weakSelf.tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .None)
-      weakSelf.tableView.endUpdates()
-
+      weakSelf.tableView.insert(indexes)
       completion?()
     }
   }
@@ -115,37 +90,43 @@ public extension Spotable where Self : Listable {
     guard let index = component.items.indexOf({ $0 == item})
       else { completion?(); return }
 
-    var indexPaths = [NSIndexPath]()
-    indexPaths.append(NSIndexPath(forRow: component.items.count, inSection: 0))
     component.items.removeAtIndex(index)
 
     dispatch { [weak self] in
       guard let weakSelf = self else { return }
-
-      weakSelf.tableView.beginUpdates()
-      weakSelf.tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .None)
-      weakSelf.tableView.endUpdates()
-
+      weakSelf.tableView.delete([index])
       completion?()
     }
   }
 
   public func delete(items: [ListItem], completion: (() -> Void)? = nil) {
-    var indexPaths = [NSIndexPath]()
+    var indexPaths = [Int]()
     let count = component.items.count
 
     for (index, item) in items.enumerate() {
-      indexPaths.append(NSIndexPath(forRow: count + index, inSection: 0))
+      indexPaths.append(count + index)
       component.items.append(item)
     }
 
     dispatch { [weak self] in
       guard let weakSelf = self else { return }
+      weakSelf.tableView.delete(indexPaths)
+      completion?()
+    }
+  }
 
-      weakSelf.tableView.beginUpdates()
-      weakSelf.tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .None)
-      weakSelf.tableView.endUpdates()
+  func delete(index: Int, completion: (() -> Void)?) {
+    dispatch { [weak self] in
+      guard let weakSelf = self else { return }
+      weakSelf.tableView.delete([index])
+      completion?()
+    }
+  }
 
+  func delete(indexes: [Int], completion: (() -> Void)?) {
+    dispatch { [weak self] in
+      guard let weakSelf = self else { return }
+      weakSelf.tableView.delete([indexes])
       completion?()
     }
   }
@@ -164,10 +145,7 @@ public extension Spotable where Self : Listable {
       cell.configure(&component.items[index])
     }
 
-    tableView.beginUpdates()
-    tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: .Automatic)
-    tableView.endUpdates()
-
+    tableView.reloadSection()
     completion?()
   }
 
@@ -187,9 +165,7 @@ public extension Spotable where Self : Listable {
       }
     }
 
-    tableView.beginUpdates()
-    tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
-    tableView.endUpdates()
+    tableView.reloadSection()
     tableView.setNeedsLayout()
     tableView.layoutIfNeeded()
     completion?()
