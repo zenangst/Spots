@@ -7,7 +7,6 @@ inhibit_all_warnings!
 
 pod 'Cache', git: 'https://github.com/hyperoslo/Cache'
 pod 'Compass'
-pod 'Hex'
 pod 'Imaginary', git: 'https://github.com/hyperoslo/Imaginary'
 pod 'Spots', path: '../../'
 pod 'Sugar', git: 'https://github.com/hyperoslo/Sugar'
