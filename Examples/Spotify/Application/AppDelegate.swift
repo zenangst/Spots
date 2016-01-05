@@ -29,10 +29,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       $0.items = [ListItem(title: "Auth", action: "auth", kind: "playlist", size: CGSize(width: 120, height: 88))]
       }
     )
-    let navigationController = UINavigationController(rootViewController: controller)
-
     controller.title = "Spotify".uppercaseString
 
+    let navigationController = UINavigationController(rootViewController: controller)
     return navigationController
   }()
 
