@@ -110,10 +110,9 @@ class PlayerController: SpotsController {
     spotsDelegate = self
   }
 
-  func updatePlayer(notification: NSNotification) {
-    if let userInfo = notification.userInfo,
-      track = userInfo["track"] as? String,
-      artist = userInfo["artist"] as? String {
+  func updatePlayer(userInfo: [String : String]) {
+    if let track = userInfo["track"],
+      artist = userInfo["artist"] {
 
         var newListItem: ListItem
         if let spot = spot(0), item = spot.items.first {
@@ -263,21 +262,13 @@ extension PlayerController: SPTAudioStreamingPlaybackDelegate {
 
     guard let name = trackMetadata["SPTAudioStreamingMetadataArtistName"] as? String,
       artist = trackMetadata["SPTAudioStreamingMetadataArtistName"] as? String,
-      track = trackMetadata["SPTAudioStreamingMetadataTrackName"] as? String,
-      uri = trackMetadata["SPTAudioStreamingMetadataAlbumURI"] as? String
+      track = trackMetadata["SPTAudioStreamingMetadataTrackName"] as? String
       else { return }
 
-    SPTAlbum.albumWithURI(NSURL(string: uri), accessToken: Keychain.password(forAccount: keychainAccount), market: nil) { (error, object) -> Void in
-      guard let album = object as? SPTPartialAlbum else { return }
-
-      NSNotificationCenter.defaultCenter().postNotificationName("updatePlayer",
-        object: nil,
-        userInfo: [
-          "title" : name,
-          "image" : album.largestCover.imageURL.absoluteString,
-          "artist" :artist,
-          "track" : track
-        ])
-    }
+    updatePlayer([
+      "title" : name,
+      "artist" :artist,
+      "track" : track
+      ])
   }
 }
