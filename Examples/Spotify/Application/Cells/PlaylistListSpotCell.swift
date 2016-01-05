@@ -27,7 +27,7 @@ public class PlaylistListSpotCell: UITableViewCell, Itemble {
     backgroundColor = UIColor.blackColor()
     textLabel?.textColor = UIColor.whiteColor()
     detailTextLabel?.textColor = UIColor.whiteColor()
-
+    
     if let textColor = item.meta["background"] as? UIColor where !textColor.isDarkColor {
       textLabel?.textColor = textColor
     }
@@ -45,10 +45,8 @@ public class PlaylistListSpotCell: UITableViewCell, Itemble {
     detailTextLabel?.text = item.subtitle
     textLabel?.text = item.title
 
-    if !item.image.isEmpty {
-      if let url = NSURL(string: item.image) {
-        imageView?.setImage(url, placeholder: transparentImage)
-      }
+    if let url = NSURL(string: item.image) where !item.image.isEmpty {
+      imageView?.setImage(url, placeholder: transparentImage)
     }
 
     item.size.height = item.size.height > 0.0 ? item.size.height : size.height
