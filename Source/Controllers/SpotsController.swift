@@ -130,7 +130,7 @@ extension SpotsController {
     return spots.filter{ $0.index == index }.first
   }
 
-  public func spot(closure: (index: Int, spot: Spotable) -> Bool) -> Spotable? {
+  public func spot(@noescape closure: (index: Int, spot: Spotable) -> Bool) -> Spotable? {
     for (index, spot) in spots.enumerate()
       where closure(index: index, spot: spot) {
         return spot
@@ -148,7 +148,7 @@ extension SpotsController {
     }
   }
 
-  public func update(spotAtIndex index: Int = 0, _ closure: (spot: Spotable) -> Void) {
+  public func update(spotAtIndex index: Int = 0, @noescape _ closure: (spot: Spotable) -> Void) {
     guard let spot = spot(index) else { return }
     closure(spot: spot)
     spot.prepare()
