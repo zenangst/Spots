@@ -50,7 +50,7 @@ CHECKOUT OPTIONS:
     :commit: 265eb5ddd1df41bbcc9f0f860e33649e831868d4
     :git: https://github.com/hyperoslo/Imaginary
   Sugar:
-    :commit: 7814da21e9f9450c08805706f51ee498e1514bc8
+    :commit: bb8e269e3bb49def2237fcc3a0759cb974c9fcbd
     :git: https://github.com/hyperoslo/Sugar
   Tailor:
     :commit: 085f59593e5833532efa4d94b192e7bed49ce817
