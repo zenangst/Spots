@@ -6,15 +6,8 @@ public class PlayerListSpotCell: UITableViewCell, Itemble {
   public var size = CGSize(width: 0, height: 60)
   public var item: ListItem?
 
-  lazy var selectedView: UIView = {
-    let view = UIView()
-
-    return view
-  }()
-
-  lazy var transparentImage: UIImage = {
-    return UIImage.transparentImage(CGSize(width: 60, height: 60))
-  }()
+  lazy var selectedView = UIView()
+  lazy var transparentImage = UIImage.transparentImage(CGSize(width: 60, height: 60))
 
   public override init(style: UITableViewCellStyle, reuseIdentifier: String!) {
     super.init(style: .Subtitle, reuseIdentifier: reuseIdentifier)
