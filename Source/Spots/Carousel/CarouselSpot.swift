@@ -80,7 +80,7 @@ extension CarouselSpot: UIScrollViewDelegate {
     targetContentOffset.memory.x = currentOffset;
     scrollView.setContentOffset(CGPoint(x: newTargetOffset, y:0), animated: true)
 
-    let index: Int = Int(floor(newTargetOffset / scrollView.contentSize.width * 100))
+    let index: Int = Int(floor(newTargetOffset * CGFloat(items.count) / scrollView.contentSize.width))
     if index >= 0 && index <= items.count {
       let item = items[index]
       carouselScrollDelegate?.spotDidEndScrolling(self, item: item)
