@@ -6,13 +6,10 @@ public class PlayerGridSpotCell: UICollectionViewCell, Itemble {
 
   public var size = CGSize(width: 125, height: 100)
 
-  lazy var imageView: UIImageView = {
-    let imageView = UIImageView()
-    imageView.contentMode = .ScaleAspectFill
-    imageView.tintColor = UIColor.whiteColor()
-
-    return imageView
-  }()
+  lazy var imageView = UIImageView().then {
+    $0.contentMode = .ScaleAspectFill
+    $0.tintColor = UIColor.whiteColor()
+  }
 
   lazy var textLabel = UILabel().then {
     $0.textColor = UIColor.whiteColor()
