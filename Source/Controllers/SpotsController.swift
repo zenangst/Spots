@@ -115,9 +115,9 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
 
     initialContentInset = spotsScrollView.contentInset
 
-    spots.forEach { spot in
-      spot.render().layoutSubviews()
-      spot.render().setNeedsDisplay()
+    spots.forEach {
+      $0.render().layoutSubviews()
+      $0.render().setNeedsDisplay()
     }
   }
 }
