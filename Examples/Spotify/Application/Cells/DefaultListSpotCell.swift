@@ -26,10 +26,8 @@ public class DefaultListSpotCell: UITableViewCell, Itemble {
       textLabel?.textColor = textColor
     }
 
-    if let background = item.meta["background"] as? UIColor {
-      if !background.isDarkColor {
-        textLabel?.textColor = UIColor.darkGrayColor()
-      }
+    if let background = item.meta["background"] as? UIColor where !background.isDarkColor {
+      textLabel?.textColor = UIColor.darkGrayColor()
     }
 
     if let subtitleColor = item.meta["secondary"] as? UIColor where !subtitleColor.isDarkColor {
