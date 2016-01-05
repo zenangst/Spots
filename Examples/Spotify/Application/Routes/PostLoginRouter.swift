@@ -2,6 +2,7 @@ import UIKit
 import Keychain
 import Compass
 import Cache
+import Sugar
 
 public struct PostLoginRouter: Routing {
 
@@ -27,15 +28,19 @@ public struct PostLoginRouter: Routing {
 
         player.playURIs([NSURL(string: uri.replace("_", with: ":"))!], fromIndex: 0, callback: { (error) -> Void in })
       case "play:{uri}:{track}":
-        guard let playlist = arguments["uri"],
-          trackString = arguments["track"],
-          track = Int32(trackString) else { return }
+        guard let trackString = arguments["track"],
+          index = Int(trackString) else { return }
 
         let urls = applicationDelegate.mainController.playerController.currentURIs
+        let url = urls[index]
+        let startIndex = index > 0 ? index - 1 : 0
+        let modifiedList = urls[urls.startIndex + startIndex..<urls.endIndex].map { $0 }
 
-        player.playURIs(urls,
-          fromIndex: track,
-          callback: { (error) -> Void in })
+        if let newIndex = modifiedList.indexOf({ $0 == url }) {
+          player.playURIs(modifiedList,
+            fromIndex: Int32(newIndex),
+            callback: { (error) -> Void in })
+        }
       case "stop":
         guard player.isPlaying else { return }
         player.stop({ (error) -> Void in })
