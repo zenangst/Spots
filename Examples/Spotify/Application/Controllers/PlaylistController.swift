@@ -107,11 +107,7 @@ class PlaylistController: SpotsController {
 
           self.update(spotAtIndex: 0) { $0.items = [top] }
 
-          if object.firstTrackPage.hasNextPage {
-            self.playlistPage = object.firstTrackPage
-          } else {
-            self.playlistPage = nil
-          }
+          self.playlistPage = object.firstTrackPage.hasNextPage ? object.firstTrackPage : nil
 
           closure?()
         }
@@ -155,11 +151,7 @@ class PlaylistController: SpotsController {
         self.update(spotAtIndex: 1) { $0.items = featured }
         closure?()
 
-        if object.hasNextPage {
-          self.playlistPage = object
-        } else {
-          self.playlistPage = nil
-        }
+        self.playlistPage = object.hasNextPage ? object : nil
       }
     }
   }
