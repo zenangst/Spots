@@ -30,20 +30,12 @@ public struct PostLoginRouter: Routing {
         guard let playlist = arguments["uri"],
           trackString = arguments["track"],
           track = Int32(trackString) else { return }
-        let realPlaylist = playlist.stringByReplacingOccurrencesOfString("-", withString: ":")
 
-        SPTPlaylistSnapshot.playlistWithURI(NSURL(string: realPlaylist), accessToken: Keychain.password(forAccount: keychainAccount), callback: { (error, object) -> Void in
-          guard let object = object as? SPTPlaylistSnapshot else { return }
-          var urls = [NSURL]()
+        let urls = applicationDelegate.mainController.playerController.currentURIs
 
-          object.firstTrackPage.items.forEach {
-            urls.append($0.uri)
-          }
-
-          player.playURIs(urls,
-            fromIndex: track,
-            callback: { (error) -> Void in })
-        })
+        player.playURIs(urls,
+          fromIndex: track,
+          callback: { (error) -> Void in })
       case "stop":
         guard player.isPlaying else { return }
         player.stop({ (error) -> Void in })

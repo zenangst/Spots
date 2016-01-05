@@ -10,6 +10,7 @@ class PlayerController: SpotsController {
   var initialOrigin: CGFloat = UIScreen.mainScreen().bounds.height - 108
   let offset: CGFloat = 108
   var lastItem: ListItem?
+  var currentURIs = [NSURL]()
 
   lazy var panRecognizer: UIPanGestureRecognizer = UIPanGestureRecognizer(target: self, action: "handlePanGesture:")
   lazy var tapRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "handleTapGesture:")

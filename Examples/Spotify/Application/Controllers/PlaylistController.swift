@@ -11,6 +11,7 @@ class PlaylistController: SpotsController {
   var playlistID: String?
   var offset = 0
   var playlistPage: SPTListPage?
+  var currentURIs = [NSURL]()
 
   convenience init(playlistID: String?) {
     let listSpot = ListSpot().then {
@@ -44,6 +45,8 @@ class PlaylistController: SpotsController {
   }
 
   func refreshData(closure: (() -> Void)? = nil) {
+    currentURIs.removeAll()
+
     if let playlistID = playlistID {
       let uri = playlistID.replace("-", with: ":")
 
@@ -77,6 +80,8 @@ class PlaylistController: SpotsController {
               "image" : album.largestCover.imageURL.absoluteString
             ]
             ))
+
+          self.currentURIs.append(item.uri)
         }
 
         if let first = listItems.first,
@@ -195,6 +200,8 @@ extension PlaylistController: SpotsScrollDelegate {
               return
           }
 
+          self.currentURIs.append(item.uri)
+
           if let firstItem = self.spot(2)!.items.first {
             items.append(ListItem(
               title: item.name,
@@ -213,7 +220,7 @@ extension PlaylistController: SpotsScrollDelegate {
                 "detail" : firstItem.meta["detail"] ?? ""
               ])
             )
-            index++
+            index = index + 1
           }
 
 
@@ -270,11 +277,9 @@ extension PlaylistController: SpotsScrollDelegate {
 extension PlaylistController: SpotsDelegate {
 
   func spotDidSelectItem(spot: Spotable, item: ListItem) {
-    guard let urn = item.action else { return }
-    Compass.navigate(urn)
-
     if let delegate = UIApplication.sharedApplication().delegate as? AppDelegate,
       playList = spot as? ListSpot {
+        delegate.mainController.playerController.currentURIs = currentURIs
         delegate.mainController.playerController.update(spotAtIndex: 1) {
           $0.items = playList.items.map {
             ListItem(title: $0.title,
@@ -294,6 +299,9 @@ extension PlaylistController: SpotsDelegate {
           carouselSpot.scrollTo { item.action == $0.action }
         }
     }
+
+    guard let urn = item.action else { return }
+    Compass.navigate(urn)
 
     if let notification = item.meta["notification"] as? String {
       let murmur = Murmur(title: notification,

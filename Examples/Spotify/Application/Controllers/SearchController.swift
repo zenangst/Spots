@@ -65,8 +65,7 @@ extension SearchController: SpotsDelegate {
 extension SearchController: UITextFieldDelegate {
 
   func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
-    if textField.text?.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) == 1 &&
-      string.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) == 0 {
+    if textField.text?.length == 1 && string.length == 0 {
         if spot(1)?.component.title == "Results" {
           update(spotAtIndex: 1) { spot in
             spot.component.title = ""
@@ -74,9 +73,7 @@ extension SearchController: UITextFieldDelegate {
 
           update(spotAtIndex: 2) { $0.items = [] }
         }
-    } else if textField.text?.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0 ||
-      string.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0 {
-
+    } else if textField.text?.length > 0 || string.length > 0 {
         if spot(1)?.component.title == "" {
           update(spotAtIndex: 1) { spot in
             spot.component.title = "Results"
