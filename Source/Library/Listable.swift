@@ -49,9 +49,10 @@ public extension Spotable where Self : Listable {
     var indexes = [Int]()
     let count = component.items.count
 
-    for (index, item) in items.enumerate() {
-      component.items.append(item)
-      indexes.append(count + index)
+    component.items.appendContentsOf(items)
+
+    items.enumerate().forEach {
+      indexes.append(count + $0.index)
     }
 
     dispatch { [weak self] in
@@ -76,8 +77,8 @@ public extension Spotable where Self : Listable {
 
     component.items.insertContentsOf(items, at: 0)
 
-    for (index, _) in items.enumerate() {
-      indexes.append(items.count - index)
+    items.enumerate().forEach {
+      indexes.append(items.count - $0.index)
     }
 
     dispatch { [weak self] in
