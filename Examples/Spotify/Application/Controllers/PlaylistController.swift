@@ -193,6 +193,7 @@ extension PlaylistController: SpotsDelegate {
   func spotDidSelectItem(spot: Spotable, item: ListItem) {
     if let delegate = UIApplication.sharedApplication().delegate as? AppDelegate,
       playList = spot as? ListSpot {
+        delegate.mainController.playerController.lastItem = item
         delegate.mainController.playerController.currentURIs = currentURIs
         delegate.mainController.playerController.update(spotAtIndex: 1) {
           $0.items = playList.items.map {
@@ -206,11 +207,8 @@ extension PlaylistController: SpotsDelegate {
                 height: UIScreen.mainScreen().bounds.width)
             )
           }
-        }
 
-        if let carouselSpot = delegate.mainController.playerController.spot(1) as? CarouselSpot {
-          delegate.mainController.playerController.lastItem = item
-          carouselSpot.scrollTo { item.action == $0.action }
+          ($0 as? CarouselSpot)?.scrollTo { item.action == $0.action }
         }
     }
 
