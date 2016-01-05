@@ -3,12 +3,6 @@ import Sugar
 
 public protocol Listable: Spotable {
   var tableView: UITableView { get }
-
-  func append(item: ListItem, completion: (() -> Void)?)
-  func append(items: [ListItem], completion: (() -> Void)?)
-  func prepend(items: [ListItem], completion: (() -> Void)?)
-  func delete(item: ListItem, completion: (() -> Void)?)
-  func delete(items: [ListItem], completion: (() -> Void)?)
 }
 
 public extension Spotable where Self : Listable {

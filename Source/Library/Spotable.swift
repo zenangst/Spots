@@ -37,14 +37,6 @@ public extension Spotable {
     }
   }
 
-  public func append(item: ListItem, completion: (() -> Void)? = nil) {}
-  public func append(items: [ListItem], completion: (() -> Void)? = nil) {}
-  public func prepend(items: [ListItem], completion: (() -> Void)? = nil) {}
-  public func insert(item: ListItem, index: Int, completion: (() -> Void)? = nil) {}
-  public func update(item: ListItem, index: Int, completion: (() -> Void)? = nil) {}
-  public func delete(index: Int, completion: (() -> Void)? = nil) {}
-  public func delete(indexs: [Int], completion: (() -> Void)? = nil) {}
-
   public func item(index: Int) -> ListItem {
     return component.items[index]
   }
