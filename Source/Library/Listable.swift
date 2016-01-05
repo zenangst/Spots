@@ -74,9 +74,10 @@ public extension Spotable where Self : Listable {
   public func prepend(items: [ListItem], completion: (() -> Void)? = nil) {
     var indexes = [Int]()
 
-    for (index, item) in items.enumerate() {
+    component.items.insertContentsOf(items, at: 0)
+
+    for (index, _) in items.enumerate() {
       indexes.append(items.count - index)
-      component.items.insert(item, atIndex: 0)
     }
 
     dispatch { [weak self] in
