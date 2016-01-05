@@ -4,6 +4,7 @@ import Compass
 import Sugar
 import Keychain
 import Cache
+import Hue
 
 let keychainAccount = "spots-accessToken"
 var username: String? {
@@ -81,11 +82,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     UIApplication.sharedApplication().statusBarStyle = .LightContent
 
     UINavigationBar.appearance().then {
-      $0.barTintColor = UIColor(red:0.000, green:0.000, blue:0.000, alpha: 1)
-      $0.tintColor = UIColor(red:1.000, green:1.000, blue:1.000, alpha: 1)
+      $0.barTintColor = UIColor.hex("#000")
+      $0.tintColor = UIColor.hex("#fff")
       $0.shadowImage = UIImage()
       $0.titleTextAttributes = [
-        NSForegroundColorAttributeName: UIColor(red:1.000, green:1.000, blue:1.000, alpha: 1)
+        NSForegroundColorAttributeName: UIColor.hex("#fff")
       ]
     }
   }
