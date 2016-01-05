@@ -10,7 +10,7 @@ public class ListHeaderView: UIView, Componentable {
     label.font = UIFont.boldSystemFontOfSize(11)
 
     return label
-  }()
+    }()
 
   lazy var paddedStyle: NSParagraphStyle = {
     let style = NSMutableParagraphStyle()
@@ -20,7 +20,7 @@ public class ListHeaderView: UIView, Componentable {
     style.tailIndent = -15.0
 
     return style
-    }()
+  }()
 
   public override init(frame: CGRect) {
     super.init(frame: frame)
@@ -28,7 +28,7 @@ public class ListHeaderView: UIView, Componentable {
   }
 
   public required init?(coder aDecoder: NSCoder) {
-      fatalError("init(coder:) has not been implemented")
+    fatalError("init(coder:) has not been implemented")
   }
 
   public func configure(component: Component) {
