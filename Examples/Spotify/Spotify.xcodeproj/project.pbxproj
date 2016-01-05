@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		A802709A14B2B09B40B27C24 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28622753AFF41826673AFB29 /* Pods.framework */; };
 		BD00A3791C35827B00C984F3 /* PlaylistGridSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD00A3781C35827B00C984F3 /* PlaylistGridSpotCell.swift */; };
+		BD0E01BF1C3BB0DE0092C477 /* SPTListPage+Spots.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0E01BE1C3BB0DE0092C477 /* SPTListPage+Spots.swift */; };
 		BD231C9C1C1E0D6C00D93449 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD231C911C1E0D6C00D93449 /* AppDelegate.swift */; };
 		BD231C9D1C1E0D6C00D93449 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BD231C921C1E0D6C00D93449 /* Assets.xcassets */; };
 		BD231C9E1C1E0D6C00D93449 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BD231C931C1E0D6C00D93449 /* LaunchScreen.storyboard */; };
@@ -45,6 +46,7 @@
 		5E70EB4CC092C66A8663C4B9 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		87CF5208C24D6284F4E697DD /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		BD00A3781C35827B00C984F3 /* PlaylistGridSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistGridSpotCell.swift; sourceTree = "<group>"; };
+		BD0E01BE1C3BB0DE0092C477 /* SPTListPage+Spots.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SPTListPage+Spots.swift"; sourceTree = "<group>"; };
 		BD231C911C1E0D6C00D93449 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BD231C921C1E0D6C00D93449 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BD231C941C1E0D6C00D93449 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -139,6 +141,7 @@
 			children = (
 				BD231CBB1C20B88A00D93449 /* UIImage+Transparent.swift */,
 				BD231CBD1C21465300D93449 /* SPTSession+Cachable.swift */,
+				BD0E01BE1C3BB0DE0092C477 /* SPTListPage+Spots.swift */,
 			);
 			path = Extensions;
 			sourceTree = SOURCE_ROOT;
@@ -363,6 +366,7 @@
 				BD231CBE1C21465300D93449 /* SPTSession+Cachable.swift in Sources */,
 				BD231C9C1C1E0D6C00D93449 /* AppDelegate.swift in Sources */,
 				BDAA75281C21683700E49759 /* FeaturedController.swift in Sources */,
+				BD0E01BF1C3BB0DE0092C477 /* SPTListPage+Spots.swift in Sources */,
 				BDAF155E1C36F9060008A5D6 /* PlayerController.swift in Sources */,
 				BDDC21741C3A9B8400ABD671 /* SearchController.swift in Sources */,
 				BDADDD931C35A8DB0023D135 /* FeaturedGridSpotCell.swift in Sources */,
