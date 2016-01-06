@@ -57,7 +57,7 @@ deleting `ListItems`.
 - Static custom cell registrations for all `Spotable` objects. 
 Write one view cell and use it across your application, when and where you 
 want to use it.
-- Cell height caching, this improves performance as each cells has its height stored as a calculated value 
+- Cell height caching, this improves performance as each cell has its height stored as a calculated value.
 on the view model.
 - Supports multiple cell types inside the same data source, no more ugly if-statements in your implementation;
 **Spots** handles this for you by using a cell registry.
