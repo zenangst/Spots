@@ -5,11 +5,18 @@
 [![License](https://img.shields.io/cocoapods/l/Spots.svg?style=flat)](http://cocoadocs.org/docsets/Spots)
 [![Platform](https://img.shields.io/cocoapods/p/Spots.svg?style=flat)](http://cocoadocs.org/docsets/Spots)
 
+**Spots** is a view controller framework that makes your setup and future
+development blazingly fast. Because of its internal architecture,
+generic view models, you can easily move your view models into
+the cloud. This is super easy to do because **Spots** can translate
+JSON data into view model data right out-of-the-box.
+It is packed with convenience methods that are all at your disposal through
+the public API.
+
 ## Table of Contents
 
 <img src="https://raw.githubusercontent.com/hyperoslo/Spots/master/Images/icon.png" alt="Hue Icon" align="right" />
 
-* [Description](#description)
 * [Key features](#key-features)
 * [Usage](#usage)
   * [View models in the Cloud](#view-models-in-the-cloud) 
@@ -30,16 +37,6 @@
 * [Credits](#credits)
 * [Contributing](#contributing)
 * [License](#license)
-
-## Description
-
-**Spots** is a view controller framework that makes your setup and future
-development blazingly fast. Because of its internal architecture,
-generic view models, you can easily move your view models into
-the cloud. This is super easy to do because **Spots** can translate
-JSON data into view model data right out-of-the-box.
-It is packed with convenience methods that are all at your disposal through
-the public API.
 
 ## Key features
 
