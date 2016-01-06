@@ -14,7 +14,8 @@ extension SpotsController {
       size.height > bounds.size.height &&
       !refreshing &&
       size.height - itemOffset > 0 &&
-      !refreshPositions.contains(size.height - itemOffset)
+      !refreshPositions.contains(size.height - itemOffset) &&
+      offset.y > 0
 
     // Refreshable
     tableView.contentOffset.y = scrollView.contentOffset.y + tableView.frame.height
