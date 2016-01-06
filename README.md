@@ -11,7 +11,15 @@
 * [Key features](#key-features)
 * [Usage](#usage)
 * [SpotsController](#spotscontroller)
+  * [Delegates](#delegates) 
+    *  [SpotsDelegate](#spotsdelegate) 
+    *  [SpotsRefreshDelegate](#spotsrefreshdelegate) 
+    *  [SpotsScrollDelegate](#spotsscrolldelegate)
+    *  [SpotsCarouselScrollDelegate](#spotscarouselscrolldelegate)
 * [JSON structure](#json-structure)
+* [Models](#models)
+  * [Component](#component)
+  * [ListItem](#listitem)
 * [Installation](#installation)
 * [Author](#author)
 * [Contributing](#contributing)
@@ -81,10 +89,11 @@ navigationController?.pushViewController(controller, animated: true)
 ```
 
 ## SpotsController
-The `SpotsController` inherits from `UIViewController` but it sports some core features that makes your everyday mundane tasks a thing of the past.
+The `SpotsController` inherits from `UIViewController` but it sports some core features that makes your everyday mundane tasks a thing of the past. `SpotsController` has four different delegates
 
-### Delegates
-*SpotsController* has four different delegates
+## Delegates
+
+### SpotsDelegate
 
 ```swift
 public protocol SpotsDelegate: class {
@@ -94,6 +103,8 @@ public protocol SpotsDelegate: class {
 
 `spotDidSelectItem` is triggered when a user taps on an item inside of a `Spotable` object. It returns both the `spot` and the `item` to add context to what UI element was touched.
 
+### SpotsRefreshDelegate
+
 ```swift
 public protocol SpotsRefreshDelegate: class {
   func spotsDidReload(refreshControl: UIRefreshControl, completion: (() -> Void)?)
@@ -102,6 +113,8 @@ public protocol SpotsRefreshDelegate: class {
 
 `spotsDidReload` is triggered when a user pulls the `SpotsScrollView` offset above its initial bounds.
 
+### SpotsScrollDelegate
+
 ```swift
 public protocol SpotsScrollDelegate: class {
   func spotDidReachEnd(completion: (() -> Void)?)
@@ -109,6 +122,8 @@ public protocol SpotsScrollDelegate: class {
 ```
 
 `spotDidReachEnd` is triggered when the user scrolls to the end of the `SpotsScrollView`, this can be used to implement infinite scrolling.
+
+### SpotsCarouselScrollDelegate
 
 ```swift
 public protocol SpotsCarouselScrollDelegate: class {
@@ -172,6 +187,37 @@ public protocol SpotsCarouselScrollDelegate: class {
       "meta" : []
     }
   ]
+}
+```
+
+## Models
+
+### Component
+
+```swift
+public struct Component: Mappable {
+  public var index = 0
+  public var title = ""
+  public var kind = ""
+  public var span: CGFloat = 0
+  public var items = [ListItem]()
+  public var size: CGSize?
+  public var meta = [String : String]()
+}
+```
+
+### ListItem
+
+```swift
+public struct ListItem: Mappable {
+  public var index = 0
+  public var title = ""
+  public var subtitle = ""
+  public var image = ""
+  public var kind = ""
+  public var action: String?
+  public var size = CGSize(width: 0, height: 0)
+  public var meta = [String : AnyObject]()
 }
 ```
 
