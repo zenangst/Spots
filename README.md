@@ -54,11 +54,11 @@ The JSON data will be parsed into view model data and your view controller is re
 ```swift
 let spots = [Spotable]()
 let myContacts = Component(title: "My contacts", items: [
-ListItem(title: "John Hyperseed"),
-ListItem(title: "Vadym Markov"),
-ListItem(title: "Ramon Gilabert Llop"),
-ListItem(title: "Khoa Pham"),
-ListItem(title: "Christoffer Winterkvist")
+  ListItem(title: "John Hyperseed"),
+  ListItem(title: "Vadym Markov"),
+  ListItem(title: "Ramon Gilabert Llop"),
+  ListItem(title: "Khoa Pham"),
+  ListItem(title: "Christoffer Winterkvist")
 ])
 let listSpot = ListSpot(component: myContacts)
 let controller = SpotsController(spots: [listSpot])
