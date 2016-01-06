@@ -118,6 +118,63 @@ public protocol SpotsCarouselScrollDelegate: class {
 
 `spotDidEndScrolling` is triggered when a user ends scrolling in a carousel, it returns item that is being displayed and the spot to give you the context that you need.
 
+## JSON structure
+
+```json
+{
+ "components" : [
+    {
+      "title"    : "Hyper iOS",
+      "type"     : "list",
+      "span"     : "1",
+      "items" : [
+        {
+          "title"    : "John Hyperseed",
+          "subtitle" : "Build server",
+          "image"    : "{image url}",
+          "type"     : "profile",
+          "action"   : "profile:1",
+          "meta"     : {"nationality" : "Apple"}
+        },
+        {
+          "title"    : "Vadym Markov",
+          "subtitle" : "iOS Developer",
+          "image"    : "{image url}",
+          "type"     : "profile",
+          "action"   : "profile:2",
+          "meta"     : {"nationality" : "Ukrainian"}
+        },
+        {
+          "title"    : "Ramon Gilabert Llop",
+          "subtitle" : "iOS Developer",
+          "image"    : "{image url}",
+          "type"     : "profile",
+          "action"   : "profile:3",
+          "meta"     : {"nationality" : "Catalan"}
+        },
+        {
+          "title"    : "Khoa Pham",
+          "subtitle" : "iOS Developer",
+          "image"    : "{image url}",
+          "type"     : "profile",
+          "action"   : "profile:4",
+          "meta"     : {"nationality" : "Vietnamese"}
+        },
+        {
+          "title"    : "Christoffer Winterkvist",
+          "subtitle" : "iOS Developer",
+          "image"    : "{image url}",
+          "type"     : "profile",
+          "action"   : "profile:5",
+          "meta"     : {"nationality" : "Swedish"}
+        }
+      ],
+      "meta" : []
+    }
+  ]
+}
+```
+
 ## Installation
 
 **Spots** is available through [CocoaPods](http://cocoapods.org). To install
