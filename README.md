@@ -29,15 +29,20 @@ JSON data into view model data right out-of-the-box.
 
 - JSON based views that could be served up by your backend
 - Supports displaying multiple collection and table views in the same container
-- Features both infinity scrolling and pull to refresh, all you have to do is to setup delegates that conforms to the public protocols on `SpotsController`
-- No need to implement your own data source, every `Spotable` object has their own set of *ListItem*’s which is maintained internally and is there at your disposable if you decide to make changes to them
-- Easy configuration of `UICollectionView`’s, `UITableView` and any custom spot implementation that you add. This improves code reuse and helps theme your app and ultimately to keep your application consistent
+- Features both infinity scrolling and pull to refresh, all you have to do is to 
+setup delegates that conforms to the public protocols on `SpotsController`
+- No need to implement your own data source, every `Spotable` object has their own set of `ListItem`’s 
+which is maintained internally and is there at your disposable if you decide to make changes to them
+- Easy configuration of `UICollectionView`’s, `UITableView` and any custom spot implementation that you add. 
+This improves code reuse and helps theme your app and ultimately to keep your application consistent
 - Support custom Spots, all you need to do is to conform to `Spotable`
 - A rich public API for appending, prepending, inserting, updating or deleting `ListItems`
 - Features three different spots out-of-the-box; `CarouselSpot`, `GridSpot`, `ListSpot`
-- Static custom cell registrations for all `Spotable` objects. Write one view cell and use it across your application, when and where you want to use it.
+- Static custom cell registrations for all `Spotable` objects. 
+Write one view cell and use it across your application, when and where you want to use it.
 - Cell height caching, this improves performance as each cells has its height stored as a calculated value on the view model
-- Supports multiple cell types inside the same data source, no more ugly if-statements in your implementation, *Spots* handles this for you by using a cell registry
+- Supports multiple cell types inside the same data source, no more ugly if-statements in your implementation, 
+*Spots* handles this for you by using a cell registry
 
 ## Usage
 
