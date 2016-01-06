@@ -3,6 +3,7 @@ import Sugar
 import Tailor
 import Spots
 import Imaginary
+import Hue
 
 class GridTopicCell: UICollectionViewCell, Itemble {
 
@@ -72,6 +73,10 @@ class GridTopicCell: UICollectionViewCell, Itemble {
       imageView.image = nil
       let URL = NSURL(string: item.image)
       imageView.setImage(URL)
+    }
+
+    if let hexColor =  item.meta["color"] as? String {
+      contentView.backgroundColor = UIColor.hex(hexColor)
     }
 
     label.attributedText = NSAttributedString(string: item.title,
