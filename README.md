@@ -24,6 +24,7 @@
   * [ListItem](#listitem)
 * [Installation](#installation)
 * [Author](#author)
+* [Credits](#credits)
 * [Contributing](#contributing)
 * [License](#license)
 
