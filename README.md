@@ -49,8 +49,7 @@ which is maintained internally and is there at your disposable if you decide to
 make changes to them.
 - Easy configuration of `UICollectionView`’s, `UITableView`'s and any custom spot 
 implementation that you add. 
-This improves code reuse and helps to theme your app and ultimately to keep your 
-application consistent.
+This improves code reuse and helps to theme your app and ultimately keep your application consistent.
 - Support custom Spots, all you need to do is to conform to `Spotable`
 - A rich public API for appending, prepending, inserting, updating or 
 deleting `ListItems`.
