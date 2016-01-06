@@ -3,6 +3,7 @@ PODS:
   - Compass (1.2.4)
   - Fakery (1.1.0):
     - SwiftyJSON
+  - Hue (0.1.0)
   - Imaginary (0.1.0):
     - Cache
   - Spots (0.1.0):
@@ -16,8 +17,9 @@ PODS:
 
 DEPENDENCIES:
   - Cache (from `https://github.com/hyperoslo/Cache`)
-  - Compass (from `https://github.com/hyperoslo/compass`)
+  - Compass (from `https://github.com/hyperoslo/Compass`)
   - Fakery
+  - Hue (from `https://github.com/hyperoslo/Hue`)
   - Imaginary (from `https://github.com/hyperoslo/Imaginary`)
   - Spots (from `../../`)
   - Sugar (from `https://github.com/hyperoslo/Sugar`)
@@ -27,7 +29,9 @@ EXTERNAL SOURCES:
   Cache:
     :git: https://github.com/hyperoslo/Cache
   Compass:
-    :git: https://github.com/hyperoslo/compass
+    :git: https://github.com/hyperoslo/Compass
+  Hue:
+    :git: https://github.com/hyperoslo/Hue
   Imaginary:
     :git: https://github.com/hyperoslo/Imaginary
   Spots:
@@ -43,7 +47,10 @@ CHECKOUT OPTIONS:
     :git: https://github.com/hyperoslo/Cache
   Compass:
     :commit: aa963fac1d59e4c6e12610ecfd2f8cb2a7bec06c
-    :git: https://github.com/hyperoslo/compass
+    :git: https://github.com/hyperoslo/Compass
+  Hue:
+    :commit: 1fcddfad166e60e5af3d5d3496f3e5dbceaf474c
+    :git: https://github.com/hyperoslo/Hue
   Imaginary:
     :commit: 265eb5ddd1df41bbcc9f0f860e33649e831868d4
     :git: https://github.com/hyperoslo/Imaginary
@@ -58,6 +65,7 @@ SPEC CHECKSUMS:
   Cache: 78f58bc008313c7a1182967a2ebcb3de9fddecd4
   Compass: b7ce9d4c22226a4b22609c4acbcba6f1bcb53cfd
   Fakery: 593389814fb7c42fe7f0801e76c8ae55b95505e7
+  Hue: 236ca79bd7426ab735bf0436589b8e505611a3fa
   Imaginary: feaea646440c68a9b6ed66a46597d548b9a44207
   Spots: 9de65acd79cebc15b9f9756a86f7cab0104bc8fe
   Sugar: 41ef7630a1568447e9ce1d30939cc732fdc65542
