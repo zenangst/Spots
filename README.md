@@ -81,7 +81,7 @@ navigationController?.pushViewController(controller, animated: true)
 ```
 
 ## SpotsController
-The *SpotsController* inherits from *UIViewController* but it sports some core features that makes your everyday mundane tasks a thing of the past.
+The `SpotsController` inherits from `UIViewController` but it sports some core features that makes your everyday mundane tasks a thing of the past.
 
 ### Delegates
 *SpotsController* has four different delegates
