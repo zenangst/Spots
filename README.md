@@ -74,7 +74,7 @@ The *SpotsController* inherits from *UIViewController* but it sports some core f
 
 ```swift
 public protocol SpotsDelegate: class {
-func spotDidSelectItem(spot: Spotable, item: ListItem)
+  func spotDidSelectItem(spot: Spotable, item: ListItem)
 }
 ```
 
@@ -82,7 +82,7 @@ func spotDidSelectItem(spot: Spotable, item: ListItem)
 
 ```swift
 public protocol SpotsRefreshDelegate: class {
-func spotsDidReload(refreshControl: UIRefreshControl, completion: (() -> Void)?)
+  func spotsDidReload(refreshControl: UIRefreshControl, completion: (() -> Void)?)
 }
 ```
 
@@ -90,7 +90,7 @@ func spotsDidReload(refreshControl: UIRefreshControl, completion: (() -> Void)?)
 
 ```swift
 public protocol SpotsScrollDelegate: class {
-func spotDidReachEnd(completion: (() -> Void)?)
+  func spotDidReachEnd(completion: (() -> Void)?)
 }
 ```
 
@@ -98,7 +98,7 @@ func spotDidReachEnd(completion: (() -> Void)?)
 
 ```swift
 public protocol SpotsCarouselScrollDelegate: class {
-func spotDidEndScrolling(spot: Spotable, item: ListItem)
+  func spotDidEndScrolling(spot: Spotable, item: ListItem)
 }
 ```
 
