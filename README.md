@@ -247,7 +247,7 @@ Can be either a URL string or a local string, you can easily determine if it sho
 - **.kind**
 Is used for the `reuseIdentifier` of your `UITableViewCell` or `UICollectionViewCell`.
 - **.action**
-Action identifier for you to parse and process when a user taps on a list item.
+Action identifier for you to parse and process when a user taps on a list item. We recommend [Compass](https://github.com/hyperoslo/Compass) as centralized navigation system.
 - **.size**
 Can either inherit from the `UITableViewCell`/`UICollectionViewCell`, or be manually set by the height calculations inside of your view.
 - **.meta**
