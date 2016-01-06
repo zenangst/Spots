@@ -68,6 +68,10 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     self.init(spots: [spot])
   }
 
+  public convenience init(_ json: [String : AnyObject]) {
+    self.init(spots: Parser.parse(json))
+  }
+
   public required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -98,7 +102,7 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
 
   public override func viewDidAppear(animated: Bool) {
     super.viewDidAppear(animated)
-  
+
     spotsScrollView.configured = true
   }
 
