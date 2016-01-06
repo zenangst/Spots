@@ -221,6 +221,23 @@ public struct ListItem: Mappable {
 }
 ```
 
+- **.index**
+Calculated value to determine the index it has inside of the component.
+- **.title**
+The headline for your data, in a `UITableViewCell` it is normally used for `textLabel.text` but you are free to use it as you like.
+- **.subtitle**
+Same as for the title, in a `UITableViewCell` it is normally used for `detailTextLabel.text`.
+- **.image**
+Can be either a URL string or a local string, you can easily determine if it should use a local or remote asset in your view.
+- **.kind**
+Is used for the `reuseIdentifier` of your `UITableViewCell` or `UICollectionViewCell`.
+- **.action**
+Action identifier for you to parse and process when a user taps on a list item.
+- **.size**
+Can either inherit from the `UITableViewCell`/`UICollectionViewCell`, or be manually set by the height calculations inside of your view.
+- **.meta**
+This is used for extra data that you might need access to inside of your view, it can be a hex color, a unique identifer or additional images for your view.
+
 ## Installation
 
 **Spots** is available through [CocoaPods](http://cocoapods.org). To install
