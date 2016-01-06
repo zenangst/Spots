@@ -206,6 +206,19 @@ public struct Component: Mappable {
 }
 ```
 
+- **.index**
+Calculated value to determine the index it has inside of the spot.
+- **.title**
+This is used as a title in `UITableView` view.
+- **.kind**
+Determines which spot should be used. `carousel`, `list`, `grid` are there by default but you can register your own.
+- **.span**
+Determines the amount of views that should fit on one row, by default it is set to zero and uses the default `UICollectionViewFlowLayout` to render `UICollectionView` based views.
+- **.size**
+Calculated value based on the amount of items and their combined heights.
+- **.meta**
+Custom data that you are free to use as you like in your implementation.
+
 ### ListItem
 
 ```swift
