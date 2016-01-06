@@ -39,8 +39,10 @@ This improves code reuse and helps theme your app and ultimately to keep your ap
 - A rich public API for appending, prepending, inserting, updating or deleting `ListItems`
 - Features three different spots out-of-the-box; `CarouselSpot`, `GridSpot`, `ListSpot`
 - Static custom cell registrations for all `Spotable` objects. 
-Write one view cell and use it across your application, when and where you want to use it.
-- Cell height caching, this improves performance as each cells has its height stored as a calculated value on the view model
+Write one view cell and use it across your application, 
+when and where you want to use it.
+- Cell height caching, this improves performance as each cells has its height stored as a calculated value 
+on the view model
 - Supports multiple cell types inside the same data source, no more ugly if-statements in your implementation, 
 *Spots* handles this for you by using a cell registry
 
