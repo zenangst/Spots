@@ -152,4 +152,21 @@ class SpotsControllerTests : XCTestCase {
 
     XCTAssert(spotController.filter { $0 is Listable }.count == 2)
   }
+
+  func testJSONInitialiser() {
+    let sourceController = SpotsController(spot: ListSpot().then {
+      $0.items = [ListItem(title: "First item")]
+      })
+    let jsonController = SpotsController([
+      "components" : [
+        ["type" : "list",
+          "items" : [
+            ["title" : "First item"]
+          ]
+        ]
+      ]
+      ])
+
+    XCTAssert(sourceController.spot.component == jsonController.spot.component)
+  }
 }
