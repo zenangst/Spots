@@ -20,10 +20,12 @@
 ## Description
 
 **Spots** is a view controller framework that makes your setup and future
-development blazingly fast. Because of its internal architecture and
+development blazingly fast. Because of its internal architecture,
 generic view models, you can easily move your view models into
 the cloud. This is super easy to do because **Spots** can translate
 JSON data into view model data right out-of-the-box.
+It is packed with convenience methods that are all at your disposal through
+the public API.
 
 ## Key features
 
