@@ -23,6 +23,7 @@
   * [Component](#component)
   * [ListItem](#listitem)
 * [Installation](#installation)
+* [Dependencies](#dependencies)
 * [Author](#author)
 * [Credits](#credits)
 * [Contributing](#contributing)
@@ -261,6 +262,15 @@ it, simply add the following line to your Podfile:
 ```ruby
 pod 'Spots'
 ```
+
+## Dependencies
+
+- **Sugar**
+To sweeten the implementation.
+- **[Tailor](https://github.com/zenangst/Tailor)**
+To seamlessly map JSON to both `Component` and `ListItem`.
+- **Imaginary**
+To offer a solid and easy-to-use solution for loading remote images in both core and custom views.
 
 ## Author
 
