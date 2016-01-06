@@ -273,7 +273,7 @@ We would love you to contribute to **Spots**, check the [CONTRIBUTING](https://g
 ## Credits
 
 - The idea behind Spot came from [John Sundell](https://github.com/johnsundell)'s tech talk "Components & View Models in the Cloud - how Spotify builds native, dynamic UIs".
-- - [Ole Begemanns](https://github.com/ole/) implementation of [OLEContainerScrollView](https://github.com/ole/OLEContainerScrollView) is the basis for `SpotsScrollView`, we salute you.
+- [Ole Begemanns](https://github.com/ole/) implementation of [OLEContainerScrollView](https://github.com/ole/OLEContainerScrollView) is the basis for `SpotsScrollView`, we salute you.
 
 ## License
 
