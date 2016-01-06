@@ -67,8 +67,7 @@ on the view model.
 
 ### View models in the Cloud
 ```swift
-let spots = Parser.parse(json)
-let controller = SpotsController(spots: spots)
+let controller = SpotsController(json)
 navigationController?.pushViewController(controller, animated: true)
 ```
 
