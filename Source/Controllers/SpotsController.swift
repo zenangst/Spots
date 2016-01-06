@@ -97,6 +97,8 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
   }
 
   public override func viewDidAppear(animated: Bool) {
+    super.viewDidAppear(animated)
+  
     spotsScrollView.configured = true
   }
 
