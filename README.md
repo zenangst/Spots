@@ -7,6 +7,8 @@
 
 ## Table of Contents
 
+<img src="https://raw.githubusercontent.com/hyperoslo/Spots/master/Images/icon.png" alt="Hue Icon" align="right" />
+
 * [Description](#description)
 * [Key features](#key-features)
 * [Usage](#usage)
