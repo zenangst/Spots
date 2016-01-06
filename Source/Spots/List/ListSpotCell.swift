@@ -1,4 +1,5 @@
 import UIKit
+import Imaginary
 
 public class ListSpotCell: UITableViewCell, Itemble {
 
@@ -14,14 +15,21 @@ public class ListSpotCell: UITableViewCell, Itemble {
   }
 
   public func configure(inout item: ListItem) {
-    accessoryType = item.action?.isEmpty ?? false
-      ? .DisclosureIndicator
-      : .None
+    if let action = item.action where !action.isEmpty {
+      accessoryType = .DisclosureIndicator
+    } else {
+      accessoryType = .None
+    }
+
     detailTextLabel?.text = item.subtitle
     textLabel?.text = item.title
 
     if !item.image.isEmpty {
-      imageView?.image = UIImage(named: item.image)
+      if let url = NSURL(string: item.image) {
+        imageView?.setImage(url, placeholder: UIImage(named: "ImagePlaceholder"))
+      } else {
+        imageView?.image = UIImage(named: item.image)
+      }
     }
 
     item.size.height = item.size.height > 0.0 ? item.size.height : size.height

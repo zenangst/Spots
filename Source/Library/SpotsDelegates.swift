@@ -14,3 +14,8 @@ public protocol SpotsScrollDelegate: class {
 
   func spotDidReachEnd(completion: (() -> Void)?)
 }
+
+public protocol SpotsCarouselScrollDelegate: class {
+
+  func spotDidEndScrolling(spot: Spotable, item: ListItem)
+}

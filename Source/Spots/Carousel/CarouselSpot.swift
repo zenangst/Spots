@@ -9,15 +9,14 @@ public class CarouselSpot: NSObject, Spotable, Gridable {
   public var cachedCells = [String : Itemble]()
   public var component: Component
   public var index = 0
+  public var paginate = false
 
+  public weak var carouselScrollDelegate: SpotsCarouselScrollDelegate?
   public weak var spotsDelegate: SpotsDelegate?
 
-  public lazy var layout: UICollectionViewFlowLayout = { [unowned self] in
-    let layout = UICollectionViewFlowLayout()
-    layout.scrollDirection = .Horizontal
-
-    return layout
-    }()
+  public lazy var layout = UICollectionViewFlowLayout().then {
+    $0.scrollDirection = .Horizontal
+  }
 
   public lazy var collectionView: UICollectionView = { [unowned self] in
     let collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: self.layout)
@@ -34,6 +33,13 @@ public class CarouselSpot: NSObject, Spotable, Gridable {
     super.init()
   }
 
+  public convenience init(_ component: Component, top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0, itemSpacing: CGFloat = 0) {
+    self.init(component: component)
+
+    layout.sectionInset = UIEdgeInsetsMake(top, left, bottom, right)
+    layout.minimumInteritemSpacing = itemSpacing
+  }
+
   public func setup(size: CGSize) {
     collectionView.frame.size = size
 
@@ -41,7 +47,10 @@ public class CarouselSpot: NSObject, Spotable, Gridable {
       collectionView.frame.size.height = collectionView.contentSize.height
     } else {
       collectionView.frame.size.height = component.items.first?.size.height ?? 0
-      collectionView.frame.size.height += layout.sectionInset.top + layout.sectionInset.bottom
+
+      if collectionView.frame.size.height > 0 {
+        collectionView.frame.size.height += layout.sectionInset.top + layout.sectionInset.bottom
+      }
     }
 
     CarouselSpot.configure?(view: collectionView)
@@ -51,6 +60,8 @@ public class CarouselSpot: NSObject, Spotable, Gridable {
 extension CarouselSpot: UIScrollViewDelegate {
 
   public func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+    guard paginate else { return }
+
     let pageWidth: CGFloat = collectionView.frame.width - layout.sectionInset.right
      + layout.sectionInset.left + layout.minimumLineSpacing
     let currentOffset = scrollView.contentOffset.x
@@ -68,6 +79,22 @@ extension CarouselSpot: UIScrollViewDelegate {
 
     targetContentOffset.memory.x = currentOffset;
     scrollView.setContentOffset(CGPoint(x: newTargetOffset, y:0), animated: true)
+
+    let index: Int = Int(floor(newTargetOffset * CGFloat(items.count) / scrollView.contentSize.width))
+    if index >= 0 && index <= items.count {
+      let item = items[index]
+      carouselScrollDelegate?.spotDidEndScrolling(self, item: item)
+    }
+  }
+
+  public func scrollTo(predicate: (ListItem) -> Bool) {
+    if let index = items.indexOf(predicate) {
+      let pageWidth: CGFloat = collectionView.frame.width - layout.sectionInset.right
+        + layout.sectionInset.left + layout.minimumLineSpacing
+      let newTargetOffset = pageWidth * CGFloat(index)
+
+      collectionView.setContentOffset(CGPoint(x: newTargetOffset, y:0), animated: true)
+    }
   }
 }
 

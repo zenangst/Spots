@@ -8,6 +8,8 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
   public private(set) var initialContentInset: UIEdgeInsets = UIEdgeInsetsZero
   public private(set) var spots: [Spotable]
 
+  public var refreshPositions = [CGFloat]()
+
   public var refreshing = false {
     didSet { if !refreshing { refreshControl.endRefreshing() } }
   }
@@ -33,31 +35,25 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
 
   weak public var spotsScrollDelegate: SpotsScrollDelegate?
 
-  lazy public var spotsScrollView: SpotsScrollView = { [unowned self] in
-    let scrollView = SpotsScrollView(frame: self.view.frame)
-    scrollView.alwaysBounceVertical = true
-    scrollView.backgroundColor = UIColor.whiteColor()
-    scrollView.clipsToBounds = true
-    scrollView.delegate = self
+  lazy public var spotsScrollView: SpotsScrollView = SpotsScrollView().then { [unowned self] in
+    $0.frame = self.view.frame
+    $0.alwaysBounceVertical = true
+    $0.backgroundColor = UIColor.whiteColor()
+    $0.clipsToBounds = true
+    $0.delegate = self
+  }
 
-    return scrollView
-    }()
 
-  public lazy var tableView: UITableView = { [unowned self] in
-    let tableView = UITableView(frame: CGRect(x: 0, y: -60, width: UIScreen.mainScreen().bounds.width, height: 60))
-    tableView.userInteractionEnabled = false
-    tableView.tableFooterView = UIView(frame: CGRect.zero)
-    tableView.backgroundColor = UIColor.clearColor()
+  public lazy var tableView = UITableView().then {
+    $0.frame = CGRect(x: 0, y: -60, width: UIScreen.mainScreen().bounds.width, height: 60)
+    $0.userInteractionEnabled = false
+    $0.tableFooterView = UIView(frame: CGRect.zero)
+    $0.backgroundColor = UIColor.clearColor()
+  }
 
-    return tableView
-    }()
-
-  public lazy var refreshControl: UIRefreshControl = { [unowned self] in
-    let refreshControl = UIRefreshControl()
-    refreshControl.addTarget(self, action: "refreshSpot:", forControlEvents: .ValueChanged)
-
-    return refreshControl
-    }()
+  public lazy var refreshControl: UIRefreshControl = UIRefreshControl().then { [unowned self] in
+    $0.addTarget(self, action: "refreshSpot:", forControlEvents: .ValueChanged)
+  }
 
   // MARK: Initializer
 
@@ -65,7 +61,6 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     self.spots = spots
     super.init(nibName: nil, bundle: nil)
     view.addSubview(spotsScrollView)
-
     spots.enumerate().forEach { spots[$0.index].index = $0.index }
   }
 
@@ -120,9 +115,9 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
 
     initialContentInset = spotsScrollView.contentInset
 
-    spots.forEach { spot in
-      spot.render().layoutSubviews()
-      spot.render().setNeedsDisplay()
+    spots.forEach {
+      $0.render().layoutSubviews()
+      $0.render().setNeedsDisplay()
     }
   }
 }
@@ -135,7 +130,7 @@ extension SpotsController {
     return spots.filter{ $0.index == index }.first
   }
 
-  public func spot(closure: (index: Int, spot: Spotable) -> Bool) -> Spotable? {
+  public func spot(@noescape closure: (index: Int, spot: Spotable) -> Bool) -> Spotable? {
     for (index, spot) in spots.enumerate()
       where closure(index: index, spot: spot) {
         return spot
@@ -153,7 +148,7 @@ extension SpotsController {
     }
   }
 
-  public func update(spotAtIndex index: Int = 0, _ closure: (spot: Spotable) -> Void) {
+  public func update(spotAtIndex index: Int = 0, @noescape _ closure: (spot: Spotable) -> Void) {
     guard let spot = spot(index) else { return }
     closure(spot: spot)
     spot.prepare()
@@ -162,7 +157,10 @@ extension SpotsController {
     dispatch { [weak self] in
       guard let weakSelf = self else { return }
 
-      weakSelf.spot(spot.index)?.reload([index]) { }
+      weakSelf.spot(spot.index)?.reload([index]) {
+        weakSelf.spotsScrollView.setNeedsDisplay()
+        weakSelf.spotsScrollView.forceUpdate = true
+      }
     }
   }
 
@@ -196,9 +194,8 @@ extension SpotsController {
 
   public func refreshSpots(refreshControl: UIRefreshControl) {
     dispatch { [weak self] in
-      if let weakSelf = self {
-        weakSelf.spotsRefreshDelegate?.spotsDidReload(refreshControl) { }
-      }
+      guard let weakSelf = self else { return }
+      weakSelf.spotsRefreshDelegate?.spotsDidReload(refreshControl) { }
     }
   }
 }

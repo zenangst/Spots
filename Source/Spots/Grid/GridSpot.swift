@@ -12,10 +12,7 @@ public class GridSpot: NSObject, Spotable, Gridable {
 
   public weak var spotsDelegate: SpotsDelegate?
 
-  public lazy var layout: UICollectionViewFlowLayout = { [unowned self] in
-    let layout = UICollectionViewFlowLayout()
-    return layout
-    }()
+  public lazy var layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
 
   public lazy var collectionView: UICollectionView = { [unowned self] in
     let collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: self.layout)
@@ -30,6 +27,10 @@ public class GridSpot: NSObject, Spotable, Gridable {
   public required init(component: Component) {
     self.component = component
     super.init()
+  }
+
+  public convenience init(title: String = "", kind: String = "grid") {
+    self.init(component: Component(title: title, kind: kind))
   }
 
   public convenience init(_ component: Component, top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0, itemSpacing: CGFloat = 0) {

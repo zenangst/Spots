@@ -7,11 +7,15 @@ public class SpotsScrollView: UIScrollView {
 
   private var subviewsInLayoutOrder = [UIView?]()
   public var configured = false
+  public var forceUpdate = false {
+    didSet {
+      if forceUpdate { layoutSubviews() }
+    }
+  }
 
-  lazy public var contentView: SpotsContentView = { [unowned self] in
-    let view = SpotsContentView(frame: self.frame)
-    return view
-    }()
+  lazy public var contentView: SpotsContentView = SpotsContentView().then { [unowned self] in
+    $0.frame = self.frame
+  }
 
   deinit {
     contentView.subviews.forEach { $0.removeFromSuperview() }
@@ -130,6 +134,10 @@ public class SpotsScrollView: UIScrollView {
     contentSize = CGSize(width: bounds.size.width, height: fmax(yOffsetOfCurrentSubview, minimumContentHeight))
 
     if initialContentOffset != contentOffset {
+      setNeedsLayout()
+      layoutIfNeeded()
+    } else if forceUpdate {
+      forceUpdate = false
       setNeedsLayout()
       layoutIfNeeded()
     }

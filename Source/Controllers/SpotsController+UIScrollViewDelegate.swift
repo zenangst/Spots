@@ -7,9 +7,14 @@ extension SpotsController {
     let inset = scrollView.contentInset
     let offset = scrollView.contentOffset
     let size = scrollView.contentSize
-    let shouldFetch = offset.y + bounds.size.height - inset.bottom > size.height
-      && size.height > bounds.size.height
-      && !refreshing
+    let itemOffset = (size.height - UIScreen.mainScreen().bounds.size.height * 2) > 0
+      ? UIScreen.mainScreen().bounds.size.height * 2
+      : (spots.last?.component.items.last?.size.height ?? 0) * 6
+    let shouldFetch = offset.y + bounds.size.height - inset.bottom > size.height - itemOffset &&
+      size.height > bounds.size.height &&
+      !refreshing &&
+      size.height - itemOffset > 0 &&
+      !refreshPositions.contains(size.height - itemOffset)
 
     // Refreshable
     tableView.contentOffset.y = scrollView.contentOffset.y + tableView.frame.height
@@ -19,12 +24,11 @@ extension SpotsController {
     }
 
     // Infinite scrolling
-    if shouldFetch && !refreshing {
+    if shouldFetch {
+      refreshPositions.append(size.height - itemOffset)
       refreshing = true
-      delay(0.2) {
-        self.spotsScrollDelegate?.spotDidReachEnd {
-          self.refreshing = false
-        }
+      self.spotsScrollDelegate?.spotDidReachEnd {
+        self.refreshing = false
       }
     }
   }
@@ -33,11 +37,23 @@ extension SpotsController {
     guard refreshControl.refreshing else { return }
     spotsScrollView.contentInset.top = -scrollView.contentOffset.y
 
+    refreshPositions.removeAll()
     delay(0.5) {
       self.spotsRefreshDelegate?.spotsDidReload(self.refreshControl) { [weak self] in
         guard let weakSelf = self else { return }
         UIView.animateWithDuration(0.3, animations: {
-          weakSelf.spotsScrollView.contentInset = weakSelf.initialContentInset
+          var newContentInset = weakSelf.initialContentInset
+
+          if let navigationController = weakSelf.navigationController
+            where !navigationController.navigationBar.opaque {
+              newContentInset.top = navigationController.navigationBar.frame.height + 20
+          }
+
+          if let tabBarController = weakSelf.tabBarController {
+            newContentInset.bottom = tabBarController.tabBar.frame.height ?? weakSelf.spotsScrollView.contentInset.bottom
+          }
+
+          weakSelf.spotsScrollView.contentInset = newContentInset
           }, completion: { _ in
             weakSelf.refreshing = false
         })
