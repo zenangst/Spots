@@ -10,6 +10,8 @@
 * [Description](#description)
 * [Key features](#key-features)
 * [Usage](#usage)
+  * [View models in the Cloud](#view-models-in-the-cloud) 
+  * [Programmatic approach](#programmatic-approach) 
 * [SpotsController](#spotscontroller)
   * [Delegates](#delegates) 
     *  [SpotsDelegate](#spotsdelegate) 
@@ -267,6 +269,10 @@ pod 'Spots'
 ## Contribute
 
 We would love you to contribute to **Spots**, check the [CONTRIBUTING](https://github.com/hyperoslo/Spots/blob/master/CONTRIBUTING.md) file for more info.
+
+## Credits
+
+- The idea behind Spot came from John Sundell's tech talk "Components & View Models in the Cloud - how Spotify builds native, dynamic UIs".
 
 ## License
 
