@@ -42,7 +42,7 @@ the public API.
 - JSON based views that could be served up by your backend.
 - Supports displaying multiple collection and table views in the same container.
 - Features both infinity scrolling and pull to refresh, all you have to do is to 
-setup delegates that conforms to the public protocols on `SpotsController`.
+setup delegates that conform to the public protocols on `SpotsController`.
 - No need to implement your own data source, every `Spotable` object has their 
 own set of `ListItem`’s.
 which is maintained internally and is there at your disposable if you decide to 
