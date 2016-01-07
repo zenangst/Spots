@@ -5,7 +5,7 @@ PODS:
     - SwiftyJSON
   - Imaginary (0.1.0):
     - Cache
-  - Sugar (0.1.0)
+  - Sugar (1.0.0)
   - SwiftyJSON (2.3.2)
   - Tailor (0.2.0):
     - Sugar
@@ -41,7 +41,7 @@ CHECKOUT OPTIONS:
     :commit: 265eb5ddd1df41bbcc9f0f860e33649e831868d4
     :git: https://github.com/hyperoslo/Imaginary
   Sugar:
-    :commit: 0ace854ec430ff96ffb5eae5785b566168146982
+    :commit: 5483e77eafa332bb19546cdbe7084b8e9c5f144f
     :git: https://github.com/hyperoslo/Sugar
   Tailor:
     :commit: 085f59593e5833532efa4d94b192e7bed49ce817
@@ -52,7 +52,7 @@ SPEC CHECKSUMS:
   Compass: b7ce9d4c22226a4b22609c4acbcba6f1bcb53cfd
   Fakery: 593389814fb7c42fe7f0801e76c8ae55b95505e7
   Imaginary: feaea646440c68a9b6ed66a46597d548b9a44207
-  Sugar: 41ef7630a1568447e9ce1d30939cc732fdc65542
+  Sugar: 7191a36d6b567d65ba4ac7c67b1684ca0554fec5
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   Tailor: acba14dba2fb854cdf2550c1a3dfd603f6b59dbc
 
