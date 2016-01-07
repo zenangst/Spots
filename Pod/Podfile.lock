@@ -5,55 +5,33 @@ PODS:
     - SwiftyJSON
   - Imaginary (0.1.0):
     - Cache
-  - Sugar (1.0.0)
   - SwiftyJSON (2.3.2)
-  - Tailor (0.2.0):
-    - Sugar
 
 DEPENDENCIES:
   - Cache (from `https://github.com/hyperoslo/Cache`)
-  - Compass (from `https://github.com/hyperoslo/compass`)
+  - Compass
   - Fakery
   - Imaginary (from `https://github.com/hyperoslo/Imaginary`)
-  - Sugar (from `https://github.com/hyperoslo/Sugar`)
-  - Tailor (from `https://github.com/zenangst/Tailor`)
 
 EXTERNAL SOURCES:
   Cache:
     :git: https://github.com/hyperoslo/Cache
-  Compass:
-    :git: https://github.com/hyperoslo/compass
   Imaginary:
     :git: https://github.com/hyperoslo/Imaginary
-  Sugar:
-    :git: https://github.com/hyperoslo/Sugar
-  Tailor:
-    :git: https://github.com/zenangst/Tailor
 
 CHECKOUT OPTIONS:
   Cache:
     :commit: ae5f3ceb0124a4183d4d2ecfa59652109612906c
     :git: https://github.com/hyperoslo/Cache
-  Compass:
-    :commit: aa963fac1d59e4c6e12610ecfd2f8cb2a7bec06c
-    :git: https://github.com/hyperoslo/compass
   Imaginary:
     :commit: 265eb5ddd1df41bbcc9f0f860e33649e831868d4
     :git: https://github.com/hyperoslo/Imaginary
-  Sugar:
-    :commit: 5483e77eafa332bb19546cdbe7084b8e9c5f144f
-    :git: https://github.com/hyperoslo/Sugar
-  Tailor:
-    :commit: 085f59593e5833532efa4d94b192e7bed49ce817
-    :git: https://github.com/zenangst/Tailor
 
 SPEC CHECKSUMS:
   Cache: 78f58bc008313c7a1182967a2ebcb3de9fddecd4
   Compass: b7ce9d4c22226a4b22609c4acbcba6f1bcb53cfd
   Fakery: 593389814fb7c42fe7f0801e76c8ae55b95505e7
   Imaginary: feaea646440c68a9b6ed66a46597d548b9a44207
-  Sugar: 7191a36d6b567d65ba4ac7c67b1684ca0554fec5
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
-  Tailor: acba14dba2fb854cdf2550c1a3dfd603f6b59dbc
 
 COCOAPODS: 0.39.0
