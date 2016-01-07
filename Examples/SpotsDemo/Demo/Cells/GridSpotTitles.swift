@@ -2,7 +2,7 @@ import UIKit
 import Imaginary
 import Sugar
 import Spots
-import Hex
+import Hue
 
 class GridSpotCellTitles : UICollectionViewCell, Itemble {
 
@@ -58,7 +58,7 @@ class GridSpotCellTitles : UICollectionViewCell, Itemble {
   func configure(inout item: ListItem) {
     optimize()
     if let textColor = item.meta["text-color"] as? String {
-      titleLabel.textColor = UIColor(hex: textColor)
+      titleLabel.textColor = UIColor.hex(textColor)
     }
 
     titleLabel.text = item.title
@@ -66,7 +66,7 @@ class GridSpotCellTitles : UICollectionViewCell, Itemble {
       attributes: [NSParagraphStyleAttributeName : paddedStyle])
     metaText.attributedText = NSAttributedString(string: item.meta.property("text") ?? "",
       attributes: [NSParagraphStyleAttributeName : paddedStyle])
-    metaText.textColor = UIColor(hex: item.meta.property("text-color") ?? "000000")
+    metaText.textColor = UIColor.hex(item.meta.property("text-color") ?? "000000")
 
     layoutSubviews()
 
