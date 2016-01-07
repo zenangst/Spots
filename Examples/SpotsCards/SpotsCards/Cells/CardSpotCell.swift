@@ -1,7 +1,7 @@
 import UIKit
 import Imaginary
 import Sugar
-import Hex
+import Hue
 import Spots
 
 class CardSpotCell : UICollectionViewCell, Itemble {
@@ -82,9 +82,9 @@ class CardSpotCell : UICollectionViewCell, Itemble {
     subtitleLabel.attributedText = NSAttributedString(string: item.subtitle,
       attributes: [NSParagraphStyleAttributeName : paddedStyle])
 
-    titleLabel.textColor = UIColor(hex: item.meta.property("foreground-color") ?? "000000")
-    subtitleLabel.textColor = UIColor(hex: item.meta.property("foreground-color") ?? "000000")
-    canvasView.backgroundColor = UIColor(hex: item.meta.property("background-color") ?? "FFFFFF")
+    titleLabel.textColor = UIColor.hex(item.meta.property("foreground-color") ?? "000000")
+    subtitleLabel.textColor = UIColor.hex(item.meta.property("foreground-color") ?? "000000")
+    canvasView.backgroundColor = UIColor.hex(item.meta.property("background-color") ?? "FFFFFF")
 
     layoutSubviews()
 

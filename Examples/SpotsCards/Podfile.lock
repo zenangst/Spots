@@ -1,39 +1,34 @@
 PODS:
   - Cache (1.0.0)
   - Compass (1.2.4)
-  - Hex (3.0.0)
+  - Hue (0.1.0)
   - Imaginary (0.1.0):
     - Cache
-  - Spots (0.1.0):
+  - Spots (1.0.0):
     - Imaginary
     - Sugar
     - Tailor
-  - Sugar (0.1.0)
-  - Tailor (0.2.0):
-    - Sugar
+  - Sugar (1.0.0)
+  - Tailor (0.2.0)
 
 DEPENDENCIES:
   - Cache (from `https://github.com/hyperoslo/Cache`)
-  - Compass (from `https://github.com/hyperoslo/compass`)
-  - Hex
+  - Compass (from `https://github.com/hyperoslo/Compass`)
+  - Hue (from `https://github.com/hyperoslo/Hue`)
   - Imaginary (from `https://github.com/hyperoslo/Imaginary`)
   - Spots (from `../../`)
-  - Sugar (from `https://github.com/hyperoslo/Sugar`)
-  - Tailor (from `https://github.com/zenangst/Tailor`)
 
 EXTERNAL SOURCES:
   Cache:
     :git: https://github.com/hyperoslo/Cache
   Compass:
-    :git: https://github.com/hyperoslo/compass
+    :git: https://github.com/hyperoslo/Compass
+  Hue:
+    :git: https://github.com/hyperoslo/Hue
   Imaginary:
     :git: https://github.com/hyperoslo/Imaginary
   Spots:
     :path: "../../"
-  Sugar:
-    :git: https://github.com/hyperoslo/Sugar
-  Tailor:
-    :git: https://github.com/zenangst/Tailor
 
 CHECKOUT OPTIONS:
   Cache:
@@ -41,24 +36,21 @@ CHECKOUT OPTIONS:
     :git: https://github.com/hyperoslo/Cache
   Compass:
     :commit: aa963fac1d59e4c6e12610ecfd2f8cb2a7bec06c
-    :git: https://github.com/hyperoslo/compass
+    :git: https://github.com/hyperoslo/Compass
+  Hue:
+    :commit: 1fcddfad166e60e5af3d5d3496f3e5dbceaf474c
+    :git: https://github.com/hyperoslo/Hue
   Imaginary:
     :commit: 265eb5ddd1df41bbcc9f0f860e33649e831868d4
     :git: https://github.com/hyperoslo/Imaginary
-  Sugar:
-    :commit: 0ace854ec430ff96ffb5eae5785b566168146982
-    :git: https://github.com/hyperoslo/Sugar
-  Tailor:
-    :commit: 085f59593e5833532efa4d94b192e7bed49ce817
-    :git: https://github.com/zenangst/Tailor
 
 SPEC CHECKSUMS:
   Cache: 78f58bc008313c7a1182967a2ebcb3de9fddecd4
   Compass: b7ce9d4c22226a4b22609c4acbcba6f1bcb53cfd
-  Hex: ee430da9c4412d9196366ae5327f279021dc03eb
+  Hue: 236ca79bd7426ab735bf0436589b8e505611a3fa
   Imaginary: feaea646440c68a9b6ed66a46597d548b9a44207
-  Spots: 9de65acd79cebc15b9f9756a86f7cab0104bc8fe
-  Sugar: 41ef7630a1568447e9ce1d30939cc732fdc65542
-  Tailor: acba14dba2fb854cdf2550c1a3dfd603f6b59dbc
+  Spots: f306eb047ce7896f2a7fbddf1a9fd8e3bf853015
+  Sugar: 7191a36d6b567d65ba4ac7c67b1684ca0554fec5
+  Tailor: 214469e948557ac67a0d3d93674aeaa686f74e4f
 
 COCOAPODS: 0.39.0

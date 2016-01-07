@@ -5,11 +5,8 @@ platform :ios, '8.0'
 use_frameworks!
 inhibit_all_warnings!
 
-pod 'Compass', git: 'https://github.com/hyperoslo/compass'
+pod 'Compass'
 pod 'Imaginary', git: 'https://github.com/hyperoslo/Imaginary'
 pod 'Cache', git: 'https://github.com/hyperoslo/Cache'
-pod 'Hex'
 pod 'Spots', path: '../../'
-pod 'Sugar', git: 'https://github.com/hyperoslo/Sugar'
-pod 'Tailor', git: 'https://github.com/zenangst/Tailor'
 pod "Fakery"
