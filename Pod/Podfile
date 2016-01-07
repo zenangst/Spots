@@ -1,7 +1,7 @@
 platform :ios, '8.0'
 use_frameworks!
 
-pod 'Compass'
 pod 'Fakery'
 pod 'Imaginary', git: 'https://github.com/hyperoslo/Imaginary'
 pod 'Cache', git: 'https://github.com/hyperoslo/Cache'
+pod 'Sugar'
