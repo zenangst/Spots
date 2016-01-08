@@ -1,0 +1,16 @@
+source 'https://github.com/CocoaPods/Specs.git'
+
+platform :ios, '8.0'
+
+use_frameworks!
+inhibit_all_warnings!
+
+target "Spotify" do
+  pod 'Cache', git: 'https://github.com/hyperoslo/Cache'
+  pod 'Compass'
+  pod 'Imaginary', git: 'https://github.com/hyperoslo/Imaginary'
+  pod 'Spots', path: '../../'
+  pod 'Keychain', git: 'https://github.com/hyperoslo/Keychain'
+  pod 'Whisper'
+  pod 'Hue', git: 'https://github.com/hyperoslo/Hue'
+end

@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "38A0E0B8CC71517BD0065D1A89290295EBFA6A7C",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "2F24C7ABC659AFF86BEF70BD7DCAF0EF1B9AD29C" : 0,
+    "38A0E0B8CC71517BD0065D1A89290295EBFA6A7C" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "1423DE55-CA3A-43B1-B6FB-D41E5441D87D",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "2F24C7ABC659AFF86BEF70BD7DCAF0EF1B9AD29C" : "ios-sdk\/",
+    "38A0E0B8CC71517BD0065D1A89290295EBFA6A7C" : "Spots\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "Spotify",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Examples\/Spotify\/Spotify.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/spotify\/ios-sdk.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "2F24C7ABC659AFF86BEF70BD7DCAF0EF1B9AD29C"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:hyperoslo\/Spots.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "38A0E0B8CC71517BD0065D1A89290295EBFA6A7C"
+    }
+  ]
+}

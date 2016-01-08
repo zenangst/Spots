@@ -1,2 +1,5 @@
 github "Quick/Nimble"
 github "Quick/Quick"
+github "hyperoslo/Sugar"
+github "hyperoslo/Imaginary" "master"
+github "zenangst/Tailor"

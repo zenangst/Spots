@@ -1,0 +1,14 @@
+source 'https://github.com/CocoaPods/Specs.git'
+
+platform :ios, '8.0'
+
+use_frameworks!
+inhibit_all_warnings!
+
+target "SpotsCards" do
+  pod 'Compass', git: 'https://github.com/hyperoslo/Compass'
+  pod 'Imaginary', git: 'https://github.com/hyperoslo/Imaginary'
+  pod 'Cache', git: 'https://github.com/hyperoslo/Cache'
+  pod 'Hue', git: 'https://github.com/hyperoslo/Hue'
+  pod 'Spots', path: '../../'
+end

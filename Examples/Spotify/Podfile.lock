@@ -1,0 +1,66 @@
+PODS:
+  - Cache (1.0.0)
+  - Compass (1.3.0):
+    - Sugar
+  - Hue (1.0.0)
+  - Imaginary (0.1.0):
+    - Cache
+  - Keychain (1.0.0)
+  - Spots (1.0.0):
+    - Imaginary
+    - Sugar
+    - Tailor
+  - Sugar (1.0.2)
+  - Tailor (0.3.1):
+    - Sugar
+  - Whisper (1.1.0)
+
+DEPENDENCIES:
+  - Cache (from `https://github.com/hyperoslo/Cache`)
+  - Compass
+  - Hue (from `https://github.com/hyperoslo/Hue`)
+  - Imaginary (from `https://github.com/hyperoslo/Imaginary`)
+  - Keychain (from `https://github.com/hyperoslo/Keychain`)
+  - Spots (from `../../`)
+  - Whisper
+
+EXTERNAL SOURCES:
+  Cache:
+    :git: https://github.com/hyperoslo/Cache
+  Hue:
+    :git: https://github.com/hyperoslo/Hue
+  Imaginary:
+    :git: https://github.com/hyperoslo/Imaginary
+  Keychain:
+    :git: https://github.com/hyperoslo/Keychain
+  Spots:
+    :path: "../../"
+
+CHECKOUT OPTIONS:
+  Cache:
+    :commit: ae5f3ceb0124a4183d4d2ecfa59652109612906c
+    :git: https://github.com/hyperoslo/Cache
+  Hue:
+    :commit: d31e0257a47f05c1c800ce150d1fec104dfc9085
+    :git: https://github.com/hyperoslo/Hue
+  Imaginary:
+    :commit: 265eb5ddd1df41bbcc9f0f860e33649e831868d4
+    :git: https://github.com/hyperoslo/Imaginary
+  Keychain:
+    :commit: 21e6f607394e112229a7f30bebe2f832a4d43c48
+    :git: https://github.com/hyperoslo/Keychain
+
+SPEC CHECKSUMS:
+  Cache: 78f58bc008313c7a1182967a2ebcb3de9fddecd4
+  Compass: 3c8b5a504f9c1616332070239c47d0235d90040a
+  Hue: 44ae8b1091935fcc75055174095ab04653989235
+  Imaginary: feaea646440c68a9b6ed66a46597d548b9a44207
+  Keychain: 50cb247cab32e774422741b118af9b598a3fb5b2
+  Spots: 0e2a783d37cf05ce0752e2ae4cd709de0112cb04
+  Sugar: c9638457a8566ba13bb875c41a464e291c37019a
+  Tailor: 3ec670165a4a0b728c187313e85b433af457152c
+  Whisper: 80f9eafa9d51dbc246f7c6aeb8aaa146a20cddce
+
+PODFILE CHECKSUM: 3a2aeebe9f05ae88ecc097c1abc9e12147b4f281
+
+COCOAPODS: 1.0.0.beta.2
