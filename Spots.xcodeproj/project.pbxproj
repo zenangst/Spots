@@ -24,27 +24,18 @@
 		BD89CBBD1C400F4C0092EDF7 /* SpotsScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD89CB8F1C400F370092EDF7 /* SpotsScrollView.swift */; };
 		BD89CBBE1C400F4C0092EDF7 /* Componentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD89CB931C400F370092EDF7 /* Componentable.swift */; };
 		BD89CBBF1C400F4C0092EDF7 /* Itemble.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD89CB941C400F370092EDF7 /* Itemble.swift */; };
-		BD89CBC01C400F4C0092EDF7 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD89CB951C400F370092EDF7 /* Parser.swift */; };
-		BD89CBC11C400F4C0092EDF7 /* SpotFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD89CB961C400F370092EDF7 /* SpotFactory.swift */; };
 		BD89CBC21C400F4C0092EDF7 /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD89CB981C400F370092EDF7 /* Component.swift */; };
 		BD89CBC31C400F4C0092EDF7 /* ListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD89CB991C400F370092EDF7 /* ListItem.swift */; };
-		BD89CBC41C400F530092EDF7 /* Componentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD89CB931C400F370092EDF7 /* Componentable.swift */; };
-		BD89CBC51C400F530092EDF7 /* Itemble.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD89CB941C400F370092EDF7 /* Itemble.swift */; };
-		BD89CBC61C400F530092EDF7 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD89CB951C400F370092EDF7 /* Parser.swift */; };
-		BD89CBC71C400F530092EDF7 /* SpotFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD89CB961C400F370092EDF7 /* SpotFactory.swift */; };
-		BD89CBC81C400F530092EDF7 /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD89CB981C400F370092EDF7 /* Component.swift */; };
-		BD89CBC91C400F530092EDF7 /* ListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD89CB991C400F370092EDF7 /* ListItem.swift */; };
 		BD89CBCC1C4010720092EDF7 /* Sugar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD89CBCA1C4010720092EDF7 /* Sugar.framework */; };
 		BD89CBCD1C4010720092EDF7 /* Tailor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD89CBCB1C4010720092EDF7 /* Tailor.framework */; };
 		BD89CBD01C4010790092EDF7 /* Sugar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD89CBCF1C4010780092EDF7 /* Sugar.framework */; };
 		BD89CBD21C4011A20092EDF7 /* Tailor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD89CBD11C4011A20092EDF7 /* Tailor.framework */; };
-		BD89CBD61C4011ED0092EDF7 /* Spotable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD89CBD51C4011ED0092EDF7 /* Spotable.swift */; };
-		BD89CBD91C4012A60092EDF7 /* GridSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD89CBD81C4012A60092EDF7 /* GridSpot.swift */; };
-		BD89CBDB1C4012AB0092EDF7 /* ListSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD89CBDA1C4012AB0092EDF7 /* ListSpot.swift */; };
-		BD89CBDD1C4012B30092EDF7 /* CarouselSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD89CBDC1C4012B30092EDF7 /* CarouselSpot.swift */; };
-		BD89CBDF1C40145F0092EDF7 /* SpotsDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD89CBDE1C40145F0092EDF7 /* SpotsDelegates.swift */; };
-		BD89CBE21C4015430092EDF7 /* Gridable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD89CBE01C4015430092EDF7 /* Gridable.swift */; };
-		BD89CBE31C4015430092EDF7 /* Listable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD89CBE11C4015430092EDF7 /* Listable.swift */; };
+		BD89CBE61C401A480092EDF7 /* SpotFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD89CBE41C401A400092EDF7 /* SpotFactory.swift */; };
+		BD89CBE81C401A600092EDF7 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD89CBE71C401A600092EDF7 /* Parser.swift */; };
+		BD89CBE91C401A960092EDF7 /* Componentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD89CB931C400F370092EDF7 /* Componentable.swift */; };
+		BD89CBEA1C401A960092EDF7 /* Itemble.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD89CB941C400F370092EDF7 /* Itemble.swift */; };
+		BD89CBEB1C401ABC0092EDF7 /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD89CB981C400F370092EDF7 /* Component.swift */; };
+		BD89CBEC1C401ABC0092EDF7 /* ListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD89CB991C400F370092EDF7 /* ListItem.swift */; };
 		D5B2E8AA1C3A780C00C0327D /* Spots.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5B2E89F1C3A780C00C0327D /* Spots.framework */; };
 		D5C6294A1C3A7FAA007F7B7C /* Spots.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5C629401C3A7FAA007F7B7C /* Spots.framework */; };
 		D5C629771C3A878E007F7B7C /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5C629751C3A878E007F7B7C /* Quick.framework */; };
@@ -92,8 +83,6 @@
 		BD89CB8F1C400F370092EDF7 /* SpotsScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotsScrollView.swift; sourceTree = "<group>"; };
 		BD89CB931C400F370092EDF7 /* Componentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Componentable.swift; sourceTree = "<group>"; };
 		BD89CB941C400F370092EDF7 /* Itemble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Itemble.swift; sourceTree = "<group>"; };
-		BD89CB951C400F370092EDF7 /* Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
-		BD89CB961C400F370092EDF7 /* SpotFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotFactory.swift; sourceTree = "<group>"; };
 		BD89CB981C400F370092EDF7 /* Component.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
 		BD89CB991C400F370092EDF7 /* ListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListItem.swift; sourceTree = "<group>"; };
 		BD89CBCA1C4010720092EDF7 /* Sugar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sugar.framework; path = Carthage/Build/iOS/Sugar.framework; sourceTree = "<group>"; };
@@ -107,6 +96,8 @@
 		BD89CBDE1C40145F0092EDF7 /* SpotsDelegates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsDelegates.swift; sourceTree = "<group>"; };
 		BD89CBE01C4015430092EDF7 /* Gridable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gridable.swift; sourceTree = "<group>"; };
 		BD89CBE11C4015430092EDF7 /* Listable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Listable.swift; sourceTree = "<group>"; };
+		BD89CBE41C401A400092EDF7 /* SpotFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotFactory.swift; sourceTree = "<group>"; };
+		BD89CBE71C401A600092EDF7 /* Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
 		D500FD111C3AABED00782D78 /* Playground-iOS.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Playground-iOS.playground"; sourceTree = "<group>"; };
 		D500FD121C3AAC8E00782D78 /* Playground-Mac.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Playground-Mac.playground"; sourceTree = "<group>"; };
 		D5B2E89F1C3A780C00C0327D /* Spots.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Spots.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -201,6 +192,8 @@
 		BD89CB7C1C400F370092EDF7 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				BD89CBE71C401A600092EDF7 /* Parser.swift */,
+				BD89CBE41C401A400092EDF7 /* SpotFactory.swift */,
 				BD89CB7D1C400F370092EDF7 /* Gridable.swift */,
 				BD89CB7E1C400F370092EDF7 /* Listable.swift */,
 				BD89CB7F1C400F370092EDF7 /* Spotable.swift */,
@@ -287,8 +280,6 @@
 			children = (
 				BD89CB931C400F370092EDF7 /* Componentable.swift */,
 				BD89CB941C400F370092EDF7 /* Itemble.swift */,
-				BD89CB951C400F370092EDF7 /* Parser.swift */,
-				BD89CB961C400F370092EDF7 /* SpotFactory.swift */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -623,18 +614,18 @@
 				BD89CBB31C400F4C0092EDF7 /* Spotable.swift in Sources */,
 				BD89CBB41C400F4C0092EDF7 /* SpotsDelegates.swift in Sources */,
 				BD89CBB51C400F4C0092EDF7 /* CarouselSpot.swift in Sources */,
+				BD89CBE61C401A480092EDF7 /* SpotFactory.swift in Sources */,
 				BD89CBB61C400F4C0092EDF7 /* CarouselSpotCell.swift in Sources */,
 				BD89CBB71C400F4C0092EDF7 /* GridSpot.swift in Sources */,
 				BD89CBB81C400F4C0092EDF7 /* GridSpotCell.swift in Sources */,
 				BD89CBB91C400F4C0092EDF7 /* ListSpot.swift in Sources */,
+				BD89CBE81C401A600092EDF7 /* Parser.swift in Sources */,
 				BD89CBBA1C400F4C0092EDF7 /* ListSpotCell.swift in Sources */,
 				BD89CBBB1C400F4C0092EDF7 /* SpotCell.swift in Sources */,
 				BD89CBBC1C400F4C0092EDF7 /* SpotsContentView.swift in Sources */,
 				BD89CBBD1C400F4C0092EDF7 /* SpotsScrollView.swift in Sources */,
 				BD89CBBE1C400F4C0092EDF7 /* Componentable.swift in Sources */,
 				BD89CBBF1C400F4C0092EDF7 /* Itemble.swift in Sources */,
-				BD89CBC01C400F4C0092EDF7 /* Parser.swift in Sources */,
-				BD89CBC11C400F4C0092EDF7 /* SpotFactory.swift in Sources */,
 				BD89CBC21C400F4C0092EDF7 /* Component.swift in Sources */,
 				BD89CBC31C400F4C0092EDF7 /* ListItem.swift in Sources */,
 			);
@@ -653,19 +644,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BD89CBD61C4011ED0092EDF7 /* Spotable.swift in Sources */,
-				BD89CBC41C400F530092EDF7 /* Componentable.swift in Sources */,
-				BD89CBC51C400F530092EDF7 /* Itemble.swift in Sources */,
-				BD89CBE21C4015430092EDF7 /* Gridable.swift in Sources */,
-				BD89CBC61C400F530092EDF7 /* Parser.swift in Sources */,
-				BD89CBC71C400F530092EDF7 /* SpotFactory.swift in Sources */,
-				BD89CBD91C4012A60092EDF7 /* GridSpot.swift in Sources */,
-				BD89CBC81C400F530092EDF7 /* Component.swift in Sources */,
-				BD89CBE31C4015430092EDF7 /* Listable.swift in Sources */,
-				BD89CBC91C400F530092EDF7 /* ListItem.swift in Sources */,
-				BD89CBDB1C4012AB0092EDF7 /* ListSpot.swift in Sources */,
-				BD89CBDD1C4012B30092EDF7 /* CarouselSpot.swift in Sources */,
-				BD89CBDF1C40145F0092EDF7 /* SpotsDelegates.swift in Sources */,
+				BD89CBEB1C401ABC0092EDF7 /* Component.swift in Sources */,
+				BD89CBEC1C401ABC0092EDF7 /* ListItem.swift in Sources */,
+				BD89CBE91C401A960092EDF7 /* Componentable.swift in Sources */,
+				BD89CBEA1C401A960092EDF7 /* Itemble.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -732,6 +714,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -774,6 +757,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -877,7 +861,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Spots/Info-Mac.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = "no.hyper.Spots-Mac";
 				PRODUCT_NAME = Spots;
 				SDKROOT = macosx;
@@ -904,7 +888,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Spots/Info-Mac.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = "no.hyper.Spots-Mac";
 				PRODUCT_NAME = Spots;
 				SDKROOT = macosx;
