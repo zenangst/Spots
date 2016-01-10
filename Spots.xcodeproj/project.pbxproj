@@ -89,17 +89,8 @@
 		BD89CBCB1C4010720092EDF7 /* Tailor.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Tailor.framework; path = Carthage/Build/iOS/Tailor.framework; sourceTree = "<group>"; };
 		BD89CBCF1C4010780092EDF7 /* Sugar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sugar.framework; path = Carthage/Build/Mac/Sugar.framework; sourceTree = "<group>"; };
 		BD89CBD11C4011A20092EDF7 /* Tailor.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Tailor.framework; path = Carthage/Build/Mac/Tailor.framework; sourceTree = "<group>"; };
-		BD89CBD51C4011ED0092EDF7 /* Spotable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spotable.swift; sourceTree = "<group>"; };
-		BD89CBD81C4012A60092EDF7 /* GridSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridSpot.swift; sourceTree = "<group>"; };
-		BD89CBDA1C4012AB0092EDF7 /* ListSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListSpot.swift; sourceTree = "<group>"; };
-		BD89CBDC1C4012B30092EDF7 /* CarouselSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselSpot.swift; sourceTree = "<group>"; };
-		BD89CBDE1C40145F0092EDF7 /* SpotsDelegates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsDelegates.swift; sourceTree = "<group>"; };
-		BD89CBE01C4015430092EDF7 /* Gridable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gridable.swift; sourceTree = "<group>"; };
-		BD89CBE11C4015430092EDF7 /* Listable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Listable.swift; sourceTree = "<group>"; };
 		BD89CBE41C401A400092EDF7 /* SpotFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotFactory.swift; sourceTree = "<group>"; };
 		BD89CBE71C401A600092EDF7 /* Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
-		D500FD111C3AABED00782D78 /* Playground-iOS.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Playground-iOS.playground"; sourceTree = "<group>"; };
-		D500FD121C3AAC8E00782D78 /* Playground-Mac.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Playground-Mac.playground"; sourceTree = "<group>"; };
 		D5B2E89F1C3A780C00C0327D /* Spots.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Spots.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5B2E8A91C3A780C00C0327D /* Spots-iOS-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Spots-iOS-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5C629401C3A7FAA007F7B7C /* Spots.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Spots.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -311,10 +302,6 @@
 		BD89CBD41C4011E30092EDF7 /* Library */ = {
 			isa = PBXGroup;
 			children = (
-				BD89CBE01C4015430092EDF7 /* Gridable.swift */,
-				BD89CBE11C4015430092EDF7 /* Listable.swift */,
-				BD89CBDE1C40145F0092EDF7 /* SpotsDelegates.swift */,
-				BD89CBD51C4011ED0092EDF7 /* Spotable.swift */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -322,9 +309,6 @@
 		BD89CBD71C4012830092EDF7 /* Spots */ = {
 			isa = PBXGroup;
 			children = (
-				BD89CBD81C4012A60092EDF7 /* GridSpot.swift */,
-				BD89CBDA1C4012AB0092EDF7 /* ListSpot.swift */,
-				BD89CBDC1C4012B30092EDF7 /* CarouselSpot.swift */,
 			);
 			path = Spots;
 			sourceTree = "<group>";
@@ -333,8 +317,6 @@
 			isa = PBXGroup;
 			children = (
 				BD89CBD31C4011BF0092EDF7 /* Frameworks */,
-				D500FD111C3AABED00782D78 /* Playground-iOS.playground */,
-				D500FD121C3AAC8E00782D78 /* Playground-Mac.playground */,
 				D5B2E8A01C3A780C00C0327D /* Products */,
 				BD89CB771C400F370092EDF7 /* Sources */,
 				D5C6295C1C3A800E007F7B7C /* Spots */,
