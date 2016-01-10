@@ -27,12 +27,12 @@ public class PlaylistListSpotCell: UITableViewCell, Itemble {
     backgroundColor = UIColor.blackColor()
     textLabel?.textColor = UIColor.whiteColor()
     detailTextLabel?.textColor = UIColor.whiteColor()
-    
-    if let textColor = item.meta["background"] as? UIColor where !textColor.isDarkColor {
+
+    if let textColor = item.meta["background"] as? UIColor where !textColor.isDark {
       textLabel?.textColor = textColor
     }
 
-    if let subtitleColor = item.meta["secondary"] as? UIColor where !subtitleColor.isDarkColor {
+    if let subtitleColor = item.meta["secondary"] as? UIColor where !subtitleColor.isDark {
       detailTextLabel?.textColor = subtitleColor
     }
 
