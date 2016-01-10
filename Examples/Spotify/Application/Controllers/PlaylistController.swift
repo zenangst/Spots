@@ -82,6 +82,7 @@ class PlaylistController: SpotsController {
 
           var top = first
           top.image = object.largestImage.imageURL.absoluteString
+          top.action = ""
 
           self.update(spotAtIndex: 0) { $0.items = [top] }
 
