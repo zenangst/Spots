@@ -21,6 +21,8 @@ public class PlayerListSpotCell: UITableViewCell, Itemble {
 
   public func configure(inout item: ListItem) {
     textLabel?.textAlignment = .Center
+    textLabel?.font = UIFont.boldSystemFontOfSize(14)
+    detailTextLabel?.font = UIFont.boldSystemFontOfSize(14)
     detailTextLabel?.textAlignment = .Center
     textLabel?.textColor = UIColor.whiteColor()
     detailTextLabel?.textColor = UIColor.grayColor()
