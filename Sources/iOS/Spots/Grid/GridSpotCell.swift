@@ -1,5 +1,5 @@
 import UIKit
-//import Imaginary
+import Imaginary
 import Sugar
 
 class GridSpotCell: UICollectionViewCell, Itemble {
@@ -34,10 +34,10 @@ class GridSpotCell: UICollectionViewCell, Itemble {
   }
 
   func configure(inout item: ListItem) {
-//    if item.image != "" {
-//      let URL = NSURL(string: item.image)
-//      imageView.setImage(URL)
-//    }
+    if item.image != "" {
+      let URL = NSURL(string: item.image)
+      imageView.setImage(URL)
+    }
 
     imageView.frame = contentView.frame
     label.text = item.title

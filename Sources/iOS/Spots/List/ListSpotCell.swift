@@ -1,5 +1,5 @@
 import UIKit
-//import Imaginary
+import Imaginary
 
 public class ListSpotCell: UITableViewCell, Itemble {
 
@@ -26,7 +26,7 @@ public class ListSpotCell: UITableViewCell, Itemble {
 
     if !item.image.isEmpty {
       if let url = NSURL(string: item.image) {
-        //imageView?.setImage(url, placeholder: UIImage(named: "ImagePlaceholder"))
+        imageView?.setImage(url, placeholder: UIImage(named: "ImagePlaceholder"))
       } else {
         imageView?.image = UIImage(named: item.image)
       }
