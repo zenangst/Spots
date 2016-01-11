@@ -546,6 +546,7 @@
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/Quick.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Nimble.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Fakery.framework",
 			);
 			name = "Copy frameworks with Carthage";
 			outputPaths = (
@@ -562,6 +563,7 @@
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/Mac/Quick.framework",
 				"$(SRCROOT)/Carthage/Build/Mac/Nimble.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Fakery.framework",
 			);
 			name = "Copy frameworks with Carthage";
 			outputPaths = (
