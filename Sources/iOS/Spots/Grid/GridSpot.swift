@@ -63,14 +63,7 @@ extension GridSpot: UICollectionViewDelegateFlowLayout {
 extension GridSpot: UICollectionViewDelegate {
 
   public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-    guard let cell = collectionView.cellForItemAtIndexPath(indexPath) else { return }
-
-    UIView.animateWithDuration(0.125, animations: { () -> Void in
-      cell.transform = CGAffineTransformMakeScale(0.8, 0.8)
-      }) { _ in
-        self.spotsDelegate?.spotDidSelectItem(self, item: self.item(indexPath))
-        UIView.animateWithDuration(0.125) { cell.transform = CGAffineTransformIdentity }
-    }
+    spotsDelegate?.spotDidSelectItem(self, item: item(indexPath))
   }
 }
 
