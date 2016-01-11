@@ -1,5 +1,6 @@
 import Foundation
 import XCTest
+import Spots
 
 class ComponentTests : XCTestCase {
 
@@ -28,7 +29,7 @@ class ComponentTests : XCTestCase {
       span: json["span"] as! CGFloat,
       meta: json["meta"] as! [String : String],
       items: [ListItem(title: "item1")])
-      
+
     XCTAssertEqual(codeComponent.title, json["title"] as? String)
     XCTAssertEqual(codeComponent.kind,  json["type"] as? String)
     XCTAssertEqual(codeComponent.span,  json["span"] as? CGFloat)
@@ -38,7 +39,7 @@ class ComponentTests : XCTestCase {
     // Compare JSON and programmatically created component
     XCTAssert(jsonComponent == codeComponent)
   }
-  
+
   func testEquatable() {
     let jsonComponent = Component(json)
     var codeComponent = Component(
