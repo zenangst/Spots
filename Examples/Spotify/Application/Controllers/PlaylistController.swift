@@ -82,6 +82,7 @@ class PlaylistController: SpotsController {
 
           var top = first
           top.image = object.largestImage.imageURL.absoluteString
+          top.action = ""
 
           self.update(spotAtIndex: 0) { $0.items = [top] }
 
@@ -216,7 +217,18 @@ extension PlaylistController: SpotsDelegate {
     }
 
     guard let urn = item.action else { return }
-    Compass.navigate(urn)
+
+    if let carouselSpot = spot as? CarouselSpot,
+      cell = carouselSpot.collectionView.cellForItemAtIndexPath(NSIndexPath(forItem: item.index, inSection: 0)) {
+        UIView.animateWithDuration(0.125, animations: { () -> Void in
+          cell.transform = CGAffineTransformMakeScale(0.8, 0.8)
+          }) { _ in
+            Compass.navigate(urn)
+            UIView.animateWithDuration(0.125) { cell.transform = CGAffineTransformIdentity }
+        }
+    } else {
+      Compass.navigate(urn)
+    }
 
     if let notification = item.meta["notification"] as? String {
       let murmur = Murmur(title: notification,

@@ -35,6 +35,7 @@ class FeaturedController: SpotsController, SpotsDelegate {
 
   func spotDidSelectItem(spot: Spotable, item: ListItem) {
     guard let urn = item.action else { return }
+
     Compass.navigate(urn)
   }
 }

@@ -5,8 +5,10 @@ platform :ios, '8.0'
 use_frameworks!
 inhibit_all_warnings!
 
-pod 'Compass'
-pod 'Imaginary', git: 'https://github.com/hyperoslo/Imaginary'
-pod 'Cache', git: 'https://github.com/hyperoslo/Cache'
-pod 'Spots', path: '../../'
-pod "Fakery"
+target "SpotsFeed" do
+  pod 'Compass'
+  pod 'Imaginary', git: 'https://github.com/hyperoslo/Imaginary'
+  pod 'Cache', git: 'https://github.com/hyperoslo/Cache'
+  pod 'Spots', path: '../../'
+  pod "Fakery"
+end

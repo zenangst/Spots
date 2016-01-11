@@ -19,18 +19,18 @@ the public API.
 
 * [Key features](#key-features)
 * [Usage](#usage)
-  * [View models in the Cloud](#view-models-in-the-cloud)
-  * [Programmatic approach](#programmatic-approach)
+* [View models in the Cloud](#view-models-in-the-cloud)
+* [Programmatic approach](#programmatic-approach)
 * [SpotsController](#spotscontroller)
-  * [Delegates](#delegates)
-    *  [SpotsDelegate](#spotsdelegate)
-    *  [SpotsRefreshDelegate](#spotsrefreshdelegate)
-    *  [SpotsScrollDelegate](#spotsscrolldelegate)
-    *  [SpotsCarouselScrollDelegate](#spotscarouselscrolldelegate)
+* [Delegates](#delegates)
+*  [SpotsDelegate](#spotsdelegate)
+*  [SpotsRefreshDelegate](#spotsrefreshdelegate)
+*  [SpotsScrollDelegate](#spotsscrolldelegate)
+*  [SpotsCarouselScrollDelegate](#spotscarouselscrolldelegate)
 * [JSON structure](#json-structure)
 * [Models](#models)
-  * [Component](#component)
-  * [ListItem](#listitem)
+* [Component](#component)
+* [ListItem](#listitem)
 * [Installation](#installation)
 * [Dependencies](#dependencies)
 * [Author](#author)
@@ -77,11 +77,11 @@ The JSON data will be parsed into view model data and your view controller is re
 ```swift
 let spots = [Spotable]()
 let myContacts = Component(title: "My contacts", items: [
-  ListItem(title: "John Hyperseed"),
-  ListItem(title: "Vadym Markov"),
-  ListItem(title: "Ramon Gilabert Llop"),
-  ListItem(title: "Khoa Pham"),
-  ListItem(title: "Christoffer Winterkvist")
+ListItem(title: "John Hyperseed"),
+ListItem(title: "Vadym Markov"),
+ListItem(title: "Ramon Gilabert Llop"),
+ListItem(title: "Khoa Pham"),
+ListItem(title: "Christoffer Winterkvist")
 ])
 let listSpot = ListSpot(component: myContacts)
 let controller = SpotsController(spots: [listSpot])
@@ -98,7 +98,7 @@ The `SpotsController` inherits from `UIViewController` but it sports some core f
 
 ```swift
 public protocol SpotsDelegate: class {
-  func spotDidSelectItem(spot: Spotable, item: ListItem)
+func spotDidSelectItem(spot: Spotable, item: ListItem)
 }
 ```
 
@@ -108,7 +108,7 @@ public protocol SpotsDelegate: class {
 
 ```swift
 public protocol SpotsRefreshDelegate: class {
-  func spotsDidReload(refreshControl: UIRefreshControl, completion: (() -> Void)?)
+func spotsDidReload(refreshControl: UIRefreshControl, completion: (() -> Void)?)
 }
 ```
 
@@ -118,7 +118,7 @@ public protocol SpotsRefreshDelegate: class {
 
 ```swift
 public protocol SpotsScrollDelegate: class {
-  func spotDidReachEnd(completion: (() -> Void)?)
+func spotDidReachEnd(completion: (() -> Void)?)
 }
 ```
 
@@ -128,7 +128,7 @@ public protocol SpotsScrollDelegate: class {
 
 ```swift
 public protocol SpotsCarouselScrollDelegate: class {
-  func spotDidEndScrolling(spot: Spotable, item: ListItem)
+func spotDidEndScrolling(spot: Spotable, item: ListItem)
 }
 ```
 
@@ -138,56 +138,56 @@ public protocol SpotsCarouselScrollDelegate: class {
 
 ```json
 {
- "components" : [
-    {
-      "title"    : "Hyper iOS",
-      "type"     : "list",
-      "span"     : "1",
-      "items" : [
-        {
-          "title"    : "John Hyperseed",
-          "subtitle" : "Build server",
-          "image"    : "{image url}",
-          "type"     : "profile",
-          "action"   : "profile:1",
-          "meta"     : {"nationality" : "Apple"}
-        },
-        {
-          "title"    : "Vadym Markov",
-          "subtitle" : "iOS Developer",
-          "image"    : "{image url}",
-          "type"     : "profile",
-          "action"   : "profile:2",
-          "meta"     : {"nationality" : "Ukrainian"}
-        },
-        {
-          "title"    : "Ramon Gilabert Llop",
-          "subtitle" : "iOS Developer",
-          "image"    : "{image url}",
-          "type"     : "profile",
-          "action"   : "profile:3",
-          "meta"     : {"nationality" : "Catalan"}
-        },
-        {
-          "title"    : "Khoa Pham",
-          "subtitle" : "iOS Developer",
-          "image"    : "{image url}",
-          "type"     : "profile",
-          "action"   : "profile:4",
-          "meta"     : {"nationality" : "Vietnamese"}
-        },
-        {
-          "title"    : "Christoffer Winterkvist",
-          "subtitle" : "iOS Developer",
-          "image"    : "{image url}",
-          "type"     : "profile",
-          "action"   : "profile:5",
-          "meta"     : {"nationality" : "Swedish"}
-        }
-      ],
-      "meta" : []
-    }
-  ]
+"components" : [
+{
+"title"    : "Hyper iOS",
+"type"     : "list",
+"span"     : "1",
+"items" : [
+{
+"title"    : "John Hyperseed",
+"subtitle" : "Build server",
+"image"    : "{image url}",
+"type"     : "profile",
+"action"   : "profile:1",
+"meta"     : {"nationality" : "Apple"}
+},
+{
+"title"    : "Vadym Markov",
+"subtitle" : "iOS Developer",
+"image"    : "{image url}",
+"type"     : "profile",
+"action"   : "profile:2",
+"meta"     : {"nationality" : "Ukrainian"}
+},
+{
+"title"    : "Ramon Gilabert Llop",
+"subtitle" : "iOS Developer",
+"image"    : "{image url}",
+"type"     : "profile",
+"action"   : "profile:3",
+"meta"     : {"nationality" : "Catalan"}
+},
+{
+"title"    : "Khoa Pham",
+"subtitle" : "iOS Developer",
+"image"    : "{image url}",
+"type"     : "profile",
+"action"   : "profile:4",
+"meta"     : {"nationality" : "Vietnamese"}
+},
+{
+"title"    : "Christoffer Winterkvist",
+"subtitle" : "iOS Developer",
+"image"    : "{image url}",
+"type"     : "profile",
+"action"   : "profile:5",
+"meta"     : {"nationality" : "Swedish"}
+}
+],
+"meta" : []
+}
+]
 }
 ```
 
@@ -197,13 +197,13 @@ public protocol SpotsCarouselScrollDelegate: class {
 
 ```swift
 public struct Component: Mappable {
-  public var index = 0
-  public var title = ""
-  public var kind = ""
-  public var span: CGFloat = 0
-  public var items = [ListItem]()
-  public var size: CGSize?
-  public var meta = [String : String]()
+public var index = 0
+public var title = ""
+public var kind = ""
+public var span: CGFloat = 0
+public var items = [ListItem]()
+public var size: CGSize?
+public var meta = [String : String]()
 }
 ```
 
@@ -224,14 +224,14 @@ Custom data that you are free to use as you like in your implementation.
 
 ```swift
 public struct ListItem: Mappable {
-  public var index = 0
-  public var title = ""
-  public var subtitle = ""
-  public var image = ""
-  public var kind = ""
-  public var action: String?
-  public var size = CGSize(width: 0, height: 0)
-  public var meta = [String : AnyObject]()
+public var index = 0
+public var title = ""
+public var subtitle = ""
+public var image = ""
+public var kind = ""
+public var action: String?
+public var size = CGSize(width: 0, height: 0)
+public var meta = [String : AnyObject]()
 }
 ```
 
@@ -288,4 +288,3 @@ Reference: http://oleb.net/blog/2014/05/scrollviews-inside-scrollviews/
 ## License
 
 **Spots** is available under the MIT license. See the LICENSE file for more info.
-
