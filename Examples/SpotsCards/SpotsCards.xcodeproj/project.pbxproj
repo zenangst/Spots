@@ -50,7 +50,6 @@
 			children = (
 				2253B9FDAC5A474CF6C6D0D4 /* Pods-SpotsCards.debug.xcconfig */,
 				7A8CB6FCC43233366543BF8F /* Pods-SpotsCards.release.xcconfig */,
-			);
 			name = Pods;
 			sourceTree = "<group>";
 		};

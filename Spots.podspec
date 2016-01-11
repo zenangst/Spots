@@ -16,7 +16,6 @@ Pod::Spec.new do |s|
   s.osx.source_files = 'Sources/{Shared}/**/*'
 
   s.frameworks = 'Foundation'
-
   s.dependency 'Sugar'
   s.dependency 'Tailor'
   s.dependency 'Imaginary'
