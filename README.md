@@ -1,25 +1,3 @@
-# Spots
-
-[![CI Status](http://img.shields.io/travis/hyperoslo/Spots.svg?style=flat)](https://travis-ci.org/hyperoslo/Spots)
-[![Version](https://img.shields.io/cocoapods/v/Spots.svg?style=flat)](http://cocoadocs.org/docsets/Spots)
-[![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
-[![License](https://img.shields.io/cocoapods/l/Spots.svg?style=flat)](http://cocoadocs.org/docsets/Spots)
-[![Platform](https://img.shields.io/cocoapods/p/Spots.svg?style=flat)](http://cocoadocs.org/docsets/Spots)
-
-## Description
-
-**Spots** description.
-
-## Usage
-
-```swift
-<API>
-```
-
-## Author
-
-Hyper Interaktiv AS, ios@hyper.no
-=======
 ![Spots logo](https://raw.githubusercontent.com/hyperoslo/Spots/master/Images/cover_v2.png)
 
 [![CI Status](http://img.shields.io/travis/hyperoslo/Spots.svg?style=flat)](https://travis-ci.org/hyperoslo/Spots)
