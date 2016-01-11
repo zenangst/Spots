@@ -35,6 +35,17 @@ class FeaturedController: SpotsController, SpotsDelegate {
 
   func spotDidSelectItem(spot: Spotable, item: ListItem) {
     guard let urn = item.action else { return }
-    Compass.navigate(urn)
+
+    if let gridSpot = spot as? GridSpot,
+    cell = gridSpot.collectionView.cellForItemAtIndexPath(NSIndexPath(forItem: item.index, inSection: 0)) {
+      UIView.animateWithDuration(0.125, animations: { () -> Void in
+        cell.transform = CGAffineTransformMakeScale(0.8, 0.8)
+        }) { _ in
+          Compass.navigate(urn)
+          UIView.animateWithDuration(0.125) { cell.transform = CGAffineTransformIdentity }
+      }
+    } else {
+      Compass.navigate(urn)
+    }
   }
 }
