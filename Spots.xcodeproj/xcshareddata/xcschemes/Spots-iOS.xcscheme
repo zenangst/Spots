@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D5B2E89E1C3A780C00C0327D"
+               BlueprintIdentifier = "D58478081C43FEB8006EBA49"
                BuildableName = "Spots.framework"
                BlueprintName = "Spots-iOS"
                ReferencedContainer = "container:Spots.xcodeproj">
@@ -32,7 +32,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D5B2E8A81C3A780C00C0327D"
+               BlueprintIdentifier = "D58478121C43FEB9006EBA49"
                BuildableName = "Spots-iOS-Tests.xctest"
                BlueprintName = "Spots-iOS-Tests"
                ReferencedContainer = "container:Spots.xcodeproj">
@@ -42,7 +42,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D5B2E89E1C3A780C00C0327D"
+            BlueprintIdentifier = "D58478081C43FEB8006EBA49"
             BuildableName = "Spots.framework"
             BlueprintName = "Spots-iOS"
             ReferencedContainer = "container:Spots.xcodeproj">
@@ -64,7 +64,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D5B2E89E1C3A780C00C0327D"
+            BlueprintIdentifier = "D58478081C43FEB8006EBA49"
             BuildableName = "Spots.framework"
             BlueprintName = "Spots-iOS"
             ReferencedContainer = "container:Spots.xcodeproj">
@@ -82,7 +82,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D5B2E89E1C3A780C00C0327D"
+            BlueprintIdentifier = "D58478081C43FEB8006EBA49"
             BuildableName = "Spots.framework"
             BlueprintName = "Spots-iOS"
             ReferencedContainer = "container:Spots.xcodeproj">

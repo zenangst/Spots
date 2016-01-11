@@ -1,3 +1,4 @@
+@testable import Spots
 import Foundation
 import XCTest
 import Fakery
