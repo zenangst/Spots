@@ -42,10 +42,6 @@
 		D5C629781C3A878E007F7B7C /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5C629761C3A878E007F7B7C /* Nimble.framework */; };
 		D5C6297B1C3A879F007F7B7C /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5C629791C3A879F007F7B7C /* Quick.framework */; };
 		D5C6297C1C3A879F007F7B7C /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5C6297A1C3A879F007F7B7C /* Nimble.framework */; };
-		D5C6299B1C3A8BDA007F7B7C /* MacSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C629951C3A8BDA007F7B7C /* MacSpec.swift */; };
-		D5C6299C1C3A8BDA007F7B7C /* SharedSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C629971C3A8BDA007F7B7C /* SharedSpec.swift */; };
-		D5C6299D1C3A8C6B007F7B7C /* iOSSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C629931C3A8BDA007F7B7C /* iOSSpec.swift */; };
-		D5C6299E1C3A8C75007F7B7C /* SharedSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C629971C3A8BDA007F7B7C /* SharedSpec.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,9 +99,6 @@
 		D5C6298C1C3A8BBD007F7B7C /* Info-Mac.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-Mac.plist"; sourceTree = "<group>"; };
 		D5C629901C3A8BDA007F7B7C /* Info-iOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
 		D5C629911C3A8BDA007F7B7C /* Info-Mac.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-Mac.plist"; sourceTree = "<group>"; };
-		D5C629931C3A8BDA007F7B7C /* iOSSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iOSSpec.swift; sourceTree = "<group>"; };
-		D5C629951C3A8BDA007F7B7C /* MacSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacSpec.swift; sourceTree = "<group>"; };
-		D5C629971C3A8BDA007F7B7C /* SharedSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedSpec.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -251,8 +244,6 @@
 		BD89CB901C400F370092EDF7 /* Mac */ = {
 			isa = PBXGroup;
 			children = (
-				BD89CBD71C4012830092EDF7 /* Spots */,
-				BD89CBD41C4011E30092EDF7 /* Library */,
 			);
 			path = Mac;
 			sourceTree = "<group>";
@@ -297,20 +288,6 @@
 				BD89CBCB1C4010720092EDF7 /* Tailor.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		BD89CBD41C4011E30092EDF7 /* Library */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Library;
-			sourceTree = "<group>";
-		};
-		BD89CBD71C4012830092EDF7 /* Spots */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Spots;
 			sourceTree = "<group>";
 		};
 		D5B2E8951C3A780C00C0327D = {
@@ -359,7 +336,6 @@
 		D5C629921C3A8BDA007F7B7C /* iOS */ = {
 			isa = PBXGroup;
 			children = (
-				D5C629931C3A8BDA007F7B7C /* iOSSpec.swift */,
 			);
 			path = iOS;
 			sourceTree = "<group>";
@@ -367,7 +343,6 @@
 		D5C629941C3A8BDA007F7B7C /* Mac */ = {
 			isa = PBXGroup;
 			children = (
-				D5C629951C3A8BDA007F7B7C /* MacSpec.swift */,
 			);
 			path = Mac;
 			sourceTree = "<group>";
@@ -375,7 +350,6 @@
 		D5C629961C3A8BDA007F7B7C /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				D5C629971C3A8BDA007F7B7C /* SharedSpec.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -617,8 +591,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D5C6299E1C3A8C75007F7B7C /* SharedSpec.swift in Sources */,
-				D5C6299D1C3A8C6B007F7B7C /* iOSSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -637,8 +609,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D5C6299C1C3A8BDA007F7B7C /* SharedSpec.swift in Sources */,
-				D5C6299B1C3A8BDA007F7B7C /* MacSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
