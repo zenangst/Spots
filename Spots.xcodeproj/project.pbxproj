@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BDB538301C444B3C0005E498 /* ListSpotSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB5382F1C444B3C0005E498 /* ListSpotSpec.swift */; };
+		BDCCD9271C44438800AC21D1 /* GridSpotSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCCD9261C44438800AC21D1 /* GridSpotSpec.swift */; };
 		D58478141C43FEB9006EBA49 /* Spots.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478091C43FEB8006EBA49 /* Spots.framework */; };
 		D58478531C43FFEB006EBA49 /* TestSpotFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58478281C43FF34006EBA49 /* TestSpotFactory.swift */; };
 		D58478551C43FFEF006EBA49 /* TestSpotsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58478291C43FF34006EBA49 /* TestSpotsController.swift */; };
@@ -72,6 +74,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BDB5382F1C444B3C0005E498 /* ListSpotSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListSpotSpec.swift; sourceTree = "<group>"; };
+		BDCCD9261C44438800AC21D1 /* GridSpotSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridSpotSpec.swift; sourceTree = "<group>"; };
 		D58478091C43FEB8006EBA49 /* Spots.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Spots.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D58478131C43FEB9006EBA49 /* Spots-iOS-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Spots-iOS-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D58478241C43FF34006EBA49 /* Info-iOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
@@ -211,6 +215,8 @@
 			children = (
 				D58478281C43FF34006EBA49 /* TestSpotFactory.swift */,
 				D58478291C43FF34006EBA49 /* TestSpotsController.swift */,
+				BDCCD9261C44438800AC21D1 /* GridSpotSpec.swift */,
+				BDB5382F1C444B3C0005E498 /* ListSpotSpec.swift */,
 			);
 			path = iOS;
 			sourceTree = "<group>";
@@ -570,6 +576,8 @@
 				"$(SRCROOT)/Carthage/Build/iOS/Fakery.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/SwiftyJSON.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Sugar.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Quick.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Nimble.framework",
 			);
 			outputPaths = (
 			);
@@ -643,7 +651,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BDB538301C444B3C0005E498 /* ListSpotSpec.swift in Sources */,
 				D58478591C440000006EBA49 /* TestListItem.swift in Sources */,
+				BDCCD9271C44438800AC21D1 /* GridSpotSpec.swift in Sources */,
 				D58478571C43FFFD006EBA49 /* TestComponent.swift in Sources */,
 				D58478531C43FFEB006EBA49 /* TestSpotFactory.swift in Sources */,
 				D58478551C43FFEF006EBA49 /* TestSpotsController.swift in Sources */,
