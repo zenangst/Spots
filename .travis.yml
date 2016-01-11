@@ -5,7 +5,8 @@ before_install:
 - brew update
 - brew install carthage
 - if brew outdated | grep -qx xctool; then brew upgrade xctool; fi
-- carthage update --platform iOS
+- carthage update --no-build --platform iOS
+- carthage bootstrap --platform iOS
 
 script:
 - xctool clean build -project Spots.xcodeproj -scheme Spots-iOS -sdk iphonesimulator
