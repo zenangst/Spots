@@ -2,6 +2,7 @@
 import Foundation
 import XCTest
 import Fakery
+import Spots
 
 class ListItemTests : XCTestCase {
 

@@ -1,6 +1,7 @@
 @testable import Spots
 import Foundation
 import XCTest
+import Spots
 
 class SpotsControllerTests : XCTestCase {
 
