@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BD3F13D61C43DE6E00847A94 /* TestComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3F13D41C43DE6E00847A94 /* TestComponent.swift */; };
+		BD3F13D71C43DE6E00847A94 /* TestComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3F13D41C43DE6E00847A94 /* TestComponent.swift */; };
+		BD3F13D81C43DE6E00847A94 /* TestListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3F13D51C43DE6E00847A94 /* TestListItem.swift */; };
+		BD3F13D91C43DE6E00847A94 /* TestListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3F13D51C43DE6E00847A94 /* TestListItem.swift */; };
+		BD3F13DB1C43DE7C00847A94 /* TestSpotFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3F13DA1C43DE7C00847A94 /* TestSpotFactory.swift */; };
+		BD3F13DD1C43DE8600847A94 /* TestSpotsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3F13DC1C43DE8600847A94 /* TestSpotsController.swift */; };
 		BD89CBAF1C400F4C0092EDF7 /* SpotsController+UIScrollViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD89CB7A1C400F370092EDF7 /* SpotsController+UIScrollViewDelegate.swift */; };
 		BD89CBB01C400F4C0092EDF7 /* SpotsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD89CB7B1C400F370092EDF7 /* SpotsController.swift */; };
 		BD89CBB11C400F4C0092EDF7 /* Gridable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD89CB7D1C400F370092EDF7 /* Gridable.swift */; };
@@ -62,6 +68,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BD3F13D41C43DE6E00847A94 /* TestComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestComponent.swift; sourceTree = "<group>"; };
+		BD3F13D51C43DE6E00847A94 /* TestListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestListItem.swift; sourceTree = "<group>"; };
+		BD3F13DA1C43DE7C00847A94 /* TestSpotFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSpotFactory.swift; sourceTree = "<group>"; };
+		BD3F13DC1C43DE8600847A94 /* TestSpotsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSpotsController.swift; sourceTree = "<group>"; };
 		BD89CB7A1C400F370092EDF7 /* SpotsController+UIScrollViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SpotsController+UIScrollViewDelegate.swift"; sourceTree = "<group>"; };
 		BD89CB7B1C400F370092EDF7 /* SpotsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotsController.swift; sourceTree = "<group>"; };
 		BD89CB7D1C400F370092EDF7 /* Gridable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gridable.swift; sourceTree = "<group>"; };
@@ -336,6 +346,8 @@
 		D5C629921C3A8BDA007F7B7C /* iOS */ = {
 			isa = PBXGroup;
 			children = (
+				BD3F13DC1C43DE8600847A94 /* TestSpotsController.swift */,
+				BD3F13DA1C43DE7C00847A94 /* TestSpotFactory.swift */,
 			);
 			path = iOS;
 			sourceTree = "<group>";
@@ -350,6 +362,8 @@
 		D5C629961C3A8BDA007F7B7C /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				BD3F13D41C43DE6E00847A94 /* TestComponent.swift */,
+				BD3F13D51C43DE6E00847A94 /* TestListItem.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -591,6 +605,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BD3F13DB1C43DE7C00847A94 /* TestSpotFactory.swift in Sources */,
+				BD3F13DD1C43DE8600847A94 /* TestSpotsController.swift in Sources */,
+				BD3F13D81C43DE6E00847A94 /* TestListItem.swift in Sources */,
+				BD3F13D61C43DE6E00847A94 /* TestComponent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -609,6 +627,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BD3F13D91C43DE6E00847A94 /* TestListItem.swift in Sources */,
+				BD3F13D71C43DE6E00847A94 /* TestComponent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -851,6 +871,7 @@
 		D5C629551C3A7FAA007F7B7C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -863,12 +884,14 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "no.hyper.Spots-MacTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		D5C629561C3A7FAA007F7B7C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
