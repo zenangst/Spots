@@ -1,0 +1,109 @@
+{
+ "components" : [
+  {
+    "type" : "header",
+    "items" : [
+      {
+        "type"     : "header",
+        "image"    : "http://hyper.no/assets/about-us-top-f59eec81e5470547a81c36612084e0cf.jpg"
+      }
+    ]
+  },
+  {
+    "type" : "header",
+    "items" : [
+      {
+        "type"     : "titles",
+        "title"    : "TURNING IDEAS INTO BUSINESS",
+        "subtitle" : "Hyper is a full-service digital agency with 60 employees based in Oslo, Norway."
+      }
+    ]
+  },
+  {
+    "type" : "key-points",
+    "span"  : 2,
+    "items" : [
+      {
+        "type"     : "circle",
+        "image"    : "http://hyper.no/assets/about-us-top-f59eec81e5470547a81c36612084e0cf.jpg",
+        "title"    : "WHAT WE DO",
+        "subtitle" : "We bring together advertising, business improvement and product development."
+      },
+      {
+        "type"     : "circle",
+        "image"    : "http://hyper.no/assets/about-us-top-f59eec81e5470547a81c36612084e0cf.jpg",
+        "title"    : "WHAT WE DELIVER",
+        "subtitle" : "Our end product is not a report. We make web pages, apps, films, second screen tools, games and a lot more."
+      },
+      {
+        "type"     : "circle",
+        "image"    : "http://hyper.no/assets/about-us-top-f59eec81e5470547a81c36612084e0cf.jpg",
+        "title"    : "HOW WE WORK",
+        "subtitle" : "We put together a team of designers, developers, business consultants, animators, film directors and game designers to solve the task ahead."
+      },
+      {
+        "type"     : "circle",
+        "image"    : "http://hyper.no/assets/about-us-top-f59eec81e5470547a81c36612084e0cf.jpg",
+        "title"    : "WHAT WE STRIVE FOR",
+        "subtitle" : "We want strategy and insight to hook up with ideas and shake hands with technology and say: Let’s do business!"
+      }
+    ]
+  },
+  {
+    "type" : "header",
+    "meta" : {
+      "background-color" : "222222"
+    },
+    "items" : [
+      {
+        "type"     : "header",
+        "image"    : "http://www.hyper.no/assets/adds-2dd62355b8b0ddd7dc8a134c4e045748.jpg"
+      },
+      {
+        "type"     : "titles",
+        "title"    : "ADVERTISING",
+               "subtitle" : "Today’s technology has given us completely new possibilities for developing products. For many people, the website, app or mobile solution has become the actual core product. Sometimes it is this product that has to be improved. Just think how important Apple software has been for the experience of the Apple brand. Sometimes it is a brand new product solution, and sometimes you can productify an idea, a concept or a solution.",
+        "meta" : {
+               "text" : "Everyone is willing to pay for digital products and solutions. Who has not bought music, streamed a video, downloaded an app, or bought something online? Marketing a digital service is as much about developing the product itself as it is about the history that you share. It’s about design, functionality and user experience, combined with a credible history. Facebook is a good example of something where functional innovation goes hand in hand with the story of a young man with a hoodie at the stock exchange.\n\n Even products that are not digital have a digital life. The consumer will share information about your product, whether that product is a mobile phone, a garment or a carton of milk. Tine’s Mr. Melk (Mr Milk) has over ⅓ of young people in Norway as friends on Facebook, he has had two number one hits on Spotify and over 1 million people have downloaded his game Mr. Melk Winter Games. Or what about a ski helmet with a built-in camera that can share, live, an off-piste experience from the Norwegian mountains with the rest of the world.\n\n If you involve your customers in the actual product development, they will be more likely to be loyal and act as brand ambassadors for you. Hyper has developed a program for monitoring social media with over 30,000 subscribers across the world. We have developed an innovative sales support system for Dansani. We have developed a separate children’s traffic club for NAF, the Norwegian Automobile Association. We have launched commercial games in the AppStore. We have developed new saving products for the LandkredittBank and we have developed a number of web-based services for communication, file sharing and dialogue."
+        }
+      }
+    ]
+  },
+  {
+    "type" : "header",
+    "items" : [
+      {
+        "type"     : "header",
+        "image"    : "http://www.hyper.no/assets/business_improv-9ac0ac8799823a46c0d961842121705b.jpg"
+      },
+      {
+        "type"     : "titles",
+        "title"    : "BUSINESS IMPROVEMENT",
+        "subtitle" : "The digital revolution opens up the possibility of completely new ways of building up and developing an organisation. Through communication, training and culture building.",
+        "meta" : {
+               "text-color" : "000000",
+               "text" : "There is enormous power in building up a strong business culture. The management should cultivate a culture of openness, knowledge sharing, discussion and experience. We can do this through, among other things, transferring the way we communicate in social media to our internal communication. We make engaging internal communication solutions with quality content. You want to create ambassadors. We can help you do that.\n\n To perform well, you have to train a lot and have the opportunity to practise. Athletes put in thousands of hours of training every year in order to perform at top level. Good management involves training your employees in focusing on the right things, to be good decision-makers, to become rich in knowledge. No one thrives by making decisions on things they can’t carry through or know nothing about. It’s not very efficient to make the wrong decisions – and it can be costly. Good training is necessary for being able to perform.\n\n A marketing manager who does not actively seek cooperation with the rest of the organisation will pretty soon be out of a job. These days it’s no longer enough to just pay to get your message out there. You have to be a brand. The advertisements must reflect brand perception in social media, in customer services, on individual websites, and, not least, must be firmly anchored in their own organisation. The responsibility for building up a brand or selling a product may just as easily rest with IT, HR, product development, customer services, in stores or in production. There was never a better time for taking the employees seriously with regard to opinion, communication and marketing work.\n\n We make use of social media, digital 3D games and mobile intranet solutions for in-house training, communication, knowledge sharing and self-motivation. We create engagement around learning and skills development internally. Every single employee is allowed to train, learn, participate, compete, and perhaps most important of all – share from their own working day, and be seen. This builds up a culture of winners.\n\n We have a good understanding of business and can see how things are connected. We also know that efficiency is all about things other than just monetary value."
+        }
+      }
+    ]
+  },
+  {
+    "type" : "header",
+    "items" : [
+      {
+        "type"     : "header",
+        "image"    : "http://www.hyper.no/assets/tech-42e1ae773852750cd237cf1f0e385bad.jpg"
+      },
+      {
+        "type"     : "titles",
+        "title"    : "PRODUCT DEVELOPMENT",
+               "subtitle" : "Today’s technology has given us completely new possibilities for developing products. For many people, the website, app or mobile solution has become the actual core product. Sometimes it is this product that has to be improved. Just think how important Apple software has been for the experience of the Apple brand. Sometimes it is a brand new product solution, and sometimes you can productify an idea, a concept or a solution.",
+        "meta" : {
+               "text-color" : "000000",
+               "text" : "Everyone is willing to pay for digital products and solutions. Who has not bought music, streamed a video, downloaded an app, or bought something online? Marketing a digital service is as much about developing the product itself as it is about the history that you share. It’s about design, functionality and user experience, combined with a credible history. Facebook is a good example of something where functional innovation goes hand in hand with the story of a young man with a hoodie at the stock exchange.\n\n Even products that are not digital have a digital life. The consumer will share information about your product, whether that product is a mobile phone, a garment or a carton of milk. Tine’s Mr. Melk (Mr Milk) has over ⅓ of young people in Norway as friends on Facebook, he has had two number one hits on Spotify and over 1 million people have downloaded his game Mr. Melk Winter Games. Or what about a ski helmet with a built-in camera that can share, live, an off-piste experience from the Norwegian mountains with the rest of the world.\n\n If you involve your customers in the actual product development, they will be more likely to be loyal and act as brand ambassadors for you. Hyper has developed a program for monitoring social media with over 30,000 subscribers across the world. We have developed an innovative sales support system for Dansani. We have developed a separate children’s traffic club for NAF, the Norwegian Automobile Association. We have launched commercial games in the AppStore. We have developed new saving products for the LandkredittBank and we have developed a number of web-based services for communication, file sharing and dialogue."
+        }
+      }
+    ]
+  }
+  ]
+}

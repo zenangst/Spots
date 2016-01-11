@@ -10,5 +10,4 @@ before_install:
 script:
 - xctool clean build -project Spots.xcodeproj -scheme Spots-iOS -sdk iphonesimulator
 - xctool test -project Spots.xcodeproj -scheme Spots-iOS -sdk iphonesimulator
-- xctool clean build -project Spots.xcodeproj -scheme Spots-Mac -sdk macosx
-- xctool test -project Spots.xcodeproj -scheme Spots-Mac -sdk macosx
+
