@@ -219,12 +219,12 @@ extension PlaylistController: SpotsDelegate {
     guard let urn = item.action else { return }
 
     if let carouselSpot = spot as? CarouselSpot,
-      cell = arouselSpot.collectionView.cellForItemAtIndexPath(NSIndexPath(forItem: item.index, inSection: 0)) {
+      cell = carouselSpot.collectionView.cellForItemAtIndexPath(NSIndexPath(forItem: item.index, inSection: 0)) {
         UIView.animateWithDuration(0.125, animations: { () -> Void in
           cell.transform = CGAffineTransformMakeScale(0.8, 0.8)
           }) { _ in
             Compass.navigate(urn)
-            UIView.animateWithDuration(0.125) { cell.transform = GAffineTransformIdentity }
+            UIView.animateWithDuration(0.125) { cell.transform = CGAffineTransformIdentity }
         }
     } else {
       Compass.navigate(urn)
