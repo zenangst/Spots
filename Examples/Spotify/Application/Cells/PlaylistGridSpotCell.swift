@@ -6,15 +6,15 @@ public class PlaylistGridSpotCell: UICollectionViewCell, Itemble {
 
   public var size = CGSize(width: 125, height: 160)
 
-  lazy var imageView: UIImageView = UIImageView().then {
+  lazy var imageView = UIImageView().then {
     $0.contentMode = .ScaleAspectFill
   }
 
-  lazy var albumView: UIImageView = UIImageView().then{
+  lazy var albumView = UIImageView().then{
     $0.contentMode = .ScaleAspectFill
   }
 
-  lazy var blurView: UIVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .Light))
+  lazy var blurView = UIVisualEffectView(effect: UIBlurEffect(style: .Light))
 
   override init(frame: CGRect) {
     super.init(frame: frame)
