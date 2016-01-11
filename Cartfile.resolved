@@ -1,5 +1,6 @@
-github "hyperoslo/Imaginary" "265eb5ddd1df41bbcc9f0f860e33649e831868d4"
+github "hyperoslo/Cache" "5da09c624c8de0735cdd39b95e0ad2b25d8f1708"
 github "Quick/Nimble" "v3.0.0"
 github "Quick/Quick" "v0.8.0"
 github "hyperoslo/Sugar" "1.0.2"
+github "hyperoslo/Imaginary" "8301434e481f643734f533e4e84e8abc12e266eb"
 github "zenangst/Tailor" "0.3.1"
