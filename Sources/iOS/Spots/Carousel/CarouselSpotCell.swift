@@ -8,9 +8,7 @@ class CarouselSpotCell: UICollectionViewCell, Itemble {
   var item: ListItem?
 
   var label: UILabel = {
-    let label = UILabel(frame: CGRect(x: 0, y: 0,
-      width: 200,
-      height: 200))
+    let label = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
     label.textAlignment = .Center
     return label
     }()
