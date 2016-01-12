@@ -21,6 +21,8 @@ public extension Spotable where Self : Viewable {
   }
 
   private func prepareSpot<T: Spotable>(spot: T) {
+    if component.kind.isEmpty { component.kind = "view" }
+
     component.items.forEach {
       if T.views.keys.contains($0.kind) {
         let viewClass = T.views[$0.kind] ?? T.defaultView
