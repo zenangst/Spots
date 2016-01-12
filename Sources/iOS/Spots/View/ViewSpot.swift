@@ -16,6 +16,9 @@ public class ViewSpot: NSObject, Spotable, Viewable {
   public required init(component: Component) {
     self.component = component
     super.init()
+    prepare()
+  }
+
   public convenience init(title: String = "", kind: String = "view") {
     self.init(component: Component(title: title, kind: kind))
   }
