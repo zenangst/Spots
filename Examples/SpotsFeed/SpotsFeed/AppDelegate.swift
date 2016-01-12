@@ -33,8 +33,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     window = UIWindow(frame: UIScreen.mainScreen().bounds)
 
-    ListSpot.cells["feed"] = PostTableViewCell.self
-    ListSpot.cells["comment"] = CommentTableViewCell.self
+    ListSpot.views["feed"] = PostTableViewCell.self
+    ListSpot.views["comment"] = CommentTableViewCell.self
 
     let feedComponent = Component(span: 1, items: FeedController.generateItems(0, to: 3))
     let feedSpot = ListSpot(component: feedComponent)
