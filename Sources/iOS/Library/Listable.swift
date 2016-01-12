@@ -14,17 +14,17 @@ public extension Spotable where Self : Listable {
   private func prepareSpot<T: Spotable>(spot: T) {
     if component.kind.isEmpty { component.kind = "list" }
 
-    for (reuseIdentifier, classType) in T.cells {
+    for (reuseIdentifier, classType) in T.views {
       tableView.registerClass(classType, forCellReuseIdentifier: reuseIdentifier)
     }
 
-    if !T.cells.keys.contains(component.kind) {
-      tableView.registerClass(T.defaultCell, forCellReuseIdentifier: component.kind)
+    if !T.views.keys.contains(component.kind) {
+      tableView.registerClass(T.defaultView, forCellReuseIdentifier: component.kind)
     }
 
     for (index, item) in component.items.enumerate() {
       let reuseIdentifer = item.kind.isEmpty ? component.kind : item.kind
-      let componentCellClass = T.cells[reuseIdentifer] ?? T.defaultCell
+      let componentCellClass = T.views[reuseIdentifer] ?? T.defaultView
 
       component.items[index].index = index
 
@@ -136,7 +136,7 @@ public extension Spotable where Self : Listable {
   public func update(item: ListItem, index: Int, completion: (() -> Void)? = nil) {
     items[index] = item
 
-    let cellClass = self.dynamicType.cells[item.kind] ?? self.dynamicType.defaultCell
+    let cellClass = self.dynamicType.views[item.kind] ?? self.dynamicType.defaultView
     let reuseIdentifier = !component.items[index].kind.isEmpty
       ? component.items[index].kind
       : component.kind
@@ -155,7 +155,7 @@ public extension Spotable where Self : Listable {
     let items = component.items
 
     for (index, item) in items.enumerate() {
-      let cellClass = self.dynamicType.cells[item.kind] ?? self.dynamicType.defaultCell
+      let cellClass = self.dynamicType.views[item.kind] ?? self.dynamicType.defaultView
       let reuseIdentifier = !component.items[index].kind.isEmpty
         ? component.items[index].kind
         : component.kind

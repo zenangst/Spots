@@ -3,11 +3,11 @@ import Sugar
 
 public class GridSpot: NSObject, Spotable, Gridable {
 
-  public static var cells = [String: UIView.Type]()
+  public static var views = [String: UIView.Type]()
+  public static var defaultView: UIView.Type = GridSpotCell.self
   public static var configure: ((view: UICollectionView) -> Void)?
-  public static var defaultCell: UIView.Type = GridSpotCell.self
 
-  public var cachedCells = [String : Itemble]()
+  public var cachedViews = [String : Itemble]()
   public var component: Component
   public var index = 0
 

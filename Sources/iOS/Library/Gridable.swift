@@ -191,7 +191,7 @@ public extension Spotable where Self : Gridable {
   public func reload(indexes: [Int] = [], completion: (() -> Void)?) {
     let items = component.items
     for (index, item) in items.enumerate() {
-      let cellClass = self.dynamicType.cells[item.kind] ?? self.dynamicType.defaultCell
+      let cellClass = self.dynamicType.views[item.kind] ?? self.dynamicType.defaultView
       if let cell = cellClass.init() as? Itemble {
         component.items[index].index = index
         cell.configure(&component.items[index])
