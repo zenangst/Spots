@@ -14,10 +14,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarDelegate {
     ListSpot.headers["search"] = SearchHeaderView.self
     ListSpot.headers["list"] = ListHeaderView.self
     ListSpot.configure = { tableView in tableView.tableFooterView = UIView(frame: CGRect.zero) }
-    ListSpot.cells["feed"] = FeedItemCell.self
+    ListSpot.views["feed"] = FeedItemCell.self
 
-    CarouselSpot.cells["topic"] = GridTopicCell.self
-    GridSpot.cells["topic"] = GridTopicCell.self
+    CarouselSpot.views["topic"] = GridTopicCell.self
+    GridSpot.views["topic"] = GridTopicCell.self
 
     let forYouController = ForYouController(title: "For You")
     let favoritesController = FavoritesController(title: "Favorites")
@@ -25,13 +25,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarDelegate {
     let searchController = SearchController(title: "Search")
     let savedController = SavedController(title: "Saved")
     let tabBarController = MainController()
-    
+
     forYouController.tabBarItem.image = UIImage(named: "ForYou")
     favoritesController.tabBarItem.image = UIImage(named: "Favorites")
     exploreController.tabBarItem.image = UIImage(named: "Explore")
     searchController.tabBarItem.image = UIImage(named: "Search")
     savedController.tabBarItem.image = UIImage(named: "Saved")
-    
+
     tabBarController.viewControllers = [
       forYouController,
       favoritesController,
@@ -39,7 +39,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarDelegate {
       searchController,
       savedController
     ]
-    tabBarController.selectedIndex = 0
+    tabBarController.selectedIndex = 2
 
     navigationController = UINavigationController(rootViewController: tabBarController)
 

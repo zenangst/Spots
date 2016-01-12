@@ -13,16 +13,16 @@ struct SpotsConfigurator: Configurator {
       collectionView.backgroundColor = UIColor.clearColor()
     }
 
-    CarouselSpot.cells["playlist"] = PlaylistGridSpotCell.self
-    CarouselSpot.cells["featured"] = FeaturedGridSpotCell.self
+    CarouselSpot.views["playlist"] = PlaylistGridSpotCell.self
+    CarouselSpot.views["featured"] = FeaturedGridSpotCell.self
 
     GridSpot.configure = { collectionView in
       collectionView.backgroundColor = UIColor.clearColor()
     }
 
-    GridSpot.cells["player"] = PlayerGridSpotCell.self
-    GridSpot.cells["playlist"] = PlaylistGridSpotCell.self
-    GridSpot.cells["featured"] = FeaturedGridSpotCell.self
+    GridSpot.views["player"] = PlayerGridSpotCell.self
+    GridSpot.views["playlist"] = PlaylistGridSpotCell.self
+    GridSpot.views["featured"] = FeaturedGridSpotCell.self
 
     ListSpot.configure = { tableView in
       let inset: CGFloat = 15
@@ -40,9 +40,9 @@ struct SpotsConfigurator: Configurator {
     ListSpot.headers["search"] = SearchHeaderView.self
     ListSpot.headers["list"] = ListHeaderView.self
 
-    ListSpot.cells["default"] = DefaultListSpotCell.self
-    ListSpot.cells["playlist"] = PlaylistListSpotCell.self
-    ListSpot.cells["player"] = PlayerListSpotCell.self
-    ListSpot.defaultCell = DefaultListSpotCell.self
+    ListSpot.views["default"] = DefaultListSpotCell.self
+    ListSpot.views["playlist"] = PlaylistListSpotCell.self
+    ListSpot.views["player"] = PlayerListSpotCell.self
+    ListSpot.defaultView = DefaultListSpotCell.self
   }
 }

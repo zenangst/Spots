@@ -9,10 +9,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
     window = UIWindow(frame: UIScreen.mainScreen().bounds)
-    
-    GridSpot.cells["header"] = GridSpotHeader.self
-    GridSpot.cells["titles"] = GridSpotCellTitles.self
-    GridSpot.cells["circle"] = GridSpotCellCircle.self
+
+    GridSpot.views["header"] = GridSpotHeader.self
+    GridSpot.views["titles"] = GridSpotCellTitles.self
+    GridSpot.views["circle"] = GridSpotCellCircle.self
 
     let controller = JSONController()
 
@@ -22,9 +22,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     window?.rootViewController = navigationController
 
     applyStyles()
-    
+
     window?.makeKeyAndVisible()
-    
+
     return true
   }
 
