@@ -21,7 +21,7 @@ class ViewSpotSpec: QuickSpec {
       }
 
       describe("convenience init with title") {
-        let viewSpot = ListSpot(title: "Spot")
+        let viewSpot = ViewSpot(title: "Spot")
 
         it ("sets a title") {
           expect(viewSpot.component.title).to(equal("Spot"))
