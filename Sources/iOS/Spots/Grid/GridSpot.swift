@@ -40,11 +40,6 @@ public class GridSpot: NSObject, Spotable, Gridable {
     layout.sectionInset = UIEdgeInsetsMake(top, left, bottom, right)
     layout.minimumInteritemSpacing = itemSpacing
   }
-
-  public func setup(size: CGSize) {
-    collectionView.frame.size = size
-    GridSpot.configure?(view: collectionView)
-  }
 }
 
 extension GridSpot: UICollectionViewDelegateFlowLayout {
