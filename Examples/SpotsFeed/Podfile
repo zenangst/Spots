@@ -9,6 +9,7 @@ target "SpotsFeed" do
   pod 'Compass'
   pod 'Imaginary', git: 'https://github.com/hyperoslo/Imaginary'
   pod 'Cache', git: 'https://github.com/hyperoslo/Cache'
+  pod 'Hue', git: 'https://github.com/hyperoslo/Hue'
   pod 'Spots', path: '../../'
   pod "Fakery"
 end

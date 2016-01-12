@@ -4,6 +4,7 @@ PODS:
     - Sugar
   - Fakery (1.1.0):
     - SwiftyJSON
+  - Hue (1.0.0)
   - Imaginary (0.1.0):
     - Cache
   - Spots (1.0.0):
@@ -19,12 +20,15 @@ DEPENDENCIES:
   - Cache (from `https://github.com/hyperoslo/Cache`)
   - Compass
   - Fakery
+  - Hue (from `https://github.com/hyperoslo/Hue`)
   - Imaginary (from `https://github.com/hyperoslo/Imaginary`)
   - Spots (from `../../`)
 
 EXTERNAL SOURCES:
   Cache:
     :git: https://github.com/hyperoslo/Cache
+  Hue:
+    :git: https://github.com/hyperoslo/Hue
   Imaginary:
     :git: https://github.com/hyperoslo/Imaginary
   Spots:
@@ -34,6 +38,9 @@ CHECKOUT OPTIONS:
   Cache:
     :commit: 5af9d7f80b5c39ec578c54874d5acda248d10831
     :git: https://github.com/hyperoslo/Cache
+  Hue:
+    :commit: d31e0257a47f05c1c800ce150d1fec104dfc9085
+    :git: https://github.com/hyperoslo/Hue
   Imaginary:
     :commit: ab000e8bd10e1ada8d50307bcaaefc8bea209e8d
     :git: https://github.com/hyperoslo/Imaginary
@@ -42,12 +49,13 @@ SPEC CHECKSUMS:
   Cache: 78f58bc008313c7a1182967a2ebcb3de9fddecd4
   Compass: 3c8b5a504f9c1616332070239c47d0235d90040a
   Fakery: 593389814fb7c42fe7f0801e76c8ae55b95505e7
+  Hue: 44ae8b1091935fcc75055174095ab04653989235
   Imaginary: feaea646440c68a9b6ed66a46597d548b9a44207
   Spots: 0e2a783d37cf05ce0752e2ae4cd709de0112cb04
   Sugar: c9638457a8566ba13bb875c41a464e291c37019a
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   Tailor: 3ec670165a4a0b728c187313e85b433af457152c
 
-PODFILE CHECKSUM: 28ab223e09938592306da973d1540467e2cd0128
+PODFILE CHECKSUM: 11971312bc18561aa45838e85c355d380836a254
 
 COCOAPODS: 1.0.0.beta.2
