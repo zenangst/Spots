@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BD0625F71C45754B00A16F91 /* ViewSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0625F61C45754B00A16F91 /* ViewSpot.swift */; };
+		BD48BEC71C45795600317D76 /* Viewable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD48BEC61C45795600317D76 /* Viewable.swift */; };
 		BDB538301C444B3C0005E498 /* ListSpotSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB5382F1C444B3C0005E498 /* ListSpotSpec.swift */; };
 		BDCCD9271C44438800AC21D1 /* GridSpotSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCCD9261C44438800AC21D1 /* GridSpotSpec.swift */; };
 		D58478141C43FEB9006EBA49 /* Spots.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478091C43FEB8006EBA49 /* Spots.framework */; };
@@ -73,6 +75,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BD0625F61C45754B00A16F91 /* ViewSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewSpot.swift; sourceTree = "<group>"; };
+		BD48BEC61C45795600317D76 /* Viewable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Viewable.swift; sourceTree = "<group>"; };
 		BDB5382F1C444B3C0005E498 /* ListSpotSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListSpotSpec.swift; sourceTree = "<group>"; };
 		BDB538321C444D460005E498 /* Playground-iOS.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Playground-iOS.playground"; sourceTree = "<group>"; };
 		BDCCD9261C44438800AC21D1 /* GridSpotSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridSpotSpec.swift; sourceTree = "<group>"; };
@@ -166,6 +170,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BD0625F51C45753900A16F91 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				BD0625F61C45754B00A16F91 /* ViewSpot.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		BDB538311C444D460005E498 /* Playgrounds */ = {
 			isa = PBXGroup;
 			children = (
@@ -276,6 +288,7 @@
 				D58478641C440062006EBA49 /* Spotable.swift */,
 				D58478651C440062006EBA49 /* SpotFactory.swift */,
 				D58478661C440062006EBA49 /* SpotsDelegates.swift */,
+				BD48BEC61C45795600317D76 /* Viewable.swift */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -286,6 +299,7 @@
 				D58478681C440062006EBA49 /* Carousel */,
 				D584786B1C440062006EBA49 /* Grid */,
 				D584786E1C440062006EBA49 /* List */,
+				BD0625F51C45753900A16F91 /* View */,
 			);
 			path = Spots;
 			sourceTree = "<group>";
@@ -622,8 +636,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BD48BEC71C45795600317D76 /* Viewable.swift in Sources */,
 				D584789B1C440062006EBA49 /* SpotsContentView.swift in Sources */,
 				D584789F1C440062006EBA49 /* Componentable.swift in Sources */,
+				BD0625F71C45754B00A16F91 /* ViewSpot.swift in Sources */,
 				D58478911C440062006EBA49 /* GridSpot.swift in Sources */,
 				D58478931C440062006EBA49 /* GridSpotCell.swift in Sources */,
 				D584789D1C440062006EBA49 /* SpotsScrollView.swift in Sources */,
