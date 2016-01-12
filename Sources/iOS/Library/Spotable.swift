@@ -2,8 +2,8 @@ import UIKit
 
 public protocol Spotable: class {
 
-  static var cells: [String : UIView.Type] { get set }
-  static var defaultCell: UIView.Type { get set }
+  static var views: [String : UIView.Type] { get set }
+  static var defaultView: UIView.Type { get set }
 
   weak var spotsDelegate: SpotsDelegate? { get set }
 

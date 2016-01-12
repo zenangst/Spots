@@ -147,7 +147,7 @@ public extension Spotable where Self : Gridable {
   public func update(item: ListItem, index: Int, completion: (() -> Void)? = nil) {
     items[index] = item
 
-    let cellClass = self.dynamicType.cells[item.kind] ?? self.dynamicType.defaultCell
+    let cellClass = self.dynamicType.views[item.kind] ?? self.dynamicType.defaultView
     let reuseIdentifier = !component.items[index].kind.isEmpty
       ? component.items[index].kind
       : component.kind
@@ -167,17 +167,17 @@ public extension Spotable where Self : Gridable {
   private func prepareSpot<T: Spotable>(spot: T) {
     if component.kind.isEmpty { component.kind = "grid" }
 
-    for (reuseIdentifier, classType) in T.cells {
+    for (reuseIdentifier, classType) in T.views {
       collectionView.registerClass(classType, forCellWithReuseIdentifier: reuseIdentifier)
     }
 
-    if !T.cells.keys.contains(component.kind) {
-      collectionView.registerClass(T.defaultCell, forCellWithReuseIdentifier: component.kind)
+    if !T.views.keys.contains(component.kind) {
+      collectionView.registerClass(T.defaultView, forCellWithReuseIdentifier: component.kind)
     }
 
     for (index, item) in component.items.enumerate() {
       let reuseIdentifer = item.kind.isEmpty ? component.kind : item.kind
-      let componentCellClass = T.cells[reuseIdentifer] ?? T.defaultCell
+      let componentCellClass = T.views[reuseIdentifer] ?? T.defaultView
 
       component.items[index].index = index
 
@@ -191,7 +191,7 @@ public extension Spotable where Self : Gridable {
   public func reload(indexes: [Int] = [], completion: (() -> Void)?) {
     let items = component.items
     for (index, item) in items.enumerate() {
-      let cellClass = self.dynamicType.cells[item.kind] ?? self.dynamicType.defaultCell
+      let cellClass = self.dynamicType.views[item.kind] ?? self.dynamicType.defaultView
       if let cell = cellClass.init() as? Itemble {
         component.items[index].index = index
         cell.configure(&component.items[index])
@@ -207,6 +207,11 @@ public extension Spotable where Self : Gridable {
 
   public func render() -> UIScrollView {
     return collectionView
+  }
+
+  public func setup(size: CGSize) {
+    collectionView.frame.size = size
+    GridSpot.configure?(view: collectionView)
   }
 
   public func layout(size: CGSize) {

@@ -38,7 +38,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   Cache:
-    :commit: 5da09c624c8de0735cdd39b95e0ad2b25d8f1708
+    :commit: 5af9d7f80b5c39ec578c54874d5acda248d10831
     :git: https://github.com/hyperoslo/Cache
   Compass:
     :commit: 3f50eb79bb76b14475f23b9b27c05d7f8d817b22
@@ -47,7 +47,7 @@ CHECKOUT OPTIONS:
     :commit: d31e0257a47f05c1c800ce150d1fec104dfc9085
     :git: https://github.com/hyperoslo/Hue
   Imaginary:
-    :commit: 8301434e481f643734f533e4e84e8abc12e266eb
+    :commit: ab000e8bd10e1ada8d50307bcaaefc8bea209e8d
     :git: https://github.com/hyperoslo/Imaginary
 
 SPEC CHECKSUMS:

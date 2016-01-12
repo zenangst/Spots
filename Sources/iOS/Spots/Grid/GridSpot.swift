@@ -3,11 +3,11 @@ import Sugar
 
 public class GridSpot: NSObject, Spotable, Gridable {
 
-  public static var cells = [String: UIView.Type]()
+  public static var views = [String: UIView.Type]()
+  public static var defaultView: UIView.Type = GridSpotCell.self
   public static var configure: ((view: UICollectionView) -> Void)?
-  public static var defaultCell: UIView.Type = GridSpotCell.self
 
-  public var cachedCells = [String : Itemble]()
+  public var cachedViews = [String : Itemble]()
   public var component: Component
   public var index = 0
 
@@ -39,11 +39,6 @@ public class GridSpot: NSObject, Spotable, Gridable {
 
     layout.sectionInset = UIEdgeInsetsMake(top, left, bottom, right)
     layout.minimumInteritemSpacing = itemSpacing
-  }
-
-  public func setup(size: CGSize) {
-    collectionView.frame.size = size
-    GridSpot.configure?(view: collectionView)
   }
 }
 

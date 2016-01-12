@@ -28,7 +28,6 @@
 		D58478931C440062006EBA49 /* GridSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D584786D1C440062006EBA49 /* GridSpotCell.swift */; };
 		D58478951C440062006EBA49 /* ListSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = D584786F1C440062006EBA49 /* ListSpot.swift */; };
 		D58478971C440062006EBA49 /* ListSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58478701C440062006EBA49 /* ListSpotCell.swift */; };
-		D58478991C440062006EBA49 /* SpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58478721C440062006EBA49 /* SpotCell.swift */; };
 		D584789B1C440062006EBA49 /* SpotsContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58478741C440062006EBA49 /* SpotsContentView.swift */; };
 		D584789D1C440062006EBA49 /* SpotsScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58478751C440062006EBA49 /* SpotsScrollView.swift */; };
 		D584789F1C440062006EBA49 /* Componentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58478781C440062006EBA49 /* Componentable.swift */; };
@@ -101,7 +100,6 @@
 		D584786D1C440062006EBA49 /* GridSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridSpotCell.swift; sourceTree = "<group>"; };
 		D584786F1C440062006EBA49 /* ListSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListSpot.swift; sourceTree = "<group>"; };
 		D58478701C440062006EBA49 /* ListSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListSpotCell.swift; sourceTree = "<group>"; };
-		D58478721C440062006EBA49 /* SpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotCell.swift; sourceTree = "<group>"; };
 		D58478741C440062006EBA49 /* SpotsContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsContentView.swift; sourceTree = "<group>"; };
 		D58478751C440062006EBA49 /* SpotsScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsScrollView.swift; sourceTree = "<group>"; };
 		D58478781C440062006EBA49 /* Componentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Componentable.swift; sourceTree = "<group>"; };
@@ -288,7 +286,6 @@
 				D58478681C440062006EBA49 /* Carousel */,
 				D584786B1C440062006EBA49 /* Grid */,
 				D584786E1C440062006EBA49 /* List */,
-				D58478711C440062006EBA49 /* Spots */,
 			);
 			path = Spots;
 			sourceTree = "<group>";
@@ -318,14 +315,6 @@
 				D58478701C440062006EBA49 /* ListSpotCell.swift */,
 			);
 			path = List;
-			sourceTree = "<group>";
-		};
-		D58478711C440062006EBA49 /* Spots */ = {
-			isa = PBXGroup;
-			children = (
-				D58478721C440062006EBA49 /* SpotCell.swift */,
-			);
-			path = Spots;
 			sourceTree = "<group>";
 		};
 		D58478731C440062006EBA49 /* Views */ = {
@@ -647,7 +636,6 @@
 				D58478A11C440062006EBA49 /* Itemble.swift in Sources */,
 				D58478971C440062006EBA49 /* ListSpotCell.swift in Sources */,
 				D58478851C440062006EBA49 /* Parser.swift in Sources */,
-				D58478991C440062006EBA49 /* SpotCell.swift in Sources */,
 				D58478A51C440062006EBA49 /* ListItem.swift in Sources */,
 				D58478951C440062006EBA49 /* ListSpot.swift in Sources */,
 				D584787D1C440062006EBA49 /* SpotsController+UIScrollViewDelegate.swift in Sources */,

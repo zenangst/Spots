@@ -3,9 +3,9 @@ import Sugar
 
 public class ListSpot: NSObject, Spotable, Listable {
 
-  public static var cells = [String : UIView.Type]()
+  public static var views = [String : UIView.Type]()
   public static var configure: ((view: UITableView) -> Void)?
-  public static var defaultCell: UIView.Type = ListSpotCell.self
+  public static var defaultView: UIView.Type = ListSpotCell.self
   public static var headers = [String : UIView.Type]()
 
   public var index = 0
