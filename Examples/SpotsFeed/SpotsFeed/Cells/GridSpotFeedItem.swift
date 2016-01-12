@@ -1,7 +1,6 @@
 import UIKit
 import Imaginary
 import Sugar
-import Hex
 import Spots
 
 class GridSpotFeedItem : UICollectionViewCell, Itemble {
@@ -14,7 +13,7 @@ class GridSpotFeedItem : UICollectionViewCell, Itemble {
     view.autoresizingMask = [.FlexibleWidth]
     view.backgroundColor = UIColor.whiteColor()
     view.clipsToBounds = true
-    
+
     return view
     }()
 
