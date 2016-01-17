@@ -175,17 +175,20 @@ public extension Spotable where Self : Gridable {
       collectionView.registerClass(T.defaultView, forCellWithReuseIdentifier: component.kind)
     }
 
+    var cached: UIView?
     for (index, item) in component.items.enumerate() {
       let reuseIdentifer = item.kind.isEmpty ? component.kind : item.kind
       let componentCellClass = T.views[reuseIdentifer] ?? T.defaultView
 
       component.items[index].index = index
 
-      if let cell = componentCellClass.init() as? Itemble {
-        component.items[index].size.width = UIScreen.mainScreen().bounds.size.width / CGFloat(component.span)
-        cell.configure(&component.items[index])
+      if cached == nil && cached.dynamicType != componentCellClass { cached = componentCellClass.init() }
+      component.items[index].size.width = UIScreen.mainScreen().bounds.size.width / CGFloat(component.span)
+      cached!.then {
+        ($0 as? Itemble)?.configure(&component.items[index])
       }
     }
+    cached = nil
   }
 
   public func reload(indexes: [Int] = [], completion: (() -> Void)?) {
