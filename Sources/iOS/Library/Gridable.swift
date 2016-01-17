@@ -178,15 +178,15 @@ public extension Spotable where Self : Gridable {
     var cached: UIView?
     for (index, item) in component.items.enumerate() {
       let reuseIdentifer = item.kind.isEmpty ? component.kind : item.kind
-      let componentCellClass = T.views[reuseIdentifer] ?? T.defaultView
+      let componentClass = T.views[reuseIdentifer] ?? T.defaultView
 
       component.items[index].index = index
 
-      if cached == nil && cached.dynamicType != componentCellClass { cached = componentCellClass.init() }
+      if cached?.isKindOfClass(componentClass) == false { cached = nil }
+      if cached == nil { cached = componentClass.init() }
+
       component.items[index].size.width = UIScreen.mainScreen().bounds.size.width / CGFloat(component.span)
-      cached!.then {
-        ($0 as? Itemble)?.configure(&component.items[index])
-      }
+      (cached as? Itemble)?.configure(&component.items[index])
     }
     cached = nil
   }
