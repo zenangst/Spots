@@ -22,16 +22,19 @@ public extension Spotable where Self : Listable {
       tableView.registerClass(T.defaultView, forCellReuseIdentifier: component.kind)
     }
 
+    var cached: UIView?
     for (index, item) in component.items.enumerate() {
       let reuseIdentifer = item.kind.isEmpty ? component.kind : item.kind
       let componentCellClass = T.views[reuseIdentifer] ?? T.defaultView
 
       component.items[index].index = index
 
-      componentCellClass.init().then {
+      if cached == nil && cached.dynamicType != componentCellClass { cached = componentCellClass.init() }
+      cached!.then {
         ($0 as? Itemble)?.configure(&component.items[index])
       }
     }
+    cached = nil
   }
 
   public func append(item: ListItem, completion: (() -> Void)? = nil) {
