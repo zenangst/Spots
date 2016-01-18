@@ -42,7 +42,7 @@ public extension Spotable where Self : Listable {
     dispatch { [weak self] in
       guard let weakSelf = self else { return }
 
-      weakSelf.tableView.insert([weakSelf.component.items.count])
+      weakSelf.tableView.insert([0])
       completion?()
     }
   }
