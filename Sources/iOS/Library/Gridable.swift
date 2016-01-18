@@ -20,12 +20,23 @@ public extension Spotable where Self : Gridable {
   }
 
   public func append(item: ListItem, completion: (() -> Void)? = nil) {
-    component.items.append(item)
+    var indexes = [Int]()
+    let count = component.items.count
+
+    for (index, item) in items.enumerate() {
+      component.items.append(item)
+      indexes.append(count + index)
+    }
 
     dispatch { [weak self] in
       guard let weakSelf = self else { return }
-      weakSelf.collectionView.insert([0], completion: completion)
-      completion?()
+
+      if count > 0 {
+        weakSelf.collectionView.insert(indexes, completion: completion)
+      } else {
+        weakSelf.collectionView.reloadData()
+        completion?()
+      }
     }
   }
 
