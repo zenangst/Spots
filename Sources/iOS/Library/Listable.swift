@@ -42,7 +42,7 @@ public extension Spotable where Self : Listable {
     dispatch { [weak self] in
       guard let weakSelf = self else { return }
 
-      weakSelf.tableView.insert([weakSelf.component.items.count])
+      weakSelf.tableView.insert([weakSelf.component.items.count], animation: .Bottom)
       completion?()
     }
   }
@@ -59,7 +59,7 @@ public extension Spotable where Self : Listable {
 
     dispatch { [weak self] in
       guard let weakSelf = self else { return }
-      weakSelf.tableView.insert(indexes)
+      weakSelf.tableView.insert(indexes, animation: .Bottom)
       completion?()
     }
   }
@@ -69,7 +69,7 @@ public extension Spotable where Self : Listable {
 
     dispatch { [weak self] in
       guard let weakSelf = self else { return }
-      weakSelf.tableView.insert([index])
+      weakSelf.tableView.insert([index], animation: .Top)
       completion?()
     }
   }
@@ -85,7 +85,7 @@ public extension Spotable where Self : Listable {
 
     dispatch { [weak self] in
       guard let weakSelf = self else { return }
-      weakSelf.tableView.insert(indexes)
+      weakSelf.tableView.insert(indexes, animation: .Top)
       completion?()
     }
   }
