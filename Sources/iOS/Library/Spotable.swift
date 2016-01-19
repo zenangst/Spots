@@ -56,4 +56,7 @@ public extension Spotable {
     }
   }
 
+  public func scrollTo(@noescape includeElement: (ListItem) -> Bool) -> CGFloat {
+    return 0.0
+  }
 }
