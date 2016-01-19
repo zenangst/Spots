@@ -24,16 +24,21 @@ public extension Spotable where Self : Listable {
 
     var cached: UIView?
     for (index, item) in component.items.enumerate() {
-      let reuseIdentifer = item.kind.isEmpty ? component.kind : item.kind
-      let componentClass = T.views[reuseIdentifer] ?? T.defaultView
-
-      component.items[index].index = index
-
-      if cached?.isKindOfClass(componentClass) == false { cached = nil }
-      if cached == nil { cached = componentClass.init() }
-      (cached as? Itemble)?.configure(&component.items[index])
+      prepareItem(item, index: index, spot: self, cached: &cached)
     }
     cached = nil
+  }
+
+  func prepareItem<T: Spotable>(item: ListItem, index: Int, spot: T, inout cached: UIView?) {
+    let reuseIdentifer = item.kind.isEmpty ? component.kind : item.kind
+    let componentClass = T.views[reuseIdentifer] ?? T.defaultView
+
+    component.items[index].index = index
+
+    if cached?.isKindOfClass(componentClass) == false { cached = nil }
+    if cached == nil { cached = componentClass.init() }
+
+    (cached as? Itemble)?.configure(&component.items[index])
   }
 
   public func append(item: ListItem, completion: (() -> Void)? = nil) {
@@ -43,9 +48,12 @@ public extension Spotable where Self : Listable {
     dispatch { [weak self] in
       guard let weakSelf = self else { return }
 
-      weakSelf.tableView.insert([count], animation: .Bottom)
+      weakSelf.tableView.insert([count], animation: .Top)
       completion?()
     }
+    var cached: UIView?
+    prepareItem(item, index: count, spot: self, cached: &cached)
+    cached = nil
   }
 
   public func append(items: [ListItem], completion: (() -> Void)? = nil) {
@@ -54,9 +62,12 @@ public extension Spotable where Self : Listable {
 
     component.items.appendContentsOf(items)
 
+    var cached: UIView?
     items.enumerate().forEach {
       indexes.append(count + $0.index)
+      prepareItem($0.element, index: count + $0.index, spot: self, cached: &cached)
     }
+    cached = nil
 
     dispatch { [weak self] in
       guard let weakSelf = self else { return }
@@ -183,5 +194,13 @@ public extension Spotable where Self : Listable {
   public func layout(size: CGSize) {
     tableView.frame.size.width = size.width
     tableView.layoutIfNeeded()
+  }
+
+  public func scrollTo(@noescape includeElement: (ListItem) -> Bool) -> CGFloat {
+    guard let item = items.filter(includeElement).first else { return 0.0 }
+
+    let height = component.items[0...item.index].reduce(0, combine: { $0 + $1.size.height })
+
+    return height
   }
 }
