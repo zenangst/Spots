@@ -214,7 +214,7 @@ extension SpotsController {
     }
   }
 
-  public func scrollToItem(@noescape includeElement: (ListItem) -> Bool, spotIndex index: Int) {
+  public func scrollTo(spotIndex index: Int = 0, @noescape includeElement: (ListItem) -> Bool) {
     guard let itemY = spot(index)?.scrollTo(includeElement) else { return }
 
     if spot(index)?.spotHeight() > spotsScrollView.frame.height - spotsScrollView.contentInset.bottom {
