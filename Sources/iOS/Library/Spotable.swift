@@ -45,6 +45,10 @@ public extension Spotable {
     return component.items[indexPath.item]
   }
 
+  public func spotHeight() -> CGFloat {
+    return component.items.reduce(0, combine: { $0 + $1.size.height })
+  }
+
   public func refreshIndexes() {
     items.enumerate().forEach {
       items[$0.index].index = $0.index
