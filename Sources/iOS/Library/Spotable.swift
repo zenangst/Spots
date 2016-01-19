@@ -24,6 +24,7 @@ public protocol Spotable: class {
   func render() -> UIScrollView
   func layout(size: CGSize)
   func prepare()
+  func scrollTo(@noescape includeElement: (ListItem) -> Bool) -> CGFloat
 }
 
 public extension Spotable {
@@ -54,4 +55,5 @@ public extension Spotable {
       items[$0.index].index = $0.index
     }
   }
+
 }
