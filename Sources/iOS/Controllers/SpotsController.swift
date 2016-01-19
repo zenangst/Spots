@@ -204,6 +204,15 @@ extension SpotsController {
       weakSelf.spotsRefreshDelegate?.spotsDidReload(refreshControl) { }
     }
   }
+
+  public func scrollToItem(@noescape includeElement: (ListItem) -> Bool, spotIndex index: Int) {
+    guard let itemY = spot(index)?.scrollTo(includeElement) else { return }
+
+    if spot(index)?.spotHeight() > spotsScrollView.frame.height - spotsScrollView.contentInset.bottom {
+      let y = itemY - spotsScrollView.frame.height + spotsScrollView.contentInset.bottom
+      spotsScrollView.setContentOffset(CGPoint(x: CGFloat(0.0), y: y), animated: true)
+    }
+  }
 }
 
 // MARK: - Private methods
