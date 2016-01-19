@@ -9,7 +9,10 @@ public class SpotsScrollView: UIScrollView {
   public var configured = false
   public var forceUpdate = false {
     didSet {
-      if forceUpdate { layoutSubviews() }
+      if forceUpdate {
+        setNeedsLayout()
+        layoutSubviews()
+      }
     }
   }
 
@@ -65,13 +68,13 @@ public class SpotsScrollView: UIScrollView {
   public override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
     if let change = change where context == KVOContext {
       if let scrollView = object as? UIScrollView,
-        oldContentSize = change[NSKeyValueChangeOldKey] as? CGSize {
+        oldContentSize = change[NSKeyValueChangeOldKey]?.CGSizeValue() {
           if scrollView.contentSize != oldContentSize {
             setNeedsLayout()
             layoutIfNeeded()
           }
       } else if let view = object as? UIView,
-        oldContentSize = change[NSKeyValueChangeOldKey] as? CGRect {
+        oldContentSize = change[NSKeyValueChangeOldKey]?.CGRectValue {
           if view.frame != oldContentSize {
             setNeedsLayout()
             layoutIfNeeded()
