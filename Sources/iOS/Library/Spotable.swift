@@ -45,7 +45,6 @@ public extension Spotable {
     return component.items[indexPath.item]
   }
 
-  public func prepare() { }
   public func refreshIndexes() {
     items.enumerate().forEach {
       items[$0.index].index = $0.index
