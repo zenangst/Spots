@@ -157,6 +157,7 @@ extension SpotsController {
   public func update(spotAtIndex index: Int = 0, @noescape _ closure: (spot: Spotable) -> Void) {
     guard let spot = spot(index) else { return }
     closure(spot: spot)
+    spot.refreshIndexes()
     spot.prepare()
     spot.setup(spotsScrollView.bounds.size)
 
@@ -172,30 +173,37 @@ extension SpotsController {
 
   public func append(item: ListItem, spotIndex: Int = 0, completion: (() -> Void)? = nil) {
     spot(spotIndex)?.append(item) { completion?() }
+    spot(spotIndex)?.refreshIndexes()
   }
 
   public func append(items: [ListItem], spotIndex: Int = 0, completion: (() -> Void)? = nil) {
     spot(spotIndex)?.append(items) { completion?() }
+    spot(spotIndex)?.refreshIndexes()
   }
 
   public func prepend(items: [ListItem], spotIndex: Int = 0, completion: (() -> Void)? = nil) {
     spot(spotIndex)?.prepend(items)  { completion?() }
+    spot(spotIndex)?.refreshIndexes()
   }
 
   public func insert(item: ListItem, index: Int = 0, spotIndex: Int, completion: (() -> Void)? = nil) {
     spot(spotIndex)?.insert(item, index: index)  { completion?() }
+    spot(spotIndex)?.refreshIndexes()
   }
 
   public func update(item: ListItem, index: Int = 0, spotIndex: Int, completion: (() -> Void)? = nil) {
     spot(spotIndex)?.update(item, index: index)  { completion?() }
+    spot(spotIndex)?.refreshIndexes()
   }
 
   public func delete(index: Int, spotIndex: Int = 0, completion: (() -> Void)? = nil) {
     spot(spotIndex)?.delete(index) { completion?() }
+    spot(spotIndex)?.refreshIndexes()
   }
 
   public func delete(indexes indexes: [Int], spotIndex: Int, completion: (() -> Void)? = nil) {
     spot(spotIndex)?.delete(indexes) { completion?() }
+    spot(spotIndex)?.refreshIndexes()
   }
 
   public func refreshSpots(refreshControl: UIRefreshControl) {
