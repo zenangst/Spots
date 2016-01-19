@@ -149,7 +149,7 @@ public extension Spotable where Self : Listable {
       cell.configure(&component.items[index])
     }
 
-    tableView.reloadSection()
+    tableView.reload([index], section: 0, animation: .None)
     completion?()
   }
 
