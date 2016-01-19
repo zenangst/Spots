@@ -37,12 +37,13 @@ public extension Spotable where Self : Listable {
   }
 
   public func append(item: ListItem, completion: (() -> Void)? = nil) {
+    let count = component.items.count
     component.items.append(item)
 
     dispatch { [weak self] in
       guard let weakSelf = self else { return }
 
-      weakSelf.tableView.insert([weakSelf.component.items.count], animation: .Bottom)
+      weakSelf.tableView.insert([count], animation: .Bottom)
       completion?()
     }
   }
