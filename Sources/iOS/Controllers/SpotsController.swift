@@ -116,6 +116,7 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     spotsScrollView.frame = UIScreen.mainScreen().bounds
     spotsScrollView.frame.size.height -= ceil(spotsScrollView.contentInset.top + spotsScrollView.contentOffset.y)
     spotsScrollView.contentInset.bottom = tabBarController?.tabBar.frame.height ?? spotsScrollView.contentInset.bottom
+    spotsScrollView.scrollIndicatorInsets.bottom = spotsScrollView.contentInset.bottom
 
     SpotsController.configure?(container: spotsScrollView)
 
