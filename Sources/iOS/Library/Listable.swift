@@ -131,15 +131,16 @@ public extension Spotable where Self : Listable {
     }
   }
 
-  func delete(index: Int, completion: (() -> Void)?) {
+  func delete(index: Int, completion: (() -> Void)? = nil) {
     dispatch { [weak self] in
       guard let weakSelf = self else { return }
+      weakSelf.component.items.removeAtIndex(index)
       weakSelf.tableView.delete([index])
       completion?()
     }
   }
 
-  func delete(indexes: [Int], completion: (() -> Void)?) {
+  func delete(indexes: [Int], completion: (() -> Void)? = nil) {
     dispatch { [weak self] in
       guard let weakSelf = self else { return }
       weakSelf.tableView.delete([indexes])
