@@ -202,7 +202,7 @@ extension SpotsController {
     spot(spotIndex)?.refreshIndexes()
   }
 
-  public func delete(indexes indexes: [Int], spotIndex: Int, completion: (() -> Void)? = nil) {
+  public func delete(indexes indexes: [Int], spotIndex: Int = 0, completion: (() -> Void)? = nil) {
     spot(spotIndex)?.delete(indexes) { completion?() }
     spot(spotIndex)?.refreshIndexes()
   }
