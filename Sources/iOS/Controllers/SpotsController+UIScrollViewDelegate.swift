@@ -26,12 +26,12 @@ extension SpotsController {
     }
 
     // Infinite scrolling
-    if shouldFetch {
-      refreshPositions.append(size.height - itemOffset)
-      refreshing = true
-      self.spotsScrollDelegate?.spotDidReachEnd {
-        self.refreshing = false
-      }
+    guard let delegate = spotsScrollDelegate where shouldFetch else { return }
+
+    refreshPositions.append(size.height - itemOffset)
+    refreshing = true
+    delegate.spotDidReachEnd {
+      self.refreshing = false
     }
   }
 
