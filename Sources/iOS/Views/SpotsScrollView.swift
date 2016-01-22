@@ -7,6 +7,8 @@ public class SpotsScrollView: UIScrollView {
 
   private var subviewsInLayoutOrder = [UIView?]()
   public var configured = false
+  public var customContentInset: UIEdgeInsets?
+
   public var forceUpdate = false {
     didSet {
       if forceUpdate {
@@ -158,6 +160,10 @@ public class SpotsScrollView: UIScrollView {
       forceUpdate = false
       setNeedsLayout()
       layoutIfNeeded()
+    }
+
+    if let customContentInset = customContentInset {
+      self.contentInset = customContentInset
     }
   }
 }

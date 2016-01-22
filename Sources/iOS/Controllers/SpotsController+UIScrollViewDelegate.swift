@@ -21,6 +21,10 @@ extension SpotsController {
     // Refreshable
     tableView.contentOffset.y = scrollView.contentOffset.y + tableView.frame.height
 
+    if let customContentInset = spotsScrollView.customContentInset {
+      spotsScrollView.contentInset = customContentInset
+    }
+
     if !tableView.hidden && scrollView.contentOffset.y < tableView.frame.origin.y * 2 && !refreshControl.refreshing {
       dispatch {
         self.refreshControl.beginRefreshing()
