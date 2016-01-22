@@ -92,7 +92,7 @@ public extension Spotable where Self : Listable {
     component.items.insertContentsOf(items, at: 0)
 
     items.enumerate().forEach {
-      indexes.append(items.count - $0.index)
+      indexes.append(items.count - 1 - $0.index)
     }
 
     dispatch { [weak self] in
