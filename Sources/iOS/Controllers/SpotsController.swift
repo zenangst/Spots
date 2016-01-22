@@ -24,12 +24,7 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
 
   weak public var spotsRefreshDelegate: SpotsRefreshDelegate? {
     didSet {
-      if spotsRefreshDelegate != nil {
-        tableView.addSubview(refreshControl)
-        spotsScrollView.addSubview(tableView)
-      } else {
-        [refreshControl, tableView].forEach { $0.removeFromSuperview() }
-      }
+      tableView.hidden = spotsRefreshDelegate == nil
     }
   }
 
@@ -43,12 +38,12 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     $0.delegate = self
   }
 
-
   public lazy var tableView = UITableView().then {
     $0.frame = CGRect(x: 0, y: -60, width: UIScreen.mainScreen().bounds.width, height: 60)
     $0.userInteractionEnabled = false
     $0.tableFooterView = UIView(frame: CGRect.zero)
     $0.backgroundColor = UIColor.clearColor()
+    $0.hidden = true
   }
 
   public lazy var refreshControl: UIRefreshControl = UIRefreshControl().then { [unowned self] in
@@ -80,6 +75,8 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     super.viewDidLoad()
 
     view.addSubview(spotsScrollView)
+    tableView.addSubview(refreshControl)
+    spotsScrollView.addSubview(tableView)
 
     spots.enumerate().forEach { index, spot in
       spots[index].index = index
