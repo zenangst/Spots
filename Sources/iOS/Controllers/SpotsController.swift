@@ -60,8 +60,6 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
   public required init(spots: [Spotable] = []) {
     self.spots = spots
     super.init(nibName: nil, bundle: nil)
-    view.addSubview(spotsScrollView)
-    spots.enumerate().forEach { spots[$0.index].index = $0.index }
   }
 
   public convenience init(spot: Spotable)  {
@@ -81,7 +79,10 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
   public override func viewDidLoad() {
     super.viewDidLoad()
 
-    spots.forEach { spot in
+    view.addSubview(spotsScrollView)
+
+    spots.enumerate().forEach { index, spot in
+      spots[index].index = index
       spot.render().optimize()
       spotsScrollView.contentView.addSubview(spot.render())
       spot.prepare()
@@ -90,42 +91,18 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
         width: view.frame.width,
         height: ceil(spot.render().frame.height))
     }
+
+    SpotsController.configure?(container: spotsScrollView)
   }
 
   public override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
-
-    if !spotsScrollView.configured {
-      configureContainer()
-    }
-  }
-
-  public override func viewDidAppear(animated: Bool) {
-    super.viewDidAppear(animated)
-
-    spotsScrollView.configured = true
   }
 
   public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
     super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
 
     spots.forEach { $0.layout(size) }
-  }
-
-  private func configureContainer() {
-    spotsScrollView.frame = UIScreen.mainScreen().bounds
-    spotsScrollView.frame.size.height -= ceil(spotsScrollView.contentInset.top + spotsScrollView.contentOffset.y)
-    spotsScrollView.contentInset.bottom = tabBarController?.tabBar.frame.height ?? spotsScrollView.contentInset.bottom
-    spotsScrollView.scrollIndicatorInsets.bottom = spotsScrollView.contentInset.bottom
-
-    SpotsController.configure?(container: spotsScrollView)
-
-    initialContentInset = spotsScrollView.contentInset
-
-    spots.forEach {
-      $0.render().layoutSubviews()
-      $0.render().setNeedsDisplay()
-    }
   }
 }
 
