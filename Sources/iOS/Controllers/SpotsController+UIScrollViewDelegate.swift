@@ -51,10 +51,6 @@ extension SpotsController {
               newContentInset.top = navigationController.navigationBar.frame.height + 20
           }
 
-          if let tabBarController = weakSelf.tabBarController {
-            newContentInset.bottom = tabBarController.tabBar.frame.height ?? weakSelf.spotsScrollView.contentInset.bottom
-          }
-
           weakSelf.spotsScrollView.contentInset = newContentInset
           }, completion: { _ in
             weakSelf.refreshing = false
