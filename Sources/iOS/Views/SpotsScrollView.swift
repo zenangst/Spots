@@ -16,6 +16,17 @@ public class SpotsScrollView: UIScrollView {
     }
   }
 
+  public override var contentInset:UIEdgeInsets {
+    willSet {
+      if self.tracking {
+        let diff = newValue.top - self.contentInset.top;
+        var translation = self.panGestureRecognizer.translationInView(self)
+        translation.y -= diff * 3.0 / 2.0
+        self.panGestureRecognizer.setTranslation(translation, inView: self)
+      }
+    }
+  }
+
   lazy public var contentView: SpotsContentView = SpotsContentView().then { [unowned self] in
     $0.frame = self.frame
   }
