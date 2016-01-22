@@ -15,6 +15,10 @@ class SearchController: SpotsController {
 
     self.init(spots: spots)
     self.title = title
+  }
+
+  override func viewWillAppear(animated: Bool) {
+    super.viewWillAppear(animated)
 
     dispatch(queue: .Interactive) { [weak self] in
       let items = FavoritesController.generateItems(0, to: 4)

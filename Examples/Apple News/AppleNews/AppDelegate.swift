@@ -41,6 +41,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarDelegate {
     ]
     tabBarController.selectedIndex = 2
 
+    tabBarController.tabBar.translucent = true
+
     navigationController = UINavigationController(rootViewController: tabBarController)
 
     window?.rootViewController = navigationController

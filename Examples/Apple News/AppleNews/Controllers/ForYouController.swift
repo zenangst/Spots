@@ -15,13 +15,6 @@ class ForYouController: SpotsController, SpotsDelegate {
     spotsDelegate = self
     spotsScrollDelegate = self
     spotsRefreshDelegate = self
-
-    dispatch(queue: .Interactive) { [weak self] in
-      let items = ForYouController.generateItems(0, to: 10)
-      self?.update { spot in
-        spot.component.items = items
-      }
-    }
   }
 
   func spotDidSelectItem(spot: Spotable, item: ListItem) { }
@@ -45,6 +38,16 @@ class ForYouController: SpotsController, SpotsDelegate {
       })
     }
     return items
+  }
+
+  override func viewWillAppear(animated: Bool) {
+    super.viewWillAppear(animated)
+    dispatch(queue: .Interactive) { [weak self] in
+      let items = ForYouController.generateItems(0, to: 10)
+      self?.update { spot in
+        spot.component.items = items
+      }
+    }
   }
 }
 
