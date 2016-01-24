@@ -187,6 +187,7 @@ extension SpotsController {
   public func refreshSpots(refreshControl: UIRefreshControl) {
     dispatch { [weak self] in
       guard let weakSelf = self else { return }
+      weakSelf.refreshPositions.removeAll()
       weakSelf.spotsRefreshDelegate?.spotsDidReload(refreshControl) {
         refreshControl.endRefreshing()
       }
