@@ -70,7 +70,6 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     super.viewDidLoad()
 
     view.addSubview(spotsScrollView)
-    spotsScrollView.insertSubview(refreshControl, atIndex: 0)
 
     spots.enumerate().forEach { index, spot in
       spots[index].index = index
@@ -93,6 +92,11 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
       where tabBarController.tabBar.translucent {
         spotsScrollView.contentInset.bottom = tabBarController.tabBar.frame.height
     }
+
+    guard let _ = spotsRefreshDelegate where refreshControl.superview == nil
+      else { return }
+
+    spotsScrollView.insertSubview(refreshControl, atIndex: 0)
   }
 
   public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
