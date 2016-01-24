@@ -14,7 +14,7 @@ class MainController: UITabBarController {
   }
 
   required init?(coder aDecoder: NSCoder) {
-      fatalError("init(coder:) has not been implemented")
+    fatalError("init(coder:) has not been implemented")
   }
 
   override func tabBar(tabBar: UITabBar, didSelectItem item: UITabBarItem) {

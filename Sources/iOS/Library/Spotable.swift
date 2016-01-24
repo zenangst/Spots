@@ -24,6 +24,7 @@ public protocol Spotable: class {
   func render() -> UIScrollView
   func layout(size: CGSize)
   func prepare()
+  func scrollTo(@noescape includeElement: (ListItem) -> Bool) -> CGFloat
 }
 
 public extension Spotable {
@@ -45,5 +46,17 @@ public extension Spotable {
     return component.items[indexPath.item]
   }
 
-  public func prepare() { }
+  public func spotHeight() -> CGFloat {
+    return component.items.reduce(0, combine: { $0 + $1.size.height })
+  }
+
+  public func refreshIndexes() {
+    items.enumerate().forEach {
+      items[$0.index].index = $0.index
+    }
+  }
+
+  public func scrollTo(@noescape includeElement: (ListItem) -> Bool) -> CGFloat {
+    return 0.0
+  }
 }
