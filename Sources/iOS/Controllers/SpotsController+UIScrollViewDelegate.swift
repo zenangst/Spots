@@ -40,28 +40,4 @@ extension SpotsController {
       self.refreshing = false
     }
   }
-
-  public func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-    guard refreshControl.refreshing else { return }
-    spotsScrollView.contentInset.top = -scrollView.contentOffset.y
-
-    refreshPositions.removeAll()
-    delay(0.5) {
-      self.spotsRefreshDelegate?.spotsDidReload(self.refreshControl) { [weak self] in
-        guard let weakSelf = self else { return }
-        UIView.animateWithDuration(0.3, animations: {
-          var newContentInset = weakSelf.initialContentInset
-
-          if let navigationController = weakSelf.navigationController
-            where !navigationController.navigationBar.opaque {
-              newContentInset.top = navigationController.navigationBar.frame.height + 20
-          }
-
-          weakSelf.spotsScrollView.contentInset = newContentInset
-          }, completion: { _ in
-            weakSelf.refreshing = false
-        })
-      }
-    }
-  }
 }
