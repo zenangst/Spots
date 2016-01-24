@@ -24,7 +24,7 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
 
   weak public var spotsRefreshDelegate: SpotsRefreshDelegate? {
     didSet {
-      tableView.hidden = spotsRefreshDelegate == nil
+      refreshControl.hidden = spotsRefreshDelegate == nil
     }
   }
 
@@ -38,17 +38,12 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     $0.delegate = self
   }
 
-  public lazy var tableView = UITableView().then {
-    $0.frame = CGRect(x: 0, y: -60, width: UIScreen.mainScreen().bounds.width, height: 60)
-    $0.userInteractionEnabled = false
-    $0.tableFooterView = UIView(frame: CGRect.zero)
-    $0.backgroundColor = UIColor.clearColor()
-    $0.hidden = true
-  }
+  public lazy var refreshControl: UIRefreshControl = { [unowned self] in
+    let refreshControl = UIRefreshControl()
+    refreshControl.addTarget(self, action: "refreshSpots:", forControlEvents: .ValueChanged)
 
-  public lazy var refreshControl: UIRefreshControl = UIRefreshControl().then { [unowned self] in
-    $0.addTarget(self, action: "refreshSpot:", forControlEvents: .ValueChanged)
-  }
+    return refreshControl
+  }()
 
   // MARK: Initializer
 
@@ -75,8 +70,7 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     super.viewDidLoad()
 
     view.addSubview(spotsScrollView)
-    tableView.addSubview(refreshControl)
-    spotsScrollView.addSubview(tableView)
+    spotsScrollView.insertSubview(refreshControl, atIndex: 0)
 
     spots.enumerate().forEach { index, spot in
       spots[index].index = index
@@ -189,7 +183,9 @@ extension SpotsController {
   public func refreshSpots(refreshControl: UIRefreshControl) {
     dispatch { [weak self] in
       guard let weakSelf = self else { return }
-      weakSelf.spotsRefreshDelegate?.spotsDidReload(refreshControl) { }
+      weakSelf.spotsRefreshDelegate?.spotsDidReload(refreshControl) {
+        refreshControl.endRefreshing()
+      }
     }
   }
 
