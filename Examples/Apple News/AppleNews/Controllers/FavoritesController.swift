@@ -10,13 +10,6 @@ class FavoritesController: SpotsController {
     let favorites = Component(span: 3)
     self.init(spot: GridSpot(favorites, top: 10, left: 10, bottom: 20, right: 10, itemSpacing: -5))
     self.title = title
-
-    dispatch(queue: .Interactive) { [weak self] in
-      let items = FavoritesController.generateItems(0, to: 11)
-      self?.update { spot in
-        spot.component.items = items
-      }
-    }
   }
 
   static func generateItem(index: Int, kind: String = "topic") -> ListItem {
@@ -35,5 +28,15 @@ class FavoritesController: SpotsController {
       })
     }
     return items
+  }
+
+  override func viewWillAppear(animated: Bool) {
+    super.viewWillAppear(animated)
+    dispatch(queue: .Interactive) { [weak self] in
+      let items = FavoritesController.generateItems(0, to: 11)
+      self?.update { spot in
+        spot.component.items = items
+      }
+    }
   }
 }

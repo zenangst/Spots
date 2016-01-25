@@ -24,12 +24,7 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
 
   weak public var spotsRefreshDelegate: SpotsRefreshDelegate? {
     didSet {
-      if spotsRefreshDelegate != nil {
-        tableView.addSubview(refreshControl)
-        spotsScrollView.addSubview(tableView)
-      } else {
-        [refreshControl, tableView].forEach { $0.removeFromSuperview() }
-      }
+      refreshControl.hidden = spotsRefreshDelegate == nil
     }
   }
 
@@ -43,25 +38,18 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     $0.delegate = self
   }
 
+  public lazy var refreshControl: UIRefreshControl = { [unowned self] in
+    let refreshControl = UIRefreshControl()
+    refreshControl.addTarget(self, action: "refreshSpots:", forControlEvents: .ValueChanged)
 
-  public lazy var tableView = UITableView().then {
-    $0.frame = CGRect(x: 0, y: -60, width: UIScreen.mainScreen().bounds.width, height: 60)
-    $0.userInteractionEnabled = false
-    $0.tableFooterView = UIView(frame: CGRect.zero)
-    $0.backgroundColor = UIColor.clearColor()
-  }
-
-  public lazy var refreshControl: UIRefreshControl = UIRefreshControl().then { [unowned self] in
-    $0.addTarget(self, action: "refreshSpot:", forControlEvents: .ValueChanged)
-  }
+    return refreshControl
+  }()
 
   // MARK: Initializer
 
   public required init(spots: [Spotable] = []) {
     self.spots = spots
     super.init(nibName: nil, bundle: nil)
-    view.addSubview(spotsScrollView)
-    spots.enumerate().forEach { spots[$0.index].index = $0.index }
   }
 
   public convenience init(spot: Spotable)  {
@@ -81,7 +69,10 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
   public override func viewDidLoad() {
     super.viewDidLoad()
 
-    spots.forEach { spot in
+    view.addSubview(spotsScrollView)
+
+    spots.enumerate().forEach { index, spot in
+      spots[index].index = index
       spot.render().optimize()
       spotsScrollView.contentView.addSubview(spot.render())
       spot.prepare()
@@ -90,41 +81,28 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
         width: view.frame.width,
         height: ceil(spot.render().frame.height))
     }
+
+    SpotsController.configure?(container: spotsScrollView)
   }
 
   public override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
 
-    if !spotsScrollView.configured {
-      configureContainer()
+    if let tabBarController = self.tabBarController
+      where tabBarController.tabBar.translucent {
+        spotsScrollView.contentInset.bottom = tabBarController.tabBar.frame.height
     }
-  }
 
-  public override func viewDidAppear(animated: Bool) {
-    super.viewDidAppear(animated)
+    guard let _ = spotsRefreshDelegate where refreshControl.superview == nil
+      else { return }
 
-    spotsScrollView.configured = true
+    spotsScrollView.insertSubview(refreshControl, atIndex: 0)
   }
 
   public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
     super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
 
     spots.forEach { $0.layout(size) }
-  }
-
-  private func configureContainer() {
-    spotsScrollView.frame = UIScreen.mainScreen().bounds
-    spotsScrollView.frame.size.height -= ceil(spotsScrollView.contentInset.top + spotsScrollView.contentOffset.y)
-    spotsScrollView.contentInset.bottom = tabBarController?.tabBar.frame.height ?? spotsScrollView.contentInset.bottom
-
-    SpotsController.configure?(container: spotsScrollView)
-
-    initialContentInset = spotsScrollView.contentInset
-
-    spots.forEach {
-      $0.render().layoutSubviews()
-      $0.render().setNeedsDisplay()
-    }
   }
 }
 
@@ -157,6 +135,7 @@ extension SpotsController {
   public func update(spotAtIndex index: Int = 0, @noescape _ closure: (spot: Spotable) -> Void) {
     guard let spot = spot(index) else { return }
     closure(spot: spot)
+    spot.refreshIndexes()
     spot.prepare()
     spot.setup(spotsScrollView.bounds.size)
 
@@ -172,36 +151,55 @@ extension SpotsController {
 
   public func append(item: ListItem, spotIndex: Int = 0, completion: (() -> Void)? = nil) {
     spot(spotIndex)?.append(item) { completion?() }
+    spot(spotIndex)?.refreshIndexes()
   }
 
   public func append(items: [ListItem], spotIndex: Int = 0, completion: (() -> Void)? = nil) {
     spot(spotIndex)?.append(items) { completion?() }
+    spot(spotIndex)?.refreshIndexes()
   }
 
   public func prepend(items: [ListItem], spotIndex: Int = 0, completion: (() -> Void)? = nil) {
     spot(spotIndex)?.prepend(items)  { completion?() }
+    spot(spotIndex)?.refreshIndexes()
   }
 
   public func insert(item: ListItem, index: Int = 0, spotIndex: Int, completion: (() -> Void)? = nil) {
     spot(spotIndex)?.insert(item, index: index)  { completion?() }
+    spot(spotIndex)?.refreshIndexes()
   }
 
   public func update(item: ListItem, index: Int = 0, spotIndex: Int, completion: (() -> Void)? = nil) {
     spot(spotIndex)?.update(item, index: index)  { completion?() }
+    spot(spotIndex)?.refreshIndexes()
   }
 
   public func delete(index: Int, spotIndex: Int = 0, completion: (() -> Void)? = nil) {
     spot(spotIndex)?.delete(index) { completion?() }
+    spot(spotIndex)?.refreshIndexes()
   }
 
-  public func delete(indexes indexes: [Int], spotIndex: Int, completion: (() -> Void)? = nil) {
+  public func delete(indexes indexes: [Int], spotIndex: Int = 0, completion: (() -> Void)? = nil) {
     spot(spotIndex)?.delete(indexes) { completion?() }
+    spot(spotIndex)?.refreshIndexes()
   }
 
   public func refreshSpots(refreshControl: UIRefreshControl) {
     dispatch { [weak self] in
       guard let weakSelf = self else { return }
-      weakSelf.spotsRefreshDelegate?.spotsDidReload(refreshControl) { }
+      weakSelf.refreshPositions.removeAll()
+      weakSelf.spotsRefreshDelegate?.spotsDidReload(refreshControl) {
+        refreshControl.endRefreshing()
+      }
+    }
+  }
+
+  public func scrollTo(spotIndex index: Int = 0, @noescape includeElement: (ListItem) -> Bool) {
+    guard let itemY = spot(index)?.scrollTo(includeElement) else { return }
+
+    if spot(index)?.spotHeight() > spotsScrollView.frame.height - spotsScrollView.contentInset.bottom {
+      let y = itemY - spotsScrollView.frame.height + spotsScrollView.contentInset.bottom
+      spotsScrollView.setContentOffset(CGPoint(x: CGFloat(0.0), y: y), animated: true)
     }
   }
 }

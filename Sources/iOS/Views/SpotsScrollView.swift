@@ -7,9 +7,24 @@ public class SpotsScrollView: UIScrollView {
 
   private var subviewsInLayoutOrder = [UIView?]()
   public var configured = false
+
   public var forceUpdate = false {
     didSet {
-      if forceUpdate { layoutSubviews() }
+      if forceUpdate {
+        setNeedsLayout()
+        layoutSubviews()
+      }
+    }
+  }
+
+  public override var contentInset:UIEdgeInsets {
+    willSet {
+      if self.tracking {
+        let diff = newValue.top - self.contentInset.top;
+        var translation = self.panGestureRecognizer.translationInView(self)
+        translation.y -= diff * 3.0 / 2.0
+        self.panGestureRecognizer.setTranslation(translation, inView: self)
+      }
     }
   }
 
@@ -65,13 +80,13 @@ public class SpotsScrollView: UIScrollView {
   public override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
     if let change = change where context == KVOContext {
       if let scrollView = object as? UIScrollView,
-        oldContentSize = change[NSKeyValueChangeOldKey] as? CGSize {
+        oldContentSize = change[NSKeyValueChangeOldKey]?.CGSizeValue() {
           if scrollView.contentSize != oldContentSize {
             setNeedsLayout()
             layoutIfNeeded()
           }
       } else if let view = object as? UIView,
-        oldContentSize = change[NSKeyValueChangeOldKey] as? CGRect {
+        oldContentSize = change[NSKeyValueChangeOldKey]?.CGRectValue {
           if view.frame != oldContentSize {
             setNeedsLayout()
             layoutIfNeeded()
@@ -132,6 +147,10 @@ public class SpotsScrollView: UIScrollView {
     let minimumContentHeight = bounds.height - (contentInset.top + contentInset.bottom)
     let initialContentOffset = contentOffset
     contentSize = CGSize(width: bounds.size.width, height: fmax(yOffsetOfCurrentSubview, minimumContentHeight))
+
+    if let superview = superview where self.frame.size.height != superview.frame.size.height {
+      self.frame.size.height = superview.frame.size.height
+    }
 
     if initialContentOffset != contentOffset {
       setNeedsLayout()

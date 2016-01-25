@@ -12,6 +12,10 @@ class SavedController: SpotsController {
     self.init(spot: feedSpot)
 
     self.title = title
+  }
+
+  override func viewWillAppear(animated: Bool) {
+    super.viewWillAppear(animated)
 
     dispatch(queue: .Interactive) { [weak self] in
       let items = ForYouController.generateItems(0, to: 2)
