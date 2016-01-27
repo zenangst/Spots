@@ -259,7 +259,6 @@ Action identifier for you to parse and process when a user taps on a list item. 
 Can either inherit from the `UITableViewCell`/`UICollectionViewCell`, or be manually set by the height calculations inside of your view.
 - **.meta**
 This is used for extra data that you might need access to inside of your view, it can be a hex color, a unique identifer or additional images for your view.
->>>>>>> 38c5d396d575fb819585d529bf1a8defbcf12b12
 
 ## Installation
 
