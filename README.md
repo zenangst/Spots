@@ -30,7 +30,7 @@ the public API.
 * [JSON structure](#json-structure)
 * [Models](#models)
 * [Component](#component)
-* [ListItem](#listitem)
+* [ViewModel](#viewmodel)
 * [Installation](#installation)
 * [Dependencies](#dependencies)
 * [Author](#author)
@@ -45,7 +45,7 @@ the public API.
 - Features both infinity scrolling and pull to refresh, all you have to do is to
 setup delegates that conform to the public protocols on `SpotsController`.
 - No need to implement your own data source, every `Spotable` object has their
-own set of `ListItem`’s.
+own set of `ViewModel`’s.
 which is maintained internally and is there at your disposable if you decide to
 make changes to them.
 - Easy configuration of `UICollectionView`’s, `UITableView`'s and any custom spot
@@ -76,11 +76,11 @@ The JSON data will be parsed into view model data and your view controller is re
 ### Programmatic approach
 ```swift
 let myContacts = Component(title: "My contacts", items: [
-  ListItem(title: "John Hyperseed"),
-  ListItem(title: "Vadym Markov"),
-  ListItem(title: "Ramon Gilabert Llop"),
-  ListItem(title: "Khoa Pham"),
-  ListItem(title: "Christoffer Winterkvist")
+  ViewModel(title: "John Hyperseed"),
+  ViewModel(title: "Vadym Markov"),
+  ViewModel(title: "Ramon Gilabert Llop"),
+  ViewModel(title: "Khoa Pham"),
+  ViewModel(title: "Christoffer Winterkvist")
 ])
 let listSpot = ListSpot(component: myContacts)
 let controller = SpotsController(spots: [listSpot])
@@ -97,7 +97,7 @@ The `SpotsController` inherits from `UIViewController` but it sports some core f
 
 ```swift
 public protocol SpotsDelegate: class {
-func spotDidSelectItem(spot: Spotable, item: ListItem)
+  func spotDidSelectItem(spot: Spotable, item: ViewModel)
 }
 ```
 
@@ -107,7 +107,7 @@ func spotDidSelectItem(spot: Spotable, item: ListItem)
 
 ```swift
 public protocol SpotsRefreshDelegate: class {
-func spotsDidReload(refreshControl: UIRefreshControl, completion: (() -> Void)?)
+  func spotsDidReload(refreshControl: UIRefreshControl, completion: (() -> Void)?)
 }
 ```
 
@@ -117,7 +117,7 @@ func spotsDidReload(refreshControl: UIRefreshControl, completion: (() -> Void)?)
 
 ```swift
 public protocol SpotsScrollDelegate: class {
-func spotDidReachEnd(completion: (() -> Void)?)
+  func spotDidReachEnd(completion: (() -> Void)?)
 }
 ```
 
@@ -127,7 +127,7 @@ func spotDidReachEnd(completion: (() -> Void)?)
 
 ```swift
 public protocol SpotsCarouselScrollDelegate: class {
-func spotDidEndScrolling(spot: Spotable, item: ListItem)
+  func spotDidEndScrolling(spot: Spotable, item: ViewModel)
 }
 ```
 
@@ -137,56 +137,65 @@ func spotDidEndScrolling(spot: Spotable, item: ListItem)
 
 ```json
 {
-"components" : [
-{
-"title"    : "Hyper iOS",
-"type"     : "list",
-"span"     : "1",
-"items" : [
-{
-"title"    : "John Hyperseed",
-"subtitle" : "Build server",
-"image"    : "{image url}",
-"type"     : "profile",
-"action"   : "profile:1",
-"meta"     : {"nationality" : "Apple"}
-},
-{
-"title"    : "Vadym Markov",
-"subtitle" : "iOS Developer",
-"image"    : "{image url}",
-"type"     : "profile",
-"action"   : "profile:2",
-"meta"     : {"nationality" : "Ukrainian"}
-},
-{
-"title"    : "Ramon Gilabert Llop",
-"subtitle" : "iOS Developer",
-"image"    : "{image url}",
-"type"     : "profile",
-"action"   : "profile:3",
-"meta"     : {"nationality" : "Catalan"}
-},
-{
-"title"    : "Khoa Pham",
-"subtitle" : "iOS Developer",
-"image"    : "{image url}",
-"type"     : "profile",
-"action"   : "profile:4",
-"meta"     : {"nationality" : "Vietnamese"}
-},
-{
-"title"    : "Christoffer Winterkvist",
-"subtitle" : "iOS Developer",
-"image"    : "{image url}",
-"type"     : "profile",
-"action"   : "profile:5",
-"meta"     : {"nationality" : "Swedish"}
-}
-],
-"meta" : []
-}
-]
+   "components":[
+      {
+         "title":"Hyper iOS",
+         "type":"list",
+         "span":"1",
+         "items":[
+            {
+               "title":"John Hyperseed",
+               "subtitle":"Build server",
+               "image":"{image url}",
+               "type":"profile",
+               "action":"profile:1",
+               "meta":{
+                  "nationality":"Apple"
+               }
+            },
+            {
+               "title":"Vadym Markov",
+               "subtitle":"iOS Developer",
+               "image":"{image url}",
+               "type":"profile",
+               "action":"profile:2",
+               "meta":{
+                  "nationality":"Ukrainian"
+               }
+            },
+            {
+               "title":"Ramon Gilabert Llop",
+               "subtitle":"iOS Developer",
+               "image":"{image url}",
+               "type":"profile",
+               "action":"profile:3",
+               "meta":{
+                  "nationality":"Catalan"
+               }
+            },
+            {
+               "title":"Khoa Pham",
+               "subtitle":"iOS Developer",
+               "image":"{image url}",
+               "type":"profile",
+               "action":"profile:4",
+               "meta":{
+                  "nationality":"Vietnamese"
+               }
+            },
+            {
+               "title":"Christoffer Winterkvist",
+               "subtitle":"iOS Developer",
+               "image":"{image url}",
+               "type":"profile",
+               "action":"profile:5",
+               "meta":{
+                  "nationality":"Swedish"
+               }
+            }
+         ]
+      }
+   ]
 }
 ```
 
@@ -195,14 +204,14 @@ func spotDidEndScrolling(spot: Spotable, item: ListItem)
 ### Component
 
 ```swift
-public struct Component: Mappable {
-public var index = 0
-public var title = ""
-public var kind = ""
-public var span: CGFloat = 0
-public var items = [ListItem]()
-public var size: CGSize?
-public var meta = [String : String]()
+  public struct Component: Mappable {
+  public var index = 0
+  public var title = ""
+  public var kind = ""
+  public var span: CGFloat = 0
+  public var items = [ViewModel]()
+  public var size: CGSize?
+  public var meta = [String : String]()
 }
 ```
 
@@ -219,18 +228,18 @@ Calculated value based on the amount of items and their combined heights.
 - **.meta**
 Custom data that you are free to use as you like in your implementation.
 
-### ListItem
+### ViewModel
 
 ```swift
-public struct ListItem: Mappable {
-public var index = 0
-public var title = ""
-public var subtitle = ""
-public var image = ""
-public var kind = ""
-public var action: String?
-public var size = CGSize(width: 0, height: 0)
-public var meta = [String : AnyObject]()
+  public struct ViewModel: Mappable {
+  public var index = 0
+  public var title = ""
+  public var subtitle = ""
+  public var image = ""
+  public var kind = ""
+  public var action: String?
+  public var size = CGSize(width: 0, height: 0)
+  public var meta = [String : AnyObject]()
 }
 ```
 
@@ -266,7 +275,7 @@ pod 'Spots'
 - **[Sugar](https://github.com/hyperoslo/Sugar)**
 To sweeten the implementation.
 - **[Tailor](https://github.com/zenangst/Tailor)**
-To seamlessly map JSON to both `Component` and `ListItem`.
+To seamlessly map JSON to both `Component` and `ViewModel`.
 - **[Imaginary](https://github.com/hyperoslo/Imaginary)**
 To offer a solid and easy-to-use solution for loading remote images in both core and custom views.
 
