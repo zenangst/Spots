@@ -1,10 +1,10 @@
 import UIKit
 import Imaginary
 
-public class ListSpotCell: UITableViewCell, Itemble {
+public class ListSpotCell: UITableViewCell, ViewConfigurable {
 
   public var size = CGSize(width: 0, height: 44)
-  public var item: ListItem?
+  public var item: ViewModel?
 
   public override init(style: UITableViewCellStyle, reuseIdentifier: String!) {
     super.init(style: .Subtitle, reuseIdentifier: reuseIdentifier)
@@ -14,7 +14,7 @@ public class ListSpotCell: UITableViewCell, Itemble {
     fatalError("init(coder:) has not been implemented")
   }
 
-  public func configure(inout item: ListItem) {
+  public func configure(inout item: ViewModel) {
     if let action = item.action where !action.isEmpty {
       accessoryType = .DisclosureIndicator
     } else {

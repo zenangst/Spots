@@ -2,7 +2,7 @@ import Spots
 import Imaginary
 import Sugar
 
-public class PlayerGridSpotCell: UICollectionViewCell, Itemble {
+public class PlayerGridSpotCell: UICollectionViewCell, ViewConfigurable {
 
   public var size = CGSize(width: 125, height: 100)
 

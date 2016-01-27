@@ -16,13 +16,13 @@ public protocol PostInformationDelegate: class {
   func mediaDidTap(postID: Int, kind: Media.Kind, index: Int)
 }
 
-public class PostTableViewCell: WallTableViewCell, Itemble {
+public class PostTableViewCell: WallTableViewCell, ViewConfigurable {
 
   public var size = CGSize(width: 0, height: 44)
 
   public static let reusableIdentifier = "PostTableViewCell"
 
-  public class func height(item: ListItem) -> CGFloat {
+  public class func height(item: ViewModel) -> CGFloat {
     let post = item.post
     let postText = post.text as NSString
     let textFrame = postText.boundingRectWithSize(CGSize(width: UIScreen.mainScreen().bounds.width - 40,
@@ -119,7 +119,7 @@ public class PostTableViewCell: WallTableViewCell, Itemble {
     fatalError("init(coder:) has not been implemented")
   }
 
-  public func setupViews(item: ListItem) -> CGFloat {
+  public func setupViews(item: ViewModel) -> CGFloat {
     let post = item.post
     var imageHeight: CGFloat = 0
     var imageTop: CGFloat = 50
@@ -160,7 +160,7 @@ public class PostTableViewCell: WallTableViewCell, Itemble {
     return bottomSeparator.frame.origin.y
   }
 
-  public func configure(inout item: ListItem) {
+  public func configure(inout item: ViewModel) {
     item.size.width = contentView.frame.width
     item.size.height = setupViews(item)
     item.size.height = ceil(PostTableViewCell.height(item))

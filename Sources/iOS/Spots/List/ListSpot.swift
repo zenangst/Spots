@@ -12,7 +12,7 @@ public class ListSpot: NSObject, Spotable, Listable {
   public var headerHeight: CGFloat = 44
   public var component: Component
   public var cachedHeaders = [String : Componentable]()
-  public var cachedCells = [String : Itemble]()
+  public var cachedCells = [String : ViewConfigurable]()
 
   public let itemHeight: CGFloat = 44
 
@@ -117,7 +117,7 @@ extension ListSpot: UITableViewDataSource {
     cell.optimize()
 
     if indexPath.item < component.items.count {
-      (cell as? Itemble)?.configure(&component.items[indexPath.item])
+      (cell as? ViewConfigurable)?.configure(&component.items[indexPath.item])
     }
 
     return cell

@@ -29,7 +29,7 @@ public extension Spotable where Self : Listable {
     cached = nil
   }
 
-  func prepareItem<T: Spotable>(item: ListItem, index: Int, spot: T, inout cached: UIView?) {
+  func prepareItem<T: Spotable>(item: ViewModel, index: Int, spot: T, inout cached: UIView?) {
     let reuseIdentifer = item.kind.isEmpty ? component.kind : item.kind
     let componentClass = T.views[reuseIdentifer] ?? T.defaultView
 
@@ -38,10 +38,10 @@ public extension Spotable where Self : Listable {
     if cached?.isKindOfClass(componentClass) == false { cached = nil }
     if cached == nil { cached = componentClass.init() }
 
-    (cached as? Itemble)?.configure(&component.items[index])
+    (cached as? ViewConfigurable)?.configure(&component.items[index])
   }
 
-  public func append(item: ListItem, completion: (() -> Void)? = nil) {
+  public func append(item: ViewModel, completion: (() -> Void)? = nil) {
     let count = component.items.count
     component.items.append(item)
 
@@ -56,7 +56,7 @@ public extension Spotable where Self : Listable {
     cached = nil
   }
 
-  public func append(items: [ListItem], completion: (() -> Void)? = nil) {
+  public func append(items: [ViewModel], completion: (() -> Void)? = nil) {
     var indexes = [Int]()
     let count = component.items.count
 
@@ -76,7 +76,7 @@ public extension Spotable where Self : Listable {
     }
   }
 
-  public func insert(item: ListItem, index: Int, completion: (() -> Void)? = nil) {
+  public func insert(item: ViewModel, index: Int, completion: (() -> Void)? = nil) {
     component.items.insert(item, atIndex: index)
 
     dispatch { [weak self] in
@@ -86,7 +86,7 @@ public extension Spotable where Self : Listable {
     }
   }
 
-  public func prepend(items: [ListItem], completion: (() -> Void)? = nil) {
+  public func prepend(items: [ViewModel], completion: (() -> Void)? = nil) {
     var indexes = [Int]()
 
     component.items.insertContentsOf(items, at: 0)
@@ -102,7 +102,7 @@ public extension Spotable where Self : Listable {
     }
   }
 
-  public func delete(item: ListItem, completion: (() -> Void)? = nil) {
+  public func delete(item: ViewModel, completion: (() -> Void)? = nil) {
     guard let index = component.items.indexOf({ $0 == item})
       else { completion?(); return }
 
@@ -115,7 +115,7 @@ public extension Spotable where Self : Listable {
     }
   }
 
-  public func delete(items: [ListItem], completion: (() -> Void)? = nil) {
+  public func delete(items: [ViewModel], completion: (() -> Void)? = nil) {
     var indexPaths = [Int]()
     let count = component.items.count
 
@@ -149,7 +149,7 @@ public extension Spotable where Self : Listable {
     }
   }
 
-  public func update(item: ListItem, index: Int, completion: (() -> Void)? = nil) {
+  public func update(item: ViewModel, index: Int, completion: (() -> Void)? = nil) {
     items[index] = item
 
     let cellClass = self.dynamicType.views[item.kind] ?? self.dynamicType.defaultView
@@ -158,7 +158,7 @@ public extension Spotable where Self : Listable {
       : component.kind
 
     tableView.registerClass(cellClass, forCellReuseIdentifier: reuseIdentifier)
-    if let cell = cellClass.init() as? Itemble {
+    if let cell = cellClass.init() as? ViewConfigurable {
       component.items[index].index = index
       cell.configure(&component.items[index])
     }
@@ -177,7 +177,7 @@ public extension Spotable where Self : Listable {
         : component.kind
 
       tableView.registerClass(cellClass, forCellReuseIdentifier: reuseIdentifier)
-      if let cell = cellClass.init() as? Itemble {
+      if let cell = cellClass.init() as? ViewConfigurable {
         component.items[index].index = index
         cell.configure(&component.items[index])
       }
@@ -198,7 +198,7 @@ public extension Spotable where Self : Listable {
     tableView.layoutIfNeeded()
   }
 
-  public func scrollTo(@noescape includeElement: (ListItem) -> Bool) -> CGFloat {
+  public func scrollTo(@noescape includeElement: (ViewModel) -> Bool) -> CGFloat {
     guard let item = items.filter(includeElement).first else { return 0.0 }
 
     let height = component.items[0...item.index].reduce(0, combine: { $0 + $1.size.height })

@@ -3,7 +3,7 @@ import Imaginary
 import Sugar
 import Spots
 
-class GridSpotHeader : UICollectionViewCell, Itemble {
+class GridSpotHeader : UICollectionViewCell, ViewConfigurable {
 
   var size = CGSize(width: 0, height: 320)
   lazy var imageView: UIImageView = {
@@ -22,7 +22,7 @@ class GridSpotHeader : UICollectionViewCell, Itemble {
     fatalError("init(coder:) has not been implemented")
   }
 
-  func configure(inout item: ListItem) {
+  func configure(inout item: ViewModel) {
     optimize()
     
     if !item.image.isEmpty {

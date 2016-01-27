@@ -1,7 +1,7 @@
 import Spots
 import Imaginary
 
-public class DefaultListSpotCell: UITableViewCell, Itemble {
+public class DefaultListSpotCell: UITableViewCell, ViewConfigurable {
 
   public var size = CGSize(width: 0, height: 60)
   public var item: ListItem?

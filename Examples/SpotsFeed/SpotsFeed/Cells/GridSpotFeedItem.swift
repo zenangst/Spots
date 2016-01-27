@@ -3,10 +3,10 @@ import Imaginary
 import Sugar
 import Spots
 
-class GridSpotFeedItem : UICollectionViewCell, Itemble {
+class GridSpotFeedItem : UICollectionViewCell, ViewConfigurable {
 
   var size = CGSize(width: 0, height: 320)
-  var item: ListItem?
+  var item: ViewModel?
 
   lazy var canvasView: UIView = {
     let view = UIView()
@@ -69,7 +69,7 @@ class GridSpotFeedItem : UICollectionViewCell, Itemble {
     fatalError("init(coder:) has not been implemented")
   }
 
-  func configure(inout item: ListItem) {
+  func configure(inout item: ViewModel) {
     if !item.image.isEmpty {
       imageView.image = nil
       let URL = NSURL(string: item.image)

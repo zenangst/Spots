@@ -7,7 +7,7 @@ public class CarouselSpot: NSObject, Spotable, Gridable {
   public static var configure: ((view: UICollectionView) -> Void)?
   public static var defaultView: UIView.Type = CarouselSpotCell.self
 
-  public var cachedViews = [String : Itemble]()
+  public var cachedViews = [String : ViewConfigurable]()
   public var component: Component
   public var index = 0
   public var paginate = false
@@ -88,7 +88,7 @@ extension CarouselSpot: UIScrollViewDelegate {
     }
   }
 
-  public func scrollTo(predicate: (ListItem) -> Bool) {
+  public func scrollTo(predicate: (ViewModel) -> Bool) {
     if let index = items.indexOf(predicate) {
       let pageWidth: CGFloat = collectionView.frame.width - layout.sectionInset.right
         + layout.sectionInset.left + layout.minimumLineSpacing
@@ -131,7 +131,7 @@ extension CarouselSpot: UICollectionViewDataSource {
     let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath)
     cell.optimize()
 
-    if let grid = cell as? Itemble {
+    if let grid = cell as? ViewConfigurable {
       grid.configure(&component.items[indexPath.item])
       collectionView.collectionViewLayout.invalidateLayout()
     }

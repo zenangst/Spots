@@ -19,7 +19,7 @@ public extension Spotable where Self : Gridable {
     prepareSpot(self)
   }
 
-  public func append(item: ListItem, completion: (() -> Void)? = nil) {
+  public func append(item: ViewModel, completion: (() -> Void)? = nil) {
     var indexes = [Int]()
     let count = component.items.count
 
@@ -40,7 +40,7 @@ public extension Spotable where Self : Gridable {
     }
   }
 
-  public func append(items: [ListItem], completion: (() -> Void)? = nil) {
+  public func append(items: [ViewModel], completion: (() -> Void)? = nil) {
     var indexes = [Int]()
     let count = component.items.count
 
@@ -61,7 +61,7 @@ public extension Spotable where Self : Gridable {
     }
   }
 
-  public func insert(item: ListItem, index: Int, completion: (() -> Void)? = nil) {
+  public func insert(item: ViewModel, index: Int, completion: (() -> Void)? = nil) {
     component.items.insert(item, atIndex: index)
     var indexes = [Int]()
     let count = component.items.count
@@ -80,7 +80,7 @@ public extension Spotable where Self : Gridable {
     }
   }
 
-  public func prepend(items: [ListItem], completion: (() -> Void)? = nil) {
+  public func prepend(items: [ViewModel], completion: (() -> Void)? = nil) {
     var indexes = [Int]()
     let count = component.items.count
 
@@ -101,7 +101,7 @@ public extension Spotable where Self : Gridable {
     }
   }
 
-  public func delete(item: ListItem, completion: (() -> Void)? = nil) {
+  public func delete(item: ViewModel, completion: (() -> Void)? = nil) {
     guard let index = component.items.indexOf({ $0 == item})
       else { completion?(); return }
 
@@ -115,7 +115,7 @@ public extension Spotable where Self : Gridable {
     }
   }
 
-  public func delete(items: [ListItem], completion: (() -> Void)? = nil) {
+  public func delete(items: [ViewModel], completion: (() -> Void)? = nil) {
     var indexes = [Int]()
     let count = component.items.count
 
@@ -144,7 +144,7 @@ public extension Spotable where Self : Gridable {
     }
   }
 
-  public func update(item: ListItem, index: Int, completion: (() -> Void)? = nil) {
+  public func update(item: ViewModel, index: Int, completion: (() -> Void)? = nil) {
     items[index] = item
 
     let cellClass = self.dynamicType.views[item.kind] ?? self.dynamicType.defaultView
@@ -153,7 +153,7 @@ public extension Spotable where Self : Gridable {
       : component.kind
 
     collectionView.registerClass(cellClass, forCellWithReuseIdentifier: reuseIdentifier)
-    if let cell = cellClass.init() as? Itemble {
+    if let cell = cellClass.init() as? ViewConfigurable {
       component.items[index].index = index
       cell.configure(&component.items[index])
     }
@@ -186,7 +186,7 @@ public extension Spotable where Self : Gridable {
       if cached == nil { cached = componentClass.init() }
 
       component.items[index].size.width = UIScreen.mainScreen().bounds.size.width / CGFloat(component.span)
-      (cached as? Itemble)?.configure(&component.items[index])
+      (cached as? ViewConfigurable)?.configure(&component.items[index])
     }
     cached = nil
   }
@@ -195,7 +195,7 @@ public extension Spotable where Self : Gridable {
     let items = component.items
     for (index, item) in items.enumerate() {
       let cellClass = self.dynamicType.views[item.kind] ?? self.dynamicType.defaultView
-      if let cell = cellClass.init() as? Itemble {
+      if let cell = cellClass.init() as? ViewConfigurable {
         component.items[index].index = index
         cell.configure(&component.items[index])
       }

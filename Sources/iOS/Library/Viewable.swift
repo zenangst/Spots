@@ -27,8 +27,8 @@ public extension Spotable where Self : Viewable {
       if T.views.keys.contains($0.kind) {
         let viewClass = T.views[$0.kind] ?? T.defaultView
         let view = viewClass.init().then {
-          ($0 as? Itemble)?.configure(&component.items[index])
-          guard let size = ($0 as? Itemble)?.size else { return }
+          ($0 as? ViewConfigurable)?.configure(&component.items[index])
+          guard let size = ($0 as? ViewConfigurable)?.size else { return }
           $0.frame.size = size
         }
         scrollView.addSubview(view)
@@ -48,22 +48,22 @@ public extension Spotable where Self : Viewable {
     }
   }
 
-  func append(item: ListItem, completion: (() -> Void)? = nil) {
+  func append(item: ViewModel, completion: (() -> Void)? = nil) {
     let dynamic = self.dynamicType
 
     guard dynamic.views.keys.contains(item.kind) else { return }
 
     let viewClass = dynamic.views[item.kind] ?? dynamic.defaultView
     let view = viewClass.init().then {
-      ($0 as? Itemble)?.configure(&component.items[index])
-      guard let size = ($0 as? Itemble)?.size else { return }
+      ($0 as? ViewConfigurable)?.configure(&component.items[index])
+      guard let size = ($0 as? ViewConfigurable)?.size else { return }
       $0.frame.size = size
     }
     scrollView.addSubview(view)
     component.items.append(item)
   }
 
-  func append(items: [ListItem], completion: (() -> Void)? = nil) {
+  func append(items: [ViewModel], completion: (() -> Void)? = nil) {
     for item in items {
       let dynamic = self.dynamicType
 
@@ -71,8 +71,8 @@ public extension Spotable where Self : Viewable {
 
       let viewClass = dynamic.views[item.kind] ?? dynamic.defaultView
       let view = viewClass.init().then {
-        ($0 as? Itemble)?.configure(&component.items[index])
-        guard let size = ($0 as? Itemble)?.size else { return }
+        ($0 as? ViewConfigurable)?.configure(&component.items[index])
+        guard let size = ($0 as? ViewConfigurable)?.size else { return }
         $0.frame.size = size
       }
       scrollView.addSubview(view)
@@ -80,7 +80,7 @@ public extension Spotable where Self : Viewable {
     }
   }
 
-  func prepend(items: [ListItem], completion: (() -> Void)? = nil) {
+  func prepend(items: [ViewModel], completion: (() -> Void)? = nil) {
     component.items.insertContentsOf(items, at: 0)
 
     for item in items.reverse() {
@@ -90,8 +90,8 @@ public extension Spotable where Self : Viewable {
 
       let viewClass = dynamic.views[item.kind] ?? dynamic.defaultView
       let view = viewClass.init().then {
-        ($0 as? Itemble)?.configure(&component.items[index])
-        guard let size = ($0 as? Itemble)?.size else { return }
+        ($0 as? ViewConfigurable)?.configure(&component.items[index])
+        guard let size = ($0 as? ViewConfigurable)?.size else { return }
         $0.frame.size = size
       }
       scrollView.insertSubview(view, atIndex: 0)
@@ -99,23 +99,23 @@ public extension Spotable where Self : Viewable {
     }
   }
 
-  func insert(item: ListItem, index: Int, completion: (() -> Void)? = nil) {
+  func insert(item: ViewModel, index: Int, completion: (() -> Void)? = nil) {
     let dynamic = self.dynamicType
 
     guard dynamic.views.keys.contains(item.kind) else { return }
 
     let viewClass = dynamic.views[item.kind] ?? dynamic.defaultView
     let view = viewClass.init().then {
-      ($0 as? Itemble)?.configure(&component.items[index])
-      guard let size = ($0 as? Itemble)?.size else { return }
+      ($0 as? ViewConfigurable)?.configure(&component.items[index])
+      guard let size = ($0 as? ViewConfigurable)?.size else { return }
       $0.frame.size = size
     }
     scrollView.insertSubview(view, atIndex: index)
     component.items.insert(item, atIndex: index)
   }
 
-  func update(item: ListItem, index: Int, completion: (() -> Void)? = nil) {
-    guard let view = scrollView.subviews[index] as? Itemble else { return }
+  func update(item: ViewModel, index: Int, completion: (() -> Void)? = nil) {
+    guard let view = scrollView.subviews[index] as? ViewConfigurable else { return }
 
     component.items[index] = item
     view.configure(&component.items[index])

@@ -34,7 +34,7 @@ EXTERNAL SOURCES:
   Keychain:
     :git: https://github.com/hyperoslo/Keychain
   Spots:
-    :path: ../../
+    :path: "../../"
 
 CHECKOUT OPTIONS:
   Cache:
@@ -44,7 +44,7 @@ CHECKOUT OPTIONS:
     :commit: d31e0257a47f05c1c800ce150d1fec104dfc9085
     :git: https://github.com/hyperoslo/Hue
   Imaginary:
-    :commit: ab000e8bd10e1ada8d50307bcaaefc8bea209e8d
+    :commit: 243448a070decf6d8fcdc503b14505a2951af680
     :git: https://github.com/hyperoslo/Imaginary
   Keychain:
     :commit: 21e6f607394e112229a7f30bebe2f832a4d43c48

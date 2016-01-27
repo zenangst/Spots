@@ -2,7 +2,7 @@ import UIKit
 
 public protocol SpotsDelegate: class {
 
-  func spotDidSelectItem(spot: Spotable, item: ListItem)
+  func spotDidSelectItem(spot: Spotable, item: ViewModel)
 }
 
 public protocol SpotsRefreshDelegate: class {
@@ -17,5 +17,5 @@ public protocol SpotsScrollDelegate: class {
 
 public protocol SpotsCarouselScrollDelegate: class {
 
-  func spotDidEndScrolling(spot: Spotable, item: ListItem)
+  func spotDidEndScrolling(spot: Spotable, item: ViewModel)
 }

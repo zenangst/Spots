@@ -4,7 +4,7 @@ import Sugar
 import Hue
 import Spots
 
-class CardSpotCell : UICollectionViewCell, Itemble {
+class CardSpotCell : UICollectionViewCell, ViewConfigurable {
 
   var size = CGSize(
     width: 325,

@@ -28,7 +28,7 @@ class ComponentTests : XCTestCase {
       kind: json["type"] as! String,
       span: json["span"] as! CGFloat,
       meta: json["meta"] as! [String : String],
-      items: [ListItem(title: "item1")])
+      items: [ViewModel(title: "item1")])
       
     XCTAssertEqual(codeComponent.title, json["title"] as? String)
     XCTAssertEqual(codeComponent.kind,  json["type"] as? String)
@@ -49,7 +49,7 @@ class ComponentTests : XCTestCase {
       meta: json["meta"] as! [String : String])
     XCTAssertFalse(jsonComponent == codeComponent)
 
-    codeComponent.items.append(ListItem(title: "item2"))
+    codeComponent.items.append(ViewModel(title: "item2"))
     XCTAssertFalse(jsonComponent == codeComponent)
   }
 }

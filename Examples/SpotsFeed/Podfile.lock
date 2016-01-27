@@ -28,14 +28,14 @@ EXTERNAL SOURCES:
   Imaginary:
     :git: https://github.com/hyperoslo/Imaginary
   Spots:
-    :path: ../../
+    :path: "../../"
 
 CHECKOUT OPTIONS:
   Cache:
     :commit: 5af9d7f80b5c39ec578c54874d5acda248d10831
     :git: https://github.com/hyperoslo/Cache
   Imaginary:
-    :commit: ab000e8bd10e1ada8d50307bcaaefc8bea209e8d
+    :commit: 243448a070decf6d8fcdc503b14505a2951af680
     :git: https://github.com/hyperoslo/Imaginary
 
 SPEC CHECKSUMS:
