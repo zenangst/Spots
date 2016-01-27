@@ -3,12 +3,12 @@ import Foundation
 import XCTest
 import Fakery
 
-class ListItemTests : XCTestCase {
+class ViewModelTests : XCTestCase {
 
   static let faker = Faker()
   let json: [String : AnyObject] = [
-    "title" : ListItemTests.faker.name.firstName(),
-    "subtitle" : ListItemTests.faker.name.lastName(),
+    "title" : ViewModelTests.faker.name.firstName(),
+    "subtitle" : ViewModelTests.faker.name.lastName(),
     "image" : "smile",
     "type" : "person",
     "action" : "profile",
@@ -18,16 +18,16 @@ class ListItemTests : XCTestCase {
 
   func testInit() {
     // Test component created with JSON
-    let jsonListItem = ListItem(json)
-    XCTAssertEqual(jsonListItem.title,    json["title"] as? String)
-    XCTAssertEqual(jsonListItem.subtitle, json["subtitle"] as? String)
-    XCTAssertEqual(jsonListItem.image,    json["image"] as? String)
-    XCTAssertEqual(jsonListItem.kind,     json["type"] as? String)
-    XCTAssertEqual(jsonListItem.action,   json["action"] as? String)
-    XCTAssert(jsonListItem.meta.count == 1)
+    let jsonViewModel = ViewModel(json)
+    XCTAssertEqual(jsonViewModel.title,    json["title"] as? String)
+    XCTAssertEqual(jsonViewModel.subtitle, json["subtitle"] as? String)
+    XCTAssertEqual(jsonViewModel.image,    json["image"] as? String)
+    XCTAssertEqual(jsonViewModel.kind,     json["type"] as? String)
+    XCTAssertEqual(jsonViewModel.action,   json["action"] as? String)
+    XCTAssert(jsonViewModel.meta.count == 1)
 
     // Test component created programmatically
-    let codeListItem = ListItem(
+    let codeViewModel = ViewModel(
       title:    json["title"] as! String,
       subtitle: json["subtitle"] as! String,
       image:    json["image"] as! String,
@@ -40,16 +40,16 @@ class ListItemTests : XCTestCase {
       meta:     json["meta"] as! [String : AnyObject]
     )
 
-    XCTAssertEqual(codeListItem.title,    json["title"] as? String)
-    XCTAssertEqual(codeListItem.subtitle, json["subtitle"] as? String)
-    XCTAssertEqual(codeListItem.image,    json["image"] as? String)
-    XCTAssertEqual(codeListItem.kind,     json["type"] as? String)
-    XCTAssertEqual(codeListItem.action,   json["action"] as? String)
-    XCTAssert(codeListItem.meta.count == 1)
+    XCTAssertEqual(codeViewModel.title,    json["title"] as? String)
+    XCTAssertEqual(codeViewModel.subtitle, json["subtitle"] as? String)
+    XCTAssertEqual(codeViewModel.image,    json["image"] as? String)
+    XCTAssertEqual(codeViewModel.kind,     json["type"] as? String)
+    XCTAssertEqual(codeViewModel.action,   json["action"] as? String)
+    XCTAssert(codeViewModel.meta.count == 1)
 
     // Compare JSON and programmatically created component
-    XCTAssert(jsonListItem == codeListItem)
-    XCTAssertEqual(jsonListItem.meta["contactInfo"] as? String, codeListItem.meta["contactInfo"] as? String)
+    XCTAssert(jsonViewModel == codeViewModel)
+    XCTAssertEqual(jsonViewModel.meta["contactInfo"] as? String, codeViewModel.meta["contactInfo"] as? String)
   }
 
 }
