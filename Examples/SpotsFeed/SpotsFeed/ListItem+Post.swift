@@ -1,7 +1,7 @@
 import UIKit
 import Spots
 
-extension ListItem {
+extension ViewModel {
 
   var post: Post {
     get {

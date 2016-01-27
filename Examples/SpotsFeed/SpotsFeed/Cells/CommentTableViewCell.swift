@@ -6,11 +6,11 @@ public protocol CommentTableViewCellDelegate: class {
   func commentAuthorDidTap(commentID: Int)
 }
 
-public class CommentTableViewCell: WallTableViewCell, Itemble {
+public class CommentTableViewCell: WallTableViewCell, ViewConfigurable {
 
   public var size = CGSize(width: 0, height: 44)
 
-  public class func height(item: ListItem) -> CGFloat {
+  public class func height(item: ViewModel) -> CGFloat {
     let post = item.post
     let postText = post.text as NSString
     let textFrame = postText.boundingRectWithSize(CGSize(
@@ -134,7 +134,7 @@ public class CommentTableViewCell: WallTableViewCell, Itemble {
 
   // MARK: - Setup
 
-  public func setupViews(item: ListItem) -> CGFloat {
+  public func setupViews(item: ViewModel) -> CGFloat {
     let post = item.post
     let totalWidth = UIScreen.mainScreen().bounds.width
 
@@ -163,7 +163,7 @@ public class CommentTableViewCell: WallTableViewCell, Itemble {
     return bottomSeparator.frame.origin.y
   }
 
-  public func configure(inout item: ListItem) {
+  public func configure(inout item: ViewModel) {
     if bottomSeparator.frame.origin.y == 0.0 {
       item.size.width = contentView.frame.width
       item.size.height = setupViews(item)

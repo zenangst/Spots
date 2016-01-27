@@ -5,28 +5,28 @@ class ExploreController: SpotsController {
 
   convenience init(title: String) {
     let suggestedChannels = Component(span: 3, items: [
-      ListItem(title: "Apple",   kind: "topic", image: ExploreController.suggestedImage(1)),
-      ListItem(title: "Spotify", kind: "topic", image: ExploreController.suggestedImage(2)),
-      ListItem(title: "Google",  kind: "topic", image: ExploreController.suggestedImage(3))
+      ViewModel(title: "Apple",   kind: "topic", image: ExploreController.suggestedImage(1)),
+      ViewModel(title: "Spotify", kind: "topic", image: ExploreController.suggestedImage(2)),
+      ViewModel(title: "Google",  kind: "topic", image: ExploreController.suggestedImage(3))
       ])
 
     let suggestedTopics = Component(span: 3, items: [
-      ListItem(title: "Business", kind: "topic", meta: ["color" : "5A0E20"]),
-      ListItem(title: "Software", kind: "topic", meta: ["color" : "760D26"]),
-      ListItem(title: "News",     kind: "topic", meta: ["color" : "2266B5"]),
-      ListItem(title: "iOS",      kind: "topic", meta: ["color" : "4CBCFB"])
+      ViewModel(title: "Business", kind: "topic", meta: ["color" : "5A0E20"]),
+      ViewModel(title: "Software", kind: "topic", meta: ["color" : "760D26"]),
+      ViewModel(title: "News",     kind: "topic", meta: ["color" : "2266B5"]),
+      ViewModel(title: "iOS",      kind: "topic", meta: ["color" : "4CBCFB"])
       ])
 
     let browse = Component(title: "Browse", items: [
-      ListItem(title: "News"),
-      ListItem(title: "Business"),
-      ListItem(title: "Politics"),
-      ListItem(title: "Travel"),
-      ListItem(title: "Technology"),
-      ListItem(title: "Sports"),
-      ListItem(title: "Science"),
-      ListItem(title: "Entertainment"),
-      ListItem(title: "Food")
+      ViewModel(title: "News"),
+      ViewModel(title: "Business"),
+      ViewModel(title: "Politics"),
+      ViewModel(title: "Travel"),
+      ViewModel(title: "Technology"),
+      ViewModel(title: "Sports"),
+      ViewModel(title: "Science"),
+      ViewModel(title: "Entertainment"),
+      ViewModel(title: "Food")
       ])
 
     let spots: [Spotable] = [

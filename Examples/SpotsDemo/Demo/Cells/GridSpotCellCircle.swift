@@ -3,7 +3,7 @@ import Imaginary
 import Sugar
 import Spots
 
-class GridSpotCellCircle : UICollectionViewCell, Itemble {
+class GridSpotCellCircle : UICollectionViewCell, ViewConfigurable {
 
   var size = CGSize(width: 88, height: 120)
 
@@ -44,7 +44,7 @@ class GridSpotCellCircle : UICollectionViewCell, Itemble {
     fatalError("init(coder:) has not been implemented")
   }
 
-  func configure(inout item: ListItem) {
+  func configure(inout item: ViewModel) {
     optimize()
 
     imageView.frame.size.height = 88

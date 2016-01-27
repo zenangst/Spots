@@ -12,16 +12,16 @@ class FavoritesController: SpotsController {
     self.title = title
   }
 
-  static func generateItem(index: Int, kind: String = "topic") -> ListItem {
-    let item = ListItem(title: faker.commerce.department(),
+  static func generateItem(index: Int, kind: String = "topic") -> ViewModel {
+    let item = ViewModel(title: faker.commerce.department(),
       kind: kind,
       image: faker.internet.image(width: 125, height: 160) + "?type=avatar&id=\(index)")
 
     return item
   }
 
-  static func generateItems(from: Int, to: Int, kind: String = "topic") -> [ListItem] {
-    var items = [ListItem]()
+  static func generateItems(from: Int, to: Int, kind: String = "topic") -> [ViewModel] {
+    var items = [ViewModel]()
     for i in from...from+to {
       autoreleasepool({
         items.append(generateItem(i))

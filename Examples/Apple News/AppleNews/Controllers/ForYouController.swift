@@ -17,12 +17,12 @@ class ForYouController: SpotsController, SpotsDelegate {
     spotsRefreshDelegate = self
   }
 
-  func spotDidSelectItem(spot: Spotable, item: ListItem) { }
+  func spotDidSelectItem(spot: Spotable, item: ViewModel) { }
 
-  static func generateItem(index: Int, kind: String = "feed") -> ListItem {
+  static func generateItem(index: Int, kind: String = "feed") -> ViewModel {
     let sencenceCount = Int(arc4random_uniform(4) + 2)
 
-    let item = ListItem(title: faker.lorem.sentences(amount: sencenceCount),
+    let item = ViewModel(title: faker.lorem.sentences(amount: sencenceCount),
       subtitle: faker.lorem.sentences(amount: 1),
       kind: kind,
       image: faker.internet.image(width: 180, height: 180) + "?type=avatar&id=\(index)")
@@ -30,8 +30,8 @@ class ForYouController: SpotsController, SpotsDelegate {
     return item
   }
 
-  static func generateItems(from: Int, to: Int, kind: String = "feed") -> [ListItem] {
-    var items = [ListItem]()
+  static func generateItems(from: Int, to: Int, kind: String = "feed") -> [ViewModel] {
+    var items = [ViewModel]()
     for i in from...from+to {
       autoreleasepool({
         items.append(generateItem(i))

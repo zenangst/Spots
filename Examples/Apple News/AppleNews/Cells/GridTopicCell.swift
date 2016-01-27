@@ -5,7 +5,7 @@ import Spots
 import Imaginary
 import Hue
 
-class GridTopicCell: UICollectionViewCell, Itemble {
+class GridTopicCell: UICollectionViewCell, ViewConfigurable {
 
   var size = CGSize(width: 125, height: 160)
 
@@ -67,7 +67,7 @@ class GridTopicCell: UICollectionViewCell, Itemble {
     fatalError("init(coder:) has not been implemented")
   }
 
-  func configure(inout item: ListItem) {
+  func configure(inout item: ViewModel) {
     if !item.image.isEmpty {
       imageView.frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
       imageView.image = nil

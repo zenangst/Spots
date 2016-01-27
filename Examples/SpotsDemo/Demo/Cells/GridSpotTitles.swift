@@ -4,7 +4,7 @@ import Sugar
 import Spots
 import Hue
 
-class GridSpotCellTitles : UICollectionViewCell, Itemble {
+class GridSpotCellTitles : UICollectionViewCell, ViewConfigurable {
 
   var size = CGSize(width: 88, height: 88)
 
@@ -55,7 +55,7 @@ class GridSpotCellTitles : UICollectionViewCell, Itemble {
     fatalError("init(coder:) has not been implemented")
   }
 
-  func configure(inout item: ListItem) {
+  func configure(inout item: ViewModel) {
     optimize()
     if let textColor = item.meta["text-color"] as? String {
       titleLabel.textColor = UIColor.hex(textColor)

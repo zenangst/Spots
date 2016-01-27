@@ -2,7 +2,7 @@ import Spots
 import Sugar
 import Imaginary
 
-class FeedItemCell: UITableViewCell, Itemble {
+class FeedItemCell: UITableViewCell, ViewConfigurable {
 
   var size = CGSize(width: 0, height: 0)
 
@@ -37,7 +37,7 @@ class FeedItemCell: UITableViewCell, Itemble {
       fatalError("init(coder:) has not been implemented")
   }
 
-  func configure(inout item: ListItem) {
+  func configure(inout item: ViewModel) {
     if !item.image.isEmpty {
       let URL = NSURL(string: item.image)
       customImageView.setImage(URL)
