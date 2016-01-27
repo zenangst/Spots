@@ -149,27 +149,27 @@ extension SpotsController {
     }
   }
 
-  public func append(item: ListItem, spotIndex: Int = 0, completion: (() -> Void)? = nil) {
+  public func append(item: ViewModel, spotIndex: Int = 0, completion: (() -> Void)? = nil) {
     spot(spotIndex)?.append(item) { completion?() }
     spot(spotIndex)?.refreshIndexes()
   }
 
-  public func append(items: [ListItem], spotIndex: Int = 0, completion: (() -> Void)? = nil) {
+  public func append(items: [ViewModel], spotIndex: Int = 0, completion: (() -> Void)? = nil) {
     spot(spotIndex)?.append(items) { completion?() }
     spot(spotIndex)?.refreshIndexes()
   }
 
-  public func prepend(items: [ListItem], spotIndex: Int = 0, completion: (() -> Void)? = nil) {
+  public func prepend(items: [ViewModel], spotIndex: Int = 0, completion: (() -> Void)? = nil) {
     spot(spotIndex)?.prepend(items)  { completion?() }
     spot(spotIndex)?.refreshIndexes()
   }
 
-  public func insert(item: ListItem, index: Int = 0, spotIndex: Int, completion: (() -> Void)? = nil) {
+  public func insert(item: ViewModel, index: Int = 0, spotIndex: Int, completion: (() -> Void)? = nil) {
     spot(spotIndex)?.insert(item, index: index)  { completion?() }
     spot(spotIndex)?.refreshIndexes()
   }
 
-  public func update(item: ListItem, index: Int = 0, spotIndex: Int, completion: (() -> Void)? = nil) {
+  public func update(item: ViewModel, index: Int = 0, spotIndex: Int, completion: (() -> Void)? = nil) {
     spot(spotIndex)?.update(item, index: index)  { completion?() }
     spot(spotIndex)?.refreshIndexes()
   }
@@ -194,7 +194,7 @@ extension SpotsController {
     }
   }
 
-  public func scrollTo(spotIndex index: Int = 0, @noescape includeElement: (ListItem) -> Bool) {
+  public func scrollTo(spotIndex index: Int = 0, @noescape includeElement: (ViewModel) -> Bool) {
     guard let itemY = spot(index)?.scrollTo(includeElement) else { return }
 
     if spot(index)?.spotHeight() > spotsScrollView.frame.height - spotsScrollView.contentInset.bottom {

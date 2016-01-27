@@ -7,7 +7,7 @@ public class GridSpot: NSObject, Spotable, Gridable {
   public static var defaultView: UIView.Type = GridSpotCell.self
   public static var configure: ((view: UICollectionView) -> Void)?
 
-  public var cachedViews = [String : Itemble]()
+  public var cachedViews = [String : ViewConfigurable]()
   public var component: Component
   public var index = 0
 
@@ -75,7 +75,7 @@ extension GridSpot: UICollectionViewDataSource {
     let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath)
     cell.optimize()
 
-    if let grid = cell as? Itemble {
+    if let grid = cell as? ViewConfigurable {
       grid.configure(&component.items[indexPath.item])
       collectionView.collectionViewLayout.invalidateLayout()
     }

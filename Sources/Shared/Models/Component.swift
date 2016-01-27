@@ -12,7 +12,7 @@ public struct Component: Mappable {
   public var title = ""
   public var kind = ""
   public var span: CGFloat = 0
-  public var items = [ListItem]()
+  public var items = [ViewModel]()
   public var size: CGSize?
   public var meta = [String : String]()
 
@@ -24,7 +24,7 @@ public struct Component: Mappable {
     meta  <- map.property("meta")
   }
 
-  public init(title: String = "", kind: String = "", span: CGFloat = 0, items: [ListItem] = [], meta: [String : String] = [:]) {
+  public init(title: String = "", kind: String = "", span: CGFloat = 0, items: [ViewModel] = [], meta: [String : String] = [:]) {
     self.title = title
     self.kind = kind
     self.span = span

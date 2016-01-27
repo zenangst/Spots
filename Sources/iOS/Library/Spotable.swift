@@ -13,23 +13,23 @@ public protocol Spotable: class {
   init(component: Component)
 
   func setup(size: CGSize)
-  func append(item: ListItem, completion: (() -> Void)?)
-  func append(items: [ListItem], completion: (() -> Void)?)
-  func prepend(items: [ListItem], completion: (() -> Void)?)
-  func insert(item: ListItem, index: Int, completion: (() -> Void)?)
-  func update(item: ListItem, index: Int, completion: (() -> Void)?)
+  func append(item: ViewModel, completion: (() -> Void)?)
+  func append(items: [ViewModel], completion: (() -> Void)?)
+  func prepend(items: [ViewModel], completion: (() -> Void)?)
+  func insert(item: ViewModel, index: Int, completion: (() -> Void)?)
+  func update(item: ViewModel, index: Int, completion: (() -> Void)?)
   func delete(index: Int, completion: (() -> Void)?)
   func delete(indexes: [Int], completion: (() -> Void)?)
   func reload(indexes: [Int], completion: (() -> Void)?)
   func render() -> UIScrollView
   func layout(size: CGSize)
   func prepare()
-  func scrollTo(@noescape includeElement: (ListItem) -> Bool) -> CGFloat
+  func scrollTo(@noescape includeElement: (ViewModel) -> Bool) -> CGFloat
 }
 
 public extension Spotable {
 
-  var items: [ListItem] {
+  var items: [ViewModel] {
     set(items) {
       component.items = items
     }
@@ -38,11 +38,11 @@ public extension Spotable {
     }
   }
 
-  public func item(index: Int) -> ListItem {
+  public func item(index: Int) -> ViewModel {
     return component.items[index]
   }
 
-  public func item(indexPath: NSIndexPath) -> ListItem {
+  public func item(indexPath: NSIndexPath) -> ViewModel {
     return component.items[indexPath.item]
   }
 
@@ -56,7 +56,7 @@ public extension Spotable {
     }
   }
 
-  public func scrollTo(@noescape includeElement: (ListItem) -> Bool) -> CGFloat {
+  public func scrollTo(@noescape includeElement: (ViewModel) -> Bool) -> CGFloat {
     return 0.0
   }
 }

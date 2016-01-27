@@ -4,8 +4,8 @@
   import Foundation
 #endif
 
-public protocol Itemble: class {
+public protocol ViewConfigurable: class {
   var size: CGSize { get set }
 
-  func configure(inout item: ListItem)
+  func configure(inout item: ViewModel)
 }

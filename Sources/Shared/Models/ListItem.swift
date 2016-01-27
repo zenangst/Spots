@@ -7,7 +7,7 @@
 import Tailor
 import Sugar
 
-public struct ListItem: Mappable {
+public struct ViewModel: Mappable {
   public var index = 0
   public var title = ""
   public var subtitle = ""
@@ -42,7 +42,7 @@ public struct ListItem: Mappable {
   }
 }
 
-public func ==(lhs: [ListItem], rhs: [ListItem]) -> Bool {
+public func ==(lhs: [ViewModel], rhs: [ViewModel]) -> Bool {
   var equal = lhs.count == rhs.count
 
   if !equal { return false }
@@ -54,7 +54,7 @@ public func ==(lhs: [ListItem], rhs: [ListItem]) -> Bool {
   return equal
 }
 
-public func ==(lhs: ListItem, rhs: ListItem) -> Bool {
+public func ==(lhs: ViewModel, rhs: ViewModel) -> Bool {
   let equal = lhs.title == rhs.title &&
     lhs.subtitle == rhs.subtitle &&
     lhs.image == rhs.image &&
@@ -64,7 +64,7 @@ public func ==(lhs: ListItem, rhs: ListItem) -> Bool {
   return equal
 }
 
-public func ===(lhs: ListItem, rhs: ListItem) -> Bool {
+public func ===(lhs: ViewModel, rhs: ViewModel) -> Bool {
   let equal = lhs.title == rhs.title &&
     lhs.subtitle == rhs.subtitle &&
     lhs.image == rhs.image &&
@@ -75,6 +75,6 @@ public func ===(lhs: ListItem, rhs: ListItem) -> Bool {
   return equal
 }
 
-public func !=(lhs: ListItem, rhs: ListItem) -> Bool {
+public func !=(lhs: ViewModel, rhs: ViewModel) -> Bool {
   return !(lhs == rhs)
 }

@@ -2,10 +2,10 @@ import UIKit
 import Imaginary
 import Sugar
 
-class GridSpotCell: UICollectionViewCell, Itemble {
+class GridSpotCell: UICollectionViewCell, ViewConfigurable {
 
   var size = CGSize(width: 88, height: 88)
-  var item: ListItem?
+  var item: ViewModel?
 
   var label: UILabel = {
     let label = UILabel(frame: CGRect(x: 0, y: 0,
@@ -33,7 +33,7 @@ class GridSpotCell: UICollectionViewCell, Itemble {
     fatalError("init(coder:) has not been implemented")
   }
 
-  func configure(inout item: ListItem) {
+  func configure(inout item: ViewModel) {
     if item.image != "" {
       let URL = NSURL(string: item.image)
       imageView.setImage(URL)
