@@ -53,7 +53,7 @@ implementation that you add.
 This improves code reuse and helps to theme your app and ultimately keep your application consistent.
 - Support custom Spots, all you need to do is to conform to `Spotable`
 - A rich public API for appending, prepending, inserting, updating or
-deleting `ListItems`.
+deleting `ViewModels`.
 - Features three different spots out-of-the-box; `CarouselSpot`, `GridSpot`, `ListSpot`
 - Static custom cell registrations for all `Spotable` objects.
 Write one view cell and use it across your application, when and where you
