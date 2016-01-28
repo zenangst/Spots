@@ -62,16 +62,14 @@ class ViewModelTests : XCTestCase {
   }
 
   func testMetaWithType() {
-    let modelFoo = ViewModel(title: "foo",
-      meta: ["id" : 1])
+    let modelFoo = ViewModel(title: "foo", meta: ["id" : 1])
 
     XCTAssert(modelFoo.meta("id", type: Int.self) == 1)
     XCTAssertNil(modelFoo.meta("foo", type: String.self))
   }
 
   func testMetaWithDefaultValue() {
-    let modelFoo = ViewModel(title: "foo",
-      meta: ["id" : 1])
+    let modelFoo = ViewModel(title: "foo", meta: ["id" : 1])
 
     XCTAssert(modelFoo.meta("id", 0) == 1)
     XCTAssert(modelFoo.meta("foo", "bar") == "bar")
