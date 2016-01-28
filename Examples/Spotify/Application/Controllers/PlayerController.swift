@@ -173,8 +173,7 @@ class PlayerController: SpotsController {
       UIView.animateWithDuration(NSTimeInterval(time), delay: 0, options: [.AllowUserInteraction], animations: {
         self.view.frame.origin.y = endY
         UIApplication.sharedApplication().statusBarHidden = endY == minimumY
-        }, completion: { _ in
-      })
+        }, completion: { _ in })
 
     default: break
     }
