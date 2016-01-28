@@ -16,6 +16,7 @@ public struct ViewModel: Mappable {
   public var action: String?
   public var size = CGSize(width: 0, height: 0)
   public var meta = [String : AnyObject]()
+  public var relations = [String : [ViewModel]]()
 
   public init(_ map: JSONDictionary) {
     title    <- map.property("title")
@@ -25,13 +26,17 @@ public struct ViewModel: Mappable {
     action   <- map.property("action")
     meta     <- map.property("meta")
 
+    if let relation = map["relations"] as? [String : [ViewModel]] {
+      relations = relation
+    }
+
     size = CGSize(
       width:  ((map["size"] as? JSONDictionary)?["width"] as? Int) ?? 0,
       height: ((map["size"] as? JSONDictionary)?["height"] as? Int) ?? 0
     )
   }
 
-  public init(title: String = "", subtitle: String = "", image: String = "", kind: String = "", action: String? = nil, size: CGSize = CGSize(width: 0, height: 0), meta: JSONDictionary = [:]) {
+  public init(title: String = "", subtitle: String = "", image: String = "", kind: String = "", action: String? = nil, size: CGSize = CGSize(width: 0, height: 0), meta: JSONDictionary = [:], relations: [String : [ViewModel]] = [:]) {
     self.title = title
     self.subtitle = subtitle
     self.image = image
@@ -39,6 +44,7 @@ public struct ViewModel: Mappable {
     self.action = action
     self.size = size
     self.meta = meta
+    self.relations = relations
   }
 }
 
