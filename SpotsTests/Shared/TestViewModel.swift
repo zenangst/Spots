@@ -58,6 +58,7 @@ class ViewModelTests : XCTestCase {
         ViewModel(title: "bar")
         ]])
     XCTAssert(modelFoo.relations["bar"]!.first!.title == "bar")
+    XCTAssert(modelFoo.relation("bar", 0)?.title == "bar")
   }
 
   func testMetaWithType() {
