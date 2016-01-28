@@ -46,6 +46,18 @@ public struct ViewModel: Mappable {
     self.meta = meta
     self.relations = relations
   }
+
+  public func meta<T>(key: String, _ defaultValue: T) -> T {
+    return meta[key] as? T ?? defaultValue
+  }
+
+  public func meta<T>(key: String, type: T.Type) -> T? {
+    return meta[key] as? T
+  }
+
+  public func relation(key: String, _ index: Int) -> ViewModel? {
+    return relations[key]?[index] ?? nil
+  }
 }
 
 public func ==(lhs: [ViewModel], rhs: [ViewModel]) -> Bool {
