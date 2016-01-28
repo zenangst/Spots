@@ -52,4 +52,11 @@ class ViewModelTests : XCTestCase {
     XCTAssertEqual(jsonViewModel.meta["contactInfo"] as? String, codeViewModel.meta["contactInfo"] as? String)
   }
 
+  func testRelations() {
+    let modelFoo = ViewModel(title: "foo",
+      relations: ["bar" : [
+        ViewModel(title: "bar")
+        ]])
+    XCTAssert(modelFoo.relations["bar"]!.first!.title == "bar")
+  }
 }
