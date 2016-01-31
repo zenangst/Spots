@@ -202,6 +202,11 @@ extension SpotsController {
       spotsScrollView.setContentOffset(CGPoint(x: CGFloat(0.0), y: y), animated: true)
     }
   }
+
+  public func scrollToBottom(animated: Bool) {
+    let y = spotsScrollView.contentSize.height - spotsScrollView.frame.height + spotsScrollView.contentInset.bottom
+    spotsScrollView.setContentOffset(CGPoint(x: 0, y: y), animated: animated)
+  }
 }
 
 // MARK: - Private methods
