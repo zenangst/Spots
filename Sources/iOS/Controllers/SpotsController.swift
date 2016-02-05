@@ -33,7 +33,6 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
   lazy public var spotsScrollView: SpotsScrollView = SpotsScrollView().then { [unowned self] in
     $0.frame = self.view.frame
     $0.alwaysBounceVertical = true
-    $0.backgroundColor = UIColor.whiteColor()
     $0.clipsToBounds = true
     $0.delegate = self
   }
@@ -68,8 +67,7 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
 
   public override func viewDidLoad() {
     super.viewDidLoad()
-
-    view.addSubview(spotsScrollView)
+    view = spotsScrollView
 
     spots.enumerate().forEach { index, spot in
       spots[index].index = index
