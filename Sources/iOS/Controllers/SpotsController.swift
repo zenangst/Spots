@@ -67,8 +67,7 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
 
   public override func viewDidLoad() {
     super.viewDidLoad()
-
-    view.addSubview(spotsScrollView)
+    view = spotsScrollView
 
     spots.enumerate().forEach { index, spot in
       spots[index].index = index
