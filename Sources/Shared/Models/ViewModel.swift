@@ -30,6 +30,16 @@ public struct ViewModel: Mappable {
       relations = relation
     }
 
+    if let relations = map["relations"] as? [String : [JSONDictionary]] {
+      var newRelations = [String : [ViewModel]]()
+      relations.forEach { key, array in
+        if newRelations[key] == nil { newRelations[key] = [ViewModel]() }
+        array.forEach { newRelations[key]?.append(ViewModel($0)) }
+
+        self.relations = newRelations
+      }
+    }
+
     size = CGSize(
       width:  ((map["size"] as? JSONDictionary)?["width"] as? Int) ?? 0,
       height: ((map["size"] as? JSONDictionary)?["height"] as? Int) ?? 0
