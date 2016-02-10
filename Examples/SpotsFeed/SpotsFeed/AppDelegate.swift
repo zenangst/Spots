@@ -33,6 +33,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     window = UIWindow(frame: UIScreen.mainScreen().bounds)
 
+    SpotsController.configure = {
+      $0.backgroundColor = UIColor.whiteColor()
+    }
+
     ListSpot.views["feed"] = PostTableViewCell.self
     ListSpot.views["comment"] = CommentTableViewCell.self
 
