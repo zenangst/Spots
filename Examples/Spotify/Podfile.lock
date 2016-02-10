@@ -10,7 +10,7 @@ PODS:
     - Imaginary
     - Sugar
     - Tailor
-  - Sugar (1.0.3)
+  - Sugar (1.0.4)
   - Tailor (0.3.1):
     - Sugar
   - Whisper (2.0.2)
@@ -41,7 +41,7 @@ CHECKOUT OPTIONS:
     :commit: 5af9d7f80b5c39ec578c54874d5acda248d10831
     :git: https://github.com/hyperoslo/Cache
   Hue:
-    :commit: d31e0257a47f05c1c800ce150d1fec104dfc9085
+    :commit: 4f0f8bfdb69d926883216ffe9a802a5a2022f3f5
     :git: https://github.com/hyperoslo/Hue
   Imaginary:
     :commit: 243448a070decf6d8fcdc503b14505a2951af680
@@ -57,7 +57,7 @@ SPEC CHECKSUMS:
   Imaginary: feaea646440c68a9b6ed66a46597d548b9a44207
   Keychain: 50cb247cab32e774422741b118af9b598a3fb5b2
   Spots: 0e2a783d37cf05ce0752e2ae4cd709de0112cb04
-  Sugar: 0dec8fa53840c88c01579e61bcff8edbe468cb41
+  Sugar: 814a9f59f546b942884a276f32324e73d6f93b11
   Tailor: 3ec670165a4a0b728c187313e85b433af457152c
   Whisper: 49abcba82d23dd20f0a9a025797cacd09c8aa3bb
 

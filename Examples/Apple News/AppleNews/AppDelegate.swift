@@ -11,6 +11,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarDelegate {
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
     window = UIWindow(frame: UIScreen.mainScreen().bounds)
 
+    SpotsController.configure = {
+      $0.backgroundColor = UIColor.whiteColor()
+    }
+
     ListSpot.headers["search"] = SearchHeaderView.self
     ListSpot.headers["list"] = ListHeaderView.self
     ListSpot.configure = { tableView in tableView.tableFooterView = UIView(frame: CGRect.zero) }

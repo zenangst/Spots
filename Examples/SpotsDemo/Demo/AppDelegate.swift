@@ -14,6 +14,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     GridSpot.views["titles"] = GridSpotCellTitles.self
     GridSpot.views["circle"] = GridSpotCellCircle.self
 
+    SpotsController.configure = {
+      $0.backgroundColor = UIColor.whiteColor()
+    }
+
     let controller = JSONController()
 
     controller.title = "Spots".uppercaseString

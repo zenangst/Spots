@@ -9,7 +9,7 @@ PODS:
     - Imaginary
     - Sugar
     - Tailor
-  - Sugar (1.0.3)
+  - Sugar (1.0.4)
   - Tailor (0.3.1):
     - Sugar
 
@@ -40,7 +40,7 @@ CHECKOUT OPTIONS:
     :commit: b702df434f60418b8817896d89b60fc4a78fea89
     :git: https://github.com/hyperoslo/Compass
   Hue:
-    :commit: d31e0257a47f05c1c800ce150d1fec104dfc9085
+    :commit: 4f0f8bfdb69d926883216ffe9a802a5a2022f3f5
     :git: https://github.com/hyperoslo/Hue
   Imaginary:
     :commit: 243448a070decf6d8fcdc503b14505a2951af680
@@ -52,7 +52,7 @@ SPEC CHECKSUMS:
   Hue: 44ae8b1091935fcc75055174095ab04653989235
   Imaginary: feaea646440c68a9b6ed66a46597d548b9a44207
   Spots: 0e2a783d37cf05ce0752e2ae4cd709de0112cb04
-  Sugar: 0dec8fa53840c88c01579e61bcff8edbe468cb41
+  Sugar: 814a9f59f546b942884a276f32324e73d6f93b11
   Tailor: 3ec670165a4a0b728c187313e85b433af457152c
 
 COCOAPODS: 0.39.0
