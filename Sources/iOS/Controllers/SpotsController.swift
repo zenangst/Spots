@@ -10,9 +10,7 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
 
   public var refreshPositions = [CGFloat]()
 
-  public var refreshing = false {
-    didSet { if !refreshing { refreshControl.endRefreshing() } }
-  }
+  public var refreshing = false
 
   weak public var spotsDelegate: SpotsDelegate? {
     didSet { spots.forEach { $0.spotsDelegate = spotsDelegate } }
