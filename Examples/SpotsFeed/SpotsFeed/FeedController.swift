@@ -65,7 +65,9 @@ extension FeedController: SpotsScrollDelegate {
     dispatch(queue: .Interactive) { [weak self] in
       guard let weakSelf = self else { return }
       let items = FeedController.generateItems(weakSelf.spot.component.items.count, to: 3)
-      weakSelf.append(items) { completion?() }
+      dispatch {
+        weakSelf.append(items) { completion?() }
+      }
     }
   }
 }
