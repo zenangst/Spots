@@ -70,7 +70,7 @@ class CardSpotCell : UICollectionViewCell, ViewConfigurable {
     fatalError("init(coder:) has not been implemented")
   }
 
-  func configure(inout item: ListItem) {
+  func configure(inout item: ViewModel) {
     if !item.image.isEmpty {
       imageView.image = nil
       let URL = NSURL(string: item.image)
