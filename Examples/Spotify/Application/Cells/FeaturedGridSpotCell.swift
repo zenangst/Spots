@@ -20,7 +20,7 @@ public class FeaturedGridSpotCell: UICollectionViewCell, ViewConfigurable {
     fatalError("init(coder:) has not been implemented")
   }
 
-  public func configure(inout item: ListItem) {
+  public func configure(inout item: ViewModel) {
     backgroundColor = UIColor.clearColor()
 
     if !item.image.isEmpty {

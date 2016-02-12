@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   lazy var authController: UINavigationController = {
     let controller = AuthController(spot: ListSpot().then {
-      $0.items = [ListItem(title: "Auth", action: "auth", kind: "playlist", size: CGSize(width: 120, height: 88))]
+      $0.items = [ViewModel(title: "Auth", action: "auth", kind: "playlist", size: CGSize(width: 120, height: 88))]
       }
     )
     controller.title = "Spotify".uppercaseString

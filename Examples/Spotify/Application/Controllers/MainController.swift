@@ -5,17 +5,17 @@ import Compass
 class MainController: UITabBarController {
 
   lazy var playerController = PlayerController(spots: [
-    ListSpot().then { $0.items = [ListItem(kind: "player", action: "openPlayer")] },
+    ListSpot().then { $0.items = [ViewModel(kind: "player", action: "openPlayer")] },
     CarouselSpot(Component(span: 1)),
     ListSpot(component: Component(items: [
-      ListItem(kind: "player")
+      ViewModel(kind: "player")
       ])).then {
         $0.tableView.separatorStyle = .None
     },
     GridSpot(component: Component(span: 3, kind: "player" ,items: [
-      ListItem(title: "Previous", image: "previousButton", action: "previous"),
-      ListItem(title: "Stop", image: "stopButton", action: "stop"),
-      ListItem(title: "Next", image: "nextButton", action: "next")
+      ViewModel(title: "Previous", image: "previousButton", action: "previous"),
+      ViewModel(title: "Stop", image: "stopButton", action: "stop"),
+      ViewModel(title: "Next", image: "nextButton", action: "next")
       ]))
     ])
 

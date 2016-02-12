@@ -13,7 +13,7 @@ class ProfileController: SpotsController {
     let listSpot = ListSpot().then {
       $0.headerHeight = 44
       $0.component.title = "User information"
-      $0.items = [ListItem(title: "Logout", action: "logout")]
+      $0.items = [ViewModel(title: "Logout", action: "logout")]
     }
 
     self.init(spots: [gridSpot, listSpot])
@@ -29,12 +29,12 @@ class ProfileController: SpotsController {
       let image = user.largestImage.imageURL.absoluteString
 
       self.update {
-        let item = ListItem(kind: "playlist", image: image)
+        let item = ViewModel(kind: "playlist", image: image)
         $0.items = [item]
       }
 
       self.update(spotAtIndex: 1) {
-        $0.items.insert(ListItem(title: user.displayName), atIndex: 0)
+        $0.items.insert(ViewModel(title: user.displayName), atIndex: 0)
       }
     }
   }
@@ -42,7 +42,7 @@ class ProfileController: SpotsController {
 
 extension ProfileController: SpotsDelegate {
 
-  func spotDidSelectItem(spot: Spotable, item: ListItem) {
+  func spotDidSelectItem(spot: Spotable, item: ViewModel) {
     guard let urn = item.action else { return }
     Compass.navigate(urn)
   }

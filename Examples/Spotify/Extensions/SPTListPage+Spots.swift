@@ -2,8 +2,8 @@ import Spots
 
 extension SPTListPage {
 
-  public func listItems(playlistID: String? = nil, offset: Int = 0) -> [ListItem] {
-    var listItems = [ListItem]()
+  public func ViewModels(playlistID: String? = nil, offset: Int = 0) -> [ViewModel] {
+    var ViewModels = [ViewModel]()
     if let items = items {
       for (index, item) in items.enumerate() {
         if let playlistID = playlistID {
@@ -12,7 +12,7 @@ extension SPTListPage {
             album = item.album
             else { continue }
 
-          listItems.append(ListItem(
+          ViewModels.append(ViewModel(
             title: item.name,
             subtitle:  "\(artist.name) - \(album.name)",
             image: album.largestCover.imageURL.absoluteString,
@@ -31,7 +31,7 @@ extension SPTListPage {
             where image != nil
             else { continue }
 
-          listItems.append(ListItem(
+          ViewModels.append(ViewModel(
             title: item.name,
             subtitle: "\(item.trackCount) songs",
             image: (image as SPTImage).imageURL.absoluteString,
@@ -42,7 +42,7 @@ extension SPTListPage {
       }
     }
 
-    return listItems
+    return ViewModels
   }
 
   public func uris() -> [NSURL] {

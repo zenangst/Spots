@@ -39,7 +39,7 @@ public class PlaylistGridSpotCell: UICollectionViewCell, ViewConfigurable {
     }
   }
 
-  public func configure(inout item: ListItem) {
+  public func configure(inout item: ViewModel) {
     backgroundColor = UIColor.clearColor()
 
     if !item.image.isEmpty {

@@ -15,7 +15,7 @@ class PlaylistController: SpotsController {
 
   convenience init(playlistID: String?) {
     let listSpot = ListSpot().then {
-      $0.items = [ListItem(title: "Loading...", kind: "playlist", size: CGSize(width: 44, height: 44))]
+      $0.items = [ViewModel(title: "Loading...", kind: "playlist", size: CGSize(width: 44, height: 44))]
     }
     let featuredSpot = CarouselSpot(Component(span: 2), top: 5, left: 15, bottom: 5, right: 15, itemSpacing: 15)
     let gridSpot = GridSpot(component: Component(span: 1))
@@ -59,10 +59,10 @@ class PlaylistController: SpotsController {
 
         self.title = object.name
 
-        var listItems = firstTrackPage.listItems(playlistID)
+        var ViewModels = firstTrackPage.ViewModels(playlistID)
         self.currentURIs.appendContentsOf(firstTrackPage.uris())
 
-        if let first = listItems.first,
+        if let first = ViewModels.first,
           imageString = first.meta["image"] as? String,
           url = NSURL(string: imageString),
           data = NSData(contentsOfURL: url),
@@ -70,15 +70,15 @@ class PlaylistController: SpotsController {
         {
           let (background, primary, secondary, detail) = image.colors(CGSize(width: 128, height: 128))
           if let background = background, primary = primary, secondary = secondary, detail = detail {
-            listItems.enumerate().forEach {
-              listItems[$0.index].meta["background"] = background
-              listItems[$0.index].meta["primary"] = primary
-              listItems[$0.index].meta["secondary"] = secondary
-              listItems[$0.index].meta["detail"] = detail
+            ViewModels.enumerate().forEach {
+              ViewModels[$0.index].meta["background"] = background
+              ViewModels[$0.index].meta["primary"] = primary
+              ViewModels[$0.index].meta["secondary"] = secondary
+              ViewModels[$0.index].meta["detail"] = detail
             }
           }
 
-          self.update(spotAtIndex: 2) { $0.items = listItems }
+          self.update(spotAtIndex: 2) { $0.items = ViewModels }
 
           var top = first
           top.image = object.largestImage.imageURL.absoluteString
@@ -97,7 +97,7 @@ class PlaylistController: SpotsController {
           where object.items != nil
           else { return }
 
-        var items = object.listItems()
+        var items = object.ViewModels()
 
         var featured = items.filter {
           $0.title.lowercaseString.containsString("top") ||
@@ -146,10 +146,10 @@ extension PlaylistController: SpotsScrollDelegate {
           return
       }
 
-      var items = [ListItem]()
+      var items = [ViewModel]()
 
       if let playlistID = self.playlistID, listSpot = self.spot(2) {
-        items.appendContentsOf(object.listItems(playlistID, offset: listSpot.items.count))
+        items.appendContentsOf(object.ViewModels(playlistID, offset: listSpot.items.count))
         self.currentURIs.appendContentsOf(object.uris())
 
         if let firstItem = listSpot.items.first {
@@ -162,7 +162,7 @@ extension PlaylistController: SpotsScrollDelegate {
         }
         self.append(items, spotIndex: 2)
       } else {
-        items.appendContentsOf(object.listItems())
+        items.appendContentsOf(object.ViewModels())
 
         var featured = items.filter {
           $0.title.lowercaseString.containsString("top") ||
@@ -191,7 +191,7 @@ extension PlaylistController: SpotsScrollDelegate {
 
 extension PlaylistController: SpotsDelegate {
 
-  func spotDidSelectItem(spot: Spotable, item: ListItem) {
+  func spotDidSelectItem(spot: Spotable, item: ViewModel) {
     if let delegate = UIApplication.sharedApplication().delegate as? AppDelegate,
       playList = spot as? ListSpot {
         delegate.mainController.playerController.lastItem = item
@@ -201,7 +201,7 @@ extension PlaylistController: SpotsDelegate {
         }
         delegate.mainController.playerController.update(spotAtIndex: 1) {
           $0.items = playList.items.map {
-            ListItem(title: $0.title,
+            ViewModel(title: $0.title,
               subtitle: $0.subtitle,
               image: $0.image,
               kind: "featured",

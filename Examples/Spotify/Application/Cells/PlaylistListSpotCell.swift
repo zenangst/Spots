@@ -4,7 +4,7 @@ import Imaginary
 public class PlaylistListSpotCell: UITableViewCell, ViewConfigurable {
 
   public var size = CGSize(width: 0, height: 60)
-  public var item: ListItem?
+  public var item: ViewModel?
 
   lazy var selectedView = UIView().then {
     $0.backgroundColor = UIColor.darkGrayColor().colorWithAlphaComponent(0.4)
@@ -23,7 +23,7 @@ public class PlaylistListSpotCell: UITableViewCell, ViewConfigurable {
     fatalError("init(coder:) has not been implemented")
   }
 
-  public func configure(inout item: ListItem) {
+  public func configure(inout item: ViewModel) {
     backgroundColor = UIColor.blackColor()
     textLabel?.textColor = UIColor.whiteColor()
     detailTextLabel?.textColor = UIColor.whiteColor()
