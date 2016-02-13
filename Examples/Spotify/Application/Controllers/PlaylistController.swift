@@ -59,10 +59,10 @@ class PlaylistController: SpotsController {
 
         self.title = object.name
 
-        var ViewModels = firstTrackPage.ViewModels(playlistID)
+        var viewModels = firstTrackPage.viewModels(playlistID)
         self.currentURIs.appendContentsOf(firstTrackPage.uris())
 
-        if let first = ViewModels.first,
+        if let first = viewModels.first,
           imageString = first.meta["image"] as? String,
           url = NSURL(string: imageString),
           data = NSData(contentsOfURL: url),
@@ -70,15 +70,15 @@ class PlaylistController: SpotsController {
         {
           let (background, primary, secondary, detail) = image.colors(CGSize(width: 128, height: 128))
           if let background = background, primary = primary, secondary = secondary, detail = detail {
-            ViewModels.enumerate().forEach {
-              ViewModels[$0.index].meta["background"] = background
-              ViewModels[$0.index].meta["primary"] = primary
-              ViewModels[$0.index].meta["secondary"] = secondary
-              ViewModels[$0.index].meta["detail"] = detail
+            viewModels.enumerate().forEach {
+              viewModels[$0.index].meta["background"] = background
+              viewModels[$0.index].meta["primary"] = primary
+              viewModels[$0.index].meta["secondary"] = secondary
+              viewModels[$0.index].meta["detail"] = detail
             }
           }
 
-          self.update(spotAtIndex: 2) { $0.items = ViewModels }
+          self.update(spotAtIndex: 2) { $0.items = viewModels }
 
           var top = first
           top.image = object.largestImage.imageURL.absoluteString
@@ -97,7 +97,7 @@ class PlaylistController: SpotsController {
           where object.items != nil
           else { return }
 
-        var items = object.ViewModels()
+        var items = object.viewModels()
 
         var featured = items.filter {
           $0.title.lowercaseString.containsString("top") ||
@@ -149,7 +149,7 @@ extension PlaylistController: SpotsScrollDelegate {
       var items = [ViewModel]()
 
       if let playlistID = self.playlistID, listSpot = self.spot(2) {
-        items.appendContentsOf(object.ViewModels(playlistID, offset: listSpot.items.count))
+        items.appendContentsOf(object.viewModels(playlistID, offset: listSpot.items.count))
         self.currentURIs.appendContentsOf(object.uris())
 
         if let firstItem = listSpot.items.first {
@@ -162,7 +162,7 @@ extension PlaylistController: SpotsScrollDelegate {
         }
         self.append(items, spotIndex: 2)
       } else {
-        items.appendContentsOf(object.ViewModels())
+        items.appendContentsOf(object.viewModels())
 
         var featured = items.filter {
           $0.title.lowercaseString.containsString("top") ||
