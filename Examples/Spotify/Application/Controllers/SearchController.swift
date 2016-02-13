@@ -89,7 +89,7 @@ extension SearchController: UITextFieldDelegate {
                 where object.items != nil && object.items.count > 0
                 else { return }
 
-              var ViewModels = [ViewModel]()
+              var viewModels = [ViewModel]()
 
               object.items.enumerate().forEach { index, item in
                 guard let item = item as? SPTPartialTrack else { return }
@@ -98,7 +98,7 @@ extension SearchController: UITextFieldDelegate {
                   image = (item.album as SPTPartialAlbum).largestCover
                   else { return }
 
-                ViewModels.append(ViewModel(
+                viewModels.append(ViewModel(
                   title: item.name,
                   subtitle:  "\(artist) - \((item.album as SPTPartialAlbum).name)",
                   image: image.imageURL.absoluteString,
@@ -112,7 +112,7 @@ extension SearchController: UITextFieldDelegate {
                   ]
                   ))
               }
-              self.update(spotAtIndex: 2) { $0.items = ViewModels }
+              self.update(spotAtIndex: 2) { $0.items = viewModels }
             }
           })
         }
