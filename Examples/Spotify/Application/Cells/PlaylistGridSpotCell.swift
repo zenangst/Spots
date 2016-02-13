@@ -32,8 +32,7 @@ public class PlaylistGridSpotCell: UICollectionViewCell, ViewConfigurable {
   }
 
   public override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
-    if let imageView = object as? UIImageView,
-      image = imageView.image
+    if let imageView = object as? UIImageView, image = imageView.image
       where keyPath == "image" {
         albumView.image = image
     }
