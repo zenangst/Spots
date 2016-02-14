@@ -54,6 +54,8 @@ class ForYouController: SpotsController, SpotsDelegate {
 extension ForYouController: SpotsScrollDelegate {
 
   func spotDidReachBeginning(completion: (() -> Void)?) {
+    guard spot.component.items.count < 100 else { return }
+
     let items = ForYouController.generateItems(spot.component.items.count, to: 2)
 
     spot.items.insertContentsOf(items, at: 0)
