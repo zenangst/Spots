@@ -40,8 +40,9 @@ class ForYouController: SpotsController, SpotsDelegate {
     return items
   }
 
-  override func viewWillAppear(animated: Bool) {
-    super.viewWillAppear(animated)
+  override func viewDidLoad() {
+    super.viewDidLoad()
+
     dispatch(queue: .Interactive) { [weak self] in
       let items = ForYouController.generateItems(0, to: 10)
       self?.update { spot in
