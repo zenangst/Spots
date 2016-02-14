@@ -32,7 +32,7 @@ class PlayerController: SpotsController {
     spotsScrollView.backgroundColor = UIColor.clearColor()
 
     if let listSpot = spot(0, ListSpot.self) {
-      listSpot.collection.separatorStyle = .None
+      listSpot.tableView.separatorStyle = .None
     }
 
     if let carouselSpot = spot(1, CarouselSpot.self) {
