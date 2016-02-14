@@ -148,7 +148,7 @@ extension PlaylistController: SpotsScrollDelegate {
 
       var items = [ViewModel]()
 
-      if let playlistID = self.playlistID, listSpot = self.spot(2) {
+      if let playlistID = self.playlistID, listSpot = self.spot(2, Spotable.self) {
         items.appendContentsOf(object.viewModels(playlistID, offset: listSpot.items.count))
         self.currentURIs.appendContentsOf(object.uris())
 

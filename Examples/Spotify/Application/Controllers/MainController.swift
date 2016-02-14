@@ -10,7 +10,7 @@ class MainController: UITabBarController {
     ListSpot(component: Component(items: [
       ViewModel(kind: "player")
       ])).then {
-        $0.tableView.separatorStyle = .None
+        $0.collection.separatorStyle = .None
     },
     GridSpot(component: Component(span: 3, kind: "player" ,items: [
       ViewModel(title: "Previous", image: "previousButton", action: "previous"),

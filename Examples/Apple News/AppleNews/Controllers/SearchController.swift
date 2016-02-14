@@ -43,7 +43,7 @@ extension SearchController: UITextFieldDelegate {
         dispatch(queue: .Interactive) { [weak self] in
           let items = FavoritesController.generateItems(0, to: 4)
 
-          if self?.spot(1)?.component.title == "Results" {
+          if self?.spot(1, Spotable.self)?.component.title == "Results" {
             self?.update(spotAtIndex: 1) { spot in
               spot.component.title = "Suggestions"
             }
@@ -58,7 +58,7 @@ extension SearchController: UITextFieldDelegate {
 
         dispatch(queue: .Interactive) { [weak self] in
 
-          if self?.spot(1)?.component.title == "Suggestions" {
+          if self?.spot(1, Spotable.self)?.component.title == "Suggestions" {
             self?.update(spotAtIndex: 1) { spot in
               spot.component.title = "Results"
             }

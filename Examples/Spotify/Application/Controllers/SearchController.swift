@@ -43,7 +43,7 @@ extension SearchController: SpotsDelegate {
     guard let urn = item.action else { return }
 
     if let delegate = UIApplication.sharedApplication().delegate as? AppDelegate,
-    carouselSpot = delegate.mainController.playerController.spot(1) as? CarouselSpot {
+    carouselSpot = delegate.mainController.playerController.spot(1, CarouselSpot.self) {
 
       delegate.mainController.playerController.update(spotAtIndex: 1) {
         var item = item
@@ -66,7 +66,7 @@ extension SearchController: UITextFieldDelegate {
 
   func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
     if textField.text?.length == 1 && string.length == 0 {
-        if spot(1)?.component.title == "Results" {
+        if spot(1, Spotable.self)?.component.title == "Results" {
           update(spotAtIndex: 1) { spot in
             spot.component.title = ""
           }
@@ -74,7 +74,7 @@ extension SearchController: UITextFieldDelegate {
           update(spotAtIndex: 2) { $0.items = [] }
         }
     } else if textField.text?.length > 0 || string.length > 0 {
-        if spot(1)?.component.title == "" {
+        if spot(1, Spotable.self)?.component.title == "" {
           update(spotAtIndex: 1) { spot in
             spot.component.title = "Results"
           }
