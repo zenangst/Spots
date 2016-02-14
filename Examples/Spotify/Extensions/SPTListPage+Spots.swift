@@ -13,8 +13,8 @@ extension SPTListPage {
             else { continue }
 
           let image = album.largestCover != nil
-          ? album.largestCover.imageURL.absoluteString
-          : ""
+            ? album.largestCover.imageURL.absoluteString
+            : ""
 
           viewModels.append(ViewModel(
             title: item.name,
