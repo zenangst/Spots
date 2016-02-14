@@ -87,6 +87,7 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     if let tabBarController = self.tabBarController
       where tabBarController.tabBar.translucent {
         spotsScrollView.contentInset.bottom = tabBarController.tabBar.frame.height
+        spotsScrollView.scrollIndicatorInsets.bottom = spotsScrollView.contentInset.bottom
     }
 
     guard let _ = spotsRefreshDelegate where refreshControl.superview == nil
