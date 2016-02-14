@@ -106,8 +106,8 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
 
 extension SpotsController {
 
-  public func spot(index: Int = 0) -> Spotable? {
-    return spots.filter{ $0.index == index }.first
+  public func spot<T>(index: Int = 0, _ type: T.Type) -> T? {
+    return spots.filter({ $0.index == index }).first as? T
   }
 
   public func spot(@noescape closure: (index: Int, spot: Spotable) -> Bool) -> Spotable? {
