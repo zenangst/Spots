@@ -4,7 +4,7 @@ import Imaginary
 public class PlayerListSpotCell: UITableViewCell, ViewConfigurable {
 
   public var size = CGSize(width: 0, height: 60)
-  public var item: ListItem?
+  public var item: ViewModel?
 
   lazy var selectedView = UIView()
   lazy var transparentImage = UIImage.transparentImage(CGSize(width: 60, height: 60))
@@ -19,7 +19,7 @@ public class PlayerListSpotCell: UITableViewCell, ViewConfigurable {
     fatalError("init(coder:) has not been implemented")
   }
 
-  public func configure(inout item: ListItem) {
+  public func configure(inout item: ViewModel) {
     textLabel?.textAlignment = .Center
     textLabel?.font = UIFont.boldSystemFontOfSize(14)
     detailTextLabel?.font = UIFont.boldSystemFontOfSize(14)

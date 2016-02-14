@@ -34,7 +34,7 @@ struct SpotsConfigurator: Configurator {
         left: inset,
         bottom: inset,
         right: inset)
-      tableView.separatorColor = UIColor(red: 255, green: 255, blue: 255, alpha: 0.2)
+      tableView.separatorColor = UIColor.hex("FFF").alpha(0.2)
     }
 
     ListSpot.headers["search"] = SearchHeaderView.self

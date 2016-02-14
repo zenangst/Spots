@@ -10,7 +10,7 @@ class AuthController: SpotsController, SpotsDelegate {
     self.spotsDelegate = self
   }
 
-  func spotDidSelectItem(spot: Spotable, item: ListItem) {
+  func spotDidSelectItem(spot: Spotable, item: ViewModel) {
     guard let urn = item.action else { return }
     Compass.navigate(urn)
   }

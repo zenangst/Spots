@@ -4,7 +4,7 @@ import Imaginary
 public class DefaultListSpotCell: UITableViewCell, ViewConfigurable {
 
   public var size = CGSize(width: 0, height: 60)
-  public var item: ListItem?
+  public var item: ViewModel?
 
   lazy var selectedView = UIView()
 
@@ -18,19 +18,19 @@ public class DefaultListSpotCell: UITableViewCell, ViewConfigurable {
     fatalError("init(coder:) has not been implemented")
   }
 
-  public func configure(inout item: ListItem) {
+  public func configure(inout item: ViewModel) {
     textLabel?.textColor = UIColor.whiteColor()
     detailTextLabel?.textColor = UIColor.grayColor()
 
-    if let textColor = item.meta["textColor"] as? UIColor where !textColor.isDark {
+    if let textColor = item.meta("textColor", type: UIColor.self) where !textColor.isDark {
       textLabel?.textColor = textColor
     }
 
-    if let background = item.meta["background"] as? UIColor where !background.isDark {
+    if let background = item.meta("background", type: UIColor.self) where !background.isDark {
       textLabel?.textColor = UIColor.darkGrayColor()
     }
 
-    if let subtitleColor = item.meta["secondary"] as? UIColor where !subtitleColor.isDark {
+    if let subtitleColor = item.meta("secondary", type: UIColor.self) where !subtitleColor.isDark {
       detailTextLabel?.textColor = subtitleColor
 
       if let backgroundColor = backgroundColor where !backgroundColor.isDark {
