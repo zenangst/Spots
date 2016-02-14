@@ -203,7 +203,7 @@ extension PlaylistController: SpotsDelegate {
           $0.items = playList.items.map {
             ViewModel(title: $0.title,
               subtitle: $0.subtitle,
-              image: $0.image,
+              image: $0.meta("image", type: String.self) ?? $0.image,
               kind: "featured",
               action: $0.action,
               size: CGSize(
