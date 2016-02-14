@@ -12,17 +12,21 @@ extension SPTListPage {
             album = item.album
             else { continue }
 
+          let image = album.largestCover != nil
+          ? album.largestCover.imageURL.absoluteString
+          : ""
+
           viewModels.append(ViewModel(
             title: item.name,
             subtitle:  "\(artist.name) - \(album.name)",
-            image: album.largestCover.imageURL.absoluteString,
+            image: image,
             kind: "playlist",
             action: "play:\(playlistID):\(index + offset)",
             meta: [
               "notification" : "\(item.name) by \(artist.name)",
               "track" : item.name,
               "artist" : artist.name,
-              "image" : album.largestCover.imageURL.absoluteString
+              "image" : image
             ]
             ))
         } else {
