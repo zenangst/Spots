@@ -46,9 +46,7 @@ public extension Spotable where Self : Listable {
     component.items.append(item)
 
     dispatch { [weak self] in
-      guard let weakSelf = self else { return }
-
-      weakSelf.tableView.insert([count], animation: .Top)
+      self?.tableView.insert([count], animation: .None)
       completion?()
     }
     var cached: UIView?
@@ -70,8 +68,7 @@ public extension Spotable where Self : Listable {
     cached = nil
 
     dispatch { [weak self] in
-      guard let weakSelf = self else { return }
-      weakSelf.tableView.insert(indexes, animation: .Bottom)
+      self?.tableView.insert(indexes, animation: .None)
       completion?()
     }
   }
@@ -80,8 +77,7 @@ public extension Spotable where Self : Listable {
     component.items.insert(item, atIndex: index)
 
     dispatch { [weak self] in
-      guard let weakSelf = self else { return }
-      weakSelf.tableView.insert([index], animation: .Top)
+      self?.tableView.insert([index], animation: .None)
       completion?()
     }
   }
@@ -96,8 +92,7 @@ public extension Spotable where Self : Listable {
     }
 
     dispatch { [weak self] in
-      guard let weakSelf = self else { return }
-      weakSelf.tableView.insert(indexes, animation: .Top)
+      self?.tableView.insert(indexes, animation: .None)
       completion?()
     }
   }
@@ -109,8 +104,7 @@ public extension Spotable where Self : Listable {
     component.items.removeAtIndex(index)
 
     dispatch { [weak self] in
-      guard let weakSelf = self else { return }
-      weakSelf.tableView.delete([index])
+      self?.tableView.delete([index])
       completion?()
     }
   }
@@ -125,26 +119,23 @@ public extension Spotable where Self : Listable {
     }
 
     dispatch { [weak self] in
-      guard let weakSelf = self else { return }
-      weakSelf.tableView.delete(indexPaths)
+      self?.tableView.delete(indexPaths)
       completion?()
     }
   }
 
   func delete(index: Int, completion: (() -> Void)? = nil) {
     dispatch { [weak self] in
-      guard let weakSelf = self else { return }
-      weakSelf.component.items.removeAtIndex(index)
-      weakSelf.tableView.delete([index])
+      self?.component.items.removeAtIndex(index)
+      self?.tableView.delete([index])
       completion?()
     }
   }
 
   func delete(indexes: [Int], completion: (() -> Void)? = nil) {
     dispatch { [weak self] in
-      guard let weakSelf = self else { return }
-      indexes.forEach { weakSelf.component.items.removeAtIndex($0) }
-      weakSelf.tableView.delete(indexes, section: 0, animation: .Automatic)
+      indexes.forEach { self?.component.items.removeAtIndex($0) }
+      self?.tableView.delete(indexes, section: 0, animation: .Automatic)
       completion?()
     }
   }

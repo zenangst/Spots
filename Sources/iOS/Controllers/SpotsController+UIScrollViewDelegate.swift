@@ -14,12 +14,25 @@ extension SpotsController {
       offset.y > size.height - UIScreen.mainScreen().bounds.height * 2 &&
       !refreshPositions.contains(size.height - itemOffset)
 
-    // Infinite scrolling
-    guard let delegate = spotsScrollDelegate where shouldFetch else { return }
-    refreshPositions.append(size.height - itemOffset)
-    refreshing = true
-    delegate.spotDidReachEnd {
-      self.refreshing = false
+    guard let delegate = spotsScrollDelegate else { return }
+
+    // Scroll did reach top
+    if spotsScrollView.contentOffset.y < 0 &&
+      abs(spotsScrollView.contentOffset.y) == spotsScrollView.contentInset.top &&
+      !refreshing {
+        refreshing = true
+        delegate.spotDidReachBeginning {
+          self.refreshing = false
+        }
+    }
+
+    if shouldFetch {
+      // Infinite scrolling
+      refreshPositions.append(size.height - itemOffset)
+      refreshing = true
+      delegate.spotDidReachEnd {
+        self.refreshing = false
+      }
     }
   }
 }

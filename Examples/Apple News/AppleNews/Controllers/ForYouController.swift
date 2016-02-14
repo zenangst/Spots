@@ -14,7 +14,6 @@ class ForYouController: SpotsController, SpotsDelegate {
     self.title = title
     spotsDelegate = self
     spotsScrollDelegate = self
-    spotsRefreshDelegate = self
   }
 
   func spotDidSelectItem(spot: Spotable, item: ViewModel) { }
@@ -40,8 +39,9 @@ class ForYouController: SpotsController, SpotsDelegate {
     return items
   }
 
-  override func viewWillAppear(animated: Bool) {
-    super.viewWillAppear(animated)
+  override func viewDidLoad() {
+    super.viewDidLoad()
+
     dispatch(queue: .Interactive) { [weak self] in
       let items = ForYouController.generateItems(0, to: 10)
       self?.update { spot in
@@ -51,18 +51,25 @@ class ForYouController: SpotsController, SpotsDelegate {
   }
 }
 
-extension ForYouController: SpotsRefreshDelegate {
-
-  func spotsDidReload(refreshControl: UIRefreshControl, completion: (() -> Void)?) {
-    let items = ForYouController.generateItems(spot.component.items.count, to: 10)
-    delay(0.5) {
-      self.prepend(items)
-      completion?()
-    }
-  }
-}
-
 extension ForYouController: SpotsScrollDelegate {
+
+  func spotDidReachBeginning(completion: (() -> Void)?) {
+    guard spot.component.items.count < 100 else { return }
+
+    let items = ForYouController.generateItems(spot.component.items.count, to: 2)
+
+    spot.items.insertContentsOf(items, at: 0)
+    spot.prepare()
+
+    let height = spot.items[0..<items.count].reduce(0, combine: { $0 + $1.size.height })
+
+    spot(0, ListSpot.self)?.tableView.insert(Array(0..<(items.count)), section: 0, animation: .None)
+    spot(0, ListSpot.self)?.tableView.reload(Array((items.count)..<(items.count)), section: 0, animation: .None)
+
+    spotsScrollView.contentOffset.y = height - spotsScrollView.contentInset.top
+
+    completion?()
+  }
 
   func spotDidReachEnd(completion: (() -> Void)?) {
     if spot.component.items.count < 100 {

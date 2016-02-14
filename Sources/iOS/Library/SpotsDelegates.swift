@@ -12,7 +12,14 @@ public protocol SpotsRefreshDelegate: class {
 
 public protocol SpotsScrollDelegate: class {
 
+  func spotDidReachBeginning(completion: (() -> Void)?)
   func spotDidReachEnd(completion: (() -> Void)?)
+}
+
+public extension SpotsScrollDelegate {
+  func spotDidReachBeginning(completion: (() -> Void)?) {
+    completion?()
+  }
 }
 
 public protocol SpotsCarouselScrollDelegate: class {

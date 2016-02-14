@@ -14,7 +14,7 @@ public class PlaylistGridSpotCell: UICollectionViewCell, ViewConfigurable {
     $0.contentMode = .ScaleAspectFill
   }
 
-  lazy var blurView = UIVisualEffectView(effect: UIBlurEffect(style: .Light))
+  lazy var blurView = UIVisualEffectView(effect: UIBlurEffect(style: .Dark))
 
   override init(frame: CGRect) {
     super.init(frame: frame)

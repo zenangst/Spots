@@ -31,11 +31,11 @@ class PlayerController: SpotsController {
     spotsScrollView.scrollEnabled = false
     spotsScrollView.backgroundColor = UIColor.clearColor()
 
-    if let listSpot = spot(0) as? ListSpot {
+    if let listSpot = spot(0, ListSpot.self) {
       listSpot.tableView.separatorStyle = .None
     }
 
-    if let carouselSpot = spot(1) as? CarouselSpot {
+    if let carouselSpot = spot(1, CarouselSpot.self) {
       carouselSpot.paginate = true
       carouselSpot.carouselScrollDelegate = self
     }
@@ -64,7 +64,7 @@ class PlayerController: SpotsController {
           dispatch { [weak self] in
             guard let background = background else { return }
 
-            if let listSpot = self?.spot(0) as? ListSpot {
+            if let listSpot = self?.spot(0, ListSpot.self) {
               var item = listSpot.items[0]
 
               item.meta["background"] = background
@@ -74,7 +74,7 @@ class PlayerController: SpotsController {
               self?.update(item, index: 0, spotIndex: 0)
             }
 
-            if let listSpot = self?.spot(2) as? ListSpot {
+            if let listSpot = self?.spot(2, ListSpot.self) {
               var item = listSpot.items[0]
 
               item.meta["background"] = background
@@ -84,7 +84,7 @@ class PlayerController: SpotsController {
               self?.update(item, index: 0, spotIndex: 2)
             }
 
-            if let gridSpot = self?.spot(3) as? GridSpot {
+            if let gridSpot = self?.spot(3, GridSpot.self) {
               var items = gridSpot.items
               items.enumerate().forEach {
                 items[$0.index].meta["textColor"] = secondary
@@ -115,7 +115,7 @@ class PlayerController: SpotsController {
       artist = userInfo["artist"] {
 
         var newViewModel: ViewModel
-        if let spot = spot(0), item = spot.items.first {
+        if let spot = spot(0, Spotable.self), item = spot.items.first {
           newViewModel = item
           newViewModel.title = track
           newViewModel.subtitle = artist
@@ -214,7 +214,7 @@ extension PlayerController: SpotsDelegate {
       return
     }
 
-    if let carouselSpot = self.spot(1) as? CarouselSpot,
+    if let carouselSpot = self.spot(1, CarouselSpot.self),
       lastItem = lastItem {
         guard let currentIndex = carouselSpot.items.indexOf({ $0.action == lastItem.action }) else { return }
         var newIndex = currentIndex

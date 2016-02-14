@@ -76,7 +76,7 @@ class JSONController: UIViewController {
         let json = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments) as? [String : AnyObject]
         if let json = json {
           SpotFactory.DefaultSpot = ListSpot.self
-        
+
           let components = Parser.parse(json)
           let controller = SpotsController(spots: components)
           navigationController?.pushViewController(controller, animated: true)
@@ -94,7 +94,6 @@ class JSONController: UIViewController {
 
   func setupFrames() {
     let totalSize = UIScreen.mainScreen().bounds
-
 
     if [.Portrait, .PortraitUpsideDown].contains(UIApplication.sharedApplication().statusBarOrientation) {
       titleLabel.frame.origin = CGPoint(x: (totalSize.width - titleLabel.frame.width) / 2, y: 90)

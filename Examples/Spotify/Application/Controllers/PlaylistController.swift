@@ -148,7 +148,7 @@ extension PlaylistController: SpotsScrollDelegate {
 
       var items = [ViewModel]()
 
-      if let playlistID = self.playlistID, listSpot = self.spot(2) {
+      if let playlistID = self.playlistID, listSpot = self.spot(2, Spotable.self) {
         items.appendContentsOf(object.viewModels(playlistID, offset: listSpot.items.count))
         self.currentURIs.appendContentsOf(object.uris())
 
@@ -193,17 +193,17 @@ extension PlaylistController: SpotsDelegate {
 
   func spotDidSelectItem(spot: Spotable, item: ViewModel) {
     if let delegate = UIApplication.sharedApplication().delegate as? AppDelegate,
-      playList = spot as? ListSpot {
+      playlist = spot as? ListSpot {
         delegate.mainController.playerController.lastItem = item
         delegate.mainController.playerController.currentURIs = currentURIs
         if !item.image.isEmpty {
           delegate.mainController.playerController.currentAlbum.setImage(NSURL(string: item.image)!)
         }
         delegate.mainController.playerController.update(spotAtIndex: 1) {
-          $0.items = playList.items.map {
+          $0.items = playlist.items.map {
             ViewModel(title: $0.title,
               subtitle: $0.subtitle,
-              image: $0.image,
+              image: $0.meta("image", type: String.self) ?? $0.image,
               kind: "featured",
               action: $0.action,
               size: CGSize(

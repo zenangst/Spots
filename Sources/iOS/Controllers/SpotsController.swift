@@ -17,7 +17,7 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
   }
 
   public var spot: Spotable {
-    get { return spot(0)! }
+    get { return spot(0, Spotable.self)! }
   }
 
   weak public var spotsRefreshDelegate: SpotsRefreshDelegate? {
@@ -87,6 +87,7 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     if let tabBarController = self.tabBarController
       where tabBarController.tabBar.translucent {
         spotsScrollView.contentInset.bottom = tabBarController.tabBar.frame.height
+        spotsScrollView.scrollIndicatorInsets.bottom = spotsScrollView.contentInset.bottom
     }
 
     guard let _ = spotsRefreshDelegate where refreshControl.superview == nil
@@ -106,8 +107,8 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
 
 extension SpotsController {
 
-  public func spot(index: Int = 0) -> Spotable? {
-    return spots.filter{ $0.index == index }.first
+  public func spot<T>(index: Int = 0, _ type: T.Type) -> T? {
+    return spots.filter({ $0.index == index }).first as? T
   }
 
   public func spot(@noescape closure: (index: Int, spot: Spotable) -> Bool) -> Spotable? {
@@ -129,7 +130,7 @@ extension SpotsController {
   }
 
   public func update(spotAtIndex index: Int = 0, @noescape _ closure: (spot: Spotable) -> Void) {
-    guard let spot = spot(index) else { return }
+    guard let spot = spot(index, Spotable.self) else { return }
     closure(spot: spot)
     spot.refreshIndexes()
     spot.prepare()
@@ -138,7 +139,7 @@ extension SpotsController {
     dispatch { [weak self] in
       guard let weakSelf = self else { return }
 
-      weakSelf.spot(spot.index)?.reload([index]) {
+      weakSelf.spot(spot.index, Spotable.self)?.reload([index]) {
         weakSelf.spotsScrollView.setNeedsDisplay()
         weakSelf.spotsScrollView.forceUpdate = true
       }
@@ -146,38 +147,38 @@ extension SpotsController {
   }
 
   public func append(item: ViewModel, spotIndex: Int = 0, completion: (() -> Void)? = nil) {
-    spot(spotIndex)?.append(item) { completion?() }
-    spot(spotIndex)?.refreshIndexes()
+    spot(spotIndex, Spotable.self)?.append(item) { completion?() }
+    spot(spotIndex, Spotable.self)?.refreshIndexes()
   }
 
   public func append(items: [ViewModel], spotIndex: Int = 0, completion: (() -> Void)? = nil) {
-    spot(spotIndex)?.append(items) { completion?() }
-    spot(spotIndex)?.refreshIndexes()
+    spot(spotIndex, Spotable.self)?.append(items) { completion?() }
+    spot(spotIndex, Spotable.self)?.refreshIndexes()
   }
 
   public func prepend(items: [ViewModel], spotIndex: Int = 0, completion: (() -> Void)? = nil) {
-    spot(spotIndex)?.prepend(items)  { completion?() }
-    spot(spotIndex)?.refreshIndexes()
+    spot(spotIndex, Spotable.self)?.prepend(items)  { completion?() }
+    spot(spotIndex, Spotable.self)?.refreshIndexes()
   }
 
   public func insert(item: ViewModel, index: Int = 0, spotIndex: Int, completion: (() -> Void)? = nil) {
-    spot(spotIndex)?.insert(item, index: index)  { completion?() }
-    spot(spotIndex)?.refreshIndexes()
+    spot(spotIndex, Spotable.self)?.insert(item, index: index)  { completion?() }
+    spot(spotIndex, Spotable.self)?.refreshIndexes()
   }
 
   public func update(item: ViewModel, index: Int = 0, spotIndex: Int, completion: (() -> Void)? = nil) {
-    spot(spotIndex)?.update(item, index: index)  { completion?() }
-    spot(spotIndex)?.refreshIndexes()
+    spot(spotIndex, Spotable.self)?.update(item, index: index)  { completion?() }
+    spot(spotIndex, Spotable.self)?.refreshIndexes()
   }
 
   public func delete(index: Int, spotIndex: Int = 0, completion: (() -> Void)? = nil) {
-    spot(spotIndex)?.delete(index) { completion?() }
-    spot(spotIndex)?.refreshIndexes()
+    spot(spotIndex, Spotable.self)?.delete(index) { completion?() }
+    spot(spotIndex, Spotable.self)?.refreshIndexes()
   }
 
   public func delete(indexes indexes: [Int], spotIndex: Int = 0, completion: (() -> Void)? = nil) {
-    spot(spotIndex)?.delete(indexes) { completion?() }
-    spot(spotIndex)?.refreshIndexes()
+    spot(spotIndex, Spotable.self)?.delete(indexes) { completion?() }
+    spot(spotIndex, Spotable.self)?.refreshIndexes()
   }
 
   public func refreshSpots(refreshControl: UIRefreshControl) {
@@ -191,9 +192,9 @@ extension SpotsController {
   }
 
   public func scrollTo(spotIndex index: Int = 0, @noescape includeElement: (ViewModel) -> Bool) {
-    guard let itemY = spot(index)?.scrollTo(includeElement) else { return }
+    guard let itemY = spot(index, Spotable.self)?.scrollTo(includeElement) else { return }
 
-    if spot(index)?.spotHeight() > spotsScrollView.frame.height - spotsScrollView.contentInset.bottom {
+    if spot(index, Spotable.self)?.spotHeight() > spotsScrollView.frame.height - spotsScrollView.contentInset.bottom {
       let y = itemY - spotsScrollView.frame.height + spotsScrollView.contentInset.bottom
       spotsScrollView.setContentOffset(CGPoint(x: CGFloat(0.0), y: y), animated: true)
     }
