@@ -4,7 +4,7 @@ import Imaginary
 
 class FeedItemCell: UITableViewCell, ViewConfigurable {
 
-  var size = CGSize(width: 0, height: 0)
+  var size = CGSize(width: 0, height: 180)
 
   lazy var customImageView: UIImageView = {
     let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 120, height: 120))
@@ -50,15 +50,9 @@ class FeedItemCell: UITableViewCell, ViewConfigurable {
 
     [textLabel, detailTextLabel].forEach { $0?.sizeToFit() }
 
-    let textFrame = item.title.boundingRectWithSize(frame.size,
-      options: .UsesLineFragmentOrigin,
-      attributes: [NSParagraphStyleAttributeName : paddedStyle],
-      context: nil)
-    let detailTextFrame = item.subtitle.boundingRectWithSize(frame.size,
-      options: .UsesLineFragmentOrigin,
-      attributes: [NSParagraphStyleAttributeName : paddedStyle],
-      context: nil)
+    textLabel?.sizeToFit()
+    detailTextLabel?.sizeToFit()
 
-    item.size.height = textFrame.size.height + detailTextFrame.size.height + 120
+    item.size.height = size.height
   }
 }
