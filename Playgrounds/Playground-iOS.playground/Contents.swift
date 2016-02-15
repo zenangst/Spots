@@ -10,6 +10,5 @@ let myContacts = Component(title: "My contacts", items: [
   ViewModel(title: "Khoa Pham", subtitle: "iOS Developer"),
   ViewModel(title: "Christoffer Winterkvist", subtitle: "iOS Developer")
   ])
-let listSpot = ListSpot(component: myContacts)
-let controller = SpotsController(spots: [listSpot])
+let controller = SpotsController(spot: ListSpot(component: myContacts))
 controller.view
