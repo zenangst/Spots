@@ -12,4 +12,4 @@ let myContacts = Component(title: "My contacts", items: [
   ])
 let listSpot = ListSpot(component: myContacts)
 let controller = SpotsController(spots: [listSpot])
-controller.
+controller.view
