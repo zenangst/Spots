@@ -20,7 +20,7 @@ public struct Component: Mappable {
     title <- map.property("title")
     kind  <- map.property("type")
     span  <- map.property("span")
-    items <- map.objects("items")
+    items <- map.relations("items")
     meta  <- map.property("meta")
   }
 
