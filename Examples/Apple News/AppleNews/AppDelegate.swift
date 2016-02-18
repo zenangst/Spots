@@ -43,7 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarDelegate {
       searchController,
       savedController
     ]
-    tabBarController.selectedIndex = 2
+    tabBarController.selectedIndex = 0
 
     tabBarController.tabBar.translucent = true
 
