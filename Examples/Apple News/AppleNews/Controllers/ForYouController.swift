@@ -54,21 +54,42 @@ class ForYouController: SpotsController, SpotsDelegate {
 extension ForYouController: SpotsScrollDelegate {
 
   func spotDidReachBeginning(completion: (() -> Void)?) {
-    guard spot.component.items.count < 100 else { return }
+    guard spot.component.items.count < 100 &&
+      view.window != nil
+      else {
+        completion?()
+        return
+    }
 
-    let items = ForYouController.generateItems(spot.component.items.count, to: 2)
+    guard let navigationBar = navigationController?.navigationBar,
+      topItem = navigationBar.topItem else { return }
 
-    spot.items.insertContentsOf(items, at: 0)
-    spot.prepare()
+    let items = ForYouController.generateItems(self.spot.component.items.count, to: 10)
 
-    let height = spot.items[0..<items.count].reduce(0, combine: { $0 + $1.size.height })
+    let animation = CATransition()
+    animation.duration = 0.3
+    animation.type = kCATransitionFade
+    animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionDefault)
 
-    spot(0, ListSpot.self)?.tableView.insert(Array(0..<(items.count)), section: 0, animation: .None)
-    spot(0, ListSpot.self)?.tableView.reload(Array((items.count)..<(items.count)), section: 0, animation: .None)
+    navigationBar.layer.addAnimation(animation, forKey: "Animate Title")
 
-    spotsScrollView.contentOffset.y = height - spotsScrollView.contentInset.top
+    let previousTitle = topItem.title ?? ""
+    topItem.title = "Checking for stories..."
+    delay(1.0) {
+      self.spot.items.insertContentsOf(items, at: 0)
+      self.spot.prepare()
 
-    completion?()
+      let height = self.spot.items[0..<items.count].reduce(0, combine: { $0 + $1.size.height })
+
+      self.spot(0, ListSpot.self)?.tableView.insert(Array(0..<(items.count)), section: 0, animation: .None)
+      self.spot(0, ListSpot.self)?.tableView.reload(Array((items.count)..<(items.count)), section: 0, animation: .None)
+
+      self.spotsScrollView.contentOffset.y = height - self.spotsScrollView.contentInset.top
+
+      navigationBar.layer.addAnimation(animation, forKey: "Animate Title")
+      topItem.title = previousTitle
+      completion?()
+    }
   }
 
   func spotDidReachEnd(completion: (() -> Void)?) {
