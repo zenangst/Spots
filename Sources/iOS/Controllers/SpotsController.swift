@@ -5,6 +5,7 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
 
   public static var configure: ((container: SpotsScrollView) -> Void)?
 
+  public private(set) var initialContentInset: UIEdgeInsets = UIEdgeInsetsZero
   public private(set) var spots: [Spotable]
 
   public var refreshPositions = [CGFloat]()
