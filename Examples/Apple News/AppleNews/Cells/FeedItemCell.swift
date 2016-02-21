@@ -4,24 +4,18 @@ import Imaginary
 
 class FeedItemCell: UITableViewCell, ViewConfigurable {
 
-  var size = CGSize(width: 0, height: 180)
+  var size = CGSize(width: 0, height: 130)
 
-  lazy var customImageView: UIImageView = {
-    let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 120, height: 120))
-    imageView.contentMode = .ScaleAspectFill
+  lazy var customImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 100, height: 100)).then {
+    $0.contentMode = .ScaleAspectFill
+  }
 
-    return imageView
-    }()
-
-  lazy var paddedStyle: NSParagraphStyle = {
-    let style = NSMutableParagraphStyle()
-    style.alignment = .Left
-    style.firstLineHeadIndent = 10.0
-    style.headIndent = 10.0
-    style.tailIndent = 0.0
-
-    return style
-    }()
+  lazy var paddedStyle = NSMutableParagraphStyle().then {
+    $0.alignment = .Left
+    $0.firstLineHeadIndent = 5.0
+    $0.headIndent = 5.0
+    $0.tailIndent = 0.0
+  }
 
   override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: .Subtitle, reuseIdentifier: reuseIdentifier)
@@ -39,14 +33,11 @@ class FeedItemCell: UITableViewCell, ViewConfigurable {
 
   func configure(inout item: ViewModel) {
     if !item.image.isEmpty {
-      let URL = NSURL(string: item.image)
-      customImageView.setImage(URL)
+      customImageView.setImage(NSURL(string: item.image))
     }
 
-    textLabel?.attributedText = NSAttributedString(string: item.title,
-      attributes: [NSParagraphStyleAttributeName : paddedStyle])
-    detailTextLabel?.attributedText = NSAttributedString(string: item.subtitle,
-      attributes: [NSParagraphStyleAttributeName : paddedStyle])
+    textLabel?.text = item.title
+    detailTextLabel?.text = item.subtitle
 
     [textLabel, detailTextLabel].forEach { $0?.sizeToFit() }
 

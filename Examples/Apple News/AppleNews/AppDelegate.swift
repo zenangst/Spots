@@ -10,18 +10,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarDelegate {
 
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
     window = UIWindow(frame: UIScreen.mainScreen().bounds)
+    window?.backgroundColor = UIColor.whiteColor()
 
-    SpotsController.configure = {
-      $0.backgroundColor = UIColor.whiteColor()
-    }
-
-    ListSpot.headers["search"] = SearchHeaderView.self
-    ListSpot.headers["list"] = ListHeaderView.self
-    ListSpot.configure = { tableView in tableView.tableFooterView = UIView(frame: CGRect.zero) }
-    ListSpot.views["feed"] = FeedItemCell.self
-
-    CarouselSpot.views["topic"] = GridTopicCell.self
-    GridSpot.views["topic"] = GridTopicCell.self
+    SpotsConfigurator().configure()
 
     let forYouController = ForYouController(title: "For You")
     let favoritesController = FavoritesController(title: "Favorites")
@@ -44,7 +35,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarDelegate {
       savedController
     ]
     tabBarController.selectedIndex = 0
-
     tabBarController.tabBar.translucent = true
 
     navigationController = UINavigationController(rootViewController: tabBarController)

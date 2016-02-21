@@ -15,6 +15,7 @@ PODS:
   - SwiftyJSON (2.3.2)
   - Tailor (0.4.5):
     - Sugar
+  - Transition (0.1.0)
 
 DEPENDENCIES:
   - Cache (from `https://github.com/hyperoslo/Cache`)
@@ -23,6 +24,7 @@ DEPENDENCIES:
   - Hue (from `https://github.com/hyperoslo/Hue`)
   - Imaginary (from `https://github.com/hyperoslo/Imaginary`)
   - Spots (from `../../`)
+  - Transition (from `https://github.com/hyperoslo/Transition`)
 
 EXTERNAL SOURCES:
   Cache:
@@ -35,6 +37,8 @@ EXTERNAL SOURCES:
     :git: https://github.com/hyperoslo/Imaginary
   Spots:
     :path: "../../"
+  Transition:
+    :git: https://github.com/hyperoslo/Transition
 
 CHECKOUT OPTIONS:
   Cache:
@@ -49,6 +53,9 @@ CHECKOUT OPTIONS:
   Imaginary:
     :commit: 243448a070decf6d8fcdc503b14505a2951af680
     :git: https://github.com/hyperoslo/Imaginary
+  Transition:
+    :commit: 0d94057f824787973ae34bac4906164e3d6a2c8b
+    :git: https://github.com/hyperoslo/Transition
 
 SPEC CHECKSUMS:
   Cache: 78f58bc008313c7a1182967a2ebcb3de9fddecd4
@@ -60,5 +67,6 @@ SPEC CHECKSUMS:
   Sugar: 8d9788c4630c6bdcab8c19a0f7ff06f10ba353bd
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   Tailor: d1d5bce9d81e953c3d7b3f3fd6d084337feeb7a5
+  Transition: 66d86e3ae1b8f0b3d9ba2000c7a45fbc17b066f2
 
 COCOAPODS: 0.39.0

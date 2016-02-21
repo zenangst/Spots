@@ -12,4 +12,5 @@ target "AppleNews" do
   pod 'Cache', git: 'https://github.com/hyperoslo/Cache'
   pod 'Spots', path: '../../'
   pod 'Fakery'
+  pod 'Transition', git: 'https://github.com/hyperoslo/Transition'
 end
