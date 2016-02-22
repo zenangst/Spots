@@ -69,13 +69,11 @@ class PlaylistController: SpotsController {
           image = UIImage(data: data)
         {
           let (background, primary, secondary, detail) = image.colors(CGSize(width: 128, height: 128))
-          if let background = background, primary = primary, secondary = secondary, detail = detail {
-            viewModels.enumerate().forEach {
-              viewModels[$0.index].meta["background"] = background
-              viewModels[$0.index].meta["primary"] = primary
-              viewModels[$0.index].meta["secondary"] = secondary
-              viewModels[$0.index].meta["detail"] = detail
-            }
+          viewModels.enumerate().forEach {
+            viewModels[$0.index].meta["background"] = background
+            viewModels[$0.index].meta["primary"] = primary
+            viewModels[$0.index].meta["secondary"] = secondary
+            viewModels[$0.index].meta["detail"] = detail
           }
 
           self.update(spotAtIndex: 2) { $0.items = viewModels }
