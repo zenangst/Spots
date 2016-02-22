@@ -4,8 +4,7 @@ language: objective-c
 before_install:
 - brew update
 #- brew install carthage
-- brew upgrade carthage
-- if brew outdated | grep -qx xctool; then brew upgrade xctool; fi
+- if brew outdated | grep -qx xctool; then brew upgrade xctool; brew upgrade carthage; fi
 - carthage update --platform iOS,Mac
 
 script:
