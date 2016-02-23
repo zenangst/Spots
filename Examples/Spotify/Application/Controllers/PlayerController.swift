@@ -62,8 +62,6 @@ class PlayerController: SpotsController {
         dispatch(queue: .Interactive) {
           let (background, primary, secondary, detail) = image.colors(CGSize(width: 128, height: 128))
           dispatch { [weak self] in
-            guard let background = background else { return }
-
             if let listSpot = self?.spot(0, ListSpot.self) {
               var item = listSpot.items[0]
 

@@ -41,7 +41,7 @@ CHECKOUT OPTIONS:
     :commit: 5af9d7f80b5c39ec578c54874d5acda248d10831
     :git: https://github.com/hyperoslo/Cache
   Hue:
-    :commit: 4f0f8bfdb69d926883216ffe9a802a5a2022f3f5
+    :commit: e1859d62e2412d4acc7d9db3ee12eb4bcc9f3e35
     :git: https://github.com/hyperoslo/Hue
   Imaginary:
     :commit: 243448a070decf6d8fcdc503b14505a2951af680
