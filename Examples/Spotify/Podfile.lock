@@ -2,7 +2,7 @@ PODS:
   - Cache (1.0.0)
   - Compass (1.4.0):
     - Sugar
-  - Hue (1.0.0)
+  - Hue (1.0.1)
   - Imaginary (0.1.0):
     - Cache
   - Keychain (1.0.0)
@@ -41,7 +41,7 @@ CHECKOUT OPTIONS:
     :commit: 5af9d7f80b5c39ec578c54874d5acda248d10831
     :git: https://github.com/hyperoslo/Cache
   Hue:
-    :commit: e1859d62e2412d4acc7d9db3ee12eb4bcc9f3e35
+    :commit: 8b373b8efcffbfbc8f31c8377ea9b24eb7cbb419
     :git: https://github.com/hyperoslo/Hue
   Imaginary:
     :commit: 243448a070decf6d8fcdc503b14505a2951af680
@@ -53,7 +53,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Cache: 78f58bc008313c7a1182967a2ebcb3de9fddecd4
   Compass: f4b8c37f9b315f0ee4f5e4f71888c54c92992d5d
-  Hue: 44ae8b1091935fcc75055174095ab04653989235
+  Hue: 0a53589bb58317e74068863b701ef1e5eee89ac1
   Imaginary: feaea646440c68a9b6ed66a46597d548b9a44207
   Keychain: 50cb247cab32e774422741b118af9b598a3fb5b2
   Spots: 0e2a783d37cf05ce0752e2ae4cd709de0112cb04

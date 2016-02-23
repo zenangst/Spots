@@ -4,7 +4,7 @@ PODS:
     - Sugar
   - Fakery (1.1.2):
     - SwiftyJSON
-  - Hue (1.0.0)
+  - Hue (1.0.1)
   - Imaginary (0.1.0):
     - Cache
   - Spots (1.0.0):
@@ -48,7 +48,7 @@ CHECKOUT OPTIONS:
     :commit: b702df434f60418b8817896d89b60fc4a78fea89
     :git: https://github.com/hyperoslo/Compass
   Hue:
-    :commit: 4f0f8bfdb69d926883216ffe9a802a5a2022f3f5
+    :commit: 8b373b8efcffbfbc8f31c8377ea9b24eb7cbb419
     :git: https://github.com/hyperoslo/Hue
   Imaginary:
     :commit: 243448a070decf6d8fcdc503b14505a2951af680
@@ -61,7 +61,7 @@ SPEC CHECKSUMS:
   Cache: 78f58bc008313c7a1182967a2ebcb3de9fddecd4
   Compass: f4b8c37f9b315f0ee4f5e4f71888c54c92992d5d
   Fakery: a4121424cf731cacc04a5ff1735fcc6e3efc656d
-  Hue: 44ae8b1091935fcc75055174095ab04653989235
+  Hue: 0a53589bb58317e74068863b701ef1e5eee89ac1
   Imaginary: feaea646440c68a9b6ed66a46597d548b9a44207
   Spots: 0e2a783d37cf05ce0752e2ae4cd709de0112cb04
   Sugar: 8d9788c4630c6bdcab8c19a0f7ff06f10ba353bd
