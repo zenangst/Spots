@@ -185,7 +185,9 @@ public extension Spotable where Self : Gridable {
       if cached?.isKindOfClass(componentClass) == false { cached = nil }
       if cached == nil { cached = componentClass.init() }
 
-      component.items[index].size.width = UIScreen.mainScreen().bounds.size.width / CGFloat(component.span)
+      if component.span > 0 {
+        component.items[index].size.width = UIScreen.mainScreen().bounds.size.width / CGFloat(component.span)
+      }
       (cached as? ViewConfigurable)?.configure(&component.items[index])
     }
     cached = nil
