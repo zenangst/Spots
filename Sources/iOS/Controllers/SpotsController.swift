@@ -171,6 +171,11 @@ extension SpotsController {
     spot(spotIndex, Spotable.self)?.refreshIndexes()
   }
 
+  public func update(indexes indexes: [Int], spotIndex: Int = 0, completion: (() -> Void)? = nil) {
+    spot(spotIndex, Spotable.self)?.reload(indexes) { completion?() }
+    spot(spotIndex, Spotable.self)?.refreshIndexes()
+  }
+
   public func delete(index: Int, spotIndex: Int = 0, completion: (() -> Void)? = nil) {
     spot(spotIndex, Spotable.self)?.delete(index) { completion?() }
     spot(spotIndex, Spotable.self)?.refreshIndexes()
