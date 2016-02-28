@@ -25,6 +25,8 @@ class FeedItemCell: UITableViewCell, ViewConfigurable {
     detailTextLabel?.numberOfLines = 0
     detailTextLabel?.font = UIFont.systemFontOfSize(13)
     accessoryView = customImageView
+
+    selectionStyle = .None
   }
 
   required init?(coder aDecoder: NSCoder) {

@@ -28,6 +28,8 @@ public class FeaturedFeedItemCell: UITableViewCell, ViewConfigurable {
   override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: .Default, reuseIdentifier: reuseIdentifier)
 
+    selectionStyle = .None
+
     addSubview(featuredImage)
     addSubview(titleLabel)
     addSubview(introLabel)

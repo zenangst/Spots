@@ -8,26 +8,61 @@ class ForYouController: SpotsController, SpotsDelegate {
   static let faker = Faker()
 
   weak var selectedCell: UITableViewCell?
+  weak var detailNavigation: UINavigationController?
+
+  lazy var featuredImage = UIImageView(frame: CGRect.zero).then {
+    $0.contentMode = .ScaleAspectFill
+    $0.clipsToBounds = true
+  }
 
   lazy var transition: Transition = { [unowned self] in
     let transition = Transition() { [weak self] controller, show in
-      guard let weakSelf = self,
-      cell = self?.selectedCell else { return }
 
-      controller.view.transform = CGAffineTransformMakeScale(0.5, 0.5)
-      controller.view.alpha = show ? 1 : 0
-      let centerY = controller.view.center.y
-      var newY = cell.convertRect(weakSelf.view.bounds, toView: weakSelf.view).origin.y
-      controller.view.center.y = newY
+      if controller.isBeingPresented() {
+        guard let weakSelf = self,
+          cell = self?.selectedCell else { return }
 
-      UIView.animateWithDuration(0.3, delay: 0.0, options: .BeginFromCurrentState, animations: {
-        controller.view.transform = CGAffineTransformIdentity
-        controller.view.alpha = 1
-        controller.view.center.y = centerY
-        }, completion: nil)
+        controller.view.alpha = 0
 
-      weakSelf.selectedCell = nil
+        if let imageView = cell.accessoryView as? UIImageView {
+          weakSelf.featuredImage.image = imageView.image
+          weakSelf.featuredImage.frame = cell.convertRect(weakSelf.view.bounds, toView: weakSelf.view)
+          weakSelf.featuredImage.frame.size = CGSize(width: 100, height: 100)
+          weakSelf.featuredImage.frame.origin.x = cell.frame.width - weakSelf.featuredImage.frame.width - 15
+          weakSelf.featuredImage.frame.origin.y += 15
+        }
+
+        if let featuredCell = cell as? FeaturedFeedItemCell {
+          weakSelf.featuredImage.image = featuredCell.featuredImage.image
+          weakSelf.featuredImage.frame = cell.convertRect(weakSelf.view.bounds, toView: weakSelf.view)
+          weakSelf.featuredImage.frame.size = CGSize(width: cell.frame.width - 30, height: 200)
+          weakSelf.featuredImage.frame.origin.x = 15
+          weakSelf.featuredImage.frame.origin.y += 15
+        }
+
+        cell.accessoryView?.alpha = 0.0
+        weakSelf.view.addSubview(weakSelf.featuredImage)
+
+        UIView.animateWithDuration(0.2, delay: 0.0, options: .BeginFromCurrentState, animations: {
+          weakSelf.featuredImage.frame = CGRect(x: 0, y: 64, width: cell.frame.width, height: 200)
+          }) { _ in }
+
+        UIView.animateWithDuration(0.2, delay: 0.1, options: .BeginFromCurrentState, animations: {
+          controller.view.alpha = 1
+          }) { _ in
+            cell.accessoryView?.alpha = 1.0
+            weakSelf.featuredImage.image = nil
+            weakSelf.featuredImage.removeFromSuperview()
+        }
+
+        weakSelf.selectedCell = nil
+      } else if !show && controller.isBeingDismissed() {
+        controller.view.alpha = 0.0
+        controller.view.center.x = -controller.view.frame.width
+      }
     }
+
+    transition.animationDuration = 0.4
 
     return transition
   }()
@@ -51,8 +86,12 @@ class ForYouController: SpotsController, SpotsDelegate {
     controller.viewDidLoad()
     let navigationController = UINavigationController(rootViewController: controller)
     navigationController.transitioningDelegate = transition
+    navigationController.modalPresentationStyle = .Custom
+    navigationController.navigationBar.topItem?.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .Done, target: controller, action: "detailDidDismiss:")
 
     self.navigationController?.presentViewController(navigationController, animated: true, completion: nil)
+
+    detailNavigation = navigationController
   }
 
   static func generateItem(index: Int, kind: String = "feed") -> ViewModel {
