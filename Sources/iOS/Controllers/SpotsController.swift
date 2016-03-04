@@ -123,9 +123,19 @@ extension SpotsController {
     return spots.filter(includeElement)
   }
 
-  public func reload() {
+  public func reload(completion: (() -> Void)? = nil) {
+    var spotsLeft = spots.count
+
     dispatch { [weak self] in
-      self?.spots.forEach { $0.reload([]) {} }
+      self?.spots.forEach { spot in
+        spot.reload([]) {
+          spotsLeft--
+
+          if spotsLeft == 0 {
+            completion?()
+          }
+        }
+      }
     }
   }
 
