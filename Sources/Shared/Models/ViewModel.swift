@@ -66,7 +66,11 @@ public struct ViewModel: Mappable {
   }
 
   public func relation(key: String, _ index: Int) -> ViewModel? {
-    return relations[key]?[index] ?? nil
+    if let items = relations[key] where index < items.count {
+      return items[index]
+    } else {
+      return nil
+    }
   }
 }
 
