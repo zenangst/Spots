@@ -123,9 +123,19 @@ extension SpotsController {
     return spots.filter(includeElement)
   }
 
-  public func reload() {
+  public func reload(completion: (() -> Void)? = nil) {
+    var spotsLeft = spots.count
+
     dispatch { [weak self] in
-      self?.spots.forEach { $0.reload([]) {} }
+      self?.spots.forEach { spot in
+        spot.reload([]) {
+          spotsLeft--
+
+          if spotsLeft == 0 {
+            completion?()
+          }
+        }
+      }
     }
   }
 
@@ -147,42 +157,66 @@ extension SpotsController {
   }
 
   public func append(item: ViewModel, spotIndex: Int = 0, completion: (() -> Void)? = nil) {
-    spot(spotIndex, Spotable.self)?.append(item) { completion?() }
+    spot(spotIndex, Spotable.self)?.append(item) {
+      completion?()
+      self.spotsScrollView.forceUpdate = true
+    }
     spot(spotIndex, Spotable.self)?.refreshIndexes()
   }
 
   public func append(items: [ViewModel], spotIndex: Int = 0, completion: (() -> Void)? = nil) {
-    spot(spotIndex, Spotable.self)?.append(items) { completion?() }
+    spot(spotIndex, Spotable.self)?.append(items) {
+      completion?()
+      self.spotsScrollView.forceUpdate = true
+    }
     spot(spotIndex, Spotable.self)?.refreshIndexes()
   }
 
   public func prepend(items: [ViewModel], spotIndex: Int = 0, completion: (() -> Void)? = nil) {
-    spot(spotIndex, Spotable.self)?.prepend(items)  { completion?() }
+    spot(spotIndex, Spotable.self)?.prepend(items)  {
+      completion?()
+      self.spotsScrollView.forceUpdate = true
+    }
     spot(spotIndex, Spotable.self)?.refreshIndexes()
   }
 
   public func insert(item: ViewModel, index: Int = 0, spotIndex: Int, completion: (() -> Void)? = nil) {
-    spot(spotIndex, Spotable.self)?.insert(item, index: index)  { completion?() }
+    spot(spotIndex, Spotable.self)?.insert(item, index: index)  {
+      completion?()
+      self.spotsScrollView.forceUpdate = true
+    }
     spot(spotIndex, Spotable.self)?.refreshIndexes()
   }
 
   public func update(item: ViewModel, index: Int = 0, spotIndex: Int, completion: (() -> Void)? = nil) {
-    spot(spotIndex, Spotable.self)?.update(item, index: index)  { completion?() }
+    spot(spotIndex, Spotable.self)?.update(item, index: index)  {
+      completion?()
+      self.spotsScrollView.forceUpdate = true
+    }
     spot(spotIndex, Spotable.self)?.refreshIndexes()
   }
 
   public func update(indexes indexes: [Int], spotIndex: Int = 0, completion: (() -> Void)? = nil) {
-    spot(spotIndex, Spotable.self)?.reload(indexes) { completion?() }
+    spot(spotIndex, Spotable.self)?.reload(indexes) {
+      completion?()
+      self.spotsScrollView.forceUpdate = true
+    }
     spot(spotIndex, Spotable.self)?.refreshIndexes()
   }
 
   public func delete(index: Int, spotIndex: Int = 0, completion: (() -> Void)? = nil) {
-    spot(spotIndex, Spotable.self)?.delete(index) { completion?() }
+    spot(spotIndex, Spotable.self)?.delete(index) {
+      completion?()
+      self.spotsScrollView.forceUpdate = true
+    }
     spot(spotIndex, Spotable.self)?.refreshIndexes()
   }
 
   public func delete(indexes indexes: [Int], spotIndex: Int = 0, completion: (() -> Void)? = nil) {
-    spot(spotIndex, Spotable.self)?.delete(indexes) { completion?() }
+    spot(spotIndex, Spotable.self)?.delete(indexes) {
+      completion?()
+      self.spotsScrollView.forceUpdate = true
+    }
     spot(spotIndex, Spotable.self)?.refreshIndexes()
   }
 
