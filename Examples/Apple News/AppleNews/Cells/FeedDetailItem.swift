@@ -30,9 +30,7 @@ public class FeedDetailItemCell: UITableViewCell, ViewConfigurable {
 
     selectionStyle = .None
 
-    addSubview(featuredImage)
-    addSubview(titleLabel)
-    addSubview(introLabel)
+    [featuredImage, titleLabel, introLabel].forEach { addSubview($0) }
   }
 
   required public init?(coder aDecoder: NSCoder) {
@@ -42,10 +40,12 @@ public class FeedDetailItemCell: UITableViewCell, ViewConfigurable {
   public func configure(inout item: ViewModel) {
     if !item.image.isEmpty {
       featuredImage.setImage(NSURL(string: item.image))
+      featuredImage.frame.size.height = 200
+    } else {
+      featuredImage.frame.size.height = 0
     }
 
     featuredImage.frame.size.width = contentView.frame.width
-    featuredImage.frame.size.height = 200
 
     titleLabel.text = item.title
     titleLabel.frame.size.width = contentView.frame.width - 30
@@ -59,6 +59,6 @@ public class FeedDetailItemCell: UITableViewCell, ViewConfigurable {
     introLabel.frame.origin.x = 15
     introLabel.frame.origin.y = titleLabel.frame.maxY + 15
 
-    item.size.height = introLabel.frame.maxY + 15
+    item.size.height = introLabel.frame.maxY - 30
   }
 }

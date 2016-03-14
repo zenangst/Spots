@@ -43,22 +43,28 @@ class ForYouController: SpotsController, SpotsDelegate {
         cell.accessoryView?.alpha = 0.0
         weakSelf.view.addSubview(weakSelf.featuredImage)
 
-        UIView.animateWithDuration(0.2, delay: 0.0, options: .BeginFromCurrentState, animations: {
+        UIView.animateWithDuration(0.25, delay: 0.0, options: [.BeginFromCurrentState, .AllowAnimatedContent], animations: {
           weakSelf.featuredImage.frame = CGRect(x: 0, y: 64, width: cell.frame.width, height: 200)
+
+          UIView.animateWithDuration(0.4, delay: 0.10, options: [.BeginFromCurrentState, .AllowAnimatedContent], animations: {
+            weakSelf.spot.render().transform = CGAffineTransformMakeScale(2.0,2.0)
+            weakSelf.spot.render().alpha = 0.0
+            controller.view.alpha = 1
+            }) { _ in
+              cell.accessoryView?.alpha = 1.0
+              weakSelf.featuredImage.image = nil
+              weakSelf.featuredImage.removeFromSuperview()
+          }
+
           }) { _ in }
 
-        UIView.animateWithDuration(0.2, delay: 0.1, options: .BeginFromCurrentState, animations: {
-          controller.view.alpha = 1
-          }) { _ in
-            cell.accessoryView?.alpha = 1.0
-            weakSelf.featuredImage.image = nil
-            weakSelf.featuredImage.removeFromSuperview()
-        }
+
 
         weakSelf.selectedCell = nil
       } else if !show && controller.isBeingDismissed() {
+        self?.spot.render().transform = CGAffineTransformIdentity
+        self?.spot.render().alpha = 1.0
         controller.view.alpha = 0.0
-        controller.view.center.x = -controller.view.frame.width
       }
     }
 
@@ -81,7 +87,12 @@ class ForYouController: SpotsController, SpotsDelegate {
       selectedCell = cell
     }
 
-    let controller = ForYouDetailController(spot: ListSpot(component: Component(items: [item])))
+    let controller = ForYouDetailController(spot: ListSpot(component: Component(items: [
+      item,
+      ViewModel(title: ForYouController.faker.lorem.sentences(amount: 1),
+        subtitle: ForYouController.faker.lorem.sentences(amount: 40),
+        kind: "feed-detail")
+    ])))
     controller.spotsScrollView.contentInset.top = 64
     controller.viewDidLoad()
     let navigationController = UINavigationController(rootViewController: controller)
