@@ -43,7 +43,7 @@ class ForYouController: SpotsController, SpotsDelegate {
         cell.accessoryView?.alpha = 0.0
         weakSelf.view.addSubview(weakSelf.featuredImage)
 
-        UIView.animateWithDuration(0.25, delay: 0.0, options: [.BeginFromCurrentState, .AllowAnimatedContent], animations: {
+        UIView.animateWithDuration(0.20, delay: 0.0, options: [.BeginFromCurrentState, .AllowAnimatedContent], animations: {
           weakSelf.featuredImage.frame = CGRect(x: 0, y: 64, width: cell.frame.width, height: 200)
 
           UIView.animateWithDuration(0.4, delay: 0.10, options: [.BeginFromCurrentState, .AllowAnimatedContent], animations: {
