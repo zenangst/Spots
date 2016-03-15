@@ -44,7 +44,7 @@ class ForYouController: SpotsController, SpotsDelegate {
         weakSelf.view.addSubview(weakSelf.featuredImage)
 
         UIView.animateWithDuration(0.20, delay: 0.0, options: [.BeginFromCurrentState, .AllowAnimatedContent], animations: {
-          weakSelf.featuredImage.frame = CGRect(x: 0, y: 64, width: cell.frame.width, height: 200)
+          weakSelf.featuredImage.frame = CGRect(x: 0, y: 64, width: cell.frame.width, height: 300)
 
           UIView.animateWithDuration(0.4, delay: 0.10, options: [.BeginFromCurrentState, .AllowAnimatedContent], animations: {
             weakSelf.spot.render().transform = CGAffineTransformMakeScale(2.0,2.0)

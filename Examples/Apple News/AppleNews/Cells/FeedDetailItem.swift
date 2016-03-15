@@ -40,7 +40,7 @@ public class FeedDetailItemCell: UITableViewCell, ViewConfigurable {
   public func configure(inout item: ViewModel) {
     if !item.image.isEmpty {
       featuredImage.setImage(NSURL(string: item.image))
-      featuredImage.frame.size.height = 200
+      featuredImage.frame.size.height = 300
     } else {
       featuredImage.frame.size.height = 0
     }
