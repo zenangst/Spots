@@ -84,6 +84,8 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
   public override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
 
+    spotsScrollView.forceUpdate = true
+
     if let tabBarController = self.tabBarController
       where tabBarController.tabBar.translucent {
         spotsScrollView.contentInset.bottom = tabBarController.tabBar.frame.height
