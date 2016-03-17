@@ -10,7 +10,7 @@ PODS:
     - Imaginary
     - Sugar
     - Tailor
-  - Sugar (1.0.5)
+  - Sugar (1.0.7)
   - Tailor (0.4.5):
     - Sugar
   - Whisper (2.0.2)
@@ -57,7 +57,7 @@ SPEC CHECKSUMS:
   Imaginary: feaea646440c68a9b6ed66a46597d548b9a44207
   Keychain: 50cb247cab32e774422741b118af9b598a3fb5b2
   Spots: 0e2a783d37cf05ce0752e2ae4cd709de0112cb04
-  Sugar: 8d9788c4630c6bdcab8c19a0f7ff06f10ba353bd
+  Sugar: 610b55c5ca712804789b5f3aa566af8d82fa3cb6
   Tailor: d1d5bce9d81e953c3d7b3f3fd6d084337feeb7a5
   Whisper: 49abcba82d23dd20f0a9a025797cacd09c8aa3bb
 
