@@ -29,18 +29,6 @@ public extension Spotable where Self : Listable {
     cached = nil
   }
 
-  func prepareItem<T: Spotable>(item: ViewModel, index: Int, spot: T, inout cached: UIView?) {
-    let reuseIdentifer = item.kind.isEmpty ? component.kind : item.kind
-    let componentClass = T.views[reuseIdentifer] ?? T.defaultView
-
-    component.items[index].index = index
-
-    if cached?.isKindOfClass(componentClass) == false { cached = nil }
-    if cached == nil { cached = componentClass.init() }
-
-    (cached as? ViewConfigurable)?.configure(&component.items[index])
-  }
-
   public func append(item: ViewModel, completion: (() -> Void)? = nil) {
     let count = component.items.count
     component.items.append(item)

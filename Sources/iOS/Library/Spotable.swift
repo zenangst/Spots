@@ -59,4 +59,16 @@ public extension Spotable {
   public func scrollTo(@noescape includeElement: (ViewModel) -> Bool) -> CGFloat {
     return 0.0
   }
+
+    func prepareItem<T: Spotable>(item: ViewModel, index: Int, spot: T, inout cached: UIView?) {
+    let reuseIdentifer = item.kind.isEmpty ? component.kind : item.kind
+    let componentClass = T.views[reuseIdentifer] ?? T.defaultView
+
+    component.items[index].index = index
+
+    if cached?.isKindOfClass(componentClass) == false { cached = nil }
+    if cached == nil { cached = componentClass.init() }
+
+    (cached as? ViewConfigurable)?.configure(&component.items[index])
+  }
 }
