@@ -10,7 +10,7 @@ PODS:
     - Imaginary
     - Sugar
     - Tailor
-  - Sugar (1.0.7)
+  - Sugar (1.0.10)
   - SwiftyJSON (2.3.2)
   - Tailor (0.4.5):
     - Sugar
@@ -44,7 +44,7 @@ SPEC CHECKSUMS:
   Fakery: a4121424cf731cacc04a5ff1735fcc6e3efc656d
   Imaginary: feaea646440c68a9b6ed66a46597d548b9a44207
   Spots: 0e2a783d37cf05ce0752e2ae4cd709de0112cb04
-  Sugar: 610b55c5ca712804789b5f3aa566af8d82fa3cb6
+  Sugar: 22e3e4e6b44d5daef87a025996363fc60626b90b
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   Tailor: d1d5bce9d81e953c3d7b3f3fd6d084337feeb7a5
 
