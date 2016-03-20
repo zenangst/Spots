@@ -30,12 +30,8 @@ public protocol Spotable: class {
 public extension Spotable {
 
   var items: [ViewModel] {
-    set(items) {
-      component.items = items
-    }
-    get {
-      return component.items
-    }
+    set(items) { component.items = items }
+    get { return component.items }
   }
 
   public func item(index: Int) -> ViewModel {
