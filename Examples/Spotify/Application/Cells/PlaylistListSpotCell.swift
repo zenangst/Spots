@@ -10,9 +10,7 @@ public class PlaylistListSpotCell: UITableViewCell, ViewConfigurable {
     $0.backgroundColor = UIColor.darkGrayColor().colorWithAlphaComponent(0.4)
   }
 
-  lazy var transparentImage: UIImage = {
-    return UIImage.transparentImage(CGSize(width: 48, height: 48))
-  }()
+  lazy var transparentImage = UIImage.transparentImage(CGSize(width: 48, height: 48))
 
   public override init(style: UITableViewCellStyle, reuseIdentifier: String!) {
     super.init(style: .Subtitle, reuseIdentifier: reuseIdentifier)
