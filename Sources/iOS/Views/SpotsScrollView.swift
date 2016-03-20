@@ -75,6 +75,7 @@ public class SpotsScrollView: UIScrollView {
     if let index = subviewsInLayoutOrder.indexOf({ $0 == subview }) {
       subviewsInLayoutOrder.removeAtIndex(index)
     }
+
     setNeedsLayout()
   }
 
