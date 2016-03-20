@@ -193,7 +193,7 @@ public extension Spotable where Self : Gridable {
     cached = nil
   }
 
-  public func reload(indexes: [Int] = [], completion: (() -> Void)?) {
+  public func reload(indexes: [Int]? = nil, completion: (() -> Void)?) {
     let items = component.items
     for (index, item) in items.enumerate() {
       let cellClass = self.dynamicType.views[item.kind] ?? self.dynamicType.defaultView
