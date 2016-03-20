@@ -20,7 +20,7 @@ public protocol Spotable: class {
   func update(item: ViewModel, index: Int, completion: (() -> Void)?)
   func delete(index: Int, completion: (() -> Void)?)
   func delete(indexes: [Int], completion: (() -> Void)?)
-  func reload(indexes: [Int], completion: (() -> Void)?)
+  func reload(indexes: [Int]?, completion: (() -> Void)?)
   func render() -> UIScrollView
   func layout(size: CGSize)
   func prepare()
