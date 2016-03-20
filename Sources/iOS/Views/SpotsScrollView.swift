@@ -152,6 +152,7 @@ public class SpotsScrollView: UIScrollView {
       self.frame.size.height = superview.frame.size.height
     }
 
+    guard forceUpdate || initialContentOffset != contentOffset else { return }
 
     if forceUpdate == true { forceUpdate = false }
     setNeedsLayout()
