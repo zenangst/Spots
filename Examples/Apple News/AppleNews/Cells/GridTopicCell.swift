@@ -9,25 +9,19 @@ class GridTopicCell: UICollectionViewCell, ViewConfigurable {
 
   var size = CGSize(width: 125, height: 160)
 
-  lazy var label: UILabel = { [unowned self] in
-    let label = UILabel(frame: CGRectZero)
-    label.font = UIFont.boldSystemFontOfSize(11)
-    label.numberOfLines = 4
-    label.textAlignment = .Center
+  lazy var label = UILabel().then {
+    $0.font = UIFont.boldSystemFontOfSize(11)
+    $0.numberOfLines = 2
+    $0.textAlignment = .Center
+  }
 
-    return label
-    }()
-
-  lazy var imageView: UIImageView = {
-    let imageView = UIImageView()
-    imageView.contentMode = .ScaleAspectFill
-
-    return imageView
-    }()
+  lazy var imageView = UIImageView().then {
+    $0.contentMode = .ScaleAspectFill
+  }
 
   lazy var plusButton: UILabel = { [unowned self] in
     let button = UILabel()
-    button.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.7)
+    button.backgroundColor = UIColor.hex("FFF").alpha(0.7)
     button.clipsToBounds = true
     button.frame = CGRect(x: self.size.width - 48, y: 8, width: 25, height: 25)
     button.layer.cornerRadius = button.frame.width / 2
@@ -38,19 +32,13 @@ class GridTopicCell: UICollectionViewCell, ViewConfigurable {
     return button
   }()
 
-  lazy var blurView: UIView = {
-    let view = UIView()
-    view.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
+  lazy var blurView = UIVisualEffectView().then {
+    $0.effect = UIBlurEffect(style: .ExtraLight)
+  }
 
-    return view
-  }()
-
-  lazy var paddedStyle: NSParagraphStyle = {
-    let style = NSMutableParagraphStyle()
-    style.alignment = .Center
-
-    return style
-    }()
+  lazy var paddedStyle = NSMutableParagraphStyle().then {
+    $0.alignment = .Center
+  }
 
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -58,7 +46,7 @@ class GridTopicCell: UICollectionViewCell, ViewConfigurable {
     contentView.clipsToBounds = true
     contentView.layer.cornerRadius = 3
 
-    blurView.addSubview(label)
+    blurView.contentView.addSubview(label)
 
     [imageView, plusButton, blurView].forEach { contentView.addSubview($0) }
   }
@@ -79,13 +67,15 @@ class GridTopicCell: UICollectionViewCell, ViewConfigurable {
       contentView.backgroundColor = UIColor.hex(hexColor)
     }
 
-    label.attributedText = NSAttributedString(string: item.title,
-      attributes: [NSParagraphStyleAttributeName : paddedStyle])
-    label.frame.size.height = 38
-
     blurView.frame.size.width = contentView.frame.size.width
     blurView.frame.size.height = 48
     blurView.frame.origin.y = 120
+
+    label.attributedText = NSAttributedString(string: item.title,
+      attributes: [NSParagraphStyleAttributeName : paddedStyle])
+    label.sizeToFit()
+    label.frame.size.height = 38
+    label.frame.size.width = blurView.frame.width
 
     item.size.height = 155
   }

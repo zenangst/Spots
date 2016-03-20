@@ -7,6 +7,8 @@ public protocol Listable: Spotable {
 
 public extension Spotable where Self : Listable {
 
+  typealias Completion = (() -> Void)?
+
   public func prepare() {
     prepareSpot(self)
   }
@@ -23,25 +25,14 @@ public extension Spotable where Self : Listable {
     }
 
     var cached: UIView?
+    defer { cached = nil }
+
     for (index, item) in component.items.enumerate() {
       prepareItem(item, index: index, spot: self, cached: &cached)
     }
-    cached = nil
   }
 
-  func prepareItem<T: Spotable>(item: ViewModel, index: Int, spot: T, inout cached: UIView?) {
-    let reuseIdentifer = item.kind.isEmpty ? component.kind : item.kind
-    let componentClass = T.views[reuseIdentifer] ?? T.defaultView
-
-    component.items[index].index = index
-
-    if cached?.isKindOfClass(componentClass) == false { cached = nil }
-    if cached == nil { cached = componentClass.init() }
-
-    (cached as? ViewConfigurable)?.configure(&component.items[index])
-  }
-
-  public func append(item: ViewModel, completion: (() -> Void)? = nil) {
+  public func append(item: ViewModel, completion: Completion = nil) {
     let count = component.items.count
     component.items.append(item)
 
@@ -50,8 +41,9 @@ public extension Spotable where Self : Listable {
       completion?()
     }
     var cached: UIView?
+    defer { cached = nil }
+
     prepareItem(item, index: count, spot: self, cached: &cached)
-    cached = nil
   }
 
   public func append(items: [ViewModel], completion: (() -> Void)? = nil) {
@@ -73,7 +65,7 @@ public extension Spotable where Self : Listable {
     }
   }
 
-  public func insert(item: ViewModel, index: Int, completion: (() -> Void)? = nil) {
+  public func insert(item: ViewModel, index: Int = 0, completion: Completion = nil) {
     component.items.insert(item, atIndex: index)
 
     dispatch { [weak self] in
@@ -82,7 +74,7 @@ public extension Spotable where Self : Listable {
     }
   }
 
-  public func prepend(items: [ViewModel], completion: (() -> Void)? = nil) {
+  public func prepend(items: [ViewModel], completion: Completion = nil) {
     var indexes = [Int]()
 
     component.items.insertContentsOf(items, at: 0)
@@ -97,7 +89,7 @@ public extension Spotable where Self : Listable {
     }
   }
 
-  public func delete(item: ViewModel, completion: (() -> Void)? = nil) {
+  public func delete(item: ViewModel, completion: Completion = nil) {
     guard let index = component.items.indexOf({ $0 == item})
       else { completion?(); return }
 
@@ -109,7 +101,7 @@ public extension Spotable where Self : Listable {
     }
   }
 
-  public func delete(items: [ViewModel], completion: (() -> Void)? = nil) {
+  public func delete(items: [ViewModel], completion: Completion = nil) {
     var indexPaths = [Int]()
     let count = component.items.count
 
@@ -124,7 +116,7 @@ public extension Spotable where Self : Listable {
     }
   }
 
-  func delete(index: Int, completion: (() -> Void)? = nil) {
+  func delete(index: Int, completion: Completion = nil) {
     dispatch { [weak self] in
       self?.component.items.removeAtIndex(index)
       self?.tableView.delete([index])
@@ -132,7 +124,7 @@ public extension Spotable where Self : Listable {
     }
   }
 
-  func delete(indexes: [Int], completion: (() -> Void)? = nil) {
+  func delete(indexes: [Int], completion: Completion = nil) {
     dispatch { [weak self] in
       indexes.forEach { self?.component.items.removeAtIndex($0) }
       self?.tableView.delete(indexes, section: 0, animation: .Automatic)
@@ -140,7 +132,7 @@ public extension Spotable where Self : Listable {
     }
   }
 
-  public func update(item: ViewModel, index: Int, completion: (() -> Void)? = nil) {
+  public func update(item: ViewModel, index: Int = 0, completion: Completion = nil) {
     items[index] = item
 
     let cellClass = self.dynamicType.views[item.kind] ?? self.dynamicType.defaultView
@@ -149,6 +141,7 @@ public extension Spotable where Self : Listable {
       : component.kind
 
     tableView.registerClass(cellClass, forCellReuseIdentifier: reuseIdentifier)
+
     if let cell = cellClass.init() as? ViewConfigurable {
       component.items[index].index = index
       cell.configure(&component.items[index])
@@ -158,7 +151,7 @@ public extension Spotable where Self : Listable {
     completion?()
   }
 
-  public func reload(indexes: [Int] = [], completion: (() -> Void)? = nil) {
+  public func reload(indexes: [Int] = [], completion: Completion = nil) {
     let items = component.items
 
     for (index, item) in items.enumerate() {
@@ -168,6 +161,7 @@ public extension Spotable where Self : Listable {
         : component.kind
 
       tableView.registerClass(cellClass, forCellReuseIdentifier: reuseIdentifier)
+
       if let cell = cellClass.init() as? ViewConfigurable {
         component.items[index].index = index
         cell.configure(&component.items[index])
@@ -192,7 +186,8 @@ public extension Spotable where Self : Listable {
   public func scrollTo(@noescape includeElement: (ViewModel) -> Bool) -> CGFloat {
     guard let item = items.filter(includeElement).first else { return 0.0 }
 
-    let height = component.items[0...item.index].reduce(0, combine: { $0 + $1.size.height })
+    let height = component.items[0...item.index]
+      .reduce(0, combine: { $0 + $1.size.height })
 
     return height
   }

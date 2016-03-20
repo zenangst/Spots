@@ -17,6 +17,7 @@ public protocol SpotsScrollDelegate: class {
 }
 
 public extension SpotsScrollDelegate {
+
   func spotDidReachBeginning(completion: (() -> Void)?) {
     completion?()
   }

@@ -4,17 +4,18 @@ PODS:
     - Sugar
   - Fakery (1.1.2):
     - SwiftyJSON
-  - Hue (1.0.0)
+  - Hue (1.1)
   - Imaginary (0.1.0):
     - Cache
   - Spots (1.0.0):
     - Imaginary
     - Sugar
     - Tailor
-  - Sugar (1.0.5)
+  - Sugar (1.0.10)
   - SwiftyJSON (2.3.2)
   - Tailor (0.4.5):
     - Sugar
+  - Transition (0.1.0)
 
 DEPENDENCIES:
   - Cache (from `https://github.com/hyperoslo/Cache`)
@@ -23,6 +24,7 @@ DEPENDENCIES:
   - Hue (from `https://github.com/hyperoslo/Hue`)
   - Imaginary (from `https://github.com/hyperoslo/Imaginary`)
   - Spots (from `../../`)
+  - Transition (from `https://github.com/hyperoslo/Transition`)
 
 EXTERNAL SOURCES:
   Cache:
@@ -35,6 +37,8 @@ EXTERNAL SOURCES:
     :git: https://github.com/hyperoslo/Imaginary
   Spots:
     :path: "../../"
+  Transition:
+    :git: https://github.com/hyperoslo/Transition
 
 CHECKOUT OPTIONS:
   Cache:
@@ -44,21 +48,25 @@ CHECKOUT OPTIONS:
     :commit: b702df434f60418b8817896d89b60fc4a78fea89
     :git: https://github.com/hyperoslo/Compass
   Hue:
-    :commit: 4f0f8bfdb69d926883216ffe9a802a5a2022f3f5
+    :commit: ac060de256dee3929d20d65ec9ca6726878a4342
     :git: https://github.com/hyperoslo/Hue
   Imaginary:
     :commit: 243448a070decf6d8fcdc503b14505a2951af680
     :git: https://github.com/hyperoslo/Imaginary
+  Transition:
+    :commit: 0d94057f824787973ae34bac4906164e3d6a2c8b
+    :git: https://github.com/hyperoslo/Transition
 
 SPEC CHECKSUMS:
   Cache: 78f58bc008313c7a1182967a2ebcb3de9fddecd4
   Compass: f4b8c37f9b315f0ee4f5e4f71888c54c92992d5d
   Fakery: a4121424cf731cacc04a5ff1735fcc6e3efc656d
-  Hue: 44ae8b1091935fcc75055174095ab04653989235
+  Hue: ed6781be844b58b2a38150cfd4bf24c33449faf8
   Imaginary: feaea646440c68a9b6ed66a46597d548b9a44207
   Spots: 0e2a783d37cf05ce0752e2ae4cd709de0112cb04
-  Sugar: 8d9788c4630c6bdcab8c19a0f7ff06f10ba353bd
+  Sugar: 22e3e4e6b44d5daef87a025996363fc60626b90b
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   Tailor: d1d5bce9d81e953c3d7b3f3fd6d084337feeb7a5
+  Transition: 66d86e3ae1b8f0b3d9ba2000c7a45fbc17b066f2
 
 COCOAPODS: 0.39.0

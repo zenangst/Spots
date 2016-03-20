@@ -1,28 +1,115 @@
 import Spots
 import Sugar
 import Fakery
+import Transition
 
 class ForYouController: SpotsController, SpotsDelegate {
 
   static let faker = Faker()
 
-  convenience init(title: String) {
-    let component = Component()
-    let feedSpot = ListSpot(component: component)
-    self.init(spot: feedSpot)
+  weak var selectedCell: UITableViewCell?
+  weak var detailNavigation: UINavigationController?
 
-    self.title = title
-    spotsDelegate = self
-    spotsScrollDelegate = self
+  lazy var featuredImage = UIImageView(frame: CGRect.zero).then {
+    $0.contentMode = .ScaleAspectFill
+    $0.clipsToBounds = true
   }
 
-  func spotDidSelectItem(spot: Spotable, item: ViewModel) { }
+  lazy var transition: Transition = { [unowned self] in
+    let transition = Transition() { [weak self] controller, show in
+
+      if controller.isBeingPresented() {
+        guard let weakSelf = self,
+          cell = self?.selectedCell else { return }
+
+        controller.view.alpha = 0
+
+        if let imageView = cell.accessoryView as? UIImageView {
+          weakSelf.featuredImage.image = imageView.image
+          weakSelf.featuredImage.frame = cell.convertRect(weakSelf.view.bounds, toView: weakSelf.view)
+          weakSelf.featuredImage.frame.size = CGSize(width: 100, height: 100)
+          weakSelf.featuredImage.frame.origin.x = cell.frame.width - weakSelf.featuredImage.frame.width - 15
+          weakSelf.featuredImage.frame.origin.y += 15
+        }
+
+        if let featuredCell = cell as? FeaturedFeedItemCell {
+          weakSelf.featuredImage.image = featuredCell.featuredImage.image
+          weakSelf.featuredImage.frame = cell.convertRect(weakSelf.view.bounds, toView: weakSelf.view)
+          weakSelf.featuredImage.frame.size = CGSize(width: cell.frame.width - 30, height: 200)
+          weakSelf.featuredImage.frame.origin.x = 15
+          weakSelf.featuredImage.frame.origin.y += 15
+        }
+
+        cell.accessoryView?.alpha = 0.0
+        weakSelf.view.addSubview(weakSelf.featuredImage)
+
+        UIView.animateWithDuration(0.20, delay: 0.0, options: [.BeginFromCurrentState, .AllowAnimatedContent], animations: {
+          weakSelf.featuredImage.frame = CGRect(x: 0, y: 64, width: cell.frame.width, height: 300)
+
+          UIView.animateWithDuration(0.4, delay: 0.10, options: [.BeginFromCurrentState, .AllowAnimatedContent], animations: {
+            weakSelf.spot.render().transform = CGAffineTransformMakeScale(2.0,2.0)
+            weakSelf.spot.render().alpha = 0.0
+            controller.view.alpha = 1
+            }) { _ in
+              cell.accessoryView?.alpha = 1.0
+              weakSelf.featuredImage.image = nil
+              weakSelf.featuredImage.removeFromSuperview()
+          }
+
+          }) { _ in }
+
+
+
+        weakSelf.selectedCell = nil
+      } else if !show && controller.isBeingDismissed() {
+        self?.spot.render().transform = CGAffineTransformIdentity
+        self?.spot.render().alpha = 1.0
+        controller.view.alpha = 0.0
+      }
+    }
+
+    transition.animationDuration = 0.4
+
+    return transition
+  }()
+
+  convenience init(title: String) {
+    self.init(spot: ListSpot(component: Component()))
+    self.title = title
+  }
+
+  func spotDidSelectItem(spot: Spotable, item: ViewModel) {
+    var item = item
+    item.kind = "feed-detail"
+    item.subtitle = ForYouController.faker.lorem.sentences(amount: 20)
+
+    if let cell = self.spot(0, ListSpot.self)?.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: item.index, inSection: 0)) {
+      selectedCell = cell
+    }
+
+    let controller = ForYouDetailController(spot: ListSpot(component: Component(items: [
+      item,
+      ViewModel(title: ForYouController.faker.lorem.sentences(amount: 1),
+        subtitle: ForYouController.faker.lorem.sentences(amount: 40),
+        kind: "feed-detail")
+    ])))
+    controller.spotsScrollView.contentInset.top = 64
+    controller.viewDidLoad()
+    let navigationController = UINavigationController(rootViewController: controller)
+    navigationController.transitioningDelegate = transition
+    navigationController.modalPresentationStyle = .Custom
+    navigationController.navigationBar.topItem?.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .Done, target: controller, action: "detailDidDismiss:")
+
+    self.navigationController?.presentViewController(navigationController, animated: true, completion: nil)
+
+    detailNavigation = navigationController
+  }
 
   static func generateItem(index: Int, kind: String = "feed") -> ViewModel {
-    let sencenceCount = Int(arc4random_uniform(4) + 2)
+    let sentences = Int(arc4random_uniform(2) + 2)
 
-    let item = ViewModel(title: faker.lorem.sentences(amount: sencenceCount),
-      subtitle: faker.lorem.sentences(amount: 1),
+    let item = ViewModel(title: faker.lorem.sentences(amount: sentences),
+      subtitle: faker.lorem.sentences(amount: 2),
       kind: kind,
       image: faker.internet.image(width: 180, height: 180) + "?type=avatar&id=\(index)")
 
@@ -32,15 +119,20 @@ class ForYouController: SpotsController, SpotsDelegate {
   static func generateItems(from: Int, to: Int, kind: String = "feed") -> [ViewModel] {
     var items = [ViewModel]()
     for i in from...from+to {
-      autoreleasepool({
-        items.append(generateItem(i))
-      })
+      let kind = Int(arc4random_uniform(100)) % 10 == 1
+        ? "featured-feed"
+        : "feed"
+
+      autoreleasepool { items.append(generateItem(i, kind: kind)) }
     }
     return items
   }
 
   override func viewDidLoad() {
     super.viewDidLoad()
+
+    spotsDelegate = self
+    spotsScrollDelegate = self
 
     dispatch(queue: .Interactive) { [weak self] in
       let items = ForYouController.generateItems(0, to: 10)
@@ -54,8 +146,7 @@ class ForYouController: SpotsController, SpotsDelegate {
 extension ForYouController: SpotsScrollDelegate {
 
   func spotDidReachBeginning(completion: (() -> Void)?) {
-    guard spot.component.items.count < 100 &&
-      view.window != nil
+    guard spot.component.items.count < 100 && view.window != nil
       else {
         completion?()
         return
@@ -94,8 +185,7 @@ extension ForYouController: SpotsScrollDelegate {
 
   func spotDidReachEnd(completion: (() -> Void)?) {
     if spot.component.items.count < 100 {
-      let items = ForYouController.generateItems(spot.component.items.count, to: 10)
-      append(items)
+      append(ForYouController.generateItems(spot.component.items.count, to: 10))
     }
     delay(0.3) { completion?() }
   }
