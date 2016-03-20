@@ -10,7 +10,7 @@ public class PlaylistGridSpotCell: UICollectionViewCell, ViewConfigurable {
     $0.contentMode = .ScaleAspectFill
   }
 
-  lazy var albumView = UIImageView().then{
+  lazy var albumView = UIImageView().then {
     $0.contentMode = .ScaleAspectFill
   }
 
