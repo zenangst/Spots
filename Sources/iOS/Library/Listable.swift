@@ -184,9 +184,7 @@ public extension Spotable where Self : Listable {
   public func scrollTo(@noescape includeElement: (ViewModel) -> Bool) -> CGFloat {
     guard let item = items.filter(includeElement).first else { return 0.0 }
 
-    let height = component.items[0...item.index]
+    return component.items[0...item.index]
       .reduce(0, combine: { $0 + $1.size.height })
-
-    return height
   }
 }
