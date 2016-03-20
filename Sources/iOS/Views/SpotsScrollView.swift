@@ -51,18 +51,21 @@ public class SpotsScrollView: UIScrollView {
 
     subviewsInLayoutOrder.append(subview)
 
-    if let scrollView = subview as? UIScrollView where scrollView.superview == contentView {
-      scrollView.scrollsToTop = false
-      scrollView.scrollEnabled = false
-
-      if let collectionView = scrollView as? UICollectionView,
-        layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
-        where layout.scrollDirection == .Horizontal  {
-          scrollView.scrollEnabled = true
-      }
-
-      scrollView.addObserver(self, forKeyPath: "contentSize", options: .Old, context: KVOContext)
+    guard let scrollView = subview as? UIScrollView where scrollView.superview == contentView else {
+      setNeedsLayout()
+      return
     }
+
+    scrollView.scrollsToTop = false
+    scrollView.scrollEnabled = false
+
+    if let collectionView = scrollView as? UICollectionView,
+      layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
+      where layout.scrollDirection == .Horizontal  {
+        scrollView.scrollEnabled = true
+    }
+
+    scrollView.addObserver(self, forKeyPath: "contentSize", options: .Old, context: KVOContext)
 
     setNeedsLayout()
   }
