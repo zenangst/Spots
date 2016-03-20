@@ -38,13 +38,8 @@ public class PlayerGridSpotCell: UICollectionViewCell, ViewConfigurable {
       textLabel.frame.origin.y = imageView.frame.origin.y + 20
     }
 
-    if let tintColor = item.meta["tintColor"] as? UIColor {
-      imageView.tintColor = tintColor
-    }
-
-    if let textColor = item.meta["textColor"] as? UIColor {
-      textLabel.textColor = textColor
-    }
+    imageView.tintColor = item.meta("tintColor", UIColor.whiteColor())
+    textLabel.textColor = item.meta("textColor", UIColor.whiteColor())
 
     textLabel.text = item.title
     textLabel.frame.size.width = frame.size.width
