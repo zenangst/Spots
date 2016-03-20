@@ -115,7 +115,8 @@ extension ListSpot: UITableViewDataSource {
 
     let reuseIdentifier = indexPath.item < component.items.count && !item(indexPath).kind.isEmpty
       ? item(indexPath).kind : component.kind
-    let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier(reuseIdentifier, forIndexPath: indexPath)
+    let cell: UITableViewCell = tableView
+      .dequeueReusableCellWithIdentifier(reuseIdentifier, forIndexPath: indexPath)
       .then { $0.optimize() }
 
     if indexPath.item < component.items.count {
