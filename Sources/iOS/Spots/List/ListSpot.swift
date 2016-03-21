@@ -32,6 +32,7 @@ public class ListSpot: NSObject, Spotable, Listable {
     prepare()
 
     let reuseIdentifer = component.kind.isEmpty ? "list" : component.kind
+
     if let headerType = ListSpot.headers[reuseIdentifer] {
       let header = headerType.init(frame: CGRect(x: 0, y: 0,
         width: UIScreen.mainScreen().bounds.width, height: headerHeight))
@@ -80,6 +81,7 @@ extension ListSpot: UITableViewDelegate {
 
   public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
     let reuseIdentifer = component.kind.isEmpty ? "list" : component.kind
+
     if let cachedHeader = cachedHeaders[reuseIdentifer] {
       cachedHeader.configure(component)
       return cachedHeader as? UIView
@@ -113,8 +115,9 @@ extension ListSpot: UITableViewDataSource {
 
     let reuseIdentifier = indexPath.item < component.items.count && !item(indexPath).kind.isEmpty
       ? item(indexPath).kind : component.kind
-    let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier(reuseIdentifier, forIndexPath: indexPath)
-    cell.optimize()
+    let cell: UITableViewCell = tableView
+      .dequeueReusableCellWithIdentifier(reuseIdentifier, forIndexPath: indexPath)
+      .then { $0.optimize() }
 
     if indexPath.item < component.items.count {
       (cell as? ViewConfigurable)?.configure(&component.items[indexPath.item])

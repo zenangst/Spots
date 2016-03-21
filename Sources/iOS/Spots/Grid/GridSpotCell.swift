@@ -7,21 +7,16 @@ class GridSpotCell: UICollectionViewCell, ViewConfigurable {
   var size = CGSize(width: 88, height: 88)
   var item: ViewModel?
 
-  var label: UILabel = {
-    let label = UILabel(frame: CGRect(x: 0, y: 0,
-      width: 200,
-      height: 200))
-    label.textAlignment = .Center
-    label.autoresizingMask = [.FlexibleWidth]
-    return label
-    }()
+  var label = UILabel().then {
+    $0.frame = CGRect(x: 0, y: 0, width: 200, height: 200)
+    $0.textAlignment = .Center
+    $0.autoresizingMask = [.FlexibleWidth]
+  }
 
-  lazy var imageView: UIImageView = {
-    let imageView = UIImageView()
-    imageView.contentMode = .ScaleAspectFill
-    imageView.autoresizingMask = [.FlexibleWidth]
-    return imageView
-    }()
+  lazy var imageView = UIImageView().then {
+    $0.contentMode = .ScaleAspectFill
+    $0.autoresizingMask = [.FlexibleWidth]
+  }
 
   override init(frame: CGRect) {
     super.init(frame: frame)

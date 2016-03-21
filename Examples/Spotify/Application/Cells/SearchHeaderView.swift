@@ -5,45 +5,33 @@ public class SearchHeaderView: UIView, Componentable {
 
   public var height: CGFloat = 88
 
-  lazy var label: UILabel = { [unowned self] in
-    let label = UILabel(frame: self.frame)
-    label.font = UIFont.boldSystemFontOfSize(11)
-    label.textColor = UIColor.lightGrayColor()
+  lazy var label: UILabel = UILabel(frame: self.frame).then {
+    $0.font = UIFont.boldSystemFontOfSize(11)
+    $0.textColor = UIColor.lightGrayColor()
+  }
 
-    return label
-    }()
+  lazy var backgroundView: UIView = UIView(frame: self.frame).then {
+    $0.backgroundColor = UIColor.darkGrayColor().alpha(0.5)
+    $0.frame.size.height = 44
+    $0.frame.origin.y = 44
+  }
 
-  lazy var backgroundView: UIView = {
-    let view = UITextField(frame: self.frame)
-    view.backgroundColor = UIColor.darkGrayColor().alpha(0.5)
-    view.frame.size.height = 44
-    view.frame.origin.y = 44
+  public lazy var searchField: UITextField = UITextField(frame: self.frame).then { [unowned self] in
+    $0.frame.size.width -= 30
+    $0.frame.size.height = 44
+    $0.frame.origin.y = 44
+    $0.frame.origin.x = 15
+    $0.font = UIFont.systemFontOfSize(18)
+    $0.textColor = UIColor.lightGrayColor()
+    $0.keyboardAppearance = .Dark
+  }
 
-    return view
-    }()
-
-  public lazy var searchField: UITextField = { [unowned self] in
-    let searchField = UITextField(frame: self.frame)
-    searchField.frame.size.width -= 30
-    searchField.frame.size.height = 44
-    searchField.frame.origin.y = 44
-    searchField.frame.origin.x = 15
-    searchField.font = UIFont.systemFontOfSize(18)
-    searchField.textColor = UIColor.lightGrayColor()
-    searchField.keyboardAppearance = .Dark
-
-    return searchField
-    }()
-
-  lazy var paddedStyle: NSParagraphStyle = {
-    let style = NSMutableParagraphStyle()
-    style.alignment = .Left
-    style.firstLineHeadIndent = 15.0
-    style.headIndent = 15.0
-    style.tailIndent = -15.0
-
-    return style
-    }()
+  lazy var paddedStyle = NSMutableParagraphStyle().then {
+    $0.alignment = .Left
+    $0.firstLineHeadIndent = 15.0
+    $0.headIndent = 15.0
+    $0.tailIndent = -15.0
+  }
 
   public override init(frame: CGRect) {
     super.init(frame: frame)

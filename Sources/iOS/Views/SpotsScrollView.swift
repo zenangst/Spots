@@ -51,18 +51,21 @@ public class SpotsScrollView: UIScrollView {
 
     subviewsInLayoutOrder.append(subview)
 
-    if let scrollView = subview as? UIScrollView where scrollView.superview == contentView {
-      scrollView.scrollsToTop = false
-      scrollView.scrollEnabled = false
-
-      if let collectionView = scrollView as? UICollectionView,
-        layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
-        where layout.scrollDirection == .Horizontal  {
-          scrollView.scrollEnabled = true
-      }
-
-      scrollView.addObserver(self, forKeyPath: "contentSize", options: .Old, context: KVOContext)
+    guard let scrollView = subview as? UIScrollView where scrollView.superview == contentView else {
+      setNeedsLayout()
+      return
     }
+
+    scrollView.scrollsToTop = false
+    scrollView.scrollEnabled = false
+
+    if let collectionView = scrollView as? UICollectionView,
+      layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
+      where layout.scrollDirection == .Horizontal  {
+        scrollView.scrollEnabled = true
+    }
+
+    scrollView.addObserver(self, forKeyPath: "contentSize", options: .Old, context: KVOContext)
 
     setNeedsLayout()
   }
@@ -75,6 +78,7 @@ public class SpotsScrollView: UIScrollView {
     if let index = subviewsInLayoutOrder.indexOf({ $0 == subview }) {
       subviewsInLayoutOrder.removeAtIndex(index)
     }
+
     setNeedsLayout()
   }
 
@@ -82,16 +86,14 @@ public class SpotsScrollView: UIScrollView {
     if let change = change where context == KVOContext {
       if let scrollView = object as? UIScrollView,
         oldContentSize = change[NSKeyValueChangeOldKey]?.CGSizeValue() {
-          if scrollView.contentSize != oldContentSize {
-            setNeedsLayout()
-            layoutIfNeeded()
-          }
+          guard scrollView.contentSize != oldContentSize else { return }
+          setNeedsLayout()
+          layoutIfNeeded()
       } else if let view = object as? UIView,
         oldContentSize = change[NSKeyValueChangeOldKey]?.CGRectValue {
-          if view.frame != oldContentSize {
-            setNeedsLayout()
-            layoutIfNeeded()
-          }
+          guard view.frame != oldContentSize else { return }
+          setNeedsLayout()
+          layoutIfNeeded()
       }
     } else {
       super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)
@@ -153,13 +155,10 @@ public class SpotsScrollView: UIScrollView {
       self.frame.size.height = superview.frame.size.height
     }
 
-    if initialContentOffset != contentOffset {
-      setNeedsLayout()
-      layoutIfNeeded()
-    } else if forceUpdate {
-      forceUpdate = false
-      setNeedsLayout()
-      layoutIfNeeded()
-    }
+    guard forceUpdate || initialContentOffset != contentOffset else { return }
+
+    if forceUpdate == true { forceUpdate = false }
+    setNeedsLayout()
+    layoutIfNeeded()
   }
 }
