@@ -21,14 +21,14 @@ class JSONController: UIViewController {
 
   lazy var submitButton: UIButton = { [unowned self] in
     let button = UIButton()
-    button.addTarget(self, action: #selector(JSONController.submitButtonDidPress(_:)), forControlEvents: .TouchUpInside)
+    button.addTarget(self, action: #selector(submitButtonDidPress(_:)), forControlEvents: .TouchUpInside)
     button.setTitle("Build", forState: .Normal)
 
     return button
     }()
 
   lazy var tapGesture: UITapGestureRecognizer = { [weak self] in
-    let tapGesture = UITapGestureRecognizer(target: self, action: #selector(JSONController.backgroundTapped(_:)))
+    let tapGesture = UITapGestureRecognizer(target: self, action: #selector(backgroundTapped(_:)))
     return tapGesture
   }()
 

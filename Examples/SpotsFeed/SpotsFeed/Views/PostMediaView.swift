@@ -48,7 +48,7 @@ public class PostMediaView: UIView {
 
     [firstTapGestureRecognizer, secondTapGestureRecognizer,
       thirdTapGestureRecognizer, fourthTapGestureRecognizer].forEach {
-        $0.addTarget(self, action: #selector(PostMediaView.handleGestureRecognizer(_:)))
+        $0.addTarget(self, action: #selector(handleGestureRecognizer(_:)))
     }
     firstImageView.addGestureRecognizer(firstTapGestureRecognizer)
     secondImageView.addGestureRecognizer(secondTapGestureRecognizer)
