@@ -44,14 +44,14 @@ public class PostAuthorView: UIView {
 
   public lazy var tapAuthorGestureRecognizer: UITapGestureRecognizer = { [unowned self] in
     let gesture = UITapGestureRecognizer()
-    gesture.addTarget(self, action: "handleTapGestureRecognizer")
+    gesture.addTarget(self, action: #selector(PostAuthorView.handleTapGestureRecognizer))
 
     return gesture
     }()
 
   public lazy var tapLabelGestureRecognizer: UITapGestureRecognizer = { [unowned self] in
     let gesture = UITapGestureRecognizer()
-    gesture.addTarget(self, action: "handleTapGestureRecognizer")
+    gesture.addTarget(self, action: #selector(PostAuthorView.handleTapGestureRecognizer))
 
     return gesture
     }()

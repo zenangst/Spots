@@ -1,38 +1,34 @@
 import UIKit
 import Spots
+import Sugar
 
 class JSONController: UIViewController {
 
-  lazy var scrollView: UIScrollView = UIScrollView()
+  lazy var scrollView = UIScrollView()
 
-  lazy var titleLabel: UILabel = {
-    let label = UILabel()
+  lazy var titleLabel = UILabel().then { label in
     label.text = "JSON"
     label.font = UIFont(name: "HelveticaNeue-Medium", size: 20)!
     label.textColor = UIColor(red:0.86, green:0.86, blue:0.86, alpha:1)
     label.textAlignment = .Center
     label.numberOfLines = 0
     label.sizeToFit()
+  }
 
-    return label
-    }()
-
-  lazy var textView: UITextView = {
-    let textView = UITextView()
-    textView.font = UIFont(name: "Menlo", size: 13)
-    return textView
-  }()
+  lazy var textView = UITextView().then {
+    $0.font = UIFont(name: "Menlo", size: 13)
+  }
 
   lazy var submitButton: UIButton = { [unowned self] in
     let button = UIButton()
-    button.addTarget(self, action: "submitButtonDidPress:", forControlEvents: .TouchUpInside)
+    button.addTarget(self, action: #selector(JSONController.submitButtonDidPress(_:)), forControlEvents: .TouchUpInside)
     button.setTitle("Build", forState: .Normal)
 
     return button
     }()
 
   lazy var tapGesture: UITapGestureRecognizer = { [weak self] in
-    let tapGesture = UITapGestureRecognizer(target: self, action: "backgroundTapped:")
+    let tapGesture = UITapGestureRecognizer(target: self, action: #selector(JSONController.backgroundTapped(_:)))
     return tapGesture
   }()
 
@@ -44,9 +40,7 @@ class JSONController: UIViewController {
 
     navigationItem.backBarButtonItem = UIBarButtonItem(title: nil, style: .Plain, target: nil, action: nil)
 
-    [titleLabel, textView, submitButton].forEach {
-      view.addSubview($0)
-    }
+    [titleLabel, textView, submitButton].forEach { view.addSubview($0) }
 
     submitButton.setTitleColor(UIColor.grayColor(), forState: .Normal)
     submitButton.layer.borderColor = UIColor.grayColor().CGColor

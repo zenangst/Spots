@@ -14,7 +14,7 @@ public class WallTableViewCell: UITableViewCell {
 
   public lazy var tapGestureRecognizer: UITapGestureRecognizer = { [unowned self] in
     let gesture = UITapGestureRecognizer()
-    gesture.addTarget(self, action: "handleTapGestureRecognizer")
+    gesture.addTarget(self, action: #selector(PostAuthorView.handleTapGestureRecognizer))
 
     return gesture
     }()
