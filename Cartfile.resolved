@@ -1,8 +1,6 @@
-github "hyperoslo/Cache" "5af9d7f80b5c39ec578c54874d5acda248d10831"
 github "Quick/Nimble" "v3.2.0"
 github "Quick/Quick" "v0.9.1"
 github "hyperoslo/Sugar" "1.0.10"
 github "SwiftyJSON/SwiftyJSON" "2.3.3"
 github "vadymmarkov/Fakery" "1.1.2"
-github "hyperoslo/Imaginary" "243448a070decf6d8fcdc503b14505a2951af680"
 github "zenangst/Tailor" "0.4.5"

@@ -1,5 +1,4 @@
 import UIKit
-import Imaginary
 import Sugar
 
 class CarouselSpotCell: UICollectionViewCell, ViewConfigurable {
@@ -28,10 +27,7 @@ class CarouselSpotCell: UICollectionViewCell, ViewConfigurable {
   }
 
   func configure(inout item: ViewModel) {
-    if !item.image.isEmpty {
-      imageView.setImage(NSURL(string: item.image))
-    }
-
+    imageView.image = UIImage(named: item.image)
     imageView.frame = contentView.frame
     label.text = item.title
   }

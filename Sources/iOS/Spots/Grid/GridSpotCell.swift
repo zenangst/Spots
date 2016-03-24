@@ -1,5 +1,4 @@
 import UIKit
-import Imaginary
 import Sugar
 
 class GridSpotCell: UICollectionViewCell, ViewConfigurable {
@@ -29,11 +28,7 @@ class GridSpotCell: UICollectionViewCell, ViewConfigurable {
   }
 
   func configure(inout item: ViewModel) {
-    if item.image != "" {
-      let URL = NSURL(string: item.image)
-      imageView.setImage(URL)
-    }
-
+    imageView.image = UIImage(named: item.image)
     imageView.frame = contentView.frame
     label.text = item.title
   }
