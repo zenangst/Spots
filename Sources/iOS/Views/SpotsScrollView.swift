@@ -3,7 +3,7 @@ import QuartzCore
 
 public class SpotsScrollView: UIScrollView {
 
-  let KVOContext = UnsafeMutablePointer<()>()
+  let KVOContext = UnsafeMutablePointer<()>(nil)
 
   private var subviewsInLayoutOrder = [UIView?]()
   public var configured = false
