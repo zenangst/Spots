@@ -18,5 +18,4 @@ Pod::Spec.new do |s|
   s.frameworks = 'Foundation'
   s.dependency 'Sugar'
   s.dependency 'Tailor'
-  s.dependency 'Imaginary'
 end

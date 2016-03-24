@@ -46,9 +46,7 @@
 		D58478E71C440645006EBA49 /* TestComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D584782B1C43FF34006EBA49 /* TestComponent.swift */; };
 		D58478E81C440645006EBA49 /* TestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D584782C1C43FF34006EBA49 /* TestViewModel.swift */; };
 		D58478ED1C440726006EBA49 /* Tailor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478E91C440726006EBA49 /* Tailor.framework */; };
-		D58478EE1C440726006EBA49 /* Imaginary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478EA1C440726006EBA49 /* Imaginary.framework */; };
 		D58478EF1C440726006EBA49 /* Sugar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478EB1C440726006EBA49 /* Sugar.framework */; };
-		D58478F01C440726006EBA49 /* Cache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478EC1C440726006EBA49 /* Cache.framework */; };
 		D58478F21C44074C006EBA49 /* Sugar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478EB1C440726006EBA49 /* Sugar.framework */; };
 		D58478F51C44074C006EBA49 /* Fakery.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478F31C44074C006EBA49 /* Fakery.framework */; };
 		D58478F61C44074C006EBA49 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478F41C44074C006EBA49 /* SwiftyJSON.framework */; };
@@ -134,9 +132,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D58478ED1C440726006EBA49 /* Tailor.framework in Frameworks */,
-				D58478EE1C440726006EBA49 /* Imaginary.framework in Frameworks */,
 				D58478EF1C440726006EBA49 /* Sugar.framework in Frameworks */,
-				D58478F01C440726006EBA49 /* Cache.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -576,9 +572,7 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/Tailor.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Imaginary.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Sugar.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Cache.framework",
 			);
 			outputPaths = (
 			);

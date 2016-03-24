@@ -1,5 +1,5 @@
 import UIKit
-import Imaginary
+import Sugar
 
 public class ListSpotCell: UITableViewCell, ViewConfigurable {
 
@@ -23,14 +23,7 @@ public class ListSpotCell: UITableViewCell, ViewConfigurable {
 
     detailTextLabel?.text = item.subtitle
     textLabel?.text = item.title
-
-    if !item.image.isEmpty {
-      if let url = NSURL(string: item.image) {
-        imageView?.setImage(url, placeholder: UIImage(named: "ImagePlaceholder"))
-      } else {
-        imageView?.image = UIImage(named: item.image)
-      }
-    }
+    imageView?.image = UIImage(named: item.image)
 
     item.size.height = item.size.height > 0.0 ? item.size.height : size.height
   }
