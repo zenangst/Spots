@@ -37,7 +37,7 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
 
   public lazy var refreshControl: UIRefreshControl = { [unowned self] in
     let refreshControl = UIRefreshControl()
-    refreshControl.addTarget(self, action: #selector(SpotsController.refreshSpots(_:)), forControlEvents: .ValueChanged)
+    refreshControl.addTarget(self, action: #selector(refreshSpots(_:)), forControlEvents: .ValueChanged)
 
     return refreshControl
   }()

@@ -86,14 +86,14 @@ public class CommentTableViewCell: WallTableViewCell, ViewConfigurable {
 
   public lazy var imageTapGestureRecognizer: UITapGestureRecognizer = {
     let gesture = UITapGestureRecognizer()
-    gesture.addTarget(self, action: #selector(CommentTableViewCell.handleAuthorGestureRecognizer))
+    gesture.addTarget(self, action: #selector(handleAuthorGestureRecognizer))
 
     return gesture
     }()
 
   public lazy var authorTapGestureRecognizer: UITapGestureRecognizer = {
     let gesture = UITapGestureRecognizer()
-    gesture.addTarget(self, action: #selector(CommentTableViewCell.handleAuthorGestureRecognizer))
+    gesture.addTarget(self, action: #selector(handleAuthorGestureRecognizer))
 
     return gesture
     }()

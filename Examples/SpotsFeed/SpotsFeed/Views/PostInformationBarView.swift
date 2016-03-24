@@ -19,7 +19,7 @@ public class PostInformationBarView: UIView {
     let button = UIButton()
     button.titleLabel?.font = FontList.Information.like
     button.setTitleColor(ColorList.Information.like, forState: .Normal)
-    button.addTarget(self, action: #selector(PostInformationBarView.likesButtonDidPress), forControlEvents: .TouchUpInside)
+    button.addTarget(self, action: #selector(likesButtonDidPress), forControlEvents: .TouchUpInside)
 
     return button
     }()
@@ -28,7 +28,7 @@ public class PostInformationBarView: UIView {
     let button = UIButton()
     button.titleLabel?.font = FontList.Information.comment
     button.setTitleColor(ColorList.Information.comment, forState: .Normal)
-    button.addTarget(self, action: #selector(PostInformationBarView.commentButtonDidPress), forControlEvents: .TouchUpInside)
+    button.addTarget(self, action: #selector(commentButtonDidPress), forControlEvents: .TouchUpInside)
 
     return button
     }()
@@ -37,7 +37,7 @@ public class PostInformationBarView: UIView {
     let button = UIButton()
     button.titleLabel?.font = FontList.Information.comment
     button.setTitleColor(ColorList.Information.seen, forState: .Normal)
-    button.addTarget(self, action: #selector(PostInformationBarView.seenButtonDidPress), forControlEvents: .TouchUpInside)
+    button.addTarget(self, action: #selector(seenButtonDidPress), forControlEvents: .TouchUpInside)
 
     return button
     }()
