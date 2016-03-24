@@ -131,7 +131,7 @@ extension SpotsController {
     dispatch { [weak self] in
       self?.spots.forEach { spot in
         spot.reload([]) {
-          spotsLeft--
+          spotsLeft -= 1
 
           if spotsLeft == 0 {
             completion?()
