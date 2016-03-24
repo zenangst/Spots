@@ -2,6 +2,7 @@
 
 import UIKit
 import Spots
+import XCPlayground
 
 let myContacts = Component(title: "My contacts", items: [
   ViewModel(title: "John Hyperseed", subtitle: "Build server"),
@@ -11,4 +12,5 @@ let myContacts = Component(title: "My contacts", items: [
   ViewModel(title: "Christoffer Winterkvist", subtitle: "iOS Developer")
   ])
 let controller = SpotsController(spot: ListSpot(component: myContacts))
-controller.view
+
+XCPlaygroundPage.currentPage.liveView = controller.view
