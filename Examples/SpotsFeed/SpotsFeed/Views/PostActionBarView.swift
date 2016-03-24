@@ -25,7 +25,7 @@ public class PostActionBarView: UIView {
     let button = UIButton(type: .Custom)
     button.setTitle(NSLocalizedString("Like", comment: ""), forState: .Normal)
     button.titleLabel?.font = FontList.Action.like
-    button.addTarget(self, action: "likeButtonDidPress", forControlEvents: .TouchUpInside)
+    button.addTarget(self, action: #selector(PostActionBarView.likeButtonDidPress), forControlEvents: .TouchUpInside)
     button.subviews.first?.opaque = true
     button.subviews.first?.backgroundColor = UIColor.whiteColor()
 
@@ -36,7 +36,7 @@ public class PostActionBarView: UIView {
     let button = UIButton(type: .Custom)
     button.setTitle(NSLocalizedString("Comment", comment: ""), forState: .Normal)
     button.titleLabel?.font = FontList.Action.comment
-    button.addTarget(self, action: "commentButtonDidPress", forControlEvents: .TouchUpInside)
+    button.addTarget(self, action: #selector(PostInformationBarView.commentButtonDidPress), forControlEvents: .TouchUpInside)
     button.setTitleColor(ColorList.Action.comment, forState: .Normal)
     button.subviews.first?.opaque = true
     button.subviews.first?.backgroundColor = UIColor.whiteColor()

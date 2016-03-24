@@ -26,7 +26,7 @@ class JSONController: UIViewController {
 
   lazy var submitButton: UIButton = { [unowned self] in
     let button = UIButton()
-    button.addTarget(self, action: "submitButtonDidPress:", forControlEvents: .TouchUpInside)
+    button.addTarget(self, action: #selector(JSONController.submitButtonDidPress(_:)), forControlEvents: .TouchUpInside)
     button.setTitle("Build", forState: .Normal)
 
     return button

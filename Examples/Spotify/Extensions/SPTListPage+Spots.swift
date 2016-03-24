@@ -26,7 +26,7 @@ extension SPTListPage {
             kind: "playlist",
             action: "play:\(playlistID):\(index + offset)",
             meta: [
-              "notification" : "\(item.name) by \(artist.name)",
+              "notification" : item.name + " by " + artist.name,
               "track" : item.name,
               "artist" : artist.name,
               "image" : largeImage

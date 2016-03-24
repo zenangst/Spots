@@ -12,8 +12,8 @@ class PlayerController: SpotsController {
   var lastItem: ViewModel?
   var currentURIs = [NSURL]()
 
-  lazy var panRecognizer: UIPanGestureRecognizer = UIPanGestureRecognizer(target: self, action: "handlePanGesture:")
-  lazy var tapRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "handleTapGesture:")
+  lazy var panRecognizer: UIPanGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(PlayerController.handlePanGesture(_:)))
+  lazy var tapRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(PlayerController.handleTapGesture(_:)))
 
   lazy var currentAlbum = UIImageView()
 
@@ -42,7 +42,7 @@ class PlayerController: SpotsController {
 
     view.addGestureRecognizer(panRecognizer)
 
-    NSNotificationCenter.defaultCenter().addObserver(self, selector: "updatePlayer:", name: "updatePlayer", object: nil)
+    NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(PlayerController.updatePlayer(_:)), name: "updatePlayer", object: nil)
 
     currentAlbum.addObserver(self, forKeyPath: "image", options: [.New, .Old], context: nil)
   }

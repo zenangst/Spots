@@ -98,7 +98,7 @@ class ForYouController: SpotsController, SpotsDelegate {
     let navigationController = UINavigationController(rootViewController: controller)
     navigationController.transitioningDelegate = transition
     navigationController.modalPresentationStyle = .Custom
-    navigationController.navigationBar.topItem?.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .Done, target: controller, action: "detailDidDismiss:")
+    navigationController.navigationBar.topItem?.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .Done, target: controller, action: #selector(ForYouDetailController.detailDidDismiss(_:)))
 
     self.navigationController?.presentViewController(navigationController, animated: true, completion: nil)
 
