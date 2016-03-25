@@ -28,16 +28,16 @@ class ForYouController: SpotsController, SpotsDelegate {
           weakSelf.featuredImage.image = imageView.image
           weakSelf.featuredImage.frame = cell.convertRect(weakSelf.view.bounds, toView: weakSelf.view)
           weakSelf.featuredImage.frame.size = CGSize(width: 100, height: 100)
-          weakSelf.featuredImage.frame.origin.x = cell.frame.width - weakSelf.featuredImage.frame.width - 15
-          weakSelf.featuredImage.frame.origin.y += 15
+          weakSelf.featuredImage.x = cell.frame.width - weakSelf.featuredImage.frame.width - 15
+          weakSelf.featuredImage.y += 15
         }
 
         if let featuredCell = cell as? FeaturedFeedItemCell {
           weakSelf.featuredImage.image = featuredCell.featuredImage.image
           weakSelf.featuredImage.frame = cell.convertRect(weakSelf.view.bounds, toView: weakSelf.view)
           weakSelf.featuredImage.frame.size = CGSize(width: cell.frame.width - 30, height: 200)
-          weakSelf.featuredImage.frame.origin.x = 15
-          weakSelf.featuredImage.frame.origin.y += 15
+          weakSelf.featuredImage.x = 15
+          weakSelf.featuredImage.y += 15
         }
 
         cell.accessoryView?.alpha = 0.0

@@ -3,7 +3,7 @@ import Spots
 
 public class ListHeaderView: UIView, Componentable {
 
-  public var height: CGFloat = 44
+  public var defaultHeight: CGFloat = 44
 
   lazy var label: UILabel = UILabel().then { [unowned self] in
     $0.frame = self.frame

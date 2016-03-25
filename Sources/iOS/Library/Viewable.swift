@@ -44,7 +44,7 @@ public extension Spotable where Self : Viewable {
 
     component.items.enumerate().forEach {
       component.items[$0.index].size.width = size.width
-      scrollView.subviews[$0.index].frame.size.width = size.width
+      scrollView.subviews[$0.index].width = size.width
     }
   }
 

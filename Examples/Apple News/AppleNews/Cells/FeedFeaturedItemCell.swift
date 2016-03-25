@@ -22,7 +22,7 @@ public class FeaturedFeedItemCell: UITableViewCell, ViewConfigurable {
   }
 
   lazy var separatorView = UIView().then {
-    $0.frame.size.height = 1
+    $0.height = 1
   }
 
   override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -44,22 +44,22 @@ public class FeaturedFeedItemCell: UITableViewCell, ViewConfigurable {
       featuredImage.setImage(NSURL(string: item.image))
     }
 
-    featuredImage.frame.size.width = contentView.frame.width - 30
-    featuredImage.frame.size.height = 200
-    featuredImage.frame.origin.y = 15
-    featuredImage.frame.origin.x = 15
+    featuredImage.width = contentView.frame.width - 30
+    featuredImage.height = 200
+    featuredImage.y = 15
+    featuredImage.x = 15
 
     titleLabel.text = item.title
-    titleLabel.frame.size.width = contentView.frame.width - 30
+    titleLabel.width = contentView.frame.width - 30
     titleLabel.sizeToFit()
-    titleLabel.frame.origin.x = 15
-    titleLabel.frame.origin.y = featuredImage.frame.maxY + 15
+    titleLabel.x = 15
+    titleLabel.y = featuredImage.frame.maxY + 15
 
     introLabel.text = item.subtitle
-    introLabel.frame.size.width = contentView.frame.width - 30
+    introLabel.width = contentView.frame.width - 30
     introLabel.sizeToFit()
-    introLabel.frame.origin.x = 15
-    introLabel.frame.origin.y = titleLabel.frame.maxY + 15
+    introLabel.x = 15
+    introLabel.y = titleLabel.frame.maxY + 15
 
     item.size.height = introLabel.frame.maxY + 15
   }

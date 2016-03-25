@@ -3,7 +3,7 @@ import Spots
 
 public class SearchHeaderView: UIView, Componentable {
 
-  public var height: CGFloat = 88
+  public var defaultHeight: CGFloat = 88
 
   lazy var label: UILabel = { [unowned self] in
     let label = UILabel(frame: self.frame)
@@ -15,18 +15,18 @@ public class SearchHeaderView: UIView, Componentable {
   lazy var backgroundView: UIView = {
     let view = UITextField(frame: self.frame)
     view.backgroundColor = UIColor(red:0.961, green:0.961, blue:0.961, alpha: 1)
-    view.frame.size.height = 44
-    view.frame.origin.y = 44
+    view.height = 44
+    view.y = 44
 
     return view
     }()
 
   public lazy var searchField: UITextField = { [unowned self] in
     let searchField = UITextField(frame: self.frame)
-    searchField.frame.size.width -= 30
-    searchField.frame.size.height = 44
-    searchField.frame.origin.y = 44
-    searchField.frame.origin.x = 15
+    searchField.width -= 30
+    searchField.height = 44
+    searchField.y = 44
+    searchField.x = 15
     searchField.font = UIFont.systemFontOfSize(18)
 
     return searchField

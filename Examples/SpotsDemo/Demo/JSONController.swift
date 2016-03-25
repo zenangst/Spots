@@ -98,11 +98,11 @@ class JSONController: UIViewController {
 
 
     if [.Portrait, .PortraitUpsideDown].contains(UIApplication.sharedApplication().statusBarOrientation) {
-      titleLabel.frame.origin = CGPoint(x: (totalSize.width - titleLabel.frame.width) / 2, y: 90)
+      titleLabel.frame.origin = CGPoint(x: (totalSize.width - titleLabel.width) / 2, y: 90)
       textView.frame = CGRect(x: 25, y: titleLabel.frame.maxY + 25, width: totalSize.width - 25 * 2, height: 350)
       submitButton.frame = CGRect(x: 50, y: textView.frame.maxY + 50, width: totalSize.width - 100, height: 50)
     } else {
-      titleLabel.frame.origin = CGPoint(x: (totalSize.width - titleLabel.frame.width) / 2, y: 50)
+      titleLabel.frame.origin = CGPoint(x: (totalSize.width - titleLabel.width) / 2, y: 50)
       textView.frame = CGRect(x: 25, y: titleLabel.frame.maxY + 25, width: totalSize.width - 25 * 2, height: 150)
       submitButton.frame = CGRect(x: 50, y: textView.frame.maxY + 50, width: totalSize.width - 100, height: 50)
     }

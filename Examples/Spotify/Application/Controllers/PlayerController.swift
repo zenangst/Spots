@@ -136,9 +136,9 @@ class PlayerController: SpotsController {
     let minimumY: CGFloat = -60
     let maximumY: CGFloat = UIScreen.mainScreen().bounds.height - offset
 
-    if view.frame.origin.y == maximumY {
+    if view.y == maximumY {
       UIView.animateWithDuration(0.2, delay: 0, options: [.AllowUserInteraction], animations: {
-        self.view.frame.origin.y = minimumY
+        self.view.y = minimumY
         UIApplication.sharedApplication().statusBarHidden = true
         }, completion: nil)
     }
@@ -152,14 +152,14 @@ class PlayerController: SpotsController {
 
     switch gesture.state {
     case .Began:
-      initialOrigin = view.frame.origin.y
+      initialOrigin = view.y
     case .Changed:
       if initialOrigin + translation.y < minimumY {
-        view.frame.origin.y = minimumY
-      } else if view.frame.origin.y > maximumY {
-        view.frame.origin.y = maximumY
-      } else if view.frame.origin.y <= maximumY {
-        view.frame.origin.y = initialOrigin + translation.y
+        view.y = minimumY
+      } else if view.y > maximumY {
+        view.y = maximumY
+      } else if view.y <= maximumY {
+        view.y = initialOrigin + translation.y
       }
     case .Ended, .Cancelled:
       let endY = velocity.y <= 0 ? minimumY : maximumY
@@ -169,7 +169,7 @@ class PlayerController: SpotsController {
       }
 
       UIView.animateWithDuration(NSTimeInterval(time), delay: 0, options: [.AllowUserInteraction], animations: {
-        self.view.frame.origin.y = endY
+        self.view.y = endY
         UIApplication.sharedApplication().statusBarHidden = endY == minimumY
         }, completion: { _ in })
 
@@ -179,14 +179,14 @@ class PlayerController: SpotsController {
 
   func openPlayer() {
     UIView.animateWithDuration(0.3) {
-      self.view.frame.origin.y = -60
+      self.view.y = -60
     }
   }
 
   func showPlayer() {
-    if view.frame.origin.y == UIScreen.mainScreen().bounds.height {
+    if view.y == UIScreen.mainScreen().bounds.height {
       UIView.animateWithDuration(0.3) {
-        self.view.frame.origin.y -= self.offset
+        self.view.y -= self.offset
       }
 
       if let lastItem = lastItem where !lastItem.image.isEmpty {
@@ -197,7 +197,7 @@ class PlayerController: SpotsController {
 
   func hidePlayer() {
     UIView.animateWithDuration(0.3) {
-      self.view.frame.origin.y = UIScreen.mainScreen().bounds.height
+      self.view.y = UIScreen.mainScreen().bounds.height
     }
   }
 }

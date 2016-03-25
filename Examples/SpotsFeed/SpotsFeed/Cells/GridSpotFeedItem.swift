@@ -82,7 +82,7 @@ class GridSpotFeedItem : UICollectionViewCell, ViewConfigurable {
       attributes: [NSParagraphStyleAttributeName : paddedStyle])
 
     layoutSubviews()
-    item.size.height = subtitleLabel.frame.origin.y + subtitleLabel.frame.height + 20
+    item.size.height = subtitleLabel.y + subtitleLabel.frame.height + 20
 
     canvasView.frame = CGRect(x: 10, y: 10,
       width: contentView.frame.width - 20,
@@ -94,15 +94,15 @@ class GridSpotFeedItem : UICollectionViewCell, ViewConfigurable {
   override func layoutSubviews() {
     super.layoutSubviews()
 
-    imageView.frame.size.height = 320
+    imageView.height = 320
 
     [titleLabel, subtitleLabel].forEach {
       $0.sizeToFit()
-      $0.frame.size.width = contentView.frame.width
+      $0.width = contentView.frame.width
     }
 
-    titleLabel.frame.origin.y = 340
+    titleLabel.y = 340
 
-    subtitleLabel.frame.origin.y = titleLabel.frame.size.height + titleLabel.frame.origin.y
+    subtitleLabel.y = titleLabel.height + titleLabel.y
   }
 }

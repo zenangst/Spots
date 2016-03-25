@@ -8,7 +8,7 @@ PODS:
   - Spots (1.0.0):
     - Sugar
     - Tailor
-  - Sugar (1.0.11)
+  - Sugar (1.0.12)
   - Tailor (0.4.5):
     - Sugar
 
@@ -51,7 +51,7 @@ SPEC CHECKSUMS:
   Hue: ed6781be844b58b2a38150cfd4bf24c33449faf8
   Imaginary: feaea646440c68a9b6ed66a46597d548b9a44207
   Spots: fb26399117edb88894a111886fb2766c29f6daa0
-  Sugar: 8f7d1b999d5a8c29cf9eff6d6f4b7037c4c99d29
+  Sugar: 7280dfee5299f98cbae23d86c800cccd86377117
   Tailor: d1d5bce9d81e953c3d7b3f3fd6d084337feeb7a5
 
 COCOAPODS: 0.39.0

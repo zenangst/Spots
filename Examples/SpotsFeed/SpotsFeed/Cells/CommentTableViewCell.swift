@@ -149,7 +149,7 @@ public class CommentTableViewCell: WallTableViewCell, ViewConfigurable {
     authorLabel.text = post.author!.name
 
     textView.text = post.text
-    textView.frame.size.width = totalWidth - Dimensions.textOffset - Dimensions.sideOffset
+    textView.width = totalWidth - Dimensions.textOffset - Dimensions.sideOffset
     textView.sizeToFit()
     textView.frame = CGRect(x: Dimensions.textOffset, y: 36,
       width: textView.frame.width, height: textView.frame.height)

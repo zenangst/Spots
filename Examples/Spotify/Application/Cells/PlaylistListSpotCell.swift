@@ -53,12 +53,12 @@ public class PlaylistListSpotCell: UITableViewCell, ViewConfigurable {
   public override func layoutSubviews() {
     super.layoutSubviews()
 
-    imageView?.frame.origin.y = 6
+    imageView?.y = 6
     imageView?.frame.size = CGSize(width: 48, height: 48)
 
     if imageView?.image != nil {
-      textLabel?.frame.origin.x = 68
-      detailTextLabel?.frame.origin.x = 68
+      textLabel?.x = 68
+      detailTextLabel?.x = 68
     }
   }
 }

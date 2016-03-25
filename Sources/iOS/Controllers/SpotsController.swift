@@ -74,8 +74,8 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
       spot.prepare()
       spot.setup(spotsScrollView.frame.size)
       spot.component.size = CGSize(
-        width: view.frame.width,
-        height: ceil(spot.render().frame.height))
+        width: view.width,
+        height: ceil(spot.render().height))
     }
 
     SpotsController.configure?(container: spotsScrollView)
@@ -88,7 +88,7 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
 
     if let tabBarController = self.tabBarController
       where tabBarController.tabBar.translucent {
-        spotsScrollView.contentInset.bottom = tabBarController.tabBar.frame.height
+        spotsScrollView.contentInset.bottom = tabBarController.tabBar.height
         spotsScrollView.scrollIndicatorInsets.bottom = spotsScrollView.contentInset.bottom
     }
 
@@ -235,14 +235,14 @@ extension SpotsController {
   public func scrollTo(spotIndex index: Int = 0, @noescape includeElement: (ViewModel) -> Bool) {
     guard let itemY = spot(index, Spotable.self)?.scrollTo(includeElement) else { return }
 
-    if spot(index, Spotable.self)?.spotHeight() > spotsScrollView.frame.height - spotsScrollView.contentInset.bottom {
-      let y = itemY - spotsScrollView.frame.height + spotsScrollView.contentInset.bottom
+    if spot(index, Spotable.self)?.spotHeight() > spotsScrollView.height - spotsScrollView.contentInset.bottom {
+      let y = itemY - spotsScrollView.height + spotsScrollView.contentInset.bottom
       spotsScrollView.setContentOffset(CGPoint(x: CGFloat(0.0), y: y), animated: true)
     }
   }
 
   public func scrollToBottom(animated: Bool) {
-    let y = spotsScrollView.contentSize.height - spotsScrollView.frame.height + spotsScrollView.contentInset.bottom
+    let y = spotsScrollView.contentSize.height - spotsScrollView.height + spotsScrollView.contentInset.bottom
     spotsScrollView.setContentOffset(CGPoint(x: 0, y: y), animated: animated)
   }
 }

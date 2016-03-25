@@ -73,7 +73,7 @@ public class PlayerListSpotCell: UITableViewCell, ViewConfigurable {
     textLabel?.frame.size = frame.size
     detailTextLabel?.frame.size = frame.size
 
-    textLabel?.frame.origin.y = -10
-    detailTextLabel?.frame.origin.y = 10
+    textLabel?.y = -10
+    detailTextLabel?.y = 10
   }
 }

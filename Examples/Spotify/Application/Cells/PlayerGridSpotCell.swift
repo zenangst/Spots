@@ -32,18 +32,18 @@ public class PlayerGridSpotCell: UICollectionViewCell, ViewConfigurable {
 
     if !item.image.isEmpty {
       imageView.frame.size = CGSize(width: 32, height: 32)
-      imageView.frame.origin.x = (frame.size.width - imageView.frame.width) / 2
-      imageView.frame.origin.y = (frame.size.height - imageView.frame.height) / 2
+      imageView.x = (width - imageView.frame.width) / 2
+      imageView.y = (height - imageView.frame.height) / 2
       imageView.image = UIImage(named: item.image)?.imageWithRenderingMode(.AlwaysTemplate)
-      textLabel.frame.origin.y = imageView.frame.origin.y + 20
+      textLabel.y = imageView.y + 20
     }
 
     imageView.tintColor = item.meta("tintColor", UIColor.whiteColor())
     textLabel.textColor = item.meta("textColor", UIColor.whiteColor())
 
     textLabel.text = item.title
-    textLabel.frame.size.width = frame.size.width
-    textLabel.frame.size.height = 48
+    textLabel.width = width
+    textLabel.height = 48
 
     item.size = size
   }

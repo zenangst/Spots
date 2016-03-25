@@ -34,9 +34,9 @@
 		5DD957703EEEF6B20D588D95 /* Pods_AppleNews.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppleNews.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		709B0E5595FD3FE04624719A /* Pods-AppleNews.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppleNews.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AppleNews/Pods-AppleNews.debug.xcconfig"; sourceTree = "<group>"; };
 		BD0054341C7A3DB1001AD90A /* ForYouDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForYouDetailController.swift; sourceTree = "<group>"; };
-		BD0054361C7A43C7001AD90A /* FeedDetailItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedDetailItem.swift; sourceTree = "<group>"; };
-		BD037EBE1C0B89A7004BDA21 /* SearchHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchHeaderView.swift; sourceTree = "<group>"; };
-		BD0500D21C7A336000FEF1BD /* FeedFeaturedItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedFeaturedItemCell.swift; sourceTree = "<group>"; };
+		BD0054361C7A43C7001AD90A /* FeedDetailItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = FeedDetailItem.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		BD037EBE1C0B89A7004BDA21 /* SearchHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SearchHeaderView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		BD0500D21C7A336000FEF1BD /* FeedFeaturedItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = FeedFeaturedItemCell.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		BD4BCCC91BDE04AA00466C0F /* AppleNews.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppleNews.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD7D3B2D1C7A2CCF005C4418 /* Configurator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configurator.swift; sourceTree = "<group>"; };
 		BD7D3B2F1C7A2CE7005C4418 /* SpotsConfigurator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsConfigurator.swift; sourceTree = "<group>"; };
@@ -49,7 +49,7 @@
 		BDE260411C0B1A7700FB1939 /* FeedItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedItemCell.swift; sourceTree = "<group>"; };
 		BDE260441C0B67F000FB1939 /* ExploreController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExploreController.swift; sourceTree = "<group>"; };
 		BDE260451C0B67F000FB1939 /* FavoritesController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesController.swift; sourceTree = "<group>"; };
-		BDE260461C0B67F000FB1939 /* ForYouController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForYouController.swift; sourceTree = "<group>"; };
+		BDE260461C0B67F000FB1939 /* ForYouController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ForYouController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		BDE260471C0B67F000FB1939 /* SavedController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavedController.swift; sourceTree = "<group>"; };
 		BDE260481C0B67F000FB1939 /* SearchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchController.swift; sourceTree = "<group>"; };
 		BDE2604E1C0B798C00FB1939 /* MainController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainController.swift; sourceTree = "<group>"; };

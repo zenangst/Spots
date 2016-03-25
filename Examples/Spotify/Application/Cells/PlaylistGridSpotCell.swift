@@ -48,8 +48,8 @@ public class PlaylistGridSpotCell: UICollectionViewCell, ViewConfigurable {
       blurView.frame.size = frame.size
 
       albumView.frame.size = CGSize(width: 128, height: 128)
-      albumView.frame.origin.x = (frame.width - albumView.frame.width) / 2
-      albumView.frame.origin.y = (frame.height - albumView.frame.height) / 2
+      albumView.x = (frame.width - albumView.frame.width) / 2
+      albumView.y = (frame.height - albumView.frame.height) / 2
     }
 
     item.size = size

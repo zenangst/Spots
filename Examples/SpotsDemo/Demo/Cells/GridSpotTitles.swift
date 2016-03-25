@@ -70,7 +70,7 @@ class GridSpotCellTitles : UICollectionViewCell, ViewConfigurable {
 
     layoutSubviews()
 
-    item.size.height = metaText.frame.origin.y + metaText.frame.height + 20
+    item.size.height = metaText.y + metaText.height + 20
     item.size.width = UIScreen.mainScreen().bounds.width
   }
 
@@ -79,11 +79,11 @@ class GridSpotCellTitles : UICollectionViewCell, ViewConfigurable {
 
     [titleLabel, subtitleLabel, metaText].forEach {
       $0.sizeToFit()
-      $0.frame.size.width = contentView.frame.width
+      $0.width = contentView.width
     }
 
-    titleLabel.frame.origin.y = 10
-    subtitleLabel.frame.origin.y = titleLabel.frame.size.height + titleLabel.frame.origin.y + 10
-    metaText.frame.origin.y = subtitleLabel.frame.size.height + subtitleLabel.frame.origin.y + 10
+    titleLabel.y = 10
+    subtitleLabel.y = titleLabel.height + titleLabel.y + 10
+    metaText.y = subtitleLabel.height + subtitleLabel.y + 10
   }
 }
