@@ -47,7 +47,7 @@ class GridSpotCellCircle : UICollectionViewCell, ViewConfigurable {
   func configure(inout item: ViewModel) {
     optimize()
 
-    imageView.frame.size.height = 88
+    imageView.height = 88
     
     if !item.image.isEmpty {
       let URL = NSURL(string: item.image)
@@ -59,32 +59,32 @@ class GridSpotCellCircle : UICollectionViewCell, ViewConfigurable {
 
     layoutSubviews()
 
-    item.size.height = subtitleLabel.frame.origin.y + subtitleLabel.frame.size.height
+    item.size.height = subtitleLabel.y + subtitleLabel.height
   }
 
   override func layoutSubviews() {
     super.layoutSubviews()
 
     imageView.frame = contentView.frame
-    imageView.frame.size.height = 88
-    imageView.frame.size.width = 88
-    imageView.frame.origin.x = frame.size.width / 2 - imageView.frame.size.width / 2
+    imageView.height = 88
+    imageView.width = 88
+    imageView.x = width / 2 - imageView.width / 2
     imageView.clipsToBounds = true
     imageView.layer.cornerRadius = 44
     imageView.layer.borderColor = UIColor.whiteColor().CGColor
     imageView.layer.borderWidth = 2.0
 
     titleLabel.sizeToFit()
-    titleLabel.frame.size.width = contentView.frame.width
-    titleLabel.frame.origin.y = imageView.frame.origin.y > 88
-      ? imageView.frame.origin.y
+    titleLabel.width = contentView.width
+    titleLabel.y = imageView.y > 88
+      ? imageView.y
       : 88
-    titleLabel.frame.origin.y += 10
+    titleLabel.y += 10
 
     subtitleLabel.sizeToFit()
-    subtitleLabel.frame.size.width = contentView.frame.width
-    subtitleLabel.frame.origin.y = titleLabel.frame.size.height + titleLabel.frame.origin.y
-    subtitleLabel.frame.size.width = contentView.frame.width
-    subtitleLabel.frame.size.height += 10
+    subtitleLabel.width = contentView.width
+    subtitleLabel.y = titleLabel.height + titleLabel.y
+    subtitleLabel.width = contentView.width
+    subtitleLabel.height += 10
   }
 }

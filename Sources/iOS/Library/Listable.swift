@@ -177,7 +177,7 @@ public extension Spotable where Self : Listable {
   }
 
   public func layout(size: CGSize) {
-    tableView.frame.size.width = size.width
+    tableView.width = size.width
     tableView.layoutIfNeeded()
   }
 

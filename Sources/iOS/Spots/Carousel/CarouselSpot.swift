@@ -45,12 +45,12 @@ public class CarouselSpot: NSObject, Spotable, Gridable {
     collectionView.frame.size = size
 
     if collectionView.contentSize.height > 0 {
-      collectionView.frame.size.height = collectionView.contentSize.height
+      collectionView.height = collectionView.contentSize.height
     } else {
-      collectionView.frame.size.height = component.items.first?.size.height ?? 0
+      collectionView.height = component.items.first?.size.height ?? 0
 
-      if collectionView.frame.size.height > 0 {
-        collectionView.frame.size.height += layout.sectionInset.top + layout.sectionInset.bottom
+      if collectionView.height > 0 {
+        collectionView.height += layout.sectionInset.top + layout.sectionInset.bottom
       }
     }
 
@@ -63,7 +63,7 @@ extension CarouselSpot: UIScrollViewDelegate {
   public func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
     guard paginate else { return }
 
-    let pageWidth: CGFloat = collectionView.frame.width - layout.sectionInset.right
+    let pageWidth: CGFloat = collectionView.width - layout.sectionInset.right
      + layout.sectionInset.left + layout.minimumLineSpacing
     let currentOffset = scrollView.contentOffset.x
     let targetOffset = targetContentOffset.memory.x
@@ -90,7 +90,7 @@ extension CarouselSpot: UIScrollViewDelegate {
 
   public func scrollTo(predicate: (ViewModel) -> Bool) {
     if let index = items.indexOf(predicate) {
-      let pageWidth: CGFloat = collectionView.frame.width - layout.sectionInset.right
+      let pageWidth: CGFloat = collectionView.width - layout.sectionInset.right
         + layout.sectionInset.left + layout.minimumLineSpacing
       let newTargetOffset = pageWidth * CGFloat(index)
 
@@ -104,9 +104,9 @@ extension CarouselSpot: UICollectionViewDelegateFlowLayout {
   public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
 
     if component.span > 0 {
-      component.items[indexPath.item].size.width = collectionView.frame.width / CGFloat(component.span)
+      component.items[indexPath.item].size.width = collectionView.width / CGFloat(component.span)
     } else {
-      component.items[indexPath.item].size.width = collectionView.frame.width
+      component.items[indexPath.item].size.width = collectionView.width
     }
 
     component.items[indexPath.item].size.width -= layout.sectionInset.left

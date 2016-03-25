@@ -67,15 +67,15 @@ class GridTopicCell: UICollectionViewCell, ViewConfigurable {
       contentView.backgroundColor = UIColor.hex(hexColor)
     }
 
-    blurView.frame.size.width = contentView.frame.size.width
-    blurView.frame.size.height = 48
-    blurView.frame.origin.y = 120
+    blurView.width = contentView.width
+    blurView.height = 48
+    blurView.y = 120
 
     label.attributedText = NSAttributedString(string: item.title,
       attributes: [NSParagraphStyleAttributeName : paddedStyle])
     label.sizeToFit()
-    label.frame.size.height = 38
-    label.frame.size.width = blurView.frame.width
+    label.height = 38
+    label.width = blurView.frame.width
 
     item.size.height = 155
   }

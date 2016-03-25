@@ -40,7 +40,7 @@ public class ListSpot: NSObject, Spotable, Listable {
       if let configurable = header as? Componentable {
         configurable.configure(component)
         cachedHeaders[reuseIdentifer] = configurable
-        headerHeight = configurable.height
+        headerHeight = configurable.defaultHeight
       }
     }
   }
@@ -57,7 +57,7 @@ public class ListSpot: NSObject, Spotable, Listable {
 
     tableView.frame.size = size
     tableView.contentSize = CGSize(
-      width: tableView.frame.width,
+      width: tableView.width,
       height: height - tableView.contentInset.top - tableView.contentInset.bottom)
 
     ListSpot.configure?(view: tableView)
@@ -95,8 +95,8 @@ extension ListSpot: UITableViewDelegate {
 
   public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
     component.size = CGSize(
-      width: tableView.frame.width,
-      height: tableView.frame.height)
+      width: tableView.width,
+      height: tableView.height)
 
     return indexPath.item < component.items.count ? item(indexPath).size.height : 0.0
   }

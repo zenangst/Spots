@@ -148,16 +148,16 @@ public class PostTableViewCell: WallTableViewCell, ViewConfigurable {
     actionBarView.configureView(post.liked)
 
     textView.text = post.text
-    textView.frame.size.width = UIScreen.mainScreen().bounds.width - 40
+    textView.width = UIScreen.mainScreen().bounds.width - 40
     textView.sizeToFit()
     textView.frame = CGRect(x: 20, y: CGRectGetMaxY(postMediaView.frame) + 12,
       width: textView.frame.width, height: textView.frame.height)
 
     informationView.frame.origin = CGPoint(x: 0, y: CGRectGetMaxY(textView.frame))
     actionBarView.frame.origin = CGPoint(x: 0, y: CGRectGetMaxY(informationView.frame))
-    bottomSeparator.frame.origin.y = CGRectGetMaxY(actionBarView.frame)
+    bottomSeparator.y = CGRectGetMaxY(actionBarView.frame)
 
-    return bottomSeparator.frame.origin.y
+    return bottomSeparator.y
   }
 
   public func configure(inout item: ViewModel) {

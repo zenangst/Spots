@@ -22,7 +22,7 @@ public class FeedDetailItemCell: UITableViewCell, ViewConfigurable {
   }
 
   lazy var separatorView = UIView().then {
-    $0.frame.size.height = 1
+    $0.height = 1
   }
 
   override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -40,24 +40,24 @@ public class FeedDetailItemCell: UITableViewCell, ViewConfigurable {
   public func configure(inout item: ViewModel) {
     if !item.image.isEmpty {
       featuredImage.setImage(NSURL(string: item.image))
-      featuredImage.frame.size.height = 300
+      featuredImage.height = 300
     } else {
-      featuredImage.frame.size.height = 0
+      featuredImage.height = 0
     }
 
-    featuredImage.frame.size.width = contentView.frame.width
+    featuredImage.width = contentView.frame.width
 
     titleLabel.text = item.title
-    titleLabel.frame.size.width = contentView.frame.width - 30
+    titleLabel.width = contentView.frame.width - 30
     titleLabel.sizeToFit()
-    titleLabel.frame.origin.x = 15
-    titleLabel.frame.origin.y = featuredImage.frame.maxY + 15
+    titleLabel.x = 15
+    titleLabel.y = featuredImage.frame.maxY + 15
 
     introLabel.text = item.subtitle
-    introLabel.frame.size.width = contentView.frame.width - 30
+    introLabel.width = contentView.frame.width - 30
     introLabel.sizeToFit()
-    introLabel.frame.origin.x = 15
-    introLabel.frame.origin.y = titleLabel.frame.maxY + 15
+    introLabel.x = 15
+    introLabel.y = titleLabel.frame.maxY + 15
 
     item.size.height = introLabel.frame.maxY - 30
   }
