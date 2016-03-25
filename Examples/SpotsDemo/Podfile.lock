@@ -6,10 +6,9 @@ PODS:
   - Imaginary (0.1.0):
     - Cache
   - Spots (1.0.0):
-    - Imaginary
     - Sugar
     - Tailor
-  - Sugar (1.0.10)
+  - Sugar (1.0.11)
   - Tailor (0.4.5):
     - Sugar
 
@@ -51,8 +50,8 @@ SPEC CHECKSUMS:
   Compass: f4b8c37f9b315f0ee4f5e4f71888c54c92992d5d
   Hue: ed6781be844b58b2a38150cfd4bf24c33449faf8
   Imaginary: feaea646440c68a9b6ed66a46597d548b9a44207
-  Spots: 0e2a783d37cf05ce0752e2ae4cd709de0112cb04
-  Sugar: 22e3e4e6b44d5daef87a025996363fc60626b90b
+  Spots: fb26399117edb88894a111886fb2766c29f6daa0
+  Sugar: 8f7d1b999d5a8c29cf9eff6d6f4b7037c4c99d29
   Tailor: d1d5bce9d81e953c3d7b3f3fd6d084337feeb7a5
 
 COCOAPODS: 0.39.0
