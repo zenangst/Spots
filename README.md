@@ -275,8 +275,6 @@ pod 'Spots'
 To sweeten the implementation.
 - **[Tailor](https://github.com/zenangst/Tailor)**
 To seamlessly map JSON to both `Component` and `ViewModel`.
-- **[Imaginary](https://github.com/hyperoslo/Imaginary)**
-To offer a solid and easy-to-use solution for loading remote images in both core and custom views.
 
 ## Author
 
