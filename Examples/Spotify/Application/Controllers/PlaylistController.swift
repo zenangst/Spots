@@ -21,18 +21,20 @@ class PlaylistController: SpotsController {
     let gridSpot = GridSpot(component: Component(span: 1))
 
     self.init(spots: [gridSpot, featuredSpot, listSpot])
-    self.view.backgroundColor = UIColor.blackColor()
-    self.spotsScrollView.backgroundColor = UIColor.blackColor()
-    self.spotsRefreshDelegate = self
-    self.spotsScrollDelegate = self
     self.playlistID = playlistID
-
-    refreshData()
   }
 
   override func viewDidLoad() {
     super.viewDidLoad()
     spotsDelegate = self
+    spotsScrollView.backgroundColor = UIColor.blackColor()
+    spotsRefreshDelegate = self
+    spotsScrollDelegate = self
+    view.backgroundColor = UIColor.blackColor()
+
+    if playlistID == nil {
+      refreshData()
+    }
   }
 
   override func scrollViewDidScroll(scrollView: UIScrollView) {
