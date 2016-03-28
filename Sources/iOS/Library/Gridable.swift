@@ -148,7 +148,7 @@ public extension Spotable where Self : Gridable {
     items[index] = item
 
     let cellClass = self.dynamicType.views[item.kind] ?? self.dynamicType.defaultView
-    let reuseIdentifier = !component.items[index].kind.isEmpty
+    let reuseIdentifier = component.items[index].kind.isPresent
       ? component.items[index].kind
       : component.kind
 
@@ -177,7 +177,7 @@ public extension Spotable where Self : Gridable {
 
     var cached: UIView?
     for (index, item) in component.items.enumerate() {
-      let reuseIdentifer = item.kind.isEmpty ? component.kind : item.kind
+      let reuseIdentifer = item.kind.isPresent ? item.kind : component.kind
       let componentClass = T.views[reuseIdentifer] ?? T.defaultView
 
       component.items[index].index = index

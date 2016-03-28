@@ -136,7 +136,7 @@ public extension Spotable where Self : Listable {
     items[index] = item
 
     let cellClass = self.dynamicType.views[item.kind] ?? self.dynamicType.defaultView
-    let reuseIdentifier = !component.items[index].kind.isEmpty
+    let reuseIdentifier = component.items[index].kind.isPresent
       ? component.items[index].kind
       : component.kind
 
@@ -154,7 +154,7 @@ public extension Spotable where Self : Listable {
   public func reload(indexes: [Int]? = nil, completion: Completion = nil) {
     for (index, item) in component.items.enumerate() {
       let cellClass = self.dynamicType.views[item.kind] ?? self.dynamicType.defaultView
-      let reuseIdentifier = !component.items[index].kind.isEmpty
+      let reuseIdentifier = component.items[index].kind.isPresent
         ? component.items[index].kind
         : component.kind
 

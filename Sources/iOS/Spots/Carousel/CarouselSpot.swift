@@ -133,9 +133,9 @@ extension CarouselSpot: UICollectionViewDataSource {
   public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
     component.items[indexPath.item].index = indexPath.item
 
-    let reuseIdentifier = !item(indexPath).kind.isEmpty ? item(indexPath).kind : component.kind
     let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath)
     cell.optimize()
+    let reuseIdentifier = item(indexPath).kind.isPresent ? item(indexPath).kind : component.kind
 
     if let grid = cell as? ViewConfigurable {
       grid.configure(&component.items[indexPath.item])
