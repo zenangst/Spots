@@ -22,6 +22,7 @@ public struct PostLoginRouter: Routing {
       case "playlist:{uri}":
         guard let playlist = arguments["uri"] else { return }
         let controller = PlaylistController(playlistID: playlist)
+        controller.refreshData()
         navigationController.pushViewController(controller, animated: true)
       case "song:{uri}":
         guard let uri = arguments["uri"] else { return }
