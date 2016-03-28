@@ -57,7 +57,7 @@ public extension Spotable {
   }
 
   public func prepareItem<T: Spotable>(item: ViewModel, index: Int, spot: T, inout cached: UIView?) {
-    let reuseIdentifer = item.kind.isEmpty ? component.kind : item.kind
+    let reuseIdentifer = item.kind.isPresent ? item.kind : component.kind
     let componentClass = T.views[reuseIdentifer] ?? T.defaultView
 
     component.items[index].index = index

@@ -31,17 +31,17 @@ public class ListSpot: NSObject, Spotable, Listable {
     super.init()
     prepare()
 
-    let reuseIdentifer = component.kind.isEmpty ? "list" : component.kind
+    let reuseIdentifer = component.kind.isPresent ? component.kind : "list"
 
-    if let headerType = ListSpot.headers[reuseIdentifer] {
-      let header = headerType.init(frame: CGRect(x: 0, y: 0,
-        width: UIScreen.mainScreen().bounds.width, height: headerHeight))
+    guard let headerType = ListSpot.headers[reuseIdentifer]  else { return }
 
-      if let configurable = header as? Componentable {
-        configurable.configure(component)
-        cachedHeaders[reuseIdentifer] = configurable
-        headerHeight = configurable.defaultHeight
-      }
+    let header = headerType.init(frame: CGRect(x: 0, y: 0,
+      width: UIScreen.mainScreen().bounds.width, height: headerHeight))
+
+    if let configurable = header as? Componentable {
+      configurable.configure(component)
+      cachedHeaders[reuseIdentifer] = configurable
+      headerHeight = configurable.defaultHeight
     }
   }
 
@@ -53,7 +53,7 @@ public class ListSpot: NSObject, Spotable, Listable {
     prepare()
     var height = component.items.reduce(0, combine: { $0 + $1.size.height })
 
-    if !component.title.isEmpty { height += headerHeight }
+    if component.title.isPresent { height += headerHeight }
 
     tableView.frame.size = size
     tableView.contentSize = CGSize(
@@ -67,7 +67,7 @@ public class ListSpot: NSObject, Spotable, Listable {
 extension ListSpot: UITableViewDelegate {
 
   public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    return !component.title.isEmpty ? headerHeight : 0
+    return component.title.isPresent ? headerHeight : 0
   }
 
   public func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -80,7 +80,7 @@ extension ListSpot: UITableViewDelegate {
   }
 
   public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-    let reuseIdentifer = component.kind.isEmpty ? "list" : component.kind
+    let reuseIdentifer = component.kind.isPresent ? component.kind : "list"
 
     if let cachedHeader = cachedHeaders[reuseIdentifer] {
       cachedHeader.configure(component)
@@ -113,7 +113,7 @@ extension ListSpot: UITableViewDataSource {
       component.items[indexPath.item].index = indexPath.row
     }
 
-    let reuseIdentifier = indexPath.item < component.items.count && !item(indexPath).kind.isEmpty
+    let reuseIdentifier = indexPath.item < component.items.count && item(indexPath).kind.isPresent
       ? item(indexPath).kind : component.kind
     let cell: UITableViewCell = tableView
       .dequeueReusableCellWithIdentifier(reuseIdentifier, forIndexPath: indexPath)

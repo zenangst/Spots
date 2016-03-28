@@ -15,7 +15,7 @@ public class ListSpotCell: UITableViewCell, ViewConfigurable {
   }
 
   public func configure(inout item: ViewModel) {
-    if let action = item.action where !action.isEmpty {
+    if let action = item.action where action.isPresent {
       accessoryType = .DisclosureIndicator
     } else {
       accessoryType = .None

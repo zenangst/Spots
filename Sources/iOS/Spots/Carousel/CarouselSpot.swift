@@ -83,8 +83,7 @@ extension CarouselSpot: UIScrollViewDelegate {
 
     let index: Int = Int(floor(newTargetOffset * CGFloat(items.count) / scrollView.contentSize.width))
     if index >= 0 && index <= items.count {
-      let item = items[index]
-      carouselScrollDelegate?.spotDidEndScrolling(self, item: item)
+      carouselScrollDelegate?.spotDidEndScrolling(self, item: items[index])
     }
   }
 
@@ -92,9 +91,8 @@ extension CarouselSpot: UIScrollViewDelegate {
     if let index = items.indexOf(predicate) {
       let pageWidth: CGFloat = collectionView.width - layout.sectionInset.right
         + layout.sectionInset.left + layout.minimumLineSpacing
-      let newTargetOffset = pageWidth * CGFloat(index)
 
-      collectionView.setContentOffset(CGPoint(x: newTargetOffset, y:0), animated: true)
+      collectionView.setContentOffset(CGPoint(x: pageWidth * CGFloat(index), y:0), animated: true)
     }
   }
 }
@@ -102,12 +100,9 @@ extension CarouselSpot: UIScrollViewDelegate {
 extension CarouselSpot: UICollectionViewDelegateFlowLayout {
 
   public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-
-    if component.span > 0 {
-      component.items[indexPath.item].size.width = collectionView.width / CGFloat(component.span)
-    } else {
-      component.items[indexPath.item].size.width = collectionView.width
-    }
+    component.items[indexPath.item].size.width = component.span > 0
+      ? collectionView.width / CGFloat(component.span)
+      : collectionView.width
 
     component.items[indexPath.item].size.width -= layout.sectionInset.left
 
@@ -133,14 +128,11 @@ extension CarouselSpot: UICollectionViewDataSource {
   public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
     component.items[indexPath.item].index = indexPath.item
 
-    let reuseIdentifier = !item(indexPath).kind.isEmpty ? item(indexPath).kind : component.kind
-    let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath)
-    cell.optimize()
+    let reuseIdentifier = item(indexPath).kind.isPresent ? item(indexPath).kind : component.kind
+    let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath).then { $0.optimize() }
 
-    if let grid = cell as? ViewConfigurable {
-      grid.configure(&component.items[indexPath.item])
-      collectionView.collectionViewLayout.invalidateLayout()
-    }
+    (cell as? ViewConfigurable)?.configure(&component.items[indexPath.item])
+    collectionView.collectionViewLayout.invalidateLayout()
 
     return cell
   }
