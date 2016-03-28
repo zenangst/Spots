@@ -33,15 +33,15 @@ public class ListSpot: NSObject, Spotable, Listable {
 
     let reuseIdentifer = component.kind.isPresent ? component.kind : "list"
 
-    if let headerType = ListSpot.headers[reuseIdentifer] {
-      let header = headerType.init(frame: CGRect(x: 0, y: 0,
-        width: UIScreen.mainScreen().bounds.width, height: headerHeight))
+    guard let headerType = ListSpot.headers[reuseIdentifer]  else { return }
 
-      if let configurable = header as? Componentable {
-        configurable.configure(component)
-        cachedHeaders[reuseIdentifer] = configurable
-        headerHeight = configurable.defaultHeight
-      }
+    let header = headerType.init(frame: CGRect(x: 0, y: 0,
+      width: UIScreen.mainScreen().bounds.width, height: headerHeight))
+
+    if let configurable = header as? Componentable {
+      configurable.configure(component)
+      cachedHeaders[reuseIdentifer] = configurable
+      headerHeight = configurable.defaultHeight
     }
   }
 
