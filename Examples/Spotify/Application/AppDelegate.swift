@@ -89,16 +89,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
   }
 
-  func application(app: UIApplication,
-    openURL url: NSURL,
-    options: [String : AnyObject]) -> Bool {
-      if session == nil {
-        return PreLoginRouter().navigate(url, navigationController: authController)
-      }
+  func application(app: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
+    if session == nil {
+      return PreLoginRouter().navigate(url, navigationController: authController)
+    }
 
-      guard let navigationController = mainController.selectedViewController as? UINavigationController
-        else { return false }
+    guard let navigationController = mainController.selectedViewController as? UINavigationController
+      else { return false }
 
-      return PostLoginRouter().navigate(url, navigationController: navigationController)
+    return PostLoginRouter().navigate(url, navigationController: navigationController)
   }
 }
