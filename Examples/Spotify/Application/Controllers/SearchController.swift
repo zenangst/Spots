@@ -42,8 +42,8 @@ extension SearchController: SpotsDelegate {
   func spotDidSelectItem(spot: Spotable, item: ViewModel) {
     guard let urn = item.action else { return }
 
-    if let delegate = UIApplication.sharedApplication().delegate as? AppDelegate,
-    carouselSpot = delegate.mainController.playerController.spot(1, CarouselSpot.self) {
+    guard let delegate = UIApplication.sharedApplication().delegate as? AppDelegate,
+      carouselSpot = delegate.mainController.playerController.spot(1, CarouselSpot.self) else { return }
 
       delegate.mainController.playerController.update(spotAtIndex: 1) {
         var item = item
@@ -56,7 +56,6 @@ extension SearchController: SpotsDelegate {
 
       delegate.mainController.playerController.lastItem = item
       carouselSpot.scrollTo { item.action == $0.action }
-    }
 
     Compass.navigate(urn)
   }
