@@ -27,10 +27,10 @@ class SearchController: SpotsController {
   override func scrollViewDidScroll(scrollView: UIScrollView) {
     super.scrollViewDidScroll(scrollView)
 
-    if let spot = spot as? ListSpot,
-      searchHeader = spot.cachedHeaders["search"] as? SearchHeaderView {
-        searchHeader.searchField.resignFirstResponder()
-    }
+    guard let spot = spot as? ListSpot,
+      searchHeader = spot.cachedHeaders["search"] as? SearchHeaderView else { return }
+
+    searchHeader.searchField.resignFirstResponder()
   }
 }
 
