@@ -194,7 +194,7 @@ extension PlaylistController: SpotsDelegate {
       playlist = spot as? ListSpot {
         delegate.mainController.playerController.lastItem = item
         delegate.mainController.playerController.currentURIs = currentURIs
-        if !item.image.isEmpty {
+        if item.image.isPresent {
           delegate.mainController.playerController.currentAlbum.setImage(NSURL(string: item.image)!)
         }
         delegate.mainController.playerController.update(spotAtIndex: 1) {
