@@ -10,21 +10,18 @@ class SearchController: SpotsController {
   lazy var serialQueue = dispatch_queue_create("serialQueue", DISPATCH_QUEUE_SERIAL)
 
   convenience init(title: String) {
-    let component = Component(title: "Search", kind: "search")
-    let spots: [Spotable] = [
-      ListSpot(component: component),
-      ListSpot(title: ""),
+    self.init(spots: [
+      ListSpot(component: Component(title: "Search", kind: "search")),
+      ListSpot(),
       ListSpot()
-    ]
-
-    self.init(spots: spots)
+      ])
     self.title = title
     self.spotsDelegate = self
 
-    if let spot = spot as? ListSpot,
-      searchHeader = spot.cachedHeaders["search"] as? SearchHeaderView {
-        searchHeader.searchField.delegate = self
-    }
+    guard let spot = spot as? ListSpot,
+      searchHeader = spot.cachedHeaders["search"] as? SearchHeaderView else { return }
+
+    searchHeader.searchField.delegate = self
   }
 
   override func scrollViewDidScroll(scrollView: UIScrollView) {
