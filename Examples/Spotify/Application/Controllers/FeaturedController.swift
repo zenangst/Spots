@@ -2,7 +2,7 @@ import Spots
 import Keychain
 import Compass
 
-class FeaturedController: SpotsController, SpotsDelegate {
+class FeaturedController: SpotsController {
 
   let accessToken = Keychain.password(forAccount: keychainAccount)
 
@@ -11,8 +11,19 @@ class FeaturedController: SpotsController, SpotsDelegate {
 
     self.init(spot: featuredPlaylists)
     self.spotsDelegate = self
+    self.spotsRefreshDelegate = self
     self.title = title
+  }
 
+  override func viewWillAppear(animated: Bool) {
+    super.viewWillAppear(animated)
+
+    guard spot.items.count <= 1 else { return }
+
+    loadData()
+  }
+
+  func loadData(completion: (() -> Void)? = nil) {
     SPTBrowse.requestFeaturedPlaylistsForCountry("NO", limit: 50, offset: 0, locale: nil, timestamp: nil, accessToken: accessToken) { (error, object) -> Void in
       guard let object = object as? SPTFeaturedPlaylistList else { return }
 
@@ -24,17 +35,23 @@ class FeaturedController: SpotsController, SpotsDelegate {
           kind: "featured",
           action: "playlist:" + (item.uri as NSURL).absoluteString.replace(":", with: "-"))
         }
+        completion?()
       }
     }
   }
+}
 
-  override func viewDidAppear(animated: Bool) {
-    super.viewDidAppear(animated)
-    spotsScrollView.contentInset.bottom = 120
-  }
+extension FeaturedController : SpotsDelegate {
 
   func spotDidSelectItem(spot: Spotable, item: ViewModel) {
     guard let urn = item.action else { return }
     Compass.navigate(urn)
+  }
+}
+
+extension FeaturedController : SpotsRefreshDelegate {
+
+  func spotsDidReload(refreshControl: UIRefreshControl, completion: (() -> Void)?) {
+    loadData(completion)
   }
 }
