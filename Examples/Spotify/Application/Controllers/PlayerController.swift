@@ -189,7 +189,7 @@ class PlayerController: SpotsController {
         self.view.y -= self.offset
       }
 
-      if let lastItem = lastItem where !lastItem.image.isEmpty {
+      if let lastItem = lastItem where lastItem.image.isPresent {
         currentAlbum.setImage(NSURL(string: lastItem.image)!)
       }
     }
@@ -230,7 +230,7 @@ extension PlayerController: SpotsDelegate {
         guard let urn = item.action else { return }
         Compass.navigate(urn)
 
-        if !item.image.isEmpty {
+        if item.image.isPresent {
           currentAlbum.setImage(NSURL(string: item.image)!)
         }
     }
@@ -247,7 +247,7 @@ extension PlayerController: SpotsCarouselScrollDelegate {
     Compass.navigate(urn)
     self.lastItem = item
 
-    if !item.image.isEmpty {
+    if item.image.isPresent {
       currentAlbum.setImage(NSURL(string: item.image)!)
     }
   }

@@ -30,7 +30,7 @@ public class PlayerGridSpotCell: UICollectionViewCell, ViewConfigurable {
   public func configure(inout item: ViewModel) {
     backgroundColor = UIColor.clearColor()
 
-    if !item.image.isEmpty {
+    if item.image.isPresent {
       imageView.frame.size = CGSize(width: 32, height: 32)
       imageView.x = (width - imageView.frame.width) / 2
       imageView.y = (height - imageView.frame.height) / 2

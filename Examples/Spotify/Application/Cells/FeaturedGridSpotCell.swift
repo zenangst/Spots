@@ -23,7 +23,7 @@ public class FeaturedGridSpotCell: UICollectionViewCell, ViewConfigurable {
   public func configure(inout item: ViewModel) {
     backgroundColor = UIColor.clearColor()
 
-    if !item.image.isEmpty {
+    if item.image.isPresent {
       imageView.setImage(NSURL(string: item.image))
       imageView.frame.size = frame.size
     }

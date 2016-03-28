@@ -27,7 +27,7 @@ public class PlayerListSpotCell: UITableViewCell, ViewConfigurable {
     textLabel?.textColor = UIColor.whiteColor()
     detailTextLabel?.textColor = UIColor.grayColor()
 
-    if let action = item.action where !action.isEmpty {
+    if let action = item.action where action.isPresent {
       accessoryType = .DisclosureIndicator
 
       if let subtitleColor = item.meta["secondary"] as? UIColor {
