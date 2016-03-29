@@ -34,7 +34,7 @@ public class PlaylistListSpotCell: UITableViewCell, ViewConfigurable {
       detailTextLabel?.textColor = subtitleColor
     }
 
-    if let action = item.action where !action.isEmpty {
+    if let action = item.action where action.isPresent {
       accessoryType = .DisclosureIndicator
     } else {
       accessoryType = .None
@@ -43,7 +43,7 @@ public class PlaylistListSpotCell: UITableViewCell, ViewConfigurable {
     detailTextLabel?.text = item.subtitle
     textLabel?.text = item.title
 
-    if let url = NSURL(string: item.image) where !item.image.isEmpty {
+    if let url = NSURL(string: item.image) where item.image.isPresent {
       imageView?.setImage(url, placeholder: transparentImage)
     }
 

@@ -10,30 +10,27 @@ class SearchController: SpotsController {
   lazy var serialQueue = dispatch_queue_create("serialQueue", DISPATCH_QUEUE_SERIAL)
 
   convenience init(title: String) {
-    let component = Component(title: "Search", kind: "search")
-    let spots: [Spotable] = [
-      ListSpot(component: component),
-      ListSpot(title: ""),
+    self.init(spots: [
+      ListSpot(component: Component(title: "Search", kind: "search")),
+      ListSpot(),
       ListSpot()
-    ]
-
-    self.init(spots: spots)
+      ])
     self.title = title
     self.spotsDelegate = self
 
-    if let spot = spot as? ListSpot,
-      searchHeader = spot.cachedHeaders["search"] as? SearchHeaderView {
-        searchHeader.searchField.delegate = self
-    }
+    guard let spot = spot as? ListSpot,
+      searchHeader = spot.cachedHeaders["search"] as? SearchHeaderView else { return }
+
+    searchHeader.searchField.delegate = self
   }
 
   override func scrollViewDidScroll(scrollView: UIScrollView) {
     super.scrollViewDidScroll(scrollView)
 
-    if let spot = spot as? ListSpot,
-      searchHeader = spot.cachedHeaders["search"] as? SearchHeaderView {
-        searchHeader.searchField.resignFirstResponder()
-    }
+    guard let spot = spot as? ListSpot,
+      searchHeader = spot.cachedHeaders["search"] as? SearchHeaderView else { return }
+
+    searchHeader.searchField.resignFirstResponder()
   }
 }
 
@@ -42,8 +39,8 @@ extension SearchController: SpotsDelegate {
   func spotDidSelectItem(spot: Spotable, item: ViewModel) {
     guard let urn = item.action else { return }
 
-    if let delegate = UIApplication.sharedApplication().delegate as? AppDelegate,
-    carouselSpot = delegate.mainController.playerController.spot(1, CarouselSpot.self) {
+    guard let delegate = UIApplication.sharedApplication().delegate as? AppDelegate,
+      carouselSpot = delegate.mainController.playerController.spot(1, CarouselSpot.self) else { return }
 
       delegate.mainController.playerController.update(spotAtIndex: 1) {
         var item = item
@@ -56,7 +53,6 @@ extension SearchController: SpotsDelegate {
 
       delegate.mainController.playerController.lastItem = item
       carouselSpot.scrollTo { item.action == $0.action }
-    }
 
     Compass.navigate(urn)
   }
@@ -122,7 +118,6 @@ extension SearchController: UITextFieldDelegate {
   }
 
   func textFieldShouldReturn(textField: UITextField) -> Bool {
-    textField.resignFirstResponder()
-    return true
+    return textField.resignFirstResponder()
   }
 }

@@ -1,5 +1,6 @@
 import Spots
 import Imaginary
+import Sugar
 
 public class DefaultListSpotCell: UITableViewCell, ViewConfigurable {
 
@@ -38,7 +39,7 @@ public class DefaultListSpotCell: UITableViewCell, ViewConfigurable {
       }
     }
 
-    if let action = item.action where !action.isEmpty {
+    if let action = item.action where action.isPresent {
       accessoryType = .DisclosureIndicator
       selectedView.backgroundColor = UIColor.darkGrayColor().colorWithAlphaComponent(0.4)
     } else {
@@ -49,7 +50,7 @@ public class DefaultListSpotCell: UITableViewCell, ViewConfigurable {
     detailTextLabel?.text = item.subtitle
     textLabel?.text = item.title
 
-    if !item.image.isEmpty {
+    if item.image.isPresent {
       imageView?.image = UIImage(named: item.image)?.imageWithRenderingMode(.AlwaysTemplate)
       imageView?.tintColor = UIColor.whiteColor()
     }

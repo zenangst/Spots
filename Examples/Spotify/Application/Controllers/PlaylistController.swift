@@ -14,34 +14,36 @@ class PlaylistController: SpotsController {
   var currentURIs = [NSURL]()
 
   convenience init(playlistID: String?) {
-    let listSpot = ListSpot().then {
-      $0.items = [ViewModel(title: "Loading...", kind: "playlist", size: CGSize(width: 44, height: 44))]
-    }
     let featuredSpot = CarouselSpot(Component(span: 2), top: 5, left: 15, bottom: 5, right: 15, itemSpacing: 15)
     let gridSpot = GridSpot(component: Component(span: 1))
+    let listSpot = ListSpot(title: "Playlists").then {
+      $0.items = [ViewModel(title: "Loading...", kind: "playlist", size: CGSize(width: 44, height: 44))]
+    }
 
     self.init(spots: [gridSpot, featuredSpot, listSpot])
-    self.view.backgroundColor = UIColor.blackColor()
-    self.spotsScrollView.backgroundColor = UIColor.blackColor()
-    self.spotsRefreshDelegate = self
-    self.spotsScrollDelegate = self
     self.playlistID = playlistID
-
-    refreshData()
   }
 
   override func viewDidLoad() {
     super.viewDidLoad()
     spotsDelegate = self
+    spotsScrollView.backgroundColor = UIColor.blackColor()
+    spotsRefreshDelegate = self
+    spotsScrollDelegate = self
+    view.backgroundColor = UIColor.blackColor()
+
+    if playlistID == nil {
+      refreshData()
+    }
   }
 
   override func scrollViewDidScroll(scrollView: UIScrollView) {
     super.scrollViewDidScroll(scrollView)
 
-    if let delegate = UIApplication.sharedApplication().delegate as? AppDelegate
-      where !delegate.mainController.playerController.player.isPlaying {
-        delegate.mainController.playerController.hidePlayer()
-    }
+    guard let delegate = UIApplication.sharedApplication().delegate as? AppDelegate
+      where !delegate.mainController.playerController.player.isPlaying else { return }
+
+    delegate.mainController.playerController.hidePlayer()
   }
 
   func refreshData(closure: (() -> Void)? = nil) {
@@ -194,7 +196,7 @@ extension PlaylistController: SpotsDelegate {
       playlist = spot as? ListSpot {
         delegate.mainController.playerController.lastItem = item
         delegate.mainController.playerController.currentURIs = currentURIs
-        if !item.image.isEmpty {
+        if item.image.isPresent {
           delegate.mainController.playerController.currentAlbum.setImage(NSURL(string: item.image)!)
         }
         delegate.mainController.playerController.update(spotAtIndex: 1) {
