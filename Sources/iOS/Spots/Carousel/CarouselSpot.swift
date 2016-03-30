@@ -135,8 +135,8 @@ extension CarouselSpot: UICollectionViewDataSource {
 
     (cell as? ViewConfigurable)?.configure(&component.items[indexPath.item])
     
-    if let configure = configure, viewConfigurable = cell as? ViewConfigurable {
-      configure(viewConfigurable)
+    if let configure = configure, view = cell as? ViewConfigurable {
+      configure(view)
     }
     
     collectionView.collectionViewLayout.invalidateLayout()
