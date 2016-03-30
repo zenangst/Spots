@@ -12,7 +12,7 @@ public class CarouselSpot: NSObject, Spotable, Gridable {
   public var index = 0
   public var paginate = false
   
-  public var configureBlock: (ViewConfigurable -> Void)?
+  public var configure: (ViewConfigurable -> Void)?
 
   public weak var carouselScrollDelegate: SpotsCarouselScrollDelegate?
   public weak var spotsDelegate: SpotsDelegate?
@@ -135,8 +135,8 @@ extension CarouselSpot: UICollectionViewDataSource {
 
     (cell as? ViewConfigurable)?.configure(&component.items[indexPath.item])
     
-    if let configureBlock = configureBlock, viewConfigurable = cell as? ViewConfigurable {
-      configureBlock(viewConfigurable)
+    if let configure = configure, viewConfigurable = cell as? ViewConfigurable {
+      configure(viewConfigurable)
     }
     
     collectionView.collectionViewLayout.invalidateLayout()
