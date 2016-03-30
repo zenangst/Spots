@@ -9,6 +9,7 @@ public protocol Spotable: class {
 
   var index: Int { get set }
   var component: Component { get set }
+  var configureBlock: (ViewConfigurable -> Void)? { get set }
 
   init(component: Component)
 

@@ -10,6 +10,8 @@ public class ViewSpot: NSObject, Spotable, Viewable {
   public weak var spotsDelegate: SpotsDelegate?
   public var component: Component
   public var index = 0
+  
+  public var configureBlock: (ViewConfigurable -> Void)?
 
   public lazy var scrollView = UIScrollView()
 
