@@ -6,11 +6,11 @@
 [![Platform](https://img.shields.io/cocoapods/p/Spots.svg?style=flat)](http://cocoadocs.org/docsets/Spots)
 
 **Spots** is a view controller framework that makes your setup and future
-development blazingly fast. Because of its internal architecture,
+development blazingly fast. Because of its internal architecture and
 generic view models, you can easily move your view models into
 the cloud. This is super easy to do because **Spots** can translate
 JSON data into view model data right out-of-the-box.
-It is packed with convenience methods that are all at your disposal through
+It is packed with convenience methods that are at your disposal through
 the public API.
 
 ## Table of Contents
@@ -41,7 +41,7 @@ the public API.
 ## Key features
 
 - JSON based views that could be served up by your backend.
-- Supports displaying multiple collection and table views in the same container.
+- Supports displaying multiple collections, tables or regular views in the same container.
 - Features both infinity scrolling and pull to refresh, all you have to do is to
 setup delegates that conform to the public protocols on `SpotsController`.
 - No need to implement your own data source, every `Spotable` object has their
@@ -53,7 +53,7 @@ implementation that you add.
 This improves code reuse and helps to theme your app and ultimately keep your application consistent.
 - Support custom Spots, all you need to do is to conform to `Spotable`
 - A rich public API for appending, prepending, inserting, updating or
-deleting `ViewModels`.
+deleting `ViewModel`s.
 - Features three different spots out-of-the-box; `CarouselSpot`, `GridSpot`, `ListSpot`
 - Static custom cell registrations for all `Spotable` objects.
 Write one view cell and use it across your application, when and where you
