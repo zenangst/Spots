@@ -91,7 +91,8 @@ public func ==(lhs: ViewModel, rhs: ViewModel) -> Bool {
     lhs.subtitle == rhs.subtitle &&
     lhs.image == rhs.image &&
     lhs.kind == rhs.kind &&
-    lhs.action == rhs.action
+    lhs.action == rhs.action &&
+    (lhs.meta as NSDictionary).isEqual(rhs.meta as NSDictionary)
 
   return equal
 }
@@ -102,7 +103,8 @@ public func ===(lhs: ViewModel, rhs: ViewModel) -> Bool {
     lhs.image == rhs.image &&
     lhs.kind == rhs.kind &&
     lhs.action == rhs.action &&
-    lhs.size == rhs.size
+    lhs.size == rhs.size &&
+    (lhs.meta as NSDictionary).isEqual(rhs.meta as NSDictionary)
 
   return equal
 }
