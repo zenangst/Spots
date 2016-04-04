@@ -45,6 +45,7 @@ class ViewModelTests : XCTestCase {
     XCTAssertEqual(codeViewModel.image,    json["image"] as? String)
     XCTAssertEqual(codeViewModel.kind,     json["type"] as? String)
     XCTAssertEqual(codeViewModel.action,   json["action"] as? String)
+    XCTAssertEqual(codeViewModel.meta as NSDictionary, json["meta"] as? NSDictionary)
     XCTAssert(codeViewModel.meta.count == 1)
 
     // Compare JSON and programmatically created component
