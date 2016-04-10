@@ -1,5 +1,6 @@
 import UIKit
 import Sugar
+import Brick
 
 public protocol Gridable: Spotable {
   var layout: UICollectionViewFlowLayout { get }

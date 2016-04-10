@@ -1,5 +1,6 @@
 import UIKit
 import Sugar
+import Brick
 
 public class CarouselSpot: NSObject, Spotable, Gridable {
 
@@ -11,7 +12,7 @@ public class CarouselSpot: NSObject, Spotable, Gridable {
   public var component: Component
   public var index = 0
   public var paginate = false
-  
+
   public var configure: (ViewConfigurable -> Void)?
 
   public weak var carouselScrollDelegate: SpotsCarouselScrollDelegate?
@@ -134,11 +135,11 @@ extension CarouselSpot: UICollectionViewDataSource {
     let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath).then { $0.optimize() }
 
     (cell as? ViewConfigurable)?.configure(&component.items[indexPath.item])
-    
+
     if let configure = configure, view = cell as? ViewConfigurable {
       configure(view)
     }
-    
+
     collectionView.collectionViewLayout.invalidateLayout()
 
     return cell

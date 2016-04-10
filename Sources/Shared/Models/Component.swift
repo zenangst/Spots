@@ -6,6 +6,7 @@
 
 import Tailor
 import Sugar
+import Brick
 
 public struct Component: Mappable {
   public var index = 0

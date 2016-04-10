@@ -4,6 +4,8 @@
   import Foundation
 #endif
 
+import Brick
+
 public protocol ViewConfigurable: class {
   var size: CGSize { get set }
 
