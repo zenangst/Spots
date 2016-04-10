@@ -1,6 +1,7 @@
 import Spots
 import Imaginary
 import Sugar
+import Brick
 
 public class DefaultListSpotCell: UITableViewCell, ViewConfigurable {
 

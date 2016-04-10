@@ -1,5 +1,5 @@
 import UIKit
-import Spots
+import Brick
 
 extension ViewModel {
 

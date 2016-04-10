@@ -5,6 +5,7 @@ import Sugar
 import Keychain
 import Cache
 import Hue
+import Brick
 
 let keychainAccount = "spots-accessToken"
 var username: String? {

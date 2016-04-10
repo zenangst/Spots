@@ -1,6 +1,7 @@
 import Sugar
 import Fakery
 import Spots
+import Brick
 
 public class FeedController: SpotsController, SpotsDelegate {
 

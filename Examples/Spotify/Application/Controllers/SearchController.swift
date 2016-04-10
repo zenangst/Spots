@@ -2,6 +2,7 @@ import Spots
 import Compass
 import Keychain
 import Sugar
+import Brick
 
 class SearchController: SpotsController {
 

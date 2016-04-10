@@ -1,6 +1,7 @@
 import Spots
 import Fakery
 import Sugar
+import Brick
 
 class FavoritesController: SpotsController {
 

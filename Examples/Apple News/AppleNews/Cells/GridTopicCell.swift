@@ -4,6 +4,7 @@ import Tailor
 import Spots
 import Imaginary
 import Hue
+import Brick
 
 class GridTopicCell: UICollectionViewCell, ViewConfigurable {
 

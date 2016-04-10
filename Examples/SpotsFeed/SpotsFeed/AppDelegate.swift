@@ -3,6 +3,7 @@ import Fakery
 import Compass
 import Sugar
 import Spots
+import Brick
 
 public func action(urn: String) {
   let stringURL = "\(Compass.scheme)\(urn)"

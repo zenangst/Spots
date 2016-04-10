@@ -1,5 +1,6 @@
 import UIKit
 import Spots
+import Brick
 
 public protocol PostActionDelegate: class {
 

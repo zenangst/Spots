@@ -1,5 +1,6 @@
 import Spots
 import Imaginary
+import Brick
 
 public class PlaylistListSpotCell: UITableViewCell, ViewConfigurable {
 

@@ -2,6 +2,7 @@ import UIKit
 import Imaginary
 import Sugar
 import Spots
+import Brick
 
 class GridSpotHeader : UICollectionViewCell, ViewConfigurable {
 
@@ -24,13 +25,13 @@ class GridSpotHeader : UICollectionViewCell, ViewConfigurable {
 
   func configure(inout item: ViewModel) {
     optimize()
-    
+
     if !item.image.isEmpty {
       imageView.image = nil
       let URL = NSURL(string: item.image)
       imageView.setImage(URL)
     }
-    
+
     imageView.frame = contentView.frame
     item.size.height = 320
     item.size.width = UIScreen.mainScreen().bounds.width

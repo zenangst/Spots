@@ -17,7 +17,6 @@ PODS:
     - Sugar
 
 DEPENDENCIES:
-  - Brick (from `https://github.com/hyperoslo/Brick`)
   - Cache (from `https://github.com/hyperoslo/Cache`)
   - Compass (from `https://github.com/hyperoslo/Compass`)
   - Hue (from `https://github.com/hyperoslo/Hue`)
@@ -25,8 +24,6 @@ DEPENDENCIES:
   - Spots (from `../../`)
 
 EXTERNAL SOURCES:
-  Brick:
-    :git: https://github.com/hyperoslo/Brick
   Cache:
     :git: https://github.com/hyperoslo/Cache
   Compass:
@@ -39,9 +36,6 @@ EXTERNAL SOURCES:
     :path: "../../"
 
 CHECKOUT OPTIONS:
-  Brick:
-    :commit: 37c626ada4309d0234a3b67facf0489f03e15d73
-    :git: https://github.com/hyperoslo/Brick
   Cache:
     :commit: 3fa13067951112c55bd36a4578001681377c81e7
     :git: https://github.com/hyperoslo/Cache

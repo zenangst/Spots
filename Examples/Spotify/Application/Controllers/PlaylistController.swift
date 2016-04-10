@@ -4,6 +4,7 @@ import Whisper
 import Compass
 import Sugar
 import Hue
+import Brick
 
 class PlaylistController: SpotsController {
 

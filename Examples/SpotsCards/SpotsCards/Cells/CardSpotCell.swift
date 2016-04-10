@@ -3,6 +3,7 @@ import Imaginary
 import Sugar
 import Hue
 import Spots
+import Brick
 
 class CardSpotCell : UICollectionViewCell, ViewConfigurable {
 
