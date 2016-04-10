@@ -15,7 +15,7 @@ the public API.
 
 ## Table of Contents
 
-<img src="https://raw.githubusercontent.com/hyperoslo/Spots/master/Images/icon.png" alt="Hue Icon" align="right" />
+<img src="https://raw.githubusercontent.com/hyperoslo/Spots/master/Images/icon_v4.png" alt="Spots Icon" align="right" />
 
 * [Key features](#key-features)
 * [Usage](#usage)
