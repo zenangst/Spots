@@ -271,6 +271,8 @@ pod 'Spots'
 
 ## Dependencies
 
+- **[Brick](https://github.com/hyperoslo/Brick)**
+`ViewModel` comes from `Brick`.
 - **[Sugar](https://github.com/hyperoslo/Sugar)**
 To sweeten the implementation.
 - **[Tailor](https://github.com/zenangst/Tailor)**
