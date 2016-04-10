@@ -189,8 +189,6 @@
 		D58477FF1C43FEB8006EBA49 = {
 			isa = PBXGroup;
 			children = (
-				BD352E601CBAD6F9002CD032 /* Brick.framework */,
-				BD352E5E1CBAD6EC002CD032 /* Brick.framework */,
 				BDB538311C444D460005E498 /* Playgrounds */,
 				D58479001C44078B006EBA49 /* Frameworks-Mac */,
 				D58478F11C44072B006EBA49 /* Frameworks-iOS */,
@@ -372,6 +370,7 @@
 		D58478F11C44072B006EBA49 /* Frameworks-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				BD352E5E1CBAD6EC002CD032 /* Brick.framework */,
 				D58478F31C44074C006EBA49 /* Fakery.framework */,
 				D58478F41C44074C006EBA49 /* SwiftyJSON.framework */,
 				D58478E91C440726006EBA49 /* Tailor.framework */,
@@ -385,6 +384,7 @@
 		D58479001C44078B006EBA49 /* Frameworks-Mac */ = {
 			isa = PBXGroup;
 			children = (
+				BD352E601CBAD6F9002CD032 /* Brick.framework */,
 				D58478FC1C440781006EBA49 /* Fakery.framework */,
 				D58478FD1C440781006EBA49 /* SwiftyJSON.framework */,
 				D58478F71C44076B006EBA49 /* Tailor.framework */,
@@ -849,7 +849,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = "SpotsTests/Info-iOS.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(FRAMEWORK_SEARCH_PATHS)";
 				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.SpotsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -863,7 +863,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = "SpotsTests/Info-iOS.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(FRAMEWORK_SEARCH_PATHS)";
 				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.SpotsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -929,7 +929,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
 				INFOPLIST_FILE = "SpotsTests/Info-Mac.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks $(FRAMEWORK_SEARCH_PATHS)";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = "no.hyper.Spots-MacTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -947,7 +947,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
 				INFOPLIST_FILE = "SpotsTests/Info-Mac.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks $(FRAMEWORK_SEARCH_PATHS)";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = "no.hyper.Spots-MacTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
