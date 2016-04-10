@@ -1,6 +1,7 @@
 import Spots
 import Sugar
 import Compass
+import Brick
 
 class MainController: UITabBarController {
 

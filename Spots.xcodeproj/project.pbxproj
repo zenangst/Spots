@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		BD0625F71C45754B00A16F91 /* ViewSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0625F61C45754B00A16F91 /* ViewSpot.swift */; };
+		BD352E5F1CBAD6EC002CD032 /* Brick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD352E5E1CBAD6EC002CD032 /* Brick.framework */; };
+		BD352E611CBAD6F9002CD032 /* Brick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD352E601CBAD6F9002CD032 /* Brick.framework */; };
 		BD48BEC71C45795600317D76 /* Viewable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD48BEC61C45795600317D76 /* Viewable.swift */; };
 		BD48BEC91C459B4800317D76 /* ViewSpotSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD48BEC81C459B4800317D76 /* ViewSpotSpec.swift */; };
 		BD48BECB1C459D2A00317D76 /* CarouselSpotSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD48BECA1C459D2A00317D76 /* CarouselSpotSpec.swift */; };
@@ -17,7 +19,6 @@
 		D58478531C43FFEB006EBA49 /* TestSpotFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58478281C43FF34006EBA49 /* TestSpotFactory.swift */; };
 		D58478551C43FFEF006EBA49 /* TestSpotsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58478291C43FF34006EBA49 /* TestSpotsController.swift */; };
 		D58478571C43FFFD006EBA49 /* TestComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D584782B1C43FF34006EBA49 /* TestComponent.swift */; };
-		D58478591C440000006EBA49 /* TestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D584782C1C43FF34006EBA49 /* TestViewModel.swift */; };
 		D584787D1C440062006EBA49 /* SpotsController+UIScrollViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D584785E1C440062006EBA49 /* SpotsController+UIScrollViewDelegate.swift */; };
 		D584787F1C440062006EBA49 /* SpotsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D584785F1C440062006EBA49 /* SpotsController.swift */; };
 		D58478811C440062006EBA49 /* Gridable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58478611C440062006EBA49 /* Gridable.swift */; };
@@ -37,14 +38,11 @@
 		D584789F1C440062006EBA49 /* Componentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58478781C440062006EBA49 /* Componentable.swift */; };
 		D58478A11C440062006EBA49 /* ViewConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58478791C440062006EBA49 /* ViewConfigurable.swift */; };
 		D58478A31C440062006EBA49 /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = D584787B1C440062006EBA49 /* Component.swift */; };
-		D58478A51C440062006EBA49 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D584787C1C440062006EBA49 /* ViewModel.swift */; };
 		D58478D21C440568006EBA49 /* Spots.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478C81C440567006EBA49 /* Spots.framework */; };
 		D58478E31C44063C006EBA49 /* Componentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58478781C440062006EBA49 /* Componentable.swift */; };
 		D58478E41C44063C006EBA49 /* ViewConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58478791C440062006EBA49 /* ViewConfigurable.swift */; };
 		D58478E51C44063C006EBA49 /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = D584787B1C440062006EBA49 /* Component.swift */; };
-		D58478E61C44063C006EBA49 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D584787C1C440062006EBA49 /* ViewModel.swift */; };
 		D58478E71C440645006EBA49 /* TestComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D584782B1C43FF34006EBA49 /* TestComponent.swift */; };
-		D58478E81C440645006EBA49 /* TestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D584782C1C43FF34006EBA49 /* TestViewModel.swift */; };
 		D58478ED1C440726006EBA49 /* Tailor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478E91C440726006EBA49 /* Tailor.framework */; };
 		D58478EF1C440726006EBA49 /* Sugar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478EB1C440726006EBA49 /* Sugar.framework */; };
 		D58478F21C44074C006EBA49 /* Sugar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478EB1C440726006EBA49 /* Sugar.framework */; };
@@ -76,6 +74,8 @@
 
 /* Begin PBXFileReference section */
 		BD0625F61C45754B00A16F91 /* ViewSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewSpot.swift; sourceTree = "<group>"; };
+		BD352E5E1CBAD6EC002CD032 /* Brick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Brick.framework; path = Carthage/Build/iOS/Brick.framework; sourceTree = "<group>"; };
+		BD352E601CBAD6F9002CD032 /* Brick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Brick.framework; path = Carthage/Build/Mac/Brick.framework; sourceTree = "<group>"; };
 		BD48BEC61C45795600317D76 /* Viewable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Viewable.swift; sourceTree = "<group>"; };
 		BD48BEC81C459B4800317D76 /* ViewSpotSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewSpotSpec.swift; sourceTree = "<group>"; };
 		BD48BECA1C459D2A00317D76 /* CarouselSpotSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselSpotSpec.swift; sourceTree = "<group>"; };
@@ -89,7 +89,6 @@
 		D58478281C43FF34006EBA49 /* TestSpotFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSpotFactory.swift; sourceTree = "<group>"; };
 		D58478291C43FF34006EBA49 /* TestSpotsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSpotsController.swift; sourceTree = "<group>"; };
 		D584782B1C43FF34006EBA49 /* TestComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestComponent.swift; sourceTree = "<group>"; };
-		D584782C1C43FF34006EBA49 /* TestViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewModel.swift; sourceTree = "<group>"; };
 		D584784F1C43FFA1006EBA49 /* Info-Mac.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-Mac.plist"; sourceTree = "<group>"; };
 		D58478511C43FFA8006EBA49 /* Info-Mac.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-Mac.plist"; sourceTree = "<group>"; };
 		D584785E1C440062006EBA49 /* SpotsController+UIScrollViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SpotsController+UIScrollViewDelegate.swift"; sourceTree = "<group>"; };
@@ -111,7 +110,6 @@
 		D58478781C440062006EBA49 /* Componentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Componentable.swift; sourceTree = "<group>"; };
 		D58478791C440062006EBA49 /* ViewConfigurable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewConfigurable.swift; sourceTree = "<group>"; };
 		D584787B1C440062006EBA49 /* Component.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
-		D584787C1C440062006EBA49 /* ViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		D58478C81C440567006EBA49 /* Spots.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Spots.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D58478D11C440567006EBA49 /* Spots-Mac-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Spots-Mac-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D58478E91C440726006EBA49 /* Tailor.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Tailor.framework; path = Carthage/Build/iOS/Tailor.framework; sourceTree = "<group>"; };
@@ -133,6 +131,7 @@
 			files = (
 				D58478ED1C440726006EBA49 /* Tailor.framework in Frameworks */,
 				D58478EF1C440726006EBA49 /* Sugar.framework in Frameworks */,
+				BD352E5F1CBAD6EC002CD032 /* Brick.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -153,6 +152,7 @@
 			files = (
 				D58478F91C44076B006EBA49 /* Tailor.framework in Frameworks */,
 				D58478FA1C44076B006EBA49 /* Sugar.framework in Frameworks */,
+				BD352E611CBAD6F9002CD032 /* Brick.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -247,7 +247,6 @@
 			isa = PBXGroup;
 			children = (
 				D584782B1C43FF34006EBA49 /* TestComponent.swift */,
-				D584782C1C43FF34006EBA49 /* TestViewModel.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -364,7 +363,6 @@
 			isa = PBXGroup;
 			children = (
 				D584787B1C440062006EBA49 /* Component.swift */,
-				D584787C1C440062006EBA49 /* ViewModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -372,6 +370,7 @@
 		D58478F11C44072B006EBA49 /* Frameworks-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				BD352E5E1CBAD6EC002CD032 /* Brick.framework */,
 				D58478F31C44074C006EBA49 /* Fakery.framework */,
 				D58478F41C44074C006EBA49 /* SwiftyJSON.framework */,
 				D58478E91C440726006EBA49 /* Tailor.framework */,
@@ -385,6 +384,7 @@
 		D58479001C44078B006EBA49 /* Frameworks-Mac */ = {
 			isa = PBXGroup;
 			children = (
+				BD352E601CBAD6F9002CD032 /* Brick.framework */,
 				D58478FC1C440781006EBA49 /* Fakery.framework */,
 				D58478FD1C440781006EBA49 /* SwiftyJSON.framework */,
 				D58478F71C44076B006EBA49 /* Tailor.framework */,
@@ -573,6 +573,7 @@
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/Tailor.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Sugar.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Brick.framework",
 			);
 			outputPaths = (
 			);
@@ -606,6 +607,7 @@
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/Mac/Tailor.framework",
 				"$(SRCROOT)/Carthage/Build/Mac/Sugar.framework",
+				"$(SRCROOT)/Carthage/Build/Mac/Brick.framework",
 			);
 			outputPaths = (
 			);
@@ -652,7 +654,6 @@
 				D58478A11C440062006EBA49 /* ViewConfigurable.swift in Sources */,
 				D58478971C440062006EBA49 /* ListSpotCell.swift in Sources */,
 				D58478851C440062006EBA49 /* Parser.swift in Sources */,
-				D58478A51C440062006EBA49 /* ViewModel.swift in Sources */,
 				D58478951C440062006EBA49 /* ListSpot.swift in Sources */,
 				D584787D1C440062006EBA49 /* SpotsController+UIScrollViewDelegate.swift in Sources */,
 				D584788B1C440062006EBA49 /* SpotsDelegates.swift in Sources */,
@@ -667,7 +668,6 @@
 			files = (
 				BD48BECB1C459D2A00317D76 /* CarouselSpotSpec.swift in Sources */,
 				BDB538301C444B3C0005E498 /* ListSpotSpec.swift in Sources */,
-				D58478591C440000006EBA49 /* TestViewModel.swift in Sources */,
 				BDCCD9271C44438800AC21D1 /* GridSpotSpec.swift in Sources */,
 				D58478571C43FFFD006EBA49 /* TestComponent.swift in Sources */,
 				BD48BEC91C459B4800317D76 /* ViewSpotSpec.swift in Sources */,
@@ -680,7 +680,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D58478E61C44063C006EBA49 /* ViewModel.swift in Sources */,
 				D58478E41C44063C006EBA49 /* ViewConfigurable.swift in Sources */,
 				D58478E51C44063C006EBA49 /* Component.swift in Sources */,
 				D58478E31C44063C006EBA49 /* Componentable.swift in Sources */,
@@ -691,7 +690,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D58478E81C440645006EBA49 /* TestViewModel.swift in Sources */,
 				D58478E71C440645006EBA49 /* TestComponent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -851,7 +849,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = "SpotsTests/Info-iOS.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(FRAMEWORK_SEARCH_PATHS)";
 				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.SpotsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -865,7 +863,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = "SpotsTests/Info-iOS.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(FRAMEWORK_SEARCH_PATHS)";
 				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.SpotsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -931,7 +929,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
 				INFOPLIST_FILE = "SpotsTests/Info-Mac.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks $(FRAMEWORK_SEARCH_PATHS)";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = "no.hyper.Spots-MacTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -949,7 +947,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
 				INFOPLIST_FILE = "SpotsTests/Info-Mac.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks $(FRAMEWORK_SEARCH_PATHS)";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = "no.hyper.Spots-MacTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";

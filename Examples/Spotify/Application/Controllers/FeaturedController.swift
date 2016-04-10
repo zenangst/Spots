@@ -1,6 +1,7 @@
 import Spots
 import Keychain
 import Compass
+import Brick
 
 class FeaturedController: SpotsController {
 

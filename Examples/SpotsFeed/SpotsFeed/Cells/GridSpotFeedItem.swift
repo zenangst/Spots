@@ -2,6 +2,7 @@ import UIKit
 import Imaginary
 import Sugar
 import Spots
+import Brick
 
 class GridSpotFeedItem : UICollectionViewCell, ViewConfigurable {
 

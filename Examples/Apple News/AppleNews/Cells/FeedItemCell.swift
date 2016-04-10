@@ -1,6 +1,7 @@
 import Spots
 import Sugar
 import Imaginary
+import Brick
 
 class FeedItemCell: UITableViewCell, ViewConfigurable {
 

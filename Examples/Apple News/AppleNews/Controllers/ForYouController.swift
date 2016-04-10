@@ -1,6 +1,7 @@
 import Spots
 import Sugar
 import Fakery
+import Brick
 import Transition
 
 class ForYouController: SpotsController, SpotsDelegate {

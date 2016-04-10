@@ -1,6 +1,7 @@
 import Foundation
 import Spots
 import Compass
+import Brick
 
 class AuthController: SpotsController, SpotsDelegate {
 

@@ -2,6 +2,7 @@ import UIKit
 import Imaginary
 import Sugar
 import Spots
+import Brick
 
 class GridSpotCellCircle : UICollectionViewCell, ViewConfigurable {
 
@@ -48,12 +49,12 @@ class GridSpotCellCircle : UICollectionViewCell, ViewConfigurable {
     optimize()
 
     imageView.height = 88
-    
+
     if !item.image.isEmpty {
       let URL = NSURL(string: item.image)
       imageView.setImage(URL)
     }
-    
+
     titleLabel.text = item.title
     subtitleLabel.text = item.subtitle
 

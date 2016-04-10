@@ -3,6 +3,7 @@ import Compass
 import Keychain
 import Imaginary
 import Sugar
+import Brick
 
 class PlayerController: SpotsController {
 

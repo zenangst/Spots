@@ -1,5 +1,6 @@
 import Spots
 import Sugar
+import Brick
 import Imaginary
 
 public class FeaturedFeedItemCell: UITableViewCell, ViewConfigurable {

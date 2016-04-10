@@ -1,5 +1,6 @@
 import UIKit
 import Sugar
+import Brick
 
 public protocol Listable: Spotable {
   var tableView: UITableView { get }

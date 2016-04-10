@@ -1,4 +1,4 @@
-import Spots
+import Brick
 
 extension SPTListPage {
 

@@ -1,4 +1,5 @@
 import Spots
+import Brick
 import Fakery
 
 class ExploreController: SpotsController {

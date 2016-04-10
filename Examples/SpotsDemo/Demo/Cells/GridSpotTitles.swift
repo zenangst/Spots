@@ -3,6 +3,7 @@ import Imaginary
 import Sugar
 import Spots
 import Hue
+import Brick
 
 class GridSpotCellTitles : UICollectionViewCell, ViewConfigurable {
 
