@@ -1,4 +1,7 @@
 PODS:
+  - Brick (0.1.0):
+    - Sugar (~> 1.0)
+    - Tailor
   - Cache (1.0.0)
   - Compass (1.4.0):
     - Sugar
@@ -6,13 +9,15 @@ PODS:
   - Imaginary (0.1.0):
     - Cache
   - Spots (1.0.0):
+    - Brick
     - Sugar
     - Tailor
-  - Sugar (1.0.12)
-  - Tailor (0.4.5):
+  - Sugar (1.0.13)
+  - Tailor (0.7.0):
     - Sugar
 
 DEPENDENCIES:
+  - Brick (from `https://github.com/hyperoslo/Brick`)
   - Cache (from `https://github.com/hyperoslo/Cache`)
   - Compass (from `https://github.com/hyperoslo/Compass`)
   - Hue (from `https://github.com/hyperoslo/Hue`)
@@ -20,6 +25,8 @@ DEPENDENCIES:
   - Spots (from `../../`)
 
 EXTERNAL SOURCES:
+  Brick:
+    :git: https://github.com/hyperoslo/Brick
   Cache:
     :git: https://github.com/hyperoslo/Cache
   Compass:
@@ -32,26 +39,30 @@ EXTERNAL SOURCES:
     :path: "../../"
 
 CHECKOUT OPTIONS:
+  Brick:
+    :commit: 37c626ada4309d0234a3b67facf0489f03e15d73
+    :git: https://github.com/hyperoslo/Brick
   Cache:
-    :commit: 5af9d7f80b5c39ec578c54874d5acda248d10831
+    :commit: 3fa13067951112c55bd36a4578001681377c81e7
     :git: https://github.com/hyperoslo/Cache
   Compass:
     :commit: b702df434f60418b8817896d89b60fc4a78fea89
     :git: https://github.com/hyperoslo/Compass
   Hue:
-    :commit: ac060de256dee3929d20d65ec9ca6726878a4342
+    :commit: 89ae5e19abc17e5ef87ad823a08250c0671a79e9
     :git: https://github.com/hyperoslo/Hue
   Imaginary:
     :commit: 243448a070decf6d8fcdc503b14505a2951af680
     :git: https://github.com/hyperoslo/Imaginary
 
 SPEC CHECKSUMS:
+  Brick: e49666d7e89c013688839f327166a79d3d1e2e1c
   Cache: 78f58bc008313c7a1182967a2ebcb3de9fddecd4
   Compass: f4b8c37f9b315f0ee4f5e4f71888c54c92992d5d
-  Hue: ed6781be844b58b2a38150cfd4bf24c33449faf8
+  Hue: c7d6a7206bac669ed69e78cc6c14a4d7bd28277c
   Imaginary: feaea646440c68a9b6ed66a46597d548b9a44207
-  Spots: fb26399117edb88894a111886fb2766c29f6daa0
-  Sugar: 7280dfee5299f98cbae23d86c800cccd86377117
-  Tailor: d1d5bce9d81e953c3d7b3f3fd6d084337feeb7a5
+  Spots: 9330ae8c8157a4fab347825c67a788b9a51691a0
+  Sugar: ca8778ac9d076fba1366b889e6bc205f376465e4
+  Tailor: 3d53a5e881a42530500c6fa18b86120f4ddd57fe
 
 COCOAPODS: 0.39.0
