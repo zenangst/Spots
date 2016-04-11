@@ -161,7 +161,7 @@ public extension Spotable where Self : Gridable {
 
     dispatch { [weak self] in
       guard let weakSelf = self else { return }
-      weakSelf.collectionView.reload([index])
+      weakSelf.collectionView.reload([index], completion: completion)
     }
   }
 
