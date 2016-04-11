@@ -120,10 +120,13 @@ extension ListSpot: UITableViewDataSource {
       .dequeueReusableCellWithIdentifier(reuseIdentifier, forIndexPath: indexPath)
       .then { $0.optimize() }
 
-    if indexPath.item < component.items.count {
-      (cell as? SpotConfigurable)?.configure(&component.items[indexPath.item])
+    if let cell = cell as? SpotConfigurable where indexPath.item < component.items.count {
+      cell.configure(&component.items[indexPath.item])
+      if component.items[indexPath.item].size.height == 0.0 {
+        component.items[indexPath.item].size = cell.size
+      }
     }
-    
+
     if let configure = configure, view = cell as? SpotConfigurable {
       configure(view)
     }

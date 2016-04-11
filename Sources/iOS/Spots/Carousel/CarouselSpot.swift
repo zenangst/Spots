@@ -134,7 +134,12 @@ extension CarouselSpot: UICollectionViewDataSource {
     let reuseIdentifier = item(indexPath).kind.isPresent ? item(indexPath).kind : component.kind
     let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath).then { $0.optimize() }
 
-    (cell as? SpotConfigurable)?.configure(&component.items[indexPath.item])
+    if let cell = cell as? SpotConfigurable {
+      cell.configure(&component.items[indexPath.item])
+      if component.items[indexPath.item].size.height == 0.0 {
+        component.items[indexPath.item].size = cell.size
+      }
+    }
 
     if let configure = configure, view = cell as? SpotConfigurable {
       configure(view)
