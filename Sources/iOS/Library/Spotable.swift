@@ -10,7 +10,7 @@ public protocol Spotable: class {
 
   var index: Int { get set }
   var component: Component { get set }
-  var configure: (ViewConfigurable -> Void)? { get set }
+  var configure: (SpotConfigurable -> Void)? { get set }
 
   init(component: Component)
 
@@ -67,6 +67,6 @@ public extension Spotable {
     if cached?.isKindOfClass(componentClass) == false { cached = nil }
     if cached == nil { cached = componentClass.init() }
 
-    (cached as? ViewConfigurable)?.configure(&component.items[index])
+    (cached as? SpotConfigurable)?.configure(&component.items[index])
   }
 }

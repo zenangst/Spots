@@ -2,7 +2,7 @@ import UIKit
 import Sugar
 import Brick
 
-class GridSpotCell: UICollectionViewCell, ViewConfigurable {
+class GridSpotCell: UICollectionViewCell, SpotConfigurable {
 
   var size = CGSize(width: 88, height: 88)
   var item: ViewModel?

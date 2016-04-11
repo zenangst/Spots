@@ -11,7 +11,7 @@ public class ViewSpot: NSObject, Spotable, Viewable {
   public var component: Component
   public var index = 0
   
-  public var configure: (ViewConfigurable -> Void)?
+  public var configure: (SpotConfigurable -> Void)?
 
   public lazy var scrollView = UIScrollView()
 

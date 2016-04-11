@@ -3,7 +3,7 @@ import Imaginary
 import Sugar
 import Brick
 
-public class FeaturedGridSpotCell: UICollectionViewCell, ViewConfigurable {
+public class FeaturedGridSpotCell: UICollectionViewCell, SpotConfigurable {
 
   public var size = CGSize(width: 100, height: 120)
 

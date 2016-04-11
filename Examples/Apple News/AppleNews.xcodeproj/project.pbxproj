@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B29CF9CD77B8C93859BD762B /* Pods_AppleNews.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DD957703EEEF6B20D588D95 /* Pods_AppleNews.framework */; };
+		A466301051DBAF3D3CDCC68C /* Pods_AppleNews.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCED3B2FE617262FF1780A7E /* Pods_AppleNews.framework */; };
 		BD0054351C7A3DB1001AD90A /* ForYouDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0054341C7A3DB1001AD90A /* ForYouDetailController.swift */; };
 		BD0054371C7A43C7001AD90A /* FeedDetailItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0054361C7A43C7001AD90A /* FeedDetailItem.swift */; };
 		BD037EBF1C0B89A7004BDA21 /* SearchHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD037EBE1C0B89A7004BDA21 /* SearchHeaderView.swift */; };
@@ -29,10 +29,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		2002620FC54D3BB1C033EE63 /* Pods-AppleNews.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppleNews.release.xcconfig"; path = "Pods/Target Support Files/Pods-AppleNews/Pods-AppleNews.release.xcconfig"; sourceTree = "<group>"; };
 		4130076C870CD84B2DA65854 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5DD957703EEEF6B20D588D95 /* Pods_AppleNews.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppleNews.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		709B0E5595FD3FE04624719A /* Pods-AppleNews.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppleNews.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AppleNews/Pods-AppleNews.debug.xcconfig"; sourceTree = "<group>"; };
+		87E4A9CFD2C3E6F740CCE9D2 /* Pods-AppleNews.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppleNews.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AppleNews/Pods-AppleNews.debug.xcconfig"; sourceTree = "<group>"; };
 		BD0054341C7A3DB1001AD90A /* ForYouDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForYouDetailController.swift; sourceTree = "<group>"; };
 		BD0054361C7A43C7001AD90A /* FeedDetailItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = FeedDetailItem.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		BD037EBE1C0B89A7004BDA21 /* SearchHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SearchHeaderView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -53,6 +51,8 @@
 		BDE260471C0B67F000FB1939 /* SavedController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavedController.swift; sourceTree = "<group>"; };
 		BDE260481C0B67F000FB1939 /* SearchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchController.swift; sourceTree = "<group>"; };
 		BDE2604E1C0B798C00FB1939 /* MainController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainController.swift; sourceTree = "<group>"; };
+		FCED3B2FE617262FF1780A7E /* Pods_AppleNews.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppleNews.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FE669EE9B946318525C48D96 /* Pods-AppleNews.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppleNews.release.xcconfig"; path = "Pods/Target Support Files/Pods-AppleNews/Pods-AppleNews.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,7 +60,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B29CF9CD77B8C93859BD762B /* Pods_AppleNews.framework in Frameworks */,
+				A466301051DBAF3D3CDCC68C /* Pods_AppleNews.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -71,18 +71,9 @@
 			isa = PBXGroup;
 			children = (
 				4130076C870CD84B2DA65854 /* Pods.framework */,
-				5DD957703EEEF6B20D588D95 /* Pods_AppleNews.framework */,
+				FCED3B2FE617262FF1780A7E /* Pods_AppleNews.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		2EC87F64127F08E25451BDB8 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				709B0E5595FD3FE04624719A /* Pods-AppleNews.debug.xcconfig */,
-				2002620FC54D3BB1C033EE63 /* Pods-AppleNews.release.xcconfig */,
-			);
-			name = Pods;
 			sourceTree = "<group>";
 		};
 		BD4BCCC01BDE04AA00466C0F = {
@@ -91,7 +82,7 @@
 				22AB7A2AE7FDD8056EF15DDE /* Frameworks */,
 				BD4BCCCA1BDE04AA00466C0F /* Products */,
 				BD9142C21BF086300062BFCB /* AppleNews */,
-				2EC87F64127F08E25451BDB8 /* Pods */,
+				E78DF31C852528FC4BF73F25 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -169,6 +160,15 @@
 			path = Controllers;
 			sourceTree = "<group>";
 		};
+		E78DF31C852528FC4BF73F25 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				87E4A9CFD2C3E6F740CCE9D2 /* Pods-AppleNews.debug.xcconfig */,
+				FE669EE9B946318525C48D96 /* Pods-AppleNews.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -176,12 +176,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BD4BCCDB1BDE04AA00466C0F /* Build configuration list for PBXNativeTarget "AppleNews" */;
 			buildPhases = (
-				F77B86A1365BCF282489826C /* Check Pods Manifest.lock */,
+				FB89AE5D66CAD4B6D4A0A26A /* 📦 Check Pods Manifest.lock */,
 				BD4BCCC51BDE04AA00466C0F /* Sources */,
 				BD4BCCC61BDE04AA00466C0F /* Frameworks */,
 				BD4BCCC71BDE04AA00466C0F /* Resources */,
-				377891BCDE3A1034F2896219 /* Embed Pods Frameworks */,
-				770FA7EB69475B8B06164E82 /* Copy Pods Resources */,
+				A8F34E097D1DDF39F74C66BC /* 📦 Embed Pods Frameworks */,
+				EBB61488B540A42FD4BF13B4 /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -237,14 +237,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		377891BCDE3A1034F2896219 /* Embed Pods Frameworks */ = {
+		A8F34E097D1DDF39F74C66BC /* 📦 Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "📦 Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -252,14 +252,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AppleNews/Pods-AppleNews-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		770FA7EB69475B8B06164E82 /* Copy Pods Resources */ = {
+		EBB61488B540A42FD4BF13B4 /* 📦 Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "📦 Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -267,14 +267,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AppleNews/Pods-AppleNews-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		F77B86A1365BCF282489826C /* Check Pods Manifest.lock */ = {
+		FB89AE5D66CAD4B6D4A0A26A /* 📦 Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "📦 Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -405,7 +405,7 @@
 		};
 		BD4BCCDC1BDE04AA00466C0F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 709B0E5595FD3FE04624719A /* Pods-AppleNews.debug.xcconfig */;
+			baseConfigurationReference = 87E4A9CFD2C3E6F740CCE9D2 /* Pods-AppleNews.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = AppleNews/Info.plist;
@@ -417,7 +417,7 @@
 		};
 		BD4BCCDD1BDE04AA00466C0F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2002620FC54D3BB1C033EE63 /* Pods-AppleNews.release.xcconfig */;
+			baseConfigurationReference = FE669EE9B946318525C48D96 /* Pods-AppleNews.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = AppleNews/Info.plist;

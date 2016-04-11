@@ -3,7 +3,7 @@ import Sugar
 import Brick
 import Imaginary
 
-public class FeaturedFeedItemCell: UITableViewCell, ViewConfigurable {
+public class FeaturedFeedItemCell: UITableViewCell, SpotConfigurable {
 
   public var size = CGSize(width: 0, height: 130)
 

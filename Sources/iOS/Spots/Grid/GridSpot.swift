@@ -7,10 +7,10 @@ public class GridSpot: NSObject, Spotable, Gridable {
   public static var defaultView: UIView.Type = GridSpotCell.self
   public static var configure: ((view: UICollectionView) -> Void)?
 
-  public var cachedViews = [String : ViewConfigurable]()
+  public var cachedViews = [String : SpotConfigurable]()
   public var component: Component
   public var index = 0
-  public var configure: (ViewConfigurable -> Void)?
+  public var configure: (SpotConfigurable -> Void)?
 
   public weak var spotsDelegate: SpotsDelegate?
 
@@ -76,9 +76,9 @@ extension GridSpot: UICollectionViewDataSource {
     let reuseIdentifier = item(indexPath).kind.isPresent ? item(indexPath).kind : component.kind
     let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath).then { $0.optimize() }
 
-    (cell as? ViewConfigurable)?.configure(&component.items[indexPath.item])
+    (cell as? SpotConfigurable)?.configure(&component.items[indexPath.item])
     
-    if let configure = configure, view = cell as? ViewConfigurable {
+    if let configure = configure, view = cell as? SpotConfigurable {
       configure(view)
     }
     

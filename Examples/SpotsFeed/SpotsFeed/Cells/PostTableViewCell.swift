@@ -17,7 +17,7 @@ public protocol PostInformationDelegate: class {
   func mediaDidTap(postID: Int, kind: Media.Kind, index: Int)
 }
 
-public class PostTableViewCell: WallTableViewCell, ViewConfigurable {
+public class PostTableViewCell: WallTableViewCell, SpotConfigurable {
 
   public var size = CGSize(width: 0, height: 44)
 

@@ -1,5 +1,5 @@
 PODS:
-  - Brick (0.1.0):
+  - Brick (0.2.0):
     - Sugar (~> 1.0)
     - Tailor
   - Cache (1.0.0)
@@ -61,7 +61,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/hyperoslo/Transition
 
 SPEC CHECKSUMS:
-  Brick: e49666d7e89c013688839f327166a79d3d1e2e1c
+  Brick: fb66513880a7cce1dcb33243943fba53dbe00394
   Cache: 78f58bc008313c7a1182967a2ebcb3de9fddecd4
   Compass: f4b8c37f9b315f0ee4f5e4f71888c54c92992d5d
   Fakery: a4121424cf731cacc04a5ff1735fcc6e3efc656d
@@ -73,4 +73,6 @@ SPEC CHECKSUMS:
   Tailor: 3d53a5e881a42530500c6fa18b86120f4ddd57fe
   Transition: 66d86e3ae1b8f0b3d9ba2000c7a45fbc17b066f2
 
-COCOAPODS: 0.39.0
+PODFILE CHECKSUM: b5990c672d7c25f24324197d1aa40668c01b8dd7
+
+COCOAPODS: 1.0.0.beta.5

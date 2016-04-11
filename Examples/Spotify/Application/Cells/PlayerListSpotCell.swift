@@ -2,7 +2,7 @@ import Spots
 import Imaginary
 import Brick
 
-public class PlayerListSpotCell: UITableViewCell, ViewConfigurable {
+public class PlayerListSpotCell: UITableViewCell, SpotConfigurable {
 
   public var size = CGSize(width: 0, height: 60)
   public var item: ViewModel?

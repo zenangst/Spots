@@ -154,7 +154,7 @@ public extension Spotable where Self : Gridable {
       : component.kind
 
     collectionView.registerClass(cellClass, forCellWithReuseIdentifier: reuseIdentifier)
-    if let cell = cellClass.init() as? ViewConfigurable {
+    if let cell = cellClass.init() as? SpotConfigurable {
       component.items[index].index = index
       cell.configure(&component.items[index])
     }
@@ -189,7 +189,7 @@ public extension Spotable where Self : Gridable {
       if component.span > 0 {
         component.items[index].size.width = UIScreen.mainScreen().bounds.size.width / CGFloat(component.span)
       }
-      (cached as? ViewConfigurable)?.configure(&component.items[index])
+      (cached as? SpotConfigurable)?.configure(&component.items[index])
     }
     cached = nil
   }
@@ -198,7 +198,7 @@ public extension Spotable where Self : Gridable {
     let items = component.items
     for (index, item) in items.enumerate() {
       let cellClass = self.dynamicType.views[item.kind] ?? self.dynamicType.defaultView
-      if let cell = cellClass.init() as? ViewConfigurable {
+      if let cell = cellClass.init() as? SpotConfigurable {
         component.items[index].index = index
         cell.configure(&component.items[index])
       }

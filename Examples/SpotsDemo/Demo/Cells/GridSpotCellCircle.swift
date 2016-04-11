@@ -4,7 +4,7 @@ import Sugar
 import Spots
 import Brick
 
-class GridSpotCellCircle : UICollectionViewCell, ViewConfigurable {
+class GridSpotCellCircle : UICollectionViewCell, SpotConfigurable {
 
   var size = CGSize(width: 88, height: 120)
 
