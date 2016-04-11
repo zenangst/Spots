@@ -143,7 +143,7 @@ public extension Spotable where Self : Listable {
 
     tableView.registerClass(cellClass, forCellReuseIdentifier: reuseIdentifier)
 
-    if let cell = cellClass.init() as? ViewConfigurable {
+    if let cell = cellClass.init() as? SpotConfigurable {
       component.items[index].index = index
       cell.configure(&component.items[index])
     }
@@ -161,7 +161,7 @@ public extension Spotable where Self : Listable {
 
       tableView.registerClass(cellClass, forCellReuseIdentifier: reuseIdentifier)
 
-      if let cell = cellClass.init() as? ViewConfigurable {
+      if let cell = cellClass.init() as? SpotConfigurable {
         component.items[index].index = index
         cell.configure(&component.items[index])
       }

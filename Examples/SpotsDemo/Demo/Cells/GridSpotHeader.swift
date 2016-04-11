@@ -4,7 +4,7 @@ import Sugar
 import Spots
 import Brick
 
-class GridSpotHeader : UICollectionViewCell, ViewConfigurable {
+class GridSpotHeader : UICollectionViewCell, SpotConfigurable {
 
   var size = CGSize(width: 0, height: 320)
   lazy var imageView: UIImageView = {

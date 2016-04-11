@@ -2,7 +2,7 @@ import UIKit
 import Sugar
 import Brick
 
-public class ListSpotCell: UITableViewCell, ViewConfigurable {
+public class ListSpotCell: UITableViewCell, SpotConfigurable {
 
   public var size = CGSize(width: 0, height: 44)
   public var item: ViewModel?

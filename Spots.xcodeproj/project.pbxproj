@@ -36,11 +36,11 @@
 		D584789B1C440062006EBA49 /* SpotsContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58478741C440062006EBA49 /* SpotsContentView.swift */; };
 		D584789D1C440062006EBA49 /* SpotsScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58478751C440062006EBA49 /* SpotsScrollView.swift */; };
 		D584789F1C440062006EBA49 /* Componentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58478781C440062006EBA49 /* Componentable.swift */; };
-		D58478A11C440062006EBA49 /* ViewConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58478791C440062006EBA49 /* ViewConfigurable.swift */; };
+		D58478A11C440062006EBA49 /* SpotConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58478791C440062006EBA49 /* SpotConfigurable.swift */; };
 		D58478A31C440062006EBA49 /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = D584787B1C440062006EBA49 /* Component.swift */; };
 		D58478D21C440568006EBA49 /* Spots.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478C81C440567006EBA49 /* Spots.framework */; };
 		D58478E31C44063C006EBA49 /* Componentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58478781C440062006EBA49 /* Componentable.swift */; };
-		D58478E41C44063C006EBA49 /* ViewConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58478791C440062006EBA49 /* ViewConfigurable.swift */; };
+		D58478E41C44063C006EBA49 /* SpotConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58478791C440062006EBA49 /* SpotConfigurable.swift */; };
 		D58478E51C44063C006EBA49 /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = D584787B1C440062006EBA49 /* Component.swift */; };
 		D58478E71C440645006EBA49 /* TestComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D584782B1C43FF34006EBA49 /* TestComponent.swift */; };
 		D58478ED1C440726006EBA49 /* Tailor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478E91C440726006EBA49 /* Tailor.framework */; };
@@ -108,7 +108,7 @@
 		D58478741C440062006EBA49 /* SpotsContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsContentView.swift; sourceTree = "<group>"; };
 		D58478751C440062006EBA49 /* SpotsScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsScrollView.swift; sourceTree = "<group>"; };
 		D58478781C440062006EBA49 /* Componentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Componentable.swift; sourceTree = "<group>"; };
-		D58478791C440062006EBA49 /* ViewConfigurable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewConfigurable.swift; sourceTree = "<group>"; };
+		D58478791C440062006EBA49 /* SpotConfigurable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotConfigurable.swift; sourceTree = "<group>"; };
 		D584787B1C440062006EBA49 /* Component.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
 		D58478C81C440567006EBA49 /* Spots.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Spots.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D58478D11C440567006EBA49 /* Spots-Mac-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Spots-Mac-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -354,7 +354,7 @@
 			isa = PBXGroup;
 			children = (
 				D58478781C440062006EBA49 /* Componentable.swift */,
-				D58478791C440062006EBA49 /* ViewConfigurable.swift */,
+				D58478791C440062006EBA49 /* SpotConfigurable.swift */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -651,7 +651,7 @@
 				D58478871C440062006EBA49 /* Spotable.swift in Sources */,
 				D58478A31C440062006EBA49 /* Component.swift in Sources */,
 				D58478831C440062006EBA49 /* Listable.swift in Sources */,
-				D58478A11C440062006EBA49 /* ViewConfigurable.swift in Sources */,
+				D58478A11C440062006EBA49 /* SpotConfigurable.swift in Sources */,
 				D58478971C440062006EBA49 /* ListSpotCell.swift in Sources */,
 				D58478851C440062006EBA49 /* Parser.swift in Sources */,
 				D58478951C440062006EBA49 /* ListSpot.swift in Sources */,
@@ -680,7 +680,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D58478E41C44063C006EBA49 /* ViewConfigurable.swift in Sources */,
+				D58478E41C44063C006EBA49 /* SpotConfigurable.swift in Sources */,
 				D58478E51C44063C006EBA49 /* Component.swift in Sources */,
 				D58478E31C44063C006EBA49 /* Componentable.swift in Sources */,
 			);

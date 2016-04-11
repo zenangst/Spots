@@ -12,8 +12,8 @@ public class ListSpot: NSObject, Spotable, Listable {
   public var headerHeight: CGFloat = 44
   public var component: Component
   public var cachedHeaders = [String : Componentable]()
-  public var cachedCells = [String : ViewConfigurable]()
-  public var configure: (ViewConfigurable -> Void)?
+  public var cachedCells = [String : SpotConfigurable]()
+  public var configure: (SpotConfigurable -> Void)?
 
   public let itemHeight: CGFloat = 44
 
@@ -121,10 +121,10 @@ extension ListSpot: UITableViewDataSource {
       .then { $0.optimize() }
 
     if indexPath.item < component.items.count {
-      (cell as? ViewConfigurable)?.configure(&component.items[indexPath.item])
+      (cell as? SpotConfigurable)?.configure(&component.items[indexPath.item])
     }
     
-    if let configure = configure, view = cell as? ViewConfigurable {
+    if let configure = configure, view = cell as? SpotConfigurable {
       configure(view)
     }
 

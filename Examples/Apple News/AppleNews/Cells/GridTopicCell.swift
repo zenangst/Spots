@@ -6,7 +6,7 @@ import Imaginary
 import Hue
 import Brick
 
-class GridTopicCell: UICollectionViewCell, ViewConfigurable {
+class GridTopicCell: UICollectionViewCell, SpotConfigurable {
 
   var size = CGSize(width: 125, height: 160)
 

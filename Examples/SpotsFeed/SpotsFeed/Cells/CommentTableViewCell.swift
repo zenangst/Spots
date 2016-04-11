@@ -7,7 +7,7 @@ public protocol CommentTableViewCellDelegate: class {
   func commentAuthorDidTap(commentID: Int)
 }
 
-public class CommentTableViewCell: WallTableViewCell, ViewConfigurable {
+public class CommentTableViewCell: WallTableViewCell, SpotConfigurable {
 
   public var size = CGSize(width: 0, height: 44)
 

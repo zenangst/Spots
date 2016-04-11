@@ -5,7 +5,7 @@ import Spots
 import Hue
 import Brick
 
-class GridSpotCellTitles : UICollectionViewCell, ViewConfigurable {
+class GridSpotCellTitles : UICollectionViewCell, SpotConfigurable {
 
   var size = CGSize(width: 88, height: 88)
 

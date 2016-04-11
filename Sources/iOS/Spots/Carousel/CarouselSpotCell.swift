@@ -2,7 +2,7 @@ import UIKit
 import Sugar
 import Brick
 
-class CarouselSpotCell: UICollectionViewCell, ViewConfigurable {
+class CarouselSpotCell: UICollectionViewCell, SpotConfigurable {
 
   var size = CGSize(width: 88, height: 88)
   var item: ViewModel?

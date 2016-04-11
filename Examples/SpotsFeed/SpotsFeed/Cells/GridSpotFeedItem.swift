@@ -4,7 +4,7 @@ import Sugar
 import Spots
 import Brick
 
-class GridSpotFeedItem : UICollectionViewCell, ViewConfigurable {
+class GridSpotFeedItem : UICollectionViewCell, SpotConfigurable {
 
   var size = CGSize(width: 0, height: 320)
   var item: ViewModel?

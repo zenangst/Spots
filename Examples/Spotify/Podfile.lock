@@ -1,5 +1,5 @@
 PODS:
-  - Brick (0.1.0):
+  - Brick (0.2.0):
     - Sugar (~> 1.0)
     - Tailor
   - Cache (1.0.0)
@@ -54,7 +54,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/hyperoslo/Keychain
 
 SPEC CHECKSUMS:
-  Brick: e49666d7e89c013688839f327166a79d3d1e2e1c
+  Brick: fb66513880a7cce1dcb33243943fba53dbe00394
   Cache: 78f58bc008313c7a1182967a2ebcb3de9fddecd4
   Compass: f4b8c37f9b315f0ee4f5e4f71888c54c92992d5d
   Hue: c7d6a7206bac669ed69e78cc6c14a4d7bd28277c
@@ -65,4 +65,6 @@ SPEC CHECKSUMS:
   Tailor: 3d53a5e881a42530500c6fa18b86120f4ddd57fe
   Whisper: 18b574de21a089c0d664b115f26e0d9ccbbadbab
 
-COCOAPODS: 0.39.0
+PODFILE CHECKSUM: 3a2aeebe9f05ae88ecc097c1abc9e12147b4f281
+
+COCOAPODS: 1.0.0.beta.5

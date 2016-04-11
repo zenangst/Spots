@@ -28,8 +28,8 @@ public extension Spotable where Self : Viewable {
       if T.views.keys.contains($0.kind) {
         let viewClass = T.views[$0.kind] ?? T.defaultView
         let view = viewClass.init().then {
-          ($0 as? ViewConfigurable)?.configure(&component.items[index])
-          guard let size = ($0 as? ViewConfigurable)?.size else { return }
+          ($0 as? SpotConfigurable)?.configure(&component.items[index])
+          guard let size = ($0 as? SpotConfigurable)?.size else { return }
           $0.frame.size = size
         }
         scrollView.addSubview(view)
@@ -56,8 +56,8 @@ public extension Spotable where Self : Viewable {
 
     let viewClass = dynamic.views[item.kind] ?? dynamic.defaultView
     let view = viewClass.init().then {
-      ($0 as? ViewConfigurable)?.configure(&component.items[index])
-      guard let size = ($0 as? ViewConfigurable)?.size else { return }
+      ($0 as? SpotConfigurable)?.configure(&component.items[index])
+      guard let size = ($0 as? SpotConfigurable)?.size else { return }
       $0.frame.size = size
     }
     scrollView.addSubview(view)
@@ -72,8 +72,8 @@ public extension Spotable where Self : Viewable {
 
       let viewClass = dynamic.views[item.kind] ?? dynamic.defaultView
       let view = viewClass.init().then {
-        ($0 as? ViewConfigurable)?.configure(&component.items[index])
-        guard let size = ($0 as? ViewConfigurable)?.size else { return }
+        ($0 as? SpotConfigurable)?.configure(&component.items[index])
+        guard let size = ($0 as? SpotConfigurable)?.size else { return }
         $0.frame.size = size
       }
       scrollView.addSubview(view)
@@ -91,8 +91,8 @@ public extension Spotable where Self : Viewable {
 
       let viewClass = dynamic.views[item.kind] ?? dynamic.defaultView
       let view = viewClass.init().then {
-        ($0 as? ViewConfigurable)?.configure(&component.items[index])
-        guard let size = ($0 as? ViewConfigurable)?.size else { return }
+        ($0 as? SpotConfigurable)?.configure(&component.items[index])
+        guard let size = ($0 as? SpotConfigurable)?.size else { return }
         $0.frame.size = size
       }
       scrollView.insertSubview(view, atIndex: 0)
@@ -107,8 +107,8 @@ public extension Spotable where Self : Viewable {
 
     let viewClass = dynamic.views[item.kind] ?? dynamic.defaultView
     let view = viewClass.init().then {
-      ($0 as? ViewConfigurable)?.configure(&component.items[index])
-      guard let size = ($0 as? ViewConfigurable)?.size else { return }
+      ($0 as? SpotConfigurable)?.configure(&component.items[index])
+      guard let size = ($0 as? SpotConfigurable)?.size else { return }
       $0.frame.size = size
     }
     scrollView.insertSubview(view, atIndex: index)
@@ -116,7 +116,7 @@ public extension Spotable where Self : Viewable {
   }
 
   func update(item: ViewModel, index: Int, completion: (() -> Void)? = nil) {
-    guard let view = scrollView.subviews[index] as? ViewConfigurable else { return }
+    guard let view = scrollView.subviews[index] as? SpotConfigurable else { return }
 
     component.items[index] = item
     view.configure(&component.items[index])
