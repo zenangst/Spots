@@ -67,6 +67,12 @@ public extension Spotable {
     if cached?.isKindOfClass(componentClass) == false { cached = nil }
     if cached == nil { cached = componentClass.init() }
 
-    (cached as? SpotConfigurable)?.configure(&component.items[index])
+    guard let view = cached as? SpotConfigurable else { return }
+
+    view.configure(&component.items[index])
+
+    if component.items[index].size.height == 0 {
+      component.items[index].size.height = view.size.height
+    }
   }
 }
