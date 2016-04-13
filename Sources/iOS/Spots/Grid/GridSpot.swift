@@ -28,7 +28,12 @@ public class GridSpot: NSObject, Spotable, Gridable {
 
   public required init(component: Component) {
     self.component = component
+
     super.init()
+
+    for (key, value) in GridSpot.views {
+      self.collectionView.registerClass(value, forCellWithReuseIdentifier: key)
+    }
   }
 
   public convenience init(title: String = "", kind: String = "grid") {
@@ -73,8 +78,15 @@ extension GridSpot: UICollectionViewDataSource {
   public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
     component.items[indexPath.item].index = indexPath.row
 
-    let reuseIdentifier = item(indexPath).kind.isPresent ? item(indexPath).kind : component.kind
-    let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath).then { $0.optimize() }
+    let model = component.items[indexPath.item]
+    let info = reusableInfo(model)
+
+    if GridSpot.views[info.identifier] == nil {
+      collectionView.registerClass(info.itemClass, forCellWithReuseIdentifier: info.identifier)
+      GridSpot.views[info.identifier] = info.itemClass
+    }
+
+    let cell = collectionView.dequeueReusableCellWithReuseIdentifier(info.identifier, forIndexPath: indexPath).then { $0.optimize() }
 
     if let cell = cell as? SpotConfigurable {
       cell.configure(&component.items[indexPath.item])

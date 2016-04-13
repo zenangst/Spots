@@ -21,16 +21,41 @@ public class ListSpot: NSObject, Spotable, Listable {
 
   private var fetching = false
 
-  public lazy var tableView: UITableView = UITableView().then { [unowned self] in
-    $0.dataSource = self
-    $0.delegate = self
-    $0.rowHeight = UITableViewAutomaticDimension
+  public var tableView: UITableView = UITableView() {
+    didSet {
+      tableView.dataSource = self
+      tableView.delegate = self
+      tableView.rowHeight = UITableViewAutomaticDimension
+    }
   }
+
+  // MARK: - Initialization
 
   public required init(component: Component) {
     self.component = component
+
+    if component.kind.isEmpty { self.component.kind = "list" }
+
     super.init()
-    prepare()
+    setupDefaults()
+  }
+
+  public convenience init(tableView: UITableView? = nil, title: String = "", kind: String = "list") {
+    self.init(component: Component(title: title, kind: kind))
+
+    if let tableView = tableView {
+      self.tableView = tableView
+    }
+
+    setupDefaults()
+  }
+
+  // MARK: - Setup
+
+  func setupDefaults() {
+    for (key, value) in ListSpot.views {
+      self.tableView.registerClass(value, forCellReuseIdentifier: key)
+    }
 
     let reuseIdentifer = component.kind.isPresent ? component.kind : "list"
 
@@ -46,12 +71,7 @@ public class ListSpot: NSObject, Spotable, Listable {
     }
   }
 
-  public convenience init(title: String = "", kind: String = "list") {
-    self.init(component: Component(title: title, kind: kind))
-  }
-
   public func setup(size: CGSize) {
-    prepare()
     var height = component.items.reduce(0, combine: { $0 + $1.size.height })
 
     if component.title.isPresent { height += headerHeight }
@@ -64,6 +84,8 @@ public class ListSpot: NSObject, Spotable, Listable {
     ListSpot.configure?(view: tableView)
   }
 }
+
+// MARK: - UITableViewDelegate
 
 extension ListSpot: UITableViewDelegate {
 
@@ -103,6 +125,8 @@ extension ListSpot: UITableViewDelegate {
   }
 }
 
+// MARK: - UITableViewDataSource
+
 extension ListSpot: UITableViewDataSource {
 
   public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -114,10 +138,16 @@ extension ListSpot: UITableViewDataSource {
       component.items[indexPath.item].index = indexPath.row
     }
 
-    let reuseIdentifier = indexPath.item < component.items.count && item(indexPath).kind.isPresent
-      ? item(indexPath).kind : component.kind
+    let model = component.items[indexPath.item]
+    let info = reusableInfo(model)
+
+    if ListSpot.views[info.identifier] == nil {
+      tableView.registerClass(info.itemClass, forCellReuseIdentifier: info.identifier)
+      ListSpot.views[info.identifier] = info.itemClass
+    }
+
     let cell: UITableViewCell = tableView
-      .dequeueReusableCellWithIdentifier(reuseIdentifier, forIndexPath: indexPath)
+      .dequeueReusableCellWithIdentifier(info.identifier, forIndexPath: indexPath)
       .then { $0.optimize() }
 
     if let cell = cell as? SpotConfigurable where indexPath.item < component.items.count {

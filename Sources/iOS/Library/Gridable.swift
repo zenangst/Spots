@@ -16,10 +16,6 @@ public extension Spotable where Self : Gridable {
     layout.minimumInteritemSpacing = itemSpacing
   }
 
-  public func prepare() {
-    prepareSpot(self)
-  }
-
   public func append(item: ViewModel, completion: (() -> Void)? = nil) {
     var indexes = [Int]()
     let count = component.items.count
@@ -148,13 +144,11 @@ public extension Spotable where Self : Gridable {
   public func update(item: ViewModel, index: Int, completion: (() -> Void)? = nil) {
     items[index] = item
 
-    let cellClass = self.dynamicType.views[item.kind] ?? self.dynamicType.defaultView
-    let reuseIdentifier = component.items[index].kind.isPresent
-      ? component.items[index].kind
-      : component.kind
+    let info = reusableInfo(item)
 
-    collectionView.registerClass(cellClass, forCellWithReuseIdentifier: reuseIdentifier)
-    if let cell = cellClass.init() as? SpotConfigurable {
+    collectionView.registerClass(info.itemClass, forCellWithReuseIdentifier: info.identifier)
+
+    if let cell = info.itemClass.init() as? SpotConfigurable {
       component.items[index].index = index
       cell.configure(&component.items[index])
     }
@@ -165,40 +159,12 @@ public extension Spotable where Self : Gridable {
     }
   }
 
-  private func prepareSpot<T: Spotable>(spot: T) {
-    if component.kind.isEmpty { component.kind = "grid" }
-
-    for (reuseIdentifier, classType) in T.views {
-      collectionView.registerClass(classType, forCellWithReuseIdentifier: reuseIdentifier)
-    }
-
-    if !T.views.keys.contains(component.kind) {
-      collectionView.registerClass(T.defaultView, forCellWithReuseIdentifier: component.kind)
-    }
-
-    var cached: UIView?
-    for (index, item) in component.items.enumerate() {
-      let reuseIdentifer = item.kind.isPresent ? item.kind : component.kind
-      let componentClass = T.views[reuseIdentifer] ?? T.defaultView
-
-      component.items[index].index = index
-
-      if cached?.isKindOfClass(componentClass) == false { cached = nil }
-      if cached == nil { cached = componentClass.init() }
-
-      if component.span > 0 {
-        component.items[index].size.width = UIScreen.mainScreen().bounds.size.width / CGFloat(component.span)
-      }
-      (cached as? SpotConfigurable)?.configure(&component.items[index])
-    }
-    cached = nil
-  }
-
   public func reload(indexes: [Int]? = nil, completion: (() -> Void)?) {
     let items = component.items
     for (index, item) in items.enumerate() {
-      let cellClass = self.dynamicType.views[item.kind] ?? self.dynamicType.defaultView
-      if let cell = cellClass.init() as? SpotConfigurable {
+      let info = reusableInfo(item)
+
+      if let cell = info.itemClass.init() as? SpotConfigurable {
         component.items[index].index = index
         cell.configure(&component.items[index])
       }

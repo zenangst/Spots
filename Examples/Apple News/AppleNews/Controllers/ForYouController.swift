@@ -169,7 +169,12 @@ extension ForYouController: SpotsScrollDelegate {
     topItem.title = "Checking for stories..."
     delay(1.0) {
       self.spot.items.insertContentsOf(items, at: 0)
-      self.spot.prepare()
+
+      var cached: UIView?
+      defer { cached = nil }
+      for (index, item) in self.spot.component.items.enumerate() {
+        self.spot.prepareItem(item, index: index, cached: &cached)
+      }
 
       let height = self.spot.items[0..<items.count].reduce(0, combine: { $0 + $1.size.height })
 

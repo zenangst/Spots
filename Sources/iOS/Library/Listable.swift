@@ -10,29 +10,6 @@ public extension Spotable where Self : Listable {
 
   typealias Completion = (() -> Void)?
 
-  public func prepare() {
-    prepareSpot(self)
-  }
-
-  private func prepareSpot<T: Spotable>(spot: T) {
-    if component.kind.isEmpty { component.kind = "list" }
-
-    for (reuseIdentifier, classType) in T.views {
-      tableView.registerClass(classType, forCellReuseIdentifier: reuseIdentifier)
-    }
-
-    if !T.views.keys.contains(component.kind) {
-      tableView.registerClass(T.defaultView, forCellReuseIdentifier: component.kind)
-    }
-
-    var cached: UIView?
-    defer { cached = nil }
-
-    for (index, item) in component.items.enumerate() {
-      prepareItem(item, index: index, spot: self, cached: &cached)
-    }
-  }
-
   public func append(item: ViewModel, completion: Completion = nil) {
     let count = component.items.count
     component.items.append(item)
@@ -44,7 +21,7 @@ public extension Spotable where Self : Listable {
     var cached: UIView?
     defer { cached = nil }
 
-    prepareItem(item, index: count, spot: self, cached: &cached)
+    prepareItem(item, index: count, cached: &cached)
   }
 
   public func append(items: [ViewModel], completion: (() -> Void)? = nil) {
@@ -56,7 +33,7 @@ public extension Spotable where Self : Listable {
     var cached: UIView?
     items.enumerate().forEach {
       indexes.append(count + $0.index)
-      prepareItem($0.element, index: count + $0.index, spot: self, cached: &cached)
+      prepareItem($0.element, index: count + $0.index, cached: &cached)
     }
     cached = nil
 
@@ -136,14 +113,11 @@ public extension Spotable where Self : Listable {
   public func update(item: ViewModel, index: Int = 0, completion: Completion = nil) {
     items[index] = item
 
-    let cellClass = self.dynamicType.views[item.kind] ?? self.dynamicType.defaultView
-    let reuseIdentifier = component.items[index].kind.isPresent
-      ? component.items[index].kind
-      : component.kind
+    let info = reusableInfo(item)
 
-    tableView.registerClass(cellClass, forCellReuseIdentifier: reuseIdentifier)
+    tableView.registerClass(info.itemClass, forCellReuseIdentifier: info.identifier)
 
-    if let cell = cellClass.init() as? SpotConfigurable {
+    if let cell = info.itemClass.init() as? SpotConfigurable {
       component.items[index].index = index
       cell.configure(&component.items[index])
     }
@@ -154,14 +128,11 @@ public extension Spotable where Self : Listable {
 
   public func reload(indexes: [Int]? = nil, completion: Completion = nil) {
     for (index, item) in component.items.enumerate() {
-      let cellClass = self.dynamicType.views[item.kind] ?? self.dynamicType.defaultView
-      let reuseIdentifier = component.items[index].kind.isPresent
-        ? component.items[index].kind
-        : component.kind
+      let info = reusableInfo(item)
 
-      tableView.registerClass(cellClass, forCellReuseIdentifier: reuseIdentifier)
+      tableView.registerClass(info.itemClass, forCellReuseIdentifier: info.identifier)
 
-      if let cell = cellClass.init() as? SpotConfigurable {
+      if let cell = info.itemClass.init() as? SpotConfigurable {
         component.items[index].index = index
         cell.configure(&component.items[index])
       }
