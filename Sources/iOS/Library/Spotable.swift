@@ -58,9 +58,8 @@ public extension Spotable {
     return 0.0
   }
 
-  public func prepareItem<T: Spotable>(item: ViewModel, index: Int, spot: T, inout cached: UIView?) {
-    let reuseIdentifer = item.kind.isPresent ? item.kind : component.kind
-    let componentClass = T.views[reuseIdentifer] ?? T.defaultView
+  public func prepareItem(item: ViewModel, index: Int, inout cached: UIView?) {
+    let componentClass = reusableInfo(item).itemClass
 
     component.items[index].index = index
 
@@ -74,5 +73,18 @@ public extension Spotable {
     if component.items[index].size.height == 0 {
       component.items[index].size.height = view.size.height
     }
+  }
+
+  public func reusableInfo(item: ViewModel) -> (identifier: String, itemClass: UIView.Type) {
+    let kind = item.kind.isPresent ? item.kind : component.kind
+    let itemClass = self.dynamicType.views[kind]
+      ?? NSClassFromString(kind) as? UIView.Type
+      ?? self.dynamicType.defaultView
+
+    let identifier = component.items[index].kind.isPresent
+      ? component.items[index].kind
+      : component.kind
+
+    return (identifier: identifier, itemClass: itemClass)
   }
 }
