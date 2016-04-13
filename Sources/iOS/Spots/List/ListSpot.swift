@@ -28,6 +28,8 @@ public class ListSpot: NSObject, Spotable, Listable {
       tableView.rowHeight = UITableViewAutomaticDimension
     }
   }
+  
+  // MARK: - Initializers
 
   public required init(component: Component) {
     self.component = component
@@ -48,9 +50,17 @@ public class ListSpot: NSObject, Spotable, Listable {
     }
   }
 
-  public convenience init(title: String = "", kind: String = "list") {
+  public convenience init(tableView: UITableView? = nil, title: String = "", kind: String = "list") {
     self.init(component: Component(title: title, kind: kind))
+    
+    if let tableView = tableView {
+      self.tableView = tableView
+    }
+    
+    prepare()
   }
+  
+  // MARK: - Setup
 
   public func setup(size: CGSize) {
     prepare()
@@ -66,6 +76,8 @@ public class ListSpot: NSObject, Spotable, Listable {
     ListSpot.configure?(view: tableView)
   }
 }
+
+// MARK: - UITableViewDelegate
 
 extension ListSpot: UITableViewDelegate {
 
@@ -104,6 +116,8 @@ extension ListSpot: UITableViewDelegate {
     return indexPath.item < component.items.count ? item(indexPath).size.height : 0.0
   }
 }
+
+// MARK: - UITableViewDataSource
 
 extension ListSpot: UITableViewDataSource {
 
