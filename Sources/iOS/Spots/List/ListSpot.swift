@@ -21,10 +21,12 @@ public class ListSpot: NSObject, Spotable, Listable {
 
   private var fetching = false
 
-  public lazy var tableView: UITableView = UITableView().then { [unowned self] in
-    $0.dataSource = self
-    $0.delegate = self
-    $0.rowHeight = UITableViewAutomaticDimension
+  public var tableView = UITableView() {
+    didSet {
+      tableView.dataSource = self
+      tableView.delegate = self
+      tableView.rowHeight = UITableViewAutomaticDimension
+    }
   }
 
   public required init(component: Component) {
