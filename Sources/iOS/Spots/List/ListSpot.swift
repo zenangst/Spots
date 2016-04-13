@@ -21,11 +21,15 @@ public class ListSpot: NSObject, Spotable, Listable {
 
   private var fetching = false
 
-  public lazy var tableView: UITableView = UITableView().then { [unowned self] in
-    $0.dataSource = self
-    $0.delegate = self
-    $0.rowHeight = UITableViewAutomaticDimension
+  public var tableView: UITableView = UITableView() {
+    didSet {
+      tableView.dataSource = self
+      tableView.delegate = self
+      tableView.rowHeight = UITableViewAutomaticDimension
+    }
   }
+
+  // MARK: - Initialization
 
   public required init(component: Component) {
     self.component = component
@@ -33,7 +37,22 @@ public class ListSpot: NSObject, Spotable, Listable {
     if component.kind.isEmpty { self.component.kind = "list" }
 
     super.init()
+    setupDefaults()
+  }
 
+  public convenience init(tableView: UITableView? = nil, title: String = "", kind: String = "list") {
+    self.init(component: Component(title: title, kind: kind))
+
+    if let tableView = tableView {
+      self.tableView = tableView
+    }
+
+    setupDefaults()
+  }
+
+  // MARK: - Setup
+
+  func setupDefaults() {
     for (key, value) in ListSpot.views {
       self.tableView.registerClass(value, forCellReuseIdentifier: key)
     }
@@ -52,10 +71,6 @@ public class ListSpot: NSObject, Spotable, Listable {
     }
   }
 
-  public convenience init(title: String = "", kind: String = "list") {
-    self.init(component: Component(title: title, kind: kind))
-  }
-
   public func setup(size: CGSize) {
     var height = component.items.reduce(0, combine: { $0 + $1.size.height })
 
@@ -69,6 +84,8 @@ public class ListSpot: NSObject, Spotable, Listable {
     ListSpot.configure?(view: tableView)
   }
 }
+
+// MARK: - UITableViewDelegate
 
 extension ListSpot: UITableViewDelegate {
 
@@ -107,6 +124,8 @@ extension ListSpot: UITableViewDelegate {
     return indexPath.item < component.items.count ? item(indexPath).size.height : 0.0
   }
 }
+
+// MARK: - UITableViewDataSource
 
 extension ListSpot: UITableViewDataSource {
 

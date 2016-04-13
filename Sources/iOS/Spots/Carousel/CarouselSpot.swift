@@ -35,7 +35,7 @@ public class CarouselSpot: NSObject, Spotable, Gridable {
   public required init(component: Component) {
     self.component = component
 
-    for (index, item) in component.items.enumerate() {
+    for (index, _) in component.items.enumerate() {
       if component.span > 0 {
         self.component.index = index
         self.component.items[index].size.width = UIScreen.mainScreen().bounds.size.width / CGFloat(component.span)
