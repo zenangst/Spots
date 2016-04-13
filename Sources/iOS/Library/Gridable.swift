@@ -148,13 +148,11 @@ public extension Spotable where Self : Gridable {
   public func update(item: ViewModel, index: Int, completion: (() -> Void)? = nil) {
     items[index] = item
 
-    let cellClass = self.dynamicType.views[item.kind] ?? self.dynamicType.defaultView
-    let reuseIdentifier = component.items[index].kind.isPresent
-      ? component.items[index].kind
-      : component.kind
+    let info = reusableInfo(item)
 
-    collectionView.registerClass(cellClass, forCellWithReuseIdentifier: reuseIdentifier)
-    if let cell = cellClass.init() as? SpotConfigurable {
+    collectionView.registerClass(info.itemClass, forCellWithReuseIdentifier: info.identifier)
+
+    if let cell = info.itemClass.init() as? SpotConfigurable {
       component.items[index].index = index
       cell.configure(&component.items[index])
     }
@@ -197,8 +195,9 @@ public extension Spotable where Self : Gridable {
   public func reload(indexes: [Int]? = nil, completion: (() -> Void)?) {
     let items = component.items
     for (index, item) in items.enumerate() {
-      let cellClass = self.dynamicType.views[item.kind] ?? self.dynamicType.defaultView
-      if let cell = cellClass.init() as? SpotConfigurable {
+      let info = reusableInfo(item)
+
+      if let cell = info.itemClass.init() as? SpotConfigurable {
         component.items[index].index = index
         cell.configure(&component.items[index])
       }
