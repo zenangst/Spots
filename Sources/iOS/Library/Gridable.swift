@@ -16,10 +16,6 @@ public extension Spotable where Self : Gridable {
     layout.minimumInteritemSpacing = itemSpacing
   }
 
-  public func prepare() {
-    prepareSpot(self)
-  }
-
   public func append(item: ViewModel, completion: (() -> Void)? = nil) {
     var indexes = [Int]()
     let count = component.items.count
@@ -161,35 +157,6 @@ public extension Spotable where Self : Gridable {
       guard let weakSelf = self else { return }
       weakSelf.collectionView.reload([index], completion: completion)
     }
-  }
-
-  private func prepareSpot<T: Spotable>(spot: T) {
-    if component.kind.isEmpty { component.kind = "grid" }
-
-    for (reuseIdentifier, classType) in T.views {
-      collectionView.registerClass(classType, forCellWithReuseIdentifier: reuseIdentifier)
-    }
-
-    if !T.views.keys.contains(component.kind) {
-      collectionView.registerClass(T.defaultView, forCellWithReuseIdentifier: component.kind)
-    }
-
-    var cached: UIView?
-    for (index, item) in component.items.enumerate() {
-      let reuseIdentifer = item.kind.isPresent ? item.kind : component.kind
-      let componentClass = T.views[reuseIdentifer] ?? T.defaultView
-
-      component.items[index].index = index
-
-      if cached?.isKindOfClass(componentClass) == false { cached = nil }
-      if cached == nil { cached = componentClass.init() }
-
-      if component.span > 0 {
-        component.items[index].size.width = UIScreen.mainScreen().bounds.size.width / CGFloat(component.span)
-      }
-      (cached as? SpotConfigurable)?.configure(&component.items[index])
-    }
-    cached = nil
   }
 
   public func reload(indexes: [Int]? = nil, completion: (() -> Void)?) {

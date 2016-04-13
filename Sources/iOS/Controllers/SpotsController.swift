@@ -72,7 +72,6 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
       spots[index].index = index
       spot.render().optimize()
       spotsScrollView.contentView.addSubview(spot.render())
-      spot.prepare()
       spot.setup(spotsScrollView.frame.size)
       spot.component.size = CGSize(
         width: view.width,
@@ -146,7 +145,6 @@ extension SpotsController {
     guard let spot = spot(index, Spotable.self) else { return }
     closure(spot: spot)
     spot.refreshIndexes()
-    spot.prepare()
     spot.setup(spotsScrollView.bounds.size)
 
     dispatch { [weak self] in

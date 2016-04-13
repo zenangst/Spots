@@ -34,7 +34,46 @@ public class CarouselSpot: NSObject, Spotable, Gridable {
 
   public required init(component: Component) {
     self.component = component
+
+    for (index, item) in component.items.enumerate() {
+      if component.span > 0 {
+        self.component.index = index
+        self.component.items[index].size.width = UIScreen.mainScreen().bounds.size.width / CGFloat(component.span)
+      }
+    }
+
     super.init()
+
+    prepareSpot(self)
+  }
+
+  private func prepareSpot<T: Spotable>(spot: T) {
+    if component.kind.isEmpty { component.kind = "grid" }
+
+    for (reuseIdentifier, classType) in T.views {
+      collectionView.registerClass(classType, forCellWithReuseIdentifier: reuseIdentifier)
+    }
+
+    if !T.views.keys.contains(component.kind) {
+      collectionView.registerClass(T.defaultView, forCellWithReuseIdentifier: component.kind)
+    }
+
+    var cached: UIView?
+    for (index, item) in component.items.enumerate() {
+      let reuseIdentifer = item.kind.kindString.isPresent ? item.kind.kindString : component.kind
+      let componentClass = T.views[reuseIdentifer] ?? T.defaultView
+
+      component.items[index].index = index
+
+      if cached?.isKindOfClass(componentClass) == false { cached = nil }
+      if cached == nil { cached = componentClass.init() }
+
+      if component.span > 0 {
+        component.items[index].size.width = UIScreen.mainScreen().bounds.size.width / CGFloat(component.span)
+      }
+      (cached as? SpotConfigurable)?.configure(&component.items[index])
+    }
+    cached = nil
   }
 
   public convenience init(_ component: Component, top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0, itemSpacing: CGFloat = 0) {
@@ -131,8 +170,15 @@ extension CarouselSpot: UICollectionViewDataSource {
   public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
     component.items[indexPath.item].index = indexPath.item
 
-    let reuseIdentifier = item(indexPath).kind.isPresent ? item(indexPath).kind : component.kind
-    let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath).then { $0.optimize() }
+    let model = component.items[indexPath.item]
+    let info = reusableInfo(model)
+
+    if CarouselSpot.views[info.identifier] == nil {
+      collectionView.registerClass(info.itemClass, forCellWithReuseIdentifier: info.identifier)
+      CarouselSpot.views[info.identifier] = info.itemClass
+    }
+
+    let cell = collectionView.dequeueReusableCellWithReuseIdentifier(info.identifier, forIndexPath: indexPath).then { $0.optimize() }
 
     if let cell = cell as? SpotConfigurable {
       cell.configure(&component.items[indexPath.item])

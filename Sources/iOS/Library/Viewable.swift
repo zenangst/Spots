@@ -25,8 +25,8 @@ public extension Spotable where Self : Viewable {
     if component.kind.isEmpty { component.kind = "view" }
 
     component.items.forEach {
-      if T.views.keys.contains($0.kind) {
-        let viewClass = T.views[$0.kind] ?? T.defaultView
+      if T.views.keys.contains($0.kindString) {
+        let viewClass = T.views[$0.kindString] ?? T.defaultView
         let view = viewClass.init().then {
           ($0 as? SpotConfigurable)?.configure(&component.items[index])
           guard let size = ($0 as? SpotConfigurable)?.size else { return }

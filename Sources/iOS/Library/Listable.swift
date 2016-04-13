@@ -10,29 +10,6 @@ public extension Spotable where Self : Listable {
 
   typealias Completion = (() -> Void)?
 
-  public func prepare() {
-    prepareSpot(self)
-  }
-
-  private func prepareSpot<T: Spotable>(spot: T) {
-    if component.kind.isEmpty { component.kind = "list" }
-
-    for (reuseIdentifier, classType) in T.views {
-      tableView.registerClass(classType, forCellReuseIdentifier: reuseIdentifier)
-    }
-
-    if !T.views.keys.contains(component.kind) {
-      tableView.registerClass(T.defaultView, forCellReuseIdentifier: component.kind)
-    }
-
-    var cached: UIView?
-    defer { cached = nil }
-
-    for (index, item) in component.items.enumerate() {
-      prepareItem(item, index: index, cached: &cached)
-    }
-  }
-
   public func append(item: ViewModel, completion: Completion = nil) {
     let count = component.items.count
     component.items.append(item)

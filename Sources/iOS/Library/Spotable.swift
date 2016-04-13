@@ -1,5 +1,6 @@
 import UIKit
 import Brick
+import Sugar
 
 public protocol Spotable: class {
 
@@ -25,7 +26,6 @@ public protocol Spotable: class {
   func reload(indexes: [Int]?, completion: (() -> Void)?)
   func render() -> UIScrollView
   func layout(size: CGSize)
-  func prepare()
   func scrollTo(@noescape includeElement: (ViewModel) -> Bool) -> CGFloat
 }
 
@@ -76,14 +76,15 @@ public extension Spotable {
   }
 
   public func reusableInfo(item: ViewModel) -> (identifier: String, itemClass: UIView.Type) {
-    let kind = item.kind.isPresent ? item.kind : component.kind
+    let kind = item.kindString.isPresent ? item.kindString : component.kind
+
     let itemClass = self.dynamicType.views[kind]
       ?? NSClassFromString(kind) as? UIView.Type
       ?? self.dynamicType.defaultView
 
-    let identifier = component.items[index].kind.isPresent
-      ? component.items[index].kind
-      : component.kind
+    let identifier = component.items[index].kindString.isPresent
+      ? component.items[index].kindString
+      : component.kind.kindString
 
     return (identifier: identifier, itemClass: itemClass)
   }

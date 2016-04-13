@@ -29,8 +29,14 @@ public class ListSpot: NSObject, Spotable, Listable {
 
   public required init(component: Component) {
     self.component = component
+
+    if component.kind.isEmpty { self.component.kind = "list" }
+
     super.init()
-    prepare()
+
+    for (key, value) in ListSpot.views {
+      self.tableView.registerClass(value, forCellReuseIdentifier: key)
+    }
 
     let reuseIdentifer = component.kind.isPresent ? component.kind : "list"
 
@@ -51,7 +57,6 @@ public class ListSpot: NSObject, Spotable, Listable {
   }
 
   public func setup(size: CGSize) {
-    prepare()
     var height = component.items.reduce(0, combine: { $0 + $1.size.height })
 
     if component.title.isPresent { height += headerHeight }
@@ -114,10 +119,16 @@ extension ListSpot: UITableViewDataSource {
       component.items[indexPath.item].index = indexPath.row
     }
 
-    let reuseIdentifier = indexPath.item < component.items.count && item(indexPath).kind.isPresent
-      ? item(indexPath).kind : component.kind
+    let model = component.items[indexPath.item]
+    let info = reusableInfo(model)
+
+    if ListSpot.views[info.identifier] == nil {
+      tableView.registerClass(info.itemClass, forCellReuseIdentifier: info.identifier)
+      ListSpot.views[info.identifier] = info.itemClass
+    }
+
     let cell: UITableViewCell = tableView
-      .dequeueReusableCellWithIdentifier(reuseIdentifier, forIndexPath: indexPath)
+      .dequeueReusableCellWithIdentifier(info.identifier, forIndexPath: indexPath)
       .then { $0.optimize() }
 
     if let cell = cell as? SpotConfigurable where indexPath.item < component.items.count {
