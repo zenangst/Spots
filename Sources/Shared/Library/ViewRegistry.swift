@@ -8,8 +8,8 @@ public struct ViewRegistry {
     get {
       return storage[key.string]
     }
-    set {
-      storage[key.string] = newValue
+    set(value) {
+      storage[key.string] = value
     }
   }
 }

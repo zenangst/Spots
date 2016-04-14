@@ -21,19 +21,15 @@ public class ListSpot: NSObject, Spotable, Listable {
 
   private var fetching = false
 
-  public var tableView = UITableView() {
-    didSet {
-      tableView.dataSource = self
-      tableView.delegate = self
-      tableView.rowHeight = UITableViewAutomaticDimension
-    }
-  }
+  public lazy var tableView = UITableView()
   
   // MARK: - Initializers
 
   public required init(component: Component) {
     self.component = component
     super.init()
+    
+    setupTableView()
     prepare()
 
     let reuseIdentifer = component.kind.isPresent ? component.kind : "list"
@@ -57,6 +53,7 @@ public class ListSpot: NSObject, Spotable, Listable {
       self.tableView = tableView
     }
     
+    setupTableView()
     prepare()
   }
   
@@ -74,6 +71,12 @@ public class ListSpot: NSObject, Spotable, Listable {
       height: height - tableView.contentInset.top - tableView.contentInset.bottom)
 
     ListSpot.configure?(view: tableView)
+  }
+  
+  func setupTableView() {
+    tableView.dataSource = self
+    tableView.delegate = self
+    tableView.rowHeight = UITableViewAutomaticDimension
   }
 }
 
