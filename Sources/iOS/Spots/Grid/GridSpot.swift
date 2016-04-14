@@ -3,7 +3,7 @@ import Sugar
 
 public class GridSpot: NSObject, Spotable, Gridable {
 
-  public static var registry = ViewRegistry()
+  public static var views = ViewRegistry()
   public static var defaultView: UIView.Type = GridSpotCell.self
   public static var configure: ((view: UICollectionView) -> Void)?
 

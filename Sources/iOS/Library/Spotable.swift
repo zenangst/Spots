@@ -3,7 +3,7 @@ import Brick
 
 public protocol Spotable: class {
 
-  static var registry: ViewRegistry { get }
+  static var views: ViewRegistry { get }
   static var defaultView: UIView.Type { get set }
 
   weak var spotsDelegate: SpotsDelegate? { get set }
@@ -60,7 +60,7 @@ public extension Spotable {
 
   public func prepareItem<T: Spotable>(item: ViewModel, index: Int, spot: T, inout cached: UIView?) {
     let reuseIdentifer = item.kind.isPresent ? item.kind : component.kind
-    let componentClass = T.registry.views[reuseIdentifer] ?? T.defaultView
+    let componentClass = T.views.storage[reuseIdentifer] ?? T.defaultView
 
     component.items[index].index = index
 

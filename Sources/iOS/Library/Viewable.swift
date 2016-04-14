@@ -25,8 +25,8 @@ public extension Spotable where Self : Viewable {
     if component.kind.isEmpty { component.kind = "view" }
 
     component.items.forEach {
-      if T.registry.views.keys.contains($0.kind) {
-        let viewClass = T.registry.views[$0.kind] ?? T.defaultView
+      if T.views.storage.keys.contains($0.kind) {
+        let viewClass = T.views.storage[$0.kind] ?? T.defaultView
         let view = viewClass.init().then {
           ($0 as? SpotConfigurable)?.configure(&component.items[index])
           guard let size = ($0 as? SpotConfigurable)?.size else { return }
@@ -52,9 +52,9 @@ public extension Spotable where Self : Viewable {
   func append(item: ViewModel, completion: (() -> Void)? = nil) {
     let dynamic = self.dynamicType
 
-    guard dynamic.registry.views.keys.contains(item.kind) else { return }
+    guard dynamic.views.storage.keys.contains(item.kind) else { return }
 
-    let viewClass = dynamic.registry.views[item.kind] ?? dynamic.defaultView
+    let viewClass = dynamic.views.storage[item.kind] ?? dynamic.defaultView
     let view = viewClass.init().then {
       ($0 as? SpotConfigurable)?.configure(&component.items[index])
       guard let size = ($0 as? SpotConfigurable)?.size else { return }
@@ -68,9 +68,9 @@ public extension Spotable where Self : Viewable {
     for item in items {
       let dynamic = self.dynamicType
 
-      guard dynamic.registry.views.keys.contains(item.kind) else { return }
+      guard dynamic.views.storage.keys.contains(item.kind) else { return }
 
-      let viewClass = dynamic.registry.views[item.kind] ?? dynamic.defaultView
+      let viewClass = dynamic.views.storage[item.kind] ?? dynamic.defaultView
       let view = viewClass.init().then {
         ($0 as? SpotConfigurable)?.configure(&component.items[index])
         guard let size = ($0 as? SpotConfigurable)?.size else { return }
@@ -87,9 +87,9 @@ public extension Spotable where Self : Viewable {
     for item in items.reverse() {
       let dynamic = self.dynamicType
 
-      guard dynamic.registry.views.keys.contains(item.kind) else { return }
+      guard dynamic.views.storage.keys.contains(item.kind) else { return }
 
-      let viewClass = dynamic.registry.views[item.kind] ?? dynamic.defaultView
+      let viewClass = dynamic.views.storage[item.kind] ?? dynamic.defaultView
       let view = viewClass.init().then {
         ($0 as? SpotConfigurable)?.configure(&component.items[index])
         guard let size = ($0 as? SpotConfigurable)?.size else { return }
@@ -103,9 +103,9 @@ public extension Spotable where Self : Viewable {
   func insert(item: ViewModel, index: Int, completion: (() -> Void)? = nil) {
     let dynamic = self.dynamicType
 
-    guard dynamic.registry.views.keys.contains(item.kind) else { return }
+    guard dynamic.views.storage.keys.contains(item.kind) else { return }
 
-    let viewClass = dynamic.registry.views[item.kind] ?? dynamic.defaultView
+    let viewClass = dynamic.views.storage[item.kind] ?? dynamic.defaultView
     let view = viewClass.init().then {
       ($0 as? SpotConfigurable)?.configure(&component.items[index])
       guard let size = ($0 as? SpotConfigurable)?.size else { return }
