@@ -3,7 +3,7 @@ import Sugar
 
 public class ListSpot: NSObject, Spotable, Listable {
 
-  public static var views = [String : UIView.Type]()
+  public static var registry = ViewRegistry()
   public static var configure: ((view: UITableView) -> Void)?
   public static var defaultView: UIView.Type = ListSpotCell.self
   public static var headers = [String : UIView.Type]()

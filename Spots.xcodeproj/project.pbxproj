@@ -53,6 +53,8 @@
 		D58478FB1C440781006EBA49 /* Sugar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478F81C44076B006EBA49 /* Sugar.framework */; };
 		D58478FE1C440781006EBA49 /* Fakery.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478FC1C440781006EBA49 /* Fakery.framework */; };
 		D58478FF1C440781006EBA49 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478FD1C440781006EBA49 /* SwiftyJSON.framework */; };
+		DAA38AAB1CBF157F00D48603 /* ViewRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA38AAA1CBF157F00D48603 /* ViewRegistry.swift */; };
+		DAA38AAC1CBF157F00D48603 /* ViewRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA38AAA1CBF157F00D48603 /* ViewRegistry.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -122,6 +124,7 @@
 		D58478F81C44076B006EBA49 /* Sugar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sugar.framework; path = Carthage/Build/Mac/Sugar.framework; sourceTree = "<group>"; };
 		D58478FC1C440781006EBA49 /* Fakery.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Fakery.framework; path = Carthage/Build/Mac/Fakery.framework; sourceTree = "<group>"; };
 		D58478FD1C440781006EBA49 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/Mac/SwiftyJSON.framework; sourceTree = "<group>"; };
+		DAA38AAA1CBF157F00D48603 /* ViewRegistry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewRegistry.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -355,6 +358,7 @@
 			children = (
 				D58478781C440062006EBA49 /* Componentable.swift */,
 				D58478791C440062006EBA49 /* SpotConfigurable.swift */,
+				DAA38AAA1CBF157F00D48603 /* ViewRegistry.swift */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -639,6 +643,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BD48BEC71C45795600317D76 /* Viewable.swift in Sources */,
+				DAA38AAB1CBF157F00D48603 /* ViewRegistry.swift in Sources */,
 				D584789B1C440062006EBA49 /* SpotsContentView.swift in Sources */,
 				D584789F1C440062006EBA49 /* Componentable.swift in Sources */,
 				BD0625F71C45754B00A16F91 /* ViewSpot.swift in Sources */,
@@ -681,6 +686,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D58478E41C44063C006EBA49 /* SpotConfigurable.swift in Sources */,
+				DAA38AAC1CBF157F00D48603 /* ViewRegistry.swift in Sources */,
 				D58478E51C44063C006EBA49 /* Component.swift in Sources */,
 				D58478E31C44063C006EBA49 /* Componentable.swift in Sources */,
 			);
