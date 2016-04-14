@@ -6,16 +6,16 @@ class ExploreController: SpotsController {
 
   convenience init(title: String) {
     let suggestedChannels = Component(span: 3, items: [
-      ViewModel(title: "Apple",   kind: "topic", image: ExploreController.suggestedImage(1)),
-      ViewModel(title: "Spotify", kind: "topic", image: ExploreController.suggestedImage(2)),
-      ViewModel(title: "Google",  kind: "topic", image: ExploreController.suggestedImage(3))
+      ViewModel(title: "Apple",   kind: Cell.Topic, image: ExploreController.suggestedImage(1)),
+      ViewModel(title: "Spotify", kind: Cell.Topic, image: ExploreController.suggestedImage(2)),
+      ViewModel(title: "Google",  kind: Cell.Topic, image: ExploreController.suggestedImage(3))
       ])
 
     let suggestedTopics = Component(span: 3, items: [
-      ViewModel(title: "Business", kind: "topic", meta: ["color" : "5A0E20"]),
-      ViewModel(title: "Software", kind: "topic", meta: ["color" : "760D26"]),
-      ViewModel(title: "News",     kind: "topic", meta: ["color" : "2266B5"]),
-      ViewModel(title: "iOS",      kind: "topic", meta: ["color" : "4CBCFB"])
+      ViewModel(title: "Business", kind: Cell.Topic, meta: ["color" : "5A0E20"]),
+      ViewModel(title: "Software", kind: Cell.Topic, meta: ["color" : "760D26"]),
+      ViewModel(title: "News",     kind: Cell.Topic, meta: ["color" : "2266B5"]),
+      ViewModel(title: "iOS",      kind: Cell.Topic, meta: ["color" : "4CBCFB"])
       ])
 
     let browse = Component(title: "Browse", items: [

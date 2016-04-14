@@ -3,10 +3,10 @@ import Sugar
 
 public class ListSpot: NSObject, Spotable, Listable {
 
-  public static var views = [String : UIView.Type]()
+  public static var views = ViewRegistry()
   public static var configure: ((view: UITableView) -> Void)?
   public static var defaultView: UIView.Type = ListSpotCell.self
-  public static var headers = [String : UIView.Type]()
+  public static var headers = ViewRegistry()
 
   public var index = 0
   public var headerHeight: CGFloat = 44
@@ -21,15 +21,15 @@ public class ListSpot: NSObject, Spotable, Listable {
 
   private var fetching = false
 
-  public lazy var tableView: UITableView = UITableView().then { [unowned self] in
-    $0.dataSource = self
-    $0.delegate = self
-    $0.rowHeight = UITableViewAutomaticDimension
-  }
+  public lazy var tableView = UITableView()
+  
+  // MARK: - Initializers
 
   public required init(component: Component) {
     self.component = component
     super.init()
+    
+    setupTableView()
     prepare()
 
     let reuseIdentifer = component.kind.isPresent ? component.kind : "list"
@@ -46,9 +46,18 @@ public class ListSpot: NSObject, Spotable, Listable {
     }
   }
 
-  public convenience init(title: String = "", kind: String = "list") {
+  public convenience init(tableView: UITableView? = nil, title: String = "", kind: String = "list") {
     self.init(component: Component(title: title, kind: kind))
+    
+    if let tableView = tableView {
+      self.tableView = tableView
+    }
+    
+    setupTableView()
+    prepare()
   }
+  
+  // MARK: - Setup
 
   public func setup(size: CGSize) {
     prepare()
@@ -63,7 +72,15 @@ public class ListSpot: NSObject, Spotable, Listable {
 
     ListSpot.configure?(view: tableView)
   }
+  
+  func setupTableView() {
+    tableView.dataSource = self
+    tableView.delegate = self
+    tableView.rowHeight = UITableViewAutomaticDimension
+  }
 }
+
+// MARK: - UITableViewDelegate
 
 extension ListSpot: UITableViewDelegate {
 
@@ -102,6 +119,8 @@ extension ListSpot: UITableViewDelegate {
     return indexPath.item < component.items.count ? item(indexPath).size.height : 0.0
   }
 }
+
+// MARK: - UITableViewDataSource
 
 extension ListSpot: UITableViewDataSource {
 

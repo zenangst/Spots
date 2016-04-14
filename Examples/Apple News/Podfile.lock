@@ -39,7 +39,7 @@ EXTERNAL SOURCES:
   Imaginary:
     :git: https://github.com/hyperoslo/Imaginary
   Spots:
-    :path: "../../"
+    :path: ../../
   Transition:
     :git: https://github.com/hyperoslo/Transition
 
@@ -73,6 +73,4 @@ SPEC CHECKSUMS:
   Tailor: 7388a9bb2ae83db9e07d5940de08eb444efa15a8
   Transition: 66d86e3ae1b8f0b3d9ba2000c7a45fbc17b066f2
 
-PODFILE CHECKSUM: b5990c672d7c25f24324197d1aa40668c01b8dd7
-
-COCOAPODS: 1.0.0.beta.5
+COCOAPODS: 0.39.0

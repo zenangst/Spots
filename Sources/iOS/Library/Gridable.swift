@@ -26,18 +26,18 @@ public extension Spotable where Self : Gridable {
   private func prepareSpot<T: Spotable>(spot: T) {
     if component.kind.isEmpty { component.kind = "grid" }
 
-    for (reuseIdentifier, classType) in T.views {
+    for (reuseIdentifier, classType) in T.views.storage {
       collectionView.registerClass(classType, forCellWithReuseIdentifier: reuseIdentifier)
     }
 
-    if !T.views.keys.contains(component.kind) {
+    if !T.views.storage.keys.contains(component.kind) {
       collectionView.registerClass(T.defaultView, forCellWithReuseIdentifier: component.kind)
     }
 
     var cached: UIView?
     for (index, item) in component.items.enumerate() {
       let reuseIdentifer = item.kind.isPresent ? item.kind : component.kind
-      let componentClass = T.views[reuseIdentifer] ?? T.defaultView
+      let componentClass = T.views.storage[reuseIdentifer] ?? T.defaultView
 
       component.items[index].index = index
 
@@ -218,7 +218,7 @@ public extension Spotable where Self : Gridable {
   public func update(item: ViewModel, index: Int, completion: (() -> Void)? = nil) {
     items[index] = item
 
-    let cellClass = self.dynamicType.views[item.kind] ?? self.dynamicType.defaultView
+    let cellClass = self.dynamicType.views.storage[item.kind] ?? self.dynamicType.defaultView
     let reuseIdentifier = component.items[index].kind.isPresent
       ? component.items[index].kind
       : component.kind
@@ -242,7 +242,7 @@ public extension Spotable where Self : Gridable {
   public func reload(indexes: [Int]? = nil, completion: (() -> Void)?) {
     let items = component.items
     for (index, item) in items.enumerate() {
-      let cellClass = self.dynamicType.views[item.kind] ?? self.dynamicType.defaultView
+      let cellClass = self.dynamicType.views.storage[item.kind] ?? self.dynamicType.defaultView
       if let cell = cellClass.init() as? SpotConfigurable {
         component.items[index].index = index
         cell.configure(&component.items[index])

@@ -81,7 +81,7 @@ class ForYouController: SpotsController, SpotsDelegate {
 
   func spotDidSelectItem(spot: Spotable, item: ViewModel) {
     var item = item
-    item.kind = "feed-detail"
+    item.update(kind: Cell.FeedDetail)
     item.subtitle = ForYouController.faker.lorem.sentences(amount: 20)
 
     if let cell = self.spot(0, ListSpot.self)?.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: item.index, inSection: 0)) {
@@ -92,7 +92,7 @@ class ForYouController: SpotsController, SpotsDelegate {
       item,
       ViewModel(title: ForYouController.faker.lorem.sentences(amount: 1),
         subtitle: ForYouController.faker.lorem.sentences(amount: 40),
-        kind: "feed-detail")
+        kind: Cell.FeedDetail)
     ])))
     controller.spotsScrollView.contentInset.top = 64
     controller.viewDidLoad()
@@ -106,7 +106,7 @@ class ForYouController: SpotsController, SpotsDelegate {
     detailNavigation = navigationController
   }
 
-  static func generateItem(index: Int, kind: String = "feed") -> ViewModel {
+  static func generateItem(index: Int, kind: Cell = Cell.Feed) -> ViewModel {
     let sentences = Int(arc4random_uniform(2) + 2)
 
     let item = ViewModel(title: faker.lorem.sentences(amount: sentences),
@@ -117,12 +117,12 @@ class ForYouController: SpotsController, SpotsDelegate {
     return item
   }
 
-  static func generateItems(from: Int, to: Int, kind: String = "feed") -> [ViewModel] {
+  static func generateItems(from: Int, to: Int, kind: Cell = Cell.Feed) -> [ViewModel] {
     var items = [ViewModel]()
     for i in from...from+to {
       let kind = Int(arc4random_uniform(100)) % 10 == 1
-        ? "featured-feed"
-        : "feed"
+        ? Cell.FeaturedFeed
+        : Cell.Feed
 
       autoreleasepool { items.append(generateItem(i, kind: kind)) }
     }
