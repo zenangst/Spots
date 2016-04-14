@@ -45,15 +45,24 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
 
   // MARK: Initializer
 
+  /**
+   - Parameter spots: An array of Spotable objects
+   */
   public required init(spots: [Spotable] = []) {
     self.spots = spots
     super.init(nibName: nil, bundle: nil)
   }
 
+  /**
+   - Parameter spot: A Spotable object
+   */
   public convenience init(spot: Spotable)  {
     self.init(spots: [spot])
   }
 
+  /**
+   - Parameter json: A JSON dictionary that gets parsed into UI elements
+   */
   public convenience init(_ json: [String : AnyObject]) {
     self.init(spots: Parser.parse(json))
   }
@@ -110,10 +119,17 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
 
 extension SpotsController {
 
+  /**
+   - Parameter index: The index of the spot that you are trying to resolve
+   - Parameter type: The generic type for the spot you are trying to resolve
+   */
   public func spot<T>(index: Int = 0, _ type: T.Type) -> T? {
     return spots.filter({ $0.index == index }).first as? T
   }
 
+  /**
+   - Parameter closure: A closure to perform actions on a spotable object
+   */
   public func spot(@noescape closure: (index: Int, spot: Spotable) -> Bool) -> Spotable? {
     for (index, spot) in spots.enumerate()
       where closure(index: index, spot: spot) {
@@ -122,10 +138,16 @@ extension SpotsController {
     return nil
   }
 
+  /**
+   - Parameter includeElement: A filter predicate to find a spot
+   */
   public func filter(@noescape includeElement: (Spotable) -> Bool) -> [Spotable] {
     return spots.filter(includeElement)
   }
 
+  /**
+   - Parameter completion: A closure that will be run after reload has been performed on all spots
+   */
   public func reload(completion: (() -> Void)? = nil) {
     var spotsLeft = spots.count
 
@@ -142,6 +164,10 @@ extension SpotsController {
     }
   }
 
+  /**
+   - Parameter spotAtIndex: The index of the spot that you want to perform updates on
+   - Parameter closure: A transform closure to perform the proper modification to the target spot before updating the internals
+   */
   public func update(spotAtIndex index: Int = 0, @noescape _ closure: (spot: Spotable) -> Void) {
     guard let spot = spot(index, Spotable.self) else { return }
     closure(spot: spot)
@@ -159,6 +185,11 @@ extension SpotsController {
     }
   }
 
+  /**
+   - Parameter item: The view model that you want to append
+   - Parameter spotIndex: The index of the spot that you want to append to, defaults to 0
+   - Parameter closure: A completion closure that will run after the spot has performed updates internally
+   */
   public func append(item: ViewModel, spotIndex: Int = 0, completion: (() -> Void)? = nil) {
     spot(spotIndex, Spotable.self)?.append(item) {
       completion?()
@@ -167,6 +198,11 @@ extension SpotsController {
     spot(spotIndex, Spotable.self)?.refreshIndexes()
   }
 
+  /**
+   - Parameter items: A collection of view models
+   - Parameter spotIndex: The index of the spot that you want to append to, defaults to 0
+   - Parameter closure: A completion closure that will run after the spot has performed updates internally
+   */
   public func append(items: [ViewModel], spotIndex: Int = 0, completion: (() -> Void)? = nil) {
     spot(spotIndex, Spotable.self)?.append(items) {
       completion?()
@@ -175,6 +211,11 @@ extension SpotsController {
     spot(spotIndex, Spotable.self)?.refreshIndexes()
   }
 
+  /**
+   - Parameter items: A collection of view models
+   - Parameter spotIndex: The index of the spot that you want to prepend to, defaults to 0
+   - Parameter closure: A completion closure that will run after the spot has performed updates internally
+   */
   public func prepend(items: [ViewModel], spotIndex: Int = 0, completion: (() -> Void)? = nil) {
     spot(spotIndex, Spotable.self)?.prepend(items)  {
       completion?()
@@ -183,6 +224,12 @@ extension SpotsController {
     spot(spotIndex, Spotable.self)?.refreshIndexes()
   }
 
+  /**
+   - Parameter item: The view model that you want to insert
+   - Parameter index: The index that you want to insert the view model at
+   - Parameter spotIndex: The index of the spot that you want to insert into
+   - Parameter closure: A completion closure that will run after the spot has performed updates internally
+   */
   public func insert(item: ViewModel, index: Int = 0, spotIndex: Int, completion: (() -> Void)? = nil) {
     spot(spotIndex, Spotable.self)?.insert(item, index: index)  {
       completion?()
@@ -191,6 +238,12 @@ extension SpotsController {
     spot(spotIndex, Spotable.self)?.refreshIndexes()
   }
 
+  /**
+   - Parameter item: The view model that you want to update
+   - Parameter index: The index that you want to insert the view model at
+   - Parameter spotIndex: The index of the spot that you want to update into
+   - Parameter closure: A completion closure that will run after the spot has performed updates internally
+   */
   public func update(item: ViewModel, index: Int = 0, spotIndex: Int, completion: (() -> Void)? = nil) {
     spot(spotIndex, Spotable.self)?.update(item, index: index)  {
       completion?()
@@ -199,6 +252,11 @@ extension SpotsController {
     spot(spotIndex, Spotable.self)?.refreshIndexes()
   }
 
+  /**
+   - Parameter indexes: An integer array of indexes that you want to update
+   - Parameter spotIndex: The index of the spot that you want to update into
+   - Parameter closure: A completion closure that will run after the spot has performed updates internally
+   */
   public func update(indexes indexes: [Int], spotIndex: Int = 0, completion: (() -> Void)? = nil) {
     spot(spotIndex, Spotable.self)?.reload(indexes) {
       completion?()
@@ -207,6 +265,11 @@ extension SpotsController {
     spot(spotIndex, Spotable.self)?.refreshIndexes()
   }
 
+  /**
+   - Parameter index: The index of the view model that you want to remove
+   - Parameter spotIndex: The index of the spot that you want to remove into
+   - Parameter closure: A completion closure that will run after the spot has performed updates internally
+   */
   public func delete(index: Int, spotIndex: Int = 0, completion: (() -> Void)? = nil) {
     spot(spotIndex, Spotable.self)?.delete(index) {
       completion?()
@@ -215,6 +278,11 @@ extension SpotsController {
     spot(spotIndex, Spotable.self)?.refreshIndexes()
   }
 
+  /**
+   - Parameter indexes: A collection of indexes for view models that you want to remove
+   - Parameter spotIndex: The index of the spot that you want to remove into
+   - Parameter closure: A completion closure that will run after the spot has performed updates internally
+   */
   public func delete(indexes indexes: [Int], spotIndex: Int = 0, completion: (() -> Void)? = nil) {
     spot(spotIndex, Spotable.self)?.delete(indexes) {
       completion?()
@@ -222,6 +290,7 @@ extension SpotsController {
     }
     spot(spotIndex, Spotable.self)?.refreshIndexes()
   }
+
 
   public func refreshSpots(refreshControl: UIRefreshControl) {
     dispatch { [weak self] in
@@ -233,6 +302,10 @@ extension SpotsController {
     }
   }
 
+  /**
+   - Parameter index: The index of the spot that you want to scroll
+   - Parameter includeElement: A filter predicate to find a view model
+   */
   public func scrollTo(spotIndex index: Int = 0, @noescape includeElement: (ViewModel) -> Bool) {
     guard let itemY = spot(index, Spotable.self)?.scrollTo(includeElement) else { return }
 
@@ -242,6 +315,9 @@ extension SpotsController {
     }
   }
 
+  /**
+   - Parameter animated: A boolean value to determine if you want to perform the scrolling with or without animation
+   */
   public func scrollToBottom(animated: Bool) {
     let y = spotsScrollView.contentSize.height - spotsScrollView.height + spotsScrollView.contentInset.bottom
     spotsScrollView.setContentOffset(CGPoint(x: 0, y: y), animated: animated)
@@ -252,10 +328,16 @@ extension SpotsController {
 
 extension SpotsController {
 
+  /**
+   - Parameter indexPath: The index path of the component you want to lookup
+   */
   private func component(indexPath: NSIndexPath) -> Component {
     return spot(indexPath).component
   }
 
+  /**
+   - Parameter indexPath: The index path of the spot you want to lookup
+   */
   private func spot(indexPath: NSIndexPath) -> Spotable {
     return spots[indexPath.item]
   }
