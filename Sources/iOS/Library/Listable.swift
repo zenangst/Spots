@@ -9,11 +9,13 @@ public protocol Listable: Spotable {
 public extension Spotable where Self : Listable {
 
   typealias Completion = (() -> Void)?
-
   public func prepare() {
     prepareSpot(self)
   }
 
+  /**
+   - Parameter spot: Spotable
+   */
   private func prepareSpot<T: Spotable>(spot: T) {
     if component.kind.isEmpty { component.kind = "list" }
 
@@ -33,6 +35,10 @@ public extension Spotable where Self : Listable {
     }
   }
 
+  /**
+   - Parameter item: The view model that you want to append
+   - Parameter completion: (() -> Void)?
+   */
   public func append(item: ViewModel, completion: Completion = nil) {
     let count = component.items.count
     component.items.append(item)
@@ -47,6 +53,10 @@ public extension Spotable where Self : Listable {
     prepareItem(item, index: count, spot: self, cached: &cached)
   }
 
+  /**
+   - Parameter item: A collection of view models that you want to insert
+   - Parameter completion: (() -> Void)?
+   */
   public func append(items: [ViewModel], completion: (() -> Void)? = nil) {
     var indexes = [Int]()
     let count = component.items.count
@@ -66,6 +76,11 @@ public extension Spotable where Self : Listable {
     }
   }
 
+  /**
+   - Parameter item: The view model that you want to insert
+   - Parameter index: The index where the new ViewModel should be inserted
+   - Parameter completion: (() -> Void)?
+   */
   public func insert(item: ViewModel, index: Int = 0, completion: Completion = nil) {
     component.items.insert(item, atIndex: index)
 
@@ -75,6 +90,10 @@ public extension Spotable where Self : Listable {
     }
   }
 
+  /**
+   - Parameter item: A collection of view model that you want to prepend
+   - Parameter completion: A completion closure that is executed in the main queue
+   */
   public func prepend(items: [ViewModel], completion: Completion = nil) {
     var indexes = [Int]()
 
@@ -90,6 +109,10 @@ public extension Spotable where Self : Listable {
     }
   }
 
+  /**
+   - Parameter item: The view model that you want to remove
+   - Parameter completion: A completion closure that is executed in the main queue
+   */
   public func delete(item: ViewModel, completion: Completion = nil) {
     guard let index = component.items.indexOf({ $0 == item})
       else { completion?(); return }
@@ -102,6 +125,10 @@ public extension Spotable where Self : Listable {
     }
   }
 
+  /**
+   - Parameter item: A collection of view models that you want to delete
+   - Parameter completion: A completion closure that is executed in the main queue
+   */
   public func delete(items: [ViewModel], completion: Completion = nil) {
     var indexPaths = [Int]()
     let count = component.items.count
@@ -117,6 +144,10 @@ public extension Spotable where Self : Listable {
     }
   }
 
+  /**
+   - Parameter index: The index of the view model that you want to remove
+   - Parameter completion: A completion closure that is executed in the main queue when the view model has been removed
+   */
   func delete(index: Int, completion: Completion = nil) {
     dispatch { [weak self] in
       self?.component.items.removeAtIndex(index)
@@ -125,6 +156,10 @@ public extension Spotable where Self : Listable {
     }
   }
 
+  /**
+   - Parameter indexes: An array of indexes that you want to remove
+   - Parameter completion: A completion closure that is executed in the main queue when the view model has been removed
+   */
   func delete(indexes: [Int], completion: Completion = nil) {
     dispatch { [weak self] in
       indexes.forEach { self?.component.items.removeAtIndex($0) }
@@ -133,6 +168,11 @@ public extension Spotable where Self : Listable {
     }
   }
 
+  /**
+   - Parameter item: The new update view model that you want to update at an index
+   - Parameter index: The index of the view model, defaults to 0
+   - Parameter completion: A completion closure that is executed in the main queue when the view model has been removed
+   */
   public func update(item: ViewModel, index: Int = 0, completion: Completion = nil) {
     items[index] = item
 
@@ -152,6 +192,10 @@ public extension Spotable where Self : Listable {
     completion?()
   }
 
+  /**
+   - Parameter indexes: An array of integers that you want to reload, default is nil
+   - Parameter completion: A completion closure that is executed in the main queue when the view model has been reloaded
+   */
   public func reload(indexes: [Int]? = nil, completion: Completion = nil) {
     for (index, item) in component.items.enumerate() {
       let cellClass = self.dynamicType.views[item.kind] ?? self.dynamicType.defaultView
@@ -173,15 +217,25 @@ public extension Spotable where Self : Listable {
     completion?()
   }
 
+  /**
+   - Returns: UIScrollView: Returns a UITableView as a UIScrollView
+   */
   public func render() -> UIScrollView {
     return tableView
   }
 
+  /**
+   - Parameter size: A CGSize to set the width of the table view
+   */
   public func layout(size: CGSize) {
     tableView.width = size.width
     tableView.layoutIfNeeded()
   }
 
+  /**
+   - Parameter includeElement: A filter predicate to find a view model
+   - Returns: A calculate CGFloat based on what the includedElement matches
+   */
   public func scrollTo(@noescape includeElement: (ViewModel) -> Bool) -> CGFloat {
     guard let item = items.filter(includeElement).first else { return 0.0 }
 
