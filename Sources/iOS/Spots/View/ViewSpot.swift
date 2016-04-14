@@ -3,7 +3,7 @@ import Sugar
 
 public class ViewSpot: NSObject, Spotable, Viewable {
 
-  public static var views = [String: UIView.Type]()
+  public static var views = ViewRegistry()
   public static var configure: ((view: UICollectionView) -> Void)?
   public static var defaultView: UIView.Type = UIView.self
 

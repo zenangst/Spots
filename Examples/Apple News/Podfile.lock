@@ -1,5 +1,5 @@
 PODS:
-  - Brick (0.2.0):
+  - Brick (0.4.0):
     - Sugar (~> 1.0)
     - Tailor
   - Cache (1.0.0)
@@ -16,7 +16,7 @@ PODS:
     - Tailor
   - Sugar (1.0.13)
   - SwiftyJSON (2.3.2)
-  - Tailor (0.7.0):
+  - Tailor (0.8.0):
     - Sugar
   - Transition (0.1.0)
 
@@ -39,7 +39,7 @@ EXTERNAL SOURCES:
   Imaginary:
     :git: https://github.com/hyperoslo/Imaginary
   Spots:
-    :path: "../../"
+    :path: ../../
   Transition:
     :git: https://github.com/hyperoslo/Transition
 
@@ -61,7 +61,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/hyperoslo/Transition
 
 SPEC CHECKSUMS:
-  Brick: fb66513880a7cce1dcb33243943fba53dbe00394
+  Brick: f483a54e15c6a1d15c8b8e475c49d3605381e42c
   Cache: 78f58bc008313c7a1182967a2ebcb3de9fddecd4
   Compass: f4b8c37f9b315f0ee4f5e4f71888c54c92992d5d
   Fakery: a4121424cf731cacc04a5ff1735fcc6e3efc656d
@@ -70,9 +70,7 @@ SPEC CHECKSUMS:
   Spots: 9330ae8c8157a4fab347825c67a788b9a51691a0
   Sugar: ca8778ac9d076fba1366b889e6bc205f376465e4
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
-  Tailor: 3d53a5e881a42530500c6fa18b86120f4ddd57fe
+  Tailor: 7388a9bb2ae83db9e07d5940de08eb444efa15a8
   Transition: 66d86e3ae1b8f0b3d9ba2000c7a45fbc17b066f2
 
-PODFILE CHECKSUM: b5990c672d7c25f24324197d1aa40668c01b8dd7
-
-COCOAPODS: 1.0.0.beta.5
+COCOAPODS: 0.39.0

@@ -1,4 +1,21 @@
 import Spots
+import Brick
+
+enum Header: String, StringConvertible {
+  case Search, List
+  
+  var string: String {
+    return rawValue
+  }
+}
+
+enum Cell: String, StringConvertible {
+  case Feed, FeaturedFeed, FeedDetail, Topic
+  
+  var string: String {
+    return rawValue
+  }
+}
 
 struct SpotsConfigurator {
   func configure() {
@@ -8,12 +25,14 @@ struct SpotsConfigurator {
 
     ListSpot.headers["search"] = SearchHeaderView.self
     ListSpot.headers["list"] = ListHeaderView.self
+    
     ListSpot.configure = { tableView in tableView.tableFooterView = UIView(frame: CGRect.zero) }
-    ListSpot.views["feed"] = FeedItemCell.self
-    ListSpot.views["featured-feed"] = FeaturedFeedItemCell.self
-    ListSpot.views["feed-detail"] = FeedDetailItemCell.self
+    
+    ListSpot.views[Cell.Feed] = FeedItemCell.self
+    ListSpot.views[Cell.FeaturedFeed] = FeaturedFeedItemCell.self
+    ListSpot.views[Cell.FeedDetail] = FeedDetailItemCell.self
 
-    CarouselSpot.views["topic"] = GridTopicCell.self
-    GridSpot.views["topic"] = GridTopicCell.self
+    CarouselSpot.views[Cell.Topic] = GridTopicCell.self
+    GridSpot.views[Cell.Topic] = GridTopicCell.self
   }
 }
