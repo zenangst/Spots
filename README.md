@@ -4,6 +4,8 @@
 [![Version](https://img.shields.io/cocoapods/v/Spots.svg?style=flat)](http://cocoadocs.org/docsets/Spots)
 [![License](https://img.shields.io/cocoapods/l/Spots.svg?style=flat)](http://cocoadocs.org/docsets/Spots)
 [![Platform](https://img.shields.io/cocoapods/p/Spots.svg?style=flat)](http://cocoadocs.org/docsets/Spots)
+[![Documentation](https://img.shields.io/cocoapods/metrics/doc-percent/Spots.svg?style=flat)](http://cocoadocs.org/docsets/Spots)
+![Swift](https://img.shields.io/badge/%20in-swift%202.2-orange.svg)
 
 **Spots** is a view controller framework that makes your setup and future
 development blazingly fast. Because of its internal architecture and
@@ -18,6 +20,7 @@ the public API.
 <img src="https://raw.githubusercontent.com/hyperoslo/Spots/master/Images/icon_v4.png" alt="Spots Icon" align="right" />
 
 * [Key features](#key-features)
+* [Origin Story](#origin-story)
 * [Usage](#usage)
 * [View models in the Cloud](#view-models-in-the-cloud)
 * [Programmatic approach](#programmatic-approach)
@@ -62,6 +65,12 @@ want to use it.
 on the view model.
 - Supports multiple cell types inside the same data source, no more ugly if-statements in your implementation;
 **Spots** handles this for you by using a cell registry.
+
+## Origin Story
+
+We wrote a Medium article about how and why we built `Spots`.
+You can find it here: [Hitting the sweet spot of inspiration](https://medium.com/@zenangst/hitting-the-sweet-spot-of-inspiration-637d387bc629#.b9a1mun2i)
+
 
 ## Usage
 
