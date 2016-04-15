@@ -29,7 +29,7 @@ public class ListSpot: NSObject, Spotable, Listable {
   public required init(component: Component) {
     self.component = component
     super.init()
-    
+
     setupTableView()
     prepare()
 
@@ -55,7 +55,7 @@ public class ListSpot: NSObject, Spotable, Listable {
     setupTableView()
     prepare()
   }
-  
+
   // MARK: - Setup
 
   public func setup(size: CGSize) {
@@ -71,7 +71,7 @@ public class ListSpot: NSObject, Spotable, Listable {
 
     ListSpot.configure?(view: tableView)
   }
-  
+
   func setupTableView() {
     tableView.dataSource = self
     tableView.delegate = self
