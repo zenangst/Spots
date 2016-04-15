@@ -198,7 +198,7 @@ public extension Spotable where Self : Listable {
    */
   public func reload(indexes: [Int]? = nil, completion: Completion = nil) {
     refreshIndexes()
-    
+
     for (index, item) in component.items.enumerate() {
       let cellClass = self.dynamicType.views.storage[item.kind] ?? self.dynamicType.defaultView
       let reuseIdentifier = component.items[index].kind.isPresent
@@ -236,7 +236,7 @@ public extension Spotable where Self : Listable {
 
   /**
    - Parameter includeElement: A filter predicate to find a view model
-   - Returns: A calculate CGFloat based on what the includedElement matches
+   - Returns: A calculate CGFloat based on what the includeElement matches
    */
   public func scrollTo(@noescape includeElement: (ViewModel) -> Bool) -> CGFloat {
     guard let item = items.filter(includeElement).first else { return 0.0 }
