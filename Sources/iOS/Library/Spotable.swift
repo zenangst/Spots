@@ -108,13 +108,9 @@ public extension Spotable {
    - Parameter cached: An optional UIView, used to reduce the amount of different reusable views that should be prepared.
    */
   public func prepareItem<T: Spotable>(item: ViewModel, index: Int, spot: T, inout cached: UIView?) {
-    let reuseIdentifer = item.kind.isPresent ? item.kind : component.kind
-    let componentClass = T.views.storage[reuseIdentifer] ?? T.defaultView
+    cachedViewFor(item, cache: &cached)
 
     component.items[index].index = index
-
-    if cached?.isKindOfClass(componentClass) == false { cached = nil }
-    if cached == nil { cached = componentClass.init() }
 
     guard let view = cached as? SpotConfigurable else { return }
 
