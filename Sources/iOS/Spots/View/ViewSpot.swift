@@ -22,7 +22,7 @@ public class ViewSpot: NSObject, Spotable, Viewable {
     prepare()
   }
 
-  public convenience init(title: String = "", kind: String = "view") {
-    self.init(component: Component(title: title, kind: kind))
+  public convenience init(title: String = "", kind: String? = nil) {
+    self.init(component: Component(title: title, kind: kind ?? ViewSpot.defaultKind))
   }
 }
