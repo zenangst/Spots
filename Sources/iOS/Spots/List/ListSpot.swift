@@ -47,13 +47,11 @@ public class ListSpot: NSObject, Spotable, Listable {
     }
   }
 
-  public convenience init(tableView: UITableView? = nil, title: String = "", kind: String = "list") {
-    self.init(component: Component(title: title, kind: kind))
-    
-    if let tableView = tableView {
-      self.tableView = tableView
-    }
-    
+  public convenience init(tableView: UITableView? = nil, title: String = "", kind: String? = nil) {
+    self.init(component: Component(title: title, kind: kind ?? ListSpot.defaultKind))
+
+    self.tableView ?= tableView
+
     setupTableView()
     prepare()
   }
