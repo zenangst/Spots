@@ -15,7 +15,7 @@ public class GridSpot: NSObject, Spotable, Gridable {
 
   public weak var spotsDelegate: SpotsDelegate?
 
-  public lazy var layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+  public lazy var layout = UICollectionViewFlowLayout()
 
   public lazy var collectionView: UICollectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: self.layout).then {
     $0.backgroundColor = UIColor.whiteColor()
