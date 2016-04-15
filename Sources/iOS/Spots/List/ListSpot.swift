@@ -33,7 +33,7 @@ public class ListSpot: NSObject, Spotable, Listable {
     setupTableView()
     prepare()
 
-    let reuseIdentifer = component.kind.isPresent ? component.kind : "list"
+    let reuseIdentifer = component.kind.isPresent ? component.kind : self.dynamicType.defaultKind
 
     guard let headerType = ListSpot.headers[reuseIdentifer]  else { return }
 
