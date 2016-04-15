@@ -124,4 +124,12 @@ public extension Spotable {
       component.items[index].size.height = view.size.height
     }
   }
+
+  func cachedViewFor(item: ViewModel, inout cache: UIView?) {
+    let reuseIdentifer = item.kind.isPresent ? item.kind : component.kind
+    let componentClass = self.dynamicType.views.storage[reuseIdentifer] ?? self.dynamicType.defaultView
+
+    if cache?.isKindOfClass(componentClass) == false { cache = nil }
+    if cache == nil { cache = componentClass.init() }
+  }
 }
