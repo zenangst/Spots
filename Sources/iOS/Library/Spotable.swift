@@ -37,6 +37,26 @@ public extension Spotable {
   }
 
   /**
+   - Parameter spot: Spotable
+   */
+  func registerAndPrepare<T: Spotable>(spot: T, @noescape register: (classType: UIView.Type, withIdentifier: String) -> Void) {
+    if component.kind.isEmpty { component.kind = spot.dynamicType.defaultKind }
+
+    for (reuseIdentifier, classType) in T.views.storage {
+      register(classType: classType, withIdentifier: reuseIdentifier)
+    }
+
+    if !T.views.storage.keys.contains(component.kind) {
+      register(classType: T.defaultView, withIdentifier: component.kind)
+    }
+
+    var cached: UIView?
+    for (index, item) in component.items.enumerate() {
+      prepareItem(item, index: index, spot: self, cached: &cached)
+    }
+  }
+
+  /**
    - Parameter index: The index of the item to lookup
    - Returns: A ViewModel at found at the index
    */
