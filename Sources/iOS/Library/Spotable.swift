@@ -39,6 +39,7 @@ public extension Spotable {
 
   /**
    - Parameter spot: Spotable
+   - Parameter register: A closure containing class type and reuse identifer
    */
   func registerAndPrepare<T: Spotable>(spot: T, @noescape register: (classType: UIView.Type, withIdentifier: String) -> Void) {
     if component.kind.isEmpty { component.kind = spot.dynamicType.defaultKind }
