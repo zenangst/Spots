@@ -197,6 +197,8 @@ public extension Spotable where Self : Listable {
    - Parameter completion: A completion closure that is executed in the main queue when the view model has been reloaded
    */
   public func reload(indexes: [Int]? = nil, completion: Completion = nil) {
+    refreshIndexes()
+    
     for (index, item) in component.items.enumerate() {
       let cellClass = self.dynamicType.views.storage[item.kind] ?? self.dynamicType.defaultView
       let reuseIdentifier = component.items[index].kind.isPresent
