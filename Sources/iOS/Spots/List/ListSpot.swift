@@ -20,10 +20,10 @@ public class ListSpot: NSObject, Spotable, Listable {
 
   public weak var spotsDelegate: SpotsDelegate?
 
+  public lazy var tableView = UITableView()
+
   private var fetching = false
 
-  public lazy var tableView = UITableView()
-  
   // MARK: - Initializers
 
   public required init(component: Component) {
