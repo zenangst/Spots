@@ -17,39 +17,19 @@ public extension Spotable where Self : Gridable {
   }
 
   public func prepare() {
-    prepareSpot(self)
-  }
-
-  /**
-   - Parameter spot: Spotable
-   */
-  private func prepareSpot<T: Spotable>(spot: T) {
-    if component.kind.isEmpty { component.kind = "grid" }
-
-    for (reuseIdentifier, classType) in T.views.storage {
-      collectionView.registerClass(classType, forCellWithReuseIdentifier: reuseIdentifier)
-    }
-
-    if !T.views.storage.keys.contains(component.kind) {
-      collectionView.registerClass(T.defaultView, forCellWithReuseIdentifier: component.kind)
+    registerAndPrepare(self) { (classType, withIdentifier) in
+      collectionView.registerClass(classType, forCellWithReuseIdentifier: withIdentifier)
     }
 
     var cached: UIView?
     for (index, item) in component.items.enumerate() {
-      let reuseIdentifer = item.kind.isPresent ? item.kind : component.kind
-      let componentClass = T.views.storage[reuseIdentifer] ?? T.defaultView
-
-      component.items[index].index = index
-
-      if cached?.isKindOfClass(componentClass) == false { cached = nil }
-      if cached == nil { cached = componentClass.init() }
+      cachedViewFor(item, cache: &cached)
 
       if component.span > 0 {
         component.items[index].size.width = UIScreen.mainScreen().bounds.size.width / CGFloat(component.span)
       }
       (cached as? SpotConfigurable)?.configure(&component.items[index])
     }
-    cached = nil
   }
 
   /**

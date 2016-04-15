@@ -8,7 +8,7 @@ PODS:
   - Hue (1.1)
   - Imaginary (0.1.0):
     - Cache
-  - Spots (1.1.0):
+  - Spots (1.1.1):
     - Brick
     - Sugar
     - Tailor
@@ -55,7 +55,7 @@ SPEC CHECKSUMS:
   Compass: f4b8c37f9b315f0ee4f5e4f71888c54c92992d5d
   Hue: c7d6a7206bac669ed69e78cc6c14a4d7bd28277c
   Imaginary: feaea646440c68a9b6ed66a46597d548b9a44207
-  Spots: 7c45d341050453355e1bf75b9f9635c5e97f2820
+  Spots: f2d6167ff461682a15b5f4d4a509357dc80d17fb
   Sugar: ca8778ac9d076fba1366b889e6bc205f376465e4
   Tailor: 7388a9bb2ae83db9e07d5940de08eb444efa15a8
 
