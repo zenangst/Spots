@@ -6,6 +6,7 @@ public class ViewSpot: NSObject, Spotable, Viewable {
   public static var views = ViewRegistry()
   public static var configure: ((view: UICollectionView) -> Void)?
   public static var defaultView: UIView.Type = UIView.self
+  public static var defaultKind = "view"
 
   public weak var spotsDelegate: SpotsDelegate?
   public var component: Component
