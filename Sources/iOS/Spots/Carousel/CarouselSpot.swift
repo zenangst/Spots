@@ -22,15 +22,12 @@ public class CarouselSpot: NSObject, Spotable, Gridable {
     $0.scrollDirection = .Horizontal
   }
 
-  public lazy var collectionView: UICollectionView = { [unowned self] in
-    let collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: self.layout)
-    collectionView.backgroundColor = UIColor.whiteColor()
-    collectionView.dataSource = self
-    collectionView.delegate = self
-    collectionView.showsHorizontalScrollIndicator = false
-
-    return collectionView
-    }()
+  public lazy var collectionView: UICollectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: self.layout).then {
+    $0.backgroundColor = UIColor.whiteColor()
+    $0.dataSource = self
+    $0.delegate = self
+    $0.showsHorizontalScrollIndicator = false
+  }
 
   public required init(component: Component) {
     self.component = component
