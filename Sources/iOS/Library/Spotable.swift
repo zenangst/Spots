@@ -5,6 +5,7 @@ public protocol Spotable: class {
 
   static var views: ViewRegistry { get }
   static var defaultView: UIView.Type { get set }
+  static var defaultKind: String { get }
 
   weak var spotsDelegate: SpotsDelegate? { get set }
 
