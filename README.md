@@ -4,6 +4,8 @@
 [![Version](https://img.shields.io/cocoapods/v/Spots.svg?style=flat)](http://cocoadocs.org/docsets/Spots)
 [![License](https://img.shields.io/cocoapods/l/Spots.svg?style=flat)](http://cocoadocs.org/docsets/Spots)
 [![Platform](https://img.shields.io/cocoapods/p/Spots.svg?style=flat)](http://cocoadocs.org/docsets/Spots)
+[![Documentation](https://img.shields.io/cocoapods/metrics/doc-percent/Walker.svg?style=flat)](http://cocoadocs.org/docsets/Walker)
+![Swift](https://img.shields.io/badge/%20in-swift%202.2-orange.svg)
 
 **Spots** is a view controller framework that makes your setup and future
 development blazingly fast. Because of its internal architecture and
