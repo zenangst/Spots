@@ -29,8 +29,8 @@ public class GridSpot: NSObject, Spotable, Gridable {
     super.init()
   }
 
-  public convenience init(title: String = "", kind: String = "grid") {
-    self.init(component: Component(title: title, kind: kind))
+  public convenience init(title: String = "", kind: String? = nil) {
+    self.init(component: Component(title: title, kind: kind ?? GridSpot.defaultKind))
   }
 
   public convenience init(_ component: Component, top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0, itemSpacing: CGFloat = 0, lineSpacing: CGFloat = 0) {
