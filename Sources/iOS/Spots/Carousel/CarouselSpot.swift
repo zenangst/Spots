@@ -137,10 +137,8 @@ extension CarouselSpot: UICollectionViewDataSource {
       if component.items[indexPath.item].size.height == 0.0 {
         component.items[indexPath.item].size = cell.size
       }
-    }
 
-    if let configure = configure, view = cell as? SpotConfigurable {
-      configure(view)
+      configure?(cell)
     }
 
     collectionView.collectionViewLayout.invalidateLayout()
