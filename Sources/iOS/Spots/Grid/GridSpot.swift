@@ -1,7 +1,7 @@
 import UIKit
 import Sugar
 
-public class GridSpot: NSObject, Spotable, Gridable {
+public class GridSpot: NSObject, Gridable {
 
   public static var views = ViewRegistry()
   public static var defaultView: UIView.Type = GridSpotCell.self

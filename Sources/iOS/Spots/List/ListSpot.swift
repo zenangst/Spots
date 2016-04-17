@@ -1,7 +1,7 @@
 import UIKit
 import Sugar
 
-public class ListSpot: NSObject, Spotable, Listable {
+public class ListSpot: NSObject, Listable {
 
   public static var views = ViewRegistry()
   public static var configure: ((view: UITableView) -> Void)?

@@ -2,7 +2,7 @@ import UIKit
 import Sugar
 import Brick
 
-public class CarouselSpot: NSObject, Spotable, Gridable {
+public class CarouselSpot: NSObject, Gridable {
 
   public static var views = ViewRegistry()
   public static var configure: ((view: UICollectionView) -> Void)?
