@@ -11,7 +11,7 @@ public extension Spotable where Self : Listable {
   typealias Completion = (() -> Void)?
 
   public func prepare() {
-    registerAndPrepare(self) { (classType, withIdentifier) in
+    registerAndPrepare { (classType, withIdentifier) in
       tableView.registerClass(classType, forCellReuseIdentifier: withIdentifier)
     }
   }

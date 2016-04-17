@@ -41,20 +41,20 @@ public extension Spotable {
    - Parameter spot: Spotable
    - Parameter register: A closure containing class type and reuse identifer
    */
-  func registerAndPrepare<T: Spotable>(spot: T, @noescape register: (classType: UIView.Type, withIdentifier: String) -> Void) {
-    if component.kind.isEmpty { component.kind = spot.dynamicType.defaultKind }
+  func registerAndPrepare(@noescape register: (classType: UIView.Type, withIdentifier: String) -> Void) {
+    if component.kind.isEmpty { component.kind = Self.defaultKind }
 
-    for (reuseIdentifier, classType) in T.views.storage {
+    Self.views.storage.forEach { reuseIdentifier, classType in
       register(classType: classType, withIdentifier: reuseIdentifier)
     }
 
-    if !T.views.storage.keys.contains(component.kind) {
-      register(classType: T.defaultView, withIdentifier: component.kind)
+    if !Self.views.storage.keys.contains(component.kind) {
+      register(classType: Self.defaultView, withIdentifier: component.kind)
     }
 
     var cached: UIView?
-    for (index, item) in component.items.enumerate() {
-      prepareItem(item, index: index, spot: self, cached: &cached)
+    component.items.enumerate().forEach {
+      prepareItem($1, index: $0, spot: self, cached: &cached)
     }
   }
 

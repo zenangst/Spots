@@ -17,7 +17,7 @@ public extension Spotable where Self : Gridable {
   }
 
   public func prepare() {
-    registerAndPrepare(self) { (classType, withIdentifier) in
+    registerAndPrepare { (classType, withIdentifier) in
       collectionView.registerClass(classType, forCellWithReuseIdentifier: withIdentifier)
     }
 
