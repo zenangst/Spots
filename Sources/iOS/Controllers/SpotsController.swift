@@ -10,7 +10,6 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
   public private(set) var spots: [Spotable]
 
   public var refreshPositions = [CGFloat]()
-
   public var refreshing = false
 
   weak public var spotsDelegate: SpotsDelegate? {
