@@ -54,7 +54,7 @@ public extension Spotable {
 
     var cached: UIView?
     component.items.enumerate().forEach {
-      prepareItem($1, index: $0, spot: self, cached: &cached)
+      prepareItem($1, index: $0, cached: &cached)
     }
   }
 
@@ -108,7 +108,7 @@ public extension Spotable {
    - Parameter spot: The spot that should be prepared
    - Parameter cached: An optional UIView, used to reduce the amount of different reusable views that should be prepared.
    */
-  public func prepareItem<T: Spotable>(item: ViewModel, index: Int, spot: T, inout cached: UIView?) {
+  public func prepareItem(item: ViewModel, index: Int, inout cached: UIView?) {
     cachedViewFor(item, cache: &cached)
 
     component.items[index].index = index

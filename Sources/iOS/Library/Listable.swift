@@ -29,7 +29,7 @@ public extension Spotable where Self : Listable {
       completion?()
     }
     var cached: UIView?
-    prepareItem(item, index: count, spot: self, cached: &cached)
+    prepareItem(item, index: count, cached: &cached)
   }
 
   /**
@@ -45,7 +45,7 @@ public extension Spotable where Self : Listable {
     var cached: UIView?
     items.enumerate().forEach {
       indexes.append(count + $0.index)
-      prepareItem($0.element, index: count + $0.index, spot: self, cached: &cached)
+      prepareItem($0.element, index: count + $0.index, cached: &cached)
     }
 
     dispatch { [weak self] in
