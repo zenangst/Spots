@@ -5,6 +5,7 @@ public protocol Spotable: class {
 
   static var views: ViewRegistry { get }
   static var defaultView: UIView.Type { get set }
+  static var defaultKind: String { get }
 
   weak var spotsDelegate: SpotsDelegate? { get set }
 
@@ -34,6 +35,27 @@ public extension Spotable {
   var items: [ViewModel] {
     set(items) { component.items = items }
     get { return component.items }
+  }
+
+  /**
+   - Parameter spot: Spotable
+   - Parameter register: A closure containing class type and reuse identifer
+   */
+  func registerAndPrepare(@noescape register: (classType: UIView.Type, withIdentifier: String) -> Void) {
+    if component.kind.isEmpty { component.kind = Self.defaultKind }
+
+    Self.views.storage.forEach { reuseIdentifier, classType in
+      register(classType: classType, withIdentifier: reuseIdentifier)
+    }
+
+    if !Self.views.storage.keys.contains(component.kind) {
+      register(classType: Self.defaultView, withIdentifier: component.kind)
+    }
+
+    var cached: UIView?
+    component.items.enumerate().forEach {
+      prepareItem($1, index: $0, cached: &cached)
+    }
   }
 
   /**
@@ -86,14 +108,10 @@ public extension Spotable {
    - Parameter spot: The spot that should be prepared
    - Parameter cached: An optional UIView, used to reduce the amount of different reusable views that should be prepared.
    */
-  public func prepareItem<T: Spotable>(item: ViewModel, index: Int, spot: T, inout cached: UIView?) {
-    let reuseIdentifer = item.kind.isPresent ? item.kind : component.kind
-    let componentClass = T.views.storage[reuseIdentifer] ?? T.defaultView
+  public func prepareItem(item: ViewModel, index: Int, inout cached: UIView?) {
+    cachedViewFor(item, cache: &cached)
 
     component.items[index].index = index
-
-    if cached?.isKindOfClass(componentClass) == false { cached = nil }
-    if cached == nil { cached = componentClass.init() }
 
     guard let view = cached as? SpotConfigurable else { return }
 
@@ -102,5 +120,19 @@ public extension Spotable {
     if component.items[index].size.height == 0 {
       component.items[index].size.height = view.size.height
     }
+  }
+
+  /**
+  Cache view for item kind
+
+  - Parameter item: A view model
+  - Parameter cached: An optional UIView, used to reduce the amount of different reusable views that should be prepared.
+  */
+  func cachedViewFor(item: ViewModel, inout cache: UIView?) {
+    let reuseIdentifer = item.kind.isPresent ? item.kind : component.kind
+    let componentClass = self.dynamicType.views.storage[reuseIdentifer] ?? self.dynamicType.defaultView
+
+    if cache?.isKindOfClass(componentClass) == false { cache = nil }
+    if cache == nil { cache = componentClass.init() }
   }
 }

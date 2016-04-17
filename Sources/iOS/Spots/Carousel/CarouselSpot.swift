@@ -2,11 +2,12 @@ import UIKit
 import Sugar
 import Brick
 
-public class CarouselSpot: NSObject, Spotable, Gridable {
+public class CarouselSpot: NSObject, Gridable {
 
   public static var views = ViewRegistry()
   public static var configure: ((view: UICollectionView) -> Void)?
   public static var defaultView: UIView.Type = CarouselSpotCell.self
+  public static var defaultKind = "carousel"
 
   public var cachedViews = [String : SpotConfigurable]()
   public var component: Component
@@ -22,15 +23,12 @@ public class CarouselSpot: NSObject, Spotable, Gridable {
     $0.scrollDirection = .Horizontal
   }
 
-  public lazy var collectionView: UICollectionView = { [unowned self] in
-    let collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: self.layout)
-    collectionView.backgroundColor = UIColor.whiteColor()
-    collectionView.dataSource = self
-    collectionView.delegate = self
-    collectionView.showsHorizontalScrollIndicator = false
-
-    return collectionView
-    }()
+  public lazy var collectionView: UICollectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: self.layout).then {
+    $0.backgroundColor = UIColor.whiteColor()
+    $0.dataSource = self
+    $0.delegate = self
+    $0.showsHorizontalScrollIndicator = false
+  }
 
   public required init(component: Component) {
     self.component = component
@@ -139,10 +137,8 @@ extension CarouselSpot: UICollectionViewDataSource {
       if component.items[indexPath.item].size.height == 0.0 {
         component.items[indexPath.item].size = cell.size
       }
-    }
 
-    if let configure = configure, view = cell as? SpotConfigurable {
-      configure(view)
+      configure?(cell)
     }
 
     collectionView.collectionViewLayout.invalidateLayout()

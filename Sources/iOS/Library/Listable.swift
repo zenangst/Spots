@@ -9,29 +9,10 @@ public protocol Listable: Spotable {
 public extension Spotable where Self : Listable {
 
   typealias Completion = (() -> Void)?
+
   public func prepare() {
-    prepareSpot(self)
-  }
-
-  /**
-   - Parameter spot: Spotable
-   */
-  private func prepareSpot<T: Spotable>(spot: T) {
-    if component.kind.isEmpty { component.kind = "list" }
-
-    for (reuseIdentifier, classType) in T.views.storage {
-      tableView.registerClass(classType, forCellReuseIdentifier: reuseIdentifier)
-    }
-
-    if !T.views.storage.keys.contains(component.kind) {
-      tableView.registerClass(T.defaultView, forCellReuseIdentifier: component.kind)
-    }
-
-    var cached: UIView?
-    defer { cached = nil }
-
-    for (index, item) in component.items.enumerate() {
-      prepareItem(item, index: index, spot: self, cached: &cached)
+    registerAndPrepare { (classType, withIdentifier) in
+      tableView.registerClass(classType, forCellReuseIdentifier: withIdentifier)
     }
   }
 
@@ -48,9 +29,7 @@ public extension Spotable where Self : Listable {
       completion?()
     }
     var cached: UIView?
-    defer { cached = nil }
-
-    prepareItem(item, index: count, spot: self, cached: &cached)
+    prepareItem(item, index: count, cached: &cached)
   }
 
   /**
@@ -66,9 +45,8 @@ public extension Spotable where Self : Listable {
     var cached: UIView?
     items.enumerate().forEach {
       indexes.append(count + $0.index)
-      prepareItem($0.element, index: count + $0.index, spot: self, cached: &cached)
+      prepareItem($0.element, index: count + $0.index, cached: &cached)
     }
-    cached = nil
 
     dispatch { [weak self] in
       self?.tableView.insert(indexes, animation: .None)

@@ -1,11 +1,12 @@
 import UIKit
 import Sugar
 
-public class ListSpot: NSObject, Spotable, Listable {
+public class ListSpot: NSObject, Listable {
 
   public static var views = ViewRegistry()
   public static var configure: ((view: UITableView) -> Void)?
   public static var defaultView: UIView.Type = ListSpotCell.self
+  public static var defaultKind = "list"
   public static var headers = ViewRegistry()
 
   public var index = 0
@@ -19,20 +20,20 @@ public class ListSpot: NSObject, Spotable, Listable {
 
   public weak var spotsDelegate: SpotsDelegate?
 
+  public lazy var tableView = UITableView()
+
   private var fetching = false
 
-  public lazy var tableView = UITableView()
-  
   // MARK: - Initializers
 
   public required init(component: Component) {
     self.component = component
     super.init()
-    
+
     setupTableView()
     prepare()
 
-    let reuseIdentifer = component.kind.isPresent ? component.kind : "list"
+    let reuseIdentifer = component.kind.isPresent ? component.kind : self.dynamicType.defaultKind
 
     guard let headerType = ListSpot.headers[reuseIdentifer]  else { return }
 
@@ -46,17 +47,15 @@ public class ListSpot: NSObject, Spotable, Listable {
     }
   }
 
-  public convenience init(tableView: UITableView? = nil, title: String = "", kind: String = "list") {
-    self.init(component: Component(title: title, kind: kind))
-    
-    if let tableView = tableView {
-      self.tableView = tableView
-    }
-    
+  public convenience init(tableView: UITableView? = nil, title: String = "", kind: String? = nil) {
+    self.init(component: Component(title: title, kind: kind ?? ListSpot.defaultKind))
+
+    self.tableView ?= tableView
+
     setupTableView()
     prepare()
   }
-  
+
   // MARK: - Setup
 
   public func setup(size: CGSize) {
@@ -72,7 +71,7 @@ public class ListSpot: NSObject, Spotable, Listable {
 
     ListSpot.configure?(view: tableView)
   }
-  
+
   func setupTableView() {
     tableView.dataSource = self
     tableView.delegate = self
@@ -144,10 +143,8 @@ extension ListSpot: UITableViewDataSource {
       if component.items[indexPath.item].size.height == 0.0 {
         component.items[indexPath.item].size = cell.size
       }
-    }
 
-    if let configure = configure, view = cell as? SpotConfigurable {
-      configure(view)
+      configure?(cell)
     }
 
     return cell

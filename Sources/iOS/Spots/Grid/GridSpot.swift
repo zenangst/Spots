@@ -1,10 +1,11 @@
 import UIKit
 import Sugar
 
-public class GridSpot: NSObject, Spotable, Gridable {
+public class GridSpot: NSObject, Gridable {
 
   public static var views = ViewRegistry()
   public static var defaultView: UIView.Type = GridSpotCell.self
+  public static var defaultKind = "grid"
   public static var configure: ((view: UICollectionView) -> Void)?
 
   public var cachedViews = [String : SpotConfigurable]()
@@ -14,25 +15,22 @@ public class GridSpot: NSObject, Spotable, Gridable {
 
   public weak var spotsDelegate: SpotsDelegate?
 
-  public lazy var layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+  public lazy var layout = UICollectionViewFlowLayout()
 
-  public lazy var collectionView: UICollectionView = { [unowned self] in
-    let collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: self.layout)
-    collectionView.backgroundColor = UIColor.whiteColor()
-    collectionView.dataSource = self
-    collectionView.delegate = self
-    collectionView.scrollEnabled = false
-
-    return collectionView
-    }()
+  public lazy var collectionView: UICollectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: self.layout).then {
+    $0.backgroundColor = UIColor.whiteColor()
+    $0.dataSource = self
+    $0.delegate = self
+    $0.scrollEnabled = false
+  }
 
   public required init(component: Component) {
     self.component = component
     super.init()
   }
 
-  public convenience init(title: String = "", kind: String = "grid") {
-    self.init(component: Component(title: title, kind: kind))
+  public convenience init(title: String = "", kind: String? = nil) {
+    self.init(component: Component(title: title, kind: kind ?? GridSpot.defaultKind))
   }
 
   public convenience init(_ component: Component, top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0, itemSpacing: CGFloat = 0, lineSpacing: CGFloat = 0) {
@@ -81,10 +79,7 @@ extension GridSpot: UICollectionViewDataSource {
       if component.items[indexPath.item].size.height == 0.0 {
         component.items[indexPath.item].size = cell.size
       }
-    }
-
-    if let configure = configure, view = cell as? SpotConfigurable {
-      configure(view)
+      configure?(cell)
     }
 
     collectionView.collectionViewLayout.invalidateLayout()
