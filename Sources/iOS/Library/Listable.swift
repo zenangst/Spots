@@ -3,7 +3,9 @@ import Sugar
 import Brick
 
 public protocol Listable: Spotable {
+  static var headers: ViewRegistry { get }
   var tableView: UITableView { get }
+  var cachedHeaders: [String : Componentable] { get }
 }
 
 public extension Spotable where Self : Listable {

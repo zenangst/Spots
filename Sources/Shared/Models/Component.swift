@@ -12,6 +12,7 @@ public struct Component: Mappable {
   public var index = 0
   public var title = ""
   public var kind = ""
+  public var sectioned = false
   public var span: CGFloat = 0
   public var items = [ViewModel]()
   public var size: CGSize?
