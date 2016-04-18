@@ -5,6 +5,8 @@ import Brick
 public protocol Gridable: Spotable {
   var layout: UICollectionViewFlowLayout { get }
   var collectionView: UICollectionView { get }
+
+  func sizeForItemAt(indexPath: NSIndexPath) -> CGSize
 }
 
 public extension Spotable where Self : Gridable {
