@@ -15,6 +15,7 @@ public class GridSpot: NSObject, Gridable {
 
   public weak var spotsDelegate: SpotsDelegate?
 
+  public lazy var adapter: CollectionAdapter = CollectionAdapter(spot: self)
   public lazy var layout = UICollectionViewFlowLayout()
 
   public lazy var collectionView: UICollectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: self.layout).then {
