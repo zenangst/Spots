@@ -12,12 +12,7 @@ public class ListAdapter : NSObject {
 extension ListAdapter: UITableViewDelegate {
 
   public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    var headerHeight: CGFloat = 0
-    if let listSpot = spot as? ListSpot {
-      headerHeight = listSpot.headerHeight
-    }
-
-    return spot.component.title.isPresent ? headerHeight : 0
+    return spot.component.meta("headerHeight", 0.0)
   }
 
   public func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -30,18 +25,15 @@ extension ListAdapter: UITableViewDelegate {
   }
 
   public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-    var headerHeight: CGFloat = 0
-    if let listSpot = spot as? ListSpot {
-      headerHeight = listSpot.headerHeight
-    }
-
-    let reuseIdentifer = spot.component.kind.isPresent ? spot.component.kind : "list"
+    let reuseIdentifer = spot.component.kind.isPresent ? spot.component.kind : spot.dynamicType.defaultKind
 
     if let listSpot = spot as? ListSpot, cachedHeader = listSpot.cachedHeaders[reuseIdentifer] {
       cachedHeader.configure(spot.component)
       return cachedHeader as? UIView
     } else if let header = ListSpot.headers[reuseIdentifer] {
-      let header = header.init(frame: CGRect(x: 0, y: 0, width: tableView.bounds.width, height: headerHeight))
+      let header = header.init(frame: CGRect(x: 0, y: 0,
+        width: tableView.bounds.width,
+        height: spot.component.meta("headerHeight", 0.0)))
       return header
     }
 
