@@ -6,6 +6,7 @@
 [![Platform](https://img.shields.io/cocoapods/p/Spots.svg?style=flat)](http://cocoadocs.org/docsets/Spots)
 [![Documentation](https://img.shields.io/cocoapods/metrics/doc-percent/Spots.svg?style=flat)](http://cocoadocs.org/docsets/Spots)
 ![Swift](https://img.shields.io/badge/%20in-swift%202.2-orange.svg)
+[![Join the chat at https://gitter.im/hyperoslo/Spots](https://badges.gitter.im/hyperoslo/Spots.svg)](https://gitter.im/hyperoslo/Spots?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 **Spots** is a view controller framework that makes your setup and future
 development blazingly fast. Because of its internal architecture and
@@ -16,8 +17,6 @@ It is packed with convenience methods that are at your disposal through
 the public API.
 
 ## Table of Contents
-
-[![Join the chat at https://gitter.im/hyperoslo/Spots](https://badges.gitter.im/hyperoslo/Spots.svg)](https://gitter.im/hyperoslo/Spots?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 <img src="https://raw.githubusercontent.com/hyperoslo/Spots/master/Images/icon_v4.png" alt="Spots Icon" align="right" />
 
