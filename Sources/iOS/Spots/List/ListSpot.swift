@@ -20,6 +20,7 @@ public class ListSpot: NSObject, Listable {
 
   public weak var spotsDelegate: SpotsDelegate?
 
+  public lazy var adapter: ListAdapter = ListAdapter(spot: self)
   public lazy var tableView = UITableView()
 
   private var fetching = false
