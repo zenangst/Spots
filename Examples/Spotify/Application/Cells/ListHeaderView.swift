@@ -1,5 +1,6 @@
 import UIKit
 import Spots
+import Sugar
 
 public class ListHeaderView: UIView, Componentable {
 
@@ -30,5 +31,6 @@ public class ListHeaderView: UIView, Componentable {
     label.textColor = UIColor.grayColor()
     label.attributedText = NSAttributedString(string: component.title.uppercaseString,
       attributes: [NSParagraphStyleAttributeName : paddedStyle])
+    label.height = component.meta("headerHeight", 0.0)
   }
 }

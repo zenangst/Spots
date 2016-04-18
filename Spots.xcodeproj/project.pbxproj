@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		BD0625F71C45754B00A16F91 /* ViewSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0625F61C45754B00A16F91 /* ViewSpot.swift */; };
+		BD2A7E0B1CC4E74E00D26905 /* CollectionAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2A7E0A1CC4E74E00D26905 /* CollectionAdapter.swift */; };
+		BD2A7E0F1CC4F56F00D26905 /* ListAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2A7E0E1CC4F56F00D26905 /* ListAdapter.swift */; };
 		BD352E5F1CBAD6EC002CD032 /* Brick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD352E5E1CBAD6EC002CD032 /* Brick.framework */; };
 		BD352E611CBAD6F9002CD032 /* Brick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD352E601CBAD6F9002CD032 /* Brick.framework */; };
 		BD48BEC71C45795600317D76 /* Viewable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD48BEC61C45795600317D76 /* Viewable.swift */; };
@@ -75,6 +77,8 @@
 
 /* Begin PBXFileReference section */
 		BD0625F61C45754B00A16F91 /* ViewSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewSpot.swift; sourceTree = "<group>"; };
+		BD2A7E0A1CC4E74E00D26905 /* CollectionAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionAdapter.swift; sourceTree = "<group>"; };
+		BD2A7E0E1CC4F56F00D26905 /* ListAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListAdapter.swift; sourceTree = "<group>"; };
 		BD352E5E1CBAD6EC002CD032 /* Brick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Brick.framework; path = Carthage/Build/iOS/Brick.framework; sourceTree = "<group>"; };
 		BD352E601CBAD6F9002CD032 /* Brick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Brick.framework; path = Carthage/Build/Mac/Brick.framework; sourceTree = "<group>"; };
 		BD48BEC61C45795600317D76 /* Viewable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Viewable.swift; sourceTree = "<group>"; };
@@ -293,6 +297,8 @@
 				D58478661C440062006EBA49 /* SpotsDelegates.swift */,
 				BD48BEC61C45795600317D76 /* Viewable.swift */,
 				BD9FBC741CBFD7CE00A59212 /* ViewRegistry.swift */,
+				BD2A7E0A1CC4E74E00D26905 /* CollectionAdapter.swift */,
+				BD2A7E0E1CC4F56F00D26905 /* ListAdapter.swift */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -657,8 +663,10 @@
 				D58478831C440062006EBA49 /* Listable.swift in Sources */,
 				D58478A11C440062006EBA49 /* SpotConfigurable.swift in Sources */,
 				D58478971C440062006EBA49 /* ListSpotCell.swift in Sources */,
+				BD2A7E0B1CC4E74E00D26905 /* CollectionAdapter.swift in Sources */,
 				D58478851C440062006EBA49 /* Parser.swift in Sources */,
 				D58478951C440062006EBA49 /* ListSpot.swift in Sources */,
+				BD2A7E0F1CC4F56F00D26905 /* ListAdapter.swift in Sources */,
 				D584787D1C440062006EBA49 /* SpotsController+UIScrollViewDelegate.swift in Sources */,
 				D584788B1C440062006EBA49 /* SpotsDelegates.swift in Sources */,
 				D584787F1C440062006EBA49 /* SpotsController.swift in Sources */,

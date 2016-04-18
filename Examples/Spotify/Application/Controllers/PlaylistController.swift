@@ -18,6 +18,7 @@ class PlaylistController: SpotsController {
     let featuredSpot = CarouselSpot(Component(span: 2), top: 5, left: 15, bottom: 5, right: 15, itemSpacing: 15)
     let gridSpot = GridSpot(component: Component(span: 1))
     let listSpot = ListSpot(title: "Playlists").then {
+      $0.component.meta["headerHeight"] = 44
       $0.items = [ViewModel(title: "Loading...", kind: "playlist", size: CGSize(width: 44, height: 44))]
     }
 

@@ -13,11 +13,12 @@ public class CarouselSpot: NSObject, Gridable {
   public var component: Component
   public var index = 0
   public var paginate = false
-
   public var configure: (SpotConfigurable -> Void)?
 
   public weak var carouselScrollDelegate: SpotsCarouselScrollDelegate?
   public weak var spotsDelegate: SpotsDelegate?
+
+  public lazy var adapter: CollectionAdapter = CollectionAdapter(spot: self)
 
   public lazy var layout = UICollectionViewFlowLayout().then {
     $0.scrollDirection = .Horizontal
@@ -25,8 +26,8 @@ public class CarouselSpot: NSObject, Gridable {
 
   public lazy var collectionView: UICollectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: self.layout).then {
     $0.backgroundColor = UIColor.whiteColor()
-    $0.dataSource = self
-    $0.delegate = self
+    $0.dataSource = self.adapter
+    $0.delegate = self.adapter
     $0.showsHorizontalScrollIndicator = false
   }
 
@@ -98,9 +99,9 @@ extension CarouselSpot: UIScrollViewDelegate {
   }
 }
 
-extension CarouselSpot: UICollectionViewDelegateFlowLayout {
+extension CarouselSpot {
 
-  public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+  public func sizeForItemAt(indexPath: NSIndexPath) -> CGSize {
     component.items[indexPath.item].size.width = component.span > 0
       ? collectionView.width / CGFloat(component.span)
       : collectionView.width
@@ -110,39 +111,5 @@ extension CarouselSpot: UICollectionViewDelegateFlowLayout {
     return CGSize(
       width: ceil(item(indexPath).size.width),
       height: ceil(item(indexPath).size.height))
-  }
-}
-
-extension CarouselSpot: UICollectionViewDelegate {
-
-  public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-    spotsDelegate?.spotDidSelectItem(self, item: item(indexPath))
-  }
-}
-
-extension CarouselSpot: UICollectionViewDataSource {
-
-  public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return component.items.count
-  }
-
-  public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-    component.items[indexPath.item].index = indexPath.item
-
-    let reuseIdentifier = item(indexPath).kind.isPresent ? item(indexPath).kind : component.kind
-    let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath).then { $0.optimize() }
-
-    if let cell = cell as? SpotConfigurable {
-      cell.configure(&component.items[indexPath.item])
-      if component.items[indexPath.item].size.height == 0.0 {
-        component.items[indexPath.item].size = cell.size
-      }
-
-      configure?(cell)
-    }
-
-    collectionView.collectionViewLayout.invalidateLayout()
-
-    return cell
   }
 }

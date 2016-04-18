@@ -13,7 +13,7 @@ class ProfileController: SpotsController {
     }
 
     let listSpot = ListSpot().then {
-      $0.headerHeight = 44
+      $0.component.meta["headerHeight"] = 44
       $0.component.title = "User information"
       $0.items = [ViewModel(title: "Logout", action: "logout")]
     }
