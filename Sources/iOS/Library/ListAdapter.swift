@@ -68,15 +68,30 @@ extension ListAdapter: UITableViewDelegate {
   }
 
   public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-    let reuseIdentifer = spot.component.kind.isPresent ? spot.component.kind : spot.dynamicType.defaultKind
+    guard sectioned else { return nil }
 
-    if let listSpot = spot as? ListSpot, cachedHeader = listSpot.cachedHeaders[reuseIdentifer] {
-      cachedHeader.configure(spot.component)
-      return cachedHeader as? UIView
-    } else if let header = ListSpot.headers[reuseIdentifer] {
+    let reuseIdentifier = section < spot.component.items.count
+      ? spot.component.items[section].kind : spot.component.kind
+
+    if let header = spot.dynamicType.sections[reuseIdentifier] {
       let header = header.init(frame: CGRect(x: 0, y: 0,
         width: tableView.bounds.width,
         height: spot.component.meta("sectionHeaderHeight", 0.0)))
+      let collapsed = collapsedSections.indexOf(section) != nil
+
+      spot.component.items[section].index = section
+      spot.component.items[section].meta["collapsed"] = collapsed
+
+      (header as? SpotConfigurable)?.configure(&spot.component.items[section])
+
+      if let index = collapsedSections.indexOf(section) {
+        collapsedSections.removeAtIndex(index)
+      }
+
+      if collapsed {
+        collapsedSections.append(section)
+      }
+
       return header
     }
 
