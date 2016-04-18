@@ -10,7 +10,6 @@ public class ListSpot: NSObject, Listable {
   public static var headers = ViewRegistry()
 
   public var index = 0
-  public var headerHeight: CGFloat = 44
   public var component: Component
   public var cachedHeaders = [String : Componentable]()
   public var cachedCells = [String : SpotConfigurable]()
@@ -39,12 +38,12 @@ public class ListSpot: NSObject, Listable {
     guard let headerType = ListSpot.headers[reuseIdentifer]  else { return }
 
     let header = headerType.init(frame: CGRect(x: 0, y: 0,
-      width: UIScreen.mainScreen().bounds.width, height: headerHeight))
+      width: UIScreen.mainScreen().bounds.width, height: component.meta("headerHeight", 0.0)))
 
     if let configurable = header as? Componentable {
       configurable.configure(component)
       cachedHeaders[reuseIdentifer] = configurable
-      headerHeight = configurable.defaultHeight
+      self.component.meta["headerHeight"] = configurable.defaultHeight
     }
   }
 
@@ -63,7 +62,7 @@ public class ListSpot: NSObject, Listable {
     prepare()
     var height = component.items.reduce(0, combine: { $0 + $1.size.height })
 
-    if component.title.isPresent { height += headerHeight }
+    if component.title.isPresent { height += component.meta("headerHeight", 0.0) }
 
     tableView.frame.size = size
     tableView.contentSize = CGSize(
