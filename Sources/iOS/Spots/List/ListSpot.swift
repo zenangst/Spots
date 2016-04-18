@@ -74,8 +74,8 @@ public class ListSpot: NSObject, Listable {
   }
 
   func setupTableView() {
-    tableView.dataSource = self
-    tableView.delegate = self
+    tableView.dataSource = self.adapter
+    tableView.delegate = self.adapter
     tableView.rowHeight = UITableViewAutomaticDimension
   }
 }
