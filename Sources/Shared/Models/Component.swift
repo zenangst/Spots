@@ -32,6 +32,16 @@ public struct Component: Mappable {
     self.items = items
     self.meta = meta
   }
+
+  // MARK: - Helpers
+
+  public func meta<T>(key: String, _ defaultValue: T) -> T {
+    return meta[key] as? T ?? defaultValue
+  }
+
+  public func meta<T>(key: String, type: T.Type) -> T? {
+    return meta[key] as? T
+  }
 }
 
 public func ==(lhs: Component, rhs: Component) -> Bool {
