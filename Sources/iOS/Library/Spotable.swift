@@ -71,7 +71,11 @@ public extension Spotable {
    - Returns: A ViewModel at found at the index
    */
   public func item(indexPath: NSIndexPath) -> ViewModel {
-    return component.items[indexPath.item]
+    guard component.sectioned else {
+      return component.items[indexPath.item]
+    }
+
+    return component.items[indexPath.section].relations["items"]?[indexPath.item] ?? ViewModel()
   }
 
   /**

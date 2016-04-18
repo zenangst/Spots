@@ -4,10 +4,12 @@ import Sugar
 public class ListSpot: NSObject, Listable {
 
   public static var views = ViewRegistry()
+  public static var headers = ViewRegistry()
+  public static var sections = ViewRegistry()
+
   public static var configure: ((view: UITableView) -> Void)?
   public static var defaultView: UIView.Type = ListSpotCell.self
   public static var defaultKind = "list"
-  public static var headers = ViewRegistry()
 
   public var index = 0
   public var component: Component
