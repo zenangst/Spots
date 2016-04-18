@@ -113,37 +113,3 @@ extension CarouselSpot: UICollectionViewDelegateFlowLayout {
       height: ceil(item(indexPath).size.height))
   }
 }
-
-extension CarouselSpot: UICollectionViewDelegate {
-
-  public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-    spotsDelegate?.spotDidSelectItem(self, item: item(indexPath))
-  }
-}
-
-extension CarouselSpot: UICollectionViewDataSource {
-
-  public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return component.items.count
-  }
-
-  public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-    component.items[indexPath.item].index = indexPath.item
-
-    let reuseIdentifier = item(indexPath).kind.isPresent ? item(indexPath).kind : component.kind
-    let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath).then { $0.optimize() }
-
-    if let cell = cell as? SpotConfigurable {
-      cell.configure(&component.items[indexPath.item])
-      if component.items[indexPath.item].size.height == 0.0 {
-        component.items[indexPath.item].size = cell.size
-      }
-
-      configure?(cell)
-    }
-
-    collectionView.collectionViewLayout.invalidateLayout()
-
-    return cell
-  }
-}
