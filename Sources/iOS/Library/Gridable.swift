@@ -262,4 +262,14 @@ public extension Spotable where Self : Gridable {
     guard let componentSize = component.size else { return }
     collectionView.height = componentSize.height
   }
+
+  public func sizeForItemAt(indexPath: NSIndexPath) -> CGSize {
+    if component.span > 0 {
+      component.items[indexPath.item].size.width = collectionView.width / CGFloat(component.span) - layout.minimumInteritemSpacing
+    }
+
+    return CGSize(
+      width: ceil(item(indexPath).size.width - layout.sectionInset.left - layout.sectionInset.right),
+      height: ceil(item(indexPath).size.height))
+  }
 }
