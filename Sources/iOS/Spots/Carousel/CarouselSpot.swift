@@ -19,6 +19,8 @@ public class CarouselSpot: NSObject, Gridable {
   public weak var carouselScrollDelegate: SpotsCarouselScrollDelegate?
   public weak var spotsDelegate: SpotsDelegate?
 
+  public lazy var adapter: CollectionAdapter = CollectionAdapter(spot: self)
+
   public lazy var layout = UICollectionViewFlowLayout().then {
     $0.scrollDirection = .Horizontal
   }
