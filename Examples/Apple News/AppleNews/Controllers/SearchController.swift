@@ -8,8 +8,8 @@ class SearchController: SpotsController {
     let results = Component(title: "Search", kind: "search")
 
     let spots: [Spotable] = [
-      ListSpot(component: results),
-      ListSpot(title: "Suggestions"),
+      ListSpot(component: results).then { $0.component.meta["headerHeight"] = 88 },
+      ListSpot(title: "Suggestions").then { $0.component.meta["headerHeight"] = 44 },
       ListSpot()
     ]
 
