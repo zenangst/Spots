@@ -17,6 +17,8 @@ the public API.
 
 ## Table of Contents
 
+[![Join the chat at https://gitter.im/hyperoslo/Spots](https://badges.gitter.im/hyperoslo/Spots.svg)](https://gitter.im/hyperoslo/Spots?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 <img src="https://raw.githubusercontent.com/hyperoslo/Spots/master/Images/icon_v4.png" alt="Spots Icon" align="right" />
 
 * [Key features](#key-features)
