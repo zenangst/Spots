@@ -13,7 +13,6 @@ public class CarouselSpot: NSObject, Gridable {
   public var component: Component
   public var index = 0
   public var paginate = false
-
   public var configure: (SpotConfigurable -> Void)?
 
   public weak var carouselScrollDelegate: SpotsCarouselScrollDelegate?
