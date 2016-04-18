@@ -99,9 +99,9 @@ extension CarouselSpot: UIScrollViewDelegate {
   }
 }
 
-extension CarouselSpot: UICollectionViewDelegateFlowLayout {
+extension CarouselSpot {
 
-  public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+  public func sizeForItemAt(indexPath: NSIndexPath) -> CGSize {
     component.items[indexPath.item].size.width = component.span > 0
       ? collectionView.width / CGFloat(component.span)
       : collectionView.width
