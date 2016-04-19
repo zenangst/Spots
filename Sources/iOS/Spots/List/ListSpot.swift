@@ -41,7 +41,6 @@ public class ListSpot: NSObject, Listable {
     if let configurable = header as? Componentable {
       configurable.configure(component)
       cachedHeaders[reuseIdentifer] = configurable
-      self.component.meta["headerHeight"] = configurable.defaultHeight
     }
   }
 
