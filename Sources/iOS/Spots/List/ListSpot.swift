@@ -15,8 +15,6 @@ public class ListSpot: NSObject, Listable {
   public var cachedCells = [String : SpotConfigurable]()
   public var configure: (SpotConfigurable -> Void)?
 
-  public let itemHeight: CGFloat = 44
-
   public weak var spotsDelegate: SpotsDelegate?
 
   public lazy var adapter: ListAdapter = ListAdapter(spot: self)
@@ -43,7 +41,6 @@ public class ListSpot: NSObject, Listable {
     if let configurable = header as? Componentable {
       configurable.configure(component)
       cachedHeaders[reuseIdentifer] = configurable
-      self.component.meta["headerHeight"] = configurable.defaultHeight
     }
   }
 

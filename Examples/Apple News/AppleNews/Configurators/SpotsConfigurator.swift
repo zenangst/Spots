@@ -3,7 +3,7 @@ import Brick
 
 enum Header: String, StringConvertible {
   case Search, List
-  
+
   var string: String {
     return rawValue
   }
@@ -11,7 +11,7 @@ enum Header: String, StringConvertible {
 
 enum Cell: String, StringConvertible {
   case Feed, FeaturedFeed, FeedDetail, Topic
-  
+
   var string: String {
     return rawValue
   }
@@ -25,9 +25,9 @@ struct SpotsConfigurator {
 
     ListSpot.headers["search"] = SearchHeaderView.self
     ListSpot.headers["list"] = ListHeaderView.self
-    
+
     ListSpot.configure = { tableView in tableView.tableFooterView = UIView(frame: CGRect.zero) }
-    
+
     ListSpot.views[Cell.Feed] = FeedItemCell.self
     ListSpot.views[Cell.FeaturedFeed] = FeaturedFeedItemCell.self
     ListSpot.views[Cell.FeedDetail] = FeedDetailItemCell.self

@@ -28,7 +28,7 @@ public class ListHeaderView: UIView, Componentable {
   }
 
   public required init?(coder aDecoder: NSCoder) {
-      fatalError("init(coder:) has not been implemented")
+    fatalError("init(coder:) has not been implemented")
   }
 
   public func configure(component: Component) {
