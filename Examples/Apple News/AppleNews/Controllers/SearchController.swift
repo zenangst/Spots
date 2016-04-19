@@ -5,11 +5,11 @@ class SearchController: SpotsController {
 
   convenience init(title: String) {
 
-    let results = Component(title: "Search", kind: "search")
+    let results = Component(title: "Search", kind: "search", meta: ["headerHeight" : 44])
 
     let spots: [Spotable] = [
-      ListSpot(component: results).then { $0.component.meta["headerHeight"] = 88 },
-      ListSpot(title: "Suggestions").then { $0.component.meta["headerHeight"] = 44 },
+      ListSpot(component: results),
+      ListSpot(component: Component(title: "Suggestions", meta: ["headerHeight" : 44])),
       ListSpot()
     ]
 

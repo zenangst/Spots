@@ -31,10 +31,10 @@ class ExploreController: SpotsController {
       ], meta: ["headerHeight" : 44])
 
     let spots: [Spotable] = [
-      ListSpot(title: "Suggested Channels").then { $0.component.meta["headerHeight"] = 44 },
+      ListSpot(component: Component(title : "Suggested Channels", meta: ["headerHeight" : 44])),
       CarouselSpot(suggestedChannels,
         top: 5, left: 15, bottom: 5, right: 15, itemSpacing: 15),
-      ListSpot(title: "Suggested Topics").then { $0.component.meta["headerHeight"] = 44 },
+      ListSpot(component: Component(title : "Suggested Topics", meta: ["headerHeight" : 44])),
       CarouselSpot(suggestedTopics,
         top: 5, left: 15, bottom: 5, right: 15, itemSpacing: 15),
       ListSpot(component: browse)
