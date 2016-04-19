@@ -2,6 +2,7 @@
 
 import UIKit
 import Spots
+import Brick
 import XCPlayground
 
 let myContacts = Component(title: "My contacts", items: [
