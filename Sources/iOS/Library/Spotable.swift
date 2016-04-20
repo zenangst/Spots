@@ -90,6 +90,10 @@ public extension Spotable {
     }
   }
 
+  /**
+   Reloads spot only if it has changes
+   - Parameter items: An array of view models
+   */
   public func reloadIfNeeded(items: [ViewModel]) {
     guard !(self.items == items) else { return }
 
