@@ -90,6 +90,13 @@ public extension Spotable {
     }
   }
 
+  public func reloadIfNeeded(items: [ViewModel]) {
+    guard !(self.items == items) else { return }
+
+    self.items = items
+    reload(nil, completion: nil)
+  }
+
   /**
    TODO: We should probably have a look at this method? Seems silly to always return 0.0 😁
 
