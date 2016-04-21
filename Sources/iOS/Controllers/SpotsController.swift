@@ -190,8 +190,7 @@ extension SpotsController {
    - Parameter items: An array of view models
    */
   public func updateIfNeeded(spotAtIndex index: Int = 0, items: [ViewModel]) {
-    guard let spot = spot(index, Spotable.self) else { return }
-    guard !(spot.items == items) else { return }
+    guard let spot = spot(index, Spotable.self) where !(spot.items == items) else { return }
 
     update(spotAtIndex: index) {
       $0.items = items
