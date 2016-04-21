@@ -185,6 +185,19 @@ extension SpotsController {
   }
 
   /**
+   Updates spot only if the passed view models are not the same with the current ones.
+   - Parameter spotAtIndex: The index of the spot that you want to perform updates on
+   - Parameter items: An array of view models
+   */
+  public func updateIfNeeded(spotAtIndex index: Int = 0, items: [ViewModel]) {
+    guard let spot = spot(index, Spotable.self) where !(spot.items == items) else { return }
+
+    update(spotAtIndex: index) {
+      $0.items = items
+    }
+  }
+
+  /**
    - Parameter item: The view model that you want to append
    - Parameter spotIndex: The index of the spot that you want to append to, defaults to 0
    - Parameter closure: A completion closure that will run after the spot has performed updates internally

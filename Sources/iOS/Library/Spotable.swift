@@ -91,6 +91,17 @@ public extension Spotable {
   }
 
   /**
+   Reloads spot only if it has changes
+   - Parameter items: An array of view models
+   */
+  public func reloadIfNeeded(items: [ViewModel]) {
+    guard !(self.items == items) else { return }
+
+    self.items = items
+    reload(nil, completion: nil)
+  }
+
+  /**
    TODO: We should probably have a look at this method? Seems silly to always return 0.0 😁
 
    - Parameter includeElement: A filter predicate to find a view model
