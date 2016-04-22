@@ -5,18 +5,18 @@ PODS:
   - Cache (1.0.0)
   - Compass (1.4.0):
     - Sugar
-  - Fakery (1.1.2):
+  - Fakery (1.2.0):
     - SwiftyJSON
   - Hue (1.1)
   - Imaginary (0.1.0):
     - Cache
-  - Spots (1.1.2):
+  - Spots (1.2.0):
     - Brick
     - Sugar
     - Tailor
   - Sugar (1.0.13)
   - SwiftyJSON (2.3.2)
-  - Tailor (0.8.0):
+  - Tailor (0.10.0):
     - Sugar
   - Transition (0.1.0)
 
@@ -64,15 +64,15 @@ SPEC CHECKSUMS:
   Brick: f483a54e15c6a1d15c8b8e475c49d3605381e42c
   Cache: 78f58bc008313c7a1182967a2ebcb3de9fddecd4
   Compass: f4b8c37f9b315f0ee4f5e4f71888c54c92992d5d
-  Fakery: a4121424cf731cacc04a5ff1735fcc6e3efc656d
+  Fakery: ff6a27c3688a05c055d3e64c5fa9d78684796749
   Hue: c7d6a7206bac669ed69e78cc6c14a4d7bd28277c
   Imaginary: feaea646440c68a9b6ed66a46597d548b9a44207
-  Spots: 78980fb3aecbdd3c33ba22ca5c692725360dee72
+  Spots: 8824321152777e2d545b198b07d8e584d0034ceb
   Sugar: ca8778ac9d076fba1366b889e6bc205f376465e4
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
-  Tailor: 7388a9bb2ae83db9e07d5940de08eb444efa15a8
+  Tailor: ff8314352078e8df973cf801a8397b85b2daf5e7
   Transition: 66d86e3ae1b8f0b3d9ba2000c7a45fbc17b066f2
 
 PODFILE CHECKSUM: b5990c672d7c25f24324197d1aa40668c01b8dd7
 
-COCOAPODS: 1.0.0.beta.5
+COCOAPODS: 1.0.0.beta.8
