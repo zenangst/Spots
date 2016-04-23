@@ -162,12 +162,16 @@ SpotsController.configure = {
   $0.backgroundColor = UIColor.whiteColor()
 }
 
+CarouselSpot.configure = {
+  $0.contentInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+}
+
 // Configure List spots
 ListSpot.configure = { tableView in
   tableView.tableFooterView = UIView(frame: CGRect.zero)
 }
 
-let carouselItems = Component(span: 1, items: [
+let carouselItems = Component(items: [
   ViewModel(title: "UX", kind: Cell.Featured, meta: ["color" : UIColor.blackColor()]),
   ViewModel(title: "Persistency", kind: Cell.Featured, meta: ["color" : UIColor.grayColor()]),
   ViewModel(title: "Networking", kind: Cell.Featured, meta: ["color" : UIColor.greenColor()]),
