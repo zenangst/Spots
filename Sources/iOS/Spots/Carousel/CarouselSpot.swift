@@ -29,7 +29,10 @@ public class CarouselSpot: NSObject, Gridable {
     $0.dataSource = self.adapter
     $0.delegate = self.adapter
     $0.showsHorizontalScrollIndicator = false
+    $0.backgroundView = self.backgroundView
   }
+
+  public lazy var backgroundView = UIView()
 
   public required init(component: Component) {
     self.component = component
