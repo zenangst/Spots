@@ -139,14 +139,17 @@ extension CarouselSpot: UIScrollViewDelegate {
 extension CarouselSpot {
 
   public func sizeForItemAt(indexPath: NSIndexPath) -> CGSize {
-    component.items[indexPath.item].size.width = component.span > 0
+    var width = component.span > 0
       ? collectionView.width / CGFloat(component.span)
       : collectionView.width
 
-    component.items[indexPath.item].size.width -= layout.sectionInset.left
+    width -= layout.sectionInset.left
+    width -= collectionView.contentInset.left + collectionView.contentInset.right
+
+    component.items[indexPath.item].size.width = width
 
     return CGSize(
-      width: ceil(item(indexPath).size.width),
-      height: ceil(item(indexPath).size.height))
+      width: ceil(component.items[indexPath.item].size.width),
+      height: ceil(component.items[indexPath.item].size.height))
   }
 }
