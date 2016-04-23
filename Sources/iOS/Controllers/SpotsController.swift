@@ -76,16 +76,7 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     super.viewDidLoad()
     view.addSubview(spotsScrollView)
 
-    spots.enumerate().forEach { index, spot in
-      spots[index].index = index
-      spot.render().optimize()
-      spotsScrollView.contentView.addSubview(spot.render())
-      spot.prepare()
-      spot.setup(spotsScrollView.frame.size)
-      spot.component.size = CGSize(
-        width: view.width,
-        height: ceil(spot.render().height))
-    }
+    setupSpots()
 
     SpotsController.configure?(container: spotsScrollView)
   }
@@ -111,6 +102,23 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
 
     spots.forEach { $0.layout(size) }
+  }
+
+  /**
+   - Parameter animated: An optional animation closure that runs when a spot is being rendered
+  */
+  private func setupSpots(animated: ((view: UIView) -> Void)? = nil) {
+    spots.enumerate().forEach { index, spot in
+      spots[index].index = index
+      spot.render().optimize()
+      spotsScrollView.contentView.addSubview(spot.render())
+      spot.prepare()
+      spot.setup(spotsScrollView.frame.size)
+      spot.component.size = CGSize(
+        width: view.width,
+        height: ceil(spot.render().height))
+      animated?(view: spot.render())
+    }
   }
 }
 
