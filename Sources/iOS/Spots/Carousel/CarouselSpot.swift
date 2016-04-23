@@ -124,6 +124,8 @@ extension CarouselSpot: UIScrollViewDelegate {
     if index >= 0 && index <= items.count {
       carouselScrollDelegate?.spotDidEndScrolling(self, item: items[index])
     }
+
+    pageControl.currentPage = Int(floor(CGFloat(index) / component.span))
   }
 
   public func scrollTo(predicate: (ViewModel) -> Bool) {
