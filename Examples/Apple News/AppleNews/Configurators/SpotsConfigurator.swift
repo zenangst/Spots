@@ -23,6 +23,12 @@ struct SpotsConfigurator {
       $0.backgroundColor = UIColor.whiteColor()
     }
 
+    GridSpot.configure = { collectionView, layout in
+      layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 20, right: 10)
+      layout.minimumInteritemSpacing = -5
+      layout.minimumLineSpacing = 10
+    }
+
     ListSpot.headers["search"] = SearchHeaderView.self
     ListSpot.headers["list"] = ListHeaderView.self
 
