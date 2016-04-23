@@ -250,7 +250,7 @@ public extension Spotable where Self : Gridable {
    */
   public func setup(size: CGSize) {
     collectionView.frame.size = size
-    GridSpot.configure?(view: collectionView)
+    GridSpot.configure?(view: collectionView, layout: layout)
   }
 
   /**

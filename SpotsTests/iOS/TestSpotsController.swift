@@ -171,4 +171,38 @@ class SpotsControllerTests : XCTestCase {
 
     XCTAssert(sourceController.spot.component == jsonController.spot.component)
   }
+
+  func testJSONReload() {
+    let initialJSON = [
+      "components" : [
+        ["type" : "list",
+          "items" : [
+            ["title" : "First list item"]
+          ]
+        ]
+      ]
+    ]
+    let jsonController = SpotsController(initialJSON)
+
+    XCTAssert(jsonController.spot.component.kind == "list")
+    XCTAssert(jsonController.spot.component.items.count == 1)
+    XCTAssert(jsonController.spot.component.items.first?.title == "First list item")
+
+    let updateJSON = [
+      "components" : [
+        ["type" : "grid",
+          "items" : [
+            ["title" : "First grid item"],
+            ["title" : "Second grid item"]
+          ]
+        ]
+      ]
+    ]
+
+    jsonController.reload(updateJSON)
+
+    XCTAssert(jsonController.spot.component.kind == "grid")
+    XCTAssert(jsonController.spot.component.items.count == 2)
+    XCTAssert(jsonController.spot.component.items.first?.title == "First grid item")
+  }
 }

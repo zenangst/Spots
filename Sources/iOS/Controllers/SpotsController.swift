@@ -76,16 +76,7 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     super.viewDidLoad()
     view.addSubview(spotsScrollView)
 
-    spots.enumerate().forEach { index, spot in
-      spots[index].index = index
-      spot.render().optimize()
-      spotsScrollView.contentView.addSubview(spot.render())
-      spot.prepare()
-      spot.setup(spotsScrollView.frame.size)
-      spot.component.size = CGSize(
-        width: view.width,
-        height: ceil(spot.render().height))
-    }
+    setupSpots()
 
     SpotsController.configure?(container: spotsScrollView)
   }
@@ -111,6 +102,23 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
 
     spots.forEach { $0.layout(size) }
+  }
+
+  /**
+   - Parameter animated: An optional animation closure that runs when a spot is being rendered
+  */
+  private func setupSpots(animated: ((view: UIView) -> Void)? = nil) {
+    spots.enumerate().forEach { index, spot in
+      spots[index].index = index
+      spot.render().optimize()
+      spotsScrollView.contentView.addSubview(spot.render())
+      spot.prepare()
+      spot.setup(spotsScrollView.frame.size)
+      spot.component.size = CGSize(
+        width: view.width,
+        height: ceil(spot.render().height))
+      animated?(view: spot.render())
+    }
   }
 }
 
@@ -161,6 +169,20 @@ extension SpotsController {
         }
       }
     }
+  }
+
+  /**
+   - Parameter json: A JSON dictionary that gets parsed into UI elements
+   - Parameter completion: A closure that will be run after reload has been performed on all spots
+  */
+  public func reload(json: [String : AnyObject], animated: ((view: UIView) -> Void)? = nil, closure: (() -> Void)? = nil) {
+    spots = Parser.parse(json)
+
+    spotsScrollView.contentView.subviews.forEach { $0.removeFromSuperview() }
+    setupSpots(animated)
+    spotsScrollView.forceUpdate = true
+
+    closure?()
   }
 
   /**

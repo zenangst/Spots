@@ -6,7 +6,7 @@ public class GridSpot: NSObject, Gridable {
   public static var views = ViewRegistry()
   public static var defaultView: UIView.Type = GridSpotCell.self
   public static var defaultKind = "grid"
-  public static var configure: ((view: UICollectionView) -> Void)?
+  public static var configure: ((view: UICollectionView, layout: UICollectionViewFlowLayout) -> Void)?
 
   public var cachedViews = [String : SpotConfigurable]()
   public var component: Component
