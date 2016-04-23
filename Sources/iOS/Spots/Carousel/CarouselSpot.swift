@@ -10,15 +10,46 @@ public class CarouselSpot: NSObject, Gridable {
   public static var defaultKind = "carousel"
 
   public var cachedViews = [String : SpotConfigurable]()
-  public var component: Component
+
+  public var component: Component {
+    willSet(value) {
+      pageControl.numberOfPages = Int(floor(CGFloat(component.items.count) / component.span))
+    }
+  }
+
   public var index = 0
-  public var paginate = false
+
+  public var paginate = false {
+    willSet(newValue) {
+      collectionView.pagingEnabled = newValue
+    }
+  }
+
+  public var pageIndicator: Bool = false {
+    willSet(value) {
+      if value {
+        pageControl.currentPage = 1
+        pageControl.width = backgroundView.frame.width
+        collectionView.backgroundView?.addSubview(pageControl)
+        layout.sectionInset.bottom = pageControl.height
+      } else {
+        pageControl.removeFromSuperview()
+        layout.sectionInset.bottom = 0
+      }
+    }
+  }
+
   public var configure: (SpotConfigurable -> Void)?
 
   public weak var carouselScrollDelegate: SpotsCarouselScrollDelegate?
   public weak var spotsDelegate: SpotsDelegate?
 
   public lazy var adapter: CollectionAdapter = CollectionAdapter(spot: self)
+  public lazy var pageControl = UIPageControl().then {
+    $0.frame.size.height = 22
+    $0.pageIndicatorTintColor = UIColor.lightGrayColor()
+    $0.currentPageIndicatorTintColor = UIColor.grayColor()
+  }
 
   public lazy var layout = UICollectionViewFlowLayout().then {
     $0.scrollDirection = .Horizontal
@@ -29,7 +60,10 @@ public class CarouselSpot: NSObject, Gridable {
     $0.dataSource = self.adapter
     $0.delegate = self.adapter
     $0.showsHorizontalScrollIndicator = false
+    $0.backgroundView = self.backgroundView
   }
+
+  public lazy var backgroundView = UIView()
 
   public required init(component: Component) {
     self.component = component
@@ -57,6 +91,9 @@ public class CarouselSpot: NSObject, Gridable {
     }
 
     CarouselSpot.configure?(view: collectionView)
+
+    guard pageIndicator else { return }
+    pageControl.frame.origin.y = collectionView.height - pageControl.frame.size.height
   }
 }
 
@@ -80,13 +117,13 @@ extension CarouselSpot: UIScrollViewDelegate {
       newTargetOffset = 0
     }
 
-    targetContentOffset.memory.x = currentOffset;
-    scrollView.setContentOffset(CGPoint(x: newTargetOffset, y:0), animated: true)
-
     let index: Int = Int(floor(newTargetOffset * CGFloat(items.count) / scrollView.contentSize.width))
+
     if index >= 0 && index <= items.count {
       carouselScrollDelegate?.spotDidEndScrolling(self, item: items[index])
     }
+
+    pageControl.currentPage = Int(floor(CGFloat(index) / component.span))
   }
 
   public func scrollTo(predicate: (ViewModel) -> Bool) {
@@ -102,14 +139,17 @@ extension CarouselSpot: UIScrollViewDelegate {
 extension CarouselSpot {
 
   public func sizeForItemAt(indexPath: NSIndexPath) -> CGSize {
-    component.items[indexPath.item].size.width = component.span > 0
+    var width = component.span > 0
       ? collectionView.width / CGFloat(component.span)
       : collectionView.width
 
-    component.items[indexPath.item].size.width -= layout.sectionInset.left
+    width -= layout.sectionInset.left
+    width -= collectionView.contentInset.left + collectionView.contentInset.right
+
+    component.items[indexPath.item].size.width = width
 
     return CGSize(
-      width: ceil(item(indexPath).size.width),
-      height: ceil(item(indexPath).size.height))
+      width: ceil(component.items[indexPath.item].size.width),
+      height: ceil(component.items[indexPath.item].size.height))
   }
 }
