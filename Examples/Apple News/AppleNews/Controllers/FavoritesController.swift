@@ -9,7 +9,7 @@ class FavoritesController: SpotsController {
 
   convenience init(title: String) {
     let favorites = Component(span: 3)
-    self.init(spot: GridSpot(favorites, top: 10, left: 10, bottom: 20, right: 10, itemSpacing: -5))
+    self.init(spot: GridSpot(favorites, top: 10, left: 10, bottom: 20, right: 10, itemSpacing: -5, lineSpacing: 10))
     self.title = title
   }
 
