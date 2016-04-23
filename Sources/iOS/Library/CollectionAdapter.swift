@@ -8,6 +8,14 @@ public class CollectionAdapter : NSObject {
   }
 }
 
+extension CollectionAdapter : UIScrollViewDelegate {
+  public func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+    if let carousel = spot as? CarouselSpot {
+      carousel.scrollViewWillEndDragging(scrollView, withVelocity: velocity, targetContentOffset: targetContentOffset)
+    }
+  }
+}
+
 extension CollectionAdapter : UICollectionViewDelegate {
 
   public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
