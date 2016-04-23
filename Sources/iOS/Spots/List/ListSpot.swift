@@ -57,9 +57,8 @@ public class ListSpot: NSObject, Listable {
 
   public func setup(size: CGSize) {
     prepare()
-    var height = component.items.reduce(0, combine: { $0 + $1.size.height })
-
-    if component.title.isPresent { height += component.meta("headerHeight", 0.0) }
+    let height = component.items.reduce(component.meta("headerHeight", 0.0),
+                                        combine: { $0 + $1.size.height })
 
     tableView.frame.size = size
     tableView.contentSize = CGSize(
