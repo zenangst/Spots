@@ -9,12 +9,12 @@ PODS:
   - Imaginary (0.1.0):
     - Cache
   - Keychain (1.0.0)
-  - Spots (1.2.0):
+  - Spots (1.2.1):
     - Brick
     - Sugar
     - Tailor
   - Sugar (1.0.13)
-  - Tailor (0.10.0):
+  - Tailor (0.11.0):
     - Sugar
   - Whisper (2.1)
 
@@ -60,11 +60,11 @@ SPEC CHECKSUMS:
   Hue: c7d6a7206bac669ed69e78cc6c14a4d7bd28277c
   Imaginary: feaea646440c68a9b6ed66a46597d548b9a44207
   Keychain: 50cb247cab32e774422741b118af9b598a3fb5b2
-  Spots: 8824321152777e2d545b198b07d8e584d0034ceb
+  Spots: ce6fe7d0818f4c52d669518a07fae0f9235c13d9
   Sugar: ca8778ac9d076fba1366b889e6bc205f376465e4
-  Tailor: ff8314352078e8df973cf801a8397b85b2daf5e7
+  Tailor: 428bfaa0e01facb5dfb69a3caa4eb6ba45cd3114
   Whisper: 18b574de21a089c0d664b115f26e0d9ccbbadbab
 
 PODFILE CHECKSUM: 3a2aeebe9f05ae88ecc097c1abc9e12147b4f281
 
-COCOAPODS: 1.0.0.beta.8
+COCOAPODS: 1.0.0.beta.5
