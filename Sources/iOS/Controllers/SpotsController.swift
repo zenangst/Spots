@@ -172,6 +172,20 @@ extension SpotsController {
   }
 
   /**
+   - Parameter json: A JSON dictionary that gets parsed into UI elements
+   - Parameter completion: A closure that will be run after reload has been performed on all spots
+  */
+  public func reload(json: [String : AnyObject], animated: ((view: UIView) -> Void)? = nil, closure: (() -> Void)? = nil) {
+    spots = Parser.parse(json)
+
+    spotsScrollView.contentView.subviews.forEach { $0.removeFromSuperview() }
+    setupSpots(animated)
+    spotsScrollView.forceUpdate = true
+
+    closure?()
+  }
+
+  /**
    - Parameter spotAtIndex: The index of the spot that you want to perform updates on
    - Parameter closure: A transform closure to perform the proper modification to the target spot before updating the internals
    */
