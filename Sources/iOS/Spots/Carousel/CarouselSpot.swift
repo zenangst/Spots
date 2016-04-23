@@ -19,6 +19,11 @@ public class CarouselSpot: NSObject, Gridable {
   public weak var spotsDelegate: SpotsDelegate?
 
   public lazy var adapter: CollectionAdapter = CollectionAdapter(spot: self)
+  public lazy var pageControl = UIPageControl().then {
+    $0.frame.size.height = 22
+    $0.pageIndicatorTintColor = UIColor.lightGrayColor()
+    $0.currentPageIndicatorTintColor = UIColor.grayColor()
+  }
 
   public lazy var layout = UICollectionViewFlowLayout().then {
     $0.scrollDirection = .Horizontal
