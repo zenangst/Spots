@@ -24,6 +24,21 @@ public class CarouselSpot: NSObject, Gridable {
       collectionView.pagingEnabled = newValue
     }
   }
+
+  public var pageIndicator: Bool = false {
+    willSet(value) {
+      if value {
+        pageControl.currentPage = 1
+        pageControl.width = backgroundView.frame.width
+        collectionView.backgroundView?.addSubview(pageControl)
+        layout.sectionInset.bottom = pageControl.height
+      } else {
+        pageControl.removeFromSuperview()
+        layout.sectionInset.bottom = 0
+      }
+    }
+  }
+
   public var configure: (SpotConfigurable -> Void)?
 
   public weak var carouselScrollDelegate: SpotsCarouselScrollDelegate?
