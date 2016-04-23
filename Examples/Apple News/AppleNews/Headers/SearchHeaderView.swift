@@ -1,22 +1,23 @@
 import UIKit
 import Spots
+import Sugar
 
 public class SearchHeaderView: UIView, Componentable {
 
   public var defaultHeight: CGFloat = 88
 
   lazy var label: UILabel = { [unowned self] in
-    let label = UILabel(frame: self.frame)
+    let label = UILabel(frame: self.bounds)
     label.font = UIFont.boldSystemFontOfSize(11)
 
     return label
     }()
 
   lazy var backgroundView: UIView = {
-    let view = UITextField(frame: self.frame)
+    let view = UITextField(frame: self.bounds)
     view.backgroundColor = UIColor(red:0.961, green:0.961, blue:0.961, alpha: 1)
     view.height = 44
-    view.y = 44
+    view.y = 0
 
     return view
     }()
@@ -25,7 +26,7 @@ public class SearchHeaderView: UIView, Componentable {
     let searchField = UITextField(frame: self.frame)
     searchField.width -= 30
     searchField.height = 44
-    searchField.y = 44
+    searchField.y = 0
     searchField.x = 15
     searchField.font = UIFont.systemFontOfSize(18)
 
@@ -56,5 +57,7 @@ public class SearchHeaderView: UIView, Componentable {
 
     label.attributedText = NSAttributedString(string: component.title.uppercaseString,
       attributes: [NSParagraphStyleAttributeName : paddedStyle])
+
+    frame.size.height ?= component.size?.height
   }
 }

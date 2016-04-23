@@ -16,7 +16,7 @@ extension ListAdapter: UITableViewDelegate {
   }
 
   public func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    return spot.component.title
+    return spot.component.title.isPresent ? spot.component.title : nil
   }
 
   public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

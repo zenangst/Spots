@@ -8,7 +8,13 @@ class ExploreController: SpotsController {
     let suggestedChannels = Component(span: 3, items: [
       ViewModel(title: "Apple",   kind: Cell.Topic, image: ExploreController.suggestedImage(1)),
       ViewModel(title: "Spotify", kind: Cell.Topic, image: ExploreController.suggestedImage(2)),
-      ViewModel(title: "Google",  kind: Cell.Topic, image: ExploreController.suggestedImage(3))
+      ViewModel(title: "Google",  kind: Cell.Topic, image: ExploreController.suggestedImage(3)),
+      ViewModel(title: "Apple",   kind: Cell.Topic, image: ExploreController.suggestedImage(4)),
+      ViewModel(title: "Spotify", kind: Cell.Topic, image: ExploreController.suggestedImage(5)),
+      ViewModel(title: "Google",  kind: Cell.Topic, image: ExploreController.suggestedImage(6)),
+      ViewModel(title: "Apple",   kind: Cell.Topic, image: ExploreController.suggestedImage(7)),
+      ViewModel(title: "Spotify", kind: Cell.Topic, image: ExploreController.suggestedImage(8)),
+      ViewModel(title: "Google",  kind: Cell.Topic, image: ExploreController.suggestedImage(9))
       ])
 
     let suggestedTopics = Component(span: 3, items: [
@@ -28,15 +34,18 @@ class ExploreController: SpotsController {
       ViewModel(title: "Science"),
       ViewModel(title: "Entertainment"),
       ViewModel(title: "Food")
-      ], meta: ["headerHeight" : 44])
+      ], meta: ["headerHeight" : 33])
+
+    let suggestedSpot = CarouselSpot(suggestedChannels, left: 15, right: 15, itemSpacing: 15)
+    suggestedSpot.pageIndicator = true
+    suggestedSpot.paginate = true
 
     let spots: [Spotable] = [
-      ListSpot(component: Component(title : "Suggested Channels", meta: ["headerHeight" : 44])),
-      CarouselSpot(suggestedChannels,
-        top: 5, left: 15, bottom: 5, right: 15, itemSpacing: 15),
-      ListSpot(component: Component(title : "Suggested Topics", meta: ["headerHeight" : 44])),
+      ListSpot(component: Component(title : "Suggested Channels", meta: ["headerHeight" : 33])),
+      suggestedSpot,
+      ListSpot(component: Component(title : "Suggested Topics", meta: ["headerHeight" : 33])),
       CarouselSpot(suggestedTopics,
-        top: 5, left: 15, bottom: 5, right: 15, itemSpacing: 15),
+        left: 15, right: 15, itemSpacing: 15),
       ListSpot(component: browse)
     ]
 
