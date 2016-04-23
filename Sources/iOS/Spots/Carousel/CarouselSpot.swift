@@ -10,7 +10,13 @@ public class CarouselSpot: NSObject, Gridable {
   public static var defaultKind = "carousel"
 
   public var cachedViews = [String : SpotConfigurable]()
-  public var component: Component
+
+  public var component: Component {
+    willSet(value) {
+      pageControl.numberOfPages = Int(floor(CGFloat(component.items.count) / component.span))
+    }
+  }
+
   public var index = 0
   public var paginate = false
   public var configure: (SpotConfigurable -> Void)?
