@@ -91,6 +91,9 @@ public class CarouselSpot: NSObject, Gridable {
     }
 
     CarouselSpot.configure?(view: collectionView)
+
+    guard pageIndicator else { return }
+    pageControl.frame.origin.y = collectionView.height - pageControl.frame.size.height
   }
 }
 
