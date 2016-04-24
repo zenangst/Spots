@@ -2,10 +2,22 @@ import Spots
 import Brick
 import UIKit
 
+extension UIImage {
+
+  static func transparentImage(size: CGSize) -> UIImage {
+    UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
+    let image = UIGraphicsGetImageFromCurrentImageContext()
+    UIGraphicsEndImageContext()
+    return image
+  }
+}
+
 public class ListCell: UITableViewCell, SpotConfigurable {
 
-  public var size = CGSize(width: 0, height: 88)
+  public var size = CGSize(width: 0, height: 128)
   public var item: ViewModel?
+
+  lazy var transparentImage = UIImage.transparentImage(CGSize(width: 60, height: 60))
 
   lazy var selectedView = UIView().then {
     $0.backgroundColor = UIColor.darkGrayColor().colorWithAlphaComponent(0.4)
@@ -30,6 +42,12 @@ public class ListCell: UITableViewCell, SpotConfigurable {
       accessoryType = .None
     }
 
+    if item.image.isPresent {
+      imageView?.setImage(NSURL(string: item.image), placeholder: transparentImage)
+    } else {
+      imageView?.image = nil
+    }
+
     detailTextLabel?.text = item.subtitle
     textLabel?.text = item.title
 
@@ -41,5 +59,15 @@ public class ListCell: UITableViewCell, SpotConfigurable {
 
     textLabel?.x = 16
     detailTextLabel?.x = 16
+
+    imageView?.x = 24
+    imageView?.y = 16
+    imageView?.frame.size = CGSize(width: 96, height: 96)
+    imageView?.layer.cornerRadius = 96 / 2
+
+    if imageView?.image != nil {
+      textLabel?.x = 132
+      detailTextLabel?.x = 132
+    }
   }
 }
