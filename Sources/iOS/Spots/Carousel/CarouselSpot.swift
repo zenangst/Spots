@@ -21,7 +21,7 @@ public class CarouselSpot: NSObject, Gridable {
 
   public var index = 0
 
-#if os(iOS)
+  #if os(iOS)
   public var paginate = false {
     willSet(newValue) {
       collectionView.pagingEnabled = newValue

@@ -44,7 +44,7 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
 
     return refreshControl
   }()
-  #endif
+#endif
 
   // MARK: Initializer
 
