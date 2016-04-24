@@ -7,12 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BD461CB41CCD3DFE00C0A1C5 /* GridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD461CB01CCD3DFE00C0A1C5 /* GridCell.swift */; };
+		BD461CB51CCD3DFE00C0A1C5 /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD461CB11CCD3DFE00C0A1C5 /* ListCell.swift */; };
+		BD461CB61CCD3DFE00C0A1C5 /* SpotsConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD461CB31CCD3DFE00C0A1C5 /* SpotsConfigurator.swift */; };
 		BDA207B41CCBECCF005294B9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA207B31CCBECCF005294B9 /* AppDelegate.swift */; };
 		BDA207B61CCBECCF005294B9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA207B51CCBECCF005294B9 /* ViewController.swift */; };
 		BDA207BB1CCBECCF005294B9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BDA207BA1CCBECCF005294B9 /* Assets.xcassets */; };
-		BDA207C31CCBF777005294B9 /* SpotsConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA207C21CCBF777005294B9 /* SpotsConfigurator.swift */; };
-		BDA207C51CCBF7D5005294B9 /* GridTopicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA207C41CCBF7D5005294B9 /* GridTopicCell.swift */; };
-		BDA207C71CCBFA4C005294B9 /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA207C61CCBFA4C005294B9 /* ListCell.swift */; };
+		BDB124261CCD4B7400221585 /* FeaturedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB124251CCD4B7400221585 /* FeaturedCell.swift */; };
 		EAABE69CC7479FEEA0EA1F32 /* Pods_Dashboard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10797B9D174E89B6F31A1488 /* Pods_Dashboard.framework */; };
 /* End PBXBuildFile section */
 
@@ -20,14 +21,15 @@
 		10797B9D174E89B6F31A1488 /* Pods_Dashboard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dashboard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		258D67C1E005B42F2F5426FE /* Pods-Dashboard.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dashboard.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Dashboard/Pods-Dashboard.debug.xcconfig"; sourceTree = "<group>"; };
 		8D787B390A47CCE0BDA584AC /* Pods-Dashboard.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dashboard.release.xcconfig"; path = "Pods/Target Support Files/Pods-Dashboard/Pods-Dashboard.release.xcconfig"; sourceTree = "<group>"; };
+		BD461CB01CCD3DFE00C0A1C5 /* GridCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridCell.swift; sourceTree = "<group>"; };
+		BD461CB11CCD3DFE00C0A1C5 /* ListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
+		BD461CB31CCD3DFE00C0A1C5 /* SpotsConfigurator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsConfigurator.swift; sourceTree = "<group>"; };
 		BDA207B01CCBECCF005294B9 /* Dashboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dashboard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDA207B31CCBECCF005294B9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BDA207B51CCBECCF005294B9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		BDA207BA1CCBECCF005294B9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BDA207BC1CCBECCF005294B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		BDA207C21CCBF777005294B9 /* SpotsConfigurator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsConfigurator.swift; sourceTree = "<group>"; };
-		BDA207C41CCBF7D5005294B9 /* GridTopicCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridTopicCell.swift; sourceTree = "<group>"; };
-		BDA207C61CCBFA4C005294B9 /* ListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
+		BDB124251CCD4B7400221585 /* FeaturedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeaturedCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,6 +50,24 @@
 				10797B9D174E89B6F31A1488 /* Pods_Dashboard.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BD461CAF1CCD3DFE00C0A1C5 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				BD461CB01CCD3DFE00C0A1C5 /* GridCell.swift */,
+				BD461CB11CCD3DFE00C0A1C5 /* ListCell.swift */,
+				BDB124251CCD4B7400221585 /* FeaturedCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		BD461CB21CCD3DFE00C0A1C5 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				BD461CB31CCD3DFE00C0A1C5 /* SpotsConfigurator.swift */,
+			);
+			path = Library;
 			sourceTree = "<group>";
 		};
 		BDA207A71CCBECCF005294B9 = {
@@ -71,13 +91,12 @@
 		BDA207B21CCBECCF005294B9 /* Dashboard */ = {
 			isa = PBXGroup;
 			children = (
-				BDA207C41CCBF7D5005294B9 /* GridTopicCell.swift */,
+				BD461CAF1CCD3DFE00C0A1C5 /* Cells */,
+				BD461CB21CCD3DFE00C0A1C5 /* Library */,
 				BDA207B31CCBECCF005294B9 /* AppDelegate.swift */,
 				BDA207B51CCBECCF005294B9 /* ViewController.swift */,
 				BDA207BA1CCBECCF005294B9 /* Assets.xcassets */,
 				BDA207BC1CCBECCF005294B9 /* Info.plist */,
-				BDA207C21CCBF777005294B9 /* SpotsConfigurator.swift */,
-				BDA207C61CCBFA4C005294B9 /* ListCell.swift */,
 			);
 			path = Dashboard;
 			sourceTree = "<group>";
@@ -212,10 +231,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				BDA207B61CCBECCF005294B9 /* ViewController.swift in Sources */,
+				BD461CB51CCD3DFE00C0A1C5 /* ListCell.swift in Sources */,
 				BDA207B41CCBECCF005294B9 /* AppDelegate.swift in Sources */,
-				BDA207C31CCBF777005294B9 /* SpotsConfigurator.swift in Sources */,
-				BDA207C71CCBFA4C005294B9 /* ListCell.swift in Sources */,
-				BDA207C51CCBF7D5005294B9 /* GridTopicCell.swift in Sources */,
+				BDB124261CCD4B7400221585 /* FeaturedCell.swift in Sources */,
+				BD461CB61CCD3DFE00C0A1C5 /* SpotsConfigurator.swift in Sources */,
+				BD461CB41CCD3DFE00C0A1C5 /* GridCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
