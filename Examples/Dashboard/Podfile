@@ -10,4 +10,5 @@ target "Dashboard" do
   pod 'Tailor'
   pod 'Brick'
   pod 'Spots', path: '../../'
+  pod 'Imaginary', git: 'https://github.com/hyperoslo/Imaginary'
 end

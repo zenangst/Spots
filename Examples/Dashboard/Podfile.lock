@@ -2,6 +2,9 @@ PODS:
   - Brick (0.5.0):
     - Sugar (~> 1.0)
     - Tailor
+  - Cache (1.1.0)
+  - Imaginary (0.1.0):
+    - Cache
   - Spots (1.4.0):
     - Brick
     - Sugar
@@ -12,20 +15,30 @@ PODS:
 
 DEPENDENCIES:
   - Brick
+  - Imaginary (from `https://github.com/hyperoslo/Imaginary`)
   - Spots (from `../../`)
   - Sugar
   - Tailor
 
 EXTERNAL SOURCES:
+  Imaginary:
+    :git: https://github.com/hyperoslo/Imaginary
   Spots:
     :path: "../../"
 
+CHECKOUT OPTIONS:
+  Imaginary:
+    :commit: 3a11aad63dabe4812ca1ff83e04f2096d9c38729
+    :git: https://github.com/hyperoslo/Imaginary
+
 SPEC CHECKSUMS:
   Brick: 585fdfc3a5dae686790a519eaea220b8338b91a7
+  Cache: e40d243efe7172ce3eda44287ada2b95b5a7bd7b
+  Imaginary: 5317b8d2dc8ecf20455232226bf8a277abdd37d5
   Spots: a6ba983b32d47869c3566881d272c970abf6c0f9
   Sugar: 65f2987353aa6249889e122631b2573e84849126
   Tailor: 4b9d3a6e386f3e743bada55e380721e25ef07c58
 
-PODFILE CHECKSUM: 5f1233ce9ada5c2e2bd3df0a174bbc1b54aaaf7f
+PODFILE CHECKSUM: 7e35f93308528a38d7410b823f2e60d4adca7a32
 
 COCOAPODS: 1.0.0.beta.8
