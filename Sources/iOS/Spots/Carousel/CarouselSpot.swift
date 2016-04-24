@@ -13,17 +13,21 @@ public class CarouselSpot: NSObject, Gridable {
 
   public var component: Component {
     willSet(value) {
+      #if os(iOS)
       pageControl.numberOfPages = Int(floor(CGFloat(component.items.count) / component.span))
+      #endif
     }
   }
 
   public var index = 0
 
+  #if os(iOS)
   public var paginate = false {
     willSet(newValue) {
       collectionView.pagingEnabled = newValue
     }
   }
+  #endif
 
   public var pageIndicator: Bool = false {
     willSet(value) {
@@ -100,7 +104,9 @@ public class CarouselSpot: NSObject, Gridable {
 extension CarouselSpot: UIScrollViewDelegate {
 
   public func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+    #if os(iOS)
     guard paginate else { return }
+    #endif
 
     let pageWidth: CGFloat = collectionView.width - layout.sectionInset.right
      + layout.sectionInset.left + layout.minimumLineSpacing
@@ -123,7 +129,9 @@ extension CarouselSpot: UIScrollViewDelegate {
       carouselScrollDelegate?.spotDidEndScrolling(self, item: items[index])
     }
 
+    #if os(iOS)
     pageControl.currentPage = Int(floor(CGFloat(index) / component.span))
+    #endif
   }
 
   public func scrollTo(predicate: (ViewModel) -> Bool) {

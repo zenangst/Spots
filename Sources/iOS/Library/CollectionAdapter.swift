@@ -23,6 +23,25 @@ extension CollectionAdapter : UICollectionViewDelegate {
   public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
     spot.spotsDelegate?.spotDidSelectItem(spot, item: spot.item(indexPath))
   }
+
+  public func collectionView(collectionView: UICollectionView, canFocusItemAtIndexPath indexPath: NSIndexPath) -> Bool {
+    return true
+  }
+
+  @available(iOS 9.0, *)
+  public func collectionView(collectionView: UICollectionView, shouldUpdateFocusInContext context: UICollectionViewFocusUpdateContext) -> Bool {
+    guard let indexPaths = collectionView.indexPathsForSelectedItems() else { return true }
+    return indexPaths.isEmpty
+  }
+
+  public func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool {
+    if let indexPath = collectionView.indexPathsForSelectedItems()?.first {
+      collectionView.deselectItemAtIndexPath(indexPath, animated: true)
+      return false
+    } else {
+      return true
+    }
+  }
 }
 
 extension CollectionAdapter : UICollectionViewDataSource  {
@@ -35,7 +54,7 @@ extension CollectionAdapter : UICollectionViewDataSource  {
     spot.component.items[indexPath.item].index = indexPath.item
 
     let reuseIdentifier = spot.item(indexPath).kind.isPresent ? spot.item(indexPath).kind : spot.component.kind
-    let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath).then { $0.optimize() }
+    let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath)
 
     if let cell = cell as? SpotConfigurable {
       cell.configure(&spot.component.items[indexPath.item])

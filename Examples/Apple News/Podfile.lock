@@ -1,8 +1,8 @@
 PODS:
-  - Brick (0.4.0):
+  - Brick (0.5.0):
     - Sugar (~> 1.0)
     - Tailor
-  - Cache (1.0.0)
+  - Cache (1.1.0)
   - Compass (1.4.0):
     - Sugar
   - Fakery (1.2.0):
@@ -10,13 +10,13 @@ PODS:
   - Hue (1.1)
   - Imaginary (0.1.0):
     - Cache
-  - Spots (1.2.1):
+  - Spots (1.4.0):
     - Brick
     - Sugar
     - Tailor
-  - Sugar (1.0.13)
+  - Sugar (1.1.0)
   - SwiftyJSON (2.3.2)
-  - Tailor (0.11.0):
+  - Tailor (0.12.0):
     - Sugar
   - Transition (0.1.0)
 
@@ -45,7 +45,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   Cache:
-    :commit: 3fa13067951112c55bd36a4578001681377c81e7
+    :commit: 23f28bcd1e4072bbea57fadad17bed729e946326
     :git: https://github.com/hyperoslo/Cache
   Compass:
     :commit: b702df434f60418b8817896d89b60fc4a78fea89
@@ -54,25 +54,25 @@ CHECKOUT OPTIONS:
     :commit: 89ae5e19abc17e5ef87ad823a08250c0671a79e9
     :git: https://github.com/hyperoslo/Hue
   Imaginary:
-    :commit: 243448a070decf6d8fcdc503b14505a2951af680
+    :commit: 3a11aad63dabe4812ca1ff83e04f2096d9c38729
     :git: https://github.com/hyperoslo/Imaginary
   Transition:
     :commit: 0d94057f824787973ae34bac4906164e3d6a2c8b
     :git: https://github.com/hyperoslo/Transition
 
 SPEC CHECKSUMS:
-  Brick: f483a54e15c6a1d15c8b8e475c49d3605381e42c
-  Cache: 78f58bc008313c7a1182967a2ebcb3de9fddecd4
+  Brick: 585fdfc3a5dae686790a519eaea220b8338b91a7
+  Cache: e40d243efe7172ce3eda44287ada2b95b5a7bd7b
   Compass: f4b8c37f9b315f0ee4f5e4f71888c54c92992d5d
   Fakery: ff6a27c3688a05c055d3e64c5fa9d78684796749
   Hue: c7d6a7206bac669ed69e78cc6c14a4d7bd28277c
-  Imaginary: feaea646440c68a9b6ed66a46597d548b9a44207
-  Spots: ce6fe7d0818f4c52d669518a07fae0f9235c13d9
-  Sugar: ca8778ac9d076fba1366b889e6bc205f376465e4
+  Imaginary: 5317b8d2dc8ecf20455232226bf8a277abdd37d5
+  Spots: a6ba983b32d47869c3566881d272c970abf6c0f9
+  Sugar: 65f2987353aa6249889e122631b2573e84849126
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
-  Tailor: 428bfaa0e01facb5dfb69a3caa4eb6ba45cd3114
+  Tailor: 4b9d3a6e386f3e743bada55e380721e25ef07c58
   Transition: 66d86e3ae1b8f0b3d9ba2000c7a45fbc17b066f2
 
 PODFILE CHECKSUM: b5990c672d7c25f24324197d1aa40668c01b8dd7
 
-COCOAPODS: 1.0.0.beta.5
+COCOAPODS: 1.0.0.beta.8

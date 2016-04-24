@@ -56,7 +56,9 @@ public class SpotsScrollView: UIScrollView {
       return
     }
 
+#if os(iOS)
     scrollView.scrollsToTop = false
+#endif
     scrollView.scrollEnabled = false
 
     if let collectionView = scrollView as? UICollectionView,
