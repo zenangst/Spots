@@ -20,11 +20,13 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     get { return spot(0, Spotable.self)! }
   }
 
+#if os(iOS)
   weak public var spotsRefreshDelegate: SpotsRefreshDelegate? {
     didSet {
       refreshControl.hidden = spotsRefreshDelegate == nil
     }
   }
+#endif
 
   weak public var spotsScrollDelegate: SpotsScrollDelegate?
 
@@ -35,12 +37,14 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     $0.delegate = self
   }
 
+#if os(iOS)
   public lazy var refreshControl: UIRefreshControl = { [unowned self] in
     let refreshControl = UIRefreshControl()
     refreshControl.addTarget(self, action: #selector(refreshSpots(_:)), forControlEvents: .ValueChanged)
 
     return refreshControl
   }()
+  #endif
 
   // MARK: Initializer
 
@@ -91,11 +95,12 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
         spotsScrollView.contentInset.bottom = tabBarController.tabBar.height
         spotsScrollView.scrollIndicatorInsets.bottom = spotsScrollView.contentInset.bottom
     }
-
+#if os(iOS)
     guard let _ = spotsRefreshDelegate where refreshControl.superview == nil
       else { return }
 
     spotsScrollView.insertSubview(refreshControl, atIndex: 0)
+#endif
   }
 
   public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
@@ -325,7 +330,7 @@ extension SpotsController {
     spot(spotIndex, Spotable.self)?.refreshIndexes()
   }
 
-
+#if os(iOS)
   public func refreshSpots(refreshControl: UIRefreshControl) {
     dispatch { [weak self] in
       guard let weakSelf = self else { return }
@@ -335,6 +340,7 @@ extension SpotsController {
       }
     }
   }
+#endif
 
   /**
    - Parameter index: The index of the spot that you want to scroll

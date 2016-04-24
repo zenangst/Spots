@@ -20,7 +20,9 @@ public protocol SpotsRefreshDelegate: class {
    - Parameter refreshControl: A UIRefreshControl
    - Parameter completion: A completion closure that should be triggered when the update is completed
    */
+   #if os(iOS)
   func spotsDidReload(refreshControl: UIRefreshControl, completion: (() -> Void)?)
+  #endif
 }
 
 public protocol SpotsScrollDelegate: class {
