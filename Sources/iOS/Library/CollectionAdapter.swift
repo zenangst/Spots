@@ -28,6 +28,7 @@ extension CollectionAdapter : UICollectionViewDelegate {
     return true
   }
 
+  @available(iOS 9.0, *)
   public func collectionView(collectionView: UICollectionView, shouldUpdateFocusInContext context: UICollectionViewFocusUpdateContext) -> Bool {
     guard let indexPaths = collectionView.indexPathsForSelectedItems() else { return true }
     return indexPaths.isEmpty
