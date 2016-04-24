@@ -1,11 +1,3 @@
-//
-//  AppDelegate.swift
-//  Dashboard
-//
-//  Created by Christoffer Winterkvist on 23/04/16.
-//  Copyright © 2016 Hyper. All rights reserved.
-//
-
 import UIKit
 
 @UIApplicationMain
