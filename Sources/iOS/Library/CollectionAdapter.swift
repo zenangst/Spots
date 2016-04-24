@@ -23,6 +23,24 @@ extension CollectionAdapter : UICollectionViewDelegate {
   public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
     spot.spotsDelegate?.spotDidSelectItem(spot, item: spot.item(indexPath))
   }
+
+  public func collectionView(collectionView: UICollectionView, canFocusItemAtIndexPath indexPath: NSIndexPath) -> Bool {
+    return true
+  }
+
+  public func collectionView(collectionView: UICollectionView, shouldUpdateFocusInContext context: UICollectionViewFocusUpdateContext) -> Bool {
+    guard let indexPaths = collectionView.indexPathsForSelectedItems() else { return true }
+    return indexPaths.isEmpty
+  }
+
+  public func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool {
+    if let indexPath = collectionView.indexPathsForSelectedItems()?.first {
+      collectionView.deselectItemAtIndexPath(indexPath, animated: true)
+      return false
+    } else {
+      return true
+    }
+  }
 }
 
 extension CollectionAdapter : UICollectionViewDataSource  {
