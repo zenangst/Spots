@@ -104,7 +104,7 @@ public class CarouselSpot: NSObject, Gridable {
 extension CarouselSpot: UIScrollViewDelegate {
 
   public func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-  #if os(iOS)
+    #if os(iOS)
     guard paginate else { return }
     #endif
 
