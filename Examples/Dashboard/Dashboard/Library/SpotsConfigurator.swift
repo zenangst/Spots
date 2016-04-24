@@ -3,7 +3,7 @@ import Spots
 import Brick
 
 enum Cell: String, StringConvertible {
-  case List, Featured
+  case List, Featured, Grid
 
   var string: String {
     return rawValue
@@ -13,12 +13,14 @@ enum Cell: String, StringConvertible {
 struct SpotsConfigurator {
 
   func configure() {
-    CarouselSpot.views[Cell.Featured] = GridTopicCell.self
-    GridSpot.views[Cell.Featured] = GridTopicCell.self
+    CarouselSpot.views[Cell.Featured] = FeaturedCell.self
+    GridSpot.views[Cell.Grid] = GridCell.self
     ListSpot.views[Cell.List] = ListCell.self
-    ListSpot.defaultKind = Cell.List.string
 
-    // Configure spots controller
+    ListSpot.defaultKind = Cell.List.string
+    GridSpot.defaultKind = Cell.Grid.string
+    CarouselSpot.defaultKind = Cell.Grid.string
+
     SpotsController.configure = {
       $0.backgroundColor = UIColor.clearColor()
     }
@@ -33,7 +35,6 @@ struct SpotsConfigurator {
       $0.contentInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
     }
 
-    // Configure List spots
     ListSpot.configure = {
       $0.backgroundColor = UIColor.clearColor()
       $0.tableFooterView = UIView(frame: CGRect.zero)
