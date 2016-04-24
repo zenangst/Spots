@@ -1,0 +1,51 @@
+PODS:
+  - Brick (0.5.0):
+    - Sugar (~> 1.0)
+    - Tailor
+  - Spots (1.4.0):
+    - Brick
+    - Sugar
+    - Tailor
+  - Sugar (1.1.0)
+  - Tailor (0.11.0):
+    - Sugar
+
+DEPENDENCIES:
+  - Brick (from `https://github.com/hyperoslo/Brick`, branch `feature/tvos`)
+  - Spots (from `../../`)
+  - Sugar (from `https://github.com/hyperoslo/Sugar`, branch `feature/tvos`)
+  - Tailor (from `https://github.com/zenangst/Tailor`, branch `feature/tvos`)
+
+EXTERNAL SOURCES:
+  Brick:
+    :branch: feature/tvos
+    :git: https://github.com/hyperoslo/Brick
+  Spots:
+    :path: "../../"
+  Sugar:
+    :branch: feature/tvos
+    :git: https://github.com/hyperoslo/Sugar
+  Tailor:
+    :branch: feature/tvos
+    :git: https://github.com/zenangst/Tailor
+
+CHECKOUT OPTIONS:
+  Brick:
+    :commit: 833ed2f4f247753b5b7ad109c9718c090898e085
+    :git: https://github.com/hyperoslo/Brick
+  Sugar:
+    :commit: 3bbe7c5b368159bab726b80b2ae2abe429d9473c
+    :git: https://github.com/hyperoslo/Sugar
+  Tailor:
+    :commit: 3ba5070ea9e0114246645d3014ede8ac0b3f9722
+    :git: https://github.com/zenangst/Tailor
+
+SPEC CHECKSUMS:
+  Brick: 585fdfc3a5dae686790a519eaea220b8338b91a7
+  Spots: a6ba983b32d47869c3566881d272c970abf6c0f9
+  Sugar: 65f2987353aa6249889e122631b2573e84849126
+  Tailor: 16c6bea0989ef663e23a30ea0656a3a8e6695792
+
+PODFILE CHECKSUM: 762215b0d88d00ec1ec265d164271cea19a563b4
+
+COCOAPODS: 1.0.0.beta.5

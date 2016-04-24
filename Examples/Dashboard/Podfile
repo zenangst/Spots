@@ -1,0 +1,13 @@
+source 'https://github.com/CocoaPods/Specs.git'
+
+platform :tvos, '9.2'
+
+use_frameworks!
+inhibit_all_warnings!
+
+target "Dashboard" do
+  pod 'Sugar', git: 'https://github.com/hyperoslo/Sugar', branch: 'feature/tvos'
+  pod 'Tailor', git: 'https://github.com/zenangst/Tailor', branch: 'feature/tvos'
+  pod 'Brick', git: 'https://github.com/hyperoslo/Brick', branch: 'feature/tvos'
+  pod 'Spots', path: '../../'
+end
