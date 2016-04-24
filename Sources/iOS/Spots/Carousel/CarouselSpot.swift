@@ -13,7 +13,7 @@ public class CarouselSpot: NSObject, Gridable {
 
   public var component: Component {
     willSet(value) {
-      pageControl.numberOfPages = Int(floor(CGFloat(component.items.count) / component.span))
+      //pageControl.numberOfPages = Int(floor(CGFloat(component.items.count) / component.span))
     }
   }
 
@@ -127,7 +127,7 @@ extension CarouselSpot: UIScrollViewDelegate {
       carouselScrollDelegate?.spotDidEndScrolling(self, item: items[index])
     }
 
-    pageControl.currentPage = Int(floor(CGFloat(index) / component.span))
+    //pageControl.currentPage = Int(floor(CGFloat(index) / component.span))
   }
 
   public func scrollTo(predicate: (ViewModel) -> Bool) {
