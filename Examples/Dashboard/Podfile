@@ -6,8 +6,8 @@ use_frameworks!
 inhibit_all_warnings!
 
 target "Dashboard" do
-  pod 'Sugar', git: 'https://github.com/hyperoslo/Sugar', branch: 'feature/tvos'
-  pod 'Tailor', git: 'https://github.com/zenangst/Tailor', branch: 'feature/tvos'
-  pod 'Brick', git: 'https://github.com/hyperoslo/Brick', branch: 'feature/tvos'
+  pod 'Sugar'
+  pod 'Tailor'
+  pod 'Brick'
   pod 'Spots', path: '../../'
 end
