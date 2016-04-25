@@ -149,7 +149,7 @@ public extension Spotable where Self : Listable {
   /**
    - Parameter item: The new update view model that you want to update at an index
    - Parameter index: The index of the view model, defaults to 0
-   - Parameter completion: A completion closure that is executed in the main queue when the view model has been removed
+   - Parameter completion: A completion closure that is executed in the main queue when the view model has been updated 
    */
   public func update(item: ViewModel, index: Int = 0, completion: Completion = nil) {
     items[index] = item
