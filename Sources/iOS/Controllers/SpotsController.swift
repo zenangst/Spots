@@ -124,6 +124,9 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
         height: ceil(spot.render().height))
       animated?(view: spot.render())
     }
+
+    guard let spotsDelegate = spotsDelegate else { return }
+    self.spotsDelegate = spotsDelegate
   }
 }
 
