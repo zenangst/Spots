@@ -2,7 +2,7 @@ import UIKit
 
 public class ListAdapter : NSObject {
 
-  var spot: Listable
+  unowned var spot: Listable
 
   init(spot: Listable) {
     self.spot = spot
