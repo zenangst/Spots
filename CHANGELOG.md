@@ -1,8 +1,7 @@
 # Change Log
 
-## [Unreleased](https://github.com/hyperoslo/Spots/tree/HEAD)
-
-[Full Changelog](https://github.com/hyperoslo/Spots/compare/1.5.2...HEAD)
+## [1.5.3](https://github.com/hyperoslo/Spots/tree/1.5.3) (2016-04-25)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/1.5.2...1.5.3)
 
 **Merged pull requests:**
 
