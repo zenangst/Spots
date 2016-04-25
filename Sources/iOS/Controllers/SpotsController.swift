@@ -125,8 +125,8 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
       animated?(view: spot.render())
     }
 
-    guard let delegate = spotsDelegate else { return }
-    self.spotsDelegate = delegate
+    guard let spotsDelegate = spotsDelegate else { return }
+    self.spotsDelegate = spotsDelegate
   }
 }
 
