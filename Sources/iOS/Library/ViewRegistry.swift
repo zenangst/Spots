@@ -1,6 +1,7 @@
 import UIKit
 import Brick
 
+/// A view registry that is used internally when resolving kind to the corresponding spot.
 public struct ViewRegistry {
   var storage = [String : UIView.Type]()
 

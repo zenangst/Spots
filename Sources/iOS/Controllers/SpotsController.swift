@@ -2,25 +2,37 @@ import UIKit
 import Sugar
 import Brick
 
+/**
+ SpotsController is a subclass of UIViewController
+ */
 public class SpotsController: UIViewController, UIScrollViewDelegate {
 
+  /// A static closure to configure SpotsScrollView
   public static var configure: ((container: SpotsScrollView) -> Void)?
 
+  /// Initial content offset for SpotsController, defaults to UIEdgeInsetsZero
   public private(set) var initialContentInset: UIEdgeInsets = UIEdgeInsetsZero
+  /// A collection of Spotable objects
   public private(set) var spots: [Spotable]
 
+  /// An array of refresh positions to avoid refreshing multiple times when using infinite scrolling
   public var refreshPositions = [CGFloat]()
+  /// A bool value to indicate if the SpotsController is refeshing
   public var refreshing = false
 
+  /// A delegate for when an item is tapped within a Spot
   weak public var spotsDelegate: SpotsDelegate? {
     didSet { spots.forEach { $0.spotsDelegate = spotsDelegate } }
   }
 
+  /// A convenience method for resolving the first spot
+  /// Note: that this method uses force unwrapping, use with caution
   public var spot: Spotable {
     get { return spot(0, Spotable.self)! }
   }
 
 #if os(iOS)
+  /// A refresh delegate for handling reloading of a Spot
   weak public var spotsRefreshDelegate: SpotsRefreshDelegate? {
     didSet {
       refreshControl.hidden = spotsRefreshDelegate == nil
@@ -28,8 +40,10 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
   }
 #endif
 
+  /// A scroll delegate for handling spotDidReachBeginning and spotDidReachEnd
   weak public var spotsScrollDelegate: SpotsScrollDelegate?
 
+  /// A custom scroll view that handles the scrolling for all internal scroll views
   lazy public var spotsScrollView: SpotsScrollView = SpotsScrollView().then { [unowned self] in
     $0.frame = self.view.frame
     $0.alwaysBounceVertical = true
@@ -38,6 +52,8 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
   }
 
 #if os(iOS)
+  /// A UIRefresh control
+  /// Note: Only avaiable on iOS
   public lazy var refreshControl: UIRefreshControl = { [unowned self] in
     let refreshControl = UIRefreshControl()
     refreshControl.addTarget(self, action: #selector(refreshSpots(_:)), forControlEvents: .ValueChanged)
@@ -75,7 +91,7 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
   }
 
   //MARK: - View Life Cycle
-
+  /// Called after the spot controller's view is loaded into memory.
   public override func viewDidLoad() {
     super.viewDidLoad()
     view.addSubview(spotsScrollView)
@@ -85,6 +101,7 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     SpotsController.configure?(container: spotsScrollView)
   }
 
+  /// Notifies the spot controller that its view is about to be added to a view hierarchy.
   public override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
 
@@ -103,6 +120,7 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
 #endif
   }
 
+  /// Notifies the container that the size of tis view is about to change.
   public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
     super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
 
@@ -135,6 +153,8 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
 extension SpotsController {
 
   /**
+   A generic look up method for resolving spots based on index
+
    - Parameter index: The index of the spot that you are trying to resolve
    - Parameter type: The generic type for the spot you are trying to resolve
    */
@@ -143,6 +163,8 @@ extension SpotsController {
   }
 
   /**
+   A generic look up method for resolving spots using a closure
+
    - Parameter closure: A closure to perform actions on a spotable object
    */
   public func spot(@noescape closure: (index: Int, spot: Spotable) -> Bool) -> Spotable? {
@@ -369,6 +391,7 @@ extension SpotsController {
 
 // MARK: - Private methods
 
+/// An extension with private methods on SpotsController
 extension SpotsController {
 
   /**

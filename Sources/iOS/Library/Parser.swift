@@ -1,6 +1,9 @@
 import Foundation
 import Sugar
 
+/**
+  A JSON to UI parser to produce components for SpotsController
+ */
 public struct Parser {
 
   /**
