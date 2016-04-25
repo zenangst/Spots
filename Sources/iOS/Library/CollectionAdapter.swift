@@ -1,7 +1,7 @@
 import UIKit
 
 public class CollectionAdapter : NSObject {
-  var spot: Gridable
+  unowned var spot: Gridable
 
   init(spot: Gridable) {
     self.spot = spot

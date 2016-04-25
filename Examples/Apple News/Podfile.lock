@@ -10,7 +10,7 @@ PODS:
   - Hue (1.1)
   - Imaginary (0.1.0):
     - Cache
-  - Spots (1.4.0):
+  - Spots (1.5.0):
     - Brick
     - Sugar
     - Tailor
@@ -67,7 +67,7 @@ SPEC CHECKSUMS:
   Fakery: ff6a27c3688a05c055d3e64c5fa9d78684796749
   Hue: c7d6a7206bac669ed69e78cc6c14a4d7bd28277c
   Imaginary: 5317b8d2dc8ecf20455232226bf8a277abdd37d5
-  Spots: a6ba983b32d47869c3566881d272c970abf6c0f9
+  Spots: 0c23f11e5a6d5ecbf9d867ceac5815138328066e
   Sugar: 65f2987353aa6249889e122631b2573e84849126
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   Tailor: 4b9d3a6e386f3e743bada55e380721e25ef07c58
