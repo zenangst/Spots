@@ -5,7 +5,7 @@ PODS:
   - Cache (1.1.0)
   - Imaginary (0.1.0):
     - Cache
-  - Spots (1.5.2):
+  - Spots (1.5.4):
     - Brick
     - Sugar
     - Tailor
@@ -35,7 +35,7 @@ SPEC CHECKSUMS:
   Brick: 009193c09e0dbf4c61bef193230f0625fc97d6ad
   Cache: e40d243efe7172ce3eda44287ada2b95b5a7bd7b
   Imaginary: 5317b8d2dc8ecf20455232226bf8a277abdd37d5
-  Spots: 0cc9e14d928df1088875b01cca553385ba98b6ff
+  Spots: 6dfc407ca3dad13414f9bde5f5396c73b5c4e5d9
   Sugar: bed396c924fd089feee7c780778cca2a124f580c
   Tailor: 38a9f1ed1fa804856583396a55ed764d832eeca8
 
