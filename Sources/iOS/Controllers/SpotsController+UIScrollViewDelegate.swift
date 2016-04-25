@@ -1,6 +1,9 @@
 import UIKit
 import Sugar
 
+/**
+ A SpotsController extension to handle scrollViewDidScroll
+ */
 extension SpotsController {
 
   public func scrollViewDidScroll(scrollView: UIScrollView) {

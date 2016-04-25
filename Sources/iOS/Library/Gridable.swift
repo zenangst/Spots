@@ -3,14 +3,32 @@ import Sugar
 import Brick
 
 public protocol Gridable: Spotable {
+  // The layout object used to initialize the collection spot controller.
   var layout: UICollectionViewFlowLayout { get }
+  /// The collection view object managed by this gridable object.
   var collectionView: UICollectionView { get }
 
+  /**
+   Asks the data source for the size of an item in a particular location.
+
+   - Parameter indexPath: The index path of the
+   - Returns: Size of the object at index path as CGSize
+   */
   func sizeForItemAt(indexPath: NSIndexPath) -> CGSize
 }
 
 public extension Spotable where Self : Gridable {
 
+  /**
+   Initializes a Gridable container and configures the Spot with the provided component and optional layout properties.
+
+   - Parameter component: A Component model
+   - Parameter top: The top UIEdgeInset for the layout
+   - Parameter left: The left UIEdgeInset for the layout
+   - Parameter bottom: The bottom UIEdgeInset for the layout
+   - Parameter right: The right UIEdgeInset for the layout
+   - Parameter itemSpacing: The minimumInteritemSpacing for the layout
+   */
   public init(_ component: Component, top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0, itemSpacing: CGFloat = 0) {
     self.init(component: component)
 
@@ -18,6 +36,9 @@ public extension Spotable where Self : Gridable {
     layout.minimumInteritemSpacing = itemSpacing
   }
 
+  /**
+   Called when the Gridable object is being prepared, it is required by Spotable
+   */
   public func prepare() {
     registerAndPrepare { (classType, withIdentifier) in
       collectionView.registerClass(classType, forCellWithReuseIdentifier: withIdentifier)
@@ -263,6 +284,12 @@ public extension Spotable where Self : Gridable {
     collectionView.height = componentSize.height
   }
 
+  /**
+   Asks the data source for the size of an item in a particular location.
+
+   - Parameter indexPath: The index path of the
+   - Returns: Size of the object at index path as CGSize
+   */
   public func sizeForItemAt(indexPath: NSIndexPath) -> CGSize {
     if component.span > 0 {
       component.items[indexPath.item].size.width = collectionView.width / CGFloat(component.span) - layout.minimumInteritemSpacing

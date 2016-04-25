@@ -1,6 +1,7 @@
 import UIKit
 import Brick
 
+/// A delegate for when an item is tapped within a Spot
 public protocol SpotsDelegate: class {
 
   /**
@@ -12,6 +13,7 @@ public protocol SpotsDelegate: class {
   func spotDidSelectItem(spot: Spotable, item: ViewModel)
 }
 
+/// A refresh delegate for handling reloading of a Spot
 public protocol SpotsRefreshDelegate: class {
 
   /**
@@ -25,6 +27,7 @@ public protocol SpotsRefreshDelegate: class {
 #endif
 }
 
+/// A scroll delegate for handling spotDidReachBeginning and spotDidReachEnd
 public protocol SpotsScrollDelegate: class {
 
   /**
@@ -38,6 +41,7 @@ public protocol SpotsScrollDelegate: class {
   func spotDidReachEnd(completion: (() -> Void)?)
 }
 
+/// A dummy scroll delegate extension to make spotDidReachBeginning optional
 public extension SpotsScrollDelegate {
 
   /**
