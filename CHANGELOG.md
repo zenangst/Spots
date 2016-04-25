@@ -1,5 +1,20 @@
 # Change Log
 
+## [Unreleased](https://github.com/hyperoslo/Spots/tree/HEAD)
+
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/1.5.2...HEAD)
+
+**Merged pull requests:**
+
+- Set delegate to spots when in setupSpots [\#201](https://github.com/hyperoslo/Spots/pull/201) ([zenangst](https://github.com/zenangst))
+
+## [1.5.2](https://github.com/hyperoslo/Spots/tree/1.5.2) (2016-04-25)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/1.5.1...1.5.2)
+
+**Merged pull requests:**
+
+- Add CHANGELOG.md [\#200](https://github.com/hyperoslo/Spots/pull/200) ([zenangst](https://github.com/zenangst))
+
 ## [1.5.1](https://github.com/hyperoslo/Spots/tree/1.5.1) (2016-04-25)
 [Full Changelog](https://github.com/hyperoslo/Spots/compare/1.5.0...1.5.1)
 
