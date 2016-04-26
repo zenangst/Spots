@@ -1,5 +1,6 @@
 import UIKit
 import Brick
+import Sugar
 
 /// A class protocol that is used for all components inside of SpotsController
 public protocol Spotable: class {
@@ -39,6 +40,12 @@ public extension Spotable {
   var items: [ViewModel] {
     set(items) { component.items = items }
     get { return component.items }
+  }
+
+  public var dictionary: JSONDictionary {
+    get {
+      return component.dictionary
+    }
   }
 
   /**
