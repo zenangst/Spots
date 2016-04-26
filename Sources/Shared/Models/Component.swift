@@ -71,7 +71,7 @@ public struct Component: Mappable {
    */
   public init(_ map: JSONDictionary) {
     title <- map.property(.Title)
-    kind  <- map.property(.Kind) ?? map.property(.Type)
+    kind  <- map.property(.Kind)
     span  <- map.property(.Span)
     items <- map.relations(.Items)
     meta  <- map.property(.Meta)
