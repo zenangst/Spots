@@ -2,6 +2,7 @@
 import Foundation
 import XCTest
 import Brick
+import Sugar
 
 class ComponentTests : XCTestCase {
 
@@ -55,5 +56,16 @@ class ComponentTests : XCTestCase {
 
     codeComponent.items.append(ViewModel(title: "item2"))
     XCTAssertFalse(jsonComponent == codeComponent)
+  }
+
+  func testComponentDictionary() {
+    let jsonComponent = Component(json)
+
+    XCTAssertEqual(jsonComponent.dictionary["title"] as? String, json["title"] as? String)
+    XCTAssertEqual(jsonComponent.dictionary["kind"] as? String, json["type"] as? String)
+    XCTAssertEqual(jsonComponent.dictionary["span"] as? CGFloat, json["span"] as? CGFloat)
+
+    XCTAssertEqual((jsonComponent.dictionary["items"] as! [JSONDictionary])[0]["title"] as? String, json["items"]![0]["title"])
+    XCTAssertEqual((jsonComponent.dictionary["items"] as! [JSONDictionary]).count, json["items"]!.count)
   }
 }
