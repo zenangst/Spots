@@ -48,6 +48,22 @@ public struct Component: Mappable {
   /// A key-value dictionary for any additional information
   public var meta = [String : AnyObject]()
 
+  /// A dictionary representation of the component
+  public var dictionary: JSONDictionary {
+    return [
+      Key.Index.string : index,
+      Key.Title.string : title,
+      Key.Kind.string : kind,
+      Key.Span.string : span,
+      Key.Items.string: items.map { $0.dictionary },
+      Key.Size.string : [
+        Key.Width.string : size?.width ?? 0,
+        Key.Height.string : size?.height ?? 0
+      ],
+      Key.Meta.string : meta
+    ]
+  }
+
   /**
    Initializes a component with a JSON dictionary and maps the keys of the dictionary to its corresponding values.
 
