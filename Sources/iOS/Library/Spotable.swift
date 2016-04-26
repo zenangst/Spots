@@ -145,11 +145,11 @@ public extension Spotable {
   }
 
   /**
-  Cache view for item kind
+   Cache view for item kind
 
-  - Parameter item: A view model
-  - Parameter cached: An optional UIView, used to reduce the amount of different reusable views that should be prepared.
-  */
+   - Parameter item: A view model
+   - Parameter cached: An optional UIView, used to reduce the amount of different reusable views that should be prepared.
+   */
   func cachedViewFor(item: ViewModel, inout cache: UIView?) {
     let reuseIdentifer = item.kind.isPresent ? item.kind : component.kind
     let componentClass = self.dynamicType.views.storage[reuseIdentifer] ?? self.dynamicType.defaultView
