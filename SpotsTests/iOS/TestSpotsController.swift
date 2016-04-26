@@ -161,7 +161,7 @@ class SpotsControllerTests : XCTestCase {
       })
     let jsonController = SpotsController([
       "components" : [
-        ["type" : "list",
+        ["kind" : "list",
           "items" : [
             ["title" : "First item"]
           ]
@@ -175,7 +175,7 @@ class SpotsControllerTests : XCTestCase {
   func testJSONReload() {
     let initialJSON = [
       "components" : [
-        ["type" : "list",
+        ["kind" : "list",
           "items" : [
             ["title" : "First list item"]
           ]
@@ -190,7 +190,7 @@ class SpotsControllerTests : XCTestCase {
 
     let updateJSON = [
       "components" : [
-        ["type" : "grid",
+        ["kind" : "grid",
           "items" : [
             ["title" : "First grid item"],
             ["title" : "Second grid item"]
