@@ -20,6 +20,12 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
   /// A bool value to indicate if the SpotsController is refeshing
   public var refreshing = false
 
+  public var dictionary: JSONDictionary {
+    get {
+      return ["components" : spots.map { $0.component.dictionary }]
+    }
+  }
+
   /// A delegate for when an item is tapped within a Spot
   weak public var spotsDelegate: SpotsDelegate? {
     didSet { spots.forEach { $0.spotsDelegate = spotsDelegate } }
