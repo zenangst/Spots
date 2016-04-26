@@ -3,6 +3,7 @@ import Brick
 
 /// A view registry that is used internally when resolving kind to the corresponding spot.
 public struct ViewRegistry {
+  /// A Key-value dictionary of registred types
   var storage = [String : UIView.Type]()
 
   /**

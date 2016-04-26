@@ -2,6 +2,7 @@ import UIKit
 import Sugar
 import Brick
 
+/// Viewable is a protocol for Spots that are based on UIScrollView
 public protocol Viewable: Spotable {
   var scrollView: UIScrollView { get }
 }

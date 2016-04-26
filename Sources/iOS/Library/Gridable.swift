@@ -2,6 +2,7 @@ import UIKit
 import Sugar
 import Brick
 
+/// Gridable is protocol for Spots that are based on UICollectionView
 public protocol Gridable: Spotable {
   // The layout object used to initialize the collection spot controller.
   var layout: UICollectionViewFlowLayout { get }
