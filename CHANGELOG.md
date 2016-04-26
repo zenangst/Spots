@@ -2,7 +2,15 @@
 
 ## [Unreleased](https://github.com/hyperoslo/Spots/tree/HEAD)
 
-[Full Changelog](https://github.com/hyperoslo/Spots/compare/1.5.4...HEAD)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/1.5.5...HEAD)
+
+**Merged pull requests:**
+
+- Feature/dictionary on controller and spotable [\#204](https://github.com/hyperoslo/Spots/pull/204) ([zenangst](https://github.com/zenangst))
+- Feature .dictionary on Component [\#203](https://github.com/hyperoslo/Spots/pull/203) ([zenangst](https://github.com/zenangst))
+
+## [1.5.5](https://github.com/hyperoslo/Spots/tree/1.5.5) (2016-04-25)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/1.5.4...1.5.5)
 
 **Merged pull requests:**
 
