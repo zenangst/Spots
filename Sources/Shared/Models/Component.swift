@@ -10,6 +10,27 @@ import Brick
 
 /// The Component struct is used to configure a Spotable object
 public struct Component: Mappable {
+
+  /**
+   An enum with all the string keys used in the view model
+   */
+  public enum Key: String {
+    case Index
+    case Title
+    case Kind
+    case Type
+    case Meta
+    case Span
+    case Items
+    case Size
+    case Width
+    case Height
+
+    var string: String {
+      return rawValue.lowercaseString
+    }
+  }
+
   /// The index of the ViewModel when appearing in a list, should be computed and continuously updated by the data source
   public var index = 0
   /// The title for the component
