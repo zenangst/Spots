@@ -157,4 +157,20 @@ public extension Spotable {
     if cache?.isKindOfClass(componentClass) == false { cache = nil }
     if cache == nil { cache = componentClass.init() }
   }
+
+  /**
+   Get reuseidentifier for the item at index path, it checks if the view model kind is registered inside of the ViewRegistry, otherwise it falls back to trying to resolve the component.kind to get the reuse identifier. As a last result, it will return the default kind for the Spotable kind.
+
+   - Parameter indexPath: The index path of the item you are trying to resolve
+   */
+  func reuseIdentifierForItem(indexPath: NSIndexPath) -> String {
+    let viewModel = item(indexPath)
+    if self.dynamicType.views.storage[viewModel.kind] != nil {
+      return viewModel.kind
+    } else if self.dynamicType.views.storage[component.kind] != nil {
+      return component.kind
+    } else {
+      return self.dynamicType.defaultKind
+    }
+  }
 }
