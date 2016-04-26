@@ -70,11 +70,11 @@ public struct Component: Mappable {
    - Parameter map: A JSON key-value dictionary
    */
   public init(_ map: JSONDictionary) {
-    title <- map.property("title")
-    kind  <- map.property("type")
-    span  <- map.property("span")
-    items <- map.relations("items")
-    meta  <- map.property("meta")
+    title <- map.property(.Title)
+    kind  <- map.property(.Kind) ?? map.property(.Type)
+    span  <- map.property(.Span)
+    items <- map.relations(.Items)
+    meta  <- map.property(.Meta)
   }
 
   /**
