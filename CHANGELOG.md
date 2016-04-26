@@ -2,7 +2,22 @@
 
 ## [Unreleased](https://github.com/hyperoslo/Spots/tree/HEAD)
 
-[Full Changelog](https://github.com/hyperoslo/Spots/compare/1.5.5...HEAD)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/1.6.0...HEAD)
+
+**Implemented enhancements:**
+
+- Improve safety when `kind` cannot be resolved into a class [\#205](https://github.com/hyperoslo/Spots/issues/205)
+
+**Fixed bugs:**
+
+- Improve safety when `kind` cannot be resolved into a class [\#205](https://github.com/hyperoslo/Spots/issues/205)
+
+**Merged pull requests:**
+
+- Feature/safe resolving of kinds [\#206](https://github.com/hyperoslo/Spots/pull/206) ([zenangst](https://github.com/zenangst))
+
+## [1.6.0](https://github.com/hyperoslo/Spots/tree/1.6.0) (2016-04-26)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/1.5.5...1.6.0)
 
 **Merged pull requests:**
 
