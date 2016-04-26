@@ -1,5 +1,6 @@
 import Quick
 import Nimble
+import Brick
 @testable import Spots
 
 class ListSpotSpec: QuickSpec {
@@ -44,6 +45,27 @@ class ListSpotSpec: QuickSpec {
           expect((component.dictionary["meta"] as! [String : AnyObject])["headerHeight"] as? CGFloat)
             .to(equal((listSpot.dictionary["meta"] as! [String : AnyObject])["headerHeight"] as? CGFloat))
         }
+      }
+
+      describe("can safely resolve kind") {
+        let component = Component(title: "ListSpot", kind: "custom-list", items: [ViewModel(title: "foo", kind: "custom-item-kind")])
+        let listSpot = ListSpot(component: component)
+        let indexPath = NSIndexPath(forRow: 0, inSection: 0)
+
+        expect(listSpot.reuseIdentifierForItem(indexPath)).to(equal("list"))
+
+        ListSpot.views["default-list"] = ListSpotCell.self
+        ListSpot.defaultKind = "default-list"
+        expect(listSpot.reuseIdentifierForItem(indexPath)).to(equal("default-list"))
+
+        ListSpot.views["custom-list"] = ListSpotCell.self
+        expect(listSpot.reuseIdentifierForItem(indexPath)).to(equal("custom-list"))
+
+        ListSpot.views["custom-item-kind"] = ListSpotCell.self
+        expect(listSpot.reuseIdentifierForItem(indexPath)).to(equal("custom-item-kind"))
+
+        ListSpot.views.storage.removeAll()
+        ListSpot.defaultKind = "list"
       }
     }
   }

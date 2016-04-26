@@ -1,5 +1,6 @@
 import Quick
 import Nimble
+import Brick
 @testable import Spots
 
 class GridSpotSpec: QuickSpec {
@@ -35,16 +36,37 @@ class GridSpotSpec: QuickSpec {
 
       describe("can be represented as dictionary") {
         let component = Component(title: "GridSpot", kind: "grid", span: 3, meta: ["headerHeight" : 44.0])
-        let listSpot = GridSpot(component: component)
+        let gridSpot = GridSpot(component: component)
 
         it ("represent GridSpot as a dictionary") {
-          expect(component.dictionary["index"] as? Int).to(equal(listSpot.dictionary["index"] as? Int))
-          expect(component.dictionary["title"] as? String).to(equal(listSpot.dictionary["title"] as? String))
-          expect(component.dictionary["kind"] as? String).to(equal(listSpot.dictionary["kind"] as? String))
-          expect(component.dictionary["span"] as? Int).to(equal(listSpot.dictionary["span"] as? Int))
+          expect(component.dictionary["index"] as? Int).to(equal(gridSpot.dictionary["index"] as? Int))
+          expect(component.dictionary["title"] as? String).to(equal(gridSpot.dictionary["title"] as? String))
+          expect(component.dictionary["kind"] as? String).to(equal(gridSpot.dictionary["kind"] as? String))
+          expect(component.dictionary["span"] as? Int).to(equal(gridSpot.dictionary["span"] as? Int))
           expect((component.dictionary["meta"] as! [String : AnyObject])["headerHeight"] as? CGFloat)
-            .to(equal((listSpot.dictionary["meta"] as! [String : AnyObject])["headerHeight"] as? CGFloat))
+            .to(equal((gridSpot.dictionary["meta"] as! [String : AnyObject])["headerHeight"] as? CGFloat))
         }
+      }
+
+      describe("can safely resolve kind") {
+        let component = Component(title: "GridSpot", kind: "custom-grid", items: [ViewModel(title: "foo", kind: "custom-item-kind")])
+        let gridSpot = GridSpot(component: component)
+        let indexPath = NSIndexPath(forRow: 0, inSection: 0)
+
+        expect(gridSpot.reuseIdentifierForItem(indexPath)).to(equal("grid"))
+
+        GridSpot.views["default-grid"] = GridSpotCell.self
+        GridSpot.defaultKind = "default-grid"
+        expect(gridSpot.reuseIdentifierForItem(indexPath)).to(equal("default-grid"))
+
+        GridSpot.views["custom-grid"] = GridSpotCell.self
+        expect(gridSpot.reuseIdentifierForItem(indexPath)).to(equal("custom-grid"))
+
+        GridSpot.views["custom-item-kind"] = GridSpotCell.self
+        expect(gridSpot.reuseIdentifierForItem(indexPath)).to(equal("custom-item-kind"))
+
+        GridSpot.views.storage.removeAll()
+        GridSpot.defaultKind = "grid"
       }
     }
   }
