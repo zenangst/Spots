@@ -122,8 +122,7 @@ indexPath
       spot.component.items[indexPath.item].index = indexPath.row
     }
 
-    let reuseIdentifier = indexPath.item < spot.component.items.count && spot.item(indexPath).kind.isPresent
-      ? spot.item(indexPath).kind : spot.component.kind
+    let reuseIdentifier = spot.reuseIdentifierForItem(indexPath)
     let cell: UITableViewCell = tableView
       .dequeueReusableCellWithIdentifier(reuseIdentifier, forIndexPath: indexPath)
       .then { $0.optimize() }

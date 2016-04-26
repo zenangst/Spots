@@ -160,10 +160,8 @@ public extension Spotable where Self : Listable {
   public func update(item: ViewModel, index: Int = 0, completion: Completion = nil) {
     items[index] = item
 
-    let cellClass = self.dynamicType.views.storage[item.kind] ?? self.dynamicType.defaultView
-    let reuseIdentifier = component.items[index].kind.isPresent
-      ? component.items[index].kind
-      : component.kind
+    let reuseIdentifier = reuseIdentifierForItem(NSIndexPath(forRow: index, inSection: 0))
+    let cellClass = self.dynamicType.views.storage[reuseIdentifier] ?? self.dynamicType.defaultView
 
     tableView.registerClass(cellClass, forCellReuseIdentifier: reuseIdentifier)
 
@@ -184,10 +182,8 @@ public extension Spotable where Self : Listable {
     refreshIndexes()
 
     for (index, item) in component.items.enumerate() {
-      let cellClass = self.dynamicType.views.storage[item.kind] ?? self.dynamicType.defaultView
-      let reuseIdentifier = component.items[index].kind.isPresent
-        ? component.items[index].kind
-        : component.kind
+      let reuseIdentifier = reuseIdentifierForItem(NSIndexPath(forItem: index, inSection: 0))
+      let cellClass = self.dynamicType.views.storage[reuseIdentifier] ?? self.dynamicType.defaultView
 
       tableView.registerClass(cellClass, forCellReuseIdentifier: reuseIdentifier)
 
@@ -200,6 +196,7 @@ public extension Spotable where Self : Listable {
     tableView.reloadSection()
     tableView.setNeedsLayout()
     tableView.layoutIfNeeded()
+    UIView.setAnimationsEnabled(true)
     completion?()
   }
 

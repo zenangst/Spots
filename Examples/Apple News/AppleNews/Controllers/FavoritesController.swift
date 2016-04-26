@@ -58,7 +58,7 @@ class FavoritesController: SpotsController {
     reload([
       "components" : [
         [
-        "type" : newType,
+        "kind" : newType,
         "span" : 3
         ]
       ]

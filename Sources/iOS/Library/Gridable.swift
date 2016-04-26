@@ -222,10 +222,8 @@ public extension Spotable where Self : Gridable {
   public func update(item: ViewModel, index: Int, completion: (() -> Void)? = nil) {
     items[index] = item
 
-    let cellClass = self.dynamicType.views.storage[item.kind] ?? self.dynamicType.defaultView
-    let reuseIdentifier = component.items[index].kind.isPresent
-      ? component.items[index].kind
-      : component.kind
+    let reuseIdentifier = reuseIdentifierForItem(NSIndexPath(forItem: index, inSection: 0))
+    let cellClass = self.dynamicType.views.storage[reuseIdentifier] ?? self.dynamicType.defaultView
 
     collectionView.registerClass(cellClass, forCellWithReuseIdentifier: reuseIdentifier)
     if let cell = cellClass.init() as? SpotConfigurable {
