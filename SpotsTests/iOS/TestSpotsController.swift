@@ -205,4 +205,20 @@ class SpotsControllerTests : XCTestCase {
     XCTAssert(jsonController.spot.component.items.count == 2)
     XCTAssert(jsonController.spot.component.items.first?.title == "First grid item")
   }
+
+  func testDictionaryOnSpotsController() {
+    let initialJSON = [
+      "components" : [
+        ["kind" : "list",
+          "items" : [
+            ["title" : "First list item"]
+          ]
+        ]
+      ]
+    ]
+    let firstController = SpotsController(initialJSON)
+    let secondController = SpotsController(firstController.dictionary)
+
+    XCTAssertTrue(firstController.spots.first!.component == secondController.spots.first!.component)
+  }
 }
