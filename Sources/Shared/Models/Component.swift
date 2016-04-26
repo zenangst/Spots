@@ -18,7 +18,6 @@ public struct Component: Mappable {
     case Index
     case Title
     case Kind
-    case Type
     case Meta
     case Span
     case Items
