@@ -181,7 +181,7 @@ public extension Spotable where Self : Listable {
   public func reload(indexes: [Int]? = nil, completion: Completion = nil) {
     refreshIndexes()
 
-    for (index, item) in component.items.enumerate() {
+    for (index, _) in component.items.enumerate() {
       let reuseIdentifier = reuseIdentifierForItem(NSIndexPath(forItem: index, inSection: 0))
       let cellClass = self.dynamicType.views.storage[reuseIdentifier] ?? self.dynamicType.defaultView
 
