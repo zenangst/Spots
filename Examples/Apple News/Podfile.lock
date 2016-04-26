@@ -1,5 +1,5 @@
 PODS:
-  - Brick (0.6.1):
+  - Brick (0.7.0):
     - Sugar (~> 1.0)
     - Tailor
   - Cache (1.1.0)
@@ -10,7 +10,7 @@ PODS:
   - Hue (1.1)
   - Imaginary (0.1.0):
     - Cache
-  - Spots (1.5.4):
+  - Spots (1.5.5):
     - Brick
     - Sugar
     - Tailor
@@ -61,13 +61,13 @@ CHECKOUT OPTIONS:
     :git: https://github.com/hyperoslo/Transition
 
 SPEC CHECKSUMS:
-  Brick: 009193c09e0dbf4c61bef193230f0625fc97d6ad
+  Brick: 16a5b83abf5ac36b01d00e8ffe730b4e1a06e4b9
   Cache: e40d243efe7172ce3eda44287ada2b95b5a7bd7b
   Compass: f4b8c37f9b315f0ee4f5e4f71888c54c92992d5d
   Fakery: ff6a27c3688a05c055d3e64c5fa9d78684796749
   Hue: c7d6a7206bac669ed69e78cc6c14a4d7bd28277c
   Imaginary: 5317b8d2dc8ecf20455232226bf8a277abdd37d5
-  Spots: 6dfc407ca3dad13414f9bde5f5396c73b5c4e5d9
+  Spots: 05789adb62c3a4e7dfb226c01d41e077613b51a9
   Sugar: bed396c924fd089feee7c780778cca2a124f580c
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   Tailor: 38a9f1ed1fa804856583396a55ed764d832eeca8

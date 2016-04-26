@@ -6,7 +6,7 @@ class SpotFactoryTests : XCTestCase {
 
   let json: [String : AnyObject] = [
     "title" : "title1",
-    "type" : "merry-go-round",
+    "kind" : "merry-go-round",
     "span" : 1,
     "meta" : ["foo" : "bar"],
     "items" : [["title" : "item1"]]

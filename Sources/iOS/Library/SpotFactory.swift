@@ -1,7 +1,9 @@
 public class SpotFactory {
 
+  /// The default spot for the SpotFactory
   public static var DefaultSpot: Spotable.Type = GridSpot.self
 
+  /// Defaults spots, it includes carousel, list, grid and view
   private static var spots: [String: Spotable.Type] = [
     "carousel": CarouselSpot.self,
     "list" : ListSpot.self,

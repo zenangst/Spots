@@ -10,6 +10,26 @@ import Brick
 
 /// The Component struct is used to configure a Spotable object
 public struct Component: Mappable {
+
+  /**
+   An enum with all the string keys used in the view model
+   */
+  public enum Key: String {
+    case Index
+    case Title
+    case Kind
+    case Meta
+    case Span
+    case Items
+    case Size
+    case Width
+    case Height
+
+    var string: String {
+      return rawValue.lowercaseString
+    }
+  }
+
   /// The index of the ViewModel when appearing in a list, should be computed and continuously updated by the data source
   public var index = 0
   /// The title for the component
@@ -27,17 +47,33 @@ public struct Component: Mappable {
   /// A key-value dictionary for any additional information
   public var meta = [String : AnyObject]()
 
+  /// A dictionary representation of the component
+  public var dictionary: JSONDictionary {
+    return [
+      Key.Index.string : index,
+      Key.Title.string : title,
+      Key.Kind.string : kind,
+      Key.Span.string : span,
+      Key.Items.string: items.map { $0.dictionary },
+      Key.Size.string : [
+        Key.Width.string : size?.width ?? 0,
+        Key.Height.string : size?.height ?? 0
+      ],
+      Key.Meta.string : meta
+    ]
+  }
+
   /**
    Initializes a component with a JSON dictionary and maps the keys of the dictionary to its corresponding values.
 
    - Parameter map: A JSON key-value dictionary
    */
   public init(_ map: JSONDictionary) {
-    title <- map.property("title")
-    kind  <- map.property("type")
-    span  <- map.property("span")
-    items <- map.relations("items")
-    meta  <- map.property("meta")
+    title <- map.property(.Title)
+    kind  <- map.property(.Kind)
+    span  <- map.property(.Span)
+    items <- map.relations(.Items)
+    meta  <- map.property(.Meta)
   }
 
   /**
