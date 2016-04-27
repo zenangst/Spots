@@ -248,10 +248,10 @@ extension SpotsController {
    - Parameter spotAtIndex: The index of the spot that you want to perform updates on
    - Parameter items: An array of view models
    */
-  public func updateIfNeeded(spotAtIndex index: Int = 0, items: [ViewModel]) {
+  public func updateIfNeeded(spotAtIndex index: Int = 0, items: [ViewModel], animated: Bool = true) {
     guard let spot = spot(index, Spotable.self) where !(spot.items == items) else { return }
 
-    update(spotAtIndex: index) {
+    update(spotAtIndex: index, animated: animated) {
       $0.items = items
     }
   }
