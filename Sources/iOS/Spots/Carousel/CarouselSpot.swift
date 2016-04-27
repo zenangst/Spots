@@ -5,7 +5,7 @@ import Brick
 public class CarouselSpot: NSObject, Gridable {
 
   public static var views = ViewRegistry()
-  public static var configure: ((view: UICollectionView) -> Void)?
+  public static var configure: ((view: UICollectionView, layout: UICollectionViewFlowLayout) -> Void)?
   public static var defaultView: UIView.Type = CarouselSpotCell.self
   public static var defaultKind: StringConvertible = "carousel"
 
