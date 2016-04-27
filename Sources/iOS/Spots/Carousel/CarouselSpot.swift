@@ -35,10 +35,8 @@ public class CarouselSpot: NSObject, Gridable {
         pageControl.currentPage = 1
         pageControl.width = backgroundView.frame.width
         collectionView.backgroundView?.addSubview(pageControl)
-        layout.sectionInset.bottom = pageControl.height
       } else {
         pageControl.removeFromSuperview()
-        layout.sectionInset.bottom = 0
       }
     }
   }
@@ -79,6 +77,7 @@ public class CarouselSpot: NSObject, Gridable {
 
     layout.sectionInset = UIEdgeInsetsMake(top, left, bottom, right)
     layout.minimumInteritemSpacing = itemSpacing
+    layout.minimumLineSpacing = itemSpacing
   }
 
   public func setup(size: CGSize) {
@@ -94,10 +93,12 @@ public class CarouselSpot: NSObject, Gridable {
       }
     }
 
-    CarouselSpot.configure?(view: collectionView)
+    CarouselSpot.configure?(view: collectionView, layout: layout)
 
     guard pageIndicator else { return }
-    pageControl.frame.origin.y = collectionView.height - pageControl.frame.size.height
+    layout.sectionInset.bottom = layout.sectionInset.bottom + pageControl.height
+    collectionView.height += layout.sectionInset.top + layout.sectionInset.bottom
+    pageControl.frame.origin.y = collectionView.height - pageControl.height
   }
 }
 
