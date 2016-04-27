@@ -9,14 +9,14 @@ struct SpotsConfigurator: Configurator {
       scrollView.backgroundColor = UIColor.blackColor()
     }
 
-    CarouselSpot.configure = { collectionView in
+    CarouselSpot.configure = { collectionView, layout in
       collectionView.backgroundColor = UIColor.clearColor()
     }
 
     CarouselSpot.views["playlist"] = PlaylistGridSpotCell.self
     CarouselSpot.views["featured"] = FeaturedGridSpotCell.self
 
-    GridSpot.configure = { collectionView in
+    GridSpot.configure = { collectionView, layout in
       collectionView.backgroundColor = UIColor.clearColor()
     }
 
