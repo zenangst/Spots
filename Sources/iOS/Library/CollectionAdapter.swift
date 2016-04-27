@@ -125,3 +125,24 @@ extension CollectionAdapter : UICollectionViewDataSource  {
     return cell
   }
 }
+
+extension CollectionAdapter: UICollectionViewDelegateFlowLayout {
+
+  public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
+    guard spot.layout.scrollDirection == .Horizontal else { return spot.layout.sectionInset.bottom }
+
+    return spot.layout.minimumLineSpacing
+  }
+
+  public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+    guard spot.layout.scrollDirection == .Horizontal else { return spot.layout.sectionInset }
+
+    let left = spot.layout.minimumLineSpacing / 2
+    let right = spot.layout.minimumLineSpacing / 2
+
+    return UIEdgeInsets(top: spot.layout.sectionInset.top,
+                        left: left,
+                        bottom: spot.layout.sectionInset.bottom,
+                        right: right)
+  }
+}
