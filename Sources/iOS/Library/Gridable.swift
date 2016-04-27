@@ -239,9 +239,10 @@ public extension Spotable where Self : Gridable {
 
   /**
    - Parameter indexes: An array of integers that you want to reload, default is nil
+   - Parameter animated: Perform reload animation
    - Parameter completion: A completion closure that is executed in the main queue when the view model has been reloaded
    */
-  public func reload(indexes: [Int]? = nil, completion: (() -> Void)?) {
+  public func reload(indexes: [Int]? = nil, animated: Bool = true, completion: (() -> Void)?) {
     let items = component.items
     for (index, item) in items.enumerate() {
       let cellClass = self.dynamicType.views.storage[item.kind] ?? self.dynamicType.defaultView

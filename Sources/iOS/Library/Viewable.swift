@@ -139,5 +139,5 @@ public extension Spotable where Self : Viewable {
     }
   }
 
-  func reload(indexes: [Int]? = nil, completion: (() -> Void)? = nil) { }
+  func reload(indexes: [Int]? = nil, animated: Bool = true, completion: (() -> Void)? = nil) { }
 }

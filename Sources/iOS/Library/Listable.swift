@@ -176,9 +176,10 @@ public extension Spotable where Self : Listable {
 
   /**
    - Parameter indexes: An array of integers that you want to reload, default is nil
+   - Parameter animated: Perform reload animation
    - Parameter completion: A completion closure that is executed in the main queue when the view model has been reloaded
    */
-  public func reload(indexes: [Int]? = nil, completion: Completion = nil) {
+  public func reload(indexes: [Int]? = nil, animated: Bool = true, completion: Completion = nil) {
     refreshIndexes()
 
     for (index, _) in component.items.enumerate() {
