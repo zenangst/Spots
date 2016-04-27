@@ -65,7 +65,7 @@ extension ListAdapter: UITableViewDelegate {
   public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
     let reuseIdentifer = spot.component.kind.isPresent ? spot.component.kind : spot.dynamicType.defaultKind
 
-    if let listSpot = spot as? ListSpot, cachedHeader = listSpot.cachedHeaders[reuseIdentifer] {
+    if let listSpot = spot as? ListSpot, cachedHeader = listSpot.cachedHeaders[reuseIdentifer.string] {
       cachedHeader.configure(spot.component)
       return cachedHeader as? UIView
     } else if let header = ListSpot.headers[reuseIdentifer] {
