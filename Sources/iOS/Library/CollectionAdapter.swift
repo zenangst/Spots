@@ -109,7 +109,7 @@ extension CollectionAdapter : UICollectionViewDataSource  {
     spot.component.items[indexPath.item].index = indexPath.item
 
     let reuseIdentifier = spot.reuseIdentifierForItem(indexPath)
-    let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath)
+    let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath).then { $0.optimize() }
 
     if let cell = cell as? SpotConfigurable {
       cell.configure(&spot.component.items[indexPath.item])
