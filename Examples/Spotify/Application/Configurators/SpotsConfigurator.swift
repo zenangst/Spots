@@ -11,6 +11,10 @@ struct SpotsConfigurator: Configurator {
 
     CarouselSpot.configure = { collectionView, layout in
       collectionView.backgroundColor = UIColor.clearColor()
+
+      layout.sectionInset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
+      layout.minimumInteritemSpacing = 0
+      layout.minimumLineSpacing = 5
     }
 
     CarouselSpot.views["playlist"] = PlaylistGridSpotCell.self
@@ -18,6 +22,10 @@ struct SpotsConfigurator: Configurator {
 
     GridSpot.configure = { collectionView, layout in
       collectionView.backgroundColor = UIColor.clearColor()
+
+      layout.sectionInset = UIEdgeInsets(top: 0, left: 5, bottom: 5, right: 5)
+      layout.minimumInteritemSpacing = 0
+      layout.minimumLineSpacing = 0
     }
 
     GridSpot.views["player"] = PlayerGridSpotCell.self
