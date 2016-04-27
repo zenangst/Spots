@@ -28,7 +28,7 @@ public protocol Spotable: class {
   func update(item: ViewModel, index: Int, completion: (() -> Void)?)
   func delete(index: Int, completion: (() -> Void)?)
   func delete(indexes: [Int], completion: (() -> Void)?)
-  func reload(indexes: [Int]?, completion: (() -> Void)?)
+  func reload(indexes: [Int]?, animated: Bool, completion: (() -> Void)?)
   func render() -> UIScrollView
   func layout(size: CGSize)
   func prepare()
@@ -104,12 +104,13 @@ public extension Spotable {
   /**
    Reloads spot only if it has changes
    - Parameter items: An array of view models
+   - Parameter animated: Perform reload animation
    */
-  public func reloadIfNeeded(items: [ViewModel]) {
+  public func reloadIfNeeded(items: [ViewModel], animated: Bool = true) {
     guard !(self.items == items) else { return }
 
     self.items = items
-    reload(nil, completion: nil)
+    reload(nil, animated: animated, completion: nil)
   }
 
   /**
