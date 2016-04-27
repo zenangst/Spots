@@ -194,7 +194,7 @@ public extension Spotable where Self : Listable {
       }
     }
 
-    tableView.reloadSection()
+    animated ? tableView.reloadSection() : tableView.reloadData()
     tableView.setNeedsLayout()
     tableView.layoutIfNeeded()
     UIView.setAnimationsEnabled(true)
