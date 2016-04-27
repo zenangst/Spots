@@ -1,11 +1,12 @@
 import UIKit
 import Sugar
+import Brick
 
 public class GridSpot: NSObject, Gridable {
 
   public static var views = ViewRegistry()
   public static var defaultView: UIView.Type = GridSpotCell.self
-  public static var defaultKind = "grid"
+  public static var defaultKind: StringConvertible = "grid"
   public static var configure: ((view: UICollectionView, layout: UICollectionViewFlowLayout) -> Void)?
 
   public var cachedViews = [String : SpotConfigurable]()
@@ -31,7 +32,7 @@ public class GridSpot: NSObject, Gridable {
   }
 
   public convenience init(title: String = "", kind: String? = nil) {
-    self.init(component: Component(title: title, kind: kind ?? GridSpot.defaultKind))
+    self.init(component: Component(title: title, kind: kind ?? GridSpot.defaultKind.string))
   }
 
   public convenience init(_ component: Component, top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0, itemSpacing: CGFloat = 0, lineSpacing: CGFloat = 0) {

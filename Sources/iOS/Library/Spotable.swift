@@ -10,7 +10,7 @@ public protocol Spotable: class {
   /// The default view type for the spotable object
   static var defaultView: UIView.Type { get set }
   /// The default kind to fall back to if the view model kind does not exist when trying to display the spotable item
-  static var defaultKind: String { get }
+  static var defaultKind: StringConvertible { get }
 
   weak var spotsDelegate: SpotsDelegate? { get set }
 
@@ -53,7 +53,7 @@ public extension Spotable {
    - Parameter register: A closure containing class type and reuse identifer
    */
   func registerAndPrepare(@noescape register: (classType: UIView.Type, withIdentifier: String) -> Void) {
-    if component.kind.isEmpty { component.kind = Self.defaultKind }
+    if component.kind.isEmpty { component.kind = Self.defaultKind.string }
 
     Self.views.storage.forEach { reuseIdentifier, classType in
       register(classType: classType, withIdentifier: reuseIdentifier)
@@ -170,7 +170,7 @@ public extension Spotable {
     } else if self.dynamicType.views.storage[component.kind] != nil {
       return component.kind
     } else {
-      return self.dynamicType.defaultKind
+      return self.dynamicType.defaultKind.string
     }
   }
 }

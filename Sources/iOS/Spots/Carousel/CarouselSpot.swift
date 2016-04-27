@@ -7,7 +7,7 @@ public class CarouselSpot: NSObject, Gridable {
   public static var views = ViewRegistry()
   public static var configure: ((view: UICollectionView) -> Void)?
   public static var defaultView: UIView.Type = CarouselSpotCell.self
-  public static var defaultKind = "carousel"
+  public static var defaultKind: StringConvertible = "carousel"
 
   public var cachedViews = [String : SpotConfigurable]()
 
