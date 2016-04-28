@@ -1,12 +1,13 @@
 import UIKit
 import Sugar
+import Brick
 
 public class ListSpot: NSObject, Listable {
 
   public static var views = ViewRegistry()
   public static var configure: ((view: UITableView) -> Void)?
   public static var defaultView: UIView.Type = ListSpotCell.self
-  public static var defaultKind = "list"
+  public static var defaultKind: StringConvertible = "list"
   public static var headers = ViewRegistry()
 
   public var index = 0
@@ -41,12 +42,12 @@ public class ListSpot: NSObject, Listable {
 
     if let configurable = header as? Componentable {
       configurable.configure(component)
-      cachedHeaders[reuseIdentifer] = configurable
+      cachedHeaders[reuseIdentifer.string] = configurable
     }
   }
 
   public convenience init(tableView: UITableView? = nil, title: String = "", kind: String? = nil) {
-    self.init(component: Component(title: title, kind: kind ?? ListSpot.defaultKind))
+    self.init(component: Component(title: title, kind: kind ?? ListSpot.defaultKind.string))
 
     self.tableView ?= tableView
 

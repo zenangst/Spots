@@ -1,12 +1,13 @@
 import UIKit
 import Sugar
+import Brick
 
 public class ViewSpot: NSObject, Spotable, Viewable {
 
   public static var views = ViewRegistry()
   public static var configure: ((view: UICollectionView) -> Void)?
   public static var defaultView: UIView.Type = UIView.self
-  public static var defaultKind = "view"
+  public static var defaultKind: StringConvertible = "view"
 
   public weak var spotsDelegate: SpotsDelegate?
   public var component: Component
@@ -25,6 +26,6 @@ public class ViewSpot: NSObject, Spotable, Viewable {
   }
 
   public convenience init(title: String = "", kind: String? = nil) {
-    self.init(component: Component(title: title, kind: kind ?? ViewSpot.defaultKind))
+    self.init(component: Component(title: title, kind: kind ?? ViewSpot.defaultKind.string))
   }
 }
