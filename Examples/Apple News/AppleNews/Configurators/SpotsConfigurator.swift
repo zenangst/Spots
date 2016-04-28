@@ -24,8 +24,15 @@ struct SpotsConfigurator {
     }
 
     GridSpot.configure = { collectionView, layout in
-      layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 20, right: 10)
-      layout.minimumInteritemSpacing = -5
+      layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 0)
+      layout.minimumInteritemSpacing = 0
+      layout.minimumLineSpacing = 0
+      collectionView.contentInset.right = 10
+    }
+
+    CarouselSpot.configure = { collectionView, layout in
+      layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+      layout.minimumInteritemSpacing = 0
       layout.minimumLineSpacing = 10
     }
 
