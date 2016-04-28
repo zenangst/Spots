@@ -30,9 +30,9 @@ struct SpotsConfigurator {
       collectionView.contentInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
     }
 
-    CarouselSpot.configure = {
-      $0.backgroundColor = UIColor.clearColor()
-      $0.contentInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+    CarouselSpot.configure = { collectionView, layout in
+      collectionView.backgroundColor = UIColor.clearColor()
+      collectionView.contentInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
     }
 
     ListSpot.configure = {
