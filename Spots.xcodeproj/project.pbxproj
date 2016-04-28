@@ -58,6 +58,8 @@
 		D58478FB1C440781006EBA49 /* Sugar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478F81C44076B006EBA49 /* Sugar.framework */; };
 		D58478FE1C440781006EBA49 /* Fakery.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478FC1C440781006EBA49 /* Fakery.framework */; };
 		D58478FF1C440781006EBA49 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478FD1C440781006EBA49 /* SwiftyJSON.framework */; };
+		D5A3DC8B1CD174000084F451 /* SpotCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A3DC8A1CD174000084F451 /* SpotCache.swift */; };
+		D5A3DC8C1CD174000084F451 /* SpotCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A3DC8A1CD174000084F451 /* SpotCache.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -131,6 +133,7 @@
 		D58478F81C44076B006EBA49 /* Sugar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sugar.framework; path = Carthage/Build/Mac/Sugar.framework; sourceTree = "<group>"; };
 		D58478FC1C440781006EBA49 /* Fakery.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Fakery.framework; path = Carthage/Build/Mac/Fakery.framework; sourceTree = "<group>"; };
 		D58478FD1C440781006EBA49 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/Mac/SwiftyJSON.framework; sourceTree = "<group>"; };
+		D5A3DC8A1CD174000084F451 /* SpotCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotCache.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,6 +195,7 @@
 			children = (
 				BD7C2F531CCF3D8F0075FC4E /* Extensions */,
 				BD7C2F541CCF3D8F0075FC4E /* Protocols */,
+				D5A3DC8A1CD174000084F451 /* SpotCache.swift */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -673,6 +677,7 @@
 				BD7C2F571CCF3D8F0075FC4E /* Componentable.swift in Sources */,
 				BD0625F71C45754B00A16F91 /* ViewSpot.swift in Sources */,
 				D58478911C440062006EBA49 /* GridSpot.swift in Sources */,
+				D5A3DC8B1CD174000084F451 /* SpotCache.swift in Sources */,
 				D58478931C440062006EBA49 /* GridSpotCell.swift in Sources */,
 				D584789D1C440062006EBA49 /* SpotsScrollView.swift in Sources */,
 				BD7C2F591CCF3D8F0075FC4E /* SpotConfigurable.swift in Sources */,
@@ -714,6 +719,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D58478E51C44063C006EBA49 /* Component.swift in Sources */,
+				D5A3DC8C1CD174000084F451 /* SpotCache.swift in Sources */,
 				BD7C2F581CCF3D8F0075FC4E /* Componentable.swift in Sources */,
 				BD7C2F5A1CCF3D8F0075FC4E /* SpotConfigurable.swift in Sources */,
 				BD7C2F5D1CCF3DA90075FC4E /* Component+Extension.swift in Sources */,
