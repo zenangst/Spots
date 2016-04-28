@@ -125,7 +125,10 @@ indexPath
     let reuseIdentifier = spot.reuseIdentifierForItem(indexPath)
     let cell: UITableViewCell = tableView
       .dequeueReusableCellWithIdentifier(reuseIdentifier, forIndexPath: indexPath)
-      .then { $0.optimize() }
+
+    #if os(iOS)
+      cell.optimize()
+    #endif
 
     if let cell = cell as? SpotConfigurable where indexPath.item < spot.component.items.count {
       cell.configure(&spot.component.items[indexPath.item])
