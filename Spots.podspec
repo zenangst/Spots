@@ -21,4 +21,5 @@ Pod::Spec.new do |s|
   s.dependency 'Sugar'
   s.dependency 'Tailor'
   s.dependency 'Brick'
+  s.dependency 'Cache'
 end
