@@ -112,8 +112,15 @@ public extension Spotable {
 
     self.items = items
     reload(nil, animated: animated) {
-      self.stateCache?.save(self.dictionary)
+      self.cache()
     }
+  }
+
+  /**
+   Caches the current state of the spot
+  */
+  public func cache() {
+    stateCache?.save(dictionary)
   }
 
   /**
