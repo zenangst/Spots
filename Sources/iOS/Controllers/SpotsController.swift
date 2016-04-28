@@ -221,7 +221,7 @@ extension SpotsController {
   */
   public func reload(json: [String : AnyObject], animated: ((view: UIView) -> Void)? = nil, closure: (() -> Void)? = nil) {
     spots = Parser.parse(json)
-    stateCache?.save(dictionary)
+    cache()
 
     spotsScrollView.contentView.subviews.forEach { $0.removeFromSuperview() }
     setupSpots(animated)
@@ -403,6 +403,13 @@ extension SpotsController {
   public func scrollToBottom(animated: Bool) {
     let y = spotsScrollView.contentSize.height - spotsScrollView.height + spotsScrollView.contentInset.bottom
     spotsScrollView.setContentOffset(CGPoint(x: 0, y: y), animated: animated)
+  }
+
+  /**
+   Caches the current state of the spot controller
+   */
+  public func cache() {
+    stateCache?.save(dictionary)
   }
 }
 
