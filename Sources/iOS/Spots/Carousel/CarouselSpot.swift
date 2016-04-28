@@ -5,7 +5,7 @@ import Brick
 public class CarouselSpot: NSObject, Gridable {
 
   public static var views = ViewRegistry()
-  public static var configure: ((view: UICollectionView) -> Void)?
+  public static var configure: ((view: UICollectionView, layout: UICollectionViewFlowLayout) -> Void)?
   public static var defaultView: UIView.Type = CarouselSpotCell.self
   public static var defaultKind: StringConvertible = "carousel"
 
@@ -36,10 +36,8 @@ public class CarouselSpot: NSObject, Gridable {
         pageControl.currentPage = 1
         pageControl.width = backgroundView.frame.width
         collectionView.backgroundView?.addSubview(pageControl)
-        layout.sectionInset.bottom = pageControl.height
       } else {
         pageControl.removeFromSuperview()
-        layout.sectionInset.bottom = 0
       }
     }
   }
@@ -75,11 +73,12 @@ public class CarouselSpot: NSObject, Gridable {
     super.init()
   }
 
-  public convenience init(_ component: Component, top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0, itemSpacing: CGFloat = 0) {
+  public convenience init(_ component: Component, top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0, itemSpacing: CGFloat = 0, lineSpacing: CGFloat = 0) {
     self.init(component: component)
 
     layout.sectionInset = UIEdgeInsetsMake(top, left, bottom, right)
     layout.minimumInteritemSpacing = itemSpacing
+    layout.minimumLineSpacing = lineSpacing
   }
 
   public func setup(size: CGSize) {
@@ -95,10 +94,12 @@ public class CarouselSpot: NSObject, Gridable {
       }
     }
 
-    CarouselSpot.configure?(view: collectionView)
+    CarouselSpot.configure?(view: collectionView, layout: layout)
 
     guard pageIndicator else { return }
-    pageControl.frame.origin.y = collectionView.height - pageControl.frame.size.height
+    layout.sectionInset.bottom = layout.sectionInset.bottom + pageControl.height
+    collectionView.height += layout.sectionInset.top + layout.sectionInset.bottom
+    pageControl.frame.origin.y = collectionView.height - pageControl.height
   }
 }
 
@@ -152,7 +153,9 @@ extension CarouselSpot {
       ? collectionView.width / CGFloat(component.span)
       : collectionView.width
 
-    width -= layout.sectionInset.left
+    width -= layout.sectionInset.left - layout.sectionInset.right
+    width -= layout.minimumInteritemSpacing
+    width -= layout.minimumLineSpacing
     width -= collectionView.contentInset.left + collectionView.contentInset.right
 
     component.items[indexPath.item].size.width = width

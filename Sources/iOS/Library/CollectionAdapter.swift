@@ -111,6 +111,10 @@ extension CollectionAdapter : UICollectionViewDataSource  {
     let reuseIdentifier = spot.reuseIdentifierForItem(indexPath)
     let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath)
 
+    #if os(iOS)
+      cell.optimize()
+    #endif
+
     if let cell = cell as? SpotConfigurable {
       cell.configure(&spot.component.items[indexPath.item])
       if spot.component.items[indexPath.item].size.height == 0.0 {
@@ -123,5 +127,26 @@ extension CollectionAdapter : UICollectionViewDataSource  {
     collectionView.collectionViewLayout.invalidateLayout()
 
     return cell
+  }
+}
+
+extension CollectionAdapter: UICollectionViewDelegateFlowLayout {
+
+  public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
+    guard spot.layout.scrollDirection == .Horizontal else { return spot.layout.sectionInset.bottom }
+
+    return spot.layout.minimumLineSpacing
+  }
+
+  public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+    guard spot.layout.scrollDirection == .Horizontal else { return spot.layout.sectionInset }
+
+    let left = spot.layout.minimumLineSpacing / 2
+    let right = spot.layout.minimumLineSpacing / 2
+
+    return UIEdgeInsets(top: spot.layout.sectionInset.top,
+                        left: left,
+                        bottom: spot.layout.sectionInset.bottom,
+                        right: right)
   }
 }

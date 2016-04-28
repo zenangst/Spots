@@ -36,7 +36,7 @@ class ExploreController: SpotsController {
       ViewModel(title: "Food")
       ], meta: ["headerHeight" : 33])
 
-    let suggestedSpot = CarouselSpot(suggestedChannels, left: 15, right: 15, itemSpacing: 15)
+    let suggestedSpot = CarouselSpot(suggestedChannels)
     suggestedSpot.pageIndicator = true
     suggestedSpot.paginate = true
 
@@ -44,8 +44,7 @@ class ExploreController: SpotsController {
       ListSpot(component: Component(title : "Suggested Channels", meta: ["headerHeight" : 33])),
       suggestedSpot,
       ListSpot(component: Component(title : "Suggested Topics", meta: ["headerHeight" : 33])),
-      CarouselSpot(suggestedTopics,
-        left: 15, right: 15, itemSpacing: 15),
+      CarouselSpot(suggestedTopics),
       ListSpot(component: browse)
     ]
 
