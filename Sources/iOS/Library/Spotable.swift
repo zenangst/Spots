@@ -17,6 +17,7 @@ public protocol Spotable: class {
   var index: Int { get set }
   var component: Component { get set }
   var configure: (SpotConfigurable -> Void)? { get set }
+  var stateCache: SpotCache? { get }
 
   init(component: Component)
 
@@ -110,7 +111,9 @@ public extension Spotable {
     guard !(self.items == items) else { return }
 
     self.items = items
-    reload(nil, animated: animated, completion: nil)
+    reload(nil, animated: animated) {
+      self.stateCache?.save(self.dictionary)
+    }
   }
 
   /**

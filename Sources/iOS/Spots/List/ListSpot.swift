@@ -21,6 +21,7 @@ public class ListSpot: NSObject, Listable {
   public lazy var tableView = UITableView()
 
   private var fetching = false
+  public private(set) var stateCache: SpotCache?
 
   // MARK: - Initializers
 
@@ -47,6 +48,16 @@ public class ListSpot: NSObject, Listable {
   public convenience init(tableView: UITableView? = nil, title: String = "", kind: String? = nil) {
     self.init(component: Component(title: title, kind: kind ?? ListSpot.defaultKind))
 
+    self.tableView ?= tableView
+
+    setupTableView()
+    prepare()
+  }
+
+  public convenience init(stateCache: SpotCache, tableView: UITableView? = nil) {
+    self.init(component: Component(stateCache.load()))
+
+    self.stateCache = stateCache
     self.tableView ?= tableView
 
     setupTableView()

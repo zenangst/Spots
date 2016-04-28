@@ -26,7 +26,7 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     }
   }
 
-  var cache: SpotCache?
+  var stateCache: SpotCache?
 
   /// A delegate for when an item is tapped within a Spot
   weak public var spotsDelegate: SpotsDelegate? {
@@ -94,9 +94,9 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     self.init(spots: Parser.parse(json))
   }
 
-  public convenience init(cache: SpotCache) {
-    self.init(spots: Parser.parse(cache.load()))
-    self.cache = cache
+  public convenience init(stateCache: SpotCache) {
+    self.init(spots: Parser.parse(stateCache.load()))
+    self.stateCache = stateCache
   }
 
   public required init?(coder aDecoder: NSCoder) {
@@ -221,7 +221,7 @@ extension SpotsController {
   */
   public func reload(json: [String : AnyObject], animated: ((view: UIView) -> Void)? = nil, closure: (() -> Void)? = nil) {
     spots = Parser.parse(json)
-    cache?.save(dictionary)
+    stateCache?.save(dictionary)
 
     spotsScrollView.contentView.subviews.forEach { $0.removeFromSuperview() }
     setupSpots(animated)
