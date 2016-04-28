@@ -151,7 +151,6 @@ extension CarouselSpot {
     var width = component.span > 0
       ? collectionView.width / CGFloat(component.span)
       : collectionView.width
-    var height = component.items[indexPath.item].size.height
 
     width -= layout.sectionInset.left - layout.sectionInset.right
     width -= layout.minimumInteritemSpacing
@@ -159,7 +158,6 @@ extension CarouselSpot {
     width -= collectionView.contentInset.left + collectionView.contentInset.right
 
     component.items[indexPath.item].size.width = width
-    component.items[indexPath.item].size.height = height
 
     return CGSize(
       width: ceil(component.items[indexPath.item].size.width),
