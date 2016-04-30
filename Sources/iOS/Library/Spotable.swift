@@ -108,7 +108,10 @@ public extension Spotable {
    - Parameter animated: Perform reload animation
    */
   public func reloadIfNeeded(items: [ViewModel], animated: Bool = true) {
-    guard !(self.items == items) else { return }
+    guard !(self.items == items) else {
+      cache()
+      return
+    }
 
     self.items = items
     reload(nil, animated: animated) {
