@@ -162,8 +162,8 @@ SpotsController.configure = {
   $0.backgroundColor = UIColor.whiteColor()
 }
 
-CarouselSpot.configure = {
-  $0.contentInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+CarouselSpot.configure = { collectionView, layout in
+  collectionView.contentInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
 }
 
 // Configure List spots
