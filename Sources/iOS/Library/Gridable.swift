@@ -297,6 +297,9 @@ public extension Spotable where Self : Gridable {
 
     let width = item(indexPath).size.width - collectionView.contentInset.left - layout.sectionInset.left - layout.sectionInset.right
 
+    // Never return a negative width
+    guard width > -1 else { return CGSizeZero }
+
     return CGSize(
       width: floor(width),
       height: ceil(item(indexPath).size.height))
