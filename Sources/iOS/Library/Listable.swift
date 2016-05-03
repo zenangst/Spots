@@ -32,7 +32,7 @@ public extension Spotable where Self : Listable {
     component.items.append(item)
 
     dispatch { [weak self] in
-      self?.tableView.insert([count], animation: self?.resolveAnimation(animation) ?? .None)
+      self?.tableView.insert([count], animation: animation.tableViewAnimation)
       completion?()
     }
     var cached: UIView?
@@ -57,7 +57,7 @@ public extension Spotable where Self : Listable {
     }
 
     dispatch { [weak self] in
-      self?.tableView.insert(indexes, animation: self?.resolveAnimation(animation) ?? .None)
+      self?.tableView.insert(indexes, animation: animation.tableViewAnimation)
       completion?()
     }
   }
@@ -72,7 +72,7 @@ public extension Spotable where Self : Listable {
     component.items.insert(item, atIndex: index)
 
     dispatch { [weak self] in
-      self?.tableView.insert([index], animation: self?.resolveAnimation(animation) ?? .None)
+      self?.tableView.insert([index], animation: animation.tableViewAnimation)
       completion?()
     }
   }
@@ -92,7 +92,7 @@ public extension Spotable where Self : Listable {
     }
 
     dispatch { [weak self] in
-      self?.tableView.insert(indexes, animation: self?.resolveAnimation(animation) ?? .None)
+      self?.tableView.insert(indexes, animation: animation.tableViewAnimation)
       completion?()
     }
   }
@@ -109,7 +109,7 @@ public extension Spotable where Self : Listable {
     component.items.removeAtIndex(index)
 
     dispatch { [weak self] in
-      self?.tableView.delete([index], animation: self?.resolveAnimation(animation) ?? .Automatic)
+      self?.tableView.delete([index], animation: animation.tableViewAnimation)
       completion?()
     }
   }
@@ -129,7 +129,7 @@ public extension Spotable where Self : Listable {
     }
 
     dispatch { [weak self] in
-      self?.tableView.delete(indexPaths, animation: self?.resolveAnimation(animation) ?? .Automatic)
+      self?.tableView.delete(indexPaths, animation: animation.tableViewAnimation)
       completion?()
     }
   }
@@ -142,7 +142,7 @@ public extension Spotable where Self : Listable {
   func delete(index: Int, animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
     dispatch { [weak self] in
       self?.component.items.removeAtIndex(index)
-      self?.tableView.delete([index], animation: self?.resolveAnimation(animation) ?? .Automatic)
+      self?.tableView.delete([index], animation: animation.tableViewAnimation)
       completion?()
     }
   }
@@ -155,7 +155,7 @@ public extension Spotable where Self : Listable {
   func delete(indexes: [Int], animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
     dispatch { [weak self] in
       indexes.forEach { self?.component.items.removeAtIndex($0) }
-      self?.tableView.delete(indexes, section: 0, animation: self?.resolveAnimation(animation) ?? .Automatic)
+      self?.tableView.delete(indexes, section: 0, animation: animation.tableViewAnimation)
       completion?()
     }
   }
@@ -179,7 +179,7 @@ public extension Spotable where Self : Listable {
       cell.configure(&component.items[index])
     }
 
-    tableView.reload([index], section: 0, animation: resolveAnimation(animation))
+    tableView.reload([index], section: 0, animation: animation.tableViewAnimation)
     completion?()
   }
 
@@ -234,31 +234,5 @@ public extension Spotable where Self : Listable {
 
     return component.items[0...item.index]
       .reduce(0, combine: { $0 + $1.size.height })
-  }
-
-  /**
-   Resolves a SpotsAnimation into a UITableViewRowAnimation
-   - Parameter animation: SpotsAnimation
-   - Returns: A UITableViewRowAnimation
-   */
-  private func resolveAnimation(animation: SpotsAnimation) -> UITableViewRowAnimation {
-    switch animation {
-    case .Fade:
-      return UITableViewRowAnimation.Fade
-    case .Right:
-      return UITableViewRowAnimation.Right
-    case .Left:
-      return UITableViewRowAnimation.Left
-    case .Top:
-      return UITableViewRowAnimation.Top
-    case .Bottom:
-      return UITableViewRowAnimation.Bottom
-    case .None:
-      return UITableViewRowAnimation.None
-    case .Middle:
-      return UITableViewRowAnimation.Middle
-    case .Automatic:
-      return UITableViewRowAnimation.Automatic
-    }
   }
 }
