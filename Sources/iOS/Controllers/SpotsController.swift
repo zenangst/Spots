@@ -191,12 +191,12 @@ extension SpotsController {
   /**
    - Parameter completion: A closure that will be run after reload has been performed on all spots
    */
-  public func reload(animated: Bool = true, completion: (() -> Void)? = nil) {
+  public func reload(animated: Bool = true, animation: SpotsAnimation = .Automatic, completion: (() -> Void)? = nil) {
     var spotsLeft = spots.count
 
     dispatch { [weak self] in
       self?.spots.forEach { spot in
-        spot.reload([], animated: animated) {
+        spot.reload([], animation: animation) {
           spotsLeft -= 1
 
           if spotsLeft == 0 {
@@ -226,7 +226,7 @@ extension SpotsController {
    - Parameter animated: Perform reload animation
    - Parameter closure: A transform closure to perform the proper modification to the target spot before updating the internals
    */
-  public func update(spotAtIndex index: Int = 0, animated: Bool = true, @noescape _ closure: (spot: Spotable) -> Void) {
+  public func update(spotAtIndex index: Int = 0, animation: SpotsAnimation = .Automatic, @noescape _ closure: (spot: Spotable) -> Void) {
     guard let spot = spot(index, Spotable.self) else { return }
     closure(spot: spot)
     spot.refreshIndexes()
@@ -236,7 +236,7 @@ extension SpotsController {
     dispatch { [weak self] in
       guard let weakSelf = self else { return }
 
-      weakSelf.spot(spot.index, Spotable.self)?.reload([index], animated: animated) {
+      weakSelf.spot(spot.index, Spotable.self)?.reload([index], animation: animation) {
         weakSelf.spotsScrollView.setNeedsDisplay()
         weakSelf.spotsScrollView.forceUpdate = true
       }
@@ -248,10 +248,10 @@ extension SpotsController {
    - Parameter spotAtIndex: The index of the spot that you want to perform updates on
    - Parameter items: An array of view models
    */
-  public func updateIfNeeded(spotAtIndex index: Int = 0, items: [ViewModel], animated: Bool = true) {
+  public func updateIfNeeded(spotAtIndex index: Int = 0, items: [ViewModel], animation: SpotsAnimation = .Automatic) {
     guard let spot = spot(index, Spotable.self) where !(spot.items == items) else { return }
 
-    update(spotAtIndex: index, animated: animated) {
+    update(spotAtIndex: index, animation: animation) {
       $0.items = items
     }
   }
@@ -329,8 +329,8 @@ extension SpotsController {
    - Parameter animated: Perform reload animation
    - Parameter closure: A completion closure that will run after the spot has performed updates internally
    */
-  public func update(indexes indexes: [Int], spotIndex: Int = 0, animated: Bool = true, completion: (() -> Void)? = nil) {
-    spot(spotIndex, Spotable.self)?.reload(indexes, animated: animated) {
+  public func update(indexes indexes: [Int], spotIndex: Int = 0, animation: SpotsAnimation = .Automatic, completion: (() -> Void)? = nil) {
+    spot(spotIndex, Spotable.self)?.reload(indexes, animation: animation) {
       completion?()
       self.spotsScrollView.forceUpdate = true
     }
