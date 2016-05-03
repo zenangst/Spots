@@ -2,7 +2,29 @@
 
 ## [Unreleased](https://github.com/hyperoslo/Spots/tree/HEAD)
 
-[Full Changelog](https://github.com/hyperoslo/Spots/compare/1.6.1...HEAD)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/1.7.0...HEAD)
+
+**Merged pull requests:**
+
+- Fix crash in update method [\#214](https://github.com/hyperoslo/Spots/pull/214) ([zenangst](https://github.com/zenangst))
+
+## [1.7.0](https://github.com/hyperoslo/Spots/tree/1.7.0) (2016-05-03)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/1.6.3...1.7.0)
+
+**Merged pull requests:**
+
+- Improve/controling animations [\#213](https://github.com/hyperoslo/Spots/pull/213) ([zenangst](https://github.com/zenangst))
+- Improve Componentable headers [\#212](https://github.com/hyperoslo/Spots/pull/212) ([zenangst](https://github.com/zenangst))
+
+## [1.6.3](https://github.com/hyperoslo/Spots/tree/1.6.3) (2016-05-03)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/1.6.2...1.6.3)
+
+**Merged pull requests:**
+
+- Improve transitioning [\#211](https://github.com/hyperoslo/Spots/pull/211) ([zenangst](https://github.com/zenangst))
+
+## [1.6.2](https://github.com/hyperoslo/Spots/tree/1.6.2) (2016-04-28)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/1.6.1...1.6.2)
 
 **Merged pull requests:**
 
