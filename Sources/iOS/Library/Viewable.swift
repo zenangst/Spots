@@ -50,7 +50,7 @@ public extension Spotable where Self : Viewable {
     }
   }
 
-  func append(item: ViewModel, completion: (() -> Void)? = nil) {
+  func append(item: ViewModel, withAnimation animation: SpotsAnimation = .None, completion: (() -> Void)? = nil) {
     let dynamic = self.dynamicType
 
     guard dynamic.views.storage.keys.contains(item.kind) else { return }
@@ -65,7 +65,7 @@ public extension Spotable where Self : Viewable {
     component.items.append(item)
   }
 
-  func append(items: [ViewModel], completion: (() -> Void)? = nil) {
+  func append(items: [ViewModel], withAnimation animation: SpotsAnimation = .None, completion: (() -> Void)? = nil) {
     for item in items {
       let dynamic = self.dynamicType
 
@@ -82,7 +82,7 @@ public extension Spotable where Self : Viewable {
     }
   }
 
-  func prepend(items: [ViewModel], completion: (() -> Void)? = nil) {
+  func prepend(items: [ViewModel], withAnimation animation: SpotsAnimation = .None, completion: (() -> Void)? = nil) {
     component.items.insertContentsOf(items, at: 0)
 
     for item in items.reverse() {
@@ -101,7 +101,7 @@ public extension Spotable where Self : Viewable {
     }
   }
 
-  func insert(item: ViewModel, index: Int, completion: (() -> Void)? = nil) {
+  func insert(item: ViewModel, index: Int, withAnimation animation: SpotsAnimation = .None, completion: (() -> Void)? = nil) {
     let dynamic = self.dynamicType
 
     guard dynamic.views.storage.keys.contains(item.kind) else { return }
@@ -116,21 +116,21 @@ public extension Spotable where Self : Viewable {
     component.items.insert(item, atIndex: index)
   }
 
-  func update(item: ViewModel, index: Int, completion: (() -> Void)? = nil) {
+  func update(item: ViewModel, index: Int, withAnimation animation: SpotsAnimation = .None, completion: (() -> Void)? = nil) {
     guard let view = scrollView.subviews[index] as? SpotConfigurable else { return }
 
     component.items[index] = item
     view.configure(&component.items[index])
   }
 
-  func delete(index: Int, completion: (() -> Void)? = nil) {
+  func delete(index: Int, withAnimation animation: SpotsAnimation = .None, completion: (() -> Void)? = nil) {
     guard index >= 0 && index <= scrollView.subviews.count else { return }
 
     component.items.removeAtIndex(index)
     scrollView.subviews[index].removeFromSuperview()
   }
 
-  func delete(indexes: [Int], completion: (() -> Void)?) {
+  func delete(indexes: [Int], withAnimation animation: SpotsAnimation = .None, completion: (() -> Void)?) {
     for (index, _) in component.items.enumerate() {
       guard index >= 0 && index <= scrollView.subviews.count else { return }
 
@@ -139,5 +139,5 @@ public extension Spotable where Self : Viewable {
     }
   }
 
-  func reload(indexes: [Int]? = nil, animated: Bool = true, completion: (() -> Void)? = nil) { }
+  func reload(indexes: [Int]? = nil, withAnimation animation: SpotsAnimation = .None, completion: (() -> Void)? = nil) { }
 }
