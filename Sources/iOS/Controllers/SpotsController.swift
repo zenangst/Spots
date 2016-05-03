@@ -261,8 +261,8 @@ extension SpotsController {
    - Parameter spotIndex: The index of the spot that you want to append to, defaults to 0
    - Parameter closure: A completion closure that will run after the spot has performed updates internally
    */
-  public func append(item: ViewModel, spotIndex: Int = 0, completion: (() -> Void)? = nil) {
-    spot(spotIndex, Spotable.self)?.append(item) {
+  public func append(item: ViewModel, spotIndex: Int = 0, animation: SpotsAnimation = .None, completion: (() -> Void)? = nil) {
+    spot(spotIndex, Spotable.self)?.append(item, animation: animation) {
       completion?()
       self.spotsScrollView.forceUpdate = true
     }
@@ -274,8 +274,8 @@ extension SpotsController {
    - Parameter spotIndex: The index of the spot that you want to append to, defaults to 0
    - Parameter closure: A completion closure that will run after the spot has performed updates internally
    */
-  public func append(items: [ViewModel], spotIndex: Int = 0, completion: (() -> Void)? = nil) {
-    spot(spotIndex, Spotable.self)?.append(items) {
+  public func append(items: [ViewModel], spotIndex: Int = 0, animation: SpotsAnimation = .None, completion: (() -> Void)? = nil) {
+    spot(spotIndex, Spotable.self)?.append(items, animation: animation) {
       completion?()
       self.spotsScrollView.forceUpdate = true
     }
@@ -287,8 +287,8 @@ extension SpotsController {
    - Parameter spotIndex: The index of the spot that you want to prepend to, defaults to 0
    - Parameter closure: A completion closure that will run after the spot has performed updates internally
    */
-  public func prepend(items: [ViewModel], spotIndex: Int = 0, completion: (() -> Void)? = nil) {
-    spot(spotIndex, Spotable.self)?.prepend(items)  {
+  public func prepend(items: [ViewModel], spotIndex: Int = 0, animation: SpotsAnimation = .None, completion: (() -> Void)? = nil) {
+    spot(spotIndex, Spotable.self)?.prepend(items, animation: animation)  {
       completion?()
       self.spotsScrollView.forceUpdate = true
     }
@@ -301,8 +301,8 @@ extension SpotsController {
    - Parameter spotIndex: The index of the spot that you want to insert into
    - Parameter closure: A completion closure that will run after the spot has performed updates internally
    */
-  public func insert(item: ViewModel, index: Int = 0, spotIndex: Int, completion: (() -> Void)? = nil) {
-    spot(spotIndex, Spotable.self)?.insert(item, index: index)  {
+  public func insert(item: ViewModel, index: Int = 0, spotIndex: Int, animation: SpotsAnimation = .None, completion: (() -> Void)? = nil) {
+    spot(spotIndex, Spotable.self)?.insert(item, index: index, animation: animation)  {
       completion?()
       self.spotsScrollView.forceUpdate = true
     }
@@ -315,8 +315,8 @@ extension SpotsController {
    - Parameter spotIndex: The index of the spot that you want to update into
    - Parameter closure: A completion closure that will run after the spot has performed updates internally
    */
-  public func update(item: ViewModel, index: Int = 0, spotIndex: Int, completion: (() -> Void)? = nil) {
-    spot(spotIndex, Spotable.self)?.update(item, index: index)  {
+  public func update(item: ViewModel, index: Int = 0, spotIndex: Int, animation: SpotsAnimation = .None, completion: (() -> Void)? = nil) {
+    spot(spotIndex, Spotable.self)?.update(item, index: index, animation: animation)  {
       completion?()
       self.spotsScrollView.forceUpdate = true
     }
@@ -342,8 +342,8 @@ extension SpotsController {
    - Parameter spotIndex: The index of the spot that you want to remove into
    - Parameter closure: A completion closure that will run after the spot has performed updates internally
    */
-  public func delete(index: Int, spotIndex: Int = 0, completion: (() -> Void)? = nil) {
-    spot(spotIndex, Spotable.self)?.delete(index) {
+  public func delete(index: Int, spotIndex: Int = 0, animation: SpotsAnimation = .None, completion: (() -> Void)? = nil) {
+    spot(spotIndex, Spotable.self)?.delete(index, animation: animation) {
       completion?()
       self.spotsScrollView.forceUpdate = true
     }
@@ -355,8 +355,8 @@ extension SpotsController {
    - Parameter spotIndex: The index of the spot that you want to remove into
    - Parameter closure: A completion closure that will run after the spot has performed updates internally
    */
-  public func delete(indexes indexes: [Int], spotIndex: Int = 0, completion: (() -> Void)? = nil) {
-    spot(spotIndex, Spotable.self)?.delete(indexes) {
+  public func delete(indexes indexes: [Int], spotIndex: Int = 0, animation: SpotsAnimation = .None, completion: (() -> Void)? = nil) {
+    spot(spotIndex, Spotable.self)?.delete(indexes, animation: animation) {
       completion?()
       self.spotsScrollView.forceUpdate = true
     }
