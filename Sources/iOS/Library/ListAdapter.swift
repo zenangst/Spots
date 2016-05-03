@@ -72,6 +72,7 @@ extension ListAdapter: UITableViewDelegate {
       let header = header.init(frame: CGRect(x: 0, y: 0,
         width: tableView.bounds.width,
         height: spot.component.meta("headerHeight", 0.0)))
+      (header as? Componentable)?.configure(spot.component)
       return header
     }
 
