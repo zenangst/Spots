@@ -231,7 +231,6 @@ extension SpotsController {
     closure(spot: spot)
     spot.refreshIndexes()
     spot.prepare()
-    spot.setup(spotsScrollView.bounds.size)
 
     dispatch { [weak self] in
       guard let weakSelf = self else { return }
