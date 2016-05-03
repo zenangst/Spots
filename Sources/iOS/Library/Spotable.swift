@@ -21,14 +21,14 @@ public protocol Spotable: class {
   init(component: Component)
 
   func setup(size: CGSize)
-  func append(item: ViewModel, animation: SpotsAnimation, completion: (() -> Void)?)
-  func append(items: [ViewModel], animation: SpotsAnimation, completion: (() -> Void)?)
-  func prepend(items: [ViewModel], animation: SpotsAnimation, completion: (() -> Void)?)
-  func insert(item: ViewModel, index: Int, animation: SpotsAnimation, completion: (() -> Void)?)
-  func update(item: ViewModel, index: Int, animation: SpotsAnimation, completion: (() -> Void)?)
-  func delete(index: Int, animation: SpotsAnimation, completion: (() -> Void)?)
-  func delete(indexes: [Int], animation: SpotsAnimation, completion: (() -> Void)?)
-  func reload(indexes: [Int]?, animation: SpotsAnimation, completion: (() -> Void)?)
+  func append(item: ViewModel, withAnimation animation: SpotsAnimation, completion: (() -> Void)?)
+  func append(items: [ViewModel], withAnimation animation: SpotsAnimation, completion: (() -> Void)?)
+  func prepend(items: [ViewModel], withAnimation animation: SpotsAnimation, completion: (() -> Void)?)
+  func insert(item: ViewModel, index: Int, withAnimation animation: SpotsAnimation, completion: (() -> Void)?)
+  func update(item: ViewModel, index: Int, withAnimation animation: SpotsAnimation, completion: (() -> Void)?)
+  func delete(index: Int, withAnimation animation: SpotsAnimation, completion: (() -> Void)?)
+  func delete(indexes: [Int], withAnimation animation: SpotsAnimation, completion: (() -> Void)?)
+  func reload(indexes: [Int]?, withAnimation animation: SpotsAnimation, completion: (() -> Void)?)
   func render() -> UIScrollView
   func layout(size: CGSize)
   func prepare()
@@ -106,11 +106,11 @@ public extension Spotable {
    - Parameter items: An array of view models
    - Parameter animated: Perform reload animation
    */
-  public func reloadIfNeeded(items: [ViewModel], animation: SpotsAnimation = .None) {
+  public func reloadIfNeeded(items: [ViewModel], withAnimation animation: SpotsAnimation = .Automatic) {
     guard !(self.items == items) else { return }
 
     self.items = items
-    reload(nil, animation: animation, completion: nil)
+    reload(nil, withAnimation: animation, completion: nil)
   }
 
   /**

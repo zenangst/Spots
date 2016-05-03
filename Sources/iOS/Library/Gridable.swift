@@ -61,7 +61,7 @@ public extension Spotable where Self : Gridable {
    - Parameter animation: The animation that should be used (currently not in use)
    - Parameter completion: (() -> Void)?
    */
-  public func append(item: ViewModel, animation: SpotsAnimation = .None, completion: (() -> Void)? = nil) {
+  public func append(item: ViewModel, withAnimation animation: SpotsAnimation = .None, completion: (() -> Void)? = nil) {
     var indexes = [Int]()
     let count = component.items.count
 
@@ -87,7 +87,7 @@ public extension Spotable where Self : Gridable {
    - Parameter animation: The animation that should be used (currently not in use)
    - Parameter completion: (() -> Void)?
    */
-  public func append(items: [ViewModel], animation: SpotsAnimation = .None, completion: (() -> Void)? = nil) {
+  public func append(items: [ViewModel], withAnimation animation: SpotsAnimation = .None, completion: (() -> Void)? = nil) {
     var indexes = [Int]()
     let count = component.items.count
 
@@ -114,7 +114,7 @@ public extension Spotable where Self : Gridable {
    - Parameter index: The index where the new ViewModel should be inserted
    - Parameter completion: (() -> Void)?
    */
-  public func insert(item: ViewModel, index: Int, animation: SpotsAnimation = .None, completion: (() -> Void)? = nil) {
+  public func insert(item: ViewModel, index: Int, withAnimation animation: SpotsAnimation = .None, completion: (() -> Void)? = nil) {
     component.items.insert(item, atIndex: index)
     var indexes = [Int]()
     let count = component.items.count
@@ -138,7 +138,7 @@ public extension Spotable where Self : Gridable {
    - Parameter animation: The animation that should be used (currently not in use)
    - Parameter completion: A completion closure that is executed in the main queue
    */
-  public func prepend(items: [ViewModel], animation: SpotsAnimation = .None, completion: (() -> Void)? = nil) {
+  public func prepend(items: [ViewModel], withAnimation animation: SpotsAnimation = .None, completion: (() -> Void)? = nil) {
     var indexes = [Int]()
     let count = component.items.count
 
@@ -164,7 +164,7 @@ public extension Spotable where Self : Gridable {
    - Parameter animation: The animation that should be used (currently not in use)
    - Parameter completion: A completion closure that is executed in the main queue
    */
-  public func delete(item: ViewModel, animation: SpotsAnimation = .None, completion: (() -> Void)? = nil) {
+  public func delete(item: ViewModel, withAnimation animation: SpotsAnimation = .None, completion: (() -> Void)? = nil) {
     guard let index = component.items.indexOf({ $0 == item})
       else { completion?(); return }
 
@@ -183,7 +183,7 @@ public extension Spotable where Self : Gridable {
    - Parameter animation: The animation that should be used (currently not in use)
    - Parameter completion: A completion closure that is executed in the main queue
    */
-  public func delete(items: [ViewModel], animation: SpotsAnimation = .None, completion: (() -> Void)? = nil) {
+  public func delete(items: [ViewModel], withAnimation animation: SpotsAnimation = .None, completion: (() -> Void)? = nil) {
     var indexes = [Int]()
     let count = component.items.count
 
@@ -203,7 +203,7 @@ public extension Spotable where Self : Gridable {
    - Parameter animation: The animation that should be used (currently not in use)
    - Parameter completion: A completion closure that is executed in the main queue when the view model has been removed
    */
-  func delete(index: Int, animation: SpotsAnimation = .None, completion: (() -> Void)?) {
+  func delete(index: Int, withAnimation animation: SpotsAnimation = .None, completion: (() -> Void)?) {
     dispatch { [weak self] in
       guard let weakSelf = self else { return }
       weakSelf.collectionView.delete([index], completion: completion)
@@ -215,7 +215,7 @@ public extension Spotable where Self : Gridable {
    - Parameter animation: The animation that should be used (currently not in use)
    - Parameter completion: A completion closure that is executed in the main queue when the view model has been removed
    */
-  func delete(indexes: [Int], animation: SpotsAnimation = .None, completion: (() -> Void)?) {
+  func delete(indexes: [Int], withAnimation animation: SpotsAnimation = .None, completion: (() -> Void)?) {
     dispatch { [weak self] in
       guard let weakSelf = self else { return }
       weakSelf.collectionView.delete(indexes, completion: completion)
@@ -228,7 +228,7 @@ public extension Spotable where Self : Gridable {
    - Parameter animation: The animation that should be used (currently not in use)
    - Parameter completion: A completion closure that is executed in the main queue when the view model has been removed
    */
-  public func update(item: ViewModel, index: Int, animation: SpotsAnimation = .None, completion: (() -> Void)? = nil) {
+  public func update(item: ViewModel, index: Int, withAnimation animation: SpotsAnimation = .None, completion: (() -> Void)? = nil) {
     items[index] = item
 
     let reuseIdentifier = reuseIdentifierForItem(NSIndexPath(forItem: index, inSection: 0))
@@ -251,7 +251,7 @@ public extension Spotable where Self : Gridable {
    - Parameter animated: Perform reload animation
    - Parameter completion: A completion closure that is executed in the main queue when the view model has been reloaded
    */
-  public func reload(indexes: [Int]? = nil, animation: SpotsAnimation = .None, completion: (() -> Void)?) {
+  public func reload(indexes: [Int]? = nil, withAnimation animation: SpotsAnimation = .None, completion: (() -> Void)?) {
     let items = component.items
     for (index, item) in items.enumerate() {
       let cellClass = self.dynamicType.views.storage[item.kind] ?? self.dynamicType.defaultView

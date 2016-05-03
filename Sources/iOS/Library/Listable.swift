@@ -27,7 +27,7 @@ public extension Spotable where Self : Listable {
    - Parameter animation: The animation that should be used
    - Parameter completion: (() -> Void)?
    */
-  public func append(item: ViewModel, animation: SpotsAnimation = .None, completion: Completion = nil) {
+  public func append(item: ViewModel, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     let count = component.items.count
     component.items.append(item)
 
@@ -44,7 +44,7 @@ public extension Spotable where Self : Listable {
    - Parameter animation: The animation that should be used
    - Parameter completion: (() -> Void)?
    */
-  public func append(items: [ViewModel], animation: SpotsAnimation = .None, completion: (() -> Void)? = nil) {
+  public func append(items: [ViewModel], withAnimation animation: SpotsAnimation = .None, completion: (() -> Void)? = nil) {
     var indexes = [Int]()
     let count = component.items.count
 
@@ -68,7 +68,7 @@ public extension Spotable where Self : Listable {
    - Parameter animation: The animation that should be used
    - Parameter completion: (() -> Void)?
    */
-  public func insert(item: ViewModel, index: Int = 0, animation: SpotsAnimation = .None, completion: Completion = nil) {
+  public func insert(item: ViewModel, index: Int = 0, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     component.items.insert(item, atIndex: index)
 
     dispatch { [weak self] in
@@ -82,7 +82,7 @@ public extension Spotable where Self : Listable {
    - Parameter animation: The animation that should be used
    - Parameter completion: A completion closure that is executed in the main queue
    */
-  public func prepend(items: [ViewModel], animation: SpotsAnimation = .None, completion: Completion = nil) {
+  public func prepend(items: [ViewModel], withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     var indexes = [Int]()
 
     component.items.insertContentsOf(items, at: 0)
@@ -102,7 +102,7 @@ public extension Spotable where Self : Listable {
    - Parameter animation: The animation that should be used
    - Parameter completion: A completion closure that is executed in the main queue
    */
-  public func delete(item: ViewModel, animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
+  public func delete(item: ViewModel, withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
     guard let index = component.items.indexOf({ $0 == item})
       else { completion?(); return }
 
@@ -119,7 +119,7 @@ public extension Spotable where Self : Listable {
    - Parameter animation: The animation that should be used
    - Parameter completion: A completion closure that is executed in the main queue
    */
-  public func delete(items: [ViewModel], animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
+  public func delete(items: [ViewModel], withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
     var indexPaths = [Int]()
     let count = component.items.count
 
@@ -139,7 +139,7 @@ public extension Spotable where Self : Listable {
    - Parameter animation: The animation that should be used
    - Parameter completion: A completion closure that is executed in the main queue when the view model has been removed
    */
-  func delete(index: Int, animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
+  func delete(index: Int, withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
     dispatch { [weak self] in
       self?.component.items.removeAtIndex(index)
       self?.tableView.delete([index], animation: animation.tableViewAnimation)
@@ -152,7 +152,7 @@ public extension Spotable where Self : Listable {
    - Parameter animation: The animation that should be used
    - Parameter completion: A completion closure that is executed in the main queue when the view model has been removed
    */
-  func delete(indexes: [Int], animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
+  func delete(indexes: [Int], withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
     dispatch { [weak self] in
       indexes.forEach { self?.component.items.removeAtIndex($0) }
       self?.tableView.delete(indexes, section: 0, animation: animation.tableViewAnimation)
@@ -166,7 +166,7 @@ public extension Spotable where Self : Listable {
    - Parameter animation: The animation that should be used
    - Parameter completion: A completion closure that is executed in the main queue when the view model has been updated
    */
-  public func update(item: ViewModel, index: Int = 0, animation: SpotsAnimation = .None, completion: Completion = nil) {
+  public func update(item: ViewModel, index: Int = 0, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     items[index] = item
 
     let reuseIdentifier = reuseIdentifierForItem(NSIndexPath(forRow: index, inSection: 0))
@@ -188,7 +188,7 @@ public extension Spotable where Self : Listable {
    - Parameter animated: Perform reload animation
    - Parameter completion: A completion closure that is executed in the main queue when the view model has been reloaded
    */
-  public func reload(indexes: [Int]? = nil, animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
+  public func reload(indexes: [Int]? = nil, withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
     refreshIndexes()
 
     for (index, _) in component.items.enumerate() {
