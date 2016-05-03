@@ -236,6 +236,11 @@ public extension Spotable where Self : Listable {
       .reduce(0, combine: { $0 + $1.size.height })
   }
 
+  /**
+   Resolves a SpotsAnimation into a UITableViewRowAnimation
+   - Parameter animation: SpotsAnimation
+   - Returns: A UITableViewRowAnimation
+   */
   private func resolveAnimation(animation: SpotsAnimation) -> UITableViewRowAnimation {
     switch animation {
     case .Fade:
