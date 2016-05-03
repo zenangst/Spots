@@ -7,7 +7,7 @@ PODS:
   - CryptoSwift (0.4)
   - Imaginary (0.1.0):
     - Cache
-  - Spots (1.6.2):
+  - Spots (1.7.1):
     - Brick
     - Sugar
     - Tailor
@@ -38,7 +38,7 @@ SPEC CHECKSUMS:
   Cache: b8abf7795a6d72f9d5b924d1367624a53fe777a9
   CryptoSwift: 584eac7d00b2f497fe7b20de271b8c0c52fff844
   Imaginary: 5317b8d2dc8ecf20455232226bf8a277abdd37d5
-  Spots: 30168151892207329bde38824b9ddd4a5b320f98
+  Spots: e3b0d0c214e1ec96e9da8040fbdd8430653df60a
   Sugar: bed396c924fd089feee7c780778cca2a124f580c
   Tailor: 38a9f1ed1fa804856583396a55ed764d832eeca8
 
