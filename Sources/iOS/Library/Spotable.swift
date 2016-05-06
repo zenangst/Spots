@@ -22,14 +22,14 @@ public protocol Spotable: class {
   init(component: Component)
 
   func setup(size: CGSize)
-  func append(item: ViewModel, completion: (() -> Void)?)
-  func append(items: [ViewModel], completion: (() -> Void)?)
-  func prepend(items: [ViewModel], completion: (() -> Void)?)
-  func insert(item: ViewModel, index: Int, completion: (() -> Void)?)
-  func update(item: ViewModel, index: Int, completion: (() -> Void)?)
-  func delete(index: Int, completion: (() -> Void)?)
-  func delete(indexes: [Int], completion: (() -> Void)?)
-  func reload(indexes: [Int]?, animated: Bool, completion: (() -> Void)?)
+  func append(item: ViewModel, withAnimation animation: SpotsAnimation, completion: (() -> Void)?)
+  func append(items: [ViewModel], withAnimation animation: SpotsAnimation, completion: (() -> Void)?)
+  func prepend(items: [ViewModel], withAnimation animation: SpotsAnimation, completion: (() -> Void)?)
+  func insert(item: ViewModel, index: Int, withAnimation animation: SpotsAnimation, completion: (() -> Void)?)
+  func update(item: ViewModel, index: Int, withAnimation animation: SpotsAnimation, completion: (() -> Void)?)
+  func delete(index: Int, withAnimation animation: SpotsAnimation, completion: (() -> Void)?)
+  func delete(indexes: [Int], withAnimation animation: SpotsAnimation, completion: (() -> Void)?)
+  func reload(indexes: [Int]?, withAnimation animation: SpotsAnimation, completion: (() -> Void)?)
   func render() -> UIScrollView
   func layout(size: CGSize)
   func prepare()
@@ -107,14 +107,14 @@ public extension Spotable {
    - Parameter items: An array of view models
    - Parameter animated: Perform reload animation
    */
-  public func reloadIfNeeded(items: [ViewModel], animated: Bool = true) {
+  public func reloadIfNeeded(items: [ViewModel], withAnimation animation: SpotsAnimation = .Automatic) {
     guard !(self.items == items) else {
       cache()
       return
     }
 
     self.items = items
-    reload(nil, animated: animated) {
+    reload(nil, withAnimation: animation) {
       self.cache()
     }
   }
