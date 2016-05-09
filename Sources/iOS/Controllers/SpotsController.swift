@@ -223,6 +223,10 @@ extension SpotsController {
     spots = Parser.parse(json)
     cache()
 
+    if spotsScrollView.superview == nil {
+      view.addSubview(spotsScrollView)
+    }
+
     spotsScrollView.contentView.subviews.forEach { $0.removeFromSuperview() }
     setupSpots(animated)
     spotsScrollView.forceUpdate = true
