@@ -63,6 +63,8 @@ extension ListAdapter: UITableViewDelegate {
    - Returns: A view object to be displayed in the header of section based on the kind of the ListSpot and registered headers.
  */
   public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    guard spot.component.meta("headerHeight", type: CGFloat.self) != 0.0 else { return nil}
+
     let reuseIdentifer = spot.component.kind.isPresent ? spot.component.kind : spot.dynamicType.defaultKind
 
     if let listSpot = spot as? ListSpot, cachedHeader = listSpot.cachedHeaders[reuseIdentifer.string] {
