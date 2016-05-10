@@ -23,7 +23,7 @@ public protocol SpotsRefreshDelegate: class {
    - Parameter completion: A completion closure that should be triggered when the update is completed
    */
 #if os(iOS)
-  func spotsDidReload(refreshControl: UIRefreshControl, completion: (() -> Void)?)
+  func spotsDidReload(refreshControl: UIRefreshControl, completion: Completion)
 #endif
 }
 
@@ -33,12 +33,12 @@ public protocol SpotsScrollDelegate: class {
   /**
    A delegate method that is triggered when the scroll view reaches the top
    */
-  func spotDidReachBeginning(completion: (() -> Void)?)
+  func spotDidReachBeginning(completion: Completion)
 
   /**
    A delegate method that is triggered when the scroll view reaches the end
    */
-  func spotDidReachEnd(completion: (() -> Void)?)
+  func spotDidReachEnd(completion: Completion)
 }
 
 /// A dummy scroll delegate extension to make spotDidReachBeginning optional
@@ -47,7 +47,7 @@ public extension SpotsScrollDelegate {
   /**
    A default implementation for spotDidReachBeginning, it renders the method optional
    */
-  func spotDidReachBeginning(completion: (() -> Void)?) {
+  func spotDidReachBeginning(completion: Completion) {
     completion?()
   }
 }
