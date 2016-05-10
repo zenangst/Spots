@@ -1,6 +1,7 @@
 import UIKit
 import Sugar
 import Brick
+import Cache
 
 /**
  SpotsController is a subclass of UIViewController
@@ -163,6 +164,17 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
 
     guard let spotsDelegate = self.spotsDelegate else { return }
     self.spotsDelegate = spotsDelegate
+  }
+
+  /**
+   Clear Spots cache
+   */
+  public static func clearCache() {
+    let paths = NSSearchPathForDirectoriesInDomains(.CachesDirectory,
+                                                    NSSearchPathDomainMask.UserDomainMask, true)
+    let path = "\(paths.first!)/\(DiskStorage.prefix).\(SpotCache.cacheName)"
+    do { try NSFileManager.defaultManager().removeItemAtPath(path) }
+    catch { NSLog("Could not remove cache at path: \(path)") }
   }
 }
 
