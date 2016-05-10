@@ -10,9 +10,6 @@ public protocol Listable: Spotable {
 
 public extension Spotable where Self : Listable {
 
-  /// A type alias for a anonymous completion
-  typealias Completion = (() -> Void)?
-
   /**
    Called when the Listable object is being prepared, it is required by Spotable
    */
@@ -25,7 +22,7 @@ public extension Spotable where Self : Listable {
   /**
    - Parameter item: The view model that you want to append
    - Parameter animation: The animation that should be used
-   - Parameter completion: (() -> Void)?
+   - Parameter completion: Completion
    */
   public func append(item: ViewModel, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     let count = component.items.count
@@ -42,9 +39,9 @@ public extension Spotable where Self : Listable {
   /**
    - Parameter item: A collection of view models that you want to insert
    - Parameter animation: The animation that should be used
-   - Parameter completion: (() -> Void)?
+   - Parameter completion: Completion
    */
-  public func append(items: [ViewModel], withAnimation animation: SpotsAnimation = .None, completion: (() -> Void)? = nil) {
+  public func append(items: [ViewModel], withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     var indexes = [Int]()
     let count = component.items.count
 
@@ -66,7 +63,7 @@ public extension Spotable where Self : Listable {
    - Parameter item: The view model that you want to insert
    - Parameter index: The index where the new ViewModel should be inserted
    - Parameter animation: The animation that should be used
-   - Parameter completion: (() -> Void)?
+   - Parameter completion: Completion
    */
   public func insert(item: ViewModel, index: Int = 0, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     component.items.insert(item, atIndex: index)

@@ -132,7 +132,7 @@ extension CollectionAdapter : UICollectionViewDataSource  {
 
 extension CollectionAdapter: UICollectionViewDelegateFlowLayout {
 
-  public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
+  public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
     guard spot.layout.scrollDirection == .Horizontal else { return spot.layout.sectionInset.bottom }
 
     return spot.layout.minimumLineSpacing

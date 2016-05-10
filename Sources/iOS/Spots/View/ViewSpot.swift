@@ -17,6 +17,8 @@ public class ViewSpot: NSObject, Spotable, Viewable {
 
   public lazy var scrollView = UIScrollView()
 
+  public private(set) var stateCache: SpotCache?
+
   public required init(component: Component) {
     self.component = component
     super.init()

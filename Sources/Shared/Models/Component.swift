@@ -124,10 +124,31 @@ public struct Component: Mappable {
  - Parameter rhs: Right hand component
  - Returns: A boolean value, true if both Components are equal
  */
+
+public func ==(lhs: [Component], rhs: [Component]) -> Bool {
+  var equal = lhs.count == rhs.count
+
+  if !equal { return false }
+
+  for (index, item) in lhs.enumerate() {
+    if item != rhs[index] { equal = false; break }
+  }
+
+  return equal
+}
+
 public func ==(lhs: Component, rhs: Component) -> Bool {
   return lhs.title == rhs.title &&
     lhs.kind == rhs.kind &&
     lhs.span == rhs.span &&
     (lhs.meta as NSDictionary).isEqual(rhs.meta as NSDictionary) &&
     lhs.items == rhs.items
+}
+
+public func !=(lhs: [Component], rhs: [Component]) -> Bool {
+  return !(lhs == rhs)
+}
+
+public func !=(lhs: Component, rhs: Component) -> Bool {
+  return !(lhs == rhs)
 }

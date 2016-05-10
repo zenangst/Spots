@@ -10,6 +10,7 @@ public class CarouselSpot: NSObject, Gridable {
   public static var defaultKind: StringConvertible = "carousel"
 
   public var cachedViews = [String : SpotConfigurable]()
+  public private(set) var stateCache: SpotCache?
 
   public var component: Component {
     willSet(value) {

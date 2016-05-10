@@ -17,18 +17,19 @@ public protocol Spotable: class {
   var index: Int { get set }
   var component: Component { get set }
   var configure: (SpotConfigurable -> Void)? { get set }
+  var stateCache: SpotCache? { get }
 
   init(component: Component)
 
   func setup(size: CGSize)
-  func append(item: ViewModel, withAnimation animation: SpotsAnimation, completion: (() -> Void)?)
-  func append(items: [ViewModel], withAnimation animation: SpotsAnimation, completion: (() -> Void)?)
-  func prepend(items: [ViewModel], withAnimation animation: SpotsAnimation, completion: (() -> Void)?)
-  func insert(item: ViewModel, index: Int, withAnimation animation: SpotsAnimation, completion: (() -> Void)?)
-  func update(item: ViewModel, index: Int, withAnimation animation: SpotsAnimation, completion: (() -> Void)?)
-  func delete(index: Int, withAnimation animation: SpotsAnimation, completion: (() -> Void)?)
-  func delete(indexes: [Int], withAnimation animation: SpotsAnimation, completion: (() -> Void)?)
-  func reload(indexes: [Int]?, withAnimation animation: SpotsAnimation, completion: (() -> Void)?)
+  func append(item: ViewModel, withAnimation animation: SpotsAnimation, completion: Completion)
+  func append(items: [ViewModel], withAnimation animation: SpotsAnimation, completion: Completion)
+  func prepend(items: [ViewModel], withAnimation animation: SpotsAnimation, completion: Completion)
+  func insert(item: ViewModel, index: Int, withAnimation animation: SpotsAnimation, completion: Completion)
+  func update(item: ViewModel, index: Int, withAnimation animation: SpotsAnimation, completion: Completion)
+  func delete(index: Int, withAnimation animation: SpotsAnimation, completion: Completion)
+  func delete(indexes: [Int], withAnimation animation: SpotsAnimation, completion: Completion)
+  func reload(indexes: [Int]?, withAnimation animation: SpotsAnimation, completion: Completion)
   func render() -> UIScrollView
   func layout(size: CGSize)
   func prepare()
@@ -107,10 +108,22 @@ public extension Spotable {
    - Parameter animated: Perform reload animation
    */
   public func reloadIfNeeded(items: [ViewModel], withAnimation animation: SpotsAnimation = .Automatic) {
-    guard !(self.items == items) else { return }
+    guard !(self.items == items) else {
+      cache()
+      return
+    }
 
     self.items = items
-    reload(nil, withAnimation: animation, completion: nil)
+    reload(nil, withAnimation: animation) {
+      self.cache()
+    }
+  }
+
+  /**
+   Caches the current state of the spot
+  */
+  public func cache() {
+    stateCache?.save(dictionary)
   }
 
   /**

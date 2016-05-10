@@ -18,6 +18,7 @@ public class GridSpot: NSObject, Gridable {
 
   public lazy var adapter: CollectionAdapter = CollectionAdapter(spot: self)
   public lazy var layout = UICollectionViewFlowLayout()
+  public private(set) var stateCache: SpotCache?
 
   public lazy var collectionView: UICollectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: self.layout).then {
     $0.backgroundColor = UIColor.whiteColor()
