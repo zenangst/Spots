@@ -149,7 +149,7 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
   /**
    - Parameter animated: An optional animation closure that runs when a spot is being rendered
   */
-  private func setupSpots(animated: ((view: UIView) -> Void)? = nil) {
+  public func setupSpots(animated: ((view: UIView) -> Void)? = nil) {
     spots.enumerate().forEach { index, spot in
       spots[index].index = index
       spot.render().optimize()
@@ -237,12 +237,16 @@ extension SpotsController {
   */
   public func reloadIfNeeded(json: [String : AnyObject], animated: ((view: UIView) -> Void)? = nil, closure: (() -> Void)? = nil) {
     let newSpots = Parser.parse(json)
-    
+
     let newComponents = newSpots.map { $0.component }
     let oldComponents = spots.map { $0.component }
 
-    guard oldComponents != newComponents else { cache(); return }
-    
+    guard oldComponents != newComponents else {
+      cache()
+      closure?()
+      return
+    }
+
     spots = newSpots
     cache()
 
