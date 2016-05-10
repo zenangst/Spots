@@ -2,7 +2,15 @@
 
 ## [Unreleased](https://github.com/hyperoslo/Spots/tree/HEAD)
 
-[Full Changelog](https://github.com/hyperoslo/Spots/compare/1.7.0...HEAD)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/1.7.1...HEAD)
+
+**Merged pull requests:**
+
+- Don't show header if header height is 0.0 [\#215](https://github.com/hyperoslo/Spots/pull/215) ([vadymmarkov](https://github.com/vadymmarkov))
+- Feature: view model cache [\#210](https://github.com/hyperoslo/Spots/pull/210) ([vadymmarkov](https://github.com/vadymmarkov))
+
+## [1.7.1](https://github.com/hyperoslo/Spots/tree/1.7.1) (2016-05-03)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/1.7.0...1.7.1)
 
 **Merged pull requests:**
 
