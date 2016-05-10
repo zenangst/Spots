@@ -5,7 +5,8 @@ import Cache
 public struct SpotCache {
 
   public let key: String
-  let cache = Cache<JSON>(name: "SpotCache")
+  static let cacheName = "SpotCache"
+  let cache = Cache<JSON>(name: SpotCache.cacheName)
 
   // MARK: - Initialization
 
