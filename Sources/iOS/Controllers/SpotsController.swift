@@ -94,7 +94,11 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     self.init(spots: Parser.parse(json))
   }
 
-  public convenience init(stateCache: SpotCache) {
+  /**
+   - Parameter cacheKey: A key that will be used to identify the SpotCache
+   */
+  public convenience init(cacheKey: String) {
+    let stateCache = SpotCache(key: cacheKey)
     self.init(spots: Parser.parse(stateCache.load()))
     self.stateCache = stateCache
   }
