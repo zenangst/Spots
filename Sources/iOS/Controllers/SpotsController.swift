@@ -237,7 +237,6 @@ extension SpotsController {
   */
   public func reloadIfNeeded(json: [String : AnyObject], animated: ((view: UIView) -> Void)? = nil, closure: (() -> Void)? = nil) {
     let newSpots = Parser.parse(json)
-
     let newComponents = newSpots.map { $0.component }
     let oldComponents = spots.map { $0.component }
 
