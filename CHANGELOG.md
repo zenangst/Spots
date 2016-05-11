@@ -2,7 +2,14 @@
 
 ## [Unreleased](https://github.com/hyperoslo/Spots/tree/HEAD)
 
-[Full Changelog](https://github.com/hyperoslo/Spots/compare/1.7.1...HEAD)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/1.8.0...HEAD)
+
+**Merged pull requests:**
+
+- Allow delegate to be informed of spots change [\#216](https://github.com/hyperoslo/Spots/pull/216) ([onmyway133](https://github.com/onmyway133))
+
+## [1.8.0](https://github.com/hyperoslo/Spots/tree/1.8.0) (2016-05-10)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/1.7.1...1.8.0)
 
 **Merged pull requests:**
 
