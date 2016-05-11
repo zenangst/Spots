@@ -1,19 +1,20 @@
 PODS:
-  - Brick (0.7.0):
+  - Brick (0.8.1):
     - Sugar (~> 1.0)
     - Tailor
   - Cache (1.3.0):
     - CryptoSwift
-  - Compass (1.4.0):
+  - Compass (2.0.0):
     - Sugar
-  - CryptoSwift (0.4)
+  - CryptoSwift (0.4.1)
   - Fakery (1.2.0):
     - SwiftyJSON
   - Hue (1.1)
   - Imaginary (0.1.0):
     - Cache
-  - Spots (1.7.1):
+  - Spots (1.8.0):
     - Brick
+    - Cache
     - Sugar
     - Tailor
   - Sugar (1.1.1)
@@ -50,7 +51,7 @@ CHECKOUT OPTIONS:
     :commit: 5b2cdfc5ce9e6d9e3b36059231fd78b89bc9979f
     :git: https://github.com/hyperoslo/Cache
   Compass:
-    :commit: b702df434f60418b8817896d89b60fc4a78fea89
+    :commit: 1069cd991eb3a35df3cf1bb09e56f535613132f9
     :git: https://github.com/hyperoslo/Compass
   Hue:
     :commit: 89ae5e19abc17e5ef87ad823a08250c0671a79e9
@@ -63,14 +64,14 @@ CHECKOUT OPTIONS:
     :git: https://github.com/hyperoslo/Transition
 
 SPEC CHECKSUMS:
-  Brick: 16a5b83abf5ac36b01d00e8ffe730b4e1a06e4b9
+  Brick: e61cc63552ceb1546e4c728d6fd62cc9fbeba03c
   Cache: b8abf7795a6d72f9d5b924d1367624a53fe777a9
-  Compass: f4b8c37f9b315f0ee4f5e4f71888c54c92992d5d
-  CryptoSwift: 584eac7d00b2f497fe7b20de271b8c0c52fff844
+  Compass: a5793a890400a010a9a4eb6547c014e982483a2c
+  CryptoSwift: 25b5aff3f260967391f8fff2e9abe4254d2c6fd5
   Fakery: ff6a27c3688a05c055d3e64c5fa9d78684796749
   Hue: c7d6a7206bac669ed69e78cc6c14a4d7bd28277c
   Imaginary: 5317b8d2dc8ecf20455232226bf8a277abdd37d5
-  Spots: e3b0d0c214e1ec96e9da8040fbdd8430653df60a
+  Spots: 49b15b496f7b72e9004c6364fec4a0c2bf9c0461
   Sugar: bed396c924fd089feee7c780778cca2a124f580c
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   Tailor: 38a9f1ed1fa804856583396a55ed764d832eeca8
@@ -78,4 +79,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: b5990c672d7c25f24324197d1aa40668c01b8dd7
 
-COCOAPODS: 1.0.0.beta.8
+COCOAPODS: 1.0.0

@@ -12,7 +12,7 @@ class SearchController: SpotsController {
 
   convenience init(title: String) {
     self.init(spots: [
-      ListSpot(component: Component(title: "Search", kind: "search", meta: ["headerHeight" : 44])),
+      ListSpot(component: Component(title: "Search", kind: "search", meta: ["headerHeight" : 88])),
       ListSpot(),
       ListSpot()
       ])

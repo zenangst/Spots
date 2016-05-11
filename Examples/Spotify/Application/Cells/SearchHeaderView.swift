@@ -8,6 +8,7 @@ public class SearchHeaderView: UIView, Componentable {
   lazy var label: UILabel = UILabel(frame: self.frame).then {
     $0.font = UIFont.boldSystemFontOfSize(11)
     $0.textColor = UIColor.lightGrayColor()
+    $0.frame.size.height = 44
   }
 
   lazy var backgroundView: UIView = UIView(frame: self.frame).then {

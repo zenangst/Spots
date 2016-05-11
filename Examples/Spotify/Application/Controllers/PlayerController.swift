@@ -90,9 +90,9 @@ class PlayerController: SpotsController {
                 items[$0.index].meta["tintColor"] = detail
               }
 
-              self?.update(spotAtIndex: 3, {
+              self?.update(spotAtIndex: 3, withAnimation: .Automatic) {
                 $0.items = items
-              })
+              }
             }
 
             UIView.animateWithDuration(0.3) {
