@@ -2,7 +2,15 @@
 
 ## [Unreleased](https://github.com/hyperoslo/Spots/tree/HEAD)
 
-[Full Changelog](https://github.com/hyperoslo/Spots/compare/1.8.0...HEAD)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/1.8.1...HEAD)
+
+**Merged pull requests:**
+
+- Improve/build time [\#218](https://github.com/hyperoslo/Spots/pull/218) ([zenangst](https://github.com/zenangst))
+- Fix/spots delegate [\#217](https://github.com/hyperoslo/Spots/pull/217) ([onmyway133](https://github.com/onmyway133))
+
+## [1.8.1](https://github.com/hyperoslo/Spots/tree/1.8.1) (2016-05-11)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/1.8.0...1.8.1)
 
 **Merged pull requests:**
 
