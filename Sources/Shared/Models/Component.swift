@@ -49,18 +49,28 @@ public struct Component: Mappable {
 
   /// A dictionary representation of the component
   public var dictionary: JSONDictionary {
-    return [
+    var width: CGFloat = 0
+    var height: CGFloat = 0
+    if let size = size {
+      width = size.width
+      height = size.height
+    }
+  
+    let JSONItems: [JSONDictionary] = items.map { $0.dictionary }
+    let JSONComponents: JSONDictionary = [
       Key.Index.string : index,
       Key.Title.string : title,
       Key.Kind.string : kind,
       Key.Span.string : span,
-      Key.Items.string: items.map { $0.dictionary },
+      Key.Items.string: JSONItems,
       Key.Size.string : [
-        Key.Width.string : size?.width ?? 0,
-        Key.Height.string : size?.height ?? 0
+        Key.Width.string : width,
+        Key.Height.string : height
       ],
       Key.Meta.string : meta
     ]
+
+    return JSONComponents
   }
 
   /**

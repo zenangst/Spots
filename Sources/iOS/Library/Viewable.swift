@@ -25,14 +25,16 @@ public extension Spotable where Self : Viewable {
   private func prepareSpot<T: Spotable>(spot: T) {
     if component.kind.isEmpty { component.kind = "view" }
 
-    component.items.forEach {
-      if T.views.storage.keys.contains($0.kind) {
-        let viewClass = T.views.storage[$0.kind] ?? T.defaultView
-        let view = viewClass.init().then {
-          ($0 as? SpotConfigurable)?.configure(&component.items[index])
-          guard let size = ($0 as? SpotConfigurable)?.size else { return }
-          $0.frame.size = size
+    component.items.forEach { (item: ViewModel) in
+      if T.views.storage.keys.contains(item.kind) {
+        let viewClass = T.views.storage[item.kind] ?? T.defaultView
+        let view = viewClass.init()
+
+        if let spotConfigurable = view as? SpotConfigurable {
+          spotConfigurable.configure(&component.items[index])
+          view.frame.size = spotConfigurable.size
         }
+        
         scrollView.addSubview(view)
       }
     }

@@ -56,7 +56,7 @@ public extension Spotable {
   func registerAndPrepare(@noescape register: (classType: UIView.Type, withIdentifier: String) -> Void) {
     if component.kind.isEmpty { component.kind = Self.defaultKind.string }
 
-    Self.views.storage.forEach { reuseIdentifier, classType in
+    Self.views.storage.forEach { (reuseIdentifier: String, classType: UIView.Type) in
       register(classType: classType, withIdentifier: reuseIdentifier)
     }
 
@@ -65,9 +65,10 @@ public extension Spotable {
     }
 
     var cached: UIView?
-    component.items.enumerate().forEach {
-      prepareItem($1, index: $0, cached: &cached)
+    component.items.enumerate().forEach { (index: Int, item: ViewModel) in
+      prepareItem(item, index: index, cached: &cached)
     }
+    cached = nil
   }
 
   /**
