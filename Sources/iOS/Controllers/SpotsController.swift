@@ -35,13 +35,15 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
 
   /// A delegate for when an item is tapped within a Spot
   weak public var spotsDelegate: SpotsDelegate? {
-    didSet { spots.forEach { $0.spotsDelegate = spotsDelegate } }
+    didSet {
+      spots.forEach { $0.spotsDelegate = spotsDelegate }
+      spotsDelegate?.spotsDidChange(spots)
+    }
   }
 
   /// A convenience method for resolving the first spot
-  /// Note: that this method uses force unwrapping, use with caution
-  public var spot: Spotable {
-    get { return spot(0, Spotable.self)! }
+  public var spot: Spotable? {
+    get { return spot(0, Spotable.self) }
   }
 
 #if os(iOS)

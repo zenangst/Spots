@@ -23,7 +23,7 @@ class SpotsControllerTests : XCTestCase {
       spot.component.items = items
     }
 
-    XCTAssert(spotController.spot.component.items == items)
+    XCTAssert(spotController.spot!.component.items == items)
   }
 
   func testAppendItem() {
@@ -31,22 +31,22 @@ class SpotsControllerTests : XCTestCase {
     let listSpot = ListSpot(component: component)
     let spotController = SpotsController(spot: listSpot)
 
-    XCTAssert(spotController.spot.component.items.count == 0)
+    XCTAssert(spotController.spot!.component.items.count == 0)
 
     let item = ViewModel(title: "title1", kind: "list")
     spotController.append(item, spotIndex: 0)
 
-    XCTAssert(spotController.spot.component.items.count == 1)
+    XCTAssert(spotController.spot!.component.items.count == 1)
 
-    if let testItem = spotController.spot.component.items.first {
+    if let testItem = spotController.spot!.component.items.first {
       XCTAssert(testItem == item)
     }
 
     // Test appending item without kind
     spotController.append(ViewModel(title: "title2"), spotIndex: 0)
 
-    XCTAssert(spotController.spot.component.items.count == 2)
-    XCTAssertEqual(spotController.spot.component.items[1].title, "title2")
+    XCTAssert(spotController.spot!.component.items.count == 2)
+    XCTAssertEqual(spotController.spot!.component.items[1].title, "title2")
   }
 
   func testAppendItems() {
@@ -60,8 +60,8 @@ class SpotsControllerTests : XCTestCase {
     ]
     spotController.append(items, spotIndex: 0)
 
-    XCTAssert(spotController.spot.component.items.count > 0)
-    XCTAssert(spotController.spot.component.items == items)
+    XCTAssert(spotController.spot!.component.items.count > 0)
+    XCTAssert(spotController.spot!.component.items == items)
 
     // Test appending items without kind
     spotController.append([
@@ -69,9 +69,9 @@ class SpotsControllerTests : XCTestCase {
       ViewModel(title: "title4")
       ], spotIndex: 0)
 
-    XCTAssertEqual(spotController.spot.component.items.count, 4)
-    XCTAssertEqual(spotController.spot.component.items[2].title, "title3")
-    XCTAssertEqual(spotController.spot.component.items[3].title, "title4")
+    XCTAssertEqual(spotController.spot!.component.items.count, 4)
+    XCTAssertEqual(spotController.spot!.component.items[2].title, "title3")
+    XCTAssertEqual(spotController.spot!.component.items[3].title, "title4")
   }
 
   func testPrependItems() {
@@ -85,16 +85,16 @@ class SpotsControllerTests : XCTestCase {
     ]
     spotController.prepend(items, spotIndex: 0)
 
-    XCTAssertEqual(spotController.spot.component.items.count, 2)
-    XCTAssert(spotController.spot.component.items == items)
+    XCTAssertEqual(spotController.spot!.component.items.count, 2)
+    XCTAssert(spotController.spot!.component.items == items)
 
     spotController.prepend([
       ViewModel(title: "title3"),
       ViewModel(title: "title4")
       ], spotIndex: 0)
 
-    XCTAssertEqual(spotController.spot.component.items[0].title, "title3")
-    XCTAssertEqual(spotController.spot.component.items[1].title, "title4")
+    XCTAssertEqual(spotController.spot!.component.items[0].title, "title3")
+    XCTAssertEqual(spotController.spot!.component.items[1].title, "title4")
   }
 
   func testDeleteItem() {
@@ -106,19 +106,19 @@ class SpotsControllerTests : XCTestCase {
 
     let spotController = SpotsController(spot: initialListSpot)
 
-    let firstItem = spotController.spot.component.items.first
+    let firstItem = spotController.spot!.component.items.first
 
     XCTAssertEqual(firstItem?.title, "title1")
     XCTAssertEqual(firstItem?.index, 0)
 
     let listSpot = (spotController.spot as! ListSpot)
     listSpot.delete(component.items.first!) {
-      let lastItem = spotController.spot.component.items.first
+      let lastItem = spotController.spot!.component.items.first
 
       XCTAssertNotEqual(lastItem?.title, "title1")
       XCTAssertEqual(lastItem?.index, 0)
       XCTAssertEqual(lastItem?.title, "title2")
-      XCTAssertEqual(spotController.spot.component.items.count, 1)
+      XCTAssertEqual(spotController.spot!.component.items.count, 1)
     }
   }
 
@@ -169,7 +169,7 @@ class SpotsControllerTests : XCTestCase {
       ]
       ])
 
-    XCTAssert(sourceController.spot.component == jsonController.spot.component)
+    XCTAssert(sourceController.spot!.component == jsonController.spot!.component)
   }
 
   func testJSONReload() {
@@ -184,9 +184,9 @@ class SpotsControllerTests : XCTestCase {
     ]
     let jsonController = SpotsController(initialJSON)
 
-    XCTAssert(jsonController.spot.component.kind == "list")
-    XCTAssert(jsonController.spot.component.items.count == 1)
-    XCTAssert(jsonController.spot.component.items.first?.title == "First list item")
+    XCTAssert(jsonController.spot!.component.kind == "list")
+    XCTAssert(jsonController.spot!.component.items.count == 1)
+    XCTAssert(jsonController.spot!.component.items.first?.title == "First list item")
 
     let updateJSON = [
       "components" : [
@@ -201,9 +201,9 @@ class SpotsControllerTests : XCTestCase {
 
     jsonController.reload(updateJSON)
 
-    XCTAssert(jsonController.spot.component.kind == "grid")
-    XCTAssert(jsonController.spot.component.items.count == 2)
-    XCTAssert(jsonController.spot.component.items.first?.title == "First grid item")
+    XCTAssert(jsonController.spot!.component.kind == "grid")
+    XCTAssert(jsonController.spot!.component.items.count == 2)
+    XCTAssert(jsonController.spot!.component.items.first?.title == "First grid item")
   }
 
   func testDictionaryOnSpotsController() {

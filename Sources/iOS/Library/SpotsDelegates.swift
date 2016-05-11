@@ -22,6 +22,7 @@ public protocol SpotsDelegate: class {
 
 public extension SpotsDelegate {
 
+  func spotDidSelectItem(spot: Spotable, item: ViewModel) {}
   func spotsDidChange(spots: [Spotable]) {}
 }
 
