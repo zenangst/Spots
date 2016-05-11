@@ -20,6 +20,11 @@ public protocol SpotsDelegate: class {
   func spotDidSelectItem(spot: Spotable, item: ViewModel)
 }
 
+public extension SpotsDelegate {
+
+  func spotsDidChange(spots: [Spotable]) {}
+}
+
 /// A refresh delegate for handling reloading of a Spot
 public protocol SpotsRefreshDelegate: class {
 
