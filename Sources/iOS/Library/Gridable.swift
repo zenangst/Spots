@@ -41,21 +41,18 @@ public extension Spotable where Self : Gridable {
    Called when the Gridable object is being prepared, it is required by Spotable
    */
   public func prepare() {
-    registerAndPrepare { (classType: UIView.Type, withIdentifier: String) in
+    registerAndPrepare { (classType, withIdentifier) in
       collectionView.registerClass(classType, forCellWithReuseIdentifier: withIdentifier)
     }
 
     var cached: UIView?
-    component.items.enumerate().forEach { (index: Int, item: ViewModel) in
+    for (index, item) in component.items.enumerate() {
       cachedViewFor(item, cache: &cached)
 
       if component.span > 0 {
         component.items[index].size.width = UIScreen.mainScreen().bounds.size.width / CGFloat(component.span)
       }
-
-      if let cached = cached as? SpotConfigurable {
-        cached.configure(&component.items[index])
-      }
+      (cached as? SpotConfigurable)?.configure(&component.items[index])
     }
   }
 
