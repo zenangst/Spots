@@ -14,7 +14,11 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
   /// Initial content offset for SpotsController, defaults to UIEdgeInsetsZero
   public private(set) var initialContentInset: UIEdgeInsets = UIEdgeInsetsZero
   /// A collection of Spotable objects
-  public private(set) var spots: [Spotable]
+  public private(set) var spots: [Spotable] {
+    didSet {
+      spotsDelegate?.spotsDidChange(spots)
+    }
+  }
 
   /// An array of refresh positions to avoid refreshing multiple times when using infinite scrolling
   public var refreshPositions = [CGFloat]()
