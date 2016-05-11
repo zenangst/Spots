@@ -31,6 +31,7 @@ public extension Spotable where Self : Viewable {
         let view = viewClass.init()
 
         if let spotConfigurable = view as? SpotConfigurable {
+          spotConfigurable.configure(&component.items[index])
           view.frame.size = spotConfigurable.size
         }
         
