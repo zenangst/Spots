@@ -48,8 +48,8 @@ class ForYouController: SpotsController, SpotsDelegate {
           weakSelf.featuredImage.frame = CGRect(x: 0, y: 64, width: cell.frame.width, height: 300)
 
           UIView.animateWithDuration(0.4, delay: 0.10, options: [.BeginFromCurrentState, .AllowAnimatedContent], animations: {
-            weakSelf.spot.render().transform = CGAffineTransformMakeScale(2.0,2.0)
-            weakSelf.spot.render().alpha = 0.0
+            weakSelf.spot?.render().transform = CGAffineTransformMakeScale(2.0,2.0)
+            weakSelf.spot?.render().alpha = 0.0
             controller.view.alpha = 1
             }) { _ in
               cell.accessoryView?.alpha = 1.0
@@ -63,8 +63,8 @@ class ForYouController: SpotsController, SpotsDelegate {
 
         weakSelf.selectedCell = nil
       } else if !show && controller.isBeingDismissed() {
-        self?.spot.render().transform = CGAffineTransformIdentity
-        self?.spot.render().alpha = 1.0
+        self?.spot?.render().transform = CGAffineTransformIdentity
+        self?.spot?.render().alpha = 1.0
         controller.view.alpha = 0.0
       }
     }
@@ -147,7 +147,7 @@ class ForYouController: SpotsController, SpotsDelegate {
 extension ForYouController: SpotsScrollDelegate {
 
   func spotDidReachBeginning(completion: (() -> Void)?) {
-    guard spot.component.items.count < 100 && view.window != nil
+    guard let spot = spot where spot.component.items.count < 100 && view.window != nil
       else {
         completion?()
         return
@@ -156,7 +156,7 @@ extension ForYouController: SpotsScrollDelegate {
     guard let navigationBar = navigationController?.navigationBar,
       topItem = navigationBar.topItem else { return }
 
-    let items = ForYouController.generateItems(self.spot.component.items.count, to: 10)
+    let items = ForYouController.generateItems(spot.component.items.count, to: 10)
 
     let animation = CATransition()
     animation.duration = 0.3
@@ -168,10 +168,12 @@ extension ForYouController: SpotsScrollDelegate {
     let previousTitle = topItem.title ?? ""
     topItem.title = "Checking for stories..."
     delay(1.0) {
-      self.spot.items.insertContentsOf(items, at: 0)
-      self.spot.prepare()
+      guard let spot = self.spot else { return }
 
-      let height = self.spot.items[0..<items.count].reduce(0, combine: { $0 + $1.size.height })
+      spot.items.insertContentsOf(items, at: 0)
+      spot.prepare()
+
+      let height = spot.items[0..<items.count].reduce(0, combine: { $0 + $1.size.height })
 
       self.spot(0, ListSpot.self)?.tableView.insert(Array(0..<(items.count)), section: 0, animation: .None)
       self.spot(0, ListSpot.self)?.tableView.reload(Array((items.count)..<(items.count)), section: 0, animation: .None)
@@ -185,7 +187,7 @@ extension ForYouController: SpotsScrollDelegate {
   }
 
   func spotDidReachEnd(completion: (() -> Void)?) {
-    if spot.component.items.count < 100 {
+    if let spot = spot where spot.component.items.count < 100 {
       append(ForYouController.generateItems(spot.component.items.count, to: 10))
     }
     delay(0.3) { completion?() }
