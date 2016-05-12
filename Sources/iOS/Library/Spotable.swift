@@ -21,28 +21,47 @@ public protocol Spotable: class {
 
   init(component: Component)
 
+  /// Setup Spotable object with size
   func setup(size: CGSize)
+  /// Append view model to a Spotable object
   func append(item: ViewModel, withAnimation animation: SpotsAnimation, completion: Completion)
+  /// Append a collection of view models to Spotable object
   func append(items: [ViewModel], withAnimation animation: SpotsAnimation, completion: Completion)
+  /// Prepend view models to a Spotable object
   func prepend(items: [ViewModel], withAnimation animation: SpotsAnimation, completion: Completion)
+  /// Insert view model to a Spotable object
   func insert(item: ViewModel, index: Int, withAnimation animation: SpotsAnimation, completion: Completion)
+  /// Update view model to a Spotable object
   func update(item: ViewModel, index: Int, withAnimation animation: SpotsAnimation, completion: Completion)
+  /// Delete view model from a Spotable object
+  func delete(item: ViewModel, withAnimation animation: SpotsAnimation, completion: Completion)
+  /// Delete a collection of view models from a Spotable object
+  func delete(item: [ViewModel], withAnimation animation: SpotsAnimation, completion: Completion)
+  /// Delete view model at index with animation from a Spotable object
   func delete(index: Int, withAnimation animation: SpotsAnimation, completion: Completion)
+  /// Delete view model indexes with animation from a Spotable object
   func delete(indexes: [Int], withAnimation animation: SpotsAnimation, completion: Completion)
+  /// Reload view model indexes with animation in a Spotable object
   func reload(indexes: [Int]?, withAnimation animation: SpotsAnimation, completion: Completion)
+  /// Return a Spotable object as a UIScrollView
   func render() -> UIScrollView
+  /// Layout Spotable object using size
   func layout(size: CGSize)
+  /// Perform internal preperations for a Spotable object
   func prepare()
+  /// Scroll to view model using predicate
   func scrollTo(@noescape includeElement: (ViewModel) -> Bool) -> CGFloat
 }
 
 public extension Spotable {
 
+  /// A collection of view models
   var items: [ViewModel] {
     set(items) { component.items = items }
     get { return component.items }
   }
 
+  /// Return a dictionary representation of Spotable object
   public var dictionary: JSONDictionary {
     get {
       return component.dictionary
