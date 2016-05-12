@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name             = "Spots"
   s.summary          = "Spots is a view controller framework that makes your setup and future development blazingly fast."
-  s.version          = "1.8.2"
+  s.version          = "1.8.333"
   s.homepage         = "https://github.com/hyperoslo/Spots"
   s.license          = 'MIT'
   s.author           = { "Hyper Interaktiv AS" => "ios@hyper.no" }
