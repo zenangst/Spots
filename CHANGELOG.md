@@ -2,7 +2,16 @@
 
 ## [Unreleased](https://github.com/hyperoslo/Spots/tree/HEAD)
 
-[Full Changelog](https://github.com/hyperoslo/Spots/compare/1.8.2...HEAD)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/1.8.3...HEAD)
+
+**Merged pull requests:**
+
+- Feature/gridable animation for deletions [\#222](https://github.com/hyperoslo/Spots/pull/222) ([zenangst](https://github.com/zenangst))
+- Spots and SpotsDelegate didSet [\#221](https://github.com/hyperoslo/Spots/pull/221) ([onmyway133](https://github.com/onmyway133))
+- Fix Spots examples [\#220](https://github.com/hyperoslo/Spots/pull/220) ([onmyway133](https://github.com/onmyway133))
+
+## [1.8.3](https://github.com/hyperoslo/Spots/tree/1.8.3) (2016-05-12)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/1.8.2...1.8.3)
 
 **Merged pull requests:**
 
