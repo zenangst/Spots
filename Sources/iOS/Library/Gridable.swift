@@ -311,4 +311,49 @@ public extension Spotable where Self : Gridable {
       width: floor(width),
       height: ceil(item(indexPath).size.height))
   }
+
+  /**
+   Perform animation before mutation
+
+   - Parameter spotAnimation: The animation that you want to apply
+   - Parameter withIndex: The index of the cell
+   - Parameter completion: A completion block that runs after applying the animation
+   */
+  private func perform(_ spotAnimation: SpotsAnimation, withIndex index: Int, completion: () -> Void) {
+    guard let cell = collectionView.cellForItemAtIndexPath(NSIndexPath(forItem: index, inSection: 0))
+      else { completion(); return }
+      
+    let animation = CABasicAnimation()
+
+    switch spotAnimation {
+    case .Top:
+      animation.keyPath = "position.y"
+      animation.toValue = -cell.frame.height
+    case .Bottom:
+      animation.keyPath = "position.y"
+      animation.toValue = cell.frame.height * 2
+    case .Left:
+      animation.keyPath = "position.x"
+      animation.toValue = -cell.frame.width - collectionView.contentOffset.x
+    case .Right:
+      animation.keyPath = "position.x"
+      animation.toValue = cell.frame.width + collectionView.frame.size.width + collectionView.contentOffset.x
+    case .Fade:
+      animation.keyPath = "opacity"
+      animation.toValue = 0.0
+    case .Middle:
+      animation.keyPath = "transform.scale.y"
+      animation.toValue = 0.0
+    case .Automatic:
+      animation.keyPath = "transform.scale"
+      animation.toValue = 0.0
+    default:
+      break
+    }
+
+    animation.duration = 0.3
+    cell.layer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+    cell.layer.addAnimation(animation, forKey: "SpotAnimation")
+    completion()
+  }
 }
