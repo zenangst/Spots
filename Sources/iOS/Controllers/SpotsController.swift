@@ -16,6 +16,7 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
   /// A collection of Spotable objects
   public private(set) var spots: [Spotable] {
     didSet {
+      spots.forEach { $0.spotsDelegate = spotsDelegate }
       spotsDelegate?.spotsDidChange(spots)
     }
   }
@@ -167,9 +168,6 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
         height: ceil(spot.render().height))
       animated?(view: spot.render())
     }
-
-    guard let spotsDelegate = self.spotsDelegate else { return }
-    self.spotsDelegate = spotsDelegate
   }
 
   /**
