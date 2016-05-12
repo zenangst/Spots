@@ -2,7 +2,14 @@
 
 ## [Unreleased](https://github.com/hyperoslo/Spots/tree/HEAD)
 
-[Full Changelog](https://github.com/hyperoslo/Spots/compare/1.8.3...HEAD)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/1.8.4...HEAD)
+
+**Merged pull requests:**
+
+- Improve Caching for Spotable [\#223](https://github.com/hyperoslo/Spots/pull/223) ([zenangst](https://github.com/zenangst))
+
+## [1.8.4](https://github.com/hyperoslo/Spots/tree/1.8.4) (2016-05-12)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/1.8.3...1.8.4)
 
 **Merged pull requests:**
 
