@@ -187,7 +187,7 @@ public extension Spotable where Self : Gridable {
 
     for (index, item) in items.enumerate() {
       indexes.append(count + index)
-      component.items.append(item)
+      component.items.removeAtIndex(count - index)
     }
 
     dispatch { [weak self] in
