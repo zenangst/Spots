@@ -168,11 +168,13 @@ public extension Spotable where Self : Gridable {
     guard let index = component.items.indexOf({ $0 == item })
       else { completion?(); return }
 
-    component.items.removeAtIndex(index)
-
-    dispatch { [weak self] in
+    perform(animation, withIndex: index) { [weak self] in
       guard let weakSelf = self else { return }
+
+      if animation == .None { UIView.setAnimationsEnabled(false) }
+      weakSelf.component.items.removeAtIndex(index)
       weakSelf.collectionView.delete([index], completion: completion)
+      if animation == .None { UIView.setAnimationsEnabled(true) }
     }
   }
 
@@ -187,7 +189,7 @@ public extension Spotable where Self : Gridable {
 
     for (index, item) in items.enumerate() {
       indexes.append(count + index)
-      component.items.append(item)
+      component.items.removeAtIndex(count - index)
     }
 
     dispatch { [weak self] in
@@ -202,9 +204,15 @@ public extension Spotable where Self : Gridable {
    - Parameter completion: A completion closure that is executed in the main queue when the view model has been removed
    */
   func delete(index: Int, withAnimation animation: SpotsAnimation = .None, completion: Completion) {
-    dispatch { [weak self] in
-      guard let weakSelf = self else { return }
-      weakSelf.collectionView.delete([index], completion: completion)
+    perform(animation, withIndex: index) {
+      dispatch { [weak self] in
+        guard let weakSelf = self else { return }
+
+        if animation == .None { UIView.setAnimationsEnabled(false) }
+        weakSelf.component.items.removeAtIndex(index)
+        weakSelf.collectionView.delete([index], completion: completion)
+        if animation == .None { UIView.setAnimationsEnabled(true) }
+      }
     }
   }
 
