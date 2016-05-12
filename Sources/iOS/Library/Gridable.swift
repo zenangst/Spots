@@ -18,7 +18,6 @@ public protocol Gridable: Spotable {
   func sizeForItemAt(indexPath: NSIndexPath) -> CGSize
 }
 
-/// A Spotable extension for Gridable objects
 public extension Spotable where Self : Gridable {
 
   /**
@@ -59,7 +58,7 @@ public extension Spotable where Self : Gridable {
 
   /**
    - Parameter item: The view model that you want to append
-   - Parameter withAnimation: The animation that should be used (currently not in use)
+   - Parameter animation: The animation that should be used (currently not in use)
    - Parameter completion: Completion
    */
   public func append(item: ViewModel, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
@@ -84,8 +83,8 @@ public extension Spotable where Self : Gridable {
   }
 
   /**
-   - Parameter items: A collection of view models that you want to insert
-   - Parameter withAnimation: The animation that should be used (currently not in use)
+   - Parameter item: A collection of view models that you want to insert
+   - Parameter animation: The animation that should be used (currently not in use)
    - Parameter completion: Completion
    */
   public func append(items: [ViewModel], withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
@@ -111,7 +110,7 @@ public extension Spotable where Self : Gridable {
 
   /**
    - Parameter item: The view model that you want to insert
-   - Parameter withAnimation: The animation that should be used (currently not in use)
+   - Parameter animation: The animation that should be used (currently not in use)
    - Parameter index: The index where the new ViewModel should be inserted
    - Parameter completion: Completion
    */
@@ -162,7 +161,7 @@ public extension Spotable where Self : Gridable {
 
   /**
    - Parameter item: The view model that you want to remove
-   - Parameter withAnimation: The animation that should be used (currently not in use)
+   - Parameter animation: The animation that should be used (currently not in use)
    - Parameter completion: A completion closure that is executed in the main queue
    */
   public func delete(item: ViewModel, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
@@ -180,8 +179,8 @@ public extension Spotable where Self : Gridable {
   }
 
   /**
-   - Parameter items: A collection of view models that you want to delete
-   - Parameter withAnimation: The animation that should be used (currently not in use)
+   - Parameter item: A collection of view models that you want to delete
+   - Parameter animation: The animation that should be used (currently not in use)
    - Parameter completion: A completion closure that is executed in the main queue
    */
   public func delete(items: [ViewModel], withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
@@ -201,7 +200,7 @@ public extension Spotable where Self : Gridable {
 
   /**
    - Parameter index: The index of the view model that you want to remove
-   - Parameter withAnimation: The animation that should be used (currently not in use)
+   - Parameter animation: The animation that should be used (currently not in use)
    - Parameter completion: A completion closure that is executed in the main queue when the view model has been removed
    */
   func delete(index: Int, withAnimation animation: SpotsAnimation = .None, completion: Completion) {
@@ -219,7 +218,7 @@ public extension Spotable where Self : Gridable {
 
   /**
    - Parameter indexes: An array of indexes that you want to remove
-   - Parameter withAnimation: The animation that should be used (currently not in use)
+   - Parameter animation: The animation that should be used (currently not in use)
    - Parameter completion: A completion closure that is executed in the main queue when the view model has been removed
    */
   func delete(indexes: [Int], withAnimation animation: SpotsAnimation = .None, completion: Completion) {
