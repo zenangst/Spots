@@ -168,13 +168,11 @@ public extension Spotable where Self : Gridable {
     guard let index = component.items.indexOf({ $0 == item })
       else { completion?(); return }
 
-    perform(animation, withIndex: index) { [weak self] in
-      guard let weakSelf = self else { return }
+    component.items.removeAtIndex(index)
 
-      if animation == .None { UIView.setAnimationsEnabled(false) }
-      weakSelf.component.items.removeAtIndex(index)
+    dispatch { [weak self] in
+      guard let weakSelf = self else { return }
       weakSelf.collectionView.delete([index], completion: completion)
-      if animation == .None { UIView.setAnimationsEnabled(true) }
     }
   }
 
@@ -204,15 +202,9 @@ public extension Spotable where Self : Gridable {
    - Parameter completion: A completion closure that is executed in the main queue when the view model has been removed
    */
   func delete(index: Int, withAnimation animation: SpotsAnimation = .None, completion: Completion) {
-    perform(animation, withIndex: index) {
-      dispatch { [weak self] in
-        guard let weakSelf = self else { return }
-
-        if animation == .None { UIView.setAnimationsEnabled(false) }
-        weakSelf.component.items.removeAtIndex(index)
-        weakSelf.collectionView.delete([index], completion: completion)
-        if animation == .None { UIView.setAnimationsEnabled(true) }
-      }
+    dispatch { [weak self] in
+      guard let weakSelf = self else { return }
+      weakSelf.collectionView.delete([index], completion: completion)
     }
   }
 
