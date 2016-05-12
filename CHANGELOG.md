@@ -2,7 +2,14 @@
 
 ## [Unreleased](https://github.com/hyperoslo/Spots/tree/HEAD)
 
-[Full Changelog](https://github.com/hyperoslo/Spots/compare/1.8.1...HEAD)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/1.8.2...HEAD)
+
+**Merged pull requests:**
+
+- Fix delete on Gridable [\#219](https://github.com/hyperoslo/Spots/pull/219) ([zenangst](https://github.com/zenangst))
+
+## [1.8.2](https://github.com/hyperoslo/Spots/tree/1.8.2) (2016-05-11)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/1.8.1...1.8.2)
 
 **Merged pull requests:**
 
