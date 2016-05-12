@@ -177,11 +177,10 @@ public extension Spotable where Self : Viewable {
    - Parameter completion: A completion closure that is executed in the main queue
    */
   public func delete(items: [ViewModel], withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
-    var indexes = [Int]()
     let count = component.items.count
 
     dispatch { [weak self] in
-      for (index, item) in items.enumerate() {
+      for (index, _) in items.enumerate() {
         self?.component.items.removeAtIndex(count - index)
         self?.scrollView.subviews[count - index].removeFromSuperview()
       }

@@ -188,7 +188,7 @@ public extension Spotable where Self : Gridable {
     var indexes = [Int]()
     let count = component.items.count
 
-    for (index, item) in items.enumerate() {
+    for (index, _) in items.enumerate() {
       indexes.append(count + index)
       component.items.removeAtIndex(count - index)
     }
@@ -328,7 +328,7 @@ public extension Spotable where Self : Gridable {
    - Parameter withIndex: The index of the cell
    - Parameter completion: A completion block that runs after applying the animation
    */
-  private func perform(_ spotAnimation: SpotsAnimation, withIndex index: Int, completion: () -> Void) {
+  private func perform(spotAnimation: SpotsAnimation, withIndex index: Int, completion: () -> Void) {
     guard let cell = collectionView.cellForItemAtIndexPath(NSIndexPath(forItem: index, inSection: 0))
       else { completion(); return }
       
