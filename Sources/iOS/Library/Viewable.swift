@@ -141,27 +141,5 @@ public extension Spotable where Self : Viewable {
     }
   }
 
-  public func delete(item: ViewModel, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
-    guard let index = component.items.indexOf({ $0 == item })
-      else { completion?(); return }
-
-    dispatch { [weak self] in
-      self?.component.items.removeAtIndex(index)
-      self?.scrollView.subviews[index].removeFromSuperview()
-    }
-  }
-
-  public func delete(items: [ViewModel], withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
-    var indexes = [Int]()
-    let count = component.items.count
-
-    dispatch { [weak self] in
-      for (index, item) in items.enumerate() {
-        self?.component.items.removeAtIndex(count - index)
-        self?.scrollView.subviews[count - index].removeFromSuperview()
-      }
-    }
-  }
-
   func reload(indexes: [Int]? = nil, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) { }
 }
