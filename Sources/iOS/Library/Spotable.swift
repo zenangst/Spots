@@ -27,8 +27,6 @@ public protocol Spotable: class {
   func prepend(items: [ViewModel], withAnimation animation: SpotsAnimation, completion: Completion)
   func insert(item: ViewModel, index: Int, withAnimation animation: SpotsAnimation, completion: Completion)
   func update(item: ViewModel, index: Int, withAnimation animation: SpotsAnimation, completion: Completion)
-  func delete(item: ViewModel, withAnimation animation: SpotsAnimation, completion: Completion)
-  func delete(item: [ViewModel], withAnimation animation: SpotsAnimation, completion: Completion)
   func delete(index: Int, withAnimation animation: SpotsAnimation, completion: Completion)
   func delete(indexes: [Int], withAnimation animation: SpotsAnimation, completion: Completion)
   func reload(indexes: [Int]?, withAnimation animation: SpotsAnimation, completion: Completion)
