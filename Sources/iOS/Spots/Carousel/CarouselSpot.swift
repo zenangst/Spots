@@ -81,6 +81,15 @@ public class CarouselSpot: NSObject, Gridable {
     layout.minimumLineSpacing = lineSpacing
   }
 
+  public convenience init(cacheKey: String) {
+    let stateCache = SpotCache(key: cacheKey)
+    
+    self.init(component: Component(stateCache.load()))
+    self.stateCache = stateCache
+
+    prepare()
+  }
+
   public func setup(size: CGSize) {
     collectionView.frame.size = size
 
