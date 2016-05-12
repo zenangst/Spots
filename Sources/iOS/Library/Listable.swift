@@ -100,7 +100,7 @@ public extension Spotable where Self : Listable {
    - Parameter completion: A completion closure that is executed in the main queue
    */
   public func delete(item: ViewModel, withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
-    guard let index = component.items.indexOf({ $0 == item})
+    guard let index = component.items.indexOf({ $0 == item })
       else { completion?(); return }
 
     component.items.removeAtIndex(index)
