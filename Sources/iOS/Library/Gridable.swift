@@ -165,16 +165,14 @@ public extension Spotable where Self : Gridable {
    - Parameter completion: A completion closure that is executed in the main queue
    */
   public func delete(item: ViewModel, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
-    guard let index = component.items.indexOf({ $0 == item})
+    guard let index = component.items.indexOf({ $0 == item })
       else { completion?(); return }
 
-    var indexes = [Int]()
-    indexes.append(component.items.count)
     component.items.removeAtIndex(index)
 
     dispatch { [weak self] in
       guard let weakSelf = self else { return }
-      weakSelf.collectionView.delete(indexes, completion: completion)
+      weakSelf.collectionView.delete([index], completion: completion)
     }
   }
 
