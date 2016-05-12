@@ -5,10 +5,14 @@ import Brick
 
 class AuthController: SpotsController, SpotsDelegate {
 
-  override func viewDidLoad() {
-    super.viewDidLoad()
+  required init(spots: [Spotable]) {
+    super.init(spots: spots)
 
     self.spotsDelegate = self
+  }
+
+  required init?(coder aDecoder: NSCoder) {
+    fatalError()
   }
 
   func spotDidSelectItem(spot: Spotable, item: ViewModel) {
