@@ -51,8 +51,8 @@ extension FeedController: SpotsRefreshDelegate {
   public func spotsDidReload(refreshControl: UIRefreshControl, completion: (() -> Void)?) {
     delay(1.0) {
       dispatch(queue: .Interactive) { [weak self] in
-        guard let weakSelf = self else { return }
-        let items = FeedController.generateItems(weakSelf.spot.component.items.count, to: 10)
+        guard let weakSelf = self, spot = weakSelf.spot else { return }
+        let items = FeedController.generateItems(spot.component.items.count, to: 10)
 
         weakSelf.prepend(items) { completion?() }
       }
@@ -64,8 +64,8 @@ extension FeedController: SpotsScrollDelegate {
 
   public func spotDidReachEnd(completion: (() -> Void)?) {
     dispatch(queue: .Interactive) { [weak self] in
-      guard let weakSelf = self else { return }
-      let items = FeedController.generateItems(weakSelf.spot.component.items.count, to: 3)
+      guard let weakSelf = self, spot = weakSelf.spot else { return }
+      let items = FeedController.generateItems(spot.component.items.count, to: 3)
       dispatch {
         weakSelf.append(items) { completion?() }
       }
