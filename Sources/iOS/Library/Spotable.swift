@@ -139,6 +139,17 @@ public extension Spotable {
     }
   }
 
+  public func reloadIfNeeded(json: JSONDictionary, withAnimation animation: SpotsAnimation = .Automatic) {
+    let newComponent = Component(json)
+
+    guard component != newComponent else { cache(); return }
+
+    component = newComponent
+    reload(nil, withAnimation: animation) { [weak self] in
+      self?.cache()
+    }
+  }
+
   /**
    Caches the current state of the spot
   */
