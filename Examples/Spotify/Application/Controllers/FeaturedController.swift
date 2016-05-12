@@ -19,7 +19,7 @@ class FeaturedController: SpotsController {
   override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
 
-    guard spot.items.count <= 1 else { return }
+    guard spot?.items.count <= 1 else { return }
 
     loadData()
   }
