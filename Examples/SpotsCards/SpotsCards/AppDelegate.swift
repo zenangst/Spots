@@ -13,7 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     SpotFactory.register("cards", spot: CardSpot.self)
     CarouselSpot.views["card"] = CardSpotCell.self
 
-    CarouselSpot.configure = { collectionView in
+    CarouselSpot.configure = { collectionView, layout in
       collectionView.backgroundColor = UIColor(red:0.110, green:0.110, blue:0.110, alpha: 1)
     }
 
