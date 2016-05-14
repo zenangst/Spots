@@ -109,10 +109,13 @@ The `SpotsController` inherits from `UIViewController` but it sports some core f
 ```swift
 public protocol SpotsDelegate: class {
   func spotDidSelectItem(spot: Spotable, item: ViewModel)
+  func spotsDidChange(spots: [Spotable])
 }
 ```
 
 `spotDidSelectItem` is triggered when a user taps on an item inside of a `Spotable` object. It returns both the `spot` and the `item` to add context to what UI element was touched.
+
+`spotsDidChange` notifies the delegate when the internal `.spots` property changes.
 
 ### SpotsRefreshDelegate
 
