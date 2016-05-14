@@ -131,9 +131,12 @@ public protocol SpotsRefreshDelegate: class {
 
 ```swift
 public protocol SpotsScrollDelegate: class {
+  func spotDidReachBeginning(completion: Completion)
   func spotDidReachEnd(completion: (() -> Void)?)
 }
 ```
+
+`spotDidReachBeginning` notifies the delegate when the scrollview has reached the top. This has a default implementation and is rendered optional for anything that conform to `SpotsScrollDelegate`.
 
 `spotDidReachEnd` is triggered when the user scrolls to the end of the `SpotsScrollView`, this can be used to implement infinite scrolling.
 
