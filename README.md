@@ -291,7 +291,7 @@ pod 'Spots'
 - **[Brick](https://github.com/hyperoslo/Brick)**
 `ViewModel` comes from `Brick`.
 - **[Cache](https://github.com/hyperoslo/Cache)**
-Used for `ViewModel` caching when initializing a controller or `Spotable` object with a cache key.
+Used for `Component` and `ViewModel` caching when initializing a `SpotsController` or `Spotable` object with a cache key.
 - **[Sugar](https://github.com/hyperoslo/Sugar)**
 To sweeten the implementation.
 - **[Tailor](https://github.com/zenangst/Tailor)**
