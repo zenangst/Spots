@@ -45,7 +45,8 @@ the public API.
 ## Key features
 
 - JSON based views that could be served up by your backend.
-- Supports displaying multiple collections, tables or regular views in the same container.
+- View based caching for controllers, table and collection views.
+- Supports displaying multiple collections, tables and regular views in the same container.
 - Features both infinity scrolling and pull to refresh, all you have to do is to
 setup delegates that conform to the public protocols on `SpotsController`.
 - No need to implement your own data source, every `Spotable` object has their
@@ -108,10 +109,13 @@ The `SpotsController` inherits from `UIViewController` but it sports some core f
 ```swift
 public protocol SpotsDelegate: class {
   func spotDidSelectItem(spot: Spotable, item: ViewModel)
+  func spotsDidChange(spots: [Spotable])
 }
 ```
 
 `spotDidSelectItem` is triggered when a user taps on an item inside of a `Spotable` object. It returns both the `spot` and the `item` to add context to what UI element was touched.
+
+`spotsDidChange` notifies the delegate when the internal `.spots` property changes.
 
 ### SpotsRefreshDelegate
 
@@ -127,9 +131,12 @@ public protocol SpotsRefreshDelegate: class {
 
 ```swift
 public protocol SpotsScrollDelegate: class {
+  func spotDidReachBeginning(completion: Completion)
   func spotDidReachEnd(completion: (() -> Void)?)
 }
 ```
+
+`spotDidReachBeginning` notifies the delegate when the scrollview has reached the top. This has a default implementation and is rendered optional for anything that conform to `SpotsScrollDelegate`.
 
 `spotDidReachEnd` is triggered when the user scrolls to the end of the `SpotsScrollView`, this can be used to implement infinite scrolling.
 
@@ -283,6 +290,8 @@ pod 'Spots'
 
 - **[Brick](https://github.com/hyperoslo/Brick)**
 `ViewModel` comes from `Brick`.
+- **[Cache](https://github.com/hyperoslo/Cache)**
+Used for `Component` and `ViewModel` caching when initializing a `SpotsController` or `Spotable` object with a cache key.
 - **[Sugar](https://github.com/hyperoslo/Sugar)**
 To sweeten the implementation.
 - **[Tailor](https://github.com/zenangst/Tailor)**
