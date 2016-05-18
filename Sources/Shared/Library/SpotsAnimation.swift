@@ -1,4 +1,8 @@
-import UIKit
+#if os(iOS)
+  import UIKit
+#else
+  import Foundation
+#endif
 
 /**
  The type of animation when items are inserted or deleted.
@@ -13,6 +17,7 @@ public enum SpotsAnimation : Int {
   case Middle
   case Automatic
 
+  #if os(iOS)
   /**
    Resolves a SpotsAnimation into a UITableViewRowAnimation
    */
@@ -36,4 +41,26 @@ public enum SpotsAnimation : Int {
       return UITableViewRowAnimation.Automatic
     }
   }
+  #else
+  var tableViewAnimation: NSTableViewAnimationOptions  {
+    switch self {
+    case .Fade:
+      return NSTableViewAnimationOptions.EffectFade
+    case .Right:
+      return NSTableViewAnimationOptions.SlideRight
+    case .Left:
+      return NSTableViewAnimationOptions.SlideLeft
+    case .Top:
+      return NSTableViewAnimationOptions.SlideUp
+    case .Bottom:
+      return NSTableViewAnimationOptions.SlideDown
+    case .None:
+      return NSTableViewAnimationOptions.EffectNone
+    case .Middle:
+      return NSTableViewAnimationOptions.EffectGap
+    case .Automatic:
+      return NSTableViewAnimationOptions.EffectFade
+    }
+  }
+  #endif
 }
