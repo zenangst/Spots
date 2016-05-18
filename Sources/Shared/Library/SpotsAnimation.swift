@@ -1,7 +1,7 @@
 #if os(iOS)
   import UIKit
 #else
-  import Foundation
+  import Cocoa
 #endif
 
 /**
