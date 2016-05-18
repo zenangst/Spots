@@ -92,7 +92,9 @@ public class SpotsScrollView: NSScrollView {
       yOffsetOfCurrentSubview += scrollView.frame.height
     }
 
-    documentView?.setFrameSize(CGSize(width: bounds.size.width, height: fmax(yOffsetOfCurrentSubview, bounds.height)))
+    guard frame.height > 0 else { return }
+
+    documentView?.setFrameSize(CGSize(width: frame.size.width, height: fmax(yOffsetOfCurrentSubview, frame.height)))
     documentView?.setFrameOrigin(contentOffset)
 
     displayIfNeeded()
