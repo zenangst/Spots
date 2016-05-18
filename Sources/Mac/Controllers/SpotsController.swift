@@ -72,7 +72,8 @@ public class SpotsController: NSViewController, SpotsProtocol {
   }
 
   public override func loadView() {
-    view = NSView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+    view = NSView(frame: CGRect(x: 0, y: 0, width: 100, height: 1))
+    view.autoresizingMask = .ViewWidthSizable
   }
 
   public override func viewDidLoad() {
