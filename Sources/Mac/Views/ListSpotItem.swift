@@ -8,6 +8,17 @@ public class ListSpotItem: NSTableRowView, SpotConfigurable {
       return true
     }
   }
+
+  public override var selected: Bool {
+    didSet {
+      if selected {
+        layer?.backgroundColor = NSColor.blackColor().colorWithAlphaComponent(0.85).CGColor
+      } else {
+        layer?.backgroundColor = NSColor.blackColor().CGColor
+      }
+    }
+  }
+
   public var size = CGSize(width: 0, height: 88)
 
   lazy var titleLabel = NSTextField().then {
