@@ -29,6 +29,22 @@ public class ListSpotItem: NSTableRowView, SpotConfigurable {
     $0.drawsBackground = false
   }
 
+  lazy var subtitleLabel = NSTextField().then {
+    $0.editable = false
+    $0.selectable = false
+    $0.bezeled = false
+    $0.textColor = NSColor.whiteColor()
+    $0.drawsBackground = false
+  }
+
+  lazy var lineView = NSView().then {
+    $0.frame.size.height = 1
+    $0.wantsLayer = true
+    $0.layer = CALayer()
+    $0.layer?.backgroundColor = NSColor.grayColor().colorWithAlphaComponent(0.4).CGColor
+    $0.autoresizingMask = .ViewWidthSizable
+  }
+
   override init(frame frameRect: NSRect) {
     super.init(frame: frameRect)
 
@@ -37,6 +53,8 @@ public class ListSpotItem: NSTableRowView, SpotConfigurable {
     layer?.backgroundColor = NSColor.blackColor().CGColor
 
     addSubview(titleLabel)
+    addSubview(subtitleLabel)
+    addSubview(lineView)
   }
 
   public required init?(coder: NSCoder) {
