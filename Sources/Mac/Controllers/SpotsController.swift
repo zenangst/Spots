@@ -43,6 +43,30 @@ public class SpotsController: NSViewController, SpotsProtocol {
     self.spots = spots
     super.init(nibName: nil, bundle: nil)!
   }
+
+  /**
+   - Parameter spot: A Spotable object
+   */
+  public convenience init(spot: Spotable)  {
+    self.init(spots: [spot])
+  }
+
+  /**
+   - Parameter json: A JSON dictionary that gets parsed into UI elements
+   */
+  public convenience init(_ json: [String : AnyObject]) {
+    NSLog("json: \(json)")
+    self.init(spots: Parser.parse(json))
+  }
+
+  /**
+   - Parameter cacheKey: A key that will be used to identify the SpotCache
+   */
+  public convenience init(cacheKey: String) {
+    let stateCache = SpotCache(key: cacheKey)
+    self.init(spots: Parser.parse(stateCache.load()))
+    self.stateCache = stateCache
+  }
   
   public required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
