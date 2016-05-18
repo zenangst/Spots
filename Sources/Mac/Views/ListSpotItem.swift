@@ -33,7 +33,7 @@ public class ListSpotItem: NSTableRowView, SpotConfigurable {
     $0.editable = false
     $0.selectable = false
     $0.bezeled = false
-    $0.textColor = NSColor.whiteColor()
+    $0.textColor = NSColor.lightGrayColor()
     $0.drawsBackground = false
   }
 
