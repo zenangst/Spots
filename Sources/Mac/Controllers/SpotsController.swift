@@ -55,7 +55,6 @@ public class SpotsController: NSViewController, SpotsProtocol {
    - Parameter json: A JSON dictionary that gets parsed into UI elements
    */
   public convenience init(_ json: [String : AnyObject]) {
-    NSLog("json: \(json)")
     self.init(spots: Parser.parse(json))
   }
 
