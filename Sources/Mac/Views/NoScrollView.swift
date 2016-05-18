@@ -5,6 +5,7 @@ public class NoScrollView: NSScrollView {
   override init(frame frameRect: NSRect) {
     super.init(frame: frameRect)
 
+    drawsBackground = false
     hasHorizontalScroller = false
     hasVerticalScroller = false
   }
@@ -18,6 +19,10 @@ public class NoScrollView: NSScrollView {
   }
   
   static public override func isCompatibleWithResponsiveScrolling() -> Bool {
+    return true
+  }
+
+  override public var allowsVibrancy: Bool {
     return true
   }
 }

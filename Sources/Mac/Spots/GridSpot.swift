@@ -30,6 +30,7 @@ public class GridSpot: NSObject, Gridable {
 
   public lazy var collectionView: NSCollectionView = NSCollectionView().then {
     $0.autoresizingMask = [.ViewWidthSizable]
+    $0.backgroundColors = [NSColor.clearColor()]
   }
 
   public required init(component: Component) {

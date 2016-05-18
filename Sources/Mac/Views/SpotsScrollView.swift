@@ -20,6 +20,7 @@ public class SpotsScrollView: NSScrollView {
   override init(frame frameRect: NSRect) {
     super.init(frame: frameRect)
     self.documentView = spotsContentView
+    drawsBackground = false
   }
   
   required public init?(coder: NSCoder) {
@@ -92,7 +93,7 @@ public class SpotsScrollView: NSScrollView {
       yOffsetOfCurrentSubview += scrollView.frame.height
     }
 
-    guard frame.height > 0 else { return }
+    guard frame.height > 0 && frame.width > 100 else { return }
 
     documentView?.setFrameSize(CGSize(width: frame.size.width, height: fmax(yOffsetOfCurrentSubview, frame.height)))
     documentView?.setFrameOrigin(contentOffset)
