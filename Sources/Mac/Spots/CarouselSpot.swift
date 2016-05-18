@@ -2,10 +2,11 @@ import Cocoa
 import Sugar
 import Brick
 
-public class CarouselSpot: NSObject, Spotable {
+public class CarouselSpot: NSObject, Gridable {
 
   public static var views = ViewRegistry()
-  public static var defaultView: RegularView.Type = GridSpotCell.self
+  public static var grids = GridRegistry()
+  public static var defaultView: RegularView.Type = NSView.self
   public static var defaultKind: StringConvertible = "carousel"
 
   public weak var spotsDelegate: SpotsDelegate?
@@ -14,6 +15,8 @@ public class CarouselSpot: NSObject, Spotable {
   public var component: Component
   public var configure: (SpotConfigurable -> Void)?
   public var index = 0
+  @available(OSX 10.11, *)
+  public lazy var layout = NSCollectionViewFlowLayout()
 
   public private(set) var stateCache: SpotCache?
 
