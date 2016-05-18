@@ -6,7 +6,7 @@ public class ListSpot: NSObject, Spotable {
 
   public static var views = ViewRegistry()
   public static var configure: ((view: NSTableView) -> Void)?
-  public static var defaultView: RegularView.Type = GridSpotCell.self
+  public static var defaultView: RegularView.Type = ListSpotItem.self
   public static var defaultKind: StringConvertible = "list"
 
   public weak var spotsDelegate: SpotsDelegate?
@@ -19,10 +19,12 @@ public class ListSpot: NSObject, Spotable {
   public private(set) var stateCache: SpotCache?
 
   public lazy var adapter: ListAdapter = ListAdapter(spot: self)
+  
   public lazy var scrollView: ScrollView = ScrollView().then {
     $0.documentView = NSView()
     $0.autoresizingMask = .ViewWidthSizable
   }
+
   public lazy var tableView: NSTableView = NSTableView(frame: CGRectZero).then {
     $0.allowsColumnReordering = false
     $0.allowsColumnResizing = false
