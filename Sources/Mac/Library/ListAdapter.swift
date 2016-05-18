@@ -29,7 +29,7 @@ extension ListAdapter: NSTableViewDataSource {
   }
 
   public func tableView(tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
-    return false
+    return true
   }
   
   public func tableView(tableView: NSTableView, shouldSelectTableColumn tableColumn: NSTableColumn?) -> Bool {
