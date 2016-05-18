@@ -4,6 +4,8 @@ import Brick
 
 public class TableViewCell: NSTableRowView, SpotConfigurable {
 
+  public var size = CGSize(width: 0, height: 88)
+
   lazy var titleLabel = NSTextField().then {
     $0.editable = false
     $0.selectable = false
@@ -12,8 +14,6 @@ public class TableViewCell: NSTableRowView, SpotConfigurable {
     $0.drawsBackground = false
   }
 
-  public var size = CGSize(width: 0, height: 88)
-  
   override init(frame frameRect: NSRect) {
     super.init(frame: frameRect)
 
@@ -33,9 +33,5 @@ public class TableViewCell: NSTableRowView, SpotConfigurable {
     titleLabel.frame.origin.x = 40
     titleLabel.stringValue = item.title
     titleLabel.sizeToFit()
-  }
-
-  public override func layoutSubtreeIfNeeded() {
-    super.layoutSubtreeIfNeeded()
   }
 }
