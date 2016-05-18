@@ -62,9 +62,22 @@ public class ListSpotItem: NSTableRowView, SpotConfigurable {
   }
 
   public func configure(inout item: ViewModel) {
-    titleLabel.frame.origin.y = 15
-    titleLabel.frame.origin.x = 40
     titleLabel.stringValue = item.title
+    titleLabel.frame.origin.x = 8
+
     titleLabel.sizeToFit()
+    if item.subtitle.isPresent {
+      titleLabel.frame.origin.y = 8
+      titleLabel.font = NSFont.boldSystemFontOfSize(14)
+    } else {
+      titleLabel.frame.origin.y = item.size.height / 2 - titleLabel.frame.size.height / 2
+    }
+
+    subtitleLabel.frame.origin.x = 8
+    subtitleLabel.stringValue = item.subtitle
+    subtitleLabel.sizeToFit()
+    subtitleLabel.frame.origin.y = titleLabel.frame.origin.y + subtitleLabel.frame.height
+    
+    lineView.frame.origin.y = item.size.height + 1
   }
 }
