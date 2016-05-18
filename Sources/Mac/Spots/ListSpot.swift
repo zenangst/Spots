@@ -59,6 +59,13 @@ public class ListSpot: NSObject, Spotable {
   public func setupTableView() {
     tableView.setDelegate(adapter)
     tableView.setDataSource(adapter)
+    tableView.target = self
+    tableView.doubleAction = #selector(self.doubleAction(_:))
+  }
+
+  public func doubleAction(sender: AnyObject?) {
+    let viewModel = item(tableView.selectedRow)
+    spotsDelegate?.spotDidSelectItem(self, item: viewModel)
   }
 
   public func render() -> RegularView {
