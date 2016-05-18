@@ -7,7 +7,7 @@ public protocol Gridable: Spotable {
   // The layout object used to initialize the collection spot controller.
   var layout: UICollectionViewFlowLayout { get }
   /// The collection view object managed by this gridable object.
-  var collectionView: UICollectionView { get }
+  var collectionView: CollectionView { get }
 
   /**
    Asks the data source for the size of an item in a particular location.
