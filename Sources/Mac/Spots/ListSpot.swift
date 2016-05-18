@@ -32,6 +32,7 @@ public class ListSpot: NSObject, Spotable {
     $0.allowsEmptySelection = true
     $0.allowsMultipleSelection = false
     $0.headerView = nil
+    $0.selectionHighlightStyle = .None
   }
 
   public required init(component: Component) {
