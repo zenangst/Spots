@@ -12,20 +12,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   func applicationDidFinishLaunching(aNotification: NSNotification) {
 
     ListSpot.views["list"] = TableViewCell.self
+    GridSpot.grids["grid"] = GridSpotItem.self
 
-    let listSpot = ListSpot(component: Component(title: "test", items: [
-      ViewModel(title: "Foo", size: CGSize(width: 88, height: 44)),
-      ViewModel(title: "Foo2", size: CGSize(width: 88, height: 44))
-      ]))
-    let listSpot2 = ListSpot(component: Component(title: "test", items: [
-      ViewModel(title: "Bar", size: CGSize(width: 88, height: 44)),
-      ViewModel(title: "Bar2", size: CGSize(width: 88, height: 44))
-      ]))
-    let listSpot3 = ListSpot(component: Component(title: "test", items: [
-      ViewModel(title: "Baz", size: CGSize(width: 88, height: 44)),
-      ViewModel(title: "Baz2", size: CGSize(width: 88, height: 44))
-      ]))
-    let spotsController = SpotsController(spots: [listSpot, listSpot2, listSpot3])
+    let spotsController = SpotsController([
+      "components" : [
+        ["kind" : "grid", "items" : [["title" : "hello", "kind" : "grid", "size" : ["height" : 88]]]],
+        ["kind" : "list", "items" : [["title" : "hello", "kind" : "list", "size" : ["height" : 44]]]]
+      ]
+      ])
 
     window.contentView = spotsController.view
   }
