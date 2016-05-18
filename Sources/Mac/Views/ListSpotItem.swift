@@ -3,6 +3,11 @@ import Brick
 
 public class ListSpotItem: NSTableRowView, SpotConfigurable {
 
+  static public var flipped: Bool {
+    get {
+      return true
+    }
+  }
   public var size = CGSize(width: 0, height: 88)
 
   lazy var titleLabel = NSTextField().then {
