@@ -2,7 +2,19 @@
 
 ## [Unreleased](https://github.com/hyperoslo/Spots/tree/HEAD)
 
-[Full Changelog](https://github.com/hyperoslo/Spots/compare/1.8.4...HEAD)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/1.9.0...HEAD)
+
+**Closed issues:**
+
+- Please add Cartfile documentation. [\#224](https://github.com/hyperoslo/Spots/issues/224)
+
+**Merged pull requests:**
+
+- Improve scrollTo on SpotsController [\#227](https://github.com/hyperoslo/Spots/pull/227) ([zenangst](https://github.com/zenangst))
+- Update README [\#225](https://github.com/hyperoslo/Spots/pull/225) ([zenangst](https://github.com/zenangst))
+
+## [1.9.0](https://github.com/hyperoslo/Spots/tree/1.9.0) (2016-05-12)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/1.8.4...1.9.0)
 
 **Merged pull requests:**
 
