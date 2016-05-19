@@ -14,15 +14,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     ListSpot.views["list"] = ListSpotItem.self
     GridSpot.grids["grid"] = GridSpotItem.self
 
-//    ["kind" : "grid", "items" : [["title" : "hello", "kind" : "grid", "size" : ["height" : 88]]]],
-
     let items: [[String : AnyObject]] = [
       ["title" : "foo", "subtitle" : "bar", "kind" : "list", "size" : ["height" : 44]],
       ["title" : "foo", "subtitle" : "bar", "kind" : "list", "size" : ["height" : 44]],
       ["title" : "foo", "kind" : "list", "size" : ["height" : 44]]
     ]
+    
     let spotsController = SpotsController([
       "components" : [
+        ["kind" : "grid", "items" : [["title" : "hello", "kind" : "grid", "size" : ["height" : 88]]]],
         ["kind" : "list", "items" : items]
       ]
       ])

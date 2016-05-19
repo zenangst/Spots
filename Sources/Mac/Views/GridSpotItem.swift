@@ -14,7 +14,7 @@ public class GridSpotItem: NSCollectionViewItem, SpotConfigurable {
   override public func viewDidLoad() {
     super.viewDidLoad()
     view.wantsLayer = true
-    view.layer?.backgroundColor = NSColor.orangeColor().CGColor
+    view.layer?.backgroundColor = NSColor.blackColor().CGColor
   }
 
   public func configure(inout item: ViewModel) {
