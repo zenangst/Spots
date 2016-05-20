@@ -2,7 +2,18 @@
 
 ## [Unreleased](https://github.com/hyperoslo/Spots/tree/HEAD)
 
-[Full Changelog](https://github.com/hyperoslo/Spots/compare/1.9.1...HEAD)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/1.9.2...HEAD)
+
+**Closed issues:**
+
+- Turn objects into JSON [\#229](https://github.com/hyperoslo/Spots/issues/229)
+
+**Merged pull requests:**
+
+- This remove the case of accessing lazy var in deinit [\#231](https://github.com/hyperoslo/Spots/pull/231) ([onmyway133](https://github.com/onmyway133))
+
+## [1.9.2](https://github.com/hyperoslo/Spots/tree/1.9.2) (2016-05-19)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/1.9.1...1.9.2)
 
 **Merged pull requests:**
 
