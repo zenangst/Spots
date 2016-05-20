@@ -2,7 +2,27 @@
 
 ## [Unreleased](https://github.com/hyperoslo/Spots/tree/HEAD)
 
-[Full Changelog](https://github.com/hyperoslo/Spots/compare/1.8.4...HEAD)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/1.9.1...HEAD)
+
+**Merged pull requests:**
+
+- Improve transition between view controllers [\#230](https://github.com/hyperoslo/Spots/pull/230) ([zenangst](https://github.com/zenangst))
+- Use weak self. Nil delegate in deinit [\#228](https://github.com/hyperoslo/Spots/pull/228) ([onmyway133](https://github.com/onmyway133))
+
+## [1.9.1](https://github.com/hyperoslo/Spots/tree/1.9.1) (2016-05-19)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/1.9.0...1.9.1)
+
+**Closed issues:**
+
+- Please add Cartfile documentation. [\#224](https://github.com/hyperoslo/Spots/issues/224)
+
+**Merged pull requests:**
+
+- Improve scrollTo on SpotsController [\#227](https://github.com/hyperoslo/Spots/pull/227) ([zenangst](https://github.com/zenangst))
+- Update README [\#225](https://github.com/hyperoslo/Spots/pull/225) ([zenangst](https://github.com/zenangst))
+
+## [1.9.0](https://github.com/hyperoslo/Spots/tree/1.9.0) (2016-05-12)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/1.8.4...1.9.0)
 
 **Merged pull requests:**
 

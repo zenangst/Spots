@@ -53,11 +53,13 @@ public class SpotsController: UIViewController, SpotsProtocol, UIScrollViewDeleg
   weak public var spotsScrollDelegate: SpotsScrollDelegate?
 
   /// A custom scroll view that handles the scrolling for all internal scroll views
-  lazy public var spotsScrollView: SpotsScrollView = SpotsScrollView().then { [unowned self] in
-    $0.frame = self.view.frame
+  lazy public var spotsScrollView: SpotsScrollView = SpotsScrollView().then { [weak self] in
+    guard let strongSelf = self else { return }
+
+    $0.frame = strongSelf.view.frame
     $0.alwaysBounceVertical = true
     $0.clipsToBounds = true
-    $0.delegate = self
+    $0.delegate = strongSelf
   }
 
 #if os(iOS)
@@ -106,6 +108,10 @@ public class SpotsController: UIViewController, SpotsProtocol, UIScrollViewDeleg
 
   public required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
+  }
+
+  deinit {
+    spotsScrollView.delegate = nil
   }
 
   // MARK: - View Life Cycle
