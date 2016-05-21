@@ -143,7 +143,7 @@ public extension SpotsProtocol {
    - Parameter closure: A completion closure that will run after the spot has performed updates internally
    */
   public func prepend(items: [ViewModel], spotIndex: Int = 0, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
-    spot(spotIndex, Spotable.self)?.prepend(items, withAnimation: animation)  {
+    spot(spotIndex, Spotable.self)?.prepend(items, withAnimation: animation) {
       completion?()
       self.spotsScrollView.forceUpdate = true
     }
@@ -157,7 +157,7 @@ public extension SpotsProtocol {
    - Parameter closure: A completion closure that will run after the spot has performed updates internally
    */
   public func insert(item: ViewModel, index: Int = 0, spotIndex: Int, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
-    spot(spotIndex, Spotable.self)?.insert(item, index: index, withAnimation: animation)  {
+    spot(spotIndex, Spotable.self)?.insert(item, index: index, withAnimation: animation) {
       completion?()
       self.spotsScrollView.forceUpdate = true
     }
@@ -171,7 +171,7 @@ public extension SpotsProtocol {
    - Parameter closure: A completion closure that will run after the spot has performed updates internally
    */
   public func update(item: ViewModel, index: Int = 0, spotIndex: Int, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
-    spot(spotIndex, Spotable.self)?.update(item, index: index, withAnimation: animation)  {
+    spot(spotIndex, Spotable.self)?.update(item, index: index, withAnimation: animation) {
       completion?()
       self.spotsScrollView.forceUpdate = true
     }
@@ -225,8 +225,13 @@ public extension SpotsProtocol {
   public func scrollTo(spotIndex index: Int = 0, @noescape includeElement: (ViewModel) -> Bool) {
     guard let itemY = spot(index, Spotable.self)?.scrollTo(includeElement) else { return }
 
-    if spot(index, Spotable.self)?.spotHeight() > spotsScrollView.height - spotsScrollView.contentInset.bottom {
-      let y = itemY - spotsScrollView.height + spotsScrollView.contentInset.bottom
+    var initialHeight: CGFloat = 0.0
+    if index > 0 {
+      initialHeight += spots[0..<index].reduce(0, combine: { $0 + $1.spotHeight() })
+    }
+
+    if spot(index, Spotable.self)?.spotHeight() > spotsScrollView.height - spotsScrollView.contentInset.bottom - initialHeight {
+      let y = itemY - spotsScrollView.height + spotsScrollView.contentInset.bottom + initialHeight
       spotsScrollView.setContentOffset(CGPoint(x: CGFloat(0.0), y: y), animated: true)
     }
   }
