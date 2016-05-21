@@ -86,7 +86,7 @@ public class SpotsController: UIViewController, SpotsProtocol, UIScrollViewDeleg
   /**
    - Parameter spot: A Spotable object
    */
-  public convenience init(spot: Spotable)  {
+  public convenience init(spot: Spotable) {
     self.init(spots: [spot])
   }
 
@@ -108,10 +108,6 @@ public class SpotsController: UIViewController, SpotsProtocol, UIScrollViewDeleg
 
   public required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
-  }
-
-  deinit {
-    spotsScrollView.delegate = nil
   }
 
   // MARK: - View Life Cycle
@@ -176,8 +172,7 @@ public class SpotsController: UIViewController, SpotsProtocol, UIScrollViewDeleg
     let paths = NSSearchPathForDirectoriesInDomains(.CachesDirectory,
                                                     NSSearchPathDomainMask.UserDomainMask, true)
     let path = "\(paths.first!)/\(DiskStorage.prefix).\(SpotCache.cacheName)"
-    do { try NSFileManager.defaultManager().removeItemAtPath(path) }
-    catch { NSLog("Could not remove cache at path: \(path)") }
+    do { try NSFileManager.defaultManager().removeItemAtPath(path) } catch { NSLog("Could not remove cache at path: \(path)") }
   }
 }
 
@@ -229,7 +224,7 @@ extension SpotsController {
     spotsScrollView.contentView.subviews.forEach { $0.removeFromSuperview() }
     setupSpots(animated)
     spotsScrollView.forceUpdate = true
-    
+
     closure?()
   }
 
