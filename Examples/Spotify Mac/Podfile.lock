@@ -5,7 +5,7 @@ PODS:
   - Cache (1.3.0):
     - CryptoSwift
   - CryptoSwift (0.4.1)
-  - Spots (1.9.0):
+  - Spots (1.9.3):
     - Brick
     - Cache
     - Sugar
@@ -16,28 +16,27 @@ PODS:
 
 DEPENDENCIES:
   - Spots (from `../../`)
-  - Sugar (from `https://github.com/hyperoslo/Sugar.git`, branch `feature/indexes-for-osx`)
+  - Sugar (from `https://github.com/hyperoslo/Sugar.git`)
 
 EXTERNAL SOURCES:
   Spots:
     :path: "../../"
   Sugar:
-    :branch: feature/indexes-for-osx
     :git: https://github.com/hyperoslo/Sugar.git
 
 CHECKOUT OPTIONS:
   Sugar:
-    :commit: 1a4e4618e3729c5ebd0b7376bbac7c2934000753
+    :commit: faabfeaa07b6fb49f712db31139df042cf190d42
     :git: https://github.com/hyperoslo/Sugar.git
 
 SPEC CHECKSUMS:
   Brick: e61cc63552ceb1546e4c728d6fd62cc9fbeba03c
   Cache: b8abf7795a6d72f9d5b924d1367624a53fe777a9
   CryptoSwift: 25b5aff3f260967391f8fff2e9abe4254d2c6fd5
-  Spots: 902fd4b48067334b96701998eff118e8a28081b4
+  Spots: 4af076943fbfdc380b5c694a665fff3d2cfd5d42
   Sugar: 73eaf2803ba1128d8b0370f402494981af7675d3
   Tailor: 38a9f1ed1fa804856583396a55ed764d832eeca8
 
-PODFILE CHECKSUM: deea58de55e856d81d3ae221841db4518e1d6c62
+PODFILE CHECKSUM: 5d5b3ee8d2f5ea379e82fc331b2e952ef603097f
 
 COCOAPODS: 1.0.0
