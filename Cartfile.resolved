@@ -1,7 +1,7 @@
 github "krzyzanowskim/CryptoSwift" "0.4.1"
 github "Quick/Nimble" "v4.0.1"
 github "Quick/Quick" "v0.9.2"
-github "hyperoslo/Sugar" "1.1.1"
+github "hyperoslo/Sugar" "faabfeaa07b6fb49f712db31139df042cf190d42"
 github "SwiftyJSON/SwiftyJSON" "2.3.3"
 github "hyperoslo/Cache" "5b2cdfc5ce9e6d9e3b36059231fd78b89bc9979f"
 github "vadymmarkov/Fakery" "1.2.0"
