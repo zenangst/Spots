@@ -445,12 +445,12 @@ extension SpotsController {
   public func scrollTo(spotIndex index: Int = 0, @noescape includeElement: (ViewModel) -> Bool) {
     guard let itemY = spot(index, Spotable.self)?.scrollTo(includeElement) else { return }
 
-    if spot(index, Spotable.self)?.spotHeight() > spotsScrollView.height - spotsScrollView.contentInset.bottom {
-      var initialHeight: CGFloat = 0.0
-      if index > 0 {
-        initialHeight += spots[0..<index].reduce(0, combine: { $0 + $1.spotHeight() })
-      }
+    var initialHeight: CGFloat = 0.0
+    if index > 0 {
+      initialHeight += spots[0..<index].reduce(0, combine: { $0 + $1.spotHeight() })
+    }
 
+    if spot(index, Spotable.self)?.spotHeight() > spotsScrollView.height - spotsScrollView.contentInset.bottom - initialHeight {
       let y = itemY - spotsScrollView.height + spotsScrollView.contentInset.bottom + initialHeight
       spotsScrollView.setContentOffset(CGPoint(x: CGFloat(0.0), y: y), animated: true)
     }
