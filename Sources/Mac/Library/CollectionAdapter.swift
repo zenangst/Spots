@@ -3,7 +3,7 @@ import Cocoa
 /**
  The CollectionAdapter works as a proxy handler for all Gridable object
  */
-public class CollectionAdapter : NSObject {
+public class CollectionAdapter: NSObject {
   // An unowned Listable object
   var spot: Gridable
 
@@ -30,18 +30,18 @@ extension CollectionAdapter: NSCollectionViewDataSource {
   }
 
   public func collectionView(collectionView: NSCollectionView, itemForRepresentedObjectAtIndexPath indexPath: NSIndexPath) -> NSCollectionViewItem {
-    var reuseIdentifier = "grid"
+    var reuseIdentifier = spot.dynamicType.defaultKind
     if #available(OSX 10.11, *) {
       reuseIdentifier = spot.reuseIdentifierForItem(indexPath.item)
-    }
-    let view = spot.dynamicType.grids[reuseIdentifier]
-    if let collectionItem = view?.init() {
-      if #available(OSX 10.11, *) {
+
+      let item = collectionView.makeItemWithIdentifier(reuseIdentifier.string, forIndexPath: indexPath)
+      let view = spot.dynamicType.grids[reuseIdentifier]
+      if let collectionItem = view?.init() {
         (collectionItem as? SpotConfigurable)?.configure(&spot.component.items[indexPath.item])
+        return collectionItem
       } else {
-        // Fallback on earlier versions
+        return NSCollectionViewItem()
       }
-      return collectionItem
     } else {
       return NSCollectionViewItem()
     }
@@ -54,5 +54,4 @@ extension CollectionAdapter: NSCollectionViewDelegateFlowLayout {
   public func collectionView(collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> NSSize {
     return spot.sizeForItemAt(indexPath)
   }
-
 }
