@@ -19,7 +19,7 @@ public class ListSpot: NSObject, Spotable {
   public private(set) var stateCache: SpotCache?
 
   public lazy var adapter: ListAdapter = ListAdapter(spot: self)
-  
+
   public lazy var scrollView: ScrollView = ScrollView().then {
     $0.documentView = NSView()
     $0.autoresizingMask = .ViewWidthSizable
@@ -135,7 +135,7 @@ public class ListSpot: NSObject, Spotable {
       }
     }
   }
-  
+
   public func insert(item: ViewModel, index: Int, withAnimation animation: SpotsAnimation, completion: Completion) {
     component.items.insert(item, atIndex: index)
 
@@ -146,7 +146,7 @@ public class ListSpot: NSObject, Spotable {
       }
     }
   }
-  
+
   public func update(item: ViewModel, index: Int, withAnimation animation: SpotsAnimation, completion: Completion) {
     items[index] = item
 
@@ -157,7 +157,7 @@ public class ListSpot: NSObject, Spotable {
       }
     }
   }
-  
+
   public func delete(item: ViewModel, withAnimation animation: SpotsAnimation, completion: Completion) {
     guard let index = component.items.indexOf({ $0 == item })
       else { completion?(); return }
@@ -188,7 +188,7 @@ public class ListSpot: NSObject, Spotable {
       }
     }
   }
-  
+
   public func delete(index: Int, withAnimation animation: SpotsAnimation, completion: Completion) {
     dispatch { [weak self] in
       guard let tableView = self?.tableView else { completion?(); return }
@@ -198,7 +198,7 @@ public class ListSpot: NSObject, Spotable {
       }
     }
   }
-  
+
   public func delete(indexes: [Int], withAnimation animation: SpotsAnimation, completion: Completion) {
     dispatch { [weak self] in
       indexes.forEach { self?.component.items.removeAtIndex($0) }
@@ -208,7 +208,7 @@ public class ListSpot: NSObject, Spotable {
       }
     }
   }
-  
+
   public func reload(indexes: [Int]?, withAnimation animation: SpotsAnimation, completion: Completion) {
     dispatch { [weak self] in
       guard let tableView = self?.tableView else { completion?(); return }
