@@ -13,6 +13,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     ListSpot.views["list"] = ListSpotItem.self
     GridSpot.grids["grid"] = GridSpotItem.self
+    CarouselSpot.grids["carousel"] = GridSpotItem.self
 
     let items: [[String : AnyObject]] = [
       ["title" : "foo", "subtitle" : "bar", "kind" : "list", "size" : ["height" : 44]],
