@@ -3,6 +3,7 @@ import Cocoa
 public class SpotsController: NSViewController, SpotsProtocol {
 
   public static var configure: ((container: SpotsScrollView) -> Void)?
+  let KVOWindowContext = UnsafeMutablePointer<()>(nil)
 
   /// A collection of Spotable objects
   public var spots: [Spotable] {
@@ -58,6 +59,10 @@ public class SpotsController: NSViewController, SpotsProtocol {
     self.init(spots: Parser.parse(json))
   }
 
+  deinit {
+    view.removeObserver(self, forKeyPath: "window", context: KVOWindowContext)
+  }
+
   /**
    - Parameter cacheKey: A key that will be used to identify the SpotCache
    */
@@ -71,9 +76,25 @@ public class SpotsController: NSViewController, SpotsProtocol {
     fatalError("init(coder:) has not been implemented")
   }
 
+  public override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+    guard let themeFrame = view.superview
+      where keyPath == "window" && context == KVOWindowContext else { return }
+
+    spotsScrollView.frame = view.frame
+    setupSpots()
+    SpotsController.configure?(container: spotsScrollView)
+
+    for case let grid as Gridable in spots {
+      if #available(OSX 10.11, *) {
+        grid.layout.invalidateLayout()
+      }
+    }
+  }
+
   public override func loadView() {
     view = NSView(frame: CGRect(x: 0, y: 0, width: 100, height: 1))
     view.autoresizingMask = .ViewWidthSizable
+    view.addObserver(self, forKeyPath: "window", options: .Old, context: KVOWindowContext)
   }
 
   public override func viewDidLoad() {
