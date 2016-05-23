@@ -51,13 +51,14 @@ public protocol Spotable: class {
   /// Reload view model indexes with animation in a Spotable object
   func reload(indexes: [Int]?, withAnimation animation: SpotsAnimation, completion: Completion)
 
+  /// Perform internal preperations for a Spotable object
+  func prepare()
+
 #if os(iOS)
   /// Return a Spotable object as a ScrollView
   func render() -> ScrollView
   /// Layout Spotable object using size
   func layout(size: CGSize)
-  /// Perform internal preperations for a Spotable object
-  func prepare()
   /// Scroll to view model using predicate
   func scrollTo(@noescape includeElement: (ViewModel) -> Bool) -> CGFloat
 #else
