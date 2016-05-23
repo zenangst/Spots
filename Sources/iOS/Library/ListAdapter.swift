@@ -4,13 +4,13 @@ import UIKit
  The ListAdapter works as a proxy handler for all Listable object
  */
 public class ListAdapter : NSObject {
-  // An unowned Gridable object
+  // An unowned Listable object
   unowned var spot: Listable
 
   /**
-   Initialization a new instance of a CollectionAdapter using a Gridable object
+   Initialization a new instance of a ListAdapter using a Listable object
 
-   - Parameter gridable: A Gridable object
+   - Parameter gridable: A Listable object
    */
   init(spot: Listable) {
     self.spot = spot

@@ -1,4 +1,4 @@
-github "hyperoslo/Sugar"
+github "hyperoslo/Sugar" "master"
 github "hyperoslo/Brick"
 github "hyperoslo/Cache" "master"
 github "zenangst/Tailor"

@@ -1,19 +1,24 @@
-import UIKit
+#if os(iOS)
+  import UIKit
+#else
+  import Cocoa
+#endif
+
 import Sugar
 import Brick
 
-/// Viewable is a protocol for Spots that are based on UIScrollView
+/// Viewable is a protocol for Spots that are based on UIScrollView or NSScrollView
 public protocol Viewable: Spotable {
-  var scrollView: UIScrollView { get }
+  var scrollView: ScrollView { get }
 }
 
 /// A Spotable extension for Viewable objects
 public extension Spotable where Self : Viewable {
 
   /**
-   - Returns: UIScrollView: A UIScrollView container for your view
+   - Returns: ScrollView: A UIScrollView or NSScrollView container for your view
    */
-  func render() -> UIScrollView {
+  func render() -> ScrollView {
     return scrollView
   }
 
@@ -22,7 +27,9 @@ public extension Spotable where Self : Viewable {
    */
   func layout(size: CGSize) {
     render().frame.size = size
+    #if os(iOS)
     scrollView.contentSize = size
+    #endif
   }
 
   /**
@@ -51,14 +58,16 @@ public extension Spotable where Self : Viewable {
   }
 
   func setup(size: CGSize) {
-    let height = component.items.reduce(0, combine: { $0 + $1.size.height })
+    let height = spotHeight()
     let size = CGSize(width: size.width, height: height)
     render().frame.size = size
+    #if os(iOS)
     render().contentSize = size
+    #endif
 
     component.items.enumerate().forEach {
       component.items[$0.index].size.width = size.width
-      scrollView.subviews[$0.index].width = size.width
+      scrollView.subviews[$0.index].frame.size.width = size.width
     }
   }
 
@@ -121,7 +130,9 @@ public extension Spotable where Self : Viewable {
       guard let size = ($0 as? SpotConfigurable)?.size else { return }
       $0.frame.size = size
     }
-    scrollView.insertSubview(view, atIndex: index)
+    #if os(iOS)
+      scrollView.insertSubview(view, atIndex: index)
+    #endif
     component.items.insert(item, atIndex: index)
   }
 
@@ -144,7 +155,9 @@ public extension Spotable where Self : Viewable {
         guard let size = ($0 as? SpotConfigurable)?.size else { return }
         $0.frame.size = size
       }
+      #if os(iOS)
       scrollView.insertSubview(view, atIndex: 0)
+      #endif
       component.items.insert(item, atIndex: 0)
     }
   }

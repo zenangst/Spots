@@ -6,8 +6,9 @@ before_install:
 - brew update
 - if brew outdated | grep -qx xctool; then brew upgrade xctool; fi
 - if brew outdated | grep -qx carthage; then brew upgrade carthage; fi
-- travis_wait 35 carthage bootstrap --platform iOS
+- travis_wait 35 carthage bootstrap --platform iOS,Mac
 
 script:
+- xcodebuild clean build -project Spots.xcodeproj -scheme "Spots-Mac"
 - xcodebuild clean build -project Spots.xcodeproj -scheme "Spots-iOS" -sdk iphonesimulator
 - xcodebuild test -project Spots.xcodeproj -scheme "Spots-iOS" -sdk iphonesimulator

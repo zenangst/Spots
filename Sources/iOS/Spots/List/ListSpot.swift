@@ -6,7 +6,7 @@ public class ListSpot: NSObject, Listable {
 
   public static var views = ViewRegistry()
   public static var configure: ((view: UITableView) -> Void)?
-  public static var defaultView: UIView.Type = ListSpotCell.self
+  public static var defaultView: RegularView.Type = ListSpotCell.self
   public static var defaultKind: StringConvertible = "list"
   public static var headers = ViewRegistry()
 

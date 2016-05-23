@@ -1,0 +1,11 @@
+source 'https://github.com/CocoaPods/Specs.git'
+
+platform :osx, '10.10'
+
+use_frameworks!
+inhibit_all_warnings!
+
+target "Spotify Mac" do
+  pod 'Spots', path: '../../'
+  pod 'Sugar', git: 'https://github.com/hyperoslo/Sugar.git'
+end

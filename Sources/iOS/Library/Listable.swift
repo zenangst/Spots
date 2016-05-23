@@ -1,11 +1,16 @@
-import UIKit
+#if os(iOS)
+  import UIKit
+#else
+  import Foundation
+#endif
+
 import Sugar
 import Brick
 
-/// Listable is a protocol for Spots that are based on UITableView
+/// Listable is a protocol for Spots that are based on TableView
 public protocol Listable: Spotable {
   /// The table view object managed by this listable object.
-  var tableView: UITableView { get }
+  var tableView: TableView { get }
 }
 
 public extension Spotable where Self : Listable {
@@ -32,7 +37,7 @@ public extension Spotable where Self : Listable {
       self?.tableView.insert([count], animation: animation.tableViewAnimation)
       completion?()
     }
-    var cached: UIView?
+    var cached: RegularView?
     prepareItem(item, index: count, cached: &cached)
   }
 
@@ -47,7 +52,7 @@ public extension Spotable where Self : Listable {
 
     component.items.appendContentsOf(items)
 
-    var cached: UIView?
+    var cached: RegularView?
     items.enumerate().forEach {
       indexes.append(count + $0.index)
       prepareItem($0.element, index: count + $0.index, cached: &cached)
@@ -203,14 +208,14 @@ public extension Spotable where Self : Listable {
     animation != .None ? tableView.reloadSection(0, animation: animation.tableViewAnimation) : tableView.reloadData()
     tableView.setNeedsLayout()
     tableView.layoutIfNeeded()
-    UIView.setAnimationsEnabled(true)
+    RegularView.setAnimationsEnabled(true)
     completion?()
   }
 
   /**
-   - Returns: UIScrollView: Returns a UITableView as a UIScrollView
+   - Returns: ScrollView: Returns a TableView as a ScrollView
    */
-  public func render() -> UIScrollView {
+  public func render() -> ScrollView {
     return tableView
   }
 
