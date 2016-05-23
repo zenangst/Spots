@@ -20,10 +20,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
       ["title" : "foo", "subtitle" : "bar", "kind" : "list", "size" : ["height" : 44]],
       ["title" : "foo", "kind" : "list", "size" : ["height" : 44]]
     ]
-    
+
     let spotsController = SpotsController([
       "components" : [
-        ["kind" : "grid", "items" : [["title" : "hello", "kind" : "grid", "size" : ["height" : 88]]]],
+        ["kind" : "grid", "size" : ["height" : 88], "span" : 3, "items" : [
+          ["title" : "foo", "size": ["height" : 88]],
+          ["title" : "ar", "size": ["height" : 88]],
+          ["title" : "baz", "size": ["height" : 88]]
+          ]
+        ],
         ["kind" : "list", "items" : items]
       ]
       ])
@@ -36,4 +41,3 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     // Insert code here to tear down your application
   }
 }
-
