@@ -60,4 +60,28 @@ public class CarouselSpot: NSObject, Gridable {
   public func delete(index: Int, withAnimation animation: SpotsAnimation, completion: Completion) {}
   public func delete(indexes: [Int], withAnimation animation: SpotsAnimation, completion: Completion) {}
   public func reload(indexes: [Int]?, withAnimation animation: SpotsAnimation, completion: Completion) {}
+
+extension CarouselSpot {
+  
+  public func sizeForItemAt(indexPath: NSIndexPath) -> CGSize {
+    var width = component.span > 0
+      ? collectionView.frame.width / CGFloat(component.span)
+      : collectionView.frame.width
+
+    if #available(OSX 10.11, *) {
+      if let layout = layout as? NSCollectionViewFlowLayout {
+        width -= layout.sectionInset.left - layout.sectionInset.right
+        width -= layout.minimumInteritemSpacing
+        width -= layout.minimumLineSpacing
+      }
+      
+      component.items[indexPath.item].size.width = width
+    
+      return CGSize(
+        width: ceil(component.items[indexPath.item].size.width),
+        height: ceil(component.items[indexPath.item].size.height))
+    } else {
+      return CGSize.zero
+    }
+  }
 }
