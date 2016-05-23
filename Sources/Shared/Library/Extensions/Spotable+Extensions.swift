@@ -192,4 +192,6 @@ public extension Spotable {
       return self.dynamicType.defaultKind.string
     }
   }
+
+  func prepare() { }
 }
