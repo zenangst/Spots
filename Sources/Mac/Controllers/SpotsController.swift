@@ -12,7 +12,7 @@ public class SpotsController: NSViewController, SpotsProtocol {
       spotsDelegate?.spotsDidChange(spots)
     }
   }
-  
+
   /// A convenience method for resolving the first spot
   public var spot: Spotable? {
     get { return spot(0, Spotable.self) }
@@ -33,7 +33,7 @@ public class SpotsController: NSViewController, SpotsProtocol {
 
   /// A custom scroll view that handles the scrolling for all internal scroll views
   lazy public var spotsScrollView: SpotsScrollView = SpotsScrollView().then { [unowned self] in
-    $0.autoresizingMask = [.ViewWidthSizable,.ViewHeightSizable]
+    $0.autoresizingMask = [.ViewWidthSizable, .ViewHeightSizable]
 //    $0.delegate = self
   }
 
@@ -48,7 +48,7 @@ public class SpotsController: NSViewController, SpotsProtocol {
   /**
    - Parameter spot: A Spotable object
    */
-  public convenience init(spot: Spotable)  {
+  public convenience init(spot: Spotable) {
     self.init(spots: [spot])
   }
 
@@ -71,7 +71,7 @@ public class SpotsController: NSViewController, SpotsProtocol {
     self.init(spots: Parser.parse(stateCache.load()))
     self.stateCache = stateCache
   }
-  
+
   public required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -92,19 +92,16 @@ public class SpotsController: NSViewController, SpotsProtocol {
   }
 
   public override func loadView() {
-    view = NSView(frame: CGRect(x: 0, y: 0, width: 100, height: 1))
+    view = NSView()
     view.autoresizingMask = .ViewWidthSizable
     view.addObserver(self, forKeyPath: "window", options: .Old, context: KVOWindowContext)
   }
 
   public override func viewDidLoad() {
+    super.viewDidLoad()
     view.wantsLayer = true
     view.layer = CALayer()
     view.addSubview(spotsScrollView)
-
-    spotsScrollView.frame = view.frame
-    setupSpots()
-    SpotsController.configure?(container: spotsScrollView)
   }
 
   /**
@@ -114,7 +111,7 @@ public class SpotsController: NSViewController, SpotsProtocol {
     spots.enumerate().forEach { index, spot in
       spots[index].index = index
       spotsScrollView.spotsContentView.addSubview(spot.render())
-      //spot.prepare()
+      spot.prepare()
       spot.setup(CGSize(width: spotsScrollView.frame.width,
         height: spot.spotHeight() ?? 0))
       spot.component.size = CGSize(
