@@ -141,8 +141,7 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
         spotsScrollView.scrollIndicatorInsets.bottom = spotsScrollView.contentInset.bottom
     }
 #if os(iOS)
-    guard let _ = spotsRefreshDelegate where refreshControl.superview == nil
-      else { return }
+    guard let _ = spotsRefreshDelegate else { return }
 
     spotsScrollView.insertSubview(refreshControl, atIndex: 0)
 #endif
