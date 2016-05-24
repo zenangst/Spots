@@ -386,6 +386,7 @@ extension SpotsController {
     guard let oldItem = spot(spotIndex, Spotable.self)?.item(index) where item != oldItem
       else {
         spot(spotIndex, Spotable.self)?.refreshIndexes()
+        completion?()
         return
     }
 
