@@ -290,7 +290,7 @@ extension SpotsController {
    - Parameter animated: Perform reload animation
    - Parameter closure: A transform closure to perform the proper modification to the target spot before updating the internals
    */
-  public func update(spotAtIndex index: Int = 0, withAnimation animation: SpotsAnimation = .Automatic, @noescape _ closure: (spot: Spotable) -> Void, completion: Completion = nil) {
+  public func update(spotAtIndex index: Int = 0, withAnimation animation: SpotsAnimation = .Automatic, withCompletion completion: Completion = nil, @noescape _ closure: (spot: Spotable) -> Void) {
     guard let spot = spot(index, Spotable.self) else { completion?(); return }
     closure(spot: spot)
     spot.refreshIndexes()
@@ -318,9 +318,9 @@ extension SpotsController {
       return
     }
 
-    update(spotAtIndex: index, withAnimation: animation, {
+    update(spotAtIndex: index, withAnimation: animation, withCompletion: completion, {
       $0.items = items
-    }, completion: completion)
+    })
   }
 
   /**
