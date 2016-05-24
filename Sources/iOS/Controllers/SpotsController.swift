@@ -318,7 +318,7 @@ extension SpotsController {
       return
     }
 
-    update(spotAtIndex: index, withAnimation: animation, closure: {
+    update(spotAtIndex: index, withAnimation: animation, {
       $0.items = items
     }, completion: completion)
   }
