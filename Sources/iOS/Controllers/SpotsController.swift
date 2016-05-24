@@ -290,8 +290,8 @@ extension SpotsController {
    - Parameter animated: Perform reload animation
    - Parameter closure: A transform closure to perform the proper modification to the target spot before updating the internals
    */
-  public func update(spotAtIndex index: Int = 0, withAnimation animation: SpotsAnimation = .Automatic, @noescape _ closure: (spot: Spotable) -> Void) {
-    guard let spot = spot(index, Spotable.self) else { return }
+  public func update(spotAtIndex index: Int = 0, withAnimation animation: SpotsAnimation = .Automatic, @noescape _ closure: (spot: Spotable) -> Void, completion: Completion = nil) {
+    guard let spot = spot(index, Spotable.self) else { completion?(); return }
     closure(spot: spot)
     spot.refreshIndexes()
     spot.prepare()
@@ -302,6 +302,7 @@ extension SpotsController {
       weakSelf.spot(spot.index, Spotable.self)?.reload([index], withAnimation: animation) {
         weakSelf.spotsScrollView.setNeedsDisplay()
         weakSelf.spotsScrollView.forceUpdate = true
+        completion?()
       }
     }
   }
@@ -311,12 +312,15 @@ extension SpotsController {
    - Parameter spotAtIndex: The index of the spot that you want to perform updates on
    - Parameter items: An array of view models
    */
-  public func updateIfNeeded(spotAtIndex index: Int = 0, items: [ViewModel], withAnimation animation: SpotsAnimation = .Automatic) {
-    guard let spot = spot(index, Spotable.self) where !(spot.items == items) else { return }
-
-    update(spotAtIndex: index, withAnimation: animation) {
-      $0.items = items
+  public func updateIfNeeded(spotAtIndex index: Int = 0, items: [ViewModel], withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
+    guard let spot = spot(index, Spotable.self) where !(spot.items == items) else {
+      completion?()
+      return
     }
+
+    update(spotAtIndex: index, withAnimation: animation, closure: {
+      $0.items = items
+    }, completion: completion)
   }
 
   /**
