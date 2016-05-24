@@ -383,6 +383,13 @@ extension SpotsController {
    - Parameter closure: A completion closure that will run after the spot has performed updates internally
    */
   public func update(item: ViewModel, index: Int = 0, spotIndex: Int, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
+    guard let oldItem = spot(spotIndex, Spotable.self)?.item(index) where item != oldItem
+      else {
+        spot(spotIndex, Spotable.self)?.refreshIndexes()
+        completion?()
+        return
+    }
+
     spot(spotIndex, Spotable.self)?.update(item, index: index, withAnimation: animation)  {
       completion?()
       self.spotsScrollView.forceUpdate = true
