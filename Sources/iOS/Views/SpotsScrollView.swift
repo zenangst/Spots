@@ -124,7 +124,7 @@ public class SpotsScrollView: UIScrollView {
 
         // TODO: Fix this properly...
         // This should also apply for UICollectionView but I haven't figured out a way to resize them properly without it going ape-shit over that the layout is incorrect.
-        if subview is UITableView {
+        if subview is UITableView && scrollView.contentSize.height > self.bounds.height {
           let remainingBoundsHeight = fmax(CGRectGetMaxY(bounds) - CGRectGetMinY(frame), 0.0)
           let remainingContentHeight = fmax(scrollView.contentSize.height - contentOffset.y, 0.0)
           frame.size.height = ceil(fmin(remainingBoundsHeight, remainingContentHeight))
