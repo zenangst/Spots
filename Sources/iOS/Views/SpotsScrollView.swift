@@ -55,15 +55,15 @@ public class SpotsScrollView: UIScrollView {
       return
     }
 
-#if os(iOS)
-    scrollView.scrollsToTop = false
-#endif
+    #if os(iOS)
+      scrollView.scrollsToTop = false
+    #endif
     scrollView.scrollEnabled = false
 
     if let collectionView = scrollView as? UICollectionView,
       layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
       where layout.scrollDirection == .Horizontal  {
-        scrollView.scrollEnabled = true
+      scrollView.scrollEnabled = true
     }
 
     scrollView.addObserver(self, forKeyPath: "contentSize", options: .Old, context: KVOContext)
@@ -87,14 +87,14 @@ public class SpotsScrollView: UIScrollView {
     if let change = change where context == KVOContext {
       if let scrollView = object as? UIScrollView,
         oldContentSize = change[NSKeyValueChangeOldKey]?.CGSizeValue() {
-          guard scrollView.contentSize != oldContentSize else { return }
-          setNeedsLayout()
-          layoutIfNeeded()
+        guard scrollView.contentSize != oldContentSize else { return }
+        setNeedsLayout()
+        layoutIfNeeded()
       } else if let view = object as? UIView,
         oldContentSize = change[NSKeyValueChangeOldKey]?.CGRectValue {
-          guard view.frame != oldContentSize else { return }
-          setNeedsLayout()
-          layoutIfNeeded()
+        guard view.frame != oldContentSize else { return }
+        setNeedsLayout()
+        layoutIfNeeded()
       }
     } else {
       super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)
@@ -124,7 +124,7 @@ public class SpotsScrollView: UIScrollView {
 
         // TODO: Fix this properly...
         // This should also apply for UICollectionView but I haven't figured out a way to resize them properly without it going ape-shit over that the layout is incorrect.
-        if subview is UITableView {
+        if subview is UITableView && scrollView.contentSize.height > bounds.height {
           let remainingBoundsHeight = fmax(CGRectGetMaxY(bounds) - CGRectGetMinY(frame), 0.0)
           let remainingContentHeight = fmax(scrollView.contentSize.height - contentOffset.y, 0.0)
           frame.size.height = ceil(fmin(remainingBoundsHeight, remainingContentHeight))
