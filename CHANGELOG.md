@@ -2,7 +2,23 @@
 
 ## [Unreleased](https://github.com/hyperoslo/Spots/tree/HEAD)
 
-[Full Changelog](https://github.com/hyperoslo/Spots/compare/1.9.2...HEAD)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/1.9.3...HEAD)
+
+**Implemented enhancements:**
+
+- Improve updating method on SpotsController [\#234](https://github.com/hyperoslo/Spots/pull/234) ([zenangst](https://github.com/zenangst))
+
+**Fixed bugs:**
+
+- Fix scrolling to item when having multiple spots. [\#232](https://github.com/hyperoslo/Spots/pull/232) ([zenangst](https://github.com/zenangst))
+
+**Merged pull requests:**
+
+- Fix layout issue when content size changes [\#239](https://github.com/hyperoslo/Spots/pull/239) ([zenangst](https://github.com/zenangst))
+- Improve/update if needed [\#233](https://github.com/hyperoslo/Spots/pull/233) ([zenangst](https://github.com/zenangst))
+
+## [1.9.3](https://github.com/hyperoslo/Spots/tree/1.9.3) (2016-05-20)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/1.9.2...1.9.3)
 
 **Closed issues:**
 
