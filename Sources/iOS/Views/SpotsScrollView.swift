@@ -55,15 +55,15 @@ public class SpotsScrollView: UIScrollView {
       return
     }
 
-#if os(iOS)
-    scrollView.scrollsToTop = false
-#endif
+    #if os(iOS)
+      scrollView.scrollsToTop = false
+    #endif
     scrollView.scrollEnabled = false
 
     if let collectionView = scrollView as? UICollectionView,
       layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
       where layout.scrollDirection == .Horizontal  {
-        scrollView.scrollEnabled = true
+      scrollView.scrollEnabled = true
     }
 
     scrollView.addObserver(self, forKeyPath: "contentSize", options: .Old, context: KVOContext)
@@ -87,14 +87,14 @@ public class SpotsScrollView: UIScrollView {
     if let change = change where context == KVOContext {
       if let scrollView = object as? UIScrollView,
         oldContentSize = change[NSKeyValueChangeOldKey]?.CGSizeValue() {
-          guard scrollView.contentSize != oldContentSize else { return }
-          setNeedsLayout()
-          layoutIfNeeded()
+        guard scrollView.contentSize != oldContentSize else { return }
+        setNeedsLayout()
+        layoutIfNeeded()
       } else if let view = object as? UIView,
         oldContentSize = change[NSKeyValueChangeOldKey]?.CGRectValue {
-          guard view.frame != oldContentSize else { return }
-          setNeedsLayout()
-          layoutIfNeeded()
+        guard view.frame != oldContentSize else { return }
+        setNeedsLayout()
+        layoutIfNeeded()
       }
     } else {
       super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)
