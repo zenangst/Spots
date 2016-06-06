@@ -144,6 +144,7 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     guard let _ = spotsRefreshDelegate where refreshControl.superview == nil
       else { return }
 
+    refreshControl.frame.origin.y = 0
     spotsScrollView.insertSubview(refreshControl, atIndex: 0)
 #endif
   }
