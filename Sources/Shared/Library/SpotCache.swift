@@ -21,7 +21,7 @@ public struct SpotCache {
     SyncCache(cache).add(key, object: JSON.Dictionary(json), expiry: expiry)
   }
 
-  func load() -> JSONDictionary {
+  public func load() -> JSONDictionary {
     return SyncCache(cache).object(key)?.object as? JSONDictionary ?? [:]
   }
 
