@@ -32,7 +32,7 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     }
   }
 
-  var stateCache: SpotCache?
+  public var stateCache: SpotCache?
 
   /// A delegate for when an item is tapped within a Spot
   weak public var spotsDelegate: SpotsDelegate? {
