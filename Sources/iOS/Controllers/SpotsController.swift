@@ -488,6 +488,9 @@ extension SpotsController {
    Caches the current state of the spot controller
    */
   public func cache() {
+    #if DEVMODE
+    liveEditing(stateCache)
+    #endif
     stateCache?.save(dictionary)
   }
 
