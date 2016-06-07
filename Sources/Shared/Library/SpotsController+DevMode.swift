@@ -23,7 +23,7 @@ extension SpotsController {
           json = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? [String : AnyObject] {
           dispatch_source_cancel(self.source)
           self.source = nil
-          self.reload(json)
+          self.reloadIfNeeded(json)
         }
       } catch let error {
         dispatch_source_cancel(self.source)
@@ -33,7 +33,7 @@ extension SpotsController {
           "title" : "JSON parsing error",
           "subtitle" : "\(error)"]]
           ]
-        ]])
+          ]])
       }
     })
 
