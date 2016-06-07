@@ -199,11 +199,11 @@ class SpotsControllerTests : XCTestCase {
       ]
     ]
 
-    jsonController.reload(updateJSON)
-
-    XCTAssert(jsonController.spot!.component.kind == "grid")
-    XCTAssert(jsonController.spot!.component.items.count == 2)
-    XCTAssert(jsonController.spot!.component.items.first?.title == "First grid item")
+    jsonController.reload(updateJSON) {
+      XCTAssert(jsonController.spot!.component.kind == "grid")
+      XCTAssert(jsonController.spot!.component.items.count == 2)
+      XCTAssert(jsonController.spot!.component.items.first?.title == "First grid item")
+    }
   }
 
   func testDictionaryOnSpotsController() {
