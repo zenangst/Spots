@@ -271,18 +271,22 @@ extension SpotsController {
    - Parameter completion: A closure that will be run after reload has been performed on all spots
   */
   public func reload(json: [String : AnyObject], animated: ((view: UIView) -> Void)? = nil, closure: Completion = nil) {
-    spots = Parser.parse(json)
-    cache()
+    dispatch { [weak self] in
+      guard let weakSelf = self else { closure?(); return }
 
-    if spotsScrollView.superview == nil {
-      view.addSubview(spotsScrollView)
+      weakSelf.spots = Parser.parse(json)
+      weakSelf.cache()
+
+      if weakSelf.spotsScrollView.superview == nil {
+        weakSelf.view.addSubview(weakSelf.spotsScrollView)
+      }
+
+      weakSelf.spotsScrollView.contentView.subviews.forEach { $0.removeFromSuperview() }
+      weakSelf.setupSpots(animated)
+      weakSelf.spotsScrollView.forceUpdate = true
+
+      closure?()
     }
-
-    spotsScrollView.contentView.subviews.forEach { $0.removeFromSuperview() }
-    setupSpots(animated)
-    spotsScrollView.forceUpdate = true
-
-    closure?()
   }
 
   /**
