@@ -1,6 +1,7 @@
 import Foundation
 import Sugar
 import Cache
+import CryptoSwift
 
 public struct SpotCache {
 
