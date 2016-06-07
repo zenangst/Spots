@@ -490,6 +490,19 @@ extension SpotsController {
   public func cache() {
     stateCache?.save(dictionary)
   }
+
+  #if DEVMODE
+  private func liveEditing(stateCache: SpotCache?) {
+    guard let stateCache = stateCache where source == nil else { return }
+    CacheJSONOptions.writeOptions = .PrettyPrinted
+
+    let paths = NSSearchPathForDirectoriesInDomains(.CachesDirectory,
+                                                    NSSearchPathDomainMask.UserDomainMask, true)
+    let path = "\(paths.first!)/\(DiskStorage.prefix).\(SpotCache.cacheName)/\(stateCache.fileName())"
+    NSLog("SpotsCache -> \(stateCache.key):\nfile://\(path)")
+    delay(0.5) { self.monitor(path) }
+  }
+  #endif
 }
 
 // MARK: - Private methods
