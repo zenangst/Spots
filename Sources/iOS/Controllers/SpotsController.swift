@@ -251,24 +251,28 @@ extension SpotsController {
     let newComponents = newSpots.map { $0.component }
     let oldComponents = spots.map { $0.component }
 
-    guard oldComponents != newComponents else {
-      cache()
+    dispatch { [weak self] in
+      guard let weakSelf = self else { closure?(); return }
+
+      guard oldComponents != newComponents else {
+        weakSelf.cache()
+        closure?()
+        return
+      }
+
+      weakSelf.spots = newSpots
+      weakSelf.cache()
+
+      if weakSelf.spotsScrollView.superview == nil {
+        weakSelf.view.addSubview(weakSelf.spotsScrollView)
+      }
+
+      weakSelf.spotsScrollView.contentView.subviews.forEach { $0.removeFromSuperview() }
+      weakSelf.setupSpots(animated)
+      weakSelf.spotsScrollView.forceUpdate = true
+
       closure?()
-      return
     }
-
-    spots = newSpots
-    cache()
-
-    if spotsScrollView.superview == nil {
-      view.addSubview(spotsScrollView)
-    }
-
-    spotsScrollView.contentView.subviews.forEach { $0.removeFromSuperview() }
-    setupSpots(animated)
-    spotsScrollView.forceUpdate = true
-
-    closure?()
   }
 
   /**
