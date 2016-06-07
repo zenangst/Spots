@@ -32,6 +32,11 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     }
   }
 
+  #if DEVMODE
+  public let fileQueue: dispatch_queue_t = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
+  public var source: dispatch_source_t!
+  #endif
+
   public var stateCache: SpotCache?
 
   /// A delegate for when an item is tapped within a Spot
