@@ -29,7 +29,7 @@ public struct SpotCache {
     cache.remove(key)
   }
 
-  func fileName() -> String {
+  public func fileName() -> String {
     if let digest = key.dataUsingEncoding(NSUTF8StringEncoding)?.md5() {
       var string = ""
       var byte: UInt8 = 0
