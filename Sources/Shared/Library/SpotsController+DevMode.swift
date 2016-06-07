@@ -3,7 +3,7 @@ import Sugar
 
 extension SpotsController {
 
-  func dispatchSource(filePath: String) {
+  func monitor(filePath: String) {
     source = dispatch_source_create(
       DISPATCH_SOURCE_TYPE_VNODE,
       UInt(open(filePath, O_EVTONLY)),
