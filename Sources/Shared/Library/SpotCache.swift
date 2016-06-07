@@ -1,6 +1,7 @@
 import Foundation
 import Sugar
 import Cache
+import CryptoSwift
 
 public struct SpotCache {
 
@@ -27,5 +28,21 @@ public struct SpotCache {
 
   func clear() {
     cache.remove(key)
+  }
+
+  func fileName() -> String {
+    if let digest = key.dataUsingEncoding(NSUTF8StringEncoding)?.md5() {
+      var string = ""
+      var byte: UInt8 = 0
+
+      for i in 0 ..< digest.length {
+        digest.getBytes(&byte, range: NSRange(location: i, length: 1))
+        string += String(format: "%02x", byte)
+      }
+
+      return string
+    }
+
+    return ""
   }
 }

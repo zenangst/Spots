@@ -8,7 +8,7 @@ extension SpotsController {
 
   /**
    Tells the delegate when the user scrolls the content view within the receiver.
-   
+
    - Parameter scrollView: The scroll-view object in which the scrolling occurred.
  */
   public func scrollViewDidScroll(scrollView: UIScrollView) {
@@ -25,8 +25,8 @@ extension SpotsController {
     guard let delegate = spotsScrollDelegate else { return }
 
     // Scroll did reach top
-    if spotsScrollView.contentOffset.y < 0 &&
-      abs(spotsScrollView.contentOffset.y) == spotsScrollView.contentInset.top &&
+    if scrollView.contentOffset.y < 0 &&
+      abs(scrollView.contentOffset.y) == scrollView.contentInset.top &&
       !refreshing {
         refreshing = true
         delegate.spotDidReachBeginning {
