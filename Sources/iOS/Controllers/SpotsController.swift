@@ -500,7 +500,7 @@ extension SpotsController {
 
   #if DEVMODE
   private func liveEditing(stateCache: SpotCache?) {
-    guard let stateCache = stateCache where source == nil else { return }
+    guard let stateCache = stateCache where source == nil && Simulator.isRunning else { return }
     CacheJSONOptions.writeOptions = .PrettyPrinted
 
     let paths = NSSearchPathForDirectoriesInDomains(.CachesDirectory,
