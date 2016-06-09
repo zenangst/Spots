@@ -246,7 +246,7 @@ extension SpotsController {
    - Parameter json: A JSON dictionary that gets parsed into UI elements
    - Parameter completion: A closure that will be run after reload has been performed on all spots
   */
-  public func reloadIfNeeded(json: [String : AnyObject], animated: ((view: UIView) -> Void)? = nil, closure: Completion = nil) {
+  public func reloadIfNeeded(json: [String : AnyObject], compare: ((lhs: [Component], rhs: [Component]) -> Bool) = { lhs, rhs in return lhs != rhs }, animated: ((view: UIView) -> Void)? = nil, closure: Completion = nil) {
     dispatch { [weak self] in
       guard let weakSelf = self else { closure?(); return }
 
@@ -254,7 +254,7 @@ extension SpotsController {
       let newComponents = newSpots.map { $0.component }
       let oldComponents = weakSelf.spots.map { $0.component }
 
-      guard oldComponents != newComponents else {
+      guard compare(lhs: newComponents, rhs: oldComponents) else {
         weakSelf.cache()
         closure?()
         return
