@@ -55,7 +55,7 @@ public struct Component: Mappable {
       width = size.width
       height = size.height
     }
-  
+
     let JSONItems: [JSONDictionary] = items.map { $0.dictionary }
     let JSONComponents: JSONDictionary = [
       Key.Index.string : index,
@@ -128,6 +128,8 @@ public struct Component: Mappable {
   }
 }
 
+// Compare a collection of view models
+
 /**
  A collection of Component Equatable implementation
  - Parameter lhs: Left hand component
@@ -147,6 +149,28 @@ public func ==(lhs: [Component], rhs: [Component]) -> Bool {
   return equal
 }
 
+public func ===(lhs: [Component], rhs: [Component]) -> Bool {
+  var equal = lhs.count == rhs.count
+
+  if !equal { return false }
+
+  for (index, item) in lhs.enumerate() {
+    if item !== rhs[index] { equal = false; break }
+  }
+
+  return equal
+}
+
+public func !=(lhs: [Component], rhs: [Component]) -> Bool {
+  return !(lhs == rhs)
+}
+
+public func !==(lhs: [Component], rhs: [Component]) -> Bool {
+  return !(lhs === rhs)
+}
+
+/// Compare view models
+
 public func ==(lhs: Component, rhs: Component) -> Bool {
   return lhs.title == rhs.title &&
     lhs.kind == rhs.kind &&
@@ -155,10 +179,18 @@ public func ==(lhs: Component, rhs: Component) -> Bool {
     lhs.items == rhs.items
 }
 
-public func !=(lhs: [Component], rhs: [Component]) -> Bool {
-  return !(lhs == rhs)
+public func ===(lhs: Component, rhs: Component) -> Bool {
+  return lhs.title == rhs.title &&
+    lhs.kind == rhs.kind &&
+    lhs.span == rhs.span &&
+    (lhs.meta as NSDictionary).isEqual(rhs.meta as NSDictionary) &&
+    lhs.items === rhs.items
 }
 
 public func !=(lhs: Component, rhs: Component) -> Bool {
   return !(lhs == rhs)
+}
+
+public func !==(lhs: Component, rhs: Component) -> Bool {
+  return !(lhs === rhs)
 }
