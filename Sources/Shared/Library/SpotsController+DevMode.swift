@@ -23,15 +23,7 @@ extension SpotsController {
           json = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? [String : AnyObject] {
           dispatch_source_cancel(self.source)
           self.source = nil
-          guard let spot = spot(index, Spotable.self) where !(spot.items === items) else {
-            self.cache()
-            return
-          }
-
-          self.update(spotAtIndex: index, withCompletion: completion, {
-            $0.items = items
-            self.cache()
-          })
+          self.reloadIfNeeded(json, compare: { $0 !== $1 })
         }
       } catch let error {
         dispatch_source_cancel(self.source)
