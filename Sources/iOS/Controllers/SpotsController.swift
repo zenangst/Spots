@@ -124,8 +124,9 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
 
 #if DEVMODE
   deinit {
-    dispatch_source_cancel(source)
-    source = nil
+    if let source = source {
+      dispatch_source_cancel(source)
+    }
   }
 #endif
 
