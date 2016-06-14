@@ -1,18 +1,18 @@
 PODS:
-  - Brick (0.8.1):
+  - Brick (0.8.2):
     - Sugar (~> 1.0)
     - Tailor
-  - Cache (1.3.0):
+  - Cache (1.4.0):
     - CryptoSwift
-  - Compass (2.0.0):
+  - Compass (3.0.0):
     - Sugar
-  - CryptoSwift (0.4.1)
+  - CryptoSwift (0.5)
   - Fakery (1.2.0):
     - SwiftyJSON
   - Hue (1.1)
   - Imaginary (0.1.0):
     - Cache
-  - Spots (1.8.3):
+  - Spots (1.9.4):
     - Brick
     - Cache
     - Sugar
@@ -48,30 +48,30 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   Cache:
-    :commit: 5b2cdfc5ce9e6d9e3b36059231fd78b89bc9979f
+    :commit: d6f0b013cbe9ede4b5fe5a8b615220abce0327d6
     :git: https://github.com/hyperoslo/Cache
   Compass:
-    :commit: 1069cd991eb3a35df3cf1bb09e56f535613132f9
+    :commit: ef73279b2d22e3af204c040e478dcd4c2b5b7944
     :git: https://github.com/hyperoslo/Compass
   Hue:
-    :commit: 89ae5e19abc17e5ef87ad823a08250c0671a79e9
+    :commit: 43404964a799dd0c8affc2d4631ead33df8e04f1
     :git: https://github.com/hyperoslo/Hue
   Imaginary:
-    :commit: 3a11aad63dabe4812ca1ff83e04f2096d9c38729
+    :commit: 7e122dc1bd463c25b39057b1d31c3237efcb8276
     :git: https://github.com/hyperoslo/Imaginary
   Transition:
     :commit: 0d94057f824787973ae34bac4906164e3d6a2c8b
     :git: https://github.com/hyperoslo/Transition
 
 SPEC CHECKSUMS:
-  Brick: e61cc63552ceb1546e4c728d6fd62cc9fbeba03c
-  Cache: b8abf7795a6d72f9d5b924d1367624a53fe777a9
-  Compass: a5793a890400a010a9a4eb6547c014e982483a2c
-  CryptoSwift: 25b5aff3f260967391f8fff2e9abe4254d2c6fd5
+  Brick: c5b60d83f69c5e882097ee4e9bf12abd428e395a
+  Cache: 059cf0e10e6c3aec2c402eea19bd6b3aacb3fe9d
+  Compass: a3c2e008e328b5773501df6186d5f64771cd82ce
+  CryptoSwift: b89d89caad9e5bc417b054078635eeb22bcddf54
   Fakery: ff6a27c3688a05c055d3e64c5fa9d78684796749
   Hue: c7d6a7206bac669ed69e78cc6c14a4d7bd28277c
   Imaginary: 5317b8d2dc8ecf20455232226bf8a277abdd37d5
-  Spots: 2be44750b05034e4d977072a411c83a64a10e4d1
+  Spots: 987f628580c294d4727244a68a1bd0e9c19b65cc
   Sugar: bed396c924fd089feee7c780778cca2a124f580c
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   Tailor: 38a9f1ed1fa804856583396a55ed764d832eeca8

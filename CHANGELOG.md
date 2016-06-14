@@ -2,7 +2,19 @@
 
 ## [Unreleased](https://github.com/hyperoslo/Spots/tree/HEAD)
 
-[Full Changelog](https://github.com/hyperoslo/Spots/compare/1.9.3...HEAD)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/1.9.4...HEAD)
+
+**Merged pull requests:**
+
+- Improve/live editing [\#245](https://github.com/hyperoslo/Spots/pull/245) ([zenangst](https://github.com/zenangst))
+- Fix dispatch updates [\#244](https://github.com/hyperoslo/Spots/pull/244) ([zenangst](https://github.com/zenangst))
+- Restrict to only run liveEditing in simulator [\#243](https://github.com/hyperoslo/Spots/pull/243) ([zenangst](https://github.com/zenangst))
+- Improve/live editing [\#242](https://github.com/hyperoslo/Spots/pull/242) ([zenangst](https://github.com/zenangst))
+- Feature live editing mode [\#241](https://github.com/hyperoslo/Spots/pull/241) ([zenangst](https://github.com/zenangst))
+- Expose cache and cache load method [\#240](https://github.com/hyperoslo/Spots/pull/240) ([zenangst](https://github.com/zenangst))
+
+## [1.9.4](https://github.com/hyperoslo/Spots/tree/1.9.4) (2016-06-01)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/1.9.3...1.9.4)
 
 **Implemented enhancements:**
 

@@ -122,6 +122,14 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     fatalError("init(coder:) has not been implemented")
   }
 
+#if DEVMODE
+  deinit {
+    if let source = source {
+      dispatch_source_cancel(source)
+    }
+  }
+#endif
+
   // MARK: - View Life Cycle
 
   /// Called after the spot controller's view is loaded into memory.
