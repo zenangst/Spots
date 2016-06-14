@@ -4,6 +4,8 @@ import Sugar
 extension SpotsController {
 
   func monitor(filePath: String) {
+    guard NSFileManager.defaultManager().fileExistsAtPath(filePath) else { return }
+
     source = dispatch_source_create(
       DISPATCH_SOURCE_TYPE_VNODE,
       UInt(open(filePath, O_EVTONLY)),
