@@ -102,7 +102,9 @@ public class CarouselSpot: NSObject, Gridable {
       }
     }
 
+    #if os(iOS)
     paginate ?= component.meta("paginate", type: Bool.self)
+    #endif
 
     CarouselSpot.configure?(view: collectionView, layout: layout)
 
