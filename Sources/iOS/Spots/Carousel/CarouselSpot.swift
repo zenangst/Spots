@@ -102,6 +102,8 @@ public class CarouselSpot: NSObject, Gridable {
       }
     }
 
+    paginate ?= component.meta("paginate", type: Bool.self)
+
     CarouselSpot.configure?(view: collectionView, layout: layout)
 
     guard pageIndicator else { return }
