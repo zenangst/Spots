@@ -82,7 +82,7 @@ public class CarouselSpot: NSObject, Gridable {
 
   public convenience init(cacheKey: String) {
     let stateCache = SpotCache(key: cacheKey)
-    
+
     self.init(component: Component(stateCache.load()))
     self.stateCache = stateCache
 
