@@ -6,6 +6,8 @@
 
 **Merged pull requests:**
 
+- Minor improvements [\#247](https://github.com/hyperoslo/Spots/pull/247) ([zenangst](https://github.com/zenangst))
+- Improve/live editing [\#246](https://github.com/hyperoslo/Spots/pull/246) ([zenangst](https://github.com/zenangst))
 - Improve/live editing [\#245](https://github.com/hyperoslo/Spots/pull/245) ([zenangst](https://github.com/zenangst))
 - Fix dispatch updates [\#244](https://github.com/hyperoslo/Spots/pull/244) ([zenangst](https://github.com/zenangst))
 - Restrict to only run liveEditing in simulator [\#243](https://github.com/hyperoslo/Spots/pull/243) ([zenangst](https://github.com/zenangst))
