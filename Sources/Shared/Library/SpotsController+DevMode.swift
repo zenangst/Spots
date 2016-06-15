@@ -25,7 +25,10 @@ extension SpotsController {
           json = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? [String : AnyObject] {
           dispatch_source_cancel(self.source)
           self.source = nil
-          self.reloadIfNeeded(json, compare: { $0 !== $1 })
+          let offset = self.spotsScrollView.contentOffset
+          self.reloadIfNeeded(json, compare: { $0 !== $1 }) {
+            self.spotsScrollView.contentOffset = offset
+          }
         }
       } catch let error {
         dispatch_source_cancel(self.source)
