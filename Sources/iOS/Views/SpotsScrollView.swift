@@ -85,12 +85,7 @@ public class SpotsScrollView: UIScrollView {
 
   public override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
     if let change = change where context == KVOContext {
-      if let scrollView = object as? UIScrollView,
-        oldContentSize = change[NSKeyValueChangeOldKey]?.CGSizeValue() {
-        guard scrollView.contentSize != oldContentSize else { return }
-        setNeedsLayout()
-        layoutIfNeeded()
-      } else if let view = object as? UIView,
+      if let view = object as? UIView,
         oldContentSize = change[NSKeyValueChangeOldKey]?.CGRectValue {
         guard view.frame != oldContentSize else { return }
         setNeedsLayout()

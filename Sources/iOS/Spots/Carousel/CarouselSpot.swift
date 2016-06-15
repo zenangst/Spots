@@ -59,7 +59,6 @@ public class CarouselSpot: NSObject, Gridable {
   }
 
   public lazy var collectionView: UICollectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: self.layout).then {
-    $0.backgroundColor = UIColor.whiteColor()
     $0.dataSource = self.adapter
     $0.delegate = self.adapter
     $0.showsHorizontalScrollIndicator = false
@@ -83,7 +82,7 @@ public class CarouselSpot: NSObject, Gridable {
 
   public convenience init(cacheKey: String) {
     let stateCache = SpotCache(key: cacheKey)
-    
+
     self.init(component: Component(stateCache.load()))
     self.stateCache = stateCache
 
@@ -102,6 +101,8 @@ public class CarouselSpot: NSObject, Gridable {
         collectionView.height += layout.sectionInset.top + layout.sectionInset.bottom
       }
     }
+
+    paginate ?= component.meta("paginate", type: Bool.self)
 
     CarouselSpot.configure?(view: collectionView, layout: layout)
 
