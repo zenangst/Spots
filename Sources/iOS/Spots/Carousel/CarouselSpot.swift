@@ -59,7 +59,6 @@ public class CarouselSpot: NSObject, Gridable {
   }
 
   public lazy var collectionView: UICollectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: self.layout).then {
-    $0.backgroundColor = UIColor.whiteColor()
     $0.dataSource = self.adapter
     $0.delegate = self.adapter
     $0.showsHorizontalScrollIndicator = false
