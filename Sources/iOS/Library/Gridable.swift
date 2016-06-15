@@ -331,7 +331,7 @@ public extension Spotable where Self : Gridable {
   private func perform(spotAnimation: SpotsAnimation, withIndex index: Int, completion: () -> Void) {
     guard let cell = collectionView.cellForItemAtIndexPath(NSIndexPath(forItem: index, inSection: 0))
       else { completion(); return }
-      
+
     let animation = CABasicAnimation()
 
     switch spotAnimation {
