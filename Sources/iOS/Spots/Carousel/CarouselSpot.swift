@@ -104,6 +104,7 @@ public class CarouselSpot: NSObject, Gridable {
 
     #if os(iOS)
     paginate ?= component.meta("paginate", type: Bool.self)
+    pageIndicator ?= component.meta("pageIndicator", type: Bool.self)
     #endif
 
     CarouselSpot.configure?(view: collectionView, layout: layout)
@@ -116,6 +117,10 @@ public class CarouselSpot: NSObject, Gridable {
 }
 
 extension CarouselSpot: UIScrollViewDelegate {
+
+  public func scrollViewDidScroll(scrollView: UIScrollView) {
+    carouselScrollDelegate?.spotDidScroll(self)
+  }
 
   public func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
     #if os(iOS)
