@@ -32,6 +32,10 @@ extension CollectionAdapter : UIScrollViewDelegate {
   public func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
     (spot as? CarouselSpot)?.scrollViewWillEndDragging(scrollView, withVelocity: velocity, targetContentOffset: targetContentOffset)
   }
+
+  public func scrollViewDidScroll(scrollView: UIScrollView) {
+    (spot as? CarouselSpot)?.scrollViewDidScroll(scrollView)
+  }
 }
 
 extension CollectionAdapter : UICollectionViewDelegate {

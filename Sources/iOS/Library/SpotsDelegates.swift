@@ -67,6 +67,8 @@ public extension SpotsScrollDelegate {
 
 public protocol SpotsCarouselScrollDelegate: class {
 
+  func spotDidScroll(spot: Spotable)
+
   /**
    - Parameter spot: Object that comforms to the Spotable protocol
    - Parameter item: The last view model in the component
