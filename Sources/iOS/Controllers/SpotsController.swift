@@ -227,6 +227,7 @@ extension SpotsController {
 
    - Parameter index: The index of the spot that you are trying to resolve
    - Parameter type: The generic type for the spot you are trying to resolve
+   - Returns: A generic Spotable object
    */
   public func spot<T>(index: Int = 0, _ type: T.Type) -> T? {
     return spots.filter({ $0.index == index }).first as? T
@@ -236,6 +237,7 @@ extension SpotsController {
    A generic look up method for resolving spots using a closure
 
    - Parameter closure: A closure to perform actions on a spotable object
+   - Returns: An optional Spotable object
    */
   public func spot(@noescape closure: (index: Int, spot: Spotable) -> Bool) -> Spotable? {
     for (index, spot) in spots.enumerate()
@@ -247,15 +249,19 @@ extension SpotsController {
 
   /**
    - Parameter includeElement: A filter predicate to find a spot
+   - Returns: A collection of Spotable objects
    */
   public func filter(@noescape includeElement: (Spotable) -> Bool) -> [Spotable] {
     return spots.filter(includeElement)
   }
 
   /**
-   - Parameter completion: A closure that will be run after reload has been performed on all spots
+   Reload all Spotable objects
+
+   - Parameter animation:  Determines which animation should be used for reloading.
+   - Parameter completion: A closure that will be run after reload has been performed on all spots.
    */
-  public func reload(animated: Bool = true, withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
+  public func reload(withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
     var spotsLeft = spots.count
 
     dispatch { [weak self] in
