@@ -143,11 +143,13 @@ public extension Spotable where Self : Gridable {
    */
   public func prepend(items: [ViewModel], withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     var indexes = [Int]()
-    let count = component.items.count
 
-    for (index, item) in items.enumerate() {
-      indexes.append(items.count - index)
-      component.items.insert(item, atIndex: 0)
+    component.items.insertContentsOf(items, at: 0)
+
+    var cached: UIView?
+    items.enumerate().forEach {
+      indexes.append(items.count - 1 - $0.index)
+      prepareItem($0.element, index: $0.index, cached: &cached)
     }
 
     dispatch { [weak self] in
