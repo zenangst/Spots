@@ -152,7 +152,7 @@ public extension Spotable {
 
   /**
    Caches the current state of the spot
-  */
+   */
   public func cache() {
     stateCache?.save(dictionary)
   }
@@ -186,6 +186,10 @@ public extension Spotable {
 
     if component.items[index].size.height == 0 {
       component.items[index].size.height = view.size.height
+    }
+
+    if component.items[index].size.width == 0 {
+      component.items[index].size.width = view.size.width
     }
   }
 

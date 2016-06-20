@@ -16,7 +16,7 @@ public enum SpotsAnimation : Int {
   /**
    Resolves a SpotsAnimation into a UITableViewRowAnimation
    */
-  var tableViewAnimation: UITableViewRowAnimation  {
+  var tableViewAnimation: UITableViewRowAnimation {
     switch self {
     case .Fade:
       return UITableViewRowAnimation.Fade

@@ -4,7 +4,7 @@ import Brick
 
 /// Gridable is protocol for Spots that are based on UICollectionView
 public protocol Gridable: Spotable {
-  // The layout object used to initialize the collection spot controller.
+  /// The layout object used to initialize the collection spot controller.
   var layout: UICollectionViewFlowLayout { get }
   /// The collection view object managed by this gridable object.
   var collectionView: UICollectionView { get }
@@ -34,7 +34,7 @@ public extension Spotable where Self : Gridable {
   public init(_ component: Component, top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0, itemSpacing: CGFloat = 0) {
     self.init(component: component)
 
-    layout.sectionInset = UIEdgeInsetsMake(top, left, bottom, right)
+    layout.sectionInset = UIEdgeInsets(top: top, left: left, bottom: bottom, right: right)
     layout.minimumInteritemSpacing = itemSpacing
   }
 
@@ -64,17 +64,17 @@ public extension Spotable where Self : Gridable {
    */
   public func append(item: ViewModel, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     var indexes = [Int]()
-    let count = component.items.count
+    let itemsCount = component.items.count
 
     for (index, item) in items.enumerate() {
       component.items.append(item)
-      indexes.append(count + index)
+      indexes.append(itemsCount + index)
     }
 
     dispatch { [weak self] in
       guard let weakSelf = self else { return }
 
-      if count > 0 {
+      if itemsCount > 0 {
         weakSelf.collectionView.insert(indexes, completion: completion)
       } else {
         weakSelf.collectionView.reloadData()
@@ -102,7 +102,7 @@ public extension Spotable where Self : Gridable {
     dispatch { [weak self] in
       guard let weakSelf = self else { return }
 
-      if count > 0 {
+      if itemsCount > 0 {
         weakSelf.collectionView.insert(indexes, completion: completion)
       } else {
         weakSelf.collectionView.reloadData()
@@ -120,14 +120,14 @@ public extension Spotable where Self : Gridable {
   public func insert(item: ViewModel, index: Int, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     component.items.insert(item, atIndex: index)
     var indexes = [Int]()
-    let count = component.items.count
+    let itemsCount = component.items.count
 
     indexes.append(index)
 
     dispatch { [weak self] in
       guard let weakSelf = self else { return }
 
-      if count > 0 {
+      if itemsCount > 0 {
         weakSelf.collectionView.insert(indexes, completion: completion)
       } else {
         weakSelf.collectionView.reloadData()
@@ -155,12 +155,7 @@ public extension Spotable where Self : Gridable {
     dispatch { [weak self] in
       guard let weakSelf = self else { return }
 
-      if count > 0 {
-        weakSelf.collectionView.insert(indexes, completion: completion)
-      } else {
-        weakSelf.collectionView.reloadData()
-        completion?()
-      }
+      weakSelf.collectionView.insert(indexes, completion: completion)
     }
   }
 
@@ -318,7 +313,7 @@ public extension Spotable where Self : Gridable {
     let width = item(indexPath).size.width - collectionView.contentInset.left - layout.sectionInset.left - layout.sectionInset.right
 
     // Never return a negative width
-    guard width > -1 else { return CGSizeZero }
+    guard width > -1 else { return CGSize.zero }
 
     return CGSize(
       width: floor(width),

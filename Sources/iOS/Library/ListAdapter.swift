@@ -3,14 +3,14 @@ import UIKit
 /**
  The ListAdapter works as a proxy handler for all Listable object
  */
-public class ListAdapter : NSObject {
+public class ListAdapter: NSObject {
   // An unowned Gridable object
   unowned var spot: Listable
 
   /**
-   Initialization a new instance of a CollectionAdapter using a Gridable object
+   Initialization a new instance of a ListAdapter using a Listable object
 
-   - Parameter gridable: A Gridable object
+   - Parameter spot: A Listable object
    */
   init(spot: Listable) {
     self.spot = spot
@@ -26,9 +26,9 @@ extension ListAdapter: UITableViewDelegate {
    Asks the delegate for the height to use for the header of a particular section.
 
    - Parameter tableView	: The table-view object requesting this information.
-   - Parameter section: An index number identifying a section of tableView .
+   - Parameter heightForHeaderInSection: An index number identifying a section of tableView.
    - Returns: Returns the `headerHeight` found in `component.meta`, otherwise 0.0.
-   */
+   **/
   public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
     return spot.component.meta("headerHeight", 0.0)
   }
@@ -39,7 +39,7 @@ extension ListAdapter: UITableViewDelegate {
    - Parameter tableView	: The table-view object asking for the title.
    - Parameter section: An index number identifying a section of tableView.
    - Returns: A string to use as the title of the section header. Will return `nil` if title is not present on Component
-   */
+   **/
   public func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
     return spot.component.title.isPresent ? spot.component.title : nil
   }
@@ -49,7 +49,7 @@ extension ListAdapter: UITableViewDelegate {
 
    - Parameter tableView	: A table-view object informing the delegate about the new row selection.
    - Parameter indexPath: An index path locating the new selected row in tableView.
-   */
+   **/
   public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     tableView.deselectRowAtIndexPath(indexPath, animated: true)
     spot.spotsDelegate?.spotDidSelectItem(spot, item: spot.item(indexPath))
@@ -61,7 +61,7 @@ extension ListAdapter: UITableViewDelegate {
    - Parameter tableView	: The table-view object asking for the view object.
    - Parameter section: An index number identifying a section of tableView.
    - Returns: A view object to be displayed in the header of section based on the kind of the ListSpot and registered headers.
- */
+   **/
   public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
     guard spot.component.meta("headerHeight", type: CGFloat.self) != 0.0 else { return nil }
 

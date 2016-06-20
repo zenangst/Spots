@@ -161,6 +161,12 @@ public func ===(lhs: [Component], rhs: [Component]) -> Bool {
   return equal
 }
 
+/**
+ Check if to collection of components are not equal
+ - Parameter lhs: Left hand component
+ - Parameter rhs: Right hand component
+ - Returns: A boolean value, true if both Components are no equal
+ */
 public func !=(lhs: [Component], rhs: [Component]) -> Bool {
   return !(lhs == rhs)
 }

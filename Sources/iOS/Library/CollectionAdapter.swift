@@ -3,7 +3,7 @@ import UIKit
 /**
  The CollectionAdapter works as a proxy handler for all Gridable object
  */
-public class CollectionAdapter : NSObject {
+public class CollectionAdapter: NSObject {
   // An unowned Gridable object
   unowned var spot: Gridable
 
@@ -89,7 +89,7 @@ extension CollectionAdapter : UICollectionViewDelegate {
   }
 }
 
-extension CollectionAdapter : UICollectionViewDataSource  {
+extension CollectionAdapter : UICollectionViewDataSource {
 
   /**
    Asks the data source for the number of items in the specified section. (required)
