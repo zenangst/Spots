@@ -20,7 +20,7 @@ public class GridSpot: NSObject, Gridable {
   public lazy var layout = UICollectionViewFlowLayout()
   public private(set) var stateCache: SpotCache?
 
-  public lazy var collectionView: UICollectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: self.layout).then {
+  public lazy var collectionView: UICollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: self.layout).then {
     $0.dataSource = self.adapter
     $0.delegate = self.adapter
     $0.scrollEnabled = false

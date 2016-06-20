@@ -58,7 +58,7 @@ public class CarouselSpot: NSObject, Gridable {
     $0.scrollDirection = .Horizontal
   }
 
-  public lazy var collectionView: UICollectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: self.layout).then {
+  public lazy var collectionView: UICollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: self.layout).then {
     $0.dataSource = self.adapter
     $0.delegate = self.adapter
     $0.showsHorizontalScrollIndicator = false

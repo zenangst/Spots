@@ -3,7 +3,7 @@ import UIKit
 /**
  The type of animation when items are inserted or deleted.
  */
-public enum SpotsAnimation : Int {
+public enum SpotsAnimation: Int {
   case Fade
   case Right
   case Left
