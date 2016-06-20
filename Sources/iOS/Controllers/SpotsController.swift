@@ -26,6 +26,7 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
   /// A bool value to indicate if the SpotsController is refeshing
   public var refreshing = false
 
+  /// A dictionary representation of the controller
   public var dictionary: JSONDictionary {
     get {
       return ["components" : spots.map { $0.component.dictionary }]
@@ -33,10 +34,13 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
   }
 
   #if DEVMODE
+  /// A dispatch queue is a lightweight object to which your application submits blocks for subsequent execution.
   public let fileQueue: dispatch_queue_t = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
+  /// An identifier for the type system object being monitored by a dispatch source.
   public var source: dispatch_source_t!
   #endif
 
+  /// An optional SpotCache used for view controller caching
   public var stateCache: SpotCache?
 
   /// A delegate for when an item is tapped within a Spot
@@ -98,7 +102,7 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
   /**
    - Parameter spot: A Spotable object
    */
-  public convenience init(spot: Spotable)  {
+  public convenience init(spot: Spotable) {
     self.init(spots: [spot])
   }
 
@@ -192,8 +196,11 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     let paths = NSSearchPathForDirectoriesInDomains(.CachesDirectory,
                                                     NSSearchPathDomainMask.UserDomainMask, true)
     let path = "\(paths.first!)/\(DiskStorage.prefix).\(SpotCache.cacheName)"
-    do { try NSFileManager.defaultManager().removeItemAtPath(path) }
-    catch { NSLog("Could not remove cache at path: \(path)") }
+    do {
+      try NSFileManager.defaultManager().removeItemAtPath(path)
+    } catch {
+      NSLog("Could not remove cache at path: \(path)")
+    }
   }
 }
 
@@ -376,7 +383,7 @@ extension SpotsController {
    - Parameter closure: A completion closure that will run after the spot has performed updates internally
    */
   public func prepend(items: [ViewModel], spotIndex: Int = 0, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
-    spot(spotIndex, Spotable.self)?.prepend(items, withAnimation: animation)  {
+    spot(spotIndex, Spotable.self)?.prepend(items, withAnimation: animation) {
       completion?()
       self.spotsScrollView.forceUpdate = true
     }
@@ -390,7 +397,7 @@ extension SpotsController {
    - Parameter closure: A completion closure that will run after the spot has performed updates internally
    */
   public func insert(item: ViewModel, index: Int = 0, spotIndex: Int, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
-    spot(spotIndex, Spotable.self)?.insert(item, index: index, withAnimation: animation)  {
+    spot(spotIndex, Spotable.self)?.insert(item, index: index, withAnimation: animation) {
       completion?()
       self.spotsScrollView.forceUpdate = true
     }
@@ -411,7 +418,7 @@ extension SpotsController {
         return
     }
 
-    spot(spotIndex, Spotable.self)?.update(item, index: index, withAnimation: animation)  {
+    spot(spotIndex, Spotable.self)?.update(item, index: index, withAnimation: animation) {
       completion?()
       self.spotsScrollView.forceUpdate = true
     }
