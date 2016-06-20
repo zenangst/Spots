@@ -1,5 +1,8 @@
-import UIKit
 import Brick
+
+#if os(iOS)
+  import UIKit
+#endif
 
 /// A generic delegate for Spots
 public protocol SpotsDelegate: class {
