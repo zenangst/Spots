@@ -12,13 +12,24 @@ public protocol Spotable: class {
   /// The default kind to fall back to if the view model kind does not exist when trying to display the spotable item
   static var defaultKind: StringConvertible { get }
 
+  /// A SpotsDelegate object
   weak var spotsDelegate: SpotsDelegate? { get set }
 
+  /// The index of a Spotable object
   var index: Int { get set }
+  /// The component of a Spotable object
   var component: Component { get set }
+  /// A configuration closure for a SpotConfigurable object
   var configure: (SpotConfigurable -> Void)? { get set }
+  /// A cache for a Spotable object
   var stateCache: SpotCache? { get }
 
+  /**
+   Initialize a Spotable object with a Component
+
+   - Parameter component: The component that the Spotable object should be initialized with
+   - Returns: A Spotable object
+   */
   init(component: Component)
 
   /// Setup Spotable object with size
@@ -69,7 +80,8 @@ public extension Spotable {
   }
 
   /**
-   - Parameter spot: Spotable
+   A method to register and prepare a ViewModel
+
    - Parameter register: A closure containing class type and reuse identifer
    */
   func registerAndPrepare(@noescape register: (classType: UIView.Type, withIdentifier: String) -> Void) {
@@ -127,6 +139,13 @@ public extension Spotable {
    - Parameter items: An array of view models
    - Parameter animated: Perform reload animation
    */
+
+  /**
+   Reloads a spot only if it changes
+
+   - Parameter items:     A collection of ViewModels
+   - Parameter animation: The animation that should be used (only works for Listable objects)
+   */
   public func reloadIfNeeded(items: [ViewModel], withAnimation animation: SpotsAnimation = .Automatic) {
     guard !(self.items == items) else {
       cache()
@@ -139,6 +158,12 @@ public extension Spotable {
     }
   }
 
+  /**
+   Reload Spotable object with JSON if contents changed
+
+   - Parameter json:      A JSON dictionary
+   - Parameter animation: The animation that should be used (only works for Listable objects)
+   */
   public func reloadIfNeeded(json: JSONDictionary, withAnimation animation: SpotsAnimation = .Automatic) {
     let newComponent = Component(json)
 
@@ -172,7 +197,6 @@ public extension Spotable {
 
    - Parameter item: A view model
    - Parameter index: The index of the view model
-   - Parameter spot: The spot that should be prepared
    - Parameter cached: An optional UIView, used to reduce the amount of different reusable views that should be prepared.
    */
   public func prepareItem(item: ViewModel, index: Int, inout cached: UIView?) {
@@ -197,7 +221,7 @@ public extension Spotable {
    Cache view for item kind
 
    - Parameter item: A view model
-   - Parameter cached: An optional UIView, used to reduce the amount of different reusable views that should be prepared.
+   - Parameter cache: An optional UIView, used to reduce the amount of different reusable views that should be prepared.
    */
   func cachedViewFor(item: ViewModel, inout cache: UIView?) {
     let reuseIdentifer = item.kind.isPresent ? item.kind : component.kind
@@ -208,7 +232,10 @@ public extension Spotable {
   }
 
   /**
-   Get reuseidentifier for the item at index path, it checks if the view model kind is registered inside of the ViewRegistry, otherwise it falls back to trying to resolve the component.kind to get the reuse identifier. As a last result, it will return the default kind for the Spotable kind.
+   Get reuseidentifier for the item at index path.
+   It checks if the view model kind is registered inside of the ViewRegistry,
+   otherwise it falls back to trying to resolve the component.kind to get the reuse identifier.
+   As a last result, it will return the default kind for the Spotable kind.
 
    - Parameter indexPath: The index path of the item you are trying to resolve
    */
