@@ -122,6 +122,11 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     self.stateCache = stateCache
   }
 
+  /**
+   Init with coder
+
+   - Parameter aDecoder: An NSCoder
+   */
   public required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -146,7 +151,11 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     SpotsController.configure?(container: spotsScrollView)
   }
 
-  /// Notifies the spot controller that its view is about to be added to a view hierarchy.
+  /**
+   Notifies the spot controller that its view is about to be added to a view hierarchy.
+
+   - Parameter animated: If true, the view is being added to the window using an animation.
+   */
   public override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
 
@@ -165,7 +174,12 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
 #endif
   }
 
-  /// Notifies the container that the size of tis view is about to change.
+  /**
+   Notifies the container that the size of tis view is about to change.
+
+   - Parameter size:        The new size for the container’s view.
+   - Parameter coordinator: The transition coordinator object managing the size change. You can use this object to animate your changes or get information about the transition that is in progress.
+   */
   public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
     super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
 
@@ -315,8 +329,8 @@ extension SpotsController {
 
   /**
    - Parameter spotAtIndex: The index of the spot that you want to perform updates on
-   - Parameter animated: Perform reload animation
-   - Parameter closure: A transform closure to perform the proper modification to the target spot before updating the internals
+   - Parameter animation: An enum that indicates how the reloading is to be animated
+   - Parameter completion: A transform closure to perform the proper modification to the target spot before updating the internals
    */
   public func update(spotAtIndex index: Int = 0, withAnimation animation: SpotsAnimation = .Automatic, withCompletion completion: Completion = nil, @noescape _ closure: (spot: Spotable) -> Void) {
     guard let spot = spot(index, Spotable.self) else { completion?(); return }
@@ -339,6 +353,8 @@ extension SpotsController {
    Updates spot only if the passed view models are not the same with the current ones.
    - Parameter spotAtIndex: The index of the spot that you want to perform updates on
    - Parameter items: An array of view models
+   - Parameter animation: An enum that indicates how the reloading is to be animated
+   - Parameter completion: A completion closure that will run after the spot has performed updates internally
    */
   public func updateIfNeeded(spotAtIndex index: Int = 0, items: [ViewModel], withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
     guard let spot = spot(index, Spotable.self) where !(spot.items == items) else {
@@ -354,7 +370,8 @@ extension SpotsController {
   /**
    - Parameter item: The view model that you want to append
    - Parameter spotIndex: The index of the spot that you want to append to, defaults to 0
-   - Parameter closure: A completion closure that will run after the spot has performed updates internally
+   - Parameter animation: An enum that indicates how the reloading is to be animated
+   - Parameter completion: A completion closure that will run after the spot has performed updates internally
    */
   public func append(item: ViewModel, spotIndex: Int = 0, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     spot(spotIndex, Spotable.self)?.append(item, withAnimation: animation) {
@@ -367,7 +384,8 @@ extension SpotsController {
   /**
    - Parameter items: A collection of view models
    - Parameter spotIndex: The index of the spot that you want to append to, defaults to 0
-   - Parameter closure: A completion closure that will run after the spot has performed updates internally
+   - Parameter animation: An enum that indicates how the reloading is to be animated
+   - Parameter completion: A completion closure that will run after the spot has performed updates internally
    */
   public func append(items: [ViewModel], spotIndex: Int = 0, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     spot(spotIndex, Spotable.self)?.append(items, withAnimation: animation) {
@@ -380,7 +398,8 @@ extension SpotsController {
   /**
    - Parameter items: A collection of view models
    - Parameter spotIndex: The index of the spot that you want to prepend to, defaults to 0
-   - Parameter closure: A completion closure that will run after the spot has performed updates internally
+   - Parameter animation: An enum that indicates how the reloading is to be animated
+   - Parameter completion: A completion closure that will run after the spot has performed updates internally
    */
   public func prepend(items: [ViewModel], spotIndex: Int = 0, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     spot(spotIndex, Spotable.self)?.prepend(items, withAnimation: animation) {
@@ -394,7 +413,8 @@ extension SpotsController {
    - Parameter item: The view model that you want to insert
    - Parameter index: The index that you want to insert the view model at
    - Parameter spotIndex: The index of the spot that you want to insert into
-   - Parameter closure: A completion closure that will run after the spot has performed updates internally
+   - Parameter animation: An enum that indicates how the reloading is to be animated
+   - Parameter completion: A completion closure that will run after the spot has performed updates internally
    */
   public func insert(item: ViewModel, index: Int = 0, spotIndex: Int, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     spot(spotIndex, Spotable.self)?.insert(item, index: index, withAnimation: animation) {
@@ -408,7 +428,8 @@ extension SpotsController {
    - Parameter item: The view model that you want to update
    - Parameter index: The index that you want to insert the view model at
    - Parameter spotIndex: The index of the spot that you want to update into
-   - Parameter closure: A completion closure that will run after the spot has performed updates internally
+   - Parameter animation: An enum that indicates how the reloading is to be animated
+   - Parameter completion: A completion closure that will run after the spot has performed updates internally
    */
   public func update(item: ViewModel, index: Int = 0, spotIndex: Int, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     guard let oldItem = spot(spotIndex, Spotable.self)?.item(index) where item != oldItem
@@ -428,8 +449,8 @@ extension SpotsController {
   /**
    - Parameter indexes: An integer array of indexes that you want to update
    - Parameter spotIndex: The index of the spot that you want to update into
-   - Parameter animated: Perform reload animation
-   - Parameter closure: A completion closure that will run after the spot has performed updates internally
+   - Parameter animation: An enum that indicates how the reloading is to be animated
+   - Parameter completion: A completion closure that will run after the spot has performed updates internally
    */
   public func update(indexes indexes: [Int], spotIndex: Int = 0, withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
     spot(spotIndex, Spotable.self)?.reload(indexes, withAnimation: animation) {
@@ -442,7 +463,8 @@ extension SpotsController {
   /**
    - Parameter index: The index of the view model that you want to remove
    - Parameter spotIndex: The index of the spot that you want to remove into
-   - Parameter closure: A completion closure that will run after the spot has performed updates internally
+   - Parameter animation: An enum that indicates how the reloading is to be animated
+   - Parameter completion: A completion closure that will run after the spot has performed updates internally
    */
   public func delete(index: Int, spotIndex: Int = 0, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     spot(spotIndex, Spotable.self)?.delete(index, withAnimation: animation) {
@@ -455,7 +477,8 @@ extension SpotsController {
   /**
    - Parameter indexes: A collection of indexes for view models that you want to remove
    - Parameter spotIndex: The index of the spot that you want to remove into
-   - Parameter closure: A completion closure that will run after the spot has performed updates internally
+   - Parameter animation: An enum that indicates how the reloading is to be animated
+   - Parameter completion: A completion closure that will run after the spot has performed updates internally
    */
   public func delete(indexes indexes: [Int], spotIndex: Int = 0, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     spot(spotIndex, Spotable.self)?.delete(indexes, withAnimation: animation) {
@@ -466,6 +489,11 @@ extension SpotsController {
   }
 
 #if os(iOS)
+  /**
+   A refresh action for when the SpotsControllers refresh control is invoked
+
+   - Parameter refreshControl: The refresh control target to which the action message is sent.
+   */
   public func refreshSpots(refreshControl: UIRefreshControl) {
     dispatch { [weak self] in
       guard let weakSelf = self else { return }
@@ -534,14 +562,16 @@ extension SpotsController {
 
   /**
    - Parameter indexPath: The index path of the component you want to lookup
-   */
+   - Returns: A Component object at index path
+   **/
   private func component(indexPath: NSIndexPath) -> Component {
     return spot(indexPath).component
   }
 
   /**
    - Parameter indexPath: The index path of the spot you want to lookup
-   */
+   - Returns: A Spotable object at index path
+   **/
   private func spot(indexPath: NSIndexPath) -> Spotable {
     return spots[indexPath.item]
   }

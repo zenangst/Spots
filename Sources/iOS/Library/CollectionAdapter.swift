@@ -33,6 +33,11 @@ extension CollectionAdapter : UIScrollViewDelegate {
     (spot as? CarouselSpot)?.scrollViewWillEndDragging(scrollView, withVelocity: velocity, targetContentOffset: targetContentOffset)
   }
 
+  /**
+   Tells the delegate when the user scrolls the content view within the receiver.
+
+   - Parameter scrollView: The scroll-view object in which the scrolling occurred.
+   */
   public func scrollViewDidScroll(scrollView: UIScrollView) {
     (spot as? CarouselSpot)?.scrollViewDidScroll(scrollView)
   }
@@ -62,10 +67,25 @@ extension CollectionAdapter : UICollectionViewDelegate {
     spot.spotsDelegate?.spotDidSelectItem(spot, item: spot.item(indexPath))
   }
 
+  /**
+   Asks the delegate whether the item at the specified index path can be focused.
+
+   - Parameter collectionView: The collection view object requesting this information.
+   - Parameter indexPath:      The index path of an item in the collection view.
+   - Returns: YES if the item can receive be focused or NO if it can not.
+   */
   public func collectionView(collectionView: UICollectionView, canFocusItemAtIndexPath indexPath: NSIndexPath) -> Bool {
     return true
   }
 
+  /**
+   Asks the delegate whether a change in focus should occur.
+
+   - Parameter collectionView: The collection view object requesting this information.
+   - Parameter context:        The context object containing metadata associated with the focus change.
+   This object contains the index path of the previously focused item and the item targeted to receive focus next. Use this information to determine if the focus change should occur.
+   - Returns: YES if the focus change should occur or NO if it should not.
+   */
   @available(iOS 9.0, *)
   public func collectionView(collectionView: UICollectionView, shouldUpdateFocusInContext context: UICollectionViewFocusUpdateContext) -> Bool {
     guard let indexPaths = collectionView.indexPathsForSelectedItems() else { return true }
