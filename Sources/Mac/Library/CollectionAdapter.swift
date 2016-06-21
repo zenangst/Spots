@@ -30,20 +30,15 @@ extension CollectionAdapter: NSCollectionViewDataSource {
   }
 
   public func collectionView(collectionView: NSCollectionView, itemForRepresentedObjectAtIndexPath indexPath: NSIndexPath) -> NSCollectionViewItem {
-    var reuseIdentifier = spot.dynamicType.defaultKind
-    if #available(OSX 10.11, *) {
-      reuseIdentifier = spot.reuseIdentifierForItem(indexPath.item)
+    let reuseIdentifier = spot.reuseIdentifierForItem(indexPath.item)
+    let item = collectionView.makeItemWithIdentifier(reuseIdentifier, forIndexPath: indexPath)
+    let view = spot.dynamicType.grids[reuseIdentifier]
 
-      let item = collectionView.makeItemWithIdentifier(reuseIdentifier.string, forIndexPath: indexPath)
-      let view = spot.dynamicType.grids[reuseIdentifier]
-      if let collectionItem = view?.init() {
-        (collectionItem as? SpotConfigurable)?.configure(&spot.component.items[indexPath.item])
-        return collectionItem
-      } else {
-        return NSCollectionViewItem()
-      }
+    if let collectionItem = view?.init() {
+      (collectionItem as? SpotConfigurable)?.configure(&spot.component.items[indexPath.item])
+      return collectionItem
     } else {
-      return NSCollectionViewItem()
+      return item
     }
   }
 }

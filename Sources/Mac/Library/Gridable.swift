@@ -24,9 +24,7 @@ extension Gridable {
 
   public func prepare() {
     registerAndPrepare { (classType, withIdentifier) in
-      if #available(OSX 10.11, *) {
-        collectionView.registerClass(classType, forItemWithIdentifier: withIdentifier)
-      }
+      collectionView.registerClass(classType, forItemWithIdentifier: withIdentifier)
     }
 
     var cached: NSView?
@@ -70,15 +68,10 @@ extension Gridable {
    */
   public func sizeForItemAt(indexPath: NSIndexPath) -> CGSize {
     if component.span > 0 {
-      if #available(OSX 10.11, *) {
-        component.items[indexPath.item].size.width = collectionView.frame.width / CGFloat(component.span)
-      }
+      component.items[indexPath.item].size.width = collectionView.frame.width / CGFloat(component.span)
     }
 
-    var width = collectionView.frame.width
-    if #available(OSX 10.11, *) {
-      width = item(indexPath).size.width
-    }
+    let width = item(indexPath).size.width
 
     // Never return a negative width
     guard width > -1 else { return CGSize.zero }
