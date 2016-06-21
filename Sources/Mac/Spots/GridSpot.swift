@@ -63,13 +63,11 @@ public class GridSpot: NSObject, Gridable {
   public convenience init(_ component: Component, top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0, itemSpacing: CGFloat = 0, lineSpacing: CGFloat = 0) {
     self.init(component: component)
 
-    if #available(OSX 10.11, *) {
 //      layout.sectionInset = NSEdgeInsets(top: top, left: left, bottom: bottom, right: right)
 //      if let layout = layout as? LeftFlowLayout {
 //        layout.minimumInteritemSpacing = itemSpacing
 //        layout.minimumLineSpacing = lineSpacing
 //      }
-    }
   }
 
   public func setupCollectionView() {
