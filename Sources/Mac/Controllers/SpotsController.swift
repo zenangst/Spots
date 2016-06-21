@@ -91,6 +91,27 @@ public class SpotsController: NSViewController, SpotsProtocol {
     }
   }
 
+  /**
+   A generic look up method for resolving spots based on index
+   - Parameter index: The index of the spot that you are trying to resolve
+   - Parameter type: The generic type for the spot you are trying to resolve
+   */
+  public func spot<T>(index: Int = 0, _ type: T.Type) -> T? {
+    return spots.filter({ $0.index == index }).first as? T
+  }
+
+  /**
+   A generic look up method for resolving spots using a closure
+   - Parameter closure: A closure to perform actions on a spotable object
+   */
+  public func spot(@noescape closure: (index: Int, spot: Spotable) -> Bool) -> Spotable? {
+    for (index, spot) in spots.enumerate()
+      where closure(index: index, spot: spot) {
+        return spot
+    }
+    return nil
+  }
+
   public override func loadView() {
     view = NSView()
     view.autoresizingMask = .ViewWidthSizable
