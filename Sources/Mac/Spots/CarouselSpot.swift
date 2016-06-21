@@ -26,12 +26,10 @@ public class CarouselSpot: NSObject, Gridable {
   public lazy var adapter: CollectionAdapter = CollectionAdapter(spot: self)
   @available(OSX 10.11, *)
   public lazy var layout: NSCollectionViewLayout = NSCollectionViewFlowLayout().then {
-    if #available(OSX 10.11, *) {
-      $0.sectionInset = NSEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-      $0.minimumInteritemSpacing = 0
-      $0.minimumLineSpacing = 0
-      $0.scrollDirection = .Horizontal
-    }
+    $0.sectionInset = NSEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    $0.minimumInteritemSpacing = 0
+    $0.minimumLineSpacing = 0
+    $0.scrollDirection = .Horizontal
   }
 
   public lazy var scrollView: ScrollView = ScrollView().then {
@@ -68,22 +66,18 @@ public class CarouselSpot: NSObject, Gridable {
   public convenience init(_ component: Component, top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0, itemSpacing: CGFloat = 0, lineSpacing: CGFloat = 0) {
     self.init(component: component)
 
-    if #available(OSX 10.11, *) {
-      guard let layout = layout as? NSCollectionViewFlowLayout else { return }
-      layout.sectionInset = NSEdgeInsets(top: top, left: left, bottom: bottom, right: right)
-      layout.minimumInteritemSpacing = itemSpacing
-      layout.minimumLineSpacing = lineSpacing
-      layout.scrollDirection = .Horizontal
-    }
+    guard let layout = layout as? NSCollectionViewFlowLayout else { return }
+    layout.sectionInset = NSEdgeInsets(top: top, left: left, bottom: bottom, right: right)
+    layout.minimumInteritemSpacing = itemSpacing
+    layout.minimumLineSpacing = lineSpacing
+    layout.scrollDirection = .Horizontal
   }
 
   public func setupCollectionView() {
     //    collectionView.maxNumberOfColumns = Int(component.span)
-    if #available(OSX 10.11, *) {
-      collectionView.delegate = adapter
-      collectionView.dataSource = adapter
-      collectionView.collectionViewLayout = layout
-    }
+    collectionView.delegate = adapter
+    collectionView.dataSource = adapter
+    collectionView.collectionViewLayout = layout
   }
 
   public func render() -> ScrollView {
