@@ -4,7 +4,7 @@ import Sugar
 public class SpotsScrollView: NSScrollView {
 
   let KVOContext = UnsafeMutablePointer<()>(nil)
-  
+
   private var subviewsInLayoutOrder = [NSView]()
 
   public var forceUpdate = false {
@@ -22,7 +22,7 @@ public class SpotsScrollView: NSScrollView {
     self.documentView = spotsContentView
     drawsBackground = false
   }
-  
+
   required public init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -41,12 +41,12 @@ public class SpotsScrollView: NSScrollView {
 
     scrollView.addObserver(self, forKeyPath: "frame", options: .Old, context: KVOContext)
   }
-  
+
   public override func willRemoveSubview(subview: RegularView) {
     if let scrollView = subview as? ScrollView where scrollView.superview?.superview == contentView {
       scrollView.removeObserver(self, forKeyPath: "frame", context: KVOContext)
     }
-  
+
     if let index = subviewsInLayoutOrder.indexOf({ $0 == subview }) {
       subviewsInLayoutOrder.removeAtIndex(index)
       layoutSubtreeIfNeeded()
@@ -76,7 +76,7 @@ public class SpotsScrollView: NSScrollView {
 
     let contentOffset = self.contentOffset
     var yOffsetOfCurrentSubview: CGFloat = 0.0
-    
+
     for case let scrollView as ScrollView in subviewsInLayoutOrder {
       var frame = scrollView.frame
       var contentOffset = scrollView.contentOffset
