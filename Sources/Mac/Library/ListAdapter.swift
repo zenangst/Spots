@@ -1,6 +1,6 @@
 import Cocoa
 
-public class ListAdapter : NSObject {
+public class ListAdapter: NSObject {
   // An unowned Gridable object
   var spot: Spotable
 
@@ -17,7 +17,7 @@ public class ListAdapter : NSObject {
 extension ListAdapter: NSTableViewDataSource {
 
   public func tableView(tableView: NSTableView, setObjectValue object: AnyObject?, forTableColumn tableColumn: NSTableColumn?, row: Int) {
-    
+
   }
 
   public func numberOfRowsInTableView(tableView: NSTableView) -> Int {
@@ -31,7 +31,7 @@ extension ListAdapter: NSTableViewDataSource {
   public func tableView(tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
     return true
   }
-  
+
   public func tableView(tableView: NSTableView, shouldSelectTableColumn tableColumn: NSTableColumn?) -> Bool {
     return false
   }
@@ -48,14 +48,14 @@ extension ListAdapter: NSTableViewDelegate {
 
     return height
   }
-  
+
   public func tableView(tableView: NSTableView, rowViewForRow row: Int) -> NSTableRowView? {
     let reuseIdentifier = spot.reuseIdentifierForItem(row)
     let view = spot.dynamicType.views[reuseIdentifier]
     let rowView = view?.init()
 
     (rowView as? SpotConfigurable)?.configure(&spot.component.items[row])
-    
+
     if let rowView = rowView as? NSTableRowView {
       return rowView
     }
@@ -71,7 +71,4 @@ extension ListAdapter: NSTableViewDelegate {
     print("viewForTableColumn")
     return nil
   }
-
-  
-  
 }
