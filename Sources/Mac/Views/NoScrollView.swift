@@ -9,7 +9,7 @@ public class NoScrollView: NSScrollView {
     hasHorizontalScroller = false
     hasVerticalScroller = false
   }
-  
+
   required public init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -17,7 +17,7 @@ public class NoScrollView: NSScrollView {
   override public func scrollWheel(theEvent: NSEvent) {
     nextResponder?.scrollWheel(theEvent)
   }
-  
+
   static public override func isCompatibleWithResponsiveScrolling() -> Bool {
     return true
   }
