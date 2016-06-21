@@ -10,5 +10,4 @@ extension NSScrollView {
       documentView?.scrollPoint(newValue)
     }
   }
-
 }
