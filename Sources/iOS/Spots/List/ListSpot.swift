@@ -57,7 +57,7 @@ public class ListSpot: NSObject, Listable {
 
   public convenience init(cacheKey: String, tableView: UITableView? = nil) {
     let stateCache = SpotCache(key: cacheKey)
-    
+
     self.init(component: Component(stateCache.load()))
     self.stateCache = stateCache
     self.tableView ?= tableView

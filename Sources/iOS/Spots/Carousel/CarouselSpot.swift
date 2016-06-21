@@ -58,7 +58,7 @@ public class CarouselSpot: NSObject, Gridable {
     $0.scrollDirection = .Horizontal
   }
 
-  public lazy var collectionView: UICollectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: self.layout).then {
+  public lazy var collectionView: UICollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: self.layout).then {
     $0.dataSource = self.adapter
     $0.delegate = self.adapter
     $0.showsHorizontalScrollIndicator = false
@@ -75,7 +75,7 @@ public class CarouselSpot: NSObject, Gridable {
   public convenience init(_ component: Component, top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0, itemSpacing: CGFloat = 0, lineSpacing: CGFloat = 0) {
     self.init(component: component)
 
-    layout.sectionInset = UIEdgeInsetsMake(top, left, bottom, right)
+    layout.sectionInset = UIEdgeInsets(top: top, left: left, bottom: bottom, right: right)
     layout.minimumInteritemSpacing = itemSpacing
     layout.minimumLineSpacing = lineSpacing
   }

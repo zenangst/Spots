@@ -16,10 +16,10 @@ public class SpotsScrollView: UIScrollView {
     }
   }
 
-  public override var contentInset:UIEdgeInsets {
+  public override var contentInset: UIEdgeInsets {
     willSet {
       if self.tracking {
-        let diff = newValue.top - self.contentInset.top;
+        let diff = newValue.top - self.contentInset.top
         var translation = self.panGestureRecognizer.translationInView(self)
         translation.y -= diff * 3.0 / 2.0
         self.panGestureRecognizer.setTranslation(translation, inView: self)
@@ -62,7 +62,7 @@ public class SpotsScrollView: UIScrollView {
 
     if let collectionView = scrollView as? UICollectionView,
       layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
-      where layout.scrollDirection == .Horizontal  {
+      where layout.scrollDirection == .Horizontal {
       scrollView.scrollEnabled = true
     }
 
@@ -120,7 +120,7 @@ public class SpotsScrollView: UIScrollView {
         // TODO: Fix this properly...
         // This should also apply for UICollectionView but I haven't figured out a way to resize them properly without it going ape-shit over that the layout is incorrect.
         if subview is UITableView && scrollView.contentSize.height > bounds.height {
-          let remainingBoundsHeight = fmax(CGRectGetMaxY(bounds) - CGRectGetMinY(frame), 0.0)
+          let remainingBoundsHeight = fmax(bounds.maxY - frame.minY, 0.0)
           let remainingContentHeight = fmax(scrollView.contentSize.height - contentOffset.y, 0.0)
           frame.size.height = ceil(fmin(remainingBoundsHeight, remainingContentHeight))
         }

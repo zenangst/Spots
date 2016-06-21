@@ -3,6 +3,7 @@ import Sugar
 import Cache
 import CryptoSwift
 
+/// A SpotCache struct used for SpotsController and Spotable object caching
 public struct SpotCache {
 
   public let key: String

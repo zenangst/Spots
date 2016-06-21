@@ -137,7 +137,7 @@ public struct Component: Mappable {
  - Returns: A boolean value, true if both Components are equal
  */
 
-public func ==(lhs: [Component], rhs: [Component]) -> Bool {
+public func == (lhs: [Component], rhs: [Component]) -> Bool {
   var equal = lhs.count == rhs.count
 
   if !equal { return false }
@@ -149,7 +149,7 @@ public func ==(lhs: [Component], rhs: [Component]) -> Bool {
   return equal
 }
 
-public func ===(lhs: [Component], rhs: [Component]) -> Bool {
+public func === (lhs: [Component], rhs: [Component]) -> Bool {
   var equal = lhs.count == rhs.count
 
   if !equal { return false }
@@ -161,17 +161,35 @@ public func ===(lhs: [Component], rhs: [Component]) -> Bool {
   return equal
 }
 
-public func !=(lhs: [Component], rhs: [Component]) -> Bool {
+/**
+ Check if to collection of components are not equal
+ - Parameter lhs: Left hand component
+ - Parameter rhs: Right hand component
+ - Returns: A boolean value, true if both Components are no equal
+ */
+public func != (lhs: [Component], rhs: [Component]) -> Bool {
   return !(lhs == rhs)
 }
 
-public func !==(lhs: [Component], rhs: [Component]) -> Bool {
+/**
+ Check if to collection of components are truly not equal
+ - Parameter lhs: Left hand component
+ - Parameter rhs: Right hand component
+ - Returns: A boolean value, true if both Components are no equal
+ */
+public func !== (lhs: [Component], rhs: [Component]) -> Bool {
   return !(lhs === rhs)
 }
 
 /// Compare view models
 
-public func ==(lhs: Component, rhs: Component) -> Bool {
+/**
+ Check if to components are equal
+ - Parameter lhs: Left hand component
+ - Parameter rhs: Right hand component
+ - Returns: A boolean value, true if both Components are no equal
+ */
+public func == (lhs: Component, rhs: Component) -> Bool {
   return lhs.title == rhs.title &&
     lhs.kind == rhs.kind &&
     lhs.span == rhs.span &&
@@ -179,7 +197,13 @@ public func ==(lhs: Component, rhs: Component) -> Bool {
     lhs.items == rhs.items
 }
 
-public func ===(lhs: Component, rhs: Component) -> Bool {
+/**
+ Check if to components are truly equal
+ - Parameter lhs: Left hand component
+ - Parameter rhs: Right hand component
+ - Returns: A boolean value, true if both Components are no equal
+ */
+public func === (lhs: Component, rhs: Component) -> Bool {
   return lhs.title == rhs.title &&
     lhs.kind == rhs.kind &&
     lhs.span == rhs.span &&
@@ -187,10 +211,22 @@ public func ===(lhs: Component, rhs: Component) -> Bool {
     lhs.items === rhs.items
 }
 
-public func !=(lhs: Component, rhs: Component) -> Bool {
+/**
+ Check if to components are not equal
+ - Parameter lhs: Left hand component
+ - Parameter rhs: Right hand component
+ - Returns: A boolean value, true if both Components are no equal
+ */
+public func != (lhs: Component, rhs: Component) -> Bool {
   return !(lhs == rhs)
 }
 
-public func !==(lhs: Component, rhs: Component) -> Bool {
+/**
+ Check if to components are truly not equal
+ - Parameter lhs: Left hand component
+ - Parameter rhs: Right hand component
+ - Returns: A boolean value, true if both Components are no equal
+ */
+public func !== (lhs: Component, rhs: Component) -> Bool {
   return !(lhs === rhs)
 }

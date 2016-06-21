@@ -4,7 +4,7 @@ import Brick
 
 /// Gridable is protocol for Spots that are based on UICollectionView
 public protocol Gridable: Spotable {
-  // The layout object used to initialize the collection spot controller.
+  /// The layout object used to initialize the collection spot controller.
   var layout: UICollectionViewFlowLayout { get }
   /// The collection view object managed by this gridable object.
   var collectionView: UICollectionView { get }
@@ -34,7 +34,7 @@ public extension Spotable where Self : Gridable {
   public init(_ component: Component, top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0, itemSpacing: CGFloat = 0) {
     self.init(component: component)
 
-    layout.sectionInset = UIEdgeInsetsMake(top, left, bottom, right)
+    layout.sectionInset = UIEdgeInsets(top: top, left: left, bottom: bottom, right: right)
     layout.minimumInteritemSpacing = itemSpacing
   }
 
@@ -64,17 +64,17 @@ public extension Spotable where Self : Gridable {
    */
   public func append(item: ViewModel, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     var indexes = [Int]()
-    let count = component.items.count
+    let itemsCount = component.items.count
 
     for (index, item) in items.enumerate() {
       component.items.append(item)
-      indexes.append(count + index)
+      indexes.append(itemsCount + index)
     }
 
     dispatch { [weak self] in
       guard let weakSelf = self else { return }
 
-      if count > 0 {
+      if itemsCount > 0 {
         weakSelf.collectionView.insert(indexes, completion: completion)
       } else {
         weakSelf.collectionView.reloadData()
@@ -90,17 +90,19 @@ public extension Spotable where Self : Gridable {
    */
   public func append(items: [ViewModel], withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     var indexes = [Int]()
-    let count = component.items.count
+    let itemsCount = component.items.count
 
+    var cached: UIView?
     for (index, item) in items.enumerate() {
       component.items.append(item)
-      indexes.append(count + index)
+      indexes.append(itemsCount + index)
+      prepareItem(item, index: itemsCount + index, cached: &cached)
     }
 
     dispatch { [weak self] in
       guard let weakSelf = self else { return }
 
-      if count > 0 {
+      if itemsCount > 0 {
         weakSelf.collectionView.insert(indexes, completion: completion)
       } else {
         weakSelf.collectionView.reloadData()
@@ -111,21 +113,21 @@ public extension Spotable where Self : Gridable {
 
   /**
    - Parameter item: The view model that you want to insert
-   - Parameter withAnimation: The animation that should be used (currently not in use)
    - Parameter index: The index where the new ViewModel should be inserted
+   - Parameter animation: The animation that should be used (currently not in use)
    - Parameter completion: Completion
    */
   public func insert(item: ViewModel, index: Int, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     component.items.insert(item, atIndex: index)
     var indexes = [Int]()
-    let count = component.items.count
+    let itemsCount = component.items.count
 
     indexes.append(index)
 
     dispatch { [weak self] in
       guard let weakSelf = self else { return }
 
-      if count > 0 {
+      if itemsCount > 0 {
         weakSelf.collectionView.insert(indexes, completion: completion)
       } else {
         weakSelf.collectionView.reloadData()
@@ -135,28 +137,25 @@ public extension Spotable where Self : Gridable {
   }
 
   /**
-   - Parameter item: A collection of view model that you want to prepend
+   - Parameter items: A collection of view model that you want to prepend
    - Parameter animation: The animation that should be used (currently not in use)
    - Parameter completion: A completion closure that is executed in the main queue
    */
   public func prepend(items: [ViewModel], withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     var indexes = [Int]()
-    let count = component.items.count
 
-    for (index, item) in items.enumerate() {
-      indexes.append(items.count - index)
-      component.items.insert(item, atIndex: 0)
+    component.items.insertContentsOf(items, at: 0)
+
+    var cached: UIView?
+    items.enumerate().forEach {
+      indexes.append(items.count - 1 - $0.index)
+      prepareItem($0.element, index: $0.index, cached: &cached)
     }
 
     dispatch { [weak self] in
       guard let weakSelf = self else { return }
 
-      if count > 0 {
-        weakSelf.collectionView.insert(indexes, completion: completion)
-      } else {
-        weakSelf.collectionView.reloadData()
-        completion?()
-      }
+      weakSelf.collectionView.insert(indexes, completion: completion)
     }
   }
 
@@ -255,7 +254,7 @@ public extension Spotable where Self : Gridable {
 
   /**
    - Parameter indexes: An array of integers that you want to reload, default is nil
-   - Parameter animated: Perform reload animation
+   - Parameter animation: Perform reload animation
    - Parameter completion: A completion closure that is executed in the main queue when the view model has been reloaded
    */
   public func reload(indexes: [Int]? = nil, withAnimation animation: SpotsAnimation = .None, completion: Completion) {
@@ -314,7 +313,7 @@ public extension Spotable where Self : Gridable {
     let width = item(indexPath).size.width - collectionView.contentInset.left - layout.sectionInset.left - layout.sectionInset.right
 
     // Never return a negative width
-    guard width > -1 else { return CGSizeZero }
+    guard width > -1 else { return CGSize.zero }
 
     return CGSize(
       width: floor(width),

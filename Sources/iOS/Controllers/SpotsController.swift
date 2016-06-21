@@ -6,7 +6,7 @@ import Cache
 /**
  SpotsController is a subclass of UIViewController
  */
-public class SpotsController: UIViewController, UIScrollViewDelegate {
+public class SpotsController: UIViewController, SpotsProtocol, UIScrollViewDelegate {
 
   /// A static closure to configure SpotsScrollView
   public static var configure: ((container: SpotsScrollView) -> Void)?
@@ -14,7 +14,7 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
   /// Initial content offset for SpotsController, defaults to UIEdgeInsetsZero
   public private(set) var initialContentInset: UIEdgeInsets = UIEdgeInsetsZero
   /// A collection of Spotable objects
-  public private(set) var spots: [Spotable] {
+  public var spots: [Spotable] {
     didSet {
       spots.forEach { $0.spotsDelegate = spotsDelegate }
       spotsDelegate?.spotsDidChange(spots)
@@ -25,18 +25,19 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
   public var refreshPositions = [CGFloat]()
   /// A bool value to indicate if the SpotsController is refeshing
   public var refreshing = false
-
-  public var dictionary: JSONDictionary {
-    get {
-      return ["components" : spots.map { $0.component.dictionary }]
-    }
+  /// A convenience method for resolving the first spot
+  public var spot: Spotable? {
+    get { return spot(0, Spotable.self) }
   }
 
   #if DEVMODE
+  /// A dispatch queue is a lightweight object to which your application submits blocks for subsequent execution.
   public let fileQueue: dispatch_queue_t = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
+  /// An identifier for the type system object being monitored by a dispatch source.
   public var source: dispatch_source_t!
   #endif
 
+  /// An optional SpotCache used for view controller caching
   public var stateCache: SpotCache?
 
   /// A delegate for when an item is tapped within a Spot
@@ -45,11 +46,6 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
       spots.forEach { $0.spotsDelegate = spotsDelegate }
       spotsDelegate?.spotsDidChange(spots)
     }
-  }
-
-  /// A convenience method for resolving the first spot
-  public var spot: Spotable? {
-    get { return spot(0, Spotable.self) }
   }
 
 #if os(iOS)
@@ -98,7 +94,7 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
   /**
    - Parameter spot: A Spotable object
    */
-  public convenience init(spot: Spotable)  {
+  public convenience init(spot: Spotable) {
     self.init(spots: [spot])
   }
 
@@ -118,6 +114,11 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     self.stateCache = stateCache
   }
 
+  /**
+   Init with coder
+
+   - Parameter aDecoder: An NSCoder
+   */
   public required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -129,6 +130,27 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     }
   }
 #endif
+
+  /**
+   A generic look up method for resolving spots based on index
+   - Parameter index: The index of the spot that you are trying to resolve
+   - Parameter type: The generic type for the spot you are trying to resolve
+   */
+  public func spot<T>(index: Int = 0, _ type: T.Type) -> T? {
+    return spots.filter({ $0.index == index }).first as? T
+  }
+
+  /**
+   A generic look up method for resolving spots using a closure
+   - Parameter closure: A closure to perform actions on a spotable object
+   */
+  public func spot(@noescape closure: (index: Int, spot: Spotable) -> Bool) -> Spotable? {
+    for (index, spot) in spots.enumerate()
+      where closure(index: index, spot: spot) {
+        return spot
+    }
+    return nil
+  }
 
   // MARK: - View Life Cycle
 
@@ -142,7 +164,11 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     SpotsController.configure?(container: spotsScrollView)
   }
 
-  /// Notifies the spot controller that its view is about to be added to a view hierarchy.
+  /**
+   Notifies the spot controller that its view is about to be added to a view hierarchy.
+
+   - Parameter animated: If true, the view is being added to the window using an animation.
+   */
   public override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
 
@@ -161,7 +187,12 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
 #endif
   }
 
-  /// Notifies the container that the size of tis view is about to change.
+  /**
+   Notifies the container that the size of tis view is about to change.
+
+   - Parameter size:        The new size for the container’s view.
+   - Parameter coordinator: The transition coordinator object managing the size change. You can use this object to animate your changes or get information about the transition that is in progress.
+   */
   public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
     super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
 
@@ -192,273 +223,19 @@ public class SpotsController: UIViewController, UIScrollViewDelegate {
     let paths = NSSearchPathForDirectoriesInDomains(.CachesDirectory,
                                                     NSSearchPathDomainMask.UserDomainMask, true)
     let path = "\(paths.first!)/\(DiskStorage.prefix).\(SpotCache.cacheName)"
-    do { try NSFileManager.defaultManager().removeItemAtPath(path) }
-    catch { NSLog("Could not remove cache at path: \(path)") }
+    do {
+      try NSFileManager.defaultManager().removeItemAtPath(path)
+    } catch {
+      NSLog("Could not remove cache at path: \(path)")
+    }
   }
-}
 
-// MARK: - Public SpotController methods
-
-extension SpotsController {
-
+  #if os(iOS)
   /**
-   A generic look up method for resolving spots based on index
+   Refresh action for UIRefreshControl
 
-   - Parameter index: The index of the spot that you are trying to resolve
-   - Parameter type: The generic type for the spot you are trying to resolve
+   - Parameter refreshControl:
    */
-  public func spot<T>(index: Int = 0, _ type: T.Type) -> T? {
-    return spots.filter({ $0.index == index }).first as? T
-  }
-
-  /**
-   A generic look up method for resolving spots using a closure
-
-   - Parameter closure: A closure to perform actions on a spotable object
-   */
-  public func spot(@noescape closure: (index: Int, spot: Spotable) -> Bool) -> Spotable? {
-    for (index, spot) in spots.enumerate()
-      where closure(index: index, spot: spot) {
-        return spot
-    }
-    return nil
-  }
-
-  /**
-   - Parameter includeElement: A filter predicate to find a spot
-   */
-  public func filter(@noescape includeElement: (Spotable) -> Bool) -> [Spotable] {
-    return spots.filter(includeElement)
-  }
-
-  /**
-   - Parameter completion: A closure that will be run after reload has been performed on all spots
-   */
-  public func reload(animated: Bool = true, withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
-    var spotsLeft = spots.count
-
-    dispatch { [weak self] in
-      self?.spots.forEach { spot in
-        spot.reload([], withAnimation: animation) {
-          spotsLeft -= 1
-
-          if spotsLeft == 0 {
-            completion?()
-          }
-        }
-      }
-    }
-  }
-
-  /**
-   - Parameter json: A JSON dictionary that gets parsed into UI elements
-   - Parameter completion: A closure that will be run after reload has been performed on all spots
-  */
-  public func reloadIfNeeded(json: [String : AnyObject], compare: ((lhs: [Component], rhs: [Component]) -> Bool) = { lhs, rhs in return lhs != rhs }, animated: ((view: UIView) -> Void)? = nil, closure: Completion = nil) {
-    dispatch { [weak self] in
-      guard let weakSelf = self else { closure?(); return }
-
-      let newSpots = Parser.parse(json)
-      let newComponents = newSpots.map { $0.component }
-      let oldComponents = weakSelf.spots.map { $0.component }
-
-      guard compare(lhs: newComponents, rhs: oldComponents) else {
-        weakSelf.cache()
-        closure?()
-        return
-      }
-
-      weakSelf.spots = newSpots
-      weakSelf.cache()
-
-      if weakSelf.spotsScrollView.superview == nil {
-        weakSelf.view.addSubview(weakSelf.spotsScrollView)
-      }
-
-      weakSelf.spotsScrollView.contentView.subviews.forEach { $0.removeFromSuperview() }
-      weakSelf.setupSpots(animated)
-      weakSelf.spotsScrollView.forceUpdate = true
-
-      closure?()
-    }
-  }
-
-  /**
-   - Parameter json: A JSON dictionary that gets parsed into UI elements
-   - Parameter completion: A closure that will be run after reload has been performed on all spots
-  */
-  public func reload(json: [String : AnyObject], animated: ((view: UIView) -> Void)? = nil, closure: Completion = nil) {
-    dispatch { [weak self] in
-      guard let weakSelf = self else { closure?(); return }
-
-      weakSelf.spots = Parser.parse(json)
-      weakSelf.cache()
-
-      if weakSelf.spotsScrollView.superview == nil {
-        weakSelf.view.addSubview(weakSelf.spotsScrollView)
-      }
-
-      weakSelf.spotsScrollView.contentView.subviews.forEach { $0.removeFromSuperview() }
-      weakSelf.setupSpots(animated)
-      weakSelf.spotsScrollView.forceUpdate = true
-
-      closure?()
-    }
-  }
-
-  /**
-   - Parameter spotAtIndex: The index of the spot that you want to perform updates on
-   - Parameter animated: Perform reload animation
-   - Parameter closure: A transform closure to perform the proper modification to the target spot before updating the internals
-   */
-  public func update(spotAtIndex index: Int = 0, withAnimation animation: SpotsAnimation = .Automatic, withCompletion completion: Completion = nil, @noescape _ closure: (spot: Spotable) -> Void) {
-    guard let spot = spot(index, Spotable.self) else { completion?(); return }
-    closure(spot: spot)
-    spot.refreshIndexes()
-    spot.prepare()
-
-    dispatch { [weak self] in
-      guard let weakSelf = self else { return }
-
-      weakSelf.spot(spot.index, Spotable.self)?.reload([index], withAnimation: animation) {
-        weakSelf.spotsScrollView.setNeedsDisplay()
-        weakSelf.spotsScrollView.forceUpdate = true
-        completion?()
-      }
-    }
-  }
-
-  /**
-   Updates spot only if the passed view models are not the same with the current ones.
-   - Parameter spotAtIndex: The index of the spot that you want to perform updates on
-   - Parameter items: An array of view models
-   */
-  public func updateIfNeeded(spotAtIndex index: Int = 0, items: [ViewModel], withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
-    guard let spot = spot(index, Spotable.self) where !(spot.items == items) else {
-      completion?()
-      return
-    }
-
-    update(spotAtIndex: index, withAnimation: animation, withCompletion: completion, {
-      $0.items = items
-    })
-  }
-
-  /**
-   - Parameter item: The view model that you want to append
-   - Parameter spotIndex: The index of the spot that you want to append to, defaults to 0
-   - Parameter closure: A completion closure that will run after the spot has performed updates internally
-   */
-  public func append(item: ViewModel, spotIndex: Int = 0, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
-    spot(spotIndex, Spotable.self)?.append(item, withAnimation: animation) {
-      completion?()
-      self.spotsScrollView.forceUpdate = true
-    }
-    spot(spotIndex, Spotable.self)?.refreshIndexes()
-  }
-
-  /**
-   - Parameter items: A collection of view models
-   - Parameter spotIndex: The index of the spot that you want to append to, defaults to 0
-   - Parameter closure: A completion closure that will run after the spot has performed updates internally
-   */
-  public func append(items: [ViewModel], spotIndex: Int = 0, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
-    spot(spotIndex, Spotable.self)?.append(items, withAnimation: animation) {
-      completion?()
-      self.spotsScrollView.forceUpdate = true
-    }
-    spot(spotIndex, Spotable.self)?.refreshIndexes()
-  }
-
-  /**
-   - Parameter items: A collection of view models
-   - Parameter spotIndex: The index of the spot that you want to prepend to, defaults to 0
-   - Parameter closure: A completion closure that will run after the spot has performed updates internally
-   */
-  public func prepend(items: [ViewModel], spotIndex: Int = 0, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
-    spot(spotIndex, Spotable.self)?.prepend(items, withAnimation: animation)  {
-      completion?()
-      self.spotsScrollView.forceUpdate = true
-    }
-    spot(spotIndex, Spotable.self)?.refreshIndexes()
-  }
-
-  /**
-   - Parameter item: The view model that you want to insert
-   - Parameter index: The index that you want to insert the view model at
-   - Parameter spotIndex: The index of the spot that you want to insert into
-   - Parameter closure: A completion closure that will run after the spot has performed updates internally
-   */
-  public func insert(item: ViewModel, index: Int = 0, spotIndex: Int, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
-    spot(spotIndex, Spotable.self)?.insert(item, index: index, withAnimation: animation)  {
-      completion?()
-      self.spotsScrollView.forceUpdate = true
-    }
-    spot(spotIndex, Spotable.self)?.refreshIndexes()
-  }
-
-  /**
-   - Parameter item: The view model that you want to update
-   - Parameter index: The index that you want to insert the view model at
-   - Parameter spotIndex: The index of the spot that you want to update into
-   - Parameter closure: A completion closure that will run after the spot has performed updates internally
-   */
-  public func update(item: ViewModel, index: Int = 0, spotIndex: Int, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
-    guard let oldItem = spot(spotIndex, Spotable.self)?.item(index) where item != oldItem
-      else {
-        spot(spotIndex, Spotable.self)?.refreshIndexes()
-        completion?()
-        return
-    }
-
-    spot(spotIndex, Spotable.self)?.update(item, index: index, withAnimation: animation)  {
-      completion?()
-      self.spotsScrollView.forceUpdate = true
-    }
-    spot(spotIndex, Spotable.self)?.refreshIndexes()
-  }
-
-  /**
-   - Parameter indexes: An integer array of indexes that you want to update
-   - Parameter spotIndex: The index of the spot that you want to update into
-   - Parameter animated: Perform reload animation
-   - Parameter closure: A completion closure that will run after the spot has performed updates internally
-   */
-  public func update(indexes indexes: [Int], spotIndex: Int = 0, withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
-    spot(spotIndex, Spotable.self)?.reload(indexes, withAnimation: animation) {
-      completion?()
-      self.spotsScrollView.forceUpdate = true
-    }
-    spot(spotIndex, Spotable.self)?.refreshIndexes()
-  }
-
-  /**
-   - Parameter index: The index of the view model that you want to remove
-   - Parameter spotIndex: The index of the spot that you want to remove into
-   - Parameter closure: A completion closure that will run after the spot has performed updates internally
-   */
-  public func delete(index: Int, spotIndex: Int = 0, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
-    spot(spotIndex, Spotable.self)?.delete(index, withAnimation: animation) {
-      completion?()
-      self.spotsScrollView.forceUpdate = true
-    }
-    spot(spotIndex, Spotable.self)?.refreshIndexes()
-  }
-
-  /**
-   - Parameter indexes: A collection of indexes for view models that you want to remove
-   - Parameter spotIndex: The index of the spot that you want to remove into
-   - Parameter closure: A completion closure that will run after the spot has performed updates internally
-   */
-  public func delete(indexes indexes: [Int], spotIndex: Int = 0, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
-    spot(spotIndex, Spotable.self)?.delete(indexes, withAnimation: animation) {
-      completion?()
-      self.spotsScrollView.forceUpdate = true
-    }
-    spot(spotIndex, Spotable.self)?.refreshIndexes()
-  }
-
-#if os(iOS)
   public func refreshSpots(refreshControl: UIRefreshControl) {
     dispatch { [weak self] in
       guard let weakSelf = self else { return }
@@ -467,55 +244,6 @@ extension SpotsController {
         refreshControl.endRefreshing()
       }
     }
-  }
-#endif
-
-  /**
-   - Parameter index: The index of the spot that you want to scroll
-   - Parameter includeElement: A filter predicate to find a view model
-   */
-  public func scrollTo(spotIndex index: Int = 0, @noescape includeElement: (ViewModel) -> Bool) {
-    guard let itemY = spot(index, Spotable.self)?.scrollTo(includeElement) else { return }
-
-    var initialHeight: CGFloat = 0.0
-    if index > 0 {
-      initialHeight += spots[0..<index].reduce(0, combine: { $0 + $1.spotHeight() })
-    }
-
-    if spot(index, Spotable.self)?.spotHeight() > spotsScrollView.height - spotsScrollView.contentInset.bottom - initialHeight {
-      let y = itemY - spotsScrollView.height + spotsScrollView.contentInset.bottom + initialHeight
-      spotsScrollView.setContentOffset(CGPoint(x: CGFloat(0.0), y: y), animated: true)
-    }
-  }
-
-  /**
-   - Parameter animated: A boolean value to determine if you want to perform the scrolling with or without animation
-   */
-  public func scrollToBottom(animated: Bool) {
-    let y = spotsScrollView.contentSize.height - spotsScrollView.height + spotsScrollView.contentInset.bottom
-    spotsScrollView.setContentOffset(CGPoint(x: 0, y: y), animated: animated)
-  }
-
-  /**
-   Caches the current state of the spot controller
-   */
-  public func cache() {
-    #if DEVMODE
-    liveEditing(stateCache)
-    #endif
-    stateCache?.save(dictionary)
-  }
-
-  #if DEVMODE
-  private func liveEditing(stateCache: SpotCache?) {
-    guard let stateCache = stateCache where source == nil && Simulator.isRunning else { return }
-    CacheJSONOptions.writeOptions = .PrettyPrinted
-
-    let paths = NSSearchPathForDirectoriesInDomains(.CachesDirectory,
-                                                    NSSearchPathDomainMask.UserDomainMask, true)
-    let path = "\(paths.first!)/\(DiskStorage.prefix).\(SpotCache.cacheName)/\(stateCache.fileName())"
-    NSLog("SpotsCache -> \(stateCache.key):\nfile://\(path)")
-    delay(0.5) { self.monitor(path) }
   }
   #endif
 }
@@ -527,14 +255,16 @@ extension SpotsController {
 
   /**
    - Parameter indexPath: The index path of the component you want to lookup
-   */
+   - Returns: A Component object at index path
+   **/
   private func component(indexPath: NSIndexPath) -> Component {
     return spot(indexPath).component
   }
 
   /**
    - Parameter indexPath: The index path of the spot you want to lookup
-   */
+   - Returns: A Spotable object at index path
+   **/
   private func spot(indexPath: NSIndexPath) -> Spotable {
     return spots[indexPath.item]
   }
