@@ -7,7 +7,7 @@
 /**
  The type of animation when items are inserted or deleted.
  */
-public enum SpotsAnimation : Int {
+public enum SpotsAnimation: Int {
   case Fade
   case Right
   case Left
@@ -21,7 +21,7 @@ public enum SpotsAnimation : Int {
   /**
    Resolves a SpotsAnimation into a UITableViewRowAnimation
    */
-  var tableViewAnimation: UITableViewRowAnimation  {
+  var tableViewAnimation: UITableViewRowAnimation {
     switch self {
     case .Fade:
       return UITableViewRowAnimation.Fade
@@ -42,7 +42,7 @@ public enum SpotsAnimation : Int {
     }
   }
   #else
-  var tableViewAnimation: NSTableViewAnimationOptions  {
+  var tableViewAnimation: NSTableViewAnimationOptions {
     switch self {
     case .Fade:
       return NSTableViewAnimationOptions.EffectFade
