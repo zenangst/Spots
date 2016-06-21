@@ -77,7 +77,7 @@ public class ListSpotItem: NSTableRowView, SpotConfigurable {
     subtitleLabel.stringValue = item.subtitle
     subtitleLabel.sizeToFit()
     subtitleLabel.frame.origin.y = titleLabel.frame.origin.y + subtitleLabel.frame.height
-    
+
     lineView.frame.origin.y = item.size.height + 1
   }
 }

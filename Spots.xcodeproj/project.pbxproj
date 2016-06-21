@@ -17,27 +17,23 @@
 		BD38DC661D1854D700094941 /* Gridable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD38DC361D1854D700094941 /* Gridable.swift */; };
 		BD38DC681D1854D700094941 /* Listable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD38DC371D1854D700094941 /* Listable.swift */; };
 		BD38DC6A1D1854D700094941 /* ListAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD38DC381D1854D700094941 /* ListAdapter.swift */; };
-		BD38DC781D1854D700094941 /* Viewable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD38DC3F1D1854D700094941 /* Viewable.swift */; };
 		BD38DC7C1D1854D700094941 /* CarouselSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD38DC431D1854D700094941 /* CarouselSpot.swift */; };
 		BD38DC7E1D1854D700094941 /* CarouselSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD38DC441D1854D700094941 /* CarouselSpotCell.swift */; };
 		BD38DC801D1854D700094941 /* GridSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD38DC461D1854D700094941 /* GridSpot.swift */; };
 		BD38DC821D1854D700094941 /* GridSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD38DC471D1854D700094941 /* GridSpotCell.swift */; };
 		BD38DC841D1854D700094941 /* ListSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD38DC491D1854D700094941 /* ListSpot.swift */; };
 		BD38DC861D1854D700094941 /* ListSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD38DC4A1D1854D700094941 /* ListSpotCell.swift */; };
-		BD38DC881D1854D700094941 /* ViewSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD38DC4C1D1854D700094941 /* ViewSpot.swift */; };
 		BD38DC8A1D1854D700094941 /* SpotsContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD38DC4E1D1854D700094941 /* SpotsContentView.swift */; };
 		BD38DC8C1D1854D700094941 /* SpotsScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD38DC4F1D1854D700094941 /* SpotsScrollView.swift */; };
 		BD38DC8E1D1854D700094941 /* Component+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD38DC541D1854D700094941 /* Component+Extension.swift */; };
 		BD38DC901D1854D700094941 /* Componentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD38DC561D1854D700094941 /* Componentable.swift */; };
 		BD38DC921D1854D700094941 /* SpotConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD38DC571D1854D700094941 /* SpotConfigurable.swift */; };
 		BD38DC941D1854D700094941 /* SpotCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD38DC581D1854D700094941 /* SpotCache.swift */; };
-		BD38DC961D1854D700094941 /* SpotsController+DevMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD38DC591D1854D700094941 /* SpotsController+DevMode.swift */; };
 		BD38DC981D1854D700094941 /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD38DC5B1D1854D700094941 /* Component.swift */; };
 		BD38DC9A1D18550900094941 /* Component+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD38DC541D1854D700094941 /* Component+Extension.swift */; };
 		BD38DC9B1D18550900094941 /* Componentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD38DC561D1854D700094941 /* Componentable.swift */; };
 		BD38DC9C1D18550900094941 /* SpotConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD38DC571D1854D700094941 /* SpotConfigurable.swift */; };
 		BD38DC9D1D18550900094941 /* SpotCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD38DC581D1854D700094941 /* SpotCache.swift */; };
-		BD38DC9E1D18550900094941 /* SpotsController+DevMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD38DC591D1854D700094941 /* SpotsController+DevMode.swift */; };
 		BD38DC9F1D18550900094941 /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD38DC5B1D1854D700094941 /* Component.swift */; };
 		BD48BEC91C459B4800317D76 /* ViewSpotSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD48BEC81C459B4800317D76 /* ViewSpotSpec.swift */; };
 		BD48BECB1C459D2A00317D76 /* CarouselSpotSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD48BECA1C459D2A00317D76 /* CarouselSpotSpec.swift */; };
@@ -69,6 +65,13 @@
 		BD980E1B1D18A877007284DD /* ViewRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD980E191D18A877007284DD /* ViewRegistry.swift */; };
 		BD980E1D1D18A8C2007284DD /* SpotsDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD980E1C1D18A8C2007284DD /* SpotsDelegates.swift */; };
 		BD980E1E1D18A8C2007284DD /* SpotsDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD980E1C1D18A8C2007284DD /* SpotsDelegates.swift */; };
+		BD980E201D19045A007284DD /* NSTableView+Indexes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD980E1F1D19045A007284DD /* NSTableView+Indexes.swift */; };
+		BD980E221D1904E0007284DD /* SpotsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD980E211D1904E0007284DD /* SpotsProtocol.swift */; };
+		BD980E231D1904E0007284DD /* SpotsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD980E211D1904E0007284DD /* SpotsProtocol.swift */; };
+		BD980E261D1909E3007284DD /* ViewSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD980E251D1909E3007284DD /* ViewSpot.swift */; };
+		BD980E271D1909E3007284DD /* ViewSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD980E251D1909E3007284DD /* ViewSpot.swift */; };
+		BD980E291D190A26007284DD /* Viewable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD980E281D190A26007284DD /* Viewable.swift */; };
+		BD980E2A1D190A26007284DD /* Viewable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD980E281D190A26007284DD /* Viewable.swift */; };
 		BDB538301C444B3C0005E498 /* ListSpotSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB5382F1C444B3C0005E498 /* ListSpotSpec.swift */; };
 		BDCCD9271C44438800AC21D1 /* GridSpotSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCCD9261C44438800AC21D1 /* GridSpotSpec.swift */; };
 		D58478141C43FEB9006EBA49 /* Spots.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478091C43FEB8006EBA49 /* Spots.framework */; };
@@ -117,21 +120,18 @@
 		BD38DC361D1854D700094941 /* Gridable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gridable.swift; sourceTree = "<group>"; };
 		BD38DC371D1854D700094941 /* Listable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Listable.swift; sourceTree = "<group>"; };
 		BD38DC381D1854D700094941 /* ListAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListAdapter.swift; sourceTree = "<group>"; };
-		BD38DC3F1D1854D700094941 /* Viewable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Viewable.swift; sourceTree = "<group>"; };
 		BD38DC431D1854D700094941 /* CarouselSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselSpot.swift; sourceTree = "<group>"; };
 		BD38DC441D1854D700094941 /* CarouselSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselSpotCell.swift; sourceTree = "<group>"; };
 		BD38DC461D1854D700094941 /* GridSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridSpot.swift; sourceTree = "<group>"; };
 		BD38DC471D1854D700094941 /* GridSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridSpotCell.swift; sourceTree = "<group>"; };
 		BD38DC491D1854D700094941 /* ListSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListSpot.swift; sourceTree = "<group>"; };
 		BD38DC4A1D1854D700094941 /* ListSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListSpotCell.swift; sourceTree = "<group>"; };
-		BD38DC4C1D1854D700094941 /* ViewSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewSpot.swift; sourceTree = "<group>"; };
 		BD38DC4E1D1854D700094941 /* SpotsContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsContentView.swift; sourceTree = "<group>"; };
 		BD38DC4F1D1854D700094941 /* SpotsScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsScrollView.swift; sourceTree = "<group>"; };
 		BD38DC541D1854D700094941 /* Component+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Component+Extension.swift"; sourceTree = "<group>"; };
 		BD38DC561D1854D700094941 /* Componentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Componentable.swift; sourceTree = "<group>"; };
 		BD38DC571D1854D700094941 /* SpotConfigurable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotConfigurable.swift; sourceTree = "<group>"; };
 		BD38DC581D1854D700094941 /* SpotCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotCache.swift; sourceTree = "<group>"; };
-		BD38DC591D1854D700094941 /* SpotsController+DevMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SpotsController+DevMode.swift"; sourceTree = "<group>"; };
 		BD38DC5B1D1854D700094941 /* Component.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
 		BD48BEC81C459B4800317D76 /* ViewSpotSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewSpotSpec.swift; sourceTree = "<group>"; };
 		BD48BECA1C459D2A00317D76 /* CarouselSpotSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselSpotSpec.swift; sourceTree = "<group>"; };
@@ -156,6 +156,10 @@
 		BD980E0A1D18A821007284DD /* SpotsScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsScrollView.swift; sourceTree = "<group>"; };
 		BD980E191D18A877007284DD /* ViewRegistry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewRegistry.swift; sourceTree = "<group>"; };
 		BD980E1C1D18A8C2007284DD /* SpotsDelegates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsDelegates.swift; sourceTree = "<group>"; };
+		BD980E1F1D19045A007284DD /* NSTableView+Indexes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSTableView+Indexes.swift"; sourceTree = "<group>"; };
+		BD980E211D1904E0007284DD /* SpotsProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsProtocol.swift; sourceTree = "<group>"; };
+		BD980E251D1909E3007284DD /* ViewSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewSpot.swift; sourceTree = "<group>"; };
+		BD980E281D190A26007284DD /* Viewable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Viewable.swift; sourceTree = "<group>"; };
 		BDB5382F1C444B3C0005E498 /* ListSpotSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListSpotSpec.swift; sourceTree = "<group>"; };
 		BDB538321C444D460005E498 /* Playground-iOS.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Playground-iOS.playground"; sourceTree = "<group>"; };
 		BDCCD9261C44438800AC21D1 /* GridSpotSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridSpotSpec.swift; sourceTree = "<group>"; };
@@ -275,7 +279,6 @@
 				BD38DC361D1854D700094941 /* Gridable.swift */,
 				BD38DC371D1854D700094941 /* Listable.swift */,
 				BD38DC381D1854D700094941 /* ListAdapter.swift */,
-				BD38DC3F1D1854D700094941 /* Viewable.swift */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -286,7 +289,6 @@
 				BD38DC421D1854D700094941 /* Carousel */,
 				BD38DC451D1854D700094941 /* Grid */,
 				BD38DC481D1854D700094941 /* List */,
-				BD38DC4B1D1854D700094941 /* View */,
 			);
 			path = Spots;
 			sourceTree = "<group>";
@@ -318,14 +320,6 @@
 			path = List;
 			sourceTree = "<group>";
 		};
-		BD38DC4B1D1854D700094941 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				BD38DC4C1D1854D700094941 /* ViewSpot.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
 		BD38DC4D1D1854D700094941 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -350,6 +344,7 @@
 		BD38DC511D1854D700094941 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				BD980E241D1909E3007284DD /* Spots */,
 				BD38DC521D1854D700094941 /* Library */,
 				BD38DC5A1D1854D700094941 /* Models */,
 			);
@@ -359,17 +354,18 @@
 		BD38DC521D1854D700094941 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				BD980E281D190A26007284DD /* Viewable.swift */,
+				BD980E211D1904E0007284DD /* SpotsProtocol.swift */,
 				BD980E1C1D18A8C2007284DD /* SpotsDelegates.swift */,
 				BD980E191D18A877007284DD /* ViewRegistry.swift */,
 				BD980DF51D18A7C6007284DD /* TypeAlias.swift */,
 				BD980DF21D18A767007284DD /* SpotsAnimation.swift */,
 				BD980DEF1D18A726007284DD /* SpotFactory.swift */,
-				BD980DEC1D18A6ED007284DD /* Spotable.swift */,
 				BD980DE91D18A5FA007284DD /* Parser.swift */,
+				BD980DEC1D18A6ED007284DD /* Spotable.swift */,
 				BD38DC531D1854D700094941 /* Extensions */,
 				BD38DC551D1854D700094941 /* Protocols */,
 				BD38DC581D1854D700094941 /* SpotCache.swift */,
-				BD38DC591D1854D700094941 /* SpotsController+DevMode.swift */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -411,6 +407,7 @@
 			isa = PBXGroup;
 			children = (
 				BD980DFB1D18A821007284DD /* NSScrollView+Extensions.swift */,
+				BD980E1F1D19045A007284DD /* NSTableView+Indexes.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -446,6 +443,14 @@
 				BD980E0A1D18A821007284DD /* SpotsScrollView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		BD980E241D1909E3007284DD /* Spots */ = {
+			isa = PBXGroup;
+			children = (
+				BD980E251D1909E3007284DD /* ViewSpot.swift */,
+			);
+			path = Spots;
 			sourceTree = "<group>";
 		};
 		BDB538311C444D460005E498 /* Playgrounds */ = {
@@ -822,18 +827,16 @@
 			files = (
 				BD38DC8A1D1854D700094941 /* SpotsContentView.swift in Sources */,
 				BD38DC641D1854D700094941 /* CollectionAdapter.swift in Sources */,
+				BD980E291D190A26007284DD /* Viewable.swift in Sources */,
 				BD38DC7E1D1854D700094941 /* CarouselSpotCell.swift in Sources */,
 				BD38DC8C1D1854D700094941 /* SpotsScrollView.swift in Sources */,
-				BD38DC881D1854D700094941 /* ViewSpot.swift in Sources */,
 				BD38DC861D1854D700094941 /* ListSpotCell.swift in Sources */,
 				BD38DC6A1D1854D700094941 /* ListAdapter.swift in Sources */,
 				BD980DF31D18A767007284DD /* SpotsAnimation.swift in Sources */,
 				BD38DC901D1854D700094941 /* Componentable.swift in Sources */,
 				BD38DC621D1854D700094941 /* UITableView+Indexes.swift in Sources */,
-				BD38DC961D1854D700094941 /* SpotsController+DevMode.swift in Sources */,
 				BD38DC841D1854D700094941 /* ListSpot.swift in Sources */,
 				BD38DC601D1854D700094941 /* UICollectionView+Indexes.swift in Sources */,
-				BD38DC781D1854D700094941 /* Viewable.swift in Sources */,
 				BD980DEA1D18A5FA007284DD /* Parser.swift in Sources */,
 				BD38DC921D1854D700094941 /* SpotConfigurable.swift in Sources */,
 				BD980E1A1D18A877007284DD /* ViewRegistry.swift in Sources */,
@@ -843,8 +846,10 @@
 				BD980DF61D18A7C6007284DD /* TypeAlias.swift in Sources */,
 				BD38DC801D1854D700094941 /* GridSpot.swift in Sources */,
 				BD38DC661D1854D700094941 /* Gridable.swift in Sources */,
+				BD980E261D1909E3007284DD /* ViewSpot.swift in Sources */,
 				BD38DC941D1854D700094941 /* SpotCache.swift in Sources */,
 				BD38DC7C1D1854D700094941 /* CarouselSpot.swift in Sources */,
+				BD980E221D1904E0007284DD /* SpotsProtocol.swift in Sources */,
 				BD980E1D1D18A8C2007284DD /* SpotsDelegates.swift in Sources */,
 				BD38DC5C1D1854D700094941 /* SpotsController+UIScrollViewDelegate.swift in Sources */,
 				BD38DC821D1854D700094941 /* GridSpotCell.swift in Sources */,
@@ -879,6 +884,7 @@
 				BD980E151D18A821007284DD /* ListSpotItem.swift in Sources */,
 				BD38DC9B1D18550900094941 /* Componentable.swift in Sources */,
 				BD980E161D18A821007284DD /* NoScrollView.swift in Sources */,
+				BD980E201D19045A007284DD /* NSTableView+Indexes.swift in Sources */,
 				BD980E1B1D18A877007284DD /* ViewRegistry.swift in Sources */,
 				BD38DC9C1D18550900094941 /* SpotConfigurable.swift in Sources */,
 				BD980E101D18A821007284DD /* ListAdapter.swift in Sources */,
@@ -887,15 +893,17 @@
 				BD980E1E1D18A8C2007284DD /* SpotsDelegates.swift in Sources */,
 				BD980E0B1D18A821007284DD /* SpotsController.swift in Sources */,
 				BD38DC9D1D18550900094941 /* SpotCache.swift in Sources */,
+				BD980E2A1D190A26007284DD /* Viewable.swift in Sources */,
 				BD980E141D18A821007284DD /* GridSpotItem.swift in Sources */,
 				BD980E0C1D18A821007284DD /* NSScrollView+Extensions.swift in Sources */,
-				BD38DC9E1D18550900094941 /* SpotsController+DevMode.swift in Sources */,
 				BD980E121D18A821007284DD /* GridSpot.swift in Sources */,
+				BD980E271D1909E3007284DD /* ViewSpot.swift in Sources */,
 				BD38DC9F1D18550900094941 /* Component.swift in Sources */,
 				BD980DF11D18A726007284DD /* SpotFactory.swift in Sources */,
 				BD980DF71D18A7C6007284DD /* TypeAlias.swift in Sources */,
 				BD980E0F1D18A821007284DD /* GridRegistry.swift in Sources */,
 				BD980E0E1D18A821007284DD /* Gridable.swift in Sources */,
+				BD980E231D1904E0007284DD /* SpotsProtocol.swift in Sources */,
 				BD980DEB1D18A5FA007284DD /* Parser.swift in Sources */,
 				BD980E0D1D18A821007284DD /* CollectionAdapter.swift in Sources */,
 				BD980E131D18A821007284DD /* ListSpot.swift in Sources */,

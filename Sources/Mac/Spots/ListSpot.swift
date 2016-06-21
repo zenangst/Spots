@@ -25,7 +25,7 @@ public class ListSpot: NSObject, Spotable {
     $0.autoresizingMask = .ViewWidthSizable
   }
 
-  public lazy var tableView: NSTableView = NSTableView(frame: CGRectZero).then {
+  public lazy var tableView: NSTableView = NSTableView(frame: CGRect.zero).then {
     $0.allowsColumnReordering = false
     $0.allowsColumnResizing = false
     $0.allowsColumnSelection = false
@@ -68,9 +68,13 @@ public class ListSpot: NSObject, Spotable {
     spotsDelegate?.spotDidSelectItem(self, item: viewModel)
   }
 
-  public func render() -> RegularView {
+  public func render() -> ScrollView {
     return scrollView
   }
+
+  public func layout(size: CGSize) { }
+
+  public func prepare() { }
 
   public func setup(size: CGSize) {
     component.items.enumerate().forEach {

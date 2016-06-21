@@ -65,10 +65,10 @@ public class GridSpot: NSObject, Gridable {
 
     if #available(OSX 10.11, *) {
 //      layout.sectionInset = NSEdgeInsets(top: top, left: left, bottom: bottom, right: right)
-      if let layout = layout as? LeftFlowLayout {
-        layout.minimumInteritemSpacing = itemSpacing
-        layout.minimumLineSpacing = lineSpacing
-      }
+//      if let layout = layout as? LeftFlowLayout {
+//        layout.minimumInteritemSpacing = itemSpacing
+//        layout.minimumLineSpacing = lineSpacing
+//      }
     }
   }
 
@@ -81,7 +81,7 @@ public class GridSpot: NSObject, Gridable {
     }
   }
 
-  public func render() -> RegularView {
+  public func render() -> ScrollView {
     return scrollView
   }
 
