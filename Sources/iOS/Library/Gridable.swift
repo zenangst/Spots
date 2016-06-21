@@ -113,8 +113,8 @@ public extension Spotable where Self : Gridable {
 
   /**
    - Parameter item: The view model that you want to insert
-   - Parameter withAnimation: The animation that should be used (currently not in use)
    - Parameter index: The index where the new ViewModel should be inserted
+   - Parameter animation: The animation that should be used (currently not in use)
    - Parameter completion: Completion
    */
   public func insert(item: ViewModel, index: Int, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
@@ -137,7 +137,7 @@ public extension Spotable where Self : Gridable {
   }
 
   /**
-   - Parameter item: A collection of view model that you want to prepend
+   - Parameter items: A collection of view model that you want to prepend
    - Parameter animation: The animation that should be used (currently not in use)
    - Parameter completion: A completion closure that is executed in the main queue
    */
@@ -254,7 +254,7 @@ public extension Spotable where Self : Gridable {
 
   /**
    - Parameter indexes: An array of integers that you want to reload, default is nil
-   - Parameter animated: Perform reload animation
+   - Parameter animation: Perform reload animation
    - Parameter completion: A completion closure that is executed in the main queue when the view model has been reloaded
    */
   public func reload(indexes: [Int]? = nil, withAnimation animation: SpotsAnimation = .None, completion: Completion) {
