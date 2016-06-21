@@ -253,4 +253,15 @@ public extension Spotable {
       return self.dynamicType.defaultKind.string
     }
   }
+
+  func reuseIdentifierForItem(index: Int) -> String {
+    let viewModel = item(index)
+    if self.dynamicType.views.storage[viewModel.kind] != nil {
+      return viewModel.kind
+    } else if self.dynamicType.views.storage[component.kind] != nil {
+      return component.kind
+    } else {
+      return self.dynamicType.defaultKind.string
+    }
+  }
 }
