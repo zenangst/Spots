@@ -63,6 +63,7 @@ public class ListSpot: NSObject, Listable {
   }
 
   public func doubleAction(sender: AnyObject?) {
+    guard component.meta("doubleClick", type: Bool.self) == true else { return }
     let viewModel = item(tableView.selectedRow)
     spotsDelegate?.spotDidSelectItem(self, item: viewModel)
   }
