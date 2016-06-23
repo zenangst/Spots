@@ -13,6 +13,16 @@ public protocol Gridable: Spotable {
 
 extension Gridable {
 
+  public func configureLayout(component: Component) {
+    let top: CGFloat = component.meta("insetTop", 0.0)
+    let left: CGFloat = component.meta("insetLeft", 0.0)
+    let bottom: CGFloat = component.meta("insetBottom", 0.0)
+    let right: CGFloat = component.meta("insetRight", 0.0)
+    layout.minimumInteritemSpacing = component.meta("itemSpacing", 0.0)
+    layout.minimumLineSpacing = component.meta("lineSpacing", 0.0)
+    layout.sectionInset = NSEdgeInsets(top: top, left: left, bottom: bottom, right: right)
+  }
+
   public func prepare() {
     registerAndPrepare { (classType, withIdentifier) in
       collectionView.registerClass(classType, forItemWithIdentifier: withIdentifier)
