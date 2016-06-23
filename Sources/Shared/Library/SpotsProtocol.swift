@@ -362,6 +362,36 @@ public extension SpotsProtocol {
     stateCache?.save(dictionary)
   }
 
+  /**
+   Clear Spots cache
+   */
+  public static func clearCache() {
+    let paths = NSSearchPathForDirectoriesInDomains(.CachesDirectory,
+                                                    NSSearchPathDomainMask.UserDomainMask, true)
+    let path = "\(paths.first!)/\(DiskStorage.prefix).\(SpotCache.cacheName)"
+    do {
+      try NSFileManager.defaultManager().removeItemAtPath(path)
+    } catch {
+      NSLog("Could not remove cache at path: \(path)")
+    }
+  }
+
+  /**
+   - Parameter indexPath: The index path of the component you want to lookup
+   - Returns: A Component object at index path
+   **/
+  private func component(indexPath: NSIndexPath) -> Component {
+    return spot(indexPath).component
+  }
+
+  /**
+   - Parameter indexPath: The index path of the spot you want to lookup
+   - Returns: A Spotable object at index path
+   **/
+  private func spot(indexPath: NSIndexPath) -> Spotable {
+    return spots[indexPath.item]
+  }
+
   #if DEVMODE
 
   private func monitor(filePath: String) {
