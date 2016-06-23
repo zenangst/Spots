@@ -2,12 +2,6 @@ import UIKit
 import Sugar
 import Brick
 
-/// Listable is a protocol for Spots that are based on UITableView
-public protocol Listable: Spotable {
-  /// The table view object managed by this listable object.
-  var tableView: UITableView { get }
-}
-
 public extension Spotable where Self : Listable {
 
   /**

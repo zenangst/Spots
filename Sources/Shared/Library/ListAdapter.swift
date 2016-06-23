@@ -1,6 +1,4 @@
 import Foundation
-import Sugar
-import Brick
 
 public class ListAdapter: NSObject, SpotAdapter {
   // An unowned Listable object
