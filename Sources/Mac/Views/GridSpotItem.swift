@@ -30,7 +30,9 @@ public class GridSpotItem: NSCollectionViewItem, SpotConfigurable {
   public var size = CGSize(width: 0, height: 88)
   public var customView = FlippedView()
 
-  lazy var titleLabel = NSTextField().then {
+  lazy var customImageView = NSImageView()
+
+  public lazy var titleLabel = NSTextField().then {
     $0.editable = false
     $0.selectable = false
     $0.bezeled = false
@@ -38,7 +40,7 @@ public class GridSpotItem: NSCollectionViewItem, SpotConfigurable {
     $0.drawsBackground = false
   }
 
-  lazy var subtitleLabel = NSTextField().then {
+  public lazy var subtitleLabel = NSTextField().then {
     $0.editable = false
     $0.selectable = false
     $0.bezeled = false
@@ -46,7 +48,7 @@ public class GridSpotItem: NSCollectionViewItem, SpotConfigurable {
     $0.drawsBackground = false
   }
 
-  lazy var lineView = NSView().then {
+  public lazy var lineView = NSView().then {
     $0.frame.size.height = 1
     $0.wantsLayer = true
     $0.layer = CALayer()
@@ -57,9 +59,12 @@ public class GridSpotItem: NSCollectionViewItem, SpotConfigurable {
   override init?(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
     super.init(nibName: nil, bundle: nil)
 
+    imageView = customImageView
+
     view.addSubview(titleLabel)
     view.addSubview(subtitleLabel)
     view.addSubview(lineView)
+    view.addSubview(customImageView)
   }
 
   required public init?(coder: NSCoder) {
