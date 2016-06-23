@@ -69,9 +69,8 @@ public class CarouselSpot: NSObject, Gridable {
   }
 
   public func setupCollectionView() {
-    collectionView.maxNumberOfColumns = Int(component.span)
-    collectionView.delegate = adapter as? CollectionAdapter
-    collectionView.dataSource = adapter as? CollectionAdapter
+    collectionView.delegate = collectionAdapter
+    collectionView.dataSource = collectionAdapter
     collectionView.collectionViewLayout = layout
   }
 
