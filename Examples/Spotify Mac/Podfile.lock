@@ -5,6 +5,10 @@ PODS:
   - Cache (1.4.0):
     - CryptoSwift
   - CryptoSwift (0.5.1)
+  - Fashion (1.1.0):
+    - Sugar
+  - Imaginary (0.1.0):
+    - Cache
   - Spots (1.9.5):
     - Brick
     - Cache
@@ -16,12 +20,19 @@ PODS:
 
 DEPENDENCIES:
   - Cache (from `https://github.com/hyperoslo/Cache.git`)
+  - Fashion (from `https://github.com/vadymmarkov/Fashion.git`)
+  - Imaginary (from `https://github.com/hyperoslo/Imaginary.git`, branch `feature/os-x-support`)
   - Spots (from `../../`)
   - Sugar (from `https://github.com/hyperoslo/Sugar.git`)
 
 EXTERNAL SOURCES:
   Cache:
     :git: https://github.com/hyperoslo/Cache.git
+  Fashion:
+    :git: https://github.com/vadymmarkov/Fashion.git
+  Imaginary:
+    :branch: feature/os-x-support
+    :git: https://github.com/hyperoslo/Imaginary.git
   Spots:
     :path: "../../"
   Sugar:
@@ -31,6 +42,12 @@ CHECKOUT OPTIONS:
   Cache:
     :commit: d6f0b013cbe9ede4b5fe5a8b615220abce0327d6
     :git: https://github.com/hyperoslo/Cache.git
+  Fashion:
+    :commit: 3e2bf8754d1dbdc9e05f423bbb96db6dc06fec46
+    :git: https://github.com/vadymmarkov/Fashion.git
+  Imaginary:
+    :commit: 6be05cc41b14490b33be7bb0d7a4eede23cc9312
+    :git: https://github.com/hyperoslo/Imaginary.git
   Sugar:
     :commit: f2407aaab30dc9d5199b37e9f4ff002f8263dbd4
     :git: https://github.com/hyperoslo/Sugar.git
@@ -39,10 +56,12 @@ SPEC CHECKSUMS:
   Brick: c5b60d83f69c5e882097ee4e9bf12abd428e395a
   Cache: 059cf0e10e6c3aec2c402eea19bd6b3aacb3fe9d
   CryptoSwift: df42dda18baf6c76347a94e227dbcc0a341304bd
+  Fashion: 82f2bb05505e3aea0977a2c23f5d8692e06f12a9
+  Imaginary: 62a9ce1e6d7831ede429c8221a183f03ec2a90bc
   Spots: a0aa4115e1ba66e05c56c968fa1e758023a2516c
   Sugar: 73eaf2803ba1128d8b0370f402494981af7675d3
   Tailor: 38a9f1ed1fa804856583396a55ed764d832eeca8
 
-PODFILE CHECKSUM: d3ac8320b392dbbc7d271fd70275a8673b522104
+PODFILE CHECKSUM: 1f747a9622a38e445796b7ddf1c215c9ee6410ab
 
 COCOAPODS: 1.0.0

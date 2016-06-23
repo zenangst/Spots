@@ -9,6 +9,9 @@ target "Spotify Mac" do
   pod 'Spots', path: '../../'
   pod 'Sugar', git: 'https://github.com/hyperoslo/Sugar.git'
   pod 'Cache', git: 'https://github.com/hyperoslo/Cache.git'
+  pod 'Fashion', git: 'https://github.com/vadymmarkov/Fashion.git'
+  pod 'Imaginary', git: 'https://github.com/hyperoslo/Imaginary.git'
+  pod 'Hue'
 
   post_install do |installer|
     puts("Update debug pod settings to speed up build time")
