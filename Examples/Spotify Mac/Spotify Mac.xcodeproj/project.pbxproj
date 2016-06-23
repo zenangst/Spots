@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		BD296ED11D198D2B00D143F9 /* MainSplitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD296ED01D198D2B00D143F9 /* MainSplitView.swift */; };
+		BD7FA73E1D1C1FE6002CE86F /* FeaturedGridItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7FA73D1D1C1FE6002CE86F /* FeaturedGridItem.swift */; };
+		BD7FA7401D1C517D002CE86F /* HeroGridItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7FA73F1D1C517D002CE86F /* HeroGridItem.swift */; };
 		BDDC3E901CE78D5B00B608FB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDC3E8F1CE78D5B00B608FB /* AppDelegate.swift */; };
 		BDDC3E921CE78D5B00B608FB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BDDC3E911CE78D5B00B608FB /* Assets.xcassets */; };
 		BDDC3E951CE78D5B00B608FB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = BDDC3E931CE78D5B00B608FB /* MainMenu.xib */; };
@@ -20,6 +22,8 @@
 		4B24236867CC70C96FFF7A54 /* Pods-Spotify Mac.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spotify Mac.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Spotify Mac/Pods-Spotify Mac.debug.xcconfig"; sourceTree = "<group>"; };
 		B9EB7CECCE479EC197F017EE /* Pods_Spotify_Mac.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Spotify_Mac.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD296ED01D198D2B00D143F9 /* MainSplitView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainSplitView.swift; sourceTree = "<group>"; };
+		BD7FA73D1D1C1FE6002CE86F /* FeaturedGridItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeaturedGridItem.swift; sourceTree = "<group>"; };
+		BD7FA73F1D1C517D002CE86F /* HeroGridItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeroGridItem.swift; sourceTree = "<group>"; };
 		BDDC3E8C1CE78D5B00B608FB /* Spotify Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Spotify Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDDC3E8F1CE78D5B00B608FB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BDDC3E911CE78D5B00B608FB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -84,6 +88,8 @@
 				BDDC3E961CE78D5B00B608FB /* Info.plist */,
 				BDDC3EE11CEA2DDE00B608FB /* TableViewCell.swift */,
 				BD296ED01D198D2B00D143F9 /* MainSplitView.swift */,
+				BD7FA73D1D1C1FE6002CE86F /* FeaturedGridItem.swift */,
+				BD7FA73F1D1C517D002CE86F /* HeroGridItem.swift */,
 			);
 			path = "Spotify Mac";
 			sourceTree = "<group>";
@@ -211,6 +217,8 @@
 			files = (
 				BDDC3E901CE78D5B00B608FB /* AppDelegate.swift in Sources */,
 				BDDC3EE21CEA2DDE00B608FB /* TableViewCell.swift in Sources */,
+				BD7FA7401D1C517D002CE86F /* HeroGridItem.swift in Sources */,
+				BD7FA73E1D1C1FE6002CE86F /* FeaturedGridItem.swift in Sources */,
 				BD296ED11D198D2B00D143F9 /* MainSplitView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
