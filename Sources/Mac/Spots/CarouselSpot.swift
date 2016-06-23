@@ -89,8 +89,10 @@ public class CarouselSpot: NSObject, Gridable {
 
     scrollView.frame.size = size
     collectionView.frame.size = size
+    collectionView.frame.size.width = layout.collectionViewContentSize.width
 
     CarouselSpot.configure?(view: collectionView)
+    layout.invalidateLayout()
   }
 
   public func append(item: ViewModel, withAnimation animation: SpotsAnimation, completion: Completion) {}
