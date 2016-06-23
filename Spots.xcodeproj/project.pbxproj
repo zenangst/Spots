@@ -16,7 +16,6 @@
 		BD38DC641D1854D700094941 /* CollectionAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD38DC351D1854D700094941 /* CollectionAdapter.swift */; };
 		BD38DC661D1854D700094941 /* Gridable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD38DC361D1854D700094941 /* Gridable.swift */; };
 		BD38DC681D1854D700094941 /* Listable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD38DC371D1854D700094941 /* Listable.swift */; };
-		BD38DC6A1D1854D700094941 /* ListAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD38DC381D1854D700094941 /* ListAdapter.swift */; };
 		BD38DC7C1D1854D700094941 /* CarouselSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD38DC431D1854D700094941 /* CarouselSpot.swift */; };
 		BD38DC7E1D1854D700094941 /* CarouselSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD38DC441D1854D700094941 /* CarouselSpotCell.swift */; };
 		BD38DC801D1854D700094941 /* GridSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD38DC461D1854D700094941 /* GridSpot.swift */; };
@@ -52,7 +51,6 @@
 		BD980E0D1D18A821007284DD /* CollectionAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD980DFD1D18A821007284DD /* CollectionAdapter.swift */; };
 		BD980E0E1D18A821007284DD /* Gridable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD980DFE1D18A821007284DD /* Gridable.swift */; };
 		BD980E0F1D18A821007284DD /* GridRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD980DFF1D18A821007284DD /* GridRegistry.swift */; };
-		BD980E101D18A821007284DD /* ListAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD980E001D18A821007284DD /* ListAdapter.swift */; };
 		BD980E111D18A821007284DD /* CarouselSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD980E021D18A821007284DD /* CarouselSpot.swift */; };
 		BD980E121D18A821007284DD /* GridSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD980E031D18A821007284DD /* GridSpot.swift */; };
 		BD980E131D18A821007284DD /* ListSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD980E041D18A821007284DD /* ListSpot.swift */; };
@@ -74,6 +72,14 @@
 		BD980E2A1D190A26007284DD /* Viewable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD980E281D190A26007284DD /* Viewable.swift */; };
 		BDB538301C444B3C0005E498 /* ListSpotSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB5382F1C444B3C0005E498 /* ListSpotSpec.swift */; };
 		BDCCD9271C44438800AC21D1 /* GridSpotSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCCD9261C44438800AC21D1 /* GridSpotSpec.swift */; };
+		BDE8FBBA1D1BD26100C5A212 /* SpotAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE8FBB91D1BD26100C5A212 /* SpotAdapter.swift */; };
+		BDE8FBBB1D1BD26100C5A212 /* SpotAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE8FBB91D1BD26100C5A212 /* SpotAdapter.swift */; };
+		BDE8FBBD1D1BD55F00C5A212 /* Listable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE8FBBC1D1BD55F00C5A212 /* Listable.swift */; };
+		BDE8FBBF1D1BD83800C5A212 /* NSCollectionView+Indexes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE8FBBE1D1BD83800C5A212 /* NSCollectionView+Indexes.swift */; };
+		BDE8FBC31D1BEC4300C5A212 /* ListAdapter+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE8FBC21D1BEC4300C5A212 /* ListAdapter+iOS.swift */; };
+		BDE8FBC51D1BEC5D00C5A212 /* ListAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE8FBC41D1BEC5D00C5A212 /* ListAdapter.swift */; };
+		BDE8FBC61D1BEC5D00C5A212 /* ListAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE8FBC41D1BEC5D00C5A212 /* ListAdapter.swift */; };
+		BDE8FBC81D1BED9300C5A212 /* ListAdapter+Mac.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE8FBC71D1BED9300C5A212 /* ListAdapter+Mac.swift */; };
 		D58478141C43FEB9006EBA49 /* Spots.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478091C43FEB8006EBA49 /* Spots.framework */; };
 		D58478531C43FFEB006EBA49 /* TestSpotFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58478281C43FF34006EBA49 /* TestSpotFactory.swift */; };
 		D58478551C43FFEF006EBA49 /* TestSpotsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58478291C43FF34006EBA49 /* TestSpotsController.swift */; };
@@ -119,7 +125,6 @@
 		BD38DC351D1854D700094941 /* CollectionAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionAdapter.swift; sourceTree = "<group>"; };
 		BD38DC361D1854D700094941 /* Gridable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gridable.swift; sourceTree = "<group>"; };
 		BD38DC371D1854D700094941 /* Listable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Listable.swift; sourceTree = "<group>"; };
-		BD38DC381D1854D700094941 /* ListAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListAdapter.swift; sourceTree = "<group>"; };
 		BD38DC431D1854D700094941 /* CarouselSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselSpot.swift; sourceTree = "<group>"; };
 		BD38DC441D1854D700094941 /* CarouselSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselSpotCell.swift; sourceTree = "<group>"; };
 		BD38DC461D1854D700094941 /* GridSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridSpot.swift; sourceTree = "<group>"; };
@@ -145,7 +150,6 @@
 		BD980DFD1D18A821007284DD /* CollectionAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionAdapter.swift; sourceTree = "<group>"; };
 		BD980DFE1D18A821007284DD /* Gridable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gridable.swift; sourceTree = "<group>"; };
 		BD980DFF1D18A821007284DD /* GridRegistry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridRegistry.swift; sourceTree = "<group>"; };
-		BD980E001D18A821007284DD /* ListAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListAdapter.swift; sourceTree = "<group>"; };
 		BD980E021D18A821007284DD /* CarouselSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselSpot.swift; sourceTree = "<group>"; };
 		BD980E031D18A821007284DD /* GridSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridSpot.swift; sourceTree = "<group>"; };
 		BD980E041D18A821007284DD /* ListSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListSpot.swift; sourceTree = "<group>"; };
@@ -163,6 +167,12 @@
 		BDB5382F1C444B3C0005E498 /* ListSpotSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListSpotSpec.swift; sourceTree = "<group>"; };
 		BDB538321C444D460005E498 /* Playground-iOS.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Playground-iOS.playground"; sourceTree = "<group>"; };
 		BDCCD9261C44438800AC21D1 /* GridSpotSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridSpotSpec.swift; sourceTree = "<group>"; };
+		BDE8FBB91D1BD26100C5A212 /* SpotAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotAdapter.swift; sourceTree = "<group>"; };
+		BDE8FBBC1D1BD55F00C5A212 /* Listable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Listable.swift; sourceTree = "<group>"; };
+		BDE8FBBE1D1BD83800C5A212 /* NSCollectionView+Indexes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSCollectionView+Indexes.swift"; sourceTree = "<group>"; };
+		BDE8FBC21D1BEC4300C5A212 /* ListAdapter+iOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ListAdapter+iOS.swift"; sourceTree = "<group>"; };
+		BDE8FBC41D1BEC5D00C5A212 /* ListAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListAdapter.swift; sourceTree = "<group>"; };
+		BDE8FBC71D1BED9300C5A212 /* ListAdapter+Mac.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ListAdapter+Mac.swift"; sourceTree = "<group>"; };
 		D58478091C43FEB8006EBA49 /* Spots.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Spots.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D58478131C43FEB9006EBA49 /* Spots-iOS-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Spots-iOS-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D58478241C43FF34006EBA49 /* Info-iOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
@@ -268,6 +278,7 @@
 			children = (
 				BD38DC321D1854D700094941 /* UICollectionView+Indexes.swift */,
 				BD38DC331D1854D700094941 /* UITableView+Indexes.swift */,
+				BDE8FBC21D1BEC4300C5A212 /* ListAdapter+iOS.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -278,7 +289,6 @@
 				BD38DC351D1854D700094941 /* CollectionAdapter.swift */,
 				BD38DC361D1854D700094941 /* Gridable.swift */,
 				BD38DC371D1854D700094941 /* Listable.swift */,
-				BD38DC381D1854D700094941 /* ListAdapter.swift */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -366,6 +376,7 @@
 				BD38DC531D1854D700094941 /* Extensions */,
 				BD38DC551D1854D700094941 /* Protocols */,
 				BD38DC581D1854D700094941 /* SpotCache.swift */,
+				BDE8FBC41D1BEC5D00C5A212 /* ListAdapter.swift */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -383,6 +394,7 @@
 			children = (
 				BD38DC561D1854D700094941 /* Componentable.swift */,
 				BD38DC571D1854D700094941 /* SpotConfigurable.swift */,
+				BDE8FBB91D1BD26100C5A212 /* SpotAdapter.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -406,8 +418,10 @@
 		BD980DFA1D18A821007284DD /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				BDE8FBC71D1BED9300C5A212 /* ListAdapter+Mac.swift */,
 				BD980DFB1D18A821007284DD /* NSScrollView+Extensions.swift */,
 				BD980E1F1D19045A007284DD /* NSTableView+Indexes.swift */,
+				BDE8FBBE1D1BD83800C5A212 /* NSCollectionView+Indexes.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -418,7 +432,7 @@
 				BD980DFD1D18A821007284DD /* CollectionAdapter.swift */,
 				BD980DFE1D18A821007284DD /* Gridable.swift */,
 				BD980DFF1D18A821007284DD /* GridRegistry.swift */,
-				BD980E001D18A821007284DD /* ListAdapter.swift */,
+				BDE8FBBC1D1BD55F00C5A212 /* Listable.swift */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -828,10 +842,10 @@
 				BD38DC8A1D1854D700094941 /* SpotsContentView.swift in Sources */,
 				BD38DC641D1854D700094941 /* CollectionAdapter.swift in Sources */,
 				BD980E291D190A26007284DD /* Viewable.swift in Sources */,
+				BDE8FBC51D1BEC5D00C5A212 /* ListAdapter.swift in Sources */,
 				BD38DC7E1D1854D700094941 /* CarouselSpotCell.swift in Sources */,
 				BD38DC8C1D1854D700094941 /* SpotsScrollView.swift in Sources */,
 				BD38DC861D1854D700094941 /* ListSpotCell.swift in Sources */,
-				BD38DC6A1D1854D700094941 /* ListAdapter.swift in Sources */,
 				BD980DF31D18A767007284DD /* SpotsAnimation.swift in Sources */,
 				BD38DC901D1854D700094941 /* Componentable.swift in Sources */,
 				BD38DC621D1854D700094941 /* UITableView+Indexes.swift in Sources */,
@@ -844,6 +858,8 @@
 				BD38DC981D1854D700094941 /* Component.swift in Sources */,
 				BD980DED1D18A6ED007284DD /* Spotable.swift in Sources */,
 				BD980DF61D18A7C6007284DD /* TypeAlias.swift in Sources */,
+				BDE8FBBA1D1BD26100C5A212 /* SpotAdapter.swift in Sources */,
+				BDE8FBC31D1BEC4300C5A212 /* ListAdapter+iOS.swift in Sources */,
 				BD38DC801D1854D700094941 /* GridSpot.swift in Sources */,
 				BD38DC661D1854D700094941 /* Gridable.swift in Sources */,
 				BD980E261D1909E3007284DD /* ViewSpot.swift in Sources */,
@@ -882,18 +898,21 @@
 				BD980E111D18A821007284DD /* CarouselSpot.swift in Sources */,
 				BD980E181D18A821007284DD /* SpotsScrollView.swift in Sources */,
 				BD980E151D18A821007284DD /* ListSpotItem.swift in Sources */,
+				BDE8FBC61D1BEC5D00C5A212 /* ListAdapter.swift in Sources */,
+				BDE8FBC81D1BED9300C5A212 /* ListAdapter+Mac.swift in Sources */,
 				BD38DC9B1D18550900094941 /* Componentable.swift in Sources */,
 				BD980E161D18A821007284DD /* NoScrollView.swift in Sources */,
 				BD980E201D19045A007284DD /* NSTableView+Indexes.swift in Sources */,
 				BD980E1B1D18A877007284DD /* ViewRegistry.swift in Sources */,
 				BD38DC9C1D18550900094941 /* SpotConfigurable.swift in Sources */,
-				BD980E101D18A821007284DD /* ListAdapter.swift in Sources */,
 				BD980DEE1D18A6ED007284DD /* Spotable.swift in Sources */,
 				BD980DF41D18A767007284DD /* SpotsAnimation.swift in Sources */,
 				BD980E1E1D18A8C2007284DD /* SpotsDelegates.swift in Sources */,
 				BD980E0B1D18A821007284DD /* SpotsController.swift in Sources */,
+				BDE8FBBB1D1BD26100C5A212 /* SpotAdapter.swift in Sources */,
 				BD38DC9D1D18550900094941 /* SpotCache.swift in Sources */,
 				BD980E2A1D190A26007284DD /* Viewable.swift in Sources */,
+				BDE8FBBF1D1BD83800C5A212 /* NSCollectionView+Indexes.swift in Sources */,
 				BD980E141D18A821007284DD /* GridSpotItem.swift in Sources */,
 				BD980E0C1D18A821007284DD /* NSScrollView+Extensions.swift in Sources */,
 				BD980E121D18A821007284DD /* GridSpot.swift in Sources */,
@@ -901,6 +920,7 @@
 				BD38DC9F1D18550900094941 /* Component.swift in Sources */,
 				BD980DF11D18A726007284DD /* SpotFactory.swift in Sources */,
 				BD980DF71D18A7C6007284DD /* TypeAlias.swift in Sources */,
+				BDE8FBBD1D1BD55F00C5A212 /* Listable.swift in Sources */,
 				BD980E0F1D18A821007284DD /* GridRegistry.swift in Sources */,
 				BD980E0E1D18A821007284DD /* Gridable.swift in Sources */,
 				BD980E231D1904E0007284DD /* SpotsProtocol.swift in Sources */,

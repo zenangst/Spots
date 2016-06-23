@@ -21,7 +21,15 @@ public class SpotsController: NSViewController, SpotsProtocol {
   /// An array of refresh positions to avoid refreshing multiple times when using infinite scrolling
   public var refreshPositions = [CGFloat]()
 
+  /// An optional SpotCache used for view controller caching
   public var stateCache: SpotCache?
+
+  #if DEVMODE
+  /// A dispatch queue is a lightweight object to which your application submits blocks for subsequent execution.
+  public let fileQueue: dispatch_queue_t = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
+  /// An identifier for the type system object being monitored by a dispatch source.
+  public var source: dispatch_source_t!
+  #endif
 
   /// A delegate for when an item is tapped within a Spot
   weak public var spotsDelegate: SpotsDelegate? {
@@ -32,9 +40,8 @@ public class SpotsController: NSViewController, SpotsProtocol {
   }
 
   /// A custom scroll view that handles the scrolling for all internal scroll views
-  lazy public var spotsScrollView: SpotsScrollView = SpotsScrollView().then { [unowned self] in
-    $0.autoresizingMask = [.ViewWidthSizable, .ViewHeightSizable]
-//    $0.delegate = self
+  lazy public var spotsScrollView: SpotsScrollView = SpotsScrollView().then {
+    $0.autoresizingMask = [ .ViewWidthSizable, .ViewHeightSizable ]
   }
 
   /**
@@ -46,19 +53,8 @@ public class SpotsController: NSViewController, SpotsProtocol {
   }
 
   /**
-   - Parameter spot: A Spotable object
+   deinit
    */
-  public convenience init(spot: Spotable) {
-    self.init(spots: [spot])
-  }
-
-  /**
-   - Parameter json: A JSON dictionary that gets parsed into UI elements
-   */
-  public convenience init(_ json: [String : AnyObject]) {
-    self.init(spots: Parser.parse(json))
-  }
-
   deinit {
     view.removeObserver(self, forKeyPath: "window", context: KVOWindowContext)
   }
@@ -72,22 +68,34 @@ public class SpotsController: NSViewController, SpotsProtocol {
     self.stateCache = stateCache
   }
 
+  /**
+   Returns an object initialized from data in a given unarchiver
+
+   - Parameter coder: An unarchiver object.
+   - Returns: self, initialized using the data in decoder..
+   */
   public required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 
+  /**
+   This message is sent to the receiver when the value at the specified key path relative to the given object has changed.
+
+   - Parameter keyPath: The key path, relative to object, to the value that has changed.
+   - Parameter object:  The source object of the key path keyPath.
+   - Parameter change:  A dictionary that describes the changes that have been made to the value of the property at the key path keyPath relative to object.
+   - Parameter context: The value that was provided when the receiver was registered to receive key-value observation notifications.
+   */
   public override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
     guard let themeFrame = view.superview
       where keyPath == "window" && context == KVOWindowContext else { return }
 
-    spotsScrollView.frame = view.frame
+    spotsScrollView.frame = themeFrame.frame
     setupSpots()
     SpotsController.configure?(container: spotsScrollView)
 
     for case let grid as Gridable in spots {
-      if #available(OSX 10.11, *) {
-        grid.layout.invalidateLayout()
-      }
+      grid.layout.invalidateLayout()
     }
   }
 
@@ -112,16 +120,21 @@ public class SpotsController: NSViewController, SpotsProtocol {
     return nil
   }
 
+  /**
+   Instantiates a view from a nib file and sets the value of the view property.
+   */
   public override func loadView() {
     view = NSView()
     view.autoresizingMask = .ViewWidthSizable
+    view.autoresizesSubviews = true
     view.addObserver(self, forKeyPath: "window", options: .Old, context: KVOWindowContext)
   }
 
+  /**
+   Called after the view controller’s view has been loaded into memory.
+   */
   public override func viewDidLoad() {
     super.viewDidLoad()
-    view.wantsLayer = true
-    view.layer = CALayer()
     view.addSubview(spotsScrollView)
   }
 
@@ -134,7 +147,7 @@ public class SpotsController: NSViewController, SpotsProtocol {
       spotsScrollView.spotsContentView.addSubview(spot.render())
       spot.prepare()
       spot.setup(CGSize(width: spotsScrollView.frame.width,
-        height: spot.spotHeight() ?? 0))
+        height: spot.spotHeight() + 15 ?? 0))
       spot.component.size = CGSize(
         width: view.frame.width,
         height: ceil(spot.render().frame.height))

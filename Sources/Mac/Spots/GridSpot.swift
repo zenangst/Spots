@@ -19,19 +19,22 @@ public class GridSpot: NSObject, Gridable {
 
   public private(set) var stateCache: SpotCache?
 
-  public lazy var adapter: CollectionAdapter = CollectionAdapter(spot: self)
-  @available(OSX 10.11, *)
-  public lazy var layout: NSCollectionViewLayout = NSCollectionViewFlowLayout().then {
-    $0.minimumInteritemSpacing = 10
-    $0.minimumLineSpacing = 10
-    $0.sectionInset = NSEdgeInsets(top: 10.0, left: 20.0, bottom: 10.0, right: 20.0)
-    $0.itemSize = NSSize(width: 160.0, height: 140.0)
+  public var adapter: SpotAdapter? {
+    return collectionAdapter
+  }
+
+  public lazy var collectionAdapter: CollectionAdapter = CollectionAdapter(spot: self)
+
+  public lazy var layout: NSCollectionViewFlowLayout = NSCollectionViewFlowLayout().then {
+    $0.minimumInteritemSpacing = 0
+    $0.minimumLineSpacing = 0
     $0.scrollDirection = .Vertical
   }
 
   public lazy var scrollView: ScrollView = ScrollView().then {
     let view = NSView()
     view.autoresizingMask = .ViewWidthSizable
+    view.autoresizesSubviews = true
     $0.documentView = view
   }
 
@@ -39,12 +42,16 @@ public class GridSpot: NSObject, Gridable {
     $0.backgroundColors = [NSColor.clearColor()]
     $0.selectable = true
     $0.autoresizingMask = .ViewWidthSizable
+    $0.autoresizesSubviews = true
+    $0.layer = CALayer()
+    $0.wantsLayer = true
   }
 
   public required init(component: Component) {
     self.component = component
     super.init()
     setupCollectionView()
+//    scrollView.documentView = collectionView
     scrollView.contentView.addSubview(collectionView)
   }
 
@@ -63,7 +70,7 @@ public class GridSpot: NSObject, Gridable {
   public convenience init(_ component: Component, top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0, itemSpacing: CGFloat = 0, lineSpacing: CGFloat = 0) {
     self.init(component: component)
 
-//      layout.sectionInset = NSEdgeInsets(top: top, left: left, bottom: bottom, right: right)
+    layout.sectionInset = NSEdgeInsets(top: top, left: left, bottom: bottom, right: right)
 //      if let layout = layout as? LeftFlowLayout {
 //        layout.minimumInteritemSpacing = itemSpacing
 //        layout.minimumLineSpacing = lineSpacing
@@ -72,11 +79,9 @@ public class GridSpot: NSObject, Gridable {
 
   public func setupCollectionView() {
 //    collectionView.maxNumberOfColumns = Int(component.span)
-    if #available(OSX 10.11, *) {
-      collectionView.delegate = adapter
-      collectionView.dataSource = adapter
-      collectionView.collectionViewLayout = layout
-    }
+    collectionView.delegate = collectionAdapter
+    collectionView.dataSource = collectionAdapter
+    collectionView.collectionViewLayout = layout
   }
 
   public func render() -> ScrollView {
@@ -92,23 +97,10 @@ public class GridSpot: NSObject, Gridable {
       }
     }
 
-    collectionView.frame.size = size
-    scrollView.frame.size = size
+    scrollView.frame.size = layout.collectionViewContentSize
+    collectionView.frame.size = layout.collectionViewContentSize
 
     GridSpot.configure?(view: collectionView)
-    if #available(OSX 10.11, *) {
-      layout.invalidateLayout()
-    }
+    layout.invalidateLayout()
   }
-
-  public func append(item: ViewModel, withAnimation animation: SpotsAnimation, completion: Completion) {}
-  public func append(items: [ViewModel], withAnimation animation: SpotsAnimation, completion: Completion) {}
-  public func prepend(items: [ViewModel], withAnimation animation: SpotsAnimation, completion: Completion) {}
-  public func insert(item: ViewModel, index: Int, withAnimation animation: SpotsAnimation, completion: Completion) {}
-  public func update(item: ViewModel, index: Int, withAnimation animation: SpotsAnimation, completion: Completion) {}
-  public func delete(item: ViewModel, withAnimation animation: SpotsAnimation, completion: Completion) {}
-  public func delete(item: [ViewModel], withAnimation animation: SpotsAnimation, completion: Completion) {}
-  public func delete(index: Int, withAnimation animation: SpotsAnimation, completion: Completion) {}
-  public func delete(indexes: [Int], withAnimation animation: SpotsAnimation, completion: Completion) {}
-  public func reload(indexes: [Int]?, withAnimation animation: SpotsAnimation, completion: Completion) {}
 }

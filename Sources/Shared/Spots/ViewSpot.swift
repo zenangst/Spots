@@ -1,4 +1,8 @@
-import Foundation
+#if os(iOS)
+  import UIKit
+#else
+  import Foundation
+#endif
 import Sugar
 import Brick
 
@@ -19,6 +23,8 @@ public class ViewSpot: NSObject, Spotable, Viewable {
 
   public private(set) var stateCache: SpotCache?
 
+  public var adapter: SpotAdapter?
+
   public required init(component: Component) {
     self.component = component
     super.init()
@@ -31,5 +37,9 @@ public class ViewSpot: NSObject, Spotable, Viewable {
 
   public func render() -> RegularView {
     return scrollView
+  }
+
+  public func sizeForItemAt(indexPath: NSIndexPath) -> CGSize {
+    return scrollView.frame.size
   }
 }

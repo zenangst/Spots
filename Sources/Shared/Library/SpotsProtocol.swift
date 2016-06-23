@@ -10,7 +10,7 @@ import Cache
 
 public protocol SpotsProtocol: class {
   /// A SpotCache object
-  var stateCache: SpotCache? { get }
+  var stateCache: SpotCache? { get set }
   /// The internal SpotsScrollView
   var spotsScrollView: SpotsScrollView { get }
   /// A delegate that conforms to SpotsDelegate
@@ -43,6 +43,8 @@ public protocol SpotsProtocol: class {
   func setupSpots(animated: ((view: RegularView) -> Void)?)
   func spot<T>(index: Int, _ type: T.Type) -> T?
   func spot(@noescape closure: (index: Int, spot: Spotable) -> Bool) -> Spotable?
+
+  init(spots: [Spotable])
 }
 
 public extension SpotsProtocol {
@@ -51,6 +53,29 @@ public extension SpotsProtocol {
     get {
       return ["components" : spots.map { $0.component.dictionary }]
     }
+  }
+
+  /**
+   - Parameter spot: A Spotable object
+   */
+  public init(spot: Spotable) {
+    self.init(spots: [spot])
+  }
+
+  /**
+   - Parameter json: A JSON dictionary that gets parsed into UI elements
+   */
+  public init(_ json: [String : AnyObject]) {
+    self.init(spots: Parser.parse(json))
+  }
+
+  /**
+   - Parameter cacheKey: A key that will be used to identify the SpotCache
+   */
+  public init(cacheKey: String) {
+    let stateCache = SpotCache(key: cacheKey)
+    self.init(spots: Parser.parse(stateCache.load()))
+    self.stateCache = stateCache
   }
 
   /**
@@ -104,7 +129,7 @@ public extension SpotsProtocol {
         weakSelf.view.addSubview(weakSelf.spotsScrollView)
       }
 
-      weakSelf.spotsScrollView.contentView.subviews.forEach { $0.removeFromSuperview() }
+      weakSelf.reloadSpotsScrollView()
       weakSelf.setupSpots(animated)
       weakSelf.spotsScrollView.forceUpdate = true
 
@@ -127,7 +152,7 @@ public extension SpotsProtocol {
         weakSelf.view.addSubview(weakSelf.spotsScrollView)
       }
 
-      weakSelf.spotsScrollView.contentView.subviews.forEach { $0.removeFromSuperview() }
+      weakSelf.reloadSpotsScrollView()
       weakSelf.setupSpots(animated)
       weakSelf.spotsScrollView.forceUpdate = true
 
@@ -382,7 +407,11 @@ public extension SpotsProtocol {
   }
 
   private func liveEditing(stateCache: SpotCache?) {
+  #if os(iOS)
     guard let stateCache = stateCache where source == nil && Simulator.isRunning else { return }
+  #else
+    guard let stateCache = stateCache where source == nil else { return }
+  #endif
     CacheJSONOptions.writeOptions = .PrettyPrinted
 
     let paths = NSSearchPathForDirectoriesInDomains(.CachesDirectory,
@@ -392,4 +421,12 @@ public extension SpotsProtocol {
     delay(0.5) { self.monitor(path) }
   }
   #endif
+
+  private func reloadSpotsScrollView() {
+    #if os(iOS)
+      spotsScrollView.contentView.subviews.forEach { $0.removeFromSuperview() }
+    #else
+      (spotsScrollView.documentView as? RegularView)?.subviews.forEach { $0.removeFromSuperview() }
+    #endif
+  }
 }

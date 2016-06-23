@@ -15,7 +15,11 @@ public class SpotsScrollView: NSScrollView {
     }
   }
 
-  lazy public var spotsContentView: SpotsContentView = SpotsContentView()
+  lazy public var spotsContentView: SpotsContentView = SpotsContentView().then {
+    $0.translatesAutoresizingMaskIntoConstraints = true
+    $0.autoresizingMask = [.ViewWidthSizable, .ViewHeightSizable]
+    $0.autoresizesSubviews = true
+  }
 
   override init(frame frameRect: NSRect) {
     super.init(frame: frameRect)
@@ -99,5 +103,11 @@ public class SpotsScrollView: NSScrollView {
     documentView?.setFrameOrigin(contentOffset)
 
     displayIfNeeded()
+
+
+    if let view = superview {
+      view.layout()
+    }
+
   }
 }

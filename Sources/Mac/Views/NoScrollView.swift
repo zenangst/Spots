@@ -8,6 +8,7 @@ public class NoScrollView: NSScrollView {
     drawsBackground = false
     hasHorizontalScroller = false
     hasVerticalScroller = false
+    scrollsDynamically = true
   }
 
   required public init?(coder: NSCoder) {
@@ -15,7 +16,11 @@ public class NoScrollView: NSScrollView {
   }
 
   override public func scrollWheel(theEvent: NSEvent) {
-    nextResponder?.scrollWheel(theEvent)
+    if theEvent.scrollingDeltaX != 0.0 && horizontalScroller != nil {
+      super.scrollWheel(theEvent)
+    } else {
+      nextResponder?.scrollWheel(theEvent)
+    }
   }
 
   static public override func isCompatibleWithResponsiveScrolling() -> Bool {

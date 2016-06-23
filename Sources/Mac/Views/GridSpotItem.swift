@@ -1,5 +1,4 @@
 import Cocoa
-import Spots
 import Brick
 
 public class FlippedView: NSView {

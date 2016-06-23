@@ -4,20 +4,11 @@ import Brick
 /// Gridable is protocol for Spots that are based on UICollectionView
 public protocol Gridable: Spotable {
   // The layout object used to initialize the collection spot controller.
-  @available(OSX 10.11, *)
-  var layout: NSCollectionViewLayout { get }
+  var layout: NSCollectionViewFlowLayout { get }
   /// The collection view object managed by this gridable object.
   var collectionView: CollectionView { get }
 
   static var grids: GridRegistry { get }
-
-  /**
-   Asks the data source for the size of an item in a particular location.
-
-   - Parameter indexPath: The index path of the
-   - Returns: Size of the object at index path as CGSize
-   */
-  func sizeForItemAt(indexPath: NSIndexPath) -> CGSize
 }
 
 extension Gridable {
@@ -58,6 +49,13 @@ extension Gridable {
       prepareItem(item, index: index, cached: &cached)
     }
     cached = nil
+  }
+
+  /**
+   - Returns: A CGFloat of the total height of all items inside of a component
+   */
+  public func spotHeight() -> CGFloat {
+    return component.items.first?.size.height ?? 0.0
   }
 
   /**
