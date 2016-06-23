@@ -2,6 +2,34 @@ import Cocoa
 import Sugar
 import Brick
 
+class LeftFlowLayout: NSCollectionViewFlowLayout {
+
+  override func layoutAttributesForElementsInRect(rect: CGRect) -> [NSCollectionViewLayoutAttributes] {
+
+    let defaultAttributes = super.layoutAttributesForElementsInRect(rect)
+
+    guard defaultAttributes.count != 0 else { return defaultAttributes }
+
+    var leftAlignedAttributes = [NSCollectionViewLayoutAttributes]()
+    var x = self.sectionInset.left
+    var lastYPosition = defaultAttributes[0].frame.origin.y
+
+    for attributes in defaultAttributes {
+      if attributes.frame.origin.y != lastYPosition {
+        x = self.sectionInset.left
+        lastYPosition = attributes.frame.origin.y
+      }
+
+      attributes.frame.origin.x = x
+      x += attributes.frame.size.width + minimumInteritemSpacing
+
+      leftAlignedAttributes.append(attributes)
+    }
+
+    return leftAlignedAttributes
+  }
+}
+
 public class GridSpot: NSObject, Gridable {
 
   public static var views = ViewRegistry()
@@ -25,7 +53,7 @@ public class GridSpot: NSObject, Gridable {
 
   public lazy var collectionAdapter: CollectionAdapter = CollectionAdapter(spot: self)
 
-  public lazy var layout: NSCollectionViewFlowLayout = NSCollectionViewFlowLayout().then {
+  public lazy var layout: NSCollectionViewFlowLayout = LeftFlowLayout().then {
     $0.minimumInteritemSpacing = 0
     $0.minimumLineSpacing = 0
     $0.scrollDirection = .Vertical
@@ -51,7 +79,7 @@ public class GridSpot: NSObject, Gridable {
     self.component = component
     super.init()
     setupCollectionView()
-//    scrollView.documentView = collectionView
+    configureLayout(component)
     scrollView.contentView.addSubview(collectionView)
   }
 
@@ -67,18 +95,7 @@ public class GridSpot: NSObject, Gridable {
     prepare()
   }
 
-  public convenience init(_ component: Component, top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0, itemSpacing: CGFloat = 0, lineSpacing: CGFloat = 0) {
-    self.init(component: component)
-
-    layout.sectionInset = NSEdgeInsets(top: top, left: left, bottom: bottom, right: right)
-//      if let layout = layout as? LeftFlowLayout {
-//        layout.minimumInteritemSpacing = itemSpacing
-//        layout.minimumLineSpacing = lineSpacing
-//      }
-  }
-
   public func setupCollectionView() {
-//    collectionView.maxNumberOfColumns = Int(component.span)
     collectionView.delegate = collectionAdapter
     collectionView.dataSource = collectionAdapter
     collectionView.collectionViewLayout = layout
