@@ -6,12 +6,12 @@ PODS:
     - CryptoSwift
   - Compass (2.0.0):
     - Sugar
-  - CryptoSwift (0.5)
+  - CryptoSwift (0.5.1)
   - Hue (1.1)
   - Imaginary (0.1.0):
     - Cache
   - Keychain (1.0.0)
-  - Spots (1.9.4):
+  - Spots (1.9.5):
     - Brick
     - Cache
     - Sugar
@@ -60,11 +60,11 @@ SPEC CHECKSUMS:
   Brick: c5b60d83f69c5e882097ee4e9bf12abd428e395a
   Cache: 059cf0e10e6c3aec2c402eea19bd6b3aacb3fe9d
   Compass: a5793a890400a010a9a4eb6547c014e982483a2c
-  CryptoSwift: b89d89caad9e5bc417b054078635eeb22bcddf54
+  CryptoSwift: df42dda18baf6c76347a94e227dbcc0a341304bd
   Hue: c7d6a7206bac669ed69e78cc6c14a4d7bd28277c
   Imaginary: 5317b8d2dc8ecf20455232226bf8a277abdd37d5
   Keychain: 50cb247cab32e774422741b118af9b598a3fb5b2
-  Spots: 987f628580c294d4727244a68a1bd0e9c19b65cc
+  Spots: a0aa4115e1ba66e05c56c968fa1e758023a2516c
   Sugar: bed396c924fd089feee7c780778cca2a124f580c
   Tailor: 38a9f1ed1fa804856583396a55ed764d832eeca8
   Whisper: 42a3ee7c2936f861b23d41bd6cd7dfd22f102405

@@ -1,0 +1,368 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		BD296ED11D198D2B00D143F9 /* MainSplitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD296ED01D198D2B00D143F9 /* MainSplitView.swift */; };
+		BDDC3E901CE78D5B00B608FB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDC3E8F1CE78D5B00B608FB /* AppDelegate.swift */; };
+		BDDC3E921CE78D5B00B608FB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BDDC3E911CE78D5B00B608FB /* Assets.xcassets */; };
+		BDDC3E951CE78D5B00B608FB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = BDDC3E931CE78D5B00B608FB /* MainMenu.xib */; };
+		BDDC3EE21CEA2DDE00B608FB /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDC3EE11CEA2DDE00B608FB /* TableViewCell.swift */; };
+		D02FBAF5F98C17C93E8590BA /* Pods_Spotify_Mac.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9EB7CECCE479EC197F017EE /* Pods_Spotify_Mac.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		3367131F94FC9C1DCE9B39B4 /* Pods-Spotify Mac.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spotify Mac.release.xcconfig"; path = "Pods/Target Support Files/Pods-Spotify Mac/Pods-Spotify Mac.release.xcconfig"; sourceTree = "<group>"; };
+		4B24236867CC70C96FFF7A54 /* Pods-Spotify Mac.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spotify Mac.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Spotify Mac/Pods-Spotify Mac.debug.xcconfig"; sourceTree = "<group>"; };
+		B9EB7CECCE479EC197F017EE /* Pods_Spotify_Mac.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Spotify_Mac.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BD296ED01D198D2B00D143F9 /* MainSplitView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainSplitView.swift; sourceTree = "<group>"; };
+		BDDC3E8C1CE78D5B00B608FB /* Spotify Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Spotify Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BDDC3E8F1CE78D5B00B608FB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		BDDC3E911CE78D5B00B608FB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		BDDC3E941CE78D5B00B608FB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		BDDC3E961CE78D5B00B608FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BDDC3EE11CEA2DDE00B608FB /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		BDDC3E891CE78D5B00B608FB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D02FBAF5F98C17C93E8590BA /* Pods_Spotify_Mac.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		70658CFFEFCB55560BE8EB2A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				4B24236867CC70C96FFF7A54 /* Pods-Spotify Mac.debug.xcconfig */,
+				3367131F94FC9C1DCE9B39B4 /* Pods-Spotify Mac.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		7EDE005FF07A356BFB2188E7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B9EB7CECCE479EC197F017EE /* Pods_Spotify_Mac.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BDDC3E831CE78D5B00B608FB = {
+			isa = PBXGroup;
+			children = (
+				BDDC3E8E1CE78D5B00B608FB /* Spotify Mac */,
+				BDDC3E8D1CE78D5B00B608FB /* Products */,
+				70658CFFEFCB55560BE8EB2A /* Pods */,
+				7EDE005FF07A356BFB2188E7 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		BDDC3E8D1CE78D5B00B608FB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BDDC3E8C1CE78D5B00B608FB /* Spotify Mac.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BDDC3E8E1CE78D5B00B608FB /* Spotify Mac */ = {
+			isa = PBXGroup;
+			children = (
+				BDDC3E8F1CE78D5B00B608FB /* AppDelegate.swift */,
+				BDDC3E911CE78D5B00B608FB /* Assets.xcassets */,
+				BDDC3E931CE78D5B00B608FB /* MainMenu.xib */,
+				BDDC3E961CE78D5B00B608FB /* Info.plist */,
+				BDDC3EE11CEA2DDE00B608FB /* TableViewCell.swift */,
+				BD296ED01D198D2B00D143F9 /* MainSplitView.swift */,
+			);
+			path = "Spotify Mac";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		BDDC3E8B1CE78D5B00B608FB /* Spotify Mac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BDDC3E991CE78D5B00B608FB /* Build configuration list for PBXNativeTarget "Spotify Mac" */;
+			buildPhases = (
+				0075D37BE211C7E4ECA9149E /* 📦 Check Pods Manifest.lock */,
+				BDDC3E881CE78D5B00B608FB /* Sources */,
+				BDDC3E891CE78D5B00B608FB /* Frameworks */,
+				BDDC3E8A1CE78D5B00B608FB /* Resources */,
+				DB89DAA2F32E5E5D5CD330DC /* 📦 Embed Pods Frameworks */,
+				9728D66563C9AA6D8927BE7F /* 📦 Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Spotify Mac";
+			productName = "Spotify Mac";
+			productReference = BDDC3E8C1CE78D5B00B608FB /* Spotify Mac.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BDDC3E841CE78D5B00B608FB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0730;
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = Hyper;
+				TargetAttributes = {
+					BDDC3E8B1CE78D5B00B608FB = {
+						CreatedOnToolsVersion = 7.3.1;
+					};
+				};
+			};
+			buildConfigurationList = BDDC3E871CE78D5B00B608FB /* Build configuration list for PBXProject "Spotify Mac" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = BDDC3E831CE78D5B00B608FB;
+			productRefGroup = BDDC3E8D1CE78D5B00B608FB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				BDDC3E8B1CE78D5B00B608FB /* Spotify Mac */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		BDDC3E8A1CE78D5B00B608FB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BDDC3E921CE78D5B00B608FB /* Assets.xcassets in Resources */,
+				BDDC3E951CE78D5B00B608FB /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0075D37BE211C7E4ECA9149E /* 📦 Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		9728D66563C9AA6D8927BE7F /* 📦 Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Spotify Mac/Pods-Spotify Mac-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DB89DAA2F32E5E5D5CD330DC /* 📦 Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Spotify Mac/Pods-Spotify Mac-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		BDDC3E881CE78D5B00B608FB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BDDC3E901CE78D5B00B608FB /* AppDelegate.swift in Sources */,
+				BDDC3EE21CEA2DDE00B608FB /* TableViewCell.swift in Sources */,
+				BD296ED11D198D2B00D143F9 /* MainSplitView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		BDDC3E931CE78D5B00B608FB /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BDDC3E941CE78D5B00B608FB /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		BDDC3E971CE78D5B00B608FB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		BDDC3E981CE78D5B00B608FB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		BDDC3E9A1CE78D5B00B608FB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4B24236867CC70C96FFF7A54 /* Pods-Spotify Mac.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "Spotify Mac/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				PRODUCT_BUNDLE_IDENTIFIER = "no.hyper.Spotify-Mac";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		BDDC3E9B1CE78D5B00B608FB /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3367131F94FC9C1DCE9B39B4 /* Pods-Spotify Mac.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "Spotify Mac/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				PRODUCT_BUNDLE_IDENTIFIER = "no.hyper.Spotify-Mac";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		BDDC3E871CE78D5B00B608FB /* Build configuration list for PBXProject "Spotify Mac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BDDC3E971CE78D5B00B608FB /* Debug */,
+				BDDC3E981CE78D5B00B608FB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BDDC3E991CE78D5B00B608FB /* Build configuration list for PBXNativeTarget "Spotify Mac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BDDC3E9A1CE78D5B00B608FB /* Debug */,
+				BDDC3E9B1CE78D5B00B608FB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BDDC3E841CE78D5B00B608FB /* Project object */;
+}
