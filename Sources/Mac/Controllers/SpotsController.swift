@@ -90,7 +90,6 @@ public class SpotsController: NSViewController, SpotsProtocol {
     guard let themeFrame = view.superview
       where keyPath == "window" && context == KVOWindowContext else { return }
 
-    spotsScrollView.frame = themeFrame.frame
     setupSpots()
     SpotsController.configure?(container: spotsScrollView)
 
@@ -146,8 +145,8 @@ public class SpotsController: NSViewController, SpotsProtocol {
       spots[index].index = index
       spotsScrollView.spotsContentView.addSubview(spot.render())
       spot.prepare()
-      spot.setup(CGSize(width: spotsScrollView.frame.width,
-        height: spot.spotHeight() + 15 ?? 0))
+      spot.setup(CGSize(width: view.frame.width,
+        height: spot.spotHeight() ?? 0))
       spot.component.size = CGSize(
         width: view.frame.width,
         height: ceil(spot.render().frame.height))
