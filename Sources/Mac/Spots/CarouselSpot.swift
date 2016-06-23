@@ -45,6 +45,7 @@ public class CarouselSpot: NSObject, Gridable {
     super.init()
 
     setupCollectionView()
+    configureLayout(component)
     scrollView.documentView = collectionView
   }
 
