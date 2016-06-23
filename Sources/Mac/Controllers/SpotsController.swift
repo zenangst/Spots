@@ -154,4 +154,12 @@ public class SpotsController: NSViewController, SpotsProtocol {
       animated?(view: spot.render())
     }
   }
+
+  public override func viewDidLayout() {
+    super.viewDidLayout()
+    for case let spot as Spotable in spots {
+      spot.setup(CGSize(width: view.frame.width,
+        height: spot.spotHeight() ?? 0))
+    }
+  }
 }
