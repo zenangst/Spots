@@ -48,10 +48,6 @@ public class CarouselSpot: NSObject, Gridable {
     scrollView.documentView = collectionView
   }
 
-  public convenience init(title: String = "", kind: String? = nil) {
-    self.init(component: Component(title: title, kind: kind ?? GridSpot.defaultKind.string))
-  }
-
   public convenience init(cacheKey: String) {
     let stateCache = SpotCache(key: cacheKey)
 
