@@ -37,6 +37,7 @@ public class CarouselSpot: NSObject, Gridable {
 
   public lazy var collectionView: NSCollectionView = NSCollectionView().then {
     $0.autoresizingMask = .ViewWidthSizable
+    $0.selectable = true
     $0.backgroundColors = [NSColor.clearColor()]
   }
 
