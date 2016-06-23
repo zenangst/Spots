@@ -56,7 +56,7 @@ public class CarouselSpot: NSObject, Gridable {
     self.init(component: Component(stateCache.load()))
     self.stateCache = stateCache
 
-    //prepare()
+    prepare()
   }
 
   public convenience init(_ component: Component, top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0, itemSpacing: CGFloat = 0, lineSpacing: CGFloat = 0) {
