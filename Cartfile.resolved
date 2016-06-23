@@ -1,5 +1,5 @@
-github "krzyzanowskim/CryptoSwift" "0.5"
-github "Quick/Nimble" "v4.0.1"
+github "krzyzanowskim/CryptoSwift" "0.5.1"
+github "Quick/Nimble" "v4.1.0"
 github "Quick/Quick" "v0.9.2"
 github "hyperoslo/Sugar" "1.1.1"
 github "SwiftyJSON/SwiftyJSON" "2.3.3"
