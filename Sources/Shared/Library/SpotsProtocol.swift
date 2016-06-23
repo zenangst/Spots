@@ -232,7 +232,7 @@ public extension SpotsProtocol {
    - Parameter closure: A completion closure that will run after the spot has performed updates internally
    */
   public func prepend(items: [ViewModel], spotIndex: Int = 0, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
-    spot(spotIndex, Spotable.self)?.prepend(items, withAnimation: animation)  {
+    spot(spotIndex, Spotable.self)?.prepend(items, withAnimation: animation) {
       completion?()
       self.spotsScrollView.forceUpdate = true
     }
@@ -246,7 +246,7 @@ public extension SpotsProtocol {
    - Parameter closure: A completion closure that will run after the spot has performed updates internally
    */
   public func insert(item: ViewModel, index: Int = 0, spotIndex: Int, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
-    spot(spotIndex, Spotable.self)?.insert(item, index: index, withAnimation: animation)  {
+    spot(spotIndex, Spotable.self)?.insert(item, index: index, withAnimation: animation) {
       completion?()
       self.spotsScrollView.forceUpdate = true
     }
@@ -267,7 +267,7 @@ public extension SpotsProtocol {
         return
     }
 
-    spot(spotIndex, Spotable.self)?.update(item, index: index, withAnimation: animation)  {
+    spot(spotIndex, Spotable.self)?.update(item, index: index, withAnimation: animation) {
       completion?()
       self.spotsScrollView.forceUpdate = true
     }
