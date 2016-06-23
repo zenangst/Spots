@@ -174,6 +174,13 @@ extension ListAdapter: NSTableViewDataSource {
 
 extension ListAdapter: NSTableViewDelegate {
 
+  public func tableViewSelectionDidChange(notification: NSNotification) {
+    guard spot.component.meta("doubleClick", type: Bool.self) != true else { return }
+
+    let viewModel = spot.item(spot.tableView.selectedRow)
+    spot.spotsDelegate?.spotDidSelectItem(spot, item: viewModel)
+  }
+
   public func tableView(tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
     spot.component.size = CGSize(
       width: tableView.frame.width,
