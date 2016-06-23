@@ -120,7 +120,9 @@ extension CarouselSpot {
       width -= layout.minimumLineSpacing
     }
 
-    component.items[indexPath.item].size.width = width
+    if component.items[indexPath.item].size.width == 0.0 {
+      component.items[indexPath.item].size.width = width
+    }
 
     return CGSize(
       width: ceil(component.items[indexPath.item].size.width),
