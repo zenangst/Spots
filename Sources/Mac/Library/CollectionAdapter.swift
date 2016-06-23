@@ -166,7 +166,14 @@ extension CollectionAdapter {
   }
 }
 
-extension CollectionAdapter : NSCollectionViewDelegate { }
+extension CollectionAdapter : NSCollectionViewDelegate {
+
+  public func collectionView(collectionView: NSCollectionView, didSelectItemsAtIndexPaths indexPaths: Set<NSIndexPath>) {
+    guard let first = indexPaths.first else { return }
+    let item = spot.items[first.item]
+    spot.spotsDelegate?.spotDidSelectItem(spot, item: item)
+  }
+}
 
 extension CollectionAdapter: NSCollectionViewDataSource {
 
