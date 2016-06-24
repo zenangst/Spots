@@ -157,7 +157,7 @@ public class SpotsController: UIViewController, SpotsProtocol, UIScrollViewDeleg
   public override func viewDidLoad() {
     super.viewDidLoad()
     view.addSubview(spotsScrollView)
-    spotsScrollView.frame = bounds
+    spotsScrollView.frame = view.bounds
 
     setupSpots()
 
