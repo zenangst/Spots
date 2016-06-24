@@ -2,34 +2,6 @@ import Cocoa
 import Sugar
 import Brick
 
-class LeftFlowLayout: NSCollectionViewFlowLayout {
-
-  override func layoutAttributesForElementsInRect(rect: CGRect) -> [NSCollectionViewLayoutAttributes] {
-
-    let defaultAttributes = super.layoutAttributesForElementsInRect(rect)
-
-    guard defaultAttributes.count != 0 else { return defaultAttributes }
-
-    var leftAlignedAttributes = [NSCollectionViewLayoutAttributes]()
-    var x = self.sectionInset.left
-    var lastYPosition = defaultAttributes[0].frame.origin.y
-
-    for attributes in defaultAttributes {
-      if attributes.frame.origin.y != lastYPosition {
-        x = self.sectionInset.left
-        lastYPosition = attributes.frame.origin.y
-      }
-
-      attributes.frame.origin.x = x
-      x += attributes.frame.size.width + minimumInteritemSpacing
-
-      leftAlignedAttributes.append(attributes)
-    }
-
-    return leftAlignedAttributes
-  }
-}
-
 public class GridSpot: NSObject, Gridable {
 
   public static var views = ViewRegistry()
@@ -53,7 +25,7 @@ public class GridSpot: NSObject, Gridable {
 
   public lazy var collectionAdapter: CollectionAdapter = CollectionAdapter(spot: self)
 
-  public lazy var layout: NSCollectionViewFlowLayout = LeftFlowLayout().then {
+  public lazy var layout: NSCollectionViewFlowLayout = GridSpotLayout().then {
     $0.minimumInteritemSpacing = 0
     $0.minimumLineSpacing = 0
     $0.scrollDirection = .Vertical
