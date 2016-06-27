@@ -151,10 +151,6 @@ extension ListAdapter {
 
 extension ListAdapter: NSTableViewDataSource {
 
-  public func tableView(tableView: NSTableView, setObjectValue object: AnyObject?, forTableColumn tableColumn: NSTableColumn?, row: Int) {
-
-  }
-
   public func numberOfRowsInTableView(tableView: NSTableView) -> Int {
     return spot.component.items.count
   }
