@@ -71,6 +71,7 @@ public protocol Spotable: class {
 
   func spotHeight() -> CGFloat
   func sizeForItemAt(indexPath: NSIndexPath) -> CGSize
+  func deselect()
 }
 
 public extension Spotable {
