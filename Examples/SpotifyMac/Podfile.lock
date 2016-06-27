@@ -7,11 +7,13 @@ PODS:
   - CryptoSwift (0.5.1)
   - Fashion (1.1.0):
     - Sugar
+  - Hue (1.1)
   - Imaginary (0.1.0):
     - Cache
   - Spots (1.9.5):
     - Brick
     - Cache
+    - Hue
     - Sugar
     - Tailor
   - Sugar (1.1.1)
@@ -21,7 +23,8 @@ PODS:
 DEPENDENCIES:
   - Cache (from `https://github.com/hyperoslo/Cache.git`)
   - Fashion (from `https://github.com/vadymmarkov/Fashion.git`)
-  - Imaginary (from `https://github.com/hyperoslo/Imaginary.git`, branch `feature/os-x-support`)
+  - Hue (from `https://github.com/hyperoslo/Hue.git`)
+  - Imaginary (from `https://github.com/hyperoslo/Imaginary.git`)
   - Spots (from `../../`)
   - Sugar (from `https://github.com/hyperoslo/Sugar.git`)
 
@@ -30,8 +33,9 @@ EXTERNAL SOURCES:
     :git: https://github.com/hyperoslo/Cache.git
   Fashion:
     :git: https://github.com/vadymmarkov/Fashion.git
+  Hue:
+    :git: https://github.com/hyperoslo/Hue.git
   Imaginary:
-    :branch: feature/os-x-support
     :git: https://github.com/hyperoslo/Imaginary.git
   Spots:
     :path: "../../"
@@ -45,8 +49,11 @@ CHECKOUT OPTIONS:
   Fashion:
     :commit: 3e2bf8754d1dbdc9e05f423bbb96db6dc06fec46
     :git: https://github.com/vadymmarkov/Fashion.git
+  Hue:
+    :commit: 43404964a799dd0c8affc2d4631ead33df8e04f1
+    :git: https://github.com/hyperoslo/Hue.git
   Imaginary:
-    :commit: 6be05cc41b14490b33be7bb0d7a4eede23cc9312
+    :commit: b2f4e44f1000cd352856f054868d87dcfc7baad6
     :git: https://github.com/hyperoslo/Imaginary.git
   Sugar:
     :commit: f2407aaab30dc9d5199b37e9f4ff002f8263dbd4
@@ -57,11 +64,12 @@ SPEC CHECKSUMS:
   Cache: 059cf0e10e6c3aec2c402eea19bd6b3aacb3fe9d
   CryptoSwift: df42dda18baf6c76347a94e227dbcc0a341304bd
   Fashion: 82f2bb05505e3aea0977a2c23f5d8692e06f12a9
+  Hue: c7d6a7206bac669ed69e78cc6c14a4d7bd28277c
   Imaginary: 62a9ce1e6d7831ede429c8221a183f03ec2a90bc
-  Spots: a0aa4115e1ba66e05c56c968fa1e758023a2516c
+  Spots: 74bd9973e517d5170dc241bc93eed6b6728d993f
   Sugar: 73eaf2803ba1128d8b0370f402494981af7675d3
   Tailor: 38a9f1ed1fa804856583396a55ed764d832eeca8
 
-PODFILE CHECKSUM: 1f747a9622a38e445796b7ddf1c215c9ee6410ab
+PODFILE CHECKSUM: e08cbd4c613204956850643ebac9350338c56224
 
 COCOAPODS: 1.0.0

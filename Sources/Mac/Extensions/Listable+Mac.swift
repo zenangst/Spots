@@ -10,4 +10,8 @@ extension Listable {
 
     render().contentInsets = NSEdgeInsets(top: top, left: left, bottom: bottom, right: right)
   }
+
+  public func deselect() {
+    tableView.deselectAll(nil)
+  }
 }

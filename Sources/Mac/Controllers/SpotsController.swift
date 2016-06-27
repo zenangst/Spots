@@ -161,4 +161,12 @@ public class SpotsController: NSViewController, SpotsProtocol {
         height: spot.spotHeight() ?? 0))
     }
   }
+
+  public func deselectAllExcept(selectedSpot: Spotable) {
+    for spot in spots {
+      if selectedSpot.render() != spot.render() {
+        spot.deselect()
+      }
+    }
+  }
 }
