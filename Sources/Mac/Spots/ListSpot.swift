@@ -44,6 +44,7 @@ public class ListSpot: NSObject, Listable {
 
     setupTableView()
     scrollView.contentView.addSubview(tableView)
+    configureLayout(component)
   }
 
   public convenience init(cacheKey: String) {
@@ -77,7 +78,10 @@ public class ListSpot: NSObject, Listable {
     component.items.enumerate().forEach {
       component.items[$0.index].size.width = size.width
     }
-    scrollView.frame.size = size
+
+    tableView.sizeToFit()
+    scrollView.frame.size.height = tableView.frame.height
+    scrollView.frame.size.width = size.width
     ListSpot.configure?(view: tableView)
   }
 }
