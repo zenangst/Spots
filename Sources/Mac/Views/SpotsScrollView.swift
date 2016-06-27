@@ -16,7 +16,6 @@ public class SpotsScrollView: NSScrollView {
   }
 
   lazy public var spotsContentView: SpotsContentView = SpotsContentView().then {
-    $0.translatesAutoresizingMaskIntoConstraints = true
     $0.autoresizingMask = [.ViewWidthSizable, .ViewHeightSizable]
     $0.autoresizesSubviews = true
   }
@@ -60,9 +59,7 @@ public class SpotsScrollView: NSScrollView {
   public override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
     if let window = object as? NSWindow {
       layoutSubtreeIfNeeded()
-    }
-
-    if let change = change, scrollView = object as? ScrollView,
+    } else if let change = change, scrollView = object as? ScrollView,
       oldValue = (change[NSKeyValueChangeOldKey] as? NSValue)?.rectValue where context == KVOContext {
       guard scrollView.frame != oldValue else { return }
       layoutSubtreeIfNeeded()
@@ -74,9 +71,8 @@ public class SpotsScrollView: NSScrollView {
   }
 
   override public func layoutSubtreeIfNeeded() {
-    super.layoutSubtreeIfNeeded()
-
     guard let window = window else { return }
+    super.layoutSubtreeIfNeeded()
 
     let contentOffset = self.contentOffset
     var yOffsetOfCurrentSubview: CGFloat = 0.0
@@ -99,12 +95,13 @@ public class SpotsScrollView: NSScrollView {
 
     guard frame.height > 0 && frame.width > 100 else { return }
 
-    documentView?.setFrameSize(CGSize(width: frame.size.width, height: fmax(yOffsetOfCurrentSubview, frame.height)))
-    displayIfNeeded()
+    if !window.inLiveResize {
+      documentView?.setFrameSize(CGSize(width: frame.size.width, height: fmax(yOffsetOfCurrentSubview, frame.height)))
+      displayIfNeeded()
 
-    if let view = superview {
-      view.layout()
+      if let view = superview {
+        view.layout()
+      }
     }
-
   }
 }
