@@ -42,4 +42,6 @@ public class ViewSpot: NSObject, Spotable, Viewable {
   public func sizeForItemAt(indexPath: NSIndexPath) -> CGSize {
     return scrollView.frame.size
   }
+
+  public func deselect() {}
 }
