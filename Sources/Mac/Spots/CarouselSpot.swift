@@ -1,6 +1,7 @@
 import Cocoa
 import Sugar
 import Brick
+import Hue
 
 public class CarouselSpot: NSObject, Gridable {
 
@@ -106,15 +107,15 @@ public class CarouselSpot: NSObject, Gridable {
       where gradientLayer == nil {
       gradientLayer = CAGradientLayer()
       gradientLayer?.colors = [
-        NSColor(red:0.165, green:0.169, blue:0.169, alpha: 1).CGColor,
-        NSColor.blackColor().CGColor
+        NSColor.hex(gradientColor1).CGColor,
+        NSColor.hex(gradientColor2).CGColor
       ]
-      gradientLayer?.locations = [0.0, 0.4, 0.9]
+      gradientLayer?.locations = [0.0, 0.9]
       collectionView.backgroundView?.layer?.insertSublayer(gradientLayer!, atIndex: 0)
       gradientLayer?.frame.size.width = 3000
     }
 
-    gradientLayer?.frame.size.height = size.height
+    gradientLayer?.frame.size.height = size.height + layout.sectionInset.top + layout.sectionInset.bottom
     scrollView.frame.size.height = size.height + layout.sectionInset.top + layout.sectionInset.bottom
 
     var additionalX = collectionView.frame.width - layout.collectionViewContentSize.width

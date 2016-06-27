@@ -119,7 +119,7 @@ public class GridSpot: NSObject, Gridable {
     GridSpot.configure?(view: collectionView)
 
     if component.title.isPresent {
-      let fontSize = collectionView.frame.size.height / 20
+      let fontSize = component.meta("titleFontSize", collectionView.frame.size.height / 20)
       titleView.stringValue = component.title
       titleView.font = NSFont.systemFontOfSize(fontSize)
       titleView.sizeToFit()
@@ -133,6 +133,7 @@ public class GridSpot: NSObject, Gridable {
     }
 
     titleView.frame.origin.x = additionalX + layout.sectionInset.left
+    titleView.frame.origin.x = component.meta("titleLeftMargin", titleView.frame.origin.x)
     titleView.frame.origin.y = layout.sectionInset.top / 2 - titleView.frame.size.height / 2
 
     layout.invalidateLayout()
