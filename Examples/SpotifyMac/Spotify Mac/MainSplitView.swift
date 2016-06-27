@@ -6,6 +6,9 @@ class MainSplitView : NSSplitView {
   let minimumWidth: CGFloat = 150
   let maximumWidth: CGFloat = 250
 
+  var listView: NSView!
+  var detailView: NSView!
+
   override var dividerColor: NSColor {
     return NSColor.blackColor()
   }
@@ -19,11 +22,14 @@ class MainSplitView : NSSplitView {
     vertical = true
   }
 
-  convenience init(leftView: NSView, rightView: NSView) {
+  init(listView: NSView, detailView: NSView) {
     self.init()
 
-    addSubview(leftView)
-    addSubview(rightView)
+    self.listView = listView
+    self.detailView = detailView
+
+    addSubview(listView)
+    addSubview(detailView)
   }
 
   override func viewDidMoveToWindow() {
@@ -46,10 +52,10 @@ extension MainSplitView: NSSplitViewDelegate {
   }
 
   func splitViewWillResizeSubviews(notification: NSNotification) {
-    if subviews[0].frame.size.width >= maximumWidth {
-      subviews[0].frame.size.width = maximumWidth
-    } else if subviews[0].frame.size.width <= minimumWidth {
-      subviews[0].frame.size.width = minimumWidth
+    if listView.frame.width >= maximumWidth {
+      listView.frame.size.width = maximumWidth
+    } else if listView.frame.width <= minimumWidth {
+      listView.frame.size.width = minimumWidth
     }
   }
 

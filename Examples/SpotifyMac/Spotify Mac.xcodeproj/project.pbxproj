@@ -22,6 +22,8 @@
 		BDC64D3F1D21861F0066A6E6 /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC64D3E1D21861F0066A6E6 /* MenuController.swift */; };
 		BDC64D411D2186460066A6E6 /* SpotsConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC64D401D2186460066A6E6 /* SpotsConfigurator.swift */; };
 		BDC64D431D2189830066A6E6 /* FeaturedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC64D421D2189830066A6E6 /* FeaturedController.swift */; };
+		BDD126A41D21A93700C9175F /* CompassConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD126A31D21A93700C9175F /* CompassConfigurator.swift */; };
+		BDD126A61D21A94900C9175F /* Configurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD126A51D21A94900C9175F /* Configurator.swift */; };
 		BDDC3E901CE78D5B00B608FB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDC3E8F1CE78D5B00B608FB /* AppDelegate.swift */; };
 		BDDC3E921CE78D5B00B608FB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BDDC3E911CE78D5B00B608FB /* Assets.xcassets */; };
 		BDDC3E951CE78D5B00B608FB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = BDDC3E931CE78D5B00B608FB /* MainMenu.xib */; };
@@ -59,6 +61,8 @@
 		BDC64D3E1D21861F0066A6E6 /* MenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
 		BDC64D401D2186460066A6E6 /* SpotsConfigurator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsConfigurator.swift; sourceTree = "<group>"; };
 		BDC64D421D2189830066A6E6 /* FeaturedController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeaturedController.swift; sourceTree = "<group>"; };
+		BDD126A31D21A93700C9175F /* CompassConfigurator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompassConfigurator.swift; sourceTree = "<group>"; };
+		BDD126A51D21A94900C9175F /* Configurator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configurator.swift; sourceTree = "<group>"; };
 		BDDC3E8C1CE78D5B00B608FB /* Spotify Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Spotify Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDDC3E8F1CE78D5B00B608FB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BDDC3E911CE78D5B00B608FB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -122,22 +126,24 @@
 			children = (
 				BDDC3E8F1CE78D5B00B608FB /* AppDelegate.swift */,
 				BDDC3E911CE78D5B00B608FB /* Assets.xcassets */,
+				BDD126A31D21A93700C9175F /* CompassConfigurator.swift */,
+				BDD126A51D21A94900C9175F /* Configurator.swift */,
+				BDC64D421D2189830066A6E6 /* FeaturedController.swift */,
 				BD7FA73D1D1C1FE6002CE86F /* FeaturedGridItem.swift */,
 				BDAC8CEC1D20479100739627 /* GridListItem.swift */,
 				BD7FA73F1D1C517D002CE86F /* HeroGridItem.swift */,
 				BDDC3E961CE78D5B00B608FB /* Info.plist */,
 				BDDC3E931CE78D5B00B608FB /* MainMenu.xib */,
 				BD296ED01D198D2B00D143F9 /* MainSplitView.swift */,
+				BDC64D3E1D21861F0066A6E6 /* MenuController.swift */,
+				BD5E28571D2156CF00B81249 /* NSImage+tintColor.swift */,
 				BDAC8CEA1D1D4D0E00739627 /* SearchToolbarItem.swift */,
+				BDC64D401D2186460066A6E6 /* SpotsConfigurator.swift */,
 				BDDC3EE11CEA2DDE00B608FB /* TableViewCell.swift */,
 				BDAC8CE81D1D469000739627 /* TitleToolbarItem.swift */,
 				BDAC8CE61D1D440900739627 /* Toolbar.swift */,
 				BDAC8CEE1D20541000739627 /* Window.swift */,
 				BD5E28551D21010000B81249 /* WindowBackgroundView.swift */,
-				BD5E28571D2156CF00B81249 /* NSImage+tintColor.swift */,
-				BDC64D3E1D21861F0066A6E6 /* MenuController.swift */,
-				BDC64D401D2186460066A6E6 /* SpotsConfigurator.swift */,
-				BDC64D421D2189830066A6E6 /* FeaturedController.swift */,
 			);
 			path = "Spotify Mac";
 			sourceTree = "<group>";
@@ -265,6 +271,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BDDC3E901CE78D5B00B608FB /* AppDelegate.swift in Sources */,
+				BDD126A61D21A94900C9175F /* Configurator.swift in Sources */,
 				BDAC8CEF1D20541000739627 /* Window.swift in Sources */,
 				BDC64D411D2186460066A6E6 /* SpotsConfigurator.swift in Sources */,
 				BDDC3EE21CEA2DDE00B608FB /* TableViewCell.swift in Sources */,
@@ -277,6 +284,7 @@
 				BDAC8CE91D1D469000739627 /* TitleToolbarItem.swift in Sources */,
 				BD296ED11D198D2B00D143F9 /* MainSplitView.swift in Sources */,
 				BDC64D431D2189830066A6E6 /* FeaturedController.swift in Sources */,
+				BDD126A41D21A93700C9175F /* CompassConfigurator.swift in Sources */,
 				BDC64D3F1D21861F0066A6E6 /* MenuController.swift in Sources */,
 				BDAC8CED1D20479100739627 /* GridListItem.swift in Sources */,
 			);

@@ -4,6 +4,8 @@ PODS:
     - Tailor
   - Cache (1.4.0):
     - CryptoSwift
+  - Compass (3.0.0):
+    - Sugar
   - CryptoSwift (0.5.1)
   - Fashion (1.1.0):
     - Sugar
@@ -22,6 +24,7 @@ PODS:
 
 DEPENDENCIES:
   - Cache (from `https://github.com/hyperoslo/Cache.git`)
+  - Compass (from `https://github.com/hyperoslo/Compass.git`)
   - Fashion (from `https://github.com/vadymmarkov/Fashion.git`)
   - Hue (from `https://github.com/hyperoslo/Hue.git`)
   - Imaginary (from `https://github.com/hyperoslo/Imaginary.git`)
@@ -31,6 +34,8 @@ DEPENDENCIES:
 EXTERNAL SOURCES:
   Cache:
     :git: https://github.com/hyperoslo/Cache.git
+  Compass:
+    :git: https://github.com/hyperoslo/Compass.git
   Fashion:
     :git: https://github.com/vadymmarkov/Fashion.git
   Hue:
@@ -46,6 +51,9 @@ CHECKOUT OPTIONS:
   Cache:
     :commit: d6f0b013cbe9ede4b5fe5a8b615220abce0327d6
     :git: https://github.com/hyperoslo/Cache.git
+  Compass:
+    :commit: ef73279b2d22e3af204c040e478dcd4c2b5b7944
+    :git: https://github.com/hyperoslo/Compass.git
   Fashion:
     :commit: 3e2bf8754d1dbdc9e05f423bbb96db6dc06fec46
     :git: https://github.com/vadymmarkov/Fashion.git
@@ -62,6 +70,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Brick: c5b60d83f69c5e882097ee4e9bf12abd428e395a
   Cache: 059cf0e10e6c3aec2c402eea19bd6b3aacb3fe9d
+  Compass: a3c2e008e328b5773501df6186d5f64771cd82ce
   CryptoSwift: df42dda18baf6c76347a94e227dbcc0a341304bd
   Fashion: 82f2bb05505e3aea0977a2c23f5d8692e06f12a9
   Hue: c7d6a7206bac669ed69e78cc6c14a4d7bd28277c
@@ -70,6 +79,6 @@ SPEC CHECKSUMS:
   Sugar: 73eaf2803ba1128d8b0370f402494981af7675d3
   Tailor: 38a9f1ed1fa804856583396a55ed764d832eeca8
 
-PODFILE CHECKSUM: e08cbd4c613204956850643ebac9350338c56224
+PODFILE CHECKSUM: b11899f634ec5b7486e203d8b30566740dcbae60
 
 COCOAPODS: 1.0.0

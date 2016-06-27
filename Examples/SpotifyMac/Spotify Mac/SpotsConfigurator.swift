@@ -1,8 +1,8 @@
 import Spots
 
-struct SpotsConfigurator {
+struct SpotsConfigurator: Configurator {
 
-  static func configure() {
+  func configure() {
     ListSpot.views["list"] = TableViewCell.self
     GridSpot.grids["list"] = GridListItem.self
     GridSpot.grids["grid"] = GridSpotItem.self
