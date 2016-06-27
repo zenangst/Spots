@@ -31,7 +31,7 @@ extension Toolbar: NSToolbarDelegate {
       let titleToolbar = SearchToolbarItem(itemIdentifier: "title", text: "Search...")
       toolbarItem = titleToolbar
     case "title":
-      let titleToolbar = TitleToolbarItem(itemIdentifier: "title", text: "Hyper Music")
+      let titleToolbar = TitleToolbarItem(itemIdentifier: "title", text: "Spots for the Mac")
       toolbarItem = titleToolbar
     default:
       break
