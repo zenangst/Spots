@@ -99,4 +99,8 @@ extension Gridable {
       return self.dynamicType.defaultKind.string
     }
   }
+
+  public func deselect() {
+    collectionView.deselectAll(nil)
+  }
 }
