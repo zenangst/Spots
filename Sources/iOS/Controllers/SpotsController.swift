@@ -64,7 +64,6 @@ public class SpotsController: UIViewController, SpotsProtocol, UIScrollViewDeleg
   lazy public var spotsScrollView: SpotsScrollView = SpotsScrollView().then { [weak self] in
     guard let strongSelf = self else { return }
 
-    $0.frame = strongSelf.view.frame
     $0.alwaysBounceVertical = true
     $0.clipsToBounds = true
     $0.delegate = strongSelf
@@ -135,6 +134,7 @@ public class SpotsController: UIViewController, SpotsProtocol, UIScrollViewDeleg
   public override func viewDidLoad() {
     super.viewDidLoad()
     view.addSubview(spotsScrollView)
+    spotsScrollView.frame = view.bounds
 
     setupSpots()
 
