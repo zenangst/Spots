@@ -54,7 +54,7 @@ extension Gridable {
 //      register(classType: Self.defaultView, withIdentifier: component.kind)
 //    }
 
-    var cached: RegularView?
+    var cached: View?
     component.items.enumerate().forEach { (index: Int, item: ViewModel) in
       prepareItem(item, index: index, cached: &cached)
     }

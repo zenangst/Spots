@@ -12,7 +12,7 @@ public protocol Spotable: class {
   /// A view registry that is used internally when resolving kind to the corresponding spot.
   static var views: ViewRegistry { get }
   /// The default view type for the spotable object
-  static var defaultView: RegularView.Type { get set }
+  static var defaultView: View.Type { get set }
   /// The default kind to fall back to if the view model kind does not exist when trying to display the spotable item
   static var defaultKind: StringConvertible { get }
 
@@ -139,10 +139,10 @@ public extension Spotable {
 
    - Parameter register: A closure containing class type and reuse identifer
    */
-  func registerAndPrepare(@noescape register: (classType: RegularView.Type, withIdentifier: String) -> Void) {
+  func registerAndPrepare(@noescape register: (classType: View.Type, withIdentifier: String) -> Void) {
     if component.kind.isEmpty { component.kind = Self.defaultKind.string }
 
-    Self.views.storage.forEach { (reuseIdentifier: String, classType: RegularView.Type) in
+    Self.views.storage.forEach { (reuseIdentifier: String, classType: View.Type) in
       register(classType: classType, withIdentifier: reuseIdentifier)
     }
 
@@ -150,7 +150,7 @@ public extension Spotable {
       register(classType: Self.defaultView, withIdentifier: component.kind)
     }
 
-    var cached: RegularView?
+    var cached: View?
     component.items.enumerate().forEach { (index: Int, item: ViewModel) in
       prepareItem(item, index: index, cached: &cached)
     }
@@ -254,7 +254,7 @@ public extension Spotable {
    - Parameter index: The index of the view model
    - Parameter cached: An optional UIView, used to reduce the amount of different reusable views that should be prepared.
    */
-  public func prepareItem(item: ViewModel, index: Int, inout cached: RegularView?) {
+  public func prepareItem(item: ViewModel, index: Int, inout cached: View?) {
     cachedViewFor(item, cache: &cached)
 
     component.items[index].index = index
@@ -278,7 +278,7 @@ public extension Spotable {
    - Parameter item: A view model
    - Parameter cache: An optional UIView, used to reduce the amount of different reusable views that should be prepared.
    */
-  func cachedViewFor(item: ViewModel, inout cache: RegularView?) {
+  func cachedViewFor(item: ViewModel, inout cache: View?) {
     let reuseIdentifer = item.kind.isPresent ? item.kind : component.kind
     let componentClass = self.dynamicType.views.storage[reuseIdentifer] ?? self.dynamicType.defaultView
 

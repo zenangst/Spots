@@ -7,7 +7,7 @@ public class GridSpot: NSObject, Gridable {
   public static var views = ViewRegistry()
   public static var grids = GridRegistry()
   public static var configure: ((view: NSCollectionView) -> Void)?
-  public static var defaultView: RegularView.Type = NSView.self
+  public static var defaultView: View.Type = NSView.self
   public static var defaultKind: StringConvertible = "grid"
 
   public weak var spotsDelegate: SpotsDelegate?

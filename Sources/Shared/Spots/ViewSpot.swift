@@ -9,8 +9,8 @@ import Brick
 public class ViewSpot: NSObject, Spotable, Viewable {
 
   public static var views = ViewRegistry()
-  public static var configure: ((view: RegularView) -> Void)?
-  public static var defaultView: RegularView.Type = RegularView.self
+  public static var configure: ((view: View) -> Void)?
+  public static var defaultView: View.Type = View.self
   public static var defaultKind: StringConvertible = "view"
 
   public weak var spotsDelegate: SpotsDelegate?
@@ -35,7 +35,7 @@ public class ViewSpot: NSObject, Spotable, Viewable {
     self.init(component: Component(title: title, kind: kind ?? ViewSpot.defaultKind.string))
   }
 
-  public func render() -> RegularView {
+  public func render() -> View {
     return scrollView
   }
 

@@ -35,7 +35,7 @@ public class SpotsScrollView: NSScrollView {
     return true
   }
 
-  func didAddSubviewToContainer(subview: RegularView) {
+  func didAddSubviewToContainer(subview: View) {
     subviewsInLayoutOrder.append(subview)
     layoutSubtreeIfNeeded()
 
@@ -46,7 +46,7 @@ public class SpotsScrollView: NSScrollView {
     scrollView.addObserver(self, forKeyPath: "frame", options: .Old, context: KVOContext)
   }
 
-  public override func willRemoveSubview(subview: RegularView) {
+  public override func willRemoveSubview(subview: View) {
     if let scrollView = subview as? ScrollView where scrollView.superview?.superview == contentView {
       scrollView.removeObserver(self, forKeyPath: "frame", context: KVOContext)
     }

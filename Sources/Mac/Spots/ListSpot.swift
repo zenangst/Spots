@@ -6,7 +6,7 @@ public class ListSpot: NSObject, Listable {
 
   public static var views = ViewRegistry()
   public static var configure: ((view: NSTableView) -> Void)?
-  public static var defaultView: RegularView.Type = ListSpotItem.self
+  public static var defaultView: View.Type = ListSpotItem.self
   public static var defaultKind: StringConvertible = "list"
 
   public weak var spotsDelegate: SpotsDelegate?

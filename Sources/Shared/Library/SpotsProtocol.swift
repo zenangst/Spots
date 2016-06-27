@@ -21,9 +21,9 @@ public protocol SpotsProtocol: class {
   var refreshPositions: [CGFloat] { get set }
   /// A view controller view
   #if os(iOS)
-  var view: RegularView! { get }
+  var view: View! { get }
   #else
-  var view: RegularView { get }
+  var view: View { get }
   #endif
 
   var spot: Spotable? { get }
@@ -40,7 +40,7 @@ public protocol SpotsProtocol: class {
   var source: dispatch_source_t! { get set }
   #endif
 
-  func setupSpots(animated: ((view: RegularView) -> Void)?)
+  func setupSpots(animated: ((view: View) -> Void)?)
   func spot<T>(index: Int, _ type: T.Type) -> T?
   func spot(@noescape closure: (index: Int, spot: Spotable) -> Bool) -> Spotable?
 
@@ -108,7 +108,7 @@ public extension SpotsProtocol {
    - Parameter json: A JSON dictionary that gets parsed into UI elements
    - Parameter completion: A closure that will be run after reload has been performed on all spots
    */
-  public func reloadIfNeeded(json: [String : AnyObject], compare: ((lhs: [Component], rhs: [Component]) -> Bool) = { lhs, rhs in return lhs != rhs }, animated: ((view: RegularView) -> Void)? = nil, closure: Completion = nil) {
+  public func reloadIfNeeded(json: [String : AnyObject], compare: ((lhs: [Component], rhs: [Component]) -> Bool) = { lhs, rhs in return lhs != rhs }, animated: ((view: View) -> Void)? = nil, closure: Completion = nil) {
     dispatch { [weak self] in
       guard let weakSelf = self else { closure?(); return }
 
@@ -141,7 +141,7 @@ public extension SpotsProtocol {
    - Parameter json: A JSON dictionary that gets parsed into UI elements
    - Parameter completion: A closure that will be run after reload has been performed on all spots
    */
-  public func reload(json: [String : AnyObject], animated: ((view: RegularView) -> Void)? = nil, closure: Completion = nil) {
+  public func reload(json: [String : AnyObject], animated: ((view: View) -> Void)? = nil, closure: Completion = nil) {
     dispatch { [weak self] in
       guard let weakSelf = self else { closure?(); return }
 
@@ -456,7 +456,7 @@ public extension SpotsProtocol {
     #if os(iOS)
       spotsScrollView.contentView.subviews.forEach { $0.removeFromSuperview() }
     #else
-      (spotsScrollView.documentView as? RegularView)?.subviews.forEach { $0.removeFromSuperview() }
+      (spotsScrollView.documentView as? View)?.subviews.forEach { $0.removeFromSuperview() }
     #endif
   }
 }

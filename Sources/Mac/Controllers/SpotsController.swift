@@ -140,7 +140,7 @@ public class SpotsController: NSViewController, SpotsProtocol {
   /**
    - Parameter animated: An optional animation closure that runs when a spot is being rendered
    */
-  public func setupSpots(animated: ((view: RegularView) -> Void)? = nil) {
+  public func setupSpots(animated: ((view: View) -> Void)? = nil) {
     spots.enumerate().forEach { index, spot in
       spots[index].index = index
       spotsScrollView.spotsContentView.addSubview(spot.render())
