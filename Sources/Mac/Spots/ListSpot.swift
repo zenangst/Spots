@@ -26,8 +26,6 @@ public class ListSpot: NSObject, Listable {
 
   public lazy var scrollView: ScrollView = ScrollView().then {
     $0.documentView = NSView()
-    $0.autoresizingMask = .ViewWidthSizable
-    $0.layer = CALayer()
   }
 
   public lazy var tableView: NSTableView = NSTableView(frame: CGRect.zero).then {
