@@ -1,8 +1,4 @@
 import Cocoa
-import Spots
-import Brick
-import Cocoa
-import Sugar
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
