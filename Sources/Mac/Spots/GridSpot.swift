@@ -25,10 +25,15 @@ public class GridSpot: NSObject, Gridable {
 
   public lazy var collectionAdapter: CollectionAdapter = CollectionAdapter(spot: self)
 
-  public lazy var layout: NSCollectionViewFlowLayout = GridSpotLayout().then {
-    $0.minimumInteritemSpacing = 0
-    $0.minimumLineSpacing = 0
-    $0.scrollDirection = .Vertical
+  public var layout: NSCollectionViewFlowLayout
+
+  public lazy var titleView: NSTextField = NSTextField().then {
+    $0.editable = false
+    $0.selectable = false
+    $0.bezeled = false
+    $0.textColor = NSColor.grayColor()
+    $0.drawsBackground = false
+    $0.font = NSFont.systemFontOfSize(32)
   }
 
   public lazy var scrollView: ScrollView = ScrollView().then {
@@ -49,10 +54,32 @@ public class GridSpot: NSObject, Gridable {
 
   public required init(component: Component) {
     self.component = component
+
+    if component.meta("defaultFlow", type: Bool.self) == true {
+      layout = NSCollectionViewFlowLayout().then {
+        $0.minimumInteritemSpacing = 0
+        $0.minimumLineSpacing = 0
+        $0.scrollDirection = .Vertical
+      }
+    } else {
+      layout = GridSpotLayout().then {
+        $0.minimumInteritemSpacing = 0
+        $0.minimumLineSpacing = 0
+        $0.scrollDirection = .Vertical
+      }
+    }
+
     super.init()
     setupCollectionView()
     configureLayout(component)
+    scrollView.addSubview(titleView)
     scrollView.contentView.addSubview(collectionView)
+
+    if component.title.isPresent {
+      titleView.stringValue = component.title
+      titleView.sizeToFit()
+      layout.sectionInset.top += titleView.frame.size.height
+    }
   }
 
   public convenience init(title: String = "", kind: String? = nil) {
@@ -90,6 +117,24 @@ public class GridSpot: NSObject, Gridable {
     collectionView.frame.size = layout.collectionViewContentSize
 
     GridSpot.configure?(view: collectionView)
+
+    if component.title.isPresent {
+      let fontSize = collectionView.frame.size.height / 20
+      titleView.stringValue = component.title
+      titleView.font = NSFont.systemFontOfSize(fontSize)
+      titleView.sizeToFit()
+    }
+
+    var additionalX = collectionView.frame.width - layout.collectionViewContentSize.width
+    if additionalX > 0.0 {
+      additionalX = additionalX / 2
+    } else {
+      additionalX = 0
+    }
+
+    titleView.frame.origin.x = additionalX + layout.sectionInset.left
+    titleView.frame.origin.y = layout.sectionInset.top / 2 - titleView.frame.size.height / 2
+
     layout.invalidateLayout()
   }
 }
