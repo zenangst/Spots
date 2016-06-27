@@ -30,7 +30,9 @@ public class GridSpotItem: NSCollectionViewItem, SpotConfigurable {
   public var size = CGSize(width: 0, height: 88)
   public var customView = FlippedView()
 
-  lazy var customImageView = NSImageView()
+  lazy var customImageView = NSImageView().then {
+    $0.autoresizingMask = .ViewWidthSizable
+  }
 
   public lazy var titleLabel = NSTextField().then {
     $0.editable = false
@@ -48,14 +50,6 @@ public class GridSpotItem: NSCollectionViewItem, SpotConfigurable {
     $0.drawsBackground = false
   }
 
-  public lazy var lineView = NSView().then {
-    $0.frame.size.height = 1
-    $0.wantsLayer = true
-    $0.layer = CALayer()
-    $0.layer?.backgroundColor = NSColor.grayColor().colorWithAlphaComponent(0.4).CGColor
-    $0.autoresizingMask = .ViewWidthSizable
-  }
-
   override init?(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
     super.init(nibName: nil, bundle: nil)
 
@@ -63,7 +57,6 @@ public class GridSpotItem: NSCollectionViewItem, SpotConfigurable {
 
     view.addSubview(titleLabel)
     view.addSubview(subtitleLabel)
-    view.addSubview(lineView)
     view.addSubview(customImageView)
   }
 
@@ -83,11 +76,11 @@ public class GridSpotItem: NSCollectionViewItem, SpotConfigurable {
   public func configure(inout item: ViewModel) {
     titleLabel.stringValue = item.title
     titleLabel.frame.origin.x = 8
-
     titleLabel.sizeToFit()
     if item.subtitle.isPresent {
       titleLabel.frame.origin.y = 8
       titleLabel.font = NSFont.boldSystemFontOfSize(14)
+      titleLabel.sizeToFit()
     } else {
       titleLabel.frame.origin.y = item.size.height / 2 - titleLabel.frame.size.height / 2
     }
@@ -96,7 +89,5 @@ public class GridSpotItem: NSCollectionViewItem, SpotConfigurable {
     subtitleLabel.stringValue = item.subtitle
     subtitleLabel.sizeToFit()
     subtitleLabel.frame.origin.y = titleLabel.frame.origin.y + subtitleLabel.frame.height
-
-    lineView.frame.origin.y = item.size.height + 1
   }
 }
