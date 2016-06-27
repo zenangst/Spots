@@ -8,8 +8,15 @@ class GridSpotLayout: NSCollectionViewFlowLayout {
 
     guard !defaultAttributes.isEmpty else { return defaultAttributes }
 
+    var additionalX = (collectionView?.frame.width ?? 0) - collectionViewContentSize.width
+    if additionalX > 0.0 {
+      additionalX = additionalX / 2
+    } else {
+      additionalX = 0
+    }
+
     var leftAlignedAttributes = [NSCollectionViewLayoutAttributes]()
-    var x = self.sectionInset.left
+    var x = self.sectionInset.left + additionalX
     var lastYPosition = defaultAttributes[0].frame.origin.y
 
     for attributes in defaultAttributes {
