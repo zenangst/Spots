@@ -95,13 +95,11 @@ public class SpotsScrollView: NSScrollView {
 
     guard frame.height > 0 && frame.width > 100 else { return }
 
-    if !window.inLiveResize {
-      documentView?.setFrameSize(CGSize(width: frame.size.width, height: fmax(yOffsetOfCurrentSubview, frame.height)))
-      displayIfNeeded()
-
-      if let view = superview {
-        view.layout()
-      }
+    documentView?.setFrameSize(CGSize(width: frame.size.width, height: fmax(yOffsetOfCurrentSubview, frame.height)))
+    displayIfNeeded()
+    
+    if let view = superview {
+      view.layout()
     }
   }
 }
