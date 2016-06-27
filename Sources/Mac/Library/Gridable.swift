@@ -76,7 +76,7 @@ extension Gridable {
    */
   public func sizeForItemAt(indexPath: NSIndexPath) -> CGSize {
     if component.span > 0 {
-      component.items[indexPath.item].size.width = collectionView.frame.width / CGFloat(component.span)
+      component.items[indexPath.item].size.width = (collectionView.frame.width / CGFloat(component.span)) - layout.sectionInset.left - layout.sectionInset.right
     }
 
     let width = item(indexPath).size.width
