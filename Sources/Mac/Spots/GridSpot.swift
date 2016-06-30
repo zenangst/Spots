@@ -4,6 +4,47 @@ import Brick
 
 public class GridSpot: NSObject, Gridable {
 
+  public enum LayoutType: String {
+    case Grid
+    case Left
+    case Flow
+
+    var string: String {
+      return rawValue.lowercaseString
+    }
+  }
+
+  public struct Key {
+    static let minimumInteritemSpacing = "itemSpacing"
+    static let minimumLineSpacing = "lineSpacing"
+    static let titleLeftMargin = "titleLeftMargin"
+    static let titleFontSize = "titleFontSize"
+    static let layout = LayoutType.Flow.rawValue
+    static let gridLayoutMaximumItemWidth = "itemWidthMax"
+    static let gridLayoutMaximumItemHeight = "itemHeightMax"
+    static let gridLayoutMinimumItemWidth = "itemMinWidth"
+    static let gridLayoutMinimumItemHeight = "itemMinHeight"
+  }
+
+  public struct Default {
+
+    public struct Flow {
+      public static var minimumInteritemSpacing: CGFloat = 0.0
+      public static var minimumLineSpacing: CGFloat = 0.0
+    }
+
+    public static var titleFontSize: CGFloat = 18.0
+    public static var defaultLayout: LayoutType = .Flow
+    public static var gridLayoutMaximumItemWidth = 120
+    public static var gridLayoutMaximumItemHeight = 120
+    public static var gridLayoutMinimumItemWidth = 80
+    public static var gridLayoutMinimumItemHeight = 80
+    public static var sectionInsetTop: CGFloat = 0.0
+    public static var sectionInsetLeft: CGFloat = 0.0
+    public static var sectionInsetRight: CGFloat = 0.0
+    public static var sectionInsetBottom: CGFloat = 0.0
+  }
+
   public static var views = ViewRegistry()
   public static var grids = GridRegistry()
   public static var configure: ((view: NSCollectionView) -> Void)?
