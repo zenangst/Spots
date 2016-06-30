@@ -57,7 +57,6 @@ public class SpotsScrollView: NSScrollView {
   }
 
   override public func layoutSubtreeIfNeeded() {
-    guard let window = window else { return }
     super.layoutSubtreeIfNeeded()
 
     let contentOffset = self.contentOffset
