@@ -7,7 +7,7 @@ import Sugar
  */
 public class CollectionAdapter: NSObject, SpotAdapter {
   // An unowned Gridable object
-  var spot: Gridable
+  unowned var spot: Gridable
 
   /**
    Initialization a new instance of a ListAdapter using a Gridable object
