@@ -7,6 +7,7 @@ class Toolbar: NSToolbar {
 
     self.delegate = self
     allowsUserCustomization = false
+    showsBaselineSeparator = true
   }
 }
 
