@@ -9,7 +9,7 @@ import Imaginary
 let spotsSession = SpotsSession()
 
 @NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate, SPSessionDelegate {
+class AppDelegate: NSObject, NSApplicationDelegate {
 
   @IBOutlet weak var window: Window!
 
