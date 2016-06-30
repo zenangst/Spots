@@ -4,6 +4,21 @@ import Brick
 
 public class ListSpot: NSObject, Listable {
 
+  struct Key {
+    static let contentInsetsTop = "insetTop"
+    static let contentInsetsLeft = "insetLeft"
+    static let contentInsetsBottom = "insetBottom"
+    static let contentInsetsRight = "insetRight"
+    static let doubleAction = "doubleClick"
+  }
+
+  public struct Default {
+    public static var contentInsetsTop: CGFloat = 0.0
+    public static var contentInsetsLeft: CGFloat = 0.0
+    public static var contentInsetsBottom: CGFloat = 0.0
+    public static var contentInsetsRight: CGFloat = 0.0
+  }
+
   public static var views = ViewRegistry()
   public static var configure: ((view: NSTableView) -> Void)?
   public static var defaultView: View.Type = ListSpotItem.self
