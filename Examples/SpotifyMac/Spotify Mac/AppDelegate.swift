@@ -2,37 +2,50 @@ import Cocoa
 import Spots
 import Sugar
 import Compass
+import Malibu
+import OhMyAuth
+import Imaginary
+
+let spotsSession = SpotsSession()
 
 @NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate {
+class AppDelegate: NSObject, NSApplicationDelegate, SPSessionDelegate {
 
   @IBOutlet weak var window: Window!
 
-  var toolbar = Toolbar(identifier: "main-toolbar")
-  var menuController = MenuController(cacheKey: "menu-cache")
-  var featuredController = FeaturedController(cacheKey: "main-screen-cache")
+  lazy var toolbar = Toolbar(identifier: "main-toolbar")
+  lazy var menuController = MenuController(cacheKey: "menu-cache")
+  lazy var browseController = BrowseController(cacheKey: "main-screen-cache")
+  var currentController: SpotsController?
+  var splitView: MainSplitView!
 
   let configurators: [Configurator] = [
     SpotsConfigurator(),
     CompassConfigurator(),
+    OhMyAuthConfigurator(),
+    MalibuConfigurator(),
+    ImaginaryConfigurator()
   ]
 
   func applicationDidFinishLaunching(aNotification: NSNotification) {
-
     configurators.forEach { $0.configure() }
 
-    delay(0.3) {
-      (self.menuController.spot as? Gridable)?.collectionView.selectItemsAtIndexPaths([NSIndexPath(forItem: 0, inSection: 0)], scrollPosition: .None)
+    if !spotsSession.isActive {
+      spotsSession.login()
+    } else {
+      Malibu.networking("api").authenticate(bearerToken: spotsSession.accessToken ?? "")
     }
-    let splitView = MainSplitView(listView: menuController.view,
-                                  detailView: featuredController.view)
+
+    splitView = MainSplitView(listView: menuController.view,
+                  detailView: browseController.view)
 
     registerURLScheme()
 
-    window.toolbar = toolbar
+    window.minSize = NSSize(width: 720, height: 640)
     window.contentView = splitView
+    window.toolbar = toolbar
     window.becomeKeyWindow()
-  }
 
+    NSUserDefaults.standardUserDefaults().setBool(false, forKey: "NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints")
   }
 }

@@ -7,9 +7,10 @@ struct CompassConfigurator: Configurator {
     Compass.routes = [
       "auth",
       "callback",
+      "browse",
       "play:{uri}:{track}",
       "song:{uri}",
-      "playlist:{uri}",
+      "playlist:{user_id}:{playlist_id}",
       "playlists",
       "stop",
       "next",
