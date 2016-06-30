@@ -5,6 +5,25 @@ import Hue
 
 public class CarouselSpot: NSObject, Gridable {
 
+  public struct Key {
+    static let minimumInteritemSpacing = "itemSpacing"
+    static let minimumLineSpacing = "lineSpacing"
+    static let titleLeftMargin = "titleLeftMargin"
+    static let titleFontSize = "titleFontSize"
+    static let titleTextColor = "titleTextColor"
+  }
+
+  public struct Default {
+    public static var titleFontSize: CGFloat = 18.0
+    public static var titleTextColor: String = "999"
+    public static var sectionInsetTop: CGFloat = 0.0
+    public static var sectionInsetLeft: CGFloat = 0.0
+    public static var sectionInsetRight: CGFloat = 0.0
+    public static var sectionInsetBottom: CGFloat = 0.0
+    public static var minimumInteritemSpacing: CGFloat = 0.0
+    public static var minimumLineSpacing: CGFloat = 0.0
+  }
+
   public static var views = ViewRegistry()
   public static var grids = GridRegistry()
   public static var configure: ((view: NSCollectionView) -> Void)?
