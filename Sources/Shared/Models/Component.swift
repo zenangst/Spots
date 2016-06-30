@@ -30,6 +30,16 @@ public struct Component: Mappable {
     }
   }
 
+  public enum Kind: String {
+    case Carousel
+    case Grid
+    case List
+
+    public var string: String {
+      return rawValue.lowercaseString
+    }
+  }
+
   /// The index of the ViewModel when appearing in a list, should be computed and continuously updated by the data source
   public var index = 0
   /// The title for the component
