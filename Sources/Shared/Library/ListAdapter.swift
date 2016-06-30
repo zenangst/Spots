@@ -2,11 +2,7 @@ import Foundation
 
 public class ListAdapter: NSObject, SpotAdapter {
   // An unowned Listable object
-  #if os(OSX)
-  var spot: Listable
-  #else
   unowned var spot: Listable
-  #endif
 
   /**
    Initialization a new instance of a ListAdapter using a Listable object
