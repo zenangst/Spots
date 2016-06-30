@@ -4,39 +4,50 @@ import Brick
 /// Gridable is protocol for Spots that are based on UICollectionView
 public protocol Gridable: Spotable {
   // The layout object used to initialize the collection spot controller.
-  var layout: NSCollectionViewFlowLayout { get }
+  var layout: NSCollectionViewLayout { get }
   /// The collection view object managed by this gridable object.
   var collectionView: CollectionView { get }
 
   static var grids: GridRegistry { get }
+  static var defaultGrid: NSCollectionViewItem.Type { get }
+}
+
+public struct GridableMeta {
+  public struct Key {
+    static let sectionInsetTop = "insetTop"
+    static let sectionInsetLeft = "insetLeft"
+    static let sectionInsetRight = "insetRight"
+    static let sectionInsetBottom = "insetBottom"
+  }
 }
 
 extension Gridable {
-
-  public func configureLayout(component: Component) {
-    let top: CGFloat = component.meta("insetTop", 0.0)
-    let left: CGFloat = component.meta("insetLeft", 0.0)
-    let bottom: CGFloat = component.meta("insetBottom", 0.0)
-    let right: CGFloat = component.meta("insetRight", 0.0)
-    layout.minimumInteritemSpacing = component.meta("itemSpacing", 0.0)
-    layout.minimumLineSpacing = component.meta("lineSpacing", 0.0)
-    layout.sectionInset = NSEdgeInsets(top: top, left: left, bottom: bottom, right: right)
-  }
 
   public func prepare() {
     registerAndPrepare { (classType, withIdentifier) in
       collectionView.registerClass(classType, forItemWithIdentifier: withIdentifier)
     }
 
-    var cached: NSView?
+    var cached: NSCollectionViewItem?
     for (index, item) in component.items.enumerate() {
-      cachedViewFor(item, cache: &cached)
+      cachedGridFor(item, cache: &cached)
 
-      if component.span > 0 {
-        component.items[index].size.width = collectionView.frame.width / CGFloat(component.span)
+      if let layout = layout as? NSCollectionViewFlowLayout where component.span > 0 {
+        component.items[index].size.width = collectionView.frame.width / CGFloat(component.span) - layout.sectionInset.left - layout.sectionInset.right
       }
-      (cached as? SpotConfigurable)?.configure(&component.items[index])
+
+      if let configurable = cached as? SpotConfigurable {
+        configurable.configure(&component.items[index])
+      }
     }
+  }
+
+  func cachedGridFor(item: ViewModel, inout cache: NSCollectionViewItem?) {
+    let reuseIdentifer = item.kind.isPresent ? item.kind : component.kind
+    let componentClass = self.dynamicType.grids.storage[reuseIdentifer] ?? self.dynamicType.defaultGrid
+
+    if cache?.isKindOfClass(componentClass) == false { cache = nil }
+    if cache == nil { cache = componentClass.init() }
   }
 
   /**
@@ -54,7 +65,7 @@ extension Gridable {
 //      register(classType: Self.defaultView, withIdentifier: component.kind)
 //    }
 
-    var cached: View?
+    var cached: NSCollectionViewItem?
     component.items.enumerate().forEach { (index: Int, item: ViewModel) in
       prepareItem(item, index: index, cached: &cached)
     }
@@ -62,10 +73,35 @@ extension Gridable {
   }
 
   /**
+   Prepares a view model item before being used by the UI component
+
+   - Parameter item: A view model
+   - Parameter index: The index of the view model
+   - Parameter cached: An optional UIView, used to reduce the amount of different reusable views that should be prepared.
+   */
+  public func prepareItem(item: ViewModel, index: Int, inout cached: NSCollectionViewItem?) {
+    cachedGridFor(item, cache: &cached)
+
+    component.items[index].index = index
+
+    guard let view = cached as? SpotConfigurable else { return }
+
+    view.configure(&component.items[index])
+
+    if component.items[index].size.height == 0 {
+      component.items[index].size.height = layout.collectionViewContentSize.height
+    }
+
+    if component.items[index].size.width == 0 {
+      component.items[index].size.width = layout.collectionViewContentSize.width
+    }
+  }
+
+  /**
    - Returns: A CGFloat of the total height of all items inside of a component
    */
   public func spotHeight() -> CGFloat {
-    return component.items.first?.size.height ?? 0.0
+    return layout.collectionViewContentSize.height
   }
 
   /**
@@ -75,18 +111,28 @@ extension Gridable {
    - Returns: Size of the object at index path as CGSize
    */
   public func sizeForItemAt(indexPath: NSIndexPath) -> CGSize {
-    if component.span > 0 {
+    var sectionInsets: CGFloat = 0.0
+    if let layout = layout as? NSCollectionViewFlowLayout where component.span > 0 {
       component.items[indexPath.item].size.width = (collectionView.frame.width / CGFloat(component.span)) - layout.sectionInset.left - layout.sectionInset.right
+      sectionInsets = layout.sectionInset.left + layout.sectionInset.right
     }
 
-    let width = item(indexPath).size.width
-
+    var width = item(indexPath).size.width - sectionInsets
+    var height = item(indexPath).size.height
     // Never return a negative width
-    guard width > -1 else { return CGSize.zero }
+    guard width > -1 else {
+      return CGSize.zero
+    }
 
-    return CGSize(
+    if width >= collectionView.frame.width {
+      width -= 2
+    }
+
+    let size = CGSize(
       width: floor(width),
-      height: ceil(item(indexPath).size.height))
+      height: ceil(height))
+
+    return size
   }
 
   func reuseIdentifierForItem(index: Int) -> String {
