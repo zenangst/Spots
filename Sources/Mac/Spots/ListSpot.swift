@@ -22,7 +22,7 @@ public class ListSpot: NSObject, Listable {
   public static var views = ViewRegistry()
   public static var configure: ((view: NSTableView) -> Void)?
   public static var defaultView: View.Type = ListSpotItem.self
-  public static var defaultKind: StringConvertible = "list"
+  public static var defaultKind: StringConvertible = Component.Kind.List.string
 
   public weak var spotsDelegate: SpotsDelegate?
 
@@ -43,7 +43,16 @@ public class ListSpot: NSObject, Listable {
     $0.documentView = NSView()
   }
 
+  public lazy var titleView: NSTextField = NSTextField().then {
+    $0.editable = false
+    $0.selectable = false
+    $0.bezeled = false
+    $0.textColor = NSColor.grayColor()
+    $0.drawsBackground = false
+  }
+
   public lazy var tableView: NSTableView = NSTableView(frame: CGRect.zero).then {
+    $0.backgroundColor = NSColor.clearColor()
     $0.allowsColumnReordering = false
     $0.allowsColumnResizing = false
     $0.allowsColumnSelection = false
@@ -51,15 +60,35 @@ public class ListSpot: NSObject, Listable {
     $0.allowsMultipleSelection = false
     $0.headerView = nil
     $0.selectionHighlightStyle = .None
+    $0.allowsTypeSelect = true
   }
 
   public required init(component: Component) {
     self.component = component
     super.init()
 
-    setupTableView()
     scrollView.contentView.addSubview(tableView)
     configureLayout(component)
+
+    if component.title.isPresent {
+      titleView.stringValue = component.title
+      titleView.sizeToFit()
+
+//      let headerView = NSTableHeaderView()
+//      headerView.addSubview(titleView)
+//      headerView.frame = titleView.frame
+//      headerView.tableView = tableView
+//      tableView.headerView = headerView
+
+      let column = NSTableColumn(identifier: "titleView")
+      column.sizeToFit()
+      tableView.addTableColumn(column)
+
+      let top = titleView.frame.size.height / 2
+//      scrollView.automaticallyAdjustsContentInsets = false
+//      scrollView.contentInsets.top = top
+//      scrollView.clipView.sectionInset.top += top
+    }
   }
 
   public convenience init(cacheKey: String) {
@@ -69,15 +98,8 @@ public class ListSpot: NSObject, Listable {
     self.stateCache = stateCache
   }
 
-  public func setupTableView() {
-    tableView.setDelegate(listAdapter)
-    tableView.setDataSource(listAdapter)
-    tableView.target = self
-    tableView.doubleAction = #selector(self.doubleAction(_:))
-  }
-
   public func doubleAction(sender: AnyObject?) {
-    guard component.meta("doubleClick", type: Bool.self) == true else { return }
+    guard component.meta(Key.doubleAction, type: Bool.self) == true else { return }
     let viewModel = item(tableView.selectedRow)
     spotsDelegate?.spotDidSelectItem(self, item: viewModel)
   }
@@ -86,16 +108,24 @@ public class ListSpot: NSObject, Listable {
     return scrollView
   }
 
-  public func layout(size: CGSize) { }
-  public func prepare() { }
+  public func layout(size: CGSize) {
+    scrollView.contentInsets.top = component.meta(Key.contentInsetsTop, Default.contentInsetsTop)
+    scrollView.contentInsets.left = component.meta(Key.contentInsetsLeft, Default.contentInsetsLeft)
+    scrollView.contentInsets.bottom = component.meta(Key.contentInsetsBottom, Default.contentInsetsBottom)
+    scrollView.contentInsets.right = component.meta(Key.contentInsetsRight, Default.contentInsetsRight)
+  }
 
   public func setup(size: CGSize) {
     component.items.enumerate().forEach {
       component.items[$0.index].size.width = size.width
     }
-
+    tableView.setDelegate(listAdapter)
+    tableView.setDataSource(listAdapter)
+    tableView.target = self
+    tableView.doubleAction = #selector(self.doubleAction(_:))
     tableView.sizeToFit()
-    scrollView.frame.size.height = tableView.frame.height
+    layout(size)
+    scrollView.frame.size.height = tableView.frame.height + titleView.frame.size.height
     scrollView.frame.size.width = size.width
     ListSpot.configure?(view: tableView)
   }

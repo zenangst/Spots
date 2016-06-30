@@ -27,8 +27,9 @@ public class CarouselSpot: NSObject, Gridable {
   public static var views = ViewRegistry()
   public static var grids = GridRegistry()
   public static var configure: ((view: NSCollectionView) -> Void)?
+  public static var defaultGrid: NSCollectionViewItem.Type = NSCollectionViewItem.self
   public static var defaultView: View.Type = NSView.self
-  public static var defaultKind: StringConvertible = "carousel"
+  public static var defaultKind: StringConvertible = Component.Kind.Carousel.string
 
   public weak var spotsDelegate: SpotsDelegate?
 
@@ -46,15 +47,13 @@ public class CarouselSpot: NSObject, Gridable {
     return collectionAdapter
   }
 
-  public var layout: NSCollectionViewFlowLayout
+  public lazy var layout: NSCollectionViewLayout = NSCollectionViewFlowLayout()
 
   public lazy var titleView: NSTextField = NSTextField().then {
     $0.editable = false
     $0.selectable = false
     $0.bezeled = false
-    $0.textColor = NSColor.grayColor()
     $0.drawsBackground = false
-    $0.font = NSFont.systemFontOfSize(32)
   }
 
   public lazy var scrollView: ScrollView = ScrollView()
@@ -69,28 +68,32 @@ public class CarouselSpot: NSObject, Gridable {
   public required init(component: Component) {
     self.component = component
 
-    if component.meta("defaultFlow", type: Bool.self) == true {
-      layout = NSCollectionViewFlowLayout()
-    } else {
-      layout = GridSpotLayout()
-    }
-
-    layout.minimumInteritemSpacing = 0
-    layout.minimumLineSpacing = 0
-    layout.scrollDirection = .Horizontal
-
     super.init()
 
     setupCollectionView()
-    configureLayout(component)
+    configureLayoutInsets(component)
     scrollView.addSubview(titleView)
     scrollView.documentView = collectionView
 
     if component.title.isPresent {
+      titleView.textColor = NSColor.hex(component.meta(Key.titleTextColor, Default.titleTextColor))
       titleView.stringValue = component.title
       titleView.sizeToFit()
-      layout.sectionInset.top += titleView.frame.size.height
+      (layout as? NSCollectionViewFlowLayout)?.sectionInset.top += titleView.frame.size.height
     }
+  }
+
+  private func configureLayoutInsets(component: Component) {
+    guard let layout = layout as? NSCollectionViewFlowLayout else { return }
+
+    layout.sectionInset = NSEdgeInsets(
+      top: component.meta(GridableMeta.Key.sectionInsetTop, Default.sectionInsetTop),
+      left: component.meta(GridableMeta.Key.sectionInsetLeft, Default.sectionInsetLeft),
+      bottom: component.meta(GridableMeta.Key.sectionInsetBottom, Default.sectionInsetBottom),
+      right: component.meta(GridableMeta.Key.sectionInsetRight, Default.sectionInsetRight))
+    layout.minimumInteritemSpacing = component.meta(Key.minimumInteritemSpacing, 0)
+    layout.minimumLineSpacing = component.meta(Key.minimumLineSpacing, 0)
+    layout.scrollDirection = .Horizontal
   }
 
   public convenience init(cacheKey: String) {
@@ -112,47 +115,37 @@ public class CarouselSpot: NSObject, Gridable {
     return scrollView
   }
 
-  public func layout(size: CGSize) { }
+  public func layout(size: CGSize) {
+    var layoutInsets = NSEdgeInsets()
+    if let layout = layout as? NSCollectionViewFlowLayout {
+      layoutInsets = layout.sectionInset
+    }
+
+    scrollView.frame.size.height = (component.items.first?.size.height ?? 0.0) + layoutInsets.top + layoutInsets.bottom
+    collectionView.frame.size.height = scrollView.frame.size.height
+    gradientLayer?.frame.size.height = scrollView.frame.size.height
+
+    if component.title.isPresent {
+      titleView.stringValue = component.title
+      titleView.font = NSFont.systemFontOfSize(component.meta(Key.titleFontSize, Default.titleFontSize))
+      titleView.sizeToFit()
+    }
+
+    titleView.frame.origin.x = layoutInsets.left
+    titleView.frame.origin.y = layoutInsets.top / 2 - titleView.frame.size.height / 2
+
+  }
 
   public func setup(size: CGSize) {
+    guard !component.items.isEmpty else { return }
+
     if component.span > 0 {
       component.items.enumerate().forEach {
         component.items[$0.index].size.width = size.width / component.span
       }
     }
 
-    if let gradientColor1 = component.meta("gradientColor1", type: String.self),
-      gradientColor2 = component.meta("gradientColor2", type: String.self)
-      where gradientLayer == nil {
-      gradientLayer = CAGradientLayer()
-      gradientLayer?.colors = [
-        NSColor.hex(gradientColor1).CGColor,
-        NSColor.hex(gradientColor2).CGColor
-      ]
-      gradientLayer?.locations = [0.0, 0.9]
-      collectionView.backgroundView?.layer?.insertSublayer(gradientLayer!, atIndex: 0)
-      gradientLayer?.frame.size.width = 3000
-    }
-
-    gradientLayer?.frame.size.height = size.height + layout.sectionInset.top + layout.sectionInset.bottom
-    scrollView.frame.size.height = size.height + layout.sectionInset.top + layout.sectionInset.bottom
-
-    var additionalX = collectionView.frame.width - layout.collectionViewContentSize.width
-    if additionalX > 0.0 {
-      additionalX = additionalX / 2
-    } else {
-      additionalX = 0
-    }
-
-    if component.title.isPresent {
-      let fontSize = collectionView.frame.size.height / 20
-      titleView.stringValue = component.title
-      titleView.font = NSFont.systemFontOfSize(fontSize)
-      titleView.sizeToFit()
-    }
-
-    titleView.frame.origin.x = additionalX + layout.sectionInset.left
-    titleView.frame.origin.y = layout.sectionInset.top / 2 - titleView.frame.size.height / 2
+    layout(size)
     CarouselSpot.configure?(view: collectionView)
 
     layout.invalidateLayout()
