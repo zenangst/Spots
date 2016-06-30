@@ -34,23 +34,5 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     window.becomeKeyWindow()
   }
 
-  func registerURLScheme() {
-    NSAppleEventManager.sharedAppleEventManager().setEventHandler(self,
-                                                                  andSelector: #selector(handle(_:replyEvent:)),
-                                                                  forEventClass: AEEventClass(kInternetEventClass),
-                                                                  andEventID: AEEventID(kAEGetURL))
-
-    if let bundleIdentifier = NSBundle.mainBundle().bundleIdentifier {
-      LSSetDefaultHandlerForURLScheme("spots", bundleIdentifier as CFString)
-    }
-  }
-
-  func handle(event: NSAppleEventDescriptor, replyEvent: NSAppleEventDescriptor) {
-    if let stringURL = event.paramDescriptorForKeyword(AEKeyword(keyDirectObject))?.stringValue,
-      url = NSURL(string: stringURL) {
-      Compass.parse(url) { route, fragments, arguments in
-        
-      }
-    }
   }
 }
