@@ -158,23 +158,23 @@ extension ListAdapter: NSTableViewDataSource {
   public func tableView(tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableViewDropOperation) -> Bool {
     return false
   }
-
-  public func tableView(tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
-    return true
-  }
-
-  public func tableView(tableView: NSTableView, shouldSelectTableColumn tableColumn: NSTableColumn?) -> Bool {
-    return false
-  }
 }
 
 extension ListAdapter: NSTableViewDelegate {
 
-  public func tableViewSelectionDidChange(notification: NSNotification) {
-    guard spot.component.meta("doubleClick", type: Bool.self) != true else { return }
+  public func tableView(tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
+    guard spot.component.meta("doubleClick", type: Bool.self) != true &&
+      row > -1 &&
+      row < spot.component.items.count
+      else {
+        NSLog("guard: row: \(row) -> \(spot.component.items.count)")
+        return false
+    }
 
-    let viewModel = spot.item(spot.tableView.selectedRow)
+    let viewModel = spot.item(row)
     spot.spotsDelegate?.spotDidSelectItem(spot, item: viewModel)
+
+    return true
   }
 
   public func tableView(tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
@@ -182,31 +182,30 @@ extension ListAdapter: NSTableViewDelegate {
       width: tableView.frame.width,
       height: tableView.frame.height)
 
-    let height = row < spot.component.items.count ? spot.item(row).size.height : 0.0
+    let height = row < spot.component.items.count ? spot.item(row).size.height : 1.0
 
     return height
   }
 
   public func tableView(tableView: NSTableView, rowViewForRow row: Int) -> NSTableRowView? {
     let reuseIdentifier = spot.reuseIdentifierForItem(row)
-    let view = spot.dynamicType.views[reuseIdentifier]
-    let rowView = view?.init()
+    let viewClass = spot.dynamicType.views[reuseIdentifier]
+    let view = viewClass?.init()
 
-    (rowView as? SpotConfigurable)?.configure(&spot.component.items[row])
+    (view as? SpotConfigurable)?.configure(&spot.component.items[row])
+    (view as? NSTableRowView)?.identifier = reuseIdentifier
 
-    if let rowView = rowView as? NSTableRowView {
-      return rowView
-    }
-
-    return nil
+    return view as? NSTableRowView
   }
 
   public func tableView(tableView: NSTableView, willDisplayCell cell: AnyObject, forTableColumn tableColumn: NSTableColumn?, row: Int) {
-    print("will display cell")
+    NSLog("will display cell")
   }
 
   public func tableView(tableView: NSTableView, viewForTableColumn tableColumn: NSTableColumn?, row: Int) -> NSView? {
-    print("viewForTableColumn")
+    if let listSpot = spot as? ListSpot where row == 0 {
+      return listSpot.titleView
+    }
     return nil
   }
 }
