@@ -37,18 +37,9 @@ public class SpotsScrollView: NSScrollView {
   func didAddSubviewToContainer(subview: View) {
     subviewsInLayoutOrder.append(subview)
     layoutSubtreeIfNeeded()
-
-    guard let scrollView = subview as? ScrollView where scrollView.superview?.superview == contentView else {
-      return
-    }
-
-    scrollView.addObserver(self, forKeyPath: "frame", options: .Old, context: KVOContext)
   }
 
   public override func willRemoveSubview(subview: View) {
-    if let scrollView = subview as? ScrollView where scrollView.superview?.superview == contentView {
-      scrollView.removeObserver(self, forKeyPath: "frame", context: KVOContext)
-    }
 
     if let index = subviewsInLayoutOrder.indexOf({ $0 == subview }) {
       subviewsInLayoutOrder.removeAtIndex(index)
@@ -57,13 +48,8 @@ public class SpotsScrollView: NSScrollView {
   }
 
   public override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
-    if let window = object as? NSWindow {
-      layoutSubtreeIfNeeded()
-    } else if let change = change, scrollView = object as? ScrollView,
-      oldValue = (change[NSKeyValueChangeOldKey] as? NSValue)?.rectValue where context == KVOContext {
-      guard scrollView.frame != oldValue else { return }
-      layoutSubtreeIfNeeded()
-    }
+    guard let window = object as? NSWindow else { return }
+    layoutSubtreeIfNeeded()
   }
 
   static public override func isCompatibleWithResponsiveScrolling() -> Bool {
