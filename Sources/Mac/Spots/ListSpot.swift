@@ -92,8 +92,8 @@ public class ListSpot: NSObject, Listable {
   }
 
   public func doubleAction(sender: AnyObject?) {
-    guard component.meta(Key.doubleAction, type: Bool.self) == true else { return }
-    let viewModel = item(tableView.clickedRow)
+    guard let viewModel = item(tableView.clickedRow)
+    where component.meta(Key.doubleAction, type: Bool.self) == true else { return }
     spotsDelegate?.spotDidSelectItem(self, item: viewModel)
   }
 

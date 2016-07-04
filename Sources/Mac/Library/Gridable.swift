@@ -117,8 +117,8 @@ extension Gridable {
       sectionInsets = layout.sectionInset.left + layout.sectionInset.right
     }
 
-    var width = item(indexPath).size.width - sectionInsets
-    var height = item(indexPath).size.height
+    var width = (item(indexPath)?.size.width ?? 0) - sectionInsets
+    var height = item(indexPath)?.size.height ?? 0
     // Never return a negative width
     guard width > -1 else {
       return CGSize.zero
@@ -136,7 +136,8 @@ extension Gridable {
   }
 
   func reuseIdentifierForItem(index: Int) -> String {
-    let viewModel = item(index)
+    guard let viewModel = item(index) else { return self.dynamicType.defaultKind.string }
+
     if self.dynamicType.grids.storage[viewModel.kind] != nil {
       return viewModel.kind
     } else if self.dynamicType.grids.storage[component.kind] != nil {

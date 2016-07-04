@@ -163,17 +163,15 @@ extension ListAdapter: NSTableViewDataSource {
 extension ListAdapter: NSTableViewDelegate {
 
   public func tableView(tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
-    guard row > -1 && row < spot.component.items.count
+    guard let viewModel = spot.item(row) where row > -1 && row < spot.component.items.count
       else {
         return false
     }
 
-    let viewModel = spot.item(row)
-    
     if spot.component.meta("doubleClick", type: Bool.self) != true {
       spot.spotsDelegate?.spotDidSelectItem(spot, item: viewModel)
     }
-    
+
 
     return true
   }
@@ -183,7 +181,7 @@ extension ListAdapter: NSTableViewDelegate {
       width: tableView.frame.width,
       height: tableView.frame.height)
 
-    let height = row < spot.component.items.count ? spot.item(row).size.height : 1.0
+    let height = row < spot.component.items.count ? spot.item(row)?.size.height ?? 0 : 1.0
 
     return height
   }
