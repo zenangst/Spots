@@ -6,17 +6,26 @@ struct CompassConfigurator: Configurator {
     Compass.scheme = "spots"
     Compass.routes = [
       "auth",
-      "callback",
+      "artist:{artist_id}",
       "browse",
+      "album:{album_id}",
+      "albums",
+      "callback",
+      "category:{category_id}",
+      "logout",
+      "next",
+      "following",
+      "preview",
+      "topArtists",
+      "topTracks",
+      "openPlayer",
       "play:{uri}:{track}",
-      "song:{uri}",
       "playlist:{user_id}:{playlist_id}",
       "playlists",
-      "stop",
-      "next",
       "previous",
-      "openPlayer",
-      "logout"
+      "song:{uri}",
+      "songs",
+      "stop",
     ]
   }
 }
