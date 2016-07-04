@@ -44,12 +44,20 @@ public class SpotsController: NSViewController, SpotsProtocol {
     $0.autoresizingMask = [ .ViewWidthSizable, .ViewHeightSizable ]
   }
 
+  /// A scroll delegate for handling spotDidReachBeginning and spotDidReachEnd
+  weak public var spotsScrollDelegate: SpotsScrollDelegate?
+
+  /// A bool value to indicate if the SpotsController is refeshing
+  public var refreshing = false
+
   /**
    - Parameter spots: An array of Spotable objects
    */
   public required init(spots: [Spotable] = []) {
     self.spots = spots
     super.init(nibName: nil, bundle: nil)!
+
+    NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SpotsController.scrollViewDidScroll(_:)), name: NSScrollViewDidLiveScrollNotification, object: spotsScrollView)
   }
 
   /**
@@ -166,6 +174,39 @@ public class SpotsController: NSViewController, SpotsProtocol {
     for spot in spots {
       if selectedSpot.render() != spot.render() {
         spot.deselect()
+      }
+    }
+  }
+
+  func scrollViewDidScroll(notification: NSNotification) {
+    guard let scrollView = notification.object as? SpotsScrollView,
+      delegate = spotsScrollDelegate,
+      window = NSApplication.sharedApplication().mainWindow,
+      windowFrame = window.contentView?.frame
+      else { return }
+
+    let offset = scrollView.contentOffset
+    let size = scrollView.contentSize
+    let shouldFetch = !refreshing &&
+      offset.y > 0 &&
+      scrollView.contentSize.height > scrollView.spotsContentView.visibleRect.size.height &&
+      !refreshPositions.contains(scrollView.spotsContentView.visibleRect.size.height)
+
+    // Scroll did reach top
+    if scrollView.contentOffset.y < 0 &&
+      !refreshing {
+      refreshing = true
+      delegate.spotDidReachBeginning {
+        self.refreshing = false
+      }
+    }
+
+    if shouldFetch {
+      // Infinite scrolling
+      refreshPositions.append(scrollView.spotsContentView.visibleRect.size.height)
+      refreshing = true
+      delegate.spotDidReachEnd {
+        self.refreshing = false
       }
     }
   }
