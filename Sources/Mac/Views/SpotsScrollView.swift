@@ -40,7 +40,6 @@ public class SpotsScrollView: NSScrollView {
   }
 
   public override func willRemoveSubview(subview: View) {
-
     if let index = subviewsInLayoutOrder.indexOf({ $0 == subview }) {
       subviewsInLayoutOrder.removeAtIndex(index)
       layoutSubtreeIfNeeded()
