@@ -60,27 +60,36 @@ public class SpotsScrollView: NSScrollView {
     let contentOffset = self.contentOffset
     var yOffsetOfCurrentSubview: CGFloat = 0.0
 
-    for case let scrollView as ScrollView in subviewsInLayoutOrder {
-      var frame = scrollView.frame
-      var contentOffset = scrollView.contentOffset
+    for subview in subviewsInLayoutOrder {
+      if let scrollView = subview as? ScrollView {
+        var contentOffset = scrollView.contentOffset
+        var frame = scrollView.frame
+        if self.contentOffset.y <= yOffsetOfCurrentSubview {
+          contentOffset.y = 0.0
+          frame.origin.y = yOffsetOfCurrentSubview
+        }
 
-      if self.contentOffset.y <= yOffsetOfCurrentSubview {
-        contentOffset.y = 0.0
-        frame.origin.y = yOffsetOfCurrentSubview
+        frame.size.width = ceil(contentView.frame.size.width)
+        scrollView.frame = frame
+        scrollView.contentOffset = contentOffset
+
+        yOffsetOfCurrentSubview += scrollView.frame.height
+      } else {
+        var frame = subview.frame
+        if self.contentOffset.y <= yOffsetOfCurrentSubview {
+          frame.origin.y = yOffsetOfCurrentSubview
+        }
+        frame.origin.x = 0.0
+        subview.frame = frame
+        yOffsetOfCurrentSubview += subview.frame.height
       }
-
-      frame.size.width = ceil(contentView.frame.size.width)
-      scrollView.frame = frame
-      scrollView.contentOffset = contentOffset
-
-      yOffsetOfCurrentSubview += scrollView.frame.height
     }
 
     guard frame.height > 0 && frame.width > 100 else { return }
 
-    documentView?.setFrameSize(CGSize(width: frame.size.width, height: fmax(yOffsetOfCurrentSubview, frame.height)))
+    documentView?.setFrameSize(CGSize(width: frame.width, height: fmax(yOffsetOfCurrentSubview, frame.height)))
     displayIfNeeded()
-    
+
     if let view = superview {
       view.layout()
     }
