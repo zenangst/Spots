@@ -1,30 +1,32 @@
 import Cocoa
 import Spots
-import Sugar
-import Compass
 import Malibu
-import OhMyAuth
-import Imaginary
+import AVFoundation
 
+var blueprints: Blueprints = Blueprints()
 let spotsSession = SpotsSession()
 
 @NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate {
+class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 
   @IBOutlet weak var window: Window!
 
-  lazy var toolbar = Toolbar(identifier: "main-toolbar")
-  lazy var menuController = MenuController(cacheKey: "menu-cache")
-  lazy var browseController = BrowseController(cacheKey: "main-screen-cache")
+  let toolbarHeight: CGFloat = 36
+
+  lazy var listController = ListController(cacheKey: "menu-cache")
+  lazy var detailController = DetailController()
+
   var currentController: SpotsController?
   var splitView: MainSplitView!
+  var player: AVAudioPlayer?
 
   let configurators: [Configurator] = [
-    SpotsConfigurator(),
+    BlueprintConfigurator(),
     CompassConfigurator(),
-    OhMyAuthConfigurator(),
+    ImaginaryConfigurator(),
     MalibuConfigurator(),
-    ImaginaryConfigurator()
+    OhMyAuthConfigurator(),
+    SpotsConfigurator(),
   ]
 
   func applicationDidFinishLaunching(aNotification: NSNotification) {
@@ -36,16 +38,35 @@ class AppDelegate: NSObject, NSApplicationDelegate {
       Malibu.networking("api").authenticate(bearerToken: spotsSession.accessToken ?? "")
     }
 
-    splitView = MainSplitView(listView: menuController.view,
-                  detailView: browseController.view)
+    window.delegate = self
+
+    splitView = MainSplitView(listView: listController.view,
+                  detailView: detailController.view)
+
+//    listController.spotsScrollView.frame.size.height = window.frame.size.height - toolbarHeight * 2
+//    listController.spotsScrollView.frame.origin.y = toolbarHeight
+//    listController.spotsScrollView.autoresizingMask = [.ViewWidthSizable]
 
     registerURLScheme()
 
-    window.minSize = NSSize(width: 720, height: 640)
+    detailController.blueprint = blueprints["browse"]!
+
     window.contentView = splitView
-    window.toolbar = toolbar
     window.becomeKeyWindow()
 
-    NSUserDefaults.standardUserDefaults().setBool(false, forKey: "NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints")
+    NSUserDefaults.standardUserDefaults().setBool(true, forKey: "NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints")
+  }
+}
+
+extension AppDelegate {
+
+  func windowDidBecomeKey(notification: NSNotification) {
+//    guard let currentBlueprint = detailController.blueprint else { return }
+//    detailController.blueprint = currentBlueprint
+  }
+
+  func windowDidResize(notification: NSNotification) {
+//    listController.spotsScrollView.frame.size.height = window.frame.size.height - toolbarHeight * 2
+//    detailController.spotsScrollView.frame.size.height = window.frame.size.height - toolbarHeight
   }
 }
