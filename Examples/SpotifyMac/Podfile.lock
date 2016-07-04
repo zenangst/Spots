@@ -43,7 +43,7 @@ DEPENDENCIES:
   - Malibu (from `https://github.com/hyperoslo/Malibu.git`)
   - OhMyAuth (from `~/Documents/OhMyAuth`)
   - Spots (from `../../`)
-  - Sugar (from `~/Documents/Sugar`)
+  - Sugar (from `https://github.com/hyperoslo/Sugar.git`)
 
 EXTERNAL SOURCES:
   Cache:
@@ -65,7 +65,7 @@ EXTERNAL SOURCES:
   Spots:
     :path: "../../"
   Sugar:
-    :path: "~/Documents/Sugar"
+    :git: https://github.com/hyperoslo/Sugar.git
 
 CHECKOUT OPTIONS:
   Cache:
@@ -89,6 +89,9 @@ CHECKOUT OPTIONS:
   Malibu:
     :commit: e260ae8b741ef6ef2e1a421f89528ea2a54a878e
     :git: https://github.com/hyperoslo/Malibu.git
+  Sugar:
+    :commit: e5b58a110e4b1f33ddfb66c728cb5638b6641e61
+    :git: https://github.com/hyperoslo/Sugar.git
 
 SPEC CHECKSUMS:
   Alamofire: 01a82e2f6c0f860ade35534c8dd88be61bdef40c
@@ -108,6 +111,6 @@ SPEC CHECKSUMS:
   Tailor: 38a9f1ed1fa804856583396a55ed764d832eeca8
   When: 033104df132ebfa75f4d3a9ba3e7a9865a573a1c
 
-PODFILE CHECKSUM: 6e1417504894395cd53d286cc9405c1180291976
+PODFILE CHECKSUM: e5f4631ad4c195954fe1be713b7601276b3b774b
 
 COCOAPODS: 1.0.0

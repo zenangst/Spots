@@ -6,7 +6,7 @@ use_frameworks!
 inhibit_all_warnings!
 
 target "Spotify Mac" do
-  pod 'Sugar', path: '~/Documents/Sugar'
+  pod 'Sugar', git: 'https://github.com/hyperoslo/Sugar.git'
   pod 'Spots', path: '../../'
   pod 'Cache', git: 'https://github.com/hyperoslo/Cache.git'
   pod 'Fashion', git: 'https://github.com/vadymmarkov/Fashion.git'
