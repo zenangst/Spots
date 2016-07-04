@@ -5,6 +5,10 @@ import Brick
 public class ListSpot: NSObject, Listable {
 
   struct Key {
+    static let titleFontSize = "titleFontSize"
+    static let titleTopInset = "titleTopInset"
+    static let titleBottomInset = "titleBottomInset"
+    static let titleLeftInset = "titleLeftInset"
     static let contentInsetsTop = "insetTop"
     static let contentInsetsLeft = "insetLeft"
     static let contentInsetsBottom = "insetBottom"
@@ -13,6 +17,10 @@ public class ListSpot: NSObject, Listable {
   }
 
   public struct Default {
+    public static var titleFontSize: CGFloat = 14.0
+    public static var titleLeftInset: CGFloat = 0.0
+    public static var titleTopInset: CGFloat = 0.0
+    public static var titleBottomInset: CGFloat = 0.0
     public static var contentInsetsTop: CGFloat = 0.0
     public static var contentInsetsLeft: CGFloat = 0.0
     public static var contentInsetsBottom: CGFloat = 0.0
@@ -69,26 +77,6 @@ public class ListSpot: NSObject, Listable {
 
     scrollView.contentView.addSubview(tableView)
     configureLayout(component)
-
-    if component.title.isPresent {
-      titleView.stringValue = component.title
-      titleView.sizeToFit()
-
-//      let headerView = NSTableHeaderView()
-//      headerView.addSubview(titleView)
-//      headerView.frame = titleView.frame
-//      headerView.tableView = tableView
-//      tableView.headerView = headerView
-
-      let column = NSTableColumn(identifier: "titleView")
-      column.sizeToFit()
-      tableView.addTableColumn(column)
-
-      let top = titleView.frame.size.height / 2
-//      scrollView.automaticallyAdjustsContentInsets = false
-//      scrollView.contentInsets.top = top
-//      scrollView.clipView.sectionInset.top += top
-    }
   }
 
   public convenience init(cacheKey: String) {
@@ -98,9 +86,14 @@ public class ListSpot: NSObject, Listable {
     self.stateCache = stateCache
   }
 
+  deinit {
+    tableView.setDelegate(nil)
+    tableView.setDataSource(nil)
+  }
+
   public func doubleAction(sender: AnyObject?) {
     guard component.meta(Key.doubleAction, type: Bool.self) == true else { return }
-    let viewModel = item(tableView.selectedRow)
+    let viewModel = item(tableView.clickedRow)
     spotsDelegate?.spotDidSelectItem(self, item: viewModel)
   }
 
@@ -119,13 +112,29 @@ public class ListSpot: NSObject, Listable {
     component.items.enumerate().forEach {
       component.items[$0.index].size.width = size.width
     }
+
     tableView.setDelegate(listAdapter)
     tableView.setDataSource(listAdapter)
     tableView.target = self
     tableView.doubleAction = #selector(self.doubleAction(_:))
     tableView.sizeToFit()
     layout(size)
-    scrollView.frame.size.height = tableView.frame.height + titleView.frame.size.height
+
+    if component.title.isPresent {
+      render().addSubview(titleView)
+      titleView.stringValue = component.title
+      titleView.font = NSFont.systemFontOfSize(component.meta(Key.titleFontSize, Default.titleFontSize))
+      titleView.sizeToFit()
+      titleView.frame.size.height += component.meta(Key.titleTopInset, Default.titleTopInset)
+      titleView.frame.size.height += component.meta(Key.titleBottomInset, Default.titleBottomInset)
+      titleView.frame.origin.x = tableView.frame.origin.x + component.meta(Key.titleLeftInset, Default.titleLeftInset)
+      titleView.frame.origin.y = component.meta(Key.titleTopInset, Default.titleTopInset) - component.meta(Key.titleBottomInset, Default.titleBottomInset)
+      scrollView.frame.size.height = tableView.frame.height + titleView.frame.maxY
+    } else {
+      scrollView.frame.size.height = tableView.frame.height + scrollView.contentInsets.top + scrollView.contentInsets.bottom
+    }
+
+
     scrollView.frame.size.width = size.width
     ListSpot.configure?(view: tableView)
   }
