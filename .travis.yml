@@ -10,5 +10,5 @@ before_install:
 script:
 - xcodebuild clean build -project Spots.xcodeproj -scheme "Spots-iOS" -sdk iphonesimulator
 - xcodebuild test -project Spots.xcodeproj -scheme "Spots-iOS" -sdk iphonesimulator
-  #- xcodebuild clean build -project Spots.xcodeproj -scheme "Spots-Mac" -sdk macosx
-  #- xcodebuild test -project Spots.xcodeproj -scheme "Spots-Mac" -sdk macosx
+- xcodebuild clean build -project Spots.xcodeproj -scheme "Spots-Mac" -sdk macosx
+- xcodebuild test -project Spots.xcodeproj -scheme "Spots-Mac" -sdk macosx
