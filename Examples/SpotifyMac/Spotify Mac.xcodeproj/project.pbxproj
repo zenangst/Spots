@@ -8,10 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		BD296ED11D198D2B00D143F9 /* MainSplitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD296ED01D198D2B00D143F9 /* MainSplitView.swift */; };
+		BD3374071D26D4E700DBB757 /* AlbumGridItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3374061D26D4E700DBB757 /* AlbumGridItem.swift */; };
+		BD3374091D26D5BF00DBB757 /* HeaderGridItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3374081D26D5BF00DBB757 /* HeaderGridItem.swift */; };
+		BD33740B1D26E05900DBB757 /* TrackRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD33740A1D26E05900DBB757 /* TrackRow.swift */; };
 		BD5E28561D21010000B81249 /* WindowBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5E28551D21010000B81249 /* WindowBackgroundView.swift */; };
 		BD5E28581D2156CF00B81249 /* NSImage+tintColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5E28571D2156CF00B81249 /* NSImage+tintColor.swift */; };
 		BD7FA73E1D1C1FE6002CE86F /* FeaturedGridItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7FA73D1D1C1FE6002CE86F /* FeaturedGridItem.swift */; };
 		BD7FA7401D1C517D002CE86F /* HeroGridItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7FA73F1D1C517D002CE86F /* HeroGridItem.swift */; };
+		BD89CC3F1D21E2F70014782C /* OhMyAuthConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD89CC3E1D21E2F70014782C /* OhMyAuthConfigurator.swift */; };
+		BD89CC411D21EB170014782C /* SpotsSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD89CC401D21EB170014782C /* SpotsSession.swift */; };
+		BD89CC431D21ED7C0014782C /* Requests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD89CC421D21ED7C0014782C /* Requests.swift */; };
+		BD89CC451D2287870014782C /* CategoryGridItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD89CC441D2287870014782C /* CategoryGridItem.swift */; };
 		BDAC8CE71D1D440900739627 /* Toolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAC8CE61D1D440900739627 /* Toolbar.swift */; };
 		BDAC8CE91D1D469000739627 /* TitleToolbarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAC8CE81D1D469000739627 /* TitleToolbarItem.swift */; };
 		BDAC8CEB1D1D4D0E00739627 /* SearchToolbarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAC8CEA1D1D4D0E00739627 /* SearchToolbarItem.swift */; };
@@ -19,15 +26,22 @@
 		BDAC8CEF1D20541000739627 /* Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAC8CEE1D20541000739627 /* Window.swift */; };
 		BDC64D3C1D2185190066A6E6 /* CocoaLibSpotify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDC64D3B1D2185190066A6E6 /* CocoaLibSpotify.framework */; };
 		BDC64D3D1D2185210066A6E6 /* CocoaLibSpotify.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BDC64D3B1D2185190066A6E6 /* CocoaLibSpotify.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		BDC64D3F1D21861F0066A6E6 /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC64D3E1D21861F0066A6E6 /* MenuController.swift */; };
+		BDC64D3F1D21861F0066A6E6 /* ListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC64D3E1D21861F0066A6E6 /* ListController.swift */; };
 		BDC64D411D2186460066A6E6 /* SpotsConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC64D401D2186460066A6E6 /* SpotsConfigurator.swift */; };
-		BDC64D431D2189830066A6E6 /* FeaturedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC64D421D2189830066A6E6 /* FeaturedController.swift */; };
+		BDCAF0801D2730B8000A60DB /* ArtistGridItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCAF07F1D2730B8000A60DB /* ArtistGridItem.swift */; };
 		BDD126A41D21A93700C9175F /* CompassConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD126A31D21A93700C9175F /* CompassConfigurator.swift */; };
 		BDD126A61D21A94900C9175F /* Configurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD126A51D21A94900C9175F /* Configurator.swift */; };
 		BDDC3E901CE78D5B00B608FB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDC3E8F1CE78D5B00B608FB /* AppDelegate.swift */; };
 		BDDC3E921CE78D5B00B608FB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BDDC3E911CE78D5B00B608FB /* Assets.xcassets */; };
 		BDDC3E951CE78D5B00B608FB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = BDDC3E931CE78D5B00B608FB /* MainMenu.xib */; };
-		BDDC3EE21CEA2DDE00B608FB /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDC3EE11CEA2DDE00B608FB /* TableViewCell.swift */; };
+		BDDC3EE21CEA2DDE00B608FB /* TableRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDC3EE11CEA2DDE00B608FB /* TableRow.swift */; };
+		BDF473C11D24ED3500E354AC /* MalibuConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF473C01D24ED3500E354AC /* MalibuConfigurator.swift */; };
+		BDF473C31D24EDBE00E354AC /* ImaginaryConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF473C21D24EDBE00E354AC /* ImaginaryConfigurator.swift */; };
+		BDF473C51D24EE1800E354AC /* AppDelegate+Routes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF473C41D24EE1800E354AC /* AppDelegate+Routes.swift */; };
+		BDF475151D257DA800E354AC /* Blueprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF475141D257DA800E354AC /* Blueprint.swift */; };
+		BDF475171D25809000E354AC /* DetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF475161D25809000E354AC /* DetailController.swift */; };
+		BDF475191D2581D100E354AC /* Blueprints.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF475181D2581D100E354AC /* Blueprints.swift */; };
+		BDF4751B1D25853000E354AC /* BlueprintConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF4751A1D25853000E354AC /* BlueprintConfigurator.swift */; };
 		D2411EB64750BA13F6E687D7 /* Pods_Spotify_Mac.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7EDD36C15FEE6E3B20900B4 /* Pods_Spotify_Mac.framework */; };
 /* End PBXBuildFile section */
 
@@ -48,19 +62,26 @@
 		2B8828CE6480C142B637C969 /* Pods-Spotify Mac.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spotify Mac.release.xcconfig"; path = "Pods/Target Support Files/Pods-Spotify Mac/Pods-Spotify Mac.release.xcconfig"; sourceTree = "<group>"; };
 		A3A97FE108964C61A20C9DFB /* Pods-Spotify Mac.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spotify Mac.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Spotify Mac/Pods-Spotify Mac.debug.xcconfig"; sourceTree = "<group>"; };
 		BD296ED01D198D2B00D143F9 /* MainSplitView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainSplitView.swift; sourceTree = "<group>"; };
+		BD3374061D26D4E700DBB757 /* AlbumGridItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumGridItem.swift; sourceTree = "<group>"; };
+		BD3374081D26D5BF00DBB757 /* HeaderGridItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderGridItem.swift; sourceTree = "<group>"; };
+		BD33740A1D26E05900DBB757 /* TrackRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackRow.swift; sourceTree = "<group>"; };
 		BD5E28551D21010000B81249 /* WindowBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowBackgroundView.swift; sourceTree = "<group>"; };
 		BD5E28571D2156CF00B81249 /* NSImage+tintColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSImage+tintColor.swift"; sourceTree = "<group>"; };
 		BD7FA73D1D1C1FE6002CE86F /* FeaturedGridItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeaturedGridItem.swift; sourceTree = "<group>"; };
 		BD7FA73F1D1C517D002CE86F /* HeroGridItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeroGridItem.swift; sourceTree = "<group>"; };
+		BD89CC3E1D21E2F70014782C /* OhMyAuthConfigurator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OhMyAuthConfigurator.swift; sourceTree = "<group>"; };
+		BD89CC401D21EB170014782C /* SpotsSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsSession.swift; sourceTree = "<group>"; };
+		BD89CC421D21ED7C0014782C /* Requests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Requests.swift; sourceTree = "<group>"; };
+		BD89CC441D2287870014782C /* CategoryGridItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryGridItem.swift; sourceTree = "<group>"; };
 		BDAC8CE61D1D440900739627 /* Toolbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Toolbar.swift; sourceTree = "<group>"; };
 		BDAC8CE81D1D469000739627 /* TitleToolbarItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleToolbarItem.swift; sourceTree = "<group>"; };
 		BDAC8CEA1D1D4D0E00739627 /* SearchToolbarItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchToolbarItem.swift; sourceTree = "<group>"; };
 		BDAC8CEC1D20479100739627 /* GridListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridListItem.swift; sourceTree = "<group>"; };
 		BDAC8CEE1D20541000739627 /* Window.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Window.swift; sourceTree = "<group>"; };
 		BDC64D3B1D2185190066A6E6 /* CocoaLibSpotify.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CocoaLibSpotify.framework; sourceTree = "<group>"; };
-		BDC64D3E1D21861F0066A6E6 /* MenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
+		BDC64D3E1D21861F0066A6E6 /* ListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListController.swift; sourceTree = "<group>"; };
 		BDC64D401D2186460066A6E6 /* SpotsConfigurator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsConfigurator.swift; sourceTree = "<group>"; };
-		BDC64D421D2189830066A6E6 /* FeaturedController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeaturedController.swift; sourceTree = "<group>"; };
+		BDCAF07F1D2730B8000A60DB /* ArtistGridItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistGridItem.swift; sourceTree = "<group>"; };
 		BDD126A31D21A93700C9175F /* CompassConfigurator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompassConfigurator.swift; sourceTree = "<group>"; };
 		BDD126A51D21A94900C9175F /* Configurator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configurator.swift; sourceTree = "<group>"; };
 		BDDC3E8C1CE78D5B00B608FB /* Spotify Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Spotify Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -68,7 +89,14 @@
 		BDDC3E911CE78D5B00B608FB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BDDC3E941CE78D5B00B608FB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		BDDC3E961CE78D5B00B608FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		BDDC3EE11CEA2DDE00B608FB /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
+		BDDC3EE11CEA2DDE00B608FB /* TableRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableRow.swift; sourceTree = "<group>"; };
+		BDF473C01D24ED3500E354AC /* MalibuConfigurator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MalibuConfigurator.swift; sourceTree = "<group>"; };
+		BDF473C21D24EDBE00E354AC /* ImaginaryConfigurator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImaginaryConfigurator.swift; sourceTree = "<group>"; };
+		BDF473C41D24EE1800E354AC /* AppDelegate+Routes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Routes.swift"; sourceTree = "<group>"; };
+		BDF475141D257DA800E354AC /* Blueprint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Blueprint.swift; sourceTree = "<group>"; };
+		BDF475161D25809000E354AC /* DetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailController.swift; sourceTree = "<group>"; };
+		BDF475181D2581D100E354AC /* Blueprints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Blueprints.swift; sourceTree = "<group>"; };
+		BDF4751A1D25853000E354AC /* BlueprintConfigurator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlueprintConfigurator.swift; sourceTree = "<group>"; };
 		F7EDD36C15FEE6E3B20900B4 /* Pods_Spotify_Mac.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Spotify_Mac.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -124,26 +152,40 @@
 		BDDC3E8E1CE78D5B00B608FB /* Spotify Mac */ = {
 			isa = PBXGroup;
 			children = (
+				BD3374061D26D4E700DBB757 /* AlbumGridItem.swift */,
 				BDDC3E8F1CE78D5B00B608FB /* AppDelegate.swift */,
+				BDF473C41D24EE1800E354AC /* AppDelegate+Routes.swift */,
 				BDDC3E911CE78D5B00B608FB /* Assets.xcassets */,
+				BDF475141D257DA800E354AC /* Blueprint.swift */,
+				BDF4751A1D25853000E354AC /* BlueprintConfigurator.swift */,
+				BDF475181D2581D100E354AC /* Blueprints.swift */,
+				BD89CC441D2287870014782C /* CategoryGridItem.swift */,
 				BDD126A31D21A93700C9175F /* CompassConfigurator.swift */,
 				BDD126A51D21A94900C9175F /* Configurator.swift */,
-				BDC64D421D2189830066A6E6 /* FeaturedController.swift */,
 				BD7FA73D1D1C1FE6002CE86F /* FeaturedGridItem.swift */,
 				BDAC8CEC1D20479100739627 /* GridListItem.swift */,
+				BD3374081D26D5BF00DBB757 /* HeaderGridItem.swift */,
 				BD7FA73F1D1C517D002CE86F /* HeroGridItem.swift */,
+				BDF473C21D24EDBE00E354AC /* ImaginaryConfigurator.swift */,
 				BDDC3E961CE78D5B00B608FB /* Info.plist */,
 				BDDC3E931CE78D5B00B608FB /* MainMenu.xib */,
 				BD296ED01D198D2B00D143F9 /* MainSplitView.swift */,
-				BDC64D3E1D21861F0066A6E6 /* MenuController.swift */,
+				BDF473C01D24ED3500E354AC /* MalibuConfigurator.swift */,
+				BDC64D3E1D21861F0066A6E6 /* ListController.swift */,
 				BD5E28571D2156CF00B81249 /* NSImage+tintColor.swift */,
+				BD89CC3E1D21E2F70014782C /* OhMyAuthConfigurator.swift */,
+				BD89CC421D21ED7C0014782C /* Requests.swift */,
 				BDAC8CEA1D1D4D0E00739627 /* SearchToolbarItem.swift */,
 				BDC64D401D2186460066A6E6 /* SpotsConfigurator.swift */,
-				BDDC3EE11CEA2DDE00B608FB /* TableViewCell.swift */,
+				BD89CC401D21EB170014782C /* SpotsSession.swift */,
+				BDDC3EE11CEA2DDE00B608FB /* TableRow.swift */,
 				BDAC8CE81D1D469000739627 /* TitleToolbarItem.swift */,
 				BDAC8CE61D1D440900739627 /* Toolbar.swift */,
+				BD33740A1D26E05900DBB757 /* TrackRow.swift */,
+				BDF475161D25809000E354AC /* DetailController.swift */,
 				BDAC8CEE1D20541000739627 /* Window.swift */,
 				BD5E28551D21010000B81249 /* WindowBackgroundView.swift */,
+				BDCAF07F1D2730B8000A60DB /* ArtistGridItem.swift */,
 			);
 			path = "Spotify Mac";
 			sourceTree = "<group>";
@@ -270,23 +312,37 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BDF473C51D24EE1800E354AC /* AppDelegate+Routes.swift in Sources */,
 				BDDC3E901CE78D5B00B608FB /* AppDelegate.swift in Sources */,
+				BD3374091D26D5BF00DBB757 /* HeaderGridItem.swift in Sources */,
 				BDD126A61D21A94900C9175F /* Configurator.swift in Sources */,
+				BD89CC411D21EB170014782C /* SpotsSession.swift in Sources */,
 				BDAC8CEF1D20541000739627 /* Window.swift in Sources */,
+				BDF473C11D24ED3500E354AC /* MalibuConfigurator.swift in Sources */,
 				BDC64D411D2186460066A6E6 /* SpotsConfigurator.swift in Sources */,
-				BDDC3EE21CEA2DDE00B608FB /* TableViewCell.swift in Sources */,
+				BDDC3EE21CEA2DDE00B608FB /* TableRow.swift in Sources */,
+				BD89CC3F1D21E2F70014782C /* OhMyAuthConfigurator.swift in Sources */,
 				BDAC8CEB1D1D4D0E00739627 /* SearchToolbarItem.swift in Sources */,
 				BD7FA7401D1C517D002CE86F /* HeroGridItem.swift in Sources */,
+				BDF475151D257DA800E354AC /* Blueprint.swift in Sources */,
+				BDF473C31D24EDBE00E354AC /* ImaginaryConfigurator.swift in Sources */,
 				BDAC8CE71D1D440900739627 /* Toolbar.swift in Sources */,
 				BD5E28561D21010000B81249 /* WindowBackgroundView.swift in Sources */,
 				BD5E28581D2156CF00B81249 /* NSImage+tintColor.swift in Sources */,
 				BD7FA73E1D1C1FE6002CE86F /* FeaturedGridItem.swift in Sources */,
+				BD89CC431D21ED7C0014782C /* Requests.swift in Sources */,
 				BDAC8CE91D1D469000739627 /* TitleToolbarItem.swift in Sources */,
+				BDF4751B1D25853000E354AC /* BlueprintConfigurator.swift in Sources */,
 				BD296ED11D198D2B00D143F9 /* MainSplitView.swift in Sources */,
-				BDC64D431D2189830066A6E6 /* FeaturedController.swift in Sources */,
+				BDF475171D25809000E354AC /* DetailController.swift in Sources */,
+				BD89CC451D2287870014782C /* CategoryGridItem.swift in Sources */,
+				BDF475191D2581D100E354AC /* Blueprints.swift in Sources */,
+				BD3374071D26D4E700DBB757 /* AlbumGridItem.swift in Sources */,
+				BDCAF0801D2730B8000A60DB /* ArtistGridItem.swift in Sources */,
 				BDD126A41D21A93700C9175F /* CompassConfigurator.swift in Sources */,
-				BDC64D3F1D21861F0066A6E6 /* MenuController.swift in Sources */,
+				BDC64D3F1D21861F0066A6E6 /* ListController.swift in Sources */,
 				BDAC8CED1D20479100739627 /* GridListItem.swift in Sources */,
+				BD33740B1D26E05900DBB757 /* TrackRow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -403,6 +459,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "no.hyper.Spotify-Mac";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -423,6 +481,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "no.hyper.Spotify-Mac";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 			};
 			name = Release;
 		};
