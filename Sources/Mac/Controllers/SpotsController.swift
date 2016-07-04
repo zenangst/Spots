@@ -64,7 +64,12 @@ public class SpotsController: NSViewController, SpotsProtocol {
    deinit
    */
   deinit {
-    view.removeObserver(self, forKeyPath: "window", context: KVOWindowContext)
+    NSNotificationCenter.defaultCenter().removeObserver(self)
+    for spot in spots {
+      spots.forEach { $0.spotsDelegate = nil }
+    }
+    spotsDelegate = nil
+    spotsScrollDelegate = nil
   }
 
   /**
