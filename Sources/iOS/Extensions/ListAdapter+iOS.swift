@@ -227,7 +227,9 @@ extension ListAdapter: UITableViewDelegate {
    **/
   public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     tableView.deselectRowAtIndexPath(indexPath, animated: true)
-    spot.spotsDelegate?.spotDidSelectItem(spot, item: spot.item(indexPath))
+    if let item = spot.item(indexPath) {
+      spot.spotsDelegate?.spotDidSelectItem(spot, item: item)
+    }
   }
 
   /**
@@ -268,7 +270,7 @@ extension ListAdapter: UITableViewDelegate {
       width: tableView.width,
       height: tableView.height)
 
-    return indexPath.item < spot.component.items.count ? spot.item(indexPath).size.height : 0.0
+    return spot.item(indexPath)?.size.height ?? 0
   }
 }
 
