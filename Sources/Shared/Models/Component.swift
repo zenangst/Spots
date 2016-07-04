@@ -94,6 +94,11 @@ public struct Component: Mappable {
     span  <- map.property(.Span)
     items <- map.relations(.Items)
     meta  <- map.property(.Meta)
+
+    if let size = map["size"] as? JSONDictionary {
+      self.size = CGSize(width: size.property(Key.Width.string) ?? 0.0,
+                         height: size.property(Key.Height.string) ?? 0.0)
+    }
   }
 
   /**
