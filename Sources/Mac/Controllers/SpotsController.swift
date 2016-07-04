@@ -92,26 +92,6 @@ public class SpotsController: NSViewController, SpotsProtocol {
   }
 
   /**
-   This message is sent to the receiver when the value at the specified key path relative to the given object has changed.
-
-   - Parameter keyPath: The key path, relative to object, to the value that has changed.
-   - Parameter object:  The source object of the key path keyPath.
-   - Parameter change:  A dictionary that describes the changes that have been made to the value of the property at the key path keyPath relative to object.
-   - Parameter context: The value that was provided when the receiver was registered to receive key-value observation notifications.
-   */
-  public override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
-    guard let themeFrame = view.superview
-      where keyPath == "window" && context == KVOWindowContext else { return }
-
-    setupSpots()
-    SpotsController.configure?(container: spotsScrollView)
-
-    for case let grid as Gridable in spots {
-      grid.layout.invalidateLayout()
-    }
-  }
-
-  /**
    A generic look up method for resolving spots based on index
    - Parameter index: The index of the spot that you are trying to resolve
    - Parameter type: The generic type for the spot you are trying to resolve
