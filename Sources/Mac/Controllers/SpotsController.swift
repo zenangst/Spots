@@ -128,6 +128,30 @@ public class SpotsController: NSViewController, SpotsProtocol {
   public override func viewDidLoad() {
     super.viewDidLoad()
     view.addSubview(spotsScrollView)
+    setupSpots()
+    SpotsController.configure?(container: spotsScrollView)
+  }
+
+  public override func viewDidAppear() {
+    super.viewDidAppear()
+
+    for spot in spots {
+      spot.layout(spotsScrollView.frame.size)
+    }
+    spotsScrollView.forceUpdate = true
+  }
+
+  public func reloadSpots(spots: [Spotable], closure: (() -> Void)?) {
+    for spot in self.spots {
+      spot.spotsDelegate = nil
+      spot.render().removeFromSuperview()
+    }
+    self.spots = spots
+    spotsDelegate = nil
+
+    setupSpots()
+    spotsScrollView.layoutSubtreeIfNeeded()
+    closure?()
   }
 
   /**
