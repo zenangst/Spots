@@ -11,9 +11,7 @@ public struct OhMyAuthConfigurator: Configurator {
       return
     }
 
-    guard let data = "a73161d177934f639fe3b3506d5a1005:64b887abc0ed48729d2c41b2ad10ade0".dataUsingEncoding(NSUTF8StringEncoding) else { return }
-    let credential = data.base64EncodedStringWithOptions([])
-
+    let credential = "YTczMTYxZDE3NzkzNGY2MzlmZTNiMzUwNmQ1YTEwMDU6NjRiODg3YWJjMGVkNDg3MjlkMmM0MWIyYWQxMGFkZTA="
     let config = AuthConfig(
       clientId: "a73161d177934f639fe3b3506d5a1005",
       accessTokenUrl: NSURL(string: "https://accounts.spotify.com/api/token")!,
