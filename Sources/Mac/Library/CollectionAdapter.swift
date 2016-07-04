@@ -169,7 +169,7 @@ extension CollectionAdapter {
 extension CollectionAdapter : NSCollectionViewDelegate {
 
   public func collectionView(collectionView: NSCollectionView, didSelectItemsAtIndexPaths indexPaths: Set<NSIndexPath>) {
-    guard let first = indexPaths.first else { return }
+    guard let first = indexPaths.first where first.item < spot.items.count else { return }
     let item = spot.items[first.item]
     spot.spotsDelegate?.spotDidSelectItem(spot, item: item)
   }
