@@ -159,11 +159,17 @@ public class SpotsController: NSViewController, SpotsProtocol {
    */
   public func setupSpots(animated: ((view: View) -> Void)? = nil) {
     spots.enumerate().forEach { index, spot in
+
+      var height = spot.spotHeight()
+      if let componentSize = spot.component.size where componentSize.height > height {
+        height = componentSize.height
+      }
+
       spots[index].index = index
       spotsScrollView.spotsContentView.addSubview(spot.render())
       spot.prepare()
       spot.setup(CGSize(width: view.frame.width,
-        height: spot.spotHeight() ?? 0))
+        height: height))
       spot.component.size = CGSize(
         width: view.frame.width,
         height: ceil(spot.render().frame.height))
@@ -174,9 +180,10 @@ public class SpotsController: NSViewController, SpotsProtocol {
   public override func viewDidLayout() {
     super.viewDidLayout()
     for case let spot as Spotable in spots {
-      spot.setup(CGSize(width: view.frame.width,
+      spot.layout(CGSize(width: view.frame.width,
         height: spot.spotHeight() ?? 0))
     }
+    spotsScrollView.layoutSubtreeIfNeeded()
   }
 
   public func deselectAllExcept(selectedSpot: Spotable) {
