@@ -53,7 +53,5 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
-	<key>NSUIElement</key>
-	<true/>
 </dict>
 </plist>
