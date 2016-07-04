@@ -22,7 +22,7 @@ public class GridSpotItem: NSCollectionViewItem, SpotConfigurable {
       if selected {
         view.layer?.backgroundColor = NSColor.blackColor().colorWithAlphaComponent(0.85).CGColor
       } else {
-        view.layer?.backgroundColor = NSColor.blackColor().CGColor
+        view.layer?.backgroundColor = NSColor.clearColor().CGColor
       }
     }
   }
@@ -30,7 +30,7 @@ public class GridSpotItem: NSCollectionViewItem, SpotConfigurable {
   public var size = CGSize(width: 0, height: 88)
   public var customView = FlippedView()
 
-  lazy var customImageView = NSImageView().then {
+  public lazy var customImageView = NSImageView().then {
     $0.autoresizingMask = .ViewWidthSizable
   }
 
@@ -55,9 +55,9 @@ public class GridSpotItem: NSCollectionViewItem, SpotConfigurable {
 
     imageView = customImageView
 
+    view.addSubview(customImageView)
     view.addSubview(titleLabel)
     view.addSubview(subtitleLabel)
-    view.addSubview(customImageView)
   }
 
   required public init?(coder: NSCoder) {
@@ -70,7 +70,7 @@ public class GridSpotItem: NSCollectionViewItem, SpotConfigurable {
 
   override public func viewDidLoad() {
     view.wantsLayer = true
-    view.layer?.backgroundColor = NSColor.blackColor().CGColor
+    view.layer?.backgroundColor = NSColor.clearColor().CGColor
   }
 
   public func configure(inout item: ViewModel) {
