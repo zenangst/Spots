@@ -14,7 +14,7 @@ target "Spotify Mac" do
   pod 'Hue', git: 'https://github.com/hyperoslo/Hue.git'
   pod 'Compass', git: 'https://github.com/hyperoslo/Compass.git'
   pod 'Malibu', git: 'https://github.com/hyperoslo/Malibu.git'
-  pod 'OhMyAuth', path: '~/Documents/OhMyAuth'
+  pod 'OhMyAuth', git: 'https://github.com/hyperoslo/OhMyAuth.git'
   pod 'Keychain', git: 'https://github.com/hyperoslo/Keychain.git'
 
   post_install do |installer|

@@ -41,7 +41,7 @@ DEPENDENCIES:
   - Imaginary (from `https://github.com/hyperoslo/Imaginary.git`)
   - Keychain (from `https://github.com/hyperoslo/Keychain.git`)
   - Malibu (from `https://github.com/hyperoslo/Malibu.git`)
-  - OhMyAuth (from `~/Documents/OhMyAuth`)
+  - OhMyAuth (from `https://github.com/hyperoslo/OhMyAuth.git`)
   - Spots (from `../../`)
   - Sugar (from `https://github.com/hyperoslo/Sugar.git`)
 
@@ -61,7 +61,7 @@ EXTERNAL SOURCES:
   Malibu:
     :git: https://github.com/hyperoslo/Malibu.git
   OhMyAuth:
-    :path: "~/Documents/OhMyAuth"
+    :git: https://github.com/hyperoslo/OhMyAuth.git
   Spots:
     :path: "../../"
   Sugar:
@@ -89,6 +89,9 @@ CHECKOUT OPTIONS:
   Malibu:
     :commit: e260ae8b741ef6ef2e1a421f89528ea2a54a878e
     :git: https://github.com/hyperoslo/Malibu.git
+  OhMyAuth:
+    :commit: fb4af44f38eb3d45887190d5df04a8851ce0c6a6
+    :git: https://github.com/hyperoslo/OhMyAuth.git
   Sugar:
     :commit: e5b58a110e4b1f33ddfb66c728cb5638b6641e61
     :git: https://github.com/hyperoslo/Sugar.git
@@ -111,6 +114,6 @@ SPEC CHECKSUMS:
   Tailor: 38a9f1ed1fa804856583396a55ed764d832eeca8
   When: 033104df132ebfa75f4d3a9ba3e7a9865a573a1c
 
-PODFILE CHECKSUM: e5f4631ad4c195954fe1be713b7601276b3b774b
+PODFILE CHECKSUM: 9840629404bbbd6fbee34ed2ea20de4514e46bbd
 
 COCOAPODS: 1.0.0
