@@ -2,15 +2,22 @@ import Cocoa
 
 class MainSplitView : NSSplitView {
 
-  let startWidth: CGFloat = 200
-  let minimumWidth: CGFloat = 150
-  let maximumWidth: CGFloat = 250
+  let startWidth: CGFloat = 250
+  let minimumWidth: CGFloat = 200
+  let maximumWidth: CGFloat = 300
 
   var listView: NSView!
-  var detailView: NSView!
+  var detailView: NSView! {
+    didSet {
+      subviews.removeLast()
+      addSubview(detailView)
+      adjustSubviews()
+      setPosition(startWidth, ofDividerAtIndex: 0)
+    }
+  }
 
   override var dividerColor: NSColor {
-    return NSColor.blackColor()
+    return NSColor(red:0.2, green:0.2, blue:0.2, alpha: 1)
   }
 
   override init(frame: NSRect) {
@@ -20,6 +27,8 @@ class MainSplitView : NSSplitView {
     dividerStyle = .Thin
     autosaveName = "MainSplitView"
     vertical = true
+    autoresizingMask = .ViewNotSizable
+    autoresizesSubviews = false
   }
 
   init(listView: NSView, detailView: NSView) {
