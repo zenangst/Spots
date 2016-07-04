@@ -40,13 +40,12 @@ public class AlbumGridItem: NSCollectionViewItem, SpotConfigurable {
 
     customView.addSubview(customImageView)
     customView.addSubview(titleLabel)
-    
+
     setupConstraints()
   }
 
   func setupConstraints() {
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
-
     titleLabel.leftAnchor.constraintEqualToAnchor(customImageView.superview!.leftAnchor).active = true
     titleLabel.rightAnchor.constraintEqualToAnchor(customImageView.superview!.rightAnchor).active = true
     titleLabel.topAnchor.constraintEqualToAnchor(customImageView.bottomAnchor, constant: -10).active = true
