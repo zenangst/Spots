@@ -47,11 +47,6 @@ public class SpotsScrollView: NSScrollView {
     }
   }
 
-  public override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
-    guard let window = object as? NSWindow else { return }
-    layoutSubtreeIfNeeded()
-  }
-
   static public override func isCompatibleWithResponsiveScrolling() -> Bool {
     return true
   }
