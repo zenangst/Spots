@@ -119,7 +119,6 @@ public class SpotsController: NSViewController, SpotsProtocol {
     view = NSView()
     view.autoresizingMask = .ViewWidthSizable
     view.autoresizesSubviews = true
-    view.addObserver(self, forKeyPath: "window", options: .Old, context: KVOWindowContext)
   }
 
   /**
