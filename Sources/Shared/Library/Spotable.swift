@@ -102,7 +102,7 @@ public extension Spotable {
     adapter?.update(item, index: index, withAnimation: animation, completion: completion)
   }
   /// Delete view model from a Spotable object
-  func delete(item: ViewModel, withAnimation animation: SpotsAnimation, completion: Completion) {
+  func delete(item: ViewModel, withAnimation animation: SpotsAnimation = .Automatic, completion: Completion) {
     adapter?.delete(item, withAnimation: animation, completion: completion)
   }
   /// Delete a collection of view models from a Spotable object
