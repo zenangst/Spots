@@ -163,16 +163,17 @@ extension ListAdapter: NSTableViewDataSource {
 extension ListAdapter: NSTableViewDelegate {
 
   public func tableView(tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
-    guard spot.component.meta("doubleClick", type: Bool.self) != true &&
-      row > -1 &&
-      row < spot.component.items.count
+    guard row > -1 && row < spot.component.items.count
       else {
-        NSLog("guard: row: \(row) -> \(spot.component.items.count)")
         return false
     }
 
     let viewModel = spot.item(row)
-    spot.spotsDelegate?.spotDidSelectItem(spot, item: viewModel)
+    
+    if spot.component.meta("doubleClick", type: Bool.self) != true {
+      spot.spotsDelegate?.spotDidSelectItem(spot, item: viewModel)
+    }
+    
 
     return true
   }
@@ -203,9 +204,6 @@ extension ListAdapter: NSTableViewDelegate {
   }
 
   public func tableView(tableView: NSTableView, viewForTableColumn tableColumn: NSTableColumn?, row: Int) -> NSView? {
-    if let listSpot = spot as? ListSpot where row == 0 {
-      return listSpot.titleView
-    }
     return nil
   }
 }
