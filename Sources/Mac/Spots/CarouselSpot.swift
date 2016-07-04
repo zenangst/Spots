@@ -15,7 +15,7 @@ public class CarouselSpot: NSObject, Gridable {
 
   public struct Default {
     public static var titleFontSize: CGFloat = 18.0
-    public static var titleTextColor: String = "999"
+    public static var titleTextColor: String = "000000"
     public static var sectionInsetTop: CGFloat = 0.0
     public static var sectionInsetLeft: CGFloat = 0.0
     public static var sectionInsetRight: CGFloat = 0.0
@@ -76,7 +76,7 @@ public class CarouselSpot: NSObject, Gridable {
     scrollView.documentView = collectionView
 
     if component.title.isPresent {
-      titleView.textColor = NSColor.hex(component.meta(Key.titleTextColor, Default.titleTextColor))
+      titleView.textColor = NSColor.grayColor()
       titleView.stringValue = component.title
       titleView.sizeToFit()
       (layout as? NSCollectionViewFlowLayout)?.sectionInset.top += titleView.frame.size.height
@@ -105,6 +105,11 @@ public class CarouselSpot: NSObject, Gridable {
     prepare()
   }
 
+  deinit {
+    collectionView.delegate = nil
+    collectionView.dataSource = nil
+  }
+
   public func setupCollectionView() {
     collectionView.delegate = collectionAdapter
     collectionView.dataSource = collectionAdapter
@@ -131,9 +136,23 @@ public class CarouselSpot: NSObject, Gridable {
       titleView.sizeToFit()
     }
 
+    if component.span > 0 {
+      component.items.enumerate().forEach {
+        component.items[$0.index].size.width = size.width / component.span
+      }
+    }
+
     titleView.frame.origin.x = layoutInsets.left
     titleView.frame.origin.y = layoutInsets.top / 2 - titleView.frame.size.height / 2
 
+    if component.span == 1 && component.items.count == 1 {
+      scrollView.scrollingEnabled = (component.items.count > 1)
+      scrollView.hasHorizontalScroller = (component.items.count > 1)
+      component.items.enumerate().forEach {
+        component.items[$0.index].size.width = size.width / component.span
+      }
+      layout.invalidateLayout()
+    }
   }
 
   public func setup(size: CGSize) {
