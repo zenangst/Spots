@@ -31,8 +31,11 @@ public struct SpotsSession {
     if let URLComponents = NSURLComponents(URL: url, resolvingAgainstBaseURL: false),
       code = URLComponents.queryItems?.filter({ $0.name == "code" }).first?.value {
       AuthContainer.serviceNamed("spots")?.accessToken(parameters: ["code":code]) { accessToken, error in
-        NSLog("error: \(error)")
-        NSLog("accessToken: \(accessToken)")
+        if let _ = accessToken,
+        appDelegate = NSApplication.sharedApplication().delegate as? AppDelegate {
+          appDelegate.listController.fetchPlaylists()
+          appDelegate.detailController.blueprint = appDelegate.detailController.blueprint
+        }
       }
       return
     }
