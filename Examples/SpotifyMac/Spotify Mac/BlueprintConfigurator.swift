@@ -59,6 +59,7 @@ struct BlueprintConfigurator: Configurator {
               "insetRight" : 10.0,
               "itemSpacing" : 0.0,
               "lineSpacing" : 10.0,
+              "doubleClick" : true,
             ]
           ],
           ["kind" : Component.Kind.Carousel.string,
