@@ -35,16 +35,6 @@ public class AlbumGridItem: NSCollectionViewItem, SpotConfigurable {
     $0.autoresizingMask = .ViewWidthSizable
   }
 
-  public override var selected: Bool {
-    didSet {
-      if selected {
-        customView.layer?.backgroundColor = NSColor(red:0.257, green:0.257, blue:0.257, alpha: 1).CGColor
-      } else {
-        customView.layer?.backgroundColor = NSColor(red:0.157, green:0.157, blue:0.157, alpha: 1).CGColor
-      }
-    }
-  }
-
   override init?(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
     super.init(nibName: nil, bundle: nil)
 
