@@ -110,7 +110,8 @@ public extension Spotable {
    - Parameter index: The index of the item to lookup
    - Returns: A ViewModel at found at the index
    */
-  public func item(index: Int) -> ViewModel {
+  public func item(index: Int) -> ViewModel? {
+    guard index < component.items.count else { return nil }
     return component.items[index]
   }
 
@@ -118,8 +119,8 @@ public extension Spotable {
    - Parameter indexPath: The indexPath of the item to lookup
    - Returns: A ViewModel at found at the index
    */
-  public func item(indexPath: NSIndexPath) -> ViewModel {
-    return component.items[indexPath.item]
+  public func item(indexPath: NSIndexPath) -> ViewModel? {
+    return item(indexPath.row)
   }
 
   /**
@@ -244,7 +245,8 @@ public extension Spotable {
    - Parameter indexPath: The index path of the item you are trying to resolve
    */
   func reuseIdentifierForItem(indexPath: NSIndexPath) -> String {
-    let viewModel = item(indexPath)
+    guard let viewModel = item(indexPath) else { return self.dynamicType.defaultKind.string }
+
     if self.dynamicType.views.storage[viewModel.kind] != nil {
       return viewModel.kind
     } else if self.dynamicType.views.storage[component.kind] != nil {
@@ -255,7 +257,8 @@ public extension Spotable {
   }
 
   func reuseIdentifierForItem(index: Int) -> String {
-    let viewModel = item(index)
+    guard let viewModel = item(index) else { return self.dynamicType.defaultKind.string }
+    
     if self.dynamicType.views.storage[viewModel.kind] != nil {
       return viewModel.kind
     } else if self.dynamicType.views.storage[component.kind] != nil {

@@ -6,6 +6,7 @@ use_frameworks!
 inhibit_all_warnings!
 
 target "AppleNews" do
+  pod 'Sugar', git: 'https://github.com/hyperoslo/Sugar'
   pod 'Hue', git: 'https://github.com/hyperoslo/Hue'
   pod 'Compass', git: 'https://github.com/hyperoslo/Compass'
   pod 'Imaginary', git: 'https://github.com/hyperoslo/Imaginary'

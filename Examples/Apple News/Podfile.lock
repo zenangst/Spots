@@ -12,7 +12,7 @@ PODS:
   - Hue (1.1)
   - Imaginary (0.1.0):
     - Cache
-  - Spots (1.9.4):
+  - Spots (1.9.5):
     - Brick
     - Cache
     - Sugar
@@ -30,6 +30,7 @@ DEPENDENCIES:
   - Hue (from `https://github.com/hyperoslo/Hue`)
   - Imaginary (from `https://github.com/hyperoslo/Imaginary`)
   - Spots (from `../../`)
+  - Sugar (from `https://github.com/hyperoslo/Sugar`)
   - Transition (from `https://github.com/hyperoslo/Transition`)
 
 EXTERNAL SOURCES:
@@ -43,6 +44,8 @@ EXTERNAL SOURCES:
     :git: https://github.com/hyperoslo/Imaginary
   Spots:
     :path: "../../"
+  Sugar:
+    :git: https://github.com/hyperoslo/Sugar
   Transition:
     :git: https://github.com/hyperoslo/Transition
 
@@ -59,6 +62,9 @@ CHECKOUT OPTIONS:
   Imaginary:
     :commit: 7e122dc1bd463c25b39057b1d31c3237efcb8276
     :git: https://github.com/hyperoslo/Imaginary
+  Sugar:
+    :commit: c3347e96c9deac330a06d0c4c7beed02c1d3878e
+    :git: https://github.com/hyperoslo/Sugar
   Transition:
     :commit: 0d94057f824787973ae34bac4906164e3d6a2c8b
     :git: https://github.com/hyperoslo/Transition
@@ -71,12 +77,12 @@ SPEC CHECKSUMS:
   Fakery: ff6a27c3688a05c055d3e64c5fa9d78684796749
   Hue: c7d6a7206bac669ed69e78cc6c14a4d7bd28277c
   Imaginary: 5317b8d2dc8ecf20455232226bf8a277abdd37d5
-  Spots: 987f628580c294d4727244a68a1bd0e9c19b65cc
-  Sugar: bed396c924fd089feee7c780778cca2a124f580c
+  Spots: 9591de58de8510e47207d79036103a9a170a5537
+  Sugar: 73eaf2803ba1128d8b0370f402494981af7675d3
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   Tailor: 38a9f1ed1fa804856583396a55ed764d832eeca8
   Transition: 66d86e3ae1b8f0b3d9ba2000c7a45fbc17b066f2
 
-PODFILE CHECKSUM: b5990c672d7c25f24324197d1aa40668c01b8dd7
+PODFILE CHECKSUM: 04e01af2089d9294aab4bc322db3813847da7de7
 
 COCOAPODS: 1.0.0
