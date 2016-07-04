@@ -175,7 +175,11 @@ public extension Spotable {
    - Returns: A ViewModel at found at the index
    */
   public func item(indexPath: NSIndexPath) -> ViewModel? {
-    return component.items[indexPath.row]
+    #if os(iOS)
+      return component.items[indexPath.row]
+    #else
+      return component.items[indexPath.item]
+    #endif
   }
 
   /**
