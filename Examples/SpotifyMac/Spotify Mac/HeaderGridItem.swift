@@ -17,6 +17,13 @@ public class HeaderGridItem: NSCollectionViewItem, SpotConfigurable {
 
   lazy var customImageView = NSImageView().then {
     $0.autoresizingMask = .ViewWidthSizable
+    
+    let shadow = NSShadow()
+    shadow.shadowColor = NSColor.blackColor().alpha(0.5)
+    shadow.shadowBlurRadius = 10.0
+    shadow.shadowOffset = CGSize(width: 0, height: -10)
+    
+    $0.shadow = shadow
   }
 
   public lazy var titleLabel = NSTextField().then {
