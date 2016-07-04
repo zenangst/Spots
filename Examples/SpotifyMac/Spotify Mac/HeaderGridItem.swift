@@ -75,7 +75,7 @@ public class HeaderGridItem: NSCollectionViewItem, SpotConfigurable {
     customImageView.topAnchor.constraintEqualToAnchor(customView.topAnchor).active = true
     customImageView.widthAnchor.constraintEqualToConstant(160).active = true
     customImageView.heightAnchor.constraintEqualToConstant(160).active = true
-    customImageView.leftAnchor.constraintEqualToAnchor(customView.leftAnchor).active = true
+    customImageView.leftAnchor.constraintEqualToAnchor(customView.leftAnchor, constant: 10).active = true
 
     titleLabel.topAnchor.constraintEqualToAnchor(customImageView.topAnchor).active = true
     titleLabel.leftAnchor.constraintEqualToAnchor(customImageView.rightAnchor, constant: 20).active = true
