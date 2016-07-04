@@ -50,6 +50,10 @@ public class SpotsScrollView: NSScrollView {
     return true
   }
 
+  public override func viewDidMoveToWindow() {
+    layoutSubtreeIfNeeded()
+  }
+
   override public func layoutSubtreeIfNeeded() {
     super.layoutSubtreeIfNeeded()
 
