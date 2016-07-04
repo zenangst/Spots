@@ -174,7 +174,7 @@ public extension SpotsProtocol {
     dispatch { [weak self] in
       guard let weakSelf = self else { return }
 
-      weakSelf.spot(spot.index, Spotable.self)?.reload([index], withAnimation: animation) {
+      weakSelf.spot(index, Spotable.self)?.reload(nil, withAnimation: animation) {
 #if os(iOS)
         weakSelf.spotsScrollView.setNeedsDisplay()
 #endif
