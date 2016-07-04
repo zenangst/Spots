@@ -19,7 +19,7 @@ public class GridSpot: NSObject, Gridable {
     static let minimumLineSpacing = "lineSpacing"
     static let titleLeftMargin = "titleLeftMargin"
     static let titleFontSize = "titleFontSize"
-    static let layout = LayoutType.Flow.rawValue
+    static let layout = "layout"
     static let gridLayoutMaximumItemWidth = "itemWidthMax"
     static let gridLayoutMaximumItemHeight = "itemHeightMax"
     static let gridLayoutMinimumItemWidth = "itemMinWidth"
@@ -34,7 +34,7 @@ public class GridSpot: NSObject, Gridable {
     }
 
     public static var titleFontSize: CGFloat = 18.0
-    public static var defaultLayout: LayoutType = .Flow
+    public static var defaultLayout: String = LayoutType.Flow.string
     public static var gridLayoutMaximumItemWidth = 120
     public static var gridLayoutMaximumItemHeight = 120
     public static var gridLayoutMinimumItemWidth = 80
@@ -79,16 +79,14 @@ public class GridSpot: NSObject, Gridable {
 
   public lazy var scrollView: ScrollView = ScrollView().then {
     let view = NSView()
-    view.autoresizingMask = .ViewWidthSizable
-    view.autoresizesSubviews = true
     $0.documentView = view
   }
 
   public lazy var collectionView: NSCollectionView = NSCollectionView().then {
     $0.backgroundColors = [NSColor.clearColor()]
     $0.selectable = true
-    $0.autoresizingMask = .ViewWidthSizable
-    $0.autoresizesSubviews = true
+    $0.allowsMultipleSelection = false
+    $0.allowsEmptySelection = true
     $0.layer = CALayer()
     $0.wantsLayer = true
   }
@@ -121,6 +119,11 @@ public class GridSpot: NSObject, Gridable {
     self.stateCache = stateCache
   }
 
+  deinit {
+    collectionView.delegate = nil
+    collectionView.dataSource = nil
+  }
+
   private static func configureLayoutInsets(component: Component, layout: NSCollectionViewFlowLayout) -> NSCollectionViewFlowLayout {
     layout.sectionInset = NSEdgeInsets(
       top: component.meta(GridableMeta.Key.sectionInsetTop, Default.sectionInsetTop),
@@ -137,7 +140,7 @@ public class GridSpot: NSObject, Gridable {
   private static func setupLayout(component: Component) -> NSCollectionViewLayout {
     let layout: NSCollectionViewLayout
 
-    switch component.meta(Key.layout, Default.defaultLayout) {
+    switch LayoutType(rawValue: component.meta(Key.layout, Default.defaultLayout)) ?? LayoutType.Flow {
     case .Grid:
       let gridLayout = NSCollectionViewGridLayout()
 
@@ -180,8 +183,11 @@ public class GridSpot: NSObject, Gridable {
       layoutInsets = layout.sectionInset
     }
 
+    var layoutHeight = layout.collectionViewContentSize.height + layoutInsets.top + layoutInsets.bottom
+    if component.items.isEmpty { layoutHeight = size.height + layoutInsets.top + layoutInsets.bottom + 10 }
+
     scrollView.frame.size.width = size.width - layoutInsets.right
-    scrollView.frame.size.height = layout.collectionViewContentSize.height + layoutInsets.top + layoutInsets.bottom
+    scrollView.frame.size.height = layoutHeight
     collectionView.frame.size.height = scrollView.frame.size.height - layoutInsets.top + layoutInsets.bottom
     collectionView.frame.size.width = size.width - layoutInsets.right
 
@@ -193,7 +199,6 @@ public class GridSpot: NSObject, Gridable {
       titleView.sizeToFit()
     }
 
-
     titleView.frame.origin.x = layoutInsets.left
     titleView.frame.origin.x = component.meta(Key.titleLeftMargin, titleView.frame.origin.x)
     titleView.frame.origin.y = layoutInsets.top - titleView.frame.size.height / 2
@@ -202,9 +207,11 @@ public class GridSpot: NSObject, Gridable {
   }
 
   public func setup(size: CGSize) {
+    if let layout = layout as? NSCollectionViewFlowLayout {
+      layout.itemSize.height = size.height
+      layout.invalidateLayout()
+    }
     layout(size)
     prepare()
-
-    layout.invalidateLayout()
   }
 }
