@@ -26,7 +26,7 @@
 <a href="https://gitter.im/hyperoslo/Spots?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge">
 <img src="https://badges.gitter.im/hyperoslo/Spots.svg">
 </a>
-
+<br><br>
 </div>
 
 **Spots** is a view controller framework that makes your setup and future
