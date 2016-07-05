@@ -7,9 +7,10 @@ PODS:
   - CryptoSwift (0.5.1)
   - Imaginary (0.1.0):
     - Cache
-  - Spots (1.9.5):
+  - Spots (2.0.0):
     - Brick
     - Cache
+    - Hue
     - Sugar
     - Tailor
   - Sugar (1.1.1)
@@ -31,15 +32,15 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   Imaginary:
-    :commit: 7e122dc1bd463c25b39057b1d31c3237efcb8276
+    :commit: 4ab2007614aa2397a9ce82c69771f21df3d37cdc
     :git: https://github.com/hyperoslo/Imaginary
 
 SPEC CHECKSUMS:
   Brick: c5b60d83f69c5e882097ee4e9bf12abd428e395a
   Cache: 059cf0e10e6c3aec2c402eea19bd6b3aacb3fe9d
   CryptoSwift: df42dda18baf6c76347a94e227dbcc0a341304bd
-  Imaginary: 5317b8d2dc8ecf20455232226bf8a277abdd37d5
-  Spots: a0aa4115e1ba66e05c56c968fa1e758023a2516c
+  Imaginary: 62a9ce1e6d7831ede429c8221a183f03ec2a90bc
+  Spots: dd1bb515914fd6c50dc14574e4a689eebec5b919
   Sugar: bed396c924fd089feee7c780778cca2a124f580c
   Tailor: 38a9f1ed1fa804856583396a55ed764d832eeca8
 
