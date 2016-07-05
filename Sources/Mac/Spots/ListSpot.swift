@@ -71,6 +71,12 @@ public class ListSpot: NSObject, Listable {
     $0.allowsTypeSelect = true
   }
 
+  public lazy var tableColumn = NSTableColumn(identifier: "tableview-column").then {
+    $0.maxWidth = 250
+    $0.width = 250
+    $0.minWidth = 150
+  }
+
   public required init(component: Component) {
     self.component = component
     super.init()
@@ -106,6 +112,8 @@ public class ListSpot: NSObject, Listable {
     scrollView.contentInsets.left = component.meta(Key.contentInsetsLeft, Default.contentInsetsLeft)
     scrollView.contentInsets.bottom = component.meta(Key.contentInsetsBottom, Default.contentInsetsBottom)
     scrollView.contentInsets.right = component.meta(Key.contentInsetsRight, Default.contentInsetsRight)
+
+    scrollView.frame.size.width = size.width
   }
 
   public func setup(size: CGSize) {
@@ -116,12 +124,13 @@ public class ListSpot: NSObject, Listable {
     tableView.setDelegate(listAdapter)
     tableView.setDataSource(listAdapter)
     tableView.target = self
+    tableView.addTableColumn(tableColumn)
     tableView.doubleAction = #selector(self.doubleAction(_:))
     tableView.sizeToFit()
     layout(size)
 
     if component.title.isPresent {
-      render().addSubview(titleView)
+      scrollView.addSubview(titleView)
       titleView.stringValue = component.title
       titleView.font = NSFont.systemFontOfSize(component.meta(Key.titleFontSize, Default.titleFontSize))
       titleView.sizeToFit()
