@@ -143,7 +143,7 @@ extension ListAdapter {
   public func refreshHeight(completion: (() -> Void)? = nil) {
     delay(0.2) { [weak self] in
       guard let weakSelf = self, tableView = self?.spot.tableView else { return; completion?() }
-      weakSelf.spot.setup(CGSize(width: tableView.frame.width, height: weakSelf.spot.spotHeight() ?? 0))
+      weakSelf.spot.layout(CGSize(width: tableView.frame.width, height: weakSelf.spot.spotHeight() ?? 0))
       completion?()
     }
   }
