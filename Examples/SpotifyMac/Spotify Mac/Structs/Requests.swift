@@ -108,6 +108,7 @@ struct ArtistAlbums: GETRequestable {
   init(artistID: String) {
     message.resource = "artists/\(artistID)/albums"
     message.parameters["country"] = "no"
+    message.parameters["album_type"] = "album,single"
   }
 }
 
