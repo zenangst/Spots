@@ -40,7 +40,7 @@ struct BlueprintConfigurator: Configurator {
             ]
           ],
           [
-            "title" : "Albums",
+            "title" : "Top albums",
             "kind" : Component.Kind.Carousel.string,
             "meta" : [
               "itemSpacing" : 10.0,
@@ -88,7 +88,7 @@ struct BlueprintConfigurator: Configurator {
           for item in json {
             viewModels.append(ViewModel(
               title : item.property("name") ?? "",
-              image : item.array("images")?[1].property("url") ?? "",
+              image : item.array("images")?[2].property("url") ?? "",
               action: "artist:\(item.property("id") ?? "")",
               kind: "artist",
               size: CGSize(width: 160, height: 160),
@@ -145,7 +145,7 @@ struct BlueprintConfigurator: Configurator {
               size: CGSize(width: 200, height: 50),
               meta: [
                 "fragments" : ["preview" : item.property("preview_url") ?? ""],
-                "trackNumber" : "\(index).",
+                "trackNumber" : "\(index + 1).",
                 "separator" : true
               ]
             )
@@ -270,7 +270,7 @@ struct BlueprintConfigurator: Configurator {
               image: item.path("album")?.array("images")?.first?.property("url") ?? "",
               action: "album:\(item.path("album")?.property("id") ?? "")",
               kind: "album",
-              size: CGSize(width: 160, height: 180),
+              size: CGSize(width: 200, height: 200),
               meta: [
                 "separator" : true,
                 "fragments": fragments
@@ -296,8 +296,8 @@ struct BlueprintConfigurator: Configurator {
               "insetLeft" : 10.0,
               "insetRight" : 10.0,
               "insetBottom" : 10.0,
-              "itemSpacing" : 10.0,
-              "lineSpacing" : 10.0,
+              "itemSpacing" : 5.0,
+              "lineSpacing" : 5.0,
               "titleFontSize" : 15,
               "titleTopInset" : 30,
               "titleBottomInset" : 30,
@@ -339,16 +339,13 @@ struct BlueprintConfigurator: Configurator {
         [
           "title" : "Following",
           "kind" : "grid",
-          "items" : [
-            "title" : "Loading..."
-          ],
           "meta" : [
             "insetTop" : 30.0,
             "insetLeft" : 10.0,
             "insetRight" : 10.0,
             "insetBottom" : 10.0,
-            "itemSpacing" : 10.0,
-            "lineSpacing" : 10.0,
+            "itemSpacing" : 5.0,
+            "lineSpacing" : 5.0,
             "titleFontSize" : 15,
             "titleTopInset" : 30,
             "titleBottomInset" : 30,
@@ -378,7 +375,7 @@ struct BlueprintConfigurator: Configurator {
               size: CGSize(width: 200, height: 50),
               meta: [
                 "fragments" : ["preview" : item.path("track")?.property("preview_url") ?? ""],
-                "trackNumber" : "\(index).",
+                "trackNumber" : "\(index + 1).",
                 "separator" : true
               ]
             )
@@ -560,6 +557,9 @@ struct BlueprintConfigurator: Configurator {
               )
               viewModels.append(viewModel)
             }
+
+            viewModels[0].meta["useAsBackground"] = true
+
             return viewModels
           }
         ),
@@ -626,7 +626,7 @@ struct BlueprintConfigurator: Configurator {
       template: [
         "components" : [
           [
-            "kind" : Component.Kind.Carousel.string,
+            "kind" : Component.Kind.List.string,
             "span" : 1,
             "items" : [
               [
