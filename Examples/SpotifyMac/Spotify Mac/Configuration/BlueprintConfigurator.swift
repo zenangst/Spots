@@ -546,7 +546,7 @@ struct BlueprintConfigurator: Configurator {
                 image: item.array("images")?.first?.property("url") ?? "",
                 action: "playlist:\(owner):\(playlistID)",
                 kind: "featured",
-                size: CGSize(width: 250, height: 275),
+                size: CGSize(width: 250, height: 325),
                 meta: [
                   "separator" : false,
                   "fragments" : [
@@ -652,6 +652,7 @@ struct BlueprintConfigurator: Configurator {
               "itemSpacing" : 10.0,
               "lineSpacing" : 10.0,
               "insetTop" : 10.0,
+              "insetBottom" : 30.0,
               "insetLeft" : 10.0,
               "insetRight" : 10.0,
             ]
