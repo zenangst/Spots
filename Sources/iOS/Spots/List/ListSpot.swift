@@ -18,7 +18,10 @@ public class ListSpot: NSObject, Listable {
 
   public weak var spotsDelegate: SpotsDelegate?
 
-  public lazy var adapter: ListAdapter = ListAdapter(spot: self)
+  public var adapter: SpotAdapter? {
+    return listAdapter
+  }
+  public lazy var listAdapter: ListAdapter = ListAdapter(spot: self)
   public lazy var tableView = UITableView()
 
   private var fetching = false
@@ -82,8 +85,8 @@ public class ListSpot: NSObject, Listable {
   }
 
   func setupTableView() {
-    tableView.dataSource = self.adapter
-    tableView.delegate = self.adapter
+    tableView.dataSource = self.listAdapter
+    tableView.delegate = self.listAdapter
     tableView.rowHeight = UITableViewAutomaticDimension
   }
 }

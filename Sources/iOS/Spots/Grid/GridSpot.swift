@@ -16,13 +16,17 @@ public class GridSpot: NSObject, Gridable {
 
   public weak var spotsDelegate: SpotsDelegate?
 
-  public lazy var adapter: CollectionAdapter = CollectionAdapter(spot: self)
+  public var adapter: SpotAdapter? {
+    return collectionAdapter
+  }
+
+  public lazy var collectionAdapter: CollectionAdapter = CollectionAdapter(spot: self)
   public lazy var layout = UICollectionViewFlowLayout()
   public private(set) var stateCache: SpotCache?
 
   public lazy var collectionView: UICollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: self.layout).then {
-    $0.dataSource = self.adapter
-    $0.delegate = self.adapter
+    $0.dataSource = self.collectionAdapter
+    $0.delegate = self.collectionAdapter
     $0.scrollEnabled = false
   }
 

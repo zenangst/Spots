@@ -1,8 +1,9 @@
-#if os(iOS)
-  import UIKit
-#else
+#if os(OSX)
   import Cocoa
+#else
+  import UIKit
 #endif
+
 import Brick
 import Sugar
 
@@ -12,7 +13,7 @@ public protocol Spotable: class {
   /// A view registry that is used internally when resolving kind to the corresponding spot.
   static var views: ViewRegistry { get }
   /// The default view type for the spotable object
-  static var defaultView: RegularView.Type { get set }
+  static var defaultView: View.Type { get set }
   /// The default kind to fall back to if the view model kind does not exist when trying to display the spotable item
   static var defaultKind: StringConvertible { get }
 
@@ -27,6 +28,8 @@ public protocol Spotable: class {
   var configure: (SpotConfigurable -> Void)? { get set }
   /// A cache for a Spotable object
   var stateCache: SpotCache? { get }
+  /// A SpotAdapter
+  var adapter: SpotAdapter? { get }
 
   /**
    Initialize a Spotable object with a Component
@@ -66,6 +69,59 @@ public protocol Spotable: class {
   func prepare()
   /// Scroll to view model using predicate
   func scrollTo(@noescape includeElement: (ViewModel) -> Bool) -> CGFloat
+
+  func spotHeight() -> CGFloat
+  func sizeForItemAt(indexPath: NSIndexPath) -> CGSize
+
+  #if os(OSX)
+  func deselect()
+  #endif
+}
+
+public extension Spotable {
+
+  /// Append view model to a Spotable object
+  func append(item: ViewModel, withAnimation animation: SpotsAnimation, completion: Completion) {
+    adapter?.append(item, withAnimation: animation, completion: completion)
+  }
+
+  /// Append a collection of view models to Spotable object
+  func append(items: [ViewModel], withAnimation animation: SpotsAnimation, completion: Completion) {
+    adapter?.append(items, withAnimation: animation, completion: completion)
+  }
+
+  /// Prepend view models to a Spotable object
+  func prepend(items: [ViewModel], withAnimation animation: SpotsAnimation, completion: Completion) {
+    adapter?.prepend(items, withAnimation: animation, completion: completion)
+  }
+  /// Insert view model to a Spotable object
+  func insert(item: ViewModel, index: Int, withAnimation animation: SpotsAnimation, completion: Completion) {
+    adapter?.insert(item, index: index, withAnimation: animation, completion: completion)
+  }
+  /// Update view model to a Spotable object
+  func update(item: ViewModel, index: Int, withAnimation animation: SpotsAnimation, completion: Completion) {
+    adapter?.update(item, index: index, withAnimation: animation, completion: completion)
+  }
+  /// Delete view model from a Spotable object
+  func delete(item: ViewModel, withAnimation animation: SpotsAnimation = .Automatic, completion: Completion) {
+    adapter?.delete(item, withAnimation: animation, completion: completion)
+  }
+  /// Delete a collection of view models from a Spotable object
+  func delete(items: [ViewModel], withAnimation animation: SpotsAnimation, completion: Completion) {
+    adapter?.delete(items, withAnimation: animation, completion: completion)
+  }
+  /// Delete view model at index with animation from a Spotable object
+  func delete(index: Int, withAnimation animation: SpotsAnimation, completion: Completion) {
+    adapter?.delete(index, withAnimation: animation, completion: completion)
+  }
+  /// Delete view model indexes with animation from a Spotable object
+  func delete(indexes: [Int], withAnimation animation: SpotsAnimation, completion: Completion) {
+    adapter?.delete(indexes, withAnimation: animation, completion: completion)
+  }
+  /// Reload view model indexes with animation in a Spotable object
+  func reload(indexes: [Int]?, withAnimation animation: SpotsAnimation, completion: Completion) {
+    adapter?.reload(indexes, withAnimation: animation, completion: completion)
+  }
 }
 
 public extension Spotable {
@@ -88,10 +144,10 @@ public extension Spotable {
 
    - Parameter register: A closure containing class type and reuse identifer
    */
-  func registerAndPrepare(@noescape register: (classType: RegularView.Type, withIdentifier: String) -> Void) {
+  func registerAndPrepare(@noescape register: (classType: View.Type, withIdentifier: String) -> Void) {
     if component.kind.isEmpty { component.kind = Self.defaultKind.string }
 
-    Self.views.storage.forEach { (reuseIdentifier: String, classType: RegularView.Type) in
+    Self.views.storage.forEach { (reuseIdentifier: String, classType: View.Type) in
       register(classType: classType, withIdentifier: reuseIdentifier)
     }
 
@@ -99,7 +155,7 @@ public extension Spotable {
       register(classType: Self.defaultView, withIdentifier: component.kind)
     }
 
-    var cached: RegularView?
+    var cached: View?
     component.items.enumerate().forEach { (index: Int, item: ViewModel) in
       prepareItem(item, index: index, cached: &cached)
     }
@@ -120,7 +176,11 @@ public extension Spotable {
    - Returns: A ViewModel at found at the index
    */
   public func item(indexPath: NSIndexPath) -> ViewModel? {
-    return item(indexPath.row)
+    #if os(OSX)
+      return component.items[indexPath.item]
+    #else
+      return component.items[indexPath.row]
+    #endif
   }
 
   /**
@@ -204,7 +264,7 @@ public extension Spotable {
    - Parameter index: The index of the view model
    - Parameter cached: An optional UIView, used to reduce the amount of different reusable views that should be prepared.
    */
-  public func prepareItem(item: ViewModel, index: Int, inout cached: RegularView?) {
+  public func prepareItem(item: ViewModel, index: Int, inout cached: View?) {
     cachedViewFor(item, cache: &cached)
 
     component.items[index].index = index
@@ -228,7 +288,7 @@ public extension Spotable {
    - Parameter item: A view model
    - Parameter cache: An optional UIView, used to reduce the amount of different reusable views that should be prepared.
    */
-  func cachedViewFor(item: ViewModel, inout cache: RegularView?) {
+  func cachedViewFor(item: ViewModel, inout cache: View?) {
     let reuseIdentifer = item.kind.isPresent ? item.kind : component.kind
     let componentClass = self.dynamicType.views.storage[reuseIdentifer] ?? self.dynamicType.defaultView
 
@@ -258,7 +318,7 @@ public extension Spotable {
 
   func reuseIdentifierForItem(index: Int) -> String {
     guard let viewModel = item(index) else { return self.dynamicType.defaultKind.string }
-    
+
     if self.dynamicType.views.storage[viewModel.kind] != nil {
       return viewModel.kind
     } else if self.dynamicType.views.storage[component.kind] != nil {
@@ -266,5 +326,9 @@ public extension Spotable {
     } else {
       return self.dynamicType.defaultKind.string
     }
+  }
+
+  public func sizeForItemAt(indexPath: NSIndexPath) -> CGSize {
+    return render().frame.size
   }
 }

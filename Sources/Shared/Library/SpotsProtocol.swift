@@ -10,7 +10,7 @@ import Cache
 
 public protocol SpotsProtocol: class {
   /// A SpotCache object
-  var stateCache: SpotCache? { get }
+  var stateCache: SpotCache? { get set }
   /// The internal SpotsScrollView
   var spotsScrollView: SpotsScrollView { get }
   /// A delegate that conforms to SpotsDelegate
@@ -20,10 +20,10 @@ public protocol SpotsProtocol: class {
   /// An array of refresh position to avoid calling multiple refreshes
   var refreshPositions: [CGFloat] { get set }
   /// A view controller view
-  #if os(iOS)
-  var view: RegularView! { get }
+  #if os(OSX)
+  var view: View { get }
   #else
-  var view: RegularView { get }
+  var view: View! { get }
   #endif
 
   var spot: Spotable? { get }
@@ -40,9 +40,11 @@ public protocol SpotsProtocol: class {
   var source: dispatch_source_t! { get set }
   #endif
 
-  func setupSpots(animated: ((view: RegularView) -> Void)?)
+  func setupSpots(animated: ((view: View) -> Void)?)
   func spot<T>(index: Int, _ type: T.Type) -> T?
   func spot(@noescape closure: (index: Int, spot: Spotable) -> Bool) -> Spotable?
+
+  init(spots: [Spotable])
 }
 
 public extension SpotsProtocol {
@@ -51,6 +53,29 @@ public extension SpotsProtocol {
     get {
       return ["components" : spots.map { $0.component.dictionary }]
     }
+  }
+
+  /**
+   - Parameter spot: A Spotable object
+   */
+  public init(spot: Spotable) {
+    self.init(spots: [spot])
+  }
+
+  /**
+   - Parameter json: A JSON dictionary that gets parsed into UI elements
+   */
+  public init(_ json: [String : AnyObject]) {
+    self.init(spots: Parser.parse(json))
+  }
+
+  /**
+   - Parameter cacheKey: A key that will be used to identify the SpotCache
+   */
+  public init(cacheKey: String) {
+    let stateCache = SpotCache(key: cacheKey)
+    self.init(spots: Parser.parse(stateCache.load()))
+    self.stateCache = stateCache
   }
 
   /**
@@ -83,7 +108,7 @@ public extension SpotsProtocol {
    - Parameter json: A JSON dictionary that gets parsed into UI elements
    - Parameter completion: A closure that will be run after reload has been performed on all spots
    */
-  public func reloadIfNeeded(json: [String : AnyObject], compare: ((lhs: [Component], rhs: [Component]) -> Bool) = { lhs, rhs in return lhs != rhs }, animated: ((view: RegularView) -> Void)? = nil, closure: Completion = nil) {
+  public func reloadIfNeeded(json: [String : AnyObject], compare: ((lhs: [Component], rhs: [Component]) -> Bool) = { lhs, rhs in return lhs != rhs }, animated: ((view: View) -> Void)? = nil, closure: Completion = nil) {
     dispatch { [weak self] in
       guard let weakSelf = self else { closure?(); return }
 
@@ -104,7 +129,7 @@ public extension SpotsProtocol {
         weakSelf.view.addSubview(weakSelf.spotsScrollView)
       }
 
-      weakSelf.spotsScrollView.contentView.subviews.forEach { $0.removeFromSuperview() }
+      weakSelf.reloadSpotsScrollView()
       weakSelf.setupSpots(animated)
       weakSelf.spotsScrollView.forceUpdate = true
 
@@ -116,7 +141,7 @@ public extension SpotsProtocol {
    - Parameter json: A JSON dictionary that gets parsed into UI elements
    - Parameter completion: A closure that will be run after reload has been performed on all spots
    */
-  public func reload(json: [String : AnyObject], animated: ((view: RegularView) -> Void)? = nil, closure: Completion = nil) {
+  public func reload(json: [String : AnyObject], animated: ((view: View) -> Void)? = nil, closure: Completion = nil) {
     dispatch { [weak self] in
       guard let weakSelf = self else { closure?(); return }
 
@@ -127,7 +152,7 @@ public extension SpotsProtocol {
         weakSelf.view.addSubview(weakSelf.spotsScrollView)
       }
 
-      weakSelf.spotsScrollView.contentView.subviews.forEach { $0.removeFromSuperview() }
+      weakSelf.reloadSpotsScrollView()
       weakSelf.setupSpots(animated)
       weakSelf.spotsScrollView.forceUpdate = true
 
@@ -149,7 +174,7 @@ public extension SpotsProtocol {
     dispatch { [weak self] in
       guard let weakSelf = self else { return }
 
-      weakSelf.spot(spot.index, Spotable.self)?.reload([index], withAnimation: animation) {
+      weakSelf.spot(index, Spotable.self)?.reload(nil, withAnimation: animation) {
 #if os(iOS)
         weakSelf.spotsScrollView.setNeedsDisplay()
 #endif
@@ -207,7 +232,7 @@ public extension SpotsProtocol {
    - Parameter closure: A completion closure that will run after the spot has performed updates internally
    */
   public func prepend(items: [ViewModel], spotIndex: Int = 0, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
-    spot(spotIndex, Spotable.self)?.prepend(items, withAnimation: animation)  {
+    spot(spotIndex, Spotable.self)?.prepend(items, withAnimation: animation) {
       completion?()
       self.spotsScrollView.forceUpdate = true
     }
@@ -221,7 +246,7 @@ public extension SpotsProtocol {
    - Parameter closure: A completion closure that will run after the spot has performed updates internally
    */
   public func insert(item: ViewModel, index: Int = 0, spotIndex: Int, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
-    spot(spotIndex, Spotable.self)?.insert(item, index: index, withAnimation: animation)  {
+    spot(spotIndex, Spotable.self)?.insert(item, index: index, withAnimation: animation) {
       completion?()
       self.spotsScrollView.forceUpdate = true
     }
@@ -242,7 +267,7 @@ public extension SpotsProtocol {
         return
     }
 
-    spot(spotIndex, Spotable.self)?.update(item, index: index, withAnimation: animation)  {
+    spot(spotIndex, Spotable.self)?.update(item, index: index, withAnimation: animation) {
       completion?()
       self.spotsScrollView.forceUpdate = true
     }
@@ -337,6 +362,36 @@ public extension SpotsProtocol {
     stateCache?.save(dictionary)
   }
 
+  /**
+   Clear Spots cache
+   */
+  public static func clearCache() {
+    let paths = NSSearchPathForDirectoriesInDomains(.CachesDirectory,
+                                                    NSSearchPathDomainMask.UserDomainMask, true)
+    let path = "\(paths.first!)/\(DiskStorage.prefix).\(SpotCache.cacheName)"
+    do {
+      try NSFileManager.defaultManager().removeItemAtPath(path)
+    } catch {
+      NSLog("Could not remove cache at path: \(path)")
+    }
+  }
+
+  /**
+   - Parameter indexPath: The index path of the component you want to lookup
+   - Returns: A Component object at index path
+   **/
+  private func component(indexPath: NSIndexPath) -> Component {
+    return spot(indexPath).component
+  }
+
+  /**
+   - Parameter indexPath: The index path of the spot you want to lookup
+   - Returns: A Spotable object at index path
+   **/
+  private func spot(indexPath: NSIndexPath) -> Spotable {
+    return spots[indexPath.item]
+  }
+
   #if DEVMODE
 
   private func monitor(filePath: String) {
@@ -382,7 +437,11 @@ public extension SpotsProtocol {
   }
 
   private func liveEditing(stateCache: SpotCache?) {
+  #if os(iOS)
     guard let stateCache = stateCache where source == nil && Simulator.isRunning else { return }
+  #else
+    guard let stateCache = stateCache where source == nil else { return }
+  #endif
     CacheJSONOptions.writeOptions = .PrettyPrinted
 
     let paths = NSSearchPathForDirectoriesInDomains(.CachesDirectory,
@@ -392,4 +451,12 @@ public extension SpotsProtocol {
     delay(0.5) { self.monitor(path) }
   }
   #endif
+
+  private func reloadSpotsScrollView() {
+    #if os(OSX)
+      (spotsScrollView.documentView as? View)?.subviews.forEach { $0.removeFromSuperview() }
+    #else
+      spotsScrollView.contentView.subviews.forEach { $0.removeFromSuperview() }
+    #endif
+  }
 }

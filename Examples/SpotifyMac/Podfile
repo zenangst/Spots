@@ -1,0 +1,37 @@
+source 'https://github.com/CocoaPods/Specs.git'
+
+platform :osx, '10.11'
+
+use_frameworks!
+inhibit_all_warnings!
+
+target "Spotify Mac" do
+  pod 'Sugar', git: 'https://github.com/hyperoslo/Sugar.git'
+  pod 'Spots', path: '../../'
+  pod 'Cache', git: 'https://github.com/hyperoslo/Cache.git'
+  pod 'Fashion', git: 'https://github.com/vadymmarkov/Fashion.git'
+  pod 'Imaginary', git: 'https://github.com/hyperoslo/Imaginary.git'
+  pod 'Hue', git: 'https://github.com/hyperoslo/Hue.git'
+  pod 'Compass', git: 'https://github.com/hyperoslo/Compass.git'
+  pod 'Malibu', git: 'https://github.com/hyperoslo/Malibu.git'
+  pod 'OhMyAuth', git: 'https://github.com/hyperoslo/OhMyAuth.git'
+  pod 'Keychain', git: 'https://github.com/hyperoslo/Keychain.git'
+
+  post_install do |installer|
+    puts("Update debug pod settings to speed up build time")
+    Dir.glob(File.join("Pods", "**", "Pods*{debug,Private}.xcconfig")).each do |file|
+      File.open(file, 'a') { |f| f.puts "\nDEBUG_INFORMATION_FORMAT = dwarf" }
+    end
+    installer.pods_project.targets.each do |target|
+      if target.name == 'Spots'
+        target.build_configurations.each do |config|
+          if config.name == 'Debug'
+            config.build_settings['OTHER_SWIFT_FLAGS'] = '-DDEBUG -DDEVMODE'
+            else
+            config.build_settings['OTHER_SWIFT_FLAGS'] = ''
+          end
+        end
+      end
+    end
+  end
+end

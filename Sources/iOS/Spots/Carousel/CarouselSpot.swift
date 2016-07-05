@@ -47,7 +47,11 @@ public class CarouselSpot: NSObject, Gridable {
   public weak var carouselScrollDelegate: SpotsCarouselScrollDelegate?
   public weak var spotsDelegate: SpotsDelegate?
 
-  public lazy var adapter: CollectionAdapter = CollectionAdapter(spot: self)
+  public var adapter: SpotAdapter? {
+    return collectionAdapter
+  }
+  public lazy var collectionAdapter: CollectionAdapter = CollectionAdapter(spot: self)
+
   public lazy var pageControl = UIPageControl().then {
     $0.frame.size.height = 22
     $0.pageIndicatorTintColor = UIColor.lightGrayColor()
@@ -59,8 +63,8 @@ public class CarouselSpot: NSObject, Gridable {
   }
 
   public lazy var collectionView: UICollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: self.layout).then {
-    $0.dataSource = self.adapter
-    $0.delegate = self.adapter
+    $0.dataSource = self.collectionAdapter
+    $0.delegate = self.collectionAdapter
     $0.showsHorizontalScrollIndicator = false
     $0.backgroundView = self.backgroundView
   }

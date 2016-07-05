@@ -4,11 +4,53 @@ import Brick
 
 public class GridSpot: NSObject, Gridable {
 
+  public enum LayoutType: String {
+    case Grid
+    case Left
+    case Flow
+
+    var string: String {
+      return rawValue.lowercaseString
+    }
+  }
+
+  public struct Key {
+    static let minimumInteritemSpacing = "itemSpacing"
+    static let minimumLineSpacing = "lineSpacing"
+    static let titleLeftMargin = "titleLeftMargin"
+    static let titleFontSize = "titleFontSize"
+    static let layout = "layout"
+    static let gridLayoutMaximumItemWidth = "itemWidthMax"
+    static let gridLayoutMaximumItemHeight = "itemHeightMax"
+    static let gridLayoutMinimumItemWidth = "itemMinWidth"
+    static let gridLayoutMinimumItemHeight = "itemMinHeight"
+  }
+
+  public struct Default {
+
+    public struct Flow {
+      public static var minimumInteritemSpacing: CGFloat = 0.0
+      public static var minimumLineSpacing: CGFloat = 0.0
+    }
+
+    public static var titleFontSize: CGFloat = 18.0
+    public static var defaultLayout: String = LayoutType.Flow.string
+    public static var gridLayoutMaximumItemWidth = 120
+    public static var gridLayoutMaximumItemHeight = 120
+    public static var gridLayoutMinimumItemWidth = 80
+    public static var gridLayoutMinimumItemHeight = 80
+    public static var sectionInsetTop: CGFloat = 0.0
+    public static var sectionInsetLeft: CGFloat = 0.0
+    public static var sectionInsetRight: CGFloat = 0.0
+    public static var sectionInsetBottom: CGFloat = 0.0
+  }
+
   public static var views = ViewRegistry()
   public static var grids = GridRegistry()
   public static var configure: ((view: NSCollectionView) -> Void)?
-  public static var defaultView: RegularView.Type = NSView.self
-  public static var defaultKind: StringConvertible = "grid"
+  public static var defaultView: View.Type = NSView.self
+  public static var defaultGrid: NSCollectionViewItem.Type = NSCollectionViewItem.self
+  public static var defaultKind: StringConvertible = LayoutType.Grid.string
 
   public weak var spotsDelegate: SpotsDelegate?
 
@@ -19,33 +61,51 @@ public class GridSpot: NSObject, Gridable {
 
   public private(set) var stateCache: SpotCache?
 
-  public lazy var adapter: CollectionAdapter = CollectionAdapter(spot: self)
-  @available(OSX 10.11, *)
-  public lazy var layout: NSCollectionViewLayout = NSCollectionViewFlowLayout().then {
-    $0.minimumInteritemSpacing = 10
-    $0.minimumLineSpacing = 10
-    $0.sectionInset = NSEdgeInsets(top: 10.0, left: 20.0, bottom: 10.0, right: 20.0)
-    $0.itemSize = NSSize(width: 160.0, height: 140.0)
-    $0.scrollDirection = .Vertical
+  public var adapter: SpotAdapter? {
+    return collectionAdapter
+  }
+
+  public lazy var collectionAdapter: CollectionAdapter = CollectionAdapter(spot: self)
+
+  public var layout: NSCollectionViewLayout
+
+  public lazy var titleView: NSTextField = NSTextField().then {
+    $0.editable = false
+    $0.selectable = false
+    $0.bezeled = false
+    $0.textColor = NSColor.grayColor()
+    $0.drawsBackground = false
   }
 
   public lazy var scrollView: ScrollView = ScrollView().then {
     let view = NSView()
-    view.autoresizingMask = .ViewWidthSizable
     $0.documentView = view
   }
 
   public lazy var collectionView: NSCollectionView = NSCollectionView().then {
     $0.backgroundColors = [NSColor.clearColor()]
     $0.selectable = true
-    $0.autoresizingMask = .ViewWidthSizable
+    $0.allowsMultipleSelection = false
+    $0.allowsEmptySelection = true
+    $0.layer = CALayer()
+    $0.wantsLayer = true
   }
 
   public required init(component: Component) {
     self.component = component
+    self.layout = GridSpot.setupLayout(component)
     super.init()
     setupCollectionView()
+    scrollView.addSubview(titleView)
     scrollView.contentView.addSubview(collectionView)
+
+    if component.title.isPresent {
+      titleView.stringValue = component.title
+      titleView.sizeToFit()
+
+      let top = titleView.frame.size.height / 2
+      (layout as? NSCollectionViewFlowLayout)?.sectionInset.top += top
+    }
   }
 
   public convenience init(title: String = "", kind: String? = nil) {
@@ -57,58 +117,101 @@ public class GridSpot: NSObject, Gridable {
 
     self.init(component: Component(stateCache.load()))
     self.stateCache = stateCache
-    prepare()
   }
 
-  public convenience init(_ component: Component, top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0, itemSpacing: CGFloat = 0, lineSpacing: CGFloat = 0) {
-    self.init(component: component)
+  deinit {
+    collectionView.delegate = nil
+    collectionView.dataSource = nil
+  }
 
-//      layout.sectionInset = NSEdgeInsets(top: top, left: left, bottom: bottom, right: right)
-//      if let layout = layout as? LeftFlowLayout {
-//        layout.minimumInteritemSpacing = itemSpacing
-//        layout.minimumLineSpacing = lineSpacing
-//      }
+  private static func configureLayoutInsets(component: Component, layout: NSCollectionViewFlowLayout) -> NSCollectionViewFlowLayout {
+    layout.sectionInset = NSEdgeInsets(
+      top: component.meta(GridableMeta.Key.sectionInsetTop, Default.sectionInsetTop),
+      left: component.meta(GridableMeta.Key.sectionInsetLeft, Default.sectionInsetLeft),
+      bottom: component.meta(GridableMeta.Key.sectionInsetBottom, Default.sectionInsetBottom),
+      right: component.meta(GridableMeta.Key.sectionInsetRight, Default.sectionInsetRight))
+
+    layout.minimumInteritemSpacing = Default.Flow.minimumInteritemSpacing
+    layout.minimumLineSpacing = Default.Flow.minimumLineSpacing
+
+    return layout
+  }
+
+  private static func setupLayout(component: Component) -> NSCollectionViewLayout {
+    let layout: NSCollectionViewLayout
+
+    switch LayoutType(rawValue: component.meta(Key.layout, Default.defaultLayout)) ?? LayoutType.Flow {
+    case .Grid:
+      let gridLayout = NSCollectionViewGridLayout()
+
+      gridLayout.maximumItemSize = CGSize(width: component.meta(Key.gridLayoutMaximumItemWidth, Default.gridLayoutMaximumItemWidth),
+                                          height: component.meta(Key.gridLayoutMaximumItemHeight, Default.gridLayoutMaximumItemHeight))
+      gridLayout.minimumItemSize = CGSize(width: component.meta(Key.gridLayoutMinimumItemWidth, Default.gridLayoutMinimumItemWidth),
+                                          height: component.meta(Key.gridLayoutMinimumItemHeight, Default.gridLayoutMinimumItemHeight))
+      layout = gridLayout
+    case .Left:
+      let leftLayout = CollectionViewLeftLayout()
+      configureLayoutInsets(component, layout: leftLayout)
+      layout = leftLayout
+
+    case .Flow:
+      fallthrough
+    default:
+      let flowLayout = NSCollectionViewFlowLayout()
+      configureLayoutInsets(component, layout: flowLayout)
+      flowLayout.scrollDirection = .Vertical
+      layout = flowLayout
+    }
+
+    return layout
   }
 
   public func setupCollectionView() {
-//    collectionView.maxNumberOfColumns = Int(component.span)
-    if #available(OSX 10.11, *) {
-      collectionView.delegate = adapter
-      collectionView.dataSource = adapter
-      collectionView.collectionViewLayout = layout
-    }
+    collectionView.delegate = collectionAdapter
+    collectionView.dataSource = collectionAdapter
+    collectionView.collectionViewLayout = layout
   }
 
   public func render() -> ScrollView {
     return scrollView
   }
 
-  public func layout(size: CGSize) { }
+  public func layout(size: CGSize) {
 
-  public func setup(size: CGSize) {
-    if component.span > 0 {
-      component.items.enumerate().forEach {
-        component.items[$0.index].size.width = size.width
-      }
+    var layoutInsets = NSEdgeInsets()
+    if let layout = layout as? NSCollectionViewFlowLayout {
+      layoutInsets = layout.sectionInset
     }
 
-    collectionView.frame.size = size
-    scrollView.frame.size = size
+    var layoutHeight = layout.collectionViewContentSize.height + layoutInsets.top + layoutInsets.bottom
+    if component.items.isEmpty { layoutHeight = size.height + layoutInsets.top + layoutInsets.bottom + 10 }
+
+    scrollView.frame.size.width = size.width - layoutInsets.right
+    scrollView.frame.size.height = layoutHeight
+    collectionView.frame.size.height = scrollView.frame.size.height - layoutInsets.top + layoutInsets.bottom
+    collectionView.frame.size.width = size.width - layoutInsets.right
 
     GridSpot.configure?(view: collectionView)
-    if #available(OSX 10.11, *) {
-      layout.invalidateLayout()
+
+    if component.title.isPresent {
+      titleView.stringValue = component.title
+      titleView.font = NSFont.systemFontOfSize(component.meta(Key.titleFontSize, Default.titleFontSize))
+      titleView.sizeToFit()
     }
+
+    titleView.frame.origin.x = layoutInsets.left
+    titleView.frame.origin.x = component.meta(Key.titleLeftMargin, titleView.frame.origin.x)
+    titleView.frame.origin.y = layoutInsets.top - titleView.frame.size.height / 2
+
+    layout.invalidateLayout()
   }
 
-  public func append(item: ViewModel, withAnimation animation: SpotsAnimation, completion: Completion) {}
-  public func append(items: [ViewModel], withAnimation animation: SpotsAnimation, completion: Completion) {}
-  public func prepend(items: [ViewModel], withAnimation animation: SpotsAnimation, completion: Completion) {}
-  public func insert(item: ViewModel, index: Int, withAnimation animation: SpotsAnimation, completion: Completion) {}
-  public func update(item: ViewModel, index: Int, withAnimation animation: SpotsAnimation, completion: Completion) {}
-  public func delete(item: ViewModel, withAnimation animation: SpotsAnimation, completion: Completion) {}
-  public func delete(item: [ViewModel], withAnimation animation: SpotsAnimation, completion: Completion) {}
-  public func delete(index: Int, withAnimation animation: SpotsAnimation, completion: Completion) {}
-  public func delete(indexes: [Int], withAnimation animation: SpotsAnimation, completion: Completion) {}
-  public func reload(indexes: [Int]?, withAnimation animation: SpotsAnimation, completion: Completion) {}
+  public func setup(size: CGSize) {
+    if let layout = layout as? NSCollectionViewFlowLayout {
+      layout.itemSize.height = size.height
+      layout.invalidateLayout()
+    }
+    layout(size)
+    prepare()
+  }
 }

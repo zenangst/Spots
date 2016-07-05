@@ -65,7 +65,7 @@ if let rootPath = NSProcessInfo.processInfo().environment["PWD"] {
     for directory in directories where directory.characters.first != "." {
       var isDir : ObjCBool = false
       NSFileManager().changeCurrentDirectoryPath("\(rootPath)/Examples/\(directory)")
-      System.execute("pod", "update")
+      System.execute("pod", "update --no-repo-update")
     }
   } catch {}
 }

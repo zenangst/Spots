@@ -1,18 +1,35 @@
 import Cocoa
 import Sugar
 import Brick
-
-@available(OSX 10.11, *)
-public class CarouselLayout: NSCollectionViewFlowLayout {
-}
+import Hue
 
 public class CarouselSpot: NSObject, Gridable {
+
+  public struct Key {
+    static let minimumInteritemSpacing = "itemSpacing"
+    static let minimumLineSpacing = "lineSpacing"
+    static let titleLeftMargin = "titleLeftMargin"
+    static let titleFontSize = "titleFontSize"
+    static let titleTextColor = "titleTextColor"
+  }
+
+  public struct Default {
+    public static var titleFontSize: CGFloat = 18.0
+    public static var titleTextColor: String = "000000"
+    public static var sectionInsetTop: CGFloat = 0.0
+    public static var sectionInsetLeft: CGFloat = 0.0
+    public static var sectionInsetRight: CGFloat = 0.0
+    public static var sectionInsetBottom: CGFloat = 0.0
+    public static var minimumInteritemSpacing: CGFloat = 0.0
+    public static var minimumLineSpacing: CGFloat = 0.0
+  }
 
   public static var views = ViewRegistry()
   public static var grids = GridRegistry()
   public static var configure: ((view: NSCollectionView) -> Void)?
-  public static var defaultView: RegularView.Type = NSView.self
-  public static var defaultKind: StringConvertible = "carousel"
+  public static var defaultGrid: NSCollectionViewItem.Type = NSCollectionViewItem.self
+  public static var defaultView: View.Type = NSView.self
+  public static var defaultKind: StringConvertible = Component.Kind.Carousel.string
 
   public weak var spotsDelegate: SpotsDelegate?
 
@@ -23,35 +40,60 @@ public class CarouselSpot: NSObject, Gridable {
 
   public private(set) var stateCache: SpotCache?
 
-  public lazy var adapter: CollectionAdapter = CollectionAdapter(spot: self)
-  @available(OSX 10.11, *)
-  public lazy var layout: NSCollectionViewLayout = NSCollectionViewFlowLayout().then {
-    $0.sectionInset = NSEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-    $0.minimumInteritemSpacing = 0
-    $0.minimumLineSpacing = 0
-    $0.scrollDirection = .Horizontal
+  public var gradientLayer: CAGradientLayer?
+
+  public lazy var collectionAdapter: CollectionAdapter = CollectionAdapter(spot: self)
+  public var adapter: SpotAdapter? {
+    return collectionAdapter
   }
 
-  public lazy var scrollView: ScrollView = ScrollView().then {
-    $0.documentView = NSView()
-    $0.autoresizingMask = .ViewWidthSizable
+  public lazy var layout: NSCollectionViewLayout = NSCollectionViewFlowLayout()
+
+  public lazy var titleView: NSTextField = NSTextField().then {
+    $0.editable = false
+    $0.selectable = false
+    $0.bezeled = false
+    $0.drawsBackground = false
   }
 
+  public lazy var scrollView: ScrollView = ScrollView()
   public lazy var collectionView: NSCollectionView = NSCollectionView().then {
-    $0.autoresizingMask = .ViewWidthSizable
+    $0.selectable = true
     $0.backgroundColors = [NSColor.clearColor()]
+
+    let view = NSView()
+    $0.backgroundView = view
   }
 
   public required init(component: Component) {
     self.component = component
+
     super.init()
 
     setupCollectionView()
-    scrollView.contentView.addSubview(collectionView)
+    configureLayoutInsets(component)
+    scrollView.addSubview(titleView)
+    scrollView.documentView = collectionView
+
+    if component.title.isPresent {
+      titleView.textColor = NSColor.grayColor()
+      titleView.stringValue = component.title
+      titleView.sizeToFit()
+      (layout as? NSCollectionViewFlowLayout)?.sectionInset.top += titleView.frame.size.height
+    }
   }
 
-  public convenience init(title: String = "", kind: String? = nil) {
-    self.init(component: Component(title: title, kind: kind ?? GridSpot.defaultKind.string))
+  private func configureLayoutInsets(component: Component) {
+    guard let layout = layout as? NSCollectionViewFlowLayout else { return }
+
+    layout.sectionInset = NSEdgeInsets(
+      top: component.meta(GridableMeta.Key.sectionInsetTop, Default.sectionInsetTop),
+      left: component.meta(GridableMeta.Key.sectionInsetLeft, Default.sectionInsetLeft),
+      bottom: component.meta(GridableMeta.Key.sectionInsetBottom, Default.sectionInsetBottom),
+      right: component.meta(GridableMeta.Key.sectionInsetRight, Default.sectionInsetRight))
+    layout.minimumInteritemSpacing = component.meta(Key.minimumInteritemSpacing, 0)
+    layout.minimumLineSpacing = component.meta(Key.minimumLineSpacing, 0)
+    layout.scrollDirection = .Horizontal
   }
 
   public convenience init(cacheKey: String) {
@@ -60,23 +102,17 @@ public class CarouselSpot: NSObject, Gridable {
     self.init(component: Component(stateCache.load()))
     self.stateCache = stateCache
 
-    //prepare()
+    prepare()
   }
 
-  public convenience init(_ component: Component, top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0, itemSpacing: CGFloat = 0, lineSpacing: CGFloat = 0) {
-    self.init(component: component)
-
-    guard let layout = layout as? NSCollectionViewFlowLayout else { return }
-    layout.sectionInset = NSEdgeInsets(top: top, left: left, bottom: bottom, right: right)
-    layout.minimumInteritemSpacing = itemSpacing
-    layout.minimumLineSpacing = lineSpacing
-    layout.scrollDirection = .Horizontal
+  deinit {
+    collectionView.delegate = nil
+    collectionView.dataSource = nil
   }
 
   public func setupCollectionView() {
-    //    collectionView.maxNumberOfColumns = Int(component.span)
-    collectionView.delegate = adapter
-    collectionView.dataSource = adapter
+    collectionView.delegate = collectionAdapter
+    collectionView.dataSource = collectionAdapter
     collectionView.collectionViewLayout = layout
   }
 
@@ -84,31 +120,55 @@ public class CarouselSpot: NSObject, Gridable {
     return scrollView
   }
 
-  public func layout(size: CGSize) { }
+  public func layout(size: CGSize) {
+    var layoutInsets = NSEdgeInsets()
+    if let layout = layout as? NSCollectionViewFlowLayout {
+      layoutInsets = layout.sectionInset
+    }
 
-  public func setup(size: CGSize) {
+    scrollView.frame.size.height = (component.items.first?.size.height ?? 0.0) + layoutInsets.top + layoutInsets.bottom
+    collectionView.frame.size.height = scrollView.frame.size.height
+    gradientLayer?.frame.size.height = scrollView.frame.size.height
+
+    if component.title.isPresent {
+      titleView.stringValue = component.title
+      titleView.font = NSFont.systemFontOfSize(component.meta(Key.titleFontSize, Default.titleFontSize))
+      titleView.sizeToFit()
+    }
+
     if component.span > 0 {
       component.items.enumerate().forEach {
-        component.items[$0.index].size.width = size.width
+        component.items[$0.index].size.width = size.width / component.span
       }
     }
 
-    scrollView.frame.size = size
-    collectionView.frame.size = size
+    titleView.frame.origin.x = layoutInsets.left
+    titleView.frame.origin.y = layoutInsets.top / 2 - titleView.frame.size.height / 2
 
-    CarouselSpot.configure?(view: collectionView)
+    if component.span == 1 && component.items.count == 1 {
+      scrollView.scrollingEnabled = (component.items.count > 1)
+      scrollView.hasHorizontalScroller = (component.items.count > 1)
+      component.items.enumerate().forEach {
+        component.items[$0.index].size.width = size.width / component.span
+      }
+      layout.invalidateLayout()
+    }
   }
 
-  public func append(item: ViewModel, withAnimation animation: SpotsAnimation, completion: Completion) {}
-  public func append(items: [ViewModel], withAnimation animation: SpotsAnimation, completion: Completion) {}
-  public func prepend(items: [ViewModel], withAnimation animation: SpotsAnimation, completion: Completion) {}
-  public func insert(item: ViewModel, index: Int, withAnimation animation: SpotsAnimation, completion: Completion) {}
-  public func update(item: ViewModel, index: Int, withAnimation animation: SpotsAnimation, completion: Completion) {}
-  public func delete(item: ViewModel, withAnimation animation: SpotsAnimation, completion: Completion) {}
-  public func delete(item: [ViewModel], withAnimation animation: SpotsAnimation, completion: Completion) {}
-  public func delete(index: Int, withAnimation animation: SpotsAnimation, completion: Completion) {}
-  public func delete(indexes: [Int], withAnimation animation: SpotsAnimation, completion: Completion) {}
-  public func reload(indexes: [Int]?, withAnimation animation: SpotsAnimation, completion: Completion) {}
+  public func setup(size: CGSize) {
+    guard !component.items.isEmpty else { return }
+
+    if component.span > 0 {
+      component.items.enumerate().forEach {
+        component.items[$0.index].size.width = size.width / component.span
+      }
+    }
+
+    layout(size)
+    CarouselSpot.configure?(view: collectionView)
+
+    layout.invalidateLayout()
+  }
 }
 
 extension CarouselSpot {
@@ -118,20 +178,18 @@ extension CarouselSpot {
       ? collectionView.frame.width / CGFloat(component.span)
       : collectionView.frame.width
 
-    if #available(OSX 10.11, *) {
-      if let layout = layout as? NSCollectionViewFlowLayout {
-        width -= layout.sectionInset.left - layout.sectionInset.right
-        width -= layout.minimumInteritemSpacing
-        width -= layout.minimumLineSpacing
-      }
-
-      component.items[indexPath.item].size.width = width
-
-      return CGSize(
-        width: ceil(component.items[indexPath.item].size.width),
-        height: ceil(component.items[indexPath.item].size.height))
-    } else {
-      return CGSize.zero
+    if let layout = layout as? NSCollectionViewFlowLayout {
+      width -= layout.sectionInset.left - layout.sectionInset.right
+      width -= layout.minimumInteritemSpacing
+      width -= layout.minimumLineSpacing
     }
+
+    if component.items[indexPath.item].size.width == 0.0 {
+      component.items[indexPath.item].size.width = width
+    }
+
+    return CGSize(
+      width: ceil(component.items[indexPath.item].size.width),
+      height: ceil(component.items[indexPath.item].size.height))
   }
 }

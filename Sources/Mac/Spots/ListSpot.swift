@@ -2,12 +2,35 @@ import Cocoa
 import Sugar
 import Brick
 
-public class ListSpot: NSObject, Spotable {
+public class ListSpot: NSObject, Listable {
+
+  struct Key {
+    static let titleFontSize = "titleFontSize"
+    static let titleTopInset = "titleTopInset"
+    static let titleBottomInset = "titleBottomInset"
+    static let titleLeftInset = "titleLeftInset"
+    static let contentInsetsTop = "insetTop"
+    static let contentInsetsLeft = "insetLeft"
+    static let contentInsetsBottom = "insetBottom"
+    static let contentInsetsRight = "insetRight"
+    static let doubleAction = "doubleClick"
+  }
+
+  public struct Default {
+    public static var titleFontSize: CGFloat = 14.0
+    public static var titleLeftInset: CGFloat = 0.0
+    public static var titleTopInset: CGFloat = 0.0
+    public static var titleBottomInset: CGFloat = 0.0
+    public static var contentInsetsTop: CGFloat = 0.0
+    public static var contentInsetsLeft: CGFloat = 0.0
+    public static var contentInsetsBottom: CGFloat = 0.0
+    public static var contentInsetsRight: CGFloat = 0.0
+  }
 
   public static var views = ViewRegistry()
   public static var configure: ((view: NSTableView) -> Void)?
-  public static var defaultView: RegularView.Type = ListSpotItem.self
-  public static var defaultKind: StringConvertible = "list"
+  public static var defaultView: View.Type = ListSpotItem.self
+  public static var defaultKind: StringConvertible = Component.Kind.List.string
 
   public weak var spotsDelegate: SpotsDelegate?
 
@@ -18,14 +41,26 @@ public class ListSpot: NSObject, Spotable {
 
   public private(set) var stateCache: SpotCache?
 
-  public lazy var adapter: ListAdapter = ListAdapter(spot: self)
+  public var adapter: SpotAdapter? {
+    return listAdapter
+  }
+
+  private lazy var listAdapter: ListAdapter = ListAdapter(spot: self)
 
   public lazy var scrollView: ScrollView = ScrollView().then {
     $0.documentView = NSView()
-    $0.autoresizingMask = .ViewWidthSizable
+  }
+
+  public lazy var titleView: NSTextField = NSTextField().then {
+    $0.editable = false
+    $0.selectable = false
+    $0.bezeled = false
+    $0.textColor = NSColor.grayColor()
+    $0.drawsBackground = false
   }
 
   public lazy var tableView: NSTableView = NSTableView(frame: CGRect.zero).then {
+    $0.backgroundColor = NSColor.clearColor()
     $0.allowsColumnReordering = false
     $0.allowsColumnResizing = false
     $0.allowsColumnSelection = false
@@ -33,18 +68,21 @@ public class ListSpot: NSObject, Spotable {
     $0.allowsMultipleSelection = false
     $0.headerView = nil
     $0.selectionHighlightStyle = .None
+    $0.allowsTypeSelect = true
+  }
+
+  public lazy var tableColumn = NSTableColumn(identifier: "tableview-column").then {
+    $0.maxWidth = 250
+    $0.width = 250
+    $0.minWidth = 150
   }
 
   public required init(component: Component) {
     self.component = component
     super.init()
 
-    setupTableView()
     scrollView.contentView.addSubview(tableView)
-  }
-
-  public convenience init(title: String = "", kind: String? = nil) {
-    self.init(component: Component(title: title, kind: kind ?? GridSpot.defaultKind.string))
+    configureLayout(component)
   }
 
   public convenience init(cacheKey: String) {
@@ -52,19 +90,16 @@ public class ListSpot: NSObject, Spotable {
 
     self.init(component: Component(stateCache.load()))
     self.stateCache = stateCache
-
-    //prepare()
   }
 
-  public func setupTableView() {
-    tableView.setDelegate(adapter)
-    tableView.setDataSource(adapter)
-    tableView.target = self
-    tableView.doubleAction = #selector(self.doubleAction(_:))
+  deinit {
+    tableView.setDelegate(nil)
+    tableView.setDataSource(nil)
   }
 
   public func doubleAction(sender: AnyObject?) {
-    let viewModel = item(tableView.selectedRow)
+    guard let viewModel = item(tableView.clickedRow)
+    where component.meta(Key.doubleAction, type: Bool.self) == true else { return }
     spotsDelegate?.spotDidSelectItem(self, item: viewModel)
   }
 
@@ -72,159 +107,44 @@ public class ListSpot: NSObject, Spotable {
     return scrollView
   }
 
-  public func layout(size: CGSize) { }
+  public func layout(size: CGSize) {
+    scrollView.contentInsets.top = component.meta(Key.contentInsetsTop, Default.contentInsetsTop)
+    scrollView.contentInsets.left = component.meta(Key.contentInsetsLeft, Default.contentInsetsLeft)
+    scrollView.contentInsets.bottom = component.meta(Key.contentInsetsBottom, Default.contentInsetsBottom)
+    scrollView.contentInsets.right = component.meta(Key.contentInsetsRight, Default.contentInsetsRight)
 
-  public func prepare() { }
+    scrollView.frame.size.width = size.width
+  }
 
   public func setup(size: CGSize) {
     component.items.enumerate().forEach {
       component.items[$0.index].size.width = size.width
     }
-    scrollView.frame.size = size
+
+    tableView.setDelegate(listAdapter)
+    tableView.setDataSource(listAdapter)
+    tableView.target = self
+    tableView.addTableColumn(tableColumn)
+    tableView.doubleAction = #selector(self.doubleAction(_:))
+    tableView.sizeToFit()
+    layout(size)
+
+    if component.title.isPresent {
+      scrollView.addSubview(titleView)
+      titleView.stringValue = component.title
+      titleView.font = NSFont.systemFontOfSize(component.meta(Key.titleFontSize, Default.titleFontSize))
+      titleView.sizeToFit()
+      titleView.frame.size.height += component.meta(Key.titleTopInset, Default.titleTopInset)
+      titleView.frame.size.height += component.meta(Key.titleBottomInset, Default.titleBottomInset)
+      titleView.frame.origin.x = tableView.frame.origin.x + component.meta(Key.titleLeftInset, Default.titleLeftInset)
+      titleView.frame.origin.y = component.meta(Key.titleTopInset, Default.titleTopInset) - component.meta(Key.titleBottomInset, Default.titleBottomInset)
+      scrollView.frame.size.height = tableView.frame.height + titleView.frame.maxY
+    } else {
+      scrollView.frame.size.height = tableView.frame.height + scrollView.contentInsets.top + scrollView.contentInsets.bottom
+    }
+
+
+    scrollView.frame.size.width = size.width
     ListSpot.configure?(view: tableView)
-  }
-
-  private func refreshHeight(completion: (() -> Void)? = nil) {
-    delay(0.2) { [weak self] in
-      guard let weakSelf = self, tableView = self?.tableView else { return; completion?() }
-      weakSelf.setup(CGSize(width: tableView.frame.width, height: weakSelf.spotHeight() ?? 0))
-      completion?()
-    }
-  }
-
-  public func append(item: ViewModel, withAnimation animation: SpotsAnimation, completion: Completion) {
-    let count = component.items.count
-    component.items.append(item)
-
-    dispatch { [weak self] in
-      guard let tableView = self?.tableView else { completion?(); return }
-      tableView.insert([count], animation: animation.tableViewAnimation) {
-        self?.setup(tableView.frame.size)
-        completion?()
-      }
-    }
-  }
-  public func append(items: [ViewModel], withAnimation animation: SpotsAnimation, completion: Completion) {
-    var indexes = [Int]()
-    let count = component.items.count
-
-    component.items.appendContentsOf(items)
-
-    items.enumerate().forEach {
-      indexes.append(count + $0.index)
-    }
-
-    dispatch { [weak self] in
-      guard let tableView = self?.tableView else { completion?(); return }
-      tableView.insert(indexes, animation: animation.tableViewAnimation) {
-        self?.setup(tableView.frame.size)
-        completion?()
-      }
-    }
-  }
-
-  public func prepend(items: [ViewModel], withAnimation animation: SpotsAnimation, completion: Completion) {
-    var indexes = [Int]()
-
-    component.items.insertContentsOf(items, at: 0)
-
-    items.enumerate().forEach {
-      indexes.append(items.count - 1 - $0.index)
-    }
-
-    dispatch { [weak self] in
-      guard let tableView = self?.tableView else { completion?(); return }
-      tableView.insert(indexes, animation: animation.tableViewAnimation) {
-        self?.refreshHeight()
-      }
-    }
-  }
-
-  public func insert(item: ViewModel, index: Int, withAnimation animation: SpotsAnimation, completion: Completion) {
-    component.items.insert(item, atIndex: index)
-
-    dispatch { [weak self] in
-      guard let tableView = self?.tableView else { completion?(); return }
-      tableView.insert([index], animation: animation.tableViewAnimation) {
-        self?.refreshHeight(completion)
-      }
-    }
-  }
-
-  public func update(item: ViewModel, index: Int, withAnimation animation: SpotsAnimation, completion: Completion) {
-    items[index] = item
-
-    dispatch { [weak self] in
-      guard let tableView = self?.tableView else { completion?(); return }
-      tableView.reload([index], section: 0, animation: animation.tableViewAnimation) {
-        self?.refreshHeight(completion)
-      }
-    }
-  }
-
-  public func delete(item: ViewModel, withAnimation animation: SpotsAnimation, completion: Completion) {
-    guard let index = component.items.indexOf({ $0 == item })
-      else { completion?(); return }
-
-    component.items.removeAtIndex(index)
-
-    dispatch { [weak self] in
-      guard let tableView = self?.tableView else { completion?(); return }
-      tableView.delete([index], animation: animation.tableViewAnimation) {
-        self?.refreshHeight(completion)
-      }
-    }
-  }
-
-  public func delete(item: [ViewModel], withAnimation animation: SpotsAnimation, completion: Completion) {
-    var indexPaths = [Int]()
-    let count = component.items.count
-
-    for (index, item) in items.enumerate() {
-      indexPaths.append(count + index)
-      component.items.append(item)
-    }
-
-    dispatch { [weak self] in
-      guard let tableView = self?.tableView else { completion?(); return }
-      tableView.delete(indexPaths, animation: animation.tableViewAnimation) {
-        self?.refreshHeight(completion)
-      }
-    }
-  }
-
-  public func delete(index: Int, withAnimation animation: SpotsAnimation, completion: Completion) {
-    dispatch { [weak self] in
-      guard let tableView = self?.tableView else { completion?(); return }
-      self?.component.items.removeAtIndex(index)
-      tableView.delete([index], animation: animation.tableViewAnimation) {
-        self?.refreshHeight(completion)
-      }
-    }
-  }
-
-  public func delete(indexes: [Int], withAnimation animation: SpotsAnimation, completion: Completion) {
-    dispatch { [weak self] in
-      indexes.forEach { self?.component.items.removeAtIndex($0) }
-      guard let tableView = self?.tableView else { completion?(); return }
-      tableView.delete(indexes, animation: animation.tableViewAnimation) {
-        self?.refreshHeight(completion)
-      }
-    }
-  }
-
-  public func reload(indexes: [Int]?, withAnimation animation: SpotsAnimation, completion: Completion) {
-    dispatch { [weak self] in
-      guard let tableView = self?.tableView else { completion?(); return }
-      if let indexes = indexes where animation != .None {
-        tableView.reload(indexes, animation: animation.tableViewAnimation) {
-          self?.refreshHeight(completion)
-        }
-      } else {
-        tableView.reloadData()
-        self?.setup(tableView.frame.size)
-        completion?()
-      }
-    }
   }
 }

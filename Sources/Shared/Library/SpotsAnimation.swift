@@ -1,6 +1,10 @@
 #if os(iOS)
   import UIKit
-#else
+#endif
+#if os(tvOS)
+  import UIKit
+#endif
+#if os(OSX)
   import Cocoa
 #endif
 
@@ -17,7 +21,28 @@ public enum SpotsAnimation: Int {
   case Middle
   case Automatic
 
-  #if os(iOS)
+  #if os(OSX)
+  var tableViewAnimation: NSTableViewAnimationOptions {
+    switch self {
+    case .Fade:
+      return NSTableViewAnimationOptions.EffectFade
+    case .Right:
+      return NSTableViewAnimationOptions.SlideRight
+    case .Left:
+      return NSTableViewAnimationOptions.SlideLeft
+    case .Top:
+      return NSTableViewAnimationOptions.SlideUp
+    case .Bottom:
+      return NSTableViewAnimationOptions.SlideDown
+    case .None:
+      return NSTableViewAnimationOptions.EffectNone
+    case .Middle:
+      return NSTableViewAnimationOptions.EffectGap
+    case .Automatic:
+      return NSTableViewAnimationOptions.EffectFade
+    }
+  }
+  #else
   /**
    Resolves a SpotsAnimation into a UITableViewRowAnimation
    */
@@ -39,27 +64,6 @@ public enum SpotsAnimation: Int {
       return UITableViewRowAnimation.Middle
     case .Automatic:
       return UITableViewRowAnimation.Automatic
-    }
-  }
-  #else
-  var tableViewAnimation: NSTableViewAnimationOptions {
-    switch self {
-    case .Fade:
-      return NSTableViewAnimationOptions.EffectFade
-    case .Right:
-      return NSTableViewAnimationOptions.SlideRight
-    case .Left:
-      return NSTableViewAnimationOptions.SlideLeft
-    case .Top:
-      return NSTableViewAnimationOptions.SlideUp
-    case .Bottom:
-      return NSTableViewAnimationOptions.SlideDown
-    case .None:
-      return NSTableViewAnimationOptions.EffectNone
-    case .Middle:
-      return NSTableViewAnimationOptions.EffectGap
-    case .Automatic:
-      return NSTableViewAnimationOptions.EffectFade
     }
   }
   #endif

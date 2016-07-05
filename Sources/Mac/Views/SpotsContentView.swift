@@ -13,7 +13,7 @@ public class SpotsContentView: NSView {
 
    - Parameter subview: The view that was added as a subview.
    */
-  override public func didAddSubview(subview: RegularView) {
+  override public func didAddSubview(subview: View) {
     super.didAddSubview(subview)
 
     guard let clipView = superview,
@@ -26,7 +26,7 @@ public class SpotsContentView: NSView {
 
    - Parameter subview: Tells the view that a subview is about to be removed.
    */
-  override public func willRemoveSubview(subview: RegularView) {
+  override public func willRemoveSubview(subview: View) {
     super.willRemoveSubview(subview)
 
     guard let clipView = superview,

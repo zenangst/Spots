@@ -1,12 +1,16 @@
-import Foundation
+#if os(iOS)
+  import UIKit
+#else
+  import Foundation
+#endif
 import Sugar
 import Brick
 
 public class ViewSpot: NSObject, Spotable, Viewable {
 
   public static var views = ViewRegistry()
-  public static var configure: ((view: RegularView) -> Void)?
-  public static var defaultView: RegularView.Type = RegularView.self
+  public static var configure: ((view: View) -> Void)?
+  public static var defaultView: View.Type = View.self
   public static var defaultKind: StringConvertible = "view"
 
   public weak var spotsDelegate: SpotsDelegate?
@@ -19,6 +23,8 @@ public class ViewSpot: NSObject, Spotable, Viewable {
 
   public private(set) var stateCache: SpotCache?
 
+  public var adapter: SpotAdapter?
+
   public required init(component: Component) {
     self.component = component
     super.init()
@@ -29,7 +35,13 @@ public class ViewSpot: NSObject, Spotable, Viewable {
     self.init(component: Component(title: title, kind: kind ?? ViewSpot.defaultKind.string))
   }
 
-  public func render() -> RegularView {
+  public func render() -> View {
     return scrollView
   }
+
+  public func sizeForItemAt(indexPath: NSIndexPath) -> CGSize {
+    return scrollView.frame.size
+  }
+
+  public func deselect() {}
 }
