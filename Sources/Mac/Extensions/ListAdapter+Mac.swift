@@ -196,9 +196,7 @@ extension ListAdapter: NSTableViewDelegate {
     return view as? NSTableRowView
   }
 
-  public func tableView(tableView: NSTableView, willDisplayCell cell: AnyObject, forTableColumn tableColumn: NSTableColumn?, row: Int) {
-    NSLog("will display cell")
-  }
+  public func tableView(tableView: NSTableView, willDisplayCell cell: AnyObject, forTableColumn tableColumn: NSTableColumn?, row: Int) { }
 
   public func tableView(tableView: NSTableView, viewForTableColumn tableColumn: NSTableColumn?, row: Int) -> NSView? {
     return nil
