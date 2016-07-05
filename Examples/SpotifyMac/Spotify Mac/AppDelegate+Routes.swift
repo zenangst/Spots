@@ -36,6 +36,16 @@ extension AppDelegate {
       self.detailController.fragments = fragments
 
       switch route {
+      case "forward":
+
+        break
+      case "back":
+        NSLog("self.history: \(self.history)")
+        guard let last = self.history.popLast() else { return }
+
+        NSLog("last: \(last)")
+
+        AppDelegate.navigate(last, fragments: ["skipHistory" : true])
       case "preview":
         let cacheDirectories = NSSearchPathForDirectoriesInDomains(.CachesDirectory, .UserDomainMask, true)
 
@@ -45,7 +55,7 @@ extension AppDelegate {
           else { return }
 
         if let player = self.player {
-          //player.stop()
+          player.stop()
           self.player = nil
         }
 
@@ -62,12 +72,18 @@ extension AppDelegate {
             self.volumeFadeIn()
           }
 
+          player.prepareToPlay()
           player.play()
 
         } catch { NSLog("error: \(error)") }
       case "artist:{artist_id}":
         guard let artistBlueprint = blueprints["artist"],
         artistID = arguments["artist_id"] else { return }
+
+        if let currentBlueprint = self.detailController.blueprint where fragments["skipHistory"] == nil {
+          self.history.append(currentBlueprint.cacheKey)
+        }
+
         var blueprint = artistBlueprint
 
         blueprint.cacheKey = "artist:\(artistID)"
@@ -85,7 +101,7 @@ extension AppDelegate {
                   image: item.array("images")?.first?.property("url") ?? "",
                   action: "album:\(item.property("id") ?? "")",
                   kind: "album",
-                  size: CGSize(width: 160, height: 180),
+                  size: CGSize(width: 180, height: 180),
                   meta: [
                     "separator" : true,
                     "fragments": [
@@ -119,7 +135,7 @@ extension AppDelegate {
                   size: CGSize(width: 200, height: 50),
                   meta: [
                     "fragments" : ["preview" : item.property("preview_url") ?? ""],
-                    "trackNumber" : "\(index).",
+                    "trackNumber" : "\(index + 1).",
                     "separator" : true
                   ]
                 )
@@ -164,17 +180,26 @@ extension AppDelegate {
         self.detailController.blueprint = blueprint
       case "topArtists":
         guard let topTrackBlueprint = blueprints["top-artists"] else { return }
+        if let _ = self.detailController.blueprint where fragments["skipHistory"] == nil {
+          self.history.append("topArtists")
+        }
         var blueprint = topTrackBlueprint
         blueprint.requests[0].request = TopRequest(type: "artists")
         self.detailController.blueprint = blueprint
       case "topTracks":
         guard let topTrackBlueprint = blueprints["top-tracks"] else { return }
+        if let _ = self.detailController.blueprint where fragments["skipHistory"] == nil {
+          self.history.append("topTracks")
+        }
         var blueprint = topTrackBlueprint
         blueprint.requests[0].request = TopRequest(type: "tracks")
         self.detailController.blueprint = blueprint
       case "album:{album_id}":
         guard let albumID = arguments["album_id"],
           albumBlueprint = blueprints["album"] else { return }
+        if let currentBlueprint = self.detailController.blueprint where fragments["skipHistory"] == nil {
+          self.history.append(currentBlueprint.cacheKey)
+        }
 
         var blueprint = albumBlueprint
         blueprint.cacheKey("album:\(albumID)")
@@ -182,24 +207,40 @@ extension AppDelegate {
         self.detailController.blueprint = blueprint
       case "albums":
         guard let blueprint = blueprints["albums"] else { return }
+        if let currentBlueprint = self.detailController.blueprint where fragments["skipHistory"] == nil {
+          self.history.append(currentBlueprint.cacheKey)
+        }
         self.detailController.blueprint = blueprint
       case "browse":
         guard let blueprint = blueprints["browse"] else { return }
+        if let currentBlueprint = self.detailController.blueprint where fragments["skipHistory"] == nil {
+          self.history.append(currentBlueprint.cacheKey)
+        }
         self.detailController.blueprint = blueprint
       case "category:{category_id}":
         guard let categoryID = arguments["category_id"],
           categoryBlueprint = blueprints["category"] else { return }
+        if let currentBlueprint = self.detailController.blueprint where fragments["skipHistory"] == nil {
+          self.history.append(currentBlueprint.cacheKey)
+        }
         var blueprint = categoryBlueprint
-        blueprint.cacheKey("category:playlist:\(categoryID)")
+        blueprint.cacheKey("category:\(categoryID)")
         blueprint.requests[0].request = CategoryRequest(categoryID: categoryID)
         self.detailController.blueprint = blueprint
       case "following":
         guard let blueprint = blueprints["following"] else { return }
+        if let currentBlueprint = self.detailController.blueprint where fragments["skipHistory"] == nil {
+          self.history.append(currentBlueprint.cacheKey)
+        }
         self.detailController.blueprint = blueprint
       case "playlist:{user_id}:{playlist_id}":
         guard let userID = arguments["user_id"],
           playlistID = arguments["playlist_id"],
           playlistBlueprint = blueprints["playlist"] else { return }
+
+        if let currentBlueprint = self.detailController.blueprint where fragments["skipHistory"] == nil {
+          self.history.append(currentBlueprint.cacheKey)
+        }
 
         var blueprint = playlistBlueprint
         blueprint.cacheKey("playlist:\(userID):\(playlistID)")
@@ -207,6 +248,9 @@ extension AppDelegate {
         self.detailController.blueprint = blueprint
       case "songs":
         guard let blueprint = blueprints["songs"] else { return }
+        if let currentBlueprint = self.detailController.blueprint where fragments["skipHistory"] == nil {
+          self.history.append(currentBlueprint.cacheKey)
+        }
         self.detailController.blueprint = blueprint
       default: break
       }
