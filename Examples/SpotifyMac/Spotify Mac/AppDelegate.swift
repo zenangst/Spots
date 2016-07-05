@@ -11,6 +11,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 
   @IBOutlet weak var window: Window!
 
+  var history = [String]()
+
   let toolbarHeight: CGFloat = 36
 
   lazy var listController = ListController(cacheKey: "menu-cache")
@@ -31,7 +33,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 
   func applicationDidFinishLaunching(aNotification: NSNotification) {
     configurators.forEach { $0.configure() }
-
+    
     if !spotsSession.isActive {
       spotsSession.login()
     } else {
