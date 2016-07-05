@@ -18,7 +18,7 @@ the public API.
 
 ## Table of Contents
 
-<img src="https://raw.githubusercontent.com/hyperoslo/Spots/master/Images/icon_v4.png" alt="Spots Icon" align="right" />
+<img src="https://raw.githubusercontent.com/hyperoslo/Spots/master/Images/icon_v5.png" alt="Spots Icon" align="right" />
 
 * [Key features](#key-features)
 * [Origin Story](#origin-story)
