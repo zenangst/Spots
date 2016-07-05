@@ -81,11 +81,13 @@ extension DetailController {
     guard let action = item.action else { return }
 
     if item.kind == "track" {
+      for item in spot.items where item.meta("playing", type: Bool.self) == true {
+        var item = item
+        item.meta["playing"] = false
+        update(item, index: item.index, spotIndex: spot.index, withAnimation: .None, completion: nil)
+      }
       var item = item
       item.meta["playing"] = true
-      for (index, _) in spot.items.enumerate() {
-        spot.items[index].meta["playing"] = false
-      }
       update(item, index: item.index, spotIndex: spot.index, withAnimation: .None, completion: nil)
     }
 
