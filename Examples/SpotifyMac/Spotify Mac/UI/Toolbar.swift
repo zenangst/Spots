@@ -7,7 +7,7 @@ class Toolbar: NSToolbar {
 
     self.delegate = self
     allowsUserCustomization = false
-    showsBaselineSeparator = true
+    showsBaselineSeparator = false
   }
 }
 
@@ -15,6 +15,8 @@ extension Toolbar: NSToolbarDelegate {
 
   func toolbarDefaultItemIdentifiers(toolbar: NSToolbar) -> [String] {
     return [
+      "back",
+      "forward",
       NSToolbarFlexibleSpaceItemIdentifier,
       "title",
       NSToolbarFlexibleSpaceItemIdentifier,
@@ -28,6 +30,12 @@ extension Toolbar: NSToolbarDelegate {
       toolbarItem = NSToolbarItem(itemIdentifier: NSToolbarFlexibleSpaceItemIdentifier)
     case NSToolbarSpaceItemIdentifier:
       toolbarItem = NSToolbarItem(itemIdentifier: NSToolbarSpaceItemIdentifier)
+    case "back":
+      let backButton = NavigationToolbarItem(itemIdentifier: "back", imageString: "leftArrow", action: "back")
+      toolbarItem = backButton
+    case "forward":
+      let forwardButton = NavigationToolbarItem(itemIdentifier: "forward", imageString: "rightArrow", action: "forward")
+      toolbarItem = forwardButton
     case "search":
       let titleToolbar = SearchToolbarItem(itemIdentifier: "title", text: "Search...")
       toolbarItem = titleToolbar
@@ -43,11 +51,12 @@ extension Toolbar: NSToolbarDelegate {
 
   func toolbarAllowedItemIdentifiers(toolbar: NSToolbar) -> [String] {
     return [
+      "back",
+      "forward",
       "title",
       "search",
       NSToolbarSpaceItemIdentifier,
       NSToolbarFlexibleSpaceItemIdentifier
     ]
   }
-
 }
