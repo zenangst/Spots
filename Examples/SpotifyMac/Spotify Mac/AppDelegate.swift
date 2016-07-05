@@ -33,7 +33,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 
   func applicationDidFinishLaunching(aNotification: NSNotification) {
     configurators.forEach { $0.configure() }
-    
+
     if !spotsSession.isActive {
       spotsSession.login()
     } else {
@@ -45,10 +45,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     splitView = MainSplitView(listView: listController.view,
                   detailView: detailController.view)
 
-//    listController.spotsScrollView.frame.size.height = window.frame.size.height - toolbarHeight * 2
-//    listController.spotsScrollView.frame.origin.y = toolbarHeight
-//    listController.spotsScrollView.autoresizingMask = [.ViewWidthSizable]
-
     registerURLScheme()
 
     detailController.blueprint = blueprints["browse"]!
@@ -57,18 +53,5 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     window.becomeKeyWindow()
 
     NSUserDefaults.standardUserDefaults().setBool(true, forKey: "NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints")
-  }
-}
-
-extension AppDelegate {
-
-  func windowDidBecomeKey(notification: NSNotification) {
-//    guard let currentBlueprint = detailController.blueprint else { return }
-//    detailController.blueprint = currentBlueprint
-  }
-
-  func windowDidResize(notification: NSNotification) {
-//    listController.spotsScrollView.frame.size.height = window.frame.size.height - toolbarHeight * 2
-//    detailController.spotsScrollView.frame.size.height = window.frame.size.height - toolbarHeight
   }
 }
