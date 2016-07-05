@@ -1,12 +1,33 @@
 ![Spots logo](https://raw.githubusercontent.com/hyperoslo/Spots/master/Images/cover_v4.jpg)
 
-[![CI Status](http://img.shields.io/travis/hyperoslo/Spots.svg?style=flat)](https://travis-ci.org/hyperoslo/Spots)
-[![Version](https://img.shields.io/cocoapods/v/Spots.svg?style=flat)](http://cocoadocs.org/docsets/Spots)
-[![License](https://img.shields.io/cocoapods/l/Spots.svg?style=flat)](http://cocoadocs.org/docsets/Spots)
-[![Platform](https://img.shields.io/cocoapods/p/Spots.svg?style=flat)](http://cocoadocs.org/docsets/Spots)
-[![Documentation](https://img.shields.io/cocoapods/metrics/doc-percent/Spots.svg?style=flat)](http://cocoadocs.org/docsets/Spots)
-![Swift](https://img.shields.io/badge/%20in-swift%202.2-orange.svg)
-[![Join the chat at https://gitter.im/hyperoslo/Spots](https://badges.gitter.im/hyperoslo/Spots.svg)](https://gitter.im/hyperoslo/Spots?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+<div align="center">
+<a href="https://travis-ci.org/hyperoslo/Spots" target="_blank">
+<img src="http://img.shields.io/travis/hyperoslo/Spots.svg?style=flat">
+</a>
+
+<a href="http://cocoadocs.org/docsets/Spots" target="_blank">
+<img src="https://img.shields.io/cocoapods/v/Spots.svg?style=flat">
+</a>
+
+<a href="http://cocoadocs.org/docsets/Spots" target="_blank">
+<img src="https://img.shields.io/cocoapods/l/Spots.svg?style=flat">
+</a>
+
+<a href="http://cocoadocs.org/docsets/Spots" target="_blank">
+<img src="https://img.shields.io/cocoapods/p/Spots.svg?style=flat">
+</a>
+
+<a href="http://cocoadocs.org/docsets/Spots" target="_blank">
+<img src="https://img.shields.io/cocoapods/metrics/doc-percent/Spots.svg?style=flat">
+</a>
+
+<img src="https://img.shields.io/badge/%20in-swift%202.2-orange.svg">
+
+<a href="https://gitter.im/hyperoslo/Spots?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge">
+<img src="https://badges.gitter.im/hyperoslo/Spots.svg">
+</a>
+
+</div>
 
 **Spots** is a view controller framework that makes your setup and future
 development blazingly fast. Because of its internal architecture and
