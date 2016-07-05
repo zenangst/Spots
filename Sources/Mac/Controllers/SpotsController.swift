@@ -208,12 +208,10 @@ public class SpotsController: NSViewController, SpotsProtocol {
   func scrollViewDidScroll(notification: NSNotification) {
     guard let scrollView = notification.object as? SpotsScrollView,
       delegate = spotsScrollDelegate,
-      window = NSApplication.sharedApplication().mainWindow,
-      windowFrame = window.contentView?.frame
+      _ = NSApplication.sharedApplication().mainWindow
       else { return }
 
     let offset = scrollView.contentOffset
-    let size = scrollView.contentSize
     let shouldFetch = !refreshing &&
       offset.y > 0 &&
       scrollView.contentSize.height > scrollView.spotsContentView.visibleRect.size.height &&
