@@ -1,12 +1,16 @@
 import Spots
 import Brick
 
-public class HeroGridItem: NSCollectionViewItem, SpotConfigurable {
+public class HeroGridItem: NSTableRowView, SpotConfigurable {
 
   public var size = CGSize(width: 0, height: 320)
   public var customView = FlippedView()
 
-  public lazy var customImageView = NSImageView()
+  public lazy var gradientLayer = CAGradientLayer()
+
+  public lazy var customImageView = NSImageView().then {
+    $0.imageScaling = .ScaleNone
+  }
 
   public lazy var titleLabel = NSTextField().then {
     $0.editable = false
@@ -24,14 +28,12 @@ public class HeroGridItem: NSCollectionViewItem, SpotConfigurable {
     $0.drawsBackground = false
   }
 
-  override init?(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
-    super.init(nibName: nil, bundle: nil)
+  override init(frame frameRect: NSRect) {
+    super.init(frame: frameRect)
 
-    imageView = customImageView
-
-    view.addSubview(customImageView)
-    view.addSubview(titleLabel)
-    view.addSubview(subtitleLabel)
+    addSubview(customImageView)
+    addSubview(titleLabel)
+    addSubview(subtitleLabel)
 
     let shadow = NSShadow()
     shadow.shadowColor = NSColor.blackColor()
@@ -45,10 +47,6 @@ public class HeroGridItem: NSCollectionViewItem, SpotConfigurable {
 
   required public init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
-  }
-
-  public override func loadView() {
-    view = customView
   }
 
   func setupConstraints() {
@@ -75,7 +73,6 @@ public class HeroGridItem: NSCollectionViewItem, SpotConfigurable {
     subtitleLabel.sizeToFit()
 
     if item.image.isPresent && item.image.hasPrefix("http") {
-      let gradientLayer = CAGradientLayer()
 
       gradientLayer.colors = [
         NSColor.clearColor().CGColor,
@@ -89,10 +86,15 @@ public class HeroGridItem: NSCollectionViewItem, SpotConfigurable {
       customImageView.shadow = shadow
       customImageView.setImage(NSURL(string: item.image)) { [weak self] _ in
         guard let weakSelf = self else { return }
-        gradientLayer.frame.size.width = weakSelf.customImageView.frame.size.width
-        gradientLayer.frame.size.height = weakSelf.customImageView.frame.size.height
-        weakSelf.customImageView.layer?.mask = gradientLayer
+        weakSelf.customImageView.layer?.mask = weakSelf.gradientLayer
       }
     }
+  }
+
+  public override func layout() {
+    super.layout()
+
+    gradientLayer.frame.size.width = customImageView.frame.size.width * 2
+    gradientLayer.frame.size.height = customImageView.frame.size.height
   }
 }
