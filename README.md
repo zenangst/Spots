@@ -1,4 +1,4 @@
-![Spots logo](https://raw.githubusercontent.com/hyperoslo/Spots/master/Images/cover_v3.png)
+![Spots logo](https://raw.githubusercontent.com/hyperoslo/Spots/master/Images/cover_v3.jpg)
 
 [![CI Status](http://img.shields.io/travis/hyperoslo/Spots.svg?style=flat)](https://travis-ci.org/hyperoslo/Spots)
 [![Version](https://img.shields.io/cocoapods/v/Spots.svg?style=flat)](http://cocoadocs.org/docsets/Spots)
