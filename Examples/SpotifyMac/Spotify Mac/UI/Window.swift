@@ -18,7 +18,6 @@ class Window: NSWindow, NSWindowDelegate {
 
       let gradientLayer = CAGradientLayer()
       gradientLayer.colors = [
-//        NSColor(red:0.3, green:0.3, blue:0.3, alpha: 1).CGColor,
         NSColor(red:0.15, green:0.15, blue:0.15, alpha: 1).CGColor,
         NSColor(red:0.1, green:0.1, blue:0.1, alpha: 1).CGColor,
       ]

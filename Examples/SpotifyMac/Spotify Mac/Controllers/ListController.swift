@@ -18,7 +18,7 @@ class ListController: SpotsController, SpotsDelegate, SpotsScrollDelegate {
     let stateCache = SpotCache(key: cacheKey)
     var spots = stateCache.load()
 
-//    if spots.isEmpty {
+    if spots.isEmpty {
     let size = ["height" : 40]
       let meta = ["separator" : false, "tintColor" : "EF7C19"]
       let mainItems: [[String : AnyObject]] = [
@@ -78,7 +78,6 @@ class ListController: SpotsController, SpotsDelegate, SpotsScrollDelegate {
       spots = [
         "components" : [
           [
-//            "title" : "Spotify for the Mac".uppercaseString,
             "kind" : "list",
             "span" : 1,
             "items" : mainItems,
@@ -114,7 +113,7 @@ class ListController: SpotsController, SpotsDelegate, SpotsScrollDelegate {
           ]
         ]
       ]
-//    }
+    }
 
     self.init(spots: Parser.parse(spots))
     self.stateCache = stateCache

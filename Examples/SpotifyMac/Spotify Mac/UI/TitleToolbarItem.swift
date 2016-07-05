@@ -10,7 +10,6 @@ public class TitleToolbarItem: NSToolbarItem {
     $0.font = NSFont.systemFontOfSize(14)
     $0.textColor = NSColor.whiteColor()
     $0.drawsBackground = false
-//    $0.cell?.backgroundStyle = .Raised
     $0.wantsLayer = true
   }
 
