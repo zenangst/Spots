@@ -33,7 +33,6 @@ class DetailController: SpotsController, SpotsDelegate, SpotsScrollDelegate {
 
   override func viewWillAppear() {
     super.viewWillAppear()
-
     guard let blueprint = blueprint else { return }
     build(blueprint)
     self.spotsScrollDelegate = self
@@ -84,9 +83,11 @@ extension DetailController {
     if item.kind == "track" {
       var item = item
       item.meta["playing"] = true
-//      update(item, index: item.index, spotIndex: spot.index, withAnimation: .None, completion: nil)
+      for (index, _) in spot.items.enumerate() {
+        spot.items[index].meta["playing"] = false
+      }
+      update(item, index: item.index, spotIndex: spot.index, withAnimation: .None, completion: nil)
     }
-
 
     AppDelegate.navigate(action, fragments: item.meta("fragments", [:]))
   }
