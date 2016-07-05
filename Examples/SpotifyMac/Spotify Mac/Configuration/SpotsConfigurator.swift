@@ -8,7 +8,6 @@ struct SpotsConfigurator: Configurator {
     CarouselSpot.grids["carousel"] = GridSpotItem.self
     CarouselSpot.grids["category"] = CategoryGridItem.self
     CarouselSpot.grids["featured"] = FeaturedGridItem.self
-    CarouselSpot.grids["hero"] = HeroGridItem.self
     CarouselSpot.grids["list"] = GridListItem.self
     GridSpot.grids["artist"] = ArtistGridItem.self
     GridSpot.grids["album"] = AlbumGridItem.self
@@ -19,6 +18,7 @@ struct SpotsConfigurator: Configurator {
     GridSpot.grids["list"] = GridListItem.self
     ListSpot.views["list"] = TableRow.self
     ListSpot.views["track"] = TrackRow.self
+    ListSpot.views["hero"] = HeroGridItem.self
 
     CarouselSpot.Default.sectionInsetTop = 30.0
     CarouselSpot.Default.sectionInsetLeft = 30.0
