@@ -11,7 +11,7 @@ PODS:
   - Imaginary (0.1.0):
     - Cache
   - Keychain (1.0.0)
-  - Spots (1.9.5):
+  - Spots (2.0.0):
     - Brick
     - Cache
     - Hue
@@ -48,10 +48,10 @@ CHECKOUT OPTIONS:
     :commit: d6f0b013cbe9ede4b5fe5a8b615220abce0327d6
     :git: https://github.com/hyperoslo/Cache
   Hue:
-    :commit: 43404964a799dd0c8affc2d4631ead33df8e04f1
+    :commit: 18d070a63a2ffb5e0a07d2f9872946d8ecc77c74
     :git: https://github.com/hyperoslo/Hue
   Imaginary:
-    :commit: 0e3058d2b3963e060ea825532e0fc1b080f79ee2
+    :commit: 4ab2007614aa2397a9ce82c69771f21df3d37cdc
     :git: https://github.com/hyperoslo/Imaginary
   Keychain:
     :commit: f8197b27fe34774b72046b0ec4a24e517e1bb79c
@@ -65,7 +65,7 @@ SPEC CHECKSUMS:
   Hue: c7d6a7206bac669ed69e78cc6c14a4d7bd28277c
   Imaginary: 62a9ce1e6d7831ede429c8221a183f03ec2a90bc
   Keychain: 50cb247cab32e774422741b118af9b598a3fb5b2
-  Spots: 74bd9973e517d5170dc241bc93eed6b6728d993f
+  Spots: 17006fd1b18f306c377811168ddf6d57a947c6d0
   Sugar: bed396c924fd089feee7c780778cca2a124f580c
   Tailor: 38a9f1ed1fa804856583396a55ed764d832eeca8
   Whisper: 42a3ee7c2936f861b23d41bd6cd7dfd22f102405

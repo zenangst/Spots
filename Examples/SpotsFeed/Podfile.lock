@@ -9,11 +9,13 @@ PODS:
   - CryptoSwift (0.5.1)
   - Fakery (1.2.0):
     - SwiftyJSON
+  - Hue (1.1)
   - Imaginary (0.1.0):
     - Cache
-  - Spots (1.9.5):
+  - Spots (2.0.0):
     - Brick
     - Cache
+    - Hue
     - Sugar
     - Tailor
   - Sugar (1.1.1)
@@ -41,7 +43,7 @@ CHECKOUT OPTIONS:
     :commit: d6f0b013cbe9ede4b5fe5a8b615220abce0327d6
     :git: https://github.com/hyperoslo/Cache
   Imaginary:
-    :commit: 7e122dc1bd463c25b39057b1d31c3237efcb8276
+    :commit: 4ab2007614aa2397a9ce82c69771f21df3d37cdc
     :git: https://github.com/hyperoslo/Imaginary
 
 SPEC CHECKSUMS:
@@ -50,8 +52,9 @@ SPEC CHECKSUMS:
   Compass: a5793a890400a010a9a4eb6547c014e982483a2c
   CryptoSwift: df42dda18baf6c76347a94e227dbcc0a341304bd
   Fakery: ff6a27c3688a05c055d3e64c5fa9d78684796749
-  Imaginary: 5317b8d2dc8ecf20455232226bf8a277abdd37d5
-  Spots: a0aa4115e1ba66e05c56c968fa1e758023a2516c
+  Hue: ed6781be844b58b2a38150cfd4bf24c33449faf8
+  Imaginary: 62a9ce1e6d7831ede429c8221a183f03ec2a90bc
+  Spots: 17006fd1b18f306c377811168ddf6d57a947c6d0
   Sugar: bed396c924fd089feee7c780778cca2a124f580c
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   Tailor: 38a9f1ed1fa804856583396a55ed764d832eeca8

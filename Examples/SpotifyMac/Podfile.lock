@@ -22,7 +22,7 @@ PODS:
     - JWTDecode
     - Keychain
     - Sugar
-  - Spots (1.9.5):
+  - Spots (2.0.0):
     - Brick
     - Cache
     - Hue
@@ -78,7 +78,7 @@ CHECKOUT OPTIONS:
     :commit: 3e2bf8754d1dbdc9e05f423bbb96db6dc06fec46
     :git: https://github.com/vadymmarkov/Fashion.git
   Hue:
-    :commit: 43404964a799dd0c8affc2d4631ead33df8e04f1
+    :commit: 18d070a63a2ffb5e0a07d2f9872946d8ecc77c74
     :git: https://github.com/hyperoslo/Hue.git
   Imaginary:
     :commit: 4ab2007614aa2397a9ce82c69771f21df3d37cdc
@@ -109,7 +109,7 @@ SPEC CHECKSUMS:
   Keychain: 50cb247cab32e774422741b118af9b598a3fb5b2
   Malibu: 7d69e5c8d15cd70a1c50c4efb3e13cb44340573e
   OhMyAuth: ce16b5e94887376934ea92a3ba252b6f79910699
-  Spots: 74bd9973e517d5170dc241bc93eed6b6728d993f
+  Spots: 17006fd1b18f306c377811168ddf6d57a947c6d0
   Sugar: 73eaf2803ba1128d8b0370f402494981af7675d3
   Tailor: 38a9f1ed1fa804856583396a55ed764d832eeca8
   When: 033104df132ebfa75f4d3a9ba3e7a9865a573a1c
