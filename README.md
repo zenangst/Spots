@@ -45,6 +45,7 @@ the public API.
 ## Key features
 
 - JSON based views that could be served up by your backend.
+- Live editing.
 - View based caching for controllers, table and collection views.
 - Supports displaying multiple collections, tables and regular views in the same container.
 - Features both infinity scrolling and pull to refresh (on iOS), all you have to do is to
