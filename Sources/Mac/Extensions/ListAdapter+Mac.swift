@@ -172,7 +172,6 @@ extension ListAdapter: NSTableViewDelegate {
       spot.spotsDelegate?.spotDidSelectItem(spot, item: viewModel)
     }
 
-
     return true
   }
 
