@@ -37,8 +37,6 @@
 		BD6A1F0D1D2A5B2500E85FD3 /* TrackRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6A1EF11D2A5B2500E85FD3 /* TrackRow.swift */; };
 		BD6A1F0F1D2A5C8100E85FD3 /* NSImage+contentMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6A1F0E1D2A5C8100E85FD3 /* NSImage+contentMode.swift */; };
 		BD6A1F121D2AC74100E85FD3 /* NavigationToolbarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6A1F111D2AC74100E85FD3 /* NavigationToolbarItem.swift */; };
-		BDC64D3C1D2185190066A6E6 /* CocoaLibSpotify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDC64D3B1D2185190066A6E6 /* CocoaLibSpotify.framework */; };
-		BDC64D3D1D2185210066A6E6 /* CocoaLibSpotify.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BDC64D3B1D2185190066A6E6 /* CocoaLibSpotify.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BDDC3E901CE78D5B00B608FB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDC3E8F1CE78D5B00B608FB /* AppDelegate.swift */; };
 		BDDC3E921CE78D5B00B608FB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BDDC3E911CE78D5B00B608FB /* Assets.xcassets */; };
 		BDDC3E951CE78D5B00B608FB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = BDDC3E931CE78D5B00B608FB /* MainMenu.xib */; };
@@ -53,7 +51,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				BDC64D3D1D2185210066A6E6 /* CocoaLibSpotify.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,7 +89,6 @@
 		BD6A1EF11D2A5B2500E85FD3 /* TrackRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackRow.swift; sourceTree = "<group>"; };
 		BD6A1F0E1D2A5C8100E85FD3 /* NSImage+contentMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSImage+contentMode.swift"; sourceTree = "<group>"; };
 		BD6A1F111D2AC74100E85FD3 /* NavigationToolbarItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationToolbarItem.swift; sourceTree = "<group>"; };
-		BDC64D3B1D2185190066A6E6 /* CocoaLibSpotify.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CocoaLibSpotify.framework; sourceTree = "<group>"; };
 		BDDC3E8C1CE78D5B00B608FB /* Spotify Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Spotify Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDDC3E8F1CE78D5B00B608FB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BDDC3E911CE78D5B00B608FB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -108,7 +104,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D2411EB64750BA13F6E687D7 /* Pods_Spotify_Mac.framework in Frameworks */,
-				BDC64D3C1D2185190066A6E6 /* CocoaLibSpotify.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -127,7 +122,6 @@
 		7EDE005FF07A356BFB2188E7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				BDC64D3B1D2185190066A6E6 /* CocoaLibSpotify.framework */,
 				F7EDD36C15FEE6E3B20900B4 /* Pods_Spotify_Mac.framework */,
 			);
 			name = Frameworks;
