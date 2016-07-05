@@ -22,6 +22,7 @@ public class ArtistGridItem: NSCollectionViewItem, SpotConfigurable {
   }
 
   lazy var customImageView = NSImageView().then {
+    $0.imageScaling = .ScaleNone
     $0.wantsLayer = true
     $0.layer?.cornerRadius = 60
   }
@@ -90,7 +91,9 @@ public class ArtistGridItem: NSCollectionViewItem, SpotConfigurable {
     self.item = item
 
     if item.image.isPresent && item.image.hasPrefix("http") {
-      customImageView.setImage(NSURL(string: item.image))
+      customImageView.setImage(NSURL(string: item.image)) { [weak self] image in
+        self?.customImageView.contentMode = .ScaleToAspectFill
+      }
     }
   }
 }
