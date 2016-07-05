@@ -35,6 +35,8 @@
 		BD6A1F0B1D2A5B2500E85FD3 /* HeroGridItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6A1EEF1D2A5B2500E85FD3 /* HeroGridItem.swift */; };
 		BD6A1F0C1D2A5B2500E85FD3 /* TableRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6A1EF01D2A5B2500E85FD3 /* TableRow.swift */; };
 		BD6A1F0D1D2A5B2500E85FD3 /* TrackRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6A1EF11D2A5B2500E85FD3 /* TrackRow.swift */; };
+		BD6A1F0F1D2A5C8100E85FD3 /* NSImage+contentMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6A1F0E1D2A5C8100E85FD3 /* NSImage+contentMode.swift */; };
+		BD6A1F121D2AC74100E85FD3 /* NavigationToolbarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6A1F111D2AC74100E85FD3 /* NavigationToolbarItem.swift */; };
 		BDC64D3C1D2185190066A6E6 /* CocoaLibSpotify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDC64D3B1D2185190066A6E6 /* CocoaLibSpotify.framework */; };
 		BDC64D3D1D2185210066A6E6 /* CocoaLibSpotify.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BDC64D3B1D2185190066A6E6 /* CocoaLibSpotify.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BDDC3E901CE78D5B00B608FB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDC3E8F1CE78D5B00B608FB /* AppDelegate.swift */; };
@@ -88,6 +90,8 @@
 		BD6A1EEF1D2A5B2500E85FD3 /* HeroGridItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeroGridItem.swift; sourceTree = "<group>"; };
 		BD6A1EF01D2A5B2500E85FD3 /* TableRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableRow.swift; sourceTree = "<group>"; };
 		BD6A1EF11D2A5B2500E85FD3 /* TrackRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackRow.swift; sourceTree = "<group>"; };
+		BD6A1F0E1D2A5C8100E85FD3 /* NSImage+contentMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSImage+contentMode.swift"; sourceTree = "<group>"; };
+		BD6A1F111D2AC74100E85FD3 /* NavigationToolbarItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationToolbarItem.swift; sourceTree = "<group>"; };
 		BDC64D3B1D2185190066A6E6 /* CocoaLibSpotify.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CocoaLibSpotify.framework; sourceTree = "<group>"; };
 		BDDC3E8C1CE78D5B00B608FB /* Spotify Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Spotify Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDDC3E8F1CE78D5B00B608FB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -155,6 +159,7 @@
 			isa = PBXGroup;
 			children = (
 				BD6A1EDA1D2A5B2500E85FD3 /* NSImage+tintColor.swift */,
+				BD6A1F0E1D2A5C8100E85FD3 /* NSImage+contentMode.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -186,6 +191,7 @@
 				BD6A1EE51D2A5B2500E85FD3 /* TitleToolbarItem.swift */,
 				BD6A1EE61D2A5B2500E85FD3 /* Toolbar.swift */,
 				BD6A1EE71D2A5B2500E85FD3 /* Window.swift */,
+				BD6A1F111D2AC74100E85FD3 /* NavigationToolbarItem.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -367,11 +373,13 @@
 			files = (
 				BD6A1F0D1D2A5B2500E85FD3 /* TrackRow.swift in Sources */,
 				BD6A1EF61D2A5B2500E85FD3 /* OhMyAuthConfigurator.swift in Sources */,
+				BD6A1F0F1D2A5C8100E85FD3 /* NSImage+contentMode.swift in Sources */,
 				BD6A1F061D2A5B2500E85FD3 /* ArtistGridItem.swift in Sources */,
 				BD6A1EF91D2A5B2500E85FD3 /* ListController.swift in Sources */,
 				BD6A1F041D2A5B2500E85FD3 /* Window.swift in Sources */,
 				BD6A1F0A1D2A5B2500E85FD3 /* HeaderGridItem.swift in Sources */,
 				BD6A1F081D2A5B2500E85FD3 /* FeaturedGridItem.swift in Sources */,
+				BD6A1F121D2AC74100E85FD3 /* NavigationToolbarItem.swift in Sources */,
 				BD6A1F071D2A5B2500E85FD3 /* CategoryGridItem.swift in Sources */,
 				BD6A1EF51D2A5B2500E85FD3 /* MalibuConfigurator.swift in Sources */,
 				BD6A1F021D2A5B2500E85FD3 /* TitleToolbarItem.swift in Sources */,
