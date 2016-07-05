@@ -7,11 +7,13 @@ struct CompassConfigurator: Configurator {
     Compass.routes = [
       "auth",
       "artist:{artist_id}",
+      "back",
       "browse",
       "album:{album_id}",
       "albums",
       "callback",
       "category:{category_id}",
+      "forward",
       "logout",
       "next",
       "following",
