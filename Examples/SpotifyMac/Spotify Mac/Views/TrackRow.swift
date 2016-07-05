@@ -128,8 +128,6 @@ public class TrackRow: NSTableRowView, SpotConfigurable {
 
     imageView.leftAnchor.constraintEqualToAnchor(trackLabel.rightAnchor).active = true
     imageView.centerYAnchor.constraintEqualToAnchor(imageView.superview!.centerYAnchor).active = true
-    imageView.heightAnchor.constraintEqualToConstant(40).active = true
-    imageView.widthAnchor.constraintEqualToConstant(40).active = true
   }
 
   override public func hitTest(aPoint: NSPoint) -> NSView? {
@@ -141,8 +139,6 @@ public class TrackRow: NSTableRowView, SpotConfigurable {
   }
 
   public func configure(inout item: ViewModel) {
-    let titlesOffset: CGFloat = 40
-
     if item.meta("separator", type: Bool.self) == false {
       lineView.frame.size.height = 0.0
     } else {
@@ -162,28 +158,24 @@ public class TrackRow: NSTableRowView, SpotConfigurable {
     self.item = item
 
     if item.image.isPresent {
-      titleLabel.frame.origin.x = 50 + titlesOffset
-
       if item.image.hasPrefix("http") {
-        imageView.frame.size.width = 40
-        imageView.frame.size.height = 40
+        imageView.heightAnchor.constraintEqualToConstant(40).active = true
+        imageView.widthAnchor.constraintEqualToConstant(40).active = true
         imageView.setImage(NSURL(string: item.image))
       } else {
         imageView.image = NSImage(named: item.image)
-        imageView.frame.size.width = 18
-        imageView.frame.size.height = 18
-        imageView.frame.origin.x = 10
-        imageView.frame.origin.y = item.size.height / 2 - imageView.frame.size.height / 2 + 1
-//        if tintColor != nil {
-          imageView.tintColor = NSColor.grayColor()
-//        }
+        imageView.heightAnchor.constraintEqualToConstant(18).active = true
+        imageView.widthAnchor.constraintEqualToConstant(18).active = true
+        imageView.tintColor = selected ? NSColor.whiteColor() : NSColor.grayColor()
       }
     }
 
     if item.meta("playing", type: Bool.self) == true {
       playButton.image = NSImage(named: "stopButton")
+      playButton.tintColor = NSColor.whiteColor()
     } else {
       playButton.image = NSImage(named: "playButton")
+      playButton.tintColor = NSColor.grayColor()
     }
 
     lineView.frame.origin.y = item.size.height
