@@ -22,7 +22,7 @@ extension SpotsController {
       : (spots.last?.component.items.last?.size.height ?? 0) * 6
     let shouldFetch = !refreshing &&
       size.height > UIScreen.mainScreen().bounds.height &&
-      offset.y > size.height - UIScreen.mainScreen().bounds.height * multiplier &&
+      offset.y > size.height - scrollView.bounds.height * multiplier &&
       !refreshPositions.contains(size.height - itemOffset)
 
     guard let delegate = spotsScrollDelegate else { return }
