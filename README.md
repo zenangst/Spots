@@ -1,4 +1,4 @@
-![Spots logo](https://raw.githubusercontent.com/hyperoslo/Spots/master/Images/cover_v2.png)
+![Spots logo](https://raw.githubusercontent.com/hyperoslo/Spots/master/Images/cover_v3.png)
 
 [![CI Status](http://img.shields.io/travis/hyperoslo/Spots.svg?style=flat)](https://travis-ci.org/hyperoslo/Spots)
 [![Version](https://img.shields.io/cocoapods/v/Spots.svg?style=flat)](http://cocoadocs.org/docsets/Spots)
@@ -47,13 +47,13 @@ the public API.
 - JSON based views that could be served up by your backend.
 - View based caching for controllers, table and collection views.
 - Supports displaying multiple collections, tables and regular views in the same container.
-- Features both infinity scrolling and pull to refresh, all you have to do is to
+- Features both infinity scrolling and pull to refresh (on iOS), all you have to do is to
 setup delegates that conform to the public protocols on `SpotsController`.
 - No need to implement your own data source, every `Spotable` object has their
 own set of `ViewModel`’s.
 which is maintained internally and is there at your disposable if you decide to
 make changes to them.
-- Easy configuration of `UICollectionView`’s, `UITableView`'s and any custom spot
+- Easy configuration of collection views, table views and any custom spot
 implementation that you add.
 This improves code reuse and helps to theme your app and ultimately keep your application consistent.
 - Support custom Spots, all you need to do is to conform to `Spotable`
@@ -100,7 +100,7 @@ navigationController?.pushViewController(controller, animated: true)
 ```
 
 ## SpotsController
-The `SpotsController` inherits from `UIViewController` but it sports some core features that makes your everyday mundane tasks a thing of the past. `SpotsController` has four different delegates
+The `SpotsController` inherits from `UIViewController` and `NSViewController` but it sports some core features that makes your everyday mundane tasks a thing of the past. `SpotsController` has four different delegates
 
 ## Delegates
 
@@ -235,11 +235,11 @@ public protocol SpotsCarouselScrollDelegate: class {
 - **.index**
 Calculated value to determine the index it has inside of the spot.
 - **.title**
-This is used as a title in `UITableView` view.
+This is used as a title in table view view.
 - **.kind**
 Determines which spot should be used. `carousel`, `list`, `grid` are there by default but you can register your own.
 - **.span**
-Determines the amount of views that should fit on one row, by default it is set to zero and uses the default `UICollectionViewFlowLayout` to render `UICollectionView` based views.
+Determines the amount of views that should fit on one row, by default it is set to zero and uses the default flow layout to render collection based views.
 - **.size**
 Calculated value based on the amount of items and their combined heights.
 - **.meta**
