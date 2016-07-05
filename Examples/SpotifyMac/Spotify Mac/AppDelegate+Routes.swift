@@ -40,11 +40,7 @@ extension AppDelegate {
 
         break
       case "back":
-        NSLog("self.history: \(self.history)")
         guard let last = self.history.popLast() else { return }
-
-        NSLog("last: \(last)")
-
         AppDelegate.navigate(last, fragments: ["skipHistory" : true])
       case "preview":
         let cacheDirectories = NSSearchPathForDirectoriesInDomains(.CachesDirectory, .UserDomainMask, true)
