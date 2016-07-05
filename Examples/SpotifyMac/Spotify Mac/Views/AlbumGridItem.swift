@@ -48,7 +48,6 @@ public class AlbumGridItem: NSCollectionViewItem, SpotConfigurable {
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
     titleLabel.leftAnchor.constraintEqualToAnchor(customImageView.superview!.leftAnchor).active = true
     titleLabel.rightAnchor.constraintEqualToAnchor(customImageView.superview!.rightAnchor).active = true
-    titleLabel.topAnchor.constraintEqualToAnchor(customImageView.bottomAnchor, constant: -10).active = true
     titleLabel.centerXAnchor.constraintEqualToAnchor(titleLabel.superview!.centerXAnchor).active = true
   }
 
@@ -63,14 +62,14 @@ public class AlbumGridItem: NSCollectionViewItem, SpotConfigurable {
   public func configure(inout item: ViewModel) {
     self.item = item
 
-    titleLabel.stringValue = item.title
-    titleLabel.sizeToFit()
+    customView.frame.size.height = item.size.height
 
     if item.image.isPresent && item.image.hasPrefix("http") {
       customImageView.frame.size.width = item.size.width
       customImageView.frame.size.height = item.size.height
-      customImageView.frame.origin.y = customView.frame.height - customImageView.frame.height
-      customImageView.setImage(NSURL(string: item.image))
+      customImageView.setImage(NSURL(string: item.image)) { [weak self] image in
+        self?.customImageView.contentMode = .ScaleToAspectFill
+      }
     }
   }
 }
