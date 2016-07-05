@@ -17,12 +17,12 @@ public class HeaderGridItem: NSCollectionViewItem, SpotConfigurable {
 
   lazy var customImageView = NSImageView().then {
     $0.autoresizingMask = .ViewWidthSizable
-    
+
     let shadow = NSShadow()
     shadow.shadowColor = NSColor.blackColor().alpha(0.5)
     shadow.shadowBlurRadius = 10.0
     shadow.shadowOffset = CGSize(width: 0, height: -10)
-    
+
     $0.shadow = shadow
   }
 
@@ -95,7 +95,9 @@ public class HeaderGridItem: NSCollectionViewItem, SpotConfigurable {
     subtitleLabel.stringValue = item.subtitle
 
     if item.image.isPresent && item.image.hasPrefix("http") {
-      customImageView.setImage(NSURL(string: item.image))
+      customImageView.setImage(NSURL(string: item.image)) { [weak self] _ in
+        self?.customImageView.contentMode = .ScaleToAspectFill
+      }
     }
   }
 }
