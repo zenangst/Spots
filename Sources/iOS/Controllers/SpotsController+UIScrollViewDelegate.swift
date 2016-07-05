@@ -14,12 +14,15 @@ extension SpotsController {
   public func scrollViewDidScroll(scrollView: UIScrollView) {
     let offset = scrollView.contentOffset
     let size = scrollView.contentSize
+    let multiplier: CGFloat = !refreshPositions.isEmpty
+      ? CGFloat(1 + refreshPositions.count)
+      : 1
     let itemOffset = (size.height - UIScreen.mainScreen().bounds.size.height * 2) > 0
       ? UIScreen.mainScreen().bounds.size.height * 2
       : (spots.last?.component.items.last?.size.height ?? 0) * 6
     let shouldFetch = !refreshing &&
       size.height > UIScreen.mainScreen().bounds.height &&
-      offset.y > size.height - UIScreen.mainScreen().bounds.height * 2 &&
+      offset.y > size.height - UIScreen.mainScreen().bounds.height * multiplier &&
       !refreshPositions.contains(size.height - itemOffset)
 
     guard let delegate = spotsScrollDelegate else { return }
@@ -28,10 +31,10 @@ extension SpotsController {
     if scrollView.contentOffset.y < 0 &&
       abs(scrollView.contentOffset.y) == scrollView.contentInset.top &&
       !refreshing {
-        refreshing = true
-        delegate.spotDidReachBeginning {
-          self.refreshing = false
-        }
+      refreshing = true
+      delegate.spotDidReachBeginning {
+        self.refreshing = false
+      }
     }
 
     if shouldFetch {
