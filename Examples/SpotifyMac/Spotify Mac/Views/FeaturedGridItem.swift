@@ -31,6 +31,8 @@ public class FeaturedGridItem: NSCollectionViewItem, SpotConfigurable {
     $0.bezeled = false
     $0.textColor = NSColor.whiteColor()
     $0.drawsBackground = false
+    $0.cell?.wraps = true
+    $0.cell?.lineBreakMode = .ByClipping
   }
 
   public lazy var subtitleLabel = NSTextField().then {
@@ -71,9 +73,9 @@ public class FeaturedGridItem: NSCollectionViewItem, SpotConfigurable {
     customImageView.leftAnchor.constraintEqualToAnchor(customImageView.superview!.leftAnchor).active = true
     customImageView.rightAnchor.constraintEqualToAnchor(customImageView.superview!.rightAnchor).active = true
 
-    titleLabel.leftAnchor.constraintEqualToAnchor(customImageView.superview!.leftAnchor).active = true
-    titleLabel.rightAnchor.constraintEqualToAnchor(customImageView.superview!.rightAnchor).active = true
-    titleLabel.topAnchor.constraintEqualToAnchor(customImageView.bottomAnchor).active = true
+    titleLabel.leftAnchor.constraintEqualToAnchor(titleLabel.superview!.leftAnchor).active = true
+    titleLabel.rightAnchor.constraintEqualToAnchor(titleLabel.superview!.rightAnchor).active = true
+    titleLabel.topAnchor.constraintEqualToAnchor(titleLabel.bottomAnchor).active = true
 
     subtitleLabel.leftAnchor.constraintEqualToAnchor(customImageView.superview!.leftAnchor).active = true
     subtitleLabel.rightAnchor.constraintEqualToAnchor(customImageView.superview!.rightAnchor).active = true
@@ -85,33 +87,32 @@ public class FeaturedGridItem: NSCollectionViewItem, SpotConfigurable {
   }
 
   public override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+    if let item = item,
+      image = customImageView.image
+      where keyPath == "customImageView.image" && item.meta("useAsBackground", type: Bool.self) == true {
 
-//    if let item = item,
-//      image = customImageView.image
-//      where keyPath == "customImageView.image" && item.meta("useAsBackground", type: Bool.self) == true {
-//
-//      dispatch(queue: .Interactive) {
-//        let (background, _, _, _) = image.colors()
-//        dispatch { [weak self] in
-//          guard let collectionView = self?.collectionView,
-//            backgroundView = collectionView.backgroundView,
-//            backgroundLayer = backgroundView.layer
-//            where backgroundLayer.sublayers == nil
-//          else { return }
-//          let gradientLayer = CAGradientLayer()
-//
-//          gradientLayer.colors = [
-//            background.alpha(0.8).CGColor,
-//            NSColor.clearColor().CGColor
-//          ]
-//          gradientLayer.locations = [0.0, 0.7]
-//          gradientLayer.frame.size.width = 3000
-//          gradientLayer.frame.size.height = collectionView.frame.size.height
-//          gradientLayer.opacity = 0.4
-//          backgroundLayer.insertSublayer(gradientLayer, atIndex: 0)
-//        }
-//      }
-//    }
+      dispatch(queue: .Interactive) {
+        let (background, _, _, _) = image.colors()
+        dispatch { [weak self] in
+          guard let collectionView = self?.collectionView,
+            backgroundView = collectionView.backgroundView,
+            backgroundLayer = backgroundView.layer
+            where backgroundLayer.sublayers == nil
+          else { return }
+          let gradientLayer = CAGradientLayer()
+
+          gradientLayer.colors = [
+            background.alpha(0.4).CGColor,
+            NSColor.clearColor().CGColor
+          ]
+          gradientLayer.locations = [0.0, 0.7]
+          gradientLayer.frame.size.width = 3000
+          gradientLayer.frame.size.height = collectionView.frame.size.height
+          gradientLayer.opacity = 0.4
+          backgroundLayer.insertSublayer(gradientLayer, atIndex: 0)
+        }
+      }
+    }
   }
 
   public func configure(inout item: ViewModel) {
