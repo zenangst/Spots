@@ -178,7 +178,7 @@ public class SpotsController: NSViewController, SpotsProtocol {
 
   public override func viewDidLayout() {
     super.viewDidLayout()
-    for case let spot as Spotable in spots {
+    for spot in spots {
       spot.layout(CGSize(width: view.frame.width,
         height: spot.spotHeight() ?? 0))
     }

@@ -57,7 +57,6 @@ public class SpotsScrollView: NSScrollView {
   override public func layoutSubtreeIfNeeded() {
     super.layoutSubtreeIfNeeded()
 
-    let contentOffset = self.contentOffset
     var yOffsetOfCurrentSubview: CGFloat = 0.0
 
     for subview in subviewsInLayoutOrder {

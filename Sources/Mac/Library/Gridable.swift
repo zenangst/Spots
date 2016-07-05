@@ -118,7 +118,7 @@ extension Gridable {
     }
 
     var width = (item(indexPath)?.size.width ?? 0) - sectionInsets
-    var height = item(indexPath)?.size.height ?? 0
+    let height = item(indexPath)?.size.height ?? 0
     // Never return a negative width
     guard width > -1 else {
       return CGSize.zero
