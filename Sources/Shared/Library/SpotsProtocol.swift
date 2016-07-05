@@ -56,29 +56,6 @@ public extension SpotsProtocol {
   }
 
   /**
-   - Parameter spot: A Spotable object
-   */
-  public init(spot: Spotable) {
-    self.init(spots: [spot])
-  }
-
-  /**
-   - Parameter json: A JSON dictionary that gets parsed into UI elements
-   */
-  public init(_ json: [String : AnyObject]) {
-    self.init(spots: Parser.parse(json))
-  }
-
-  /**
-   - Parameter cacheKey: A key that will be used to identify the SpotCache
-   */
-  public init(cacheKey: String) {
-    let stateCache = SpotCache(key: cacheKey)
-    self.init(spots: Parser.parse(stateCache.load()))
-    self.stateCache = stateCache
-  }
-
-  /**
    - Parameter includeElement: A filter predicate to find a spot
    */
   public func filter(@noescape includeElement: (Spotable) -> Bool) -> [Spotable] {

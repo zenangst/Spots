@@ -61,24 +61,36 @@ public class SpotsController: NSViewController, SpotsProtocol {
   }
 
   /**
-   deinit
-   */
-  deinit {
-    NSNotificationCenter.defaultCenter().removeObserver(self)
-    for spot in spots {
-      spots.forEach { $0.spotsDelegate = nil }
-    }
-    spotsDelegate = nil
-    spotsScrollDelegate = nil
-  }
-
-  /**
    - Parameter cacheKey: A key that will be used to identify the SpotCache
    */
   public convenience init(cacheKey: String) {
     let stateCache = SpotCache(key: cacheKey)
     self.init(spots: Parser.parse(stateCache.load()))
     self.stateCache = stateCache
+  }
+
+  /**
+   - Parameter spot: A Spotable object
+   */
+  public convenience init(spot: Spotable) {
+    self.init(spots: [spot])
+  }
+
+  /**
+   - Parameter json: A JSON dictionary that gets parsed into UI elements
+   */
+  public convenience init(_ json: [String : AnyObject]) {
+    self.init(spots: Parser.parse(json))
+  }
+
+  /**
+   deinit
+   */
+  deinit {
+    NSNotificationCenter.defaultCenter().removeObserver(self)
+    spots.forEach { $0.spotsDelegate = nil }
+    spotsDelegate = nil
+    spotsScrollDelegate = nil
   }
 
   /**
@@ -196,12 +208,10 @@ public class SpotsController: NSViewController, SpotsProtocol {
   func scrollViewDidScroll(notification: NSNotification) {
     guard let scrollView = notification.object as? SpotsScrollView,
       delegate = spotsScrollDelegate,
-      window = NSApplication.sharedApplication().mainWindow,
-      windowFrame = window.contentView?.frame
+      _ = NSApplication.sharedApplication().mainWindow
       else { return }
 
     let offset = scrollView.contentOffset
-    let size = scrollView.contentSize
     let shouldFetch = !refreshing &&
       offset.y > 0 &&
       scrollView.contentSize.height > scrollView.spotsContentView.visibleRect.size.height &&
