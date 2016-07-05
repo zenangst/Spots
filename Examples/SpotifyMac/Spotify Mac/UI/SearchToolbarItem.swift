@@ -9,7 +9,6 @@ public class SearchToolbarItem: NSToolbarItem {
     $0.bezelStyle = .RoundedBezel
     $0.cell?.backgroundStyle = .Raised
     $0.wantsLayer = true
-
   }
 
   lazy public var customView = NSView().then {
