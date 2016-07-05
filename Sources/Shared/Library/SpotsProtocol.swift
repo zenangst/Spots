@@ -20,10 +20,10 @@ public protocol SpotsProtocol: class {
   /// An array of refresh position to avoid calling multiple refreshes
   var refreshPositions: [CGFloat] { get set }
   /// A view controller view
-  #if os(iOS)
-  var view: View! { get }
-  #else
+  #if os(OSX)
   var view: View { get }
+  #else
+  var view: View! { get }
   #endif
 
   var spot: Spotable? { get }
@@ -453,10 +453,10 @@ public extension SpotsProtocol {
   #endif
 
   private func reloadSpotsScrollView() {
-    #if os(iOS)
-      spotsScrollView.contentView.subviews.forEach { $0.removeFromSuperview() }
-    #else
+    #if os(OSX)
       (spotsScrollView.documentView as? View)?.subviews.forEach { $0.removeFromSuperview() }
+    #else
+      spotsScrollView.contentView.subviews.forEach { $0.removeFromSuperview() }
     #endif
   }
 }
