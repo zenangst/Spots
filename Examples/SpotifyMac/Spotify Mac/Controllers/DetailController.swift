@@ -70,7 +70,7 @@ class DetailController: SpotsController, SpotsDelegate, SpotsScrollDelegate {
   }
 
   func process(fragments: [String : AnyObject]? = nil) {
-    guard let handler = blueprint?.fragmentHandler, fragments = fragments else { return }
+    guard let handler = blueprint?.fragmentHandler, fragments = fragments where fragments["skipHistory"] == nil else { return }
 
     handler(fragments: fragments, controller: self)
   }
