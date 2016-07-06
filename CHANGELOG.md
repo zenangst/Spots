@@ -2,7 +2,42 @@
 
 ## [Unreleased](https://github.com/hyperoslo/Spots/tree/HEAD)
 
-[Full Changelog](https://github.com/hyperoslo/Spots/compare/1.9.4...HEAD)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/2.0.1...HEAD)
+
+**Merged pull requests:**
+
+- Make item with index path safe again [\#257](https://github.com/hyperoslo/Spots/pull/257) ([zenangst](https://github.com/zenangst))
+
+## [2.0.1](https://github.com/hyperoslo/Spots/tree/2.0.1) (2016-07-05)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/2.0.0...2.0.1)
+
+**Closed issues:**
+
+- Make Spots safer [\#238](https://github.com/hyperoslo/Spots/issues/238)
+
+**Merged pull requests:**
+
+- Fix/weird init issue [\#255](https://github.com/hyperoslo/Spots/pull/255) ([zenangst](https://github.com/zenangst))
+- Improve/scrollviewDidScroll [\#254](https://github.com/hyperoslo/Spots/pull/254) ([zenangst](https://github.com/zenangst))
+
+## [2.0.0](https://github.com/hyperoslo/Spots/tree/2.0.0) (2016-07-05)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/1.9.5...2.0.0)
+
+**Implemented enhancements:**
+
+- Feature view model caching [\#199](https://github.com/hyperoslo/Spots/issues/199)
+
+**Merged pull requests:**
+
+- 2.0.0 [\#253](https://github.com/hyperoslo/Spots/pull/253) ([zenangst](https://github.com/zenangst))
+- Guard access to item [\#252](https://github.com/hyperoslo/Spots/pull/252) ([onmyway133](https://github.com/onmyway133))
+- Change to view.bounds [\#251](https://github.com/hyperoslo/Spots/pull/251) ([onmyway133](https://github.com/onmyway133))
+- Avoid accessing view inside lazy block [\#250](https://github.com/hyperoslo/Spots/pull/250) ([onmyway133](https://github.com/onmyway133))
+- General foundation changes [\#249](https://github.com/hyperoslo/Spots/pull/249) ([zenangst](https://github.com/zenangst))
+- Improve delegate for CarouselSpot [\#248](https://github.com/hyperoslo/Spots/pull/248) ([zenangst](https://github.com/zenangst))
+
+## [1.9.5](https://github.com/hyperoslo/Spots/tree/1.9.5) (2016-06-15)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/1.9.4...1.9.5)
 
 **Merged pull requests:**
 
