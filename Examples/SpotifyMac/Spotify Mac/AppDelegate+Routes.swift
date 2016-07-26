@@ -26,6 +26,11 @@ extension AppDelegate {
   }
 
   func handleURL(url: NSURL, parameters: [String : AnyObject] = [:], fragments: [String : AnyObject] = [:]) {
+
+    guard let windowController = self.mainWindowController else {
+      return
+    }
+
     if url.absoluteString.hasPrefix("spots://callback") {
       spotsSession.auth(url)
       return
