@@ -184,7 +184,7 @@ public class GridSpot: NSObject, Gridable {
     }
 
     var layoutHeight = layout.collectionViewContentSize.height + layoutInsets.top + layoutInsets.bottom
-    if component.items.isEmpty { layoutHeight = size.height + layoutInsets.top + layoutInsets.bottom + 10 }
+    if component.items.isEmpty { layoutHeight = size.height + layoutInsets.top + layoutInsets.bottom }
 
     scrollView.frame.size.width = size.width - layoutInsets.right
     scrollView.frame.size.height = layoutHeight
