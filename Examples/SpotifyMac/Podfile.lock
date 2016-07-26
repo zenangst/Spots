@@ -22,7 +22,7 @@ PODS:
     - JWTDecode
     - Keychain
     - Sugar
-  - Spots (2.0.0):
+  - Spots (2.0.2):
     - Brick
     - Cache
     - Hue
@@ -99,7 +99,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Alamofire: 01a82e2f6c0f860ade35534c8dd88be61bdef40c
   Brick: c5b60d83f69c5e882097ee4e9bf12abd428e395a
-  Cache: 059cf0e10e6c3aec2c402eea19bd6b3aacb3fe9d
+  Cache: '059cf0e10e6c3aec2c402eea19bd6b3aacb3fe9d'
   Compass: a3c2e008e328b5773501df6186d5f64771cd82ce
   CryptoSwift: df42dda18baf6c76347a94e227dbcc0a341304bd
   Fashion: 82f2bb05505e3aea0977a2c23f5d8692e06f12a9
@@ -109,11 +109,11 @@ SPEC CHECKSUMS:
   Keychain: 50cb247cab32e774422741b118af9b598a3fb5b2
   Malibu: 7d69e5c8d15cd70a1c50c4efb3e13cb44340573e
   OhMyAuth: ce16b5e94887376934ea92a3ba252b6f79910699
-  Spots: dd1bb515914fd6c50dc14574e4a689eebec5b919
+  Spots: baa41382911aced9e94083df72928e4e4ac6d3ce
   Sugar: 73eaf2803ba1128d8b0370f402494981af7675d3
   Tailor: 38a9f1ed1fa804856583396a55ed764d832eeca8
   When: 033104df132ebfa75f4d3a9ba3e7a9865a573a1c
 
 PODFILE CHECKSUM: 9840629404bbbd6fbee34ed2ea20de4514e46bbd
 
-COCOAPODS: 1.0.0
+COCOAPODS: 1.0.1
