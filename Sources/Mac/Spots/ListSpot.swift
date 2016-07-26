@@ -69,6 +69,7 @@ public class ListSpot: NSObject, Listable {
     $0.headerView = nil
     $0.selectionHighlightStyle = .None
     $0.allowsTypeSelect = true
+    $0.focusRingType = .None
   }
 
   public lazy var tableColumn = NSTableColumn(identifier: "tableview-column").then {
