@@ -6,15 +6,21 @@ import Hue
 public class CarouselSpot: NSObject, Gridable {
 
   public struct Key {
-    static let minimumInteritemSpacing = "itemSpacing"
-    static let minimumLineSpacing = "lineSpacing"
-    static let titleLeftMargin = "titleLeftMargin"
-    static let titleFontSize = "titleFontSize"
-    static let titleTextColor = "titleTextColor"
+    public static let minimumInteritemSpacing = "itemSpacing"
+    public static let minimumLineSpacing = "lineSpacing"
+    public static let titleFontSize = "titleFontSize"
+    public static let titleLeftMargin = "titleLeftMargin"
+    public static let titleTopInset = "titleTopInset"
+    public static let titleBottomInset = "titleBottomInset"
+    public static let titleLeftInset = "titleLeftInset"
+    public static let titleTextColor = "titleTextColor"
   }
 
   public struct Default {
     public static var titleFontSize: CGFloat = 18.0
+    public static var titleLeftInset: CGFloat = 0.0
+    public static var titleTopInset: CGFloat = 10.0
+    public static var titleBottomInset: CGFloat = 10.0
     public static var titleTextColor: String = "000000"
     public static var sectionInsetTop: CGFloat = 0.0
     public static var sectionInsetLeft: CGFloat = 0.0
