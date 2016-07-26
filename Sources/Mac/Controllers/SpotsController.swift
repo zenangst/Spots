@@ -157,6 +157,7 @@ public class SpotsController: NSViewController, SpotsProtocol {
   public override func viewDidLoad() {
     super.viewDidLoad()
     view.addSubview(spotsScrollView)
+    spotsScrollView.hasVerticalScroller = true
     setupSpots()
     SpotsController.configure?(container: spotsScrollView)
   }
