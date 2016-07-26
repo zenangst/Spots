@@ -8,6 +8,9 @@ extension ListAdapter {
     let count = spot.component.items.count
     spot.component.items.append(item)
 
+    var cached: View?
+    spot.prepareItem(item, index: count, cached: &cached)
+
     dispatch { [weak self] in
       guard let tableView = self?.spot.tableView else { completion?(); return }
       tableView.insert([count], animation: animation.tableViewAnimation) {
@@ -22,14 +25,16 @@ extension ListAdapter {
 
     spot.component.items.appendContentsOf(items)
 
+    var cached: NSView?
     items.enumerate().forEach {
       indexes.append(count + $0.index)
+      spot.prepareItem($0.element, index: count + $0.index, cached: &cached)
     }
 
     dispatch { [weak self] in
       guard let tableView = self?.spot.tableView else { completion?(); return }
       tableView.insert(indexes, animation: animation.tableViewAnimation) {
-        self?.spot.setup(tableView.frame.size)
+        self?.spot.layout(tableView.frame.size)
         completion?()
       }
     }
@@ -181,6 +186,8 @@ extension ListAdapter: NSTableViewDelegate {
       height: tableView.frame.height)
 
     let height = row < spot.component.items.count ? spot.item(row)?.size.height ?? 0 : 1.0
+
+    if height == 0 { return 1.0 }
 
     return height
   }
