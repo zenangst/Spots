@@ -72,6 +72,7 @@ public class FeaturedGridItem: NSCollectionViewItem, SpotConfigurable {
     customImageView.topAnchor.constraintEqualToAnchor(customImageView.superview!.topAnchor).active = true
     customImageView.leftAnchor.constraintEqualToAnchor(customImageView.superview!.leftAnchor).active = true
     customImageView.rightAnchor.constraintEqualToAnchor(customImageView.superview!.rightAnchor).active = true
+    customImageView.heightAnchor.constraintEqualToConstant(250).active = true
 
     titleLabel.leftAnchor.constraintEqualToAnchor(titleLabel.superview!.leftAnchor).active = true
     titleLabel.rightAnchor.constraintEqualToAnchor(titleLabel.superview!.rightAnchor).active = true
