@@ -2,12 +2,12 @@ import Spots
 import Brick
 import Sugar
 
-public class HeaderGridItem: NSCollectionViewItem, SpotConfigurable {
+public class HeaderGridItem: NSTableRowView, SpotConfigurable {
 
   var item: ViewModel?
 
   public var size = CGSize(width: 0, height: 88)
-  public var customView = FlippedView()
+  public var containerView = FlippedView()
 
   static public var flipped: Bool {
     get {
@@ -47,12 +47,14 @@ public class HeaderGridItem: NSCollectionViewItem, SpotConfigurable {
     $0.layer?.backgroundColor = NSColor.grayColor().colorWithAlphaComponent(0.2).CGColor
   }
 
-  override init?(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
-    super.init(nibName: nil, bundle: nil)
-    customView.addSubview(titleLabel)
-    customView.addSubview(subtitleLabel)
-    customView.addSubview(customImageView)
-    customView.addSubview(lineView)
+  override init(frame frameRect: NSRect) {
+    super.init(frame: frameRect)
+
+    containerView.addSubview(titleLabel)
+    containerView.addSubview(subtitleLabel)
+    containerView.addSubview(customImageView)
+    containerView.addSubview(lineView)
+    addSubview(containerView)
 
     setupConstraints()
   }
@@ -61,21 +63,23 @@ public class HeaderGridItem: NSCollectionViewItem, SpotConfigurable {
     fatalError("init(coder:) has not been implemented")
   }
 
-  public override func loadView() {
-    view = customView
-  }
-
   func setupConstraints() {
+    containerView.translatesAutoresizingMaskIntoConstraints = false
     customImageView.translatesAutoresizingMaskIntoConstraints = false
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
     subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
     customImageView.translatesAutoresizingMaskIntoConstraints = false
     lineView.translatesAutoresizingMaskIntoConstraints = false
 
-    customImageView.topAnchor.constraintEqualToAnchor(customView.topAnchor).active = true
+    containerView.topAnchor.constraintEqualToAnchor(topAnchor).active = true
+    containerView.leftAnchor.constraintEqualToAnchor(leftAnchor, constant: 24).active = true
+    containerView.rightAnchor.constraintEqualToAnchor(rightAnchor, constant: -24).active = true
+    containerView.bottomAnchor.constraintEqualToAnchor(bottomAnchor).active = true
+
+    customImageView.topAnchor.constraintEqualToAnchor(containerView.topAnchor).active = true
     customImageView.widthAnchor.constraintEqualToConstant(160).active = true
     customImageView.heightAnchor.constraintEqualToConstant(160).active = true
-    customImageView.leftAnchor.constraintEqualToAnchor(customView.leftAnchor, constant: 10).active = true
+    customImageView.leftAnchor.constraintEqualToAnchor(leftAnchor, constant: 10).active = true
 
     titleLabel.topAnchor.constraintEqualToAnchor(customImageView.topAnchor).active = true
     titleLabel.leftAnchor.constraintEqualToAnchor(customImageView.rightAnchor, constant: 20).active = true
