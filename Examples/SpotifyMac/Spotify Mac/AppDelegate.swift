@@ -9,7 +9,7 @@ let spotsSession = SpotsSession()
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 
-  @IBOutlet weak var window: Window!
+  var window: Window?
 
   var history = [String]()
 
@@ -19,6 +19,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
   lazy var detailController = DetailController()
 
   var currentController: SpotsController?
+  var mainWindowController: MainWindowController?
   var splitView: MainSplitView!
   var player: AVAudioPlayer?
 
@@ -34,23 +35,35 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
   func applicationDidFinishLaunching(aNotification: NSNotification) {
     configurators.forEach { $0.configure() }
 
+//    spotsSession.login()
+
     if !spotsSession.isActive {
       spotsSession.login()
     } else {
       Malibu.networking("api").authenticate(bearerToken: spotsSession.accessToken ?? "")
     }
 
-    window.delegate = self
-
-    splitView = MainSplitView(listView: listController.view,
-                  detailView: detailController.view)
+    if let window = window where window.frame.size.width < window.minSize.width {
+      let previousRect = window.frame
+      window.setFrame(NSRect(
+        x: previousRect.origin.x,
+        y: previousRect.origin.y,
+        width: window.minSize.width,
+        height: window.minSize.height
+        ), display: false)
+    }
 
     registerURLScheme()
 
     detailController.blueprint = blueprints["browse"]!
 
-    window.contentView = splitView
-    window.becomeKeyWindow()
+    window = Window()
+    mainWindowController = MainWindowController(window: window)
+    mainWindowController?.windowFrameAutosaveName = "MainWindow"
+    window?.windowController = mainWindowController
+    mainWindowController?.currentController = detailController
+    AppDelegate.navigate("browse")
+    mainWindowController?.showWindow(nil)
 
     NSUserDefaults.standardUserDefaults().setBool(true, forKey: "NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints")
   }
