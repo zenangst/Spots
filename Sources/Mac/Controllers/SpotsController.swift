@@ -231,9 +231,10 @@ public class SpotsController: NSViewController, SpotsProtocol {
       else { return }
 
     let offset = scrollView.contentOffset
+    let totalHeight = (scrollView.documentView as? NSView)?.frame.size.height ?? 0
     let shouldFetch = !refreshing &&
       offset.y > 0 &&
-      scrollView.contentSize.height > scrollView.spotsContentView.visibleRect.size.height &&
+      offset.y + scrollView.frame.size.height > totalHeight - scrollView.frame.size.height &&
       !refreshPositions.contains(scrollView.spotsContentView.visibleRect.size.height)
 
     // Scroll did reach top
