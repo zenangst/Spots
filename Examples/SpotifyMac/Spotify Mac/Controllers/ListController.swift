@@ -115,10 +115,17 @@ class ListController: SpotsController, SpotsDelegate, SpotsScrollDelegate {
       ]
     }
 
-    self.init(spots: Parser.parse(spots))
+    self.init(spots: Parser.parse(spots), backgroundType: .Dynamic)
     self.stateCache = stateCache
     self.spotsDelegate = self
     self.spotsScrollDelegate = self
+    spotsScrollView.frame.origin.y = -40
+  }
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    view.wantsLayer = true
+    (view as? NSVisualEffectView)?.material = .UltraDark
   }
 
   override func viewDidAppear() {
