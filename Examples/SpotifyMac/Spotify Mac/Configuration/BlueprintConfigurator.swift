@@ -26,7 +26,7 @@ struct BlueprintConfigurator: Configurator {
       template: [
         "components" : [
           [
-            "kind" : "grid",
+            "kind" : "list",
             "size" : [
               "width" : 200.0,
               "height" : 315.0
@@ -220,7 +220,7 @@ struct BlueprintConfigurator: Configurator {
       template: [
         "components" : [
           [
-            "kind" : "grid",
+            "kind" : "list",
             "size" : [
               "width" : 200.0,
               "height" : 315.0
@@ -498,7 +498,7 @@ struct BlueprintConfigurator: Configurator {
       },template: [
         "components" : [
           [
-            "kind" : "grid",
+            "kind" : "list",
             "size" : [
               "width" : 200.0,
               "height" : 315.0
@@ -623,6 +623,19 @@ struct BlueprintConfigurator: Configurator {
           }
         )
       ],
+      fragmentHandler: { fragments, controller in
+        let headerModel = ViewModel(
+          title: "Welcome to Spotify for the Mac",
+          image: "http://i1.wp.com/fusion.net/wp-content/uploads/2015/06/150623-album-covers.png?resize=1600%2C900&quality=80&strip=all",
+          subtitle: "Built with Spots",
+          kind : "hero",
+          size: CGSize(width: 700, height: 400)
+        )
+
+        controller.updateIfNeeded(spotAtIndex: 0, items: [headerModel], withAnimation: .None) {
+          controller.cache()
+        }
+      },
       template: [
         "components" : [
           [
@@ -652,9 +665,10 @@ struct BlueprintConfigurator: Configurator {
               "itemSpacing" : 10.0,
               "lineSpacing" : 10.0,
               "insetTop" : 10.0,
-              "insetBottom" : 30.0,
+              "insetBottom" : 0.0,
               "insetLeft" : 10.0,
               "insetRight" : 10.0,
+              "titleLeftMargin" : 20
             ]
           ],
           ["kind" : Component.Kind.Grid.string,
@@ -666,6 +680,7 @@ struct BlueprintConfigurator: Configurator {
               "insetRight" : 10.0,
               "itemSpacing" : 0.0,
               "lineSpacing" : 10.0,
+              "titleLeftMargin" : 20,
               "layout" : "left"
             ]
           ],
@@ -678,7 +693,8 @@ struct BlueprintConfigurator: Configurator {
               "insetRight" : 10.0,
               "insetBottom" : 10.0,
               "itemSpacing" : 10.0,
-              "lineSpacing" : 10.0
+              "lineSpacing" : 10.0,
+              "titleLeftMargin" : 20
             ]
           ],
         ]
