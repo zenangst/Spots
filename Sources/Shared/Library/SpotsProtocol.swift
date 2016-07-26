@@ -44,7 +44,12 @@ public protocol SpotsProtocol: class {
   func spot<T>(index: Int, _ type: T.Type) -> T?
   func spot(@noescape closure: (index: Int, spot: Spotable) -> Bool) -> Spotable?
 
+  #if os(OSX)
+  init(spots: [Spotable], backgroundType: SpotsControllerBackground)
+  #else
   init(spots: [Spotable])
+  #endif
+
 }
 
 public extension SpotsProtocol {
