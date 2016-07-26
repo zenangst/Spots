@@ -14,10 +14,10 @@ public protocol Gridable: Spotable {
 
 public struct GridableMeta {
   public struct Key {
-    static let sectionInsetTop = "insetTop"
-    static let sectionInsetLeft = "insetLeft"
-    static let sectionInsetRight = "insetRight"
-    static let sectionInsetBottom = "insetBottom"
+    public static let sectionInsetTop = "insetTop"
+    public static let sectionInsetLeft = "insetLeft"
+    public static let sectionInsetRight = "insetRight"
+    public static let sectionInsetBottom = "insetBottom"
   }
 }
 
