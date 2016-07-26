@@ -15,15 +15,15 @@ public class GridSpot: NSObject, Gridable {
   }
 
   public struct Key {
-    static let minimumInteritemSpacing = "itemSpacing"
-    static let minimumLineSpacing = "lineSpacing"
-    static let titleLeftMargin = "titleLeftMargin"
-    static let titleFontSize = "titleFontSize"
-    static let layout = "layout"
-    static let gridLayoutMaximumItemWidth = "itemWidthMax"
-    static let gridLayoutMaximumItemHeight = "itemHeightMax"
-    static let gridLayoutMinimumItemWidth = "itemMinWidth"
-    static let gridLayoutMinimumItemHeight = "itemMinHeight"
+    public static let minimumInteritemSpacing = "itemSpacing"
+    public static let minimumLineSpacing = "lineSpacing"
+    public static let titleLeftMargin = "titleLeftMargin"
+    public static let titleFontSize = "titleFontSize"
+    public static let layout = "layout"
+    public static let gridLayoutMaximumItemWidth = "itemWidthMax"
+    public static let gridLayoutMaximumItemHeight = "itemHeightMax"
+    public static let gridLayoutMinimumItemWidth = "itemMinWidth"
+    public static let gridLayoutMinimumItemHeight = "itemMinHeight"
   }
 
   public struct Default {
