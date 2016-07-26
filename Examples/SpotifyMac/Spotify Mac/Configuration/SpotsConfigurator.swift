@@ -14,8 +14,8 @@ struct SpotsConfigurator: Configurator {
     GridSpot.grids["category"] = CategoryGridItem.self
     GridSpot.grids["featured"] = FeaturedGridItem.self
     GridSpot.grids["grid"] = GridSpotItem.self
-    GridSpot.grids["header"] = HeaderGridItem.self
     GridSpot.grids["list"] = GridListItem.self
+    ListSpot.views["header"] = HeaderGridItem.self
     ListSpot.views["list"] = TableRow.self
     ListSpot.views["track"] = TrackRow.self
     ListSpot.views["hero"] = HeroGridItem.self
