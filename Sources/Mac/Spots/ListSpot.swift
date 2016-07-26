@@ -113,6 +113,7 @@ public class ListSpot: NSObject, Listable {
     scrollView.contentInsets.bottom = component.meta(Key.contentInsetsBottom, Default.contentInsetsBottom)
     scrollView.contentInsets.right = component.meta(Key.contentInsetsRight, Default.contentInsetsRight)
 
+    tableView.sizeToFit()
     scrollView.frame.size.width = size.width
   }
 
