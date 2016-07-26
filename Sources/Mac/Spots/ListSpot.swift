@@ -137,17 +137,11 @@ public class ListSpot: NSObject, Listable {
       titleView.stringValue = component.title
       titleView.font = NSFont.systemFontOfSize(component.meta(Key.titleFontSize, Default.titleFontSize))
       titleView.sizeToFit()
-      titleView.frame.size.height += component.meta(Key.titleTopInset, Default.titleTopInset)
-      titleView.frame.size.height += component.meta(Key.titleBottomInset, Default.titleBottomInset)
+      titleView.enabled = false
       titleView.frame.origin.x = tableView.frame.origin.x + component.meta(Key.titleLeftInset, Default.titleLeftInset)
-      titleView.frame.origin.y = component.meta(Key.titleTopInset, Default.titleTopInset) - component.meta(Key.titleBottomInset, Default.titleBottomInset)
-      scrollView.frame.size.height = tableView.frame.height + titleView.frame.maxY
-    } else {
-      scrollView.frame.size.height = tableView.frame.height + scrollView.contentInsets.top + scrollView.contentInsets.bottom
+      titleView.frame.origin.y = component.meta(Key.titleTopInset, Default.titleTopInset)
     }
 
-
-    scrollView.frame.size.width = size.width
     ListSpot.configure?(view: tableView)
   }
 }
