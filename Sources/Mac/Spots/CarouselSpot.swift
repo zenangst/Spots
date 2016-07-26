@@ -148,8 +148,11 @@ public class CarouselSpot: NSObject, Gridable {
       }
     }
 
-    titleView.frame.origin.x = layoutInsets.left
-    titleView.frame.origin.y = layoutInsets.top / 2 - titleView.frame.size.height / 2
+    titleView.frame.origin.x = collectionView.frame.origin.x + component.meta(Key.titleLeftInset, Default.titleLeftInset)
+    titleView.frame.origin.x = component.meta(Key.titleLeftMargin, titleView.frame.origin.x)
+    titleView.frame.origin.y = component.meta(Key.titleTopInset, Default.titleTopInset) - component.meta(Key.titleBottomInset, Default.titleBottomInset)
+
+    collectionView.frame.size.height = scrollView.frame.size.height + titleView.frame.size.height
 
     if component.span == 1 && component.items.count == 1 {
       scrollView.scrollingEnabled = (component.items.count > 1)
