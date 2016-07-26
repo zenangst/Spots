@@ -115,6 +115,7 @@ public class ListSpot: NSObject, Listable {
 
     tableView.sizeToFit()
     scrollView.frame.size.width = size.width
+    scrollView.frame.size.height = tableView.frame.height + scrollView.contentInsets.top + scrollView.contentInsets.bottom
   }
 
   public func setup(size: CGSize) {
