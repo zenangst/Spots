@@ -1,5 +1,9 @@
 import Cocoa
 
+public enum SpotsControllerBackground {
+  case Regular, Dynamic
+}
+
 public class SpotsController: NSViewController, SpotsProtocol {
 
   public static var configure: ((container: SpotsScrollView) -> Void)?
@@ -50,11 +54,14 @@ public class SpotsController: NSViewController, SpotsProtocol {
   /// A bool value to indicate if the SpotsController is refeshing
   public var refreshing = false
 
+  private let backgroundType: SpotsControllerBackground
+
   /**
    - Parameter spots: An array of Spotable objects
    */
-  public required init(spots: [Spotable] = []) {
+  public required init(spots: [Spotable] = [], backgroundType: SpotsControllerBackground = .Regular) {
     self.spots = spots
+    self.backgroundType = backgroundType
     super.init(nibName: nil, bundle: nil)!
 
     NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SpotsController.scrollViewDidScroll(_:)), name: NSScrollViewDidLiveScrollNotification, object: spotsScrollView)
@@ -128,9 +135,20 @@ public class SpotsController: NSViewController, SpotsProtocol {
    Instantiates a view from a nib file and sets the value of the view property.
    */
   public override func loadView() {
-    view = NSView()
+    let view: NSView
+
+    switch backgroundType {
+    case .Regular:
+      view = NSView()
+    case .Dynamic:
+      let visualEffectView = NSVisualEffectView()
+      visualEffectView.blendingMode = .BehindWindow
+      view = visualEffectView
+    }
+
     view.autoresizingMask = .ViewWidthSizable
     view.autoresizesSubviews = true
+    self.view = view
   }
 
   /**
