@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BD34054B1D41334E007B8504 /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD34054A1D41334E007B8504 /* MainWindowController.swift */; };
 		BD6A1EF21D2A5B2500E85FD3 /* BlueprintConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6A1ED01D2A5B2500E85FD3 /* BlueprintConfigurator.swift */; };
 		BD6A1EF31D2A5B2500E85FD3 /* CompassConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6A1ED11D2A5B2500E85FD3 /* CompassConfigurator.swift */; };
 		BD6A1EF41D2A5B2500E85FD3 /* ImaginaryConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6A1ED21D2A5B2500E85FD3 /* ImaginaryConfigurator.swift */; };
@@ -59,6 +60,7 @@
 /* Begin PBXFileReference section */
 		2B8828CE6480C142B637C969 /* Pods-Spotify Mac.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spotify Mac.release.xcconfig"; path = "Pods/Target Support Files/Pods-Spotify Mac/Pods-Spotify Mac.release.xcconfig"; sourceTree = "<group>"; };
 		A3A97FE108964C61A20C9DFB /* Pods-Spotify Mac.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spotify Mac.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Spotify Mac/Pods-Spotify Mac.debug.xcconfig"; sourceTree = "<group>"; };
+		BD34054A1D41334E007B8504 /* MainWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
 		BD6A1ED01D2A5B2500E85FD3 /* BlueprintConfigurator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlueprintConfigurator.swift; sourceTree = "<group>"; };
 		BD6A1ED11D2A5B2500E85FD3 /* CompassConfigurator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompassConfigurator.swift; sourceTree = "<group>"; };
 		BD6A1ED21D2A5B2500E85FD3 /* ImaginaryConfigurator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImaginaryConfigurator.swift; sourceTree = "<group>"; };
@@ -143,6 +145,7 @@
 		BD6A1ED61D2A5B2500E85FD3 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				BD34054A1D41334E007B8504 /* MainWindowController.swift */,
 				BD6A1ED71D2A5B2500E85FD3 /* DetailController.swift */,
 				BD6A1ED81D2A5B2500E85FD3 /* ListController.swift */,
 			);
@@ -250,13 +253,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BDDC3E991CE78D5B00B608FB /* Build configuration list for PBXNativeTarget "Spotify Mac" */;
 			buildPhases = (
-				F18CD1DAFEFD085285A1E01C /* 📦 Check Pods Manifest.lock */,
+				F18CD1DAFEFD085285A1E01C /* [CP] Check Pods Manifest.lock */,
 				BDDC3E881CE78D5B00B608FB /* Sources */,
 				BDDC3E891CE78D5B00B608FB /* Frameworks */,
 				BDDC3E8A1CE78D5B00B608FB /* Resources */,
 				BDB4FBB21D21822000C52D7F /* CopyFiles */,
-				E001BF53174C65A87081AF9F /* 📦 Embed Pods Frameworks */,
-				14C402F4C9AB1C3FA7C11353 /* 📦 Copy Pods Resources */,
+				E001BF53174C65A87081AF9F /* [CP] Embed Pods Frameworks */,
+				14C402F4C9AB1C3FA7C11353 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -313,14 +316,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		14C402F4C9AB1C3FA7C11353 /* 📦 Copy Pods Resources */ = {
+		14C402F4C9AB1C3FA7C11353 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -328,14 +331,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Spotify Mac/Pods-Spotify Mac-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		E001BF53174C65A87081AF9F /* 📦 Embed Pods Frameworks */ = {
+		E001BF53174C65A87081AF9F /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -343,14 +346,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Spotify Mac/Pods-Spotify Mac-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		F18CD1DAFEFD085285A1E01C /* 📦 Check Pods Manifest.lock */ = {
+		F18CD1DAFEFD085285A1E01C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -373,6 +376,7 @@
 				BD6A1F041D2A5B2500E85FD3 /* Window.swift in Sources */,
 				BD6A1F0A1D2A5B2500E85FD3 /* HeaderGridItem.swift in Sources */,
 				BD6A1F081D2A5B2500E85FD3 /* FeaturedGridItem.swift in Sources */,
+				BD34054B1D41334E007B8504 /* MainWindowController.swift in Sources */,
 				BD6A1F121D2AC74100E85FD3 /* NavigationToolbarItem.swift in Sources */,
 				BD6A1F071D2A5B2500E85FD3 /* CategoryGridItem.swift in Sources */,
 				BD6A1EF51D2A5B2500E85FD3 /* MalibuConfigurator.swift in Sources */,
