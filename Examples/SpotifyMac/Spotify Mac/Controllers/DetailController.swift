@@ -30,6 +30,12 @@ class DetailController: SpotsController, SpotsDelegate, SpotsScrollDelegate {
   }
 
   var fragments: [String : AnyObject] = [:]
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    
+    spotsScrollView.frame.origin.y = -40
+  }
 
   override func viewWillAppear() {
     super.viewWillAppear()
