@@ -19,8 +19,8 @@ public class ListSpot: NSObject, Listable {
   public struct Default {
     public static var titleFontSize: CGFloat = 14.0
     public static var titleLeftInset: CGFloat = 0.0
-    public static var titleTopInset: CGFloat = 0.0
-    public static var titleBottomInset: CGFloat = 0.0
+    public static var titleTopInset: CGFloat = 10.0
+    public static var titleBottomInset: CGFloat = 10.0
     public static var contentInsetsTop: CGFloat = 0.0
     public static var contentInsetsLeft: CGFloat = 0.0
     public static var contentInsetsBottom: CGFloat = 0.0
