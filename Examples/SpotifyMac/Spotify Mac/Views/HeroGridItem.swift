@@ -65,10 +65,10 @@ public class HeroGridItem: NSTableRowView, SpotConfigurable {
 
   public func configure(inout item: ViewModel) {
     titleLabel.stringValue = item.title
-    titleLabel.font = NSFont.systemFontOfSize(28)
+    titleLabel.font = NSFont(name: "Avenir Next", size: 64)
     titleLabel.sizeToFit()
 
-    subtitleLabel.font = NSFont.boldSystemFontOfSize(64)
+    subtitleLabel.font = NSFont(name: "Avenir Next Condensed", size: 28)
     subtitleLabel.stringValue = item.subtitle.uppercaseString
     subtitleLabel.sizeToFit()
 
