@@ -1,6 +1,7 @@
 import Compass
 import AVFoundation
 import Brick
+import Sugar
 
 extension AppDelegate {
 
@@ -8,8 +9,6 @@ extension AppDelegate {
     let stringURL = "\(Compass.scheme)\(urn)"
     guard let appDelegate = NSApplication.sharedApplication().delegate as? AppDelegate,
       url = NSURL(string: stringURL) else { return }
-
-
 
     appDelegate.handleURL(url, fragments: fragments)
   }
@@ -27,10 +26,6 @@ extension AppDelegate {
 
   func handleURL(url: NSURL, parameters: [String : AnyObject] = [:], fragments: [String : AnyObject] = [:]) {
 
-    guard let windowController = self.mainWindowController else {
-      return
-    }
-
     if url.absoluteString.hasPrefix("spots://callback") {
       spotsSession.auth(url)
       return
@@ -42,10 +37,10 @@ extension AppDelegate {
 
       switch route {
       case "forward":
-
         break
       case "back":
         guard let last = self.history.popLast() else { return }
+        self.detailController.removeGradientSublayers()
         AppDelegate.navigate(last, fragments: ["skipHistory" : true])
       case "preview":
         let cacheDirectories = NSSearchPathForDirectoriesInDomains(.CachesDirectory, .UserDomainMask, true)
@@ -230,7 +225,7 @@ extension AppDelegate {
           )
         )
 
-        self.detailController.blueprint = blueprint
+        self.evaluateBlueprint(blueprint)
       case "topArtists":
         guard let topTrackBlueprint = blueprints["top-artists"] else { return }
         if let _ = self.detailController.blueprint where fragments["skipHistory"] == nil {
@@ -238,7 +233,7 @@ extension AppDelegate {
         }
         var blueprint = topTrackBlueprint
         blueprint.requests[0].request = TopRequest(type: "artists")
-        self.detailController.blueprint = blueprint
+        self.evaluateBlueprint(blueprint)
       case "topTracks":
         guard let topTrackBlueprint = blueprints["top-tracks"] else { return }
         if let _ = self.detailController.blueprint where fragments["skipHistory"] == nil {
@@ -246,7 +241,7 @@ extension AppDelegate {
         }
         var blueprint = topTrackBlueprint
         blueprint.requests[0].request = TopRequest(type: "tracks")
-        self.detailController.blueprint = blueprint
+        self.evaluateBlueprint(blueprint)
       case "album:{album_id}":
         guard let albumID = arguments["album_id"],
           albumBlueprint = blueprints["album"] else { return }
@@ -257,19 +252,19 @@ extension AppDelegate {
         var blueprint = albumBlueprint
         blueprint.cacheKey("album:\(albumID)")
         blueprint.requests[0].request = AlbumRequest(albumID: albumID)
-        self.detailController.blueprint = blueprint
+        self.evaluateBlueprint(blueprint)
       case "albums":
         guard let blueprint = blueprints["albums"] else { return }
         if let currentBlueprint = self.detailController.blueprint where fragments["skipHistory"] == nil {
           self.history.append(currentBlueprint.cacheKey)
         }
-        self.detailController.blueprint = blueprint
+        self.evaluateBlueprint(blueprint)
       case "browse":
         guard let blueprint = blueprints["browse"] else { return }
         if let currentBlueprint = self.detailController.blueprint where fragments["skipHistory"] == nil {
           self.history.append(currentBlueprint.cacheKey)
         }
-        self.detailController.blueprint = blueprint
+        self.evaluateBlueprint(blueprint)
       case "category:{category_id}":
         guard let categoryID = arguments["category_id"],
           categoryBlueprint = blueprints["category"] else { return }
@@ -279,13 +274,19 @@ extension AppDelegate {
         var blueprint = categoryBlueprint
         blueprint.cacheKey("category:\(categoryID)")
         blueprint.requests[0].request = CategoryRequest(categoryID: categoryID)
-        self.detailController.blueprint = blueprint
+        self.evaluateBlueprint(blueprint)
       case "following":
         guard let blueprint = blueprints["following"] else { return }
         if let currentBlueprint = self.detailController.blueprint where fragments["skipHistory"] == nil {
           self.history.append(currentBlueprint.cacheKey)
         }
-        self.detailController.blueprint = blueprint
+        self.evaluateBlueprint(blueprint)
+      case "playlists":
+        guard let blueprint = blueprints["playlists"] else { return }
+        if let currentBlueprint = self.detailController.blueprint where fragments["skipHistory"] == nil {
+          self.history.append(currentBlueprint.cacheKey)
+        }
+        self.evaluateBlueprint(blueprint)
       case "playlist:{user_id}:{playlist_id}":
         guard let userID = arguments["user_id"],
           playlistID = arguments["playlist_id"],
@@ -298,13 +299,13 @@ extension AppDelegate {
         var blueprint = playlistBlueprint
         blueprint.cacheKey("playlist:\(userID):\(playlistID)")
         blueprint.requests[0].request = PlaylistRequest(userID: userID, playlistID: playlistID)
-        self.detailController.blueprint = blueprint
+        self.evaluateBlueprint(blueprint)
       case "songs":
         guard let blueprint = blueprints["songs"] else { return }
         if let currentBlueprint = self.detailController.blueprint where fragments["skipHistory"] == nil {
           self.history.append(currentBlueprint.cacheKey)
         }
-        self.detailController.blueprint = blueprint
+        self.evaluateBlueprint(blueprint)
       default: break
       }
     }
