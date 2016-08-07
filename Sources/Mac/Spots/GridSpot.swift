@@ -105,6 +105,7 @@ public class GridSpot: NSObject, Gridable {
     super.init()
     setupCollectionView()
     scrollView.addSubview(titleView)
+    scrollView.addSubview(lineView)
     scrollView.contentView.addSubview(collectionView)
 
     if component.title.isPresent {
