@@ -34,6 +34,8 @@ public class GridSpot: NSObject, Gridable {
     }
 
     public static var titleFontSize: CGFloat = 18.0
+    public static var titleLeftInset: CGFloat = 0.0
+    public static var titleTopInset: CGFloat = 10.0
     public static var defaultLayout: String = LayoutType.Flow.string
     public static var gridLayoutMaximumItemWidth = 120
     public static var gridLayoutMaximumItemHeight = 120
