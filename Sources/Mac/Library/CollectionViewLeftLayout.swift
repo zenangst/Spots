@@ -10,15 +10,19 @@ class CollectionViewLeftLayout: NSCollectionViewFlowLayout {
 
     var leftAlignedAttributes = [NSCollectionViewLayoutAttributes]()
 
-    var x: CGFloat = 0
+    var x: CGFloat = sectionInset.left
     var y: CGFloat = 0
     for attributes in defaultAttributes {
+      var attributes = attributes
+
       if attributes.frame.origin.y != y {
         x = sectionInset.left
         y = attributes.frame.origin.y
       }
 
-      x += attributes.frame.size.width
+      attributes.frame.origin.x = x
+
+      x += attributes.frame.size.width + minimumInteritemSpacing
       leftAlignedAttributes.append(attributes)
     }
 
