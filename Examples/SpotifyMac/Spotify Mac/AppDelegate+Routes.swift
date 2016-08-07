@@ -102,19 +102,27 @@ extension AppDelegate {
             adapter: { json in
               var list = [ViewModel]()
               for item in json {
+                let duration = item.property("duration_ms") ?? 0
+                let albumURN = "album:\(item.path("album.id") ?? "")"
+                let artistURN = "artist:\(item.path("artists.0.id") ?? "")"
+                let meta: [String : AnyObject] = [
+                  "album-urn" : albumURN,
+                  "artist-urn" : artistURN,
+                  "duration" : duration,
+                  "separator" : true,
+                  "fragments": [
+                    "title": item.property("name") ?? "",
+                    "image": item.array("images")?.first?.property("url") ?? "",
+                    ]
+                  ]
+
                 let viewModel = ViewModel(
                   title: item.property("name") ?? "",
                   image: item.array("images")?.first?.property("url") ?? "",
                   action: "album:\(item.property("id") ?? "")",
                   kind: "album",
                   size: CGSize(width: 180, height: 180),
-                  meta: [
-                    "separator" : true,
-                    "fragments": [
-                      "title": item.property("name") ?? "",
-                      "image": item.array("images")?.first?.property("url") ?? "",
-                    ]
-                  ]
+                  meta: meta
                 )
                 list.append(viewModel)
               }
@@ -130,8 +138,36 @@ extension AppDelegate {
             spotIndex: 2,
             adapter: { json in
               var list = [ViewModel]()
+
               for (index, item) in json.enumerate() {
-                let subtitle = item.array("artists")?.first?.property("name") ?? ""
+                let albumFragments: [String : String] = [
+                  "title" : item.path("album.name") ?? "",
+                  "image" : item.path("album.images.0.url") ?? "",
+                  "preview" : item.path("preview_url") ?? ""
+                ]
+
+                let artistFragments: [String : String] = [
+                  "title" : item.path("artists.0.name") ?? "",
+                  "image" : item.path("artists.0.images.0.url") ?? "",
+                  "artist-id" : item.path("artists.0.id") ?? ""
+                ]
+
+                let duration = item.property("duration_ms") ?? 0
+                let subtitle = item.path("artists.0.name") ?? ""
+                let albumURN = "album:\(item.path("album.id") ?? "")"
+                let artistURN = "artist:\(item.path("artists.0.id") ?? "")"
+
+                let meta: [String : AnyObject] = [
+                  "album-urn" : albumURN,
+                  "artist-urn" : artistURN,
+                  "duration" : duration,
+                  "album-fragments" : albumFragments,
+                  "artist-fragments" : artistFragments,
+                  "fragments" : ["preview" : item.property("preview_url") ?? ""],
+                  "trackNumber" : "\(index + 1).",
+                  "separator" : true
+                ]
+
                 let viewModel = ViewModel(
                   title: item.property("name") ?? "",
                   subtitle: "by \(subtitle)",
@@ -139,11 +175,7 @@ extension AppDelegate {
                   image: item.path("album")?.array("images")?.first?.property("url") ?? "",
                   kind: "track",
                   size: CGSize(width: 200, height: 50),
-                  meta: [
-                    "fragments" : ["preview" : item.property("preview_url") ?? ""],
-                    "trackNumber" : "\(index + 1).",
-                    "separator" : true
-                  ]
+                  meta: meta
                 )
                 list.append(viewModel)
               }
@@ -161,16 +193,31 @@ extension AppDelegate {
             adapter: { json in
               var list = [ViewModel]()
               for item in json {
+
+                var description = ""
+                if let followers = item.dictionary("followers")?["total"] as? Int {
+                  description += "Followers: \(followers)\n"
+                }
+
+                if let genres = item["genres"] as? [String] where !genres.isEmpty {
+                  description += "Genres: \(genres.joinWithSeparator(","))\n"
+                }
+
+                if let popularity = item["popularity"] as? Int {
+                  description += "Popularity: \(popularity)\n"
+                }
+
                 let viewModel = ViewModel(
                   title: item.property("name") ?? "",
                   action: "artist:\(item.property("id") ?? "")",
                   image: item.array("images")?.first?.property("url") ?? "",
                   kind: "artist",
-                  size: CGSize(width: 160, height: 180),
+                  size: CGSize(width: 180, height: 180),
                   meta: [
                     "fragments" : [
                       "title" : item.property("name") ?? "",
-                      "image" : item.array("images")?.first?.property("url") ?? ""
+                      "image" : item.array("images")?.first?.property("url") ?? "",
+                      "description" : description
                     ],
                     "separator" : true
                   ]
