@@ -19,9 +19,9 @@ public class HeaderGridItem: NSTableRowView, SpotConfigurable {
     $0.autoresizingMask = .ViewWidthSizable
 
     let shadow = NSShadow()
-    shadow.shadowColor = NSColor.blackColor().alpha(0.5)
+    shadow.shadowColor = NSColor.blackColor().alpha(0.6)
     shadow.shadowBlurRadius = 10.0
-    shadow.shadowOffset = CGSize(width: 0, height: -10)
+    shadow.shadowOffset = CGSize(width: 0, height: -4)
 
     $0.shadow = shadow
   }
@@ -39,12 +39,8 @@ public class HeaderGridItem: NSTableRowView, SpotConfigurable {
     $0.bezeled = false
     $0.textColor = NSColor.lightGrayColor()
     $0.backgroundColor = NSColor.blackColor()
+    $0.font = NSFont.systemFontOfSize(14)
     $0.drawsBackground = false
-  }
-
-  lazy var lineView = NSView().then {
-    $0.wantsLayer = true
-    $0.layer?.backgroundColor = NSColor.grayColor().colorWithAlphaComponent(0.2).CGColor
   }
 
   override init(frame frameRect: NSRect) {
@@ -53,7 +49,8 @@ public class HeaderGridItem: NSTableRowView, SpotConfigurable {
     containerView.addSubview(titleLabel)
     containerView.addSubview(subtitleLabel)
     containerView.addSubview(customImageView)
-    containerView.addSubview(lineView)
+
+    addObserver(self, forKeyPath: "customImageView.image", options: .New, context: nil)
     addSubview(containerView)
 
     setupConstraints()
@@ -63,13 +60,50 @@ public class HeaderGridItem: NSTableRowView, SpotConfigurable {
     fatalError("init(coder:) has not been implemented")
   }
 
+  deinit {
+    removeObserver(self, forKeyPath: "customImageView.image")
+  }
+
+  public override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+    if let image = customImageView.image where keyPath == "customImageView.image" {
+
+      dispatch(queue: .Interactive) {
+        let (background, _, _, _) = image.colors()
+        dispatch {
+          guard let appDelegate = NSApplication.sharedApplication().delegate as? AppDelegate else {
+            return
+          }
+
+          let gradientLayer = CAGradientLayer()
+
+          gradientLayer.colors = [
+            NSColor.clearColor().CGColor,
+            background.alpha(0.4).CGColor,
+          ]
+          gradientLayer.locations = [0.0, 1.0]
+          gradientLayer.frame.size.width = 3000
+          gradientLayer.frame.size.height = appDelegate.mainWindowController?.currentController?.view.frame.size.height ?? 0
+
+          appDelegate.mainWindowController?.currentController?.removeGradientSublayers()
+          appDelegate.mainWindowController?.currentController?.view.layer?.insertSublayer(gradientLayer, atIndex: 0)
+
+          NSAnimationContext.runAnimationGroup({ context in
+            context.duration = 1.0
+            gradientLayer.opacity = 0.0
+          }) {
+            gradientLayer.opacity = 0.4
+          }
+        }
+      }
+    }
+  }
+
   func setupConstraints() {
     containerView.translatesAutoresizingMaskIntoConstraints = false
     customImageView.translatesAutoresizingMaskIntoConstraints = false
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
     subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
     customImageView.translatesAutoresizingMaskIntoConstraints = false
-    lineView.translatesAutoresizingMaskIntoConstraints = false
 
     containerView.topAnchor.constraintEqualToAnchor(topAnchor).active = true
     containerView.leftAnchor.constraintEqualToAnchor(leftAnchor, constant: 24).active = true
@@ -77,29 +111,27 @@ public class HeaderGridItem: NSTableRowView, SpotConfigurable {
     containerView.bottomAnchor.constraintEqualToAnchor(bottomAnchor).active = true
 
     customImageView.topAnchor.constraintEqualToAnchor(containerView.topAnchor).active = true
-    customImageView.widthAnchor.constraintEqualToConstant(160).active = true
-    customImageView.heightAnchor.constraintEqualToConstant(160).active = true
-    customImageView.leftAnchor.constraintEqualToAnchor(leftAnchor, constant: 10).active = true
+    customImageView.widthAnchor.constraintEqualToConstant(120).active = true
+    customImageView.heightAnchor.constraintEqualToConstant(120).active = true
+    customImageView.leftAnchor.constraintEqualToAnchor(containerView.leftAnchor, constant: 15).active = true
 
     titleLabel.topAnchor.constraintEqualToAnchor(customImageView.topAnchor).active = true
     titleLabel.leftAnchor.constraintEqualToAnchor(customImageView.rightAnchor, constant: 20).active = true
     titleLabel.rightAnchor.constraintEqualToAnchor(titleLabel.superview!.rightAnchor, constant: 10).active = true
 
-    subtitleLabel.leftAnchor.constraintEqualToAnchor(titleLabel.leftAnchor, constant: -4).active = true
+    subtitleLabel.leftAnchor.constraintEqualToAnchor(titleLabel.leftAnchor).active = true
     subtitleLabel.rightAnchor.constraintEqualToAnchor(titleLabel.superview!.rightAnchor).active = true
     subtitleLabel.topAnchor.constraintEqualToAnchor(titleLabel.bottomAnchor, constant: 10).active = true
-
-    lineView.heightAnchor.constraintEqualToConstant(1).active = true
-    lineView.widthAnchor.constraintEqualToAnchor(lineView.superview!.widthAnchor).active = true
-    lineView.bottomAnchor.constraintEqualToAnchor(lineView.superview!.bottomAnchor).active = true
   }
 
   public func configure(inout item: ViewModel) {
+    self.item = item
+
     titleLabel.stringValue = item.title
     subtitleLabel.stringValue = item.subtitle
 
     if item.image.isPresent && item.image.hasPrefix("http") {
-      customImageView.setImage(NSURL(string: item.image)) { [weak self] _ in
+      customImageView.setImage(NSURL(string: item.image)) { [weak self] image in
         self?.customImageView.contentMode = .ScaleToAspectFill
       }
     }
