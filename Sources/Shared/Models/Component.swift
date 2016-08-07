@@ -31,9 +31,9 @@ public struct Component: Mappable {
   }
 
   public enum Kind: String {
-    case Carousel
-    case Grid
-    case List
+    case Carousel = "carousel"
+    case Grid = "grid"
+    case List = "list"
 
     public var string: String {
       return rawValue.lowercaseString
