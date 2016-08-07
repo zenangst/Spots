@@ -422,7 +422,7 @@ public extension SpotsProtocol {
   #if os(iOS)
     guard let stateCache = stateCache where source == nil && Simulator.isRunning else { return }
   #else
-    guard let stateCache = stateCache where source == nil else { return }
+    guard let stateCache = stateCache else { return }
   #endif
     CacheJSONOptions.writeOptions = .PrettyPrinted
 
