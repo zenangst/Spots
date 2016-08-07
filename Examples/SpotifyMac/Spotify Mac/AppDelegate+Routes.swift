@@ -60,23 +60,28 @@ extension AppDelegate {
           self.player = nil
         }
 
-        guard let data = NSData(contentsOfURL: url), lastPath = url.lastPathComponent else { return }
+        dispatch(queue: .Interactive) {
+          guard let data = NSData(contentsOfURL: url), lastPath = url.lastPathComponent else { return }
 
-        do {
-          let filePath = "\(cacheDirectory)/no.hyper.Spotify-Mac/\(lastPath)"
-          data.writeToFile(filePath, atomically: true)
-          let player = try AVAudioPlayer(contentsOfURL: NSURL(fileURLWithPath: filePath))
-          self.player = player
+          do {
+            let filePath = "\(cacheDirectory)/no.hyper.Spotify-Mac/\(lastPath)"
+            data.writeToFile(filePath, atomically: true)
 
-          if !player.playing {
+            let player = try AVAudioPlayer(contentsOfURL: NSURL(fileURLWithPath: filePath))
+
             player.volume = 0.0
-            self.volumeFadeIn()
-          }
+            self.player = player
+            dispatch {
+              self.volumeTimer?.invalidate()
+              self.volumeTimer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: #selector(AppDelegate.volumeFadeIn), userInfo: nil, repeats: true)
 
-          player.prepareToPlay()
-          player.play()
+              self.volumeTimer?.fire()
+              self.player?.play()
+            }
+          } catch { NSLog("error: \(error)") }
+        }
 
-        } catch { NSLog("error: \(error)") }
+
       case "artist:{artist_id}":
         guard let artistBlueprint = blueprints["artist"],
         artistID = arguments["artist_id"] else { return }
@@ -267,9 +272,11 @@ extension AppDelegate {
 
   func volumeFadeIn() {
     guard let player = player else { return }
-    if player.volume < 1.0 {
+
+    if player.volume <= 1.0 {
       player.volume += 0.1
-      self.performSelector(#selector(AppDelegate.volumeFadeIn), withObject: nil, afterDelay: 0.2)
+    } else {
+      volumeTimer?.invalidate()
     }
   }
 }
