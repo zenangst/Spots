@@ -108,12 +108,8 @@ public class GridSpot: NSObject, Gridable {
     scrollView.addSubview(lineView)
     scrollView.contentView.addSubview(collectionView)
 
-    if component.title.isPresent {
-      titleView.stringValue = component.title
-      titleView.sizeToFit()
-
-      let top = titleView.frame.size.height / 2
-      (layout as? NSCollectionViewFlowLayout)?.sectionInset.top += top
+    if let layout = layout as? NSCollectionViewFlowLayout where component.title.isPresent {
+      configureTitleView(layout.sectionInset)
     }
   }
 
@@ -140,8 +136,8 @@ public class GridSpot: NSObject, Gridable {
       bottom: component.meta(GridableMeta.Key.sectionInsetBottom, Default.sectionInsetBottom),
       right: component.meta(GridableMeta.Key.sectionInsetRight, Default.sectionInsetRight))
 
-    layout.minimumInteritemSpacing = Default.Flow.minimumInteritemSpacing
-    layout.minimumLineSpacing = Default.Flow.minimumLineSpacing
+    layout.minimumInteritemSpacing = component.meta(GridSpot.Key.minimumInteritemSpacing, Default.Flow.minimumInteritemSpacing)
+    layout.minimumLineSpacing = component.meta(GridSpot.Key.minimumLineSpacing, Default.Flow.minimumLineSpacing)
 
     return layout
   }
@@ -186,14 +182,19 @@ public class GridSpot: NSObject, Gridable {
   }
 
   public func layout(size: CGSize) {
-
+    layout.prepareForTransitionToLayout(layout)
+    
     var layoutInsets = NSEdgeInsets()
     if let layout = layout as? NSCollectionViewFlowLayout {
+      layout.sectionInset.top = component.meta(GridableMeta.Key.sectionInsetTop, Default.sectionInsetTop) + titleView.frame.size.height + 8
       layoutInsets = layout.sectionInset
     }
 
     var layoutHeight = layout.collectionViewContentSize.height + layoutInsets.top + layoutInsets.bottom
-    if component.items.isEmpty { layoutHeight = size.height + layoutInsets.top + layoutInsets.bottom }
+
+    if component.items.isEmpty {
+      layoutHeight = size.height + layoutInsets.top + layoutInsets.bottom
+    }
 
     scrollView.frame.size.width = size.width - layoutInsets.right
     scrollView.frame.size.height = layoutHeight
@@ -203,24 +204,27 @@ public class GridSpot: NSObject, Gridable {
     GridSpot.configure?(view: collectionView)
 
     if component.title.isPresent {
-      titleView.stringValue = component.title
-      titleView.font = NSFont.systemFontOfSize(component.meta(Key.titleFontSize, Default.titleFontSize))
-      titleView.sizeToFit()
+      configureTitleView(layoutInsets)
     }
-
-    titleView.frame.origin.x = layoutInsets.left
-    titleView.frame.origin.x = component.meta(Key.titleLeftMargin, titleView.frame.origin.x)
-    titleView.frame.origin.y = layoutInsets.top - titleView.frame.size.height / 2
-
-    layout.invalidateLayout()
   }
 
   public func setup(size: CGSize) {
-    if let layout = layout as? NSCollectionViewFlowLayout {
-      layout.itemSize.height = size.height
-      layout.invalidateLayout()
-    }
+    var size = size
+    size.height = layout.collectionViewContentSize.height
     layout(size)
     prepare()
+  }
+
+  private func configureTitleView(layoutInsets: NSEdgeInsets) {
+    titleView.stringValue = component.title
+    titleView.font = NSFont.systemFontOfSize(component.meta(Key.titleFontSize, Default.titleFontSize))
+    titleView.sizeToFit()
+    titleView.frame.size.width = collectionView.frame.width - layoutInsets.right - layoutInsets.left
+    lineView.frame.size.width = scrollView.frame.size.width - (component.meta(Key.titleLeftMargin, Default.titleLeftInset) * 2)
+    lineView.frame.origin.x = component.meta(Key.titleLeftMargin, Default.titleLeftInset)
+    titleView.frame.origin.x = layoutInsets.left
+    titleView.frame.origin.x = component.meta(Key.titleLeftMargin, titleView.frame.origin.x)
+    titleView.frame.origin.y = titleView.frame.size.height / 2
+    lineView.frame.origin.y = titleView.frame.maxY + 8
   }
 }
