@@ -179,6 +179,7 @@ public extension SpotsProtocol {
 
     update(spotAtIndex: index, withAnimation: animation, withCompletion: completion, {
       $0.items = items
+      self.spotsScrollView.forceUpdate = true
     })
   }
 
