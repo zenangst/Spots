@@ -3,6 +3,19 @@ import Brick
 
 extension Listable {
 
+  public var responder: NSResponder {
+    return tableView
+  }
+
+  public var nextResponder: NSResponder? {
+    get {
+      return tableView.nextResponder
+    }
+    set {
+      tableView.nextResponder = newValue
+    }
+  }
+
   public func prepare() {
     var cached: View?
     for (index, item) in component.items.enumerate() {
