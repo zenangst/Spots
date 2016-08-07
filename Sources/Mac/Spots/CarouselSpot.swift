@@ -60,6 +60,7 @@ public class CarouselSpot: NSObject, Gridable {
     $0.selectable = false
     $0.bezeled = false
     $0.drawsBackground = false
+    $0.textColor = NSColor.grayColor()
   }
 
   public lazy var scrollView: ScrollView = ScrollView()
