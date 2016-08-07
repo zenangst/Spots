@@ -5,6 +5,7 @@ import Brick
 public class ListSpot: NSObject, Listable {
 
   public struct Key {
+    public static let titleSeparator = "titleSeparator"
     public static let titleFontSize = "titleFontSize"
     public static let titleTopInset = "titleTopInset"
     public static let titleBottomInset = "titleBottomInset"
@@ -17,7 +18,8 @@ public class ListSpot: NSObject, Listable {
   }
 
   public struct Default {
-    public static var titleFontSize: CGFloat = 14.0
+    public static var titleSeparator: Bool = true
+    public static var titleFontSize: CGFloat = 18.0
     public static var titleLeftInset: CGFloat = 0.0
     public static var titleTopInset: CGFloat = 10.0
     public static var titleBottomInset: CGFloat = 10.0
@@ -78,6 +80,12 @@ public class ListSpot: NSObject, Listable {
     $0.minWidth = 150
   }
 
+  lazy var lineView = NSView().then {
+    $0.frame.size.height = 1
+    $0.wantsLayer = true
+    $0.layer?.backgroundColor = NSColor.grayColor().colorWithAlphaComponent(0.2).CGColor
+  }
+
   public required init(component: Component) {
     self.component = component
     super.init()
@@ -104,6 +112,12 @@ public class ListSpot: NSObject, Listable {
     spotsDelegate?.spotDidSelectItem(self, item: viewModel)
   }
 
+  public func action(sender: AnyObject?) {
+    guard let viewModel = item(tableView.clickedRow)
+      where component.meta(Key.doubleAction, false) == false else { return }
+    spotsDelegate?.spotDidSelectItem(self, item: viewModel)
+  }
+
   public func render() -> ScrollView {
     return scrollView
   }
@@ -113,6 +127,10 @@ public class ListSpot: NSObject, Listable {
     scrollView.contentInsets.left = component.meta(Key.contentInsetsLeft, Default.contentInsetsLeft)
     scrollView.contentInsets.bottom = component.meta(Key.contentInsetsBottom, Default.contentInsetsBottom)
     scrollView.contentInsets.right = component.meta(Key.contentInsetsRight, Default.contentInsetsRight)
+
+    if component.title.isPresent {
+      configureTitleView()
+    }
 
     tableView.sizeToFit()
     scrollView.frame.size.width = size.width
@@ -128,20 +146,33 @@ public class ListSpot: NSObject, Listable {
     tableView.setDataSource(listAdapter)
     tableView.target = self
     tableView.addTableColumn(tableColumn)
+    tableView.action = #selector(self.action(_:))
     tableView.doubleAction = #selector(self.doubleAction(_:))
     tableView.sizeToFit()
-    layout(size)
 
     if component.title.isPresent {
       scrollView.addSubview(titleView)
-      titleView.stringValue = component.title
-      titleView.font = NSFont.systemFontOfSize(component.meta(Key.titleFontSize, Default.titleFontSize))
-      titleView.sizeToFit()
-      titleView.enabled = false
-      titleView.frame.origin.x = tableView.frame.origin.x + component.meta(Key.titleLeftInset, Default.titleLeftInset)
-      titleView.frame.origin.y = component.meta(Key.titleTopInset, Default.titleTopInset)
+      if component.meta(Key.titleSeparator, Default.titleSeparator) {
+        scrollView.addSubview(lineView)
+      }
+      configureTitleView()
     }
 
+    layout(size)
     ListSpot.configure?(view: tableView)
+  }
+
+  private func configureTitleView() {
+    titleView.stringValue = component.title
+    titleView.font = NSFont.systemFontOfSize(component.meta(Key.titleFontSize, Default.titleFontSize))
+    titleView.sizeToFit()
+    titleView.enabled = false
+    titleView.frame.origin.x = tableView.frame.origin.x + component.meta(Key.titleLeftInset, Default.titleLeftInset)
+    scrollView.contentInsets.top += titleView.frame.size.height * 2
+    titleView.frame.origin.y = titleView.frame.size.height / 2
+
+    lineView.frame.size.width = scrollView.frame.size.width - (component.meta(Key.titleLeftInset, Default.titleLeftInset) * 2)
+    lineView.frame.origin.x = component.meta(Key.titleLeftInset, Default.titleLeftInset)
+    lineView.frame.origin.y = titleView.frame.maxY + 8
   }
 }
