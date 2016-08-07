@@ -8,7 +8,8 @@ public struct SpotCache {
 
   public let key: String
   static let cacheName = "SpotCache"
-  let cache = Cache<JSON>(name: SpotCache.cacheName)
+  let cache = Cache<JSON>(name: "\(SpotCache.cacheName)/\(NSBundle.mainBundle().bundleIdentifier!)")
+  
   var path: String {
     return cache.path + "/" + fileName()
   }
