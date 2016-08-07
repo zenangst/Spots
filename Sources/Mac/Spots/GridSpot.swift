@@ -93,6 +93,12 @@ public class GridSpot: NSObject, Gridable {
     $0.wantsLayer = true
   }
 
+  lazy var lineView = NSView().then {
+    $0.frame.size.height = 1
+    $0.wantsLayer = true
+    $0.layer?.backgroundColor = NSColor.grayColor().colorWithAlphaComponent(0.2).CGColor
+  }
+
   public required init(component: Component) {
     self.component = component
     self.layout = GridSpot.setupLayout(component)
