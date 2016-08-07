@@ -62,4 +62,12 @@ extension Listable {
   public func deselect() {
     tableView.deselectAll(nil)
   }
+
+  public func selectFirst() -> Self {
+    guard let viewModel = item(0) where !component.items.isEmpty else { return self }
+    tableView.selectRowIndexes(NSIndexSet(index: 0), byExtendingSelection: false)
+    spotsDelegate?.spotDidSelectItem(self, item: viewModel)
+
+    return self
+  }
 }
