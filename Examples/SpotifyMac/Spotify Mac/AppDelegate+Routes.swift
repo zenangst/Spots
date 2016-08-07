@@ -263,6 +263,12 @@ extension AppDelegate {
     }
   }
 
+  func evaluateBlueprint(newBlueprint: Blueprint) {
+    if newBlueprint.cacheKey != detailController.blueprint?.cacheKey {
+      detailController.blueprint = newBlueprint
+    }
+  }
+
   func handle(event: NSAppleEventDescriptor, replyEvent: NSAppleEventDescriptor) {
     if let stringURL = event.paramDescriptorForKeyword(AEKeyword(keyDirectObject))?.stringValue,
       url = NSURL(string: stringURL) {
