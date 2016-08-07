@@ -17,7 +17,7 @@ class MainWindowController: NSWindowController {
     }
   }
 
-  var currentController: NSViewController? {
+  var currentController: DetailController? {
     didSet {
       guard let currentController = currentController else {
         mainItem = nil
