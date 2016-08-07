@@ -9,19 +9,18 @@ let spotsSession = SpotsSession()
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 
-  var window: Window?
-
-  var history = [String]()
-
   let toolbarHeight: CGFloat = 36
 
   lazy var listController = ListController(cacheKey: "menu-cache")
-  lazy var detailController = DetailController()
+  lazy var detailController: DetailController = DetailController([:])
 
+  var volumeTimer: NSTimer?
+  var window: Window?
+  var player: AVAudioPlayer?
+  var history = [String]()
   var currentController: SpotsController?
   var mainWindowController: MainWindowController?
   var splitView: MainSplitView!
-  var player: AVAudioPlayer?
 
   let configurators: [Configurator] = [
     BlueprintConfigurator(),
@@ -55,16 +54,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 
     registerURLScheme()
 
-    detailController.blueprint = blueprints["browse"]!
-
     window = Window()
     mainWindowController = MainWindowController(window: window)
     mainWindowController?.windowFrameAutosaveName = "MainWindow"
     window?.windowController = mainWindowController
     mainWindowController?.currentController = detailController
-    AppDelegate.navigate("browse")
     mainWindowController?.showWindow(nil)
 
-    NSUserDefaults.standardUserDefaults().setBool(true, forKey: "NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints")
+    NSUserDefaults.standardUserDefaults().setBool(false, forKey: "NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints")
   }
 }
