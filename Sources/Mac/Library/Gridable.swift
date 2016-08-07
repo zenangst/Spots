@@ -23,6 +23,21 @@ public struct GridableMeta {
 
 extension Gridable {
 
+  #if os(OSX)
+  public var responder: NSResponder {
+    return collectionView
+  }
+
+  public var nextResponder: NSResponder? {
+    get {
+      return collectionView.nextResponder
+    }
+    set {
+      collectionView.nextResponder = newValue
+    }
+  }
+  #endif
+
   public func prepare() {
     registerAndPrepare { (classType, withIdentifier) in
       collectionView.registerClass(classType, forItemWithIdentifier: withIdentifier)
