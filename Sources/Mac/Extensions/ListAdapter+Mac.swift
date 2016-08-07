@@ -169,7 +169,7 @@ extension ListAdapter: NSTableViewDelegate {
         return false
     }
 
-    if spot.component.meta("doubleClick", type: Bool.self) != true {
+    if spot.component.meta(ListSpot.Key.doubleAction, type: Bool.self) != true {
       spot.spotsDelegate?.spotDidSelectItem(spot, item: viewModel)
     }
 
