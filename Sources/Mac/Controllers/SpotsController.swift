@@ -180,8 +180,8 @@ public class SpotsController: NSViewController, SpotsProtocol {
     spotsDelegate = nil
 
     setupSpots()
-    spotsScrollView.layoutSubtreeIfNeeded()
     closure?()
+    spotsScrollView.layoutSubtreeIfNeeded()
   }
 
   /**
