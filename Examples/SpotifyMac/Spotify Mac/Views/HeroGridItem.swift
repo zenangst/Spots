@@ -57,10 +57,10 @@ public class HeroGridItem: NSTableRowView, SpotConfigurable {
     customImageView.widthAnchor.constraintEqualToAnchor(customImageView.superview!.widthAnchor).active = true
     customImageView.heightAnchor.constraintEqualToAnchor(customImageView.superview!.heightAnchor).active = true
 
-    titleLabel.leftAnchor.constraintEqualToAnchor(titleLabel.superview!.leftAnchor, constant: 30).active = true
-    titleLabel.bottomAnchor.constraintEqualToAnchor(subtitleLabel.topAnchor).active = true
-    subtitleLabel.leftAnchor.constraintEqualToAnchor(subtitleLabel.superview!.leftAnchor, constant: 30).active = true
-    subtitleLabel.bottomAnchor.constraintEqualToAnchor(subtitleLabel.superview!.bottomAnchor, constant: -30).active = true
+    titleLabel.centerXAnchor.constraintEqualToAnchor(centerXAnchor).active = true
+    titleLabel.centerYAnchor.constraintEqualToAnchor(centerYAnchor).active = true
+    subtitleLabel.centerXAnchor.constraintEqualToAnchor(centerXAnchor).active = true
+    subtitleLabel.topAnchor.constraintEqualToAnchor(titleLabel.bottomAnchor, constant: -15).active = true
   }
 
   public func configure(inout item: ViewModel) {
