@@ -68,8 +68,6 @@ public class ArtistGridItem: NSCollectionViewItem, SpotConfigurable {
 
     customImageView.centerXAnchor.constraintEqualToAnchor(customImageView.superview!.centerXAnchor).active = true
     customImageView.topAnchor.constraintEqualToAnchor(customImageView.superview!.topAnchor).active = true
-    customImageView.heightAnchor.constraintEqualToConstant(120).active = true
-    customImageView.widthAnchor.constraintEqualToConstant(120).active = true
 
     titleLabel.leftAnchor.constraintEqualToAnchor(customImageView.superview!.leftAnchor).active = true
     titleLabel.rightAnchor.constraintEqualToAnchor(customImageView.superview!.rightAnchor).active = true
@@ -89,6 +87,10 @@ public class ArtistGridItem: NSCollectionViewItem, SpotConfigurable {
     subtitleLabel.stringValue = item.subtitle
 
     self.item = item
+
+    customImageView.heightAnchor.constraintEqualToConstant(item.size.height - 40).active = true
+    customImageView.widthAnchor.constraintEqualToConstant(item.size.width - 40).active = true
+    customImageView.layer?.cornerRadius = (item.size.width - 40) / 2
 
     if item.image.isPresent && item.image.hasPrefix("http") {
       customImageView.setImage(NSURL(string: item.image)) { [weak self] image in
