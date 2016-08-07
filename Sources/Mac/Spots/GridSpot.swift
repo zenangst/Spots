@@ -5,9 +5,9 @@ import Brick
 public class GridSpot: NSObject, Gridable {
 
   public enum LayoutType: String {
-    case Grid
-    case Left
-    case Flow
+    case Grid = "grid"
+    case Left = "left"
+    case Flow = "flow"
 
     var string: String {
       return rawValue.lowercaseString
