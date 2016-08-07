@@ -5,6 +5,12 @@ import Malibu
 import Sugar
 import Tailor
 
+public enum KeyboardEvents: UInt16 {
+  case Up = 126
+  case Down = 125
+  case Enter = 36
+}
+
 class DetailController: SpotsController, SpotsDelegate, SpotsScrollDelegate {
 
   var blueprint: Blueprint? {
