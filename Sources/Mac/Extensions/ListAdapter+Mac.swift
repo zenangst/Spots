@@ -139,8 +139,7 @@ extension ListAdapter {
         }
       } else {
         tableView.reloadData()
-        self?.spot.setup(tableView.frame.size)
-        completion?()
+        self?.refreshHeight(completion)
       }
     }
   }
