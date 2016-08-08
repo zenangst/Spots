@@ -1,7 +1,7 @@
-#if os(iOS)
-  import UIKit
+#if os(OSX)
+  import Cocoa
 #else
-  import Foundation
+  import UIKit
 #endif
 import Sugar
 import Brick
@@ -24,7 +24,7 @@ public class ViewSpot: NSObject, Spotable, Viewable {
   public private(set) var stateCache: SpotCache?
 
   public var adapter: SpotAdapter?
-  
+
   public var responder: NSResponder {
     return scrollView
   }
