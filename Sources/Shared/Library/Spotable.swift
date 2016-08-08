@@ -81,25 +81,25 @@ public protocol Spotable: class {
 public extension Spotable {
 
   /// Append view model to a Spotable object
-  func append(item: ViewModel, withAnimation animation: SpotsAnimation, completion: Completion) {
+  func append(item: ViewModel, withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
     adapter?.append(item, withAnimation: animation, completion: completion)
   }
 
   /// Append a collection of view models to Spotable object
-  func append(items: [ViewModel], withAnimation animation: SpotsAnimation, completion: Completion) {
+  func append(items: [ViewModel], withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
     adapter?.append(items, withAnimation: animation, completion: completion)
   }
 
   /// Prepend view models to a Spotable object
-  func prepend(items: [ViewModel], withAnimation animation: SpotsAnimation, completion: Completion) {
+  func prepend(items: [ViewModel], withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
     adapter?.prepend(items, withAnimation: animation, completion: completion)
   }
   /// Insert view model to a Spotable object
-  func insert(item: ViewModel, index: Int, withAnimation animation: SpotsAnimation, completion: Completion) {
+  func insert(item: ViewModel, index: Int, withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
     adapter?.insert(item, index: index, withAnimation: animation, completion: completion)
   }
   /// Update view model to a Spotable object
-  func update(item: ViewModel, index: Int, withAnimation animation: SpotsAnimation, completion: Completion) {
+  func update(item: ViewModel, index: Int, withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
     adapter?.update(item, index: index, withAnimation: animation, completion: completion)
   }
   /// Delete view model from a Spotable object
@@ -107,19 +107,19 @@ public extension Spotable {
     adapter?.delete(item, withAnimation: animation, completion: completion)
   }
   /// Delete a collection of view models from a Spotable object
-  func delete(items: [ViewModel], withAnimation animation: SpotsAnimation, completion: Completion) {
+  func delete(items: [ViewModel], withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
     adapter?.delete(items, withAnimation: animation, completion: completion)
   }
   /// Delete view model at index with animation from a Spotable object
-  func delete(index: Int, withAnimation animation: SpotsAnimation, completion: Completion) {
+  func delete(index: Int, withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
     adapter?.delete(index, withAnimation: animation, completion: completion)
   }
   /// Delete view model indexes with animation from a Spotable object
-  func delete(indexes: [Int], withAnimation animation: SpotsAnimation, completion: Completion) {
+  func delete(indexes: [Int], withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
     adapter?.delete(indexes, withAnimation: animation, completion: completion)
   }
   /// Reload view model indexes with animation in a Spotable object
-  func reload(indexes: [Int]?, withAnimation animation: SpotsAnimation, completion: Completion) {
+  func reload(indexes: [Int]? = nil, withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
     adapter?.reload(indexes, withAnimation: animation, completion: completion)
   }
 }
