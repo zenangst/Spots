@@ -34,7 +34,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
   func applicationDidFinishLaunching(aNotification: NSNotification) {
     configurators.forEach { $0.configure() }
 
-//    spotsSession.login()
+    spotsSession.login()
 
     if !spotsSession.isActive {
       spotsSession.login()
