@@ -27,7 +27,7 @@ struct TopArtistsBlueprint: BlueprintContainer {
               description += "Genres: \(genres.joinWithSeparator(","))\n"
             }
 
-            if let popularity = item["popularity"] as? Int {
+            if let popularity: Int = item.resolve(keyPath: "popularity") {
               description += "Popularity: \(popularity)\n"
             }
 
