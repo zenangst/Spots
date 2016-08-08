@@ -18,7 +18,7 @@ struct TopArtistsBlueprint: BlueprintContainer {
           for item in json {
 
             var description = ""
-            let followers: Int = item.path("followers.total") ?? 0
+            let followers: Int = item.resolve(keyPath: "followers.total") ?? 0
             if followers > 0 {
               description += "Followers: \(followers)\n"
             }
@@ -32,14 +32,14 @@ struct TopArtistsBlueprint: BlueprintContainer {
             }
 
             viewModels.append(ViewModel(
-              title : item.property("name") ?? "",
-              image : item.path("images.2.url") ?? "",
-              action: "artist:\(item.property("id") ?? "")",
+              title : item.resolve(keyPath: "name") ?? "",
+              image : item.resolve(keyPath: "images.2.url") ?? "",
+              action: "artist:\(item.resolve(keyPath: "id") ?? "")",
               kind: "artist",
               size: CGSize(width: 180, height: 180),
               meta: ["fragments" : [
-                "title" : item.property("name") ?? "",
-                "image" : item.path("images.1.url") ?? "",
+                "title" : item.resolve(keyPath: "name") ?? "",
+                "image" : item.resolve(keyPath: "images.1.url") ?? "",
                 "description" : description
                 ]]
               ))

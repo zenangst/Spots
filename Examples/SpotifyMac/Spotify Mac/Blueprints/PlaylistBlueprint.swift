@@ -14,26 +14,26 @@ struct PlaylistBlueprint: BlueprintContainer {
       adapter: { json in
         var list = [ViewModel]()
         for (index, item) in json.enumerate() {
-          let subtitle = item.path("track.artists.0.name") ?? ""
+          let subtitle = item.resolve(keyPath: "track.artists.0.name") ?? ""
 
           let albumFragments: [String : String] = [
-            "title" : item.path("track.album.name") ?? "",
-            "image" : item.path("track.album.images.0.url") ?? "",
-            "preview" : item.path("track.preview_url") ?? ""
+            "title" : item.resolve(keyPath: "track.album.name") ?? "",
+            "image" : item.resolve(keyPath: "track.album.images.0.url") ?? "",
+            "preview" : item.resolve(keyPath: "track.preview_url") ?? ""
           ]
 
           let artistFragments: [String : String] = [
-            "title" : item.path("track.artists.0.name") ?? "",
-            "image" : item.path("track.artists.0.images.0.url") ?? "",
-            "artist-id" : item.path("track.artists.0.id") ?? ""
+            "title" : item.resolve(keyPath: "track.artists.0.name") ?? "",
+            "image" : item.resolve(keyPath: "track.artists.0.images.0.url") ?? "",
+            "artist-id" : item.resolve(keyPath: "track.artists.0.id") ?? ""
           ]
 
-          let duration = item.path("track.duration_ms") ?? 0
-          let preview = item.path("track.preview_url") ?? ""
+          let duration = item.resolve(keyPath: "track.duration_ms") ?? 0
+          let preview = item.resolve(keyPath: "track.preview_url") ?? ""
           let meta: [String : AnyObject] = [
             "fragments" : ["preview" : preview],
-            "album-urn" : "album:\(item.path("track.album.id") ?? "")",
-            "artist-urn" : "artist:\(item.path("track.artists.0.id") ?? "")",
+            "album-urn" : "album:\(item.resolve(keyPath: "track.album.id") ?? "")",
+            "artist-urn" : "artist:\(item.resolve(keyPath: "track.artists.0.id") ?? "")",
             "duration" : duration,
             "album-fragments" : albumFragments,
             "artist-fragments" : artistFragments,
@@ -42,9 +42,9 @@ struct PlaylistBlueprint: BlueprintContainer {
           ]
 
           let viewModel = ViewModel(
-            title: item.path("track.name") ?? "",
+            title: item.resolve(keyPath: "track.name") ?? "",
             subtitle: "by \(subtitle)",
-            image: item.path("track.album.images.0.url") ?? "",
+            image: item.resolve(keyPath: "track.album.images.0.url") ?? "",
             action: "preview",
             kind: "track",
             size: CGSize(width: 200, height: 50),
@@ -56,9 +56,9 @@ struct PlaylistBlueprint: BlueprintContainer {
       }
       )], fragmentHandler: { fragments, controller in
         let headerModel = ViewModel(
-          title: fragments.property("title") ?? "",
-          image: fragments.property("image") ?? "",
-          subtitle: fragments.property("description") ?? "",
+          title: fragments.resolve(keyPath:"title") ?? "",
+          image: fragments.resolve(keyPath:"image") ?? "",
+          subtitle: fragments.resolve(keyPath:"description") ?? "",
           kind : "header",
           size: CGSize(width: 700, height: 135)
         )

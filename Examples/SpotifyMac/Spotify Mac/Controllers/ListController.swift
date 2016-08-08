@@ -327,10 +327,10 @@ class ListController: SpotsController, SpotsDelegate, SpotsScrollDelegate {
       let owner = (item["owner"] as? JSONDictionary)?["id"] as? String ?? ""
       let playlistID = item["id"] as? String ?? ""
       var description = ""
-      description = "by \(item.path("owner.id") ?? "")\n"
+      description = "by \(item.resolve(keyPath: "owner.id") ?? "")\n"
       description += "Collaborative: \((item["collaborative"] as? Bool) == true ? "Yes" : "No")\n"
       description += "Public: \((item["collaborative"] as? Bool) == true ? "Yes" : "No")\n"
-      if let tracks: Int = item.path("tracks.total") {
+      if let tracks: Int = item.resolve(keyPath: "tracks.total") {
         description += "Tracks: \(tracks)\n"
       }
 
@@ -344,8 +344,8 @@ class ListController: SpotsController, SpotsDelegate, SpotsScrollDelegate {
           "separator" : false,
           "tintColor" : "37D247",
           "fragments" : [
-            "title" : item.property("name") ?? "",
-            "image" : item.array("images")?.first?.property("url") ?? "",
+            "title" : item.resolve(keyPath: "name") ?? "",
+            "image" : item.resolve(keyPath: "images.0.url") ?? "",
             "description" : description
           ]
         ]

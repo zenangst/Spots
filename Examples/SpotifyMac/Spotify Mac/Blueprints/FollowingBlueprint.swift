@@ -32,15 +32,15 @@ struct FollowingBlueprint: BlueprintContainer {
             }
 
             viewModels.append(ViewModel(
-              title : item.property("name") ?? "",
-              image : item.path("images.1.url") ?? "",
-              action : "artist:\(item.property("id") ?? "")",
+              title : item.resolve(keyPath: "name") ?? "",
+              image : item.resolve(keyPath: "images.1.url") ?? "",
+              action : "artist:\(item.resolve(keyPath: "id") ?? "")",
               kind: "artist",
               size: CGSize(width: 160, height: 160),
               meta: [
                 "fragments" : [
-                  "title" : item.property("name") ?? "",
-                  "image" : item.path("images.1.url") ?? "",
+                  "title" : item.resolve(keyPath: "name") ?? "",
+                  "image" : item.resolve(keyPath: "images.1.url") ?? "",
                   "description" : description
                 ]
               ]

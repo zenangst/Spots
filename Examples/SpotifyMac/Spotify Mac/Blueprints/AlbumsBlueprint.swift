@@ -18,14 +18,14 @@ struct AlbumsBlueprint: BlueprintContainer {
             var viewModels = [ViewModel]()
             for item in json {
               let fragments: [String : String] = [
-                "title" : item.path("album.name") ?? "",
-                "image" : item.path("album.images.0.url") ?? ""
+                "title" : item.resolve(keyPath: "album.name") ?? "",
+                "image" : item.resolve(keyPath: "album.images.0.url") ?? ""
               ]
 
               let model = ViewModel(
-                title: item.path("album.name") ?? "",
-                image: item.path("album.images.0.url") ?? "",
-                action: "album:\(item.path("album.id") ?? "")",
+                title: item.resolve(keyPath: "album.name") ?? "",
+                image: item.resolve(keyPath: "album.images.0.url") ?? "",
+                action: "album:\(item.resolve(keyPath: "album.id") ?? "")",
                 kind: "album",
                 size: CGSize(width: 180, height: 180),
                 meta: [

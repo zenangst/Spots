@@ -97,24 +97,24 @@ extension AppDelegate {
             adapter: { json in
               var list = [ViewModel]()
               for item in json {
-                let duration = item.property("duration_ms") ?? 0
-                let albumURN = "album:\(item.path("album.id") ?? "")"
-                let artistURN = "artist:\(item.path("artists.0.id") ?? "")"
+                let duration = item.resolve(keyPath: "duration_ms") ?? 0
+                let albumURN = "album:\(item.resolve(keyPath: "album.id") ?? "")"
+                let artistURN = "artist:\(item.resolve(keyPath: "artists.0.id") ?? "")"
                 let meta: [String : AnyObject] = [
                   "album-urn" : albumURN,
                   "artist-urn" : artistURN,
                   "duration" : duration,
                   "separator" : true,
                   "fragments": [
-                    "title": item.property("name") ?? "",
-                    "image": item.array("images")?.first?.property("url") ?? "",
+                    "title": item.resolve(keyPath: "name") ?? "",
+                    "image": item.resolve(keyPath: "images.0.url") ?? "",
                     ]
                   ]
 
                 let viewModel = ViewModel(
-                  title: item.property("name") ?? "",
-                  image: item.array("images")?.first?.property("url") ?? "",
-                  action: "album:\(item.property("id") ?? "")",
+                  title: item.resolve(keyPath: "name") ?? "",
+                  image: item.resolve(keyPath: "images.0.url") ?? "",
+                  action: "album:\(item.resolve(keyPath: "id") ?? "")",
                   kind: "album",
                   size: CGSize(width: 180, height: 180),
                   meta: meta
@@ -136,21 +136,21 @@ extension AppDelegate {
 
               for (index, item) in json.enumerate() {
                 let albumFragments: [String : String] = [
-                  "title" : item.path("album.name") ?? "",
-                  "image" : item.path("album.images.0.url") ?? "",
-                  "preview" : item.path("preview_url") ?? ""
+                  "title" : item.resolve(keyPath: "album.name") ?? "",
+                  "image" : item.resolve(keyPath: "album.images.0.url") ?? "",
+                  "preview" : item.resolve(keyPath: "preview_url") ?? ""
                 ]
 
                 let artistFragments: [String : String] = [
-                  "title" : item.path("artists.0.name") ?? "",
-                  "image" : item.path("artists.0.images.0.url") ?? "",
-                  "artist-id" : item.path("artists.0.id") ?? ""
+                  "title" : item.resolve(keyPath: "artists.0.name") ?? "",
+                  "image" : item.resolve(keyPath: "artists.0.images.0.url") ?? "",
+                  "artist-id" : item.resolve(keyPath: "artists.0.id") ?? ""
                 ]
 
-                let duration = item.property("duration_ms") ?? 0
-                let subtitle = item.path("artists.0.name") ?? ""
-                let albumURN = "album:\(item.path("album.id") ?? "")"
-                let artistURN = "artist:\(item.path("artists.0.id") ?? "")"
+                let duration = item.resolve(keyPath: "duration_ms") ?? 0
+                let subtitle = item.resolve(keyPath: "artists.0.name") ?? ""
+                let albumURN = "album:\(item.resolve(keyPath: "album.id") ?? "")"
+                let artistURN = "artist:\(item.resolve(keyPath: "artists.0.id") ?? "")"
 
                 let meta: [String : AnyObject] = [
                   "album-urn" : albumURN,
@@ -158,16 +158,16 @@ extension AppDelegate {
                   "duration" : duration,
                   "album-fragments" : albumFragments,
                   "artist-fragments" : artistFragments,
-                  "fragments" : ["preview" : item.property("preview_url") ?? ""],
+                  "fragments" : ["preview" : item.resolve(keyPath: "preview_url") ?? ""],
                   "trackNumber" : "\(index + 1).",
                   "separator" : true
                 ]
 
                 let viewModel = ViewModel(
-                  title: item.property("name") ?? "",
+                  title: item.resolve(keyPath: "name") ?? "",
                   subtitle: "by \(subtitle)",
                   action: "preview",
-                  image: item.path("album")?.array("images")?.first?.property("url") ?? "",
+                  image: item.resolve(keyPath: "album.images.0.url") ?? "",
                   kind: "track",
                   size: CGSize(width: 200, height: 50),
                   meta: meta
@@ -203,15 +203,15 @@ extension AppDelegate {
                 }
 
                 let viewModel = ViewModel(
-                  title: item.property("name") ?? "",
-                  action: "artist:\(item.property("id") ?? "")",
-                  image: item.array("images")?.first?.property("url") ?? "",
+                  title: item.resolve(keyPath: "name") ?? "",
+                  action: "artist:\(item.resolve(keyPath: "id") ?? "")",
+                  image: item.resolve(keyPath: "images.0.url") ?? "",
                   kind: "artist",
                   size: CGSize(width: 180, height: 180),
                   meta: [
                     "fragments" : [
-                      "title" : item.property("name") ?? "",
-                      "image" : item.array("images")?.first?.property("url") ?? "",
+                      "title" : item.resolve(keyPath: "name") ?? "",
+                      "image" : item.resolve(keyPath: "images.0.url") ?? "",
                       "description" : description
                     ],
                     "separator" : true

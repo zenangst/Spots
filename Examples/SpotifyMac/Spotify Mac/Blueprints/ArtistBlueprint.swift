@@ -13,9 +13,9 @@ struct ArtistBlueprint: BlueprintContainer {
       requests: [],
       fragmentHandler: { fragments, controller in
 
-        let image: String = fragments.property("image") ?? ""
+        let image: String = fragments.resolve(keyPath:"image") ?? ""
 
-        if let artistID: String = fragments.property("artist-id") where image.isEmpty {
+        if let artistID: String = fragments.resolve(keyPath:"artist-id") where image.isEmpty {
           let ride = Malibu.networking("api").GET(ArtistRequest(artistID: artistID))
           ride.validate()
             .toJSONDictionary()
@@ -31,9 +31,9 @@ struct ArtistBlueprint: BlueprintContainer {
         }
 
         let headerModel = ViewModel(
-          title: fragments.property("title") ?? "",
-          image: fragments.property("image") ?? "",
-          subtitle: fragments.property("description") ?? "",
+          title: fragments.resolve(keyPath:"title") ?? "",
+          image: fragments.resolve(keyPath:"image") ?? "",
+          subtitle: fragments.resolve(keyPath:"description") ?? "",
           kind : "header",
           size: CGSize(width: 700, height: 135)
         )

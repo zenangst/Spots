@@ -18,27 +18,27 @@ struct TopTracksBlueprint: BlueprintContainer {
           for (index, item) in json.enumerate() {
 
             let albumFragments: [String : String] = [
-              "title" : item.path("album.name") ?? "",
-              "image" : item.path("album.images.0.url") ?? "",
-              "preview" : item.path("preview_url") ?? ""
+              "title" : item.resolve(keyPath: "album.name") ?? "",
+              "image" : item.resolve(keyPath: "album.images.0.url") ?? "",
+              "preview" : item.resolve(keyPath: "preview_url") ?? ""
             ]
 
             let artistFragments: [String : String] = [
-              "title" : item.path("artists.0.name") ?? "",
-              "image" : item.path("artists.0.images.0.url") ?? "",
-              "artist-id" : item.path("artists.0.id") ?? ""
+              "title" : item.resolve(keyPath: "artists.0.name") ?? "",
+              "image" : item.resolve(keyPath: "artists.0.images.0.url") ?? "",
+              "artist-id" : item.resolve(keyPath: "artists.0.id") ?? ""
             ]
 
-            let duration = item.property("duration_ms") ?? 0
-            let subtitle = item.path("artists.0.name") ?? ""
-            let albumURN = "album:\(item.path("album.id") ?? "")"
-            let artistURN = "artist:\(item.path("artists.0.id") ?? "")"
+            let duration = item.resolve(keyPath: "duration_ms") ?? 0
+            let subtitle = item.resolve(keyPath: "artists.0.name") ?? ""
+            let albumURN = "album:\(item.resolve(keyPath: "album.id") ?? "")"
+            let artistURN = "artist:\(item.resolve(keyPath: "artists.0.id") ?? "")"
 
             let viewModel = ViewModel(
-              title: item.property("name") ?? "",
+              title: item.resolve(keyPath: "name") ?? "",
               subtitle: "by \(subtitle)",
               action: "preview",
-              image: item.path("album.images.0.url") ?? "",
+              image: item.resolve(keyPath: "album.images.0.url") ?? "",
               kind: "track",
               size: CGSize(width: 200, height: 50),
               meta: [
@@ -47,7 +47,7 @@ struct TopTracksBlueprint: BlueprintContainer {
                 "artist-fragments" : artistFragments,
                 "album-urn" : albumURN,
                 "artist-urn" : artistURN,
-                "fragments" : ["preview" : item.property("preview_url") ?? ""],
+                "fragments" : ["preview" : item.resolve(keyPath: "preview_url") ?? ""],
                 "trackNumber" : "\(index + 1).",
                 "separator" : true
               ]
