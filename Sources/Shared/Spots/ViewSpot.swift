@@ -25,17 +25,6 @@ public class ViewSpot: NSObject, Spotable, Viewable {
 
   public var adapter: SpotAdapter?
 
-  public var responder: NSResponder {
-    return scrollView
-  }
-
-  public var nextResponder: NSResponder? {
-    get {
-      return nil
-    }
-    set {}
-  }
-
   public required init(component: Component) {
     self.component = component
     super.init()

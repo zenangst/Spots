@@ -23,7 +23,6 @@ public struct GridableMeta {
 
 extension Gridable {
 
-  #if os(OSX)
   public var responder: NSResponder {
     return collectionView
   }
@@ -36,7 +35,6 @@ extension Gridable {
       collectionView.nextResponder = newValue
     }
   }
-  #endif
 
   public func prepare() {
     registerAndPrepare { (classType, withIdentifier) in
