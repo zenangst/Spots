@@ -186,10 +186,7 @@ public class TrackRow: NSTableRowView, SpotConfigurable {
 
     trackLabel.stringValue = item.meta("trackNumber", "")
     titleLabel.stringValue = item.title
-
-    let attributedString = NSMutableAttributedString(string: item.subtitle)
-    attributedString.addAttribute(NSLinkAttributeName, value: "https://www.hackingwithswift.com", range: NSRange(location: 0, length: item.subtitle.length))
-    subtitleLabel.attributedStringValue = attributedString
+    subtitleLabel.attributedStringValue = NSAttributedString(string: item.subtitle)
     subtitleLabel.sizeToFit()
     durationLabel.stringValue = NSTimeInterval(item.meta("duration", 0)).minutesAndSeconds
 
