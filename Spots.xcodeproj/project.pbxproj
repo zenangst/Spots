@@ -76,7 +76,7 @@
 		BDB538301C444B3C0005E498 /* ListSpotSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB5382F1C444B3C0005E498 /* ListSpotSpec.swift */; };
 		BDCCD9271C44438800AC21D1 /* GridSpotSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCCD9261C44438800AC21D1 /* GridSpotSpec.swift */; };
 		BDD25AFE1D58F7AA00927FC5 /* Viewable+Mac.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD25AFC1D58F77200927FC5 /* Viewable+Mac.swift */; };
-		BDD25B001D58F83900927FC5 /* Gridable+Mac.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD25AFF1D58F83900927FC5 /* Gridable+Mac.swift */; };
+		BDD25B011D58F89300927FC5 /* Gridable+Mac.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD25AFF1D58F83900927FC5 /* Gridable+Mac.swift */; };
 		BDE8FBBA1D1BD26100C5A212 /* SpotAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE8FBB91D1BD26100C5A212 /* SpotAdapter.swift */; };
 		BDE8FBBB1D1BD26100C5A212 /* SpotAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE8FBB91D1BD26100C5A212 /* SpotAdapter.swift */; };
 		BDE8FBC31D1BEC4300C5A212 /* ListAdapter+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE8FBC21D1BEC4300C5A212 /* ListAdapter+iOS.swift */; };
@@ -860,7 +860,6 @@
 				BD38DC901D1854D700094941 /* Componentable.swift in Sources */,
 				BD38DC621D1854D700094941 /* UITableView+Indexes.swift in Sources */,
 				BD38DC841D1854D700094941 /* ListSpot.swift in Sources */,
-				BDD25B001D58F83900927FC5 /* Gridable+Mac.swift in Sources */,
 				BD38DC601D1854D700094941 /* UICollectionView+Indexes.swift in Sources */,
 				BD980DEA1D18A5FA007284DD /* Parser.swift in Sources */,
 				BD38DC921D1854D700094941 /* SpotConfigurable.swift in Sources */,
@@ -928,6 +927,7 @@
 				BD6A1F2B1D2B8C5200E85FD3 /* SpotsController.swift in Sources */,
 				BD38DC9D1D18550900094941 /* SpotCache.swift in Sources */,
 				BD980E2A1D190A26007284DD /* Viewable.swift in Sources */,
+				BDD25B011D58F89300927FC5 /* Gridable+Mac.swift in Sources */,
 				BD980E271D1909E3007284DD /* ViewSpot.swift in Sources */,
 				BD6A1F321D2B8C5200E85FD3 /* CollectionViewLeftLayout.swift in Sources */,
 				BDD25AFE1D58F7AA00927FC5 /* Viewable+Mac.swift in Sources */,
