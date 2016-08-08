@@ -90,7 +90,10 @@ public extension SpotsProtocol {
    - Parameter json: A JSON dictionary that gets parsed into UI elements
    - Parameter completion: A closure that will be run after reload has been performed on all spots
    */
-  public func reloadIfNeeded(json: [String : AnyObject], compare: ((lhs: [Component], rhs: [Component]) -> Bool) = { lhs, rhs in return lhs != rhs }, animated: ((view: View) -> Void)? = nil, closure: Completion = nil) {
+  public func reloadIfNeeded(json: [String : AnyObject],
+                             compare: ((lhs: [Component], rhs: [Component]) -> Bool) = { lhs, rhs in return lhs != rhs },
+                             animated: ((view: View) -> Void)? = nil,
+                             closure: Completion = nil) {
     dispatch { [weak self] in
       guard let weakSelf = self else { closure?(); return }
 
