@@ -16,6 +16,7 @@ target "Spotify Mac" do
   pod 'Malibu', git: 'https://github.com/hyperoslo/Malibu.git'
   pod 'OhMyAuth', git: 'https://github.com/hyperoslo/OhMyAuth.git'
   pod 'Keychain', git: 'https://github.com/hyperoslo/Keychain.git'
+  pod 'Tailor', git: 'https://github.com/zenangst/Tailor.git'
 
   post_install do |installer|
     puts("Update debug pod settings to speed up build time")
