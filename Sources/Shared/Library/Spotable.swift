@@ -31,6 +31,11 @@ public protocol Spotable: class {
   /// A SpotAdapter
   var adapter: SpotAdapter? { get }
 
+  #if os(OSX)
+    var responder: NSResponder { get }
+    var nextResponder: NSResponder? { get set }
+  #endif
+
   /**
    Initialize a Spotable object with a Component
 

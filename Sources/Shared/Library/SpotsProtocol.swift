@@ -44,7 +44,12 @@ public protocol SpotsProtocol: class {
   func spot<T>(index: Int, _ type: T.Type) -> T?
   func spot(@noescape closure: (index: Int, spot: Spotable) -> Bool) -> Spotable?
 
+  #if os(OSX)
+  init(spots: [Spotable], backgroundType: SpotsControllerBackground)
+  #else
   init(spots: [Spotable])
+  #endif
+
 }
 
 public extension SpotsProtocol {
@@ -85,7 +90,10 @@ public extension SpotsProtocol {
    - Parameter json: A JSON dictionary that gets parsed into UI elements
    - Parameter completion: A closure that will be run after reload has been performed on all spots
    */
-  public func reloadIfNeeded(json: [String : AnyObject], compare: ((lhs: [Component], rhs: [Component]) -> Bool) = { lhs, rhs in return lhs != rhs }, animated: ((view: View) -> Void)? = nil, closure: Completion = nil) {
+  public func reloadIfNeeded(json: [String : AnyObject],
+                             compare: ((lhs: [Component], rhs: [Component]) -> Bool) = { lhs, rhs in return lhs != rhs },
+                             animated: ((view: View) -> Void)? = nil,
+                             closure: Completion = nil) {
     dispatch { [weak self] in
       guard let weakSelf = self else { closure?(); return }
 
@@ -174,6 +182,7 @@ public extension SpotsProtocol {
 
     update(spotAtIndex: index, withAnimation: animation, withCompletion: completion, {
       $0.items = items
+      self.spotsScrollView.forceUpdate = true
     })
   }
 
@@ -417,15 +426,15 @@ public extension SpotsProtocol {
   #if os(iOS)
     guard let stateCache = stateCache where source == nil && Simulator.isRunning else { return }
   #else
-    guard let stateCache = stateCache where source == nil else { return }
+    guard let stateCache = stateCache else { return }
   #endif
     CacheJSONOptions.writeOptions = .PrettyPrinted
 
     let paths = NSSearchPathForDirectoriesInDomains(.CachesDirectory,
                                                     NSSearchPathDomainMask.UserDomainMask, true)
-    let path = "\(paths.first!)/\(DiskStorage.prefix).\(SpotCache.cacheName)/\(stateCache.fileName())"
-    NSLog("SpotsCache -> \(stateCache.key):\nfile://\(path)")
-    delay(0.5) { self.monitor(path) }
+
+    NSLog("SpotsCache -> \(stateCache.key):\nfile://\(stateCache.path)")
+    delay(0.5) { self.monitor(stateCache.path) }
   }
   #endif
 

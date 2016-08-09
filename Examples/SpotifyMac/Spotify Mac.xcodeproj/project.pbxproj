@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BD277A831D5319700009458E /* NSTimeInterval+minuteSeconds.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD277A821D5319700009458E /* NSTimeInterval+minuteSeconds.swift */; };
+		BD34054B1D41334E007B8504 /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD34054A1D41334E007B8504 /* MainWindowController.swift */; };
 		BD6A1EF21D2A5B2500E85FD3 /* BlueprintConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6A1ED01D2A5B2500E85FD3 /* BlueprintConfigurator.swift */; };
 		BD6A1EF31D2A5B2500E85FD3 /* CompassConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6A1ED11D2A5B2500E85FD3 /* CompassConfigurator.swift */; };
 		BD6A1EF41D2A5B2500E85FD3 /* ImaginaryConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6A1ED21D2A5B2500E85FD3 /* ImaginaryConfigurator.swift */; };
@@ -37,6 +39,20 @@
 		BD6A1F0D1D2A5B2500E85FD3 /* TrackRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6A1EF11D2A5B2500E85FD3 /* TrackRow.swift */; };
 		BD6A1F0F1D2A5C8100E85FD3 /* NSImage+contentMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6A1F0E1D2A5C8100E85FD3 /* NSImage+contentMode.swift */; };
 		BD6A1F121D2AC74100E85FD3 /* NavigationToolbarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6A1F111D2AC74100E85FD3 /* NavigationToolbarItem.swift */; };
+		BD8F70041D5364A6007A861B /* ArtistBlueprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8F70031D5364A6007A861B /* ArtistBlueprint.swift */; };
+		BD8F70061D53656A007A861B /* TopArtistsBlueprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8F70051D53656A007A861B /* TopArtistsBlueprint.swift */; };
+		BD8F70081D5365DA007A861B /* BlueprintContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8F70071D5365DA007A861B /* BlueprintContainer.swift */; };
+		BD8F700A1D536667007A861B /* TopTracksBlueprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8F70091D536667007A861B /* TopTracksBlueprint.swift */; };
+		BD8F700C1D5366B4007A861B /* AlbumBlueprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8F700B1D5366B4007A861B /* AlbumBlueprint.swift */; };
+		BD8F700E1D5366FA007A861B /* AlbumsBlueprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8F700D1D5366FA007A861B /* AlbumsBlueprint.swift */; };
+		BD8F70101D536750007A861B /* FollowingBlueprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8F700F1D536750007A861B /* FollowingBlueprint.swift */; };
+		BD8F70121D536794007A861B /* SongsBlueprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8F70111D536794007A861B /* SongsBlueprint.swift */; };
+		BD8F70141D5367DE007A861B /* CategoryBlueprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8F70131D5367DE007A861B /* CategoryBlueprint.swift */; };
+		BD8F70161D536817007A861B /* PlaylistBlueprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8F70151D536817007A861B /* PlaylistBlueprint.swift */; };
+		BD8F70181D536860007A861B /* PlaylistsBlueprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8F70171D536860007A861B /* PlaylistsBlueprint.swift */; };
+		BD8F701A1D536890007A861B /* BrowseBlueprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8F70191D536890007A861B /* BrowseBlueprint.swift */; };
+		BD8F701E1D53736B007A861B /* ClickableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8F701D1D53736B007A861B /* ClickableImageView.swift */; };
+		BD8F70201D537C43007A861B /* ClickableTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8F701F1D537C43007A861B /* ClickableTextField.swift */; };
 		BDDC3E901CE78D5B00B608FB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDC3E8F1CE78D5B00B608FB /* AppDelegate.swift */; };
 		BDDC3E921CE78D5B00B608FB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BDDC3E911CE78D5B00B608FB /* Assets.xcassets */; };
 		BDDC3E951CE78D5B00B608FB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = BDDC3E931CE78D5B00B608FB /* MainMenu.xib */; };
@@ -59,6 +75,8 @@
 /* Begin PBXFileReference section */
 		2B8828CE6480C142B637C969 /* Pods-Spotify Mac.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spotify Mac.release.xcconfig"; path = "Pods/Target Support Files/Pods-Spotify Mac/Pods-Spotify Mac.release.xcconfig"; sourceTree = "<group>"; };
 		A3A97FE108964C61A20C9DFB /* Pods-Spotify Mac.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spotify Mac.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Spotify Mac/Pods-Spotify Mac.debug.xcconfig"; sourceTree = "<group>"; };
+		BD277A821D5319700009458E /* NSTimeInterval+minuteSeconds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSTimeInterval+minuteSeconds.swift"; sourceTree = "<group>"; };
+		BD34054A1D41334E007B8504 /* MainWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
 		BD6A1ED01D2A5B2500E85FD3 /* BlueprintConfigurator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlueprintConfigurator.swift; sourceTree = "<group>"; };
 		BD6A1ED11D2A5B2500E85FD3 /* CompassConfigurator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompassConfigurator.swift; sourceTree = "<group>"; };
 		BD6A1ED21D2A5B2500E85FD3 /* ImaginaryConfigurator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImaginaryConfigurator.swift; sourceTree = "<group>"; };
@@ -89,6 +107,20 @@
 		BD6A1EF11D2A5B2500E85FD3 /* TrackRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackRow.swift; sourceTree = "<group>"; };
 		BD6A1F0E1D2A5C8100E85FD3 /* NSImage+contentMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSImage+contentMode.swift"; sourceTree = "<group>"; };
 		BD6A1F111D2AC74100E85FD3 /* NavigationToolbarItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationToolbarItem.swift; sourceTree = "<group>"; };
+		BD8F70031D5364A6007A861B /* ArtistBlueprint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistBlueprint.swift; sourceTree = "<group>"; };
+		BD8F70051D53656A007A861B /* TopArtistsBlueprint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopArtistsBlueprint.swift; sourceTree = "<group>"; };
+		BD8F70071D5365DA007A861B /* BlueprintContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlueprintContainer.swift; sourceTree = "<group>"; };
+		BD8F70091D536667007A861B /* TopTracksBlueprint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopTracksBlueprint.swift; sourceTree = "<group>"; };
+		BD8F700B1D5366B4007A861B /* AlbumBlueprint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumBlueprint.swift; sourceTree = "<group>"; };
+		BD8F700D1D5366FA007A861B /* AlbumsBlueprint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumsBlueprint.swift; sourceTree = "<group>"; };
+		BD8F700F1D536750007A861B /* FollowingBlueprint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowingBlueprint.swift; sourceTree = "<group>"; };
+		BD8F70111D536794007A861B /* SongsBlueprint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongsBlueprint.swift; sourceTree = "<group>"; };
+		BD8F70131D5367DE007A861B /* CategoryBlueprint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryBlueprint.swift; sourceTree = "<group>"; };
+		BD8F70151D536817007A861B /* PlaylistBlueprint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistBlueprint.swift; sourceTree = "<group>"; };
+		BD8F70171D536860007A861B /* PlaylistsBlueprint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistsBlueprint.swift; sourceTree = "<group>"; };
+		BD8F70191D536890007A861B /* BrowseBlueprint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowseBlueprint.swift; sourceTree = "<group>"; };
+		BD8F701D1D53736B007A861B /* ClickableImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClickableImageView.swift; sourceTree = "<group>"; };
+		BD8F701F1D537C43007A861B /* ClickableTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClickableTextField.swift; sourceTree = "<group>"; };
 		BDDC3E8C1CE78D5B00B608FB /* Spotify Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Spotify Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDDC3E8F1CE78D5B00B608FB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BDDC3E911CE78D5B00B608FB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -143,6 +175,7 @@
 		BD6A1ED61D2A5B2500E85FD3 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				BD34054A1D41334E007B8504 /* MainWindowController.swift */,
 				BD6A1ED71D2A5B2500E85FD3 /* DetailController.swift */,
 				BD6A1ED81D2A5B2500E85FD3 /* ListController.swift */,
 			);
@@ -154,6 +187,7 @@
 			children = (
 				BD6A1EDA1D2A5B2500E85FD3 /* NSImage+tintColor.swift */,
 				BD6A1F0E1D2A5C8100E85FD3 /* NSImage+contentMode.swift */,
+				BD277A821D5319700009458E /* NSTimeInterval+minuteSeconds.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -162,6 +196,7 @@
 			isa = PBXGroup;
 			children = (
 				BD6A1EDC1D2A5B2500E85FD3 /* Configurator.swift */,
+				BD8F70071D5365DA007A861B /* BlueprintContainer.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -186,6 +221,8 @@
 				BD6A1EE61D2A5B2500E85FD3 /* Toolbar.swift */,
 				BD6A1EE71D2A5B2500E85FD3 /* Window.swift */,
 				BD6A1F111D2AC74100E85FD3 /* NavigationToolbarItem.swift */,
+				BD8F701D1D53736B007A861B /* ClickableImageView.swift */,
+				BD8F701F1D537C43007A861B /* ClickableTextField.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -204,6 +241,24 @@
 				BD6A1EF11D2A5B2500E85FD3 /* TrackRow.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		BD8F70021D536497007A861B /* Blueprints */ = {
+			isa = PBXGroup;
+			children = (
+				BD8F700B1D5366B4007A861B /* AlbumBlueprint.swift */,
+				BD8F700D1D5366FA007A861B /* AlbumsBlueprint.swift */,
+				BD8F70031D5364A6007A861B /* ArtistBlueprint.swift */,
+				BD8F70191D536890007A861B /* BrowseBlueprint.swift */,
+				BD8F70131D5367DE007A861B /* CategoryBlueprint.swift */,
+				BD8F700F1D536750007A861B /* FollowingBlueprint.swift */,
+				BD8F70151D536817007A861B /* PlaylistBlueprint.swift */,
+				BD8F70171D536860007A861B /* PlaylistsBlueprint.swift */,
+				BD8F70111D536794007A861B /* SongsBlueprint.swift */,
+				BD8F70051D53656A007A861B /* TopArtistsBlueprint.swift */,
+				BD8F70091D536667007A861B /* TopTracksBlueprint.swift */,
+			);
+			path = Blueprints;
 			sourceTree = "<group>";
 		};
 		BDDC3E831CE78D5B00B608FB = {
@@ -227,6 +282,7 @@
 		BDDC3E8E1CE78D5B00B608FB /* Spotify Mac */ = {
 			isa = PBXGroup;
 			children = (
+				BD8F70021D536497007A861B /* Blueprints */,
 				BDDC3E8F1CE78D5B00B608FB /* AppDelegate.swift */,
 				BDF473C41D24EE1800E354AC /* AppDelegate+Routes.swift */,
 				BDDC3E911CE78D5B00B608FB /* Assets.xcassets */,
@@ -250,13 +306,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BDDC3E991CE78D5B00B608FB /* Build configuration list for PBXNativeTarget "Spotify Mac" */;
 			buildPhases = (
-				F18CD1DAFEFD085285A1E01C /* 📦 Check Pods Manifest.lock */,
+				F18CD1DAFEFD085285A1E01C /* [CP] Check Pods Manifest.lock */,
 				BDDC3E881CE78D5B00B608FB /* Sources */,
 				BDDC3E891CE78D5B00B608FB /* Frameworks */,
 				BDDC3E8A1CE78D5B00B608FB /* Resources */,
 				BDB4FBB21D21822000C52D7F /* CopyFiles */,
-				E001BF53174C65A87081AF9F /* 📦 Embed Pods Frameworks */,
-				14C402F4C9AB1C3FA7C11353 /* 📦 Copy Pods Resources */,
+				E001BF53174C65A87081AF9F /* [CP] Embed Pods Frameworks */,
+				14C402F4C9AB1C3FA7C11353 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -313,14 +369,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		14C402F4C9AB1C3FA7C11353 /* 📦 Copy Pods Resources */ = {
+		14C402F4C9AB1C3FA7C11353 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -328,14 +384,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Spotify Mac/Pods-Spotify Mac-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		E001BF53174C65A87081AF9F /* 📦 Embed Pods Frameworks */ = {
+		E001BF53174C65A87081AF9F /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -343,14 +399,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Spotify Mac/Pods-Spotify Mac-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		F18CD1DAFEFD085285A1E01C /* 📦 Check Pods Manifest.lock */ = {
+		F18CD1DAFEFD085285A1E01C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -369,19 +425,30 @@
 				BD6A1EF61D2A5B2500E85FD3 /* OhMyAuthConfigurator.swift in Sources */,
 				BD6A1F0F1D2A5C8100E85FD3 /* NSImage+contentMode.swift in Sources */,
 				BD6A1F061D2A5B2500E85FD3 /* ArtistGridItem.swift in Sources */,
+				BD277A831D5319700009458E /* NSTimeInterval+minuteSeconds.swift in Sources */,
+				BD8F70161D536817007A861B /* PlaylistBlueprint.swift in Sources */,
 				BD6A1EF91D2A5B2500E85FD3 /* ListController.swift in Sources */,
+				BD8F70141D5367DE007A861B /* CategoryBlueprint.swift in Sources */,
+				BD8F70061D53656A007A861B /* TopArtistsBlueprint.swift in Sources */,
+				BD8F70101D536750007A861B /* FollowingBlueprint.swift in Sources */,
+				BD8F70121D536794007A861B /* SongsBlueprint.swift in Sources */,
+				BD8F700C1D5366B4007A861B /* AlbumBlueprint.swift in Sources */,
 				BD6A1F041D2A5B2500E85FD3 /* Window.swift in Sources */,
 				BD6A1F0A1D2A5B2500E85FD3 /* HeaderGridItem.swift in Sources */,
 				BD6A1F081D2A5B2500E85FD3 /* FeaturedGridItem.swift in Sources */,
+				BD34054B1D41334E007B8504 /* MainWindowController.swift in Sources */,
 				BD6A1F121D2AC74100E85FD3 /* NavigationToolbarItem.swift in Sources */,
+				BD8F70181D536860007A861B /* PlaylistsBlueprint.swift in Sources */,
 				BD6A1F071D2A5B2500E85FD3 /* CategoryGridItem.swift in Sources */,
 				BD6A1EF51D2A5B2500E85FD3 /* MalibuConfigurator.swift in Sources */,
 				BD6A1F021D2A5B2500E85FD3 /* TitleToolbarItem.swift in Sources */,
 				BD6A1F0C1D2A5B2500E85FD3 /* TableRow.swift in Sources */,
 				BD6A1EFE1D2A5B2500E85FD3 /* Requests.swift in Sources */,
 				BDF473C51D24EE1800E354AC /* AppDelegate+Routes.swift in Sources */,
+				BD8F70081D5365DA007A861B /* BlueprintContainer.swift in Sources */,
 				BD6A1EFB1D2A5B2500E85FD3 /* Configurator.swift in Sources */,
 				BD6A1F031D2A5B2500E85FD3 /* Toolbar.swift in Sources */,
+				BD8F70041D5364A6007A861B /* ArtistBlueprint.swift in Sources */,
 				BD6A1EFC1D2A5B2500E85FD3 /* Blueprint.swift in Sources */,
 				BD6A1F051D2A5B2500E85FD3 /* AlbumGridItem.swift in Sources */,
 				BD6A1F091D2A5B2500E85FD3 /* GridListItem.swift in Sources */,
@@ -392,11 +459,16 @@
 				BD6A1EFD1D2A5B2500E85FD3 /* Blueprints.swift in Sources */,
 				BD6A1F011D2A5B2500E85FD3 /* SearchToolbarItem.swift in Sources */,
 				BDDC3E901CE78D5B00B608FB /* AppDelegate.swift in Sources */,
+				BD8F70201D537C43007A861B /* ClickableTextField.swift in Sources */,
+				BD8F700E1D5366FA007A861B /* AlbumsBlueprint.swift in Sources */,
 				BD6A1EF71D2A5B2500E85FD3 /* SpotsConfigurator.swift in Sources */,
+				BD8F701E1D53736B007A861B /* ClickableImageView.swift in Sources */,
 				BD6A1F0B1D2A5B2500E85FD3 /* HeroGridItem.swift in Sources */,
 				BD6A1F001D2A5B2500E85FD3 /* MainSplitView.swift in Sources */,
+				BD8F700A1D536667007A861B /* TopTracksBlueprint.swift in Sources */,
 				BD6A1EF81D2A5B2500E85FD3 /* DetailController.swift in Sources */,
 				BD6A1EF41D2A5B2500E85FD3 /* ImaginaryConfigurator.swift in Sources */,
+				BD8F701A1D536890007A861B /* BrowseBlueprint.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

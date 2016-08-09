@@ -101,6 +101,15 @@ struct TopRequest: GETRequestable {
   }
 }
 
+struct ArtistRequest: GETRequestable {
+  var etagPolicy: ETagPolicy = .Disabled
+  var message = Message(resource: "")
+
+  init(artistID: String) {
+    message.resource = "artists/\(artistID)"
+  }
+}
+
 struct ArtistAlbums: GETRequestable {
   var etagPolicy: ETagPolicy = .Disabled
   var message = Message(resource: "")

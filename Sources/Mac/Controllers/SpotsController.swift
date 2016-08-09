@@ -1,5 +1,9 @@
 import Cocoa
 
+public enum SpotsControllerBackground {
+  case Regular, Dynamic
+}
+
 public class SpotsController: NSViewController, SpotsProtocol {
 
   public static var configure: ((container: SpotsScrollView) -> Void)?
@@ -50,11 +54,14 @@ public class SpotsController: NSViewController, SpotsProtocol {
   /// A bool value to indicate if the SpotsController is refeshing
   public var refreshing = false
 
+  private let backgroundType: SpotsControllerBackground
+
   /**
    - Parameter spots: An array of Spotable objects
    */
-  public required init(spots: [Spotable] = []) {
+  public required init(spots: [Spotable] = [], backgroundType: SpotsControllerBackground = .Regular) {
     self.spots = spots
+    self.backgroundType = backgroundType
     super.init(nibName: nil, bundle: nil)!
 
     NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SpotsController.scrollViewDidScroll(_:)), name: NSScrollViewDidLiveScrollNotification, object: spotsScrollView)
@@ -128,9 +135,20 @@ public class SpotsController: NSViewController, SpotsProtocol {
    Instantiates a view from a nib file and sets the value of the view property.
    */
   public override func loadView() {
-    view = NSView()
+    let view: NSView
+
+    switch backgroundType {
+    case .Regular:
+      view = NSView()
+    case .Dynamic:
+      let visualEffectView = NSVisualEffectView()
+      visualEffectView.blendingMode = .BehindWindow
+      view = visualEffectView
+    }
+
     view.autoresizingMask = .ViewWidthSizable
     view.autoresizesSubviews = true
+    self.view = view
   }
 
   /**
@@ -139,6 +157,7 @@ public class SpotsController: NSViewController, SpotsProtocol {
   public override func viewDidLoad() {
     super.viewDidLoad()
     view.addSubview(spotsScrollView)
+    spotsScrollView.hasVerticalScroller = true
     setupSpots()
     SpotsController.configure?(container: spotsScrollView)
   }
@@ -161,8 +180,8 @@ public class SpotsController: NSViewController, SpotsProtocol {
     spotsDelegate = nil
 
     setupSpots()
-    spotsScrollView.layoutSubtreeIfNeeded()
     closure?()
+    spotsScrollView.layoutSubtreeIfNeeded()
   }
 
   /**
@@ -170,7 +189,6 @@ public class SpotsController: NSViewController, SpotsProtocol {
    */
   public func setupSpots(animated: ((view: View) -> Void)? = nil) {
     spots.enumerate().forEach { index, spot in
-
       var height = spot.spotHeight()
       if let componentSize = spot.component.size where componentSize.height > height {
         height = componentSize.height
@@ -205,17 +223,22 @@ public class SpotsController: NSViewController, SpotsProtocol {
     }
   }
 
-  func scrollViewDidScroll(notification: NSNotification) {
+  public func scrollViewDidScroll(notification: NSNotification) {
     guard let scrollView = notification.object as? SpotsScrollView,
       delegate = spotsScrollDelegate,
       _ = NSApplication.sharedApplication().mainWindow
+    where !refreshing && scrollView.contentOffset.y > 0
       else { return }
 
     let offset = scrollView.contentOffset
-    let shouldFetch = !refreshing &&
-      offset.y > 0 &&
-      scrollView.contentSize.height > scrollView.spotsContentView.visibleRect.size.height &&
-      !refreshPositions.contains(scrollView.spotsContentView.visibleRect.size.height)
+    let totalHeight = (scrollView.documentView as? NSView)?.frame.size.height ?? 0
+    let multiplier: CGFloat = !refreshPositions.isEmpty
+      ? CGFloat(1 + refreshPositions.count)
+      : 1.5
+    let currentOffset = offset.y + scrollView.frame.size.height
+    let shouldFetch = currentOffset > totalHeight - scrollView.frame.size.height * multiplier + scrollView.frame.origin.y &&
+      !refreshPositions.contains(currentOffset)
+
 
     // Scroll did reach top
     if scrollView.contentOffset.y < 0 &&
@@ -228,8 +251,8 @@ public class SpotsController: NSViewController, SpotsProtocol {
 
     if shouldFetch {
       // Infinite scrolling
-      refreshPositions.append(scrollView.spotsContentView.visibleRect.size.height)
       refreshing = true
+      refreshPositions.append(currentOffset)
       delegate.spotDidReachEnd {
         self.refreshing = false
       }

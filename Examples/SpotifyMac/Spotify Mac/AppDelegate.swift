@@ -9,18 +9,18 @@ let spotsSession = SpotsSession()
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 
-  @IBOutlet weak var window: Window!
-
-  var history = [String]()
-
   let toolbarHeight: CGFloat = 36
 
   lazy var listController = ListController(cacheKey: "menu-cache")
-  lazy var detailController = DetailController()
+  lazy var detailController: DetailController = DetailController([:])
 
-  var currentController: SpotsController?
-  var splitView: MainSplitView!
+  var volumeTimer: NSTimer?
+  var window: Window?
   var player: AVAudioPlayer?
+  var history = [String]()
+  var currentController: SpotsController?
+  var mainWindowController: MainWindowController?
+  var splitView: MainSplitView!
 
   let configurators: [Configurator] = [
     BlueprintConfigurator(),
@@ -34,24 +34,33 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
   func applicationDidFinishLaunching(aNotification: NSNotification) {
     configurators.forEach { $0.configure() }
 
+    spotsSession.login()
+
     if !spotsSession.isActive {
       spotsSession.login()
     } else {
       Malibu.networking("api").authenticate(bearerToken: spotsSession.accessToken ?? "")
     }
 
-    window.delegate = self
-
-    splitView = MainSplitView(listView: listController.view,
-                  detailView: detailController.view)
+    if let window = window where window.frame.size.width < window.minSize.width {
+      let previousRect = window.frame
+      window.setFrame(NSRect(
+        x: previousRect.origin.x,
+        y: previousRect.origin.y,
+        width: window.minSize.width,
+        height: window.minSize.height
+        ), display: false)
+    }
 
     registerURLScheme()
 
-    detailController.blueprint = blueprints["browse"]!
+    window = Window()
+    mainWindowController = MainWindowController(window: window)
+    mainWindowController?.windowFrameAutosaveName = "MainWindow"
+    window?.windowController = mainWindowController
+    mainWindowController?.currentController = detailController
+    mainWindowController?.showWindow(nil)
 
-    window.contentView = splitView
-    window.becomeKeyWindow()
-
-    NSUserDefaults.standardUserDefaults().setBool(true, forKey: "NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints")
+    NSUserDefaults.standardUserDefaults().setBool(false, forKey: "NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints")
   }
 }

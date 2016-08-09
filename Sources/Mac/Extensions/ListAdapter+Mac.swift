@@ -8,6 +8,9 @@ extension ListAdapter {
     let count = spot.component.items.count
     spot.component.items.append(item)
 
+    var cached: View?
+    spot.prepareItem(item, index: count, cached: &cached)
+
     dispatch { [weak self] in
       guard let tableView = self?.spot.tableView else { completion?(); return }
       tableView.insert([count], animation: animation.tableViewAnimation) {
@@ -22,14 +25,16 @@ extension ListAdapter {
 
     spot.component.items.appendContentsOf(items)
 
+    var cached: NSView?
     items.enumerate().forEach {
       indexes.append(count + $0.index)
+      spot.prepareItem($0.element, index: count + $0.index, cached: &cached)
     }
 
     dispatch { [weak self] in
       guard let tableView = self?.spot.tableView else { completion?(); return }
       tableView.insert(indexes, animation: animation.tableViewAnimation) {
-        self?.spot.setup(tableView.frame.size)
+        self?.spot.layout(tableView.frame.size)
         completion?()
       }
     }
@@ -134,18 +139,14 @@ extension ListAdapter {
         }
       } else {
         tableView.reloadData()
-        self?.spot.setup(tableView.frame.size)
-        completion?()
+        self?.refreshHeight(completion)
       }
     }
   }
 
   public func refreshHeight(completion: (() -> Void)? = nil) {
-    delay(0.2) { [weak self] in
-      guard let weakSelf = self, tableView = self?.spot.tableView else { return; completion?() }
-      weakSelf.spot.layout(CGSize(width: tableView.frame.width, height: weakSelf.spot.spotHeight() ?? 0))
-      completion?()
-    }
+    spot.layout(CGSize(width: spot.tableView.frame.width, height: spot.spotHeight() ?? 0))
+    completion?()
   }
 }
 
@@ -168,7 +169,7 @@ extension ListAdapter: NSTableViewDelegate {
         return false
     }
 
-    if spot.component.meta("doubleClick", type: Bool.self) != true {
+    if spot.component.meta(ListSpot.Key.doubleAction, type: Bool.self) != true {
       spot.spotsDelegate?.spotDidSelectItem(spot, item: viewModel)
     }
 
@@ -181,6 +182,8 @@ extension ListAdapter: NSTableViewDelegate {
       height: tableView.frame.height)
 
     let height = row < spot.component.items.count ? spot.item(row)?.size.height ?? 0 : 1.0
+
+    if height == 0 { return 1.0 }
 
     return height
   }
@@ -196,7 +199,7 @@ extension ListAdapter: NSTableViewDelegate {
     return view as? NSTableRowView
   }
 
-  public func tableView(tableView: NSTableView, willDisplayCell cell: AnyObject, forTableColumn tableColumn: NSTableColumn?, row: Int) { }
+  public func tableView(tableView: NSTableView, willDisplayCell cell: AnyObject, forTableColumn tableColumn: NSTableColumn?, row: Int) {}
 
   public func tableView(tableView: NSTableView, viewForTableColumn tableColumn: NSTableColumn?, row: Int) -> NSView? {
     return nil

@@ -21,17 +21,18 @@ public class TableRow: NSTableRowView, SpotConfigurable {
   public override var selected: Bool {
     didSet {
       if selected {
-        titleLabel.textColor = NSColor.whiteColor()
-        subtitleLabel.textColor = NSColor.lightGrayColor()
+        titleLabel.textColor = tintColor
+        subtitleLabel.textColor = tintColor
         if tintColor != nil {
           imageView.tintColor = tintColor
         }
-        layer?.backgroundColor = NSColor(red:0.157, green:0.157, blue:0.157, alpha: 1).CGColor
+        layer?.backgroundColor = NSColor(red:0.1, green:0.1, blue:0.1, alpha: 0.985).CGColor
       } else {
         titleLabel.textColor = NSColor.lightGrayColor()
         subtitleLabel.textColor = NSColor.darkGrayColor()
         if tintColor != nil { imageView.tintColor = NSColor.grayColor() }
         layer?.backgroundColor = NSColor.clearColor().CGColor
+        self.shadow = nil
       }
     }
   }
@@ -119,8 +120,6 @@ public class TableRow: NSTableRowView, SpotConfigurable {
         imageView.frame.size.width = 40
         imageView.frame.size.height = 40
         imageView.frame.origin.x = 5
-        titleLabel.frame.origin.x = imageView.frame.maxX + 5
-        subtitleLabel.frame.origin.x = imageView.frame.maxX + 5
         imageView.frame.origin.y = item.size.height / 2 - imageView.frame.size.height / 2
 
         imageView.setImage(NSURL(string: item.image))
@@ -129,8 +128,6 @@ public class TableRow: NSTableRowView, SpotConfigurable {
         imageView.frame.size.width = 18
         imageView.frame.size.height = 18
         imageView.frame.origin.x = 10
-        titleLabel.frame.origin.x = imageView.frame.maxX + 5
-        subtitleLabel.frame.origin.x = imageView.frame.maxX + 5
         imageView.frame.origin.y = item.size.height / 2 - imageView.frame.size.height / 2 + 1
         if tintColor != nil {
           imageView.tintColor = NSColor.grayColor()

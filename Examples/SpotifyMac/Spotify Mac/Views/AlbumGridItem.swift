@@ -63,10 +63,10 @@ public class AlbumGridItem: NSCollectionViewItem, SpotConfigurable {
     self.item = item
 
     customView.frame.size.height = item.size.height
+    customImageView.frame.size.width = item.size.width
+    customImageView.frame.size.height = item.size.height
 
     if item.image.isPresent && item.image.hasPrefix("http") {
-      customImageView.frame.size.width = item.size.width
-      customImageView.frame.size.height = item.size.height
       customImageView.setImage(NSURL(string: item.image)) { [weak self] image in
         self?.customImageView.contentMode = .ScaleToAspectFill
       }

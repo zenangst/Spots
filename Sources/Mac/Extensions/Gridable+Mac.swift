@@ -14,14 +14,27 @@ public protocol Gridable: Spotable {
 
 public struct GridableMeta {
   public struct Key {
-    static let sectionInsetTop = "insetTop"
-    static let sectionInsetLeft = "insetLeft"
-    static let sectionInsetRight = "insetRight"
-    static let sectionInsetBottom = "insetBottom"
+    public static let sectionInsetTop = "insetTop"
+    public static let sectionInsetLeft = "insetLeft"
+    public static let sectionInsetRight = "insetRight"
+    public static let sectionInsetBottom = "insetBottom"
   }
 }
 
 extension Gridable {
+
+  public var responder: NSResponder {
+    return collectionView
+  }
+
+  public var nextResponder: NSResponder? {
+    get {
+      return collectionView.nextResponder
+    }
+    set {
+      collectionView.nextResponder = newValue
+    }
+  }
 
   public func prepare() {
     registerAndPrepare { (classType, withIdentifier) in
