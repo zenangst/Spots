@@ -23,7 +23,7 @@ struct ArtistBlueprint: BlueprintContainer {
 
               guard let firstItem = controller.spot(0, Listable.self)?.component.items.first else { return }
               var newItem = firstItem
-              newItem.image = json.path("images.0.url") ?? ""
+              newItem.image = json.resolve(keyPath: "images.0.url") ?? ""
               controller.updateIfNeeded(spotAtIndex: 0, items: [newItem], withAnimation: .None) {
                 controller.cache()
               }
