@@ -245,11 +245,9 @@ extension AppDelegate {
         blueprint.requests[0].request = AlbumRequest(albumID: albumID)
         newBlueprint = blueprint
       case "albums":
-        guard let blueprint = blueprints["albums"] else { return }
-        newBlueprint = blueprint
+        newBlueprint = blueprints[route]
       case "browse":
-        guard let blueprint = blueprints["browse"] else { return }
-        newBlueprint = blueprint
+        newBlueprint = blueprints[route]
       case "category:{category_id}":
         guard let categoryID = arguments["category_id"],
           categoryBlueprint = blueprints["category"] else { return }
@@ -258,11 +256,9 @@ extension AppDelegate {
         blueprint.requests[0].request = CategoryRequest(categoryID: categoryID)
         newBlueprint = blueprint
       case "following":
-        guard let blueprint = blueprints["following"] else { return }
-        newBlueprint = blueprint
+        newBlueprint = blueprints[route]
       case "playlists":
-        guard let blueprint = blueprints["playlists"] else { return }
-        newBlueprint = blueprint
+        newBlueprint = blueprints[route]
       case "playlist:{user_id}:{playlist_id}":
         guard let userID = arguments["user_id"],
           playlistID = arguments["playlist_id"],
@@ -273,8 +269,7 @@ extension AppDelegate {
         blueprint.requests[0].request = PlaylistRequest(userID: userID, playlistID: playlistID)
         newBlueprint = blueprint
       case "songs":
-        guard let blueprint = blueprints["songs"] else { return }
-
+        newBlueprint = blueprints[route]
       default: break
       }
 
