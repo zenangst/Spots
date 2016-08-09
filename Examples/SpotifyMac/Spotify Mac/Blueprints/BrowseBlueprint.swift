@@ -47,7 +47,6 @@ struct BrowseBlueprint: BlueprintContainer {
           rootKey: "albums",
           spotIndex: 2,
           adapter: { json in
-
             var viewModels = [ViewModel]()
 
             for item in json {
