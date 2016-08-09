@@ -56,7 +56,6 @@ class GridSpotSpec: QuickSpec {
         expect(gridSpot.identifier(indexPath)).to(equal("grid"))
 
         GridSpot.views["default-grid"] = GridSpotCell.self
-        GridSpot.defaultKind = "default-grid"
         expect(gridSpot.identifier(indexPath)).to(equal("default-grid"))
 
         GridSpot.views["custom-grid"] = GridSpotCell.self
@@ -66,7 +65,6 @@ class GridSpotSpec: QuickSpec {
         expect(gridSpot.identifier(indexPath)).to(equal("custom-item-kind"))
 
         GridSpot.views.storage.removeAll()
-        GridSpot.defaultKind = "grid"
       }
     }
   }

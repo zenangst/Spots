@@ -55,7 +55,6 @@ class ListSpotSpec: QuickSpec {
         expect(listSpot.identifier(indexPath)).to(equal("list"))
 
         ListSpot.views["default-list"] = ListSpotCell.self
-        ListSpot.defaultKind = "default-list"
         expect(listSpot.identifier(indexPath)).to(equal("default-list"))
 
         ListSpot.views["custom-list"] = ListSpotCell.self
@@ -65,7 +64,6 @@ class ListSpotSpec: QuickSpec {
         expect(listSpot.identifier(indexPath)).to(equal("custom-item-kind"))
 
         ListSpot.views.storage.removeAll()
-        ListSpot.defaultKind = "list"
       }
     }
   }
