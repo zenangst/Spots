@@ -216,17 +216,43 @@ public class CollectionAdapter: NSObject, SpotAdapter {
    - Parameter completion: A completion closure that is executed in the main queue when the view model has been reloaded
    */
   public func reload(indexes: [Int]? = nil, withAnimation animation: SpotsAnimation = .None, completion: Completion) {
-    let items = spot.component.items
-    for (index, item) in items.enumerate() {
-      let cellClass = self.spot.dynamicType.views.storage[item.kind] ?? self.spot.dynamicType.defaultView
-      if let cell = cellClass.init() as? SpotConfigurable {
-        spot.component.items[index].index = index
-        cell.configure(&spot.component.items[index])
+    spot.refreshIndexes()
+    var cellCache: [String : SpotConfigurable] = [:]
+
+    if let indexes = indexes {
+      indexes.forEach { index  in
+        let item = spot.component.items[index]
+        let reuseIdentifier: String = spot.reuseIdentifierForItem(NSIndexPath(forItem: index, inSection: 0))
+        let cellType = spot.dynamicType.views.storage[item.kind] ?? spot.dynamicType.defaultView
+
+        spot.collectionView.registerClass(cellType, forCellWithReuseIdentifier: reuseIdentifier)
+
+        if let cache = spot.configure(itemAtIndex: index, ofType: cellType, cached: cellCache[reuseIdentifier]) {
+          cellCache[reuseIdentifier] = cache
+        }
+      }
+    } else {
+      spot.component.items.enumerate().forEach { index, _  in
+        let item = spot.component.items[index]
+        let reuseIdentifier: String = spot.reuseIdentifierForItem(NSIndexPath(forItem: index, inSection: 0))
+        let cellType = spot.dynamicType.views.storage[item.kind] ?? spot.dynamicType.defaultView
+
+        spot.collectionView.registerClass(cellType, forCellWithReuseIdentifier: reuseIdentifier)
+
+        if let cache = spot.configure(itemAtIndex: index, ofType: cellType, cached: cellCache[reuseIdentifier]) {
+          cellCache[reuseIdentifier] = cache
+        }
       }
     }
 
     spot.collectionView.collectionViewLayout.invalidateLayout()
-    spot.collectionView.reloadData()
+
+    if let indexes = indexes {
+      spot.collectionView.reload(indexes)
+    } else {
+      spot.collectionView.reloadData()
+    }
+
     spot.setup(spot.collectionView.bounds.size)
     spot.collectionView.layoutIfNeeded()
     completion?()
