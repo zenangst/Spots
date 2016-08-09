@@ -34,6 +34,7 @@ extension AppDelegate {
     Compass.parse(url, fragments: fragments) { route, arguments, fragments in
 
       self.detailController.fragments = fragments
+      var newBlueprint: Blueprint? = nil
 
       switch route {
       case "forward":
@@ -75,16 +76,9 @@ extension AppDelegate {
             }
           } catch { NSLog("error: \(error)") }
         }
-
-
       case "artist:{artist_id}":
         guard let artistBlueprint = blueprints["artist"],
         artistID = arguments["artist_id"] else { return }
-
-        if let currentBlueprint = self.detailController.blueprint where fragments["skipHistory"] == nil {
-          self.history.append(currentBlueprint.cacheKey)
-        }
-
         var blueprint = artistBlueprint
 
         blueprint.cacheKey = "artist:\(artistID)"
@@ -225,7 +219,7 @@ extension AppDelegate {
           )
         )
 
-        self.evaluateBlueprint(blueprint)
+        newBlueprint = blueprint
       case "topArtists":
         guard let topTrackBlueprint = blueprints["top-artists"] else { return }
         if let _ = self.detailController.blueprint where fragments["skipHistory"] == nil {
@@ -233,7 +227,7 @@ extension AppDelegate {
         }
         var blueprint = topTrackBlueprint
         blueprint.requests[0].request = TopRequest(type: "artists")
-        self.evaluateBlueprint(blueprint)
+        newBlueprint = blueprint
       case "topTracks":
         guard let topTrackBlueprint = blueprints["top-tracks"] else { return }
         if let _ = self.detailController.blueprint where fragments["skipHistory"] == nil {
@@ -241,77 +235,60 @@ extension AppDelegate {
         }
         var blueprint = topTrackBlueprint
         blueprint.requests[0].request = TopRequest(type: "tracks")
-        self.evaluateBlueprint(blueprint)
+        newBlueprint = blueprint
       case "album:{album_id}":
         guard let albumID = arguments["album_id"],
           albumBlueprint = blueprints["album"] else { return }
-        if let currentBlueprint = self.detailController.blueprint where fragments["skipHistory"] == nil {
-          self.history.append(currentBlueprint.cacheKey)
-        }
 
         var blueprint = albumBlueprint
         blueprint.cacheKey("album:\(albumID)")
         blueprint.requests[0].request = AlbumRequest(albumID: albumID)
-        self.evaluateBlueprint(blueprint)
+        newBlueprint = blueprint
       case "albums":
         guard let blueprint = blueprints["albums"] else { return }
-        if let currentBlueprint = self.detailController.blueprint where fragments["skipHistory"] == nil {
-          self.history.append(currentBlueprint.cacheKey)
-        }
-        self.evaluateBlueprint(blueprint)
+        newBlueprint = blueprint
       case "browse":
         guard let blueprint = blueprints["browse"] else { return }
-        if let currentBlueprint = self.detailController.blueprint where fragments["skipHistory"] == nil {
-          self.history.append(currentBlueprint.cacheKey)
-        }
-        self.evaluateBlueprint(blueprint)
+        newBlueprint = blueprint
       case "category:{category_id}":
         guard let categoryID = arguments["category_id"],
           categoryBlueprint = blueprints["category"] else { return }
-        if let currentBlueprint = self.detailController.blueprint where fragments["skipHistory"] == nil {
-          self.history.append(currentBlueprint.cacheKey)
-        }
         var blueprint = categoryBlueprint
         blueprint.cacheKey("category:\(categoryID)")
         blueprint.requests[0].request = CategoryRequest(categoryID: categoryID)
-        self.evaluateBlueprint(blueprint)
+        newBlueprint = blueprint
       case "following":
         guard let blueprint = blueprints["following"] else { return }
-        if let currentBlueprint = self.detailController.blueprint where fragments["skipHistory"] == nil {
-          self.history.append(currentBlueprint.cacheKey)
-        }
-        self.evaluateBlueprint(blueprint)
+        newBlueprint = blueprint
       case "playlists":
         guard let blueprint = blueprints["playlists"] else { return }
-        if let currentBlueprint = self.detailController.blueprint where fragments["skipHistory"] == nil {
-          self.history.append(currentBlueprint.cacheKey)
-        }
-        self.evaluateBlueprint(blueprint)
+        newBlueprint = blueprint
       case "playlist:{user_id}:{playlist_id}":
         guard let userID = arguments["user_id"],
           playlistID = arguments["playlist_id"],
           playlistBlueprint = blueprints["playlist"] else { return }
 
-        if let currentBlueprint = self.detailController.blueprint where fragments["skipHistory"] == nil {
-          self.history.append(currentBlueprint.cacheKey)
-        }
-
         var blueprint = playlistBlueprint
         blueprint.cacheKey("playlist:\(userID):\(playlistID)")
         blueprint.requests[0].request = PlaylistRequest(userID: userID, playlistID: playlistID)
-        self.evaluateBlueprint(blueprint)
+        newBlueprint = blueprint
       case "songs":
         guard let blueprint = blueprints["songs"] else { return }
-        if let currentBlueprint = self.detailController.blueprint where fragments["skipHistory"] == nil {
-          self.history.append(currentBlueprint.cacheKey)
-        }
-        self.evaluateBlueprint(blueprint)
+
       default: break
+      }
+
+      if let newBlueprint = newBlueprint {
+        self.evaluateBlueprint(newBlueprint, fragments: fragments)
       }
     }
   }
 
-  func evaluateBlueprint(newBlueprint: Blueprint) {
+  func evaluateBlueprint(newBlueprint: Blueprint, fragments: [String : AnyObject]) {
+    if let currentBlueprint = detailController.blueprint where fragments["skipHistory"] == nil {
+      self.history.append(currentBlueprint.cacheKey)
+    }
+
     if newBlueprint.cacheKey != detailController.blueprint?.cacheKey {
       detailController.blueprint = newBlueprint
     }
