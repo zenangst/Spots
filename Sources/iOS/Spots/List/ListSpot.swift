@@ -111,6 +111,8 @@ public class ListSpot: NSObject, Listable {
     self.dynamicType.headers.storage.forEach { identifier, type in
       self.tableView.registerClass(type, forHeaderFooterViewReuseIdentifier: identifier)
     }
+
+    prepareItems()
   }
 
   public func cachedViewFor(item: ViewModel, inout cache: View?) {

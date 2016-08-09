@@ -39,21 +39,6 @@ public extension Spotable where Self : Gridable {
   }
 
   /**
-   Called when the Gridable object is being prepared, it is required by Spotable
-   */
-  public func prepare() {
-    var cached: UIView?
-    for (index, item) in component.items.enumerate() {
-      cachedViewFor(item, cache: &cached)
-
-      if component.span > 0 {
-        component.items[index].size.width = UIScreen.mainScreen().bounds.size.width / CGFloat(component.span)
-      }
-      (cached as? SpotConfigurable)?.configure(&component.items[index])
-    }
-  }
-
-  /**
    - Returns: UIScrollView: Returns a UICollectionView as a UIScrollView
    */
   public func render() -> UIScrollView {
@@ -99,5 +84,14 @@ public extension Spotable where Self : Gridable {
       width: floor(width),
       height: ceil(height)
     )
+  }
+
+  public func prepareItems() {
+    component.items.enumerate().forEach { (index: Int, _) in
+      configureItem(index, usesViewSize: true)
+      if component.span > 0 {
+        component.items[index].size.width = UIScreen.mainScreen().bounds.size.width / CGFloat(component.span)
+      }
+    }
   }
 }

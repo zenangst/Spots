@@ -69,6 +69,8 @@ public class GridSpot: NSObject, Gridable {
     self.dynamicType.views.storage.forEach { identifier, type in
       self.collectionView.registerClass(type, forCellWithReuseIdentifier: identifier)
     }
+
+    prepareItems()
   }
 
   public func cachedViewFor(item: ViewModel, inout cache: View?) {
