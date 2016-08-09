@@ -4,7 +4,10 @@ import Brick
 
 public class ListSpot: NSObject, Listable {
 
-  public static var views = ViewRegistry()
+  public static var views = ViewRegistry().then {
+    $0.defaultView = ListSpotCell.self
+  }
+
   public static var nibs = NibRegistry()
   public static var configure: ((view: UITableView) -> Void)?
   public static var defaultView: UIView.Type = ListSpotCell.self
@@ -89,5 +92,24 @@ public class ListSpot: NSObject, Listable {
     tableView.dataSource = self.listAdapter
     tableView.delegate = self.listAdapter
     tableView.rowHeight = UITableViewAutomaticDimension
+  }
+
+  // MARK: - Spotable
+
+  public func prepare() {
+    tableView.registerClass(self.dynamicType.views.defaultView,
+                            forCellReuseIdentifier: String(self.dynamicType.views.defaultView))
+
+    self.dynamicType.views.storage.forEach { identifier, type in
+      self.tableView.registerClass(type, forCellReuseIdentifier: identifier)
+    }
+
+    self.dynamicType.nibs.storage.forEach { identifier, nib in
+      self.tableView.registerNib(nib, forCellReuseIdentifier: identifier)
+    }
+
+    self.dynamicType.headers.storage.forEach { identifier, type in
+      self.tableView.registerClass(type, forHeaderFooterViewReuseIdentifier: identifier)
+    }
   }
 }

@@ -4,7 +4,10 @@ import Brick
 
 public class CarouselSpot: NSObject, Gridable {
 
-  public static var views = ViewRegistry()
+  public static var views = ViewRegistry().then {
+    $0.defaultView = CarouselSpotCell.self
+  }
+
   public static var nibs = NibRegistry()
   public static var configure: ((view: UICollectionView, layout: UICollectionViewFlowLayout) -> Void)?
   public static var defaultView: UIView.Type = CarouselSpotCell.self
@@ -164,6 +167,17 @@ extension CarouselSpot: UIScrollViewDelegate {
         + layout.sectionInset.left + layout.minimumLineSpacing
 
       collectionView.setContentOffset(CGPoint(x: pageWidth * CGFloat(index), y:0), animated: true)
+    }
+  }
+
+  // MARK: - Spotable
+
+  public func prepare() {
+    collectionView.registerClass(self.dynamicType.views.defaultView,
+                                 forCellWithReuseIdentifier: String(self.dynamicType.views.defaultView))
+
+    self.dynamicType.views.storage.forEach { identifier, type in
+      self.collectionView.registerClass(type, forCellWithReuseIdentifier: identifier)
     }
   }
 }

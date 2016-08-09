@@ -4,7 +4,10 @@ import Brick
 
 public class GridSpot: NSObject, Gridable {
 
-  public static var views = ViewRegistry()
+  public static var views = ViewRegistry().then {
+    $0.defaultView = GridSpotCell.self
+  }
+
   public static var nibs = NibRegistry()
   public static var defaultView: UIView.Type = GridSpotCell.self
   public static var defaultKind: StringConvertible = "grid"
@@ -55,5 +58,19 @@ public class GridSpot: NSObject, Gridable {
     layout.sectionInset = UIEdgeInsets(top: top, left: left, bottom: bottom, right: right)
     layout.minimumInteritemSpacing = itemSpacing
     layout.minimumLineSpacing = lineSpacing
+  }
+
+  // MARK: - Spotable
+
+  /**
+   Called when the Gridable object is being prepared, it is required by Spotable
+   */
+  public func prepare() {
+    collectionView.registerClass(self.dynamicType.views.defaultView,
+                                 forCellWithReuseIdentifier: String(self.dynamicType.views.defaultView))
+
+    self.dynamicType.views.storage.forEach { identifier, type in
+      self.collectionView.registerClass(type, forCellWithReuseIdentifier: identifier)
+    }
   }
 }
