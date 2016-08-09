@@ -49,7 +49,7 @@ public class GridSpot: NSObject, Gridable {
     self.init(component: Component(stateCache.load()))
     self.stateCache = stateCache
 
-    prepare()
+    registerAndPrepare()
   }
 
   public convenience init(_ component: Component, top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0, itemSpacing: CGFloat = 0, lineSpacing: CGFloat = 0) {
@@ -62,15 +62,13 @@ public class GridSpot: NSObject, Gridable {
 
   // MARK: - Spotable
 
-  public func prepare() {
+  public func register() {
     collectionView.registerClass(self.dynamicType.views.defaultView,
                                  forCellWithReuseIdentifier: String(self.dynamicType.views.defaultView))
 
     self.dynamicType.views.storage.forEach { identifier, type in
       self.collectionView.registerClass(type, forCellWithReuseIdentifier: identifier)
     }
-
-    prepareItems()
   }
 
   public func cachedViewFor(item: ViewModel, inout cache: View?) {

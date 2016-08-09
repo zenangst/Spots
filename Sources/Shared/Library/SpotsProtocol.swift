@@ -154,7 +154,7 @@ public extension SpotsProtocol {
     guard let spot = spot(index, Spotable.self) else { completion?(); return }
     closure(spot: spot)
     spot.refreshIndexes()
-    spot.prepare()
+    spot.registerAndPrepare() // FIXME: Why call again?
 
     dispatch { [weak self] in
       guard let weakSelf = self else { return }

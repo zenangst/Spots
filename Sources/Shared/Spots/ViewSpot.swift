@@ -63,4 +63,8 @@ public class ViewSpot: NSObject, Spotable, Viewable {
     // FIXME:
     return nil
   }
+
+  public func register() {
+    // TODO:
+  }
 }

@@ -38,7 +38,7 @@ public class ListSpot: NSObject, Listable {
     super.init()
 
     setupTableView()
-    prepare()
+    registerAndPrepare()
 
     let reuseIdentifer = component.kind.isPresent ? component.kind : self.dynamicType.defaultKind
 
@@ -59,7 +59,7 @@ public class ListSpot: NSObject, Listable {
     self.tableView ?= tableView
 
     setupTableView()
-    prepare()
+    registerAndPrepare() // FIXME: Why call again?
   }
 
   public convenience init(cacheKey: String, tableView: UITableView? = nil) {
@@ -70,13 +70,13 @@ public class ListSpot: NSObject, Listable {
     self.tableView ?= tableView
 
     setupTableView()
-    prepare()
+    registerAndPrepare() // FIXME: Why call again?
   }
 
   // MARK: - Setup
 
   public func setup(size: CGSize) {
-    prepare()
+    registerAndPrepare() // FIXME: Why call again?
     let height = component.items.reduce(component.meta("headerHeight", 0.0),
                                         combine: { $0 + $1.size.height })
 
@@ -96,7 +96,7 @@ public class ListSpot: NSObject, Listable {
 
   // MARK: - Spotable
 
-  public func prepare() {
+  public func register() {
     tableView.registerClass(self.dynamicType.views.defaultView,
                             forCellReuseIdentifier: String(self.dynamicType.views.defaultView))
 
@@ -111,8 +111,6 @@ public class ListSpot: NSObject, Listable {
     self.dynamicType.headers.storage.forEach { identifier, type in
       self.tableView.registerClass(type, forHeaderFooterViewReuseIdentifier: identifier)
     }
-
-    prepareItems()
   }
 
   public func cachedViewFor(item: ViewModel, inout cache: View?) {

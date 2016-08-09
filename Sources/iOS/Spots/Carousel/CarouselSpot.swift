@@ -94,7 +94,7 @@ public class CarouselSpot: NSObject, Gridable {
     self.init(component: Component(stateCache.load()))
     self.stateCache = stateCache
 
-    prepare()
+    registerAndPrepare()
   }
 
   public func setup(size: CGSize) {
@@ -172,15 +172,13 @@ extension CarouselSpot: UIScrollViewDelegate {
 
   // MARK: - Spotable
 
-  public func prepare() {
+  public func register() {
     collectionView.registerClass(self.dynamicType.views.defaultView,
                                  forCellWithReuseIdentifier: String(self.dynamicType.views.defaultView))
 
     self.dynamicType.views.storage.forEach { identifier, type in
       self.collectionView.registerClass(type, forCellWithReuseIdentifier: identifier)
     }
-
-    prepareItems()
   }
 
   public func cachedViewFor(item: ViewModel, inout cache: View?) {

@@ -71,7 +71,7 @@ public protocol Spotable: class {
   /// Layout Spotable object using size
   func layout(size: CGSize)
   /// Perform internal preperations for a Spotable object
-  func prepare()
+  func register()
   /// Scroll to view model using predicate
   func scrollTo(@noescape includeElement: (ViewModel) -> Bool) -> CGFloat
 
@@ -362,5 +362,10 @@ public extension Spotable {
     #else
       return identifier(indexPath.row)
     #endif
+  }
+
+  func registerAndPrepare() {
+    register()
+    prepareItems()
   }
 }
