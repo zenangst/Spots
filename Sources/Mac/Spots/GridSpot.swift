@@ -8,10 +8,6 @@ public class GridSpot: NSObject, Gridable {
     case Grid = "grid"
     case Left = "left"
     case Flow = "flow"
-
-    var string: String {
-      return rawValue.lowercaseString
-    }
   }
 
   public struct Key {
@@ -36,7 +32,7 @@ public class GridSpot: NSObject, Gridable {
     public static var titleFontSize: CGFloat = 18.0
     public static var titleLeftInset: CGFloat = 0.0
     public static var titleTopInset: CGFloat = 10.0
-    public static var defaultLayout: String = LayoutType.Flow.string
+    public static var defaultLayout: String = LayoutType.Flow.rawValue
     public static var gridLayoutMaximumItemWidth = 120
     public static var gridLayoutMaximumItemHeight = 120
     public static var gridLayoutMinimumItemWidth = 80
@@ -52,7 +48,7 @@ public class GridSpot: NSObject, Gridable {
   public static var configure: ((view: NSCollectionView) -> Void)?
   public static var defaultView: View.Type = NSView.self
   public static var defaultGrid: NSCollectionViewItem.Type = NSCollectionViewItem.self
-  public static var defaultKind: StringConvertible = LayoutType.Grid.string
+  public static var defaultKind: StringConvertible = LayoutType.Grid.rawValue
 
   public weak var spotsDelegate: SpotsDelegate?
 
