@@ -177,7 +177,7 @@ public extension Spotable {
   */
   func prepareItems() {
     component.items.enumerate().forEach { (index: Int, _) in
-      configureItem(index)
+      configureItem(index, usesViewSize: true)
     }
   }
 
@@ -281,7 +281,7 @@ public extension Spotable {
 
    - Parameter index: The index of the view model
    */
-  public func configureItem(index: Int) {
+  public func configureItem(index: Int, usesViewSize: Bool = false) {
     guard let item = item(index) else { return }
 
     var viewModel = item
@@ -291,12 +291,14 @@ public extension Spotable {
 
     view.configure(&viewModel)
 
-    if viewModel.size.height == 0 {
-      viewModel.size.height = view.size.height
-    }
+    if usesViewSize {
+      if viewModel.size.height == 0 {
+        viewModel.size.height = view.size.height
+      }
 
-    if viewModel.size.width == 0 {
-      viewModel.size.width = view.size.width
+      if viewModel.size.width == 0 {
+        viewModel.size.width = view.size.width
+      }
     }
 
     if index < component.items.count {
