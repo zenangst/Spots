@@ -333,6 +333,29 @@ public extension Spotable {
     }
   }
 
+  /**
+   Configure cell at index
+
+   - Parameter index:    The index of the item that should be configured
+   - Parameter cellType: The View.Type of the cell
+   - Parameter cached:   An optional cache of the SpotConfigurable object
+   - Returns: An optional instance of the SpotConfigurable object
+   */
+  func configure(itemAtIndex index: Int, ofType cellType: View.Type, cached: SpotConfigurable? = nil) -> SpotConfigurable? {
+    var instance: SpotConfigurable? = cached
+
+    if instance == nil {
+      instance = cellType.init() as? SpotConfigurable
+    }
+
+    guard let cell = instance else { return nil }
+
+    component.items[index].index = index
+    cell.configure(&component.items[index])
+
+    return cell
+  }
+
   public func sizeForItemAt(indexPath: NSIndexPath) -> CGSize {
     return render().frame.size
   }
