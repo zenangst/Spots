@@ -53,11 +53,10 @@ public class CollectionAdapter: NSObject, SpotAdapter {
     var indexes = [Int]()
     let itemsCount = spot.component.items.count
 
-    var cached: View?
     for (index, item) in items.enumerate() {
       spot.component.items.append(item)
       indexes.append(itemsCount + index)
-      spot.prepareItem(item, index: itemsCount + index, cached: &cached)
+      spot.prepareItem(item, index: itemsCount + index)
     }
 
     dispatch { [weak self] in
@@ -107,10 +106,9 @@ public class CollectionAdapter: NSObject, SpotAdapter {
 
     spot.component.items.insertContentsOf(items, at: 0)
 
-    var cached: View?
     items.enumerate().forEach {
       indexes.append(items.count - 1 - $0.index)
-      spot.prepareItem($0.element, index: $0.index, cached: &cached)
+      spot.prepareItem($0.element, index: $0.index)
     }
 
     dispatch { [weak self] in

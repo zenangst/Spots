@@ -16,8 +16,8 @@ extension ListAdapter {
       self?.spot.tableView.insert([count], animation: animation.tableViewAnimation)
       completion?()
     }
-    var cached: UIView?
-    spot.prepareItem(item, index: count, cached: &cached)
+
+    spot.prepareItem(item, index: count)
   }
 
   /**
@@ -31,10 +31,9 @@ extension ListAdapter {
 
     spot.component.items.appendContentsOf(items)
 
-    var cached: UIView?
     items.enumerate().forEach {
       indexes.append(count + $0.index)
-      spot.prepareItem($0.element, index: count + $0.index, cached: &cached)
+      spot.prepareItem($0.element, index: count + $0.index)
     }
 
     dispatch { [weak self] in

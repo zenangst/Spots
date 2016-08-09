@@ -176,11 +176,9 @@ public extension Spotable {
    Prepare items in component
   */
   func prepareItems() {
-    var cached: View?
     component.items.enumerate().forEach { (index: Int, item: ViewModel) in
-      prepareItem(item, index: index, cached: &cached)
+      prepareItem(item, index: index)
     }
-    cached = nil
   }
 
   /**
@@ -283,14 +281,11 @@ public extension Spotable {
 
    - Parameter item: A view model
    - Parameter index: The index of the view model
-   - Parameter cached: An optional UIView, used to reduce the amount of different reusable views that should be prepared.
    */
-  public func prepareItem(item: ViewModel, index: Int, inout cached: View?) {
-    cachedViewFor(item, cache: &cached)
-
+  public func prepareItem(item: ViewModel, index: Int) {
     component.items[index].index = index
 
-    guard let view = cached as? SpotConfigurable else { return }
+    guard let view = dequeueView(item) as? SpotConfigurable else { return }
 
     view.configure(&component.items[index])
 
