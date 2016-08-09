@@ -160,6 +160,7 @@ extension ListAdapter {
       cell.configure(&spot.component.items[index])
     }
 
+    spot.tableView.contentSize.height = spot.spotHeight()
     spot.tableView.reload([index], section: 0, animation: animation.tableViewAnimation)
     completion?()
   }
