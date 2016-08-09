@@ -2,7 +2,29 @@
 
 ## [Unreleased](https://github.com/hyperoslo/Spots/tree/HEAD)
 
-[Full Changelog](https://github.com/hyperoslo/Spots/compare/2.0.1...HEAD)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/2.0.3...HEAD)
+
+**Closed issues:**
+
+- UITextField and NSTextField? [\#256](https://github.com/hyperoslo/Spots/issues/256)
+- indexes is not used [\#237](https://github.com/hyperoslo/Spots/issues/237)
+
+**Merged pull requests:**
+
+- Improve layout [\#263](https://github.com/hyperoslo/Spots/pull/263) ([zenangst](https://github.com/zenangst))
+- Refactor reload and update methods [\#262](https://github.com/hyperoslo/Spots/pull/262) ([zenangst](https://github.com/zenangst))
+- Set content size after calling update on ListSpot [\#261](https://github.com/hyperoslo/Spots/pull/261) ([zenangst](https://github.com/zenangst))
+- Improve Spots Mac Demo and Mac implementation [\#260](https://github.com/hyperoslo/Spots/pull/260) ([zenangst](https://github.com/zenangst))
+
+## [2.0.3](https://github.com/hyperoslo/Spots/tree/2.0.3) (2016-08-08)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/2.0.2...2.0.3)
+
+**Merged pull requests:**
+
+- Improve: Spotable defaults [\#259](https://github.com/hyperoslo/Spots/pull/259) ([vadymmarkov](https://github.com/vadymmarkov))
+
+## [2.0.2](https://github.com/hyperoslo/Spots/tree/2.0.2) (2016-07-06)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/2.0.1...2.0.2)
 
 **Merged pull requests:**
 
