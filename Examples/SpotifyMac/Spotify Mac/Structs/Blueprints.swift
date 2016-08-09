@@ -15,4 +15,8 @@ public struct Blueprints {
       storage[key.string] = value
     }
   }
+
+  mutating func register(containerType: BlueprintContainer.Type) {
+    self.storage[containerType.key] = containerType.drawing
+  }
 }
