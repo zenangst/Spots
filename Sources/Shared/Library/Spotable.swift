@@ -310,15 +310,11 @@ public extension Spotable {
    - Parameter indexPath: The index path of the item you are trying to resolve
    */
   func reuseIdentifierForItem(indexPath: NSIndexPath) -> String {
-    guard let viewModel = item(indexPath) else { return self.dynamicType.defaultKind.string }
-
-    if self.dynamicType.views.storage[viewModel.kind] != nil {
-      return viewModel.kind
-    } else if self.dynamicType.views.storage[component.kind] != nil {
-      return component.kind
-    } else {
-      return self.dynamicType.defaultKind.string
-    }
+    #if os(OSX)
+      return reuseIdentifierForItem(indexPath.item)
+    #else
+      return reuseIdentifierForItem(indexPath.row)
+    #endif
   }
 
   func reuseIdentifierForItem(index: Int) -> String {
