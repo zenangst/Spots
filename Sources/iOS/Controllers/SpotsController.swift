@@ -172,8 +172,6 @@ public class SpotsController: UIViewController, SpotsProtocol, UIScrollViewDeleg
   public override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
 
-    spotsScrollView.forceUpdate = true
-
     if let tabBarController = self.tabBarController
       where tabBarController.tabBar.translucent {
         spotsScrollView.contentInset.bottom = tabBarController.tabBar.height
@@ -185,6 +183,8 @@ public class SpotsController: UIViewController, SpotsProtocol, UIScrollViewDeleg
 
     spotsScrollView.insertSubview(refreshControl, atIndex: 0)
 #endif
+
+    spotsScrollView.forceUpdate = true
   }
 
   /**
