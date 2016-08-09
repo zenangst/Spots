@@ -150,16 +150,11 @@ extension ListAdapter {
   public func update(item: ViewModel, index: Int = 0, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     spot.items[index] = item
 
-    let reuseIdentifier = spot.reuseIdentifierForItem(NSIndexPath(forRow: index, inSection: 0))
-    let cellClass = self.spot.dynamicType.views.storage[reuseIdentifier] ?? self.spot.dynamicType.defaultView
+    let reuseIdentifier: String = spot.reuseIdentifierForItem(NSIndexPath(forRow: index, inSection: 0))
+    let cellType: View.Type = spot.dynamicType.views.storage[reuseIdentifier] ?? spot.dynamicType.defaultView
 
-    spot.tableView.registerClass(cellClass, forCellReuseIdentifier: reuseIdentifier)
-
-    if let cell = cellClass.init() as? SpotConfigurable {
-      spot.component.items[index].index = index
-      cell.configure(&spot.component.items[index])
-    }
-
+    spot.tableView.registerClass(cellType, forCellReuseIdentifier: reuseIdentifier)
+    spot.configure(itemAtIndex: index, ofType: cellType)
     spot.tableView.contentSize.height = spot.spotHeight()
     spot.tableView.reload([index], section: 0, animation: animation.tableViewAnimation)
     completion?()
