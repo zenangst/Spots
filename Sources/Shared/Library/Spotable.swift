@@ -86,6 +86,9 @@ public protocol Spotable: class {
    */
   func cachedViewFor(item: ViewModel, inout cache: View?)
 
+  func dequeueView(identifier: String, indexPath: NSIndexPath) -> View?
+  func identifier(index: Int) -> String?
+
   #if os(OSX)
   func deselect()
   #endif
@@ -167,7 +170,12 @@ public extension Spotable {
     if !Self.views.storage.keys.contains(component.kind) {
       register(classType: Self.defaultView, withIdentifier: component.kind)
     }
+  }
 
+  /**
+   Prepare items in component
+  */
+  func prepareItems() {
     var cached: View?
     component.items.enumerate().forEach { (index: Int, item: ViewModel) in
       prepareItem(item, index: index, cached: &cached)
@@ -348,5 +356,25 @@ public extension Spotable {
 
   public func sizeForItemAt(indexPath: NSIndexPath) -> CGSize {
     return render().frame.size
+  }
+
+  func dequeueView(item: ViewModel) -> View? {
+    let indexPath: NSIndexPath
+
+    #if os(OSX)
+      indexPath = NSIndexPath(forItem: item.index, inSection: 0)
+    #else
+      indexPath = NSIndexPath(forRow: item.index, inSection: 0)
+    #endif
+
+    return dequeueView(item.kind, indexPath: indexPath)
+  }
+
+  func identifier(indexPath: NSIndexPath) -> String? {
+    #if os(OSX)
+      return identifier(index: indexPath.item)
+    #else
+      return identifier(indexPath.row)
+    #endif
   }
 }

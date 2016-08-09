@@ -53,4 +53,14 @@ public class ViewSpot: NSObject, Spotable, Viewable {
   public func cachedViewFor(item: ViewModel, inout cache: View?) {
     // FIXME:
   }
+
+  public func dequeueView(identifier: String, indexPath: NSIndexPath) -> View? {
+    // FIXME:
+    return nil
+  }
+
+  public func identifier(index: Int) -> String? {
+    // FIXME:
+    return nil
+  }
 }

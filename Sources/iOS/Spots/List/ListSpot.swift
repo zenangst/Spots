@@ -119,4 +119,22 @@ public class ListSpot: NSObject, Listable {
       return
     }
   }
+
+  public func dequeueView(identifier: String, indexPath: NSIndexPath) -> View? {
+    return tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath)
+  }
+
+  public func identifier(index: Int) -> String? {
+    guard let kind = item(index)?.kind else { return nil }
+
+    if self.dynamicType.views.storage[kind] != nil {
+      return kind
+    }
+
+    if self.dynamicType.nibs.storage[kind] != nil {
+      return kind
+    }
+
+    return nil
+  }
 }
