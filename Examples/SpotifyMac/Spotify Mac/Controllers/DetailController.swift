@@ -132,13 +132,13 @@ class DetailController: SpotsController, SpotsDelegate, SpotsScrollDelegate {
         .toJSONDictionary()
         .done { json in
           var items: JSONArray
-          if let rootElementItems = json.path(element.rootKey)?.array("items") {
+          if let rootElementItems: JSONArray = json.resolve(keyPath: "\(element.rootKey).items") {
             items = rootElementItems
           } else {
-            if let rootItems = json.array("items") {
+            if let rootItems: JSONArray = json.resolve(keyPath: "items") {
               items = rootItems
             } else {
-              guard let secondaryItems = json.array(element.rootKey) else { return }
+              guard let secondaryItems: JSONArray = json.resolve(keyPath: element.rootKey) else { return }
               items = secondaryItems
             }
           }
