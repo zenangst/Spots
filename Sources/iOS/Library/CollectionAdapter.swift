@@ -56,7 +56,8 @@ public class CollectionAdapter: NSObject, SpotAdapter {
     for (index, item) in items.enumerate() {
       spot.component.items.append(item)
       indexes.append(itemsCount + index)
-      spot.prepareItem(item, index: itemsCount + index)
+
+      spot.configureItem(itemsCount + index)
     }
 
     dispatch { [weak self] in
@@ -108,7 +109,7 @@ public class CollectionAdapter: NSObject, SpotAdapter {
 
     items.enumerate().forEach {
       indexes.append(items.count - 1 - $0.index)
-      spot.prepareItem($0.element, index: $0.index)
+      spot.configureItem($0.index)
     }
 
     dispatch { [weak self] in

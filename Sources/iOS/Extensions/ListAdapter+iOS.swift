@@ -17,7 +17,7 @@ extension ListAdapter {
       completion?()
     }
 
-    spot.prepareItem(item, index: count)
+    spot.configureItem(count)
   }
 
   /**
@@ -33,7 +33,7 @@ extension ListAdapter {
 
     items.enumerate().forEach {
       indexes.append(count + $0.index)
-      spot.prepareItem($0.element, index: count + $0.index)
+      spot.configureItem(count + $0.index)
     }
 
     dispatch { [weak self] in
