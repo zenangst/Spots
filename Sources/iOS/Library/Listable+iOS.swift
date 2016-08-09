@@ -8,9 +8,7 @@ public extension Spotable where Self : Listable {
    Called when the Listable object is being prepared, it is required by Spotable
    */
   public func prepare() {
-    registerAndPrepare { (classType, withIdentifier) in
-      tableView.registerClass(classType, forCellReuseIdentifier: withIdentifier)
-    }
+
   }
 
   /**

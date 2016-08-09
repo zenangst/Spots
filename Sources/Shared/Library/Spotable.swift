@@ -156,23 +156,6 @@ public extension Spotable {
   }
 
   /**
-   A method to register and prepare a ViewModel
-
-   - Parameter register: A closure containing class type and reuse identifer
-   */
-  func registerAndPrepare(@noescape register: (classType: View.Type, withIdentifier: String) -> Void) {
-    if component.kind.isEmpty { component.kind = Self.defaultKind.string }
-
-    Self.views.storage.forEach { (reuseIdentifier: String, classType: View.Type) in
-      register(classType: classType, withIdentifier: reuseIdentifier)
-    }
-
-    if !Self.views.storage.keys.contains(component.kind) {
-      register(classType: Self.defaultView, withIdentifier: component.kind)
-    }
-  }
-
-  /**
    Prepare items in component
   */
   func prepareItems() {

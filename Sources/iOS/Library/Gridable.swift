@@ -42,10 +42,6 @@ public extension Spotable where Self : Gridable {
    Called when the Gridable object is being prepared, it is required by Spotable
    */
   public func prepare() {
-    registerAndPrepare { (classType, withIdentifier) in
-      collectionView.registerClass(classType, forCellWithReuseIdentifier: withIdentifier)
-    }
-
     var cached: UIView?
     for (index, item) in component.items.enumerate() {
       cachedViewFor(item, cache: &cached)
