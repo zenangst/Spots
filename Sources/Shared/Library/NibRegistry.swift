@@ -1,7 +1,8 @@
 import Brick
+import Sugar
 
 /// A nib registry that is used internally when resolving kind to the corresponding spot.
-public struct NibRegistry {
+public class NibRegistry {
   /// A Key-value dictionary of registred types
   var storage = [String : Nib]()
 
@@ -19,3 +20,5 @@ public struct NibRegistry {
     }
   }
 }
+
+extension NibRegistry: Then {}
