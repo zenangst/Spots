@@ -78,6 +78,14 @@ public protocol Spotable: class {
   func spotHeight() -> CGFloat
   func sizeForItemAt(indexPath: NSIndexPath) -> CGSize
 
+  /**
+   Cache view for item kind
+
+   - Parameter item: A view model
+   - Parameter cache: An optional UIView, used to reduce the amount of different reusable views that should be prepared.
+   */
+  func cachedViewFor(item: ViewModel, inout cache: View?)
+
   #if os(OSX)
   func deselect()
   #endif
@@ -285,20 +293,6 @@ public extension Spotable {
     if component.items[index].size.width == 0 {
       component.items[index].size.width = view.size.width
     }
-  }
-
-  /**
-   Cache view for item kind
-
-   - Parameter item: A view model
-   - Parameter cache: An optional UIView, used to reduce the amount of different reusable views that should be prepared.
-   */
-  func cachedViewFor(item: ViewModel, inout cache: View?) {
-    let reuseIdentifer = item.kind.isPresent ? item.kind : component.kind
-    let componentClass = self.dynamicType.views.storage[reuseIdentifer] ?? self.dynamicType.defaultView
-
-    if cache?.isKindOfClass(componentClass) == false { cache = nil }
-    if cache == nil { cache = componentClass.init() }
   }
 
   /**

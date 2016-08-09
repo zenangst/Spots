@@ -112,4 +112,11 @@ public class ListSpot: NSObject, Listable {
       self.tableView.registerClass(type, forHeaderFooterViewReuseIdentifier: identifier)
     }
   }
+
+  public func cachedViewFor(item: ViewModel, inout cache: View?) {
+    if let view = tableView.dequeueReusableCellWithIdentifier(item.kind) {
+      cache = view
+      return
+    }
+  }
 }

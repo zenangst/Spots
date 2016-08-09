@@ -62,9 +62,6 @@ public class GridSpot: NSObject, Gridable {
 
   // MARK: - Spotable
 
-  /**
-   Called when the Gridable object is being prepared, it is required by Spotable
-   */
   public func prepare() {
     collectionView.registerClass(self.dynamicType.views.defaultView,
                                  forCellWithReuseIdentifier: String(self.dynamicType.views.defaultView))
@@ -72,5 +69,10 @@ public class GridSpot: NSObject, Gridable {
     self.dynamicType.views.storage.forEach { identifier, type in
       self.collectionView.registerClass(type, forCellWithReuseIdentifier: identifier)
     }
+  }
+
+  public func cachedViewFor(item: ViewModel, inout cache: View?) {
+    let indexPath = NSIndexPath(forItem: index, inSection: 0)
+    cache = collectionView.dequeueReusableCellWithReuseIdentifier(item.kind, forIndexPath: indexPath)
   }
 }

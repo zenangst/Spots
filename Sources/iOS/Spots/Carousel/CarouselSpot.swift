@@ -180,6 +180,11 @@ extension CarouselSpot: UIScrollViewDelegate {
       self.collectionView.registerClass(type, forCellWithReuseIdentifier: identifier)
     }
   }
+
+  public func cachedViewFor(item: ViewModel, inout cache: View?) {
+    let indexPath = NSIndexPath(forItem: index, inSection: 0)
+    cache = collectionView.dequeueReusableCellWithReuseIdentifier(item.kind, forIndexPath: indexPath)
+  }
 }
 
 extension CarouselSpot {
