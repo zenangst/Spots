@@ -199,13 +199,10 @@ public class CollectionAdapter: NSObject, SpotAdapter {
     spot.items[index] = item
 
     let reuseIdentifier = spot.reuseIdentifierForItem(NSIndexPath(forItem: index, inSection: 0))
-    let cellClass = self.spot.dynamicType.views.storage[reuseIdentifier] ?? self.spot.dynamicType.defaultView
+    let cellType: View.Type = spot.dynamicType.views.storage[reuseIdentifier] ?? spot.dynamicType.defaultView
 
-    spot.collectionView.registerClass(cellClass, forCellWithReuseIdentifier: reuseIdentifier)
-    if let cell = cellClass.init() as? SpotConfigurable {
-      spot.component.items[index].index = index
-      cell.configure(&spot.component.items[index])
-    }
+    spot.collectionView.registerClass(cellType, forCellWithReuseIdentifier: reuseIdentifier)
+    spot.configure(itemAtIndex: index, ofType: cellType)
 
     dispatch { [weak self] in
       guard let weakSelf = self else { return }
