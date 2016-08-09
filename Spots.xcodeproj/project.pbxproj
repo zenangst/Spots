@@ -84,6 +84,8 @@
 		BDE8FBC61D1BEC5D00C5A212 /* ListAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE8FBC41D1BEC5D00C5A212 /* ListAdapter.swift */; };
 		BDE8FBCA1D1BF11500C5A212 /* Listable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE8FBC91D1BF11500C5A212 /* Listable.swift */; };
 		BDE8FBCB1D1BF11500C5A212 /* Listable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE8FBC91D1BF11500C5A212 /* Listable.swift */; };
+		D2B93CBD1D59B6C8009D05FF /* NibRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B93CBC1D59B6C8009D05FF /* NibRegistry.swift */; };
+		D2B93CBE1D59B6C8009D05FF /* NibRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B93CBC1D59B6C8009D05FF /* NibRegistry.swift */; };
 		D58478141C43FEB9006EBA49 /* Spots.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478091C43FEB8006EBA49 /* Spots.framework */; };
 		D58478531C43FFEB006EBA49 /* TestSpotFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58478281C43FF34006EBA49 /* TestSpotFactory.swift */; };
 		D58478551C43FFEF006EBA49 /* TestSpotsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58478291C43FF34006EBA49 /* TestSpotsController.swift */; };
@@ -180,6 +182,7 @@
 		BDE8FBC21D1BEC4300C5A212 /* ListAdapter+iOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ListAdapter+iOS.swift"; sourceTree = "<group>"; };
 		BDE8FBC41D1BEC5D00C5A212 /* ListAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListAdapter.swift; sourceTree = "<group>"; };
 		BDE8FBC91D1BF11500C5A212 /* Listable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Listable.swift; sourceTree = "<group>"; };
+		D2B93CBC1D59B6C8009D05FF /* NibRegistry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NibRegistry.swift; sourceTree = "<group>"; };
 		D58478091C43FEB8006EBA49 /* Spots.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Spots.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D58478131C43FEB9006EBA49 /* Spots-iOS-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Spots-iOS-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D58478241C43FF34006EBA49 /* Info-iOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
@@ -363,6 +366,7 @@
 				BD980E211D1904E0007284DD /* SpotsProtocol.swift */,
 				BD980E1C1D18A8C2007284DD /* SpotsDelegates.swift */,
 				BD980E191D18A877007284DD /* ViewRegistry.swift */,
+				D2B93CBC1D59B6C8009D05FF /* NibRegistry.swift */,
 				BD980DF51D18A7C6007284DD /* TypeAlias.swift */,
 				BD980DF21D18A767007284DD /* SpotsAnimation.swift */,
 				BD980DEF1D18A726007284DD /* SpotFactory.swift */,
@@ -858,6 +862,7 @@
 				BD38DC861D1854D700094941 /* ListSpotCell.swift in Sources */,
 				BD980DF31D18A767007284DD /* SpotsAnimation.swift in Sources */,
 				BD38DC901D1854D700094941 /* Componentable.swift in Sources */,
+				D2B93CBD1D59B6C8009D05FF /* NibRegistry.swift in Sources */,
 				BD38DC621D1854D700094941 /* UITableView+Indexes.swift in Sources */,
 				BD38DC841D1854D700094941 /* ListSpot.swift in Sources */,
 				BD38DC601D1854D700094941 /* UICollectionView+Indexes.swift in Sources */,
@@ -904,6 +909,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D2B93CBE1D59B6C8009D05FF /* NibRegistry.swift in Sources */,
 				BD38DC9A1D18550900094941 /* Component+Extension.swift in Sources */,
 				BDE8FBC61D1BEC5D00C5A212 /* ListAdapter.swift in Sources */,
 				BD6A1F391D2B8C5200E85FD3 /* ListSpotItem.swift in Sources */,
