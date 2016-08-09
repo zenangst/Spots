@@ -52,17 +52,17 @@ class ListSpotSpec: QuickSpec {
         let listSpot = ListSpot(component: component)
         let indexPath = NSIndexPath(forRow: 0, inSection: 0)
 
-        expect(listSpot.reuseIdentifierForItem(indexPath)).to(equal("list"))
+        expect(listSpot.identifier(indexPath)).to(equal("list"))
 
         ListSpot.views["default-list"] = ListSpotCell.self
         ListSpot.defaultKind = "default-list"
-        expect(listSpot.reuseIdentifierForItem(indexPath)).to(equal("default-list"))
+        expect(listSpot.identifier(indexPath)).to(equal("default-list"))
 
         ListSpot.views["custom-list"] = ListSpotCell.self
-        expect(listSpot.reuseIdentifierForItem(indexPath)).to(equal("custom-list"))
+        expect(listSpot.identifier(indexPath)).to(equal("custom-list"))
 
         ListSpot.views["custom-item-kind"] = ListSpotCell.self
-        expect(listSpot.reuseIdentifierForItem(indexPath)).to(equal("custom-item-kind"))
+        expect(listSpot.identifier(indexPath)).to(equal("custom-item-kind"))
 
         ListSpot.views.storage.removeAll()
         ListSpot.defaultKind = "list"
