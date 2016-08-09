@@ -9,11 +9,7 @@ import Sugar
 
 /// A class protocol that is used for all components inside of SpotsController
 public protocol Spotable: class {
-
-  /// A view registry that is used internally when resolving kind to the corresponding spot.
-  static var views: ViewRegistry { get }
-  /// The default view type for the spotable object
-  static var defaultView: View.Type { get set }
+  
   /// The default kind to fall back to if the view model kind does not exist when trying to display the spotable item
   static var defaultKind: StringConvertible { get }
 

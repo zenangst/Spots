@@ -9,6 +9,11 @@ import Brick
 
 /// Viewable is a protocol for Spots that are based on UIScrollView
 public protocol Viewable: Spotable {
+  /// A view registry that is used internally when resolving kind to the corresponding spot.
+  static var views: ViewRegistry { get }
+  /// The default view type for the spotable object
+  static var defaultView: View.Type { get set }
+
   var scrollView: ScrollView { get }
 }
 
@@ -39,7 +44,7 @@ public extension Spotable where Self : Viewable {
     prepareSpot(self)
   }
 
-  private func prepareSpot<T: Spotable>(spot: T) {
+  private func prepareSpot<T: Viewable>(spot: T) {
     if component.kind.isEmpty { component.kind = "view" }
 
     component.items.forEach { (item: ViewModel) in
