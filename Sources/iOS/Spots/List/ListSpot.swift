@@ -10,13 +10,10 @@ public class ListSpot: NSObject, Listable {
 
   public static var nibs = NibRegistry()
   public static var configure: ((view: UITableView) -> Void)?
-  public static var defaultKind: StringConvertible = "list"
   public static var headers = ViewRegistry()
 
   public var index = 0
   public var component: Component
-  public var cachedHeaders = [String : Componentable]()
-  public var cachedCells = [String : SpotConfigurable]()
   public var configure: (SpotConfigurable -> Void)?
 
   public weak var spotsDelegate: SpotsDelegate?
@@ -36,24 +33,16 @@ public class ListSpot: NSObject, Listable {
     self.component = component
     super.init()
 
+    if component.kind.isEmpty {
+      self.component.kind = "list"
+    }
+
     setupTableView()
     registerAndPrepare()
-
-    let reuseIdentifer = component.kind.isPresent ? component.kind : self.dynamicType.defaultKind
-
-    guard let headerType = ListSpot.headers[reuseIdentifer]  else { return }
-
-    let header = headerType.init(frame: CGRect(x: 0, y: 0,
-      width: UIScreen.mainScreen().bounds.width, height: component.meta("headerHeight", 0.0)))
-
-    if let configurable = header as? Componentable {
-      configurable.configure(component)
-      cachedHeaders[reuseIdentifer.string] = configurable
-    }
   }
 
   public convenience init(tableView: UITableView? = nil, title: String = "", kind: String? = nil) {
-    self.init(component: Component(title: title, kind: kind ?? ListSpot.defaultKind.string))
+    self.init(component: Component(title: title, kind: kind ?? "list"))
 
     self.tableView ?= tableView
 
@@ -98,6 +87,8 @@ public class ListSpot: NSObject, Listable {
   public func register() {
     tableView.registerClass(self.dynamicType.views.defaultView,
                             forCellReuseIdentifier: String(self.dynamicType.views.defaultView))
+    tableView.registerClass(self.dynamicType.headers.defaultView,
+                            forHeaderFooterViewReuseIdentifier: String(self.dynamicType.headers.defaultView))
 
     self.dynamicType.views.storage.forEach { identifier, type in
       self.tableView.registerClass(type, forCellReuseIdentifier: identifier)

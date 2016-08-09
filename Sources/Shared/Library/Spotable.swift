@@ -9,9 +9,6 @@ import Sugar
 
 /// A class protocol that is used for all components inside of SpotsController
 public protocol Spotable: class {
-  
-  /// The default kind to fall back to if the view model kind does not exist when trying to display the spotable item
-  static var defaultKind: StringConvertible { get }
 
   /// A SpotsDelegate object
   weak var spotsDelegate: SpotsDelegate? { get set }

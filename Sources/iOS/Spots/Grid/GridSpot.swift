@@ -9,10 +9,8 @@ public class GridSpot: NSObject, Gridable {
   }
 
   public static var nibs = NibRegistry()
-  public static var defaultKind: StringConvertible = "grid"
   public static var configure: ((view: UICollectionView, layout: UICollectionViewFlowLayout) -> Void)?
 
-  public var cachedViews = [String : SpotConfigurable]()
   public var component: Component
   public var index = 0
   public var configure: (SpotConfigurable -> Void)?
@@ -39,7 +37,7 @@ public class GridSpot: NSObject, Gridable {
   }
 
   public convenience init(title: String = "", kind: String? = nil) {
-    self.init(component: Component(title: title, kind: kind ?? GridSpot.defaultKind.string))
+    self.init(component: Component(title: title, kind: kind ?? "grid"))
   }
 
   public convenience init(cacheKey: String) {

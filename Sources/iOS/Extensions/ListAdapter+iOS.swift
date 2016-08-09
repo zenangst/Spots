@@ -232,20 +232,11 @@ extension ListAdapter: UITableViewDelegate {
   public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
     guard spot.component.meta("headerHeight", type: CGFloat.self) != 0.0 else { return nil }
 
-    let reuseIdentifer = spot.component.kind.isPresent ? spot.component.kind : spot.dynamicType.defaultKind
+    let view = tableView.dequeueReusableHeaderFooterViewWithIdentifier(spot.component.kind)
+    view?.height = spot.component.meta("headerHeight", 0.0)
+    (view as? Componentable)?.configure(spot.component)
 
-    if let listSpot = spot as? ListSpot, cachedHeader = listSpot.cachedHeaders[reuseIdentifer.string] {
-      cachedHeader.configure(spot.component)
-      return cachedHeader as? UIView
-    } else if let header = ListSpot.headers[reuseIdentifer] {
-      let header = header.init(frame: CGRect(x: 0, y: 0,
-        width: tableView.bounds.width,
-        height: spot.component.meta("headerHeight", 0.0)))
-      (header as? Componentable)?.configure(spot.component)
-      return header
-    }
-
-    return nil
+    return view
   }
 
   /**
