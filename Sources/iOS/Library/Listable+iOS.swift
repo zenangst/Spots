@@ -5,13 +5,6 @@ import Brick
 public extension Spotable where Self : Listable {
 
   /**
-   Called when the Listable object is being prepared, it is required by Spotable
-   */
-  public func prepare() {
-
-  }
-
-  /**
    - Returns: UIScrollView: Returns a UITableView as a UIScrollView
    */
   public func render() -> UIScrollView {
