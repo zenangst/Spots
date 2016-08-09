@@ -197,11 +197,7 @@ public class CollectionAdapter: NSObject, SpotAdapter {
   public func update(item: ViewModel, index: Int, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     spot.items[index] = item
 
-    let reuseIdentifier = spot.reuseIdentifierForItem(NSIndexPath(forItem: index, inSection: 0))
-    let cellType: View.Type = spot.dynamicType.views.storage[reuseIdentifier] ?? spot.dynamicType.defaultView
-
-    spot.collectionView.registerClass(cellType, forCellWithReuseIdentifier: reuseIdentifier)
-    spot.configure(itemAtIndex: index, ofType: cellType)
+    spot.configureItem(index)
 
     dispatch { [weak self] in
       guard let weakSelf = self else { return }
@@ -220,27 +216,11 @@ public class CollectionAdapter: NSObject, SpotAdapter {
 
     if let indexes = indexes {
       indexes.forEach { index  in
-        let item = spot.component.items[index]
-        let reuseIdentifier: String = spot.reuseIdentifierForItem(NSIndexPath(forItem: index, inSection: 0))
-        let cellType = spot.dynamicType.views.storage[item.kind] ?? spot.dynamicType.defaultView
-
-        spot.collectionView.registerClass(cellType, forCellWithReuseIdentifier: reuseIdentifier)
-
-        if let cache = spot.configure(itemAtIndex: index, ofType: cellType, cached: cellCache[reuseIdentifier]) {
-          cellCache[reuseIdentifier] = cache
-        }
+        spot.configureItem(index)
       }
     } else {
       spot.component.items.enumerate().forEach { index, _  in
-        let item = spot.component.items[index]
-        let reuseIdentifier: String = spot.reuseIdentifierForItem(NSIndexPath(forItem: index, inSection: 0))
-        let cellType = spot.dynamicType.views.storage[item.kind] ?? spot.dynamicType.defaultView
-
-        spot.collectionView.registerClass(cellType, forCellWithReuseIdentifier: reuseIdentifier)
-
-        if let cache = spot.configure(itemAtIndex: index, ofType: cellType, cached: cellCache[reuseIdentifier]) {
-          cellCache[reuseIdentifier] = cache
-        }
+        spot.configureItem(index)
       }
     }
 
@@ -421,7 +401,7 @@ extension CollectionAdapter : UICollectionViewDataSource {
   public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
     spot.component.items[indexPath.item].index = indexPath.item
 
-    let reuseIdentifier = spot.reuseIdentifierForItem(indexPath)
+    let reuseIdentifier = spot.identifier(indexPath) ?? ""
     let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath)
 
     #if os(iOS)

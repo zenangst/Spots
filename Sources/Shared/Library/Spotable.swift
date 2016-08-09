@@ -78,14 +78,6 @@ public protocol Spotable: class {
   func spotHeight() -> CGFloat
   func sizeForItemAt(indexPath: NSIndexPath) -> CGSize
 
-  /**
-   Cache view for item kind
-
-   - Parameter item: A view model
-   - Parameter cache: An optional UIView, used to reduce the amount of different reusable views that should be prepared.
-   */
-  func cachedViewFor(item: ViewModel, inout cache: View?)
-
   func dequeueView(identifier: String, indexPath: NSIndexPath) -> View?
   func identifier(index: Int) -> String?
 
@@ -287,57 +279,6 @@ public extension Spotable {
     if index < component.items.count {
       component.items[index] = viewModel
     }
-  }
-
-  /**
-   Get reuseidentifier for the item at index path.
-   It checks if the view model kind is registered inside of the ViewRegistry,
-   otherwise it falls back to trying to resolve the component.kind to get the reuse identifier.
-   As a last result, it will return the default kind for the Spotable kind.
-
-   - Parameter indexPath: The index path of the item you are trying to resolve
-   */
-  func reuseIdentifierForItem(indexPath: NSIndexPath) -> String {
-    #if os(OSX)
-      return reuseIdentifierForItem(indexPath.item)
-    #else
-      return reuseIdentifierForItem(indexPath.row)
-    #endif
-  }
-
-  func reuseIdentifierForItem(index: Int) -> String {
-    guard let viewModel = item(index) else { return self.dynamicType.defaultKind.string }
-
-    if self.dynamicType.views.storage[viewModel.kind] != nil {
-      return viewModel.kind
-    } else if self.dynamicType.views.storage[component.kind] != nil {
-      return component.kind
-    } else {
-      return self.dynamicType.defaultKind.string
-    }
-  }
-
-  /**
-   Configure cell at index
-
-   - Parameter index:    The index of the item that should be configured
-   - Parameter cellType: The View.Type of the cell
-   - Parameter cached:   An optional cache of the SpotConfigurable object
-   - Returns: An optional instance of the SpotConfigurable object
-   */
-  func configure(itemAtIndex index: Int, ofType cellType: View.Type, cached: SpotConfigurable? = nil) -> SpotConfigurable? {
-    var instance: SpotConfigurable? = cached
-
-    if instance == nil {
-      instance = cellType.init() as? SpotConfigurable
-    }
-
-    guard let cell = instance else { return nil }
-
-    component.items[index].index = index
-    cell.configure(&component.items[index])
-
-    return cell
   }
 
   public func sizeForItemAt(indexPath: NSIndexPath) -> CGSize {
