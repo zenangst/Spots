@@ -245,6 +245,7 @@ public class CollectionAdapter: NSObject, SpotAdapter {
       }
     }
 
+    cellCache.removeAll()
     spot.collectionView.collectionViewLayout.invalidateLayout()
 
     if let indexes = indexes {

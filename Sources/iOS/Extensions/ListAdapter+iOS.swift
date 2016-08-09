@@ -192,6 +192,8 @@ extension ListAdapter {
         }
       }
     }
+    
+    cellCache.removeAll()
 
     animation != .None ? spot.tableView.reloadSection(0, animation: animation.tableViewAnimation) : spot.tableView.reloadData()
     spot.tableView.contentSize.height = spot.spotHeight()
