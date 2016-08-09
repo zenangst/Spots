@@ -176,8 +176,8 @@ public extension Spotable {
    Prepare items in component
   */
   func prepareItems() {
-    component.items.enumerate().forEach { (index: Int, item: ViewModel) in
-      prepareItem(item, index: index)
+    component.items.enumerate().forEach { (index: Int, _) in
+      configureItem(index)
     }
   }
 
@@ -279,22 +279,28 @@ public extension Spotable {
   /**
    Prepares a view model item before being used by the UI component
 
-   - Parameter item: A view model
    - Parameter index: The index of the view model
    */
-  public func prepareItem(item: ViewModel, index: Int) {
-    component.items[index].index = index
+  public func configureItem(index: Int) {
+    guard let item = item(index) else { return }
 
-    guard let view = dequeueView(item) as? SpotConfigurable else { return }
+    var viewModel = item
+    viewModel.index = index
 
-    view.configure(&component.items[index])
+    guard let view = dequeueView(viewModel) as? SpotConfigurable else { return }
 
-    if component.items[index].size.height == 0 {
-      component.items[index].size.height = view.size.height
+    view.configure(&viewModel)
+
+    if viewModel.size.height == 0 {
+      viewModel.size.height = view.size.height
     }
 
-    if component.items[index].size.width == 0 {
-      component.items[index].size.width = view.size.width
+    if viewModel.size.width == 0 {
+      viewModel.size.width = view.size.width
+    }
+
+    if index < component.items.count {
+      component.items[index] = viewModel
     }
   }
 
