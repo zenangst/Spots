@@ -12,7 +12,6 @@ struct ArtistBlueprint: BlueprintContainer {
       cacheKey: "artist",
       requests: [],
       fragmentHandler: { fragments, controller in
-
         let image: String = fragments.resolve(keyPath:"image") ?? ""
 
         if let artistID: String = fragments.resolve(keyPath:"artist-id") where image.isEmpty {
