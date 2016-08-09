@@ -9,7 +9,6 @@ public class GridSpot: NSObject, Gridable {
   }
 
   public static var nibs = NibRegistry()
-  public static var defaultView: UIView.Type = GridSpotCell.self
   public static var defaultKind: StringConvertible = "grid"
   public static var configure: ((view: UICollectionView, layout: UICollectionViewFlowLayout) -> Void)?
 

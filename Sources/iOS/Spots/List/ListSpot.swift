@@ -10,7 +10,6 @@ public class ListSpot: NSObject, Listable {
 
   public static var nibs = NibRegistry()
   public static var configure: ((view: UITableView) -> Void)?
-  public static var defaultView: UIView.Type = ListSpotCell.self
   public static var defaultKind: StringConvertible = "list"
   public static var headers = ViewRegistry()
 
