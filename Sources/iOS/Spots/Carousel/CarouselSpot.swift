@@ -166,40 +166,6 @@ extension CarouselSpot: UIScrollViewDelegate {
       collectionView.setContentOffset(CGPoint(x: pageWidth * CGFloat(index), y:0), animated: true)
     }
   }
-
-  // MARK: - Spotable
-
-  public func register() {
-    collectionView.registerClass(self.dynamicType.views.defaultView,
-                                 forCellWithReuseIdentifier: String(self.dynamicType.views.defaultView))
-
-    self.dynamicType.views.storage.forEach { identifier, type in
-      self.collectionView.registerClass(type, forCellWithReuseIdentifier: identifier)
-    }
-  }
-
-  public func cachedViewFor(item: ViewModel, inout cache: View?) {
-    let indexPath = NSIndexPath(forItem: index, inSection: 0)
-    cache = collectionView.dequeueReusableCellWithReuseIdentifier(item.kind, forIndexPath: indexPath)
-  }
-
-  public func dequeueView(identifier: String, indexPath: NSIndexPath) -> View? {
-    return collectionView.dequeueReusableCellWithReuseIdentifier(identifier, forIndexPath: indexPath)
-  }
-
-  public func identifier(index: Int) -> String? {
-    guard let kind = item(index)?.kind else { return nil }
-
-    if self.dynamicType.views.storage[kind] != nil {
-      return kind
-    }
-
-    if self.dynamicType.nibs.storage[kind] != nil {
-      return kind
-    }
-
-    return nil
-  }
 }
 
 extension CarouselSpot {
