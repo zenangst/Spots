@@ -2,7 +2,19 @@
 
 ## [Unreleased](https://github.com/hyperoslo/Spots/tree/HEAD)
 
-[Full Changelog](https://github.com/hyperoslo/Spots/compare/2.0.3...HEAD)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/2.1.0...HEAD)
+
+**Closed issues:**
+
+- In Demo "AppleNews" CarouselSpot or GridSpot crashes after scrolling on iPhone6s Plus Device [\#258](https://github.com/hyperoslo/Spots/issues/258)
+
+**Merged pull requests:**
+
+- Refactor layout code in SpotsScrollView [\#266](https://github.com/hyperoslo/Spots/pull/266) ([zenangst](https://github.com/zenangst))
+- Move common functions to extension [\#265](https://github.com/hyperoslo/Spots/pull/265) ([zenangst](https://github.com/zenangst))
+
+## [2.1.0](https://github.com/hyperoslo/Spots/tree/2.1.0) (2016-08-09)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/2.0.3...2.1.0)
 
 **Closed issues:**
 
