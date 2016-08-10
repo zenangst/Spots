@@ -116,7 +116,6 @@ public extension SpotsProtocol {
 
       weakSelf.reloadSpotsScrollView()
       weakSelf.setupSpots(animated)
-      weakSelf.spotsScrollView.forceUpdate = true
 
       closure?()
     }
@@ -139,7 +138,6 @@ public extension SpotsProtocol {
 
       weakSelf.reloadSpotsScrollView()
       weakSelf.setupSpots(animated)
-      weakSelf.spotsScrollView.forceUpdate = true
 
       closure?()
     }
@@ -160,10 +158,6 @@ public extension SpotsProtocol {
       guard let weakSelf = self else { return }
 
       weakSelf.spot(index, Spotable.self)?.reload(nil, withAnimation: animation) {
-#if os(iOS)
-        weakSelf.spotsScrollView.setNeedsDisplay()
-#endif
-        weakSelf.spotsScrollView.forceUpdate = true
         completion?()
       }
     }
@@ -182,7 +176,6 @@ public extension SpotsProtocol {
 
     update(spotAtIndex: index, withAnimation: animation, withCompletion: completion, {
       $0.items = items
-      self.spotsScrollView.forceUpdate = true
     })
   }
 
@@ -194,7 +187,6 @@ public extension SpotsProtocol {
   public func append(item: ViewModel, spotIndex: Int = 0, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     spot(spotIndex, Spotable.self)?.append(item, withAnimation: animation) {
       completion?()
-      self.spotsScrollView.forceUpdate = true
     }
     spot(spotIndex, Spotable.self)?.refreshIndexes()
   }
@@ -207,7 +199,6 @@ public extension SpotsProtocol {
   public func append(items: [ViewModel], spotIndex: Int = 0, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     spot(spotIndex, Spotable.self)?.append(items, withAnimation: animation) {
       completion?()
-      self.spotsScrollView.forceUpdate = true
     }
     spot(spotIndex, Spotable.self)?.refreshIndexes()
   }
@@ -220,7 +211,6 @@ public extension SpotsProtocol {
   public func prepend(items: [ViewModel], spotIndex: Int = 0, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     spot(spotIndex, Spotable.self)?.prepend(items, withAnimation: animation) {
       completion?()
-      self.spotsScrollView.forceUpdate = true
     }
     spot(spotIndex, Spotable.self)?.refreshIndexes()
   }
@@ -234,7 +224,6 @@ public extension SpotsProtocol {
   public func insert(item: ViewModel, index: Int = 0, spotIndex: Int, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     spot(spotIndex, Spotable.self)?.insert(item, index: index, withAnimation: animation) {
       completion?()
-      self.spotsScrollView.forceUpdate = true
     }
     spot(spotIndex, Spotable.self)?.refreshIndexes()
   }
@@ -255,7 +244,6 @@ public extension SpotsProtocol {
 
     spot(spotIndex, Spotable.self)?.update(item, index: index, withAnimation: animation) {
       completion?()
-      self.spotsScrollView.forceUpdate = true
     }
     spot(spotIndex, Spotable.self)?.refreshIndexes()
   }
@@ -269,7 +257,6 @@ public extension SpotsProtocol {
   public func update(indexes indexes: [Int], spotIndex: Int = 0, withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
     spot(spotIndex, Spotable.self)?.reload(indexes, withAnimation: animation) {
       completion?()
-      self.spotsScrollView.forceUpdate = true
     }
     spot(spotIndex, Spotable.self)?.refreshIndexes()
   }
@@ -295,7 +282,6 @@ public extension SpotsProtocol {
   public func delete(indexes indexes: [Int], spotIndex: Int = 0, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     spot(spotIndex, Spotable.self)?.delete(indexes, withAnimation: animation) {
       completion?()
-      self.spotsScrollView.forceUpdate = true
     }
     spot(spotIndex, Spotable.self)?.refreshIndexes()
   }
@@ -345,6 +331,7 @@ public extension SpotsProtocol {
     #if DEVMODE
       liveEditing(stateCache)
     #endif
+
     stateCache?.save(dictionary)
   }
 

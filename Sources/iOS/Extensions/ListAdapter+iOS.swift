@@ -155,7 +155,6 @@ extension ListAdapter {
 
     spot.tableView.registerClass(cellType, forCellReuseIdentifier: reuseIdentifier)
     spot.configure(itemAtIndex: index, ofType: cellType)
-    spot.tableView.contentSize.height = spot.spotHeight()
     spot.tableView.reload([index], section: 0, animation: animation.tableViewAnimation)
     completion?()
   }
@@ -192,13 +191,10 @@ extension ListAdapter {
         }
       }
     }
-    
+
     cellCache.removeAll()
 
     animation != .None ? spot.tableView.reloadSection(0, animation: animation.tableViewAnimation) : spot.tableView.reloadData()
-    spot.tableView.contentSize.height = spot.spotHeight()
-    spot.tableView.setNeedsLayout()
-    spot.tableView.layoutIfNeeded()
     UIView.setAnimationsEnabled(true)
     completion?()
   }
