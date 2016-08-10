@@ -10,6 +10,8 @@ import Sugar
 /// A class protocol that is used for all components inside of SpotsController
 public protocol Spotable: class {
 
+  static var views: Registry { get set }
+
   /// A SpotsDelegate object
   weak var spotsDelegate: SpotsDelegate? { get set }
 
@@ -254,7 +256,7 @@ public extension Spotable {
     var viewModel = item
     viewModel.index = index
 
-    guard let view = dequeueView(viewModel) as? SpotConfigurable else { return }
+    guard let view = Self.views.make(viewModel.kind) as? SpotConfigurable else { return }
 
     view.configure(&viewModel)
 

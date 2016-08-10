@@ -4,7 +4,7 @@ import Brick
 
 public class ListSpot: NSObject, Listable {
 
-  public static var views = Registry().then {
+  public static var views: Registry = Registry().then {
     $0.defaultItem = Registry.Item.classType(ListSpotCell.self)
   }
 

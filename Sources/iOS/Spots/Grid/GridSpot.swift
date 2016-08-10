@@ -4,7 +4,7 @@ import Brick
 
 public class GridSpot: NSObject, Gridable {
 
-  public static var views = Registry().then {
+  public static var views: Registry = Registry().then {
     $0.defaultItem = Registry.Item.classType(GridSpotCell.self)
   }
 
