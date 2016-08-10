@@ -1,3 +1,4 @@
+import Foundation
 import Brick
 import Sugar
 
@@ -30,6 +31,37 @@ public class Registry {
     set(value) {
       storage[key.string] = value
     }
+  }
+
+  // MARK: - Template
+
+  private var cache: NSCache = NSCache()
+
+  func purge() {
+    cache.removeAllObjects()
+  }
+
+  func make(identifier: String) -> View? {
+    guard let item = storage[identifier] else { return nil }
+
+    if let view = cache.objectForKey(identifier) as? View {
+      return view
+    }
+
+    let view: View?
+
+    switch item {
+    case .classType(let classType):
+      view = classType.init()
+    case .nib(let nib):
+      view = nib.instantiateWithOwner(nil, options: nil).first as? View
+    }
+
+    if let view = view {
+      cache.setObject(view, forKey: identifier)
+    }
+
+    return view
   }
 }
 
