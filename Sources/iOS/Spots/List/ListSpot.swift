@@ -103,13 +103,6 @@ public class ListSpot: NSObject, Listable {
     }
   }
 
-  public func cachedViewFor(item: ViewModel, inout cache: View?) {
-    if let view = tableView.dequeueReusableCellWithIdentifier(item.kind) {
-      cache = view
-      return
-    }
-  }
-
   public func dequeueView(identifier: String, indexPath: NSIndexPath) -> View? {
     return tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath)
   }

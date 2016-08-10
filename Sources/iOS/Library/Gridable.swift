@@ -110,11 +110,6 @@ public extension Spotable where Self : Gridable {
     }
   }
 
-  public func cachedViewFor(item: ViewModel, inout cache: View?) {
-    let indexPath = NSIndexPath(forItem: index, inSection: 0)
-    cache = collectionView.dequeueReusableCellWithReuseIdentifier(item.kind, forIndexPath: indexPath)
-  }
-
   public func dequeueView(identifier: String, indexPath: NSIndexPath) -> View? {
     return collectionView.dequeueReusableCellWithReuseIdentifier(identifier, forIndexPath: indexPath)
   }
