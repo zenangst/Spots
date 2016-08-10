@@ -199,8 +199,11 @@ public extension Spotable {
    Refreshes the indexes of all items within the component
    */
   public func refreshIndexes() {
-    items.enumerate().forEach {
-      items[$0.index].index = $0.index
+    dispatch(queue: .Interactive) { [weak self] in
+      guard let weakSelf = self else { return }
+      weakSelf.items.enumerate().forEach {
+        weakSelf.items[$0.index].index = $0.index
+      }
     }
   }
 
