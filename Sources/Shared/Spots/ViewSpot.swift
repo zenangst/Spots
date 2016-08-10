@@ -8,8 +8,8 @@ import Brick
 
 public class ViewSpot: NSObject, Spotable, Viewable {
 
-  public static var views = ViewRegistry().then {
-    $0.defaultView = View.self
+  public static var views = Registry().then {
+    $0.defaultItem = Registry.Item.classType(View.self)
   }
 
   public static var configure: ((view: View) -> Void)?

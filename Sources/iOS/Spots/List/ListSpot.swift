@@ -4,13 +4,12 @@ import Brick
 
 public class ListSpot: NSObject, Listable {
 
-  public static var views = ViewRegistry().then {
-    $0.defaultView = ListSpotCell.self
+  public static var views = Registry().then {
+    $0.defaultItem = Registry.Item.classType(ListSpotCell.self)
   }
 
-  public static var nibs = NibRegistry()
   public static var configure: ((view: UITableView) -> Void)?
-  public static var headers = ViewRegistry()
+  public static var headers = Registry()
 
   public var index = 0
   public var component: Component
@@ -85,21 +84,22 @@ public class ListSpot: NSObject, Listable {
   // MARK: - Spotable
 
   public func register() {
-    tableView.registerClass(self.dynamicType.views.defaultView,
-                            forCellReuseIdentifier: String(self.dynamicType.views.defaultView))
-    tableView.registerClass(self.dynamicType.headers.defaultView,
-                            forHeaderFooterViewReuseIdentifier: String(self.dynamicType.headers.defaultView))
-
-    self.dynamicType.views.storage.forEach { identifier, type in
-      self.tableView.registerClass(type, forCellReuseIdentifier: identifier)
+    for (identifier, item) in self.dynamicType.views.storage {
+      switch item {
+      case .classType(let classType):
+        self.tableView.registerClass(classType, forCellReuseIdentifier: identifier)
+      case .nib(let nib):
+        self.tableView.registerNib(nib, forCellReuseIdentifier: identifier)
+      }
     }
 
-    self.dynamicType.nibs.storage.forEach { identifier, nib in
-      self.tableView.registerNib(nib, forCellReuseIdentifier: identifier)
-    }
-
-    self.dynamicType.headers.storage.forEach { identifier, type in
-      self.tableView.registerClass(type, forHeaderFooterViewReuseIdentifier: identifier)
+    for (identifier, item) in self.dynamicType.headers.storage {
+      switch item {
+      case .classType(let classType):
+        self.tableView.registerClass(classType, forHeaderFooterViewReuseIdentifier: identifier)
+      case .nib(let nib):
+        self.tableView.registerNib(nib, forHeaderFooterViewReuseIdentifier: identifier)
+      }
     }
   }
 
@@ -115,15 +115,7 @@ public class ListSpot: NSObject, Listable {
   }
 
   public func identifier(index: Int) -> String? {
-    guard let kind = item(index)?.kind else { return nil }
-
-    if self.dynamicType.views.storage[kind] != nil {
-      return kind
-    }
-
-    if self.dynamicType.nibs.storage[kind] != nil {
-      return kind
-    }
+    // FIXME:
 
     return nil
   }

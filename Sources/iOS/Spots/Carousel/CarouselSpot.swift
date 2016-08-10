@@ -4,11 +4,10 @@ import Brick
 
 public class CarouselSpot: NSObject, Gridable {
 
-  public static var views = ViewRegistry().then {
-    $0.defaultView = CarouselSpotCell.self
+  public static var views = Registry().then {
+    $0.defaultItem = Registry.Item.classType(CarouselSpotCell.self)
   }
 
-  public static var nibs = NibRegistry()
   public static var configure: ((view: UICollectionView, layout: UICollectionViewFlowLayout) -> Void)?
 
   public private(set) var stateCache: SpotCache?

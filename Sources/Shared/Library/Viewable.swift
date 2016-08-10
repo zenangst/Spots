@@ -10,7 +10,7 @@ import Brick
 /// Viewable is a protocol for Spots that are based on UIScrollView
 public protocol Viewable: Spotable {
   /// A view registry that is used internally when resolving kind to the corresponding spot.
-  static var views: ViewRegistry { get }
+  static var views: Registry { get }
   /// The default view type for the spotable object
   static var defaultView: View.Type { get set }
 
@@ -51,9 +51,9 @@ public extension Spotable where Self : Viewable {
     if component.kind.isEmpty { component.kind = "view" }
 
     component.items.forEach { (item: ViewModel) in
-      if T.views.storage.keys.contains(item.kind) {
-        let viewClass = T.views.storage[item.kind] ?? T.defaultView
-        let view = viewClass.init()
+      if case let Registry.Item.classType(classType)? = T.views.storage[item.kind]
+        where T.views.storage.keys.contains(item.kind) {
+        let view = classType.init()
 
         if let spotConfigurable = view as? SpotConfigurable {
           spotConfigurable.configure(&component.items[index])
@@ -87,10 +87,10 @@ public extension Spotable where Self : Viewable {
   func append(item: ViewModel, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     let dynamic = self.dynamicType
 
-    guard dynamic.views.storage.keys.contains(item.kind) else { return }
+    guard case let Registry.Item.classType(classType)? = dynamic.views.storage[item.kind]
+      where dynamic.views.storage.keys.contains(item.kind) else { return }
 
-    let viewClass = dynamic.views.storage[item.kind] ?? dynamic.defaultView
-    let view = viewClass.init().then {
+    let view = classType.init().then {
       ($0 as? SpotConfigurable)?.configure(&component.items[index])
       guard let size = ($0 as? SpotConfigurable)?.size else { return }
       $0.frame.size = size
@@ -108,10 +108,10 @@ public extension Spotable where Self : Viewable {
     for item in items {
       let dynamic = self.dynamicType
 
-      guard dynamic.views.storage.keys.contains(item.kind) else { return }
+      guard case let Registry.Item.classType(classType)? = dynamic.views.storage[item.kind]
+        where dynamic.views.storage.keys.contains(item.kind) else { return }
 
-      let viewClass = dynamic.views.storage[item.kind] ?? dynamic.defaultView
-      let view = viewClass.init().then {
+      let view = classType.init().then {
         ($0 as? SpotConfigurable)?.configure(&component.items[index])
         guard let size = ($0 as? SpotConfigurable)?.size else { return }
         $0.frame.size = size
@@ -130,10 +130,10 @@ public extension Spotable where Self : Viewable {
   func insert(item: ViewModel, index: Int, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     let dynamic = self.dynamicType
 
-    guard dynamic.views.storage.keys.contains(item.kind) else { return }
+    guard case let Registry.Item.classType(classType)? = dynamic.views.storage[item.kind]
+      where dynamic.views.storage.keys.contains(item.kind) else { return }
 
-    let viewClass = dynamic.views.storage[item.kind] ?? dynamic.defaultView
-    let view = viewClass.init().then {
+    let view = classType.init().then {
       ($0 as? SpotConfigurable)?.configure(&component.items[index])
       guard let size = ($0 as? SpotConfigurable)?.size else { return }
       $0.frame.size = size
@@ -155,10 +155,10 @@ public extension Spotable where Self : Viewable {
     for item in items.reverse() {
       let dynamic = self.dynamicType
 
-      guard dynamic.views.storage.keys.contains(item.kind) else { return }
-
-      let viewClass = dynamic.views.storage[item.kind] ?? dynamic.defaultView
-      let view = viewClass.init().then {
+      guard case let Registry.Item.classType(classType)? = dynamic.views.storage[item.kind]
+        where dynamic.views.storage.keys.contains(item.kind) else { return }
+      
+      let view = classType.init().then {
         ($0 as? SpotConfigurable)?.configure(&component.items[index])
         guard let size = ($0 as? SpotConfigurable)?.size else { return }
         $0.frame.size = size

@@ -4,8 +4,7 @@ import Brick
 
 /// Gridable is protocol for Spots that are based on UICollectionView
 public protocol Gridable: Spotable {
-  static var views: ViewRegistry { get }
-  static var nibs: NibRegistry { get }
+  static var views: Registry { get }
 
   /// The layout object used to initialize the collection spot controller.
   var layout: UICollectionViewFlowLayout { get }
@@ -101,11 +100,13 @@ public extension Spotable where Self : Gridable {
   // MARK: - Spotable
 
   public func register() {
-    collectionView.registerClass(self.dynamicType.views.defaultView,
-                                 forCellWithReuseIdentifier: String(self.dynamicType.views.defaultView))
-
-    self.dynamicType.views.storage.forEach { identifier, type in
-      self.collectionView.registerClass(type, forCellWithReuseIdentifier: identifier)
+    for (identifier, item) in self.dynamicType.views.storage {
+      switch item {
+      case .classType(let classType):
+        self.collectionView.registerClass(classType, forCellWithReuseIdentifier: identifier)
+      case .nib(let nib):
+        self.collectionView.registerNib(nib, forCellWithReuseIdentifier: identifier)
+      }
     }
   }
 
@@ -119,16 +120,8 @@ public extension Spotable where Self : Gridable {
   }
 
   public func identifier(index: Int) -> String? {
-    guard let kind = item(index)?.kind else { return nil }
-
-    if self.dynamicType.views.storage[kind] != nil {
-      return kind
-    }
-
-    if self.dynamicType.nibs.storage[kind] != nil {
-      return kind
-    }
-
+    // FIXME:
+    
     return nil
   }
 }
