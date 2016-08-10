@@ -183,8 +183,6 @@ public class SpotsController: UIViewController, SpotsProtocol, UIScrollViewDeleg
 
     spotsScrollView.insertSubview(refreshControl, atIndex: 0)
 #endif
-
-    spotsScrollView.forceUpdate = true
   }
 
   /**
