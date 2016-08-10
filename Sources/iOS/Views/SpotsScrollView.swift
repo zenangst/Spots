@@ -46,11 +46,15 @@ public class SpotsScrollView: UIScrollView {
 
   func didAddSubviewToContainer(subview: UIView) {
     subview.autoresizingMask = [.None]
-    subview.translatesAutoresizingMaskIntoConstraints = false
 
     subviewsInLayoutOrder.append(subview)
 
-    guard let scrollView = subview as? UIScrollView where scrollView.superview == contentView else {
+    if subview.superview == contentView && !(subview is UIScrollView) {
+      subview.addObserver(self, forKeyPath: "frame", options: .Old, context: KVOContext)
+      subview.addObserver(self, forKeyPath: "bounds", options: .Old, context: KVOContext)
+    }
+
+    guard let scrollView = subview as? UIScrollView else {
       setNeedsLayout()
       return
     }
@@ -72,8 +76,11 @@ public class SpotsScrollView: UIScrollView {
   }
 
   public override func willRemoveSubview(subview: UIView) {
-    if let scrollView = subview as? UIScrollView where scrollView.superview == contentView {
-      scrollView.removeObserver(self, forKeyPath: "contentSize", context: KVOContext)
+    if subview is UIScrollView {
+      subview.removeObserver(self, forKeyPath: "contentSize", context: KVOContext)
+    } else if subview.superview == contentView {
+      subview.removeObserver(self, forKeyPath: "frame", context: KVOContext)
+      subview.removeObserver(self, forKeyPath: "bounds", context: KVOContext)
     }
 
     if let index = subviewsInLayoutOrder.indexOf({ $0 == subview }) {
@@ -84,12 +91,23 @@ public class SpotsScrollView: UIScrollView {
   }
 
   public override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
-    if let change = change where context == KVOContext {
-      if let view = object as? UIView,
-        oldContentSize = change[NSKeyValueChangeOldKey]?.CGSizeValue() {
-        guard view.frame.size != oldContentSize else { return }
-        setNeedsLayout()
-        layoutIfNeeded()
+    if let change = change where context == KVOContext && keyPath == "contentSize" {
+      if let scrollView = object as? UIScrollView {
+        guard let change = change[NSKeyValueChangeOldKey] else { return }
+        let oldContentSize = change.CGSizeValue()
+        let newContentSize = scrollView.contentSize
+        if !CGSizeEqualToSize(newContentSize, oldContentSize) {
+          setNeedsLayout()
+          layoutIfNeeded()
+        }
+      } else if let view = object as? UIView,
+        oldFrame = change[NSKeyValueChangeOldKey]?.CGRectValue() {
+        let newFrame = view.frame
+
+        if (!CGRectEqualToRect(newFrame, oldFrame)) {
+          self.setNeedsLayout()
+          self.layoutIfNeeded()
+        }
       }
     } else {
       super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)
@@ -117,11 +135,10 @@ public class SpotsScrollView: UIScrollView {
           frame.origin.y = self.contentOffset.y
         }
 
-        // TODO: Fix this properly...
-        // This should also apply for UICollectionView but I haven't figured out a way to resize them properly without it going ape-shit over that the layout is incorrect.
-        if subview is UITableView {
-          let remainingBoundsHeight = fmax(bounds.maxY - frame.minY, 0.0)
-          let remainingContentHeight = fmax(scrollView.contentSize.height - contentOffset.y, 0.0)
+        let remainingBoundsHeight = fmax(bounds.maxY - frame.minY, 0.0)
+        let remainingContentHeight = fmax(scrollView.contentSize.height - contentOffset.y, 0.0)
+
+        if !(subview is UICollectionView) {
           frame.size.height = ceil(fmin(remainingBoundsHeight, remainingContentHeight))
         }
 
@@ -133,6 +150,7 @@ public class SpotsScrollView: UIScrollView {
         yOffsetOfCurrentSubview += scrollView.contentSize.height + scrollView.contentInset.top + scrollView.contentInset.bottom
       } else if let subview = subview {
         var frame = subview.frame
+        frame.origin.x = 0
         frame.origin.y = yOffsetOfCurrentSubview
         frame.size.width = contentView.bounds.size.width
         subview.frame = frame
