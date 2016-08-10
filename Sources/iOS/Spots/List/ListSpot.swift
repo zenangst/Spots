@@ -103,10 +103,6 @@ public class ListSpot: NSObject, Listable {
     }
   }
 
-  public func dequeueView(identifier: String, indexPath: NSIndexPath) -> View? {
-    return tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath)
-  }
-
   public func identifier(index: Int) -> String? {
     // FIXME:
 

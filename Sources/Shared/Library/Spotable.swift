@@ -71,7 +71,6 @@ public protocol Spotable: class {
   func spotHeight() -> CGFloat
   func sizeForItemAt(indexPath: NSIndexPath) -> CGSize
 
-  func dequeueView(identifier: String, indexPath: NSIndexPath) -> View?
   func identifier(index: Int) -> String?
 
   #if os(OSX)
@@ -276,18 +275,6 @@ public extension Spotable {
 
   public func sizeForItemAt(indexPath: NSIndexPath) -> CGSize {
     return render().frame.size
-  }
-
-  func dequeueView(item: ViewModel) -> View? {
-    let indexPath: NSIndexPath
-
-    #if os(OSX)
-      indexPath = NSIndexPath(forItem: item.index, inSection: 0)
-    #else
-      indexPath = NSIndexPath(forRow: item.index, inSection: 0)
-    #endif
-
-    return dequeueView(item.kind, indexPath: indexPath)
   }
 
   func identifier(indexPath: NSIndexPath) -> String? {

@@ -50,11 +50,6 @@ public class ViewSpot: NSObject, Spotable, Viewable {
 
   // MARK: - Spotable
 
-  public func dequeueView(identifier: String, indexPath: NSIndexPath) -> View? {
-    // FIXME:
-    return nil
-  }
-
   public func identifier(index: Int) -> String? {
     // FIXME:
     return nil

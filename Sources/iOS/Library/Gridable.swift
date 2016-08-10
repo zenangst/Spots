@@ -110,10 +110,6 @@ public extension Spotable where Self : Gridable {
     }
   }
 
-  public func dequeueView(identifier: String, indexPath: NSIndexPath) -> View? {
-    return collectionView.dequeueReusableCellWithReuseIdentifier(identifier, forIndexPath: indexPath)
-  }
-
   public func identifier(index: Int) -> String? {
     // FIXME:
     
