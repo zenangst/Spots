@@ -54,13 +54,13 @@ class ListSpotSpec: QuickSpec {
 
         expect(listSpot.identifier(indexPath)).to(equal("list"))
 
-        ListSpot.views["default-list"] = ListSpotCell.self
+        ListSpot.views["default-list"] = Registry.Item.classType(ListSpotCell.self)
         expect(listSpot.identifier(indexPath)).to(equal("default-list"))
 
-        ListSpot.views["custom-list"] = ListSpotCell.self
+        ListSpot.views["custom-list"] = Registry.Item.classType(ListSpotCell.self)
         expect(listSpot.identifier(indexPath)).to(equal("custom-list"))
 
-        ListSpot.views["custom-item-kind"] = ListSpotCell.self
+        ListSpot.views["custom-item-kind"] = Registry.Item.classType(ListSpotCell.self)
         expect(listSpot.identifier(indexPath)).to(equal("custom-item-kind"))
 
         ListSpot.views.storage.removeAll()

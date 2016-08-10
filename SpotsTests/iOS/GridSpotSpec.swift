@@ -55,13 +55,13 @@ class GridSpotSpec: QuickSpec {
 
         expect(gridSpot.identifier(indexPath)).to(equal("grid"))
 
-        GridSpot.views["default-grid"] = GridSpotCell.self
+        GridSpot.views["default-grid"] = Registry.Item.classType(GridSpotCell.self)
         expect(gridSpot.identifier(indexPath)).to(equal("default-grid"))
 
-        GridSpot.views["custom-grid"] = GridSpotCell.self
+        GridSpot.views["custom-grid"] = Registry.Item.classType(GridSpotCell.self)
         expect(gridSpot.identifier(indexPath)).to(equal("custom-grid"))
 
-        GridSpot.views["custom-item-kind"] = GridSpotCell.self
+        GridSpot.views["custom-item-kind"] = Registry.Item.classType(GridSpotCell.self)
         expect(gridSpot.identifier(indexPath)).to(equal("custom-item-kind"))
 
         GridSpot.views.storage.removeAll()
