@@ -46,7 +46,7 @@ public class ListSpot: NSObject, Listable {
     self.tableView ?= tableView
 
     setupTableView()
-    registerAndPrepare() // FIXME: Why call again?
+    registerAndPrepare()
   }
 
   public convenience init(cacheKey: String, tableView: UITableView? = nil) {
@@ -57,13 +57,13 @@ public class ListSpot: NSObject, Listable {
     self.tableView ?= tableView
 
     setupTableView()
-    registerAndPrepare() // FIXME: Why call again?
+    registerAndPrepare()
   }
 
   // MARK: - Setup
 
   public func setup(size: CGSize) {
-    registerAndPrepare() // FIXME: Why call again?
+    registerAndPrepare()
     let height = component.items.reduce(component.meta("headerHeight", 0.0),
                                         combine: { $0 + $1.size.height })
 
