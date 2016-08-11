@@ -11,7 +11,7 @@ PODS:
     - SwiftyJSON
   - Imaginary (0.1.0):
     - Cache
-  - Spots (2.0.3):
+  - Spots (2.1.0):
     - Brick
     - Cache
     - Hue
@@ -52,7 +52,7 @@ SPEC CHECKSUMS:
   CryptoSwift: c1ef79f901b86099a6fe8b3c7524cf9f3f3c8c40
   Fakery: 8e6f7da2feb311a90a956ab9b9b2ce72106d1787
   Imaginary: 62a9ce1e6d7831ede429c8221a183f03ec2a90bc
-  Spots: bed67b01b0cbeea7a7b68cc4a2c357d2c7e0e549
+  Spots: df1baf3b762d51b1d315ca87a18791da1834053d
   Sugar: 556b623f0f8846cf08de7302701892f11d567419
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   Tailor: 135708d29cef05d8f83e61ce8c07171c8fcfc865

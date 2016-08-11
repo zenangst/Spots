@@ -16,8 +16,8 @@ extension ListAdapter {
       self?.spot.tableView.insert([count], animation: animation.tableViewAnimation)
       completion?()
     }
-
-    spot.configureItem(count)
+    var cached: UIView?
+    spot.prepareItem(item, index: count, cached: &cached)
   }
 
   /**
@@ -31,9 +31,10 @@ extension ListAdapter {
 
     spot.component.items.appendContentsOf(items)
 
+    var cached: UIView?
     items.enumerate().forEach {
       indexes.append(count + $0.index)
-      spot.configureItem(count + $0.index)
+      spot.prepareItem($0.element, index: count + $0.index, cached: &cached)
     }
 
     dispatch { [weak self] in
@@ -149,8 +150,11 @@ extension ListAdapter {
   public func update(item: ViewModel, index: Int = 0, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     spot.items[index] = item
 
-    spot.configureItem(index)
-    spot.tableView.contentSize.height = spot.spotHeight()
+    let reuseIdentifier: String = spot.reuseIdentifierForItem(NSIndexPath(forRow: index, inSection: 0))
+    let cellType: View.Type = spot.dynamicType.views.storage[reuseIdentifier] ?? spot.dynamicType.defaultView
+
+    spot.tableView.registerClass(cellType, forCellReuseIdentifier: reuseIdentifier)
+    spot.configure(itemAtIndex: index, ofType: cellType)
     spot.tableView.reload([index], section: 0, animation: animation.tableViewAnimation)
     completion?()
   }
@@ -162,21 +166,35 @@ extension ListAdapter {
    */
   public func reload(indexes: [Int]? = nil, withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
     spot.refreshIndexes()
+    var cellCache: [String : SpotConfigurable] = [:]
 
     if let indexes = indexes {
       indexes.forEach { index  in
-        spot.configureItem(index)
+        let reuseIdentifier: String = spot.reuseIdentifierForItem(NSIndexPath(forItem: index, inSection: 0))
+        let cellType: View.Type = spot.dynamicType.views.storage[reuseIdentifier] ?? spot.dynamicType.defaultView
+
+        spot.tableView.registerClass(cellType, forCellReuseIdentifier: reuseIdentifier)
+
+        if let cache = spot.configure(itemAtIndex: index, ofType: cellType, cached: cellCache[reuseIdentifier]) {
+          cellCache[reuseIdentifier] = cache
+        }
       }
     } else {
       for (index, _) in spot.component.items.enumerate() {
-        spot.configureItem(index)
+        let reuseIdentifier: String = spot.reuseIdentifierForItem(NSIndexPath(forItem: index, inSection: 0))
+        let cellType: View.Type = spot.dynamicType.views.storage[reuseIdentifier] ?? spot.dynamicType.defaultView
+
+        spot.tableView.registerClass(cellType, forCellReuseIdentifier: reuseIdentifier)
+
+        if let cache = spot.configure(itemAtIndex: index, ofType: cellType, cached: cellCache[reuseIdentifier]) {
+          cellCache[reuseIdentifier] = cache
+        }
       }
     }
 
+    cellCache.removeAll()
+
     animation != .None ? spot.tableView.reloadSection(0, animation: animation.tableViewAnimation) : spot.tableView.reloadData()
-    spot.tableView.contentSize.height = spot.spotHeight()
-    spot.tableView.setNeedsLayout()
-    spot.tableView.layoutIfNeeded()
     UIView.setAnimationsEnabled(true)
     completion?()
   }
@@ -232,11 +250,20 @@ extension ListAdapter: UITableViewDelegate {
   public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
     guard spot.component.meta("headerHeight", type: CGFloat.self) != 0.0 else { return nil }
 
-    let view = tableView.dequeueReusableHeaderFooterViewWithIdentifier(spot.component.kind)
-    view?.height = spot.component.meta("headerHeight", 0.0)
-    (view as? Componentable)?.configure(spot.component)
+    let reuseIdentifer = spot.component.kind.isPresent ? spot.component.kind : spot.dynamicType.defaultKind
 
-    return view
+    if let listSpot = spot as? ListSpot, cachedHeader = listSpot.cachedHeaders[reuseIdentifer.string] {
+      cachedHeader.configure(spot.component)
+      return cachedHeader as? UIView
+    } else if let header = ListSpot.headers[reuseIdentifer] {
+      let header = header.init(frame: CGRect(x: 0, y: 0,
+        width: tableView.bounds.width,
+        height: spot.component.meta("headerHeight", 0.0)))
+      (header as? Componentable)?.configure(spot.component)
+      return header
+    }
+
+    return nil
   }
 
   /**
@@ -283,7 +310,7 @@ extension ListAdapter: UITableViewDataSource {
       spot.component.items[indexPath.item].index = indexPath.row
     }
 
-    let reuseIdentifier = spot.identifier(indexPath) ?? ""
+    let reuseIdentifier = spot.reuseIdentifierForItem(indexPath)
     let cell: UITableViewCell = tableView
       .dequeueReusableCellWithIdentifier(reuseIdentifier, forIndexPath: indexPath)
 
