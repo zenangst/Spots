@@ -401,7 +401,7 @@ extension CollectionAdapter : UICollectionViewDataSource {
   public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
     spot.component.items[indexPath.item].index = indexPath.item
 
-    let reuseIdentifier = spot.identifier(indexPath) ?? ""
+    let reuseIdentifier = spot.identifier(indexPath)
     let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath)
 
     #if os(iOS)

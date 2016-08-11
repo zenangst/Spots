@@ -280,7 +280,7 @@ public extension Spotable {
     return render().frame.size
   }
 
-  func identifier(indexPath: NSIndexPath) -> String? {
+  func identifier(indexPath: NSIndexPath) -> String {
     #if os(OSX)
       return identifier(index: indexPath.item)
     #else
@@ -288,7 +288,7 @@ public extension Spotable {
     #endif
   }
 
-  public func identifier(index: Int) -> String? {
+  public func identifier(index: Int) -> String {
     guard let item = item(index)
       where self.dynamicType.views.storage[item.kind] != nil
       else {

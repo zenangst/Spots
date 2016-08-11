@@ -278,7 +278,7 @@ extension ListAdapter: UITableViewDataSource {
       spot.component.items[indexPath.item].index = indexPath.row
     }
 
-    let reuseIdentifier = spot.identifier(indexPath) ?? ""
+    let reuseIdentifier = spot.identifier(indexPath)
     let cell: UITableViewCell = tableView
       .dequeueReusableCellWithIdentifier(reuseIdentifier, forIndexPath: indexPath)
 
