@@ -53,13 +53,13 @@ class ListSpotSpec: QuickSpec {
         let indexPath = NSIndexPath(forRow: 0, inSection: 0)
 
         it("resolve kind") {
-          expect(listSpot.identifier(indexPath)).to(equal("list"))
+          expect(listSpot.identifier(indexPath)).to(equal(ListSpot.views.defaultIdentifier))
 
-          ListSpot.views["default-list"] = Registry.Item.classType(ListSpotCell.self)
-          expect(listSpot.identifier(indexPath)).to(equal("default-list"))
+          ListSpot.views.defaultItem = Registry.Item.classType(ListSpotCell.self)
+          expect(listSpot.identifier(indexPath)).to(equal(ListSpot.views.defaultIdentifier))
 
-          ListSpot.views["custom-list"] = Registry.Item.classType(ListSpotCell.self)
-          expect(listSpot.identifier(indexPath)).to(equal("custom-list"))
+          ListSpot.views.defaultItem = Registry.Item.classType(ListSpotCell.self)
+          expect(listSpot.identifier(indexPath)).to(equal(ListSpot.views.defaultIdentifier))
 
           ListSpot.views["custom-item-kind"] = Registry.Item.classType(ListSpotCell.self)
           expect(listSpot.identifier(indexPath)).to(equal("custom-item-kind"))

@@ -54,13 +54,13 @@ class GridSpotSpec: QuickSpec {
         let indexPath = NSIndexPath(forRow: 0, inSection: 0)
 
         it("resolve kind") {
-          expect(gridSpot.identifier(indexPath)).to(equal("grid"))
+          expect(gridSpot.identifier(indexPath)).to(equal(GridSpot.views.defaultIdentifier))
 
-          GridSpot.views["default-grid"] = Registry.Item.classType(GridSpotCell.self)
-          expect(gridSpot.identifier(indexPath)).to(equal("default-grid"))
+          GridSpot.views.defaultItem = Registry.Item.classType(GridSpotCell.self)
+          expect(gridSpot.identifier(indexPath)).to(equal(GridSpot.views.defaultIdentifier))
 
-          GridSpot.views["custom-grid"] = Registry.Item.classType(GridSpotCell.self)
-          expect(gridSpot.identifier(indexPath)).to(equal("custom-grid"))
+          GridSpot.views.defaultItem = Registry.Item.classType(GridSpotCell.self)
+          expect(gridSpot.identifier(indexPath)).to(equal(GridSpot.views.defaultIdentifier))
 
           GridSpot.views["custom-item-kind"] = Registry.Item.classType(GridSpotCell.self)
           expect(gridSpot.identifier(indexPath)).to(equal("custom-item-kind"))
