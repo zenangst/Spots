@@ -73,8 +73,6 @@ public protocol Spotable: class {
   func spotHeight() -> CGFloat
   func sizeForItemAt(indexPath: NSIndexPath) -> CGSize
 
-  func identifier(index: Int) -> String?
-
   #if os(OSX)
   func deselect()
   #endif
@@ -288,6 +286,16 @@ public extension Spotable {
     #else
       return identifier(indexPath.row)
     #endif
+  }
+
+  public func identifier(index: Int) -> String? {
+    guard let item = item(index)
+      where self.dynamicType.views.storage[item.kind] != nil
+      else {
+        return self.dynamicType.views.defaultIdentifier
+    }
+
+    return item.kind
   }
 
   func registerAndPrepare() {

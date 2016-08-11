@@ -50,11 +50,6 @@ public class ViewSpot: NSObject, Spotable, Viewable {
 
   // MARK: - Spotable
 
-  public func identifier(index: Int) -> String? {
-    // FIXME:
-    return nil
-  }
-
   public func register() {
     // TODO:
   }

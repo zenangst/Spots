@@ -108,10 +108,4 @@ public extension Spotable where Self : Gridable {
       }
     }
   }
-
-  public func identifier(index: Int) -> String? {
-    // FIXME:
-    
-    return nil
-  }
 }

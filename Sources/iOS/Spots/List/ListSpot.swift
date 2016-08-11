@@ -102,10 +102,4 @@ public class ListSpot: NSObject, Listable {
       }
     }
   }
-
-  public func identifier(index: Int) -> String? {
-    // FIXME:
-
-    return nil
-  }
 }

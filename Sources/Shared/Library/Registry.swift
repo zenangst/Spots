@@ -15,8 +15,12 @@ public class Registry {
 
   var defaultItem: Item? {
     didSet {
-      storage[String(defaultItem)] = defaultItem
+      storage[defaultIdentifier] = defaultItem
     }
+  }
+
+  var defaultIdentifier: String {
+    return String(defaultItem)
   }
 
   /**
