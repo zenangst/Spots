@@ -33,7 +33,6 @@ public class CarouselSpot: NSObject, Gridable {
   public var pageIndicator: Bool = false {
     willSet(value) {
       if value {
-        pageControl.currentPage = 1
         pageControl.width = backgroundView.frame.width
         collectionView.backgroundView?.addSubview(pageControl)
       } else {
