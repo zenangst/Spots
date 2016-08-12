@@ -236,7 +236,7 @@ extension PlaylistController: SpotsDelegate {
       let murmur = Murmur(title: notification,
         backgroundColor: UIColor(red:0.063, green:0.063, blue:0.063, alpha: 1),
         titleColor: UIColor.whiteColor())
-      Whistle(murmur)
+      show(whistle: murmur)
     }
   }
 }

@@ -19,8 +19,8 @@ class SearchController: SpotsController {
     self.title = title
     self.spotsDelegate = self
 
-    guard let spot = spot as? ListSpot,
-      searchHeader = spot.cachedHeaders["search"] as? SearchHeaderView else { return }
+    guard let headerView = spot(0, ListSpot.self)?.tableView.headerViewForSection(0),
+      searchHeader = headerView as? SearchHeaderView else { return }
 
     searchHeader.searchField.delegate = self
   }
@@ -28,9 +28,8 @@ class SearchController: SpotsController {
   override func scrollViewDidScroll(scrollView: UIScrollView) {
     super.scrollViewDidScroll(scrollView)
 
-    guard let spot = spot as? ListSpot,
-      searchHeader = spot.cachedHeaders["search"] as? SearchHeaderView else { return }
-
+    guard let headerView = spot(0, ListSpot.self)?.tableView.headerViewForSection(0),
+      searchHeader = headerView as? SearchHeaderView else { return }
     searchHeader.searchField.resignFirstResponder()
   }
 }

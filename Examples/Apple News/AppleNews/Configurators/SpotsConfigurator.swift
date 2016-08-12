@@ -38,16 +38,16 @@ struct SpotsConfigurator {
       layout.minimumLineSpacing = 10
     }
 
-    ListSpot.register(header: SearchHeaderView.self, withIdentifier: "search")
-    ListSpot.register(header: ListHeaderView.self, withIdentifier: "list")
+    ListSpot.register(header: SearchHeaderView.self, identifier: "search")
+    ListSpot.register(header: ListHeaderView.self, identifier: "list")
 
     ListSpot.configure = { tableView in tableView.tableFooterView = UIView(frame: CGRect.zero) }
 
-    ListSpot.register(view: FeedItemCell.self, withIdentifier: Cell.Feed)
-    ListSpot.register(view: FeaturedFeedItemCell.self, withIdentifier: Cell.FeaturedFeed)
-    ListSpot.register(view: FeedDetailItemCell.self, withIdentifier: Cell.FeedDetail)
+    ListSpot.register(header: FeedItemCell.self, identifier: Cell.Feed)
+    ListSpot.register(header: FeaturedFeedItemCell.self, identifier: Cell.FeaturedFeed)
+    ListSpot.register(header: FeedDetailItemCell.self, identifier: Cell.FeedDetail)
 
-    CarouselSpot.register(view: GridTopicCell.self, withIdentifier: Cell.Topic)
-    GridSpot.register(view: GridTopicCell.self, withIdentifier: Cell.Topic)
+    CarouselSpot.register(view: GridTopicCell.self, identifier: Cell.Topic)
+    GridSpot.register(view: GridTopicCell.self, identifier: Cell.Topic)
   }
 }

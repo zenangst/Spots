@@ -36,8 +36,8 @@ public class ListSpot: NSObject, Listable {
       self.component.kind = "list"
     }
 
-    setupTableView()
     registerAndPrepare()
+    setupTableView()
   }
 
   public convenience init(tableView: UITableView? = nil, title: String = "", kind: String? = nil) {
@@ -103,7 +103,11 @@ public class ListSpot: NSObject, Listable {
     }
   }
 
-  public static func register(header header: View.Type, withIdentifier identifier: StringConvertible) {
+  public static func register(header header: View.Type, identifier: StringConvertible) {
     self.headers.storage[identifier.string] = Registry.Item.classType(header)
+  }
+
+  public static func register(defaultHeader header: View.Type) {
+    self.headers.storage[self.views.defaultIdentifier] = Registry.Item.classType(header)
   }
 }

@@ -229,6 +229,7 @@ extension ListAdapter: UITableViewDelegate {
 
     let view = tableView.dequeueReusableHeaderFooterViewWithIdentifier(spot.component.kind)
     view?.height = spot.component.meta("headerHeight", 0.0)
+    view?.width = spot.tableView.width
     (view as? Componentable)?.configure(spot.component)
 
     return view
