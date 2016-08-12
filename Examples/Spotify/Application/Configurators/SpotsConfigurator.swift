@@ -17,8 +17,8 @@ struct SpotsConfigurator: Configurator {
       layout.minimumLineSpacing = 5
     }
 
-    CarouselSpot.views["playlist"] = PlaylistGridSpotCell.self
-    CarouselSpot.views["featured"] = FeaturedGridSpotCell.self
+    CarouselSpot.register(view: PlaylistGridSpotCell.self, withIdentifier: "playlist")
+    CarouselSpot.register(view: FeaturedGridSpotCell.self, withIdentifier: "featured")
 
     GridSpot.configure = { collectionView, layout in
       collectionView.backgroundColor = UIColor.clearColor()
@@ -28,9 +28,9 @@ struct SpotsConfigurator: Configurator {
       layout.minimumLineSpacing = 0
     }
 
-    GridSpot.views["player"] = PlayerGridSpotCell.self
-    GridSpot.views["playlist"] = PlaylistGridSpotCell.self
-    GridSpot.views["featured"] = FeaturedGridSpotCell.self
+    GridSpot.register(view: PlayerGridSpotCell.self, withIdentifier: "player")
+    GridSpot.register(view: PlaylistGridSpotCell.self, withIdentifier: "playlist")
+    GridSpot.register(view: FeaturedGridSpotCell.self, withIdentifier: "featured")
 
     ListSpot.configure = { tableView in
       let inset: CGFloat = 15
@@ -44,13 +44,15 @@ struct SpotsConfigurator: Configurator {
         right: inset)
       tableView.separatorColor = UIColor.hex("FFF").alpha(0.2)
     }
+    
+    ListSpot.register(header: SearchHeaderView.self, withIdentifier: "search")
+    ListSpot.register(header: ListHeaderView.self, withIdentifier: "list")
+    ListSpot.register(defaultHeader: ListHeaderView.self)
 
-    ListSpot.headers["search"] = SearchHeaderView.self
-    ListSpot.headers["list"] = ListHeaderView.self
-
-    ListSpot.views["default"] = DefaultListSpotCell.self
-    ListSpot.views["playlist"] = PlaylistListSpotCell.self
-    ListSpot.views["player"] = PlayerListSpotCell.self
-    ListSpot.defaultView = DefaultListSpotCell.self
+    ListSpot.register(view: PlaylistListSpotCell.self, withIdentifier: "playlist")
+    ListSpot.register(view: PlayerListSpotCell.self, withIdentifier: "player")
+    ListSpot.register(view: DefaultListSpotCell.self, withIdentifier: "default")
+    ListSpot.register(defaultView: DefaultListSpotCell.self)
+    
   }
 }
