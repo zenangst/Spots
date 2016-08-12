@@ -43,10 +43,10 @@ class SpotsControllerTests : XCTestCase {
     }
 
     // Test appending item without kind
-    spotController.append(ViewModel(title: "title2"), spotIndex: 0)
-
-    XCTAssert(spotController.spot!.component.items.count == 2)
-    XCTAssertEqual(spotController.spot!.component.items[1].title, "title2")
+    spotController.append(ViewModel(title: "title2"), spotIndex: 0) {
+      XCTAssert(spotController.spot!.component.items.count == 2)
+      XCTAssertEqual(spotController.spot!.component.items[1].title, "title2")
+    }
   }
 
   func testAppendItems() {
@@ -67,11 +67,11 @@ class SpotsControllerTests : XCTestCase {
     spotController.append([
       ViewModel(title: "title3"),
       ViewModel(title: "title4")
-      ], spotIndex: 0)
-
-    XCTAssertEqual(spotController.spot!.component.items.count, 4)
-    XCTAssertEqual(spotController.spot!.component.items[2].title, "title3")
-    XCTAssertEqual(spotController.spot!.component.items[3].title, "title4")
+    ], spotIndex: 0) {
+      XCTAssertEqual(spotController.spot!.component.items.count, 4)
+      XCTAssertEqual(spotController.spot!.component.items[2].title, "title3")
+      XCTAssertEqual(spotController.spot!.component.items[3].title, "title4")
+    }
   }
 
   func testPrependItems() {
@@ -91,10 +91,10 @@ class SpotsControllerTests : XCTestCase {
     spotController.prepend([
       ViewModel(title: "title3"),
       ViewModel(title: "title4")
-      ], spotIndex: 0)
-
-    XCTAssertEqual(spotController.spot!.component.items[0].title, "title3")
-    XCTAssertEqual(spotController.spot!.component.items[1].title, "title4")
+    ], spotIndex: 0) {
+      XCTAssertEqual(spotController.spot!.component.items[0].title, "title3")
+      XCTAssertEqual(spotController.spot!.component.items[1].title, "title4")
+    }
   }
 
   func testDeleteItem() {
