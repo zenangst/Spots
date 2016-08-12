@@ -23,7 +23,7 @@ public class SearchHeaderView: UITableViewHeaderFooterView, Componentable {
     }()
 
   public lazy var searchField: UITextField = { [unowned self] in
-    let searchField = UITextField(frame: self.frame)
+    let searchField = UITextField(frame: self.bounds)
     searchField.width -= 30
     searchField.height = 44
     searchField.y = 0

@@ -304,7 +304,7 @@ public extension Spotable {
     prepareItems()
   }
 
-  public static func register(view view: View.Type, withIdentifier identifier: StringConvertible) {
+  public static func register(view view: View.Type, identifier: StringConvertible) {
     self.views.storage[identifier.string] = Registry.Item.classType(view)
   }
 

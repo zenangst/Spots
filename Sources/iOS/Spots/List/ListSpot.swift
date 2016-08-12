@@ -103,7 +103,7 @@ public class ListSpot: NSObject, Listable {
     }
   }
 
-  public static func register(header header: View.Type, withIdentifier identifier: StringConvertible) {
+  public static func register(header header: View.Type, identifier: StringConvertible) {
     self.headers.storage[identifier.string] = Registry.Item.classType(header)
   }
 
