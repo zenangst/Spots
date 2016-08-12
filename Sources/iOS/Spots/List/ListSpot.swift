@@ -36,8 +36,8 @@ public class ListSpot: NSObject, Listable {
       self.component.kind = "list"
     }
 
-    setupTableView()
     registerAndPrepare()
+    setupTableView()
   }
 
   public convenience init(tableView: UITableView? = nil, title: String = "", kind: String? = nil) {
