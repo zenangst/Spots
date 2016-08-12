@@ -67,11 +67,13 @@ extension ListAdapter {
 
     spot.component.items.insertContentsOf(items, at: 0)
 
-    items.enumerate().forEach {
-      indexes.append(items.count - 1 - $0.index)
-    }
+    dispatch { [weak self, spot = spot] in
+      items.enumerate().forEach {
+        let index = items.count - 1 - $0.index
+        indexes.append(index)
+        spot.configureItem(index)
+      }
 
-    dispatch { [weak self] in
       self?.spot.tableView.insert(indexes, animation: animation.tableViewAnimation)
       completion?()
     }
