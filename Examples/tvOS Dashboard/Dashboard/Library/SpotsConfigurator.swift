@@ -13,13 +13,13 @@ enum Cell: String, StringConvertible {
 struct SpotsConfigurator {
 
   func configure() {
-    CarouselSpot.views[Cell.Featured] = FeaturedCell.self
-    GridSpot.views[Cell.Grid] = GridCell.self
-    ListSpot.views[Cell.List] = ListCell.self
+    CarouselSpot.register(view: FeaturedCell.self, identifier: Cell.Featured)
+    GridSpot.register(view: GridCell.self, identifier: Cell.Grid)
+    ListSpot.register(view: ListCell.self, identifier: Cell.List)
 
-    ListSpot.defaultKind = Cell.List.string
-    GridSpot.defaultKind = Cell.Grid.string
-    CarouselSpot.defaultKind = Cell.Grid.string
+    ListSpot.register(defaultView: ListCell.self)
+    GridSpot.register(defaultView: GridCell.self)
+    CarouselSpot.register(defaultView: GridCell.self)
 
     SpotsController.configure = {
       $0.backgroundColor = UIColor.clearColor()
