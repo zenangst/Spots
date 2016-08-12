@@ -240,6 +240,8 @@ extension PlayerController: SpotsDelegate {
 
 extension PlayerController: SpotsCarouselScrollDelegate {
 
+  func spotDidScroll(spot: Spotable) { }
+
   func spotDidEndScrolling(spot: Spotable, item: ViewModel) {
     guard let urn = item.action, lastItem = lastItem
       where item.action != lastItem.action
