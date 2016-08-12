@@ -1,7 +1,7 @@
 import UIKit
 import Spots
 
-public class ListHeaderView: UIView, Componentable {
+public class ListHeaderView: UITableViewHeaderFooterView, Componentable {
 
   public var defaultHeight: CGFloat = 44
 
@@ -22,9 +22,8 @@ public class ListHeaderView: UIView, Componentable {
     return style
     }()
 
-  public override init(frame: CGRect) {
-    super.init(frame: frame)
-    addSubview(label)
+  public override init(reuseIdentifier: String?) {
+    super.init(reuseIdentifier: reuseIdentifier)
   }
 
   public required init?(coder aDecoder: NSCoder) {
