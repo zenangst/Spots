@@ -25,9 +25,9 @@ class SearchController: SpotsController {
       }
     }
 
-    if let spot = spot as? ListSpot,
-      searchHeader = spot.cachedHeaders["search"] as? SearchHeaderView {
-        searchHeader.searchField.delegate = self
+    if let headerView = spot(1, ListSpot.self)?.tableView.headerViewForSection(0),
+      searchHeader = headerView as? SearchHeaderView {
+      searchHeader.searchField.delegate = self
     }
   }
 }

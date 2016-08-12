@@ -254,7 +254,11 @@ public extension Spotable {
     var viewModel = item
     viewModel.index = index
 
-    guard let view = Self.views.make(viewModel.kind) as? SpotConfigurable else { return }
+    let kind = item.kind.isEmpty || Self.views.storage[item.kind] == nil
+      ? Self.views.defaultIdentifier
+      : viewModel.kind
+
+    guard let view = Self.views.make(kind) as? SpotConfigurable else { return }
 
     view.configure(&viewModel)
 
@@ -298,5 +302,9 @@ public extension Spotable {
   func registerAndPrepare() {
     register()
     prepareItems()
+  }
+
+  public static func register(view view: View.Type, withIdentifier identifier: StringConvertible) {
+    self.views.storage[identifier.string] = Registry.Item.classType(view)
   }
 }

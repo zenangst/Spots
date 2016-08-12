@@ -2,7 +2,7 @@ import UIKit
 import Spots
 import Sugar
 
-public class SearchHeaderView: UIView, Componentable {
+public class SearchHeaderView: UITableViewHeaderFooterView, Componentable {
 
   public var defaultHeight: CGFloat = 88
 
@@ -13,7 +13,7 @@ public class SearchHeaderView: UIView, Componentable {
     return label
     }()
 
-  lazy var backgroundView: UIView = {
+  lazy var customBackgroundView: UIView = {
     let view = UITextField(frame: self.bounds)
     view.backgroundColor = UIColor(red:0.961, green:0.961, blue:0.961, alpha: 1)
     view.height = 44
@@ -43,9 +43,9 @@ public class SearchHeaderView: UIView, Componentable {
     return style
     }()
 
-  public override init(frame: CGRect) {
-    super.init(frame: frame)
-    [backgroundView, searchField, label].forEach { addSubview($0) }
+  public override init(reuseIdentifier: String?) {
+    super.init(reuseIdentifier: reuseIdentifier)
+    [customBackgroundView, searchField, label].forEach { addSubview($0) }
   }
 
   public required init?(coder aDecoder: NSCoder) {
