@@ -10,12 +10,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
     window = UIWindow(frame: UIScreen.mainScreen().bounds)
 
-    GridSpot.views["header"] = GridSpotHeader.self
-    GridSpot.views["titles"] = GridSpotCellTitles.self
-    GridSpot.views["circle"] = GridSpotCellCircle.self
+    GridSpot.register(view: GridSpotHeader.self, identifier: "header")
+    GridSpot.register(view: GridSpotCellTitles.self, identifier: "titles")
+    GridSpot.register(view: GridSpotCellCircle.self, identifier: "circle")
 
     SpotsController.configure = {
       $0.backgroundColor = UIColor.whiteColor()
+    }
+    
+    GridSpot.configure = { collectionView, layout in
+      collectionView.backgroundColor = UIColor.whiteColor()
     }
 
     let controller = JSONController()
