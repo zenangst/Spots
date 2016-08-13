@@ -304,6 +304,10 @@ public extension Spotable {
     prepareItems()
   }
 
+  public static func register(nib nib: Nib, identifier: StringConvertible) {
+    self.views.storage[identifier.string] = Registry.Item.nib(nib)
+  }
+
   public static func register(view view: View.Type, identifier: StringConvertible) {
     self.views.storage[identifier.string] = Registry.Item.classType(view)
   }
