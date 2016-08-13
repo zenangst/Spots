@@ -52,7 +52,7 @@ public class Registry {
       return view
     }
 
-    let view: View?
+    var view: View? = nil
 
     switch item {
     case .classType(let classType):
