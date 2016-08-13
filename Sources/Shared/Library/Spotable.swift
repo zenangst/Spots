@@ -283,7 +283,7 @@ public extension Spotable {
 
   func identifier(indexPath: NSIndexPath) -> String {
     #if os(OSX)
-      return identifier(index: indexPath.item)
+      return identifier(indexPath.item)
     #else
       return identifier(indexPath.row)
     #endif
