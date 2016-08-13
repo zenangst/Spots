@@ -179,8 +179,7 @@ public class ListSpot: NSObject, Listable {
   public func register() {
     for (identifier, item) in self.dynamicType.views.storage {
       switch item {
-      case .classType(let classType):
-        break
+      case .classType(let classType): break
       case .nib(let nib):
         self.tableView.registerNib(nib, forIdentifier: identifier)
       }
