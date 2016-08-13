@@ -103,11 +103,11 @@ extension Gridable {
     collectionView.deselectAll(nil)
   }
 
-  public static func register(item item: NSCollectionViewItem.Type, identifier: StringConvertible) {
-    self.grids.storage[identifier.string] = GridRegistry.Item.classType(item)
+  public static func register(view view: NSCollectionViewItem.Type, identifier: StringConvertible) {
+    self.grids.storage[identifier.string] = GridRegistry.Item.classType(view)
   }
 
-  public static func register(defaultItem: NSCollectionViewItem.Type) {
-    self.grids.storage[self.grids.defaultIdentifier] = GridRegistry.Item.classType(defaultItem)
+  public static func register(defaultView: NSCollectionViewItem.Type) {
+    self.grids.storage[self.grids.defaultIdentifier] = GridRegistry.Item.classType(defaultView)
   }
 }
