@@ -55,9 +55,11 @@ public protocol SpotsProtocol: class {
 public extension SpotsProtocol {
 
   public var dictionary: JSONDictionary {
-    get {
-      return ["components" : spots.map { $0.component.dictionary }]
-    }
+    get { return dictionary() }
+  }
+
+  public func dictionary(amountOfItems: Int? = nil) -> JSONDictionary {
+    return ["components" : spots.map { $0.component.dictionary(amountOfItems) }]
   }
 
   /**
@@ -344,12 +346,12 @@ public extension SpotsProtocol {
   /**
    Caches the current state of the spot controller
    */
-  public func cache() {
+  public func cache(items items: Int? = nil) {
     #if DEVMODE
       liveEditing(stateCache)
     #endif
 
-    stateCache?.save(dictionary)
+    stateCache?.save(dictionary(items))
   }
 
   /**
