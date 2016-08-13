@@ -149,9 +149,26 @@ extension ListAdapter {
    - Parameter completion: A completion closure that is executed in the main queue when the view model has been updated
    */
   public func update(item: ViewModel, index: Int = 0, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
+    let oldItem = spot.items[index]
+
     spot.items[index] = item
     spot.configureItem(index)
-    spot.tableView.reload([index], section: 0, animation: animation.tableViewAnimation)
+
+    let newItem = spot.items[index]
+    let indexPath = NSIndexPath(forRow: index, inSection: 0)
+
+    if newItem.kind != oldItem.kind || newItem.size.height != oldItem.size.height {
+      if let cell = spot.tableView.cellForRowAtIndexPath(indexPath) as? SpotConfigurable {
+        spot.tableView.beginUpdates()
+        cell.configure(&spot.items[index])
+        spot.tableView.endUpdates()
+      } else {
+        spot.tableView.reload([index], section: 0, animation: animation.tableViewAnimation)
+      }
+    } else if let cell = spot.tableView.cellForRowAtIndexPath(indexPath) as? SpotConfigurable {
+      cell.configure(&spot.items[index])
+    }
+
     completion?()
   }
 
