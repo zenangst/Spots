@@ -93,7 +93,7 @@ CHECKOUT OPTIONS:
     :commit: 5273ca100e23bbcd82ff52cde30daec655ef3b75
     :git: https://github.com/hyperoslo/Malibu.git
   OhMyAuth:
-    :commit: fb4af44f38eb3d45887190d5df04a8851ce0c6a6
+    :commit: 3b61b2cc3eeebd5f3a5ff0b178d5b7aa7d0a1631
     :git: https://github.com/hyperoslo/OhMyAuth.git
   Sugar:
     :commit: e66d36a4a36b3114279e35e5b97acb464acba75f
