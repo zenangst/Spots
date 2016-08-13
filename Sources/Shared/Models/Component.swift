@@ -59,6 +59,10 @@ public struct Component: Mappable {
 
   /// A dictionary representation of the component
   public var dictionary: JSONDictionary {
+    return dictionary()
+  }
+
+  public func dictionary(amountOfItems: Int? = nil) -> JSONDictionary {
     var width: CGFloat = 0
     var height: CGFloat = 0
     if let size = size {
@@ -66,7 +70,14 @@ public struct Component: Mappable {
       height = size.height
     }
 
-    let JSONItems: [JSONDictionary] = items.map { $0.dictionary }
+    let JSONItems: [JSONDictionary]
+
+    if let amountOfItems = amountOfItems {
+      JSONItems = Array(items[0..<amountOfItems]).map { $0.dictionary }
+    } else {
+      JSONItems = items.map { $0.dictionary }
+    }
+
     let JSONComponents: JSONDictionary = [
       Key.Index.string : index,
       Key.Title.string : title,
