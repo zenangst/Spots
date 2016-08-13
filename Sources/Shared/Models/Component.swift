@@ -72,7 +72,7 @@ public struct Component: Mappable {
 
     let JSONItems: [JSONDictionary]
 
-    if let amountOfItems = amountOfItems {
+    if let amountOfItems = amountOfItems where amountOfItems <= items.count {
       JSONItems = Array(items[0..<amountOfItems]).map { $0.dictionary }
     } else {
       JSONItems = items.map { $0.dictionary }
