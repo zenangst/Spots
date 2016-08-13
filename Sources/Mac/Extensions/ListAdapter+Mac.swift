@@ -30,7 +30,6 @@ extension ListAdapter {
       let index = count + $0.index
 //      indexes.append(count + $0.index)
       spot.configureItem(index, usesViewSize: true)
-//      spot.prepareItem($0.element, index: count + $0.index, cached: &cached)
     }
 
     dispatch { [weak self] in
