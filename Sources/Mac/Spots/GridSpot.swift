@@ -99,6 +99,7 @@ public class GridSpot: NSObject, Gridable {
     self.component = component
     self.layout = GridSpot.setupLayout(component)
     super.init()
+    registerAndPrepare()
     setupCollectionView()
     scrollView.addSubview(titleView)
     scrollView.addSubview(lineView)
