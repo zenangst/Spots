@@ -346,12 +346,12 @@ public extension SpotsProtocol {
   /**
    Caches the current state of the spot controller
    */
-  public func cache() {
+  public func cache(items: Int? = nil) {
     #if DEVMODE
       liveEditing(stateCache)
     #endif
 
-    stateCache?.save(dictionary)
+    stateCache?.save(dictionary(items))
   }
 
   /**
