@@ -23,7 +23,7 @@ public protocol Gridable: Spotable {
   func sizeForItemAt(indexPath: NSIndexPath) -> CGSize
 
   #if os(OSX)
-  static var grids: GridRegistry { get }
+  static var grids: GridRegistry { get set }
   static var defaultGrid: NSCollectionViewItem.Type { get }
   #endif
 }
