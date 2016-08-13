@@ -28,7 +28,7 @@ extension ListAdapter {
     var cached: NSView?
     items.enumerate().forEach {
       let index = count + $0.index
-//      indexes.append(count + $0.index)
+      indexes.append(index)
       spot.configureItem(index, usesViewSize: true)
     }
 
