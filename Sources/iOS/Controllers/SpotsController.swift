@@ -183,6 +183,7 @@ public class SpotsController: UIViewController, SpotsProtocol, UIScrollViewDeleg
 
     spotsScrollView.insertSubview(refreshControl, atIndex: 0)
 #endif
+    spotsScrollView.forceUpdate = true
   }
 
   /**
@@ -212,6 +213,7 @@ public class SpotsController: UIViewController, SpotsProtocol, UIScrollViewDeleg
         height: ceil(spot.render().height))
       animated?(view: spot.render())
     }
+    spotsScrollView.forceUpdate = true
   }
 
   #if os(iOS)
