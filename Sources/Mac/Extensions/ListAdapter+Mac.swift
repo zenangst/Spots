@@ -9,7 +9,7 @@ extension ListAdapter {
     spot.component.items.append(item)
 
     var cached: View?
-    spot.prepareItem(item, index: count, cached: &cached)
+    spot.configureItem(count, usesViewSize: true)
 
     dispatch { [weak self] in
       guard let tableView = self?.spot.tableView else { completion?(); return }
@@ -27,8 +27,10 @@ extension ListAdapter {
 
     var cached: NSView?
     items.enumerate().forEach {
-      indexes.append(count + $0.index)
-      spot.prepareItem($0.element, index: count + $0.index, cached: &cached)
+      let index = count + $0.index
+//      indexes.append(count + $0.index)
+      spot.configureItem(index, usesViewSize: true)
+//      spot.prepareItem($0.element, index: count + $0.index, cached: &cached)
     }
 
     dispatch { [weak self] in
@@ -189,9 +191,9 @@ extension ListAdapter: NSTableViewDelegate {
   }
 
   public func tableView(tableView: NSTableView, rowViewForRow row: Int) -> NSTableRowView? {
-    let reuseIdentifier = spot.reuseIdentifierForItem(row)
-    let viewClass = spot.dynamicType.views[reuseIdentifier]
-    let view = viewClass?.init()
+    let reuseIdentifier = spot.identifier(row)
+    let cachedView = spot.dynamicType.views.make(reuseIdentifier)
+    let view = cachedView?.dynamicType.init()
 
     (view as? SpotConfigurable)?.configure(&spot.component.items[row])
     (view as? NSTableRowView)?.identifier = reuseIdentifier
