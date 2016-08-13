@@ -3,18 +3,19 @@ import Spots
 struct SpotsConfigurator: Configurator {
 
   func configure() {
-    CarouselSpot.grids["artist"] = ArtistGridItem.self
-    CarouselSpot.grids["album"] = AlbumGridItem.self
-    CarouselSpot.grids["carousel"] = GridSpotItem.self
-    CarouselSpot.grids["category"] = CategoryGridItem.self
-    CarouselSpot.grids["featured"] = FeaturedGridItem.self
-    CarouselSpot.grids["list"] = GridListItem.self
-    GridSpot.grids["artist"] = ArtistGridItem.self
-    GridSpot.grids["album"] = AlbumGridItem.self
-    GridSpot.grids["category"] = CategoryGridItem.self
-    GridSpot.grids["featured"] = FeaturedGridItem.self
-    GridSpot.grids["grid"] = GridSpotItem.self
-    GridSpot.grids["list"] = GridListItem.self
+    CarouselSpot.register(item: ArtistGridItem.self, identifier: "artist")
+    CarouselSpot.register(item: AlbumGridItem.self, identifier: "album")
+    CarouselSpot.register(item: GridSpotItem.self, identifier: "carousel")
+    CarouselSpot.register(item: CategoryGridItem.self, identifier: "category")
+    CarouselSpot.register(item: FeaturedGridItem.self, identifier: "featured")
+    CarouselSpot.register(item: GridListItem.self, identifier: "list")
+
+    GridSpot.register(item: ArtistGridItem.self, identifier: "artist")
+    GridSpot.register(item: AlbumGridItem.self, identifier: "album")
+    GridSpot.register(item: CategoryGridItem.self, identifier: "category")
+    GridSpot.register(item: FeaturedGridItem.self, identifier: "featured")
+    GridSpot.register(item: GridSpotItem.self, identifier: "grid")
+    GridSpot.register(item: GridListItem.self, identifier: "list")
 
     ListSpot.register(view: HeaderGridItem.self, identifier: "header")
     ListSpot.register(view: TableRow.self, identifier: "list")
