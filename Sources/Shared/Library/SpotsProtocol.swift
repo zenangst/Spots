@@ -55,9 +55,11 @@ public protocol SpotsProtocol: class {
 public extension SpotsProtocol {
 
   public var dictionary: JSONDictionary {
-    get {
-      return ["components" : spots.map { $0.component.dictionary }]
-    }
+    get { return dictionary() }
+  }
+
+  public func dictionary(amountOfItems: Int? = nil) -> JSONDictionary {
+    return ["components" : spots.map { $0.component.dictionary(amountOfItems) }]
   }
 
   /**
