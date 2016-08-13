@@ -15,10 +15,12 @@ struct SpotsConfigurator: Configurator {
     GridSpot.grids["featured"] = FeaturedGridItem.self
     GridSpot.grids["grid"] = GridSpotItem.self
     GridSpot.grids["list"] = GridListItem.self
-    ListSpot.views["header"] = HeaderGridItem.self
-    ListSpot.views["list"] = TableRow.self
-    ListSpot.views["track"] = TrackRow.self
-    ListSpot.views["hero"] = HeroGridItem.self
+    
+    ListSpot.register(view: HeaderGridItem.self, identifier: "header")
+    ListSpot.register(view: TableRow.self, identifier: "list")
+    ListSpot.register(view: TrackRow.self, identifier: "track")
+    ListSpot.register(view: HeroGridItem.self, identifier: "hero")
+    ListSpot.register(defaultView: TableRow.self)
 
     CarouselSpot.Default.sectionInsetTop = 0.0
     CarouselSpot.Default.sectionInsetLeft = 10.0
