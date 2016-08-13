@@ -175,4 +175,15 @@ public class ListSpot: NSObject, Listable {
     lineView.frame.origin.x = component.meta(Key.titleLeftInset, Default.titleLeftInset)
     lineView.frame.origin.y = titleView.frame.maxY + 8
   }
+
+  public func register() {
+    for (identifier, item) in self.dynamicType.views.storage {
+      switch item {
+      case .classType(let classType):
+        break
+      case .nib(let nib):
+        self.tableView.registerNib(nib, forIdentifier: identifier)
+      }
+    }
+  }
 }
