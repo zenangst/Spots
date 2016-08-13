@@ -43,7 +43,7 @@ public class GridSpot: NSObject, Gridable {
     public static var sectionInsetBottom: CGFloat = 0.0
   }
 
-  public static var views = ViewRegistry()
+  public static var views = Registry()
   public static var grids = GridRegistry()
   public static var configure: ((view: NSCollectionView) -> Void)?
   public static var defaultView: View.Type = NSView.self

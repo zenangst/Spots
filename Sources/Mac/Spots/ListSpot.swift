@@ -29,7 +29,7 @@ public class ListSpot: NSObject, Listable {
     public static var contentInsetsRight: CGFloat = 0.0
   }
 
-  public static var views = ViewRegistry()
+  public static var views = Registry()
   public static var configure: ((view: NSTableView) -> Void)?
   public static var defaultView: View.Type = ListSpotItem.self
   public static var defaultKind: StringConvertible = Component.Kind.List.string

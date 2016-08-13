@@ -30,7 +30,7 @@ public class CarouselSpot: NSObject, Gridable {
     public static var minimumLineSpacing: CGFloat = 0.0
   }
 
-  public static var views = ViewRegistry()
+  public static var views = Registry()
   public static var grids = GridRegistry()
   public static var configure: ((view: NSCollectionView) -> Void)?
   public static var defaultGrid: NSCollectionViewItem.Type = NSCollectionViewItem.self
