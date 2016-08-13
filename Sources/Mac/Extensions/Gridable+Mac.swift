@@ -28,8 +28,6 @@ extension Gridable {
   public func prepare() {
     var cached: NSCollectionViewItem?
     for (index, item) in component.items.enumerate() {
-      cachedGridFor(item, cache: &cached)
-
       if let layout = layout as? NSCollectionViewFlowLayout where component.span > 0 {
         component.items[index].size.width = collectionView.frame.width / CGFloat(component.span) - layout.sectionInset.left - layout.sectionInset.right
       }
@@ -40,45 +38,16 @@ extension Gridable {
     }
   }
 
-  func cachedGridFor(item: ViewModel, inout cache: NSCollectionViewItem?) {
-    let reuseIdentifer = item.kind.isPresent ? item.kind : component.kind
-    let componentClass = self.dynamicType.grids.storage[reuseIdentifer] ?? self.dynamicType.defaultGrid
-
-    if cache?.isKindOfClass(componentClass) == false { cache = nil }
-    if cache == nil { cache = componentClass.init() }
-  }
-
   // MARK: - Spotable
 
   public func register() {
 
-    for (_, container) in self.dynamicType.grids.storage.enumerate() {
-      self.collectionView.registerClass(container.1, forItemWithIdentifier: container.0)
-    }
-  }
-
-  /**
-   Prepares a view model item before being used by the UI component
-
-   - Parameter item: A view model
-   - Parameter index: The index of the view model
-   - Parameter cached: An optional UIView, used to reduce the amount of different reusable views that should be prepared.
-   */
-  public func prepareItem(item: ViewModel, index: Int, inout cached: NSCollectionViewItem?) {
-    cachedGridFor(item, cache: &cached)
-
-    component.items[index].index = index
-
-    guard let view = cached as? SpotConfigurable else { return }
-
-    view.configure(&component.items[index])
-
-    if component.items[index].size.height == 0 {
-      component.items[index].size.height = layout.collectionViewContentSize.height
-    }
-
-    if component.items[index].size.width == 0 {
-      component.items[index].size.width = layout.collectionViewContentSize.width
+    for (identifier, item) in self.dynamicType.grids.storage {
+      switch item {
+      case .classType(let classType):
+          self.collectionView.registerClass(classType, forItemWithIdentifier: identifier)
+      default: break
+      }
     }
   }
 
@@ -132,5 +101,13 @@ extension Gridable {
 
   public func deselect() {
     collectionView.deselectAll(nil)
+  }
+
+  public static func register(item item: NSCollectionViewItem.Type, identifier: StringConvertible) {
+    self.grids.storage[identifier.string] = GridRegistry.Item.classType(item)
+  }
+
+  public static func register(defaultItem: NSCollectionViewItem.Type) {
+    self.grids.storage[self.grids.defaultIdentifier] = GridRegistry.Item.classType(defaultItem)
   }
 }
