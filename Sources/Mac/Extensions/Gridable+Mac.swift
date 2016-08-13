@@ -1,17 +1,6 @@
 import Cocoa
 import Brick
 
-/// Gridable is protocol for Spots that are based on UICollectionView
-public protocol Gridable: Spotable {
-  // The layout object used to initialize the collection spot controller.
-  var layout: NSCollectionViewLayout { get }
-  /// The collection view object managed by this gridable object.
-  var collectionView: CollectionView { get }
-
-  static var grids: GridRegistry { get }
-  static var defaultGrid: NSCollectionViewItem.Type { get }
-}
-
 public struct GridableMeta {
   public struct Key {
     public static let sectionInsetTop = "insetTop"
@@ -37,10 +26,6 @@ extension Gridable {
   }
 
   public func prepare() {
-    registerAndPrepare { (classType, withIdentifier) in
-      collectionView.registerClass(classType, forItemWithIdentifier: withIdentifier)
-    }
-
     var cached: NSCollectionViewItem?
     for (index, item) in component.items.enumerate() {
       cachedGridFor(item, cache: &cached)
@@ -63,26 +48,13 @@ extension Gridable {
     if cache == nil { cache = componentClass.init() }
   }
 
-  /**
-   - Parameter spot: Spotable
-   - Parameter register: A closure containing class type and reuse identifer
-   */
-  func registerAndPrepare(@noescape register: (classType: NSCollectionViewItem.Type, withIdentifier: String) -> Void) {
-    if component.kind.isEmpty { component.kind = Self.defaultKind.string }
+  // MARK: - Spotable
 
-    Self.grids.storage.forEach { (reuseIdentifier: String, classType: NSCollectionViewItem.Type) in
-      register(classType: classType, withIdentifier: reuseIdentifier)
+  public func register() {
+
+    for (_, container) in self.dynamicType.grids.storage.enumerate() {
+      self.collectionView.registerClass(container.1, forItemWithIdentifier: container.0)
     }
-
-//    if !Self.grids.storage.keys.contains(component.kind) {
-//      register(classType: Self.defaultView, withIdentifier: component.kind)
-//    }
-
-    var cached: NSCollectionViewItem?
-    component.items.enumerate().forEach { (index: Int, item: ViewModel) in
-      prepareItem(item, index: index, cached: &cached)
-    }
-    cached = nil
   }
 
   /**
@@ -148,16 +120,14 @@ extension Gridable {
     return size
   }
 
-  func reuseIdentifierForItem(index: Int) -> String {
-    guard let viewModel = item(index) else { return self.dynamicType.defaultKind.string }
-
-    if self.dynamicType.grids.storage[viewModel.kind] != nil {
-      return viewModel.kind
-    } else if self.dynamicType.grids.storage[component.kind] != nil {
-      return component.kind
-    } else {
-      return self.dynamicType.defaultKind.string
+  public func identifier(index: Int) -> String {
+    guard let item = item(index)
+      where self.dynamicType.grids.storage[item.kind] != nil
+      else {
+        return self.dynamicType.views.defaultIdentifier
     }
+
+    return item.kind
   }
 
   public func deselect() {
