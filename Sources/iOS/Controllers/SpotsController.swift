@@ -162,6 +162,7 @@ public class SpotsController: UIViewController, SpotsProtocol, UIScrollViewDeleg
     setupSpots()
 
     SpotsController.configure?(container: spotsScrollView)
+    spotsScrollView.forceUpdate = true
   }
 
   /**

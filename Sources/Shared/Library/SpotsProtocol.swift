@@ -119,7 +119,7 @@ public extension SpotsProtocol {
       weakSelf.setupSpots(animated)
 
       closure?()
-      self?.spotsScrollView.forceUpdate = true
+      weakSelf.spotsScrollView.forceUpdate = true
     }
   }
 
@@ -142,7 +142,7 @@ public extension SpotsProtocol {
       weakSelf.setupSpots(animated)
 
       closure?()
-      self?.spotsScrollView.forceUpdate = true
+      weakSelf.spotsScrollView.forceUpdate = true
     }
   }
 
