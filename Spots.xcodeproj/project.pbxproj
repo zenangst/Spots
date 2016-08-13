@@ -14,7 +14,6 @@
 		BD38DC601D1854D700094941 /* UICollectionView+Indexes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD38DC321D1854D700094941 /* UICollectionView+Indexes.swift */; };
 		BD38DC621D1854D700094941 /* UITableView+Indexes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD38DC331D1854D700094941 /* UITableView+Indexes.swift */; };
 		BD38DC641D1854D700094941 /* CollectionAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD38DC351D1854D700094941 /* CollectionAdapter.swift */; };
-		BD38DC661D1854D700094941 /* Gridable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD38DC361D1854D700094941 /* Gridable.swift */; };
 		BD38DC681D1854D700094941 /* Listable+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD38DC371D1854D700094941 /* Listable+iOS.swift */; };
 		BD38DC7C1D1854D700094941 /* CarouselSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD38DC431D1854D700094941 /* CarouselSpot.swift */; };
 		BD38DC7E1D1854D700094941 /* CarouselSpotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD38DC441D1854D700094941 /* CarouselSpotCell.swift */; };
@@ -36,6 +35,9 @@
 		BD38DC9F1D18550900094941 /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD38DC5B1D1854D700094941 /* Component.swift */; };
 		BD48BEC91C459B4800317D76 /* ViewSpotSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD48BEC81C459B4800317D76 /* ViewSpotSpec.swift */; };
 		BD48BECB1C459D2A00317D76 /* CarouselSpotSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD48BECA1C459D2A00317D76 /* CarouselSpotSpec.swift */; };
+		BD4AA20A1D5E6E6D00DD0208 /* Gridable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4AA2091D5E6E6D00DD0208 /* Gridable.swift */; };
+		BD4AA20B1D5E6E6D00DD0208 /* Gridable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4AA2091D5E6E6D00DD0208 /* Gridable.swift */; };
+		BD4AA20D1D5E6FD000DD0208 /* Gridable+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4AA20C1D5E6FD000DD0208 /* Gridable+iOS.swift */; };
 		BD6A1F2B1D2B8C5200E85FD3 /* SpotsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6A1F151D2B8C5200E85FD3 /* SpotsController.swift */; };
 		BD6A1F2C1D2B8C5200E85FD3 /* Listable+Mac.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6A1F171D2B8C5200E85FD3 /* Listable+Mac.swift */; };
 		BD6A1F2D1D2B8C5200E85FD3 /* ListAdapter+Mac.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6A1F181D2B8C5200E85FD3 /* ListAdapter+Mac.swift */; };
@@ -127,7 +129,6 @@
 		BD38DC321D1854D700094941 /* UICollectionView+Indexes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Indexes.swift"; sourceTree = "<group>"; };
 		BD38DC331D1854D700094941 /* UITableView+Indexes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+Indexes.swift"; sourceTree = "<group>"; };
 		BD38DC351D1854D700094941 /* CollectionAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionAdapter.swift; sourceTree = "<group>"; };
-		BD38DC361D1854D700094941 /* Gridable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gridable.swift; sourceTree = "<group>"; };
 		BD38DC371D1854D700094941 /* Listable+iOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Listable+iOS.swift"; sourceTree = "<group>"; };
 		BD38DC431D1854D700094941 /* CarouselSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselSpot.swift; sourceTree = "<group>"; };
 		BD38DC441D1854D700094941 /* CarouselSpotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselSpotCell.swift; sourceTree = "<group>"; };
@@ -144,6 +145,8 @@
 		BD38DC5B1D1854D700094941 /* Component.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
 		BD48BEC81C459B4800317D76 /* ViewSpotSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewSpotSpec.swift; sourceTree = "<group>"; };
 		BD48BECA1C459D2A00317D76 /* CarouselSpotSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselSpotSpec.swift; sourceTree = "<group>"; };
+		BD4AA2091D5E6E6D00DD0208 /* Gridable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gridable.swift; sourceTree = "<group>"; };
+		BD4AA20C1D5E6FD000DD0208 /* Gridable+iOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Gridable+iOS.swift"; sourceTree = "<group>"; };
 		BD6A1F151D2B8C5200E85FD3 /* SpotsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsController.swift; sourceTree = "<group>"; };
 		BD6A1F171D2B8C5200E85FD3 /* Listable+Mac.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Listable+Mac.swift"; sourceTree = "<group>"; };
 		BD6A1F181D2B8C5200E85FD3 /* ListAdapter+Mac.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ListAdapter+Mac.swift"; sourceTree = "<group>"; };
@@ -286,6 +289,7 @@
 				BD38DC321D1854D700094941 /* UICollectionView+Indexes.swift */,
 				BD38DC331D1854D700094941 /* UITableView+Indexes.swift */,
 				BDE8FBC21D1BEC4300C5A212 /* ListAdapter+iOS.swift */,
+				BD4AA20C1D5E6FD000DD0208 /* Gridable+iOS.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -294,7 +298,6 @@
 			isa = PBXGroup;
 			children = (
 				BD38DC351D1854D700094941 /* CollectionAdapter.swift */,
-				BD38DC361D1854D700094941 /* Gridable.swift */,
 				BD38DC371D1854D700094941 /* Listable+iOS.swift */,
 			);
 			path = Library;
@@ -359,6 +362,7 @@
 		BD38DC521D1854D700094941 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				BD4AA2091D5E6E6D00DD0208 /* Gridable.swift */,
 				BD980E281D190A26007284DD /* Viewable.swift */,
 				BD980E211D1904E0007284DD /* SpotsProtocol.swift */,
 				BD980E1C1D18A8C2007284DD /* SpotsDelegates.swift */,
@@ -864,6 +868,7 @@
 				BD38DC601D1854D700094941 /* UICollectionView+Indexes.swift in Sources */,
 				BD980DEA1D18A5FA007284DD /* Parser.swift in Sources */,
 				BD38DC921D1854D700094941 /* SpotConfigurable.swift in Sources */,
+				BD4AA20A1D5E6E6D00DD0208 /* Gridable.swift in Sources */,
 				BD980DF01D18A726007284DD /* SpotFactory.swift in Sources */,
 				BD38DC981D1854D700094941 /* Component.swift in Sources */,
 				BD980DED1D18A6ED007284DD /* Spotable.swift in Sources */,
@@ -871,7 +876,6 @@
 				BDE8FBBA1D1BD26100C5A212 /* SpotAdapter.swift in Sources */,
 				BDE8FBC31D1BEC4300C5A212 /* ListAdapter+iOS.swift in Sources */,
 				BD38DC801D1854D700094941 /* GridSpot.swift in Sources */,
-				BD38DC661D1854D700094941 /* Gridable.swift in Sources */,
 				BD980E261D1909E3007284DD /* ViewSpot.swift in Sources */,
 				BD38DC941D1854D700094941 /* SpotCache.swift in Sources */,
 				BDE8FBCA1D1BF11500C5A212 /* Listable.swift in Sources */,
@@ -879,6 +883,7 @@
 				BD980E221D1904E0007284DD /* SpotsProtocol.swift in Sources */,
 				BD980E1D1D18A8C2007284DD /* SpotsDelegates.swift in Sources */,
 				BD38DC5C1D1854D700094941 /* SpotsController+UIScrollViewDelegate.swift in Sources */,
+				BD4AA20D1D5E6FD000DD0208 /* Gridable+iOS.swift in Sources */,
 				BD38DC821D1854D700094941 /* GridSpotCell.swift in Sources */,
 				BD38DC5E1D1854D700094941 /* SpotsController.swift in Sources */,
 				BD38DC681D1854D700094941 /* Listable+iOS.swift in Sources */,
@@ -939,6 +944,7 @@
 				BD6A1F2E1D2B8C5200E85FD3 /* NSCollectionView+Indexes.swift in Sources */,
 				BD6A1F2C1D2B8C5200E85FD3 /* Listable+Mac.swift in Sources */,
 				BD980E231D1904E0007284DD /* SpotsProtocol.swift in Sources */,
+				BD4AA20B1D5E6E6D00DD0208 /* Gridable.swift in Sources */,
 				BD980DEB1D18A5FA007284DD /* Parser.swift in Sources */,
 				D259D0F91D5BD1930003ACFA /* Registry.swift in Sources */,
 			);

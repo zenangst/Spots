@@ -1,26 +1,6 @@
 import UIKit
-import Sugar
-import Brick
 
-/// Gridable is protocol for Spots that are based on UICollectionView
-public protocol Gridable: Spotable {
-
-  /// The layout object used to initialize the collection spot controller.
-  var layout: UICollectionViewFlowLayout { get }
-  /// The collection view object managed by this gridable object.
-  var collectionView: UICollectionView { get }
-
-  /**
-   Asks the data source for the size of an item in a particular location.
-
-   - Parameter indexPath: The index path of the
-   - Returns: Size of the object at index path as CGSize
-   */
-  func sizeForItemAt(indexPath: NSIndexPath) -> CGSize
-}
-
-/// A Spotable extension for Gridable objects
-public extension Spotable where Self : Gridable {
+extension Gridable {
 
   /**
    Initializes a Gridable container and configures the Spot with the provided component and optional layout properties.
@@ -35,33 +15,8 @@ public extension Spotable where Self : Gridable {
   public init(_ component: Component, top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0, itemSpacing: CGFloat = 0) {
     self.init(component: component)
 
-    layout.sectionInset = UIEdgeInsets(top: top, left: left, bottom: bottom, right: right)
+    layout.sectionInset = EdgeInsets(top: top, left: left, bottom: bottom, right: right)
     layout.minimumInteritemSpacing = itemSpacing
-  }
-
-  /**
-   - Returns: UIScrollView: Returns a UICollectionView as a UIScrollView
-   */
-  public func render() -> UIScrollView {
-    return collectionView
-  }
-
-  /**
-   - Parameter size: A CGSize to set the size of the collection view
-   */
-  public func setup(size: CGSize) {
-    collectionView.frame.size = size
-    GridSpot.configure?(view: collectionView, layout: layout)
-  }
-
-  /**
-   - Parameter size: A CGSize to set the width and height of the collection view
-   */
-  public func layout(size: CGSize) {
-    collectionView.collectionViewLayout.invalidateLayout()
-    collectionView.width = size.width
-    guard let componentSize = component.size else { return }
-    collectionView.height = componentSize.height
   }
 
   /**
@@ -72,7 +27,7 @@ public extension Spotable where Self : Gridable {
    */
   public func sizeForItemAt(indexPath: NSIndexPath) -> CGSize {
     if component.span > 0 {
-      component.items[indexPath.item].size.width = collectionView.width / CGFloat(component.span) - layout.minimumInteritemSpacing
+      component.items[indexPath.item].size.width = collectionView.frame.width / CGFloat(component.span) - layout.minimumInteritemSpacing
     }
 
     let width = (item(indexPath)?.size.width ?? 0) - collectionView.contentInset.left - layout.sectionInset.left - layout.sectionInset.right
@@ -85,6 +40,16 @@ public extension Spotable where Self : Gridable {
       width: floor(width),
       height: ceil(height)
     )
+  }
+
+  /**
+   - Parameter size: A CGSize to set the width and height of the collection view
+   */
+  public func layout(size: CGSize) {
+    collectionView.collectionViewLayout.invalidateLayout()
+    collectionView.frame.size.width = size.width
+    guard let componentSize = component.size else { return }
+    collectionView.frame.size.height = componentSize.height
   }
 
   public func prepareItems() {

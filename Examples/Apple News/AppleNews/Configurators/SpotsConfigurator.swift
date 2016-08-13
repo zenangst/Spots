@@ -43,9 +43,9 @@ struct SpotsConfigurator {
 
     ListSpot.configure = { tableView in tableView.tableFooterView = UIView(frame: CGRect.zero) }
 
-    ListSpot.register(header: FeedItemCell.self, identifier: Cell.Feed)
-    ListSpot.register(header: FeaturedFeedItemCell.self, identifier: Cell.FeaturedFeed)
-    ListSpot.register(header: FeedDetailItemCell.self, identifier: Cell.FeedDetail)
+    ListSpot.register(view: FeedItemCell.self, identifier: Cell.Feed)
+    ListSpot.register(view: FeaturedFeedItemCell.self, identifier: Cell.FeaturedFeed)
+    ListSpot.register(view: FeedDetailItemCell.self, identifier: Cell.FeedDetail)
 
     CarouselSpot.register(view: GridTopicCell.self, identifier: Cell.Topic)
     GridSpot.register(view: GridTopicCell.self, identifier: Cell.Topic)

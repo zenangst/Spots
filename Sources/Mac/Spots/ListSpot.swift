@@ -29,7 +29,7 @@ public class ListSpot: NSObject, Listable {
     public static var contentInsetsRight: CGFloat = 0.0
   }
 
-  public static var views = ViewRegistry()
+  public static var views = Registry()
   public static var configure: ((view: NSTableView) -> Void)?
   public static var defaultView: View.Type = ListSpotItem.self
   public static var defaultKind: StringConvertible = Component.Kind.List.string
@@ -174,5 +174,15 @@ public class ListSpot: NSObject, Listable {
     lineView.frame.size.width = scrollView.frame.size.width - (component.meta(Key.titleLeftInset, Default.titleLeftInset) * 2)
     lineView.frame.origin.x = component.meta(Key.titleLeftInset, Default.titleLeftInset)
     lineView.frame.origin.y = titleView.frame.maxY + 8
+  }
+
+  public func register() {
+    for (identifier, item) in self.dynamicType.views.storage {
+      switch item {
+      case .classType(let classType): break
+      case .nib(let nib):
+        self.tableView.registerNib(nib, forIdentifier: identifier)
+      }
+    }
   }
 }

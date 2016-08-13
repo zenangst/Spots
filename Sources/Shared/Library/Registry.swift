@@ -52,13 +52,16 @@ public class Registry {
       return view
     }
 
-    let view: View?
+    var view: View? = nil
 
     switch item {
     case .classType(let classType):
       view = classType.init()
     case .nib(let nib):
+      #if os(OSX)
+      #else
       view = nib.instantiateWithOwner(nil, options: nil).first as? View
+      #endif
     }
 
     if let view = view {
