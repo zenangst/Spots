@@ -7,8 +7,6 @@ extension ListAdapter {
   public func append(item: ViewModel, withAnimation animation: SpotsAnimation, completion: Completion) {
     let count = spot.component.items.count
     spot.component.items.append(item)
-
-    var cached: View?
     spot.configureItem(count, usesViewSize: true)
 
     dispatch { [weak self] in
@@ -25,7 +23,6 @@ extension ListAdapter {
 
     spot.component.items.appendContentsOf(items)
 
-    var cached: NSView?
     items.enumerate().forEach {
       let index = count + $0.index
       indexes.append(index)
