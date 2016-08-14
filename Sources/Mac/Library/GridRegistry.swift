@@ -12,12 +12,14 @@ public struct GridRegistry {
   /// A Key-value dictionary of registred types
   var storage = [String : Item]()
 
+  /// The default item for the registry
   var defaultItem: Item? {
     didSet {
       storage[defaultIdentifier] = defaultItem
     }
   }
 
+  /// The default identifier for the registry
   var defaultIdentifier: String {
     return String(defaultItem)
   }
@@ -38,12 +40,22 @@ public struct GridRegistry {
 
   // MARK: - Template
 
+  /// A cache that stores instances of created views
   private var cache: NSCache = NSCache()
 
+  /**
+   Empty the current view cache
+   */
   func purge() {
     cache.removeAllObjects()
   }
 
+  /**
+   Create a view for corresponding identifier
+
+   - Parameter identifier: A reusable identifier for the view
+   - Returns: A tuple with an optional registry type and view
+   */
   func make(identifier: String) -> (type: RegistryType?, item: NSCollectionViewItem?) {
     guard let item = storage[identifier] else { return (type: nil, item: nil) }
 
