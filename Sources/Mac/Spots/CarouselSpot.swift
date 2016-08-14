@@ -84,6 +84,7 @@ public class CarouselSpot: NSObject, Gridable {
 
     super.init()
 
+    registerAndPrepare()
     setupCollectionView()
     configureLayoutInsets(component)
 
