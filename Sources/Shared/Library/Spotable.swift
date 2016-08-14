@@ -258,18 +258,21 @@ public extension Spotable {
       ? Self.views.defaultIdentifier
       : viewModel.kind
 
-    guard let view = Self.views.make(kind) as? SpotConfigurable else { return }
+    switch Self.views.make(kind) {
+    case (let type, let view):
+      guard let view = view as? SpotConfigurable else { return }
+      view.configure(&viewModel)
 
-    view.configure(&viewModel)
+      if usesViewSize {
+        if viewModel.size.height == 0 {
+          viewModel.size.height = view.size.height
+        }
 
-    if usesViewSize {
-      if viewModel.size.height == 0 {
-        viewModel.size.height = view.size.height
+        if viewModel.size.width == 0 {
+          viewModel.size.width = view.size.width
+        }
       }
-
-      if viewModel.size.width == 0 {
-        viewModel.size.width = view.size.width
-      }
+    default: break
     }
 
     if index < component.items.count {
