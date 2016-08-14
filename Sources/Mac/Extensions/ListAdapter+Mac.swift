@@ -188,9 +188,9 @@ extension ListAdapter: NSTableViewDelegate {
 
   public func tableView(tableView: NSTableView, rowViewForRow row: Int) -> NSTableRowView? {
     let reuseIdentifier = spot.identifier(row)
-    let cachedView = spot.dynamicType.views.make(reuseIdentifier)
-    var view: View? = nil
+    guard let cachedView = spot.dynamicType.views.make(reuseIdentifier) else { return nil }
 
+    var view: View? = nil
     if let type = cachedView.type {
       switch type {
       case .Regular:
