@@ -34,7 +34,7 @@ class ListSpotSpec: QuickSpec {
       }
 
       describe("can be represented as dictionary") {
-        let component = Component(title: "ListSpot", kind: "list", span: 1, meta: ["headerHeight" : 44.0])
+        let component = Component(title: "ListSpot", kind: "list", span: 1, meta: [ListSpot.Key.headerHeight : 44.0])
         let listSpot = ListSpot(component: component)
 
         it ("represent ListSpot as a dictionary") {
@@ -42,7 +42,7 @@ class ListSpotSpec: QuickSpec {
           expect(component.dictionary["title"] as? String).to(equal(listSpot.dictionary["title"] as? String))
           expect(component.dictionary["kind"] as? String).to(equal(listSpot.dictionary["kind"] as? String))
           expect(component.dictionary["span"] as? Int).to(equal(listSpot.dictionary["span"] as? Int))
-          expect((component.dictionary["meta"] as! [String : AnyObject])["headerHeight"] as? CGFloat)
+          expect((component.dictionary["meta"] as! [String : AnyObject])[ListSpot.Key.headerHeight] as? CGFloat)
             .to(equal((listSpot.dictionary["meta"] as! [String : AnyObject])["headerHeight"] as? CGFloat))
         }
       }

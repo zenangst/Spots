@@ -209,7 +209,7 @@ extension ListAdapter: UITableViewDelegate {
    - Returns: Returns the `headerHeight` found in `component.meta`, otherwise 0.0.
    **/
   public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    return spot.component.meta("headerHeight", 0.0)
+    return spot.component.meta(ListSpot.Key.headerHeight, 0.0)
   }
 
   /**
@@ -244,10 +244,10 @@ extension ListAdapter: UITableViewDelegate {
    - Returns: A view object to be displayed in the header of section based on the kind of the ListSpot and registered headers.
    **/
   public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-    guard spot.component.meta("headerHeight", type: CGFloat.self) != 0.0 else { return nil }
+    guard spot.component.meta(ListSpot.Key.headerHeight, type: CGFloat.self) != 0.0 else { return nil }
 
     let view = tableView.dequeueReusableHeaderFooterViewWithIdentifier(spot.component.kind)
-    view?.height = spot.component.meta("headerHeight", 0.0)
+    view?.height = spot.component.meta(ListSpot.Key.headerHeight, 0.0)
     view?.width = spot.tableView.width
     (view as? Componentable)?.configure(spot.component)
 

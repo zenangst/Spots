@@ -4,6 +4,10 @@ import Brick
 
 public class ListSpot: NSObject, Listable {
 
+  public struct Key {
+    public static let headerHeight = "headerHeight"
+  }
+
   public static var views: Registry = Registry().then {
     $0.defaultItem = Registry.Item.classType(ListSpotCell.self)
   }
@@ -64,7 +68,7 @@ public class ListSpot: NSObject, Listable {
 
   public func setup(size: CGSize) {
     registerAndPrepare()
-    let height = component.items.reduce(component.meta("headerHeight", 0.0),
+    let height = component.items.reduce(component.meta(Key.headerHeight, 0.0),
                                         combine: { $0 + $1.size.height })
 
     tableView.frame.size = size
