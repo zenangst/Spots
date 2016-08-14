@@ -160,7 +160,7 @@ public extension SpotsProtocol {
       return }
     closure(spot: spot)
     spot.refreshIndexes()
-    spot.registerAndPrepare() // FIXME: Why call again?
+    spot.registerAndPrepare()
 
     dispatch { [weak self] in
       guard let weakSelf = self else { return }
