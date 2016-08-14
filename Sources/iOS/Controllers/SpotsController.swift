@@ -207,7 +207,7 @@ public class SpotsController: UIViewController, SpotsProtocol, UIScrollViewDeleg
       spots[index].index = index
       spot.render().optimize()
       spotsScrollView.contentView.addSubview(spot.render())
-      spot.registerAndPrepare() // FIXME: Why call again?
+      spot.registerAndPrepare()
       spot.setup(spotsScrollView.frame.size)
       spot.component.size = CGSize(
         width: view.width,

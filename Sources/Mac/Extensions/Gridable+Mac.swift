@@ -25,19 +25,6 @@ extension Gridable {
     }
   }
 
-  public func prepare() {
-    var cached: NSCollectionViewItem?
-    for (index, item) in component.items.enumerate() {
-      if let layout = layout as? NSCollectionViewFlowLayout where component.span > 0 {
-        component.items[index].size.width = collectionView.frame.width / CGFloat(component.span) - layout.sectionInset.left - layout.sectionInset.right
-      }
-
-      if let configurable = cached as? SpotConfigurable {
-        configurable.configure(&component.items[index])
-      }
-    }
-  }
-
   // MARK: - Spotable
 
   public func register() {
