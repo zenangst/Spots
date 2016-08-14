@@ -92,21 +92,19 @@ extension Gridable {
       ? Self.grids.defaultIdentifier
       : viewModel.kind
 
-    switch Self.grids.make(kind) {
-    case (let type, let view):
-      guard let view = view as? SpotConfigurable else { return }
-      view.configure(&viewModel)
+    guard let (_, collectionItem) = Self.grids.make(kind),
+      view = collectionItem as? SpotConfigurable else { return }
 
-      if usesViewSize {
-        if viewModel.size.height == 0 {
-          viewModel.size.height = view.size.height
-        }
+    view.configure(&viewModel)
 
-        if viewModel.size.width == 0 {
-          viewModel.size.width = view.size.width
-        }
+    if usesViewSize {
+      if viewModel.size.height == 0 {
+        viewModel.size.height = view.size.height
       }
-    default: break
+
+      if viewModel.size.width == 0 {
+        viewModel.size.width = view.size.width
+      }
     }
 
     if index < component.items.count {
