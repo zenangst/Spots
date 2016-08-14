@@ -50,7 +50,5 @@ public class ViewSpot: NSObject, Spotable, Viewable {
 
   // MARK: - Spotable
 
-  public func register() {
-    // TODO:
-  }
+  public func register() {}
 }
