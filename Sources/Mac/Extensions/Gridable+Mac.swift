@@ -19,12 +19,13 @@ extension Gridable {
   // MARK: - Spotable
 
   public func register() {
-
     for (identifier, item) in self.dynamicType.grids.storage {
       switch item {
       case .classType(let classType):
-          self.collectionView.registerClass(classType, forItemWithIdentifier: identifier)
-      default: break
+        self.collectionView.registerClass(classType, forItemWithIdentifier: identifier)
+      case .nib(let nib):
+        NSLog("nib: \(nib)")
+        self.collectionView.registerNib(nib, forItemWithIdentifier: identifier)
       }
     }
   }
@@ -71,10 +72,51 @@ extension Gridable {
     guard let item = item(index)
       where self.dynamicType.grids.storage[item.kind] != nil
       else {
-        return self.dynamicType.views.defaultIdentifier
+        return self.dynamicType.grids.defaultIdentifier
     }
 
     return item.kind
+  }
+
+  /**
+   Prepares a view model item before being used by the UI component
+
+   - Parameter index: The index of the view model
+   */
+  public func configureItem(index: Int, usesViewSize: Bool = false) {
+    guard let item = item(index) else { return }
+
+    var viewModel = item
+    viewModel.index = index
+
+    let kind = item.kind.isEmpty || Self.grids.storage[item.kind] == nil
+      ? Self.grids.defaultIdentifier
+      : viewModel.kind
+
+    switch Self.grids.make(kind) {
+    case (let type, let view):
+      guard let view = view as? SpotConfigurable else { return }
+      view.configure(&viewModel)
+
+      if usesViewSize {
+        if viewModel.size.height == 0 {
+          viewModel.size.height = view.size.height
+        }
+
+        if viewModel.size.width == 0 {
+          viewModel.size.width = view.size.width
+        }
+      }
+    default: break
+    }
+
+    if index < component.items.count {
+      component.items[index] = viewModel
+    }
+  }
+
+  public static func register(nib nib: Nib, identifier: StringConvertible) {
+    self.grids.storage[identifier.string] = GridRegistry.Item.nib(nib)
   }
 
   public func deselect() {
