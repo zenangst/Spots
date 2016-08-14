@@ -189,7 +189,16 @@ extension ListAdapter: NSTableViewDelegate {
   public func tableView(tableView: NSTableView, rowViewForRow row: Int) -> NSTableRowView? {
     let reuseIdentifier = spot.identifier(row)
     let cachedView = spot.dynamicType.views.make(reuseIdentifier)
-    let view = cachedView?.dynamicType.init()
+    var view: View? = nil
+
+    if let type = cachedView.type {
+      switch type {
+      case .Regular:
+        view = cachedView.view?.dynamicType.init()
+      case .Nib:
+        view = cachedView.view
+      }
+    }
 
     (view as? SpotConfigurable)?.configure(&spot.component.items[row])
     (view as? NSTableRowView)?.identifier = reuseIdentifier
