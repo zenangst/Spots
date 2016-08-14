@@ -196,7 +196,7 @@ extension ListAdapter: NSTableViewDelegate {
       case .Regular:
         view = cachedView.view?.dynamicType.init()
       case .Nib:
-        view = cachedView.view
+        view = tableView.makeViewWithIdentifier(reuseIdentifier, owner: nil)
       }
     }
 
