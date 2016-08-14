@@ -209,7 +209,6 @@ public class GridSpot: NSObject, Gridable {
     var size = size
     size.height = layout.collectionViewContentSize.height
     layout(size)
-    prepare()
   }
 
   private func configureTitleView(layoutInsets: NSEdgeInsets) {
