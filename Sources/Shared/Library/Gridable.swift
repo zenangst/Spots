@@ -6,6 +6,15 @@
 import Sugar
 import Brick
 
+public struct GridableMeta {
+  public struct Key {
+    public static let sectionInsetTop = "insetTop"
+    public static let sectionInsetLeft = "insetLeft"
+    public static let sectionInsetRight = "insetRight"
+    public static let sectionInsetBottom = "insetBottom"
+  }
+}
+
 /// Gridable is protocol for Spots that are based on UICollectionView
 public protocol Gridable: Spotable {
 

@@ -1,15 +1,6 @@
 import Cocoa
 import Brick
 
-public struct GridableMeta {
-  public struct Key {
-    public static let sectionInsetTop = "insetTop"
-    public static let sectionInsetLeft = "insetLeft"
-    public static let sectionInsetRight = "insetRight"
-    public static let sectionInsetBottom = "insetBottom"
-  }
-}
-
 extension Gridable {
 
   public var responder: NSResponder {
