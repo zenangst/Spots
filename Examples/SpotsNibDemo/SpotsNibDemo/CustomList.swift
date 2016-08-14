@@ -20,5 +20,4 @@ public class CustomList: UITableViewCell, SpotConfigurable {
     subtitleLabel?.text = item.subtitle
     toggle?.on = item.meta("toggle", false)
   }
-
 }
