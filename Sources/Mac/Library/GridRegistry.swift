@@ -56,8 +56,8 @@ public struct GridRegistry {
    - Parameter identifier: A reusable identifier for the view
    - Returns: A tuple with an optional registry type and view
    */
-  func make(identifier: String) -> (type: RegistryType?, item: NSCollectionViewItem?) {
-    guard let item = storage[identifier] else { return (type: nil, item: nil) }
+  func make(identifier: String) -> (type: RegistryType?, item: NSCollectionViewItem?)? {
+    guard let item = storage[identifier] else { return nil }
 
     let registryType: RegistryType?
     var view: NSCollectionViewItem? = nil

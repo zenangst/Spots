@@ -66,8 +66,8 @@ public class Registry {
    - Parameter identifier: A reusable identifier for the view
    - Returns: A tuple with an optional registry type and view
    */
-  func make(identifier: String) -> (type: RegistryType?, view: View?) {
-    guard let item = storage[identifier] else { return (type: nil, view: nil) }
+  func make(identifier: String) -> (type: RegistryType?, view: View?)? {
+    guard let item = storage[identifier] else { return nil }
 
     let registryType: RegistryType?
     var view: View? = nil
