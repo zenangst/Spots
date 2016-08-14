@@ -2,6 +2,10 @@ import Foundation
 import Brick
 import Sugar
 
+#if os(OSX)
+import Cocoa
+#endif
+
 public enum RegistryType: String {
   case Nib = "nib"
   case Regular = "regular"
