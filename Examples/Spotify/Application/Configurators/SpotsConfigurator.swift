@@ -49,9 +49,9 @@ struct SpotsConfigurator: Configurator {
     ListSpot.register(header: ListHeaderView.self, identifier: "list")
     ListSpot.register(defaultHeader: ListHeaderView.self)
 
-    ListSpot.register(header: PlaylistListSpotCell.self, identifier: "playlist")
-    ListSpot.register(header: PlayerListSpotCell.self, identifier: "player")
-    ListSpot.register(header: DefaultListSpotCell.self, identifier: "default")
+    ListSpot.register(view: PlaylistListSpotCell.self, identifier: "playlist")
+    ListSpot.register(view: PlayerListSpotCell.self, identifier: "player")
+    ListSpot.register(view: DefaultListSpotCell.self, identifier: "default")
     ListSpot.register(defaultView: DefaultListSpotCell.self)
     
   }
