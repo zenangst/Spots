@@ -157,7 +157,7 @@ public extension Spotable where Self : Viewable {
 
       guard case let Registry.Item.classType(classType)? = dynamic.views.storage[item.kind]
         where dynamic.views.storage.keys.contains(item.kind) else { return }
-      
+
       let view = classType.init().then {
         ($0 as? SpotConfigurable)?.configure(&component.items[index])
         guard let size = ($0 as? SpotConfigurable)?.size else { return }
