@@ -50,20 +50,31 @@ public class Registry {
     cache.removeAllObjects()
   }
 
-  func make(identifier: String) -> View? {
-    guard let item = storage[identifier] else { return nil }
+  func make(identifier: String) -> (type: RegistryType?, view: View?) {
+    guard let item = storage[identifier] else { return (type: nil, view: nil) }
 
-    if let view = cache.objectForKey(identifier) as? View {
-      return view
-    }
-
+    let registryType: RegistryType?
     var view: View? = nil
 
     switch item {
     case .classType(let classType):
+      registryType = .Regular
+      if let view = cache.objectForKey(registryType!.rawValue + identifier) as? View {
+        return (type: registryType, view: view)
+      }
+
       view = classType.init()
+
     case .nib(let nib):
+      registryType = .Nib
+      if let view = cache.objectForKey(registryType!.rawValue + identifier) as? View {
+        return (type: registryType, view: view)
+      }
       #if os(OSX)
+        var views: NSArray?
+        if nib.instantiateWithOwner(nil, topLevelObjects: &views) {
+          view = views?.filter({ $0 is NSTableRowView }).first as? View
+        }
       #else
       view = nib.instantiateWithOwner(nil, options: nil).first as? View
       #endif
@@ -73,7 +84,7 @@ public class Registry {
       cache.setObject(view, forKey: identifier)
     }
 
-    return view
+    return (type: registryType, view: view)
   }
 }
 
