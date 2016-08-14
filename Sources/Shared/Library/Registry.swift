@@ -2,6 +2,11 @@ import Foundation
 import Brick
 import Sugar
 
+public enum RegistryType: String {
+  case Nib = "nib"
+  case Regular = "regular"
+}
+
 /// A registry that is used internally when resolving kind to the corresponding spot.
 public class Registry {
 
