@@ -34,7 +34,7 @@ class ListSpotSpec: QuickSpec {
       }
 
       describe("can be represented as dictionary") {
-        let component = Component(title: "ListSpot", kind: "list", span: 1, meta: ["headerHeight" : 44.0])
+        let component = Component(title: "ListSpot", kind: "list", span: 1, meta: [ListSpot.Key.headerHeight : 44.0])
         let listSpot = ListSpot(component: component)
 
         it ("represent ListSpot as a dictionary") {
@@ -42,7 +42,7 @@ class ListSpotSpec: QuickSpec {
           expect(component.dictionary["title"] as? String).to(equal(listSpot.dictionary["title"] as? String))
           expect(component.dictionary["kind"] as? String).to(equal(listSpot.dictionary["kind"] as? String))
           expect(component.dictionary["span"] as? Int).to(equal(listSpot.dictionary["span"] as? Int))
-          expect((component.dictionary["meta"] as! [String : AnyObject])["headerHeight"] as? CGFloat)
+          expect((component.dictionary["meta"] as! [String : AnyObject])[ListSpot.Key.headerHeight] as? CGFloat)
             .to(equal((listSpot.dictionary["meta"] as! [String : AnyObject])["headerHeight"] as? CGFloat))
         }
       }
@@ -52,20 +52,20 @@ class ListSpotSpec: QuickSpec {
         let listSpot = ListSpot(component: component)
         let indexPath = NSIndexPath(forRow: 0, inSection: 0)
 
-        expect(listSpot.reuseIdentifierForItem(indexPath)).to(equal("list"))
+        it("resolve kind") {
+          expect(listSpot.identifier(indexPath)).to(equal(ListSpot.views.defaultIdentifier))
 
-        ListSpot.views["default-list"] = ListSpotCell.self
-        ListSpot.defaultKind = "default-list"
-        expect(listSpot.reuseIdentifierForItem(indexPath)).to(equal("default-list"))
+          ListSpot.views.defaultItem = Registry.Item.classType(ListSpotCell.self)
+          expect(listSpot.identifier(indexPath)).to(equal(ListSpot.views.defaultIdentifier))
 
-        ListSpot.views["custom-list"] = ListSpotCell.self
-        expect(listSpot.reuseIdentifierForItem(indexPath)).to(equal("custom-list"))
+          ListSpot.views.defaultItem = Registry.Item.classType(ListSpotCell.self)
+          expect(listSpot.identifier(indexPath)).to(equal(ListSpot.views.defaultIdentifier))
 
-        ListSpot.views["custom-item-kind"] = ListSpotCell.self
-        expect(listSpot.reuseIdentifierForItem(indexPath)).to(equal("custom-item-kind"))
+          ListSpot.views["custom-item-kind"] = Registry.Item.classType(ListSpotCell.self)
+          expect(listSpot.identifier(indexPath)).to(equal("custom-item-kind"))
 
-        ListSpot.views.storage.removeAll()
-        ListSpot.defaultKind = "list"
+          ListSpot.views.storage.removeAll()
+        }
       }
     }
   }

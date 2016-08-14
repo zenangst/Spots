@@ -171,7 +171,7 @@ extension ForYouController: SpotsScrollDelegate {
       guard let spot = self.spot else { return }
 
       spot.items.insertContentsOf(items, at: 0)
-      spot.prepare()
+      spot.registerAndPrepare()
 
       let height = spot.items[0..<items.count].reduce(0, combine: { $0 + $1.size.height })
 

@@ -162,6 +162,7 @@ public class SpotsController: UIViewController, SpotsProtocol, UIScrollViewDeleg
     setupSpots()
 
     SpotsController.configure?(container: spotsScrollView)
+    spotsScrollView.forceUpdate = true
   }
 
   /**
@@ -183,6 +184,7 @@ public class SpotsController: UIViewController, SpotsProtocol, UIScrollViewDeleg
 
     spotsScrollView.insertSubview(refreshControl, atIndex: 0)
 #endif
+    spotsScrollView.forceUpdate = true
   }
 
   /**
@@ -205,13 +207,14 @@ public class SpotsController: UIViewController, SpotsProtocol, UIScrollViewDeleg
       spots[index].index = index
       spot.render().optimize()
       spotsScrollView.contentView.addSubview(spot.render())
-      spot.prepare()
+      spot.registerAndPrepare()
       spot.setup(spotsScrollView.frame.size)
       spot.component.size = CGSize(
         width: view.width,
         height: ceil(spot.render().height))
       animated?(view: spot.render())
     }
+    spotsScrollView.forceUpdate = true
   }
 
   #if os(iOS)

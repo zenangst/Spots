@@ -22,7 +22,7 @@ PODS:
     - JWTDecode
     - Keychain
     - Sugar
-  - Spots (2.1.0):
+  - Spots (3.0.0):
     - Brick
     - Cache
     - Hue
@@ -93,7 +93,7 @@ CHECKOUT OPTIONS:
     :commit: 5273ca100e23bbcd82ff52cde30daec655ef3b75
     :git: https://github.com/hyperoslo/Malibu.git
   OhMyAuth:
-    :commit: fb4af44f38eb3d45887190d5df04a8851ce0c6a6
+    :commit: 3b61b2cc3eeebd5f3a5ff0b178d5b7aa7d0a1631
     :git: https://github.com/hyperoslo/OhMyAuth.git
   Sugar:
     :commit: e66d36a4a36b3114279e35e5b97acb464acba75f
@@ -115,7 +115,7 @@ SPEC CHECKSUMS:
   Keychain: 50cb247cab32e774422741b118af9b598a3fb5b2
   Malibu: 49454a9ce422ad8e230f4699a43d88264a4d7e06
   OhMyAuth: ce16b5e94887376934ea92a3ba252b6f79910699
-  Spots: df1baf3b762d51b1d315ca87a18791da1834053d
+  Spots: abcb0b80a250d5a67b28bd5e43d262e4b5c40c97
   Sugar: 556b623f0f8846cf08de7302701892f11d567419
   Tailor: 1f4eaf090bda57c880fbef795133a67270976b15
   When: 033104df132ebfa75f4d3a9ba3e7a9865a573a1c

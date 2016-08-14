@@ -2,14 +2,9 @@ import UIKit
 import Spots
 import Sugar
 
-public class ListHeaderView: UIView, Componentable {
+public class ListHeaderView: UITableViewHeaderFooterView, Componentable {
 
   public var defaultHeight: CGFloat = 44
-
-  lazy var label: UILabel = UILabel().then { [unowned self] in
-    $0.frame = self.frame
-    $0.font = UIFont.boldSystemFontOfSize(11)
-  }
 
   lazy var paddedStyle: NSParagraphStyle = NSMutableParagraphStyle().then {
     $0.alignment = .Left
@@ -18,9 +13,9 @@ public class ListHeaderView: UIView, Componentable {
     $0.tailIndent = -15.0
   }
 
-  public override init(frame: CGRect) {
-    super.init(frame: frame)
-    addSubview(label)
+  public override init(reuseIdentifier: String?) {
+    super.init(reuseIdentifier: reuseIdentifier)
+    contentView.backgroundColor = UIColor.blackColor()
   }
 
   public required init?(coder aDecoder: NSCoder) {
@@ -28,9 +23,13 @@ public class ListHeaderView: UIView, Componentable {
   }
 
   public func configure(component: Component) {
-    label.textColor = UIColor.grayColor()
-    label.attributedText = NSAttributedString(string: component.title.uppercaseString,
-      attributes: [NSParagraphStyleAttributeName : paddedStyle])
-    label.height = component.meta("headerHeight", 0.0)
+    textLabel?.textColor = UIColor.grayColor()
+  }
+  
+  public override func layoutSubviews() {
+    super.layoutSubviews()
+    
+    textLabel?.font = UIFont.boldSystemFontOfSize(11)
+    textLabel?.text = textLabel?.text?.uppercaseString
   }
 }

@@ -43,7 +43,7 @@ public class GridSpot: NSObject, Gridable {
     public static var sectionInsetBottom: CGFloat = 0.0
   }
 
-  public static var views = ViewRegistry()
+  public static var views = Registry()
   public static var grids = GridRegistry()
   public static var configure: ((view: NSCollectionView) -> Void)?
   public static var defaultView: View.Type = NSView.self
@@ -99,6 +99,7 @@ public class GridSpot: NSObject, Gridable {
     self.component = component
     self.layout = GridSpot.setupLayout(component)
     super.init()
+    registerAndPrepare()
     setupCollectionView()
     scrollView.addSubview(titleView)
     scrollView.addSubview(lineView)
@@ -208,7 +209,6 @@ public class GridSpot: NSObject, Gridable {
     var size = size
     size.height = layout.collectionViewContentSize.height
     layout(size)
-    prepare()
   }
 
   private func configureTitleView(layoutInsets: NSEdgeInsets) {

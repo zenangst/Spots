@@ -7,9 +7,7 @@ extension ListAdapter {
   public func append(item: ViewModel, withAnimation animation: SpotsAnimation, completion: Completion) {
     let count = spot.component.items.count
     spot.component.items.append(item)
-
-    var cached: View?
-    spot.prepareItem(item, index: count, cached: &cached)
+    spot.configureItem(count, usesViewSize: true)
 
     dispatch { [weak self] in
       guard let tableView = self?.spot.tableView else { completion?(); return }
@@ -25,10 +23,10 @@ extension ListAdapter {
 
     spot.component.items.appendContentsOf(items)
 
-    var cached: NSView?
     items.enumerate().forEach {
-      indexes.append(count + $0.index)
-      spot.prepareItem($0.element, index: count + $0.index, cached: &cached)
+      let index = count + $0.index
+      indexes.append(index)
+      spot.configureItem(index, usesViewSize: true)
     }
 
     dispatch { [weak self] in
@@ -189,9 +187,18 @@ extension ListAdapter: NSTableViewDelegate {
   }
 
   public func tableView(tableView: NSTableView, rowViewForRow row: Int) -> NSTableRowView? {
-    let reuseIdentifier = spot.reuseIdentifierForItem(row)
-    let viewClass = spot.dynamicType.views[reuseIdentifier]
-    let view = viewClass?.init()
+    let reuseIdentifier = spot.identifier(row)
+    guard let cachedView = spot.dynamicType.views.make(reuseIdentifier) else { return nil }
+
+    var view: View? = nil
+    if let type = cachedView.type {
+      switch type {
+      case .Regular:
+        view = cachedView.view?.dynamicType.init()
+      case .Nib:
+        view = tableView.makeViewWithIdentifier(reuseIdentifier, owner: nil)
+      }
+    }
 
     (view as? SpotConfigurable)?.configure(&spot.component.items[row])
     (view as? NSTableRowView)?.identifier = reuseIdentifier

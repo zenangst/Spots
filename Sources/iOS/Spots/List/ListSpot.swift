@@ -4,16 +4,19 @@ import Brick
 
 public class ListSpot: NSObject, Listable {
 
-  public static var views = ViewRegistry()
+  public struct Key {
+    public static let headerHeight = "headerHeight"
+  }
+
+  public static var views: Registry = Registry().then {
+    $0.defaultItem = Registry.Item.classType(ListSpotCell.self)
+  }
+
   public static var configure: ((view: UITableView) -> Void)?
-  public static var defaultView: UIView.Type = ListSpotCell.self
-  public static var defaultKind: StringConvertible = "list"
-  public static var headers = ViewRegistry()
+  public static var headers = Registry()
 
   public var index = 0
   public var component: Component
-  public var cachedHeaders = [String : Componentable]()
-  public var cachedCells = [String : SpotConfigurable]()
   public var configure: (SpotConfigurable -> Void)?
 
   public weak var spotsDelegate: SpotsDelegate?
@@ -33,29 +36,21 @@ public class ListSpot: NSObject, Listable {
     self.component = component
     super.init()
 
-    setupTableView()
-    prepare()
-
-    let reuseIdentifer = component.kind.isPresent ? component.kind : self.dynamicType.defaultKind
-
-    guard let headerType = ListSpot.headers[reuseIdentifer]  else { return }
-
-    let header = headerType.init(frame: CGRect(x: 0, y: 0,
-      width: UIScreen.mainScreen().bounds.width, height: component.meta("headerHeight", 0.0)))
-
-    if let configurable = header as? Componentable {
-      configurable.configure(component)
-      cachedHeaders[reuseIdentifer.string] = configurable
+    if component.kind.isEmpty {
+      self.component.kind = "list"
     }
+
+    registerAndPrepare()
+    setupTableView()
   }
 
   public convenience init(tableView: UITableView? = nil, title: String = "", kind: String? = nil) {
-    self.init(component: Component(title: title, kind: kind ?? ListSpot.defaultKind.string))
+    self.init(component: Component(title: title, kind: kind ?? "list"))
 
     self.tableView ?= tableView
 
     setupTableView()
-    prepare()
+    registerAndPrepare()
   }
 
   public convenience init(cacheKey: String, tableView: UITableView? = nil) {
@@ -66,14 +61,14 @@ public class ListSpot: NSObject, Listable {
     self.tableView ?= tableView
 
     setupTableView()
-    prepare()
+    registerAndPrepare()
   }
 
   // MARK: - Setup
 
   public func setup(size: CGSize) {
-    prepare()
-    let height = component.items.reduce(component.meta("headerHeight", 0.0),
+    registerAndPrepare()
+    let height = component.items.reduce(component.meta(Key.headerHeight, 0.0),
                                         combine: { $0 + $1.size.height })
 
     tableView.frame.size = size
@@ -88,5 +83,35 @@ public class ListSpot: NSObject, Listable {
     tableView.dataSource = self.listAdapter
     tableView.delegate = self.listAdapter
     tableView.rowHeight = UITableViewAutomaticDimension
+  }
+
+  // MARK: - Spotable
+
+  public func register() {
+    for (identifier, item) in self.dynamicType.views.storage {
+      switch item {
+      case .classType(let classType):
+        self.tableView.registerClass(classType, forCellReuseIdentifier: identifier)
+      case .nib(let nib):
+        self.tableView.registerNib(nib, forCellReuseIdentifier: identifier)
+      }
+    }
+
+    for (identifier, item) in self.dynamicType.headers.storage {
+      switch item {
+      case .classType(let classType):
+        self.tableView.registerClass(classType, forHeaderFooterViewReuseIdentifier: identifier)
+      case .nib(let nib):
+        self.tableView.registerNib(nib, forHeaderFooterViewReuseIdentifier: identifier)
+      }
+    }
+  }
+
+  public static func register(header header: View.Type, identifier: StringConvertible) {
+    self.headers.storage[identifier.string] = Registry.Item.classType(header)
+  }
+
+  public static func register(defaultHeader header: View.Type) {
+    self.headers.storage[self.views.defaultIdentifier] = Registry.Item.classType(header)
   }
 }

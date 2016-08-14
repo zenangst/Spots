@@ -8,7 +8,10 @@ import Brick
 
 public class ViewSpot: NSObject, Spotable, Viewable {
 
-  public static var views = ViewRegistry()
+  public static var views = Registry().then {
+    $0.defaultItem = Registry.Item.classType(View.self)
+  }
+
   public static var configure: ((view: View) -> Void)?
   public static var defaultView: View.Type = View.self
   public static var defaultKind: StringConvertible = "view"
@@ -44,4 +47,8 @@ public class ViewSpot: NSObject, Spotable, Viewable {
   }
 
   public func deselect() {}
+
+  // MARK: - Spotable
+
+  public func register() {}
 }

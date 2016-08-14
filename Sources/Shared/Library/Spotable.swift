@@ -10,12 +10,7 @@ import Sugar
 /// A class protocol that is used for all components inside of SpotsController
 public protocol Spotable: class {
 
-  /// A view registry that is used internally when resolving kind to the corresponding spot.
-  static var views: ViewRegistry { get }
-  /// The default view type for the spotable object
-  static var defaultView: View.Type { get set }
-  /// The default kind to fall back to if the view model kind does not exist when trying to display the spotable item
-  static var defaultKind: StringConvertible { get }
+  static var views: Registry { get set }
 
   /// A SpotsDelegate object
   weak var spotsDelegate: SpotsDelegate? { get set }
@@ -71,7 +66,7 @@ public protocol Spotable: class {
   /// Layout Spotable object using size
   func layout(size: CGSize)
   /// Perform internal preperations for a Spotable object
-  func prepare()
+  func register()
   /// Scroll to view model using predicate
   func scrollTo(@noescape includeElement: (ViewModel) -> Bool) -> CGFloat
 
@@ -145,26 +140,12 @@ public extension Spotable {
   }
 
   /**
-   A method to register and prepare a ViewModel
-
-   - Parameter register: A closure containing class type and reuse identifer
-   */
-  func registerAndPrepare(@noescape register: (classType: View.Type, withIdentifier: String) -> Void) {
-    if component.kind.isEmpty { component.kind = Self.defaultKind.string }
-
-    Self.views.storage.forEach { (reuseIdentifier: String, classType: View.Type) in
-      register(classType: classType, withIdentifier: reuseIdentifier)
+   Prepare items in component
+  */
+  func prepareItems() {
+    component.items.enumerate().forEach { (index: Int, _) in
+      configureItem(index, usesViewSize: true)
     }
-
-    if !Self.views.storage.keys.contains(component.kind) {
-      register(classType: Self.defaultView, withIdentifier: component.kind)
-    }
-
-    var cached: View?
-    component.items.enumerate().forEach { (index: Int, item: ViewModel) in
-      prepareItem(item, index: index, cached: &cached)
-    }
-    cached = nil
   }
 
   /**
@@ -199,11 +180,8 @@ public extension Spotable {
    Refreshes the indexes of all items within the component
    */
   public func refreshIndexes() {
-    dispatch(queue: .Interactive) { [weak self] in
-      guard let weakSelf = self else { return }
-      weakSelf.items.enumerate().forEach {
-        weakSelf.items[$0.index].index = $0.index
-      }
+    items.enumerate().forEach {
+      items[$0.index].index = $0.index
     }
   }
 
@@ -268,98 +246,74 @@ public extension Spotable {
   /**
    Prepares a view model item before being used by the UI component
 
-   - Parameter item: A view model
    - Parameter index: The index of the view model
-   - Parameter cached: An optional UIView, used to reduce the amount of different reusable views that should be prepared.
    */
-  public func prepareItem(item: ViewModel, index: Int, inout cached: View?) {
-    cachedViewFor(item, cache: &cached)
+  public func configureItem(index: Int, usesViewSize: Bool = false) {
+    guard let item = item(index) else { return }
 
-    component.items[index].index = index
+    var viewModel = item
+    viewModel.index = index
 
-    guard let view = cached as? SpotConfigurable else { return }
+    let kind = item.kind.isEmpty || Self.views.storage[item.kind] == nil
+      ? Self.views.defaultIdentifier
+      : viewModel.kind
 
-    view.configure(&component.items[index])
+    guard let (_, resolvedView) = Self.views.make(kind),
+      view = resolvedView as? SpotConfigurable else { return }
 
-    if component.items[index].size.height == 0 {
-      component.items[index].size.height = view.size.height
+    view.configure(&viewModel)
+
+    if usesViewSize {
+      if viewModel.size.height == 0 {
+        viewModel.size.height = view.size.height
+      }
+
+      if viewModel.size.width == 0 {
+        viewModel.size.width = view.size.width
+      }
     }
 
-    if component.items[index].size.width == 0 {
-      component.items[index].size.width = view.size.width
+    if index < component.items.count {
+        component.items[index] = viewModel
     }
-  }
-
-  /**
-   Cache view for item kind
-
-   - Parameter item: A view model
-   - Parameter cache: An optional UIView, used to reduce the amount of different reusable views that should be prepared.
-   */
-  func cachedViewFor(item: ViewModel, inout cache: View?) {
-    let reuseIdentifer = item.kind.isPresent ? item.kind : component.kind
-    let componentClass = self.dynamicType.views.storage[reuseIdentifer] ?? self.dynamicType.defaultView
-
-    if cache?.isKindOfClass(componentClass) == false { cache = nil }
-    if cache == nil { cache = componentClass.init() }
-  }
-
-  /**
-   Get reuseidentifier for the item at index path.
-   It checks if the view model kind is registered inside of the ViewRegistry,
-   otherwise it falls back to trying to resolve the component.kind to get the reuse identifier.
-   As a last result, it will return the default kind for the Spotable kind.
-
-   - Parameter indexPath: The index path of the item you are trying to resolve
-   */
-  func reuseIdentifierForItem(indexPath: NSIndexPath) -> String {
-    guard let viewModel = item(indexPath) else { return self.dynamicType.defaultKind.string }
-
-    if self.dynamicType.views.storage[viewModel.kind] != nil {
-      return viewModel.kind
-    } else if self.dynamicType.views.storage[component.kind] != nil {
-      return component.kind
-    } else {
-      return self.dynamicType.defaultKind.string
-    }
-  }
-
-  func reuseIdentifierForItem(index: Int) -> String {
-    guard let viewModel = item(index) else { return self.dynamicType.defaultKind.string }
-
-    if self.dynamicType.views.storage[viewModel.kind] != nil {
-      return viewModel.kind
-    } else if self.dynamicType.views.storage[component.kind] != nil {
-      return component.kind
-    } else {
-      return self.dynamicType.defaultKind.string
-    }
-  }
-
-  /**
-   Configure cell at index
-
-   - Parameter index:    The index of the item that should be configured
-   - Parameter cellType: The View.Type of the cell
-   - Parameter cached:   An optional cache of the SpotConfigurable object
-   - Returns: An optional instance of the SpotConfigurable object
-   */
-  func configure(itemAtIndex index: Int, ofType cellType: View.Type, cached: SpotConfigurable? = nil) -> SpotConfigurable? {
-    var instance: SpotConfigurable? = cached
-
-    if instance == nil {
-      instance = cellType.init() as? SpotConfigurable
-    }
-
-    guard let cell = instance else { return nil }
-
-    component.items[index].index = index
-    cell.configure(&component.items[index])
-
-    return cell
   }
 
   public func sizeForItemAt(indexPath: NSIndexPath) -> CGSize {
     return render().frame.size
+  }
+
+  func identifier(indexPath: NSIndexPath) -> String {
+    #if os(OSX)
+      return identifier(indexPath.item)
+    #else
+      return identifier(indexPath.row)
+    #endif
+  }
+
+  public func identifier(index: Int) -> String {
+    guard let item = item(index)
+      where self.dynamicType.views.storage[item.kind] != nil
+      else {
+        return self.dynamicType.views.defaultIdentifier
+    }
+
+    return item.kind
+  }
+
+  func registerAndPrepare() {
+    register()
+    prepareItems()
+  }
+
+  public static func register(nib nib: Nib, identifier: StringConvertible) {
+    self.views.storage[identifier.string] = Registry.Item.nib(nib)
+  }
+
+  public static func register(view view: View.Type, identifier: StringConvertible) {
+    self.views.storage[identifier.string] = Registry.Item.classType(view)
+  }
+
+  public static func register(defaultView view: View.Type) {
+    self.views.storage[self.views.defaultIdentifier] = Registry.Item.classType(view)
   }
 }

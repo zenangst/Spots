@@ -4,12 +4,12 @@ import Brick
 
 public class CarouselSpot: NSObject, Gridable {
 
-  public static var views = ViewRegistry()
-  public static var configure: ((view: UICollectionView, layout: UICollectionViewFlowLayout) -> Void)?
-  public static var defaultView: UIView.Type = CarouselSpotCell.self
-  public static var defaultKind: StringConvertible = "carousel"
+  public static var views: Registry = Registry().then {
+    $0.defaultItem = Registry.Item.classType(CarouselSpotCell.self)
+  }
 
-  public var cachedViews = [String : SpotConfigurable]()
+  public static var configure: ((view: UICollectionView, layout: UICollectionViewFlowLayout) -> Void)?
+
   public private(set) var stateCache: SpotCache?
 
   public var component: Component {
@@ -89,7 +89,7 @@ public class CarouselSpot: NSObject, Gridable {
     self.init(component: Component(stateCache.load()))
     self.stateCache = stateCache
 
-    prepare()
+    registerAndPrepare()
   }
 
   public func setup(size: CGSize) {

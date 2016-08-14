@@ -1,7 +1,7 @@
 import UIKit
 import Spots
 
-public class SearchHeaderView: UIView, Componentable {
+public class SearchHeaderView: UITableViewHeaderFooterView, Componentable {
 
   public var defaultHeight: CGFloat = 88
 
@@ -11,7 +11,7 @@ public class SearchHeaderView: UIView, Componentable {
     $0.frame.size.height = 44
   }
 
-  lazy var backgroundView: UIView = UIView(frame: self.frame).then {
+  lazy var customBackgroundView: UIView = UIView(frame: self.frame).then {
     $0.backgroundColor = UIColor.darkGrayColor().alpha(0.5)
     $0.height = 44
     $0.y = 44
@@ -34,9 +34,11 @@ public class SearchHeaderView: UIView, Componentable {
     $0.tailIndent = -15.0
   }
 
-  public override init(frame: CGRect) {
-    super.init(frame: frame)
-    [backgroundView, searchField, label].forEach { addSubview($0) }
+  public override init(reuseIdentifier: String?) {
+    super.init(reuseIdentifier: reuseIdentifier)
+    [customBackgroundView, searchField, label].forEach {
+      contentView.addSubview($0)
+    }
   }
 
   public required init?(coder aDecoder: NSCoder) {

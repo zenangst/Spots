@@ -38,8 +38,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       $0.backgroundColor = UIColor.whiteColor()
     }
 
-    ListSpot.views["feed"] = PostTableViewCell.self
-    ListSpot.views["comment"] = CommentTableViewCell.self
+    ListSpot.register(view: PostTableViewCell.self, identifier: "feed")
+    ListSpot.register(view: CommentTableViewCell.self, identifier: "comment")
 
     let feedComponent = Component(span: 1, items: FeedController.generateItems(0, to: 3))
     let feedSpot = ListSpot(component: feedComponent)

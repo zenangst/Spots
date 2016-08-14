@@ -53,20 +53,20 @@ class GridSpotSpec: QuickSpec {
         let gridSpot = GridSpot(component: component)
         let indexPath = NSIndexPath(forRow: 0, inSection: 0)
 
-        expect(gridSpot.reuseIdentifierForItem(indexPath)).to(equal("grid"))
+        it("resolve kind") {
+          expect(gridSpot.identifier(indexPath)).to(equal(GridSpot.views.defaultIdentifier))
 
-        GridSpot.views["default-grid"] = GridSpotCell.self
-        GridSpot.defaultKind = "default-grid"
-        expect(gridSpot.reuseIdentifierForItem(indexPath)).to(equal("default-grid"))
+          GridSpot.views.defaultItem = Registry.Item.classType(GridSpotCell.self)
+          expect(gridSpot.identifier(indexPath)).to(equal(GridSpot.views.defaultIdentifier))
 
-        GridSpot.views["custom-grid"] = GridSpotCell.self
-        expect(gridSpot.reuseIdentifierForItem(indexPath)).to(equal("custom-grid"))
+          GridSpot.views.defaultItem = Registry.Item.classType(GridSpotCell.self)
+          expect(gridSpot.identifier(indexPath)).to(equal(GridSpot.views.defaultIdentifier))
 
-        GridSpot.views["custom-item-kind"] = GridSpotCell.self
-        expect(gridSpot.reuseIdentifierForItem(indexPath)).to(equal("custom-item-kind"))
+          GridSpot.views["custom-item-kind"] = Registry.Item.classType(GridSpotCell.self)
+          expect(gridSpot.identifier(indexPath)).to(equal("custom-item-kind"))
 
-        GridSpot.views.storage.removeAll()
-        GridSpot.defaultKind = "grid"
+          GridSpot.views.storage.removeAll()
+        }
       }
     }
   }

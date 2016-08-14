@@ -151,11 +151,10 @@ class GridTopicCell: UICollectionViewCell, SpotConfigurable {
 }
 
 // Register spots
-CarouselSpot.views[Cell.Featured] = GridTopicCell.self
-GridSpot.views[Cell.Featured] = GridTopicCell.self
-GridSpot.views[Cell.Featured] = GridTopicCell.self
-ListSpot.headers["list"] = ListHeaderView.self
-ListSpot.defaultView = ListCell.self
+CarouselSpot.register(view: GridTopicCell.self, identifier: Cell.Featured)
+GridSpot.register(view: GridTopicCell.self, identifier: Cell.Featured)
+ListSpot.register(header: ListHeaderView.self, identifier: "list")
+ListSpot.register(defaultView: ListCell.self)
 
 // Configure spots controller
 SpotsController.configure = {

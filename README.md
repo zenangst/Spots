@@ -87,6 +87,8 @@ want to use it.
 - Cell height caching, this improves performance as each cell has its height stored as a calculated value.
 on the view model.
 - Supports multiple cell types inside the same data source, no more ugly if-statements in your implementation;
+- Soft & hard updates to UI components.
+- Supports both views made programmatically and nib-based views.
 **Spots** handles this for you by using a cell registry.
 
 ## Origin Story
