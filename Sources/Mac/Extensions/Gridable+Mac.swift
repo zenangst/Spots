@@ -24,7 +24,6 @@ extension Gridable {
       case .classType(let classType):
         self.collectionView.registerClass(classType, forItemWithIdentifier: identifier)
       case .nib(let nib):
-        NSLog("nib: \(nib)")
         self.collectionView.registerNib(nib, forItemWithIdentifier: identifier)
       }
     }
