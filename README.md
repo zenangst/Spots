@@ -2,7 +2,7 @@
 
 ## Documentation
 
-[Docs](https://hyperoslo.github.io/Spots) generated with [jazzy](https://github.com/realm/jazzy).
+[Docs](http://opensource.hyper.no/Spots/) generated with [jazzy](https://github.com/realm/jazzy).
 Hosted by [GitHub Pages](https://pages.github.com).
 
 ## Setup
