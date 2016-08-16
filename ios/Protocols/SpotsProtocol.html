@@ -1,0 +1,1981 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>SpotsProtocol Protocol Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset="utf-8">
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+
+    <a name="//apple_ref/swift/Protocol/SpotsProtocol" class="dashAnchor"></a>
+
+    <a title="SpotsProtocol Protocol Reference"></a>
+
+    <header class="header">
+      <p class="header-col header-col--primary">
+        <a class="header-link" href="../index.html">
+          Spots Docs
+        </a>
+         (52% documented)
+      </p>
+    
+        <p class="header-col header-col--secondary">
+          <a class="header-link" href="https://github.com/hyperoslo/Spots">
+            <img class="header-icon" src="../img/gh.png"/>
+            View on GitHub
+          </a>
+        </p>
+    
+    </header>
+
+    <p class="breadcrumbs">
+      <a class="breadcrumb" href="../index.html">Spots Reference</a>
+      <img class="carat" src="../img/carat.png" />
+      SpotsProtocol Protocol Reference
+    </p>
+
+    <div class="content-wrapper">
+      <nav class="navigation">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/CarouselSpot.html">CarouselSpot</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/CollectionAdapter.html">CollectionAdapter</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/GridSpot.html">GridSpot</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/GridSpot/Key.html">– Key</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/GridSpot/Default.html">– Default</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/ListAdapter.html">ListAdapter</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/ListSpot.html">ListSpot</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/ListSpot/Key.html">– Key</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/ListSpotCell.html">ListSpotCell</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/Registry.html">Registry</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/Registry/Item.html">– Item</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/SpotFactory.html">SpotFactory</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/SpotsContentView.html">SpotsContentView</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/SpotsController.html">SpotsController</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/SpotsScrollView.html">SpotsScrollView</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/ViewSpot.html">ViewSpot</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Enums.html">Enums</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/RegistryType.html">RegistryType</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/SpotsAnimation.html">SpotsAnimation</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/UICollectionView.html">UICollectionView</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/UITableView.html">UITableView</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Functions.html">Functions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:ZF5Spotsoi2neFTGSaVS_9Component_GSaS0___Sb">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:ZF5Spotsoi2neFTVS_9ComponentS0__Sb">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:ZF5Spotsoi3neeFTVS_9ComponentS0__Sb">!==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:ZF5Spotsoi3neeFTGSaVS_9Component_GSaS0___Sb">!==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:ZF5Spotsoi2eeFTVS_9ComponentS0__Sb">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:ZF5Spotsoi2eeFTGSaVS_9Component_GSaS0___Sb">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:ZF5Spotsoi3eeeFTGSaVS_9Component_GSaS0___Sb">===(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:ZF5Spotsoi3eeeFTVS_9ComponentS0__Sb">===(_:_:)</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/Componentable.html">Componentable</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/Gridable.html">Gridable</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/Listable.html">Listable</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/SpotAdapter.html">SpotAdapter</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/SpotConfigurable.html">SpotConfigurable</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/Spotable.html">Spotable</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/SpotsCarouselScrollDelegate.html">SpotsCarouselScrollDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/SpotsDelegate.html">SpotsDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/SpotsProtocol.html">SpotsProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/SpotsRefreshDelegate.html">SpotsRefreshDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/SpotsScrollDelegate.html">SpotsScrollDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/Viewable.html">Viewable</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Structs.html">Structs</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/Component.html">Component</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/Component/Key.html">– Key</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/Component/Kind.html">– Kind</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/GridableMeta.html">GridableMeta</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/GridableMeta/Key.html">– Key</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/Parser.html">Parser</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/SpotCache.html">SpotCache</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Subscripts.html">Subscripts</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Subscripts.html#/s:ie5Spots0_Rxs8Hashablexs24StringLiteralConvertiblerVs10Dictionary9subscriptFOVS_9Component3KeyGSqq__">subscript(_:)</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+
+        <section class="section">
+          <div class="section-content">
+            <h1>SpotsProtocol</h1>
+            <p>Undocumented</p>
+
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-content">
+            <div class="task-group">
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vP5Spots13SpotsProtocol10stateCacheGSqVS_9SpotCache_"></a>
+                    <a name="//apple_ref/swift/Property/stateCache" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vP5Spots13SpotsProtocol10stateCacheGSqVS_9SpotCache_">stateCache</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A SpotCache object</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">stateCache</span><span class="p">:</span> <span class="kt"><a href="../Structs/SpotCache.html">SpotCache</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vP5Spots13SpotsProtocol15spotsScrollViewCS_15SpotsScrollView"></a>
+                    <a name="//apple_ref/swift/Property/spotsScrollView" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vP5Spots13SpotsProtocol15spotsScrollViewCS_15SpotsScrollView">spotsScrollView</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The internal SpotsScrollView</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">spotsScrollView</span><span class="p">:</span> <span class="kt"><a href="../Classes/SpotsScrollView.html">SpotsScrollView</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vP5Spots13SpotsProtocol13spotsDelegateGSqPS_13SpotsDelegate__"></a>
+                    <a name="//apple_ref/swift/Property/spotsDelegate" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vP5Spots13SpotsProtocol13spotsDelegateGSqPS_13SpotsDelegate__">spotsDelegate</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A delegate that conforms to SpotsDelegate</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">spotsDelegate</span><span class="p">:</span> <span class="kt"><a href="../Protocols/SpotsDelegate.html">SpotsDelegate</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vP5Spots13SpotsProtocol5spotsGSaPS_8Spotable__"></a>
+                    <a name="//apple_ref/swift/Property/spots" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vP5Spots13SpotsProtocol5spotsGSaPS_8Spotable__">spots</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A collection of Spotable objects</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">spots</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Protocols/Spotable.html">Spotable</a></span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vP5Spots13SpotsProtocol16refreshPositionsGSaV12CoreGraphics7CGFloat_"></a>
+                    <a name="//apple_ref/swift/Property/refreshPositions" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vP5Spots13SpotsProtocol16refreshPositionsGSaV12CoreGraphics7CGFloat_">refreshPositions</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>An array of refresh position to avoid calling multiple refreshes</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">refreshPositions</span><span class="p">:</span> <span class="p">[</span><span class="kt">CGFloat</span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/"></a>
+                    <a name="//apple_ref/swift/Property/view" class="dashAnchor"></a>
+                    <a class="token" href="#/">view</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vP5Spots13SpotsProtocol4viewGSQCSo6UIView_"></a>
+                    <a name="//apple_ref/swift/Property/view" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vP5Spots13SpotsProtocol4viewGSQCSo6UIView_">view</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vP5Spots13SpotsProtocol4spotGSqPS_8Spotable__"></a>
+                    <a name="//apple_ref/swift/Property/spot" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vP5Spots13SpotsProtocol4spotGSqPS_8Spotable__">spot</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vP5Spots13SpotsProtocol10dictionaryERR"></a>
+                    <a name="//apple_ref/swift/Property/dictionary" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vP5Spots13SpotsProtocol10dictionaryERR">dictionary</a>
+                    </code>
+                      <span class="declaration-note">
+                        Default implementation
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A dictionary representation of the controller</p>
+
+                      </div>
+                      <h4>Default Implementation</h4>
+                      <div class="default_impl abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">dictionary</span><span class="p">:</span> <span class="kt">JSONDictionary</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vP5Spots13SpotsProtocol20spotsRefreshDelegateGSqPS_20SpotsRefreshDelegate__"></a>
+                    <a name="//apple_ref/swift/Property/spotsRefreshDelegate" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vP5Spots13SpotsProtocol20spotsRefreshDelegateGSqPS_20SpotsRefreshDelegate__">spotsRefreshDelegate</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/"></a>
+                    <a name="//apple_ref/swift/Property/fileQueue" class="dashAnchor"></a>
+                    <a class="token" href="#/">fileQueue</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/"></a>
+                    <a name="//apple_ref/swift/Property/source" class="dashAnchor"></a>
+                    <a class="token" href="#/">source</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FP5Spots13SpotsProtocol10setupSpotsFGSqFT4viewCSo6UIView_T__T_"></a>
+                    <a name="//apple_ref/swift/Method/setupSpots(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FP5Spots13SpotsProtocol10setupSpotsFGSqFT4viewCSo6UIView_T__T_">setupSpots(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FP5Spots13SpotsProtocol4spoturFTSiMqd___GSqqd___"></a>
+                    <a name="//apple_ref/swift/Method/spot(_:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FP5Spots13SpotsProtocol4spoturFTSiMqd___GSqqd___">spot(_:_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FP5Spots13SpotsProtocol4spotFFT5indexSi4spotPS_8Spotable__SbGSqPS1___"></a>
+                    <a name="//apple_ref/swift/Method/spot(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FP5Spots13SpotsProtocol4spotFFT5indexSi4spotPS_8Spotable__SbGSqPS1___">spot(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/"></a>
+                    <a name="//apple_ref/swift/Method/init(spots:backgroundType:)" class="dashAnchor"></a>
+                    <a class="token" href="#/">init(spots:backgroundType:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FP5Spots13SpotsProtocolcFT5spotsGSaPS_8Spotable___x"></a>
+                    <a name="//apple_ref/swift/Method/init(spots:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FP5Spots13SpotsProtocolcFT5spotsGSaPS_8Spotable___x">init(spots:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FE5SpotsPS_13SpotsProtocol10dictionaryERR"></a>
+                    <a name="//apple_ref/swift/Method/dictionary(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FE5SpotsPS_13SpotsProtocol10dictionaryERR">dictionary(_:)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FE5SpotsPS_13SpotsProtocol6filterFFPS_8Spotable_SbGSaPS1___"></a>
+                    <a name="//apple_ref/swift/Method/filter(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FE5SpotsPS_13SpotsProtocol6filterFFPS_8Spotable_SbGSaPS1___">filter(_:)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter includeElement: A filter predicate to find a spot
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">filter</span><span class="p">(</span><span class="kd">@noescape</span> <span class="nv">includeElement</span><span class="p">:</span> <span class="p">(</span><span class="kt"><a href="../Protocols/Spotable.html">Spotable</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt"><a href="../Protocols/Spotable.html">Spotable</a></span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>includeElement</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A filter predicate to find a spot</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FE5SpotsPS_13SpotsProtocol6reloadFTSb13withAnimationOS_14SpotsAnimation10completionGSqFT_T___T_"></a>
+                    <a name="//apple_ref/swift/Method/reload(_:withAnimation:completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FE5SpotsPS_13SpotsProtocol6reloadFTSb13withAnimationOS_14SpotsAnimation10completionGSqFT_T___T_">reload(_:withAnimation:completion:)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter completion: A closure that will be run after reload has been performed on all spots
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">reload</span><span class="p">(</span><span class="nv">animated</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">true</span><span class="p">,</span> <span class="n">withAnimation</span> <span class="nv">animation</span><span class="p">:</span> <span class="kt"><a href="../Enums/SpotsAnimation.html">SpotsAnimation</a></span> <span class="o">=</span> <span class="o">.</span><span class="kt">Automatic</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kt">Completion</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A closure that will be run after reload has been performed on all spots</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FE5SpotsPS_13SpotsProtocol14reloadIfNeededFTGVs10DictionarySSPs9AnyObject__7compareFT3lhsGSaVS_9Component_3rhsGSaS3___Sb8animatedGSqFT4viewCSo6UIView_T__7closureGSqFT_T___T_"></a>
+                    <a name="//apple_ref/swift/Method/reloadIfNeeded(_:compare:animated:closure:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FE5SpotsPS_13SpotsProtocol14reloadIfNeededFTGVs10DictionarySSPs9AnyObject__7compareFT3lhsGSaVS_9Component_3rhsGSaS3___Sb8animatedGSqFT4viewCSo6UIView_T__7closureGSqFT_T___T_">reloadIfNeeded(_:compare:animated:closure:)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter json: A JSON dictionary that gets parsed into UI elements
+
+</div>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter completion: A closure that will be run after reload has been performed on all spots
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">reloadIfNeeded</span><span class="p">(</span><span class="nv">json</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span> <span class="p">:</span> <span class="kt">AnyObject</span><span class="p">],</span>
+                             <span class="nv">compare</span><span class="p">:</span> <span class="p">((</span><span class="nv">lhs</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Structs/Component.html">Component</a></span><span class="p">],</span> <span class="nv">rhs</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Structs/Component.html">Component</a></span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kt">Bool</span><span class="p">)</span> <span class="o">=</span> <span class="p">{</span> <span class="n">lhs</span><span class="p">,</span> <span class="n">rhs</span> <span class="k">in</span> <span class="k">return</span> <span class="n">lhs</span> <span class="o">!=</span> <span class="n">rhs</span> <span class="p">},</span>
+                             <span class="nv">animated</span><span class="p">:</span> <span class="p">((</span><span class="nv">view</span><span class="p">:</span> <span class="kt">View</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+                             <span class="nv">closure</span><span class="p">:</span> <span class="kt">Completion</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>json</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A JSON dictionary that gets parsed into UI elements</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A closure that will be run after reload has been performed on all spots</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FE5SpotsPS_13SpotsProtocol6reloadFTGVs10DictionarySSPs9AnyObject__8animatedGSqFT4viewCSo6UIView_T__7closureGSqFT_T___T_"></a>
+                    <a name="//apple_ref/swift/Method/reload(_:animated:closure:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FE5SpotsPS_13SpotsProtocol6reloadFTGVs10DictionarySSPs9AnyObject__8animatedGSqFT4viewCSo6UIView_T__7closureGSqFT_T___T_">reload(_:animated:closure:)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter json: A JSON dictionary that gets parsed into UI elements
+
+</div>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter completion: A closure that will be run after reload has been performed on all spots
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">reload</span><span class="p">(</span><span class="nv">json</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span> <span class="p">:</span> <span class="kt">AnyObject</span><span class="p">],</span> <span class="nv">animated</span><span class="p">:</span> <span class="p">((</span><span class="nv">view</span><span class="p">:</span> <span class="kt">View</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">closure</span><span class="p">:</span> <span class="kt">Completion</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>json</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A JSON dictionary that gets parsed into UI elements</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A closure that will be run after reload has been performed on all spots</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FE5SpotsPS_13SpotsProtocol6updateFT11spotAtIndexSi13withAnimationOS_14SpotsAnimation14withCompletionGSqFT_T__FT4spotPS_8Spotable__T__T_"></a>
+                    <a name="//apple_ref/swift/Method/update(spotAtIndex:withAnimation:withCompletion:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FE5SpotsPS_13SpotsProtocol6updateFT11spotAtIndexSi13withAnimationOS_14SpotsAnimation14withCompletionGSqFT_T__FT4spotPS_8Spotable__T__T_">update(spotAtIndex:withAnimation:withCompletion:_:)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter spotAtIndex: The index of the spot that you want to perform updates on
+
+</div>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter animated: Perform reload animation
+
+</div>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter closure: A transform closure to perform the proper modification to the target spot before updating the internals
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">update</span><span class="p">(</span><span class="n">spotAtIndex</span> <span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">withAnimation</span> <span class="nv">animation</span><span class="p">:</span> <span class="kt"><a href="../Enums/SpotsAnimation.html">SpotsAnimation</a></span> <span class="o">=</span> <span class="o">.</span><span class="kt">Automatic</span><span class="p">,</span> <span class="n">withCompletion</span> <span class="nv">completion</span><span class="p">:</span> <span class="kt">Completion</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="kd">@noescape</span> <span class="n">_</span> <span class="nv">closure</span><span class="p">:</span> <span class="p">(</span><span class="nv">spot</span><span class="p">:</span> <span class="kt"><a href="../Protocols/Spotable.html">Spotable</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>spotAtIndex</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The index of the spot that you want to perform updates on</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>animated</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Perform reload animation</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>closure</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A transform closure to perform the proper modification to the target spot before updating the internals</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FE5SpotsPS_13SpotsProtocol14updateIfNeededERR"></a>
+                    <a name="//apple_ref/swift/Method/updateIfNeeded(spotAtIndex:items:withAnimation:completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FE5SpotsPS_13SpotsProtocol14updateIfNeededERR">updateIfNeeded(spotAtIndex:items:withAnimation:completion:)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Updates spot only if the passed view models are not the same with the current ones.
+- Parameter spotAtIndex: The index of the spot that you want to perform updates on
+- Parameter items: An array of view models</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">updateIfNeeded</span><span class="p">(</span><span class="n">spotAtIndex</span> <span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">items</span><span class="p">:</span> <span class="p">[</span><span class="kt">ViewModel</span><span class="p">],</span> <span class="n">withAnimation</span> <span class="nv">animation</span><span class="p">:</span> <span class="kt"><a href="../Enums/SpotsAnimation.html">SpotsAnimation</a></span> <span class="o">=</span> <span class="o">.</span><span class="kt">Automatic</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kt">Completion</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>spotAtIndex</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The index of the spot that you want to perform updates on</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>items</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An array of view models</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FE5SpotsPS_13SpotsProtocol6appendERR"></a>
+                    <a name="//apple_ref/swift/Method/append(_:spotIndex:withAnimation:completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FE5SpotsPS_13SpotsProtocol6appendERR">append(_:spotIndex:withAnimation:completion:)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter item: The view model that you want to append
+
+</div>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter spotIndex: The index of the spot that you want to append to, defaults to 0
+
+</div>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter closure: A completion closure that will run after the spot has performed updates internally
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">append</span><span class="p">(</span><span class="nv">item</span><span class="p">:</span> <span class="kt">ViewModel</span><span class="p">,</span> <span class="nv">spotIndex</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">withAnimation</span> <span class="nv">animation</span><span class="p">:</span> <span class="kt"><a href="../Enums/SpotsAnimation.html">SpotsAnimation</a></span> <span class="o">=</span> <span class="o">.</span><span class="kt">None</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kt">Completion</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>item</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The view model that you want to append</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>spotIndex</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The index of the spot that you want to append to, defaults to 0</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>closure</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A completion closure that will run after the spot has performed updates internally</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FE5SpotsPS_13SpotsProtocol7prependERR"></a>
+                    <a name="//apple_ref/swift/Method/prepend(_:spotIndex:withAnimation:completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FE5SpotsPS_13SpotsProtocol7prependERR">prepend(_:spotIndex:withAnimation:completion:)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter items: A collection of view models
+
+</div>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter spotIndex: The index of the spot that you want to prepend to, defaults to 0
+
+</div>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter closure: A completion closure that will run after the spot has performed updates internally
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">prepend</span><span class="p">(</span><span class="nv">items</span><span class="p">:</span> <span class="p">[</span><span class="kt">ViewModel</span><span class="p">],</span> <span class="nv">spotIndex</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">withAnimation</span> <span class="nv">animation</span><span class="p">:</span> <span class="kt"><a href="../Enums/SpotsAnimation.html">SpotsAnimation</a></span> <span class="o">=</span> <span class="o">.</span><span class="kt">None</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kt">Completion</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>items</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A collection of view models</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>spotIndex</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The index of the spot that you want to prepend to, defaults to 0</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>closure</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A completion closure that will run after the spot has performed updates internally</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FE5SpotsPS_13SpotsProtocol6insertERR"></a>
+                    <a name="//apple_ref/swift/Method/insert(_:index:spotIndex:withAnimation:completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FE5SpotsPS_13SpotsProtocol6insertERR">insert(_:index:spotIndex:withAnimation:completion:)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter item: The view model that you want to insert
+
+</div>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter index: The index that you want to insert the view model at
+
+</div>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter spotIndex: The index of the spot that you want to insert into
+
+</div>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter closure: A completion closure that will run after the spot has performed updates internally
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">insert</span><span class="p">(</span><span class="nv">item</span><span class="p">:</span> <span class="kt">ViewModel</span><span class="p">,</span> <span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">spotIndex</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="n">withAnimation</span> <span class="nv">animation</span><span class="p">:</span> <span class="kt"><a href="../Enums/SpotsAnimation.html">SpotsAnimation</a></span> <span class="o">=</span> <span class="o">.</span><span class="kt">None</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kt">Completion</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>item</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The view model that you want to insert</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>index</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The index that you want to insert the view model at</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>spotIndex</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The index of the spot that you want to insert into</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>closure</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A completion closure that will run after the spot has performed updates internally</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FE5SpotsPS_13SpotsProtocol6updateERR"></a>
+                    <a name="//apple_ref/swift/Method/update(_:index:spotIndex:withAnimation:completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FE5SpotsPS_13SpotsProtocol6updateERR">update(_:index:spotIndex:withAnimation:completion:)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter item: The view model that you want to update
+
+</div>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter index: The index that you want to insert the view model at
+
+</div>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter spotIndex: The index of the spot that you want to update into
+
+</div>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter closure: A completion closure that will run after the spot has performed updates internally
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">update</span><span class="p">(</span><span class="nv">item</span><span class="p">:</span> <span class="kt">ViewModel</span><span class="p">,</span> <span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">spotIndex</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="n">withAnimation</span> <span class="nv">animation</span><span class="p">:</span> <span class="kt"><a href="../Enums/SpotsAnimation.html">SpotsAnimation</a></span> <span class="o">=</span> <span class="o">.</span><span class="kt">None</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kt">Completion</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>item</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The view model that you want to update</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>index</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The index that you want to insert the view model at</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>spotIndex</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The index of the spot that you want to update into</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>closure</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A completion closure that will run after the spot has performed updates internally</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FE5SpotsPS_13SpotsProtocol6updateFT7indexesGSaSi_9spotIndexSi13withAnimationOS_14SpotsAnimation10completionGSqFT_T___T_"></a>
+                    <a name="//apple_ref/swift/Method/update(indexes:spotIndex:withAnimation:completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FE5SpotsPS_13SpotsProtocol6updateFT7indexesGSaSi_9spotIndexSi13withAnimationOS_14SpotsAnimation10completionGSqFT_T___T_">update(indexes:spotIndex:withAnimation:completion:)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter indexes: An integer array of indexes that you want to update
+
+</div>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter spotIndex: The index of the spot that you want to update into
+
+</div>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter animated: Perform reload animation
+
+</div>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter closure: A completion closure that will run after the spot has performed updates internally
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">update</span><span class="p">(</span><span class="n">indexes</span> <span class="nv">indexes</span><span class="p">:</span> <span class="p">[</span><span class="kt">Int</span><span class="p">],</span> <span class="nv">spotIndex</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">withAnimation</span> <span class="nv">animation</span><span class="p">:</span> <span class="kt"><a href="../Enums/SpotsAnimation.html">SpotsAnimation</a></span> <span class="o">=</span> <span class="o">.</span><span class="kt">Automatic</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kt">Completion</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>indexes</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An integer array of indexes that you want to update</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>spotIndex</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The index of the spot that you want to update into</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>animated</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Perform reload animation</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>closure</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A completion closure that will run after the spot has performed updates internally</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FE5SpotsPS_13SpotsProtocol6deleteFTSi9spotIndexSi13withAnimationOS_14SpotsAnimation10completionGSqFT_T___T_"></a>
+                    <a name="//apple_ref/swift/Method/delete(_:spotIndex:withAnimation:completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FE5SpotsPS_13SpotsProtocol6deleteFTSi9spotIndexSi13withAnimationOS_14SpotsAnimation10completionGSqFT_T___T_">delete(_:spotIndex:withAnimation:completion:)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter index: The index of the view model that you want to remove
+
+</div>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter spotIndex: The index of the spot that you want to remove into
+
+</div>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter closure: A completion closure that will run after the spot has performed updates internally
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">delete</span><span class="p">(</span><span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="nv">spotIndex</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">withAnimation</span> <span class="nv">animation</span><span class="p">:</span> <span class="kt"><a href="../Enums/SpotsAnimation.html">SpotsAnimation</a></span> <span class="o">=</span> <span class="o">.</span><span class="kt">None</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kt">Completion</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>index</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The index of the view model that you want to remove</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>spotIndex</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The index of the spot that you want to remove into</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>closure</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A completion closure that will run after the spot has performed updates internally</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FE5SpotsPS_13SpotsProtocol6deleteFT7indexesGSaSi_9spotIndexSi13withAnimationOS_14SpotsAnimation10completionGSqFT_T___T_"></a>
+                    <a name="//apple_ref/swift/Method/delete(indexes:spotIndex:withAnimation:completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FE5SpotsPS_13SpotsProtocol6deleteFT7indexesGSaSi_9spotIndexSi13withAnimationOS_14SpotsAnimation10completionGSqFT_T___T_">delete(indexes:spotIndex:withAnimation:completion:)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter indexes: A collection of indexes for view models that you want to remove
+
+</div>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter spotIndex: The index of the spot that you want to remove into
+
+</div>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter closure: A completion closure that will run after the spot has performed updates internally
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">delete</span><span class="p">(</span><span class="n">indexes</span> <span class="nv">indexes</span><span class="p">:</span> <span class="p">[</span><span class="kt">Int</span><span class="p">],</span> <span class="nv">spotIndex</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">withAnimation</span> <span class="nv">animation</span><span class="p">:</span> <span class="kt"><a href="../Enums/SpotsAnimation.html">SpotsAnimation</a></span> <span class="o">=</span> <span class="o">.</span><span class="kt">None</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kt">Completion</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>indexes</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A collection of indexes for view models that you want to remove</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>spotIndex</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The index of the spot that you want to remove into</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>closure</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A completion closure that will run after the spot has performed updates internally</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FE5SpotsPS_13SpotsProtocol12refreshSpotsFCSo16UIRefreshControlT_"></a>
+                    <a name="//apple_ref/swift/Method/refreshSpots(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FE5SpotsPS_13SpotsProtocol12refreshSpotsFCSo16UIRefreshControlT_">refreshSpots(_:)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FE5SpotsPS_13SpotsProtocol8scrollToERR"></a>
+                    <a name="//apple_ref/swift/Method/scrollTo(spotIndex:includeElement:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FE5SpotsPS_13SpotsProtocol8scrollToERR">scrollTo(spotIndex:includeElement:)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter index: The index of the spot that you want to scroll
+
+</div>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter includeElement: A filter predicate to find a view model
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">scrollTo</span><span class="p">(</span><span class="n">spotIndex</span> <span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="kd">@noescape</span> <span class="nv">includeElement</span><span class="p">:</span> <span class="p">(</span><span class="kt">ViewModel</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>index</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The index of the spot that you want to scroll</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>includeElement</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A filter predicate to find a view model</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FE5SpotsPS_13SpotsProtocol14scrollToBottomFSbT_"></a>
+                    <a name="//apple_ref/swift/Method/scrollToBottom(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FE5SpotsPS_13SpotsProtocol14scrollToBottomFSbT_">scrollToBottom(_:)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter animated: A boolean value to determine if you want to perform the scrolling with or without animation
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">scrollToBottom</span><span class="p">(</span><span class="nv">animated</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>animated</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A boolean value to determine if you want to perform the scrolling with or without animation</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FE5SpotsPS_13SpotsProtocol5cacheFT5itemsGSqSi__T_"></a>
+                    <a name="//apple_ref/swift/Method/cache(items:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FE5SpotsPS_13SpotsProtocol5cacheFT5itemsGSqSi__T_">cache(items:)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Caches the current state of the spot controller</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">cache</span><span class="p">(</span><span class="n">items</span> <span class="nv">items</span><span class="p">:</span> <span class="kt">Int</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:ZFE5SpotsPS_13SpotsProtocol10clearCacheFT_T_"></a>
+                    <a name="//apple_ref/swift/Method/clearCache()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:ZFE5SpotsPS_13SpotsProtocol10clearCacheFT_T_">clearCache()</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Clear Spots cache</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">clearCache</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+      </article>
+    </div>
+    <section class="footer">
+      <p>&copy; 2016 <a class="link" href="http://www.hyper.no" target="_blank" rel="external">Hyper Interaktiv AS</a>. All rights reserved. (Last updated: 2016-08-16)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+    </section>
+  </body>
+</div>
+</html>

@@ -4,6 +4,7 @@ generate() {
   echo "Generating..."
 
   jazzy \
+    --clean \
     --author 'Hyper Interaktiv AS' \
     --author_url 'http://www.hyper.no' \
     --github_url 'https://github.com/hyperoslo/Spots' \
@@ -21,4 +22,4 @@ generate() {
 
 git submodule update --remote
 generate ios Mac Spots-iOS
-generate 'mac' 'iOS' 'Spots-Mac'
+generate mac iOS Spots-Mac
