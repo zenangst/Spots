@@ -7,8 +7,10 @@
 
       if (href.endsWith('index.html')) {
         window.location.href = href.replace('index.html', 'ios/index.html');
-      } else {
+      } else if (href.endsWith('/')) {
         window.location.href = href + 'ios/index.html';
+      } else {
+        window.location.href = href + '/ios/index.html';
       }
     </script>
   </head>
