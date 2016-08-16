@@ -1,0 +1,3 @@
+[submodule "Spots"]
+	path = Spots
+	url = https://github.com/hyperoslo/Spots
