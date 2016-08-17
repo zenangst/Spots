@@ -161,9 +161,14 @@ public extension SpotsProtocol {
     closure(spot: spot)
     spot.refreshIndexes()
     spot.registerAndPrepare()
+    let spotHeight = spot.spotHeight()
 
     dispatch { [weak self] in
       guard let weakSelf = self else { return }
+
+      #if !os(OSX)
+      if animation != .None { spot.render().layer.frame.size.height = spotHeight }
+      #endif
 
       weakSelf.spot(index, Spotable.self)?.reload(nil, withAnimation: animation) {
         completion?()
