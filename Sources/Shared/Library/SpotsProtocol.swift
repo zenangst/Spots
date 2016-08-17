@@ -166,8 +166,7 @@ public extension SpotsProtocol {
     dispatch { [weak self] in
       guard let weakSelf = self else { return }
 
-      #if os(OSX)
-      #else
+      #if !os(OSX)
       if animation != .None { spot.render().layer.frame.size.height = spotHeight }
       #endif
 
