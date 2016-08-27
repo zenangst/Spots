@@ -4,6 +4,20 @@ import Brick
 
 public class CarouselSpot: NSObject, Gridable {
 
+  public struct Key {
+    public static let minimumInteritemSpacing = "item-spacing"
+    public static let minimumLineSpacing = "line-spacing"
+  }
+
+  public struct Default {
+    public static var sectionInsetTop: CGFloat = 0.0
+    public static var sectionInsetLeft: CGFloat = 0.0
+    public static var sectionInsetRight: CGFloat = 0.0
+    public static var sectionInsetBottom: CGFloat = 0.0
+    public static var minimumInteritemSpacing: CGFloat = 0.0
+    public static var minimumLineSpacing: CGFloat = 0.0
+  }
+
   public static var views: Registry = Registry().then {
     $0.defaultItem = Registry.Item.classType(CarouselSpotCell.self)
   }
