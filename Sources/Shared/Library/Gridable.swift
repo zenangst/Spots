@@ -74,8 +74,6 @@ public extension Spotable where Self : Gridable {
   public func layout(size: CGSize) {
     layout.invalidateLayout()
     collectionView.frame.size.width = size.width
-    guard let componentSize = component.size else { return }
-    collectionView.frame.size.height = componentSize.height
   }
 
   public func prepareItems() {
