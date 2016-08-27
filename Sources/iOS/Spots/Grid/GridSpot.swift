@@ -42,6 +42,8 @@ public class GridSpot: NSObject, Gridable {
 
   public static var configure: ((view: UICollectionView, layout: UICollectionViewFlowLayout) -> Void)?
 
+  public static var headers = Registry()
+
   public var component: Component
   public var index = 0
   public var configure: (SpotConfigurable -> Void)?
