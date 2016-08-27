@@ -53,7 +53,7 @@ public extension Spotable where Self : Gridable {
   }
   #else
   public func render() -> ScrollView {
-  return collectionView
+    return collectionView
   }
   #endif
 
