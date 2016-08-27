@@ -195,14 +195,29 @@ public class CollectionAdapter: NSObject, SpotAdapter {
    - Parameter completion: A completion closure that is executed in the main queue when the view model has been removed
    */
   public func update(item: ViewModel, index: Int, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
-    spot.items[index] = item
 
+    let oldItem = spot.items[index]
+
+    spot.items[index] = item
     spot.configureItem(index)
 
-    dispatch { [weak self] in
-      guard let weakSelf = self else { return }
-      weakSelf.spot.collectionView.reload([index], completion: completion)
+    let newItem = spot.items[index]
+    let indexPath = NSIndexPath(forItem: index, inSection: 0)
+
+    if newItem.kind != oldItem.kind || newItem.size.height != oldItem.size.height {
+      if let cell = spot.collectionView.cellForItemAtIndexPath(indexPath) as? SpotConfigurable {
+        spot.collectionView.performBatchUpdates({
+          }, completion: { (_) in
+            cell.configure(&self.spot.items[index])
+        })
+      } else {
+        spot.collectionView.reload([index], section: 0)
+      }
+    } else if let cell = spot.collectionView.cellForItemAtIndexPath(indexPath) as? SpotConfigurable {
+      cell.configure(&spot.items[index])
     }
+
+    completion?()
   }
 
   /**
