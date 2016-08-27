@@ -17,6 +17,7 @@ public struct Component: Mappable {
   public enum Key: String {
     case Index
     case Title
+    case Header
     case Kind
     case Meta
     case Span
@@ -47,6 +48,8 @@ public struct Component: Mappable {
   /// Determines which spotable component that should be used
   /// Default kinds are; list, grid and carousel
   public var kind = ""
+  /// The header identifier
+  public var header = ""
   /// Configures the span that should be used for items in one row
   /// Used by gridable components
   public var span: CGFloat = 0
@@ -82,6 +85,7 @@ public struct Component: Mappable {
       Key.Index.string : index,
       Key.Title.string : title,
       Key.Kind.string : kind,
+      Key.Header.string : header,
       Key.Span.string : span,
       Key.Items.string: JSONItems,
       Key.Size.string : [
@@ -102,6 +106,7 @@ public struct Component: Mappable {
   public init(_ map: JSONDictionary) {
     title <- map.property(.Title)
     kind  <- map.property(.Kind)
+    header  <- map.property(.Header)
     span  <- map.property(.Span)
     items <- map.relations(.Items)
     meta  <- map.property(.Meta)
@@ -121,9 +126,10 @@ public struct Component: Mappable {
    - Parameter items: A collection of view models
    - Parameter meta: A key-value dictionary for any additional information
    */
-  public init(title: String = "", kind: String = "", span: CGFloat = 0, items: [ViewModel] = [], meta: [String : AnyObject] = [:]) {
+  public init(title: String = "", header: String = "", kind: String = "", span: CGFloat = 0, items: [ViewModel] = [], meta: [String : AnyObject] = [:]) {
     self.title = title
     self.kind = kind
+    self.header = header
     self.span = span
     self.items = items
     self.meta = meta
