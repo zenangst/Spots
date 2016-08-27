@@ -23,6 +23,10 @@ public protocol Gridable: Spotable {
   /// The collection view object managed by this gridable object.
   var collectionView: CollectionView { get }
 
+  #if !os(OSX)
+  static var headers: Registry { get set }
+  #endif
+
   /**
    Asks the data source for the size of an item in a particular location.
 
