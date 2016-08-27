@@ -69,6 +69,18 @@ public extension SpotsProtocol {
     return spots.filter(includeElement)
   }
 
+  public func filterItems(@noescape includeElement: (ViewModel) -> Bool) -> [(spot: Spotable, items: [ViewModel])] {
+    var result = [(spot: Spotable, items: [ViewModel])]()
+    for spot in spots {
+      let items = spot.items.filter(includeElement)
+      if !items.isEmpty {
+        result.append((spot: spot, items: items))
+      }
+    }
+
+    return result
+  }
+
   /**
    - Parameter completion: A closure that will be run after reload has been performed on all spots
    */
