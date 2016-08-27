@@ -24,6 +24,10 @@ public class CarouselSpot: NSObject, Gridable {
 
   public static var configure: ((view: UICollectionView, layout: UICollectionViewFlowLayout) -> Void)?
 
+  public static var headers = Registry().then {
+    $0.defaultItem = Registry.Item.classType(CarouselSpotHeader.self)
+  }
+
   public private(set) var stateCache: SpotCache?
 
   public var component: Component {
