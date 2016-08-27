@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name             = "Spots"
   s.summary          = "Spots is a view controller framework that makes your setup and future development blazingly fast."
-  s.version          = "3.0.0"
+  s.version          = "3.1.0"
   s.homepage         = "https://github.com/hyperoslo/Spots"
   s.license          = 'MIT'
   s.author           = { "Hyper Interaktiv AS" => "ios@hyper.no" }
@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   s.ios.source_files = 'Sources/{iOS,Shared}/**/*'
   s.osx.source_files = 'Sources/{Mac,Shared}/**/*'
-  s.tvos.source_files = 'Sources/{iOS,Shared}/**/*'
+  s.tvos.source_files = 'Sources/{iOS,tvOS,Shared}/**/*'
 
   s.frameworks = 'Foundation'
   s.dependency 'Sugar'
