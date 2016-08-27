@@ -431,14 +431,7 @@ public extension SpotsProtocol {
           }
         }
       } catch let error {
-        dispatch_source_cancel(self.source)
-        self.source = nil
-
-        self.reload(["components" : [["kind" : "list", "items" : [[
-          "title" : "JSON parsing error",
-          "subtitle" : "\(error)"]]
-          ]
-          ]])
+        self.liveEditing(self.stateCache)
       }
     })
 
