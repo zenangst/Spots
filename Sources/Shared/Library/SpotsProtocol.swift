@@ -449,7 +449,7 @@ public extension SpotsProtocol {
     let paths = NSSearchPathForDirectoriesInDomains(.CachesDirectory,
                                                     NSSearchPathDomainMask.UserDomainMask, true)
 
-    NSLog("SpotsCache -> \(stateCache.key):\nfile://\(stateCache.path)")
+    NSLog("-----[\(stateCache.key)]-----\n\nfile://\(stateCache.path)\n\n")
     delay(0.5) { self.monitor(stateCache.path) }
   }
   #endif
