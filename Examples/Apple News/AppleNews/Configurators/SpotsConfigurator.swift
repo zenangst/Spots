@@ -34,7 +34,7 @@ struct SpotsConfigurator {
     CarouselSpot.configure = { collectionView, layout in
       collectionView.backgroundColor = UIColor.whiteColor()
       layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
-      layout.minimumInteritemSpacing = 0
+      layout.minimumInteritemSpacing = 10
       layout.minimumLineSpacing = 10
     }
 
