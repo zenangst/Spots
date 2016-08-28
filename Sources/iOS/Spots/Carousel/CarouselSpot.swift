@@ -145,8 +145,6 @@ public class CarouselSpot: NSObject, Gridable {
 
     collectionView.frame.size.height += layout.headerReferenceSize.height
 
-//    (layout as? GridableLayout)?.y = collectionView.frame.origin.y
-
     guard pageIndicator else { return }
     layout.sectionInset.bottom = layout.sectionInset.bottom + pageControl.height
     collectionView.height += layout.sectionInset.top + layout.sectionInset.bottom
