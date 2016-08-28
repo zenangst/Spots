@@ -122,6 +122,11 @@ public extension SpotsProtocol {
         return
       }
 
+      var offsets = [CGPoint]()
+      if newComponents.count == oldComponents.count {
+        offsets = weakSelf.spots.map { $0.render().contentOffset }
+      }
+
       weakSelf.spots = newSpots
       weakSelf.cache()
 
@@ -134,6 +139,10 @@ public extension SpotsProtocol {
 
       closure?()
       weakSelf.spotsScrollView.forceUpdate = true
+
+      offsets.enumerate().forEach {
+        newSpots[$0.index].render().contentOffset = $0.element
+      }
     }
   }
 
