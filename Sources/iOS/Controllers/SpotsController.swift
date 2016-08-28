@@ -262,6 +262,7 @@ public class SpotsController: UIViewController, SpotsProtocol, UIScrollViewDeleg
    - Parameter animated: An optional animation closure that runs when a spot is being rendered
   */
   public func setupSpots(animated: ((view: UIView) -> Void)? = nil) {
+    var offset: CGFloat = 0.0
     spots.enumerate().forEach { index, spot in
       spots[index].index = index
       spot.render().optimize()
@@ -272,10 +273,9 @@ public class SpotsController: UIViewController, SpotsProtocol, UIScrollViewDeleg
         width: view.width,
         height: ceil(spot.render().height))
       animated?(view: spot.render())
-    }
 
-    for case let gridable as Gridable in spots {
-      gridable.layout.y = gridable.render().frame.origin.y
+      (spot as? Gridable)?.layout.y = offset
+      offset += spot.render().frame.size.height
     }
   }
 
