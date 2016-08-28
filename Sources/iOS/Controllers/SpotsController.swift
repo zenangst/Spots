@@ -274,8 +274,8 @@ public class SpotsController: UIViewController, SpotsProtocol, UIScrollViewDeleg
       animated?(view: spot.render())
     }
 
-    for case let gridable as CarouselSpot in spots {
-      (gridable.layout as? GridableLayout)?.y = gridable.render().frame.origin.y
+    for case let gridable as Gridable in spots {
+      gridable.layout.y = gridable.render().frame.origin.y
     }
   }
 
