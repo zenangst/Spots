@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "BD7396FD1D718CD2000AF2DE"
-               BuildableName = "Spots-tvOS.framework"
+               BuildableName = "Spots.framework"
                BlueprintName = "Spots-tvOS"
                ReferencedContainer = "container:Spots.xcodeproj">
             </BuildableReference>
@@ -46,7 +46,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "BD7396FD1D718CD2000AF2DE"
-            BuildableName = "Spots-tvOS.framework"
+            BuildableName = "Spots.framework"
             BlueprintName = "Spots-tvOS"
             ReferencedContainer = "container:Spots.xcodeproj">
          </BuildableReference>
@@ -64,7 +64,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "BD7396FD1D718CD2000AF2DE"
-            BuildableName = "Spots-tvOS.framework"
+            BuildableName = "Spots.framework"
             BlueprintName = "Spots-tvOS"
             ReferencedContainer = "container:Spots.xcodeproj">
          </BuildableReference>
