@@ -3,7 +3,7 @@ import UIKit
 public class GridableLayout: UICollectionViewFlowLayout {
 
   var contentSize = CGSize.zero
-  var y: CGFloat?
+  var yOffset: CGFloat?
 
   public override func collectionViewContentSize() -> CGSize {
     return contentSize
@@ -35,7 +35,7 @@ public class GridableLayout: UICollectionViewFlowLayout {
 
     guard let collectionView = collectionView else { return }
 
-    if let y = y where collectionView.dragging {
+    if let y = yOffset where collectionView.dragging {
       collectionView.frame.origin.y = y
     }
   }
@@ -74,7 +74,7 @@ public class GridableLayout: UICollectionViewFlowLayout {
       offset += itemAttribute.size.width + minimumInteritemSpacing
     }
 
-    if let y = y {
+    if let y = yOffset {
       collectionView?.frame.origin.y = y
     }
 

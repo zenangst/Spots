@@ -438,8 +438,14 @@ public extension SpotsProtocol {
           self.reloadIfNeeded(json, compare: { $0 !== $1 }) {
             self.spotsScrollView.contentOffset = offset
 
+            var yOffset: CGFloat = 0.0
+            for spot in self.spots {
+              (spot as? Gridable)?.layout.yOffset = yOffset
+              yOffset += spot.render().frame.size.height
+            }
+
             for case let gridable as CarouselSpot in self.spots {
-              (gridable.layout as? GridableLayout)?.y = gridable.render().frame.origin.y
+              (gridable.layout as? GridableLayout)?.yOffset = gridable.render().frame.origin.y
             }
           }
         }
