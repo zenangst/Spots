@@ -3,7 +3,7 @@ import UIKit
 public class GridableLayout: UICollectionViewFlowLayout {
 
   var contentSize = CGSize.zero
-  var yOffset: CGFloat?
+  public var yOffset: CGFloat?
 
   public override func collectionViewContentSize() -> CGSize {
     return contentSize
@@ -17,6 +17,7 @@ public class GridableLayout: UICollectionViewFlowLayout {
     contentSize.width = adapter.spot.items.reduce(0, combine: { $0 + $1.size.width })
     contentSize.width += CGFloat(adapter.spot.items.count) * (minimumInteritemSpacing)
     contentSize.width += sectionInset.left + (sectionInset.right / 2) - 3
+    contentSize.width = ceil(contentSize.width)
 
     if scrollDirection == .Horizontal {
       contentSize.height = firstItem.size.height + headerReferenceSize.height
