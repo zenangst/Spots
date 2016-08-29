@@ -19,6 +19,7 @@ public class ListSpot: NSObject, Listable {
   public var component: Component
   public var configure: (SpotConfigurable -> Void)?
 
+  public weak var spotsCompositeDelegate: SpotsCompositeDelegate?
   public weak var spotsDelegate: SpotsDelegate?
 
   public var adapter: SpotAdapter? {

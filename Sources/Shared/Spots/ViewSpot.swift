@@ -16,6 +16,7 @@ public class ViewSpot: NSObject, Spotable, Viewable {
   public static var defaultView: View.Type = View.self
   public static var defaultKind: StringConvertible = "view"
 
+  public weak var spotsCompositeDelegate: SpotsCompositeDelegate?
   public weak var spotsDelegate: SpotsDelegate?
   public var component: Component
   public var index = 0
