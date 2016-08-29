@@ -2,7 +2,6 @@ import UIKit
 import Brick
 
 public protocol SpotComposite: class {
-  weak var spotsDelegate: SpotsDelegate? { get set }
   var contentView: UIView { get }
 
   func configure(inout item: ViewModel, spots: [Spotable]?)
