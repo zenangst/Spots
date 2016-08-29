@@ -39,6 +39,14 @@ public class SpotsController: UIViewController, SpotsProtocol, UIScrollViewDeleg
     }
   }
 
+  public var compositeSpots: [Int : [Spotable]] {
+    didSet {
+      for (index, elements) in compositeSpots {
+        elements.forEach { $0.spotsDelegate = spotsDelegate }
+      }
+    }
+  }
+
   /// An array of refresh positions to avoid refreshing multiple times when using infinite scrolling
   public var refreshPositions = [CGFloat]()
   /// A bool value to indicate if the SpotsController is refeshing
