@@ -249,8 +249,6 @@ public extension Spotable {
   }
 
   /**
-   TODO: We should probably have a look at this method? Seems silly to always return 0.0 😁
-
    - Parameter includeElement: A filter predicate to find a view model
    - Returns: Always returns 0.0
    */

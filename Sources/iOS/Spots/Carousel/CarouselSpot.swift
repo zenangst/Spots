@@ -201,8 +201,6 @@ extension CarouselSpot: UIScrollViewDelegate {
     guard paginate else { return }
     #endif
 
-    let targetX = scrollView.contentOffset.x
-
     let pageWidth: CGFloat = collectionView.width
     let currentOffset = scrollView.contentOffset.x
     let targetOffset = targetContentOffset.memory.x

@@ -315,20 +315,19 @@ extension ListAdapter: UITableViewDataSource {
       cell.optimize()
     #endif
 
-    if indexPath.item < spot.component.items.count {
-      
-      if let composite = cell as? SpotComposite {
-        let spots = spot.spotsCompositeDelegate?.compositeSpots[spot.index]
-        composite.configure(&spot.component.items[indexPath.item], spots: spots)
-      } else if let cell = cell as? SpotConfigurable {
-        cell.configure(&spot.component.items[indexPath.item])
+    guard indexPath.item < spot.component.items.count else { return cell }
 
-        if spot.component.items[indexPath.item].size.height == 0.0 {
-          spot.component.items[indexPath.item].size = cell.size
-        }
+    if let composite = cell as? SpotComposite {
+      let spots = spot.spotsCompositeDelegate?.compositeSpots[spot.index]
+      composite.configure(&spot.component.items[indexPath.item], spots: spots)
+    } else if let cell = cell as? SpotConfigurable {
+      cell.configure(&spot.component.items[indexPath.item])
 
-        spot.configure?(cell)
+      if spot.component.items[indexPath.item].size.height == 0.0 {
+        spot.component.items[indexPath.item].size = cell.size
       }
+
+      spot.configure?(cell)
     }
 
     return cell

@@ -142,6 +142,10 @@
 		BDED121F1D74BE6C00C7AC26 /* SpotComposite.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDED121E1D74BE6C00C7AC26 /* SpotComposite.swift */; };
 		BDED12211D74BFD300C7AC26 /* CarouselComposite.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDED12201D74BFD300C7AC26 /* CarouselComposite.swift */; };
 		BDED12231D74BFEF00C7AC26 /* GridComposite.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDED12221D74BFEF00C7AC26 /* GridComposite.swift */; };
+		BDED12251D74F86000C7AC26 /* SpotComposite.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDED121E1D74BE6C00C7AC26 /* SpotComposite.swift */; };
+		BDED12261D74F86A00C7AC26 /* GridComposite.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDED12221D74BFEF00C7AC26 /* GridComposite.swift */; };
+		BDED12271D74F86F00C7AC26 /* ListComposite.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE5E45F1D74BE4400C1FA21 /* ListComposite.swift */; };
+		BDED12291D74F89100C7AC26 /* CarouselComposite.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDED12201D74BFD300C7AC26 /* CarouselComposite.swift */; };
 		D259D0F81D5BD1930003ACFA /* Registry.swift in Sources */ = {isa = PBXBuildFile; fileRef = D259D0F71D5BD1930003ACFA /* Registry.swift */; };
 		D259D0F91D5BD1930003ACFA /* Registry.swift in Sources */ = {isa = PBXBuildFile; fileRef = D259D0F71D5BD1930003ACFA /* Registry.swift */; };
 		D58478141C43FEB9006EBA49 /* Spots.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478091C43FEB8006EBA49 /* Spots.framework */; };
@@ -1090,9 +1094,11 @@
 				BD7397001D718CD2000AF2DE /* CollectionAdapter.swift in Sources */,
 				BD7397011D718CD2000AF2DE /* Registry.swift in Sources */,
 				BD73974B1D718D38000AF2DE /* CollectionAdapter+tvOS.swift in Sources */,
+				BDED12271D74F86F00C7AC26 /* ListComposite.swift in Sources */,
 				BD7397021D718CD2000AF2DE /* Viewable.swift in Sources */,
 				BD7397031D718CD2000AF2DE /* ListAdapter.swift in Sources */,
 				BD7397041D718CD2000AF2DE /* CarouselSpotCell.swift in Sources */,
+				BDED12251D74F86000C7AC26 /* SpotComposite.swift in Sources */,
 				BD7397051D718CD2000AF2DE /* SpotsScrollView.swift in Sources */,
 				BD7397061D718CD2000AF2DE /* ListSpotCell.swift in Sources */,
 				BD7397071D718CD2000AF2DE /* SpotsAnimation.swift in Sources */,
@@ -1115,7 +1121,9 @@
 				BD7397171D718CD2000AF2DE /* GridableLayout.swift in Sources */,
 				BD7397181D718CD2000AF2DE /* ViewSpot.swift in Sources */,
 				BD7397191D718CD2000AF2DE /* SpotCache.swift in Sources */,
+				BDED12291D74F89100C7AC26 /* CarouselComposite.swift in Sources */,
 				BD73971A1D718CD2000AF2DE /* Listable.swift in Sources */,
+				BDED12261D74F86A00C7AC26 /* GridComposite.swift in Sources */,
 				BD73971B1D718CD2000AF2DE /* CarouselSpot.swift in Sources */,
 				BD73971C1D718CD2000AF2DE /* SpotsProtocol.swift in Sources */,
 				BD73971D1D718CD2000AF2DE /* SpotsDelegates.swift in Sources */,

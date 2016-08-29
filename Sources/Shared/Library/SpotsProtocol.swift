@@ -72,9 +72,7 @@ public extension SpotsProtocol {
 
     for (_, spots) in compositeSpots {
       let compositeResults = spots.filter(includeElement)
-      if !compositeResults.isEmpty {
-        result.appendContentsOf(compositeResults)
-      }
+      if !compositeResults.isEmpty { result.appendContentsOf(compositeResults) }
     }
 
     return result
@@ -431,7 +429,6 @@ public extension SpotsProtocol {
   }
 
   #if DEVMODE
-
   private func monitor(filePath: String) {
     guard NSFileManager.defaultManager().fileExistsAtPath(filePath) else { return }
 
@@ -487,7 +484,6 @@ public extension SpotsProtocol {
 
     let paths = NSSearchPathForDirectoriesInDomains(.CachesDirectory,
                                                     NSSearchPathDomainMask.UserDomainMask, true)
-
     NSLog("-----[\(stateCache.key)]-----\n\nfile://\(stateCache.path)\n\n")
     delay(0.5) { self.monitor(stateCache.path) }
   }
