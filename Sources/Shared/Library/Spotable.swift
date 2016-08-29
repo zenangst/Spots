@@ -269,17 +269,26 @@ public extension Spotable {
       : viewModel.kind
 
     guard let (_, resolvedView) = Self.views.make(kind),
-      view = resolvedView as? SpotConfigurable else { return }
+      view = resolvedView else { return }
 
-    view.configure(&viewModel)
+    if let composite = view as? SpotComposite {
+      let spots = composite.parse(viewModel)
+      for spot in spots {
+        spot.registerAndPrepare()
+        spot.render().optimize()
+      }
+      spotsCompositeDelegate?.compositeSpots[component.index] = spots
+    } else {
+      (view as? SpotConfigurable)?.configure(&viewModel)
+    }
 
     if usesViewSize {
       if viewModel.size.height == 0 {
-        viewModel.size.height = view.size.height
+        viewModel.size.height = (view as? SpotConfigurable)?.size.height ?? 0.0
       }
 
       if viewModel.size.width == 0 {
-        viewModel.size.width = view.size.width
+        viewModel.size.width = (view as? SpotConfigurable)?.size.width ?? 0.0
       }
     }
 
