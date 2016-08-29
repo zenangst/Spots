@@ -16,7 +16,7 @@ public protocol Spotable: class {
   weak var spotsDelegate: SpotsDelegate? { get set }
 
   /// The index of a Spotable object
-  var index: Int { get set }
+  var index: Int { get }
   /// The component of a Spotable object
   var component: Component { get set }
   /// A configuration closure for a SpotConfigurable object
@@ -79,6 +79,10 @@ public protocol Spotable: class {
 }
 
 public extension Spotable {
+
+  public var index: Int {
+    return component.index
+  }
 
   /// Append view model to a Spotable object
   func append(item: ViewModel, withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
