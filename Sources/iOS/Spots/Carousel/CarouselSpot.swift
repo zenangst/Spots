@@ -243,6 +243,13 @@ extension CarouselSpot: UIScrollViewDelegate {
 
 extension CarouselSpot {
 
+  /**
+   - Returns: A CGFloat of the total height of all items inside of a component
+   */
+  public func spotHeight() -> CGFloat {
+    return collectionView.height - layout.sectionInset.top - layout.sectionInset.bottom - layout.headerReferenceSize.height
+  }
+
   public func sizeForItemAt(indexPath: NSIndexPath) -> CGSize {
     var width = collectionView.width
 
