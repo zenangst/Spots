@@ -190,7 +190,12 @@ extension ListAdapter {
       }
     }
 
-    animation != .None ? spot.tableView.reloadSection(0, animation: animation.tableViewAnimation) : spot.tableView.reloadData()
+    if let indexes = indexes {
+      spot.tableView.reload(indexes)
+    } else {
+      animation != .None ? spot.tableView.reloadSection(0, animation: animation.tableViewAnimation) : spot.tableView.reloadData()
+    }
+
     UIView.setAnimationsEnabled(true)
     completion?()
   }
@@ -310,13 +315,20 @@ extension ListAdapter: UITableViewDataSource {
       cell.optimize()
     #endif
 
-    if let cell = cell as? SpotConfigurable where indexPath.item < spot.component.items.count {
-      cell.configure(&spot.component.items[indexPath.item])
-      if spot.component.items[indexPath.item].size.height == 0.0 {
-        spot.component.items[indexPath.item].size = cell.size
-      }
+    if indexPath.item < spot.component.items.count {
+      
+      if let composite = cell as? SpotComposite {
+        let spots = spot.spotsCompositeDelegate?.compositeSpots[spot.index]
+        composite.configure(&spot.component.items[indexPath.item], spots: spots)
+      } else if let cell = cell as? SpotConfigurable {
+        cell.configure(&spot.component.items[indexPath.item])
 
-      spot.configure?(cell)
+        if spot.component.items[indexPath.item].size.height == 0.0 {
+          spot.component.items[indexPath.item].size = cell.size
+        }
+
+        spot.configure?(cell)
+      }
     }
 
     return cell
