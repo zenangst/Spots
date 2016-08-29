@@ -27,7 +27,6 @@ public class GridSpot: NSObject, Gridable {
   public static var headers = Registry()
 
   public var component: Component
-  public var index = 0
   public var configure: (SpotConfigurable -> Void)?
 
   public weak var spotsDelegate: SpotsDelegate?
