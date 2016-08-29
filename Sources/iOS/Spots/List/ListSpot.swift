@@ -10,6 +10,7 @@ public class ListSpot: NSObject, Listable {
 
   public static var views: Registry = Registry().then {
     $0.defaultItem = Registry.Item.classType(ListSpotCell.self)
+    $0.composite =  Registry.Item.classType(ListComposite.self)
   }
 
   public static var configure: ((view: UITableView) -> Void)?

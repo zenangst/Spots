@@ -20,6 +20,7 @@ public class GridSpot: NSObject, Gridable {
 
   public static var views: Registry = Registry().then {
     $0.defaultItem = Registry.Item.classType(GridSpotCell.self)
+    $0.composite =  Registry.Item.classType(GridComposite.self)
   }
 
   public static var configure: ((view: UICollectionView, layout: UICollectionViewFlowLayout) -> Void)?

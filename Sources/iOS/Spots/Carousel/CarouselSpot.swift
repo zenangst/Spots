@@ -20,6 +20,7 @@ public class CarouselSpot: NSObject, Gridable {
 
   public static var views: Registry = Registry().then {
     $0.defaultItem = Registry.Item.classType(CarouselSpotCell.self)
+    $0.composite =  Registry.Item.classType(CarouselComposite.self)
   }
 
   public static var configure: ((view: UICollectionView, layout: UICollectionViewFlowLayout) -> Void)?
