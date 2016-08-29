@@ -207,8 +207,14 @@ public extension Spotable {
       return
     }
 
+    var indexes: [Int]? = nil
     self.items = items
-    reload(nil, withAnimation: animation) {
+
+    for (index, _) in items.enumerate() {
+      indexes?.append(index)
+    }
+
+    reload(indexes, withAnimation: animation) {
       self.cache()
     }
   }
