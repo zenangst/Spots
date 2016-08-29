@@ -209,7 +209,8 @@ extension ListAdapter: UITableViewDelegate {
    - Returns: Returns the `headerHeight` found in `component.meta`, otherwise 0.0.
    **/
   public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    return spot.component.meta(ListSpot.Key.headerHeight, 0.0)
+    let header = spot.dynamicType.headers.make(spot.component.header)
+    return (header?.view as? Componentable)?.defaultHeight ?? 0.0
   }
 
   /**
@@ -220,6 +221,9 @@ extension ListAdapter: UITableViewDelegate {
    - Returns: A string to use as the title of the section header. Will return `nil` if title is not present on Component
    **/
   public func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    if let _ = spot.dynamicType.headers.make(spot.component.header) {
+      return nil
+    }
     return spot.component.title.isPresent ? spot.component.title : nil
   }
 
@@ -244,9 +248,9 @@ extension ListAdapter: UITableViewDelegate {
    - Returns: A view object to be displayed in the header of section based on the kind of the ListSpot and registered headers.
    **/
   public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-    guard spot.component.meta(ListSpot.Key.headerHeight, type: CGFloat.self) != 0.0 else { return nil }
+    guard !spot.component.header.isEmpty else { return nil }
 
-    let view = tableView.dequeueReusableHeaderFooterViewWithIdentifier(spot.component.kind)
+    let view = tableView.dequeueReusableHeaderFooterViewWithIdentifier(spot.component.header)
     view?.height = spot.component.meta(ListSpot.Key.headerHeight, 0.0)
     view?.width = spot.tableView.width
     (view as? Componentable)?.configure(spot.component)
