@@ -2,6 +2,11 @@ import Brick
 
 #if os(iOS)
   import UIKit
+
+  public protocol SpotsCompositeDelegate: class {
+    var compositeSpots: [Int : [Spotable]] { get set }
+  }
+
 #endif
 
 /// A generic delegate for Spots
