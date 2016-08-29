@@ -16,6 +16,7 @@ public struct Component: Mappable {
    */
   public enum Key: String {
     case Index
+    case Identifier
     case Title
     case Header
     case Kind
@@ -41,6 +42,8 @@ public struct Component: Mappable {
     }
   }
 
+  // Identifier
+  public var identifier: Int?
   /// The index of the ViewModel when appearing in a list, should be computed and continuously updated by the data source
   public var index = 0
   /// The title for the component
@@ -68,6 +71,7 @@ public struct Component: Mappable {
   public func dictionary(amountOfItems: Int? = nil) -> JSONDictionary {
     var width: CGFloat = 0
     var height: CGFloat = 0
+
     if let size = size {
       width = size.width
       height = size.height
@@ -81,19 +85,22 @@ public struct Component: Mappable {
       JSONItems = items.map { $0.dictionary }
     }
 
-    let JSONComponents: JSONDictionary = [
+    var JSONComponents: JSONDictionary = [
       Key.Index.string : index,
-      Key.Title.string : title,
       Key.Kind.string : kind,
-      Key.Header.string : header,
       Key.Span.string : span,
-      Key.Items.string: JSONItems,
       Key.Size.string : [
         Key.Width.string : width,
         Key.Height.string : height
       ],
-      Key.Meta.string : meta
+      Key.Items.string: JSONItems,
     ]
+
+    JSONComponents[Key.Identifier.string] = identifier
+
+    if !title.isEmpty { JSONComponents[Key.Title.string] = title }
+    if !header.isEmpty { JSONComponents[Key.Header.string] = header }
+    if !meta.isEmpty { JSONComponents[Key.Meta.string] = meta }
 
     return JSONComponents
   }
@@ -104,6 +111,7 @@ public struct Component: Mappable {
    - Parameter map: A JSON key-value dictionary
    */
   public init(_ map: JSONDictionary) {
+    identifier = map.property(.Identifier)
     title <- map.property(.Title)
     kind  <- map.property(.Kind)
     header  <- map.property(.Header)
@@ -126,7 +134,8 @@ public struct Component: Mappable {
    - Parameter items: A collection of view models
    - Parameter meta: A key-value dictionary for any additional information
    */
-  public init(title: String = "", header: String = "", kind: String = "", span: CGFloat = 0, items: [ViewModel] = [], meta: [String : AnyObject] = [:]) {
+  public init(identifier: Int? = nil, title: String = "", header: String = "", kind: String = "", span: CGFloat = 0, items: [ViewModel] = [], meta: [String : AnyObject] = [:]) {
+    self.identifier = identifier
     self.title = title
     self.kind = kind
     self.header = header
