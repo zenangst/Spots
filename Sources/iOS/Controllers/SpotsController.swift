@@ -6,7 +6,7 @@ import Cache
 /**
  SpotsController is a subclass of UIViewController
  */
-public class SpotsController: UIViewController, SpotsProtocol, UIScrollViewDelegate {
+public class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDelegate, UIScrollViewDelegate {
 
   /**
    A notification enum
@@ -113,6 +113,7 @@ public class SpotsController: UIViewController, SpotsProtocol, UIScrollViewDeleg
    */
   public required init(spots: [Spotable] = []) {
     self.spots = spots
+    self.compositeSpots = [:]
     super.init(nibName: nil, bundle: nil)
 
     NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(self.deviceDidRotate(_:)), name: NotificationKeys.deviceDidRotateNotification.rawValue, object: nil)
@@ -244,7 +245,10 @@ public class SpotsController: UIViewController, SpotsProtocol, UIScrollViewDeleg
   func configureView(withSize size: CGSize) {
     spotsScrollView.frame.size = size
     spotsScrollView.contentView.frame.size = size
-    spots.forEach { $0.layout(size) }
+    spots.enumerate().forEach {
+      compositeSpots[$0.index]?.forEach { $0.layout(size) }
+      $0.element.layout(size)
+    }
   }
 
   /**
@@ -271,8 +275,10 @@ public class SpotsController: UIViewController, SpotsProtocol, UIScrollViewDeleg
   */
   public func setupSpots(animated: ((view: UIView) -> Void)? = nil) {
     var yOffset: CGFloat = 0.0
+    compositeSpots = [:]
     spots.enumerate().forEach { index, spot in
-      spots[index].index = index
+      spot.spotsCompositeDelegate = self
+      spots[index].component.index = index
       spot.render().optimize()
       spotsScrollView.contentView.addSubview(spot.render())
       spot.registerAndPrepare()
