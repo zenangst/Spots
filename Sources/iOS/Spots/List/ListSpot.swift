@@ -15,7 +15,6 @@ public class ListSpot: NSObject, Listable {
   public static var configure: ((view: UITableView) -> Void)?
   public static var headers = Registry()
 
-  public var index = 0
   public var component: Component
   public var configure: (SpotConfigurable -> Void)?
 
