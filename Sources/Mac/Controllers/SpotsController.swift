@@ -17,6 +17,14 @@ public class SpotsController: NSViewController, SpotsProtocol {
     }
   }
 
+  public var compositeSpots: [Int : [Spotable]] {
+    didSet {
+      for (index, elements) in compositeSpots {
+        elements.forEach { $0.spotsDelegate = spotsDelegate }
+      }
+    }
+  }
+
   /// A convenience method for resolving the first spot
   public var spot: Spotable? {
     get { return spot(0, Spotable.self) }
@@ -60,6 +68,7 @@ public class SpotsController: NSViewController, SpotsProtocol {
    - Parameter spots: An array of Spotable objects
    */
   public required init(spots: [Spotable] = [], backgroundType: SpotsControllerBackground = .Regular) {
+    self.compositeSpots = [:]
     self.spots = spots
     self.backgroundType = backgroundType
     super.init(nibName: nil, bundle: nil)!
@@ -189,13 +198,15 @@ public class SpotsController: NSViewController, SpotsProtocol {
    */
   public func setupSpots(animated: ((view: View) -> Void)? = nil) {
     spots.enumerate().forEach { index, spot in
-      spot.spotsCompositeDelegate = self
+      #if !os(OSX)
+        spot.spotsCompositeDelegate = self
+      #endif
       var height = spot.spotHeight()
       if let componentSize = spot.component.size where componentSize.height > height {
         height = componentSize.height
       }
 
-      spots[index].index = index
+      spots[index].component.index = index
       spot.registerAndPrepare()
       spotsScrollView.spotsContentView.addSubview(spot.render())
       spot.setup(CGSize(width: view.frame.width,

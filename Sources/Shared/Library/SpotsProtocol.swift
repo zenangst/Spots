@@ -70,7 +70,7 @@ public extension SpotsProtocol {
   public func filter(@noescape includeElement: (Spotable) -> Bool) -> [Spotable] {
     var result = spots.filter(includeElement)
 
-    for (index, spots) in compositeSpots {
+    for (_, spots) in compositeSpots {
       let compositeResults = spots.filter(includeElement)
       if !compositeResults.isEmpty {
         result.appendContentsOf(compositeResults)
@@ -89,7 +89,7 @@ public extension SpotsProtocol {
       }
     }
 
-    for (index, spots) in compositeSpots {
+    for (_, spots) in compositeSpots {
       for spot in spots {
         let items = spot.items.filter(includeElement)
         if !items.isEmpty {

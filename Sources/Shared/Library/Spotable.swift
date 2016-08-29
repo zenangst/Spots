@@ -12,8 +12,10 @@ public protocol Spotable: class {
 
   static var views: Registry { get set }
 
+  #if !os(OSX)
   /// A SpotsCompositeDelegate object
   weak var spotsCompositeDelegate: SpotsCompositeDelegate? { get set }
+  #endif
 
   /// A SpotsDelegate object
   weak var spotsDelegate: SpotsDelegate? { get set }
@@ -274,16 +276,20 @@ public extension Spotable {
     guard let (_, resolvedView) = Self.views.make(kind),
       view = resolvedView else { return }
 
-    if let composite = view as? SpotComposite {
-      let spots = composite.parse(viewModel)
-      for spot in spots {
-        spot.registerAndPrepare()
-        spot.render().optimize()
+    #if !os(OSX)
+      if let composite = view as? SpotComposite {
+        let spots = composite.parse(viewModel)
+        for spot in spots {
+          spot.registerAndPrepare()
+          spot.render().optimize()
+        }
+        spotsCompositeDelegate?.compositeSpots[component.index] = spots
+      } else {
+        (view as? SpotConfigurable)?.configure(&viewModel)
       }
-      spotsCompositeDelegate?.compositeSpots[component.index] = spots
-    } else {
+    #else
       (view as? SpotConfigurable)?.configure(&viewModel)
-    }
+    #endif
 
     if usesViewSize {
       if viewModel.size.height == 0 {
