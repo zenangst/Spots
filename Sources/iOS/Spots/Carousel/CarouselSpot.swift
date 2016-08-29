@@ -67,6 +67,7 @@ public class CarouselSpot: NSObject, Gridable {
   public var configure: (SpotConfigurable -> Void)?
 
   public weak var carouselScrollDelegate: SpotsCarouselScrollDelegate?
+  public weak var spotsCompositeDelegate: SpotsCompositeDelegate?
   public weak var spotsDelegate: SpotsDelegate?
 
   public var adapter: SpotAdapter? {
