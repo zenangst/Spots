@@ -68,7 +68,16 @@ public extension SpotsProtocol {
    - Parameter includeElement: A filter predicate to find a spot
    */
   public func filter(@noescape includeElement: (Spotable) -> Bool) -> [Spotable] {
-    return spots.filter(includeElement)
+    var result = spots.filter(includeElement)
+
+    for (index, spots) in compositeSpots {
+      let compositeResults = spots.filter(includeElement)
+      if !compositeResults.isEmpty {
+        result.appendContentsOf(compositeResults)
+      }
+    }
+
+    return result
   }
 
   public func filterItems(@noescape includeElement: (ViewModel) -> Bool) -> [(spot: Spotable, items: [ViewModel])] {
@@ -77,6 +86,15 @@ public extension SpotsProtocol {
       let items = spot.items.filter(includeElement)
       if !items.isEmpty {
         result.append((spot: spot, items: items))
+      }
+    }
+
+    for (index, spots) in compositeSpots {
+      for spot in spots {
+        let items = spot.items.filter(includeElement)
+        if !items.isEmpty {
+          result.append((spot: spot, items: items))
+        }
       }
     }
 
