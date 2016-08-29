@@ -189,6 +189,7 @@ public class SpotsController: NSViewController, SpotsProtocol {
    */
   public func setupSpots(animated: ((view: View) -> Void)? = nil) {
     spots.enumerate().forEach { index, spot in
+      spot.spotsCompositeDelegate = self
       var height = spot.spotHeight()
       if let componentSize = spot.component.size where componentSize.height > height {
         height = componentSize.height
