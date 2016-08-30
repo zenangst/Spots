@@ -39,10 +39,12 @@ public class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDel
     }
   }
 
-  public var compositeSpots: [Int : [Spotable]] {
+  public var compositeSpots: [Int : [Int : [Spotable]]] {
     didSet {
-      for (index, elements) in compositeSpots {
-        elements.forEach { $0.spotsDelegate = spotsDelegate }
+      for (index, items) in compositeSpots {
+        for (itemIndex, container) in items.enumerate() {
+          container.1.forEach { $0.spotsDelegate = spotsDelegate }
+        }
       }
     }
   }
@@ -245,9 +247,13 @@ public class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDel
   func configureView(withSize size: CGSize) {
     spotsScrollView.frame.size = size
     spotsScrollView.contentView.frame.size = size
-    spots.enumerate().forEach {
-      compositeSpots[$0.index]?.forEach { $0.layout(size) }
-      $0.element.layout(size)
+    spots.enumerate().forEach { index, spot in
+      compositeSpots[index]?.forEach { cIndex, cSpots in
+        cSpots.forEach {
+          $0.layout(size)
+        }
+      }
+      spot.layout(size)
     }
   }
 
