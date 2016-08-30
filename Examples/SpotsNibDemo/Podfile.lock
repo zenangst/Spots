@@ -1,11 +1,11 @@
 PODS:
-  - Brick (0.8.2):
+  - Brick (0.9.1):
     - Sugar (~> 1.0)
     - Tailor
   - Cache (1.5.1):
     - CryptoSwift
   - CryptoSwift (0.5.2)
-  - Hue (1.1.1)
+  - Hue (1.2.0)
   - Spots (3.1.0):
     - Brick
     - Cache
@@ -25,10 +25,10 @@ EXTERNAL SOURCES:
     :path: "../../"
 
 SPEC CHECKSUMS:
-  Brick: c5b60d83f69c5e882097ee4e9bf12abd428e395a
+  Brick: 8b2da311b9099c6790a38f06795f12eaa337c3bc
   Cache: 87b48b059429d3b53238533830c53941f8aa85f0
   CryptoSwift: c1ef79f901b86099a6fe8b3c7524cf9f3f3c8c40
-  Hue: 931aeeadcb29ce5de5b97589aa936be4638a1501
+  Hue: '0705083b7aff40334033373e6293ec1215285ac2'
   Spots: e041c84821a11742fcb2b062969516d77e48cf4b
   Sugar: 556b623f0f8846cf08de7302701892f11d567419
   Tailor: 135708d29cef05d8f83e61ce8c07171c8fcfc865

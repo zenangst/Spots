@@ -1,11 +1,10 @@
 PODS:
-  - Brick (0.8.2):
+  - Brick (0.9.1):
     - Sugar (~> 1.0)
     - Tailor
   - Cache (1.5.1):
     - CryptoSwift
-  - Compass (2.0.0):
-    - Sugar
+  - Compass (3.0.0)
   - CryptoSwift (0.5.2)
   - Fakery (1.3.0):
     - SwiftyJSON
@@ -46,9 +45,9 @@ CHECKOUT OPTIONS:
     :git: https://github.com/hyperoslo/Imaginary
 
 SPEC CHECKSUMS:
-  Brick: c5b60d83f69c5e882097ee4e9bf12abd428e395a
+  Brick: 8b2da311b9099c6790a38f06795f12eaa337c3bc
   Cache: 87b48b059429d3b53238533830c53941f8aa85f0
-  Compass: a5793a890400a010a9a4eb6547c014e982483a2c
+  Compass: 5bb05fc2b873e9d5b1efda5752649b6a0a993843
   CryptoSwift: c1ef79f901b86099a6fe8b3c7524cf9f3f3c8c40
   Fakery: 8e6f7da2feb311a90a956ab9b9b2ce72106d1787
   Imaginary: 62a9ce1e6d7831ede429c8221a183f03ec2a90bc

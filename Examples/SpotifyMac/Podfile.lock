@@ -1,6 +1,6 @@
 PODS:
-  - Alamofire (3.4.1)
-  - Brick (0.8.2):
+  - Alamofire (3.4.2)
+  - Brick (0.9.1):
     - Sugar (~> 1.0)
     - Tailor
   - Cache (1.5.1):
@@ -9,7 +9,7 @@ PODS:
   - CryptoSwift (0.5.2)
   - Fashion (1.1.0):
     - Sugar
-  - Hue (1.1.1)
+  - Hue (1.2.0)
   - Imaginary (0.1.0):
     - Cache
   - JWTDecode (1.1.0)
@@ -80,7 +80,7 @@ CHECKOUT OPTIONS:
     :commit: 3e2bf8754d1dbdc9e05f423bbb96db6dc06fec46
     :git: https://github.com/vadymmarkov/Fashion.git
   Hue:
-    :commit: 66e5c25d9ef9a95840c23467dc79f12ded8af0c8
+    :commit: c8b91723d487a1b7852d70f6d28b79f4caefd742
     :git: https://github.com/hyperoslo/Hue.git
   Imaginary:
     :commit: 4ab2007614aa2397a9ce82c69771f21df3d37cdc
@@ -92,7 +92,7 @@ CHECKOUT OPTIONS:
     :commit: 5273ca100e23bbcd82ff52cde30daec655ef3b75
     :git: https://github.com/hyperoslo/Malibu.git
   OhMyAuth:
-    :commit: 3b61b2cc3eeebd5f3a5ff0b178d5b7aa7d0a1631
+    :commit: 772b530ad5de4f4cd29cac4d78c00369a284a390
     :git: https://github.com/hyperoslo/OhMyAuth.git
   Sugar:
     :commit: e66d36a4a36b3114279e35e5b97acb464acba75f
@@ -102,13 +102,13 @@ CHECKOUT OPTIONS:
     :git: https://github.com/zenangst/Tailor.git
 
 SPEC CHECKSUMS:
-  Alamofire: 01a82e2f6c0f860ade35534c8dd88be61bdef40c
-  Brick: c5b60d83f69c5e882097ee4e9bf12abd428e395a
+  Alamofire: 6aa33201d20d069e1598891cf928883ff1888c7a
+  Brick: 8b2da311b9099c6790a38f06795f12eaa337c3bc
   Cache: 87b48b059429d3b53238533830c53941f8aa85f0
   Compass: 5bb05fc2b873e9d5b1efda5752649b6a0a993843
   CryptoSwift: c1ef79f901b86099a6fe8b3c7524cf9f3f3c8c40
   Fashion: 82f2bb05505e3aea0977a2c23f5d8692e06f12a9
-  Hue: 931aeeadcb29ce5de5b97589aa936be4638a1501
+  Hue: '0705083b7aff40334033373e6293ec1215285ac2'
   Imaginary: 62a9ce1e6d7831ede429c8221a183f03ec2a90bc
   JWTDecode: a6b91ad0bc798c723e9a29a368a6ead70edf7213
   Keychain: 50cb247cab32e774422741b118af9b598a3fb5b2
