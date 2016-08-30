@@ -189,9 +189,9 @@ public extension SpotsProtocol {
 
         for (spotIndex, spot) in foundContainer.enumerate() {
           guard let rootContainer = oldComposite[index],
-            itemContainer = rootContainer[itemIndex] as? [Int : [Spotable]],
-            oldSpots = itemContainer[spotIndex],
-            oldSpot = oldSpots[spot.index] as? Spotable else { continue }
+            itemContainer = rootContainer[itemIndex],
+            oldSpot = itemContainer[spotIndex] as? Spotable else { continue }
+
           spot.render().contentOffset = oldSpot.render().contentOffset
         }
       }
