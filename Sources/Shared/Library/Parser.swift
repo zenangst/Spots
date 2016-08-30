@@ -16,4 +16,12 @@ public struct Parser {
       SpotFactory.resolve(Component($0))
     }
   }
+
+  public static func parse(json: JSONArray?) -> [Spotable] {
+    guard let json = json else { return [] }
+
+    return json.map {
+      SpotFactory.resolve(Component($0))
+    }
+  }
 }
