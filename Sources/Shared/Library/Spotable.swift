@@ -281,7 +281,12 @@ public extension Spotable {
           spot.registerAndPrepare()
           spot.render().optimize()
         }
-        spotsCompositeDelegate?.compositeSpots[component.index] = spots
+
+        if spotsCompositeDelegate?.compositeSpots[component.index] == nil {
+          spotsCompositeDelegate?.compositeSpots[component.index] = [index : spots]
+        } else {
+          spotsCompositeDelegate?.compositeSpots[component.index]?[index] = spots
+        }
       } else {
         (view as? SpotConfigurable)?.configure(&viewModel)
       }
