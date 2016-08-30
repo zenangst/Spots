@@ -188,7 +188,10 @@ public extension SpotsProtocol {
         foundContainer = weakSelf.compositeSpots[index]?[itemIndex] else { continue }
 
         for (spotIndex, spot) in foundContainer.enumerate() {
-          guard let oldSpot = oldComposite[index]?[itemIndex]?[spotIndex] else { continue }
+          guard let rootContainer = oldComposite[index],
+            itemContainer = rootContainer[itemIndex] as? [Int : [Spotable]],
+            oldSpots = itemContainer[spotIndex],
+            oldSpot = oldSpots[spot.index] as? Spotable else { continue }
           spot.render().contentOffset = oldSpot.render().contentOffset
         }
       }
