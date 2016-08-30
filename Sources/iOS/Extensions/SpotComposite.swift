@@ -14,11 +14,18 @@ public extension SpotComposite where Self : View {
     guard let spots = spots else { return }
 
     var height: CGFloat = 0.0
+
     spots.enumerate().forEach { index, spot in
       spot.component.size = CGSize(
         width: contentView.frame.width,
         height: ceil(spot.render().height))
-      spot.setup(contentView.frame.size)
+
+      if spot.component.size?.height ?? 0.0 == 0.0 {
+        spot.setup(contentView.frame.size)
+      } else {
+        spot.layout(contentView.frame.size)
+      }
+
       contentView.addSubview(spot.render())
       spot.render().layoutIfNeeded()
       height += spot.render().contentSize.height
@@ -31,7 +38,7 @@ public extension SpotComposite where Self : View {
 public extension SpotComposite {
 
   public func parse(item: ViewModel) -> [Spotable] {
-    let spots = Parser.parse(item.meta, key: "children")
+    let spots = Parser.parse(item.children)
     return spots
   }
 }
