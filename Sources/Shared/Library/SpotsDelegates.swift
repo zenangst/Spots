@@ -8,6 +8,18 @@ public protocol SpotsCompositeDelegate: class {
   var compositeSpots: [Int : [Int : [Spotable]]] { get set }
 }
 
+extension SpotsCompositeDelegate {
+
+  func resolve(spotIndex spotIndex: Int, itemIndex: Int) -> [Spotable]? {
+    guard let compositeContainer = compositeSpots[spotIndex],
+      result = compositeContainer[itemIndex] else {
+        return nil
+    }
+
+    return result
+  }
+}
+
 /// A generic delegate for Spots
 public protocol SpotsDelegate: class {
 
