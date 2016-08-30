@@ -20,11 +20,9 @@ public extension SpotComposable where Self : View {
         width: contentView.frame.width,
         height: ceil(spot.render().height))
 
-      if spot.component.size?.height ?? 0.0 == 0.0 {
-        spot.setup(contentView.frame.size)
-      } else {
-        spot.layout(contentView.frame.size)
-      }
+      spot.component.size?.height == Optional(0.0)
+        ? spot.setup(contentView.frame.size)
+        : spot.layout(contentView.frame.size)
 
       contentView.addSubview(spot.render())
       spot.render().layoutIfNeeded()
