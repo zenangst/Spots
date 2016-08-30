@@ -5,7 +5,7 @@ import Brick
 #endif
 
 public protocol SpotsCompositeDelegate: class {
-  var compositeSpots: [Int : [Spotable]] { get set }
+  var compositeSpots: [Int : [Int : [Spotable]]] { get set }
 }
 
 /// A generic delegate for Spots
