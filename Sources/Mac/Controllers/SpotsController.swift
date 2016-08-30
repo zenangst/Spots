@@ -17,10 +17,12 @@ public class SpotsController: NSViewController, SpotsProtocol {
     }
   }
 
-  public var compositeSpots: [Int : [Spotable]] {
+  public var compositeSpots: [Int : [Int : [Spotable]]] {
     didSet {
-      for (index, elements) in compositeSpots {
-        elements.forEach { $0.spotsDelegate = spotsDelegate }
+      for (_, items) in compositeSpots {
+        for (_, container) in items.enumerate() {
+          container.1.forEach { $0.spotsDelegate = spotsDelegate }
+        }
       }
     }
   }
