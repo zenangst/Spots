@@ -77,9 +77,13 @@ extension Gridable {
     for (identifier, item) in self.dynamicType.headers.storage {
       switch item {
       case .classType(let classType):
-        self.collectionView.registerClass(classType, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: identifier)
+        self.collectionView.registerClass(classType,
+                                          forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
+                                          withReuseIdentifier: identifier)
       case .nib(let nib):
-        self.collectionView.registerNib(nib, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: identifier)
+        self.collectionView.registerNib(nib,
+                                        forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
+                                        withReuseIdentifier: identifier)
       }
     }
   }
