@@ -317,7 +317,7 @@ extension ListAdapter: UITableViewDataSource {
 
     guard indexPath.item < spot.component.items.count else { return cell }
 
-    if let composite = cell as? SpotComposite {
+    if let composite = cell as? SpotComposable {
       let spots = spot.spotsCompositeDelegate?.compositeSpots[spot.index]?[indexPath.item]
       composite.configure(&spot.component.items[indexPath.item], spots: spots)
     } else if let cell = cell as? SpotConfigurable {

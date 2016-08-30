@@ -422,7 +422,7 @@ extension CollectionAdapter : UICollectionViewDataSource {
       cell.optimize()
     #endif
 
-    if let composite = cell as? SpotComposite {
+    if let composite = cell as? SpotComposable {
       let spots = spot.spotsCompositeDelegate?.compositeSpots[spot.index]?[indexPath.item]
       composite.configure(&spot.component.items[indexPath.item], spots: spots)
     } else if let cell = cell as? SpotConfigurable {

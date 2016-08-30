@@ -1,14 +1,14 @@
 import UIKit
 import Brick
 
-public protocol SpotComposite: class {
+public protocol SpotComposable: class {
   var contentView: View { get }
 
   func configure(inout item: ViewModel, spots: [Spotable]?)
   func parse(item: ViewModel) -> [Spotable]
 }
 
-public extension SpotComposite where Self : View {
+public extension SpotComposable where Self : View {
 
   func configure(inout item: ViewModel, spots: [Spotable]?) {
     guard let spots = spots else { return }
@@ -35,7 +35,7 @@ public extension SpotComposite where Self : View {
   }
 }
 
-public extension SpotComposite {
+public extension SpotComposable {
 
   public func parse(item: ViewModel) -> [Spotable] {
     let spots = Parser.parse(item.children)
