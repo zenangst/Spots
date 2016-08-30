@@ -134,7 +134,13 @@ public struct Component: Mappable {
    - Parameter items: A collection of view models
    - Parameter meta: A key-value dictionary for any additional information
    */
-  public init(identifier: Int? = nil, title: String = "", header: String = "", kind: String = "", span: CGFloat = 0, items: [ViewModel] = [], meta: [String : AnyObject] = [:]) {
+  public init(identifier: Int? = nil,
+              title: String = "",
+              header: String = "",
+              kind: String = "",
+              span: CGFloat = 0,
+              items: [ViewModel] = [],
+              meta: [String : AnyObject] = [:]) {
     self.identifier = identifier
     self.title = title
     self.kind = kind
