@@ -508,6 +508,7 @@ public extension SpotsProtocol {
           }
         }
       } catch let error {
+        self.source = nil
         self.liveEditing(self.stateCache)
       }
     })
