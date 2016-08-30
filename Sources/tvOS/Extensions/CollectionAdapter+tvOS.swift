@@ -12,8 +12,8 @@ extension CollectionAdapter {
     if let indexPath = collectionView.indexPathsForSelectedItems()?.first {
       collectionView.deselectItemAtIndexPath(indexPath, animated: true)
       return false
-    } else {
-      return true
     }
+
+    return true
   }
 }
