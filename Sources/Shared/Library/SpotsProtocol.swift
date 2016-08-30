@@ -61,7 +61,29 @@ public extension SpotsProtocol {
   }
 
   public func dictionary(amountOfItems: Int? = nil) -> JSONDictionary {
-    return ["components" : spots.map { $0.component.dictionary(amountOfItems) }]
+    var result = [JSONDictionary]()
+
+    for spot in spots {
+      var spotJSON = spot.component.dictionary(amountOfItems)
+      for item in spot.items where item.kind == "composite" {
+        if let compositeSpots = compositeSpots[spot.index]?[item.index] {
+          var newItem = item
+          var children = [JSONDictionary]()
+          for itemSpot in compositeSpots {
+            children.append(itemSpot.dictionary)
+          }
+          newItem.children = children
+          var newItems = spotJSON[Component.Key.Items] as? JSONArray
+
+          newItems?[item.index] = newItem.dictionary
+          spotJSON[Component.Key.Items] = newItems
+        }
+      }
+
+      result.append(spotJSON)
+    }
+
+    return ["components" : result ]
   }
 
   /**
@@ -70,9 +92,11 @@ public extension SpotsProtocol {
   public func filter(@noescape includeElement: (Spotable) -> Bool) -> [Spotable] {
     var result = spots.filter(includeElement)
 
-    for (_, spots) in compositeSpots {
-      let compositeResults = spots.filter(includeElement)
-      if !compositeResults.isEmpty { result.appendContentsOf(compositeResults) }
+    for (_, cSpots) in compositeSpots {
+      for (_, spots) in cSpots.enumerate() {
+        let compositeResults = spots.1.filter(includeElement)
+        if !compositeResults.isEmpty { result.appendContentsOf(compositeResults) }
+      }
     }
 
     return result
@@ -87,11 +111,13 @@ public extension SpotsProtocol {
       }
     }
 
-    for (_, spots) in compositeSpots {
-      for spot in spots {
-        let items = spot.items.filter(includeElement)
-        if !items.isEmpty {
-          result.append((spot: spot, items: items))
+    for (_, cSpots) in compositeSpots {
+      for (_, spots) in cSpots.enumerate() {
+        for spot in spots.1 {
+          let items = spot.items.filter(includeElement)
+          if !items.isEmpty {
+            result.append((spot: spot, items: items))
+          }
         }
       }
     }
@@ -141,12 +167,13 @@ public extension SpotsProtocol {
       }
 
       var offsets = [CGPoint]()
+      var oldComposite = weakSelf.compositeSpots
+
       if newComponents.count == oldComponents.count {
         offsets = weakSelf.spots.map { $0.render().contentOffset }
       }
 
       weakSelf.spots = newSpots
-      weakSelf.cache()
 
       if weakSelf.spotsScrollView.superview == nil {
         weakSelf.view.addSubview(weakSelf.spotsScrollView)
@@ -154,6 +181,17 @@ public extension SpotsProtocol {
 
       weakSelf.reloadSpotsScrollView()
       weakSelf.setupSpots(animated)
+      weakSelf.cache()
+
+      for (index, container) in weakSelf.compositeSpots.enumerate() {
+        guard let itemIndex = container.1.keys.first,
+        foundContainer = weakSelf.compositeSpots[index]?[itemIndex] else { continue }
+
+        for (spotIndex, spot) in foundContainer.enumerate() {
+          guard let oldSpot = oldComposite[index]?[itemIndex]?[spotIndex] else { continue }
+          spot.render().contentOffset = oldSpot.render().contentOffset
+        }
+      }
 
       closure?()
       weakSelf.spotsScrollView.forceUpdate = true
