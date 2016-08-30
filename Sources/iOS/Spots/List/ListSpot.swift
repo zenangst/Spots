@@ -10,15 +10,16 @@ public class ListSpot: NSObject, Listable {
 
   public static var views: Registry = Registry().then {
     $0.defaultItem = Registry.Item.classType(ListSpotCell.self)
+    $0.composite =  Registry.Item.classType(ListComposite.self)
   }
 
   public static var configure: ((view: UITableView) -> Void)?
   public static var headers = Registry()
 
-  public var index = 0
   public var component: Component
   public var configure: (SpotConfigurable -> Void)?
 
+  public weak var spotsCompositeDelegate: SpotsCompositeDelegate?
   public weak var spotsDelegate: SpotsDelegate?
 
   public var adapter: SpotAdapter? {

@@ -195,14 +195,29 @@ public class CollectionAdapter: NSObject, SpotAdapter {
    - Parameter completion: A completion closure that is executed in the main queue when the view model has been removed
    */
   public func update(item: ViewModel, index: Int, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
-    spot.items[index] = item
 
+    let oldItem = spot.items[index]
+
+    spot.items[index] = item
     spot.configureItem(index)
 
-    dispatch { [weak self] in
-      guard let weakSelf = self else { return }
-      weakSelf.spot.collectionView.reload([index], completion: completion)
+    let newItem = spot.items[index]
+    let indexPath = NSIndexPath(forItem: index, inSection: 0)
+
+    if newItem.kind != oldItem.kind || newItem.size.height != oldItem.size.height {
+      if let cell = spot.collectionView.cellForItemAtIndexPath(indexPath) as? SpotConfigurable {
+        spot.collectionView.performBatchUpdates({
+          }, completion: { (_) in
+            cell.configure(&self.spot.items[index])
+        })
+      } else {
+        spot.collectionView.reload([index], section: 0)
+      }
+    } else if let cell = spot.collectionView.cellForItemAtIndexPath(indexPath) as? SpotConfigurable {
+      cell.configure(&spot.items[index])
     }
+
+    completion?()
   }
 
   /**
@@ -255,6 +270,10 @@ extension CollectionAdapter : UIScrollViewDelegate {
     (spot as? CarouselSpot)?.scrollViewWillEndDragging(scrollView, withVelocity: velocity, targetContentOffset: targetContentOffset)
   }
 
+  public func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    (spot as? CarouselSpot)?.scrollViewDidEndDragging(scrollView, willDecelerate: decelerate)
+  }
+
   /**
    Tells the delegate when the user scrolls the content view within the receiver.
 
@@ -266,6 +285,17 @@ extension CollectionAdapter : UIScrollViewDelegate {
 }
 
 extension CollectionAdapter : UICollectionViewDelegate {
+
+  public func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
+    let header = spot.component.header.isEmpty
+      ? spot.dynamicType.headers.defaultIdentifier
+      : spot.component.header
+
+    let view = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: header, forIndexPath: indexPath)
+    (view as? Componentable)?.configure(spot.component)
+
+    return view
+  }
 
   /**
    Asks the delegate for the size of the specified item’s cell.
@@ -314,22 +344,6 @@ extension CollectionAdapter : UICollectionViewDelegate {
   public func collectionView(collectionView: UICollectionView, shouldUpdateFocusInContext context: UICollectionViewFocusUpdateContext) -> Bool {
     guard let indexPaths = collectionView.indexPathsForSelectedItems() else { return true }
     return indexPaths.isEmpty
-  }
-
-  /**
-   Asks the delegate if the specified item should be selected.
-
-   - Parameter collectionView: The collection view object that is asking whether the selection should change.
-   - Parameter indexPath: The index path of the cell to be selected.
-   - Returns: true if the item should be selected or false if it should not.
-   */
-  public func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-    if let indexPath = collectionView.indexPathsForSelectedItems()?.first {
-      collectionView.deselectItemAtIndexPath(indexPath, animated: true)
-      return false
-    } else {
-      return true
-    }
   }
 
   /**
@@ -408,12 +422,14 @@ extension CollectionAdapter : UICollectionViewDataSource {
       cell.optimize()
     #endif
 
-    if let cell = cell as? SpotConfigurable {
+    if let composite = cell as? SpotComposable {
+      let spots = spot.spotsCompositeDelegate?.resolve(spotIndex: spot.index, itemIndex: indexPath.item)
+      composite.configure(&spot.component.items[indexPath.item], spots: spots)
+    } else if let cell = cell as? SpotConfigurable {
       cell.configure(&spot.component.items[indexPath.item])
       if spot.component.items[indexPath.item].size.height == 0.0 {
         spot.component.items[indexPath.item].size = cell.size
       }
-
       spot.configure?(cell)
     }
 

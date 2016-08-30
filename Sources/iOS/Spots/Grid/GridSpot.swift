@@ -5,47 +5,32 @@ import Brick
 public class GridSpot: NSObject, Gridable {
 
   public struct Key {
-    public static let minimumInteritemSpacing = "itemSpacing"
-    public static let minimumLineSpacing = "lineSpacing"
-    public static let titleLeftMargin = "titleLeftMargin"
-    public static let titleFontSize = "titleFontSize"
-    public static let layout = "layout"
-    public static let gridLayoutMaximumItemWidth = "itemWidthMax"
-    public static let gridLayoutMaximumItemHeight = "itemHeightMax"
-    public static let gridLayoutMinimumItemWidth = "itemMinWidth"
-    public static let gridLayoutMinimumItemHeight = "itemMinHeight"
+    public static let minimumInteritemSpacing = "item-spacing"
+    public static let minimumLineSpacing = "line-spacing"
   }
 
   public struct Default {
-
-    public struct Flow {
-      public static var minimumInteritemSpacing: CGFloat = 0.0
-      public static var minimumLineSpacing: CGFloat = 0.0
-    }
-
-    public static var titleFontSize: CGFloat = 18.0
-    public static var titleLeftInset: CGFloat = 0.0
-    public static var titleTopInset: CGFloat = 10.0
-    public static var gridLayoutMaximumItemWidth = 120
-    public static var gridLayoutMaximumItemHeight = 120
-    public static var gridLayoutMinimumItemWidth = 80
-    public static var gridLayoutMinimumItemHeight = 80
     public static var sectionInsetTop: CGFloat = 0.0
     public static var sectionInsetLeft: CGFloat = 0.0
     public static var sectionInsetRight: CGFloat = 0.0
     public static var sectionInsetBottom: CGFloat = 0.0
+    public static var minimumInteritemSpacing: CGFloat = 0.0
+    public static var minimumLineSpacing: CGFloat = 0.0
   }
 
   public static var views: Registry = Registry().then {
     $0.defaultItem = Registry.Item.classType(GridSpotCell.self)
+    $0.composite =  Registry.Item.classType(GridComposite.self)
   }
 
   public static var configure: ((view: UICollectionView, layout: UICollectionViewFlowLayout) -> Void)?
 
+  public static var headers = Registry()
+
   public var component: Component
-  public var index = 0
   public var configure: (SpotConfigurable -> Void)?
 
+  public weak var spotsCompositeDelegate: SpotsCompositeDelegate?
   public weak var spotsDelegate: SpotsDelegate?
 
   public var adapter: SpotAdapter? {
@@ -53,7 +38,7 @@ public class GridSpot: NSObject, Gridable {
   }
 
   public lazy var collectionAdapter: CollectionAdapter = CollectionAdapter(spot: self)
-  public lazy var layout = UICollectionViewFlowLayout()
+  public lazy var layout: CollectionLayout = CollectionLayout()
   public private(set) var stateCache: SpotCache?
 
   public lazy var collectionView: UICollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: self.layout).then {
@@ -72,8 +57,8 @@ public class GridSpot: NSObject, Gridable {
       bottom: component.meta(GridableMeta.Key.sectionInsetBottom, Default.sectionInsetBottom),
       right: component.meta(GridableMeta.Key.sectionInsetRight, Default.sectionInsetRight))
 
-    layout.minimumInteritemSpacing = component.meta(GridSpot.Key.minimumInteritemSpacing, Default.Flow.minimumInteritemSpacing)
-    layout.minimumLineSpacing = component.meta(GridSpot.Key.minimumLineSpacing, Default.Flow.minimumLineSpacing)
+    layout.minimumInteritemSpacing = component.meta(GridSpot.Key.minimumInteritemSpacing, Default.minimumInteritemSpacing)
+    layout.minimumLineSpacing = component.meta(GridSpot.Key.minimumLineSpacing, Default.minimumLineSpacing)
   }
 
   public convenience init(title: String = "", kind: String? = nil) {

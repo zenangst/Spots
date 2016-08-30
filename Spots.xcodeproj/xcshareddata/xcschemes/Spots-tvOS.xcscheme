@@ -14,8 +14,8 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "BD5B9A131CD2865E002E69DA"
-               BuildableName = "Spots-tvOS.framework"
+               BlueprintIdentifier = "BD7396FD1D718CD2000AF2DE"
+               BuildableName = "Spots.framework"
                BlueprintName = "Spots-tvOS"
                ReferencedContainer = "container:Spots.xcodeproj">
             </BuildableReference>
@@ -28,26 +28,7 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D58478121C43FEB9006EBA49"
-               BuildableName = "Spots-iOS-Tests.xctest"
-               BlueprintName = "Spots-iOS-Tests"
-               ReferencedContainer = "container:Spots.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "BD5B9A131CD2865E002E69DA"
-            BuildableName = "Spots-tvOS.framework"
-            BlueprintName = "Spots-tvOS"
-            ReferencedContainer = "container:Spots.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
@@ -64,8 +45,8 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "BD5B9A131CD2865E002E69DA"
-            BuildableName = "Spots-tvOS.framework"
+            BlueprintIdentifier = "BD7396FD1D718CD2000AF2DE"
+            BuildableName = "Spots.framework"
             BlueprintName = "Spots-tvOS"
             ReferencedContainer = "container:Spots.xcodeproj">
          </BuildableReference>
@@ -82,8 +63,8 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "BD5B9A131CD2865E002E69DA"
-            BuildableName = "Spots-tvOS.framework"
+            BlueprintIdentifier = "BD7396FD1D718CD2000AF2DE"
+            BuildableName = "Spots.framework"
             BlueprintName = "Spots-tvOS"
             ReferencedContainer = "container:Spots.xcodeproj">
          </BuildableReference>

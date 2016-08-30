@@ -8,10 +8,10 @@ import Brick
 
 public struct GridableMeta {
   public struct Key {
-    public static let sectionInsetTop = "insetTop"
-    public static let sectionInsetLeft = "insetLeft"
-    public static let sectionInsetRight = "insetRight"
-    public static let sectionInsetBottom = "insetBottom"
+    public static let sectionInsetTop = "inset-top"
+    public static let sectionInsetLeft = "inset-left"
+    public static let sectionInsetRight = "inset-right"
+    public static let sectionInsetBottom = "inset-bottom"
   }
 }
 
@@ -22,6 +22,10 @@ public protocol Gridable: Spotable {
   var layout: CollectionLayout { get }
   /// The collection view object managed by this gridable object.
   var collectionView: CollectionView { get }
+
+  #if !os(OSX)
+  static var headers: Registry { get set }
+  #endif
 
   /**
    Asks the data source for the size of an item in a particular location.
@@ -49,7 +53,7 @@ public extension Spotable where Self : Gridable {
   }
   #else
   public func render() -> ScrollView {
-  return collectionView
+    return collectionView
   }
   #endif
 
@@ -70,8 +74,6 @@ public extension Spotable where Self : Gridable {
   public func layout(size: CGSize) {
     layout.invalidateLayout()
     collectionView.frame.size.width = size.width
-    guard let componentSize = component.size else { return }
-    collectionView.frame.size.height = componentSize.height
   }
 
   public func prepareItems() {

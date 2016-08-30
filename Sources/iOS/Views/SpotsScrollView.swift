@@ -3,7 +3,7 @@ import QuartzCore
 
 public class SpotsScrollView: UIScrollView {
 
-  let KVOContext = UnsafeMutablePointer<()>(nil)
+  let subviewContext = UnsafeMutablePointer<()>(nil)
 
   private var subviewsInLayoutOrder = [UIView?]()
 
@@ -50,8 +50,8 @@ public class SpotsScrollView: UIScrollView {
     subviewsInLayoutOrder.append(subview)
 
     if subview.superview == contentView && !(subview is UIScrollView) {
-      subview.addObserver(self, forKeyPath: "frame", options: .Old, context: KVOContext)
-      subview.addObserver(self, forKeyPath: "bounds", options: .Old, context: KVOContext)
+      subview.addObserver(self, forKeyPath: "frame", options: .Old, context: subviewContext)
+      subview.addObserver(self, forKeyPath: "bounds", options: .Old, context: subviewContext)
     }
 
     guard let scrollView = subview as? UIScrollView else {
@@ -70,17 +70,17 @@ public class SpotsScrollView: UIScrollView {
       scrollView.scrollEnabled = true
     }
 
-    scrollView.addObserver(self, forKeyPath: "contentSize", options: .Old, context: KVOContext)
+    scrollView.addObserver(self, forKeyPath: "contentSize", options: .Old, context: subviewContext)
 
     setNeedsLayout()
   }
 
   public override func willRemoveSubview(subview: UIView) {
     if subview is UIScrollView {
-      subview.removeObserver(self, forKeyPath: "contentSize", context: KVOContext)
+      subview.removeObserver(self, forKeyPath: "contentSize", context: subviewContext)
     } else if subview.superview == contentView {
-      subview.removeObserver(self, forKeyPath: "frame", context: KVOContext)
-      subview.removeObserver(self, forKeyPath: "bounds", context: KVOContext)
+      subview.removeObserver(self, forKeyPath: "frame", context: subviewContext)
+      subview.removeObserver(self, forKeyPath: "bounds", context: subviewContext)
     }
 
     if let index = subviewsInLayoutOrder.indexOf({ $0 == subview }) {
@@ -91,7 +91,7 @@ public class SpotsScrollView: UIScrollView {
   }
 
   public override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
-    if let change = change where context == KVOContext && keyPath == "contentSize" {
+    if let change = change where context == subviewContext && keyPath == "contentSize" {
       if let scrollView = object as? UIScrollView {
         guard let change = change[NSKeyValueChangeOldKey] else { return }
         let oldContentSize = change.CGSizeValue()
@@ -116,6 +116,8 @@ public class SpotsScrollView: UIScrollView {
 
   public override func layoutSubviews() {
     super.layoutSubviews()
+
+    guard let superview = superview else { return }
 
     contentView.frame = bounds
     contentView.bounds = CGRect(origin: contentOffset, size: bounds.size)
@@ -163,7 +165,7 @@ public class SpotsScrollView: UIScrollView {
     let initialContentOffset = contentOffset
     contentSize = CGSize(width: bounds.size.width, height: fmax(yOffsetOfCurrentSubview, minimumContentHeight))
 
-    if let superview = superview where self.height != superview.height {
+    if self.height != superview.height {
       self.height = superview.height
     }
 

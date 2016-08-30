@@ -21,6 +21,6 @@ public typealias Completion = (() -> Void)?
   public typealias TableView = UITableView
   public typealias CollectionView = UICollectionView
   public typealias Nib = UINib
-  public typealias CollectionLayout = UICollectionViewFlowLayout
+  public typealias CollectionLayout = GridableLayout
   public typealias EdgeInsets = UIEdgeInsets
 #endif

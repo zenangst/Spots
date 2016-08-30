@@ -6,7 +6,25 @@ import Cache
 /**
  SpotsController is a subclass of UIViewController
  */
-public class SpotsController: UIViewController, SpotsProtocol, UIScrollViewDelegate {
+public class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDelegate, UIScrollViewDelegate {
+
+  /**
+   A notification enum
+
+   - deviceDidRotateNotification: Used when the device is rotated
+   */
+  enum NotificationKeys: String {
+    case deviceDidRotateNotification = "deviceDidRotateNotification"
+  }
+
+  /// A rotation class that is used in the `deviceDidRotate` notification
+  class RotationSize {
+    let size: CGSize
+
+    init(size: CGSize) {
+      self.size = size
+    }
+  }
 
   /// A static closure to configure SpotsScrollView
   public static var configure: ((container: SpotsScrollView) -> Void)?
@@ -18,6 +36,16 @@ public class SpotsController: UIViewController, SpotsProtocol, UIScrollViewDeleg
     didSet {
       spots.forEach { $0.spotsDelegate = spotsDelegate }
       spotsDelegate?.spotsDidChange(spots)
+    }
+  }
+
+  public var compositeSpots: [Int : [Int : [Spotable]]] {
+    didSet {
+      for (index, items) in compositeSpots {
+        for (itemIndex, container) in items.enumerate() {
+          container.1.forEach { $0.spotsDelegate = spotsDelegate }
+        }
+      }
     }
   }
 
@@ -87,7 +115,10 @@ public class SpotsController: UIViewController, SpotsProtocol, UIScrollViewDeleg
    */
   public required init(spots: [Spotable] = []) {
     self.spots = spots
+    self.compositeSpots = [:]
     super.init(nibName: nil, bundle: nil)
+
+    NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(self.deviceDidRotate(_:)), name: NotificationKeys.deviceDidRotateNotification.rawValue, object: nil)
   }
 
   /**
@@ -122,13 +153,14 @@ public class SpotsController: UIViewController, SpotsProtocol, UIScrollViewDeleg
     fatalError("init(coder:) has not been implemented")
   }
 
-#if DEVMODE
   deinit {
+    #if DEVMODE
     if let source = source {
       dispatch_source_cancel(source)
     }
+    NSNotificationCenter.defaultCenter().removeObserver(self)
+    #endif
   }
-#endif
 
   /**
    A generic look up method for resolving spots based on index
@@ -151,6 +183,21 @@ public class SpotsController: UIViewController, SpotsProtocol, UIScrollViewDeleg
     return nil
   }
 
+  // MARK: - Notifications
+
+  /**
+   Handle rotation for views that are not on screen
+
+   - parameter notification: A notification containing the new size
+   */
+  func deviceDidRotate(notification: NSNotification) {
+    if let userInfo = notification.userInfo as? [String : AnyObject],
+      rotationSize = userInfo["size"] as? RotationSize
+      where view.window == nil {
+      configureView(withSize: rotationSize.size)
+    }
+  }
+
   // MARK: - View Life Cycle
 
   /// Called after the spot controller's view is loaded into memory.
@@ -162,7 +209,6 @@ public class SpotsController: UIViewController, SpotsProtocol, UIScrollViewDeleg
     setupSpots()
 
     SpotsController.configure?(container: spotsScrollView)
-    spotsScrollView.forceUpdate = true
   }
 
   /**
@@ -172,6 +218,8 @@ public class SpotsController: UIViewController, SpotsProtocol, UIScrollViewDeleg
    */
   public override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
+
+    defer { spotsScrollView.forceUpdate = true }
 
     if let tabBarController = self.tabBarController
       where tabBarController.tabBar.translucent {
@@ -184,7 +232,29 @@ public class SpotsController: UIViewController, SpotsProtocol, UIScrollViewDeleg
 
     spotsScrollView.insertSubview(refreshControl, atIndex: 0)
 #endif
+  }
+
+  /**
+   Notifies the view controller that its view was added to a view hierarchy.
+
+   - parameter animated: If true, the view was added to the window using an animation.
+   */
+  override public func viewDidAppear(animated: Bool) {
     spotsScrollView.forceUpdate = true
+    super.viewDidAppear(animated)
+  }
+
+  func configureView(withSize size: CGSize) {
+    spotsScrollView.frame.size = size
+    spotsScrollView.contentView.frame.size = size
+    spots.enumerate().forEach { index, spot in
+      compositeSpots[index]?.forEach { cIndex, cSpots in
+        cSpots.forEach {
+          $0.layout(size)
+        }
+      }
+      spot.layout(size)
+    }
   }
 
   /**
@@ -196,15 +266,25 @@ public class SpotsController: UIViewController, SpotsProtocol, UIScrollViewDeleg
   public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
     super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
 
-    spots.forEach { $0.layout(size) }
+    coordinator.animateAlongsideTransition({ (UIViewControllerTransitionCoordinatorContext) in
+      self.configureView(withSize: size)
+      }) { (UIViewControllerTransitionCoordinatorContext) in
+        self.configureView(withSize: size)
+        NSNotificationCenter.defaultCenter().postNotificationName(NotificationKeys.deviceDidRotateNotification.rawValue,
+                                                                  object: nil,
+                                                                  userInfo: ["size" : RotationSize(size: size)])
+    }
   }
 
   /**
    - Parameter animated: An optional animation closure that runs when a spot is being rendered
   */
   public func setupSpots(animated: ((view: UIView) -> Void)? = nil) {
+    var yOffset: CGFloat = 0.0
+    compositeSpots = [:]
     spots.enumerate().forEach { index, spot in
-      spots[index].index = index
+      spot.spotsCompositeDelegate = self
+      spots[index].component.index = index
       spot.render().optimize()
       spotsScrollView.contentView.addSubview(spot.render())
       spot.registerAndPrepare()
@@ -213,8 +293,10 @@ public class SpotsController: UIViewController, SpotsProtocol, UIScrollViewDeleg
         width: view.width,
         height: ceil(spot.render().height))
       animated?(view: spot.render())
+
+      (spot as? Gridable)?.layout.yOffset = yOffset
+      yOffset += spot.render().frame.size.height
     }
-    spotsScrollView.forceUpdate = true
   }
 
   #if os(iOS)

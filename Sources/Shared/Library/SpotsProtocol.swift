@@ -15,6 +15,8 @@ public protocol SpotsProtocol: class {
   var spotsScrollView: SpotsScrollView { get }
   /// A delegate that conforms to SpotsDelegate
   var spotsDelegate: SpotsDelegate? { get }
+  /// A collection of Spotable objects used in composition
+  var compositeSpots: [Int : [Int : [Spotable]]] { get set }
   /// A collection of Spotable objects
   var spots: [Spotable] { get set }
   /// An array of refresh position to avoid calling multiple refreshes
@@ -59,14 +61,68 @@ public extension SpotsProtocol {
   }
 
   public func dictionary(amountOfItems: Int? = nil) -> JSONDictionary {
-    return ["components" : spots.map { $0.component.dictionary(amountOfItems) }]
+    var result = [JSONDictionary]()
+
+    for spot in spots {
+      var spotJSON = spot.component.dictionary(amountOfItems)
+      for item in spot.items where item.kind == "composite" {
+        if let compositeSpots = compositeSpots[spot.index]?[item.index] {
+          var newItem = item
+          var children = [JSONDictionary]()
+          for itemSpot in compositeSpots {
+            children.append(itemSpot.dictionary)
+          }
+          newItem.children = children
+          var newItems = spotJSON[Component.Key.Items] as? JSONArray
+
+          newItems?[item.index] = newItem.dictionary
+          spotJSON[Component.Key.Items] = newItems
+        }
+      }
+
+      result.append(spotJSON)
+    }
+
+    return ["components" : result ]
   }
 
   /**
    - Parameter includeElement: A filter predicate to find a spot
    */
   public func filter(@noescape includeElement: (Spotable) -> Bool) -> [Spotable] {
-    return spots.filter(includeElement)
+    var result = spots.filter(includeElement)
+
+    for (_, cSpots) in compositeSpots {
+      for (_, spots) in cSpots.enumerate() {
+        let compositeResults = spots.1.filter(includeElement)
+        if !compositeResults.isEmpty { result.appendContentsOf(compositeResults) }
+      }
+    }
+
+    return result
+  }
+
+  public func filterItems(@noescape includeElement: (ViewModel) -> Bool) -> [(spot: Spotable, items: [ViewModel])] {
+    var result = [(spot: Spotable, items: [ViewModel])]()
+    for spot in spots {
+      let items = spot.items.filter(includeElement)
+      if !items.isEmpty {
+        result.append((spot: spot, items: items))
+      }
+    }
+
+    for (_, cSpots) in compositeSpots {
+      for (_, spots) in cSpots.enumerate() {
+        for spot in spots.1 {
+          let items = spot.items.filter(includeElement)
+          if !items.isEmpty {
+            result.append((spot: spot, items: items))
+          }
+        }
+      }
+    }
+
+    return result
   }
 
   /**
@@ -110,8 +166,14 @@ public extension SpotsProtocol {
         return
       }
 
+      var offsets = [CGPoint]()
+      var oldComposite = weakSelf.compositeSpots
+
+      if newComponents.count == oldComponents.count {
+        offsets = weakSelf.spots.map { $0.render().contentOffset }
+      }
+
       weakSelf.spots = newSpots
-      weakSelf.cache()
 
       if weakSelf.spotsScrollView.superview == nil {
         weakSelf.view.addSubview(weakSelf.spotsScrollView)
@@ -119,9 +181,27 @@ public extension SpotsProtocol {
 
       weakSelf.reloadSpotsScrollView()
       weakSelf.setupSpots(animated)
+      weakSelf.cache()
+
+      for (index, container) in weakSelf.compositeSpots.enumerate() {
+        guard let itemIndex = container.1.keys.first,
+        foundContainer = weakSelf.compositeSpots[index]?[itemIndex] else { continue }
+
+        for (spotIndex, spot) in foundContainer.enumerate() {
+          guard let rootContainer = oldComposite[index],
+            itemContainer = rootContainer[itemIndex],
+            oldSpot = itemContainer[spotIndex] as? Spotable else { continue }
+
+          spot.render().contentOffset = oldSpot.render().contentOffset
+        }
+      }
 
       closure?()
       weakSelf.spotsScrollView.forceUpdate = true
+
+      offsets.enumerate().forEach {
+        newSpots[$0.index].render().contentOffset = $0.element
+      }
     }
   }
 
@@ -390,7 +470,6 @@ public extension SpotsProtocol {
   }
 
   #if DEVMODE
-
   private func monitor(filePath: String) {
     guard NSFileManager.defaultManager().fileExistsAtPath(filePath) else { return }
 
@@ -416,17 +495,21 @@ public extension SpotsProtocol {
           let offset = self.spotsScrollView.contentOffset
           self.reloadIfNeeded(json, compare: { $0 !== $1 }) {
             self.spotsScrollView.contentOffset = offset
+
+            var yOffset: CGFloat = 0.0
+            for spot in self.spots {
+              (spot as? Gridable)?.layout.yOffset = yOffset
+              yOffset += spot.render().frame.size.height
+            }
+
+            for case let gridable as CarouselSpot in self.spots {
+              (gridable.layout as? GridableLayout)?.yOffset = gridable.render().frame.origin.y
+            }
           }
         }
       } catch let error {
-        dispatch_source_cancel(self.source)
         self.source = nil
-
-        self.reload(["components" : [["kind" : "list", "items" : [[
-          "title" : "JSON parsing error",
-          "subtitle" : "\(error)"]]
-          ]
-          ]])
+        self.liveEditing(self.stateCache)
       }
     })
 
@@ -443,8 +526,7 @@ public extension SpotsProtocol {
 
     let paths = NSSearchPathForDirectoriesInDomains(.CachesDirectory,
                                                     NSSearchPathDomainMask.UserDomainMask, true)
-
-    NSLog("SpotsCache -> \(stateCache.key):\nfile://\(stateCache.path)")
+    NSLog("-----[\(stateCache.key)]-----\n\nfile://\(stateCache.path)\n\n")
     delay(0.5) { self.monitor(stateCache.path) }
   }
   #endif

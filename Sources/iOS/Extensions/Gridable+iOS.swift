@@ -1,4 +1,6 @@
 import UIKit
+import Sugar
+import Brick
 
 extension Gridable {
 
@@ -42,16 +44,6 @@ extension Gridable {
     )
   }
 
-  /**
-   - Parameter size: A CGSize to set the width and height of the collection view
-   */
-  public func layout(size: CGSize) {
-    collectionView.collectionViewLayout.invalidateLayout()
-    collectionView.frame.size.width = size.width
-    guard let componentSize = component.size else { return }
-    collectionView.frame.size.height = componentSize.height
-  }
-
   public func prepareItems() {
     component.items.enumerate().forEach { (index: Int, _) in
       configureItem(index, usesViewSize: true)
@@ -59,6 +51,15 @@ extension Gridable {
         component.items[index].size.width = UIScreen.mainScreen().bounds.size.width / CGFloat(component.span)
       }
     }
+  }
+
+  /**
+   - Parameter size: A CGSize to set the width and height of the collection view
+   */
+  public func layout(size: CGSize) {
+    layout.invalidateLayout()
+    collectionView.frame.size.width = size.width
+    collectionView.frame.size.height = layout.collectionViewContentSize().height
   }
 
   // MARK: - Spotable
@@ -72,5 +73,30 @@ extension Gridable {
         self.collectionView.registerNib(nib, forCellWithReuseIdentifier: identifier)
       }
     }
+
+    for (identifier, item) in self.dynamicType.headers.storage {
+      switch item {
+      case .classType(let classType):
+        self.collectionView.registerClass(classType,
+                                          forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
+                                          withReuseIdentifier: identifier)
+      case .nib(let nib):
+        self.collectionView.registerNib(nib,
+                                        forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
+                                        withReuseIdentifier: identifier)
+      }
+    }
+  }
+
+  public static func register(header header: View.Type, identifier: StringConvertible) {
+    self.headers.storage[identifier.string] = Registry.Item.classType(header)
+  }
+
+  public static func register(header nib: Nib, identifier: StringConvertible) {
+    self.headers.storage[identifier.string] = Registry.Item.nib(nib)
+  }
+
+  public static func register(defaultHeader header: View.Type) {
+    self.headers.storage[self.views.defaultIdentifier] = Registry.Item.classType(header)
   }
 }

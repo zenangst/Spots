@@ -39,6 +39,7 @@ class ExploreController: SpotsController {
     let suggestedSpot = CarouselSpot(suggestedChannels)
     suggestedSpot.pageIndicator = true
     suggestedSpot.paginate = true
+    suggestedSpot.paginateByItem = false
 
     let spots: [Spotable] = [
       ListSpot(component: Component(title : "Suggested Channels", meta: ["headerHeight" : 33])),

@@ -12,11 +12,16 @@ public protocol Spotable: class {
 
   static var views: Registry { get set }
 
+  #if !os(OSX)
+  /// A SpotsCompositeDelegate object
+  weak var spotsCompositeDelegate: SpotsCompositeDelegate? { get set }
+  #endif
+
   /// A SpotsDelegate object
   weak var spotsDelegate: SpotsDelegate? { get set }
 
   /// The index of a Spotable object
-  var index: Int { get set }
+  var index: Int { get }
   /// The component of a Spotable object
   var component: Component { get set }
   /// A configuration closure for a SpotConfigurable object
@@ -79,6 +84,10 @@ public protocol Spotable: class {
 }
 
 public extension Spotable {
+
+  public var index: Int {
+    return component.index
+  }
 
   /// Append view model to a Spotable object
   func append(item: ViewModel, withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
@@ -203,8 +212,14 @@ public extension Spotable {
       return
     }
 
+    var indexes: [Int]? = nil
     self.items = items
-    reload(nil, withAnimation: animation) {
+
+    for (index, _) in items.enumerate() {
+      indexes?.append(index)
+    }
+
+    reload(indexes, withAnimation: animation) {
       self.cache()
     }
   }
@@ -234,8 +249,6 @@ public extension Spotable {
   }
 
   /**
-   TODO: We should probably have a look at this method? Seems silly to always return 0.0 😁
-
    - Parameter includeElement: A filter predicate to find a view model
    - Returns: Always returns 0.0
    */
@@ -259,17 +272,35 @@ public extension Spotable {
       : viewModel.kind
 
     guard let (_, resolvedView) = Self.views.make(kind),
-      view = resolvedView as? SpotConfigurable else { return }
+      view = resolvedView else { return }
 
-    view.configure(&viewModel)
+    #if !os(OSX)
+      if let composite = view as? SpotComposable {
+        let spots = composite.parse(viewModel)
+        for spot in spots {
+          spot.registerAndPrepare()
+          spot.render().optimize()
+        }
+
+        if spotsCompositeDelegate?.compositeSpots[component.index] == nil {
+          spotsCompositeDelegate?.compositeSpots[component.index] = [index : spots]
+        } else {
+          spotsCompositeDelegate?.compositeSpots[component.index]?[index] = spots
+        }
+      } else {
+        (view as? SpotConfigurable)?.configure(&viewModel)
+      }
+    #else
+      (view as? SpotConfigurable)?.configure(&viewModel)
+    #endif
 
     if usesViewSize {
       if viewModel.size.height == 0 {
-        viewModel.size.height = view.size.height
+        viewModel.size.height = (view as? SpotConfigurable)?.size.height ?? 0.0
       }
 
       if viewModel.size.width == 0 {
-        viewModel.size.width = view.size.width
+        viewModel.size.width = (view as? SpotConfigurable)?.size.width ?? 0.0
       }
     }
 

@@ -29,6 +29,12 @@ public class Registry {
     }
   }
 
+  var composite: Item? {
+    didSet {
+      storage["composite"] = composite
+    }
+  }
+
   /// The default identifier for the registry
   var defaultIdentifier: String {
     return String(defaultItem)
