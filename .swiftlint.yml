@@ -1,5 +1,6 @@
 disabled_rules:
   - valid_docs
+  - nesting
 opt_in_rules: # some rules are only opt-in
   - empty_count
     #- missing_docs
