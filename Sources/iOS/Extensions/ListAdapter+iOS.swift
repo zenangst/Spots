@@ -14,7 +14,9 @@ extension ListAdapter {
 
     dispatch { [weak self] in
       self?.spot.tableView.insert([count], animation: animation.tableViewAnimation)
-      completion?()
+      self?.spot.updateHeight() {
+        completion?()
+      }
     }
 
     spot.configureItem(count)
@@ -38,7 +40,9 @@ extension ListAdapter {
 
     dispatch { [weak self] in
       self?.spot.tableView.insert(indexes, animation: animation.tableViewAnimation)
-      completion?()
+      self?.spot.updateHeight() {
+        completion?()
+      }
     }
   }
 
@@ -53,7 +57,9 @@ extension ListAdapter {
 
     dispatch { [weak self] in
       self?.spot.tableView.insert([index], animation: animation.tableViewAnimation)
-      completion?()
+      self?.spot.updateHeight() {
+        completion?()
+      }
     }
   }
 
@@ -75,7 +81,9 @@ extension ListAdapter {
       }
 
       self?.spot.tableView.insert(indexes, animation: animation.tableViewAnimation)
-      completion?()
+      self?.spot.updateHeight() {
+        completion?()
+      }
     }
   }
 
@@ -92,7 +100,9 @@ extension ListAdapter {
 
     dispatch { [weak self] in
       self?.spot.tableView.delete([index], animation: animation.tableViewAnimation)
-      completion?()
+      self?.spot.updateHeight() {
+        completion?()
+      }
     }
   }
 
@@ -112,7 +122,9 @@ extension ListAdapter {
 
     dispatch { [weak self] in
       self?.spot.tableView.delete(indexPaths, animation: animation.tableViewAnimation)
-      completion?()
+      self?.spot.updateHeight() {
+        completion?()
+      }
     }
   }
 
@@ -125,7 +137,9 @@ extension ListAdapter {
     dispatch { [weak self] in
       self?.spot.component.items.removeAtIndex(index)
       self?.spot.tableView.delete([index], animation: animation.tableViewAnimation)
-      completion?()
+      self?.spot.updateHeight() {
+        completion?()
+      }
     }
   }
 
@@ -138,7 +152,9 @@ extension ListAdapter {
     dispatch { [weak self] in
       indexes.forEach { self?.spot.component.items.removeAtIndex($0) }
       self?.spot.tableView.delete(indexes, section: 0, animation: animation.tableViewAnimation)
-      completion?()
+      self?.spot.updateHeight() {
+        completion?()
+      }
     }
   }
 
@@ -169,7 +185,9 @@ extension ListAdapter {
       cell.configure(&spot.items[index])
     }
 
-    completion?()
+    spot.updateHeight() {
+      completion?()
+    }
   }
 
   /**
@@ -197,6 +215,7 @@ extension ListAdapter {
     }
 
     UIView.setAnimationsEnabled(true)
+    spot.updateHeight()
     completion?()
   }
 }
