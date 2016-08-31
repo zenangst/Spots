@@ -41,8 +41,8 @@ public class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDel
 
   public var compositeSpots: [Int : [Int : [Spotable]]] {
     didSet {
-      for (index, items) in compositeSpots {
-        for (itemIndex, container) in items.enumerate() {
+      for (_, items) in compositeSpots {
+        for (_, container) in items.enumerate() {
           container.1.forEach { $0.spotsDelegate = spotsDelegate }
         }
       }
