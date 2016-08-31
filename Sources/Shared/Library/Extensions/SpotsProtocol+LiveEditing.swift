@@ -1,5 +1,6 @@
 import Foundation
 import Sugar
+import Cache
 
 #if DEVMODE
   public extension SpotsProtocol {
