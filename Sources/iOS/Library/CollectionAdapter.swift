@@ -33,12 +33,14 @@ public class CollectionAdapter: NSObject, SpotAdapter {
     }
 
     dispatch { [weak self] in
-      guard let weakSelf = self else { return }
+      guard let weakSelf = self else { completion?(); return }
 
       if itemsCount > 0 {
         weakSelf.spot.collectionView.insert(indexes, completion: completion)
       } else {
         weakSelf.spot.collectionView.reloadData()
+      }
+      weakSelf.spot.updateHeight() {
         completion?()
       }
     }
@@ -61,12 +63,14 @@ public class CollectionAdapter: NSObject, SpotAdapter {
     }
 
     dispatch { [weak self] in
-      guard let weakSelf = self else { return }
+      guard let weakSelf = self else { completion?(); return }
 
       if itemsCount > 0 {
         weakSelf.spot.collectionView.insert(indexes, completion: completion)
       } else {
         weakSelf.spot.collectionView.reloadData()
+      }
+      weakSelf.spot.updateHeight() {
         completion?()
       }
     }
@@ -86,12 +90,14 @@ public class CollectionAdapter: NSObject, SpotAdapter {
     indexes.append(index)
 
     dispatch { [weak self] in
-      guard let weakSelf = self else { return }
+      guard let weakSelf = self else { completion?(); return }
 
       if itemsCount > 0 {
         weakSelf.spot.collectionView.insert(indexes, completion: completion)
       } else {
         weakSelf.spot.collectionView.reloadData()
+      }
+      weakSelf.spot.updateHeight() {
         completion?()
       }
     }
@@ -113,9 +119,12 @@ public class CollectionAdapter: NSObject, SpotAdapter {
     }
 
     dispatch { [weak self] in
-      guard let weakSelf = self else { return }
+      guard let weakSelf = self else { completion?(); return }
 
       weakSelf.spot.collectionView.insert(indexes, completion: completion)
+      weakSelf.spot.updateHeight() {
+        completion?()
+      }
     }
   }
 
@@ -129,12 +138,15 @@ public class CollectionAdapter: NSObject, SpotAdapter {
       else { completion?(); return }
 
     perform(animation, withIndex: index) { [weak self] in
-      guard let weakSelf = self else { return }
+      guard let weakSelf = self else { completion?(); return }
 
       if animation == .None { UIView.setAnimationsEnabled(false) }
       weakSelf.spot.component.items.removeAtIndex(index)
       weakSelf.spot.collectionView.delete([index], completion: completion)
       if animation == .None { UIView.setAnimationsEnabled(true) }
+      weakSelf.spot.updateHeight() {
+        completion?()
+      }
     }
   }
 
@@ -153,8 +165,11 @@ public class CollectionAdapter: NSObject, SpotAdapter {
     }
 
     dispatch { [weak self] in
-      guard let weakSelf = self else { return }
+      guard let weakSelf = self else { completion?(); return }
       weakSelf.spot.collectionView.delete(indexes, completion: completion)
+      weakSelf.spot.updateHeight() {
+        completion?()
+      }
     }
   }
 
@@ -166,12 +181,15 @@ public class CollectionAdapter: NSObject, SpotAdapter {
   public func delete(index: Int, withAnimation animation: SpotsAnimation = .None, completion: Completion) {
     perform(animation, withIndex: index) {
       dispatch { [weak self] in
-        guard let weakSelf = self else { return }
+        guard let weakSelf = self else { completion?(); return }
 
         if animation == .None { UIView.setAnimationsEnabled(false) }
         weakSelf.spot.component.items.removeAtIndex(index)
         weakSelf.spot.collectionView.delete([index], completion: completion)
         if animation == .None { UIView.setAnimationsEnabled(true) }
+        weakSelf.spot.updateHeight() {
+          completion?()
+        }
       }
     }
   }
@@ -185,6 +203,9 @@ public class CollectionAdapter: NSObject, SpotAdapter {
     dispatch { [weak self] in
       guard let weakSelf = self else { return }
       weakSelf.spot.collectionView.delete(indexes, completion: completion)
+      weakSelf.spot.updateHeight() {
+        completion?()
+      }
     }
   }
 
@@ -411,7 +432,7 @@ extension CollectionAdapter : UICollectionViewDataSource {
    - Parameter collectionView: An object representing the collection view requesting this information.
    - Parameter indexPath: The index path that specifies the location of the item.
    - Returns: A configured cell object. You must not return nil from this method.
- */
+   */
   public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
     spot.component.items[indexPath.item].index = indexPath.item
 

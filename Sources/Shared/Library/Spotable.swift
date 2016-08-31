@@ -185,6 +185,17 @@ public extension Spotable {
     return component.items.reduce(0, combine: { $0 + $1.size.height })
   }
 
+  public func updateHeight(completion: Completion = nil) {
+    dispatch(queue: .Interactive) { [weak self] in
+      guard let weakSelf = self else { completion?(); return }
+      let spotHeight = weakSelf.spotHeight()
+      dispatch { [weak self] in
+        self?.render().frame.size.height = spotHeight
+        completion?()
+      }
+    }
+  }
+
   /**
    Refreshes the indexes of all items within the component
    */
