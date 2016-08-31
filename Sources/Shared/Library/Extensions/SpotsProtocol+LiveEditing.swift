@@ -1,7 +1,9 @@
 import Foundation
+import Sugar
 
 #if DEVMODE
   public extension SpotsProtocol {
+
     private func monitor(filePath: String) {
       guard NSFileManager.defaultManager().fileExistsAtPath(filePath) else { return }
 
