@@ -51,7 +51,7 @@ import Cache
       dispatch_resume(source)
     }
 
-    private func liveEditing(stateCache: SpotCache?) {
+    func liveEditing(stateCache: SpotCache?) {
       #if os(iOS)
         guard let stateCache = stateCache where source == nil && Simulator.isRunning else { return }
       #else
