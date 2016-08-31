@@ -129,9 +129,9 @@
 		BDB538301C444B3C0005E498 /* ListSpotSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB5382F1C444B3C0005E498 /* ListSpotSpec.swift */; };
 		BDB648531D75EC710041449A /* SpotComposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB648521D75EC710041449A /* SpotComposable.swift */; };
 		BDB648541D75EC710041449A /* SpotComposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB648521D75EC710041449A /* SpotComposable.swift */; };
-		BDB648571D76A39A0041449A /* SpotProtocol+LiveEditing.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB648561D76A39A0041449A /* SpotProtocol+LiveEditing.swift */; };
-		BDB648581D76A4420041449A /* SpotProtocol+LiveEditing.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB648561D76A39A0041449A /* SpotProtocol+LiveEditing.swift */; };
-		BDB648591D76A4420041449A /* SpotProtocol+LiveEditing.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB648561D76A39A0041449A /* SpotProtocol+LiveEditing.swift */; };
+		BDB6485B1D76B7980041449A /* SpotsProtocol+LiveEditing.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB6485A1D76B7980041449A /* SpotsProtocol+LiveEditing.swift */; };
+		BDB6485C1D76B7980041449A /* SpotsProtocol+LiveEditing.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB6485A1D76B7980041449A /* SpotsProtocol+LiveEditing.swift */; };
+		BDB6485D1D76B7980041449A /* SpotsProtocol+LiveEditing.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB6485A1D76B7980041449A /* SpotsProtocol+LiveEditing.swift */; };
 		BDBE7B871D6C2D8E00330C06 /* GridableLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDBE7B861D6C2D8E00330C06 /* GridableLayout.swift */; };
 		BDCCD9271C44438800AC21D1 /* GridSpotSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCCD9261C44438800AC21D1 /* GridSpotSpec.swift */; };
 		BDD25AFE1D58F7AA00927FC5 /* Viewable+Mac.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD25AFC1D58F77200927FC5 /* Viewable+Mac.swift */; };
@@ -254,7 +254,7 @@
 		BDB538321C444D460005E498 /* Playground-iOS.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Playground-iOS.playground"; sourceTree = "<group>"; };
 		BDB648521D75EC710041449A /* SpotComposable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotComposable.swift; sourceTree = "<group>"; };
 		BDB648551D75EF150041449A /* Info-tvOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-tvOS.plist"; sourceTree = "<group>"; };
-		BDB648561D76A39A0041449A /* SpotProtocol+LiveEditing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SpotProtocol+LiveEditing.swift"; sourceTree = "<group>"; };
+		BDB6485A1D76B7980041449A /* SpotsProtocol+LiveEditing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SpotsProtocol+LiveEditing.swift"; sourceTree = "<group>"; };
 		BDBE7B861D6C2D8E00330C06 /* GridableLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridableLayout.swift; sourceTree = "<group>"; };
 		BDCCD9261C44438800AC21D1 /* GridSpotSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridSpotSpec.swift; sourceTree = "<group>"; };
 		BDD25AFC1D58F77200927FC5 /* Viewable+Mac.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Viewable+Mac.swift"; sourceTree = "<group>"; };
@@ -496,8 +496,8 @@
 		BD38DC531D1854D700094941 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				BDB6485A1D76B7980041449A /* SpotsProtocol+LiveEditing.swift */,
 				BD38DC541D1854D700094941 /* Component+Extension.swift */,
-				BDB648561D76A39A0041449A /* SpotProtocol+LiveEditing.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1125,12 +1125,12 @@
 				BD7397161D718CD2000AF2DE /* GridSpot.swift in Sources */,
 				BD7397171D718CD2000AF2DE /* GridableLayout.swift in Sources */,
 				BD7397181D718CD2000AF2DE /* ViewSpot.swift in Sources */,
-				BDB648591D76A4420041449A /* SpotProtocol+LiveEditing.swift in Sources */,
 				BD7397191D718CD2000AF2DE /* SpotCache.swift in Sources */,
 				BDED12291D74F89100C7AC26 /* CarouselComposite.swift in Sources */,
 				BD73971A1D718CD2000AF2DE /* Listable.swift in Sources */,
 				BDED12261D74F86A00C7AC26 /* GridComposite.swift in Sources */,
 				BD73971B1D718CD2000AF2DE /* CarouselSpot.swift in Sources */,
+				BDB6485D1D76B7980041449A /* SpotsProtocol+LiveEditing.swift in Sources */,
 				BD73971C1D718CD2000AF2DE /* SpotsProtocol.swift in Sources */,
 				BD73971D1D718CD2000AF2DE /* SpotsDelegates.swift in Sources */,
 				BD73971E1D718CD2000AF2DE /* SpotsController+UIScrollViewDelegate.swift in Sources */,
@@ -1173,6 +1173,7 @@
 				BD38DC621D1854D700094941 /* UITableView+Indexes.swift in Sources */,
 				BD38DC841D1854D700094941 /* ListSpot.swift in Sources */,
 				BD9EA7FF1D6DAF42006B1001 /* CarouselSpotHeader.swift in Sources */,
+				BDB6485B1D76B7980041449A /* SpotsProtocol+LiveEditing.swift in Sources */,
 				BD38DC601D1854D700094941 /* UICollectionView+Indexes.swift in Sources */,
 				BD980DEA1D18A5FA007284DD /* Parser.swift in Sources */,
 				BD38DC921D1854D700094941 /* SpotConfigurable.swift in Sources */,
@@ -1183,7 +1184,6 @@
 				BD980DF61D18A7C6007284DD /* TypeAlias.swift in Sources */,
 				BDE5E4601D74BE4400C1FA21 /* ListComposite.swift in Sources */,
 				BDE8FBBA1D1BD26100C5A212 /* SpotAdapter.swift in Sources */,
-				BDB648571D76A39A0041449A /* SpotProtocol+LiveEditing.swift in Sources */,
 				BDE8FBC31D1BEC4300C5A212 /* ListAdapter+iOS.swift in Sources */,
 				BD38DC801D1854D700094941 /* GridSpot.swift in Sources */,
 				BDBE7B871D6C2D8E00330C06 /* GridableLayout.swift in Sources */,
@@ -1250,9 +1250,9 @@
 				BDD25AFE1D58F7AA00927FC5 /* Viewable+Mac.swift in Sources */,
 				BD6A1F351D2B8C5200E85FD3 /* CarouselSpot.swift in Sources */,
 				BD38DC9F1D18550900094941 /* Component.swift in Sources */,
+				BDB6485C1D76B7980041449A /* SpotsProtocol+LiveEditing.swift in Sources */,
 				BD980DF11D18A726007284DD /* SpotFactory.swift in Sources */,
 				BD980DF71D18A7C6007284DD /* TypeAlias.swift in Sources */,
-				BDB648581D76A4420041449A /* SpotProtocol+LiveEditing.swift in Sources */,
 				BD6A1F311D2B8C5200E85FD3 /* CollectionAdapter.swift in Sources */,
 				BD6A1F361D2B8C5200E85FD3 /* GridSpot.swift in Sources */,
 				BD6A1F2E1D2B8C5200E85FD3 /* NSCollectionView+Indexes.swift in Sources */,

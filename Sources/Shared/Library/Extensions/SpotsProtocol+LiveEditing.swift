@@ -1,5 +1,4 @@
 import Foundation
-import Spots
 
 #if DEVMODE
   public extension SpotsProtocol {
