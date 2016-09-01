@@ -10,11 +10,19 @@ public struct Parser {
    - Returns: A collection of spotable objects
    */
   public static func parse(json: JSONDictionary, key: String = "components") -> [Spotable] {
+    var components: [Component] = parse(json, key: key)
+
+    for (index, _) in components.enumerate() {
+      components[index].index = index
+    }
+
+    return components.map { SpotFactory.resolve($0) }
+  }
+
+  public static func parse(json: JSONDictionary, key: String = "components") -> [Component] {
     guard let components = json[key] as? JSONArray else { return [] }
 
-    return components.map {
-      SpotFactory.resolve(Component($0))
-    }
+    return components.map { Component($0) }
   }
 
   public static func parse(json: JSONArray?) -> [Spotable] {

@@ -199,25 +199,29 @@ public class SpotsController: NSViewController, SpotsProtocol {
    - Parameter animated: An optional animation closure that runs when a spot is being rendered
    */
   public func setupSpots(animated: ((view: View) -> Void)? = nil) {
+    compositeSpots = [:]
     spots.enumerate().forEach { index, spot in
-      #if !os(OSX)
-        spot.spotsCompositeDelegate = self
-      #endif
-      var height = spot.spotHeight()
-      if let componentSize = spot.component.size where componentSize.height > height {
-        height = componentSize.height
-      }
-
-      spots[index].component.index = index
-      spot.registerAndPrepare()
-      spotsScrollView.spotsContentView.addSubview(spot.render())
-      spot.setup(CGSize(width: view.frame.width,
-        height: height))
-      spot.component.size = CGSize(
-        width: view.frame.width,
-        height: ceil(spot.render().frame.height))
+      setupSpot(index, spot: spot)
       animated?(view: spot.render())
     }
+  }
+
+  public func setupSpot(index: Int, spot: Spotable) {
+    #if !os(OSX)
+      spot.spotsCompositeDelegate = self
+    #endif
+    var height = spot.spotHeight()
+    if let componentSize = spot.component.size where componentSize.height > height {
+      height = componentSize.height
+    }
+
+    spots[index].component.index = index
+    spot.registerAndPrepare()
+    spotsScrollView.spotsContentView.addSubview(spot.render())
+    spot.setup(CGSize(width: view.frame.width, height: height))
+    spot.component.size = CGSize(
+      width: view.frame.width,
+      height: ceil(spot.render().frame.height))
   }
 
   public override func viewDidLayout() {

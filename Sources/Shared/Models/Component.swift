@@ -8,8 +8,12 @@ import Tailor
 import Sugar
 import Brick
 
+public enum ComponentDiff {
+  case Identifier, Kind, Span, Header, Meta, Items, New, Removed, None
+}
+
 /// The Component struct is used to configure a Spotable object
-public struct Component: Mappable {
+public struct Component: Mappable, Equatable {
 
   /**
    An enum with all the string keys used in the view model
@@ -173,6 +177,30 @@ public struct Component: Mappable {
   public func meta<T>(key: String, type: T.Type) -> T? {
     return meta[key] as? T
   }
+
+  /**
+   Compare two components
+
+   - parameter component: A Component used for comparison
+
+   - returns: A ComponentDiff value, see ComponentDiff for values.
+   */
+  public func diff(component component: Component) -> ComponentDiff {
+    // Determine if the UI component is the same, used when SpotsController needs to replace the entire UI component
+    if kind != component.kind { return .Kind }
+    // Determine if the unqiue identifier for the component changed
+    if identifier != component.identifier { return .Identifier }
+    // Determine if the component span layout changed, this can be used to trigger layout related processes
+    if span != component.span { return .Span }
+    // Determine if the header for the component has changed
+    if header != component.header { return .Kind }
+    // Check if meta data for the component changed, this can be up to the developer to decide what course of action to take.
+    if !(meta as NSDictionary).isEqual(component.meta as NSDictionary) { return .Meta }
+    // Check if the items have changed
+    if !(items == component.items) { return .Items }
+
+    return .None
+  }
 }
 
 // Compare a collection of view models
@@ -237,9 +265,12 @@ public func !== (lhs: [Component], rhs: [Component]) -> Bool {
  - Returns: A boolean value, true if both Components are no equal
  */
 public func == (lhs: Component, rhs: Component) -> Bool {
+  guard lhs.identifier == rhs.identifier else { return false }
+
   return lhs.title == rhs.title &&
     lhs.kind == rhs.kind &&
     lhs.span == rhs.span &&
+    lhs.header == rhs.header &&
     (lhs.meta as NSDictionary).isEqual(rhs.meta as NSDictionary) &&
     lhs.items == rhs.items
 }
@@ -251,9 +282,12 @@ public func == (lhs: Component, rhs: Component) -> Bool {
  - Returns: A boolean value, true if both Components are no equal
  */
 public func === (lhs: Component, rhs: Component) -> Bool {
+  guard lhs.identifier == rhs.identifier else { return false }
+
   return lhs.title == rhs.title &&
     lhs.kind == rhs.kind &&
     lhs.span == rhs.span &&
+    lhs.header == rhs.header &&
     (lhs.meta as NSDictionary).isEqual(rhs.meta as NSDictionary) &&
     lhs.items === rhs.items
 }
