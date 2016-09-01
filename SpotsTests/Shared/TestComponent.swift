@@ -68,4 +68,42 @@ class ComponentTests : XCTestCase {
     XCTAssertEqual((jsonComponent.dictionary["items"] as! [JSONDictionary])[0]["title"] as? String, json["items"]![0]["title"])
     XCTAssertEqual((jsonComponent.dictionary["items"] as! [JSONDictionary]).count, json["items"]!.count)
   }
+
+  func testComponentDiffing() {
+    let initialJSON: [String : AnyObject] = [
+      "components" : [
+        ["kind" : "list",
+          "items" : [
+            ["title" : "First list item"]
+          ]
+        ],
+        ["kind" : "list",
+          "items" : [
+            ["title" : "First list item"]
+          ]
+        ]
+      ]
+    ]
+
+    let newJSON: [String : AnyObject] = [
+      "components" : [
+        ["kind" : "list",
+          "items" : [
+            ["title" : "First list item 2"]
+          ]
+        ],
+        ["kind" : "grid",
+          "items" : [
+            ["title" : "First list item"]
+          ]
+        ]
+      ]
+    ]
+
+    let lhs: [Component] = Parser.parse(initialJSON)
+    let rhs: [Component] = Parser.parse(newJSON)
+
+    XCTAssertTrue(lhs.first?.diff(component: rhs.first!) == .Items)
+    XCTAssertTrue(lhs[1].diff(component: rhs[1]) == .Kind)
+  }
 }
