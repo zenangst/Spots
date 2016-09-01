@@ -182,6 +182,16 @@ public extension SpotsProtocol {
     }
   }
 
+  func removeCompositeViews() {
+    for (_, cSpots) in self.compositeSpots {
+      for (_, spots) in cSpots.enumerate() {
+        for spot in spots.1 {
+          spot.render().removeFromSuperview()
+        }
+      }
+    }
+  }
+
   func process(changes changes: [ComponentDiff], components newComponents: [Component], closure: Completion = nil) {
     dispatch {
       var yOffset: CGFloat = 0.0
@@ -190,14 +200,7 @@ public extension SpotsProtocol {
         case .Identifier, .Kind, .Span, .Header, .Meta:
           let spot = SpotFactory.resolve(newComponents[index])
 
-          for (_, cSpots) in self.compositeSpots {
-            for (_, spots) in cSpots.enumerate() {
-              for spot in spots.1 {
-                spot.render().removeFromSuperview()
-              }
-            }
-          }
-
+          self.removeCompositeViews()
           self.spots[index].render().removeFromSuperview()
           self.spots[index] = spot
           self.setupSpot(index, spot: spot)
@@ -214,13 +217,13 @@ public extension SpotsProtocol {
         case .Removed:
           self.spots.removeAtIndex(index)
         case .Items:
-          if let spot = self.spot(index, Spotable.self) {
-            for item in newComponents[index].items {
-              if item.kind == "composite" {
-                spot.update(item, index: item.index, withAnimation: .None)
-              } else {
-                spot.update(item, index: item.index, withAnimation: .Automatic)
-              }
+          guard let spot = self.spot(index, Spotable.self) else { continue }
+
+          for item in newComponents[index].items {
+            if item.kind == "composite" {
+              spot.update(item, index: item.index, withAnimation: .None)
+            } else {
+              spot.update(item, index: item.index, withAnimation: .Automatic)
             }
           }
         case .None: break
