@@ -179,20 +179,6 @@ public struct Component: Mappable, Equatable {
   }
 
   /**
-   Check if component properties are equal, it excludes items and setting related properties
-
-   - parameter component: A Component used for the comparison
-
-   - returns: Returns true if they are equal
-   */
-  public func equalTo(component component: Component) -> Bool {
-    return kind == component.kind &&
-      identifier == component.identifier &&
-      span == component.span &&
-      header == component.header
-  }
-
-  /**
    Compare two components
 
    - parameter component: A Component used for comparison
