@@ -283,20 +283,23 @@ public class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDel
     var yOffset: CGFloat = 0.0
     compositeSpots = [:]
     spots.enumerate().forEach { index, spot in
-      spot.spotsCompositeDelegate = self
-      spots[index].component.index = index
-      spot.render().optimize()
+      setupSpot(index, spot: spot)
       spotsScrollView.contentView.addSubview(spot.render())
-      spot.registerAndPrepare()
-      spot.setup(spotsScrollView.frame.size)
-      spot.component.size = CGSize(
-        width: view.width,
-        height: ceil(spot.render().height))
       animated?(view: spot.render())
-
       (spot as? Gridable)?.layout.yOffset = yOffset
       yOffset += spot.render().frame.size.height
     }
+  }
+
+  public func setupSpot(index: Int, spot: Spotable) {
+    spot.spotsCompositeDelegate = self
+    spots[index].component.index = index
+    spot.render().optimize()
+    spot.registerAndPrepare()
+    spot.setup(spotsScrollView.frame.size)
+    spot.component.size = CGSize(
+      width: view.width,
+      height: ceil(spot.render().height))
   }
 
   #if os(iOS)
