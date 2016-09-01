@@ -178,6 +178,13 @@ public struct Component: Mappable, Equatable {
     return meta[key] as? T
   }
 
+  /**
+   Check if component properties are equal, it excludes items and setting related properties
+
+   - parameter component: A Component used for the comparison
+
+   - returns: Returns true if they are equal
+   */
   public func equalTo(component component: Component) -> Bool {
     return kind == component.kind &&
       identifier == component.identifier &&
@@ -185,12 +192,25 @@ public struct Component: Mappable, Equatable {
       header == component.header
   }
 
+  /**
+   Compare two components
+
+   - parameter component: A Component used for comparison
+
+   - returns: A ComponentDiff value, see ComponentDiff for values.
+   */
   public func diff(component component: Component) -> ComponentDiff {
+    // Determine if the UI component is the same, used when SpotsController needs to replace the entire UI component
     if kind != component.kind { return .Kind }
+    // Determine if the unqiue identifier for the component changed
     if identifier != component.identifier { return .Identifier }
+    // Determine if the component span layout changed, this can be used to trigger layout related processes
     if span != component.span { return .Span }
+    // Determine if the header for the component has changed
     if header != component.header { return .Kind }
+    // Check if meta data for the component changed, this can be up to the developer to decide what course of action to take.
     if !(meta as NSDictionary).isEqual(component.meta as NSDictionary) { return .Meta }
+    // Check if the items have changed
     if !(items == component.items) { return .Items }
 
     return .None
