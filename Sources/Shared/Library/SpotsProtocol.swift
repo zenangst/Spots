@@ -230,7 +230,7 @@ public extension SpotsProtocol {
     dispatch { [weak self] in
       guard let weakSelf = self else { closure?(); return }
 
-      let newSpots = Parser.parse(json)
+      let newSpots: [Spotable] = Parser.parse(json)
       let newComponents = newSpots.map { $0.component }
       let oldComponents = weakSelf.spots.map { $0.component }
 
