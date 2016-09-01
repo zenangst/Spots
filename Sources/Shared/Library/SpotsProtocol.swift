@@ -146,6 +146,7 @@ public extension SpotsProtocol {
     }
   }
 
+  #if !os(OSX)
   public func reloadIfNeeded(components: [Component], closure: Completion = nil) {
     let newComponents = components
     let oldComponents = spots.map { $0.component }
@@ -218,6 +219,7 @@ public extension SpotsProtocol {
 
     closure?()
   }
+  #endif
 
   /**
    - Parameter json: A JSON dictionary that gets parsed into UI elements

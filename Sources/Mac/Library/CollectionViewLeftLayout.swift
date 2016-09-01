@@ -13,7 +13,7 @@ class CollectionViewLeftLayout: NSCollectionViewFlowLayout {
     var x: CGFloat = sectionInset.left
     var y: CGFloat = 0
     for attributes in defaultAttributes {
-      var attributes = attributes
+      let attributes = attributes
 
       if attributes.frame.origin.y != y {
         x = sectionInset.left
