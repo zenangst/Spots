@@ -43,6 +43,7 @@ public protocol SpotsProtocol: class {
   #endif
 
   func setupSpots(animated: ((view: View) -> Void)?)
+  func setupSpot(index: Int, spot: Spotable)
   func spot<T>(index: Int, _ type: T.Type) -> T?
   func spot(@noescape closure: (index: Int, spot: Spotable) -> Bool) -> Spotable?
 
