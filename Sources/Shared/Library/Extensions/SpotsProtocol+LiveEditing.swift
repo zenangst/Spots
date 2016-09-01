@@ -40,9 +40,12 @@ import Cache
                 (gridable.layout as? GridableLayout)?.yOffset = gridable.render().frame.origin.y
               }
             }
+            print("Spots reloaded: \(self.spots.count)")
           }
-        } catch let error {
+        } catch let error as NSError {
           self.source = nil
+
+          print("Error: \(error.localizedDescription)")
           self.liveEditing(self.stateCache)
         }
       })
@@ -60,7 +63,9 @@ import Cache
 
       let paths = NSSearchPathForDirectoriesInDomains(.CachesDirectory,
                                                       NSSearchPathDomainMask.UserDomainMask, true)
-      NSLog("-----[\(stateCache.key)]-----\n\nfile://\(stateCache.path)\n\n")
+      print("🎍 SPOTS: Caching...")
+      print("Cache key: \(stateCache.key)")
+      print("File path: file://\(stateCache.path)\n")
       delay(0.5) { self.monitor(stateCache.path) }
     }
   }
