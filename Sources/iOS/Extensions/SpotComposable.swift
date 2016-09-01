@@ -25,6 +25,7 @@ public extension SpotComposable where Self : View {
         : spot.layout(contentView.frame.size)
 
       contentView.addSubview(spot.render())
+      spot.render().frame.origin.y = height
       spot.render().layoutIfNeeded()
       height += spot.render().contentSize.height
     }
