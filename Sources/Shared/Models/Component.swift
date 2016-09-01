@@ -177,6 +177,24 @@ public struct Component: Mappable, Equatable {
   public func meta<T>(key: String, type: T.Type) -> T? {
     return meta[key] as? T
   }
+
+  public func equalTo(component component: Component) -> Bool {
+    return kind == component.kind &&
+      identifier == component.identifier &&
+      span == component.span &&
+      header == component.header
+  }
+
+  public func diff(component component: Component) -> ComponentDiff {
+    if kind != component.kind { return .Kind }
+    if identifier != component.identifier { return .Identifier }
+    if span != component.span { return .Span }
+    if header != component.header { return .Kind }
+    if !(meta as NSDictionary).isEqual(component.meta as NSDictionary) { return .Meta }
+    if !(items == component.items) { return .Items }
+
+    return .None
+  }
 }
 
 // Compare a collection of view models
