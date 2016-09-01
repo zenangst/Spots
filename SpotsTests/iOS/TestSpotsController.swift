@@ -221,4 +221,74 @@ class SpotsControllerTests : XCTestCase {
 
     XCTAssertTrue(firstController.spots.first!.component == secondController.spots.first!.component)
   }
+
+  func testReloadIfNeededWithComponents() {
+    let initialJSON: [String : AnyObject] = [
+      "components" : [
+        ["kind" : "list",
+          "items" : [
+            ["title" : "First list item"]
+          ]
+        ],
+        ["kind" : "list",
+          "items" : [
+            ["title" : "First list item"]
+          ]
+        ]
+      ]
+    ]
+
+    let newJSON: [String : AnyObject] = [
+      "components" : [
+        ["kind" : "list",
+          "items" : [
+            ["title" : "First list item 2"],
+            [
+              "kind" : "composite",
+              "items" : [
+                ["kind" : "grid",
+                  "items" : [
+                    ["title" : "First list item"]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ],
+        ["kind" : "grid",
+          "items" : [
+            ["title" : "First list item"]
+          ]
+        ]
+      ]
+    ]
+
+    let controller = SpotsController(initialJSON)
+    XCTAssertTrue(controller.spots[0] is ListSpot)
+    XCTAssertEqual(controller.spots[0].items.first?.title, "First list item")
+    XCTAssertEqual(controller.spots[1].items.first?.title, "First list item")
+    XCTAssertTrue(controller.spots[1] is ListSpot)
+    XCTAssertTrue(controller.spots.count == 2)
+    XCTAssertTrue(controller.compositeSpots.count == 0)
+
+    controller.reloadIfNeeded(newJSON) {
+      XCTAssertEqual(controller.spots.count, 3)
+      XCTAssertTrue(controller.spots[0] is ListSpot)
+      XCTAssertTrue(controller.spots[1] is GridSpot)
+      XCTAssertEqual(controller.spots[0].items.first?.title, "First list item 2")
+      XCTAssertEqual(controller.spots[1].items.first?.title, "First list item")
+
+      XCTAssertEqual(controller.spots[0].items[1].kind, "composite")
+      XCTAssertTrue(controller.compositeSpots.count == 1)
+
+      controller.reloadIfNeeded(initialJSON) {
+        XCTAssertTrue(controller.spots[0] is ListSpot)
+        XCTAssertEqual(controller.spots[0].items.first?.title, "First list item")
+        XCTAssertEqual(controller.spots[1].items.first?.title, "First list item")
+        XCTAssertTrue(controller.spots[1] is ListSpot)
+        XCTAssertTrue(controller.spots.count == 2)
+        XCTAssertTrue(controller.compositeSpots.count == 0)
+      }
+    }
+  }
 }
