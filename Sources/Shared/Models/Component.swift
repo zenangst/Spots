@@ -8,6 +8,10 @@ import Tailor
 import Sugar
 import Brick
 
+public enum ComponentDiff {
+  case Identifier, Kind, Span, Header, Meta, Items, New, Removed, None
+}
+
 /// The Component struct is used to configure a Spotable object
 public struct Component: Mappable {
 
