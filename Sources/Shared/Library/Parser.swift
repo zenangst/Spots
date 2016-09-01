@@ -11,6 +11,7 @@ public struct Parser {
    */
   public static func parse(json: JSONDictionary, key: String = "components") -> [Spotable] {
     var components: [Component] = parse(json, key: key)
+
     for (index, _) in components.enumerate() {
       components[index].index = index
     }
