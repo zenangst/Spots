@@ -146,6 +146,79 @@ public extension SpotsProtocol {
     }
   }
 
+  public func reloadIfNeeded(components: [Component], closure: Completion = nil) {
+    let newComponents = components
+    let oldComponents = spots.map { $0.component }
+
+    guard newComponents !== oldComponents else {
+      closure?()
+      return
+    }
+
+    let oldComponentCount = oldComponents.count
+
+    var changes = [ComponentDiff]()
+    for (index, component) in components.enumerate() {
+      if index >= oldComponentCount {
+        changes.append(.New)
+        continue
+      }
+
+      changes.append(component.diff(component: oldComponents[index]))
+    }
+
+    if oldComponentCount > components.count {
+      oldComponents[components.count..<oldComponents.count].forEach { _ in
+        changes.append(.Removed)
+      }
+    }
+
+    var yOffset: CGFloat = 0.0
+    for (index, change) in changes.enumerate() {
+      switch change {
+      case .Identifier, .Kind, .Span, .Header, .Meta:
+        let spot = SpotFactory.resolve(newComponents[index])
+
+        for (_, cSpots) in compositeSpots {
+          for (_, spots) in cSpots.enumerate() {
+            for spot in spots.1 {
+              spot.render().removeFromSuperview()
+            }
+          }
+        }
+
+        spots[index].render().removeFromSuperview()
+        spots[index] = spot
+        setupSpot(index, spot: spot)
+        spotsScrollView.contentView.insertSubview(spot.render(), atIndex: index)
+        (spot as? Gridable)?.layout.yOffset = yOffset
+        yOffset += spot.render().frame.size.height
+      case .New:
+        let spot = SpotFactory.resolve(newComponents[index])
+        spots.append(spot)
+        setupSpot(index, spot: spot)
+        (spot as? Gridable)?.layout.yOffset = yOffset
+        spotsScrollView.contentView.addSubview(spot.render())
+        yOffset += spot.render().frame.size.height
+      case .Removed:
+        spots.removeAtIndex(index)
+      case .Items:
+        if let spot = spot(index, Spotable.self) {
+          for item in newComponents[index].items {
+            if item.kind == "composite" {
+              spot.update(item, index: item.index, withAnimation: .None)
+            } else {
+              spot.update(item, index: item.index, withAnimation: .Automatic)
+            }
+          }
+        }
+      case .None: break
+      }
+    }
+
+    closure?()
+  }
+
   /**
    - Parameter json: A JSON dictionary that gets parsed into UI elements
    - Parameter completion: A closure that will be run after reload has been performed on all spots
