@@ -241,9 +241,12 @@ public func !== (lhs: [Component], rhs: [Component]) -> Bool {
  - Returns: A boolean value, true if both Components are no equal
  */
 public func == (lhs: Component, rhs: Component) -> Bool {
+  guard lhs.identifier == rhs.identifier else { return false }
+
   return lhs.title == rhs.title &&
     lhs.kind == rhs.kind &&
     lhs.span == rhs.span &&
+    lhs.header == rhs.header &&
     (lhs.meta as NSDictionary).isEqual(rhs.meta as NSDictionary) &&
     lhs.items == rhs.items
 }
@@ -255,9 +258,12 @@ public func == (lhs: Component, rhs: Component) -> Bool {
  - Returns: A boolean value, true if both Components are no equal
  */
 public func === (lhs: Component, rhs: Component) -> Bool {
+  guard lhs.identifier == rhs.identifier else { return false }
+
   return lhs.title == rhs.title &&
     lhs.kind == rhs.kind &&
     lhs.span == rhs.span &&
+    lhs.header == rhs.header &&
     (lhs.meta as NSDictionary).isEqual(rhs.meta as NSDictionary) &&
     lhs.items === rhs.items
 }
