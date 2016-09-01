@@ -148,11 +148,14 @@ public extension SpotsProtocol {
 
   #if !os(OSX)
   public func reloadIfNeeded(components: [Component], closure: Completion = nil) {
+
+    dispatch(queue: .Interactive) {
+
     let newComponents = components
-    let oldComponents = spots.map { $0.component }
+    let oldComponents = self.spots.map { $0.component }
 
     guard newComponents !== oldComponents else {
-      closure?()
+      dispatch { closure?() }
       return
     }
 
@@ -174,50 +177,53 @@ public extension SpotsProtocol {
       }
     }
 
-    var yOffset: CGFloat = 0.0
-    for (index, change) in changes.enumerate() {
-      switch change {
-      case .Identifier, .Kind, .Span, .Header, .Meta:
-        let spot = SpotFactory.resolve(newComponents[index])
+      dispatch {
+        var yOffset: CGFloat = 0.0
+        for (index, change) in changes.enumerate() {
+          switch change {
+          case .Identifier, .Kind, .Span, .Header, .Meta:
+            let spot = SpotFactory.resolve(newComponents[index])
 
-        for (_, cSpots) in compositeSpots {
-          for (_, spots) in cSpots.enumerate() {
-            for spot in spots.1 {
-              spot.render().removeFromSuperview()
+            for (_, cSpots) in self.compositeSpots {
+              for (_, spots) in cSpots.enumerate() {
+                for spot in spots.1 {
+                  spot.render().removeFromSuperview()
+                }
+              }
             }
+
+            self.spots[index].render().removeFromSuperview()
+            self.spots[index] = spot
+            self.setupSpot(index, spot: spot)
+            self.spotsScrollView.contentView.insertSubview(spot.render(), atIndex: index)
+            (spot as? Gridable)?.layout.yOffset = yOffset
+            yOffset += spot.render().frame.size.height
+          case .New:
+            let spot = SpotFactory.resolve(newComponents[index])
+            self.spots.append(spot)
+            self.setupSpot(index, spot: spot)
+            (spot as? Gridable)?.layout.yOffset = yOffset
+            self.spotsScrollView.contentView.addSubview(spot.render())
+            yOffset += spot.render().frame.size.height
+          case .Removed:
+            self.spots.removeAtIndex(index)
+          case .Items:
+            if let spot = self.spot(index, Spotable.self) {
+              for item in newComponents[index].items {
+                if item.kind == "composite" {
+                  spot.update(item, index: item.index, withAnimation: .None)
+                } else {
+                  spot.update(item, index: item.index, withAnimation: .Automatic)
+                }
+              }
+            }
+          case .None: break
           }
         }
 
-        spots[index].render().removeFromSuperview()
-        spots[index] = spot
-        setupSpot(index, spot: spot)
-        spotsScrollView.contentView.insertSubview(spot.render(), atIndex: index)
-        (spot as? Gridable)?.layout.yOffset = yOffset
-        yOffset += spot.render().frame.size.height
-      case .New:
-        let spot = SpotFactory.resolve(newComponents[index])
-        spots.append(spot)
-        setupSpot(index, spot: spot)
-        (spot as? Gridable)?.layout.yOffset = yOffset
-        spotsScrollView.contentView.addSubview(spot.render())
-        yOffset += spot.render().frame.size.height
-      case .Removed:
-        spots.removeAtIndex(index)
-      case .Items:
-        if let spot = spot(index, Spotable.self) {
-          for item in newComponents[index].items {
-            if item.kind == "composite" {
-              spot.update(item, index: item.index, withAnimation: .None)
-            } else {
-              spot.update(item, index: item.index, withAnimation: .Automatic)
-            }
-          }
-        }
-      case .None: break
+        closure?()
       }
     }
-
-    closure?()
   }
   #endif
 
@@ -266,7 +272,7 @@ public extension SpotsProtocol {
         for (spotIndex, spot) in foundContainer.enumerate() {
           guard let rootContainer = oldComposite[index],
             itemContainer = rootContainer[itemIndex]
-            where spotIndex <= itemContainer.count else { continue }
+            where spotIndex < itemContainer.count else { continue }
 
           spot.render().contentOffset = itemContainer[spotIndex].render().contentOffset
         }
