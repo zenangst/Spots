@@ -224,10 +224,16 @@ public extension Spotable {
     }
 
     var indexes: [Int]? = nil
+    let oldItems = self.items
     self.items = items
 
-    for (index, _) in items.enumerate() {
-      indexes?.append(index)
+    if items.count == oldItems.count {
+      for (index, item) in items.enumerate() {
+        guard !(item == oldItems[index]) else { continue }
+
+        if indexes == nil { indexes = [Int]() }
+        indexes?.append(index)
+      }
     }
 
     reload(indexes, withAnimation: animation) {
