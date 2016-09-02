@@ -54,6 +54,27 @@ public extension NSCollectionView {
     }
   }
 
+  func process(changes: (insertions: [Int], reloads: [Int], deletions: [Int]),
+               withAnimation animation: NSTableViewAnimationOptions = .EffectFade,
+                             section: Int = 0,
+                             updateDataSource: () -> Void,
+                             completion: ((()) -> Void)? = nil) {
+    let deletionSets = Set<NSIndexPath>(changes.deletions
+      .map { NSIndexPath(forItem: $0, inSection: section) })
+    let insertionsSets = Set<NSIndexPath>(changes.insertions
+      .map { NSIndexPath(forItem: $0, inSection: section) })
+    let reloadSets = Set<NSIndexPath>(changes.reloads
+      .map { NSIndexPath(forItem: $0, inSection: section) })
+
+    performBatchUpdates({ [weak self] in
+      self?.deleteItemsAtIndexPaths(deletionSets)
+      self?.insertItemsAtIndexPaths(insertionsSets)
+      self?.reloadItemsAtIndexPaths(reloadSets)
+      }) { _ in
+        completion?()
+    }
+  }
+
   /**
    A convenience method for reloading a section
    - Parameter index: The section you want to update
