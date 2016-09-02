@@ -41,6 +41,7 @@ import Cache
               for case let gridable as CarouselSpot in self.spots {
                 (gridable.layout as? GridableLayout)?.yOffset = gridable.render().frame.origin.y
               }
+              self.spotsScrollView.forceUpdate = true
             }
             print("Spots reloaded: \(self.spots.count)")
             self.liveEditing(self.stateCache)

@@ -177,6 +177,7 @@ public extension SpotsProtocol {
 
       self.process(changes: changes, components: newComponents) {
         closure?()
+        self.spotsScrollView.forceUpdate = true
       }
     }
   }
