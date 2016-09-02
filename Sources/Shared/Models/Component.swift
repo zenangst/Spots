@@ -193,7 +193,7 @@ public struct Component: Mappable, Equatable {
     // Determine if the component span layout changed, this can be used to trigger layout related processes
     if span != component.span { return .Span }
     // Determine if the header for the component has changed
-    if header != component.header { return .Kind }
+    if header != component.header { return .Header }
     // Check if meta data for the component changed, this can be up to the developer to decide what course of action to take.
     if !(meta as NSDictionary).isEqual(component.meta as NSDictionary) { return .Meta }
     // Check if the items have changed
