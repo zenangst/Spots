@@ -47,9 +47,9 @@ public extension UITableView {
                              section: Int = 0,
                              updateDataSource: () -> Void,
                              completion: ((()) -> Void)? = nil) {
-    var insertions = changes.insertions.map { NSIndexPath(forRow: $0, inSection: section) }
-    var reloads = changes.reloads.map { NSIndexPath(forRow: $0, inSection: section) }
-    var deletions = changes.deletions.map { NSIndexPath(forRow: $0, inSection: section) }
+    let insertions = changes.insertions.map { NSIndexPath(forRow: $0, inSection: section) }
+    let reloads = changes.reloads.map { NSIndexPath(forRow: $0, inSection: section) }
+    let deletions = changes.deletions.map { NSIndexPath(forRow: $0, inSection: section) }
 
     updateDataSource()
     beginUpdates()
