@@ -66,6 +66,9 @@ public protocol Spotable: class {
   func delete(indexes: [Int], withAnimation animation: SpotsAnimation, completion: Completion)
   /// Reload view model indexes with animation in a Spotable object
   func reload(indexes: [Int]?, withAnimation animation: SpotsAnimation, completion: Completion)
+  /// Reload view models if needed using change set
+  func reloadIfNeeded(changes: ViewModelChanges, updateDataSource: () -> Void, completion: Completion)
+
   /// Return a Spotable object as a UIScrollView
   func render() -> ScrollView
   /// Layout Spotable object using size
@@ -130,6 +133,11 @@ public extension Spotable {
   /// Reload view model indexes with animation in a Spotable object
   func reload(indexes: [Int]? = nil, withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
     adapter?.reload(indexes, withAnimation: animation, completion: completion)
+  }
+
+  /// Reload view models with change set
+  func reloadIfNeeded(changes: ViewModelChanges, updateDataSource: () -> Void, completion: Completion) {
+    adapter?.reloadIfNeeded(changes, updateDataSource: updateDataSource, completion: completion)
   }
 }
 
@@ -204,12 +212,6 @@ public extension Spotable {
       items[$0.index].index = $0.index
     }
   }
-
-  /**
-   Reloads spot only if it has changes
-   - Parameter items: An array of view models
-   - Parameter animated: Perform reload animation
-   */
 
   /**
    Reloads a spot only if it changes
