@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BD10D5251D7955AB00DF8E9B /* TestViewModelExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD10D5211D79533C00DF8E9B /* TestViewModelExtensions.swift */; };
+		BD10D5261D7955AC00DF8E9B /* TestViewModelExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD10D5211D79533C00DF8E9B /* TestViewModelExtensions.swift */; };
+		BD10D5271D7955AC00DF8E9B /* TestViewModelExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD10D5211D79533C00DF8E9B /* TestViewModelExtensions.swift */; };
 		BD352E5F1CBAD6EC002CD032 /* Brick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD352E5E1CBAD6EC002CD032 /* Brick.framework */; };
 		BD352E611CBAD6F9002CD032 /* Brick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD352E601CBAD6F9002CD032 /* Brick.framework */; };
 		BD38DC5C1D1854D700094941 /* SpotsController+UIScrollViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD38DC2F1D1854D700094941 /* SpotsController+UIScrollViewDelegate.swift */; };
@@ -37,6 +40,7 @@
 		BD4AA20A1D5E6E6D00DD0208 /* Gridable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4AA2091D5E6E6D00DD0208 /* Gridable.swift */; };
 		BD4AA20B1D5E6E6D00DD0208 /* Gridable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4AA2091D5E6E6D00DD0208 /* Gridable.swift */; };
 		BD4AA20D1D5E6FD000DD0208 /* Gridable+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4AA20C1D5E6FD000DD0208 /* Gridable+iOS.swift */; };
+		BD4CDB4B1D79E2C70069E979 /* ViewModel+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4CDB4A1D79E2C70069E979 /* ViewModel+Extensions.swift */; };
 		BD6A1F2B1D2B8C5200E85FD3 /* SpotsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6A1F151D2B8C5200E85FD3 /* SpotsController.swift */; };
 		BD6A1F2C1D2B8C5200E85FD3 /* Listable+Mac.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6A1F171D2B8C5200E85FD3 /* Listable+Mac.swift */; };
 		BD6A1F2D1D2B8C5200E85FD3 /* ListAdapter+Mac.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6A1F181D2B8C5200E85FD3 /* ListAdapter+Mac.swift */; };
@@ -194,6 +198,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BD10D5211D79533C00DF8E9B /* TestViewModelExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewModelExtensions.swift; sourceTree = "<group>"; };
 		BD352E5E1CBAD6EC002CD032 /* Brick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Brick.framework; path = Carthage/Build/iOS/Brick.framework; sourceTree = "<group>"; };
 		BD352E601CBAD6F9002CD032 /* Brick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Brick.framework; path = Carthage/Build/Mac/Brick.framework; sourceTree = "<group>"; };
 		BD38DC2F1D1854D700094941 /* SpotsController+UIScrollViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SpotsController+UIScrollViewDelegate.swift"; sourceTree = "<group>"; };
@@ -218,6 +223,7 @@
 		BD48BECA1C459D2A00317D76 /* CarouselSpotSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselSpotSpec.swift; sourceTree = "<group>"; };
 		BD4AA2091D5E6E6D00DD0208 /* Gridable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gridable.swift; sourceTree = "<group>"; };
 		BD4AA20C1D5E6FD000DD0208 /* Gridable+iOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Gridable+iOS.swift"; sourceTree = "<group>"; };
+		BD4CDB4A1D79E2C70069E979 /* ViewModel+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ViewModel+Extensions.swift"; sourceTree = "<group>"; };
 		BD6A1F151D2B8C5200E85FD3 /* SpotsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsController.swift; sourceTree = "<group>"; };
 		BD6A1F171D2B8C5200E85FD3 /* Listable+Mac.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Listable+Mac.swift"; sourceTree = "<group>"; };
 		BD6A1F181D2B8C5200E85FD3 /* ListAdapter+Mac.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ListAdapter+Mac.swift"; sourceTree = "<group>"; };
@@ -498,6 +504,7 @@
 			children = (
 				BDB6485A1D76B7980041449A /* SpotsProtocol+LiveEditing.swift */,
 				BD38DC541D1854D700094941 /* Component+Extension.swift */,
+				BD4CDB4A1D79E2C70069E979 /* ViewModel+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -683,6 +690,7 @@
 			isa = PBXGroup;
 			children = (
 				D584782B1C43FF34006EBA49 /* TestComponent.swift */,
+				BD10D5211D79533C00DF8E9B /* TestViewModelExtensions.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -1152,6 +1160,7 @@
 				BD7397391D718CDB000AF2DE /* ViewSpotSpec.swift in Sources */,
 				BD73973A1D718CDB000AF2DE /* TestSpotFactory.swift in Sources */,
 				BD73973B1D718CDB000AF2DE /* TestSpotsController.swift in Sources */,
+				BD10D5271D7955AC00DF8E9B /* TestViewModelExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1196,6 +1205,7 @@
 				BDB648531D75EC710041449A /* SpotComposable.swift in Sources */,
 				BD980E1D1D18A8C2007284DD /* SpotsDelegates.swift in Sources */,
 				BDED12231D74BFEF00C7AC26 /* GridComposite.swift in Sources */,
+				BD4CDB4B1D79E2C70069E979 /* ViewModel+Extensions.swift in Sources */,
 				BD38DC5C1D1854D700094941 /* SpotsController+UIScrollViewDelegate.swift in Sources */,
 				BD4AA20D1D5E6FD000DD0208 /* Gridable+iOS.swift in Sources */,
 				BD38DC821D1854D700094941 /* GridSpotCell.swift in Sources */,
@@ -1215,6 +1225,7 @@
 				BD48BEC91C459B4800317D76 /* ViewSpotSpec.swift in Sources */,
 				D58478531C43FFEB006EBA49 /* TestSpotFactory.swift in Sources */,
 				D58478551C43FFEF006EBA49 /* TestSpotsController.swift in Sources */,
+				BD10D5251D7955AB00DF8E9B /* TestViewModelExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1269,6 +1280,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D58478E71C440645006EBA49 /* TestComponent.swift in Sources */,
+				BD10D5261D7955AC00DF8E9B /* TestViewModelExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

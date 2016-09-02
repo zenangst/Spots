@@ -4,7 +4,7 @@ import XCTest
 import Brick
 import Sugar
 
-class SpotableTests : XCTestCase {
+class ViewModelExtensionsTests : XCTestCase {
 
   func testEvaluateChanges() {
     /*
@@ -27,27 +27,23 @@ class SpotableTests : XCTestCase {
     XCTAssertEqual(newModels.count, 3)
     XCTAssertEqual(oldModels.count, 2)
 
-    let listSpot = ListSpot(component: Component(items: oldModels))
-    XCTAssertEqual(listSpot.items.count, 2)
-
     var changes = ViewModel.evaluate(newModels, oldModels: oldModels)
     XCTAssertEqual(changes![0], ViewModelDiff.None)
     XCTAssertEqual(changes![1], ViewModelDiff.None)
     XCTAssertEqual(changes![2], ViewModelDiff.New)
 
-    var processedChanges = listSpot.processChanges(changes!)
+    var processedChanges = ViewModel.processChanges(changes!)
     XCTAssertEqual(processedChanges.insertions.count, 1)
     XCTAssertEqual(processedChanges.updates.count, 0)
     XCTAssertEqual(processedChanges.reloads.count, 0)
     XCTAssertEqual(processedChanges.deletions.count, 0)
-
 
     changes = ViewModel.evaluate(oldModels, oldModels: newModels)
     XCTAssertEqual(changes![0], ViewModelDiff.None)
     XCTAssertEqual(changes![1], ViewModelDiff.None)
     XCTAssertEqual(changes![2], ViewModelDiff.Removed)
 
-    processedChanges = listSpot.processChanges(changes!)
+    processedChanges = ViewModel.processChanges(changes!)
     XCTAssertEqual(processedChanges.insertions.count, 0)
     XCTAssertEqual(processedChanges.updates.count, 0)
     XCTAssertEqual(processedChanges.reloads.count, 0)
@@ -73,7 +69,7 @@ class SpotableTests : XCTestCase {
     XCTAssertEqual(changes![0], ViewModelDiff.Title)
     XCTAssertEqual(changes![1], ViewModelDiff.Kind)
 
-    processedChanges = listSpot.processChanges(changes!)
+    processedChanges = ViewModel.processChanges(changes!)
     XCTAssertEqual(processedChanges.insertions.count, 0)
     XCTAssertEqual(processedChanges.updates.count, 1)
     XCTAssertEqual(processedChanges.reloads.count, 1)
