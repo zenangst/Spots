@@ -128,6 +128,20 @@ extension ListAdapter {
     }
   }
 
+  public func reloadIfNeeded(changes: ViewModelChanges, updateDataSource: () -> Void, completion: Completion) {
+    if changes.updates.isEmpty {
+      spot.tableView.process((insertions: changes.insertions, reloads: changes.reloads, deletions: changes.deletions), updateDataSource: updateDataSource, completion: completion)
+    } else {
+      spot.tableView.process((insertions: changes.insertions, reloads: changes.reloads, deletions: changes.deletions), updateDataSource: updateDataSource) {
+
+        for index in changes.updates {
+          guard let item = self.spot.item(index) else { continue }
+          self.spot.update(item, index: index, withAnimation: .Automatic, completion: completion)
+        }
+      }
+    }
+  }
+
   public func reload(indexes: [Int]?, withAnimation animation: SpotsAnimation, completion: Completion) {
     dispatch { [weak self] in
       guard let tableView = self?.spot.tableView else { completion?(); return }
