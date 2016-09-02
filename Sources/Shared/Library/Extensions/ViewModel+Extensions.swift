@@ -52,6 +52,32 @@ public extension ViewModel {
     return changes
   }
 
+  public static func processChanges(changes: [ViewModelDiff]) -> (ViewModelChanges) {
+    var insertions = [Int]()
+    var updates = [Int]()
+    var reloads = [Int]()
+    var deletions = [Int]()
+    var childrenUpdates = [Int]()
+
+    for (index, change) in changes.enumerate() {
+      switch change {
+      case .Kind, .Size:
+        reloads.append(index)
+      case .Children:
+        childrenUpdates.append(index)
+      case .New:
+        insertions.append(index)
+      case .Removed:
+        deletions.append(index)
+      case .None: break
+      default:
+        updates.append(index)
+      }
+    }
+
+    return (insertions: insertions, updates: updates, reloads: reloads, deletions: deletions, updatedChildren: childrenUpdates)
+  }
+
   public func diff(rhs: ViewModel) -> ViewModelDiff {
 
     let lhsChildren = children.map { Component($0) }
