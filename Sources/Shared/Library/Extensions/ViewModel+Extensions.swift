@@ -1,6 +1,8 @@
 import Brick
 import Foundation
 
+public typealias ViewModelChanges = (insertions: [Int], updates: [Int], reloads: [Int], deletions: [Int], updatedChildren: [Int])
+
 public extension ViewModel {
 
   static func evaluate(newModels: [ViewModel], oldModels: [ViewModel]) -> [ViewModelDiff]? {
