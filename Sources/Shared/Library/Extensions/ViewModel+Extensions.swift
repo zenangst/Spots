@@ -3,6 +3,10 @@ import Foundation
 
 public typealias ViewModelChanges = (insertions: [Int], updates: [Int], reloads: [Int], deletions: [Int], updatedChildren: [Int])
 
+public enum ViewModelDiff {
+  case Identifier, Index, Title, Subtitle, Image, Kind, Action, Meta, Children, Relations, Size, New, Removed, None
+}
+
 public extension ViewModel {
 
   static func evaluate(newModels: [ViewModel], oldModels: [ViewModel]) -> [ViewModelDiff]? {
