@@ -232,7 +232,20 @@ public extension SpotsProtocol {
             }) {
               if changes.updatedChildren.contains(spot.index) {
                 for item in newComponents[index].items {
-                  spot.update(item, index: item.index, withAnimation: .Automatic)
+                  guard let spots = spot.spotsCompositeDelegate?
+                    .resolve(spotIndex: spot.index, itemIndex: item.index) else { continue }
+                let components = Parser.parse(item.children).map { $0.component }
+                  if components.count == spots.count {
+                    for (index, spot) in spots.enumerate() {
+                      spot.component = components[index]
+                      spot.reload()
+                    }
+                    closure?()
+                    return
+                  } else {
+                    spot.update(item, index: item.index, withAnimation: .Automatic, completion: closure)
+                    return
+                  }
                 }
               }
               closure?()
