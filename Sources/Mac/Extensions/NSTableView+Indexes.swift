@@ -32,6 +32,35 @@ public extension NSTableView {
                    endClosure: completion)
   }
 
+  func process(changes: (insertions: [Int], reloads: [Int], deletions: [Int]),
+               withAnimation animation: NSTableViewAnimationOptions = .EffectFade,
+                             section: Int = 0,
+                             updateDataSource: () -> Void,
+                             completion: ((()) -> Void)? = nil) {
+    let insertionsSets = NSMutableIndexSet()
+    changes.insertions.forEach { insertionsSets.addIndex($0) }
+    let reloadSets = NSMutableIndexSet()
+    changes.reloads.forEach { reloadSets.addIndex($0) }
+    let deletionSets = NSMutableIndexSet()
+    changes.deletions.forEach { deletionSets.addIndex($0) }
+
+    updateDataSource()
+    beginUpdates()
+    removeRowsAtIndexes(deletionSets, withAnimation: animation)
+    insertRowsAtIndexes(insertionsSets, withAnimation: animation)
+
+    reloadSets.forEach { index in
+      if let view = rowViewAtRow(index, makeIfNecessary: false) as? SpotConfigurable,
+        adapter = dataSource() as? ListAdapter {
+        var item = adapter.spot.component.items[index]
+        view.configure(&item)
+      }
+    }
+
+    completion?()
+    endUpdates()
+  }
+
   private func performUpdates(@noescape closure: () -> Void, endClosure: (() -> Void)? = nil) {
     beginUpdates()
     closure()
