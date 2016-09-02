@@ -231,9 +231,7 @@ public extension SpotsProtocol {
             }) {
               if changes.updatedChildren.contains(spot.index) {
                 for item in newComponents[index].items {
-                  spot.update(item, index: item.index, withAnimation: .Automatic) {
-                    self.setupSpot(spot.index, spot: spot)
-                  }
+                  spot.update(item, index: item.index, withAnimation: .Automatic)
                 }
               }
               closure?()
