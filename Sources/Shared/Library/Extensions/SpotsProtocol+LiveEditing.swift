@@ -27,7 +27,9 @@ import Cache
             dispatch_source_cancel(self.source)
             self.source = nil
             let offset = self.spotsScrollView.contentOffset
-            self.reloadIfNeeded(json, compare: { $0 !== $1 }) {
+            let components: [Component] = Parser.parse(json)
+
+            self.reloadIfNeeded(components) {
               self.spotsScrollView.contentOffset = offset
 
               var yOffset: CGFloat = 0.0
@@ -41,11 +43,12 @@ import Cache
               }
             }
             print("Spots reloaded: \(self.spots.count)")
+            self.liveEditing(self.stateCache)
           }
-        } catch let error as NSError {
+        } catch let error {
           self.source = nil
 
-          print("Error: \(error.localizedDescription)")
+          print("Error: could not parse file")
           self.liveEditing(self.stateCache)
         }
       })
