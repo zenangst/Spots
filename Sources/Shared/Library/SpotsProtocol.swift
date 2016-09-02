@@ -222,10 +222,10 @@ public extension SpotsProtocol {
         case .Items:
           guard let spot = self.spot(index, Spotable.self) else { continue }
 
-          let lhs = newComponents[index].items
-          let rhs = spot.items
+          let newItems = newComponents[index].items
+          let oldItems = spot.items
 
-          if let diff = ViewModel.evaluate(lhs, oldModels: rhs) {
+          if let diff = ViewModel.evaluate(newItems, oldModels: oldItems) {
             let changes = ViewModel.processChanges(diff)
             spot.adapter?.reloadIfNeeded(changes, updateDataSource: {
               spot.items = newComponents[index].items
