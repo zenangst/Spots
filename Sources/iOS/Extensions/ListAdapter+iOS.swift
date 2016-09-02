@@ -178,7 +178,9 @@ extension ListAdapter {
         spot.tableView.beginUpdates()
         composite.configure(&spot.component.items[indexPath.item], spots: spots)
         spot.tableView.endUpdates()
-        completion?()
+        spot.updateHeight() {
+          completion?()
+        }
         return
       }
     }
