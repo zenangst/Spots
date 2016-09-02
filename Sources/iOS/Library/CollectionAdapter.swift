@@ -241,6 +241,20 @@ public class CollectionAdapter: NSObject, SpotAdapter {
     completion?()
   }
 
+  public func reloadIfNeeded(changes: ViewModelChanges, updateDataSource: () -> Void, completion: Completion) {
+    if changes.updates.isEmpty {
+      spot.collectionView.process((insertions: changes.insertions, reloads: changes.reloads, deletions: changes.deletions), updateDataSource: updateDataSource, completion: completion)
+    } else {
+      spot.collectionView.process((insertions: changes.insertions, reloads: changes.reloads, deletions: changes.deletions), updateDataSource: updateDataSource) {
+
+        for index in changes.updates {
+          guard let item = self.spot.item(index) else { continue }
+          self.spot.update(item, index: index, withAnimation: .Automatic, completion: completion)
+        }
+      }
+    }
+  }
+
   /**
    - Parameter indexes: An array of integers that you want to reload, default is nil
    - Parameter animation: Perform reload animation
