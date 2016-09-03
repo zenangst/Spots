@@ -75,5 +75,4 @@ class ViewModelExtensionsTests : XCTestCase {
     XCTAssertEqual(processedChanges.reloads.count, 1)
     XCTAssertEqual(processedChanges.deletions.count, 0)
   }
-
 }
