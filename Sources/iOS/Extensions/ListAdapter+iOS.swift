@@ -173,16 +173,15 @@ extension ListAdapter {
     let newItem = spot.items[index]
     let indexPath = NSIndexPath(forRow: index, inSection: 0)
 
-    if let composite = spot.tableView.cellForRowAtIndexPath(indexPath) as? SpotComposable {
-      if let spots = spot.spotsCompositeDelegate?.resolve(spotIndex: spot.index, itemIndex: indexPath.item) {
-        spot.tableView.beginUpdates()
-        composite.configure(&spot.component.items[indexPath.item], spots: spots)
-        spot.tableView.endUpdates()
-        spot.updateHeight() {
-          completion?()
-        }
-        return
+    if let composite = spot.tableView.cellForRowAtIndexPath(indexPath) as? SpotComposable,
+      spots = spot.spotsCompositeDelegate?.resolve(spotIndex: spot.index, itemIndex: indexPath.item) {
+      spot.tableView.beginUpdates()
+      composite.configure(&spot.component.items[indexPath.item], spots: spots)
+      spot.tableView.endUpdates()
+      spot.updateHeight() {
+        completion?()
       }
+      return
     }
 
     if newItem.kind != oldItem.kind || newItem.size.height != oldItem.size.height {
