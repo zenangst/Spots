@@ -18,4 +18,3 @@ public class CollectionAdapter: NSObject, SpotAdapter {
     self.spot = spot
   }
 }
-
