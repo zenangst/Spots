@@ -2,23 +2,6 @@ import Cocoa
 import Brick
 import Sugar
 
-/**
- The CollectionAdapter works as a proxy handler for all Gridable object
- */
-public class CollectionAdapter: NSObject, SpotAdapter {
-  // An unowned Gridable object
-  unowned var spot: Gridable
-
-  /**
-   Initialization a new instance of a ListAdapter using a Gridable object
-
-   - Parameter gridable: A Listable object
-   */
-  init(spot: Gridable) {
-    self.spot = spot
-  }
-}
-
 extension CollectionAdapter {
 
   public func append(item: ViewModel, withAnimation animation: SpotsAnimation, completion: Completion) {
@@ -178,47 +161,5 @@ extension CollectionAdapter {
       weakSelf.spot.setup(CGSize(width: collectionView.frame.width, height: weakSelf.spot.spotHeight() ?? 0))
       completion?()
     }
-  }
-}
-
-extension CollectionAdapter : NSCollectionViewDelegate {
-
-  public func collectionView(collectionView: NSCollectionView, didSelectItemsAtIndexPaths indexPaths: Set<NSIndexPath>) {
-    /*
-     This delay is here to avoid an assertion that happens inside the collection view binding,
-     it tries to resolve the item at index but it no longer exists so the assertion is thrown.
-     This can probably be fixed in a more convenient way in the future without delays.
-     */
-    delay(0.1) { [spot = spot] in
-      guard let first = indexPaths.first,
-        item = spot.item(first.item) where first.item < spot.items.count else { return }
-      spot.spotsDelegate?.spotDidSelectItem(spot, item: item)
-    }
-  }
-}
-
-extension CollectionAdapter: NSCollectionViewDataSource {
-
-  public func numberOfSectionsInCollectionView(collectionView: NSCollectionView) -> Int {
-    return 1
-  }
-
-  public func collectionView(collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
-    return spot.component.items.count
-  }
-
-  public func collectionView(collectionView: NSCollectionView, itemForRepresentedObjectAtIndexPath indexPath: NSIndexPath) -> NSCollectionViewItem {
-    let reuseIdentifier = spot.identifier(indexPath.item)
-    let item = collectionView.makeItemWithIdentifier(reuseIdentifier, forIndexPath: indexPath)
-
-    (item as? SpotConfigurable)?.configure(&spot.component.items[indexPath.item])
-    return item
-  }
-}
-
-extension CollectionAdapter: NSCollectionViewDelegateFlowLayout {
-
-  public func collectionView(collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> NSSize {
-    return spot.sizeForItemAt(indexPath)
   }
 }
