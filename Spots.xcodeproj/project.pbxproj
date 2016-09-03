@@ -460,9 +460,9 @@
 				BD129C4B1D7B256D009AC164 /* Spotable+Extensions.swift */,
 				BD129C4C1D7B256D009AC164 /* SpotsProtocol+Extensions.swift */,
 				BD129C4D1D7B256D009AC164 /* SpotsProtocol+LiveEditing.swift */,
+				BD129E3B1D7B2E84009AC164 /* SpotsProtocol+Mutation.swift */,
 				BD129C4E1D7B256D009AC164 /* Viewable+Extensions.swift */,
 				BD129C4F1D7B256D009AC164 /* ViewModel+Extensions.swift */,
-				BD129E3B1D7B2E84009AC164 /* SpotsProtocol+Mutation.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
