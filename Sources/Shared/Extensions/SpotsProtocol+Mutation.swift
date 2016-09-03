@@ -118,12 +118,38 @@ extension SpotsProtocol {
                   guard let spots = spot.spotsCompositeDelegate?
                     .resolve(spotIndex: spot.index, itemIndex: item.index) else { continue }
                   let components = Parser.parse(item.children).map { $0.component }
+
                   if components.count == spots.count {
+                    var offset = [CGPoint]()
                     for (index, spot) in spots.enumerate() {
                       spot.component = components[index]
-                      spot.reload()
+                      offset.append(spot.render().contentOffset)
                     }
-                    closure?()
+
+                    CATransaction.begin()
+                    spot.update(item, index: item.index, withAnimation: .Automatic) {
+                      if let compositeSpots = self.compositeSpots[spot.index],
+                        spots = compositeSpots[item.index] {
+                        for (index, spot) in spots.enumerate() {
+                          spot.render().contentOffset = offset[index]
+                        }
+                      }
+                      CATransaction.commit()
+                      closure?()
+                    }
+                    return
+                  } else if spots.count > components.count {
+                    if let compositeSpots = self.compositeSpots[spot.index],
+                      spots = compositeSpots[item.index] {
+                      for (index,removedSpot) in spots.enumerate() {
+                        if !components.contains(removedSpot.component) {
+                          var oldContent = self.compositeSpots[spot.index]?[item.index]
+                          oldContent?.removeAtIndex(index)
+                          self.compositeSpots[spot.index]?[item.index] = oldContent
+                        }
+                      }
+                    }
+                    spot.update(item, index: item.index, withAnimation: .Automatic, completion: closure)
                     return
                   } else {
                     spot.update(item, index: item.index, withAnimation: .Automatic, completion: closure)
@@ -131,6 +157,7 @@ extension SpotsProtocol {
                   }
                 }
               }
+
               closure?()
             }
 
