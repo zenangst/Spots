@@ -143,15 +143,16 @@ extension CollectionAdapter {
   }
 
   public func reloadIfNeeded(changes: ViewModelChanges, updateDataSource: () -> Void, completion: Completion) {
-    if changes.updates.isEmpty {
+    guard !changes.updates.isEmpty else {
       spot.collectionView.process((insertions: changes.insertions, reloads: changes.reloads, deletions: changes.deletions), updateDataSource: updateDataSource, completion: completion)
-    } else {
-      spot.collectionView.process((insertions: changes.insertions, reloads: changes.reloads, deletions: changes.deletions), updateDataSource: updateDataSource) {
+      return
+    }
 
-        for index in changes.updates {
-          guard let item = self.spot.item(index) else { continue }
-          self.spot.update(item, index: index, withAnimation: .Automatic, completion: completion)
-        }
+    spot.collectionView.process((insertions: changes.insertions, reloads: changes.reloads, deletions: changes.deletions), updateDataSource: updateDataSource) {
+
+      for index in changes.updates {
+        guard let item = self.spot.item(index) else { continue }
+        self.spot.update(item, index: index, withAnimation: .Automatic, completion: completion)
       }
     }
   }
