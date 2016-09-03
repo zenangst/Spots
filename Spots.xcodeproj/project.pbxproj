@@ -92,87 +92,87 @@
 		BD129E361D7B2CDE009AC164 /* Viewable+Mac.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E1E1D7B2CDE009AC164 /* Viewable+Mac.swift */; };
 		BD129E371D7B2CDE009AC164 /* GridRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E201D7B2CDE009AC164 /* GridRegistry.swift */; };
 		BD129E391D7B2D1E009AC164 /* CarouselSpot+Spotable+Mac.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E381D7B2D1E009AC164 /* CarouselSpot+Spotable+Mac.swift */; };
-		BD129E611D7B2F3C009AC164 /* ListAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E411D7B2F3C009AC164 /* ListAdapter.swift */; };
-		BD129E621D7B2F3C009AC164 /* ListAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E411D7B2F3C009AC164 /* ListAdapter.swift */; };
-		BD129E631D7B2F3C009AC164 /* ListAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E411D7B2F3C009AC164 /* ListAdapter.swift */; };
-		BD129E641D7B2F3C009AC164 /* Registry.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E421D7B2F3C009AC164 /* Registry.swift */; };
-		BD129E651D7B2F3C009AC164 /* Registry.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E421D7B2F3C009AC164 /* Registry.swift */; };
-		BD129E661D7B2F3C009AC164 /* Registry.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E421D7B2F3C009AC164 /* Registry.swift */; };
-		BD129E671D7B2F3C009AC164 /* SpotFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E431D7B2F3C009AC164 /* SpotFactory.swift */; };
-		BD129E681D7B2F3C009AC164 /* SpotFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E431D7B2F3C009AC164 /* SpotFactory.swift */; };
-		BD129E691D7B2F3C009AC164 /* SpotFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E431D7B2F3C009AC164 /* SpotFactory.swift */; };
-		BD129E6A1D7B2F3C009AC164 /* SpotsAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E451D7B2F3C009AC164 /* SpotsAnimation.swift */; };
-		BD129E6B1D7B2F3C009AC164 /* SpotsAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E451D7B2F3C009AC164 /* SpotsAnimation.swift */; };
-		BD129E6C1D7B2F3C009AC164 /* SpotsAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E451D7B2F3C009AC164 /* SpotsAnimation.swift */; };
-		BD129E6D1D7B2F3C009AC164 /* Component+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E471D7B2F3C009AC164 /* Component+Extension.swift */; };
-		BD129E6E1D7B2F3C009AC164 /* Component+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E471D7B2F3C009AC164 /* Component+Extension.swift */; };
-		BD129E6F1D7B2F3C009AC164 /* Component+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E471D7B2F3C009AC164 /* Component+Extension.swift */; };
-		BD129E701D7B2F3C009AC164 /* Gridable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E481D7B2F3C009AC164 /* Gridable+Extensions.swift */; };
-		BD129E711D7B2F3C009AC164 /* Gridable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E481D7B2F3C009AC164 /* Gridable+Extensions.swift */; };
-		BD129E721D7B2F3C009AC164 /* Gridable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E481D7B2F3C009AC164 /* Gridable+Extensions.swift */; };
-		BD129E731D7B2F3C009AC164 /* Spotable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E491D7B2F3C009AC164 /* Spotable+Extensions.swift */; };
-		BD129E741D7B2F3C009AC164 /* Spotable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E491D7B2F3C009AC164 /* Spotable+Extensions.swift */; };
-		BD129E751D7B2F3C009AC164 /* Spotable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E491D7B2F3C009AC164 /* Spotable+Extensions.swift */; };
-		BD129E761D7B2F3C009AC164 /* SpotsProtocol+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E4A1D7B2F3C009AC164 /* SpotsProtocol+Extensions.swift */; };
-		BD129E771D7B2F3C009AC164 /* SpotsProtocol+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E4A1D7B2F3C009AC164 /* SpotsProtocol+Extensions.swift */; };
-		BD129E781D7B2F3C009AC164 /* SpotsProtocol+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E4A1D7B2F3C009AC164 /* SpotsProtocol+Extensions.swift */; };
-		BD129E791D7B2F3C009AC164 /* SpotsProtocol+LiveEditing.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E4B1D7B2F3C009AC164 /* SpotsProtocol+LiveEditing.swift */; };
-		BD129E7A1D7B2F3C009AC164 /* SpotsProtocol+LiveEditing.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E4B1D7B2F3C009AC164 /* SpotsProtocol+LiveEditing.swift */; };
-		BD129E7B1D7B2F3C009AC164 /* SpotsProtocol+LiveEditing.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E4B1D7B2F3C009AC164 /* SpotsProtocol+LiveEditing.swift */; };
-		BD129E7C1D7B2F3C009AC164 /* SpotsProtocol+Mutation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E4C1D7B2F3C009AC164 /* SpotsProtocol+Mutation.swift */; };
-		BD129E7D1D7B2F3C009AC164 /* SpotsProtocol+Mutation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E4C1D7B2F3C009AC164 /* SpotsProtocol+Mutation.swift */; };
-		BD129E7E1D7B2F3C009AC164 /* SpotsProtocol+Mutation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E4C1D7B2F3C009AC164 /* SpotsProtocol+Mutation.swift */; };
-		BD129E7F1D7B2F3C009AC164 /* Viewable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E4D1D7B2F3C009AC164 /* Viewable+Extensions.swift */; };
-		BD129E801D7B2F3C009AC164 /* Viewable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E4D1D7B2F3C009AC164 /* Viewable+Extensions.swift */; };
-		BD129E811D7B2F3C009AC164 /* Viewable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E4D1D7B2F3C009AC164 /* Viewable+Extensions.swift */; };
-		BD129E821D7B2F3C009AC164 /* ViewModel+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E4E1D7B2F3C009AC164 /* ViewModel+Extensions.swift */; };
-		BD129E831D7B2F3C009AC164 /* ViewModel+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E4E1D7B2F3C009AC164 /* ViewModel+Extensions.swift */; };
-		BD129E841D7B2F3C009AC164 /* ViewModel+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E4E1D7B2F3C009AC164 /* ViewModel+Extensions.swift */; };
-		BD129E851D7B2F3C009AC164 /* Componentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E501D7B2F3C009AC164 /* Componentable.swift */; };
-		BD129E861D7B2F3C009AC164 /* Componentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E501D7B2F3C009AC164 /* Componentable.swift */; };
-		BD129E871D7B2F3C009AC164 /* Componentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E501D7B2F3C009AC164 /* Componentable.swift */; };
-		BD129E881D7B2F3C009AC164 /* Gridable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E511D7B2F3C009AC164 /* Gridable.swift */; };
-		BD129E891D7B2F3C009AC164 /* Gridable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E511D7B2F3C009AC164 /* Gridable.swift */; };
-		BD129E8A1D7B2F3C009AC164 /* Gridable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E511D7B2F3C009AC164 /* Gridable.swift */; };
-		BD129E8B1D7B2F3C009AC164 /* Listable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E521D7B2F3C009AC164 /* Listable.swift */; };
-		BD129E8C1D7B2F3C009AC164 /* Listable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E521D7B2F3C009AC164 /* Listable.swift */; };
-		BD129E8D1D7B2F3C009AC164 /* Listable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E521D7B2F3C009AC164 /* Listable.swift */; };
-		BD129E8E1D7B2F3C009AC164 /* Spotable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E531D7B2F3C009AC164 /* Spotable.swift */; };
-		BD129E8F1D7B2F3C009AC164 /* Spotable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E531D7B2F3C009AC164 /* Spotable.swift */; };
-		BD129E901D7B2F3C009AC164 /* Spotable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E531D7B2F3C009AC164 /* Spotable.swift */; };
-		BD129E911D7B2F3C009AC164 /* SpotAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E541D7B2F3C009AC164 /* SpotAdapter.swift */; };
-		BD129E921D7B2F3C009AC164 /* SpotAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E541D7B2F3C009AC164 /* SpotAdapter.swift */; };
-		BD129E931D7B2F3C009AC164 /* SpotAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E541D7B2F3C009AC164 /* SpotAdapter.swift */; };
-		BD129E941D7B2F3C009AC164 /* SpotConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E551D7B2F3C009AC164 /* SpotConfigurable.swift */; };
-		BD129E951D7B2F3C009AC164 /* SpotConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E551D7B2F3C009AC164 /* SpotConfigurable.swift */; };
-		BD129E961D7B2F3C009AC164 /* SpotConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E551D7B2F3C009AC164 /* SpotConfigurable.swift */; };
-		BD129E971D7B2F3C009AC164 /* SpotsDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E561D7B2F3C009AC164 /* SpotsDelegates.swift */; };
-		BD129E981D7B2F3C009AC164 /* SpotsDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E561D7B2F3C009AC164 /* SpotsDelegates.swift */; };
-		BD129E991D7B2F3C009AC164 /* SpotsDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E561D7B2F3C009AC164 /* SpotsDelegates.swift */; };
-		BD129E9A1D7B2F3C009AC164 /* SpotsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E571D7B2F3C009AC164 /* SpotsProtocol.swift */; };
-		BD129E9B1D7B2F3C009AC164 /* SpotsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E571D7B2F3C009AC164 /* SpotsProtocol.swift */; };
-		BD129E9C1D7B2F3C009AC164 /* SpotsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E571D7B2F3C009AC164 /* SpotsProtocol.swift */; };
-		BD129E9D1D7B2F3C009AC164 /* Viewable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E581D7B2F3C009AC164 /* Viewable.swift */; };
-		BD129E9E1D7B2F3C009AC164 /* Viewable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E581D7B2F3C009AC164 /* Viewable.swift */; };
-		BD129E9F1D7B2F3C009AC164 /* Viewable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E581D7B2F3C009AC164 /* Viewable.swift */; };
-		BD129EA01D7B2F3C009AC164 /* ViewSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E5A1D7B2F3C009AC164 /* ViewSpot.swift */; };
-		BD129EA11D7B2F3C009AC164 /* ViewSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E5A1D7B2F3C009AC164 /* ViewSpot.swift */; };
-		BD129EA21D7B2F3C009AC164 /* ViewSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E5A1D7B2F3C009AC164 /* ViewSpot.swift */; };
-		BD129EA31D7B2F3C009AC164 /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E5C1D7B2F3C009AC164 /* Component.swift */; };
-		BD129EA41D7B2F3C009AC164 /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E5C1D7B2F3C009AC164 /* Component.swift */; };
-		BD129EA51D7B2F3C009AC164 /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E5C1D7B2F3C009AC164 /* Component.swift */; };
-		BD129EA61D7B2F3C009AC164 /* GridableMeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E5D1D7B2F3C009AC164 /* GridableMeta.swift */; };
-		BD129EA71D7B2F3C009AC164 /* GridableMeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E5D1D7B2F3C009AC164 /* GridableMeta.swift */; };
-		BD129EA81D7B2F3C009AC164 /* GridableMeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E5D1D7B2F3C009AC164 /* GridableMeta.swift */; };
-		BD129EA91D7B2F3C009AC164 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E5E1D7B2F3C009AC164 /* Parser.swift */; };
-		BD129EAA1D7B2F3C009AC164 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E5E1D7B2F3C009AC164 /* Parser.swift */; };
-		BD129EAB1D7B2F3C009AC164 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E5E1D7B2F3C009AC164 /* Parser.swift */; };
-		BD129EAC1D7B2F3C009AC164 /* SpotCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E5F1D7B2F3C009AC164 /* SpotCache.swift */; };
-		BD129EAD1D7B2F3C009AC164 /* SpotCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E5F1D7B2F3C009AC164 /* SpotCache.swift */; };
-		BD129EAE1D7B2F3C009AC164 /* SpotCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E5F1D7B2F3C009AC164 /* SpotCache.swift */; };
-		BD129EAF1D7B2F3C009AC164 /* TypeAlias.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E601D7B2F3C009AC164 /* TypeAlias.swift */; };
-		BD129EB01D7B2F3C009AC164 /* TypeAlias.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E601D7B2F3C009AC164 /* TypeAlias.swift */; };
-		BD129EB11D7B2F3C009AC164 /* TypeAlias.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E601D7B2F3C009AC164 /* TypeAlias.swift */; };
+		BD129F451D7B2F91009AC164 /* ListAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F261D7B2F91009AC164 /* ListAdapter.swift */; };
+		BD129F461D7B2F91009AC164 /* ListAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F261D7B2F91009AC164 /* ListAdapter.swift */; };
+		BD129F471D7B2F91009AC164 /* ListAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F261D7B2F91009AC164 /* ListAdapter.swift */; };
+		BD129F481D7B2F91009AC164 /* Registry.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F271D7B2F91009AC164 /* Registry.swift */; };
+		BD129F491D7B2F91009AC164 /* Registry.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F271D7B2F91009AC164 /* Registry.swift */; };
+		BD129F4A1D7B2F91009AC164 /* Registry.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F271D7B2F91009AC164 /* Registry.swift */; };
+		BD129F4B1D7B2F91009AC164 /* SpotFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F281D7B2F91009AC164 /* SpotFactory.swift */; };
+		BD129F4C1D7B2F91009AC164 /* SpotFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F281D7B2F91009AC164 /* SpotFactory.swift */; };
+		BD129F4D1D7B2F91009AC164 /* SpotFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F281D7B2F91009AC164 /* SpotFactory.swift */; };
+		BD129F4E1D7B2F91009AC164 /* ViewSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F291D7B2F91009AC164 /* ViewSpot.swift */; };
+		BD129F4F1D7B2F91009AC164 /* ViewSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F291D7B2F91009AC164 /* ViewSpot.swift */; };
+		BD129F501D7B2F91009AC164 /* ViewSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F291D7B2F91009AC164 /* ViewSpot.swift */; };
+		BD129F511D7B2F91009AC164 /* SpotsAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F2B1D7B2F91009AC164 /* SpotsAnimation.swift */; };
+		BD129F521D7B2F91009AC164 /* SpotsAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F2B1D7B2F91009AC164 /* SpotsAnimation.swift */; };
+		BD129F531D7B2F91009AC164 /* SpotsAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F2B1D7B2F91009AC164 /* SpotsAnimation.swift */; };
+		BD129F541D7B2F91009AC164 /* Component+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F2D1D7B2F91009AC164 /* Component+Extension.swift */; };
+		BD129F551D7B2F91009AC164 /* Component+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F2D1D7B2F91009AC164 /* Component+Extension.swift */; };
+		BD129F561D7B2F91009AC164 /* Component+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F2D1D7B2F91009AC164 /* Component+Extension.swift */; };
+		BD129F571D7B2F91009AC164 /* Gridable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F2E1D7B2F91009AC164 /* Gridable+Extensions.swift */; };
+		BD129F581D7B2F91009AC164 /* Gridable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F2E1D7B2F91009AC164 /* Gridable+Extensions.swift */; };
+		BD129F591D7B2F91009AC164 /* Gridable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F2E1D7B2F91009AC164 /* Gridable+Extensions.swift */; };
+		BD129F5A1D7B2F91009AC164 /* Spotable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F2F1D7B2F91009AC164 /* Spotable+Extensions.swift */; };
+		BD129F5B1D7B2F91009AC164 /* Spotable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F2F1D7B2F91009AC164 /* Spotable+Extensions.swift */; };
+		BD129F5C1D7B2F91009AC164 /* Spotable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F2F1D7B2F91009AC164 /* Spotable+Extensions.swift */; };
+		BD129F5D1D7B2F91009AC164 /* SpotsProtocol+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F301D7B2F91009AC164 /* SpotsProtocol+Extensions.swift */; };
+		BD129F5E1D7B2F91009AC164 /* SpotsProtocol+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F301D7B2F91009AC164 /* SpotsProtocol+Extensions.swift */; };
+		BD129F5F1D7B2F91009AC164 /* SpotsProtocol+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F301D7B2F91009AC164 /* SpotsProtocol+Extensions.swift */; };
+		BD129F601D7B2F91009AC164 /* SpotsProtocol+LiveEditing.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F311D7B2F91009AC164 /* SpotsProtocol+LiveEditing.swift */; };
+		BD129F611D7B2F91009AC164 /* SpotsProtocol+LiveEditing.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F311D7B2F91009AC164 /* SpotsProtocol+LiveEditing.swift */; };
+		BD129F621D7B2F91009AC164 /* SpotsProtocol+LiveEditing.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F311D7B2F91009AC164 /* SpotsProtocol+LiveEditing.swift */; };
+		BD129F631D7B2F91009AC164 /* SpotsProtocol+Mutation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F321D7B2F91009AC164 /* SpotsProtocol+Mutation.swift */; };
+		BD129F641D7B2F91009AC164 /* SpotsProtocol+Mutation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F321D7B2F91009AC164 /* SpotsProtocol+Mutation.swift */; };
+		BD129F651D7B2F91009AC164 /* SpotsProtocol+Mutation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F321D7B2F91009AC164 /* SpotsProtocol+Mutation.swift */; };
+		BD129F661D7B2F91009AC164 /* Viewable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F331D7B2F91009AC164 /* Viewable+Extensions.swift */; };
+		BD129F671D7B2F91009AC164 /* Viewable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F331D7B2F91009AC164 /* Viewable+Extensions.swift */; };
+		BD129F681D7B2F91009AC164 /* Viewable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F331D7B2F91009AC164 /* Viewable+Extensions.swift */; };
+		BD129F691D7B2F91009AC164 /* ViewModel+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F341D7B2F91009AC164 /* ViewModel+Extensions.swift */; };
+		BD129F6A1D7B2F91009AC164 /* ViewModel+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F341D7B2F91009AC164 /* ViewModel+Extensions.swift */; };
+		BD129F6B1D7B2F91009AC164 /* ViewModel+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F341D7B2F91009AC164 /* ViewModel+Extensions.swift */; };
+		BD129F6C1D7B2F91009AC164 /* Componentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F361D7B2F91009AC164 /* Componentable.swift */; };
+		BD129F6D1D7B2F91009AC164 /* Componentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F361D7B2F91009AC164 /* Componentable.swift */; };
+		BD129F6E1D7B2F91009AC164 /* Componentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F361D7B2F91009AC164 /* Componentable.swift */; };
+		BD129F6F1D7B2F91009AC164 /* Gridable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F371D7B2F91009AC164 /* Gridable.swift */; };
+		BD129F701D7B2F91009AC164 /* Gridable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F371D7B2F91009AC164 /* Gridable.swift */; };
+		BD129F711D7B2F91009AC164 /* Gridable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F371D7B2F91009AC164 /* Gridable.swift */; };
+		BD129F721D7B2F91009AC164 /* Listable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F381D7B2F91009AC164 /* Listable.swift */; };
+		BD129F731D7B2F91009AC164 /* Listable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F381D7B2F91009AC164 /* Listable.swift */; };
+		BD129F741D7B2F91009AC164 /* Listable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F381D7B2F91009AC164 /* Listable.swift */; };
+		BD129F751D7B2F91009AC164 /* Spotable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F391D7B2F91009AC164 /* Spotable.swift */; };
+		BD129F761D7B2F91009AC164 /* Spotable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F391D7B2F91009AC164 /* Spotable.swift */; };
+		BD129F771D7B2F91009AC164 /* Spotable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F391D7B2F91009AC164 /* Spotable.swift */; };
+		BD129F781D7B2F91009AC164 /* SpotAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F3A1D7B2F91009AC164 /* SpotAdapter.swift */; };
+		BD129F791D7B2F91009AC164 /* SpotAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F3A1D7B2F91009AC164 /* SpotAdapter.swift */; };
+		BD129F7A1D7B2F91009AC164 /* SpotAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F3A1D7B2F91009AC164 /* SpotAdapter.swift */; };
+		BD129F7B1D7B2F91009AC164 /* SpotConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F3B1D7B2F91009AC164 /* SpotConfigurable.swift */; };
+		BD129F7C1D7B2F91009AC164 /* SpotConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F3B1D7B2F91009AC164 /* SpotConfigurable.swift */; };
+		BD129F7D1D7B2F91009AC164 /* SpotConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F3B1D7B2F91009AC164 /* SpotConfigurable.swift */; };
+		BD129F7E1D7B2F91009AC164 /* SpotsDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F3C1D7B2F91009AC164 /* SpotsDelegates.swift */; };
+		BD129F7F1D7B2F91009AC164 /* SpotsDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F3C1D7B2F91009AC164 /* SpotsDelegates.swift */; };
+		BD129F801D7B2F91009AC164 /* SpotsDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F3C1D7B2F91009AC164 /* SpotsDelegates.swift */; };
+		BD129F811D7B2F91009AC164 /* SpotsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F3D1D7B2F91009AC164 /* SpotsProtocol.swift */; };
+		BD129F821D7B2F91009AC164 /* SpotsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F3D1D7B2F91009AC164 /* SpotsProtocol.swift */; };
+		BD129F831D7B2F91009AC164 /* SpotsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F3D1D7B2F91009AC164 /* SpotsProtocol.swift */; };
+		BD129F841D7B2F91009AC164 /* Viewable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F3E1D7B2F91009AC164 /* Viewable.swift */; };
+		BD129F851D7B2F91009AC164 /* Viewable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F3E1D7B2F91009AC164 /* Viewable.swift */; };
+		BD129F861D7B2F91009AC164 /* Viewable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F3E1D7B2F91009AC164 /* Viewable.swift */; };
+		BD129F871D7B2F91009AC164 /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F401D7B2F91009AC164 /* Component.swift */; };
+		BD129F881D7B2F91009AC164 /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F401D7B2F91009AC164 /* Component.swift */; };
+		BD129F891D7B2F91009AC164 /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F401D7B2F91009AC164 /* Component.swift */; };
+		BD129F8A1D7B2F91009AC164 /* GridableMeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F411D7B2F91009AC164 /* GridableMeta.swift */; };
+		BD129F8B1D7B2F91009AC164 /* GridableMeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F411D7B2F91009AC164 /* GridableMeta.swift */; };
+		BD129F8C1D7B2F91009AC164 /* GridableMeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F411D7B2F91009AC164 /* GridableMeta.swift */; };
+		BD129F8D1D7B2F91009AC164 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F421D7B2F91009AC164 /* Parser.swift */; };
+		BD129F8E1D7B2F91009AC164 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F421D7B2F91009AC164 /* Parser.swift */; };
+		BD129F8F1D7B2F91009AC164 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F421D7B2F91009AC164 /* Parser.swift */; };
+		BD129F901D7B2F91009AC164 /* SpotCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F431D7B2F91009AC164 /* SpotCache.swift */; };
+		BD129F911D7B2F91009AC164 /* SpotCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F431D7B2F91009AC164 /* SpotCache.swift */; };
+		BD129F921D7B2F91009AC164 /* SpotCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F431D7B2F91009AC164 /* SpotCache.swift */; };
+		BD129F931D7B2F91009AC164 /* TypeAlias.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F441D7B2F91009AC164 /* TypeAlias.swift */; };
+		BD129F941D7B2F91009AC164 /* TypeAlias.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F441D7B2F91009AC164 /* TypeAlias.swift */; };
+		BD129F951D7B2F91009AC164 /* TypeAlias.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F441D7B2F91009AC164 /* TypeAlias.swift */; };
 		BD352E5F1CBAD6EC002CD032 /* Brick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD352E5E1CBAD6EC002CD032 /* Brick.framework */; };
 		BD352E611CBAD6F9002CD032 /* Brick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD352E601CBAD6F9002CD032 /* Brick.framework */; };
 		BD48BEC91C459B4800317D76 /* ViewSpotSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD48BEC81C459B4800317D76 /* ViewSpotSpec.swift */; };
@@ -292,33 +292,33 @@
 		BD129E201D7B2CDE009AC164 /* GridRegistry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridRegistry.swift; sourceTree = "<group>"; };
 		BD129E381D7B2D1E009AC164 /* CarouselSpot+Spotable+Mac.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CarouselSpot+Spotable+Mac.swift"; sourceTree = "<group>"; };
 		BD129E3A1D7B2DE2009AC164 /* Info-tvOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-tvOS.plist"; sourceTree = "<group>"; };
-		BD129E411D7B2F3C009AC164 /* ListAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListAdapter.swift; sourceTree = "<group>"; };
-		BD129E421D7B2F3C009AC164 /* Registry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Registry.swift; sourceTree = "<group>"; };
-		BD129E431D7B2F3C009AC164 /* SpotFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotFactory.swift; sourceTree = "<group>"; };
-		BD129E451D7B2F3C009AC164 /* SpotsAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsAnimation.swift; sourceTree = "<group>"; };
-		BD129E471D7B2F3C009AC164 /* Component+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Component+Extension.swift"; sourceTree = "<group>"; };
-		BD129E481D7B2F3C009AC164 /* Gridable+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Gridable+Extensions.swift"; sourceTree = "<group>"; };
-		BD129E491D7B2F3C009AC164 /* Spotable+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Spotable+Extensions.swift"; sourceTree = "<group>"; };
-		BD129E4A1D7B2F3C009AC164 /* SpotsProtocol+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SpotsProtocol+Extensions.swift"; sourceTree = "<group>"; };
-		BD129E4B1D7B2F3C009AC164 /* SpotsProtocol+LiveEditing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SpotsProtocol+LiveEditing.swift"; sourceTree = "<group>"; };
-		BD129E4C1D7B2F3C009AC164 /* SpotsProtocol+Mutation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SpotsProtocol+Mutation.swift"; sourceTree = "<group>"; };
-		BD129E4D1D7B2F3C009AC164 /* Viewable+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Viewable+Extensions.swift"; sourceTree = "<group>"; };
-		BD129E4E1D7B2F3C009AC164 /* ViewModel+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ViewModel+Extensions.swift"; sourceTree = "<group>"; };
-		BD129E501D7B2F3C009AC164 /* Componentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Componentable.swift; sourceTree = "<group>"; };
-		BD129E511D7B2F3C009AC164 /* Gridable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gridable.swift; sourceTree = "<group>"; };
-		BD129E521D7B2F3C009AC164 /* Listable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Listable.swift; sourceTree = "<group>"; };
-		BD129E531D7B2F3C009AC164 /* Spotable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spotable.swift; sourceTree = "<group>"; };
-		BD129E541D7B2F3C009AC164 /* SpotAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotAdapter.swift; sourceTree = "<group>"; };
-		BD129E551D7B2F3C009AC164 /* SpotConfigurable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotConfigurable.swift; sourceTree = "<group>"; };
-		BD129E561D7B2F3C009AC164 /* SpotsDelegates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsDelegates.swift; sourceTree = "<group>"; };
-		BD129E571D7B2F3C009AC164 /* SpotsProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsProtocol.swift; sourceTree = "<group>"; };
-		BD129E581D7B2F3C009AC164 /* Viewable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Viewable.swift; sourceTree = "<group>"; };
-		BD129E5A1D7B2F3C009AC164 /* ViewSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewSpot.swift; sourceTree = "<group>"; };
-		BD129E5C1D7B2F3C009AC164 /* Component.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
-		BD129E5D1D7B2F3C009AC164 /* GridableMeta.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridableMeta.swift; sourceTree = "<group>"; };
-		BD129E5E1D7B2F3C009AC164 /* Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
-		BD129E5F1D7B2F3C009AC164 /* SpotCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotCache.swift; sourceTree = "<group>"; };
-		BD129E601D7B2F3C009AC164 /* TypeAlias.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeAlias.swift; sourceTree = "<group>"; };
+		BD129F261D7B2F91009AC164 /* ListAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListAdapter.swift; sourceTree = "<group>"; };
+		BD129F271D7B2F91009AC164 /* Registry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Registry.swift; sourceTree = "<group>"; };
+		BD129F281D7B2F91009AC164 /* SpotFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotFactory.swift; sourceTree = "<group>"; };
+		BD129F291D7B2F91009AC164 /* ViewSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewSpot.swift; sourceTree = "<group>"; };
+		BD129F2B1D7B2F91009AC164 /* SpotsAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsAnimation.swift; sourceTree = "<group>"; };
+		BD129F2D1D7B2F91009AC164 /* Component+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Component+Extension.swift"; sourceTree = "<group>"; };
+		BD129F2E1D7B2F91009AC164 /* Gridable+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Gridable+Extensions.swift"; sourceTree = "<group>"; };
+		BD129F2F1D7B2F91009AC164 /* Spotable+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Spotable+Extensions.swift"; sourceTree = "<group>"; };
+		BD129F301D7B2F91009AC164 /* SpotsProtocol+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SpotsProtocol+Extensions.swift"; sourceTree = "<group>"; };
+		BD129F311D7B2F91009AC164 /* SpotsProtocol+LiveEditing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SpotsProtocol+LiveEditing.swift"; sourceTree = "<group>"; };
+		BD129F321D7B2F91009AC164 /* SpotsProtocol+Mutation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SpotsProtocol+Mutation.swift"; sourceTree = "<group>"; };
+		BD129F331D7B2F91009AC164 /* Viewable+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Viewable+Extensions.swift"; sourceTree = "<group>"; };
+		BD129F341D7B2F91009AC164 /* ViewModel+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ViewModel+Extensions.swift"; sourceTree = "<group>"; };
+		BD129F361D7B2F91009AC164 /* Componentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Componentable.swift; sourceTree = "<group>"; };
+		BD129F371D7B2F91009AC164 /* Gridable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gridable.swift; sourceTree = "<group>"; };
+		BD129F381D7B2F91009AC164 /* Listable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Listable.swift; sourceTree = "<group>"; };
+		BD129F391D7B2F91009AC164 /* Spotable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spotable.swift; sourceTree = "<group>"; };
+		BD129F3A1D7B2F91009AC164 /* SpotAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotAdapter.swift; sourceTree = "<group>"; };
+		BD129F3B1D7B2F91009AC164 /* SpotConfigurable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotConfigurable.swift; sourceTree = "<group>"; };
+		BD129F3C1D7B2F91009AC164 /* SpotsDelegates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsDelegates.swift; sourceTree = "<group>"; };
+		BD129F3D1D7B2F91009AC164 /* SpotsProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsProtocol.swift; sourceTree = "<group>"; };
+		BD129F3E1D7B2F91009AC164 /* Viewable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Viewable.swift; sourceTree = "<group>"; };
+		BD129F401D7B2F91009AC164 /* Component.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
+		BD129F411D7B2F91009AC164 /* GridableMeta.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridableMeta.swift; sourceTree = "<group>"; };
+		BD129F421D7B2F91009AC164 /* Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
+		BD129F431D7B2F91009AC164 /* SpotCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotCache.swift; sourceTree = "<group>"; };
+		BD129F441D7B2F91009AC164 /* TypeAlias.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeAlias.swift; sourceTree = "<group>"; };
 		BD352E5E1CBAD6EC002CD032 /* Brick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Brick.framework; path = Carthage/Build/iOS/Brick.framework; sourceTree = "<group>"; };
 		BD352E601CBAD6F9002CD032 /* Brick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Brick.framework; path = Carthage/Build/Mac/Brick.framework; sourceTree = "<group>"; };
 		BD48BEC81C459B4800317D76 /* ViewSpotSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewSpotSpec.swift; sourceTree = "<group>"; };
@@ -535,84 +535,76 @@
 			path = Structs;
 			sourceTree = "<group>";
 		};
-		BD129E3F1D7B2F3C009AC164 /* Shared */ = {
+		BD129F241D7B2F91009AC164 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				BD129E401D7B2F3C009AC164 /* Classes */,
-				BD129E441D7B2F3C009AC164 /* Enums */,
-				BD129E461D7B2F3C009AC164 /* Extensions */,
-				BD129E4F1D7B2F3C009AC164 /* Protocols */,
-				BD129E591D7B2F3C009AC164 /* Spots */,
-				BD129E5B1D7B2F3C009AC164 /* Structs */,
-				BD129E601D7B2F3C009AC164 /* TypeAlias.swift */,
+				BD129F251D7B2F91009AC164 /* Classes */,
+				BD129F2A1D7B2F91009AC164 /* Enums */,
+				BD129F2C1D7B2F91009AC164 /* Extensions */,
+				BD129F351D7B2F91009AC164 /* Protocols */,
+				BD129F3F1D7B2F91009AC164 /* Structs */,
+				BD129F441D7B2F91009AC164 /* TypeAlias.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
 		};
-		BD129E401D7B2F3C009AC164 /* Classes */ = {
+		BD129F251D7B2F91009AC164 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				BD129E411D7B2F3C009AC164 /* ListAdapter.swift */,
-				BD129E421D7B2F3C009AC164 /* Registry.swift */,
-				BD129E431D7B2F3C009AC164 /* SpotFactory.swift */,
+				BD129F261D7B2F91009AC164 /* ListAdapter.swift */,
+				BD129F271D7B2F91009AC164 /* Registry.swift */,
+				BD129F281D7B2F91009AC164 /* SpotFactory.swift */,
+				BD129F291D7B2F91009AC164 /* ViewSpot.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
 		};
-		BD129E441D7B2F3C009AC164 /* Enums */ = {
+		BD129F2A1D7B2F91009AC164 /* Enums */ = {
 			isa = PBXGroup;
 			children = (
-				BD129E451D7B2F3C009AC164 /* SpotsAnimation.swift */,
+				BD129F2B1D7B2F91009AC164 /* SpotsAnimation.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
 		};
-		BD129E461D7B2F3C009AC164 /* Extensions */ = {
+		BD129F2C1D7B2F91009AC164 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				BD129E471D7B2F3C009AC164 /* Component+Extension.swift */,
-				BD129E481D7B2F3C009AC164 /* Gridable+Extensions.swift */,
-				BD129E491D7B2F3C009AC164 /* Spotable+Extensions.swift */,
-				BD129E4A1D7B2F3C009AC164 /* SpotsProtocol+Extensions.swift */,
-				BD129E4B1D7B2F3C009AC164 /* SpotsProtocol+LiveEditing.swift */,
-				BD129E4C1D7B2F3C009AC164 /* SpotsProtocol+Mutation.swift */,
-				BD129E4D1D7B2F3C009AC164 /* Viewable+Extensions.swift */,
-				BD129E4E1D7B2F3C009AC164 /* ViewModel+Extensions.swift */,
+				BD129F2D1D7B2F91009AC164 /* Component+Extension.swift */,
+				BD129F2E1D7B2F91009AC164 /* Gridable+Extensions.swift */,
+				BD129F2F1D7B2F91009AC164 /* Spotable+Extensions.swift */,
+				BD129F301D7B2F91009AC164 /* SpotsProtocol+Extensions.swift */,
+				BD129F311D7B2F91009AC164 /* SpotsProtocol+LiveEditing.swift */,
+				BD129F321D7B2F91009AC164 /* SpotsProtocol+Mutation.swift */,
+				BD129F331D7B2F91009AC164 /* Viewable+Extensions.swift */,
+				BD129F341D7B2F91009AC164 /* ViewModel+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		BD129E4F1D7B2F3C009AC164 /* Protocols */ = {
+		BD129F351D7B2F91009AC164 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				BD129E501D7B2F3C009AC164 /* Componentable.swift */,
-				BD129E511D7B2F3C009AC164 /* Gridable.swift */,
-				BD129E521D7B2F3C009AC164 /* Listable.swift */,
-				BD129E531D7B2F3C009AC164 /* Spotable.swift */,
-				BD129E541D7B2F3C009AC164 /* SpotAdapter.swift */,
-				BD129E551D7B2F3C009AC164 /* SpotConfigurable.swift */,
-				BD129E561D7B2F3C009AC164 /* SpotsDelegates.swift */,
-				BD129E571D7B2F3C009AC164 /* SpotsProtocol.swift */,
-				BD129E581D7B2F3C009AC164 /* Viewable.swift */,
+				BD129F361D7B2F91009AC164 /* Componentable.swift */,
+				BD129F371D7B2F91009AC164 /* Gridable.swift */,
+				BD129F381D7B2F91009AC164 /* Listable.swift */,
+				BD129F391D7B2F91009AC164 /* Spotable.swift */,
+				BD129F3A1D7B2F91009AC164 /* SpotAdapter.swift */,
+				BD129F3B1D7B2F91009AC164 /* SpotConfigurable.swift */,
+				BD129F3C1D7B2F91009AC164 /* SpotsDelegates.swift */,
+				BD129F3D1D7B2F91009AC164 /* SpotsProtocol.swift */,
+				BD129F3E1D7B2F91009AC164 /* Viewable.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
 		};
-		BD129E591D7B2F3C009AC164 /* Spots */ = {
+		BD129F3F1D7B2F91009AC164 /* Structs */ = {
 			isa = PBXGroup;
 			children = (
-				BD129E5A1D7B2F3C009AC164 /* ViewSpot.swift */,
-			);
-			path = Spots;
-			sourceTree = "<group>";
-		};
-		BD129E5B1D7B2F3C009AC164 /* Structs */ = {
-			isa = PBXGroup;
-			children = (
-				BD129E5C1D7B2F3C009AC164 /* Component.swift */,
-				BD129E5D1D7B2F3C009AC164 /* GridableMeta.swift */,
-				BD129E5E1D7B2F3C009AC164 /* Parser.swift */,
-				BD129E5F1D7B2F3C009AC164 /* SpotCache.swift */,
+				BD129F401D7B2F91009AC164 /* Component.swift */,
+				BD129F411D7B2F91009AC164 /* GridableMeta.swift */,
+				BD129F421D7B2F91009AC164 /* Parser.swift */,
+				BD129F431D7B2F91009AC164 /* SpotCache.swift */,
 			);
 			path = Structs;
 			sourceTree = "<group>";
@@ -622,7 +614,7 @@
 			children = (
 				BD129D471D7B295F009AC164 /* iOS */,
 				BD129E061D7B2CDE009AC164 /* Mac */,
-				BD129E3F1D7B2F3C009AC164 /* Shared */,
+				BD129F241D7B2F91009AC164 /* Shared */,
 				BD7397481D718D20000AF2DE /* tvOS */,
 			);
 			path = Sources;
@@ -1130,63 +1122,63 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BD129E871D7B2F3C009AC164 /* Componentable.swift in Sources */,
+				BD129F501D7B2F91009AC164 /* ViewSpot.swift in Sources */,
 				BD129DC21D7B2B6C009AC164 /* GridSpot.swift in Sources */,
-				BD129E721D7B2F3C009AC164 /* Gridable+Extensions.swift in Sources */,
 				BD73974B1D718D38000AF2DE /* CollectionAdapter+tvOS.swift in Sources */,
-				BD129EAE1D7B2F3C009AC164 /* SpotCache.swift in Sources */,
-				BD129E661D7B2F3C009AC164 /* Registry.swift in Sources */,
+				BD129F4A1D7B2F91009AC164 /* Registry.swift in Sources */,
+				BD129F921D7B2F91009AC164 /* SpotCache.swift in Sources */,
+				BD129F861D7B2F91009AC164 /* Viewable.swift in Sources */,
 				BD129DCE1D7B2B6C009AC164 /* SpotsController.swift in Sources */,
 				BD129DC41D7B2B6C009AC164 /* GridSpotCell.swift in Sources */,
 				BD129D981D7B295F009AC164 /* SpotComposable.swift in Sources */,
-				BD129E961D7B2F3C009AC164 /* SpotConfigurable.swift in Sources */,
 				BD129D941D7B295F009AC164 /* UICollectionView+Indexes.swift in Sources */,
 				BD129D901D7B295F009AC164 /* SpotComposable+Extensions.swift in Sources */,
+				BD129F531D7B2F91009AC164 /* SpotsAnimation.swift in Sources */,
 				BD129DD01D7B2B6C009AC164 /* SpotsScrollView.swift in Sources */,
-				BD129EAB1D7B2F3C009AC164 /* Parser.swift in Sources */,
+				BD129F8F1D7B2F91009AC164 /* Parser.swift in Sources */,
 				BD129D841D7B295F009AC164 /* CollectionAdapter+UICollectionViewDelegate.swift in Sources */,
-				BD129E6C1D7B2F3C009AC164 /* SpotsAnimation.swift in Sources */,
 				BD129DBE1D7B2B6C009AC164 /* GridableLayout.swift in Sources */,
 				BD129D8A1D7B295F009AC164 /* Gridable+Extensions+iOS.swift in Sources */,
-				BD129E841D7B2F3C009AC164 /* ViewModel+Extensions.swift in Sources */,
-				BD129E8D1D7B2F3C009AC164 /* Listable.swift in Sources */,
-				BD129E7E1D7B2F3C009AC164 /* SpotsProtocol+Mutation.swift in Sources */,
-				BD129E9F1D7B2F3C009AC164 /* Viewable.swift in Sources */,
 				BD129D881D7B295F009AC164 /* CollectionAdapter+UIScrollViewDelegate.swift in Sources */,
-				BD129E811D7B2F3C009AC164 /* Viewable+Extensions.swift in Sources */,
-				BD129E691D7B2F3C009AC164 /* SpotFactory.swift in Sources */,
+				BD129F4D1D7B2F91009AC164 /* SpotFactory.swift in Sources */,
 				BD129DC01D7B2B6C009AC164 /* GridComposite.swift in Sources */,
-				BD129E9C1D7B2F3C009AC164 /* SpotsProtocol.swift in Sources */,
+				BD129F741D7B2F91009AC164 /* Listable.swift in Sources */,
 				BD129D9F1D7B29F6009AC164 /* CarouselSpot+UIScrollViewDelegate.swift in Sources */,
+				BD129F7A1D7B2F91009AC164 /* SpotAdapter.swift in Sources */,
 				BD129D8E1D7B295F009AC164 /* ListAdapter+Extensions+iOS.swift in Sources */,
 				BD129D961D7B295F009AC164 /* UITableView+Indexes.swift in Sources */,
 				BD129D921D7B295F009AC164 /* SpotsController+UIScrollViewDelegate.swift in Sources */,
-				BD129E931D7B2F3C009AC164 /* SpotAdapter.swift in Sources */,
-				BD129EA21D7B2F3C009AC164 /* ViewSpot.swift in Sources */,
-				BD129E6F1D7B2F3C009AC164 /* Component+Extension.swift in Sources */,
+				BD129F7D1D7B2F91009AC164 /* SpotConfigurable.swift in Sources */,
+				BD129F6E1D7B2F91009AC164 /* Componentable.swift in Sources */,
 				BD129D821D7B295F009AC164 /* CollectionAdapter+UICollectionViewDataSource.swift in Sources */,
+				BD129F681D7B2F91009AC164 /* Viewable+Extensions.swift in Sources */,
 				BD129DC61D7B2B6C009AC164 /* ListComposite.swift in Sources */,
-				BD129E7B1D7B2F3C009AC164 /* SpotsProtocol+LiveEditing.swift in Sources */,
 				BD129DB41D7B2B6C009AC164 /* CarouselComposite.swift in Sources */,
-				BD129EA81D7B2F3C009AC164 /* GridableMeta.swift in Sources */,
-				BD129EA51D7B2F3C009AC164 /* Component.swift in Sources */,
 				BD129DA21D7B2A3D009AC164 /* CarouselSpot+iOS.swift in Sources */,
+				BD129F5F1D7B2F91009AC164 /* SpotsProtocol+Extensions.swift in Sources */,
 				BD129DCA1D7B2B6C009AC164 /* ListSpotCell.swift in Sources */,
-				BD129E781D7B2F3C009AC164 /* SpotsProtocol+Extensions.swift in Sources */,
 				BD129DB81D7B2B6C009AC164 /* CarouselSpotCell.swift in Sources */,
+				BD129F621D7B2F91009AC164 /* SpotsProtocol+LiveEditing.swift in Sources */,
+				BD129F5C1D7B2F91009AC164 /* Spotable+Extensions.swift in Sources */,
+				BD129F8C1D7B2F91009AC164 /* GridableMeta.swift in Sources */,
+				BD129F891D7B2F91009AC164 /* Component.swift in Sources */,
 				BD129D8C1D7B295F009AC164 /* Listable+Extensions+iOS.swift in Sources */,
-				BD129EB11D7B2F3C009AC164 /* TypeAlias.swift in Sources */,
 				BD129DBC1D7B2B6C009AC164 /* CollectionAdapter.swift in Sources */,
-				BD129E991D7B2F3C009AC164 /* SpotsDelegates.swift in Sources */,
 				BD129DBA1D7B2B6C009AC164 /* CarouselSpotHeader.swift in Sources */,
-				BD129E751D7B2F3C009AC164 /* Spotable+Extensions.swift in Sources */,
+				BD129F831D7B2F91009AC164 /* SpotsProtocol.swift in Sources */,
 				BD129DCC1D7B2B6C009AC164 /* SpotsContentView.swift in Sources */,
+				BD129F951D7B2F91009AC164 /* TypeAlias.swift in Sources */,
+				BD129F591D7B2F91009AC164 /* Gridable+Extensions.swift in Sources */,
+				BD129F561D7B2F91009AC164 /* Component+Extension.swift in Sources */,
+				BD129F6B1D7B2F91009AC164 /* ViewModel+Extensions.swift in Sources */,
+				BD129F801D7B2F91009AC164 /* SpotsDelegates.swift in Sources */,
+				BD129F651D7B2F91009AC164 /* SpotsProtocol+Mutation.swift in Sources */,
+				BD129F771D7B2F91009AC164 /* Spotable.swift in Sources */,
 				BD129DC81D7B2B6C009AC164 /* ListSpot.swift in Sources */,
 				BD129D861D7B295F009AC164 /* CollectionAdapter+UICollectionViewDelegateFlowLayout.swift in Sources */,
+				BD129F711D7B2F91009AC164 /* Gridable.swift in Sources */,
 				BD129DB61D7B2B6C009AC164 /* CarouselSpot.swift in Sources */,
-				BD129E901D7B2F3C009AC164 /* Spotable.swift in Sources */,
-				BD129E631D7B2F3C009AC164 /* ListAdapter.swift in Sources */,
-				BD129E8A1D7B2F3C009AC164 /* Gridable.swift in Sources */,
+				BD129F471D7B2F91009AC164 /* ListAdapter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1209,62 +1201,62 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BD129F6C1D7B2F91009AC164 /* Componentable.swift in Sources */,
+				BD129F8A1D7B2F91009AC164 /* GridableMeta.swift in Sources */,
 				BD129DA11D7B2A3D009AC164 /* CarouselSpot+iOS.swift in Sources */,
-				BD129EA61D7B2F3C009AC164 /* GridableMeta.swift in Sources */,
-				BD129E7C1D7B2F3C009AC164 /* SpotsProtocol+Mutation.swift in Sources */,
-				BD129E6A1D7B2F3C009AC164 /* SpotsAnimation.swift in Sources */,
+				BD129F571D7B2F91009AC164 /* Gridable+Extensions.swift in Sources */,
 				BD129DC91D7B2B6C009AC164 /* ListSpotCell.swift in Sources */,
 				BD129D931D7B295F009AC164 /* UICollectionView+Indexes.swift in Sources */,
-				BD129E761D7B2F3C009AC164 /* SpotsProtocol+Extensions.swift in Sources */,
-				BD129E971D7B2F3C009AC164 /* SpotsDelegates.swift in Sources */,
 				BD129D871D7B295F009AC164 /* CollectionAdapter+UIScrollViewDelegate.swift in Sources */,
-				BD129E8E1D7B2F3C009AC164 /* Spotable.swift in Sources */,
 				BD129DC51D7B2B6C009AC164 /* ListComposite.swift in Sources */,
-				BD129E881D7B2F3C009AC164 /* Gridable.swift in Sources */,
-				BD129E611D7B2F3C009AC164 /* ListAdapter.swift in Sources */,
+				BD129F451D7B2F91009AC164 /* ListAdapter.swift in Sources */,
+				BD129F7B1D7B2F91009AC164 /* SpotConfigurable.swift in Sources */,
 				BD129DB51D7B2B6C009AC164 /* CarouselSpot.swift in Sources */,
 				BD129DCB1D7B2B6C009AC164 /* SpotsContentView.swift in Sources */,
 				BD129D951D7B295F009AC164 /* UITableView+Indexes.swift in Sources */,
 				BD129D831D7B295F009AC164 /* CollectionAdapter+UICollectionViewDelegate.swift in Sources */,
-				BD129E671D7B2F3C009AC164 /* SpotFactory.swift in Sources */,
-				BD129EA01D7B2F3C009AC164 /* ViewSpot.swift in Sources */,
+				BD129F511D7B2F91009AC164 /* SpotsAnimation.swift in Sources */,
+				BD129F4B1D7B2F91009AC164 /* SpotFactory.swift in Sources */,
 				BD129D8F1D7B295F009AC164 /* SpotComposable+Extensions.swift in Sources */,
+				BD129F691D7B2F91009AC164 /* ViewModel+Extensions.swift in Sources */,
+				BD129F721D7B2F91009AC164 /* Listable.swift in Sources */,
+				BD129F631D7B2F91009AC164 /* SpotsProtocol+Mutation.swift in Sources */,
+				BD129F841D7B2F91009AC164 /* Viewable.swift in Sources */,
 				BD129D811D7B295F009AC164 /* CollectionAdapter+UICollectionViewDataSource.swift in Sources */,
+				BD129F661D7B2F91009AC164 /* Viewable+Extensions.swift in Sources */,
 				BD129DC71D7B2B6C009AC164 /* ListSpot.swift in Sources */,
-				BD129E641D7B2F3C009AC164 /* Registry.swift in Sources */,
+				BD129F481D7B2F91009AC164 /* Registry.swift in Sources */,
+				BD129F811D7B2F91009AC164 /* SpotsProtocol.swift in Sources */,
 				BD129DB31D7B2B6C009AC164 /* CarouselComposite.swift in Sources */,
 				BD129DB91D7B2B6C009AC164 /* CarouselSpotHeader.swift in Sources */,
 				BD129D911D7B295F009AC164 /* SpotsController+UIScrollViewDelegate.swift in Sources */,
-				BD129E791D7B2F3C009AC164 /* SpotsProtocol+LiveEditing.swift in Sources */,
-				BD129E7F1D7B2F3C009AC164 /* Viewable+Extensions.swift in Sources */,
 				BD129DCD1D7B2B6C009AC164 /* SpotsController.swift in Sources */,
+				BD129F931D7B2F91009AC164 /* TypeAlias.swift in Sources */,
+				BD129F781D7B2F91009AC164 /* SpotAdapter.swift in Sources */,
+				BD129F541D7B2F91009AC164 /* Component+Extension.swift in Sources */,
 				BD129D8D1D7B295F009AC164 /* ListAdapter+Extensions+iOS.swift in Sources */,
-				BD129EAF1D7B2F3C009AC164 /* TypeAlias.swift in Sources */,
-				BD129E731D7B2F3C009AC164 /* Spotable+Extensions.swift in Sources */,
-				BD129E941D7B2F3C009AC164 /* SpotConfigurable.swift in Sources */,
 				BD129DCF1D7B2B6C009AC164 /* SpotsScrollView.swift in Sources */,
-				BD129E911D7B2F3C009AC164 /* SpotAdapter.swift in Sources */,
-				BD129E9D1D7B2F3C009AC164 /* Viewable.swift in Sources */,
-				BD129E821D7B2F3C009AC164 /* ViewModel+Extensions.swift in Sources */,
+				BD129F601D7B2F91009AC164 /* SpotsProtocol+LiveEditing.swift in Sources */,
 				BD129D851D7B295F009AC164 /* CollectionAdapter+UICollectionViewDelegateFlowLayout.swift in Sources */,
 				BD129DC31D7B2B6C009AC164 /* GridSpotCell.swift in Sources */,
+				BD129F4E1D7B2F91009AC164 /* ViewSpot.swift in Sources */,
+				BD129F5D1D7B2F91009AC164 /* SpotsProtocol+Extensions.swift in Sources */,
 				BD129DC11D7B2B6C009AC164 /* GridSpot.swift in Sources */,
-				BD129E701D7B2F3C009AC164 /* Gridable+Extensions.swift in Sources */,
 				BD129D9E1D7B29F6009AC164 /* CarouselSpot+UIScrollViewDelegate.swift in Sources */,
 				BD129DBB1D7B2B6C009AC164 /* CollectionAdapter.swift in Sources */,
-				BD129E6D1D7B2F3C009AC164 /* Component+Extension.swift in Sources */,
-				BD129E9A1D7B2F3C009AC164 /* SpotsProtocol.swift in Sources */,
+				BD129F7E1D7B2F91009AC164 /* SpotsDelegates.swift in Sources */,
 				BD129D891D7B295F009AC164 /* Gridable+Extensions+iOS.swift in Sources */,
-				BD129E8B1D7B2F3C009AC164 /* Listable.swift in Sources */,
-				BD129EA31D7B2F3C009AC164 /* Component.swift in Sources */,
+				BD129F5A1D7B2F91009AC164 /* Spotable+Extensions.swift in Sources */,
 				BD129DB71D7B2B6C009AC164 /* CarouselSpotCell.swift in Sources */,
-				BD129E851D7B2F3C009AC164 /* Componentable.swift in Sources */,
+				BD129F871D7B2F91009AC164 /* Component.swift in Sources */,
 				BD129DBD1D7B2B6C009AC164 /* GridableLayout.swift in Sources */,
-				BD129EA91D7B2F3C009AC164 /* Parser.swift in Sources */,
 				BD129DBF1D7B2B6C009AC164 /* GridComposite.swift in Sources */,
-				BD129EAC1D7B2F3C009AC164 /* SpotCache.swift in Sources */,
 				BD129D971D7B295F009AC164 /* SpotComposable.swift in Sources */,
+				BD129F8D1D7B2F91009AC164 /* Parser.swift in Sources */,
+				BD129F751D7B2F91009AC164 /* Spotable.swift in Sources */,
+				BD129F901D7B2F91009AC164 /* SpotCache.swift in Sources */,
 				BD129D8B1D7B295F009AC164 /* Listable+Extensions+iOS.swift in Sources */,
+				BD129F6F1D7B2F91009AC164 /* Gridable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1288,56 +1280,56 @@
 			buildActionMask = 2147483647;
 			files = (
 				BD129E371D7B2CDE009AC164 /* GridRegistry.swift in Sources */,
-				BD129E741D7B2F3C009AC164 /* Spotable+Extensions.swift in Sources */,
-				BD129E951D7B2F3C009AC164 /* SpotConfigurable.swift in Sources */,
+				BD129F731D7B2F91009AC164 /* Listable.swift in Sources */,
 				BD129E321D7B2CDE009AC164 /* ListAdapter+Mac.swift in Sources */,
-				BD129E7A1D7B2F3C009AC164 /* SpotsProtocol+LiveEditing.swift in Sources */,
-				BD129E981D7B2F3C009AC164 /* SpotsDelegates.swift in Sources */,
-				BD129E7D1D7B2F3C009AC164 /* SpotsProtocol+Mutation.swift in Sources */,
-				BD129E9E1D7B2F3C009AC164 /* Viewable.swift in Sources */,
+				BD129F4F1D7B2F91009AC164 /* ViewSpot.swift in Sources */,
 				BD129E211D7B2CDE009AC164 /* CarouselSpot.swift in Sources */,
-				BD129EA41D7B2F3C009AC164 /* Component.swift in Sources */,
-				BD129E6E1D7B2F3C009AC164 /* Component+Extension.swift in Sources */,
 				BD129E271D7B2CDE009AC164 /* ListSpotItem.swift in Sources */,
-				BD129E861D7B2F3C009AC164 /* Componentable.swift in Sources */,
-				BD129E831D7B2F3C009AC164 /* ViewModel+Extensions.swift in Sources */,
+				BD129F6D1D7B2F91009AC164 /* Componentable.swift in Sources */,
 				BD129E391D7B2D1E009AC164 /* CarouselSpot+Spotable+Mac.swift in Sources */,
 				BD129E311D7B2CDE009AC164 /* Listable+Mac.swift in Sources */,
+				BD129F881D7B2F91009AC164 /* Component.swift in Sources */,
+				BD129F761D7B2F91009AC164 /* Spotable.swift in Sources */,
+				BD129F7F1D7B2F91009AC164 /* SpotsDelegates.swift in Sources */,
 				BD129E291D7B2CDE009AC164 /* SpotsContentView.swift in Sources */,
+				BD129F7C1D7B2F91009AC164 /* SpotConfigurable.swift in Sources */,
 				BD129E361D7B2CDE009AC164 /* Viewable+Mac.swift in Sources */,
+				BD129F5B1D7B2F91009AC164 /* Spotable+Extensions.swift in Sources */,
+				BD129F671D7B2F91009AC164 /* Viewable+Extensions.swift in Sources */,
+				BD129F611D7B2F91009AC164 /* SpotsProtocol+LiveEditing.swift in Sources */,
 				BD129E2E1D7B2CDE009AC164 /* CollectionAdapter+NSCollectionViewDelegateFlowLayout.swift in Sources */,
 				BD129E231D7B2CDE009AC164 /* CollectionViewLeftLayout.swift in Sources */,
 				BD129E2D1D7B2CDE009AC164 /* CollectionAdapter+NSCollectionViewDelegate.swift in Sources */,
 				BD129E261D7B2CDE009AC164 /* ListSpot.swift in Sources */,
-				BD129E651D7B2F3C009AC164 /* Registry.swift in Sources */,
+				BD129F6A1D7B2F91009AC164 /* ViewModel+Extensions.swift in Sources */,
+				BD129F491D7B2F91009AC164 /* Registry.swift in Sources */,
 				BD129E281D7B2CDE009AC164 /* NoScrollView.swift in Sources */,
 				BD129E331D7B2CDE009AC164 /* NSCollectionView+Indexes.swift in Sources */,
 				BD129E2A1D7B2CDE009AC164 /* SpotsController.swift in Sources */,
-				BD129E6B1D7B2F3C009AC164 /* SpotsAnimation.swift in Sources */,
-				BD129EAA1D7B2F3C009AC164 /* Parser.swift in Sources */,
-				BD129EA11D7B2F3C009AC164 /* ViewSpot.swift in Sources */,
-				BD129E681D7B2F3C009AC164 /* SpotFactory.swift in Sources */,
-				BD129E921D7B2F3C009AC164 /* SpotAdapter.swift in Sources */,
-				BD129EA71D7B2F3C009AC164 /* GridableMeta.swift in Sources */,
-				BD129EAD1D7B2F3C009AC164 /* SpotCache.swift in Sources */,
-				BD129E801D7B2F3C009AC164 /* Viewable+Extensions.swift in Sources */,
+				BD129F8E1D7B2F91009AC164 /* Parser.swift in Sources */,
+				BD129F4C1D7B2F91009AC164 /* SpotFactory.swift in Sources */,
 				BD129E341D7B2CDE009AC164 /* NSScrollView+Extensions.swift in Sources */,
 				BD129E2C1D7B2CDE009AC164 /* CollectionAdapter+NSCollectionViewDataSource.swift in Sources */,
-				BD129E8F1D7B2F3C009AC164 /* Spotable.swift in Sources */,
+				BD129F8B1D7B2F91009AC164 /* GridableMeta.swift in Sources */,
+				BD129F911D7B2F91009AC164 /* SpotCache.swift in Sources */,
 				BD129E301D7B2CDE009AC164 /* Gridable+Mac.swift in Sources */,
+				BD129F5E1D7B2F91009AC164 /* SpotsProtocol+Extensions.swift in Sources */,
 				BD129E241D7B2CDE009AC164 /* GridSpot.swift in Sources */,
 				BD129E351D7B2CDE009AC164 /* NSTableView+Indexes.swift in Sources */,
-				BD129E621D7B2F3C009AC164 /* ListAdapter.swift in Sources */,
-				BD129E711D7B2F3C009AC164 /* Gridable+Extensions.swift in Sources */,
-				BD129EB01D7B2F3C009AC164 /* TypeAlias.swift in Sources */,
+				BD129F461D7B2F91009AC164 /* ListAdapter.swift in Sources */,
 				BD129E2B1D7B2CDE009AC164 /* SpotsScrollView.swift in Sources */,
-				BD129E9B1D7B2F3C009AC164 /* SpotsProtocol.swift in Sources */,
+				BD129F581D7B2F91009AC164 /* Gridable+Extensions.swift in Sources */,
+				BD129F641D7B2F91009AC164 /* SpotsProtocol+Mutation.swift in Sources */,
+				BD129F551D7B2F91009AC164 /* Component+Extension.swift in Sources */,
+				BD129F941D7B2F91009AC164 /* TypeAlias.swift in Sources */,
+				BD129F821D7B2F91009AC164 /* SpotsProtocol.swift in Sources */,
 				BD129E221D7B2CDE009AC164 /* CollectionAdapter.swift in Sources */,
-				BD129E8C1D7B2F3C009AC164 /* Listable.swift in Sources */,
+				BD129F791D7B2F91009AC164 /* SpotAdapter.swift in Sources */,
 				BD129E2F1D7B2CDE009AC164 /* CollectionAdapter+SpotAdapter+Mac.swift in Sources */,
-				BD129E891D7B2F3C009AC164 /* Gridable.swift in Sources */,
+				BD129F851D7B2F91009AC164 /* Viewable.swift in Sources */,
+				BD129F701D7B2F91009AC164 /* Gridable.swift in Sources */,
 				BD129E251D7B2CDE009AC164 /* GridSpotItem.swift in Sources */,
-				BD129E771D7B2F3C009AC164 /* SpotsProtocol+Extensions.swift in Sources */,
+				BD129F521D7B2F91009AC164 /* SpotsAnimation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
