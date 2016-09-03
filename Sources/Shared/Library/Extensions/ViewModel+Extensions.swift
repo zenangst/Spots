@@ -16,10 +16,10 @@ public enum ViewModelDiff {
 public extension ViewModel {
 
   static func evaluate(newModels: [ViewModel], oldModels: [ViewModel]) -> [ViewModelDiff]? {
-    let lhsChildren = newModels.flatMap { $0.children }
-    let rhsChildren = oldModels.flatMap { $0.children }
+    let newChildren = newModels.flatMap { $0.children }
+    let oldChildren = oldModels.flatMap { $0.children }
 
-    guard !(oldModels == newModels) || !(lhsChildren as NSArray).isEqualToArray(rhsChildren) else {
+    guard !(oldModels == newModels) || !(newChildren as NSArray).isEqualToArray(oldChildren) else {
       return nil
     }
 
