@@ -49,12 +49,12 @@ public extension NSTableView {
     removeRowsAtIndexes(deletionSets, withAnimation: animation)
     insertRowsAtIndexes(insertionsSets, withAnimation: animation)
 
-    reloadSets.forEach { index in
-      if let view = rowViewAtRow(index, makeIfNecessary: false) as? SpotConfigurable,
-        adapter = dataSource() as? ListAdapter {
-        var item = adapter.spot.component.items[index]
-        view.configure(&item)
-      }
+    for index in reloadSets {
+      guard let view = rowViewAtRow(index, makeIfNecessary: false) as? SpotConfigurable,
+        adapter = dataSource() as? ListAdapter else { continue }
+
+      var item = adapter.spot.component.items[index]
+      view.configure(&item)
     }
 
     completion?()
