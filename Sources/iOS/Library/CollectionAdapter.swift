@@ -225,6 +225,17 @@ public class CollectionAdapter: NSObject, SpotAdapter {
     let newItem = spot.items[index]
     let indexPath = NSIndexPath(forItem: index, inSection: 0)
 
+    if let composite = spot.collectionView.cellForItemAtIndexPath(indexPath) as? SpotComposable {
+      if let spots = spot.spotsCompositeDelegate?.resolve(spotIndex: spot.index, itemIndex: indexPath.item) {
+        spot.collectionView.performBatchUpdates({
+          composite.configure(&self.spot.component.items[indexPath.item], spots: spots)
+        }, completion: { (_) in
+            completion?()
+        })
+        return
+      }
+    }
+
     if newItem.kind != oldItem.kind || newItem.size.height != oldItem.size.height {
       if let cell = spot.collectionView.cellForItemAtIndexPath(indexPath) as? SpotConfigurable {
         spot.collectionView.performBatchUpdates({
@@ -239,6 +250,20 @@ public class CollectionAdapter: NSObject, SpotAdapter {
     }
 
     completion?()
+  }
+
+  public func reloadIfNeeded(changes: ViewModelChanges, updateDataSource: () -> Void, completion: Completion) {
+    if changes.updates.isEmpty {
+      spot.collectionView.process((insertions: changes.insertions, reloads: changes.reloads, deletions: changes.deletions), updateDataSource: updateDataSource, completion: completion)
+    } else {
+      spot.collectionView.process((insertions: changes.insertions, reloads: changes.reloads, deletions: changes.deletions), updateDataSource: updateDataSource) {
+
+        for index in changes.updates {
+          guard let item = self.spot.item(index) else { continue }
+          self.spot.update(item, index: index, withAnimation: .Automatic, completion: completion)
+        }
+      }
+    }
   }
 
   /**

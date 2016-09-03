@@ -42,6 +42,24 @@ public extension UITableView {
     if animation == .None { UIView.setAnimationsEnabled(true) }
   }
 
+  func process(changes: (insertions: [Int], reloads: [Int], deletions: [Int]),
+               withAnimation animation: UITableViewRowAnimation = .Automatic,
+                             section: Int = 0,
+                             updateDataSource: () -> Void,
+                             completion: ((()) -> Void)? = nil) {
+    let insertions = changes.insertions.map { NSIndexPath(forRow: $0, inSection: section) }
+    let reloads = changes.reloads.map { NSIndexPath(forRow: $0, inSection: section) }
+    let deletions = changes.deletions.map { NSIndexPath(forRow: $0, inSection: section) }
+
+    updateDataSource()
+    beginUpdates()
+    deleteRowsAtIndexPaths(deletions, withRowAnimation: animation)
+    insertRowsAtIndexPaths(insertions, withRowAnimation: animation)
+    reloadRowsAtIndexPaths(reloads, withRowAnimation: animation)
+    completion?()
+    endUpdates()
+  }
+
   /**
    A convenience method for performing inserts on a UITableView
    - Parameter section: The section you want to update

@@ -148,7 +148,6 @@ public extension SpotsProtocol {
 
   #if !os(OSX)
   public func reloadIfNeeded(components: [Component], closure: Completion = nil) {
-
     dispatch(queue: .Interactive) {
       let newComponents = components
       let oldComponents = self.spots.map { $0.component }
@@ -178,6 +177,7 @@ public extension SpotsProtocol {
 
       self.process(changes: changes, components: newComponents) {
         closure?()
+        self.spotsScrollView.forceUpdate = true
       }
     }
   }
@@ -195,6 +195,7 @@ public extension SpotsProtocol {
   func process(changes changes: [ComponentDiff], components newComponents: [Component], closure: Completion = nil) {
     dispatch {
       var yOffset: CGFloat = 0.0
+      var runClosure = true
       for (index, change) in changes.enumerate() {
         switch change {
         case .Identifier, .Kind, .Span, .Header, .Meta:
@@ -215,22 +216,50 @@ public extension SpotsProtocol {
           self.spotsScrollView.contentView.addSubview(spot.render())
           yOffset += spot.render().frame.size.height
         case .Removed:
-          self.spots.removeAtIndex(index)
+          if index < self.spots.count {
+            self.spots.removeAtIndex(index)
+          }
         case .Items:
           guard let spot = self.spot(index, Spotable.self) else { continue }
 
-          for item in newComponents[index].items {
-            if item.kind == "composite" {
-              spot.update(item, index: item.index, withAnimation: .None)
-            } else {
-              spot.update(item, index: item.index, withAnimation: .Automatic)
+          let newItems = newComponents[index].items
+          let oldItems = spot.items
+
+          if let diff = ViewModel.evaluate(newItems, oldModels: oldItems) {
+            let changes = ViewModel.processChanges(diff)
+            spot.adapter?.reloadIfNeeded(changes, updateDataSource: {
+              spot.items = newComponents[index].items
+            }) {
+              if changes.updatedChildren.contains(spot.index) {
+                for item in newComponents[index].items {
+                  guard let spots = spot.spotsCompositeDelegate?
+                    .resolve(spotIndex: spot.index, itemIndex: item.index) else { continue }
+                let components = Parser.parse(item.children).map { $0.component }
+                  if components.count == spots.count {
+                    for (index, spot) in spots.enumerate() {
+                      spot.component = components[index]
+                      spot.reload()
+                    }
+                    closure?()
+                    return
+                  } else {
+                    spot.update(item, index: item.index, withAnimation: .Automatic, completion: closure)
+                    return
+                  }
+                }
+              }
+              closure?()
             }
+
+            runClosure = false
           }
         case .None: break
         }
       }
 
-      closure?()
+      if runClosure {
+        closure?()
+      }
     }
   }
   #endif
