@@ -78,19 +78,19 @@ public extension ViewModel {
     return (insertions: insertions, updates: updates, reloads: reloads, deletions: deletions, updatedChildren: childrenUpdates)
   }
 
-  public func diff(rhs: ViewModel) -> ViewModelDiff {
+  public func diff(oldViewModel: ViewModel) -> ViewModelDiff {
 
-    let lhsChildren = children.map { Component($0) }
-    let rhsChildren = rhs.children.map { Component($0) }
+    let newChildren = children.map { Component($0) }
+    let oldChildren = oldViewModel.children.map { Component($0) }
 
-    if kind != rhs.kind { return .Kind }
-    if lhsChildren != rhsChildren { return .Children }
-    if identifier != rhs.identifier { return .Identifier }
-    if title != rhs.title { return .Title }
-    if subtitle != rhs.subtitle { return .Subtitle }
-    if image != rhs.image { return .Image }
-    if action != rhs.action { return .Action }
-    if !(meta as NSDictionary).isEqualToDictionary(rhs.meta) { return .Meta }
+    if kind != oldViewModel.kind { return .Kind }
+    if newChildren != oldChildren { return .Children }
+    if identifier != oldViewModel.identifier { return .Identifier }
+    if title != oldViewModel.title { return .Title }
+    if subtitle != oldViewModel.subtitle { return .Subtitle }
+    if image != oldViewModel.image { return .Image }
+    if action != oldViewModel.action { return .Action }
+    if !(meta as NSDictionary).isEqualToDictionary(oldViewModel.meta) { return .Meta }
 
     return .None
   }
