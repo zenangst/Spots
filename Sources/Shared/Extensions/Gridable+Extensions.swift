@@ -1,45 +1,9 @@
-#if os(OSX)
-  import Cocoa
-#else
+#if os(iOS)
   import UIKit
+#else
+  import Cocoa
 #endif
-import Sugar
 import Brick
-
-public struct GridableMeta {
-  public struct Key {
-    public static let sectionInsetTop = "inset-top"
-    public static let sectionInsetLeft = "inset-left"
-    public static let sectionInsetRight = "inset-right"
-    public static let sectionInsetBottom = "inset-bottom"
-  }
-}
-
-/// Gridable is protocol for Spots that are based on UICollectionView
-public protocol Gridable: Spotable {
-
-  /// The layout object used to initialize the collection spot controller.
-  var layout: CollectionLayout { get }
-  /// The collection view object managed by this gridable object.
-  var collectionView: CollectionView { get }
-
-  #if !os(OSX)
-  static var headers: Registry { get set }
-  #endif
-
-  /**
-   Asks the data source for the size of an item in a particular location.
-
-   - Parameter indexPath: The index path of the
-   - Returns: Size of the object at index path as CGSize
-   */
-  func sizeForItemAt(indexPath: NSIndexPath) -> CGSize
-
-  #if os(OSX)
-  static var grids: GridRegistry { get set }
-  static var defaultGrid: NSCollectionViewItem.Type { get }
-  #endif
-}
 
 /// A Spotable extension for Gridable objects
 public extension Spotable where Self : Gridable {
@@ -47,13 +11,13 @@ public extension Spotable where Self : Gridable {
   /**
    - Returns: UIScrollView: Returns a UICollectionView as a UIScrollView
    */
-   #if os(OSX)
+  #if os(OSX)
   public func render() -> CollectionView {
     return collectionView
   }
   #else
   public func render() -> ScrollView {
-    return collectionView
+  return collectionView
   }
   #endif
 
@@ -63,7 +27,7 @@ public extension Spotable where Self : Gridable {
   public func setup(size: CGSize) {
     collectionView.frame.size = size
     #if os(OSX)
-      #else
+    #else
       GridSpot.configure?(view: collectionView, layout: layout)
     #endif
   }
