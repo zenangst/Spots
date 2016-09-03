@@ -142,6 +142,10 @@
 		BD129D9A1D7B295F009AC164 /* SpotsContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129D651D7B295F009AC164 /* SpotsContentView.swift */; };
 		BD129D9B1D7B295F009AC164 /* SpotsScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129D661D7B295F009AC164 /* SpotsScrollView.swift */; };
 		BD129D9C1D7B295F009AC164 /* SpotsScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129D661D7B295F009AC164 /* SpotsScrollView.swift */; };
+		BD129D9E1D7B29F6009AC164 /* CarouselSpot+UIScrollViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129D9D1D7B29F6009AC164 /* CarouselSpot+UIScrollViewDelegate.swift */; };
+		BD129D9F1D7B29F6009AC164 /* CarouselSpot+UIScrollViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129D9D1D7B29F6009AC164 /* CarouselSpot+UIScrollViewDelegate.swift */; };
+		BD129DA11D7B2A3D009AC164 /* CarouselSpot+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129DA01D7B2A3D009AC164 /* CarouselSpot+iOS.swift */; };
+		BD129DA21D7B2A3D009AC164 /* CarouselSpot+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129DA01D7B2A3D009AC164 /* CarouselSpot+iOS.swift */; };
 		BD352E5F1CBAD6EC002CD032 /* Brick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD352E5E1CBAD6EC002CD032 /* Brick.framework */; };
 		BD352E611CBAD6F9002CD032 /* Brick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD352E601CBAD6F9002CD032 /* Brick.framework */; };
 		BD48BEC91C459B4800317D76 /* ViewSpotSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD48BEC81C459B4800317D76 /* ViewSpotSpec.swift */; };
@@ -279,6 +283,8 @@
 		BD129D631D7B295F009AC164 /* SpotComposable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotComposable.swift; sourceTree = "<group>"; };
 		BD129D651D7B295F009AC164 /* SpotsContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsContentView.swift; sourceTree = "<group>"; };
 		BD129D661D7B295F009AC164 /* SpotsScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsScrollView.swift; sourceTree = "<group>"; };
+		BD129D9D1D7B29F6009AC164 /* CarouselSpot+UIScrollViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CarouselSpot+UIScrollViewDelegate.swift"; sourceTree = "<group>"; };
+		BD129DA01D7B2A3D009AC164 /* CarouselSpot+iOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CarouselSpot+iOS.swift"; sourceTree = "<group>"; };
 		BD352E5E1CBAD6EC002CD032 /* Brick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Brick.framework; path = Carthage/Build/iOS/Brick.framework; sourceTree = "<group>"; };
 		BD352E601CBAD6F9002CD032 /* Brick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Brick.framework; path = Carthage/Build/Mac/Brick.framework; sourceTree = "<group>"; };
 		BD48BEC81C459B4800317D76 /* ViewSpotSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewSpotSpec.swift; sourceTree = "<group>"; };
@@ -515,6 +521,8 @@
 		BD129D561D7B295F009AC164 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				BD129DA01D7B2A3D009AC164 /* CarouselSpot+iOS.swift */,
+				BD129D9D1D7B29F6009AC164 /* CarouselSpot+UIScrollViewDelegate.swift */,
 				BD129D571D7B295F009AC164 /* CollectionAdapter+UICollectionViewDataSource.swift */,
 				BD129D581D7B295F009AC164 /* CollectionAdapter+UICollectionViewDelegate.swift */,
 				BD129D591D7B295F009AC164 /* CollectionAdapter+UICollectionViewDelegateFlowLayout.swift */,
@@ -1155,6 +1163,7 @@
 				BD129C9D1D7B256D009AC164 /* Viewable.swift in Sources */,
 				BD129D881D7B295F009AC164 /* CollectionAdapter+UIScrollViewDelegate.swift in Sources */,
 				BD129D801D7B295F009AC164 /* SpotsController.swift in Sources */,
+				BD129D9F1D7B29F6009AC164 /* CarouselSpot+UIScrollViewDelegate.swift in Sources */,
 				BD129D8E1D7B295F009AC164 /* ListAdapter+Extensions+iOS.swift in Sources */,
 				BD129D961D7B295F009AC164 /* UITableView+Indexes.swift in Sources */,
 				BD129C641D7B256D009AC164 /* ListAdapter.swift in Sources */,
@@ -1168,6 +1177,7 @@
 				BD129CAC1D7B256D009AC164 /* SpotCache.swift in Sources */,
 				BD129CAF1D7B256D009AC164 /* TypeAlias.swift in Sources */,
 				BD129CA01D7B256D009AC164 /* ViewSpot.swift in Sources */,
+				BD129DA21D7B2A3D009AC164 /* CarouselSpot+iOS.swift in Sources */,
 				BD129C971D7B256D009AC164 /* SpotsDelegates.swift in Sources */,
 				BD129C701D7B256D009AC164 /* Gridable+Extensions.swift in Sources */,
 				BD129D8C1D7B295F009AC164 /* Listable+Extensions+iOS.swift in Sources */,
@@ -1205,6 +1215,7 @@
 				BD129D991D7B295F009AC164 /* SpotsContentView.swift in Sources */,
 				BD129C921D7B256D009AC164 /* SpotConfigurable.swift in Sources */,
 				BD129D791D7B295F009AC164 /* ListComposite.swift in Sources */,
+				BD129DA11D7B2A3D009AC164 /* CarouselSpot+iOS.swift in Sources */,
 				BD129CAD1D7B256D009AC164 /* TypeAlias.swift in Sources */,
 				BD129D771D7B295F009AC164 /* GridSpotCell.swift in Sources */,
 				BD129C621D7B256D009AC164 /* ListAdapter.swift in Sources */,
@@ -1252,6 +1263,7 @@
 				BD129D6B1D7B295F009AC164 /* CarouselSpotCell.swift in Sources */,
 				BD129D731D7B295F009AC164 /* GridComposite.swift in Sources */,
 				BD129D7D1D7B295F009AC164 /* ListSpotCell.swift in Sources */,
+				BD129D9E1D7B29F6009AC164 /* CarouselSpot+UIScrollViewDelegate.swift in Sources */,
 				BD129D891D7B295F009AC164 /* Gridable+Extensions+iOS.swift in Sources */,
 				BD129D971D7B295F009AC164 /* SpotComposable.swift in Sources */,
 				BD129D8B1D7B295F009AC164 /* Listable+Extensions+iOS.swift in Sources */,
