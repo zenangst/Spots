@@ -1,13 +1,6 @@
 import UIKit
 import Brick
 
-public protocol SpotComposable: class {
-  var contentView: View { get }
-
-  func configure(inout item: ViewModel, spots: [Spotable]?)
-  func parse(item: ViewModel) -> [Spotable]
-}
-
 public extension SpotComposable where Self : View {
 
   func configure(inout item: ViewModel, spots: [Spotable]?) {
@@ -32,9 +25,6 @@ public extension SpotComposable where Self : View {
 
     item.size.height = height
   }
-}
-
-public extension SpotComposable {
 
   public func parse(item: ViewModel) -> [Spotable] {
     let spots = Parser.parse(item.children)

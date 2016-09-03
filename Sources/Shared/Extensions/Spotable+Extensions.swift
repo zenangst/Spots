@@ -1,6 +1,11 @@
+#if os(iOS)
+  import UIKit
+#else
+  import Foundation
+#endif
+
 import Brick
 import Sugar
-import Foundation
 
 public extension Spotable {
 
