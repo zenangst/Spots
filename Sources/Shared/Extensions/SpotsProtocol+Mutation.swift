@@ -6,125 +6,8 @@
 
 import Sugar
 import Brick
-import Cache
 
-public protocol SpotsProtocol: class {
-  /// A SpotCache object
-  var stateCache: SpotCache? { get set }
-  /// The internal SpotsScrollView
-  var spotsScrollView: SpotsScrollView { get }
-  /// A delegate that conforms to SpotsDelegate
-  var spotsDelegate: SpotsDelegate? { get }
-  /// A collection of Spotable objects used in composition
-  var compositeSpots: [Int : [Int : [Spotable]]] { get set }
-  /// A collection of Spotable objects
-  var spots: [Spotable] { get set }
-  /// An array of refresh position to avoid calling multiple refreshes
-  var refreshPositions: [CGFloat] { get set }
-  /// A view controller view
-  #if os(OSX)
-  var view: View { get }
-  #else
-  var view: View! { get }
-  #endif
-
-  var spot: Spotable? { get }
-
-  /// A dictionary representation of the controller
-  var dictionary: JSONDictionary { get }
-
-  #if os(iOS)
-  var spotsRefreshDelegate: SpotsRefreshDelegate? { get set }
-  #endif
-
-  #if DEVMODE
-  var fileQueue: dispatch_queue_t { get }
-  var source: dispatch_source_t! { get set }
-  #endif
-
-  func setupSpots(animated: ((view: View) -> Void)?)
-  func setupSpot(index: Int, spot: Spotable)
-  func spot<T>(index: Int, _ type: T.Type) -> T?
-  func spot(@noescape closure: (index: Int, spot: Spotable) -> Bool) -> Spotable?
-
-  #if os(OSX)
-  init(spots: [Spotable], backgroundType: SpotsControllerBackground)
-  #else
-  init(spots: [Spotable])
-  #endif
-
-}
-
-public extension SpotsProtocol {
-
-  public var dictionary: JSONDictionary {
-    get { return dictionary() }
-  }
-
-  public func dictionary(amountOfItems: Int? = nil) -> JSONDictionary {
-    var result = [JSONDictionary]()
-
-    for spot in spots {
-      var spotJSON = spot.component.dictionary(amountOfItems)
-      for item in spot.items where item.kind == "composite" {
-        if let compositeSpots = compositeSpots[spot.index]?[item.index] {
-          var newItem = item
-          var children = [JSONDictionary]()
-          for itemSpot in compositeSpots {
-            children.append(itemSpot.dictionary)
-          }
-          newItem.children = children
-          var newItems = spotJSON[Component.Key.Items] as? JSONArray
-
-          newItems?[item.index] = newItem.dictionary
-          spotJSON[Component.Key.Items] = newItems
-        }
-      }
-
-      result.append(spotJSON)
-    }
-
-    return ["components" : result ]
-  }
-
-  /**
-   - Parameter includeElement: A filter predicate to find a spot
-   */
-  public func filter(@noescape includeElement: (Spotable) -> Bool) -> [Spotable] {
-    var result = spots.filter(includeElement)
-
-    for (_, cSpots) in compositeSpots {
-      for (_, spots) in cSpots.enumerate() {
-        let compositeResults = spots.1.filter(includeElement)
-        if !compositeResults.isEmpty { result.appendContentsOf(compositeResults) }
-      }
-    }
-
-    return result
-  }
-
-  public func filterItems(@noescape includeElement: (ViewModel) -> Bool) -> [(spot: Spotable, items: [ViewModel])] {
-    var result = [(spot: Spotable, items: [ViewModel])]()
-    for spot in spots {
-      let items = spot.items.filter(includeElement)
-      if !items.isEmpty {
-        result.append((spot: spot, items: items))
-      }
-    }
-
-    for (_, cSpots) in compositeSpots {
-      for (_, spots) in cSpots.enumerate() {
-        for spot in spots.1 {
-          let items = spot.items.filter(includeElement)
-          if !items.isEmpty {
-            result.append((spot: spot, items: items))
-          }
-        }
-      }
-    }
-
-    return result
-  }
+extension SpotsProtocol {
 
   /**
    - Parameter completion: A closure that will be run after reload has been performed on all spots
@@ -234,7 +117,7 @@ public extension SpotsProtocol {
                 for item in newComponents[index].items {
                   guard let spots = spot.spotsCompositeDelegate?
                     .resolve(spotIndex: spot.index, itemIndex: item.index) else { continue }
-                let components = Parser.parse(item.children).map { $0.component }
+                  let components = Parser.parse(item.children).map { $0.component }
                   if components.count == spots.count {
                     for (index, spot) in spots.enumerate() {
                       spot.component = components[index]
@@ -304,7 +187,7 @@ public extension SpotsProtocol {
 
       for (index, container) in weakSelf.compositeSpots.enumerate() {
         guard let itemIndex = container.1.keys.first,
-        foundContainer = weakSelf.compositeSpots[index]?[itemIndex] else { continue }
+          foundContainer = weakSelf.compositeSpots[index]?[itemIndex] else { continue }
 
         for (spotIndex, spot) in foundContainer.enumerate() {
           guard let rootContainer = oldComposite[index],
@@ -366,7 +249,7 @@ public extension SpotsProtocol {
       guard let weakSelf = self else { return }
 
       #if !os(OSX)
-      if animation != .None { spot.render().layer.frame.size.height = spotHeight }
+        if animation != .None { spot.render().layer.frame.size.height = spotHeight }
       #endif
 
       weakSelf.spot(index, Spotable.self)?.reload(nil, withAnimation: animation) {
@@ -520,73 +403,6 @@ public extension SpotsProtocol {
     }
   }
   #endif
-#if os(iOS)
-  /**
-   - Parameter index: The index of the spot that you want to scroll
-   - Parameter includeElement: A filter predicate to find a view model
-   */
-  public func scrollTo(spotIndex index: Int = 0, @noescape includeElement: (ViewModel) -> Bool) {
-    guard let itemY = spot(index, Spotable.self)?.scrollTo(includeElement) else { return }
-
-    var initialHeight: CGFloat = 0.0
-    if index > 0 {
-      initialHeight += spots[0..<index].reduce(0, combine: { $0 + $1.spotHeight() })
-    }
-    if spot(index, Spotable.self)?.spotHeight() > spotsScrollView.frame.height - spotsScrollView.contentInset.bottom - initialHeight {
-      let y = itemY - spotsScrollView.frame.size.height + spotsScrollView.contentInset.bottom + initialHeight
-      spotsScrollView.setContentOffset(CGPoint(x: CGFloat(0.0), y: y), animated: true)
-    }
-  }
-
-  /**
-   - Parameter animated: A boolean value to determine if you want to perform the scrolling with or without animation
-   */
-  public func scrollToBottom(animated: Bool) {
-    let y = spotsScrollView.contentSize.height - spotsScrollView.frame.size.height + spotsScrollView.contentInset.bottom
-    spotsScrollView.setContentOffset(CGPoint(x: 0, y: y), animated: animated)
-  }
-#endif
-
-  /**
-   Caches the current state of the spot controller
-   */
-  public func cache(items items: Int? = nil) {
-    #if DEVMODE
-      liveEditing(stateCache)
-    #endif
-
-    stateCache?.save(dictionary(items))
-  }
-
-  /**
-   Clear Spots cache
-   */
-  public static func clearCache() {
-    let paths = NSSearchPathForDirectoriesInDomains(.CachesDirectory,
-                                                    NSSearchPathDomainMask.UserDomainMask, true)
-    let path = "\(paths.first!)/\(DiskStorage.prefix).\(SpotCache.cacheName)"
-    do {
-      try NSFileManager.defaultManager().removeItemAtPath(path)
-    } catch {
-      NSLog("Could not remove cache at path: \(path)")
-    }
-  }
-
-  /**
-   - Parameter indexPath: The index path of the component you want to lookup
-   - Returns: A Component object at index path
-   **/
-  private func component(indexPath: NSIndexPath) -> Component {
-    return spot(indexPath).component
-  }
-
-  /**
-   - Parameter indexPath: The index path of the spot you want to lookup
-   - Returns: A Spotable object at index path
-   **/
-  private func spot(indexPath: NSIndexPath) -> Spotable {
-    return spots[indexPath.item]
-  }
 
   private func reloadSpotsScrollView() {
     #if os(OSX)
