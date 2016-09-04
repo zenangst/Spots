@@ -157,7 +157,7 @@ extension SpotsProtocol {
         }
         closure?()
       }
-      return false
+      return true
     }
     return false
   }
