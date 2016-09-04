@@ -259,33 +259,30 @@ public class CollectionAdapter: NSObject, SpotAdapter {
           return
         }
 
-        let executeCompletion = changes.updatedChildren.count - 1
         for index in changes.updatedChildren {
           guard let item = self.spot.item(index) else { continue }
           self.spot.update(item, index: index, withAnimation: .Automatic) {
-            if index == executeCompletion {
+            if changes.updatedChildren.last == index {
               completion?()
             }
           }
         }
 
       } else {
-        let executeCompletion = changes.updates.count - 1
         for index in changes.updates {
           guard let item = self.spot.item(index) else { continue }
 
           self.spot.update(item, index: index, withAnimation: .Automatic) {
-            if index == executeCompletion {
+            if changes.updates.last == index {
               guard !changes.updatedChildren.isEmpty else {
                 completion?()
                 return
               }
 
-              let executeCompletion = changes.updatedChildren.count - 1
               for index in changes.updatedChildren {
                 guard let item = self.spot.item(index) else { continue }
                 self.spot.update(item, index: index, withAnimation: .Automatic) {
-                  if index == executeCompletion {
+                  if changes.updatedChildren.last == index {
                     completion?()
                   }
                 }
