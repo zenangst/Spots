@@ -145,7 +145,7 @@ extension SpotsProtocol {
         spot.items = newItems
       }) {
         let executeClosure = newItems.count - 1
-        for item in newItems {
+        for (index, item) in newItems.enumerate() {
           let components = Parser.parse(item.children).map { $0.component }
           if let compositeSpots = self.compositeSpots[spot.index],
             spots = compositeSpots[item.index] {
@@ -158,8 +158,8 @@ extension SpotsProtocol {
               self.compositeSpots[spot.index]?[item.index] = oldContent
             }
           }
-          spot.update(item, index: item.index, withAnimation: .Automatic) {
-            guard item.index == executeClosure else { return }
+          spot.update(item, index: index, withAnimation: .Automatic) {
+            guard index == executeClosure else { return }
             closure?()
             self.spotsScrollView.forceUpdate = true
             CATransaction.commit()
