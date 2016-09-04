@@ -141,7 +141,7 @@ extension SpotsProtocol {
                   } else if spots.count > components.count {
                     if let compositeSpots = self.compositeSpots[spot.index],
                       spots = compositeSpots[item.index] {
-                      for (index,removedSpot) in spots.enumerate() {
+                      for (index, removedSpot) in spots.enumerate() {
                         if !components.contains(removedSpot.component) {
                           var oldContent = self.compositeSpots[spot.index]?[item.index]
                           oldContent?.removeAtIndex(index)
