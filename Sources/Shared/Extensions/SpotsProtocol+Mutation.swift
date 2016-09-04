@@ -75,94 +75,109 @@ extension SpotsProtocol {
     }
   }
 
-  func process(changes changes: [ComponentDiff], components newComponents: [Component], closure: Completion = nil) {
+  private func replaceSpot(index: Int, newComponents: [Component], inout yOffset: CGFloat) {
+    let spot = SpotFactory.resolve(newComponents[index])
+
+    self.removeCompositeViews()
+    self.spots[index].render().removeFromSuperview()
+    self.spots[index] = spot
+    self.setupSpot(index, spot: spot)
+    self.spotsScrollView.contentView.insertSubview(spot.render(), atIndex: index)
+    (spot as? Gridable)?.layout.yOffset = yOffset
+    yOffset += spot.render().frame.size.height
+  }
+
+  private func newSpot(index: Int, newComponents: [Component], inout yOffset: CGFloat) {
+    let spot = SpotFactory.resolve(newComponents[index])
+    self.spots.append(spot)
+    self.setupSpot(index, spot: spot)
+    (spot as? Gridable)?.layout.yOffset = yOffset
+    self.spotsScrollView.contentView.addSubview(spot.render())
+    yOffset += spot.render().frame.size.height
+  }
+
+  private func removeSpot(index: Int) {
+    if index < self.spots.count {
+      self.spots.removeAtIndex(index)
+    }
+  }
+
+  private func setupItemsForSpot(index: Int, newComponents: [Component], closure: Completion = nil) -> Bool {
+    guard let spot = self.spot(index, Spotable.self) else { return false }
+
+    let newItems = newComponents[index].items
+    let oldItems = spot.items
+
+    if let diff = ViewModel.evaluate(newItems, oldModels: oldItems) {
+      let changes = ViewModel.processChanges(diff)
+      spot.adapter?.reloadIfNeeded(changes, updateDataSource: {
+        spot.items = newComponents[index].items
+      }) {
+        guard changes.updatedChildren.contains(spot.index) else { return }
+          for item in newComponents[index].items {
+            guard let spots = spot.spotsCompositeDelegate?.resolve(spotIndex: spot.index, itemIndex: item.index)
+              else { continue }
+            let components = Parser.parse(item.children).map { $0.component }
+
+            if components.count == spots.count {
+              var offset = [CGPoint]()
+              for (index, spot) in spots.enumerate() {
+                spot.component = components[index]
+                offset.append(spot.render().contentOffset)
+              }
+
+              CATransaction.begin()
+              spot.update(item, index: item.index, withAnimation: .Automatic) {
+                if let compositeSpots = self.compositeSpots[spot.index],
+                  spots = compositeSpots[item.index] {
+                  for (index, spot) in spots.enumerate() {
+                    spot.render().contentOffset = offset[index]
+                  }
+                }
+                CATransaction.commit()
+                closure?()
+              }
+              return
+            } else if spots.count > components.count {
+              if let compositeSpots = self.compositeSpots[spot.index],
+                spots = compositeSpots[item.index] {
+                for (index, removedSpot) in spots.enumerate() {
+                  guard !components.contains(removedSpot.component) else { continue }
+                  var oldContent = self.compositeSpots[spot.index]?[item.index]
+                  oldContent?.removeAtIndex(index)
+                  self.compositeSpots[spot.index]?[item.index] = oldContent
+                }
+              }
+              spot.update(item, index: item.index, withAnimation: .Automatic, completion: closure)
+              return
+            } else {
+              spot.update(item, index: item.index, withAnimation: .Automatic, completion: closure)
+              return
+            }
+        }
+        closure?()
+      }
+      return false
+    }
+    return false
+  }
+
+  func process(changes changes: [ComponentDiff],
+                       components newComponents: [Component],
+                                  closure: Completion = nil) {
     dispatch {
       var yOffset: CGFloat = 0.0
       var runClosure = true
       for (index, change) in changes.enumerate() {
         switch change {
         case .Identifier, .Kind, .Span, .Header, .Meta:
-          let spot = SpotFactory.resolve(newComponents[index])
-
-          self.removeCompositeViews()
-          self.spots[index].render().removeFromSuperview()
-          self.spots[index] = spot
-          self.setupSpot(index, spot: spot)
-          self.spotsScrollView.contentView.insertSubview(spot.render(), atIndex: index)
-          (spot as? Gridable)?.layout.yOffset = yOffset
-          yOffset += spot.render().frame.size.height
+          self.replaceSpot(index, newComponents: newComponents, yOffset: &yOffset)
         case .New:
-          let spot = SpotFactory.resolve(newComponents[index])
-          self.spots.append(spot)
-          self.setupSpot(index, spot: spot)
-          (spot as? Gridable)?.layout.yOffset = yOffset
-          self.spotsScrollView.contentView.addSubview(spot.render())
-          yOffset += spot.render().frame.size.height
+          self.newSpot(index, newComponents: newComponents, yOffset: &yOffset)
         case .Removed:
-          if index < self.spots.count {
-            self.spots.removeAtIndex(index)
-          }
+          self.removeSpot(index)
         case .Items:
-          guard let spot = self.spot(index, Spotable.self) else { continue }
-
-          let newItems = newComponents[index].items
-          let oldItems = spot.items
-
-          if let diff = ViewModel.evaluate(newItems, oldModels: oldItems) {
-            let changes = ViewModel.processChanges(diff)
-            spot.adapter?.reloadIfNeeded(changes, updateDataSource: {
-              spot.items = newComponents[index].items
-            }) {
-              if changes.updatedChildren.contains(spot.index) {
-                for item in newComponents[index].items {
-                  guard let spots = spot.spotsCompositeDelegate?
-                    .resolve(spotIndex: spot.index, itemIndex: item.index) else { continue }
-                  let components = Parser.parse(item.children).map { $0.component }
-
-                  if components.count == spots.count {
-                    var offset = [CGPoint]()
-                    for (index, spot) in spots.enumerate() {
-                      spot.component = components[index]
-                      offset.append(spot.render().contentOffset)
-                    }
-
-                    CATransaction.begin()
-                    spot.update(item, index: item.index, withAnimation: .Automatic) {
-                      if let compositeSpots = self.compositeSpots[spot.index],
-                        spots = compositeSpots[item.index] {
-                        for (index, spot) in spots.enumerate() {
-                          spot.render().contentOffset = offset[index]
-                        }
-                      }
-                      CATransaction.commit()
-                      closure?()
-                    }
-                    return
-                  } else if spots.count > components.count {
-                    if let compositeSpots = self.compositeSpots[spot.index],
-                      spots = compositeSpots[item.index] {
-                      for (index, removedSpot) in spots.enumerate() {
-                        if !components.contains(removedSpot.component) {
-                          var oldContent = self.compositeSpots[spot.index]?[item.index]
-                          oldContent?.removeAtIndex(index)
-                          self.compositeSpots[spot.index]?[item.index] = oldContent
-                        }
-                      }
-                    }
-                    spot.update(item, index: item.index, withAnimation: .Automatic, completion: closure)
-                    return
-                  } else {
-                    spot.update(item, index: item.index, withAnimation: .Automatic, completion: closure)
-                    return
-                  }
-                }
-              }
-
-              closure?()
-            }
-
-            runClosure = false
-          }
+          runClosure = self.setupItemsForSpot(index, newComponents: newComponents, closure: closure)
         case .None: break
         }
       }
