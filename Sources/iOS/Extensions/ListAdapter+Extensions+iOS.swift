@@ -233,13 +233,46 @@ extension ListAdapter {
   }
 
   public func reloadIfNeeded(changes: ViewModelChanges, updateDataSource: () -> Void, completion: Completion) {
-    if changes.updates.isEmpty {
-      spot.tableView.process((insertions: changes.insertions, reloads: changes.reloads, deletions: changes.deletions), updateDataSource: updateDataSource, completion: completion)
-    } else {
-      spot.tableView.process((insertions: changes.insertions, reloads: changes.reloads, deletions: changes.deletions), updateDataSource: updateDataSource) {
+    spot.tableView.process((insertions: changes.insertions, reloads: changes.reloads, deletions: changes.deletions), updateDataSource: updateDataSource) {
+      if changes.updates.isEmpty {
+        guard !changes.updatedChildren.isEmpty else {
+          completion?()
+          return
+        }
 
+        let executeCompletion = changes.updatedChildren.count - 1
+        for index in changes.updatedChildren {
+          guard let item = self.spot.item(index) else { continue }
+          self.spot.update(item, index: index, withAnimation: .Automatic) {
+            if index == executeCompletion {
+              completion?()
+            }
+          }
+        }
+
+      } else {
+        let executeCompletion = changes.updates.count - 1
         for index in changes.updates {
           guard let item = self.spot.item(index) else { continue }
+
+          self.spot.update(item, index: index, withAnimation: .Automatic) {
+            if index == executeCompletion {
+              guard !changes.updatedChildren.isEmpty else {
+                completion?()
+                return
+              }
+
+              let executeCompletion = changes.updatedChildren.count - 1
+              for index in changes.updatedChildren {
+                guard let item = self.spot.item(index) else { continue }
+                self.spot.update(item, index: index, withAnimation: .Automatic) {
+                  if index == executeCompletion {
+                    completion?()
+                  }
+                }
+              }
+            }
+          }
         }
       }
     }
