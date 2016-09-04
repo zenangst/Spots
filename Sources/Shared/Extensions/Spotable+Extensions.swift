@@ -116,7 +116,7 @@ public extension Spotable {
 
   public func updateHeight(completion: Completion = nil) {
     dispatch(queue: .Interactive) { [weak self] in
-      guard let weakSelf = self else { completion?(); return }
+      guard let weakSelf = self else { dispatch { completion?(); }; return }
       let spotHeight = weakSelf.spotHeight()
       dispatch { [weak self] in
         self?.render().frame.size.height = spotHeight

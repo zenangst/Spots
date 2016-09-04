@@ -165,7 +165,7 @@ extension ListAdapter {
    - Parameter completion: A completion closure that is executed in the main queue when the view model has been updated
    */
   public func update(item: ViewModel, index: Int = 0, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
-    let oldItem = spot.items[index]
+    guard let oldItem = spot.item(index) else { completion?(); return }
 
     spot.items[index] = item
     spot.configureItem(index)
@@ -233,14 +233,43 @@ extension ListAdapter {
   }
 
   public func reloadIfNeeded(changes: ViewModelChanges, updateDataSource: () -> Void, completion: Completion) {
-    if changes.updates.isEmpty {
-      spot.tableView.process((insertions: changes.insertions, reloads: changes.reloads, deletions: changes.deletions), updateDataSource: updateDataSource, completion: completion)
-    } else {
-      spot.tableView.process((insertions: changes.insertions, reloads: changes.reloads, deletions: changes.deletions), updateDataSource: updateDataSource) {
+    spot.tableView.process((insertions: changes.insertions, reloads: changes.reloads, deletions: changes.deletions), updateDataSource: updateDataSource) {
+      if changes.updates.isEmpty {
+        guard !changes.updatedChildren.isEmpty else {
+          completion?()
+          return
+        }
 
+        for index in changes.updatedChildren {
+          guard let item = self.spot.item(index) else { continue }
+          self.spot.update(item, index: index, withAnimation: .Automatic) {
+            if changes.updatedChildren.last == index {
+              completion?()
+            }
+          }
+        }
+
+      } else {
         for index in changes.updates {
           guard let item = self.spot.item(index) else { continue }
-          self.spot.update(item, index: index, withAnimation: .Automatic, completion: completion)
+
+          self.spot.update(item, index: index, withAnimation: .Automatic) {
+            if changes.updates.last == index {
+              guard !changes.updatedChildren.isEmpty else {
+                completion?()
+                return
+              }
+
+              for index in changes.updatedChildren {
+                guard let item = self.spot.item(index) else { continue }
+                self.spot.update(item, index: index, withAnimation: .Automatic) {
+                  if changes.updatedChildren.last == index {
+                    completion?()
+                  }
+                }
+              }
+            }
+          }
         }
       }
     }
