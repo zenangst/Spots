@@ -30,6 +30,10 @@ file_length:
   error: 1200
 # naming rules can set warnings/errors for min_length and max_length
 # additionally they can set excluded names
+cyclomatic_complexity:
+  warning: 20
+  error: 30
+
 type_name:
   min_length: 3 # only warning
   max_length: # warning and error
