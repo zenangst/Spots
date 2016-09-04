@@ -216,8 +216,7 @@ public class CollectionAdapter: NSObject, SpotAdapter {
    - Parameter completion: A completion closure that is executed in the main queue when the view model has been removed
    */
   public func update(item: ViewModel, index: Int, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
-
-    let oldItem = spot.items[index]
+    guard let oldItem = spot.item(index) else { completion?(); return }
 
     spot.items[index] = item
     spot.configureItem(index)
