@@ -107,7 +107,7 @@ extension SpotsProtocol {
     let newItems = newComponents[index].items
     let oldItems = spot.items
 
-    guard let diff = ViewModel.evaluate(newItems, oldModels: oldItems) else { return false }
+    guard let diff = ViewModel.evaluate(newItems, oldModels: oldItems) else { closure?(); return false }
     let changes = ViewModel.processChanges(diff)
 
     if newItems.count == spot.items.count {
