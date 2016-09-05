@@ -232,7 +232,7 @@ extension ListAdapter {
     completion?()
   }
 
-  public func updateItem(updates: [Int], completion: Completion) {
+  public func process(updates: [Int], completion: Completion) {
     guard !updates.isEmpty else { completion?(); return }
 
     let lastUpdate = updates.last
@@ -249,10 +249,10 @@ extension ListAdapter {
   public func reloadIfNeeded(changes: ViewModelChanges, updateDataSource: () -> Void, completion: Completion) {
     spot.tableView.process((insertions: changes.insertions, reloads: changes.reloads, deletions: changes.deletions), updateDataSource: updateDataSource) {
       if changes.updates.isEmpty {
-        self.updateItem(changes.updatedChildren, completion: completion)
+        self.process(changes.updatedChildren, completion: completion)
       } else {
-        self.updateItem(changes.updates) {
-          self.updateItem(changes.updatedChildren, completion: completion)
+        self.process(changes.updates) {
+          self.process(changes.updatedChildren, completion: completion)
         }
       }
     }
