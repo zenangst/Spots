@@ -251,44 +251,30 @@ public class CollectionAdapter: NSObject, SpotAdapter {
     completion?()
   }
 
+  public func process(updates: [Int], completion: Completion) {
+    guard !updates.isEmpty else {
+      completion?()
+      return
+    }
+
+    let lastUpdate = updates.last
+    for index in updates {
+      guard let item = self.spot.item(index) else { completion?(); continue }
+      self.update(item, index: index, withAnimation: .Automatic) {
+        if index == lastUpdate {
+          completion?()
+        }
+      }
+    }
+  }
+
   public func reloadIfNeeded(changes: ViewModelChanges, updateDataSource: () -> Void, completion: Completion) {
     spot.collectionView.process((insertions: changes.insertions, reloads: changes.reloads, deletions: changes.deletions), updateDataSource: updateDataSource) {
       if changes.updates.isEmpty {
-        guard !changes.updatedChildren.isEmpty else {
-          completion?()
-          return
-        }
-
-        for index in changes.updatedChildren {
-          guard let item = self.spot.item(index) else { continue }
-          self.spot.update(item, index: index, withAnimation: .Automatic) {
-            if changes.updatedChildren.last == index {
-              completion?()
-            }
-          }
-        }
-
+        self.process(changes.updatedChildren, completion: completion)
       } else {
-        for index in changes.updates {
-          guard let item = self.spot.item(index) else { continue }
-
-          self.spot.update(item, index: index, withAnimation: .Automatic) {
-            if changes.updates.last == index {
-              guard !changes.updatedChildren.isEmpty else {
-                completion?()
-                return
-              }
-
-              for index in changes.updatedChildren {
-                guard let item = self.spot.item(index) else { continue }
-                self.spot.update(item, index: index, withAnimation: .Automatic) {
-                  if changes.updatedChildren.last == index {
-                    completion?()
-                  }
-                }
-              }
-            }
-          }
+        self.process(changes.updates) {
+          self.process(changes.updatedChildren, completion: completion)
         }
       }
     }

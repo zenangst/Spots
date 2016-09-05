@@ -60,6 +60,14 @@ public extension UICollectionView {
     let deletions = changes.deletions.map { NSIndexPath(forRow: $0, inSection: section) }
 
     updateDataSource()
+
+    if insertions.isEmpty &&
+      reloads.isEmpty &&
+      deletions.isEmpty {
+      completion?()
+      return
+    }
+
     performBatchUpdates({
       self.insertItemsAtIndexPaths(insertions)
       self.reloadItemsAtIndexPaths(reloads)
