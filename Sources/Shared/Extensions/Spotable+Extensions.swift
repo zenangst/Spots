@@ -60,9 +60,6 @@ public extension Spotable {
   func reloadIfNeeded(changes: ViewModelChanges, updateDataSource: () -> Void, completion: Completion) {
     adapter?.reloadIfNeeded(changes, updateDataSource: updateDataSource, completion: completion)
   }
-}
-
-public extension Spotable {
 
   /// A collection of view models
   var items: [ViewModel] {
