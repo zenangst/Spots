@@ -137,7 +137,7 @@ public extension Spotable {
    - Parameter items:     A collection of ViewModels
    - Parameter animation: The animation that should be used (only works for Listable objects)
    */
-  public func reloadIfNeeded(items: [ViewModel], withAnimation animation: SpotsAnimation = .Automatic) {
+  public func reloadIfNeeded(items: [ViewModel], withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
     guard !(self.items == items) else {
       cache()
       return
@@ -158,6 +158,7 @@ public extension Spotable {
 
     reload(indexes, withAnimation: animation) {
       self.cache()
+      completion?()
     }
   }
 
