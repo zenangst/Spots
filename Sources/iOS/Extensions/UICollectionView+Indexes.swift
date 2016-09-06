@@ -73,8 +73,8 @@ public extension UICollectionView {
       self.reloadItemsAtIndexPaths(reloads)
       self.deleteItemsAtIndexPaths(deletions)
       }) { _ in
-        completion?()
     }
+    completion?()
   }
 
   /**
