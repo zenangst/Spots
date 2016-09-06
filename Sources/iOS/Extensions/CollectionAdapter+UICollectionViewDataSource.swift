@@ -41,8 +41,6 @@ extension CollectionAdapter : UICollectionViewDataSource {
       spot.configure?(cell)
     }
 
-    collectionView.collectionViewLayout.invalidateLayout()
-
     return cell
   }
 }
