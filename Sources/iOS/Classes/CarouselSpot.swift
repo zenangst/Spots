@@ -95,6 +95,7 @@ public class CarouselSpot: NSObject, Gridable {
     $0.delegate = self.collectionAdapter
     $0.showsHorizontalScrollIndicator = false
     $0.backgroundView = self.backgroundView
+    $0.alwaysBounceHorizontal = true
   }
 
   public lazy var backgroundView = UIView()
