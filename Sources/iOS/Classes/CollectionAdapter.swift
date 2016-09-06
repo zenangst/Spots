@@ -271,10 +271,16 @@ public class CollectionAdapter: NSObject, SpotAdapter {
   public func reloadIfNeeded(changes: ViewModelChanges, updateDataSource: () -> Void, completion: Completion) {
     spot.collectionView.process((insertions: changes.insertions, reloads: changes.reloads, deletions: changes.deletions), updateDataSource: updateDataSource) {
       if changes.updates.isEmpty {
-        self.process(changes.updatedChildren, completion: completion)
+        self.process(changes.updatedChildren) {
+          completion?()
+          self.spot.layout(self.spot.collectionView.bounds.size)
+        }
       } else {
         self.process(changes.updates) {
-          self.process(changes.updatedChildren, completion: completion)
+          self.process(changes.updatedChildren) {
+            completion?()
+            self.spot.layout(self.spot.collectionView.bounds.size)
+          }
         }
       }
     }
@@ -300,7 +306,6 @@ public class CollectionAdapter: NSObject, SpotAdapter {
     }
 
     cellCache.removeAll()
-    spot.collectionView.collectionViewLayout.invalidateLayout()
 
     if let indexes = indexes {
       spot.collectionView.reload(indexes)
