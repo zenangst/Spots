@@ -21,9 +21,8 @@ extension CollectionAdapter : UICollectionViewDelegate {
    - Parameter indexPath: The index path of the cell that was selected.
    */
   public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-    if let item = spot.item(indexPath) {
-      spot.spotsDelegate?.spotDidSelectItem(spot, item: item)
-    }
+    guard let item = spot.item(indexPath) else { return }
+    spot.spotsDelegate?.spotDidSelectItem(spot, item: item)
   }
 
   /**
