@@ -26,6 +26,8 @@ extension CollectionAdapter : UIScrollViewDelegate {
    - Parameter scrollView: The scroll-view object in which the scrolling occurred.
    */
   public func scrollViewDidScroll(scrollView: UIScrollView) {
+    // This is a weird workaround to get the carousel to scroll more smoothly... weird I know.
+    let _ = spot.layout.layoutAttributesForElementsInRect(scrollView.frame)
     (spot as? CarouselSpot)?.scrollViewDidScroll(scrollView)
   }
 }
