@@ -266,6 +266,8 @@ public class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDel
   public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
     super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
 
+    guard presentedViewController == nil else { return }
+
     coordinator.animateAlongsideTransition({ (UIViewControllerTransitionCoordinatorContext) in
       self.configureView(withSize: size)
       }) { (UIViewControllerTransitionCoordinatorContext) in
