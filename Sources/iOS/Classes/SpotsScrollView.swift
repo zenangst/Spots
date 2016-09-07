@@ -141,10 +141,7 @@ public class SpotsScrollView: UIScrollView {
         let remainingBoundsHeight = fmax(bounds.maxY - frame.minY, 0.0)
         let remainingContentHeight = fmax(scrollView.contentSize.height - contentOffset.y, 0.0)
 
-        if !(subview is UICollectionView) {
-          frame.size.height = ceil(fmin(remainingBoundsHeight, remainingContentHeight))
-        }
-
+        frame.size.height = ceil(fmin(remainingBoundsHeight, remainingContentHeight))
         frame.size.width = ceil(contentView.frame.size.width)
 
         scrollView.frame = frame
