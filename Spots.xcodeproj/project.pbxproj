@@ -438,6 +438,7 @@
 			children = (
 				BD129DA01D7B2A3D009AC164 /* CarouselSpot+iOS.swift */,
 				BD129D9D1D7B29F6009AC164 /* CarouselSpot+UIScrollViewDelegate.swift */,
+				BD76FA461D8066A7001CA31C /* CollectionAdapter+Extensions+iOS.swift */,
 				BD129D571D7B295F009AC164 /* CollectionAdapter+UICollectionViewDataSource.swift */,
 				BD129D581D7B295F009AC164 /* CollectionAdapter+UICollectionViewDelegate.swift */,
 				BD129D591D7B295F009AC164 /* CollectionAdapter+UICollectionViewDelegateFlowLayout.swift */,
@@ -449,7 +450,6 @@
 				BD129D5F1D7B295F009AC164 /* SpotsController+UIScrollViewDelegate.swift */,
 				BD129D601D7B295F009AC164 /* UICollectionView+Indexes.swift */,
 				BD129D611D7B295F009AC164 /* UITableView+Indexes.swift */,
-				BD76FA461D8066A7001CA31C /* CollectionAdapter+Extensions+iOS.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
