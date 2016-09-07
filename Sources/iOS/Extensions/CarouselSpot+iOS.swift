@@ -23,9 +23,9 @@ extension CarouselSpot {
         width -= layout.sectionInset.left / component.span
         width -= layout.minimumInteritemSpacing
       }
+      
+      component.items[indexPath.item].size.width = width
     }
-
-    component.items[indexPath.item].size.width = width
 
     if component.items[indexPath.item].size.height == 0.0 {
       component.items[indexPath.item].size.height = collectionView.height - layout.sectionInset.top - layout.sectionInset.bottom - layout.headerReferenceSize.height
