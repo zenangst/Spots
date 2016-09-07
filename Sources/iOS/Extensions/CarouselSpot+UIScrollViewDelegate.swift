@@ -3,6 +3,10 @@ import Brick
 
 extension CarouselSpot: UIScrollViewDelegate {
 
+  /**
+   A method that handles what type of scrollling the CarouselSpot should use when pagination is enabled.
+   It can snap to the nearest item or scroll page by page.
+   */
   private func paginatedEndScrolling() {
     var currentCellOffset = collectionView.contentOffset
     if paginateByItem {
