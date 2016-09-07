@@ -23,7 +23,7 @@ extension CarouselSpot {
         width -= layout.sectionInset.left / component.span
         width -= layout.minimumInteritemSpacing
       }
-      
+
       component.items[indexPath.item].size.width = width
     }
 
