@@ -9,6 +9,13 @@ extension CarouselSpot {
     return collectionView.height - layout.sectionInset.top - layout.sectionInset.bottom - layout.headerReferenceSize.height
   }
 
+  /**
+   Update and return the size for the item at index path
+
+   - parameter indexPath: An NSIndexPath
+
+   - returns: CGSize of the item at index path
+   */
   public func sizeForItemAt(indexPath: NSIndexPath) -> CGSize {
     guard indexPath.item < component.items.count else { return CGSize.zero }
     var width = collectionView.width

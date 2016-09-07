@@ -2,6 +2,7 @@ import UIKit
 import Sugar
 import Brick
 
+/// A default cell for the CarouselSpot
 class CarouselSpotCell: UICollectionViewCell, SpotConfigurable {
 
   var size = CGSize(width: 88, height: 88)

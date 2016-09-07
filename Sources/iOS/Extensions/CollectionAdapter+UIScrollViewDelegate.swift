@@ -16,6 +16,12 @@ extension CollectionAdapter : UIScrollViewDelegate {
     (spot as? CarouselSpot)?.scrollViewWillEndDragging(scrollView, withVelocity: velocity, targetContentOffset: targetContentOffset)
   }
 
+  /**
+   Tells the delegate when dragging ended in the scroll view.
+
+   - parameter scrollView: The scroll-view object that finished scrolling the content view.
+   - parameter decelerate: true if the scrolling movement will continue, but decelerate, after a touch-up gesture during a dragging operation.
+   */
   public func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
     (spot as? CarouselSpot)?.scrollViewDidEndDragging(scrollView, willDecelerate: decelerate)
   }

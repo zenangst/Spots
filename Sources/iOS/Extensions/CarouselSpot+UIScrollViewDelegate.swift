@@ -30,11 +30,24 @@ extension CarouselSpot: UIScrollViewDelegate {
     carouselScrollDelegate?.spotDidScroll(self)
   }
 
+  /**
+   Tells the delegate when dragging ended in the scroll view.
+
+   - parameter scrollView: The scroll-view object that finished scrolling the content view.
+   - parameter decelerate: true if the scrolling movement will continue, but decelerate, after a touch-up gesture during a dragging operation.
+   */
   public func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
     guard paginate else { return }
     paginatedEndScrolling()
   }
 
+  /**
+   Tells the delegate when the user finishes scrolling the content.
+
+   - parameter scrollView:          The scroll-view object where the user ended the touch..
+   - parameter velocity:            The velocity of the scroll view (in points) at the moment the touch was released.
+   - parameter targetContentOffset: The expected offset when the scrolling action decelerates to a stop.
+   */
   public func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
     #if os(iOS)
       guard paginate else { return }
