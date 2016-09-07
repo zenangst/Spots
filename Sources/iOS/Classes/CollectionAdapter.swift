@@ -292,6 +292,8 @@ public class CollectionAdapter: NSObject, SpotAdapter {
    - Parameter completion: A completion closure that is executed in the main queue when the view model has been reloaded
    */
   public func reload(indexes: [Int]? = nil, withAnimation animation: SpotsAnimation = .None, completion: Completion) {
+    if animation == .None { UIView.setAnimationsEnabled(false) }
+
     spot.refreshIndexes()
     var cellCache: [String : SpotConfigurable] = [:]
 
@@ -316,5 +318,7 @@ public class CollectionAdapter: NSObject, SpotAdapter {
     spot.setup(spot.collectionView.bounds.size)
     spot.collectionView.layoutIfNeeded()
     completion?()
+
+    if animation == .None { UIView.setAnimationsEnabled(true) }
   }
 }
