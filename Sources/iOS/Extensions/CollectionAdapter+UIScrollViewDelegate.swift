@@ -16,6 +16,12 @@ extension CollectionAdapter : UIScrollViewDelegate {
     (spot as? CarouselSpot)?.scrollViewWillEndDragging(scrollView, withVelocity: velocity, targetContentOffset: targetContentOffset)
   }
 
+  /**
+   Tells the delegate when dragging ended in the scroll view.
+
+   - parameter scrollView: The scroll-view object that finished scrolling the content view.
+   - parameter decelerate: true if the scrolling movement will continue, but decelerate, after a touch-up gesture during a dragging operation.
+   */
   public func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
     (spot as? CarouselSpot)?.scrollViewDidEndDragging(scrollView, willDecelerate: decelerate)
   }
@@ -23,7 +29,7 @@ extension CollectionAdapter : UIScrollViewDelegate {
   /**
    Tells the delegate when the user scrolls the content view within the receiver.
 
-   - Parameter scrollView: The scroll-view object in which the scrolling occurred.
+   - parameter scrollView: The scroll-view object in which the scrolling occurred.
    */
   public func scrollViewDidScroll(scrollView: UIScrollView) {
     // This is a weird workaround to get the carousel to scroll more smoothly... weird I know.

@@ -192,6 +192,8 @@
 		BD73973F1D718CDB000AF2DE /* Sugar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478EB1C440726006EBA49 /* Sugar.framework */; };
 		BD7397401D718CDB000AF2DE /* Spots.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478091C43FEB8006EBA49 /* Spots.framework */; };
 		BD73974B1D718D38000AF2DE /* CollectionAdapter+tvOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD73974A1D718D38000AF2DE /* CollectionAdapter+tvOS.swift */; };
+		BD76FA471D8066A7001CA31C /* CollectionAdapter+Extensions+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD76FA461D8066A7001CA31C /* CollectionAdapter+Extensions+iOS.swift */; };
+		BD76FA481D8066A7001CA31C /* CollectionAdapter+Extensions+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD76FA461D8066A7001CA31C /* CollectionAdapter+Extensions+iOS.swift */; };
 		BDB538301C444B3C0005E498 /* ListSpotSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB5382F1C444B3C0005E498 /* ListSpotSpec.swift */; };
 		BDCCD9271C44438800AC21D1 /* GridSpotSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCCD9261C44438800AC21D1 /* GridSpotSpec.swift */; };
 		D58478141C43FEB9006EBA49 /* Spots.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478091C43FEB8006EBA49 /* Spots.framework */; };
@@ -326,6 +328,7 @@
 		BD73972F1D718CD2000AF2DE /* Spots.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Spots.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD7397461D718CDB000AF2DE /* Spots-tvOS-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Spots-tvOS-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD73974A1D718D38000AF2DE /* CollectionAdapter+tvOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CollectionAdapter+tvOS.swift"; sourceTree = "<group>"; };
+		BD76FA461D8066A7001CA31C /* CollectionAdapter+Extensions+iOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CollectionAdapter+Extensions+iOS.swift"; sourceTree = "<group>"; };
 		BDB5382F1C444B3C0005E498 /* ListSpotSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListSpotSpec.swift; sourceTree = "<group>"; };
 		BDB538321C444D460005E498 /* Playground-iOS.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Playground-iOS.playground"; sourceTree = "<group>"; };
 		BDB648551D75EF150041449A /* Info-tvOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-tvOS.plist"; sourceTree = "<group>"; };
@@ -435,6 +438,7 @@
 			children = (
 				BD129DA01D7B2A3D009AC164 /* CarouselSpot+iOS.swift */,
 				BD129D9D1D7B29F6009AC164 /* CarouselSpot+UIScrollViewDelegate.swift */,
+				BD76FA461D8066A7001CA31C /* CollectionAdapter+Extensions+iOS.swift */,
 				BD129D571D7B295F009AC164 /* CollectionAdapter+UICollectionViewDataSource.swift */,
 				BD129D581D7B295F009AC164 /* CollectionAdapter+UICollectionViewDelegate.swift */,
 				BD129D591D7B295F009AC164 /* CollectionAdapter+UICollectionViewDelegateFlowLayout.swift */,
@@ -1137,6 +1141,7 @@
 				BD129DD01D7B2B6C009AC164 /* SpotsScrollView.swift in Sources */,
 				BD129F8F1D7B2F91009AC164 /* Parser.swift in Sources */,
 				BD129D841D7B295F009AC164 /* CollectionAdapter+UICollectionViewDelegate.swift in Sources */,
+				BD76FA481D8066A7001CA31C /* CollectionAdapter+Extensions+iOS.swift in Sources */,
 				BD129DBE1D7B2B6C009AC164 /* GridableLayout.swift in Sources */,
 				BD129D8A1D7B295F009AC164 /* Gridable+Extensions+iOS.swift in Sources */,
 				BD129D881D7B295F009AC164 /* CollectionAdapter+UIScrollViewDelegate.swift in Sources */,
@@ -1216,6 +1221,7 @@
 				BD129D951D7B295F009AC164 /* UITableView+Indexes.swift in Sources */,
 				BD129D831D7B295F009AC164 /* CollectionAdapter+UICollectionViewDelegate.swift in Sources */,
 				BD129F511D7B2F91009AC164 /* SpotsAnimation.swift in Sources */,
+				BD76FA471D8066A7001CA31C /* CollectionAdapter+Extensions+iOS.swift in Sources */,
 				BD129F4B1D7B2F91009AC164 /* SpotFactory.swift in Sources */,
 				BD129D8F1D7B295F009AC164 /* SpotComposable+Extensions.swift in Sources */,
 				BD129F691D7B2F91009AC164 /* ViewModel+Extensions.swift in Sources */,

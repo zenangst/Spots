@@ -2,6 +2,16 @@ import UIKit
 
 extension CollectionAdapter : UICollectionViewDataSource {
 
+  /**
+   Asks your data source object to provide a supplementary view to display in the collection view.
+   A configured supplementary view object. You must not return nil from this method.
+
+   - parameter collectionView: The collection view requesting this information.
+   - parameter kind:           The kind of supplementary view to provide. The value of this string is defined by the layout object that supports the supplementary view.
+   - parameter indexPath:      The index path that specifies the location of the new supplementary view.
+
+   - returns: A configured supplementary view object.
+   */
   public func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
     let header = spot.component.header.isEmpty
       ? spot.dynamicType.headers.defaultIdentifier

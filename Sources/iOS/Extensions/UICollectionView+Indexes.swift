@@ -50,6 +50,15 @@ public extension UICollectionView {
     }
   }
 
+  /**
+   Process a collection of changes
+
+   - parameter changes:          A tuple with insertions, reloads and delctions
+   - parameter animation:        The animation that should be used to perform the updates
+   - parameter section:          The section that will be updates
+   - parameter updateDataSource: A closure that is used to update the data source before performing the updates on the UI
+   - parameter completion:       A completion closure that will run when both data source and UI is updated
+   */
   func process(changes: (insertions: [Int], reloads: [Int], deletions: [Int]),
                withAnimation animation: UITableViewRowAnimation = .Automatic,
                              section: Int = 0,

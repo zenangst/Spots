@@ -3,6 +3,10 @@ import Brick
 
 extension CarouselSpot: UIScrollViewDelegate {
 
+  /**
+   A method that handles what type of scrollling the CarouselSpot should use when pagination is enabled.
+   It can snap to the nearest item or scroll page by page.
+   */
   private func paginatedEndScrolling() {
     var currentCellOffset = collectionView.contentOffset
     if paginateByItem {
@@ -26,15 +30,33 @@ extension CarouselSpot: UIScrollViewDelegate {
     }
   }
 
+  /**
+   Tells the delegate when the user scrolls the content view within the receiver.
+
+   - parameter scrollView: The scroll-view object in which the scrolling occurred.
+   */
   public func scrollViewDidScroll(scrollView: UIScrollView) {
     carouselScrollDelegate?.spotDidScroll(self)
   }
 
+  /**
+   Tells the delegate when dragging ended in the scroll view.
+
+   - parameter scrollView: The scroll-view object that finished scrolling the content view.
+   - parameter decelerate: true if the scrolling movement will continue, but decelerate, after a touch-up gesture during a dragging operation.
+   */
   public func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
     guard paginate else { return }
     paginatedEndScrolling()
   }
 
+  /**
+   Tells the delegate when the user finishes scrolling the content.
+
+   - parameter scrollView:          The scroll-view object where the user ended the touch..
+   - parameter velocity:            The velocity of the scroll view (in points) at the moment the touch was released.
+   - parameter targetContentOffset: The expected offset when the scrolling action decelerates to a stop.
+   */
   public func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
     #if os(iOS)
       guard paginate else { return }
@@ -69,6 +91,11 @@ extension CarouselSpot: UIScrollViewDelegate {
     paginatedEndScrolling()
   }
 
+  /**
+   Scroll to a specific item based on predicate
+
+   - parameter predicate: A predicate closure to determine which item to scroll to
+   */
   public func scrollTo(predicate: (ViewModel) -> Bool) {
     if let index = items.indexOf(predicate) {
       let pageWidth: CGFloat = collectionView.width - layout.sectionInset.right

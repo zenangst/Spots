@@ -2,14 +2,21 @@ import UIKit
 import Sugar
 import Brick
 
+/// A CarouselSpot, a collection view based Spotable object that lays out its items in a horizontal order
 public class CarouselSpot: NSObject, Gridable {
 
+  /**
+   *  A struct that holds keys that is used when mapping meta data to configuration methods
+   */
   public struct Key {
     public static let minimumInteritemSpacing = "item-spacing"
     public static let minimumLineSpacing = "line-spacing"
     public static let dynamicSpan = "dynamic-span"
   }
 
+  /**
+   *  A struct with default values for the CarouselSpot
+   */
   public struct Default {
     public static var dynamicSpan: Bool = false
     public static var sectionInsetTop: CGFloat = 0.0
@@ -20,21 +27,27 @@ public class CarouselSpot: NSObject, Gridable {
     public static var minimumLineSpacing: CGFloat = 0.0
   }
 
+  /// A boolean value that affects the sizing of items when using span, if enabled and the item count is less than the span, the CarouselSpot will even out the space between the items to align them
   public var dynamicSpan = false
 
+  /// A Registry object that holds identifiers and classes for cells used in the CarouselSpot
   public static var views: Registry = Registry().then {
     $0.defaultItem = Registry.Item.classType(CarouselSpotCell.self)
     $0.composite =  Registry.Item.classType(CarouselComposite.self)
   }
 
+  /// A configuration closure that is run in setup(_:)
   public static var configure: ((view: UICollectionView, layout: UICollectionViewFlowLayout) -> Void)?
 
+  /// A Registry object that holds identifiers and classes for headers used in the CarouselSpot
   public static var headers = Registry().then {
     $0.defaultItem = Registry.Item.classType(CarouselSpotHeader.self)
   }
 
+  /// A SpotCache for the CarouselSpot
   public private(set) var stateCache: SpotCache?
 
+  /// A component struct used as configuration and data source for the CarouselSpot
   public var component: Component {
     willSet(value) {
       #if os(iOS)
@@ -47,6 +60,7 @@ public class CarouselSpot: NSObject, Gridable {
   }
 
   #if os(iOS)
+  /// A boolean value that configures the collection views pagination
   public var paginate = false {
     willSet(newValue) {
       if component.span == 1 {
@@ -55,9 +69,11 @@ public class CarouselSpot: NSObject, Gridable {
     }
   }
 
+  /// Determines how the CarouselSpot should handle pagination, if enabled, it will snap to each item in the carousel
   public var paginateByItem: Bool = false
   #endif
 
+  /// A boolean value that determines if the CarouselSpot should show a page indicator
   public var pageIndicator: Bool = false {
     willSet(value) {
       if value {
@@ -69,10 +85,13 @@ public class CarouselSpot: NSObject, Gridable {
     }
   }
 
+  /// A configuration closure
   public var configure: (SpotConfigurable -> Void)?
 
   public weak var carouselScrollDelegate: SpotsCarouselScrollDelegate?
+  /// A SpotsCompositeDelegate for the CarouselSpot, used to access composite spots
   public weak var spotsCompositeDelegate: SpotsCompositeDelegate?
+  /// A SpotsDelegate that is used for the CarouselSpot
   public weak var spotsDelegate: SpotsDelegate?
 
   public var adapter: SpotAdapter? {
@@ -80,16 +99,19 @@ public class CarouselSpot: NSObject, Gridable {
   }
   public lazy var collectionAdapter: CollectionAdapter = CollectionAdapter(spot: self)
 
+  /// A UIPageControl, enable by setting pageIndicator to true
   public lazy var pageControl = UIPageControl().then {
     $0.frame.size.height = 22
     $0.pageIndicatorTintColor = UIColor.lightGrayColor()
     $0.currentPageIndicatorTintColor = UIColor.grayColor()
   }
 
+  /// A custom UICollectionViewFlowLayout
   public lazy var layout: CollectionLayout = GridableLayout().then {
     $0.scrollDirection = .Horizontal
   }
 
+  /// A UICollectionView, used as the main UI component for a CarouselSpot
   public lazy var collectionView: UICollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: self.layout).then {
     $0.dataSource = self.collectionAdapter
     $0.delegate = self.collectionAdapter
@@ -98,14 +120,35 @@ public class CarouselSpot: NSObject, Gridable {
     $0.alwaysBounceHorizontal = true
   }
 
+  /// The collection views background view
   public lazy var backgroundView = UIView()
 
+  /**
+   A required initializer to instantiate a CarouselSpot with a component
+
+   - parameter component: A component
+
+   - returns: A CarouselSpot object
+   */
   public required init(component: Component) {
     self.component = component
     super.init()
     configureInsets()
   }
 
+  /**
+   A convenience initializer for CarouselSpot with base configuration
+
+   - parameter component:   A Component
+   - parameter top:         Top section inset
+   - parameter left:        Left section inset
+   - parameter bottom:      Bottom section inset
+   - parameter right:       Right section inset
+   - parameter itemSpacing: The item spacing used in the flow layout
+   - parameter lineSpacing: The line spacing used in the flow layout
+
+   - returns: A CarouselSpot object
+   */
   public convenience init(_ component: Component, top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0, itemSpacing: CGFloat = 0, lineSpacing: CGFloat = 0) {
     self.init(component: component)
 
@@ -114,6 +157,13 @@ public class CarouselSpot: NSObject, Gridable {
     layout.minimumLineSpacing = lineSpacing
   }
 
+  /**
+   Instantiate a CarouselSpot with a cache key
+
+   - parameter cacheKey: A unique cache key for the Spotable object
+
+   - returns: A CarouselSpot object
+   */
   public convenience init(cacheKey: String) {
     let stateCache = SpotCache(key: cacheKey)
 
@@ -123,6 +173,11 @@ public class CarouselSpot: NSObject, Gridable {
     registerAndPrepare()
   }
 
+  /**
+   Setup Spotable component with base size
+
+   - parameter size: The size of the superview
+   */
   public func setup(size: CGSize) {
     collectionView.frame.size = size
 
@@ -157,6 +212,9 @@ public class CarouselSpot: NSObject, Gridable {
     pageControl.frame.origin.y = collectionView.height - pageControl.height
   }
 
+  /**
+   Configure section insets and layout spacing for the UICollectionViewFlow using component meta data
+   */
   func configureInsets() {
     layout.sectionInset = UIEdgeInsets(
       top: component.meta(GridableMeta.Key.sectionInsetTop, Default.sectionInsetTop),

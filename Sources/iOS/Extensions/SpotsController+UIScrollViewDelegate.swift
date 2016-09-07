@@ -9,8 +9,8 @@ extension SpotsController {
   /**
    Tells the delegate when the user scrolls the content view within the receiver.
 
-   - Parameter scrollView: The scroll-view object in which the scrolling occurred.
- */
+   - parameter scrollView: The scroll-view object in which the scrolling occurred.
+   */
   public func scrollViewDidScroll(scrollView: UIScrollView) {
     let offset = scrollView.contentOffset
     let size = scrollView.contentSize
