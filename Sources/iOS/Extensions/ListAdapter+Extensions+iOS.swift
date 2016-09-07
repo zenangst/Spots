@@ -232,6 +232,12 @@ extension ListAdapter {
     completion?()
   }
 
+  /**
+   Process updates and determine if the updates are done
+
+   - parameter updates:    A collection of updates
+   - parameter completion: A completion closure that is run when the updates are finished
+   */
   public func process(updates: [Int], completion: Completion) {
     guard !updates.isEmpty else { completion?(); return }
 
@@ -246,6 +252,13 @@ extension ListAdapter {
     }
   }
 
+  /**
+   Reload spot with ViewModelChanges
+
+   - parameter changes:          A collection of changes; inserations, updates, reloads, deletions and updated children
+   - parameter updateDataSource: A closure to update your data source
+   - parameter completion:       A completion closure that runs when your updates are done
+   */
   public func reloadIfNeeded(changes: ViewModelChanges, updateDataSource: () -> Void, completion: Completion) {
     spot.tableView.process((insertions: changes.insertions, reloads: changes.reloads, deletions: changes.deletions), updateDataSource: updateDataSource) {
       if changes.updates.isEmpty {
