@@ -157,7 +157,9 @@ public class SpotsScrollView: UIScrollView {
   }
 
   /**
-   A custom implementation of layoutSubviews that handles the scrolling of all the underlaying views within the container. It does this by iterating over subviewsInLayoutOrder and sets the current offset for each individual view within the container. This method can be forcefully invoke by setting `forceUpdate` to `true` on `SpotsScrollView`.
+   A custom implementation of layoutSubviews that handles the scrolling of all the underlaying views within the container.
+   It does this by iterating over subviewsInLayoutOrder and sets the current offset for each individual view within the container.
+   This method can be forcefully invoke by setting `forceUpdate` to `true` on `SpotsScrollView`.
    */
   public override func layoutSubviews() {
     super.layoutSubviews()
