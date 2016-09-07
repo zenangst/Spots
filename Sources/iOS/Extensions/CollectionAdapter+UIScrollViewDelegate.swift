@@ -29,7 +29,7 @@ extension CollectionAdapter : UIScrollViewDelegate {
   /**
    Tells the delegate when the user scrolls the content view within the receiver.
 
-   - Parameter scrollView: The scroll-view object in which the scrolling occurred.
+   - parameter scrollView: The scroll-view object in which the scrolling occurred.
    */
   public func scrollViewDidScroll(scrollView: UIScrollView) {
     // This is a weird workaround to get the carousel to scroll more smoothly... weird I know.

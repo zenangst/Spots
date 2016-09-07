@@ -44,6 +44,9 @@ extension Gridable {
     )
   }
 
+  /**
+   Prepares all items in the Gridable object component
+   */
   public func prepareItems() {
     component.items.enumerate().forEach { (index: Int, _) in
       configureItem(index, usesViewSize: true)
@@ -64,6 +67,9 @@ extension Gridable {
 
   // MARK: - Spotable
 
+  /**
+   Register all views in Registry on UICollectionView
+   */
   public func register() {
     for (identifier, item) in self.dynamicType.views.storage {
       switch item {
@@ -88,14 +94,32 @@ extension Gridable {
     }
   }
 
+  /**
+   Add header view class to Registry
+
+   - parameter header:     The view type that you want to register
+   - parameter identifier: The identifier for the header
+   */
   public static func register(header header: View.Type, identifier: StringConvertible) {
     self.headers.storage[identifier.string] = Registry.Item.classType(header)
   }
 
+  /**
+   Add header nib-based view class to Registry
+
+   - parameter header:     The nib file that is used by the view
+   - parameter identifier: The identifier for the nib-based header
+   */
   public static func register(header nib: Nib, identifier: StringConvertible) {
     self.headers.storage[identifier.string] = Registry.Item.nib(nib)
   }
 
+  /**
+   Register a default header for the Gridable component
+
+   - parameter defaultHeader: The default header class that should be used by the component
+   - parameter identifier: The identifier for the header
+   */
   public static func register(defaultHeader header: View.Type) {
     self.headers.storage[self.views.defaultIdentifier] = Registry.Item.classType(header)
   }

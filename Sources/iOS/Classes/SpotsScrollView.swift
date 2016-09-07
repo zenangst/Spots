@@ -3,10 +3,13 @@ import QuartzCore
 
 public class SpotsScrollView: UIScrollView {
 
+  /// A KVO context used to monitor changes in contentSize, frames and bounds
   let subviewContext = UnsafeMutablePointer<()>(nil)
 
+  /// An collection of UIView's that resemble the order of the views in the scroll view
   private var subviewsInLayoutOrder = [UIView?]()
 
+  /// A boolean value that can be used to force the scroll view to layout subviews
   public var forceUpdate = false {
     didSet {
       if forceUpdate {
@@ -16,6 +19,7 @@ public class SpotsScrollView: UIScrollView {
     }
   }
 
+  /// The distance that the content view is inset from the enclosing scroll view.
   public override var contentInset: UIEdgeInsets {
     willSet {
       if self.tracking {
@@ -27,23 +31,47 @@ public class SpotsScrollView: UIScrollView {
     }
   }
 
+  /// A container view that works as a proxy layer for scroll view
   lazy public var contentView: SpotsContentView = SpotsContentView().then { [unowned self] in
     $0.frame = self.frame
   }
 
+  /**
+   A deinitiazlier that removes all subviews from contentView
+   */
   deinit {
     contentView.subviews.forEach { $0.removeFromSuperview() }
   }
 
+  /**
+   Initializes and returns a newly allocated view object with the specified frame rectangle.
+   An initialized view object.
+
+   - parameter frame: The frame rectangle for the view, measured in points. The origin of the frame is relative to the superview in which you plan to add it. This method uses the frame rectangle to set the center and bounds properties accordingly.
+
+   - returns: An initialized view object
+   */
   override init(frame: CGRect) {
     super.init(frame: frame)
     addSubview(contentView)
   }
 
+  /**
+   Returns an object initialized from data in a given unarchiver.
+
+   - parameter aDecoder: An unarchiver object.
+
+   - returns: self, initialized using the data in decoder.
+   */
   required public init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 
+  /**
+   A method to setup KVO observers on views added to contentView
+
+   - parameter subview: The view to add to the view as a subview.
+   */
   func didAddSubviewToContainer(subview: UIView) {
     subview.autoresizingMask = [.None]
 
@@ -76,6 +104,11 @@ public class SpotsScrollView: UIScrollView {
     setNeedsLayout()
   }
 
+  /**
+   Tells the view that a subview is about to be removed.
+
+   - parameter subview: The subview that will be removed.
+   */
   public override func willRemoveSubview(subview: UIView) {
     if subview is UIScrollView {
       subview.removeObserver(self, forKeyPath: "contentSize", context: subviewContext)
@@ -91,6 +124,14 @@ public class SpotsScrollView: UIScrollView {
     setNeedsLayout()
   }
 
+  /**
+   This message is sent to the receiver when the value at the specified key path relative to the given object has changed.
+
+   - parameter keyPath: The key path, relative to object, to the value that has changed.
+   - parameter object:  The source object of the key path keyPath.
+   - parameter change:  A dictionary that describes the changes that have been made to the value of the property at the key path keyPath relative to object.
+   - parameter context: The value that was provided when the receiver was registered to receive key-value observation notifications.
+   */
   public override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
     if let change = change where context == subviewContext && keyPath == "contentSize" {
       if let scrollView = object as? UIScrollView {
@@ -115,6 +156,9 @@ public class SpotsScrollView: UIScrollView {
     }
   }
 
+  /**
+   A custom implementation of layoutSubviews that handles the scrolling of all the underlaying views within the container. It does this by iterating over subviewsInLayoutOrder and sets the current offset for each individual view within the container. This method can be forcefully invoke by setting `forceUpdate` to `true` on `SpotsScrollView`.
+   */
   public override func layoutSubviews() {
     super.layoutSubviews()
 

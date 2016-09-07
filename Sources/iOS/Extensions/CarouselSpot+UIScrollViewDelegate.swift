@@ -26,6 +26,11 @@ extension CarouselSpot: UIScrollViewDelegate {
     }
   }
 
+  /**
+   Tells the delegate when the user scrolls the content view within the receiver.
+
+   - parameter scrollView: The scroll-view object in which the scrolling occurred.
+   */
   public func scrollViewDidScroll(scrollView: UIScrollView) {
     carouselScrollDelegate?.spotDidScroll(self)
   }
@@ -82,6 +87,11 @@ extension CarouselSpot: UIScrollViewDelegate {
     paginatedEndScrolling()
   }
 
+  /**
+   Scroll to a specific item based on predicate
+
+   - parameter predicate: A predicate closure to determine which item to scroll to
+   */
   public func scrollTo(predicate: (ViewModel) -> Bool) {
     if let index = items.indexOf(predicate) {
       let pageWidth: CGFloat = collectionView.width - layout.sectionInset.right
