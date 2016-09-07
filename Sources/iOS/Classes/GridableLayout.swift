@@ -36,47 +36,54 @@ public class GridableLayout: UICollectionViewFlowLayout {
 
     guard let collectionView = collectionView else { return }
 
-    if let y = yOffset where collectionView.dragging {
+    if let y = yOffset where collectionView.dragging && headerReferenceSize.height > 0.0 {
       collectionView.frame.origin.y = y
     }
   }
 
   public override func layoutAttributesForElementsInRect(rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-    guard let adapter = collectionView?.delegate as? CollectionAdapter else { return nil }
+    guard let collectionView = collectionView,
+      adapter = collectionView.dataSource as? CollectionAdapter
+      else { return nil }
 
     var attributes = [UICollectionViewLayoutAttributes]()
-    var offset: CGFloat = sectionInset.left
+    var rect = rect
 
-    if let headerAttributes = super.layoutAttributesForElementsInRect(rect)?
-      .filter({ $0.representedElementKind == UICollectionElementKindSectionHeader })
-      .first {
-      headerAttributes.zIndex = 1024
-      headerAttributes.frame.size.height = headerReferenceSize.height
-      headerAttributes.frame.origin.x = collectionView?.contentOffset.x ?? 0.0
-      attributes.append(headerAttributes)
+    if headerReferenceSize.height > 0.0 {
+      rect.origin = CGPoint(x: -UIScreen.mainScreen().bounds.width, y: 0)
+      rect.size.height = contentSize.height
+      rect.size.width = UIScreen.mainScreen().bounds.width * 3
     }
 
-    for item in 0..<adapter.spot.items.count {
-      let indexPath = NSIndexPath(forItem: item, inSection: 0)
-      guard let itemAttribute = layoutAttributesForItemAtIndexPath(indexPath)?.copy() as? UICollectionViewLayoutAttributes
-        else { continue }
+    if let newAttributes = super.layoutAttributesForElementsInRect(rect) {
+      var offset: CGFloat = sectionInset.left
+      for attribute in newAttributes {
+        guard let itemAttribute = attribute.copy() as? UICollectionViewLayoutAttributes
+          else { continue }
 
-      itemAttribute.size = adapter.spot.sizeForItemAt(indexPath)
+        if itemAttribute.representedElementKind == UICollectionElementKindSectionHeader {
+          itemAttribute.zIndex = 1024
+          itemAttribute.frame.size.height = headerReferenceSize.height
+          itemAttribute.frame.origin.x = collectionView.contentOffset.x
+          attributes.append(itemAttribute)
+        } else {
+          itemAttribute.size = adapter.spot.sizeForItemAt(itemAttribute.indexPath)
 
-      if scrollDirection == .Horizontal {
-        itemAttribute.frame.origin.y = headerReferenceSize.height
-        itemAttribute.frame.origin.x = offset
-      } else {
-        itemAttribute.frame.origin.y = itemAttribute.frame.origin.y + headerReferenceSize.height
-        itemAttribute.frame.origin.x = itemAttribute.frame.origin.x
+          if scrollDirection == .Horizontal {
+            itemAttribute.frame.origin.y = headerReferenceSize.height
+            itemAttribute.frame.origin.x = offset
+            offset += itemAttribute.size.width + minimumInteritemSpacing
+          } else {
+            itemAttribute.frame.origin.y = itemAttribute.frame.origin.y + headerReferenceSize.height
+            itemAttribute.frame.origin.x = itemAttribute.frame.origin.x
+          }
+          attributes.append(itemAttribute)
+        }
       }
-
-      attributes.append(itemAttribute)
-      offset += itemAttribute.size.width + minimumInteritemSpacing
     }
 
-    if let y = yOffset {
-      collectionView?.frame.origin.y = y
+    if let y = yOffset where headerReferenceSize.height > 0.0 {
+      collectionView.frame.origin.y = y
     }
 
     return attributes

@@ -47,7 +47,7 @@ public struct Component: Mappable, Equatable {
   }
 
   // Identifier
-  public var identifier: Int?
+  public var identifier: String?
   /// The index of the ViewModel when appearing in a list, should be computed and continuously updated by the data source
   public var index = 0
   /// The title for the component
@@ -138,7 +138,7 @@ public struct Component: Mappable, Equatable {
    - Parameter items: A collection of view models
    - Parameter meta: A key-value dictionary for any additional information
    */
-  public init(identifier: Int? = nil,
+  public init(identifier: String? = nil,
               title: String = "",
               header: String = "",
               kind: String = "",

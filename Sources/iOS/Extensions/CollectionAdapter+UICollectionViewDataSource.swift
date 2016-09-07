@@ -2,6 +2,17 @@ import UIKit
 
 extension CollectionAdapter : UICollectionViewDataSource {
 
+  public func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
+    let header = spot.component.header.isEmpty
+      ? spot.dynamicType.headers.defaultIdentifier
+      : spot.component.header
+
+    let view = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: header, forIndexPath: indexPath)
+    (view as? Componentable)?.configure(spot.component)
+
+    return view
+  }
+
   /**
    Asks the data source for the number of items in the specified section. (required)
 
@@ -40,8 +51,6 @@ extension CollectionAdapter : UICollectionViewDataSource {
       }
       spot.configure?(cell)
     }
-
-    collectionView.collectionViewLayout.invalidateLayout()
 
     return cell
   }

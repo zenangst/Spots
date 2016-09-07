@@ -2,17 +2,6 @@ import UIKit
 
 extension CollectionAdapter : UICollectionViewDelegate {
 
-  public func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
-    let header = spot.component.header.isEmpty
-      ? spot.dynamicType.headers.defaultIdentifier
-      : spot.component.header
-
-    let view = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: header, forIndexPath: indexPath)
-    (view as? Componentable)?.configure(spot.component)
-
-    return view
-  }
-
   /**
    Asks the delegate for the size of the specified item’s cell.
 
@@ -32,9 +21,8 @@ extension CollectionAdapter : UICollectionViewDelegate {
    - Parameter indexPath: The index path of the cell that was selected.
    */
   public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-    if let item = spot.item(indexPath) {
-      spot.spotsDelegate?.spotDidSelectItem(spot, item: item)
-    }
+    guard let item = spot.item(indexPath) else { return }
+    spot.spotsDelegate?.spotDidSelectItem(spot, item: item)
   }
 
   /**

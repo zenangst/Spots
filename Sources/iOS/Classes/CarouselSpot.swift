@@ -7,9 +7,11 @@ public class CarouselSpot: NSObject, Gridable {
   public struct Key {
     public static let minimumInteritemSpacing = "item-spacing"
     public static let minimumLineSpacing = "line-spacing"
+    public static let dynamicSpan = "dynamic-span"
   }
 
   public struct Default {
+    public static var dynamicSpan: Bool = false
     public static var sectionInsetTop: CGFloat = 0.0
     public static var sectionInsetLeft: CGFloat = 0.0
     public static var sectionInsetRight: CGFloat = 0.0
@@ -17,6 +19,8 @@ public class CarouselSpot: NSObject, Gridable {
     public static var minimumInteritemSpacing: CGFloat = 0.0
     public static var minimumLineSpacing: CGFloat = 0.0
   }
+
+  public var dynamicSpan = false
 
   public static var views: Registry = Registry().then {
     $0.defaultItem = Registry.Item.classType(CarouselSpotCell.self)
@@ -34,6 +38,7 @@ public class CarouselSpot: NSObject, Gridable {
   public var component: Component {
     willSet(value) {
       #if os(iOS)
+        dynamicSpan ?= component.meta(Key.dynamicSpan, Default.dynamicSpan)
         if component.items.count > 1 && component.span > 0 {
           pageControl.numberOfPages = Int(floor(CGFloat(component.items.count) / component.span))
         }
@@ -90,6 +95,7 @@ public class CarouselSpot: NSObject, Gridable {
     $0.delegate = self.collectionAdapter
     $0.showsHorizontalScrollIndicator = false
     $0.backgroundView = self.backgroundView
+    $0.alwaysBounceHorizontal = true
   }
 
   public lazy var backgroundView = UIView()
