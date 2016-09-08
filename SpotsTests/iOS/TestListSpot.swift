@@ -8,7 +8,6 @@ class ListSpotTests: XCTestCase {
   func testConvenienceInitWithTitleAndKind() {
     let spot = ListSpot(title: "Spot")
     XCTAssertEqual(spot.component.title, "Spot")
-
     XCTAssertEqual(spot.component.kind, "list")
 
     let customKindSpot = ListSpot(title: "Custom Spot", kind: "custom")
