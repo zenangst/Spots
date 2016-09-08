@@ -51,14 +51,7 @@ public class GridSpot: NSObject, Gridable {
     self.component = component
     super.init()
 
-    layout.sectionInset = UIEdgeInsets(
-      top: component.meta(GridableMeta.Key.sectionInsetTop, Default.sectionInsetTop),
-      left: component.meta(GridableMeta.Key.sectionInsetLeft, Default.sectionInsetLeft),
-      bottom: component.meta(GridableMeta.Key.sectionInsetBottom, Default.sectionInsetBottom),
-      right: component.meta(GridableMeta.Key.sectionInsetRight, Default.sectionInsetRight))
-
-    layout.minimumInteritemSpacing = component.meta(GridSpot.Key.minimumInteritemSpacing, Default.minimumInteritemSpacing)
-    layout.minimumLineSpacing = component.meta(GridSpot.Key.minimumLineSpacing, Default.minimumLineSpacing)
+    self.configureLayout()
   }
 
   public convenience init(title: String = "", kind: String? = nil) {
@@ -80,5 +73,18 @@ public class GridSpot: NSObject, Gridable {
     layout.sectionInset = UIEdgeInsets(top: top, left: left, bottom: bottom, right: right)
     layout.minimumInteritemSpacing = itemSpacing
     layout.minimumLineSpacing = lineSpacing
+  }
+
+  /**
+   Configure section insets and layout spacing for the UICollectionViewFlow using component meta data
+   */
+  func configureLayout() {
+    layout.sectionInset = UIEdgeInsets(
+      top: component.meta(GridableMeta.Key.sectionInsetTop, Default.sectionInsetTop),
+      left: component.meta(GridableMeta.Key.sectionInsetLeft, Default.sectionInsetLeft),
+      bottom: component.meta(GridableMeta.Key.sectionInsetBottom, Default.sectionInsetBottom),
+      right: component.meta(GridableMeta.Key.sectionInsetRight, Default.sectionInsetRight))
+    layout.minimumInteritemSpacing = component.meta(GridableMeta.Key.minimumInteritemSpacing, Default.minimumInteritemSpacing)
+    layout.minimumLineSpacing = component.meta(GridableMeta.Key.minimumLineSpacing, Default.minimumLineSpacing)
   }
 }

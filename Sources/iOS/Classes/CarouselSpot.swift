@@ -9,8 +9,6 @@ public class CarouselSpot: NSObject, Gridable {
    *  A struct that holds keys that is used when mapping meta data to configuration methods
    */
   public struct Key {
-    public static let minimumInteritemSpacing = "item-spacing"
-    public static let minimumLineSpacing = "line-spacing"
     public static let dynamicSpan = "dynamic-span"
   }
 
@@ -221,8 +219,8 @@ public class CarouselSpot: NSObject, Gridable {
       left: component.meta(GridableMeta.Key.sectionInsetLeft, Default.sectionInsetLeft),
       bottom: component.meta(GridableMeta.Key.sectionInsetBottom, Default.sectionInsetBottom),
       right: component.meta(GridableMeta.Key.sectionInsetRight, Default.sectionInsetRight))
-    layout.minimumInteritemSpacing = component.meta(Key.minimumInteritemSpacing, Default.minimumInteritemSpacing)
-    layout.minimumLineSpacing = component.meta(Key.minimumLineSpacing, Default.minimumLineSpacing)
+    layout.minimumInteritemSpacing = component.meta(GridableMeta.Key.minimumInteritemSpacing, Default.minimumInteritemSpacing)
+    layout.minimumLineSpacing = component.meta(GridableMeta.Key.minimumLineSpacing, Default.minimumLineSpacing)
     dynamicSpan = component.meta(Key.dynamicSpan, false)
   }
 }
