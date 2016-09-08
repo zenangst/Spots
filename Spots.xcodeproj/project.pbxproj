@@ -189,8 +189,6 @@
 		BD7397381D718CDB000AF2DE /* TestComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D584782B1C43FF34006EBA49 /* TestComponent.swift */; };
 		BD73973A1D718CDB000AF2DE /* TestSpotFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58478281C43FF34006EBA49 /* TestSpotFactory.swift */; };
 		BD73973B1D718CDB000AF2DE /* TestSpotsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58478291C43FF34006EBA49 /* TestSpotsController.swift */; };
-		BD73973D1D718CDB000AF2DE /* Fakery.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478F31C44074C006EBA49 /* Fakery.framework */; };
-		BD73973E1D718CDB000AF2DE /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478F41C44074C006EBA49 /* SwiftyJSON.framework */; };
 		BD73973F1D718CDB000AF2DE /* Sugar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478EB1C440726006EBA49 /* Sugar.framework */; };
 		BD7397401D718CDB000AF2DE /* Spots.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478091C43FEB8006EBA49 /* Spots.framework */; };
 		BD73974B1D718D38000AF2DE /* CollectionAdapter+tvOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD73974A1D718D38000AF2DE /* CollectionAdapter+tvOS.swift */; };
@@ -205,13 +203,9 @@
 		D58478ED1C440726006EBA49 /* Tailor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478E91C440726006EBA49 /* Tailor.framework */; };
 		D58478EF1C440726006EBA49 /* Sugar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478EB1C440726006EBA49 /* Sugar.framework */; };
 		D58478F21C44074C006EBA49 /* Sugar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478EB1C440726006EBA49 /* Sugar.framework */; };
-		D58478F51C44074C006EBA49 /* Fakery.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478F31C44074C006EBA49 /* Fakery.framework */; };
-		D58478F61C44074C006EBA49 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478F41C44074C006EBA49 /* SwiftyJSON.framework */; };
 		D58478F91C44076B006EBA49 /* Tailor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478F71C44076B006EBA49 /* Tailor.framework */; };
 		D58478FA1C44076B006EBA49 /* Sugar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478F81C44076B006EBA49 /* Sugar.framework */; };
 		D58478FB1C440781006EBA49 /* Sugar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478F81C44076B006EBA49 /* Sugar.framework */; };
-		D58478FE1C440781006EBA49 /* Fakery.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478FC1C440781006EBA49 /* Fakery.framework */; };
-		D58478FF1C440781006EBA49 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478FD1C440781006EBA49 /* SwiftyJSON.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -348,12 +342,8 @@
 		D58478EA1C440726006EBA49 /* Imaginary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Imaginary.framework; path = Carthage/Build/iOS/Imaginary.framework; sourceTree = "<group>"; };
 		D58478EB1C440726006EBA49 /* Sugar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sugar.framework; path = Carthage/Build/iOS/Sugar.framework; sourceTree = "<group>"; };
 		D58478EC1C440726006EBA49 /* Cache.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cache.framework; path = Carthage/Build/iOS/Cache.framework; sourceTree = "<group>"; };
-		D58478F31C44074C006EBA49 /* Fakery.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Fakery.framework; path = Carthage/Build/iOS/Fakery.framework; sourceTree = "<group>"; };
-		D58478F41C44074C006EBA49 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
 		D58478F71C44076B006EBA49 /* Tailor.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Tailor.framework; path = Carthage/Build/Mac/Tailor.framework; sourceTree = "<group>"; };
 		D58478F81C44076B006EBA49 /* Sugar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sugar.framework; path = Carthage/Build/Mac/Sugar.framework; sourceTree = "<group>"; };
-		D58478FC1C440781006EBA49 /* Fakery.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Fakery.framework; path = Carthage/Build/Mac/Fakery.framework; sourceTree = "<group>"; };
-		D58478FD1C440781006EBA49 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/Mac/SwiftyJSON.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -371,8 +361,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BD73973D1D718CDB000AF2DE /* Fakery.framework in Frameworks */,
-				BD73973E1D718CDB000AF2DE /* SwiftyJSON.framework in Frameworks */,
 				BD73973F1D718CDB000AF2DE /* Sugar.framework in Frameworks */,
 				BD7397401D718CDB000AF2DE /* Spots.framework in Frameworks */,
 			);
@@ -392,8 +380,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D58478F51C44074C006EBA49 /* Fakery.framework in Frameworks */,
-				D58478F61C44074C006EBA49 /* SwiftyJSON.framework in Frameworks */,
 				D58478F21C44074C006EBA49 /* Sugar.framework in Frameworks */,
 				D58478141C43FEB9006EBA49 /* Spots.framework in Frameworks */,
 			);
@@ -413,8 +399,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D58478FE1C440781006EBA49 /* Fakery.framework in Frameworks */,
-				D58478FF1C440781006EBA49 /* SwiftyJSON.framework in Frameworks */,
 				D58478FB1C440781006EBA49 /* Sugar.framework in Frameworks */,
 				D58478D21C440568006EBA49 /* Spots.framework in Frameworks */,
 			);
@@ -722,8 +706,6 @@
 			isa = PBXGroup;
 			children = (
 				BD352E5E1CBAD6EC002CD032 /* Brick.framework */,
-				D58478F31C44074C006EBA49 /* Fakery.framework */,
-				D58478F41C44074C006EBA49 /* SwiftyJSON.framework */,
 				D58478E91C440726006EBA49 /* Tailor.framework */,
 				D58478EA1C440726006EBA49 /* Imaginary.framework */,
 				D58478EB1C440726006EBA49 /* Sugar.framework */,
@@ -736,8 +718,6 @@
 			isa = PBXGroup;
 			children = (
 				BD352E601CBAD6F9002CD032 /* Brick.framework */,
-				D58478FC1C440781006EBA49 /* Fakery.framework */,
-				D58478FD1C440781006EBA49 /* SwiftyJSON.framework */,
 				D58478F71C44076B006EBA49 /* Tailor.framework */,
 				D58478F81C44076B006EBA49 /* Sugar.framework */,
 			);

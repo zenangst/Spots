@@ -1,7 +1,6 @@
 import Cocoa
 import Sugar
 import Brick
-import Hue
 
 public class CarouselSpot: NSObject, Gridable {
 
