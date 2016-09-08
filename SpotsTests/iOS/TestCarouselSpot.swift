@@ -45,4 +45,137 @@ class CarouselSpotTests: XCTestCase {
 
     CarouselSpot.views.storage.removeAll()
   }
+
+  func testMetaMapping() {
+    var json: [String : AnyObject] = [
+      "meta" : [
+        "item-spacing" : 25.0,
+        "line-spacing" : 10.0,
+        "dynamic-span" :  true
+      ]
+    ]
+
+    var component = Component(json)
+    var spot = CarouselSpot(component: component)
+    spot.setup(CGSize(width: 100, height: 100))
+
+    XCTAssertEqual(spot.layout.minimumInteritemSpacing, 25.0)
+    XCTAssertEqual(spot.layout.minimumLineSpacing, 10.0)
+    XCTAssertEqual(spot.dynamicSpan, true)
+
+    json = [
+      "meta" : [
+        "item-spacing" : 12.5,
+        "line-spacing" : 7.5,
+        "dynamic-span" :  false
+      ]
+    ]
+
+    component = Component(json)
+    spot = CarouselSpot(component: component)
+    spot.setup(CGSize(width: 100, height: 100))
+
+    XCTAssertEqual(spot.layout.minimumInteritemSpacing, 12.5)
+    XCTAssertEqual(spot.layout.minimumLineSpacing, 7.5)
+    XCTAssertEqual(spot.dynamicSpan, false)
+  }
+
+  func testCarouselSetupWithSimpleStructure() {
+    let json: [String : AnyObject] = [
+      "items" : [
+        ["title" : "foo",
+          "size" : [
+            "width" : 120,
+            "height" : 180]
+        ],
+        ["title" : "bar",
+          "size" : [
+            "width" : 120,
+            "height" : 180]
+        ],
+        ["title" : "baz",
+          "size" : [
+            "width" : 120,
+            "height" : 180]
+        ],
+      ],
+      "meta" : [
+        "item-spacing" : 25.0,
+        "line-spacing" : 10.0
+      ]
+    ]
+
+    let component = Component(json)
+    let spot = CarouselSpot(component: component)
+    spot.setup(CGSize(width: 100, height: 100))
+
+    // Test that spot height is equal to first item in the list
+    XCTAssertEqual(spot.items.count, 3)
+    XCTAssertEqual(spot.items[0].title, "foo")
+    XCTAssertEqual(spot.items[1].title, "bar")
+    XCTAssertEqual(spot.items[2].title, "baz")
+    XCTAssertEqual(spot.items.first?.size.width, 120)
+    XCTAssertEqual(spot.items.first?.size.height, 180)
+    XCTAssertEqual(spot.render().frame.size.height, 180)
+
+    // Check default value of `paginate`
+    XCTAssertFalse(spot.paginate)
+
+    // Check that header height gets added to the calculation
+    spot.layout.headerReferenceSize.height = 20
+    spot.setup(CGSize(width: 100, height: 100))
+    XCTAssertEqual(spot.render().frame.size.height, 200)
+  }
+
+  func testCarouselSetupWithPagination() {
+    let json: [String : AnyObject] = [
+      "items" : [
+        ["title" : "foo", "kind" : "carousel"],
+        ["title" : "bar", "kind" : "carousel"],
+        ["title" : "baz", "kind" : "carousel"],
+        ["title" : "bazar", "kind" : "carousel"]
+      ],
+      "span" : 4.0,
+      "meta" : [
+        "item-spacing" : 25.0,
+        "line-spacing" : 10.0,
+        "dynamic-span" :  false,
+        "paginate" : true,
+      ]
+    ]
+
+    let component = Component(json)
+    let spot = CarouselSpot(component: component)
+    spot.render().layoutIfNeeded()
+
+    // Check `span` mapping
+    XCTAssertEqual(spot.component.span, 4)
+
+    spot.setup(CGSize(width: 667, height: 225))
+    spot.prepareItems()
+
+    // Check `paginate` mapping
+    XCTAssertTrue(spot.paginate)
+
+    // Test that spot height is equal to first item in the list
+    XCTAssertEqual(spot.items.count, 4)
+    XCTAssertEqual(spot.items[0].title, "foo")
+    XCTAssertEqual(spot.items[1].title, "bar")
+    XCTAssertEqual(spot.items[2].title, "baz")
+    XCTAssertEqual(spot.items[3].title, "bazar")
+    XCTAssertEqual(spot.items[0].size.width, 103.5)
+    XCTAssertEqual(spot.items[0].size.height, 225)
+    XCTAssertEqual(spot.items[1].size.width, 103.5)
+    XCTAssertEqual(spot.items[1].size.height, 225)
+    XCTAssertEqual(spot.items[2].size.width, 103.5)
+    XCTAssertEqual(spot.items[2].size.height, 225)
+    XCTAssertEqual(spot.items[3].size.width, 103.5)
+    XCTAssertEqual(spot.items[3].size.height, 225)
+    XCTAssertEqual(spot.render().frame.size.height, 225)
+
+    // Check that header height gets added to the calculation
+    spot.layout.headerReferenceSize.height = 20
+    spot.setup(CGSize(width: 100, height: 100))
+    XCTAssertEqual(spot.render().frame.size.height, 245)
+  }
 }
