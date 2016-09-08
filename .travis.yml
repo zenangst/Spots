@@ -13,4 +13,4 @@ script:
 - xcodebuild clean build -project Spots.xcodeproj -scheme "Spots-Mac" -sdk macosx
 - xcodebuild test -project Spots.xcodeproj -scheme "Spots-Mac" -sdk macosx
 - xcodebuild clean build -project Spots.xcodeproj -scheme "Spots-tvOS" -sdk tvOS
-- xcodebuild test -project Spots.xcodeproj -scheme "Spots-tvOS" -sdk tvOS§
+- xcodebuild test -project Spots.xcodeproj -scheme "Spots-tvOS" -sdk tvOS
