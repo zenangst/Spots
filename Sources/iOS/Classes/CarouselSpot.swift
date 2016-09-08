@@ -133,7 +133,7 @@ public class CarouselSpot: NSObject, Gridable {
   public required init(component: Component) {
     self.component = component
     super.init()
-    configureInsets()
+    configureLayout()
   }
 
   /**
@@ -215,7 +215,7 @@ public class CarouselSpot: NSObject, Gridable {
   /**
    Configure section insets and layout spacing for the UICollectionViewFlow using component meta data
    */
-  func configureInsets() {
+  func configureLayout() {
     layout.sectionInset = UIEdgeInsets(
       top: component.meta(GridableMeta.Key.sectionInsetTop, Default.sectionInsetTop),
       left: component.meta(GridableMeta.Key.sectionInsetLeft, Default.sectionInsetLeft),
@@ -223,5 +223,6 @@ public class CarouselSpot: NSObject, Gridable {
       right: component.meta(GridableMeta.Key.sectionInsetRight, Default.sectionInsetRight))
     layout.minimumInteritemSpacing = component.meta(Key.minimumInteritemSpacing, Default.minimumInteritemSpacing)
     layout.minimumLineSpacing = component.meta(Key.minimumLineSpacing, Default.minimumLineSpacing)
+    dynamicSpan = component.meta(Key.dynamicSpan, false)
   }
 }
