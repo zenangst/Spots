@@ -4,5 +4,7 @@ public struct GridableMeta {
     public static let sectionInsetLeft = "inset-left"
     public static let sectionInsetRight = "inset-right"
     public static let sectionInsetBottom = "inset-bottom"
+    public static let minimumInteritemSpacing = "item-spacing"
+    public static let minimumLineSpacing = "line-spacing"
   }
 }
