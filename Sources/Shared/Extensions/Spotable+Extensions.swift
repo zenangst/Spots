@@ -68,7 +68,7 @@ public extension Spotable {
   }
 
   /// Return a dictionary representation of Spotable object
-  public var dictionary: JSONDictionary {
+  public var dictionary: [String : AnyObject] {
     get {
       return component.dictionary
     }
@@ -168,7 +168,7 @@ public extension Spotable {
    - Parameter json:      A JSON dictionary
    - Parameter animation: The animation that should be used (only works for Listable objects)
    */
-  public func reloadIfNeeded(json: JSONDictionary, withAnimation animation: SpotsAnimation = .Automatic) {
+  public func reloadIfNeeded(json: [String : AnyObject], withAnimation animation: SpotsAnimation = .Automatic) {
     let newComponent = Component(json)
 
     guard component != newComponent else { cache(); return }

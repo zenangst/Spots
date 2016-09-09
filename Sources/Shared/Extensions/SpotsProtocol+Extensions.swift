@@ -10,24 +10,24 @@ import Cache
 
 public extension SpotsProtocol {
 
-  public var dictionary: JSONDictionary {
+  public var dictionary: [String : AnyObject] {
     get { return dictionary() }
   }
 
-  public func dictionary(amountOfItems: Int? = nil) -> JSONDictionary {
-    var result = [JSONDictionary]()
+  public func dictionary(amountOfItems: Int? = nil) -> [String : AnyObject] {
+    var result = [[String : AnyObject]]()
 
     for spot in spots {
       var spotJSON = spot.component.dictionary(amountOfItems)
       for item in spot.items where item.kind == "composite" {
         if let compositeSpots = compositeSpots[spot.index]?[item.index] {
           var newItem = item
-          var children = [JSONDictionary]()
+          var children = [[String : AnyObject]]()
           for itemSpot in compositeSpots {
             children.append(itemSpot.dictionary)
           }
           newItem.children = children
-          var newItems = spotJSON[Component.Key.Items] as? JSONArray
+          var newItems = spotJSON[Component.Key.Items] as? [[String : AnyObject]]
 
           newItems?[item.index] = newItem.dictionary
           spotJSON[Component.Key.Items] = newItems

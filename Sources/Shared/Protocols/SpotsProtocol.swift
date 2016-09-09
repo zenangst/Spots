@@ -31,7 +31,7 @@ public protocol SpotsProtocol: class {
   var spot: Spotable? { get }
 
   /// A dictionary representation of the controller
-  var dictionary: JSONDictionary { get }
+  var dictionary: [String : AnyObject] { get }
 
   #if os(iOS)
   var spotsRefreshDelegate: SpotsRefreshDelegate? { get set }
