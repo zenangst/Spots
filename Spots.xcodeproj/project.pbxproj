@@ -1021,7 +1021,6 @@
 			files = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/Fakery.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Sugar.framework",
 			);
 			outputPaths = (
@@ -1052,7 +1051,6 @@
 			files = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/Fakery.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Sugar.framework",
 			);
 			outputPaths = (
@@ -1083,7 +1081,6 @@
 			files = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/Mac/Fakery.framework",
 				"$(SRCROOT)/Carthage/Build/Mac/Sugar.framework",
 			);
 			outputPaths = (
