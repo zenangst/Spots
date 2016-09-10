@@ -300,7 +300,7 @@ extension ListAdapter: UITableViewDelegate {
     if let _ = spot.dynamicType.headers.make(spot.component.header) {
       return nil
     }
-    return spot.component.title.isPresent ? spot.component.title : nil
+    return !spot.component.title.isEmpty ? spot.component.title : nil
   }
 
   /**
