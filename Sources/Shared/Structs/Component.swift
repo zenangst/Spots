@@ -68,11 +68,11 @@ public struct Component: Mappable, Equatable {
   public var meta = [String : AnyObject]()
 
   /// A dictionary representation of the component
-  public var dictionary: JSONDictionary {
+  public var dictionary: [String : AnyObject] {
     return dictionary()
   }
 
-  public func dictionary(amountOfItems: Int? = nil) -> JSONDictionary {
+  public func dictionary(amountOfItems: Int? = nil) -> [String : AnyObject] {
     var width: CGFloat = 0
     var height: CGFloat = 0
 
@@ -81,7 +81,7 @@ public struct Component: Mappable, Equatable {
       height = size.height
     }
 
-    let JSONItems: [JSONDictionary]
+    let JSONItems: [[String : AnyObject]]
 
     if let amountOfItems = amountOfItems {
       JSONItems = Array(items[0..<min(amountOfItems, items.count)]).map { $0.dictionary }
@@ -89,7 +89,7 @@ public struct Component: Mappable, Equatable {
       JSONItems = items.map { $0.dictionary }
     }
 
-    var JSONComponents: JSONDictionary = [
+    var JSONComponents: [String : AnyObject] = [
       Key.Index.string : index,
       Key.Kind.string : kind,
       Key.Span.string : span,
@@ -114,7 +114,7 @@ public struct Component: Mappable, Equatable {
 
    - Parameter map: A JSON key-value dictionary
    */
-  public init(_ map: JSONDictionary) {
+  public init(_ map: [String : AnyObject]) {
     identifier = map.property(.Identifier)
     title <- map.property(.Title)
     kind  <- map.property(.Kind)
@@ -123,7 +123,7 @@ public struct Component: Mappable, Equatable {
     items <- map.relations(.Items)
     meta  <- map.property(.Meta)
 
-    if let size = map["size"] as? JSONDictionary {
+    if let size = map["size"] as? [String : AnyObject] {
       self.size = CGSize(width: size.property(Key.Width.string) ?? 0.0,
                          height: size.property(Key.Height.string) ?? 0.0)
     }
