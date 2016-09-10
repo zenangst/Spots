@@ -18,13 +18,8 @@ public class GridSpot: NSObject, Gridable {
     public static var minimumLineSpacing: CGFloat = 0.0
   }
 
-  public static var views: Registry = Registry().then {
-    $0.defaultItem = Registry.Item.classType(GridSpotCell.self)
-    $0.composite =  Registry.Item.classType(GridComposite.self)
-  }
-
+  public static var views: Registry = Registry()
   public static var configure: ((view: UICollectionView, layout: UICollectionViewFlowLayout) -> Void)?
-
   public static var headers = Registry()
 
   public var component: Component
@@ -52,6 +47,8 @@ public class GridSpot: NSObject, Gridable {
     super.init()
 
     self.configureLayout()
+    GridSpot.views.defaultItem = Registry.Item.classType(GridSpotCell.self)
+    GridSpot.views.composite =  Registry.Item.classType(GridComposite.self)
   }
 
   public convenience init(title: String = "", kind: String? = nil) {

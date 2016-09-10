@@ -8,11 +8,7 @@ public class ListSpot: NSObject, Listable {
     public static let headerHeight = "headerHeight"
   }
 
-  public static var views: Registry = Registry().then {
-    $0.defaultItem = Registry.Item.classType(ListSpotCell.self)
-    $0.composite =  Registry.Item.classType(ListComposite.self)
-  }
-
+  public static var views: Registry = Registry()
   public static var configure: ((view: UITableView) -> Void)?
   public static var headers = Registry()
 
@@ -43,6 +39,9 @@ public class ListSpot: NSObject, Listable {
 
     registerAndPrepare()
     setupTableView()
+
+    ListSpot.views.defaultItem = Registry.Item.classType(ListSpotCell.self)
+    ListSpot.views.composite =  Registry.Item.classType(ListComposite.self)
   }
 
   public convenience init(tableView: UITableView? = nil, title: String = "", kind: String? = nil) {
