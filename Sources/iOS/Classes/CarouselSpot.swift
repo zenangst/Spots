@@ -29,10 +29,7 @@ public class CarouselSpot: NSObject, Gridable {
   public var dynamicSpan = false
 
   /// A Registry object that holds identifiers and classes for cells used in the CarouselSpot
-  public static var views: Registry = Registry().then {
-    $0.defaultItem = Registry.Item.classType(CarouselSpotCell.self)
-    $0.composite =  Registry.Item.classType(CarouselComposite.self)
-  }
+  public static var views: Registry = Registry()
 
   /// A configuration closure that is run in setup(_:)
   public static var configure: ((view: UICollectionView, layout: UICollectionViewFlowLayout) -> Void)?
