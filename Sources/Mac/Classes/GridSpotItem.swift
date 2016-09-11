@@ -77,7 +77,7 @@ public class GridSpotItem: NSCollectionViewItem, SpotConfigurable {
     titleLabel.stringValue = item.title
     titleLabel.frame.origin.x = 8
     titleLabel.sizeToFit()
-    if item.subtitle.isPresent {
+    if !item.subtitle.isEmpty {
       titleLabel.frame.origin.y = 8
       titleLabel.font = NSFont.boldSystemFontOfSize(14)
       titleLabel.sizeToFit()

@@ -47,7 +47,8 @@ public class SpotsScrollView: UIScrollView {
    Initializes and returns a newly allocated view object with the specified frame rectangle.
    An initialized view object.
 
-   - parameter frame: The frame rectangle for the view, measured in points. The origin of the frame is relative to the superview in which you plan to add it. This method uses the frame rectangle to set the center and bounds properties accordingly.
+   - parameter frame: The frame rectangle for the view, measured in points. The origin of the frame is relative to the superview in which you plan to add it.
+   This method uses the frame rectangle to set the center and bounds properties accordingly.
 
    - returns: An initialized view object
    */

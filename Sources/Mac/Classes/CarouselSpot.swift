@@ -87,7 +87,7 @@ public class CarouselSpot: NSObject, Gridable {
     setupCollectionView()
     configureLayoutInsets(component)
 
-    if let layout = layout as? NSCollectionViewFlowLayout where component.title.isPresent {
+    if let layout = layout as? NSCollectionViewFlowLayout where !component.title.isEmpty {
       configureTitleView(layout.sectionInset)
     }
     scrollView.addSubview(titleView)
@@ -144,7 +144,7 @@ public class CarouselSpot: NSObject, Gridable {
     collectionView.frame.size.height = scrollView.frame.size.height
     gradientLayer?.frame.size.height = scrollView.frame.size.height
 
-    if component.title.isPresent {
+    if !component.title.isEmpty {
       configureTitleView(layoutInsets)
     }
 

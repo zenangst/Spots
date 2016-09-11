@@ -129,7 +129,7 @@ public class ListSpot: NSObject, Listable {
     scrollView.contentInsets.bottom = component.meta(Key.contentInsetsBottom, Default.contentInsetsBottom)
     scrollView.contentInsets.right = component.meta(Key.contentInsetsRight, Default.contentInsetsRight)
 
-    if component.title.isPresent {
+    if !component.title.isEmpty {
       configureTitleView()
     }
 
@@ -151,7 +151,7 @@ public class ListSpot: NSObject, Listable {
     tableView.doubleAction = #selector(self.doubleAction(_:))
     tableView.sizeToFit()
 
-    if component.title.isPresent {
+    if !component.title.isEmpty {
       scrollView.addSubview(titleView)
       if component.meta(Key.titleSeparator, Default.titleSeparator) {
         scrollView.addSubview(lineView)

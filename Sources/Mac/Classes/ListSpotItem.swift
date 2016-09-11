@@ -66,7 +66,7 @@ public class ListSpotItem: NSTableRowView, SpotConfigurable {
     titleLabel.frame.origin.x = 8
 
     titleLabel.sizeToFit()
-    if item.subtitle.isPresent {
+    if !item.subtitle.isEmpty {
       titleLabel.frame.origin.y = 8
       titleLabel.font = NSFont.boldSystemFontOfSize(14)
     } else {
