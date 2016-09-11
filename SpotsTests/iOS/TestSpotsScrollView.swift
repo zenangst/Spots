@@ -17,7 +17,10 @@ extension SpotsController {
 
 class SpotsScrollViewTests: XCTestCase {
 
-  func testSpotsScrollView() {
+  var bounds: CGRect!
+  var controller: SpotsController!
+
+  var initialJSON: [String : AnyObject] {
     let listItems: [[String : AnyObject]] = [
       [
         "title" : "Item",
@@ -37,7 +40,7 @@ class SpotsScrollViewTests: XCTestCase {
       ]
     ]
 
-    let initialJSON: [String : AnyObject] = [
+    return [
       "components" : [
         [
           "kind" : "list",
@@ -57,14 +60,18 @@ class SpotsScrollViewTests: XCTestCase {
         ],
       ]
     ]
+  }
 
-    let bounds = CGRect(origin: CGPoint.zero, size: CGSize(width: 375, height: 667))
-    let controller = SpotsController(initialJSON)
+  override func setUp() {
+    bounds = CGRect(origin: CGPoint.zero, size: CGSize(width: 375, height: 667))
+    controller = SpotsController(initialJSON)
     controller.view.autoresizingMask = .None
     controller.view.frame.size = CGSize(width: 375, height: 667)
     controller.preloadView()
     controller.viewWillAppear(true)
+  }
 
+  func testSpotsScrollView() {
     XCTAssertEqual(controller.spotsScrollView.contentView.subviews.count, 4)
     XCTAssertTrue(controller.spotsScrollView.contentView.subviews[0] is UITableView)
     XCTAssertEqual((controller.spotsScrollView.contentView.subviews[0] as? UIScrollView)!.contentSize.height, 320)
