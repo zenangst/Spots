@@ -214,9 +214,8 @@ public extension CollectionAdapter {
       if let spots = spot.spotsCompositeDelegate?.resolve(spotIndex: spot.index, itemIndex: indexPath.item) {
         spot.collectionView.performBatchUpdates({
           composite.configure(&self.spot.component.items[indexPath.item], spots: spots)
-          }, completion: { (_) in
-            completion?()
-        })
+          }, completion: nil)
+          completion?()
         return
       }
     }
