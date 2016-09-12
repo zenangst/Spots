@@ -220,7 +220,7 @@ extension ListAdapter {
     }
 
     if let indexes = indexes {
-      spot.tableView.reload(indexes)
+      spot.tableView.reload(indexes, animation: animation.tableViewAnimation)
     } else {
       animation != .None
         ? spot.tableView.reloadSection(0, animation: animation.tableViewAnimation)
