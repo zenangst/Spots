@@ -22,7 +22,7 @@ public struct SpotCache {
 
   // MARK: - Cache
 
-  func save(json: [String : AnyObject]) {
+  public func save(json: [String : AnyObject]) {
     let expiry = Expiry.Date(NSDate().dateByAddingTimeInterval(60 * 60 * 24 * 3))
     SyncCache(cache).add(key, object: JSON.Dictionary(json), expiry: expiry)
   }
@@ -31,7 +31,7 @@ public struct SpotCache {
     return SyncCache(cache).object(key)?.object as? [String : AnyObject] ?? [:]
   }
 
-  func clear() {
+  public func clear() {
     cache.remove(key)
   }
 
