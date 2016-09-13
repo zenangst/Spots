@@ -238,13 +238,13 @@ extension ListAdapter {
    - parameter updates:    A collection of updates
    - parameter completion: A completion closure that is run when the updates are finished
    */
-  public func process(updates: [Int], completion: Completion) {
+  public func process(updates: [Int], withAnimation animation: SpotsAnimation = .Automatic, completion: Completion) {
     guard !updates.isEmpty else { completion?(); return }
 
     let lastUpdate = updates.last
     for index in updates {
       guard let item = self.spot.item(index) else { completion?(); continue }
-      self.update(item, index: index, withAnimation: .Automatic) {
+      self.update(item, index: index, withAnimation: animation) {
         if index == lastUpdate {
           completion?()
         }
@@ -259,13 +259,13 @@ extension ListAdapter {
    - parameter updateDataSource: A closure to update your data source
    - parameter completion:       A completion closure that runs when your updates are done
    */
-  public func reloadIfNeeded(changes: ViewModelChanges, updateDataSource: () -> Void, completion: Completion) {
-    spot.tableView.process((insertions: changes.insertions, reloads: changes.reloads, deletions: changes.deletions), updateDataSource: updateDataSource) {
+  public func reloadIfNeeded(changes: ViewModelChanges, withAnimation animation: SpotsAnimation = .Automatic, updateDataSource: () -> Void, completion: Completion) {
+    spot.tableView.process((insertions: changes.insertions, reloads: changes.reloads, deletions: changes.deletions), withAnimation: animation.tableViewAnimation, updateDataSource: updateDataSource) {
       if changes.updates.isEmpty {
-        self.process(changes.updatedChildren, completion: completion)
+        self.process(changes.updatedChildren, withAnimation: animation, completion: completion)
       } else {
         self.process(changes.updates) {
-          self.process(changes.updatedChildren, completion: completion)
+          self.process(changes.updatedChildren, withAnimation: animation, completion: completion)
         }
       }
     }

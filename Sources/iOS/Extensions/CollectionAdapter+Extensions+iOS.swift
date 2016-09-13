@@ -242,7 +242,7 @@ public extension CollectionAdapter {
    - parameter updates:    A collection of updates
    - parameter completion: A completion closure that is run when the updates are finished
    */
-  public func process(updates: [Int], completion: Completion) {
+  public func process(updates: [Int], withAnimation animiation: SpotsAnimation, completion: Completion) {
     guard !updates.isEmpty else {
       completion?()
       return
@@ -266,16 +266,16 @@ public extension CollectionAdapter {
    - parameter updateDataSource: A closure to update your data source
    - parameter completion:       A completion closure that runs when your updates are done
    */
-  public func reloadIfNeeded(changes: ViewModelChanges, updateDataSource: () -> Void, completion: Completion) {
+  public func reloadIfNeeded(changes: ViewModelChanges, withAnimation animation: SpotsAnimation = .Automatic, updateDataSource: () -> Void, completion: Completion) {
     spot.collectionView.process((insertions: changes.insertions, reloads: changes.reloads, deletions: changes.deletions), updateDataSource: updateDataSource) {
       if changes.updates.isEmpty {
-        self.process(changes.updatedChildren) {
+        self.process(changes.updatedChildren, withAnimation: animation) {
           completion?()
           self.spot.layout(self.spot.collectionView.bounds.size)
         }
       } else {
-        self.process(changes.updates) {
-          self.process(changes.updatedChildren) {
+        self.process(changes.updates, withAnimation: animation) {
+          self.process(changes.updatedChildren, withAnimation: animation) {
             completion?()
             self.spot.layout(self.spot.collectionView.bounds.size)
           }

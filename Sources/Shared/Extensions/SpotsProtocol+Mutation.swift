@@ -30,7 +30,7 @@ extension SpotsProtocol {
   }
 
   #if !os(OSX)
-  public func reloadIfNeeded(components: [Component], closure: Completion = nil) {
+  public func reloadIfNeeded(components: [Component], withAnimation animation: SpotsAnimation = .Automatic, closure: Completion = nil) {
     dispatch(queue: .Interactive) {
       let newComponents = components
       let oldComponents = self.spots.map { $0.component }
@@ -58,7 +58,7 @@ extension SpotsProtocol {
         }
       }
 
-      self.process(changes: changes, components: newComponents) {
+      self.process(changes: changes, components: newComponents, withAnimation: animation) {
         closure?()
         self.spotsScrollView.forceUpdate = true
       }
@@ -102,7 +102,7 @@ extension SpotsProtocol {
     }
   }
 
-  private func setupItemsForSpot(index: Int, newComponents: [Component], closure: Completion = nil) -> Bool {
+  private func setupItemsForSpot(index: Int, newComponents: [Component], withAnimation animation: SpotsAnimation = .Automatic, closure: Completion = nil) -> Bool {
     guard let spot = self.spot(index, Spotable.self) else { return false }
     let newItems = newComponents[index].items
     let oldItems = spot.items
@@ -112,7 +112,7 @@ extension SpotsProtocol {
 
     if newItems.count == spot.items.count {
       var offsets = [CGPoint]()
-      spot.adapter?.reloadIfNeeded(changes, updateDataSource: {
+      spot.adapter?.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: {
         CATransaction.begin()
         for item in newItems {
           if let compositeSpots = self.compositeSpots[spot.index],
@@ -140,7 +140,7 @@ extension SpotsProtocol {
         CATransaction.commit()
       }
     } else if newItems.count < spot.items.count {
-      spot.adapter?.reloadIfNeeded(changes, updateDataSource: {
+      spot.adapter?.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: {
         CATransaction.begin()
         spot.items = newItems
       }) {
@@ -165,7 +165,7 @@ extension SpotsProtocol {
               self.compositeSpots[spot.index]?[item.index] = oldContent
             }
           }
-          spot.update(item, index: index, withAnimation: .Automatic) {
+          spot.update(item, index: index, withAnimation: animation) {
             guard index == executeClosure else { return }
             closure?()
             self.spotsScrollView.forceUpdate = true
@@ -174,11 +174,11 @@ extension SpotsProtocol {
         }
       }
     } else if newItems.count > spot.items.count {
-      spot.adapter?.reloadIfNeeded(changes, updateDataSource: {
+      spot.adapter?.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: {
         CATransaction.begin()
         spot.items = newItems
       }) {
-        spot.adapter?.reload(nil, withAnimation: .None) {
+        spot.adapter?.reload(nil, withAnimation: animation) {
           closure?()
           delay(0.1) {
             self.spotsScrollView.forceUpdate = true
@@ -193,6 +193,7 @@ extension SpotsProtocol {
 
   func process(changes changes: [ComponentDiff],
                        components newComponents: [Component],
+                                  withAnimation animation: SpotsAnimation = .Automatic,
                                   closure: Completion = nil) {
     dispatch {
       var yOffset: CGFloat = 0.0
@@ -206,7 +207,10 @@ extension SpotsProtocol {
         case .Removed:
           self.removeSpot(index)
         case .Items:
-          runClosure = self.setupItemsForSpot(index, newComponents: newComponents, closure: closure)
+          runClosure = self.setupItemsForSpot(index, 
+            newComponents: newComponents, 
+            withAnimation: animation,
+            closure: closure)
         case .None: break
         }
       }

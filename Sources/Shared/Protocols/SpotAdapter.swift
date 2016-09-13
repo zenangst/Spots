@@ -23,5 +23,5 @@ public protocol SpotAdapter: class {
   /// Reload view model indexes with animation in a Spotable object
   func reload(indexes: [Int]?, withAnimation animation: SpotsAnimation, completion: Completion)
   /// Reload view model with a change set
-  func reloadIfNeeded(changes: ViewModelChanges, updateDataSource: () -> Void, completion: Completion)
+  func reloadIfNeeded(changes: ViewModelChanges, withAnimation animation: SpotsAnimation, updateDataSource: () -> Void, completion: Completion)
 }
