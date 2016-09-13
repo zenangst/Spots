@@ -144,6 +144,13 @@ extension SpotsProtocol {
         CATransaction.begin()
         spot.items = newItems
       }) {
+        guard !newItems.isEmpty else {
+          closure?()
+          self.spotsScrollView.forceUpdate = true
+          CATransaction.commit()
+          return
+        }
+
         let executeClosure = newItems.count - 1
         for (index, item) in newItems.enumerate() {
           let components = Parser.parse(item.children).map { $0.component }
