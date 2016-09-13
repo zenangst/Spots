@@ -88,7 +88,7 @@ public extension Spotable {
    - Returns: A ViewModel at found at the index
    */
   public func item(index: Int) -> ViewModel? {
-    guard index < component.items.count else { return nil }
+    guard index < component.items.count && index > -1 else { return nil }
     return component.items[index]
   }
 
@@ -242,7 +242,7 @@ public extension Spotable {
       }
     }
 
-    if index < component.items.count {
+    if index < component.items.count && index > -1 {
       component.items[index] = viewModel
     }
   }
