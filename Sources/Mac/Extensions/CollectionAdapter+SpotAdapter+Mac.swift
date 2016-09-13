@@ -125,7 +125,7 @@ extension CollectionAdapter {
     }
   }
 
-  public func reloadIfNeeded(changes: ViewModelChanges, updateDataSource: () -> Void, completion: Completion) {
+  public func reloadIfNeeded(changes: ViewModelChanges, withAnimation animation: SpotsAnimation, updateDataSource: () -> Void, completion: Completion) {
     guard !changes.updates.isEmpty else {
       spot.collectionView.process((insertions: changes.insertions, reloads: changes.reloads, deletions: changes.deletions), updateDataSource: updateDataSource, completion: completion)
       return

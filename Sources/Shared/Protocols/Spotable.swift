@@ -69,7 +69,7 @@ public protocol Spotable: class {
 
   func reloadIfNeeded(items: [ViewModel], withAnimation animation: SpotsAnimation, completion: Completion)
   /// Reload view models if needed using change set
-  func reloadIfNeeded(changes: ViewModelChanges, updateDataSource: () -> Void, completion: Completion)
+  func reloadIfNeeded(changes: ViewModelChanges, withAnimation animation: SpotsAnimation, updateDataSource: () -> Void, completion: Completion)
 
   /// Return a Spotable object as a UIScrollView
   func render() -> ScrollView

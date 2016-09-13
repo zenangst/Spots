@@ -57,8 +57,8 @@ public extension Spotable {
   }
 
   /// Reload view models with change set
-  func reloadIfNeeded(changes: ViewModelChanges, updateDataSource: () -> Void, completion: Completion) {
-    adapter?.reloadIfNeeded(changes, updateDataSource: updateDataSource, completion: completion)
+  func reloadIfNeeded(changes: ViewModelChanges, withAnimation animation: SpotsAnimation = .Automatic, updateDataSource: () -> Void, completion: Completion) {
+    adapter?.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: updateDataSource, completion: completion)
   }
 
   /// A collection of view models
