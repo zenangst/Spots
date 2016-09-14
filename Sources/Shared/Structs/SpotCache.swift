@@ -14,6 +14,10 @@ public struct SpotCache {
     return cache.path + "/" + fileName()
   }
 
+  public var cacheExists: Bool {
+    return NSFileManager.defaultManager().fileExistsAtPath(path)
+  }
+
   // MARK: - Initialization
 
   public init(key: String) {
