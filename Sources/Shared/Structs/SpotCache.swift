@@ -15,7 +15,7 @@ public struct SpotCache {
     return cache.path + "/" + fileName()
   }
 
-  /// Check if file exists for cache
+  /// Checks if file exists for cache
   public var cacheExists: Bool {
     return NSFileManager.defaultManager().fileExistsAtPath(path)
   }
