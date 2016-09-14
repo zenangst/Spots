@@ -10,8 +10,14 @@ public struct SpotCache {
   static let cacheName = "SpotCache"
   let cache = Cache<JSON>(name: "\(SpotCache.cacheName)/\(NSBundle.mainBundle().bundleIdentifier!)")
 
+  /// The path of the cache
   var path: String {
     return cache.path + "/" + fileName()
+  }
+
+  /// Checks if file exists for cache
+  public var cacheExists: Bool {
+    return NSFileManager.defaultManager().fileExistsAtPath(path)
   }
 
   // MARK: - Initialization
