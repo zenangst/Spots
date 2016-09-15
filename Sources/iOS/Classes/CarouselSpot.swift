@@ -129,8 +129,14 @@ public class CarouselSpot: NSObject, Gridable {
     self.component = component
     super.init()
     configureLayout()
-    CarouselSpot.views.defaultItem = Registry.Item.classType(CarouselSpotCell.self)
-    CarouselSpot.views.composite =  Registry.Item.classType(CarouselComposite.self)
+
+    if CarouselSpot.views.defaultItem == nil {
+      CarouselSpot.views.defaultItem = Registry.Item.classType(CarouselSpotCell.self)
+    }
+
+    if CarouselSpot.views.composite == nil {
+      CarouselSpot.views.composite =  Registry.Item.classType(CarouselComposite.self)
+    }
   }
 
   /**
