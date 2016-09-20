@@ -242,7 +242,7 @@ public extension CollectionAdapter {
    - parameter updates:    A collection of updates
    - parameter completion: A completion closure that is run when the updates are finished
    */
-  public func process(updates: [Int], withAnimation animiation: SpotsAnimation, completion: Completion) {
+  public func process(updates: [Int], withAnimation animation: SpotsAnimation, completion: Completion) {
     guard !updates.isEmpty else {
       completion?()
       return
@@ -251,7 +251,7 @@ public extension CollectionAdapter {
     let lastUpdate = updates.last
     for index in updates {
       guard let item = self.spot.item(index) else { completion?(); continue }
-      self.update(item, index: index, withAnimation: animiation) {
+      self.update(item, index: index, withAnimation: animation) {
         if index == lastUpdate {
           completion?()
         }
