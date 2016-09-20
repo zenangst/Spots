@@ -26,6 +26,8 @@ public class ListSpot: NSObject, Listable {
 
   private var fetching = false
   public private(set) var stateCache: SpotCache?
+  /// Indicator to calculate the height based on content
+  public var dynamicHeight = true
 
   // MARK: - Initializers
 

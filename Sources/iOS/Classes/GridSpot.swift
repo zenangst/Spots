@@ -35,6 +35,8 @@ public class GridSpot: NSObject, Gridable {
   public lazy var collectionAdapter: CollectionAdapter = CollectionAdapter(spot: self)
   public lazy var layout: CollectionLayout = CollectionLayout()
   public private(set) var stateCache: SpotCache?
+  /// Indicator to calculate the height based on content
+  public var dynamicHeight = true
 
   public lazy var collectionView: UICollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: self.layout).then {
     $0.dataSource = self.collectionAdapter

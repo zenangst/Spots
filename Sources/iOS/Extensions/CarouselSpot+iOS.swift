@@ -6,6 +6,10 @@ extension CarouselSpot {
    - Returns: A CGFloat of the total height of all items inside of a component
    */
   public func spotHeight() -> CGFloat {
+    guard dynamicHeight else {
+      return self.render().frame.height
+    }
+    
     return collectionView.height - layout.sectionInset.top - layout.sectionInset.bottom - layout.headerReferenceSize.height
   }
 
