@@ -3,6 +3,9 @@ import Brick
 
 public protocol SpotAdapter: class {
 
+  /// Resolve a UI component at index
+  func ui<T>(atIndex index: Int) -> T?
+  /// Append a view model to a Spotable object
   func append(item: ViewModel, withAnimation animation: SpotsAnimation, completion: Completion)
   /// Append a collection of view models to Spotable object
   func append(items: [ViewModel], withAnimation animation: SpotsAnimation, completion: Completion)
