@@ -4,6 +4,10 @@ import Brick
 
 extension ListAdapter {
 
+  public func ui<T>(atIndex index: Int) -> T? {
+    return spot.tableView.rowViewAtRow(index, makeIfNecessary: false) as? T
+  }
+
   public func append(item: ViewModel, withAnimation animation: SpotsAnimation, completion: Completion) {
     let count = spot.component.items.count
     spot.component.items.append(item)

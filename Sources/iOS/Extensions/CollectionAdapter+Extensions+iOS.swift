@@ -4,6 +4,10 @@ import Brick
 
 public extension CollectionAdapter {
 
+  public func ui<T>(atIndex index: Int) -> T? {
+    return spot.collectionView.cellForItemAtIndexPath(NSIndexPath(forItem: index, inSection: 0)) as? T
+  }
+
   /**
    - Parameter item: The view model that you want to append
    - Parameter withAnimation: The animation that should be used (currently not in use)
