@@ -29,7 +29,7 @@ public class CarouselSpot: NSObject, Gridable {
   public var dynamicSpan = false
 
   /// Indicator to calculate the height based on content
-  public var useDynamicHeight = true
+  public var usesDynamicHeight = true
 
   /// A Registry object that holds identifiers and classes for cells used in the CarouselSpot
   public static var views: Registry = Registry()
