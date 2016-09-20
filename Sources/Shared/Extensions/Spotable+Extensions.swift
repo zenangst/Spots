@@ -111,7 +111,7 @@ public extension Spotable {
     guard dynamicHeight else {
       return self.render().frame.height
     }
-    
+
     return component.items.reduce(0, combine: { $0 + $1.size.height })
   }
 

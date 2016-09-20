@@ -36,7 +36,7 @@ extension Gridable {
     guard dynamicHeight else {
       return self.render().frame.height
     }
-    
+
     return layout.collectionViewContentSize.height
   }
 
