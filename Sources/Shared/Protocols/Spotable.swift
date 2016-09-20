@@ -31,7 +31,7 @@ public protocol Spotable: class {
   /// A SpotAdapter
   var adapter: SpotAdapter? { get }
   /// Indicator to calculate the height based on content
-  var dynamicHeight: Bool { get }
+  var useDynamicHeight: Bool { get }
 
   #if os(OSX)
     var responder: NSResponder { get }

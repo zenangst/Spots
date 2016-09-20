@@ -30,7 +30,7 @@ public class ViewSpot: NSObject, Spotable, Viewable {
   public var adapter: SpotAdapter?
 
   /// Indicator to calculate the height based on content
-  public var dynamicHeight = true
+  public var useDynamicHeight = true
 
   public required init(component: Component) {
     self.component = component
