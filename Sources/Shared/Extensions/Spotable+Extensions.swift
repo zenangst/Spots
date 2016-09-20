@@ -9,8 +9,14 @@ import Sugar
 
 public extension Spotable {
 
+  /// A computed value for the current index
   public var index: Int {
     return component.index
+  }
+
+  /// Resolve UI component at index (UITableViewCell or UICollectionViewItem)
+  public func ui<T>(atIndex index: Int) -> T? {
+    return adapter?.ui(atIndex: index)
   }
 
   /// Append view model to a Spotable object
