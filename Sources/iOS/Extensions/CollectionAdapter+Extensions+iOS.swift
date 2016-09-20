@@ -251,7 +251,7 @@ public extension CollectionAdapter {
     let lastUpdate = updates.last
     for index in updates {
       guard let item = self.spot.item(index) else { completion?(); continue }
-      self.update(item, index: index, withAnimation: .Automatic) {
+      self.update(item, index: index, withAnimation: animiation) {
         if index == lastUpdate {
           completion?()
         }
