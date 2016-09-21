@@ -57,6 +57,8 @@ public class GridSpot: NSObject, Gridable {
   public var component: Component
   public var configure: (SpotConfigurable -> Void)?
   public var index = 0
+  /// Indicator to calculate the height based on content
+  public var usesDynamicHeight = true
 
   public private(set) var stateCache: SpotCache?
 

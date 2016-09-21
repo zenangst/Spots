@@ -26,6 +26,8 @@ public class ListSpot: NSObject, Listable {
 
   private var fetching = false
   public private(set) var stateCache: SpotCache?
+  /// Indicator to calculate the height based on content
+  public var usesDynamicHeight = true
 
   // MARK: - Initializers
 
@@ -43,8 +45,9 @@ public class ListSpot: NSObject, Listable {
     setupTableView()
   }
 
-  public convenience init(tableView: UITableView? = nil, title: String = "", kind: String? = nil) {
-    self.init(component: Component(title: title, kind: kind ?? "list"))
+  public convenience init(tableView: UITableView? = nil, title: String = "",
+                          kind: String = "list", header: String = "") {
+    self.init(component: Component(title: title, kind: kind, header: header))
 
     self.tableView ?= tableView
 

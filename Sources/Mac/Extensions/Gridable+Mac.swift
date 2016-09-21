@@ -33,6 +33,10 @@ extension Gridable {
    - Returns: A CGFloat of the total height of all items inside of a component
    */
   public func spotHeight() -> CGFloat {
+    guard usesDynamicHeight else {
+      return self.render().frame.height
+    }
+
     return layout.collectionViewContentSize.height
   }
 

@@ -139,7 +139,7 @@ extension CollectionAdapter {
 
       for index in changes.updates {
         guard let item = self.spot.item(index) else { continue }
-        self.spot.update(item, index: index, withAnimation: .Automatic, completion: completion)
+        self.spot.update(item, index: index, withAnimation: animation, completion: completion)
       }
     }
   }
