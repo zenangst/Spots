@@ -60,8 +60,10 @@ extension Gridable {
    - Parameter size: A CGSize to set the width and height of the collection view
    */
   public func layout(size: CGSize) {
+    prepareItems()
+    layout.prepareLayout()
     layout.invalidateLayout()
-    collectionView.frame.size.width = size.width
+    collectionView.frame.size.width = layout.collectionViewContentSize().width
     collectionView.frame.size.height = layout.collectionViewContentSize().height
   }
 
