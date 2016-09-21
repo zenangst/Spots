@@ -21,6 +21,11 @@ public class GridableLayout: UICollectionViewFlowLayout {
 
     if scrollDirection == .Horizontal {
       contentSize.height = firstItem.size.height + headerReferenceSize.height
+      contentSize.height += sectionInset.top + sectionInset.bottom
+
+      if let spot = adapter.spot as? CarouselSpot where spot.pageIndicator {
+        contentSize.height += spot.pageControl.height
+      }
     } else {
       contentSize.height = adapter.spot.items.reduce(0, combine: { $0 + $1.size.height })
       if adapter.spot.component.span > 1 {
@@ -34,6 +39,7 @@ public class GridableLayout: UICollectionViewFlowLayout {
         contentSize.height += sectionInset.top + sectionInset.bottom
       } else {
         contentSize.height = adapter.spot.items.reduce(0, combine: { $0 + $1.size.height })
+        contentSize.height += sectionInset.top + sectionInset.bottom
       }
     }
   }
@@ -54,7 +60,7 @@ public class GridableLayout: UICollectionViewFlowLayout {
       else { return nil }
 
     var attributes = [UICollectionViewLayoutAttributes]()
-    var rect = rect
+    var rect = CGRect(origin: CGPoint.zero, size: contentSize)
 
     if headerReferenceSize.height > 0.0 {
       rect.origin = CGPoint(x: -UIScreen.mainScreen().bounds.width, y: 0)
