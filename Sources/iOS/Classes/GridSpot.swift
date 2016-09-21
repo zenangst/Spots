@@ -48,9 +48,8 @@ public class GridSpot: NSObject, Gridable {
 
     self.configureLayout()
 
-    if GridSpot.views.defaultItem == nil {
-      GridSpot.views.defaultItem = Registry.Item.classType(GridSpotCell.self)
-    }
+    registerDefault(view: GridSpotCell.self)
+    registerComposite(view: GridComposite.self)
 
     if GridSpot.views.composite == nil {
       GridSpot.views.composite =  Registry.Item.classType(GridComposite.self)

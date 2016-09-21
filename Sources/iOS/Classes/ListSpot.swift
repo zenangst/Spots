@@ -37,16 +37,10 @@ public class ListSpot: NSObject, Listable {
       self.component.kind = "list"
     }
 
+    registerDefault(view: ListSpotCell.self)
+    registerComposite(view: ListComposite.self)
     registerAndPrepare()
     setupTableView()
-
-    if ListSpot.views.defaultItem == nil {
-      ListSpot.views.defaultItem = Registry.Item.classType(ListSpotCell.self)
-    }
-
-    if ListSpot.views.composite == nil {
-      ListSpot.views.composite =  Registry.Item.classType(ListComposite.self)
-    }
   }
 
   public convenience init(tableView: UITableView? = nil, title: String = "", kind: String? = nil) {
