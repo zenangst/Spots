@@ -280,6 +280,18 @@ public extension Spotable {
     prepareItems()
   }
 
+  func registerDefault(view view: UIView.Type) {
+    if self.dynamicType.views.storage[self.dynamicType.views.defaultIdentifier] == nil {
+      self.dynamicType.views.defaultItem = Registry.Item.classType(view)
+    }
+  }
+
+  func registerComposite(view view: UIView.Type) {
+    if self.dynamicType.views.composite == nil {
+      self.dynamicType.views.composite = Registry.Item.classType(view)
+    }
+  }
+
   public static func register(nib nib: Nib, identifier: StringConvertible) {
     self.views.storage[identifier.string] = Registry.Item.nib(nib)
   }
