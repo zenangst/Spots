@@ -302,6 +302,5 @@ public extension Spotable {
 
   public static func register(defaultView view: View.Type) {
     self.views.defaultItem = Registry.Item.classType(view)
-    self.views.storage[self.views.defaultIdentifier] = Registry.Item.classType(view)
   }
 }
