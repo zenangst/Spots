@@ -9,8 +9,14 @@ import Sugar
 
 public extension Spotable {
 
+  /// A computed value for the current index
   public var index: Int {
     return component.index
+  }
+
+  /// Resolve UI component at index (UITableViewCell or UICollectionViewItem)
+  public func ui<T>(atIndex index: Int) -> T? {
+    return adapter?.ui(atIndex: index)
   }
 
   /// Append view model to a Spotable object
@@ -274,6 +280,18 @@ public extension Spotable {
     prepareItems()
   }
 
+  func registerDefault(view view: UIView.Type) {
+    if self.dynamicType.views.storage[self.dynamicType.views.defaultIdentifier] == nil {
+      self.dynamicType.views.defaultItem = Registry.Item.classType(view)
+    }
+  }
+
+  func registerComposite(view view: UIView.Type) {
+    if self.dynamicType.views.composite == nil {
+      self.dynamicType.views.composite = Registry.Item.classType(view)
+    }
+  }
+
   public static func register(nib nib: Nib, identifier: StringConvertible) {
     self.views.storage[identifier.string] = Registry.Item.nib(nib)
   }
@@ -284,6 +302,5 @@ public extension Spotable {
 
   public static func register(defaultView view: View.Type) {
     self.views.defaultItem = Registry.Item.classType(view)
-    self.views.storage[self.views.defaultIdentifier] = Registry.Item.classType(view)
   }
 }

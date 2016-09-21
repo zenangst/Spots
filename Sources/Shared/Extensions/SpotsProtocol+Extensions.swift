@@ -40,6 +40,26 @@ public extension SpotsProtocol {
     return ["components" : result ]
   }
 
+  public func ui<T>(@noescape includeElement: (ViewModel) -> Bool) -> T? {
+    for spot in spots {
+      if let first = spot.items.filter(includeElement).first {
+        return spot.ui(atIndex: first.index)
+      }
+    }
+
+    for (_, cSpots) in compositeSpots {
+      for (_, spots) in cSpots.enumerate() {
+        for spot in spots.1 {
+          if let first = spot.items.filter(includeElement).first {
+            return spot.ui(atIndex: first.index)
+          }
+        }
+      }
+    }
+
+    return nil
+  }
+
   /**
    - Parameter includeElement: A filter predicate to find a spot
    */

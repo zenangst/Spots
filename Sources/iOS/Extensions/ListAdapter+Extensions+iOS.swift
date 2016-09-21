@@ -3,6 +3,11 @@ import UIKit
 import Sugar
 
 extension ListAdapter {
+
+  public func ui<T>(atIndex index: Int) -> T? {
+    return spot.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0)) as? T
+  }
+
   /**
    - Parameter item: The view model that you want to append
    - Parameter animation: The animation that should be used

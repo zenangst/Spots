@@ -63,12 +63,20 @@ class SpotsScrollViewTests: XCTestCase {
   }
 
   override func setUp() {
+    super.setUp()
+
     bounds = CGRect(origin: CGPoint.zero, size: CGSize(width: 375, height: 667))
     controller = SpotsController(initialJSON)
     controller.view.autoresizingMask = .None
     controller.view.frame.size = CGSize(width: 375, height: 667)
     controller.preloadView()
     controller.viewWillAppear(true)
+  }
+
+  override func tearDown() {
+    super.tearDown()
+
+    controller = nil
   }
 
   func testSpotsScrollView() {

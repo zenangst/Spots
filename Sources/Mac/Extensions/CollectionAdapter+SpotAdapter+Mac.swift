@@ -4,6 +4,10 @@ import Sugar
 
 extension CollectionAdapter {
 
+  public func ui<T>(atIndex index: Int) -> T? {
+    return spot.collectionView.itemAtIndexPath(NSIndexPath(forItem: index, inSection: 0)) as? T
+  }
+
   public func append(item: ViewModel, withAnimation animation: SpotsAnimation, completion: Completion) {
     let count = spot.component.items.count
     spot.component.items.append(item)
