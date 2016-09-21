@@ -226,12 +226,11 @@ public extension CollectionAdapter {
 
     if newItem.kind != oldItem.kind || newItem.size.height != oldItem.size.height {
       if let cell = spot.collectionView.cellForItemAtIndexPath(indexPath) as? SpotConfigurable {
-        spot.collectionView.performBatchUpdates({
-          }, completion: { (_) in
-            cell.configure(&self.spot.items[index])
-        })
-      } else {
-        spot.collectionView.reload([index], section: 0)
+        if animation != .None {
+          spot.collectionView.performBatchUpdates({
+            }, completion: { (_) in })
+        }
+        cell.configure(&self.spot.items[index])
       }
     } else if let cell = spot.collectionView.cellForItemAtIndexPath(indexPath) as? SpotConfigurable {
       cell.configure(&spot.items[index])
@@ -274,14 +273,14 @@ public extension CollectionAdapter {
     spot.collectionView.process((insertions: changes.insertions, reloads: changes.reloads, deletions: changes.deletions), updateDataSource: updateDataSource) {
       if changes.updates.isEmpty {
         self.process(changes.updatedChildren, withAnimation: animation) {
-          completion?()
           self.spot.layout(self.spot.collectionView.bounds.size)
+          completion?()
         }
       } else {
         self.process(changes.updates, withAnimation: animation) {
           self.process(changes.updatedChildren, withAnimation: animation) {
-            completion?()
             self.spot.layout(self.spot.collectionView.bounds.size)
+            completion?()
           }
         }
       }
