@@ -273,14 +273,14 @@ public extension CollectionAdapter {
     spot.collectionView.process((insertions: changes.insertions, reloads: changes.reloads, deletions: changes.deletions), updateDataSource: updateDataSource) {
       if changes.updates.isEmpty {
         self.process(changes.updatedChildren, withAnimation: animation) {
-          completion?()
           self.spot.layout(self.spot.collectionView.bounds.size)
+          completion?()
         }
       } else {
         self.process(changes.updates, withAnimation: animation) {
           self.process(changes.updatedChildren, withAnimation: animation) {
-            completion?()
             self.spot.layout(self.spot.collectionView.bounds.size)
+            completion?()
           }
         }
       }
