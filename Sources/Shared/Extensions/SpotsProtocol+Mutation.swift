@@ -207,8 +207,8 @@ extension SpotsProtocol {
         case .Removed:
           self.removeSpot(index)
         case .Items:
-          runClosure = self.setupItemsForSpot(index, 
-            newComponents: newComponents, 
+          runClosure = self.setupItemsForSpot(index,
+            newComponents: newComponents,
             withAnimation: animation,
             closure: closure)
         case .None: break
