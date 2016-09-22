@@ -4,7 +4,6 @@
   import UIKit
 #endif
 
-import Sugar
 import Brick
 
 /// A Spotable extension for Viewable objects
@@ -77,11 +76,13 @@ public extension Spotable where Self : Viewable {
     guard case let Registry.Item.classType(classType)? = dynamic.views.storage[item.kind]
       where dynamic.views.storage.keys.contains(item.kind) else { return }
 
-    let view = classType.init().then {
-      ($0 as? SpotConfigurable)?.configure(&component.items[index])
-      guard let size = ($0 as? SpotConfigurable)?.size else { return }
-      $0.frame.size = size
+    let view = classType.init()
+    (view as? SpotConfigurable)?.configure(&component.items[index])
+    if let size = (view as? SpotConfigurable)?.size {
+      view.frame.size = size
     }
+
+
     scrollView.addSubview(view)
     component.items.append(item)
   }
@@ -98,11 +99,12 @@ public extension Spotable where Self : Viewable {
       guard case let Registry.Item.classType(classType)? = dynamic.views.storage[item.kind]
         where dynamic.views.storage.keys.contains(item.kind) else { return }
 
-      let view = classType.init().then {
-        ($0 as? SpotConfigurable)?.configure(&component.items[index])
-        guard let size = ($0 as? SpotConfigurable)?.size else { return }
-        $0.frame.size = size
+      let view = classType.init()
+      (view as? SpotConfigurable)?.configure(&component.items[index])
+      if let size = (view as? SpotConfigurable)?.size {
+        view.frame.size = size
       }
+
       scrollView.addSubview(view)
       component.items.append(item)
     }
@@ -120,10 +122,10 @@ public extension Spotable where Self : Viewable {
     guard case let Registry.Item.classType(classType)? = dynamic.views.storage[item.kind]
       where dynamic.views.storage.keys.contains(item.kind) else { return }
 
-    let view = classType.init().then {
-      ($0 as? SpotConfigurable)?.configure(&component.items[index])
-      guard let size = ($0 as? SpotConfigurable)?.size else { return }
-      $0.frame.size = size
+    let view = classType.init()
+    (view as? SpotConfigurable)?.configure(&component.items[index])
+    if let size = (view as? SpotConfigurable)?.size {
+      view.frame.size = size
     }
     #if os(iOS)
       scrollView.insertSubview(view, atIndex: index)
@@ -145,10 +147,10 @@ public extension Spotable where Self : Viewable {
       guard case let Registry.Item.classType(classType)? = dynamic.views.storage[item.kind]
         where dynamic.views.storage.keys.contains(item.kind) else { return }
 
-      let view = classType.init().then {
-        ($0 as? SpotConfigurable)?.configure(&component.items[index])
-        guard let size = ($0 as? SpotConfigurable)?.size else { return }
-        $0.frame.size = size
+      let view = classType.init()
+      (view as? SpotConfigurable)?.configure(&component.items[index])
+      if let size = (view as? SpotConfigurable)?.size {
+        view.frame.size = size
       }
       #if os(iOS)
         scrollView.insertSubview(view, atIndex: index)
@@ -173,7 +175,7 @@ public extension Spotable where Self : Viewable {
     guard let index = component.items.indexOf({ $0 == item })
       else { completion?(); return }
 
-    dispatch { [weak self] in
+    Dispatch.mainQueue { [weak self] in
       self?.component.items.removeAtIndex(index)
       self?.scrollView.subviews[index].removeFromSuperview()
     }
@@ -187,7 +189,7 @@ public extension Spotable where Self : Viewable {
   public func delete(items: [ViewModel], withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     let count = component.items.count
 
-    dispatch { [weak self] in
+    Dispatch.mainQueue { [weak self] in
       for (index, _) in items.enumerate() {
         self?.component.items.removeAtIndex(count - index)
         self?.scrollView.subviews[count - index].removeFromSuperview()

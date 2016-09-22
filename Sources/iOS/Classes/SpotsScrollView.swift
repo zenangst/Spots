@@ -32,9 +32,12 @@ public class SpotsScrollView: UIScrollView {
   }
 
   /// A container view that works as a proxy layer for scroll view
-  lazy public var contentView: SpotsContentView = SpotsContentView().then { [unowned self] in
-    $0.frame = self.frame
-  }
+  lazy public var contentView: SpotsContentView = { [unowned self] in
+    let contentView = SpotsContentView()
+    contentView.frame = self.frame
+
+    return contentView
+  }()
 
   /**
    A deinitiazlier that removes all subviews from contentView
@@ -210,8 +213,8 @@ public class SpotsScrollView: UIScrollView {
     let initialContentOffset = contentOffset
     contentSize = CGSize(width: bounds.size.width, height: fmax(yOffsetOfCurrentSubview, minimumContentHeight))
 
-    if self.height != superview.height {
-      self.height = superview.height
+    if self.frame.size.height != superview.frame.size.height {
+      self.frame.size.height = superview.frame.size.height
     }
 
     guard forceUpdate || initialContentOffset != contentOffset else { return }

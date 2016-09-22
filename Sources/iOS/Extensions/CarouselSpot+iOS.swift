@@ -10,7 +10,7 @@ extension CarouselSpot {
       return self.render().frame.height
     }
 
-    return collectionView.height - layout.sectionInset.top - layout.sectionInset.bottom - layout.headerReferenceSize.height
+    return collectionView.frame.height - layout.sectionInset.top - layout.sectionInset.bottom - layout.headerReferenceSize.height
   }
 
   /**
@@ -22,15 +22,15 @@ extension CarouselSpot {
    */
   public func sizeForItemAt(indexPath: NSIndexPath) -> CGSize {
     guard indexPath.item < component.items.count else { return CGSize.zero }
-    var width = collectionView.width
+    var width = collectionView.frame.width
 
     if component.span > 0 {
       if dynamicSpan && CGFloat(component.items.count) < component.span {
-        width = collectionView.width / CGFloat(component.items.count)
+        width = collectionView.frame.width / CGFloat(component.items.count)
         width -= layout.sectionInset.left / CGFloat(component.items.count)
         width -= layout.minimumInteritemSpacing
       } else {
-        width = collectionView.width / CGFloat(component.span)
+        width = collectionView.frame.width / CGFloat(component.span)
         width -= layout.sectionInset.left / component.span
         width -= layout.minimumInteritemSpacing
       }
@@ -39,7 +39,7 @@ extension CarouselSpot {
     }
 
     if component.items[indexPath.item].size.height == 0.0 {
-      component.items[indexPath.item].size.height = collectionView.height - layout.sectionInset.top - layout.sectionInset.bottom - layout.headerReferenceSize.height
+      component.items[indexPath.item].size.height = collectionView.frame.height - layout.sectionInset.top - layout.sectionInset.bottom - layout.headerReferenceSize.height
     }
 
     return CGSize(

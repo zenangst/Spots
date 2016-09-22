@@ -1,5 +1,4 @@
 import UIKit
-import Sugar
 import Brick
 
 // MARK: - Extensions for Spotable objects that also confirm to Listable
@@ -16,7 +15,7 @@ public extension Spotable where Self : Listable {
    - Parameter size: A CGSize to set the width of the table view
    */
   public func layout(size: CGSize) {
-    tableView.width = size.width
+    tableView.frame.size.width = size.width
     guard let componentSize = component.size else { return }
     tableView.frame.size.height = componentSize.height
   }

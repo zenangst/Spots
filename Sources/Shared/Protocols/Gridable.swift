@@ -3,7 +3,6 @@
 #else
   import UIKit
 #endif
-import Sugar
 import Brick
 
 /// Gridable is protocol for Spots that are based on UICollectionView

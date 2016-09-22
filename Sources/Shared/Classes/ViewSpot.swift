@@ -3,15 +3,11 @@
 #else
   import UIKit
 #endif
-import Sugar
 import Brick
 
 public class ViewSpot: NSObject, Spotable, Viewable {
 
-  public static var views = Registry().then {
-    $0.defaultItem = Registry.Item.classType(View.self)
-  }
-
+  public static var views = Registry()
   public static var configure: ((view: View) -> Void)?
   public static var defaultView: View.Type = View.self
   public static var defaultKind: StringConvertible = "view"
@@ -35,6 +31,7 @@ public class ViewSpot: NSObject, Spotable, Viewable {
   public required init(component: Component) {
     self.component = component
     super.init()
+    registerDefault(view: View.self)
     prepare()
   }
 

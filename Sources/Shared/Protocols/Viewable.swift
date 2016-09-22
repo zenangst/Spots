@@ -4,7 +4,6 @@
   import UIKit
 #endif
 
-import Sugar
 import Brick
 
 /// Viewable is a protocol for Spots that are based on UIScrollView

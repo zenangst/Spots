@@ -1,5 +1,4 @@
 import UIKit
-import Sugar
 import Brick
 
 public extension CollectionAdapter {
@@ -22,7 +21,7 @@ public extension CollectionAdapter {
       indexes.append(itemsCount + index)
     }
 
-    dispatch { [weak self] in
+    Dispatch.mainQueue { [weak self] in
       guard let weakSelf = self else { completion?(); return }
 
       if itemsCount > 0 {
@@ -52,7 +51,7 @@ public extension CollectionAdapter {
       spot.configureItem(itemsCount + index)
     }
 
-    dispatch { [weak self] in
+    Dispatch.mainQueue { [weak self] in
       guard let weakSelf = self else { completion?(); return }
 
       if itemsCount > 0 {
@@ -79,7 +78,7 @@ public extension CollectionAdapter {
 
     indexes.append(index)
 
-    dispatch { [weak self] in
+    Dispatch.mainQueue { [weak self] in
       guard let weakSelf = self else { completion?(); return }
 
       if itemsCount > 0 {
@@ -108,7 +107,7 @@ public extension CollectionAdapter {
       spot.configureItem($0.index)
     }
 
-    dispatch { [weak self] in
+    Dispatch.mainQueue { [weak self] in
       guard let weakSelf = self else { completion?(); return }
 
       weakSelf.spot.collectionView.insert(indexes, completion: completion)
@@ -154,7 +153,7 @@ public extension CollectionAdapter {
       spot.component.items.removeAtIndex(count - index)
     }
 
-    dispatch { [weak self] in
+    Dispatch.mainQueue { [weak self] in
       guard let weakSelf = self else { completion?(); return }
       weakSelf.spot.collectionView.delete(indexes, completion: completion)
       weakSelf.spot.updateHeight() {
@@ -170,7 +169,7 @@ public extension CollectionAdapter {
    */
   public func delete(index: Int, withAnimation animation: SpotsAnimation = .None, completion: Completion) {
     perform(animation, withIndex: index) {
-      dispatch { [weak self] in
+      Dispatch.mainQueue { [weak self] in
         guard let weakSelf = self else { completion?(); return }
 
         if animation == .None { UIView.setAnimationsEnabled(false) }
@@ -190,7 +189,7 @@ public extension CollectionAdapter {
    - Parameter completion: A completion closure that is executed in the main queue when the view model has been removed
    */
   public func delete(indexes: [Int], withAnimation animation: SpotsAnimation = .None, completion: Completion) {
-    dispatch { [weak self] in
+    Dispatch.mainQueue { [weak self] in
       guard let weakSelf = self else { return }
       weakSelf.spot.collectionView.delete(indexes, completion: completion)
       weakSelf.spot.updateHeight() {

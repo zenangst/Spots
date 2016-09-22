@@ -5,7 +5,6 @@
 #endif
 
 import Brick
-import Sugar
 
 public extension Spotable {
 
@@ -122,10 +121,10 @@ public extension Spotable {
   }
 
   public func updateHeight(completion: Completion = nil) {
-    dispatch(queue: .Interactive) { [weak self] in
-      guard let weakSelf = self else { dispatch { completion?(); }; return }
+    Dispatch.inQueue(queue: .Interactive) { [weak self] in
+      guard let weakSelf = self else { Dispatch.mainQueue { completion?(); }; return }
       let spotHeight = weakSelf.spotHeight()
-      dispatch { [weak self] in
+      Dispatch.mainQueue { [weak self] in
         self?.render().frame.size.height = spotHeight
         completion?()
       }
@@ -225,10 +224,8 @@ public extension Spotable {
     #if !os(OSX)
       if let composite = view as? SpotComposable {
         let spots = composite.parse(viewModel)
-        for spot in spots {
-          spot.registerAndPrepare()
-          spot.render().optimize()
-        }
+
+        spots.forEach { $0.registerAndPrepare() }
 
         if spotsCompositeDelegate?.compositeSpots[component.index] == nil {
           spotsCompositeDelegate?.compositeSpots[component.index] = [index : spots]

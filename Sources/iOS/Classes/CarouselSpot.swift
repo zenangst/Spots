@@ -1,5 +1,4 @@
 import UIKit
-import Sugar
 import Brick
 
 /// A CarouselSpot, a collection view based Spotable object that lays out its items in a horizontal order
@@ -38,9 +37,7 @@ public class CarouselSpot: NSObject, Gridable {
   public static var configure: ((view: UICollectionView, layout: UICollectionViewFlowLayout) -> Void)?
 
   /// A Registry object that holds identifiers and classes for headers used in the CarouselSpot
-  public static var headers = Registry().then {
-    $0.defaultItem = Registry.Item.classType(CarouselSpotHeader.self)
-  }
+  public static var headers = Registry()
 
   /// A SpotCache for the CarouselSpot
   public private(set) var stateCache: SpotCache?
@@ -49,7 +46,7 @@ public class CarouselSpot: NSObject, Gridable {
   public var component: Component {
     willSet(value) {
       #if os(iOS)
-        dynamicSpan ?= component.meta(Key.dynamicSpan, Default.dynamicSpan)
+        dynamicSpan = component.meta(Key.dynamicSpan, Default.dynamicSpan)
         if component.items.count > 1 && component.span > 0 {
           pageControl.numberOfPages = Int(floor(CGFloat(component.items.count) / component.span))
         }
@@ -75,7 +72,7 @@ public class CarouselSpot: NSObject, Gridable {
   public var pageIndicator: Bool = false {
     willSet(value) {
       if value {
-        pageControl.width = backgroundView.frame.width
+        pageControl.frame.size.width = backgroundView.frame.width
         collectionView.backgroundView?.addSubview(pageControl)
       } else {
         pageControl.removeFromSuperview()
@@ -98,25 +95,34 @@ public class CarouselSpot: NSObject, Gridable {
   public lazy var collectionAdapter: CollectionAdapter = CollectionAdapter(spot: self)
 
   /// A UIPageControl, enable by setting pageIndicator to true
-  public lazy var pageControl = UIPageControl().then {
-    $0.frame.size.height = 22
-    $0.pageIndicatorTintColor = UIColor.lightGrayColor()
-    $0.currentPageIndicatorTintColor = UIColor.grayColor()
-  }
+  public lazy var pageControl: UIPageControl = {
+    let pageControl = UIPageControl()
+    pageControl.frame.size.height = 22
+    pageControl.pageIndicatorTintColor = UIColor.lightGrayColor()
+    pageControl.currentPageIndicatorTintColor = UIColor.grayColor()
+
+    return pageControl
+  }()
 
   /// A custom UICollectionViewFlowLayout
-  public lazy var layout: CollectionLayout = GridableLayout().then {
-    $0.scrollDirection = .Horizontal
-  }
+  public lazy var layout: CollectionLayout = {
+    let layout = GridableLayout()
+    layout.scrollDirection = .Horizontal
+
+    return layout
+  }()
 
   /// A UICollectionView, used as the main UI component for a CarouselSpot
-  public lazy var collectionView: UICollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: self.layout).then {
-    $0.dataSource = self.collectionAdapter
-    $0.delegate = self.collectionAdapter
-    $0.showsHorizontalScrollIndicator = false
-    $0.backgroundView = self.backgroundView
-    $0.alwaysBounceHorizontal = true
-  }
+  public lazy var collectionView: UICollectionView = { [unowned self] in
+    let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: self.layout)
+    collectionView.dataSource = self.collectionAdapter
+    collectionView.delegate = self.collectionAdapter
+    collectionView.showsHorizontalScrollIndicator = false
+    collectionView.backgroundView = self.backgroundView
+    collectionView.alwaysBounceHorizontal = true
+
+    return collectionView
+  }()
 
   /// The collection views background view
   public lazy var backgroundView = UIView()
@@ -134,6 +140,7 @@ public class CarouselSpot: NSObject, Gridable {
     configureLayout()
     registerDefault(view: CarouselSpotCell.self)
     registerComposite(view: CarouselComposite.self)
+    registerDefaultHeader(header: CarouselSpotHeader.self)
   }
 
   /**
@@ -182,23 +189,28 @@ public class CarouselSpot: NSObject, Gridable {
     collectionView.frame.size = size
 
     if collectionView.contentSize.height > 0 {
-      collectionView.height = collectionView.contentSize.height
+      collectionView.frame.size.height = collectionView.contentSize.height
     } else {
-      collectionView.height = component.items.sort({ $0.size.height > $1.size.height }).first?.size.height ?? 0
+      collectionView.frame.size.height = component.items.sort({ $0.size.height > $1.size.height }).first?.size.height ?? 0
 
-      if collectionView.height > 0 {
-        collectionView.height += layout.sectionInset.top + layout.sectionInset.bottom
+      if collectionView.frame.size.height > 0 {
+        collectionView.frame.size.height += layout.sectionInset.top + layout.sectionInset.bottom
       }
     }
 
     #if os(iOS)
-    paginate ?= component.meta("paginate", type: Bool.self)
-    pageIndicator ?= component.meta("pageIndicator", type: Bool.self)
+      if let paginate = component.meta("paginate", type: Bool.self) {
+        self.paginate = paginate
+      }
+
+      if let pageIndicator = component.meta("paginate", type: Bool.self) {
+        self.pageIndicator = pageIndicator
+      }
     #endif
 
     if !component.header.isEmpty {
       let resolve = self.dynamicType.headers.make(component.header)
-      layout.headerReferenceSize.width = collectionView.width
+      layout.headerReferenceSize.width = collectionView.frame.size.width
       layout.headerReferenceSize.height = resolve?.view?.frame.size.height ?? 0.0
     }
 
@@ -207,9 +219,9 @@ public class CarouselSpot: NSObject, Gridable {
     collectionView.frame.size.height += layout.headerReferenceSize.height
 
     guard pageIndicator else { return }
-    layout.sectionInset.bottom = layout.sectionInset.bottom + pageControl.height
-    collectionView.height += layout.sectionInset.top + layout.sectionInset.bottom
-    pageControl.frame.origin.y = collectionView.height - pageControl.height
+    layout.sectionInset.bottom = layout.sectionInset.bottom + pageControl.frame.size.height
+    collectionView.frame.size.height += layout.sectionInset.top + layout.sectionInset.bottom
+    pageControl.frame.origin.y = collectionView.frame.size.height - pageControl.frame.size.height
   }
 
   /**
@@ -224,5 +236,11 @@ public class CarouselSpot: NSObject, Gridable {
     layout.minimumInteritemSpacing = component.meta(GridableMeta.Key.minimumInteritemSpacing, Default.minimumInteritemSpacing)
     layout.minimumLineSpacing = component.meta(GridableMeta.Key.minimumLineSpacing, Default.minimumLineSpacing)
     dynamicSpan = component.meta(Key.dynamicSpan, false)
+  }
+
+  func registerDefaultHeader(header view: View.Type) {
+    if self.dynamicType.headers.storage[self.dynamicType.headers.defaultIdentifier] == nil {
+      self.dynamicType.headers.defaultItem = Registry.Item.classType(view)
+    }
   }
 }

@@ -1,6 +1,4 @@
 import Cocoa
-import Brick
-import Sugar
 
 /**
  The CollectionAdapter works as a proxy handler for all Gridable object

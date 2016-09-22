@@ -5,7 +5,6 @@
 #endif
 
 import Brick
-import Sugar
 
 /// A class protocol that is used for all components inside of SpotsController
 public protocol Spotable: class {

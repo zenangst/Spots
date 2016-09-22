@@ -1,5 +1,4 @@
 import UIKit
-import Sugar
 
 /**
  A SpotsController extension to handle scrollViewDidScroll

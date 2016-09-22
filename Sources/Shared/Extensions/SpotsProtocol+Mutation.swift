@@ -4,7 +4,6 @@
   import Foundation
 #endif
 
-import Sugar
 import Brick
 
 extension SpotsProtocol {
@@ -15,7 +14,7 @@ extension SpotsProtocol {
   public func reload(animated: Bool = true, withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
     var spotsLeft = spots.count
 
-    dispatch { [weak self] in
+    Dispatch.mainQueue { [weak self] in
       self?.spots.forEach { spot in
         spot.reload([], withAnimation: animation) {
           spotsLeft -= 1
@@ -31,12 +30,12 @@ extension SpotsProtocol {
 
   #if !os(OSX)
   public func reloadIfNeeded(components: [Component], withAnimation animation: SpotsAnimation = .Automatic, closure: Completion = nil) {
-    dispatch(queue: .Interactive) {
+    Dispatch.inQueue(queue: .Interactive) {
       let newComponents = components
       let oldComponents = self.spots.map { $0.component }
 
       guard newComponents !== oldComponents else {
-        dispatch { closure?() }
+        Dispatch.mainQueue { closure?() }
         return
       }
 
@@ -180,7 +179,7 @@ extension SpotsProtocol {
       }) {
         spot.adapter?.reload(nil, withAnimation: animation) {
           closure?()
-          delay(0.1) {
+          Dispatch.delay(for: 0.1) {
             self.spotsScrollView.forceUpdate = true
             CATransaction.commit()
           }
@@ -195,7 +194,7 @@ extension SpotsProtocol {
                        components newComponents: [Component],
                                   withAnimation animation: SpotsAnimation = .Automatic,
                                   closure: Completion = nil) {
-    dispatch {
+    Dispatch.mainQueue {
       var yOffset: CGFloat = 0.0
       var runClosure = true
       for (index, change) in changes.enumerate() {
@@ -230,7 +229,7 @@ extension SpotsProtocol {
                              compare: ((lhs: [Component], rhs: [Component]) -> Bool) = { lhs, rhs in return lhs != rhs },
                              animated: ((view: View) -> Void)? = nil,
                              closure: Completion = nil) {
-    dispatch { [weak self] in
+    Dispatch.mainQueue { [weak self] in
       guard let weakSelf = self else { closure?(); return }
 
       let newSpots: [Spotable] = Parser.parse(json)
@@ -287,7 +286,7 @@ extension SpotsProtocol {
    - Parameter completion: A closure that will be run after reload has been performed on all spots
    */
   public func reload(json: [String : AnyObject], animated: ((view: View) -> Void)? = nil, closure: Completion = nil) {
-    dispatch { [weak self] in
+    Dispatch.mainQueue { [weak self] in
       guard let weakSelf = self else { closure?(); return }
 
       weakSelf.spots = Parser.parse(json)
@@ -320,7 +319,7 @@ extension SpotsProtocol {
     spot.registerAndPrepare()
     let spotHeight = spot.spotHeight()
 
-    dispatch { [weak self] in
+    Dispatch.mainQueue { [weak self] in
       guard let weakSelf = self else { return }
 
       #if !os(OSX)
@@ -469,7 +468,7 @@ extension SpotsProtocol {
 
   #if os(iOS)
   public func refreshSpots(refreshControl: UIRefreshControl) {
-    dispatch { [weak self] in
+    Dispatch.mainQueue { [weak self] in
       guard let weakSelf = self else { return }
       weakSelf.refreshPositions.removeAll()
       weakSelf.spotsRefreshDelegate?.spotsDidReload(refreshControl) {

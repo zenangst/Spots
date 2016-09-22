@@ -18,7 +18,7 @@ public extension SpotComposable where Self : View {
     spots.enumerate().forEach { index, spot in
       spot.component.size = CGSize(
         width: contentView.frame.width,
-        height: ceil(spot.render().height))
+        height: ceil(spot.render().frame.size.height))
 
       spot.component.size?.height == Optional(0.0)
         ? spot.setup(contentView.frame.size)
