@@ -779,7 +779,6 @@
 				BD7397341D718CDB000AF2DE /* Sources */,
 				BD73973C1D718CDB000AF2DE /* Frameworks */,
 				BD7397411D718CDB000AF2DE /* Resources */,
-				BD7397421D718CDB000AF2DE /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -818,7 +817,6 @@
 				D584780F1C43FEB9006EBA49 /* Sources */,
 				D58478101C43FEB9006EBA49 /* Frameworks */,
 				D58478111C43FEB9006EBA49 /* Resources */,
-				D58478B61C440208006EBA49 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1312,16 +1310,20 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/Carthage/Build/tvOS",
 				);
 				INFOPLIST_FILE = "SpotsTests/Info-tvOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.Spots;
 				PRODUCT_NAME = Spots;
+				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "appletvsimulator appletvos";
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.2;
 			};
 			name = Debug;
 		};
@@ -1334,16 +1336,20 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/Carthage/Build/tvOS",
 				);
 				INFOPLIST_FILE = "SpotsTests/Info-tvOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.Spots;
 				PRODUCT_NAME = Spots;
+				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "appletvsimulator appletvos";
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.2;
 			};
 			name = Release;
 		};
@@ -1358,6 +1364,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(FRAMEWORK_SEARCH_PATHS)";
 				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.SpotsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
 			};
 			name = Debug;
 		};
@@ -1372,6 +1379,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(FRAMEWORK_SEARCH_PATHS)";
 				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.SpotsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
 			};
 			name = Release;
 		};
