@@ -156,9 +156,9 @@ class SpotsControllerTests : XCTestCase {
   }
 
   func testJSONInitialiser() {
-    let sourceController = SpotsController(spot: ListSpot().then {
-      $0.items = [ViewModel(title: "First item")]
-      })
+    let spot = ListSpot()
+    spot.items = [ViewModel(title: "First item")]
+    let sourceController = SpotsController(spot: spot)
     let jsonController = SpotsController([
       "components" : [
         ["kind" : "list",

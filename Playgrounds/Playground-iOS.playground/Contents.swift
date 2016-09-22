@@ -18,9 +18,12 @@ public class ListCell: UITableViewCell, SpotConfigurable {
   public var size = CGSize(width: 0, height: 60)
   public var item: ViewModel?
 
-  lazy var selectedView = UIView().then {
-    $0.backgroundColor = UIColor.darkGrayColor().colorWithAlphaComponent(0.4)
-  }
+  lazy var selectedView: UIView = {
+    let view = UIView()
+    view.backgroundColor = UIColor.darkGrayColor().colorWithAlphaComponent(0.4)
+
+    return view
+  }()
 
   public override init(style: UITableViewCellStyle, reuseIdentifier: String!) {
     super.init(style: .Subtitle, reuseIdentifier: reuseIdentifier)
@@ -36,7 +39,7 @@ public class ListCell: UITableViewCell, SpotConfigurable {
     textLabel?.textColor = UIColor.blackColor()
     detailTextLabel?.textColor = UIColor.blackColor()
 
-    if let action = item.action where action.isPresent {
+    if let action = item.action where !action.isEmpty {
       accessoryType = .DisclosureIndicator
     } else {
       accessoryType = .None
@@ -51,8 +54,8 @@ public class ListCell: UITableViewCell, SpotConfigurable {
   public override func layoutSubviews() {
     super.layoutSubviews()
 
-    textLabel?.x = 16
-    detailTextLabel?.x = 16
+    textLabel?.frame.origin.x = 16
+    detailTextLabel?.frame.origin.x = 16
   }
 }
 
@@ -98,23 +101,35 @@ class GridTopicCell: UICollectionViewCell, SpotConfigurable {
 
   var size = CGSize(width: 125, height: 160)
 
-  lazy var label = UILabel().then {
-    $0.font = UIFont.boldSystemFontOfSize(11)
-    $0.numberOfLines = 2
-    $0.textAlignment = .Center
-  }
+  lazy var label: UILabel = {
+    let label = UILabel()
+    label.font = UIFont.boldSystemFontOfSize(11)
+    label.numberOfLines = 2
+    label.textAlignment = .Center
 
-  lazy var imageView = UIImageView().then {
-    $0.contentMode = .ScaleAspectFill
-  }
+    return label
+  }()
 
-  lazy var blurView = UIVisualEffectView().then {
-    $0.effect = UIBlurEffect(style: .ExtraLight)
-  }
+  lazy var imageView: UIImageView = {
+    let imageView = UIImageView()
+    imageView.contentMode = .ScaleAspectFill
 
-  lazy var paddedStyle = NSMutableParagraphStyle().then {
-    $0.alignment = .Center
-  }
+    return imageView
+  }()
+
+  lazy var blurView: UIVisualEffectView = {
+    let blurView = UIVisualEffectView()
+    blurView.effect = UIBlurEffect(style: .ExtraLight)
+
+    return blurView
+  }()
+
+  lazy var paddedStyle: NSMutableParagraphStyle = {
+    let paddedStyle = NSMutableParagraphStyle()
+    paddedStyle.alignment = .Center
+
+    return paddedStyle
+  }()
 
   override init(frame: CGRect) {
     super.init(frame: frame)

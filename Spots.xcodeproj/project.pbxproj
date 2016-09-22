@@ -184,7 +184,6 @@
 		BD4295581D81D45D00E07E1C /* TestViewSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4295571D81D45D00E07E1C /* TestViewSpot.swift */; };
 		BD4295591D81D45D00E07E1C /* TestViewSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4295571D81D45D00E07E1C /* TestViewSpot.swift */; };
 		BD7397251D718CD2000AF2DE /* Tailor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478E91C440726006EBA49 /* Tailor.framework */; };
-		BD7397261D718CD2000AF2DE /* Sugar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478EB1C440726006EBA49 /* Sugar.framework */; };
 		BD7397271D718CD2000AF2DE /* Brick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD352E5E1CBAD6EC002CD032 /* Brick.framework */; };
 		BD7397381D718CDB000AF2DE /* TestComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D584782B1C43FF34006EBA49 /* TestComponent.swift */; };
 		BD73973A1D718CDB000AF2DE /* TestSpotFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58478281C43FF34006EBA49 /* TestSpotFactory.swift */; };
@@ -209,10 +208,7 @@
 		D58478D21C440568006EBA49 /* Spots.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478C81C440567006EBA49 /* Spots.framework */; };
 		D58478E71C440645006EBA49 /* TestComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D584782B1C43FF34006EBA49 /* TestComponent.swift */; };
 		D58478ED1C440726006EBA49 /* Tailor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478E91C440726006EBA49 /* Tailor.framework */; };
-		D58478EF1C440726006EBA49 /* Sugar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478EB1C440726006EBA49 /* Sugar.framework */; };
-		D58478F21C44074C006EBA49 /* Sugar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478EB1C440726006EBA49 /* Sugar.framework */; };
 		D58478F91C44076B006EBA49 /* Tailor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478F71C44076B006EBA49 /* Tailor.framework */; };
-		D58478FA1C44076B006EBA49 /* Sugar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478F81C44076B006EBA49 /* Sugar.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -351,10 +347,8 @@
 		D58478D11C440567006EBA49 /* Spots-Mac-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Spots-Mac-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D58478E91C440726006EBA49 /* Tailor.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Tailor.framework; path = Carthage/Build/iOS/Tailor.framework; sourceTree = "<group>"; };
 		D58478EA1C440726006EBA49 /* Imaginary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Imaginary.framework; path = Carthage/Build/iOS/Imaginary.framework; sourceTree = "<group>"; };
-		D58478EB1C440726006EBA49 /* Sugar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sugar.framework; path = Carthage/Build/iOS/Sugar.framework; sourceTree = "<group>"; };
 		D58478EC1C440726006EBA49 /* Cache.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cache.framework; path = Carthage/Build/iOS/Cache.framework; sourceTree = "<group>"; };
 		D58478F71C44076B006EBA49 /* Tailor.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Tailor.framework; path = Carthage/Build/Mac/Tailor.framework; sourceTree = "<group>"; };
-		D58478F81C44076B006EBA49 /* Sugar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sugar.framework; path = Carthage/Build/Mac/Sugar.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -363,7 +357,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				BD7397251D718CD2000AF2DE /* Tailor.framework in Frameworks */,
-				BD7397261D718CD2000AF2DE /* Sugar.framework in Frameworks */,
 				BD7397271D718CD2000AF2DE /* Brick.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -381,7 +374,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D58478ED1C440726006EBA49 /* Tailor.framework in Frameworks */,
-				D58478EF1C440726006EBA49 /* Sugar.framework in Frameworks */,
 				BD352E5F1CBAD6EC002CD032 /* Brick.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -390,7 +382,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D58478F21C44074C006EBA49 /* Sugar.framework in Frameworks */,
 				D58478141C43FEB9006EBA49 /* Spots.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -400,7 +391,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D58478F91C44076B006EBA49 /* Tailor.framework in Frameworks */,
-				D58478FA1C44076B006EBA49 /* Sugar.framework in Frameworks */,
 				BD352E611CBAD6F9002CD032 /* Brick.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -721,7 +711,6 @@
 				BD352E5E1CBAD6EC002CD032 /* Brick.framework */,
 				D58478E91C440726006EBA49 /* Tailor.framework */,
 				D58478EA1C440726006EBA49 /* Imaginary.framework */,
-				D58478EB1C440726006EBA49 /* Sugar.framework */,
 				D58478EC1C440726006EBA49 /* Cache.framework */,
 			);
 			name = "Frameworks-iOS";
@@ -732,7 +721,6 @@
 			children = (
 				BD352E601CBAD6F9002CD032 /* Brick.framework */,
 				D58478F71C44076B006EBA49 /* Tailor.framework */,
-				D58478F81C44076B006EBA49 /* Sugar.framework */,
 			);
 			name = "Frameworks-Mac";
 			sourceTree = "<group>";
@@ -1005,7 +993,6 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/Tailor.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Sugar.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Brick.framework",
 			);
 			outputPaths = (
@@ -1027,20 +1014,6 @@
 			shellPath = /bin/sh;
 			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
 		};
-		BD7397421D718CDB000AF2DE /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/Sugar.framework",
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks";
-		};
 		D58478A71C440171006EBA49 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1048,22 +1021,7 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/Tailor.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Sugar.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Brick.framework",
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks";
-		};
-		D58478B61C440208006EBA49 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/Sugar.framework",
 			);
 			outputPaths = (
 			);
@@ -1078,7 +1036,6 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/Mac/Tailor.framework",
-				"$(SRCROOT)/Carthage/Build/Mac/Sugar.framework",
 				"$(SRCROOT)/Carthage/Build/Mac/Brick.framework",
 			);
 			outputPaths = (
@@ -1397,7 +1354,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				INFOPLIST_FILE = "Spots-iOS-Tests copy-Info.plist";
+				INFOPLIST_FILE = "SpotsTests/Info-tvOS.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(FRAMEWORK_SEARCH_PATHS)";
 				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.SpotsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";

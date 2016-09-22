@@ -64,8 +64,8 @@ class ComponentTests : XCTestCase {
     XCTAssertEqual(jsonComponent.dictionary["kind"] as? String, json["kind"] as? String)
     XCTAssertEqual(jsonComponent.dictionary["span"] as? CGFloat, json["span"] as? CGFloat)
 
-    XCTAssertEqual((jsonComponent.dictionary["items"] as! [JSONDictionary])[0]["title"] as? String, json["items"]![0]["title"])
-    XCTAssertEqual((jsonComponent.dictionary["items"] as! [JSONDictionary]).count, json["items"]!.count)
+    XCTAssertEqual((jsonComponent.dictionary["items"] as! [[String : AnyObject]])[0]["title"] as? String, json["items"]![0]["title"])
+    XCTAssertEqual((jsonComponent.dictionary["items"] as! [[String : AnyObject]]).count, json["items"]!.count)
   }
 
   func testComponentDiffing() {
