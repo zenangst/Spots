@@ -8,6 +8,7 @@ extension CarouselSpot: UIScrollViewDelegate {
    It can snap to the nearest item or scroll page by page.
    */
   private func paginatedEndScrolling() {
+    #if os(iOS)
     var currentCellOffset = collectionView.contentOffset
     if paginateByItem {
       currentCellOffset.x += collectionView.width / 2
@@ -19,6 +20,7 @@ extension CarouselSpot: UIScrollViewDelegate {
         currentCellOffset.x += layout.sectionInset.left * CGFloat(pageControl.currentPage)
       }
     }
+    #endif
 
     if let indexPath = collectionView.indexPathForItemAtPoint(currentCellOffset) {
       collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.CenteredHorizontally, animated: true)
@@ -45,10 +47,12 @@ extension CarouselSpot: UIScrollViewDelegate {
    - parameter scrollView: The scroll-view object that finished scrolling the content view.
    - parameter decelerate: true if the scrolling movement will continue, but decelerate, after a touch-up gesture during a dragging operation.
    */
+  #if os(iOS)
   public func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
     guard paginate else { return }
     paginatedEndScrolling()
   }
+  #endif
 
   /**
    Tells the delegate when the user finishes scrolling the content.
