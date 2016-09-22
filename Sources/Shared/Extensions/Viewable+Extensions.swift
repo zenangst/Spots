@@ -4,7 +4,6 @@
   import UIKit
 #endif
 
-import Sugar
 import Brick
 
 /// A Spotable extension for Viewable objects
@@ -173,7 +172,7 @@ public extension Spotable where Self : Viewable {
     guard let index = component.items.indexOf({ $0 == item })
       else { completion?(); return }
 
-    dispatch { [weak self] in
+    Dispatch.mainQueue { [weak self] in
       self?.component.items.removeAtIndex(index)
       self?.scrollView.subviews[index].removeFromSuperview()
     }
@@ -187,7 +186,7 @@ public extension Spotable where Self : Viewable {
   public func delete(items: [ViewModel], withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     let count = component.items.count
 
-    dispatch { [weak self] in
+    Dispatch.mainQueue { [weak self] in
       for (index, _) in items.enumerate() {
         self?.component.items.removeAtIndex(count - index)
         self?.scrollView.subviews[count - index].removeFromSuperview()

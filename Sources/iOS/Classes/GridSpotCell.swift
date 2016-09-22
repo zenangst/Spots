@@ -1,5 +1,4 @@
 import UIKit
-import Sugar
 import Brick
 
 class GridSpotCell: UICollectionViewCell, SpotConfigurable {

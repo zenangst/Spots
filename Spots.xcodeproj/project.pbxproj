@@ -194,6 +194,9 @@
 		BD73974B1D718D38000AF2DE /* CollectionAdapter+tvOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD73974A1D718D38000AF2DE /* CollectionAdapter+tvOS.swift */; };
 		BD76FA471D8066A7001CA31C /* CollectionAdapter+Extensions+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD76FA461D8066A7001CA31C /* CollectionAdapter+Extensions+iOS.swift */; };
 		BD76FA481D8066A7001CA31C /* CollectionAdapter+Extensions+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD76FA461D8066A7001CA31C /* CollectionAdapter+Extensions+iOS.swift */; };
+		BD8B1EB21D93D813000C3F53 /* GrandCentralDispatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8B1EB11D93D813000C3F53 /* GrandCentralDispatch.swift */; };
+		BD8B1EB31D93D813000C3F53 /* GrandCentralDispatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8B1EB11D93D813000C3F53 /* GrandCentralDispatch.swift */; };
+		BD8B1EB41D93D813000C3F53 /* GrandCentralDispatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8B1EB11D93D813000C3F53 /* GrandCentralDispatch.swift */; };
 		BDEED2E81D8446400030B475 /* TestSpotsScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEED2E71D8446400030B475 /* TestSpotsScrollView.swift */; };
 		BDEED2E91D8446400030B475 /* TestSpotsScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEED2E71D8446400030B475 /* TestSpotsScrollView.swift */; };
 		D58478141C43FEB9006EBA49 /* Spots.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478091C43FEB8006EBA49 /* Spots.framework */; };
@@ -327,6 +330,7 @@
 		BD7397461D718CDB000AF2DE /* Spots-tvOS-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Spots-tvOS-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD73974A1D718D38000AF2DE /* CollectionAdapter+tvOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CollectionAdapter+tvOS.swift"; sourceTree = "<group>"; };
 		BD76FA461D8066A7001CA31C /* CollectionAdapter+Extensions+iOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CollectionAdapter+Extensions+iOS.swift"; sourceTree = "<group>"; };
+		BD8B1EB11D93D813000C3F53 /* GrandCentralDispatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GrandCentralDispatch.swift; sourceTree = "<group>"; };
 		BDB538321C444D460005E498 /* Playground-iOS.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Playground-iOS.playground"; sourceTree = "<group>"; };
 		BDB648551D75EF150041449A /* Info-tvOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-tvOS.plist"; sourceTree = "<group>"; };
 		BDEED2E71D8446400030B475 /* TestSpotsScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSpotsScrollView.swift; sourceTree = "<group>"; };
@@ -596,6 +600,7 @@
 				BD129F411D7B2F91009AC164 /* GridableMeta.swift */,
 				BD129F421D7B2F91009AC164 /* Parser.swift */,
 				BD129F431D7B2F91009AC164 /* SpotCache.swift */,
+				BD8B1EB11D93D813000C3F53 /* GrandCentralDispatch.swift */,
 			);
 			path = Structs;
 			sourceTree = "<group>";
@@ -1110,6 +1115,7 @@
 				BD129DC41D7B2B6C009AC164 /* GridSpotCell.swift in Sources */,
 				BD129D981D7B295F009AC164 /* SpotComposable.swift in Sources */,
 				BD129D941D7B295F009AC164 /* UICollectionView+Indexes.swift in Sources */,
+				BD8B1EB41D93D813000C3F53 /* GrandCentralDispatch.swift in Sources */,
 				BD129D901D7B295F009AC164 /* SpotComposable+Extensions.swift in Sources */,
 				BD129F531D7B2F91009AC164 /* SpotsAnimation.swift in Sources */,
 				BD129DD01D7B2B6C009AC164 /* SpotsScrollView.swift in Sources */,
@@ -1223,6 +1229,7 @@
 				BD129F4E1D7B2F91009AC164 /* ViewSpot.swift in Sources */,
 				BD129F5D1D7B2F91009AC164 /* SpotsProtocol+Extensions.swift in Sources */,
 				BD129DC11D7B2B6C009AC164 /* GridSpot.swift in Sources */,
+				BD8B1EB21D93D813000C3F53 /* GrandCentralDispatch.swift in Sources */,
 				BD129D9E1D7B29F6009AC164 /* CarouselSpot+UIScrollViewDelegate.swift in Sources */,
 				BD129DBB1D7B2B6C009AC164 /* CollectionAdapter.swift in Sources */,
 				BD129F7E1D7B2F91009AC164 /* SpotsDelegates.swift in Sources */,
@@ -1279,6 +1286,7 @@
 				BD129F5B1D7B2F91009AC164 /* Spotable+Extensions.swift in Sources */,
 				BD129F671D7B2F91009AC164 /* Viewable+Extensions.swift in Sources */,
 				BD129F611D7B2F91009AC164 /* SpotsProtocol+LiveEditing.swift in Sources */,
+				BD8B1EB31D93D813000C3F53 /* GrandCentralDispatch.swift in Sources */,
 				BD129E2E1D7B2CDE009AC164 /* CollectionAdapter+NSCollectionViewDelegateFlowLayout.swift in Sources */,
 				BD129E231D7B2CDE009AC164 /* CollectionViewLeftLayout.swift in Sources */,
 				BD129E2D1D7B2CDE009AC164 /* CollectionAdapter+NSCollectionViewDelegate.swift in Sources */,

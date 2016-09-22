@@ -4,7 +4,6 @@
   import Foundation
 #endif
 
-import Sugar
 import Brick
 import Cache
 

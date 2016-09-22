@@ -1,5 +1,4 @@
 import Cocoa
-import Sugar
 import Brick
 
 public class CarouselSpot: NSObject, Gridable {

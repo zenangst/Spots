@@ -1,6 +1,5 @@
 import Foundation
 import Brick
-import Sugar
 
 #if os(OSX)
 import Cocoa
@@ -109,5 +108,3 @@ public class Registry {
     return (type: registryType, view: view)
   }
 }
-
-extension Registry: Then {}

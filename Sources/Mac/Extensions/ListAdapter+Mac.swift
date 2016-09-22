@@ -1,5 +1,4 @@
 import Cocoa
-import Sugar
 import Brick
 
 extension ListAdapter {
@@ -13,7 +12,7 @@ extension ListAdapter {
     spot.component.items.append(item)
     spot.configureItem(count, usesViewSize: true)
 
-    dispatch { [weak self] in
+    Dispatch.mainQueue { [weak self] in
       guard let tableView = self?.spot.tableView else { completion?(); return }
       tableView.insert([count], animation: animation.tableViewAnimation) {
         self?.spot.setup(tableView.frame.size)
@@ -33,7 +32,7 @@ extension ListAdapter {
       spot.configureItem(index, usesViewSize: true)
     }
 
-    dispatch { [weak self] in
+    Dispatch.mainQueue { [weak self] in
       guard let tableView = self?.spot.tableView else { completion?(); return }
       tableView.insert(indexes, animation: animation.tableViewAnimation) {
         self?.spot.layout(tableView.frame.size)
@@ -51,7 +50,7 @@ extension ListAdapter {
       indexes.append(items.count - 1 - $0.index)
     }
 
-    dispatch { [weak self] in
+    Dispatch.mainQueue { [weak self] in
       guard let tableView = self?.spot.tableView else { completion?(); return }
       tableView.insert(indexes, animation: animation.tableViewAnimation) {
         self?.refreshHeight()
@@ -62,7 +61,7 @@ extension ListAdapter {
   public func insert(item: ViewModel, index: Int, withAnimation animation: SpotsAnimation, completion: Completion) {
     spot.component.items.insert(item, atIndex: index)
 
-    dispatch { [weak self] in
+    Dispatch.mainQueue { [weak self] in
       guard let tableView = self?.spot.tableView else { completion?(); return }
       tableView.insert([index], animation: animation.tableViewAnimation) {
         self?.refreshHeight(completion)
@@ -73,7 +72,7 @@ extension ListAdapter {
   public func update(item: ViewModel, index: Int, withAnimation animation: SpotsAnimation, completion: Completion) {
     spot.items[index] = item
 
-    dispatch { [weak self] in
+    Dispatch.mainQueue { [weak self] in
       guard let tableView = self?.spot.tableView else { completion?(); return }
       tableView.reload([index], section: 0, animation: animation.tableViewAnimation) {
         self?.refreshHeight(completion)
@@ -87,7 +86,7 @@ extension ListAdapter {
 
     spot.component.items.removeAtIndex(index)
 
-    dispatch { [weak self] in
+    Dispatch.mainQueue { [weak self] in
       guard let tableView = self?.spot.tableView else { completion?(); return }
       tableView.delete([index], animation: animation.tableViewAnimation) {
         self?.refreshHeight(completion)
@@ -104,7 +103,7 @@ extension ListAdapter {
       spot.component.items.append(item)
     }
 
-    dispatch { [weak self] in
+    Dispatch.mainQueue { [weak self] in
       guard let tableView = self?.spot.tableView else { completion?(); return }
       tableView.delete(indexPaths, animation: animation.tableViewAnimation) {
         self?.refreshHeight(completion)
@@ -113,7 +112,7 @@ extension ListAdapter {
   }
 
   public func delete(index: Int, withAnimation animation: SpotsAnimation, completion: Completion) {
-    dispatch { [weak self] in
+    Dispatch.mainQueue { [weak self] in
       guard let tableView = self?.spot.tableView else { completion?(); return }
       self?.spot.component.items.removeAtIndex(index)
       tableView.delete([index], animation: animation.tableViewAnimation) {
@@ -123,7 +122,7 @@ extension ListAdapter {
   }
 
   public func delete(indexes: [Int], withAnimation animation: SpotsAnimation, completion: Completion) {
-    dispatch { [weak self] in
+    Dispatch.mainQueue { [weak self] in
       indexes.forEach { self?.spot.component.items.removeAtIndex($0) }
       guard let tableView = self?.spot.tableView else { completion?(); return }
       tableView.delete(indexes, animation: animation.tableViewAnimation) {
@@ -148,7 +147,7 @@ extension ListAdapter {
   }
 
   public func reload(indexes: [Int]?, withAnimation animation: SpotsAnimation, completion: Completion) {
-    dispatch { [weak self] in
+    Dispatch.mainQueue { [weak self] in
       guard let tableView = self?.spot.tableView else { completion?(); return }
       if let indexes = indexes where animation != .None {
         tableView.reload(indexes, animation: animation.tableViewAnimation) {

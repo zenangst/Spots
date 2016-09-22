@@ -1,4 +1,3 @@
-import Sugar
 import Cache
 
 #if DEVMODE
@@ -70,7 +69,7 @@ import Cache
       print("🎍 SPOTS: Caching...")
       print("Cache key: \(stateCache.key)")
       print("File path: file://\(stateCache.path)\n")
-      delay(0.5) { self.monitor(stateCache.path) }
+      Dispatch.delay(for: 0.5) { self.monitor(stateCache.path) }
     }
   }
 #endif

@@ -1,5 +1,4 @@
 import UIKit
-import Sugar
 import Brick
 import Cache
 
@@ -311,7 +310,7 @@ public class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDel
    - Parameter refreshControl:
    */
   public func refreshSpots(refreshControl: UIRefreshControl) {
-    dispatch { [weak self] in
+    Dispatch.mainQueue { [weak self] in
       guard let weakSelf = self else { return }
       weakSelf.refreshPositions.removeAll()
       weakSelf.spotsRefreshDelegate?.spotsDidReload(refreshControl) {

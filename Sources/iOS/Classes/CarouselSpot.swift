@@ -1,5 +1,4 @@
 import UIKit
-import Sugar
 import Brick
 
 /// A CarouselSpot, a collection view based Spotable object that lays out its items in a horizontal order
@@ -38,9 +37,7 @@ public class CarouselSpot: NSObject, Gridable {
   public static var configure: ((view: UICollectionView, layout: UICollectionViewFlowLayout) -> Void)?
 
   /// A Registry object that holds identifiers and classes for headers used in the CarouselSpot
-  public static var headers = Registry().then {
-    $0.defaultItem = Registry.Item.classType(CarouselSpotHeader.self)
-  }
+  public static var headers = Registry()
 
   /// A SpotCache for the CarouselSpot
   public private(set) var stateCache: SpotCache?
@@ -49,7 +46,7 @@ public class CarouselSpot: NSObject, Gridable {
   public var component: Component {
     willSet(value) {
       #if os(iOS)
-        dynamicSpan ?= component.meta(Key.dynamicSpan, Default.dynamicSpan)
+        dynamicSpan = component.meta(Key.dynamicSpan, Default.dynamicSpan)
         if component.items.count > 1 && component.span > 0 {
           pageControl.numberOfPages = Int(floor(CGFloat(component.items.count) / component.span))
         }
@@ -134,6 +131,7 @@ public class CarouselSpot: NSObject, Gridable {
     configureLayout()
     registerDefault(view: CarouselSpotCell.self)
     registerComposite(view: CarouselComposite.self)
+    registerDefaultHeader(header: CarouselSpotHeader.self)
   }
 
   /**
@@ -192,8 +190,13 @@ public class CarouselSpot: NSObject, Gridable {
     }
 
     #if os(iOS)
-    paginate ?= component.meta("paginate", type: Bool.self)
-    pageIndicator ?= component.meta("pageIndicator", type: Bool.self)
+      if let paginate = component.meta("paginate", type: Bool.self) {
+        self.paginate = paginate
+      }
+
+      if let pageIndicator = component.meta("paginate", type: Bool.self) {
+        self.pageIndicator = pageIndicator
+      }
     #endif
 
     if !component.header.isEmpty {
@@ -224,5 +227,11 @@ public class CarouselSpot: NSObject, Gridable {
     layout.minimumInteritemSpacing = component.meta(GridableMeta.Key.minimumInteritemSpacing, Default.minimumInteritemSpacing)
     layout.minimumLineSpacing = component.meta(GridableMeta.Key.minimumLineSpacing, Default.minimumLineSpacing)
     dynamicSpan = component.meta(Key.dynamicSpan, false)
+  }
+
+  func registerDefaultHeader(header view: View.Type) {
+    if self.dynamicType.headers.storage[self.dynamicType.headers.defaultIdentifier] == nil {
+      self.dynamicType.headers.defaultItem = Registry.Item.classType(view)
+    }
   }
 }

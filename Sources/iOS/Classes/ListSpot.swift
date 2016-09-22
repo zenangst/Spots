@@ -1,5 +1,4 @@
 import UIKit
-import Sugar
 import Brick
 
 public class ListSpot: NSObject, Listable {
@@ -49,7 +48,9 @@ public class ListSpot: NSObject, Listable {
                           kind: String = "list", header: String = "") {
     self.init(component: Component(title: title, kind: kind, header: header))
 
-    self.tableView ?= tableView
+    if let tableView = tableView {
+      self.tableView = tableView
+    }
 
     setupTableView()
     registerAndPrepare()
@@ -60,7 +61,10 @@ public class ListSpot: NSObject, Listable {
 
     self.init(component: Component(stateCache.load()))
     self.stateCache = stateCache
-    self.tableView ?= tableView
+
+    if let tableView = tableView {
+      self.tableView = tableView
+    }
 
     setupTableView()
     registerAndPrepare()

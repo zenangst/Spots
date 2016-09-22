@@ -5,7 +5,6 @@
 #endif
 
 import Brick
-import Sugar
 
 public extension Spotable {
 
@@ -122,10 +121,10 @@ public extension Spotable {
   }
 
   public func updateHeight(completion: Completion = nil) {
-    dispatch(queue: .Interactive) { [weak self] in
-      guard let weakSelf = self else { dispatch { completion?(); }; return }
+    Dispatch.inQueue(queue: .Interactive) { [weak self] in
+      guard let weakSelf = self else { Dispatch.mainQueue { completion?(); }; return }
       let spotHeight = weakSelf.spotHeight()
-      dispatch { [weak self] in
+      Dispatch.mainQueue { [weak self] in
         self?.render().frame.size.height = spotHeight
         completion?()
       }

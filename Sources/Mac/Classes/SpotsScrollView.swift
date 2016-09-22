@@ -1,5 +1,4 @@
 import Cocoa
-import Sugar
 
 public class SpotsScrollView: NSScrollView {
 

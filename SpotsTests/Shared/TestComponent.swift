@@ -2,7 +2,6 @@
 import Foundation
 import XCTest
 import Brick
-import Sugar
 
 class ComponentTests : XCTestCase {
 

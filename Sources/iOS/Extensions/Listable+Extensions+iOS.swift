@@ -1,5 +1,4 @@
 import UIKit
-import Sugar
 import Brick
 
 // MARK: - Extensions for Spotable objects that also confirm to Listable

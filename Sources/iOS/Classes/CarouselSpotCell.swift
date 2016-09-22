@@ -1,5 +1,4 @@
 import UIKit
-import Sugar
 import Brick
 
 /// A default cell for the CarouselSpot
