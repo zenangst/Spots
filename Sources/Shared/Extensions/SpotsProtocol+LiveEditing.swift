@@ -57,8 +57,8 @@ import Cache
     }
 
     func liveEditing(stateCache: SpotCache?) {
-      #if os(iOS)
-        guard let stateCache = stateCache where source == nil && Simulator.isRunning else { return }
+      #if (arch(i386) || arch(x86_64)) && os(iOS)
+        guard let stateCache = stateCache where source == nil else { return }
       #else
         guard let stateCache = stateCache else { return }
       #endif
