@@ -62,8 +62,7 @@ class SpotsScrollViewTests: XCTestCase {
     ]
   }
 
-  override func setUp() {
-    super.setUp()
+  func testSpotsScrollView() {
 
     bounds = CGRect(origin: CGPoint.zero, size: CGSize(width: 375, height: 667))
     controller = SpotsController(initialJSON)
@@ -71,15 +70,7 @@ class SpotsScrollViewTests: XCTestCase {
     controller.view.frame.size = CGSize(width: 375, height: 667)
     controller.preloadView()
     controller.viewWillAppear(true)
-  }
 
-  override func tearDown() {
-    super.tearDown()
-
-    controller = nil
-  }
-
-  func testSpotsScrollView() {
     XCTAssertEqual(controller.spotsScrollView.contentView.subviews.count, 4)
     XCTAssertTrue(controller.spotsScrollView.contentView.subviews[0] is UITableView)
     XCTAssertEqual((controller.spotsScrollView.contentView.subviews[0] as? UIScrollView)!.contentSize.height, 320)
@@ -183,5 +174,7 @@ class SpotsScrollViewTests: XCTestCase {
     XCTAssertTrue(controller.spotsScrollView.contentView.subviews[3] is UITableView)
     XCTAssertEqual((controller.spotsScrollView.contentView.subviews[3] as? UIScrollView)!.contentSize.height, 320)
     XCTAssertEqual(controller.spotsScrollView.contentView.subviews[3].frame.height, 0)
+
+    controller = nil
   }
 }
