@@ -1,4 +1,4 @@
-github "hyperoslo/Sugar"
 github "hyperoslo/Brick"
 github "hyperoslo/Cache" "master"
+github "krzyzanowskim/CryptoSwift" "0.5.2"
 github "zenangst/Tailor"
