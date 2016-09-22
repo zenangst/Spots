@@ -86,9 +86,12 @@ public class ListSpot: NSObject, Listable {
     tableView.dataSource = self.listAdapter
     tableView.delegate = self.listAdapter
     tableView.rowHeight = UITableViewAutomaticDimension
-    tableView.separatorStyle = component.meta(Key.separator, true)
-      ? .SingleLine
-      : .None
+
+    if let separator = component.meta(Key.separator, type: Bool.self) {
+      tableView.separatorStyle = separator
+        ? .SingleLine
+        : .None
+    }
   }
 
   // MARK: - Spotable
