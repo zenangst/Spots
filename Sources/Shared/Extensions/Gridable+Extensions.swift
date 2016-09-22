@@ -1,7 +1,7 @@
-#if os(iOS)
-  import UIKit
-#else
+#if os(OSX)
   import Cocoa
+#else
+  import UIKit
 #endif
 import Brick
 
