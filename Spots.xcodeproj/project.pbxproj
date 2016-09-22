@@ -439,12 +439,12 @@
 				BD129D5B1D7B295F009AC164 /* Gridable+Extensions+iOS.swift */,
 				BD129D5C1D7B295F009AC164 /* Listable+Extensions+iOS.swift */,
 				BD129D5D1D7B295F009AC164 /* ListAdapter+Extensions+iOS.swift */,
+				BD2A2A0B1D93BC8C009A175B /* ListAdapter+UITableViewDataSource.swift */,
+				BD2A2A0E1D93BC97009A175B /* ListAdapter+UITableViewDelegate.swift */,
 				BD129D5E1D7B295F009AC164 /* SpotComposable+Extensions.swift */,
 				BD129D5F1D7B295F009AC164 /* SpotsController+UIScrollViewDelegate.swift */,
 				BD129D601D7B295F009AC164 /* UICollectionView+Indexes.swift */,
 				BD129D611D7B295F009AC164 /* UITableView+Indexes.swift */,
-				BD2A2A0B1D93BC8C009A175B /* ListAdapter+UITableViewDataSource.swift */,
-				BD2A2A0E1D93BC97009A175B /* ListAdapter+UITableViewDelegate.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
