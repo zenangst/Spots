@@ -69,33 +69,45 @@ public class GridSpot: NSObject, Gridable {
 
   public var layout: NSCollectionViewLayout
 
-  public lazy var titleView: NSTextField = NSTextField().then {
-    $0.editable = false
-    $0.selectable = false
-    $0.bezeled = false
-    $0.textColor = NSColor.grayColor()
-    $0.drawsBackground = false
-  }
+  public lazy var titleView: NSTextField = {
+    let titleView = NSTextField()
+    titleView.editable = false
+    titleView.selectable = false
+    titleView.bezeled = false
+    titleView.textColor = NSColor.grayColor()
+    titleView.drawsBackground = false
 
-  public lazy var scrollView: ScrollView = ScrollView().then {
+    return titleView
+  }()
+
+  public lazy var scrollView: ScrollView = {
+    let scrollView = ScrollView()
     let view = NSView()
-    $0.documentView = view
-  }
+    scrollView.documentView = view
 
-  public lazy var collectionView: NSCollectionView = NSCollectionView().then {
-    $0.backgroundColors = [NSColor.clearColor()]
-    $0.selectable = true
-    $0.allowsMultipleSelection = false
-    $0.allowsEmptySelection = true
-    $0.layer = CALayer()
-    $0.wantsLayer = true
-  }
+    return scrollView
+  }()
 
-  lazy var lineView = NSView().then {
-    $0.frame.size.height = 1
-    $0.wantsLayer = true
-    $0.layer?.backgroundColor = NSColor.grayColor().colorWithAlphaComponent(0.2).CGColor
-  }
+  public lazy var collectionView: NSCollectionView = {
+    let collectionView = NSCollectionView()
+    collectionView.backgroundColors = [NSColor.clearColor()]
+    collectionView.selectable = true
+    collectionView.allowsMultipleSelection = false
+    collectionView.allowsEmptySelection = true
+    collectionView.layer = CALayer()
+    collectionView.wantsLayer = true
+
+    return collectionView
+  }()
+
+  lazy var lineView: NSView = {
+    let lineView = NSView()
+    lineView.frame.size.height = 1
+    lineView.wantsLayer = true
+    lineView.layer?.backgroundColor = NSColor.grayColor().colorWithAlphaComponent(0.2).CGColor
+
+    return lineView
+  }()
 
   public required init(component: Component) {
     self.component = component

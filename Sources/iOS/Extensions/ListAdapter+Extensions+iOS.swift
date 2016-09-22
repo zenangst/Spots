@@ -274,4 +274,3 @@ extension ListAdapter {
     }
   }
 }
-

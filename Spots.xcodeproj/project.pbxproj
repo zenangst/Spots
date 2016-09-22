@@ -189,7 +189,6 @@
 		BD7397381D718CDB000AF2DE /* TestComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D584782B1C43FF34006EBA49 /* TestComponent.swift */; };
 		BD73973A1D718CDB000AF2DE /* TestSpotFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58478281C43FF34006EBA49 /* TestSpotFactory.swift */; };
 		BD73973B1D718CDB000AF2DE /* TestSpotsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58478291C43FF34006EBA49 /* TestSpotsController.swift */; };
-		BD73973F1D718CDB000AF2DE /* Sugar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478EB1C440726006EBA49 /* Sugar.framework */; };
 		BD7397401D718CDB000AF2DE /* Spots.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478091C43FEB8006EBA49 /* Spots.framework */; };
 		BD73974B1D718D38000AF2DE /* CollectionAdapter+tvOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD73974A1D718D38000AF2DE /* CollectionAdapter+tvOS.swift */; };
 		BD76FA471D8066A7001CA31C /* CollectionAdapter+Extensions+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD76FA461D8066A7001CA31C /* CollectionAdapter+Extensions+iOS.swift */; };
@@ -214,7 +213,6 @@
 		D58478F21C44074C006EBA49 /* Sugar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478EB1C440726006EBA49 /* Sugar.framework */; };
 		D58478F91C44076B006EBA49 /* Tailor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478F71C44076B006EBA49 /* Tailor.framework */; };
 		D58478FA1C44076B006EBA49 /* Sugar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478F81C44076B006EBA49 /* Sugar.framework */; };
-		D58478FB1C440781006EBA49 /* Sugar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478F81C44076B006EBA49 /* Sugar.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -374,7 +372,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BD73973F1D718CDB000AF2DE /* Sugar.framework in Frameworks */,
 				BD7397401D718CDB000AF2DE /* Spots.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -412,7 +409,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D58478FB1C440781006EBA49 /* Sugar.framework in Frameworks */,
 				D58478D21C440568006EBA49 /* Spots.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -873,7 +869,6 @@
 				D58478CD1C440567006EBA49 /* Sources */,
 				D58478CE1C440567006EBA49 /* Frameworks */,
 				D58478CF1C440567006EBA49 /* Resources */,
-				D58478E21C440605006EBA49 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1085,20 +1080,6 @@
 				"$(SRCROOT)/Carthage/Build/Mac/Tailor.framework",
 				"$(SRCROOT)/Carthage/Build/Mac/Sugar.framework",
 				"$(SRCROOT)/Carthage/Build/Mac/Brick.framework",
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks";
-		};
-		D58478E21C440605006EBA49 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/Mac/Sugar.framework",
 			);
 			outputPaths = (
 			);

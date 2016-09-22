@@ -76,11 +76,13 @@ public extension Spotable where Self : Viewable {
     guard case let Registry.Item.classType(classType)? = dynamic.views.storage[item.kind]
       where dynamic.views.storage.keys.contains(item.kind) else { return }
 
-    let view = classType.init().then {
-      ($0 as? SpotConfigurable)?.configure(&component.items[index])
-      guard let size = ($0 as? SpotConfigurable)?.size else { return }
-      $0.frame.size = size
+    let view = classType.init()
+    (view as? SpotConfigurable)?.configure(&component.items[index])
+    if let size = (view as? SpotConfigurable)?.size {
+      view.frame.size = size
     }
+
+
     scrollView.addSubview(view)
     component.items.append(item)
   }
@@ -97,11 +99,12 @@ public extension Spotable where Self : Viewable {
       guard case let Registry.Item.classType(classType)? = dynamic.views.storage[item.kind]
         where dynamic.views.storage.keys.contains(item.kind) else { return }
 
-      let view = classType.init().then {
-        ($0 as? SpotConfigurable)?.configure(&component.items[index])
-        guard let size = ($0 as? SpotConfigurable)?.size else { return }
-        $0.frame.size = size
+      let view = classType.init()
+      (view as? SpotConfigurable)?.configure(&component.items[index])
+      if let size = (view as? SpotConfigurable)?.size {
+        view.frame.size = size
       }
+
       scrollView.addSubview(view)
       component.items.append(item)
     }
@@ -119,10 +122,10 @@ public extension Spotable where Self : Viewable {
     guard case let Registry.Item.classType(classType)? = dynamic.views.storage[item.kind]
       where dynamic.views.storage.keys.contains(item.kind) else { return }
 
-    let view = classType.init().then {
-      ($0 as? SpotConfigurable)?.configure(&component.items[index])
-      guard let size = ($0 as? SpotConfigurable)?.size else { return }
-      $0.frame.size = size
+    let view = classType.init()
+    (view as? SpotConfigurable)?.configure(&component.items[index])
+    if let size = (view as? SpotConfigurable)?.size {
+      view.frame.size = size
     }
     #if os(iOS)
       scrollView.insertSubview(view, atIndex: index)
@@ -144,10 +147,10 @@ public extension Spotable where Self : Viewable {
       guard case let Registry.Item.classType(classType)? = dynamic.views.storage[item.kind]
         where dynamic.views.storage.keys.contains(item.kind) else { return }
 
-      let view = classType.init().then {
-        ($0 as? SpotConfigurable)?.configure(&component.items[index])
-        guard let size = ($0 as? SpotConfigurable)?.size else { return }
-        $0.frame.size = size
+      let view = classType.init()
+      (view as? SpotConfigurable)?.configure(&component.items[index])
+      if let size = (view as? SpotConfigurable)?.size {
+        view.frame.size = size
       }
       #if os(iOS)
         scrollView.insertSubview(view, atIndex: index)

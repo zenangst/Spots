@@ -72,7 +72,7 @@ public class CarouselSpot: NSObject, Gridable {
   public var pageIndicator: Bool = false {
     willSet(value) {
       if value {
-        pageControl.width = backgroundView.frame.width
+        pageControl.frame.size.width = backgroundView.frame.width
         collectionView.backgroundView?.addSubview(pageControl)
       } else {
         pageControl.removeFromSuperview()
@@ -95,25 +95,34 @@ public class CarouselSpot: NSObject, Gridable {
   public lazy var collectionAdapter: CollectionAdapter = CollectionAdapter(spot: self)
 
   /// A UIPageControl, enable by setting pageIndicator to true
-  public lazy var pageControl = UIPageControl().then {
-    $0.frame.size.height = 22
-    $0.pageIndicatorTintColor = UIColor.lightGrayColor()
-    $0.currentPageIndicatorTintColor = UIColor.grayColor()
-  }
+  public lazy var pageControl: UIPageControl = {
+    let pageControl = UIPageControl()
+    pageControl.frame.size.height = 22
+    pageControl.pageIndicatorTintColor = UIColor.lightGrayColor()
+    pageControl.currentPageIndicatorTintColor = UIColor.grayColor()
+
+    return pageControl
+  }()
 
   /// A custom UICollectionViewFlowLayout
-  public lazy var layout: CollectionLayout = GridableLayout().then {
-    $0.scrollDirection = .Horizontal
-  }
+  public lazy var layout: CollectionLayout = {
+    let layout = GridableLayout()
+    layout.scrollDirection = .Horizontal
+
+    return layout
+  }()
 
   /// A UICollectionView, used as the main UI component for a CarouselSpot
-  public lazy var collectionView: UICollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: self.layout).then {
-    $0.dataSource = self.collectionAdapter
-    $0.delegate = self.collectionAdapter
-    $0.showsHorizontalScrollIndicator = false
-    $0.backgroundView = self.backgroundView
-    $0.alwaysBounceHorizontal = true
-  }
+  public lazy var collectionView: UICollectionView = { [unowned self] in
+    let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: self.layout)
+    collectionView.dataSource = self.collectionAdapter
+    collectionView.delegate = self.collectionAdapter
+    collectionView.showsHorizontalScrollIndicator = false
+    collectionView.backgroundView = self.backgroundView
+    collectionView.alwaysBounceHorizontal = true
+
+    return collectionView
+  }()
 
   /// The collection views background view
   public lazy var backgroundView = UIView()
@@ -180,12 +189,12 @@ public class CarouselSpot: NSObject, Gridable {
     collectionView.frame.size = size
 
     if collectionView.contentSize.height > 0 {
-      collectionView.height = collectionView.contentSize.height
+      collectionView.frame.size.height = collectionView.contentSize.height
     } else {
-      collectionView.height = component.items.sort({ $0.size.height > $1.size.height }).first?.size.height ?? 0
+      collectionView.frame.size.height = component.items.sort({ $0.size.height > $1.size.height }).first?.size.height ?? 0
 
-      if collectionView.height > 0 {
-        collectionView.height += layout.sectionInset.top + layout.sectionInset.bottom
+      if collectionView.frame.size.height > 0 {
+        collectionView.frame.size.height += layout.sectionInset.top + layout.sectionInset.bottom
       }
     }
 
@@ -201,7 +210,7 @@ public class CarouselSpot: NSObject, Gridable {
 
     if !component.header.isEmpty {
       let resolve = self.dynamicType.headers.make(component.header)
-      layout.headerReferenceSize.width = collectionView.width
+      layout.headerReferenceSize.width = collectionView.frame.size.width
       layout.headerReferenceSize.height = resolve?.view?.frame.size.height ?? 0.0
     }
 
@@ -210,9 +219,9 @@ public class CarouselSpot: NSObject, Gridable {
     collectionView.frame.size.height += layout.headerReferenceSize.height
 
     guard pageIndicator else { return }
-    layout.sectionInset.bottom = layout.sectionInset.bottom + pageControl.height
-    collectionView.height += layout.sectionInset.top + layout.sectionInset.bottom
-    pageControl.frame.origin.y = collectionView.height - pageControl.height
+    layout.sectionInset.bottom = layout.sectionInset.bottom + pageControl.frame.size.height
+    collectionView.frame.size.height += layout.sectionInset.top + layout.sectionInset.bottom
+    pageControl.frame.origin.y = collectionView.frame.size.height - pageControl.frame.size.height
   }
 
   /**

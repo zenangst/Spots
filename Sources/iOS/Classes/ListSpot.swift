@@ -80,7 +80,7 @@ public class ListSpot: NSObject, Listable {
 
     tableView.frame.size = size
     tableView.contentSize = CGSize(
-      width: tableView.width,
+      width: tableView.frame.size.width,
       height: height - tableView.contentInset.top - tableView.contentInset.bottom)
 
     ListSpot.configure?(view: tableView)

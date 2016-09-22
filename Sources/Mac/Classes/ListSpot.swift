@@ -51,42 +51,57 @@ public class ListSpot: NSObject, Listable {
 
   private lazy var listAdapter: ListAdapter = ListAdapter(spot: self)
 
-  public lazy var scrollView: ScrollView = ScrollView().then {
-    $0.documentView = NSView()
-  }
+  public lazy var scrollView: ScrollView = {
+    let scrollView = ScrollView()
+    scrollView.documentView = NSView()
 
-  public lazy var titleView: NSTextField = NSTextField().then {
-    $0.editable = false
-    $0.selectable = false
-    $0.bezeled = false
-    $0.textColor = NSColor.grayColor()
-    $0.drawsBackground = false
-  }
+    return scrollView
+  }()
 
-  public lazy var tableView: NSTableView = NSTableView(frame: CGRect.zero).then {
-    $0.backgroundColor = NSColor.clearColor()
-    $0.allowsColumnReordering = false
-    $0.allowsColumnResizing = false
-    $0.allowsColumnSelection = false
-    $0.allowsEmptySelection = true
-    $0.allowsMultipleSelection = false
-    $0.headerView = nil
-    $0.selectionHighlightStyle = .None
-    $0.allowsTypeSelect = true
-    $0.focusRingType = .None
-  }
+  public lazy var titleView: NSTextField = {
+    let titleView = NSTextField()
+    titleView.editable = false
+    titleView.selectable = false
+    titleView.bezeled = false
+    titleView.textColor = NSColor.grayColor()
+    titleView.drawsBackground = false
 
-  public lazy var tableColumn = NSTableColumn(identifier: "tableview-column").then {
-    $0.maxWidth = 250
-    $0.width = 250
-    $0.minWidth = 150
-  }
+    return titleView
+  }()
 
-  lazy var lineView = NSView().then {
-    $0.frame.size.height = 1
-    $0.wantsLayer = true
-    $0.layer?.backgroundColor = NSColor.grayColor().colorWithAlphaComponent(0.2).CGColor
-  }
+  public lazy var tableView: NSTableView = {
+    let tableView = NSTableView(frame: CGRect.zero)
+    tableView.backgroundColor = NSColor.clearColor()
+    tableView.allowsColumnReordering = false
+    tableView.allowsColumnResizing = false
+    tableView.allowsColumnSelection = false
+    tableView.allowsEmptySelection = true
+    tableView.allowsMultipleSelection = false
+    tableView.headerView = nil
+    tableView.selectionHighlightStyle = .None
+    tableView.allowsTypeSelect = true
+    tableView.focusRingType = .None
+
+    return tableView
+  }()
+
+  public lazy var tableColumn: NSTableColumn = {
+    let column = NSTableColumn(identifier: "tableview-column")
+    column.maxWidth = 250
+    column.width = 250
+    column.minWidth = 150
+
+    return column
+  }()
+
+  lazy var lineView: NSView = {
+    let lineView = NSView()
+    lineView.frame.size.height = 1
+    lineView.wantsLayer = true
+    lineView.layer?.backgroundColor = NSColor.grayColor().colorWithAlphaComponent(0.2).CGColor
+
+    return lineView
+  }()
 
   public required init(component: Component) {
     self.component = component

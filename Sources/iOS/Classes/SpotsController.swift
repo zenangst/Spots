@@ -88,13 +88,14 @@ public class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDel
   weak public var spotsScrollDelegate: SpotsScrollDelegate?
 
   /// A custom scroll view that handles the scrolling for all internal scroll views
-  lazy public var spotsScrollView: SpotsScrollView = SpotsScrollView().then { [weak self] in
-    guard let strongSelf = self else { return }
+  lazy public var spotsScrollView: SpotsScrollView = {  [unowned self] in
+    let scrollView = SpotsScrollView()
+    scrollView.alwaysBounceVertical = true
+    scrollView.clipsToBounds = true
+    scrollView.delegate = self
 
-    $0.alwaysBounceVertical = true
-    $0.clipsToBounds = true
-    $0.delegate = strongSelf
-  }
+    return scrollView
+  }()
 
 #if os(iOS)
   /// A UIRefresh control
@@ -222,7 +223,7 @@ public class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDel
 
     if let tabBarController = self.tabBarController
       where tabBarController.tabBar.translucent {
-        spotsScrollView.contentInset.bottom = tabBarController.tabBar.height
+        spotsScrollView.contentInset.bottom = tabBarController.tabBar.frame.size.height
         spotsScrollView.scrollIndicatorInsets.bottom = spotsScrollView.contentInset.bottom
     }
 #if os(iOS)
@@ -295,12 +296,11 @@ public class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDel
   public func setupSpot(index: Int, spot: Spotable) {
     spot.spotsCompositeDelegate = self
     spots[index].component.index = index
-    spot.render().optimize()
     spot.registerAndPrepare()
     spot.setup(spotsScrollView.frame.size)
     spot.component.size = CGSize(
-      width: view.width,
-      height: ceil(spot.render().height))
+      width: view.frame.size.width,
+      height: ceil(spot.render().frame.size.height))
   }
 
   #if os(iOS)

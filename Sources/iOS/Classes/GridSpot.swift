@@ -37,11 +37,14 @@ public class GridSpot: NSObject, Gridable {
   /// Indicator to calculate the height based on content
   public var usesDynamicHeight = true
 
-  public lazy var collectionView: UICollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: self.layout).then {
-    $0.dataSource = self.collectionAdapter
-    $0.delegate = self.collectionAdapter
-    $0.scrollEnabled = false
-  }
+  public lazy var collectionView: UICollectionView = { [unowned self] in
+    let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: self.layout)
+    collectionView.dataSource = self.collectionAdapter
+    collectionView.delegate = self.collectionAdapter
+    collectionView.scrollEnabled = false
+
+    return collectionView
+  }()
 
   public required init(component: Component) {
     self.component = component

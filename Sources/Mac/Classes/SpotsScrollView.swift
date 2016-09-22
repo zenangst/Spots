@@ -14,10 +14,13 @@ public class SpotsScrollView: NSScrollView {
     }
   }
 
-  lazy public var spotsContentView: SpotsContentView = SpotsContentView().then {
-    $0.autoresizingMask = [.ViewWidthSizable, .ViewHeightSizable]
-    $0.autoresizesSubviews = true
-  }
+  lazy public var spotsContentView: SpotsContentView = {
+    let contentView = SpotsContentView()
+    contentView.autoresizingMask = [.ViewWidthSizable, .ViewHeightSizable]
+    contentView.autoresizesSubviews = true
+
+    return contentView
+  }()
 
   override init(frame frameRect: NSRect) {
     super.init(frame: frameRect)

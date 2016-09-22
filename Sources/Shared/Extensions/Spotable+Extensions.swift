@@ -224,10 +224,8 @@ public extension Spotable {
     #if !os(OSX)
       if let composite = view as? SpotComposable {
         let spots = composite.parse(viewModel)
-        for spot in spots {
-          spot.registerAndPrepare()
-          spot.render().optimize()
-        }
+
+        spots.forEach { $0.registerAndPrepare() }
 
         if spotsCompositeDelegate?.compositeSpots[component.index] == nil {
           spotsCompositeDelegate?.compositeSpots[component.index] = [index : spots]

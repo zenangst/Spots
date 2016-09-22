@@ -30,25 +30,34 @@ public class GridSpotItem: NSCollectionViewItem, SpotConfigurable {
   public var size = CGSize(width: 0, height: 88)
   public var customView = FlippedView()
 
-  public lazy var customImageView = NSImageView().then {
-    $0.autoresizingMask = .ViewWidthSizable
-  }
+  public lazy var customImageView: NSImageView = {
+    let customImageView = NSImageView()
+    customImageView.autoresizingMask = .ViewWidthSizable
 
-  public lazy var titleLabel = NSTextField().then {
-    $0.editable = false
-    $0.selectable = false
-    $0.bezeled = false
-    $0.textColor = NSColor.whiteColor()
-    $0.drawsBackground = false
-  }
+    return customImageView
+  }()
 
-  public lazy var subtitleLabel = NSTextField().then {
-    $0.editable = false
-    $0.selectable = false
-    $0.bezeled = false
-    $0.textColor = NSColor.lightGrayColor()
-    $0.drawsBackground = false
-  }
+  public lazy var titleLabel: NSTextField = {
+    let titleLabel = NSTextField()
+    titleLabel.editable = false
+    titleLabel.selectable = false
+    titleLabel.bezeled = false
+    titleLabel.textColor = NSColor.whiteColor()
+    titleLabel.drawsBackground = false
+
+    return titleLabel
+  }()
+
+  public lazy var subtitleLabel: NSTextField = {
+    let subtitleLabel = NSTextField()
+    subtitleLabel.editable = false
+    subtitleLabel.selectable = false
+    subtitleLabel.bezeled = false
+    subtitleLabel.textColor = NSColor.lightGrayColor()
+    subtitleLabel.drawsBackground = false
+
+    return subtitleLabel
+  }()
 
   override init?(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
     super.init(nibName: nil, bundle: nil)
