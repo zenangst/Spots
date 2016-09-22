@@ -5,6 +5,7 @@ public class ListSpot: NSObject, Listable {
 
   public struct Key {
     public static let headerHeight = "headerHeight"
+    public static let separator = "separator"
   }
 
   public static var views: Registry = Registry()
@@ -89,6 +90,12 @@ public class ListSpot: NSObject, Listable {
     tableView.dataSource = self.listAdapter
     tableView.delegate = self.listAdapter
     tableView.rowHeight = UITableViewAutomaticDimension
+
+    if let separator = component.meta(Key.separator, type: Bool.self) {
+      tableView.separatorStyle = separator
+        ? .SingleLine
+        : .None
+    }
   }
 
   // MARK: - Spotable
