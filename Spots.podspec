@@ -22,4 +22,5 @@ Pod::Spec.new do |s|
   s.dependency 'Tailor'
   s.dependency 'Brick'
   s.dependency 'Cache'
+  s.dependency 'CryptoSwift', '0.5.2'
 end
