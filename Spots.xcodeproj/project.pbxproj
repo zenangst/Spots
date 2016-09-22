@@ -183,8 +183,6 @@
 		BD4295561D81D39700E07E1C /* TestCarouselSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4295541D81D39700E07E1C /* TestCarouselSpot.swift */; };
 		BD4295581D81D45D00E07E1C /* TestViewSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4295571D81D45D00E07E1C /* TestViewSpot.swift */; };
 		BD4295591D81D45D00E07E1C /* TestViewSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4295571D81D45D00E07E1C /* TestViewSpot.swift */; };
-		BD7397251D718CD2000AF2DE /* Tailor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478E91C440726006EBA49 /* Tailor.framework */; };
-		BD7397271D718CD2000AF2DE /* Brick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD352E5E1CBAD6EC002CD032 /* Brick.framework */; };
 		BD7397381D718CDB000AF2DE /* TestComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D584782B1C43FF34006EBA49 /* TestComponent.swift */; };
 		BD73973A1D718CDB000AF2DE /* TestSpotFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58478281C43FF34006EBA49 /* TestSpotFactory.swift */; };
 		BD73973B1D718CDB000AF2DE /* TestSpotsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58478291C43FF34006EBA49 /* TestSpotsController.swift */; };
@@ -199,6 +197,7 @@
 		BDAEC3871D93ECD700423C05 /* ListAdapter+UITableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAEC3851D93ECD700423C05 /* ListAdapter+UITableViewDelegate.swift */; };
 		BDAEC3891D93ECE400423C05 /* ListAdapter+UITableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAEC3881D93ECE400423C05 /* ListAdapter+UITableViewDataSource.swift */; };
 		BDAEC38A1D93ECE400423C05 /* ListAdapter+UITableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAEC3881D93ECE400423C05 /* ListAdapter+UITableViewDataSource.swift */; };
+		BDD63FAC1D941A80008E885A /* Tailor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDD63FAB1D941A80008E885A /* Tailor.framework */; };
 		BDEED2E81D8446400030B475 /* TestSpotsScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEED2E71D8446400030B475 /* TestSpotsScrollView.swift */; };
 		BDEED2E91D8446400030B475 /* TestSpotsScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEED2E71D8446400030B475 /* TestSpotsScrollView.swift */; };
 		D58478141C43FEB9006EBA49 /* Spots.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478091C43FEB8006EBA49 /* Spots.framework */; };
@@ -333,6 +332,7 @@
 		BDAEC3881D93ECE400423C05 /* ListAdapter+UITableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ListAdapter+UITableViewDataSource.swift"; sourceTree = "<group>"; };
 		BDB538321C444D460005E498 /* Playground-iOS.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Playground-iOS.playground"; sourceTree = "<group>"; };
 		BDB648551D75EF150041449A /* Info-tvOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-tvOS.plist"; sourceTree = "<group>"; };
+		BDD63FAB1D941A80008E885A /* Tailor.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Tailor.framework; path = Carthage/Build/tvOS/Tailor.framework; sourceTree = "<group>"; };
 		BDEED2E71D8446400030B475 /* TestSpotsScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSpotsScrollView.swift; sourceTree = "<group>"; };
 		D58478091C43FEB8006EBA49 /* Spots.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Spots.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D58478131C43FEB9006EBA49 /* Spots-iOS-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Spots-iOS-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -346,7 +346,6 @@
 		D58478C81C440567006EBA49 /* Spots.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Spots.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D58478D11C440567006EBA49 /* Spots-Mac-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Spots-Mac-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D58478E91C440726006EBA49 /* Tailor.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Tailor.framework; path = Carthage/Build/iOS/Tailor.framework; sourceTree = "<group>"; };
-		D58478EA1C440726006EBA49 /* Imaginary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Imaginary.framework; path = Carthage/Build/iOS/Imaginary.framework; sourceTree = "<group>"; };
 		D58478EC1C440726006EBA49 /* Cache.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cache.framework; path = Carthage/Build/iOS/Cache.framework; sourceTree = "<group>"; };
 		D58478F71C44076B006EBA49 /* Tailor.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Tailor.framework; path = Carthage/Build/Mac/Tailor.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -356,8 +355,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BD7397251D718CD2000AF2DE /* Tailor.framework in Frameworks */,
-				BD7397271D718CD2000AF2DE /* Brick.framework in Frameworks */,
+				BDD63FAC1D941A80008E885A /* Tailor.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -634,9 +632,18 @@
 			path = Playgrounds;
 			sourceTree = "<group>";
 		};
+		BDD63FAA1D941A4A008E885A /* Frameworks-tvOS */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Frameworks-tvOS";
+			sourceTree = "<group>";
+		};
 		D58477FF1C43FEB8006EBA49 = {
 			isa = PBXGroup;
 			children = (
+				BDD63FAB1D941A80008E885A /* Tailor.framework */,
+				BDD63FAA1D941A4A008E885A /* Frameworks-tvOS */,
 				D58478F11C44072B006EBA49 /* Frameworks-iOS */,
 				D58479001C44078B006EBA49 /* Frameworks-Mac */,
 				BDB538311C444D460005E498 /* Playgrounds */,
@@ -710,7 +717,6 @@
 			children = (
 				BD352E5E1CBAD6EC002CD032 /* Brick.framework */,
 				D58478E91C440726006EBA49 /* Tailor.framework */,
-				D58478EA1C440726006EBA49 /* Imaginary.framework */,
 				D58478EC1C440726006EBA49 /* Cache.framework */,
 			);
 			name = "Frameworks-iOS";
