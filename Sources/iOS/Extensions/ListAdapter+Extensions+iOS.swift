@@ -199,9 +199,11 @@ extension ListAdapter {
 
       spot.prepareItems()
       spot.updateHeight() { completion?() }
+      return
     } else if let cell = spot.tableView.cellForRowAtIndexPath(indexPath) as? SpotConfigurable {
       cell.configure(&spot.items[index])
     }
+    completion?()
   }
 
   /**
