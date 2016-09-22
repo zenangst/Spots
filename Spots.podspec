@@ -18,7 +18,6 @@ Pod::Spec.new do |s|
   s.tvos.source_files = 'Sources/{iOS,tvOS,Shared}/**/*'
 
   s.frameworks = 'Foundation'
-  s.dependency 'Sugar'
   s.dependency 'Tailor'
   s.dependency 'Brick'
   s.dependency 'Cache'
