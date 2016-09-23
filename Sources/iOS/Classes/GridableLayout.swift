@@ -24,7 +24,7 @@ public class GridableLayout: UICollectionViewFlowLayout {
       contentSize.height += sectionInset.top + sectionInset.bottom
 
       if let spot = adapter.spot as? CarouselSpot where spot.pageIndicator {
-        contentSize.height += spot.pageControl.frame.size.height
+        contentSize.height += spot.pageControl.frame.height
       }
     } else {
       contentSize.height = adapter.spot.items.reduce(0, combine: { $0 + $1.size.height })
