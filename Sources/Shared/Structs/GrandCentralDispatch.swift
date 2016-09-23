@@ -28,7 +28,6 @@ struct Dispatch {
     return queue
   }
 
-
   static func mainQueue(closure: () -> Void) {
     inQueue(queue: .Main, closure: closure)
   }
