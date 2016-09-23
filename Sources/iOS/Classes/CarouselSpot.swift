@@ -239,8 +239,7 @@ public class CarouselSpot: NSObject, Gridable {
   }
 
   func registerDefaultHeader(header view: View.Type) {
-    if self.dynamicType.headers.storage[self.dynamicType.headers.defaultIdentifier] == nil {
-      self.dynamicType.headers.defaultItem = Registry.Item.classType(view)
-    }
+    guard self.dynamicType.headers.storage[self.dynamicType.headers.defaultIdentifier] == nil else { return }
+    self.dynamicType.headers.defaultItem = Registry.Item.classType(view)
   }
 }
