@@ -54,9 +54,12 @@ public class SpotsController: NSViewController, SpotsProtocol {
   }
 
   /// A custom scroll view that handles the scrolling for all internal scroll views
-  lazy public var spotsScrollView: SpotsScrollView = SpotsScrollView().then {
-    $0.autoresizingMask = [ .ViewWidthSizable, .ViewHeightSizable ]
-  }
+  lazy public var spotsScrollView: SpotsScrollView = {
+    let spotsScrollView = SpotsScrollView()
+    spotsScrollView.autoresizingMask = [ .ViewWidthSizable, .ViewHeightSizable ]
+
+    return spotsScrollView
+  }()
 
   /// A scroll delegate for handling spotDidReachBeginning and spotDidReachEnd
   weak public var spotsScrollDelegate: SpotsScrollDelegate?

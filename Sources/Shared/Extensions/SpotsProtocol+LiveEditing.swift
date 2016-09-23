@@ -1,4 +1,3 @@
-import Sugar
 import Cache
 
 #if DEVMODE
@@ -58,8 +57,8 @@ import Cache
     }
 
     func liveEditing(stateCache: SpotCache?) {
-      #if os(iOS)
-        guard let stateCache = stateCache where source == nil && Simulator.isRunning else { return }
+      #if (arch(i386) || arch(x86_64)) && os(iOS)
+        guard let stateCache = stateCache where source == nil else { return }
       #else
         guard let stateCache = stateCache else { return }
       #endif
@@ -70,7 +69,7 @@ import Cache
       print("🎍 SPOTS: Caching...")
       print("Cache key: \(stateCache.key)")
       print("File path: file://\(stateCache.path)\n")
-      delay(0.5) { self.monitor(stateCache.path) }
+      Dispatch.delay(for: 0.5) { self.monitor(stateCache.path) }
     }
   }
 #endif

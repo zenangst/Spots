@@ -12,5 +12,5 @@ script:
 - xcodebuild test -project Spots.xcodeproj -scheme "Spots-iOS" -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 6,OS=9.3'
 - xcodebuild clean build -project Spots.xcodeproj -scheme "Spots-Mac" -sdk macosx
 - xcodebuild test -project Spots.xcodeproj -scheme "Spots-Mac" -sdk macosx
-#- xcodebuild clean build -project Spots.xcodeproj -scheme "Spots-tvOS" -sdk appletvos9.2
-#- xcodebuild test -project Spots.xcodeproj -scheme "Spots-tvOS" -sdk appletvos9.2
+#- xcodebuild clean build -project Spots.xcodeproj -scheme "Spots-tvOS" -destination 'platform=tvOS Simulator,name=Apple TV 1080p,OS=9.2'
+#- xcodebuild test -project Spots.xcodeproj -scheme "Spots-tvOS" -destination 'platform=tvOS Simulator,name=Apple TV 1080p,OS=9.2'

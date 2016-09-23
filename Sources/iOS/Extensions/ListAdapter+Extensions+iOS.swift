@@ -1,6 +1,5 @@
 import Brick
 import UIKit
-import Sugar
 
 extension ListAdapter {
 
@@ -17,7 +16,7 @@ extension ListAdapter {
     let count = spot.component.items.count
     spot.component.items.append(item)
 
-    dispatch { [weak self] in
+    Dispatch.mainQueue { [weak self] in
       self?.spot.tableView.insert([count], animation: animation.tableViewAnimation)
       self?.spot.updateHeight() {
         completion?()
@@ -43,7 +42,7 @@ extension ListAdapter {
       spot.configureItem(count + $0.index)
     }
 
-    dispatch { [weak self] in
+    Dispatch.mainQueue { [weak self] in
       self?.spot.tableView.insert(indexes, animation: animation.tableViewAnimation)
       self?.spot.updateHeight() {
         completion?()
@@ -60,7 +59,7 @@ extension ListAdapter {
   public func insert(item: ViewModel, index: Int = 0, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     spot.component.items.insert(item, atIndex: index)
 
-    dispatch { [weak self] in
+    Dispatch.mainQueue { [weak self] in
       self?.spot.tableView.insert([index], animation: animation.tableViewAnimation)
       self?.spot.updateHeight() {
         completion?()
@@ -78,7 +77,7 @@ extension ListAdapter {
 
     spot.component.items.insertContentsOf(items, at: 0)
 
-    dispatch { [weak self, spot = spot] in
+    Dispatch.mainQueue { [weak self, spot = spot] in
       items.enumerate().forEach {
         let index = items.count - 1 - $0.index
         indexes.append(index)
@@ -103,7 +102,7 @@ extension ListAdapter {
 
     spot.component.items.removeAtIndex(index)
 
-    dispatch { [weak self] in
+    Dispatch.mainQueue { [weak self] in
       self?.spot.tableView.delete([index], animation: animation.tableViewAnimation)
       self?.spot.updateHeight() {
         completion?()
@@ -125,7 +124,7 @@ extension ListAdapter {
       spot.component.items.append(item)
     }
 
-    dispatch { [weak self] in
+    Dispatch.mainQueue { [weak self] in
       self?.spot.tableView.delete(indexPaths, animation: animation.tableViewAnimation)
       self?.spot.updateHeight() {
         completion?()
@@ -139,7 +138,7 @@ extension ListAdapter {
    - Parameter completion: A completion closure that is executed in the main queue when the view model has been removed
    */
   public func delete(index: Int, withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
-    dispatch { [weak self] in
+    Dispatch.mainQueue { [weak self] in
       self?.spot.component.items.removeAtIndex(index)
       self?.spot.tableView.delete([index], animation: animation.tableViewAnimation)
       self?.spot.updateHeight() {
@@ -154,7 +153,7 @@ extension ListAdapter {
    - Parameter completion: A completion closure that is executed in the main queue when the view model has been removed
    */
   public func delete(indexes: [Int], withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
-    dispatch { [weak self] in
+    Dispatch.mainQueue { [weak self] in
       indexes.forEach { self?.spot.component.items.removeAtIndex($0) }
       self?.spot.tableView.delete(indexes, section: 0, animation: animation.tableViewAnimation)
       self?.spot.updateHeight() {
@@ -200,9 +199,11 @@ extension ListAdapter {
 
       spot.prepareItems()
       spot.updateHeight() { completion?() }
+      return
     } else if let cell = spot.tableView.cellForRowAtIndexPath(indexPath) as? SpotConfigurable {
       cell.configure(&spot.items[index])
     }
+    completion?()
   }
 
   /**

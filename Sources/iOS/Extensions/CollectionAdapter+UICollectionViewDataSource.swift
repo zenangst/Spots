@@ -46,11 +46,6 @@ extension CollectionAdapter : UICollectionViewDataSource {
 
     let reuseIdentifier = spot.identifier(indexPath)
     let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath)
-
-    #if os(iOS)
-      cell.optimize()
-    #endif
-
     if let composite = cell as? SpotComposable {
       let spots = spot.spotsCompositeDelegate?.resolve(spotIndex: spot.index, itemIndex: indexPath.item)
       composite.configure(&spot.component.items[indexPath.item], spots: spots)

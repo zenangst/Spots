@@ -55,8 +55,8 @@ extension ListAdapter: UITableViewDelegate {
     guard !spot.component.header.isEmpty else { return nil }
 
     let view = tableView.dequeueReusableHeaderFooterViewWithIdentifier(spot.component.header)
-    view?.height = spot.component.meta(ListSpot.Key.headerHeight, 0.0)
-    view?.width = spot.tableView.width
+    view?.frame.size.height = spot.component.meta(ListSpot.Key.headerHeight, 0.0)
+    view?.frame.size.width = spot.tableView.frame.size.width
     (view as? Componentable)?.configure(spot.component)
 
     return view
@@ -71,8 +71,8 @@ extension ListAdapter: UITableViewDelegate {
    */
   public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
     spot.component.size = CGSize(
-      width: tableView.width,
-      height: tableView.height)
+      width: tableView.frame.size.width,
+      height: tableView.frame.size.height)
 
     return spot.item(indexPath)?.size.height ?? 0
   }

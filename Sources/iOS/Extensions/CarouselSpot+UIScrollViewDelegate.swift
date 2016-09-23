@@ -11,12 +11,12 @@ extension CarouselSpot: UIScrollViewDelegate {
     #if os(iOS)
     var currentCellOffset = collectionView.contentOffset
     if paginateByItem {
-      currentCellOffset.x += collectionView.width / 2
+      currentCellOffset.x += collectionView.frame.size.width / 2
     } else {
       if pageControl.currentPage == 0 {
-        currentCellOffset.x = collectionView.width / 2
+        currentCellOffset.x = collectionView.frame.size.width / 2
       } else {
-        currentCellOffset.x = (collectionView.width * CGFloat(pageControl.currentPage)) + collectionView.width / 2
+        currentCellOffset.x = (collectionView.frame.size.width * CGFloat(pageControl.currentPage)) + collectionView.frame.size.width / 2
         currentCellOffset.x += layout.sectionInset.left * CGFloat(pageControl.currentPage)
       }
     }
@@ -66,7 +66,7 @@ extension CarouselSpot: UIScrollViewDelegate {
       guard paginate else { return }
     #endif
 
-    let pageWidth: CGFloat = collectionView.width
+    let pageWidth: CGFloat = collectionView.frame.size.width
     let currentOffset = scrollView.contentOffset.x
     let targetOffset = targetContentOffset.memory.x
 
@@ -102,7 +102,7 @@ extension CarouselSpot: UIScrollViewDelegate {
    */
   public func scrollTo(predicate: (ViewModel) -> Bool) {
     if let index = items.indexOf(predicate) {
-      let pageWidth: CGFloat = collectionView.width - layout.sectionInset.right
+      let pageWidth: CGFloat = collectionView.frame.size.width - layout.sectionInset.right
         + layout.sectionInset.left
 
       collectionView.setContentOffset(CGPoint(x: pageWidth * CGFloat(index), y:0), animated: true)

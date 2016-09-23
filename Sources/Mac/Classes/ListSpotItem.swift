@@ -21,29 +21,38 @@ public class ListSpotItem: NSTableRowView, SpotConfigurable {
 
   public var size = CGSize(width: 0, height: 88)
 
-  lazy var titleLabel = NSTextField().then {
-    $0.editable = false
-    $0.selectable = false
-    $0.bezeled = false
-    $0.textColor = NSColor.whiteColor()
-    $0.drawsBackground = false
-  }
+  lazy var titleLabel: NSTextField = {
+    let titleLabel = NSTextField()
+    titleLabel.editable = false
+    titleLabel.selectable = false
+    titleLabel.bezeled = false
+    titleLabel.textColor = NSColor.whiteColor()
+    titleLabel.drawsBackground = false
 
-  lazy var subtitleLabel = NSTextField().then {
-    $0.editable = false
-    $0.selectable = false
-    $0.bezeled = false
-    $0.textColor = NSColor.lightGrayColor()
-    $0.drawsBackground = false
-  }
+    return titleLabel
+  }()
 
-  lazy var lineView = NSView().then {
-    $0.frame.size.height = 1
-    $0.wantsLayer = true
-    $0.layer = CALayer()
-    $0.layer?.backgroundColor = NSColor.grayColor().colorWithAlphaComponent(0.4).CGColor
-    $0.autoresizingMask = .ViewWidthSizable
-  }
+  lazy var subtitleLabel: NSTextField = {
+    let subtitleLabel = NSTextField()
+    subtitleLabel.editable = false
+    subtitleLabel.selectable = false
+    subtitleLabel.bezeled = false
+    subtitleLabel.textColor = NSColor.lightGrayColor()
+    subtitleLabel.drawsBackground = false
+
+    return subtitleLabel
+  }()
+
+  lazy var lineView: NSView = {
+    let lineView = NSView()
+    lineView.frame.size.height = 1
+    lineView.wantsLayer = true
+    lineView.layer = CALayer()
+    lineView.layer?.backgroundColor = NSColor.grayColor().colorWithAlphaComponent(0.4).CGColor
+    lineView.autoresizingMask = .ViewWidthSizable
+
+    return lineView
+  }()
 
   override init(frame frameRect: NSRect) {
     super.init(frame: frameRect)

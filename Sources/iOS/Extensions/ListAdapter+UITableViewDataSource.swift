@@ -1,7 +1,6 @@
 import UIKit
 
-// MARK: - UITableViewDataSource
-
+/// MARK: - UITableViewDataSource
 extension ListAdapter: UITableViewDataSource {
 
   /**
@@ -31,10 +30,6 @@ extension ListAdapter: UITableViewDataSource {
     let reuseIdentifier = spot.identifier(indexPath)
     let cell: UITableViewCell = tableView
       .dequeueReusableCellWithIdentifier(reuseIdentifier, forIndexPath: indexPath)
-
-    #if os(iOS)
-      cell.optimize()
-    #endif
 
     guard indexPath.item < spot.component.items.count else { return cell }
 

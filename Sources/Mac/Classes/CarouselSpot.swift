@@ -1,5 +1,4 @@
 import Cocoa
-import Sugar
 import Brick
 
 public class CarouselSpot: NSObject, Gridable {
@@ -56,29 +55,38 @@ public class CarouselSpot: NSObject, Gridable {
 
   public lazy var layout: NSCollectionViewLayout = NSCollectionViewFlowLayout()
 
-  public lazy var titleView: NSTextField = NSTextField().then {
-    $0.editable = false
-    $0.selectable = false
-    $0.bezeled = false
-    $0.drawsBackground = false
-    $0.textColor = NSColor.grayColor()
-  }
+  public lazy var titleView: NSTextField = {
+    let titleView = NSTextField()
+    titleView.editable = false
+    titleView.selectable = false
+    titleView.bezeled = false
+    titleView.drawsBackground = false
+    titleView.textColor = NSColor.grayColor()
+
+    return titleView
+  }()
 
   public lazy var scrollView: ScrollView = ScrollView()
 
-  public lazy var collectionView: NSCollectionView = NSCollectionView().then {
-    $0.selectable = true
-    $0.backgroundColors = [NSColor.clearColor()]
+  public lazy var collectionView: NSCollectionView = {
+    let collectionView = NSCollectionView()
+    collectionView.selectable = true
+    collectionView.backgroundColors = [NSColor.clearColor()]
 
     let view = NSView()
-    $0.backgroundView = view
-  }
+    collectionView.backgroundView = view
 
-  lazy var lineView = NSView().then {
-    $0.frame.size.height = 1
-    $0.wantsLayer = true
-    $0.layer?.backgroundColor = NSColor.grayColor().colorWithAlphaComponent(0.2).CGColor
-  }
+    return collectionView
+  }()
+
+  lazy var lineView: NSView = {
+    let lineView = NSView()
+    lineView.frame.size.height = 1
+    lineView.wantsLayer = true
+    lineView.layer?.backgroundColor = NSColor.grayColor().colorWithAlphaComponent(0.2).CGColor
+
+    return lineView
+  }()
 
   public required init(component: Component) {
     self.component = component

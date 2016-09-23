@@ -5,7 +5,6 @@
 #endif
 
 import Tailor
-import Sugar
 import Brick
 
 public enum ComponentDiff {

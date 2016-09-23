@@ -1,6 +1,5 @@
 import Cocoa
 import Brick
-import Sugar
 
 extension CollectionAdapter {
 
@@ -12,7 +11,7 @@ extension CollectionAdapter {
     let count = spot.component.items.count
     spot.component.items.append(item)
 
-    dispatch { [weak self] in
+    Dispatch.mainQueue { [weak self] in
       guard let collectionView = self?.spot.collectionView else { completion?(); return }
       collectionView.insert([count], completion: {
         self?.spot.setup(collectionView.frame.size)
@@ -30,7 +29,7 @@ extension CollectionAdapter {
       indexes.append(count + $0.index)
     }
 
-    dispatch { [weak self] in
+    Dispatch.mainQueue { [weak self] in
       guard let collectionView = self?.spot.collectionView else { completion?(); return }
       collectionView.insert(indexes) {
         self?.spot.setup(collectionView.frame.size)
@@ -48,7 +47,7 @@ extension CollectionAdapter {
       indexes.append(items.count - 1 - $0.index)
     }
 
-    dispatch { [weak self] in
+    Dispatch.mainQueue { [weak self] in
       guard let collectionView = self?.spot.collectionView else { completion?(); return }
       collectionView.insert(indexes) {
         self?.refreshHeight()
@@ -59,7 +58,7 @@ extension CollectionAdapter {
   public func insert(item: ViewModel, index: Int, withAnimation animation: SpotsAnimation, completion: Completion) {
     spot.component.items.insert(item, atIndex: index)
 
-    dispatch { [weak self] in
+    Dispatch.mainQueue { [weak self] in
       guard let collectionView = self?.spot.collectionView else { completion?(); return }
       collectionView.insert([index]) {
         self?.refreshHeight(completion)
@@ -70,7 +69,7 @@ extension CollectionAdapter {
   public func update(item: ViewModel, index: Int, withAnimation animation: SpotsAnimation, completion: Completion) {
     spot.items[index] = item
 
-    dispatch { [weak self] in
+    Dispatch.mainQueue { [weak self] in
       guard let collectionView = self?.spot.collectionView else { completion?(); return }
       collectionView.reload([index], section: 0) {
         self?.refreshHeight(completion)
@@ -84,7 +83,7 @@ extension CollectionAdapter {
 
     spot.component.items.removeAtIndex(index)
 
-    dispatch { [weak self] in
+    Dispatch.mainQueue { [weak self] in
       guard let collectionView = self?.spot.collectionView else { completion?(); return }
       collectionView.delete([index]) {
         self?.refreshHeight(completion)
@@ -101,7 +100,7 @@ extension CollectionAdapter {
       spot.component.items.append(item)
     }
 
-    dispatch { [weak self] in
+    Dispatch.mainQueue { [weak self] in
       guard let collectionView = self?.spot.collectionView else { completion?(); return }
       collectionView.delete(indexPaths) {
         self?.refreshHeight(completion)
@@ -110,7 +109,7 @@ extension CollectionAdapter {
   }
 
   public func delete(index: Int, withAnimation animation: SpotsAnimation, completion: Completion) {
-    dispatch { [weak self] in
+    Dispatch.mainQueue { [weak self] in
       guard let collectionView = self?.spot.collectionView else { completion?(); return }
       self?.spot.component.items.removeAtIndex(index)
       collectionView.delete([index]) {
@@ -120,7 +119,7 @@ extension CollectionAdapter {
   }
 
   public func delete(indexes: [Int], withAnimation animation: SpotsAnimation, completion: Completion) {
-    dispatch { [weak self] in
+    Dispatch.mainQueue { [weak self] in
       indexes.forEach { self?.spot.component.items.removeAtIndex($0) }
       guard let collectionView = self?.spot.collectionView else { completion?(); return }
       collectionView.delete(indexes) {
@@ -145,7 +144,7 @@ extension CollectionAdapter {
   }
 
   public func reload(indexes: [Int]?, withAnimation animation: SpotsAnimation, completion: Completion) {
-    dispatch { [weak self] in
+    Dispatch.mainQueue { [weak self] in
       guard let collectionView = self?.spot.collectionView else { completion?(); return }
       if let indexes = indexes where animation != .None {
         collectionView.reload(indexes) {
@@ -160,7 +159,7 @@ extension CollectionAdapter {
   }
 
   public func refreshHeight(completion: (() -> Void)? = nil) {
-    delay(0.2) { [weak self] in
+    Dispatch.delay(for: 0.2) { [weak self] in
       guard let weakSelf = self, collectionView = self?.spot.collectionView else { return; completion?() }
       weakSelf.spot.setup(CGSize(width: collectionView.frame.width, height: weakSelf.spot.spotHeight() ?? 0))
       completion?()
