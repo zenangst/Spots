@@ -4,7 +4,6 @@ public enum SpotDispatchQueue {
   case Main, Interactive, Initiated, Utility, Background, Custom(dispatch_queue_t)
 }
 
-
 struct Dispatch {
 
   private static func queue(withType queueType: SpotDispatchQueue = .Main) -> dispatch_queue_t {
