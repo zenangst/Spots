@@ -1,9 +1,8 @@
 disabled_rules:
-  - valid_docs
   - nesting
 opt_in_rules: # some rules are only opt-in
   - empty_count
-    #- missing_docs
+  - missing_docs
   # Find all the available rules by running:
   # swiftlint rules
 included: # paths to include during linting. `--path` is ignored if present.
@@ -26,7 +25,7 @@ type_body_length:
   - 400 # error
 # or they can set both explicitly
 file_length:
-  warning: 500
+  warning: 650
   error: 1200
 # naming rules can set warnings/errors for min_length and max_length
 # additionally they can set excluded names
