@@ -10,7 +10,7 @@ public class CollectionAdapter: NSObject, SpotAdapter {
   /**
    Initialization a new instance of a ListAdapter using a Gridable object
 
-   - Parameter gridable: A Listable object
+   - parameter spot: A Gridable object
    */
   init(spot: Gridable) {
     self.spot = spot

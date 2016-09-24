@@ -60,7 +60,11 @@ public extension SpotsProtocol {
   }
 
   /**
-   - Parameter includeElement: A filter predicate to find a spot
+   Filter Spotable objects inside of controller
+
+   - parameter includeElement: A filter predicate to find a spot
+
+   - returns:  A collection of Spotable objects that match the includeElements predicate
    */
   public func filter(@noescape includeElement: (Spotable) -> Bool) -> [Spotable] {
     var result = spots.filter(includeElement)
@@ -75,6 +79,13 @@ public extension SpotsProtocol {
     return result
   }
 
+  /**
+   Filter view models in all Spotable objects inside of the controller
+
+   - parameter includeElement: A filter predicate to find view models
+
+   - returns: Returns a collection of tuples with view models and the corresponding Spotable objects that the match belong to
+   */
   public func filterItems(@noescape includeElement: (ViewModel) -> Bool) -> [(spot: Spotable, items: [ViewModel])] {
     var result = [(spot: Spotable, items: [ViewModel])]()
     for spot in spots {
@@ -100,8 +111,8 @@ public extension SpotsProtocol {
 
 #if os(iOS)
   /**
-   - Parameter index: The index of the spot that you want to scroll
-   - Parameter includeElement: A filter predicate to find a view model
+   - parameter index: The index of the spot that you want to scroll
+   - parameter includeElement: A filter predicate to find a view model
    */
   public func scrollTo(spotIndex index: Int = 0, @noescape includeElement: (ViewModel) -> Bool) {
     guard let itemY = spot(index, Spotable.self)?.scrollTo(includeElement) else { return }
@@ -117,7 +128,7 @@ public extension SpotsProtocol {
   }
 
   /**
-   - Parameter animated: A boolean value to determine if you want to perform the scrolling with or without animation
+   - parameter animated: A boolean value to determine if you want to perform the scrolling with or without animation
    */
   public func scrollToBottom(animated: Bool) {
     let y = spotsScrollView.contentSize.height - spotsScrollView.frame.size.height + spotsScrollView.contentInset.bottom
@@ -127,6 +138,8 @@ public extension SpotsProtocol {
 
   /**
    Caches the current state of the spot controller
+
+   - parameter items: An optional integer that is used to reduce the amount of items that should be cached per Spotable object when saving the view state to disk
    */
   public func cache(items items: Int? = nil) {
     #if DEVMODE
@@ -151,16 +164,16 @@ public extension SpotsProtocol {
   }
 
   /**
-   - Parameter indexPath: The index path of the component you want to lookup
-   - Returns: A Component object at index path
+   - parameter indexPath: The index path of the component you want to lookup
+   - returns: A Component object at index path
    **/
   private func component(indexPath: NSIndexPath) -> Component {
     return spot(indexPath).component
   }
 
   /**
-   - Parameter indexPath: The index path of the spot you want to lookup
-   - Returns: A Spotable object at index path
+   - parameter indexPath: The index path of the spot you want to lookup
+   - returns: A Spotable object at index path
    **/
   private func spot(indexPath: NSIndexPath) -> Spotable {
     return spots[indexPath.item]

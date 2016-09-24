@@ -111,7 +111,7 @@ public class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDel
   // MARK: Initializer
 
   /**
-   - Parameter spots: An array of Spotable objects
+   - parameter spots: An array of Spotable objects
    */
   public required init(spots: [Spotable] = []) {
     self.spots = spots
@@ -122,21 +122,21 @@ public class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDel
   }
 
   /**
-   - Parameter spot: A Spotable object
+   - parameter spot: A Spotable object
    */
   public convenience init(spot: Spotable) {
     self.init(spots: [spot])
   }
 
   /**
-   - Parameter json: A JSON dictionary that gets parsed into UI elements
+   - parameter json: A JSON dictionary that gets parsed into UI elements
    */
   public convenience init(_ json: [String : AnyObject]) {
     self.init(spots: Parser.parse(json))
   }
 
   /**
-   - Parameter cacheKey: A key that will be used to identify the SpotCache
+   - parameter cacheKey: A key that will be used to identify the SpotCache
    */
   public convenience init(cacheKey: String) {
     let stateCache = SpotCache(key: cacheKey)
@@ -147,7 +147,7 @@ public class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDel
   /**
    Init with coder
 
-   - Parameter aDecoder: An NSCoder
+   - parameter aDecoder: An NSCoder
    */
   public required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
@@ -162,10 +162,12 @@ public class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDel
     #endif
   }
 
-  /**
+  /***
    A generic look up method for resolving spots based on index
-   - Parameter index: The index of the spot that you are trying to resolve
-   - Parameter type: The generic type for the spot you are trying to resolve
+   - parameter index: The index of the spot that you are trying to resolve
+   - parameter type: The generic type for the spot you are trying to resolve
+
+   - returns: An optional Spotable object
    */
   public func spot<T>(index: Int = 0, _ type: T.Type) -> T? {
     return spots.filter({ $0.index == index }).first as? T
@@ -173,7 +175,9 @@ public class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDel
 
   /**
    A generic look up method for resolving spots using a closure
-   - Parameter closure: A closure to perform actions on a spotable object
+
+   - parameter closure: A closure to perform actions on a spotable object
+   - returns: An optional Spotable object
    */
   public func spot(@noescape closure: (index: Int, spot: Spotable) -> Bool) -> Spotable? {
     for (index, spot) in spots.enumerate()
@@ -214,7 +218,7 @@ public class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDel
   /**
    Notifies the spot controller that its view is about to be added to a view hierarchy.
 
-   - Parameter animated: If true, the view is being added to the window using an animation.
+   - parameter animated: If true, the view is being added to the window using an animation.
    */
   public override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
@@ -260,8 +264,8 @@ public class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDel
   /**
    Notifies the container that the size of tis view is about to change.
 
-   - Parameter size:        The new size for the container’s view.
-   - Parameter coordinator: The transition coordinator object managing the size change. You can use this object to animate your changes or get information about the transition that is in progress.
+   - parameter size:        The new size for the container’s view.
+   - parameter coordinator: The transition coordinator object managing the size change. You can use this object to animate your changes or get information about the transition that is in progress.
    */
   public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
     super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
@@ -279,7 +283,7 @@ public class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDel
   }
 
   /**
-   - Parameter animated: An optional animation closure that runs when a spot is being rendered
+   - parameter animated: An optional animation closure that runs when a spot is being rendered
   */
   public func setupSpots(animated: ((view: UIView) -> Void)? = nil) {
     var yOffset: CGFloat = 0.0
@@ -307,7 +311,7 @@ public class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDel
   /**
    Refresh action for UIRefreshControl
 
-   - Parameter refreshControl:
+   - parameter refreshControl:
    */
   public func refreshSpots(refreshControl: UIRefreshControl) {
     Dispatch.mainQueue { [weak self] in
@@ -327,16 +331,16 @@ public class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDel
 extension SpotsController {
 
   /**
-   - Parameter indexPath: The index path of the component you want to lookup
-   - Returns: A Component object at index path
+   - parameter indexPath: The index path of the component you want to lookup
+   - returns: A Component object at index path
    **/
   private func component(indexPath: NSIndexPath) -> Component {
     return spot(indexPath).component
   }
 
   /**
-   - Parameter indexPath: The index path of the spot you want to lookup
-   - Returns: A Spotable object at index path
+   - parameter indexPath: The index path of the spot you want to lookup
+   - returns: A Spotable object at index path
    **/
   private func spot(indexPath: NSIndexPath) -> Spotable {
     return spots[indexPath.item]

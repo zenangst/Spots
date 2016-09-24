@@ -11,7 +11,7 @@ public class SpotsContentView: NSView {
   /**
    Tells the view that a subview was added.
 
-   - Parameter subview: The view that was added as a subview.
+   - parameter subview: The view that was added as a subview.
    */
   override public func didAddSubview(subview: View) {
     super.didAddSubview(subview)
@@ -24,7 +24,7 @@ public class SpotsContentView: NSView {
   /**
    Tells the view that a subview is about to be removed.
 
-   - Parameter subview: Tells the view that a subview is about to be removed.
+   - parameter subview: Tells the view that a subview is about to be removed.
    */
   override public func willRemoveSubview(subview: View) {
     super.willRemoveSubview(subview)

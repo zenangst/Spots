@@ -30,7 +30,7 @@ extension Gridable {
   }
 
   /**
-   - Returns: A CGFloat of the total height of all items inside of a component
+   - returns: A CGFloat of the total height of all items inside of a component
    */
   public func spotHeight() -> CGFloat {
     guard usesDynamicHeight else {
@@ -43,8 +43,8 @@ extension Gridable {
   /**
    Asks the data source for the size of an item in a particular location.
 
-   - Parameter indexPath: The index path of the
-   - Returns: Size of the object at index path as CGSize
+   - parameter indexPath: The index path of the
+   - returns: Size of the object at index path as CGSize
    */
   public func sizeForItemAt(indexPath: NSIndexPath) -> CGSize {
     var sectionInsets: CGFloat = 0.0
@@ -84,7 +84,8 @@ extension Gridable {
   /**
    Prepares a view model item before being used by the UI component
 
-   - Parameter index: The index of the view model
+   - parameter index: The index of the view model
+   - parameter usesViewSize: A boolean value to determine if the view uses the views height
    */
   public func configureItem(index: Int, usesViewSize: Bool = false) {
     guard let item = item(index) else { return }

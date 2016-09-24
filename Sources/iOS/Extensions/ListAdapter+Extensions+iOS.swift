@@ -8,9 +8,9 @@ extension ListAdapter {
   }
 
   /**
-   - Parameter item: The view model that you want to append
-   - Parameter animation: The animation that should be used
-   - Parameter completion: Completion
+   - parameter item: The view model that you want to append
+   - parameter animation:  A SpotAnimation that is used when performing the mutation
+   - parameter completion: Completion
    */
   public func append(item: ViewModel, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     let count = spot.component.items.count
@@ -27,9 +27,9 @@ extension ListAdapter {
   }
 
   /**
-   - Parameter item: A collection of view models that you want to insert
-   - Parameter animation: The animation that should be used
-   - Parameter completion: Completion
+   - parameter items: A collection of view models that you want to insert
+   - parameter animation:  A SpotAnimation that is used when performing the mutation
+   - parameter completion: Completion
    */
   public func append(items: [ViewModel], withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     var indexes = [Int]()
@@ -51,10 +51,10 @@ extension ListAdapter {
   }
 
   /**
-   - Parameter item: The view model that you want to insert
-   - Parameter index: The index where the new ViewModel should be inserted
-   - Parameter animation: The animation that should be used
-   - Parameter completion: Completion
+   - parameter item: The view model that you want to insert
+   - parameter index: The index where the new ViewModel should be inserted
+   - parameter animation:  A SpotAnimation that is used when performing the mutation
+   - parameter completion: Completion
    */
   public func insert(item: ViewModel, index: Int = 0, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     spot.component.items.insert(item, atIndex: index)
@@ -68,9 +68,9 @@ extension ListAdapter {
   }
 
   /**
-   - Parameter item: A collection of view model that you want to prepend
-   - Parameter animation: The animation that should be used
-   - Parameter completion: A completion closure that is executed in the main queue
+   - parameter items: A collection of view model that you want to prepend
+   - parameter animation:  A SpotAnimation that is used when performing the mutation
+   - parameter completion: A completion closure that is executed in the main queue
    */
   public func prepend(items: [ViewModel], withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     var indexes = [Int]()
@@ -92,9 +92,9 @@ extension ListAdapter {
   }
 
   /**
-   - Parameter item: The view model that you want to remove
-   - Parameter animation: The animation that should be used
-   - Parameter completion: A completion closure that is executed in the main queue
+   - parameter item: The view model that you want to remove
+   - parameter animation:  A SpotAnimation that is used when performing the mutation
+   - parameter completion: A completion closure that is executed in the main queue
    */
   public func delete(item: ViewModel, withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
     guard let index = spot.component.items.indexOf({ $0 == item })
@@ -111,9 +111,9 @@ extension ListAdapter {
   }
 
   /**
-   - Parameter item: A collection of view models that you want to delete
-   - Parameter animation: The animation that should be used
-   - Parameter completion: A completion closure that is executed in the main queue
+   - parameter items: A collection of view models that you want to delete
+   - parameter animation:  A SpotAnimation that is used when performing the mutation
+   - parameter completion: A completion closure that is executed in the main queue
    */
   public func delete(items: [ViewModel], withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
     var indexPaths = [Int]()
@@ -133,9 +133,9 @@ extension ListAdapter {
   }
 
   /**
-   - Parameter index: The index of the view model that you want to remove
-   - Parameter animation: The animation that should be used
-   - Parameter completion: A completion closure that is executed in the main queue when the view model has been removed
+   - parameter index: The index of the view model that you want to remove
+   - parameter animation:  A SpotAnimation that is used when performing the mutation
+   - parameter completion: A completion closure that is executed in the main queue when the view model has been removed
    */
   public func delete(index: Int, withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
     Dispatch.mainQueue { [weak self] in
@@ -148,9 +148,9 @@ extension ListAdapter {
   }
 
   /**
-   - Parameter indexes: An array of indexes that you want to remove
-   - Parameter animation: The animation that should be used
-   - Parameter completion: A completion closure that is executed in the main queue when the view model has been removed
+   - parameter indexes: An array of indexes that you want to remove
+   - parameter animation:  A SpotAnimation that is used when performing the mutation
+   - parameter completion: A completion closure that is executed in the main queue when the view model has been removed
    */
   public func delete(indexes: [Int], withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
     Dispatch.mainQueue { [weak self] in
@@ -163,10 +163,10 @@ extension ListAdapter {
   }
 
   /**
-   - Parameter item: The new update view model that you want to update at an index
-   - Parameter index: The index of the view model, defaults to 0
-   - Parameter animation: The animation that should be used
-   - Parameter completion: A completion closure that is executed in the main queue when the view model has been updated
+   - parameter item: The new update view model that you want to update at an index
+   - parameter index: The index of the view model, defaults to 0
+   - parameter animation:  A SpotAnimation that is used when performing the mutation
+   - parameter completion: A completion closure that is executed in the main queue when the view model has been updated
    */
   public func update(item: ViewModel, index: Int = 0, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     guard let oldItem = spot.item(index) else { completion?(); return }
@@ -207,9 +207,9 @@ extension ListAdapter {
   }
 
   /**
-   - Parameter indexes: An array of integers that you want to reload, default is nil
-   - Parameter animated: Perform reload animation
-   - Parameter completion: A completion closure that is executed in the main queue when the view model has been reloaded
+   - parameter indexes: An array of integers that you want to reload, default is nil
+   - parameter animation:  A SpotAnimation that is used when performing the mutation
+   - parameter completion: A completion closure that is executed in the main queue when the view model has been reloaded
    */
   public func reload(indexes: [Int]? = nil, withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
     spot.refreshIndexes()
@@ -241,6 +241,7 @@ extension ListAdapter {
    Process updates and determine if the updates are done
 
    - parameter updates:    A collection of updates
+   - parameter animation:  A SpotAnimation that is used when performing the mutation
    - parameter completion: A completion closure that is run when the updates are finished
    */
   public func process(updates: [Int], withAnimation animation: SpotsAnimation = .Automatic, completion: Completion) {
@@ -261,6 +262,7 @@ extension ListAdapter {
    Reload spot with ViewModelChanges
 
    - parameter changes:          A collection of changes; inserations, updates, reloads, deletions and updated children
+   - parameter animation:  A SpotAnimation that is used when performing the mutation
    - parameter updateDataSource: A closure to update your data source
    - parameter completion:       A completion closure that runs when your updates are done
    */

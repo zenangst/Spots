@@ -70,7 +70,8 @@ public class SpotsController: NSViewController, SpotsProtocol {
   private let backgroundType: SpotsControllerBackground
 
   /**
-   - Parameter spots: An array of Spotable objects
+   - parameter spots: An array of Spotable objects
+   - parameter backgroundType: The type of background that the SpotsController should use, .Regular or .Dynamic
    */
   public required init(spots: [Spotable] = [], backgroundType: SpotsControllerBackground = .Regular) {
     self.compositeSpots = [:]
@@ -82,7 +83,7 @@ public class SpotsController: NSViewController, SpotsProtocol {
   }
 
   /**
-   - Parameter cacheKey: A key that will be used to identify the SpotCache
+   - parameter cacheKey: A key that will be used to identify the SpotCache
    */
   public convenience init(cacheKey: String) {
     let stateCache = SpotCache(key: cacheKey)
@@ -91,14 +92,14 @@ public class SpotsController: NSViewController, SpotsProtocol {
   }
 
   /**
-   - Parameter spot: A Spotable object
+   - parameter spot: A Spotable object
    */
   public convenience init(spot: Spotable) {
     self.init(spots: [spot])
   }
 
   /**
-   - Parameter json: A JSON dictionary that gets parsed into UI elements
+   - parameter json: A JSON dictionary that gets parsed into UI elements
    */
   public convenience init(_ json: [String : AnyObject]) {
     self.init(spots: Parser.parse(json))
@@ -117,8 +118,8 @@ public class SpotsController: NSViewController, SpotsProtocol {
   /**
    Returns an object initialized from data in a given unarchiver
 
-   - Parameter coder: An unarchiver object.
-   - Returns: self, initialized using the data in decoder..
+   - parameter coder: An unarchiver object.
+   - returns: self, initialized using the data in decoder..
    */
   public required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
@@ -126,8 +127,11 @@ public class SpotsController: NSViewController, SpotsProtocol {
 
   /**
    A generic look up method for resolving spots based on index
-   - Parameter index: The index of the spot that you are trying to resolve
-   - Parameter type: The generic type for the spot you are trying to resolve
+
+   - parameter index: The index of the spot that you are trying to resolve
+   - parameter type: The generic type for the spot you are trying to resolve
+
+   - returns: An optional Spotable object
    */
   public func spot<T>(index: Int = 0, _ type: T.Type) -> T? {
     return spots.filter({ $0.index == index }).first as? T
@@ -135,7 +139,10 @@ public class SpotsController: NSViewController, SpotsProtocol {
 
   /**
    A generic look up method for resolving spots using a closure
-   - Parameter closure: A closure to perform actions on a spotable object
+
+   - parameter closure: A closure to perform actions on a spotable object
+
+   - returns: An optional Spotable object
    */
   public func spot(@noescape closure: (index: Int, spot: Spotable) -> Bool) -> Spotable? {
     for (index, spot) in spots.enumerate()
@@ -199,7 +206,7 @@ public class SpotsController: NSViewController, SpotsProtocol {
   }
 
   /**
-   - Parameter animated: An optional animation closure that runs when a spot is being rendered
+   - parameter animated: An optional animation closure that runs when a spot is being rendered
    */
   public func setupSpots(animated: ((view: View) -> Void)? = nil) {
     compositeSpots = [:]

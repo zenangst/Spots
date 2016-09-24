@@ -27,7 +27,7 @@ public struct GridRegistry {
   /**
    A subscripting method for getting a value from storage using a StringConvertible key
 
-   - Returns: An optional UIView type
+   - returns: An optional UIView type
    */
   public subscript(key: StringConvertible) -> Item? {
     get {
@@ -53,8 +53,8 @@ public struct GridRegistry {
   /**
    Create a view for corresponding identifier
 
-   - Parameter identifier: A reusable identifier for the view
-   - Returns: A tuple with an optional registry type and view
+   - parameter identifier: A reusable identifier for the view
+   - returns: A tuple with an optional registry type and view
    */
   func make(identifier: String) -> (type: RegistryType?, item: NSCollectionViewItem?)? {
     guard let item = storage[identifier] else { return nil }

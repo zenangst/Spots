@@ -10,14 +10,14 @@ import Brick
 public extension Spotable where Self : Viewable {
 
   /**
-   - Returns: UIScrollView: A UIScrollView container for your view
+   - returns: UIScrollView: A UIScrollView container for your view
    */
   func render() -> ScrollView {
     return scrollView
   }
 
   /**
-   - Parameter size: A CGSize to set the size of the view
+   - parameter size: A CGSize to set the size of the view
    */
   func layout(size: CGSize) {
     render().frame.size = size
@@ -66,9 +66,9 @@ public extension Spotable where Self : Viewable {
   }
 
   /**
-   - Parameter item: The view model that you want to append
-   - Parameter withAnimation: The animation that should be used (currently not in use)
-   - Parameter completion: Completion
+   - parameter item: The view model that you want to append
+   - parameter withAnimation: The animation that should be used (currently not in use)
+   - parameter completion: Completion
    */
   func append(item: ViewModel, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     let dynamic = self.dynamicType
@@ -88,9 +88,9 @@ public extension Spotable where Self : Viewable {
   }
 
   /**
-   - Parameter items: A collection of view models that you want to insert
-   - Parameter withAnimation: The animation that should be used (currently not in use)
-   - Parameter completion: Completion
+   - parameter items: A collection of view models that you want to insert
+   - parameter withAnimation: The animation that should be used (currently not in use)
+   - parameter completion: Completion
    */
   func append(items: [ViewModel], withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     for item in items {
@@ -111,10 +111,10 @@ public extension Spotable where Self : Viewable {
   }
 
   /**
-   - Parameter item: The view model that you want to insert
-   - Parameter withAnimation: The animation that should be used (currently not in use)
-   - Parameter index: The index where the new ViewModel should be inserted
-   - Parameter completion: Completion
+   - parameter item: The view model that you want to insert
+   - parameter index: The index where the new ViewModel should be inserted
+   - parameter animation: A SpotAnimation struct that determines which animation that should be used to perform the update
+   - parameter completion: Completion
    */
   func insert(item: ViewModel, index: Int, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     let dynamic = self.dynamicType
@@ -134,9 +134,9 @@ public extension Spotable where Self : Viewable {
   }
 
   /**
-   - Parameter item: A collection of view model that you want to prepend
-   - Parameter animation: The animation that should be used (currently not in use)
-   - Parameter completion: A completion closure that is executed in the main queue
+   - parameter items: A collection of view model that you want to prepend
+   - parameter animation:  A SpotAnimation that is used when performing the mutation (currently not in use)
+   - parameter completion: A completion closure that is executed in the main queue
    */
   func prepend(items: [ViewModel], withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     component.items.insertContentsOf(items, at: 0)
@@ -167,9 +167,9 @@ public extension Spotable where Self : Viewable {
   }
 
   /**
-   - Parameter item: The view model that you want to remove
-   - Parameter withAnimation: The animation that should be used (currently not in use)
-   - Parameter completion: A completion closure that is executed in the main queue
+   - parameter item: The view model that you want to remove
+   - parameter withAnimation: The animation that should be used (currently not in use)
+   - parameter completion: A completion closure that is executed in the main queue
    */
   public func delete(item: ViewModel, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     guard let index = component.items.indexOf({ $0 == item })
@@ -182,9 +182,9 @@ public extension Spotable where Self : Viewable {
   }
 
   /**
-   - Parameter items: A collection of view models that you want to delete
-   - Parameter withAnimation: The animation that should be used (currently not in use)
-   - Parameter completion: A completion closure that is executed in the main queue
+   - parameter items: A collection of view models that you want to delete
+   - parameter withAnimation: The animation that should be used (currently not in use)
+   - parameter completion: A completion closure that is executed in the main queue
    */
   public func delete(items: [ViewModel], withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     let count = component.items.count
@@ -198,9 +198,9 @@ public extension Spotable where Self : Viewable {
   }
 
   /**
-   - Parameter index: The index of the view model that you want to remove
-   - Parameter withAnimation: The animation that should be used (currently not in use)
-   - Parameter completion: A completion closure that is executed in the main queue when the view model has been removed
+   - parameter index: The index of the view model that you want to remove
+   - parameter withAnimation: The animation that should be used (currently not in use)
+   - parameter completion: A completion closure that is executed in the main queue when the view model has been removed
    */
   func delete(index: Int, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     guard index >= 0 && index <= scrollView.subviews.count else { return }
@@ -210,9 +210,9 @@ public extension Spotable where Self : Viewable {
   }
 
   /**
-   - Parameter indexes: An array of indexes that you want to remove
-   - Parameter withAnimation: The animation that should be used (currently not in use)
-   - Parameter completion: A completion closure that is executed in the main queue when the view model has been removed
+   - parameter indexes: An array of indexes that you want to remove
+   - parameter withAnimation: The animation that should be used (currently not in use)
+   - parameter completion: A completion closure that is executed in the main queue when the view model has been removed
    */
   func delete(indexes: [Int], withAnimation animation: SpotsAnimation = .None, completion: Completion) {
     for (index, _) in component.items.enumerate() {

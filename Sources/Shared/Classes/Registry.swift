@@ -42,7 +42,7 @@ public class Registry {
   /**
    A subscripting method for getting a value from storage using a StringConvertible key
 
-   - Returns: An optional Nib
+   - returns: An optional Nib
    */
   public subscript(key: StringConvertible) -> Item? {
     get {
@@ -68,8 +68,8 @@ public class Registry {
   /**
    Create a view for corresponding identifier
 
-   - Parameter identifier: A reusable identifier for the view
-   - Returns: A tuple with an optional registry type and view
+   - parameter identifier: A reusable identifier for the view
+   - returns: A tuple with an optional registry type and view
    */
   func make(identifier: String) -> (type: RegistryType?, view: View?)? {
     guard let item = storage[identifier] else { return nil }

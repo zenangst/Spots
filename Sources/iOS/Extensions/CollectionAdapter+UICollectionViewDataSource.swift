@@ -26,9 +26,9 @@ extension CollectionAdapter : UICollectionViewDataSource {
   /**
    Asks the data source for the number of items in the specified section. (required)
 
-   - Parameter collectionView: An object representing the collection view requesting this information.
-   - Parameter section: An index number identifying a section in collectionView. This index value is 0-based.
-   - Returns: The number of rows in section.
+   - parameter collectionView: An object representing the collection view requesting this information.
+   - parameter section: An index number identifying a section in collectionView. This index value is 0-based.
+   - returns: The number of rows in section.
    */
   public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     return spot.component.items.count
@@ -37,9 +37,9 @@ extension CollectionAdapter : UICollectionViewDataSource {
   /**
    Asks the data source for the cell that corresponds to the specified item in the collection view. (required)
 
-   - Parameter collectionView: An object representing the collection view requesting this information.
-   - Parameter indexPath: The index path that specifies the location of the item.
-   - Returns: A configured cell object. You must not return nil from this method.
+   - parameter collectionView: An object representing the collection view requesting this information.
+   - parameter indexPath: The index path that specifies the location of the item.
+   - returns: A configured cell object. You must not return nil from this method.
    */
   public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
     spot.component.items[indexPath.item].index = indexPath.item

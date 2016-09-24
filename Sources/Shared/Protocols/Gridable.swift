@@ -20,8 +20,8 @@ public protocol Gridable: Spotable {
   /**
    Asks the data source for the size of an item in a particular location.
 
-   - Parameter indexPath: The index path of the
-   - Returns: Size of the object at index path as CGSize
+   - parameter indexPath: The index path of the
+   - returns: Size of the object at index path as CGSize
    */
   func sizeForItemAt(indexPath: NSIndexPath) -> CGSize
 

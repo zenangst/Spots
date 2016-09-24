@@ -5,10 +5,10 @@ extension CollectionAdapter : UICollectionViewDelegate {
   /**
    Asks the delegate for the size of the specified item’s cell.
 
-   - Parameter collectionView: The collection view object displaying the flow layout.
-   - Parameter collectionViewLayout: The layout object requesting the information.
-   - Parameter indexPath: The index path of the item.
-   - Returns: The width and height of the specified item. Both values must be greater than 0.
+   - parameter collectionView: The collection view object displaying the flow layout.
+   - parameter collectionViewLayout: The layout object requesting the information.
+   - parameter indexPath: The index path of the item.
+   - returns: The width and height of the specified item. Both values must be greater than 0.
    */
   public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
     return spot.sizeForItemAt(indexPath)
@@ -17,8 +17,8 @@ extension CollectionAdapter : UICollectionViewDelegate {
   /**
    Tells the delegate that the item at the specified index path was selected.
 
-   - Parameter collectionView: The collection view object that is notifying you of the selection change.
-   - Parameter indexPath: The index path of the cell that was selected.
+   - parameter collectionView: The collection view object that is notifying you of the selection change.
+   - parameter indexPath: The index path of the cell that was selected.
    */
   public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
     guard let item = spot.item(indexPath) else { return }
@@ -28,9 +28,9 @@ extension CollectionAdapter : UICollectionViewDelegate {
   /**
    Asks the delegate whether the item at the specified index path can be focused.
 
-   - Parameter collectionView: The collection view object requesting this information.
-   - Parameter indexPath:      The index path of an item in the collection view.
-   - Returns: YES if the item can receive be focused or NO if it can not.
+   - parameter collectionView: The collection view object requesting this information.
+   - parameter indexPath:      The index path of an item in the collection view.
+   - returns: YES if the item can receive be focused or NO if it can not.
    */
   public func collectionView(collectionView: UICollectionView, canFocusItemAtIndexPath indexPath: NSIndexPath) -> Bool {
     return true
@@ -39,10 +39,10 @@ extension CollectionAdapter : UICollectionViewDelegate {
   /**
    Asks the delegate whether a change in focus should occur.
 
-   - Parameter collectionView: The collection view object requesting this information.
-   - Parameter context:        The context object containing metadata associated with the focus change.
+   - parameter collectionView: The collection view object requesting this information.
+   - parameter context:        The context object containing metadata associated with the focus change.
    This object contains the index path of the previously focused item and the item targeted to receive focus next. Use this information to determine if the focus change should occur.
-   - Returns: YES if the focus change should occur or NO if it should not.
+   - returns: YES if the focus change should occur or NO if it should not.
    */
   @available(iOS 9.0, *)
   public func collectionView(collectionView: UICollectionView, shouldUpdateFocusInContext context: UICollectionViewFocusUpdateContext) -> Bool {
@@ -53,9 +53,9 @@ extension CollectionAdapter : UICollectionViewDelegate {
   /**
    Perform animation before mutation
 
-   - Parameter spotAnimation: The animation that you want to apply
-   - Parameter withIndex: The index of the cell
-   - Parameter completion: A completion block that runs after applying the animation
+   - parameter spotAnimation: The animation that you want to apply
+   - parameter withIndex: The index of the cell
+   - parameter completion: A completion block that runs after applying the animation
    */
   public func perform(spotAnimation: SpotsAnimation, withIndex index: Int, completion: () -> Void) {
     guard let cell = spot.collectionView.cellForItemAtIndexPath(NSIndexPath(forItem: index, inSection: 0))
