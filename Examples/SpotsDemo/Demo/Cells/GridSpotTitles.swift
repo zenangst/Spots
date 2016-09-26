@@ -56,10 +56,10 @@ class GridSpotCellTitles : UICollectionViewCell, SpotConfigurable {
     fatalError("init(coder:) has not been implemented")
   }
 
-  func configure(inout item: ViewModel) {
+  func configure(inout item: Item) {
     optimize()
     if let textColor = item.meta["text-color"] as? String {
-      titleLabel.textColor = UIColor.hex(textColor)
+      titleLabel.textColor = UIColor(hex: textColor)
     }
 
     titleLabel.text = item.title
@@ -67,7 +67,7 @@ class GridSpotCellTitles : UICollectionViewCell, SpotConfigurable {
       attributes: [NSParagraphStyleAttributeName : paddedStyle])
     metaText.attributedText = NSAttributedString(string: item.meta.property("text") ?? "",
       attributes: [NSParagraphStyleAttributeName : paddedStyle])
-    metaText.textColor = UIColor.hex(item.meta.property("text-color") ?? "000000")
+    metaText.textColor = UIColor(hex: item.meta.property("text-color") ?? "000000")
 
     layoutSubviews()
 

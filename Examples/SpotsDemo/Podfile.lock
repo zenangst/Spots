@@ -13,6 +13,7 @@ PODS:
     - Cache
     - CryptoSwift (= 0.5.2)
     - Tailor
+  - Sugar (1.2.0)
   - Tailor (1.3.0)
 
 DEPENDENCIES:
@@ -21,6 +22,7 @@ DEPENDENCIES:
   - Hue (from `https://github.com/hyperoslo/Hue`)
   - Imaginary (from `https://github.com/hyperoslo/Imaginary`)
   - Spots (from `../../`)
+  - Sugar
 
 EXTERNAL SOURCES:
   Cache:
@@ -56,8 +58,9 @@ SPEC CHECKSUMS:
   Hue: b4d7f4923dd16237f9cbc1783c3c81438b4391f4
   Imaginary: 62a9ce1e6d7831ede429c8221a183f03ec2a90bc
   Spots: a6cb714c1da7007b666196651c143e49c9bf05b4
+  Sugar: 556b623f0f8846cf08de7302701892f11d567419
   Tailor: 71fac74a4f14abcd13a10bf07bbe69d5ac746f58
 
-PODFILE CHECKSUM: 1dc2800aa90fc3f2870ee03ab115d0d6cc1b8876
+PODFILE CHECKSUM: 3e8c70580d60a5b59a0d72314b34576eba7ba947
 
 COCOAPODS: 1.1.0.rc.2

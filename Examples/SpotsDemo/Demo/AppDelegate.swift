@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     SpotsController.configure = {
       $0.backgroundColor = UIColor.whiteColor()
     }
-    
+
     GridSpot.configure = { collectionView, layout in
       collectionView.backgroundColor = UIColor.whiteColor()
     }

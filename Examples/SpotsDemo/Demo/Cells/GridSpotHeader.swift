@@ -23,7 +23,7 @@ class GridSpotHeader : UICollectionViewCell, SpotConfigurable {
     fatalError("init(coder:) has not been implemented")
   }
 
-  func configure(inout item: ViewModel) {
+  func configure(inout item: Item) {
     optimize()
 
     if !item.image.isEmpty {
