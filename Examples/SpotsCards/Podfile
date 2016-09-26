@@ -6,6 +6,7 @@ use_frameworks!
 inhibit_all_warnings!
 
 target "SpotsCards" do
+  pod 'Sugar'
   pod 'Compass', git: 'https://github.com/hyperoslo/Compass'
   pod 'Imaginary', git: 'https://github.com/hyperoslo/Imaginary'
   pod 'Cache', git: 'https://github.com/hyperoslo/Cache'
