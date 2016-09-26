@@ -145,8 +145,6 @@ public class CarouselSpot: NSObject, Gridable {
    A required initializer to instantiate a CarouselSpot with a component
 
    - parameter component: A component
-
-   - returns: A CarouselSpot object
    */
   public required init(component: Component) {
     self.component = component
@@ -167,8 +165,6 @@ public class CarouselSpot: NSObject, Gridable {
    - parameter right:       Right section inset
    - parameter itemSpacing: The item spacing used in the flow layout
    - parameter lineSpacing: The line spacing used in the flow layout
-
-   - returns: A CarouselSpot object
    */
   public convenience init(_ component: Component, top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0, itemSpacing: CGFloat = 0, lineSpacing: CGFloat = 0) {
     self.init(component: component)
@@ -182,8 +178,6 @@ public class CarouselSpot: NSObject, Gridable {
    Instantiate a CarouselSpot with a cache key
 
    - parameter cacheKey: A unique cache key for the Spotable object
-
-   - returns: A CarouselSpot object
    */
   public convenience init(cacheKey: String) {
     let stateCache = SpotCache(key: cacheKey)

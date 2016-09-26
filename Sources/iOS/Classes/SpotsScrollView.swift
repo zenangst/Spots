@@ -52,8 +52,6 @@ public class SpotsScrollView: UIScrollView {
 
    - parameter frame: The frame rectangle for the view, measured in points. The origin of the frame is relative to the superview in which you plan to add it.
    This method uses the frame rectangle to set the center and bounds properties accordingly.
-
-   - returns: An initialized view object
    */
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -64,8 +62,6 @@ public class SpotsScrollView: UIScrollView {
    Returns an object initialized from data in a given unarchiver.
 
    - parameter aDecoder: An unarchiver object.
-
-   - returns: self, initialized using the data in decoder.
    */
   required public init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")

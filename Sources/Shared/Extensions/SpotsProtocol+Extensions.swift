@@ -83,8 +83,6 @@ public extension SpotsProtocol {
    Filter view models in all Spotable objects inside of the controller
 
    - parameter includeElement: A filter predicate to find view models
-
-   - returns: Returns a collection of tuples with view models and the corresponding Spotable objects that the match belong to
    */
   public func filterItems(@noescape includeElement: (ViewModel) -> Bool) -> [(spot: Spotable, items: [ViewModel])] {
     var result = [(spot: Spotable, items: [ViewModel])]()

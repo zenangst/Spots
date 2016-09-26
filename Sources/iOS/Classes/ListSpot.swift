@@ -55,8 +55,6 @@ public class ListSpot: NSObject, Listable {
    A required initializer to instantiate a ListSpot with a component
 
    - parameter component: A component
-
-   - returns: A GridSpot object
    */
   public required init(component: Component) {
     self.component = component
@@ -79,8 +77,6 @@ public class ListSpot: NSObject, Listable {
    - parameter title:     A string that is used as a title for the ListSpot
    - parameter kind:      An identifier to determine which kind should be set on the Component
    - parameter header:    An identifier to determine which header should be used
-
-   - returns: A Listable object
    */
   public convenience init(tableView: UITableView? = nil, title: String = "",
                           kind: String = "list", header: String = "") {
@@ -99,8 +95,6 @@ public class ListSpot: NSObject, Listable {
 
    - parameter cacheKey: A unique cache key for the Spotable object
    - parameter tableView: A UITableView
-
-   - returns: A ListSpot object
    */
   public convenience init(cacheKey: String, tableView: UITableView? = nil) {
     let stateCache = SpotCache(key: cacheKey)

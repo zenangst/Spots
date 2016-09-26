@@ -143,8 +143,6 @@ public class GridSpot: NSObject, Gridable {
    A required initializer for creating a GridSpot
 
    - parameter component: A component struct
-
-   - returns: A Gridable object
    */
   public required init(component: Component) {
     self.component = component
@@ -166,8 +164,6 @@ public class GridSpot: NSObject, Gridable {
 
    - parameter title: A string that is used as a title for the GridSpot
    - parameter kind:  An identifier to determine which kind should be set on the Component
-
-   - returns: A Gridable object
    */
   public convenience init(title: String = "", kind: String? = nil) {
     self.init(component: Component(title: title, kind: kind ?? GridSpot.defaultKind.string))
@@ -177,8 +173,6 @@ public class GridSpot: NSObject, Gridable {
    A convenience init for initializing a Gridspot
 
    - parameter cacheKey: A cache key
-
-   - returns: A GridSpot object
    */
   public convenience init(cacheKey: String) {
     let stateCache = SpotCache(key: cacheKey)

@@ -25,8 +25,6 @@ public struct SpotCache {
    Initialize a SpotCache with a unique cache key
 
    - parameter key: A string that is used as an identifier for the SpotCache
-
-   - returns: A SpotCache object
    */
   public init(key: String) {
     self.key = key

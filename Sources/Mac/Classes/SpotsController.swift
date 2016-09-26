@@ -119,7 +119,6 @@ public class SpotsController: NSViewController, SpotsProtocol {
    Returns an object initialized from data in a given unarchiver
 
    - parameter coder: An unarchiver object.
-   - returns: self, initialized using the data in decoder..
    */
   public required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")

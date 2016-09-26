@@ -84,8 +84,6 @@ public class GridSpot: NSObject, Gridable {
    A required initializer to instantiate a GridSpot with a component
 
    - parameter component: A component
-
-   - returns: A GridSpot object
    */
   public required init(component: Component) {
     self.component = component
@@ -106,8 +104,6 @@ public class GridSpot: NSObject, Gridable {
 
    - parameter title: A string that is used as a title for the GridSpot
    - parameter kind:  An identifier to determine which kind should be set on the Component
-
-   - returns: A Gridable object
    */
   public convenience init(title: String = "", kind: String? = nil) {
     self.init(component: Component(title: title, kind: kind ?? "grid"))
@@ -117,8 +113,6 @@ public class GridSpot: NSObject, Gridable {
    Instantiate a GridSpot with a cache key
 
    - parameter cacheKey: A unique cache key for the Spotable object
-
-   - returns: A GridSpot object
    */
   public convenience init(cacheKey: String) {
     let stateCache = SpotCache(key: cacheKey)
@@ -139,8 +133,6 @@ public class GridSpot: NSObject, Gridable {
    - parameter right:       Right section inset
    - parameter itemSpacing: The item spacing used in the flow layout
    - parameter lineSpacing: The line spacing used in the flow layout
-
-   - returns: A GridSpot object
    */
   public convenience init(_ component: Component, top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0, itemSpacing: CGFloat = 0, lineSpacing: CGFloat = 0) {
     self.init(component: component)
