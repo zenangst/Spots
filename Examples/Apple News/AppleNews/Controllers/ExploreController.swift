@@ -6,34 +6,34 @@ class ExploreController: SpotsController {
 
   convenience init(title: String) {
     let suggestedChannels = Component(span: 3, items: [
-      ViewModel(title: "Apple",   kind: Cell.Topic, image: ExploreController.suggestedImage(1)),
-      ViewModel(title: "Spotify", kind: Cell.Topic, image: ExploreController.suggestedImage(2)),
-      ViewModel(title: "Google",  kind: Cell.Topic, image: ExploreController.suggestedImage(3)),
-      ViewModel(title: "Apple",   kind: Cell.Topic, image: ExploreController.suggestedImage(4)),
-      ViewModel(title: "Spotify", kind: Cell.Topic, image: ExploreController.suggestedImage(5)),
-      ViewModel(title: "Google",  kind: Cell.Topic, image: ExploreController.suggestedImage(6)),
-      ViewModel(title: "Apple",   kind: Cell.Topic, image: ExploreController.suggestedImage(7)),
-      ViewModel(title: "Spotify", kind: Cell.Topic, image: ExploreController.suggestedImage(8)),
-      ViewModel(title: "Google",  kind: Cell.Topic, image: ExploreController.suggestedImage(9))
+      Item(title: "Apple",   kind: Cell.Topic, image: ExploreController.suggestedImage(1)),
+      Item(title: "Spotify", kind: Cell.Topic, image: ExploreController.suggestedImage(2)),
+      Item(title: "Google",  kind: Cell.Topic, image: ExploreController.suggestedImage(3)),
+      Item(title: "Apple",   kind: Cell.Topic, image: ExploreController.suggestedImage(4)),
+      Item(title: "Spotify", kind: Cell.Topic, image: ExploreController.suggestedImage(5)),
+      Item(title: "Google",  kind: Cell.Topic, image: ExploreController.suggestedImage(6)),
+      Item(title: "Apple",   kind: Cell.Topic, image: ExploreController.suggestedImage(7)),
+      Item(title: "Spotify", kind: Cell.Topic, image: ExploreController.suggestedImage(8)),
+      Item(title: "Google",  kind: Cell.Topic, image: ExploreController.suggestedImage(9))
       ])
 
     let suggestedTopics = Component(span: 3, items: [
-      ViewModel(title: "Business", kind: Cell.Topic, meta: ["color" : "5A0E20"]),
-      ViewModel(title: "Software", kind: Cell.Topic, meta: ["color" : "760D26"]),
-      ViewModel(title: "News",     kind: Cell.Topic, meta: ["color" : "2266B5"]),
-      ViewModel(title: "iOS",      kind: Cell.Topic, meta: ["color" : "4CBCFB"])
+      Item(title: "Business", kind: Cell.Topic, meta: ["color" : "5A0E20"]),
+      Item(title: "Software", kind: Cell.Topic, meta: ["color" : "760D26"]),
+      Item(title: "News",     kind: Cell.Topic, meta: ["color" : "2266B5"]),
+      Item(title: "iOS",      kind: Cell.Topic, meta: ["color" : "4CBCFB"])
       ])
 
     let browse = Component(title: "Browse", items: [
-      ViewModel(title: "News"),
-      ViewModel(title: "Business"),
-      ViewModel(title: "Politics"),
-      ViewModel(title: "Travel"),
-      ViewModel(title: "Technology"),
-      ViewModel(title: "Sports"),
-      ViewModel(title: "Science"),
-      ViewModel(title: "Entertainment"),
-      ViewModel(title: "Food")
+      Item(title: "News"),
+      Item(title: "Business"),
+      Item(title: "Politics"),
+      Item(title: "Travel"),
+      Item(title: "Technology"),
+      Item(title: "Sports"),
+      Item(title: "Science"),
+      Item(title: "Entertainment"),
+      Item(title: "Food")
       ], meta: ["headerHeight" : 33])
 
     let suggestedSpot = CarouselSpot(suggestedChannels)

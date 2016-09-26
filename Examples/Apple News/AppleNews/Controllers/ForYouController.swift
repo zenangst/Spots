@@ -79,7 +79,7 @@ class ForYouController: SpotsController, SpotsDelegate {
     self.title = title
   }
 
-  func spotDidSelectItem(spot: Spotable, item: ViewModel) {
+  func spotDidSelectItem(spot: Spotable, item: Item) {
     var item = item
     item.update(kind: Cell.FeedDetail)
     item.subtitle = ForYouController.faker.lorem.sentences(amount: 20)
@@ -90,7 +90,7 @@ class ForYouController: SpotsController, SpotsDelegate {
 
     let controller = ForYouDetailController(spot: ListSpot(component: Component(items: [
       item,
-      ViewModel(title: ForYouController.faker.lorem.sentences(amount: 1),
+      Item(title: ForYouController.faker.lorem.sentences(amount: 1),
         subtitle: ForYouController.faker.lorem.sentences(amount: 40),
         kind: Cell.FeedDetail)
     ])))
@@ -106,10 +106,10 @@ class ForYouController: SpotsController, SpotsDelegate {
     detailNavigation = navigationController
   }
 
-  static func generateItem(index: Int, kind: Cell = Cell.Feed) -> ViewModel {
+  static func generateItem(index: Int, kind: Cell = Cell.Feed) -> Item {
     let sentences = Int(arc4random_uniform(2) + 2)
 
-    let item = ViewModel(title: faker.lorem.sentences(amount: sentences),
+    let item = Item(title: faker.lorem.sentences(amount: sentences),
       subtitle: faker.lorem.sentences(amount: 2),
       kind: kind,
       image: faker.internet.image(width: 180, height: 180) + "?type=avatar&id=\(index)")
@@ -117,8 +117,8 @@ class ForYouController: SpotsController, SpotsDelegate {
     return item
   }
 
-  static func generateItems(from: Int, to: Int, kind: Cell = Cell.Feed) -> [ViewModel] {
-    var items = [ViewModel]()
+  static func generateItems(from: Int, to: Int, kind: Cell = Cell.Feed) -> [Item] {
+    var items = [Item]()
     for i in from...from+to {
       let kind = Int(arc4random_uniform(100)) % 10 == 1
         ? Cell.FeaturedFeed
