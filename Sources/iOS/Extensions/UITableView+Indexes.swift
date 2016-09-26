@@ -4,9 +4,9 @@ public extension UITableView {
 
   /**
    A convenience method for performing inserts on a UITableView
-   - Parameter indexes: A collection integers
-   - Parameter section: The section you want to update
-   - Parameter animation: A constant that indicates how the reloading is to be animated
+   - parameter indexes: A collection integers
+   - parameter section: The section you want to update
+   - parameter animation: A constant that indicates how the reloading is to be animated
    **/
   func insert(indexes: [Int], section: Int = 0, animation: UITableViewRowAnimation = .Automatic) {
     let indexPaths = indexes.map { NSIndexPath(forRow: $0, inSection: section) }
@@ -18,9 +18,9 @@ public extension UITableView {
 
   /**
    A convenience method for performing inserts on a UITableView
-   - Parameter indexes: A collection integers
-   - Parameter section: The section you want to update
-   - Parameter animation: A constant that indicates how the reloading is to be animated
+   - parameter indexes: A collection integers
+   - parameter section: The section you want to update
+   - parameter animation: A constant that indicates how the reloading is to be animated
    **/
   func reload(indexes: [Int], section: Int = 0, animation: UITableViewRowAnimation = .Automatic) {
     let indexPaths = indexes.map { NSIndexPath(forRow: $0, inSection: section) }
@@ -31,9 +31,9 @@ public extension UITableView {
 
   /**
    A convenience method for performing inserts on a UITableView
-   - Parameter indexes: A collection integers
-   - Parameter section: The section you want to update
-   - Parameter animation: A constant that indicates how the reloading is to be animated
+   - parameter indexes: A collection integers
+   - parameter section: The section you want to update
+   - parameter animation: A constant that indicates how the reloading is to be animated
    **/
   func delete(indexes: [Int], section: Int = 0, animation: UITableViewRowAnimation = .Automatic) {
     let indexPaths = indexes.map { NSIndexPath(forRow: $0, inSection: section) }
@@ -71,8 +71,8 @@ public extension UITableView {
 
   /**
    A convenience method for performing inserts on a UITableView
-   - Parameter section: The section you want to update
-   - Parameter animation: A constant that indicates how the reloading is to be animated
+   - parameter section: The section you want to update
+   - parameter animation: A constant that indicates how the reloading is to be animated
    **/
   func reloadSection(section: Int = 0, animation: UITableViewRowAnimation = .Automatic) {
     if animation == .None { UIView.setAnimationsEnabled(false) }

@@ -3,6 +3,13 @@ import Brick
 
 public class GridSpot: NSObject, Gridable {
 
+  /**
+   An enum layout type
+
+   - Grid: Resolves to NSCollectionViewGridLayout
+   - Left: Resolves to CollectionViewLeftLayout
+   - Flow: Resolves to NSCollectionViewFlowLayout
+   */
   public enum LayoutType: String {
     case Grid = "grid"
     case Left = "left"
@@ -10,35 +17,58 @@ public class GridSpot: NSObject, Gridable {
   }
 
   public struct Key {
+    /// The key for minimum interitem spacing
     public static let minimumInteritemSpacing = "itemSpacing"
+    /// The key for minimum line spacing
     public static let minimumLineSpacing = "lineSpacing"
+    /// The key for title left margin
     public static let titleLeftMargin = "titleLeftMargin"
+    /// The key for title font size
     public static let titleFontSize = "titleFontSize"
+    /// The key for layout
     public static let layout = "layout"
+    /// The key for grid layout maximum item width
     public static let gridLayoutMaximumItemWidth = "itemWidthMax"
+    /// The key for grid layout maximum item height
     public static let gridLayoutMaximumItemHeight = "itemHeightMax"
+    /// The key for grid layout minimum item width
     public static let gridLayoutMinimumItemWidth = "itemMinWidth"
+    /// The key for grid layout minimum item height
     public static let gridLayoutMinimumItemHeight = "itemMinHeight"
   }
 
   public struct Default {
 
     public struct Flow {
+      /// Default minimum interitem spacing
       public static var minimumInteritemSpacing: CGFloat = 0.0
+      /// Default minimum line spacing
       public static var minimumLineSpacing: CGFloat = 0.0
     }
 
+    /// Default title font size
     public static var titleFontSize: CGFloat = 18.0
+    /// Default left inset of the title
     public static var titleLeftInset: CGFloat = 0.0
+    /// Default top inset of the title
     public static var titleTopInset: CGFloat = 10.0
+    /// Default layout
     public static var defaultLayout: String = LayoutType.Flow.rawValue
+    /// Default grid layout maximum item width
     public static var gridLayoutMaximumItemWidth = 120
+    /// Default grid layout maximum item height
     public static var gridLayoutMaximumItemHeight = 120
+    /// Default grid layout minimum item width
     public static var gridLayoutMinimumItemWidth = 80
+    /// Default grid layout minimum item height
     public static var gridLayoutMinimumItemHeight = 80
+    /// Default top section inset
     public static var sectionInsetTop: CGFloat = 0.0
+    /// Default left section inset
     public static var sectionInsetLeft: CGFloat = 0.0
+    /// Default right section inset
     public static var sectionInsetRight: CGFloat = 0.0
+    /// Default bottom section inset
     public static var sectionInsetBottom: CGFloat = 0.0
   }
 
@@ -109,6 +139,11 @@ public class GridSpot: NSObject, Gridable {
     return lineView
   }()
 
+  /**
+   A required initializer for creating a GridSpot
+
+   - parameter component: A component struct
+   */
   public required init(component: Component) {
     self.component = component
     self.layout = GridSpot.setupLayout(component)
@@ -124,10 +159,21 @@ public class GridSpot: NSObject, Gridable {
     }
   }
 
+  /**
+   A convenience init for initializing a Gridspot with a title and a kind
+
+   - parameter title: A string that is used as a title for the GridSpot
+   - parameter kind:  An identifier to determine which kind should be set on the Component
+   */
   public convenience init(title: String = "", kind: String? = nil) {
     self.init(component: Component(title: title, kind: kind ?? GridSpot.defaultKind.string))
   }
 
+  /**
+   A convenience init for initializing a Gridspot
+
+   - parameter cacheKey: A cache key
+   */
   public convenience init(cacheKey: String) {
     let stateCache = SpotCache(key: cacheKey)
 
@@ -153,6 +199,13 @@ public class GridSpot: NSObject, Gridable {
     return layout
   }
 
+  /**
+   A private method for configuring the layout for the collection view
+
+   - parameter component: The component for the GridSpot
+
+   - returns: A NSCollectionView layout determined by the Component
+   */
   private static func setupLayout(component: Component) -> NSCollectionViewLayout {
     let layout: NSCollectionViewLayout
 
@@ -182,16 +235,29 @@ public class GridSpot: NSObject, Gridable {
     return layout
   }
 
+  /**
+   Configure delegate, data source and layout for collection view
+   */
   public func setupCollectionView() {
     collectionView.delegate = collectionAdapter
     collectionView.dataSource = collectionAdapter
     collectionView.collectionViewLayout = layout
   }
 
+  /**
+   The container view for the GridSpot
+
+   - returns: A ScrollView object
+   */
   public func render() -> ScrollView {
     return scrollView
   }
 
+  /**
+   Layout with size
+
+   - parameter size: A CGSize from the GridSpot superview
+   */
   public func layout(size: CGSize) {
     layout.prepareForTransitionToLayout(layout)
 
@@ -219,12 +285,22 @@ public class GridSpot: NSObject, Gridable {
     }
   }
 
+  /**
+   Perform setup with size
+
+   - parameter size: A CGSize from the GridSpot superview
+   */
   public func setup(size: CGSize) {
     var size = size
     size.height = layout.collectionViewContentSize.height
     layout(size)
   }
 
+  /**
+   A private setup method for configuring the title view
+
+   - parameter layoutInsets: NSEdgeInsets used to configure the title and line view size and origin
+   */
   private func configureTitleView(layoutInsets: NSEdgeInsets) {
     titleView.stringValue = component.title
     titleView.font = NSFont.systemFontOfSize(component.meta(Key.titleFontSize, Default.titleFontSize))

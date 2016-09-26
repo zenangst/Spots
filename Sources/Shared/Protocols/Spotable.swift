@@ -40,8 +40,8 @@ public protocol Spotable: class {
   /**
    Initialize a Spotable object with a Component
 
-   - Parameter component: The component that the Spotable object should be initialized with
-   - Returns: A Spotable object
+   - parameter component: The component that the Spotable object should be initialized with
+   - returns: A Spotable object
    */
   init(component: Component)
 

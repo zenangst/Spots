@@ -111,7 +111,7 @@ public struct Component: Mappable, Equatable {
   /**
    Initializes a component with a JSON dictionary and maps the keys of the dictionary to its corresponding values.
 
-   - Parameter map: A JSON key-value dictionary
+   - parameter map: A JSON key-value dictionary
    */
   public init(_ map: [String : AnyObject]) {
     identifier = map.property(.Identifier)
@@ -131,11 +131,13 @@ public struct Component: Mappable, Equatable {
   /**
    Initializes a component and configures it with the provided parameters
 
-   - Parameter title: The title for your UI component.
-   - Parameter kind: The type of Component that should be used.
-   - Parameter span: Configures the span that should be used for items in one row
-   - Parameter items: A collection of view models
-   - Parameter meta: A key-value dictionary for any additional information
+   - parameter identifier: A optional string
+   - parameter title: The title for your UI component.
+   - parameter header: Determines which header item that should be used for the component.
+   - parameter kind: The type of Component that should be used.
+   - parameter span: Configures the span that should be used for items in one row
+   - parameter items: A collection of view models
+   - parameter meta: A key-value dictionary for any additional information
    */
   public init(identifier: String? = nil,
               title: String = "",
@@ -158,9 +160,9 @@ public struct Component: Mappable, Equatable {
   /**
    A generic convenience method for resolving meta attributes
 
-   - Parameter key: String
-   - Parameter defaultValue: A generic value that works as a fallback if the key value object cannot be cast into the generic type
-   - Returns: A generic value based on `defaultValue`, it falls back to `defaultValue` if type casting fails
+   - parameter key: String
+   - parameter defaultValue: A generic value that works as a fallback if the key value object cannot be cast into the generic type
+   - returns: A generic value based on `defaultValue`, it falls back to `defaultValue` if type casting fails
    */
   public func meta<T>(key: String, _ defaultValue: T) -> T {
     return meta[key] as? T ?? defaultValue
@@ -169,9 +171,9 @@ public struct Component: Mappable, Equatable {
   /**
    A generic convenience method for resolving meta attributes
 
-   - Parameter key: String
-   - Parameter type: A generic type used for casting the meta property to a specific value or reference type
-   - Returns: An optional generic value based on `type`
+   - parameter key: String
+   - parameter type: A generic type used for casting the meta property to a specific value or reference type
+   - returns: An optional generic value based on `type`
    */
   public func meta<T>(key: String, type: T.Type) -> T? {
     return meta[key] as? T
@@ -214,9 +216,9 @@ public struct Component: Mappable, Equatable {
 
 /**
  A collection of Component Equatable implementation
- - Parameter lhs: Left hand component
- - Parameter rhs: Right hand component
- - Returns: A boolean value, true if both Components are equal
+ - parameter lhs: Left hand component
+ - parameter rhs: Right hand component
+ - returns: A boolean value, true if both Components are equal
  */
 
 public func == (lhs: [Component], rhs: [Component]) -> Bool {
@@ -245,9 +247,9 @@ public func === (lhs: [Component], rhs: [Component]) -> Bool {
 
 /**
  Check if to collection of components are not equal
- - Parameter lhs: Left hand component
- - Parameter rhs: Right hand component
- - Returns: A boolean value, true if both Components are no equal
+ - parameter lhs: Left hand component
+ - parameter rhs: Right hand component
+ - returns: A boolean value, true if both Components are no equal
  */
 public func != (lhs: [Component], rhs: [Component]) -> Bool {
   return !(lhs == rhs)
@@ -255,9 +257,9 @@ public func != (lhs: [Component], rhs: [Component]) -> Bool {
 
 /**
  Check if to collection of components are truly not equal
- - Parameter lhs: Left hand component
- - Parameter rhs: Right hand component
- - Returns: A boolean value, true if both Components are no equal
+ - parameter lhs: Left hand component
+ - parameter rhs: Right hand component
+ - returns: A boolean value, true if both Components are no equal
  */
 public func !== (lhs: [Component], rhs: [Component]) -> Bool {
   return !(lhs === rhs)
@@ -267,9 +269,9 @@ public func !== (lhs: [Component], rhs: [Component]) -> Bool {
 
 /**
  Check if to components are equal
- - Parameter lhs: Left hand component
- - Parameter rhs: Right hand component
- - Returns: A boolean value, true if both Components are no equal
+ - parameter lhs: Left hand component
+ - parameter rhs: Right hand component
+ - returns: A boolean value, true if both Components are no equal
  */
 public func == (lhs: Component, rhs: Component) -> Bool {
   guard lhs.identifier == rhs.identifier else { return false }
@@ -284,9 +286,9 @@ public func == (lhs: Component, rhs: Component) -> Bool {
 
 /**
  Check if to components are truly equal
- - Parameter lhs: Left hand component
- - Parameter rhs: Right hand component
- - Returns: A boolean value, true if both Components are no equal
+ - parameter lhs: Left hand component
+ - parameter rhs: Right hand component
+ - returns: A boolean value, true if both Components are no equal
  */
 public func === (lhs: Component, rhs: Component) -> Bool {
   guard lhs.identifier == rhs.identifier else { return false }
@@ -305,9 +307,9 @@ public func === (lhs: Component, rhs: Component) -> Bool {
 
 /**
  Check if to components are not equal
- - Parameter lhs: Left hand component
- - Parameter rhs: Right hand component
- - Returns: A boolean value, true if both Components are no equal
+ - parameter lhs: Left hand component
+ - parameter rhs: Right hand component
+ - returns: A boolean value, true if both Components are no equal
  */
 public func != (lhs: Component, rhs: Component) -> Bool {
   return !(lhs == rhs)
@@ -315,9 +317,9 @@ public func != (lhs: Component, rhs: Component) -> Bool {
 
 /**
  Check if to components are truly not equal
- - Parameter lhs: Left hand component
- - Parameter rhs: Right hand component
- - Returns: A boolean value, true if both Components are no equal
+ - parameter lhs: Left hand component
+ - parameter rhs: Right hand component
+ - returns: A boolean value, true if both Components are no equal
  */
 public func !== (lhs: Component, rhs: Component) -> Bool {
   return !(lhs === rhs)

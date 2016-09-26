@@ -9,7 +9,7 @@ import Brick
 public extension Spotable where Self : Gridable {
 
   /**
-   - Returns: UIScrollView: Returns a UICollectionView as a UIScrollView
+   - returns: UIScrollView: Returns a UICollectionView as a UIScrollView
    */
   #if os(OSX)
   public func render() -> CollectionView {
@@ -22,7 +22,7 @@ public extension Spotable where Self : Gridable {
   #endif
 
   /**
-   - Parameter size: A CGSize to set the size of the collection view
+   - parameter size: A CGSize to set the size of the collection view
    */
   public func setup(size: CGSize) {
     layout.prepareLayout()
@@ -35,7 +35,7 @@ public extension Spotable where Self : Gridable {
   }
 
   /**
-   - Parameter size: A CGSize to set the width and height of the collection view
+   - parameter size: A CGSize to set the width and height of the collection view
    */
   public func layout(size: CGSize) {
     layout.invalidateLayout()

@@ -3,7 +3,7 @@ import UIKit
 extension CarouselSpot {
 
   /**
-   - Returns: A CGFloat of the total height of all items inside of a component
+   - returns: A CGFloat of the total height of all items inside of a component
    */
   public func spotHeight() -> CGFloat {
     guard usesDynamicHeight else {

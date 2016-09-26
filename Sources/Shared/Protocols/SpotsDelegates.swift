@@ -33,8 +33,8 @@ public protocol SpotsDelegate: class {
   /**
    A delegate method that is triggered when ever a cell is tapped by the user
 
-   - Parameter spot: An object that conforms to the spotable protocol
-   - Parameter item: The view model that was tapped
+   - parameter spot: An object that conforms to the spotable protocol
+   - parameter item: The view model that was tapped
    */
   func spotDidSelectItem(spot: Spotable, item: ViewModel)
 }
@@ -51,8 +51,8 @@ public protocol SpotsRefreshDelegate: class {
   /**
    A delegate method for when your spot controller was refreshed using pull to refresh
 
-   - Parameter refreshControl: A UIRefreshControl
-   - Parameter completion: A completion closure that should be triggered when the update is completed
+   - parameter refreshControl: A UIRefreshControl
+   - parameter completion: A completion closure that should be triggered when the update is completed
    */
 #if os(iOS)
   func spotsDidReload(refreshControl: UIRefreshControl, completion: Completion)
@@ -78,6 +78,8 @@ public extension SpotsScrollDelegate {
 
   /**
    A default implementation for spotDidReachBeginning, it renders the method optional
+
+   - parameter completion: A completion closure
    */
   func spotDidReachBeginning(completion: Completion) {
     completion?()
@@ -89,8 +91,8 @@ public protocol SpotsCarouselScrollDelegate: class {
   func spotDidScroll(spot: Spotable)
 
   /**
-   - Parameter spot: Object that comforms to the Spotable protocol
-   - Parameter item: The last view model in the component
+   - parameter spot: Object that comforms to the Spotable protocol
+   - parameter item: The last view model in the component
    */
   func spotDidEndScrolling(spot: Spotable, item: ViewModel)
 }

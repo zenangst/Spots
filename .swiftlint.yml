@@ -1,9 +1,8 @@
 disabled_rules:
-  - valid_docs
   - nesting
 opt_in_rules: # some rules are only opt-in
   - empty_count
-    #- missing_docs
+#  - missing_docs
   # Find all the available rules by running:
   # swiftlint rules
 included: # paths to include during linting. `--path` is ignored if present.
@@ -19,14 +18,14 @@ force_try:
   severity: warning # explicitly
 # rules that have both warning and error levels, can set just the warning level
 # implicitly
-line_length: 200
+line_length: 350
 # they can set both implicitly with an array
 type_body_length:
   - 300 # warning
   - 400 # error
 # or they can set both explicitly
 file_length:
-  warning: 500
+  warning: 650
   error: 1200
 # naming rules can set warnings/errors for min_length and max_length
 # additionally they can set excluded names

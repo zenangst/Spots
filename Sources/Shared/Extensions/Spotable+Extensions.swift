@@ -13,55 +13,137 @@ public extension Spotable {
     return component.index
   }
 
-  /// Resolve UI component at index (UITableViewCell or UICollectionViewItem)
+  /**
+   Resolve UI component at index (UITableViewCell or UICollectionViewItem)
+
+   - parameter index: The index of the view model
+
+   - returns: An optional UI component, most likely a UITableViewCell or UICollectionViewCell
+   */
   public func ui<T>(atIndex index: Int) -> T? {
     return adapter?.ui(atIndex: index)
   }
 
-  /// Append view model to a Spotable object
+  /**
+   Append view model to a Spotable object
+
+   - parameter item:       A ViewModel struct
+   - parameter animation:  A SpotAnimation that is used when performing the mutation
+   - parameter completion: A completion block that is run when the mutation is completed
+   */
   func append(item: ViewModel, withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
     adapter?.append(item, withAnimation: animation, completion: completion)
   }
 
-  /// Append a collection of view models to Spotable object
+  /**
+   Append a collection of view models to a Spotable object
+
+   - parameter items:       A collection of ViewModel structs
+   - parameter animation:  A SpotAnimation that is used when performing the mutation
+   - parameter completion: A completion block that is run when the mutation is completed
+   */
   func append(items: [ViewModel], withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
     adapter?.append(items, withAnimation: animation, completion: completion)
   }
 
-  /// Prepend view models to a Spotable object
+  /**
+   Prepend a collection of view models to a Spotable object
+
+   - parameter items:      A collection of ViewModel structs
+   - parameter animation:  A SpotAnimation that is used when performing the mutation
+   - parameter completion: A completion block that is run when the mutation is completed
+   */
   func prepend(items: [ViewModel], withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
     adapter?.prepend(items, withAnimation: animation, completion: completion)
   }
-  /// Insert view model to a Spotable object
+
+  /**
+   Insert view model to a Spotable object
+
+   - parameter item:       A ViewModel struct
+   - parameter index:      The index where the view model should be inserted
+   - parameter animation:  A SpotAnimation that is used when performing the mutation
+   - parameter completion: A completion block that is run when the mutation is completed
+   */
   func insert(item: ViewModel, index: Int, withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
     adapter?.insert(item, index: index, withAnimation: animation, completion: completion)
   }
-  /// Update view model to a Spotable object
+
+  /**
+   Update view model to a Spotable object
+
+   - parameter item:       A ViewModel struct
+   - parameter index:      The index of the view model that should be updated
+   - parameter animation:  A SpotAnimation that is used when performing the mutation
+   - parameter completion: A completion block that is run when the mutation is completed
+   */
   func update(item: ViewModel, index: Int, withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
     adapter?.update(item, index: index, withAnimation: animation, completion: completion)
   }
-  /// Delete view model from a Spotable object
+
+  /**
+   Delete view model from a Spotable object
+
+   - parameter item:       A ViewModel struct
+   - parameter animation:  A SpotAnimation that is used when performing the mutation
+   - parameter completion: A completion block that is run when the mutation is completed
+   */
   func delete(item: ViewModel, withAnimation animation: SpotsAnimation = .Automatic, completion: Completion) {
     adapter?.delete(item, withAnimation: animation, completion: completion)
   }
-  /// Delete a collection of view models from a Spotable object
+
+  /**
+   Delete a collection of view models from a Spotable object
+
+   - parameter items:       A collection of ViewModel structs
+   - parameter animation:  A SpotAnimation that is used when performing the mutation
+   - parameter completion: A completion block that is run when the mutation is completed
+   */
   func delete(items: [ViewModel], withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
     adapter?.delete(items, withAnimation: animation, completion: completion)
   }
-  /// Delete view model at index with animation from a Spotable object
+
+  /**
+   Delete a collection of view models from a Spotable object
+
+   - parameter index:      The index of the view model that should be deleted
+   - parameter animation:  A SpotAnimation that is used when performing the mutation
+   - parameter completion: A completion block that is run when the mutation is completed
+   */
   func delete(index: Int, withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
     adapter?.delete(index, withAnimation: animation, completion: completion)
   }
-  /// Delete view model indexes with animation from a Spotable object
+
+  /**
+   Delete view model indexes with animation from a Spotable object
+
+   - parameter indexes:    A collection of view model indexes
+   - parameter animation:  A SpotAnimation that is used when performing the mutation
+   - parameter completion: A completion block that is run when the mutation is completed
+   */
   func delete(indexes: [Int], withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
     adapter?.delete(indexes, withAnimation: animation, completion: completion)
   }
-  /// Reload view model indexes with animation in a Spotable object
+
+  /**
+   Reload view model indexes with animation in a Spotable object
+
+   - parameter indexes:    A collection of view model indexes
+   - parameter animation:  A SpotAnimation that is used when performing the mutation
+   - parameter completion: A completion block that is run when the mutation is completed
+   */
   func reload(indexes: [Int]? = nil, withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
     adapter?.reload(indexes, withAnimation: animation, completion: completion)
   }
 
-  /// Reload view models with change set
+  /**
+   Reload view models with change set
+
+   - parameter changes:    A ViewModelChanges struct that contains instructions for the adapter to perform mutations
+   - parameter animation:  A SpotAnimation that is used when performing the mutation
+   - parameter updateDataSource:  A closure that updates the data source, it is performed prior to calling UI updating methods
+   - parameter completion: A completion block that is run when the mutation is completed
+   */
   func reloadIfNeeded(changes: ViewModelChanges, withAnimation animation: SpotsAnimation = .Automatic, updateDataSource: () -> Void, completion: Completion) {
     adapter?.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: updateDataSource, completion: completion)
   }
@@ -89,8 +171,8 @@ public extension Spotable {
   }
 
   /**
-   - Parameter index: The index of the item to lookup
-   - Returns: A ViewModel at found at the index
+   - parameter index: The index of the item to lookup
+   - returns: A ViewModel at found at the index
    */
   public func item(index: Int) -> ViewModel? {
     guard index < component.items.count && index > -1 else { return nil }
@@ -98,8 +180,8 @@ public extension Spotable {
   }
 
   /**
-   - Parameter indexPath: The indexPath of the item to lookup
-   - Returns: A ViewModel at found at the index
+   - parameter indexPath: The indexPath of the item to lookup
+   - returns: A ViewModel at found at the index
    */
   public func item(indexPath: NSIndexPath) -> ViewModel? {
     #if os(OSX)
@@ -110,7 +192,7 @@ public extension Spotable {
   }
 
   /**
-   - Returns: A CGFloat of the total height of all items inside of a component
+   - returns: A CGFloat of the total height of all items inside of a component
    */
   public func spotHeight() -> CGFloat {
     guard usesDynamicHeight else {
@@ -143,8 +225,9 @@ public extension Spotable {
   /**
    Reloads a spot only if it changes
 
-   - Parameter items:     A collection of ViewModels
-   - Parameter animation: The animation that should be used (only works for Listable objects)
+   - parameter items:      A collection of ViewModels
+   - parameter animation:  The animation that should be used (only works for Listable objects)
+   - parameter completion: A completion closure that is performed when all mutations are performed
    */
   public func reloadIfNeeded(items: [ViewModel], withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
     guard !(self.items == items) else {
@@ -174,8 +257,8 @@ public extension Spotable {
   /**
    Reload Spotable object with JSON if contents changed
 
-   - Parameter json:      A JSON dictionary
-   - Parameter animation: The animation that should be used (only works for Listable objects)
+   - parameter json:      A JSON dictionary
+   - parameter animation:  A SpotAnimation that is used when performing the mutation (only works for Listable objects)
    */
   public func reloadIfNeeded(json: [String : AnyObject], withAnimation animation: SpotsAnimation = .Automatic) {
     let newComponent = Component(json)
@@ -196,8 +279,8 @@ public extension Spotable {
   }
 
   /**
-   - Parameter includeElement: A filter predicate to find a view model
-   - Returns: Always returns 0.0
+   - parameter includeElement: A filter predicate to find a view model
+   - returns: Always returns 0.0
    */
   public func scrollTo(@noescape includeElement: (ViewModel) -> Bool) -> CGFloat {
     return 0.0
@@ -206,7 +289,8 @@ public extension Spotable {
   /**
    Prepares a view model item before being used by the UI component
 
-   - Parameter index: The index of the view model
+   - parameter index: The index of the view model
+   - parameter usesViewSize: A boolean value to determine if the view uses the views height
    */
   public func configureItem(index: Int, usesViewSize: Bool = false) {
     guard let item = item(index) else { return }

@@ -8,6 +8,7 @@ public class CarouselSpot: NSObject, Gridable {
    *  A struct that holds keys that is used when mapping meta data to configuration methods
    */
   public struct Key {
+    /// Dynamic span key used when looking up meta properties
     public static let dynamicSpan = "dynamic-span"
   }
 
@@ -15,12 +16,19 @@ public class CarouselSpot: NSObject, Gridable {
    *  A struct with default values for the CarouselSpot
    */
   public struct Default {
+    /// Default dynamicSpan value
     public static var dynamicSpan: Bool = false
+    /// Default section inset top
     public static var sectionInsetTop: CGFloat = 0.0
+    /// Default section inset left
     public static var sectionInsetLeft: CGFloat = 0.0
+    /// Default section inset right
     public static var sectionInsetRight: CGFloat = 0.0
+    /// Default section inset bottom
     public static var sectionInsetBottom: CGFloat = 0.0
+    /// Default default minimum interitem spacing
     public static var minimumInteritemSpacing: CGFloat = 0.0
+    /// Default minimum line spacing
     public static var minimumLineSpacing: CGFloat = 0.0
   }
 
@@ -83,15 +91,21 @@ public class CarouselSpot: NSObject, Gridable {
   /// A configuration closure
   public var configure: (SpotConfigurable -> Void)?
 
+  /// A CarouselScrollDelegate, used when a CarouselSpot scrolls
   public weak var carouselScrollDelegate: SpotsCarouselScrollDelegate?
+
   /// A SpotsCompositeDelegate for the CarouselSpot, used to access composite spots
   public weak var spotsCompositeDelegate: SpotsCompositeDelegate?
+
   /// A SpotsDelegate that is used for the CarouselSpot
   public weak var spotsDelegate: SpotsDelegate?
 
+  /// A computed variable for adapters
   public var adapter: SpotAdapter? {
     return collectionAdapter
   }
+
+  /// A collection adapter that is the data source and delegate for the CarouselSpot
   public lazy var collectionAdapter: CollectionAdapter = CollectionAdapter(spot: self)
 
   /// A UIPageControl, enable by setting pageIndicator to true
@@ -131,8 +145,6 @@ public class CarouselSpot: NSObject, Gridable {
    A required initializer to instantiate a CarouselSpot with a component
 
    - parameter component: A component
-
-   - returns: A CarouselSpot object
    */
   public required init(component: Component) {
     self.component = component
@@ -153,8 +165,6 @@ public class CarouselSpot: NSObject, Gridable {
    - parameter right:       Right section inset
    - parameter itemSpacing: The item spacing used in the flow layout
    - parameter lineSpacing: The line spacing used in the flow layout
-
-   - returns: A CarouselSpot object
    */
   public convenience init(_ component: Component, top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0, itemSpacing: CGFloat = 0, lineSpacing: CGFloat = 0) {
     self.init(component: component)
@@ -168,8 +178,6 @@ public class CarouselSpot: NSObject, Gridable {
    Instantiate a CarouselSpot with a cache key
 
    - parameter cacheKey: A unique cache key for the Spotable object
-
-   - returns: A CarouselSpot object
    */
   public convenience init(cacheKey: String) {
     let stateCache = SpotCache(key: cacheKey)
@@ -238,6 +246,11 @@ public class CarouselSpot: NSObject, Gridable {
     dynamicSpan = component.meta(Key.dynamicSpan, false)
   }
 
+  /**
+   Register default header for the CarouselSpot
+
+   - parameter view: A header view
+   */
   func registerDefaultHeader(header view: View.Type) {
     guard self.dynamicType.headers.storage[self.dynamicType.headers.defaultIdentifier] == nil else { return }
     self.dynamicType.headers.defaultItem = Registry.Item.classType(view)

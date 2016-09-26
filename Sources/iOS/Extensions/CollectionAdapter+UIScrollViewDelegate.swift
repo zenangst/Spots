@@ -8,9 +8,9 @@ extension CollectionAdapter : UIScrollViewDelegate {
   /**
    Tells the delegate when the user finishes scrolling the content.
 
-   - Parameter scrollView: The scroll-view object where the user ended the touch.
-   - Parameter velocity: The velocity of the scroll view (in points) at the moment the touch was released.
-   - Parameter targetContentOffset: The expected offset when the scrolling action decelerates to a stop
+   - parameter scrollView: The scroll-view object where the user ended the touch.
+   - parameter velocity: The velocity of the scroll view (in points) at the moment the touch was released.
+   - parameter targetContentOffset: The expected offset when the scrolling action decelerates to a stop
    */
   public func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
     (spot as? CarouselSpot)?.scrollViewWillEndDragging(scrollView, withVelocity: velocity, targetContentOffset: targetContentOffset)

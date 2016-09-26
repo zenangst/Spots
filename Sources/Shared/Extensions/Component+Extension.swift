@@ -6,16 +6,16 @@ import Tailor
 extension Dictionary where Key: StringLiteralConvertible {
 
   /**
-   - Parameter name: The name of the property that you want to map
-   - Returns: A generic type if casting succeeds, otherwise it returns nil
+   - parameter name: The name of the property that you want to map
+   - returns: A generic type if casting succeeds, otherwise it returns nil
    */
   func property<T>(name: Component.Key) -> T? {
     return property(name.string)
   }
 
   /**
-   - Parameter name: The name of the property that you want to map
-   - Returns: A mappable object array, otherwise it returns nil
+   - parameter name: The name of the property that you want to map
+   - returns: A mappable object array, otherwise it returns nil
    */
   func relations<T: Mappable>(name: Component.Key) -> [T]? {
     return relations(name.string)
@@ -23,8 +23,8 @@ extension Dictionary where Key: StringLiteralConvertible {
 
   /**
    Access the value associated with the given key.
-   - Parameter key: The key associated with the value you want to get
-   - Returns: The value associated with the given key
+   - parameter key: The key associated with the value you want to get
+   - returns: The value associated with the given key
    */
   subscript(key: Component.Key) -> Value? {
     set(value) {

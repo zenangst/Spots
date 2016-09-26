@@ -1,14 +1,21 @@
 import UIKit
 
+/// A custom flow layout used in GridSpot and CarouselSpot
 public class GridableLayout: UICollectionViewFlowLayout {
 
+  /// The content size for the Gridable object
   var contentSize = CGSize.zero
+  /// The y offset for the Gridable object
   public var yOffset: CGFloat?
 
+  // Subclasses must override this method and use it to return the width and height of the collection view’s content. These values represent the width and height of all the content, not just the content that is currently visible. The collection view uses this information to configure its own content size to facilitate scrolling.
   public override func collectionViewContentSize() -> CGSize {
     return contentSize
   }
 
+  /// The collection view calls -prepareLayout once at its first layout as the first message to the layout instance.
+  /// The collection view calls -prepareLayout again after layout is invalidated and before requerying the layout information.
+  /// Subclasses should always call super if they override.
   public override func prepareLayout() {
     super.prepareLayout()
 

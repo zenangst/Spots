@@ -7,7 +7,7 @@ public class ListAdapter: NSObject, SpotAdapter {
   /**
    Initialization a new instance of a ListAdapter using a Listable object
 
-   - Parameter gridable: A Listable object
+   - parameter spot: A Listable object
    */
   init(spot: ListSpot) {
     self.spot = spot
