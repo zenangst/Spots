@@ -14,7 +14,7 @@ target "Spotify Mac" do
   pod 'Fashion', git: 'https://github.com/vadymmarkov/Fashion.git'
   pod 'Imaginary', git: 'https://github.com/hyperoslo/Imaginary.git'
   pod 'Hue', git: 'https://github.com/hyperoslo/Hue.git'
-  pod 'Compass', '2.0.0'
+  pod 'Compass', :git => 'https://github.com/hyperoslo/Compass.git', :commit => 'b08b753962834f19a9d45096aa7eec370f11b6f2'
   pod 'Malibu', git: 'https://github.com/hyperoslo/Malibu.git'
   pod 'OhMyAuth', git: 'https://github.com/hyperoslo/OhMyAuth.git'
   pod 'Keychain', git: 'https://github.com/hyperoslo/Keychain.git'
