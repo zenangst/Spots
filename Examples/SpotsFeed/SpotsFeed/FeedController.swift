@@ -14,9 +14,9 @@ public class FeedController: SpotsController, SpotsDelegate {
     super.viewDidLoad()
   }
 
-  public func spotDidSelectItem(spot: Spotable, item: ViewModel) { }
+  public func spotDidSelectItem(spot: Spotable, item: Item) { }
 
-  public static func generateItem(index: Int, kind: String = "feed") -> ViewModel {
+  public static func generateItem(index: Int, kind: String = "feed") -> Item {
     let sencenceCount = Int(arc4random_uniform(8) + 1)
     let subtitle = faker.lorem.sentences(amount: sencenceCount) + " " + faker.internet.url()
 
@@ -26,7 +26,7 @@ public class FeedController: SpotsController, SpotsDelegate {
       mediaStrings.append("http://lorempixel.com/250/250/?type=attachment&id=\(index)\(x)")
     }
 
-    let item = ViewModel(title: faker.name.name(),
+    let item = Item(title: faker.name.name(),
       subtitle: subtitle,
       kind: kind,
       image: "http://lorempixel.com/75/75?type=avatar&id=\(index)",
@@ -35,8 +35,8 @@ public class FeedController: SpotsController, SpotsDelegate {
     return item
   }
 
-  public static func generateItems(from: Int, to: Int, kind: String = "feed") -> [ViewModel] {
-    var items = [ViewModel]()
+  public static func generateItems(from: Int, to: Int, kind: String = "feed") -> [Item] {
+    var items = [Item]()
     for i in from...from+to {
       autoreleasepool({
         items.append(generateItem(i))

@@ -23,7 +23,7 @@ public class PostTableViewCell: WallTableViewCell, SpotConfigurable {
 
   public static let reusableIdentifier = "PostTableViewCell"
 
-  public class func height(item: ViewModel) -> CGFloat {
+  public class func height(item: Item) -> CGFloat {
     let post = item.post
     let postText = post.text as NSString
     let textFrame = postText.boundingRectWithSize(CGSize(width: UIScreen.mainScreen().bounds.width - 40,
@@ -120,7 +120,7 @@ public class PostTableViewCell: WallTableViewCell, SpotConfigurable {
     fatalError("init(coder:) has not been implemented")
   }
 
-  public func setupViews(item: ViewModel) -> CGFloat {
+  public func setupViews(item: Item) -> CGFloat {
     let post = item.post
     var imageHeight: CGFloat = 0
     var imageTop: CGFloat = 50
@@ -161,7 +161,7 @@ public class PostTableViewCell: WallTableViewCell, SpotConfigurable {
     return bottomSeparator.y
   }
 
-  public func configure(inout item: ViewModel) {
+  public func configure(inout item: Item) {
     item.size.width = contentView.frame.width
     item.size.height = setupViews(item)
     item.size.height = ceil(PostTableViewCell.height(item))

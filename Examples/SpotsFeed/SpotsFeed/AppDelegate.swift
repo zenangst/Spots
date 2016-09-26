@@ -75,7 +75,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       case "feed:post:{id}":
         let sencenceCount = Int(arc4random_uniform(8) + 1)
         let subtitle = Faker().lorem.sentences(amount: sencenceCount) + " " + Faker().internet.url()
-        let post = ViewModel(title: Faker().name.name(),
+        let post = Item(title: Faker().name.name(),
             subtitle: subtitle,
             kind: "feed",
             image: "http://lorempixel.com/75/75?type=avatar&id=1",
