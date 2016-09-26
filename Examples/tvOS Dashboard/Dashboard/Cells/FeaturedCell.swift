@@ -25,7 +25,7 @@ class FeaturedCell: UICollectionViewCell, SpotConfigurable {
     fatalError("init(coder:) has not been implemented")
   }
 
-  func configure(inout item: ViewModel) {
+  func configure(inout item: Item) {
 
     if item.image.isPresent {
       imageView.setImage(NSURL(string: item.image))
