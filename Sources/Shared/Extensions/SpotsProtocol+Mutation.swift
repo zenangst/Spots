@@ -8,6 +8,8 @@ import Brick
 
 extension SpotsProtocol {
 
+  public typealias CompareClosure = ((lhs: [Component], rhs: [Component]) -> Bool)
+
   /**
    Reload all Spotable objects
 
@@ -244,7 +246,7 @@ extension SpotsProtocol {
    - parameter completion: A closure that will be run after reload has been performed on all spots
    */
   public func reloadIfNeeded(json: [String : AnyObject],
-                             compare: ((lhs: [Component], rhs: [Component]) -> Bool) = { lhs, rhs in return lhs != rhs },
+                             compare: CompareClosure = { lhs, rhs in return lhs != rhs },
                              animated: ((view: View) -> Void)? = nil,
                              completion: Completion = nil) {
     Dispatch.mainQueue { [weak self] in
