@@ -83,9 +83,9 @@ class CardSpotCell : UICollectionViewCell, SpotConfigurable {
     subtitleLabel.attributedText = NSAttributedString(string: item.subtitle,
       attributes: [NSParagraphStyleAttributeName : paddedStyle])
 
-    titleLabel.textColor = UIColor.hex(item.meta.property("foreground-color") ?? "000000")
-    subtitleLabel.textColor = UIColor.hex(item.meta.property("foreground-color") ?? "000000")
-    canvasView.backgroundColor = UIColor.hex(item.meta.property("background-color") ?? "FFFFFF")
+    titleLabel.textColor = UIColor(hex: item.meta.property("foreground-color") ?? "000000")
+    subtitleLabel.textColor = UIColor(hex: item.meta.property("foreground-color") ?? "000000")
+    canvasView.backgroundColor = UIColor(hex: item.meta.property("background-color") ?? "FFFFFF")
 
     layoutSubviews()
 
