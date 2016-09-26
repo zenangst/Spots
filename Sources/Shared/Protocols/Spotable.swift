@@ -48,19 +48,19 @@ public protocol Spotable: class {
   /// Setup Spotable object with size
   func setup(size: CGSize)
   /// Append view model to a Spotable object
-  func append(item: ViewModel, withAnimation animation: SpotsAnimation, completion: Completion)
+  func append(item: Item, withAnimation animation: SpotsAnimation, completion: Completion)
   /// Append a collection of view models to Spotable object
-  func append(items: [ViewModel], withAnimation animation: SpotsAnimation, completion: Completion)
+  func append(items: [Item], withAnimation animation: SpotsAnimation, completion: Completion)
   /// Prepend view models to a Spotable object
-  func prepend(items: [ViewModel], withAnimation animation: SpotsAnimation, completion: Completion)
+  func prepend(items: [Item], withAnimation animation: SpotsAnimation, completion: Completion)
   /// Insert view model to a Spotable object
-  func insert(item: ViewModel, index: Int, withAnimation animation: SpotsAnimation, completion: Completion)
+  func insert(item: Item, index: Int, withAnimation animation: SpotsAnimation, completion: Completion)
   /// Update view model to a Spotable object
-  func update(item: ViewModel, index: Int, withAnimation animation: SpotsAnimation, completion: Completion)
+  func update(item: Item, index: Int, withAnimation animation: SpotsAnimation, completion: Completion)
   /// Delete view model from a Spotable object
-  func delete(item: ViewModel, withAnimation animation: SpotsAnimation, completion: Completion)
+  func delete(item: Item, withAnimation animation: SpotsAnimation, completion: Completion)
   /// Delete a collection of view models from a Spotable object
-  func delete(item: [ViewModel], withAnimation animation: SpotsAnimation, completion: Completion)
+  func delete(item: [Item], withAnimation animation: SpotsAnimation, completion: Completion)
   /// Delete view model at index with animation from a Spotable object
   func delete(index: Int, withAnimation animation: SpotsAnimation, completion: Completion)
   /// Delete view model indexes with animation from a Spotable object
@@ -68,9 +68,9 @@ public protocol Spotable: class {
   /// Reload view model indexes with animation in a Spotable object
   func reload(indexes: [Int]?, withAnimation animation: SpotsAnimation, completion: Completion)
 
-  func reloadIfNeeded(items: [ViewModel], withAnimation animation: SpotsAnimation, completion: Completion)
+  func reloadIfNeeded(items: [Item], withAnimation animation: SpotsAnimation, completion: Completion)
   /// Reload view models if needed using change set
-  func reloadIfNeeded(changes: ViewModelChanges, withAnimation animation: SpotsAnimation, updateDataSource: () -> Void, completion: Completion)
+  func reloadIfNeeded(changes: ItemChanges, withAnimation animation: SpotsAnimation, updateDataSource: () -> Void, completion: Completion)
 
   /// Return a Spotable object as a UIScrollView
   func render() -> ScrollView
@@ -79,7 +79,7 @@ public protocol Spotable: class {
   /// Perform internal preperations for a Spotable object
   func register()
   /// Scroll to view model using predicate
-  func scrollTo(@noescape includeElement: (ViewModel) -> Bool) -> CGFloat
+  func scrollTo(@noescape includeElement: (Item) -> Bool) -> CGFloat
 
   func spotHeight() -> CGFloat
   func sizeForItemAt(indexPath: NSIndexPath) -> CGSize

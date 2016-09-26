@@ -100,7 +100,7 @@ extension CarouselSpot: UIScrollViewDelegate {
 
    - parameter predicate: A predicate closure to determine which item to scroll to
    */
-  public func scrollTo(predicate: (ViewModel) -> Bool) {
+  public func scrollTo(predicate: (Item) -> Bool) {
     if let index = items.indexOf(predicate) {
       let pageWidth: CGFloat = collectionView.frame.size.width - layout.sectionInset.right
         + layout.sectionInset.left

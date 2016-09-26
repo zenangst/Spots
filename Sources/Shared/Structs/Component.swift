@@ -47,7 +47,7 @@ public struct Component: Mappable, Equatable {
 
   // Identifier
   public var identifier: String?
-  /// The index of the ViewModel when appearing in a list, should be computed and continuously updated by the data source
+  /// The index of the Item when appearing in a list, should be computed and continuously updated by the data source
   public var index = 0
   /// The title for the component
   public var title = ""
@@ -60,7 +60,7 @@ public struct Component: Mappable, Equatable {
   /// Used by gridable components
   public var span: CGFloat = 0
   /// A collection of view models
-  public var items = [ViewModel]()
+  public var items = [Item]()
   /// The width and height of the component, usually calculated and updated by the UI component
   public var size: CGSize?
   /// A key-value dictionary for any additional information
@@ -144,7 +144,7 @@ public struct Component: Mappable, Equatable {
               header: String = "",
               kind: String = "",
               span: CGFloat = 0,
-              items: [ViewModel] = [],
+              items: [Item] = [],
               meta: [String : AnyObject] = [:]) {
     self.identifier = identifier
     self.title = title

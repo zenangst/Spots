@@ -4,6 +4,6 @@ import Brick
 public protocol SpotComposable: class {
   var contentView: View { get }
 
-  func configure(inout item: ViewModel, spots: [Spotable]?)
-  func parse(item: ViewModel) -> [Spotable]
+  func configure(inout item: Item, spots: [Spotable]?)
+  func parse(item: Item) -> [Spotable]
 }

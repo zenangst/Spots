@@ -16,7 +16,7 @@ enum Cell: String, StringConvertible {
 public class ListCell: UITableViewCell, SpotConfigurable {
 
   public var size = CGSize(width: 0, height: 60)
-  public var item: ViewModel?
+  public var item: Item?
 
   lazy var selectedView: UIView = {
     let view = UIView()
@@ -34,7 +34,7 @@ public class ListCell: UITableViewCell, SpotConfigurable {
     fatalError("init(coder:) has not been implemented")
   }
 
-  public func configure(inout item: ViewModel) {
+  public func configure(inout item: Item) {
     backgroundColor = UIColor.whiteColor()
     textLabel?.textColor = UIColor.blackColor()
     detailTextLabel?.textColor = UIColor.blackColor()
@@ -146,7 +146,7 @@ class GridTopicCell: UICollectionViewCell, SpotConfigurable {
     fatalError("init(coder:) has not been implemented")
   }
 
-  func configure(inout item: ViewModel) {
+  func configure(inout item: Item) {
     contentView.backgroundColor = item.meta("color", UIColor.whiteColor()).colorWithAlphaComponent(0.4)
 
     blurView.width = contentView.width
@@ -186,33 +186,33 @@ ListSpot.configure = { tableView in
 }
 
 let carouselItems = Component(items: [
-  ViewModel(title: "UX", kind: Cell.Featured, meta: ["color" : UIColor.blackColor()]),
-  ViewModel(title: "Persistency", kind: Cell.Featured, meta: ["color" : UIColor.grayColor()]),
-  ViewModel(title: "Networking", kind: Cell.Featured, meta: ["color" : UIColor.greenColor()]),
-  ViewModel(title: "Navigation", kind: Cell.Featured, meta: ["color" : UIColor.redColor()])
+  Item(title: "UX", kind: Cell.Featured, meta: ["color" : UIColor.blackColor()]),
+  Item(title: "Persistency", kind: Cell.Featured, meta: ["color" : UIColor.grayColor()]),
+  Item(title: "Networking", kind: Cell.Featured, meta: ["color" : UIColor.greenColor()]),
+  Item(title: "Navigation", kind: Cell.Featured, meta: ["color" : UIColor.redColor()])
   ])
 
 let listItems = Component(title: "List Spot", items: [
-  ViewModel(title: "Vadym Markov", subtitle: "iOS Developer", action: "1"),
-  ViewModel(title: "Ramon Gilabert Llop", subtitle: "iOS Developer", action: "2"),
-  ViewModel(title: "Khoa Pham", subtitle: "iOS Developer", action: "3"),
-  ViewModel(title: "Christoffer Winterkvist", subtitle: "iOS Developer", action: "4")
+  Item(title: "Vadym Markov", subtitle: "iOS Developer", action: "1"),
+  Item(title: "Ramon Gilabert Llop", subtitle: "iOS Developer", action: "2"),
+  Item(title: "Khoa Pham", subtitle: "iOS Developer", action: "3"),
+  Item(title: "Christoffer Winterkvist", subtitle: "iOS Developer", action: "4")
   ], meta: ["headerHeight" : 44])
 
 let featuredOpensource = Component(span: 4, items: [
-  ViewModel(title: "Whisper", kind: Cell.Featured, meta: ["color" : UIColor.blueColor()]),
-  ViewModel(title: "Sync", kind: Cell.Featured, meta: ["color" : UIColor.orangeColor()]),
-  ViewModel(title: "Presentation", kind: Cell.Featured, meta: ["color" : UIColor.yellowColor()]),
-  ViewModel(title: "HUE", kind: Cell.Featured, meta: ["color" : UIColor.redColor()]),
+  Item(title: "Whisper", kind: Cell.Featured, meta: ["color" : UIColor.blueColor()]),
+  Item(title: "Sync", kind: Cell.Featured, meta: ["color" : UIColor.orangeColor()]),
+  Item(title: "Presentation", kind: Cell.Featured, meta: ["color" : UIColor.yellowColor()]),
+  Item(title: "HUE", kind: Cell.Featured, meta: ["color" : UIColor.redColor()]),
   ])
 
 let gridItems = Component(span: 6, items: [
-  ViewModel(title: "ImagePicker", kind: Cell.Featured, meta: ["color" : UIColor.darkGrayColor()]),
-  ViewModel(title: "Sugar", kind: Cell.Featured, meta: ["color" : UIColor.redColor()]),
-  ViewModel(title: "Cache", kind: Cell.Featured, meta: ["color" : UIColor.greenColor()]),
-  ViewModel(title: "Spots", kind: Cell.Featured, meta: ["color" : UIColor.blackColor()]),
-  ViewModel(title: "Compass", kind: Cell.Featured, meta: ["color" : UIColor.blueColor()]),
-  ViewModel(title: "Pages", kind: Cell.Featured, meta: ["color" : UIColor.redColor()])
+  Item(title: "ImagePicker", kind: Cell.Featured, meta: ["color" : UIColor.darkGrayColor()]),
+  Item(title: "Sugar", kind: Cell.Featured, meta: ["color" : UIColor.redColor()]),
+  Item(title: "Cache", kind: Cell.Featured, meta: ["color" : UIColor.greenColor()]),
+  Item(title: "Spots", kind: Cell.Featured, meta: ["color" : UIColor.blackColor()]),
+  Item(title: "Compass", kind: Cell.Featured, meta: ["color" : UIColor.blueColor()]),
+  Item(title: "Pages", kind: Cell.Featured, meta: ["color" : UIColor.redColor()])
   ])
 
 let controller = SpotsController(spots: [

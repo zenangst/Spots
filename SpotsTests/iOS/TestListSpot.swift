@@ -29,7 +29,7 @@ class ListSpotTests: XCTestCase {
   }
 
   func testSafelyResolveKind() {
-    let component = Component(title: "ListSpot", kind: "custom-list", items: [ViewModel(title: "foo", kind: "custom-item-kind")])
+    let component = Component(title: "ListSpot", kind: "custom-list", items: [Item(title: "foo", kind: "custom-item-kind")])
     let listSpot = ListSpot(component: component)
     let indexPath = NSIndexPath(forRow: 0, inSection: 0)
 

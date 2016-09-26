@@ -4,7 +4,7 @@ import Brick
 public class ListSpotCell: UITableViewCell, SpotConfigurable {
 
   public var size = CGSize(width: 0, height: 44)
-  public var item: ViewModel?
+  public var item: Item?
 
   public override init(style: UITableViewCellStyle, reuseIdentifier: String!) {
     super.init(style: .Subtitle, reuseIdentifier: reuseIdentifier)
@@ -14,7 +14,7 @@ public class ListSpotCell: UITableViewCell, SpotConfigurable {
     fatalError("init(coder:) has not been implemented")
   }
 
-  public func configure(inout item: ViewModel) {
+  public func configure(inout item: Item) {
     if let action = item.action where !action.isEmpty {
       accessoryType = .DisclosureIndicator
     } else {

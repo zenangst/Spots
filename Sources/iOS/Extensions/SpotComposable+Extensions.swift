@@ -10,7 +10,7 @@ public extension SpotComposable where Self : View {
    - parameter item:  The item that is currently being configured in the list
    - parameter spots: A collection of Spotable objects created from the children of the item
    */
-  func configure(inout item: ViewModel, spots: [Spotable]?) {
+  func configure(inout item: Item, spots: [Spotable]?) {
     guard let spots = spots else { return }
 
     var height: CGFloat = 0.0
@@ -40,7 +40,7 @@ public extension SpotComposable where Self : View {
 
    - returns: A collection of Spotable objects
    */
-  public func parse(item: ViewModel) -> [Spotable] {
+  public func parse(item: Item) -> [Spotable] {
     let spots = Parser.parse(item.children)
     return spots
   }

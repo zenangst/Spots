@@ -17,7 +17,7 @@ class SpotsControllerTests : XCTestCase {
     let component = Component(title: "Component")
     let listSpot = ListSpot(component: component)
     let spotController = SpotsController(spot: listSpot)
-    let items = [ViewModel(title: "item1")]
+    let items = [Item(title: "item1")]
 
     spotController.update { spot in
       spot.component.items = items
@@ -33,7 +33,7 @@ class SpotsControllerTests : XCTestCase {
 
     XCTAssert(spotController.spot!.component.items.count == 0)
 
-    let item = ViewModel(title: "title1", kind: "list")
+    let item = Item(title: "title1", kind: "list")
     spotController.append(item, spotIndex: 0)
 
     XCTAssert(spotController.spot!.component.items.count == 1)
@@ -43,7 +43,7 @@ class SpotsControllerTests : XCTestCase {
     }
 
     // Test appending item without kind
-    spotController.append(ViewModel(title: "title2"), spotIndex: 0) {
+    spotController.append(Item(title: "title2"), spotIndex: 0) {
       XCTAssert(spotController.spot!.component.items.count == 2)
       XCTAssertEqual(spotController.spot!.component.items[1].title, "title2")
     }
@@ -55,8 +55,8 @@ class SpotsControllerTests : XCTestCase {
     let spotController = SpotsController(spot: listSpot)
 
     let items = [
-      ViewModel(title: "title1", kind: "list"),
-      ViewModel(title: "title2", kind: "list")
+      Item(title: "title1", kind: "list"),
+      Item(title: "title2", kind: "list")
     ]
     spotController.append(items, spotIndex: 0)
 
@@ -65,8 +65,8 @@ class SpotsControllerTests : XCTestCase {
 
     // Test appending items without kind
     spotController.append([
-      ViewModel(title: "title3"),
-      ViewModel(title: "title4")
+      Item(title: "title3"),
+      Item(title: "title4")
     ], spotIndex: 0) {
       XCTAssertEqual(spotController.spot!.component.items.count, 4)
       XCTAssertEqual(spotController.spot!.component.items[2].title, "title3")
@@ -80,8 +80,8 @@ class SpotsControllerTests : XCTestCase {
     let spotController = SpotsController(spot: listSpot)
 
     let items = [
-      ViewModel(title: "title1", kind: "list"),
-      ViewModel(title: "title2", kind: "list")
+      Item(title: "title1", kind: "list"),
+      Item(title: "title2", kind: "list")
     ]
     spotController.prepend(items, spotIndex: 0)
 
@@ -89,8 +89,8 @@ class SpotsControllerTests : XCTestCase {
     XCTAssert(spotController.spot!.component.items == items)
 
     spotController.prepend([
-      ViewModel(title: "title3"),
-      ViewModel(title: "title4")
+      Item(title: "title3"),
+      Item(title: "title4")
     ], spotIndex: 0) {
       XCTAssertEqual(spotController.spot!.component.items[0].title, "title3")
       XCTAssertEqual(spotController.spot!.component.items[1].title, "title4")
@@ -99,8 +99,8 @@ class SpotsControllerTests : XCTestCase {
 
   func testDeleteItem() {
     let component = Component(title: "Component", kind: "list", items: [
-      ViewModel(title: "title1", kind: "list"),
-      ViewModel(title: "title2", kind: "list")
+      Item(title: "title1", kind: "list"),
+      Item(title: "title2", kind: "list")
       ])
     let initialListSpot = ListSpot(component: component)
 
@@ -124,14 +124,14 @@ class SpotsControllerTests : XCTestCase {
 
   func testComputedPropertiesOnSpotable() {
     let component = Component(title: "Component", kind: "list", items: [
-      ViewModel(title: "title1", kind: "list"),
-      ViewModel(title: "title2", kind: "list")
+      Item(title: "title1", kind: "list"),
+      Item(title: "title2", kind: "list")
       ])
     let spot = ListSpot(component: component)
 
     XCTAssert(spot.items == component.items)
 
-    let newItems = [ViewModel(title: "title3", kind: "list")]
+    let newItems = [Item(title: "title3", kind: "list")]
     spot.items = newItems
     XCTAssertFalse(spot.items == component.items)
     XCTAssert(spot.items == newItems)
@@ -140,14 +140,14 @@ class SpotsControllerTests : XCTestCase {
   func testFindAndFilterSpotWithClosure() {
     let listSpot = ListSpot(component: Component(title: "ListSpot"))
     let listSpot2 = ListSpot(component: Component(title: "ListSpot2"))
-    let gridSpot = GridSpot(component: Component(title: "GridSpot", items: [ViewModel(title: "ViewModel")]))
+    let gridSpot = GridSpot(component: Component(title: "GridSpot", items: [Item(title: "Item")]))
     let spotController = SpotsController(spots: [listSpot, listSpot2, gridSpot])
 
     XCTAssertNotNil(spotController.spot{ $1.component.title == "ListSpot" })
     XCTAssertNotNil(spotController.spot{ $1.component.title == "GridSpot" })
     XCTAssertNotNil(spotController.spot{ $1 is Listable })
     XCTAssertNotNil(spotController.spot{ $1 is Gridable })
-    XCTAssertNotNil(spotController.spot{ $1.items.filter{ $0.title == "ViewModel" }.first != nil })
+    XCTAssertNotNil(spotController.spot{ $1.items.filter{ $0.title == "Item" }.first != nil })
     XCTAssertEqual(spotController.spot{ $0.index == 0 }?.component.title, "ListSpot")
     XCTAssertEqual(spotController.spot{ $0.index == 1 }?.component.title, "ListSpot2")
     XCTAssertEqual(spotController.spot{ $0.index == 2 }?.component.title, "GridSpot")
@@ -157,7 +157,7 @@ class SpotsControllerTests : XCTestCase {
 
   func testJSONInitialiser() {
     let spot = ListSpot()
-    spot.items = [ViewModel(title: "First item")]
+    spot.items = [Item(title: "First item")]
     let sourceController = SpotsController(spot: spot)
     let jsonController = SpotsController([
       "components" : [

@@ -122,8 +122,8 @@ extension SpotsProtocol {
     let newItems = newComponents[index].items
     let oldItems = spot.items
 
-    guard let diff = ViewModel.evaluate(newItems, oldModels: oldItems) else { closure?(); return false }
-    let changes = ViewModel.processChanges(diff)
+    guard let diff = Item.evaluate(newItems, oldModels: oldItems) else { closure?(); return false }
+    let changes = Item.processChanges(diff)
 
     if newItems.count == spot.items.count {
       var offsets = [CGPoint]()
@@ -363,7 +363,7 @@ extension SpotsProtocol {
    - parameter animation: A SpotAnimation struct that determines which animation that should be used to perform the update
    - parameter completion: A completion closure that is run when the update is completed
    */
-  public func updateIfNeeded(spotAtIndex index: Int = 0, items: [ViewModel], withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
+  public func updateIfNeeded(spotAtIndex index: Int = 0, items: [Item], withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
     guard let spot = spot(index, Spotable.self) where !(spot.items == items) else {
       completion?()
       self.spotsScrollView.forceUpdate = true
@@ -382,7 +382,7 @@ extension SpotsProtocol {
    - parameter animation: A SpotAnimation struct that determines which animation that should be used to perform the update
    - parameter completion: A completion closure that will run after the spot has performed updates internally
    */
-  public func append(item: ViewModel, spotIndex: Int = 0, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
+  public func append(item: Item, spotIndex: Int = 0, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     spot(spotIndex, Spotable.self)?.append(item, withAnimation: animation) {
       completion?()
       self.spotsScrollView.forceUpdate = true
@@ -396,7 +396,7 @@ extension SpotsProtocol {
    - parameter animation: A SpotAnimation struct that determines which animation that should be used to perform the update
    - parameter completion: A completion closure that will run after the spot has performed updates internally
    */
-  public func append(items: [ViewModel], spotIndex: Int = 0, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
+  public func append(items: [Item], spotIndex: Int = 0, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     spot(spotIndex, Spotable.self)?.append(items, withAnimation: animation) {
       completion?()
       self.spotsScrollView.forceUpdate = true
@@ -410,7 +410,7 @@ extension SpotsProtocol {
    - parameter animation: A SpotAnimation struct that determines which animation that should be used to perform the update
    - parameter completion: A completion closure that will run after the spot has performed updates internally
    */
-  public func prepend(items: [ViewModel], spotIndex: Int = 0, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
+  public func prepend(items: [Item], spotIndex: Int = 0, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     spot(spotIndex, Spotable.self)?.prepend(items, withAnimation: animation) {
       completion?()
       self.spotsScrollView.forceUpdate = true
@@ -425,7 +425,7 @@ extension SpotsProtocol {
    - parameter animation: A SpotAnimation struct that determines which animation that should be used to perform the update
    - parameter completion: A completion closure that will run after the spot has performed updates internally
    */
-  public func insert(item: ViewModel, index: Int = 0, spotIndex: Int, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
+  public func insert(item: Item, index: Int = 0, spotIndex: Int, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     spot(spotIndex, Spotable.self)?.insert(item, index: index, withAnimation: animation) {
       completion?()
       self.spotsScrollView.forceUpdate = true
@@ -440,7 +440,7 @@ extension SpotsProtocol {
    - parameter animation: A SpotAnimation struct that determines which animation that should be used to perform the update
    - parameter completion: A completion closure that will run after the spot has performed updates internally
    */
-  public func update(item: ViewModel, index: Int = 0, spotIndex: Int, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
+  public func update(item: Item, index: Int = 0, spotIndex: Int, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     guard let oldItem = spot(spotIndex, Spotable.self)?.item(index) where item != oldItem
       else {
         spot(spotIndex, Spotable.self)?.refreshIndexes()

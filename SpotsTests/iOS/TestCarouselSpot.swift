@@ -28,7 +28,7 @@ class CarouselSpotTests: XCTestCase {
   }
 
   func testSafelyResolveKind() {
-    let component = Component(title: "CarouselSpot", kind: "custom-carousel", items: [ViewModel(title: "foo", kind: "custom-item-kind")])
+    let component = Component(title: "CarouselSpot", kind: "custom-carousel", items: [Item(title: "foo", kind: "custom-item-kind")])
     let carouselSpot = CarouselSpot(component: component)
     let indexPath = NSIndexPath(forRow: 0, inSection: 0)
 

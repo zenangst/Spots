@@ -36,7 +36,7 @@ public extension Spotable where Self : Viewable {
   private func prepareSpot<T: Viewable>(spot: T) {
     if component.kind.isEmpty { component.kind = "view" }
 
-    component.items.forEach { (item: ViewModel) in
+    component.items.forEach { (item: Item) in
       if case let Registry.Item.classType(classType)? = T.views.storage[item.kind]
         where T.views.storage.keys.contains(item.kind) {
         let view = classType.init()
@@ -70,7 +70,7 @@ public extension Spotable where Self : Viewable {
    - parameter withAnimation: The animation that should be used (currently not in use)
    - parameter completion: Completion
    */
-  func append(item: ViewModel, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
+  func append(item: Item, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     let dynamic = self.dynamicType
 
     guard case let Registry.Item.classType(classType)? = dynamic.views.storage[item.kind]
@@ -92,7 +92,7 @@ public extension Spotable where Self : Viewable {
    - parameter withAnimation: The animation that should be used (currently not in use)
    - parameter completion: Completion
    */
-  func append(items: [ViewModel], withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
+  func append(items: [Item], withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     for item in items {
       let dynamic = self.dynamicType
 
@@ -112,11 +112,11 @@ public extension Spotable where Self : Viewable {
 
   /**
    - parameter item: The view model that you want to insert
-   - parameter index: The index where the new ViewModel should be inserted
+   - parameter index: The index where the new Item should be inserted
    - parameter animation: A SpotAnimation struct that determines which animation that should be used to perform the update
    - parameter completion: Completion
    */
-  func insert(item: ViewModel, index: Int, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
+  func insert(item: Item, index: Int, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     let dynamic = self.dynamicType
 
     guard case let Registry.Item.classType(classType)? = dynamic.views.storage[item.kind]
@@ -138,7 +138,7 @@ public extension Spotable where Self : Viewable {
    - parameter animation:  A SpotAnimation that is used when performing the mutation (currently not in use)
    - parameter completion: A completion closure that is executed in the main queue
    */
-  func prepend(items: [ViewModel], withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
+  func prepend(items: [Item], withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     component.items.insertContentsOf(items, at: 0)
 
     for item in items.reverse() {
@@ -159,7 +159,7 @@ public extension Spotable where Self : Viewable {
     }
   }
 
-  func update(item: ViewModel, index: Int, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
+  func update(item: Item, index: Int, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     guard let view = scrollView.subviews[index] as? SpotConfigurable else { return }
 
     component.items[index] = item
@@ -171,7 +171,7 @@ public extension Spotable where Self : Viewable {
    - parameter withAnimation: The animation that should be used (currently not in use)
    - parameter completion: A completion closure that is executed in the main queue
    */
-  public func delete(item: ViewModel, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
+  public func delete(item: Item, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     guard let index = component.items.indexOf({ $0 == item })
       else { completion?(); return }
 
@@ -186,7 +186,7 @@ public extension Spotable where Self : Viewable {
    - parameter withAnimation: The animation that should be used (currently not in use)
    - parameter completion: A completion closure that is executed in the main queue
    */
-  public func delete(items: [ViewModel], withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
+  public func delete(items: [Item], withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     let count = component.items.count
 
     Dispatch.mainQueue { [weak self] in

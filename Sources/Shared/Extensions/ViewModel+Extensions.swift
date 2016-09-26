@@ -1,7 +1,7 @@
 import Brick
 import Foundation
 
-public typealias ViewModelChanges = (
+public typealias ItemChanges = (
   insertions: [Int],
   updates: [Int],
   reloads: [Int],
@@ -9,13 +9,13 @@ public typealias ViewModelChanges = (
   updatedChildren: [Int]
 )
 
-public enum ViewModelDiff {
+public enum ItemDiff {
   case Identifier, Index, Title, Subtitle, Image, Kind, Action, Meta, Children, Relations, Size, New, Removed, None
 }
 
-public extension ViewModel {
+public extension Item {
 
-  static func evaluate(newModels: [ViewModel], oldModels: [ViewModel]) -> [ViewModelDiff]? {
+  static func evaluate(newModels: [Item], oldModels: [Item]) -> [ItemDiff]? {
     let newChildren = newModels.flatMap { $0.children }
     let oldChildren = oldModels.flatMap { $0.children }
 
@@ -23,7 +23,7 @@ public extension ViewModel {
       return nil
     }
 
-    var changes = [ViewModelDiff]()
+    var changes = [ItemDiff]()
 
     if oldModels.count > newModels.count {
       for (index, element) in oldModels.enumerate() {
@@ -52,7 +52,7 @@ public extension ViewModel {
     return changes
   }
 
-  public static func processChanges(changes: [ViewModelDiff]) -> (ViewModelChanges) {
+  public static func processChanges(changes: [ItemDiff]) -> (ItemChanges) {
     var insertions = [Int]()
     var updates = [Int]()
     var reloads = [Int]()
@@ -78,19 +78,19 @@ public extension ViewModel {
     return (insertions: insertions, updates: updates, reloads: reloads, deletions: deletions, updatedChildren: childrenUpdates)
   }
 
-  public func diff(oldViewModel: ViewModel) -> ViewModelDiff {
+  public func diff(oldItem: Item) -> ItemDiff {
 
     let newChildren = children.map { Component($0) }
-    let oldChildren = oldViewModel.children.map { Component($0) }
+    let oldChildren = oldItem.children.map { Component($0) }
 
-    if kind != oldViewModel.kind { return .Kind }
+    if kind != oldItem.kind { return .Kind }
     if newChildren != oldChildren { return .Children }
-    if identifier != oldViewModel.identifier { return .Identifier }
-    if title != oldViewModel.title { return .Title }
-    if subtitle != oldViewModel.subtitle { return .Subtitle }
-    if image != oldViewModel.image { return .Image }
-    if action != oldViewModel.action { return .Action }
-    if !(meta as NSDictionary).isEqualToDictionary(oldViewModel.meta) { return .Meta }
+    if identifier != oldItem.identifier { return .Identifier }
+    if title != oldItem.title { return .Title }
+    if subtitle != oldItem.subtitle { return .Subtitle }
+    if image != oldItem.image { return .Image }
+    if action != oldItem.action { return .Action }
+    if !(meta as NSDictionary).isEqualToDictionary(oldItem.meta) { return .Meta }
 
     return .None
   }
