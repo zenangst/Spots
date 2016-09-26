@@ -6,8 +6,9 @@ use_frameworks!
 inhibit_all_warnings!
 
 target "Spotify" do
+  pod 'Sugar', git: 'https://github.com/hyperoslo/Sugar'
   pod 'Cache', git: 'https://github.com/hyperoslo/Cache'
-  pod 'Compass'
+  pod 'Compass', '2.0.0'
   pod 'Imaginary', git: 'https://github.com/hyperoslo/Imaginary'
   pod 'Spots', path: '../../'
   pod 'Keychain', git: 'https://github.com/hyperoslo/Keychain'

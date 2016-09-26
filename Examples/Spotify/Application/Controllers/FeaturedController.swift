@@ -8,7 +8,7 @@ class FeaturedController: SpotsController {
   let accessToken = Keychain.password(forAccount: keychainAccount)
 
   convenience init(title: String) {
-    let featuredPlaylists = GridSpot(component: Component(title: "Featured playlists", span: 3, items: [ViewModel(title: "Loading...")]))
+    let featuredPlaylists = GridSpot(component: Component(title: "Featured playlists", span: 3, items: [Item(title: "Loading...")]))
 
     self.init(spot: featuredPlaylists)
     self.spotsDelegate = self
@@ -29,7 +29,7 @@ class FeaturedController: SpotsController {
       guard let object = object as? SPTFeaturedPlaylistList else { return }
 
       self.update { $0.items = object.items.map { item in
-        ViewModel(
+        Item(
           title: item.name,
           subtitle: "\(item.trackCount) songs",
           image: (item.largestImage as SPTImage).imageURL.absoluteString,
@@ -44,7 +44,7 @@ class FeaturedController: SpotsController {
 
 extension FeaturedController : SpotsDelegate {
 
-  func spotDidSelectItem(spot: Spotable, item: ViewModel) {
+  func spotDidSelectItem(spot: Spotable, item: Item) {
     guard let urn = item.action else { return }
     Compass.navigate(urn)
   }

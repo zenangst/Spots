@@ -27,7 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   lazy var authController: UINavigationController = {
     let controller = AuthController(spot: ListSpot().then {
-      $0.items = [ViewModel(title: "Auth", action: "auth", kind: "playlist", size: CGSize(width: 120, height: 88))]
+      $0.items = [Item(title: "Auth", action: "auth", kind: "playlist", size: CGSize(width: 120, height: 88))]
       }
     )
     controller.title = "Spotify".uppercaseString
@@ -81,11 +81,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     UIApplication.sharedApplication().statusBarStyle = .LightContent
 
     UINavigationBar.appearance().then {
-      $0.barTintColor = UIColor.hex("#000")
-      $0.tintColor = UIColor.hex("#fff")
+      $0.barTintColor = UIColor(hex:"#000")
+      $0.tintColor = UIColor(hex:"#fff")
       $0.shadowImage = UIImage()
       $0.titleTextAttributes = [
-        NSForegroundColorAttributeName: UIColor.hex("#fff")
+        NSForegroundColorAttributeName: UIColor(hex:"#fff")
       ]
     }
   }

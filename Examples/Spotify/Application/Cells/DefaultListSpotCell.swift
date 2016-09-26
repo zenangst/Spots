@@ -6,7 +6,7 @@ import Brick
 public class DefaultListSpotCell: UITableViewCell, SpotConfigurable {
 
   public var size = CGSize(width: 0, height: 60)
-  public var item: ViewModel?
+  public var item: Item?
 
   lazy var selectedView = UIView()
 
@@ -20,7 +20,7 @@ public class DefaultListSpotCell: UITableViewCell, SpotConfigurable {
     fatalError("init(coder:) has not been implemented")
   }
 
-  public func configure(inout item: ViewModel) {
+  public func configure(inout item: Item) {
     textLabel?.textColor = UIColor.whiteColor()
     detailTextLabel?.textColor = UIColor.grayColor()
 

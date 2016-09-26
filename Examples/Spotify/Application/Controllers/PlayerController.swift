@@ -10,7 +10,7 @@ class PlayerController: SpotsController {
   let screenBounds = UIScreen.mainScreen().bounds
   var initialOrigin: CGFloat = UIScreen.mainScreen().bounds.height - 108
   let offset: CGFloat = 108
-  var lastItem: ViewModel?
+  var lastItem: Item?
   var currentURIs = [NSURL]()
 
   lazy var panRecognizer: UIPanGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(PlayerController.handlePanGesture(_:)))
@@ -113,20 +113,20 @@ class PlayerController: SpotsController {
     if let track = userInfo["track"],
       artist = userInfo["artist"] {
 
-        var newViewModel: ViewModel
+        var newItem: Item
         if let spot = spot(0, Spotable.self), item = spot.items.first {
-          newViewModel = item
-          newViewModel.title = track
-          newViewModel.subtitle = artist
-          update(newViewModel, index: 0, spotIndex: 0)
-          newViewModel.action = nil
-          update(newViewModel, index: 0, spotIndex: 2)
+          newItem = item
+          newItem.title = track
+          newItem.subtitle = artist
+          update(newItem, index: 0, spotIndex: 0)
+          newItem.action = nil
+          update(newItem, index: 0, spotIndex: 2)
         } else {
-          newViewModel = ViewModel(title: track, subtitle: artist, action: "openPlayer")
+          newItem = Item(title: track, subtitle: artist, action: "openPlayer")
 
-          insert(newViewModel, index: 0, spotIndex: 0)
-          newViewModel.action = nil
-          insert(newViewModel, index: 0, spotIndex: 2)
+          insert(newItem, index: 0, spotIndex: 0)
+          newItem.action = nil
+          insert(newItem, index: 0, spotIndex: 2)
         }
 
         showPlayer()
@@ -205,7 +205,7 @@ class PlayerController: SpotsController {
 
 extension PlayerController: SpotsDelegate {
 
-  func spotDidSelectItem(spot: Spotable, item: ViewModel) {
+  func spotDidSelectItem(spot: Spotable, item: Item) {
     guard let urn = item.action else { return }
 
     if !["next", "previous"].contains(urn) {
@@ -242,7 +242,7 @@ extension PlayerController: SpotsCarouselScrollDelegate {
 
   func spotDidScroll(spot: Spotable) { }
 
-  func spotDidEndScrolling(spot: Spotable, item: ViewModel) {
+  func spotDidEndScrolling(spot: Spotable, item: Item) {
     guard let urn = item.action, lastItem = lastItem
       where item.action != lastItem.action
       else { return }

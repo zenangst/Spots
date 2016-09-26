@@ -19,7 +19,7 @@ class PlaylistController: SpotsController {
     let gridSpot = GridSpot(component: Component(span: 1))
     let listSpot = ListSpot(title: "Playlists").then {
       $0.component.meta["headerHeight"] = 44
-      $0.items = [ViewModel(title: "Loading...", kind: "playlist", size: CGSize(width: 44, height: 44))]
+      $0.items = [Item(title: "Loading...", kind: "playlist", size: CGSize(width: 44, height: 44))]
     }
 
     self.init(spots: [gridSpot, featuredSpot, listSpot])
@@ -148,7 +148,7 @@ extension PlaylistController: SpotsScrollDelegate {
           return
       }
 
-      var items = [ViewModel]()
+      var items = [Item]()
 
       if let playlistID = self.playlistID, listSpot = self.spot(2, Spotable.self) {
         items.appendContentsOf(object.viewModels(playlistID, offset: listSpot.items.count))
@@ -193,7 +193,7 @@ extension PlaylistController: SpotsScrollDelegate {
 
 extension PlaylistController: SpotsDelegate {
 
-  func spotDidSelectItem(spot: Spotable, item: ViewModel) {
+  func spotDidSelectItem(spot: Spotable, item: Item) {
     if let delegate = UIApplication.sharedApplication().delegate as? AppDelegate,
       playlist = spot as? ListSpot {
         delegate.mainController.playerController.lastItem = item
@@ -203,7 +203,7 @@ extension PlaylistController: SpotsDelegate {
         }
         delegate.mainController.playerController.update(spotAtIndex: 1) {
           $0.items = playlist.items.map {
-            ViewModel(title: $0.title,
+            Item(title: $0.title,
               subtitle: $0.subtitle,
               image: $0.meta("image", type: String.self) ?? $0.image,
               kind: "featured",

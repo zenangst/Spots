@@ -36,7 +36,7 @@ class SearchController: SpotsController {
 
 extension SearchController: SpotsDelegate {
 
-  func spotDidSelectItem(spot: Spotable, item: ViewModel) {
+  func spotDidSelectItem(spot: Spotable, item: Item) {
     guard let urn = item.action else { return }
 
     guard let delegate = UIApplication.sharedApplication().delegate as? AppDelegate,
@@ -85,7 +85,7 @@ extension SearchController: UITextFieldDelegate {
                 where object.items != nil && object.items.count > 0
                 else { return }
 
-              var viewModels = [ViewModel]()
+              var viewModels = [Item]()
 
               object.items.enumerate().forEach { index, item in
                 guard let item = item as? SPTPartialTrack else { return }
@@ -94,7 +94,7 @@ extension SearchController: UITextFieldDelegate {
                   image = (item.album as SPTPartialAlbum).largestCover
                   else { return }
 
-                viewModels.append(ViewModel(
+                viewModels.append(Item(
                   title: item.name,
                   subtitle:  "\(artist) - \((item.album as SPTPartialAlbum).name)",
                   image: image.imageURL.absoluteString,
