@@ -1,42 +1,76 @@
 import UIKit
 import Brick
 
+/// A GridSpot, a collection view based Spotable object that lays out its items in a vertical order based of the item sizes
 public class GridSpot: NSObject, Gridable {
 
+  /**
+   *  Keys for meta data lookup
+   */
   public struct Key {
+    /// The key for minimum interitem spacing
     public static let minimumInteritemSpacing = "item-spacing"
+    /// The key for minimum line spacing
     public static let minimumLineSpacing = "line-spacing"
   }
 
+  /**
+   *  Default configuration values for GridSpot
+   */
   public struct Default {
+    /// Default top section inset
     public static var sectionInsetTop: CGFloat = 0.0
+    /// Default left section inset
     public static var sectionInsetLeft: CGFloat = 0.0
+    /// Default right section inset
     public static var sectionInsetRight: CGFloat = 0.0
+    /// Default bottom section inset
     public static var sectionInsetBottom: CGFloat = 0.0
+    /// Default minimum interitem spacing
     public static var minimumInteritemSpacing: CGFloat = 0.0
+    /// Default minimum line spacing
     public static var minimumLineSpacing: CGFloat = 0.0
   }
 
+  /// A Registry object that holds identifiers and classes for cells used in the GridSpot
   public static var views: Registry = Registry()
+
+  /// A configuration closure that is run in setup(_:)
   public static var configure: ((view: UICollectionView, layout: UICollectionViewFlowLayout) -> Void)?
+
+  /// A Registry object that holds identifiers and classes for headers used in the GridSpot
   public static var headers = Registry()
 
+  /// A component struct used as configuration and data source for the GridSpot
   public var component: Component
+
+  /// A configuration closure
   public var configure: (SpotConfigurable -> Void)?
 
+  /// A SpotsCompositeDelegate for the GridSpot, used to access composite spots
   public weak var spotsCompositeDelegate: SpotsCompositeDelegate?
+
+  /// A SpotsDelegate that is used for the GridSpot
   public weak var spotsDelegate: SpotsDelegate?
 
+  /// A computed variable for adapters
   public var adapter: SpotAdapter? {
     return collectionAdapter
   }
 
+  /// A collection adapter that is the data source and delegate for the GridSpot
   public lazy var collectionAdapter: CollectionAdapter = CollectionAdapter(spot: self)
+
+  /// A custom UICollectionViewFlowLayout
   public lazy var layout: CollectionLayout = CollectionLayout()
+
+  /// A SpotCache for the GridSpot
   public private(set) var stateCache: SpotCache?
+
   /// Indicator to calculate the height based on content
   public var usesDynamicHeight = true
 
+  /// A UICollectionView, used as the main UI component for a GridSpot
   public lazy var collectionView: UICollectionView = { [unowned self] in
     let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: self.layout)
     collectionView.dataSource = self.collectionAdapter
@@ -46,6 +80,13 @@ public class GridSpot: NSObject, Gridable {
     return collectionView
   }()
 
+  /**
+   A required initializer to instantiate a GridSpot with a component
+
+   - parameter component: A component
+
+   - returns: A GridSpot object
+   */
   public required init(component: Component) {
     self.component = component
     super.init()
@@ -60,10 +101,25 @@ public class GridSpot: NSObject, Gridable {
     }
   }
 
+  /**
+   A convenience init for initializing a Gridspot with a title and a kind
+
+   - parameter title: A string that is used as a title for the GridSpot
+   - parameter kind:  An identifier to determine which kind should be set on the Component
+
+   - returns: A Gridable object
+   */
   public convenience init(title: String = "", kind: String? = nil) {
     self.init(component: Component(title: title, kind: kind ?? "grid"))
   }
 
+  /**
+   Instantiate a GridSpot with a cache key
+
+   - parameter cacheKey: A unique cache key for the Spotable object
+
+   - returns: A GridSpot object
+   */
   public convenience init(cacheKey: String) {
     let stateCache = SpotCache(key: cacheKey)
 
@@ -73,6 +129,19 @@ public class GridSpot: NSObject, Gridable {
     registerAndPrepare()
   }
 
+  /**
+   A convenience initializer for GridSpot with base configuration
+
+   - parameter component:   A Component
+   - parameter top:         Top section inset
+   - parameter left:        Left section inset
+   - parameter bottom:      Bottom section inset
+   - parameter right:       Right section inset
+   - parameter itemSpacing: The item spacing used in the flow layout
+   - parameter lineSpacing: The line spacing used in the flow layout
+
+   - returns: A GridSpot object
+   */
   public convenience init(_ component: Component, top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0, itemSpacing: CGFloat = 0, lineSpacing: CGFloat = 0) {
     self.init(component: component)
 

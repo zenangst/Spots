@@ -93,8 +93,10 @@ public class CarouselSpot: NSObject, Gridable {
 
   /// A CarouselScrollDelegate, used when a CarouselSpot scrolls
   public weak var carouselScrollDelegate: SpotsCarouselScrollDelegate?
+
   /// A SpotsCompositeDelegate for the CarouselSpot, used to access composite spots
   public weak var spotsCompositeDelegate: SpotsCompositeDelegate?
+
   /// A SpotsDelegate that is used for the CarouselSpot
   public weak var spotsDelegate: SpotsDelegate?
 
@@ -250,6 +252,11 @@ public class CarouselSpot: NSObject, Gridable {
     dynamicSpan = component.meta(Key.dynamicSpan, false)
   }
 
+  /**
+   Register default header for the CarouselSpot
+
+   - parameter view: A header view
+   */
   func registerDefaultHeader(header view: View.Type) {
     guard self.dynamicType.headers.storage[self.dynamicType.headers.defaultIdentifier] == nil else { return }
     self.dynamicType.headers.defaultItem = Registry.Item.classType(view)
