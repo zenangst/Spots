@@ -26,20 +26,29 @@ import Cache
             dispatch_source_cancel(self.source)
             self.source = nil
             let offset = self.spotsScrollView.contentOffset
-            let components: [Component] = Parser.parse(json)
+
+            #if os(OSX)
+              let components = json
+            #else
+              let components: [Component] = Parser.parse(json)
+            #endif
 
             self.reloadIfNeeded(components) {
               self.spotsScrollView.contentOffset = offset
 
               var yOffset: CGFloat = 0.0
               for spot in self.spots {
+                #if !os(OSX)
                 (spot as? Gridable)?.layout.yOffset = yOffset
+                #endif
                 yOffset += spot.render().frame.size.height
               }
 
+              #if !os(OSX)
               for case let gridable as CarouselSpot in self.spots {
                 (gridable.layout as? GridableLayout)?.yOffset = gridable.render().frame.origin.y
               }
+              #endif
               self.spotsScrollView.forceUpdate = true
             }
             print("Spots reloaded: \(self.spots.count)")
