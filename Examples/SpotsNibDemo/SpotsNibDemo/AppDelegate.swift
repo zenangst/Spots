@@ -35,12 +35,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     let component = Component(title: "Browse", items: [
-      ViewModel(
+      Item(
         title: "First cell",
         subtitle: "This is an example of a .nib being used in Spots",
         kind: "custom-list",
         meta: ["toggle" : true]),
-      ViewModel(
+      Item(
         title: "Second example",
         subtitle: "This is just to show how it works",
         kind: "custom-list",

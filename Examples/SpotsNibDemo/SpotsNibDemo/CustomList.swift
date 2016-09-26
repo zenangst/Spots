@@ -14,7 +14,7 @@ public class CustomList: UITableViewCell, SpotConfigurable {
     backgroundColor = UIColor.clearColor()
   }
 
-  public func configure(inout item: ViewModel) {
+  public func configure(inout item: Item) {
     item.size.height = size.height
     titleLabel?.text = item.title
     subtitleLabel?.text = item.subtitle
