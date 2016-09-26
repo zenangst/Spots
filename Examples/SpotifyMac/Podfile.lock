@@ -1,11 +1,11 @@
 PODS:
   - Alamofire (3.4.2)
-  - Brick (0.9.1):
-    - Sugar (~> 1.0)
+  - Brick (0.9.6):
     - Tailor
   - Cache (1.5.1):
     - CryptoSwift
-  - Compass (3.0.0)
+  - Compass (3.0.0):
+    - Sugar
   - CryptoSwift (0.5.2)
   - Fashion (1.1.0):
     - Sugar
@@ -14,30 +14,30 @@ PODS:
     - Cache
   - JWTDecode (1.1.0)
   - Keychain (1.0.0)
-  - Malibu (1.0.2):
-    - When
+  - Malibu (1.1.0):
+    - When (= 1.0.4)
   - OhMyAuth (0.1.0):
     - Alamofire
     - JWTDecode
     - Keychain
     - Sugar
-  - Spots (3.0.0):
+  - Spots (3.0.4):
     - Brick
     - Cache
-    - Hue
-    - Sugar
+    - CryptoSwift (= 0.5.2)
     - Tailor
   - Sugar (1.2.0)
-  - Tailor (1.2.0):
-    - Sugar
+  - Tailor (1.3.0)
   - When (1.0.4)
 
 DEPENDENCIES:
+  - Alamofire (= 3.4.2)
   - Cache (from `https://github.com/hyperoslo/Cache.git`)
-  - Compass (from `https://github.com/hyperoslo/Compass.git`)
+  - Compass (from `https://github.com/hyperoslo/Compass.git`, commit `b08b753962834f19a9d45096aa7eec370f11b6f2`)
   - Fashion (from `https://github.com/vadymmarkov/Fashion.git`)
   - Hue (from `https://github.com/hyperoslo/Hue.git`)
   - Imaginary (from `https://github.com/hyperoslo/Imaginary.git`)
+  - JWTDecode (= 1.1.0)
   - Keychain (from `https://github.com/hyperoslo/Keychain.git`)
   - Malibu (from `https://github.com/hyperoslo/Malibu.git`)
   - OhMyAuth (from `https://github.com/hyperoslo/OhMyAuth.git`)
@@ -49,6 +49,7 @@ EXTERNAL SOURCES:
   Cache:
     :git: https://github.com/hyperoslo/Cache.git
   Compass:
+    :commit: b08b753962834f19a9d45096aa7eec370f11b6f2
     :git: https://github.com/hyperoslo/Compass.git
   Fashion:
     :git: https://github.com/vadymmarkov/Fashion.git
@@ -74,51 +75,51 @@ CHECKOUT OPTIONS:
     :commit: cff7ea060664c856ec76f3345cf1e541b5dc0e18
     :git: https://github.com/hyperoslo/Cache.git
   Compass:
-    :commit: 58978403802f6594cc3b04f335896fa1371610b5
+    :commit: b08b753962834f19a9d45096aa7eec370f11b6f2
     :git: https://github.com/hyperoslo/Compass.git
   Fashion:
     :commit: 3e2bf8754d1dbdc9e05f423bbb96db6dc06fec46
     :git: https://github.com/vadymmarkov/Fashion.git
   Hue:
-    :commit: 57e80ce14da8d34b574fab5c5ddf55c979f12efd
+    :commit: 3cd45dee0ac7971ff0f0c86b68865d4a075078e3
     :git: https://github.com/hyperoslo/Hue.git
   Imaginary:
-    :commit: 0f018c3d27ff43af03abca410030f3a09dd45e71
+    :commit: e111dcfcd5a67e6d52febc48c5ebfb9090f77af5
     :git: https://github.com/hyperoslo/Imaginary.git
   Keychain:
     :commit: f8197b27fe34774b72046b0ec4a24e517e1bb79c
     :git: https://github.com/hyperoslo/Keychain.git
   Malibu:
-    :commit: 5273ca100e23bbcd82ff52cde30daec655ef3b75
+    :commit: f764b53564f81bf7fd53d6cd16abb1075c6be5a5
     :git: https://github.com/hyperoslo/Malibu.git
   OhMyAuth:
-    :commit: 153c30357cafb32f4970db0a71921b7d452aed5f
+    :commit: f9c9aeffcf44f24e20298698e8d1984e62ace916
     :git: https://github.com/hyperoslo/OhMyAuth.git
   Sugar:
     :commit: d75ec0a674d31b5b24258ce8fdfccd093e479b99
     :git: https://github.com/hyperoslo/Sugar.git
   Tailor:
-    :commit: bb97f4af02dd7e56a2ca219e312370c7e0253543
+    :commit: bb59c268c91a2a542a5c0852bcf168eb1408301d
     :git: https://github.com/zenangst/Tailor.git
 
 SPEC CHECKSUMS:
   Alamofire: 6aa33201d20d069e1598891cf928883ff1888c7a
-  Brick: 8b2da311b9099c6790a38f06795f12eaa337c3bc
+  Brick: 4af97115ccf754c13d5d6dc0860936809b198d67
   Cache: 87b48b059429d3b53238533830c53941f8aa85f0
-  Compass: 5bb05fc2b873e9d5b1efda5752649b6a0a993843
+  Compass: a3c2e008e328b5773501df6186d5f64771cd82ce
   CryptoSwift: c1ef79f901b86099a6fe8b3c7524cf9f3f3c8c40
   Fashion: 82f2bb05505e3aea0977a2c23f5d8692e06f12a9
   Hue: b4d7f4923dd16237f9cbc1783c3c81438b4391f4
   Imaginary: 62a9ce1e6d7831ede429c8221a183f03ec2a90bc
   JWTDecode: a6b91ad0bc798c723e9a29a368a6ead70edf7213
   Keychain: 50cb247cab32e774422741b118af9b598a3fb5b2
-  Malibu: 49454a9ce422ad8e230f4699a43d88264a4d7e06
+  Malibu: 9d81f8fe250531809b8f839c4b66b57e3981d569
   OhMyAuth: ce16b5e94887376934ea92a3ba252b6f79910699
-  Spots: fa57db661cb2c6978850e02fc3695949bde29217
+  Spots: a6cb714c1da7007b666196651c143e49c9bf05b4
   Sugar: 556b623f0f8846cf08de7302701892f11d567419
-  Tailor: 1f4eaf090bda57c880fbef795133a67270976b15
+  Tailor: 71fac74a4f14abcd13a10bf07bbe69d5ac746f58
   When: 033104df132ebfa75f4d3a9ba3e7a9865a573a1c
 
-PODFILE CHECKSUM: 502e63467bafba703a125ea312efaa7d5fc4ce5d
+PODFILE CHECKSUM: 24986b36e9597ea2c9bfa9f0e53b4b588c010976
 
-COCOAPODS: 1.0.1
+COCOAPODS: 1.1.0.rc.2

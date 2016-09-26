@@ -2,8 +2,8 @@ import Brick
 
 extension SPTListPage {
 
-  public func viewModels(playlistID: String? = nil, offset: Int = 0) -> [ViewModel] {
-    var viewModels = [ViewModel]()
+  public func viewModels(playlistID: String? = nil, offset: Int = 0) -> [Item] {
+    var viewModels = [Item]()
     if let items = items {
       for (index, item) in items.enumerate() {
         if let playlistID = playlistID {
@@ -19,7 +19,7 @@ extension SPTListPage {
             ? album.largestCover.imageURL.absoluteString
             : ""
 
-          viewModels.append(ViewModel(
+          viewModels.append(Item(
             title: item.name,
             subtitle:  "\(artist.name) - \(album.name)",
             image: smallImage,
@@ -38,7 +38,7 @@ extension SPTListPage {
             where image != nil
             else { continue }
 
-          viewModels.append(ViewModel(
+          viewModels.append(Item(
             title: item.name,
             subtitle: "\(item.trackCount) songs",
             image: (image as SPTImage).imageURL.absoluteString,

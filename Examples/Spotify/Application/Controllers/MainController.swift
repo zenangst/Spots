@@ -6,17 +6,17 @@ import Brick
 class MainController: UITabBarController {
 
   lazy var playerController = PlayerController(spots: [
-    ListSpot().then { $0.items = [ViewModel(kind: "player", action: "openPlayer")] },
+    ListSpot().then { $0.items = [Item(kind: "player", action: "openPlayer")] },
     CarouselSpot(Component(span: 1)),
     ListSpot(component: Component(items: [
-      ViewModel(kind: "player")
+      Item(kind: "player")
       ])).then {
         $0.tableView.separatorStyle = .None
     },
     GridSpot(component: Component(span: 3, kind: "player" ,items: [
-      ViewModel(title: "Previous", image: "previousButton", action: "previous"),
-      ViewModel(title: "Stop", image: "stopButton", action: "stop"),
-      ViewModel(title: "Next", image: "nextButton", action: "next")
+      Item(title: "Previous", image: "previousButton", action: "previous"),
+      Item(title: "Stop", image: "stopButton", action: "stop"),
+      Item(title: "Next", image: "nextButton", action: "next")
       ]))
     ])
 

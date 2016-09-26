@@ -70,7 +70,7 @@ public class ListSpotItem: NSTableRowView, SpotConfigurable {
     fatalError("init(coder:) has not been implemented")
   }
 
-  public func configure(inout item: ViewModel) {
+  public func configure(inout item: Item) {
     titleLabel.stringValue = item.title
     titleLabel.frame.origin.x = 8
 

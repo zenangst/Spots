@@ -14,7 +14,7 @@ struct FollowingBlueprint: BlueprintContainer {
         rootKey: "artists",
         spotIndex: 0,
         adapter: { json in
-          var viewModels = [ViewModel]()
+          var viewModels = [Item]()
           for item in json {
 
             var description = ""
@@ -31,7 +31,7 @@ struct FollowingBlueprint: BlueprintContainer {
               description += "Popularity: \(popularity)\n"
             }
 
-            viewModels.append(ViewModel(
+            viewModels.append(Item(
               title : item.resolve(keyPath: "name") ?? "",
               image : item.resolve(keyPath: "images.1.url") ?? "",
               action : "artist:\(item.resolve(keyPath: "id") ?? "")",

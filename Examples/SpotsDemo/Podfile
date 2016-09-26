@@ -10,6 +10,7 @@ target "SpotsDemo" do
   pod 'Imaginary', git: 'https://github.com/hyperoslo/Imaginary'
   pod 'Cache', git: 'https://github.com/hyperoslo/Cache'
   pod 'Spots', path: '../../'
+  pod 'Sugar'
   pod 'Imaginary', git: 'https://github.com/hyperoslo/Imaginary'
   pod 'Hue', git: 'https://github.com/hyperoslo/Hue'
 end

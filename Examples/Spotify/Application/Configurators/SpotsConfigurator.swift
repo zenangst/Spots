@@ -42,9 +42,9 @@ struct SpotsConfigurator: Configurator {
         left: inset,
         bottom: inset,
         right: inset)
-      tableView.separatorColor = UIColor.hex("FFF").alpha(0.2)
+      tableView.separatorColor = UIColor(hex:"FFF").alpha(0.2)
     }
-    
+
     ListSpot.register(header: SearchHeaderView.self, identifier: "search")
     ListSpot.register(header: ListHeaderView.self, identifier: "list")
     ListSpot.register(defaultHeader: ListHeaderView.self)
@@ -53,6 +53,6 @@ struct SpotsConfigurator: Configurator {
     ListSpot.register(view: PlayerListSpotCell.self, identifier: "player")
     ListSpot.register(view: DefaultListSpotCell.self, identifier: "default")
     ListSpot.register(defaultView: DefaultListSpotCell.self)
-    
+
   }
 }

@@ -77,7 +77,7 @@ class JSONController: UIViewController {
         if let json = json {
           SpotFactory.DefaultSpot = ListSpot.self
 
-          let components = Parser.parse(json)
+          let components: [Spotable] = Parser.parse(json)
           let controller = SpotsController(spots: components)
           navigationController?.pushViewController(controller, animated: true)
         }

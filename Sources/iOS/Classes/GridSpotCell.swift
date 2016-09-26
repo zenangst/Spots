@@ -4,7 +4,7 @@ import Brick
 class GridSpotCell: UICollectionViewCell, SpotConfigurable {
 
   var size = CGSize(width: 88, height: 88)
-  var item: ViewModel?
+  var item: Item?
 
   var label: UILabel = {
     let label = UILabel()
@@ -33,7 +33,7 @@ class GridSpotCell: UICollectionViewCell, SpotConfigurable {
     fatalError("init(coder:) has not been implemented")
   }
 
-  func configure(inout item: ViewModel) {
+  func configure(inout item: Item) {
     imageView.image = UIImage(named: item.image)
     imageView.frame = contentView.frame
     label.text = item.title

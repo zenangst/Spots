@@ -8,8 +8,8 @@ extension CarouselSpot: UIScrollViewDelegate {
    It can snap to the nearest item or scroll page by page.
    */
   private func paginatedEndScrolling() {
-    #if os(iOS)
     var currentCellOffset = collectionView.contentOffset
+    #if os(iOS)
     if paginateByItem {
       currentCellOffset.x += collectionView.frame.size.width / 2
     } else {
@@ -100,7 +100,7 @@ extension CarouselSpot: UIScrollViewDelegate {
 
    - parameter predicate: A predicate closure to determine which item to scroll to
    */
-  public func scrollTo(predicate: (ViewModel) -> Bool) {
+  public func scrollTo(predicate: (Item) -> Bool) {
     if let index = items.indexOf(predicate) {
       let pageWidth: CGFloat = collectionView.frame.size.width - layout.sectionInset.right
         + layout.sectionInset.left

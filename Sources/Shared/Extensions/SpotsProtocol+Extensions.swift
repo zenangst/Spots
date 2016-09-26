@@ -39,7 +39,7 @@ public extension SpotsProtocol {
     return ["components" : result ]
   }
 
-  public func ui<T>(@noescape includeElement: (ViewModel) -> Bool) -> T? {
+  public func ui<T>(@noescape includeElement: (Item) -> Bool) -> T? {
     for spot in spots {
       if let first = spot.items.filter(includeElement).first {
         return spot.ui(atIndex: first.index)
@@ -84,8 +84,8 @@ public extension SpotsProtocol {
 
    - parameter includeElement: A filter predicate to find view models
    */
-  public func filterItems(@noescape includeElement: (ViewModel) -> Bool) -> [(spot: Spotable, items: [ViewModel])] {
-    var result = [(spot: Spotable, items: [ViewModel])]()
+  public func filterItems(@noescape includeElement: (Item) -> Bool) -> [(spot: Spotable, items: [Item])] {
+    var result = [(spot: Spotable, items: [Item])]()
     for spot in spots {
       let items = spot.items.filter(includeElement)
       if !items.isEmpty {
@@ -112,7 +112,7 @@ public extension SpotsProtocol {
    - parameter index: The index of the spot that you want to scroll
    - parameter includeElement: A filter predicate to find a view model
    */
-  public func scrollTo(spotIndex index: Int = 0, @noescape includeElement: (ViewModel) -> Bool) {
+  public func scrollTo(spotIndex index: Int = 0, @noescape includeElement: (Item) -> Bool) {
     guard let itemY = spot(index, Spotable.self)?.scrollTo(includeElement) else { return }
 
     var initialHeight: CGFloat = 0.0

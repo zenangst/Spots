@@ -54,7 +54,7 @@ the public API.
 * [JSON structure](#json-structure)
 * [Models](#models)
 * [Component](#component)
-* [ViewModel](#viewmodel)
+* [Item](#item)
 * [Installation](#installation)
 * [Dependencies](#dependencies)
 * [Author](#author)
@@ -71,7 +71,7 @@ the public API.
 - Features both infinity scrolling and pull to refresh (on iOS), all you have to do is to
 setup delegates that conform to the public protocols on `SpotsController`.
 - No need to implement your own data source, every `Spotable` object has their
-own set of `ViewModel`’s.
+own set of `Item`’s.
 which is maintained internally and is there at your disposable if you decide to
 make changes to them.
 - Easy configuration of collection views, table views and any custom spot
@@ -79,7 +79,7 @@ implementation that you add.
 This improves code reuse and helps to theme your app and ultimately keep your application consistent.
 - Support custom Spots, all you need to do is to conform to `Spotable`
 - A rich public API for appending, prepending, inserting, updating or
-deleting `ViewModel`s.
+deleting `Item`s.
 - Features three different spots out-of-the-box; `CarouselSpot`, `GridSpot`, `ListSpot`
 - Static custom cell registrations for all `Spotable` objects.
 Write one view cell and use it across your application, when and where you
@@ -110,11 +110,11 @@ The JSON data will be parsed into view model data and your view controller is re
 ### Programmatic approach
 ```swift
 let myContacts = Component(title: "My contacts", items: [
-  ViewModel(title: "John Hyperseed"),
-  ViewModel(title: "Vadym Markov"),
-  ViewModel(title: "Ramon Gilabert Llop"),
-  ViewModel(title: "Khoa Pham"),
-  ViewModel(title: "Christoffer Winterkvist")
+  Item(title: "John Hyperseed"),
+  Item(title: "Vadym Markov"),
+  Item(title: "Ramon Gilabert Llop"),
+  Item(title: "Khoa Pham"),
+  Item(title: "Christoffer Winterkvist")
 ])
 let listSpot = ListSpot(component: myContacts)
 let controller = SpotsController(spots: [listSpot])
@@ -131,7 +131,7 @@ The `SpotsController` inherits from `UIViewController` and `NSViewController` bu
 
 ```swift
 public protocol SpotsDelegate: class {
-  func spotDidSelectItem(spot: Spotable, item: ViewModel)
+  func spotDidSelectItem(spot: Spotable, item: Item)
   func spotsDidChange(spots: [Spotable])
 }
 ```
@@ -167,7 +167,7 @@ public protocol SpotsScrollDelegate: class {
 
 ```swift
 public protocol SpotsCarouselScrollDelegate: class {
-  func spotDidEndScrolling(spot: Spotable, item: ViewModel)
+  func spotDidEndScrolling(spot: Spotable, item: Item)
 }
 ```
 
@@ -249,7 +249,7 @@ public protocol SpotsCarouselScrollDelegate: class {
   public var title = ""
   public var kind = ""
   public var span: CGFloat = 0
-  public var items = [ViewModel]()
+  public var items = [Item]()
   public var size: CGSize?
   public var meta = [String : String]()
 }
@@ -268,10 +268,10 @@ Calculated value based on the amount of items and their combined heights.
 - **.meta**
 Custom data that you are free to use as you like in your implementation.
 
-### ViewModel
+### Item
 
 ```swift
-  public struct ViewModel: Mappable {
+  public struct Item: Mappable {
   public var index = 0
   public var title = ""
   public var subtitle = ""
@@ -312,13 +312,13 @@ pod 'Spots'
 ## Dependencies
 
 - **[Brick](https://github.com/hyperoslo/Brick)**
-`ViewModel` comes from `Brick`.
+`Item` comes from `Brick`.
 - **[Cache](https://github.com/hyperoslo/Cache)**
-Used for `Component` and `ViewModel` caching when initializing a `SpotsController` or `Spotable` object with a cache key.
+Used for `Component` and `Item` caching when initializing a `SpotsController` or `Spotable` object with a cache key.
 - **[Sugar](https://github.com/hyperoslo/Sugar)**
 To sweeten the implementation.
 - **[Tailor](https://github.com/zenangst/Tailor)**
-To seamlessly map JSON to both `Component` and `ViewModel`.
+To seamlessly map JSON to both `Component` and `Item`.
 
 ## Author
 

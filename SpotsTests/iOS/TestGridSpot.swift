@@ -39,7 +39,7 @@ class GirdSpotTests: XCTestCase {
   }
 
   func testSafelyResolveKind() {
-    let component = Component(title: "GridSpot", kind: "custom-grid", items: [ViewModel(title: "foo", kind: "custom-item-kind")])
+    let component = Component(title: "GridSpot", kind: "custom-grid", items: [Item(title: "foo", kind: "custom-item-kind")])
     let gridSpot = GridSpot(component: component)
     let indexPath = NSIndexPath(forRow: 0, inSection: 0)
 

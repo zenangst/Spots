@@ -15,11 +15,11 @@ struct PlaylistsBlueprint: BlueprintContainer {
           rootKey: "items",
           spotIndex: 0,
           adapter: { json in
-            var viewModels = [ViewModel]()
+            var viewModels = [Item]()
             for item in json {
               let owner = item.resolve(keyPath: "owner.id") ?? ""
               let playlistID = item.resolve(keyPath: "id") ?? ""
-              let viewModel = ViewModel(
+              let viewModel = Item(
                 title: item.resolve(keyPath: "name") ?? "",
                 image : item.resolve(keyPath: "images.0.url") ?? "",
                 action: "playlist:\(owner):\(playlistID)",

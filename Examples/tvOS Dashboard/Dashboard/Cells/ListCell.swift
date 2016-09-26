@@ -15,7 +15,7 @@ extension UIImage {
 public class ListCell: UITableViewCell, SpotConfigurable {
 
   public var size = CGSize(width: 0, height: 128)
-  public var item: ViewModel?
+  public var item: Item?
 
   lazy var transparentImage = UIImage.transparentImage(CGSize(width: 60, height: 60))
 
@@ -32,7 +32,7 @@ public class ListCell: UITableViewCell, SpotConfigurable {
     fatalError("init(coder:) has not been implemented")
   }
 
-  public func configure(inout item: ViewModel) {
+  public func configure(inout item: Item) {
     textLabel?.textColor = UIColor.blackColor()
     detailTextLabel?.textColor = UIColor.blackColor()
 

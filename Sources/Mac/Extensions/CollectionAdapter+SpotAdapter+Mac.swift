@@ -7,7 +7,7 @@ extension CollectionAdapter {
     return spot.collectionView.itemAtIndexPath(NSIndexPath(forItem: index, inSection: 0)) as? T
   }
 
-  public func append(item: ViewModel, withAnimation animation: SpotsAnimation, completion: Completion) {
+  public func append(item: Item, withAnimation animation: SpotsAnimation, completion: Completion) {
     let count = spot.component.items.count
     spot.component.items.append(item)
 
@@ -19,7 +19,7 @@ extension CollectionAdapter {
       })
     }
   }
-  public func append(items: [ViewModel], withAnimation animation: SpotsAnimation, completion: Completion) {
+  public func append(items: [Item], withAnimation animation: SpotsAnimation, completion: Completion) {
     var indexes = [Int]()
     let count = spot.component.items.count
 
@@ -38,7 +38,7 @@ extension CollectionAdapter {
     }
   }
 
-  public func prepend(items: [ViewModel], withAnimation animation: SpotsAnimation, completion: Completion) {
+  public func prepend(items: [Item], withAnimation animation: SpotsAnimation, completion: Completion) {
     var indexes = [Int]()
 
     spot.component.items.insertContentsOf(items, at: 0)
@@ -55,7 +55,7 @@ extension CollectionAdapter {
     }
   }
 
-  public func insert(item: ViewModel, index: Int, withAnimation animation: SpotsAnimation, completion: Completion) {
+  public func insert(item: Item, index: Int, withAnimation animation: SpotsAnimation, completion: Completion) {
     spot.component.items.insert(item, atIndex: index)
 
     Dispatch.mainQueue { [weak self] in
@@ -66,7 +66,7 @@ extension CollectionAdapter {
     }
   }
 
-  public func update(item: ViewModel, index: Int, withAnimation animation: SpotsAnimation, completion: Completion) {
+  public func update(item: Item, index: Int, withAnimation animation: SpotsAnimation, completion: Completion) {
     spot.items[index] = item
 
     Dispatch.mainQueue { [weak self] in
@@ -77,7 +77,7 @@ extension CollectionAdapter {
     }
   }
 
-  public func delete(item: ViewModel, withAnimation animation: SpotsAnimation, completion: Completion) {
+  public func delete(item: Item, withAnimation animation: SpotsAnimation, completion: Completion) {
     guard let index = spot.component.items.indexOf({ $0 == item })
       else { completion?(); return }
 
@@ -91,7 +91,7 @@ extension CollectionAdapter {
     }
   }
 
-  public func delete(item: [ViewModel], withAnimation animation: SpotsAnimation, completion: Completion) {
+  public func delete(item: [Item], withAnimation animation: SpotsAnimation, completion: Completion) {
     var indexPaths = [Int]()
     let count = spot.component.items.count
 
@@ -128,7 +128,7 @@ extension CollectionAdapter {
     }
   }
 
-  public func reloadIfNeeded(changes: ViewModelChanges, withAnimation animation: SpotsAnimation, updateDataSource: () -> Void, completion: Completion) {
+  public func reloadIfNeeded(changes: ItemChanges, withAnimation animation: SpotsAnimation, updateDataSource: () -> Void, completion: Completion) {
     guard !changes.updates.isEmpty else {
       spot.collectionView.process((insertions: changes.insertions, reloads: changes.reloads, deletions: changes.deletions), updateDataSource: updateDataSource, completion: completion)
       return

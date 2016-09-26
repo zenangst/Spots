@@ -138,11 +138,13 @@ public class ListSpot: NSObject, Listable {
     tableView.delegate = self.listAdapter
     tableView.rowHeight = UITableViewAutomaticDimension
 
+    #if os(iOS)
     if let separator = component.meta(Key.separator, type: Bool.self) {
       tableView.separatorStyle = separator
         ? .SingleLine
         : .None
     }
+    #endif
   }
 
   // MARK: - Spotable

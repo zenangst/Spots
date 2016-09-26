@@ -321,8 +321,8 @@ class ListController: SpotsController, SpotsDelegate, SpotsScrollDelegate {
     }
   }
 
-  private func parse(json: JSONArray) -> [ViewModel] {
-    var viewModels = [ViewModel]()
+  private func parse(json: JSONArray) -> [Item] {
+    var viewModels = [Item]()
     for item in json {
       let owner = (item["owner"] as? JSONDictionary)?["id"] as? String ?? ""
       let playlistID = item["id"] as? String ?? ""
@@ -334,7 +334,7 @@ class ListController: SpotsController, SpotsDelegate, SpotsScrollDelegate {
         description += "Tracks: \(tracks)\n"
       }
 
-      let viewModel = ViewModel(
+      let viewModel = Item(
         title: item["name"] as? String ?? "",
         image: "iconMyMusic",
         action: "playlist:\(owner):\(playlistID)",
@@ -360,7 +360,7 @@ class ListController: SpotsController, SpotsDelegate, SpotsScrollDelegate {
 
 extension ListController {
 
-  func spotDidSelectItem(spot: Spotable, item: ViewModel) {
+  func spotDidSelectItem(spot: Spotable, item: Item) {
     deselectAllExcept(spot)
 
     guard let action = item.action else { return }

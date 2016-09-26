@@ -6,7 +6,7 @@
 
 import Brick
 
-public protocol SpotConfigurable: ViewConfigurable {
+public protocol SpotConfigurable: ItemConfigurable {
 
   var size: CGSize { get set }
 }

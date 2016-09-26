@@ -12,7 +12,7 @@ public extension CollectionAdapter {
    - parameter withAnimation: The animation that should be used (currently not in use)
    - parameter completion: Completion
    */
-  public func append(item: ViewModel, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
+  public func append(item: Item, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     var indexes = [Int]()
     let itemsCount = spot.component.items.count
 
@@ -40,7 +40,7 @@ public extension CollectionAdapter {
    - parameter withAnimation: The animation that should be used (currently not in use)
    - parameter completion: Completion
    */
-  public func append(items: [ViewModel], withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
+  public func append(items: [Item], withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     var indexes = [Int]()
     let itemsCount = spot.component.items.count
 
@@ -67,11 +67,11 @@ public extension CollectionAdapter {
 
   /**
    - parameter item: The view model that you want to insert
-   - parameter index: The index where the new ViewModel should be inserted
+   - parameter index: The index where the new Item should be inserted
    - parameter animation:  A SpotAnimation that is used when performing the mutation (currently not in use)
    - parameter completion: Completion
    */
-  public func insert(item: ViewModel, index: Int, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
+  public func insert(item: Item, index: Int, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     spot.component.items.insert(item, atIndex: index)
     var indexes = [Int]()
     let itemsCount = spot.component.items.count
@@ -97,7 +97,7 @@ public extension CollectionAdapter {
    - parameter animation:  A SpotAnimation that is used when performing the mutation (currently not in use)
    - parameter completion: A completion closure that is executed in the main queue
    */
-  public func prepend(items: [ViewModel], withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
+  public func prepend(items: [Item], withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     var indexes = [Int]()
 
     spot.component.items.insertContentsOf(items, at: 0)
@@ -122,7 +122,7 @@ public extension CollectionAdapter {
    - parameter withAnimation: The animation that should be used (currently not in use)
    - parameter completion: A completion closure that is executed in the main queue
    */
-  public func delete(item: ViewModel, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
+  public func delete(item: Item, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     guard let index = spot.component.items.indexOf({ $0 == item })
       else { completion?(); return }
 
@@ -144,7 +144,7 @@ public extension CollectionAdapter {
    - parameter withAnimation: The animation that should be used (currently not in use)
    - parameter completion: A completion closure that is executed in the main queue
    */
-  public func delete(items: [ViewModel], withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
+  public func delete(items: [Item], withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     var indexes = [Int]()
     let count = spot.component.items.count
 
@@ -204,7 +204,7 @@ public extension CollectionAdapter {
    - parameter animation:  A SpotAnimation that is used when performing the mutation (currently not in use)
    - parameter completion: A completion closure that is executed in the main queue when the view model has been removed
    */
-  public func update(item: ViewModel, index: Int, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
+  public func update(item: Item, index: Int, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
     guard let oldItem = spot.item(index) else { completion?(); return }
 
     spot.items[index] = item
@@ -263,14 +263,14 @@ public extension CollectionAdapter {
   }
 
   /**
-   Reload spot with ViewModelChanges
+   Reload spot with ItemChanges
 
    - parameter changes:          A collection of changes; inserations, updates, reloads, deletions and updated children
    - parameter animation:  A SpotAnimation that is used when performing the mutation
    - parameter updateDataSource: A closure to update your data source
    - parameter completion:       A completion closure that runs when your updates are done
    */
-  public func reloadIfNeeded(changes: ViewModelChanges, withAnimation animation: SpotsAnimation = .Automatic, updateDataSource: () -> Void, completion: Completion) {
+  public func reloadIfNeeded(changes: ItemChanges, withAnimation animation: SpotsAnimation = .Automatic, updateDataSource: () -> Void, completion: Completion) {
     spot.collectionView.process((insertions: changes.insertions, reloads: changes.reloads, deletions: changes.deletions), updateDataSource: updateDataSource) {
       if changes.updates.isEmpty {
         self.process(changes.updatedChildren, withAnimation: animation) {

@@ -5,7 +5,7 @@ import Imaginary
 
 public class TableRow: NSTableRowView, SpotConfigurable {
 
-  public var item: ViewModel?
+  public var item: Item?
   public var size = CGSize(width: 0, height: 50)
 
   public var tintColor: NSColor? {
@@ -94,7 +94,7 @@ public class TableRow: NSTableRowView, SpotConfigurable {
     titleLabel.centerYAnchor.constraintEqualToAnchor(titleLabel.superview!.centerYAnchor).active = true
   }
 
-  public func configure(inout item: ViewModel) {
+  public func configure(inout item: Item) {
 
     if item.meta("separator", type: Bool.self) == false {
       lineView.frame.size.height = 0.0

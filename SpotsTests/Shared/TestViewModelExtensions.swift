@@ -3,7 +3,7 @@ import Foundation
 import XCTest
 import Brick
 
-class ViewModelExtensionsTests : XCTestCase {
+class ItemExtensionsTests : XCTestCase {
 
   func testEvaluateChanges() {
     /*
@@ -21,28 +21,28 @@ class ViewModelExtensionsTests : XCTestCase {
       ["title" : "baz"]
     ]
 
-    var newModels = newJSON.map { ViewModel($0) }
-    var oldModels = oldJSON.map { ViewModel($0) }
+    var newModels = newJSON.map { Item($0) }
+    var oldModels = oldJSON.map { Item($0) }
     XCTAssertEqual(newModels.count, 3)
     XCTAssertEqual(oldModels.count, 2)
 
-    var changes = ViewModel.evaluate(newModels, oldModels: oldModels)
-    XCTAssertEqual(changes![0], ViewModelDiff.None)
-    XCTAssertEqual(changes![1], ViewModelDiff.None)
-    XCTAssertEqual(changes![2], ViewModelDiff.New)
+    var changes = Item.evaluate(newModels, oldModels: oldModels)
+    XCTAssertEqual(changes![0], ItemDiff.None)
+    XCTAssertEqual(changes![1], ItemDiff.None)
+    XCTAssertEqual(changes![2], ItemDiff.New)
 
-    var processedChanges = ViewModel.processChanges(changes!)
+    var processedChanges = Item.processChanges(changes!)
     XCTAssertEqual(processedChanges.insertions.count, 1)
     XCTAssertEqual(processedChanges.updates.count, 0)
     XCTAssertEqual(processedChanges.reloads.count, 0)
     XCTAssertEqual(processedChanges.deletions.count, 0)
 
-    changes = ViewModel.evaluate(oldModels, oldModels: newModels)
-    XCTAssertEqual(changes![0], ViewModelDiff.None)
-    XCTAssertEqual(changes![1], ViewModelDiff.None)
-    XCTAssertEqual(changes![2], ViewModelDiff.Removed)
+    changes = Item.evaluate(oldModels, oldModels: newModels)
+    XCTAssertEqual(changes![0], ItemDiff.None)
+    XCTAssertEqual(changes![1], ItemDiff.None)
+    XCTAssertEqual(changes![2], ItemDiff.Removed)
 
-    processedChanges = ViewModel.processChanges(changes!)
+    processedChanges = Item.processChanges(changes!)
     XCTAssertEqual(processedChanges.insertions.count, 0)
     XCTAssertEqual(processedChanges.updates.count, 0)
     XCTAssertEqual(processedChanges.reloads.count, 0)
@@ -61,14 +61,14 @@ class ViewModelExtensionsTests : XCTestCase {
       ["title" : "bar1", "kind" : "grid-item"],
     ]
 
-    newModels = newJSON.map { ViewModel($0) }
-    oldModels = oldJSON.map { ViewModel($0) }
+    newModels = newJSON.map { Item($0) }
+    oldModels = oldJSON.map { Item($0) }
 
-    changes = ViewModel.evaluate(oldModels, oldModels: newModels)
-    XCTAssertEqual(changes![0], ViewModelDiff.Title)
-    XCTAssertEqual(changes![1], ViewModelDiff.Kind)
+    changes = Item.evaluate(oldModels, oldModels: newModels)
+    XCTAssertEqual(changes![0], ItemDiff.Title)
+    XCTAssertEqual(changes![1], ItemDiff.Kind)
 
-    processedChanges = ViewModel.processChanges(changes!)
+    processedChanges = Item.processChanges(changes!)
     XCTAssertEqual(processedChanges.insertions.count, 0)
     XCTAssertEqual(processedChanges.updates.count, 1)
     XCTAssertEqual(processedChanges.reloads.count, 1)

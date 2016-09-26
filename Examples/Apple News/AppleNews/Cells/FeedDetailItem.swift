@@ -38,7 +38,7 @@ public class FeedDetailItemCell: UITableViewCell, SpotConfigurable {
     fatalError("init(coder:) has not been implemented")
   }
 
-  public func configure(inout item: ViewModel) {
+  public func configure(inout item: Item) {
     if !item.image.isEmpty {
       featuredImage.setImage(NSURL(string: item.image))
       featuredImage.height = 300

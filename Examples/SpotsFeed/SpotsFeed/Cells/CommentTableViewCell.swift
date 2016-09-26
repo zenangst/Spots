@@ -11,7 +11,7 @@ public class CommentTableViewCell: WallTableViewCell, SpotConfigurable {
 
   public var size = CGSize(width: 0, height: 44)
 
-  public class func height(item: ViewModel) -> CGFloat {
+  public class func height(item: Item) -> CGFloat {
     let post = item.post
     let postText = post.text as NSString
     let textFrame = postText.boundingRectWithSize(CGSize(
@@ -135,7 +135,7 @@ public class CommentTableViewCell: WallTableViewCell, SpotConfigurable {
 
   // MARK: - Setup
 
-  public func setupViews(item: ViewModel) -> CGFloat {
+  public func setupViews(item: Item) -> CGFloat {
     let post = item.post
     let totalWidth = UIScreen.mainScreen().bounds.width
 
@@ -164,7 +164,7 @@ public class CommentTableViewCell: WallTableViewCell, SpotConfigurable {
     return bottomSeparator.frame.origin.y
   }
 
-  public func configure(inout item: ViewModel) {
+  public func configure(inout item: Item) {
     if bottomSeparator.frame.origin.y == 0.0 {
       item.size.width = contentView.frame.width
       item.size.height = setupViews(item)

@@ -1,7 +1,7 @@
 import UIKit
 import Brick
 
-extension ViewModel {
+extension Item {
 
   var post: Post {
     get {

@@ -6,7 +6,7 @@ import Hue
 
 public class GridListItem: NSCollectionViewItem, SpotConfigurable {
 
-  public var item: ViewModel?
+  public var item: Item?
   public var size = CGSize(width: 0, height: 88)
 
   static public var flipped: Bool {
@@ -22,7 +22,7 @@ public class GridListItem: NSCollectionViewItem, SpotConfigurable {
     customView.autoresizingMask = [.ViewWidthSizable, .ViewHeightSizable]
   }
 
-  public func configure(inout item: ViewModel) {
+  public func configure(inout item: Item) {
     customView.configure(&item)
     customView.acceptsTouchEvents = false
     item.size.height = customView.size.height

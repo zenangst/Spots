@@ -14,7 +14,7 @@ struct AlbumBlueprint: BlueprintContainer {
         rootKey: "tracks",
         spotIndex: 1,
         adapter: { json in
-          var list = [ViewModel]()
+          var list = [Item]()
           for (index, item) in json.enumerate() {
             let albumFragments: [String : String] = [
               "title" : item.resolve(keyPath: "track.album.name") ?? "",
@@ -44,7 +44,7 @@ struct AlbumBlueprint: BlueprintContainer {
               "separator" : true
             ]
 
-            let viewModel = ViewModel(
+            let viewModel = Item(
               title: item.resolve(keyPath: "name") ?? "",
               subtitle: "by \(subtitle)",
               image: "iconMyMusic",
@@ -59,7 +59,7 @@ struct AlbumBlueprint: BlueprintContainer {
         }
         )],
       fragmentHandler: { fragments, controller in
-        let headerModel = ViewModel(
+        let headerModel = Item(
           title: fragments.resolve(keyPath:"title") ?? "",
           image: fragments.resolve(keyPath:"image") ?? "",
           subtitle: fragments.resolve(keyPath:"description") ?? "",

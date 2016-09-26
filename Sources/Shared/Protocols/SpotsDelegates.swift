@@ -36,12 +36,12 @@ public protocol SpotsDelegate: class {
    - parameter spot: An object that conforms to the spotable protocol
    - parameter item: The view model that was tapped
    */
-  func spotDidSelectItem(spot: Spotable, item: ViewModel)
+  func spotDidSelectItem(spot: Spotable, item: Item)
 }
 
 public extension SpotsDelegate {
 
-  func spotDidSelectItem(spot: Spotable, item: ViewModel) {}
+  func spotDidSelectItem(spot: Spotable, item: Item) {}
   func spotsDidChange(spots: [Spotable]) {}
 }
 
@@ -94,5 +94,5 @@ public protocol SpotsCarouselScrollDelegate: class {
    - parameter spot: Object that comforms to the Spotable protocol
    - parameter item: The last view model in the component
    */
-  func spotDidEndScrolling(spot: Spotable, item: ViewModel)
+  func spotDidEndScrolling(spot: Spotable, item: Item)
 }

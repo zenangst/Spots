@@ -7,7 +7,7 @@ import Brick
 class GridSpotFeedItem : UICollectionViewCell, SpotConfigurable {
 
   var size = CGSize(width: 0, height: 320)
-  var item: ViewModel?
+  var item: Item?
 
   lazy var canvasView: UIView = {
     let view = UIView()
@@ -70,7 +70,7 @@ class GridSpotFeedItem : UICollectionViewCell, SpotConfigurable {
     fatalError("init(coder:) has not been implemented")
   }
 
-  func configure(inout item: ViewModel) {
+  func configure(inout item: Item) {
     if !item.image.isEmpty {
       imageView.image = nil
       let URL = NSURL(string: item.image)

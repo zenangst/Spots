@@ -12,8 +12,8 @@ class FavoritesController: SpotsController {
     self.title = title
   }
 
-  static func generateItem(index: Int, kind: Cell = Cell.Topic) -> ViewModel {
-    let item = ViewModel(
+  static func generateItem(index: Int, kind: Cell = Cell.Topic) -> Item {
+    let item = Item(
       title: faker.commerce.department(),
       subtitle: faker.lorem.sentences(amount: 2),
       kind: kind,
@@ -22,8 +22,8 @@ class FavoritesController: SpotsController {
     return item
   }
 
-  static func generateItems(from: Int, to: Int, kind: Cell = Cell.Topic) -> [ViewModel] {
-    var items = [ViewModel]()
+  static func generateItems(from: Int, to: Int, kind: Cell = Cell.Topic) -> [Item] {
+    var items = [Item]()
     for i in from...from+to {
       autoreleasepool { items.append(generateItem(i, kind: kind)) }
     }

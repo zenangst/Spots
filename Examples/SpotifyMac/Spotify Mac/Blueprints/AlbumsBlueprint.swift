@@ -15,14 +15,14 @@ struct AlbumsBlueprint: BlueprintContainer {
           rootKey: "albums",
           spotIndex: 0,
           adapter: { json in
-            var viewModels = [ViewModel]()
+            var viewModels = [Item]()
             for item in json {
               let fragments: [String : String] = [
                 "title" : item.resolve(keyPath: "album.name") ?? "",
                 "image" : item.resolve(keyPath: "album.images.0.url") ?? ""
               ]
 
-              let model = ViewModel(
+              let model = Item(
                 title: item.resolve(keyPath: "album.name") ?? "",
                 image: item.resolve(keyPath: "album.images.0.url") ?? "",
                 action: "album:\(item.resolve(keyPath: "album.id") ?? "")",

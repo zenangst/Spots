@@ -56,7 +56,7 @@ class GridTopicCell: UICollectionViewCell, SpotConfigurable {
     fatalError("init(coder:) has not been implemented")
   }
 
-  func configure(inout item: ViewModel) {
+  func configure(inout item: Item) {
     if !item.image.isEmpty {
       imageView.frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
       imageView.image = nil

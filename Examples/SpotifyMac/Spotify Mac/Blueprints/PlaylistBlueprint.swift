@@ -12,7 +12,7 @@ struct PlaylistBlueprint: BlueprintContainer {
       rootKey: "tracks",
       spotIndex: 1,
       adapter: { json in
-        var list = [ViewModel]()
+        var list = [Item]()
         for (index, item) in json.enumerate() {
           let subtitle = item.resolve(keyPath: "track.artists.0.name") ?? ""
 
@@ -41,7 +41,7 @@ struct PlaylistBlueprint: BlueprintContainer {
             "separator" : true
           ]
 
-          let viewModel = ViewModel(
+          let viewModel = Item(
             title: item.resolve(keyPath: "track.name") ?? "",
             subtitle: "by \(subtitle)",
             image: item.resolve(keyPath: "track.album.images.0.url") ?? "",
@@ -55,7 +55,7 @@ struct PlaylistBlueprint: BlueprintContainer {
         return list
       }
       )], fragmentHandler: { fragments, controller in
-        let headerModel = ViewModel(
+        let headerModel = Item(
           title: fragments.resolve(keyPath:"title") ?? "",
           image: fragments.resolve(keyPath:"image") ?? "",
           subtitle: fragments.resolve(keyPath:"description") ?? "",

@@ -1,33 +1,32 @@
 PODS:
-  - Brick (0.9.1):
-    - Sugar (~> 1.0)
+  - Brick (0.9.6):
     - Tailor
   - Cache (1.5.1):
     - CryptoSwift
-  - Compass (3.0.0)
+  - Compass (2.0.0):
+    - Sugar
   - CryptoSwift (0.5.2)
   - Hue (1.3.0)
   - Imaginary (0.1.0):
     - Cache
   - Keychain (1.0.0)
-  - Spots (3.0.0):
+  - Spots (3.0.4):
     - Brick
     - Cache
-    - Hue
-    - Sugar
+    - CryptoSwift (= 0.5.2)
     - Tailor
   - Sugar (1.2.0)
-  - Tailor (1.2.1):
-    - Sugar
+  - Tailor (1.3.0)
   - Whisper (3.1.1)
 
 DEPENDENCIES:
   - Cache (from `https://github.com/hyperoslo/Cache`)
-  - Compass
+  - Compass (= 2.0.0)
   - Hue (from `https://github.com/hyperoslo/Hue`)
   - Imaginary (from `https://github.com/hyperoslo/Imaginary`)
   - Keychain (from `https://github.com/hyperoslo/Keychain`)
   - Spots (from `../../`)
+  - Sugar (from `https://github.com/hyperoslo/Sugar`)
   - Whisper
 
 EXTERNAL SOURCES:
@@ -41,34 +40,39 @@ EXTERNAL SOURCES:
     :git: https://github.com/hyperoslo/Keychain
   Spots:
     :path: "../../"
+  Sugar:
+    :git: https://github.com/hyperoslo/Sugar
 
 CHECKOUT OPTIONS:
   Cache:
     :commit: cff7ea060664c856ec76f3345cf1e541b5dc0e18
     :git: https://github.com/hyperoslo/Cache
   Hue:
-    :commit: 57e80ce14da8d34b574fab5c5ddf55c979f12efd
+    :commit: 3cd45dee0ac7971ff0f0c86b68865d4a075078e3
     :git: https://github.com/hyperoslo/Hue
   Imaginary:
-    :commit: 0f018c3d27ff43af03abca410030f3a09dd45e71
+    :commit: e111dcfcd5a67e6d52febc48c5ebfb9090f77af5
     :git: https://github.com/hyperoslo/Imaginary
   Keychain:
     :commit: f8197b27fe34774b72046b0ec4a24e517e1bb79c
     :git: https://github.com/hyperoslo/Keychain
+  Sugar:
+    :commit: d75ec0a674d31b5b24258ce8fdfccd093e479b99
+    :git: https://github.com/hyperoslo/Sugar
 
 SPEC CHECKSUMS:
-  Brick: 8b2da311b9099c6790a38f06795f12eaa337c3bc
+  Brick: 4af97115ccf754c13d5d6dc0860936809b198d67
   Cache: 87b48b059429d3b53238533830c53941f8aa85f0
-  Compass: 5bb05fc2b873e9d5b1efda5752649b6a0a993843
+  Compass: a5793a890400a010a9a4eb6547c014e982483a2c
   CryptoSwift: c1ef79f901b86099a6fe8b3c7524cf9f3f3c8c40
   Hue: b4d7f4923dd16237f9cbc1783c3c81438b4391f4
   Imaginary: 62a9ce1e6d7831ede429c8221a183f03ec2a90bc
   Keychain: 50cb247cab32e774422741b118af9b598a3fb5b2
-  Spots: fa57db661cb2c6978850e02fc3695949bde29217
+  Spots: a6cb714c1da7007b666196651c143e49c9bf05b4
   Sugar: 556b623f0f8846cf08de7302701892f11d567419
-  Tailor: 4078f0dd0541adb465f1ad81b1d2bdb7571d6b0e
+  Tailor: 71fac74a4f14abcd13a10bf07bbe69d5ac746f58
   Whisper: 74decae53daf8caff5acf8628e24b92d3f05a453
 
-PODFILE CHECKSUM: 3a2aeebe9f05ae88ecc097c1abc9e12147b4f281
+PODFILE CHECKSUM: e9bbcbada558e3563b5847414b339f4fc93192b9
 
-COCOAPODS: 1.0.1
+COCOAPODS: 1.1.0.rc.2

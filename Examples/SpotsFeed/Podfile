@@ -6,7 +6,8 @@ use_frameworks!
 inhibit_all_warnings!
 
 target "SpotsFeed" do
-  pod 'Compass'
+  pod 'Sugar'
+  pod 'Compass', '2.0.0'
   pod 'Imaginary', git: 'https://github.com/hyperoslo/Imaginary'
   pod 'Cache', git: 'https://github.com/hyperoslo/Cache'
   pod 'Spots', path: '../../'

@@ -27,79 +27,79 @@ public extension Spotable {
   /**
    Append view model to a Spotable object
 
-   - parameter item:       A ViewModel struct
+   - parameter item:       A Item struct
    - parameter animation:  A SpotAnimation that is used when performing the mutation
    - parameter completion: A completion block that is run when the mutation is completed
    */
-  func append(item: ViewModel, withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
+  func append(item: Item, withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
     adapter?.append(item, withAnimation: animation, completion: completion)
   }
 
   /**
    Append a collection of view models to a Spotable object
 
-   - parameter items:       A collection of ViewModel structs
+   - parameter items:       A collection of Item structs
    - parameter animation:  A SpotAnimation that is used when performing the mutation
    - parameter completion: A completion block that is run when the mutation is completed
    */
-  func append(items: [ViewModel], withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
+  func append(items: [Item], withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
     adapter?.append(items, withAnimation: animation, completion: completion)
   }
 
   /**
    Prepend a collection of view models to a Spotable object
 
-   - parameter items:      A collection of ViewModel structs
+   - parameter items:      A collection of Item structs
    - parameter animation:  A SpotAnimation that is used when performing the mutation
    - parameter completion: A completion block that is run when the mutation is completed
    */
-  func prepend(items: [ViewModel], withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
+  func prepend(items: [Item], withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
     adapter?.prepend(items, withAnimation: animation, completion: completion)
   }
 
   /**
    Insert view model to a Spotable object
 
-   - parameter item:       A ViewModel struct
+   - parameter item:       A Item struct
    - parameter index:      The index where the view model should be inserted
    - parameter animation:  A SpotAnimation that is used when performing the mutation
    - parameter completion: A completion block that is run when the mutation is completed
    */
-  func insert(item: ViewModel, index: Int, withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
+  func insert(item: Item, index: Int, withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
     adapter?.insert(item, index: index, withAnimation: animation, completion: completion)
   }
 
   /**
    Update view model to a Spotable object
 
-   - parameter item:       A ViewModel struct
+   - parameter item:       A Item struct
    - parameter index:      The index of the view model that should be updated
    - parameter animation:  A SpotAnimation that is used when performing the mutation
    - parameter completion: A completion block that is run when the mutation is completed
    */
-  func update(item: ViewModel, index: Int, withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
+  func update(item: Item, index: Int, withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
     adapter?.update(item, index: index, withAnimation: animation, completion: completion)
   }
 
   /**
    Delete view model from a Spotable object
 
-   - parameter item:       A ViewModel struct
+   - parameter item:       A Item struct
    - parameter animation:  A SpotAnimation that is used when performing the mutation
    - parameter completion: A completion block that is run when the mutation is completed
    */
-  func delete(item: ViewModel, withAnimation animation: SpotsAnimation = .Automatic, completion: Completion) {
+  func delete(item: Item, withAnimation animation: SpotsAnimation = .Automatic, completion: Completion) {
     adapter?.delete(item, withAnimation: animation, completion: completion)
   }
 
   /**
    Delete a collection of view models from a Spotable object
 
-   - parameter items:       A collection of ViewModel structs
+   - parameter items:       A collection of Item structs
    - parameter animation:  A SpotAnimation that is used when performing the mutation
    - parameter completion: A completion block that is run when the mutation is completed
    */
-  func delete(items: [ViewModel], withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
+  func delete(items: [Item], withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
     adapter?.delete(items, withAnimation: animation, completion: completion)
   }
 
@@ -139,17 +139,17 @@ public extension Spotable {
   /**
    Reload view models with change set
 
-   - parameter changes:    A ViewModelChanges struct that contains instructions for the adapter to perform mutations
+   - parameter changes:    A ItemChanges struct that contains instructions for the adapter to perform mutations
    - parameter animation:  A SpotAnimation that is used when performing the mutation
    - parameter updateDataSource:  A closure that updates the data source, it is performed prior to calling UI updating methods
    - parameter completion: A completion block that is run when the mutation is completed
    */
-  func reloadIfNeeded(changes: ViewModelChanges, withAnimation animation: SpotsAnimation = .Automatic, updateDataSource: () -> Void, completion: Completion) {
+  func reloadIfNeeded(changes: ItemChanges, withAnimation animation: SpotsAnimation = .Automatic, updateDataSource: () -> Void, completion: Completion) {
     adapter?.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: updateDataSource, completion: completion)
   }
 
   /// A collection of view models
-  var items: [ViewModel] {
+  var items: [Item] {
     set(items) { component.items = items }
     get { return component.items }
   }
@@ -172,18 +172,18 @@ public extension Spotable {
 
   /**
    - parameter index: The index of the item to lookup
-   - returns: A ViewModel at found at the index
+   - returns: A Item at found at the index
    */
-  public func item(index: Int) -> ViewModel? {
+  public func item(index: Int) -> Item? {
     guard index < component.items.count && index > -1 else { return nil }
     return component.items[index]
   }
 
   /**
    - parameter indexPath: The indexPath of the item to lookup
-   - returns: A ViewModel at found at the index
+   - returns: A Item at found at the index
    */
-  public func item(indexPath: NSIndexPath) -> ViewModel? {
+  public func item(indexPath: NSIndexPath) -> Item? {
     #if os(OSX)
       return item(indexPath.item)
     #else
@@ -225,11 +225,11 @@ public extension Spotable {
   /**
    Reloads a spot only if it changes
 
-   - parameter items:      A collection of ViewModels
+   - parameter items:      A collection of Items
    - parameter animation:  The animation that should be used (only works for Listable objects)
    - parameter completion: A completion closure that is performed when all mutations are performed
    */
-  public func reloadIfNeeded(items: [ViewModel], withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
+  public func reloadIfNeeded(items: [Item], withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
     guard !(self.items == items) else {
       cache()
       return
@@ -282,7 +282,7 @@ public extension Spotable {
    - parameter includeElement: A filter predicate to find a view model
    - returns: Always returns 0.0
    */
-  public func scrollTo(@noescape includeElement: (ViewModel) -> Bool) -> CGFloat {
+  public func scrollTo(@noescape includeElement: (Item) -> Bool) -> CGFloat {
     return 0.0
   }
 

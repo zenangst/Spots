@@ -40,7 +40,7 @@ public class PlaylistGridSpotCell: UICollectionViewCell, SpotConfigurable {
     albumView.image = image
   }
 
-  public func configure(inout item: ViewModel) {
+  public func configure(inout item: Item) {
     backgroundColor = UIColor.clearColor()
 
     if item.image.isPresent {

@@ -89,7 +89,7 @@ extension AppDelegate {
             rootKey: "albums",
             spotIndex: 1,
             adapter: { json in
-              var list = [ViewModel]()
+              var list = [Item]()
               for item in json {
                 let duration = item.resolve(keyPath: "duration_ms") ?? 0
                 let albumURN = "album:\(item.resolve(keyPath: "album.id") ?? "")"
@@ -105,7 +105,7 @@ extension AppDelegate {
                     ]
                   ]
 
-                let viewModel = ViewModel(
+                let viewModel = Item(
                   title: item.resolve(keyPath: "name") ?? "",
                   image: item.resolve(keyPath: "images.0.url") ?? "",
                   action: "album:\(item.resolve(keyPath: "id") ?? "")",
@@ -126,7 +126,7 @@ extension AppDelegate {
             rootKey: "tracks",
             spotIndex: 2,
             adapter: { json in
-              var list = [ViewModel]()
+              var list = [Item]()
 
               for (index, item) in json.enumerate() {
                 let albumFragments: [String : String] = [
@@ -157,7 +157,7 @@ extension AppDelegate {
                   "separator" : true
                 ]
 
-                let viewModel = ViewModel(
+                let viewModel = Item(
                   title: item.resolve(keyPath: "name") ?? "",
                   subtitle: "by \(subtitle)",
                   action: "preview",
@@ -180,7 +180,7 @@ extension AppDelegate {
             rootKey: "artists",
             spotIndex: 3,
             adapter: { json in
-              var list = [ViewModel]()
+              var list = [Item]()
               for item in json {
 
                 var description = ""
@@ -196,7 +196,7 @@ extension AppDelegate {
                   description += "Popularity: \(popularity)\n"
                 }
 
-                let viewModel = ViewModel(
+                let viewModel = Item(
                   title: item.resolve(keyPath: "name") ?? "",
                   action: "artist:\(item.resolve(keyPath: "id") ?? "")",
                   image: item.resolve(keyPath: "images.0.url") ?? "",
