@@ -6,7 +6,7 @@ import Hue
 
 public class TrackRow: NSTableRowView, SpotConfigurable {
 
-  public var item: ViewModel?
+  public var item: Item?
   public var size = CGSize(width: 0, height: 50)
 
   public var tintColor: NSColor? {
@@ -177,7 +177,7 @@ public class TrackRow: NSTableRowView, SpotConfigurable {
     fatalError("init(coder:) has not been implemented")
   }
 
-  public func configure(inout item: ViewModel) {
+  public func configure(inout item: Item) {
     if item.meta("separator", type: Bool.self) == false {
       lineView.frame.size.height = 0.0
     } else {

@@ -12,11 +12,11 @@ struct CategoryBlueprint: BlueprintContainer {
       rootKey: "playlists",
       spotIndex: 0,
       adapter: { json in
-        var viewModels = [ViewModel]()
+        var viewModels = [Item]()
         for item in json {
           let owner = item.resolve(keyPath: "owner.id") ?? ""
           let playlistID = item.resolve(keyPath: "id") ?? ""
-          let viewModel = ViewModel(
+          let viewModel = Item(
             title: item.resolve(keyPath: "name") ?? "",
             subtitle: "by " + owner,
             image: item.resolve(keyPath: "images.0.url") ?? "",

@@ -15,11 +15,11 @@ struct BrowseBlueprint: BlueprintContainer {
           rootKey: "playlists",
           spotIndex: 1,
           adapter: { json in
-            var viewModels = [ViewModel]()
+            var viewModels = [Item]()
             for item in json {
               let owner = item.resolve(keyPath: "owner.id") ?? ""
               let playlistID = item.resolve(keyPath: "id") ?? ""
-              let viewModel = ViewModel(
+              let viewModel = Item(
                 title: item.resolve(keyPath: "name") ?? "",
                 subtitle: "by " + owner,
                 image: item.resolve(keyPath: "images.0.url") ?? "",
@@ -47,7 +47,7 @@ struct BrowseBlueprint: BlueprintContainer {
           rootKey: "albums",
           spotIndex: 2,
           adapter: { json in
-            var viewModels = [ViewModel]()
+            var viewModels = [Item]()
 
             for item in json {
               let fragments: [String : String] = [
@@ -55,7 +55,7 @@ struct BrowseBlueprint: BlueprintContainer {
                 "image" : item.resolve(keyPath: "images.0.url") ?? ""
               ]
 
-              let model = ViewModel(
+              let model = Item(
                 title: item.resolve(keyPath: "name") ?? "",
                 image: item.resolve(keyPath: "images.0.url") ?? "",
                 action: "album:\(item.resolve(keyPath: "id") ?? "")",
@@ -78,10 +78,10 @@ struct BrowseBlueprint: BlueprintContainer {
           rootKey: "categories",
           spotIndex: 3,
           adapter: { json in
-            var viewModels = [ViewModel]()
+            var viewModels = [Item]()
             for item in json {
               let action = item.resolve(keyPath: "id") ?? ""
-              let model = ViewModel(
+              let model = Item(
                 title: item.resolve(keyPath: "name") ?? "",
                 image: item.resolve(keyPath: "icons.0.url") ?? "",
                 action: "category:\(action)",
@@ -102,7 +102,7 @@ struct BrowseBlueprint: BlueprintContainer {
         )
       ],
       fragmentHandler: { fragments, controller in
-        let headerModel = ViewModel(
+        let headerModel = Item(
           title: "Spotify for macOS",
           subtitle: "Built with Spots",
           image: "http://i1.wp.com/fusion.net/wp-content/uploads/2015/06/150623-album-covers.png?resize=1600%2C900&quality=80&strip=all",

@@ -4,7 +4,7 @@ import Sugar
 
 public class HeaderGridItem: NSTableRowView, SpotConfigurable {
 
-  var item: ViewModel?
+  var item: Item?
 
   public var size = CGSize(width: 0, height: 88)
   public var containerView = FlippedView()
@@ -124,7 +124,7 @@ public class HeaderGridItem: NSTableRowView, SpotConfigurable {
     subtitleLabel.topAnchor.constraintEqualToAnchor(titleLabel.bottomAnchor, constant: 10).active = true
   }
 
-  public func configure(inout item: ViewModel) {
+  public func configure(inout item: Item) {
     self.item = item
 
     titleLabel.stringValue = item.title

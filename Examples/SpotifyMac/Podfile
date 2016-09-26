@@ -6,13 +6,15 @@ use_frameworks!
 inhibit_all_warnings!
 
 target "Spotify Mac" do
+  pod 'Alamofire', '3.4.2'
   pod 'Sugar', git: 'https://github.com/hyperoslo/Sugar.git'
   pod 'Spots', path: '../../'
+  pod 'JWTDecode', '1.1.0'
   pod 'Cache', git: 'https://github.com/hyperoslo/Cache.git'
   pod 'Fashion', git: 'https://github.com/vadymmarkov/Fashion.git'
   pod 'Imaginary', git: 'https://github.com/hyperoslo/Imaginary.git'
   pod 'Hue', git: 'https://github.com/hyperoslo/Hue.git'
-  pod 'Compass', git: 'https://github.com/hyperoslo/Compass.git'
+  pod 'Compass', '2.0.0'
   pod 'Malibu', git: 'https://github.com/hyperoslo/Malibu.git'
   pod 'OhMyAuth', git: 'https://github.com/hyperoslo/OhMyAuth.git'
   pod 'Keychain', git: 'https://github.com/hyperoslo/Keychain.git'

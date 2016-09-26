@@ -4,7 +4,7 @@ import Sugar
 
 public class ArtistGridItem: NSCollectionViewItem, SpotConfigurable {
 
-  var item: ViewModel?
+  var item: Item?
 
   public var size = CGSize(width: 0, height: 88)
   public var customView = FlippedView().then {
@@ -82,7 +82,7 @@ public class ArtistGridItem: NSCollectionViewItem, SpotConfigurable {
     view = customView
   }
 
-  public func configure(inout item: ViewModel) {
+  public func configure(inout item: Item) {
     titleLabel.stringValue = item.title
     subtitleLabel.stringValue = item.subtitle
 

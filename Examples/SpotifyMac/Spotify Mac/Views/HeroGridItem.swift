@@ -63,7 +63,7 @@ public class HeroGridItem: NSTableRowView, SpotConfigurable {
     subtitleLabel.topAnchor.constraintEqualToAnchor(titleLabel.bottomAnchor, constant: -15).active = true
   }
 
-  public func configure(inout item: ViewModel) {
+  public func configure(inout item: Item) {
     titleLabel.stringValue = item.title
     titleLabel.font = NSFont(name: "Avenir Next", size: 64)
     titleLabel.sizeToFit()

@@ -4,7 +4,7 @@ import Sugar
 
 public class AlbumGridItem: NSCollectionViewItem, SpotConfigurable {
 
-  var item: ViewModel?
+  var item: Item?
 
   public var size = CGSize(width: 0, height: 88)
   public var customView = FlippedView().then {
@@ -59,7 +59,7 @@ public class AlbumGridItem: NSCollectionViewItem, SpotConfigurable {
     view = customView
   }
 
-  public func configure(inout item: ViewModel) {
+  public func configure(inout item: Item) {
     self.item = item
 
     customView.frame.size.height = item.size.height

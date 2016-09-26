@@ -267,7 +267,7 @@ class DetailController: SpotsController, SpotsDelegate, SpotsScrollDelegate {
 
 extension DetailController {
 
-  func spotDidSelectItem(spot: Spotable, item: ViewModel) {
+  func spotDidSelectItem(spot: Spotable, item: Item) {
     guard let action = item.action else { return }
 
     if item.kind == "track" {

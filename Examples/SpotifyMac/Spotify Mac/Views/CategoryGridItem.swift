@@ -4,7 +4,7 @@ import Sugar
 
 public class CategoryGridItem: NSCollectionViewItem, SpotConfigurable {
 
-  var item: ViewModel?
+  var item: Item?
 
   public var size = CGSize(width: 0, height: 88)
   public var customView = FlippedView()
@@ -52,7 +52,7 @@ public class CategoryGridItem: NSCollectionViewItem, SpotConfigurable {
     view = customView
   }
 
-  public func configure(inout item: ViewModel) {
+  public func configure(inout item: Item) {
     titleLabel.stringValue = item.title
     titleLabel.frame.origin.x = 8
     titleLabel.sizeToFit()

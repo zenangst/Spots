@@ -29,7 +29,7 @@ struct ArtistBlueprint: BlueprintContainer {
           }
         }
 
-        let headerModel = ViewModel(
+        let headerModel = Item(
           title: fragments.resolve(keyPath:"title") ?? "",
           image: fragments.resolve(keyPath:"image") ?? "",
           subtitle: fragments.resolve(keyPath:"description") ?? "",

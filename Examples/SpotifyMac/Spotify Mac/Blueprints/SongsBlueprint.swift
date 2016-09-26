@@ -14,10 +14,10 @@ struct SongsBlueprint: BlueprintContainer {
         rootKey: "tracks",
         spotIndex: 0,
         adapter: { json in
-          var list = [ViewModel]()
+          var list = [Item]()
           for (index, item) in json.enumerate() {
             let subtitle = item.resolve(keyPath: "track.artists.0.name") ?? ""
-            let viewModel = ViewModel(
+            let viewModel = Item(
               title: item.resolve(keyPath: "track.name") ?? "",
               subtitle: "by \(subtitle)",
               action: "preview",

@@ -1,17 +1,18 @@
 PODS:
-  - Alamofire (4.0.1)
+  - Alamofire (3.4.2)
   - Brick (0.9.6):
     - Tailor
   - Cache (1.5.1):
     - CryptoSwift
-  - Compass (3.0.1)
+  - Compass (2.0.0):
+    - Sugar
   - CryptoSwift (0.5.2)
   - Fashion (1.1.0):
     - Sugar
   - Hue (1.3.0)
   - Imaginary (0.1.0):
     - Cache
-  - JWTDecode (2.0.0)
+  - JWTDecode (1.1.0)
   - Keychain (1.0.0)
   - Malibu (1.1.0):
     - When (= 1.0.4)
@@ -30,11 +31,13 @@ PODS:
   - When (1.0.4)
 
 DEPENDENCIES:
+  - Alamofire (= 3.4.2)
   - Cache (from `https://github.com/hyperoslo/Cache.git`)
-  - Compass (from `https://github.com/hyperoslo/Compass.git`)
+  - Compass (= 2.0.0)
   - Fashion (from `https://github.com/vadymmarkov/Fashion.git`)
   - Hue (from `https://github.com/hyperoslo/Hue.git`)
   - Imaginary (from `https://github.com/hyperoslo/Imaginary.git`)
+  - JWTDecode (= 1.1.0)
   - Keychain (from `https://github.com/hyperoslo/Keychain.git`)
   - Malibu (from `https://github.com/hyperoslo/Malibu.git`)
   - OhMyAuth (from `https://github.com/hyperoslo/OhMyAuth.git`)
@@ -45,8 +48,6 @@ DEPENDENCIES:
 EXTERNAL SOURCES:
   Cache:
     :git: https://github.com/hyperoslo/Cache.git
-  Compass:
-    :git: https://github.com/hyperoslo/Compass.git
   Fashion:
     :git: https://github.com/vadymmarkov/Fashion.git
   Hue:
@@ -70,9 +71,6 @@ CHECKOUT OPTIONS:
   Cache:
     :commit: cff7ea060664c856ec76f3345cf1e541b5dc0e18
     :git: https://github.com/hyperoslo/Cache.git
-  Compass:
-    :commit: 84242c07670f0fe09b623069740f4601ef0bf1d9
-    :git: https://github.com/hyperoslo/Compass.git
   Fashion:
     :commit: 3e2bf8754d1dbdc9e05f423bbb96db6dc06fec46
     :git: https://github.com/vadymmarkov/Fashion.git
@@ -99,15 +97,15 @@ CHECKOUT OPTIONS:
     :git: https://github.com/zenangst/Tailor.git
 
 SPEC CHECKSUMS:
-  Alamofire: 7682d43245de14874acd142ec137b144aa1dd335
+  Alamofire: 6aa33201d20d069e1598891cf928883ff1888c7a
   Brick: 4af97115ccf754c13d5d6dc0860936809b198d67
   Cache: 87b48b059429d3b53238533830c53941f8aa85f0
-  Compass: e48325f0db929a72430ddfb8d3d9af5a3b4f626a
+  Compass: a5793a890400a010a9a4eb6547c014e982483a2c
   CryptoSwift: c1ef79f901b86099a6fe8b3c7524cf9f3f3c8c40
   Fashion: 82f2bb05505e3aea0977a2c23f5d8692e06f12a9
   Hue: b4d7f4923dd16237f9cbc1783c3c81438b4391f4
   Imaginary: 62a9ce1e6d7831ede429c8221a183f03ec2a90bc
-  JWTDecode: 178e47e5d28d3abcff778bacced8342858cd6cb5
+  JWTDecode: a6b91ad0bc798c723e9a29a368a6ead70edf7213
   Keychain: 50cb247cab32e774422741b118af9b598a3fb5b2
   Malibu: 9d81f8fe250531809b8f839c4b66b57e3981d569
   OhMyAuth: ce16b5e94887376934ea92a3ba252b6f79910699
@@ -116,6 +114,6 @@ SPEC CHECKSUMS:
   Tailor: 71fac74a4f14abcd13a10bf07bbe69d5ac746f58
   When: 033104df132ebfa75f4d3a9ba3e7a9865a573a1c
 
-PODFILE CHECKSUM: 502e63467bafba703a125ea312efaa7d5fc4ce5d
+PODFILE CHECKSUM: 1c97c677c0dcefa1f00f8f1ffb337825252f1d07
 
 COCOAPODS: 1.1.0.rc.2
