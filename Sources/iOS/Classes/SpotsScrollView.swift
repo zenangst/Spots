@@ -3,21 +3,18 @@ import QuartzCore
 
 public class SpotsScrollView: UIScrollView {
 
+  enum ObservedKeypath: String {
+    case ContentOffset = "contentOffset"
+    case ContentSize   = "contentSize"
+    case Frame         = "frame"
+    case Bounds        = "bounds"
+  }
+
   /// A KVO context used to monitor changes in contentSize, frames and bounds
   let subviewContext = UnsafeMutablePointer<()>(nil)
 
   /// An collection of UIView's that resemble the order of the views in the scroll view
   private var subviewsInLayoutOrder = [UIView?]()
-
-  /// A boolean value that can be used to force the scroll view to layout subviews
-  public var forceUpdate = false {
-    didSet {
-      if forceUpdate {
-        setNeedsLayout()
-        layoutSubviews()
-      }
-    }
-  }
 
   /// The distance that the content view is inset from the enclosing scroll view.
   public override var contentInset: UIEdgeInsets {
@@ -32,12 +29,7 @@ public class SpotsScrollView: UIScrollView {
   }
 
   /// A container view that works as a proxy layer for scroll view
-  lazy public var contentView: SpotsContentView = { [unowned self] in
-    let contentView = SpotsContentView()
-    contentView.frame = self.frame
-
-    return contentView
-  }()
+  lazy public var contentView: SpotsContentView = SpotsContentView()
 
   /**
    A deinitiazlier that removes all subviews from contentView
@@ -55,6 +47,7 @@ public class SpotsScrollView: UIScrollView {
    */
   override init(frame: CGRect) {
     super.init(frame: frame)
+    contentView.autoresizingMask = self.autoresizingMask
     addSubview(contentView)
   }
 
@@ -79,8 +72,8 @@ public class SpotsScrollView: UIScrollView {
     subviewsInLayoutOrder.insert(subview, atIndex: index)
 
     if subview.superview == contentView && !(subview is UIScrollView) {
-      subview.addObserver(self, forKeyPath: "frame", options: .Old, context: subviewContext)
-      subview.addObserver(self, forKeyPath: "bounds", options: .Old, context: subviewContext)
+      subview.addObserver(self, forKeyPath: ObservedKeypath.Frame.rawValue, options: .Old, context: subviewContext)
+      subview.addObserver(self, forKeyPath: ObservedKeypath.Bounds.rawValue, options: .Old, context: subviewContext)
     }
 
     guard let scrollView = subview as? UIScrollView else {
@@ -99,7 +92,8 @@ public class SpotsScrollView: UIScrollView {
       scrollView.scrollEnabled = true
     }
 
-    scrollView.addObserver(self, forKeyPath: "contentSize", options: .Old, context: subviewContext)
+    scrollView.addObserver(self, forKeyPath: ObservedKeypath.ContentSize.rawValue, options: .Old, context: subviewContext)
+    scrollView.addObserver(self, forKeyPath: ObservedKeypath.ContentOffset.rawValue, options: .Old, context: subviewContext)
 
     setNeedsLayout()
   }
@@ -110,11 +104,12 @@ public class SpotsScrollView: UIScrollView {
    - parameter subview: The subview that will be removed.
    */
   public override func willRemoveSubview(subview: UIView) {
-    if subview is UIScrollView {
-      subview.removeObserver(self, forKeyPath: "contentSize", context: subviewContext)
+    if subview is UIScrollView && subview.superview == contentView {
+      subview.removeObserver(self, forKeyPath: ObservedKeypath.ContentSize.rawValue, context: subviewContext)
+      subview.removeObserver(self, forKeyPath: ObservedKeypath.ContentOffset.rawValue, context: subviewContext)
     } else if subview.superview == contentView {
-      subview.removeObserver(self, forKeyPath: "frame", context: subviewContext)
-      subview.removeObserver(self, forKeyPath: "bounds", context: subviewContext)
+      subview.removeObserver(self, forKeyPath: ObservedKeypath.Frame.rawValue, context: subviewContext)
+      subview.removeObserver(self, forKeyPath: ObservedKeypath.Bounds.rawValue, context: subviewContext)
     }
 
     if let index = subviewsInLayoutOrder.indexOf({ $0 == subview }) {
@@ -133,14 +128,23 @@ public class SpotsScrollView: UIScrollView {
    - parameter context: The value that was provided when the receiver was registered to receive key-value observation notifications.
    */
   public override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
-    if let change = change where context == subviewContext && keyPath == "contentSize" {
+    if let change = change where context == subviewContext {
       if let scrollView = object as? UIScrollView {
         guard let change = change[NSKeyValueChangeOldKey] else { return }
-        let oldContentSize = change.CGSizeValue()
-        let newContentSize = scrollView.contentSize
-        if !CGSizeEqualToSize(newContentSize, oldContentSize) {
-          setNeedsLayout()
-          layoutIfNeeded()
+        if keyPath == ObservedKeypath.ContentSize.rawValue {
+          let oldContentSize = change.CGSizeValue()
+          let newContentSize = scrollView.contentSize
+          if !CGSizeEqualToSize(newContentSize, oldContentSize) {
+            setNeedsLayout()
+            layoutIfNeeded()
+          }
+        } else if keyPath == ObservedKeypath.ContentOffset.rawValue {
+          let oldOffset = change.CGPointValue()
+          let newOffset = scrollView.contentOffset
+          if !CGPointEqualToPoint(newOffset, oldOffset) {
+            setNeedsLayout()
+            layoutIfNeeded()
+          }
         }
       } else if let view = object as? UIView,
         oldFrame = change[NSKeyValueChangeOldKey]?.CGRectValue() {
@@ -159,7 +163,6 @@ public class SpotsScrollView: UIScrollView {
   /**
    A custom implementation of layoutSubviews that handles the scrolling of all the underlaying views within the container.
    It does this by iterating over subviewsInLayoutOrder and sets the current offset for each individual view within the container.
-   This method can be forcefully invoke by setting `forceUpdate` to `true` on `SpotsScrollView`.
    */
   public override func layoutSubviews() {
     super.layoutSubviews()
@@ -213,9 +216,7 @@ public class SpotsScrollView: UIScrollView {
       self.frame.size.height = superview.frame.size.height
     }
 
-    guard forceUpdate || initialContentOffset != contentOffset else { return }
-
-    if forceUpdate == true { forceUpdate = false }
+    guard initialContentOffset != contentOffset else { return }
     setNeedsLayout()
     layoutIfNeeded()
   }
