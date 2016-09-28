@@ -150,7 +150,11 @@ public extension Spotable {
 
   /// A collection of view models
   var items: [Item] {
-    set(items) { component.items = items }
+    set(items) {
+      component.items = items
+      registerAndPrepare()
+      updateHeight()
+    }
     get { return component.items }
   }
 
