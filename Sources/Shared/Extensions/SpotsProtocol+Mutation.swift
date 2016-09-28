@@ -36,6 +36,15 @@ extension SpotsProtocol {
 
   #if !os(OSX)
   public func reloadIfNeeded(components: [Component], withAnimation animation: SpotsAnimation = .Automatic, closure: Completion = nil) {
+    guard !components.isEmpty else {
+      Dispatch.mainQueue {
+        self.spots.forEach { $0.render().removeFromSuperview() }
+        self.spots = []
+        closure?()
+      }
+      return
+    }
+
     Dispatch.inQueue(queue: .Interactive) {
       let newComponents = components
       let oldComponents = self.spots.map { $0.component }
