@@ -67,7 +67,6 @@ public protocol Spotable: class {
   func delete(indexes: [Int], withAnimation animation: SpotsAnimation, completion: Completion)
   /// Reload view model indexes with animation in a Spotable object
   func reload(indexes: [Int]?, withAnimation animation: SpotsAnimation, completion: Completion)
-
   func reloadIfNeeded(items: [Item], withAnimation animation: SpotsAnimation, completion: Completion)
   /// Reload view models if needed using change set
   func reloadIfNeeded(changes: ItemChanges, withAnimation animation: SpotsAnimation, updateDataSource: () -> Void, completion: Completion)
