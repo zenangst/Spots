@@ -49,7 +49,6 @@ import Cache
                 (gridable.layout as? GridableLayout)?.yOffset = gridable.render().frame.origin.y
               }
               #endif
-              self.spotsScrollView.forceUpdate = true
             }
             print("Spots reloaded: \(self.spots.count)")
             self.liveEditing(self.stateCache)

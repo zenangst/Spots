@@ -223,8 +223,6 @@ public class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDel
   public override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
 
-    defer { spotsScrollView.forceUpdate = true }
-
     if let tabBarController = self.tabBarController
       where tabBarController.tabBar.translucent {
         spotsScrollView.contentInset.bottom = tabBarController.tabBar.frame.size.height
@@ -236,16 +234,6 @@ public class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDel
 
     spotsScrollView.insertSubview(refreshControl, atIndex: 0)
 #endif
-  }
-
-  /**
-   Notifies the view controller that its view was added to a view hierarchy.
-
-   - parameter animated: If true, the view was added to the window using an animation.
-   */
-  override public func viewDidAppear(animated: Bool) {
-    spotsScrollView.forceUpdate = true
-    super.viewDidAppear(animated)
   }
 
   func configureView(withSize size: CGSize) {
