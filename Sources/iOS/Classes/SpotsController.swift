@@ -30,6 +30,7 @@ public class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDel
 
   /// Initial content offset for SpotsController, defaults to UIEdgeInsetsZero
   public private(set) var initialContentInset: UIEdgeInsets = UIEdgeInsetsZero
+
   /// A collection of Spotable objects
   public var spots: [Spotable] {
     didSet {
@@ -38,6 +39,7 @@ public class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDel
     }
   }
 
+  /// A collection of composite Spotable objects
   public var compositeSpots: [Int : [Int : [Spotable]]] {
     didSet {
       for (_, items) in compositeSpots {

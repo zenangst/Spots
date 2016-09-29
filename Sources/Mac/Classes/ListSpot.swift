@@ -28,6 +28,7 @@ public class ListSpot: NSObject, Listable {
     public static var contentInsetsRight: CGFloat = 0.0
   }
 
+  /// A Registry struct that contains all register components, used for resolving what UI component to use
   public static var views = Registry()
   public static var configure: ((view: NSTableView) -> Void)?
   public static var defaultView: View.Type = ListSpotItem.self

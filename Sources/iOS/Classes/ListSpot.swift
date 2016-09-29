@@ -1,13 +1,16 @@
 import UIKit
 import Brick
 
+/// A Spotable object that uses UITableView to render its items
 public class ListSpot: NSObject, Listable {
 
   /**
    *  Keys for meta data lookup
    */
   public struct Key {
+    /// The meta key for setting the header height
     public static let headerHeight = "headerHeight"
+    /// A meta key used for enabling and disabling separator style
     public static let separator = "separator"
   }
 
@@ -149,6 +152,9 @@ public class ListSpot: NSObject, Listable {
 
   // MARK: - Spotable
 
+  /**
+   Register all identifier to UITableView
+   */
   public func register() {
     for (identifier, item) in self.dynamicType.views.storage {
       switch item {
@@ -169,10 +175,21 @@ public class ListSpot: NSObject, Listable {
     }
   }
 
+  /**
+   Register header view with identifier
+
+   - parameter header:     The view type that you want to register
+   - parameter identifier: A string identifier for the header that you want to register
+   */
   public static func register(header header: View.Type, identifier: StringConvertible) {
     self.headers.storage[identifier.string] = Registry.Item.classType(header)
   }
 
+  /**
+   Register default header
+
+   - parameter header: The view type that you want to register as default header
+   */
   public static func register(defaultHeader header: View.Type) {
     self.headers.storage[self.views.defaultIdentifier] = Registry.Item.classType(header)
   }

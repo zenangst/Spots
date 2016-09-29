@@ -16,5 +16,6 @@ public protocol Viewable: Spotable {
   /// The default kind to fall back to if the view model kind does not exist when trying to display the spotable item
   static var defaultKind: StringConvertible { get }
 
+  /// A ScrollView
   var scrollView: ScrollView { get }
 }

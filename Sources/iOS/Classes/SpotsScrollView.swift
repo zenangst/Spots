@@ -1,6 +1,7 @@
 import UIKit
 import QuartzCore
 
+/// The core foundation scroll view inside of Spots that manages the linear layout of all Spotable objects
 public class SpotsScrollView: UIScrollView {
 
   enum ObservedKeypath: String {
@@ -54,7 +55,7 @@ public class SpotsScrollView: UIScrollView {
   /**
    Returns an object initialized from data in a given unarchiver.
 
-   - parameter aDecoder: An unarchiver object.
+   - parameter coder: An unarchiver object.
    */
   required public init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")

@@ -3,6 +3,13 @@ import UIKit
 
 extension ListAdapter {
 
+  /**
+   Find a generic UI component at index
+
+   - parameter index: The index of the UI that you are looking for
+
+   - returns: An optional generic type, this type will inherit from UITableViewcell
+   */
   public func ui<T>(atIndex index: Int) -> T? {
     return spot.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0)) as? T
   }
