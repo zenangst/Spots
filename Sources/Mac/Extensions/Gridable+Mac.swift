@@ -104,11 +104,11 @@ extension Gridable {
 
     if usesViewSize {
       if viewModel.size.height == 0 {
-        viewModel.size.height = view.size.height
+        viewModel.size.height = view.preferredViewSize.height
       }
 
       if viewModel.size.width == 0 {
-        viewModel.size.width = view.size.width
+        viewModel.size.width = view.preferredViewSize.width
       }
     }
 
