@@ -96,6 +96,7 @@ public class SpotsScrollView: UIScrollView {
     scrollView.addObserver(self, forKeyPath: ObservedKeypath.contentOffset.rawValue, options: .Old, context: subviewContext)
 
     setNeedsLayout()
+    layoutSubviews()
   }
 
   /**
@@ -117,6 +118,7 @@ public class SpotsScrollView: UIScrollView {
     }
 
     setNeedsLayout()
+    layoutSubviews()
   }
 
   /**
@@ -216,7 +218,7 @@ public class SpotsScrollView: UIScrollView {
       self.frame.size.height = superview.frame.size.height
     }
 
-    guard initialContentOffset != contentOffset else { return }
+    guard !CGPointEqualToPoint(initialContentOffset, contentOffset) else { return }
     setNeedsLayout()
     layoutIfNeeded()
   }
