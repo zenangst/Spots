@@ -1,5 +1,6 @@
 import UIKit
 
+/// A container view for KVO inside SpotsScrollView
 public class SpotsContentView: UIView {
 
   /**

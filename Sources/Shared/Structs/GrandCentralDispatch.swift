@@ -1,5 +1,15 @@
 import Foundation
 
+/**
+ A dispatch enum
+
+ - Main:        dispatch_get_main_queue
+ - Interactive: dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0)
+ - Initiated:   dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)
+ - Utility:     dispatch_get_global_queue(QOS_CLASS_UTILITY, 0)
+ - Background:  dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)
+ - Custom:      A user defined queue
+ */
 public enum SpotDispatchQueue {
   case Main, Interactive, Initiated, Utility, Background, Custom(dispatch_queue_t)
 }

@@ -72,6 +72,7 @@ public class GridSpot: NSObject, Gridable {
     public static var sectionInsetBottom: CGFloat = 0.0
   }
 
+  /// A Registry struct that contains all register components, used for resolving what UI component to use
   public static var views = Registry()
   public static var grids = GridRegistry()
   public static var configure: ((view: NSCollectionView) -> Void)?

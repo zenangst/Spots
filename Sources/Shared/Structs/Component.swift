@@ -35,17 +35,19 @@ public struct Component: Mappable, Equatable {
     }
   }
 
+  /// An enum for identifing the Component kind
   public enum Kind: String {
     case Carousel = "carousel"
     case Grid = "grid"
     case List = "list"
 
+    /// The lowercase raw value of the case
     public var string: String {
       return rawValue.lowercaseString
     }
   }
 
-  // Identifier
+  /// Identifier
   public var identifier: String?
   /// The index of the Item when appearing in a list, should be computed and continuously updated by the data source
   public var index = 0
@@ -71,6 +73,13 @@ public struct Component: Mappable, Equatable {
     return dictionary()
   }
 
+  /**
+   A method that creates a dictionary representation of the Component
+
+   - parameter amountOfItems: An optional Int that is used to limit the amount of items that should be transformed into JSON
+
+   - returns: A dictionary representation of the Component
+   */
   public func dictionary(amountOfItems: Int? = nil) -> [String : AnyObject] {
     var width: CGFloat = 0
     var height: CGFloat = 0
@@ -233,6 +242,14 @@ public func == (lhs: [Component], rhs: [Component]) -> Bool {
   return equal
 }
 
+/**
+ Compare two collections of Components to see if they are truly equal
+
+ - parameter lhs: Left hand component
+ - parameter rhs: Right hand component
+
+ - returns: A boolean value, true if both collections are equal
+ */
 public func === (lhs: [Component], rhs: [Component]) -> Bool {
   var equal = lhs.count == rhs.count
 

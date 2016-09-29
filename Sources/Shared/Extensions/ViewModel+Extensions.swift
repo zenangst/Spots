@@ -52,6 +52,13 @@ public extension Item {
     return changes
   }
 
+  /**
+   Process a collection of item diffs
+
+   - parameter changes: A collection of `ItemDiff`s
+
+   - returns: A tuple containg reloads, child updates, insertions, deletions and reload indexes
+   */
   public static func processChanges(changes: [ItemDiff]) -> (ItemChanges) {
     var insertions = [Int]()
     var updates = [Int]()
@@ -78,6 +85,13 @@ public extension Item {
     return (insertions: insertions, updates: updates, reloads: reloads, deletions: deletions, updatedChildren: childrenUpdates)
   }
 
+  /**
+   Diff current item with previous item
+
+   - parameter oldItem: The previous item that you want to compare the new one towards
+
+   - returns: An `ItemDiff` enum key
+   */
   public func diff(oldItem: Item) -> ItemDiff {
 
     let newChildren = children.map { Component($0) }
