@@ -3,7 +3,7 @@ import Brick
 
 public class ListSpotCell: UITableViewCell, SpotConfigurable {
 
-  public var size = CGSize(width: 0, height: 44)
+  public var preferredViewSize = CGSize(width: 0, height: 44)
   public var item: Item?
 
   public override init(style: UITableViewCellStyle, reuseIdentifier: String!) {
@@ -25,6 +25,6 @@ public class ListSpotCell: UITableViewCell, SpotConfigurable {
     textLabel?.text = item.title
     imageView?.image = UIImage(named: item.image)
 
-    item.size.height = item.size.height > 0.0 ? item.size.height : size.height
+    item.size.height = item.size.height > 0.0 ? item.size.height : preferredViewSize.height
   }
 }

@@ -3,7 +3,7 @@ import Brick
 
 class GridSpotCell: UICollectionViewCell, SpotConfigurable {
 
-  var size = CGSize(width: 88, height: 88)
+  var preferredViewSize = CGSize(width: 88, height: 88)
   var item: Item?
 
   var label: UILabel = {

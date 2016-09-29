@@ -15,7 +15,7 @@ enum Cell: String, StringConvertible {
 
 public class ListCell: UITableViewCell, SpotConfigurable {
 
-  public var size = CGSize(width: 0, height: 60)
+  public var preferredViewSize: CGSize(width: 0, height: 60)
   public var item: Item?
 
   lazy var selectedView: UIView = {
@@ -99,7 +99,7 @@ public class ListHeaderView: UIView, Componentable {
 
 class GridTopicCell: UICollectionViewCell, SpotConfigurable {
 
-  var size = CGSize(width: 125, height: 160)
+  var preferredViewSize: CGSize(width: 125, height: 160)
 
   lazy var label: UILabel = {
     let label = UILabel()

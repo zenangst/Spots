@@ -19,7 +19,7 @@ public class ListSpotItem: NSTableRowView, SpotConfigurable {
     }
   }
 
-  public var size = CGSize(width: 0, height: 88)
+  public var preferredViewSize: CGSize(width: 0, height: 88)
 
   lazy var titleLabel: NSTextField = {
     let titleLabel = NSTextField()
