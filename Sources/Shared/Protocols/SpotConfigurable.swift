@@ -8,5 +8,5 @@ import Brick
 
 public protocol SpotConfigurable: ItemConfigurable {
 
-  var size: CGSize { get set }
+  var preferredViewSize: CGSize { get }
 }

@@ -43,7 +43,7 @@ public extension Spotable where Self : Viewable {
 
         if let spotConfigurable = view as? SpotConfigurable {
           spotConfigurable.configure(&component.items[index])
-          view.frame.size = spotConfigurable.size
+          view.frame.size = spotConfigurable.preferredViewSize
         }
 
         scrollView.addSubview(view)
@@ -78,7 +78,7 @@ public extension Spotable where Self : Viewable {
 
     let view = classType.init()
     (view as? SpotConfigurable)?.configure(&component.items[index])
-    if let size = (view as? SpotConfigurable)?.size {
+    if let size = (view as? SpotConfigurable)?.preferredViewSize {
       view.frame.size = size
     }
 
@@ -101,7 +101,7 @@ public extension Spotable where Self : Viewable {
 
       let view = classType.init()
       (view as? SpotConfigurable)?.configure(&component.items[index])
-      if let size = (view as? SpotConfigurable)?.size {
+      if let size = (view as? SpotConfigurable)?.preferredViewSize {
         view.frame.size = size
       }
 
@@ -124,7 +124,7 @@ public extension Spotable where Self : Viewable {
 
     let view = classType.init()
     (view as? SpotConfigurable)?.configure(&component.items[index])
-    if let size = (view as? SpotConfigurable)?.size {
+    if let size = (view as? SpotConfigurable)?.preferredViewSize {
       view.frame.size = size
     }
     #if os(iOS)
@@ -149,7 +149,7 @@ public extension Spotable where Self : Viewable {
 
       let view = classType.init()
       (view as? SpotConfigurable)?.configure(&component.items[index])
-      if let size = (view as? SpotConfigurable)?.size {
+      if let size = (view as? SpotConfigurable)?.preferredViewSize {
         view.frame.size = size
       }
       #if os(iOS)

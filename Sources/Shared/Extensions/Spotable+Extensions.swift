@@ -329,11 +329,11 @@ public extension Spotable {
 
     if usesViewSize {
       if viewModel.size.height == 0 {
-        viewModel.size.height = (view as? SpotConfigurable)?.size.height ?? 0.0
+        viewModel.size.height = (view as? SpotConfigurable)?.preferredViewSize.height ?? 0.0
       }
 
       if viewModel.size.width == 0 {
-        viewModel.size.width = (view as? SpotConfigurable)?.size.width ?? 0.0
+        viewModel.size.width = (view as? SpotConfigurable)?.preferredViewSize.width ?? 0.0
       }
     }
 

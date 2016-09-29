@@ -52,7 +52,7 @@ extension CollectionAdapter : UICollectionViewDataSource {
     } else if let cell = cell as? SpotConfigurable {
       cell.configure(&spot.component.items[indexPath.item])
       if spot.component.items[indexPath.item].size.height == 0.0 {
-        spot.component.items[indexPath.item].size = cell.size
+        spot.component.items[indexPath.item].size = cell.preferredViewSize
       }
       spot.configure?(cell)
     }
