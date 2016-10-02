@@ -168,7 +168,7 @@ func configure(inout item: Item) {
 
 **Item** is a struct, but because of the **inout** keyword in the method declaration it can perform mutation and pass that back to the data source. If you prefer the size to be static, you can simply not set the height and **Spots** will handle setting it for you based on the **preferredViewSize**.
 
-When you view conforms to **SpotConfigurable**, you need to register it with a unique identifier for that view.
+When your view conforms to **SpotConfigurable**, you need to register it with a unique identifier for that view.
 
 You register your view on the component that you want to display it.
 
