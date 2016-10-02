@@ -393,8 +393,6 @@ pod 'Spots'
 `Item` comes from `Brick`.
 - **[Cache](https://github.com/hyperoslo/Cache)**
 Used for `Component` and `Item` caching when initializing a `SpotsController` or `Spotable` object with a cache key.
-- **[Sugar](https://github.com/hyperoslo/Sugar)**
-To sweeten the implementation.
 - **[Tailor](https://github.com/zenangst/Tailor)**
 To seamlessly map JSON to both `Component` and `Item`.
 
