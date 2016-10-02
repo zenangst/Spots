@@ -187,6 +187,8 @@ ListSpot.register(defaultView: MyAwesomeView.self)
 
 As mentioned above, `ListSpot` is based on `UITableView` (and `NSTableView` in macOS).
 
+By letting the data decide which views to use gives you the freedom of displaying anything anywhere, without cluttering your code with dirty if- or switch-statements that are hard to maintain and prone to introduce bugs.
+
 ## Performing mutation
 
 It is very common that you need to modify your data source and tell your UI component to either insert, update or delete depending on the action that you performed. This process can be cumbersome, so to help you out, **Spots** has some great convenience methods to help you with this process.
