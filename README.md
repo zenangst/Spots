@@ -117,6 +117,8 @@ As mentioned above, **Spots** internal view state cache uses JSON for saving the
 
 *Live editing only works when running your application in the Simulator.*
 
+See [Installation](#installation) for how to enable live editing using Cocoapods.
+
 ## How does it work?
 
 At the top level of **Spots**, you have the **SpotsController** which is the replacement for your view controller.
