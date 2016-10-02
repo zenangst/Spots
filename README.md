@@ -181,7 +181,7 @@ As mentioned above, `ListSpot` is based on `UITableView` (and `NSTableView` in m
 
 It is very common that you need to modify your data source and tell your UI component to either insert, update or delete depending on the action that you performed. This process can be cumbersome, so to help you out, **Spots** has some great convenience methods to help you with this process.
 
-On **SpotsController** you have simply methods like `reload(withAnimation, completion)` that implies tells all the **Spotable** objects to reload.
+On **SpotsController** you have simple methods like `reload(withAnimation, completion)` that tells all the **Spotable** objects to reload.
 
 You can reload **SpotsController** using a collection of **Component**’s. Internally it will perform a diffing process to pinpoint what changed, in this process it cascades down from component level into item level change checks all the moving parts to perform the most appropriate type of update depending on the change. At item level, it will check if the items size change, if not it will scale down to only run the `configure` method on the view that was affected. This is what we call hard and soft updates, it will reduce the amount of *blinking* that you can normally see in iOS.
 
