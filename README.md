@@ -128,7 +128,7 @@ All **Spotable** objects are based around one core UI element.
 
 **ListSpot** is an object that conforms to **Listable**, it has a **ListAdapter** that works as both the data source and delegate for the **ListSpot**. For iOS, **Listable** uses **UITableView** as it’s UI component, and **NSTableView** on macOS.
 
-**GridSpot** is an object that conforms to **Gridable**, it uses a different adapter than **ListSpot** as it is based on collection views. The adapter used here is **CollectionAdapter**. On iOS, **Gridable** uses **UICollectionView** as it’s UI component and **NSCollectionView** on macOS.
+**GridSpot** is an object that conforms to **Gridable**, it uses a different adapter than **ListSpot** as it is based on collection views. The adapter used here is **CollectionAdapter**. On iOS and tvOS, **Gridable** uses **UICollectionView** as it’s UI component and **NSCollectionView** on macOS.
 
 **CarouselSpot** is very similar to **GridSpot**, it shares the same **CollectionAdapter**, the main difference between them is that **CarouselSpot** has scrolling enabled and uses a process for laying it’s views out on screen.
 
@@ -148,7 +148,7 @@ func configure(inout item: Item)
 
 **preferredViewSize** is exactly what the name implies, it is the preferred size for the view when it should be rendered on screen. We used the prefix `preferred` as it might be different if the view has dynamic height.
 
-Using different heights for different object can be a hassle in both iOS and macOS, but not with **Spots**. To set a calculated height based on the **Item** content, you simply set the height back to the *item* when you are done calculating it in *configure(inout item: Item)*.
+Using different heights for different object can be a hassle in iOS, tvOS and macOS, but not with **Spots**. To set a calculated height based on the **Item** content, you simply set the height back to the *item* when you are done calculating it in *configure(inout item: Item)*.
 
 e.g
 ``swift
