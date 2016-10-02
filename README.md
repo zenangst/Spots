@@ -1,4 +1,4 @@
-![Spots logo](https://raw.githubusercontent.com/hyperoslo/Spots/master/Images/cover_v5.jpg)
+![Spots logo](https://raw.githubusercontent.com/hyperoslo/Spots/master/Images/cover_v6.jpg)
 <div align="center">
 <a href="https://travis-ci.org/hyperoslo/Spots" target="_blank">
 <img src="http://img.shields.io/travis/hyperoslo/Spots.svg?style=flat">
@@ -28,13 +28,8 @@
 <br><br>
 </div>
 
-**Spots** is a view controller framework that makes your setup and future
-development blazingly fast. Because of its internal architecture and
-generic view models, you can easily move your view models into
-the cloud. This is super easy to do because **Spots** can translate
-JSON data into view model data right out-of-the-box.
-It is packed with convenience methods that are at your disposal through
-the public API.
+**Spots** is a cross-platform view controller framework for building component-based UI. The internal architecture is built using generic view models that can be transformed both to and from JSON. So, moving your UI declaration to a backend is as easy as pie.
+Data source and delegate setup is handled by **Spots**, so there is no need for you to do that manually. The public API is jam-packed with convenience methods for performing mutation, it is as easy as working with a regular collection type.
 
 ## Table of Contents
 
@@ -42,6 +37,11 @@ the public API.
 
 * [Key features](#key-features)
 * [Origin Story](#origin-story)
+* [Why JSON?](#why-json)
+* [View state caching](#view-state-caching)
+* [Live editing](#live-editing)
+* [How does it work?](#how-does-it-work)
+* [Performing mutation](#performing-mutation)
 * [Usage](#usage)
 * [View models in the Cloud](#view-models-in-the-cloud)
 * [Programmatic approach](#programmatic-approach)
@@ -51,6 +51,7 @@ the public API.
 *  [SpotsRefreshDelegate](#spotsrefreshdelegate)
 *  [SpotsScrollDelegate](#spotsscrolldelegate)
 *  [SpotsCarouselScrollDelegate](#spotscarouselscrolldelegate)
+* [The many faces of Spots](#the-many-faces-of-spots)
 * [JSON structure](#json-structure)
 * [Models](#models)
 * [Component](#component)
@@ -96,6 +97,120 @@ on the view model.
 We wrote a Medium article about how and why we built `Spots`.
 You can find it here: [Hitting the sweet spot of inspiration](https://medium.com/@zenangst/hitting-the-sweet-spot-of-inspiration-637d387bc629#.b9a1mun2i)
 
+## Why JSON?
+
+JSON works great as a common transport language, it is platform agnostic and it is something that developers are already using regularly when building application that fetch data from an external resource. **Spots** uses JSON internally to save a snapshot of the view state to disk, the only thing that you have to do is to give the **SpotsController** a cache key and call save whenever you have performed your update.
+
+So what if I don't have a backend that supports **Spots** view models? Not to worry, you can set up **Spots** programmatically and still use all the other advantages of the framework.
+
+## View state caching
+
+As mentioned above, **Spots** features a view state cache. Instead of saving all your data in a database somewhere and perform queries every time to initiate a view controller, we went with a different and much simpler approach. If a **SpotsController** has a cache key and you call `save`, internally it will encode all underlaying **Spotable** objects and its children into a JSON file and store that to disk. The uniqueness of the file comes from the cache key, think of this like your screen identifier. The next time you construct a **SpotsController** with that cache key, it will try to load that from disk and display it the exact same way as it was before saving. The main benefit here is that you don’t have to worry about your object changing by updating to future versions of **Spots**.
+
+**ListSpot**, **GridSpot**, **CarouselSpot** also have support for view state caching because these components can be used separately without using **SpotsController**.
+
+View state caching is optional but we encourage you to use it, as it renders the need to use a database as optional.
+
+## Live editing
+
+As mentioned above, **Spots** internal view state cache uses JSON for saving the state to disk. To leverage even more from JSON, **Spots** has a built-in feature to live edit what you see on screen. If you compile **Spots** with the `-DDEVMODE` flag, **Spots** will monitor the current cache for any changes applied to the view cache. It will also print the current cache path to the console so that you easily grab the file url, open it in your favorite source code editor to play around your view and have it reload whenever you save the file.
+
+*Live editing only works when running your application in the Simulator.*
+
+See [Installation](#installation) for how to enable live editing using Cocoapods.
+
+## How does it work?
+
+At the top level of **Spots**, you have the **SpotsController** which is the replacement for your view controller.
+
+Inside of the **SpotsController**, you have a **SpotsScrollView** that handles the linear layout of the components that you add to your data source. It is also in charge of giving the user a unified scrolling experience. Scrolling is disabled on all underlaying components except for components that have horizontal scrolling (e.g **CarouselSpot**).
+
+So how does scrolling work? Whenever a user scrolls, the **SpotsScrollView** computes the offset and size of its children. By using this technique you can easily create screens that contain lists, grids and carousels with a scrolling experience as smooth as proverbial butter. By dynamically changing the size of the children, **SpotsScrollView** also ensures that reusable views are allocated and deallocated like you would expect them to.
+**SpotsScrollView** uses KVO on any view that gets added so if one component changes height or position, the entire layout will invalidate itself and redraw it like it was intended.
+
+**SpotsController** uses one or more **Spotable** objects. **Spotable** is a protocol that all components use to make sure that all layout calculations can be performed. **Spots** comes with three different **Spotable** objects out-of-the-box.
+All **Spotable** objects are based around one core UI element.
+
+**ListSpot** is an object that conforms to **Listable**, it has a **ListAdapter** that works as both the data source and delegate for the **ListSpot**. For iOS, **Listable** uses **UITableView** as its UI component, and **NSTableView** on macOS.
+
+**GridSpot** is an object that conforms to **Gridable**, it uses a different adapter than **ListSpot** as it is based on collection views. The adapter used here is **CollectionAdapter**. On iOS and tvOS, **Gridable** uses **UICollectionView** as its UI component and **NSCollectionView** on macOS.
+
+**CarouselSpot** is very similar to **GridSpot**, it shares the same **CollectionAdapter**, the main difference between them is that **CarouselSpot** has scrolling enabled and uses a process for laying its views out on screen.
+
+What all **Spotable** objects have in common is that all of them use the same **Component** struct to represent themselves. **Component** has a *kind* property that maps to the UI component that should be used. By just changing the *kind*, you can transform a *list* into a *grid* as fast has you can type it and hit save.
+
+They also share the same **Item** struct for its children.
+The child is a data container that includes the size of the view on screen and the remaining information to configure your view.
+
+To add your own view to **Spots**, you need the view to conform to **SpotConfigurable** and inherit from the core class that your component is based on (UITableViewCell on ListSpot, UICollectionViewCell on CarouselSpot and GridSpot).
+**SpotConfigurable** requires you to implement one property and one method.
+
+We don’t like to dictate the terms of how you build your views, if you prefer to build them using `.nib` files, you should be free to do so, and with **Spots** you can. The only thing that differs is how you register the view on the component.
+
+```swift
+var preferredViewSize: CGSize { get }
+
+func configure(inout item: Item)
+```
+
+**preferredViewSize** is exactly what the name implies, it is the preferred size for the view when it should be rendered on screen. We used the prefix `preferred` as it might be different if the view has dynamic height.
+
+Using different heights for different objects can be a hassle in iOS, tvOS and macOS, but not with **Spots**. To set a calculated height based on the **Item** content, you simply set the height back to the *item* when you are done calculating it in *configure(inout item: Item)*.
+
+e.g
+```swift
+func configure(inout item: Item) {
+  textLabel.text = item.title
+  textLabel.sizeToFit()
+  item.size.height = textLabel.frame.size.height
+}
+```
+
+**Item** is a struct, but because of the **inout** keyword in the method declaration it can perform mutation and pass that back to the data source. If you prefer the size to be static, you can simply not set the height and **Spots** will handle setting it for you based on the **preferredViewSize**.
+
+When your view conforms to **SpotConfigurable**, you need to register it with a unique identifier for that view.
+
+You register your view on the component that you want to display it in.
+
+```swift
+ListSpot.register(view: MyAwesomeView.self, identifier: “my-awesome-view”)
+```
+
+For `nib`-based views, you register them like this.
+
+```swift
+ListSpot.register(nib: UINib(nibName: "MyAwesomeView", bundle: NSBundle.mainBundle()), identifier: "my-awesome-view")
+```
+
+You can also register default views for your component, what it means is that it will be the fallback view for that view if the `identifier` cannot be resolved or the `identifier` is absent.
+
+```swift
+ListSpot.register(defaultView: MyAwesomeView.self)
+```
+
+As mentioned above, `ListSpot` is based on `UITableView` (and `NSTableView` in macOS).
+
+By letting the data decide which views to use gives you the freedom of displaying anything anywhere, without cluttering your code with dirty if- or switch-statements that are hard to maintain and prone to introduce bugs.
+
+## Performing mutation
+
+It is very common that you need to modify your data source and tell your UI component to either insert, update or delete depending on the action that you performed. This process can be cumbersome, so to help you out, **Spots** has some great convenience methods to help you with this process.
+
+On **SpotsController** you have simple methods like `reload(withAnimation, completion)` that tells all the **Spotable** objects to reload.
+
+You can reload **SpotsController** using a collection of **Component**’s. Internally it will perform a diffing process to pinpoint what changed, in this process it cascades down from component level to item level, and checks all the moving parts, to perform the most appropriate update operation depending on the change. At item level, it will check if the items size changed, if not it will scale down to only run the `configure` method on the view that was affected. This is what we call hard and soft updates, it will reduce the amount of *blinking* that you can normally see in iOS.
+
+A **SpotsController** can also be reloaded using JSON. It behaves a bit differently than `reloadIfNeeded(withComponents)` as it will create new component and diff them towards each other to find out if something changed. If something changed, it will simply replace the old objects with the new ones.
+
+The difference between `reload` and `reloadIfNeeded` methods is that they will only run if change is needed, just like the naming implies.
+
+If you need more fine-grained control by pinpointing an individual spot, we got you covered on this as well. **SpotsController** has an update method that takes the spot index as its first argument, followed by an animation label to specify which animation to use when doing the update.
+The remaining arguments are one mutation closure where you get the **Spotable** object and can perform your updates, and finally one completion closure that will run when your update is performed both on the data source and the UI component.
+This method has a corresponding method called `updateIfNeeded`, which applies the update if needed.
+
+You can also `append` `prepend`, `insert`, `update` or `delete` with a series to similar methods that are publicly available on **SpotsController**.
+
+All methods take an `Item` as their first argument, the second is the index of the **Spotable** object that you want to update. Just like `reload` and `update`, it also has an animation label to give you control over what animation should be used. As an added bonus, these methods also work with multiple items, so instead of passing just one item, you can pass a collection of items that you want to `append`, `prepend` etc.
 
 ## Usage
 
@@ -172,6 +287,10 @@ public protocol SpotsCarouselScrollDelegate: class {
 ```
 
 `spotDidEndScrolling` is triggered when a user ends scrolling in a carousel, it returns item that is being displayed and the spot to give you the context that you need.
+
+## The many faces of Spots
+
+Because the framework can be used in a wide variety of ways, we have decided to include more than one example project. If you are feeling adventurous, you should take a peek at the [Examples](https://github.com/hyperoslo/Spots/tree/master/Examples) folder.
 
 ## JSON structure
 
@@ -309,14 +428,36 @@ it, simply add the following line to your Podfile:
 pod 'Spots'
 ```
 
+If you want to enable live editing for you debug target. Add the following to your Podfile:
+
+```ruby
+target 'YOUR TARGET HERE' do
+  post_install do |installer|
+    puts("Update debug pod settings to speed up build time")
+    Dir.glob(File.join("Pods", "**", "Pods*{debug,Private}.xcconfig")).each do |file|
+      File.open(file, 'a') { |f| f.puts "\nDEBUG_INFORMATION_FORMAT = dwarf" }
+    end
+    installer.pods_project.targets.each do |target|
+      if target.name == 'Spots'
+        target.build_configurations.each do |config|
+          if config.name == 'Debug'
+            config.build_settings['OTHER_SWIFT_FLAGS'] = '-DDEBUG -DDEVMODE'
+            else
+            config.build_settings['OTHER_SWIFT_FLAGS'] = ''
+          end
+        end
+      end
+    end
+  end
+end
+```
+
 ## Dependencies
 
 - **[Brick](https://github.com/hyperoslo/Brick)**
 `Item` comes from `Brick`.
 - **[Cache](https://github.com/hyperoslo/Cache)**
 Used for `Component` and `Item` caching when initializing a `SpotsController` or `Spotable` object with a cache key.
-- **[Sugar](https://github.com/hyperoslo/Sugar)**
-To sweeten the implementation.
 - **[Tailor](https://github.com/zenangst/Tailor)**
 To seamlessly map JSON to both `Component` and `Item`.
 
