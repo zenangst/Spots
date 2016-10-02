@@ -171,6 +171,12 @@ You register your view on the component that you want to display it.
 ListSpot.register(view: MyAwesomeView.self, identifier: “my-awesome-view”)
 ```
 
+For `nib`-based views, you register them like this.
+
+```swift
+ListSpot.register(nib: UINib(nibName: "MyAwesomeView", bundle: NSBundle.mainBundle()), identifier: "my-awesome-view")
+```
+
 You can also register default views for your component, what it means is that it will be the fallback view for that view if the `identifier` cannot be resolved or the `identifier` is absent.
 
 ```swift
