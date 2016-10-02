@@ -135,7 +135,8 @@ What all **Spotable** objects have in common is that all of them uses the same *
 They also share the same **Item** struct for it’s children.
 The child is a data container that includes the size of the view on screen and the remaining information to configure your view.
 
-To add your own view to **Spots**, you need the view to conform to **SpotConfigurable**. It requires you to implement one property and one method.
+To add your own view to **Spots**, you need the view to conform to **SpotConfigurable** and inherit from the core class that your component is based on (UITableViewCell on ListSpot, UICollectionViewCell on CarouselSpot and GridSpot). 
+**SpotConfigurable** requires you to implement one property and one method.
 
 ```swift
 var preferredViewSize: CGSize { get }
