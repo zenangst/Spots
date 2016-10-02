@@ -139,7 +139,7 @@ All **Spotable** objects are based around one core UI element.
 
 What all **Spotable** objects have in common is that all of them use the same **Component** struct to represent themselves. **Component** has a *kind* property that maps to the UI component that should be used. By just changing the *kind*, you can transform a *list* into a *grid* as fast has you can type it and hit save.
 
-They also share the same **Item** struct for it’s children.
+They also share the same **Item** struct for its children.
 The child is a data container that includes the size of the view on screen and the remaining information to configure your view.
 
 To add your own view to **Spots**, you need the view to conform to **SpotConfigurable** and inherit from the core class that your component is based on (UITableViewCell on ListSpot, UICollectionViewCell on CarouselSpot and GridSpot).
