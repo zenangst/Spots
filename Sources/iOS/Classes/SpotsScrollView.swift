@@ -141,7 +141,9 @@ public class SpotsScrollView: UIScrollView {
             setNeedsLayout()
             layoutIfNeeded()
           }
-        } else if keyPath == ObservedKeypath.contentOffset.rawValue {
+        } else if keyPath == ObservedKeypath.contentOffset.rawValue
+          && (dragging == false && tracking == false)
+        {
           let oldOffset = change.CGPointValue()
           let newOffset = scrollView.contentOffset
           if !CGPointEqualToPoint(newOffset, oldOffset) {
