@@ -1,4 +1,4 @@
-![Spots logo](https://raw.githubusercontent.com/hyperoslo/Spots/master/Images/cover_v5.jpg)
+![Spots logo](https://raw.githubusercontent.com/hyperoslo/Spots/master/Images/cover_v6.jpg)
 <div align="center">
 <a href="https://travis-ci.org/hyperoslo/Spots" target="_blank">
 <img src="http://img.shields.io/travis/hyperoslo/Spots.svg?style=flat">
