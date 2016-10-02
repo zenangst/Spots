@@ -200,7 +200,7 @@ On **SpotsController** you have simple methods like `reload(withAnimation, compl
 
 You can reload **SpotsController** using a collection of **Component**’s. Internally it will perform a diffing process to pinpoint what changed, in this process it cascades down from component level to item level, and checks all the moving parts, to perform the most appropriate update operation depending on the change. At item level, it will check if the items size changed, if not it will scale down to only run the `configure` method on the view that was affected. This is what we call hard and soft updates, it will reduce the amount of *blinking* that you can normally see in iOS.
 
-A **SpotsController** can also be reloaded with using JSON. It behaves a bit differently than `reloadIfNeeded(withComponents)` as it will create new component and diff them towards each other to find out if something changed. If something changed, it will simply replace the old objects with the new ones.
+A **SpotsController** can also be reloaded using JSON. It behaves a bit differently than `reloadIfNeeded(withComponents)` as it will create new component and diff them towards each other to find out if something changed. If something changed, it will simply replace the old objects with the new ones.
 
 The difference between `reload` and `reloadIfNeeded` methods is that they will only run if change is needed, just like the naming implies.
 
