@@ -157,7 +157,7 @@ class CarouselSpotTests: XCTestCase {
     // Check `paginate` mapping
     XCTAssertTrue(spot.paginate)
 
-    let width = UIScreen.mainScreen().bounds.width / 4
+    let width = spot.render().bounds.width / 4
 
     // Test that spot height is equal to first item in the list
     XCTAssertEqual(spot.items.count, 4)
