@@ -44,18 +44,6 @@ extension Gridable {
   }
 
   /**
-   Prepares all items in the Gridable object component
-   */
-  public func prepareItems() {
-    component.items.enumerate().forEach { (index: Int, _) in
-      configureItem(index, usesViewSize: true)
-      if component.span > 0 {
-        component.items[index].size.width = UIScreen.mainScreen().bounds.size.width / CGFloat(component.span)
-      }
-    }
-  }
-
-  /**
    - parameter size: A CGSize to set the width and height of the collection view
    */
   public func layout(size: CGSize) {
