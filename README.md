@@ -126,7 +126,7 @@ So how does scrolling work? Whenever a user scrolls, the **SpotsScrollView** com
 **SpotsController** uses one or more **Spotable** objects. **Spotable** is a protocol that all components use to make sure that all layout calculations can be performed. **Spots** comes with three different **Spotable** objects out-of-the-box.
 All **Spotable** objects are based around one core UI element.
 
-**ListSpot** is an object that conforms to **Listable**, it has a **ListAdapter** that works as both the data source and delegate for the **ListSpot**. For iOS, **Listable** uses **UITableView** as it’s UI component, and **NSTableView** on macOS.
+**ListSpot** is an object that conforms to **Listable**, it has a **ListAdapter** that works as both the data source and delegate for the **ListSpot**. For iOS, **Listable** uses **UITableView** as its UI component, and **NSTableView** on macOS.
 
 **GridSpot** is an object that conforms to **Gridable**, it uses a different adapter than **ListSpot** as it is based on collection views. The adapter used here is **CollectionAdapter**. On iOS and tvOS, **Gridable** uses **UICollectionView** as it’s UI component and **NSCollectionView** on macOS.
 
