@@ -36,7 +36,8 @@ Data source and delegate setup is handled by **Spots**, so that you don’t have
 <img src="https://raw.githubusercontent.com/hyperoslo/Spots/master/Images/icon_v5.png" alt="Spots Icon" align="right" />
 
 * [Key features](#key-features)
-* [Origin Story](#origin-story) * [Why JSON?](#why-json)
+* [Origin Story](#origin-story)
+* [Why JSON?](#why-json)
 * [View state caching](#view-state-caching)
 * [Live editing](#live-editing)
 * [How does it work?](#how-does-it-work)
@@ -119,7 +120,7 @@ At the top level of **Spots**, you have the **SpotsController** which is the rep
 
 Inside of the **SpotsController**, you have a **SpotsScrollView** that handles the linear layout of the components that you add to your data source. It is also in charge of giving the user a unified scrolling experience. Scrolling is disabled on all underlaying components except for components that have horizontal scrolling (e.g **CarouselSpot**).
 
-So how does scrolling work? Whenever a user scrolls, the **SpotsScrollView** computes the offset and size of its children. By using this technique you can easily create screens that contain lists, grids and carousels with a scrolling experience as smooth as proverbial butter. By dynamically changing the size of the children, **SpotsScrollView** also ensures that reusable views are allocated and deallocated like you would expect them to. 
+So how does scrolling work? Whenever a user scrolls, the **SpotsScrollView** computes the offset and size of its children. By using this technique you can easily create screens that contain lists, grids and carousels with a scrolling experience as smooth as proverbial butter. By dynamically changing the size of the children, **SpotsScrollView** also ensures that reusable views are allocated and deallocated like you would expect them to.
 **SpotsScrollView** uses KVO on any view that gets added so if one component changes height or position, the entire layout will invalidate itself and redraw it like it was intended.
 
 **SpotsController** uses one or more **Spotable** objects. **Spotable** is a protocol that all components use to make sure that all layout calculations can be performed. **Spots** comes with three different **Spotable** objects out-of-the-box.
@@ -136,7 +137,7 @@ What all **Spotable** objects have in common is that all of them uses the same *
 They also share the same **Item** struct for it’s children.
 The child is a data container that includes the size of the view on screen and the remaining information to configure your view.
 
-To add your own view to **Spots**, you need the view to conform to **SpotConfigurable** and inherit from the core class that your component is based on (UITableViewCell on ListSpot, UICollectionViewCell on CarouselSpot and GridSpot). 
+To add your own view to **Spots**, you need the view to conform to **SpotConfigurable** and inherit from the core class that your component is based on (UITableViewCell on ListSpot, UICollectionViewCell on CarouselSpot and GridSpot).
 **SpotConfigurable** requires you to implement one property and one method.
 
 ```swift
