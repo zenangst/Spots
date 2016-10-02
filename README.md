@@ -428,7 +428,7 @@ it, simply add the following line to your Podfile:
 pod 'Spots'
 ```
 
-If you want to enable live editing for you debug target. Add the following to your Podfile
+If you want to enable live editing for you debug target. Add the following to your Podfile:
 
 ```ruby
 target 'YOUR TARGET HERE' do
