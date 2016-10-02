@@ -28,7 +28,7 @@
 <br><br>
 </div>
 
-**Spots** is a cross platform view controller framework that helps you build component based UI. The internal architecture is built using generic view models that can be transform both to and from JSON. So, moving your UI declaration to a backend is as easy as pie.
+**Spots** is a cross platform view controller framework that helps you build component-based UI. The internal architecture is built using generic view models that can be transformed both to and from JSON. So, moving your UI declaration to a backend is as easy as pie.
 Data source and delegate setup is handled by **Spots**, so there is no need for you to do that manually. The public API is jam-packed with convenience methods for performing mutation, it is as easy as working with a regular collection type.
 
 ## Table of Contents
