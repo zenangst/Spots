@@ -426,6 +426,30 @@ it, simply add the following line to your Podfile:
 pod 'Spots'
 ```
 
+If you want to enable live editing for you debug target. Add the following to your Podfile
+
+```ruby
+target 'YOUR TARGET HERE' do
+  post_install do |installer|
+    puts("Update debug pod settings to speed up build time")
+    Dir.glob(File.join("Pods", "**", "Pods*{debug,Private}.xcconfig")).each do |file|
+      File.open(file, 'a') { |f| f.puts "\nDEBUG_INFORMATION_FORMAT = dwarf" }
+    end
+    installer.pods_project.targets.each do |target|
+      if target.name == 'Spots'
+        target.build_configurations.each do |config|
+          if config.name == 'Debug'
+            config.build_settings['OTHER_SWIFT_FLAGS'] = '-DDEBUG -DDEVMODE'
+            else
+            config.build_settings['OTHER_SWIFT_FLAGS'] = ''
+          end
+        end
+      end
+    end
+  end
+end
+```
+
 ## Dependencies
 
 - **[Brick](https://github.com/hyperoslo/Brick)**
