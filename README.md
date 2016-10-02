@@ -132,7 +132,7 @@ All **Spotable** objects are based around one core UI element.
 
 **CarouselSpot** is very similar to **GridSpot**, it shares the same **CollectionAdapter**, the main difference between them is that **CarouselSpot** has scrolling enabled and uses a process for laying it’s views out on screen.
 
-What all **Spotable** objects have in common is that all of them uses the same **Component** struct to represent themselves. **Component** has a *kind* property that maps to the UI component that should be used. By just changing the *kind*, you can transform a *list* into a *grid* as fast has you can type it and hit save.
+What all **Spotable** objects have in common is that all of them use the same **Component** struct to represent themselves. **Component** has a *kind* property that maps to the UI component that should be used. By just changing the *kind*, you can transform a *list* into a *grid* as fast has you can type it and hit save.
 
 They also share the same **Item** struct for it’s children.
 The child is a data container that includes the size of the view on screen and the remaining information to configure your view.
