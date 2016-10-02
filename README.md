@@ -205,7 +205,7 @@ A **SpotsController** can also be reloaded using JSON. It behaves a bit differen
 The difference between `reload` and `reloadIfNeeded` methods is that they will only run if change is needed, just like the naming implies.
 
 If you need more fine-grained control by pinpointing an individual spot, we got you covered on this as well. **SpotsController** has an update method that takes the spot index as its first argument, followed by an animation label to specify which animation to use when doing the update.
-The remaining arguments is one mutation closure where you get the **Spotable** object and can perform you updates, and finally one completion closure that will run when your update is performed both on the data source and the UI component.
+The remaining arguments are one mutation closure where you get the **Spotable** object and can perform your updates, and finally one completion closure that will run when your update is performed both on the data source and the UI component.
 This method has a corresponding method called `updateIfNeeded`, which applies the update if needed.
 
 You can also, `append` `prepend`, `insert`, `update` or `delete` with a series to similar methods that are publicly available on **SpotsController**.
