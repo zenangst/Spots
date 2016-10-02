@@ -197,7 +197,6 @@ You can also, `append` `prepend`, `insert`, `update` or `delete` with a series t
 
 All methods take an `Item` as their first argument, the second is the index of the **Spotable** object that you want to update. Just like `reload` and `update`, it also has an animation label to give you control over what animation should be used. As an added bonus, these methods also work with multiple items, so instead of passing just one item, you can pass a collection of items that you want to `append`, `prepend` etc.
 
-
 ## Usage
 
 ### View models in the Cloud
