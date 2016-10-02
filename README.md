@@ -38,6 +38,7 @@ Data source and delegate setup is handled by **Spots**, so that you don’t have
 * [Key features](#key-features)
 * [Origin Story](#origin-story) * [Why JSON?](#why-json)
 * [Live editing](#live-editing)
+* [How does it work?](#how-does-it-work)
 * [Usage](#usage)
 * [View models in the Cloud](#view-models-in-the-cloud)
 * [Programmatic approach](#programmatic-approach)
@@ -102,6 +103,25 @@ As mentioned above, **Spots** internal view state cache uses JSON for saving the
 
 *Live editing only works when running your application in the Simulator.*
 
+## How does it work?
+
+At the top level of **Spots**, you have the **SpotsController** which is the replacement for your view controller.
+
+Inside of the **SpotsController**, you have a **SpotsScrollView** that handles the linear layout of the components that you add to your data source. It is also in charge of giving the user a unified scrolling experience. Scrolling is disabled on all underlaying components except for components that have horizontal scrolling (e.g **CarouselSpot**).
+
+So how does scrolling work? Whenever a user scrolls, the **SpotsScrollView** computes the offset and size of its children. By using this technique you can easily create screens that contain lists, grids and carousels with a scrolling experience as smooth as proverbial butter. By dynamically changing the size of the children, **SpotsScrollView** also ensures that reusable views are allocated and deallocated like you would expect them to. 
+**SpotsScrollView** uses KVO on any view that gets added so if one component changes height or position, the entire layout will invalidate itself and redraw it like it was intended.
+
+**SpotsController** uses one or more **Spotable** objects. **Spotable** is a protocol that all components use to make sure that all layout calculations can be performed. **Spots** comes with three different **Spotable** objects out-of-the-box.
+All **Spotable** objects are based around one core UI element.
+
+**ListSpot** is an object that conforms to **Listable**, it has a **ListAdapter** that works as both the data source and delegate for the **ListSpot**. For iOS, **Listable** uses **UITableView** as it’s UI component, and **NSTableView** on macOS.
+
+**GridSpot** is an object that conforms to **Gridable**, it uses a different adapter than **ListSpot** as it is based on collection views. The adapter used here is **CollectionAdapter**. On iOS, **Gridable** uses **UICollectionView** as it’s UI component and **NSCollectionView** on macOS.
+
+**CarouselSpot** is very similar to **GridSpot**, it shares the same **CollectionAdapter**, the main difference between them is that **CarouselSpot** has scrolling enabled and uses a process for laying it’s views out on screen.
+
+What all **Spotable** objects have in common is that all of them uses the same **Component** struct to represent themselves. **Component** has a *kind* property that maps to the UI component that should be used. By just changing the *kind*, you can transform a *list* into a *grid* as fast has you can type it and hit save.
 
 ## Usage
 
