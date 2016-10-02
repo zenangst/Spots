@@ -25,7 +25,7 @@ public extension CollectionAdapter {
       guard let weakSelf = self else { completion?(); return }
 
       if itemsCount > 0 {
-        weakSelf.spot.collectionView.insert(indexes, completion: completion)
+        weakSelf.spot.collectionView.insert(indexes, completion: nil)
       } else {
         weakSelf.spot.collectionView.reloadData()
       }
@@ -55,7 +55,7 @@ public extension CollectionAdapter {
       guard let weakSelf = self else { completion?(); return }
 
       if itemsCount > 0 {
-        weakSelf.spot.collectionView.insert(indexes, completion: completion)
+        weakSelf.spot.collectionView.insert(indexes, completion: nil)
       } else {
         weakSelf.spot.collectionView.reloadData()
       }
@@ -82,7 +82,7 @@ public extension CollectionAdapter {
       guard let weakSelf = self else { completion?(); return }
 
       if itemsCount > 0 {
-        weakSelf.spot.collectionView.insert(indexes, completion: completion)
+        weakSelf.spot.collectionView.insert(indexes, completion: nil)
       } else {
         weakSelf.spot.collectionView.reloadData()
       }
@@ -110,9 +110,10 @@ public extension CollectionAdapter {
     Dispatch.mainQueue { [weak self] in
       guard let weakSelf = self else { completion?(); return }
 
-      weakSelf.spot.collectionView.insert(indexes, completion: completion)
-      weakSelf.spot.updateHeight() {
-        completion?()
+      weakSelf.spot.collectionView.insert(indexes) {
+        weakSelf.spot.updateHeight() {
+          completion?()
+        }
       }
     }
   }
@@ -131,7 +132,7 @@ public extension CollectionAdapter {
 
       if animation == .None { UIView.setAnimationsEnabled(false) }
       weakSelf.spot.component.items.removeAtIndex(index)
-      weakSelf.spot.collectionView.delete([index], completion: completion)
+      weakSelf.spot.collectionView.delete([index], completion: nil)
       if animation == .None { UIView.setAnimationsEnabled(true) }
       weakSelf.spot.updateHeight() {
         completion?()
@@ -155,9 +156,10 @@ public extension CollectionAdapter {
 
     Dispatch.mainQueue { [weak self] in
       guard let weakSelf = self else { completion?(); return }
-      weakSelf.spot.collectionView.delete(indexes, completion: completion)
-      weakSelf.spot.updateHeight() {
-        completion?()
+      weakSelf.spot.collectionView.delete(indexes) {
+        weakSelf.spot.updateHeight() {
+          completion?()
+        }
       }
     }
   }
@@ -174,7 +176,7 @@ public extension CollectionAdapter {
 
         if animation == .None { UIView.setAnimationsEnabled(false) }
         weakSelf.spot.component.items.removeAtIndex(index)
-        weakSelf.spot.collectionView.delete([index], completion: completion)
+        weakSelf.spot.collectionView.delete([index], completion: nil)
         if animation == .None { UIView.setAnimationsEnabled(true) }
         weakSelf.spot.updateHeight() {
           completion?()
@@ -191,9 +193,10 @@ public extension CollectionAdapter {
   public func delete(indexes: [Int], withAnimation animation: SpotsAnimation = .None, completion: Completion) {
     Dispatch.mainQueue { [weak self] in
       guard let weakSelf = self else { return }
-      weakSelf.spot.collectionView.delete(indexes, completion: completion)
-      weakSelf.spot.updateHeight() {
-        completion?()
+      weakSelf.spot.collectionView.delete(indexes) {
+        weakSelf.spot.updateHeight() {
+          completion?()
+        }
       }
     }
   }
