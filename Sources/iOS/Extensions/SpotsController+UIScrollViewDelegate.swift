@@ -16,11 +16,11 @@ extension SpotsController {
     let multiplier: CGFloat = !refreshPositions.isEmpty
       ? CGFloat(1 + refreshPositions.count)
       : 1
-    let itemOffset = (size.height - UIScreen.mainScreen().bounds.size.height * 2) > 0
-      ? UIScreen.mainScreen().bounds.size.height * 2
+    let itemOffset = (size.height - scrollView.bounds.size.height * 2) > 0
+      ? scrollView.bounds.size.height * 2
       : (spots.last?.component.items.last?.size.height ?? 0) * 6
     let shouldFetch = !refreshing &&
-      size.height > UIScreen.mainScreen().bounds.height &&
+      size.height > scrollView.bounds.height &&
       offset.y > size.height - scrollView.bounds.height * multiplier &&
       !refreshPositions.contains(size.height - itemOffset)
 
