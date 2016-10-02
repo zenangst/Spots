@@ -140,6 +140,8 @@ The child is a data container that includes the size of the view on screen and t
 To add your own view to **Spots**, you need the view to conform to **SpotConfigurable** and inherit from the core class that your component is based on (UITableViewCell on ListSpot, UICollectionViewCell on CarouselSpot and GridSpot).
 **SpotConfigurable** requires you to implement one property and one method.
 
+We don’t like to dictate the terms of how you build your views, if you prefer to build them using `.nib` files, you should be free to do so, and with **Spots** you can. The only thing that differs is how you register the view on the component.
+
 ```swift
 var preferredViewSize: CGSize { get }
 
