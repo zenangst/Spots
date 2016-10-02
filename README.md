@@ -132,6 +132,32 @@ All **Spotable** objects are based around one core UI element.
 
 What all **Spotable** objects have in common is that all of them uses the same **Component** struct to represent themselves. **Component** has a *kind* property that maps to the UI component that should be used. By just changing the *kind*, you can transform a *list* into a *grid* as fast has you can type it and hit save.
 
+They also share the same **Item** struct for it’s children.
+The child is a data container that includes the size of the view on screen and the remaining information to configure your view.
+
+To add your own view to **Spots**, you need the view to conform to **SpotConfigurable**. It requires you to implement one property and one method.
+
+```swift
+var preferredViewSize: CGSize { get }
+
+func configure(inout item: Item)
+```
+
+**preferredViewSize** is exactly what the name implies, it is the preferred size for the view when it should be rendered on screen. We used the prefix `preferred` as it might be different if the view has dynamic height.
+
+Using different heights for different object can be a hassle in both iOS and macOS, but not with **Spots**. To set a calculated height based on the **Item** content, you simply set the height back to the *item* when you are done calculating it in *configure(inout item: Item)*.
+
+e.g
+``swift
+func configure(inout item: Item) {
+  textLabel.text = item.title
+  textLabel.sizeToFit()
+  item.size.height = textLabel.frame.size.height
+}
+```
+
+**Item** is a struct, but because of the **inout** keyword in the method declaration it can perform mutation and pass that back to the data source. If you prefer the size to be static, you can simply not set the height and **Spots** will handle setting it for you based on the **preferredViewSize**.
+
 ## Usage
 
 ### View models in the Cloud
