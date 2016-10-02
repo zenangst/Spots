@@ -170,7 +170,7 @@ func configure(inout item: Item) {
 
 When your view conforms to **SpotConfigurable**, you need to register it with a unique identifier for that view.
 
-You register your view on the component that you want to display it.
+You register your view on the component that you want to display it in.
 
 ```swift
 ListSpot.register(view: MyAwesomeView.self, identifier: “my-awesome-view”)
