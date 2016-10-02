@@ -51,6 +51,7 @@ Data source and delegate setup is handled by **Spots**, so there is no need for 
 *  [SpotsRefreshDelegate](#spotsrefreshdelegate)
 *  [SpotsScrollDelegate](#spotsscrolldelegate)
 *  [SpotsCarouselScrollDelegate](#spotscarouselscrolldelegate)
+* [The many faces of Spots](#the-many-faces-of-spots)
 * [JSON structure](#json-structure)
 * [Models](#models)
 * [Component](#component)
@@ -284,6 +285,10 @@ public protocol SpotsCarouselScrollDelegate: class {
 ```
 
 `spotDidEndScrolling` is triggered when a user ends scrolling in a carousel, it returns item that is being displayed and the spot to give you the context that you need.
+
+## The many faces of Spots
+
+Because the framework can be used in a wide variety of ways, we decide to include more than one example project. If you are feeling adventures, you should take a peek at the [Examples](https://github.com/hyperoslo/Spots/tree/master/Examples) folder.
 
 ## JSON structure
 
