@@ -159,6 +159,22 @@ func configure(inout item: Item) {
 
 **Item** is a struct, but because of the **inout** keyword in the method declaration it can perform mutation and pass that back to the data source. If you prefer the size to be static, you can simply not set the height and **Spots** will handle setting it for you based on the **preferredViewSize**.
 
+When you view conforms to **SpotConfigurable**, you need to register it with a unique identifier for that view.
+
+You register your view on the component that you want to display it.
+
+```swift
+ListSpot.register(view: MyAwesomeView.self, identifier: “my-awesome-view”)
+```
+
+You can also register default views for your component, what it means is that it will be the fallback view for that view if the `identifier` cannot be resolved or the `identifier` is absent.
+
+```swift
+ListSpot.register(defaultView: MyAwesomeView.self)
+```
+
+As mentioned above, `ListSpot` is based on `UITableView` (and `NSTableView` in macOS).
+
 ## Usage
 
 ### View models in the Cloud
