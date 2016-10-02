@@ -70,9 +70,9 @@ public class GridableLayout: UICollectionViewFlowLayout {
     var rect = CGRect(origin: CGPoint.zero, size: contentSize)
 
     if headerReferenceSize.height > 0.0 {
-      rect.origin = CGPoint(x: -UIScreen.mainScreen().bounds.width, y: 0)
+      rect.origin = CGPoint(x: -collectionView.bounds.width, y: 0)
       rect.size.height = contentSize.height
-      rect.size.width = UIScreen.mainScreen().bounds.width * 3
+      rect.size.width = collectionView.bounds.width * 3
     }
 
     if let newAttributes = super.layoutAttributesForElementsInRect(rect) {
