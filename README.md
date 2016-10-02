@@ -37,6 +37,7 @@ Data source and delegate setup is handled by **Spots**, so that you don’t have
 
 * [Key features](#key-features)
 * [Origin Story](#origin-story) * [Why JSON?](#why-json)
+* [Live editing](#live-editing)
 * [Usage](#usage)
 * [View models in the Cloud](#view-models-in-the-cloud)
 * [Programmatic approach](#programmatic-approach)
@@ -94,6 +95,10 @@ You can find it here: [Hitting the sweet spot of inspiration](https://medium.com
 ## Why JSON?
 
 JSON is a works great as a common transport language, it is platform agnostic and it is something that developers are already using regularly when building application that fetch data from an external resource. **Spots** uses JSON internally to save a snapshot of the view state to disk, the only thing that you have to do is to give the **SpotsController** a cache key and call save whenever you have performed your update.
+
+## Live editing
+
+As mentioned above, **Spots** internal view state cache uses JSON for saving the state to disk. To leverage even more from JSON, **Spots** has a built-in feature to live edit what you see on screen. If you compile **Spots** with the `-DDEVMODE` flag, **Spots** will monitor the current cache for any changes applied to the view cache. It will also print the current cache path to the console so that you easily grab the file url, open it in your favorite source code editor to play around your view and have it reload whenever you save the file.
 
 
 ## Usage
