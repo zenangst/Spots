@@ -208,7 +208,7 @@ If you need more fine-grained control by pinpointing an individual spot, we got 
 The remaining arguments are one mutation closure where you get the **Spotable** object and can perform your updates, and finally one completion closure that will run when your update is performed both on the data source and the UI component.
 This method has a corresponding method called `updateIfNeeded`, which applies the update if needed.
 
-You can also, `append` `prepend`, `insert`, `update` or `delete` with a series to similar methods that are publicly available on **SpotsController**.
+You can also `append` `prepend`, `insert`, `update` or `delete` with a series to similar methods that are publicly available on **SpotsController**.
 
 All methods take an `Item` as their first argument, the second is the index of the **Spotable** object that you want to update. Just like `reload` and `update`, it also has an animation label to give you control over what animation should be used. As an added bonus, these methods also work with multiple items, so instead of passing just one item, you can pass a collection of items that you want to `append`, `prepend` etc.
 
