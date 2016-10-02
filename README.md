@@ -36,7 +36,7 @@ Data source and delegate setup is handled by **Spots**, so that you don’t have
 <img src="https://raw.githubusercontent.com/hyperoslo/Spots/master/Images/icon_v5.png" alt="Spots Icon" align="right" />
 
 * [Key features](#key-features)
-* [Origin Story](#origin-story)
+* [Origin Story](#origin-story) * [Why JSON?](#why-json)
 * [Usage](#usage)
 * [View models in the Cloud](#view-models-in-the-cloud)
 * [Programmatic approach](#programmatic-approach)
@@ -90,6 +90,10 @@ on the view model.
 
 We wrote a Medium article about how and why we built `Spots`.
 You can find it here: [Hitting the sweet spot of inspiration](https://medium.com/@zenangst/hitting-the-sweet-spot-of-inspiration-637d387bc629#.b9a1mun2i)
+
+## Why JSON?
+
+JSON is a works great as a common transport language, it is platform agnostic and it is something that developers are already using regularly when building application that fetch data from an external resource. **Spots** uses JSON internally to save a snapshot of the view state to disk, the only thing that you have to do is to give the **SpotsController** a cache key and call save whenever you have performed your update.
 
 
 ## Usage
