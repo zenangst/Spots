@@ -37,6 +37,7 @@ Data source and delegate setup is handled by **Spots**, so that you don’t have
 
 * [Key features](#key-features)
 * [Origin Story](#origin-story) * [Why JSON?](#why-json)
+* [View state caching](#view-state-caching)
 * [Live editing](#live-editing)
 * [How does it work?](#how-does-it-work)
 * [Usage](#usage)
@@ -96,6 +97,14 @@ You can find it here: [Hitting the sweet spot of inspiration](https://medium.com
 ## Why JSON?
 
 JSON is a works great as a common transport language, it is platform agnostic and it is something that developers are already using regularly when building application that fetch data from an external resource. **Spots** uses JSON internally to save a snapshot of the view state to disk, the only thing that you have to do is to give the **SpotsController** a cache key and call save whenever you have performed your update.
+
+## View state caching
+
+As mentioned above, **Spots** features a view state cache. What this means is that, instead of saving all your data in a database somewhere and perform queries every time to initiate a view controller, we went with a different and a much simpler approach. If a **SpotsController** has a cache key and you call `save`, internally it will encode all underlaying **Spotable** objects and it’s children into a JSON file and store that to disk. The uniqueness of the file comes from the cache key, think of this like your screen identifier. The next time you construct a **SpotsController** with that cache key, it will try to load that from disk and display it the exact same way as it was before saving. The main benefit here is that you don’t have to worry about your object changing by updating to future versions of **Spots**.
+
+**ListSpot**, **GridSpot**, **CarouselSpot** also has support for view state caching because these components can be used separately without using **SpotsController**.
+
+View state caching is optional but we encourage you to use it, as it renders the need to use a database as optional.
 
 ## Live editing
 
