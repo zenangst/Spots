@@ -155,7 +155,7 @@ func configure(inout item: Item)
 Using different heights for different object can be a hassle in iOS, tvOS and macOS, but not with **Spots**. To set a calculated height based on the **Item** content, you simply set the height back to the *item* when you are done calculating it in *configure(inout item: Item)*.
 
 e.g
-``swift
+```swift
 func configure(inout item: Item) {
   textLabel.text = item.title
   textLabel.sizeToFit()
