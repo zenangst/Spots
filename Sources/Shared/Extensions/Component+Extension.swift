@@ -3,13 +3,13 @@ import Tailor
 /**
  A dictinary extension to work with custom Key type
  */
-extension Dictionary where Key: StringLiteralConvertible {
+extension Dictionary where Key: ExpressibleByStringLiteral {
 
   /**
    - parameter name: The name of the property that you want to map
    - returns: A generic type if casting succeeds, otherwise it returns nil
    */
-  func property<T>(name: Component.Key) -> T? {
+  func property<T>(_ name: Component.Key) -> T? {
     return property(name.string)
   }
 
@@ -17,7 +17,7 @@ extension Dictionary where Key: StringLiteralConvertible {
    - parameter name: The name of the property that you want to map
    - returns: A mappable object array, otherwise it returns nil
    */
-  func relations<T: Mappable>(name: Component.Key) -> [T]? {
+  func relations<T: Mappable>(_ name: Component.Key) -> [T]? {
     return relations(name.string)
   }
 

@@ -10,12 +10,12 @@ public extension SpotComposable where Self : View {
    - parameter item:  The item that is currently being configured in the list
    - parameter spots: A collection of Spotable objects created from the children of the item
    */
-  func configure(inout item: Item, spots: [Spotable]?) {
+  func configure(_ item: inout Item, spots: [Spotable]?) {
     guard let spots = spots else { return }
 
     var height: CGFloat = 0.0
 
-    spots.enumerate().forEach { index, spot in
+    spots.enumerated().forEach { index, spot in
       spot.component.size = CGSize(
         width: contentView.frame.width,
         height: ceil(spot.render().frame.size.height))
@@ -40,7 +40,7 @@ public extension SpotComposable where Self : View {
 
    - returns: A collection of Spotable objects
    */
-  public func parse(item: Item) -> [Spotable] {
+  public func parse(_ item: Item) -> [Spotable] {
     let spots = Parser.parse(item.children)
     return spots
   }

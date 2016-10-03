@@ -2,7 +2,7 @@ import UIKit
 import Brick
 
 /// A Spotable object that uses UITableView to render its items
-public class ListSpot: NSObject, Listable {
+open class ListSpot: NSObject, Listable {
 
   /**
    *  Keys for meta data lookup
@@ -15,42 +15,42 @@ public class ListSpot: NSObject, Listable {
   }
 
   /// A Registry object that holds identifiers and classes for cells used in the ListSpot
-  public static var views: Registry = Registry()
+  open static var views: Registry = Registry()
 
   /// A configuration closure that is run in setup(_:)
-  public static var configure: ((view: UITableView) -> Void)?
+  open static var configure: ((_ view: UITableView) -> Void)?
 
   /// A Registry object that holds identifiers and classes for headers used in the ListSpot
-  public static var headers = Registry()
+  open static var headers = Registry()
 
   /// A component struct used as configuration and data source for the ListSpot
-  public var component: Component
+  open var component: Component
 
   /// A configuration closure
-  public var configure: (SpotConfigurable -> Void)?
+  open var configure: ((SpotConfigurable) -> Void)?
 
   /// A SpotsCompositeDelegate for the GridSpot, used to access composite spots
-  public weak var spotsCompositeDelegate: SpotsCompositeDelegate?
+  open weak var spotsCompositeDelegate: SpotsCompositeDelegate?
 
   /// A SpotsDelegate that is used for the GridSpot
-  public weak var spotsDelegate: SpotsDelegate?
+  open weak var spotsDelegate: SpotsDelegate?
 
   /// A computed variable for adapters
-  public var adapter: SpotAdapter? {
+  open var adapter: SpotAdapter? {
     return listAdapter
   }
 
   /// A list adapter that is the data source and delegate for the ListSpot
-  public lazy var listAdapter: ListAdapter = ListAdapter(spot: self)
+  open lazy var listAdapter: ListAdapter = ListAdapter(spot: self)
 
   /// A UITableView, used as the main UI component for a ListSpot
-  public lazy var tableView = UITableView()
+  open lazy var tableView = UITableView()
 
   /// A SpotCache for the ListSpot
-  public private(set) var stateCache: SpotCache?
+  open fileprivate(set) var stateCache: SpotCache?
 
   /// Indicator to calculate the height based on content
-  public var usesDynamicHeight = true
+  open var usesDynamicHeight = true
 
   // MARK: - Initializers
 
@@ -83,7 +83,7 @@ public class ListSpot: NSObject, Listable {
    */
   public convenience init(tableView: UITableView? = nil, title: String = "",
                           kind: String = "list", header: String = "") {
-    self.init(component: Component(title: title, kind: kind, header: header))
+    self.init(component: Component(title: title, header: header, kind: kind))
 
     if let tableView = tableView {
       self.tableView = tableView
@@ -120,17 +120,17 @@ public class ListSpot: NSObject, Listable {
 
    - parameter size: The size of the superview
    */
-  public func setup(size: CGSize) {
+  open func setup(_ size: CGSize) {
     registerAndPrepare()
     let height = component.items.reduce(component.meta(Key.headerHeight, 0.0),
-                                        combine: { $0 + $1.size.height })
+                                        { $0 + $1.size.height })
 
     tableView.frame.size = size
     tableView.contentSize = CGSize(
       width: tableView.frame.size.width,
       height: height - tableView.contentInset.top - tableView.contentInset.bottom)
 
-    ListSpot.configure?(view: tableView)
+    ListSpot.configure?(tableView)
   }
 
   /**
@@ -144,8 +144,8 @@ public class ListSpot: NSObject, Listable {
     #if os(iOS)
     if let separator = component.meta(Key.separator, type: Bool.self) {
       tableView.separatorStyle = separator
-        ? .SingleLine
-        : .None
+        ? .singleLine
+        : .none
     }
     #endif
   }
@@ -155,22 +155,22 @@ public class ListSpot: NSObject, Listable {
   /**
    Register all identifier to UITableView
    */
-  public func register() {
-    for (identifier, item) in self.dynamicType.views.storage {
+  open func register() {
+    for (identifier, item) in type(of: self).views.storage {
       switch item {
       case .classType(let classType):
-        self.tableView.registerClass(classType, forCellReuseIdentifier: identifier)
+        self.tableView.register(classType, forCellReuseIdentifier: identifier)
       case .nib(let nib):
-        self.tableView.registerNib(nib, forCellReuseIdentifier: identifier)
+        self.tableView.register(nib, forCellReuseIdentifier: identifier)
       }
     }
 
-    for (identifier, item) in self.dynamicType.headers.storage {
+    for (identifier, item) in type(of: self).headers.storage {
       switch item {
       case .classType(let classType):
-        self.tableView.registerClass(classType, forHeaderFooterViewReuseIdentifier: identifier)
+        self.tableView.register(classType, forHeaderFooterViewReuseIdentifier: identifier)
       case .nib(let nib):
-        self.tableView.registerNib(nib, forHeaderFooterViewReuseIdentifier: identifier)
+        self.tableView.register(nib, forHeaderFooterViewReuseIdentifier: identifier)
       }
     }
   }
@@ -181,7 +181,7 @@ public class ListSpot: NSObject, Listable {
    - parameter header:     The view type that you want to register
    - parameter identifier: A string identifier for the header that you want to register
    */
-  public static func register(header header: View.Type, identifier: StringConvertible) {
+  open static func register(header: View.Type, identifier: StringConvertible) {
     self.headers.storage[identifier.string] = Registry.Item.classType(header)
   }
 
@@ -190,7 +190,7 @@ public class ListSpot: NSObject, Listable {
 
    - parameter header: The view type that you want to register as default header
    */
-  public static func register(defaultHeader header: View.Type) {
+  open static func register(defaultHeader header: View.Type) {
     self.headers.storage[self.views.defaultIdentifier] = Registry.Item.classType(header)
   }
 }

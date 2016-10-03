@@ -31,7 +31,7 @@ public extension Spotable {
    - parameter animation:  A SpotAnimation that is used when performing the mutation
    - parameter completion: A completion block that is run when the mutation is completed
    */
-  func append(item: Item, withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
+  func append(_ item: Item, withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
     adapter?.append(item, withAnimation: animation, completion: completion)
   }
 
@@ -42,7 +42,7 @@ public extension Spotable {
    - parameter animation:  A SpotAnimation that is used when performing the mutation
    - parameter completion: A completion block that is run when the mutation is completed
    */
-  func append(items: [Item], withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
+  func append(_ items: [Item], withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
     adapter?.append(items, withAnimation: animation, completion: completion)
   }
 
@@ -53,7 +53,7 @@ public extension Spotable {
    - parameter animation:  A SpotAnimation that is used when performing the mutation
    - parameter completion: A completion block that is run when the mutation is completed
    */
-  func prepend(items: [Item], withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
+  func prepend(_ items: [Item], withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
     adapter?.prepend(items, withAnimation: animation, completion: completion)
   }
 
@@ -65,7 +65,7 @@ public extension Spotable {
    - parameter animation:  A SpotAnimation that is used when performing the mutation
    - parameter completion: A completion block that is run when the mutation is completed
    */
-  func insert(item: Item, index: Int, withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
+  func insert(_ item: Item, index: Int, withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
     adapter?.insert(item, index: index, withAnimation: animation, completion: completion)
   }
 
@@ -77,7 +77,7 @@ public extension Spotable {
    - parameter animation:  A SpotAnimation that is used when performing the mutation
    - parameter completion: A completion block that is run when the mutation is completed
    */
-  func update(item: Item, index: Int, withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
+  func update(_ item: Item, index: Int, withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
     adapter?.update(item, index: index, withAnimation: animation, completion: completion)
   }
 
@@ -88,7 +88,7 @@ public extension Spotable {
    - parameter animation:  A SpotAnimation that is used when performing the mutation
    - parameter completion: A completion block that is run when the mutation is completed
    */
-  func delete(item: Item, withAnimation animation: SpotsAnimation = .Automatic, completion: Completion) {
+  func delete(_ item: Item, withAnimation animation: SpotsAnimation = .automatic, completion: Completion) {
     adapter?.delete(item, withAnimation: animation, completion: completion)
   }
 
@@ -99,7 +99,7 @@ public extension Spotable {
    - parameter animation:  A SpotAnimation that is used when performing the mutation
    - parameter completion: A completion block that is run when the mutation is completed
    */
-  func delete(items: [Item], withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
+  func delete(_ items: [Item], withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
     adapter?.delete(items, withAnimation: animation, completion: completion)
   }
 
@@ -110,7 +110,7 @@ public extension Spotable {
    - parameter animation:  A SpotAnimation that is used when performing the mutation
    - parameter completion: A completion block that is run when the mutation is completed
    */
-  func delete(index: Int, withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
+  func delete(_ index: Int, withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
     adapter?.delete(index, withAnimation: animation, completion: completion)
   }
 
@@ -121,7 +121,7 @@ public extension Spotable {
    - parameter animation:  A SpotAnimation that is used when performing the mutation
    - parameter completion: A completion block that is run when the mutation is completed
    */
-  func delete(indexes: [Int], withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
+  func delete(_ indexes: [Int], withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
     adapter?.delete(indexes, withAnimation: animation, completion: completion)
   }
 
@@ -132,7 +132,7 @@ public extension Spotable {
    - parameter animation:  A SpotAnimation that is used when performing the mutation
    - parameter completion: A completion block that is run when the mutation is completed
    */
-  func reload(indexes: [Int]? = nil, withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
+  func reload(_ indexes: [Int]? = nil, withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
     adapter?.reload(indexes, withAnimation: animation, completion: completion)
   }
 
@@ -144,7 +144,7 @@ public extension Spotable {
    - parameter updateDataSource:  A closure that updates the data source, it is performed prior to calling UI updating methods
    - parameter completion: A completion block that is run when the mutation is completed
    */
-  func reloadIfNeeded(changes: ItemChanges, withAnimation animation: SpotsAnimation = .Automatic, updateDataSource: () -> Void, completion: Completion) {
+  func reloadIfNeeded(_ changes: ItemChanges, withAnimation animation: SpotsAnimation = .automatic, updateDataSource: () -> Void, completion: Completion) {
     adapter?.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: updateDataSource, completion: completion)
   }
 
@@ -169,7 +169,7 @@ public extension Spotable {
    Prepare items in component
    */
   func prepareItems() {
-    component.items.enumerate().forEach { (index: Int, _) in
+    component.items.enumerated().forEach { (index: Int, _) in
       configureItem(index, usesViewSize: true)
     }
   }
@@ -178,7 +178,7 @@ public extension Spotable {
    - parameter index: The index of the item to lookup
    - returns: A Item at found at the index
    */
-  public func item(index: Int) -> Item? {
+  public func item(_ index: Int) -> Item? {
     guard index < component.items.count && index > -1 else { return nil }
     return component.items[index]
   }
@@ -187,7 +187,7 @@ public extension Spotable {
    - parameter indexPath: The indexPath of the item to lookup
    - returns: A Item at found at the index
    */
-  public func item(indexPath: NSIndexPath) -> Item? {
+  public func item(_ indexPath: IndexPath) -> Item? {
     #if os(OSX)
       return item(indexPath.item)
     #else
@@ -203,11 +203,11 @@ public extension Spotable {
       return self.render().frame.height
     }
 
-    return component.items.reduce(0, combine: { $0 + $1.size.height })
+    return component.items.reduce(0, { $0 + $1.size.height })
   }
 
-  public func updateHeight(completion: Completion = nil) {
-    Dispatch.inQueue(queue: .Interactive) { [weak self] in
+  public func updateHeight(_ completion: Completion = nil) {
+    Dispatch.inQueue(queue: .interactive) { [weak self] in
       guard let weakSelf = self else { Dispatch.mainQueue { completion?(); }; return }
       let spotHeight = weakSelf.spotHeight()
       Dispatch.mainQueue { [weak self] in
@@ -236,7 +236,7 @@ public extension Spotable {
    - parameter animation:  The animation that should be used (only works for Listable objects)
    - parameter completion: A completion closure that is performed when all mutations are performed
    */
-  public func reloadIfNeeded(items: [Item], withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
+  public func reloadIfNeeded(_ items: [Item], withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
     guard !(self.items == items) else {
       cache()
       return
@@ -247,7 +247,7 @@ public extension Spotable {
     self.items = items
 
     if items.count == oldItems.count {
-      for (index, item) in items.enumerate() {
+      for (index, item) in items.enumerated() {
         guard !(item == oldItems[index]) else { continue }
 
         if indexes == nil { indexes = [Int]() }
@@ -267,7 +267,7 @@ public extension Spotable {
    - parameter json:      A JSON dictionary
    - parameter animation:  A SpotAnimation that is used when performing the mutation (only works for Listable objects)
    */
-  public func reloadIfNeeded(json: [String : AnyObject], withAnimation animation: SpotsAnimation = .Automatic) {
+  public func reloadIfNeeded(_ json: [String : AnyObject], withAnimation animation: SpotsAnimation = .automatic) {
     let newComponent = Component(json)
 
     guard component != newComponent else { cache(); return }
@@ -289,7 +289,7 @@ public extension Spotable {
    - parameter includeElement: A filter predicate to find a view model
    - returns: Always returns 0.0
    */
-  public func scrollTo(@noescape includeElement: (Item) -> Bool) -> CGFloat {
+  public func scrollTo(_ includeElement: (Item) -> Bool) -> CGFloat {
     return 0.0
   }
 
@@ -299,7 +299,7 @@ public extension Spotable {
    - parameter index: The index of the view model
    - parameter usesViewSize: A boolean value to determine if the view uses the views height
    */
-  public func configureItem(index: Int, usesViewSize: Bool = false) {
+  public func configureItem(_ index: Int, usesViewSize: Bool = false) {
     guard let item = item(index) else { return }
 
     var viewModel = item
@@ -310,7 +310,7 @@ public extension Spotable {
       : viewModel.kind
 
     guard let (_, resolvedView) = Self.views.make(kind),
-      view = resolvedView else { return }
+      let view = resolvedView else { return }
 
     #if !os(OSX)
       if let composite = view as? SpotComposable {
@@ -345,23 +345,23 @@ public extension Spotable {
     }
   }
 
-  public func sizeForItemAt(indexPath: NSIndexPath) -> CGSize {
+  public func sizeForItemAt(_ indexPath: IndexPath) -> CGSize {
     return render().frame.size
   }
 
-  func identifier(indexPath: NSIndexPath) -> String {
+  func identifier(_ indexPath: IndexPath) -> String {
     #if os(OSX)
       return identifier(indexPath.item)
     #else
-      return identifier(indexPath.row)
+      return identifier((indexPath as NSIndexPath).row)
     #endif
   }
 
-  public func identifier(index: Int) -> String {
+  public func identifier(_ index: Int) -> String {
     guard let item = item(index)
-      where self.dynamicType.views.storage[item.kind] != nil
+      , type(of: self).views.storage[item.kind] != nil
       else {
-        return self.dynamicType.views.defaultIdentifier
+        return type(of: self).views.defaultIdentifier
     }
 
     return item.kind
@@ -372,23 +372,23 @@ public extension Spotable {
     prepareItems()
   }
 
-  func registerDefault(view view: View.Type) {
-    if self.dynamicType.views.storage[self.dynamicType.views.defaultIdentifier] == nil {
-      self.dynamicType.views.defaultItem = Registry.Item.classType(view)
+  func registerDefault(view: View.Type) {
+    if type(of: self).views.storage[type(of: self).views.defaultIdentifier] == nil {
+      type(of: self).views.defaultItem = Registry.Item.classType(view)
     }
   }
 
-  func registerComposite(view view: View.Type) {
-    if self.dynamicType.views.composite == nil {
-      self.dynamicType.views.composite = Registry.Item.classType(view)
+  func registerComposite(view: View.Type) {
+    if type(of: self).views.composite == nil {
+      type(of: self).views.composite = Registry.Item.classType(view)
     }
   }
 
-  public static func register(nib nib: Nib, identifier: StringConvertible) {
+  public static func register(nib: Nib, identifier: StringConvertible) {
     self.views.storage[identifier.string] = Registry.Item.nib(nib)
   }
 
-  public static func register(view view: View.Type, identifier: StringConvertible) {
+  public static func register(view: View.Type, identifier: StringConvertible) {
     self.views.storage[identifier.string] = Registry.Item.classType(view)
   }
 

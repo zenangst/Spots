@@ -8,12 +8,12 @@ public extension UICollectionView {
    - parameter section: The section you want to update
    - parameter completion: A completion block for when the updates are done
   **/
-  func insert(indexes: [Int], section: Int = 0, completion: (() -> Void)? = nil) {
-    let indexPaths = indexes.map { NSIndexPath(forItem: $0, inSection: section) }
+  func insert(_ indexes: [Int], section: Int = 0, completion: (() -> Void)? = nil) {
+    let indexPaths = indexes.map { IndexPath(item: $0, section: section) }
 
     performBatchUpdates({ [weak self] in
       guard let weakSelf = self else { return }
-      weakSelf.insertItemsAtIndexPaths(indexPaths)
+      weakSelf.insertItems(at: indexPaths)
       }) { _ in
         completion?()
     }
@@ -25,11 +25,11 @@ public extension UICollectionView {
    - parameter section: The section you want to update
    - parameter completion: A completion block for when the updates are done
    **/
-  func reload(indexes: [Int], section: Int = 0, completion: (() -> Void)? = nil) {
-    let indexPaths = indexes.map { NSIndexPath(forItem: $0, inSection: section) }
+  func reload(_ indexes: [Int], section: Int = 0, completion: (() -> Void)? = nil) {
+    let indexPaths = indexes.map { IndexPath(item: $0, section: section) }
 
     UIView.performWithoutAnimation {
-      self.reloadItemsAtIndexPaths(indexPaths)
+      self.reloadItems(at: indexPaths)
       completion?()
     }
   }
@@ -40,11 +40,11 @@ public extension UICollectionView {
    - parameter section: The section you want to update
    - parameter completion: A completion block for when the updates are done
    **/
-  func delete(indexes: [Int], section: Int = 0, completion: (() -> Void)? = nil) {
-    let indexPaths = indexes.map { NSIndexPath(forItem: $0, inSection: section) }
+  func delete(_ indexes: [Int], section: Int = 0, completion: (() -> Void)? = nil) {
+    let indexPaths = indexes.map { IndexPath(item: $0, section: section) }
     performBatchUpdates({ [weak self] in
       guard let weakSelf = self else { return }
-      weakSelf.deleteItemsAtIndexPaths(indexPaths)
+      weakSelf.deleteItems(at: indexPaths)
       }) { _ in
         completion?()
     }
@@ -59,14 +59,14 @@ public extension UICollectionView {
    - parameter updateDataSource: A closure that is used to update the data source before performing the updates on the UI
    - parameter completion:       A completion closure that will run when both data source and UI is updated
    */
-  func process(changes: (insertions: [Int], reloads: [Int], deletions: [Int]),
-               withAnimation animation: UITableViewRowAnimation = .Automatic,
+  func process(_ changes: (insertions: [Int], reloads: [Int], deletions: [Int]),
+               withAnimation animation: UITableViewRowAnimation = .automatic,
                              section: Int = 0,
                              updateDataSource: () -> Void,
                              completion: ((()) -> Void)? = nil) {
-    let insertions = changes.insertions.map { NSIndexPath(forRow: $0, inSection: section) }
-    let reloads = changes.reloads.map { NSIndexPath(forRow: $0, inSection: section) }
-    let deletions = changes.deletions.map { NSIndexPath(forRow: $0, inSection: section) }
+    let insertions = changes.insertions.map { IndexPath(row: $0, section: section) }
+    let reloads = changes.reloads.map { IndexPath(row: $0, section: section) }
+    let deletions = changes.deletions.map { IndexPath(row: $0, section: section) }
 
     updateDataSource()
 
@@ -78,9 +78,9 @@ public extension UICollectionView {
     }
 
     performBatchUpdates({
-      self.insertItemsAtIndexPaths(insertions)
-      self.reloadItemsAtIndexPaths(reloads)
-      self.deleteItemsAtIndexPaths(deletions)
+      self.insertItems(at: insertions)
+      self.reloadItems(at: reloads)
+      self.deleteItems(at: deletions)
       }) { _ in
     }
     completion?()
@@ -91,10 +91,10 @@ public extension UICollectionView {
    - parameter index: The section you want to update
    - parameter completion: A completion block for when the updates are done
    **/
-  func reloadSection(index: Int = 0, completion: (() -> Void)? = nil) {
+  func reloadSection(_ index: Int = 0, completion: (() -> Void)? = nil) {
     performBatchUpdates({ [weak self] in
       guard let weakSelf = self else { return }
-      weakSelf.reloadSections(NSIndexSet(index: index))
+      weakSelf.reloadSections(IndexSet(integer: index))
       }) { _ in
         completion?()
     }

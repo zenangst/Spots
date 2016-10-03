@@ -6,6 +6,26 @@
 
 import Brick
 import Cache
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 public extension SpotsProtocol {
 
@@ -13,7 +33,7 @@ public extension SpotsProtocol {
     get { return dictionary() }
   }
 
-  public func dictionary(amountOfItems: Int? = nil) -> [String : AnyObject] {
+  public func dictionary(_ amountOfItems: Int? = nil) -> [String : AnyObject] {
     var result = [[String : AnyObject]]()
 
     for spot in spots {
@@ -36,10 +56,10 @@ public extension SpotsProtocol {
       result.append(spotJSON)
     }
 
-    return ["components" : result ]
+    return ["components" : result as AnyObject ]
   }
 
-  public func ui<T>(@noescape includeElement: (Item) -> Bool) -> T? {
+  public func ui<T>(_ includeElement: (Item) -> Bool) -> T? {
     for spot in spots {
       if let first = spot.items.filter(includeElement).first {
         return spot.ui(atIndex: first.index)
@@ -47,7 +67,7 @@ public extension SpotsProtocol {
     }
 
     for (_, cSpots) in compositeSpots {
-      for (_, spots) in cSpots.enumerate() {
+      for (_, spots) in cSpots.enumerated() {
         for spot in spots.1 {
           if let first = spot.items.filter(includeElement).first {
             return spot.ui(atIndex: first.index)
@@ -66,13 +86,13 @@ public extension SpotsProtocol {
 
    - returns:  A collection of Spotable objects that match the includeElements predicate
    */
-  public func filter(@noescape includeElement: (Spotable) -> Bool) -> [Spotable] {
+  public func filter(_ includeElement: (Spotable) -> Bool) -> [Spotable] {
     var result = spots.filter(includeElement)
 
     for (_, cSpots) in compositeSpots {
-      for (_, spots) in cSpots.enumerate() {
+      for (_, spots) in cSpots.enumerated() {
         let compositeResults = spots.1.filter(includeElement)
-        if !compositeResults.isEmpty { result.appendContentsOf(compositeResults) }
+        if !compositeResults.isEmpty { result.append(contentsOf: compositeResults) }
       }
     }
 
@@ -84,7 +104,7 @@ public extension SpotsProtocol {
 
    - parameter includeElement: A filter predicate to find view models
    */
-  public func filterItems(@noescape includeElement: (Item) -> Bool) -> [(spot: Spotable, items: [Item])] {
+  public func filterItems(_ includeElement: (Item) -> Bool) -> [(spot: Spotable, items: [Item])] {
     var result = [(spot: Spotable, items: [Item])]()
     for spot in spots {
       let items = spot.items.filter(includeElement)
@@ -94,7 +114,7 @@ public extension SpotsProtocol {
     }
 
     for (_, cSpots) in compositeSpots {
-      for (_, spots) in cSpots.enumerate() {
+      for (_, spots) in cSpots.enumerated() {
         for spot in spots.1 {
           let items = spot.items.filter(includeElement)
           if !items.isEmpty {
@@ -112,12 +132,12 @@ public extension SpotsProtocol {
    - parameter index: The index of the spot that you want to scroll
    - parameter includeElement: A filter predicate to find a view model
    */
-  public func scrollTo(spotIndex index: Int = 0, @noescape includeElement: (Item) -> Bool) {
+  public func scrollTo(spotIndex index: Int = 0, includeElement: (Item) -> Bool) {
     guard let itemY = spot(index, Spotable.self)?.scrollTo(includeElement) else { return }
 
     var initialHeight: CGFloat = 0.0
     if index > 0 {
-      initialHeight += spots[0..<index].reduce(0, combine: { $0 + $1.spotHeight() })
+      initialHeight += spots[0..<index].reduce(0, { $0 + $1.spotHeight() })
     }
     if spot(index, Spotable.self)?.spotHeight() > spotsScrollView.frame.height - spotsScrollView.contentInset.bottom - initialHeight {
       let y = itemY - spotsScrollView.frame.size.height + spotsScrollView.contentInset.bottom + initialHeight
@@ -128,7 +148,7 @@ public extension SpotsProtocol {
   /**
    - parameter animated: A boolean value to determine if you want to perform the scrolling with or without animation
    */
-  public func scrollToBottom(animated: Bool) {
+  public func scrollToBottom(_ animated: Bool) {
     let y = spotsScrollView.contentSize.height - spotsScrollView.frame.size.height + spotsScrollView.contentInset.bottom
     spotsScrollView.setContentOffset(CGPoint(x: 0, y: y), animated: animated)
   }
@@ -139,7 +159,7 @@ public extension SpotsProtocol {
 
    - parameter items: An optional integer that is used to reduce the amount of items that should be cached per Spotable object when saving the view state to disk
    */
-  public func cache(items items: Int? = nil) {
+  public func cache(items: Int? = nil) {
     #if DEVMODE
       liveEditing(stateCache)
     #endif
@@ -151,11 +171,11 @@ public extension SpotsProtocol {
    Clear Spots cache
    */
   public static func clearCache() {
-    let paths = NSSearchPathForDirectoriesInDomains(.CachesDirectory,
-                                                    NSSearchPathDomainMask.UserDomainMask, true)
+    let paths = NSSearchPathForDirectoriesInDomains(.cachesDirectory,
+                                                    FileManager.SearchPathDomainMask.userDomainMask, true)
     let path = "\(paths.first!)/\(DiskStorage.prefix).\(SpotCache.cacheName)"
     do {
-      try NSFileManager.defaultManager().removeItemAtPath(path)
+      try FileManager.default.removeItem(atPath: path)
     } catch {
       NSLog("Could not remove cache at path: \(path)")
     }
@@ -165,7 +185,7 @@ public extension SpotsProtocol {
    - parameter indexPath: The index path of the component you want to lookup
    - returns: A Component object at index path
    **/
-  private func component(indexPath: NSIndexPath) -> Component {
+  fileprivate func component(_ indexPath: IndexPath) -> Component {
     return spot(indexPath).component
   }
 
@@ -173,7 +193,7 @@ public extension SpotsProtocol {
    - parameter indexPath: The index path of the spot you want to lookup
    - returns: A Spotable object at index path
    **/
-  private func spot(indexPath: NSIndexPath) -> Spotable {
-    return spots[indexPath.item]
+  fileprivate func spot(_ indexPath: IndexPath) -> Spotable {
+    return spots[(indexPath as NSIndexPath).item]
   }
 }

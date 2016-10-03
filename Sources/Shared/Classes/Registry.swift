@@ -11,7 +11,7 @@ public enum RegistryType: String {
 }
 
 /// A registry that is used internally when resolving kind to the corresponding spot.
-public class Registry {
+open class Registry {
 
   public enum Item {
     case classType(View.Type)
@@ -36,7 +36,7 @@ public class Registry {
 
   /// The default identifier for the registry
   var defaultIdentifier: String {
-    return String(defaultItem)
+    return String(describing: defaultItem)
   }
 
   /**
@@ -44,7 +44,7 @@ public class Registry {
 
    - returns: An optional Nib
    */
-  public subscript(key: StringConvertible) -> Item? {
+  open subscript(key: StringConvertible) -> Item? {
     get {
       return storage[key.string]
     }
@@ -56,7 +56,7 @@ public class Registry {
   // MARK: - Template
 
   /// A cache that stores instances of created views
-  private var cache: NSCache = NSCache()
+  fileprivate var cache: NSCache = NSCache()
 
   /**
    Empty the current view cache
@@ -71,7 +71,7 @@ public class Registry {
    - parameter identifier: A reusable identifier for the view
    - returns: A tuple with an optional registry type and view
    */
-  func make(identifier: String) -> (type: RegistryType?, view: View?)? {
+  func make(_ identifier: String) -> (type: RegistryType?, view: View?)? {
     guard let item = storage[identifier] else { return nil }
 
     let registryType: RegistryType
@@ -80,7 +80,7 @@ public class Registry {
     switch item {
     case .classType(let classType):
       registryType = .Regular
-      if let view = cache.objectForKey(registryType.rawValue + identifier) as? View {
+      if let view = cache.object(forKey: registryType.rawValue + identifier) as? View {
         return (type: registryType, view: view)
       }
 
@@ -88,7 +88,7 @@ public class Registry {
 
     case .nib(let nib):
       registryType = .Nib
-      if let view = cache.objectForKey(registryType.rawValue + identifier) as? View {
+      if let view = cache.object(forKey: registryType.rawValue + identifier) as? View {
         return (type: registryType, view: view)
       }
       #if os(OSX)
@@ -97,7 +97,7 @@ public class Registry {
           view = views?.filter({ $0 is NSTableRowView }).first as? View
         }
       #else
-      view = nib.instantiateWithOwner(nil, options: nil).first as? View
+      view = nib.instantiate(withOwner: nil, options: nil).first as? View
       #endif
     }
 

@@ -2,15 +2,15 @@ import UIKit
 import Brick
 
 /// A boilerplate cell for ListSpot
-public class ListSpotCell: UITableViewCell, SpotConfigurable {
+open class ListSpotCell: UITableViewCell, SpotConfigurable {
 
   /// The preferred view size for the view, width will be ignored for ListSpot cells
-  public var preferredViewSize = CGSize(width: 0, height: 44)
+  open var preferredViewSize = CGSize(width: 0, height: 44)
   /// An optional reference to the current item
-  public var item: Item?
+  open var item: Item?
 
   public override init(style: UITableViewCellStyle, reuseIdentifier: String!) {
-    super.init(style: .Subtitle, reuseIdentifier: reuseIdentifier)
+    super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
   }
 
   /**
@@ -27,11 +27,11 @@ public class ListSpotCell: UITableViewCell, SpotConfigurable {
 
    - parameter item: An Item struct
    */
-  public func configure(inout item: Item) {
-    if let action = item.action where !action.isEmpty {
-      accessoryType = .DisclosureIndicator
+  open func configure(_ item: inout Item) {
+    if let action = item.action , !action.isEmpty {
+      accessoryType = .disclosureIndicator
     } else {
-      accessoryType = .None
+      accessoryType = .none
     }
 
     detailTextLabel?.text = item.subtitle

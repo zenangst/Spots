@@ -9,15 +9,15 @@ class CarouselSpotCell: UICollectionViewCell, SpotConfigurable {
 
   var label: UILabel = {
     let label = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
-    label.textAlignment = .Center
+    label.textAlignment = .center
 
     return label
   }()
 
   lazy var imageView: UIImageView = {
     let imageView = UIImageView()
-    imageView.autoresizingMask = [.FlexibleWidth]
-    imageView.contentMode = .ScaleAspectFill
+    imageView.autoresizingMask = [.flexibleWidth]
+    imageView.contentMode = .scaleAspectFill
 
     return imageView
   }()
@@ -32,7 +32,7 @@ class CarouselSpotCell: UICollectionViewCell, SpotConfigurable {
     fatalError("init(coder:) has not been implemented")
   }
 
-  func configure(inout item: Item) {
+  func configure(_ item: inout Item) {
     imageView.image = UIImage(named: item.image)
     imageView.frame = contentView.frame
     label.text = item.title

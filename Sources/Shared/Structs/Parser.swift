@@ -9,10 +9,10 @@ public struct Parser {
 
    - returns: A collection of spotable objects
    */
-  public static func parse(json: [String : AnyObject], key: String = "components") -> [Spotable] {
+  public static func parse(_ json: [String : AnyObject], key: String = "components") -> [Spotable] {
     var components: [Component] = parse(json, key: key)
 
-    for (index, _) in components.enumerate() {
+    for (index, _) in components.enumerated() {
       components[index].index = index
     }
 
@@ -25,7 +25,7 @@ public struct Parser {
 
    - returns: A collection of `Component`s
    */
-  public static func parse(json: [String : AnyObject], key: String = "components") -> [Component] {
+  public static func parse(_ json: [String : AnyObject], key: String = "components") -> [Component] {
     guard let components = json[key] as? [[String : AnyObject]] else { return [] }
 
     return components.map { Component($0) }
@@ -36,7 +36,7 @@ public struct Parser {
 
    - returns: A collection of spotable objects
    */
-  public static func parse(json: [[String : AnyObject]]?) -> [Spotable] {
+  public static func parse(_ json: [[String : AnyObject]]?) -> [Spotable] {
     guard let json = json else { return [] }
 
     return json.map {

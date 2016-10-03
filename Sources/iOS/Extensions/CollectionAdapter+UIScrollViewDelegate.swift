@@ -12,7 +12,7 @@ extension CollectionAdapter : UIScrollViewDelegate {
    - parameter velocity: The velocity of the scroll view (in points) at the moment the touch was released.
    - parameter targetContentOffset: The expected offset when the scrolling action decelerates to a stop
    */
-  public func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+  public func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
     (spot as? CarouselSpot)?.scrollViewWillEndDragging(scrollView, withVelocity: velocity, targetContentOffset: targetContentOffset)
   }
 
@@ -23,7 +23,7 @@ extension CollectionAdapter : UIScrollViewDelegate {
    - parameter scrollView: The scroll-view object that finished scrolling the content view.
    - parameter decelerate: true if the scrolling movement will continue, but decelerate, after a touch-up gesture during a dragging operation.
    */
-  public func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+  public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
     (spot as? CarouselSpot)?.scrollViewDidEndDragging(scrollView, willDecelerate: decelerate)
   }
   #endif
@@ -33,9 +33,9 @@ extension CollectionAdapter : UIScrollViewDelegate {
 
    - parameter scrollView: The scroll-view object in which the scrolling occurred.
    */
-  public func scrollViewDidScroll(scrollView: UIScrollView) {
+  public func scrollViewDidScroll(_ scrollView: UIScrollView) {
     // This is a weird workaround to get the carousel to scroll more smoothly... weird I know.
-    let _ = spot.layout.layoutAttributesForElementsInRect(scrollView.frame)
+    let _ = spot.layout.layoutAttributesForElements(in: scrollView.frame)
     (spot as? CarouselSpot)?.scrollViewDidScroll(scrollView)
   }
 }

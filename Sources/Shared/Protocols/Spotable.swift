@@ -24,7 +24,7 @@ public protocol Spotable: class {
   /// The component of a Spotable object
   var component: Component { get set }
   /// A configuration closure for a SpotConfigurable object
-  var configure: (SpotConfigurable -> Void)? { get set }
+  var configure: ((SpotConfigurable) -> Void)? { get set }
   /// A cache for a Spotable object
   var stateCache: SpotCache? { get }
   /// A SpotAdapter
@@ -46,42 +46,42 @@ public protocol Spotable: class {
   init(component: Component)
 
   /// Setup Spotable object with size
-  func setup(size: CGSize)
+  func setup(_ size: CGSize)
   /// Append view model to a Spotable object
-  func append(item: Item, withAnimation animation: SpotsAnimation, completion: Completion)
+  func append(_ item: Item, withAnimation animation: SpotsAnimation, completion: Completion)
   /// Append a collection of view models to Spotable object
-  func append(items: [Item], withAnimation animation: SpotsAnimation, completion: Completion)
+  func append(_ items: [Item], withAnimation animation: SpotsAnimation, completion: Completion)
   /// Prepend view models to a Spotable object
-  func prepend(items: [Item], withAnimation animation: SpotsAnimation, completion: Completion)
+  func prepend(_ items: [Item], withAnimation animation: SpotsAnimation, completion: Completion)
   /// Insert view model to a Spotable object
-  func insert(item: Item, index: Int, withAnimation animation: SpotsAnimation, completion: Completion)
+  func insert(_ item: Item, index: Int, withAnimation animation: SpotsAnimation, completion: Completion)
   /// Update view model to a Spotable object
-  func update(item: Item, index: Int, withAnimation animation: SpotsAnimation, completion: Completion)
+  func update(_ item: Item, index: Int, withAnimation animation: SpotsAnimation, completion: Completion)
   /// Delete view model from a Spotable object
-  func delete(item: Item, withAnimation animation: SpotsAnimation, completion: Completion)
+  func delete(_ item: Item, withAnimation animation: SpotsAnimation, completion: Completion)
   /// Delete a collection of view models from a Spotable object
-  func delete(item: [Item], withAnimation animation: SpotsAnimation, completion: Completion)
+  func delete(_ item: [Item], withAnimation animation: SpotsAnimation, completion: Completion)
   /// Delete view model at index with animation from a Spotable object
-  func delete(index: Int, withAnimation animation: SpotsAnimation, completion: Completion)
+  func delete(_ index: Int, withAnimation animation: SpotsAnimation, completion: Completion)
   /// Delete view model indexes with animation from a Spotable object
-  func delete(indexes: [Int], withAnimation animation: SpotsAnimation, completion: Completion)
+  func delete(_ indexes: [Int], withAnimation animation: SpotsAnimation, completion: Completion)
   /// Reload view model indexes with animation in a Spotable object
-  func reload(indexes: [Int]?, withAnimation animation: SpotsAnimation, completion: Completion)
-  func reloadIfNeeded(items: [Item], withAnimation animation: SpotsAnimation, completion: Completion)
+  func reload(_ indexes: [Int]?, withAnimation animation: SpotsAnimation, completion: Completion)
+  func reloadIfNeeded(_ items: [Item], withAnimation animation: SpotsAnimation, completion: Completion)
   /// Reload view models if needed using change set
-  func reloadIfNeeded(changes: ItemChanges, withAnimation animation: SpotsAnimation, updateDataSource: () -> Void, completion: Completion)
+  func reloadIfNeeded(_ changes: ItemChanges, withAnimation animation: SpotsAnimation, updateDataSource: () -> Void, completion: Completion)
 
   /// Return a Spotable object as a UIScrollView
   func render() -> ScrollView
   /// Layout Spotable object using size
-  func layout(size: CGSize)
+  func layout(_ size: CGSize)
   /// Perform internal preperations for a Spotable object
   func register()
   /// Scroll to view model using predicate
-  func scrollTo(@noescape includeElement: (Item) -> Bool) -> CGFloat
+  func scrollTo(_ includeElement: (Item) -> Bool) -> CGFloat
 
   func spotHeight() -> CGFloat
-  func sizeForItemAt(indexPath: NSIndexPath) -> CGSize
+  func sizeForItemAt(_ indexPath: IndexPath) -> CGSize
 
   #if os(OSX)
   func deselect()

@@ -11,7 +11,7 @@ extension ListAdapter {
    - returns: An optional generic type, this type will inherit from UITableViewcell
    */
   public func ui<T>(atIndex index: Int) -> T? {
-    return spot.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0)) as? T
+    return spot.tableView.cellForRow(at: IndexPath(row: index, section: 0)) as? T
   }
 
   /**
@@ -19,7 +19,7 @@ extension ListAdapter {
    - parameter animation:  A SpotAnimation that is used when performing the mutation
    - parameter completion: Completion
    */
-  public func append(item: Item, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
+  public func append(_ item: Item, withAnimation animation: SpotsAnimation = .none, completion: Completion = nil) {
     let count = spot.component.items.count
     spot.component.items.append(item)
 
@@ -38,13 +38,13 @@ extension ListAdapter {
    - parameter animation:  A SpotAnimation that is used when performing the mutation
    - parameter completion: Completion
    */
-  public func append(items: [Item], withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
+  public func append(_ items: [Item], withAnimation animation: SpotsAnimation = .none, completion: Completion = nil) {
     var indexes = [Int]()
     let count = spot.component.items.count
 
-    spot.component.items.appendContentsOf(items)
+    spot.component.items.append(contentsOf: items)
 
-    items.enumerate().forEach {
+    items.enumerated().forEach {
       indexes.append(count + $0.index)
       spot.configureItem(count + $0.index)
     }
@@ -63,8 +63,8 @@ extension ListAdapter {
    - parameter animation:  A SpotAnimation that is used when performing the mutation
    - parameter completion: Completion
    */
-  public func insert(item: Item, index: Int = 0, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
-    spot.component.items.insert(item, atIndex: index)
+  public func insert(_ item: Item, index: Int = 0, withAnimation animation: SpotsAnimation = .none, completion: Completion = nil) {
+    spot.component.items.insert(item, at: index)
 
     Dispatch.mainQueue { [weak self] in
       self?.spot.tableView.insert([index], animation: animation.tableViewAnimation)
@@ -79,13 +79,13 @@ extension ListAdapter {
    - parameter animation:  A SpotAnimation that is used when performing the mutation
    - parameter completion: A completion closure that is executed in the main queue
    */
-  public func prepend(items: [Item], withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
+  public func prepend(_ items: [Item], withAnimation animation: SpotsAnimation = .none, completion: Completion = nil) {
     var indexes = [Int]()
 
-    spot.component.items.insertContentsOf(items, at: 0)
+    spot.component.items.insert(contentsOf: items, at: 0)
 
     Dispatch.mainQueue { [weak self, spot = spot] in
-      items.enumerate().forEach {
+      items.enumerated().forEach {
         let index = items.count - 1 - $0.index
         indexes.append(index)
         spot.configureItem(index)
@@ -103,11 +103,11 @@ extension ListAdapter {
    - parameter animation:  A SpotAnimation that is used when performing the mutation
    - parameter completion: A completion closure that is executed in the main queue
    */
-  public func delete(item: Item, withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
-    guard let index = spot.component.items.indexOf({ $0 == item })
+  public func delete(_ item: Item, withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
+    guard let index = spot.component.items.index(where: { $0 == item })
       else { completion?(); return }
 
-    spot.component.items.removeAtIndex(index)
+    spot.component.items.remove(at: index)
 
     Dispatch.mainQueue { [weak self] in
       self?.spot.tableView.delete([index], animation: animation.tableViewAnimation)
@@ -122,11 +122,11 @@ extension ListAdapter {
    - parameter animation:  A SpotAnimation that is used when performing the mutation
    - parameter completion: A completion closure that is executed in the main queue
    */
-  public func delete(items: [Item], withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
+  public func delete(_ items: [Item], withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
     var indexPaths = [Int]()
     let count = spot.component.items.count
 
-    for (index, item) in items.enumerate() {
+    for (index, item) in items.enumerated() {
       indexPaths.append(count + index)
       spot.component.items.append(item)
     }
@@ -144,9 +144,9 @@ extension ListAdapter {
    - parameter animation:  A SpotAnimation that is used when performing the mutation
    - parameter completion: A completion closure that is executed in the main queue when the view model has been removed
    */
-  public func delete(index: Int, withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
+  public func delete(_ index: Int, withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
     Dispatch.mainQueue { [weak self] in
-      self?.spot.component.items.removeAtIndex(index)
+      self?.spot.component.items.remove(at: index)
       self?.spot.tableView.delete([index], animation: animation.tableViewAnimation)
       self?.spot.updateHeight() {
         completion?()
@@ -159,9 +159,9 @@ extension ListAdapter {
    - parameter animation:  A SpotAnimation that is used when performing the mutation
    - parameter completion: A completion closure that is executed in the main queue when the view model has been removed
    */
-  public func delete(indexes: [Int], withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
+  public func delete(_ indexes: [Int], withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
     Dispatch.mainQueue { [weak self] in
-      indexes.forEach { self?.spot.component.items.removeAtIndex($0) }
+      indexes.forEach { self?.spot.component.items.remove(at: $0) }
       self?.spot.tableView.delete(indexes, section: 0, animation: animation.tableViewAnimation)
       self?.spot.updateHeight() {
         completion?()
@@ -175,17 +175,17 @@ extension ListAdapter {
    - parameter animation:  A SpotAnimation that is used when performing the mutation
    - parameter completion: A completion closure that is executed in the main queue when the view model has been updated
    */
-  public func update(item: Item, index: Int = 0, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
+  public func update(_ item: Item, index: Int = 0, withAnimation animation: SpotsAnimation = .none, completion: Completion = nil) {
     guard let oldItem = spot.item(index) else { completion?(); return }
 
     spot.items[index] = item
     spot.configureItem(index)
 
     let newItem = spot.items[index]
-    let indexPath = NSIndexPath(forRow: index, inSection: 0)
+    let indexPath = IndexPath(row: index, section: 0)
 
-    if let composite = spot.tableView.cellForRowAtIndexPath(indexPath) as? SpotComposable,
-      spots = spot.spotsCompositeDelegate?.resolve(spotIndex: spot.index, itemIndex: indexPath.item) {
+    if let composite = spot.tableView.cellForRow(at: indexPath) as? SpotComposable,
+      let spots = spot.spotsCompositeDelegate?.resolve(spotIndex: spot.index, itemIndex: (indexPath as NSIndexPath).item) {
       spot.tableView.beginUpdates()
       composite.configure(&spot.component.items[indexPath.item], spots: spots)
       spot.tableView.endUpdates()
@@ -196,7 +196,7 @@ extension ListAdapter {
     }
 
     if newItem.kind != oldItem.kind || newItem.size.height != oldItem.size.height {
-      if let cell = spot.tableView.cellForRowAtIndexPath(indexPath) as? SpotConfigurable where animation != .None {
+      if let cell = spot.tableView.cellForRow(at: indexPath) as? SpotConfigurable , animation != .none {
         spot.tableView.beginUpdates()
         cell.configure(&spot.items[index])
         spot.tableView.endUpdates()
@@ -207,7 +207,7 @@ extension ListAdapter {
       spot.prepareItems()
       spot.updateHeight() { completion?() }
       return
-    } else if let cell = spot.tableView.cellForRowAtIndexPath(indexPath) as? SpotConfigurable {
+    } else if let cell = spot.tableView.cellForRow(at: indexPath) as? SpotConfigurable {
       cell.configure(&spot.items[index])
     }
     completion?()
@@ -218,7 +218,7 @@ extension ListAdapter {
    - parameter animation:  A SpotAnimation that is used when performing the mutation
    - parameter completion: A completion closure that is executed in the main queue when the view model has been reloaded
    */
-  public func reload(indexes: [Int]? = nil, withAnimation animation: SpotsAnimation = .Automatic, completion: Completion = nil) {
+  public func reload(_ indexes: [Int]? = nil, withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
     spot.refreshIndexes()
 
     if let indexes = indexes {
@@ -226,7 +226,7 @@ extension ListAdapter {
         spot.configureItem(index)
       }
     } else {
-      for (index, _) in spot.component.items.enumerate() {
+      for (index, _) in spot.component.items.enumerated() {
         spot.configureItem(index)
       }
     }
@@ -234,7 +234,7 @@ extension ListAdapter {
     if let indexes = indexes {
       spot.tableView.reload(indexes, animation: animation.tableViewAnimation)
     } else {
-      animation != .None
+      animation != .none
         ? spot.tableView.reloadSection(0, animation: animation.tableViewAnimation)
         : spot.tableView.reloadData()
     }
@@ -251,7 +251,7 @@ extension ListAdapter {
    - parameter animation:  A SpotAnimation that is used when performing the mutation
    - parameter completion: A completion closure that is run when the updates are finished
    */
-  public func process(updates: [Int], withAnimation animation: SpotsAnimation = .Automatic, completion: Completion) {
+  public func process(_ updates: [Int], withAnimation animation: SpotsAnimation = .automatic, completion: Completion) {
     guard !updates.isEmpty else { completion?(); return }
 
     let lastUpdate = updates.last
@@ -273,7 +273,7 @@ extension ListAdapter {
    - parameter updateDataSource: A closure to update your data source
    - parameter completion:       A completion closure that runs when your updates are done
    */
-  public func reloadIfNeeded(changes: ItemChanges, withAnimation animation: SpotsAnimation = .Automatic, updateDataSource: () -> Void, completion: Completion) {
+  public func reloadIfNeeded(_ changes: ItemChanges, withAnimation animation: SpotsAnimation = .automatic, updateDataSource: () -> Void, completion: Completion) {
     spot.tableView.process((insertions: changes.insertions, reloads: changes.reloads, deletions: changes.deletions), withAnimation: animation.tableViewAnimation, updateDataSource: updateDataSource) {
       if changes.updates.isEmpty {
         self.process(changes.updatedChildren, withAnimation: animation, completion: completion)

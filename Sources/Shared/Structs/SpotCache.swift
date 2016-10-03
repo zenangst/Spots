@@ -7,7 +7,7 @@ public struct SpotCache {
 
   public let key: String
   static let cacheName = "SpotCache"
-  let cache = Cache<JSON>(name: "\(SpotCache.cacheName)/\(NSBundle.mainBundle().bundleIdentifier!)")
+  let cache = Cache<JSON>(name: "\(SpotCache.cacheName)/\(Bundle.main.bundleIdentifier!)")
 
   /// The path of the cache
   var path: String {
@@ -16,7 +16,7 @@ public struct SpotCache {
 
   /// Checks if file exists for cache
   public var cacheExists: Bool {
-    return NSFileManager.defaultManager().fileExistsAtPath(path)
+    return FileManager.default.fileExists(atPath: path)
   }
 
   // MARK: - Initialization
@@ -37,8 +37,8 @@ public struct SpotCache {
 
    - parameter json: A JSON object
    */
-  public func save(json: [String : AnyObject]) {
-    let expiry = Expiry.Date(NSDate().dateByAddingTimeInterval(60 * 60 * 24 * 3))
+  public func save(_ json: [String : AnyObject]) {
+    let expiry = Expiry.Date(Date().dateByAddingTimeInterval(60 * 60 * 24 * 3))
     SyncCache(cache).add(key, object: JSON.Dictionary(json), expiry: expiry)
   }
 
@@ -64,12 +64,12 @@ public struct SpotCache {
    - returns: An md5 representation of the SpotCache's file name, computed from the SpotCache key
    */
   func fileName() -> String {
-    if let digest = key.dataUsingEncoding(NSUTF8StringEncoding)?.md5() {
+    if let digest = key.data(using: String.Encoding.utf8)?.md5() {
       var string = ""
       var byte: UInt8 = 0
 
-      for i in 0 ..< digest.length {
-        digest.getBytes(&byte, range: NSRange(location: i, length: 1))
+      for i in 0 ..< digest.count {
+        digest.copyBytes(to: &byte, from: NSRange(location: i, length: 1))
         string += String(format: "%02x", byte)
       }
 

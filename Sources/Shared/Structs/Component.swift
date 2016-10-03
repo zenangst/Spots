@@ -8,7 +8,7 @@ import Tailor
 import Brick
 
 public enum ComponentDiff {
-  case Identifier, Kind, Span, Header, Meta, Items, New, Removed, None
+  case identifier, kind, span, header, meta, items, new, removed, none
 }
 
 /// The Component struct is used to configure a Spotable object
@@ -31,7 +31,7 @@ public struct Component: Mappable, Equatable {
     case Height
 
     var string: String {
-      return rawValue.lowercaseString
+      return rawValue.lowercased()
     }
   }
 
@@ -43,7 +43,7 @@ public struct Component: Mappable, Equatable {
 
     /// The lowercase raw value of the case
     public var string: String {
-      return rawValue.lowercaseString
+      return rawValue.lowercased()
     }
   }
 
@@ -80,7 +80,7 @@ public struct Component: Mappable, Equatable {
 
    - returns: A dictionary representation of the Component
    */
-  public func dictionary(amountOfItems: Int? = nil) -> [String : AnyObject] {
+  public func dictionary(_ amountOfItems: Int? = nil) -> [String : AnyObject] {
     var width: CGFloat = 0
     var height: CGFloat = 0
 
@@ -98,9 +98,9 @@ public struct Component: Mappable, Equatable {
     }
 
     var JSONComponents: [String : AnyObject] = [
-      Key.Index.string : index,
-      Key.Kind.string : kind,
-      Key.Span.string : span,
+      Key.Index.string : index as AnyObject,
+      Key.Kind.string : kind as AnyObject,
+      Key.Span.string : span as AnyObject,
       Key.Size.string : [
         Key.Width.string : width,
         Key.Height.string : height
@@ -108,11 +108,11 @@ public struct Component: Mappable, Equatable {
       Key.Items.string: JSONItems,
     ]
 
-    JSONComponents[Key.Identifier.string] = identifier
+    JSONComponents[Key.Identifier.string] = identifier as AnyObject?
 
-    if !title.isEmpty { JSONComponents[Key.Title.string] = title }
-    if !header.isEmpty { JSONComponents[Key.Header.string] = header }
-    if !meta.isEmpty { JSONComponents[Key.Meta.string] = meta }
+    if !title.isEmpty { JSONComponents[Key.Title.string] = title as AnyObject? }
+    if !header.isEmpty { JSONComponents[Key.Header.string] = header as AnyObject? }
+    if !meta.isEmpty { JSONComponents[Key.Meta.string] = meta as AnyObject? }
 
     return JSONComponents
   }
@@ -173,7 +173,7 @@ public struct Component: Mappable, Equatable {
    - parameter defaultValue: A generic value that works as a fallback if the key value object cannot be cast into the generic type
    - returns: A generic value based on `defaultValue`, it falls back to `defaultValue` if type casting fails
    */
-  public func meta<T>(key: String, _ defaultValue: T) -> T {
+  public func meta<T>(_ key: String, _ defaultValue: T) -> T {
     return meta[key] as? T ?? defaultValue
   }
 
@@ -184,7 +184,7 @@ public struct Component: Mappable, Equatable {
    - parameter type: A generic type used for casting the meta property to a specific value or reference type
    - returns: An optional generic value based on `type`
    */
-  public func meta<T>(key: String, type: T.Type) -> T? {
+  public func meta<T>(_ key: String, type: T.Type) -> T? {
     return meta[key] as? T
   }
 
@@ -195,29 +195,29 @@ public struct Component: Mappable, Equatable {
 
    - returns: A ComponentDiff value, see ComponentDiff for values.
    */
-  public func diff(component component: Component) -> ComponentDiff {
+  public func diff(component: Component) -> ComponentDiff {
     // Determine if the UI component is the same, used when SpotsController needs to replace the entire UI component
-    if kind != component.kind { return .Kind }
+    if kind != component.kind { return .kind }
     // Determine if the unqiue identifier for the component changed
-    if identifier != component.identifier { return .Identifier }
+    if identifier != component.identifier { return .identifier }
     // Determine if the component span layout changed, this can be used to trigger layout related processes
-    if span != component.span { return .Span }
+    if span != component.span { return .span }
     // Determine if the header for the component has changed
-    if header != component.header { return .Header }
+    if header != component.header { return .header }
     // Check if meta data for the component changed, this can be up to the developer to decide what course of action to take.
-    if !(meta as NSDictionary).isEqualToDictionary(component.meta) { return .Meta }
+    if !(meta as NSDictionary).isEqual(to: component.meta) { return .meta }
     // Check if the items have changed
-    if !(items == component.items) { return .Items }
+    if !(items == component.items) { return .items }
     // Check children
 
     let lhsChildren = items.flatMap { $0.children }
     let rhsChildren = component.items.flatMap { $0.children }
 
-    if !(lhsChildren as NSArray).isEqualToArray(rhsChildren) {
-      return .Items
+    if !(lhsChildren as NSArray).isEqual(to: rhsChildren) {
+      return .items
     }
 
-    return .None
+    return .none
   }
 }
 
@@ -235,7 +235,7 @@ public func == (lhs: [Component], rhs: [Component]) -> Bool {
 
   if !equal { return false }
 
-  for (index, item) in lhs.enumerate() {
+  for (index, item) in lhs.enumerated() {
     if item != rhs[index] { equal = false; break }
   }
 
@@ -255,7 +255,7 @@ public func === (lhs: [Component], rhs: [Component]) -> Bool {
 
   if !equal { return false }
 
-  for (index, item) in lhs.enumerate() {
+  for (index, item) in lhs.enumerated() {
     if item !== rhs[index] { equal = false; break }
   }
 
@@ -318,7 +318,7 @@ public func === (lhs: Component, rhs: Component) -> Bool {
     lhs.span == rhs.span &&
     lhs.header == rhs.header &&
     (lhs.meta as NSDictionary).isEqual(rhs.meta as NSDictionary) &&
-    (lhsChildren as NSArray).isEqualToArray(rhsChildren) &&
+    (lhsChildren as NSArray).isEqual(to: rhsChildren) &&
     lhs.items === rhs.items
 }
 

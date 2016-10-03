@@ -9,7 +9,7 @@ extension SpotsController {
     let _ = view
   }
 
-  func scrollTo(point: CGPoint) {
+  func scrollTo(_ point: CGPoint) {
     spotsScrollView.setContentOffset(point, animated: false)
     spotsScrollView.layoutSubviews()
   }
@@ -23,7 +23,7 @@ class SpotsScrollViewTests: XCTestCase {
   var initialJSON: [String : AnyObject] {
     let listItems: [[String : AnyObject]] = [
       [
-        "title" : "Item",
+        "title" : "Item" as AnyObject,
         "size" : ["height" : 80]
       ],
       [

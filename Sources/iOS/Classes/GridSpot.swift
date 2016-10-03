@@ -2,7 +2,7 @@ import UIKit
 import Brick
 
 /// A GridSpot, a collection view based Spotable object that lays out its items in a vertical order based of the item sizes
-public class GridSpot: NSObject, Gridable {
+open class GridSpot: NSObject, Gridable {
 
   /**
    *  Keys for meta data lookup
@@ -33,49 +33,49 @@ public class GridSpot: NSObject, Gridable {
   }
 
   /// A Registry object that holds identifiers and classes for cells used in the GridSpot
-  public static var views: Registry = Registry()
+  open static var views: Registry = Registry()
 
   /// A configuration closure that is run in setup(_:)
-  public static var configure: ((view: UICollectionView, layout: UICollectionViewFlowLayout) -> Void)?
+  open static var configure: ((_ view: UICollectionView, _ layout: UICollectionViewFlowLayout) -> Void)?
 
   /// A Registry object that holds identifiers and classes for headers used in the GridSpot
-  public static var headers = Registry()
+  open static var headers = Registry()
 
   /// A component struct used as configuration and data source for the GridSpot
-  public var component: Component
+  open var component: Component
 
   /// A configuration closure
-  public var configure: (SpotConfigurable -> Void)?
+  open var configure: ((SpotConfigurable) -> Void)?
 
   /// A SpotsCompositeDelegate for the GridSpot, used to access composite spots
-  public weak var spotsCompositeDelegate: SpotsCompositeDelegate?
+  open weak var spotsCompositeDelegate: SpotsCompositeDelegate?
 
   /// A SpotsDelegate that is used for the GridSpot
-  public weak var spotsDelegate: SpotsDelegate?
+  open weak var spotsDelegate: SpotsDelegate?
 
   /// A computed variable for adapters
-  public var adapter: SpotAdapter? {
+  open var adapter: SpotAdapter? {
     return collectionAdapter
   }
 
   /// A collection adapter that is the data source and delegate for the GridSpot
-  public lazy var collectionAdapter: CollectionAdapter = CollectionAdapter(spot: self)
+  open lazy var collectionAdapter: CollectionAdapter = CollectionAdapter(spot: self)
 
   /// A custom UICollectionViewFlowLayout
-  public lazy var layout: CollectionLayout = CollectionLayout()
+  open lazy var layout: CollectionLayout = CollectionLayout()
 
   /// A SpotCache for the GridSpot
-  public private(set) var stateCache: SpotCache?
+  open fileprivate(set) var stateCache: SpotCache?
 
   /// Indicator to calculate the height based on content
-  public var usesDynamicHeight = true
+  open var usesDynamicHeight = true
 
   /// A UICollectionView, used as the main UI component for a GridSpot
-  public lazy var collectionView: UICollectionView = { [unowned self] in
+  open lazy var collectionView: UICollectionView = { [unowned self] in
     let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: self.layout)
     collectionView.dataSource = self.collectionAdapter
     collectionView.delegate = self.collectionAdapter
-    collectionView.scrollEnabled = false
+    collectionView.isScrollEnabled = false
 
     return collectionView
   }()

@@ -12,14 +12,14 @@
  The type of animation when items are inserted or deleted.
  */
 public enum SpotsAnimation: Int {
-  case Fade
-  case Right
-  case Left
-  case Top
-  case Bottom
-  case None
-  case Middle
-  case Automatic
+  case fade
+  case right
+  case left
+  case top
+  case bottom
+  case none
+  case middle
+  case automatic
 
   #if os(OSX)
   var tableViewAnimation: NSTableViewAnimationOptions {
@@ -48,22 +48,22 @@ public enum SpotsAnimation: Int {
    */
   var tableViewAnimation: UITableViewRowAnimation {
     switch self {
-    case .Fade:
-      return UITableViewRowAnimation.Fade
-    case .Right:
-      return UITableViewRowAnimation.Right
-    case .Left:
-      return UITableViewRowAnimation.Left
-    case .Top:
-      return UITableViewRowAnimation.Top
-    case .Bottom:
-      return UITableViewRowAnimation.Bottom
-    case .None:
-      return UITableViewRowAnimation.None
-    case .Middle:
-      return UITableViewRowAnimation.Middle
-    case .Automatic:
-      return UITableViewRowAnimation.Automatic
+    case .fade:
+      return UITableViewRowAnimation.fade
+    case .right:
+      return UITableViewRowAnimation.right
+    case .left:
+      return UITableViewRowAnimation.left
+    case .top:
+      return UITableViewRowAnimation.top
+    case .bottom:
+      return UITableViewRowAnimation.bottom
+    case .none:
+      return UITableViewRowAnimation.none
+    case .middle:
+      return UITableViewRowAnimation.middle
+    case .automatic:
+      return UITableViewRowAnimation.automatic
     }
   }
   #endif

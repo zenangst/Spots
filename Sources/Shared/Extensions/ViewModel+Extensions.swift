@@ -10,23 +10,23 @@ public typealias ItemChanges = (
 )
 
 public enum ItemDiff {
-  case Identifier, Index, Title, Subtitle, Image, Kind, Action, Meta, Children, Relations, Size, New, Removed, None
+  case identifier, index, title, subtitle, image, kind, action, meta, children, relations, size, new, removed, none
 }
 
 public extension Item {
 
-  static func evaluate(newModels: [Item], oldModels: [Item]) -> [ItemDiff]? {
+  static func evaluate(_ newModels: [Item], oldModels: [Item]) -> [ItemDiff]? {
     let newChildren = newModels.flatMap { $0.children }
     let oldChildren = oldModels.flatMap { $0.children }
 
-    guard !(oldModels == newModels) || !(newChildren as NSArray).isEqualToArray(oldChildren) else {
+    guard !(oldModels == newModels) || !(newChildren as NSArray).isEqual(to: oldChildren) else {
       return nil
     }
 
     var changes = [ItemDiff]()
 
     if oldModels.count > newModels.count {
-      for (index, element) in oldModels.enumerate() {
+      for (index, element) in oldModels.enumerated() {
         if index > newModels.count - 1 {
           changes.append(.Removed)
           continue
@@ -35,7 +35,7 @@ public extension Item {
         changes.append(element.diff(newModels[index]))
       }
     } else if oldModels.count < newModels.count {
-      for (index, element) in newModels.enumerate() {
+      for (index, element) in newModels.enumerated() {
         if index > oldModels.count - 1 {
           changes.append(.New)
           continue
@@ -44,7 +44,7 @@ public extension Item {
         changes.append(element.diff(oldModels[index]))
       }
     } else {
-      for (index, element) in newModels.enumerate() {
+      for (index, element) in newModels.enumerated() {
         changes.append(element.diff(oldModels[index]))
       }
     }
@@ -59,14 +59,14 @@ public extension Item {
 
    - returns: A tuple containg reloads, child updates, insertions, deletions and reload indexes
    */
-  public static func processChanges(changes: [ItemDiff]) -> (ItemChanges) {
+  public static func processChanges(_ changes: [ItemDiff]) -> (ItemChanges) {
     var insertions = [Int]()
     var updates = [Int]()
     var reloads = [Int]()
     var deletions = [Int]()
     var childrenUpdates = [Int]()
 
-    for (index, change) in changes.enumerate() {
+    for (index, change) in changes.enumerated() {
       switch change {
       case .Kind, .Size:
         reloads.append(index)
@@ -92,10 +92,10 @@ public extension Item {
 
    - returns: An `ItemDiff` enum key
    */
-  public func diff(oldItem: Item) -> ItemDiff {
+  public func diff(_ oldItem: Item) -> ItemDiff {
 
-    let newChildren = children.map { Component($0) }
-    let oldChildren = oldItem.children.map { Component($0) }
+    let newChildren = children.map { Component($0 as [String : AnyObject]) }
+    let oldChildren = oldItem.children.map { Component($0 as [String : AnyObject]) }
 
     if kind != oldItem.kind { return .Kind }
     if newChildren != oldChildren { return .Children }
@@ -104,7 +104,7 @@ public extension Item {
     if subtitle != oldItem.subtitle { return .Subtitle }
     if image != oldItem.image { return .Image }
     if action != oldItem.action { return .Action }
-    if !(meta as NSDictionary).isEqualToDictionary(oldItem.meta) { return .Meta }
+    if !(meta as NSDictionary).isEqual(to: oldItem.meta) { return .Meta }
 
     return .None
   }

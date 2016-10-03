@@ -24,12 +24,12 @@ public extension Spotable where Self : Gridable {
   /**
    - parameter size: A CGSize to set the size of the collection view
    */
-  public func setup(size: CGSize) {
-    layout.prepareLayout()
+  public func setup(_ size: CGSize) {
+    layout.prepare()
     collectionView.frame.size.width = size.width
     #if !os(OSX)
       collectionView.frame.size.height = layout.contentSize.height
-      GridSpot.configure?(view: collectionView, layout: layout)
+      GridSpot.configure?(collectionView, layout)
     #endif
     component.size = collectionView.frame.size
   }
@@ -37,13 +37,13 @@ public extension Spotable where Self : Gridable {
   /**
    - parameter size: A CGSize to set the width and height of the collection view
    */
-  public func layout(size: CGSize) {
+  public func layout(_ size: CGSize) {
     layout.invalidateLayout()
     collectionView.frame.size.width = size.width
   }
 
   public func prepareItems() {
-    component.items.enumerate().forEach { (index: Int, _) in
+    component.items.enumerated().forEach { (index: Int, _) in
       configureItem(index, usesViewSize: true)
       if component.span > 0 {
         #if os(OSX)

@@ -2,7 +2,7 @@ import UIKit
 import QuartzCore
 
 /// The core foundation scroll view inside of Spots that manages the linear layout of all Spotable objects
-public class SpotsScrollView: UIScrollView {
+open class SpotsScrollView: UIScrollView {
 
   enum ObservedKeypath: String {
     case contentOffset = "contentOffset"
@@ -12,25 +12,25 @@ public class SpotsScrollView: UIScrollView {
   }
 
   /// A KVO context used to monitor changes in contentSize, frames and bounds
-  let subviewContext = UnsafeMutablePointer<()>(nil)
+  let subviewContext = UnsafeMutableRawPointer(nil)
 
   /// An collection of UIView's that resemble the order of the views in the scroll view
-  private var subviewsInLayoutOrder = [UIView?]()
+  fileprivate var subviewsInLayoutOrder = [UIView?]()
 
   /// The distance that the content view is inset from the enclosing scroll view.
-  public override var contentInset: UIEdgeInsets {
+  open override var contentInset: UIEdgeInsets {
     willSet {
-      if self.tracking {
+      if self.isTracking {
         let diff = newValue.top - self.contentInset.top
-        var translation = self.panGestureRecognizer.translationInView(self)
+        var translation = self.panGestureRecognizer.translation(in: self)
         translation.y -= diff * 3.0 / 2.0
-        self.panGestureRecognizer.setTranslation(translation, inView: self)
+        self.panGestureRecognizer.setTranslation(translation, in: self)
       }
     }
   }
 
   /// A container view that works as a proxy layer for scroll view
-  lazy public var contentView: SpotsContentView = SpotsContentView()
+  lazy open var contentView: SpotsContentView = SpotsContentView()
 
   /**
    A deinitiazlier that removes all subviews from contentView
@@ -66,15 +66,15 @@ public class SpotsScrollView: UIScrollView {
 
    - parameter subview: The view to add to the view as a subview.
    */
-  func didAddSubviewToContainer(subview: UIView) {
-    subview.autoresizingMask = [.None]
+  func didAddSubviewToContainer(_ subview: UIView) {
+    subview.autoresizingMask = UIViewAutoresizing()
 
-    guard let index = contentView.subviews.indexOf(subview) else { return }
-    subviewsInLayoutOrder.insert(subview, atIndex: index)
+    guard let index = contentView.subviews.index(of: subview) else { return }
+    subviewsInLayoutOrder.insert(subview, at: index)
 
     if subview.superview == contentView && !(subview is UIScrollView) {
-      subview.addObserver(self, forKeyPath: ObservedKeypath.frame.rawValue, options: .Old, context: subviewContext)
-      subview.addObserver(self, forKeyPath: ObservedKeypath.bounds.rawValue, options: .Old, context: subviewContext)
+      subview.addObserver(self, forKeyPath: ObservedKeypath.frame.rawValue, options: .old, context: subviewContext)
+      subview.addObserver(self, forKeyPath: ObservedKeypath.bounds.rawValue, options: .old, context: subviewContext)
     }
 
     guard let scrollView = subview as? UIScrollView else {
@@ -85,16 +85,16 @@ public class SpotsScrollView: UIScrollView {
     #if os(iOS)
       scrollView.scrollsToTop = false
     #endif
-    scrollView.scrollEnabled = false
+    scrollView.isScrollEnabled = false
 
     if let collectionView = scrollView as? UICollectionView,
-      layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
-      where layout.scrollDirection == .Horizontal {
-      scrollView.scrollEnabled = true
+      let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
+      , layout.scrollDirection == .horizontal {
+      scrollView.isScrollEnabled = true
     }
 
-    scrollView.addObserver(self, forKeyPath: ObservedKeypath.contentSize.rawValue, options: .Old, context: subviewContext)
-    scrollView.addObserver(self, forKeyPath: ObservedKeypath.contentOffset.rawValue, options: .Old, context: subviewContext)
+    scrollView.addObserver(self, forKeyPath: ObservedKeypath.contentSize.rawValue, options: .old, context: subviewContext)
+    scrollView.addObserver(self, forKeyPath: ObservedKeypath.contentOffset.rawValue, options: .old, context: subviewContext)
 
     setNeedsLayout()
     layoutSubviews()
@@ -105,7 +105,7 @@ public class SpotsScrollView: UIScrollView {
 
    - parameter subview: The subview that will be removed.
    */
-  public override func willRemoveSubview(subview: UIView) {
+  open override func willRemoveSubview(_ subview: UIView) {
     if subview is UIScrollView && subview.superview == contentView {
       subview.removeObserver(self, forKeyPath: ObservedKeypath.contentSize.rawValue, context: subviewContext)
       subview.removeObserver(self, forKeyPath: ObservedKeypath.contentOffset.rawValue, context: subviewContext)
@@ -114,8 +114,8 @@ public class SpotsScrollView: UIScrollView {
       subview.removeObserver(self, forKeyPath: ObservedKeypath.bounds.rawValue, context: subviewContext)
     }
 
-    if let index = subviewsInLayoutOrder.indexOf({ $0 == subview }) {
-      subviewsInLayoutOrder.removeAtIndex(index)
+    if let index = subviewsInLayoutOrder.index(where: { $0 == subview }) {
+      subviewsInLayoutOrder.remove(at: index)
     }
 
     setNeedsLayout()
@@ -130,37 +130,37 @@ public class SpotsScrollView: UIScrollView {
    - parameter change:  A dictionary that describes the changes that have been made to the value of the property at the key path keyPath relative to object.
    - parameter context: The value that was provided when the receiver was registered to receive key-value observation notifications.
    */
-  public override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
-    if let change = change where context == subviewContext {
+  open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+    if let change = change , context == subviewContext {
       if let scrollView = object as? UIScrollView {
-        guard let change = change[NSKeyValueChangeOldKey] else { return }
+        guard let change = change[NSKeyValueChangeKey.oldKey] else { return }
         if keyPath == ObservedKeypath.contentSize.rawValue {
-          let oldContentSize = change.CGSizeValue()
+          let oldContentSize = (change as AnyObject).cgSizeValue
           let newContentSize = scrollView.contentSize
-          if !CGSizeEqualToSize(newContentSize, oldContentSize) {
+          if !newContentSize.equalTo(oldContentSize!) {
             setNeedsLayout()
             layoutIfNeeded()
           }
         } else if keyPath == ObservedKeypath.contentOffset.rawValue
-          && (dragging == false && tracking == false) {
-          let oldOffset = change.CGPointValue()
+          && (isDragging == false && isTracking == false) {
+          let oldOffset = (change as AnyObject).cgPointValue
           let newOffset = scrollView.contentOffset
-          if !CGPointEqualToPoint(newOffset, oldOffset) {
+          if !newOffset.equalTo(oldOffset!) {
             setNeedsLayout()
             layoutIfNeeded()
           }
         }
       } else if let view = object as? UIView,
-        oldFrame = change[NSKeyValueChangeOldKey]?.CGRectValue() {
+        let oldFrame = (change[NSKeyValueChangeKey.oldKey] as AnyObject).cgRectValue {
         let newFrame = view.frame
 
-        if (!CGRectEqualToRect(newFrame, oldFrame)) {
+        if (!newFrame.equalTo(oldFrame)) {
           self.setNeedsLayout()
           self.layoutIfNeeded()
         }
       }
     } else {
-      super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)
+      super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
     }
   }
 
@@ -168,7 +168,7 @@ public class SpotsScrollView: UIScrollView {
    A custom implementation of layoutSubviews that handles the scrolling of all the underlaying views within the container.
    It does this by iterating over subviewsInLayoutOrder and sets the current offset for each individual view within the container.
    */
-  public override func layoutSubviews() {
+  open override func layoutSubviews() {
     super.layoutSubviews()
 
     guard let superview = superview else { return }
@@ -220,7 +220,7 @@ public class SpotsScrollView: UIScrollView {
       self.frame.size.height = superview.frame.size.height
     }
 
-    guard !CGPointEqualToPoint(initialContentOffset, contentOffset) else { return }
+    guard !initialContentOffset.equalTo(contentOffset) else { return }
     setNeedsLayout()
     layoutIfNeeded()
   }

@@ -22,7 +22,7 @@ import Cache
 
         do {
           if let data = NSData(contentsOfFile: filePath),
-            json = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? [String : AnyObject] {
+            let json = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? [String : AnyObject] {
             dispatch_source_cancel(self.source)
             self.source = nil
             let offset = self.spotsScrollView.contentOffset
@@ -66,7 +66,7 @@ import Cache
 
     func liveEditing(stateCache: SpotCache?) {
       #if (arch(i386) || arch(x86_64)) && os(iOS)
-        guard let stateCache = stateCache where source == nil else { return }
+        guard let stateCache = stateCache , source == nil else { return }
       #else
         guard let stateCache = stateCache else { return }
       #endif

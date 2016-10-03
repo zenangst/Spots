@@ -7,7 +7,7 @@ extension CarouselSpot: UIScrollViewDelegate {
    A method that handles what type of scrollling the CarouselSpot should use when pagination is enabled.
    It can snap to the nearest item or scroll page by page.
    */
-  private func paginatedEndScrolling() {
+  fileprivate func paginatedEndScrolling() {
     var currentCellOffset = collectionView.contentOffset
     #if os(iOS)
     if paginateByItem {
@@ -22,12 +22,12 @@ extension CarouselSpot: UIScrollViewDelegate {
     }
     #endif
 
-    if let indexPath = collectionView.indexPathForItemAtPoint(currentCellOffset) {
-      collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.CenteredHorizontally, animated: true)
+    if let indexPath = collectionView.indexPathForItem(at: currentCellOffset) {
+      collectionView.scrollToItem(at: indexPath, at: UICollectionViewScrollPosition.centeredHorizontally, animated: true)
     } else {
       currentCellOffset.x += layout.sectionInset.left
-      if let indexPath = collectionView.indexPathForItemAtPoint(currentCellOffset) {
-        collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.CenteredHorizontally, animated: true)
+      if let indexPath = collectionView.indexPathForItem(at: currentCellOffset) {
+        collectionView.scrollToItem(at: indexPath, at: UICollectionViewScrollPosition.centeredHorizontally, animated: true)
       }
     }
   }
@@ -37,7 +37,7 @@ extension CarouselSpot: UIScrollViewDelegate {
 
    - parameter scrollView: The scroll-view object in which the scrolling occurred.
    */
-  public func scrollViewDidScroll(scrollView: UIScrollView) {
+  public func scrollViewDidScroll(_ scrollView: UIScrollView) {
     carouselScrollDelegate?.spotDidScroll(self)
   }
 
@@ -48,7 +48,7 @@ extension CarouselSpot: UIScrollViewDelegate {
    - parameter scrollView: The scroll-view object that finished scrolling the content view.
    - parameter decelerate: true if the scrolling movement will continue, but decelerate, after a touch-up gesture during a dragging operation.
    */
-  public func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+  public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
     guard paginate else { return }
     paginatedEndScrolling()
   }
@@ -61,14 +61,14 @@ extension CarouselSpot: UIScrollViewDelegate {
    - parameter velocity:            The velocity of the scroll view (in points) at the moment the touch was released.
    - parameter targetContentOffset: The expected offset when the scrolling action decelerates to a stop.
    */
-  public func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+  public func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
     #if os(iOS)
       guard paginate else { return }
     #endif
 
     let pageWidth: CGFloat = collectionView.frame.size.width
     let currentOffset = scrollView.contentOffset.x
-    let targetOffset = targetContentOffset.memory.x
+    let targetOffset = targetContentOffset.pointee.x
 
     var newTargetOffset: CGFloat = targetOffset > currentOffset
       ? ceil(currentOffset / pageWidth) * pageWidth
@@ -100,8 +100,8 @@ extension CarouselSpot: UIScrollViewDelegate {
 
    - parameter predicate: A predicate closure to determine which item to scroll to
    */
-  public func scrollTo(predicate: (Item) -> Bool) {
-    if let index = items.indexOf(predicate) {
+  public func scrollTo(_ predicate: (Item) -> Bool) {
+    if let index = items.index(where: predicate) {
       let pageWidth: CGFloat = collectionView.frame.size.width - layout.sectionInset.right
         + layout.sectionInset.left
 

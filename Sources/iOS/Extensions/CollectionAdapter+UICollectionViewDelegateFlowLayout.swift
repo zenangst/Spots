@@ -10,8 +10,8 @@ extension CollectionAdapter: UICollectionViewDelegateFlowLayout {
    - parameter section:              The index number of the section whose line spacing is needed.
    - returns: The minimum space (measured in points) to apply between successive lines in a section.
    */
-  public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
-    guard spot.layout.scrollDirection == .Horizontal else { return spot.layout.sectionInset.bottom }
+  public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+    guard spot.layout.scrollDirection == .horizontal else { return spot.layout.sectionInset.bottom }
 
     return spot.layout.minimumLineSpacing
   }
@@ -24,8 +24,8 @@ extension CollectionAdapter: UICollectionViewDelegateFlowLayout {
    - parameter section:              The index number of the section whose insets are needed.
    - returns: The margins to apply to items in the section.
    */
-  public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
-    guard spot.layout.scrollDirection == .Horizontal else { return spot.layout.sectionInset }
+  public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+    guard spot.layout.scrollDirection == .horizontal else { return spot.layout.sectionInset }
 
     let left = spot.layout.minimumLineSpacing / 2
     let right = spot.layout.minimumLineSpacing / 2

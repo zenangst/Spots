@@ -6,9 +6,9 @@ import Brick
 class ComponentTests : XCTestCase {
 
   let json: [String : AnyObject] = [
-    "title" : "title1",
-    "kind" : "list",
-    "span" : 1,
+    "title" : "title1" as AnyObject,
+    "kind" : "list" as AnyObject,
+    "span" : 1 as AnyObject,
     "meta" : ["foo" : "bar"],
     "items" : [["title" : "item1"]]
   ]

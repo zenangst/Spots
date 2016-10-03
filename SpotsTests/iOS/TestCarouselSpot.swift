@@ -30,7 +30,7 @@ class CarouselSpotTests: XCTestCase {
   func testSafelyResolveKind() {
     let component = Component(title: "CarouselSpot", kind: "custom-carousel", items: [Item(title: "foo", kind: "custom-item-kind")])
     let carouselSpot = CarouselSpot(component: component)
-    let indexPath = NSIndexPath(forRow: 0, inSection: 0)
+    let indexPath = IndexPath(row: 0, section: 0)
 
     XCTAssertEqual(carouselSpot.identifier(indexPath), CarouselSpot.views.defaultIdentifier)
 

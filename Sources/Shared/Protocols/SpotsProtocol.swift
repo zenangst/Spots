@@ -41,10 +41,10 @@ public protocol SpotsProtocol: class {
   var source: dispatch_source_t! { get set }
   #endif
 
-  func setupSpots(animated: ((view: View) -> Void)?)
-  func setupSpot(index: Int, spot: Spotable)
-  func spot<T>(index: Int, _ type: T.Type) -> T?
-  func spot(@noescape closure: (index: Int, spot: Spotable) -> Bool) -> Spotable?
+  func setupSpots(_ animated: ((_ view: View) -> Void)?)
+  func setupSpot(_ index: Int, spot: Spotable)
+  func spot<T>(_ index: Int, _ type: T.Type) -> T?
+  func spot(_ closure: (_ index: Int, _ spot: Spotable) -> Bool) -> Spotable?
 
   #if os(OSX)
   init(spots: [Spotable], backgroundType: SpotsControllerBackground)

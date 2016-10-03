@@ -4,7 +4,7 @@ import Brick
 public extension CollectionAdapter {
 
   public func ui<T>(atIndex index: Int) -> T? {
-    return spot.collectionView.cellForItemAtIndexPath(NSIndexPath(forItem: index, inSection: 0)) as? T
+    return spot.collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? T
   }
 
   /**
@@ -12,11 +12,11 @@ public extension CollectionAdapter {
    - parameter withAnimation: The animation that should be used (currently not in use)
    - parameter completion: Completion
    */
-  public func append(item: Item, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
+  public func append(_ item: Item, withAnimation animation: SpotsAnimation = .none, completion: Completion = nil) {
     var indexes = [Int]()
     let itemsCount = spot.component.items.count
 
-    for (index, item) in spot.items.enumerate() {
+    for (index, item) in spot.items.enumerated() {
       spot.component.items.append(item)
       indexes.append(itemsCount + index)
     }
@@ -40,11 +40,11 @@ public extension CollectionAdapter {
    - parameter withAnimation: The animation that should be used (currently not in use)
    - parameter completion: Completion
    */
-  public func append(items: [Item], withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
+  public func append(_ items: [Item], withAnimation animation: SpotsAnimation = .none, completion: Completion = nil) {
     var indexes = [Int]()
     let itemsCount = spot.component.items.count
 
-    for (index, item) in items.enumerate() {
+    for (index, item) in items.enumerated() {
       spot.component.items.append(item)
       indexes.append(itemsCount + index)
 
@@ -71,8 +71,8 @@ public extension CollectionAdapter {
    - parameter animation:  A SpotAnimation that is used when performing the mutation (currently not in use)
    - parameter completion: Completion
    */
-  public func insert(item: Item, index: Int, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
-    spot.component.items.insert(item, atIndex: index)
+  public func insert(_ item: Item, index: Int, withAnimation animation: SpotsAnimation = .none, completion: Completion = nil) {
+    spot.component.items.insert(item, at: index)
     var indexes = [Int]()
     let itemsCount = spot.component.items.count
 
@@ -97,12 +97,12 @@ public extension CollectionAdapter {
    - parameter animation:  A SpotAnimation that is used when performing the mutation (currently not in use)
    - parameter completion: A completion closure that is executed in the main queue
    */
-  public func prepend(items: [Item], withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
+  public func prepend(_ items: [Item], withAnimation animation: SpotsAnimation = .none, completion: Completion = nil) {
     var indexes = [Int]()
 
-    spot.component.items.insertContentsOf(items, at: 0)
+    spot.component.items.insert(contentsOf: items, at: 0)
 
-    items.enumerate().forEach {
+    items.enumerated().forEach {
       indexes.append(items.count - 1 - $0.index)
       spot.configureItem($0.index)
     }
@@ -123,8 +123,8 @@ public extension CollectionAdapter {
    - parameter withAnimation: The animation that should be used (currently not in use)
    - parameter completion: A completion closure that is executed in the main queue
    */
-  public func delete(item: Item, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
-    guard let index = spot.component.items.indexOf({ $0 == item })
+  public func delete(_ item: Item, withAnimation animation: SpotsAnimation = .none, completion: Completion = nil) {
+    guard let index = spot.component.items.index(where: { $0 == item })
       else { completion?(); return }
 
     perform(animation, withIndex: index) { [weak self] in
@@ -145,13 +145,13 @@ public extension CollectionAdapter {
    - parameter withAnimation: The animation that should be used (currently not in use)
    - parameter completion: A completion closure that is executed in the main queue
    */
-  public func delete(items: [Item], withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
+  public func delete(_ items: [Item], withAnimation animation: SpotsAnimation = .none, completion: Completion = nil) {
     var indexes = [Int]()
     let count = spot.component.items.count
 
-    for (index, _) in items.enumerate() {
+    for (index, _) in items.enumerated() {
       indexes.append(count + index)
-      spot.component.items.removeAtIndex(count - index)
+      spot.component.items.remove(at: count - index)
     }
 
     Dispatch.mainQueue { [weak self] in
@@ -169,15 +169,15 @@ public extension CollectionAdapter {
    - parameter withAnimation: The animation that should be used (currently not in use)
    - parameter completion: A completion closure that is executed in the main queue when the view model has been removed
    */
-  public func delete(index: Int, withAnimation animation: SpotsAnimation = .None, completion: Completion) {
+  public func delete(_ index: Int, withAnimation animation: SpotsAnimation = .none, completion: Completion) {
     perform(animation, withIndex: index) {
       Dispatch.mainQueue { [weak self] in
         guard let weakSelf = self else { completion?(); return }
 
-        if animation == .None { UIView.setAnimationsEnabled(false) }
+        if animation == .none { UIView.setAnimationsEnabled(false) }
         weakSelf.spot.component.items.removeAtIndex(index)
         weakSelf.spot.collectionView.delete([index], completion: nil)
-        if animation == .None { UIView.setAnimationsEnabled(true) }
+        if animation == .none { UIView.setAnimationsEnabled(true) }
         weakSelf.spot.updateHeight() {
           completion?()
         }
@@ -190,7 +190,7 @@ public extension CollectionAdapter {
    - parameter withAnimation: The animation that should be used (currently not in use)
    - parameter completion: A completion closure that is executed in the main queue when the view model has been removed
    */
-  public func delete(indexes: [Int], withAnimation animation: SpotsAnimation = .None, completion: Completion) {
+  public func delete(_ indexes: [Int], withAnimation animation: SpotsAnimation = .none, completion: Completion) {
     Dispatch.mainQueue { [weak self] in
       guard let weakSelf = self else { return }
       weakSelf.spot.collectionView.delete(indexes) {
@@ -207,17 +207,17 @@ public extension CollectionAdapter {
    - parameter animation:  A SpotAnimation that is used when performing the mutation (currently not in use)
    - parameter completion: A completion closure that is executed in the main queue when the view model has been removed
    */
-  public func update(item: Item, index: Int, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
+  public func update(_ item: Item, index: Int, withAnimation animation: SpotsAnimation = .none, completion: Completion = nil) {
     guard let oldItem = spot.item(index) else { completion?(); return }
 
     spot.items[index] = item
     spot.configureItem(index)
 
     let newItem = spot.items[index]
-    let indexPath = NSIndexPath(forItem: index, inSection: 0)
+    let indexPath = IndexPath(item: index, section: 0)
 
-    if let composite = spot.collectionView.cellForItemAtIndexPath(indexPath) as? SpotComposable {
-      if let spots = spot.spotsCompositeDelegate?.resolve(spotIndex: spot.index, itemIndex: indexPath.item) {
+    if let composite = spot.collectionView.cellForItem(at: indexPath) as? SpotComposable {
+      if let spots = spot.spotsCompositeDelegate?.resolve(spotIndex: spot.index, itemIndex: (indexPath as NSIndexPath).item) {
         spot.collectionView.performBatchUpdates({
           composite.configure(&self.spot.component.items[indexPath.item], spots: spots)
           }, completion: nil)
@@ -227,14 +227,14 @@ public extension CollectionAdapter {
     }
 
     if newItem.kind != oldItem.kind || newItem.size.height != oldItem.size.height {
-      if let cell = spot.collectionView.cellForItemAtIndexPath(indexPath) as? SpotConfigurable {
-        if animation != .None {
+      if let cell = spot.collectionView.cellForItem(at: indexPath) as? SpotConfigurable {
+        if animation != .none {
           spot.collectionView.performBatchUpdates({
             }, completion: { (_) in })
         }
         cell.configure(&self.spot.items[index])
       }
-    } else if let cell = spot.collectionView.cellForItemAtIndexPath(indexPath) as? SpotConfigurable {
+    } else if let cell = spot.collectionView.cellForItem(at: indexPath) as? SpotConfigurable {
       cell.configure(&spot.items[index])
     }
 
@@ -248,7 +248,7 @@ public extension CollectionAdapter {
    - parameter animation:  A SpotAnimation that is used when performing the mutation
    - parameter completion: A completion closure that is run when the updates are finished
    */
-  public func process(updates: [Int], withAnimation animation: SpotsAnimation, completion: Completion) {
+  public func process(_ updates: [Int], withAnimation animation: SpotsAnimation, completion: Completion) {
     guard !updates.isEmpty else {
       completion?()
       return
@@ -273,7 +273,7 @@ public extension CollectionAdapter {
    - parameter updateDataSource: A closure to update your data source
    - parameter completion:       A completion closure that runs when your updates are done
    */
-  public func reloadIfNeeded(changes: ItemChanges, withAnimation animation: SpotsAnimation = .Automatic, updateDataSource: () -> Void, completion: Completion) {
+  public func reloadIfNeeded(_ changes: ItemChanges, withAnimation animation: SpotsAnimation = .automatic, updateDataSource: () -> Void, completion: Completion) {
     spot.collectionView.process((insertions: changes.insertions, reloads: changes.reloads, deletions: changes.deletions), updateDataSource: updateDataSource) {
       if changes.updates.isEmpty {
         self.process(changes.updatedChildren, withAnimation: animation) {
@@ -296,8 +296,8 @@ public extension CollectionAdapter {
    - parameter animation: Perform reload animation
    - parameter completion: A completion closure that is executed in the main queue when the view model has been reloaded
    */
-  public func reload(indexes: [Int]? = nil, withAnimation animation: SpotsAnimation = .None, completion: Completion) {
-    if animation == .None { UIView.setAnimationsEnabled(false) }
+  public func reload(_ indexes: [Int]? = nil, withAnimation animation: SpotsAnimation = .none, completion: Completion) {
+    if animation == .none { UIView.setAnimationsEnabled(false) }
 
     spot.refreshIndexes()
     var cellCache: [String : SpotConfigurable] = [:]
@@ -324,6 +324,6 @@ public extension CollectionAdapter {
     spot.collectionView.layoutIfNeeded()
     completion?()
 
-    if animation == .None { UIView.setAnimationsEnabled(true) }
+    if animation == .none { UIView.setAnimationsEnabled(true) }
   }
 }

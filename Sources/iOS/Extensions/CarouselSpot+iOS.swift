@@ -20,7 +20,7 @@ extension CarouselSpot {
 
    - returns: CGSize of the item at index path
    */
-  public func sizeForItemAt(indexPath: NSIndexPath) -> CGSize {
+  public func sizeForItemAt(_ indexPath: IndexPath) -> CGSize {
     guard indexPath.item < component.items.count else { return CGSize.zero }
     var width = collectionView.frame.width
 

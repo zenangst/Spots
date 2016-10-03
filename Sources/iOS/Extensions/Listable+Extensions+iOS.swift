@@ -14,7 +14,7 @@ public extension Spotable where Self : Listable {
   /**
    - parameter size: A CGSize to set the width of the table view
    */
-  public func layout(size: CGSize) {
+  public func layout(_ size: CGSize) {
     tableView.frame.size.width = size.width
     guard let componentSize = component.size else { return }
     tableView.frame.size.height = componentSize.height
@@ -24,10 +24,10 @@ public extension Spotable where Self : Listable {
    - parameter includeElement: A filter predicate to find a view model
    - returns: A calculate CGFloat based on what the includeElement matches
    */
-  public func scrollTo(@noescape includeElement: (Item) -> Bool) -> CGFloat {
+  public func scrollTo(_ includeElement: (Item) -> Bool) -> CGFloat {
     guard let item = items.filter(includeElement).first else { return 0.0 }
 
     return component.items[0...item.index]
-      .reduce(0, combine: { $0 + $1.size.height })
+      .reduce(0, { $0 + $1.size.height })
   }
 }

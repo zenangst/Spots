@@ -885,8 +885,15 @@
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "Hyper Interaktiv AS";
 				TargetAttributes = {
+					BD7396FD1D718CD2000AF2DE = {
+						LastSwiftMigration = 0800;
+					};
+					BD7397311D718CDB000AF2DE = {
+						LastSwiftMigration = 0800;
+					};
 					D58478081C43FEB8006EBA49 = {
 						CreatedOnToolsVersion = 7.2;
+						LastSwiftMigration = 0800;
 					};
 					D58478121C43FEB9006EBA49 = {
 						CreatedOnToolsVersion = 7.2;
@@ -1332,6 +1339,7 @@
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "appletvsimulator appletvos";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.2;
 			};
@@ -1358,6 +1366,7 @@
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "appletvsimulator appletvos";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.2;
 			};
@@ -1375,6 +1384,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.SpotsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -1390,6 +1400,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.SpotsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -1501,6 +1512,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.Spots;
 				PRODUCT_NAME = Spots;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -1523,6 +1535,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.Spots;
 				PRODUCT_NAME = Spots;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

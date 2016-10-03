@@ -1,6 +1,6 @@
 import Foundation
 
-public class ListAdapter: NSObject, SpotAdapter {
+open class ListAdapter: NSObject, SpotAdapter {
   // An unowned Listable object
   unowned var spot: Listable
 

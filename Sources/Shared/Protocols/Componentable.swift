@@ -6,5 +6,5 @@
 
 public protocol Componentable {
   var defaultHeight: CGFloat { get }
-  func configure(component: Component)
+  func configure(_ component: Component)
 }

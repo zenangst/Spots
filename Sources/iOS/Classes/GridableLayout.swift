@@ -1,43 +1,43 @@
 import UIKit
 
 /// A custom flow layout used in GridSpot and CarouselSpot
-public class GridableLayout: UICollectionViewFlowLayout {
+open class GridableLayout: UICollectionViewFlowLayout {
 
   /// The content size for the Gridable object
   var contentSize = CGSize.zero
   /// The y offset for the Gridable object
-  public var yOffset: CGFloat?
+  open var yOffset: CGFloat?
 
   // Subclasses must override this method and use it to return the width and height of the collection view’s content. These values represent the width and height of all the content, not just the content that is currently visible. The collection view uses this information to configure its own content size to facilitate scrolling.
-  public override func collectionViewContentSize() -> CGSize {
+  open override var collectionViewContentSize : CGSize {
     return contentSize
   }
 
   /// The collection view calls -prepareLayout once at its first layout as the first message to the layout instance.
   /// The collection view calls -prepareLayout again after layout is invalidated and before requerying the layout information.
   /// Subclasses should always call super if they override.
-  public override func prepareLayout() {
-    super.prepareLayout()
+  open override func prepare() {
+    super.prepare()
 
     guard let adapter = collectionView?.delegate as? CollectionAdapter,
-      firstItem = adapter.spot.items.first else { return }
-    contentSize.width = adapter.spot.items.reduce(0, combine: { $0 + $1.size.width })
+      let firstItem = adapter.spot.items.first else { return }
+    contentSize.width = adapter.spot.items.reduce(0, { $0 + $1.size.width })
     contentSize.width += CGFloat(adapter.spot.items.count) * (minimumInteritemSpacing)
     contentSize.width += sectionInset.left + (sectionInset.right / 2) - 3
     contentSize.width = ceil(contentSize.width)
 
-    if scrollDirection == .Horizontal {
+    if scrollDirection == .horizontal {
       contentSize.height = firstItem.size.height + headerReferenceSize.height
       contentSize.height += sectionInset.top + sectionInset.bottom
 
-      if let spot = adapter.spot as? CarouselSpot where spot.pageIndicator {
+      if let spot = adapter.spot as? CarouselSpot , spot.pageIndicator {
         contentSize.height += spot.pageControl.frame.height
       }
     } else {
-      contentSize.height = adapter.spot.items.reduce(0, combine: { $0 + $1.size.height })
+      contentSize.height = adapter.spot.items.reduce(0, { $0 + $1.size.height })
       if adapter.spot.component.span > 1 {
         let count = adapter.spot.items.count
-        if let last = adapter.spot.items.last where count % Int(adapter.spot.component.span) != 0 {
+        if let last = adapter.spot.items.last , count % Int(adapter.spot.component.span) != 0 {
           contentSize.height += last.size.height
         }
 
@@ -45,25 +45,25 @@ public class GridableLayout: UICollectionViewFlowLayout {
         contentSize.height /= adapter.spot.component.span
         contentSize.height += sectionInset.top + sectionInset.bottom
       } else {
-        contentSize.height = adapter.spot.items.reduce(0, combine: { $0 + $1.size.height })
+        contentSize.height = adapter.spot.items.reduce(0, { $0 + $1.size.height })
         contentSize.height += sectionInset.top + sectionInset.bottom
       }
     }
   }
 
-  public override func invalidateLayout() {
+  open override func invalidateLayout() {
     super.invalidateLayout()
 
     guard let collectionView = collectionView else { return }
 
-    if let y = yOffset where collectionView.dragging && headerReferenceSize.height > 0.0 {
+    if let y = yOffset , collectionView.isDragging && headerReferenceSize.height > 0.0 {
       collectionView.frame.origin.y = y
     }
   }
 
-  public override func layoutAttributesForElementsInRect(rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+  open override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
     guard let collectionView = collectionView,
-      adapter = collectionView.dataSource as? CollectionAdapter
+      let adapter = collectionView.dataSource as? CollectionAdapter
       else { return nil }
 
     var attributes = [UICollectionViewLayoutAttributes]()
@@ -75,7 +75,7 @@ public class GridableLayout: UICollectionViewFlowLayout {
       rect.size.width = collectionView.bounds.width * 3
     }
 
-    if let newAttributes = super.layoutAttributesForElementsInRect(rect) {
+    if let newAttributes = super.layoutAttributesForElements(in: rect) {
       var offset: CGFloat = sectionInset.left
       for attribute in newAttributes {
         guard let itemAttribute = attribute.copy() as? UICollectionViewLayoutAttributes
@@ -89,7 +89,7 @@ public class GridableLayout: UICollectionViewFlowLayout {
         } else {
           itemAttribute.size = adapter.spot.sizeForItemAt(itemAttribute.indexPath)
 
-          if scrollDirection == .Horizontal {
+          if scrollDirection == .horizontal {
             itemAttribute.frame.origin.y = headerReferenceSize.height
             itemAttribute.frame.origin.x = offset
             offset += itemAttribute.size.width + minimumInteritemSpacing
@@ -102,14 +102,14 @@ public class GridableLayout: UICollectionViewFlowLayout {
       }
     }
 
-    if let y = yOffset where headerReferenceSize.height > 0.0 {
+    if let y = yOffset , headerReferenceSize.height > 0.0 {
       collectionView.frame.origin.y = y
     }
 
     return attributes
   }
 
-  public override func shouldInvalidateLayoutForBoundsChange(newBounds: CGRect) -> Bool {
+  open override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
     return true
   }
 }

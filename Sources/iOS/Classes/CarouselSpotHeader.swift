@@ -16,7 +16,7 @@ class CarouselSpotHeader: UICollectionReusableView, Componentable {
     fatalError("init(coder:) has not been implemented")
   }
 
-  func configure(component: Component) {
+  func configure(_ component: Component) {
     titleLabel.text = component.title
   }
 

@@ -41,7 +41,7 @@ class GirdSpotTests: XCTestCase {
   func testSafelyResolveKind() {
     let component = Component(title: "GridSpot", kind: "custom-grid", items: [Item(title: "foo", kind: "custom-item-kind")])
     let gridSpot = GridSpot(component: component)
-    let indexPath = NSIndexPath(forRow: 0, inSection: 0)
+    let indexPath = IndexPath(row: 0, section: 0)
 
     XCTAssertEqual(gridSpot.identifier(indexPath), GridSpot.views.defaultIdentifier)
     

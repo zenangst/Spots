@@ -5,7 +5,7 @@ import Cache
 /**
  SpotsController is a subclass of UIViewController
  */
-public class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDelegate, UIScrollViewDelegate {
+open class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDelegate, UIScrollViewDelegate {
 
   /**
    A notification enum
@@ -26,13 +26,13 @@ public class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDel
   }
 
   /// A static closure to configure SpotsScrollView
-  public static var configure: ((container: SpotsScrollView) -> Void)?
+  open static var configure: ((_ container: SpotsScrollView) -> Void)?
 
   /// Initial content offset for SpotsController, defaults to UIEdgeInsetsZero
-  public private(set) var initialContentInset: UIEdgeInsets = UIEdgeInsetsZero
+  open fileprivate(set) var initialContentInset: UIEdgeInsets = UIEdgeInsets.zero
 
   /// A collection of Spotable objects
-  public var spots: [Spotable] {
+  open var spots: [Spotable] {
     didSet {
       spots.forEach { $0.spotsDelegate = spotsDelegate }
       spotsDelegate?.spotsDidChange(spots)
@@ -40,10 +40,10 @@ public class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDel
   }
 
   /// A collection of composite Spotable objects
-  public var compositeSpots: [Int : [Int : [Spotable]]] {
+  open var compositeSpots: [Int : [Int : [Spotable]]] {
     didSet {
       for (_, items) in compositeSpots {
-        for (_, container) in items.enumerate() {
+        for (_, container) in items.enumerated() {
           container.1.forEach { $0.spotsDelegate = spotsDelegate }
         }
       }
@@ -51,11 +51,11 @@ public class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDel
   }
 
   /// An array of refresh positions to avoid refreshing multiple times when using infinite scrolling
-  public var refreshPositions = [CGFloat]()
+  open var refreshPositions = [CGFloat]()
   /// A bool value to indicate if the SpotsController is refeshing
-  public var refreshing = false
+  open var refreshing = false
   /// A convenience method for resolving the first spot
-  public var spot: Spotable? {
+  open var spot: Spotable? {
     get { return spot(0, Spotable.self) }
   }
 
@@ -67,10 +67,10 @@ public class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDel
   #endif
 
   /// An optional SpotCache used for view controller caching
-  public var stateCache: SpotCache?
+  open var stateCache: SpotCache?
 
   /// A delegate for when an item is tapped within a Spot
-  weak public var spotsDelegate: SpotsDelegate? {
+  weak open var spotsDelegate: SpotsDelegate? {
     didSet {
       spots.forEach { $0.spotsDelegate = spotsDelegate }
       spotsDelegate?.spotsDidChange(spots)
@@ -79,18 +79,18 @@ public class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDel
 
 #if os(iOS)
   /// A refresh delegate for handling reloading of a Spot
-  weak public var spotsRefreshDelegate: SpotsRefreshDelegate? {
+  weak open var spotsRefreshDelegate: SpotsRefreshDelegate? {
     didSet {
-      refreshControl.hidden = spotsRefreshDelegate == nil
+      refreshControl.isHidden = spotsRefreshDelegate == nil
     }
   }
 #endif
 
   /// A scroll delegate for handling spotDidReachBeginning and spotDidReachEnd
-  weak public var spotsScrollDelegate: SpotsScrollDelegate?
+  weak open var spotsScrollDelegate: SpotsScrollDelegate?
 
   /// A custom scroll view that handles the scrolling for all internal scroll views
-  lazy public var spotsScrollView: SpotsScrollView = {  [unowned self] in
+  lazy open var spotsScrollView: SpotsScrollView = {  [unowned self] in
     let scrollView = SpotsScrollView()
     scrollView.alwaysBounceVertical = true
     scrollView.clipsToBounds = true
@@ -102,9 +102,9 @@ public class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDel
 #if os(iOS)
   /// A UIRefresh control
   /// Note: Only avaiable on iOS
-  public lazy var refreshControl: UIRefreshControl = { [unowned self] in
+  open lazy var refreshControl: UIRefreshControl = { [unowned self] in
     let refreshControl = UIRefreshControl()
-    refreshControl.addTarget(self, action: #selector(refreshSpots(_:)), forControlEvents: .ValueChanged)
+    refreshControl.addTarget(self, action: #selector(refreshSpots(_:)), for: .valueChanged)
 
     return refreshControl
   }()
@@ -120,7 +120,7 @@ public class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDel
     self.compositeSpots = [:]
     super.init(nibName: nil, bundle: nil)
 
-    NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(self.deviceDidRotate(_:)), name: NotificationKeys.deviceDidRotateNotification.rawValue, object: nil)
+    NotificationCenter.default.addObserver(self, selector:#selector(self.deviceDidRotate(_:)), name: NSNotification.Name(rawValue: NotificationKeys.deviceDidRotateNotification.rawValue), object: nil)
   }
 
   /**
@@ -171,7 +171,7 @@ public class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDel
 
    - returns: An optional Spotable object
    */
-  public func spot<T>(index: Int = 0, _ type: T.Type) -> T? {
+  open func spot<T>(_ index: Int = 0, _ type: T.Type) -> T? {
     return spots.filter({ $0.index == index }).first as? T
   }
 
@@ -181,9 +181,9 @@ public class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDel
    - parameter closure: A closure to perform actions on a spotable object
    - returns: An optional Spotable object
    */
-  public func spot(@noescape closure: (index: Int, spot: Spotable) -> Bool) -> Spotable? {
-    for (index, spot) in spots.enumerate()
-      where closure(index: index, spot: spot) {
+  open func spot(_ closure: (_ index: Int, _ spot: Spotable) -> Bool) -> Spotable? {
+    for (index, spot) in spots.enumerated()
+      where closure(index, spot) {
         return spot
     }
     return nil
@@ -196,10 +196,10 @@ public class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDel
 
    - parameter notification: A notification containing the new size
    */
-  func deviceDidRotate(notification: NSNotification) {
-    if let userInfo = notification.userInfo as? [String : AnyObject],
-      rotationSize = userInfo["size"] as? RotationSize
-      where view.window == nil {
+  func deviceDidRotate(_ notification: Notification) {
+    if let userInfo = (notification as NSNotification).userInfo as? [String : AnyObject],
+      let rotationSize = userInfo["size"] as? RotationSize
+      , view.window == nil {
       configureView(withSize: rotationSize.size)
     }
   }
@@ -207,14 +207,14 @@ public class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDel
   // MARK: - View Life Cycle
 
   /// Called after the spot controller's view is loaded into memory.
-  public override func viewDidLoad() {
+  open override func viewDidLoad() {
     super.viewDidLoad()
     view.addSubview(spotsScrollView)
     spotsScrollView.frame = view.bounds
 
     setupSpots()
 
-    SpotsController.configure?(container: spotsScrollView)
+    SpotsController.configure?(spotsScrollView)
   }
 
   /**
@@ -222,26 +222,26 @@ public class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDel
 
    - parameter animated: If true, the view is being added to the window using an animation.
    */
-  public override func viewWillAppear(animated: Bool) {
+  open override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
 
     if let tabBarController = self.tabBarController
-      where tabBarController.tabBar.translucent {
+      , tabBarController.tabBar.isTranslucent {
         spotsScrollView.contentInset.bottom = tabBarController.tabBar.frame.size.height
         spotsScrollView.scrollIndicatorInsets.bottom = spotsScrollView.contentInset.bottom
     }
 #if os(iOS)
-    guard let _ = spotsRefreshDelegate where refreshControl.superview == nil
+    guard let _ = spotsRefreshDelegate , refreshControl.superview == nil
       else { return }
 
-    spotsScrollView.insertSubview(refreshControl, atIndex: 0)
+    spotsScrollView.insertSubview(refreshControl, at: 0)
 #endif
   }
 
   func configureView(withSize size: CGSize) {
     spotsScrollView.frame.size = size
     spotsScrollView.contentView.frame.size = size
-    spots.enumerate().forEach { index, spot in
+    spots.enumerated().forEach { index, spot in
       compositeSpots[index]?.forEach { cIndex, cSpots in
         cSpots.forEach {
           $0.layout(size)
@@ -257,18 +257,18 @@ public class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDel
    - parameter size:        The new size for the container’s view.
    - parameter coordinator: The transition coordinator object managing the size change. You can use this object to animate your changes or get information about the transition that is in progress.
    */
-  public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-    super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+  open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    super.viewWillTransition(to: size, with: coordinator)
 
     #if os(iOS)
       guard spots_shouldAutorotate() else { return }
     #endif
 
-    coordinator.animateAlongsideTransition({ (UIViewControllerTransitionCoordinatorContext) in
+    coordinator.animate(alongsideTransition: { (UIViewControllerTransitionCoordinatorContext) in
       self.configureView(withSize: size)
       }) { (UIViewControllerTransitionCoordinatorContext) in
         self.configureView(withSize: size)
-        NSNotificationCenter.defaultCenter().postNotificationName(NotificationKeys.deviceDidRotateNotification.rawValue,
+        NotificationCenter.default.post(name: Notification.Name(rawValue: NotificationKeys.deviceDidRotateNotification.rawValue),
                                                                   object: nil,
                                                                   userInfo: ["size" : RotationSize(size: size)])
     }
@@ -277,19 +277,19 @@ public class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDel
   /**
    - parameter animated: An optional animation closure that runs when a spot is being rendered
   */
-  public func setupSpots(animated: ((view: UIView) -> Void)? = nil) {
+  open func setupSpots(_ animated: ((_ view: UIView) -> Void)? = nil) {
     var yOffset: CGFloat = 0.0
     compositeSpots = [:]
-    spots.enumerate().forEach { index, spot in
+    spots.enumerated().forEach { index, spot in
       setupSpot(index, spot: spot)
       spotsScrollView.contentView.addSubview(spot.render())
-      animated?(view: spot.render())
+      animated?(spot.render())
       (spot as? Gridable)?.layout.yOffset = yOffset
       yOffset += spot.render().frame.size.height
     }
   }
 
-  public func setupSpot(index: Int, spot: Spotable) {
+  open func setupSpot(_ index: Int, spot: Spotable) {
     spot.spotsCompositeDelegate = self
     spots[index].component.index = index
     spot.registerAndPrepare()
@@ -305,7 +305,7 @@ public class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDel
 
    - parameter refreshControl:
    */
-  public func refreshSpots(refreshControl: UIRefreshControl) {
+  open func refreshSpots(_ refreshControl: UIRefreshControl) {
     Dispatch.mainQueue { [weak self] in
       guard let weakSelf = self else { return }
       weakSelf.refreshPositions.removeAll()
@@ -326,7 +326,7 @@ extension SpotsController {
    - parameter indexPath: The index path of the component you want to lookup
    - returns: A Component object at index path
    **/
-  private func component(indexPath: NSIndexPath) -> Component {
+  fileprivate func component(_ indexPath: IndexPath) -> Component {
     return spot(indexPath).component
   }
 
@@ -334,7 +334,7 @@ extension SpotsController {
    - parameter indexPath: The index path of the spot you want to lookup
    - returns: A Spotable object at index path
    **/
-  private func spot(indexPath: NSIndexPath) -> Spotable {
-    return spots[indexPath.item]
+  fileprivate func spot(_ indexPath: IndexPath) -> Spotable {
+    return spots[(indexPath as NSIndexPath).item]
   }
 }

@@ -26,7 +26,7 @@ extension Gridable {
    - parameter indexPath: The index path of the
    - returns: Size of the object at index path as CGSize
    */
-  public func sizeForItemAt(indexPath: NSIndexPath) -> CGSize {
+  public func sizeForItemAt(_ indexPath: IndexPath) -> CGSize {
     if component.span > 0 {
       component.items[indexPath.item].size.width = collectionView.frame.width / CGFloat(component.span) - layout.minimumInteritemSpacing
     }
@@ -46,9 +46,9 @@ extension Gridable {
   /**
    - parameter size: A CGSize to set the width and height of the collection view
    */
-  public func layout(size: CGSize) {
+  public func layout(_ size: CGSize) {
     prepareItems()
-    layout.prepareLayout()
+    layout.prepare()
     layout.invalidateLayout()
     collectionView.frame.size.width = layout.collectionViewContentSize().width
     collectionView.frame.size.height = layout.collectionViewContentSize().height
@@ -60,23 +60,23 @@ extension Gridable {
    Register all views in Registry on UICollectionView
    */
   public func register() {
-    for (identifier, item) in self.dynamicType.views.storage {
+    for (identifier, item) in type(of: self).views.storage {
       switch item {
       case .classType(let classType):
-        self.collectionView.registerClass(classType, forCellWithReuseIdentifier: identifier)
+        self.collectionView.register(classType, forCellWithReuseIdentifier: identifier)
       case .nib(let nib):
-        self.collectionView.registerNib(nib, forCellWithReuseIdentifier: identifier)
+        self.collectionView.register(nib, forCellWithReuseIdentifier: identifier)
       }
     }
 
-    for (identifier, item) in self.dynamicType.headers.storage {
+    for (identifier, item) in type(of: self).headers.storage {
       switch item {
       case .classType(let classType):
-        self.collectionView.registerClass(classType,
+        self.collectionView.register(classType,
                                           forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
                                           withReuseIdentifier: identifier)
       case .nib(let nib):
-        self.collectionView.registerNib(nib,
+        self.collectionView.register(nib,
                                         forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
                                         withReuseIdentifier: identifier)
       }
@@ -89,7 +89,7 @@ extension Gridable {
    - parameter header:     The view type that you want to register
    - parameter identifier: The identifier for the header
    */
-  public static func register(header header: View.Type, identifier: StringConvertible) {
+  public static func register(header: View.Type, identifier: StringConvertible) {
     self.headers.storage[identifier.string] = Registry.Item.classType(header)
   }
 

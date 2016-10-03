@@ -11,14 +11,14 @@ class ItemExtensionsTests : XCTestCase {
      */
 
     var oldJSON: [[String : AnyObject]] = [
-      ["title" : "foo"],
-      ["title" : "bar"],
+      ["title" : "foo" as AnyObject],
+      ["title" : "bar" as AnyObject],
     ]
 
     var newJSON: [[String : AnyObject]] = [
-      ["title" : "foo"],
-      ["title" : "bar"],
-      ["title" : "baz"]
+      ["title" : "foo" as AnyObject],
+      ["title" : "bar" as AnyObject],
+      ["title" : "baz" as AnyObject]
     ]
 
     var newModels = newJSON.map { Item($0) }
@@ -53,12 +53,12 @@ class ItemExtensionsTests : XCTestCase {
      */
 
     oldJSON = [
-      ["title" : "foo", "kind" : "course-item"],
-      ["title" : "bar", "kind" : "list-item"],
+      ["title" : "foo" as AnyObject, "kind" : "course-item" as AnyObject],
+      ["title" : "bar" as AnyObject, "kind" : "list-item" as AnyObject],
     ]
     newJSON = [
-      ["title" : "foo1", "kind" : "course-item"],
-      ["title" : "bar1", "kind" : "grid-item"],
+      ["title" : "foo1" as AnyObject, "kind" : "course-item" as AnyObject],
+      ["title" : "bar1" as AnyObject, "kind" : "grid-item" as AnyObject],
     ]
 
     newModels = newJSON.map { Item($0) }

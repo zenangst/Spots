@@ -11,7 +11,7 @@ extension ListAdapter: UITableViewDataSource {
 
    - returns: The number of rows in section.
    */
-  public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+  public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return spot.component.items.count
   }
 
@@ -23,19 +23,19 @@ extension ListAdapter: UITableViewDataSource {
    - parameter indexPath: An index path locating a row in tableView.
    - returns: An object inheriting from UITableViewCell that the table view can use for the specified row. Will return the default table view cell for the current component based of kind.
    */
-  public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+  public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     if indexPath.item < spot.component.items.count {
       spot.component.items[indexPath.item].index = indexPath.row
     }
 
     let reuseIdentifier = spot.identifier(indexPath)
     let cell: UITableViewCell = tableView
-      .dequeueReusableCellWithIdentifier(reuseIdentifier, forIndexPath: indexPath)
+      .dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
 
     guard indexPath.item < spot.component.items.count else { return cell }
 
     if let composite = cell as? SpotComposable {
-      let spots = spot.spotsCompositeDelegate?.resolve(spotIndex: spot.index, itemIndex: indexPath.item)
+      let spots = spot.spotsCompositeDelegate?.resolve(spotIndex: spot.index, itemIndex: (indexPath as NSIndexPath).item)
       composite.configure(&spot.component.items[indexPath.item], spots: spots)
     } else if let cell = cell as? SpotConfigurable {
       cell.configure(&spot.component.items[indexPath.item])

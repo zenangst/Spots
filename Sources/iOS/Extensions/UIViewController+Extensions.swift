@@ -4,11 +4,11 @@ import UIKit
 extension UIViewController {
 
   func spots_shouldAutorotate() -> Bool {
-    if let parentViewController = parentViewController {
+    if let parentViewController = parent {
       return parentViewController.spots_shouldAutorotate()
     }
 
-    return shouldAutorotate()
+    return shouldAutorotate
   }
 }
 #endif

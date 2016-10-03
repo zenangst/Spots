@@ -5,9 +5,9 @@ import XCTest
 class SpotFactoryTests : XCTestCase {
 
   let json: [String : AnyObject] = [
-    "title" : "title1",
-    "kind" : "merry-go-round",
-    "span" : 1,
+    "title" : "title1" as AnyObject,
+    "kind" : "merry-go-round" as AnyObject,
+    "span" : 1 as AnyObject,
     "meta" : ["foo" : "bar"],
     "items" : [["title" : "item1"]]
   ]
@@ -30,7 +30,7 @@ class SpotFactoryTests : XCTestCase {
 
   func testDefaultResolve() {
     var newJson = json
-    newJson["type"] = "weirdo"
+    newJson["type"] = "weirdo" as AnyObject?
 
     let component = Component(newJson)
     let spot = SpotFactory.resolve(component)

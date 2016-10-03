@@ -12,12 +12,12 @@ extension CollectionAdapter : UICollectionViewDataSource {
 
    - returns: A configured supplementary view object.
    */
-  public func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
+  public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
     let header = spot.component.header.isEmpty
-      ? spot.dynamicType.headers.defaultIdentifier
+      ? type(of: spot).headers.defaultIdentifier
       : spot.component.header
 
-    let view = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: header, forIndexPath: indexPath)
+    let view = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: header, for: indexPath)
     (view as? Componentable)?.configure(spot.component)
 
     return view
@@ -30,7 +30,7 @@ extension CollectionAdapter : UICollectionViewDataSource {
    - parameter section: An index number identifying a section in collectionView. This index value is 0-based.
    - returns: The number of rows in section.
    */
-  public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+  public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     return spot.component.items.count
   }
 
@@ -41,13 +41,13 @@ extension CollectionAdapter : UICollectionViewDataSource {
    - parameter indexPath: The index path that specifies the location of the item.
    - returns: A configured cell object. You must not return nil from this method.
    */
-  public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+  public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     spot.component.items[indexPath.item].index = indexPath.item
 
     let reuseIdentifier = spot.identifier(indexPath)
-    let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath)
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
     if let composite = cell as? SpotComposable {
-      let spots = spot.spotsCompositeDelegate?.resolve(spotIndex: spot.index, itemIndex: indexPath.item)
+      let spots = spot.spotsCompositeDelegate?.resolve(spotIndex: spot.index, itemIndex: (indexPath as NSIndexPath).item)
       composite.configure(&spot.component.items[indexPath.item], spots: spots)
     } else if let cell = cell as? SpotConfigurable {
       cell.configure(&spot.component.items[indexPath.item])
