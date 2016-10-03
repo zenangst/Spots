@@ -12,7 +12,7 @@ open class SpotsScrollView: UIScrollView {
   }
 
   /// A KVO context used to monitor changes in contentSize, frames and bounds
-  let subviewContext: UnsafeMutableRawPointer = UnsafeMutableRawPointer(mutating: nil)!
+  let subviewContext: UnsafeMutableRawPointer? = UnsafeMutableRawPointer(mutating: nil)
 
   /// An collection of UIView's that resemble the order of the views in the scroll view
   fileprivate var subviewsInLayoutOrder = [UIView?]()

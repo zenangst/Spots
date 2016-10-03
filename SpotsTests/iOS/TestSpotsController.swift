@@ -143,14 +143,14 @@ class SpotsControllerTests : XCTestCase {
     let gridSpot = GridSpot(component: Component(title: "GridSpot", items: [Item(title: "Item")]))
     let spotController = SpotsController(spots: [listSpot, listSpot2, gridSpot])
 
-    XCTAssertNotNil(spotController.spot{ $1.component.title == "ListSpot" })
-    XCTAssertNotNil(spotController.spot{ $1.component.title == "GridSpot" })
-    XCTAssertNotNil(spotController.spot{ $1 is Listable })
-    XCTAssertNotNil(spotController.spot{ $1 is Gridable })
-    XCTAssertNotNil(spotController.spot{ $1.items.filter{ $0.title == "Item" }.first != nil })
-    XCTAssertEqual(spotController.spot{ $0.index == 0 }?.component.title, "ListSpot")
-    XCTAssertEqual(spotController.spot{ $0.index == 1 }?.component.title, "ListSpot2")
-    XCTAssertEqual(spotController.spot{ $0.index == 2 }?.component.title, "GridSpot")
+    XCTAssertNotNil(spotController.resolve(spot: { $1.component.title == "ListSpot" }))
+    XCTAssertNotNil(spotController.resolve(spot: { $1.component.title == "GridSpot" }))
+    XCTAssertNotNil(spotController.resolve(spot: { $1 is Listable }))
+    XCTAssertNotNil(spotController.resolve(spot: { $1 is Gridable }))
+    XCTAssertNotNil(spotController.resolve(spot: { $1.items.filter{ $0.title == "Item" }.first != nil }))
+    XCTAssertEqual(spotController.resolve(spot: { $0.0 == 0 })?.component.title, "ListSpot")
+    XCTAssertEqual(spotController.resolve(spot: { $0.0 == 1 })?.component.title, "ListSpot2")
+    XCTAssertEqual(spotController.resolve(spot: { $0.0 == 2 })?.component.title, "GridSpot")
 
     XCTAssert(spotController.filter { $0 is Listable }.count == 2)
   }

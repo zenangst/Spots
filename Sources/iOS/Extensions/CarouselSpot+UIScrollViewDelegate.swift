@@ -86,7 +86,7 @@ extension CarouselSpot: UIScrollViewDelegate {
       carouselScrollDelegate?.spotDidEndScrolling(self, item: items[index])
     }
 
-    let floatIndex = ceil(CGFloat(index) / component.span)
+    let floatIndex = ceil(CGFloat(index) / CGFloat(component.span))
 
     #if os(iOS)
       pageControl.currentPage = Int(floatIndex)

@@ -60,7 +60,7 @@ public struct Component: Mappable, Equatable {
   public var header = ""
   /// Configures the span that should be used for items in one row
   /// Used by gridable components
-  public var span: CGFloat = 0
+  public var span: Double = 0
   /// A collection of view models
   public var items = [Item]()
   /// The width and height of the component, usually calculated and updated by the UI component
@@ -152,7 +152,7 @@ public struct Component: Mappable, Equatable {
               title: String = "",
               header: String = "",
               kind: String = "",
-              span: CGFloat = 0,
+              span: Double = 0,
               items: [Item] = [],
               meta: [String : Any] = [:]) {
     self.identifier = identifier

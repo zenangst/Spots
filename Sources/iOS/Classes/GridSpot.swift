@@ -19,17 +19,17 @@ open class GridSpot: NSObject, Gridable {
    */
   public struct Default {
     /// Default top section inset
-    public static var sectionInsetTop: CGFloat = 0.0
+    public static var sectionInsetTop: Double = 0.0
     /// Default left section inset
-    public static var sectionInsetLeft: CGFloat = 0.0
+    public static var sectionInsetLeft: Double = 0.0
     /// Default right section inset
-    public static var sectionInsetRight: CGFloat = 0.0
+    public static var sectionInsetRight: Double = 0.0
     /// Default bottom section inset
-    public static var sectionInsetBottom: CGFloat = 0.0
+    public static var sectionInsetBottom: Double = 0.0
     /// Default minimum interitem spacing
-    public static var minimumInteritemSpacing: CGFloat = 0.0
+    public static var minimumInteritemSpacing: Double = 0.0
     /// Default minimum line spacing
-    public static var minimumLineSpacing: CGFloat = 0.0
+    public static var minimumLineSpacing: Double = 0.0
   }
 
   /// A Registry object that holds identifiers and classes for cells used in the GridSpot
@@ -147,11 +147,11 @@ open class GridSpot: NSObject, Gridable {
    */
   func configureLayout() {
     layout.sectionInset = UIEdgeInsets(
-      top: component.meta(GridableMeta.Key.sectionInsetTop, Default.sectionInsetTop),
-      left: component.meta(GridableMeta.Key.sectionInsetLeft, Default.sectionInsetLeft),
-      bottom: component.meta(GridableMeta.Key.sectionInsetBottom, Default.sectionInsetBottom),
-      right: component.meta(GridableMeta.Key.sectionInsetRight, Default.sectionInsetRight))
-    layout.minimumInteritemSpacing = component.meta(GridableMeta.Key.minimumInteritemSpacing, Default.minimumInteritemSpacing)
-    layout.minimumLineSpacing = component.meta(GridableMeta.Key.minimumLineSpacing, Default.minimumLineSpacing)
+      top: CGFloat(component.meta(GridableMeta.Key.sectionInsetTop, Default.sectionInsetTop)),
+      left: CGFloat(component.meta(GridableMeta.Key.sectionInsetLeft, Default.sectionInsetLeft)),
+      bottom: CGFloat(component.meta(GridableMeta.Key.sectionInsetBottom, Default.sectionInsetBottom)),
+      right: CGFloat(component.meta(GridableMeta.Key.sectionInsetRight, Default.sectionInsetRight)))
+    layout.minimumInteritemSpacing = CGFloat(component.meta(GridableMeta.Key.minimumInteritemSpacing, Default.minimumInteritemSpacing))
+    layout.minimumLineSpacing = CGFloat(component.meta(GridableMeta.Key.minimumLineSpacing, Default.minimumLineSpacing))
   }
 }

@@ -181,7 +181,7 @@ open class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDeleg
    - parameter closure: A closure to perform actions on a spotable object
    - returns: An optional Spotable object
    */
-  open func spot(_ closure: (_ index: Int, _ spot: Spotable) -> Bool) -> Spotable? {
+  open func resolve(spot closure: (_ index: Int, _ spot: Spotable) -> Bool) -> Spotable? {
     for (index, spot) in spots.enumerated()
       where closure(index, spot) {
         return spot

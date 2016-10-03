@@ -15,17 +15,17 @@ public class CarouselSpot: NSObject, Gridable {
   }
 
   public struct Default {
-    public static var titleFontSize: CGFloat = 18.0
-    public static var titleLeftInset: CGFloat = 0.0
-    public static var titleTopInset: CGFloat = 10.0
-    public static var titleBottomInset: CGFloat = 10.0
+    public static var titleFontSize: Double = 18.0
+    public static var titleLeftInset: Double = 0.0
+    public static var titleTopInset: Double = 10.0
+    public static var titleBottomInset: Double = 10.0
     public static var titleTextColor: String = "000000"
-    public static var sectionInsetTop: CGFloat = 0.0
-    public static var sectionInsetLeft: CGFloat = 0.0
-    public static var sectionInsetRight: CGFloat = 0.0
-    public static var sectionInsetBottom: CGFloat = 0.0
-    public static var minimumInteritemSpacing: CGFloat = 0.0
-    public static var minimumLineSpacing: CGFloat = 0.0
+    public static var sectionInsetTop: Double = 0.0
+    public static var sectionInsetLeft: Double = 0.0
+    public static var sectionInsetRight: Double = 0.0
+    public static var sectionInsetBottom: Double = 0.0
+    public static var minimumInteritemSpacing: Double = 0.0
+    public static var minimumLineSpacing: Double = 0.0
   }
 
   /// A Registry struct that contains all register components, used for resolving what UI component to use

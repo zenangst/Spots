@@ -42,7 +42,7 @@ open class GridableLayout: UICollectionViewFlowLayout {
         }
 
         contentSize.height += CGFloat(adapter.spot.items.count) * minimumLineSpacing
-        contentSize.height /= adapter.spot.component.span
+        contentSize.height /= CGFloat(adapter.spot.component.span)
         contentSize.height += sectionInset.top + sectionInset.bottom
       } else {
         contentSize.height = adapter.spot.items.reduce(0, { $0 + $1.size.height })
