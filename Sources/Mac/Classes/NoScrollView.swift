@@ -1,6 +1,6 @@
 import Cocoa
 
-public class NoScrollView: NSScrollView {
+open class NoScrollView: NSScrollView {
 
   var scrollingEnabled: Bool = true
 
@@ -12,26 +12,26 @@ public class NoScrollView: NSScrollView {
     hasVerticalScroller = false
     scrollsDynamically = true
     automaticallyAdjustsContentInsets = false
-    scrollerStyle = .Overlay
+    scrollerStyle = .overlay
   }
 
   required public init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 
-  override public func scrollWheel(theEvent: NSEvent) {
+  override open func scrollWheel(with theEvent: NSEvent) {
     if theEvent.scrollingDeltaX != 0.0 && horizontalScroller != nil && scrollingEnabled {
-      super.scrollWheel(theEvent)
+      super.scrollWheel(with: theEvent)
     } else {
-      nextResponder?.scrollWheel(theEvent)
+      nextResponder?.scrollWheel(with: theEvent)
     }
   }
 
-  static public override func isCompatibleWithResponsiveScrolling() -> Bool {
+  static open override func isCompatibleWithResponsiveScrolling() -> Bool {
     return true
   }
 
-  override public var allowsVibrancy: Bool {
+  override open var allowsVibrancy: Bool {
     return true
   }
 }

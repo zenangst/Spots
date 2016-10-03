@@ -1,7 +1,7 @@
 import Cocoa
 import Brick
 
-public class ListSpot: NSObject, Listable {
+open class ListSpot: NSObject, Listable {
 
   public struct Key {
     public static let titleSeparator = "titleSeparator"
@@ -29,64 +29,64 @@ public class ListSpot: NSObject, Listable {
   }
 
   /// A Registry struct that contains all register components, used for resolving what UI component to use
-  public static var views = Registry()
-  public static var configure: ((view: NSTableView) -> Void)?
-  public static var defaultView: View.Type = ListSpotItem.self
-  public static var defaultKind: StringConvertible = Component.Kind.List.string
+  open static var views = Registry()
+  open static var configure: ((_ view: NSTableView) -> Void)?
+  open static var defaultView: View.Type = ListSpotItem.self
+  open static var defaultKind: StringConvertible = Component.Kind.List.string
 
-  public weak var spotsCompositeDelegate: SpotsCompositeDelegate?
-  public weak var spotsDelegate: SpotsDelegate?
+  open weak var spotsCompositeDelegate: SpotsCompositeDelegate?
+  open weak var spotsDelegate: SpotsDelegate?
 
-  public var cachedViews = [String : SpotConfigurable]()
-  public var component: Component
-  public var configure: (SpotConfigurable -> Void)?
-  public var index = 0
+  open var cachedViews = [String : SpotConfigurable]()
+  open var component: Component
+  open var configure: ((SpotConfigurable) -> Void)?
+  open var index = 0
   /// Indicator to calculate the height based on content
-  public var usesDynamicHeight = true
+  open var usesDynamicHeight = true
 
-  public private(set) var stateCache: SpotCache?
+  open fileprivate(set) var stateCache: SpotCache?
 
-  public var adapter: SpotAdapter? {
+  open var adapter: SpotAdapter? {
     return listAdapter
   }
 
-  private lazy var listAdapter: ListAdapter = ListAdapter(spot: self)
+  fileprivate lazy var listAdapter: ListAdapter = ListAdapter(spot: self)
 
-  public lazy var scrollView: ScrollView = {
+  open lazy var scrollView: ScrollView = {
     let scrollView = ScrollView()
     scrollView.documentView = NSView()
 
     return scrollView
   }()
 
-  public lazy var titleView: NSTextField = {
+  open lazy var titleView: NSTextField = {
     let titleView = NSTextField()
-    titleView.editable = false
-    titleView.selectable = false
-    titleView.bezeled = false
-    titleView.textColor = NSColor.grayColor()
+    titleView.isEditable = false
+    titleView.isSelectable = false
+    titleView.isBezeled = false
+    titleView.textColor = NSColor.gray
     titleView.drawsBackground = false
 
     return titleView
   }()
 
-  public lazy var tableView: NSTableView = {
+  open lazy var tableView: NSTableView = {
     let tableView = NSTableView(frame: CGRect.zero)
-    tableView.backgroundColor = NSColor.clearColor()
+    tableView.backgroundColor = NSColor.clear
     tableView.allowsColumnReordering = false
     tableView.allowsColumnResizing = false
     tableView.allowsColumnSelection = false
     tableView.allowsEmptySelection = true
     tableView.allowsMultipleSelection = false
     tableView.headerView = nil
-    tableView.selectionHighlightStyle = .None
+    tableView.selectionHighlightStyle = .none
     tableView.allowsTypeSelect = true
-    tableView.focusRingType = .None
+    tableView.focusRingType = .none
 
     return tableView
   }()
 
-  public lazy var tableColumn: NSTableColumn = {
+  open lazy var tableColumn: NSTableColumn = {
     let column = NSTableColumn(identifier: "tableview-column")
     column.maxWidth = 250
     column.width = 250
@@ -99,7 +99,7 @@ public class ListSpot: NSObject, Listable {
     let lineView = NSView()
     lineView.frame.size.height = 1
     lineView.wantsLayer = true
-    lineView.layer?.backgroundColor = NSColor.grayColor().colorWithAlphaComponent(0.2).CGColor
+    lineView.layer?.backgroundColor = NSColor.gray.withAlphaComponent(0.2).cgColor
 
     return lineView
   }()
@@ -120,27 +120,27 @@ public class ListSpot: NSObject, Listable {
   }
 
   deinit {
-    tableView.setDelegate(nil)
-    tableView.setDataSource(nil)
+    tableView.delegate = nil
+    tableView.dataSource = nil
   }
 
-  public func doubleAction(sender: AnyObject?) {
+  open func doubleAction(_ sender: Any?) {
     guard let viewModel = item(tableView.clickedRow)
-    where component.meta(Key.doubleAction, type: Bool.self) == true else { return }
+    , component.meta(Key.doubleAction, type: Bool.self) == true else { return }
     spotsDelegate?.spotDidSelectItem(self, item: viewModel)
   }
 
-  public func action(sender: AnyObject?) {
+  open func action(_ sender: Any?) {
     guard let viewModel = item(tableView.clickedRow)
-      where component.meta(Key.doubleAction, false) == false else { return }
+      , component.meta(Key.doubleAction, false) == false else { return }
     spotsDelegate?.spotDidSelectItem(self, item: viewModel)
   }
 
-  public func render() -> ScrollView {
+  open func render() -> ScrollView {
     return scrollView
   }
 
-  public func layout(size: CGSize) {
+  open func layout(_ size: CGSize) {
     scrollView.contentInsets.top = component.meta(Key.contentInsetsTop, Default.contentInsetsTop)
     scrollView.contentInsets.left = component.meta(Key.contentInsetsLeft, Default.contentInsetsLeft)
     scrollView.contentInsets.bottom = component.meta(Key.contentInsetsBottom, Default.contentInsetsBottom)
@@ -155,13 +155,13 @@ public class ListSpot: NSObject, Listable {
     scrollView.frame.size.height = tableView.frame.height + scrollView.contentInsets.top + scrollView.contentInsets.bottom
   }
 
-  public func setup(size: CGSize) {
+  open func setup(_ size: CGSize) {
     component.items.enumerated().forEach {
-      component.items[$0.index].size.width = size.width
+      component.items[$0.offset].size.width = size.width
     }
 
-    tableView.setDelegate(listAdapter)
-    tableView.setDataSource(listAdapter)
+    tableView.delegate = listAdapter
+    tableView.dataSource = listAdapter
     tableView.target = self
     tableView.addTableColumn(tableColumn)
     tableView.action = #selector(self.action(_:))
@@ -177,14 +177,14 @@ public class ListSpot: NSObject, Listable {
     }
 
     layout(size)
-    ListSpot.configure?(view: tableView)
+    ListSpot.configure?(tableView)
   }
 
-  private func configureTitleView() {
+  fileprivate func configureTitleView() {
     titleView.stringValue = component.title
-    titleView.font = NSFont.systemFontOfSize(component.meta(Key.titleFontSize, Default.titleFontSize))
+    titleView.font = NSFont.systemFont(ofSize: component.meta(Key.titleFontSize, Default.titleFontSize))
     titleView.sizeToFit()
-    titleView.enabled = false
+    titleView.isEnabled = false
     titleView.frame.origin.x = tableView.frame.origin.x + component.meta(Key.titleLeftInset, Default.titleLeftInset)
     scrollView.contentInsets.top += titleView.frame.size.height * 2
     titleView.frame.origin.y = titleView.frame.size.height / 2
@@ -194,12 +194,12 @@ public class ListSpot: NSObject, Listable {
     lineView.frame.origin.y = titleView.frame.maxY + 8
   }
 
-  public func register() {
-    for (identifier, item) in self.dynamicType.views.storage {
+  open func register() {
+    for (identifier, item) in type(of: self).views.storage {
       switch item {
       case .classType(_): break
       case .nib(let nib):
-        self.tableView.registerNib(nib, forIdentifier: identifier)
+        self.tableView.register(nib, forIdentifier: identifier)
       }
     }
   }

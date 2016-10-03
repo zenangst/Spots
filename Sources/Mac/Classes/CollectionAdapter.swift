@@ -3,7 +3,7 @@ import Cocoa
 /**
  The CollectionAdapter works as a proxy handler for all Gridable object
  */
-public class CollectionAdapter: NSObject, SpotAdapter {
+open class CollectionAdapter: NSObject, SpotAdapter {
   // An unowned Gridable object
   unowned var spot: Gridable
 

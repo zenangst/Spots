@@ -159,7 +159,7 @@ public extension SpotsProtocol {
 
    - parameter items: An optional integer that is used to reduce the amount of items that should be cached per Spotable object when saving the view state to disk
    */
-  public func cache(items: Int? = nil) {
+  public func cache(_ items: Int? = nil) {
     #if DEVMODE
       liveEditing(stateCache)
     #endif

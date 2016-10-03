@@ -452,7 +452,7 @@ extension SpotsProtocol {
    - parameter animation: A SpotAnimation struct that determines which animation that should be used to perform the update
    - parameter completion: A completion closure that will run after the spot has performed updates internally
    */
-  public func update(indexes: [Int], spotIndex: Int = 0, withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
+  public func update(_ indexes: [Int], spotIndex: Int = 0, withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
     spot(spotIndex, Spotable.self)?.reload(indexes, withAnimation: animation) {
       completion?()
     }
@@ -478,7 +478,7 @@ extension SpotsProtocol {
    - parameter animation: A SpotAnimation struct that determines which animation that should be used to perform the update
    - parameter completion: A completion closure that will run after the spot has performed updates internally
    */
-  public func delete(indexes: [Int], spotIndex: Int = 0, withAnimation animation: SpotsAnimation = .none, completion: Completion = nil) {
+  public func delete(_ indexes: [Int], spotIndex: Int = 0, withAnimation animation: SpotsAnimation = .none, completion: Completion = nil) {
     spot(spotIndex, Spotable.self)?.delete(indexes, withAnimation: animation) {
       completion?()
     }
@@ -499,7 +499,7 @@ extension SpotsProtocol {
 
   fileprivate func reloadSpotsScrollView() {
     #if os(OSX)
-      (spotsScrollView.documentView as? View)?.subviews.forEach { $0.removeFromSuperview() }
+      spotsScrollView.documentView?.subviews.forEach { $0.removeFromSuperview() }
     #else
       spotsScrollView.contentView.subviews.forEach { $0.removeFromSuperview() }
     #endif

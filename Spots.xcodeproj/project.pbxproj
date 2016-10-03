@@ -900,9 +900,11 @@
 					};
 					D58478C71C440567006EBA49 = {
 						CreatedOnToolsVersion = 7.2;
+						LastSwiftMigration = 0800;
 					};
 					D58478D01C440567006EBA49 = {
 						CreatedOnToolsVersion = 7.2;
+						LastSwiftMigration = 0800;
 					};
 				};
 			};

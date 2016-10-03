@@ -2,9 +2,9 @@ import Cocoa
 
 class CollectionViewLeftLayout: NSCollectionViewFlowLayout {
 
-  override func layoutAttributesForElementsInRect(rect: CGRect) -> [NSCollectionViewLayoutAttributes] {
+  override func layoutAttributesForElements(in rect: CGRect) -> [NSCollectionViewLayoutAttributes] {
 
-    let defaultAttributes = super.layoutAttributesForElementsInRect(rect)
+    let defaultAttributes = super.layoutAttributesForElements(in: rect)
 
     guard !defaultAttributes.isEmpty else { return defaultAttributes }
 

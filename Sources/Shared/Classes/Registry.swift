@@ -6,8 +6,8 @@ import Cocoa
 #endif
 
 public enum RegistryType: String {
-  case Nib = "nib"
-  case Regular = "regular"
+  case nib = "nib"
+  case regular = "regular"
 }
 
 /// A registry that is used internally when resolving kind to the corresponding spot.
@@ -79,7 +79,7 @@ open class Registry {
 
     switch item {
     case .classType(let classType):
-      registryType = .Regular
+      registryType = .regular
       if let view = cache.object(forKey: "\(registryType.rawValue)\(identifier)" as NSString) {
         return (type: registryType, view: view)
       }
@@ -87,13 +87,13 @@ open class Registry {
       view = classType.init()
 
     case .nib(let nib):
-      registryType = .Nib
+      registryType = .nib
       if let view = cache.object(forKey: "\(registryType.rawValue)\(identifier)" as NSString) {
         return (type: registryType, view: view)
       }
       #if os(OSX)
         var views: NSArray?
-        if nib.instantiateWithOwner(nil, topLevelObjects: &views) {
+        if nib.instantiate(withOwner: nil, topLevelObjects: &views!) {
           view = views?.filter({ $0 is NSTableRowView }).first as? View
         }
       #else

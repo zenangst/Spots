@@ -371,23 +371,23 @@ public extension Spotable {
     prepareItems()
   }
 
-  func registerDefault(view: View.Type) {
+  func registerDefault(_ view: View.Type) {
     if type(of: self).views.storage[type(of: self).views.defaultIdentifier] == nil {
       type(of: self).views.defaultItem = Registry.Item.classType(view)
     }
   }
 
-  func registerComposite(view: View.Type) {
+  func registerComposite(_ view: View.Type) {
     if type(of: self).views.composite == nil {
       type(of: self).views.composite = Registry.Item.classType(view)
     }
   }
 
-  public static func register(nib: Nib, identifier: StringConvertible) {
+  public static func register(_ nib: Nib, identifier: StringConvertible) {
     self.views.storage[identifier.string] = Registry.Item.nib(nib)
   }
 
-  public static func register(view: View.Type, identifier: StringConvertible) {
+  public static func register(_ view: View.Type, identifier: StringConvertible) {
     self.views.storage[identifier.string] = Registry.Item.classType(view)
   }
 

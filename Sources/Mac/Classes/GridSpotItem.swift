@@ -1,65 +1,65 @@
 import Cocoa
 import Brick
 
-public class FlippedView: NSView {
-  static public var flipped: Bool {
+open class FlippedView: NSView {
+  static open var flipped: Bool {
     get {
       return true
     }
   }
 }
 
-public class GridSpotItem: NSCollectionViewItem, SpotConfigurable {
+open class GridSpotItem: NSCollectionViewItem, SpotConfigurable {
 
-  static public var flipped: Bool {
+  static open var flipped: Bool {
     get {
       return true
     }
   }
 
-  public override var selected: Bool {
+  open override var isSelected: Bool {
     didSet {
-      if selected {
-        view.layer?.backgroundColor = NSColor.blackColor().colorWithAlphaComponent(0.85).CGColor
+      if isSelected {
+        view.layer?.backgroundColor = NSColor.black.withAlphaComponent(0.85).cgColor
       } else {
-        view.layer?.backgroundColor = NSColor.clearColor().CGColor
+        view.layer?.backgroundColor = NSColor.clear.cgColor
       }
     }
   }
 
-  public var preferredViewSize = CGSize(width: 0, height: 88)
-  public var customView = FlippedView()
+  open var preferredViewSize = CGSize(width: 0, height: 88)
+  open var customView = FlippedView()
 
-  public lazy var customImageView: NSImageView = {
+  open lazy var customImageView: NSImageView = {
     let customImageView = NSImageView()
-    customImageView.autoresizingMask = .ViewWidthSizable
+    customImageView.autoresizingMask = .viewWidthSizable
 
     return customImageView
   }()
 
-  public lazy var titleLabel: NSTextField = {
+  open lazy var titleLabel: NSTextField = {
     let titleLabel = NSTextField()
-    titleLabel.editable = false
-    titleLabel.selectable = false
-    titleLabel.bezeled = false
-    titleLabel.textColor = NSColor.whiteColor()
+    titleLabel.isEditable = false
+    titleLabel.isSelectable = false
+    titleLabel.isBezeled = false
+    titleLabel.textColor = NSColor.white
     titleLabel.drawsBackground = false
 
     return titleLabel
   }()
 
-  public lazy var subtitleLabel: NSTextField = {
+  open lazy var subtitleLabel: NSTextField = {
     let subtitleLabel = NSTextField()
-    subtitleLabel.editable = false
-    subtitleLabel.selectable = false
-    subtitleLabel.bezeled = false
-    subtitleLabel.textColor = NSColor.lightGrayColor()
+    subtitleLabel.isEditable = false
+    subtitleLabel.isSelectable = false
+    subtitleLabel.isBezeled = false
+    subtitleLabel.textColor = NSColor.lightGray
     subtitleLabel.drawsBackground = false
 
     return subtitleLabel
   }()
 
-  override init?(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+  override init?(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     super.init(nibName: nil, bundle: nil)
 
     imageView = customImageView
@@ -73,22 +73,22 @@ public class GridSpotItem: NSCollectionViewItem, SpotConfigurable {
     fatalError("init(coder:) has not been implemented")
   }
 
-  public override func loadView() {
+  open override func loadView() {
     view = customView
   }
 
-  override public func viewDidLoad() {
+  override open func viewDidLoad() {
     view.wantsLayer = true
-    view.layer?.backgroundColor = NSColor.clearColor().CGColor
+    view.layer?.backgroundColor = NSColor.clear.cgColor
   }
 
-  public func configure(inout item: Item) {
+  open func configure( _ item: inout Item) {
     titleLabel.stringValue = item.title
     titleLabel.frame.origin.x = 8
     titleLabel.sizeToFit()
     if !item.subtitle.isEmpty {
       titleLabel.frame.origin.y = 8
-      titleLabel.font = NSFont.boldSystemFontOfSize(14)
+      titleLabel.font = NSFont.boldSystemFont(ofSize: 14)
       titleLabel.sizeToFit()
     } else {
       titleLabel.frame.origin.y = item.size.height / 2 - titleLabel.frame.size.height / 2

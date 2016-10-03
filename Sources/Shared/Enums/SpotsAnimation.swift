@@ -24,22 +24,22 @@ public enum SpotsAnimation: Int {
   #if os(OSX)
   var tableViewAnimation: NSTableViewAnimationOptions {
     switch self {
-    case .Fade:
-      return NSTableViewAnimationOptions.EffectFade
-    case .Right:
-      return NSTableViewAnimationOptions.SlideRight
-    case .Left:
-      return NSTableViewAnimationOptions.SlideLeft
-    case .Top:
-      return NSTableViewAnimationOptions.SlideUp
-    case .Bottom:
-      return NSTableViewAnimationOptions.SlideDown
-    case .None:
-      return NSTableViewAnimationOptions.EffectNone
-    case .Middle:
-      return NSTableViewAnimationOptions.EffectGap
-    case .Automatic:
-      return NSTableViewAnimationOptions.EffectFade
+    case .fade:
+      return NSTableViewAnimationOptions.effectFade
+    case .right:
+      return NSTableViewAnimationOptions.slideRight
+    case .left:
+      return NSTableViewAnimationOptions.slideLeft
+    case .top:
+      return NSTableViewAnimationOptions.slideUp
+    case .bottom:
+      return NSTableViewAnimationOptions.slideDown
+    case .none:
+      return NSTableViewAnimationOptions()
+    case .middle:
+      return NSTableViewAnimationOptions.effectGap
+    case .automatic:
+      return NSTableViewAnimationOptions.effectFade
     }
   }
   #else

@@ -1,12 +1,12 @@
 import Cocoa
 
-public class SpotsScrollView: NSScrollView {
+open class SpotsScrollView: NSScrollView {
 
-  let KVOContext = UnsafeMutablePointer<()>(nil)
+  let KVOContext: UnsafeMutableRawPointer? = UnsafeMutableRawPointer(mutating: nil)
 
-  private var subviewsInLayoutOrder = [NSView]()
+  fileprivate var subviewsInLayoutOrder = [NSView]()
 
-  public var forceUpdate = false {
+  open var forceUpdate = false {
     didSet {
       if forceUpdate {
         layoutSubtreeIfNeeded()
@@ -14,9 +14,9 @@ public class SpotsScrollView: NSScrollView {
     }
   }
 
-  lazy public var spotsContentView: SpotsContentView = {
+  lazy open var spotsContentView: SpotsContentView = {
     let contentView = SpotsContentView()
-    contentView.autoresizingMask = [.ViewWidthSizable, .ViewHeightSizable]
+    contentView.autoresizingMask = [.viewWidthSizable, .viewHeightSizable]
     contentView.autoresizesSubviews = true
 
     return contentView
@@ -36,27 +36,27 @@ public class SpotsScrollView: NSScrollView {
     return true
   }
 
-  func didAddSubviewToContainer(subview: View) {
+  func didAddSubviewToContainer(_ subview: View) {
     subviewsInLayoutOrder.append(subview)
     layoutSubtreeIfNeeded()
   }
 
-  public override func willRemoveSubview(subview: View) {
-    if let index = subviewsInLayoutOrder.indexOf({ $0 == subview }) {
+  open override func willRemoveSubview(_ subview: View) {
+    if let index = subviewsInLayoutOrder.index(where: { $0 == subview }) {
       subviewsInLayoutOrder.remove(at: index)
       layoutSubtreeIfNeeded()
     }
   }
 
-  static public override func isCompatibleWithResponsiveScrolling() -> Bool {
+  static open override func isCompatibleWithResponsiveScrolling() -> Bool {
     return true
   }
 
-  public override func viewDidMoveToWindow() {
+  open override func viewDidMoveToWindow() {
     layoutSubtreeIfNeeded()
   }
 
-  override public func layoutSubtreeIfNeeded() {
+  override open func layoutSubtreeIfNeeded() {
     super.layoutSubtreeIfNeeded()
 
     var yOffsetOfCurrentSubview: CGFloat = 0.0

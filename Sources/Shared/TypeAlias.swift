@@ -14,7 +14,6 @@ public typealias Completion = (() -> Void)?
   public typealias CollectionView = NSCollectionView
   public typealias Nib = NSNib
   public typealias CollectionLayout = NSCollectionViewLayout
-  public typealias EdgeInsets = NSEdgeInsets
 #else
   public typealias View = UIView
   public typealias ScrollView = UIScrollView

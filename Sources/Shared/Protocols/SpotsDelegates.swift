@@ -10,7 +10,7 @@ public protocol SpotsCompositeDelegate: class {
 
 extension SpotsCompositeDelegate {
 
-  func resolve(spotIndex: Int, itemIndex: Int) -> [Spotable]? {
+  func resolve(_ spotIndex: Int, itemIndex: Int) -> [Spotable]? {
     guard let compositeContainer = compositeSpots[spotIndex],
       let result = compositeContainer[itemIndex] else {
         return nil

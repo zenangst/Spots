@@ -7,7 +7,7 @@ extension NSScrollView {
       return documentVisibleRect.origin
     }
     set(newValue) {
-      documentView?.scrollPoint(newValue)
+      documentView?.scroll(newValue)
     }
   }
 }

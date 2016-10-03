@@ -2,7 +2,7 @@ import Cocoa
 
 extension CollectionAdapter: NSCollectionViewDelegateFlowLayout {
 
-  public func collectionView(collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> NSSize {
-    return spot.sizeForItemAt(indexPath)
+  public func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> NSSize {
+    return spot.sizeForItemAt(indexPath as IndexPath)
   }
 }

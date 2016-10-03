@@ -56,7 +56,7 @@ open class CarouselSpot: NSObject, Gridable {
       #if os(iOS)
         dynamicSpan = component.meta(Key.dynamicSpan, Default.dynamicSpan)
         if component.items.count > 1 && component.span > 0 {
-          pageControl.numberOfPages = Int(floor(Double(component.items.count) / component.span))
+          pageControl.numberOfPages = Int(floor(Double(component.items.count) / CGFloat(component.span)))
         }
       #endif
     }

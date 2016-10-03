@@ -19,12 +19,12 @@ extension Gridable {
   // MARK: - Spotable
 
   public func register() {
-    for (identifier, item) in self.dynamicType.grids.storage {
+    for (identifier, item) in type(of: self).grids.storage {
       switch item {
       case .classType(let classType):
-        self.collectionView.registerClass(classType, forItemWithIdentifier: identifier)
+        self.collectionView.register(classType, forItemWithIdentifier: identifier)
       case .nib(let nib):
-        self.collectionView.registerNib(nib, forItemWithIdentifier: identifier)
+        self.collectionView.register(nib, forItemWithIdentifier: identifier)
       }
     }
   }
@@ -46,15 +46,15 @@ extension Gridable {
    - parameter indexPath: The index path of the
    - returns: Size of the object at index path as CGSize
    */
-  public func sizeForItemAt(indexPath: NSIndexPath) -> CGSize {
+  public func sizeForItemAt(_ indexPath: IndexPath) -> CGSize {
     var sectionInsets: CGFloat = 0.0
-    if let layout = layout as? NSCollectionViewFlowLayout where component.span > 0 {
+    if let layout = layout as? NSCollectionViewFlowLayout , component.span > 0 {
       component.items[indexPath.item].size.width = (collectionView.frame.width / CGFloat(component.span)) - layout.sectionInset.left - layout.sectionInset.right
       sectionInsets = layout.sectionInset.left + layout.sectionInset.right
     }
 
-    var width = (item(indexPath)?.size.width ?? 0) - sectionInsets
-    let height = item(indexPath)?.size.height ?? 0
+    var width = (item(indexPath as IndexPath)?.size.width ?? 0) - sectionInsets
+    let height = item(indexPath as IndexPath)?.size.height ?? 0
     // Never return a negative width
     guard width > -1 else {
       return CGSize.zero
@@ -71,11 +71,11 @@ extension Gridable {
     return size
   }
 
-  public func identifier(index: Int) -> String {
+  public func identifier(_ index: Int) -> String {
     guard let item = item(index)
-      where self.dynamicType.grids.storage[item.kind] != nil
+      , type(of: self).grids.storage[item.kind] != nil
       else {
-        return self.dynamicType.grids.defaultIdentifier
+        return type(of: self).grids.defaultIdentifier
     }
 
     return item.kind
@@ -87,7 +87,7 @@ extension Gridable {
    - parameter index: The index of the view model
    - parameter usesViewSize: A boolean value to determine if the view uses the views height
    */
-  public func configureItem(index: Int, usesViewSize: Bool = false) {
+  public func configureItem(_ index: Int, usesViewSize: Bool = false) {
     guard let item = item(index) else { return }
 
     var viewModel = item
@@ -98,7 +98,7 @@ extension Gridable {
       : viewModel.kind
 
     guard let (_, collectionItem) = Self.grids.make(kind),
-      view = collectionItem as? SpotConfigurable else { return }
+      let view = collectionItem as? SpotConfigurable else { return }
 
     view.configure(&viewModel)
 
@@ -117,7 +117,7 @@ extension Gridable {
     }
   }
 
-  public static func register(nib nib: Nib, identifier: StringConvertible) {
+  public static func register(_ nib: Nib, identifier: StringConvertible) {
     self.grids.storage[identifier.string] = GridRegistry.Item.nib(nib)
   }
 
@@ -125,11 +125,11 @@ extension Gridable {
     collectionView.deselectAll(nil)
   }
 
-  public static func register(view view: NSCollectionViewItem.Type, identifier: StringConvertible) {
+  public static func register(_ view: NSCollectionViewItem.Type, identifier: StringConvertible) {
     self.grids.storage[identifier.string] = GridRegistry.Item.classType(view)
   }
 
-  public static func register(defaultView: NSCollectionViewItem.Type) {
+  public static func register(_ defaultView: NSCollectionViewItem.Type) {
     self.grids.storage[self.grids.defaultIdentifier] = GridRegistry.Item.classType(defaultView)
   }
 }
