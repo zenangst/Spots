@@ -1,4 +1,4 @@
-github "hyperoslo/Brick"
-github "hyperoslo/Cache" "master"
+github "hyperoslo/Brick" "1.0.0"
+github "hyperoslo/Cache" "1.5.1"
 github "krzyzanowskim/CryptoSwift" "0.5.2"
-github "zenangst/Tailor"
+github "zenangst/Tailor" "1.3.0"
