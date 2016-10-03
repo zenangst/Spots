@@ -155,7 +155,7 @@ open class GridSpot: NSObject, Gridable {
     scrollView.addSubview(lineView)
     scrollView.contentView.addSubview(collectionView)
 
-    if let layout = layout as? NSCollectionViewFlowLayout , !component.title.isEmpty {
+    if let layout = layout as? NSCollectionViewFlowLayout, !component.title.isEmpty {
       configureTitleView(layout.sectionInset)
     }
   }

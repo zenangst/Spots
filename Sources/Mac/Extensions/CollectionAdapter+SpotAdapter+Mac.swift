@@ -146,7 +146,7 @@ extension CollectionAdapter {
   public func reload(_ indexes: [Int]?, withAnimation animation: SpotsAnimation, completion: Completion) {
     Dispatch.mainQueue { [weak self] in
       guard let collectionView = self?.spot.collectionView else { completion?(); return }
-      if let indexes = indexes , animation != .none {
+      if let indexes = indexes, animation != .none {
         collectionView.reload(indexes) {
           self?.refreshHeight(completion)
         }

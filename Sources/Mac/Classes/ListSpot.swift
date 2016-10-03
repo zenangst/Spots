@@ -125,14 +125,12 @@ open class ListSpot: NSObject, Listable {
   }
 
   open func doubleAction(_ sender: Any?) {
-    guard let viewModel = item(tableView.clickedRow)
-    , component.meta(Key.doubleAction, type: Bool.self) == true else { return }
+    guard let viewModel = item(tableView.clickedRow), component.meta(Key.doubleAction, type: Bool.self) == true else { return }
     spotsDelegate?.spotDidSelectItem(self, item: viewModel)
   }
 
   open func action(_ sender: Any?) {
-    guard let viewModel = item(tableView.clickedRow)
-      , component.meta(Key.doubleAction, false) == false else { return }
+    guard let viewModel = item(tableView.clickedRow), component.meta(Key.doubleAction, false) == false else { return }
     spotsDelegate?.spotDidSelectItem(self, item: viewModel)
   }
 

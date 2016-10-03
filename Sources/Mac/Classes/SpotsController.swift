@@ -220,7 +220,7 @@ open class SpotsController: NSViewController, SpotsProtocol {
       spot.spotsCompositeDelegate = self
     #endif
     var height = spot.spotHeight()
-    if let componentSize = spot.component.size , componentSize.height > height {
+    if let componentSize = spot.component.size, componentSize.height > height {
       height = componentSize.height
     }
 
@@ -253,8 +253,7 @@ open class SpotsController: NSViewController, SpotsProtocol {
   public func scrollViewDidScroll(_ notification: NSNotification) {
     guard let scrollView = notification.object as? SpotsScrollView,
       let delegate = spotsScrollDelegate,
-      let _ = NSApplication.shared().mainWindow
-    , !refreshing && scrollView.contentOffset.y > 0
+      let _ = NSApplication.shared().mainWindow, !refreshing && scrollView.contentOffset.y > 0
       else { return }
 
     let offset = scrollView.contentOffset
