@@ -2,7 +2,110 @@
 
 ## [Unreleased](https://github.com/hyperoslo/Spots/tree/HEAD)
 
-[Full Changelog](https://github.com/hyperoslo/Spots/compare/2.1.0...HEAD)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/3.0.5...HEAD)
+
+**Closed issues:**
+
+- Handle size change when presenting another view controller [\#313](https://github.com/hyperoslo/Spots/issues/313)
+
+**Merged pull requests:**
+
+- Refactor CollectionAdapter to not call completion twice [\#326](https://github.com/hyperoslo/Spots/pull/326) ([zenangst](https://github.com/zenangst))
+- Update README [\#325](https://github.com/hyperoslo/Spots/pull/325) ([zenangst](https://github.com/zenangst))
+- Check for dragging and tracking in SpotsScrollView [\#324](https://github.com/hyperoslo/Spots/pull/324) ([zenangst](https://github.com/zenangst))
+- Fix dependence of UIScreen [\#323](https://github.com/hyperoslo/Spots/pull/323) ([zenangst](https://github.com/zenangst))
+- Check for auto rotation [\#322](https://github.com/hyperoslo/Spots/pull/322) ([onmyway133](https://github.com/onmyway133))
+- Add missing docs [\#321](https://github.com/hyperoslo/Spots/pull/321) ([zenangst](https://github.com/zenangst))
+- Refactor/spot configurable [\#319](https://github.com/hyperoslo/Spots/pull/319) ([zenangst](https://github.com/zenangst))
+- Improve SpotsScrollView layout operations [\#318](https://github.com/hyperoslo/Spots/pull/318) ([zenangst](https://github.com/zenangst))
+- Remove force update method on SpotsScrollView [\#317](https://github.com/hyperoslo/Spots/pull/317) ([zenangst](https://github.com/zenangst))
+- Add guard if reloading without components [\#316](https://github.com/hyperoslo/Spots/pull/316) ([zenangst](https://github.com/zenangst))
+- Fix/reloadifneeded with components [\#315](https://github.com/hyperoslo/Spots/pull/315) ([zenangst](https://github.com/zenangst))
+
+## [3.0.5](https://github.com/hyperoslo/Spots/tree/3.0.5) (2016-09-26)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/3.0.4...3.0.5)
+
+**Closed issues:**
+
+- Remove Sugar as a dependency [\#292](https://github.com/hyperoslo/Spots/issues/292)
+
+**Merged pull requests:**
+
+- Migrate/to new version of brick [\#314](https://github.com/hyperoslo/Spots/pull/314) ([zenangst](https://github.com/zenangst))
+- Update/docs [\#312](https://github.com/hyperoslo/Spots/pull/312) ([zenangst](https://github.com/zenangst))
+
+## [3.0.4](https://github.com/hyperoslo/Spots/tree/3.0.4) (2016-09-23)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/3.0.3...3.0.4)
+
+**Merged pull requests:**
+
+- Remove/sugar [\#310](https://github.com/hyperoslo/Spots/pull/310) ([zenangst](https://github.com/zenangst))
+- Add separator meta key and setting [\#308](https://github.com/hyperoslo/Spots/pull/308) ([zenangst](https://github.com/zenangst))
+
+## [3.0.3](https://github.com/hyperoslo/Spots/tree/3.0.3) (2016-09-22)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/3.0.2...3.0.3)
+
+**Closed issues:**
+
+- version dependencies in the pod spec files. [\#302](https://github.com/hyperoslo/Spots/issues/302)
+
+## [3.0.2](https://github.com/hyperoslo/Spots/tree/3.0.2) (2016-09-22)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/3.0.1...3.0.2)
+
+## [3.0.1](https://github.com/hyperoslo/Spots/tree/3.0.1) (2016-09-22)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/3.0.0...3.0.1)
+
+## [3.0.0](https://github.com/hyperoslo/Spots/tree/3.0.0) (2016-09-21)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/2.1.2...3.0.0)
+
+**Merged pull requests:**
+
+- Ignore soft updates if animations are set to none [\#307](https://github.com/hyperoslo/Spots/pull/307) ([zenangst](https://github.com/zenangst))
+- Improve GridableLayout in horizontal mode [\#306](https://github.com/hyperoslo/Spots/pull/306) ([zenangst](https://github.com/zenangst))
+- Feature/dynamic spot height [\#305](https://github.com/hyperoslo/Spots/pull/305) ([vadymmarkov](https://github.com/vadymmarkov))
+- Add UI quering methods [\#304](https://github.com/hyperoslo/Spots/pull/304) ([zenangst](https://github.com/zenangst))
+- Don't register default items if they are already set in init [\#303](https://github.com/hyperoslo/Spots/pull/303) ([zenangst](https://github.com/zenangst))
+- Add computed property to check if cache exists [\#301](https://github.com/hyperoslo/Spots/pull/301) ([zenangst](https://github.com/zenangst))
+- Add animations to reloadIfNeeded with Components [\#300](https://github.com/hyperoslo/Spots/pull/300) ([zenangst](https://github.com/zenangst))
+- Add return if new items is empty [\#299](https://github.com/hyperoslo/Spots/pull/299) ([zenangst](https://github.com/zenangst))
+- Check that index is larger than -1 [\#298](https://github.com/hyperoslo/Spots/pull/298) ([zenangst](https://github.com/zenangst))
+- Make SpotCache functions public [\#297](https://github.com/hyperoslo/Spots/pull/297) ([zenangst](https://github.com/zenangst))
+- Fix animations for ListAdapter.update [\#296](https://github.com/hyperoslo/Spots/pull/296) ([zenangst](https://github.com/zenangst))
+- Fix CollectionAdapter update completion closure not being invoked [\#295](https://github.com/hyperoslo/Spots/pull/295) ([zenangst](https://github.com/zenangst))
+- Improve SpotsScrollView with tests [\#294](https://github.com/hyperoslo/Spots/pull/294) ([zenangst](https://github.com/zenangst))
+- Remove JSONDictionary and JSONArray references [\#293](https://github.com/hyperoslo/Spots/pull/293) ([zenangst](https://github.com/zenangst))
+- Improve tests [\#291](https://github.com/hyperoslo/Spots/pull/291) ([zenangst](https://github.com/zenangst))
+- Update docs and minor improvements [\#289](https://github.com/hyperoslo/Spots/pull/289) ([zenangst](https://github.com/zenangst))
+- Refactor internal components [\#287](https://github.com/hyperoslo/Spots/pull/287) ([zenangst](https://github.com/zenangst))
+- Check for presented view controller [\#286](https://github.com/hyperoslo/Spots/pull/286) ([onmyway133](https://github.com/onmyway133))
+- Improve reload if needed code on adapters [\#285](https://github.com/hyperoslo/Spots/pull/285) ([zenangst](https://github.com/zenangst))
+- Improve reloadIfNeeded\(components\) [\#284](https://github.com/hyperoslo/Spots/pull/284) ([zenangst](https://github.com/zenangst))
+- Refactor process method on SpotsProtocol+Mutation [\#283](https://github.com/hyperoslo/Spots/pull/283) ([zenangst](https://github.com/zenangst))
+- Fix/reload bug [\#282](https://github.com/hyperoslo/Spots/pull/282) ([zenangst](https://github.com/zenangst))
+- Refactor/file structure [\#281](https://github.com/hyperoslo/Spots/pull/281) ([zenangst](https://github.com/zenangst))
+- Feature reloadIfNeeded on Spotable components [\#280](https://github.com/hyperoslo/Spots/pull/280) ([zenangst](https://github.com/zenangst))
+- Introduce reloadIfNeeded with components [\#278](https://github.com/hyperoslo/Spots/pull/278) ([zenangst](https://github.com/zenangst))
+- Refactor adapters [\#277](https://github.com/hyperoslo/Spots/pull/277) ([zenangst](https://github.com/zenangst))
+- Refactor/live editing [\#276](https://github.com/hyperoslo/Spots/pull/276) ([zenangst](https://github.com/zenangst))
+- Feature composition and overall header support on iOS [\#275](https://github.com/hyperoslo/Spots/pull/275) ([zenangst](https://github.com/zenangst))
+- Set layer frame when updating [\#274](https://github.com/hyperoslo/Spots/pull/274) ([zenangst](https://github.com/zenangst))
+- Improve/caching [\#273](https://github.com/hyperoslo/Spots/pull/273) ([zenangst](https://github.com/zenangst))
+- Add/ios nib example [\#272](https://github.com/hyperoslo/Spots/pull/272) ([zenangst](https://github.com/zenangst))
+- macOS implementation + hard and soft updates for ListSpot [\#271](https://github.com/hyperoslo/Spots/pull/271) ([zenangst](https://github.com/zenangst))
+- Fix SpotsFeed and tvOS example [\#270](https://github.com/hyperoslo/Spots/pull/270) ([zenangst](https://github.com/zenangst))
+- Fix/spotify iOS demo + SpotCards demo + SpotsDemo [\#269](https://github.com/hyperoslo/Spots/pull/269) ([zenangst](https://github.com/zenangst))
+- Fix/apple new demo [\#268](https://github.com/hyperoslo/Spots/pull/268) ([zenangst](https://github.com/zenangst))
+- Spots 3.0 - Refactor Spots core and support Nib-files 😈 [\#264](https://github.com/hyperoslo/Spots/pull/264) ([onmyway133](https://github.com/onmyway133))
+
+## [2.1.2](https://github.com/hyperoslo/Spots/tree/2.1.2) (2016-08-11)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/2.1.1...2.1.2)
+
+**Merged pull requests:**
+
+- Don't set current page of the carousel page control [\#267](https://github.com/hyperoslo/Spots/pull/267) ([vadymmarkov](https://github.com/vadymmarkov))
+
+## [2.1.1](https://github.com/hyperoslo/Spots/tree/2.1.1) (2016-08-10)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/2.1.0...2.1.1)
 
 **Closed issues:**
 
