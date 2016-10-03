@@ -260,7 +260,9 @@ public class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDel
   public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
     super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
 
-    guard spots_shouldAutorotate() else { return }
+    #if os(iOS)
+      guard spots_shouldAutorotate() else { return }
+    #endif
 
     coordinator.animateAlongsideTransition({ (UIViewControllerTransitionCoordinatorContext) in
       self.configureView(withSize: size)
