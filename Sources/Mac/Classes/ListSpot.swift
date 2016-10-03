@@ -156,7 +156,7 @@ public class ListSpot: NSObject, Listable {
   }
 
   public func setup(size: CGSize) {
-    component.items.enumerate().forEach {
+    component.items.enumerated().forEach {
       component.items[$0.index].size.width = size.width
     }
 

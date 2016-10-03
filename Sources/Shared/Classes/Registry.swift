@@ -56,7 +56,7 @@ open class Registry {
   // MARK: - Template
 
   /// A cache that stores instances of created views
-  fileprivate var cache: NSCache = NSCache()
+  fileprivate var cache: NSCache = NSCache<NSString, View>()
 
   /**
    Empty the current view cache
@@ -80,7 +80,7 @@ open class Registry {
     switch item {
     case .classType(let classType):
       registryType = .Regular
-      if let view = cache.object(forKey: registryType.rawValue + identifier) as? View {
+      if let view = cache.object(forKey: "\(registryType.rawValue)\(identifier)" as NSString) {
         return (type: registryType, view: view)
       }
 
@@ -88,7 +88,7 @@ open class Registry {
 
     case .nib(let nib):
       registryType = .Nib
-      if let view = cache.object(forKey: registryType.rawValue + identifier) as? View {
+      if let view = cache.object(forKey: "\(registryType.rawValue)\(identifier)" as NSString) {
         return (type: registryType, view: view)
       }
       #if os(OSX)
@@ -102,7 +102,7 @@ open class Registry {
     }
 
     if let view = view {
-      cache.setObject(view, forKey: registryType.rawValue + identifier)
+      cache.setObject(view, forKey: "\(registryType.rawValue)\(identifier)" as NSString)
     }
 
     return (type: registryType, view: view)

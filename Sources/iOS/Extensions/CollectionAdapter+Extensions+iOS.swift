@@ -103,8 +103,8 @@ public extension CollectionAdapter {
     spot.component.items.insert(contentsOf: items, at: 0)
 
     items.enumerated().forEach {
-      indexes.append(items.count - 1 - $0.index)
-      spot.configureItem($0.index)
+      indexes.append(items.count - 1 - $0.offset)
+      spot.configureItem($0.offset)
     }
 
     Dispatch.mainQueue { [weak self] in
@@ -130,10 +130,10 @@ public extension CollectionAdapter {
     perform(animation, withIndex: index) { [weak self] in
       guard let weakSelf = self else { completion?(); return }
 
-      if animation == .None { UIView.setAnimationsEnabled(false) }
-      weakSelf.spot.component.items.removeAtIndex(index)
+      if animation == .none { UIView.setAnimationsEnabled(false) }
+      weakSelf.spot.component.items.remove(at: index)
       weakSelf.spot.collectionView.delete([index], completion: nil)
-      if animation == .None { UIView.setAnimationsEnabled(true) }
+      if animation == .none { UIView.setAnimationsEnabled(true) }
       weakSelf.spot.updateHeight() {
         completion?()
       }
@@ -175,7 +175,7 @@ public extension CollectionAdapter {
         guard let weakSelf = self else { completion?(); return }
 
         if animation == .none { UIView.setAnimationsEnabled(false) }
-        weakSelf.spot.component.items.removeAtIndex(index)
+        weakSelf.spot.component.items.remove(at: index)
         weakSelf.spot.collectionView.delete([index], completion: nil)
         if animation == .none { UIView.setAnimationsEnabled(true) }
         weakSelf.spot.updateHeight() {
@@ -307,7 +307,7 @@ public extension CollectionAdapter {
         spot.configureItem(index)
       }
     } else {
-      spot.component.items.enumerate().forEach { index, _  in
+      spot.component.items.enumerated().forEach { index, _  in
         spot.configureItem(index)
       }
     }

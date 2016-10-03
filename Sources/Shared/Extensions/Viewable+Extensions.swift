@@ -60,8 +60,8 @@ public extension Spotable where Self : Viewable {
     #endif
 
     component.items.enumerated().forEach {
-      component.items[$0.index].size.width = size.width
-      scrollView.subviews[$0.index].frame.size.width = size.width
+      component.items[$0.offset].size.width = size.width
+      scrollView.subviews[$0.offset].frame.size.width = size.width
     }
   }
 

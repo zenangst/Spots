@@ -29,24 +29,24 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 public extension SpotsProtocol {
 
-  public var dictionary: [String : AnyObject] {
+  public var dictionary: [String : Any] {
     get { return dictionary() }
   }
 
-  public func dictionary(_ amountOfItems: Int? = nil) -> [String : AnyObject] {
-    var result = [[String : AnyObject]]()
+  public func dictionary(_ amountOfItems: Int? = nil) -> [String : Any] {
+    var result = [[String : Any]]()
 
     for spot in spots {
       var spotJSON = spot.component.dictionary(amountOfItems)
       for item in spot.items where item.kind == "composite" {
         if let compositeSpots = compositeSpots[spot.index]?[item.index] {
           var newItem = item
-          var children = [[String : AnyObject]]()
+          var children = [[String : Any]]()
           for itemSpot in compositeSpots {
             children.append(itemSpot.dictionary)
           }
           newItem.children = children
-          var newItems = spotJSON[Component.Key.Items] as? [[String : AnyObject]]
+          var newItems = spotJSON[Component.Key.Items] as? [[String : Any]]
 
           newItems?[item.index] = newItem.dictionary
           spotJSON[Component.Key.Items] = newItems

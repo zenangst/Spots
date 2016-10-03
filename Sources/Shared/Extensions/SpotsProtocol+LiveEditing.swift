@@ -22,7 +22,7 @@ import Cache
 
         do {
           if let data = NSData(contentsOfFile: filePath),
-            let json = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? [String : AnyObject] {
+            let json = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? [String : Any] {
             dispatch_source_cancel(self.source)
             self.source = nil
             let offset = self.spotsScrollView.contentOffset

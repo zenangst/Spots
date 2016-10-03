@@ -159,7 +159,7 @@ public extension Spotable {
   }
 
   /// Return a dictionary representation of Spotable object
-  public var dictionary: [String : AnyObject] {
+  public var dictionary: [String : Any] {
     get {
       return component.dictionary
     }
@@ -222,8 +222,8 @@ public extension Spotable {
    */
   public func refreshIndexes() {
     var updatedItems  = items
-    updatedItems.enumerate().forEach {
-      updatedItems[$0.index].index = $0.index
+    updatedItems.enumerated().forEach {
+      updatedItems[$0.offset].index = $0.offset
     }
 
     items = updatedItems
@@ -267,7 +267,7 @@ public extension Spotable {
    - parameter json:      A JSON dictionary
    - parameter animation:  A SpotAnimation that is used when performing the mutation (only works for Listable objects)
    */
-  public func reloadIfNeeded(_ json: [String : AnyObject], withAnimation animation: SpotsAnimation = .automatic) {
+  public func reloadIfNeeded(_ json: [String : Any], withAnimation animation: SpotsAnimation = .automatic) {
     let newComponent = Component(json)
 
     guard component != newComponent else { cache(); return }

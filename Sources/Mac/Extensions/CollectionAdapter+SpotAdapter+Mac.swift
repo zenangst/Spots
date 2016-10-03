@@ -25,7 +25,7 @@ extension CollectionAdapter {
 
     spot.component.items.appendContentsOf(items)
 
-    items.enumerate().forEach {
+    items.enumerated().forEach {
       indexes.append(count + $0.index)
     }
 
@@ -43,7 +43,7 @@ extension CollectionAdapter {
 
     spot.component.items.insertContentsOf(items, at: 0)
 
-    items.enumerate().forEach {
+    items.enumerated().forEach {
       indexes.append(items.count - 1 - $0.index)
     }
 
@@ -81,7 +81,7 @@ extension CollectionAdapter {
     guard let index = spot.component.items.indexOf({ $0 == item })
       else { completion?(); return }
 
-    spot.component.items.removeAtIndex(index)
+    spot.component.items.remove(at: index)
 
     Dispatch.mainQueue { [weak self] in
       guard let collectionView = self?.spot.collectionView else { completion?(); return }
@@ -111,7 +111,7 @@ extension CollectionAdapter {
   public func delete(index: Int, withAnimation animation: SpotsAnimation, completion: Completion) {
     Dispatch.mainQueue { [weak self] in
       guard let collectionView = self?.spot.collectionView else { completion?(); return }
-      self?.spot.component.items.removeAtIndex(index)
+      self?.spot.component.items.remove(at: index)
       collectionView.delete([index]) {
         self?.refreshHeight(completion)
       }

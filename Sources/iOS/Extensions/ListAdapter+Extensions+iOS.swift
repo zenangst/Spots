@@ -45,8 +45,8 @@ extension ListAdapter {
     spot.component.items.append(contentsOf: items)
 
     items.enumerated().forEach {
-      indexes.append(count + $0.index)
-      spot.configureItem(count + $0.index)
+      indexes.append(count + $0.offset)
+      spot.configureItem(count + $0.offset)
     }
 
     Dispatch.mainQueue { [weak self] in
@@ -86,7 +86,7 @@ extension ListAdapter {
 
     Dispatch.mainQueue { [weak self, spot = spot] in
       items.enumerated().forEach {
-        let index = items.count - 1 - $0.index
+        let index = items.count - 1 - $0.offset
         indexes.append(index)
         spot.configureItem(index)
       }

@@ -17,7 +17,7 @@ public struct Component: Mappable, Equatable {
   /**
    An enum with all the string keys used in the view model
    */
-  public enum Key: String {
+  public enum Key: String, StringConvertible {
     case Index
     case Identifier
     case Title
@@ -30,7 +30,7 @@ public struct Component: Mappable, Equatable {
     case Width
     case Height
 
-    var string: String {
+    public var string: String {
       return rawValue.lowercased()
     }
   }
@@ -66,10 +66,10 @@ public struct Component: Mappable, Equatable {
   /// The width and height of the component, usually calculated and updated by the UI component
   public var size: CGSize?
   /// A key-value dictionary for any additional information
-  public var meta = [String : AnyObject]()
+  public var meta = [String : Any]()
 
   /// A dictionary representation of the component
-  public var dictionary: [String : AnyObject] {
+  public var dictionary: [String : Any] {
     return dictionary()
   }
 
@@ -80,7 +80,7 @@ public struct Component: Mappable, Equatable {
 
    - returns: A dictionary representation of the Component
    */
-  public func dictionary(_ amountOfItems: Int? = nil) -> [String : AnyObject] {
+  public func dictionary(_ amountOfItems: Int? = nil) -> [String : Any] {
     var width: CGFloat = 0
     var height: CGFloat = 0
 
@@ -89,7 +89,7 @@ public struct Component: Mappable, Equatable {
       height = size.height
     }
 
-    let JSONItems: [[String : AnyObject]]
+    let JSONItems: [[String : Any]]
 
     if let amountOfItems = amountOfItems {
       JSONItems = Array(items[0..<min(amountOfItems, items.count)]).map { $0.dictionary }
@@ -97,10 +97,10 @@ public struct Component: Mappable, Equatable {
       JSONItems = items.map { $0.dictionary }
     }
 
-    var JSONComponents: [String : AnyObject] = [
-      Key.Index.string : index as AnyObject,
-      Key.Kind.string : kind as AnyObject,
-      Key.Span.string : span as AnyObject,
+    var JSONComponents: [String : Any] = [
+      Key.Index.string : index,
+      Key.Kind.string : kind,
+      Key.Span.string : span,
       Key.Size.string : [
         Key.Width.string : width,
         Key.Height.string : height
@@ -108,11 +108,11 @@ public struct Component: Mappable, Equatable {
       Key.Items.string: JSONItems,
     ]
 
-    JSONComponents[Key.Identifier.string] = identifier as AnyObject?
+    JSONComponents[Key.Identifier.string] = identifier
 
-    if !title.isEmpty { JSONComponents[Key.Title.string] = title as AnyObject? }
-    if !header.isEmpty { JSONComponents[Key.Header.string] = header as AnyObject? }
-    if !meta.isEmpty { JSONComponents[Key.Meta.string] = meta as AnyObject? }
+    if !title.isEmpty { JSONComponents[Key.Title.string] = title }
+    if !header.isEmpty { JSONComponents[Key.Header.string] = header }
+    if !meta.isEmpty { JSONComponents[Key.Meta.string] = meta }
 
     return JSONComponents
   }
@@ -122,16 +122,16 @@ public struct Component: Mappable, Equatable {
 
    - parameter map: A JSON key-value dictionary
    */
-  public init(_ map: [String : AnyObject]) {
-    identifier = map.property(.Identifier)
-    title <- map.property(.Title)
-    kind  <- map.property(.Kind)
-    header  <- map.property(.Header)
-    span  <- map.property(.Span)
-    items <- map.relations(.Items)
-    meta  <- map.property(.Meta)
+  public init(_ map: [String : Any]) {
+    identifier = map.property("identifier")
+    title <- map.property("title")
+    kind  <- map.property("kind")
+    header  <- map.property("header")
+    span  <- map.property("span")
+    items <- map.relations("items")
+    meta  <- map.property("meta")
 
-    if let size = map["size"] as? [String : AnyObject] {
+    if let size = map["size"] as? [String : Any] {
       self.size = CGSize(width: size.property(Key.Width.string) ?? 0.0,
                          height: size.property(Key.Height.string) ?? 0.0)
     }
@@ -154,7 +154,7 @@ public struct Component: Mappable, Equatable {
               kind: String = "",
               span: CGFloat = 0,
               items: [Item] = [],
-              meta: [String : AnyObject] = [:]) {
+              meta: [String : Any] = [:]) {
     self.identifier = identifier
     self.title = title
     self.kind = kind

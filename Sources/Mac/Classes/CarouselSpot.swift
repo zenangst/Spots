@@ -160,7 +160,7 @@ public class CarouselSpot: NSObject, Gridable {
     }
 
     if component.span > 0 {
-      component.items.enumerate().forEach {
+      component.items.enumerated().forEach {
         component.items[$0.index].size.width = size.width / component.span
       }
     }
@@ -168,7 +168,7 @@ public class CarouselSpot: NSObject, Gridable {
     if component.span == 1 && component.items.count == 1 {
       scrollView.scrollingEnabled = (component.items.count > 1)
       scrollView.hasHorizontalScroller = (component.items.count > 1)
-      component.items.enumerate().forEach {
+      component.items.enumerated().forEach {
         component.items[$0.index].size.width = size.width / component.span
       }
       layout.invalidateLayout()
@@ -177,7 +177,7 @@ public class CarouselSpot: NSObject, Gridable {
 
   public func setup(size: CGSize) {
     if component.span > 0 {
-      component.items.enumerate().forEach {
+      component.items.enumerated().forEach {
         component.items[$0.index].size.width = size.width / component.span
       }
     }

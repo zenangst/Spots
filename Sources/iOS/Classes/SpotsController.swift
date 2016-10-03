@@ -133,7 +133,7 @@ open class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDeleg
   /**
    - parameter json: A JSON dictionary that gets parsed into UI elements
    */
-  public convenience init(_ json: [String : AnyObject]) {
+  public convenience init(_ json: [String : Any]) {
     self.init(spots: Parser.parse(json))
   }
 
@@ -197,7 +197,7 @@ open class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDeleg
    - parameter notification: A notification containing the new size
    */
   func deviceDidRotate(_ notification: Notification) {
-    if let userInfo = (notification as NSNotification).userInfo as? [String : AnyObject],
+    if let userInfo = (notification as NSNotification).userInfo as? [String : Any],
       let rotationSize = userInfo["size"] as? RotationSize
       , view.window == nil {
       configureView(withSize: rotationSize.size)

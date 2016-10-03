@@ -28,7 +28,7 @@ public extension Item {
     if oldModels.count > newModels.count {
       for (index, element) in oldModels.enumerated() {
         if index > newModels.count - 1 {
-          changes.append(.Removed)
+          changes.append(.removed)
           continue
         }
 
@@ -37,7 +37,7 @@ public extension Item {
     } else if oldModels.count < newModels.count {
       for (index, element) in newModels.enumerated() {
         if index > oldModels.count - 1 {
-          changes.append(.New)
+          changes.append(.new)
           continue
         }
 
@@ -68,15 +68,15 @@ public extension Item {
 
     for (index, change) in changes.enumerated() {
       switch change {
-      case .Kind, .Size:
+      case .kind, .size:
         reloads.append(index)
-      case .Children:
+      case .children:
         childrenUpdates.append(index)
-      case .New:
+      case .new:
         insertions.append(index)
-      case .Removed:
+      case .removed:
         deletions.append(index)
-      case .None: break
+      case .none: break
       default:
         updates.append(index)
       }
@@ -94,19 +94,19 @@ public extension Item {
    */
   public func diff(_ oldItem: Item) -> ItemDiff {
 
-    let newChildren = children.map { Component($0 as [String : AnyObject]) }
-    let oldChildren = oldItem.children.map { Component($0 as [String : AnyObject]) }
+    let newChildren = children.map { Component($0 as [String : Any]) }
+    let oldChildren = oldItem.children.map { Component($0 as [String : Any]) }
 
-    if kind != oldItem.kind { return .Kind }
-    if newChildren != oldChildren { return .Children }
-    if identifier != oldItem.identifier { return .Identifier }
-    if title != oldItem.title { return .Title }
-    if subtitle != oldItem.subtitle { return .Subtitle }
-    if image != oldItem.image { return .Image }
-    if action != oldItem.action { return .Action }
-    if !(meta as NSDictionary).isEqual(to: oldItem.meta) { return .Meta }
+    if kind != oldItem.kind { return .kind }
+    if newChildren != oldChildren { return .children }
+    if identifier != oldItem.identifier { return .identifier }
+    if title != oldItem.title { return .title }
+    if subtitle != oldItem.subtitle { return .subtitle }
+    if image != oldItem.image { return .image }
+    if action != oldItem.action { return .action }
+    if !(meta as NSDictionary).isEqual(to: oldItem.meta) { return .meta }
 
-    return .None
+    return .none
   }
 
 }

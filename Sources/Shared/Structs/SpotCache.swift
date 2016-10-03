@@ -37,9 +37,9 @@ public struct SpotCache {
 
    - parameter json: A JSON object
    */
-  public func save(_ json: [String : AnyObject]) {
-    let expiry = Expiry.Date(Date().dateByAddingTimeInterval(60 * 60 * 24 * 3))
-    SyncCache(cache).add(key, object: JSON.Dictionary(json), expiry: expiry)
+  public func save(_ json: [String : Any]) {
+    let expiry = Expiry.date(Date().addingTimeInterval(60 * 60 * 24 * 3))
+    SyncCache(cache).add(key, object: JSON.dictionary(json), expiry: expiry)
   }
 
   /**
@@ -47,8 +47,8 @@ public struct SpotCache {
 
    - returns: A Swift dictionary
    */
-  public func load() -> [String : AnyObject] {
-    return SyncCache(cache).object(key)?.object as? [String : AnyObject] ?? [:]
+  public func load() -> [String : Any] {
+    return SyncCache(cache).object(key)?.object as? [String : Any] ?? [:]
   }
 
   /**
@@ -66,11 +66,8 @@ public struct SpotCache {
   func fileName() -> String {
     if let digest = key.data(using: String.Encoding.utf8)?.md5() {
       var string = ""
-      var byte: UInt8 = 0
-
-      for i in 0 ..< digest.count {
-        digest.copyBytes(to: &byte, from: NSRange(location: i, length: 1))
-        string += String(format: "%02x", byte)
+      for byte in digest {
+        string += String(format:"%02x", byte)
       }
 
       return string

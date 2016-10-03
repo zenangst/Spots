@@ -101,7 +101,7 @@ public class SpotsController: NSViewController, SpotsProtocol {
   /**
    - parameter json: A JSON dictionary that gets parsed into UI elements
    */
-  public convenience init(_ json: [String : AnyObject]) {
+  public convenience init(_ json: [String : Any]) {
     self.init(spots: Parser.parse(json))
   }
 
@@ -209,7 +209,7 @@ public class SpotsController: NSViewController, SpotsProtocol {
    */
   public func setupSpots(animated: ((view: View) -> Void)? = nil) {
     compositeSpots = [:]
-    spots.enumerate().forEach { index, spot in
+    spots.enumerated().forEach { index, spot in
       setupSpot(index, spot: spot)
       animated?(view: spot.render())
     }

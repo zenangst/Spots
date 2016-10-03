@@ -88,7 +88,7 @@ extension SpotsProtocol {
   }
 
   fileprivate func replaceSpot(_ index: Int, newComponents: [Component], yOffset: inout CGFloat) {
-    let spot = SpotFactory.resolve(newComponents[index])
+    let spot = SpotFactory.resolve(component: newComponents[index])
 
     self.removeCompositeViews()
     self.spots[index].render().removeFromSuperview()
@@ -100,7 +100,7 @@ extension SpotsProtocol {
   }
 
   fileprivate func newSpot(_ index: Int, newComponents: [Component], yOffset: inout CGFloat) {
-    let spot = SpotFactory.resolve(newComponents[index])
+    let spot = SpotFactory.resolve(component: newComponents[index])
     spots.append(spot)
     setupSpot(index, spot: spot)
     (spot as? Gridable)?.layout.yOffset = yOffset
@@ -150,7 +150,7 @@ extension SpotsProtocol {
         for item in newItems {
           if let compositeSpots = self.compositeSpots[spot.index],
             let spots = compositeSpots[item.index] {
-            for (index, spot) in spots.enumerate() {
+            for (index, spot) in spots.enumerated() {
               guard index < offsets.count else { continue }
               spot.render().contentOffset = offsets[index]
             }
@@ -172,15 +172,15 @@ extension SpotsProtocol {
         }
 
         let executeClosure = newItems.count - 1
-        for (index, item) in newItems.enumerate() {
+        for (index, item) in newItems.enumerated() {
           let components = Parser.parse(item.children).map { $0.component }
           if let compositeSpots = self.compositeSpots[spot.index],
             let spots = compositeSpots[item.index] {
-            for (index, removedSpot) in spots.enumerate() {
+            for (index, removedSpot) in spots.enumerated() {
               guard !components.contains(removedSpot.component) else { continue }
-              var oldContent = self.compositeSpots[spot.index]?[item.index]
-              if index < oldContent?.count {
-                oldContent?.removeAtIndex(index)
+              let oldContent = self.compositeSpots[spot.index]?[item.index]
+              if var oldContent = self.compositeSpots[spot.index]?[item.index], index < oldContent.count {
+                oldContent.remove(at: index)
               }
               self.compositeSpots[spot.index]?[item.index] = oldContent
             }
@@ -248,7 +248,7 @@ extension SpotsProtocol {
    - parameter animated: An animation closure that can be used to perform custom animations when reloading
    - parameter completion: A closure that will be run after reload has been performed on all spots
    */
-  public func reloadIfNeeded(_ json: [String : AnyObject],
+  public func reloadIfNeeded(_ json: [String : Any],
                              compare: @escaping CompareClosure = { lhs, rhs in return lhs != rhs },
                              animated: ((_ view: View) -> Void)? = nil,
                              completion: Completion = nil) {
@@ -298,7 +298,7 @@ extension SpotsProtocol {
       completion?()
 
       offsets.enumerated().forEach {
-        newSpots[$0.index].render().contentOffset = $0.element
+        newSpots[$0.offset].render().contentOffset = $0.element
       }
     }
   }
@@ -308,7 +308,7 @@ extension SpotsProtocol {
    - parameter animated: An animation closure that can be used to perform custom animations when reloading
    - parameter completion: A closure that will be run after reload has been performed on all spots
    */
-  public func reload(_ json: [String : AnyObject], animated: ((_ view: View) -> Void)? = nil, completion: Completion = nil) {
+  public func reload(_ json: [String : Any], animated: ((_ view: View) -> Void)? = nil, completion: Completion = nil) {
     Dispatch.mainQueue { [weak self] in
       guard let weakSelf = self else { completion?(); return }
 
@@ -336,7 +336,7 @@ extension SpotsProtocol {
     guard let spot = spot(index, Spotable.self) else {
       completion?()
       return }
-    closure(spot: spot)
+    closure(spot)
     spot.refreshIndexes()
     spot.registerAndPrepare()
     let spotHeight = spot.spotHeight()

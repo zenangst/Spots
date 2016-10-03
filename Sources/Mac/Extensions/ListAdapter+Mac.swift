@@ -26,7 +26,7 @@ extension ListAdapter {
 
     spot.component.items.appendContentsOf(items)
 
-    items.enumerate().forEach {
+    items.enumerated().forEach {
       let index = count + $0.index
       indexes.append(index)
       spot.configureItem(index, usesViewSize: true)
@@ -46,7 +46,7 @@ extension ListAdapter {
 
     spot.component.items.insertContentsOf(items, at: 0)
 
-    items.enumerate().forEach {
+    items.enumerated().forEach {
       indexes.append(items.count - 1 - $0.index)
     }
 
@@ -84,7 +84,7 @@ extension ListAdapter {
     guard let index = spot.component.items.indexOf({ $0 == item })
       else { completion?(); return }
 
-    spot.component.items.removeAtIndex(index)
+    spot.component.items.remove(at: index)
 
     Dispatch.mainQueue { [weak self] in
       guard let tableView = self?.spot.tableView else { completion?(); return }
@@ -114,7 +114,7 @@ extension ListAdapter {
   public func delete(index: Int, withAnimation animation: SpotsAnimation, completion: Completion) {
     Dispatch.mainQueue { [weak self] in
       guard let tableView = self?.spot.tableView else { completion?(); return }
-      self?.spot.component.items.removeAtIndex(index)
+      self?.spot.component.items.remove(at: index)
       tableView.delete([index], animation: animation.tableViewAnimation) {
         self?.refreshHeight(completion)
       }
