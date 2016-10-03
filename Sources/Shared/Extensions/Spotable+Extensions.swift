@@ -221,9 +221,12 @@ public extension Spotable {
    Refreshes the indexes of all items within the component
    */
   public func refreshIndexes() {
-    items.enumerate().forEach {
-      items[$0.index].index = $0.index
+    var updatedItems  = items
+    updatedItems.enumerate().forEach {
+      updatedItems[$0.index].index = $0.index
     }
+
+    items = updatedItems
   }
 
   /**

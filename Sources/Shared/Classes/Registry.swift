@@ -74,13 +74,13 @@ public class Registry {
   func make(identifier: String) -> (type: RegistryType?, view: View?)? {
     guard let item = storage[identifier] else { return nil }
 
-    let registryType: RegistryType?
+    let registryType: RegistryType
     var view: View? = nil
 
     switch item {
     case .classType(let classType):
       registryType = .Regular
-      if let view = cache.objectForKey(registryType!.rawValue + identifier) as? View {
+      if let view = cache.objectForKey(registryType.rawValue + identifier) as? View {
         return (type: registryType, view: view)
       }
 
@@ -88,7 +88,7 @@ public class Registry {
 
     case .nib(let nib):
       registryType = .Nib
-      if let view = cache.objectForKey(registryType!.rawValue + identifier) as? View {
+      if let view = cache.objectForKey(registryType.rawValue + identifier) as? View {
         return (type: registryType, view: view)
       }
       #if os(OSX)
@@ -102,7 +102,7 @@ public class Registry {
     }
 
     if let view = view {
-      cache.setObject(view, forKey: identifier)
+      cache.setObject(view, forKey: registryType.rawValue + identifier)
     }
 
     return (type: registryType, view: view)
