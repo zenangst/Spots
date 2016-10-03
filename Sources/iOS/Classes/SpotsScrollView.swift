@@ -153,7 +153,7 @@ open class SpotsScrollView: UIScrollView {
         let oldFrame = (change[NSKeyValueChangeKey.oldKey] as AnyObject).cgRectValue {
         let newFrame = view.frame
 
-        if (!newFrame.equalTo(oldFrame)) {
+        if !newFrame.equalTo(oldFrame) {
           self.setNeedsLayout()
           self.layoutIfNeeded()
         }

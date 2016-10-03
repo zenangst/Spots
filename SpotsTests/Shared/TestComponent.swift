@@ -65,7 +65,7 @@ class ComponentTests : XCTestCase {
     XCTAssertEqual(jsonComponent.dictionary["span"] as? Double, json["span"] as? Double)
 
     XCTAssertEqual((jsonComponent.dictionary["items"] as! [[String : Any]])[0]["title"] as? String,
-                   ((json["items"] as! [AnyObject])[0] as! [String : Any])["title"] as! String)
+                   ((json["items"] as! [AnyObject])[0] as! [String : Any])["title"] as? String)
     XCTAssertEqual((jsonComponent.dictionary["items"] as! [[String : Any]]).count, (json["items"]! as AnyObject).count)
   }
 
