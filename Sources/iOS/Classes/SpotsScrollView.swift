@@ -88,8 +88,7 @@ open class SpotsScrollView: UIScrollView {
     scrollView.isScrollEnabled = false
 
     if let collectionView = scrollView as? UICollectionView,
-      let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
-      , layout.scrollDirection == .horizontal {
+      let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout, layout.scrollDirection == .horizontal {
       scrollView.isScrollEnabled = true
     }
 
@@ -131,7 +130,7 @@ open class SpotsScrollView: UIScrollView {
    - parameter context: The value that was provided when the receiver was registered to receive key-value observation notifications.
    */
   open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-    if let change = change , context == subviewContext {
+    if let change = change, context == subviewContext {
       if let scrollView = object as? UIScrollView {
         guard let change = change[NSKeyValueChangeKey.oldKey] else { return }
         if keyPath == ObservedKeypath.contentSize.rawValue {

@@ -9,7 +9,7 @@ open class GridableLayout: UICollectionViewFlowLayout {
   open var yOffset: CGFloat?
 
   // Subclasses must override this method and use it to return the width and height of the collection view’s content. These values represent the width and height of all the content, not just the content that is currently visible. The collection view uses this information to configure its own content size to facilitate scrolling.
-  open override var collectionViewContentSize : CGSize {
+  open override var collectionViewContentSize: CGSize {
     return contentSize
   }
 
@@ -37,7 +37,7 @@ open class GridableLayout: UICollectionViewFlowLayout {
       contentSize.height = adapter.spot.items.reduce(0, { $0 + $1.size.height })
       if adapter.spot.component.span > 1 {
         let count = adapter.spot.items.count
-        if let last = adapter.spot.items.last , count % Int(adapter.spot.component.span) != 0 {
+        if let last = adapter.spot.items.last, count % Int(adapter.spot.component.span) != 0 {
           contentSize.height += last.size.height
         }
 
@@ -56,7 +56,7 @@ open class GridableLayout: UICollectionViewFlowLayout {
 
     guard let collectionView = collectionView else { return }
 
-    if let y = yOffset , collectionView.isDragging && headerReferenceSize.height > 0.0 {
+    if let y = yOffset, collectionView.isDragging && headerReferenceSize.height > 0.0 {
       collectionView.frame.origin.y = y
     }
   }
@@ -102,7 +102,7 @@ open class GridableLayout: UICollectionViewFlowLayout {
       }
     }
 
-    if let y = yOffset , headerReferenceSize.height > 0.0 {
+    if let y = yOffset, headerReferenceSize.height > 0.0 {
       collectionView.frame.origin.y = y
     }
 

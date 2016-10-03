@@ -28,7 +28,7 @@ open class ListSpotCell: UITableViewCell, SpotConfigurable {
    - parameter item: An Item struct
    */
   open func configure(_ item: inout Item) {
-    if let action = item.action , !action.isEmpty {
+    if let action = item.action, !action.isEmpty {
       accessoryType = .disclosureIndicator
     } else {
       accessoryType = .none

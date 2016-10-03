@@ -37,8 +37,7 @@ public extension Spotable where Self : Viewable {
     if component.kind.isEmpty { component.kind = "view" }
 
     component.items.forEach { (item: Item) in
-      if case let Registry.Item.classType(classType)? = T.views.storage[item.kind]
-        , T.views.storage.keys.contains(item.kind) {
+      if case let Registry.Item.classType(classType)? = T.views.storage[item.kind], T.views.storage.keys.contains(item.kind) {
         let view = classType.init()
 
         if let spotConfigurable = view as? SpotConfigurable {
@@ -73,8 +72,7 @@ public extension Spotable where Self : Viewable {
   func append(_ item: Item, withAnimation animation: SpotsAnimation = .none, completion: Completion = nil) {
     let dynamic = type(of: self)
 
-    guard case let Registry.Item.classType(classType)? = dynamic.views.storage[item.kind]
-      , dynamic.views.storage.keys.contains(item.kind) else { return }
+    guard case let Registry.Item.classType(classType)? = dynamic.views.storage[item.kind], dynamic.views.storage.keys.contains(item.kind) else { return }
 
     let view = classType.init()
     (view as? SpotConfigurable)?.configure(&component.items[index])
@@ -96,8 +94,7 @@ public extension Spotable where Self : Viewable {
     for item in items {
       let dynamic = type(of: self)
 
-      guard case let Registry.Item.classType(classType)? = dynamic.views.storage[item.kind]
-        , dynamic.views.storage.keys.contains(item.kind) else { return }
+      guard case let Registry.Item.classType(classType)? = dynamic.views.storage[item.kind], dynamic.views.storage.keys.contains(item.kind) else { return }
 
       let view = classType.init()
       (view as? SpotConfigurable)?.configure(&component.items[index])
@@ -119,8 +116,7 @@ public extension Spotable where Self : Viewable {
   func insert(_ item: Item, index: Int, withAnimation animation: SpotsAnimation = .none, completion: Completion = nil) {
     let dynamic = type(of: self)
 
-    guard case let Registry.Item.classType(classType)? = dynamic.views.storage[item.kind]
-      , dynamic.views.storage.keys.contains(item.kind) else { return }
+    guard case let Registry.Item.classType(classType)? = dynamic.views.storage[item.kind], dynamic.views.storage.keys.contains(item.kind) else { return }
 
     let view = classType.init()
     (view as? SpotConfigurable)?.configure(&component.items[index])
@@ -144,8 +140,7 @@ public extension Spotable where Self : Viewable {
     for item in items.reversed() {
       let dynamic = type(of: self)
 
-      guard case let Registry.Item.classType(classType)? = dynamic.views.storage[item.kind]
-        , dynamic.views.storage.keys.contains(item.kind) else { return }
+      guard case let Registry.Item.classType(classType)? = dynamic.views.storage[item.kind], dynamic.views.storage.keys.contains(item.kind) else { return }
 
       let view = classType.init()
       (view as? SpotConfigurable)?.configure(&component.items[index])

@@ -198,8 +198,7 @@ open class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDeleg
    */
   func deviceDidRotate(_ notification: Notification) {
     if let userInfo = (notification as NSNotification).userInfo as? [String : Any],
-      let rotationSize = userInfo["size"] as? RotationSize
-      , view.window == nil {
+      let rotationSize = userInfo["size"] as? RotationSize, view.window == nil {
       configureView(withSize: rotationSize.size)
     }
   }
@@ -225,13 +224,12 @@ open class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDeleg
   open override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
 
-    if let tabBarController = self.tabBarController
-      , tabBarController.tabBar.isTranslucent {
+    if let tabBarController = self.tabBarController, tabBarController.tabBar.isTranslucent {
         spotsScrollView.contentInset.bottom = tabBarController.tabBar.frame.size.height
         spotsScrollView.scrollIndicatorInsets.bottom = spotsScrollView.contentInset.bottom
     }
 #if os(iOS)
-    guard let _ = spotsRefreshDelegate , refreshControl.superview == nil
+    guard let _ = spotsRefreshDelegate, refreshControl.superview == nil
       else { return }
 
     spotsScrollView.insertSubview(refreshControl, at: 0)

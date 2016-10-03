@@ -196,7 +196,7 @@ extension ListAdapter {
     }
 
     if newItem.kind != oldItem.kind || newItem.size.height != oldItem.size.height {
-      if let cell = spot.tableView.cellForRow(at: indexPath) as? SpotConfigurable , animation != .none {
+      if let cell = spot.tableView.cellForRow(at: indexPath) as? SpotConfigurable, animation != .none {
         spot.tableView.beginUpdates()
         cell.configure(&spot.items[index])
         spot.tableView.endUpdates()

@@ -358,8 +358,7 @@ public extension Spotable {
   }
 
   public func identifier(_ index: Int) -> String {
-    guard let item = item(index)
-      , type(of: self).views.storage[item.kind] != nil
+    guard let item = item(index), type(of: self).views.storage[item.kind] != nil
       else {
         return type(of: self).views.defaultIdentifier
     }

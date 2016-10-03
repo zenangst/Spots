@@ -6,7 +6,7 @@
 
 import Brick
 import Cache
-fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+fileprivate func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
   case let (l?, r?):
     return l < r
@@ -17,7 +17,7 @@ fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
-fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+fileprivate func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
   case let (l?, r?):
     return l > r

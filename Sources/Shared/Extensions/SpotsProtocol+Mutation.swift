@@ -288,8 +288,7 @@ extension SpotsProtocol {
 
         for (spotIndex, spot) in foundContainer.enumerated() {
           guard let rootContainer = oldComposite[index],
-            let itemContainer = rootContainer[itemIndex]
-            , spotIndex < itemContainer.count else { continue }
+            let itemContainer = rootContainer[itemIndex], spotIndex < itemContainer.count else { continue }
 
           spot.render().contentOffset = itemContainer[spotIndex].render().contentOffset
         }
@@ -363,7 +362,7 @@ extension SpotsProtocol {
    - parameter completion: A completion closure that is run when the update is completed
    */
   public func updateIfNeeded(spotAtIndex index: Int = 0, items: [Item], withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
-    guard let spot = spot(index, Spotable.self) , !(spot.items == items) else {
+    guard let spot = spot(index, Spotable.self), !(spot.items == items) else {
       completion?()
       return
     }
@@ -434,7 +433,7 @@ extension SpotsProtocol {
    - parameter completion: A completion closure that will run after the spot has performed updates internally
    */
   public func update(_ item: Item, index: Int = 0, spotIndex: Int, withAnimation animation: SpotsAnimation = .none, completion: Completion = nil) {
-    guard let oldItem = spot(spotIndex, Spotable.self)?.item(index) , item != oldItem
+    guard let oldItem = spot(spotIndex, Spotable.self)?.item(index), item != oldItem
       else {
         spot(spotIndex, Spotable.self)?.refreshIndexes()
         completion?()
