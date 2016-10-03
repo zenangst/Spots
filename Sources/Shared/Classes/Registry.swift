@@ -102,7 +102,7 @@ public class Registry {
     }
 
     if let view = view {
-      cache.setObject(view, forKey: identifier)
+      cache.setObject(view, forKey: registryType!.rawValue + identifier)
     }
 
     return (type: registryType, view: view)
