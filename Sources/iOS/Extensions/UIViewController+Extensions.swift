@@ -1,3 +1,4 @@
+#if os(iOS)
 import UIKit
 
 extension UIViewController {
@@ -10,3 +11,4 @@ extension UIViewController {
     return shouldAutorotate()
   }
 }
+#endif
