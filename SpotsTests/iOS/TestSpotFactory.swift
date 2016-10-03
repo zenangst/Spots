@@ -4,7 +4,7 @@ import XCTest
 
 class SpotFactoryTests : XCTestCase {
 
-  let json: [String : AnyObject] = [
+  let json: [String : Any] = [
     "title" : "title1" as AnyObject,
     "kind" : "merry-go-round" as AnyObject,
     "span" : 1 as AnyObject,
@@ -13,16 +13,16 @@ class SpotFactoryTests : XCTestCase {
   ]
 
   func testRegisterAndResolve() {
-    SpotFactory.register("merry-go-round", spot: CarouselSpot.self)
+    SpotFactory.register(kind: "merry-go-round", spot: CarouselSpot.self)
 
     let component = Component(json)
-    var spot = SpotFactory.resolve(component)
+    var spot = SpotFactory.resolve(component: component)
 
     XCTAssertTrue(spot.component == component)
     XCTAssertTrue(spot is CarouselSpot)
 
-    SpotFactory.register("merry-go-round", spot: GridSpot.self)
-    spot = SpotFactory.resolve(component)
+    SpotFactory.register(kind: "merry-go-round", spot: GridSpot.self)
+    spot = SpotFactory.resolve(component: component)
 
     XCTAssertTrue(spot.component == component)
     XCTAssertTrue(spot is GridSpot)
@@ -33,7 +33,7 @@ class SpotFactoryTests : XCTestCase {
     newJson["type"] = "weirdo" as AnyObject?
 
     let component = Component(newJson)
-    let spot = SpotFactory.resolve(component)
+    let spot = SpotFactory.resolve(component: component)
 
     XCTAssertTrue(spot.component == component)
     XCTAssertTrue(spot is GridSpot)

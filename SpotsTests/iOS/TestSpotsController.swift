@@ -223,7 +223,7 @@ class SpotsControllerTests : XCTestCase {
   }
 
   func testReloadIfNeededWithComponents() {
-    let initialJSON: [String : AnyObject] = [
+    let initialJSON: [String : Any] = [
       "components" : [
         ["kind" : "list",
           "items" : [
@@ -238,7 +238,7 @@ class SpotsControllerTests : XCTestCase {
       ]
     ]
 
-    let newJSON: [String : AnyObject] = [
+    let newJSON: [String : Any] = [
       "components" : [
         ["kind" : "list",
           "items" : [

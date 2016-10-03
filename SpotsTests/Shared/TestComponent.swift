@@ -5,7 +5,7 @@ import Brick
 
 class ComponentTests : XCTestCase {
 
-  let json: [String : AnyObject] = [
+  let json: [String : Any] = [
     "title" : "title1" as AnyObject,
     "kind" : "list" as AnyObject,
     "span" : 1 as AnyObject,
@@ -30,8 +30,8 @@ class ComponentTests : XCTestCase {
       title: json["title"] as! String,
       kind: json["kind"] as! String,
       span: json["span"] as! CGFloat,
-      meta: json["meta"] as! [String : String],
-      items: [Item(title: "item1")])
+      items: [Item(title: "item1")],
+      meta: json["meta"] as! [String : String])
 
     XCTAssertEqual(codeComponent.title, json["title"] as? String)
     XCTAssertEqual(codeComponent.kind,  json["kind"] as? String)
@@ -64,12 +64,13 @@ class ComponentTests : XCTestCase {
     XCTAssertEqual(jsonComponent.dictionary["kind"] as? String, json["kind"] as? String)
     XCTAssertEqual(jsonComponent.dictionary["span"] as? CGFloat, json["span"] as? CGFloat)
 
-    XCTAssertEqual((jsonComponent.dictionary["items"] as! [[String : AnyObject]])[0]["title"] as? String, json["items"]![0]["title"])
-    XCTAssertEqual((jsonComponent.dictionary["items"] as! [[String : AnyObject]]).count, json["items"]!.count)
+    XCTAssertEqual((jsonComponent.dictionary["items"] as! [[String : Any]])[0]["title"] as? String,
+                   ((json["items"] as! [AnyObject])[0] as! [String : Any])["title"] as! String)
+    XCTAssertEqual((jsonComponent.dictionary["items"] as! [[String : Any]]).count, (json["items"]! as AnyObject).count)
   }
 
   func testComponentDiffing() {
-    let initialJSON: [String : AnyObject] = [
+    let initialJSON: [String : Any] = [
       "components" : [
         ["kind" : "list",
           "items" : [
@@ -84,7 +85,7 @@ class ComponentTests : XCTestCase {
       ]
     ]
 
-    let newJSON: [String : AnyObject] = [
+    let newJSON: [String : Any] = [
       "components" : [
         ["kind" : "list",
           "items" : [
@@ -102,7 +103,7 @@ class ComponentTests : XCTestCase {
     let lhs: [Component] = Parser.parse(initialJSON)
     let rhs: [Component] = Parser.parse(newJSON)
 
-    XCTAssertTrue(lhs.first?.diff(component: rhs.first!) == .Items)
-    XCTAssertTrue(lhs[1].diff(component: rhs[1]) == .Kind)
+    XCTAssertTrue(lhs.first?.diff(component: rhs.first!) == .items)
+    XCTAssertTrue(lhs[1].diff(component: rhs[1]) == .kind)
   }
 }

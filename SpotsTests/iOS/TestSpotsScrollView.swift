@@ -20,8 +20,8 @@ class SpotsScrollViewTests: XCTestCase {
   var bounds: CGRect!
   var controller: SpotsController!
 
-  var initialJSON: [String : AnyObject] {
-    let listItems: [[String : AnyObject]] = [
+  var initialJSON: [String : Any] {
+    let listItems: [[String : Any]] = [
       [
         "title" : "Item" as AnyObject,
         "size" : ["height" : 80]
@@ -67,7 +67,7 @@ class SpotsScrollViewTests: XCTestCase {
 
     bounds = CGRect(origin: CGPoint.zero, size: CGSize(width: 375, height: 667))
     controller = SpotsController(initialJSON)
-    controller.view.autoresizingMask = .None
+    controller.view.autoresizingMask = []
     controller.view.frame.size = CGSize(width: 375, height: 667)
     controller.preloadView()
     controller.viewWillAppear(true)
