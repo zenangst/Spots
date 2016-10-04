@@ -324,6 +324,19 @@ public extension Spotable {
           spotsCompositeDelegate?.compositeSpots[component.index]?[index] = spots
         }
       } else {
+        // Set initial size for view
+        view.frame.size = render().frame.size
+
+        if let view = view as? UITableViewCell {
+          view.contentView.frame = view.bounds
+        }
+
+        if let view = view as? UICollectionViewCell {
+          view.contentView.frame = view.bounds
+        }
+
+        print("\(#file):\(#line) -> \(view)")
+
         (view as? SpotConfigurable)?.configure(&viewModel)
       }
     #else
