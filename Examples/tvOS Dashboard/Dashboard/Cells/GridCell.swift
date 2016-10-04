@@ -24,9 +24,9 @@ class GridCell: UICollectionViewCell, SpotConfigurable {
     fatalError("init(coder:) has not been implemented")
   }
 
-  func configure(inout item: Item) {
+  func configure(_ item: inout Item) {
     if item.image.isPresent {
-      imageView.setImage(NSURL(string: item.image))
+      imageView.setImage(URL(string: item.image))
       imageView.tintColor = UIColor.whiteColor()
       imageView.frame.size = frame.size
       imageView.width -= 20
@@ -42,9 +42,9 @@ class GridCell: UICollectionViewCell, SpotConfigurable {
     item.size.height = item.meta("height", item.size.height)
   }
 
-  override func didUpdateFocusInContext(context: UIFocusUpdateContext, withAnimationCoordinator coordinator: UIFocusAnimationCoordinator) {
+  override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
     coordinator.addCoordinatedAnimations({
-      if self.focused {
+      if self.isFocused {
         self.layer.zPosition = 1000
       } else {
         self.layer.zPosition = 0
