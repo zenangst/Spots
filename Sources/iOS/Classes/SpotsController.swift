@@ -288,6 +288,8 @@ open class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDeleg
   }
 
   open func setupSpot(_ index: Int, spot: Spotable) {
+    spot.render().bounds.size.width = view.bounds.width
+    spot.render().frame.origin.x = 0.0
     spot.spotsCompositeDelegate = self
     spots[index].component.index = index
     spot.registerAndPrepare()
