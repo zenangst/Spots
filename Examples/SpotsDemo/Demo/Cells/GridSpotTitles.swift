@@ -7,13 +7,13 @@ import Brick
 
 class GridSpotCellTitles : UICollectionViewCell, SpotConfigurable {
 
-  var size = CGSize(width: 88, height: 88)
+  var preferredViewSize = CGSize(width: 88, height: 88)
 
   lazy var titleLabel: UILabel = { [unowned self] in
     let label = UILabel(frame: self.contentView.frame)
-    label.textColor = UIColor.blackColor()
-    label.textAlignment = .Center
-    label.autoresizingMask = [.FlexibleWidth]
+    label.textColor = UIColor.black
+    label.textAlignment = .center
+    label.autoresizingMask = [.flexibleWidth]
     label.font = UIFont(name: "AvenirNext-Bold", size: 30)
     label.numberOfLines = 2
     return label
@@ -21,8 +21,8 @@ class GridSpotCellTitles : UICollectionViewCell, SpotConfigurable {
 
   lazy var subtitleLabel: UILabel = { [unowned self] in
     let label = UILabel(frame: self.contentView.frame)
-    label.textAlignment = .Justified
-    label.font = UIFont.systemFontOfSize(16)
+    label.textAlignment = .justified
+    label.font = UIFont.systemFont(ofSize: 16)
     label.textColor = UIColor(red:0.933, green:0.459, blue:0.200, alpha: 1)
     label.font = UIFont(name: "Georgia", size: 16)
     label.numberOfLines = 0
@@ -31,15 +31,15 @@ class GridSpotCellTitles : UICollectionViewCell, SpotConfigurable {
 
   lazy var metaText: UILabel = { [unowned self] in
     let label = UILabel(frame: self.contentView.frame)
-    label.textAlignment = .Justified
-    label.font = UIFont.systemFontOfSize(14)
+    label.textAlignment = .justified
+    label.font = UIFont.systemFont(ofSize: 14)
     label.numberOfLines = 0
     return label
   }()
 
   lazy var paddedStyle: NSParagraphStyle = {
     let style = NSMutableParagraphStyle()
-    style.alignment = .Left
+    style.alignment = .left
     style.firstLineHeadIndent = 20.0
     style.headIndent = 20.0
     style.tailIndent = -20.0
@@ -56,7 +56,7 @@ class GridSpotCellTitles : UICollectionViewCell, SpotConfigurable {
     fatalError("init(coder:) has not been implemented")
   }
 
-  func configure(inout item: Item) {
+  func configure( _ item: inout Item) {
     optimize()
     if let textColor = item.meta["text-color"] as? String {
       titleLabel.textColor = UIColor(hex: textColor)
@@ -65,26 +65,20 @@ class GridSpotCellTitles : UICollectionViewCell, SpotConfigurable {
     titleLabel.text = item.title
     subtitleLabel.attributedText = NSAttributedString(string: item.subtitle,
       attributes: [NSParagraphStyleAttributeName : paddedStyle])
-    metaText.attributedText = NSAttributedString(string: item.meta.property("text") ?? "",
+    metaText.attributedText = NSAttributedString(string: item.text,
       attributes: [NSParagraphStyleAttributeName : paddedStyle])
     metaText.textColor = UIColor(hex: item.meta.property("text-color") ?? "000000")
 
-    layoutSubviews()
-
-    item.size.height = metaText.y + metaText.height + 20
-    item.size.width = UIScreen.mainScreen().bounds.width
-  }
-
-  override func layoutSubviews() {
-    super.layoutSubviews()
-
     [titleLabel, subtitleLabel, metaText].forEach {
+      $0.frame.size.width = contentView.frame.width
       $0.sizeToFit()
-      $0.width = contentView.width
+      $0.frame.size.width = contentView.frame.width
     }
 
-    titleLabel.y = 10
-    subtitleLabel.y = titleLabel.height + titleLabel.y + 10
-    metaText.y = subtitleLabel.height + subtitleLabel.y + 10
+    subtitleLabel.frame.origin.y = titleLabel.frame.maxY
+    metaText.frame.origin.y = subtitleLabel.frame.maxY
+
+    item.size.height = metaText.frame.maxY + 20
+    item.size.width = UIScreen.main.bounds.width
   }
 }

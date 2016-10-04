@@ -6,10 +6,10 @@ import Brick
 
 class GridSpotHeader : UICollectionViewCell, SpotConfigurable {
 
-  var size = CGSize(width: 0, height: 320)
+  var preferredViewSize: CGSize = CGSize(width: 0, height: 320)
   lazy var imageView: UIImageView = {
     let imageView = UIImageView()
-    imageView.contentMode = .ScaleAspectFill
+    imageView.contentMode = .scaleAspectFill
     return imageView
     }()
 
@@ -23,17 +23,17 @@ class GridSpotHeader : UICollectionViewCell, SpotConfigurable {
     fatalError("init(coder:) has not been implemented")
   }
 
-  func configure(inout item: Item) {
+  func configure( _ item: inout Item) {
     optimize()
 
     if !item.image.isEmpty {
       imageView.image = nil
-      let URL = NSURL(string: item.image)
-      imageView.setImage(URL)
+      let url = NSURL(string: item.image)
+      imageView.setImage(url as URL?)
     }
 
     imageView.frame = contentView.frame
     item.size.height = 320
-    item.size.width = UIScreen.mainScreen().bounds.width
+    item.size.width = UIScreen.main.bounds.width
   }
 }

@@ -7,24 +7,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
   var navigationController: UINavigationController?
 
-  func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-    window = UIWindow(frame: UIScreen.mainScreen().bounds)
+  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    window = UIWindow(frame: UIScreen.main.bounds)
 
-    GridSpot.register(view: GridSpotHeader.self, identifier: "header")
-    GridSpot.register(view: GridSpotCellTitles.self, identifier: "titles")
-    GridSpot.register(view: GridSpotCellCircle.self, identifier: "circle")
+    GridSpot.register(GridSpotHeader.self, identifier: "header")
+    GridSpot.register(GridSpotCellTitles.self, identifier: "titles")
+    GridSpot.register(GridSpotCellCircle.self, identifier: "circle")
 
     SpotsController.configure = {
-      $0.backgroundColor = UIColor.whiteColor()
+      $0.backgroundColor = UIColor.white
     }
 
     GridSpot.configure = { collectionView, layout in
-      collectionView.backgroundColor = UIColor.whiteColor()
+      collectionView.backgroundColor = UIColor.white
     }
 
     let controller = JSONController()
 
-    controller.title = "Spots".uppercaseString
+    controller.title = "Spots".uppercased()
 
     navigationController = UINavigationController(rootViewController: controller)
     window?.rootViewController = navigationController
@@ -37,7 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
 
   func applyStyles() {
-    UIApplication.sharedApplication().statusBarStyle = .LightContent
+    UIApplication.shared.statusBarStyle = .lightContent
 
     let navigationBar = UINavigationBar.appearance()
     navigationBar.barTintColor = UIColor(red:0.000, green:0.000, blue:0.000, alpha: 1)
