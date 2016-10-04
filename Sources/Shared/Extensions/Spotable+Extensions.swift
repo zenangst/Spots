@@ -351,6 +351,10 @@ public extension Spotable {
       if viewModel.size.width == 0 {
         viewModel.size.width = (view as? SpotConfigurable)?.preferredViewSize.width ?? 0.0
       }
+
+      if viewModel.size.width == 0 {
+        viewModel.size.width = view.bounds.width
+      }
     }
 
     if index < component.items.count && index > -1 {
