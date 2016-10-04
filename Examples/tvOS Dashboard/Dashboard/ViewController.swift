@@ -18,10 +18,10 @@ class ViewController: SpotsController {
       ])
 
     let developers = Component(title: "Swift Developers @hyperoslo", items: [
-      Item(title: "Vadym Markov", image: "https://avatars2.githubusercontent.com/u/10529867?v=3&s=460", subtitle: "iOS Developer", action: "1"),
-      Item(title: "Ramon Gilabert Llop", image: "https://avatars1.githubusercontent.com/u/6138120?v=3&s=460", subtitle: "iOS Developer", action: "2"),
-      Item(title: "Khoa Pham", image: "https://avatars0.githubusercontent.com/u/2284279?v=3&s=460", subtitle: "iOS Developer", action: "3"),
-      Item(title: "Christoffer Winterkvist", image: "https://avatars2.githubusercontent.com/u/57446?v=3&s=460", subtitle: "iOS Developer", action: "4")
+      Item(title: "Vadym Markov", subtitle: "iOS Developer", image: "https://avatars2.githubusercontent.com/u/10529867?v=3&s=460", action: "1"),
+      Item(title: "Ramon Gilabert Llop", subtitle: "iOS Developer", image: "https://avatars1.githubusercontent.com/u/6138120?v=3&s=460", action: "2"),
+      Item(title: "Khoa Pham", subtitle: "iOS Developer", image: "https://avatars0.githubusercontent.com/u/2284279?v=3&s=460", action: "3"),
+      Item(title: "Christoffer Winterkvist", subtitle: "iOS Developer", image: "https://avatars2.githubusercontent.com/u/57446?v=3&s=460", action: "4")
       ], meta: ["headerHeight" : 44])
 
     let spots: [Spotable] = [
