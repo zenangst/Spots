@@ -16,6 +16,8 @@ PODS:
 
 DEPENDENCIES:
   - Brick (from `https://github.com/hyperoslo/Brick`, branch `swift-3`)
+  - Cache (from `https://github.com/hyperoslo/Cache`, branch `swift-3`)
+  - CryptoSwift (= 0.6.0)
   - Imaginary (from `https://github.com/hyperoslo/Imaginary`, branch `swift-3`)
   - Spots (from `../../`)
   - Sugar (from `https://github.com/hyperoslo/Sugar`, branch `swift-3`)
@@ -25,6 +27,9 @@ EXTERNAL SOURCES:
   Brick:
     :branch: swift-3
     :git: https://github.com/hyperoslo/Brick
+  Cache:
+    :branch: swift-3
+    :git: https://github.com/hyperoslo/Cache
   Imaginary:
     :branch: swift-3
     :git: https://github.com/hyperoslo/Imaginary
@@ -38,6 +43,9 @@ CHECKOUT OPTIONS:
   Brick:
     :commit: 8c3040e96b8e8d62b534d40def925de30b7f8853
     :git: https://github.com/hyperoslo/Brick
+  Cache:
+    :commit: f4f1398fe02c762630a802b5e5ae9c334beafed9
+    :git: https://github.com/hyperoslo/Cache
   Imaginary:
     :commit: b8780d8f5037ea49050bdca18087b9c92f53f502
     :git: https://github.com/hyperoslo/Imaginary
@@ -54,6 +62,6 @@ SPEC CHECKSUMS:
   Sugar: 556b623f0f8846cf08de7302701892f11d567419
   Tailor: d5ee9756f4698e0b0d3f3eaa650ffc995714b3b3
 
-PODFILE CHECKSUM: a4c7c04cb25212d6784688d4fc097aa469ff41bb
+PODFILE CHECKSUM: 75f069e06500b8bd7cac942fb7187df1dcd546e5
 
 COCOAPODS: 1.1.0.rc.2
