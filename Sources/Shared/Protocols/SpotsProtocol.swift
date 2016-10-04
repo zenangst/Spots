@@ -37,8 +37,8 @@ public protocol SpotsProtocol: class {
   #endif
 
   #if DEVMODE
-  var fileQueue: dispatch_queue_t { get }
-  var source: dispatch_source_t! { get set }
+  var fileQueue: DispatchQueue { get }
+  var source: DispatchSourceFileSystemObject! { get set }
   #endif
 
   func setupSpots(_ animated: ((_ view: View) -> Void)?)
