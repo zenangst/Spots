@@ -33,6 +33,8 @@ class FeaturedCell: UICollectionViewCell, SpotConfigurable {
       imageView.image = nil
     }
 
+    item.size.width = contentView.bounds.width
+
     if item.size.height == 0.0 {
       item.size.height = preferredViewSize.height
     }
