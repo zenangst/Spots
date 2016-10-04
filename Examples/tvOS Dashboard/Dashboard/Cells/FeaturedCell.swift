@@ -7,7 +7,7 @@ import Imaginary
 
 class FeaturedCell: UICollectionViewCell, SpotConfigurable {
 
-  var preferredViewSize: CGSize = CGSize(width: 125, height: 500)
+  var preferredViewSize: CGSize = CGSize(width: 0, height: 500)
 
   lazy var imageView = UIImageView().then {
     $0.adjustsImageWhenAncestorFocused = true
@@ -32,8 +32,6 @@ class FeaturedCell: UICollectionViewCell, SpotConfigurable {
     } else {
       imageView.image = nil
     }
-
-    item.size.width = contentView.bounds.width
 
     if item.size.height == 0.0 {
       item.size.height = preferredViewSize.height
