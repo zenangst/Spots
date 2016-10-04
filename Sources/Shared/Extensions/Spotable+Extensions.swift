@@ -343,13 +343,13 @@ public extension Spotable {
       (view as? SpotConfigurable)?.configure(&viewModel)
     #endif
 
-    if usesViewSize {
+    if let itemView = view as? SpotConfigurable, usesViewSize {
       if viewModel.size.height == 0 {
-        viewModel.size.height = (view as? SpotConfigurable)?.preferredViewSize.height ?? 0.0
+        viewModel.size.height = itemView.preferredViewSize.height ?? 0.0
       }
 
       if viewModel.size.width == 0 {
-        viewModel.size.width = (view as? SpotConfigurable)?.preferredViewSize.width ?? 0.0
+        viewModel.size.width = itemView.preferredViewSize.width ?? 0.0
       }
 
       if viewModel.size.width == 0 {
