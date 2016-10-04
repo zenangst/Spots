@@ -312,16 +312,18 @@ public extension Spotable {
     guard let (_, resolvedView) = Self.views.make(kind),
       view = resolvedView else { return }
 
-    // Set initial size for view
-    view.frame.size = render().frame.size
+    #if !os(OSX)
+      // Set initial size for view
+      view.frame.size = render().frame.size
 
-    if let view = view as? UITableViewCell {
-      view.contentView.frame = view.bounds
-    }
+      if let view = view as? UITableViewCell {
+        view.contentView.frame = view.bounds
+      }
 
-    if let view = view as? UICollectionViewCell {
-      view.contentView.frame = view.bounds
-    }
+      if let view = view as? UICollectionViewCell {
+        view.contentView.frame = view.bounds
+      }
+    #endif
 
     #if !os(OSX)
       if let composite = view as? SpotComposable {
