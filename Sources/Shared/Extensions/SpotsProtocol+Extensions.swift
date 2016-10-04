@@ -161,7 +161,7 @@ public extension SpotsProtocol {
    */
   public func cache(_ items: Int? = nil) {
     #if DEVMODE
-      liveEditing(stateCache)
+      liveEditing(stateCache: stateCache)
     #endif
 
     stateCache?.save(dictionary(items))

@@ -67,8 +67,8 @@ open class ListSpot: NSObject, Listable {
       self.component.kind = "list"
     }
 
-    registerDefault(view: ListSpotCell.self)
-    registerComposite(view: ListComposite.self)
+    registerDefault(ListSpotCell.self)
+    registerComposite(ListComposite.self)
     registerAndPrepare()
     setupTableView()
   }

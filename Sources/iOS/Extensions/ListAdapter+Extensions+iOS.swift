@@ -185,7 +185,7 @@ extension ListAdapter {
     let indexPath = IndexPath(row: index, section: 0)
 
     if let composite = spot.tableView.cellForRow(at: indexPath) as? SpotComposable,
-      let spots = spot.spotsCompositeDelegate?.resolve(spotIndex: spot.index, itemIndex: (indexPath as NSIndexPath).item) {
+      let spots = spot.spotsCompositeDelegate?.resolve(spot.index, itemIndex: (indexPath as NSIndexPath).item) {
       spot.tableView.beginUpdates()
       composite.configure(&spot.component.items[indexPath.item], spots: spots)
       spot.tableView.endUpdates()
