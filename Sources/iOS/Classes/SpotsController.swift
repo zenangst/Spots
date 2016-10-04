@@ -61,7 +61,7 @@ open class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDeleg
 
   #if DEVMODE
   /// A dispatch queue is a lightweight object to which your application submits blocks for subsequent execution.
-  public let fileQueue: dispatch_queue_t = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
+  public let fileQueue: DispatchQueue = DispatchQueue.global(qos: DispatchQoS.QoSClass.default)
   /// An identifier for the type system object being monitored by a dispatch source.
   public var source: dispatch_source_t!
   #endif
@@ -158,9 +158,9 @@ open class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDeleg
   deinit {
     #if DEVMODE
     if let source = source {
-      dispatch_source_cancel(source)
+      source.cancel()
     }
-    NSNotificationCenter.defaultCenter().removeObserver(self)
+    NotificationCenter.default.removeObserver(self)
     #endif
   }
 

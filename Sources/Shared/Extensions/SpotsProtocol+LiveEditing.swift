@@ -4,26 +4,25 @@ import Cache
   public extension SpotsProtocol {
 
     private func monitor(filePath: String) {
-      guard NSFileManager.defaultManager().fileExistsAtPath(filePath) else { return }
+      guard FileManager.default.fileExists(atPath: filePath) else { return }
 
-      source = dispatch_source_create(
-        DISPATCH_SOURCE_TYPE_VNODE,
-        UInt(open(filePath, O_EVTONLY)),
-        DISPATCH_VNODE_DELETE | DISPATCH_VNODE_WRITE | DISPATCH_VNODE_EXTEND | DISPATCH_VNODE_ATTRIB | DISPATCH_VNODE_LINK | DISPATCH_VNODE_RENAME | DISPATCH_VNODE_REVOKE,
-        fileQueue)
+      let eventMask: DispatchSource.FileSystemEvent = [.delete, .write, .extend, .attrib, .link, .rename, .revoke]
+      source = DispatchSource.makeFileSystemObjectSource(fileDescriptor: Int32(open(filePath, O_EVTONLY)),
+                                                         eventMask: eventMask,
+                                                         queue: fileQueue)
 
-      dispatch_source_set_event_handler(source, {
+      source.setEventHandler(handler: {
         // Check that file still exists, otherwise cancel observering
-        guard NSFileManager.defaultManager().fileExistsAtPath(filePath) else {
-          dispatch_source_cancel(self.source)
+        guard FileManager.default.fileExists(atPath: filePath) else {
+          self.source.cancel()
           self.source = nil
           return
         }
 
         do {
           if let data = NSData(contentsOfFile: filePath),
-            let json = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? [String : Any] {
-            dispatch_source_cancel(self.source)
+            let json = try JSONSerialization.jsonObject(with: data as Data, options: .mutableContainers) as? [String : Any] {
+            self.source.cancel()
             self.source = nil
             let offset = self.spotsScrollView.contentOffset
 
@@ -51,17 +50,17 @@ import Cache
               #endif
             }
             print("Spots reloaded: \(self.spots.count)")
-            self.liveEditing(self.stateCache)
+            self.liveEditing(stateCache: self.stateCache)
           }
         } catch let error {
           self.source = nil
 
           print("Error: could not parse file")
-          self.liveEditing(self.stateCache)
+          self.liveEditing(stateCache: self.stateCache)
         }
       })
 
-      dispatch_resume(source)
+      source.resume()
     }
 
     func liveEditing(stateCache: SpotCache?) {
@@ -70,14 +69,14 @@ import Cache
       #else
         guard let stateCache = stateCache else { return }
       #endif
-      CacheJSONOptions.writeOptions = .PrettyPrinted
+      CacheJSONOptions.writeOptions = .prettyPrinted
 
-      let paths = NSSearchPathForDirectoriesInDomains(.CachesDirectory,
-                                                      NSSearchPathDomainMask.UserDomainMask, true)
+      let paths = NSSearchPathForDirectoriesInDomains(.cachesDirectory,
+                                                      FileManager.SearchPathDomainMask.userDomainMask, true)
       print("🎍 SPOTS: Caching...")
       print("Cache key: \(stateCache.key)")
       print("File path: file://\(stateCache.path)\n")
-      Dispatch.delay(for: 0.5) { self.monitor(stateCache.path) }
+      Dispatch.delay(for: 0.5) { self.monitor(filePath: stateCache.path) }
     }
   }
 #endif
