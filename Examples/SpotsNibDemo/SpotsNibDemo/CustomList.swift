@@ -2,22 +2,22 @@ import UIKit
 import Brick
 import Spots
 
-public class CustomList: UITableViewCell, SpotConfigurable {
+open class CustomList: UITableViewCell, SpotConfigurable {
 
   @IBOutlet var toggle: UISwitch?
   @IBOutlet var titleLabel: UILabel?
   @IBOutlet var subtitleLabel: UILabel?
-  public var size = CGSize(width: 100, height: 60)
+  open var preferredViewSize: CGSize = CGSize(width: 100, height: 60)
 
   public required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
-    backgroundColor = UIColor.clearColor()
+    backgroundColor = UIColor.clear
   }
 
-  public func configure(inout item: Item) {
-    item.size.height = size.height
+  open func configure(_ item: inout Item) {
+    item.size.height = preferredViewSize.height
     titleLabel?.text = item.title
     subtitleLabel?.text = item.subtitle
-    toggle?.on = item.meta("toggle", false)
+    toggle?.isOn = item.meta("toggle", false)
   }
 }
