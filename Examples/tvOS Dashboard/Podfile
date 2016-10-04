@@ -6,9 +6,9 @@ use_frameworks!
 inhibit_all_warnings!
 
 target "tvOS Dashboard" do
-  pod 'Sugar'
-  pod 'Tailor'
-  pod 'Brick'
+  pod 'Sugar', git: 'https://github.com/hyperoslo/Sugar', branch: 'swift-3'
+  pod 'Tailor', '2.0.0'
+  pod 'Brick', git: 'https://github.com/hyperoslo/Brick', branch: 'swift-3'
   pod 'Spots', path: '../../'
-  pod 'Imaginary', git: 'https://github.com/hyperoslo/Imaginary'
+  pod 'Imaginary', git: 'https://github.com/hyperoslo/Imaginary', branch: 'swift-3'
 end
