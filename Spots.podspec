@@ -18,8 +18,8 @@ Pod::Spec.new do |s|
   s.tvos.source_files = 'Sources/{iOS,tvOS,Shared}/**/*'
 
   s.frameworks = 'Foundation'
-  s.dependency 'Tailor', '1.3.0'
+  s.dependency 'Tailor', '2.0.0'
   s.dependency 'Brick', '1.0.0'
   s.dependency 'Cache', '1.5.1'
-  s.dependency 'CryptoSwift', '0.5.2'
+  s.dependency 'CryptoSwift', '0.6.0'
 end
