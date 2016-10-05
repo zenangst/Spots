@@ -17,7 +17,7 @@ class ForYouDetailController: SpotsController {
 
     view.addSubview(barView)
 
-    spot(0, Listable.self)?.tableView.separatorStyle = .none
+    spot(at: 0, Listable.self)?.tableView.separatorStyle = .none
   }
 
   func detailDidDismiss(_ sender: AnyObject) {

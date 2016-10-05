@@ -84,7 +84,7 @@ class ForYouController: SpotsController, SpotsDelegate {
     item.update(kind: Cell.FeedDetail)
     item.subtitle = ForYouController.faker.lorem.sentences(amount: 20)
 
-    if let cell = self.spot(0, ListSpot.self)?.tableView.cellForRow(at: IndexPath(row: item.index, section: 0)) {
+    if let cell = self.spot(at: 0, ListSpot.self)?.tableView.cellForRow(at: IndexPath(row: item.index, section: 0)) {
       selectedCell = cell
     }
 
@@ -175,8 +175,8 @@ extension ForYouController: SpotsScrollDelegate {
 
       let height = spot.items[0..<items.count].reduce(0, { $0 + $1.size.height })
 
-      self.spot(0, ListSpot.self)?.tableView.insert(Array(0..<(items.count)), section: 0, animation: .none)
-      self.spot(0, ListSpot.self)?.tableView.reload(Array((items.count)..<(items.count)), section: 0, animation: .none)
+      self.spot(at: 0, ListSpot.self)?.tableView.insert(Array(0..<(items.count)), section: 0, animation: .none)
+      self.spot(at: 0, ListSpot.self)?.tableView.reload(Array((items.count)..<(items.count)), section: 0, animation: .none)
 
       self.spotsScrollView.contentOffset.y = height - self.spotsScrollView.contentInset.top
 

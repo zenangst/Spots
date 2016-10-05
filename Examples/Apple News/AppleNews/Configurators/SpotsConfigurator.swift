@@ -43,11 +43,11 @@ struct SpotsConfigurator {
 
     ListSpot.configure = { tableView in tableView.tableFooterView = UIView(frame: CGRect.zero) }
 
-    ListSpot.register(FeedItemCell.self, identifier: Cell.Feed)
-    ListSpot.register(FeaturedFeedItemCell.self, identifier: Cell.FeaturedFeed)
-    ListSpot.register(FeedDetailItemCell.self, identifier: Cell.FeedDetail)
+    ListSpot.register(view: FeedItemCell.self, identifier: Cell.Feed)
+    ListSpot.register(view: FeaturedFeedItemCell.self, identifier: Cell.FeaturedFeed)
+    ListSpot.register(view: FeedDetailItemCell.self, identifier: Cell.FeedDetail)
 
-    CarouselSpot.register(GridTopicCell.self, identifier: Cell.Topic)
-    GridSpot.register(GridTopicCell.self, identifier: Cell.Topic)
+    CarouselSpot.register(view: GridTopicCell.self, identifier: Cell.Topic)
+    GridSpot.register(view: GridTopicCell.self, identifier: Cell.Topic)
   }
 }

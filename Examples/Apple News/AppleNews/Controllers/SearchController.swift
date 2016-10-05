@@ -25,7 +25,7 @@ class SearchController: SpotsController {
       }
     }
 
-    if let headerView = spot(1, ListSpot.self)?.tableView.headerView(forSection: 0),
+    if let headerView = spot(at: 1, ListSpot.self)?.tableView.headerView(forSection: 0),
       let searchHeader = headerView as? SearchHeaderView {
       searchHeader.searchField.delegate = self
     }
@@ -41,7 +41,7 @@ extension SearchController: UITextFieldDelegate {
         dispatch(queue: .interactive) { [weak self] in
           let items = FavoritesController.generateItems(0, to: 4)
 
-          if self?.spot(1, Spotable.self)?.component.title == "Results" {
+          if self?.spot(at: 1, Spotable.self)?.component.title == "Results" {
             self?.update(spotAtIndex: 1) { spot in
               spot.component.title = "Suggestions"
             }
@@ -56,7 +56,7 @@ extension SearchController: UITextFieldDelegate {
 
         dispatch(queue: .interactive) { [weak self] in
 
-          if self?.spot(1, Spotable.self)?.component.title == "Suggestions" {
+          if self?.spot(at: 1, Spotable.self)?.component.title == "Suggestions" {
             self?.update(spotAtIndex: 1) { spot in
               spot.component.title = "Results"
             }
