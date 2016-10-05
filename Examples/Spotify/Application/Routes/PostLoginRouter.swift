@@ -8,7 +8,7 @@ public struct PostLoginRouter: Routing {
 
   public func navigate(_ url: URL, navigationController: UINavigationController) -> Bool {
     guard let applicationDelegate = UIApplication.shared.delegate as? AppDelegate,
-    let location = Compass.parse(url)
+    let location = Compass.parse(url: url)
       else { return false }
 
     let route = location.path

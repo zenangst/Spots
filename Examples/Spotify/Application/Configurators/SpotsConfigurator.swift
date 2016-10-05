@@ -17,8 +17,8 @@ struct SpotsConfigurator: Configurator {
       layout.minimumLineSpacing = 5
     }
 
-    CarouselSpot.register(PlaylistGridSpotCell.self, identifier: "playlist")
-    CarouselSpot.register(FeaturedGridSpotCell.self, identifier: "featured")
+    CarouselSpot.register(view: PlaylistGridSpotCell.self, identifier: "playlist")
+    CarouselSpot.register(view: FeaturedGridSpotCell.self, identifier: "featured")
 
     GridSpot.configure = { collectionView, layout in
       collectionView.backgroundColor = UIColor.clear
@@ -28,9 +28,9 @@ struct SpotsConfigurator: Configurator {
       layout.minimumLineSpacing = 0
     }
 
-    GridSpot.register(PlayerGridSpotCell.self, identifier: "player")
-    GridSpot.register(PlaylistGridSpotCell.self, identifier: "playlist")
-    GridSpot.register(FeaturedGridSpotCell.self, identifier: "featured")
+    GridSpot.register(view: PlayerGridSpotCell.self, identifier: "player")
+    GridSpot.register(view: PlaylistGridSpotCell.self, identifier: "playlist")
+    GridSpot.register(view: FeaturedGridSpotCell.self, identifier: "featured")
 
     ListSpot.configure = { tableView in
       let inset: CGFloat = 15
@@ -49,9 +49,9 @@ struct SpotsConfigurator: Configurator {
     ListSpot.register(header: ListHeaderView.self, identifier: "list")
     ListSpot.register(defaultHeader: ListHeaderView.self)
 
-    ListSpot.register(PlaylistListSpotCell.self, identifier: "playlist")
-    ListSpot.register(PlayerListSpotCell.self, identifier: "player")
-    ListSpot.register(DefaultListSpotCell.self, identifier: "default")
+    ListSpot.register(view: PlaylistListSpotCell.self, identifier: "playlist")
+    ListSpot.register(view: PlayerListSpotCell.self, identifier: "player")
+    ListSpot.register(view: DefaultListSpotCell.self, identifier: "default")
     ListSpot.register(defaultView: DefaultListSpotCell.self)
 
   }

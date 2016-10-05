@@ -19,7 +19,7 @@ class SearchController: SpotsController {
     self.title = title
     self.spotsDelegate = self
 
-    guard let headerView = spot(0, ListSpot.self)?.tableView.headerView(forSection: 0),
+    guard let headerView = spot(at: 0, ListSpot.self)?.tableView.headerView(forSection: 0),
       let searchHeader = headerView as? SearchHeaderView else { return }
 
     searchHeader.searchField.delegate = self
@@ -28,7 +28,7 @@ class SearchController: SpotsController {
   override func scrollViewDidScroll(_ scrollView: UIScrollView) {
     super.scrollViewDidScroll(scrollView)
 
-    guard let headerView = spot(0, ListSpot.self)?.tableView.headerView(forSection: 0),
+    guard let headerView = spot(at: 0, ListSpot.self)?.tableView.headerView(forSection: 0),
       let searchHeader = headerView as? SearchHeaderView else { return }
     searchHeader.searchField.resignFirstResponder()
   }
@@ -40,7 +40,7 @@ extension SearchController: SpotsDelegate {
     guard let urn = item.action else { return }
 
     guard let delegate = UIApplication.shared.delegate as? AppDelegate,
-      let carouselSpot = delegate.mainController.playerController.spot(1, CarouselSpot.self) else { return }
+      let carouselSpot = delegate.mainController.playerController.spot(at: 1, CarouselSpot.self) else { return }
 
       delegate.mainController.playerController.update(spotAtIndex: 1) {
         var item = item
@@ -62,7 +62,7 @@ extension SearchController: UITextFieldDelegate {
 
   func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
     if textField.text?.length == 1 && string.length == 0 {
-        if spot(1, Spotable.self)?.component.title == "Results" {
+        if spot(at: 1, Spotable.self)?.component.title == "Results" {
           update(spotAtIndex: 1) { spot in
             spot.component.title = ""
           }
@@ -70,7 +70,7 @@ extension SearchController: UITextFieldDelegate {
           update(spotAtIndex: 2) { $0.items = [] }
         }
     } else if (textField.text?.length)! > 0 || string.length > 0 {
-        if spot(1, Spotable.self)?.component.title == "" {
+        if spot(at: 1, Spotable.self)?.component.title == "" {
           update(spotAtIndex: 1) { spot in
             spot.component.title = "Results"
           }

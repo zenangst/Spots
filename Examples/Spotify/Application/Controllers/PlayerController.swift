@@ -32,11 +32,11 @@ class PlayerController: SpotsController {
     spotsScrollView.isScrollEnabled = false
     spotsScrollView.backgroundColor = UIColor.clear
 
-    if let listSpot = spot(0, ListSpot.self) {
+    if let listSpot = spot(at: 0, ListSpot.self) {
       listSpot.tableView.separatorStyle = .none
     }
 
-    if let carouselSpot = spot(1, CarouselSpot.self) {
+    if let carouselSpot = spot(at: 1, CarouselSpot.self) {
       carouselSpot.paginate = true
       carouselSpot.carouselScrollDelegate = self
     }
@@ -62,7 +62,7 @@ class PlayerController: SpotsController {
         dispatch(queue: .interactive) {
           let (background, primary, secondary, detail) = image.colors(CGSize(width: 128, height: 128))
           dispatch { [weak self] in
-            if let listSpot = self?.spot(0, ListSpot.self) {
+            if let listSpot = self?.spot(at: 0, ListSpot.self) {
               var item = listSpot.items[0]
 
               item.meta["background"] = background
@@ -72,7 +72,7 @@ class PlayerController: SpotsController {
               self?.update(item, index: 0, spotIndex: 0)
             }
 
-            if let listSpot = self?.spot(2, ListSpot.self) {
+            if let listSpot = self?.spot(at: 2, ListSpot.self) {
               var item = listSpot.items[0]
 
               item.meta["background"] = background
@@ -82,7 +82,7 @@ class PlayerController: SpotsController {
               self?.update(item, index: 0, spotIndex: 2)
             }
 
-            if let gridSpot = self?.spot(3, GridSpot.self) {
+            if let gridSpot = self?.spot(at: 3, GridSpot.self) {
               var items = gridSpot.items
               items.enumerated().forEach {
                 items[$0.offset].meta["textColor"] = secondary
@@ -113,7 +113,7 @@ class PlayerController: SpotsController {
       let artist = userInfo["artist"] {
 
         var newItem: Item
-        if let spot = spot(0, Spotable.self), let item = spot.items.first {
+        if let spot = spot(at: 0, Spotable.self), let item = spot.items.first {
           newItem = item
           newItem.title = track
           newItem.subtitle = artist
@@ -212,7 +212,7 @@ extension PlayerController: SpotsDelegate {
       return
     }
 
-    if let carouselSpot = self.spot(1, CarouselSpot.self),
+    if let carouselSpot = self.spot(at: 1, CarouselSpot.self),
       let lastItem = lastItem {
         guard let currentIndex = carouselSpot.items.index(where: { $0.action == lastItem.action }) else { return }
         var newIndex = currentIndex
