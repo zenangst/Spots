@@ -1,7 +1,7 @@
 import UIKit
 import Spots
 
-public class CardSpot: CarouselSpot {
+open class CardSpot: CarouselSpot {
 
   static let padding: CGFloat = 25
 

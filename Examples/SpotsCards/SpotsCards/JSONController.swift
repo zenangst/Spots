@@ -10,7 +10,7 @@ class JSONController: UIViewController {
     label.text = "JSON"
     label.font = UIFont(name: "HelveticaNeue-Medium", size: 20)!
     label.textColor = UIColor(red:0.86, green:0.86, blue:0.86, alpha:1)
-    label.textAlignment = .Center
+    label.textAlignment = .center
     label.numberOfLines = 0
     label.sizeToFit()
 
@@ -26,8 +26,8 @@ class JSONController: UIViewController {
 
   lazy var submitButton: UIButton = { [unowned self] in
     let button = UIButton()
-    button.addTarget(self, action: #selector(submitButtonDidPress(_:)), forControlEvents: .TouchUpInside)
-    button.setTitle("Build", forState: .Normal)
+    button.addTarget(self, action: #selector(submitButtonDidPress(_:)), for: .touchUpInside)
+    button.setTitle("Build", for: UIControlState())
 
     return button
     }()
@@ -35,26 +35,26 @@ class JSONController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    view.backgroundColor = UIColor.whiteColor()
+    view.backgroundColor = UIColor.white
 
-    navigationItem.backBarButtonItem = UIBarButtonItem(title: nil, style: .Plain, target: nil, action: nil)
+    navigationItem.backBarButtonItem = UIBarButtonItem(title: nil, style: .plain, target: nil, action: nil)
 
     [titleLabel, textView, submitButton].forEach {
       view.addSubview($0)
     }
 
-    submitButton.setTitleColor(UIColor.grayColor(), forState: .Normal)
-    submitButton.layer.borderColor = UIColor.grayColor().CGColor
+    submitButton.setTitleColor(UIColor.gray, for: UIControlState())
+    submitButton.layer.borderColor = UIColor.gray.cgColor
     submitButton.layer.borderWidth = 1.5
     submitButton.layer.cornerRadius = 7.5
 
-    textView.layer.borderColor = UIColor.lightGrayColor().CGColor
+    textView.layer.borderColor = UIColor.lightGray.cgColor
     textView.layer.borderWidth = 1.0
     textView.layer.cornerRadius = 7.5
 
-    let bundlePath = NSBundle.mainBundle().pathForResource("components", ofType: "json")
-    let data = NSFileManager.defaultManager().contentsAtPath(bundlePath!)
-    let json = NSString(data: data!, encoding:NSUTF8StringEncoding) as! String
+    let bundlePath = Bundle.main.path(forResource: "components", ofType: "json")
+    let data = FileManager.default.contents(atPath: bundlePath!)
+    let json = NSString(data: data!, encoding:String.Encoding.utf8.rawValue) as! String
 
     textView.text = json
 
@@ -69,11 +69,11 @@ class JSONController: UIViewController {
 
   // MARK: Action methods
 
-  func submitButtonDidPress(button: UIButton? = nil) {
-    if let data = textView.text.dataUsingEncoding(NSUTF8StringEncoding) {
+  func submitButtonDidPress(_ button: UIButton? = nil) {
+    if let data = textView.text.data(using: String.Encoding.utf8) {
 
       do {
-        let json = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments) as? [String : AnyObject]
+        let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String : AnyObject]
         if let json = json {
           SpotFactory.DefaultSpot = ListSpot.self
 
@@ -82,10 +82,10 @@ class JSONController: UIViewController {
           navigationController?.pushViewController(controller, animated: true)
         }
       } catch {
-        let alertController = UIAlertController(title: "Error", message: "Unable to resolve JSON", preferredStyle: .Alert)
-        let doneAction = UIAlertAction(title: "Okay", style: .Default, handler: nil)
+        let alertController = UIAlertController(title: "Error", message: "Unable to resolve JSON", preferredStyle: .alert)
+        let doneAction = UIAlertAction(title: "Okay", style: .default, handler: nil)
         alertController.addAction(doneAction)
-        presentViewController(alertController, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
       }
     }
   }
@@ -93,9 +93,9 @@ class JSONController: UIViewController {
   // MARK - Configuration
 
   func setupFrames() {
-    let totalSize = UIScreen.mainScreen().bounds
+    let totalSize = UIScreen.main.bounds
 
-    if [.Portrait, .PortraitUpsideDown].contains(UIApplication.sharedApplication().statusBarOrientation) {
+    if [.portrait, .portraitUpsideDown].contains(UIApplication.shared.statusBarOrientation) {
       titleLabel.frame.origin = CGPoint(x: (totalSize.width - titleLabel.frame.width) / 2, y: 90)
       textView.frame = CGRect(x: 25, y: titleLabel.frame.maxY + 25, width: totalSize.width - 25 * 2, height: 350)
       submitButton.frame = CGRect(x: 50, y: textView.frame.maxY + 50, width: totalSize.width - 100, height: 50)
