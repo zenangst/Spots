@@ -21,7 +21,7 @@ class ForYouController: SpotsController, SpotsDelegate {
 
       if controller.isBeingPresented() {
         guard let weakSelf = self,
-          cell = self?.selectedCell else { return }
+          let cell = self?.selectedCell else { return }
 
         controller.view.alpha = 0
 
@@ -79,7 +79,7 @@ class ForYouController: SpotsController, SpotsDelegate {
     self.title = title
   }
 
-  func spotDidSelectItem(spot: Spotable, item: Item) {
+  func spotDidSelectItem(_ spot: Spotable, item: Item) {
     var item = item
     item.update(kind: Cell.FeedDetail)
     item.subtitle = ForYouController.faker.lorem.sentences(amount: 20)
@@ -106,7 +106,7 @@ class ForYouController: SpotsController, SpotsDelegate {
     detailNavigation = navigationController
   }
 
-  static func generateItem(index: Int, kind: Cell = Cell.Feed) -> Item {
+  static func generateItem(_ index: Int, kind: Cell = Cell.Feed) -> Item {
     let sentences = Int(arc4random_uniform(2) + 2)
 
     let item = Item(title: faker.lorem.sentences(amount: sentences),
@@ -117,7 +117,7 @@ class ForYouController: SpotsController, SpotsDelegate {
     return item
   }
 
-  static func generateItems(from: Int, to: Int, kind: Cell = Cell.Feed) -> [Item] {
+  static func generateItems(_ from: Int, to: Int, kind: Cell = Cell.Feed) -> [Item] {
     var items = [Item]()
     for i in from...from+to {
       let kind = Int(arc4random_uniform(100)) % 10 == 1
@@ -146,15 +146,15 @@ class ForYouController: SpotsController, SpotsDelegate {
 
 extension ForYouController: SpotsScrollDelegate {
 
-  func spotDidReachBeginning(completion: (() -> Void)?) {
-    guard let spot = spot where spot.component.items.count < 100 && view.window != nil
+  func spotDidReachBeginning(_ completion: (() -> Void)?) {
+    guard let spot = spot , spot.component.items.count < 100 && view.window != nil
       else {
         completion?()
         return
     }
 
     guard let navigationBar = navigationController?.navigationBar,
-      topItem = navigationBar.topItem else { return }
+      let topItem = navigationBar.topItem else { return }
 
     let items = ForYouController.generateItems(spot.component.items.count, to: 10)
 
@@ -186,8 +186,8 @@ extension ForYouController: SpotsScrollDelegate {
     }
   }
 
-  func spotDidReachEnd(completion: (() -> Void)?) {
-    if let spot = spot where spot.component.items.count < 100 {
+  func spotDidReachEnd(_ completion: (() -> Void)?) {
+    if let spot = spot , spot.component.items.count < 100 {
       append(ForYouController.generateItems(spot.component.items.count, to: 10))
     }
     delay(0.3) { completion?() }

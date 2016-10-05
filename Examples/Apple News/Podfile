@@ -1,17 +1,16 @@
+require "../../core-pods.rb"
 source 'https://github.com/CocoaPods/Specs.git'
-
 platform :ios, '8.0'
-
 use_frameworks!
 inhibit_all_warnings!
 
 target "AppleNews" do
-  pod 'Sugar', git: 'https://github.com/hyperoslo/Sugar'
-  pod 'Hue', git: 'https://github.com/hyperoslo/Hue'
-  pod 'Compass', git: 'https://github.com/hyperoslo/Compass'
-  pod 'Imaginary', git: 'https://github.com/hyperoslo/Imaginary'
-  pod 'Cache', git: 'https://github.com/hyperoslo/Cache'
+  core_pods
+  pod 'Sugar', git: 'https://github.com/hyperoslo/Sugar', :branch => 'swift-3'
+  pod 'Hue', git: 'https://github.com/hyperoslo/Hue', :branch => 'swift-3'
+  pod 'Compass', git: 'https://github.com/hyperoslo/Compass', :branch => 'swift-3'
+  pod 'Imaginary', git: 'https://github.com/hyperoslo/Imaginary', :branch => 'swift-3'
   pod 'Spots', path: '../../'
-  pod 'Fakery'
-  pod 'Transition', git: 'https://github.com/hyperoslo/Transition'
+  pod 'Fakery', '2.0.0'
+  pod 'Transition', git: 'https://github.com/hyperoslo/Transition', :branch => 'swift-3'
 end

@@ -2,13 +2,13 @@ import UIKit
 import Spots
 import Sugar
 
-public class SearchHeaderView: UITableViewHeaderFooterView, Componentable {
+open class SearchHeaderView: UITableViewHeaderFooterView, Componentable {
 
-  public var defaultHeight: CGFloat = 88
+  open var defaultHeight: CGFloat = 88
 
   lazy var label: UILabel = { [unowned self] in
     let label = UILabel(frame: self.bounds)
-    label.font = UIFont.boldSystemFontOfSize(11)
+    label.font = UIFont.boldSystemFont(ofSize: 11)
 
     return label
     }()
@@ -22,20 +22,20 @@ public class SearchHeaderView: UITableViewHeaderFooterView, Componentable {
     return view
     }()
 
-  public lazy var searchField: UITextField = { [unowned self] in
+  open lazy var searchField: UITextField = { [unowned self] in
     let searchField = UITextField(frame: self.bounds)
     searchField.width -= 30
     searchField.height = 44
     searchField.y = 0
     searchField.x = 15
-    searchField.font = UIFont.systemFontOfSize(18)
+    searchField.font = UIFont.systemFont(ofSize: 18)
 
     return searchField
     }()
 
   lazy var paddedStyle: NSParagraphStyle = {
     let style = NSMutableParagraphStyle()
-    style.alignment = .Left
+    style.alignment = .left
     style.firstLineHeadIndent = 15.0
     style.headIndent = 15.0
     style.tailIndent = -15.0
@@ -52,8 +52,8 @@ public class SearchHeaderView: UITableViewHeaderFooterView, Componentable {
     fatalError("init(coder:) has not been implemented")
   }
 
-  public func configure(component: Component) {
-    backgroundColor = UIColor.whiteColor()
+  open func configure(_ component: Component) {
+    backgroundColor = UIColor.white
 
     label.attributedText = NSAttributedString(string: component.title.uppercaseString,
       attributes: [NSParagraphStyleAttributeName : paddedStyle])

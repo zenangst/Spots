@@ -1,20 +1,20 @@
 import UIKit
 import Spots
 
-public class ListHeaderView: UITableViewHeaderFooterView, Componentable {
+open class ListHeaderView: UITableViewHeaderFooterView, Componentable {
 
-  public var defaultHeight: CGFloat = 44
+  open var defaultHeight: CGFloat = 44
 
   lazy var label: UILabel = { [unowned self] in
     let label = UILabel(frame: self.frame)
-    label.font = UIFont.boldSystemFontOfSize(11)
+    label.font = UIFont.boldSystemFont(ofSize: 11)
 
     return label
   }()
 
   lazy var paddedStyle: NSParagraphStyle = {
     let style = NSMutableParagraphStyle()
-    style.alignment = .Left
+    style.alignment = .left
     style.firstLineHeadIndent = 15.0
     style.headIndent = 15.0
     style.tailIndent = -15.0
@@ -30,8 +30,8 @@ public class ListHeaderView: UITableViewHeaderFooterView, Componentable {
     fatalError("init(coder:) has not been implemented")
   }
 
-  public func configure(component: Component) {
-    backgroundColor = UIColor.whiteColor()
+  open func configure(_ component: Component) {
+    backgroundColor = UIColor.white
 
     label.attributedText = NSAttributedString(string: component.title.uppercaseString,
       attributes: [NSParagraphStyleAttributeName : paddedStyle])

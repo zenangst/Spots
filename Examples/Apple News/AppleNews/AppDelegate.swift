@@ -8,9 +8,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarDelegate {
   var window: UIWindow?
   var navigationController: UINavigationController?
 
-  func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-    window = UIWindow(frame: UIScreen.mainScreen().bounds)
-    window?.backgroundColor = UIColor.whiteColor()
+  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    window = UIWindow(frame: UIScreen.main.bounds)
+    window?.backgroundColor = UIColor.white
 
     SpotsConfigurator().configure()
 
@@ -35,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarDelegate {
       savedController
     ]
     tabBarController.selectedIndex = 0
-    tabBarController.tabBar.translucent = true
+    tabBarController.tabBar.isTranslucent = true
 
     navigationController = UINavigationController(rootViewController: tabBarController)
 

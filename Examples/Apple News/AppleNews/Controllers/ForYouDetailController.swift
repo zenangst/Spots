@@ -20,18 +20,18 @@ class ForYouDetailController: SpotsController {
     spot(0, Listable.self)?.tableView.separatorStyle = .None
   }
 
-  func detailDidDismiss(sender: AnyObject) {
+  func detailDidDismiss(_ sender: AnyObject) {
     navigationController?.dismissViewControllerAnimated(true, completion: nil)
   }
 }
 
 extension ForYouDetailController {
 
-  override func scrollViewDidScroll(scrollView: UIScrollView) {
+  override func scrollViewDidScroll(_ scrollView: UIScrollView) {
     super.scrollViewDidScroll(scrollView)
 
     guard let navigationController = navigationController
-      where scrollView.tracking
+      , scrollView.tracking
       else { return }
 
     if spotsScrollView.contentOffset.y >= lastContentOffset?.y && spotsScrollView.contentOffset.y > 64 {

@@ -3,9 +3,9 @@ import Sugar
 import Imaginary
 import Brick
 
-public class FeedDetailItemCell: UITableViewCell, SpotConfigurable {
+open class FeedDetailItemCell: UITableViewCell, SpotConfigurable {
 
-  public var size = CGSize(width: 0, height: 180)
+  open var size = CGSize(width: 0, height: 180)
 
   lazy var featuredImage = UIImageView(frame: CGRect.zero).then {
     $0.contentMode = .ScaleAspectFill
@@ -38,7 +38,7 @@ public class FeedDetailItemCell: UITableViewCell, SpotConfigurable {
     fatalError("init(coder:) has not been implemented")
   }
 
-  public func configure(inout item: Item) {
+  open func configure(_ item: inout Item) {
     if !item.image.isEmpty {
       featuredImage.setImage(NSURL(string: item.image))
       featuredImage.height = 300

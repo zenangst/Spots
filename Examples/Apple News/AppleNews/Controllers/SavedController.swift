@@ -14,7 +14,7 @@ class SavedController: SpotsController {
     self.title = title
   }
 
-  override func viewWillAppear(animated: Bool) {
+  override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
 
     dispatch(queue: .Interactive) { [weak self] in

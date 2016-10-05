@@ -15,7 +15,7 @@ class SearchController: SpotsController {
     self.title = title
   }
 
-  override func viewWillAppear(animated: Bool) {
+  override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
 
     dispatch(queue: .Interactive) { [weak self] in
@@ -26,7 +26,7 @@ class SearchController: SpotsController {
     }
 
     if let headerView = spot(1, ListSpot.self)?.tableView.headerViewForSection(0),
-      searchHeader = headerView as? SearchHeaderView {
+      let searchHeader = headerView as? SearchHeaderView {
       searchHeader.searchField.delegate = self
     }
   }
@@ -34,7 +34,7 @@ class SearchController: SpotsController {
 
 extension SearchController: UITextFieldDelegate {
 
-  func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+  func textField(_ textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
     if textField.text?.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) == 1 &&
       string.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) == 0 {
 
@@ -72,7 +72,7 @@ extension SearchController: UITextFieldDelegate {
     return true
   }
 
-  func textFieldShouldReturn(textField: UITextField) -> Bool {
+  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     textField.resignFirstResponder()
     return true
   }

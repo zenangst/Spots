@@ -34,7 +34,7 @@ class FeedItemCell: UITableViewCell, SpotConfigurable {
     fatalError("init(coder:) has not been implemented")
   }
 
-  func configure(inout item: Item) {
+  func configure(_ item: inout Item) {
     if !item.image.isEmpty {
       customImageView.setImage(NSURL(string: item.image))
     }

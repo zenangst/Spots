@@ -28,7 +28,7 @@ class GridTopicCell: UICollectionViewCell, SpotConfigurable {
     button.layer.cornerRadius = button.frame.width / 2
     button.font = UIFont(name: "Menlo", size: 16)
     button.text = "+"
-    button.textAlignment = .Center
+    button.textAlignment = .center
 
     return button
   }()
@@ -56,11 +56,11 @@ class GridTopicCell: UICollectionViewCell, SpotConfigurable {
     fatalError("init(coder:) has not been implemented")
   }
 
-  func configure(inout item: Item) {
+  func configure(_ item: inout Item) {
     if !item.image.isEmpty {
       imageView.frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
       imageView.image = nil
-      let URL = NSURL(string: item.image)
+      let URL = URL(string: item.image)
       imageView.setImage(URL)
     }
 

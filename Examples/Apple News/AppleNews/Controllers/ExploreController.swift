@@ -53,11 +53,11 @@ class ExploreController: SpotsController {
     self.title = title
   }
 
-  static func suggestedImage(id: Int) -> String {
+  static func suggestedImage(_ id: Int) -> String {
     return Faker().internet.image(width: 125, height: 160) + "?item=\(id)"
   }
 
-  static func topicImage(hex: String, id: Int) -> String {
+  static func topicImage(_ hex: String, id: Int) -> String {
     return Faker().internet.templateImage(width: 125, height: 160, backColorHex: hex, frontColorHex: hex) + "?item=\(id)"
   }
 }

@@ -1,85 +1,97 @@
 PODS:
-  - Brick (0.9.6):
+  - Brick (1.0.0):
     - Tailor
   - Cache (1.5.1):
     - CryptoSwift
-  - Compass (3.0.1)
-  - CryptoSwift (0.5.2)
-  - Fakery (1.3.2):
-    - SwiftyJSON (< 3.0.0)
-  - Hue (1.3.0)
+  - Compass (3.0.0)
+  - CryptoSwift (0.6.0)
+  - Fakery (2.0.0)
+  - Hue (1.2.0)
   - Imaginary (0.1.0):
     - Cache
-  - Spots (3.0.4):
-    - Brick
-    - Cache
-    - CryptoSwift (= 0.5.2)
-    - Tailor
+  - Spots (4.0.2):
+    - Brick (= 1.0.0)
+    - Cache (= 1.5.1)
+    - CryptoSwift (= 0.6.0)
+    - Tailor (= 2.0.0)
   - Sugar (1.2.0)
-  - SwiftyJSON (2.4.0)
-  - Tailor (1.3.0)
+  - Tailor (2.0.0)
   - Transition (0.1.0)
 
 DEPENDENCIES:
-  - Cache (from `https://github.com/hyperoslo/Cache`)
-  - Compass (from `https://github.com/hyperoslo/Compass`)
-  - Fakery
-  - Hue (from `https://github.com/hyperoslo/Hue`)
-  - Imaginary (from `https://github.com/hyperoslo/Imaginary`)
+  - Brick (from `https://github.com/hyperoslo/Brick`, branch `swift-3`)
+  - Cache (from `https://github.com/hyperoslo/Cache`, branch `swift-3`)
+  - Compass (from `https://github.com/hyperoslo/Compass`, branch `swift-3`)
+  - CryptoSwift (= 0.6.0)
+  - Fakery (= 2.0.0)
+  - Hue (from `https://github.com/hyperoslo/Hue`, branch `swift-3`)
+  - Imaginary (from `https://github.com/hyperoslo/Imaginary`, branch `swift-3`)
   - Spots (from `../../`)
-  - Sugar (from `https://github.com/hyperoslo/Sugar`)
-  - Transition (from `https://github.com/hyperoslo/Transition`)
+  - Sugar (from `https://github.com/hyperoslo/Sugar`, branch `swift-3`)
+  - Tailor (= 2.0.0)
+  - Transition (from `https://github.com/hyperoslo/Transition`, branch `swift-3`)
 
 EXTERNAL SOURCES:
+  Brick:
+    :branch: swift-3
+    :git: https://github.com/hyperoslo/Brick
   Cache:
+    :branch: swift-3
     :git: https://github.com/hyperoslo/Cache
   Compass:
+    :branch: swift-3
     :git: https://github.com/hyperoslo/Compass
   Hue:
+    :branch: swift-3
     :git: https://github.com/hyperoslo/Hue
   Imaginary:
+    :branch: swift-3
     :git: https://github.com/hyperoslo/Imaginary
   Spots:
     :path: "../../"
   Sugar:
+    :branch: swift-3
     :git: https://github.com/hyperoslo/Sugar
   Transition:
+    :branch: swift-3
     :git: https://github.com/hyperoslo/Transition
 
 CHECKOUT OPTIONS:
+  Brick:
+    :commit: 8c3040e96b8e8d62b534d40def925de30b7f8853
+    :git: https://github.com/hyperoslo/Brick
   Cache:
-    :commit: cff7ea060664c856ec76f3345cf1e541b5dc0e18
+    :commit: f4f1398fe02c762630a802b5e5ae9c334beafed9
     :git: https://github.com/hyperoslo/Cache
   Compass:
-    :commit: 84242c07670f0fe09b623069740f4601ef0bf1d9
+    :commit: ebbafc3b650c5848095ac10536b90c2ead1e692f
     :git: https://github.com/hyperoslo/Compass
   Hue:
-    :commit: 3cd45dee0ac7971ff0f0c86b68865d4a075078e3
+    :commit: 5830d6062f3c10bf6fd581759fbe307b3378a02e
     :git: https://github.com/hyperoslo/Hue
   Imaginary:
-    :commit: e111dcfcd5a67e6d52febc48c5ebfb9090f77af5
+    :commit: 6fadb337e2fa8ebf90d7c1b28f1fd4cac77a6fc9
     :git: https://github.com/hyperoslo/Imaginary
   Sugar:
-    :commit: d75ec0a674d31b5b24258ce8fdfccd093e479b99
+    :commit: 6b04120d3caf3f1e38f970e965c9f39752a23b32
     :git: https://github.com/hyperoslo/Sugar
   Transition:
-    :commit: 0d94057f824787973ae34bac4906164e3d6a2c8b
+    :commit: 57174fa92a12e9ef5c5f88a88ef1889bb83e46f7
     :git: https://github.com/hyperoslo/Transition
 
 SPEC CHECKSUMS:
-  Brick: 4af97115ccf754c13d5d6dc0860936809b198d67
+  Brick: 2de240889550c54ea20b146c72f31e9b256c71ad
   Cache: 87b48b059429d3b53238533830c53941f8aa85f0
-  Compass: e48325f0db929a72430ddfb8d3d9af5a3b4f626a
-  CryptoSwift: c1ef79f901b86099a6fe8b3c7524cf9f3f3c8c40
-  Fakery: 9ffe5c045791a7656aaf2e8b39b181c0d0d00c89
-  Hue: b4d7f4923dd16237f9cbc1783c3c81438b4391f4
+  Compass: 5bb05fc2b873e9d5b1efda5752649b6a0a993843
+  CryptoSwift: 4a599b7241b8d3b857d6e2c28867d0bd5d1aae24
+  Fakery: 97b99c23937d2e025d9135c75e2b17351ccd5031
+  Hue: '0705083b7aff40334033373e6293ec1215285ac2'
   Imaginary: 62a9ce1e6d7831ede429c8221a183f03ec2a90bc
-  Spots: a6cb714c1da7007b666196651c143e49c9bf05b4
+  Spots: fcb567d256e0051a629b4fb302c00598e54d45a0
   Sugar: 556b623f0f8846cf08de7302701892f11d567419
-  SwiftyJSON: 96918c1bf505efa50c4f72957018dd3452090c9c
-  Tailor: 71fac74a4f14abcd13a10bf07bbe69d5ac746f58
+  Tailor: d5ee9756f4698e0b0d3f3eaa650ffc995714b3b3
   Transition: 66d86e3ae1b8f0b3d9ba2000c7a45fbc17b066f2
 
-PODFILE CHECKSUM: 04e01af2089d9294aab4bc322db3813847da7de7
+PODFILE CHECKSUM: 2417acc8e047e178b516e1f036c5b3bf0a510eac
 
 COCOAPODS: 1.1.0.rc.2

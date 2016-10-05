@@ -12,7 +12,7 @@ class FavoritesController: SpotsController {
     self.title = title
   }
 
-  static func generateItem(index: Int, kind: Cell = Cell.Topic) -> Item {
+  static func generateItem(_ index: Int, kind: Cell = Cell.Topic) -> Item {
     let item = Item(
       title: faker.commerce.department(),
       subtitle: faker.lorem.sentences(amount: 2),
@@ -22,7 +22,7 @@ class FavoritesController: SpotsController {
     return item
   }
 
-  static func generateItems(from: Int, to: Int, kind: Cell = Cell.Topic) -> [Item] {
+  static func generateItems(_ from: Int, to: Int, kind: Cell = Cell.Topic) -> [Item] {
     var items = [Item]()
     for i in from...from+to {
       autoreleasepool { items.append(generateItem(i, kind: kind)) }
@@ -36,7 +36,7 @@ class FavoritesController: SpotsController {
     showContent()
   }
 
-  override func viewWillAppear(animated: Bool) {
+  override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
 
     if navigationController?.navigationBar.topItem?.rightBarButtonItem == nil {
