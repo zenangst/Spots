@@ -3,6 +3,15 @@ import Brick
 
 extension Gridable {
 
+  /// A computed CGFloat of the total height of all items inside of a component
+  public var computedHeight: CGFloat {
+    guard usesDynamicHeight else {
+      return self.render().frame.height
+    }
+
+    return layout.collectionViewContentSize.height
+  }
+
   public var responder: NSResponder {
     return collectionView
   }
@@ -27,17 +36,6 @@ extension Gridable {
         self.collectionView.register(nib, forItemWithIdentifier: identifier)
       }
     }
-  }
-
-  /**
-   - returns: A CGFloat of the total height of all items inside of a component
-   */
-  public func spotHeight -> CGFloat {
-    guard usesDynamicHeight else {
-      return self.render().frame.height
-    }
-
-    return layout.collectionViewContentSize.height
   }
 
   /**
