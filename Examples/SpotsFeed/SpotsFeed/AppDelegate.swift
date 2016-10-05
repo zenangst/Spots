@@ -38,8 +38,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       $0.backgroundColor = UIColor.white
     }
 
-    ListSpot.register(PostTableViewCell.self, identifier: "feed")
-    ListSpot.register(CommentTableViewCell.self, identifier: "comment")
+    ListSpot.register(view: PostTableViewCell.self, identifier: "feed")
+    ListSpot.register(view: CommentTableViewCell.self, identifier: "comment")
 
     let feedComponent = Component(span: 1, items: FeedController.generateItems(0, to: 3))
     let feedSpot = ListSpot(component: feedComponent)
@@ -60,7 +60,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
 
   @discardableResult func handleURL(_ url: URL) -> Bool {
-    guard let location = Compass.parse(url) else { return false }
+    guard let location = Compass.parse(url: url) else { return false }
     
     let route = location.path
 
