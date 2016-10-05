@@ -205,6 +205,8 @@ extension ListAdapter: NSTableViewDelegate {
   }
 
   public func tableView(_ tableView: NSTableView, rowViewForRow row: Int) -> NSTableRowView? {
+    guard row >= 0 && row < spot.component.items.count else { return nil }
+
     let reuseIdentifier = spot.identifier(row)
     guard let cachedView = type(of: spot).views.make(reuseIdentifier) else { return nil }
 
