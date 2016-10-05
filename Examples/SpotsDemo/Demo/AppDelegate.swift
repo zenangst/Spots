@@ -10,9 +10,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
     window = UIWindow(frame: UIScreen.main.bounds)
 
-    GridSpot.register(GridSpotHeader.self, identifier: "header")
-    GridSpot.register(GridSpotCellTitles.self, identifier: "titles")
-    GridSpot.register(GridSpotCellCircle.self, identifier: "circle")
+    GridSpot.register(view: GridSpotHeader.self, identifier: "header")
+    GridSpot.register(view: GridSpotCellTitles.self, identifier: "titles")
+    GridSpot.register(view: GridSpotCellCircle.self, identifier: "circle")
 
     SpotsController.configure = {
       $0.backgroundColor = UIColor.white
