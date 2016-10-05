@@ -10,7 +10,6 @@ target "AppleNews" do
   pod 'Hue', git: 'https://github.com/hyperoslo/Hue', :branch => 'swift-3'
   pod 'Compass', git: 'https://github.com/hyperoslo/Compass', :branch => 'swift-3'
   pod 'Imaginary', git: 'https://github.com/hyperoslo/Imaginary', :branch => 'swift-3'
-  pod 'Spots', path: '../../'
   pod 'Fakery', '2.0.0'
   pod 'Transition', git: 'https://github.com/hyperoslo/Transition', :branch => 'swift-3'
 end
