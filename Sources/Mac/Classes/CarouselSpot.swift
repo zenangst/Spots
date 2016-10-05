@@ -41,7 +41,6 @@ open class CarouselSpot: NSObject, Gridable {
   open var cachedViews = [String : SpotConfigurable]()
   open var component: Component
   open var configure: ((SpotConfigurable) -> Void)?
-  open var index = 0
   /// Indicator to calculate the height based on content
   open var usesDynamicHeight = true
 
