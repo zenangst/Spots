@@ -16,8 +16,8 @@ class FavoritesController: SpotsController {
     let item = Item(
       title: faker.commerce.department(),
       subtitle: faker.lorem.sentences(amount: 2),
-      kind: kind,
-      image: faker.internet.image(width: 125, height: 160) + "?type=avatar&id=\(index)")
+      image: faker.internet.image(width: 125, height: 160) + "?type=avatar&id=\(index)",
+      kind: kind)
 
     return item
   }
@@ -41,7 +41,7 @@ class FavoritesController: SpotsController {
 
     if navigationController?.navigationBar.topItem?.rightBarButtonItem == nil {
       navigationController?.navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(
-        barButtonSystemItem: .Organize,
+        barButtonSystemItem: .organize,
         target: self,
         action: #selector(showContent))
     }
@@ -51,7 +51,7 @@ class FavoritesController: SpotsController {
     let newType = spot(0, Spotable.self)?.component.kind == "grid" ? "list" : "grid"
 
     navigationController?.navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(
-      barButtonSystemItem: newType == "grid" ? .Organize : .Action,
+      barButtonSystemItem: newType == "grid" ? .organize : .action,
       target: self,
       action: #selector(showContent))
 
@@ -64,13 +64,13 @@ class FavoritesController: SpotsController {
       ]
     ], animated: { view in
       view.alpha = 0.0
-      view.transform = CGAffineTransformMakeScale(1.0, 0.0)
-      UIView.animateWithDuration(0.3) {
+      view.transform = CGAffineTransform(scaleX: 1.0, y: 0.0)
+      UIView.animate(withDuration: 0.3) {
         view.alpha = 1.0
-        view.transform = CGAffineTransformIdentity
+        view.transform = CGAffineTransform.identity
       }
     }) {
-      dispatch(queue: .Interactive) { [weak self] in
+      dispatch(queue: .interactive) { [weak self] in
         let items = FavoritesController.generateItems(0, to: 11, kind: newType == "grid" ? Cell.Topic : Cell.Feed)
         self?.update { spot in
           spot.component.items = items

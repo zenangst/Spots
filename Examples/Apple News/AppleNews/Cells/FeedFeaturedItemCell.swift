@@ -5,21 +5,21 @@ import Imaginary
 
 open class FeaturedFeedItemCell: UITableViewCell, SpotConfigurable {
 
-  open var size = CGSize(width: 0, height: 130)
+  open var preferredViewSize: CGSize = CGSize(width: 0, height: 130)
 
   lazy var featuredImage = UIImageView(frame: CGRect.zero).then {
-    $0.contentMode = .ScaleAspectFill
+    $0.contentMode = .scaleAspectFill
     $0.clipsToBounds = true
   }
 
   lazy var titleLabel = UILabel().then {
     $0.numberOfLines = 0
-    $0.font = UIFont.boldSystemFontOfSize(18)
+    $0.font = UIFont.boldSystemFont(ofSize: 18)
   }
 
   lazy var introLabel = UILabel().then {
     $0.numberOfLines = 0
-    $0.font = UIFont.systemFontOfSize(13)
+    $0.font = UIFont.systemFont(ofSize: 13)
   }
 
   lazy var separatorView = UIView().then {
@@ -27,9 +27,9 @@ open class FeaturedFeedItemCell: UITableViewCell, SpotConfigurable {
   }
 
   override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-    super.init(style: .Default, reuseIdentifier: reuseIdentifier)
+    super.init(style: .default, reuseIdentifier: reuseIdentifier)
 
-    selectionStyle = .None
+    selectionStyle = .none
 
     addSubview(featuredImage)
     addSubview(titleLabel)
@@ -41,8 +41,8 @@ open class FeaturedFeedItemCell: UITableViewCell, SpotConfigurable {
   }
 
   open func configure(_ item: inout Item) {
-    if !item.image.isEmpty {
-      featuredImage.setImage(NSURL(string: item.image))
+    if let url = URL(string: item.image), !item.image.isEmpty {
+      featuredImage.setImage(url)
     }
 
     featuredImage.width = contentView.frame.width - 30

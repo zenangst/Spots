@@ -18,14 +18,14 @@ class SearchController: SpotsController {
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
 
-    dispatch(queue: .Interactive) { [weak self] in
+    dispatch(queue: .interactive) { [weak self] in
       let items = FavoritesController.generateItems(0, to: 4)
       self?.update(spotAtIndex: 2) { spot in
         spot.component.items = items
       }
     }
 
-    if let headerView = spot(1, ListSpot.self)?.tableView.headerViewForSection(0),
+    if let headerView = spot(1, ListSpot.self)?.tableView.headerView(forSection: 0),
       let searchHeader = headerView as? SearchHeaderView {
       searchHeader.searchField.delegate = self
     }
@@ -34,11 +34,11 @@ class SearchController: SpotsController {
 
 extension SearchController: UITextFieldDelegate {
 
-  func textField(_ textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
-    if textField.text?.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) == 1 &&
-      string.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) == 0 {
+  func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    if textField.text?.lengthOfBytes(using: String.Encoding.utf8) == 1 &&
+      string.lengthOfBytes(using: String.Encoding.utf8) == 0 {
 
-        dispatch(queue: .Interactive) { [weak self] in
+        dispatch(queue: .interactive) { [weak self] in
           let items = FavoritesController.generateItems(0, to: 4)
 
           if self?.spot(1, Spotable.self)?.component.title == "Results" {
@@ -51,10 +51,10 @@ extension SearchController: UITextFieldDelegate {
             spot.component.items = items
           }
         }
-    } else if textField.text?.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0 ||
-      string.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0 {
+    } else if (textField.text?.lengthOfBytes(using: String.Encoding.utf8))! > 0 ||
+      string.lengthOfBytes(using: String.Encoding.utf8) > 0 {
 
-        dispatch(queue: .Interactive) { [weak self] in
+        dispatch(queue: .interactive) { [weak self] in
 
           if self?.spot(1, Spotable.self)?.component.title == "Suggestions" {
             self?.update(spotAtIndex: 1) { spot in

@@ -4,22 +4,21 @@ import Imaginary
 import Brick
 
 open class FeedDetailItemCell: UITableViewCell, SpotConfigurable {
-
-  open var size = CGSize(width: 0, height: 180)
+  open var preferredViewSize: CGSize = CGSize(width: 0, height: 180)
 
   lazy var featuredImage = UIImageView(frame: CGRect.zero).then {
-    $0.contentMode = .ScaleAspectFill
+    $0.contentMode = .scaleAspectFill
     $0.clipsToBounds = true
   }
 
   lazy var titleLabel = UILabel().then {
     $0.numberOfLines = 0
-    $0.font = UIFont.boldSystemFontOfSize(20)
+    $0.font = UIFont.boldSystemFont(ofSize: 20)
   }
 
   lazy var introLabel = UILabel().then {
     $0.numberOfLines = 0
-    $0.font = UIFont.systemFontOfSize(15)
+    $0.font = UIFont.systemFont(ofSize: 15)
   }
 
   lazy var separatorView = UIView().then {
@@ -27,9 +26,9 @@ open class FeedDetailItemCell: UITableViewCell, SpotConfigurable {
   }
 
   override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-    super.init(style: .Default, reuseIdentifier: reuseIdentifier)
+    super.init(style: .default, reuseIdentifier: reuseIdentifier)
 
-    selectionStyle = .None
+    selectionStyle = .none
 
     [featuredImage, titleLabel, introLabel].forEach { addSubview($0) }
   }
@@ -40,7 +39,7 @@ open class FeedDetailItemCell: UITableViewCell, SpotConfigurable {
 
   open func configure(_ item: inout Item) {
     if !item.image.isEmpty {
-      featuredImage.setImage(NSURL(string: item.image))
+      featuredImage.setImage(NSURL(string: item.image) as URL?)
       featuredImage.height = 300
     } else {
       featuredImage.height = 0

@@ -6,7 +6,7 @@ PODS:
   - Compass (3.0.0)
   - CryptoSwift (0.6.0)
   - Fakery (2.0.0)
-  - Hue (1.2.0)
+  - Hue (2.0.0)
   - Imaginary (0.1.0):
     - Cache
   - Spots (4.0.2):
@@ -67,7 +67,7 @@ CHECKOUT OPTIONS:
     :commit: ebbafc3b650c5848095ac10536b90c2ead1e692f
     :git: https://github.com/hyperoslo/Compass
   Hue:
-    :commit: 5830d6062f3c10bf6fd581759fbe307b3378a02e
+    :commit: f4c7ceebf6fb7edb57fa7e7b8355984e7f243e5a
     :git: https://github.com/hyperoslo/Hue
   Imaginary:
     :commit: 6fadb337e2fa8ebf90d7c1b28f1fd4cac77a6fc9
@@ -85,7 +85,7 @@ SPEC CHECKSUMS:
   Compass: 5bb05fc2b873e9d5b1efda5752649b6a0a993843
   CryptoSwift: 4a599b7241b8d3b857d6e2c28867d0bd5d1aae24
   Fakery: 97b99c23937d2e025d9135c75e2b17351ccd5031
-  Hue: '0705083b7aff40334033373e6293ec1215285ac2'
+  Hue: '08216d56d01a550a6bbf785778e3dca851b6a65f'
   Imaginary: 62a9ce1e6d7831ede429c8221a183f03ec2a90bc
   Spots: fcb567d256e0051a629b4fb302c00598e54d45a0
   Sugar: 556b623f0f8846cf08de7302701892f11d567419

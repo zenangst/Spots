@@ -55,7 +55,7 @@ open class SearchHeaderView: UITableViewHeaderFooterView, Componentable {
   open func configure(_ component: Component) {
     backgroundColor = UIColor.white
 
-    label.attributedText = NSAttributedString(string: component.title.uppercaseString,
+    label.attributedText = NSAttributedString(string: component.title.uppercased(),
       attributes: [NSParagraphStyleAttributeName : paddedStyle])
 
     frame.size.height ?= component.size?.height

@@ -12,14 +12,14 @@ class ForYouController: SpotsController, SpotsDelegate {
   weak var detailNavigation: UINavigationController?
 
   lazy var featuredImage = UIImageView(frame: CGRect.zero).then {
-    $0.contentMode = .ScaleAspectFill
+    $0.contentMode = .scaleAspectFill
     $0.clipsToBounds = true
   }
 
   lazy var transition: Transition = { [unowned self] in
     let transition = Transition() { [weak self] controller, show in
 
-      if controller.isBeingPresented() {
+      if controller.isBeingPresented {
         guard let weakSelf = self,
           let cell = self?.selectedCell else { return }
 
@@ -27,7 +27,7 @@ class ForYouController: SpotsController, SpotsDelegate {
 
         if let imageView = cell.accessoryView as? UIImageView {
           weakSelf.featuredImage.image = imageView.image
-          weakSelf.featuredImage.frame = cell.convertRect(weakSelf.view.bounds, toView: weakSelf.view)
+          weakSelf.featuredImage.frame = cell.convert(weakSelf.view.bounds, to: weakSelf.view)
           weakSelf.featuredImage.frame.size = CGSize(width: 100, height: 100)
           weakSelf.featuredImage.x = cell.frame.width - weakSelf.featuredImage.frame.width - 15
           weakSelf.featuredImage.y += 15
@@ -35,7 +35,7 @@ class ForYouController: SpotsController, SpotsDelegate {
 
         if let featuredCell = cell as? FeaturedFeedItemCell {
           weakSelf.featuredImage.image = featuredCell.featuredImage.image
-          weakSelf.featuredImage.frame = cell.convertRect(weakSelf.view.bounds, toView: weakSelf.view)
+          weakSelf.featuredImage.frame = cell.convert(weakSelf.view.bounds, to: weakSelf.view)
           weakSelf.featuredImage.frame.size = CGSize(width: cell.frame.width - 30, height: 200)
           weakSelf.featuredImage.x = 15
           weakSelf.featuredImage.y += 15
@@ -44,11 +44,11 @@ class ForYouController: SpotsController, SpotsDelegate {
         cell.accessoryView?.alpha = 0.0
         weakSelf.view.addSubview(weakSelf.featuredImage)
 
-        UIView.animateWithDuration(0.20, delay: 0.0, options: [.BeginFromCurrentState, .AllowAnimatedContent], animations: {
+        UIView.animate(withDuration: 0.20, delay: 0.0, options: [.beginFromCurrentState, .allowAnimatedContent], animations: {
           weakSelf.featuredImage.frame = CGRect(x: 0, y: 64, width: cell.frame.width, height: 300)
 
-          UIView.animateWithDuration(0.4, delay: 0.10, options: [.BeginFromCurrentState, .AllowAnimatedContent], animations: {
-            weakSelf.spot?.render().transform = CGAffineTransformMakeScale(2.0,2.0)
+          UIView.animate(withDuration: 0.4, delay: 0.10, options: [.beginFromCurrentState, .allowAnimatedContent], animations: {
+            weakSelf.spot?.render().transform = CGAffineTransform(scaleX: 2.0,y: 2.0)
             weakSelf.spot?.render().alpha = 0.0
             controller.view.alpha = 1
             }) { _ in
@@ -62,8 +62,8 @@ class ForYouController: SpotsController, SpotsDelegate {
 
 
         weakSelf.selectedCell = nil
-      } else if !show && controller.isBeingDismissed() {
-        self?.spot?.render().transform = CGAffineTransformIdentity
+      } else if !show && controller.isBeingDismissed {
+        self?.spot?.render().transform = CGAffineTransform.identity
         self?.spot?.render().alpha = 1.0
         controller.view.alpha = 0.0
       }
@@ -84,7 +84,7 @@ class ForYouController: SpotsController, SpotsDelegate {
     item.update(kind: Cell.FeedDetail)
     item.subtitle = ForYouController.faker.lorem.sentences(amount: 20)
 
-    if let cell = self.spot(0, ListSpot.self)?.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: item.index, inSection: 0)) {
+    if let cell = self.spot(0, ListSpot.self)?.tableView.cellForRow(at: IndexPath(row: item.index, section: 0)) {
       selectedCell = cell
     }
 
@@ -98,10 +98,10 @@ class ForYouController: SpotsController, SpotsDelegate {
     controller.viewDidLoad()
     let navigationController = UINavigationController(rootViewController: controller)
     navigationController.transitioningDelegate = transition
-    navigationController.modalPresentationStyle = .Custom
-    navigationController.navigationBar.topItem?.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .Done, target: controller, action: #selector(ForYouDetailController.detailDidDismiss(_:)))
+    navigationController.modalPresentationStyle = .custom
+    navigationController.navigationBar.topItem?.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .done, target: controller, action: #selector(ForYouDetailController.detailDidDismiss(_:)))
 
-    self.navigationController?.presentViewController(navigationController, animated: true, completion: nil)
+    self.navigationController?.present(navigationController, animated: true, completion: nil)
 
     detailNavigation = navigationController
   }
@@ -111,8 +111,8 @@ class ForYouController: SpotsController, SpotsDelegate {
 
     let item = Item(title: faker.lorem.sentences(amount: sentences),
       subtitle: faker.lorem.sentences(amount: 2),
-      kind: kind,
-      image: faker.internet.image(width: 180, height: 180) + "?type=avatar&id=\(index)")
+      image: faker.internet.image(width: 180, height: 180) + "?type=avatar&id=\(index)",
+      kind: kind)
 
     return item
   }
@@ -135,7 +135,7 @@ class ForYouController: SpotsController, SpotsDelegate {
     spotsDelegate = self
     spotsScrollDelegate = self
 
-    dispatch(queue: .Interactive) { [weak self] in
+    dispatch(queue: .interactive) { [weak self] in
       let items = ForYouController.generateItems(0, to: 10)
       self?.update { spot in
         spot.component.items = items
@@ -163,24 +163,24 @@ extension ForYouController: SpotsScrollDelegate {
     animation.type = kCATransitionFade
     animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionDefault)
 
-    navigationBar.layer.addAnimation(animation, forKey: "Animate Title")
+    navigationBar.layer.add(animation, forKey: "Animate Title")
 
     let previousTitle = topItem.title ?? ""
     topItem.title = "Checking for stories..."
     delay(1.0) {
       guard let spot = self.spot else { return }
 
-      spot.items.insertContentsOf(items, at: 0)
+      spot.items.insert(contentsOf: items, at: 0)
       spot.registerAndPrepare()
 
-      let height = spot.items[0..<items.count].reduce(0, combine: { $0 + $1.size.height })
+      let height = spot.items[0..<items.count].reduce(0, { $0 + $1.size.height })
 
-      self.spot(0, ListSpot.self)?.tableView.insert(Array(0..<(items.count)), section: 0, animation: .None)
-      self.spot(0, ListSpot.self)?.tableView.reload(Array((items.count)..<(items.count)), section: 0, animation: .None)
+      self.spot(0, ListSpot.self)?.tableView.insert(Array(0..<(items.count)), section: 0, animation: .none)
+      self.spot(0, ListSpot.self)?.tableView.reload(Array((items.count)..<(items.count)), section: 0, animation: .none)
 
       self.spotsScrollView.contentOffset.y = height - self.spotsScrollView.contentInset.top
 
-      navigationBar.layer.addAnimation(animation, forKey: "Animate Title")
+      navigationBar.layer.add(animation, forKey: "Animate Title")
       topItem.title = previousTitle
       completion?()
     }

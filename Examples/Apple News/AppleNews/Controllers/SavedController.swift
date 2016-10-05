@@ -17,7 +17,7 @@ class SavedController: SpotsController {
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
 
-    dispatch(queue: .Interactive) { [weak self] in
+    dispatch(queue: .interactive) { [weak self] in
       let items = ForYouController.generateItems(0, to: 2)
       self?.update { spot in
         spot.component.items = items

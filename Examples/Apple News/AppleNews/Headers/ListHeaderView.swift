@@ -33,7 +33,7 @@ open class ListHeaderView: UITableViewHeaderFooterView, Componentable {
   open func configure(_ component: Component) {
     backgroundColor = UIColor.white
 
-    label.attributedText = NSAttributedString(string: component.title.uppercaseString,
+    label.attributedText = NSAttributedString(string: component.title.uppercased(),
       attributes: [NSParagraphStyleAttributeName : paddedStyle])
   }
 }

@@ -6,7 +6,7 @@ class ForYouDetailController: SpotsController {
   var lastContentOffset: CGPoint?
 
   lazy var barView: UIVisualEffectView = {
-    let effect = UIBlurEffect(style: .ExtraLight)
+    let effect = UIBlurEffect(style: .extraLight)
     let view = UIVisualEffectView(effect: effect)
     view.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 20)
     return view
@@ -17,11 +17,11 @@ class ForYouDetailController: SpotsController {
 
     view.addSubview(barView)
 
-    spot(0, Listable.self)?.tableView.separatorStyle = .None
+    spot(0, Listable.self)?.tableView.separatorStyle = .none
   }
 
   func detailDidDismiss(_ sender: AnyObject) {
-    navigationController?.dismissViewControllerAnimated(true, completion: nil)
+    navigationController?.dismiss(animated: true, completion: nil)
   }
 }
 
@@ -31,10 +31,10 @@ extension ForYouDetailController {
     super.scrollViewDidScroll(scrollView)
 
     guard let navigationController = navigationController
-      , scrollView.tracking
+      , scrollView.isTracking
       else { return }
 
-    if spotsScrollView.contentOffset.y >= lastContentOffset?.y && spotsScrollView.contentOffset.y > 64 {
+    if spotsScrollView.contentOffset.y >= (lastContentOffset?.y)! && spotsScrollView.contentOffset.y > 64 {
       navigationController.setNavigationBarHidden(true, animated: true)
     } else {
       navigationController.setNavigationBarHidden(false, animated: true)
