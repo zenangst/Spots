@@ -226,7 +226,7 @@ class DetailController: SpotsController, SpotsDelegate, SpotsScrollDelegate {
       let currentSpot = spots.filter({ $0.responder == tableView }).first as? Listable
       else { return true }
 
-    if let model = currentSpot.item(tableView.selectedRow), keyEvent == .enter {
+    if let model = currentSpot.item(at: tableView.selectedRow), keyEvent == .enter {
       spotDidSelectItem(currentSpot, item: model)
       return false
     }

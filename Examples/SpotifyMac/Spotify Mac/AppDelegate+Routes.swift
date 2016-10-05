@@ -31,7 +31,7 @@ extension AppDelegate {
       return
     }
 
-    guard let location = Compass.parse(url, payload: fragments) else { return }
+    guard let location = Compass.parse(url: url, payload: fragments) else { return }
     let route = location.path
     let arguments = location.arguments
 

@@ -197,7 +197,7 @@ class ListController: SpotsController, SpotsDelegate, SpotsScrollDelegate {
 
     guard let appDelegate = NSApplication.shared().delegate as? AppDelegate,
       let window = appDelegate.window,
-      let firstSpot = spot(0, Listable.self) else {
+      let firstSpot = spot(at: 0, Listable.self) else {
       return
     }
 
@@ -275,7 +275,7 @@ class ListController: SpotsController, SpotsDelegate, SpotsScrollDelegate {
       newIndex = currentSpot.index - 1
     }
 
-    if let newIndex = newIndex, let newSpot = spot(newIndex, Listable.self) {
+    if let newIndex = newIndex, let newSpot = spot(at: newIndex, Listable.self) {
       window.makeFirstResponder(newSpot.responder)
     }
 
@@ -370,7 +370,7 @@ extension ListController {
   }
 
   func spotDidReachEnd(_ completion: Completion) {
-    let offset = spot(UI.playlists, Spotable.self)?.component.items.count ?? 0
+    let offset = spot(at: UI.playlists, Spotable.self)?.component.items.count ?? 0
     Malibu.networking("api").GET(PlaylistsRequest(offset: offset))
       .validate()
       .toJsonDictionary()

@@ -3,24 +3,24 @@ import Spots
 struct SpotsConfigurator: Configurator {
 
   func configure() {
-    CarouselSpot.register(ArtistGridItem.self, identifier: "artist")
-    CarouselSpot.register(AlbumGridItem.self, identifier: "album")
-    CarouselSpot.register(GridSpotItem.self, identifier: "carousel")
-    CarouselSpot.register(CategoryGridItem.self, identifier: "category")
-    CarouselSpot.register(FeaturedGridItem.self, identifier: "featured")
-    CarouselSpot.register(GridListItem.self, identifier: "list")
+    CarouselSpot.register(view: ArtistGridItem.self, identifier: "artist")
+    CarouselSpot.register(view: AlbumGridItem.self, identifier: "album")
+    CarouselSpot.register(view: GridSpotItem.self, identifier: "carousel")
+    CarouselSpot.register(view: CategoryGridItem.self, identifier: "category")
+    CarouselSpot.register(view: FeaturedGridItem.self, identifier: "featured")
+    CarouselSpot.register(view: GridListItem.self, identifier: "list")
 
-    GridSpot.register(ArtistGridItem.self, identifier: "artist")
-    GridSpot.register(AlbumGridItem.self, identifier: "album")
-    GridSpot.register(CategoryGridItem.self, identifier: "category")
-    GridSpot.register(FeaturedGridItem.self, identifier: "featured")
-    GridSpot.register(GridSpotItem.self, identifier: "grid")
-    GridSpot.register(GridListItem.self, identifier: "list")
+    GridSpot.register(view: ArtistGridItem.self, identifier: "artist")
+    GridSpot.register(view: AlbumGridItem.self, identifier: "album")
+    GridSpot.register(view: CategoryGridItem.self, identifier: "category")
+    GridSpot.register(view: FeaturedGridItem.self, identifier: "featured")
+    GridSpot.register(view: GridSpotItem.self, identifier: "grid")
+    GridSpot.register(view: GridListItem.self, identifier: "list")
 
-    ListSpot.register(HeaderGridItem.self, identifier: "header")
-    ListSpot.register(TableRow.self, identifier: "list")
-    ListSpot.register(TrackRow.self, identifier: "track")
-    ListSpot.register(HeroGridItem.self, identifier: "hero")
+    ListSpot.register(view: HeaderGridItem.self, identifier: "header")
+    ListSpot.register(view: TableRow.self, identifier: "list")
+    ListSpot.register(view: TrackRow.self, identifier: "track")
+    ListSpot.register(view: HeroGridItem.self, identifier: "hero")
     ListSpot.register(defaultView: TableRow.self)
 
     CarouselSpot.Default.sectionInsetTop = 0.0
