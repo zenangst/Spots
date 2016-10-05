@@ -53,8 +53,8 @@ extension Gridable {
       sectionInsets = layout.sectionInset.left + layout.sectionInset.right
     }
 
-    var width = (item(indexPath as IndexPath)?.size.width ?? 0) - sectionInsets
-    let height = item(indexPath as IndexPath)?.size.height ?? 0
+    var width = (item(at: indexPath)?.size.width ?? 0) - sectionInsets
+    let height = item(at: indexPath)?.size.height ?? 0
     // Never return a negative width
     guard width > -1 else {
       return CGSize.zero
@@ -72,7 +72,7 @@ extension Gridable {
   }
 
   public func identifier(_ index: Int) -> String {
-    guard let item = item(index), type(of: self).grids.storage[item.kind] != nil
+    guard let item = item(at: index), type(of: self).grids.storage[item.kind] != nil
       else {
         return type(of: self).grids.defaultIdentifier
     }
@@ -87,7 +87,7 @@ extension Gridable {
    - parameter usesViewSize: A boolean value to determine if the view uses the views height
    */
   public func configureItem(at index: Int, usesViewSize: Bool = false) {
-    guard let item = item(index) else { return }
+    guard let item = item(at: index) else { return }
 
     var viewModel = item
     viewModel.index = index

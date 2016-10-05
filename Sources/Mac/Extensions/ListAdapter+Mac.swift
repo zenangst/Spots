@@ -10,7 +10,7 @@ extension ListAdapter {
   public func append(_ item: Item, withAnimation animation: SpotsAnimation, completion: Completion) {
     let count = spot.component.items.count
     spot.component.items.append(item)
-    spot.configureItem(count, usesViewSize: true)
+    spot.configureItem(at: count, usesViewSize: true)
 
     Dispatch.mainQueue { [weak self] in
       guard let tableView = self?.spot.tableView else { completion?(); return }
@@ -180,7 +180,7 @@ extension ListAdapter: NSTableViewDataSource {
 extension ListAdapter: NSTableViewDelegate {
 
   public func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
-    guard let viewModel = spot.item(row), row > -1 && row < spot.component.items.count
+    guard let viewModel = spot.item(at: row), row > -1 && row < spot.component.items.count
       else {
         return false
     }
@@ -197,7 +197,7 @@ extension ListAdapter: NSTableViewDelegate {
       width: tableView.frame.width,
       height: tableView.frame.height)
 
-    let height = row < spot.component.items.count ? spot.item(row)?.size.height ?? 0 : 1.0
+    let height = row < spot.component.items.count ? spot.item(at: row)?.size.height ?? 0 : 1.0
 
     if height == 0 { return 1.0 }
 
