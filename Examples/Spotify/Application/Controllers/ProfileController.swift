@@ -27,7 +27,7 @@ class ProfileController: SpotsController {
 
   func refreshData() {
     SPTUser.request(username, withAccessToken: accessToken) { (error, object) -> Void in
-      guard let user = object as? SPTUser , user.largestImage != nil else { return }
+      guard let user = object as? SPTUser, user.largestImage != nil else { return }
       let image = user.largestImage.imageURL.absoluteString
 
       self.update { $0.items = [Item(image: image, kind: "playlist")] }

@@ -58,8 +58,7 @@ class PlayerController: SpotsController {
 
   override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
     if let imageView = object as? UIImageView,
-      let image = imageView.image
-      , keyPath == "image" {
+      let image = imageView.image, keyPath == "image" {
         dispatch(queue: .interactive) {
           let (background, primary, secondary, detail) = image.colors(CGSize(width: 128, height: 128))
           dispatch { [weak self] in
@@ -190,7 +189,7 @@ class PlayerController: SpotsController {
         self.view.y -= self.offset
       }
 
-      if let lastItem = lastItem , lastItem.image.isPresent {
+      if let lastItem = lastItem, lastItem.image.isPresent {
         currentAlbum.setImage(URL(string: lastItem.image)!)
       }
     }
@@ -243,8 +242,7 @@ extension PlayerController: SpotsCarouselScrollDelegate {
   func spotDidScroll(_ spot: Spotable) { }
 
   func spotDidEndScrolling(_ spot: Spotable, item: Item) {
-    guard let urn = item.action, let lastItem = lastItem
-      , item.action != lastItem.action
+    guard let urn = item.action, let lastItem = lastItem, item.action != lastItem.action
       else { return }
 
     Compass.navigate(to: urn)

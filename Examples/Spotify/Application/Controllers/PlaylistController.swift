@@ -42,8 +42,7 @@ class PlaylistController: SpotsController {
   override func scrollViewDidScroll(_ scrollView: UIScrollView) {
     super.scrollViewDidScroll(scrollView)
 
-    guard let delegate = UIApplication.shared.delegate as? AppDelegate
-      , !delegate.mainController.playerController.player.isPlaying else { return }
+    guard let delegate = UIApplication.shared.delegate as? AppDelegate, !delegate.mainController.playerController.player.isPlaying else { return }
 
     delegate.mainController.playerController.hidePlayer()
   }
@@ -70,8 +69,7 @@ class PlaylistController: SpotsController {
           let imageString = first.meta["image"] as? String,
           let url = NSURL(string: imageString),
           let data = NSData(contentsOf: url as URL),
-          let image = UIImage(data: data as Data)
-        {
+          let image = UIImage(data: data as Data) {
           let (background, primary, secondary, detail) = image.colors(CGSize(width: 128, height: 128))
           viewModels.enumerated().forEach {
             viewModels[$0.offset].meta["background"] = background
@@ -95,8 +93,7 @@ class PlaylistController: SpotsController {
       })
     } else {
       SPTPlaylistList.playlists(forUser: username, withAccessToken: accessToken) { (error, object) -> Void in
-        guard let object = object as? SPTPlaylistList
-          , object.items != nil
+        guard let object = object as? SPTPlaylistList, object.items != nil
           else { return }
 
         var items = object.viewModels()
@@ -141,8 +138,7 @@ extension PlaylistController: SpotsScrollDelegate {
     guard let playlistPage = playlistPage else { return }
 
     playlistPage.requestNextPage(withAccessToken: accessToken, callback: { (error, object) -> Void in
-      guard let object = object as? SPTListPage
-        , object.items != nil
+      guard let object = object as? SPTListPage, object.items != nil
         else {
           completion?()
           return

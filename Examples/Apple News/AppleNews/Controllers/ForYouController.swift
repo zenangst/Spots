@@ -48,7 +48,7 @@ class ForYouController: SpotsController, SpotsDelegate {
           weakSelf.featuredImage.frame = CGRect(x: 0, y: 64, width: cell.frame.width, height: 300)
 
           UIView.animate(withDuration: 0.4, delay: 0.10, options: [.beginFromCurrentState, .allowAnimatedContent], animations: {
-            weakSelf.spot?.render().transform = CGAffineTransform(scaleX: 2.0,y: 2.0)
+            weakSelf.spot?.render().transform = CGAffineTransform(scaleX: 2.0, y: 2.0)
             weakSelf.spot?.render().alpha = 0.0
             controller.view.alpha = 1
             }) { _ in
@@ -147,7 +147,7 @@ class ForYouController: SpotsController, SpotsDelegate {
 extension ForYouController: SpotsScrollDelegate {
 
   func spotDidReachBeginning(_ completion: (() -> Void)?) {
-    guard let spot = spot , spot.component.items.count < 100 && view.window != nil
+    guard let spot = spot, spot.component.items.count < 100 && view.window != nil
       else {
         completion?()
         return
@@ -187,7 +187,7 @@ extension ForYouController: SpotsScrollDelegate {
   }
 
   func spotDidReachEnd(_ completion: (() -> Void)?) {
-    if let spot = spot , spot.component.items.count < 100 {
+    if let spot = spot, spot.component.items.count < 100 {
       append(ForYouController.generateItems(spot.component.items.count, to: 10))
     }
     delay(0.3) { completion?() }

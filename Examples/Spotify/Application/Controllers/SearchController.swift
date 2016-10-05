@@ -81,8 +81,7 @@ extension SearchController: UITextFieldDelegate {
         dispatch(queue: .custom(serialQueue)) {
           SPTSearch.perform(withQuery: "\(text)\(string)", queryType: .queryTypeTrack, accessToken: self.accessToken, callback: { (error, object) -> Void in
             if let object = object {
-              guard let object = object as? SPTListPage
-                , object.items != nil && object.items.count > 0
+              guard let object = object as? SPTListPage, object.items != nil && object.items.count > 0
                 else { return }
 
               var viewModels = [Item]()

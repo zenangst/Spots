@@ -30,8 +30,7 @@ extension ForYouDetailController {
   override func scrollViewDidScroll(_ scrollView: UIScrollView) {
     super.scrollViewDidScroll(scrollView)
 
-    guard let navigationController = navigationController
-      , scrollView.isTracking
+    guard let navigationController = navigationController, scrollView.isTracking
       else { return }
 
     if spotsScrollView.contentOffset.y >= (lastContentOffset?.y)! && spotsScrollView.contentOffset.y > 64 {

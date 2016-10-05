@@ -34,8 +34,7 @@ open class PlaylistGridSpotCell: UICollectionViewCell, SpotConfigurable {
 
   open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
     guard let imageView = object as? UIImageView,
-      let image = imageView.image
-      , keyPath == "image" else { return }
+      let image = imageView.image, keyPath == "image" else { return }
 
     albumView.image = image
   }

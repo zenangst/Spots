@@ -25,10 +25,10 @@ open class ListHeaderView: UITableViewHeaderFooterView, Componentable {
   open func configure(_ component: Component) {
     textLabel?.textColor = UIColor.gray
   }
-  
+
   open override func layoutSubviews() {
     super.layoutSubviews()
-    
+
     textLabel?.font = UIFont.boldSystemFont(ofSize: 11)
     textLabel?.text = textLabel?.text?.uppercased()
   }

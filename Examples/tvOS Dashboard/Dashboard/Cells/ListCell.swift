@@ -36,7 +36,7 @@ open class ListCell: UITableViewCell, SpotConfigurable {
     textLabel?.textColor = UIColor.black
     detailTextLabel?.textColor = UIColor.black
 
-    if let action = item.action , action.isPresent {
+    if let action = item.action, action.isPresent {
       accessoryType = .disclosureIndicator
     } else {
       accessoryType = .none

@@ -4,7 +4,7 @@ import Sugar
 import Spots
 import Brick
 
-class GridSpotCellCircle : UICollectionViewCell, SpotConfigurable {
+class GridSpotCellCircle: UICollectionViewCell, SpotConfigurable {
 
   var preferredViewSize: CGSize = CGSize(width: 88, height: 140)
 
@@ -38,7 +38,7 @@ class GridSpotCellCircle : UICollectionViewCell, SpotConfigurable {
   override init(frame: CGRect) {
     super.init(frame: frame)
 
-    [titleLabel, subtitleLabel, imageView].forEach{ contentView.addSubview($0) }
+    [titleLabel, subtitleLabel, imageView].forEach { contentView.addSubview($0) }
   }
 
   required init?(coder aDecoder: NSCoder) {

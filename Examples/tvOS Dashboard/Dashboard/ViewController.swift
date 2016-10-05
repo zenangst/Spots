@@ -35,4 +35,3 @@ class ViewController: SpotsController {
     self.init(spots: spots)
   }
 }
-

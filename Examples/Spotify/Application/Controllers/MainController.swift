@@ -9,12 +9,12 @@ class MainController: UITabBarController {
     let list = ListSpot(component: Component(items: [Item(kind: "player", action: "openPlayer")]))
     let carousel = CarouselSpot(component: Component(span: 1))
     let player = ListSpot(component: Component(items: [Item(kind: "player")]))
-    let playerButtons = GridSpot(component: Component(kind: "player", span: 3 ,items: [
+    let playerButtons = GridSpot(component: Component(kind: "player", span: 3, items: [
       Item(title: "Previous", image: "previousButton", action: "previous"),
       Item(title: "Stop", image: "stopButton", action: "stop"),
       Item(title: "Next", image: "nextButton", action: "next")
       ]))
-    
+
     player.tableView.separatorStyle = .none
 
     let controller = PlayerController(spots: [list, carousel, player, playerButtons])

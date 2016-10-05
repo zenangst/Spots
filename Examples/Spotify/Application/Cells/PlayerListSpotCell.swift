@@ -28,7 +28,7 @@ open class PlayerListSpotCell: UITableViewCell, SpotConfigurable {
     textLabel?.textColor = UIColor.white
     detailTextLabel?.textColor = UIColor.gray
 
-    if let action = item.action , action.isPresent {
+    if let action = item.action, action.isPresent {
       accessoryType = .disclosureIndicator
 
       if let subtitleColor = item.meta["secondary"] as? UIColor {
@@ -41,7 +41,7 @@ open class PlayerListSpotCell: UITableViewCell, SpotConfigurable {
       selectedView.backgroundColor = UIColor.clear
     }
 
-    if let textColor = item.meta["textColor"] as? UIColor , !textColor.isDark {
+    if let textColor = item.meta["textColor"] as? UIColor, !textColor.isDark {
       textLabel?.textColor = textColor
     }
 
@@ -51,10 +51,10 @@ open class PlayerListSpotCell: UITableViewCell, SpotConfigurable {
       }
     }
 
-    if let subtitleColor = item.meta["secondary"] as? UIColor , !subtitleColor.isDark {
+    if let subtitleColor = item.meta["secondary"] as? UIColor, !subtitleColor.isDark {
       detailTextLabel?.textColor = subtitleColor
 
-      if let backgroundColor = backgroundColor , !backgroundColor.isDark {
+      if let backgroundColor = backgroundColor, !backgroundColor.isDark {
         detailTextLabel?.textColor = UIColor.darkGray
       }
     }

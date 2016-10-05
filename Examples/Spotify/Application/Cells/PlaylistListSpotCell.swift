@@ -27,15 +27,15 @@ open class PlaylistListSpotCell: UITableViewCell, SpotConfigurable {
     textLabel?.textColor = UIColor.white
     detailTextLabel?.textColor = UIColor.white
 
-    if let textColor = item.meta["background"] as? UIColor , !textColor.isDark {
+    if let textColor = item.meta["background"] as? UIColor, !textColor.isDark {
       textLabel?.textColor = textColor
     }
 
-    if let subtitleColor = item.meta["secondary"] as? UIColor , !subtitleColor.isDark {
+    if let subtitleColor = item.meta["secondary"] as? UIColor, !subtitleColor.isDark {
       detailTextLabel?.textColor = subtitleColor
     }
 
-    if let action = item.action , action.isPresent {
+    if let action = item.action, action.isPresent {
       accessoryType = .disclosureIndicator
     } else {
       accessoryType = .none
@@ -44,7 +44,7 @@ open class PlaylistListSpotCell: UITableViewCell, SpotConfigurable {
     detailTextLabel?.text = item.subtitle
     textLabel?.text = item.title
 
-    if let url = URL(string: item.image) , item.image.isPresent {
+    if let url = URL(string: item.image), item.image.isPresent {
       imageView?.setImage(url, placeholder: transparentImage)
     }
 

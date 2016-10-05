@@ -24,23 +24,23 @@ open class DefaultListSpotCell: UITableViewCell, SpotConfigurable {
     textLabel?.textColor = UIColor.white
     detailTextLabel?.textColor = UIColor.gray
 
-    if let textColor = item.meta("textColor", type: UIColor.self) , !textColor.isDark {
+    if let textColor = item.meta("textColor", type: UIColor.self), !textColor.isDark {
       textLabel?.textColor = textColor
     }
 
-    if let background = item.meta("background", type: UIColor.self) , !background.isDark {
+    if let background = item.meta("background", type: UIColor.self), !background.isDark {
       textLabel?.textColor = UIColor.darkGray
     }
 
-    if let subtitleColor = item.meta("secondary", type: UIColor.self) , !subtitleColor.isDark {
+    if let subtitleColor = item.meta("secondary", type: UIColor.self), !subtitleColor.isDark {
       detailTextLabel?.textColor = subtitleColor
 
-      if let backgroundColor = backgroundColor , !backgroundColor.isDark {
+      if let backgroundColor = backgroundColor, !backgroundColor.isDark {
         detailTextLabel?.textColor = UIColor.darkGray
       }
     }
 
-    if let action = item.action , action.isPresent {
+    if let action = item.action, action.isPresent {
       accessoryType = .disclosureIndicator
       selectedView.backgroundColor = UIColor.darkGray.withAlphaComponent(0.4)
     } else {
