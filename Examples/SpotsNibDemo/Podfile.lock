@@ -4,7 +4,7 @@ PODS:
   - Cache (1.5.1):
     - CryptoSwift
   - CryptoSwift (0.6.0)
-  - Hue (1.2.0)
+  - Hue (2.0.0)
   - Spots (4.0.2):
     - Brick (= 1.0.0)
     - Cache (= 1.5.1)
@@ -16,7 +16,7 @@ DEPENDENCIES:
   - Brick (from `https://github.com/hyperoslo/Brick`, branch `swift-3`)
   - Cache (from `https://github.com/hyperoslo/Cache`, branch `swift-3`)
   - CryptoSwift (= 0.6.0)
-  - Hue (from `https://github.com/hyperoslo/Hue`, branch `swift3`)
+  - Hue (from `https://github.com/hyperoslo/Hue`, branch `swift-3`)
   - Spots (from `../../`)
   - Tailor (= 2.0.0)
 
@@ -28,7 +28,7 @@ EXTERNAL SOURCES:
     :branch: swift-3
     :git: https://github.com/hyperoslo/Cache
   Hue:
-    :branch: swift3
+    :branch: swift-3
     :git: https://github.com/hyperoslo/Hue
   Spots:
     :path: "../../"
@@ -41,17 +41,17 @@ CHECKOUT OPTIONS:
     :commit: f4f1398fe02c762630a802b5e5ae9c334beafed9
     :git: https://github.com/hyperoslo/Cache
   Hue:
-    :commit: c21ca81d4fa002309f8f8f554317bf9ec3167365
+    :commit: b8682f91d47b137b3be4f1cd8e255fdee8214027
     :git: https://github.com/hyperoslo/Hue
 
 SPEC CHECKSUMS:
   Brick: 2de240889550c54ea20b146c72f31e9b256c71ad
   Cache: 87b48b059429d3b53238533830c53941f8aa85f0
   CryptoSwift: 4a599b7241b8d3b857d6e2c28867d0bd5d1aae24
-  Hue: '0705083b7aff40334033373e6293ec1215285ac2'
+  Hue: '08216d56d01a550a6bbf785778e3dca851b6a65f'
   Spots: fcb567d256e0051a629b4fb302c00598e54d45a0
   Tailor: d5ee9756f4698e0b0d3f3eaa650ffc995714b3b3
 
-PODFILE CHECKSUM: 1159729096c90cf3ec7279eaa2616acdbf6f27e3
+PODFILE CHECKSUM: 5e38d91c67d8b3de21c7dfd9d1db21d9707eb084
 
 COCOAPODS: 1.1.0.rc.2

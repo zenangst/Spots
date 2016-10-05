@@ -7,7 +7,7 @@ PODS:
   - Compass (3.0.0)
   - CryptoSwift (0.6.0)
   - Fashion (2.0.0)
-  - Hue (1.2.0)
+  - Hue (2.0.0)
   - Imaginary (0.1.0):
     - Cache
   - JWTDecode (2.0.0)
@@ -81,10 +81,10 @@ CHECKOUT OPTIONS:
     :commit: f4f1398fe02c762630a802b5e5ae9c334beafed9
     :git: https://github.com/hyperoslo/Cache
   Compass:
-    :commit: d8764b1aff2ac01e2fb324ed26c0bc369085e1b7
+    :commit: f585b1230a37b0ca9f648dce64c54f82eed3b35f
     :git: https://github.com/hyperoslo/Compass
   Hue:
-    :commit: 4f54c27882b08c84da2e36af5b909465189f79dd
+    :commit: b8682f91d47b137b3be4f1cd8e255fdee8214027
     :git: https://github.com/hyperoslo/Hue.git
   Imaginary:
     :commit: 6fadb337e2fa8ebf90d7c1b28f1fd4cac77a6fc9
@@ -93,10 +93,10 @@ CHECKOUT OPTIONS:
     :commit: c5f3406fed825570bf42b75c498531f86abbb256
     :git: https://github.com/hyperoslo/Keychain.git
   OhMyAuth:
-    :commit: 6c525d010c85a99bd9da5d1b62a7406468715959
+    :commit: 7f82b3e4f073250978bbdcc7f2f2422fa87d4c9c
     :git: https://github.com/hyperoslo/OhMyAuth.git
   Sugar:
-    :commit: bff8fdde3499f5d40ef0725d120f45dea3f102ce
+    :commit: 6b04120d3caf3f1e38f970e965c9f39752a23b32
     :git: https://github.com/hyperoslo/Sugar.git
 
 SPEC CHECKSUMS:
@@ -106,7 +106,7 @@ SPEC CHECKSUMS:
   Compass: 5bb05fc2b873e9d5b1efda5752649b6a0a993843
   CryptoSwift: 4a599b7241b8d3b857d6e2c28867d0bd5d1aae24
   Fashion: f5cd202dcd048edd35217349527ac446d0853cd7
-  Hue: '0705083b7aff40334033373e6293ec1215285ac2'
+  Hue: '08216d56d01a550a6bbf785778e3dca851b6a65f'
   Imaginary: 62a9ce1e6d7831ede429c8221a183f03ec2a90bc
   JWTDecode: 178e47e5d28d3abcff778bacced8342858cd6cb5
   Keychain: 50cb247cab32e774422741b118af9b598a3fb5b2

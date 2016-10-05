@@ -67,7 +67,7 @@ CHECKOUT OPTIONS:
     :commit: f4f1398fe02c762630a802b5e5ae9c334beafed9
     :git: https://github.com/hyperoslo/Cache
   Compass:
-    :commit: ebbafc3b650c5848095ac10536b90c2ead1e692f
+    :commit: f585b1230a37b0ca9f648dce64c54f82eed3b35f
     :git: https://github.com/hyperoslo/Compass
   Hue:
     :commit: b8682f91d47b137b3be4f1cd8e255fdee8214027

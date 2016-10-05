@@ -47,10 +47,10 @@ CHECKOUT OPTIONS:
     :commit: f4f1398fe02c762630a802b5e5ae9c334beafed9
     :git: https://github.com/hyperoslo/Cache
   Imaginary:
-    :commit: b8780d8f5037ea49050bdca18087b9c92f53f502
+    :commit: 6fadb337e2fa8ebf90d7c1b28f1fd4cac77a6fc9
     :git: https://github.com/hyperoslo/Imaginary
   Sugar:
-    :commit: bff8fdde3499f5d40ef0725d120f45dea3f102ce
+    :commit: 6b04120d3caf3f1e38f970e965c9f39752a23b32
     :git: https://github.com/hyperoslo/Sugar
 
 SPEC CHECKSUMS:

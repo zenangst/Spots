@@ -64,10 +64,10 @@ CHECKOUT OPTIONS:
     :commit: f4f1398fe02c762630a802b5e5ae9c334beafed9
     :git: https://github.com/hyperoslo/Cache
   Compass:
-    :commit: ebbafc3b650c5848095ac10536b90c2ead1e692f
+    :commit: f585b1230a37b0ca9f648dce64c54f82eed3b35f
     :git: https://github.com/hyperoslo/Compass
   Hue:
-    :commit: f4c7ceebf6fb7edb57fa7e7b8355984e7f243e5a
+    :commit: b8682f91d47b137b3be4f1cd8e255fdee8214027
     :git: https://github.com/hyperoslo/Hue
   Imaginary:
     :commit: 6fadb337e2fa8ebf90d7c1b28f1fd4cac77a6fc9
@@ -92,6 +92,6 @@ SPEC CHECKSUMS:
   Tailor: d5ee9756f4698e0b0d3f3eaa650ffc995714b3b3
   Transition: 66d86e3ae1b8f0b3d9ba2000c7a45fbc17b066f2
 
-PODFILE CHECKSUM: 2417acc8e047e178b516e1f036c5b3bf0a510eac
+PODFILE CHECKSUM: 267d53aa17cf1d77fdc7b5f9ec07b55d5099e97c
 
 COCOAPODS: 1.1.0.rc.2
