@@ -4,25 +4,25 @@ import Brick
 
 public protocol CommentTableViewCellDelegate: class {
 
-  func commentAuthorDidTap(commentID: Int)
+  func commentAuthorDidTap(_ commentID: Int)
 }
 
-public class CommentTableViewCell: WallTableViewCell, SpotConfigurable {
+open class CommentTableViewCell: WallTableViewCell, SpotConfigurable {
 
-  public var size = CGSize(width: 0, height: 44)
+  open var preferredViewSize: CGSize = CGSize(width: 0, height: 44)
 
-  public class func height(item: Item) -> CGFloat {
+  open class func height(_ item: Item) -> CGFloat {
     let post = item.post
     let postText = post.text as NSString
-    let textFrame = postText.boundingRectWithSize(CGSize(
-      width: UIScreen.mainScreen().bounds.width - Dimensions.textOffset - Dimensions.sideOffset,
-      height: CGFloat.max), options: .UsesLineFragmentOrigin,
+    let textFrame = postText.boundingRect(with: CGSize(
+      width: UIScreen.main.bounds.width - Dimensions.textOffset - Dimensions.sideOffset,
+      height: CGFloat.greatestFiniteMagnitude), options: .usesLineFragmentOrigin,
       attributes: [ NSFontAttributeName : FontList.Comment.text ], context: nil)
 
     return 70.5 + textFrame.height
   }
 
-  public static let reusableIdentifier = "CommentTableViewCell"
+  open static let reusableIdentifier = "CommentTableViewCell"
 
   public struct Dimensions {
     public static let sideOffset: CGFloat = 10
@@ -32,26 +32,26 @@ public class CommentTableViewCell: WallTableViewCell, SpotConfigurable {
     public static let dateTopOffset: CGFloat = 30
   }
 
-  public lazy var avatarImageView: UIImageView = {
+  open lazy var avatarImageView: UIImageView = {
     let imageView = UIImageView()
     imageView.layer.cornerRadius = Dimensions.avatarSize / 2
-    imageView.contentMode = .ScaleAspectFill
+    imageView.contentMode = .scaleAspectFill
     imageView.clipsToBounds = true
-    imageView.opaque = true
-    imageView.backgroundColor = UIColor.whiteColor()
-    imageView.userInteractionEnabled = true
+    imageView.isOpaque = true
+    imageView.backgroundColor = UIColor.white
+    imageView.isUserInteractionEnabled = true
 
     return imageView
     }()
 
-  public lazy var authorLabel: UILabel = {
+  open lazy var authorLabel: UILabel = {
     let label = UILabel()
     label.font = FontList.Comment.author
 
     return label
     }()
 
-  public lazy var dateLabel: UILabel = {
+  open lazy var dateLabel: UILabel = {
     let label = UILabel()
     label.textColor = ColorList.Comment.date
     label.font = FontList.Comment.date
@@ -59,56 +59,57 @@ public class CommentTableViewCell: WallTableViewCell, SpotConfigurable {
     return label
     }()
 
-  public lazy var textView: UITextView = { [unowned self] in
+  open lazy var textView: UITextView = { [unowned self] in
     let textView = UITextView()
     textView.font = FontList.Comment.author
-    textView.dataDetectorTypes = .Link
-    textView.editable = false
-    textView.scrollEnabled = false
+    textView.dataDetectorTypes = .link
+    textView.isEditable = false
+    textView.isScrollEnabled = false
     textView.delegate = self
     textView.textContainer.lineFragmentPadding = 0
-    textView.textContainerInset = UIEdgeInsetsZero
+    textView.textContainerInset = UIEdgeInsets.zero
     textView.linkTextAttributes = [
       NSForegroundColorAttributeName: ColorList.Basis.highlightedColor,
       NSUnderlineColorAttributeName: ColorList.Basis.highlightedColor,
-      NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle.rawValue]
+      NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue]
     textView.subviews.first?.backgroundColor = ColorList.Comment.background
 
     return textView
     }()
 
-  public lazy var bottomSeparator: CALayer = {
+  open lazy var bottomSeparator: CALayer = {
     let layer = CALayer()
-    layer.backgroundColor = ColorList.Comment.background.CGColor
-    layer.opaque = true
+    layer.backgroundColor = ColorList.Comment.background.cgColor
+    layer.isOpaque = true
 
     return layer
     }()
 
-  public lazy var imageTapGestureRecognizer: UITapGestureRecognizer = {
+  open lazy var imageTapGestureRecognizer: UITapGestureRecognizer = {
     let gesture = UITapGestureRecognizer()
     gesture.addTarget(self, action: #selector(handleAuthorGestureRecognizer))
 
     return gesture
     }()
 
-  public lazy var authorTapGestureRecognizer: UITapGestureRecognizer = {
+  open lazy var authorTapGestureRecognizer: UITapGestureRecognizer = {
     let gesture = UITapGestureRecognizer()
     gesture.addTarget(self, action: #selector(handleAuthorGestureRecognizer))
 
     return gesture
     }()
 
-  public weak var commentDelegate: CommentTableViewCellDelegate?
+  open weak var commentDelegate: CommentTableViewCellDelegate?
 
   // MARK: - Initialization
 
   public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-    [avatarImageView, authorLabel, textView, dateLabel].forEach {
+    let views: [UIView] = [avatarImageView, authorLabel, textView, dateLabel]
+    views.forEach {
       addSubview($0)
-      $0.opaque = true
+      $0.isOpaque = true
       $0.backgroundColor = ColorList.Comment.background
     }
 
@@ -118,8 +119,8 @@ public class CommentTableViewCell: WallTableViewCell, SpotConfigurable {
     authorLabel.addGestureRecognizer(authorTapGestureRecognizer)
 
     layer.addSublayer(bottomSeparator)
-    opaque = true
-    selectionStyle = .None
+    isOpaque = true
+    selectionStyle = .none
   }
 
   public required init?(coder aDecoder: NSCoder) {
@@ -128,16 +129,16 @@ public class CommentTableViewCell: WallTableViewCell, SpotConfigurable {
 
   // MARK: - Actions
 
-  public func handleAuthorGestureRecognizer() {
+  open func handleAuthorGestureRecognizer() {
     guard let post = post else { return }
     commentDelegate?.commentAuthorDidTap(post.id)
   }
 
   // MARK: - Setup
 
-  public func setupViews(item: Item) -> CGFloat {
+  open func setupViews(_ item: Item) -> CGFloat {
     let post = item.post
-    let totalWidth = UIScreen.mainScreen().bounds.width
+    let totalWidth = UIScreen.main.bounds.width
 
     avatarImageView.frame = CGRect(x: Dimensions.sideOffset, y: Dimensions.sideOffset,
       width: Dimensions.avatarSize, height: Dimensions.avatarSize)
@@ -164,7 +165,7 @@ public class CommentTableViewCell: WallTableViewCell, SpotConfigurable {
     return bottomSeparator.frame.origin.y
   }
 
-  public func configure(inout item: Item) {
+  open func configure(_ item: inout Item) {
     if bottomSeparator.frame.origin.y == 0.0 {
       item.size.width = contentView.frame.width
       item.size.height = setupViews(item)
@@ -178,7 +179,7 @@ public class CommentTableViewCell: WallTableViewCell, SpotConfigurable {
 
 extension CommentTableViewCell: UITextViewDelegate {
 
-  public func textView(textView: UITextView, shouldInteractWithURL URL: NSURL, inRange characterRange: NSRange) -> Bool {
+  public func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange) -> Bool {
     return true
   }
 }

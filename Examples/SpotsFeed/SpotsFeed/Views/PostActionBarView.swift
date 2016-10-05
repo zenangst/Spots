@@ -2,49 +2,49 @@ import UIKit
 
 public protocol PostActionBarViewDelegate: class {
 
-  func likeButtonDidPress(liked: Bool)
+  func likeButtonDidPress(_ liked: Bool)
   func commentButtonDidPress()
 }
 
-public class PostActionBarView: UIView {
+open class PostActionBarView: UIView {
 
   public struct Dimensions {
     public static let generalOffset: CGFloat = 10
     public static let separatorHeight: CGFloat = 0.5
   }
 
-  public lazy var topSeparator: CALayer = {
+  open lazy var topSeparator: CALayer = {
     let layer = CALayer()
-    layer.backgroundColor = ColorList.Basis.tableViewBackground.CGColor
-    layer.opaque = true
+    layer.backgroundColor = ColorList.Basis.tableViewBackground.cgColor
+    layer.isOpaque = true
 
     return layer
     }()
 
-  public lazy var likeButton: UIButton = { [unowned self] in
-    let button = UIButton(type: .Custom)
-    button.setTitle(NSLocalizedString("Like", comment: ""), forState: .Normal)
+  open lazy var likeButton: UIButton = { [unowned self] in
+    let button = UIButton(type: .custom)
+    button.setTitle(NSLocalizedString("Like", comment: ""), for: UIControlState())
     button.titleLabel?.font = FontList.Action.like
-    button.addTarget(self, action: #selector(likeButtonDidPress), forControlEvents: .TouchUpInside)
-    button.subviews.first?.opaque = true
-    button.subviews.first?.backgroundColor = UIColor.whiteColor()
+    button.addTarget(self, action: #selector(likeButtonDidPress), for: .touchUpInside)
+    button.subviews.first?.isOpaque = true
+    button.subviews.first?.backgroundColor = UIColor.white
 
     return button
     }()
 
-  public lazy var commentButton: UIButton = { [unowned self] in
-    let button = UIButton(type: .Custom)
-    button.setTitle(NSLocalizedString("Comment", comment: ""), forState: .Normal)
+  open lazy var commentButton: UIButton = { [unowned self] in
+    let button = UIButton(type: .custom)
+    button.setTitle(NSLocalizedString("Comment", comment: ""), for: UIControlState())
     button.titleLabel?.font = FontList.Action.comment
-    button.addTarget(self, action: #selector(commentButtonDidPress), forControlEvents: .TouchUpInside)
-    button.setTitleColor(ColorList.Action.comment, forState: .Normal)
-    button.subviews.first?.opaque = true
-    button.subviews.first?.backgroundColor = UIColor.whiteColor()
+    button.addTarget(self, action: #selector(commentButtonDidPress), for: .touchUpInside)
+    button.setTitleColor(ColorList.Action.comment, for: UIControlState())
+    button.subviews.first?.isOpaque = true
+    button.subviews.first?.backgroundColor = UIColor.white
 
     return button
     }()
 
-  public weak var delegate: PostActionBarViewDelegate?
+  open weak var delegate: PostActionBarViewDelegate?
 
   // MARK: - Initialization
 
@@ -53,21 +53,21 @@ public class PostActionBarView: UIView {
 
     [likeButton, commentButton].forEach {
       addSubview($0)
-      $0.opaque = true
-      $0.backgroundColor = UIColor.clearColor()
+      $0.isOpaque = true
+      $0.backgroundColor = UIColor.clear
       $0.layer.drawsAsynchronously = true
     }
 
     layer.addSublayer(topSeparator)
-    backgroundColor = UIColor.whiteColor()
+    backgroundColor = UIColor.white
   }
 
   // MARK: - Setup
 
-  public override func drawRect(rect: CGRect) {
-    super.drawRect(rect)
+  open override func draw(_ rect: CGRect) {
+    super.draw(rect)
 
-    let totalWidth = UIScreen.mainScreen().bounds.width
+    let totalWidth = UIScreen.main.bounds.width
 
     topSeparator.frame = CGRect(x: Dimensions.generalOffset, y: 0,
       width: totalWidth - Dimensions.generalOffset * 2, height: Dimensions.separatorHeight)
@@ -81,33 +81,33 @@ public class PostActionBarView: UIView {
     fatalError("init(coder:) has not been implemented")
   }
 
-  public func configureView(liked: Bool) {
+  open func configureView(_ liked: Bool) {
     let color = liked ? ColorList.Action.liked : ColorList.Action.like
-    likeButton.setTitleColor(color, forState: .Normal)
+    likeButton.setTitleColor(color, for: UIControlState())
   }
 
   // MARK: - Actions
 
-  public func likeButtonDidPress() {
-    let color = likeButton.titleColorForState(.Normal) == ColorList.Action.liked
+  open func likeButtonDidPress() {
+    let color = likeButton.titleColor(for: UIControlState()) == ColorList.Action.liked
       ? ColorList.Action.like : ColorList.Action.liked
     let liked = color == ColorList.Action.liked
 
     if liked {
-      UIView.animateWithDuration(0.1, animations: {
-        self.likeButton.transform = CGAffineTransformMakeScale(1.35, 1.35)
+      UIView.animate(withDuration: 0.1, animations: {
+        self.likeButton.transform = CGAffineTransform(scaleX: 1.35, y: 1.35)
         }, completion: { _ in
-          UIView.animateWithDuration(0.1, animations: {
-            self.likeButton.transform = CGAffineTransformIdentity
+          UIView.animate(withDuration: 0.1, animations: {
+            self.likeButton.transform = CGAffineTransform.identity
           })
       })
     }
 
     delegate?.likeButtonDidPress(liked)
-    likeButton.setTitleColor(color, forState: .Normal)
+    likeButton.setTitleColor(color, for: UIControlState())
   }
 
-  public func commentButtonDidPress() {
+  open func commentButtonDidPress() {
     delegate?.commentButtonDidPress()
   }
 }

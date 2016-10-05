@@ -1,22 +1,22 @@
 import Foundation
 
-public class Media {
+open class Media {
 
   public enum Kind {
-    case Image, Video
+    case image, video
   }
 
-  public var kind: Kind
-  public var source: NSURL?
-  public var thumbnail: NSURL?
+  open var kind: Kind
+  open var source: URL?
+  open var thumbnail: URL?
 
   // MARK: - Initialization
 
-  public init(kind: Kind, source: NSURL?, thumbnail: NSURL? = nil) {
+  public init(kind: Kind, source: URL?, thumbnail: URL? = nil) {
     self.kind = kind
     self.source = source
 
-    if kind == .Image {
+    if kind == .image {
       self.thumbnail = thumbnail ?? source
     }
   }

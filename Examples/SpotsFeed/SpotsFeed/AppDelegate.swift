@@ -5,10 +5,10 @@ import Sugar
 import Spots
 import Brick
 
-public func action(urn: String) {
+public func performAction(withURN urn: String) {
   let stringURL = "\(Compass.scheme)\(urn)"
-  guard let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate,
-    url = NSURL(string: stringURL) else { return }
+  guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
+    let url = URL(string: stringURL) else { return }
 
   appDelegate.handleURL(url)
 }
@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
   var navigationController: UINavigationController?
 
-  func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
     Compass.scheme = Application.mainScheme!
     Compass.routes = [
@@ -32,14 +32,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       "feed:post:{id}"
     ]
 
-    window = UIWindow(frame: UIScreen.mainScreen().bounds)
+    window = UIWindow(frame: UIScreen.main.bounds)
 
     SpotsController.configure = {
-      $0.backgroundColor = UIColor.whiteColor()
+      $0.backgroundColor = UIColor.white
     }
 
-    ListSpot.register(view: PostTableViewCell.self, identifier: "feed")
-    ListSpot.register(view: CommentTableViewCell.self, identifier: "comment")
+    ListSpot.register(PostTableViewCell.self, identifier: "feed")
+    ListSpot.register(CommentTableViewCell.self, identifier: "comment")
 
     let feedComponent = Component(span: 1, items: FeedController.generateItems(0, to: 3))
     let feedSpot = ListSpot(component: feedComponent)
@@ -55,12 +55,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     return true
   }
 
-  func application(app: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
+  func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any]) -> Bool {
     return handleURL(url)
   }
 
-  func handleURL(url: NSURL) -> Bool {
-    return Compass.parse(url) { [unowned self] route, arguments in
+  @discardableResult func handleURL(_ url: URL) -> Bool {
+    guard let location = Compass.parse(url) else { return false }
+    
+    let route = location.path
+
       switch route {
       case "feed:author:{id}":
         print("👤")
@@ -75,15 +78,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       case "feed:post:{id}":
         let sencenceCount = Int(arc4random_uniform(8) + 1)
         let subtitle = Faker().lorem.sentences(amount: sencenceCount) + " " + Faker().internet.url()
-        let post = Item(title: Faker().name.name(),
+        let faker = Faker()
+        let post = Item(title: faker.name.name(),
             subtitle: subtitle,
-            kind: "feed",
             image: "http://lorempixel.com/75/75?type=avatar&id=1",
+            kind: "feed",
             meta: ["media" : ["http://lorempixel.com/250/250/?type=attachment&id=1"]])
         let comments = FeedController.generateItems(0, to: 20, kind: "comment")
 
         var content = [post]
-        content.appendContentsOf(comments)
+        content.append(contentsOf: comments)
 
         let feedComponent = Component(span: 1, items: content)
         let feedSpot = ListSpot(component: feedComponent)
@@ -91,13 +95,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         controller.title = "Feed"
         self.navigationController?.pushViewController(controller, animated: true)
       default:
-        print("\(route) not captured")
+        return false
       }
-    }
+
+    return true
   }
 
   func applyStyles() {
-    UIApplication.sharedApplication().statusBarStyle = .LightContent
+    UIApplication.shared.statusBarStyle = .lightContent
 
     let navigationBar = UINavigationBar.appearance()
     navigationBar.barTintColor = UIColor(red:0.000, green:0.000, blue:0.000, alpha: 1)
