@@ -71,7 +71,7 @@ extension Gridable {
     return size
   }
 
-  public func identifier(_ index: Int) -> String {
+  public func identifier(at index: Int) -> String {
     guard let item = item(at: index), type(of: self).grids.storage[item.kind] != nil
       else {
         return type(of: self).grids.defaultIdentifier

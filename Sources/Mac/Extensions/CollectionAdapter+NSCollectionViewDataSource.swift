@@ -11,7 +11,7 @@ extension CollectionAdapter: NSCollectionViewDataSource {
   }
 
   public func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
-    let reuseIdentifier = spot.identifier(indexPath.item)
+    let reuseIdentifier = spot.identifier(at: indexPath.item)
     let item = collectionView.makeItem(withIdentifier: reuseIdentifier, for: indexPath as IndexPath)
 
     (item as? SpotConfigurable)?.configure(&spot.component.items[indexPath.item])

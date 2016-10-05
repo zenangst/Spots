@@ -364,15 +364,15 @@ public extension Spotable {
     return render().frame.size
   }
 
-  func identifier(_ indexPath: IndexPath) -> String {
+  func identifier(at indexPath: IndexPath) -> String {
     #if os(OSX)
-      return identifier(indexPath.item)
+      return identifier(at: indexPath.item)
     #else
-      return identifier((indexPath as NSIndexPath).row)
+      return identifier(at: indexPath.row)
     #endif
   }
 
-  public func identifier(_ index: Int) -> String {
+  public func identifier(at index: Int) -> String {
     guard let item = item(at: index), type(of: self).views.storage[item.kind] != nil
       else {
         return type(of: self).views.defaultIdentifier
