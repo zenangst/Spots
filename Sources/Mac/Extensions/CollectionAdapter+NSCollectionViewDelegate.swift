@@ -2,7 +2,7 @@ import Cocoa
 
 extension CollectionAdapter : NSCollectionViewDelegate {
 
-  @nonobjc public func collectionView(_ collectionView: NSCollectionView, didSelectItemsAtIndexPaths indexPaths: Set<IndexPath>) {
+  public func collectionView(_ collectionView: NSCollectionView, didSelectItemsAt indexPaths: Set<IndexPath>) {
     /*
      This delay is here to avoid an assertion that happens inside the collection view binding,
      it tries to resolve the item at index but it no longer exists so the assertion is thrown.
