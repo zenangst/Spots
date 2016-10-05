@@ -3,8 +3,8 @@ import Brick
 
 extension CollectionAdapter {
 
-  public func ui<T>(atIndex index: Int) -> T? {
-    return spot.collectionView.item(at: IndexPath(item: index, section: 0) as IndexPath) as? T
+  public func ui<T>(at index: Int) -> T? {
+    return spot.collectionView.item(at: IndexPath(item: index, section: 0)) as? T
   }
 
   public func append(_ item: Item, withAnimation animation: SpotsAnimation, completion: Completion) {

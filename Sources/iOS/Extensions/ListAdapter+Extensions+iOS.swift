@@ -10,7 +10,7 @@ extension ListAdapter {
 
    - returns: An optional generic type, this type will inherit from UITableViewcell
    */
-  public func ui<T>(atIndex index: Int) -> T? {
+  public func ui<T>(at index: Int) -> T? {
     return spot.tableView.cellForRow(at: IndexPath(row: index, section: 0)) as? T
   }
 

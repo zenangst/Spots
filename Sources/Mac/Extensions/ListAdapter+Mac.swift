@@ -3,7 +3,7 @@ import Brick
 
 extension ListAdapter {
 
-  public func ui<T>(atIndex index: Int) -> T? {
+  public func ui<T>(at index: Int) -> T? {
     return spot.tableView.rowView(atRow: index, makeIfNecessary: false) as? T
   }
 

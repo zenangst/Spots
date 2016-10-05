@@ -21,7 +21,7 @@ public extension Spotable {
    - returns: An optional UI component, most likely a UITableViewCell or UICollectionViewCell
    */
   public func ui<T>(atIndex index: Int) -> T? {
-    return adapter?.ui(atIndex: index)
+    return adapter?.ui(at: index)
   }
 
   /**
@@ -334,7 +334,7 @@ public extension Spotable {
         if let view = view as? UICollectionViewCell {
           view.contentView.frame = view.bounds
         }
-        
+
         (view as? SpotConfigurable)?.configure(&viewModel)
       }
     #else

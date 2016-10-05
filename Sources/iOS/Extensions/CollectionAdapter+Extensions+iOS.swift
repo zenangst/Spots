@@ -3,7 +3,7 @@ import Brick
 
 public extension CollectionAdapter {
 
-  public func ui<T>(atIndex index: Int) -> T? {
+  public func ui<T>(at index: Int) -> T? {
     return spot.collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? T
   }
 
