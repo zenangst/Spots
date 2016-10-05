@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     ]
     navigationBar.setBackgroundImage(nil, for: .default)
 
-    ListSpot.register(UINib(nibName: "CustomList", bundle: Bundle.main), identifier: "custom-list")
+    ListSpot.register(nib: UINib(nibName: "CustomList", bundle: Bundle.main), identifier: "custom-list")
     ListSpot.configure = { tableView in
       tableView.backgroundColor = UIColor(hex: "181B23")
       tableView.separatorInset = UIEdgeInsets(
