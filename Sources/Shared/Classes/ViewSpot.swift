@@ -32,7 +32,7 @@ open class ViewSpot: NSObject, Spotable, Viewable {
   public required init(component: Component) {
     self.component = component
     super.init()
-    registerDefault(View.self)
+    registerDefault(view: View.self)
     prepare()
   }
 

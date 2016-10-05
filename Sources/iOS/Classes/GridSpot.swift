@@ -91,8 +91,8 @@ open class GridSpot: NSObject, Gridable {
 
     self.configureLayout()
 
-    registerDefault(GridSpotCell.self)
-    registerComposite(GridComposite.self)
+    registerDefault(view: GridSpotCell.self)
+    registerComposite(view: GridComposite.self)
 
     if GridSpot.views.composite == nil {
       GridSpot.views.composite =  Registry.Item.classType(GridComposite.self)

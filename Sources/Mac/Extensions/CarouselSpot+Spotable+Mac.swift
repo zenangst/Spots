@@ -2,7 +2,7 @@ import Cocoa
 
 extension CarouselSpot {
 
-  public func sizeForItemAt(_ indexPath: IndexPath) -> CGSize {
+  public func sizeForItem(at indexPath: IndexPath) -> CGSize {
     var width = component.span > 0
       ? collectionView.frame.width / CGFloat(component.span)
       : collectionView.frame.width

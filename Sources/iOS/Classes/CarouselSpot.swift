@@ -150,8 +150,8 @@ open class CarouselSpot: NSObject, Gridable {
     self.component = component
     super.init()
     configureLayout()
-    registerDefault(CarouselSpotCell.self)
-    registerComposite(CarouselComposite.self)
+    registerDefault(view: CarouselSpotCell.self)
+    registerComposite(view: CarouselComposite.self)
     registerDefaultHeader(header: CarouselSpotHeader.self)
   }
 
