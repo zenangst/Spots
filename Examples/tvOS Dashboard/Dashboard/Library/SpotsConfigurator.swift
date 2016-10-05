@@ -13,9 +13,9 @@ enum Cell: String, StringConvertible {
 struct SpotsConfigurator {
 
   func configure() {
-    CarouselSpot.register(FeaturedCell.self, identifier: Cell.Featured)
-    GridSpot.register(GridCell.self, identifier: Cell.Grid)
-    ListSpot.register(ListCell.self, identifier: Cell.List)
+    CarouselSpot.register(view: FeaturedCell.self, identifier: Cell.Featured)
+    GridSpot.register(view: GridCell.self, identifier: Cell.Grid)
+    ListSpot.register(view: ListCell.self, identifier: Cell.List)
 
     ListSpot.register(defaultView: ListCell.self)
     GridSpot.register(defaultView: GridCell.self)
