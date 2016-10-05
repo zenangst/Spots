@@ -31,8 +31,8 @@ extension Gridable {
       component.items[indexPath.item].size.width = collectionView.frame.width / CGFloat(component.span) - layout.minimumInteritemSpacing
     }
 
-    let width = (item(indexPath)?.size.width ?? 0) - collectionView.contentInset.left - layout.sectionInset.left - layout.sectionInset.right
-    let height = item(indexPath)?.size.height ?? 0
+    let width = (item(at: indexPath)?.size.width ?? 0) - collectionView.contentInset.left - layout.sectionInset.left - layout.sectionInset.right
+    let height = item(at: indexPath)?.size.height ?? 0
 
     // Never return a negative width
     guard width > -1 else { return CGSize.zero }

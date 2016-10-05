@@ -30,7 +30,7 @@ extension ListAdapter {
       }
     }
 
-    spot.configureItem(count)
+    spot.configureItem(at: count)
   }
 
   /**
@@ -46,7 +46,7 @@ extension ListAdapter {
 
     items.enumerated().forEach {
       indexes.append(count + $0.offset)
-      spot.configureItem(count + $0.offset)
+      spot.configureItem(at: count + $0.offset)
     }
 
     Dispatch.mainQueue { [weak self] in
@@ -88,7 +88,7 @@ extension ListAdapter {
       items.enumerated().forEach {
         let index = items.count - 1 - $0.offset
         indexes.append(index)
-        spot.configureItem(index)
+        spot.configureItem(at: index)
       }
 
       self?.spot.tableView.insert(indexes, animation: animation.tableViewAnimation)
@@ -176,10 +176,10 @@ extension ListAdapter {
    - parameter completion: A completion closure that is executed in the main queue when the view model has been updated
    */
   public func update(_ item: Item, index: Int = 0, withAnimation animation: SpotsAnimation = .none, completion: Completion = nil) {
-    guard let oldItem = spot.item(index) else { completion?(); return }
+    guard let oldItem = spot.item(at: index) else { completion?(); return }
 
     spot.items[index] = item
-    spot.configureItem(index)
+    spot.configureItem(at: index)
 
     let newItem = spot.items[index]
     let indexPath = IndexPath(row: index, section: 0)
@@ -223,11 +223,11 @@ extension ListAdapter {
 
     if let indexes = indexes {
       indexes.forEach { index  in
-        spot.configureItem(index)
+        spot.configureItem(at: index)
       }
     } else {
       for (index, _) in spot.component.items.enumerated() {
-        spot.configureItem(index)
+        spot.configureItem(at: index)
       }
     }
 
@@ -256,7 +256,7 @@ extension ListAdapter {
 
     let lastUpdate = updates.last
     for index in updates {
-      guard let item = self.spot.item(index) else { completion?(); continue }
+      guard let item = self.spot.item(at: index) else { completion?(); continue }
       self.update(item, index: index, withAnimation: animation) {
         if index == lastUpdate {
           completion?()

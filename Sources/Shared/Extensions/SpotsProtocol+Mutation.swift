@@ -433,7 +433,7 @@ extension SpotsProtocol {
    - parameter completion: A completion closure that will run after the spot has performed updates internally
    */
   public func update(_ item: Item, index: Int = 0, spotIndex: Int, withAnimation animation: SpotsAnimation = .none, completion: Completion = nil) {
-    guard let oldItem = spot(at: spotIndex, Spotable.self)?.item(index), item != oldItem
+    guard let oldItem = spot(at: spotIndex, Spotable.self)?.item(at: index), item != oldItem
       else {
         spot(at: spotIndex, Spotable.self)?.refreshIndexes()
         completion?()

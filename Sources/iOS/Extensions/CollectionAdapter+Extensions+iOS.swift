@@ -48,7 +48,7 @@ public extension CollectionAdapter {
       spot.component.items.append(item)
       indexes.append(itemsCount + index)
 
-      spot.configureItem(itemsCount + index)
+      spot.configureItem(at: itemsCount + index)
     }
 
     Dispatch.mainQueue { [weak self] in
@@ -104,7 +104,7 @@ public extension CollectionAdapter {
 
     items.enumerated().forEach {
       indexes.append(items.count - 1 - $0.offset)
-      spot.configureItem($0.offset)
+      spot.configureItem(at: $0.offset)
     }
 
     Dispatch.mainQueue { [weak self] in
@@ -208,10 +208,10 @@ public extension CollectionAdapter {
    - parameter completion: A completion closure that is executed in the main queue when the view model has been removed
    */
   public func update(_ item: Item, index: Int, withAnimation animation: SpotsAnimation = .none, completion: Completion = nil) {
-    guard let oldItem = spot.item(index) else { completion?(); return }
+    guard let oldItem = spot.item(at: index) else { completion?(); return }
 
     spot.items[index] = item
-    spot.configureItem(index)
+    spot.configureItem(at: index)
 
     let newItem = spot.items[index]
     let indexPath = IndexPath(item: index, section: 0)
@@ -256,7 +256,7 @@ public extension CollectionAdapter {
 
     let lastUpdate = updates.last
     for index in updates {
-      guard let item = self.spot.item(index) else { completion?(); continue }
+      guard let item = self.spot.item(at: index) else { completion?(); continue }
       self.update(item, index: index, withAnimation: animation) {
         if index == lastUpdate {
           completion?()
@@ -304,11 +304,11 @@ public extension CollectionAdapter {
 
     if let indexes = indexes {
       indexes.forEach { index  in
-        spot.configureItem(index)
+        spot.configureItem(at: index)
       }
     } else {
       spot.component.items.enumerated().forEach { index, _  in
-        spot.configureItem(index)
+        spot.configureItem(at: index)
       }
     }
 

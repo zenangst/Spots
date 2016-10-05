@@ -39,7 +39,7 @@ extension ListAdapter: UITableViewDelegate {
    **/
   public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
-    if let item = spot.item(indexPath) {
+    if let item = spot.item(at: indexPath) {
       spot.spotsDelegate?.spotDidSelectItem(spot, item: item)
     }
   }
@@ -74,6 +74,6 @@ extension ListAdapter: UITableViewDelegate {
       width: tableView.frame.size.width,
       height: tableView.frame.size.height)
 
-    return spot.item(indexPath)?.size.height ?? 0
+    return spot.item(at: indexPath)?.size.height ?? 0
   }
 }

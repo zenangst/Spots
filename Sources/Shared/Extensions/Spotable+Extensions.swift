@@ -170,7 +170,7 @@ public extension Spotable {
    */
   func prepareItems() {
     component.items.enumerated().forEach { (index: Int, _) in
-      configureItem(index, usesViewSize: true)
+      configureItem(at: index, usesViewSize: true)
     }
   }
 
@@ -178,7 +178,7 @@ public extension Spotable {
    - parameter index: The index of the item to lookup
    - returns: A Item at found at the index
    */
-  public func item(_ index: Int) -> Item? {
+  public func item(at index: Int) -> Item? {
     guard index < component.items.count && index > -1 else { return nil }
     return component.items[index]
   }
@@ -187,11 +187,11 @@ public extension Spotable {
    - parameter indexPath: The indexPath of the item to lookup
    - returns: A Item at found at the index
    */
-  public func item(_ indexPath: IndexPath) -> Item? {
+  public func item(at indexPath: IndexPath) -> Item? {
     #if os(OSX)
-      return item(indexPath.item)
+      return item(at: indexPath.item)
     #else
-      return item(indexPath.row)
+      return item(at: indexPath.row)
     #endif
   }
 
@@ -299,8 +299,8 @@ public extension Spotable {
    - parameter index: The index of the view model
    - parameter usesViewSize: A boolean value to determine if the view uses the views height
    */
-  public func configureItem(_ index: Int, usesViewSize: Bool = false) {
-    guard let item = item(index) else { return }
+  public func configureItem(at index: Int, usesViewSize: Bool = false) {
+    guard let item = item(at: index) else { return }
 
     var viewModel = item
     viewModel.index = index
@@ -373,7 +373,7 @@ public extension Spotable {
   }
 
   public func identifier(_ index: Int) -> String {
-    guard let item = item(index), type(of: self).views.storage[item.kind] != nil
+    guard let item = item(at: index), type(of: self).views.storage[item.kind] != nil
       else {
         return type(of: self).views.defaultIdentifier
     }

@@ -44,7 +44,7 @@ public extension Spotable where Self : Gridable {
 
   public func prepareItems() {
     component.items.enumerated().forEach { (index: Int, _) in
-      configureItem(index, usesViewSize: true)
+      configureItem(at: index, usesViewSize: true)
       if component.span > 0 {
         #if os(OSX)
           if let layout = layout as? NSCollectionViewFlowLayout {
