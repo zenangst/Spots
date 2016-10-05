@@ -2,7 +2,8 @@ import Cocoa
 
 open class SpotsScrollView: NSScrollView {
 
-  let KVOContext: UnsafeMutableRawPointer? = UnsafeMutableRawPointer(mutating: nil)
+  /// A KVO context used to monitor changes in contentSize, frames and bounds
+  let subviewContext: UnsafeMutableRawPointer? = UnsafeMutableRawPointer(mutating: nil)
 
   fileprivate var subviewsInLayoutOrder = [NSView]()
 
@@ -38,6 +39,7 @@ open class SpotsScrollView: NSScrollView {
 
   func didAddSubviewToContainer(_ subview: View) {
     subviewsInLayoutOrder.append(subview)
+    subview.addObserver(self, forKeyPath: #keyPath(frame), options: .old, context: subviewContext)
     layoutSubtreeIfNeeded()
   }
 
@@ -45,10 +47,21 @@ open class SpotsScrollView: NSScrollView {
     if let index = subviewsInLayoutOrder.index(where: { $0 == subview }) {
       subviewsInLayoutOrder.remove(at: index)
       layoutSubtreeIfNeeded()
+      subview.removeObserver(self, forKeyPath: #keyPath(frame), context: subviewContext)
     }
   }
 
-  static open override func isCompatibleWithResponsiveScrolling() -> Bool {
+  open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+    if let change = change, let view = object as? View, context == subviewContext {
+      if let value = change[NSKeyValueChangeKey.oldKey] as? NSValue, keyPath == #keyPath(frame) {
+        if value.rectValue != view.frame {
+          layoutSubtreeIfNeeded()
+        }
+      }
+    }
+  }
+
+  open func isCompatibleWithResponsiveScrolling() -> Bool {
     return true
   }
 
@@ -56,7 +69,7 @@ open class SpotsScrollView: NSScrollView {
     layoutSubtreeIfNeeded()
   }
 
-  override open func layoutSubtreeIfNeeded() {
+  open override func layoutSubtreeIfNeeded() {
     super.layoutSubtreeIfNeeded()
 
     var yOffsetOfCurrentSubview: CGFloat = 0.0
