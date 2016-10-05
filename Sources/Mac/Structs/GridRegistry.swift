@@ -38,18 +38,6 @@ public struct GridRegistry {
     }
   }
 
-  // MARK: - Template
-
-  /// A cache that stores instances of created views
-  fileprivate var cache: NSCache = NSCache<NSString, NSCollectionViewItem>()
-
-  /**
-   Empty the current view cache
-   */
-  func purge() {
-    cache.removeAllObjects()
-  }
-
   /**
    Create a view for corresponding identifier
 
@@ -65,26 +53,13 @@ public struct GridRegistry {
     switch item {
     case .classType(let classType):
       registryType = .regular
-      if let item = cache.object(forKey: "\(registryType.rawValue)\(identifier)" as NSString) {
-        return (type: registryType, item: item)
-      }
-
       view = classType.init()
-
     case .nib(let nib):
       registryType = .nib
-      if let view = cache.object(forKey: "\(registryType.rawValue)\(identifier)" as NSString) {
-        return (type: registryType, item: view)
-      }
-
       var views = NSArray()
       if nib.instantiate(withOwner: nil, topLevelObjects: &views) {
         view = views.filter({ $0 is NSCollectionViewItem }).first as? NSCollectionViewItem
       }
-    }
-
-    if let view = view {
-      cache.setObject(view, forKey: identifier as NSString)
     }
 
     return (type: registryType, item: view)

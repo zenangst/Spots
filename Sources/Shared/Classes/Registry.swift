@@ -80,9 +80,11 @@ open class Registry {
     switch item {
     case .classType(let classType):
       registryType = .regular
+      #if !os(OSX)
       if let view = cache.object(forKey: "\(registryType.rawValue)\(identifier)" as NSString) {
         return (type: registryType, view: view)
       }
+      #endif
 
       view = classType.init()
 
