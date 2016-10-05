@@ -1,125 +1,122 @@
 PODS:
-  - Alamofire (3.4.2)
-  - Brick (0.9.6):
+  - Alamofire (4.0.1)
+  - Brick (1.0.0):
     - Tailor
   - Cache (1.5.1):
     - CryptoSwift
-  - Compass (3.0.0):
-    - Sugar
-  - CryptoSwift (0.5.2)
-  - Fashion (1.1.0):
-    - Sugar
-  - Hue (1.3.0)
+  - Compass (3.0.0)
+  - CryptoSwift (0.6.0)
+  - Fashion (2.0.0)
+  - Hue (1.2.0)
   - Imaginary (0.1.0):
     - Cache
-  - JWTDecode (1.1.0)
+  - JWTDecode (2.0.0)
   - Keychain (1.0.0)
-  - Malibu (1.1.0):
-    - When (= 1.0.4)
-  - OhMyAuth (0.1.0):
+  - Malibu (2.0.0):
+    - When (~> 2.0)
+  - OhMyAuth (0.2.0):
     - Alamofire
     - JWTDecode
     - Keychain
     - Sugar
-  - Spots (3.0.4):
-    - Brick
-    - Cache
-    - CryptoSwift (= 0.5.2)
-    - Tailor
+  - Spots (4.0.2):
+    - Brick (= 1.0.0)
+    - Cache (= 1.5.1)
+    - CryptoSwift (= 0.6.0)
+    - Tailor (= 2.0.0)
   - Sugar (1.2.0)
-  - Tailor (1.3.0)
-  - When (1.0.4)
+  - Tailor (2.0.0)
+  - When (2.0.0)
 
 DEPENDENCIES:
-  - Alamofire (= 3.4.2)
-  - Cache (from `https://github.com/hyperoslo/Cache.git`)
-  - Compass (from `https://github.com/hyperoslo/Compass.git`, commit `b08b753962834f19a9d45096aa7eec370f11b6f2`)
-  - Fashion (from `https://github.com/vadymmarkov/Fashion.git`)
-  - Hue (from `https://github.com/hyperoslo/Hue.git`)
-  - Imaginary (from `https://github.com/hyperoslo/Imaginary.git`)
-  - JWTDecode (= 1.1.0)
-  - Keychain (from `https://github.com/hyperoslo/Keychain.git`)
-  - Malibu (from `https://github.com/hyperoslo/Malibu.git`)
-  - OhMyAuth (from `https://github.com/hyperoslo/OhMyAuth.git`)
+  - Alamofire (= 4.0.1)
+  - Brick (from `https://github.com/hyperoslo/Brick`, branch `swift-3`)
+  - Cache (from `https://github.com/hyperoslo/Cache`, branch `swift-3`)
+  - Compass (from `https://github.com/hyperoslo/Compass`, branch `swift-3`)
+  - CryptoSwift (= 0.6.0)
+  - Fashion (= 2.0.0)
+  - Hue (from `https://github.com/hyperoslo/Hue.git`, branch `swift-3`)
+  - Imaginary (from `https://github.com/hyperoslo/Imaginary.git`, branch `swift-3`)
+  - JWTDecode (= 2.0.0)
+  - Keychain (from `https://github.com/hyperoslo/Keychain.git`, branch `swift-3`)
+  - Malibu (= 2.0.0)
+  - OhMyAuth (from `https://github.com/hyperoslo/OhMyAuth.git`, branch `swift-3`)
   - Spots (from `../../`)
-  - Sugar (from `https://github.com/hyperoslo/Sugar.git`)
-  - Tailor (from `https://github.com/zenangst/Tailor.git`)
+  - Sugar (from `https://github.com/hyperoslo/Sugar.git`, branch `swift-3`)
+  - Tailor (= 2.0.0)
 
 EXTERNAL SOURCES:
+  Brick:
+    :branch: swift-3
+    :git: https://github.com/hyperoslo/Brick
   Cache:
-    :git: https://github.com/hyperoslo/Cache.git
+    :branch: swift-3
+    :git: https://github.com/hyperoslo/Cache
   Compass:
-    :commit: b08b753962834f19a9d45096aa7eec370f11b6f2
-    :git: https://github.com/hyperoslo/Compass.git
-  Fashion:
-    :git: https://github.com/vadymmarkov/Fashion.git
+    :branch: swift-3
+    :git: https://github.com/hyperoslo/Compass
   Hue:
+    :branch: swift-3
     :git: https://github.com/hyperoslo/Hue.git
   Imaginary:
+    :branch: swift-3
     :git: https://github.com/hyperoslo/Imaginary.git
   Keychain:
+    :branch: swift-3
     :git: https://github.com/hyperoslo/Keychain.git
-  Malibu:
-    :git: https://github.com/hyperoslo/Malibu.git
   OhMyAuth:
+    :branch: swift-3
     :git: https://github.com/hyperoslo/OhMyAuth.git
   Spots:
     :path: "../../"
   Sugar:
+    :branch: swift-3
     :git: https://github.com/hyperoslo/Sugar.git
-  Tailor:
-    :git: https://github.com/zenangst/Tailor.git
 
 CHECKOUT OPTIONS:
+  Brick:
+    :commit: 8c3040e96b8e8d62b534d40def925de30b7f8853
+    :git: https://github.com/hyperoslo/Brick
   Cache:
-    :commit: cff7ea060664c856ec76f3345cf1e541b5dc0e18
-    :git: https://github.com/hyperoslo/Cache.git
+    :commit: f4f1398fe02c762630a802b5e5ae9c334beafed9
+    :git: https://github.com/hyperoslo/Cache
   Compass:
-    :commit: b08b753962834f19a9d45096aa7eec370f11b6f2
-    :git: https://github.com/hyperoslo/Compass.git
-  Fashion:
-    :commit: 3e2bf8754d1dbdc9e05f423bbb96db6dc06fec46
-    :git: https://github.com/vadymmarkov/Fashion.git
+    :commit: d8764b1aff2ac01e2fb324ed26c0bc369085e1b7
+    :git: https://github.com/hyperoslo/Compass
   Hue:
-    :commit: 3cd45dee0ac7971ff0f0c86b68865d4a075078e3
+    :commit: 4f54c27882b08c84da2e36af5b909465189f79dd
     :git: https://github.com/hyperoslo/Hue.git
   Imaginary:
-    :commit: e111dcfcd5a67e6d52febc48c5ebfb9090f77af5
+    :commit: 6fadb337e2fa8ebf90d7c1b28f1fd4cac77a6fc9
     :git: https://github.com/hyperoslo/Imaginary.git
   Keychain:
-    :commit: f8197b27fe34774b72046b0ec4a24e517e1bb79c
+    :commit: c5f3406fed825570bf42b75c498531f86abbb256
     :git: https://github.com/hyperoslo/Keychain.git
-  Malibu:
-    :commit: f764b53564f81bf7fd53d6cd16abb1075c6be5a5
-    :git: https://github.com/hyperoslo/Malibu.git
   OhMyAuth:
-    :commit: f9c9aeffcf44f24e20298698e8d1984e62ace916
+    :commit: 6c525d010c85a99bd9da5d1b62a7406468715959
     :git: https://github.com/hyperoslo/OhMyAuth.git
   Sugar:
-    :commit: d75ec0a674d31b5b24258ce8fdfccd093e479b99
+    :commit: bff8fdde3499f5d40ef0725d120f45dea3f102ce
     :git: https://github.com/hyperoslo/Sugar.git
-  Tailor:
-    :commit: bb59c268c91a2a542a5c0852bcf168eb1408301d
-    :git: https://github.com/zenangst/Tailor.git
 
 SPEC CHECKSUMS:
-  Alamofire: 6aa33201d20d069e1598891cf928883ff1888c7a
-  Brick: 4af97115ccf754c13d5d6dc0860936809b198d67
+  Alamofire: 7682d43245de14874acd142ec137b144aa1dd335
+  Brick: 2de240889550c54ea20b146c72f31e9b256c71ad
   Cache: 87b48b059429d3b53238533830c53941f8aa85f0
-  Compass: a3c2e008e328b5773501df6186d5f64771cd82ce
-  CryptoSwift: c1ef79f901b86099a6fe8b3c7524cf9f3f3c8c40
-  Fashion: 82f2bb05505e3aea0977a2c23f5d8692e06f12a9
-  Hue: b4d7f4923dd16237f9cbc1783c3c81438b4391f4
+  Compass: 5bb05fc2b873e9d5b1efda5752649b6a0a993843
+  CryptoSwift: 4a599b7241b8d3b857d6e2c28867d0bd5d1aae24
+  Fashion: f5cd202dcd048edd35217349527ac446d0853cd7
+  Hue: '0705083b7aff40334033373e6293ec1215285ac2'
   Imaginary: 62a9ce1e6d7831ede429c8221a183f03ec2a90bc
-  JWTDecode: a6b91ad0bc798c723e9a29a368a6ead70edf7213
+  JWTDecode: 178e47e5d28d3abcff778bacced8342858cd6cb5
   Keychain: 50cb247cab32e774422741b118af9b598a3fb5b2
-  Malibu: 9d81f8fe250531809b8f839c4b66b57e3981d569
-  OhMyAuth: ce16b5e94887376934ea92a3ba252b6f79910699
-  Spots: a6cb714c1da7007b666196651c143e49c9bf05b4
+  Malibu: d697d750eba061696ddafa097b6cb325ba6037f7
+  OhMyAuth: 942f2e827952813b1e938624d52d9ed4da1eba5f
+  Spots: fcb567d256e0051a629b4fb302c00598e54d45a0
   Sugar: 556b623f0f8846cf08de7302701892f11d567419
-  Tailor: 71fac74a4f14abcd13a10bf07bbe69d5ac746f58
-  When: 033104df132ebfa75f4d3a9ba3e7a9865a573a1c
+  Tailor: d5ee9756f4698e0b0d3f3eaa650ffc995714b3b3
+  When: 3df626af4891607ea7dd3f46a451176c5642c528
 
-PODFILE CHECKSUM: 24986b36e9597ea2c9bfa9f0e53b4b588c010976
+PODFILE CHECKSUM: af2badb37e2a7cbdeee26bcc54225e4f3921b149
 
 COCOAPODS: 1.1.0.rc.2
