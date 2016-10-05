@@ -137,9 +137,9 @@ public extension SpotsProtocol {
 
     var initialHeight: CGFloat = 0.0
     if index > 0 {
-      initialHeight += spots[0..<index].reduce(0, { $0 + $1.spotHeight() })
+      initialHeight += spots[0..<index].reduce(0, { $0 + $1.computedHeight })
     }
-    if spot(at: index, Spotable.self)?.spotHeight() > spotsScrollView.frame.height - spotsScrollView.contentInset.bottom - initialHeight {
+    if spot(at: index, Spotable.self)?.computedHeight > spotsScrollView.frame.height - spotsScrollView.contentInset.bottom - initialHeight {
       let y = itemY - spotsScrollView.frame.size.height + spotsScrollView.contentInset.bottom + initialHeight
       spotsScrollView.setContentOffset(CGPoint(x: CGFloat(0.0), y: y), animated: true)
     }

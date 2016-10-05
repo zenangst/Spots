@@ -338,7 +338,7 @@ extension SpotsProtocol {
     closure(spot)
     spot.refreshIndexes()
     spot.registerAndPrepare()
-    let spotHeight = spot.spotHeight()
+    let spotHeight = spot.computedHeight
 
     Dispatch.mainQueue { [weak self] in
       guard let weakSelf = self else { return }

@@ -13,6 +13,15 @@ public extension Spotable {
     return component.index
   }
 
+  /// A computed CGFloat of the total height of all items inside of a component
+  public var computedHeight: CGFloat {
+    guard usesDynamicHeight else {
+      return self.render().frame.height
+    }
+
+    return component.items.reduce(0, { $0 + $1.size.height })
+  }
+
   /**
    Resolve UI component at index (UITableViewCell or UICollectionViewItem)
 
@@ -195,21 +204,10 @@ public extension Spotable {
     #endif
   }
 
-  /**
-   - returns: A CGFloat of the total height of all items inside of a component
-   */
-  public func spotHeight() -> CGFloat {
-    guard usesDynamicHeight else {
-      return self.render().frame.height
-    }
-
-    return component.items.reduce(0, { $0 + $1.size.height })
-  }
-
   public func updateHeight(_ completion: Completion = nil) {
     Dispatch.inQueue(queue: .interactive) { [weak self] in
       guard let weakSelf = self else { Dispatch.mainQueue { completion?(); }; return }
-      let spotHeight = weakSelf.spotHeight()
+      let spotHeight = weakSelf.computedHeight
       Dispatch.mainQueue { [weak self] in
         self?.render().frame.size.height = spotHeight
         completion?()

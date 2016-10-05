@@ -161,7 +161,7 @@ extension CollectionAdapter {
   public func refreshHeight(_ completion: (() -> Void)? = nil) {
     Dispatch.delay(for: 0.2) { [weak self] in
       guard let weakSelf = self, let collectionView = self?.spot.collectionView else { return; completion?() }
-      weakSelf.spot.setup(CGSize(width: collectionView.frame.width, height: weakSelf.spot.spotHeight() ))
+      weakSelf.spot.setup(CGSize(width: collectionView.frame.width, height: weakSelf.spot.computedHeight ))
       completion?()
     }
   }

@@ -224,7 +224,7 @@ open class SpotsController: NSViewController, SpotsProtocol {
       spot.spotsCompositeDelegate = self
     #endif
 
-    var height = spot.spotHeight()
+    var height = spot.computedHeight
     if let componentSize = spot.component.size, componentSize.height > height {
       height = componentSize.height
     }
@@ -242,7 +242,7 @@ open class SpotsController: NSViewController, SpotsProtocol {
     super.viewDidLayout()
     for spot in spots {
       spot.layout(CGSize(width: view.frame.width,
-        height: spot.spotHeight() ))
+        height: spot.computedHeight ))
     }
     spotsScrollView.layoutSubtreeIfNeeded()
   }

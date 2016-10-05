@@ -21,6 +21,8 @@ public protocol Spotable: class {
 
   /// The index of a Spotable object
   var index: Int { get }
+  /// A computed value for the size of the Spotable object
+  var computedHeight: CGFloat { get }
   /// The component of a Spotable object
   var component: Component { get set }
   /// A configuration closure for a SpotConfigurable object
@@ -80,7 +82,6 @@ public protocol Spotable: class {
   /// Scroll to view model using predicate
   func scrollTo(_ includeElement: (Item) -> Bool) -> CGFloat
 
-  func spotHeight() -> CGFloat
   func sizeForItem(at indexPath: IndexPath) -> CGSize
 
   #if os(OSX)

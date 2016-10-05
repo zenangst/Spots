@@ -161,7 +161,7 @@ extension ListAdapter {
   }
 
   public func refreshHeight(_ completion: (() -> Void)? = nil) {
-    spot.layout(CGSize(width: spot.tableView.frame.width, height: spot.spotHeight() ))
+    spot.layout(CGSize(width: spot.tableView.frame.width, height: spot.computedHeight ))
     completion?()
   }
 }
