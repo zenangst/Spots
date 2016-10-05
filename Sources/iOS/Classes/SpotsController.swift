@@ -56,7 +56,7 @@ open class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDeleg
   open var refreshing = false
   /// A convenience method for resolving the first spot
   open var spot: Spotable? {
-    get { return spot(0, Spotable.self) }
+    get { return spot(at: 0, Spotable.self) }
   }
 
   #if DEVMODE
@@ -171,8 +171,12 @@ open class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDeleg
 
    - returns: An optional Spotable object
    */
-  open func spot<T>(_ index: Int = 0, _ type: T.Type) -> T? {
+  open func spot<T>(at index: Int = 0, _ type: T.Type) -> T? {
     return spots.filter({ $0.index == index }).first as? T
+  }
+
+  open func spot(at index: Int = 0) -> Spotable? {
+    return spots.filter({ $0.index == index }).first
   }
 
   /**
@@ -279,7 +283,7 @@ open class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDeleg
     var yOffset: CGFloat = 0.0
     compositeSpots = [:]
     spots.enumerated().forEach { index, spot in
-      setupSpot(index, spot: spot)
+      setupSpot(at: index, spot: spot)
       spotsScrollView.contentView.addSubview(spot.render())
       animated?(spot.render())
       (spot as? Gridable)?.layout.yOffset = yOffset
@@ -287,7 +291,7 @@ open class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDeleg
     }
   }
 
-  open func setupSpot(_ index: Int, spot: Spotable) {
+  open func setupSpot(at index: Int, spot: Spotable) {
     spot.render().bounds.size.width = view.bounds.width
     spot.render().frame.origin.x = 0.0
     spot.spotsCompositeDelegate = self
@@ -326,15 +330,15 @@ extension SpotsController {
    - parameter indexPath: The index path of the component you want to lookup
    - returns: A Component object at index path
    **/
-  fileprivate func component(_ indexPath: IndexPath) -> Component {
-    return spot(indexPath).component
+  fileprivate func component(at indexPath: IndexPath) -> Component {
+    return spot(at: indexPath).component
   }
 
   /**
    - parameter indexPath: The index path of the spot you want to lookup
    - returns: A Spotable object at index path
    **/
-  fileprivate func spot(_ indexPath: IndexPath) -> Spotable {
-    return spots[(indexPath as NSIndexPath).item]
+  fileprivate func spot(at indexPath: IndexPath) -> Spotable {
+    return spots[indexPath.item]
   }
 }

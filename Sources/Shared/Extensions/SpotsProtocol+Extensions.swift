@@ -86,7 +86,7 @@ public extension SpotsProtocol {
 
    - returns:  A collection of Spotable objects that match the includeElements predicate
    */
-  public func filter(_ includeElement: (Spotable) -> Bool) -> [Spotable] {
+  public func filter(spots includeElement: (Spotable) -> Bool) -> [Spotable] {
     var result = spots.filter(includeElement)
 
     for (_, cSpots) in compositeSpots {
@@ -104,7 +104,7 @@ public extension SpotsProtocol {
 
    - parameter includeElement: A filter predicate to find view models
    */
-  public func filterItems(_ includeElement: (Item) -> Bool) -> [(spot: Spotable, items: [Item])] {
+  public func filter(items includeElement: (Item) -> Bool) -> [(spot: Spotable, items: [Item])] {
     var result = [(spot: Spotable, items: [Item])]()
     for spot in spots {
       let items = spot.items.filter(includeElement)
@@ -133,13 +133,13 @@ public extension SpotsProtocol {
    - parameter includeElement: A filter predicate to find a view model
    */
   public func scrollTo(spotIndex index: Int = 0, includeElement: (Item) -> Bool) {
-    guard let itemY = spot(index, Spotable.self)?.scrollTo(includeElement) else { return }
+    guard let itemY = spot(at: index, Spotable.self)?.scrollTo(includeElement) else { return }
 
     var initialHeight: CGFloat = 0.0
     if index > 0 {
       initialHeight += spots[0..<index].reduce(0, { $0 + $1.spotHeight() })
     }
-    if spot(index, Spotable.self)?.spotHeight() > spotsScrollView.frame.height - spotsScrollView.contentInset.bottom - initialHeight {
+    if spot(at: index, Spotable.self)?.spotHeight() > spotsScrollView.frame.height - spotsScrollView.contentInset.bottom - initialHeight {
       let y = itemY - spotsScrollView.frame.size.height + spotsScrollView.contentInset.bottom + initialHeight
       spotsScrollView.setContentOffset(CGPoint(x: CGFloat(0.0), y: y), animated: true)
     }
@@ -185,15 +185,15 @@ public extension SpotsProtocol {
    - parameter indexPath: The index path of the component you want to lookup
    - returns: A Component object at index path
    **/
-  fileprivate func component(_ indexPath: IndexPath) -> Component {
-    return spot(indexPath).component
+  fileprivate func component(at indexPath: IndexPath) -> Component {
+    return spot(at: indexPath).component
   }
 
   /**
    - parameter indexPath: The index path of the spot you want to lookup
    - returns: A Spotable object at index path
    **/
-  fileprivate func spot(_ indexPath: IndexPath) -> Spotable {
-    return spots[(indexPath as NSIndexPath).item]
+  fileprivate func spot(at indexPath: IndexPath) -> Spotable {
+    return spots[indexPath.item]
   }
 }

@@ -42,8 +42,8 @@ public protocol SpotsProtocol: class {
   #endif
 
   func setupSpots(_ animated: ((_ view: View) -> Void)?)
-  func setupSpot(_ index: Int, spot: Spotable)
-  func spot<T>(_ index: Int, _ type: T.Type) -> T?
+  func setupSpot(at index: Int, spot: Spotable)
+  func spot<T>(at index: Int, _ type: T.Type) -> T?
   func resolve(spot closure: (_ index: Int, _ spot: Spotable) -> Bool) -> Spotable?
 
   #if os(OSX)

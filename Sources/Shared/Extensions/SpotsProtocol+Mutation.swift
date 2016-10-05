@@ -93,7 +93,7 @@ extension SpotsProtocol {
     self.removeCompositeViews()
     self.spots[index].render().removeFromSuperview()
     self.spots[index] = spot
-    self.setupSpot(index, spot: spot)
+    self.setupSpot(at: index, spot: spot)
     self.spotsScrollView.contentView.insertSubview(spot.render(), at: index)
     (spot as? Gridable)?.layout.yOffset = yOffset
     yOffset += spot.render().frame.size.height
@@ -102,7 +102,7 @@ extension SpotsProtocol {
   fileprivate func newSpot(_ index: Int, newComponents: [Component], yOffset: inout CGFloat) {
     let spot = SpotFactory.resolve(component: newComponents[index])
     spots.append(spot)
-    setupSpot(index, spot: spot)
+    setupSpot(at: index, spot: spot)
     (spot as? Gridable)?.layout.yOffset = yOffset
     spotsScrollView.contentView.addSubview(spot.render())
     yOffset += spot.render().frame.size.height
@@ -125,7 +125,7 @@ extension SpotsProtocol {
    - returns: A boolean value that determines if the closure should run in `process(changes:)`
    */
   fileprivate func setupItemsForSpot(_ index: Int, newComponents: [Component], withAnimation animation: SpotsAnimation = .automatic, closure: Completion = nil) -> Bool {
-    guard let spot = self.spot(index, Spotable.self) else { return false }
+    guard let spot = self.spot(at: index, Spotable.self) else { return false }
     let newItems = newComponents[index].items
     let oldItems = spot.items
 
@@ -332,7 +332,7 @@ extension SpotsProtocol {
    - parameter closure: A transform closure to perform the proper modification to the target spot before updating the internals
    */
   public func update(spotAtIndex index: Int = 0, withAnimation animation: SpotsAnimation = .automatic, withCompletion completion: Completion = nil, _ closure: (_ spot: Spotable) -> Void) {
-    guard let spot = spot(index, Spotable.self) else {
+    guard let spot = spot(at: index, Spotable.self) else {
       completion?()
       return }
     closure(spot)
@@ -347,7 +347,7 @@ extension SpotsProtocol {
         if animation != .none { spot.render().layer.frame.size.height = spotHeight }
       #endif
 
-      weakSelf.spot(index, Spotable.self)?.reload(nil, withAnimation: animation) {
+      weakSelf.spot(at: index, Spotable.self)?.reload(nil, withAnimation: animation) {
         completion?()
       }
     }
@@ -362,7 +362,7 @@ extension SpotsProtocol {
    - parameter completion: A completion closure that is run when the update is completed
    */
   public func updateIfNeeded(spotAtIndex index: Int = 0, items: [Item], withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
-    guard let spot = spot(index, Spotable.self), !(spot.items == items) else {
+    guard let spot = spot(at: index, Spotable.self), !(spot.items == items) else {
       completion?()
       return
     }
@@ -379,10 +379,10 @@ extension SpotsProtocol {
    - parameter completion: A completion closure that will run after the spot has performed updates internally
    */
   public func append(_ item: Item, spotIndex: Int = 0, withAnimation animation: SpotsAnimation = .none, completion: Completion = nil) {
-    spot(spotIndex, Spotable.self)?.append(item, withAnimation: animation) {
+    spot(at: spotIndex, Spotable.self)?.append(item, withAnimation: animation) {
       completion?()
     }
-    spot(spotIndex, Spotable.self)?.refreshIndexes()
+    spot(at: spotIndex, Spotable.self)?.refreshIndexes()
   }
 
   /**
@@ -392,10 +392,10 @@ extension SpotsProtocol {
    - parameter completion: A completion closure that will run after the spot has performed updates internally
    */
   public func append(_ items: [Item], spotIndex: Int = 0, withAnimation animation: SpotsAnimation = .none, completion: Completion = nil) {
-    spot(spotIndex, Spotable.self)?.append(items, withAnimation: animation) {
+    spot(at: spotIndex, Spotable.self)?.append(items, withAnimation: animation) {
       completion?()
     }
-    spot(spotIndex, Spotable.self)?.refreshIndexes()
+    spot(at: spotIndex, Spotable.self)?.refreshIndexes()
   }
 
   /**
@@ -405,10 +405,10 @@ extension SpotsProtocol {
    - parameter completion: A completion closure that will run after the spot has performed updates internally
    */
   public func prepend(_ items: [Item], spotIndex: Int = 0, withAnimation animation: SpotsAnimation = .none, completion: Completion = nil) {
-    spot(spotIndex, Spotable.self)?.prepend(items, withAnimation: animation) {
+    spot(at: spotIndex, Spotable.self)?.prepend(items, withAnimation: animation) {
       completion?()
     }
-    spot(spotIndex, Spotable.self)?.refreshIndexes()
+    spot(at: spotIndex, Spotable.self)?.refreshIndexes()
   }
 
   /**
@@ -419,10 +419,10 @@ extension SpotsProtocol {
    - parameter completion: A completion closure that will run after the spot has performed updates internally
    */
   public func insert(_ item: Item, index: Int = 0, spotIndex: Int, withAnimation animation: SpotsAnimation = .none, completion: Completion = nil) {
-    spot(spotIndex, Spotable.self)?.insert(item, index: index, withAnimation: animation) {
+    spot(at: spotIndex, Spotable.self)?.insert(item, index: index, withAnimation: animation) {
       completion?()
     }
-    spot(spotIndex, Spotable.self)?.refreshIndexes()
+    spot(at: spotIndex, Spotable.self)?.refreshIndexes()
   }
 
   /**
@@ -433,17 +433,17 @@ extension SpotsProtocol {
    - parameter completion: A completion closure that will run after the spot has performed updates internally
    */
   public func update(_ item: Item, index: Int = 0, spotIndex: Int, withAnimation animation: SpotsAnimation = .none, completion: Completion = nil) {
-    guard let oldItem = spot(spotIndex, Spotable.self)?.item(index), item != oldItem
+    guard let oldItem = spot(at: spotIndex, Spotable.self)?.item(index), item != oldItem
       else {
-        spot(spotIndex, Spotable.self)?.refreshIndexes()
+        spot(at: spotIndex, Spotable.self)?.refreshIndexes()
         completion?()
         return
     }
 
-    spot(spotIndex, Spotable.self)?.update(item, index: index, withAnimation: animation) {
+    spot(at: spotIndex, Spotable.self)?.update(item, index: index, withAnimation: animation) {
       completion?()
     }
-    spot(spotIndex, Spotable.self)?.refreshIndexes()
+    spot(at: spotIndex, Spotable.self)?.refreshIndexes()
   }
 
   /**
@@ -453,10 +453,10 @@ extension SpotsProtocol {
    - parameter completion: A completion closure that will run after the spot has performed updates internally
    */
   public func update(_ indexes: [Int], spotIndex: Int = 0, withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
-    spot(spotIndex, Spotable.self)?.reload(indexes, withAnimation: animation) {
+    spot(at: spotIndex, Spotable.self)?.reload(indexes, withAnimation: animation) {
       completion?()
     }
-    spot(spotIndex, Spotable.self)?.refreshIndexes()
+    spot(at: spotIndex, Spotable.self)?.refreshIndexes()
   }
 
   /**
@@ -466,10 +466,10 @@ extension SpotsProtocol {
    - parameter completion: A completion closure that will run after the spot has performed updates internally
    */
   public func delete(_ index: Int, spotIndex: Int = 0, withAnimation animation: SpotsAnimation = .none, completion: Completion = nil) {
-    spot(spotIndex, Spotable.self)?.delete(index, withAnimation: animation) {
+    spot(at: spotIndex, Spotable.self)?.delete(index, withAnimation: animation) {
       completion?()
     }
-    spot(spotIndex, Spotable.self)?.refreshIndexes()
+    spot(at: spotIndex, Spotable.self)?.refreshIndexes()
   }
 
   /**
@@ -479,10 +479,10 @@ extension SpotsProtocol {
    - parameter completion: A completion closure that will run after the spot has performed updates internally
    */
   public func delete(_ indexes: [Int], spotIndex: Int = 0, withAnimation animation: SpotsAnimation = .none, completion: Completion = nil) {
-    spot(spotIndex, Spotable.self)?.delete(indexes, withAnimation: animation) {
+    spot(at: spotIndex, Spotable.self)?.delete(indexes, withAnimation: animation) {
       completion?()
     }
-    spot(spotIndex, Spotable.self)?.refreshIndexes()
+    spot(at: spotIndex, Spotable.self)?.refreshIndexes()
   }
 
   #if os(iOS)

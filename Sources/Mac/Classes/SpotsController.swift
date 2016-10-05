@@ -29,7 +29,7 @@ open class SpotsController: NSViewController, SpotsProtocol {
 
   /// A convenience method for resolving the first spot
   open var spot: Spotable? {
-    get { return spot(0, Spotable.self) }
+    get { return spot(at: 0) }
   }
 
   /// An array of refresh positions to avoid refreshing multiple times when using infinite scrolling
@@ -132,8 +132,12 @@ open class SpotsController: NSViewController, SpotsProtocol {
 
    - returns: An optional Spotable object
    */
-  public func spot<T>(_ index: Int = 0, _ type: T.Type) -> T? {
+  public func spot<T>(at index: Int = 0, _ type: T.Type) -> T? {
     return spots.filter({ $0.index == index }).first as? T
+  }
+
+  open func spot(at index: Int = 0) -> Spotable? {
+    return spots.filter({ $0.index == index }).first
   }
 
   /**
@@ -210,12 +214,12 @@ open class SpotsController: NSViewController, SpotsProtocol {
   public func setupSpots(_ animated: ((_ view: View) -> Void)? = nil) {
     compositeSpots = [:]
     spots.enumerated().forEach { index, spot in
-      setupSpot(index, spot: spot)
+      setupSpot(at: index, spot: spot)
       animated?(spot.render())
     }
   }
 
-  public func setupSpot(_ index: Int, spot: Spotable) {
+  public func setupSpot(at index: Int, spot: Spotable) {
     #if !os(OSX)
       spot.spotsCompositeDelegate = self
     #endif
