@@ -335,8 +335,6 @@ public extension Spotable {
           view.contentView.frame = view.bounds
         }
 
-        print("\(#file):\(#line) -> \(view)")
-
         (view as? SpotConfigurable)?.configure(&viewModel)
       }
     #else
