@@ -5,20 +5,21 @@ import Brick
 
 class MainController: UITabBarController {
 
-  lazy var playerController = PlayerController(spots: [
-    ListSpot().then { $0.items = [Item(kind: "player", action: "openPlayer")] },
-    CarouselSpot(Component(span: 1)),
-    ListSpot(component: Component(items: [
-      Item(kind: "player")
-      ])).then {
-        $0.tableView.separatorStyle = .None
-    },
-    GridSpot(component: Component(span: 3, kind: "player" ,items: [
+  lazy var playerController: PlayerController = {
+    let list = ListSpot(component: Component(items: [Item(kind: "player", action: "openPlayer")]))
+    let carousel = CarouselSpot(component: Component(span: 1))
+    let player = ListSpot(component: Component(items: [Item(kind: "player")]))
+    let playerButtons = GridSpot(component: Component(kind: "player", span: 3 ,items: [
       Item(title: "Previous", image: "previousButton", action: "previous"),
       Item(title: "Stop", image: "stopButton", action: "stop"),
       Item(title: "Next", image: "nextButton", action: "next")
       ]))
-    ])
+    
+    player.tableView.separatorStyle = .none
+
+    let controller = PlayerController(spots: [list, carousel, player, playerButtons])
+    return controller
+  }()
 
   lazy var myMusicController: UINavigationController = {
     let controller = PlaylistController(playlistID: nil)
@@ -57,19 +58,17 @@ class MainController: UITabBarController {
     super.viewDidLoad()
     setupTabBar()
 
-    playerController.view.height = UIScreen.mainScreen().bounds.height + 60
-    playerController.view.y = UIScreen.mainScreen().bounds.height
+    playerController.view.height = UIScreen.main.bounds.height + 60
+    playerController.view.y = UIScreen.main.bounds.height
     myMusicController.view.addSubview(playerController.view)
   }
 
   func setupTabBar() {
     delegate = self
-    tabBar.translucent = true
+    tabBar.isTranslucent = true
 
-    UITabBar.appearance().then {
-      $0.barTintColor = UIColor(red:0.000, green:0.000, blue:0.000, alpha: 1)
-      $0.tintColor = UIColor(red:1.000, green:1.000, blue:1.000, alpha: 1)
-    }
+    UITabBar.appearance().barTintColor = UIColor(red:0.000, green:0.000, blue:0.000, alpha: 1)
+    UITabBar.appearance().tintColor = UIColor(red:1.000, green:1.000, blue:1.000, alpha: 1)
 
     viewControllers = [
       myMusicController,
@@ -84,7 +83,7 @@ class MainController: UITabBarController {
 
 extension MainController: UITabBarControllerDelegate {
 
-  func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
+  func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
     playerController.view.removeFromSuperview()
     viewController.view.addSubview(playerController.view)
   }

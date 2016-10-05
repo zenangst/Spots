@@ -6,37 +6,37 @@ struct SpotsConfigurator: Configurator {
   static func configure() {
 
     SpotsController.configure = { scrollView in
-      scrollView.backgroundColor = UIColor.blackColor()
+      scrollView.backgroundColor = UIColor.black
     }
 
     CarouselSpot.configure = { collectionView, layout in
-      collectionView.backgroundColor = UIColor.clearColor()
+      collectionView.backgroundColor = UIColor.clear
 
       layout.sectionInset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
       layout.minimumInteritemSpacing = 0
       layout.minimumLineSpacing = 5
     }
 
-    CarouselSpot.register(view: PlaylistGridSpotCell.self, identifier: "playlist")
-    CarouselSpot.register(view: FeaturedGridSpotCell.self, identifier: "featured")
+    CarouselSpot.register(PlaylistGridSpotCell.self, identifier: "playlist")
+    CarouselSpot.register(FeaturedGridSpotCell.self, identifier: "featured")
 
     GridSpot.configure = { collectionView, layout in
-      collectionView.backgroundColor = UIColor.clearColor()
+      collectionView.backgroundColor = UIColor.clear
 
       layout.sectionInset = UIEdgeInsets(top: 0, left: 5, bottom: 5, right: 5)
       layout.minimumInteritemSpacing = 0
       layout.minimumLineSpacing = 0
     }
 
-    GridSpot.register(view: PlayerGridSpotCell.self, identifier: "player")
-    GridSpot.register(view: PlaylistGridSpotCell.self, identifier: "playlist")
-    GridSpot.register(view: FeaturedGridSpotCell.self, identifier: "featured")
+    GridSpot.register(PlayerGridSpotCell.self, identifier: "player")
+    GridSpot.register(PlaylistGridSpotCell.self, identifier: "playlist")
+    GridSpot.register(FeaturedGridSpotCell.self, identifier: "featured")
 
     ListSpot.configure = { tableView in
       let inset: CGFloat = 15
 
-      tableView.backgroundColor = UIColor.clearColor()
-      tableView.layoutMargins = UIEdgeInsetsZero
+      tableView.backgroundColor = UIColor.clear
+      tableView.layoutMargins = EdgeInsets.zero
       tableView.tableFooterView = UIView(frame: CGRect.zero)
       tableView.separatorInset = UIEdgeInsets(top: inset,
         left: inset,
@@ -49,9 +49,9 @@ struct SpotsConfigurator: Configurator {
     ListSpot.register(header: ListHeaderView.self, identifier: "list")
     ListSpot.register(defaultHeader: ListHeaderView.self)
 
-    ListSpot.register(view: PlaylistListSpotCell.self, identifier: "playlist")
-    ListSpot.register(view: PlayerListSpotCell.self, identifier: "player")
-    ListSpot.register(view: DefaultListSpotCell.self, identifier: "default")
+    ListSpot.register(PlaylistListSpotCell.self, identifier: "playlist")
+    ListSpot.register(PlayerListSpotCell.self, identifier: "player")
+    ListSpot.register(DefaultListSpotCell.self, identifier: "default")
     ListSpot.register(defaultView: DefaultListSpotCell.self)
 
   }

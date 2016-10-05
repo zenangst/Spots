@@ -3,25 +3,25 @@ import Imaginary
 import Sugar
 import Brick
 
-public class PlaylistGridSpotCell: UICollectionViewCell, SpotConfigurable {
+open class PlaylistGridSpotCell: UICollectionViewCell, SpotConfigurable {
 
-  public var size = CGSize(width: 125, height: 160)
+  open var preferredViewSize: CGSize = CGSize(width: 125, height: 160)
 
   lazy var imageView = UIImageView().then {
-    $0.contentMode = .ScaleAspectFill
+    $0.contentMode = .scaleAspectFill
   }
 
   lazy var albumView = UIImageView().then {
-    $0.contentMode = .ScaleAspectFill
+    $0.contentMode = .scaleAspectFill
   }
 
-  lazy var blurView = UIVisualEffectView(effect: UIBlurEffect(style: .Dark))
+  lazy var blurView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
 
   override init(frame: CGRect) {
     super.init(frame: frame)
 
-    [imageView, blurView, albumView].forEach { addSubview($0) }
-    imageView.addObserver(self, forKeyPath: "image", options: [.New, .Old], context: nil)
+    [imageView, blurView, albumView].forEach { contentView.addSubview($0) }
+    imageView.addObserver(self, forKeyPath: "image", options: [.new, .old], context: nil)
   }
 
   deinit {
@@ -32,27 +32,28 @@ public class PlaylistGridSpotCell: UICollectionViewCell, SpotConfigurable {
     fatalError("init(coder:) has not been implemented")
   }
 
-  public override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+  open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
     guard let imageView = object as? UIImageView,
-      image = imageView.image
-      where keyPath == "image" else { return }
+      let image = imageView.image
+      , keyPath == "image" else { return }
 
     albumView.image = image
   }
 
-  public func configure(inout item: Item) {
-    backgroundColor = UIColor.clearColor()
+  open func configure(_ item: inout Item) {
+    optimize()
+    backgroundColor = UIColor.clear
 
     if item.image.isPresent {
-      imageView.setImage(NSURL(string: item.image))
-      imageView.frame.size = frame.size
-      blurView.frame.size = frame.size
+      imageView.setImage(URL(string: item.image))
+      imageView.frame = contentView.frame
+      blurView.frame = contentView.frame
 
       albumView.frame.size = CGSize(width: 128, height: 128)
       albumView.x = (frame.width - albumView.frame.width) / 2
       albumView.y = (frame.height - albumView.frame.height) / 2
     }
 
-    item.size = size
+    item.size = preferredViewSize
   }
 }

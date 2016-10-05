@@ -1,5 +1,5 @@
 import UIKit
 
 public protocol Routing {
-  func navigate(url: NSURL, navigationController: UINavigationController) -> Bool
+  func navigate(_ url: URL, navigationController: UINavigationController) -> Bool
 }

@@ -3,12 +3,12 @@ import Imaginary
 import Sugar
 import Brick
 
-public class FeaturedGridSpotCell: UICollectionViewCell, SpotConfigurable {
+open class FeaturedGridSpotCell: UICollectionViewCell, SpotConfigurable {
 
-  public var size = CGSize(width: 100, height: 120)
+  open var preferredViewSize: CGSize = CGSize(width: 100, height: 120)
 
   lazy var imageView: UIImageView = UIImageView().then {
-    $0.contentMode = .ScaleAspectFill
+    $0.contentMode = .scaleAspectFill
   }
 
   override init(frame: CGRect) {
@@ -21,16 +21,16 @@ public class FeaturedGridSpotCell: UICollectionViewCell, SpotConfigurable {
     fatalError("init(coder:) has not been implemented")
   }
 
-  public func configure(inout item: Item) {
-    backgroundColor = UIColor.clearColor()
+  open func configure(_ item: inout Item) {
+    backgroundColor = UIColor.clear
 
     if item.image.isPresent {
-      imageView.setImage(NSURL(string: item.image))
+      imageView.setImage(URL(string: item.image))
       imageView.frame.size = frame.size
     }
 
     if item.size.height == 0 {
-      item.size = size
+      item.size = preferredViewSize
     }
   }
 }

@@ -2,60 +2,60 @@ import Spots
 import Imaginary
 import Brick
 
-public class PlayerListSpotCell: UITableViewCell, SpotConfigurable {
+open class PlayerListSpotCell: UITableViewCell, SpotConfigurable {
 
-  public var size = CGSize(width: 0, height: 60)
-  public var item: Item?
+  open var preferredViewSize: CGSize = CGSize(width: 0, height: 60)
+  open var item: Item?
 
   lazy var selectedView = UIView()
   lazy var transparentImage = UIImage.transparentImage(CGSize(width: 60, height: 60))
 
   public override init(style: UITableViewCellStyle, reuseIdentifier: String!) {
-    super.init(style: .Subtitle, reuseIdentifier: reuseIdentifier)
+    super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
     selectedBackgroundView = selectedView
-    backgroundColor = UIColor.clearColor()
+    backgroundColor = UIColor.clear
   }
 
   public required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 
-  public func configure(inout item: Item) {
-    textLabel?.textAlignment = .Center
-    textLabel?.font = UIFont.boldSystemFontOfSize(14)
-    detailTextLabel?.font = UIFont.boldSystemFontOfSize(14)
-    detailTextLabel?.textAlignment = .Center
-    textLabel?.textColor = UIColor.whiteColor()
-    detailTextLabel?.textColor = UIColor.grayColor()
+  open func configure(_ item: inout Item) {
+    textLabel?.textAlignment = .center
+    textLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+    detailTextLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+    detailTextLabel?.textAlignment = .center
+    textLabel?.textColor = UIColor.white
+    detailTextLabel?.textColor = UIColor.gray
 
-    if let action = item.action where action.isPresent {
-      accessoryType = .DisclosureIndicator
+    if let action = item.action , action.isPresent {
+      accessoryType = .disclosureIndicator
 
       if let subtitleColor = item.meta["secondary"] as? UIColor {
         selectedView.backgroundColor = subtitleColor.alpha(0.8)
       } else {
-        selectedView.backgroundColor = UIColor.darkGrayColor().alpha(0.8)
+        selectedView.backgroundColor = UIColor.darkGray.alpha(0.8)
       }
     } else {
-      accessoryType = .None
-      selectedView.backgroundColor = UIColor.clearColor()
+      accessoryType = .none
+      selectedView.backgroundColor = UIColor.clear
     }
 
-    if let textColor = item.meta["textColor"] as? UIColor where !textColor.isDark {
+    if let textColor = item.meta["textColor"] as? UIColor , !textColor.isDark {
       textLabel?.textColor = textColor
     }
 
     if let background = item.meta["background"] as? UIColor {
       if !background.isDark {
-        textLabel?.textColor = UIColor.darkGrayColor()
+        textLabel?.textColor = UIColor.darkGray
       }
     }
 
-    if let subtitleColor = item.meta["secondary"] as? UIColor where !subtitleColor.isDark {
+    if let subtitleColor = item.meta["secondary"] as? UIColor , !subtitleColor.isDark {
       detailTextLabel?.textColor = subtitleColor
 
-      if let backgroundColor = backgroundColor where !backgroundColor.isDark {
-        detailTextLabel?.textColor = UIColor.darkGrayColor()
+      if let backgroundColor = backgroundColor , !backgroundColor.isDark {
+        detailTextLabel?.textColor = UIColor.darkGray
       }
     }
 
@@ -63,14 +63,14 @@ public class PlayerListSpotCell: UITableViewCell, SpotConfigurable {
     textLabel?.text = item.title
 
     if !item.image.isEmpty {
-      imageView?.image = UIImage(named: item.image)?.imageWithRenderingMode(.AlwaysTemplate)
-      imageView?.tintColor = UIColor.whiteColor()
+      imageView?.image = UIImage(named: item.image)?.withRenderingMode(.alwaysTemplate)
+      imageView?.tintColor = UIColor.white
     }
 
-    item.size.height = item.size.height > 0.0 ? item.size.height : size.height
+    item.size.height = item.size.height > 0.0 ? item.size.height : preferredViewSize.height
   }
 
-  public override func layoutSubviews() {
+  open override func layoutSubviews() {
     textLabel?.frame.size = frame.size
     detailTextLabel?.frame.size = frame.size
 

@@ -10,11 +10,11 @@ import Brick
 let keychainAccount = "spots-accessToken"
 var username: String? {
 set(value) {
-  NSUserDefaults.standardUserDefaults().setValue(value, forKey: "username")
-  NSUserDefaults.standardUserDefaults().synchronize()
+  UserDefaults.standard.setValue(value, forKey: "username")
+  UserDefaults.standard.synchronize()
 }
 get {
-  return NSUserDefaults.standardUserDefaults().valueForKey("username") as? String
+  return UserDefaults.standard.value(forKey: "username") as? String
 }
 }
 
@@ -22,15 +22,15 @@ get {
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
   var window: UIWindow?
-  lazy var cache = Cache<SPTSession>(name: "Spotify")
+  lazy var cache: Cache<SPTSession> = Cache<SPTSession>(name: "Spotify")
   lazy var mainController: MainController = MainController()
 
   lazy var authController: UINavigationController = {
     let controller = AuthController(spot: ListSpot().then {
-      $0.items = [Item(title: "Auth", action: "auth", kind: "playlist", size: CGSize(width: 120, height: 88))]
+      $0.items = [Item(title: "Auth", kind: "playlist", action: "auth", size: CGSize(width: 120, height: 88))]
       }
     )
-    controller.title = "Spotify".uppercaseString
+    controller.title = "Spotify".uppercased()
 
     let navigationController = UINavigationController(rootViewController: controller)
     return navigationController
@@ -46,7 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     didSet {
       guard let session = session else { return }
 
-      mainController.playerController.player.loginWithSession(session, callback: { (error) -> Void in
+      mainController.playerController.player.login(with: session, callback: { (error) -> Void in
         if let _ = error {
           self.session = nil
           self.cache.remove("session")
@@ -56,9 +56,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
   }
 
-  func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
     configurators.forEach { $0.configure() }
-    window = UIWindow(frame: UIScreen.mainScreen().bounds)
+    window = UIWindow(frame: UIScreen.main.bounds)
 
     window?.rootViewController = authController
 
@@ -78,19 +78,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
 
   func applyStyles() {
-    UIApplication.sharedApplication().statusBarStyle = .LightContent
-
-    UINavigationBar.appearance().then {
-      $0.barTintColor = UIColor(hex:"#000")
-      $0.tintColor = UIColor(hex:"#fff")
-      $0.shadowImage = UIImage()
-      $0.titleTextAttributes = [
-        NSForegroundColorAttributeName: UIColor(hex:"#fff")
-      ]
-    }
+    UIApplication.shared.statusBarStyle = .lightContent
+    UINavigationBar.appearance().barTintColor = UIColor(hex:"#000")
+    UINavigationBar.appearance().tintColor = UIColor(hex:"#fff")
+    UINavigationBar.appearance().shadowImage = UIImage()
+    UINavigationBar.appearance().titleTextAttributes = [
+      NSForegroundColorAttributeName: UIColor(hex:"#fff")
+    ]
   }
 
-  func application(app: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
+  func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any]) -> Bool {
     if session == nil {
       return PreLoginRouter().navigate(url, navigationController: authController)
     }

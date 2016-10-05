@@ -15,8 +15,8 @@ class AuthController: SpotsController, SpotsDelegate {
     fatalError()
   }
 
-  func spotDidSelectItem(spot: Spotable, item: Item) {
+  func spotDidSelectItem(_ spot: Spotable, item: Item) {
     guard let urn = item.action else { return }
-    Compass.navigate(urn)
+    Compass.navigate(to: urn)
   }
 }

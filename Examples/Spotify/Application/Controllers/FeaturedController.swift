@@ -16,25 +16,25 @@ class FeaturedController: SpotsController {
     self.title = title
   }
 
-  override func viewWillAppear(animated: Bool) {
+  override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
 
-    guard spot?.items.count <= 1 else { return }
+    guard (spot?.items.count)! <= 1 else { return }
 
     loadData()
   }
 
-  func loadData(completion: (() -> Void)? = nil) {
-    SPTBrowse.requestFeaturedPlaylistsForCountry("NO", limit: 50, offset: 0, locale: nil, timestamp: nil, accessToken: accessToken) { (error, object) -> Void in
+  func loadData(_ completion: (() -> Void)? = nil) {
+    SPTBrowse.requestFeaturedPlaylists(forCountry: "NO", limit: 50, offset: 0, locale: nil, timestamp: nil, accessToken: accessToken) { (error, object) -> Void in
       guard let object = object as? SPTFeaturedPlaylistList else { return }
 
       self.update { $0.items = object.items.map { item in
         Item(
-          title: item.name,
-          subtitle: "\(item.trackCount) songs",
-          image: (item.largestImage as SPTImage).imageURL.absoluteString,
+          title: (item as AnyObject).name,
+          subtitle: "\((item as AnyObject).trackCount) songs",
+          image: ((item as AnyObject).largestImage as SPTImage).imageURL.absoluteString,
           kind: "featured",
-          action: "playlist:" + (item.uri as NSURL).absoluteString.replace(":", with: "-"))
+          action: "playlist:" + (((item as AnyObject).uri as NSURL).absoluteString?.replace(":", with: "-"))!)
         }
         completion?()
       }
@@ -44,15 +44,15 @@ class FeaturedController: SpotsController {
 
 extension FeaturedController : SpotsDelegate {
 
-  func spotDidSelectItem(spot: Spotable, item: Item) {
+  func spotDidSelectItem(_ spot: Spotable, item: Item) {
     guard let urn = item.action else { return }
-    Compass.navigate(urn)
+    Compass.navigate(to: urn)
   }
 }
 
 extension FeaturedController : SpotsRefreshDelegate {
 
-  func spotsDidReload(refreshControl: UIRefreshControl, completion: (() -> Void)?) {
+  func spotsDidReload(_ refreshControl: UIRefreshControl, completion: (() -> Void)?) {
     loadData(completion)
   }
 }
