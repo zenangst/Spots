@@ -40,9 +40,9 @@ open class SpotsController: NSViewController, SpotsProtocol {
 
   #if DEVMODE
   /// A dispatch queue is a lightweight object to which your application submits blocks for subsequent execution.
-  public let fileQueue: dispatch_queue_t = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
+  public let fileQueue: DispatchQueue = DispatchQueue.global(qos: DispatchQoS.QoSClass.default)
   /// An identifier for the type system object being monitored by a dispatch source.
-  public var source: dispatch_source_t!
+  public var source: DispatchSourceFileSystemObject!
   #endif
 
   /// A delegate for when an item is tapped within a Spot
@@ -219,6 +219,7 @@ open class SpotsController: NSViewController, SpotsProtocol {
     #if !os(OSX)
       spot.spotsCompositeDelegate = self
     #endif
+
     var height = spot.spotHeight()
     if let componentSize = spot.component.size, componentSize.height > height {
       height = componentSize.height
