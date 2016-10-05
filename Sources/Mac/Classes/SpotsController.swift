@@ -250,7 +250,7 @@ open class SpotsController: NSViewController, SpotsProtocol {
     }
   }
 
-  public func scrollViewDidScroll(_ notification: NSNotification) {
+  open func scrollViewDidScroll(_ notification: NSNotification) {
     guard let scrollView = notification.object as? SpotsScrollView,
       let delegate = spotsScrollDelegate,
       let _ = NSApplication.shared().mainWindow, !refreshing && scrollView.contentOffset.y > 0
@@ -264,7 +264,6 @@ open class SpotsController: NSViewController, SpotsProtocol {
     let currentOffset = offset.y + scrollView.frame.size.height
     let shouldFetch = currentOffset > totalHeight - scrollView.frame.size.height * multiplier + scrollView.frame.origin.y &&
       !refreshPositions.contains(currentOffset)
-
 
     // Scroll did reach top
     if scrollView.contentOffset.y < 0 &&
