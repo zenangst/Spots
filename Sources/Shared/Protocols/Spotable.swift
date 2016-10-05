@@ -81,7 +81,7 @@ public protocol Spotable: class {
   func scrollTo(_ includeElement: (Item) -> Bool) -> CGFloat
 
   func spotHeight() -> CGFloat
-  func sizeForItemAt(_ indexPath: IndexPath) -> CGSize
+  func sizeForItem(at indexPath: IndexPath) -> CGSize
 
   #if os(OSX)
   func deselect()

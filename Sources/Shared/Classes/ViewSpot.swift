@@ -57,7 +57,7 @@ open class ViewSpot: NSObject, Spotable, Viewable {
 
    - returns: The size of the item found using the index path
    */
-  open func sizeForItemAt(_ indexPath: IndexPath) -> CGSize {
+  open func sizeForItem(at indexPath: IndexPath) -> CGSize {
     return scrollView.frame.size
   }
 

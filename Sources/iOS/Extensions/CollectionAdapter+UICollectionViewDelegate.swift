@@ -11,7 +11,7 @@ extension CollectionAdapter : UICollectionViewDelegate {
    - returns: The width and height of the specified item. Both values must be greater than 0.
    */
   @objc(collectionView:layout:sizeForItemAtIndexPath:) public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    return spot.sizeForItemAt(indexPath)
+    return spot.sizeForItem(at: indexPath)
   }
 
   /**

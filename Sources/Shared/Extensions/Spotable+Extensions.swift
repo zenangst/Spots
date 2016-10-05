@@ -360,7 +360,7 @@ public extension Spotable {
     }
   }
 
-  public func sizeForItemAt(_ indexPath: IndexPath) -> CGSize {
+  public func sizeForItem(at indexPath: IndexPath) -> CGSize {
     return render().frame.size
   }
 

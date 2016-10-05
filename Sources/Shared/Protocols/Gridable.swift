@@ -23,7 +23,7 @@ public protocol Gridable: Spotable {
    - parameter indexPath: The index path of the
    - returns: Size of the object at index path as CGSize
    */
-  func sizeForItemAt(_ indexPath: IndexPath) -> CGSize
+  func sizeForItem(at indexPath: IndexPath) -> CGSize
 
   #if os(OSX)
   static var grids: GridRegistry { get set }

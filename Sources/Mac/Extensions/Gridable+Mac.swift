@@ -46,7 +46,7 @@ extension Gridable {
    - parameter indexPath: The index path of the
    - returns: Size of the object at index path as CGSize
    */
-  public func sizeForItemAt(_ indexPath: IndexPath) -> CGSize {
+  public func sizeForItem(at indexPath: IndexPath) -> CGSize {
     var sectionInsets: CGFloat = 0.0
     if let layout = layout as? NSCollectionViewFlowLayout, component.span > 0 {
       component.items[indexPath.item].size.width = (collectionView.frame.width / CGFloat(component.span)) - layout.sectionInset.left - layout.sectionInset.right
@@ -86,7 +86,7 @@ extension Gridable {
    - parameter index: The index of the view model
    - parameter usesViewSize: A boolean value to determine if the view uses the views height
    */
-  public func configureItem(_ index: Int, usesViewSize: Bool = false) {
+  public func configureItem(at index: Int, usesViewSize: Bool = false) {
     guard let item = item(index) else { return }
 
     var viewModel = item
@@ -116,7 +116,7 @@ extension Gridable {
     }
   }
 
-  public static func register(_ nib: Nib, identifier: StringConvertible) {
+  public static func register(nib: Nib, identifier: StringConvertible) {
     self.grids.storage[identifier.string] = GridRegistry.Item.nib(nib)
   }
 
@@ -124,11 +124,11 @@ extension Gridable {
     collectionView.deselectAll(nil)
   }
 
-  public static func register(_ view: NSCollectionViewItem.Type, identifier: StringConvertible) {
+  public static func register(view: NSCollectionViewItem.Type, identifier: StringConvertible) {
     self.grids.storage[identifier.string] = GridRegistry.Item.classType(view)
   }
 
-  public static func register(_ defaultView: NSCollectionViewItem.Type) {
+  public static func register(defaultView: NSCollectionViewItem.Type) {
     self.grids.storage[self.grids.defaultIdentifier] = GridRegistry.Item.classType(defaultView)
   }
 }
