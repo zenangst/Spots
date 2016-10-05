@@ -15,7 +15,7 @@ struct TopTracksBlueprint: BlueprintContainer {
         spotIndex: 0,
         adapter: { json in
           var list = [Item]()
-          for (index, item) in json.enumerate() {
+          for (index, item) in json.enumerated() {
 
             let albumFragments: [String : String] = [
               "title" : item.resolve(keyPath: "album.name") ?? "",
@@ -37,9 +37,9 @@ struct TopTracksBlueprint: BlueprintContainer {
             let viewModel = Item(
               title: item.resolve(keyPath: "name") ?? "",
               subtitle: "by \(subtitle)",
-              action: "preview",
               image: item.resolve(keyPath: "album.images.0.url") ?? "",
               kind: "track",
+              action: "preview",
               size: CGSize(width: 200, height: 50),
               meta: [
                 "duration" : duration,

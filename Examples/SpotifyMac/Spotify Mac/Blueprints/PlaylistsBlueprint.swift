@@ -22,8 +22,8 @@ struct PlaylistsBlueprint: BlueprintContainer {
               let viewModel = Item(
                 title: item.resolve(keyPath: "name") ?? "",
                 image : item.resolve(keyPath: "images.0.url") ?? "",
-                action: "playlist:\(owner):\(playlistID)",
                 kind: "featured",
+                action: "playlist:\(owner):\(playlistID)",
                 size: CGSize(width: 180, height: 255),
                 meta: [
                   "fragments" : [

@@ -13,7 +13,7 @@ class Toolbar: NSToolbar {
 
 extension Toolbar: NSToolbarDelegate {
 
-  func toolbarDefaultItemIdentifiers(toolbar: NSToolbar) -> [String] {
+  func toolbarDefaultItemIdentifiers(_ toolbar: NSToolbar) -> [String] {
     return [
       "back",
       "forward",
@@ -23,7 +23,7 @@ extension Toolbar: NSToolbarDelegate {
     ]
   }
 
-  func toolbar(toolbar: NSToolbar, itemForItemIdentifier itemIdentifier: String, willBeInsertedIntoToolbar flag: Bool) -> NSToolbarItem? {
+  func toolbar(_ toolbar: NSToolbar, itemForItemIdentifier itemIdentifier: String, willBeInsertedIntoToolbar flag: Bool) -> NSToolbarItem? {
     var toolbarItem: NSToolbarItem? = nil
     switch itemIdentifier {
     case NSToolbarFlexibleSpaceItemIdentifier:
@@ -49,7 +49,7 @@ extension Toolbar: NSToolbarDelegate {
     return toolbarItem
   }
 
-  func toolbarAllowedItemIdentifiers(toolbar: NSToolbar) -> [String] {
+  func toolbarAllowedItemIdentifiers(_ toolbar: NSToolbar) -> [String] {
     return [
       "back",
       "forward",

@@ -2,14 +2,14 @@ import Spots
 import Brick
 import Sugar
 
-public class CategoryGridItem: NSCollectionViewItem, SpotConfigurable {
+open class CategoryGridItem: NSCollectionViewItem, SpotConfigurable {
 
   var item: Item?
 
-  public var size = CGSize(width: 0, height: 88)
-  public var customView = FlippedView()
+  open var preferredViewSize: CGSize = CGSize(width: 0, height: 88)
+  open var customView = FlippedView()
 
-  static public var flipped: Bool {
+  static open var flipped: Bool {
     get {
       return true
     }
@@ -17,24 +17,24 @@ public class CategoryGridItem: NSCollectionViewItem, SpotConfigurable {
 
   lazy var customImageView = NSImageView()
 
-  public lazy var titleLabel = NSTextField().then {
-    $0.editable = false
-    $0.selectable = false
-    $0.bezeled = false
-    $0.textColor = NSColor.whiteColor()
+  open lazy var titleLabel = NSTextField().then {
+    $0.isEditable = false
+    $0.isSelectable = false
+    $0.isBezeled = false
+    $0.textColor = NSColor.white
     $0.drawsBackground = false
-    $0.font = NSFont.boldSystemFontOfSize(14)
+    $0.font = NSFont.boldSystemFont(ofSize: 14)
   }
 
-  public lazy var subtitleLabel = NSTextField().then {
-    $0.editable = false
-    $0.selectable = false
-    $0.bezeled = false
-    $0.textColor = NSColor.lightGrayColor()
+  open lazy var subtitleLabel = NSTextField().then {
+    $0.isEditable = false
+    $0.isSelectable = false
+    $0.isBezeled = false
+    $0.textColor = NSColor.lightGray
     $0.drawsBackground = false
   }
 
-  override init?(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+  override init?(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     super.init(nibName: nil, bundle: nil)
 
     imageView = customImageView
@@ -48,17 +48,17 @@ public class CategoryGridItem: NSCollectionViewItem, SpotConfigurable {
     fatalError("init(coder:) has not been implemented")
   }
 
-  public override func loadView() {
+  open override func loadView() {
     view = customView
   }
 
-  public func configure(inout item: Item) {
+  open func configure(_ item: inout Item) {
     titleLabel.stringValue = item.title
     titleLabel.frame.origin.x = 8
     titleLabel.sizeToFit()
     if item.subtitle.isPresent {
       titleLabel.frame.origin.y = 8
-      titleLabel.font = NSFont.boldSystemFontOfSize(14)
+      titleLabel.font = NSFont.boldSystemFont(ofSize: 14)
       titleLabel.sizeToFit()
     } else {
       titleLabel.frame.origin.y = item.size.height / 2 - titleLabel.frame.size.height / 2
@@ -69,13 +69,13 @@ public class CategoryGridItem: NSCollectionViewItem, SpotConfigurable {
     subtitleLabel.sizeToFit()
     subtitleLabel.frame.origin.y = titleLabel.frame.origin.y + subtitleLabel.frame.height
 
-    if let imageView = imageView where
+    if let imageView = imageView ,
       item.image.isPresent && item.image.hasPrefix("http") {
       customImageView.frame.size.width = item.size.width
       customImageView.frame.size.height = item.size.height
       customImageView.frame.origin.y = customView.frame.height - imageView.frame.height
-      customImageView.imageAlignment = .AlignCenter
-      customImageView.setImage(NSURL(string: item.image))
+      customImageView.imageAlignment = .alignCenter
+      customImageView.setImage(NSURL(string: item.image) as URL?)
 
       titleLabel.frame.origin.x = imageView.frame.width / 2 - titleLabel.frame.width / 2
       titleLabel.frame.origin.y = imageView.frame.height / 5

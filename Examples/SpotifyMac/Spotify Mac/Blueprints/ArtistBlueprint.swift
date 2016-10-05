@@ -14,16 +14,16 @@ struct ArtistBlueprint: BlueprintContainer {
       fragmentHandler: { fragments, controller in
         let image: String = fragments.resolve(keyPath:"image") ?? ""
 
-        if let artistID: String = fragments.resolve(keyPath:"artist-id") where image.isEmpty {
+        if let artistID: String = fragments.resolve(keyPath:"artist-id") , image.isEmpty {
           let ride = Malibu.networking("api").GET(ArtistRequest(artistID: artistID))
           ride.validate()
-            .toJSONDictionary()
+            .toJsonDictionary()
             .done { json in
               guard let firstItem = controller.spot(0, Listable.self)?.component.items.first else { return }
 
               var newItem = firstItem
               newItem.image = json.resolve(keyPath: "images.0.url") ?? ""
-              controller.updateIfNeeded(spotAtIndex: 0, items: [newItem], withAnimation: .None) {
+              controller.updateIfNeeded(spotAtIndex: 0, items: [newItem], withAnimation: .none) {
                 controller.cache()
               }
           }
@@ -31,13 +31,13 @@ struct ArtistBlueprint: BlueprintContainer {
 
         let headerModel = Item(
           title: fragments.resolve(keyPath:"title") ?? "",
-          image: fragments.resolve(keyPath:"image") ?? "",
           subtitle: fragments.resolve(keyPath:"description") ?? "",
+          image: fragments.resolve(keyPath:"image") ?? "",
           kind : "header",
           size: CGSize(width: 700, height: 135)
         )
 
-        controller.updateIfNeeded(spotAtIndex: 0, items: [headerModel], withAnimation: .None) {
+        controller.updateIfNeeded(spotAtIndex: 0, items: [headerModel], withAnimation: .none) {
           controller.cache()
         }
       },

@@ -23,8 +23,8 @@ struct BrowseBlueprint: BlueprintContainer {
                 title: item.resolve(keyPath: "name") ?? "",
                 subtitle: "by " + owner,
                 image: item.resolve(keyPath: "images.0.url") ?? "",
-                action: "playlist:\(owner):\(playlistID)",
                 kind: "featured",
+                action: "playlist:\(owner):\(playlistID)",
                 size: CGSize(width: 200, height: 275),
                 meta: [
                   "separator" : false,
@@ -37,7 +37,9 @@ struct BrowseBlueprint: BlueprintContainer {
               viewModels.append(viewModel)
             }
 
-            viewModels[0].meta["useAsBackground"] = true
+            if !viewModels.isEmpty {
+              viewModels[0].meta["useAsBackground"] = true
+            }
 
             return viewModels
           }
@@ -58,8 +60,8 @@ struct BrowseBlueprint: BlueprintContainer {
               let model = Item(
                 title: item.resolve(keyPath: "name") ?? "",
                 image: item.resolve(keyPath: "images.0.url") ?? "",
-                action: "album:\(item.resolve(keyPath: "id") ?? "")",
                 kind: "list",
+                action: "album:\(item.resolve(keyPath: "id") ?? "")",
                 size: CGSize(width: 250, height: 44),
                 meta: [
                   "separator" : true,
@@ -84,8 +86,8 @@ struct BrowseBlueprint: BlueprintContainer {
               let model = Item(
                 title: item.resolve(keyPath: "name") ?? "",
                 image: item.resolve(keyPath: "icons.0.url") ?? "",
-                action: "category:\(action)",
                 kind: "category",
+                action: "category:\(action)",
                 size: CGSize(width: 120, height: 120),
                 meta: [
                   "separator" : false,
@@ -110,7 +112,7 @@ struct BrowseBlueprint: BlueprintContainer {
           size: CGSize(width: 700, height: 250)
         )
 
-        controller.updateIfNeeded(spotAtIndex: 0, items: [headerModel], withAnimation: .None) {
+        controller.updateIfNeeded(spotAtIndex: 0, items: [headerModel], withAnimation: .none) {
           controller.cache()
         }
       },

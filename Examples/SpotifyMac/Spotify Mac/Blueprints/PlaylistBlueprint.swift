@@ -13,7 +13,7 @@ struct PlaylistBlueprint: BlueprintContainer {
       spotIndex: 1,
       adapter: { json in
         var list = [Item]()
-        for (index, item) in json.enumerate() {
+        for (index, item) in json.enumerated() {
           let subtitle = item.resolve(keyPath: "track.artists.0.name") ?? ""
 
           let albumFragments: [String : String] = [
@@ -30,7 +30,7 @@ struct PlaylistBlueprint: BlueprintContainer {
 
           let duration = item.resolve(keyPath: "track.duration_ms") ?? 0
           let preview = item.resolve(keyPath: "track.preview_url") ?? ""
-          let meta: [String : AnyObject] = [
+          let meta: [String : Any] = [
             "fragments" : ["preview" : preview],
             "album-urn" : "album:\(item.resolve(keyPath: "track.album.id") ?? "")",
             "artist-urn" : "artist:\(item.resolve(keyPath: "track.artists.0.id") ?? "")",
@@ -45,8 +45,8 @@ struct PlaylistBlueprint: BlueprintContainer {
             title: item.resolve(keyPath: "track.name") ?? "",
             subtitle: "by \(subtitle)",
             image: item.resolve(keyPath: "track.album.images.0.url") ?? "",
-            action: "preview",
             kind: "track",
+            action: "preview",
             size: CGSize(width: 200, height: 50),
             meta: meta
           )
@@ -57,13 +57,13 @@ struct PlaylistBlueprint: BlueprintContainer {
       )], fragmentHandler: { fragments, controller in
         let headerModel = Item(
           title: fragments.resolve(keyPath:"title") ?? "",
-          image: fragments.resolve(keyPath:"image") ?? "",
           subtitle: fragments.resolve(keyPath:"description") ?? "",
+          image: fragments.resolve(keyPath:"image") ?? "",
           kind : "header",
           size: CGSize(width: 700, height: 135)
         )
 
-        controller.updateIfNeeded(spotAtIndex: 0, items: [headerModel], withAnimation: .None) {
+        controller.updateIfNeeded(spotAtIndex: 0, items: [headerModel], withAnimation: .none) {
           controller.cache()
         }
       },template: [

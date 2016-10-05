@@ -5,33 +5,37 @@ import Sugar
 
 extension AppDelegate {
 
-  static func navigate(urn: String, fragments: [String : AnyObject] = [:]) {
+  static func navigate(_ urn: String, fragments: [String : Any] = [:]) {
     let stringURL = "\(Compass.scheme)\(urn)"
-    guard let appDelegate = NSApplication.sharedApplication().delegate as? AppDelegate,
-      url = NSURL(string: stringURL) else { return }
+    guard let appDelegate = NSApplication.shared().delegate as? AppDelegate,
+      let url = URL(string: stringURL) else { return }
 
     appDelegate.handleURL(url, fragments: fragments)
   }
 
   func registerURLScheme() {
-    NSAppleEventManager.sharedAppleEventManager().setEventHandler(self,
+    NSAppleEventManager.shared().setEventHandler(self,
                                                                   andSelector: #selector(handle(_:replyEvent:)),
                                                                   forEventClass: AEEventClass(kInternetEventClass),
                                                                   andEventID: AEEventID(kAEGetURL))
 
-    if let bundleIdentifier = NSBundle.mainBundle().bundleIdentifier {
-      LSSetDefaultHandlerForURLScheme("spots", bundleIdentifier as CFString)
+    if let bundleIdentifier = Bundle.main.bundleIdentifier {
+      LSSetDefaultHandlerForURLScheme("spots" as CFString, bundleIdentifier as CFString)
     }
   }
 
-  func handleURL(url: NSURL, parameters: [String : AnyObject] = [:], fragments: [String : AnyObject] = [:]) {
+  func handleURL(_ url: URL, parameters: [String : Any] = [:], fragments: [String : Any] = [:]) {
 
     if url.absoluteString.hasPrefix("spots://callback") {
-      spotsSession.auth(url)
+      spotsSession.auth(url as NSURL)
       return
     }
 
-    Compass.parse(url, fragments: fragments) { route, arguments, fragments in
+    guard let location = Compass.parse(url, payload: fragments) else { return }
+    let route = location.path
+    let arguments = location.arguments
+
+//    Compass.parse(url, payload: fragments) { route, arguments, fragments in
 
       self.detailController.fragments = fragments
       var newBlueprint: Blueprint? = nil
@@ -44,11 +48,11 @@ extension AppDelegate {
         self.detailController.removeGradientSublayers()
         AppDelegate.navigate(last, fragments: ["skipHistory" : true])
       case "preview":
-        let cacheDirectories = NSSearchPathForDirectoriesInDomains(.CachesDirectory, .UserDomainMask, true)
+        let cacheDirectories = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true)
 
         guard let stringURL = fragments["preview"] as? String,
-          url = NSURL(string: stringURL),
-          cacheDirectory = cacheDirectories.first
+          let url = NSURL(string: stringURL),
+          let cacheDirectory = cacheDirectories.first
           else { return }
 
         if let player = self.player {
@@ -56,20 +60,20 @@ extension AppDelegate {
           self.player = nil
         }
 
-        dispatch(queue: .Interactive) {
-          guard let data = NSData(contentsOfURL: url), lastPath = url.lastPathComponent else { return }
+        dispatch(queue: .interactive) {
+          guard let data = NSData(contentsOf: url as URL), let lastPath = url.lastPathComponent else { return }
 
           do {
             let filePath = "\(cacheDirectory)/no.hyper.Spotify-Mac/\(lastPath)"
-            data.writeToFile(filePath, atomically: true)
+            data.write(toFile: filePath, atomically: true)
 
-            let player = try AVAudioPlayer(contentsOfURL: NSURL(fileURLWithPath: filePath))
+            let player = try AVAudioPlayer(contentsOf: NSURL(fileURLWithPath: filePath) as URL)
 
             player.volume = 0.0
             self.player = player
             dispatch {
               self.volumeTimer?.invalidate()
-              self.volumeTimer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: #selector(AppDelegate.volumeFadeIn), userInfo: nil, repeats: true)
+              self.volumeTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(AppDelegate.volumeFadeIn), userInfo: nil, repeats: true)
 
               self.volumeTimer?.fire()
               self.player?.play()
@@ -78,7 +82,7 @@ extension AppDelegate {
         }
       case "artist:{artist_id}":
         guard let artistBlueprint = blueprints["artist"],
-        artistID = arguments["artist_id"] else { return }
+        let artistID = arguments["artist_id"] else { return }
         var blueprint = artistBlueprint
 
         blueprint.cacheKey = "artist:\(artistID)"
@@ -94,7 +98,7 @@ extension AppDelegate {
                 let duration = item.resolve(keyPath: "duration_ms") ?? 0
                 let albumURN = "album:\(item.resolve(keyPath: "album.id") ?? "")"
                 let artistURN = "artist:\(item.resolve(keyPath: "artists.0.id") ?? "")"
-                let meta: [String : AnyObject] = [
+                let meta: [String : Any] = [
                   "album-urn" : albumURN,
                   "artist-urn" : artistURN,
                   "duration" : duration,
@@ -108,8 +112,8 @@ extension AppDelegate {
                 let viewModel = Item(
                   title: item.resolve(keyPath: "name") ?? "",
                   image: item.resolve(keyPath: "images.0.url") ?? "",
-                  action: "album:\(item.resolve(keyPath: "id") ?? "")",
                   kind: "album",
+                  action: "album:\(item.resolve(keyPath: "id") ?? "")",
                   size: CGSize(width: 180, height: 180),
                   meta: meta
                 )
@@ -128,7 +132,7 @@ extension AppDelegate {
             adapter: { json in
               var list = [Item]()
 
-              for (index, item) in json.enumerate() {
+              for (index, item) in json.enumerated() {
                 let albumFragments: [String : String] = [
                   "title" : item.resolve(keyPath: "album.name") ?? "",
                   "image" : item.resolve(keyPath: "album.images.0.url") ?? "",
@@ -146,7 +150,7 @@ extension AppDelegate {
                 let albumURN = "album:\(item.resolve(keyPath: "album.id") ?? "")"
                 let artistURN = "artist:\(item.resolve(keyPath: "artists.0.id") ?? "")"
 
-                let meta: [String : AnyObject] = [
+                let meta: [String : Any] = [
                   "album-urn" : albumURN,
                   "artist-urn" : artistURN,
                   "duration" : duration,
@@ -160,9 +164,9 @@ extension AppDelegate {
                 let viewModel = Item(
                   title: item.resolve(keyPath: "name") ?? "",
                   subtitle: "by \(subtitle)",
-                  action: "preview",
                   image: item.resolve(keyPath: "album.images.0.url") ?? "",
                   kind: "track",
+                  action: "preview",
                   size: CGSize(width: 200, height: 50),
                   meta: meta
                 )
@@ -188,8 +192,8 @@ extension AppDelegate {
                   description += "Followers: \(followers)\n"
                 }
 
-                if let genres = item["genres"] as? [String] where !genres.isEmpty {
-                  description += "Genres: \(genres.joinWithSeparator(","))\n"
+                if let genres = item["genres"] as? [String] , !genres.isEmpty {
+                  description += "Genres: \(genres.joined(separator: ","))\n"
                 }
 
                 if let popularity: Int = item.resolve(keyPath: "popularity") {
@@ -198,9 +202,9 @@ extension AppDelegate {
 
                 let viewModel = Item(
                   title: item.resolve(keyPath: "name") ?? "",
-                  action: "artist:\(item.resolve(keyPath: "id") ?? "")",
                   image: item.resolve(keyPath: "images.0.url") ?? "",
                   kind: "artist",
+                  action: "artist:\(item.resolve(keyPath: "id") ?? "")",
                   size: CGSize(width: 180, height: 180),
                   meta: [
                     "fragments" : [
@@ -222,7 +226,7 @@ extension AppDelegate {
         newBlueprint = blueprint
       case "topArtists":
         guard let topTrackBlueprint = blueprints["top-artists"] else { return }
-        if let _ = self.detailController.blueprint where fragments["skipHistory"] == nil {
+        if let _ = self.detailController.blueprint , fragments["skipHistory"] == nil {
           self.history.append("topArtists")
         }
         var blueprint = topTrackBlueprint
@@ -230,7 +234,7 @@ extension AppDelegate {
         newBlueprint = blueprint
       case "topTracks":
         guard let topTrackBlueprint = blueprints["top-tracks"] else { return }
-        if let _ = self.detailController.blueprint where fragments["skipHistory"] == nil {
+        if let _ = self.detailController.blueprint , fragments["skipHistory"] == nil {
           self.history.append("topTracks")
         }
         var blueprint = topTrackBlueprint
@@ -238,7 +242,7 @@ extension AppDelegate {
         newBlueprint = blueprint
       case "album:{album_id}":
         guard let albumID = arguments["album_id"],
-          albumBlueprint = blueprints["album"] else { return }
+          let albumBlueprint = blueprints["album"] else { return }
 
         var blueprint = albumBlueprint
         blueprint.cacheKey("album:\(albumID)")
@@ -250,7 +254,7 @@ extension AppDelegate {
         newBlueprint = blueprints[route]
       case "category:{category_id}":
         guard let categoryID = arguments["category_id"],
-          categoryBlueprint = blueprints["category"] else { return }
+          let categoryBlueprint = blueprints["category"] else { return }
         var blueprint = categoryBlueprint
         blueprint.cacheKey("category:\(categoryID)")
         blueprint.requests[0].request = CategoryRequest(categoryID: categoryID)
@@ -261,8 +265,8 @@ extension AppDelegate {
         newBlueprint = blueprints[route]
       case "playlist:{user_id}:{playlist_id}":
         guard let userID = arguments["user_id"],
-          playlistID = arguments["playlist_id"],
-          playlistBlueprint = blueprints["playlist"] else { return }
+          let playlistID = arguments["playlist_id"],
+          let playlistBlueprint = blueprints["playlist"] else { return }
 
         var blueprint = playlistBlueprint
         blueprint.cacheKey("playlist:\(userID):\(playlistID)")
@@ -276,11 +280,11 @@ extension AppDelegate {
       if let newBlueprint = newBlueprint {
         self.evaluateBlueprint(newBlueprint, fragments: fragments)
       }
-    }
+//    }
   }
 
-  func evaluateBlueprint(newBlueprint: Blueprint, fragments: [String : AnyObject]) {
-    if let currentBlueprint = detailController.blueprint where fragments["skipHistory"] == nil {
+  func evaluateBlueprint(_ newBlueprint: Blueprint, fragments: [String : Any]) {
+    if let currentBlueprint = detailController.blueprint , fragments["skipHistory"] == nil {
       self.history.append(currentBlueprint.cacheKey)
     }
 
@@ -289,9 +293,9 @@ extension AppDelegate {
     }
   }
 
-  func handle(event: NSAppleEventDescriptor, replyEvent: NSAppleEventDescriptor) {
-    if let stringURL = event.paramDescriptorForKeyword(AEKeyword(keyDirectObject))?.stringValue,
-      url = NSURL(string: stringURL) {
+  func handle(_ event: NSAppleEventDescriptor, replyEvent: NSAppleEventDescriptor) {
+    if let stringURL = event.paramDescriptor(forKeyword: AEKeyword(keyDirectObject))?.stringValue,
+      let url = URL(string: stringURL) {
       handleURL(url)
     }
   }

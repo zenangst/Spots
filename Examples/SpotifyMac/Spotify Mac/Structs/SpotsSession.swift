@@ -24,15 +24,15 @@ public struct SpotsSession {
 
   func login() {
     let authString = "https://accounts.spotify.com/authorize/?client_id=\(spotifyClientID)&response_type=code&redirect_uri=spots%3A%2F%2Fcallback&scope=user-read-private%20user-read-email%20user-top-read%20user-library-read%20user-follow-read%20playlist-read-collaborative"
-    NSWorkspace.sharedWorkspace().openURL(NSURL(string: authString)!)
+    NSWorkspace.shared().open(NSURL(string: authString)! as URL)
   }
 
-  func auth(url: NSURL) {
-    if let URLComponents = NSURLComponents(URL: url, resolvingAgainstBaseURL: false),
-      code = URLComponents.queryItems?.filter({ $0.name == "code" }).first?.value {
+  func auth(_ url: NSURL) {
+    if let URLComponents = NSURLComponents(url: url as URL, resolvingAgainstBaseURL: false),
+      let code = URLComponents.queryItems?.filter({ $0.name == "code" }).first?.value {
       AuthContainer.serviceNamed("spots")?.accessToken(parameters: ["code":code]) { accessToken, error in
         if let _ = accessToken {
-          NSNotificationCenter.defaultCenter().postNotificationName("sessionActive", object: nil)
+          NotificationCenter.default.post(name: NSNotification.Name(rawValue: "sessionActive"), object: nil)
         }
       }
       return

@@ -13,7 +13,7 @@ public extension NSImage {
       tintColor.set()
 
       let imageRect = NSRect(origin: NSZeroPoint, size: size)
-      NSRectFillUsingOperation(imageRect, NSCompositingOperation.CompositeSourceAtop)
+      NSRectFillUsingOperation(imageRect, NSCompositingOperation.sourceAtop)
       unlockFocus()
     }
   }
@@ -27,14 +27,14 @@ public extension NSImageView {
     }
     set {
       guard let tintColor = newValue,
-        image = image,
-        tinted = image.copy() as? NSImage else { return }
+        let image = image,
+        let tinted = image.copy() as? NSImage else { return }
 
       tinted.lockFocus()
       tintColor.set()
 
       let imageRect = NSRect(origin: NSZeroPoint, size: image.size)
-      NSRectFillUsingOperation(imageRect, NSCompositingOperation.CompositeSourceAtop)
+      NSRectFillUsingOperation(imageRect, NSCompositingOperation.sourceAtop)
       tinted.unlockFocus()
 
       self.image = tinted
