@@ -334,7 +334,7 @@ public extension Spotable {
         if let view = view as? UICollectionViewCell {
           view.contentView.frame = view.bounds
         }
-
+        
         (view as? SpotConfigurable)?.configure(&viewModel)
       }
     #else
