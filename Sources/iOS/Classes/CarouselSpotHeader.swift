@@ -2,7 +2,7 @@ import UIKit
 
 class CarouselSpotHeader: UICollectionReusableView, Componentable {
 
-  var defaultHeight: CGFloat = 120
+  var preferredHeaderHeight: CGFloat = 120
 
   lazy var titleLabel = UILabel()
 
