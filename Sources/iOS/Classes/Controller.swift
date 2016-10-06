@@ -51,11 +51,11 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
   }
 
   /// An array of refresh positions to avoid refreshing multiple times when using infinite scrolling
-  open var refreshPositions = [CGFloat]()
+  public var refreshPositions = [CGFloat]()
   /// A bool value to indicate if the Controller is refeshing
-  open var refreshing = false
+  public var refreshing = false
   /// A convenience method for resolving the first spot
-  open var spot: Spotable? {
+  public var spot: Spotable? {
     get { return spot(at: 0, Spotable.self) }
   }
 
@@ -67,7 +67,7 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
   #endif
 
   /// An optional SpotCache used for view controller caching
-  open var stateCache: SpotCache?
+  public var stateCache: SpotCache?
 
   /// A delegate for when an item is tapped within a Spot
   weak open var delegate: SpotsDelegate? {
@@ -79,7 +79,7 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
 
 #if os(iOS)
   /// A refresh delegate for handling reloading of a Spot
-  weak open var refreshDelegate: RefreshDelegate? {
+  weak public var refreshDelegate: RefreshDelegate? {
     didSet {
       refreshControl.isHidden = refreshDelegate == nil
     }
@@ -87,7 +87,7 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
 #endif
 
   /// A scroll delegate for handling spotDidReachBeginning and spotDidReachEnd
-  weak open var scrollDelegate: ScrollDelegate?
+  weak public var scrollDelegate: ScrollDelegate?
 
   /// A custom scroll view that handles the scrolling for all internal scroll views
   lazy open var scrollView: SpotsScrollView = {  [unowned self] in
@@ -102,7 +102,7 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
 #if os(iOS)
   /// A UIRefresh control
   /// Note: Only avaiable on iOS
-  open lazy var refreshControl: UIRefreshControl = { [unowned self] in
+  public lazy var refreshControl: UIRefreshControl = { [unowned self] in
     let refreshControl = UIRefreshControl()
     refreshControl.addTarget(self, action: #selector(refreshSpots(_:)), for: .valueChanged)
 
