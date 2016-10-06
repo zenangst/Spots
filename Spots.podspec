@@ -22,4 +22,5 @@ Pod::Spec.new do |s|
   s.dependency 'Brick', '1.0.0'
   s.dependency 'Cache', '1.5.1'
   s.dependency 'CryptoSwift', '0.6.0'
+  s.pod_target_xcconfig = { 'SWIFT_VERSION' => '3.0' }
 end
