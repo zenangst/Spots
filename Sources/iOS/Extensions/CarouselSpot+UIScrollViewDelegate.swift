@@ -1,12 +1,11 @@
 import UIKit
 import Brick
 
+/// A scroll view extension on CarouselSpot to handle scrolling specifically for this object.
 extension CarouselSpot: UIScrollViewDelegate {
 
-  /**
-   A method that handles what type of scrollling the CarouselSpot should use when pagination is enabled.
-   It can snap to the nearest item or scroll page by page.
-   */
+  /// A method that handles what type of scrollling the CarouselSpot should use when pagination is enabled.
+  /// It can snap to the nearest item or scroll page by page.
   fileprivate func paginatedEndScrolling() {
     var currentCellOffset = collectionView.contentOffset
     #if os(iOS)
@@ -32,35 +31,29 @@ extension CarouselSpot: UIScrollViewDelegate {
     }
   }
 
-  /**
-   Tells the delegate when the user scrolls the content view within the receiver.
-
-   - parameter scrollView: The scroll-view object in which the scrolling occurred.
-   */
+  /// Tells the delegate when the user scrolls the content view within the receiver.
+  ///
+  /// - parameter scrollView: The scroll-view object in which the scrolling occurred.
   public func scrollViewDidScroll(_ scrollView: UIScrollView) {
     carouselScrollDelegate?.spotDidScroll(self)
   }
 
   #if os(iOS)
-  /**
-   Tells the delegate when dragging ended in the scroll view.
-
-   - parameter scrollView: The scroll-view object that finished scrolling the content view.
-   - parameter decelerate: true if the scrolling movement will continue, but decelerate, after a touch-up gesture during a dragging operation.
-   */
+  /// Tells the delegate when dragging ended in the scroll view.
+  ///
+  /// - parameter scrollView: The scroll-view object that finished scrolling the content view.
+  /// - parameter decelerate: true if the scrolling movement will continue, but decelerate, after a touch-up gesture during a dragging operation.
   public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
     guard paginate else { return }
     paginatedEndScrolling()
   }
   #endif
 
-  /**
-   Tells the delegate when the user finishes scrolling the content.
-
-   - parameter scrollView:          The scroll-view object where the user ended the touch..
-   - parameter velocity:            The velocity of the scroll view (in points) at the moment the touch was released.
-   - parameter targetContentOffset: The expected offset when the scrolling action decelerates to a stop.
-   */
+  /// Tells the delegate when the user finishes scrolling the content.
+  ///
+  /// - parameter scrollView:          The scroll-view object where the user ended the touch.
+  /// - parameter velocity:            The velocity of the scroll view (in points) at the moment the touch was released.
+  /// - parameter targetContentOffset: The expected offset when the scrolling action decelerates to a stop.
   public func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
     #if os(iOS)
       guard paginate else { return }
@@ -95,11 +88,9 @@ extension CarouselSpot: UIScrollViewDelegate {
     paginatedEndScrolling()
   }
 
-  /**
-   Scroll to a specific item based on predicate
-
-   - parameter predicate: A predicate closure to determine which item to scroll to
-   */
+  /// Scroll to a specific item based on predicate.
+  ///
+  /// - parameter predicate: A predicate closure to determine which item to scroll to
   public func scrollTo(_ predicate: (Item) -> Bool) {
     if let index = items.index(where: predicate) {
       let pageWidth: CGFloat = collectionView.frame.size.width - layout.sectionInset.right

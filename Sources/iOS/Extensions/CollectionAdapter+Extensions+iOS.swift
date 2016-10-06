@@ -7,11 +7,11 @@ public extension CollectionAdapter {
     return spot.collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? T
   }
 
-  /**
-   - parameter item: The view model that you want to append
-   - parameter withAnimation: The animation that should be used (currently not in use)
-   - parameter completion: Completion
-   */
+  /// Append item to collection with animation
+  ///
+  /// - parameter item: The view model that you want to append.
+  /// - parameter animation:  The animation that should be used (currently not in use).
+  /// - parameter completion: A completion closure that is executed in the main queue.
   public func append(_ item: Item, withAnimation animation: SpotsAnimation = .none, completion: Completion = nil) {
     var indexes = [Int]()
     let itemsCount = spot.component.items.count
@@ -35,11 +35,11 @@ public extension CollectionAdapter {
     }
   }
 
-  /**
-   - parameter items: A collection of view models that you want to insert
-   - parameter withAnimation: The animation that should be used (currently not in use)
-   - parameter completion: Completion
-   */
+  /// Append a collection of items to collection with animation
+  ///
+  /// - parameter items:      A collection of view models that you want to insert
+  /// - parameter animation:  The animation that should be used (currently not in use)
+  /// - parameter completion: A completion closure that is executed in the main queue.
   public func append(_ items: [Item], withAnimation animation: SpotsAnimation = .none, completion: Completion = nil) {
     var indexes = [Int]()
     let itemsCount = spot.component.items.count
@@ -65,12 +65,12 @@ public extension CollectionAdapter {
     }
   }
 
-  /**
-   - parameter item: The view model that you want to insert
-   - parameter index: The index where the new Item should be inserted
-   - parameter animation:  A SpotAnimation that is used when performing the mutation (currently not in use)
-   - parameter completion: Completion
-   */
+  /// Insert item into collection at index.
+  ///
+  /// - parameter item:       The view model that you want to insert.
+  /// - parameter index:      The index where the new Item should be inserted.
+  /// - parameter animation:  A SpotAnimation that is used when performing the mutation (currently not in use).
+  /// - parameter completion: A completion closure that is executed in the main queue.
   public func insert(_ item: Item, index: Int, withAnimation animation: SpotsAnimation = .none, completion: Completion = nil) {
     spot.component.items.insert(item, at: index)
     var indexes = [Int]()
@@ -92,11 +92,11 @@ public extension CollectionAdapter {
     }
   }
 
-  /**
-   - parameter items: A collection of view model that you want to prepend
-   - parameter animation:  A SpotAnimation that is used when performing the mutation (currently not in use)
-   - parameter completion: A completion closure that is executed in the main queue
-   */
+  /// Prepend a collection items to the collection with animation
+  ///
+  /// - parameter items:      A collection of view model that you want to prepend
+  /// - parameter animation:  A SpotAnimation that is used when performing the mutation (currently not in use)
+  /// - parameter completion: A completion closure that is executed in the main queue.
   public func prepend(_ items: [Item], withAnimation animation: SpotsAnimation = .none, completion: Completion = nil) {
     var indexes = [Int]()
 
@@ -118,11 +118,11 @@ public extension CollectionAdapter {
     }
   }
 
-  /**
-   - parameter item: The view model that you want to remove
-   - parameter withAnimation: The animation that should be used (currently not in use)
-   - parameter completion: A completion closure that is executed in the main queue
-   */
+  /// Delete item from collection with animation
+  ///
+  /// - parameter item:       The view model that you want to remove
+  /// - parameter animation:  The animation that should be used (currently not in use)
+  /// - parameter completion: A completion closure that is executed in the main queue
   public func delete(_ item: Item, withAnimation animation: SpotsAnimation = .none, completion: Completion = nil) {
     guard let index = spot.component.items.index(where: { $0 == item })
       else { completion?(); return }
@@ -140,11 +140,11 @@ public extension CollectionAdapter {
     }
   }
 
-  /**
-   - parameter items: A collection of view models that you want to delete
-   - parameter withAnimation: The animation that should be used (currently not in use)
-   - parameter completion: A completion closure that is executed in the main queue
-   */
+  /// Delete items from collection with animation
+  ///
+  /// - parameter items:      A collection of view models that you want to delete
+  /// - parameter animation:  The animation that should be used (currently not in use)
+  /// - parameter completion: A completion closure that is executed in the main queue
   public func delete(_ items: [Item], withAnimation animation: SpotsAnimation = .none, completion: Completion = nil) {
     var indexes = [Int]()
     let count = spot.component.items.count
@@ -164,11 +164,11 @@ public extension CollectionAdapter {
     }
   }
 
-  /**
-   - parameter index: The index of the view model that you want to remove
-   - parameter withAnimation: The animation that should be used (currently not in use)
-   - parameter completion: A completion closure that is executed in the main queue when the view model has been removed
-   */
+  /// Delete item at index with animation
+  ///
+  /// - parameter index:      The index of the view model that you want to remove
+  /// - parameter animation:  The animation that should be used (currently not in use)
+  /// - parameter completion: A completion closure that is executed in the main queue when the view model has been removed
   public func delete(_ index: Int, withAnimation animation: SpotsAnimation = .none, completion: Completion) {
     perform(animation, withIndex: index) {
       Dispatch.mainQueue { [weak self] in
@@ -185,11 +185,11 @@ public extension CollectionAdapter {
     }
   }
 
-  /**
-   - parameter indexes: An array of indexes that you want to remove
-   - parameter withAnimation: The animation that should be used (currently not in use)
-   - parameter completion: A completion closure that is executed in the main queue when the view model has been removed
-   */
+  /// Delete a collection
+  ///
+  /// - parameter indexes:    An array of indexes that you want to remove
+  /// - parameter animation:  The animation that should be used (currently not in use)
+  /// - parameter completion: A completion closure that is executed in the main queue when the view model has been removed
   public func delete(_ indexes: [Int], withAnimation animation: SpotsAnimation = .none, completion: Completion) {
     Dispatch.mainQueue { [weak self] in
       guard let weakSelf = self else { return }
