@@ -46,7 +46,7 @@ open class SpotsController: NSViewController, SpotsProtocol {
   #endif
 
   /// A delegate for when an item is tapped within a Spot
-  weak open var spotsDelegate: SpotsDelegate? {
+  weak public var spotsDelegate: SpotsDelegate? {
     didSet {
       spots.forEach { $0.spotsDelegate = spotsDelegate }
       spotsDelegate?.spotsDidChange(spots)
@@ -54,7 +54,7 @@ open class SpotsController: NSViewController, SpotsProtocol {
   }
 
   /// A custom scroll view that handles the scrolling for all internal scroll views
-  lazy open var spotsScrollView: SpotsScrollView = {
+  lazy public var spotsScrollView: SpotsScrollView = {
     let spotsScrollView = SpotsScrollView()
     spotsScrollView.autoresizingMask = [ .viewWidthSizable, .viewHeightSizable ]
 
