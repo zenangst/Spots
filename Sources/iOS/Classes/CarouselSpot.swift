@@ -141,11 +141,11 @@ open class CarouselSpot: NSObject, Gridable {
   /// The collection views background view
   open lazy var backgroundView = UIView()
 
-  /**
-   A required initializer to instantiate a CarouselSpot with a component
-
-   - parameter component: A component
-   */
+  /// A required initializer to instantiate a CarouselSpot with a component
+  ///
+  /// - parameter component: A component
+  ///
+  /// - returns: A CarouselSpot object using a Component
   public required init(component: Component) {
     self.component = component
     super.init()
@@ -155,17 +155,17 @@ open class CarouselSpot: NSObject, Gridable {
     registerDefaultHeader(header: CarouselSpotHeader.self)
   }
 
-  /**
-   A convenience initializer for CarouselSpot with base configuration
-
-   - parameter component:   A Component
-   - parameter top:         Top section inset
-   - parameter left:        Left section inset
-   - parameter bottom:      Bottom section inset
-   - parameter right:       Right section inset
-   - parameter itemSpacing: The item spacing used in the flow layout
-   - parameter lineSpacing: The line spacing used in the flow layout
-   */
+  /// A convenience initializer for CarouselSpot with base configuration
+  ///
+  /// - parameter component:   A Component
+  /// - parameter top:         Top section inset
+  /// - parameter left:        Left section inset
+  /// - parameter bottom:      Bottom section inset
+  /// - parameter right:       Right section inset
+  /// - parameter itemSpacing: The item spacing used in the flow layout
+  /// - parameter lineSpacing: The line spacing used in the flow layout
+  ///
+  /// - returns: A CarouselSpot with configured layout
   public convenience init(_ component: Component, top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0, itemSpacing: CGFloat = 0, lineSpacing: CGFloat = 0) {
     self.init(component: component)
 
@@ -174,25 +174,22 @@ open class CarouselSpot: NSObject, Gridable {
     layout.minimumLineSpacing = lineSpacing
   }
 
-  /**
-   Instantiate a CarouselSpot with a cache key
-
-   - parameter cacheKey: A unique cache key for the Spotable object
-   */
+  /// Instantiate a CarouselSpot with a cache key
+  ///
+  /// - parameter cacheKey: A unique cache key for the Spotable object
+  ///
+  /// - returns: A CarouselSpot with a cache key
   public convenience init(cacheKey: String) {
     let stateCache = SpotCache(key: cacheKey)
-
     self.init(component: Component(stateCache.load()))
     self.stateCache = stateCache
 
     registerAndPrepare()
   }
 
-  /**
-   Setup Spotable component with base size
-
-   - parameter size: The size of the superview
-   */
+  /// Setup Spotable component with base size
+  ///
+  /// - parameter size: The size of the superview
   open func setup(_ size: CGSize) {
     collectionView.frame.size = size
 
@@ -232,9 +229,7 @@ open class CarouselSpot: NSObject, Gridable {
     pageControl.frame.origin.y = collectionView.frame.size.height - pageControl.frame.size.height
   }
 
-  /**
-   Configure section insets and layout spacing for the UICollectionViewFlow using component meta data
-   */
+  /// Configure section insets and layout spacing for the UICollectionViewFlow using component meta data
   func configureLayout() {
     layout.sectionInset = UIEdgeInsets(
       top: CGFloat(component.meta(GridableMeta.Key.sectionInsetTop, Default.sectionInsetTop)),
@@ -246,11 +241,9 @@ open class CarouselSpot: NSObject, Gridable {
     dynamicSpan = component.meta(Key.dynamicSpan, false)
   }
 
-  /**
-   Register default header for the CarouselSpot
-
-   - parameter view: A header view
-   */
+  /// Register default header for the CarouselSpot
+  ///
+  /// - parameter view: A header view
   func registerDefaultHeader(header view: View.Type) {
     guard type(of: self).headers.storage[type(of: self).headers.defaultIdentifier] == nil else { return }
     type(of: self).headers.defaultItem = Registry.Item.classType(view)
