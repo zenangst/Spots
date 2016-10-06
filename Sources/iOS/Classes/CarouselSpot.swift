@@ -141,11 +141,11 @@ open class CarouselSpot: NSObject, Gridable {
   /// The collection views background view
   open lazy var backgroundView = UIView()
 
-  /// A required initializer to instantiate a CarouselSpot with a component
+  /// A required initializer to instantiate a CarouselSpot with a component.
   ///
   /// - parameter component: A component
   ///
-  /// - returns: A CarouselSpot object using a Component
+  /// - returns: An initialized carousel spot.
   public required init(component: Component) {
     self.component = component
     super.init()
@@ -155,17 +155,17 @@ open class CarouselSpot: NSObject, Gridable {
     registerDefaultHeader(header: CarouselSpotHeader.self)
   }
 
-  /// A convenience initializer for CarouselSpot with base configuration
+  /// A convenience initializer for CarouselSpot with base configuration.
   ///
-  /// - parameter component:   A Component
-  /// - parameter top:         Top section inset
-  /// - parameter left:        Left section inset
-  /// - parameter bottom:      Bottom section inset
-  /// - parameter right:       Right section inset
-  /// - parameter itemSpacing: The item spacing used in the flow layout
-  /// - parameter lineSpacing: The line spacing used in the flow layout
+  /// - parameter component:   A Component.
+  /// - parameter top:         Top section inset.
+  /// - parameter left:        Left section inset.
+  /// - parameter bottom:      Bottom section inset.
+  /// - parameter right:       Right section inset.
+  /// - parameter itemSpacing: The item spacing used in the flow layout.
+  /// - parameter lineSpacing: The line spacing used in the flow layout.
   ///
-  /// - returns: A CarouselSpot with configured layout
+  /// - returns: An initialized carousel spot with configured layout.
   public convenience init(_ component: Component, top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0, itemSpacing: CGFloat = 0, lineSpacing: CGFloat = 0) {
     self.init(component: component)
 
@@ -174,11 +174,11 @@ open class CarouselSpot: NSObject, Gridable {
     layout.minimumLineSpacing = lineSpacing
   }
 
-  /// Instantiate a CarouselSpot with a cache key
+  /// Instantiate a CarouselSpot with a cache key.
   ///
-  /// - parameter cacheKey: A unique cache key for the Spotable object
+  /// - parameter cacheKey: A unique cache key for the Spotable object.
   ///
-  /// - returns: A CarouselSpot with a cache key
+  /// - returns: An initialized carousel spot.
   public convenience init(cacheKey: String) {
     let stateCache = SpotCache(key: cacheKey)
     self.init(component: Component(stateCache.load()))
