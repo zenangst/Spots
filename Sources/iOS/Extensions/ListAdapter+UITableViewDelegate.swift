@@ -14,7 +14,7 @@ extension ListAdapter: UITableViewDelegate {
    **/
   public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
     let header = type(of: spot).headers.make(spot.component.header)
-    return (header?.view as? Componentable)?.defaultHeight ?? 0.0
+    return (header?.view as? Componentable)?.preferredHeaderHeight ?? 0.0
   }
 
   /**

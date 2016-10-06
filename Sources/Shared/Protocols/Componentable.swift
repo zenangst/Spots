@@ -5,6 +5,6 @@
 #endif
 
 public protocol Componentable {
-  var defaultHeight: CGFloat { get }
+  var preferredHeaderHeight: CGFloat { get }
   func configure(_ component: Component)
 }
