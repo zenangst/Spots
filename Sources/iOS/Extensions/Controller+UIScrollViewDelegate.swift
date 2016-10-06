@@ -24,7 +24,7 @@ extension Controller {
       offset.y > size.height - scrollView.bounds.height * multiplier &&
       !refreshPositions.contains(size.height - itemOffset)
 
-    guard let delegate = spotsScrollDelegate else { return }
+    guard let delegate = scrollDelegate else { return }
 
     // Scroll did reach top
     if scrollView.contentOffset.y < 0 &&

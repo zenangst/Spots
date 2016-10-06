@@ -161,7 +161,7 @@ class ListController: Controller, SpotsDelegate, SpotsScrollDelegate {
 
     self.stateCache = stateCache
     self.delegate = self
-    self.spotsScrollDelegate = self
+    self.scrollDelegate = self
     spotsScrollView.frame.origin.y = -40
 
     NotificationCenter.default.addObserver(self, selector: #selector(ListController.willFullscreen(_:)), name: NSNotification.Name.NSWindowWillEnterFullScreen, object: nil)

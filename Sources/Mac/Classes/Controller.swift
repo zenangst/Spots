@@ -62,7 +62,7 @@ open class Controller: NSViewController, SpotsProtocol {
   }()
 
   /// A scroll delegate for handling spotDidReachBeginning and spotDidReachEnd
-  weak open var spotsScrollDelegate: SpotsScrollDelegate?
+  weak open var scrollDelegate: SpotsScrollDelegate?
 
   /// A bool value to indicate if the Controller is refeshing
   open var refreshing = false
@@ -112,7 +112,7 @@ open class Controller: NSViewController, SpotsProtocol {
     NotificationCenter.default.removeObserver(self)
     spots.forEach { $0.delegate = nil }
     delegate = nil
-    spotsScrollDelegate = nil
+    scrollDelegate = nil
   }
 
   /**
@@ -257,7 +257,7 @@ open class Controller: NSViewController, SpotsProtocol {
 
   open func scrollViewDidScroll(_ notification: NSNotification) {
     guard let scrollView = notification.object as? SpotsScrollView,
-      let delegate = spotsScrollDelegate,
+      let delegate = scrollDelegate,
       let _ = NSApplication.shared().mainWindow, !refreshing && scrollView.contentOffset.y > 0
       else { return }
 

@@ -104,7 +104,7 @@ class DetailController: Controller, SpotsDelegate, SpotsScrollDelegate {
     super.viewWillAppear()
     guard let blueprint = blueprint else { return }
     build(blueprint)
-    spotsScrollDelegate = self
+    scrollDelegate = self
   }
 
   func willEnterFullscreen(_ notification: NSNotification) {

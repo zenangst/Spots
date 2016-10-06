@@ -133,7 +133,7 @@ class ForYouController: Controller, SpotsDelegate {
     super.viewDidLoad()
 
     delegate = self
-    spotsScrollDelegate = self
+    scrollDelegate = self
 
     dispatch(queue: .interactive) { [weak self] in
       let items = ForYouController.generateItems(0, to: 10)

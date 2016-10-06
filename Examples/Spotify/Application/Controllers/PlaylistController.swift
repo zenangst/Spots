@@ -31,7 +31,7 @@ class PlaylistController: Controller {
     delegate = self
     spotsScrollView.backgroundColor = UIColor.black
     spotsRefreshDelegate = self
-    spotsScrollDelegate = self
+    scrollDelegate = self
     view.backgroundColor = UIColor.black
 
     if playlistID == nil {
