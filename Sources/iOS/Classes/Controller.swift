@@ -79,9 +79,9 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
 
 #if os(iOS)
   /// A refresh delegate for handling reloading of a Spot
-  weak open var spotsRefreshDelegate: SpotsRefreshDelegate? {
+  weak open var refreshDelegate: SpotsRefreshDelegate? {
     didSet {
-      refreshControl.isHidden = spotsRefreshDelegate == nil
+      refreshControl.isHidden = refreshDelegate == nil
     }
   }
 #endif
@@ -233,7 +233,7 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
         scrollView.scrollIndicatorInsets.bottom = scrollView.contentInset.bottom
     }
 #if os(iOS)
-    guard let _ = spotsRefreshDelegate, refreshControl.superview == nil
+    guard let _ = refreshDelegate, refreshControl.superview == nil
       else { return }
 
     scrollView.insertSubview(refreshControl, at: 0)
@@ -313,7 +313,7 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
     Dispatch.mainQueue { [weak self] in
       guard let weakSelf = self else { return }
       weakSelf.refreshPositions.removeAll()
-      weakSelf.spotsRefreshDelegate?.spotsDidReload(refreshControl) {
+      weakSelf.refreshDelegate?.spotsDidReload(refreshControl) {
         refreshControl.endRefreshing()
       }
     }

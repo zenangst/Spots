@@ -12,7 +12,7 @@ class FeaturedController: Controller {
 
     self.init(spot: featuredPlaylists)
     self.delegate = self
-    self.spotsRefreshDelegate = self
+    self.refreshDelegate = self
     self.title = title
   }
 

@@ -30,7 +30,7 @@ class PlaylistController: Controller {
     super.viewDidLoad()
     delegate = self
     scrollView.backgroundColor = UIColor.black
-    spotsRefreshDelegate = self
+    refreshDelegate = self
     scrollDelegate = self
     view.backgroundColor = UIColor.black
 

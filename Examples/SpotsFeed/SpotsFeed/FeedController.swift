@@ -10,7 +10,7 @@ open class FeedController: Controller, SpotsDelegate {
   open override func viewDidLoad() {
     self.delegate = self
     self.scrollDelegate = self
-    self.spotsRefreshDelegate = self
+    self.refreshDelegate = self
     super.viewDidLoad()
   }
 
