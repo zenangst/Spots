@@ -237,7 +237,7 @@ extension PlayerController: SpotsDelegate {
   }
 }
 
-extension PlayerController: SpotsCarouselScrollDelegate {
+extension PlayerController: CarouselScrollDelegate {
 
   func spotDidScroll(_ spot: Spotable) { }
 

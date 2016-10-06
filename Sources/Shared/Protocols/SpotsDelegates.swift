@@ -86,7 +86,7 @@ public extension SpotsScrollDelegate {
   }
 }
 
-public protocol SpotsCarouselScrollDelegate: class {
+public protocol CarouselScrollDelegate: class {
 
   func spotDidScroll(_ spot: Spotable)
 

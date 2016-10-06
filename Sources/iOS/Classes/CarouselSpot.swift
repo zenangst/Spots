@@ -92,7 +92,7 @@ open class CarouselSpot: NSObject, Gridable {
   open var configure: ((SpotConfigurable) -> Void)?
 
   /// A CarouselScrollDelegate, used when a CarouselSpot scrolls
-  open weak var carouselScrollDelegate: SpotsCarouselScrollDelegate?
+  open weak var carouselScrollDelegate: CarouselScrollDelegate?
 
   /// A CompositeDelegate for the CarouselSpot, used to access composite spots
   open weak var spotsCompositeDelegate: CompositeDelegate?
