@@ -108,10 +108,14 @@ extension SpotsProtocol {
     yOffset += spot.render().frame.size.height
   }
 
-  fileprivate func removeSpot(_ index: Int) {
-    if index < self.spots.count {
-      self.spots.remove(at: index)
-    }
+
+  /// Remove Spot at index
+  ///
+  /// - parameter index: The index of the Spotable object hat you want to remove
+  fileprivate func removeSpot(at index: Int) {
+    guard index < self.spots.count else { return }
+    
+    self.spots.remove(at: index)
   }
 
   /**
@@ -223,7 +227,7 @@ extension SpotsProtocol {
         case .new:
           self.newSpot(index, newComponents: newComponents, yOffset: &yOffset)
         case .removed:
-          self.removeSpot(index)
+          self.removeSpot(at: index)
         case .items:
           runClosure = self.setupItemsForSpot(index,
             newComponents: newComponents,
