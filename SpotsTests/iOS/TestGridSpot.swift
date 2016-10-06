@@ -43,16 +43,16 @@ class GirdSpotTests: XCTestCase {
     let gridSpot = GridSpot(component: component)
     let indexPath = IndexPath(row: 0, section: 0)
 
-    XCTAssertEqual(gridSpot.identifier(indexPath), GridSpot.views.defaultIdentifier)
+    XCTAssertEqual(gridSpot.identifier(at: indexPath), GridSpot.views.defaultIdentifier)
     
     GridSpot.views.defaultItem = Registry.Item.classType(GridSpotCell.self)
-    XCTAssertEqual(gridSpot.identifier(indexPath),GridSpot.views.defaultIdentifier)
+    XCTAssertEqual(gridSpot.identifier(at: indexPath),GridSpot.views.defaultIdentifier)
     
     GridSpot.views.defaultItem = Registry.Item.classType(GridSpotCell.self)
-    XCTAssertEqual(gridSpot.identifier(indexPath),GridSpot.views.defaultIdentifier)
+    XCTAssertEqual(gridSpot.identifier(at: indexPath),GridSpot.views.defaultIdentifier)
     
     GridSpot.views["custom-item-kind"] = Registry.Item.classType(GridSpotCell.self)
-    XCTAssertEqual(gridSpot.identifier(indexPath), "custom-item-kind")
+    XCTAssertEqual(gridSpot.identifier(at: indexPath), "custom-item-kind")
     
     GridSpot.views.storage.removeAll()
   }

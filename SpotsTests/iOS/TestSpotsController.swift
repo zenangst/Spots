@@ -152,7 +152,7 @@ class SpotsControllerTests : XCTestCase {
     XCTAssertEqual(spotController.resolve(spot: { $0.0 == 1 })?.component.title, "ListSpot2")
     XCTAssertEqual(spotController.resolve(spot: { $0.0 == 2 })?.component.title, "GridSpot")
 
-    XCTAssert(spotController.filter { $0 is Listable }.count == 2)
+    XCTAssert(spotController.filter(spots: { $0 is Listable }).count == 2)
   }
 
   func testJSONInitialiser() {

@@ -32,16 +32,16 @@ class CarouselSpotTests: XCTestCase {
     let carouselSpot = CarouselSpot(component: component)
     let indexPath = IndexPath(row: 0, section: 0)
 
-    XCTAssertEqual(carouselSpot.identifier(indexPath), CarouselSpot.views.defaultIdentifier)
+    XCTAssertEqual(carouselSpot.identifier(at: indexPath), CarouselSpot.views.defaultIdentifier)
 
     CarouselSpot.views.defaultItem = Registry.Item.classType(CarouselSpotCell.self)
-    XCTAssertEqual(carouselSpot.identifier(indexPath),CarouselSpot.views.defaultIdentifier)
+    XCTAssertEqual(carouselSpot.identifier(at: indexPath),CarouselSpot.views.defaultIdentifier)
 
     CarouselSpot.views.defaultItem = Registry.Item.classType(CarouselSpotCell.self)
-    XCTAssertEqual(carouselSpot.identifier(indexPath),CarouselSpot.views.defaultIdentifier)
+    XCTAssertEqual(carouselSpot.identifier(at: indexPath),CarouselSpot.views.defaultIdentifier)
 
     CarouselSpot.views["custom-item-kind"] = Registry.Item.classType(CarouselSpotCell.self)
-    XCTAssertEqual(carouselSpot.identifier(indexPath), "custom-item-kind")
+    XCTAssertEqual(carouselSpot.identifier(at: indexPath), "custom-item-kind")
 
     CarouselSpot.views.storage.removeAll()
   }

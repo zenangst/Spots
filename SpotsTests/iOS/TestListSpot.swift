@@ -33,16 +33,16 @@ class ListSpotTests: XCTestCase {
     let listSpot = ListSpot(component: component)
     let indexPath = IndexPath(row: 0, section: 0)
 
-    XCTAssertEqual(listSpot.identifier(indexPath), ListSpot.views.defaultIdentifier)
+    XCTAssertEqual(listSpot.identifier(at: indexPath), ListSpot.views.defaultIdentifier)
 
     ListSpot.views.defaultItem = Registry.Item.classType(ListSpotCell.self)
-    XCTAssertEqual(listSpot.identifier(indexPath),ListSpot.views.defaultIdentifier)
+    XCTAssertEqual(listSpot.identifier(at: indexPath),ListSpot.views.defaultIdentifier)
 
     ListSpot.views.defaultItem = Registry.Item.classType(ListSpotCell.self)
-    XCTAssertEqual(listSpot.identifier(indexPath),ListSpot.views.defaultIdentifier)
+    XCTAssertEqual(listSpot.identifier(at: indexPath),ListSpot.views.defaultIdentifier)
 
     ListSpot.views["custom-item-kind"] = Registry.Item.classType(ListSpotCell.self)
-    XCTAssertEqual(listSpot.identifier(indexPath), "custom-item-kind")
+    XCTAssertEqual(listSpot.identifier(at: indexPath), "custom-item-kind")
 
     ListSpot.views.storage.removeAll()
   }
