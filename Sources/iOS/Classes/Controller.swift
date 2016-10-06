@@ -2,16 +2,12 @@ import UIKit
 import Brick
 import Cache
 
-/**
- Controller is a subclass of UIViewController
- */
+/// A controller powered by Spotable objects
 open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScrollViewDelegate {
 
-  /**
-   A notification enum
-
-   - deviceDidRotateNotification: Used when the device is rotated
-   */
+  /// A notification enum
+  ///
+  /// - deviceDidRotateNotification: Used when the device is rotated
   enum NotificationKeys: String {
     case deviceDidRotateNotification = "deviceDidRotateNotification"
   }
@@ -25,13 +21,13 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
     }
   }
 
-  /// A static closure to configure SpotsScrollView
+  /// A static closure to configure SpotsScrollView.
   open static var configure: ((_ container: SpotsScrollView) -> Void)?
 
-  /// Initial content offset for Controller, defaults to UIEdgeInsetsZero
+  /// Initial content offset for Controller, defaults to UIEdgeInsetsZero.
   open fileprivate(set) var initialContentInset: UIEdgeInsets = UIEdgeInsets.zero
 
-  /// A collection of Spotable objects
+  /// A collection of Spotable objects.
   open var spots: [Spotable] {
     didSet {
       spots.forEach { $0.delegate = delegate }
@@ -39,7 +35,7 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
     }
   }
 
-  /// A collection of composite Spotable objects
+  /// A collection of composite Spotable objects.
   open var compositeSpots: [Int : [Int : [Spotable]]] {
     didSet {
       for (_, items) in compositeSpots {
@@ -50,11 +46,11 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
     }
   }
 
-  /// An array of refresh positions to avoid refreshing multiple times when using infinite scrolling
+  /// An array of refresh positions to avoid refreshing multiple times when using infinite scrolling.
   public var refreshPositions = [CGFloat]()
-  /// A bool value to indicate if the Controller is refeshing
+  /// A bool value to indicate if the Controller is refeshing.
   public var refreshing = false
-  /// A convenience method for resolving the first spot
+  /// A convenience method for resolving the first spot.
   public var spot: Spotable? {
     get { return spot(at: 0, Spotable.self) }
   }
@@ -66,10 +62,10 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
   public var source: DispatchSourceFileSystemObject!
   #endif
 
-  /// An optional SpotCache used for view controller caching
+  /// An optional SpotCache used for view controller caching.
   public var stateCache: SpotCache?
 
-  /// A delegate for when an item is tapped within a Spot
+  /// A delegate for when an item is tapped within a Spot.
   weak open var delegate: SpotsDelegate? {
     didSet {
       spots.forEach { $0.delegate = delegate }
@@ -78,7 +74,7 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
   }
 
 #if os(iOS)
-  /// A refresh delegate for handling reloading of a Spot
+  /// A refresh delegate for handling reloading of a Spot.
   weak public var refreshDelegate: RefreshDelegate? {
     didSet {
       refreshControl.isHidden = refreshDelegate == nil
@@ -86,10 +82,10 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
   }
 #endif
 
-  /// A scroll delegate for handling spotDidReachBeginning and spotDidReachEnd
+  /// A scroll delegate for handling spotDidReachBeginning and spotDidReachEnd.
   weak public var scrollDelegate: ScrollDelegate?
 
-  /// A custom scroll view that handles the scrolling for all internal scroll views
+  /// A custom scroll view that handles the scrolling for all internal scroll views.
   lazy open var scrollView: SpotsScrollView = {  [unowned self] in
     let scrollView = SpotsScrollView()
     scrollView.alwaysBounceVertical = true
@@ -100,8 +96,8 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
   }()
 
 #if os(iOS)
-  /// A UIRefresh control
-  /// Note: Only avaiable on iOS
+  /// A UIRefresh control.
+  /// Note: Only avaiable on iOS.
   public lazy var refreshControl: UIRefreshControl = { [unowned self] in
     let refreshControl = UIRefreshControl()
     refreshControl.addTarget(self, action: #selector(refreshSpots(_:)), for: .valueChanged)
@@ -112,9 +108,11 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
 
   // MARK: Initializer
 
-  /**
-   - parameter spots: An array of Spotable objects
-   */
+  /// A required initializer for initializing a controller with Spotable objects
+  ///
+  /// - parameter spots: A collection of Spotable objects that should be setup and be added to the view hierarchy.
+  ///
+  /// - returns: An initalized controller.
   public required init(spots: [Spotable] = []) {
     self.spots = spots
     self.compositeSpots = [:]
@@ -123,34 +121,38 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
     NotificationCenter.default.addObserver(self, selector:#selector(self.deviceDidRotate(_:)), name: NSNotification.Name(rawValue: NotificationKeys.deviceDidRotateNotification.rawValue), object: nil)
   }
 
-  /**
-   - parameter spot: A Spotable object
-   */
+  /// Initialize a new controller with a single spot
+  ///
+  /// - parameter spot: A Spotable object
+  ///
+  /// - returns: An initialized controller containing one object.
   public convenience init(spot: Spotable) {
     self.init(spots: [spot])
   }
 
-  /**
-   - parameter json: A JSON dictionary that gets parsed into UI elements
-   */
+  /// Initialize a new controller using JSON.
+  ///
+  /// - parameter json: A JSON dictionary that gets parsed into UI elements.
+  ///
+  /// - returns: An initialized controller with Spotable objects built from JSON.
   public convenience init(_ json: [String : Any]) {
     self.init(spots: Parser.parse(json))
   }
 
-  /**
-   - parameter cacheKey: A key that will be used to identify the SpotCache
-   */
+  /// Initialize a new controller with a cache key.
+  ///
+  /// - parameter cacheKey: A key that will be used to identify the SpotCache.
+  ///
+  /// - returns: An initialized controller with a cache.
   public convenience init(cacheKey: String) {
     let stateCache = SpotCache(key: cacheKey)
     self.init(spots: Parser.parse(stateCache.load()))
     self.stateCache = stateCache
   }
 
-  /**
-   Init with coder
-
-   - parameter aDecoder: An NSCoder
-   */
+  /// Init with coder.
+  ///
+  /// - parameter aDecoder: An NSCoder
   public required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -164,27 +166,30 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
     #endif
   }
 
-  /***
-   A generic look up method for resolving spots based on index
-   - parameter index: The index of the spot that you are trying to resolve
-   - parameter type: The generic type for the spot you are trying to resolve
-
-   - returns: An optional Spotable object
-   */
+  ///  A generic look up method for resolving spots based on index
+  ///
+  /// - parameter index: The index of the spot that you are trying to resolve.
+  /// - parameter type: The generic type for the spot you are trying to resolve.
+  ///
+  /// - returns: An optional Spotable object of inferred type.
   open func spot<T>(at index: Int = 0, _ type: T.Type) -> T? {
     return spots.filter({ $0.index == index }).first as? T
   }
 
+  /// A look up method for resolving a spot at index as a Spotable object.
+  ///
+  /// - parameter index: The index of the spot that you are trying to resolve.
+  ///
+  /// - returns: An optional Spotable object.
   open func spot(at index: Int = 0) -> Spotable? {
     return spots.filter({ $0.index == index }).first
   }
 
-  /**
-   A generic look up method for resolving spots using a closure
-
-   - parameter closure: A closure to perform actions on a spotable object
-   - returns: An optional Spotable object
-   */
+  /// A generic look up method for resolving spots using a closure
+  ///
+  /// - parameter closure: A closure to perform actions on a spotable object
+  ///
+  /// - returns: An optional Spotable object
   open func resolve(spot closure: (_ index: Int, _ spot: Spotable) -> Bool) -> Spotable? {
     for (index, spot) in spots.enumerated()
       where closure(index, spot) {
@@ -195,15 +200,13 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
 
   // MARK: - Notifications
 
-  /**
-   Handle rotation for views that are not on screen
-
-   - parameter notification: A notification containing the new size
-   */
+  /// Handle rotation for views that are not on screen.
+  ///
+  /// - parameter notification: A notification containing the new size.
   func deviceDidRotate(_ notification: Notification) {
     if let userInfo = (notification as NSNotification).userInfo as? [String : Any],
       let rotationSize = userInfo["size"] as? RotationSize, view.window == nil {
-      configureView(withSize: rotationSize.size)
+      configure(withSize: rotationSize.size)
     }
   }
 
@@ -220,11 +223,9 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
     Controller.configure?(scrollView)
   }
 
-  /**
-   Notifies the spot controller that its view is about to be added to a view hierarchy.
-
-   - parameter animated: If true, the view is being added to the window using an animation.
-   */
+  /// Notifies the spot controller that its view is about to be added to a view hierarchy.
+  ///
+  /// - parameter animated: If true, the view is being added to the window using an animation.
   open override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
 
@@ -240,7 +241,10 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
 #endif
   }
 
-  func configureView(withSize size: CGSize) {
+  /// Configure scrollview and composite views with new size.
+  ///
+  /// - parameter size: The size that should be used to configure the views.
+  func configure(withSize size: CGSize) {
     scrollView.frame.size = size
     scrollView.contentView.frame.size = size
     spots.enumerated().forEach { index, spot in
@@ -253,12 +257,10 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
     }
   }
 
-  /**
-   Notifies the container that the size of tis view is about to change.
-
-   - parameter size:        The new size for the container’s view.
-   - parameter coordinator: The transition coordinator object managing the size change. You can use this object to animate your changes or get information about the transition that is in progress.
-   */
+  /// Notifies the container that the size of tis view is about to change.
+  ///
+  /// - parameter size:        The new size for the container’s view.
+  /// - parameter coordinator: The transition coordinator object managing the size change. You can use this object to animate your changes or get information about the transition that is in progress.
   open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
     super.viewWillTransition(to: size, with: coordinator)
 
@@ -267,18 +269,19 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
     #endif
 
     coordinator.animate(alongsideTransition: { (UIViewControllerTransitionCoordinatorContext) in
-      self.configureView(withSize: size)
+      self.configure(withSize: size)
       }) { (UIViewControllerTransitionCoordinatorContext) in
-        self.configureView(withSize: size)
+        self.configure(withSize: size)
         NotificationCenter.default.post(name: Notification.Name(rawValue: NotificationKeys.deviceDidRotateNotification.rawValue),
                                                                   object: nil,
                                                                   userInfo: ["size" : RotationSize(size: size)])
     }
   }
 
-  /**
-   - parameter animated: An optional animation closure that runs when a spot is being rendered
-  */
+
+  /// Set up Spotable objects.
+  ///
+  /// - parameter animated: An optional animation closure that is invoked when setting up the spot.
   open func setupSpots(_ animated: ((_ view: UIView) -> Void)? = nil) {
     var yOffset: CGFloat = 0.0
     compositeSpots = [:]
@@ -291,6 +294,10 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
     }
   }
 
+  /// Set up Spot at index
+  ///
+  /// - parameter index: The index of the Spotable object
+  /// - parameter spot:  The spotable object that is going to be setup
   open func setupSpot(at index: Int, spot: Spotable) {
     spot.render().bounds.size.width = view.bounds.width
     spot.render().frame.origin.x = 0.0
@@ -304,11 +311,9 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
   }
 
   #if os(iOS)
-  /**
-   Refresh action for UIRefreshControl
-
-   - parameter refreshControl:
-   */
+  /// Refresh action for UIRefreshControl
+  ///
+  /// - parameter refreshControl: The refresh control used to refresh the controller.
   open func refreshSpots(_ refreshControl: UIRefreshControl) {
     Dispatch.mainQueue { [weak self] in
       guard let weakSelf = self else { return }
@@ -326,18 +331,20 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
 /// An extension with private methods on Controller
 extension Controller {
 
-  /**
-   - parameter indexPath: The index path of the component you want to lookup
-   - returns: A Component object at index path
-   **/
+  /// Resolve component at index path.
+  ///
+  /// - parameter indexPath: The index path of the component belonging to the Spotable object at that index.
+  ///
+  /// - returns: A Component object at index path.
   fileprivate func component(at indexPath: IndexPath) -> Component {
     return spot(at: indexPath).component
   }
 
-  /**
-   - parameter indexPath: The index path of the spot you want to lookup
-   - returns: A Spotable object at index path
-   **/
+  /// Resolve spot at index path.
+  ///
+  /// - parameter indexPath: The index path of the spotable object.
+  ///
+  /// - returns: A Spotable object.
   fileprivate func spot(at indexPath: IndexPath) -> Spotable {
     return spots[indexPath.item]
   }

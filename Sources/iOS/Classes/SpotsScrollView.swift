@@ -25,40 +25,34 @@ open class SpotsScrollView: UIScrollView {
   /// A container view that works as a proxy layer for scroll view
   lazy open var contentView: SpotsContentView = SpotsContentView()
 
-  /**
-   A deinitiazlier that removes all subviews from contentView
-   */
+
+  /// A deinitiazlier that removes all subviews from contentView
   deinit {
     contentView.subviews.forEach { $0.removeFromSuperview() }
   }
 
-  /**
-   Initializes and returns a newly allocated view object with the specified frame rectangle.
-   An initialized view object.
-
-   - parameter frame: The frame rectangle for the view, measured in points. The origin of the frame is relative to the superview in which you plan to add it.
-   This method uses the frame rectangle to set the center and bounds properties accordingly.
-   */
+  /// Initializes and returns a newly allocated view object with the specified frame rectangle.
+  ///
+  /// - parameter frame: The frame rectangle for the view, measured in points. The origin of the frame is relative to the superview in which you plan to add it.
+  ///  This method uses the frame rectangle to set the center and bounds properties accordingly.
+  ///
+  /// - returns: An initialized spots scroll view
   override init(frame: CGRect) {
     super.init(frame: frame)
     contentView.autoresizingMask = self.autoresizingMask
     addSubview(contentView)
   }
 
-  /**
-   Returns an object initialized from data in a given unarchiver.
-
-   - parameter coder: An unarchiver object.
-   */
+  /// Returns an object initialized from data in a given unarchiver.
+  ///
+  /// - parameter coder: An unarchiver object.
   required public init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 
-  /**
-   A method to setup KVO observers on views added to contentView
-
-   - parameter subview: The view to add to the view as a subview.
-   */
+  /// A method to setup KVO observers on views added to contentView
+  ///
+  /// - parameter subview: - parameter subview: The view to add to the view as a subview..
   func didAddSubviewToContainer(_ subview: UIView) {
     subview.autoresizingMask = UIViewAutoresizing()
 
@@ -92,11 +86,9 @@ open class SpotsScrollView: UIScrollView {
     layoutSubviews()
   }
 
-  /**
-   Tells the view that a subview is about to be removed.
-
-   - parameter subview: The subview that will be removed.
-   */
+  /// Tells the view that a subview is about to be removed.
+  ///
+  /// - parameter subview: - parameter subview: The subview that will be removed.
   open override func willRemoveSubview(_ subview: UIView) {
     if subview is UIScrollView && subview.superview == contentView {
       subview.removeObserver(self, forKeyPath: #keyPath(contentSize), context: subviewContext)
@@ -114,14 +106,12 @@ open class SpotsScrollView: UIScrollView {
     layoutSubviews()
   }
 
-  /**
-   This message is sent to the receiver when the value at the specified key path relative to the given object has changed.
-
-   - parameter keyPath: The key path, relative to object, to the value that has changed.
-   - parameter object:  The source object of the key path keyPath.
-   - parameter change:  A dictionary that describes the changes that have been made to the value of the property at the key path keyPath relative to object.
-   - parameter context: The value that was provided when the receiver was registered to receive key-value observation notifications.
-   */
+  /// This message is sent to the receiver when the value at the specified key path relative to the given object has changed.
+  ///
+  /// - parameter keyPath: The key path, relative to object, to the value that has changed.
+  /// - parameter object:  The source object of the key path keyPath.
+  /// - parameter change:  A dictionary that describes the changes that have been made to the value of the property at the key path keyPath relative to object.
+  /// - parameter context: The value that was provided when the receiver was registered to receive key-value observation notifications.
   open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
     if let change = change, context == subviewContext {
       if let scrollView = object as? UIScrollView {
@@ -156,10 +146,8 @@ open class SpotsScrollView: UIScrollView {
     }
   }
 
-  /**
-   A custom implementation of layoutSubviews that handles the scrolling of all the underlaying views within the container.
-   It does this by iterating over subviewsInLayoutOrder and sets the current offset for each individual view within the container.
-   */
+  /// A custom implementation of layoutSubviews that handles the scrolling of all the underlaying views within the container.
+  /// It does this by iterating over subviewsInLayoutOrder and sets the current offset for each individual view within the container.
   open override func layoutSubviews() {
     super.layoutSubviews()
 

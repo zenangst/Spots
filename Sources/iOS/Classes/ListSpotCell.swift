@@ -9,24 +9,26 @@ open class ListSpotCell: UITableViewCell, SpotConfigurable {
   /// An optional reference to the current item
   open var item: Item?
 
+  /// Initializes a table cell with a style and a reuse identifier and returns it to the caller.
+  ///
+  /// - parameter style:           A constant indicating a cell style. See UITableViewCellStyle for descriptions of these constants.
+  /// - parameter reuseIdentifier: A string used to identify the cell object if it is to be reused for drawing multiple rows of a table view.
+  ///
+  /// - returns: An initialized UITableViewCell object or nil if the object could not be created.
   public override init(style: UITableViewCellStyle, reuseIdentifier: String!) {
     super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
   }
 
-  /**
-   Returns an object initialized from data in a given unarchiver.
-
-   - parameter coder: An unarchiver object.
-   */
+  /// Init with coder
+  ///
+  /// - parameter aDecoder: An NSCoder
   public required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 
-  /**
-   A configure method that connects data with the view
-
-   - parameter item: An Item struct
-   */
+  /// Configure cell with Item struct
+  ///
+  /// - parameter item: The Item struct that is used for configuring the view.
   open func configure(_ item: inout Item) {
     if let action = item.action, !action.isEmpty {
       accessoryType = .disclosureIndicator

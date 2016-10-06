@@ -80,11 +80,11 @@ open class GridSpot: NSObject, Gridable {
     return collectionView
   }()
 
-  /**
-   A required initializer to instantiate a GridSpot with a component
-
-   - parameter component: A component
-   */
+  /// A required initializer to instantiate a GridSpot with a component.
+  ///
+  /// - parameter component: A component.
+  ///
+  /// - returns: An initialized grid spot with component.
   public required init(component: Component) {
     self.component = component
     super.init()
@@ -99,21 +99,21 @@ open class GridSpot: NSObject, Gridable {
     }
   }
 
-  /**
-   A convenience init for initializing a Gridspot with a title and a kind
-
-   - parameter title: A string that is used as a title for the GridSpot
-   - parameter kind:  An identifier to determine which kind should be set on the Component
-   */
+  /// A convenience init for initializing a Gridspot with a title and a kind.
+  ///
+  ///  - parameter title: A string that is used as a title for the GridSpot.
+  ///  - parameter kind:  An identifier to determine which kind should be set on the Component.
+  ///
+  /// - returns: An initialized grid spot with computed component using title and kind.
   public convenience init(title: String = "", kind: String? = nil) {
     self.init(component: Component(title: title, kind: kind ?? "grid"))
   }
 
-  /**
-   Instantiate a GridSpot with a cache key
-
-   - parameter cacheKey: A unique cache key for the Spotable object
-   */
+  /// Instantiate a GridSpot with a cache key.
+  ///
+  /// - parameter cacheKey: A unique cache key for the Spotable object
+  ///
+  /// - returns: An initialized grid spot.
   public convenience init(cacheKey: String) {
     let stateCache = SpotCache(key: cacheKey)
 
@@ -123,17 +123,17 @@ open class GridSpot: NSObject, Gridable {
     registerAndPrepare()
   }
 
-  /**
-   A convenience initializer for GridSpot with base configuration
-
-   - parameter component:   A Component
-   - parameter top:         Top section inset
-   - parameter left:        Left section inset
-   - parameter bottom:      Bottom section inset
-   - parameter right:       Right section inset
-   - parameter itemSpacing: The item spacing used in the flow layout
-   - parameter lineSpacing: The line spacing used in the flow layout
-   */
+  /// A convenience initializer for GridSpot with base configuration.
+  ///
+  /// - parameter component:   A Component.
+  /// - parameter top:         Top section inset.
+  /// - parameter left:        Left section inset.
+  /// - parameter bottom:      Bottom section inset.
+  /// - parameter right:       Right section inset.
+  /// - parameter itemSpacing: The item spacing used in the flow layout.
+  /// - parameter lineSpacing: The line spacing used in the flow layout.
+  ///
+  /// - returns: An initialized grid spot with configured layout.
   public convenience init(_ component: Component, top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0, itemSpacing: CGFloat = 0, lineSpacing: CGFloat = 0) {
     self.init(component: component)
 
@@ -142,9 +142,7 @@ open class GridSpot: NSObject, Gridable {
     layout.minimumLineSpacing = lineSpacing
   }
 
-  /**
-   Configure section insets and layout spacing for the UICollectionViewFlow using component meta data
-   */
+  /// Configure section insets and layout spacing for the UICollectionViewFlow using component meta data
   func configureLayout() {
     layout.sectionInset = UIEdgeInsets(
       top: CGFloat(component.meta(GridableMeta.Key.sectionInsetTop, Default.sectionInsetTop)),

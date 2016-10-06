@@ -38,10 +38,16 @@ class CarouselSpotCell: UICollectionViewCell, SpotConfigurable {
     [imageView, label].forEach { contentView.addSubview($0) }
   }
 
+  /// Init with coder
+  ///
+  /// - parameter aDecoder: An NSCoder
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 
+  /// Configure cell with Item struct
+  ///
+  /// - parameter item: The Item struct that is used for configuring the view.
   func configure(_ item: inout Item) {
     imageView.image = UIImage(named: item.image)
     imageView.frame = contentView.frame

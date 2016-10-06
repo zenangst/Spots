@@ -4,9 +4,7 @@ import Brick
 /// A Spotable object that uses UITableView to render its items
 open class ListSpot: NSObject, Listable {
 
-  /**
-   *  Keys for meta data lookup
-   */
+  /// Keys for meta data lookup
   public struct Key {
     /// The meta key for setting the header height
     public static let headerHeight = "headerHeight"
@@ -54,11 +52,11 @@ open class ListSpot: NSObject, Listable {
 
   // MARK: - Initializers
 
-  /**
-   A required initializer to instantiate a ListSpot with a component
-
-   - parameter component: A component
-   */
+  /// A required initializer to instantiate a ListSpot with a component.
+  ///
+  /// - parameter component: A component.
+  ///
+  /// - returns: An initialized list spot with component.
   public required init(component: Component) {
     self.component = component
     super.init()
@@ -73,14 +71,14 @@ open class ListSpot: NSObject, Listable {
     setupTableView()
   }
 
-  /**
-   A convenience init for initializing a ListSpot with a custom tableview, title and a kind
-
-   - parameter tableView: A UITableView
-   - parameter title:     A string that is used as a title for the ListSpot
-   - parameter kind:      An identifier to determine which kind should be set on the Component
-   - parameter header:    An identifier to determine which header should be used
-   */
+  /// A convenience init for initializing a ListSpot with a custom tableview, title and a kind.
+  ///
+  /// - parameter tableView: A UITableView.
+  /// - parameter title:     A string that is used as a title for the ListSpot.
+  /// - parameter kind:      An identifier to determine which kind should be set on the Component.
+  /// - parameter kind:      An identifier to determine which kind should be set on the Component.
+  ///
+  /// - returns: An initialized list spot with component.
   public convenience init(tableView: UITableView? = nil, title: String = "",
                           kind: String = "list", header: String = "") {
     self.init(component: Component(title: title, header: header, kind: kind))
@@ -93,12 +91,11 @@ open class ListSpot: NSObject, Listable {
     registerAndPrepare()
   }
 
-  /**
-   Instantiate a ListSpot with a cache key
-
-   - parameter cacheKey: A unique cache key for the Spotable object
-   - parameter tableView: A UITableView
-   */
+  /// Instantiate a ListSpot with a cache key.
+  ///
+  /// - parameter cacheKey: A unique cache key for the Spotable object.
+  ///
+  /// - returns: An initialized list spot.
   public convenience init(cacheKey: String, tableView: UITableView? = nil) {
     let stateCache = SpotCache(key: cacheKey)
 
@@ -115,11 +112,9 @@ open class ListSpot: NSObject, Listable {
 
   // MARK: - Setup
 
-  /**
-   Setup Spotable component with base size
-
-   - parameter size: The size of the superview
-   */
+  /// Setup Spotable component with base size.
+  ///
+  /// - parameter size: The size of the superview.
   open func setup(_ size: CGSize) {
     registerAndPrepare()
     let height = component.items.reduce(component.meta(Key.headerHeight, 0.0), { $0 + $1.size.height })
@@ -132,9 +127,7 @@ open class ListSpot: NSObject, Listable {
     ListSpot.configure?(tableView)
   }
 
-  /**
-   Configure and setup the data source, delegate and additional configuration options for the table view
-   */
+  /// Configure and setup the data source, delegate and additional configuration options for the table view.
   func setupTableView() {
     tableView.dataSource = self.listAdapter
     tableView.delegate = self.listAdapter
@@ -151,9 +144,7 @@ open class ListSpot: NSObject, Listable {
 
   // MARK: - Spotable
 
-  /**
-   Register all identifier to UITableView
-   */
+  /// Register all identifier to UITableView.
   open func register() {
     for (identifier, item) in type(of: self).views.storage {
       switch item {
@@ -174,21 +165,17 @@ open class ListSpot: NSObject, Listable {
     }
   }
 
-  /**
-   Register header view with identifier
-
-   - parameter header:     The view type that you want to register
-   - parameter identifier: A string identifier for the header that you want to register
-   */
+  /// Register header view with identifier
+  ///
+  /// - parameter header:     The view type that you want to register.
+  /// - parameter identifier: A string identifier for the header that you want to register.
   open static func register(header: View.Type, identifier: StringConvertible) {
     self.headers.storage[identifier.string] = Registry.Item.classType(header)
   }
 
-  /**
-   Register default header
-
-   - parameter header: The view type that you want to register as default header
-   */
+  /// Register default header
+  ///
+  /// parameter header: The view type that you want to register as default header.
   open static func register(defaultHeader header: View.Type) {
     self.headers.storage[self.views.defaultIdentifier] = Registry.Item.classType(header)
   }

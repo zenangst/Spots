@@ -51,6 +51,7 @@ open class GridableLayout: UICollectionViewFlowLayout {
     }
   }
 
+  /// Invalidates the current layout and triggers a layout update.
   open override func invalidateLayout() {
     super.invalidateLayout()
 
@@ -61,6 +62,12 @@ open class GridableLayout: UICollectionViewFlowLayout {
     }
   }
 
+
+  /// Returns the layout attributes for all of the cells and views in the specified rectangle.
+  ///
+  /// - parameter rect: The rectangle (specified in the collection view’s coordinate system) containing the target views.
+  ///
+  /// - returns: An array of layout attribute objects containing the layout information for the enclosed items and views. The default implementation of this method returns nil.
   open override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
     guard let collectionView = collectionView,
       let adapter = collectionView.dataSource as? CollectionAdapter
@@ -109,6 +116,12 @@ open class GridableLayout: UICollectionViewFlowLayout {
     return attributes
   }
 
+
+  /// Asks the layout object if the new bounds require a layout update.
+  ///
+  /// - parameter newBounds: The new bounds of the collection view.
+  ///
+  /// - returns: Always returns true
   open override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
     return true
   }
