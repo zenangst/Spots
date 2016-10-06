@@ -311,7 +311,7 @@ public extension Spotable {
       let view = resolvedView else { return }
 
     #if !os(OSX)
-      if let composite = view as? SpotComposable {
+      if let composite = view as? Composable {
         let spots = composite.parse(viewModel)
 
         spots.forEach { $0.registerAndPrepare() }

@@ -216,7 +216,7 @@ public extension CollectionAdapter {
     let newItem = spot.items[index]
     let indexPath = IndexPath(item: index, section: 0)
 
-    if let composite = spot.collectionView.cellForItem(at: indexPath) as? SpotComposable {
+    if let composite = spot.collectionView.cellForItem(at: indexPath) as? Composable {
       if let spots = spot.spotsCompositeDelegate?.resolve(spot.index, itemIndex: (indexPath as NSIndexPath).item) {
         spot.collectionView.performBatchUpdates({
           composite.configure(&self.spot.component.items[indexPath.item], spots: spots)

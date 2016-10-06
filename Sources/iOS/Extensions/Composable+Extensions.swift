@@ -1,11 +1,11 @@
 import UIKit
 import Brick
 
-// MARK: - An extension on SpotComposable views
-public extension SpotComposable where Self : View {
+// MARK: - An extension on Composable views
+public extension Composable where Self : View {
 
   /**
-   A configuration method to configure the SpotComposable view with a collection of Spotable objects
+   A configuration method to configure the Composable view with a collection of Spotable objects
 
    - parameter item:  The item that is currently being configured in the list
    - parameter spots: A collection of Spotable objects created from the children of the item
