@@ -50,7 +50,7 @@ extension FeaturedController : SpotsDelegate {
   }
 }
 
-extension FeaturedController : SpotsRefreshDelegate {
+extension FeaturedController : RefreshDelegate {
 
   func spotsDidReload(_ refreshControl: UIRefreshControl, completion: (() -> Void)?) {
     loadData(completion)

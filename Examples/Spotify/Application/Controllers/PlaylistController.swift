@@ -122,7 +122,7 @@ class PlaylistController: Controller {
   }
 }
 
-extension PlaylistController: SpotsRefreshDelegate {
+extension PlaylistController: RefreshDelegate {
 
   func spotsDidReload(_ refreshControl: UIRefreshControl, completion: (() -> Void)?) {
     refreshData {

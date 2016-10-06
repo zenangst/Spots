@@ -46,7 +46,7 @@ open class FeedController: Controller, SpotsDelegate {
   }
 }
 
-extension FeedController: SpotsRefreshDelegate {
+extension FeedController: RefreshDelegate {
 
   public func spotsDidReload(_ refreshControl: UIRefreshControl, completion: (() -> Void)?) {
     delay(1.0) {

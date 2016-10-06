@@ -79,7 +79,7 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
 
 #if os(iOS)
   /// A refresh delegate for handling reloading of a Spot
-  weak open var refreshDelegate: SpotsRefreshDelegate? {
+  weak open var refreshDelegate: RefreshDelegate? {
     didSet {
       refreshControl.isHidden = refreshDelegate == nil
     }

@@ -33,7 +33,7 @@ public protocol SpotsProtocol: class {
   var dictionary: [String : Any] { get }
 
   #if os(iOS)
-  var refreshDelegate: SpotsRefreshDelegate? { get set }
+  var refreshDelegate: RefreshDelegate? { get set }
   #endif
 
   #if DEVMODE
