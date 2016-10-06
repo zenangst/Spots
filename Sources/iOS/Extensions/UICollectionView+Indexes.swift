@@ -2,12 +2,11 @@ import UIKit
 
 public extension UICollectionView {
 
-  /**
-   A convenience method for performing inserts on a UICollectionView
-   - parameter indexes: A collection integers
-   - parameter section: The section you want to update
-   - parameter completion: A completion block for when the updates are done
-  **/
+  /// A convenience method for performing inserts on a UICollectionView
+  ///
+  ///  - parameter indexes: A collection integers
+  ///  - parameter section: The section you want to update
+  ///  - parameter completion: A completion block for when the updates are done
   func insert(_ indexes: [Int], section: Int = 0, completion: (() -> Void)? = nil) {
     let indexPaths = indexes.map { IndexPath(item: $0, section: section) }
 
@@ -19,12 +18,11 @@ public extension UICollectionView {
     }
   }
 
-  /**
-   A convenience method for performing updates on a UICollectionView
-   - parameter indexes: A collection integers
-   - parameter section: The section you want to update
-   - parameter completion: A completion block for when the updates are done
-   **/
+  /// A convenience method for performing updates on a UICollectionView
+  
+  ///  - parameter indexes: A collection integers
+  ///  - parameter section: The section you want to update
+  ///  - parameter completion: A completion block for when the updates are done
   func reload(_ indexes: [Int], section: Int = 0, completion: (() -> Void)? = nil) {
     let indexPaths = indexes.map { IndexPath(item: $0, section: section) }
 
@@ -34,12 +32,11 @@ public extension UICollectionView {
     }
   }
 
-  /**
-   A convenience method for performing deletions on a UICollectionView
-   - parameter indexes: A collection integers
-   - parameter section: The section you want to update
-   - parameter completion: A completion block for when the updates are done
-   **/
+  /// A convenience method for performing deletions on a UICollectionView
+  ///
+  ///  - parameter indexes: A collection integers
+  ///  - parameter section: The section you want to update
+  ///  - parameter completion: A completion block for when the updates are done
   func delete(_ indexes: [Int], section: Int = 0, completion: (() -> Void)? = nil) {
     let indexPaths = indexes.map { IndexPath(item: $0, section: section) }
     performBatchUpdates({ [weak self] in
@@ -50,15 +47,14 @@ public extension UICollectionView {
     }
   }
 
-  /**
-   Process a collection of changes
 
-   - parameter changes:          A tuple with insertions, reloads and delctions
-   - parameter animation:        The animation that should be used to perform the updates
-   - parameter section:          The section that will be updates
-   - parameter updateDataSource: A closure that is used to update the data source before performing the updates on the UI
-   - parameter completion:       A completion closure that will run when both data source and UI is updated
-   */
+  /// Process a collection of changes
+  ///
+  /// - parameter changes:          A tuple with insertions, reloads and delctions
+  /// - parameter animation:        The animation that should be used to perform the updates
+  /// - parameter section:          The section that will be updates
+  ///  - parameter updateDataSource: A closure that is used to update the data source before performing the updates on the UI
+  ///  - parameter completion:       A completion closure that will run when both data source and UI is updated
   func process(_ changes: (insertions: [Int], reloads: [Int], deletions: [Int]),
                withAnimation animation: UITableViewRowAnimation = .automatic,
                              section: Int = 0,
@@ -86,11 +82,9 @@ public extension UICollectionView {
     completion?()
   }
 
-  /**
-   A convenience method for reloading a section
-   - parameter index: The section you want to update
-   - parameter completion: A completion block for when the updates are done
-   **/
+  ///  A convenience method for reloading a section
+  ///  - parameter index: The section you want to update
+  ///  - parameter completion: A completion block for when the updates are done
   func reloadSection(_ index: Int = 0, completion: (() -> Void)? = nil) {
     performBatchUpdates({ [weak self] in
       guard let weakSelf = self else { return }

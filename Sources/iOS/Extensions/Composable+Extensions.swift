@@ -4,12 +4,10 @@ import Brick
 // MARK: - An extension on Composable views
 public extension Composable where Self : View {
 
-  /**
-   A configuration method to configure the Composable view with a collection of Spotable objects
-
-   - parameter item:  The item that is currently being configured in the list
-   - parameter spots: A collection of Spotable objects created from the children of the item
-   */
+  /// A configuration method to configure the Composable view with a collection of Spotable objects
+  ///
+  ///  - parameter item:  The item that is currently being configured in the list
+  ///  - parameter spots: A collection of Spotable objects created from the children of the item
   func configure(_ item: inout Item, spots: [Spotable]?) {
     guard let spots = spots else { return }
 
@@ -33,13 +31,10 @@ public extension Composable where Self : View {
     item.size.height = height
   }
 
-  /**
-   Parse view model children into Spotable objects
-
-   - parameter item: A view model with children
-
-   - returns: A collection of Spotable objects
-   */
+  /// Parse view model children into Spotable objects
+  /// - parameter item: A view model with children
+  ///
+  ///  - returns: A collection of Spotable objects
   public func parse(_ item: Item) -> [Spotable] {
     let spots = Parser.parse(item.children)
     return spots

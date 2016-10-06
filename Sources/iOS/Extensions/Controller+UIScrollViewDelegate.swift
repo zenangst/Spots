@@ -5,11 +5,10 @@ import UIKit
  */
 extension Controller {
 
-  /**
-   Tells the delegate when the user scrolls the content view within the receiver.
+  /// Tells the delegate when the user scrolls the content view within the receiver.
+  ///
+  /// - parameter scrollView: The scroll-view object in which the scrolling occurred.
 
-   - parameter scrollView: The scroll-view object in which the scrolling occurred.
-   */
   open func scrollViewDidScroll(_ scrollView: UIScrollView) {
     let offset = scrollView.contentOffset
     let size = scrollView.contentSize

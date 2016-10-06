@@ -3,16 +3,14 @@ import Brick
 
 extension Gridable {
 
-  /**
-   Initializes a Gridable container and configures the Spot with the provided component and optional layout properties.
-
-   - parameter component: A Component model
-   - parameter top: The top UIEdgeInset for the layout
-   - parameter left: The left UIEdgeInset for the layout
-   - parameter bottom: The bottom UIEdgeInset for the layout
-   - parameter right: The right UIEdgeInset for the layout
-   - parameter itemSpacing: The minimumInteritemSpacing for the layout
-   */
+  /// Initializes a Gridable container and configures the Spot with the provided component and optional layout properties.
+  ///
+  /// - parameter component: A Component model.
+  /// - parameter top: The top UIEdgeInset for the layout.
+  /// - parameter left: The left UIEdgeInset for the layout.
+  /// - parameter bottom: The bottom UIEdgeInset for the layout.
+  /// - parameter right: The right UIEdgeInset for the layout.
+  /// - parameter itemSpacing: The minimumInteritemSpacing for the layout.
   public init(_ component: Component, top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0, itemSpacing: CGFloat = 0) {
     self.init(component: component)
 
@@ -20,12 +18,12 @@ extension Gridable {
     layout.minimumInteritemSpacing = itemSpacing
   }
 
-  /**
-   Asks the data source for the size of an item in a particular location.
 
-   - parameter indexPath: The index path of the
-   - returns: Size of the object at index path as CGSize
-   */
+  /// Asks the data source for the size of an item in a particular location.
+  ///
+  /// - parameter indexPath: The index path of the
+  ///
+  /// - returns: Size of the object at index path as CGSize
   public func sizeForItem(at indexPath: IndexPath) -> CGSize {
     if component.span > 0 {
       component.items[indexPath.item].size.width = collectionView.frame.width / CGFloat(component.span) - layout.minimumInteritemSpacing
@@ -43,9 +41,9 @@ extension Gridable {
     )
   }
 
-  /**
-   - parameter size: A CGSize to set the width and height of the collection view
-   */
+  /// Layout with size
+  ///
+  /// - parameter size: A CGSize to set the width and height of the collection view
   public func layout(_ size: CGSize) {
     prepareItems()
     layout.prepare()
@@ -56,9 +54,7 @@ extension Gridable {
 
   // MARK: - Spotable
 
-  /**
-   Register all views in Registry on UICollectionView
-   */
+  /// Register all views in Registry on UICollectionView
   public func register() {
     for (identifier, item) in type(of: self).views.storage {
       switch item {
@@ -83,31 +79,25 @@ extension Gridable {
     }
   }
 
-  /**
-   Add header view class to Registry
-
-   - parameter header:     The view type that you want to register
-   - parameter identifier: The identifier for the header
-   */
+  /// Add header view class to Registry
+  ///
+  /// - parameter header:     The view type that you want to register
+  /// - parameter identifier: The identifier for the header
   public static func register(header: View.Type, identifier: StringConvertible) {
     self.headers.storage[identifier.string] = Registry.Item.classType(header)
   }
 
-  /**
-   Add header nib-based view class to Registry
-
-   - parameter header:     The nib file that is used by the view
-   - parameter identifier: The identifier for the nib-based header
-   */
+  /// Add header nib-based view class to Registry
+  ///
+  /// - parameter header:     The nib file that is used by the view
+  /// - parameter identifier: The identifier for the nib-based header
   public static func register(header nib: Nib, identifier: StringConvertible) {
     self.headers.storage[identifier.string] = Registry.Item.nib(nib)
   }
 
-  /**
-   Register a default header for the Gridable component
-
-   - parameter defaultHeader: The default header class that should be used by the component
-   */
+  ///Register a default header for the Gridable component
+  ///
+  /// - parameter defaultHeader: The default header class that should be used by the component
   public static func register(defaultHeader header: View.Type) {
     self.headers.storage[self.views.defaultIdentifier] = Registry.Item.classType(header)
   }
