@@ -39,7 +39,7 @@ open class FeedDetailItemCell: UITableViewCell, SpotConfigurable {
 
   open func configure(_ item: inout Item) {
     if !item.image.isEmpty {
-      featuredImage.setImage(NSURL(string: item.image) as URL?)
+      featuredImage.setImage(URL(string: item.image))
       featuredImage.height = 300
     } else {
       featuredImage.height = 0
