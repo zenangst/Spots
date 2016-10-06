@@ -36,7 +36,7 @@ open class CarouselSpot: NSObject, Gridable {
   open static var defaultView: View.Type = NSView.self
   open static var defaultKind: StringConvertible = Component.Kind.Carousel.string
 
-  open weak var spotsDelegate: SpotsDelegate?
+  open weak var delegate: SpotsDelegate?
 
   open var cachedViews = [String : SpotConfigurable]()
   open var component: Component

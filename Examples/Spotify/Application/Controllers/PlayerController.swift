@@ -105,7 +105,7 @@ class PlayerController: Controller {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    spotsDelegate = self
+    delegate = self
   }
 
   func updatePlayer(_ userInfo: [String : String]) {

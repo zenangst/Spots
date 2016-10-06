@@ -58,7 +58,7 @@ class DetailController: Controller, SpotsDelegate, SpotsScrollDelegate {
       reloadSpots(spots: Parser.parse(spots)) {
         self.process(self.fragments)
         self.build(blueprint)
-        self.spotsDelegate = self
+        self.delegate = self
         self.cache()
       }
     }

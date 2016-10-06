@@ -8,7 +8,7 @@ class AuthController: Controller, SpotsDelegate {
   required init(spots: [Spotable]) {
     super.init(spots: spots)
 
-    self.spotsDelegate = self
+    self.delegate = self
   }
 
   required init?(coder aDecoder: NSCoder) {

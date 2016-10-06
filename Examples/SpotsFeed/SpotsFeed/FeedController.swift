@@ -8,7 +8,7 @@ open class FeedController: Controller, SpotsDelegate {
   open static let faker = Faker()
 
   open override func viewDidLoad() {
-    self.spotsDelegate = self
+    self.delegate = self
     self.spotsScrollDelegate = self
     self.spotsRefreshDelegate = self
     super.viewDidLoad()

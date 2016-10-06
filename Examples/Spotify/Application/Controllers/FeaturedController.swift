@@ -11,7 +11,7 @@ class FeaturedController: Controller {
     let featuredPlaylists = GridSpot(component: Component(title: "Featured playlists", span: 3, items: [Item(title: "Loading...")]))
 
     self.init(spot: featuredPlaylists)
-    self.spotsDelegate = self
+    self.delegate = self
     self.spotsRefreshDelegate = self
     self.title = title
   }

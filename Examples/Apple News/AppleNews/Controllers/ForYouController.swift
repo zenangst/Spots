@@ -132,7 +132,7 @@ class ForYouController: Controller, SpotsDelegate {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    spotsDelegate = self
+    delegate = self
     spotsScrollDelegate = self
 
     dispatch(queue: .interactive) { [weak self] in

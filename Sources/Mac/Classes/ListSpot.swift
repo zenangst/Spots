@@ -35,7 +35,7 @@ open class ListSpot: NSObject, Listable {
   open static var defaultKind: StringConvertible = Component.Kind.List.string
 
   open weak var spotsCompositeDelegate: CompositeDelegate?
-  open weak var spotsDelegate: SpotsDelegate?
+  open weak var delegate: SpotsDelegate?
 
   open var cachedViews = [String : SpotConfigurable]()
   open var component: Component
@@ -125,12 +125,12 @@ open class ListSpot: NSObject, Listable {
 
   open func doubleAction(_ sender: Any?) {
     guard let viewModel = item(at: tableView.clickedRow), component.meta(Key.doubleAction, type: Bool.self) == true else { return }
-    spotsDelegate?.spotDidSelectItem(self, item: viewModel)
+    delegate?.spotDidSelectItem(self, item: viewModel)
   }
 
   open func action(_ sender: Any?) {
     guard let viewModel = item(at: tableView.clickedRow), component.meta(Key.doubleAction, false) == false else { return }
-    spotsDelegate?.spotDidSelectItem(self, item: viewModel)
+    delegate?.spotDidSelectItem(self, item: viewModel)
   }
 
   open func render() -> ScrollView {

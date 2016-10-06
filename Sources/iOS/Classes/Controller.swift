@@ -34,8 +34,8 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
   /// A collection of Spotable objects
   open var spots: [Spotable] {
     didSet {
-      spots.forEach { $0.spotsDelegate = spotsDelegate }
-      spotsDelegate?.spotsDidChange(spots)
+      spots.forEach { $0.delegate = delegate }
+      delegate?.spotsDidChange(spots)
     }
   }
 
@@ -44,7 +44,7 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
     didSet {
       for (_, items) in compositeSpots {
         for (_, container) in items.enumerated() {
-          container.1.forEach { $0.spotsDelegate = spotsDelegate }
+          container.1.forEach { $0.delegate = delegate }
         }
       }
     }
@@ -70,10 +70,10 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
   open var stateCache: SpotCache?
 
   /// A delegate for when an item is tapped within a Spot
-  weak open var spotsDelegate: SpotsDelegate? {
+  weak open var delegate: SpotsDelegate? {
     didSet {
-      spots.forEach { $0.spotsDelegate = spotsDelegate }
-      spotsDelegate?.spotsDidChange(spots)
+      spots.forEach { $0.delegate = delegate }
+      delegate?.spotsDidChange(spots)
     }
   }
 

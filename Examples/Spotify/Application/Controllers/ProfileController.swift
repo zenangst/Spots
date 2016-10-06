@@ -20,7 +20,7 @@ class ProfileController: Controller {
 
     self.init(spots: [gridSpot, listSpot])
     self.title = title
-    self.spotsDelegate = self
+    self.delegate = self
 
     refreshData()
   }

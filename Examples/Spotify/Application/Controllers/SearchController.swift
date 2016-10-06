@@ -17,7 +17,7 @@ class SearchController: Controller {
       ListSpot()
       ])
     self.title = title
-    self.spotsDelegate = self
+    self.delegate = self
 
     guard let headerView = spot(at: 0, ListSpot.self)?.tableView.headerView(forSection: 0),
       let searchHeader = headerView as? SearchHeaderView else { return }

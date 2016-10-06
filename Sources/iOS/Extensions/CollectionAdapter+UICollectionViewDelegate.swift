@@ -22,7 +22,7 @@ extension CollectionAdapter : UICollectionViewDelegate {
    */
   public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     guard let item = spot.item(at: indexPath) else { return }
-    spot.spotsDelegate?.spotDidSelectItem(spot, item: item)
+    spot.delegate?.spotDidSelectItem(spot, item: item)
   }
 
   /**

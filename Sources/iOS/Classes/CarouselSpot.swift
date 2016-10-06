@@ -98,7 +98,7 @@ open class CarouselSpot: NSObject, Gridable {
   open weak var spotsCompositeDelegate: CompositeDelegate?
 
   /// A SpotsDelegate that is used for the CarouselSpot
-  open weak var spotsDelegate: SpotsDelegate?
+  open weak var delegate: SpotsDelegate?
 
   /// A computed variable for adapters
   open var adapter: SpotAdapter? {

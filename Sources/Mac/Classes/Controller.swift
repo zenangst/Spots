@@ -12,8 +12,8 @@ open class Controller: NSViewController, SpotsProtocol {
   /// A collection of Spotable objects
   open var spots: [Spotable] {
     didSet {
-      spots.forEach { $0.spotsDelegate = spotsDelegate }
-      spotsDelegate?.spotsDidChange(spots)
+      spots.forEach { $0.delegate = delegate }
+      delegate?.spotsDidChange(spots)
     }
   }
 
@@ -21,7 +21,7 @@ open class Controller: NSViewController, SpotsProtocol {
     didSet {
       for (_, items) in compositeSpots {
         for (_, container) in items.enumerated() {
-          container.1.forEach { $0.spotsDelegate = spotsDelegate }
+          container.1.forEach { $0.delegate = delegate }
         }
       }
     }
@@ -46,10 +46,10 @@ open class Controller: NSViewController, SpotsProtocol {
   #endif
 
   /// A delegate for when an item is tapped within a Spot
-  weak public var spotsDelegate: SpotsDelegate? {
+  weak public var delegate: SpotsDelegate? {
     didSet {
-      spots.forEach { $0.spotsDelegate = spotsDelegate }
-      spotsDelegate?.spotsDidChange(spots)
+      spots.forEach { $0.delegate = delegate }
+      delegate?.spotsDidChange(spots)
     }
   }
 
@@ -110,8 +110,8 @@ open class Controller: NSViewController, SpotsProtocol {
    */
   deinit {
     NotificationCenter.default.removeObserver(self)
-    spots.forEach { $0.spotsDelegate = nil }
-    spotsDelegate = nil
+    spots.forEach { $0.delegate = nil }
+    delegate = nil
     spotsScrollDelegate = nil
   }
 
@@ -197,11 +197,11 @@ open class Controller: NSViewController, SpotsProtocol {
 
   public func reloadSpots(spots: [Spotable], closure: (() -> Void)?) {
     for spot in self.spots {
-      spot.spotsDelegate = nil
+      spot.delegate = nil
       spot.render().removeFromSuperview()
     }
     self.spots = spots
-    spotsDelegate = nil
+    delegate = nil
 
     setupSpots()
     closure?()

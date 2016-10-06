@@ -28,7 +28,7 @@ class PlaylistController: Controller {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    spotsDelegate = self
+    delegate = self
     spotsScrollView.backgroundColor = UIColor.black
     spotsRefreshDelegate = self
     spotsScrollDelegate = self

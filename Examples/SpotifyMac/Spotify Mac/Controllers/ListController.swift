@@ -160,7 +160,7 @@ class ListController: Controller, SpotsDelegate, SpotsScrollDelegate {
     self.init(spots: Parser.parse(spots), backgroundType: .dynamic)
 
     self.stateCache = stateCache
-    self.spotsDelegate = self
+    self.delegate = self
     self.spotsScrollDelegate = self
     spotsScrollView.frame.origin.y = -40
 

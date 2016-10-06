@@ -13,7 +13,7 @@ public protocol SpotsProtocol: class {
   /// The internal SpotsScrollView
   var spotsScrollView: SpotsScrollView { get }
   /// A delegate that conforms to SpotsDelegate
-  var spotsDelegate: SpotsDelegate? { get }
+  var delegate: SpotsDelegate? { get }
   /// A collection of Spotable objects used in composition
   var compositeSpots: [Int : [Int : [Spotable]]] { get set }
   /// A collection of Spotable objects

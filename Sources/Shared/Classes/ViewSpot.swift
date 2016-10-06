@@ -14,7 +14,7 @@ open class ViewSpot: NSObject, Spotable, Viewable {
   open static var defaultKind: StringConvertible = "view"
 
   open weak var spotsCompositeDelegate: CompositeDelegate?
-  open weak var spotsDelegate: SpotsDelegate?
+  open weak var delegate: SpotsDelegate?
   open var component: Component
   open var index = 0
 

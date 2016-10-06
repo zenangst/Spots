@@ -40,7 +40,7 @@ extension ListAdapter: UITableViewDelegate {
   public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
     if let item = spot.item(at: indexPath) {
-      spot.spotsDelegate?.spotDidSelectItem(spot, item: item)
+      spot.delegate?.spotDidSelectItem(spot, item: item)
     }
   }
 
