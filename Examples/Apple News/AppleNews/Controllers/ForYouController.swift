@@ -144,7 +144,7 @@ class ForYouController: Controller, SpotsDelegate {
   }
 }
 
-extension ForYouController: SpotsScrollDelegate {
+extension ForYouController: ScrollDelegate {
 
   func spotDidReachBeginning(_ completion: (() -> Void)?) {
     guard let spot = spot, spot.component.items.count < 100 && view.window != nil

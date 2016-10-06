@@ -11,7 +11,7 @@ public enum KeyboardEvents: UInt16 {
   case enter = 36
 }
 
-class DetailController: Controller, SpotsDelegate, SpotsScrollDelegate {
+class DetailController: Controller, SpotsDelegate, ScrollDelegate {
 
   lazy var shadowSeparator = NSView().then {
     $0.alphaValue = 0.0

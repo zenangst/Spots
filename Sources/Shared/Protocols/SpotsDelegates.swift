@@ -60,7 +60,7 @@ public protocol RefreshDelegate: class {
 }
 
 /// A scroll delegate for handling spotDidReachBeginning and spotDidReachEnd
-public protocol SpotsScrollDelegate: class {
+public protocol ScrollDelegate: class {
 
   /**
    A delegate method that is triggered when the scroll view reaches the top
@@ -74,7 +74,7 @@ public protocol SpotsScrollDelegate: class {
 }
 
 /// A dummy scroll delegate extension to make spotDidReachBeginning optional
-public extension SpotsScrollDelegate {
+public extension ScrollDelegate {
 
   /**
    A default implementation for spotDidReachBeginning, it renders the method optional

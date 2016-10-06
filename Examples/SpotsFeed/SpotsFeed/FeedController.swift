@@ -60,7 +60,7 @@ extension FeedController: RefreshDelegate {
   }
 }
 
-extension FeedController: SpotsScrollDelegate {
+extension FeedController: ScrollDelegate {
 
   public func spotDidReachEnd(_ completion: (() -> Void)?) {
     dispatch(queue: .interactive) { [weak self] in

@@ -62,7 +62,7 @@ open class Controller: NSViewController, SpotsProtocol {
   }()
 
   /// A scroll delegate for handling spotDidReachBeginning and spotDidReachEnd
-  weak open var scrollDelegate: SpotsScrollDelegate?
+  weak open var scrollDelegate: ScrollDelegate?
 
   /// A bool value to indicate if the Controller is refeshing
   open var refreshing = false

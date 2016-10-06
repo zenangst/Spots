@@ -6,7 +6,7 @@ import Sugar
 import Compass
 import Sugar
 
-class ListController: Controller, SpotsDelegate, SpotsScrollDelegate {
+class ListController: Controller, SpotsDelegate, ScrollDelegate {
 
   struct UI {
     static let main = 0

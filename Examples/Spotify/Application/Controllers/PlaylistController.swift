@@ -132,7 +132,7 @@ extension PlaylistController: RefreshDelegate {
   }
 }
 
-extension PlaylistController: SpotsScrollDelegate {
+extension PlaylistController: ScrollDelegate {
 
   func spotDidReachEnd(_ completion: (() -> Void)?) {
     guard let playlistPage = playlistPage else { return }
