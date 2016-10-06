@@ -45,7 +45,7 @@ Data source and delegate setup is handled by **Spots**, so there is no need for 
 * [Usage](#usage)
 * [View models in the Cloud](#view-models-in-the-cloud)
 * [Programmatic approach](#programmatic-approach)
-* [SpotsController](#spotscontroller)
+* [Controller](#spotscontroller)
 * [Delegates](#delegates)
 *  [SpotsDelegate](#spotsdelegate)
 *  [SpotsRefreshDelegate](#spotsrefreshdelegate)
@@ -70,7 +70,7 @@ Data source and delegate setup is handled by **Spots**, so there is no need for 
 - View based caching for controllers, table and collection views.
 - Supports displaying multiple collections, tables and regular views in the same container.
 - Features both infinity scrolling and pull to refresh (on iOS), all you have to do is to
-setup delegates that conform to the public protocols on `SpotsController`.
+setup delegates that conform to the public protocols on `Controller`.
 - No need to implement your own data source, every `Spotable` object has their
 own set of `Item`’s.
 which is maintained internally and is there at your disposable if you decide to
@@ -99,15 +99,15 @@ You can find it here: [Hitting the sweet spot of inspiration](https://medium.com
 
 ## Why JSON?
 
-JSON works great as a common transport language, it is platform agnostic and it is something that developers are already using regularly when building application that fetch data from an external resource. **Spots** uses JSON internally to save a snapshot of the view state to disk, the only thing that you have to do is to give the **SpotsController** a cache key and call save whenever you have performed your update.
+JSON works great as a common transport language, it is platform agnostic and it is something that developers are already using regularly when building application that fetch data from an external resource. **Spots** uses JSON internally to save a snapshot of the view state to disk, the only thing that you have to do is to give the **Controller** a cache key and call save whenever you have performed your update.
 
 So what if I don't have a backend that supports **Spots** view models? Not to worry, you can set up **Spots** programmatically and still use all the other advantages of the framework.
 
 ## View state caching
 
-As mentioned above, **Spots** features a view state cache. Instead of saving all your data in a database somewhere and perform queries every time to initiate a view controller, we went with a different and much simpler approach. If a **SpotsController** has a cache key and you call `save`, internally it will encode all underlaying **Spotable** objects and its children into a JSON file and store that to disk. The uniqueness of the file comes from the cache key, think of this like your screen identifier. The next time you construct a **SpotsController** with that cache key, it will try to load that from disk and display it the exact same way as it was before saving. The main benefit here is that you don’t have to worry about your object changing by updating to future versions of **Spots**.
+As mentioned above, **Spots** features a view state cache. Instead of saving all your data in a database somewhere and perform queries every time to initiate a view controller, we went with a different and much simpler approach. If a **Controller** has a cache key and you call `save`, internally it will encode all underlaying **Spotable** objects and its children into a JSON file and store that to disk. The uniqueness of the file comes from the cache key, think of this like your screen identifier. The next time you construct a **Controller** with that cache key, it will try to load that from disk and display it the exact same way as it was before saving. The main benefit here is that you don’t have to worry about your object changing by updating to future versions of **Spots**.
 
-**ListSpot**, **GridSpot**, **CarouselSpot** also have support for view state caching because these components can be used separately without using **SpotsController**.
+**ListSpot**, **GridSpot**, **CarouselSpot** also have support for view state caching because these components can be used separately without using **Controller**.
 
 View state caching is optional but we encourage you to use it, as it renders the need to use a database as optional.
 
@@ -121,14 +121,14 @@ See [Installation](#installation) for how to enable live editing using Cocoapods
 
 ## How does it work?
 
-At the top level of **Spots**, you have the **SpotsController** which is the replacement for your view controller.
+At the top level of **Spots**, you have the **Controller** which is the replacement for your view controller.
 
-Inside of the **SpotsController**, you have a **SpotsScrollView** that handles the linear layout of the components that you add to your data source. It is also in charge of giving the user a unified scrolling experience. Scrolling is disabled on all underlaying components except for components that have horizontal scrolling (e.g **CarouselSpot**).
+Inside of the **Controller**, you have a **SpotsScrollView** that handles the linear layout of the components that you add to your data source. It is also in charge of giving the user a unified scrolling experience. Scrolling is disabled on all underlaying components except for components that have horizontal scrolling (e.g **CarouselSpot**).
 
 So how does scrolling work? Whenever a user scrolls, the **SpotsScrollView** computes the offset and size of its children. By using this technique you can easily create screens that contain lists, grids and carousels with a scrolling experience as smooth as proverbial butter. By dynamically changing the size of the children, **SpotsScrollView** also ensures that reusable views are allocated and deallocated like you would expect them to.
 **SpotsScrollView** uses KVO on any view that gets added so if one component changes height or position, the entire layout will invalidate itself and redraw it like it was intended.
 
-**SpotsController** uses one or more **Spotable** objects. **Spotable** is a protocol that all components use to make sure that all layout calculations can be performed. **Spots** comes with three different **Spotable** objects out-of-the-box.
+**Controller** uses one or more **Spotable** objects. **Spotable** is a protocol that all components use to make sure that all layout calculations can be performed. **Spots** comes with three different **Spotable** objects out-of-the-box.
 All **Spotable** objects are based around one core UI element.
 
 **ListSpot** is an object that conforms to **Listable**, it has a **ListAdapter** that works as both the data source and delegate for the **ListSpot**. For iOS, **Listable** uses **UITableView** as its UI component, and **NSTableView** on macOS.
@@ -196,19 +196,19 @@ By letting the data decide which views to use gives you the freedom of displayin
 
 It is very common that you need to modify your data source and tell your UI component to either insert, update or delete depending on the action that you performed. This process can be cumbersome, so to help you out, **Spots** has some great convenience methods to help you with this process.
 
-On **SpotsController** you have simple methods like `reload(withAnimation, completion)` that tells all the **Spotable** objects to reload.
+On **Controller** you have simple methods like `reload(withAnimation, completion)` that tells all the **Spotable** objects to reload.
 
-You can reload **SpotsController** using a collection of **Component**’s. Internally it will perform a diffing process to pinpoint what changed, in this process it cascades down from component level to item level, and checks all the moving parts, to perform the most appropriate update operation depending on the change. At item level, it will check if the items size changed, if not it will scale down to only run the `configure` method on the view that was affected. This is what we call hard and soft updates, it will reduce the amount of *blinking* that you can normally see in iOS.
+You can reload **Controller** using a collection of **Component**’s. Internally it will perform a diffing process to pinpoint what changed, in this process it cascades down from component level to item level, and checks all the moving parts, to perform the most appropriate update operation depending on the change. At item level, it will check if the items size changed, if not it will scale down to only run the `configure` method on the view that was affected. This is what we call hard and soft updates, it will reduce the amount of *blinking* that you can normally see in iOS.
 
-A **SpotsController** can also be reloaded using JSON. It behaves a bit differently than `reloadIfNeeded(withComponents)` as it will create new component and diff them towards each other to find out if something changed. If something changed, it will simply replace the old objects with the new ones.
+A **Controller** can also be reloaded using JSON. It behaves a bit differently than `reloadIfNeeded(withComponents)` as it will create new component and diff them towards each other to find out if something changed. If something changed, it will simply replace the old objects with the new ones.
 
 The difference between `reload` and `reloadIfNeeded` methods is that they will only run if change is needed, just like the naming implies.
 
-If you need more fine-grained control by pinpointing an individual spot, we got you covered on this as well. **SpotsController** has an update method that takes the spot index as its first argument, followed by an animation label to specify which animation to use when doing the update.
+If you need more fine-grained control by pinpointing an individual spot, we got you covered on this as well. **Controller** has an update method that takes the spot index as its first argument, followed by an animation label to specify which animation to use when doing the update.
 The remaining arguments are one mutation closure where you get the **Spotable** object and can perform your updates, and finally one completion closure that will run when your update is performed both on the data source and the UI component.
 This method has a corresponding method called `updateIfNeeded`, which applies the update if needed.
 
-You can also `append` `prepend`, `insert`, `update` or `delete` with a series to similar methods that are publicly available on **SpotsController**.
+You can also `append` `prepend`, `insert`, `update` or `delete` with a series to similar methods that are publicly available on **Controller**.
 
 All methods take an `Item` as their first argument, the second is the index of the **Spotable** object that you want to update. Just like `reload` and `update`, it also has an animation label to give you control over what animation should be used. As an added bonus, these methods also work with multiple items, so instead of passing just one item, you can pass a collection of items that you want to `append`, `prepend` etc.
 
@@ -216,7 +216,7 @@ All methods take an `Item` as their first argument, the second is the index of t
 
 ### View models in the Cloud
 ```swift
-let controller = SpotsController(json)
+let controller = Controller(json)
 navigationController?.pushViewController(controller, animated: true)
 ```
 
@@ -232,13 +232,13 @@ let myContacts = Component(title: "My contacts", items: [
   Item(title: "Christoffer Winterkvist")
 ])
 let listSpot = ListSpot(component: myContacts)
-let controller = SpotsController(spots: [listSpot])
+let controller = Controller(spots: [listSpot])
 
 navigationController?.pushViewController(controller, animated: true)
 ```
 
-## SpotsController
-The `SpotsController` inherits from `UIViewController` and `NSViewController` but it sports some core features that makes your everyday mundane tasks a thing of the past. `SpotsController` has four different delegates
+## Controller
+The `Controller` inherits from `UIViewController` and `NSViewController` but it sports some core features that makes your everyday mundane tasks a thing of the past. `Controller` has four different delegates
 
 ## Delegates
 
@@ -457,7 +457,7 @@ end
 - **[Brick](https://github.com/hyperoslo/Brick)**
 `Item` comes from `Brick`.
 - **[Cache](https://github.com/hyperoslo/Cache)**
-Used for `Component` and `Item` caching when initializing a `SpotsController` or `Spotable` object with a cache key.
+Used for `Component` and `Item` caching when initializing a `Controller` or `Spotable` object with a cache key.
 - **[Tailor](https://github.com/zenangst/Tailor)**
 To seamlessly map JSON to both `Component` and `Item`.
 

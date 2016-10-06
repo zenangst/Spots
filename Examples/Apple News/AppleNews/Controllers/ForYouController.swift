@@ -4,7 +4,7 @@ import Fakery
 import Brick
 import Transition
 
-class ForYouController: SpotsController, SpotsDelegate {
+class ForYouController: Controller, SpotsDelegate {
 
   static let faker = Faker()
 

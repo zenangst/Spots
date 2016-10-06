@@ -18,7 +18,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
   var window: Window?
   var player: AVAudioPlayer?
   var history = [String]()
-  var currentController: SpotsController?
+  var currentController: Controller?
   var mainWindowController: MainWindowController?
   var splitView: MainSplitView!
 

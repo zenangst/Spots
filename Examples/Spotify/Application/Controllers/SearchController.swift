@@ -4,7 +4,7 @@ import Keychain
 import Sugar
 import Brick
 
-class SearchController: SpotsController {
+class SearchController: Controller {
 
   let accessToken = Keychain.password(forAccount: keychainAccount)
 

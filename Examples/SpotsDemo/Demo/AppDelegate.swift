@@ -14,7 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     GridSpot.register(view: GridSpotCellTitles.self, identifier: "titles")
     GridSpot.register(view: GridSpotCellCircle.self, identifier: "circle")
 
-    SpotsController.configure = {
+    Controller.configure = {
       $0.backgroundColor = UIColor.white
     }
 

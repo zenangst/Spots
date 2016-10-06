@@ -1,9 +1,9 @@
 import UIKit
 
 /**
- A SpotsController extension to handle scrollViewDidScroll
+ A Controller extension to handle scrollViewDidScroll
  */
-extension SpotsController {
+extension Controller {
 
   /**
    Tells the delegate when the user scrolls the content view within the receiver.

@@ -21,7 +21,7 @@ struct SpotsConfigurator {
     GridSpot.register(defaultView: GridCell.self)
     CarouselSpot.register(defaultView: GridCell.self)
 
-    SpotsController.configure = {
+    Controller.configure = {
       $0.backgroundColor = UIColor.clear
     }
 

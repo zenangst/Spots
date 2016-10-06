@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       collectionView.backgroundColor = UIColor(red:0.110, green:0.110, blue:0.110, alpha: 1)
     }
 
-    SpotsController.configure = {
+    Controller.configure = {
       $0.backgroundColor = UIColor.white
     }
 

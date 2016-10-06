@@ -2,7 +2,7 @@ import Spots
 import Brick
 import Fakery
 
-class ExploreController: SpotsController {
+class ExploreController: Controller {
 
   convenience init(title: String) {
     let suggestedChannels = Component(span: 3, items: [

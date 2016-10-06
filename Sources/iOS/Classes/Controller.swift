@@ -3,9 +3,9 @@ import Brick
 import Cache
 
 /**
- SpotsController is a subclass of UIViewController
+ Controller is a subclass of UIViewController
  */
-open class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDelegate, UIScrollViewDelegate {
+open class Controller: UIViewController, SpotsProtocol, SpotsCompositeDelegate, UIScrollViewDelegate {
 
   /**
    A notification enum
@@ -28,7 +28,7 @@ open class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDeleg
   /// A static closure to configure SpotsScrollView
   open static var configure: ((_ container: SpotsScrollView) -> Void)?
 
-  /// Initial content offset for SpotsController, defaults to UIEdgeInsetsZero
+  /// Initial content offset for Controller, defaults to UIEdgeInsetsZero
   open fileprivate(set) var initialContentInset: UIEdgeInsets = UIEdgeInsets.zero
 
   /// A collection of Spotable objects
@@ -52,7 +52,7 @@ open class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDeleg
 
   /// An array of refresh positions to avoid refreshing multiple times when using infinite scrolling
   open var refreshPositions = [CGFloat]()
-  /// A bool value to indicate if the SpotsController is refeshing
+  /// A bool value to indicate if the Controller is refeshing
   open var refreshing = false
   /// A convenience method for resolving the first spot
   open var spot: Spotable? {
@@ -217,7 +217,7 @@ open class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDeleg
 
     setupSpots()
 
-    SpotsController.configure?(spotsScrollView)
+    Controller.configure?(spotsScrollView)
   }
 
   /**
@@ -323,8 +323,8 @@ open class SpotsController: UIViewController, SpotsProtocol, SpotsCompositeDeleg
 
 // MARK: - Private methods
 
-/// An extension with private methods on SpotsController
-extension SpotsController {
+/// An extension with private methods on Controller
+extension Controller {
 
   /**
    - parameter indexPath: The index path of the component you want to lookup

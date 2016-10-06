@@ -34,7 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     window = UIWindow(frame: UIScreen.main.bounds)
 
-    SpotsController.configure = {
+    Controller.configure = {
       $0.backgroundColor = UIColor.white
     }
 
@@ -91,7 +91,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         let feedComponent = Component(span: 1, items: content)
         let feedSpot = ListSpot(component: feedComponent)
-        let controller = SpotsController(spots: [feedSpot])
+        let controller = Controller(spots: [feedSpot])
         controller.title = "Feed"
         self.navigationController?.pushViewController(controller, animated: true)
       default:

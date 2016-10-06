@@ -11,7 +11,7 @@ public enum KeyboardEvents: UInt16 {
   case enter = 36
 }
 
-class DetailController: SpotsController, SpotsDelegate, SpotsScrollDelegate {
+class DetailController: Controller, SpotsDelegate, SpotsScrollDelegate {
 
   lazy var shadowSeparator = NSView().then {
     $0.alphaValue = 0.0
@@ -66,7 +66,7 @@ class DetailController: SpotsController, SpotsDelegate, SpotsScrollDelegate {
 
   var fragments: [String : Any] = [:]
 
-  required init(spots: [Spotable], backgroundType: SpotsControllerBackground) {
+  required init(spots: [Spotable], backgroundType: ControllerBackground) {
     super.init(spots: spots, backgroundType: backgroundType)
 
     NotificationCenter.default.addObserver(self, selector: #selector(DetailController.willEnterFullscreen(_:)), name: NSNotification.Name.NSWindowWillEnterFullScreen, object: nil)

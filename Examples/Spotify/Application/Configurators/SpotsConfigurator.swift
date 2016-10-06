@@ -5,7 +5,7 @@ struct SpotsConfigurator: Configurator {
 
   static func configure() {
 
-    SpotsController.configure = { scrollView in
+    Controller.configure = { scrollView in
       scrollView.backgroundColor = UIColor.black
     }
 

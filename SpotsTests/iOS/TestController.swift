@@ -3,12 +3,12 @@ import Foundation
 import XCTest
 import Brick
 
-class SpotsControllerTests : XCTestCase {
+class ControllerTests : XCTestCase {
 
   func testSpotAtIndex() {
     let component = Component(title: "Component")
     let listSpot = ListSpot(component: component)
-    let spotController = SpotsController(spot: listSpot)
+    let spotController = Controller(spot: listSpot)
 
     XCTAssertEqual(spotController.spot as? ListSpot, listSpot)
   }
@@ -16,7 +16,7 @@ class SpotsControllerTests : XCTestCase {
   func testUpdateSpotAtIndex() {
     let component = Component(title: "Component")
     let listSpot = ListSpot(component: component)
-    let spotController = SpotsController(spot: listSpot)
+    let spotController = Controller(spot: listSpot)
     let items = [Item(title: "item1")]
 
     spotController.update { spot in
@@ -29,7 +29,7 @@ class SpotsControllerTests : XCTestCase {
   func testAppendItem() {
     let component = Component(title: "Component", kind: "list")
     let listSpot = ListSpot(component: component)
-    let spotController = SpotsController(spot: listSpot)
+    let spotController = Controller(spot: listSpot)
 
     XCTAssert(spotController.spot!.component.items.count == 0)
 
@@ -52,7 +52,7 @@ class SpotsControllerTests : XCTestCase {
   func testAppendItems() {
     let component = Component(title: "Component", kind: "list")
     let listSpot = ListSpot(component: component)
-    let spotController = SpotsController(spot: listSpot)
+    let spotController = Controller(spot: listSpot)
 
     let items = [
       Item(title: "title1", kind: "list"),
@@ -77,7 +77,7 @@ class SpotsControllerTests : XCTestCase {
   func testPrependItems() {
     let component = Component(title: "Component", kind: "list")
     let listSpot = ListSpot(component: component)
-    let spotController = SpotsController(spot: listSpot)
+    let spotController = Controller(spot: listSpot)
 
     let items = [
       Item(title: "title1", kind: "list"),
@@ -104,7 +104,7 @@ class SpotsControllerTests : XCTestCase {
       ])
     let initialListSpot = ListSpot(component: component)
 
-    let spotController = SpotsController(spot: initialListSpot)
+    let spotController = Controller(spot: initialListSpot)
 
     let firstItem = spotController.spot!.component.items.first
 
@@ -141,7 +141,7 @@ class SpotsControllerTests : XCTestCase {
     let listSpot = ListSpot(component: Component(title: "ListSpot"))
     let listSpot2 = ListSpot(component: Component(title: "ListSpot2"))
     let gridSpot = GridSpot(component: Component(title: "GridSpot", items: [Item(title: "Item")]))
-    let spotController = SpotsController(spots: [listSpot, listSpot2, gridSpot])
+    let spotController = Controller(spots: [listSpot, listSpot2, gridSpot])
 
     XCTAssertNotNil(spotController.resolve(spot: { $1.component.title == "ListSpot" }))
     XCTAssertNotNil(spotController.resolve(spot: { $1.component.title == "GridSpot" }))
@@ -158,8 +158,8 @@ class SpotsControllerTests : XCTestCase {
   func testJSONInitialiser() {
     let spot = ListSpot()
     spot.items = [Item(title: "First item")]
-    let sourceController = SpotsController(spot: spot)
-    let jsonController = SpotsController([
+    let sourceController = Controller(spot: spot)
+    let jsonController = Controller([
       "components" : [
         ["kind" : "list",
           "items" : [
@@ -182,7 +182,7 @@ class SpotsControllerTests : XCTestCase {
         ]
       ]
     ]
-    let jsonController = SpotsController(initialJSON)
+    let jsonController = Controller(initialJSON)
 
     XCTAssert(jsonController.spot!.component.kind == "list")
     XCTAssert(jsonController.spot!.component.items.count == 1)
@@ -206,7 +206,7 @@ class SpotsControllerTests : XCTestCase {
     }
   }
 
-  func testDictionaryOnSpotsController() {
+  func testDictionaryOnController() {
     let initialJSON = [
       "components" : [
         ["kind" : "list",
@@ -216,8 +216,8 @@ class SpotsControllerTests : XCTestCase {
         ]
       ]
     ]
-    let firstController = SpotsController(initialJSON)
-    let secondController = SpotsController(firstController.dictionary)
+    let firstController = Controller(initialJSON)
+    let secondController = Controller(firstController.dictionary)
 
     XCTAssertTrue(firstController.spots.first!.component == secondController.spots.first!.component)
   }
@@ -263,7 +263,7 @@ class SpotsControllerTests : XCTestCase {
       ]
     ]
 
-    let controller = SpotsController(initialJSON)
+    let controller = Controller(initialJSON)
     XCTAssertTrue(controller.spots[0] is ListSpot)
     XCTAssertEqual(controller.spots[0].items.first?.title, "First list item")
     XCTAssertEqual(controller.spots[1].items.first?.title, "First list item")

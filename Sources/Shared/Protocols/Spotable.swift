@@ -6,7 +6,7 @@
 
 import Brick
 
-/// A class protocol that is used for all components inside of SpotsController
+/// A class protocol that is used for all components inside of Controller
 public protocol Spotable: class {
 
   static var views: Registry { get set }

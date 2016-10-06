@@ -3,7 +3,7 @@ import Spots
 import Compass
 import Brick
 
-class AuthController: SpotsController, SpotsDelegate {
+class AuthController: Controller, SpotsDelegate {
 
   required init(spots: [Spotable]) {
     super.init(spots: spots)

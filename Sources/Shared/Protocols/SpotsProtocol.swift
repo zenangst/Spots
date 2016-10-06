@@ -47,7 +47,7 @@ public protocol SpotsProtocol: class {
   func resolve(spot closure: (_ index: Int, _ spot: Spotable) -> Bool) -> Spotable?
 
   #if os(OSX)
-  init(spots: [Spotable], backgroundType: SpotsControllerBackground)
+  init(spots: [Spotable], backgroundType: ControllerBackground)
   #else
   init(spots: [Spotable])
   #endif

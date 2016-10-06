@@ -196,7 +196,7 @@ public struct Component: Mappable, Equatable {
    - returns: A ComponentDiff value, see ComponentDiff for values.
    */
   public func diff(component: Component) -> ComponentDiff {
-    // Determine if the UI component is the same, used when SpotsController needs to replace the entire UI component
+    // Determine if the UI component is the same, used when Controller needs to replace the entire UI component
     if kind != component.kind { return .kind }
     // Determine if the unqiue identifier for the component changed
     if identifier != component.identifier { return .identifier }

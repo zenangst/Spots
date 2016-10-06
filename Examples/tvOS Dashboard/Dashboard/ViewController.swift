@@ -2,7 +2,7 @@ import UIKit
 import Spots
 import Brick
 
-class ViewController: SpotsController {
+class ViewController: Controller {
 
   convenience init(title: String) {
     let featured = Component(items: [

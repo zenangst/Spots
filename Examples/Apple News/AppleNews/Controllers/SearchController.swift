@@ -1,7 +1,7 @@
 import Spots
 import Sugar
 
-class SearchController: SpotsController {
+class SearchController: Controller {
 
   convenience init(title: String) {
     let spots: [Spotable] = [

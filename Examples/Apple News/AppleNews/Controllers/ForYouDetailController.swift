@@ -1,7 +1,7 @@
 import Spots
 import Sugar
 
-class ForYouDetailController: SpotsController {
+class ForYouDetailController: Controller {
 
   var lastContentOffset: CGPoint?
 

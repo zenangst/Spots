@@ -2,7 +2,7 @@ import Foundation
 import Cache
 import CryptoSwift
 
-/// A SpotCache struct used for SpotsController and Spotable object caching
+/// A SpotCache struct used for Controller and Spotable object caching
 public struct SpotCache {
 
   public let key: String

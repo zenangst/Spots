@@ -3,7 +3,7 @@ import Fakery
 import Spots
 import Brick
 
-open class FeedController: SpotsController, SpotsDelegate {
+open class FeedController: Controller, SpotsDelegate {
 
   open static let faker = Faker()
 

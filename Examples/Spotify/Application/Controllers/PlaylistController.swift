@@ -6,7 +6,7 @@ import Sugar
 import Hue
 import Brick
 
-class PlaylistController: SpotsController {
+class PlaylistController: Controller {
 
   let accessToken = Keychain.password(forAccount: keychainAccount)
   var playlistID: String?

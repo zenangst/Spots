@@ -19,7 +19,7 @@ enum Cell: String, StringConvertible {
 
 struct SpotsConfigurator {
   func configure() {
-    SpotsController.configure = {
+    Controller.configure = {
       $0.backgroundColor = UIColor.white
     }
 

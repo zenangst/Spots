@@ -1,5 +1,5 @@
 /**
-  A JSON to UI parser to produce components for SpotsController
+  A JSON to UI parser to produce components for Controller
  */
 public struct Parser {
 

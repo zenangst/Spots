@@ -1,10 +1,10 @@
 import Cocoa
 
-public enum SpotsControllerBackground {
+public enum ControllerBackground {
   case regular, dynamic
 }
 
-open class SpotsController: NSViewController, SpotsProtocol {
+open class Controller: NSViewController, SpotsProtocol {
 
   open static var configure: ((_ container: SpotsScrollView) -> Void)?
   let KVOWindowContext: UnsafeMutableRawPointer? = UnsafeMutableRawPointer(mutating: nil)
@@ -64,22 +64,22 @@ open class SpotsController: NSViewController, SpotsProtocol {
   /// A scroll delegate for handling spotDidReachBeginning and spotDidReachEnd
   weak open var spotsScrollDelegate: SpotsScrollDelegate?
 
-  /// A bool value to indicate if the SpotsController is refeshing
+  /// A bool value to indicate if the Controller is refeshing
   open var refreshing = false
 
-  fileprivate let backgroundType: SpotsControllerBackground
+  fileprivate let backgroundType: ControllerBackground
 
   /**
    - parameter spots: An array of Spotable objects
-   - parameter backgroundType: The type of background that the SpotsController should use, .Regular or .Dynamic
+   - parameter backgroundType: The type of background that the Controller should use, .Regular or .Dynamic
    */
-  public required init(spots: [Spotable] = [], backgroundType: SpotsControllerBackground = .regular) {
+  public required init(spots: [Spotable] = [], backgroundType: ControllerBackground = .regular) {
     self.compositeSpots = [:]
     self.spots = spots
     self.backgroundType = backgroundType
     super.init(nibName: nil, bundle: nil)!
 
-    NotificationCenter.default.addObserver(self, selector: #selector(SpotsController.scrollViewDidScroll(_:)), name: NSNotification.Name.NSScrollViewDidLiveScroll, object: spotsScrollView)
+    NotificationCenter.default.addObserver(self, selector: #selector(Controller.scrollViewDidScroll(_:)), name: NSNotification.Name.NSScrollViewDidLiveScroll, object: spotsScrollView)
   }
 
   /**
@@ -183,7 +183,7 @@ open class SpotsController: NSViewController, SpotsProtocol {
     view.addSubview(spotsScrollView)
     spotsScrollView.hasVerticalScroller = true
     setupSpots()
-    SpotsController.configure?(spotsScrollView)
+    Controller.configure?(spotsScrollView)
   }
 
   open override func viewDidAppear() {

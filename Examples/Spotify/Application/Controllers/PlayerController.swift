@@ -5,7 +5,7 @@ import Imaginary
 import Sugar
 import Brick
 
-class PlayerController: SpotsController {
+class PlayerController: Controller {
 
   let screenBounds = UIScreen.main.bounds
   var initialOrigin: CGFloat = UIScreen.main.bounds.height - 108

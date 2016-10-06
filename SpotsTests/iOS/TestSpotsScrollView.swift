@@ -3,7 +3,7 @@ import Brick
 import Foundation
 import XCTest
 
-extension SpotsController {
+extension Controller {
 
   func preloadView() {
     let _ = view
@@ -18,7 +18,7 @@ extension SpotsController {
 class SpotsScrollViewTests: XCTestCase {
 
   var bounds: CGRect!
-  var controller: SpotsController!
+  var controller: Controller!
 
   var initialJSON: [String : Any] {
     let listItems: [[String : Any]] = [
@@ -66,7 +66,7 @@ class SpotsScrollViewTests: XCTestCase {
     super.setUp()
 
     bounds = CGRect(origin: CGPoint.zero, size: CGSize(width: 375, height: 667))
-    controller = SpotsController(initialJSON)
+    controller = Controller(initialJSON)
     controller.view.autoresizingMask = []
     controller.view.frame.size = CGSize(width: 375, height: 667)
     controller.preloadView()

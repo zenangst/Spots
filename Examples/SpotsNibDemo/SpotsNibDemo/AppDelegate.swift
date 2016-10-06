@@ -49,7 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     )
 
     let spots: [Spotable] = [ListSpot(component: component)]
-    let controller = SpotsController(cacheKey: "nib-demo")
+    let controller = Controller(cacheKey: "nib-demo")
 
     controller.spots = spots
     controller.cache()
