@@ -4,9 +4,12 @@ import Brick
 /// A default cell for the CarouselSpot
 class CarouselSpotCell: UICollectionViewCell, SpotConfigurable {
 
+  /// The preferred view size for the cell
   var preferredViewSize: CGSize = CGSize(width: 88, height: 88)
+  /// A weak referenced Item struct
   var item: Item?
 
+  /// A UILabel that will use Item.title as text
   var label: UILabel = {
     let label = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
     label.textAlignment = .center
@@ -14,6 +17,7 @@ class CarouselSpotCell: UICollectionViewCell, SpotConfigurable {
     return label
   }()
 
+  /// A UIImageView that will use Item.image as its image
   lazy var imageView: UIImageView = {
     let imageView = UIImageView()
     imageView.autoresizingMask = [.flexibleWidth]
@@ -22,6 +26,12 @@ class CarouselSpotCell: UICollectionViewCell, SpotConfigurable {
     return imageView
   }()
 
+
+  /// Initializes and returns a newly allocated view object with the specified frame rectangle.
+  ///
+  /// - parameter frame: The frame rectangle for the view, measured in points.
+  ///
+  /// - returns: An initialized view object.
   override init(frame: CGRect) {
     super.init(frame: frame)
 
