@@ -5,7 +5,7 @@ import Cache
 /**
  Controller is a subclass of UIViewController
  */
-open class Controller: UIViewController, SpotsProtocol, SpotsCompositeDelegate, UIScrollViewDelegate {
+open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScrollViewDelegate {
 
   /**
    A notification enum

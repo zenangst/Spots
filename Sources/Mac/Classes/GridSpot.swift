@@ -80,7 +80,7 @@ open class GridSpot: NSObject, Gridable {
   open static var defaultGrid: NSCollectionViewItem.Type = NSCollectionViewItem.self
   open static var defaultKind: StringConvertible = LayoutType.Grid.rawValue
 
-  open weak var spotsCompositeDelegate: SpotsCompositeDelegate?
+  open weak var spotsCompositeDelegate: CompositeDelegate?
   open weak var spotsDelegate: SpotsDelegate?
 
   open var cachedViews = [String : SpotConfigurable]()

@@ -13,7 +13,7 @@ open class ViewSpot: NSObject, Spotable, Viewable {
   open static var defaultView: View.Type = View.self
   open static var defaultKind: StringConvertible = "view"
 
-  open weak var spotsCompositeDelegate: SpotsCompositeDelegate?
+  open weak var spotsCompositeDelegate: CompositeDelegate?
   open weak var spotsDelegate: SpotsDelegate?
   open var component: Component
   open var index = 0

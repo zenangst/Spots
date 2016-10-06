@@ -34,7 +34,7 @@ open class ListSpot: NSObject, Listable {
   open static var defaultView: View.Type = ListSpotItem.self
   open static var defaultKind: StringConvertible = Component.Kind.List.string
 
-  open weak var spotsCompositeDelegate: SpotsCompositeDelegate?
+  open weak var spotsCompositeDelegate: CompositeDelegate?
   open weak var spotsDelegate: SpotsDelegate?
 
   open var cachedViews = [String : SpotConfigurable]()

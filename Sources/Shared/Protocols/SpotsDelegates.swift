@@ -4,11 +4,11 @@ import Brick
   import UIKit
 #endif
 
-public protocol SpotsCompositeDelegate: class {
+public protocol CompositeDelegate: class {
   var compositeSpots: [Int : [Int : [Spotable]]] { get set }
 }
 
-extension SpotsCompositeDelegate {
+extension CompositeDelegate {
 
   func resolve(_ spotIndex: Int, itemIndex: Int) -> [Spotable]? {
     guard let compositeContainer = compositeSpots[spotIndex],

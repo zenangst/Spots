@@ -12,8 +12,8 @@ public protocol Spotable: class {
   static var views: Registry { get set }
 
   #if !os(OSX)
-  /// A SpotsCompositeDelegate object
-  weak var spotsCompositeDelegate: SpotsCompositeDelegate? { get set }
+  /// A CompositeDelegate object
+  weak var spotsCompositeDelegate: CompositeDelegate? { get set }
   #endif
 
   /// A SpotsDelegate object

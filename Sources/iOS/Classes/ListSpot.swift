@@ -29,8 +29,8 @@ open class ListSpot: NSObject, Listable {
   /// A configuration closure
   open var configure: ((SpotConfigurable) -> Void)?
 
-  /// A SpotsCompositeDelegate for the GridSpot, used to access composite spots
-  open weak var spotsCompositeDelegate: SpotsCompositeDelegate?
+  /// A CompositeDelegate for the GridSpot, used to access composite spots
+  open weak var spotsCompositeDelegate: CompositeDelegate?
 
   /// A SpotsDelegate that is used for the GridSpot
   open weak var spotsDelegate: SpotsDelegate?

@@ -94,8 +94,8 @@ open class CarouselSpot: NSObject, Gridable {
   /// A CarouselScrollDelegate, used when a CarouselSpot scrolls
   open weak var carouselScrollDelegate: SpotsCarouselScrollDelegate?
 
-  /// A SpotsCompositeDelegate for the CarouselSpot, used to access composite spots
-  open weak var spotsCompositeDelegate: SpotsCompositeDelegate?
+  /// A CompositeDelegate for the CarouselSpot, used to access composite spots
+  open weak var spotsCompositeDelegate: CompositeDelegate?
 
   /// A SpotsDelegate that is used for the CarouselSpot
   open weak var spotsDelegate: SpotsDelegate?
