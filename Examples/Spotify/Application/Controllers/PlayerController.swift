@@ -29,8 +29,8 @@ class PlayerController: Controller {
     super.init(spots: spots)
 
     view.backgroundColor = UIColor.black.withAlphaComponent(0.9)
-    spotsScrollView.isScrollEnabled = false
-    spotsScrollView.backgroundColor = UIColor.clear
+    scrollView.isScrollEnabled = false
+    scrollView.backgroundColor = UIColor.clear
 
     if let listSpot = spot(at: 0, ListSpot.self) {
       listSpot.tableView.separatorStyle = .none
@@ -95,7 +95,7 @@ class PlayerController: Controller {
             }
 
             UIView.animate(withDuration: 0.3) {
-              self?.spotsScrollView.backgroundColor = background
+              self?.scrollView.backgroundColor = background
               self?.view.backgroundColor = background
             }
           }

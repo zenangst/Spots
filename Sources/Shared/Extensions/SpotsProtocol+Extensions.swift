@@ -139,9 +139,9 @@ public extension SpotsProtocol {
     if index > 0 {
       initialHeight += spots[0..<index].reduce(0, { $0 + $1.computedHeight })
     }
-    if spot(at: index, Spotable.self)?.computedHeight > spotsScrollView.frame.height - spotsScrollView.contentInset.bottom - initialHeight {
-      let y = itemY - spotsScrollView.frame.size.height + spotsScrollView.contentInset.bottom + initialHeight
-      spotsScrollView.setContentOffset(CGPoint(x: CGFloat(0.0), y: y), animated: true)
+    if spot(at: index, Spotable.self)?.computedHeight > scrollView.frame.height - scrollView.contentInset.bottom - initialHeight {
+      let y = itemY - scrollView.frame.size.height + scrollView.contentInset.bottom + initialHeight
+      scrollView.setContentOffset(CGPoint(x: CGFloat(0.0), y: y), animated: true)
     }
   }
 
@@ -149,8 +149,8 @@ public extension SpotsProtocol {
    - parameter animated: A boolean value to determine if you want to perform the scrolling with or without animation
    */
   public func scrollToBottom(_ animated: Bool) {
-    let y = spotsScrollView.contentSize.height - spotsScrollView.frame.size.height + spotsScrollView.contentInset.bottom
-    spotsScrollView.setContentOffset(CGPoint(x: 0, y: y), animated: animated)
+    let y = scrollView.contentSize.height - scrollView.frame.size.height + scrollView.contentInset.bottom
+    scrollView.setContentOffset(CGPoint(x: 0, y: y), animated: animated)
   }
 #endif
 

@@ -94,7 +94,7 @@ class ForYouController: Controller, SpotsDelegate {
         subtitle: ForYouController.faker.lorem.sentences(amount: 40),
         kind: Cell.FeedDetail)
     ])))
-    controller.spotsScrollView.contentInset.top = 64
+    controller.scrollView.contentInset.top = 64
     controller.viewDidLoad()
     let navigationController = UINavigationController(rootViewController: controller)
     navigationController.transitioningDelegate = transition
@@ -178,7 +178,7 @@ extension ForYouController: SpotsScrollDelegate {
       self.spot(at: 0, ListSpot.self)?.tableView.insert(Array(0..<(items.count)), section: 0, animation: .none)
       self.spot(at: 0, ListSpot.self)?.tableView.reload(Array((items.count)..<(items.count)), section: 0, animation: .none)
 
-      self.spotsScrollView.contentOffset.y = height - self.spotsScrollView.contentInset.top
+      self.scrollView.contentOffset.y = height - self.scrollView.contentInset.top
 
       navigationBar.layer.add(animation, forKey: "Animate Title")
       topItem.title = previousTitle

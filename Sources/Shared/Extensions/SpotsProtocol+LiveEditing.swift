@@ -24,7 +24,7 @@ import Cache
             let json = try JSONSerialization.jsonObject(with: data as Data, options: .mutableContainers) as? [String : Any] {
             self.source.cancel()
             self.source = nil
-            let offset = self.spotsScrollView.contentOffset
+            let offset = self.scrollView.contentOffset
 
             #if os(OSX)
               let components = json
@@ -33,7 +33,7 @@ import Cache
             #endif
 
             self.reloadIfNeeded(components) {
-              self.spotsScrollView.contentOffset = offset
+              self.scrollView.contentOffset = offset
 
               var yOffset: CGFloat = 0.0
               for spot in self.spots {

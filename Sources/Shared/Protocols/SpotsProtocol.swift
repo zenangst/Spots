@@ -11,7 +11,7 @@ public protocol SpotsProtocol: class {
   /// A SpotCache object
   var stateCache: SpotCache? { get set }
   /// The internal SpotsScrollView
-  var spotsScrollView: SpotsScrollView { get }
+  var scrollView: SpotsScrollView { get }
   /// A delegate that conforms to SpotsDelegate
   var delegate: SpotsDelegate? { get }
   /// A collection of Spotable objects used in composition

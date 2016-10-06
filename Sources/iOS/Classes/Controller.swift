@@ -90,7 +90,7 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
   weak open var scrollDelegate: SpotsScrollDelegate?
 
   /// A custom scroll view that handles the scrolling for all internal scroll views
-  lazy open var spotsScrollView: SpotsScrollView = {  [unowned self] in
+  lazy open var scrollView: SpotsScrollView = {  [unowned self] in
     let scrollView = SpotsScrollView()
     scrollView.alwaysBounceVertical = true
     scrollView.clipsToBounds = true
@@ -212,12 +212,12 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
   /// Called after the spot controller's view is loaded into memory.
   open override func viewDidLoad() {
     super.viewDidLoad()
-    view.addSubview(spotsScrollView)
-    spotsScrollView.frame = view.bounds
+    view.addSubview(scrollView)
+    scrollView.frame = view.bounds
 
     setupSpots()
 
-    Controller.configure?(spotsScrollView)
+    Controller.configure?(scrollView)
   }
 
   /**
@@ -229,20 +229,20 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
     super.viewWillAppear(animated)
 
     if let tabBarController = self.tabBarController, tabBarController.tabBar.isTranslucent {
-        spotsScrollView.contentInset.bottom = tabBarController.tabBar.frame.size.height
-        spotsScrollView.scrollIndicatorInsets.bottom = spotsScrollView.contentInset.bottom
+        scrollView.contentInset.bottom = tabBarController.tabBar.frame.size.height
+        scrollView.scrollIndicatorInsets.bottom = scrollView.contentInset.bottom
     }
 #if os(iOS)
     guard let _ = spotsRefreshDelegate, refreshControl.superview == nil
       else { return }
 
-    spotsScrollView.insertSubview(refreshControl, at: 0)
+    scrollView.insertSubview(refreshControl, at: 0)
 #endif
   }
 
   func configureView(withSize size: CGSize) {
-    spotsScrollView.frame.size = size
-    spotsScrollView.contentView.frame.size = size
+    scrollView.frame.size = size
+    scrollView.contentView.frame.size = size
     spots.enumerated().forEach { index, spot in
       compositeSpots[index]?.forEach { cIndex, cSpots in
         cSpots.forEach {
@@ -284,7 +284,7 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
     compositeSpots = [:]
     spots.enumerated().forEach { index, spot in
       setupSpot(at: index, spot: spot)
-      spotsScrollView.contentView.addSubview(spot.render())
+      scrollView.contentView.addSubview(spot.render())
       animated?(spot.render())
       (spot as? Gridable)?.layout.yOffset = yOffset
       yOffset += spot.render().frame.size.height
@@ -297,7 +297,7 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
     spot.spotsCompositeDelegate = self
     spots[index].component.index = index
     spot.registerAndPrepare()
-    spot.setup(spotsScrollView.frame.size)
+    spot.setup(scrollView.frame.size)
     spot.component.size = CGSize(
       width: view.frame.size.width,
       height: ceil(spot.render().frame.size.height))

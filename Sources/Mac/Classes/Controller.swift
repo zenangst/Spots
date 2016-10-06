@@ -54,11 +54,11 @@ open class Controller: NSViewController, SpotsProtocol {
   }
 
   /// A custom scroll view that handles the scrolling for all internal scroll views
-  lazy public var spotsScrollView: SpotsScrollView = {
-    let spotsScrollView = SpotsScrollView()
-    spotsScrollView.autoresizingMask = [ .viewWidthSizable, .viewHeightSizable ]
+  lazy public var scrollView: SpotsScrollView = {
+    let scrollView = SpotsScrollView()
+    scrollView.autoresizingMask = [ .viewWidthSizable, .viewHeightSizable ]
 
-    return spotsScrollView
+    return scrollView
   }()
 
   /// A scroll delegate for handling spotDidReachBeginning and spotDidReachEnd
@@ -79,7 +79,7 @@ open class Controller: NSViewController, SpotsProtocol {
     self.backgroundType = backgroundType
     super.init(nibName: nil, bundle: nil)!
 
-    NotificationCenter.default.addObserver(self, selector: #selector(Controller.scrollViewDidScroll(_:)), name: NSNotification.Name.NSScrollViewDidLiveScroll, object: spotsScrollView)
+    NotificationCenter.default.addObserver(self, selector: #selector(Controller.scrollViewDidScroll(_:)), name: NSNotification.Name.NSScrollViewDidLiveScroll, object: scrollView)
   }
 
   /**
@@ -180,19 +180,19 @@ open class Controller: NSViewController, SpotsProtocol {
    */
   open override func viewDidLoad() {
     super.viewDidLoad()
-    view.addSubview(spotsScrollView)
-    spotsScrollView.hasVerticalScroller = true
+    view.addSubview(scrollView)
+    scrollView.hasVerticalScroller = true
     setupSpots()
-    Controller.configure?(spotsScrollView)
+    Controller.configure?(scrollView)
   }
 
   open override func viewDidAppear() {
     super.viewDidAppear()
 
     for spot in spots {
-      spot.layout(spotsScrollView.frame.size)
+      spot.layout(scrollView.frame.size)
     }
-    spotsScrollView.forceUpdate = true
+    scrollView.forceUpdate = true
   }
 
   public func reloadSpots(spots: [Spotable], closure: (() -> Void)?) {
@@ -205,7 +205,7 @@ open class Controller: NSViewController, SpotsProtocol {
 
     setupSpots()
     closure?()
-    spotsScrollView.layoutSubtreeIfNeeded()
+    scrollView.layoutSubtreeIfNeeded()
   }
 
   /**
@@ -231,7 +231,7 @@ open class Controller: NSViewController, SpotsProtocol {
 
     spots[index].component.index = index
     spot.registerAndPrepare()
-    spotsScrollView.spotsContentView.addSubview(spot.render())
+    scrollView.spotsContentView.addSubview(spot.render())
     spot.setup(CGSize(width: view.frame.width, height: height))
     spot.component.size = CGSize(
       width: view.frame.width,
@@ -244,7 +244,7 @@ open class Controller: NSViewController, SpotsProtocol {
       spot.layout(CGSize(width: view.frame.width,
         height: spot.computedHeight ))
     }
-    spotsScrollView.layoutSubtreeIfNeeded()
+    scrollView.layoutSubtreeIfNeeded()
   }
 
   public func deselectAllExcept(selectedSpot: Spotable) {

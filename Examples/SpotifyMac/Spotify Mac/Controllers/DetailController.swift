@@ -97,7 +97,7 @@ class DetailController: Controller, SpotsDelegate, SpotsScrollDelegate {
     super.viewDidLoad()
 
     view.addSubview(shadowSeparator)
-    spotsScrollView.frame.origin.y = -40
+    scrollView.frame.origin.y = -40
   }
 
   override func viewWillAppear() {
@@ -108,13 +108,13 @@ class DetailController: Controller, SpotsDelegate, SpotsScrollDelegate {
   }
 
   func willEnterFullscreen(_ notification: NSNotification) {
-    self.spotsScrollView.animator().setFrameOrigin(
-      NSPoint(x: self.spotsScrollView.frame.origin.x, y: -20)
+    self.scrollView.animator().setFrameOrigin(
+      NSPoint(x: self.scrollView.frame.origin.x, y: -20)
     )
   }
 
   func willExitFullscreen(_ notification: NSNotification) {
-    spotsScrollView.frame.origin.y = -40
+    scrollView.frame.origin.y = -40
   }
 
   func build(_ blueprint: Blueprint) {
@@ -175,7 +175,7 @@ class DetailController: Controller, SpotsDelegate, SpotsScrollDelegate {
     CATransaction.setDisableActions(true)
 
     shadowSeparator.frame.size.width = view.frame.width
-    shadowSeparator.frame.origin.y = view.frame.maxY + spotsScrollView.frame.origin.y - shadowSeparator.frame.size.height
+    shadowSeparator.frame.origin.y = view.frame.maxY + scrollView.frame.origin.y - shadowSeparator.frame.size.height
 
     guard let sublayers = view.layer?.sublayers else { return }
     for case let sublayer as CAGradientLayer in sublayers {
@@ -233,8 +233,8 @@ class DetailController: Controller, SpotsDelegate, SpotsScrollDelegate {
 
     let viewRect = tableView.rect(ofRow: tableView.selectedRow)
     let currentView = viewRect.origin.y + viewRect.size.height
-    let viewPortMin = spotsScrollView.contentOffset.y - scrollView.frame.origin.y
-    let viewPortMax = spotsScrollView.frame.size.height + spotsScrollView.contentOffset.y - scrollView.frame.origin.y - scrollView.contentInsets.top + spotsScrollView.frame.origin.y
+    let viewPortMin = scrollView.contentOffset.y - scrollView.frame.origin.y
+    let viewPortMax = scrollView.frame.size.height + scrollView.contentOffset.y - scrollView.frame.origin.y - scrollView.contentInsets.top + scrollView.frame.origin.y
 
     var newY: CGFloat = 0.0
     var shouldScroll: Bool = false
@@ -249,10 +249,10 @@ class DetailController: Controller, SpotsDelegate, SpotsScrollDelegate {
     if shouldScroll {
       NSAnimationContext.runAnimationGroup({ (context) in
         context.duration = 0.3
-        var newOrigin: NSPoint = self.spotsScrollView.contentView.bounds.origin
+        var newOrigin: NSPoint = self.scrollView.contentView.bounds.origin
         newOrigin.y = newY
-        self.spotsScrollView.contentView.animator().setBoundsOrigin(newOrigin)
-        self.spotsScrollView.reflectScrolledClipView(self.spotsScrollView.contentView)
+        self.scrollView.contentView.animator().setBoundsOrigin(newOrigin)
+        self.scrollView.reflectScrolledClipView(self.scrollView.contentView)
         }, completionHandler: nil)
     }
 

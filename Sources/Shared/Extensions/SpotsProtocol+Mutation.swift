@@ -94,7 +94,7 @@ extension SpotsProtocol {
     self.spots[index].render().removeFromSuperview()
     self.spots[index] = spot
     self.setupSpot(at: index, spot: spot)
-    self.spotsScrollView.contentView.insertSubview(spot.render(), at: index)
+    self.scrollView.contentView.insertSubview(spot.render(), at: index)
     (spot as? Gridable)?.layout.yOffset = yOffset
     yOffset += spot.render().frame.size.height
   }
@@ -104,7 +104,7 @@ extension SpotsProtocol {
     spots.append(spot)
     setupSpot(at: index, spot: spot)
     (spot as? Gridable)?.layout.yOffset = yOffset
-    spotsScrollView.contentView.addSubview(spot.render())
+    scrollView.contentView.addSubview(spot.render())
     yOffset += spot.render().frame.size.height
   }
 
@@ -274,8 +274,8 @@ extension SpotsProtocol {
 
       weakSelf.spots = newSpots
 
-      if weakSelf.spotsScrollView.superview == nil {
-        weakSelf.view.addSubview(weakSelf.spotsScrollView)
+      if weakSelf.scrollView.superview == nil {
+        weakSelf.view.addSubview(weakSelf.scrollView)
       }
 
       weakSelf.reloadSpotsScrollView()
@@ -314,8 +314,8 @@ extension SpotsProtocol {
       weakSelf.spots = Parser.parse(json)
       weakSelf.cache()
 
-      if weakSelf.spotsScrollView.superview == nil {
-        weakSelf.view.addSubview(weakSelf.spotsScrollView)
+      if weakSelf.scrollView.superview == nil {
+        weakSelf.view.addSubview(weakSelf.scrollView)
       }
 
       weakSelf.reloadSpotsScrollView()
@@ -499,9 +499,9 @@ extension SpotsProtocol {
 
   fileprivate func reloadSpotsScrollView() {
     #if os(OSX)
-      spotsScrollView.documentView?.subviews.forEach { $0.removeFromSuperview() }
+      scrollView.documentView?.subviews.forEach { $0.removeFromSuperview() }
     #else
-      spotsScrollView.contentView.subviews.forEach { $0.removeFromSuperview() }
+      scrollView.contentView.subviews.forEach { $0.removeFromSuperview() }
     #endif
   }
 }
