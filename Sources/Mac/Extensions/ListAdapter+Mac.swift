@@ -186,7 +186,7 @@ extension ListAdapter: NSTableViewDelegate {
     }
 
     if spot.component.meta(ListSpot.Key.doubleAction, type: Bool.self) != true {
-      spot.delegate?.spotDidSelectItem(spot, item: viewModel)
+      spot.delegate?.didSelect(item: viewModel, in: spot)
     }
 
     return true

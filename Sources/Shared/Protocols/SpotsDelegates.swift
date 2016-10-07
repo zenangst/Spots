@@ -41,7 +41,7 @@ public protocol SpotsDelegate: class {
   ///
   /// - parameter spot: An object that conforms to the spotable protocol
   /// - parameter item: The view model that was tapped
-  func spotDidSelectItem(_ spot: Spotable, item: Item)
+  func didSelect(item: Item, in spot: Spotable)
 }
 
 // MARK: - SpotsDelegate extension
@@ -49,9 +49,9 @@ public extension SpotsDelegate {
 
   /// Triggered when ever a user taps on an item
   ///
-  /// - parameter spot: The spotable object that the item belongs to.
   /// - parameter item: The item struct that the user tapped on.
-  func spotDidSelectItem(_ spot: Spotable, item: Item) {}
+  /// - parameter spot: The spotable object that the item belongs to.
+  func didSelect(item: Item, in spot: Spotable) {}
 
   /// Invoked when ever the collection of spotable objects changes on the Controller.
   ///

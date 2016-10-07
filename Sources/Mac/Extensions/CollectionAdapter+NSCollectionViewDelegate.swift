@@ -11,7 +11,7 @@ extension CollectionAdapter : NSCollectionViewDelegate {
     Dispatch.delay(for: 0.1) { [spot = spot] in
       guard let first = indexPaths.first,
         let item = spot.item(at: first.item), first.item < spot.items.count else { return }
-      spot.delegate?.spotDidSelectItem(spot, item: item)
+      spot.delegate?.didSelect(item: item, in: spot)
     }
   }
 }
