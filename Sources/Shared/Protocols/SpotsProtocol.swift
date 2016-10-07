@@ -27,6 +27,7 @@ public protocol SpotsProtocol: class {
   var view: View! { get }
   #endif
 
+  /// The first spotable object in the controller.
   var spot: Spotable? { get }
 
   /// A dictionary representation of the controller
@@ -37,18 +38,46 @@ public protocol SpotsProtocol: class {
   #endif
 
   #if DEVMODE
+  /// A dispatch queue is a lightweight object to which your application submits blocks for subsequent execution.
   var fileQueue: DispatchQueue { get }
+  /// An identifier for the type system object being monitored by a dispatch source.
   var source: DispatchSourceFileSystemObject! { get set }
   #endif
 
+  /// Set up Spotable objects.
+  ///
+  /// - parameter animated: An optional animation closure that is invoked when setting up the spot.
   func setupSpots(_ animated: ((_ view: View) -> Void)?)
+
+  /// Set up Spot at index
+  ///
+  /// - parameter index: The index of the Spotable object
+  /// - parameter spot:  The spotable object that is going to be setup
   func setupSpot(at index: Int, spot: Spotable)
+
+  ///  A generic look up method for resolving spots based on index
+  ///
+  /// - parameter index: The index of the spot that you are trying to resolve.
+  /// - parameter type: The generic type for the spot you are trying to resolve.
+  ///
+  /// - returns: An optional Spotable object of inferred type.
   func spot<T>(at index: Int, _ type: T.Type) -> T?
+
+  /// A generic look up method for resolving spots using a closure
+  ///
+  /// - parameter closure: A closure to perform actions on a spotable object
+  ///
+  /// - returns: An optional Spotable object
   func resolve(spot closure: (_ index: Int, _ spot: Spotable) -> Bool) -> Spotable?
 
   #if os(OSX)
   init(spots: [Spotable], backgroundType: ControllerBackground)
   #else
+  /// A required initializer for initializing a controller with Spotable objects
+  ///
+  /// - parameter spots: A collection of Spotable objects that should be setup and be added to the view hierarchy.
+  ///
+  /// - returns: An initalized controller.
   init(spots: [Spotable])
   #endif
 }
