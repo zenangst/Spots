@@ -6,6 +6,13 @@
 
 import Brick
 import Cache
+
+/// Compare method for generic types that conform to Comparable
+///
+/// - parameter lhs: Generic object on left hand side
+/// - parameter rhs: Generic object on right hand side
+///
+/// - returns: True if lhs is lesser than rhs.
 fileprivate func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
   case let (l?, r?):
@@ -17,6 +24,12 @@ fileprivate func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
+/// Compare method for generic types that conform to Comparable
+///
+/// - parameter lhs: Generic object on left hand side
+/// - parameter rhs: Generic object on right hand side
+///
+/// - returns: True if lhs is greater than rhs.
 fileprivate func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
   case let (l?, r?):
@@ -26,13 +39,19 @@ fileprivate func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
-
+// MARK: - SpotsProtocol extension
 public extension SpotsProtocol {
 
+  /// A convenience property for getting a dictionary representation of the controller wihtout item reduction.
   public var dictionary: [String : Any] {
     get { return dictionary() }
   }
 
+  /// Produce a dictionary representation of the controller.
+  ///
+  /// - parameter amountOfItems: An optional Int used for getting a subset of items to cache, it set, it will save the amount of items for each Spotable object based on this value.
+  ///
+  /// - returns: A dictionary representation of the controller.
   public func dictionary(_ amountOfItems: Int? = nil) -> [String : Any] {
     var result = [[String : Any]]()
 
@@ -59,6 +78,11 @@ public extension SpotsProtocol {
     return ["components" : result as AnyObject ]
   }
 
+  /// Resolve UI component based on a predicate.
+  ///
+  /// - parameter includeElement: A filter predicate used to match the UI that should be resolved.
+  ///
+  /// - returns: An optional object with inferred type.
   public func ui<T>(_ includeElement: (Item) -> Bool) -> T? {
     for spot in spots {
       if let first = spot.items.filter(includeElement).first {
@@ -79,13 +103,11 @@ public extension SpotsProtocol {
     return nil
   }
 
-  /**
-   Filter Spotable objects inside of controller
-
-   - parameter includeElement: A filter predicate to find a spot
-
-   - returns:  A collection of Spotable objects that match the includeElements predicate
-   */
+  /// Filter Spotable objects inside of controller
+  ///
+  /// - parameter includeElement: A filter predicate to find a spot
+  ///
+  /// - returns: A collection of Spotable objects that match the includeElements predicate
   public func filter(spots includeElement: (Spotable) -> Bool) -> [Spotable] {
     var result = spots.filter(includeElement)
 
@@ -99,11 +121,11 @@ public extension SpotsProtocol {
     return result
   }
 
-  /**
-   Filter view models in all Spotable objects inside of the controller
-
-   - parameter includeElement: A filter predicate to find view models
-   */
+  /// Filter items based on predicate.
+  ///
+  /// - parameter includeElement: The predicate that the item has to match.
+  ///
+  /// - returns: A collection of tuples containing spotable objects with the matching items that were found.
   public func filter(items includeElement: (Item) -> Bool) -> [(spot: Spotable, items: [Item])] {
     var result = [(spot: Spotable, items: [Item])]()
     for spot in spots {
@@ -128,10 +150,10 @@ public extension SpotsProtocol {
   }
 
 #if os(iOS)
-  /**
-   - parameter index: The index of the spot that you want to scroll
-   - parameter includeElement: A filter predicate to find a view model
-   */
+  /// Scroll to the index of a Spotable object, only available on iOS.
+  ///
+  /// - parameter index:          The index of the spot that you want to scroll
+  /// - parameter includeElement: A filter predicate to find a view model
   public func scrollTo(spotIndex index: Int = 0, includeElement: (Item) -> Bool) {
     guard let itemY = spot(at: index, Spotable.self)?.scrollTo(includeElement) else { return }
 
@@ -145,20 +167,18 @@ public extension SpotsProtocol {
     }
   }
 
-  /**
-   - parameter animated: A boolean value to determine if you want to perform the scrolling with or without animation
-   */
+  /// Scroll to the bottom of the controller
+  ///
+  /// - parameter animated: A boolean in indicate if the scrolling should be done with animation.
   public func scrollToBottom(_ animated: Bool) {
     let y = scrollView.contentSize.height - scrollView.frame.size.height + scrollView.contentInset.bottom
     scrollView.setContentOffset(CGPoint(x: 0, y: y), animated: animated)
   }
 #endif
 
-  /**
-   Caches the current state of the spot controller
-
-   - parameter items: An optional integer that is used to reduce the amount of items that should be cached per Spotable object when saving the view state to disk
-   */
+  /// Caches the current state of the controller
+  ///
+  /// - parameter items: An optional integer that is used to reduce the amount of items that should be cached per Spotable object when saving the view state to disk
   public func cache(_ items: Int? = nil) {
     #if DEVMODE
       liveEditing(stateCache: stateCache)
@@ -167,9 +187,7 @@ public extension SpotsProtocol {
     stateCache?.save(dictionary(items))
   }
 
-  /**
-   Clear Spots cache
-   */
+  /// Clear the Spots cache
   public static func clearCache() {
     let paths = NSSearchPathForDirectoriesInDomains(.cachesDirectory,
                                                     FileManager.SearchPathDomainMask.userDomainMask, true)
@@ -181,10 +199,11 @@ public extension SpotsProtocol {
     }
   }
 
-  /**
-   - parameter indexPath: The index path of the component you want to lookup
-   - returns: A Component object at index path
-   **/
+  /// Resolve component at index path.
+  ///
+  /// - parameter indexPath: The index path of the component belonging to the Spotable object at that index.
+  ///
+  /// - returns: A Component object at index path.
   fileprivate func component(at indexPath: IndexPath) -> Component {
     return spot(at: indexPath).component
   }

@@ -244,11 +244,10 @@ open class GridSpot: NSObject, Gridable {
     collectionView.collectionViewLayout = layout
   }
 
-  /**
-   The container view for the GridSpot
-
-   - returns: A ScrollView object
-   */
+  /// Return collection view as a scroll view
+  ///
+  /// - returns: UIScrollView: Returns a UICollectionView as a UIScrollView
+  ///
   open func render() -> ScrollView {
     return scrollView
   }

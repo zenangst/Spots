@@ -3,6 +3,9 @@ import Cache
 #if DEVMODE
   public extension SpotsProtocol {
 
+    /// Monitor changes made to a file at file path.
+    ///
+    /// - parameter filePath: A file path string, pointing to the file that should be monitored.
     private func monitor(filePath: String) {
       guard FileManager.default.fileExists(atPath: filePath) else { return }
 
@@ -63,6 +66,9 @@ import Cache
       source.resume()
     }
 
+    /// Enable live editing with state cache
+    ///
+    /// - parameter stateCache: An optional SpotCache, used for resolving which file should be monitored.
     func liveEditing(stateCache: SpotCache?) {
       #if (arch(i386) || arch(x86_64)) && os(iOS)
         guard let stateCache = stateCache, source == nil else { return }

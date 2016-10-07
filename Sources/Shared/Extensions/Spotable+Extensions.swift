@@ -6,6 +6,7 @@
 
 import Brick
 
+// MARK: - Spotable extension
 public extension Spotable {
 
   /// A computed value for the current index
@@ -150,28 +151,28 @@ public extension Spotable {
     }
   }
 
-  /**
-   Prepare items in component
-   */
+  /// Prepare items in component
   func prepareItems() {
     component.items.enumerated().forEach { (index: Int, _) in
       configureItem(at: index, usesViewSize: true)
     }
   }
 
-  /**
-   - parameter index: The index of the item to lookup
-   - returns: A Item at found at the index
-   */
+  /// Resolve item at index.
+  ///
+  /// - parameter index: The index of the item that should be resolved.
+  ///
+  /// - returns: An optional Item that corresponds to the index.
   public func item(at index: Int) -> Item? {
     guard index < component.items.count && index > -1 else { return nil }
     return component.items[index]
   }
 
-  /**
-   - parameter indexPath: The indexPath of the item to lookup
-   - returns: A Item at found at the index
-   */
+  /// Resolve item at index path.
+  ///
+  /// - parameter indexPath: The index path of the item that should be resolved.
+  ///
+  /// - returns: An optional Item that corresponds to the index path.
   public func item(at indexPath: IndexPath) -> Item? {
     #if os(OSX)
       return item(at: indexPath.item)
@@ -180,6 +181,10 @@ public extension Spotable {
     #endif
   }
 
+
+  /// Update the height of the UI Component
+  ///
+  /// - parameter completion: A completion closure that will be run in the main queue when the size has been updated.
   public func updateHeight(_ completion: Completion = nil) {
     Dispatch.inQueue(queue: .interactive) { [weak self] in
       guard let weakSelf = self else { Dispatch.mainQueue { completion?(); }; return }
@@ -191,9 +196,7 @@ public extension Spotable {
     }
   }
 
-  /**
-   Refreshes the indexes of all items within the component
-   */
+  /// Refresh indexes for all items to ensure that the indexes are unique and in ascending order.
   public func refreshIndexes() {
     var updatedItems  = items
     updatedItems.enumerated().forEach {
@@ -233,12 +236,10 @@ public extension Spotable {
     }
   }
 
-  /**
-   Reload Spotable object with JSON if contents changed
-
-   - parameter json:      A JSON dictionary
-   - parameter animation:  A SpotAnimation that is used when performing the mutation (only works for Listable objects)
-   */
+  /// Reload Spotable object with JSON if contents changed
+  ///
+  /// - parameter json:      A JSON dictionary
+  /// - parameter animation:  A SpotAnimation that is used when performing the mutation (only works for Listable objects)
   public func reloadIfNeeded(_ json: [String : Any], withAnimation animation: SpotsAnimation = .automatic) {
     let newComponent = Component(json)
 
@@ -250,27 +251,24 @@ public extension Spotable {
     }
   }
 
-  /**
-   Caches the current state of the spot
-   */
+  /// Caches the current state of the spot
   public func cache() {
     stateCache?.save(dictionary)
   }
 
-  /**
-   - parameter includeElement: A filter predicate to find a view model
-   - returns: Always returns 0.0
-   */
+  /// Scroll to Item matching predicate
+  ///
+  /// - parameter includeElement: A filter predicate to find a view model
+  ///
+  /// - returns: A calculate CGFloat based on what the includeElement matches
   public func scrollTo(_ includeElement: (Item) -> Bool) -> CGFloat {
     return 0.0
   }
 
-  /**
-   Prepares a view model item before being used by the UI component
-
-   - parameter index: The index of the view model
-   - parameter usesViewSize: A boolean value to determine if the view uses the views height
-   */
+  /// Prepares a view model item before being used by the UI component
+  ///
+  /// - parameter index:        The index of the view model
+  /// - parameter usesViewSize: A boolean value to determine if the view uses the views height
   public func configureItem(at index: Int, usesViewSize: Bool = false) {
     guard let item = item(at: index) else { return }
 
@@ -332,10 +330,21 @@ public extension Spotable {
     }
   }
 
+  /// Update and return the size for the item at index path.
+  ///
+  /// - parameter indexPath: indexPath: An NSIndexPath.
+  ///
+  /// - returns: CGSize of the item at index path.
   public func sizeForItem(at indexPath: IndexPath) -> CGSize {
     return render().frame.size
   }
 
+
+  /// Get identifier for item at index path
+  ///
+  /// - parameter indexPath: The index path for the item
+  ///
+  /// - returns: The identifier string of the item at index path
   func identifier(at indexPath: IndexPath) -> String {
     #if os(OSX)
       return identifier(at: indexPath.item)
@@ -344,6 +353,12 @@ public extension Spotable {
     #endif
   }
 
+
+  /// Lookup identifier at index.
+  ///
+  /// - parameter index: The index of the item that needs resolving.
+  ///
+  /// - returns: A string identifier for the view, defaults to the `defaultIdentifier` on the Spotable object.
   public func identifier(at index: Int) -> String {
     guard let item = item(at: index), type(of: self).views.storage[item.kind] != nil
       else {
@@ -353,31 +368,55 @@ public extension Spotable {
     return item.kind
   }
 
+
+  /// Register and prepare all items in the Spotable object.
   func registerAndPrepare() {
     register()
     prepareItems()
   }
 
+
+  /// Register default view for the Spotable object
+  ///
+  /// - parameter view: The view type that should be used as the default view
   func registerDefault(view: View.Type) {
     if type(of: self).views.storage[type(of: self).views.defaultIdentifier] == nil {
       type(of: self).views.defaultItem = Registry.Item.classType(view)
     }
   }
 
+
+  /// Register a composite view for the Spotable component.
+  ///
+  /// - parameter view: The view type that should be used as the composite view for the Spotable object.
   func registerComposite(view: View.Type) {
     if type(of: self).views.composite == nil {
       type(of: self).views.composite = Registry.Item.classType(view)
     }
   }
 
+
+  /// Register a nib file with identifier on the Spotable object.
+  ///
+  /// - parameter nib:        A Nib file that should be used for identifier
+  /// - parameter identifier: A StringConvertible identifier for the registered nib.
   public static func register(nib: Nib, identifier: StringConvertible) {
     self.views.storage[identifier.string] = Registry.Item.nib(nib)
   }
 
+
+  /// Register a view with an identifier
+  ///
+  /// - parameter view:       The view type that should be registered with an identifier.
+  /// - parameter identifier: A StringConvertible identifier for the registered view type.
   public static func register(view: View.Type, identifier: StringConvertible) {
     self.views.storage[identifier.string] = Registry.Item.classType(view)
   }
 
+
+  /// Register a default view for the Spotable object.
+  ///
+  /// - parameter view: The view type that should be used as the default view for the Spotable object.
   public static func register(defaultView view: View.Type) {
     self.views.defaultItem = Registry.Item.classType(view)
   }

@@ -8,22 +8,27 @@ import Brick
 /// A Spotable extension for Gridable objects
 public extension Spotable where Self : Gridable {
 
-  /**
-   - returns: UIScrollView: Returns a UICollectionView as a UIScrollView
-   */
   #if os(OSX)
+  /// Return collection view as a scroll view
+  ///
+  /// - returns: Returns a UICollectionView as a UIScrollView
+  ///
   public func render() -> CollectionView {
     return collectionView
   }
   #else
+  /// Return collection view as a scroll view
+  ///
+  /// - returns: Returns a UICollectionView as a UIScrollView
+  ///
   public func render() -> ScrollView {
   return collectionView
   }
   #endif
 
-  /**
-   - parameter size: A CGSize to set the size of the collection view
-   */
+  /// Setup Spotable component with base size
+  ///
+  /// - parameter size: The size of the superview
   public func setup(_ size: CGSize) {
     layout.prepare()
     collectionView.frame.size.width = size.width
@@ -34,14 +39,15 @@ public extension Spotable where Self : Gridable {
     component.size = collectionView.frame.size
   }
 
-  /**
-   - parameter size: A CGSize to set the width and height of the collection view
-   */
+  /// Layout with size
+  ///
+  /// - parameter size: A CGSize to set the width and height of the collection view
   public func layout(_ size: CGSize) {
     layout.invalidateLayout()
     collectionView.frame.size.width = size.width
   }
 
+  /// Prepare items in component
   public func prepareItems() {
     component.items.enumerated().forEach { (index: Int, _) in
       configureItem(at: index, usesViewSize: true)

@@ -174,6 +174,9 @@ open class CarouselSpot: NSObject, Gridable {
     }
   }
 
+  /// Setup Spotable component with base size
+  ///
+  /// - parameter size: The size of the superview
   open func setup(_ size: CGSize) {
     if component.span > 0 {
       component.items.enumerated().forEach {

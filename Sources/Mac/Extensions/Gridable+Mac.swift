@@ -78,12 +78,10 @@ extension Gridable {
     return item.kind
   }
 
-  /**
-   Prepares a view model item before being used by the UI component
-
-   - parameter index: The index of the view model
-   - parameter usesViewSize: A boolean value to determine if the view uses the views height
-   */
+  /// Prepares a view model item before being used by the UI component
+  ///
+  /// - parameter index:        The index of the view model
+  /// - parameter usesViewSize: A boolean value to determine if the view uses the views height
   public func configureItem(at index: Int, usesViewSize: Bool = false) {
     guard let item = item(at: index) else { return }
 
