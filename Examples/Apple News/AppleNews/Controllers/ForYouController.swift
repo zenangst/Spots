@@ -146,10 +146,10 @@ class ForYouController: Controller, SpotsDelegate {
 
 extension ForYouController: ScrollDelegate {
 
-  func didReachEnd(_ completion: ((_ scrollView: ScrollView?) -> Void)?) {
+  func didReachEnd(in scrollView: ScrollableView, completion: Completion) {
     guard let spot = spot, spot.component.items.count < 100 && view.window != nil
       else {
-        completion?(scrollView)
+        completion?()
         return
     }
 
@@ -171,7 +171,7 @@ extension ForYouController: ScrollDelegate {
       guard let weakSelf = self,
         let spot = weakSelf.spot
         else {
-          completion?(self?.scrollView)
+          completion?()
           return
       }
 
@@ -187,7 +187,7 @@ extension ForYouController: ScrollDelegate {
 
       navigationBar.layer.add(animation, forKey: "Animate Title")
       topItem.title = previousTitle
-      completion?(self?.scrollView)
+      completion?()
     }
   }
 

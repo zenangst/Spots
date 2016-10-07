@@ -19,17 +19,17 @@ open class CarouselSpot: NSObject, Gridable {
     /// Default dynamicSpan value
     public static var dynamicSpan: Bool = false
     /// Default section inset top
-    public static var sectionInsetTop: Double = 0.0
+    public static var sectionInsetTop: CGFloat = 0.0
     /// Default section inset left
-    public static var sectionInsetLeft: Double = 0.0
+    public static var sectionInsetLeft: CGFloat = 0.0
     /// Default section inset right
-    public static var sectionInsetRight: Double = 0.0
+    public static var sectionInsetRight: CGFloat = 0.0
     /// Default section inset bottom
-    public static var sectionInsetBottom: Double = 0.0
+    public static var sectionInsetBottom: CGFloat = 0.0
     /// Default default minimum interitem spacing
-    public static var minimumInteritemSpacing: Double = 0.0
+    public static var minimumInteritemSpacing: CGFloat = 0.0
     /// Default minimum line spacing
-    public static var minimumLineSpacing: Double = 0.0
+    public static var minimumLineSpacing: CGFloat = 0.0
   }
 
   /// A boolean value that affects the sizing of items when using span, if enabled and the item count is less than the span, the CarouselSpot will even out the space between the items to align them
@@ -232,12 +232,12 @@ open class CarouselSpot: NSObject, Gridable {
   /// Configure section insets and layout spacing for the UICollectionViewFlow using component meta data
   func configureLayout() {
     layout.sectionInset = UIEdgeInsets(
-      top: CGFloat(component.meta(GridableMeta.Key.sectionInsetTop, Default.sectionInsetTop)),
-      left: CGFloat(component.meta(GridableMeta.Key.sectionInsetLeft, Default.sectionInsetLeft)),
-      bottom: CGFloat(component.meta(GridableMeta.Key.sectionInsetBottom, Default.sectionInsetBottom)),
-      right: CGFloat(component.meta(GridableMeta.Key.sectionInsetRight, Default.sectionInsetRight)))
-    layout.minimumInteritemSpacing = CGFloat(component.meta(GridableMeta.Key.minimumInteritemSpacing, Default.minimumInteritemSpacing))
-    layout.minimumLineSpacing = CGFloat(component.meta(GridableMeta.Key.minimumLineSpacing, Default.minimumLineSpacing))
+      top: component.meta(GridableMeta.Key.sectionInsetTop, Default.sectionInsetTop),
+      left: component.meta(GridableMeta.Key.sectionInsetLeft, Default.sectionInsetLeft),
+      bottom: component.meta(GridableMeta.Key.sectionInsetBottom, Default.sectionInsetBottom),
+      right: component.meta(GridableMeta.Key.sectionInsetRight, Default.sectionInsetRight))
+    layout.minimumInteritemSpacing = component.meta(GridableMeta.Key.minimumInteritemSpacing, Default.minimumInteritemSpacing)
+    layout.minimumLineSpacing = component.meta(GridableMeta.Key.minimumLineSpacing, Default.minimumLineSpacing)
     dynamicSpan = component.meta(Key.dynamicSpan, false)
   }
 
