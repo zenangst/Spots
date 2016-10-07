@@ -361,7 +361,7 @@ class ListController: Controller, SpotsDelegate, ScrollDelegate {
 
 extension ListController {
 
-  func spotDidSelectItem(_ spot: Spotable, item: Item) {
+  func didSelect(item: Item, in spot: Spotable) {
     deselectAllExcept(selectedSpot: spot)
 
     guard let action = item.action else { return }

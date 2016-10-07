@@ -14,7 +14,7 @@ open class FeedController: Controller, SpotsDelegate {
     super.viewDidLoad()
   }
 
-  open func spotDidSelectItem(_ spot: Spotable, item: Item) { }
+  open func didSelect(item: Item, in spot: Spotable) { }
 
   open static func generateItem(_ index: Int, kind: String = "feed") -> Item {
     let sencenceCount = Int(arc4random_uniform(8) + 1)

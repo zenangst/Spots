@@ -189,7 +189,7 @@ extension PlaylistController: ScrollDelegate {
 
 extension PlaylistController: SpotsDelegate {
 
-  func spotDidSelectItem(_ spot: Spotable, item: Item) {
+  func didSelect(item: Item, in spot: Spotable) {
     if let delegate = UIApplication.shared.delegate as? AppDelegate,
       let playlist = spot as? ListSpot {
         delegate.mainController.playerController.lastItem = item

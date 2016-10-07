@@ -204,7 +204,7 @@ class PlayerController: Controller {
 
 extension PlayerController: SpotsDelegate {
 
-  func spotDidSelectItem(_ spot: Spotable, item: Item) {
+  func didSelect(item: Item, in spot: Spotable) {
     guard let urn = item.action else { return }
 
     if !["next", "previous"].contains(urn) {

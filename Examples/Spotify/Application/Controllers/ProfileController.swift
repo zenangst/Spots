@@ -38,7 +38,7 @@ class ProfileController: Controller {
 
 extension ProfileController: SpotsDelegate {
 
-  func spotDidSelectItem(_ spot: Spotable, item: Item) {
+  func didSelect(item: Item, in spot: Spotable) {
     guard let urn = item.action else { return }
     Compass.navigate(to: urn)
   }

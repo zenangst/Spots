@@ -4,7 +4,7 @@ import Sugar
 
 open class SearchHeaderView: UITableViewHeaderFooterView, Componentable {
 
-  open var defaultHeight: CGFloat = 88
+  open var preferredHeaderHeight: CGFloat = 88
 
   lazy var label: UILabel = { [unowned self] in
     let label = UILabel(frame: self.bounds)

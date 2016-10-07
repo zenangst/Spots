@@ -3,7 +3,7 @@ import Spots
 
 open class ListHeaderView: UITableViewHeaderFooterView, Componentable {
 
-  open var defaultHeight: CGFloat = 44
+  open var preferredHeaderHeight: CGFloat = 44
 
   lazy var label: UILabel = { [unowned self] in
     let label = UILabel(frame: self.frame)

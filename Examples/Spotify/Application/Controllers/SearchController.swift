@@ -36,7 +36,7 @@ class SearchController: Controller {
 
 extension SearchController: SpotsDelegate {
 
-  func spotDidSelectItem(_ spot: Spotable, item: Item) {
+  func didSelect(item: Item, in spot: Spotable) {
     guard let urn = item.action else { return }
 
     guard let delegate = UIApplication.shared.delegate as? AppDelegate,

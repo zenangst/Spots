@@ -79,7 +79,7 @@ class ForYouController: Controller, SpotsDelegate {
     self.title = title
   }
 
-  func spotDidSelectItem(_ spot: Spotable, item: Item) {
+  func didSelect(item: Item, in spot: Spotable) {
     var item = item
     item.update(kind: Cell.FeedDetail)
     item.subtitle = ForYouController.faker.lorem.sentences(amount: 20)
