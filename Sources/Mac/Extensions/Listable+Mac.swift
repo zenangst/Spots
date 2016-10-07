@@ -30,9 +30,9 @@ extension Listable {
   }
 
   @discardableResult public func selectFirst() -> Self {
-    guard let viewModel = item(at: 0), !component.items.isEmpty else { return self }
+    guard let item = item(at: 0), !component.items.isEmpty else { return self }
     tableView.selectRowIndexes(IndexSet(integer: 0), byExtendingSelection: false)
-    delegate?.didSelect(item: viewModel, in: self)
+    delegate?.didSelect(item: item, in: self)
 
     return self
   }

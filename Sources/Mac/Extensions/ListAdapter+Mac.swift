@@ -180,13 +180,13 @@ extension ListAdapter: NSTableViewDataSource {
 extension ListAdapter: NSTableViewDelegate {
 
   public func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
-    guard let viewModel = spot.item(at: row), row > -1 && row < spot.component.items.count
+    guard let item = spot.item(at: row), row > -1 && row < spot.component.items.count
       else {
         return false
     }
 
     if spot.component.meta(ListSpot.Key.doubleAction, type: Bool.self) != true {
-      spot.delegate?.didSelect(item: viewModel, in: spot)
+      spot.delegate?.didSelect(item: item, in: spot)
     }
 
     return true

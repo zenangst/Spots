@@ -83,32 +83,31 @@ extension Gridable {
   /// - parameter index:        The index of the view model
   /// - parameter usesViewSize: A boolean value to determine if the view uses the views height
   public func configureItem(at index: Int, usesViewSize: Bool = false) {
-    guard let item = item(at: index) else { return }
+    guard var item = item(at: index) else { return }
 
-    var viewModel = item
-    viewModel.index = index
+    item.index = index
 
     let kind = item.kind.isEmpty || Self.grids.storage[item.kind] == nil
       ? Self.grids.defaultIdentifier
-      : viewModel.kind
+      : item.kind
 
     guard let (_, collectionItem) = Self.grids.make(kind),
       let view = collectionItem as? SpotConfigurable else { return }
 
-    view.configure(&viewModel)
+    view.configure(&item)
 
     if usesViewSize {
-      if viewModel.size.height == 0 {
-        viewModel.size.height = view.preferredViewSize.height
+      if item.size.height == 0 {
+        item.size.height = view.preferredViewSize.height
       }
 
-      if viewModel.size.width == 0 {
-        viewModel.size.width = view.preferredViewSize.width
+      if item.size.width == 0 {
+        item.size.width = view.preferredViewSize.width
       }
     }
 
     if index < component.items.count {
-      component.items[index] = viewModel
+      component.items[index] = item
     }
   }
 

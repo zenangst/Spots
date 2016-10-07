@@ -270,21 +270,20 @@ public extension Spotable {
   /// - parameter index:        The index of the view model
   /// - parameter usesViewSize: A boolean value to determine if the view uses the views height
   public func configureItem(at index: Int, usesViewSize: Bool = false) {
-    guard let item = item(at: index) else { return }
+    guard var item = item(at: index) else { return }
 
-    var viewModel = item
-    viewModel.index = index
+    item.index = index
 
     let kind = item.kind.isEmpty || Self.views.storage[item.kind] == nil
       ? Self.views.defaultIdentifier
-      : viewModel.kind
+      : item.kind
 
     guard let (_, resolvedView) = Self.views.make(kind),
       let view = resolvedView else { return }
 
     #if !os(OSX)
       if let composite = view as? Composable {
-        let spots = composite.parse(viewModel)
+        let spots = composite.parse(item)
 
         spots.forEach { $0.registerAndPrepare() }
 
@@ -305,28 +304,28 @@ public extension Spotable {
           view.contentView.frame = view.bounds
         }
 
-        (view as? SpotConfigurable)?.configure(&viewModel)
+        (view as? SpotConfigurable)?.configure(&item)
       }
     #else
-      (view as? SpotConfigurable)?.configure(&viewModel)
+      (view as? SpotConfigurable)?.configure(&item)
     #endif
 
     if let itemView = view as? SpotConfigurable, usesViewSize {
-      if viewModel.size.height == 0 {
-        viewModel.size.height = itemView.preferredViewSize.height
+      if item.size.height == 0 {
+        item.size.height = itemView.preferredViewSize.height
       }
 
-      if viewModel.size.width == 0 {
-        viewModel.size.width = itemView.preferredViewSize.width
+      if item.size.width == 0 {
+        item.size.width = itemView.preferredViewSize.width
       }
 
-      if viewModel.size.width == 0 {
-        viewModel.size.width = view.bounds.width
+      if item.size.width == 0 {
+        item.size.width = view.bounds.width
       }
     }
 
     if index < component.items.count && index > -1 {
-      component.items[index] = viewModel
+      component.items[index] = item
     }
   }
 

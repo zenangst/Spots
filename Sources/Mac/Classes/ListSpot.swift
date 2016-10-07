@@ -124,13 +124,13 @@ open class ListSpot: NSObject, Listable {
   }
 
   open func doubleAction(_ sender: Any?) {
-    guard let viewModel = item(at: tableView.clickedRow), component.meta(Key.doubleAction, type: Bool.self) == true else { return }
-    delegate?.didSelect(item: viewModel, in: self)
+    guard let item = item(at: tableView.clickedRow), component.meta(Key.doubleAction, type: Bool.self) == true else { return }
+    delegate?.didSelect(item: item, in: self)
   }
 
   open func action(_ sender: Any?) {
-    guard let viewModel = item(at: tableView.clickedRow), component.meta(Key.doubleAction, false) == false else { return }
-    delegate?.didSelect(item: viewModel, in: self)
+    guard let item = item(at: tableView.clickedRow), component.meta(Key.doubleAction, false) == false else { return }
+    delegate?.didSelect(item: item, in: self)
   }
 
   open func render() -> ScrollView {
