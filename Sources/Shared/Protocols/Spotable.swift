@@ -161,6 +161,7 @@ public protocol Spotable: class {
   func sizeForItem(at indexPath: IndexPath) -> CGSize
 
   #if os(OSX)
+  /// Unselect any selected views inside of the spotable object.
   func deselect()
   #endif
 }

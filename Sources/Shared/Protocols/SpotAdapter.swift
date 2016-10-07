@@ -1,6 +1,7 @@
 import Foundation
 import Brick
 
+/// A protocol for adapters for performing mutation on the data source.
 public protocol SpotAdapter: class {
 
   /// Resolve a UI component at index with inferred type
