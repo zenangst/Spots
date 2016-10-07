@@ -22,7 +22,7 @@ open class ViewSpot: NSObject, Spotable, Viewable {
 
   open lazy var scrollView: ScrollView = ScrollView()
 
-  open fileprivate(set) var stateCache: SpotCache?
+  open fileprivate(set) var stateCache: StateCache?
 
   open var adapter: SpotAdapter?
 

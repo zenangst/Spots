@@ -64,8 +64,8 @@ open class GridSpot: NSObject, Gridable {
   /// A custom UICollectionViewFlowLayout
   open lazy var layout: CollectionLayout = CollectionLayout()
 
-  /// A SpotCache for the GridSpot
-  open fileprivate(set) var stateCache: SpotCache?
+  /// A StateCache for the GridSpot
+  open fileprivate(set) var stateCache: StateCache?
 
   /// Indicator to calculate the height based on content
   open var usesDynamicHeight = true
@@ -115,7 +115,7 @@ open class GridSpot: NSObject, Gridable {
   ///
   /// - returns: An initialized grid spot.
   public convenience init(cacheKey: String) {
-    let stateCache = SpotCache(key: cacheKey)
+    let stateCache = StateCache(key: cacheKey)
 
     self.init(component: Component(stateCache.load()))
     self.stateCache = stateCache

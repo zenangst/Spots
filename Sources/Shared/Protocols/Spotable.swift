@@ -28,7 +28,7 @@ public protocol Spotable: class {
   /// A configuration closure for a SpotConfigurable object
   var configure: ((SpotConfigurable) -> Void)? { get set }
   /// A cache for a Spotable object
-  var stateCache: SpotCache? { get }
+  var stateCache: StateCache? { get }
   /// A SpotAdapter
   var adapter: SpotAdapter? { get }
   /// Indicator to calculate the height based on content

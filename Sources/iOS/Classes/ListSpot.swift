@@ -44,8 +44,8 @@ open class ListSpot: NSObject, Listable {
   /// A UITableView, used as the main UI component for a ListSpot
   open lazy var tableView = UITableView()
 
-  /// A SpotCache for the ListSpot
-  open fileprivate(set) var stateCache: SpotCache?
+  /// A StateCache for the ListSpot
+  open fileprivate(set) var stateCache: StateCache?
 
   /// Indicator to calculate the height based on content
   open var usesDynamicHeight = true
@@ -97,7 +97,7 @@ open class ListSpot: NSObject, Listable {
   ///
   /// - returns: An initialized list spot.
   public convenience init(cacheKey: String, tableView: UITableView? = nil) {
-    let stateCache = SpotCache(key: cacheKey)
+    let stateCache = StateCache(key: cacheKey)
 
     self.init(component: Component(stateCache.load()))
     self.stateCache = stateCache

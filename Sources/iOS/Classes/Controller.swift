@@ -62,8 +62,8 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
   public var source: DispatchSourceFileSystemObject!
   #endif
 
-  /// An optional SpotCache used for view controller caching.
-  public var stateCache: SpotCache?
+  /// An optional StateCache used for view controller caching.
+  public var stateCache: StateCache?
 
   /// A delegate for when an item is tapped within a Spot.
   weak open var delegate: SpotsDelegate? {
@@ -141,11 +141,11 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
 
   /// Initialize a new controller with a cache key.
   ///
-  /// - parameter cacheKey: A key that will be used to identify the SpotCache.
+  /// - parameter cacheKey: A key that will be used to identify the StateCache.
   ///
   /// - returns: An initialized controller with a cache.
   public convenience init(cacheKey: String) {
-    let stateCache = SpotCache(key: cacheKey)
+    let stateCache = StateCache(key: cacheKey)
     self.init(spots: Parser.parse(stateCache.load()))
     self.stateCache = stateCache
   }

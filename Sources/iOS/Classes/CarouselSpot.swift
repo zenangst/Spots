@@ -47,8 +47,8 @@ open class CarouselSpot: NSObject, Gridable {
   /// A Registry object that holds identifiers and classes for headers used in the CarouselSpot
   open static var headers = Registry()
 
-  /// A SpotCache for the CarouselSpot
-  open fileprivate(set) var stateCache: SpotCache?
+  /// A StateCache for the CarouselSpot
+  open fileprivate(set) var stateCache: StateCache?
 
   /// A component struct used as configuration and data source for the CarouselSpot
   open var component: Component {
@@ -180,7 +180,7 @@ open class CarouselSpot: NSObject, Gridable {
   ///
   /// - returns: An initialized carousel spot.
   public convenience init(cacheKey: String) {
-    let stateCache = SpotCache(key: cacheKey)
+    let stateCache = StateCache(key: cacheKey)
     self.init(component: Component(stateCache.load()))
     self.stateCache = stateCache
 

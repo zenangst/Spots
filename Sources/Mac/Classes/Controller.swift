@@ -35,8 +35,8 @@ open class Controller: NSViewController, SpotsProtocol {
   /// An array of refresh positions to avoid refreshing multiple times when using infinite scrolling
   open var refreshPositions = [CGFloat]()
 
-  /// An optional SpotCache used for view controller caching
-  open var stateCache: SpotCache?
+  /// An optional StateCache used for view controller caching
+  open var stateCache: StateCache?
 
   #if DEVMODE
   /// A dispatch queue is a lightweight object to which your application submits blocks for subsequent execution.
@@ -83,10 +83,10 @@ open class Controller: NSViewController, SpotsProtocol {
   }
 
   /**
-   - parameter cacheKey: A key that will be used to identify the SpotCache
+   - parameter cacheKey: A key that will be used to identify the StateCache
    */
   public convenience init(cacheKey: String) {
-    let stateCache = SpotCache(key: cacheKey)
+    let stateCache = StateCache(key: cacheKey)
     self.init(spots: Parser.parse(stateCache.load()))
     self.stateCache = stateCache
   }

@@ -44,7 +44,7 @@ open class CarouselSpot: NSObject, Gridable {
   /// Indicator to calculate the height based on content
   open var usesDynamicHeight = true
 
-  open fileprivate(set) var stateCache: SpotCache?
+  open fileprivate(set) var stateCache: StateCache?
 
   open var gradientLayer: CAGradientLayer?
 
@@ -119,7 +119,7 @@ open class CarouselSpot: NSObject, Gridable {
   }
 
   public convenience init(cacheKey: String) {
-    let stateCache = SpotCache(key: cacheKey)
+    let stateCache = StateCache(key: cacheKey)
 
     self.init(component: Component(stateCache.load()))
     self.stateCache = stateCache

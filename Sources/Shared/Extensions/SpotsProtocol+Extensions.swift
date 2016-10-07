@@ -191,7 +191,7 @@ public extension SpotsProtocol {
   public static func clearCache() {
     let paths = NSSearchPathForDirectoriesInDomains(.cachesDirectory,
                                                     FileManager.SearchPathDomainMask.userDomainMask, true)
-    let path = "\(paths.first!)/\(DiskStorage.prefix).\(SpotCache.cacheName)"
+    let path = "\(paths.first!)/\(DiskStorage.prefix).\(StateCache.cacheName)"
     do {
       try FileManager.default.removeItem(atPath: path)
     } catch {

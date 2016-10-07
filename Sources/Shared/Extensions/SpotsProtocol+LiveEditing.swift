@@ -68,8 +68,8 @@ import Cache
 
     /// Enable live editing with state cache
     ///
-    /// - parameter stateCache: An optional SpotCache, used for resolving which file should be monitored.
-    func liveEditing(stateCache: SpotCache?) {
+    /// - parameter stateCache: An optional StateCache, used for resolving which file should be monitored.
+    func liveEditing(stateCache: StateCache?) {
       #if (arch(i386) || arch(x86_64)) && os(iOS)
         guard let stateCache = stateCache, source == nil else { return }
       #else

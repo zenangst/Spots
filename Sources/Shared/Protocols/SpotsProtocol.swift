@@ -8,8 +8,8 @@ import Brick
 import Cache
 
 public protocol SpotsProtocol: class {
-  /// A SpotCache object
-  var stateCache: SpotCache? { get set }
+  /// A StateCache object
+  var stateCache: StateCache? { get set }
   /// The internal SpotsScrollView
   var scrollView: SpotsScrollView { get }
   /// A delegate that conforms to SpotsDelegate

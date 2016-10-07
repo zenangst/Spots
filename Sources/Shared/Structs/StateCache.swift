@@ -2,14 +2,14 @@ import Foundation
 import Cache
 import CryptoSwift
 
-/// A SpotCache struct used for Controller and Spotable object caching
-public struct SpotCache {
-  /// A unique identifer string for the SpotCache
+/// A StateCache struct used for Controller and Spotable object caching
+public struct StateCache {
+  /// A unique identifer string for the StateCache
   public let key: String
   /// The cache name used by Cache
-  static let cacheName = String(describing: SpotCache.self)
+  static let cacheName = String(describing: StateCache.self)
   /// A JSON Cache object
-  let cache = Cache<JSON>(name: "\(SpotCache.cacheName)/\(Bundle.main.bundleIdentifier!)")
+  let cache = Cache<JSON>(name: "\(StateCache.cacheName)/\(Bundle.main.bundleIdentifier!)")
 
   /// The path of the cache
   var path: String {
@@ -23,18 +23,18 @@ public struct SpotCache {
 
   // MARK: - Initialization
 
-  /// Initialize a SpotCache with a unique cache key
+  /// Initialize a StateCache with a unique cache key
   ///
-  /// - parameter key: A string that is used as an identifier for the SpotCache
+  /// - parameter key: A string that is used as an identifier for the StateCache
   ///
-  /// - returns: A SpotCache object
+  /// - returns: A StateCache object
   public init(key: String) {
     self.key = key
   }
 
   // MARK: - Cache
 
-  /// Save JSON to the SpotCache
+  /// Save JSON to the StateCache
   ///
   /// - parameter json: A JSON object
   public func save(_ json: [String : Any]) {
@@ -49,14 +49,14 @@ public struct SpotCache {
     return SyncCache(cache).object(key)?.object as? [String : Any] ?? [:]
   }
 
-  /// Clear the current SpotCache
+  /// Clear the current StateCache
   public func clear() {
     cache.remove(key)
   }
 
-  /// The SpotCache file name
+  /// The StateCache file name
   ///
-  /// - returns: An md5 representation of the SpotCache's file name, computed from the SpotCache key
+  /// - returns: An md5 representation of the StateCache's file name, computed from the StateCache key
   func fileName() -> String {
     if let digest = key.data(using: String.Encoding.utf8)?.md5() {
       var string = ""
