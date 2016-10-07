@@ -17,8 +17,7 @@ class MainController: UITabBarController {
 
     player.tableView.separatorStyle = .none
 
-    let controller = PlayerController(spots: [list, carousel, player, playerButtons])
-    return controller
+    return PlayerController(spots: [list, carousel, player, playerButtons])
   }()
 
   lazy var myMusicController: UINavigationController = {
