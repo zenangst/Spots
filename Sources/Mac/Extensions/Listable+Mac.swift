@@ -17,10 +17,10 @@ extension Listable {
   }
 
   func configureLayout(_ component: Component) {
-    let top: CGFloat = component.meta("insetTop", 0.0)
-    let left: CGFloat = component.meta("insetLeft", 0.0)
-    let bottom: CGFloat = component.meta("insetBottom", 0.0)
-    let right: CGFloat = component.meta("insetRight", 0.0)
+    let top: CGFloat = component.meta("inset-top", 0.0)
+    let left: CGFloat = component.meta("inset-left", 0.0)
+    let bottom: CGFloat = component.meta("inset-bottom", 0.0)
+    let right: CGFloat = component.meta("inset-right", 0.0)
 
     render().contentInsets = EdgeInsets(top: top, left: left, bottom: bottom, right: right)
   }

@@ -24,7 +24,7 @@ open class GridSpot: NSObject, Gridable {
     /// The key for title left margin
     public static let titleLeftMargin = "titleLeftMargin"
     /// The key for title font size
-    public static let titleFontSize = "titleFontSize"
+    public static let titleFontSize = "title-font-size"
     /// The key for layout
     public static let layout = "layout"
     /// The key for grid layout maximum item width

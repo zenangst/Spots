@@ -119,11 +119,11 @@ class ListController: Spots.Controller, SpotsDelegate, ScrollDelegate {
             "items" : mainItems,
             "meta" : [
               ListSpot.Key.titleSeparator : false,
-              "titleFontSize" : 11,
-              "insetTop" : 0,
-              "insetLeft" : 0,
-              "insetRight" : 0,
-              "titleLeftInset" : 8.0
+              "title-font-size" : 11,
+              "inset-top" : 0.0,
+              "inset-left" : 0.0,
+              "inset-right" : 0.0,
+              "title-left-inset" : 8.0
             ]
           ],
           [
@@ -133,11 +133,11 @@ class ListController: Spots.Controller, SpotsDelegate, ScrollDelegate {
             "items" : yourMusicItems,
             "meta" : [
               ListSpot.Key.titleSeparator : false,
-              "titleFontSize" : 11,
-              "insetTop" : 0.0,
-              "insetLeft" : 0,
-              "insetRight" : 0,
-              "titleLeftInset" : 8.0
+              "title-font-size" : 11,
+              "inset-top" : 0.0,
+              "inset-left" : 0.0,
+              "inset-right" : 0.0,
+              "title-left-inset" : 8.0
             ]
           ],
           [
@@ -146,11 +146,11 @@ class ListController: Spots.Controller, SpotsDelegate, ScrollDelegate {
             "span" : 1,
             "meta" : [
               ListSpot.Key.titleSeparator : false,
-              "titleFontSize" : 11,
-              "insetTop" : 0.0,
-              "insetLeft" : 0,
-              "insetRight" : 0,
-              "titleLeftInset" : 8.0
+              "title-font-size" : 11,
+              "inset-top" : 0.0,
+              "inset-left" : 0.0,
+              "inset-right" : 0.0,
+              "title-left-inset" : 8.0
             ]
           ]
         ]

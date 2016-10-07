@@ -186,6 +186,13 @@ public struct Component: Mappable, Equatable {
     return meta[key] as? T ?? defaultValue
   }
 
+  public func meta(_ key: String, _ defaultValue: CGFloat) -> CGFloat {
+    if let doubleValue = meta[key] as? Double {
+      return CGFloat(doubleValue)
+    }
+    return defaultValue
+  }
+
 
   /// A generic convenience method for resolving meta attributes
   ///

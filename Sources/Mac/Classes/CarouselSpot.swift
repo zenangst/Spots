@@ -15,17 +15,17 @@ open class CarouselSpot: NSObject, Gridable {
   }
 
   public struct Default {
-    public static var titleFontSize: Double = 18.0
-    public static var titleLeftInset: Double = 0.0
-    public static var titleTopInset: Double = 10.0
-    public static var titleBottomInset: Double = 10.0
+    public static var titleFontSize: CGFloat = 18.0
+    public static var titleLeftInset: CGFloat = 0.0
+    public static var titleTopInset: CGFloat = 10.0
+    public static var titleBottomInset: CGFloat = 10.0
     public static var titleTextColor: String = "000000"
-    public static var sectionInsetTop: Double = 0.0
-    public static var sectionInsetLeft: Double = 0.0
-    public static var sectionInsetRight: Double = 0.0
-    public static var sectionInsetBottom: Double = 0.0
-    public static var minimumInteritemSpacing: Double = 0.0
-    public static var minimumLineSpacing: Double = 0.0
+    public static var sectionInsetTop: CGFloat = 0.0
+    public static var sectionInsetLeft: CGFloat = 0.0
+    public static var sectionInsetRight: CGFloat = 0.0
+    public static var sectionInsetBottom: CGFloat = 0.0
+    public static var minimumInteritemSpacing: CGFloat = 0.0
+    public static var minimumLineSpacing: CGFloat = 0.0
   }
 
   /// A Registry struct that contains all register components, used for resolving what UI component to use
@@ -109,12 +109,12 @@ open class CarouselSpot: NSObject, Gridable {
     guard let layout = layout as? NSCollectionViewFlowLayout else { return }
 
     layout.sectionInset = EdgeInsets(
-      top: CGFloat(component.meta(GridableMeta.Key.sectionInsetTop, Default.sectionInsetTop)),
-      left: CGFloat(component.meta(GridableMeta.Key.sectionInsetLeft, Default.sectionInsetLeft)),
-      bottom: CGFloat(component.meta(GridableMeta.Key.sectionInsetBottom, Default.sectionInsetBottom)),
-      right: CGFloat(component.meta(GridableMeta.Key.sectionInsetRight, Default.sectionInsetRight)))
-    layout.minimumInteritemSpacing = CGFloat(component.meta(Key.minimumInteritemSpacing, Default.minimumInteritemSpacing))
-    layout.minimumLineSpacing = CGFloat(component.meta(Key.minimumLineSpacing, Default.minimumLineSpacing))
+      top: component.meta(GridableMeta.Key.sectionInsetTop, Default.sectionInsetTop),
+      left: component.meta(GridableMeta.Key.sectionInsetLeft, Default.sectionInsetLeft),
+      bottom: component.meta(GridableMeta.Key.sectionInsetBottom, Default.sectionInsetBottom),
+      right: component.meta(GridableMeta.Key.sectionInsetRight, Default.sectionInsetRight))
+    layout.minimumInteritemSpacing = component.meta(Key.minimumInteritemSpacing, Default.minimumInteritemSpacing)
+    layout.minimumLineSpacing = component.meta(Key.minimumLineSpacing, Default.minimumLineSpacing)
     layout.scrollDirection = .horizontal
   }
 
@@ -146,7 +146,7 @@ open class CarouselSpot: NSObject, Gridable {
     var layoutInsets = EdgeInsets()
 
     if let layout = layout as? NSCollectionViewFlowLayout {
-      layout.sectionInset.top = CGFloat(component.meta(GridableMeta.Key.sectionInsetTop, Default.sectionInsetTop)) + titleView.frame.size.height + 8
+      layout.sectionInset.top = component.meta(GridableMeta.Key.sectionInsetTop, Default.sectionInsetTop) + titleView.frame.size.height + 8
       layoutInsets = layout.sectionInset
     }
 
@@ -191,14 +191,14 @@ open class CarouselSpot: NSObject, Gridable {
   fileprivate func configureTitleView(_ layoutInsets: EdgeInsets) {
     titleView.stringValue = component.title
     titleView.sizeToFit()
-    titleView.font = NSFont.systemFont(ofSize: CGFloat(component.meta(Key.titleFontSize, Default.titleFontSize)))
+    titleView.font = NSFont.systemFont(ofSize: component.meta(Key.titleFontSize, Default.titleFontSize))
     titleView.sizeToFit()
     titleView.frame.size.width = collectionView.frame.width - layoutInsets.right - layoutInsets.left
     lineView.frame.size.width = scrollView.frame.size.width - (component.meta(Key.titleLeftMargin, titleView.frame.origin.x) * 2)
     lineView.frame.origin.x = component.meta(Key.titleLeftMargin, titleView.frame.origin.x)
-    titleView.frame.origin.x = collectionView.frame.origin.x + CGFloat(component.meta(Key.titleLeftInset, Default.titleLeftInset))
+    titleView.frame.origin.x = collectionView.frame.origin.x + component.meta(Key.titleLeftInset, Default.titleLeftInset)
     titleView.frame.origin.x = component.meta(Key.titleLeftMargin, titleView.frame.origin.x)
-    titleView.frame.origin.y = CGFloat(component.meta(Key.titleTopInset, Default.titleTopInset)) - CGFloat(component.meta(Key.titleBottomInset, Default.titleBottomInset))
+    titleView.frame.origin.y = component.meta(Key.titleTopInset, Default.titleTopInset) - component.meta(Key.titleBottomInset, Default.titleBottomInset)
     lineView.frame.origin.y = titleView.frame.maxY + 5
     collectionView.frame.size.height = scrollView.frame.size.height + titleView.frame.size.height
   }

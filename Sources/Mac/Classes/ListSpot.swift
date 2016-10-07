@@ -4,15 +4,15 @@ import Brick
 open class ListSpot: NSObject, Listable {
 
   public struct Key {
-    public static let titleSeparator = "titleSeparator"
-    public static let titleFontSize = "titleFontSize"
-    public static let titleTopInset = "titleTopInset"
-    public static let titleBottomInset = "titleBottomInset"
-    public static let titleLeftInset = "titleLeftInset"
-    public static let contentInsetsTop = "insetTop"
-    public static let contentInsetsLeft = "insetLeft"
-    public static let contentInsetsBottom = "insetBottom"
-    public static let contentInsetsRight = "insetRight"
+    public static let titleSeparator = "title-separator"
+    public static let titleFontSize = "title-font-size"
+    public static let titleTopInset = "title-top-inset"
+    public static let titleBottomInset = "title-bottom-inset"
+    public static let titleLeftInset = "title-left-inset"
+    public static let contentInsetsTop = "inset-top"
+    public static let contentInsetsLeft = "inset-left"
+    public static let contentInsetsBottom = "inset-bottom"
+    public static let contentInsetsRight = "inset-right"
     public static let doubleAction = "doubleClick"
   }
 
