@@ -22,137 +22,113 @@ public extension Spotable {
     return component.items.reduce(0, { $0 + $1.size.height })
   }
 
-  /**
-   Resolve UI component at index (UITableViewCell or UICollectionViewItem)
-
-   - parameter index: The index of the view model
-
-   - returns: An optional UI component, most likely a UITableViewCell or UICollectionViewCell
-   */
+  /// Resolve a UI component at index with inferred type
+  ///
+  /// - parameter index: The index of the UI component
+  ///
+  /// - returns: An optional view of inferred type
   public func ui<T>(atIndex index: Int) -> T? {
     return adapter?.ui(at: index)
   }
 
-  /**
-   Append view model to a Spotable object
-
-   - parameter item:       A Item struct
-   - parameter animation:  A SpotAnimation that is used when performing the mutation
-   - parameter completion: A completion block that is run when the mutation is completed
-   */
+  /// Append item to collection with animation
+  ///
+  /// - parameter item: The view model that you want to append.
+  /// - parameter animation:  The animation that should be used (currently not in use).
+  /// - parameter completion: A completion closure that is executed in the main queue.
   func append(_ item: Item, withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
     adapter?.append(item, withAnimation: animation, completion: completion)
   }
 
-  /**
-   Append a collection of view models to a Spotable object
-
-   - parameter items:       A collection of Item structs
-   - parameter animation:  A SpotAnimation that is used when performing the mutation
-   - parameter completion: A completion block that is run when the mutation is completed
-   */
+  /// Append a collection of items to collection with animation
+  ///
+  /// - parameter items:      A collection of view models that you want to insert
+  /// - parameter animation:  The animation that should be used (currently not in use)
+  /// - parameter completion: A completion closure that is executed in the main queue.
   func append(_ items: [Item], withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
     adapter?.append(items, withAnimation: animation, completion: completion)
   }
 
-  /**
-   Prepend a collection of view models to a Spotable object
-
-   - parameter items:      A collection of Item structs
-   - parameter animation:  A SpotAnimation that is used when performing the mutation
-   - parameter completion: A completion block that is run when the mutation is completed
-   */
+  /// Prepend a collection items to the collection with animation
+  ///
+  /// - parameter items:      A collection of view model that you want to prepend
+  /// - parameter animation:  A SpotAnimation that is used when performing the mutation (currently not in use)
+  /// - parameter completion: A completion closure that is executed in the main queue.
   func prepend(_ items: [Item], withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
     adapter?.prepend(items, withAnimation: animation, completion: completion)
   }
 
-  /**
-   Insert view model to a Spotable object
-
-   - parameter item:       A Item struct
-   - parameter index:      The index where the view model should be inserted
-   - parameter animation:  A SpotAnimation that is used when performing the mutation
-   - parameter completion: A completion block that is run when the mutation is completed
-   */
+  /// Insert item into collection at index.
+  ///
+  /// - parameter item:       The view model that you want to insert.
+  /// - parameter index:      The index where the new Item should be inserted.
+  /// - parameter animation:  A SpotAnimation that is used when performing the mutation (currently not in use).
+  /// - parameter completion: A completion closure that is executed in the main queue.
   func insert(_ item: Item, index: Int, withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
     adapter?.insert(item, index: index, withAnimation: animation, completion: completion)
   }
 
-  /**
-   Update view model to a Spotable object
-
-   - parameter item:       A Item struct
-   - parameter index:      The index of the view model that should be updated
-   - parameter animation:  A SpotAnimation that is used when performing the mutation
-   - parameter completion: A completion block that is run when the mutation is completed
-   */
-  func update(_ item: Item, index: Int, withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
-    adapter?.update(item, index: index, withAnimation: animation, completion: completion)
-  }
-
-  /**
-   Delete view model from a Spotable object
-
-   - parameter item:       A Item struct
-   - parameter animation:  A SpotAnimation that is used when performing the mutation
-   - parameter completion: A completion block that is run when the mutation is completed
-   */
+  /// Delete item from collection with animation
+  ///
+  /// - parameter item:       The view model that you want to remove.
+  /// - parameter animation:  The animation that should be used (currently not in use).
+  /// - parameter completion: A completion closure that is executed in the main queue.
   func delete(_ item: Item, withAnimation animation: SpotsAnimation = .automatic, completion: Completion) {
     adapter?.delete(item, withAnimation: animation, completion: completion)
   }
 
-  /**
-   Delete a collection of view models from a Spotable object
-
-   - parameter items:       A collection of Item structs
-   - parameter animation:  A SpotAnimation that is used when performing the mutation
-   - parameter completion: A completion block that is run when the mutation is completed
-   */
+  /// Delete items from collection with animation
+  ///
+  /// - parameter items:      A collection of view models that you want to delete.
+  /// - parameter animation:  The animation that should be used (currently not in use).
+  /// - parameter completion: A completion closure that is executed in the main queue.
   func delete(_ items: [Item], withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
     adapter?.delete(items, withAnimation: animation, completion: completion)
   }
 
-  /**
-   Delete a collection of view models from a Spotable object
-
-   - parameter index:      The index of the view model that should be deleted
-   - parameter animation:  A SpotAnimation that is used when performing the mutation
-   - parameter completion: A completion block that is run when the mutation is completed
-   */
+  /// Delete item at index with animation
+  ///
+  /// - parameter index:      The index of the view model that you want to remove.
+  /// - parameter animation:  The animation that should be used (currently not in use).
+  /// - parameter completion: A completion closure that is executed in the main queue when the view model has been removed.
   func delete(_ index: Int, withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
     adapter?.delete(index, withAnimation: animation, completion: completion)
   }
 
-  /**
-   Delete view model indexes with animation from a Spotable object
-
-   - parameter indexes:    A collection of view model indexes
-   - parameter animation:  A SpotAnimation that is used when performing the mutation
-   - parameter completion: A completion block that is run when the mutation is completed
-   */
+  /// Delete a collection
+  ///
+  /// - parameter indexes:    An array of indexes that you want to remove.
+  /// - parameter animation:  The animation that should be used (currently not in use).
+  /// - parameter completion: A completion closure that is executed in the main queue when the view model has been removed.
   func delete(_ indexes: [Int], withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
     adapter?.delete(indexes, withAnimation: animation, completion: completion)
   }
 
-  /**
-   Reload view model indexes with animation in a Spotable object
+  /// Update item at index with new item.
+  ///
+  /// - parameter item:       The new update view model that you want to update at an index.
+  /// - parameter index:      The index of the view model, defaults to 0.
+  /// - parameter animation:  A SpotAnimation that is used when performing the mutation (currently not in use).
+  /// - parameter completion: A completion closure that is executed in the main queue when the view model has been removed.
+  func update(_ item: Item, index: Int, withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
+    adapter?.update(item, index: index, withAnimation: animation, completion: completion)
+  }
 
-   - parameter indexes:    A collection of view model indexes
-   - parameter animation:  A SpotAnimation that is used when performing the mutation
-   - parameter completion: A completion block that is run when the mutation is completed
-   */
+  /// Reloads a spot only if it changes
+  ///
+  /// - parameter items:      A collection of Items
+  /// - parameter animation:  The animation that should be used (only works for Listable objects)
+  /// - parameter completion: A completion closure that is performed when all mutations are performed
   func reload(_ indexes: [Int]? = nil, withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
     adapter?.reload(indexes, withAnimation: animation, completion: completion)
   }
 
-  /**
-   Reload view models with change set
-
-   - parameter changes:    A ItemChanges struct that contains instructions for the adapter to perform mutations
-   - parameter animation:  A SpotAnimation that is used when performing the mutation
-   - parameter updateDataSource:  A closure that updates the data source, it is performed prior to calling UI updating methods
-   - parameter completion: A completion block that is run when the mutation is completed
-   */
+  /// Reload spot with ItemChanges.
+  ///
+  /// - parameter changes:          A collection of changes; inserations, updates, reloads, deletions and updated children.
+  /// - parameter animation:        A SpotAnimation that is used when performing the mutation.
+  /// - parameter updateDataSource: A closure to update your data source.
+  /// - parameter completion:       A completion closure that runs when your updates are done.
   func reloadIfNeeded(_ changes: ItemChanges, withAnimation animation: SpotsAnimation = .automatic, updateDataSource: () -> Void, completion: Completion) {
     adapter?.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: updateDataSource, completion: completion)
   }
