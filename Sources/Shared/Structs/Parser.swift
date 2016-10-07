@@ -1,14 +1,12 @@
-/**
-  A JSON to UI parser to produce components for Controller
- */
+/// A JSON to UI parser to produce components for Controller
 public struct Parser {
 
-  /**
-   - parameter json: A JSON dictionary of components and items
-   - parameter key: The key that should be used for parsing JSON, defaults to `components`
-
-   - returns: A collection of spotable objects
-   */
+  /// Parse JSON into a collection of Spotable objects with key.
+  ///
+  /// - parameter json: A JSON dictionary of components and items.
+  /// - parameter key: The key that should be used for parsing JSON, defaults to `components`.
+  ///
+  /// - returns: A collection of spotable objects
   public static func parse(_ json: [String : Any], key: String = "components") -> [Spotable] {
     var components: [Component] = parse(json, key: key)
 
@@ -19,23 +17,23 @@ public struct Parser {
     return components.map { SpotFactory.resolve(component: $0) }
   }
 
-  /**
-   - parameter json: A JSON dictionary of components and items
-   - parameter key: The key that should be used for parsing JSON, defaults to `components`
-
-   - returns: A collection of `Component`s
-   */
+  /// Parse JSON into a collection of Components.
+  ///
+  /// - parameter json: A JSON dictionary of components and items.
+  /// - parameter key: The key that should be used for parsing JSON, defaults to `components`.
+  ///
+  /// - returns: A collection of `Component`s
   public static func parse(_ json: [String : Any], key: String = "components") -> [Component] {
     guard let components = json[key] as? [[String : Any]] else { return [] }
 
     return components.map { Component($0) }
   }
 
-  /**
-   - parameter json: A JSON dictionary of components and items
-
-   - returns: A collection of spotable objects
-   */
+  /// Parse JSON into a collection of Spotable objects.
+  ///
+  /// - parameter json: A JSON dictionary of components and items.
+  ///
+  /// - returns: A collection of spotable objects
   public static func parse(_ json: [[String : Any]]?) -> [Spotable] {
     guard let json = json else { return [] }
 

@@ -227,13 +227,11 @@ public extension Spotable {
     items = updatedItems
   }
 
-  /**
-   Reloads a spot only if it changes
-
-   - parameter items:      A collection of Items
-   - parameter animation:  The animation that should be used (only works for Listable objects)
-   - parameter completion: A completion closure that is performed when all mutations are performed
-   */
+  /// Reloads a spot only if it changes
+  ///
+  /// - parameter items:      A collection of Items
+  /// - parameter animation:  The animation that should be used (only works for Listable objects)
+  /// - parameter completion: A completion closure that is performed when all mutations are performed
   public func reloadIfNeeded(_ items: [Item], withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
     guard !(self.items == items) else {
       cache()
