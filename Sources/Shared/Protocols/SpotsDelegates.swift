@@ -52,7 +52,7 @@ public extension SpotsDelegate {
   /// - parameter spot: The spotable object that the item belongs to.
   /// - parameter item: The item struct that the user tapped on.
   func spotDidSelectItem(_ spot: Spotable, item: Item) {}
-  
+
   /// Invoked when ever the collection of spotable objects changes on the Controller.
   ///
   /// - parameter spots: The collection of new Spotable objects.
