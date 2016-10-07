@@ -25,21 +25,21 @@ public enum SpotsAnimation: Int {
   var tableViewAnimation: NSTableViewAnimationOptions {
     switch self {
     case .fade:
-      return NSTableViewAnimationOptions.effectFade
+      return .effectFade
     case .right:
-      return NSTableViewAnimationOptions.slideRight
+      return .slideRight
     case .left:
-      return NSTableViewAnimationOptions.slideLeft
+      return .slideLeft
     case .top:
-      return NSTableViewAnimationOptions.slideUp
+      return .slideUp
     case .bottom:
-      return NSTableViewAnimationOptions.slideDown
+      return .slideDown
     case .none:
       return NSTableViewAnimationOptions()
     case .middle:
-      return NSTableViewAnimationOptions.effectGap
+      return .effectGap
     case .automatic:
-      return NSTableViewAnimationOptions.effectFade
+      return .effectFade
     }
   }
   #else
@@ -49,21 +49,21 @@ public enum SpotsAnimation: Int {
   var tableViewAnimation: UITableViewRowAnimation {
     switch self {
     case .fade:
-      return UITableViewRowAnimation.fade
+      return .fade
     case .right:
-      return UITableViewRowAnimation.right
+      return .right
     case .left:
-      return UITableViewRowAnimation.left
+      return .left
     case .top:
-      return UITableViewRowAnimation.top
+      return .top
     case .bottom:
-      return UITableViewRowAnimation.bottom
+      return .bottom
     case .none:
-      return UITableViewRowAnimation.none
+      return .none
     case .middle:
-      return UITableViewRowAnimation.middle
+      return .middle
     case .automatic:
-      return UITableViewRowAnimation.automatic
+      return .automatic
     }
   }
   #endif
