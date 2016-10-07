@@ -13,7 +13,7 @@ open class Controller: NSViewController, SpotsProtocol {
   open var spots: [Spotable] {
     didSet {
       spots.forEach { $0.delegate = delegate }
-      delegate?.spotsDidChange(spots)
+      delegate?.didChange(spots: spots)
     }
   }
 
@@ -49,7 +49,7 @@ open class Controller: NSViewController, SpotsProtocol {
   weak public var delegate: SpotsDelegate? {
     didSet {
       spots.forEach { $0.delegate = delegate }
-      delegate?.spotsDidChange(spots)
+      delegate?.didChange(spots: spots)
     }
   }
 

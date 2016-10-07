@@ -35,12 +35,12 @@ public protocol SpotsDelegate: class {
   /// A delegate method that is triggered when spots is changed
   ///
   /// - parameter spots: New collection of Spotable objects
-  func spotsDidChange(_ spots: [Spotable])
+  func didChange(spots: [Spotable])
 
   /// A delegate method that is triggered when ever a cell is tapped by the user
   ///
-  /// - parameter spot: An object that conforms to the spotable protocol
   /// - parameter item: The view model that was tapped
+  /// - parameter spot: An object that conforms to the spotable protocol
   func didSelect(item: Item, in spot: Spotable)
 }
 
@@ -56,7 +56,7 @@ public extension SpotsDelegate {
   /// Invoked when ever the collection of spotable objects changes on the Controller.
   ///
   /// - parameter spots: The collection of new Spotable objects.
-  func spotsDidChange(_ spots: [Spotable]) {}
+  func didChange(spots: [Spotable]) {}
 }
 
 /// A refresh delegate for handling reloading of a Spot
