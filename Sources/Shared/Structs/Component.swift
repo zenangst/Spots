@@ -134,12 +134,12 @@ public struct Component: Mappable, Equatable {
   /// - returns: An initialized component using JSON.
   public init(_ map: [String : Any]) {
     identifier = map.property("identifier")
-    title <- map.property("title")
-    kind  <- map.property("kind")
-    header  <- map.property("header")
-    span  <- map.property("span")
-    items <- map.relations("items")
-    meta  <- map.property("meta")
+    title     <- map.property("title")
+    kind      <- map.property("kind")
+    header    <- map.property("header")
+    span      <- map.property("span")
+    items     <- map.relations("items")
+    meta      <- map.property("meta")
 
     if let size = map["size"] as? [String : Any] {
       self.size = CGSize(width: size.property(Key.Width.string) ?? 0.0,
