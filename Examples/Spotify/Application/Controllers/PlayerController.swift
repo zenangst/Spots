@@ -5,7 +5,7 @@ import Imaginary
 import Sugar
 import Brick
 
-class PlayerController: Controller {
+class PlayerController: Spots.Controller {
 
   let screenBounds = UIScreen.main.bounds
   var initialOrigin: CGFloat = UIScreen.main.bounds.height - 108
@@ -239,9 +239,9 @@ extension PlayerController: SpotsDelegate {
 
 extension PlayerController: CarouselScrollDelegate {
 
-  func spotDidScroll(_ spot: Spotable) { }
+  func didScroll(in spot: Spotable) { }
 
-  func spotDidEndScrolling(_ spot: Spotable, item: Item) {
+  func didEndScrolling(in spot: Spotable, item: Item) {
     guard let urn = item.action, let lastItem = lastItem, item.action != lastItem.action
       else { return }
 

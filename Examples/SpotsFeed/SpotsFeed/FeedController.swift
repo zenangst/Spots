@@ -62,9 +62,12 @@ extension FeedController: RefreshDelegate {
 
 extension FeedController: ScrollDelegate {
 
-  public func spotDidReachEnd(_ completion: (() -> Void)?) {
+  public func didReachEnd(in scrollView: ScrollView, completion: Completion) {
     dispatch(queue: .interactive) { [weak self] in
-      guard let weakSelf = self, let spot = weakSelf.spot else { return }
+      guard let weakSelf = self, let spot = weakSelf.spot else {
+        completion?()
+        return
+      }
       let items = FeedController.generateItems(spot.component.items.count, to: 3)
       dispatch {
         weakSelf.append(items) { completion?() }

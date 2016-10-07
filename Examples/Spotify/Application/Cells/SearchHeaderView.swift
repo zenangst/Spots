@@ -3,7 +3,7 @@ import Spots
 
 open class SearchHeaderView: UITableViewHeaderFooterView, Componentable {
 
-  open var defaultHeight: CGFloat = 88
+  open var preferredHeaderHeight: CGFloat = 88
 
   lazy var label: UILabel = UILabel(frame: self.frame).then {
     $0.font = UIFont.boldSystemFont(ofSize: 11)

@@ -11,7 +11,7 @@ public enum KeyboardEvents: UInt16 {
   case enter = 36
 }
 
-class DetailController: Controller, SpotsDelegate, ScrollDelegate {
+class DetailController: Spots.Controller, SpotsDelegate, ScrollDelegate {
 
   lazy var shadowSeparator = NSView().then {
     $0.alphaValue = 0.0
@@ -47,7 +47,7 @@ class DetailController: Controller, SpotsDelegate, ScrollDelegate {
       #if DEVMODE
       self.source = nil
       #endif
-      let newCache = SpotCache(key: blueprint.cacheKey)
+      let newCache = StateCache(key: blueprint.cacheKey)
       self.stateCache = newCache
       var spots = newCache.load()
 
@@ -227,7 +227,7 @@ class DetailController: Controller, SpotsDelegate, ScrollDelegate {
       else { return true }
 
     if let model = currentSpot.item(at: tableView.selectedRow), keyEvent == .enter {
-      spotDidSelectItem(currentSpot, item: model)
+      didSelect(item: model, in: currentSpot)
       return false
     }
 
@@ -294,11 +294,11 @@ extension DetailController {
 
 extension DetailController {
 
-  func spotDidReachBeginning(_ completion: Completion) {
+  func didReachBeginning(in scrollView: ScrollableView, completion: Completion) {
     completion?()
   }
 
-  func spotDidReachEnd(_ completion: Completion) {
+  func didReachEnd(in scrollView: ScrollableView, completion: Completion) {
     completion?()
   }
 }

@@ -173,6 +173,12 @@
 		BD129F931D7B2F91009AC164 /* TypeAlias.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F441D7B2F91009AC164 /* TypeAlias.swift */; };
 		BD129F941D7B2F91009AC164 /* TypeAlias.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F441D7B2F91009AC164 /* TypeAlias.swift */; };
 		BD129F951D7B2F91009AC164 /* TypeAlias.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F441D7B2F91009AC164 /* TypeAlias.swift */; };
+		BD1BFB561DA7A9A300BB55E1 /* ScrollDelegate+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1BFB551DA7A9A300BB55E1 /* ScrollDelegate+Extensions.swift */; };
+		BD1BFB571DA7A9A300BB55E1 /* ScrollDelegate+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1BFB551DA7A9A300BB55E1 /* ScrollDelegate+Extensions.swift */; };
+		BD1BFB581DA7A9A300BB55E1 /* ScrollDelegate+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1BFB551DA7A9A300BB55E1 /* ScrollDelegate+Extensions.swift */; };
+		BD1BFB5A1DA7A9AC00BB55E1 /* ScrollDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1BFB591DA7A9AC00BB55E1 /* ScrollDelegate.swift */; };
+		BD1BFB5B1DA7A9AC00BB55E1 /* ScrollDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1BFB591DA7A9AC00BB55E1 /* ScrollDelegate.swift */; };
+		BD1BFB5C1DA7A9AC00BB55E1 /* ScrollDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1BFB591DA7A9AC00BB55E1 /* ScrollDelegate.swift */; };
 		BD352E5F1CBAD6EC002CD032 /* Brick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD352E5E1CBAD6EC002CD032 /* Brick.framework */; };
 		BD352E611CBAD6F9002CD032 /* Brick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD352E601CBAD6F9002CD032 /* Brick.framework */; };
 		BD42954F1D81CE4F00E07E1C /* TestGridSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD42954E1D81CE4F00E07E1C /* TestGridSpot.swift */; };
@@ -318,6 +324,8 @@
 		BD129F421D7B2F91009AC164 /* Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
 		BD129F431D7B2F91009AC164 /* StateCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateCache.swift; sourceTree = "<group>"; };
 		BD129F441D7B2F91009AC164 /* TypeAlias.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeAlias.swift; sourceTree = "<group>"; };
+		BD1BFB551DA7A9A300BB55E1 /* ScrollDelegate+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ScrollDelegate+Extensions.swift"; sourceTree = "<group>"; };
+		BD1BFB591DA7A9AC00BB55E1 /* ScrollDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollDelegate.swift; sourceTree = "<group>"; };
 		BD352E5E1CBAD6EC002CD032 /* Brick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Brick.framework; path = Carthage/Build/iOS/Brick.framework; sourceTree = "<group>"; };
 		BD352E601CBAD6F9002CD032 /* Brick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Brick.framework; path = Carthage/Build/Mac/Brick.framework; sourceTree = "<group>"; };
 		BD42954E1D81CE4F00E07E1C /* TestGridSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestGridSpot.swift; sourceTree = "<group>"; };
@@ -456,6 +464,7 @@
 				BD129DA61D7B2B6C009AC164 /* CarouselSpotCell.swift */,
 				BD129DA71D7B2B6C009AC164 /* CarouselSpotHeader.swift */,
 				BD129DA81D7B2B6C009AC164 /* CollectionAdapter.swift */,
+				BD129DB11D7B2B6C009AC164 /* Controller.swift */,
 				BD129DA91D7B2B6C009AC164 /* GridableLayout.swift */,
 				BD129DAA1D7B2B6C009AC164 /* GridComposite.swift */,
 				BD129DAB1D7B2B6C009AC164 /* GridSpot.swift */,
@@ -464,7 +473,6 @@
 				BD129DAE1D7B2B6C009AC164 /* ListSpot.swift */,
 				BD129DAF1D7B2B6C009AC164 /* ListSpotCell.swift */,
 				BD129DB01D7B2B6C009AC164 /* SpotsContentView.swift */,
-				BD129DB11D7B2B6C009AC164 /* Controller.swift */,
 				BD129DB21D7B2B6C009AC164 /* SpotsScrollView.swift */,
 			);
 			path = Classes;
@@ -486,13 +494,13 @@
 				BD129E081D7B2CDE009AC164 /* CarouselSpot.swift */,
 				BD129E091D7B2CDE009AC164 /* CollectionAdapter.swift */,
 				BD129E0A1D7B2CDE009AC164 /* CollectionViewLeftLayout.swift */,
+				BD129E111D7B2CDE009AC164 /* Controller.swift */,
 				BD129E0B1D7B2CDE009AC164 /* GridSpot.swift */,
 				BD129E0C1D7B2CDE009AC164 /* GridSpotItem.swift */,
 				BD129E0D1D7B2CDE009AC164 /* ListSpot.swift */,
 				BD129E0E1D7B2CDE009AC164 /* ListSpotItem.swift */,
 				BD129E0F1D7B2CDE009AC164 /* NoScrollView.swift */,
 				BD129E101D7B2CDE009AC164 /* SpotsContentView.swift */,
-				BD129E111D7B2CDE009AC164 /* Controller.swift */,
 				BD129E121D7B2CDE009AC164 /* SpotsScrollView.swift */,
 			);
 			path = Classes;
@@ -562,12 +570,13 @@
 			children = (
 				BD129F2D1D7B2F91009AC164 /* Component+Extension.swift */,
 				BD129F2E1D7B2F91009AC164 /* Gridable+Extensions.swift */,
+				BD129F341D7B2F91009AC164 /* Item+Extensions.swift */,
+				BD1BFB551DA7A9A300BB55E1 /* ScrollDelegate+Extensions.swift */,
 				BD129F2F1D7B2F91009AC164 /* Spotable+Extensions.swift */,
 				BD129F301D7B2F91009AC164 /* SpotsProtocol+Extensions.swift */,
 				BD129F311D7B2F91009AC164 /* SpotsProtocol+LiveEditing.swift */,
 				BD129F321D7B2F91009AC164 /* SpotsProtocol+Mutation.swift */,
 				BD129F331D7B2F91009AC164 /* Viewable+Extensions.swift */,
-				BD129F341D7B2F91009AC164 /* Item+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -578,6 +587,7 @@
 				BD129F361D7B2F91009AC164 /* Componentable.swift */,
 				BD129F371D7B2F91009AC164 /* Gridable.swift */,
 				BD129F381D7B2F91009AC164 /* Listable.swift */,
+				BD1BFB591DA7A9AC00BB55E1 /* ScrollDelegate.swift */,
 				BD129F391D7B2F91009AC164 /* Spotable.swift */,
 				BD129F3A1D7B2F91009AC164 /* SpotAdapter.swift */,
 				BD129F3B1D7B2F91009AC164 /* SpotConfigurable.swift */,
@@ -1071,6 +1081,7 @@
 				BD129DC21D7B2B6C009AC164 /* GridSpot.swift in Sources */,
 				BD73974B1D718D38000AF2DE /* CollectionAdapter+tvOS.swift in Sources */,
 				BD129F4A1D7B2F91009AC164 /* Registry.swift in Sources */,
+				BD1BFB5C1DA7A9AC00BB55E1 /* ScrollDelegate.swift in Sources */,
 				BD129F921D7B2F91009AC164 /* StateCache.swift in Sources */,
 				BD129F861D7B2F91009AC164 /* Viewable.swift in Sources */,
 				BD129DCE1D7B2B6C009AC164 /* Controller.swift in Sources */,
@@ -1086,6 +1097,7 @@
 				BD76FA481D8066A7001CA31C /* CollectionAdapter+Extensions+iOS.swift in Sources */,
 				BD129DBE1D7B2B6C009AC164 /* GridableLayout.swift in Sources */,
 				BD129D8A1D7B295F009AC164 /* Gridable+Extensions+iOS.swift in Sources */,
+				BD1BFB581DA7A9A300BB55E1 /* ScrollDelegate+Extensions.swift in Sources */,
 				BD129D881D7B295F009AC164 /* CollectionAdapter+UIScrollViewDelegate.swift in Sources */,
 				BD129F4D1D7B2F91009AC164 /* SpotFactory.swift in Sources */,
 				BD129DC01D7B2B6C009AC164 /* GridComposite.swift in Sources */,
@@ -1155,6 +1167,7 @@
 				BD129F8A1D7B2F91009AC164 /* GridableMeta.swift in Sources */,
 				BD129DA11D7B2A3D009AC164 /* CarouselSpot+iOS.swift in Sources */,
 				BD129F571D7B2F91009AC164 /* Gridable+Extensions.swift in Sources */,
+				BD1BFB5A1DA7A9AC00BB55E1 /* ScrollDelegate.swift in Sources */,
 				BD129DC91D7B2B6C009AC164 /* ListSpotCell.swift in Sources */,
 				BD129D931D7B295F009AC164 /* UICollectionView+Indexes.swift in Sources */,
 				BD129D871D7B295F009AC164 /* CollectionAdapter+UIScrollViewDelegate.swift in Sources */,
@@ -1170,6 +1183,7 @@
 				BD129F4B1D7B2F91009AC164 /* SpotFactory.swift in Sources */,
 				BD129D8F1D7B295F009AC164 /* Composable+Extensions.swift in Sources */,
 				BD129F691D7B2F91009AC164 /* Item+Extensions.swift in Sources */,
+				BD1BFB561DA7A9A300BB55E1 /* ScrollDelegate+Extensions.swift in Sources */,
 				BD129F721D7B2F91009AC164 /* Listable.swift in Sources */,
 				BD129F631D7B2F91009AC164 /* SpotsProtocol+Mutation.swift in Sources */,
 				BD129F841D7B2F91009AC164 /* Viewable.swift in Sources */,
@@ -1246,6 +1260,7 @@
 				BD129E311D7B2CDE009AC164 /* Listable+Mac.swift in Sources */,
 				BD129F881D7B2F91009AC164 /* Component.swift in Sources */,
 				BD129F761D7B2F91009AC164 /* Spotable.swift in Sources */,
+				BD1BFB571DA7A9A300BB55E1 /* ScrollDelegate+Extensions.swift in Sources */,
 				BD129F7F1D7B2F91009AC164 /* SpotsDelegates.swift in Sources */,
 				BD129E291D7B2CDE009AC164 /* SpotsContentView.swift in Sources */,
 				BD129F7C1D7B2F91009AC164 /* SpotConfigurable.swift in Sources */,
@@ -1283,6 +1298,7 @@
 				BD129E221D7B2CDE009AC164 /* CollectionAdapter.swift in Sources */,
 				BD129F791D7B2F91009AC164 /* SpotAdapter.swift in Sources */,
 				BD129E2F1D7B2CDE009AC164 /* CollectionAdapter+SpotAdapter+Mac.swift in Sources */,
+				BD1BFB5B1DA7A9AC00BB55E1 /* ScrollDelegate.swift in Sources */,
 				BD129F851D7B2F91009AC164 /* Viewable.swift in Sources */,
 				BD129F701D7B2F91009AC164 /* Gridable.swift in Sources */,
 				BD129E251D7B2CDE009AC164 /* GridSpotItem.swift in Sources */,

@@ -146,10 +146,10 @@ class ForYouController: Controller, SpotsDelegate {
 
 extension ForYouController: ScrollDelegate {
 
-  func spotDidReachBeginning(_ completion: (() -> Void)?) {
+  func didReachEnd(_ completion: ((_ scrollView: ScrollView?) -> Void)?) {
     guard let spot = spot, spot.component.items.count < 100 && view.window != nil
       else {
-        completion?()
+        completion?(scrollView)
         return
     }
 
@@ -167,29 +167,36 @@ extension ForYouController: ScrollDelegate {
 
     let previousTitle = topItem.title ?? ""
     topItem.title = "Checking for stories..."
-    delay(1.0) {
-      guard let spot = self.spot else { return }
+    delay(1.0) { [weak self] in
+      guard let weakSelf = self,
+        let spot = weakSelf.spot
+        else {
+          completion?(self?.scrollView)
+          return
+      }
 
       spot.items.insert(contentsOf: items, at: 0)
       spot.registerAndPrepare()
 
       let height = spot.items[0..<items.count].reduce(0, { $0 + $1.size.height })
 
-      self.spot(at: 0, ListSpot.self)?.tableView.insert(Array(0..<(items.count)), section: 0, animation: .none)
-      self.spot(at: 0, ListSpot.self)?.tableView.reload(Array((items.count)..<(items.count)), section: 0, animation: .none)
+      weakSelf.spot(at: 0, ListSpot.self)?.tableView.insert(Array(0..<(items.count)), section: 0, animation: .none)
+      weakSelf.spot(at: 0, ListSpot.self)?.tableView.reload(Array((items.count)..<(items.count)), section: 0, animation: .none)
 
-      self.scrollView.contentOffset.y = height - self.scrollView.contentInset.top
+      weakSelf.scrollView.contentOffset.y = height - weakSelf.scrollView.contentInset.top
 
       navigationBar.layer.add(animation, forKey: "Animate Title")
       topItem.title = previousTitle
-      completion?()
+      completion?(self?.scrollView)
     }
   }
 
-  func spotDidReachEnd(_ completion: (() -> Void)?) {
+  func didReachBeginning(_ completion: ((_ scrollView: ScrollView?) -> Void)?) {
     if let spot = spot, spot.component.items.count < 100 {
       append(ForYouController.generateItems(spot.component.items.count, to: 10))
     }
-    delay(0.3) { completion?() }
+    delay(0.3) { [weak self] in
+      completion?(self?.scrollView)
+    }
   }
 }

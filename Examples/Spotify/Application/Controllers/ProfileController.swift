@@ -3,7 +3,7 @@ import Compass
 import Keychain
 import Brick
 
-class ProfileController: Controller {
+class ProfileController: Spots.Controller {
 
   let accessToken = Keychain.password(forAccount: keychainAccount)
 

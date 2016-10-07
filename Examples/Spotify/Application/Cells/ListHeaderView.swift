@@ -4,7 +4,7 @@ import Sugar
 
 open class ListHeaderView: UITableViewHeaderFooterView, Componentable {
 
-  open var defaultHeight: CGFloat = 44
+  open var preferredHeaderHeight: CGFloat = 44
 
   lazy var paddedStyle: NSParagraphStyle = NSMutableParagraphStyle().then {
     $0.alignment = .left

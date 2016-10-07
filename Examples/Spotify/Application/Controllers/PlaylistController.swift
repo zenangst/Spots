@@ -6,7 +6,7 @@ import Sugar
 import Hue
 import Brick
 
-class PlaylistController: Controller {
+class PlaylistController: Spots.Controller {
 
   let accessToken = Keychain.password(forAccount: keychainAccount)
   var playlistID: String?
@@ -134,11 +134,14 @@ extension PlaylistController: RefreshDelegate {
 
 extension PlaylistController: ScrollDelegate {
 
-  func spotDidReachEnd(_ completion: (() -> Void)?) {
+  func didReachEnd(in scrollView: ScrollView, completion: Completion) {
     guard let playlistPage = playlistPage else { return }
 
-    playlistPage.requestNextPage(withAccessToken: accessToken, callback: { (error, object) -> Void in
-      guard let object = object as? SPTListPage, object.items != nil
+    playlistPage.requestNextPage(withAccessToken: accessToken, callback: {
+      [weak self ] (error, object) -> Void in
+      guard let weakSelf = self,
+        let object = object as? SPTListPage,
+        object.items != nil
         else {
           completion?()
           return
@@ -146,9 +149,9 @@ extension PlaylistController: ScrollDelegate {
 
       var items = [Item]()
 
-      if let playlistID = self.playlistID, let listSpot = self.spot(at: 2, Spotable.self) {
+      if let playlistID = weakSelf.playlistID, let listSpot = weakSelf.spot(at: 2, Spotable.self) {
         items.append(contentsOf: object.viewModels(playlistID, offset: listSpot.items.count))
-        self.currentURIs.append(contentsOf: object.uris())
+        weakSelf.currentURIs.append(contentsOf: object.uris())
 
         if let firstItem = listSpot.items.first {
           for (index, _) in items.enumerated() {
@@ -158,7 +161,7 @@ extension PlaylistController: ScrollDelegate {
             items[index].meta["detail"] = firstItem.meta["detail"] ?? ""
           }
         }
-        self.append(items, spotIndex: 2)
+        weakSelf.append(items, spotIndex: 2)
       } else {
         items.append(contentsOf: object.viewModels())
 
@@ -176,11 +179,11 @@ extension PlaylistController: ScrollDelegate {
           featured[index].size = CGSize(width: 120, height: 140)
         }
 
-        self.append(items, spotIndex: 2)
-        self.append(featured, spotIndex: 1)
+        weakSelf.append(items, spotIndex: 2)
+        weakSelf.append(featured, spotIndex: 1)
       }
 
-      self.playlistPage = object.hasNextPage ? object : nil
+      weakSelf.playlistPage = object.hasNextPage ? object : nil
 
       completion?()
     })

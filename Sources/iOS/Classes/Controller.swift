@@ -82,7 +82,7 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
   }
 #endif
 
-  /// A scroll delegate for handling spotDidReachBeginning and spotDidReachEnd.
+  /// A scroll delegate for handling didReachBeginning and didReachEnd.
   weak public var scrollDelegate: ScrollDelegate?
 
   /// A custom scroll view that handles the scrolling for all internal scroll views.

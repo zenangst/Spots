@@ -35,7 +35,7 @@ extension CarouselSpot: UIScrollViewDelegate {
   ///
   /// - parameter scrollView: The scroll-view object in which the scrolling occurred.
   public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-    carouselScrollDelegate?.spotDidScroll(self)
+    carouselScrollDelegate?.didScroll(in: self)
   }
 
   #if os(iOS)
@@ -76,7 +76,7 @@ extension CarouselSpot: UIScrollViewDelegate {
     let index: Int = Int(floor(newTargetOffset * CGFloat(items.count) / scrollView.contentSize.width))
 
     if index >= 0 && index <= items.count {
-      carouselScrollDelegate?.spotDidEndScrolling(self, item: items[index])
+      carouselScrollDelegate?.didEndScrolling(in: self, item: items[index])
     }
 
     let floatIndex = ceil(CGFloat(index) / CGFloat(component.span))

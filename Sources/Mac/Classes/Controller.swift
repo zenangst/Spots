@@ -61,7 +61,7 @@ open class Controller: NSViewController, SpotsProtocol {
     return scrollView
   }()
 
-  /// A scroll delegate for handling spotDidReachBeginning and spotDidReachEnd
+  /// A scroll delegate for handling didReachBeginning and didReachEnd
   weak open var scrollDelegate: ScrollDelegate?
 
   /// A bool value to indicate if the Controller is refeshing
@@ -274,7 +274,7 @@ open class Controller: NSViewController, SpotsProtocol {
     if scrollView.contentOffset.y < 0 &&
       !refreshing {
       refreshing = true
-      delegate.spotDidReachBeginning {
+      delegate.didReachBeginning(in: scrollView) {
         self.refreshing = false
       }
     }
@@ -283,7 +283,7 @@ open class Controller: NSViewController, SpotsProtocol {
       // Infinite scrolling
       refreshing = true
       refreshPositions.append(currentOffset)
-      delegate.spotDidReachEnd {
+      delegate.didReachEnd(in: scrollView) {
         self.refreshing = false
       }
     }

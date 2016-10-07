@@ -71,39 +71,14 @@ public protocol RefreshDelegate: class {
 #endif
 }
 
-/// A scroll delegate for handling spotDidReachBeginning and spotDidReachEnd
-public protocol ScrollDelegate: class {
-
-  /// A delegate method that is triggered when the scroll view reaches the top
-  ///
-  /// - parameter completion: A completion closure that gets triggered when the view did reach the beginning of the scroll view.
-  func spotDidReachBeginning(_ completion: Completion)
-
-  /// A delegate method that is triggered when the scroll view reaches the end
-  ///
-  /// - parameter completion: A completion closure that gets triggered when the view did reach the end of the scroll view.
-  func spotDidReachEnd(_ completion: Completion)
-}
-
-/// A dummy scroll delegate extension to make spotDidReachBeginning optional
-public extension ScrollDelegate {
-
-  /// A default implementation for spotDidReachBeginning, it renders the method optional
-  ///
-  /// - parameter completion: A completion closure
-  func spotDidReachBeginning(_ completion: Completion) {
-    completion?()
-  }
-}
-
 public protocol CarouselScrollDelegate: class {
 
   /// Invoked when ever a user scrolls a CarouselSpot.
   ///
   /// - parameter spot: The spotable object that was scrolled.
-  func spotDidScroll(_ spot: Spotable)
+  func didScroll(in spot: Spotable)
 
   /// - parameter spot: Object that comforms to the Spotable protocol
   /// - parameter item: The last view model in the component
-  func spotDidEndScrolling(_ spot: Spotable, item: Item)
+  func didEndScrolling(in spot: Spotable, item: Item)
 }

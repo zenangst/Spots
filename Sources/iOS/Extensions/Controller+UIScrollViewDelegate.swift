@@ -30,7 +30,7 @@ extension Controller {
       abs(scrollView.contentOffset.y) == scrollView.contentInset.top &&
       !refreshing {
       refreshing = true
-      delegate.spotDidReachBeginning {
+      delegate.didReachBeginning(in: scrollView) {
         self.refreshing = false
       }
     }
@@ -39,7 +39,7 @@ extension Controller {
       // Infinite scrolling
       refreshPositions.append(size.height - itemOffset)
       refreshing = true
-      delegate.spotDidReachEnd {
+      delegate.didReachEnd(in: scrollView) {
         self.refreshing = false
       }
     }

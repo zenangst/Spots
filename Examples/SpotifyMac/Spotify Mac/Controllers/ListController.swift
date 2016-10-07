@@ -6,7 +6,7 @@ import Sugar
 import Compass
 import Sugar
 
-class ListController: Controller, SpotsDelegate, ScrollDelegate {
+class ListController: Spots.Controller, SpotsDelegate, ScrollDelegate {
 
   struct UI {
     static let main = 0
@@ -43,7 +43,7 @@ class ListController: Controller, SpotsDelegate, ScrollDelegate {
   var selectedIndex: Int = 0
 
   convenience init(cacheKey: String) {
-    let stateCache = SpotCache(key: cacheKey)
+    let stateCache = StateCache(key: cacheKey)
     var spots = stateCache.load()
 
     if spots.isEmpty {
@@ -369,7 +369,7 @@ extension ListController {
     AppDelegate.navigate(action, fragments: item.meta("fragments", [:]))
   }
 
-  func spotDidReachEnd(_ completion: Completion) {
+  func didReachEnd(in scrollView: ScrollableView, completion: Completion) {
     let offset = spot(at: UI.playlists, Spotable.self)?.component.items.count ?? 0
     Malibu.networking("api").GET(PlaylistsRequest(offset: offset))
       .validate()
