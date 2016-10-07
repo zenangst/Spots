@@ -37,7 +37,7 @@ extension CollectionAdapter : UICollectionViewDelegate {
   /// - parameter collectionView: The collection view object requesting this information.
   /// - parameter context:        The context object containing metadata associated with the focus change.
   /// This object contains the index path of the previously focused item and the item targeted to receive focus next. Use this information to determine if the focus change should occur.
-  
+
   /// - returns: YES if the focus change should occur or NO if it should not.
   @available(iOS 9.0, *)
   public func collectionView(_ collectionView: UICollectionView, shouldUpdateFocusIn context: UICollectionViewFocusUpdateContext) -> Bool {

@@ -72,7 +72,7 @@ public protocol Spotable: class {
   /// - parameter animation:  A SpotAnimation that is used when performing the mutation (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue.
   func insert(_ item: Item, index: Int, withAnimation animation: SpotsAnimation, completion: Completion)
-  
+
   /// Prepend a collection items to the collection with animation
   ///
   /// - parameter items:      A collection of view model that you want to prepend
@@ -86,7 +86,7 @@ public protocol Spotable: class {
   /// - parameter animation:  The animation that should be used (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue.
   func delete(_ item: Item, withAnimation animation: SpotsAnimation, completion: Completion)
-  
+
   /// Delete items from collection with animation
   ///
   /// - parameter items:      A collection of view models that you want to delete.

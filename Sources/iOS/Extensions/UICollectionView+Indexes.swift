@@ -19,7 +19,7 @@ public extension UICollectionView {
   }
 
   /// A convenience method for performing updates on a UICollectionView
-  
+
   ///  - parameter indexes: A collection integers
   ///  - parameter section: The section you want to update
   ///  - parameter completion: A completion block for when the updates are done
