@@ -3,6 +3,17 @@ import Brick
 
 extension Gridable {
 
+  /// A computed CGFloat of the total height of all items inside of a component.
+  public var computedHeight: CGFloat {
+    guard usesDynamicHeight else {
+      return self.render().frame.height
+    }
+
+    layout.prepare()
+
+    return layout.collectionViewContentSize.height + layout.sectionInset.top + layout.sectionInset.bottom
+  }
+
   /// Initializes a Gridable container and configures the Spot with the provided component and optional layout properties.
   ///
   /// - parameter component: A Component model.

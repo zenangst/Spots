@@ -3,15 +3,6 @@ import UIKit
 /// An extension on CarouselSpot to object specific behavior.
 extension CarouselSpot {
 
-   /// A computed CGFloat of the total height of all items inside of a component.
-  public var computedHeight: CGFloat {
-    guard usesDynamicHeight else {
-      return self.render().frame.height
-    }
-
-    return collectionView.frame.height - layout.sectionInset.top - layout.sectionInset.bottom - layout.headerReferenceSize.height
-  }
-
   /// Update and return the size for the item at index path.
   ///
   /// - parameter indexPath: indexPath: An NSIndexPath.
