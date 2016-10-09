@@ -201,8 +201,6 @@ extension ListAdapter {
       } else {
         spot.tableView.reload([index], section: 0, animation: animation.tableViewAnimation)
       }
-
-      spot.prepareItems()
       spot.updateHeight() { completion?() }
       return
     } else if let cell = spot.tableView.cellForRow(at: indexPath) as? SpotConfigurable {
