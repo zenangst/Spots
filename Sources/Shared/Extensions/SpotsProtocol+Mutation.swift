@@ -150,9 +150,9 @@ extension SpotsProtocol {
         }
 
         spot.items = newItems
-      }) {
+      }) { [weak self] in
         for item in newItems {
-          if let compositeSpots = self.compositeSpots[spot.index],
+          if let compositeSpots = self?.compositeSpots[spot.index],
             let spots = compositeSpots[item.index] {
             for (index, spot) in spots.enumerated() {
               guard index < offsets.count else { continue }
@@ -162,15 +162,17 @@ extension SpotsProtocol {
         }
 
         closure?()
+        self?.scrollView.layoutSubviews()
         CATransaction.commit()
       }
     } else if newItems.count < spot.items.count {
       spot.adapter?.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: {
         CATransaction.begin()
         spot.items = newItems
-      }) {
+      }) { [weak self] in
         guard !newItems.isEmpty else {
           closure?()
+          self?.scrollView.layoutSubviews()
           CATransaction.commit()
           return
         }
@@ -178,20 +180,21 @@ extension SpotsProtocol {
         let executeClosure = newItems.count - 1
         for (index, item) in newItems.enumerated() {
           let components = Parser.parse(item.children).map { $0.component }
-          if let compositeSpots = self.compositeSpots[spot.index],
+          if let compositeSpots = self?.compositeSpots[spot.index],
             let spots = compositeSpots[item.index] {
             for (index, removedSpot) in spots.enumerated() {
               guard !components.contains(removedSpot.component) else { continue }
-              let oldContent = self.compositeSpots[spot.index]?[item.index]
-              if var oldContent = self.compositeSpots[spot.index]?[item.index], index < oldContent.count {
+              let oldContent = self?.compositeSpots[spot.index]?[item.index]
+              if var oldContent = self?.compositeSpots[spot.index]?[item.index], index < oldContent.count {
                 oldContent.remove(at: index)
               }
-              self.compositeSpots[spot.index]?[item.index] = oldContent
+              self?.compositeSpots[spot.index]?[item.index] = oldContent
             }
           }
           spot.update(item, index: index, withAnimation: animation) {
             guard index == executeClosure else { return }
             closure?()
+            self?.scrollView.layoutSubviews()
             CATransaction.commit()
           }
         }
@@ -201,8 +204,9 @@ extension SpotsProtocol {
         CATransaction.begin()
         spot.items = newItems
       }) {
-        spot.adapter?.reload(nil, withAnimation: animation) {
+        spot.adapter?.reload(nil, withAnimation: animation) { [weak self] in
           closure?()
+          self?.scrollView.layoutSubviews()
           Dispatch.delay(for: 0.1) {
             CATransaction.commit()
           }
@@ -217,19 +221,21 @@ extension SpotsProtocol {
                        components newComponents: [Component],
                                   withAnimation animation: SpotsAnimation = .automatic,
                                   closure: Completion = nil) {
-    Dispatch.mainQueue {
+    Dispatch.mainQueue { [weak self] in
+      guard let weakSelf = self else { closure?(); return }
+
       var yOffset: CGFloat = 0.0
       var runClosure = true
       for (index, change) in changes.enumerated() {
         switch change {
         case .identifier, .kind, .span, .header, .meta:
-          self.replaceSpot(index, newComponents: newComponents, yOffset: &yOffset)
+          weakSelf.replaceSpot(index, newComponents: newComponents, yOffset: &yOffset)
         case .new:
-          self.newSpot(index, newComponents: newComponents, yOffset: &yOffset)
+          weakSelf.newSpot(index, newComponents: newComponents, yOffset: &yOffset)
         case .removed:
-          self.removeSpot(at: index)
+          weakSelf.removeSpot(at: index)
         case .items:
-          runClosure = self.setupItemsForSpot(index,
+          runClosure = weakSelf.setupItemsForSpot(index,
             newComponents: newComponents,
             withAnimation: animation,
             closure: closure)
@@ -239,6 +245,7 @@ extension SpotsProtocol {
 
       if runClosure {
         closure?()
+        weakSelf.scrollView.layoutSubviews()
       }
     }
   }
@@ -299,6 +306,7 @@ extension SpotsProtocol {
       }
 
       completion?()
+      weakSelf.scrollView.layoutSubviews()
 
       offsets.enumerated().forEach {
         newSpots[$0.offset].render().contentOffset = $0.element
@@ -326,6 +334,7 @@ extension SpotsProtocol {
       weakSelf.setupSpots(animated)
 
       completion?()
+      weakSelf.scrollView.layoutSubviews()
     }
   }
 
@@ -351,8 +360,9 @@ extension SpotsProtocol {
         if animation != .none { spot.render().layer.frame.size.height = spotHeight }
       #endif
 
-      weakSelf.spot(at: index, Spotable.self)?.reload(nil, withAnimation: animation) {
+      weakSelf.spot(at: index, Spotable.self)?.reload(nil, withAnimation: animation) { [weak self] in
         completion?()
+        self?.scrollView.layoutSubviews()
       }
     }
   }
@@ -368,11 +378,13 @@ extension SpotsProtocol {
   public func updateIfNeeded(spotAtIndex index: Int = 0, items: [Item], withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
     guard let spot = spot(at: index, Spotable.self), !(spot.items == items) else {
       completion?()
+      scrollView.layoutSubviews()
       return
     }
 
-    update(spotAtIndex: index, withAnimation: animation, withCompletion: completion, {
+    update(spotAtIndex: index, withAnimation: animation, withCompletion: completion, { [weak self] in
       $0.items = items
+      self?.scrollView.layoutSubviews()
     })
   }
 
@@ -383,8 +395,9 @@ extension SpotsProtocol {
    - parameter completion: A completion closure that will run after the spot has performed updates internally
    */
   public func append(_ item: Item, spotIndex: Int = 0, withAnimation animation: SpotsAnimation = .none, completion: Completion = nil) {
-    spot(at: spotIndex, Spotable.self)?.append(item, withAnimation: animation) {
+    spot(at: spotIndex, Spotable.self)?.append(item, withAnimation: animation) { [weak self] in
       completion?()
+      self?.scrollView.layoutSubviews()
     }
     spot(at: spotIndex, Spotable.self)?.refreshIndexes()
   }
@@ -396,8 +409,9 @@ extension SpotsProtocol {
    - parameter completion: A completion closure that will run after the spot has performed updates internally
    */
   public func append(_ items: [Item], spotIndex: Int = 0, withAnimation animation: SpotsAnimation = .none, completion: Completion = nil) {
-    spot(at: spotIndex, Spotable.self)?.append(items, withAnimation: animation) {
+    spot(at: spotIndex, Spotable.self)?.append(items, withAnimation: animation) { [weak self] in
       completion?()
+      self?.scrollView.layoutSubviews()
     }
     spot(at: spotIndex, Spotable.self)?.refreshIndexes()
   }
@@ -409,8 +423,9 @@ extension SpotsProtocol {
    - parameter completion: A completion closure that will run after the spot has performed updates internally
    */
   public func prepend(_ items: [Item], spotIndex: Int = 0, withAnimation animation: SpotsAnimation = .none, completion: Completion = nil) {
-    spot(at: spotIndex, Spotable.self)?.prepend(items, withAnimation: animation) {
+    spot(at: spotIndex, Spotable.self)?.prepend(items, withAnimation: animation) { [weak self] in
       completion?()
+      self?.scrollView.layoutSubviews()
     }
     spot(at: spotIndex, Spotable.self)?.refreshIndexes()
   }
@@ -423,8 +438,9 @@ extension SpotsProtocol {
    - parameter completion: A completion closure that will run after the spot has performed updates internally
    */
   public func insert(_ item: Item, index: Int = 0, spotIndex: Int, withAnimation animation: SpotsAnimation = .none, completion: Completion = nil) {
-    spot(at: spotIndex, Spotable.self)?.insert(item, index: index, withAnimation: animation) {
+    spot(at: spotIndex, Spotable.self)?.insert(item, index: index, withAnimation: animation) { [weak self] in
       completion?()
+      self?.scrollView.layoutSubviews()
     }
     spot(at: spotIndex, Spotable.self)?.refreshIndexes()
   }
@@ -444,8 +460,16 @@ extension SpotsProtocol {
         return
     }
 
-    spot(at: spotIndex, Spotable.self)?.update(item, index: index, withAnimation: animation) {
+    #if !os(OSX)
+      if animation == .none { CATransaction.begin() }
+    #endif
+
+    spot(at: spotIndex, Spotable.self)?.update(item, index: index, withAnimation: animation) { [weak self] in
       completion?()
+      self?.scrollView.layoutSubviews()
+      #if !os(OSX)
+        if animation == .none { CATransaction.commit() }
+      #endif
     }
     spot(at: spotIndex, Spotable.self)?.refreshIndexes()
   }
