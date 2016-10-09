@@ -138,8 +138,6 @@ public extension Spotable {
   var items: [Item] {
     set(items) {
       component.items = items
-      registerAndPrepare()
-      updateHeight()
     }
     get { return component.items }
   }
