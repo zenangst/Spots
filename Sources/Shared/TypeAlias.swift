@@ -23,6 +23,7 @@ public typealias Completion = (() -> Void)?
   /// A type alias for scrollable views
   public typealias ScrollableView = SpotsScrollView
 
+  /// Extension for macOS to gain layoutSubviews
   extension NSView {
     func layoutSubviews() { layoutSubtreeIfNeeded() }
   }
