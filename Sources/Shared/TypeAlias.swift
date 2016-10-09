@@ -22,6 +22,10 @@ public typealias Completion = (() -> Void)?
   public typealias CollectionLayout = NSCollectionViewLayout
   /// A type alias for scrollable views
   public typealias ScrollableView = SpotsScrollView
+
+  extension NSView {
+    func layoutSubviews() { layoutSubtreeIfNeeded() }
+  }
 #else
   /// A type alias to reference a normal platform view
   public typealias View = UIView
