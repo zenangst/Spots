@@ -146,11 +146,8 @@ open class SpotsScrollView: UIScrollView {
     }
   }
 
-  /// A custom implementation of layoutSubviews that handles the scrolling of all the underlaying views within the container.
-  /// It does this by iterating over subviewsInLayoutOrder and sets the current offset for each individual view within the container.
-  open override func layoutSubviews() {
-    super.layoutSubviews()
-
+  /// Layout views in linear order based of view index in `subviewsInLayoutOrder`
+  func layoutViews() {
     guard let superview = superview else { return }
 
     contentView.frame = bounds
@@ -199,6 +196,15 @@ open class SpotsScrollView: UIScrollView {
     if self.frame.size.height != superview.frame.size.height {
       self.frame.size.height = superview.frame.size.height
     }
+  }
+
+  /// A custom implementation of layoutSubviews that handles the scrolling of all the underlaying views within the container.
+  /// It does this by iterating over subviewsInLayoutOrder and sets the current offset for each individual view within the container.
+  open override func layoutSubviews() {
+    super.layoutSubviews()
+
+    let initialContentOffset = contentOffset
+    layoutViews()
 
     guard !initialContentOffset.equalTo(contentOffset) else { return }
     setNeedsLayout()
