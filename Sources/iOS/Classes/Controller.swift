@@ -97,7 +97,7 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
 
 #if os(iOS)
   /// A UIRefresh control.
-  /// Note: Only avaiable on iOS.
+  /// Note: Only available on iOS.
   public lazy var refreshControl: UIRefreshControl = { [unowned self] in
     let refreshControl = UIRefreshControl()
     refreshControl.addTarget(self, action: #selector(refreshSpots(_:)), for: .valueChanged)
