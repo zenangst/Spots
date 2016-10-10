@@ -98,12 +98,7 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
 #if os(iOS)
   /// A UIRefresh control.
   /// Note: Only available on iOS.
-  public lazy var refreshControl: UIRefreshControl = { [unowned self] in
-    let refreshControl = UIRefreshControl()
-    refreshControl.addTarget(self, action: #selector(refreshSpots(_:)), for: .valueChanged)
-
-    return refreshControl
-  }()
+  public lazy var refreshControl: UIRefreshControl()
 #endif
 
   // MARK: Initializer
@@ -237,6 +232,7 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
     guard let _ = refreshDelegate, refreshControl.superview == nil
       else { return }
 
+    refreshControl.addTarget(self, action: #selector(refreshSpots(_:)), for: .valueChanged)
     scrollView.insertSubview(refreshControl, at: 0)
 #endif
   }
