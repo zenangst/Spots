@@ -24,7 +24,7 @@
 <img src="https://img.shields.io/cocoapods/metrics/doc-percent/Spots.svg?style=flat">
 </a>
 
-<img src="https://img.shields.io/badge/%20in-swift%202.2-orange.svg">
+<img src="https://img.shields.io/badge/%20in-swift%203.0-orange.svg">
 
 <a href="https://gitter.im/hyperoslo/Spots?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge">
 <img src="https://badges.gitter.im/hyperoslo/Spots.svg">
