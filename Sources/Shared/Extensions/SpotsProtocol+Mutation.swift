@@ -88,7 +88,7 @@ extension SpotsProtocol {
   }
 
   fileprivate func replaceSpot(_ index: Int, newComponents: [Component], yOffset: inout CGFloat) {
-    let spot = SpotFactory.resolve(component: newComponents[index])
+    let spot = Factory.resolve(component: newComponents[index])
 
     self.removeCompositeViews()
     self.spots[index].render().removeFromSuperview()
@@ -100,7 +100,7 @@ extension SpotsProtocol {
   }
 
   fileprivate func newSpot(_ index: Int, newComponents: [Component], yOffset: inout CGFloat) {
-    let spot = SpotFactory.resolve(component: newComponents[index])
+    let spot = Factory.resolve(component: newComponents[index])
     spots.append(spot)
     setupSpot(at: index, spot: spot)
     (spot as? Gridable)?.layout.yOffset = yOffset

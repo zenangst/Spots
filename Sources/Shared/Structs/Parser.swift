@@ -14,7 +14,7 @@ public struct Parser {
       components[index].index = index
     }
 
-    return components.map { SpotFactory.resolve(component: $0) }
+    return components.map { Factory.resolve(component: $0) }
   }
 
   /// Parse JSON into a collection of Components.
@@ -38,7 +38,7 @@ public struct Parser {
     guard let json = json else { return [] }
 
     return json.map {
-      SpotFactory.resolve(component: Component($0))
+      Factory.resolve(component: Component($0))
     }
   }
 }

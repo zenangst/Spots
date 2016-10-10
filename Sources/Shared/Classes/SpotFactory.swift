@@ -1,6 +1,6 @@
-public class SpotFactory {
+public struct Factory {
 
-  /// The default spot for the SpotFactory
+  /// The default spot for the Factory
   public static var DefaultSpot: Spotable.Type = GridSpot.self
 
   /// Defaults spots, it includes carousel, list, grid and view
@@ -11,20 +11,19 @@ public class SpotFactory {
     "view": ViewSpot.self
   ]
 
-  /**
-   Register a spot for a specfic spot type
-
-   - parameter kind: The reusable identifier that will be used to indentify your view
-   - parameter spot: A generic spotable type
-   */
+  /// Register a spot for a specfic spot type
+  ///
+  /// - parameter kind: The reusable identifier that will be used to indentify your view
+  /// - parameter spot: A generic spotable type
   public static func register<T: Spotable>(kind: String, spot: T.Type) {
     spots[kind] = spot
   }
 
-  /**
-   - parameter component: A component that you want to resolve before initializing the spot
-   - returns: A spotable object
-   */
+  /// Craft spotable object from component struct
+  ///
+  /// - parameter component: A compontent struct used for crafting the spotable object.
+  ///
+  /// - returns: A spotable object.
   public static func resolve(component: Component) -> Spotable {
     let spot: Spotable.Type = spots[component.kind] ?? DefaultSpot
     return spot.init(component: component)
