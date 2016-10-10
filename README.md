@@ -4,12 +4,12 @@
 <img src="http://img.shields.io/travis/hyperoslo/Spots.svg?style=flat">
 </a>
 
-<a href="https://github.com/Carthage/Carthage" target="_blank">
-<img src="https://img.shields.io/badge/Carthage-Compatible-brightgreen.svg?style=flat">
-</a>
-
 <a href="http://cocoadocs.org/docsets/Spots" target="_blank">
 <img src="https://img.shields.io/cocoapods/v/Spots.svg?style=flat">
+</a>
+
+<a href="https://github.com/Carthage/Carthage" target="_blank">
+<img src="https://img.shields.io/badge/Carthage-Compatible-brightgreen.svg?style=flat">
 </a>
 
 <a href="http://cocoadocs.org/docsets/Spots" target="_blank">
