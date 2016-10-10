@@ -1,4 +1,4 @@
-import UIKit
+import Foundation
 
 /// The CollectionAdapter works as a proxy handler for all Gridable object.
 open class CollectionAdapter: NSObject, SpotAdapter {
