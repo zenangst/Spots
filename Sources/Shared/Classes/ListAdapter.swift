@@ -1,15 +1,16 @@
 import Foundation
 
+/// The ListAdapter works as a proxy handler for all Listable object.
 open class ListAdapter: NSObject, SpotAdapter {
   // An unowned Listable object
   unowned var spot: Listable
 
-  /**
-   Initialization a new instance of a ListAdapter using a Listable object
-
-   - parameter spot: A Listable object
-   */
-  init(spot: ListSpot) {
+  /// Initialization a new instance of a CollectionAdapter using a Listable object.
+  ///
+  /// - parameter spot: A List object.
+  ///
+  /// - returns: An initialized list adapter.
+  init(spot: Listable) {
     self.spot = spot
   }
 }
