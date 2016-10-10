@@ -37,6 +37,7 @@ open class ListSpot: NSObject, Listable {
   open weak var spotsCompositeDelegate: CompositeDelegate?
   open weak var delegate: SpotsDelegate?
 
+  /// A component struct used as configuration and data source for the ListSpot
   open var component: Component
   open var configure: ((SpotConfigurable) -> Void)?
   /// Indicator to calculate the height based on content

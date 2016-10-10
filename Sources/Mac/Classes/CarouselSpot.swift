@@ -20,26 +20,40 @@ open class CarouselSpot: NSObject, Gridable {
     public static var titleTopInset: CGFloat = 10.0
     public static var titleBottomInset: CGFloat = 10.0
     public static var titleTextColor: String = "000000"
+    /// Default section inset top
     public static var sectionInsetTop: CGFloat = 0.0
+    /// Default section inset left
     public static var sectionInsetLeft: CGFloat = 0.0
+    /// Default section inset right
     public static var sectionInsetRight: CGFloat = 0.0
+    /// Default section inset bottom
     public static var sectionInsetBottom: CGFloat = 0.0
+    /// Default default minimum interitem spacing
     public static var minimumInteritemSpacing: CGFloat = 0.0
+    /// Default minimum line spacing
     public static var minimumLineSpacing: CGFloat = 0.0
   }
 
   /// A Registry struct that contains all register components, used for resolving what UI component to use
   open static var views = Registry()
+
+  /// A Registry struct that contains all register components, used for resolving what UI component to use
   open static var grids = GridRegistry()
+
   open static var configure: ((_ view: NSCollectionView) -> Void)?
+
   open static var defaultGrid: NSCollectionViewItem.Type = NSCollectionViewItem.self
+
   open static var defaultView: View.Type = NSView.self
+
   open static var defaultKind: StringConvertible = Component.Kind.Carousel.string
 
+  /// A SpotsDelegate that is used for the CarouselSpot
   open weak var delegate: SpotsDelegate?
 
   open var component: Component
   open var configure: ((SpotConfigurable) -> Void)?
+
   /// Indicator to calculate the height based on content
   open var usesDynamicHeight = true
 
@@ -87,6 +101,11 @@ open class CarouselSpot: NSObject, Gridable {
     return lineView
   }()
 
+  /// A required initializer to instantiate a CarouselSpot with a component.
+  ///
+  /// - parameter component: A component
+  ///
+  /// - returns: An initialized carousel spot.
   public required init(component: Component) {
     self.component = component
 
@@ -104,19 +123,11 @@ open class CarouselSpot: NSObject, Gridable {
     scrollView.documentView = collectionView
   }
 
-  fileprivate func configureLayoutInsets(_ component: Component) {
-    guard let layout = layout as? NSCollectionViewFlowLayout else { return }
-
-    layout.sectionInset = EdgeInsets(
-      top: component.meta(GridableMeta.Key.sectionInsetTop, Default.sectionInsetTop),
-      left: component.meta(GridableMeta.Key.sectionInsetLeft, Default.sectionInsetLeft),
-      bottom: component.meta(GridableMeta.Key.sectionInsetBottom, Default.sectionInsetBottom),
-      right: component.meta(GridableMeta.Key.sectionInsetRight, Default.sectionInsetRight))
-    layout.minimumInteritemSpacing = component.meta(Key.minimumInteritemSpacing, Default.minimumInteritemSpacing)
-    layout.minimumLineSpacing = component.meta(Key.minimumLineSpacing, Default.minimumLineSpacing)
-    layout.scrollDirection = .horizontal
-  }
-
+  /// Instantiate a CarouselSpot with a cache key.
+  ///
+  /// - parameter cacheKey: A unique cache key for the Spotable object.
+  ///
+  /// - returns: An initialized carousel spot.
   public convenience init(cacheKey: String) {
     let stateCache = StateCache(key: cacheKey)
 
@@ -131,6 +142,20 @@ open class CarouselSpot: NSObject, Gridable {
     collectionView.dataSource = nil
   }
 
+  fileprivate func configureLayoutInsets(_ component: Component) {
+    guard let layout = layout as? NSCollectionViewFlowLayout else { return }
+
+    layout.sectionInset = EdgeInsets(
+      top: component.meta(GridableMeta.Key.sectionInsetTop, Default.sectionInsetTop),
+      left: component.meta(GridableMeta.Key.sectionInsetLeft, Default.sectionInsetLeft),
+      bottom: component.meta(GridableMeta.Key.sectionInsetBottom, Default.sectionInsetBottom),
+      right: component.meta(GridableMeta.Key.sectionInsetRight, Default.sectionInsetRight))
+    layout.minimumInteritemSpacing = component.meta(Key.minimumInteritemSpacing, Default.minimumInteritemSpacing)
+    layout.minimumLineSpacing = component.meta(Key.minimumLineSpacing, Default.minimumLineSpacing)
+    layout.scrollDirection = .horizontal
+  }
+
+  /// Configure collection view delegate, data source and layout
   open func setupCollectionView() {
     collectionView.delegate = collectionAdapter
     collectionView.dataSource = collectionAdapter
