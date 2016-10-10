@@ -98,7 +98,7 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
 #if os(iOS)
   /// A UIRefresh control.
   /// Note: Only available on iOS.
-  public lazy var refreshControl: UIRefreshControl()
+  public lazy var refreshControl = UIRefreshControl()
 #endif
 
   // MARK: Initializer
