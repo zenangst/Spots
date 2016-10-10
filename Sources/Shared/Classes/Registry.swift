@@ -28,6 +28,7 @@ open class Registry {
     }
   }
 
+  /// A composite item
   var composite: Item? {
     didSet {
       storage["composite"] = composite
@@ -39,11 +40,11 @@ open class Registry {
     return String(describing: defaultItem)
   }
 
-  /**
-   A subscripting method for getting a value from storage using a StringConvertible key
-
-   - returns: An optional Nib
-   */
+  /// A subscripting method for getting a value from storage using a StringConvertible key
+  ///
+  /// - parameter key: A StringConvertable identifier
+  ///
+  /// - returns: An optional Nib
   open subscript(key: StringConvertible) -> Item? {
     get {
       return storage[key.string]
