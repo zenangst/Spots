@@ -68,7 +68,7 @@ CHECKOUT OPTIONS:
     :commit: 6fadb337e2fa8ebf90d7c1b28f1fd4cac77a6fc9
     :git: https://github.com/hyperoslo/Imaginary
   Sugar:
-    :commit: d62ec6bf2a0b85012b0b1dfe25dcbf4d224f0f64
+    :commit: 7fba82b649ae53636b451762eb165e8c8de69751
     :git: https://github.com/hyperoslo/Sugar
 
 SPEC CHECKSUMS:
