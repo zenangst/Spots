@@ -2,8 +2,8 @@ import Foundation
 
 /// The CollectionAdapter works as a proxy handler for all Gridable object.
 open class CollectionAdapter: NSObject, SpotAdapter {
-  // An unowned Gridable object.
-  unowned var spot: Gridable
+  // An Gridable object.
+  var spot: Gridable
 
   /// Initialization a new instance of a CollectionAdapter using a Gridable object.
   ///

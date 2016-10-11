@@ -2,8 +2,8 @@ import Foundation
 
 /// The ListAdapter works as a proxy handler for all Listable object.
 open class ListAdapter: NSObject, SpotAdapter {
-  // An unowned Listable object
-  unowned var spot: Listable
+  // An Listable object
+  var spot: Listable
 
   /// Initialization a new instance of a CollectionAdapter using a Listable object.
   ///
