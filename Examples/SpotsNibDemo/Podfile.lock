@@ -9,8 +9,8 @@ PODS:
     - Brick (= 1.0.0)
     - Cache (= 1.5.1)
     - CryptoSwift (= 0.6.0)
-    - Tailor (= 2.0.0)
-  - Tailor (2.0.0)
+    - Tailor (= 2.0.1)
+  - Tailor (2.0.1)
 
 DEPENDENCIES:
   - Brick (from `https://github.com/hyperoslo/Brick`, branch `swift-3`)
@@ -18,7 +18,7 @@ DEPENDENCIES:
   - CryptoSwift (= 0.6.0)
   - Hue (from `https://github.com/hyperoslo/Hue`, branch `swift-3`)
   - Spots (from `../../`)
-  - Tailor (= 2.0.0)
+  - Tailor (= 2.0.1)
 
 EXTERNAL SOURCES:
   Brick:
@@ -49,8 +49,8 @@ SPEC CHECKSUMS:
   Cache: db4c6908069c442e5de02c7271fb38b38fb60a67
   CryptoSwift: 4a599b7241b8d3b857d6e2c28867d0bd5d1aae24
   Hue: 2b317616a04cc5d7cccdb024c88e6d143e2b9cf1
-  Spots: 1abd118c590ae159f91ca95057537f14095e1d13
-  Tailor: d5ee9756f4698e0b0d3f3eaa650ffc995714b3b3
+  Spots: 51933c15f351d072e22627ccbd1455daaecb2464
+  Tailor: faa9ec5be402056be8ec67c0e461f00251d19191
 
 PODFILE CHECKSUM: 5e38d91c67d8b3de21c7dfd9d1db21d9707eb084
 

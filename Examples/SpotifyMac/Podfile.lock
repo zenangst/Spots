@@ -23,9 +23,9 @@ PODS:
     - Brick (= 1.0.0)
     - Cache (= 1.5.1)
     - CryptoSwift (= 0.6.0)
-    - Tailor (= 2.0.0)
+    - Tailor (= 2.0.1)
   - Sugar (1.2.0)
-  - Tailor (2.0.0)
+  - Tailor (2.0.1)
   - When (2.0.0)
 
 DEPENDENCIES:
@@ -43,7 +43,7 @@ DEPENDENCIES:
   - OhMyAuth (from `https://github.com/hyperoslo/OhMyAuth.git`, branch `swift-3`)
   - Spots (from `../../`)
   - Sugar (from `https://github.com/hyperoslo/Sugar.git`, branch `swift-3`)
-  - Tailor (= 2.0.0)
+  - Tailor (= 2.0.1)
 
 EXTERNAL SOURCES:
   Brick:
@@ -81,7 +81,7 @@ CHECKOUT OPTIONS:
     :commit: 0246e9e9e8faae93f2c83d15824789577f4720bf
     :git: https://github.com/hyperoslo/Cache
   Compass:
-    :commit: 76bb282d0145b87ef9e0bfd0de7b3a7852ab3edf
+    :commit: 89f4e49c67483d4b7951279d1829ba47876d5ddb
     :git: https://github.com/hyperoslo/Compass
   Hue:
     :commit: d03fe87b19caf00e108d82f7e5c8da578699e3b4
@@ -93,7 +93,7 @@ CHECKOUT OPTIONS:
     :commit: aba620997062a2082a9d1a57fb5c81e4e0fe79df
     :git: https://github.com/hyperoslo/Keychain.git
   OhMyAuth:
-    :commit: be2bf2a8e8a28c66e148e1ea782e46ba5a3b3e99
+    :commit: 121dd6ffe1db71792bd2dc935a0164758033efba
     :git: https://github.com/hyperoslo/OhMyAuth.git
   Sugar:
     :commit: 7fba82b649ae53636b451762eb165e8c8de69751
@@ -111,10 +111,10 @@ SPEC CHECKSUMS:
   JWTDecode: 178e47e5d28d3abcff778bacced8342858cd6cb5
   Keychain: b82fa1a6c20666b74014e7549f53bae6c75d617f
   Malibu: d697d750eba061696ddafa097b6cb325ba6037f7
-  OhMyAuth: 2f1177b2489f63b9f8d07db2c3a0f38171367b91
-  Spots: 1abd118c590ae159f91ca95057537f14095e1d13
+  OhMyAuth: 6635daf8b6378ac68db57f313cd2ac06033d975b
+  Spots: 51933c15f351d072e22627ccbd1455daaecb2464
   Sugar: 80c69044df1b48d4c9e3f66196afac827f076134
-  Tailor: d5ee9756f4698e0b0d3f3eaa650ffc995714b3b3
+  Tailor: faa9ec5be402056be8ec67c0e461f00251d19191
   When: 3df626af4891607ea7dd3f46a451176c5642c528
 
 PODFILE CHECKSUM: af2badb37e2a7cbdeee26bcc54225e4f3921b149

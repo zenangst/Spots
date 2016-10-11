@@ -1,7 +1,7 @@
 def core_pods
   pod 'Spots', path: '../../'
   pod 'Brick', :git => 'https://github.com/hyperoslo/Brick', :branch => 'swift-3'
-  pod 'Tailor', '2.0.0'
+  pod 'Tailor', '2.0.1'
   pod 'CryptoSwift', '0.6.0'
   pod 'Cache', :git => 'https://github.com/hyperoslo/Cache', :branch => 'swift-3'
 

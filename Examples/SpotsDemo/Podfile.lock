@@ -12,9 +12,9 @@ PODS:
     - Brick (= 1.0.0)
     - Cache (= 1.5.1)
     - CryptoSwift (= 0.6.0)
-    - Tailor (= 2.0.0)
+    - Tailor (= 2.0.1)
   - Sugar (1.2.0)
-  - Tailor (2.0.0)
+  - Tailor (2.0.1)
 
 DEPENDENCIES:
   - Brick (from `https://github.com/hyperoslo/Brick`, branch `swift-3`)
@@ -25,7 +25,7 @@ DEPENDENCIES:
   - Imaginary (from `https://github.com/hyperoslo/Imaginary`, branch `swift-3`)
   - Spots (from `../../`)
   - Sugar (from `https://github.com/hyperoslo/Sugar`, branch `swift-3`)
-  - Tailor (= 2.0.0)
+  - Tailor (= 2.0.1)
 
 EXTERNAL SOURCES:
   Brick:
@@ -57,7 +57,7 @@ CHECKOUT OPTIONS:
     :commit: 0246e9e9e8faae93f2c83d15824789577f4720bf
     :git: https://github.com/hyperoslo/Cache
   Compass:
-    :commit: 76bb282d0145b87ef9e0bfd0de7b3a7852ab3edf
+    :commit: 89f4e49c67483d4b7951279d1829ba47876d5ddb
     :git: https://github.com/hyperoslo/Compass
   Hue:
     :commit: c21ca81d4fa002309f8f8f554317bf9ec3167365
@@ -76,9 +76,9 @@ SPEC CHECKSUMS:
   CryptoSwift: 4a599b7241b8d3b857d6e2c28867d0bd5d1aae24
   Hue: '0705083b7aff40334033373e6293ec1215285ac2'
   Imaginary: 62a9ce1e6d7831ede429c8221a183f03ec2a90bc
-  Spots: 1abd118c590ae159f91ca95057537f14095e1d13
+  Spots: 51933c15f351d072e22627ccbd1455daaecb2464
   Sugar: 80c69044df1b48d4c9e3f66196afac827f076134
-  Tailor: d5ee9756f4698e0b0d3f3eaa650ffc995714b3b3
+  Tailor: faa9ec5be402056be8ec67c0e461f00251d19191
 
 PODFILE CHECKSUM: 104b38805befeec6a22028f6a6ec2e0515c07741
 
