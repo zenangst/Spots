@@ -14,20 +14,20 @@ import Cache
                                                          eventMask: eventMask,
                                                          queue: fileQueue)
 
-      source.setEventHandler(handler: {
+      source.setEventHandler(handler: { [weak self] in
         // Check that file still exists, otherwise cancel observering
-        guard FileManager.default.fileExists(atPath: filePath) else {
-          self.source.cancel()
-          self.source = nil
+        guard let weakSelf = self, FileManager.default.fileExists(atPath: filePath) else {
+          self?.source.cancel()
+          self?.source = nil
           return
         }
 
         do {
           if let data = NSData(contentsOfFile: filePath),
             let json = try JSONSerialization.jsonObject(with: data as Data, options: .mutableContainers) as? [String : Any] {
-            self.source.cancel()
-            self.source = nil
-            let offset = self.scrollView.contentOffset
+            weakSelf.source.cancel()
+            weakSelf.source = nil
+            let offset = weakSelf.scrollView.contentOffset
 
             #if os(OSX)
               let components = json
@@ -35,11 +35,11 @@ import Cache
               let components: [Component] = Parser.parse(json)
             #endif
 
-            self.reloadIfNeeded(components) {
-              self.scrollView.contentOffset = offset
+            weakSelf.reloadIfNeeded(components) {
+              weakSelf.scrollView.contentOffset = offset
 
               var yOffset: CGFloat = 0.0
-              for spot in self.spots {
+              for spot in weakSelf.spots {
                 #if !os(OSX)
                 (spot as? Gridable)?.layout.yOffset = yOffset
                 #endif
@@ -47,19 +47,19 @@ import Cache
               }
 
               #if !os(OSX)
-              for case let gridable as CarouselSpot in self.spots {
+              for case let gridable as CarouselSpot in weakSelf.spots {
                 (gridable.layout as? GridableLayout)?.yOffset = gridable.render().frame.origin.y
               }
               #endif
             }
-            print("Spots reloaded: \(self.spots.count)")
-            self.liveEditing(stateCache: self.stateCache)
+            print("Spots reloaded: \(weakSelf.spots.count)")
+            weakSelf.liveEditing(stateCache: weakSelf.stateCache)
           }
         } catch let error {
-          self.source = nil
+          weakSelf.source = nil
 
           print("Error: could not parse file")
-          self.liveEditing(stateCache: self.stateCache)
+          weakSelf.liveEditing(stateCache: weakSelf.stateCache)
         }
       })
 
@@ -82,7 +82,7 @@ import Cache
       print("🎍 SPOTS: Caching...")
       print("Cache key: \(stateCache.key)")
       print("File path: file://\(stateCache.path)\n")
-      Dispatch.delay(for: 0.5) { self.monitor(filePath: stateCache.path) }
+      Dispatch.delay(for: 0.5) { [weak self] in self?.monitor(filePath: stateCache.path) }
     }
   }
 #endif
