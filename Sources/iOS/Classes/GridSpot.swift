@@ -253,7 +253,7 @@ extension GridSpot : UICollectionViewDelegate {
   /// - parameter spotAnimation: The animation that you want to apply
   /// - parameter withIndex: The index of the cell
   /// - parameter completion: A completion block that runs after applying the animation
-  public func perform(_ spotAnimation: SpotsAnimation, withIndex index: Int, completion: () -> Void) {
+  public func perform(_ spotAnimation: Animation, withIndex index: Int, completion: () -> Void) {
     guard let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0))
       else { completion(); return }
 
@@ -287,7 +287,7 @@ extension GridSpot : UICollectionViewDelegate {
 
     animation.duration = 0.3
     cell.layer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-    cell.layer.add(animation, forKey: "SpotAnimation")
+    cell.layer.add(animation, forKey: "Animation")
     completion()
   }
 }

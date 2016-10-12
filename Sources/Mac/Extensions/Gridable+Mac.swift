@@ -7,7 +7,7 @@ extension Gridable {
     return collectionView.item(at: IndexPath(item: index, section: 0)) as? T
   }
 
-  public func append(_ item: Item, withAnimation animation: SpotsAnimation, completion: Completion) {
+  public func append(_ item: Item, withAnimation animation: Animation, completion: Completion) {
     let count = component.items.count
     component.items.append(item)
 
@@ -19,7 +19,7 @@ extension Gridable {
       })
     }
   }
-  public func append(_ items: [Item], withAnimation animation: SpotsAnimation, completion: Completion) {
+  public func append(_ items: [Item], withAnimation animation: Animation, completion: Completion) {
     var indexes = [Int]()
     let count = component.items.count
 
@@ -38,7 +38,7 @@ extension Gridable {
     }
   }
 
-  public func prepend(_ items: [Item], withAnimation animation: SpotsAnimation, completion: Completion) {
+  public func prepend(_ items: [Item], withAnimation animation: Animation, completion: Completion) {
     var indexes = [Int]()
 
     component.items.insert(contentsOf: items, at: 0)
@@ -55,7 +55,7 @@ extension Gridable {
     }
   }
 
-  public func insert(_ item: Item, index: Int, withAnimation animation: SpotsAnimation, completion: Completion) {
+  public func insert(_ item: Item, index: Int, withAnimation animation: Animation, completion: Completion) {
     component.items.insert(item, at: index)
 
     Dispatch.mainQueue { [weak self] in
@@ -66,7 +66,7 @@ extension Gridable {
     }
   }
 
-  public func update(_ item: Item, index: Int, withAnimation animation: SpotsAnimation, completion: Completion) {
+  public func update(_ item: Item, index: Int, withAnimation animation: Animation, completion: Completion) {
     items[index] = item
 
     Dispatch.mainQueue { [weak self] in
@@ -77,7 +77,7 @@ extension Gridable {
     }
   }
 
-  public func delete(_ item: Item, withAnimation animation: SpotsAnimation, completion: Completion) {
+  public func delete(_ item: Item, withAnimation animation: Animation, completion: Completion) {
     guard let index = component.items.index(where: { $0 == item })
       else { completion?(); return }
 
@@ -91,7 +91,7 @@ extension Gridable {
     }
   }
 
-  public func delete(_ item: [Item], withAnimation animation: SpotsAnimation, completion: Completion) {
+  public func delete(_ item: [Item], withAnimation animation: Animation, completion: Completion) {
     var indexPaths = [Int]()
     let count = component.items.count
 
@@ -108,7 +108,7 @@ extension Gridable {
     }
   }
 
-  public func delete(_ index: Int, withAnimation animation: SpotsAnimation, completion: Completion) {
+  public func delete(_ index: Int, withAnimation animation: Animation, completion: Completion) {
     Dispatch.mainQueue { [weak self] in
       guard let collectionView = self?.collectionView else { completion?(); return }
       self?.component.items.remove(at: index)
@@ -118,7 +118,7 @@ extension Gridable {
     }
   }
 
-  public func delete(_ indexes: [Int], withAnimation animation: SpotsAnimation, completion: Completion) {
+  public func delete(_ indexes: [Int], withAnimation animation: Animation, completion: Completion) {
     Dispatch.mainQueue { [weak self] in
       indexes.forEach { self?.component.items.remove(at: $0) }
       guard let collectionView = self?.collectionView else { completion?(); return }
@@ -128,7 +128,7 @@ extension Gridable {
     }
   }
 
-  public func reloadIfNeeded(_ changes: ItemChanges, withAnimation animation: SpotsAnimation, updateDataSource: () -> Void, completion: Completion) {
+  public func reloadIfNeeded(_ changes: ItemChanges, withAnimation animation: Animation, updateDataSource: () -> Void, completion: Completion) {
     guard !changes.updates.isEmpty else {
       collectionView.process((insertions: changes.insertions, reloads: changes.reloads, deletions: changes.deletions), updateDataSource: updateDataSource, completion: completion)
       return
@@ -143,7 +143,7 @@ extension Gridable {
     }
   }
 
-  public func reload(_ indexes: [Int]?, withAnimation animation: SpotsAnimation, completion: Completion) {
+  public func reload(_ indexes: [Int]?, withAnimation animation: Animation, completion: Completion) {
     Dispatch.mainQueue { [weak self] in
       guard let collectionView = self?.collectionView else { completion?(); return }
       if let indexes = indexes, animation != .none {

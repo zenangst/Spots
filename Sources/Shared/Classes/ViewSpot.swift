@@ -9,10 +9,10 @@ open class ViewSpot: NSObject, Spotable, Viewable {
   /// Reload spot with ItemChanges.
   ///
   /// - parameter changes:          A collection of changes; inserations, updates, reloads, deletions and updated children.
-  /// - parameter animation:        A SpotAnimation that is used when performing the mutation.
+  /// - parameter animation:        A Animation that is used when performing the mutation.
   /// - parameter updateDataSource: A closure to update your data source.
   /// - parameter completion:       A completion closure that runs when your updates are done.
-  public func reloadIfNeeded(_ changes: ItemChanges, withAnimation animation: SpotsAnimation, updateDataSource: () -> Void, completion: Completion) {
+  public func reloadIfNeeded(_ changes: ItemChanges, withAnimation animation: Animation, updateDataSource: () -> Void, completion: Completion) {
     completion?()
   }
 

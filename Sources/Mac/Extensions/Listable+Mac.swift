@@ -41,7 +41,7 @@ extension Listable {
     return tableView.rowView(atRow: index, makeIfNecessary: false) as? T
   }
 
-  public func append(_ item: Item, withAnimation animation: SpotsAnimation, completion: Completion) {
+  public func append(_ item: Item, withAnimation animation: Animation, completion: Completion) {
     let count = component.items.count
     component.items.append(item)
     configureItem(at: count, usesViewSize: true)
@@ -54,7 +54,7 @@ extension Listable {
       }
     }
   }
-  public func append(_ items: [Item], withAnimation animation: SpotsAnimation, completion: Completion) {
+  public func append(_ items: [Item], withAnimation animation: Animation, completion: Completion) {
     var indexes = [Int]()
     let count = component.items.count
 
@@ -75,7 +75,7 @@ extension Listable {
     }
   }
 
-  public func prepend(_ items: [Item], withAnimation animation: SpotsAnimation, completion: Completion) {
+  public func prepend(_ items: [Item], withAnimation animation: Animation, completion: Completion) {
     var indexes = [Int]()
 
     component.items.insert(contentsOf: items, at: 0)
@@ -92,7 +92,7 @@ extension Listable {
     }
   }
 
-  public func insert(_ item: Item, index: Int, withAnimation animation: SpotsAnimation, completion: Completion) {
+  public func insert(_ item: Item, index: Int, withAnimation animation: Animation, completion: Completion) {
     component.items.insert(item, at: index)
 
     Dispatch.mainQueue { [weak self] in
@@ -103,7 +103,7 @@ extension Listable {
     }
   }
 
-  public func update(_ item: Item, index: Int, withAnimation animation: SpotsAnimation, completion: Completion) {
+  public func update(_ item: Item, index: Int, withAnimation animation: Animation, completion: Completion) {
     items[index] = item
 
     Dispatch.mainQueue { [weak self] in
@@ -114,7 +114,7 @@ extension Listable {
     }
   }
 
-  public func delete(_ item: Item, withAnimation animation: SpotsAnimation, completion: Completion) {
+  public func delete(_ item: Item, withAnimation animation: Animation, completion: Completion) {
     guard let index = component.items.index(where: { $0 == item })
       else { completion?(); return }
 
@@ -128,7 +128,7 @@ extension Listable {
     }
   }
 
-  public func delete(_ item: [Item], withAnimation animation: SpotsAnimation, completion: Completion) {
+  public func delete(_ item: [Item], withAnimation animation: Animation, completion: Completion) {
     var indexPaths = [Int]()
     let count = component.items.count
 
@@ -145,7 +145,7 @@ extension Listable {
     }
   }
 
-  public func delete(_ index: Int, withAnimation animation: SpotsAnimation, completion: Completion) {
+  public func delete(_ index: Int, withAnimation animation: Animation, completion: Completion) {
     Dispatch.mainQueue { [weak self] in
       guard let tableView = self?.tableView else { completion?(); return }
       self?.component.items.remove(at: index)
@@ -155,7 +155,7 @@ extension Listable {
     }
   }
 
-  public func delete(_ indexes: [Int], withAnimation animation: SpotsAnimation, completion: Completion) {
+  public func delete(_ indexes: [Int], withAnimation animation: Animation, completion: Completion) {
     Dispatch.mainQueue { [weak self] in
       indexes.forEach { self?.component.items.remove(at: $0) }
       guard let tableView = self?.tableView else { completion?(); return }
@@ -165,7 +165,7 @@ extension Listable {
     }
   }
 
-  public func reloadIfNeeded(_ changes: ItemChanges, withAnimation animation: SpotsAnimation, updateDataSource: () -> Void, completion: Completion) {
+  public func reloadIfNeeded(_ changes: ItemChanges, withAnimation animation: Animation, updateDataSource: () -> Void, completion: Completion) {
     guard !changes.updates.isEmpty else {
       tableView.process((insertions: changes.insertions, reloads: changes.reloads, deletions: changes.deletions), updateDataSource: updateDataSource, completion: completion)
       return
@@ -180,7 +180,7 @@ extension Listable {
     }
   }
 
-  public func reload(_ indexes: [Int]?, withAnimation animation: SpotsAnimation, completion: Completion) {
+  public func reload(_ indexes: [Int]?, withAnimation animation: Animation, completion: Completion) {
     Dispatch.mainQueue { [weak self] in
       guard let tableView = self?.tableView else { completion?(); return }
       if let indexes = indexes, animation != .none {

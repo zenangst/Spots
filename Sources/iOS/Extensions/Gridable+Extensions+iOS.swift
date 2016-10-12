@@ -122,7 +122,7 @@ extension Gridable {
   /// - parameter item: The view model that you want to append.
   /// - parameter animation:  The animation that should be used (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue.
-  public func append(_ item: Item, withAnimation animation: SpotsAnimation = .none, completion: Completion = nil) {
+  public func append(_ item: Item, withAnimation animation: Animation = .none, completion: Completion = nil) {
     var indexes = [Int]()
     let itemsCount = component.items.count
 
@@ -150,7 +150,7 @@ extension Gridable {
   /// - parameter items:      A collection of view models that you want to insert
   /// - parameter animation:  The animation that should be used (currently not in use)
   /// - parameter completion: A completion closure that is executed in the main queue.
-  public func append(_ items: [Item], withAnimation animation: SpotsAnimation = .none, completion: Completion = nil) {
+  public func append(_ items: [Item], withAnimation animation: Animation = .none, completion: Completion = nil) {
     var indexes = [Int]()
     let itemsCount = component.items.count
 
@@ -179,9 +179,9 @@ extension Gridable {
   ///
   /// - parameter item:       The view model that you want to insert.
   /// - parameter index:      The index where the new Item should be inserted.
-  /// - parameter animation:  A SpotAnimation that is used when performing the mutation (currently not in use).
+  /// - parameter animation:  A Animation that is used when performing the mutation (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue.
-  public func insert(_ item: Item, index: Int, withAnimation animation: SpotsAnimation = .none, completion: Completion = nil) {
+  public func insert(_ item: Item, index: Int, withAnimation animation: Animation = .none, completion: Completion = nil) {
     component.items.insert(item, at: index)
     var indexes = [Int]()
     let itemsCount = component.items.count
@@ -205,9 +205,9 @@ extension Gridable {
   /// Prepend a collection items to the collection with animation
   ///
   /// - parameter items:      A collection of view model that you want to prepend
-  /// - parameter animation:  A SpotAnimation that is used when performing the mutation (currently not in use)
+  /// - parameter animation:  A Animation that is used when performing the mutation (currently not in use)
   /// - parameter completion: A completion closure that is executed in the main queue.
-  public func prepend(_ items: [Item], withAnimation animation: SpotsAnimation = .none, completion: Completion = nil) {
+  public func prepend(_ items: [Item], withAnimation animation: Animation = .none, completion: Completion = nil) {
     var indexes = [Int]()
 
     component.items.insert(contentsOf: items, at: 0)
@@ -233,7 +233,7 @@ extension Gridable {
   /// - parameter item:       The view model that you want to remove.
   /// - parameter animation:  The animation that should be used (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue.
-  public func delete(_ item: Item, withAnimation animation: SpotsAnimation = .none, completion: Completion = nil) {
+  public func delete(_ item: Item, withAnimation animation: Animation = .none, completion: Completion = nil) {
     guard let index = component.items.index(where: { $0 == item })
       else { completion?(); return }
 
@@ -255,7 +255,7 @@ extension Gridable {
   /// - parameter items:      A collection of view models that you want to delete.
   /// - parameter animation:  The animation that should be used (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue.
-  public func delete(_ items: [Item], withAnimation animation: SpotsAnimation = .none, completion: Completion = nil) {
+  public func delete(_ items: [Item], withAnimation animation: Animation = .none, completion: Completion = nil) {
     var indexes = [Int]()
     let count = component.items.count
 
@@ -279,7 +279,7 @@ extension Gridable {
   /// - parameter index:      The index of the view model that you want to remove.
   /// - parameter animation:  The animation that should be used (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue when the view model has been removed.
-  public func delete(_ index: Int, withAnimation animation: SpotsAnimation = .none, completion: Completion) {
+  public func delete(_ index: Int, withAnimation animation: Animation = .none, completion: Completion) {
     perform(animation, withIndex: index) {
       Dispatch.mainQueue { [weak self] in
         guard let weakSelf = self else { completion?(); return }
@@ -300,7 +300,7 @@ extension Gridable {
   /// - parameter indexes:    An array of indexes that you want to remove.
   /// - parameter animation:  The animation that should be used (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue when the view model has been removed.
-  public func delete(_ indexes: [Int], withAnimation animation: SpotsAnimation = .none, completion: Completion) {
+  public func delete(_ indexes: [Int], withAnimation animation: Animation = .none, completion: Completion) {
     Dispatch.mainQueue { [weak self] in
       guard let weakSelf = self else { return }
       weakSelf.collectionView.delete(indexes) {
@@ -315,9 +315,9 @@ extension Gridable {
   ///
   /// - parameter item:       The new update view model that you want to update at an index.
   /// - parameter index:      The index of the view model, defaults to 0.
-  /// - parameter animation:  A SpotAnimation that is used when performing the mutation (currently not in use).
+  /// - parameter animation:  A Animation that is used when performing the mutation (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue when the view model has been removed.
-  public func update(_ item: Item, index: Int, withAnimation animation: SpotsAnimation = .none, completion: Completion = nil) {
+  public func update(_ item: Item, index: Int, withAnimation animation: Animation = .none, completion: Completion = nil) {
     guard let oldItem = self.item(at: index) else { completion?(); return }
 
     items[index] = item
@@ -354,9 +354,9 @@ extension Gridable {
   /// Process updates and determine if the updates are done.
   ///
   /// - parameter updates:    A collection of updates.
-  /// - parameter animation:  A SpotAnimation that is used when performing the mutation.
+  /// - parameter animation:  A Animation that is used when performing the mutation.
   /// - parameter completion: A completion closure that is run when the updates are finished.
-  public func process(_ updates: [Int], withAnimation animation: SpotsAnimation, completion: Completion) {
+  public func process(_ updates: [Int], withAnimation animation: Animation, completion: Completion) {
     guard !updates.isEmpty else {
       completion?()
       return
@@ -376,10 +376,10 @@ extension Gridable {
   /// Reload spot with ItemChanges.
   ///
   /// - parameter changes:          A collection of changes; inserations, updates, reloads, deletions and updated children.
-  /// - parameter animation:        A SpotAnimation that is used when performing the mutation.
+  /// - parameter animation:        A Animation that is used when performing the mutation.
   /// - parameter updateDataSource: A closure to update your data source.
   /// - parameter completion:       A completion closure that runs when your updates are done.
-  public func reloadIfNeeded(_ changes: ItemChanges, withAnimation animation: SpotsAnimation = .automatic, updateDataSource: () -> Void, completion: Completion) {
+  public func reloadIfNeeded(_ changes: ItemChanges, withAnimation animation: Animation = .automatic, updateDataSource: () -> Void, completion: Completion) {
     collectionView.process((insertions: changes.insertions, reloads: changes.reloads, deletions: changes.deletions), updateDataSource: updateDataSource) {
       if changes.updates.isEmpty {
         self.process(changes.updatedChildren, withAnimation: animation) {
@@ -402,7 +402,7 @@ extension Gridable {
   /// - parameter indexes:    An array of integers that you want to reload, default is nil.
   /// - parameter animation:  Perform reload animation.
   /// - parameter completion: A completion closure that is executed in the main queue when the view model has been reloaded.
-  public func reload(_ indexes: [Int]? = nil, withAnimation animation: SpotsAnimation = .none, completion: Completion) {
+  public func reload(_ indexes: [Int]? = nil, withAnimation animation: Animation = .none, completion: Completion) {
     if animation == .none { UIView.setAnimationsEnabled(false) }
 
     refreshIndexes()
@@ -438,7 +438,7 @@ extension Gridable {
   /// - parameter spotAnimation: The animation that you want to apply
   /// - parameter withIndex: The index of the cell
   /// - parameter completion: A completion block that runs after applying the animation
-  public func perform(_ spotAnimation: SpotsAnimation, withIndex index: Int, completion: () -> Void) {
+  public func perform(_ spotAnimation: Animation, withIndex index: Int, completion: () -> Void) {
     guard let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0))
       else { completion(); return }
 
@@ -472,7 +472,7 @@ extension Gridable {
 
     animation.duration = 0.3
     cell.layer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-    cell.layer.add(animation, forKey: "SpotAnimation")
+    cell.layer.add(animation, forKey: "Animation")
     completion()
   }
 }

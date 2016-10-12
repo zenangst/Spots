@@ -11,7 +11,7 @@
 /**
  The type of animation when items are inserted or deleted.
  */
-public enum SpotsAnimation: Int {
+public enum Animation: Int {
   case fade
   case right
   case left
@@ -44,7 +44,7 @@ public enum SpotsAnimation: Int {
   }
   #else
   /**
-   Resolves a SpotsAnimation into a UITableViewRowAnimation
+   Resolves a Animation into a UITableViewRowAnimation
    */
   var tableViewAnimation: UITableViewRowAnimation {
     switch self {

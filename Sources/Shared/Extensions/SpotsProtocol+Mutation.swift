@@ -17,7 +17,7 @@ extension SpotsProtocol {
    - parameter animation:  A SpotableAnimation struct that determines which animation that should be used for the updates
    - parameter completion: A completion block that is run when the reloading is done
    */
-  public func reload(_ animated: Bool = true, withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
+  public func reload(_ animated: Bool = true, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     var spotsLeft = spots.count
 
     Dispatch.mainQueue { [weak self] in
@@ -34,7 +34,7 @@ extension SpotsProtocol {
   }
 
   #if !os(OSX)
-  public func reloadIfNeeded(_ components: [Component], withAnimation animation: SpotsAnimation = .automatic, closure: Completion = nil) {
+  public func reloadIfNeeded(_ components: [Component], withAnimation animation: Animation = .automatic, closure: Completion = nil) {
     guard !components.isEmpty else {
       Dispatch.mainQueue {
         self.spots.forEach { $0.render().removeFromSuperview() }
@@ -123,12 +123,12 @@ extension SpotsProtocol {
 
    - parameter index: The index of the Spotable object
    - parameter newComponents: A collection of new components
-   - parameter animation: A SpotAnimation that is used to determine which animation to use when performing the update
+   - parameter animation: A Animation that is used to determine which animation to use when performing the update
    - parameter closure: A completion closure that is invoked when the setup of the new items is complete
 
    - returns: A boolean value that determines if the closure should run in `process(changes:)`
    */
-  fileprivate func setupItemsForSpot(_ index: Int, newComponents: [Component], withAnimation animation: SpotsAnimation = .automatic, closure: Completion = nil) -> Bool {
+  fileprivate func setupItemsForSpot(_ index: Int, newComponents: [Component], withAnimation animation: Animation = .automatic, closure: Completion = nil) -> Bool {
     guard let spot = self.spot(at: index, ofType: Spotable.self) else { return false }
     let newItems = newComponents[index].items
     let oldItems = spot.items
@@ -219,7 +219,7 @@ extension SpotsProtocol {
 
   func process(changes: [ComponentDiff],
                        components newComponents: [Component],
-                                  withAnimation animation: SpotsAnimation = .automatic,
+                                  withAnimation animation: Animation = .automatic,
                                   closure: Completion = nil) {
     Dispatch.mainQueue { [weak self] in
       guard let weakSelf = self else { closure?(); return }
@@ -340,11 +340,11 @@ extension SpotsProtocol {
 
   /**
    - parameter spotAtIndex: The index of the spot that you want to perform updates on
-   - parameter animation: A SpotAnimation struct that determines which animation that should be used to perform the update
+   - parameter animation: A Animation struct that determines which animation that should be used to perform the update
    - parameter completion: A completion closure that is performed when the update is completed
    - parameter closure: A transform closure to perform the proper modification to the target spot before updating the internals
    */
-  public func update(spotAtIndex index: Int = 0, withAnimation animation: SpotsAnimation = .automatic, withCompletion completion: Completion = nil, _ closure: (_ spot: Spotable) -> Void) {
+  public func update(spotAtIndex index: Int = 0, withAnimation animation: Animation = .automatic, withCompletion completion: Completion = nil, _ closure: (_ spot: Spotable) -> Void) {
     guard let spot = spot(at: index, ofType: Spotable.self) else {
       completion?()
       return }
@@ -372,10 +372,10 @@ extension SpotsProtocol {
 
    - parameter spotAtIndex: The index of the spot that you want to perform updates on
    - parameter items: An array of view models
-   - parameter animation: A SpotAnimation struct that determines which animation that should be used to perform the update
+   - parameter animation: A Animation struct that determines which animation that should be used to perform the update
    - parameter completion: A completion closure that is run when the update is completed
    */
-  public func updateIfNeeded(spotAtIndex index: Int = 0, items: [Item], withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
+  public func updateIfNeeded(spotAtIndex index: Int = 0, items: [Item], withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     guard let spot = spot(at: index, ofType: Spotable.self), !(spot.items == items) else {
       completion?()
       scrollView.layoutSubviews()
@@ -391,10 +391,10 @@ extension SpotsProtocol {
   /**
    - parameter item: The view model that you want to append
    - parameter spotIndex: The index of the spot that you want to append to, defaults to 0
-   - parameter animation: A SpotAnimation struct that determines which animation that should be used to perform the update
+   - parameter animation: A Animation struct that determines which animation that should be used to perform the update
    - parameter completion: A completion closure that will run after the spot has performed updates internally
    */
-  public func append(_ item: Item, spotIndex: Int = 0, withAnimation animation: SpotsAnimation = .none, completion: Completion = nil) {
+  public func append(_ item: Item, spotIndex: Int = 0, withAnimation animation: Animation = .none, completion: Completion = nil) {
     spot(at: spotIndex, ofType: Spotable.self)?.append(item, withAnimation: animation) { [weak self] in
       completion?()
       self?.scrollView.layoutSubviews()
@@ -405,10 +405,10 @@ extension SpotsProtocol {
   /**
    - parameter items: A collection of view models
    - parameter spotIndex: The index of the spot that you want to append to, defaults to 0
-   - parameter animation: A SpotAnimation struct that determines which animation that should be used to perform the update
+   - parameter animation: A Animation struct that determines which animation that should be used to perform the update
    - parameter completion: A completion closure that will run after the spot has performed updates internally
    */
-  public func append(_ items: [Item], spotIndex: Int = 0, withAnimation animation: SpotsAnimation = .none, completion: Completion = nil) {
+  public func append(_ items: [Item], spotIndex: Int = 0, withAnimation animation: Animation = .none, completion: Completion = nil) {
     spot(at: spotIndex, ofType: Spotable.self)?.append(items, withAnimation: animation) { [weak self] in
       completion?()
       self?.scrollView.layoutSubviews()
@@ -419,10 +419,10 @@ extension SpotsProtocol {
   /**
    - parameter items: A collection of view models
    - parameter spotIndex: The index of the spot that you want to prepend to, defaults to 0
-   - parameter animation: A SpotAnimation struct that determines which animation that should be used to perform the update
+   - parameter animation: A Animation struct that determines which animation that should be used to perform the update
    - parameter completion: A completion closure that will run after the spot has performed updates internally
    */
-  public func prepend(_ items: [Item], spotIndex: Int = 0, withAnimation animation: SpotsAnimation = .none, completion: Completion = nil) {
+  public func prepend(_ items: [Item], spotIndex: Int = 0, withAnimation animation: Animation = .none, completion: Completion = nil) {
     spot(at: spotIndex, ofType: Spotable.self)?.prepend(items, withAnimation: animation) { [weak self] in
       completion?()
       self?.scrollView.layoutSubviews()
@@ -434,10 +434,10 @@ extension SpotsProtocol {
    - parameter item: The view model that you want to insert
    - parameter index: The index that you want to insert the view model at
    - parameter spotIndex: The index of the spot that you want to insert into
-   - parameter animation: A SpotAnimation struct that determines which animation that should be used to perform the update
+   - parameter animation: A Animation struct that determines which animation that should be used to perform the update
    - parameter completion: A completion closure that will run after the spot has performed updates internally
    */
-  public func insert(_ item: Item, index: Int = 0, spotIndex: Int, withAnimation animation: SpotsAnimation = .none, completion: Completion = nil) {
+  public func insert(_ item: Item, index: Int = 0, spotIndex: Int, withAnimation animation: Animation = .none, completion: Completion = nil) {
     spot(at: spotIndex, ofType: Spotable.self)?.insert(item, index: index, withAnimation: animation) { [weak self] in
       completion?()
       self?.scrollView.layoutSubviews()
@@ -449,10 +449,10 @@ extension SpotsProtocol {
    - parameter item: The view model that you want to update
    - parameter index: The index that you want to insert the view model at
    - parameter spotIndex: The index of the spot that you want to update into
-   - parameter animation: A SpotAnimation struct that determines which animation that should be used to perform the update
+   - parameter animation: A Animation struct that determines which animation that should be used to perform the update
    - parameter completion: A completion closure that will run after the spot has performed updates internally
    */
-  public func update(_ item: Item, index: Int = 0, spotIndex: Int, withAnimation animation: SpotsAnimation = .none, completion: Completion = nil) {
+  public func update(_ item: Item, index: Int = 0, spotIndex: Int, withAnimation animation: Animation = .none, completion: Completion = nil) {
     guard let oldItem = spot(at: spotIndex, ofType: Spotable.self)?.item(at: index), item != oldItem
       else {
         spot(at: spotIndex, ofType: Spotable.self)?.refreshIndexes()
@@ -477,10 +477,10 @@ extension SpotsProtocol {
   /**
    - parameter indexes: An integer array of indexes that you want to update
    - parameter spotIndex: The index of the spot that you want to update into
-   - parameter animation: A SpotAnimation struct that determines which animation that should be used to perform the update
+   - parameter animation: A Animation struct that determines which animation that should be used to perform the update
    - parameter completion: A completion closure that will run after the spot has performed updates internally
    */
-  public func update(_ indexes: [Int], spotIndex: Int = 0, withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
+  public func update(_ indexes: [Int], spotIndex: Int = 0, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     spot(at: spotIndex, ofType: Spotable.self)?.reload(indexes, withAnimation: animation) {
       completion?()
     }
@@ -490,10 +490,10 @@ extension SpotsProtocol {
   /**
    - parameter index: The index of the view model that you want to remove
    - parameter spotIndex: The index of the spot that you want to remove into
-   - parameter animation: A SpotAnimation struct that determines which animation that should be used to perform the update
+   - parameter animation: A Animation struct that determines which animation that should be used to perform the update
    - parameter completion: A completion closure that will run after the spot has performed updates internally
    */
-  public func delete(_ index: Int, spotIndex: Int = 0, withAnimation animation: SpotsAnimation = .none, completion: Completion = nil) {
+  public func delete(_ index: Int, spotIndex: Int = 0, withAnimation animation: Animation = .none, completion: Completion = nil) {
     spot(at: spotIndex, ofType: Spotable.self)?.delete(index, withAnimation: animation) {
       completion?()
     }
@@ -503,10 +503,10 @@ extension SpotsProtocol {
   /**
    - parameter indexes: A collection of indexes for view models that you want to remove
    - parameter spotIndex: The index of the spot that you want to remove into
-   - parameter animation: A SpotAnimation struct that determines which animation that should be used to perform the update
+   - parameter animation: A Animation struct that determines which animation that should be used to perform the update
    - parameter completion: A completion closure that will run after the spot has performed updates internally
    */
-  public func delete(_ indexes: [Int], spotIndex: Int = 0, withAnimation animation: SpotsAnimation = .none, completion: Completion = nil) {
+  public func delete(_ indexes: [Int], spotIndex: Int = 0, withAnimation animation: Animation = .none, completion: Completion = nil) {
     spot(at: spotIndex, ofType: Spotable.self)?.delete(indexes, withAnimation: animation) {
       completion?()
     }

@@ -50,7 +50,7 @@ extension Listable {
   /// - parameter item: The view model that you want to append.
   /// - parameter animation:  The animation that should be used (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue.
-  public func append(_ item: Item, withAnimation animation: SpotsAnimation = .none, completion: Completion = nil) {
+  public func append(_ item: Item, withAnimation animation: Animation = .none, completion: Completion = nil) {
     let count = component.items.count
     component.items.append(item)
 
@@ -69,7 +69,7 @@ extension Listable {
   /// - parameter items:      A collection of view models that you want to insert
   /// - parameter animation:  The animation that should be used (currently not in use)
   /// - parameter completion: A completion closure that is executed in the main queue.
-  public func append(_ items: [Item], withAnimation animation: SpotsAnimation = .none, completion: Completion = nil) {
+  public func append(_ items: [Item], withAnimation animation: Animation = .none, completion: Completion = nil) {
     var indexes = [Int]()
     let count = component.items.count
 
@@ -92,9 +92,9 @@ extension Listable {
   ///
   /// - parameter item:       The view model that you want to insert.
   /// - parameter index:      The index where the new Item should be inserted.
-  /// - parameter animation:  A SpotAnimation that is used when performing the mutation (currently not in use).
+  /// - parameter animation:  A Animation that is used when performing the mutation (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue.
-  public func insert(_ item: Item, index: Int = 0, withAnimation animation: SpotsAnimation = .none, completion: Completion = nil) {
+  public func insert(_ item: Item, index: Int = 0, withAnimation animation: Animation = .none, completion: Completion = nil) {
     component.items.insert(item, at: index)
 
     Dispatch.mainQueue { [weak self] in
@@ -108,9 +108,9 @@ extension Listable {
   /// Prepend a collection items to the collection with animation
   ///
   /// - parameter items:      A collection of view model that you want to prepend
-  /// - parameter animation:  A SpotAnimation that is used when performing the mutation (currently not in use)
+  /// - parameter animation:  A Animation that is used when performing the mutation (currently not in use)
   /// - parameter completion: A completion closure that is executed in the main queue.
-  public func prepend(_ items: [Item], withAnimation animation: SpotsAnimation = .none, completion: Completion = nil) {
+  public func prepend(_ items: [Item], withAnimation animation: Animation = .none, completion: Completion = nil) {
     var indexes = [Int]()
 
     component.items.insert(contentsOf: items, at: 0)
@@ -134,7 +134,7 @@ extension Listable {
   /// - parameter item:       The view model that you want to remove.
   /// - parameter animation:  The animation that should be used (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue.
-  public func delete(_ item: Item, withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
+  public func delete(_ item: Item, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     guard let index = component.items.index(where: { $0 == item })
       else { completion?(); return }
 
@@ -153,7 +153,7 @@ extension Listable {
   /// - parameter items:      A collection of view models that you want to delete.
   /// - parameter animation:  The animation that should be used (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue.
-  public func delete(_ items: [Item], withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
+  public func delete(_ items: [Item], withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     var indexPaths = [Int]()
     let count = component.items.count
 
@@ -175,7 +175,7 @@ extension Listable {
   /// - parameter index:      The index of the view model that you want to remove.
   /// - parameter animation:  The animation that should be used (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue when the view model has been removed.
-  public func delete(_ index: Int, withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
+  public func delete(_ index: Int, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     Dispatch.mainQueue { [weak self] in
       self?.component.items.remove(at: index)
       self?.tableView.delete([index], animation: animation.tableViewAnimation)
@@ -190,7 +190,7 @@ extension Listable {
   /// - parameter indexes:    An array of indexes that you want to remove.
   /// - parameter animation:  The animation that should be used (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue when the view model has been removed.
-  public func delete(_ indexes: [Int], withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
+  public func delete(_ indexes: [Int], withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     Dispatch.mainQueue { [weak self] in
       indexes.forEach { self?.component.items.remove(at: $0) }
       self?.tableView.delete(indexes, section: 0, animation: animation.tableViewAnimation)
@@ -204,9 +204,9 @@ extension Listable {
   ///
   /// - parameter item:       The new update view model that you want to update at an index.
   /// - parameter index:      The index of the view model, defaults to 0.
-  /// - parameter animation:  A SpotAnimation that is used when performing the mutation (currently not in use).
+  /// - parameter animation:  A Animation that is used when performing the mutation (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue when the view model has been removed.
-  public func update(_ item: Item, index: Int = 0, withAnimation animation: SpotsAnimation = .none, completion: Completion = nil) {
+  public func update(_ item: Item, index: Int = 0, withAnimation animation: Animation = .none, completion: Completion = nil) {
     guard let oldItem = self.item(at: index) else { completion?(); return }
 
     items[index] = item
@@ -246,10 +246,10 @@ extension Listable {
    Process updates and determine if the updates are done
 
    - parameter updates:    A collection of updates
-   - parameter animation:  A SpotAnimation that is used when performing the mutation
+   - parameter animation:  A Animation that is used when performing the mutation
    - parameter completion: A completion closure that is run when the updates are finished
    */
-  public func process(_ updates: [Int], withAnimation animation: SpotsAnimation = .automatic, completion: Completion) {
+  public func process(_ updates: [Int], withAnimation animation: Animation = .automatic, completion: Completion) {
     guard !updates.isEmpty else { completion?(); return }
 
     let lastUpdate = updates.last
@@ -266,10 +266,10 @@ extension Listable {
   /// Reload spot with ItemChanges.
   ///
   /// - parameter changes:          A collection of changes; inserations, updates, reloads, deletions and updated children.
-  /// - parameter animation:        A SpotAnimation that is used when performing the mutation.
+  /// - parameter animation:        A Animation that is used when performing the mutation.
   /// - parameter updateDataSource: A closure to update your data source.
   /// - parameter completion:       A completion closure that runs when your updates are done.
-  public func reloadIfNeeded(_ changes: ItemChanges, withAnimation animation: SpotsAnimation = .automatic, updateDataSource: () -> Void, completion: Completion) {
+  public func reloadIfNeeded(_ changes: ItemChanges, withAnimation animation: Animation = .automatic, updateDataSource: () -> Void, completion: Completion) {
     tableView.process((insertions: changes.insertions, reloads: changes.reloads, deletions: changes.deletions), withAnimation: animation.tableViewAnimation, updateDataSource: updateDataSource) {
       if changes.updates.isEmpty {
         self.process(changes.updatedChildren, withAnimation: animation, completion: completion)
@@ -284,9 +284,9 @@ extension Listable {
   /// Process updates and determine if the updates are done.
   ///
   /// - parameter updates:    A collection of updates.
-  /// - parameter animation:  A SpotAnimation that is used when performing the mutation.
+  /// - parameter animation:  A Animation that is used when performing the mutation.
   /// - parameter completion: A completion closure that is run when the updates are finished.
-  public func reload(_ indexes: [Int]? = nil, withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
+  public func reload(_ indexes: [Int]? = nil, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     refreshIndexes()
 
     if let indexes = indexes {

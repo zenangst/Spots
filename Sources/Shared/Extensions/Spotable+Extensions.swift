@@ -37,7 +37,7 @@ public extension Spotable {
   /// - parameter item: The view model that you want to append.
   /// - parameter animation:  The animation that should be used (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue.
-  func append(_ item: Item, withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
+  func append(_ item: Item, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     append(item, withAnimation: animation, completion: completion)
   }
 
@@ -46,16 +46,16 @@ public extension Spotable {
   /// - parameter items:      A collection of view models that you want to insert
   /// - parameter animation:  The animation that should be used (currently not in use)
   /// - parameter completion: A completion closure that is executed in the main queue.
-  func append(_ items: [Item], withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
+  func append(_ items: [Item], withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     append(items, withAnimation: animation, completion: completion)
   }
 
   /// Prepend a collection items to the collection with animation
   ///
   /// - parameter items:      A collection of view model that you want to prepend
-  /// - parameter animation:  A SpotAnimation that is used when performing the mutation (currently not in use)
+  /// - parameter animation:  A Animation that is used when performing the mutation (currently not in use)
   /// - parameter completion: A completion closure that is executed in the main queue.
-  func prepend(_ items: [Item], withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
+  func prepend(_ items: [Item], withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     prepend(items, withAnimation: animation, completion: completion)
   }
 
@@ -63,9 +63,9 @@ public extension Spotable {
   ///
   /// - parameter item:       The view model that you want to insert.
   /// - parameter index:      The index where the new Item should be inserted.
-  /// - parameter animation:  A SpotAnimation that is used when performing the mutation (currently not in use).
+  /// - parameter animation:  A Animation that is used when performing the mutation (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue.
-  func insert(_ item: Item, index: Int, withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
+  func insert(_ item: Item, index: Int, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     insert(item, index: index, withAnimation: animation, completion: completion)
   }
 
@@ -74,7 +74,7 @@ public extension Spotable {
   /// - parameter item:       The view model that you want to remove.
   /// - parameter animation:  The animation that should be used (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue.
-  func delete(_ item: Item, withAnimation animation: SpotsAnimation = .automatic, completion: Completion) {
+  func delete(_ item: Item, withAnimation animation: Animation = .automatic, completion: Completion) {
     delete(item, withAnimation: animation, completion: completion)
   }
 
@@ -83,7 +83,7 @@ public extension Spotable {
   /// - parameter items:      A collection of view models that you want to delete.
   /// - parameter animation:  The animation that should be used (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue.
-  func delete(_ items: [Item], withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
+  func delete(_ items: [Item], withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     delete(items, withAnimation: animation, completion: completion)
   }
 
@@ -92,7 +92,7 @@ public extension Spotable {
   /// - parameter index:      The index of the view model that you want to remove.
   /// - parameter animation:  The animation that should be used (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue when the view model has been removed.
-  func delete(_ index: Int, withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
+  func delete(_ index: Int, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     delete(index, withAnimation: animation, completion: completion)
   }
 
@@ -101,7 +101,7 @@ public extension Spotable {
   /// - parameter indexes:    An array of indexes that you want to remove.
   /// - parameter animation:  The animation that should be used (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue when the view model has been removed.
-  func delete(_ indexes: [Int], withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
+  func delete(_ indexes: [Int], withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     delete(indexes, withAnimation: animation, completion: completion)
   }
 
@@ -109,9 +109,9 @@ public extension Spotable {
   ///
   /// - parameter item:       The new update view model that you want to update at an index.
   /// - parameter index:      The index of the view model, defaults to 0.
-  /// - parameter animation:  A SpotAnimation that is used when performing the mutation (currently not in use).
+  /// - parameter animation:  A Animation that is used when performing the mutation (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue when the view model has been removed.
-  func update(_ item: Item, index: Int, withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
+  func update(_ item: Item, index: Int, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     update(item, index: index, withAnimation: animation, completion: completion)
   }
 
@@ -120,17 +120,17 @@ public extension Spotable {
   /// - parameter items:      A collection of Items
   /// - parameter animation:  The animation that should be used (only works for Listable objects)
   /// - parameter completion: A completion closure that is performed when all mutations are performed
-  func reload(_ indexes: [Int]? = nil, withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
+  func reload(_ indexes: [Int]? = nil, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     reload(indexes, withAnimation: animation, completion: completion)
   }
 
   /// Reload spot with ItemChanges.
   ///
   /// - parameter changes:          A collection of changes; inserations, updates, reloads, deletions and updated children.
-  /// - parameter animation:        A SpotAnimation that is used when performing the mutation.
+  /// - parameter animation:        A Animation that is used when performing the mutation.
   /// - parameter updateDataSource: A closure to update your data source.
   /// - parameter completion:       A completion closure that runs when your updates are done.
-  func reloadIfNeeded(_ changes: ItemChanges, withAnimation animation: SpotsAnimation = .automatic, updateDataSource: () -> Void, completion: Completion) {
+  func reloadIfNeeded(_ changes: ItemChanges, withAnimation animation: Animation = .automatic, updateDataSource: () -> Void, completion: Completion) {
     reloadIfNeeded(changes, withAnimation: animation, updateDataSource: updateDataSource, completion: completion)
   }
 
@@ -209,7 +209,7 @@ public extension Spotable {
   /// - parameter items:      A collection of Items
   /// - parameter animation:  The animation that should be used (only works for Listable objects)
   /// - parameter completion: A completion closure that is performed when all mutations are performed
-  public func reloadIfNeeded(_ items: [Item], withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
+  public func reloadIfNeeded(_ items: [Item], withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     guard !(self.items == items) else {
       cache()
       return
@@ -237,8 +237,8 @@ public extension Spotable {
   /// Reload Spotable object with JSON if contents changed
   ///
   /// - parameter json:      A JSON dictionary
-  /// - parameter animation:  A SpotAnimation that is used when performing the mutation (only works for Listable objects)
-  public func reloadIfNeeded(_ json: [String : Any], withAnimation animation: SpotsAnimation = .automatic) {
+  /// - parameter animation:  A Animation that is used when performing the mutation (only works for Listable objects)
+  public func reloadIfNeeded(_ json: [String : Any], withAnimation animation: Animation = .automatic) {
     let newComponent = Component(json)
 
     guard component != newComponent else { cache(); return }
