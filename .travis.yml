@@ -14,3 +14,6 @@ script:
 - xcodebuild test -project Spots.xcodeproj -scheme "Spots-Mac" -sdk macosx
 #- xcodebuild clean build -project Spots.xcodeproj -scheme "Spots-tvOS" -destination 'platform=tvOS Simulator,name=Apple TV 1080p,OS=9.2'
 #- xcodebuild test -project Spots.xcodeproj -scheme "Spots-tvOS" -destination 'platform=tvOS Simulator,name=Apple TV 1080p,OS=9.2'
+
+notifications:
+  email: false
