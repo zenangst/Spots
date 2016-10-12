@@ -290,7 +290,7 @@ extension SpotsProtocol {
       }
 
       weakSelf.reloadSpotsScrollView()
-      weakSelf.setupSpots(animated)
+      weakSelf.setupSpots(animated: animated)
       weakSelf.cache()
 
       for (index, container) in weakSelf.compositeSpots.enumerated() {
@@ -331,7 +331,7 @@ extension SpotsProtocol {
       }
 
       weakSelf.reloadSpotsScrollView()
-      weakSelf.setupSpots(animated)
+      weakSelf.setupSpots(animated: animated)
 
       completion?()
       weakSelf.scrollView.layoutSubviews()

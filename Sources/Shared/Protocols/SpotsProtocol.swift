@@ -47,7 +47,7 @@ public protocol SpotsProtocol: class {
   /// Set up Spotable objects.
   ///
   /// - parameter animated: An optional animation closure that is invoked when setting up the spot.
-  func setupSpots(_ animated: ((_ view: View) -> Void)?)
+  func setupSpots(animated: ((_ view: View) -> Void)?)
 
   /// Set up Spot at index
   ///

@@ -278,7 +278,7 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
   /// Set up Spotable objects.
   ///
   /// - parameter animated: An optional animation closure that is invoked when setting up the spot.
-  open func setupSpots(_ animated: ((_ view: UIView) -> Void)? = nil) {
+  open func setupSpots(animated: ((_ view: UIView) -> Void)? = nil) {
     var yOffset: CGFloat = 0.0
     compositeSpots = [:]
     spots.enumerated().forEach { index, spot in
