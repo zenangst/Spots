@@ -28,8 +28,8 @@ public extension Spotable {
   /// - parameter index: The index of the UI component
   ///
   /// - returns: An optional view of inferred type
-  public func ui<T>(atIndex index: Int) -> T? {
-    return adapter?.ui(at: index)
+  public func ui<T>(at index: Int) -> T? {
+    return ui(at: index)
   }
 
   /// Append item to collection with animation
@@ -38,7 +38,7 @@ public extension Spotable {
   /// - parameter animation:  The animation that should be used (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue.
   func append(_ item: Item, withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
-    adapter?.append(item, withAnimation: animation, completion: completion)
+    append(item, withAnimation: animation, completion: completion)
   }
 
   /// Append a collection of items to collection with animation
@@ -47,7 +47,7 @@ public extension Spotable {
   /// - parameter animation:  The animation that should be used (currently not in use)
   /// - parameter completion: A completion closure that is executed in the main queue.
   func append(_ items: [Item], withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
-    adapter?.append(items, withAnimation: animation, completion: completion)
+    append(items, withAnimation: animation, completion: completion)
   }
 
   /// Prepend a collection items to the collection with animation
@@ -56,7 +56,7 @@ public extension Spotable {
   /// - parameter animation:  A SpotAnimation that is used when performing the mutation (currently not in use)
   /// - parameter completion: A completion closure that is executed in the main queue.
   func prepend(_ items: [Item], withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
-    adapter?.prepend(items, withAnimation: animation, completion: completion)
+    prepend(items, withAnimation: animation, completion: completion)
   }
 
   /// Insert item into collection at index.
@@ -66,7 +66,7 @@ public extension Spotable {
   /// - parameter animation:  A SpotAnimation that is used when performing the mutation (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue.
   func insert(_ item: Item, index: Int, withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
-    adapter?.insert(item, index: index, withAnimation: animation, completion: completion)
+    insert(item, index: index, withAnimation: animation, completion: completion)
   }
 
   /// Delete item from collection with animation
@@ -75,7 +75,7 @@ public extension Spotable {
   /// - parameter animation:  The animation that should be used (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue.
   func delete(_ item: Item, withAnimation animation: SpotsAnimation = .automatic, completion: Completion) {
-    adapter?.delete(item, withAnimation: animation, completion: completion)
+    delete(item, withAnimation: animation, completion: completion)
   }
 
   /// Delete items from collection with animation
@@ -84,7 +84,7 @@ public extension Spotable {
   /// - parameter animation:  The animation that should be used (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue.
   func delete(_ items: [Item], withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
-    adapter?.delete(items, withAnimation: animation, completion: completion)
+    delete(items, withAnimation: animation, completion: completion)
   }
 
   /// Delete item at index with animation
@@ -93,7 +93,7 @@ public extension Spotable {
   /// - parameter animation:  The animation that should be used (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue when the view model has been removed.
   func delete(_ index: Int, withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
-    adapter?.delete(index, withAnimation: animation, completion: completion)
+    delete(index, withAnimation: animation, completion: completion)
   }
 
   /// Delete a collection
@@ -102,7 +102,7 @@ public extension Spotable {
   /// - parameter animation:  The animation that should be used (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue when the view model has been removed.
   func delete(_ indexes: [Int], withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
-    adapter?.delete(indexes, withAnimation: animation, completion: completion)
+    delete(indexes, withAnimation: animation, completion: completion)
   }
 
   /// Update item at index with new item.
@@ -112,7 +112,7 @@ public extension Spotable {
   /// - parameter animation:  A SpotAnimation that is used when performing the mutation (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue when the view model has been removed.
   func update(_ item: Item, index: Int, withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
-    adapter?.update(item, index: index, withAnimation: animation, completion: completion)
+    update(item, index: index, withAnimation: animation, completion: completion)
   }
 
   /// Reloads a spot only if it changes
@@ -121,7 +121,7 @@ public extension Spotable {
   /// - parameter animation:  The animation that should be used (only works for Listable objects)
   /// - parameter completion: A completion closure that is performed when all mutations are performed
   func reload(_ indexes: [Int]? = nil, withAnimation animation: SpotsAnimation = .automatic, completion: Completion = nil) {
-    adapter?.reload(indexes, withAnimation: animation, completion: completion)
+    reload(indexes, withAnimation: animation, completion: completion)
   }
 
   /// Reload spot with ItemChanges.
@@ -131,7 +131,7 @@ public extension Spotable {
   /// - parameter updateDataSource: A closure to update your data source.
   /// - parameter completion:       A completion closure that runs when your updates are done.
   func reloadIfNeeded(_ changes: ItemChanges, withAnimation animation: SpotsAnimation = .automatic, updateDataSource: () -> Void, completion: Completion) {
-    adapter?.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: updateDataSource, completion: completion)
+    reloadIfNeeded(changes, withAnimation: animation, updateDataSource: updateDataSource, completion: completion)
   }
 
   /// A collection of view models

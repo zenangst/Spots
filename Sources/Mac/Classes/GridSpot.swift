@@ -90,12 +90,6 @@ open class GridSpot: NSObject, Gridable {
 
   open fileprivate(set) var stateCache: StateCache?
 
-  open var adapter: SpotAdapter? {
-    return collectionAdapter
-  }
-
-  open lazy var collectionAdapter: CollectionAdapter = CollectionAdapter(spot: self)
-
   open var layout: NSCollectionViewLayout
 
   open lazy var titleView: NSTextField = {
@@ -238,8 +232,8 @@ open class GridSpot: NSObject, Gridable {
    Configure delegate, data source and layout for collection view
    */
   open func setupCollectionView() {
-    collectionView.delegate = collectionAdapter
-    collectionView.dataSource = collectionAdapter
+    collectionView.delegate = self
+    collectionView.dataSource = self
     collectionView.collectionViewLayout = layout
   }
 
@@ -312,3 +306,46 @@ open class GridSpot: NSObject, Gridable {
     lineView.frame.origin.y = titleView.frame.maxY + 8
   }
 }
+
+extension GridSpot: NSCollectionViewDataSource {
+
+  @nonobjc public func numberOfSectionsInCollectionView(_ collectionView: NSCollectionView) -> Int {
+    return 1
+  }
+
+  public func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
+    return component.items.count
+  }
+
+  public func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
+    let reuseIdentifier = identifier(at: indexPath.item)
+    let item = collectionView.makeItem(withIdentifier: reuseIdentifier, for: indexPath as IndexPath)
+
+    (item as? SpotConfigurable)?.configure(&component.items[indexPath.item])
+    return item
+  }
+}
+
+extension GridSpot : NSCollectionViewDelegate {
+
+  public func collectionView(_ collectionView: NSCollectionView, didSelectItemsAt indexPaths: Set<IndexPath>) {
+    /*
+     This delay is here to avoid an assertion that happens inside the collection view binding,
+     it tries to resolve the item at index but it no longer exists so the assertion is thrown.
+     This can probably be fixed in a more convenient way in the future without delays.
+     */
+    Dispatch.delay(for: 0.1) { [weak self] in
+      guard let weakSelf = self, let first = indexPaths.first,
+        let item = self?.item(at: first.item), first.item < weakSelf.items.count else { return }
+      weakSelf.delegate?.didSelect(item: item, in: weakSelf)
+    }
+  }
+}
+
+extension GridSpot: NSCollectionViewDelegateFlowLayout {
+
+  public func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> NSSize {
+    return sizeForItem(at: indexPath)
+  }
+}
+

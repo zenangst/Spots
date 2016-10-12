@@ -11,7 +11,7 @@ public enum RegistryType: String {
 }
 
 /// A registry that is used internally when resolving kind to the corresponding spot.
-open class Registry {
+public struct Registry {
 
   public enum Item {
     case classType(View.Type)
@@ -45,7 +45,7 @@ open class Registry {
   /// - parameter key: A StringConvertable identifier
   ///
   /// - returns: An optional Nib
-  open subscript(key: StringConvertible) -> Item? {
+  public subscript(key: StringConvertible) -> Item? {
     get {
       return storage[key.string]
     }
