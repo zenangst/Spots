@@ -11,7 +11,6 @@
 		BD01BD121DAEA523009C10FF /* TestParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD01BD0D1DAEA464009C10FF /* TestParser.swift */; };
 		BD01BD131DAEA523009C10FF /* TestParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD01BD0D1DAEA464009C10FF /* TestParser.swift */; };
 		BD01BD181DAEA7FC009C10FF /* TestListComposite.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD01BD141DAEA7EE009C10FF /* TestListComposite.swift */; };
-		BD01BD191DAEA7FD009C10FF /* TestListComposite.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD01BD141DAEA7EE009C10FF /* TestListComposite.swift */; };
 		BD01BD1A1DAEA7FD009C10FF /* TestListComposite.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD01BD141DAEA7EE009C10FF /* TestListComposite.swift */; };
 		BD10D5251D7955AB00DF8E9B /* TestViewModelExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD10D5211D79533C00DF8E9B /* TestViewModelExtensions.swift */; };
 		BD10D5261D7955AC00DF8E9B /* TestViewModelExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD10D5211D79533C00DF8E9B /* TestViewModelExtensions.swift */; };
@@ -1229,7 +1228,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D58478E71C440645006EBA49 /* TestComponent.swift in Sources */,
-				BD01BD191DAEA7FD009C10FF /* TestListComposite.swift in Sources */,
 				BD10D5261D7955AC00DF8E9B /* TestViewModelExtensions.swift in Sources */,
 				BD01BD121DAEA523009C10FF /* TestParser.swift in Sources */,
 			);
