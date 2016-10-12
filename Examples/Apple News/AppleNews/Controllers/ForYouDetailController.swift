@@ -17,7 +17,7 @@ class ForYouDetailController: Controller {
 
     view.addSubview(barView)
 
-    spot(at: 0, Listable.self)?.tableView.separatorStyle = .none
+    spot(at: 0, ofType: Listable.self)?.tableView.separatorStyle = .none
   }
 
   func detailDidDismiss(_ sender: AnyObject) {

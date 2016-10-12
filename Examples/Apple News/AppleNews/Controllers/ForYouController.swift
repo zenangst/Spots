@@ -84,7 +84,7 @@ class ForYouController: Controller, SpotsDelegate {
     item.update(kind: Cell.FeedDetail)
     item.subtitle = ForYouController.faker.lorem.sentences(amount: 20)
 
-    if let cell = self.spot(at: 0, ListSpot.self)?.tableView.cellForRow(at: IndexPath(row: item.index, section: 0)) {
+    if let cell = self.spot(at: 0, ofType: ListSpot.self)?.tableView.cellForRow(at: IndexPath(row: item.index, section: 0)) {
       selectedCell = cell
     }
 
@@ -180,8 +180,8 @@ extension ForYouController: ScrollDelegate {
 
       let height = spot.items[0..<items.count].reduce(0, { $0 + $1.size.height })
 
-      weakSelf.spot(at: 0, ListSpot.self)?.tableView.insert(Array(0..<(items.count)), section: 0, animation: .none)
-      weakSelf.spot(at: 0, ListSpot.self)?.tableView.reload(Array((items.count)..<(items.count)), section: 0, animation: .none)
+      weakSelf.spot(at: 0, ofType: ListSpot.self)?.tableView.insert(Array(0..<(items.count)), section: 0, animation: .none)
+      weakSelf.spot(at: 0, ofType: ListSpot.self)?.tableView.reload(Array((items.count)..<(items.count)), section: 0, animation: .none)
 
       weakSelf.scrollView.contentOffset.y = height - weakSelf.scrollView.contentInset.top
 

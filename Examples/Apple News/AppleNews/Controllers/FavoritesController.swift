@@ -48,7 +48,7 @@ class FavoritesController: Controller {
   }
 
   func showContent() {
-    let newType = spot(at: 0, Spotable.self)?.component.kind == "grid" ? "list" : "grid"
+    let newType = spot(at: 0)?.component.kind == "grid" ? "list" : "grid"
 
     navigationController?.navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(
       barButtonSystemItem: newType == "grid" ? .organize : .action,
