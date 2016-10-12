@@ -65,7 +65,7 @@ CHECKOUT OPTIONS:
     :commit: d03fe87b19caf00e108d82f7e5c8da578699e3b4
     :git: https://github.com/hyperoslo/Hue
   Imaginary:
-    :commit: 6fadb337e2fa8ebf90d7c1b28f1fd4cac77a6fc9
+    :commit: 40bb9f4cb935200289976f7c64464b78bb5cea0a
     :git: https://github.com/hyperoslo/Imaginary
   Sugar:
     :commit: 7fba82b649ae53636b451762eb165e8c8de69751
