@@ -10,6 +10,9 @@
 		BD01BD111DAEA522009C10FF /* TestParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD01BD0D1DAEA464009C10FF /* TestParser.swift */; };
 		BD01BD121DAEA523009C10FF /* TestParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD01BD0D1DAEA464009C10FF /* TestParser.swift */; };
 		BD01BD131DAEA523009C10FF /* TestParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD01BD0D1DAEA464009C10FF /* TestParser.swift */; };
+		BD01BD181DAEA7FC009C10FF /* TestListComposite.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD01BD141DAEA7EE009C10FF /* TestListComposite.swift */; };
+		BD01BD191DAEA7FD009C10FF /* TestListComposite.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD01BD141DAEA7EE009C10FF /* TestListComposite.swift */; };
+		BD01BD1A1DAEA7FD009C10FF /* TestListComposite.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD01BD141DAEA7EE009C10FF /* TestListComposite.swift */; };
 		BD10D5251D7955AB00DF8E9B /* TestViewModelExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD10D5211D79533C00DF8E9B /* TestViewModelExtensions.swift */; };
 		BD10D5261D7955AC00DF8E9B /* TestViewModelExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD10D5211D79533C00DF8E9B /* TestViewModelExtensions.swift */; };
 		BD10D5271D7955AC00DF8E9B /* TestViewModelExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD10D5211D79533C00DF8E9B /* TestViewModelExtensions.swift */; };
@@ -216,6 +219,7 @@
 
 /* Begin PBXFileReference section */
 		BD01BD0D1DAEA464009C10FF /* TestParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestParser.swift; sourceTree = "<group>"; };
+		BD01BD141DAEA7EE009C10FF /* TestListComposite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestListComposite.swift; sourceTree = "<group>"; };
 		BD10D5211D79533C00DF8E9B /* TestViewModelExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewModelExtensions.swift; sourceTree = "<group>"; };
 		BD129D5B1D7B295F009AC164 /* Gridable+Extensions+iOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Gridable+Extensions+iOS.swift"; sourceTree = "<group>"; };
 		BD129D5C1D7B295F009AC164 /* Listable+Extensions+iOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Listable+Extensions+iOS.swift"; sourceTree = "<group>"; };
@@ -650,6 +654,7 @@
 				D58478291C43FF34006EBA49 /* TestController.swift */,
 				BD4295571D81D45D00E07E1C /* TestViewSpot.swift */,
 				BDEED2E71D8446400030B475 /* TestSpotsScrollView.swift */,
+				BD01BD141DAEA7EE009C10FF /* TestListComposite.swift */,
 			);
 			path = iOS;
 			sourceTree = "<group>";
@@ -1084,6 +1089,7 @@
 				BD73973A1D718CDB000AF2DE /* TestFactory.swift in Sources */,
 				BD73973B1D718CDB000AF2DE /* TestController.swift in Sources */,
 				BD01BD131DAEA523009C10FF /* TestParser.swift in Sources */,
+				BD01BD1A1DAEA7FD009C10FF /* TestListComposite.swift in Sources */,
 				BD10D5271D7955AC00DF8E9B /* TestViewModelExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1160,6 +1166,7 @@
 				D58478531C43FFEB006EBA49 /* TestFactory.swift in Sources */,
 				D58478551C43FFEF006EBA49 /* TestController.swift in Sources */,
 				BD01BD111DAEA522009C10FF /* TestParser.swift in Sources */,
+				BD01BD181DAEA7FC009C10FF /* TestListComposite.swift in Sources */,
 				BD10D5251D7955AB00DF8E9B /* TestViewModelExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1222,6 +1229,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D58478E71C440645006EBA49 /* TestComponent.swift in Sources */,
+				BD01BD191DAEA7FD009C10FF /* TestListComposite.swift in Sources */,
 				BD10D5261D7955AC00DF8E9B /* TestViewModelExtensions.swift in Sources */,
 				BD01BD121DAEA523009C10FF /* TestParser.swift in Sources */,
 			);
