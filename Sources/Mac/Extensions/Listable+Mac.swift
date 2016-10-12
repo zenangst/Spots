@@ -36,4 +36,233 @@ extension Listable {
 
     return self
   }
+
+  public func ui<T>(at index: Int) -> T? {
+    return tableView.rowView(atRow: index, makeIfNecessary: false) as? T
+  }
+
+  public func append(_ item: Item, withAnimation animation: SpotsAnimation, completion: Completion) {
+    let count = component.items.count
+    component.items.append(item)
+    configureItem(at: count, usesViewSize: true)
+
+    Dispatch.mainQueue { [weak self] in
+      guard let tableView = self?.tableView else { completion?(); return }
+      tableView.insert([count], animation: animation.tableViewAnimation) {
+        self?.setup(tableView.frame.size)
+        completion?()
+      }
+    }
+  }
+  public func append(_ items: [Item], withAnimation animation: SpotsAnimation, completion: Completion) {
+    var indexes = [Int]()
+    let count = component.items.count
+
+    component.items.append(contentsOf: items)
+
+    items.enumerated().forEach {
+      let index = count + $0.offset
+      indexes.append(index)
+      configureItem(at: index, usesViewSize: true)
+    }
+
+    Dispatch.mainQueue { [weak self] in
+      guard let tableView = self?.tableView else { completion?(); return }
+      tableView.insert(indexes, animation: animation.tableViewAnimation) {
+        self?.layout(tableView.frame.size)
+        completion?()
+      }
+    }
+  }
+
+  public func prepend(_ items: [Item], withAnimation animation: SpotsAnimation, completion: Completion) {
+    var indexes = [Int]()
+
+    component.items.insert(contentsOf: items, at: 0)
+
+    items.enumerated().forEach {
+      indexes.append(items.count - 1 - $0.offset)
+    }
+
+    Dispatch.mainQueue { [weak self] in
+      guard let tableView = self?.tableView else { completion?(); return }
+      tableView.insert(indexes, animation: animation.tableViewAnimation) {
+        self?.refreshHeight()
+      }
+    }
+  }
+
+  public func insert(_ item: Item, index: Int, withAnimation animation: SpotsAnimation, completion: Completion) {
+    component.items.insert(item, at: index)
+
+    Dispatch.mainQueue { [weak self] in
+      guard let tableView = self?.tableView else { completion?(); return }
+      tableView.insert([index], animation: animation.tableViewAnimation) {
+        self?.refreshHeight(completion)
+      }
+    }
+  }
+
+  public func update(_ item: Item, index: Int, withAnimation animation: SpotsAnimation, completion: Completion) {
+    items[index] = item
+
+    Dispatch.mainQueue { [weak self] in
+      guard let tableView = self?.tableView else { completion?(); return }
+      tableView.reload([index], section: 0, animation: animation.tableViewAnimation) {
+        self?.refreshHeight(completion)
+      }
+    }
+  }
+
+  public func delete(_ item: Item, withAnimation animation: SpotsAnimation, completion: Completion) {
+    guard let index = component.items.index(where: { $0 == item })
+      else { completion?(); return }
+
+    component.items.remove(at: index)
+
+    Dispatch.mainQueue { [weak self] in
+      guard let tableView = self?.tableView else { completion?(); return }
+      tableView.delete([index], animation: animation.tableViewAnimation) {
+        self?.refreshHeight(completion)
+      }
+    }
+  }
+
+  public func delete(_ item: [Item], withAnimation animation: SpotsAnimation, completion: Completion) {
+    var indexPaths = [Int]()
+    let count = component.items.count
+
+    for (index, item) in items.enumerated() {
+      indexPaths.append(count + index)
+      component.items.append(item)
+    }
+
+    Dispatch.mainQueue { [weak self] in
+      guard let tableView = self?.tableView else { completion?(); return }
+      tableView.delete(indexPaths, animation: animation.tableViewAnimation) {
+        self?.refreshHeight(completion)
+      }
+    }
+  }
+
+  public func delete(_ index: Int, withAnimation animation: SpotsAnimation, completion: Completion) {
+    Dispatch.mainQueue { [weak self] in
+      guard let tableView = self?.tableView else { completion?(); return }
+      self?.component.items.remove(at: index)
+      tableView.delete([index], animation: animation.tableViewAnimation) {
+        self?.refreshHeight(completion)
+      }
+    }
+  }
+
+  public func delete(_ indexes: [Int], withAnimation animation: SpotsAnimation, completion: Completion) {
+    Dispatch.mainQueue { [weak self] in
+      indexes.forEach { self?.component.items.remove(at: $0) }
+      guard let tableView = self?.tableView else { completion?(); return }
+      tableView.delete(indexes, animation: animation.tableViewAnimation) {
+        self?.refreshHeight(completion)
+      }
+    }
+  }
+
+  public func reloadIfNeeded(_ changes: ItemChanges, withAnimation animation: SpotsAnimation, updateDataSource: () -> Void, completion: Completion) {
+    guard !changes.updates.isEmpty else {
+      tableView.process((insertions: changes.insertions, reloads: changes.reloads, deletions: changes.deletions), updateDataSource: updateDataSource, completion: completion)
+      return
+    }
+
+    tableView.process((insertions: changes.insertions, reloads: changes.reloads, deletions: changes.deletions), updateDataSource: updateDataSource) {
+
+      for index in changes.updates {
+        guard let item = self.item(at: index) else { continue }
+        self.update(item, index: index, withAnimation: animation, completion: completion)
+      }
+    }
+  }
+
+  public func reload(_ indexes: [Int]?, withAnimation animation: SpotsAnimation, completion: Completion) {
+    Dispatch.mainQueue { [weak self] in
+      guard let tableView = self?.tableView else { completion?(); return }
+      if let indexes = indexes, animation != .none {
+        tableView.reload(indexes, animation: animation.tableViewAnimation) {
+          self?.refreshHeight(completion)
+        }
+      } else {
+        tableView.reloadData()
+        self?.refreshHeight(completion)
+      }
+    }
+  }
+
+  public func refreshHeight(_ completion: (() -> Void)? = nil) {
+    layout(CGSize(width: tableView.frame.width, height: computedHeight ))
+    completion?()
+  }
+}
+
+extension ListSpot: NSTableViewDataSource {
+
+  public func numberOfRows(in tableView: NSTableView) -> Int {
+    return component.items.count
+  }
+
+  public func tableView(_ tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableViewDropOperation) -> Bool {
+    return false
+  }
+}
+
+extension ListSpot: NSTableViewDelegate {
+
+  public func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
+    guard let item = item(at: row), row > -1 && row < component.items.count
+      else {
+        return false
+    }
+
+    if component.meta(ListSpot.Key.doubleAction, type: Bool.self) != true {
+      delegate?.didSelect(item: item, in: self)
+    }
+
+    return true
+  }
+
+  public func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
+    component.size = CGSize(
+      width: tableView.frame.width,
+      height: tableView.frame.height)
+
+    let height = row < component.items.count ? item(at: row)?.size.height ?? 0 : 1.0
+
+    if height == 0 { return 1.0 }
+
+    return height
+  }
+
+  public func tableView(_ tableView: NSTableView, rowViewForRow row: Int) -> NSTableRowView? {
+    guard row >= 0 && row < component.items.count else { return nil }
+
+    let reuseIdentifier = identifier(at: row)
+    guard let cachedView = type(of: self).views.make(reuseIdentifier) else { return nil }
+
+    var view: View? = nil
+    if let type = cachedView.type {
+      switch type {
+      case .regular:
+        view = cachedView.view
+      case .nib:
+        view = tableView.make(withIdentifier: reuseIdentifier, owner: nil)
+      }
+    }
+
+    (view as? SpotConfigurable)?.configure(&component.items[row])
+    (view as? NSTableRowView)?.identifier = reuseIdentifier
+
+    return view as? NSTableRowView
+  }
+
+  public func tableView(_ tableView: NSTableView, willDisplayCell cell: Any, for tableColumn: NSTableColumn?, row: Int) {}
+
+  public func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
+    return nil
+  }
 }

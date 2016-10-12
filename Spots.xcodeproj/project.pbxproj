@@ -66,16 +66,13 @@
 		BD129E291D7B2CDE009AC164 /* SpotsContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E101D7B2CDE009AC164 /* SpotsContentView.swift */; };
 		BD129E2A1D7B2CDE009AC164 /* Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E111D7B2CDE009AC164 /* Controller.swift */; };
 		BD129E2B1D7B2CDE009AC164 /* SpotsScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E121D7B2CDE009AC164 /* SpotsScrollView.swift */; };
-		BD129E2F1D7B2CDE009AC164 /* CollectionAdapter+SpotAdapter+Mac.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E171D7B2CDE009AC164 /* CollectionAdapter+SpotAdapter+Mac.swift */; };
 		BD129E301D7B2CDE009AC164 /* Gridable+Mac.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E181D7B2CDE009AC164 /* Gridable+Mac.swift */; };
 		BD129E311D7B2CDE009AC164 /* Listable+Mac.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E191D7B2CDE009AC164 /* Listable+Mac.swift */; };
-		BD129E321D7B2CDE009AC164 /* ListAdapter+Mac.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E1A1D7B2CDE009AC164 /* ListAdapter+Mac.swift */; };
 		BD129E331D7B2CDE009AC164 /* NSCollectionView+Indexes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E1B1D7B2CDE009AC164 /* NSCollectionView+Indexes.swift */; };
 		BD129E341D7B2CDE009AC164 /* NSScrollView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E1C1D7B2CDE009AC164 /* NSScrollView+Extensions.swift */; };
 		BD129E351D7B2CDE009AC164 /* NSTableView+Indexes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E1D1D7B2CDE009AC164 /* NSTableView+Indexes.swift */; };
 		BD129E361D7B2CDE009AC164 /* Viewable+Mac.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E1E1D7B2CDE009AC164 /* Viewable+Mac.swift */; };
 		BD129E371D7B2CDE009AC164 /* GridRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E201D7B2CDE009AC164 /* GridRegistry.swift */; };
-		BD129E391D7B2D1E009AC164 /* CarouselSpot+Spotable+Mac.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129E381D7B2D1E009AC164 /* CarouselSpot+Spotable+Mac.swift */; };
 		BD129F481D7B2F91009AC164 /* Registry.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F271D7B2F91009AC164 /* Registry.swift */; };
 		BD129F491D7B2F91009AC164 /* Registry.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F271D7B2F91009AC164 /* Registry.swift */; };
 		BD129F4A1D7B2F91009AC164 /* Registry.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F271D7B2F91009AC164 /* Registry.swift */; };
@@ -251,16 +248,13 @@
 		BD129E101D7B2CDE009AC164 /* SpotsContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsContentView.swift; sourceTree = "<group>"; };
 		BD129E111D7B2CDE009AC164 /* Controller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Controller.swift; sourceTree = "<group>"; };
 		BD129E121D7B2CDE009AC164 /* SpotsScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsScrollView.swift; sourceTree = "<group>"; };
-		BD129E171D7B2CDE009AC164 /* CollectionAdapter+SpotAdapter+Mac.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CollectionAdapter+SpotAdapter+Mac.swift"; sourceTree = "<group>"; };
 		BD129E181D7B2CDE009AC164 /* Gridable+Mac.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Gridable+Mac.swift"; sourceTree = "<group>"; };
 		BD129E191D7B2CDE009AC164 /* Listable+Mac.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Listable+Mac.swift"; sourceTree = "<group>"; };
-		BD129E1A1D7B2CDE009AC164 /* ListAdapter+Mac.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ListAdapter+Mac.swift"; sourceTree = "<group>"; };
 		BD129E1B1D7B2CDE009AC164 /* NSCollectionView+Indexes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSCollectionView+Indexes.swift"; sourceTree = "<group>"; };
 		BD129E1C1D7B2CDE009AC164 /* NSScrollView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSScrollView+Extensions.swift"; sourceTree = "<group>"; };
 		BD129E1D1D7B2CDE009AC164 /* NSTableView+Indexes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSTableView+Indexes.swift"; sourceTree = "<group>"; };
 		BD129E1E1D7B2CDE009AC164 /* Viewable+Mac.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Viewable+Mac.swift"; sourceTree = "<group>"; };
 		BD129E201D7B2CDE009AC164 /* GridRegistry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridRegistry.swift; sourceTree = "<group>"; };
-		BD129E381D7B2D1E009AC164 /* CarouselSpot+Spotable+Mac.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CarouselSpot+Spotable+Mac.swift"; sourceTree = "<group>"; };
 		BD129E3A1D7B2DE2009AC164 /* Info-tvOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-tvOS.plist"; sourceTree = "<group>"; };
 		BD129F271D7B2F91009AC164 /* Registry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Registry.swift; sourceTree = "<group>"; };
 		BD129F281D7B2F91009AC164 /* SpotFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotFactory.swift; sourceTree = "<group>"; };
@@ -460,11 +454,8 @@
 		BD129E131D7B2CDE009AC164 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				BD129E381D7B2D1E009AC164 /* CarouselSpot+Spotable+Mac.swift */,
-				BD129E171D7B2CDE009AC164 /* CollectionAdapter+SpotAdapter+Mac.swift */,
 				BD129E181D7B2CDE009AC164 /* Gridable+Mac.swift */,
 				BD129E191D7B2CDE009AC164 /* Listable+Mac.swift */,
-				BD129E1A1D7B2CDE009AC164 /* ListAdapter+Mac.swift */,
 				BD129E1B1D7B2CDE009AC164 /* NSCollectionView+Indexes.swift */,
 				BD129E1C1D7B2CDE009AC164 /* NSScrollView+Extensions.swift */,
 				BD129E1D1D7B2CDE009AC164 /* NSTableView+Indexes.swift */,
@@ -1178,12 +1169,10 @@
 			files = (
 				BD129E371D7B2CDE009AC164 /* GridRegistry.swift in Sources */,
 				BD129F731D7B2F91009AC164 /* Listable.swift in Sources */,
-				BD129E321D7B2CDE009AC164 /* ListAdapter+Mac.swift in Sources */,
 				BD129F4F1D7B2F91009AC164 /* ViewSpot.swift in Sources */,
 				BD129E211D7B2CDE009AC164 /* CarouselSpot.swift in Sources */,
 				BD129E271D7B2CDE009AC164 /* ListSpotItem.swift in Sources */,
 				BD129F6D1D7B2F91009AC164 /* Componentable.swift in Sources */,
-				BD129E391D7B2D1E009AC164 /* CarouselSpot+Spotable+Mac.swift in Sources */,
 				BD129E311D7B2CDE009AC164 /* Listable+Mac.swift in Sources */,
 				BD129F881D7B2F91009AC164 /* Component.swift in Sources */,
 				BD129F761D7B2F91009AC164 /* Spotable.swift in Sources */,
@@ -1219,7 +1208,6 @@
 				BD129F941D7B2F91009AC164 /* TypeAlias.swift in Sources */,
 				BD129F821D7B2F91009AC164 /* SpotsProtocol.swift in Sources */,
 				BD129F791D7B2F91009AC164 /* SpotAdapter.swift in Sources */,
-				BD129E2F1D7B2CDE009AC164 /* CollectionAdapter+SpotAdapter+Mac.swift in Sources */,
 				BD1BFB5B1DA7A9AC00BB55E1 /* ScrollDelegate.swift in Sources */,
 				BD129F851D7B2F91009AC164 /* Viewable.swift in Sources */,
 				BD129F701D7B2F91009AC164 /* Gridable.swift in Sources */,
