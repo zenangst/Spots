@@ -180,7 +180,7 @@ open class CarouselSpot: NSObject, Gridable {
   func configureCollectionView() {
     collectionView.dataSource = self
     collectionView.delegate = self
-    collectionView.backgroundView = self.backgroundView
+    collectionView.backgroundView = backgroundView
   }
 
   /// Setup Spotable component with base size
