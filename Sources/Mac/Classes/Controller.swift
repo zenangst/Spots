@@ -211,7 +211,7 @@ open class Controller: NSViewController, SpotsProtocol {
   /**
    - parameter animated: An optional animation closure that runs when a spot is being rendered
    */
-  public func setupSpots(_ animated: ((_ view: View) -> Void)? = nil) {
+  public func setupSpots(animated: ((_ view: View) -> Void)? = nil) {
     compositeSpots = [:]
     spots.enumerated().forEach { index, spot in
       setupSpot(at: index, spot: spot)
