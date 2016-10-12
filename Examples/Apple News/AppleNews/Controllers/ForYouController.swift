@@ -146,7 +146,7 @@ class ForYouController: Controller, SpotsDelegate {
 
 extension ForYouController: ScrollDelegate {
 
-  func didReachEnd(in scrollView: ScrollableView, completion: Completion) {
+  func didReachBeginning(in scrollView: ScrollableView, completion: Completion) {
     guard let spot = spot, spot.component.items.count < 100 && view.window != nil
       else {
         completion?()
@@ -191,12 +191,12 @@ extension ForYouController: ScrollDelegate {
     }
   }
 
-  func didReachBeginning(_ completion: ((_ scrollView: ScrollView?) -> Void)?) {
+  func didReachEnd(in scrollView: ScrollableView, completion: Completion) {
     if let spot = spot, spot.component.items.count < 100 {
       append(ForYouController.generateItems(spot.component.items.count, to: 10))
     }
-    delay(0.3) { [weak self] in
-      completion?(self?.scrollView)
+    delay(0.3) {
+      completion?()
     }
   }
 }
