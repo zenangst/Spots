@@ -225,10 +225,6 @@ open class CarouselSpot: NSObject, Gridable {
 
 extension CarouselSpot: NSCollectionViewDataSource {
 
-  @nonobjc public func numberOfSectionsInCollectionView(_ collectionView: NSCollectionView) -> Int {
-    return 1
-  }
-
   public func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
     return component.items.count
   }
