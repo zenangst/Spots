@@ -138,7 +138,7 @@ extension SpotsProtocol {
 
     if newItems.count == spot.items.count {
       var offsets = [CGPoint]()
-      spot.adapter?.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: {
+      spot.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: {
         CATransaction.begin()
         for item in newItems {
           if let compositeSpots = self.compositeSpots[spot.index],
@@ -166,7 +166,7 @@ extension SpotsProtocol {
         CATransaction.commit()
       }
     } else if newItems.count < spot.items.count {
-      spot.adapter?.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: {
+      spot.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: {
         CATransaction.begin()
         spot.items = newItems
       }) { [weak self] in
@@ -200,11 +200,11 @@ extension SpotsProtocol {
         }
       }
     } else if newItems.count > spot.items.count {
-      spot.adapter?.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: {
+      spot.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: {
         CATransaction.begin()
         spot.items = newItems
       }) {
-        spot.adapter?.reload(nil, withAnimation: animation) { [weak self] in
+        spot.reload(nil, withAnimation: animation) { [weak self] in
           closure?()
           self?.scrollView.layoutSubviews()
           Dispatch.delay(for: 0.1) {

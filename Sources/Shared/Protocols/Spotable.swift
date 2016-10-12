@@ -29,8 +29,6 @@ public protocol Spotable: class {
   var configure: ((SpotConfigurable) -> Void)? { get set }
   /// A cache for a Spotable object
   var stateCache: StateCache? { get }
-  /// A SpotAdapter
-  var adapter: SpotAdapter? { get }
   /// Indicator to calculate the height based on content
   var usesDynamicHeight: Bool { get }
 
@@ -50,6 +48,8 @@ public protocol Spotable: class {
 
   /// Setup Spotable object with size
   func setup(_ size: CGSize)
+
+  func ui<T>(at index: Int) -> T?
 
   /// Append item to collection with animation
   ///

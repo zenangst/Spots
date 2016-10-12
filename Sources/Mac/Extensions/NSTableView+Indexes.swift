@@ -16,8 +16,8 @@ public extension NSTableView {
     */
     indexes.forEach { index in
       if let view = rowView(atRow: index, makeIfNecessary: false) as? SpotConfigurable,
-      let adapter = dataSource as? ListAdapter {
-        var item = adapter.spot.component.items[index]
+      let adapter = dataSource as? Listable {
+        var item = adapter.component.items[index]
         view.configure(&item)
       }
     }
@@ -51,9 +51,9 @@ public extension NSTableView {
 
     for index in reloadSets {
       guard let view = rowView(atRow: index, makeIfNecessary: false) as? SpotConfigurable,
-        let adapter = dataSource as? ListAdapter else { continue }
+        let adapter = dataSource as? Listable else { continue }
 
-      var item = adapter.spot.component.items[index]
+      var item = adapter.component.items[index]
       view.configure(&item)
     }
 

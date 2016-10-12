@@ -45,12 +45,6 @@ open class ListSpot: NSObject, Listable {
 
   open fileprivate(set) var stateCache: StateCache?
 
-  open var adapter: SpotAdapter? {
-    return listAdapter
-  }
-
-  fileprivate lazy var listAdapter: ListAdapter = ListAdapter(spot: self)
-
   open lazy var scrollView: ScrollView = {
     let scrollView = ScrollView()
     scrollView.documentView = NSView()
@@ -157,8 +151,8 @@ open class ListSpot: NSObject, Listable {
       component.items[$0.offset].size.width = size.width
     }
 
-    tableView.delegate = listAdapter
-    tableView.dataSource = listAdapter
+    tableView.delegate = self
+    tableView.dataSource = self
     tableView.target = self
     tableView.addTableColumn(tableColumn)
     tableView.action = #selector(self.action(_:))

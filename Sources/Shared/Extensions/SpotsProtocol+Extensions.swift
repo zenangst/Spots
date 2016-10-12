@@ -86,7 +86,7 @@ public extension SpotsProtocol {
   public func ui<T>(_ includeElement: (Item) -> Bool) -> T? {
     for spot in spots {
       if let first = spot.items.filter(includeElement).first {
-        return spot.ui(atIndex: first.index)
+        return spot.ui(at: first.index)
       }
     }
 
@@ -94,7 +94,7 @@ public extension SpotsProtocol {
       for (_, spots) in cSpots.enumerated() {
         for spot in spots.1 {
           if let first = spot.items.filter(includeElement).first {
-            return spot.ui(atIndex: first.index)
+            return spot.ui(at: first.index)
           }
         }
       }

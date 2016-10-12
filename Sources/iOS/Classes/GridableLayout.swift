@@ -19,10 +19,10 @@ open class GridableLayout: UICollectionViewFlowLayout {
   open override func prepare() {
     super.prepare()
 
-    guard let adapter = collectionView?.delegate as? CollectionAdapter,
-      let firstItem = adapter.spot.items.first else { return }
-    contentSize.width = adapter.spot.items.reduce(0, { $0 + $1.size.width })
-    contentSize.width += CGFloat(adapter.spot.items.count) * (minimumInteritemSpacing)
+    guard let spot = collectionView?.delegate as? Gridable,
+      let firstItem = spot.items.first else { return }
+    contentSize.width = spot.items.reduce(0, { $0 + $1.size.width })
+    contentSize.width += CGFloat(spot.items.count) * (minimumInteritemSpacing)
     contentSize.width += sectionInset.left + (sectionInset.right / 2) - 3
     contentSize.width = ceil(contentSize.width)
 
@@ -30,22 +30,22 @@ open class GridableLayout: UICollectionViewFlowLayout {
       contentSize.height = firstItem.size.height + headerReferenceSize.height
       contentSize.height += sectionInset.top + sectionInset.bottom
 
-      if let spot = adapter.spot as? CarouselSpot, spot.pageIndicator {
+      if let spot = spot as? CarouselSpot, spot.pageIndicator {
         contentSize.height += spot.pageControl.frame.height
       }
     } else {
-      contentSize.height = adapter.spot.items.reduce(0, { $0 + $1.size.height })
-      if adapter.spot.component.span > 1 {
-        let count = adapter.spot.items.count
-        if let last = adapter.spot.items.last, count % Int(adapter.spot.component.span) != 0 {
+      contentSize.height = spot.items.reduce(0, { $0 + $1.size.height })
+      if spot.component.span > 1 {
+        let count = spot.items.count
+        if let last = spot.items.last, count % Int(spot.component.span) != 0 {
           contentSize.height += last.size.height
         }
 
-        contentSize.height += CGFloat(adapter.spot.items.count) * minimumLineSpacing
-        contentSize.height /= CGFloat(adapter.spot.component.span)
+        contentSize.height += CGFloat(spot.items.count) * minimumLineSpacing
+        contentSize.height /= CGFloat(spot.component.span)
         contentSize.height += sectionInset.top + sectionInset.bottom
       } else {
-        contentSize.height = adapter.spot.items.reduce(0, { $0 + $1.size.height })
+        contentSize.height = spot.items.reduce(0, { $0 + $1.size.height })
         contentSize.height += sectionInset.top + sectionInset.bottom
       }
     }
@@ -70,7 +70,7 @@ open class GridableLayout: UICollectionViewFlowLayout {
   /// - returns: An array of layout attribute objects containing the layout information for the enclosed items and views. The default implementation of this method returns nil.
   open override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
     guard let collectionView = collectionView,
-      let adapter = collectionView.dataSource as? CollectionAdapter
+      let spot = collectionView.dataSource as? Gridable
       else { return nil }
 
     var attributes = [UICollectionViewLayoutAttributes]()
@@ -94,7 +94,7 @@ open class GridableLayout: UICollectionViewFlowLayout {
           itemAttribute.frame.origin.x = collectionView.contentOffset.x
           attributes.append(itemAttribute)
         } else {
-          itemAttribute.size = adapter.spot.sizeForItem(at: itemAttribute.indexPath)
+          itemAttribute.size = spot.sizeForItem(at: itemAttribute.indexPath)
 
           if scrollDirection == .horizontal {
             itemAttribute.frame.origin.y = headerReferenceSize.height

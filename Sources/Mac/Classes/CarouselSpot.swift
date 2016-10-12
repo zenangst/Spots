@@ -61,11 +61,6 @@ open class CarouselSpot: NSObject, Gridable {
 
   open var gradientLayer: CAGradientLayer?
 
-  open lazy var collectionAdapter: CollectionAdapter = CollectionAdapter(spot: self)
-  open var adapter: SpotAdapter? {
-    return collectionAdapter
-  }
-
   open lazy var layout: NSCollectionViewLayout = NSCollectionViewFlowLayout()
 
   open lazy var titleView: NSTextField = {
@@ -157,8 +152,8 @@ open class CarouselSpot: NSObject, Gridable {
 
   /// Configure collection view delegate, data source and layout
   open func setupCollectionView() {
-    collectionView.delegate = collectionAdapter
-    collectionView.dataSource = collectionAdapter
+    collectionView.delegate = self
+    collectionView.dataSource = self
     collectionView.collectionViewLayout = layout
   }
 
@@ -225,5 +220,63 @@ open class CarouselSpot: NSObject, Gridable {
     titleView.frame.origin.y = component.meta(Key.titleTopInset, Default.titleTopInset) - component.meta(Key.titleBottomInset, Default.titleBottomInset)
     lineView.frame.origin.y = titleView.frame.maxY + 5
     collectionView.frame.size.height = scrollView.frame.size.height + titleView.frame.size.height
+  }
+
+  public func sizeForItem(at indexPath: IndexPath) -> CGSize {
+    var width = component.span > 0
+      ? collectionView.frame.width / CGFloat(component.span)
+      : collectionView.frame.width
+
+    if let layout = layout as? NSCollectionViewFlowLayout {
+      width -= layout.sectionInset.left - layout.sectionInset.right
+      width -= layout.minimumInteritemSpacing
+      width -= layout.minimumLineSpacing
+    }
+
+    if component.items[indexPath.item].size.width == 0.0 {
+      component.items[indexPath.item].size.width = width
+    }
+
+    return CGSize(
+      width: ceil(component.items[indexPath.item].size.width),
+      height: ceil(component.items[indexPath.item].size.height))
+  }
+}
+
+extension CarouselSpot: NSCollectionViewDataSource {
+
+  public func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
+    return component.items.count
+  }
+
+  public func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
+    let reuseIdentifier = identifier(at: indexPath.item)
+    let item = collectionView.makeItem(withIdentifier: reuseIdentifier, for: indexPath as IndexPath)
+
+    (item as? SpotConfigurable)?.configure(&component.items[indexPath.item])
+    return item
+  }
+}
+
+extension CarouselSpot : NSCollectionViewDelegate {
+
+  public func collectionView(_ collectionView: NSCollectionView, didSelectItemsAt indexPaths: Set<IndexPath>) {
+    /*
+     This delay is here to avoid an assertion that happens inside the collection view binding,
+     it tries to resolve the item at index but it no longer exists so the assertion is thrown.
+     This can probably be fixed in a more convenient way in the future without delays.
+     */
+    Dispatch.delay(for: 0.1) { [weak self] in
+      guard let weakSelf = self, let first = indexPaths.first,
+        let item = self?.item(at: first.item), first.item < weakSelf.items.count else { return }
+      weakSelf.delegate?.didSelect(item: item, in: weakSelf)
+    }
+  }
+}
+
+extension CarouselSpot: NSCollectionViewDelegateFlowLayout {
+
+  public func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> NSSize {
+    return sizeForItem(at: indexPath)
   }
 }

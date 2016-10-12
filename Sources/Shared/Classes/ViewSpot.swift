@@ -6,6 +6,16 @@
 import Brick
 
 open class ViewSpot: NSObject, Spotable, Viewable {
+  /// Reload spot with ItemChanges.
+  ///
+  /// - parameter changes:          A collection of changes; inserations, updates, reloads, deletions and updated children.
+  /// - parameter animation:        A SpotAnimation that is used when performing the mutation.
+  /// - parameter updateDataSource: A closure to update your data source.
+  /// - parameter completion:       A completion closure that runs when your updates are done.
+  public func reloadIfNeeded(_ changes: ItemChanges, withAnimation animation: SpotsAnimation, updateDataSource: () -> Void, completion: Completion) {
+    completion?()
+  }
+
 
   /// A Registry struct that contains all register components, used for resolving what UI component to use
   open static var views = Registry()
@@ -23,8 +33,6 @@ open class ViewSpot: NSObject, Spotable, Viewable {
   open lazy var scrollView: ScrollView = ScrollView()
 
   open fileprivate(set) var stateCache: StateCache?
-
-  open var adapter: SpotAdapter?
 
   /// Indicator to calculate the height based on content
   open var usesDynamicHeight = true
@@ -44,6 +52,10 @@ open class ViewSpot: NSObject, Spotable, Viewable {
    */
   public convenience init(title: String = "", kind: String? = nil) {
     self.init(component: Component(title: title, kind: kind ?? ViewSpot.defaultKind.string))
+  }
+
+  public func ui<T>(at index: Int) -> T? {
+    return nil
   }
 
   open func render() -> View {
