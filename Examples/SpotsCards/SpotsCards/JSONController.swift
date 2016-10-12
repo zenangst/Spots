@@ -75,7 +75,7 @@ class JSONController: UIViewController {
       do {
         let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String : AnyObject]
         if let json = json {
-          SpotFactory.DefaultSpot = ListSpot.self
+          Factory.DefaultSpot = ListSpot.self
 
           let components: [Spotable] = Parser.parse(json)
           let controller = Controller(spots: components)

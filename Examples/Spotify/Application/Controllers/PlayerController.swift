@@ -32,11 +32,11 @@ class PlayerController: Spots.Controller {
     scrollView.isScrollEnabled = false
     scrollView.backgroundColor = UIColor.clear
 
-    if let listSpot = spot(at: 0, ListSpot.self) {
+    if let listSpot = spot(at: 0, ofType: ListSpot.self) {
       listSpot.tableView.separatorStyle = .none
     }
 
-    if let carouselSpot = spot(at: 1, CarouselSpot.self) {
+    if let carouselSpot = spot(at: 1, ofType: CarouselSpot.self) {
       carouselSpot.paginate = true
       carouselSpot.carouselScrollDelegate = self
     }
@@ -49,7 +49,7 @@ class PlayerController: Spots.Controller {
   }
 
   required init?(coder aDecoder: NSCoder) {
-      fatalError("init(coder:) has not been implemented")
+    fatalError("init(coder:) has not been implemented")
   }
 
   deinit {
@@ -59,47 +59,47 @@ class PlayerController: Spots.Controller {
   override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
     if let imageView = object as? UIImageView,
       let image = imageView.image, keyPath == "image" {
-        dispatch(queue: .interactive) {
-          let (background, primary, secondary, detail) = image.colors(CGSize(width: 128, height: 128))
-          dispatch { [weak self] in
-            if let listSpot = self?.spot(at: 0, ListSpot.self) {
-              var item = listSpot.items[0]
+      dispatch(queue: .interactive) {
+        let (background, primary, secondary, detail) = image.colors(CGSize(width: 128, height: 128))
+        dispatch { [weak self] in
+          if let listSpot = self?.spot(at: 0, ofType: ListSpot.self) {
+            var item = listSpot.items[0]
 
-              item.meta["background"] = background
-              item.meta["textColor"] = primary
-              item.meta["secondary"] = secondary
+            item.meta["background"] = background
+            item.meta["textColor"] = primary
+            item.meta["secondary"] = secondary
 
-              self?.update(item, index: 0, spotIndex: 0)
+            self?.update(item, index: 0, spotIndex: 0)
+          }
+
+          if let listSpot = self?.spot(at: 2, ofType: ListSpot.self) {
+            var item = listSpot.items[0]
+
+            item.meta["background"] = background
+            item.meta["textColor"] = primary
+            item.meta["secondary"] = secondary
+
+            self?.update(item, index: 0, spotIndex: 2)
+          }
+
+          if let gridSpot = self?.spot(at: 3, ofType: GridSpot.self) {
+            var items = gridSpot.items
+            items.enumerated().forEach {
+              items[$0.offset].meta["textColor"] = secondary
+              items[$0.offset].meta["tintColor"] = detail
             }
 
-            if let listSpot = self?.spot(at: 2, ListSpot.self) {
-              var item = listSpot.items[0]
-
-              item.meta["background"] = background
-              item.meta["textColor"] = primary
-              item.meta["secondary"] = secondary
-
-              self?.update(item, index: 0, spotIndex: 2)
-            }
-
-            if let gridSpot = self?.spot(at: 3, GridSpot.self) {
-              var items = gridSpot.items
-              items.enumerated().forEach {
-                items[$0.offset].meta["textColor"] = secondary
-                items[$0.offset].meta["tintColor"] = detail
-              }
-
-              self?.update(spotAtIndex: 3, withAnimation: .automatic) {
-                $0.items = items
-              }
-            }
-
-            UIView.animate(withDuration: 0.3) {
-              self?.scrollView.backgroundColor = background
-              self?.view.backgroundColor = background
+            self?.update(spotAtIndex: 3, withAnimation: .automatic) {
+              $0.items = items
             }
           }
+
+          UIView.animate(withDuration: 0.3) {
+            self?.scrollView.backgroundColor = background
+            self?.view.backgroundColor = background
+          }
         }
+      }
     }
   }
 
@@ -112,23 +112,23 @@ class PlayerController: Spots.Controller {
     if let track = userInfo["track"],
       let artist = userInfo["artist"] {
 
-        var newItem: Item
-        if let spot = spot(at: 0, Spotable.self), let item = spot.items.first {
-          newItem = item
-          newItem.title = track
-          newItem.subtitle = artist
-          update(newItem, index: 0, spotIndex: 0)
-          newItem.action = nil
-          update(newItem, index: 0, spotIndex: 2)
-        } else {
-          newItem = Item(title: track, subtitle: artist, action: "openPlayer")
+      var newItem: Item
+      if let spot = spot(at: 0, ofType: Spotable.self), let item = spot.items.first {
+        newItem = item
+        newItem.title = track
+        newItem.subtitle = artist
+        update(newItem, index: 0, spotIndex: 0)
+        newItem.action = nil
+        update(newItem, index: 0, spotIndex: 2)
+      } else {
+        newItem = Item(title: track, subtitle: artist, action: "openPlayer")
 
-          insert(newItem, index: 0, spotIndex: 0)
-          newItem.action = nil
-          insert(newItem, index: 0, spotIndex: 2)
-        }
+        insert(newItem, index: 0, spotIndex: 0)
+        newItem.action = nil
+        insert(newItem, index: 0, spotIndex: 2)
+      }
 
-        showPlayer()
+      showPlayer()
     }
   }
 
@@ -170,7 +170,7 @@ class PlayerController: Spots.Controller {
 
       UIView.animate(withDuration: TimeInterval(time), delay: 0, options: [.allowUserInteraction], animations: {
         self.view.y = endY
-//        UIApplication.sharedApplication.statusBarHidden = endY == minimumY
+        //        UIApplication.sharedApplication.statusBarHidden = endY == minimumY
         }, completion: { _ in })
 
     default: break
@@ -212,27 +212,27 @@ extension PlayerController: SpotsDelegate {
       return
     }
 
-    if let carouselSpot = self.spot(at: 1, CarouselSpot.self),
+    if let carouselSpot = self.spot(at: 1, ofType: CarouselSpot.self),
       let lastItem = lastItem {
-        guard let currentIndex = carouselSpot.items.index(where: { $0.action == lastItem.action }) else { return }
-        var newIndex = currentIndex
+      guard let currentIndex = carouselSpot.items.index(where: { $0.action == lastItem.action }) else { return }
+      var newIndex = currentIndex
 
-        switch urn {
-        case "next":     newIndex = newIndex + 1
-        case "previous": newIndex = newIndex - 1
-        default: break
-        }
+      switch urn {
+      case "next":     newIndex = newIndex + 1
+      case "previous": newIndex = newIndex - 1
+      default: break
+      }
 
-        guard newIndex >= 0 && newIndex < carouselSpot.items.count  else { return }
-        let item = carouselSpot.items[newIndex]
-        carouselSpot.scrollTo({ item.action == $0.action })
-        self.lastItem = item
-        guard let urn = item.action else { return }
-        Compass.navigate(to: urn)
+      guard newIndex >= 0 && newIndex < carouselSpot.items.count  else { return }
+      let item = carouselSpot.items[newIndex]
+      carouselSpot.scrollTo({ item.action == $0.action })
+      self.lastItem = item
+      guard let urn = item.action else { return }
+      Compass.navigate(to: urn)
 
-        if item.image.isPresent {
-          currentAlbum.setImage(URL(string: item.image)!)
-        }
+      if item.image.isPresent {
+        currentAlbum.setImage(URL(string: item.image)!)
+      }
     }
   }
 }
@@ -262,7 +262,7 @@ extension PlayerController: SPTAudioStreamingPlaybackDelegate {
       let artist = trackMetadata["SPTAudioStreamingMetadataArtistName"] as? String,
       let track = trackMetadata["SPTAudioStreamingMetadataTrackName"] as? String
       else { return }
-
+    
     updatePlayer([
       "title" : name,
       "artist" :artist,

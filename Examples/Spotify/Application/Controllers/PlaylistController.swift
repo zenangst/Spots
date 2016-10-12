@@ -149,7 +149,7 @@ extension PlaylistController: ScrollDelegate {
 
       var items = [Item]()
 
-      if let playlistID = weakSelf.playlistID, let listSpot = weakSelf.spot(at: 2, Spotable.self) {
+      if let playlistID = weakSelf.playlistID, let listSpot = weakSelf.spot(at: 2) {
         items.append(contentsOf: object.viewModels(playlistID, offset: listSpot.items.count))
         weakSelf.currentURIs.append(contentsOf: object.uris())
 
