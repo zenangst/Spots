@@ -52,7 +52,7 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
   public var refreshing = false
   /// A convenience method for resolving the first spot.
   public var spot: Spotable? {
-    get { return spot(at: 0, Spotable.self) }
+    get { return spot(at: 0, ofType: Spotable.self) }
   }
 
   #if DEVMODE
@@ -167,7 +167,7 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
   /// - parameter type: The generic type for the spot you are trying to resolve.
   ///
   /// - returns: An optional Spotable object of inferred type.
-  open func spot<T>(at index: Int = 0, _ type: T.Type) -> T? {
+  open func spot<T>(at index: Int = 0, ofType type: T.Type) -> T? {
     return spots.filter({ $0.index == index }).first as? T
   }
 

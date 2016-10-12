@@ -155,13 +155,13 @@ public extension SpotsProtocol {
   /// - parameter index:          The index of the spot that you want to scroll
   /// - parameter includeElement: A filter predicate to find a view model
   public func scrollTo(spotIndex index: Int = 0, includeElement: (Item) -> Bool) {
-    guard let itemY = spot(at: index, Spotable.self)?.scrollTo(includeElement) else { return }
+    guard let itemY = spot(at: index, ofType: Spotable.self)?.scrollTo(includeElement) else { return }
 
     var initialHeight: CGFloat = 0.0
     if index > 0 {
       initialHeight += spots[0..<index].reduce(0, { $0 + $1.computedHeight })
     }
-    if spot(at: index, Spotable.self)?.computedHeight > scrollView.frame.height - scrollView.contentInset.bottom - initialHeight {
+    if spot(at: index, ofType: Spotable.self)?.computedHeight > scrollView.frame.height - scrollView.contentInset.bottom - initialHeight {
       let y = itemY - scrollView.frame.size.height + scrollView.contentInset.bottom + initialHeight
       scrollView.setContentOffset(CGPoint(x: CGFloat(0.0), y: y), animated: true)
     }

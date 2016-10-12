@@ -61,7 +61,7 @@ public protocol SpotsProtocol: class {
   /// - parameter type: The generic type for the spot you are trying to resolve.
   ///
   /// - returns: An optional Spotable object of inferred type.
-  func spot<T>(at index: Int, _ type: T.Type) -> T?
+  func spot<T>(at index: Int, ofType type: T.Type) -> T?
 
   /// A generic look up method for resolving spots using a closure
   ///

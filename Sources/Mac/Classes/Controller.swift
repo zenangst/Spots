@@ -132,7 +132,7 @@ open class Controller: NSViewController, SpotsProtocol {
 
    - returns: An optional Spotable object
    */
-  public func spot<T>(at index: Int = 0, _ type: T.Type) -> T? {
+  public func spot<T>(at index: Int = 0, ofType type: T.Type) -> T? {
     return spots.filter({ $0.index == index }).first as? T
   }
 

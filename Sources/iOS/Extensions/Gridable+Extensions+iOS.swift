@@ -469,11 +469,10 @@ extension Gridable {
     default:
       break
     }
-    
+
     animation.duration = 0.3
     cell.layer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
     cell.layer.add(animation, forKey: "SpotAnimation")
     completion()
   }
 }
-

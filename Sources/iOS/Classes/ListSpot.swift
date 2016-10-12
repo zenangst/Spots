@@ -285,7 +285,7 @@ extension ListSpot : UITableViewDataSource {
 
       configure?(cell)
     }
-    
+
     return cell
   }
 }

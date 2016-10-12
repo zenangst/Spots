@@ -348,4 +348,3 @@ extension GridSpot: NSCollectionViewDelegateFlowLayout {
     return sizeForItem(at: indexPath)
   }
 }
-
