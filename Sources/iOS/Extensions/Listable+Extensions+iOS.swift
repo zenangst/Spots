@@ -239,6 +239,8 @@ extension Listable {
     } else if let cell = tableView.cellForRow(at: indexPath) as? SpotConfigurable {
       cell.configure(&items[index])
       updateHeight() { completion?() }
+    } else {
+      completion?()
     }
   }
 
