@@ -23,7 +23,9 @@ open class NoScrollView: NSScrollView {
     if theEvent.scrollingDeltaX != 0.0 && horizontalScroller != nil && scrollingEnabled {
       super.scrollWheel(with: theEvent)
     } else {
-      nextResponder?.scrollWheel(with: theEvent)
+      if theEvent.scrollingDeltaY != 0.0 {
+        nextResponder?.scrollWheel(with: theEvent)
+      }
     }
   }
 
