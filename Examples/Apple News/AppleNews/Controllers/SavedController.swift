@@ -2,7 +2,7 @@ import Spots
 import Fakery
 import Sugar
 
-class SavedController: SpotsController {
+class SavedController: Controller {
 
   static let faker = Faker()
 
@@ -14,10 +14,10 @@ class SavedController: SpotsController {
     self.title = title
   }
 
-  override func viewWillAppear(animated: Bool) {
+  override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
 
-    dispatch(queue: .Interactive) { [weak self] in
+    dispatch(queue: .interactive) { [weak self] in
       let items = ForYouController.generateItems(0, to: 2)
       self?.update { spot in
         spot.component.items = items

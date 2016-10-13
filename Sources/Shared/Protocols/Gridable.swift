@@ -3,9 +3,8 @@
 #else
   import UIKit
 #endif
-import Brick
 
-/// Gridable is protocol for Spots that are based on UICollectionView
+/// Gridable is protocol for Spots that are based on collection views.
 public protocol Gridable: Spotable {
 
   /// The layout object used to initialize the collection spot controller.
@@ -14,19 +13,21 @@ public protocol Gridable: Spotable {
   var collectionView: CollectionView { get }
 
   #if !os(OSX)
+  /// The headers that should be used on the Gridable object, only available on macOS.
   static var headers: Registry { get set }
   #endif
 
-  /**
-   Asks the data source for the size of an item in a particular location.
-
-   - parameter indexPath: The index path of the
-   - returns: Size of the object at index path as CGSize
-   */
-  func sizeForItemAt(indexPath: NSIndexPath) -> CGSize
+  /// Asks the data source for the size of an item in a particular location.
+  ///
+  /// - parameter indexPath: The index path of the
+  ///
+  /// - returns: Size of the object at index path as CGSize
+  func sizeForItem(at indexPath: IndexPath) -> CGSize
 
   #if os(OSX)
+  /// A registry for Gridable objects, only available on macOS.
   static var grids: GridRegistry { get set }
+  /// The default grid item that should be used in the Gridable object, only available on macOS.
   static var defaultGrid: NSCollectionViewItem.Type { get }
   #endif
 }

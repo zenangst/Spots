@@ -1,12 +1,13 @@
 import Cocoa
 
-public class SpotsScrollView: NSScrollView {
+open class SpotsScrollView: NSScrollView {
 
-  let KVOContext = UnsafeMutablePointer<()>(nil)
+  /// A KVO context used to monitor changes in contentSize, frames and bounds
+  let subviewContext: UnsafeMutableRawPointer? = UnsafeMutableRawPointer(mutating: nil)
 
-  private var subviewsInLayoutOrder = [NSView]()
+  fileprivate var subviewsInLayoutOrder = [NSView]()
 
-  public var forceUpdate = false {
+  open var forceUpdate = false {
     didSet {
       if forceUpdate {
         layoutSubtreeIfNeeded()
@@ -14,9 +15,9 @@ public class SpotsScrollView: NSScrollView {
     }
   }
 
-  lazy public var spotsContentView: SpotsContentView = {
+  lazy open var spotsContentView: SpotsContentView = {
     let contentView = SpotsContentView()
-    contentView.autoresizingMask = [.ViewWidthSizable, .ViewHeightSizable]
+    contentView.autoresizingMask = [.viewWidthSizable, .viewHeightSizable]
     contentView.autoresizesSubviews = true
 
     return contentView
@@ -36,27 +37,39 @@ public class SpotsScrollView: NSScrollView {
     return true
   }
 
-  func didAddSubviewToContainer(subview: View) {
+  func didAddSubviewToContainer(_ subview: View) {
     subviewsInLayoutOrder.append(subview)
+    subview.addObserver(self, forKeyPath: #keyPath(frame), options: .old, context: subviewContext)
     layoutSubtreeIfNeeded()
   }
 
-  public override func willRemoveSubview(subview: View) {
-    if let index = subviewsInLayoutOrder.indexOf({ $0 == subview }) {
-      subviewsInLayoutOrder.removeAtIndex(index)
+  open override func willRemoveSubview(_ subview: View) {
+    if let index = subviewsInLayoutOrder.index(where: { $0 == subview }) {
+      subviewsInLayoutOrder.remove(at: index)
       layoutSubtreeIfNeeded()
+      subview.removeObserver(self, forKeyPath: #keyPath(frame), context: subviewContext)
     }
   }
 
-  static public override func isCompatibleWithResponsiveScrolling() -> Bool {
+  open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+    if let change = change, let view = object as? View, context == subviewContext {
+      if let value = change[NSKeyValueChangeKey.oldKey] as? NSValue, keyPath == #keyPath(frame) {
+        if value.rectValue != view.frame {
+          layoutSubtreeIfNeeded()
+        }
+      }
+    }
+  }
+
+  open func isCompatibleWithResponsiveScrolling() -> Bool {
     return true
   }
 
-  public override func viewDidMoveToWindow() {
+  open override func viewDidMoveToWindow() {
     layoutSubtreeIfNeeded()
   }
 
-  override public func layoutSubtreeIfNeeded() {
+  open override func layoutSubtreeIfNeeded() {
     super.layoutSubtreeIfNeeded()
 
     var yOffsetOfCurrentSubview: CGFloat = 0.0

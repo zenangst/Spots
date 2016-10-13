@@ -4,11 +4,11 @@ extension SPTSession: Cachable {
 
   public typealias CacheType = SPTSession
 
-  public static func decode(data: NSData) -> CacheType? {
-    return NSKeyedUnarchiver.unarchiveObjectWithData(data) as? SPTSession
+  public static func decode(_ data: Data) -> CacheType? {
+    return NSKeyedUnarchiver.unarchiveObject(with: data) as? SPTSession
   }
 
-  public func encode() -> NSData? {
-    return NSKeyedArchiver.archivedDataWithRootObject(self)
+  public func encode() -> Data? {
+    return NSKeyedArchiver.archivedData(withRootObject: self)
   }
 }

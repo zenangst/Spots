@@ -7,7 +7,7 @@ public protocol PostInformationBarViewDelegate: class {
   func seenInformationButtonDidPress()
 }
 
-public class PostInformationBarView: UIView {
+open class PostInformationBarView: UIView {
 
   public struct Dimensions {
     public static let offset: CGFloat = 20
@@ -15,34 +15,34 @@ public class PostInformationBarView: UIView {
     public static let interitemOffset: CGFloat = 10
   }
 
-  public lazy var likesButton: UIButton = { [unowned self] in
+  open lazy var likesButton: UIButton = { [unowned self] in
     let button = UIButton()
     button.titleLabel?.font = FontList.Information.like
-    button.setTitleColor(ColorList.Information.like, forState: .Normal)
-    button.addTarget(self, action: #selector(likesButtonDidPress), forControlEvents: .TouchUpInside)
+    button.setTitleColor(ColorList.Information.like, for: UIControlState())
+    button.addTarget(self, action: #selector(likesButtonDidPress), for: .touchUpInside)
 
     return button
     }()
 
-  public lazy var commentButton: UIButton = { [unowned self] in
+  open lazy var commentButton: UIButton = { [unowned self] in
     let button = UIButton()
     button.titleLabel?.font = FontList.Information.comment
-    button.setTitleColor(ColorList.Information.comment, forState: .Normal)
-    button.addTarget(self, action: #selector(commentButtonDidPress), forControlEvents: .TouchUpInside)
+    button.setTitleColor(ColorList.Information.comment, for: UIControlState())
+    button.addTarget(self, action: #selector(commentButtonDidPress), for: .touchUpInside)
 
     return button
     }()
 
-  public lazy var seenButton: UIButton = { [unowned self] in
+  open lazy var seenButton: UIButton = { [unowned self] in
     let button = UIButton()
     button.titleLabel?.font = FontList.Information.comment
-    button.setTitleColor(ColorList.Information.seen, forState: .Normal)
-    button.addTarget(self, action: #selector(seenButtonDidPress), forControlEvents: .TouchUpInside)
+    button.setTitleColor(ColorList.Information.seen, for: UIControlState())
+    button.addTarget(self, action: #selector(seenButtonDidPress), for: .touchUpInside)
 
     return button
     }()
 
-  public weak var delegate: PostInformationBarViewDelegate?
+  open weak var delegate: PostInformationBarViewDelegate?
 
   // MARK: - Initialization
 
@@ -51,14 +51,14 @@ public class PostInformationBarView: UIView {
 
     [likesButton, commentButton, seenButton].forEach {
       addSubview($0)
-      $0.opaque = true
-      $0.backgroundColor = UIColor.whiteColor()
-      $0.subviews.first?.opaque = true
-      $0.subviews.first?.backgroundColor = UIColor.whiteColor()
+      $0.isOpaque = true
+      $0.backgroundColor = UIColor.white
+      $0.subviews.first?.isOpaque = true
+      $0.subviews.first?.backgroundColor = UIColor.white
       $0.layer.drawsAsynchronously = true
     }
 
-    backgroundColor = UIColor.whiteColor()
+    backgroundColor = UIColor.white
   }
 
   public required init?(coder aDecoder: NSCoder) {
@@ -67,51 +67,51 @@ public class PostInformationBarView: UIView {
 
   // MARK: - Setup
 
-  public func configureView(likes: Int, comments: Int, seen: Int) {
+  open func configureView(_ likes: Int, comments: Int, seen: Int) {
     configureLikes(likes)
     configureComments(comments)
     configureSeen(seen)
   }
 
-  public func configureLikes(likes: Int) {
+  open func configureLikes(_ likes: Int) {
     let title = likes == 0
       ? "" : String.localizedStringWithFormat(NSLocalizedString("%d like(s)", comment: ""), likes)
 
-    likesButton.setTitle(title, forState: .Normal)
+    likesButton.setTitle(title, for: UIControlState())
     likesButton.sizeToFit()
     likesButton.frame.origin = CGPoint(x: Dimensions.offset, y: Dimensions.topOffset)
   }
 
-  public func configureComments(comments: Int) {
+  open func configureComments(_ comments: Int) {
     let title = comments == 0
       ? "" : String.localizedStringWithFormat(NSLocalizedString("%d comment(s)", comment: ""), comments)
-    let positionOffset: CGFloat = likesButton.titleForState(UIControlState.Normal) == ""
-      ? Dimensions.offset : CGRectGetMaxX(likesButton.frame) + Dimensions.interitemOffset
+    let positionOffset: CGFloat = likesButton.title(for: UIControlState()) == ""
+      ? Dimensions.offset : likesButton.frame.maxX + Dimensions.interitemOffset
 
-    commentButton.setTitle(title, forState: .Normal)
+    commentButton.setTitle(title, for: UIControlState())
     commentButton.sizeToFit()
     commentButton.frame.origin = CGPoint(x: positionOffset,
       y: Dimensions.topOffset)
   }
 
-  public func configureSeen(seen: Int) {
-    seenButton.setTitle("Seen by \(seen)", forState: .Normal)
+  open func configureSeen(_ seen: Int) {
+    seenButton.setTitle("Seen by \(seen)", for: UIControlState())
     seenButton.sizeToFit()
-    seenButton.frame.origin = CGPoint(x: UIScreen.mainScreen().bounds.width - seenButton.frame.width - Dimensions.offset,
+    seenButton.frame.origin = CGPoint(x: UIScreen.main.bounds.width - seenButton.frame.width - Dimensions.offset,
       y: Dimensions.topOffset)
   }
 
   // MARK: - Actions
 
-  public func likesButtonDidPress() {
+  open func likesButtonDidPress() {
     delegate?.likesInformationButtonDidPress()
   }
 
-  public func commentButtonDidPress() {
+  open func commentButtonDidPress() {
     delegate?.commentInformationButtonDidPress()
   }
 
-  public func seenButtonDidPress() {
+  open func seenButtonDidPress() {
     delegate?.seenInformationButtonDidPress()
   }
 }

@@ -6,7 +6,7 @@ import Sugar
 import Compass
 import Sugar
 
-class ListController: SpotsController, SpotsDelegate, SpotsScrollDelegate {
+class ListController: Spots.Controller, SpotsDelegate, ScrollDelegate {
 
   struct UI {
     static let main = 0
@@ -18,14 +18,14 @@ class ListController: SpotsController, SpotsDelegate, SpotsScrollDelegate {
     $0.alphaValue = 0.0
     $0.frame.size.height = 1
     $0.wantsLayer = true
-    $0.layer?.backgroundColor = NSColor.lightGrayColor().alpha(0.4).CGColor
+    $0.layer?.backgroundColor = NSColor.lightGray.alpha(0.4).cgColor
 
     var gradientLayer = CAGradientLayer()
     gradientLayer.frame.size.height = $0.frame.size.height
     gradientLayer.colors = [
-      NSColor.clearColor().CGColor,
-      NSColor.blackColor().CGColor,
-      NSColor.clearColor().CGColor
+      NSColor.clear.cgColor,
+      NSColor.black.cgColor,
+      NSColor.clear.cgColor
     ]
     gradientLayer.locations = [0.0, 0.5, 1.0]
     gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
@@ -34,7 +34,7 @@ class ListController: SpotsController, SpotsDelegate, SpotsScrollDelegate {
     $0.layer?.mask = gradientLayer
 
     let shadow = NSShadow()
-    shadow.shadowColor = NSColor.blackColor()
+    shadow.shadowColor = NSColor.black
     shadow.shadowBlurRadius = 3.0
     shadow.shadowOffset = CGSize(width: 0, height: -6)
     $0.shadow = shadow
@@ -43,13 +43,13 @@ class ListController: SpotsController, SpotsDelegate, SpotsScrollDelegate {
   var selectedIndex: Int = 0
 
   convenience init(cacheKey: String) {
-    let stateCache = SpotCache(key: cacheKey)
+    let stateCache = StateCache(key: cacheKey)
     var spots = stateCache.load()
 
     if spots.isEmpty {
-    let size = ["height" : 40]
-      let meta = ["separator" : false, "tintColor" : "37D247"]
-      let mainItems: [[String : AnyObject]] = [
+    let size = ["height" : 40.0]
+      let meta = ["separator" : false, "tintColor" : "37D247"] as [String : Any]
+      let mainItems: [[String : Any]] = [
         [
           "title" : "Browse",
           "subtitle" : "",
@@ -84,7 +84,7 @@ class ListController: SpotsController, SpotsDelegate, SpotsScrollDelegate {
           "meta": meta
         ]
       ]
-      let yourMusicItems: [[String : AnyObject]] = [
+      let yourMusicItems: [[String : Any]] = [
         [
           "title" : "Songs",
           "action" : "songs",
@@ -119,72 +119,73 @@ class ListController: SpotsController, SpotsDelegate, SpotsScrollDelegate {
             "items" : mainItems,
             "meta" : [
               ListSpot.Key.titleSeparator : false,
-              "titleFontSize" : 11,
-              "insetTop" : 0,
-              "insetLeft" : 0,
-              "insetRight" : 0,
-              "titleLeftInset" : 8.0
+              "title-font-size" : 11,
+              "inset-top" : 0.0,
+              "inset-left" : 0.0,
+              "inset-right" : 0.0,
+              "title-left-inset" : 8.0
             ]
           ],
           [
-            "title" : "Your Music".uppercaseString,
+            "title" : "Your Music".uppercased(),
             "kind" : "list",
             "span" : 1,
             "items" : yourMusicItems,
             "meta" : [
               ListSpot.Key.titleSeparator : false,
-              "titleFontSize" : 11,
-              "insetTop" : 0.0,
-              "insetLeft" : 0,
-              "insetRight" : 0,
-              "titleLeftInset" : 8.0
+              "title-font-size" : 11,
+              "inset-top" : 0.0,
+              "inset-left" : 0.0,
+              "inset-right" : 0.0,
+              "title-left-inset" : 8.0
             ]
           ],
           [
-            "title" : "Playlists".uppercaseString,
+            "title" : "Playlists".uppercased(),
             "kind" : "list",
             "span" : 1,
             "meta" : [
               ListSpot.Key.titleSeparator : false,
-              "titleFontSize" : 11,
-              "insetTop" : 0.0,
-              "insetLeft" : 0,
-              "insetRight" : 0,
-              "titleLeftInset" : 8.0
+              "title-font-size" : 11,
+              "inset-top" : 0.0,
+              "inset-left" : 0.0,
+              "inset-right" : 0.0,
+              "title-left-inset" : 8.0
             ]
           ]
         ]
       ]
     }
 
-    self.init(spots: Parser.parse(spots), backgroundType: .Dynamic)
+    self.init(spots: Parser.parse(spots), backgroundType: .dynamic)
+
     self.stateCache = stateCache
-    self.spotsDelegate = self
-    self.spotsScrollDelegate = self
-    spotsScrollView.frame.origin.y = -40
+    self.delegate = self
+    self.scrollDelegate = self
+    scrollView.frame.origin.y = -40
 
-    NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ListController.willFullscreen(_:)), name: NSWindowWillEnterFullScreenNotification, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(ListController.willFullscreen(_:)), name: NSNotification.Name.NSWindowWillEnterFullScreen, object: nil)
 
-    NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ListController.willExitFullscreen(_:)), name: NSWindowWillExitFullScreenNotification, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(ListController.willExitFullscreen(_:)), name: NSNotification.Name.NSWindowWillExitFullScreen, object: nil)
 
-    let notificationCenter = NSNotificationCenter.defaultCenter()
+    let notificationCenter = NotificationCenter.default
     notificationCenter.addObserver(self, selector: #selector(ListController.activate),
-                                   name: "sessionActivate", object: nil)
+                                   name: NSNotification.Name(rawValue: "sessionActivate"), object: nil)
 
-    NSEvent.addLocalMonitorForEventsMatchingMask(.KeyDownMask) { (theEvent) -> NSEvent? in
-      self.keyDown(theEvent)
+    NSEvent.addLocalMonitorForEvents(matching: .keyDown) { (theEvent) -> NSEvent? in
+      self.keyDown(with: theEvent)
       return theEvent
     }
   }
 
   deinit {
-    NSNotificationCenter.defaultCenter().removeObserver(self)
+    NotificationCenter.default.removeObserver(self)
   }
 
   override func viewDidLoad() {
     super.viewDidLoad()
     view.wantsLayer = true
-    (view as? NSVisualEffectView)?.material = .UltraDark
+    (view as? NSVisualEffectView)?.material = .ultraDark
 
     view.addSubview(shadowSeparator)
   }
@@ -194,9 +195,9 @@ class ListController: SpotsController, SpotsDelegate, SpotsScrollDelegate {
 
     fetchPlaylists()
 
-    guard let appDelegate = NSApplication.sharedApplication().delegate as? AppDelegate,
-      window = appDelegate.window,
-      firstSpot = spot(0, Listable.self) else {
+    guard let appDelegate = NSApplication.shared().delegate as? AppDelegate,
+      let window = appDelegate.window,
+      let firstSpot = spot(at: 0, ofType: Listable.self) else {
       return
     }
 
@@ -211,23 +212,23 @@ class ListController: SpotsController, SpotsDelegate, SpotsScrollDelegate {
     CATransaction.setDisableActions(true)
 
     shadowSeparator.frame.size.width = view.frame.width
-    shadowSeparator.frame.origin.y = view.frame.maxY + spotsScrollView.frame.origin.y - shadowSeparator.frame.size.height
+    shadowSeparator.frame.origin.y = view.frame.maxY + scrollView.frame.origin.y - shadowSeparator.frame.size.height
     shadowSeparator.layer?.mask?.frame.size.width = view.frame.width
 
     CATransaction.commit()
   }
 
-  func willFullscreen(notification: NSNotification) {
-    self.spotsScrollView.animator().setFrameOrigin(
-      NSPoint(x: self.spotsScrollView.frame.origin.x, y: 0)
+  func willFullscreen(_ notification: Notification) {
+    self.scrollView.animator().setFrameOrigin(
+      NSPoint(x: self.scrollView.frame.origin.x, y: 0)
     )
   }
 
-  func willExitFullscreen(notification: NSNotification) {
-    spotsScrollView.frame.origin.y = -40
+  func willExitFullscreen(_ notification: Notification) {
+    scrollView.frame.origin.y = -40
   }
 
-  override func scrollViewDidScroll(notification: NSNotification) {
+  override func scrollViewDidScroll(_ notification: NSNotification) {
     super.scrollViewDidScroll(notification)
 
     guard let scrollView = notification.object as? SpotsScrollView else { return }
@@ -256,32 +257,32 @@ class ListController: SpotsController, SpotsDelegate, SpotsScrollDelegate {
     }
   }
 
-  override func keyDown(theEvent: NSEvent) {
-    super.keyDown(theEvent)
+  override func keyDown(with theEvent: NSEvent) {
+    super.keyDown(with: theEvent)
 
-    guard let appDelegate = NSApplication.sharedApplication().delegate as? AppDelegate,
-      window = appDelegate.window,
-      keyEvent = KeyboardEvents(rawValue: theEvent.keyCode),
-      tableView = window.firstResponder as? NSTableView,
-      scrollView = tableView.superview?.superview as? NoScrollView,
-      currentSpot = spots.filter({ $0.responder == tableView }).first as? Listable
+    guard let appDelegate = NSApplication.shared().delegate as? AppDelegate,
+      let window = appDelegate.window,
+      let keyEvent = KeyboardEvents(rawValue: theEvent.keyCode),
+      let tableView = window.firstResponder as? NSTableView,
+      let scrollView = tableView.superview?.superview as? ScrollView,
+      let currentSpot = spots.filter({ $0.responder == tableView }).first as? Listable
       else { return }
 
     var newIndex: Int?
-    if keyEvent == .Down && currentSpot.component.items.count - 1 == tableView.selectedRow {
+    if keyEvent == .down && currentSpot.component.items.count - 1 == tableView.selectedRow {
       newIndex = currentSpot.index + 1
-    } else if keyEvent == .Up && tableView.selectedRow == 0 {
+    } else if keyEvent == .up && tableView.selectedRow == 0 {
       newIndex = currentSpot.index - 1
     }
 
-    if let newIndex = newIndex, newSpot = spot(newIndex, Listable.self) {
+    if let newIndex = newIndex, let newSpot = spot(at: newIndex, ofType: Listable.self) {
       window.makeFirstResponder(newSpot.responder)
     }
 
-    let viewRect = tableView.rectOfRow(tableView.selectedRow)
+    let viewRect = tableView.rect(ofRow: tableView.selectedRow)
     let currentView = viewRect.origin.y + viewRect.size.height
-    let viewPortMin = spotsScrollView.contentOffset.y - scrollView.frame.origin.y
-    let viewPortMax = spotsScrollView.frame.size.height + spotsScrollView.contentOffset.y - scrollView.frame.origin.y - scrollView.contentInsets.top + spotsScrollView.frame.origin.y
+    let viewPortMin = scrollView.contentOffset.y - scrollView.frame.origin.y
+    let viewPortMax = scrollView.frame.size.height + scrollView.contentOffset.y - scrollView.frame.origin.y - scrollView.contentInsets.top + scrollView.frame.origin.y
 
     var newY: CGFloat = 0.0
     var shouldScroll: Bool = false
@@ -296,10 +297,10 @@ class ListController: SpotsController, SpotsDelegate, SpotsScrollDelegate {
     if shouldScroll {
       NSAnimationContext.runAnimationGroup({ (context) in
         context.duration = 0.3
-        var newOrigin: NSPoint = self.spotsScrollView.contentView.bounds.origin
+        var newOrigin: NSPoint = self.scrollView.contentView.bounds.origin
         newOrigin.y = newY
-        self.spotsScrollView.contentView.animator().setBoundsOrigin(newOrigin)
-        self.spotsScrollView.reflectScrolledClipView(self.spotsScrollView.contentView)
+        self.scrollView.contentView.animator().setBoundsOrigin(newOrigin)
+        self.scrollView.reflectScrolledClipView(self.scrollView.contentView)
         }, completionHandler: nil)
     }
   }
@@ -311,9 +312,9 @@ class ListController: SpotsController, SpotsDelegate, SpotsScrollDelegate {
   func fetchPlaylists() {
     Malibu.networking("api").GET(PlaylistsRequest())
       .validate()
-      .toJSONDictionary()
+      .toJsonDictionary()
       .done { json in
-        guard let items = json["items"] as? JSONArray else { return }
+        guard let items = json["items"] as? [[String : Any]] else { return }
         let viewModels = self.parse(items)
         self.updateIfNeeded(spotAtIndex: UI.playlists, items: viewModels) {
           self.cache()
@@ -321,7 +322,7 @@ class ListController: SpotsController, SpotsDelegate, SpotsScrollDelegate {
     }
   }
 
-  private func parse(json: JSONArray) -> [Item] {
+  fileprivate func parse(_ json: [[String : Any]]) -> [Item] {
     var viewModels = [Item]()
     for item in json {
       let owner = (item["owner"] as? JSONDictionary)?["id"] as? String ?? ""
@@ -337,8 +338,8 @@ class ListController: SpotsController, SpotsDelegate, SpotsScrollDelegate {
       let viewModel = Item(
         title: item["name"] as? String ?? "",
         image: "iconMyMusic",
-        action: "playlist:\(owner):\(playlistID)",
         kind: "list",
+        action: "playlist:\(owner):\(playlistID)",
         size: CGSize(width: 120, height: 40),
         meta: [
           "separator" : false,
@@ -360,24 +361,24 @@ class ListController: SpotsController, SpotsDelegate, SpotsScrollDelegate {
 
 extension ListController {
 
-  func spotDidSelectItem(spot: Spotable, item: Item) {
-    deselectAllExcept(spot)
+  func didSelect(item: Item, in spot: Spotable) {
+    deselectAllExcept(selectedSpot: spot)
 
     guard let action = item.action else { return }
 
     AppDelegate.navigate(action, fragments: item.meta("fragments", [:]))
   }
 
-  func spotDidReachEnd(completion: Completion) {
-    let offset = spot(UI.playlists, Spotable.self)?.component.items.count ?? 0
+  func didReachEnd(in scrollView: ScrollableView, completion: Completion) {
+    let offset = spot(at: UI.playlists)?.component.items.count ?? 0
     Malibu.networking("api").GET(PlaylistsRequest(offset: offset))
       .validate()
-      .toJSONDictionary()
+      .toJsonDictionary()
       .done { json in
-        guard let items = json["items"] as? JSONArray else { return }
+        guard let items = json["items"] as? [[String : Any]] else { return }
         let viewModels = self.parse(items)
 
-        self.append(viewModels, spotIndex: UI.playlists, withAnimation: .Automatic)
+        self.append(viewModels, spotIndex: UI.playlists, withAnimation: .automatic)
         completion?()
     }
   }

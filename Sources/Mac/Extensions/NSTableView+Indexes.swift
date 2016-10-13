@@ -2,22 +2,22 @@ import Cocoa
 
 public extension NSTableView {
 
-  func insert(indexes: [Int], section: Int = 0, animation: NSTableViewAnimationOptions = .EffectFade, completion: (() -> Void)? = nil) {
+  func insert(_ indexes: [Int], section: Int = 0, animation: NSTableViewAnimationOptions = .effectFade, completion: (() -> Void)? = nil) {
     let indexPaths = NSMutableIndexSet()
-    indexes.forEach { indexPaths.addIndex($0) }
-    performUpdates({ insertRowsAtIndexes(indexPaths, withAnimation: animation) },
+    indexes.forEach { indexPaths.add($0) }
+    performUpdates({ insertRows(at: indexPaths as IndexSet, withAnimation: animation) },
                    endClosure: completion)
 
   }
 
-  func reload(indexes: [Int], section: Int = 0, animation: NSTableViewAnimationOptions = .EffectFade, completion: (() -> Void)? = nil) {
+  func reload(_ indexes: [Int], section: Int = 0, animation: NSTableViewAnimationOptions = .effectFade, completion: (() -> Void)? = nil) {
     /** Manually handle reloading of the cell as reloadDataForRowIndexes does not seems to work with view based table views
      - "For NSView-based table views, this method drops the view-cells in the table row, but not the NSTableRowView instances."
     */
     indexes.forEach { index in
-      if let view = rowViewAtRow(index, makeIfNecessary: false) as? SpotConfigurable,
-      adapter = dataSource() as? ListAdapter {
-        var item = adapter.spot.component.items[index]
+      if let view = rowView(atRow: index, makeIfNecessary: false) as? SpotConfigurable,
+      let adapter = dataSource as? Listable {
+        var item = adapter.component.items[index]
         view.configure(&item)
       }
     }
@@ -25,35 +25,35 @@ public extension NSTableView {
     completion?()
   }
 
-  func delete(indexes: [Int], animation: NSTableViewAnimationOptions = .EffectFade, completion: (() -> Void)? = nil) {
+  func delete(_ indexes: [Int], animation: NSTableViewAnimationOptions = .effectFade, completion: (() -> Void)? = nil) {
     let indexPaths = NSMutableIndexSet()
-    indexes.forEach { indexPaths.addIndex($0) }
-    performUpdates({ removeRowsAtIndexes(indexPaths, withAnimation: animation) },
+    indexes.forEach { indexPaths.add($0) }
+    performUpdates({ removeRows(at: indexPaths as IndexSet, withAnimation: animation) },
                    endClosure: completion)
   }
 
-  func process(changes: (insertions: [Int], reloads: [Int], deletions: [Int]),
-               withAnimation animation: NSTableViewAnimationOptions = .EffectFade,
+  func process(_ changes: (insertions: [Int], reloads: [Int], deletions: [Int]),
+               withAnimation animation: NSTableViewAnimationOptions = .effectFade,
                              section: Int = 0,
                              updateDataSource: () -> Void,
                              completion: ((()) -> Void)? = nil) {
     let insertionsSets = NSMutableIndexSet()
-    changes.insertions.forEach { insertionsSets.addIndex($0) }
+    changes.insertions.forEach { insertionsSets.add($0) }
     let reloadSets = NSMutableIndexSet()
-    changes.reloads.forEach { reloadSets.addIndex($0) }
+    changes.reloads.forEach { reloadSets.add($0) }
     let deletionSets = NSMutableIndexSet()
-    changes.deletions.forEach { deletionSets.addIndex($0) }
+    changes.deletions.forEach { deletionSets.add($0) }
 
     updateDataSource()
     beginUpdates()
-    removeRowsAtIndexes(deletionSets, withAnimation: animation)
-    insertRowsAtIndexes(insertionsSets, withAnimation: animation)
+    removeRows(at: deletionSets as IndexSet, withAnimation: animation)
+    insertRows(at: insertionsSets as IndexSet, withAnimation: animation)
 
     for index in reloadSets {
-      guard let view = rowViewAtRow(index, makeIfNecessary: false) as? SpotConfigurable,
-        adapter = dataSource() as? ListAdapter else { continue }
+      guard let view = rowView(atRow: index, makeIfNecessary: false) as? SpotConfigurable,
+        let adapter = dataSource as? Listable else { continue }
 
-      var item = adapter.spot.component.items[index]
+      var item = adapter.component.items[index]
       view.configure(&item)
     }
 
@@ -61,7 +61,7 @@ public extension NSTableView {
     endUpdates()
   }
 
-  private func performUpdates(@noescape closure: () -> Void, endClosure: (() -> Void)? = nil) {
+  fileprivate func performUpdates( _ closure: () -> Void, endClosure: (() -> Void)? = nil) {
     beginUpdates()
     closure()
     endUpdates()

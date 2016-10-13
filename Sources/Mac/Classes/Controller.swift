@@ -1,92 +1,92 @@
 import Cocoa
 
-public enum SpotsControllerBackground {
-  case Regular, Dynamic
+public enum ControllerBackground {
+  case regular, dynamic
 }
 
-public class SpotsController: NSViewController, SpotsProtocol {
+open class Controller: NSViewController, SpotsProtocol {
 
-  public static var configure: ((container: SpotsScrollView) -> Void)?
-  let KVOWindowContext = UnsafeMutablePointer<()>(nil)
+  open static var configure: ((_ container: SpotsScrollView) -> Void)?
+  let KVOWindowContext: UnsafeMutableRawPointer? = UnsafeMutableRawPointer(mutating: nil)
 
   /// A collection of Spotable objects
-  public var spots: [Spotable] {
+  open var spots: [Spotable] {
     didSet {
-      spots.forEach { $0.spotsDelegate = spotsDelegate }
-      spotsDelegate?.spotsDidChange(spots)
+      spots.forEach { $0.delegate = delegate }
+      delegate?.didChange(spots: spots)
     }
   }
 
-  public var compositeSpots: [Int : [Int : [Spotable]]] {
+  open var compositeSpots: [Int : [Int : [Spotable]]] {
     didSet {
       for (_, items) in compositeSpots {
-        for (_, container) in items.enumerate() {
-          container.1.forEach { $0.spotsDelegate = spotsDelegate }
+        for (_, container) in items.enumerated() {
+          container.1.forEach { $0.delegate = delegate }
         }
       }
     }
   }
 
   /// A convenience method for resolving the first spot
-  public var spot: Spotable? {
-    get { return spot(0, Spotable.self) }
+  open var spot: Spotable? {
+    get { return spot(at: 0) }
   }
 
   /// An array of refresh positions to avoid refreshing multiple times when using infinite scrolling
-  public var refreshPositions = [CGFloat]()
+  open var refreshPositions = [CGFloat]()
 
-  /// An optional SpotCache used for view controller caching
-  public var stateCache: SpotCache?
+  /// An optional StateCache used for view controller caching
+  open var stateCache: StateCache?
 
   #if DEVMODE
   /// A dispatch queue is a lightweight object to which your application submits blocks for subsequent execution.
-  public let fileQueue: dispatch_queue_t = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
+  public let fileQueue: DispatchQueue = DispatchQueue.global(qos: DispatchQoS.QoSClass.default)
   /// An identifier for the type system object being monitored by a dispatch source.
-  public var source: dispatch_source_t!
+  public var source: DispatchSourceFileSystemObject!
   #endif
 
   /// A delegate for when an item is tapped within a Spot
-  weak public var spotsDelegate: SpotsDelegate? {
+  weak public var delegate: SpotsDelegate? {
     didSet {
-      spots.forEach { $0.spotsDelegate = spotsDelegate }
-      spotsDelegate?.spotsDidChange(spots)
+      spots.forEach { $0.delegate = delegate }
+      delegate?.didChange(spots: spots)
     }
   }
 
   /// A custom scroll view that handles the scrolling for all internal scroll views
-  lazy public var spotsScrollView: SpotsScrollView = {
-    let spotsScrollView = SpotsScrollView()
-    spotsScrollView.autoresizingMask = [ .ViewWidthSizable, .ViewHeightSizable ]
+  lazy public var scrollView: SpotsScrollView = {
+    let scrollView = SpotsScrollView()
+    scrollView.autoresizingMask = [ .viewWidthSizable, .viewHeightSizable ]
 
-    return spotsScrollView
+    return scrollView
   }()
 
-  /// A scroll delegate for handling spotDidReachBeginning and spotDidReachEnd
-  weak public var spotsScrollDelegate: SpotsScrollDelegate?
+  /// A scroll delegate for handling didReachBeginning and didReachEnd
+  weak open var scrollDelegate: ScrollDelegate?
 
-  /// A bool value to indicate if the SpotsController is refeshing
-  public var refreshing = false
+  /// A bool value to indicate if the Controller is refeshing
+  open var refreshing = false
 
-  private let backgroundType: SpotsControllerBackground
+  fileprivate let backgroundType: ControllerBackground
 
   /**
    - parameter spots: An array of Spotable objects
-   - parameter backgroundType: The type of background that the SpotsController should use, .Regular or .Dynamic
+   - parameter backgroundType: The type of background that the Controller should use, .Regular or .Dynamic
    */
-  public required init(spots: [Spotable] = [], backgroundType: SpotsControllerBackground = .Regular) {
+  public required init(spots: [Spotable] = [], backgroundType: ControllerBackground = .regular) {
     self.compositeSpots = [:]
     self.spots = spots
     self.backgroundType = backgroundType
     super.init(nibName: nil, bundle: nil)!
 
-    NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SpotsController.scrollViewDidScroll(_:)), name: NSScrollViewDidLiveScrollNotification, object: spotsScrollView)
+    NotificationCenter.default.addObserver(self, selector: #selector(Controller.scrollViewDidScroll(_:)), name: NSNotification.Name.NSScrollViewDidLiveScroll, object: scrollView)
   }
 
   /**
-   - parameter cacheKey: A key that will be used to identify the SpotCache
+   - parameter cacheKey: A key that will be used to identify the StateCache
    */
   public convenience init(cacheKey: String) {
-    let stateCache = SpotCache(key: cacheKey)
+    let stateCache = StateCache(key: cacheKey)
     self.init(spots: Parser.parse(stateCache.load()))
     self.stateCache = stateCache
   }
@@ -101,7 +101,7 @@ public class SpotsController: NSViewController, SpotsProtocol {
   /**
    - parameter json: A JSON dictionary that gets parsed into UI elements
    */
-  public convenience init(_ json: [String : AnyObject]) {
+  public convenience init(_ json: [String : Any]) {
     self.init(spots: Parser.parse(json))
   }
 
@@ -109,10 +109,10 @@ public class SpotsController: NSViewController, SpotsProtocol {
    deinit
    */
   deinit {
-    NSNotificationCenter.defaultCenter().removeObserver(self)
-    spots.forEach { $0.spotsDelegate = nil }
-    spotsDelegate = nil
-    spotsScrollDelegate = nil
+    NotificationCenter.default.removeObserver(self)
+    spots.forEach { $0.delegate = nil }
+    delegate = nil
+    scrollDelegate = nil
   }
 
   /**
@@ -132,8 +132,12 @@ public class SpotsController: NSViewController, SpotsProtocol {
 
    - returns: An optional Spotable object
    */
-  public func spot<T>(index: Int = 0, _ type: T.Type) -> T? {
+  public func spot<T>(at index: Int = 0, ofType type: T.Type) -> T? {
     return spots.filter({ $0.index == index }).first as? T
+  }
+
+  open func spot(at index: Int = 0) -> Spotable? {
+    return spots.filter({ $0.index == index }).first
   }
 
   /**
@@ -143,9 +147,9 @@ public class SpotsController: NSViewController, SpotsProtocol {
 
    - returns: An optional Spotable object
    */
-  public func spot(@noescape closure: (index: Int, spot: Spotable) -> Bool) -> Spotable? {
-    for (index, spot) in spots.enumerate()
-      where closure(index: index, spot: spot) {
+  public func resolve(spot closure: (_ index: Int, _ spot: Spotable) -> Bool) -> Spotable? {
+    for (index, spot) in spots.enumerated()
+      where closure(index, spot) {
         return spot
     }
     return nil
@@ -154,19 +158,19 @@ public class SpotsController: NSViewController, SpotsProtocol {
   /**
    Instantiates a view from a nib file and sets the value of the view property.
    */
-  public override func loadView() {
+  open override func loadView() {
     let view: NSView
 
     switch backgroundType {
-    case .Regular:
+    case .regular:
       view = NSView()
-    case .Dynamic:
+    case .dynamic:
       let visualEffectView = NSVisualEffectView()
-      visualEffectView.blendingMode = .BehindWindow
+      visualEffectView.blendingMode = .behindWindow
       view = visualEffectView
     }
 
-    view.autoresizingMask = .ViewWidthSizable
+    view.autoresizingMask = .viewWidthSizable
     view.autoresizesSubviews = true
     self.view = view
   }
@@ -174,72 +178,73 @@ public class SpotsController: NSViewController, SpotsProtocol {
   /**
    Called after the view controller’s view has been loaded into memory.
    */
-  public override func viewDidLoad() {
+  open override func viewDidLoad() {
     super.viewDidLoad()
-    view.addSubview(spotsScrollView)
-    spotsScrollView.hasVerticalScroller = true
+    view.addSubview(scrollView)
+    scrollView.hasVerticalScroller = true
     setupSpots()
-    SpotsController.configure?(container: spotsScrollView)
+    Controller.configure?(scrollView)
   }
 
-  public override func viewDidAppear() {
+  open override func viewDidAppear() {
     super.viewDidAppear()
 
     for spot in spots {
-      spot.layout(spotsScrollView.frame.size)
+      spot.layout(scrollView.frame.size)
     }
-    spotsScrollView.forceUpdate = true
+    scrollView.forceUpdate = true
   }
 
   public func reloadSpots(spots: [Spotable], closure: (() -> Void)?) {
     for spot in self.spots {
-      spot.spotsDelegate = nil
+      spot.delegate = nil
       spot.render().removeFromSuperview()
     }
     self.spots = spots
-    spotsDelegate = nil
+    delegate = nil
 
     setupSpots()
     closure?()
-    spotsScrollView.layoutSubtreeIfNeeded()
+    scrollView.layoutSubtreeIfNeeded()
   }
 
   /**
    - parameter animated: An optional animation closure that runs when a spot is being rendered
    */
-  public func setupSpots(animated: ((view: View) -> Void)? = nil) {
+  public func setupSpots(animated: ((_ view: View) -> Void)? = nil) {
     compositeSpots = [:]
-    spots.enumerate().forEach { index, spot in
-      setupSpot(index, spot: spot)
-      animated?(view: spot.render())
+    spots.enumerated().forEach { index, spot in
+      setupSpot(at: index, spot: spot)
+      animated?(spot.render())
     }
   }
 
-  public func setupSpot(index: Int, spot: Spotable) {
+  public func setupSpot(at index: Int, spot: Spotable) {
     #if !os(OSX)
       spot.spotsCompositeDelegate = self
     #endif
-    var height = spot.spotHeight()
-    if let componentSize = spot.component.size where componentSize.height > height {
+
+    var height = spot.computedHeight
+    if let componentSize = spot.component.size, componentSize.height > height {
       height = componentSize.height
     }
 
     spots[index].component.index = index
     spot.registerAndPrepare()
-    spotsScrollView.spotsContentView.addSubview(spot.render())
+    scrollView.spotsContentView.addSubview(spot.render())
     spot.setup(CGSize(width: view.frame.width, height: height))
     spot.component.size = CGSize(
       width: view.frame.width,
       height: ceil(spot.render().frame.height))
   }
 
-  public override func viewDidLayout() {
+  open override func viewDidLayout() {
     super.viewDidLayout()
     for spot in spots {
       spot.layout(CGSize(width: view.frame.width,
-        height: spot.spotHeight() ?? 0))
+        height: spot.computedHeight ))
     }
-    spotsScrollView.layoutSubtreeIfNeeded()
+    scrollView.layoutSubtreeIfNeeded()
   }
 
   public func deselectAllExcept(selectedSpot: Spotable) {
@@ -250,15 +255,14 @@ public class SpotsController: NSViewController, SpotsProtocol {
     }
   }
 
-  public func scrollViewDidScroll(notification: NSNotification) {
+  open func scrollViewDidScroll(_ notification: NSNotification) {
     guard let scrollView = notification.object as? SpotsScrollView,
-      delegate = spotsScrollDelegate,
-      _ = NSApplication.sharedApplication().mainWindow
-    where !refreshing && scrollView.contentOffset.y > 0
+      let delegate = scrollDelegate,
+      let _ = NSApplication.shared().mainWindow, !refreshing && scrollView.contentOffset.y > 0
       else { return }
 
     let offset = scrollView.contentOffset
-    let totalHeight = (scrollView.documentView as? NSView)?.frame.size.height ?? 0
+    let totalHeight = scrollView.documentView?.frame.size.height ?? 0
     let multiplier: CGFloat = !refreshPositions.isEmpty
       ? CGFloat(1 + refreshPositions.count)
       : 1.5
@@ -266,12 +270,11 @@ public class SpotsController: NSViewController, SpotsProtocol {
     let shouldFetch = currentOffset > totalHeight - scrollView.frame.size.height * multiplier + scrollView.frame.origin.y &&
       !refreshPositions.contains(currentOffset)
 
-
     // Scroll did reach top
     if scrollView.contentOffset.y < 0 &&
       !refreshing {
       refreshing = true
-      delegate.spotDidReachBeginning {
+      delegate.didReachBeginning(in: scrollView) {
         self.refreshing = false
       }
     }
@@ -280,7 +283,7 @@ public class SpotsController: NSViewController, SpotsProtocol {
       // Infinite scrolling
       refreshing = true
       refreshPositions.append(currentOffset)
-      delegate.spotDidReachEnd {
+      delegate.didReachEnd(in: scrollView) {
         self.refreshing = false
       }
     }

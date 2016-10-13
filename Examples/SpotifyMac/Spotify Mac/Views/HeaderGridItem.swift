@@ -2,44 +2,43 @@ import Spots
 import Brick
 import Sugar
 
-public class HeaderGridItem: NSTableRowView, SpotConfigurable {
-
+open class HeaderGridItem: NSTableRowView, SpotConfigurable {
   var item: Item?
 
-  public var size = CGSize(width: 0, height: 88)
-  public var containerView = FlippedView()
+  open var preferredViewSize: CGSize = CGSize(width: 0, height: 88)
+  open var containerView = FlippedView()
 
-  static public var flipped: Bool {
+  static open var flipped: Bool {
     get {
       return true
     }
   }
 
   lazy var customImageView = NSImageView().then {
-    $0.autoresizingMask = .ViewWidthSizable
+    $0.autoresizingMask = .viewWidthSizable
 
     let shadow = NSShadow()
-    shadow.shadowColor = NSColor.blackColor().alpha(0.6)
+    shadow.shadowColor = NSColor.black.alpha(0.6)
     shadow.shadowBlurRadius = 10.0
     shadow.shadowOffset = CGSize(width: 0, height: -4)
 
     $0.shadow = shadow
   }
 
-  public lazy var titleLabel = NSTextField().then {
-    $0.editable = false
-    $0.bezeled = false
-    $0.textColor = NSColor.whiteColor()
+  open lazy var titleLabel = NSTextField().then {
+    $0.isEditable = false
+    $0.isBezeled = false
+    $0.textColor = NSColor.white
     $0.drawsBackground = false
-    $0.font = NSFont.boldSystemFontOfSize(28)
+    $0.font = NSFont.boldSystemFont(ofSize: 28)
   }
 
-  public lazy var subtitleLabel = NSTextField().then {
-    $0.editable = false
-    $0.bezeled = false
-    $0.textColor = NSColor.lightGrayColor()
-    $0.backgroundColor = NSColor.blackColor()
-    $0.font = NSFont.systemFontOfSize(14)
+  open lazy var subtitleLabel = NSTextField().then {
+    $0.isEditable = false
+    $0.isBezeled = false
+    $0.textColor = NSColor.lightGray
+    $0.backgroundColor = NSColor.black
+    $0.font = NSFont.systemFont(ofSize: 14)
     $0.drawsBackground = false
   }
 
@@ -50,7 +49,7 @@ public class HeaderGridItem: NSTableRowView, SpotConfigurable {
     containerView.addSubview(subtitleLabel)
     containerView.addSubview(customImageView)
 
-    addObserver(self, forKeyPath: "customImageView.image", options: .New, context: nil)
+    addObserver(self, forKeyPath: #keyPath(customImageView.image), options: .new, context: nil)
     addSubview(containerView)
 
     setupConstraints()
@@ -61,31 +60,30 @@ public class HeaderGridItem: NSTableRowView, SpotConfigurable {
   }
 
   deinit {
-    removeObserver(self, forKeyPath: "customImageView.image")
+    removeObserver(self, forKeyPath: #keyPath(customImageView.image))
   }
 
-  public override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
-    if let image = customImageView.image where keyPath == "customImageView.image" {
-
-      dispatch(queue: .Interactive) {
+  open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+    if let image = customImageView.image , keyPath == #keyPath(customImageView.image) {
+      dispatch(queue: .interactive) {
         let (background, _, _, _) = image.colors()
         dispatch {
-          guard let appDelegate = NSApplication.sharedApplication().delegate as? AppDelegate else {
+          guard let appDelegate = NSApplication.shared().delegate as? AppDelegate else {
             return
           }
 
           let gradientLayer = CAGradientLayer()
 
           gradientLayer.colors = [
-            NSColor.clearColor().CGColor,
-            background.alpha(0.4).CGColor,
+            NSColor.clear.cgColor,
+            background.alpha(0.4).cgColor,
           ]
           gradientLayer.locations = [0.0, 1.0]
           gradientLayer.frame.size.width = 3000
           gradientLayer.frame.size.height = appDelegate.mainWindowController?.currentController?.view.frame.size.height ?? 0
 
           appDelegate.mainWindowController?.currentController?.removeGradientSublayers()
-          appDelegate.mainWindowController?.currentController?.view.layer?.insertSublayer(gradientLayer, atIndex: 0)
+          appDelegate.mainWindowController?.currentController?.view.layer?.insertSublayer(gradientLayer, at: 0)
 
           NSAnimationContext.runAnimationGroup({ context in
             context.duration = 1.0
@@ -105,34 +103,34 @@ public class HeaderGridItem: NSTableRowView, SpotConfigurable {
     subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
     customImageView.translatesAutoresizingMaskIntoConstraints = false
 
-    containerView.topAnchor.constraintEqualToAnchor(topAnchor).active = true
-    containerView.leftAnchor.constraintEqualToAnchor(leftAnchor, constant: 24).active = true
-    containerView.rightAnchor.constraintEqualToAnchor(rightAnchor, constant: -24).active = true
-    containerView.bottomAnchor.constraintEqualToAnchor(bottomAnchor).active = true
+    containerView.topAnchor.constraint(equalTo: topAnchor).isActive = true
+    containerView.leftAnchor.constraint(equalTo: leftAnchor, constant: 24).isActive = true
+    containerView.rightAnchor.constraint(equalTo: rightAnchor, constant: -24).isActive = true
+    containerView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
 
-    customImageView.topAnchor.constraintEqualToAnchor(containerView.topAnchor).active = true
-    customImageView.widthAnchor.constraintEqualToConstant(120).active = true
-    customImageView.heightAnchor.constraintEqualToConstant(120).active = true
-    customImageView.leftAnchor.constraintEqualToAnchor(containerView.leftAnchor, constant: 15).active = true
+    customImageView.topAnchor.constraint(equalTo: containerView.topAnchor).isActive = true
+    customImageView.widthAnchor.constraint(equalToConstant: 120).isActive = true
+    customImageView.heightAnchor.constraint(equalToConstant: 120).isActive = true
+    customImageView.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 15).isActive = true
 
-    titleLabel.topAnchor.constraintEqualToAnchor(customImageView.topAnchor).active = true
-    titleLabel.leftAnchor.constraintEqualToAnchor(customImageView.rightAnchor, constant: 20).active = true
-    titleLabel.rightAnchor.constraintEqualToAnchor(titleLabel.superview!.rightAnchor, constant: 10).active = true
+    titleLabel.topAnchor.constraint(equalTo: customImageView.topAnchor).isActive = true
+    titleLabel.leftAnchor.constraint(equalTo: customImageView.rightAnchor, constant: 20).isActive = true
+    titleLabel.rightAnchor.constraint(equalTo: titleLabel.superview!.rightAnchor, constant: 10).isActive = true
 
-    subtitleLabel.leftAnchor.constraintEqualToAnchor(titleLabel.leftAnchor).active = true
-    subtitleLabel.rightAnchor.constraintEqualToAnchor(titleLabel.superview!.rightAnchor).active = true
-    subtitleLabel.topAnchor.constraintEqualToAnchor(titleLabel.bottomAnchor, constant: 10).active = true
+    subtitleLabel.leftAnchor.constraint(equalTo: titleLabel.leftAnchor).isActive = true
+    subtitleLabel.rightAnchor.constraint(equalTo: titleLabel.superview!.rightAnchor).isActive = true
+    subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10).isActive = true
   }
 
-  public func configure(inout item: Item) {
+  open func configure(_ item: inout Item) {
     self.item = item
 
     titleLabel.stringValue = item.title
     subtitleLabel.stringValue = item.subtitle
 
     if item.image.isPresent && item.image.hasPrefix("http") {
-      customImageView.setImage(NSURL(string: item.image)) { [weak self] image in
-        self?.customImageView.contentMode = .ScaleToAspectFill
+      customImageView.setImage(NSURL(string: item.image) as URL?) { [weak self] image in
+        self?.customImageView.contentMode = .scaleToAspectFill
       }
     }
   }

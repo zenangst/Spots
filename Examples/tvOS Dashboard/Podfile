@@ -1,14 +1,11 @@
+require "../../core-pods.rb"
 source 'https://github.com/CocoaPods/Specs.git'
-
-platform :tvos, '9.2'
-
+platform :tvos, '10.0'
 use_frameworks!
 inhibit_all_warnings!
 
 target "tvOS Dashboard" do
-  pod 'Sugar'
-  pod 'Tailor'
-  pod 'Brick'
-  pod 'Spots', path: '../../'
-  pod 'Imaginary', git: 'https://github.com/hyperoslo/Imaginary'
+  core_pods
+  pod 'Sugar', git: 'https://github.com/hyperoslo/Sugar', branch: 'swift-3'
+  pod 'Imaginary', git: 'https://github.com/hyperoslo/Imaginary', branch: 'swift-3'
 end

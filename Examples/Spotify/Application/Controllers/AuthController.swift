@@ -3,20 +3,20 @@ import Spots
 import Compass
 import Brick
 
-class AuthController: SpotsController, SpotsDelegate {
+class AuthController: Spots.Controller, SpotsDelegate {
 
   required init(spots: [Spotable]) {
     super.init(spots: spots)
 
-    self.spotsDelegate = self
+    self.delegate = self
   }
 
   required init?(coder aDecoder: NSCoder) {
     fatalError()
   }
 
-  func spotDidSelectItem(spot: Spotable, item: Item) {
+  func didSelect(item: Item, in spot: Spotable) {
     guard let urn = item.action else { return }
-    Compass.navigate(urn)
+    Compass.navigate(to: urn)
   }
 }

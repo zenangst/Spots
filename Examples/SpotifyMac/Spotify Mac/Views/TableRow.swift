@@ -3,35 +3,35 @@ import Spots
 import Brick
 import Imaginary
 
-public class TableRow: NSTableRowView, SpotConfigurable {
+open class TableRow: NSTableRowView, SpotConfigurable {
 
-  public var item: Item?
-  public var size = CGSize(width: 0, height: 50)
+  open var item: Item?
+  open var preferredViewSize: CGSize = CGSize(width: 0, height: 50)
 
-  public var tintColor: NSColor? {
+  open var tintColor: NSColor? {
     get {
       if let hexColor = item?.meta("tintColor", type: String.self) {
-        return NSColor.hex(hexColor)
+        return NSColor(hex: hexColor)
       }
 
       return nil
     }
   }
 
-  public override var selected: Bool {
+  open override var isSelected: Bool {
     didSet {
-      if selected {
+      if isSelected {
         titleLabel.textColor = tintColor
         subtitleLabel.textColor = tintColor
         if tintColor != nil {
           imageView.tintColor = tintColor
         }
-        layer?.backgroundColor = NSColor(red:0.1, green:0.1, blue:0.1, alpha: 0.985).CGColor
+        layer?.backgroundColor = NSColor(red:0.1, green:0.1, blue:0.1, alpha: 0.985).cgColor
       } else {
-        titleLabel.textColor = NSColor.lightGrayColor()
-        subtitleLabel.textColor = NSColor.darkGrayColor()
-        if tintColor != nil { imageView.tintColor = NSColor.grayColor() }
-        layer?.backgroundColor = NSColor.clearColor().CGColor
+        titleLabel.textColor = NSColor.lightGray
+        subtitleLabel.textColor = NSColor.darkGray
+        if tintColor != nil { imageView.tintColor = NSColor.gray }
+        layer?.backgroundColor = NSColor.clear.cgColor
         self.shadow = nil
       }
     }
@@ -39,34 +39,34 @@ public class TableRow: NSTableRowView, SpotConfigurable {
 
   lazy var imageView = NSImageView()
 
-  public lazy var titleLabel = NSTextField().then {
-    $0.editable = false
-    $0.bezeled = false
-    $0.textColor = NSColor.whiteColor()
+  open lazy var titleLabel = NSTextField().then {
+    $0.isEditable = false
+    $0.isBezeled = false
+    $0.textColor = NSColor.white
     $0.drawsBackground = false
   }
 
-  public lazy var subtitleLabel = NSTextField().then {
-    $0.editable = false
-    $0.bezeled = false
+  open lazy var subtitleLabel = NSTextField().then {
+    $0.isEditable = false
+    $0.isBezeled = false
     $0.drawsBackground = false
     $0.cell?.wraps = true
-    $0.cell?.lineBreakMode = .ByWordWrapping
+    $0.cell?.lineBreakMode = .byWordWrapping
   }
 
   lazy var lineView = NSView().then {
     $0.frame.size.height = 1
     $0.wantsLayer = true
     $0.layer = CALayer()
-    $0.layer?.backgroundColor = NSColor.grayColor().colorWithAlphaComponent(0.1).CGColor
-    $0.autoresizingMask = .ViewWidthSizable
+    $0.layer?.backgroundColor = NSColor.gray.withAlphaComponent(0.1).cgColor
+    $0.autoresizingMask = .viewWidthSizable
   }
 
   override init(frame frameRect: NSRect) {
     super.init(frame: frameRect)
 
-    selectionHighlightStyle = .None
-    backgroundColor = NSColor.clearColor()
+    selectionHighlightStyle = .none
+    backgroundColor = NSColor.clear
     wantsLayer = true
     layer = CALayer()
     addSubview(titleLabel)
@@ -77,7 +77,7 @@ public class TableRow: NSTableRowView, SpotConfigurable {
     setupConstraints()
   }
 
-  override public func hitTest(aPoint: NSPoint) -> NSView? {
+  override open func hitTest(_ aPoint: NSPoint) -> NSView? {
     return nil
   }
 
@@ -85,17 +85,16 @@ public class TableRow: NSTableRowView, SpotConfigurable {
     fatalError("init(coder:) has not been implemented")
   }
 
-  public func setupConstraints() {
+  open func setupConstraints() {
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
     subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
 
-    titleLabel.leftAnchor.constraintEqualToAnchor(imageView.rightAnchor, constant: 10).active = true
-    titleLabel.rightAnchor.constraintEqualToAnchor(titleLabel.superview!.rightAnchor, constant: -10).active = true
-    titleLabel.centerYAnchor.constraintEqualToAnchor(titleLabel.superview!.centerYAnchor).active = true
+    titleLabel.leftAnchor.constraint(equalTo: imageView.rightAnchor, constant: 10).isActive = true
+    titleLabel.rightAnchor.constraint(equalTo: titleLabel.superview!.rightAnchor, constant: -10).isActive = true
+    titleLabel.centerYAnchor.constraint(equalTo: titleLabel.superview!.centerYAnchor).isActive = true
   }
 
-  public func configure(inout item: Item) {
-
+  open func configure(_ item: inout Item) {
     if item.meta("separator", type: Bool.self) == false {
       lineView.frame.size.height = 0.0
     } else {
@@ -106,9 +105,9 @@ public class TableRow: NSTableRowView, SpotConfigurable {
     subtitleLabel.stringValue = item.subtitle
 
     if item.subtitle.isPresent {
-      titleLabel.font = NSFont.boldSystemFontOfSize(12)
+      titleLabel.font = NSFont.boldSystemFont(ofSize: 12)
     } else {
-      titleLabel.font = NSFont.systemFontOfSize(12)
+      titleLabel.font = NSFont.systemFont(ofSize: 12)
     }
 
     self.item = item
@@ -122,7 +121,7 @@ public class TableRow: NSTableRowView, SpotConfigurable {
         imageView.frame.origin.x = 5
         imageView.frame.origin.y = item.size.height / 2 - imageView.frame.size.height / 2
 
-        imageView.setImage(NSURL(string: item.image))
+        imageView.setImage(URL(string: item.image))
       } else {
         imageView.image = NSImage(named: item.image)
         imageView.frame.size.width = 18
@@ -130,7 +129,7 @@ public class TableRow: NSTableRowView, SpotConfigurable {
         imageView.frame.origin.x = 10
         imageView.frame.origin.y = item.size.height / 2 - imageView.frame.size.height / 2 + 1
         if tintColor != nil {
-          imageView.tintColor = NSColor.grayColor()
+          imageView.tintColor = NSColor.gray
         }
       }
     }

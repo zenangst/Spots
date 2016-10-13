@@ -25,8 +25,8 @@ struct AlbumsBlueprint: BlueprintContainer {
               let model = Item(
                 title: item.resolve(keyPath: "album.name") ?? "",
                 image: item.resolve(keyPath: "album.images.0.url") ?? "",
-                action: "album:\(item.resolve(keyPath: "album.id") ?? "")",
                 kind: "album",
+                action: "album:\(item.resolve(keyPath: "album.id") ?? "")",
                 size: CGSize(width: 180, height: 180),
                 meta: [
                   "separator" : true,

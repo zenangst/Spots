@@ -4,27 +4,27 @@ import UIKit
 
 extension UIImage {
 
-  static func transparentImage(size: CGSize) -> UIImage {
+  static func transparentImage(_ size: CGSize) -> UIImage {
     UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
     let image = UIGraphicsGetImageFromCurrentImageContext()
     UIGraphicsEndImageContext()
-    return image
+    return image!
   }
 }
 
-public class ListCell: UITableViewCell, SpotConfigurable {
+open class ListCell: UITableViewCell, SpotConfigurable {
 
-  public var size = CGSize(width: 0, height: 128)
-  public var item: Item?
+  open var preferredViewSize: CGSize = CGSize(width: 0, height: 128)
+  open var item: Item?
 
   lazy var transparentImage = UIImage.transparentImage(CGSize(width: 60, height: 60))
 
   lazy var selectedView = UIView().then {
-    $0.backgroundColor = UIColor.darkGrayColor().colorWithAlphaComponent(0.4)
+    $0.backgroundColor = UIColor.darkGray.withAlphaComponent(0.4)
   }
 
   public override init(style: UITableViewCellStyle, reuseIdentifier: String!) {
-    super.init(style: .Subtitle, reuseIdentifier: reuseIdentifier)
+    super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
     selectedBackgroundView = selectedView
   }
 
@@ -32,18 +32,18 @@ public class ListCell: UITableViewCell, SpotConfigurable {
     fatalError("init(coder:) has not been implemented")
   }
 
-  public func configure(inout item: Item) {
-    textLabel?.textColor = UIColor.blackColor()
-    detailTextLabel?.textColor = UIColor.blackColor()
+  open func configure(_ item: inout Item) {
+    textLabel?.textColor = UIColor.black
+    detailTextLabel?.textColor = UIColor.black
 
-    if let action = item.action where action.isPresent {
-      accessoryType = .DisclosureIndicator
+    if let action = item.action, action.isPresent {
+      accessoryType = .disclosureIndicator
     } else {
-      accessoryType = .None
+      accessoryType = .none
     }
 
     if item.image.isPresent {
-      imageView?.setImage(NSURL(string: item.image), placeholder: transparentImage)
+      imageView?.setImage(URL(string: item.image), placeholder: transparentImage)
     } else {
       imageView?.image = nil
     }
@@ -51,10 +51,10 @@ public class ListCell: UITableViewCell, SpotConfigurable {
     detailTextLabel?.text = item.subtitle
     textLabel?.text = item.title
 
-    item.size.height = item.size.height > 0.0 ? item.size.height : size.height
+    item.size.height = item.size.height > 0.0 ? item.size.height : preferredViewSize.height
   }
 
-  public override func layoutSubviews() {
+  open override func layoutSubviews() {
     super.layoutSubviews()
 
     textLabel?.x = 16

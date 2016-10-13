@@ -4,11 +4,11 @@ import Keychain
 import Sugar
 import Brick
 
-class SearchController: SpotsController {
+class SearchController: Spots.Controller {
 
   let accessToken = Keychain.password(forAccount: keychainAccount)
 
-  lazy var serialQueue = dispatch_queue_create("serialQueue", DISPATCH_QUEUE_SERIAL)
+  lazy var serialQueue = DispatchQueue(label: "serial", qos: DispatchQoS.userInteractive, attributes: DispatchQueue.Attributes.concurrent, autoreleaseFrequency: DispatchQueue.AutoreleaseFrequency.inherit, target: nil)
 
   convenience init(title: String) {
     self.init(spots: [
@@ -17,60 +17,60 @@ class SearchController: SpotsController {
       ListSpot()
       ])
     self.title = title
-    self.spotsDelegate = self
+    self.delegate = self
 
-    guard let headerView = spot(0, ListSpot.self)?.tableView.headerViewForSection(0),
-      searchHeader = headerView as? SearchHeaderView else { return }
+    guard let headerView = spot(at: 0, ofType: ListSpot.self)?.tableView.headerView(forSection: 0),
+      let searchHeader = headerView as? SearchHeaderView else { return }
 
     searchHeader.searchField.delegate = self
   }
 
-  override func scrollViewDidScroll(scrollView: UIScrollView) {
+  override func scrollViewDidScroll(_ scrollView: UIScrollView) {
     super.scrollViewDidScroll(scrollView)
 
-    guard let headerView = spot(0, ListSpot.self)?.tableView.headerViewForSection(0),
-      searchHeader = headerView as? SearchHeaderView else { return }
+    guard let headerView = spot(at: 0, ofType: ListSpot.self)?.tableView.headerView(forSection: 0),
+      let searchHeader = headerView as? SearchHeaderView else { return }
     searchHeader.searchField.resignFirstResponder()
   }
 }
 
 extension SearchController: SpotsDelegate {
 
-  func spotDidSelectItem(spot: Spotable, item: Item) {
+  func didSelect(item: Item, in spot: Spotable) {
     guard let urn = item.action else { return }
 
-    guard let delegate = UIApplication.sharedApplication().delegate as? AppDelegate,
-      carouselSpot = delegate.mainController.playerController.spot(1, CarouselSpot.self) else { return }
+    guard let delegate = UIApplication.shared.delegate as? AppDelegate,
+      let carouselSpot = delegate.mainController.playerController.spot(at: 1, ofType: CarouselSpot.self) else { return }
 
       delegate.mainController.playerController.update(spotAtIndex: 1) {
         var item = item
         item.kind = "featured"
         item.size = CGSize(
-          width: UIScreen.mainScreen().bounds.width,
-          height: UIScreen.mainScreen().bounds.width)
+          width: UIScreen.main.bounds.width,
+          height: UIScreen.main.bounds.width)
         $0.items = [item]
       }
 
       delegate.mainController.playerController.lastItem = item
       carouselSpot.scrollTo { item.action == $0.action }
 
-    Compass.navigate(urn)
+    Compass.navigate(to: urn)
   }
 }
 
 extension SearchController: UITextFieldDelegate {
 
-  func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+  func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
     if textField.text?.length == 1 && string.length == 0 {
-        if spot(1, Spotable.self)?.component.title == "Results" {
+        if spot(at: 1)?.component.title == "Results" {
           update(spotAtIndex: 1) { spot in
             spot.component.title = ""
           }
 
           update(spotAtIndex: 2) { $0.items = [] }
         }
-    } else if textField.text?.length > 0 || string.length > 0 {
-        if spot(1, Spotable.self)?.component.title == "" {
+    } else if (textField.text?.length)! > 0 || string.length > 0 {
+        if spot(at: 1)?.component.title == "" {
           update(spotAtIndex: 1) { spot in
             spot.component.title = "Results"
           }
@@ -78,20 +78,19 @@ extension SearchController: UITextFieldDelegate {
 
         guard let text = textField.text else { return true }
 
-        dispatch(queue: .Custom(serialQueue)) {
-          SPTSearch.performSearchWithQuery("\(text)\(string)", queryType: .QueryTypeTrack, accessToken: self.accessToken, callback: { (error, object) -> Void in
+        dispatch(queue: .custom(serialQueue)) {
+          SPTSearch.perform(withQuery: "\(text)\(string)", queryType: .queryTypeTrack, accessToken: self.accessToken, callback: { (error, object) -> Void in
             if let object = object {
-              guard let object = object as? SPTListPage
-                where object.items != nil && object.items.count > 0
+              guard let object = object as? SPTListPage, object.items != nil && object.items.count > 0
                 else { return }
 
               var viewModels = [Item]()
 
-              object.items.enumerate().forEach { index, item in
+              object.items.enumerated().forEach { index, item in
                 guard let item = item as? SPTPartialTrack else { return }
 
                 guard let artist = ((item.artists as! [SPTPartialArtist]).first)?.name,
-                  image = (item.album as SPTPartialAlbum).largestCover
+                  let image = (item.album as SPTPartialAlbum).largestCover
                   else { return }
 
                 viewModels.append(Item(
@@ -117,7 +116,7 @@ extension SearchController: UITextFieldDelegate {
     return true
   }
 
-  func textFieldShouldReturn(textField: UITextField) -> Bool {
+  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     return textField.resignFirstResponder()
   }
 }

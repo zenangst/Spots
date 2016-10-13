@@ -5,12 +5,12 @@ struct SpotsConfigurator: Configurator {
 
   static func configure() {
 
-    SpotsController.configure = { scrollView in
-      scrollView.backgroundColor = UIColor.blackColor()
+    Controller.configure = { scrollView in
+      scrollView.backgroundColor = UIColor.black
     }
 
     CarouselSpot.configure = { collectionView, layout in
-      collectionView.backgroundColor = UIColor.clearColor()
+      collectionView.backgroundColor = UIColor.clear
 
       layout.sectionInset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
       layout.minimumInteritemSpacing = 0
@@ -21,7 +21,7 @@ struct SpotsConfigurator: Configurator {
     CarouselSpot.register(view: FeaturedGridSpotCell.self, identifier: "featured")
 
     GridSpot.configure = { collectionView, layout in
-      collectionView.backgroundColor = UIColor.clearColor()
+      collectionView.backgroundColor = UIColor.clear
 
       layout.sectionInset = UIEdgeInsets(top: 0, left: 5, bottom: 5, right: 5)
       layout.minimumInteritemSpacing = 0
@@ -35,8 +35,8 @@ struct SpotsConfigurator: Configurator {
     ListSpot.configure = { tableView in
       let inset: CGFloat = 15
 
-      tableView.backgroundColor = UIColor.clearColor()
-      tableView.layoutMargins = UIEdgeInsetsZero
+      tableView.backgroundColor = UIColor.clear
+      tableView.layoutMargins = EdgeInsets.zero
       tableView.tableFooterView = UIView(frame: CGRect.zero)
       tableView.separatorInset = UIEdgeInsets(top: inset,
         left: inset,

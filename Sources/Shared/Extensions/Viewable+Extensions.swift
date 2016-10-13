@@ -19,7 +19,7 @@ public extension Spotable where Self : Viewable {
   /**
    - parameter size: A CGSize to set the size of the view
    */
-  func layout(size: CGSize) {
+  func layout(_ size: CGSize) {
     render().frame.size = size
     #if os(iOS)
       scrollView.contentSize = size
@@ -33,12 +33,11 @@ public extension Spotable where Self : Viewable {
     prepareSpot(self)
   }
 
-  private func prepareSpot<T: Viewable>(spot: T) {
+  fileprivate func prepareSpot<T: Viewable>(_ spot: T) {
     if component.kind.isEmpty { component.kind = "view" }
 
     component.items.forEach { (item: Item) in
-      if case let Registry.Item.classType(classType)? = T.views.storage[item.kind]
-        where T.views.storage.keys.contains(item.kind) {
+      if case let Registry.Item.classType(classType)? = T.views.storage[item.kind], T.views.storage.keys.contains(item.kind) {
         let view = classType.init()
 
         if let spotConfigurable = view as? SpotConfigurable {
@@ -51,30 +50,29 @@ public extension Spotable where Self : Viewable {
     }
   }
 
-  func setup(size: CGSize) {
-    let height = component.items.reduce(0, combine: { $0 + $1.size.height })
+  func setup(_ size: CGSize) {
+    let height = component.items.reduce(0, { $0 + $1.size.height })
     let size = CGSize(width: size.width, height: height)
     render().frame.size = size
     #if os(iOS)
       scrollView.contentSize = size
     #endif
 
-    component.items.enumerate().forEach {
-      component.items[$0.index].size.width = size.width
-      scrollView.subviews[$0.index].frame.size.width = size.width
+    component.items.enumerated().forEach {
+      component.items[$0.offset].size.width = size.width
+      scrollView.subviews[$0.offset].frame.size.width = size.width
     }
   }
 
-  /**
-   - parameter item: The view model that you want to append
-   - parameter withAnimation: The animation that should be used (currently not in use)
-   - parameter completion: Completion
-   */
-  func append(item: Item, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
-    let dynamic = self.dynamicType
+  /// Append item to collection with animation
+  ///
+  /// - parameter item: The view model that you want to append.
+  /// - parameter animation:  The animation that should be used (currently not in use).
+  /// - parameter completion: A completion closure that is executed in the main queue.
+  func append(_ item: Item, withAnimation animation: Animation = .none, completion: Completion = nil) {
+    let dynamic = type(of: self)
 
-    guard case let Registry.Item.classType(classType)? = dynamic.views.storage[item.kind]
-      where dynamic.views.storage.keys.contains(item.kind) else { return }
+    guard case let Registry.Item.classType(classType)? = dynamic.views.storage[item.kind], dynamic.views.storage.keys.contains(item.kind) else { return }
 
     let view = classType.init()
     (view as? SpotConfigurable)?.configure(&component.items[index])
@@ -87,17 +85,16 @@ public extension Spotable where Self : Viewable {
     component.items.append(item)
   }
 
-  /**
-   - parameter items: A collection of view models that you want to insert
-   - parameter withAnimation: The animation that should be used (currently not in use)
-   - parameter completion: Completion
-   */
-  func append(items: [Item], withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
+  /// Append a collection of items to collection with animation
+  ///
+  /// - parameter items:      A collection of view models that you want to insert
+  /// - parameter animation:  The animation that should be used (currently not in use)
+  /// - parameter completion: A completion closure that is executed in the main queue.
+  func append(_ items: [Item], withAnimation animation: Animation = .none, completion: Completion = nil) {
     for item in items {
-      let dynamic = self.dynamicType
+      let dynamic = type(of: self)
 
-      guard case let Registry.Item.classType(classType)? = dynamic.views.storage[item.kind]
-        where dynamic.views.storage.keys.contains(item.kind) else { return }
+      guard case let Registry.Item.classType(classType)? = dynamic.views.storage[item.kind], dynamic.views.storage.keys.contains(item.kind) else { return }
 
       let view = classType.init()
       (view as? SpotConfigurable)?.configure(&component.items[index])
@@ -110,17 +107,16 @@ public extension Spotable where Self : Viewable {
     }
   }
 
-  /**
-   - parameter item: The view model that you want to insert
-   - parameter index: The index where the new Item should be inserted
-   - parameter animation: A SpotAnimation struct that determines which animation that should be used to perform the update
-   - parameter completion: Completion
-   */
-  func insert(item: Item, index: Int, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
-    let dynamic = self.dynamicType
+  /// Insert item into collection at index.
+  ///
+  /// - parameter item:       The view model that you want to insert.
+  /// - parameter index:      The index where the new Item should be inserted.
+  /// - parameter animation:  A Animation that is used when performing the mutation (currently not in use).
+  /// - parameter completion: A completion closure that is executed in the main queue.
+  func insert(_ item: Item, index: Int, withAnimation animation: Animation = .none, completion: Completion = nil) {
+    let dynamic = type(of: self)
 
-    guard case let Registry.Item.classType(classType)? = dynamic.views.storage[item.kind]
-      where dynamic.views.storage.keys.contains(item.kind) else { return }
+    guard case let Registry.Item.classType(classType)? = dynamic.views.storage[item.kind], dynamic.views.storage.keys.contains(item.kind) else { return }
 
     let view = classType.init()
     (view as? SpotConfigurable)?.configure(&component.items[index])
@@ -128,24 +124,23 @@ public extension Spotable where Self : Viewable {
       view.frame.size = size
     }
     #if os(iOS)
-      scrollView.insertSubview(view, atIndex: index)
+      scrollView.insertSubview(view, at: index)
     #endif
-    component.items.insert(item, atIndex: index)
+    component.items.insert(item, at: index)
   }
 
-  /**
-   - parameter items: A collection of view model that you want to prepend
-   - parameter animation:  A SpotAnimation that is used when performing the mutation (currently not in use)
-   - parameter completion: A completion closure that is executed in the main queue
-   */
-  func prepend(items: [Item], withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
-    component.items.insertContentsOf(items, at: 0)
+  /// Prepend a collection items to the collection with animation
+  ///
+  /// - parameter items:      A collection of view model that you want to prepend
+  /// - parameter animation:  A Animation that is used when performing the mutation (currently not in use)
+  /// - parameter completion: A completion closure that is executed in the main queue.
+  func prepend(_ items: [Item], withAnimation animation: Animation = .none, completion: Completion = nil) {
+    component.items.insert(contentsOf: items, at: 0)
 
-    for item in items.reverse() {
-      let dynamic = self.dynamicType
+    for item in items.reversed() {
+      let dynamic = type(of: self)
 
-      guard case let Registry.Item.classType(classType)? = dynamic.views.storage[item.kind]
-        where dynamic.views.storage.keys.contains(item.kind) else { return }
+      guard case let Registry.Item.classType(classType)? = dynamic.views.storage[item.kind], dynamic.views.storage.keys.contains(item.kind) else { return }
 
       let view = classType.init()
       (view as? SpotConfigurable)?.configure(&component.items[index])
@@ -153,75 +148,86 @@ public extension Spotable where Self : Viewable {
         view.frame.size = size
       }
       #if os(iOS)
-        scrollView.insertSubview(view, atIndex: index)
+        scrollView.insertSubview(view, at: index)
       #endif
-      component.items.insert(item, atIndex: 0)
+      component.items.insert(item, at: 0)
     }
   }
 
-  func update(item: Item, index: Int, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
+  /// Update item at index with new item.
+  ///
+  /// - parameter item:       The new update view model that you want to update at an index.
+  /// - parameter index:      The index of the view model, defaults to 0.
+  /// - parameter animation:  A Animation that is used when performing the mutation (currently not in use).
+  /// - parameter completion: A completion closure that is executed in the main queue when the view model has been removed.
+  func update(_ item: Item, index: Int, withAnimation animation: Animation = .none, completion: Completion = nil) {
     guard let view = scrollView.subviews[index] as? SpotConfigurable else { return }
 
     component.items[index] = item
     view.configure(&component.items[index])
   }
 
-  /**
-   - parameter item: The view model that you want to remove
-   - parameter withAnimation: The animation that should be used (currently not in use)
-   - parameter completion: A completion closure that is executed in the main queue
-   */
-  public func delete(item: Item, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
-    guard let index = component.items.indexOf({ $0 == item })
+  /// Delete item from collection with animation
+  ///
+  /// - parameter item:       The view model that you want to remove.
+  /// - parameter animation:  The animation that should be used (currently not in use).
+  /// - parameter completion: A completion closure that is executed in the main queue.
+  public func delete(_ item: Item, withAnimation animation: Animation = .none, completion: Completion = nil) {
+    guard let index = component.items.index(where: { $0 == item })
       else { completion?(); return }
 
     Dispatch.mainQueue { [weak self] in
-      self?.component.items.removeAtIndex(index)
+      self?.component.items.remove(at: index)
       self?.scrollView.subviews[index].removeFromSuperview()
     }
   }
 
-  /**
-   - parameter items: A collection of view models that you want to delete
-   - parameter withAnimation: The animation that should be used (currently not in use)
-   - parameter completion: A completion closure that is executed in the main queue
-   */
-  public func delete(items: [Item], withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
+  /// Delete items from collection with animation
+  ///
+  /// - parameter items:      A collection of view models that you want to delete.
+  /// - parameter animation:  The animation that should be used (currently not in use).
+  /// - parameter completion: A completion closure that is executed in the main queue.
+  public func delete(_ items: [Item], withAnimation animation: Animation = .none, completion: Completion = nil) {
     let count = component.items.count
 
     Dispatch.mainQueue { [weak self] in
-      for (index, _) in items.enumerate() {
-        self?.component.items.removeAtIndex(count - index)
+      for (index, _) in items.enumerated() {
+        self?.component.items.remove(at: count - index)
         self?.scrollView.subviews[count - index].removeFromSuperview()
       }
     }
   }
 
-  /**
-   - parameter index: The index of the view model that you want to remove
-   - parameter withAnimation: The animation that should be used (currently not in use)
-   - parameter completion: A completion closure that is executed in the main queue when the view model has been removed
-   */
-  func delete(index: Int, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) {
+  /// Delete item at index with animation
+  ///
+  /// - parameter index:      The index of the view model that you want to remove.
+  /// - parameter animation:  The animation that should be used (currently not in use).
+  /// - parameter completion: A completion closure that is executed in the main queue when the view model has been removed.
+  func delete(_ index: Int, withAnimation animation: Animation = .none, completion: Completion = nil) {
     guard index >= 0 && index <= scrollView.subviews.count else { return }
 
-    component.items.removeAtIndex(index)
+    component.items.remove(at: index)
     scrollView.subviews[index].removeFromSuperview()
   }
 
-  /**
-   - parameter indexes: An array of indexes that you want to remove
-   - parameter withAnimation: The animation that should be used (currently not in use)
-   - parameter completion: A completion closure that is executed in the main queue when the view model has been removed
-   */
-  func delete(indexes: [Int], withAnimation animation: SpotsAnimation = .None, completion: Completion) {
-    for (index, _) in component.items.enumerate() {
+  /// Delete a collection
+  ///
+  /// - parameter indexes:    An array of indexes that you want to remove.
+  /// - parameter animation:  The animation that should be used (currently not in use).
+  /// - parameter completion: A completion closure that is executed in the main queue when the view model has been removed.
+  func delete(_ indexes: [Int], withAnimation animation: Animation = .none, completion: Completion) {
+    for (index, _) in component.items.enumerated() {
       guard index >= 0 && index <= scrollView.subviews.count else { return }
 
-      component.items.removeAtIndex(index)
+      component.items.remove(at: index)
       scrollView.subviews[index].removeFromSuperview()
     }
   }
 
-  func reload(indexes: [Int]? = nil, withAnimation animation: SpotsAnimation = .None, completion: Completion = nil) { }
+  /// Reloads a spot only if it changes
+  ///
+  /// - parameter items:      A collection of Items
+  /// - parameter animation:  The animation that should be used (only works for Listable objects)
+  /// - parameter completion: A completion closure that is performed when all mutations are performed
+  func reload(_ indexes: [Int]? = nil, withAnimation animation: Animation = .none, completion: Completion = nil) { }
 }

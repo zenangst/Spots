@@ -16,20 +16,22 @@ struct CategoryBlueprint: BlueprintContainer {
         for item in json {
           let owner = item.resolve(keyPath: "owner.id") ?? ""
           let playlistID = item.resolve(keyPath: "id") ?? ""
+          let meta: [String : Any] = [
+            "separator" : false,
+            "fragments" : [
+              "title" : item.resolve(keyPath: "name") ?? "",
+              "image" : item.resolve(keyPath: "images.0.url") ?? ""
+            ]
+          ]
+
           let viewModel = Item(
             title: item.resolve(keyPath: "name") ?? "",
             subtitle: "by " + owner,
             image: item.resolve(keyPath: "images.0.url") ?? "",
-            action: "playlist:\(owner):\(playlistID)",
             kind: "album",
+            action: "playlist:\(owner):\(playlistID)",
             size: CGSize(width: 180, height: 180),
-            meta: [
-              "separator" : false,
-              "fragments" : [
-                "title" : item.resolve(keyPath: "name") ?? "",
-                "image" : item.resolve(keyPath: "images.0.url") ?? ""
-              ]
-            ]
+            meta: meta
           )
           viewModels.append(viewModel)
         }

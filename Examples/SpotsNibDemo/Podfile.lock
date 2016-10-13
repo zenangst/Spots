@@ -1,33 +1,57 @@
 PODS:
-  - Brick (0.9.6):
+  - Brick (1.0.0):
     - Tailor
   - Cache (1.5.1):
     - CryptoSwift
-  - CryptoSwift (0.5.2)
-  - Hue (1.3.0)
-  - Spots (3.0.4):
-    - Brick
-    - Cache
-    - CryptoSwift (= 0.5.2)
-    - Tailor
-  - Tailor (1.3.0)
+  - CryptoSwift (0.6.0)
+  - Hue (2.0.0)
+  - Spots (5.0.0):
+    - Brick (= 1.0.0)
+    - Cache (= 1.5.1)
+    - CryptoSwift (= 0.6.0)
+    - Tailor (= 2.0.1)
+  - Tailor (2.0.1)
 
 DEPENDENCIES:
-  - Hue
+  - Brick (from `https://github.com/hyperoslo/Brick`, branch `swift-3`)
+  - Cache (from `https://github.com/hyperoslo/Cache`, branch `swift-3`)
+  - CryptoSwift (= 0.6.0)
+  - Hue (from `https://github.com/hyperoslo/Hue`, branch `swift-3`)
   - Spots (from `../../`)
+  - Tailor (= 2.0.1)
 
 EXTERNAL SOURCES:
+  Brick:
+    :branch: swift-3
+    :git: https://github.com/hyperoslo/Brick
+  Cache:
+    :branch: swift-3
+    :git: https://github.com/hyperoslo/Cache
+  Hue:
+    :branch: swift-3
+    :git: https://github.com/hyperoslo/Hue
   Spots:
     :path: "../../"
 
-SPEC CHECKSUMS:
-  Brick: 4af97115ccf754c13d5d6dc0860936809b198d67
-  Cache: 87b48b059429d3b53238533830c53941f8aa85f0
-  CryptoSwift: c1ef79f901b86099a6fe8b3c7524cf9f3f3c8c40
-  Hue: b4d7f4923dd16237f9cbc1783c3c81438b4391f4
-  Spots: a6cb714c1da7007b666196651c143e49c9bf05b4
-  Tailor: 71fac74a4f14abcd13a10bf07bbe69d5ac746f58
+CHECKOUT OPTIONS:
+  Brick:
+    :commit: 8c3040e96b8e8d62b534d40def925de30b7f8853
+    :git: https://github.com/hyperoslo/Brick
+  Cache:
+    :commit: 0246e9e9e8faae93f2c83d15824789577f4720bf
+    :git: https://github.com/hyperoslo/Cache
+  Hue:
+    :commit: d03fe87b19caf00e108d82f7e5c8da578699e3b4
+    :git: https://github.com/hyperoslo/Hue
 
-PODFILE CHECKSUM: 88664515d6f3f45da372bf23d4d9adb495101990
+SPEC CHECKSUMS:
+  Brick: 2de240889550c54ea20b146c72f31e9b256c71ad
+  Cache: db4c6908069c442e5de02c7271fb38b38fb60a67
+  CryptoSwift: 4a599b7241b8d3b857d6e2c28867d0bd5d1aae24
+  Hue: 2b317616a04cc5d7cccdb024c88e6d143e2b9cf1
+  Spots: 51933c15f351d072e22627ccbd1455daaecb2464
+  Tailor: faa9ec5be402056be8ec67c0e461f00251d19191
+
+PODFILE CHECKSUM: 5e38d91c67d8b3de21c7dfd9d1db21d9707eb084
 
 COCOAPODS: 1.1.0.rc.2

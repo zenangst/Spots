@@ -3,20 +3,20 @@ import Fakery
 import Spots
 import Brick
 
-public class FeedController: SpotsController, SpotsDelegate {
+open class FeedController: Controller, SpotsDelegate {
 
-  public static let faker = Faker()
+  open static let faker = Faker()
 
-  public override func viewDidLoad() {
-    self.spotsDelegate = self
-    self.spotsScrollDelegate = self
-    self.spotsRefreshDelegate = self
+  open override func viewDidLoad() {
+    self.delegate = self
+    self.scrollDelegate = self
+    self.refreshDelegate = self
     super.viewDidLoad()
   }
 
-  public func spotDidSelectItem(spot: Spotable, item: Item) { }
+  open func didSelect(item: Item, in spot: Spotable) { }
 
-  public static func generateItem(index: Int, kind: String = "feed") -> Item {
+  open static func generateItem(_ index: Int, kind: String = "feed") -> Item {
     let sencenceCount = Int(arc4random_uniform(8) + 1)
     let subtitle = faker.lorem.sentences(amount: sencenceCount) + " " + faker.internet.url()
 
@@ -28,17 +28,17 @@ public class FeedController: SpotsController, SpotsDelegate {
 
     let item = Item(title: faker.name.name(),
       subtitle: subtitle,
-      kind: kind,
       image: "http://lorempixel.com/75/75?type=avatar&id=\(index)",
+      kind: kind,
       meta: ["media" : mediaStrings])
 
     return item
   }
 
-  public static func generateItems(from: Int, to: Int, kind: String = "feed") -> [Item] {
+  open static func generateItems(_ from: Int, to: Int, kind: String = "feed") -> [Item] {
     var items = [Item]()
     for i in from...from+to {
-      autoreleasepool({
+      autoreleasepool(invoking: {
         items.append(generateItem(i))
       })
     }
@@ -46,12 +46,12 @@ public class FeedController: SpotsController, SpotsDelegate {
   }
 }
 
-extension FeedController: SpotsRefreshDelegate {
+extension FeedController: RefreshDelegate {
 
-  public func spotsDidReload(refreshControl: UIRefreshControl, completion: (() -> Void)?) {
+  public func spotsDidReload(_ refreshControl: UIRefreshControl, completion: (() -> Void)?) {
     delay(1.0) {
-      dispatch(queue: .Interactive) { [weak self] in
-        guard let weakSelf = self, spot = weakSelf.spot else { return }
+      dispatch(queue: .interactive) { [weak self] in
+        guard let weakSelf = self, let spot = weakSelf.spot else { return }
         let items = FeedController.generateItems(spot.component.items.count, to: 10)
 
         weakSelf.prepend(items) { completion?() }
@@ -60,11 +60,14 @@ extension FeedController: SpotsRefreshDelegate {
   }
 }
 
-extension FeedController: SpotsScrollDelegate {
+extension FeedController: ScrollDelegate {
 
-  public func spotDidReachEnd(completion: (() -> Void)?) {
-    dispatch(queue: .Interactive) { [weak self] in
-      guard let weakSelf = self, spot = weakSelf.spot else { return }
+  public func didReachEnd(in scrollView: ScrollView, completion: Completion) {
+    dispatch(queue: .interactive) { [weak self] in
+      guard let weakSelf = self, let spot = weakSelf.spot else {
+        completion?()
+        return
+      }
       let items = FeedController.generateItems(spot.component.items.count, to: 3)
       dispatch {
         weakSelf.append(items) { completion?() }

@@ -1,15 +1,15 @@
 import Cocoa
 
-public class NavigationToolbarItem: NSToolbarItem {
+open class NavigationToolbarItem: NSToolbarItem {
 
-  lazy public var customView = NSView().then {
+  lazy open var customView = NSView().then {
     $0.wantsLayer = true
     $0.layer = CALayer()
   }
 
-  lazy public var button = NSButton().then {
-    $0.transparent = false
-    $0.bordered = false
+  lazy open var button = NSButton().then {
+    $0.isTransparent = false
+    $0.isBordered = false
   }
 
   init(itemIdentifier: String, imageString: String, action: String) {
@@ -18,12 +18,12 @@ public class NavigationToolbarItem: NSToolbarItem {
     label = action
     target = self
     self.action = #selector(NavigationToolbarItem.navigate(_:))
-    enabled = true
+    isEnabled = true
     view = customView
     customView.addSubview(button)
     button.title = ""
     let image = NSImage(named: imageString)
-    image?.tintColor = NSColor.whiteColor()
+    image?.tintColor = NSColor.white
     image?.size = CGSize(width: 8, height: 14)
     button.image = image
 
@@ -35,7 +35,7 @@ public class NavigationToolbarItem: NSToolbarItem {
     minSize = customView.frame.size
   }
 
-  func navigate(sender: NavigationToolbarItem) {
+  func navigate(_ sender: NavigationToolbarItem) {
     AppDelegate.navigate(label)
   }
 }

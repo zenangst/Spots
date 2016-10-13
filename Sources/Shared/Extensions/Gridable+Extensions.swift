@@ -8,43 +8,49 @@ import Brick
 /// A Spotable extension for Gridable objects
 public extension Spotable where Self : Gridable {
 
-  /**
-   - returns: UIScrollView: Returns a UICollectionView as a UIScrollView
-   */
   #if os(OSX)
+  /// Return collection view as a scroll view
+  ///
+  /// - returns: Returns a UICollectionView as a UIScrollView
+  ///
   public func render() -> CollectionView {
     return collectionView
   }
   #else
+  /// Return collection view as a scroll view
+  ///
+  /// - returns: Returns a UICollectionView as a UIScrollView
+  ///
   public func render() -> ScrollView {
   return collectionView
   }
   #endif
 
-  /**
-   - parameter size: A CGSize to set the size of the collection view
-   */
-  public func setup(size: CGSize) {
-    layout.prepareLayout()
+  /// Setup Spotable component with base size
+  ///
+  /// - parameter size: The size of the superview
+  public func setup(_ size: CGSize) {
+    layout.prepare()
     collectionView.frame.size.width = size.width
     #if !os(OSX)
       collectionView.frame.size.height = layout.contentSize.height
-      GridSpot.configure?(view: collectionView, layout: layout)
+      GridSpot.configure?(collectionView, layout)
     #endif
     component.size = collectionView.frame.size
   }
 
-  /**
-   - parameter size: A CGSize to set the width and height of the collection view
-   */
-  public func layout(size: CGSize) {
+  /// Layout with size
+  ///
+  /// - parameter size: A CGSize to set the width and height of the collection view
+  public func layout(_ size: CGSize) {
     layout.invalidateLayout()
     collectionView.frame.size.width = size.width
   }
 
+  /// Prepare items in component
   public func prepareItems() {
-    component.items.enumerate().forEach { (index: Int, _) in
-      configureItem(index, usesViewSize: true)
+    component.items.enumerated().forEach { (index: Int, _) in
+      configureItem(at: index, usesViewSize: true)
       if component.span > 0 {
         #if os(OSX)
           if let layout = layout as? NSCollectionViewFlowLayout {

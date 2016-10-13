@@ -2,25 +2,25 @@ import UIKit
 
 public protocol WallTableViewCellDelegate: class {
 
-  func cellDidTap(id: Int)
-  func updateCellSize(postID: Int, liked: Bool)
+  func cellDidTap(_ id: Int)
+  func updateCellSize(_ postID: Int, liked: Bool)
 }
 
-public class WallTableViewCell: UITableViewCell {
+open class WallTableViewCell: UITableViewCell {
 
-  public class func height(post: Post) -> CGFloat {
+  open class func height(_ post: Post) -> CGFloat {
     return 44
   }
 
-  public lazy var tapGestureRecognizer: UITapGestureRecognizer = { [unowned self] in
+  open lazy var tapGestureRecognizer: UITapGestureRecognizer = { [unowned self] in
     let gesture = UITapGestureRecognizer()
     gesture.addTarget(self, action: #selector(handleTapGestureRecognizer))
 
     return gesture
     }()
 
-  public var post: Post?
-  public weak var delegate: WallTableViewCellDelegate?
+  open var post: Post?
+  open weak var delegate: WallTableViewCellDelegate?
 
   public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -35,13 +35,13 @@ public class WallTableViewCell: UITableViewCell {
 
   // MARK: - Configuration
 
-  public func configureCell(post: Post) {
+  open func configureCell(_ post: Post) {
     self.post = post
   }
 
   // MARK: - Actions
 
-  public func handleTapGestureRecognizer() {
-    action("feed:post:1")
+  open func handleTapGestureRecognizer() {
+    performAction(withURN: "feed:post:1")
   }
 }

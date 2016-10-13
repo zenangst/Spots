@@ -3,29 +3,31 @@ import Cache
 #if DEVMODE
   public extension SpotsProtocol {
 
+    /// Monitor changes made to a file at file path.
+    ///
+    /// - parameter filePath: A file path string, pointing to the file that should be monitored.
     private func monitor(filePath: String) {
-      guard NSFileManager.defaultManager().fileExistsAtPath(filePath) else { return }
+      guard FileManager.default.fileExists(atPath: filePath) else { return }
 
-      source = dispatch_source_create(
-        DISPATCH_SOURCE_TYPE_VNODE,
-        UInt(open(filePath, O_EVTONLY)),
-        DISPATCH_VNODE_DELETE | DISPATCH_VNODE_WRITE | DISPATCH_VNODE_EXTEND | DISPATCH_VNODE_ATTRIB | DISPATCH_VNODE_LINK | DISPATCH_VNODE_RENAME | DISPATCH_VNODE_REVOKE,
-        fileQueue)
+      let eventMask: DispatchSource.FileSystemEvent = [.delete, .write, .extend, .attrib, .link, .rename, .revoke]
+      source = DispatchSource.makeFileSystemObjectSource(fileDescriptor: Int32(open(filePath, O_EVTONLY)),
+                                                         eventMask: eventMask,
+                                                         queue: fileQueue)
 
-      dispatch_source_set_event_handler(source, {
+      source.setEventHandler(handler: { [weak self] in
         // Check that file still exists, otherwise cancel observering
-        guard NSFileManager.defaultManager().fileExistsAtPath(filePath) else {
-          dispatch_source_cancel(self.source)
-          self.source = nil
+        guard let weakSelf = self, FileManager.default.fileExists(atPath: filePath) else {
+          self?.source.cancel()
+          self?.source = nil
           return
         }
 
         do {
           if let data = NSData(contentsOfFile: filePath),
-            json = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? [String : AnyObject] {
-            dispatch_source_cancel(self.source)
-            self.source = nil
-            let offset = self.spotsScrollView.contentOffset
+            let json = try JSONSerialization.jsonObject(with: data as Data, options: .mutableContainers) as? [String : Any] {
+            weakSelf.source.cancel()
+            weakSelf.source = nil
+            let offset = weakSelf.scrollView.contentOffset
 
             #if os(OSX)
               let components = json
@@ -33,11 +35,11 @@ import Cache
               let components: [Component] = Parser.parse(json)
             #endif
 
-            self.reloadIfNeeded(components) {
-              self.spotsScrollView.contentOffset = offset
+            weakSelf.reloadIfNeeded(components) {
+              weakSelf.scrollView.contentOffset = offset
 
               var yOffset: CGFloat = 0.0
-              for spot in self.spots {
+              for spot in weakSelf.spots {
                 #if !os(OSX)
                 (spot as? Gridable)?.layout.yOffset = yOffset
                 #endif
@@ -45,39 +47,42 @@ import Cache
               }
 
               #if !os(OSX)
-              for case let gridable as CarouselSpot in self.spots {
+              for case let gridable as CarouselSpot in weakSelf.spots {
                 (gridable.layout as? GridableLayout)?.yOffset = gridable.render().frame.origin.y
               }
               #endif
             }
-            print("Spots reloaded: \(self.spots.count)")
-            self.liveEditing(self.stateCache)
+            print("Spots reloaded: \(weakSelf.spots.count)")
+            weakSelf.liveEditing(stateCache: weakSelf.stateCache)
           }
         } catch let error {
-          self.source = nil
+          weakSelf.source = nil
 
           print("Error: could not parse file")
-          self.liveEditing(self.stateCache)
+          weakSelf.liveEditing(stateCache: weakSelf.stateCache)
         }
       })
 
-      dispatch_resume(source)
+      source.resume()
     }
 
-    func liveEditing(stateCache: SpotCache?) {
+    /// Enable live editing with state cache
+    ///
+    /// - parameter stateCache: An optional StateCache, used for resolving which file should be monitored.
+    func liveEditing(stateCache: StateCache?) {
       #if (arch(i386) || arch(x86_64)) && os(iOS)
-        guard let stateCache = stateCache where source == nil else { return }
+        guard let stateCache = stateCache, source == nil else { return }
       #else
         guard let stateCache = stateCache else { return }
       #endif
-      CacheJSONOptions.writeOptions = .PrettyPrinted
+      CacheJSONOptions.writeOptions = .prettyPrinted
 
-      let paths = NSSearchPathForDirectoriesInDomains(.CachesDirectory,
-                                                      NSSearchPathDomainMask.UserDomainMask, true)
+      let paths = NSSearchPathForDirectoriesInDomains(.cachesDirectory,
+                                                      FileManager.SearchPathDomainMask.userDomainMask, true)
       print("🎍 SPOTS: Caching...")
       print("Cache key: \(stateCache.key)")
       print("File path: file://\(stateCache.path)\n")
-      Dispatch.delay(for: 0.5) { self.monitor(stateCache.path) }
+      Dispatch.delay(for: 0.5) { [weak self] in self?.monitor(filePath: stateCache.path) }
     }
   }
 #endif

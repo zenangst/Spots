@@ -3,23 +3,22 @@ import Sugar
 import Imaginary
 import Brick
 
-public class FeedDetailItemCell: UITableViewCell, SpotConfigurable {
-
-  public var size = CGSize(width: 0, height: 180)
+open class FeedDetailItemCell: UITableViewCell, SpotConfigurable {
+  open var preferredViewSize: CGSize = CGSize(width: 0, height: 180)
 
   lazy var featuredImage = UIImageView(frame: CGRect.zero).then {
-    $0.contentMode = .ScaleAspectFill
+    $0.contentMode = .scaleAspectFill
     $0.clipsToBounds = true
   }
 
   lazy var titleLabel = UILabel().then {
     $0.numberOfLines = 0
-    $0.font = UIFont.boldSystemFontOfSize(20)
+    $0.font = UIFont.boldSystemFont(ofSize: 20)
   }
 
   lazy var introLabel = UILabel().then {
     $0.numberOfLines = 0
-    $0.font = UIFont.systemFontOfSize(15)
+    $0.font = UIFont.systemFont(ofSize: 15)
   }
 
   lazy var separatorView = UIView().then {
@@ -27,9 +26,9 @@ public class FeedDetailItemCell: UITableViewCell, SpotConfigurable {
   }
 
   override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-    super.init(style: .Default, reuseIdentifier: reuseIdentifier)
+    super.init(style: .default, reuseIdentifier: reuseIdentifier)
 
-    selectionStyle = .None
+    selectionStyle = .none
 
     [featuredImage, titleLabel, introLabel].forEach { addSubview($0) }
   }
@@ -38,9 +37,9 @@ public class FeedDetailItemCell: UITableViewCell, SpotConfigurable {
     fatalError("init(coder:) has not been implemented")
   }
 
-  public func configure(inout item: Item) {
+  open func configure(_ item: inout Item) {
     if !item.image.isEmpty {
-      featuredImage.setImage(NSURL(string: item.image))
+      featuredImage.setImage(URL(string: item.image))
       featuredImage.height = 300
     } else {
       featuredImage.height = 0

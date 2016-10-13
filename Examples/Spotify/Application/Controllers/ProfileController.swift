@@ -3,7 +3,7 @@ import Compass
 import Keychain
 import Brick
 
-class ProfileController: SpotsController {
+class ProfileController: Spots.Controller {
 
   let accessToken = Keychain.password(forAccount: keychainAccount)
 
@@ -20,26 +20,26 @@ class ProfileController: SpotsController {
 
     self.init(spots: [gridSpot, listSpot])
     self.title = title
-    self.spotsDelegate = self
+    self.delegate = self
 
     refreshData()
   }
 
   func refreshData() {
-    SPTUser.requestUser(username, withAccessToken: accessToken) { (error, object) -> Void in
-      guard let user = object as? SPTUser where user.largestImage != nil else { return }
+    SPTUser.request(username, withAccessToken: accessToken) { (error, object) -> Void in
+      guard let user = object as? SPTUser, user.largestImage != nil else { return }
       let image = user.largestImage.imageURL.absoluteString
 
-      self.update { $0.items = [Item(kind: "playlist", image: image)] }
-      self.update(spotAtIndex: 1) { $0.items.insert(Item(title: user.displayName), atIndex: 0) }
+      self.update { $0.items = [Item(image: image, kind: "playlist")] }
+      self.update(spotAtIndex: 1) { $0.items.insert(Item(title: user.displayName), at: 0) }
     }
   }
 }
 
 extension ProfileController: SpotsDelegate {
 
-  func spotDidSelectItem(spot: Spotable, item: Item) {
+  func didSelect(item: Item, in spot: Spotable) {
     guard let urn = item.action else { return }
-    Compass.navigate(urn)
+    Compass.navigate(to: urn)
   }
 }

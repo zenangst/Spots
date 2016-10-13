@@ -3,27 +3,27 @@ import Brick
 import Foundation
 import XCTest
 
-extension SpotsController {
+extension Controller {
 
   func preloadView() {
     let _ = view
   }
 
-  func scrollTo(point: CGPoint) {
-    spotsScrollView.setContentOffset(point, animated: false)
-    spotsScrollView.layoutSubviews()
+  func scrollTo(_ point: CGPoint) {
+    scrollView.setContentOffset(point, animated: false)
+    scrollView.layoutSubviews()
   }
 }
 
 class SpotsScrollViewTests: XCTestCase {
 
   var bounds: CGRect!
-  var controller: SpotsController!
+  var controller: Controller!
 
-  var initialJSON: [String : AnyObject] {
-    let listItems: [[String : AnyObject]] = [
+  var initialJSON: [String : Any] {
+    let listItems: [[String : Any]] = [
       [
-        "title" : "Item",
+        "title" : "Item" as AnyObject,
         "size" : ["height" : 80]
       ],
       [
@@ -66,8 +66,8 @@ class SpotsScrollViewTests: XCTestCase {
     super.setUp()
 
     bounds = CGRect(origin: CGPoint.zero, size: CGSize(width: 375, height: 667))
-    controller = SpotsController(initialJSON)
-    controller.view.autoresizingMask = .None
+    controller = Controller(initialJSON)
+    controller.view.autoresizingMask = []
     controller.view.frame.size = CGSize(width: 375, height: 667)
     controller.preloadView()
     controller.viewWillAppear(true)
@@ -80,108 +80,108 @@ class SpotsScrollViewTests: XCTestCase {
   }
 
   func testSpotsScrollView() {
-    XCTAssertEqual(controller.spotsScrollView.contentView.subviews.count, 4)
-    XCTAssertTrue(controller.spotsScrollView.contentView.subviews[0] is UITableView)
-    XCTAssertEqual((controller.spotsScrollView.contentView.subviews[0] as? UIScrollView)!.contentSize.height, 320)
-    XCTAssertEqual(controller.spotsScrollView.contentView.subviews[0].frame.height, 320)
-    XCTAssertTrue(controller.spotsScrollView.contentView.subviews[1] is UITableView)
-    XCTAssertEqual((controller.spotsScrollView.contentView.subviews[1] as? UIScrollView)!.contentSize.height, 320)
-    XCTAssertEqual(controller.spotsScrollView.contentView.subviews[1].frame.height, 320)
-    XCTAssertTrue(controller.spotsScrollView.contentView.subviews[2] is UITableView)
-    XCTAssertEqual((controller.spotsScrollView.contentView.subviews[2] as? UIScrollView)!.contentSize.height, 320)
-    XCTAssertEqual(controller.spotsScrollView.contentView.subviews[2].frame.height, 27)
-    XCTAssertTrue(controller.spotsScrollView.contentView.subviews[3] is UITableView)
-    XCTAssertEqual((controller.spotsScrollView.contentView.subviews[3] as? UIScrollView)!.contentSize.height, 320)
-    XCTAssertEqual(controller.spotsScrollView.contentView.subviews[3].frame.height, 0)
+    XCTAssertEqual(controller.scrollView.contentView.subviews.count, 4)
+    XCTAssertTrue(controller.scrollView.contentView.subviews[0] is UITableView)
+    XCTAssertEqual((controller.scrollView.contentView.subviews[0] as? UIScrollView)!.contentSize.height, 320)
+    XCTAssertEqual(controller.scrollView.contentView.subviews[0].frame.height, 320)
+    XCTAssertTrue(controller.scrollView.contentView.subviews[1] is UITableView)
+    XCTAssertEqual((controller.scrollView.contentView.subviews[1] as? UIScrollView)!.contentSize.height, 320)
+    XCTAssertEqual(controller.scrollView.contentView.subviews[1].frame.height, 320)
+    XCTAssertTrue(controller.scrollView.contentView.subviews[2] is UITableView)
+    XCTAssertEqual((controller.scrollView.contentView.subviews[2] as? UIScrollView)!.contentSize.height, 320)
+    XCTAssertEqual(controller.scrollView.contentView.subviews[2].frame.height, 27)
+    XCTAssertTrue(controller.scrollView.contentView.subviews[3] is UITableView)
+    XCTAssertEqual((controller.scrollView.contentView.subviews[3] as? UIScrollView)!.contentSize.height, 320)
+    XCTAssertEqual(controller.scrollView.contentView.subviews[3].frame.height, 0)
 
     controller.scrollTo(CGPoint(x: 0, y: 160))
 
-    XCTAssertTrue(controller.spotsScrollView.contentView.subviews[0] is UITableView)
-    XCTAssertEqual((controller.spotsScrollView.contentView.subviews[0] as? UIScrollView)!.contentSize.height, 320)
-    XCTAssertEqual(controller.spotsScrollView.contentView.subviews[0].frame.height, 160)
-    XCTAssertTrue(controller.spotsScrollView.contentView.subviews[1] is UITableView)
-    XCTAssertEqual((controller.spotsScrollView.contentView.subviews[1] as? UIScrollView)!.contentSize.height, 320)
-    XCTAssertEqual(controller.spotsScrollView.contentView.subviews[1].frame.height, 320)
-    XCTAssertTrue(controller.spotsScrollView.contentView.subviews[2] is UITableView)
-    XCTAssertEqual((controller.spotsScrollView.contentView.subviews[2] as? UIScrollView)!.contentSize.height, 320)
-    XCTAssertEqual(controller.spotsScrollView.contentView.subviews[2].frame.height, 187)
-    XCTAssertTrue(controller.spotsScrollView.contentView.subviews[3] is UITableView)
-    XCTAssertEqual((controller.spotsScrollView.contentView.subviews[3] as? UIScrollView)!.contentSize.height, 320)
-    XCTAssertEqual(controller.spotsScrollView.contentView.subviews[3].frame.height, 0)
+    XCTAssertTrue(controller.scrollView.contentView.subviews[0] is UITableView)
+    XCTAssertEqual((controller.scrollView.contentView.subviews[0] as? UIScrollView)!.contentSize.height, 320)
+    XCTAssertEqual(controller.scrollView.contentView.subviews[0].frame.height, 160)
+    XCTAssertTrue(controller.scrollView.contentView.subviews[1] is UITableView)
+    XCTAssertEqual((controller.scrollView.contentView.subviews[1] as? UIScrollView)!.contentSize.height, 320)
+    XCTAssertEqual(controller.scrollView.contentView.subviews[1].frame.height, 320)
+    XCTAssertTrue(controller.scrollView.contentView.subviews[2] is UITableView)
+    XCTAssertEqual((controller.scrollView.contentView.subviews[2] as? UIScrollView)!.contentSize.height, 320)
+    XCTAssertEqual(controller.scrollView.contentView.subviews[2].frame.height, 187)
+    XCTAssertTrue(controller.scrollView.contentView.subviews[3] is UITableView)
+    XCTAssertEqual((controller.scrollView.contentView.subviews[3] as? UIScrollView)!.contentSize.height, 320)
+    XCTAssertEqual(controller.scrollView.contentView.subviews[3].frame.height, 0)
 
     controller.scrollTo(CGPoint(x: 0, y: 320))
 
-    XCTAssertTrue(controller.spotsScrollView.contentView.subviews[0] is UITableView)
-    XCTAssertEqual((controller.spotsScrollView.contentView.subviews[0] as? UIScrollView)!.contentSize.height, 320)
-    XCTAssertEqual(controller.spotsScrollView.contentView.subviews[0].frame.height, 0)
-    XCTAssertTrue(controller.spotsScrollView.contentView.subviews[1] is UITableView)
-    XCTAssertEqual((controller.spotsScrollView.contentView.subviews[1] as? UIScrollView)!.contentSize.height, 320)
-    XCTAssertEqual(controller.spotsScrollView.contentView.subviews[1].frame.height, 320)
-    XCTAssertTrue(controller.spotsScrollView.contentView.subviews[2] is UITableView)
-    XCTAssertEqual((controller.spotsScrollView.contentView.subviews[2] as? UIScrollView)!.contentSize.height, 320)
-    XCTAssertEqual(controller.spotsScrollView.contentView.subviews[2].frame.height, 320)
-    XCTAssertTrue(controller.spotsScrollView.contentView.subviews[3] is UITableView)
-    XCTAssertEqual((controller.spotsScrollView.contentView.subviews[3] as? UIScrollView)!.contentSize.height, 320)
-    XCTAssertEqual(controller.spotsScrollView.contentView.subviews[3].frame.height, 27)
+    XCTAssertTrue(controller.scrollView.contentView.subviews[0] is UITableView)
+    XCTAssertEqual((controller.scrollView.contentView.subviews[0] as? UIScrollView)!.contentSize.height, 320)
+    XCTAssertEqual(controller.scrollView.contentView.subviews[0].frame.height, 0)
+    XCTAssertTrue(controller.scrollView.contentView.subviews[1] is UITableView)
+    XCTAssertEqual((controller.scrollView.contentView.subviews[1] as? UIScrollView)!.contentSize.height, 320)
+    XCTAssertEqual(controller.scrollView.contentView.subviews[1].frame.height, 320)
+    XCTAssertTrue(controller.scrollView.contentView.subviews[2] is UITableView)
+    XCTAssertEqual((controller.scrollView.contentView.subviews[2] as? UIScrollView)!.contentSize.height, 320)
+    XCTAssertEqual(controller.scrollView.contentView.subviews[2].frame.height, 320)
+    XCTAssertTrue(controller.scrollView.contentView.subviews[3] is UITableView)
+    XCTAssertEqual((controller.scrollView.contentView.subviews[3] as? UIScrollView)!.contentSize.height, 320)
+    XCTAssertEqual(controller.scrollView.contentView.subviews[3].frame.height, 27)
 
     controller.scrollTo(CGPoint(x: 0, y: 480))
 
-    XCTAssertTrue(controller.spotsScrollView.contentView.subviews[0] is UITableView)
-    XCTAssertEqual((controller.spotsScrollView.contentView.subviews[0] as? UIScrollView)!.contentSize.height, 320)
-    XCTAssertEqual(controller.spotsScrollView.contentView.subviews[0].frame.height, 0)
-    XCTAssertTrue(controller.spotsScrollView.contentView.subviews[1] is UITableView)
-    XCTAssertEqual((controller.spotsScrollView.contentView.subviews[1] as? UIScrollView)!.contentSize.height, 320)
-    XCTAssertEqual(controller.spotsScrollView.contentView.subviews[1].frame.height, 160)
-    XCTAssertTrue(controller.spotsScrollView.contentView.subviews[2] is UITableView)
-    XCTAssertEqual((controller.spotsScrollView.contentView.subviews[2] as? UIScrollView)!.contentSize.height, 320)
-    XCTAssertEqual(controller.spotsScrollView.contentView.subviews[2].frame.height, 320)
-    XCTAssertTrue(controller.spotsScrollView.contentView.subviews[3] is UITableView)
-    XCTAssertEqual((controller.spotsScrollView.contentView.subviews[3] as? UIScrollView)!.contentSize.height, 320)
-    XCTAssertEqual(controller.spotsScrollView.contentView.subviews[3].frame.height, 187)
+    XCTAssertTrue(controller.scrollView.contentView.subviews[0] is UITableView)
+    XCTAssertEqual((controller.scrollView.contentView.subviews[0] as? UIScrollView)!.contentSize.height, 320)
+    XCTAssertEqual(controller.scrollView.contentView.subviews[0].frame.height, 0)
+    XCTAssertTrue(controller.scrollView.contentView.subviews[1] is UITableView)
+    XCTAssertEqual((controller.scrollView.contentView.subviews[1] as? UIScrollView)!.contentSize.height, 320)
+    XCTAssertEqual(controller.scrollView.contentView.subviews[1].frame.height, 160)
+    XCTAssertTrue(controller.scrollView.contentView.subviews[2] is UITableView)
+    XCTAssertEqual((controller.scrollView.contentView.subviews[2] as? UIScrollView)!.contentSize.height, 320)
+    XCTAssertEqual(controller.scrollView.contentView.subviews[2].frame.height, 320)
+    XCTAssertTrue(controller.scrollView.contentView.subviews[3] is UITableView)
+    XCTAssertEqual((controller.scrollView.contentView.subviews[3] as? UIScrollView)!.contentSize.height, 320)
+    XCTAssertEqual(controller.scrollView.contentView.subviews[3].frame.height, 187)
 
     controller.scrollTo(CGPoint(x: 0, y: 544))
 
-    XCTAssertTrue(controller.spotsScrollView.contentView.subviews[0] is UITableView)
-    XCTAssertEqual((controller.spotsScrollView.contentView.subviews[0] as? UIScrollView)!.contentSize.height, 320)
-    XCTAssertEqual(controller.spotsScrollView.contentView.subviews[0].frame.height, 0)
-    XCTAssertTrue(controller.spotsScrollView.contentView.subviews[1] is UITableView)
-    XCTAssertEqual((controller.spotsScrollView.contentView.subviews[1] as? UIScrollView)!.contentSize.height, 320)
-    XCTAssertEqual(controller.spotsScrollView.contentView.subviews[1].frame.height, 96)
-    XCTAssertTrue(controller.spotsScrollView.contentView.subviews[2] is UITableView)
-    XCTAssertEqual((controller.spotsScrollView.contentView.subviews[2] as? UIScrollView)!.contentSize.height, 320)
-    XCTAssertEqual(controller.spotsScrollView.contentView.subviews[2].frame.height, 320)
-    XCTAssertTrue(controller.spotsScrollView.contentView.subviews[3] is UITableView)
-    XCTAssertEqual((controller.spotsScrollView.contentView.subviews[3] as? UIScrollView)!.contentSize.height, 320)
-    XCTAssertEqual(controller.spotsScrollView.contentView.subviews[3].frame.height, 251)
+    XCTAssertTrue(controller.scrollView.contentView.subviews[0] is UITableView)
+    XCTAssertEqual((controller.scrollView.contentView.subviews[0] as? UIScrollView)!.contentSize.height, 320)
+    XCTAssertEqual(controller.scrollView.contentView.subviews[0].frame.height, 0)
+    XCTAssertTrue(controller.scrollView.contentView.subviews[1] is UITableView)
+    XCTAssertEqual((controller.scrollView.contentView.subviews[1] as? UIScrollView)!.contentSize.height, 320)
+    XCTAssertEqual(controller.scrollView.contentView.subviews[1].frame.height, 96)
+    XCTAssertTrue(controller.scrollView.contentView.subviews[2] is UITableView)
+    XCTAssertEqual((controller.scrollView.contentView.subviews[2] as? UIScrollView)!.contentSize.height, 320)
+    XCTAssertEqual(controller.scrollView.contentView.subviews[2].frame.height, 320)
+    XCTAssertTrue(controller.scrollView.contentView.subviews[3] is UITableView)
+    XCTAssertEqual((controller.scrollView.contentView.subviews[3] as? UIScrollView)!.contentSize.height, 320)
+    XCTAssertEqual(controller.scrollView.contentView.subviews[3].frame.height, 251)
 
     controller.scrollTo(CGPoint(x: 0, y: bounds.height))
 
-    XCTAssertTrue(controller.spotsScrollView.contentView.subviews[0] is UITableView)
-    XCTAssertEqual((controller.spotsScrollView.contentView.subviews[0] as? UIScrollView)!.contentSize.height, 320)
-    XCTAssertEqual(controller.spotsScrollView.contentView.subviews[0].frame.height, 0)
-    XCTAssertTrue(controller.spotsScrollView.contentView.subviews[1] is UITableView)
-    XCTAssertEqual((controller.spotsScrollView.contentView.subviews[1] as? UIScrollView)!.contentSize.height, 320)
-    XCTAssertEqual(controller.spotsScrollView.contentView.subviews[1].frame.height, 0)
-    XCTAssertTrue(controller.spotsScrollView.contentView.subviews[2] is UITableView)
-    XCTAssertEqual((controller.spotsScrollView.contentView.subviews[2] as? UIScrollView)!.contentSize.height, 320)
-    XCTAssertEqual(controller.spotsScrollView.contentView.subviews[2].frame.height, abs(bounds.height - 320 * 3))
-    XCTAssertTrue(controller.spotsScrollView.contentView.subviews[3] is UITableView)
-    XCTAssertEqual((controller.spotsScrollView.contentView.subviews[3] as? UIScrollView)!.contentSize.height, 320)
-    XCTAssertEqual(controller.spotsScrollView.contentView.subviews[3].frame.height, 320)
+    XCTAssertTrue(controller.scrollView.contentView.subviews[0] is UITableView)
+    XCTAssertEqual((controller.scrollView.contentView.subviews[0] as? UIScrollView)!.contentSize.height, 320)
+    XCTAssertEqual(controller.scrollView.contentView.subviews[0].frame.height, 0)
+    XCTAssertTrue(controller.scrollView.contentView.subviews[1] is UITableView)
+    XCTAssertEqual((controller.scrollView.contentView.subviews[1] as? UIScrollView)!.contentSize.height, 320)
+    XCTAssertEqual(controller.scrollView.contentView.subviews[1].frame.height, 0)
+    XCTAssertTrue(controller.scrollView.contentView.subviews[2] is UITableView)
+    XCTAssertEqual((controller.scrollView.contentView.subviews[2] as? UIScrollView)!.contentSize.height, 320)
+    XCTAssertEqual(controller.scrollView.contentView.subviews[2].frame.height, abs(bounds.height - 320 * 3))
+    XCTAssertTrue(controller.scrollView.contentView.subviews[3] is UITableView)
+    XCTAssertEqual((controller.scrollView.contentView.subviews[3] as? UIScrollView)!.contentSize.height, 320)
+    XCTAssertEqual(controller.scrollView.contentView.subviews[3].frame.height, 320)
 
-    controller.scrollTo(CGPoint(x: 0, y: controller.spotsScrollView.contentSize.height))
+    controller.scrollTo(CGPoint(x: 0, y: controller.scrollView.contentSize.height))
 
-    XCTAssertTrue(controller.spotsScrollView.contentView.subviews[0] is UITableView)
-    XCTAssertEqual((controller.spotsScrollView.contentView.subviews[0] as? UIScrollView)!.contentSize.height, 320)
-    XCTAssertEqual(controller.spotsScrollView.contentView.subviews[0].frame.height, 0)
-    XCTAssertTrue(controller.spotsScrollView.contentView.subviews[1] is UITableView)
-    XCTAssertEqual((controller.spotsScrollView.contentView.subviews[1] as? UIScrollView)!.contentSize.height, 320)
-    XCTAssertEqual(controller.spotsScrollView.contentView.subviews[1].frame.height, 0)
-    XCTAssertTrue(controller.spotsScrollView.contentView.subviews[2] is UITableView)
-    XCTAssertEqual((controller.spotsScrollView.contentView.subviews[2] as? UIScrollView)!.contentSize.height, 320)
-    XCTAssertEqual(controller.spotsScrollView.contentView.subviews[2].frame.height, 0)
-    XCTAssertTrue(controller.spotsScrollView.contentView.subviews[3] is UITableView)
-    XCTAssertEqual((controller.spotsScrollView.contentView.subviews[3] as? UIScrollView)!.contentSize.height, 320)
-    XCTAssertEqual(controller.spotsScrollView.contentView.subviews[3].frame.height, 0)
+    XCTAssertTrue(controller.scrollView.contentView.subviews[0] is UITableView)
+    XCTAssertEqual((controller.scrollView.contentView.subviews[0] as? UIScrollView)!.contentSize.height, 320)
+    XCTAssertEqual(controller.scrollView.contentView.subviews[0].frame.height, 0)
+    XCTAssertTrue(controller.scrollView.contentView.subviews[1] is UITableView)
+    XCTAssertEqual((controller.scrollView.contentView.subviews[1] as? UIScrollView)!.contentSize.height, 320)
+    XCTAssertEqual(controller.scrollView.contentView.subviews[1].frame.height, 0)
+    XCTAssertTrue(controller.scrollView.contentView.subviews[2] is UITableView)
+    XCTAssertEqual((controller.scrollView.contentView.subviews[2] as? UIScrollView)!.contentSize.height, 320)
+    XCTAssertEqual(controller.scrollView.contentView.subviews[2].frame.height, 0)
+    XCTAssertTrue(controller.scrollView.contentView.subviews[3] is UITableView)
+    XCTAssertEqual((controller.scrollView.contentView.subviews[3] as? UIScrollView)!.contentSize.height, 320)
+    XCTAssertEqual(controller.scrollView.contentView.subviews[3].frame.height, 0)
   }
 }

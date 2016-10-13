@@ -13,7 +13,7 @@ struct ImaginaryConfigurator: Configurator {
       animation.duration = 0.3
       animation.fromValue = 0.0
       animation.toValue = 1.0
-      imageView.layer?.addAnimation(animation, forKey: "fade")
+      imageView.layer?.add(animation, forKey: "fade")
     }
   }
 }

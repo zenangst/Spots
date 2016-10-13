@@ -14,11 +14,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
   lazy var listController = ListController(cacheKey: "menu-cache")
   lazy var detailController: DetailController = DetailController([:])
 
-  var volumeTimer: NSTimer?
+  var volumeTimer: Timer?
   var window: Window?
   var player: AVAudioPlayer?
   var history = [String]()
-  var currentController: SpotsController?
+  var currentController: Controller?
   var mainWindowController: MainWindowController?
   var splitView: MainSplitView!
 
@@ -31,7 +31,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     SpotsConfigurator(),
   ]
 
-  func applicationDidFinishLaunching(aNotification: NSNotification) {
+  func applicationDidFinishLaunching(_ aNotification: Notification) {
     configurators.forEach { $0.configure() }
 
 //    spotsSession.login()
@@ -42,7 +42,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
       Malibu.networking("api").authenticate(bearerToken: spotsSession.accessToken ?? "")
     }
 
-    if let window = window where window.frame.size.width < window.minSize.width {
+    if let window = window , window.frame.size.width < window.minSize.width {
       let previousRect = window.frame
       window.setFrame(NSRect(
         x: previousRect.origin.x,
@@ -61,6 +61,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     mainWindowController?.currentController = detailController
     mainWindowController?.showWindow(nil)
 
-    NSUserDefaults.standardUserDefaults().setBool(false, forKey: "NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints")
+//    UserDefaults.standard.set(true, forKey: "NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints")
   }
 }

@@ -2,27 +2,27 @@
 import Foundation
 import XCTest
 
-class SpotFactoryTests : XCTestCase {
+class FactoryTests : XCTestCase {
 
-  let json: [String : AnyObject] = [
-    "title" : "title1",
-    "kind" : "merry-go-round",
-    "span" : 1,
+  let json: [String : Any] = [
+    "title" : "title1" as AnyObject,
+    "kind" : "merry-go-round" as AnyObject,
+    "span" : 1 as AnyObject,
     "meta" : ["foo" : "bar"],
     "items" : [["title" : "item1"]]
   ]
 
   func testRegisterAndResolve() {
-    SpotFactory.register("merry-go-round", spot: CarouselSpot.self)
+    Factory.register(kind: "merry-go-round", spot: CarouselSpot.self)
 
     let component = Component(json)
-    var spot = SpotFactory.resolve(component)
+    var spot = Factory.resolve(component: component)
 
     XCTAssertTrue(spot.component == component)
     XCTAssertTrue(spot is CarouselSpot)
 
-    SpotFactory.register("merry-go-round", spot: GridSpot.self)
-    spot = SpotFactory.resolve(component)
+    Factory.register(kind: "merry-go-round", spot: GridSpot.self)
+    spot = Factory.resolve(component: component)
 
     XCTAssertTrue(spot.component == component)
     XCTAssertTrue(spot is GridSpot)
@@ -30,10 +30,10 @@ class SpotFactoryTests : XCTestCase {
 
   func testDefaultResolve() {
     var newJson = json
-    newJson["type"] = "weirdo"
+    newJson["type"] = "weirdo" as AnyObject?
 
     let component = Component(newJson)
-    let spot = SpotFactory.resolve(component)
+    let spot = Factory.resolve(component: component)
 
     XCTAssertTrue(spot.component == component)
     XCTAssertTrue(spot is GridSpot)

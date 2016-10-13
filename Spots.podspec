@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name             = "Spots"
   s.summary          = "A cross-platform view controller framework for building component-based UIs"
-  s.version          = "4.0.2"
+  s.version          = "5.0.0"
   s.homepage         = "https://github.com/hyperoslo/Spots"
   s.license          = 'MIT'
   s.author           = { "Hyper Interaktiv AS" => "ios@hyper.no" }
@@ -18,8 +18,9 @@ Pod::Spec.new do |s|
   s.tvos.source_files = 'Sources/{iOS,tvOS,Shared}/**/*'
 
   s.frameworks = 'Foundation'
-  s.dependency 'Tailor', '1.3.0'
+  s.dependency 'Tailor', '2.0.1'
   s.dependency 'Brick', '1.0.0'
   s.dependency 'Cache', '1.5.1'
-  s.dependency 'CryptoSwift', '0.5.2'
+  s.dependency 'CryptoSwift', '0.6.0'
+  s.pod_target_xcconfig = { 'SWIFT_VERSION' => '3.0' }
 end

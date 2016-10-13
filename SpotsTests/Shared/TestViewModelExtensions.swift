@@ -10,15 +10,15 @@ class ItemExtensionsTests : XCTestCase {
      Check .New and .Removed
      */
 
-    var oldJSON: [[String : AnyObject]] = [
-      ["title" : "foo"],
-      ["title" : "bar"],
+    var oldJSON: [[String : Any]] = [
+      ["title" : "foo" as AnyObject],
+      ["title" : "bar" as AnyObject],
     ]
 
-    var newJSON: [[String : AnyObject]] = [
-      ["title" : "foo"],
-      ["title" : "bar"],
-      ["title" : "baz"]
+    var newJSON: [[String : Any]] = [
+      ["title" : "foo" as AnyObject],
+      ["title" : "bar" as AnyObject],
+      ["title" : "baz" as AnyObject]
     ]
 
     var newModels = newJSON.map { Item($0) }
@@ -27,9 +27,9 @@ class ItemExtensionsTests : XCTestCase {
     XCTAssertEqual(oldModels.count, 2)
 
     var changes = Item.evaluate(newModels, oldModels: oldModels)
-    XCTAssertEqual(changes![0], ItemDiff.None)
-    XCTAssertEqual(changes![1], ItemDiff.None)
-    XCTAssertEqual(changes![2], ItemDiff.New)
+    XCTAssertEqual(changes![0], ItemDiff.none)
+    XCTAssertEqual(changes![1], ItemDiff.none)
+    XCTAssertEqual(changes![2], ItemDiff.new)
 
     var processedChanges = Item.processChanges(changes!)
     XCTAssertEqual(processedChanges.insertions.count, 1)
@@ -38,9 +38,9 @@ class ItemExtensionsTests : XCTestCase {
     XCTAssertEqual(processedChanges.deletions.count, 0)
 
     changes = Item.evaluate(oldModels, oldModels: newModels)
-    XCTAssertEqual(changes![0], ItemDiff.None)
-    XCTAssertEqual(changes![1], ItemDiff.None)
-    XCTAssertEqual(changes![2], ItemDiff.Removed)
+    XCTAssertEqual(changes![0], ItemDiff.none)
+    XCTAssertEqual(changes![1], ItemDiff.none)
+    XCTAssertEqual(changes![2], ItemDiff.removed)
 
     processedChanges = Item.processChanges(changes!)
     XCTAssertEqual(processedChanges.insertions.count, 0)
@@ -53,20 +53,20 @@ class ItemExtensionsTests : XCTestCase {
      */
 
     oldJSON = [
-      ["title" : "foo", "kind" : "course-item"],
-      ["title" : "bar", "kind" : "list-item"],
+      ["title" : "foo" as AnyObject, "kind" : "course-item" as AnyObject],
+      ["title" : "bar" as AnyObject, "kind" : "list-item" as AnyObject],
     ]
     newJSON = [
-      ["title" : "foo1", "kind" : "course-item"],
-      ["title" : "bar1", "kind" : "grid-item"],
+      ["title" : "foo1" as AnyObject, "kind" : "course-item" as AnyObject],
+      ["title" : "bar1" as AnyObject, "kind" : "grid-item" as AnyObject],
     ]
 
     newModels = newJSON.map { Item($0) }
     oldModels = oldJSON.map { Item($0) }
 
     changes = Item.evaluate(oldModels, oldModels: newModels)
-    XCTAssertEqual(changes![0], ItemDiff.Title)
-    XCTAssertEqual(changes![1], ItemDiff.Kind)
+    XCTAssertEqual(changes![0], ItemDiff.title)
+    XCTAssertEqual(changes![1], ItemDiff.kind)
 
     processedChanges = Item.processChanges(changes!)
     XCTAssertEqual(processedChanges.insertions.count, 0)

@@ -21,7 +21,7 @@ public struct GridRegistry {
 
   /// The default identifier for the registry
   var defaultIdentifier: String {
-    return String(defaultItem)
+    return String(describing: defaultItem)
   }
 
   /**
@@ -38,53 +38,28 @@ public struct GridRegistry {
     }
   }
 
-  // MARK: - Template
-
-  /// A cache that stores instances of created views
-  private var cache: NSCache = NSCache()
-
-  /**
-   Empty the current view cache
-   */
-  func purge() {
-    cache.removeAllObjects()
-  }
-
   /**
    Create a view for corresponding identifier
 
    - parameter identifier: A reusable identifier for the view
    - returns: A tuple with an optional registry type and view
    */
-  func make(identifier: String) -> (type: RegistryType?, item: NSCollectionViewItem?)? {
+  func make(_ identifier: String) -> (type: RegistryType?, item: NSCollectionViewItem?)? {
     guard let item = storage[identifier] else { return nil }
 
-    let registryType: RegistryType?
+    let registryType: RegistryType
     var view: NSCollectionViewItem? = nil
 
     switch item {
     case .classType(let classType):
-      registryType = .Regular
-      if let item = cache.objectForKey(registryType!.rawValue + identifier) as? NSCollectionViewItem {
-        return (type: registryType, item: item)
-      }
-
+      registryType = .regular
       view = classType.init()
-
     case .nib(let nib):
-      registryType = .Nib
-      if let view = cache.objectForKey(registryType!.rawValue + identifier) as? NSCollectionViewItem {
-        return (type: registryType, item: view)
+      registryType = .nib
+      var views = NSArray()
+      if nib.instantiate(withOwner: nil, topLevelObjects: &views) {
+        view = views.filter({ $0 is NSCollectionViewItem }).first as? NSCollectionViewItem
       }
-
-      var views: NSArray?
-      if nib.instantiateWithOwner(nil, topLevelObjects: &views) {
-        view = views?.filter({ $0 is NSCollectionViewItem }).first as? NSCollectionViewItem
-      }
-    }
-
-    if let view = view {
-      cache.setObject(view, forKey: identifier)
     }
 
     return (type: registryType, item: view)

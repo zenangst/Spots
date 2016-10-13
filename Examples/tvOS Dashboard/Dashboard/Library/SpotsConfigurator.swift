@@ -21,22 +21,22 @@ struct SpotsConfigurator {
     GridSpot.register(defaultView: GridCell.self)
     CarouselSpot.register(defaultView: GridCell.self)
 
-    SpotsController.configure = {
-      $0.backgroundColor = UIColor.clearColor()
+    Controller.configure = {
+      $0.backgroundColor = UIColor.clear
     }
 
     GridSpot.configure = { collectionView, layout in
-      collectionView.backgroundColor = UIColor.clearColor()
+      collectionView.backgroundColor = UIColor.clear
       collectionView.contentInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
     }
 
     CarouselSpot.configure = { collectionView, layout in
-      collectionView.backgroundColor = UIColor.clearColor()
+      collectionView.backgroundColor = UIColor.clear
       collectionView.contentInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
     }
 
     ListSpot.configure = {
-      $0.backgroundColor = UIColor.clearColor()
+      $0.backgroundColor = UIColor.clear
       $0.tableFooterView = UIView(frame: CGRect.zero)
     }
   }

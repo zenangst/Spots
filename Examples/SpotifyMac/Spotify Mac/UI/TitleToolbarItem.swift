@@ -1,19 +1,19 @@
 import Cocoa
 import Sugar
 
-public class TitleToolbarItem: NSToolbarItem {
+open class TitleToolbarItem: NSToolbarItem {
 
-  public lazy var titleLabel = NSTextField().then {
-    $0.editable = false
-    $0.selectable = false
-    $0.bezeled = false
-    $0.font = NSFont.systemFontOfSize(14)
-    $0.textColor = NSColor.whiteColor()
+  open lazy var titleLabel = NSTextField().then {
+    $0.isEditable = false
+    $0.isSelectable = false
+    $0.isBezeled = false
+    $0.font = NSFont.systemFont(ofSize: 14)
+    $0.textColor = NSColor.white
     $0.drawsBackground = false
     $0.wantsLayer = true
   }
 
-  lazy public var customView = NSView().then {
+  lazy open var customView = NSView().then {
     $0.wantsLayer = true
     $0.layer = CALayer()
   }

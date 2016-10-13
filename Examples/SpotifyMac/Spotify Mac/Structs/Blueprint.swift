@@ -6,14 +6,14 @@ import Brick
 public struct Blueprint {
 
   public var cacheKey: String
-  public var fragmentHandler: ((fragments: [String : AnyObject], controller: SpotsController) -> Void)? = nil
-  public var requests: [(request: GETRequestable?, rootKey: String, spotIndex: Int, adapter: (json: JSONArray) -> [Item])]
-  public var template: JSONDictionary
+  public var fragmentHandler: ((_ fragments: [String : Any], _ controller: Controller) -> Void)? = nil
+  public var requests: [(request: GETRequestable?, rootKey: String, spotIndex: Int, adapter: (_ json: [[String : Any]]) -> [Item])]
+  public var template: [String : Any]
 
   init(cacheKey: String,
-       requests: [(request: GETRequestable?, rootKey: String, spotIndex: Int, adapter: (json: JSONArray) -> [Item])] = [],
-       fragmentHandler: ((fragments: [String : AnyObject], controller: SpotsController) -> Void)? = nil,
-       template: JSONDictionary) {
+       requests: [(request: GETRequestable?, rootKey: String, spotIndex: Int, adapter: (_ json: [[String : Any]]) -> [Item])] = [],
+       fragmentHandler: ((_ fragments: [String : Any], _ controller: Controller) -> Void)? = nil,
+       template: [String : Any]) {
     self.cacheKey = cacheKey
     self.fragmentHandler = fragmentHandler
     self.requests = requests
@@ -23,7 +23,7 @@ public struct Blueprint {
 
 extension Blueprint {
 
-  mutating func cacheKey(key: String) {
+  mutating func cacheKey(_ key: String) {
     cacheKey = key
   }
 }

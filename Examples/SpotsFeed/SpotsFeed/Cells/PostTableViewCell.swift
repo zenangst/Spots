@@ -4,30 +4,30 @@ import Brick
 
 public protocol PostActionDelegate: class {
 
-  func likeButtonDidPress(postID: Int)
-  func commentsButtonDidPress(postID: Int)
+  func likeButtonDidPress(_ postID: Int)
+  func commentsButtonDidPress(_ postID: Int)
 }
 
 public protocol PostInformationDelegate: class {
 
-  func likesInformationDidPress(postID: Int)
-  func commentsInformationDidPress(postID: Int)
-  func seenInformationDidPress(postID: Int)
-  func authorDidTap(postID: Int)
-  func mediaDidTap(postID: Int, kind: Media.Kind, index: Int)
+  func likesInformationDidPress(_ postID: Int)
+  func commentsInformationDidPress(_ postID: Int)
+  func seenInformationDidPress(_ postID: Int)
+  func authorDidTap(_ postID: Int)
+  func mediaDidTap(_ postID: Int, kind: Media.Kind, index: Int)
 }
 
-public class PostTableViewCell: WallTableViewCell, SpotConfigurable {
+open class PostTableViewCell: WallTableViewCell, SpotConfigurable {
 
-  public var size = CGSize(width: 0, height: 44)
+  open var preferredViewSize: CGSize = CGSize(width: 0, height: 44)
 
-  public static let reusableIdentifier = "PostTableViewCell"
+  open static let reusableIdentifier = "PostTableViewCell"
 
-  public class func height(item: Item) -> CGFloat {
+  open class func height(_ item: Item) -> CGFloat {
     let post = item.post
     let postText = post.text as NSString
-    let textFrame = postText.boundingRectWithSize(CGSize(width: UIScreen.mainScreen().bounds.width - 40,
-      height: CGFloat.max), options: .UsesLineFragmentOrigin,
+    let textFrame = postText.boundingRect(with: CGSize(width: UIScreen.main.bounds.width - 40,
+      height: CGFloat.greatestFiniteMagnitude), options: .usesLineFragmentOrigin,
       attributes: [ NSFontAttributeName : FontList.Post.text ], context: nil)
 
     var imageHeight: CGFloat = 274
@@ -45,59 +45,59 @@ public class PostTableViewCell: WallTableViewCell, SpotConfigurable {
     return imageHeight + imageTop + informationHeight + 44 + 20 + 12 + textFrame.height
   }
 
-  public lazy var authorView: PostAuthorView = { [unowned self] in
+  open lazy var authorView: PostAuthorView = { [unowned self] in
     let view = PostAuthorView()
     view.delegate = self
 
     return view
     }()
 
-  public lazy var postMediaView: PostMediaView = { [unowned self] in
+  open lazy var postMediaView: PostMediaView = { [unowned self] in
     let view = PostMediaView()
     view.delegate = self
 
     return view
     }()
 
-  public lazy var textView: UITextView = { [unowned self] in
+  open lazy var textView: UITextView = { [unowned self] in
     let textView = UITextView()
     textView.font = FontList.Post.text
-    textView.dataDetectorTypes = .Link
-    textView.editable = false
-    textView.scrollEnabled = false
+    textView.dataDetectorTypes = .link
+    textView.isEditable = false
+    textView.isScrollEnabled = false
     textView.delegate = self
     textView.textContainer.lineFragmentPadding = 0
-    textView.textContainerInset = UIEdgeInsetsZero
+    textView.textContainerInset = UIEdgeInsets.zero
     textView.linkTextAttributes = [
       NSForegroundColorAttributeName: ColorList.Basis.highlightedColor,
       NSUnderlineColorAttributeName: ColorList.Basis.highlightedColor,
-      NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle.rawValue]
-    textView.subviews.first?.backgroundColor = UIColor.whiteColor()
+      NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue]
+    textView.subviews.first?.backgroundColor = UIColor.white
 
     return textView
     }()
 
-  public lazy var informationView: PostInformationBarView = { [unowned self] in
+  open lazy var informationView: PostInformationBarView = { [unowned self] in
     let view = PostInformationBarView()
     view.delegate = self
 
     return view
     }()
 
-  public lazy var actionBarView: PostActionBarView = { [unowned self] in
+  open lazy var actionBarView: PostActionBarView = { [unowned self] in
     let view = PostActionBarView()
     view.delegate = self
 
     return view
     }()
 
-  public lazy var bottomSeparator: UIView = {
+  open lazy var bottomSeparator: UIView = {
     let view = UIView()
     return view
     }()
 
-  public weak var actionDelegate: PostActionDelegate?
-  public weak var informationDelegate: PostInformationDelegate?
+  open weak var actionDelegate: PostActionDelegate?
+  open weak var informationDelegate: PostInformationDelegate?
 
   // MARK: - Initialization
 
@@ -107,12 +107,12 @@ public class PostTableViewCell: WallTableViewCell, SpotConfigurable {
     [authorView, postMediaView, textView,
       informationView, actionBarView, bottomSeparator].forEach {
         contentView.addSubview($0)
-        backgroundColor = UIColor.whiteColor()
+        backgroundColor = UIColor.white
     }
 
     bottomSeparator.backgroundColor = ColorList.Basis.tableViewBackground
-    opaque = true
-    selectionStyle = .None
+    isOpaque = true
+    selectionStyle = .none
     addGestureRecognizer(tapGestureRecognizer)
   }
 
@@ -120,7 +120,7 @@ public class PostTableViewCell: WallTableViewCell, SpotConfigurable {
     fatalError("init(coder:) has not been implemented")
   }
 
-  public func setupViews(item: Item) -> CGFloat {
+  open func setupViews(_ item: Item) -> CGFloat {
     let post = item.post
     var imageHeight: CGFloat = 0
     var imageTop: CGFloat = 50
@@ -138,30 +138,30 @@ public class PostTableViewCell: WallTableViewCell, SpotConfigurable {
       informationHeight = 16
     }
 
-    authorView.frame = CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: 60)
-    postMediaView.frame = CGRect(x: 0, y: imageTop, width: UIScreen.mainScreen().bounds.width, height: imageHeight)
-    informationView.frame.size = CGSize(width: UIScreen.mainScreen().bounds.width, height: informationHeight)
-    actionBarView.frame.size = CGSize(width: UIScreen.mainScreen().bounds.width, height: 44)
-    bottomSeparator.frame = CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: 20)
+    authorView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 60)
+    postMediaView.frame = CGRect(x: 0, y: imageTop, width: UIScreen.main.bounds.width, height: imageHeight)
+    informationView.frame.size = CGSize(width: UIScreen.main.bounds.width, height: informationHeight)
+    actionBarView.frame.size = CGSize(width: UIScreen.main.bounds.width, height: 44)
+    bottomSeparator.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 20)
 
     authorView.configureView(post.author!, date: post.publishDate)
     informationView.configureView(post.likeCount, comments: post.commentCount, seen: post.seenCount)
     actionBarView.configureView(post.liked)
 
     textView.text = post.text
-    textView.width = UIScreen.mainScreen().bounds.width - 40
+    textView.width = UIScreen.main.bounds.width - 40
     textView.sizeToFit()
-    textView.frame = CGRect(x: 20, y: CGRectGetMaxY(postMediaView.frame) + 12,
+    textView.frame = CGRect(x: 20, y: postMediaView.frame.maxY + 12,
       width: textView.frame.width, height: textView.frame.height)
 
-    informationView.frame.origin = CGPoint(x: 0, y: CGRectGetMaxY(textView.frame))
-    actionBarView.frame.origin = CGPoint(x: 0, y: CGRectGetMaxY(informationView.frame))
-    bottomSeparator.y = CGRectGetMaxY(actionBarView.frame)
+    informationView.frame.origin = CGPoint(x: 0, y: textView.frame.maxY)
+    actionBarView.frame.origin = CGPoint(x: 0, y: informationView.frame.maxY)
+    bottomSeparator.y = (actionBarView.frame).maxY
 
     return bottomSeparator.y
   }
 
-  public func configure(inout item: Item) {
+  open func configure(_ item: inout Item) {
     item.size.width = contentView.frame.width
     item.size.height = setupViews(item)
     item.size.height = ceil(PostTableViewCell.height(item))
@@ -172,7 +172,7 @@ public class PostTableViewCell: WallTableViewCell, SpotConfigurable {
 
 extension PostTableViewCell: UITextViewDelegate {
 
-  public func textView(textView: UITextView, shouldInteractWithURL URL: NSURL, inRange characterRange: NSRange) -> Bool {
+  public func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange) -> Bool {
     return true
   }
 }
@@ -201,11 +201,11 @@ extension PostTableViewCell: PostInformationBarViewDelegate {
 
 extension PostTableViewCell: PostActionBarViewDelegate {
 
-  public func likeButtonDidPress(liked: Bool) {
+  public func likeButtonDidPress(_ liked: Bool) {
     if liked {
-      action("feed:action:like:1")
+      performAction(withURN: "feed:action:like:1")
     } else {
-      action("feed:action:unlike:1")
+      performAction(withURN: "feed:action:unlike:1")
     }
 
     guard let post = post else { return }
@@ -219,7 +219,7 @@ extension PostTableViewCell: PostActionBarViewDelegate {
   }
 
   public func commentButtonDidPress() {
-    action("feed:comment:1")
+    performAction(withURN: "feed:comment:1")
   }
 }
 
@@ -228,13 +228,13 @@ extension PostTableViewCell: PostActionBarViewDelegate {
 extension PostTableViewCell: PostAuthorViewDelegate {
 
   public func authorDidTap() {
-    action("feed:author:1")
+    performAction(withURN: "feed:author:1")
   }
 }
 
 extension PostTableViewCell: PostMediaViewDelegate {
 
-  public func mediaDidTap(index: Int) {
-    action("feed:media:1")
+  public func mediaDidTap(_ index: Int) {
+    performAction(withURN: "feed:media:1")
   }
 }

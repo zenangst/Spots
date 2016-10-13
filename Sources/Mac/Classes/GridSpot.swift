@@ -1,7 +1,7 @@
 import Cocoa
 import Brick
 
-public class GridSpot: NSObject, Gridable {
+open class GridSpot: NSObject, Gridable {
 
   /**
    An enum layout type
@@ -24,7 +24,7 @@ public class GridSpot: NSObject, Gridable {
     /// The key for title left margin
     public static let titleLeftMargin = "titleLeftMargin"
     /// The key for title font size
-    public static let titleFontSize = "titleFontSize"
+    public static let titleFontSize = "title-font-size"
     /// The key for layout
     public static let layout = "layout"
     /// The key for grid layout maximum item width
@@ -73,45 +73,44 @@ public class GridSpot: NSObject, Gridable {
   }
 
   /// A Registry struct that contains all register components, used for resolving what UI component to use
-  public static var views = Registry()
-  public static var grids = GridRegistry()
-  public static var configure: ((view: NSCollectionView) -> Void)?
-  public static var defaultView: View.Type = NSView.self
-  public static var defaultGrid: NSCollectionViewItem.Type = NSCollectionViewItem.self
-  public static var defaultKind: StringConvertible = LayoutType.Grid.rawValue
+  open static var views = Registry()
+  open static var grids = GridRegistry()
+  open static var configure: ((_ view: NSCollectionView) -> Void)?
+  open static var defaultView: View.Type = NSView.self
+  open static var defaultGrid: NSCollectionViewItem.Type = NSCollectionViewItem.self
+  open static var defaultKind: StringConvertible = LayoutType.Grid.rawValue
 
-  public weak var spotsCompositeDelegate: SpotsCompositeDelegate?
-  public weak var spotsDelegate: SpotsDelegate?
+  open weak var spotsCompositeDelegate: CompositeDelegate?
+  open weak var delegate: SpotsDelegate?
 
-  public var cachedViews = [String : SpotConfigurable]()
-  public var component: Component
-  public var configure: (SpotConfigurable -> Void)?
-  public var index = 0
-  /// Indicator to calculate the height based on content
-  public var usesDynamicHeight = true
-
-  public private(set) var stateCache: SpotCache?
-
-  public var adapter: SpotAdapter? {
-    return collectionAdapter
+  open var component: Component
+  open var configure: ((SpotConfigurable) -> Void)? {
+    didSet {
+      guard let configure = configure else { return }
+      for case let cell as SpotConfigurable in collectionView.visibleItems() {
+        configure(cell)
+      }
+    }
   }
+  /// Indicator to calculate the height based on content
+  open var usesDynamicHeight = true
 
-  public lazy var collectionAdapter: CollectionAdapter = CollectionAdapter(spot: self)
+  open fileprivate(set) var stateCache: StateCache?
 
-  public var layout: NSCollectionViewLayout
+  open var layout: NSCollectionViewLayout
 
-  public lazy var titleView: NSTextField = {
+  open lazy var titleView: NSTextField = {
     let titleView = NSTextField()
-    titleView.editable = false
-    titleView.selectable = false
-    titleView.bezeled = false
-    titleView.textColor = NSColor.grayColor()
+    titleView.isEditable = false
+    titleView.isSelectable = false
+    titleView.isBezeled = false
+    titleView.textColor = NSColor.gray
     titleView.drawsBackground = false
 
     return titleView
   }()
 
-  public lazy var scrollView: ScrollView = {
+  open lazy var scrollView: ScrollView = {
     let scrollView = ScrollView()
     let view = NSView()
     scrollView.documentView = view
@@ -119,10 +118,10 @@ public class GridSpot: NSObject, Gridable {
     return scrollView
   }()
 
-  public lazy var collectionView: NSCollectionView = {
+  open lazy var collectionView: NSCollectionView = {
     let collectionView = NSCollectionView()
-    collectionView.backgroundColors = [NSColor.clearColor()]
-    collectionView.selectable = true
+    collectionView.backgroundColors = [NSColor.clear]
+    collectionView.isSelectable = true
     collectionView.allowsMultipleSelection = false
     collectionView.allowsEmptySelection = true
     collectionView.layer = CALayer()
@@ -135,7 +134,7 @@ public class GridSpot: NSObject, Gridable {
     let lineView = NSView()
     lineView.frame.size.height = 1
     lineView.wantsLayer = true
-    lineView.layer?.backgroundColor = NSColor.grayColor().colorWithAlphaComponent(0.2).CGColor
+    lineView.layer?.backgroundColor = NSColor.gray.withAlphaComponent(0.2).cgColor
 
     return lineView
   }()
@@ -155,7 +154,7 @@ public class GridSpot: NSObject, Gridable {
     scrollView.addSubview(lineView)
     scrollView.contentView.addSubview(collectionView)
 
-    if let layout = layout as? NSCollectionViewFlowLayout where !component.title.isEmpty {
+    if let layout = layout as? NSCollectionViewFlowLayout, !component.title.isEmpty {
       configureTitleView(layout.sectionInset)
     }
   }
@@ -176,7 +175,7 @@ public class GridSpot: NSObject, Gridable {
    - parameter cacheKey: A cache key
    */
   public convenience init(cacheKey: String) {
-    let stateCache = SpotCache(key: cacheKey)
+    let stateCache = StateCache(key: cacheKey)
 
     self.init(component: Component(stateCache.load()))
     self.stateCache = stateCache
@@ -187,8 +186,8 @@ public class GridSpot: NSObject, Gridable {
     collectionView.dataSource = nil
   }
 
-  private static func configureLayoutInsets(component: Component, layout: NSCollectionViewFlowLayout) -> NSCollectionViewFlowLayout {
-    layout.sectionInset = NSEdgeInsets(
+  @discardableResult fileprivate static func configureLayoutInsets(_ component: Component, layout: NSCollectionViewFlowLayout) -> NSCollectionViewFlowLayout {
+    layout.sectionInset = EdgeInsets(
       top: component.meta(GridableMeta.Key.sectionInsetTop, Default.sectionInsetTop),
       left: component.meta(GridableMeta.Key.sectionInsetLeft, Default.sectionInsetLeft),
       bottom: component.meta(GridableMeta.Key.sectionInsetBottom, Default.sectionInsetBottom),
@@ -207,7 +206,7 @@ public class GridSpot: NSObject, Gridable {
 
    - returns: A NSCollectionView layout determined by the Component
    */
-  private static func setupLayout(component: Component) -> NSCollectionViewLayout {
+  fileprivate static func setupLayout(_ component: Component) -> NSCollectionViewLayout {
     let layout: NSCollectionViewLayout
 
     switch LayoutType(rawValue: component.meta(Key.layout, Default.defaultLayout)) ?? LayoutType.Flow {
@@ -229,7 +228,7 @@ public class GridSpot: NSObject, Gridable {
     default:
       let flowLayout = NSCollectionViewFlowLayout()
       configureLayoutInsets(component, layout: flowLayout)
-      flowLayout.scrollDirection = .Vertical
+      flowLayout.scrollDirection = .vertical
       layout = flowLayout
     }
 
@@ -239,18 +238,17 @@ public class GridSpot: NSObject, Gridable {
   /**
    Configure delegate, data source and layout for collection view
    */
-  public func setupCollectionView() {
-    collectionView.delegate = collectionAdapter
-    collectionView.dataSource = collectionAdapter
+  open func setupCollectionView() {
+    collectionView.delegate = self
+    collectionView.dataSource = self
     collectionView.collectionViewLayout = layout
   }
 
-  /**
-   The container view for the GridSpot
-
-   - returns: A ScrollView object
-   */
-  public func render() -> ScrollView {
+  /// Return collection view as a scroll view
+  ///
+  /// - returns: UIScrollView: Returns a UICollectionView as a UIScrollView
+  ///
+  open func render() -> ScrollView {
     return scrollView
   }
 
@@ -259,10 +257,10 @@ public class GridSpot: NSObject, Gridable {
 
    - parameter size: A CGSize from the GridSpot superview
    */
-  public func layout(size: CGSize) {
-    layout.prepareForTransitionToLayout(layout)
+  open func layout(_ size: CGSize) {
+    layout.prepareForTransition(to: layout)
 
-    var layoutInsets = NSEdgeInsets()
+    var layoutInsets = EdgeInsets()
     if let layout = layout as? NSCollectionViewFlowLayout {
       layout.sectionInset.top = component.meta(GridableMeta.Key.sectionInsetTop, Default.sectionInsetTop) + titleView.frame.size.height + 8
       layoutInsets = layout.sectionInset
@@ -279,7 +277,7 @@ public class GridSpot: NSObject, Gridable {
     collectionView.frame.size.height = scrollView.frame.size.height - layoutInsets.top + layoutInsets.bottom
     collectionView.frame.size.width = size.width - layoutInsets.right
 
-    GridSpot.configure?(view: collectionView)
+    GridSpot.configure?(collectionView)
 
     if !component.title.isEmpty {
       configureTitleView(layoutInsets)
@@ -291,7 +289,7 @@ public class GridSpot: NSObject, Gridable {
 
    - parameter size: A CGSize from the GridSpot superview
    */
-  public func setup(size: CGSize) {
+  open func setup(_ size: CGSize) {
     var size = size
     size.height = layout.collectionViewContentSize.height
     layout(size)
@@ -300,11 +298,11 @@ public class GridSpot: NSObject, Gridable {
   /**
    A private setup method for configuring the title view
 
-   - parameter layoutInsets: NSEdgeInsets used to configure the title and line view size and origin
+   - parameter layoutInsets: EdgeInsets used to configure the title and line view size and origin
    */
-  private func configureTitleView(layoutInsets: NSEdgeInsets) {
+  fileprivate func configureTitleView(_ layoutInsets: EdgeInsets) {
     titleView.stringValue = component.title
-    titleView.font = NSFont.systemFontOfSize(component.meta(Key.titleFontSize, Default.titleFontSize))
+    titleView.font = NSFont.systemFont(ofSize: component.meta(Key.titleFontSize, Default.titleFontSize))
     titleView.sizeToFit()
     titleView.frame.size.width = collectionView.frame.width - layoutInsets.right - layoutInsets.left
     lineView.frame.size.width = scrollView.frame.size.width - (component.meta(Key.titleLeftMargin, Default.titleLeftInset) * 2)
@@ -313,5 +311,47 @@ public class GridSpot: NSObject, Gridable {
     titleView.frame.origin.x = component.meta(Key.titleLeftMargin, titleView.frame.origin.x)
     titleView.frame.origin.y = titleView.frame.size.height / 2
     lineView.frame.origin.y = titleView.frame.maxY + 8
+  }
+}
+
+extension GridSpot: NSCollectionViewDataSource {
+
+  @nonobjc public func numberOfSectionsInCollectionView(_ collectionView: NSCollectionView) -> Int {
+    return 1
+  }
+
+  public func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
+    return component.items.count
+  }
+
+  public func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
+    let reuseIdentifier = identifier(at: indexPath.item)
+    let item = collectionView.makeItem(withIdentifier: reuseIdentifier, for: indexPath as IndexPath)
+
+    (item as? SpotConfigurable)?.configure(&component.items[indexPath.item])
+    return item
+  }
+}
+
+extension GridSpot : NSCollectionViewDelegate {
+
+  public func collectionView(_ collectionView: NSCollectionView, didSelectItemsAt indexPaths: Set<IndexPath>) {
+    /*
+     This delay is here to avoid an assertion that happens inside the collection view binding,
+     it tries to resolve the item at index but it no longer exists so the assertion is thrown.
+     This can probably be fixed in a more convenient way in the future without delays.
+     */
+    Dispatch.delay(for: 0.1) { [weak self] in
+      guard let weakSelf = self, let first = indexPaths.first,
+        let item = self?.item(at: first.item), first.item < weakSelf.items.count else { return }
+      weakSelf.delegate?.didSelect(item: item, in: weakSelf)
+    }
+  }
+}
+
+extension GridSpot: NSCollectionViewDelegateFlowLayout {
+
+  public func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> NSSize {
+    return sizeForItem(at: indexPath)
   }
 }

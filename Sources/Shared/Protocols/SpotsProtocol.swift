@@ -8,12 +8,12 @@ import Brick
 import Cache
 
 public protocol SpotsProtocol: class {
-  /// A SpotCache object
-  var stateCache: SpotCache? { get set }
+  /// A StateCache object
+  var stateCache: StateCache? { get set }
   /// The internal SpotsScrollView
-  var spotsScrollView: SpotsScrollView { get }
+  var scrollView: SpotsScrollView { get }
   /// A delegate that conforms to SpotsDelegate
-  var spotsDelegate: SpotsDelegate? { get }
+  var delegate: SpotsDelegate? { get }
   /// A collection of Spotable objects used in composition
   var compositeSpots: [Int : [Int : [Spotable]]] { get set }
   /// A collection of Spotable objects
@@ -27,28 +27,57 @@ public protocol SpotsProtocol: class {
   var view: View! { get }
   #endif
 
+  /// The first spotable object in the controller.
   var spot: Spotable? { get }
 
   /// A dictionary representation of the controller
-  var dictionary: [String : AnyObject] { get }
+  var dictionary: [String : Any] { get }
 
   #if os(iOS)
-  var spotsRefreshDelegate: SpotsRefreshDelegate? { get set }
+  var refreshDelegate: RefreshDelegate? { get set }
   #endif
 
   #if DEVMODE
-  var fileQueue: dispatch_queue_t { get }
-  var source: dispatch_source_t! { get set }
+  /// A dispatch queue is a lightweight object to which your application submits blocks for subsequent execution.
+  var fileQueue: DispatchQueue { get }
+  /// An identifier for the type system object being monitored by a dispatch source.
+  var source: DispatchSourceFileSystemObject! { get set }
   #endif
 
-  func setupSpots(animated: ((view: View) -> Void)?)
-  func setupSpot(index: Int, spot: Spotable)
-  func spot<T>(index: Int, _ type: T.Type) -> T?
-  func spot(@noescape closure: (index: Int, spot: Spotable) -> Bool) -> Spotable?
+  /// Set up Spotable objects.
+  ///
+  /// - parameter animated: An optional animation closure that is invoked when setting up the spot.
+  func setupSpots(animated: ((_ view: View) -> Void)?)
+
+  /// Set up Spot at index
+  ///
+  /// - parameter index: The index of the Spotable object
+  /// - parameter spot:  The spotable object that is going to be setup
+  func setupSpot(at index: Int, spot: Spotable)
+
+  ///  A generic look up method for resolving spots based on index
+  ///
+  /// - parameter index: The index of the spot that you are trying to resolve.
+  /// - parameter type: The generic type for the spot you are trying to resolve.
+  ///
+  /// - returns: An optional Spotable object of inferred type.
+  func spot<T>(at index: Int, ofType type: T.Type) -> T?
+
+  /// A generic look up method for resolving spots using a closure
+  ///
+  /// - parameter closure: A closure to perform actions on a spotable object
+  ///
+  /// - returns: An optional Spotable object
+  func resolve(spot closure: (_ index: Int, _ spot: Spotable) -> Bool) -> Spotable?
 
   #if os(OSX)
-  init(spots: [Spotable], backgroundType: SpotsControllerBackground)
+  init(spots: [Spotable], backgroundType: ControllerBackground)
   #else
+  /// A required initializer for initializing a controller with Spotable objects
+  ///
+  /// - parameter spots: A collection of Spotable objects that should be setup and be added to the view hierarchy.
+  ///
+  /// - returns: An initalized controller.
   init(spots: [Spotable])
   #endif
 }

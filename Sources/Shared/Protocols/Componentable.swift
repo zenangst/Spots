@@ -4,7 +4,12 @@
   import Foundation
 #endif
 
+/// A protocol for Componentable objects.
 public protocol Componentable {
-  var defaultHeight: CGFloat { get }
-  func configure(component: Component)
+  /// The preferred header height for the Componentable object.
+  var preferredHeaderHeight: CGFloat { get }
+  /// Configure object with Component struct.
+  ///
+  /// - parameter component: The component that should be used for configuration.
+  func configure(_ component: Component)
 }

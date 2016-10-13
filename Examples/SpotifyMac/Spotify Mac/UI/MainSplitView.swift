@@ -12,7 +12,7 @@ class MainSplitView : NSSplitView {
       subviews.removeLast()
       addSubview(detailView)
       adjustSubviews()
-      setPosition(startWidth, ofDividerAtIndex: 0)
+      setPosition(startWidth, ofDividerAt: 0)
     }
   }
 
@@ -24,10 +24,10 @@ class MainSplitView : NSSplitView {
     super.init(frame: frame)
 
     delegate = self
-    dividerStyle = .Thin
+    dividerStyle = .thin
     autosaveName = "MainSplitView"
-    vertical = true
-    autoresizingMask = .ViewNotSizable
+    isVertical = true
+    autoresizingMask = []
     autoresizesSubviews = false
   }
 
@@ -42,7 +42,7 @@ class MainSplitView : NSSplitView {
   }
 
   override func viewDidMoveToWindow() {
-    setPosition(startWidth, ofDividerAtIndex: 0)
+    setPosition(startWidth, ofDividerAt: 0)
   }
 
   required init?(coder: NSCoder) {
@@ -52,15 +52,15 @@ class MainSplitView : NSSplitView {
 
 extension MainSplitView: NSSplitViewDelegate {
 
-  func splitView(splitView: NSSplitView, constrainMaxCoordinate proposedMaximumPosition: CGFloat, ofSubviewAt dividerIndex: Int) -> CGFloat {
+  func splitView(_ splitView: NSSplitView, constrainMaxCoordinate proposedMaximumPosition: CGFloat, ofSubviewAt dividerIndex: Int) -> CGFloat {
     return dividerIndex == 0 ? maximumWidth : proposedMaximumPosition
   }
 
-  func splitView(splitView: NSSplitView, constrainMinCoordinate proposedMinimumPosition: CGFloat, ofSubviewAt dividerIndex: Int) -> CGFloat {
+  func splitView(_ splitView: NSSplitView, constrainMinCoordinate proposedMinimumPosition: CGFloat, ofSubviewAt dividerIndex: Int) -> CGFloat {
     return dividerIndex == 0 ? minimumWidth : proposedMinimumPosition
   }
 
-  func splitViewWillResizeSubviews(notification: NSNotification) {
+  func splitViewWillResizeSubviews(_ notification: Notification) {
     if listView.frame.width >= maximumWidth {
       listView.frame.size.width = maximumWidth
     } else if listView.frame.width <= minimumWidth {
@@ -68,11 +68,11 @@ extension MainSplitView: NSSplitViewDelegate {
     }
   }
 
-  func splitViewDidResizeSubviews(notification: NSNotification) {
+  func splitViewDidResizeSubviews(_ notification: Notification) {
     subviews.forEach { $0.layout() }
   }
 
-  func splitView(splitView: NSSplitView, canCollapseSubview subview: NSView) -> Bool {
+  func splitView(_ splitView: NSSplitView, canCollapseSubview subview: NSView) -> Bool {
     return false
   }
 }

@@ -16,7 +16,7 @@ public struct Blueprints {
     }
   }
 
-  mutating func register(containerType: BlueprintContainer.Type) {
+  mutating func register(_ containerType: BlueprintContainer.Type) {
     self.storage[containerType.key] = containerType.drawing
   }
 }

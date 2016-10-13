@@ -4,15 +4,24 @@ import Brick
   import UIKit
 #endif
 
-public protocol SpotsCompositeDelegate: class {
+/// A protocol for composite delegates
+public protocol CompositeDelegate: class {
+  /// A collection of composite spotable objects, indexed by Spotable object index and Item index.
   var compositeSpots: [Int : [Int : [Spotable]]] { get set }
 }
 
-extension SpotsCompositeDelegate {
+// MARK: - CompositeDelegate extension
+extension CompositeDelegate {
 
-  func resolve(spotIndex spotIndex: Int, itemIndex: Int) -> [Spotable]? {
+  /// Resolve composite container using spot index and item index.
+  ///
+  /// - parameter spotIndex: The index of the Spotable object.
+  /// - parameter itemIndex: The index of the Item that is being displayed on screen.
+  ///
+  /// - returns: A collection of Spotable objects.
+  func resolve(_ spotIndex: Int, itemIndex: Int) -> [Spotable]? {
     guard let compositeContainer = compositeSpots[spotIndex],
-      result = compositeContainer[itemIndex] else {
+      let result = compositeContainer[itemIndex] else {
         return nil
     }
 
@@ -23,76 +32,53 @@ extension SpotsCompositeDelegate {
 /// A generic delegate for Spots
 public protocol SpotsDelegate: class {
 
-  /**
-   A delegate method that is triggered when spots is changed
+  /// A delegate method that is triggered when spots is changed
+  ///
+  /// - parameter spots: New collection of Spotable objects
+  func didChange(spots: [Spotable])
 
-   - parameter spots: New collection of Spotable objects
-   */
-  func spotsDidChange(spots: [Spotable])
-
-  /**
-   A delegate method that is triggered when ever a cell is tapped by the user
-
-   - parameter spot: An object that conforms to the spotable protocol
-   - parameter item: The view model that was tapped
-   */
-  func spotDidSelectItem(spot: Spotable, item: Item)
+  /// A delegate method that is triggered when ever a cell is tapped by the user
+  ///
+  /// - parameter item: The view model that was tapped
+  /// - parameter spot: An object that conforms to the spotable protocol
+  func didSelect(item: Item, in spot: Spotable)
 }
 
+// MARK: - SpotsDelegate extension
 public extension SpotsDelegate {
 
-  func spotDidSelectItem(spot: Spotable, item: Item) {}
-  func spotsDidChange(spots: [Spotable]) {}
+  /// Triggered when ever a user taps on an item
+  ///
+  /// - parameter item: The item struct that the user tapped on.
+  /// - parameter spot: The spotable object that the item belongs to.
+  func didSelect(item: Item, in spot: Spotable) {}
+
+  /// Invoked when ever the collection of spotable objects changes on the Controller.
+  ///
+  /// - parameter spots: The collection of new Spotable objects.
+  func didChange(spots: [Spotable]) {}
 }
 
 /// A refresh delegate for handling reloading of a Spot
-public protocol SpotsRefreshDelegate: class {
+public protocol RefreshDelegate: class {
 
-  /**
-   A delegate method for when your spot controller was refreshed using pull to refresh
-
-   - parameter refreshControl: A UIRefreshControl
-   - parameter completion: A completion closure that should be triggered when the update is completed
-   */
+  /// A delegate method for when your spot controller was refreshed using pull to refresh
+  ///
+  /// - parameter refreshControl: A UIRefreshControl
+  /// - parameter completion: A completion closure that should be triggered when the update is completed
 #if os(iOS)
-  func spotsDidReload(refreshControl: UIRefreshControl, completion: Completion)
+  func spotsDidReload(_ refreshControl: UIRefreshControl, completion: Completion)
 #endif
 }
 
-/// A scroll delegate for handling spotDidReachBeginning and spotDidReachEnd
-public protocol SpotsScrollDelegate: class {
+public protocol CarouselScrollDelegate: class {
 
-  /**
-   A delegate method that is triggered when the scroll view reaches the top
-   */
-  func spotDidReachBeginning(completion: Completion)
+  /// Invoked when ever a user scrolls a CarouselSpot.
+  ///
+  /// - parameter spot: The spotable object that was scrolled.
+  func didScroll(in spot: Spotable)
 
-  /**
-   A delegate method that is triggered when the scroll view reaches the end
-   */
-  func spotDidReachEnd(completion: Completion)
-}
-
-/// A dummy scroll delegate extension to make spotDidReachBeginning optional
-public extension SpotsScrollDelegate {
-
-  /**
-   A default implementation for spotDidReachBeginning, it renders the method optional
-
-   - parameter completion: A completion closure
-   */
-  func spotDidReachBeginning(completion: Completion) {
-    completion?()
-  }
-}
-
-public protocol SpotsCarouselScrollDelegate: class {
-
-  func spotDidScroll(spot: Spotable)
-
-  /**
-   - parameter spot: Object that comforms to the Spotable protocol
-   - parameter item: The last view model in the component
-   */
-  func spotDidEndScrolling(spot: Spotable, item: Item)
+  /// - parameter spot: Object that comforms to the Spotable protocol
+  /// - parameter item: The last view model in the component
+  func didEndScrolling(in spot: Spotable, item: Item)
 }

@@ -8,13 +8,13 @@ public extension NSCollectionView {
    - parameter section: The section you want to update
    - parameter completion: A completion block for when the updates are done
    **/
-  func insert(indexes: [Int], section: Int = 0, completion: (() -> Void)? = nil) {
-    let indexPaths = indexes.map { NSIndexPath(forItem: $0, inSection: section) }
-    let set = Set<NSIndexPath>(indexPaths)
+  func insert(_ indexes: [Int], section: Int = 0, completion: (() -> Void)? = nil) {
+    let indexPaths = indexes.map { IndexPath(item: $0, section: section) }
+    let set = Set<IndexPath>(indexPaths)
 
     performBatchUpdates({ [weak self] in
       guard let weakSelf = self else { return }
-      weakSelf.insertItemsAtIndexPaths(set)
+      weakSelf.insertItems(at: set as Set<IndexPath>)
     }) { _ in
       completion?()
     }
@@ -26,12 +26,12 @@ public extension NSCollectionView {
    - parameter section: The section you want to update
    - parameter completion: A completion block for when the updates are done
    **/
-  func reload(indexes: [Int], section: Int = 0, completion: (() -> Void)? = nil) {
-    let indexPaths = indexes.map { NSIndexPath(forItem: $0, inSection: section) }
-    let set = Set<NSIndexPath>(indexPaths)
+  func reload(_ indexes: [Int], section: Int = 0, completion: (() -> Void)? = nil) {
+    let indexPaths = indexes.map { IndexPath(item: $0, section: section) }
+    let set = Set<IndexPath>(indexPaths)
 
     //UIView.performWithoutAnimation {
-      self.reloadItemsAtIndexPaths(set)
+      self.reloadItems(at: set as Set<IndexPath>)
       completion?()
     //}
   }
@@ -42,34 +42,34 @@ public extension NSCollectionView {
    - parameter section: The section you want to update
    - parameter completion: A completion block for when the updates are done
    **/
-  func delete(indexes: [Int], section: Int = 0, completion: (() -> Void)? = nil) {
-    let indexPaths = indexes.map { NSIndexPath(forItem: $0, inSection: section) }
-    let set = Set<NSIndexPath>(indexPaths)
+  func delete(_ indexes: [Int], section: Int = 0, completion: (() -> Void)? = nil) {
+    let indexPaths = indexes.map { IndexPath(item: $0, section: section) }
+    let set = Set<IndexPath>(indexPaths)
 
     performBatchUpdates({ [weak self] in
       guard let weakSelf = self else { return }
-      weakSelf.deleteItemsAtIndexPaths(set)
+      weakSelf.deleteItems(at: set as Set<IndexPath>)
     }) { _ in
       completion?()
     }
   }
 
-  func process(changes: (insertions: [Int], reloads: [Int], deletions: [Int]),
-               withAnimation animation: NSTableViewAnimationOptions = .EffectFade,
+  func process(_ changes: (insertions: [Int], reloads: [Int], deletions: [Int]),
+               withAnimation animation: NSTableViewAnimationOptions = .effectFade,
                              section: Int = 0,
                              updateDataSource: () -> Void,
                              completion: ((()) -> Void)? = nil) {
-    let deletionSets = Set<NSIndexPath>(changes.deletions
-      .map { NSIndexPath(forItem: $0, inSection: section) })
-    let insertionsSets = Set<NSIndexPath>(changes.insertions
-      .map { NSIndexPath(forItem: $0, inSection: section) })
-    let reloadSets = Set<NSIndexPath>(changes.reloads
-      .map { NSIndexPath(forItem: $0, inSection: section) })
+    let deletionSets = Set<IndexPath>(changes.deletions
+      .map { IndexPath(item: $0, section: section) })
+    let insertionsSets = Set<IndexPath>(changes.insertions
+      .map { IndexPath(item: $0, section: section) })
+    let reloadSets = Set<IndexPath>(changes.reloads
+      .map { IndexPath(item: $0, section: section) })
 
     performBatchUpdates({ [weak self] in
-      self?.deleteItemsAtIndexPaths(deletionSets)
-      self?.insertItemsAtIndexPaths(insertionsSets)
-      self?.reloadItemsAtIndexPaths(reloadSets)
+      self?.deleteItems(at: deletionSets as Set<IndexPath>)
+      self?.insertItems(at: insertionsSets as Set<IndexPath>)
+      self?.reloadItems(at: reloadSets as Set<IndexPath>)
       }) { _ in
         completion?()
     }
@@ -80,10 +80,10 @@ public extension NSCollectionView {
    - parameter index: The section you want to update
    - parameter completion: A completion block for when the updates are done
    **/
-  func reloadSection(index: Int = 0, completion: (() -> Void)? = nil) {
+  func reloadSection(_ index: Int = 0, completion: (() -> Void)? = nil) {
     performBatchUpdates({ [weak self] in
       guard let weakSelf = self else { return }
-      weakSelf.reloadSections(NSIndexSet(index: index))
+      weakSelf.reloadSections(IndexSet(integer: index))
     }) { _ in
       completion?()
     }

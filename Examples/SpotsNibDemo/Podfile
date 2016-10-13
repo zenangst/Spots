@@ -1,11 +1,10 @@
+require "../../core-pods.rb"
 source 'https://github.com/CocoaPods/Specs.git'
-
 platform :ios, '8.0'
-
 use_frameworks!
 inhibit_all_warnings!
 
-target "SpotsNibDemo" do
-  pod 'Spots', path: '../../'
-  pod 'Hue'
+target 'SpotsNibDemo' do
+  core_pods
+  pod 'Hue', :git => 'https://github.com/hyperoslo/Hue', :branch => 'swift-3'
 end

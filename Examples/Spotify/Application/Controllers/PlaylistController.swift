@@ -6,13 +6,13 @@ import Sugar
 import Hue
 import Brick
 
-class PlaylistController: SpotsController {
+class PlaylistController: Spots.Controller {
 
   let accessToken = Keychain.password(forAccount: keychainAccount)
   var playlistID: String?
   var offset = 0
   var playlistPage: SPTListPage?
-  var currentURIs = [NSURL]()
+  var currentURIs = [URL]()
 
   convenience init(playlistID: String?) {
     let featuredSpot = CarouselSpot(Component(span: 2), top: 5, left: 15, bottom: 5, right: 15, itemSpacing: 15)
@@ -28,27 +28,26 @@ class PlaylistController: SpotsController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    spotsDelegate = self
-    spotsScrollView.backgroundColor = UIColor.blackColor()
-    spotsRefreshDelegate = self
-    spotsScrollDelegate = self
-    view.backgroundColor = UIColor.blackColor()
+    delegate = self
+    scrollView.backgroundColor = UIColor.black
+    refreshDelegate = self
+    scrollDelegate = self
+    view.backgroundColor = UIColor.black
 
     if playlistID == nil {
       refreshData()
     }
   }
 
-  override func scrollViewDidScroll(scrollView: UIScrollView) {
+  override func scrollViewDidScroll(_ scrollView: UIScrollView) {
     super.scrollViewDidScroll(scrollView)
 
-    guard let delegate = UIApplication.sharedApplication().delegate as? AppDelegate
-      where !delegate.mainController.playerController.player.isPlaying else { return }
+    guard let delegate = UIApplication.shared.delegate as? AppDelegate, !delegate.mainController.playerController.player.isPlaying else { return }
 
     delegate.mainController.playerController.hidePlayer()
   }
 
-  func refreshData(closure: (() -> Void)? = nil) {
+  func refreshData(_ closure: (() -> Void)? = nil) {
     currentURIs.removeAll()
 
     if let playlistID = playlistID {
@@ -56,28 +55,27 @@ class PlaylistController: SpotsController {
 
       self.title = "Loading..."
 
-      SPTPlaylistSnapshot.playlistWithURI(NSURL(string:uri), accessToken: accessToken, callback: { (error, object) -> Void in
+      SPTPlaylistSnapshot.playlist(withURI: URL(string:uri), accessToken: accessToken, callback: { (error, object) -> Void in
         guard let object = object as? SPTPlaylistSnapshot,
-        firstTrackPage = object.firstTrackPage
+        let firstTrackPage = object.firstTrackPage
           else { return }
 
         self.title = object.name
 
         var viewModels = firstTrackPage.viewModels(playlistID)
-        self.currentURIs.appendContentsOf(firstTrackPage.uris())
+        self.currentURIs.append(contentsOf: firstTrackPage.uris())
 
         if let first = viewModels.first,
-          imageString = first.meta["image"] as? String,
-          url = NSURL(string: imageString),
-          data = NSData(contentsOfURL: url),
-          image = UIImage(data: data)
-        {
+          let imageString = first.meta["image"] as? String,
+          let url = NSURL(string: imageString),
+          let data = NSData(contentsOf: url as URL),
+          let image = UIImage(data: data as Data) {
           let (background, primary, secondary, detail) = image.colors(CGSize(width: 128, height: 128))
-          viewModels.enumerate().forEach {
-            viewModels[$0.index].meta["background"] = background
-            viewModels[$0.index].meta["primary"] = primary
-            viewModels[$0.index].meta["secondary"] = secondary
-            viewModels[$0.index].meta["detail"] = detail
+          viewModels.enumerated().forEach {
+            viewModels[$0.offset].meta["background"] = background
+            viewModels[$0.offset].meta["primary"] = primary
+            viewModels[$0.offset].meta["secondary"] = secondary
+            viewModels[$0.offset].meta["detail"] = detail
           }
 
           self.update(spotAtIndex: 2) { $0.items = viewModels }
@@ -94,22 +92,21 @@ class PlaylistController: SpotsController {
         }
       })
     } else {
-      SPTPlaylistList.playlistsForUser(username, withAccessToken: accessToken) { (error, object) -> Void in
-        guard let object = object as? SPTPlaylistList
-          where object.items != nil
+      SPTPlaylistList.playlists(forUser: username, withAccessToken: accessToken) { (error, object) -> Void in
+        guard let object = object as? SPTPlaylistList, object.items != nil
           else { return }
 
         var items = object.viewModels()
 
         var featured = items.filter {
-          $0.title.lowercaseString.containsString("top") ||
-          $0.title.lowercaseString.containsString("starred") ||
-          $0.title.lowercaseString.containsString("discover")
+          $0.title.lowercased().range(of: "top") != nil ||
+          $0.title.lowercased().range(of: "starred")  != nil ||
+          $0.title.lowercased().range(of: "discover") != nil
         }
 
-        featured.enumerate().forEach { (index, item) in
-          if let index = items.indexOf({ $0 == item }) {
-            items.removeAtIndex(index)
+        featured.enumerated().forEach { (index, item) in
+          if let index = items.index(where: { $0 == item }) {
+            items.remove(at: index)
           }
 
           featured[index].size = CGSize(width: 120, height: 140)
@@ -125,9 +122,9 @@ class PlaylistController: SpotsController {
   }
 }
 
-extension PlaylistController: SpotsRefreshDelegate {
+extension PlaylistController: RefreshDelegate {
 
-  func spotsDidReload(refreshControl: UIRefreshControl, completion: (() -> Void)?) {
+  func spotsDidReload(_ refreshControl: UIRefreshControl, completion: (() -> Void)?) {
     refreshData {
       refreshControl.endRefreshing()
       completion?()
@@ -135,14 +132,16 @@ extension PlaylistController: SpotsRefreshDelegate {
   }
 }
 
-extension PlaylistController: SpotsScrollDelegate {
+extension PlaylistController: ScrollDelegate {
 
-  func spotDidReachEnd(completion: (() -> Void)?) {
+  func didReachEnd(in scrollView: ScrollView, completion: Completion) {
     guard let playlistPage = playlistPage else { return }
 
-    playlistPage.requestNextPageWithAccessToken(accessToken, callback: { (error, object) -> Void in
-      guard let object = object as? SPTListPage
-        where object.items != nil
+    playlistPage.requestNextPage(withAccessToken: accessToken, callback: {
+      [weak self ] (error, object) -> Void in
+      guard let weakSelf = self,
+        let object = object as? SPTListPage,
+        object.items != nil
         else {
           completion?()
           return
@@ -150,41 +149,41 @@ extension PlaylistController: SpotsScrollDelegate {
 
       var items = [Item]()
 
-      if let playlistID = self.playlistID, listSpot = self.spot(2, Spotable.self) {
-        items.appendContentsOf(object.viewModels(playlistID, offset: listSpot.items.count))
-        self.currentURIs.appendContentsOf(object.uris())
+      if let playlistID = weakSelf.playlistID, let listSpot = weakSelf.spot(at: 2) {
+        items.append(contentsOf: object.viewModels(playlistID, offset: listSpot.items.count))
+        weakSelf.currentURIs.append(contentsOf: object.uris())
 
         if let firstItem = listSpot.items.first {
-          for (index, _) in items.enumerate() {
+          for (index, _) in items.enumerated() {
             items[index].meta["background"] = firstItem.meta["background"] ?? ""
             items[index].meta["primary"] = firstItem.meta["primary"] ?? ""
             items[index].meta["secondary"] = firstItem.meta["secondary"] ?? ""
             items[index].meta["detail"] = firstItem.meta["detail"] ?? ""
           }
         }
-        self.append(items, spotIndex: 2)
+        weakSelf.append(items, spotIndex: 2)
       } else {
-        items.appendContentsOf(object.viewModels())
+        items.append(contentsOf: object.viewModels())
 
         var featured = items.filter {
-          $0.title.lowercaseString.containsString("top") ||
-          $0.title.lowercaseString.containsString("starred") ||
-          $0.title.lowercaseString.containsString("discover")
+          $0.title.lowercased().range(of: "top")  != nil ||
+            $0.title.lowercased().range(of: "starred") != nil ||
+            $0.title.lowercased().range(of: "discover") != nil
         }
 
-        featured.enumerate().forEach { (index, item) in
-          if let index = items.indexOf({ $0 == item }) {
-            items.removeAtIndex(index)
+        featured.enumerated().forEach { (index, item) in
+          if let index = items.index(where: { $0 == item }) {
+            items.remove(at: index)
           }
 
           featured[index].size = CGSize(width: 120, height: 140)
         }
 
-        self.append(items, spotIndex: 2)
-        self.append(featured, spotIndex: 1)
+        weakSelf.append(items, spotIndex: 2)
+        weakSelf.append(featured, spotIndex: 1)
       }
 
-      self.playlistPage = object.hasNextPage ? object : nil
+      weakSelf.playlistPage = object.hasNextPage ? object : nil
 
       completion?()
     })
@@ -193,13 +192,13 @@ extension PlaylistController: SpotsScrollDelegate {
 
 extension PlaylistController: SpotsDelegate {
 
-  func spotDidSelectItem(spot: Spotable, item: Item) {
-    if let delegate = UIApplication.sharedApplication().delegate as? AppDelegate,
-      playlist = spot as? ListSpot {
+  func didSelect(item: Item, in spot: Spotable) {
+    if let delegate = UIApplication.shared.delegate as? AppDelegate,
+      let playlist = spot as? ListSpot {
         delegate.mainController.playerController.lastItem = item
         delegate.mainController.playerController.currentURIs = currentURIs
         if item.image.isPresent {
-          delegate.mainController.playerController.currentAlbum.setImage(NSURL(string: item.image)!)
+          delegate.mainController.playerController.currentAlbum.setImage(URL(string: item.image)!)
         }
         delegate.mainController.playerController.update(spotAtIndex: 1) {
           $0.items = playlist.items.map {
@@ -209,8 +208,8 @@ extension PlaylistController: SpotsDelegate {
               kind: "featured",
               action: $0.action,
               size: CGSize(
-                width: UIScreen.mainScreen().bounds.width,
-                height: UIScreen.mainScreen().bounds.width)
+                width: UIScreen.main.bounds.width,
+                height: UIScreen.main.bounds.width)
             )
           }
 
@@ -221,22 +220,22 @@ extension PlaylistController: SpotsDelegate {
     guard let urn = item.action else { return }
 
     if let carouselSpot = spot as? CarouselSpot,
-      cell = carouselSpot.collectionView.cellForItemAtIndexPath(NSIndexPath(forItem: item.index, inSection: 0)) {
-        UIView.animateWithDuration(0.125, animations: { () -> Void in
-          cell.transform = CGAffineTransformMakeScale(0.8, 0.8)
+      let cell = carouselSpot.collectionView.cellForItem(at: IndexPath(item: item.index, section: 0)) {
+        UIView.animate(withDuration: 0.125, animations: { () -> Void in
+          cell.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
           }) { _ in
-            Compass.navigate(urn)
-            UIView.animateWithDuration(0.125) { cell.transform = CGAffineTransformIdentity }
+            Compass.navigate(to: urn)
+            UIView.animate(withDuration: 0.125) { cell.transform = CGAffineTransform.identity }
         }
     } else {
-      Compass.navigate(urn)
+      Compass.navigate(to: urn)
     }
 
     if let notification = item.meta["notification"] as? String {
       let murmur = Murmur(title: notification,
         backgroundColor: UIColor(red:0.063, green:0.063, blue:0.063, alpha: 1),
-        titleColor: UIColor.whiteColor())
-      show(whistle: murmur)
+        titleColor: UIColor.white)
+      Whisper.show(whistle: murmur)
     }
   }
 }

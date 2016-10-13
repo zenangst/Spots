@@ -7,17 +7,26 @@
 import Tailor
 import Brick
 
+/// A component diff enum
+///
+/// - identifier: Indicates that the identifier changed
+/// - kind:       Indicates that the kind changed
+/// - span:       Indicates that the span changed
+/// - header:     Indicates that the header changed
+/// - meta:       Indicates that the meta changed
+/// - items:      Indicates that the items changed
+/// - new:        Indicates that the component is new
+/// - removed:    Indicates that the component was removed
+/// - none:       Indicates that nothing did change
 public enum ComponentDiff {
-  case Identifier, Kind, Span, Header, Meta, Items, New, Removed, None
+  case identifier, kind, span, header, meta, items, new, removed, none
 }
 
 /// The Component struct is used to configure a Spotable object
 public struct Component: Mappable, Equatable {
 
-  /**
-   An enum with all the string keys used in the view model
-   */
-  public enum Key: String {
+  /// An enum with all the string keys used in the view model
+  public enum Key: String, StringConvertible {
     case Index
     case Identifier
     case Title
@@ -30,20 +39,23 @@ public struct Component: Mappable, Equatable {
     case Width
     case Height
 
-    var string: String {
-      return rawValue.lowercaseString
+    public var string: String {
+      return rawValue.lowercased()
     }
   }
 
   /// An enum for identifing the Component kind
   public enum Kind: String {
+    /// The identifier for CarouselSpot
     case Carousel = "carousel"
+    /// The identifier for GridSpot
     case Grid = "grid"
+    /// The identifier for ListSpot
     case List = "list"
 
     /// The lowercase raw value of the case
     public var string: String {
-      return rawValue.lowercaseString
+      return rawValue.lowercased()
     }
   }
 
@@ -60,27 +72,25 @@ public struct Component: Mappable, Equatable {
   public var header = ""
   /// Configures the span that should be used for items in one row
   /// Used by gridable components
-  public var span: CGFloat = 0
+  public var span: Double = 0
   /// A collection of view models
   public var items = [Item]()
   /// The width and height of the component, usually calculated and updated by the UI component
   public var size: CGSize?
   /// A key-value dictionary for any additional information
-  public var meta = [String : AnyObject]()
+  public var meta = [String : Any]()
 
   /// A dictionary representation of the component
-  public var dictionary: [String : AnyObject] {
+  public var dictionary: [String : Any] {
     return dictionary()
   }
 
-  /**
-   A method that creates a dictionary representation of the Component
-
-   - parameter amountOfItems: An optional Int that is used to limit the amount of items that should be transformed into JSON
-
-   - returns: A dictionary representation of the Component
-   */
-  public func dictionary(amountOfItems: Int? = nil) -> [String : AnyObject] {
+  /// A method that creates a dictionary representation of the Component
+  ///
+  /// - parameter amountOfItems: An optional Int that is used to limit the amount of items that should be transformed into JSON
+  ///
+  /// - returns: A dictionary representation of the Component
+  public func dictionary(_ amountOfItems: Int? = nil) -> [String : Any] {
     var width: CGFloat = 0
     var height: CGFloat = 0
 
@@ -89,7 +99,7 @@ public struct Component: Mappable, Equatable {
       height = size.height
     }
 
-    let JSONItems: [[String : AnyObject]]
+    let JSONItems: [[String : Any]]
 
     if let amountOfItems = amountOfItems {
       JSONItems = Array(items[0..<min(amountOfItems, items.count)]).map { $0.dictionary }
@@ -97,7 +107,7 @@ public struct Component: Mappable, Equatable {
       JSONItems = items.map { $0.dictionary }
     }
 
-    var JSONComponents: [String : AnyObject] = [
+    var JSONComponents: [String : Any] = [
       Key.Index.string : index,
       Key.Kind.string : kind,
       Key.Span.string : span,
@@ -106,7 +116,7 @@ public struct Component: Mappable, Equatable {
         Key.Height.string : height
       ],
       Key.Items.string: JSONItems,
-    ]
+      ]
 
     JSONComponents[Key.Identifier.string] = identifier
 
@@ -117,44 +127,44 @@ public struct Component: Mappable, Equatable {
     return JSONComponents
   }
 
-  /**
-   Initializes a component with a JSON dictionary and maps the keys of the dictionary to its corresponding values.
+  /// Initializes a component with a JSON dictionary and maps the keys of the dictionary to its corresponding values.
+  ///
+  /// - parameter map: A JSON key-value dictionary.
+  ///
+  /// - returns: An initialized component using JSON.
+  public init(_ map: [String : Any]) {
+    identifier = map.property("identifier")
+    title     <- map.property("title")
+    kind      <- map.property("kind")
+    header    <- map.property("header")
+    span      <- map.property("span")
+    items     <- map.relations("items")
+    meta      <- map.property("meta")
 
-   - parameter map: A JSON key-value dictionary
-   */
-  public init(_ map: [String : AnyObject]) {
-    identifier = map.property(.Identifier)
-    title <- map.property(.Title)
-    kind  <- map.property(.Kind)
-    header  <- map.property(.Header)
-    span  <- map.property(.Span)
-    items <- map.relations(.Items)
-    meta  <- map.property(.Meta)
-
-    if let size = map["size"] as? [String : AnyObject] {
+    if let size = map["size"] as? [String : Any] {
       self.size = CGSize(width: size.property(Key.Width.string) ?? 0.0,
                          height: size.property(Key.Height.string) ?? 0.0)
     }
   }
 
-  /**
-   Initializes a component and configures it with the provided parameters
-
-   - parameter identifier: A optional string
-   - parameter title: The title for your UI component.
-   - parameter header: Determines which header item that should be used for the component.
-   - parameter kind: The type of Component that should be used.
-   - parameter span: Configures the span that should be used for items in one row
-   - parameter items: A collection of view models
-   - parameter meta: A key-value dictionary for any additional information
-   */
+  /// Initializes a component and configures it with the provided parameters
+  ///
+  /// - parameter identifier: A optional string
+  /// - parameter title: The title for your UI component.
+  /// - parameter header: Determines which header item that should be used for the component.
+  /// - parameter kind: The type of Component that should be used.
+  /// - parameter span: Configures the span that should be used for items in one row
+  /// - parameter items: A collection of view models
+  /// - parameter meta: A key-value dictionary for any additional information
+  ///
+  /// - returns: An initialized component
   public init(identifier: String? = nil,
               title: String = "",
               header: String = "",
               kind: String = "",
-              span: CGFloat = 0,
+              span: Double = 0,
               items: [Item] = [],
-              meta: [String : AnyObject] = [:]) {
+              meta: [String : Any] = [:]) {
     self.identifier = identifier
     self.title = title
     self.kind = kind
@@ -166,130 +176,134 @@ public struct Component: Mappable, Equatable {
 
   // MARK: - Helpers
 
-  /**
-   A generic convenience method for resolving meta attributes
-
-   - parameter key: String
-   - parameter defaultValue: A generic value that works as a fallback if the key value object cannot be cast into the generic type
-   - returns: A generic value based on `defaultValue`, it falls back to `defaultValue` if type casting fails
-   */
-  public func meta<T>(key: String, _ defaultValue: T) -> T {
+  /// A generic convenience method for resolving meta attributes
+  ///
+  /// - parameter key: String
+  /// - parameter defaultValue: A generic value that works as a fallback if the key value object cannot be cast into the generic type
+  ///
+  /// - returns: A generic value based on `defaultValue`, it falls back to `defaultValue` if type casting fails
+  public func meta<T>(_ key: String, _ defaultValue: T) -> T {
     return meta[key] as? T ?? defaultValue
   }
 
-  /**
-   A generic convenience method for resolving meta attributes
+  public func meta(_ key: String, _ defaultValue: CGFloat) -> CGFloat {
+    if let doubleValue = meta[key] as? Double {
+      return CGFloat(doubleValue)
+    }
+    return defaultValue
+  }
 
-   - parameter key: String
-   - parameter type: A generic type used for casting the meta property to a specific value or reference type
-   - returns: An optional generic value based on `type`
-   */
-  public func meta<T>(key: String, type: T.Type) -> T? {
+
+  /// A generic convenience method for resolving meta attributes
+  ///
+  /// - parameter key: String
+  /// - parameter type: A generic type used for casting the meta property to a specific value or reference type
+  /// - returns: An optional generic value based on `type`
+  public func meta<T>(_ key: String, type: T.Type) -> T? {
     return meta[key] as? T
   }
 
-  /**
-   Compare two components
 
-   - parameter component: A Component used for comparison
-
-   - returns: A ComponentDiff value, see ComponentDiff for values.
-   */
-  public func diff(component component: Component) -> ComponentDiff {
-    // Determine if the UI component is the same, used when SpotsController needs to replace the entire UI component
-    if kind != component.kind { return .Kind }
+  ///Compare two components
+  ///
+  /// - parameter component: A Component used for comparison
+  ///
+  /// - returns: A ComponentDiff value, see ComponentDiff for values.
+  public func diff(component: Component) -> ComponentDiff {
+    // Determine if the UI component is the same, used when Controller needs to replace the entire UI component
+    if kind != component.kind { return .kind }
     // Determine if the unqiue identifier for the component changed
-    if identifier != component.identifier { return .Identifier }
+    if identifier != component.identifier { return .identifier }
     // Determine if the component span layout changed, this can be used to trigger layout related processes
-    if span != component.span { return .Span }
+    if span != component.span { return .span }
     // Determine if the header for the component has changed
-    if header != component.header { return .Header }
+    if header != component.header { return .header }
     // Check if meta data for the component changed, this can be up to the developer to decide what course of action to take.
-    if !(meta as NSDictionary).isEqualToDictionary(component.meta) { return .Meta }
+    if !(meta as NSDictionary).isEqual(to: component.meta) { return .meta }
     // Check if the items have changed
-    if !(items == component.items) { return .Items }
+    if !(items == component.items) { return .items }
     // Check children
 
     let lhsChildren = items.flatMap { $0.children }
     let rhsChildren = component.items.flatMap { $0.children }
 
-    if !(lhsChildren as NSArray).isEqualToArray(rhsChildren) {
-      return .Items
+    if !(lhsChildren as NSArray).isEqual(to: rhsChildren) {
+      return .items
     }
 
-    return .None
+    return .none
   }
 }
 
 // Compare a collection of view models
 
-/**
- A collection of Component Equatable implementation
- - parameter lhs: Left hand component
- - parameter rhs: Right hand component
- - returns: A boolean value, true if both Components are equal
- */
-
+/// A collection of Component Equatable implementation
+/// - parameter lhs: Left hand component
+/// - parameter rhs: Right hand component
+///
+/// - returns: A boolean value, true if both Components are equal
 public func == (lhs: [Component], rhs: [Component]) -> Bool {
   var equal = lhs.count == rhs.count
 
   if !equal { return false }
 
-  for (index, item) in lhs.enumerate() {
+  for (index, item) in lhs.enumerated() {
     if item != rhs[index] { equal = false; break }
   }
 
   return equal
 }
 
-/**
- Compare two collections of Components to see if they are truly equal
 
- - parameter lhs: Left hand component
- - parameter rhs: Right hand component
-
- - returns: A boolean value, true if both collections are equal
- */
+/// Compare two collections of Components to see if they are truly equal
+///
+/// - parameter lhs: Left hand component
+/// - parameter rhs: Right hand component
+///
+/// - returns: A boolean value, true if both collections are equal
 public func === (lhs: [Component], rhs: [Component]) -> Bool {
   var equal = lhs.count == rhs.count
 
   if !equal { return false }
 
-  for (index, item) in lhs.enumerate() {
+  for (index, item) in lhs.enumerated() {
     if item !== rhs[index] { equal = false; break }
   }
 
   return equal
 }
 
-/**
- Check if to collection of components are not equal
- - parameter lhs: Left hand component
- - parameter rhs: Right hand component
- - returns: A boolean value, true if both Components are no equal
- */
+
+/// Check if to collection of components are not equal
+///
+/// - parameter lhs: Left hand component
+/// - parameter rhs: Right hand component
+///
+/// - returns: A boolean value, true if both Components are no equal
 public func != (lhs: [Component], rhs: [Component]) -> Bool {
   return !(lhs == rhs)
 }
 
-/**
- Check if to collection of components are truly not equal
- - parameter lhs: Left hand component
- - parameter rhs: Right hand component
- - returns: A boolean value, true if both Components are no equal
- */
+
+/// Check if to collection of components are truly not equal
+///
+/// - parameter lhs: Left hand component
+/// - parameter rhs: Right hand component
+///
+/// - returns: A boolean value, true if both Components are no equal
 public func !== (lhs: [Component], rhs: [Component]) -> Bool {
   return !(lhs === rhs)
 }
 
 /// Compare view models
 
-/**
- Check if to components are equal
- - parameter lhs: Left hand component
- - parameter rhs: Right hand component
- - returns: A boolean value, true if both Components are no equal
- */
+
+/// Check if to components are equal
+///
+/// - parameter lhs: Left hand component
+/// - parameter rhs: Right hand component
+///
+/// - returns: A boolean value, true if both Components are no equal
 public func == (lhs: Component, rhs: Component) -> Bool {
   guard lhs.identifier == rhs.identifier else { return false }
 
@@ -301,12 +315,13 @@ public func == (lhs: Component, rhs: Component) -> Bool {
     lhs.items == rhs.items
 }
 
-/**
- Check if to components are truly equal
- - parameter lhs: Left hand component
- - parameter rhs: Right hand component
- - returns: A boolean value, true if both Components are no equal
- */
+
+/// Check if to components are truly equal
+///
+/// - parameter lhs: Left hand component
+/// - parameter rhs: Right hand component
+///
+/// - returns: A boolean value, true if both Components are no equal
 public func === (lhs: Component, rhs: Component) -> Bool {
   guard lhs.identifier == rhs.identifier else { return false }
 
@@ -318,26 +333,28 @@ public func === (lhs: Component, rhs: Component) -> Bool {
     lhs.span == rhs.span &&
     lhs.header == rhs.header &&
     (lhs.meta as NSDictionary).isEqual(rhs.meta as NSDictionary) &&
-    (lhsChildren as NSArray).isEqualToArray(rhsChildren) &&
+    (lhsChildren as NSArray).isEqual(to: rhsChildren) &&
     lhs.items === rhs.items
 }
 
-/**
- Check if to components are not equal
- - parameter lhs: Left hand component
- - parameter rhs: Right hand component
- - returns: A boolean value, true if both Components are no equal
- */
+
+/// Check if to components are not equal
+///
+/// - parameter lhs: Left hand component
+/// - parameter rhs: Right hand component
+///
+/// - returns: A boolean value, true if both Components are no equal
 public func != (lhs: Component, rhs: Component) -> Bool {
   return !(lhs == rhs)
 }
 
-/**
- Check if to components are truly not equal
- - parameter lhs: Left hand component
- - parameter rhs: Right hand component
- - returns: A boolean value, true if both Components are no equal
- */
+
+/// Check if to components are truly not equal
+///
+/// - parameter lhs: Left hand component
+/// - parameter rhs: Right hand component
+///
+/// - returns: A boolean value, true if both Components are no equal
 public func !== (lhs: Component, rhs: Component) -> Bool {
   return !(lhs === rhs)
 }

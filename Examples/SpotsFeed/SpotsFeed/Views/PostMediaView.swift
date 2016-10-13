@@ -2,10 +2,10 @@ import UIKit
 
 public protocol PostMediaViewDelegate: class {
 
-  func mediaDidTap(index: Int)
+  func mediaDidTap(_ index: Int)
 }
 
-public class PostMediaView: UIView {
+open class PostMediaView: UIView {
 
   public struct Dimensions {
     public static let containerOffset: CGFloat = 10
@@ -13,24 +13,24 @@ public class PostMediaView: UIView {
     public static let height: CGFloat = 274
   }
 
-  public lazy var firstImageView = UIImageView()
-  public lazy var secondImageView = UIImageView()
-  public lazy var thirdImageView = UIImageView()
-  public lazy var firstTapGestureRecognizer = UITapGestureRecognizer()
-  public lazy var secondTapGestureRecognizer = UITapGestureRecognizer()
-  public lazy var thirdTapGestureRecognizer = UITapGestureRecognizer()
-  public lazy var fourthTapGestureRecognizer = UITapGestureRecognizer()
+  open lazy var firstImageView = UIImageView()
+  open lazy var secondImageView = UIImageView()
+  open lazy var thirdImageView = UIImageView()
+  open lazy var firstTapGestureRecognizer = UITapGestureRecognizer()
+  open lazy var secondTapGestureRecognizer = UITapGestureRecognizer()
+  open lazy var thirdTapGestureRecognizer = UITapGestureRecognizer()
+  open lazy var fourthTapGestureRecognizer = UITapGestureRecognizer()
 
-  public lazy var imagesCountLabel: UILabel = {
+  open lazy var imagesCountLabel: UILabel = {
     let label = UILabel()
-    label.textColor = UIColor.whiteColor()
-    label.textAlignment = .Center
-    label.opaque = true
+    label.textColor = UIColor.white
+    label.textAlignment = .center
+    label.isOpaque = true
 
     return label
     }()
 
-  public weak var delegate: PostMediaViewDelegate?
+  open weak var delegate: PostMediaViewDelegate?
 
   // MARK: - Initialization
 
@@ -38,11 +38,11 @@ public class PostMediaView: UIView {
     super.init(frame: frame)
 
     [firstImageView, secondImageView, thirdImageView].forEach {
-      $0.contentMode = .ScaleAspectFill
+      $0.contentMode = .scaleAspectFill
       $0.clipsToBounds = true
-      $0.backgroundColor = UIColor.whiteColor()
-      $0.opaque = true
-      $0.userInteractionEnabled = true
+      $0.backgroundColor = UIColor.white
+      $0.isOpaque = true
+      $0.isUserInteractionEnabled = true
       $0.layer.drawsAsynchronously = true
     }
 
@@ -56,7 +56,7 @@ public class PostMediaView: UIView {
     imagesCountLabel.addGestureRecognizer(fourthTapGestureRecognizer)
 
     thirdImageView.addSubview(imagesCountLabel)
-    backgroundColor = UIColor.whiteColor()
+    backgroundColor = UIColor.white
   }
 
   public required init?(coder aDecoder: NSCoder) {
@@ -65,7 +65,7 @@ public class PostMediaView: UIView {
 
   // MARK: - Actions
 
-  public func handleGestureRecognizer(gesture: UITapGestureRecognizer) {
+  open func handleGestureRecognizer(_ gesture: UITapGestureRecognizer) {
     var index = 2
     if gesture == firstTapGestureRecognizer {
       index = 0
@@ -77,13 +77,13 @@ public class PostMediaView: UIView {
 
   // MARK: - Setup
 
-  public func configureView(media: [Media]) {
-    let totalWitdh = UIScreen.mainScreen().bounds.width
+  open func configureView(_ media: [Media]) {
+    let totalWitdh = UIScreen.main.bounds.width
     let viewsArray = [firstImageView, secondImageView, thirdImageView]
 
     viewsArray.forEach { $0.removeFromSuperview() }
 
-    for (index, element) in media.enumerate() where index < 3 {
+    for (index, element) in media.enumerated() where index < 3 {
       addSubview(viewsArray[index])
       viewsArray[index].setImage(element.thumbnail)
     }

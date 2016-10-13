@@ -2,26 +2,26 @@ import Spots
 import Brick
 import Fakery
 
-class ExploreController: SpotsController {
+class ExploreController: Controller {
 
   convenience init(title: String) {
     let suggestedChannels = Component(span: 3, items: [
-      Item(title: "Apple",   kind: Cell.Topic, image: ExploreController.suggestedImage(1)),
-      Item(title: "Spotify", kind: Cell.Topic, image: ExploreController.suggestedImage(2)),
-      Item(title: "Google",  kind: Cell.Topic, image: ExploreController.suggestedImage(3)),
-      Item(title: "Apple",   kind: Cell.Topic, image: ExploreController.suggestedImage(4)),
-      Item(title: "Spotify", kind: Cell.Topic, image: ExploreController.suggestedImage(5)),
-      Item(title: "Google",  kind: Cell.Topic, image: ExploreController.suggestedImage(6)),
-      Item(title: "Apple",   kind: Cell.Topic, image: ExploreController.suggestedImage(7)),
-      Item(title: "Spotify", kind: Cell.Topic, image: ExploreController.suggestedImage(8)),
-      Item(title: "Google",  kind: Cell.Topic, image: ExploreController.suggestedImage(9))
+      Item(title: "Apple", image: ExploreController.suggestedImage(1), kind: Cell.Topic),
+      Item(title: "Spotify", image: ExploreController.suggestedImage(2), kind: Cell.Topic),
+      Item(title: "Google", image: ExploreController.suggestedImage(3), kind: Cell.Topic),
+      Item(title: "Apple", image: ExploreController.suggestedImage(4), kind: Cell.Topic),
+      Item(title: "Spotify", image: ExploreController.suggestedImage(5), kind: Cell.Topic),
+      Item(title: "Google", image: ExploreController.suggestedImage(6), kind: Cell.Topic),
+      Item(title: "Apple", image: ExploreController.suggestedImage(7), kind: Cell.Topic),
+      Item(title: "Spotify", image: ExploreController.suggestedImage(8), kind: Cell.Topic),
+      Item(title: "Google", image: ExploreController.suggestedImage(9), kind: Cell.Topic)
       ])
 
     let suggestedTopics = Component(span: 3, items: [
       Item(title: "Business", kind: Cell.Topic, meta: ["color" : "5A0E20"]),
       Item(title: "Software", kind: Cell.Topic, meta: ["color" : "760D26"]),
-      Item(title: "News",     kind: Cell.Topic, meta: ["color" : "2266B5"]),
-      Item(title: "iOS",      kind: Cell.Topic, meta: ["color" : "4CBCFB"])
+      Item(title: "News", kind: Cell.Topic, meta: ["color" : "2266B5"]),
+      Item(title: "iOS", kind: Cell.Topic, meta: ["color" : "4CBCFB"])
       ])
 
     let browse = Component(title: "Browse", items: [
@@ -53,11 +53,11 @@ class ExploreController: SpotsController {
     self.title = title
   }
 
-  static func suggestedImage(id: Int) -> String {
+  static func suggestedImage(_ id: Int) -> String {
     return Faker().internet.image(width: 125, height: 160) + "?item=\(id)"
   }
 
-  static func topicImage(hex: String, id: Int) -> String {
+  static func topicImage(_ hex: String, id: Int) -> String {
     return Faker().internet.templateImage(width: 125, height: 160, backColorHex: hex, frontColorHex: hex) + "?item=\(id)"
   }
 }

@@ -15,14 +15,14 @@ struct SongsBlueprint: BlueprintContainer {
         spotIndex: 0,
         adapter: { json in
           var list = [Item]()
-          for (index, item) in json.enumerate() {
+          for (index, item) in json.enumerated() {
             let subtitle = item.resolve(keyPath: "track.artists.0.name") ?? ""
             let viewModel = Item(
               title: item.resolve(keyPath: "track.name") ?? "",
               subtitle: "by \(subtitle)",
-              action: "preview",
               image: item.resolve(keyPath: "track.album.images.0.url") ?? "",
               kind: "track",
+              action: "preview",
               size: CGSize(width: 200, height: 50),
               meta: [
                 "fragments" : ["preview" : item.resolve(keyPath: "track.preview_url") ?? ""],

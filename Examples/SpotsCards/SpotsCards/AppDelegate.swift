@@ -7,23 +7,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
   var navigationController: UINavigationController?
 
-  func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-    window = UIWindow(frame: UIScreen.mainScreen().bounds)
+  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    window = UIWindow(frame: UIScreen.main.bounds)
 
-    SpotFactory.register("cards", spot: CardSpot.self)
+    Factory.register(kind: "cards", spot: CardSpot.self)
     CarouselSpot.register(view: CardSpotCell.self, identifier: "card")
 
     CarouselSpot.configure = { collectionView, layout in
       collectionView.backgroundColor = UIColor(red:0.110, green:0.110, blue:0.110, alpha: 1)
     }
 
-    SpotsController.configure = {
-      $0.backgroundColor = UIColor.whiteColor()
+    Controller.configure = {
+      $0.backgroundColor = UIColor.white
     }
 
     let controller = JSONController()
 
-    controller.title = "Spots Cards".uppercaseString
+    controller.title = "Spots Cards".uppercased()
 
     navigationController = UINavigationController(rootViewController: controller)
     window?.rootViewController = navigationController
@@ -36,7 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
 
   func applyStyles() {
-    UIApplication.sharedApplication().statusBarStyle = .LightContent
+    UIApplication.shared.statusBarStyle = .lightContent
 
     let navigationBar = UINavigationBar.appearance()
     navigationBar.barTintColor = UIColor(red:0.000, green:0.000, blue:0.000, alpha: 1)

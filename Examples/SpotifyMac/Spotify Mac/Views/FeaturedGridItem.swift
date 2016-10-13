@@ -2,59 +2,59 @@ import Spots
 import Brick
 import Sugar
 
-public class FeaturedGridItem: NSCollectionViewItem, SpotConfigurable {
+open class FeaturedGridItem: NSCollectionViewItem, SpotConfigurable {
 
   var item: Item?
 
-  public var size = CGSize(width: 0, height: 88)
-  public var customView = FlippedView().then {
+  open var preferredViewSize: CGSize = CGSize(width: 0, height: 88)
+  open var customView = FlippedView().then {
     $0.wantsLayer = true
     $0.layer?.anchorPoint = CGPoint(x: 0.5, y: 0.5)
 
     let shadow = NSShadow()
-    shadow.shadowColor = NSColor.blackColor().alpha(0.5)
+    shadow.shadowColor = NSColor.black.alpha(0.5)
     shadow.shadowBlurRadius = 10.0
     shadow.shadowOffset = CGSize(width: 0, height: -10)
     $0.shadow = shadow
   }
 
-  static public var flipped: Bool {
+  static open var flipped: Bool {
     get {
       return true
     }
   }
 
   lazy var customImageView = NSImageView().then {
-    $0.autoresizingMask = .ViewWidthSizable
+    $0.autoresizingMask = .viewWidthSizable
   }
 
-  public lazy var titleLabel = NSTextField().then {
-    $0.editable = false
-    $0.selectable = false
-    $0.bezeled = false
-    $0.textColor = NSColor.whiteColor()
+  open lazy var titleLabel = NSTextField().then {
+    $0.isEditable = false
+    $0.isSelectable = false
+    $0.isBezeled = false
+    $0.textColor = NSColor.white
     $0.drawsBackground = false
-    $0.font = NSFont.systemFontOfSize(14)
+    $0.font = NSFont.systemFont(ofSize: 14)
   }
 
-  public lazy var subtitleLabel = NSTextField().then {
-    $0.editable = false
-    $0.selectable = false
-    $0.bezeled = false
-    $0.textColor = NSColor.lightGrayColor()
+  open lazy var subtitleLabel = NSTextField().then {
+    $0.isEditable = false
+    $0.isSelectable = false
+    $0.isBezeled = false
+    $0.textColor = NSColor.lightGray
     $0.drawsBackground = false
   }
 
-  override init?(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+  override init?(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     super.init(nibName: nil, bundle: nil)
 
     customView.addSubview(titleLabel)
     customView.addSubview(subtitleLabel)
     customView.addSubview(customImageView)
 
-    addObserver(self, forKeyPath: "customImageView.image", options: .New, context: nil)
+    addObserver(self, forKeyPath: #keyPath(customImageView.image), options: .new, context: nil)
 
-    let area = NSTrackingArea(rect: customView.bounds, options: [.InVisibleRect, .MouseEnteredAndExited, .ActiveInKeyWindow], owner: self, userInfo: nil)
+    let area = NSTrackingArea(rect: customView.bounds, options: [.inVisibleRect, .mouseEnteredAndExited, .activeInKeyWindow], owner: self, userInfo: nil)
     customView.addTrackingArea(area)
 
     setupConstraints()
@@ -65,7 +65,7 @@ public class FeaturedGridItem: NSCollectionViewItem, SpotConfigurable {
   }
 
   deinit {
-    removeObserver(self, forKeyPath: "customImageView.image")
+    removeObserver(self, forKeyPath: #keyPath(customImageView.image))
   }
 
   func setupConstraints() {
@@ -74,42 +74,42 @@ public class FeaturedGridItem: NSCollectionViewItem, SpotConfigurable {
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
     subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
 
-    customImageView.topAnchor.constraintEqualToAnchor(customImageView.superview!.topAnchor).active = true
-    customImageView.leftAnchor.constraintEqualToAnchor(customImageView.superview!.leftAnchor).active = true
-    customImageView.rightAnchor.constraintEqualToAnchor(customImageView.superview!.rightAnchor).active = true
+    customImageView.topAnchor.constraint(equalTo: customImageView.superview!.topAnchor).isActive = true
+    customImageView.leftAnchor.constraint(equalTo: customImageView.superview!.leftAnchor).isActive = true
+    customImageView.rightAnchor.constraint(equalTo: customImageView.superview!.rightAnchor).isActive = true
 
-    titleLabel.topAnchor.constraintEqualToAnchor(customImageView.bottomAnchor).active = true
+    titleLabel.topAnchor.constraint(equalTo: customImageView.bottomAnchor).isActive = true
 
-    subtitleLabel.leftAnchor.constraintEqualToAnchor(customImageView.superview!.leftAnchor).active = true
-    subtitleLabel.rightAnchor.constraintEqualToAnchor(customImageView.superview!.rightAnchor).active = true
-    subtitleLabel.topAnchor.constraintEqualToAnchor(titleLabel.bottomAnchor).active = true
+    subtitleLabel.leftAnchor.constraint(equalTo: customImageView.superview!.leftAnchor).isActive = true
+    subtitleLabel.rightAnchor.constraint(equalTo: customImageView.superview!.rightAnchor).isActive = true
+    subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor).isActive = true
   }
 
-  public override func loadView() {
+  open override func loadView() {
     view = customView
   }
 
-  public override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+  open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
     if let item = item,
-      image = customImageView.image,
-      backgroundView = collectionView.backgroundView,
-      backgroundLayer = backgroundView.layer
-      where backgroundLayer.sublayers == nil && keyPath == "customImageView.image" && item.meta("useAsBackground", type: Bool.self) == true {
+      let image = customImageView.image,
+      let backgroundView = collectionView.backgroundView,
+      let backgroundLayer = backgroundView.layer
+      , backgroundLayer.sublayers == nil && keyPath == "customImageView.image" && item.meta("useAsBackground", type: Bool.self) == true {
 
-      dispatch(queue: .Interactive) {
+      dispatch(queue: .interactive) {
         let (background, _, _, _) = image.colors()
         dispatch { [weak self] in
           guard let weakSelf = self else { return }
 
           let gradientLayer = CAGradientLayer()
           gradientLayer.colors = [
-            background.alpha(0.4).CGColor,
-            NSColor.clearColor().CGColor
+            background.alpha(0.4).cgColor,
+            NSColor.clear.cgColor
           ]
           gradientLayer.locations = [0.0, 0.7]
           gradientLayer.frame.size.width = 3000
           gradientLayer.frame.size.height = weakSelf.collectionView.frame.size.height
-          backgroundLayer.insertSublayer(gradientLayer, atIndex: 0)
+          backgroundLayer.insertSublayer(gradientLayer, at: 0)
 
           NSAnimationContext.runAnimationGroup({ context in
             context.duration = 1.0
@@ -122,14 +122,14 @@ public class FeaturedGridItem: NSCollectionViewItem, SpotConfigurable {
     }
   }
 
-  public override func mouseEntered(theEvent: NSEvent) {
-    super.mouseEntered(theEvent)
+  open override func mouseEntered(with theEvent: NSEvent) {
+    super.mouseEntered(with: theEvent)
 
-    guard customView.layer?.animationForKey("animationGroup") == nil else { return }
+    guard customView.layer?.animation(forKey: "animationGroup") == nil else { return }
 
     let animationGroup = CAAnimationGroup()
     animationGroup.duration = 0.10
-    animationGroup.removedOnCompletion = false
+    animationGroup.isRemovedOnCompletion = false
     animationGroup.fillMode = kCAFillModeForwards
 
     let zoomInAnimation = CABasicAnimation(keyPath: "transform.scale")
@@ -146,17 +146,17 @@ public class FeaturedGridItem: NSCollectionViewItem, SpotConfigurable {
     animationGroup.animations = [zoomInAnimation, positionAnimation]
 
     customView.layer?.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-    customView.layer?.addAnimation(animationGroup, forKey: "animationGroup")
+    customView.layer?.add(animationGroup, forKey: "animationGroup")
   }
 
-  public override func mouseExited(theEvent: NSEvent) {
-    super.mouseExited(theEvent)
+  open override func mouseExited(with theEvent: NSEvent) {
+    super.mouseExited(with: theEvent)
 
     guard customView.layer?.animationKeys() != nil else { return }
 
     let animationGroup = CAAnimationGroup()
     animationGroup.duration = 0.10
-    animationGroup.removedOnCompletion = false
+    animationGroup.isRemovedOnCompletion = false
     animationGroup.fillMode = kCAFillModeForwards
 
     let zoomInAnimation = CABasicAnimation(keyPath: "transform.scale")
@@ -171,24 +171,24 @@ public class FeaturedGridItem: NSCollectionViewItem, SpotConfigurable {
     positionAnimation.toValue = newValue
 
     animationGroup.animations = [zoomInAnimation, positionAnimation]
-    customView.layer?.removeAnimationForKey("animationGroup")
-    customView.layer?.addAnimation(animationGroup, forKey: "reverseAnimation")
+    customView.layer?.removeAnimation(forKey: "animationGroup")
+    customView.layer?.add(animationGroup, forKey: "reverseAnimation")
   }
 
-  public func configure(inout item: Item) {
+  open func configure(_ item: inout Item) {
     customView.layer?.anchorPoint = CGPoint(x: 0.0, y: 0.0)
     titleLabel.stringValue = item.title
     subtitleLabel.stringValue = item.subtitle
 
     self.item = item
 
-    customImageView.heightAnchor.constraintEqualToConstant(item.size.height - 75).active = true
-    titleLabel.leftAnchor.constraintEqualToAnchor(customImageView.leftAnchor).active = true
-    titleLabel.rightAnchor.constraintEqualToAnchor(customImageView.rightAnchor).active = true
+    customImageView.heightAnchor.constraint(equalToConstant: item.size.height - 75).isActive = true
+    titleLabel.leftAnchor.constraint(equalTo: customImageView.leftAnchor).isActive = true
+    titleLabel.rightAnchor.constraint(equalTo: customImageView.rightAnchor).isActive = true
 
     if item.image.isPresent && item.image.hasPrefix("http") {
-      customImageView.setImage(NSURL(string: item.image)) { [customImageView = customImageView] _ in
-        customImageView.contentMode = .ScaleToAspectFill
+      customImageView.setImage(NSURL(string: item.image) as URL?) { [customImageView = customImageView] _ in
+        customImageView.contentMode = .scaleToAspectFill
       }
     }
   }

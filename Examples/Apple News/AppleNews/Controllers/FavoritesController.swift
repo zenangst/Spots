@@ -3,7 +3,7 @@ import Fakery
 import Sugar
 import Brick
 
-class FavoritesController: SpotsController {
+class FavoritesController: Controller {
 
   static let faker = Faker()
 
@@ -12,17 +12,17 @@ class FavoritesController: SpotsController {
     self.title = title
   }
 
-  static func generateItem(index: Int, kind: Cell = Cell.Topic) -> Item {
+  static func generateItem(_ index: Int, kind: Cell = Cell.Topic) -> Item {
     let item = Item(
       title: faker.commerce.department(),
       subtitle: faker.lorem.sentences(amount: 2),
-      kind: kind,
-      image: faker.internet.image(width: 125, height: 160) + "?type=avatar&id=\(index)")
+      image: faker.internet.image(width: 125, height: 160) + "?type=avatar&id=\(index)",
+      kind: kind)
 
     return item
   }
 
-  static func generateItems(from: Int, to: Int, kind: Cell = Cell.Topic) -> [Item] {
+  static func generateItems(_ from: Int, to: Int, kind: Cell = Cell.Topic) -> [Item] {
     var items = [Item]()
     for i in from...from+to {
       autoreleasepool { items.append(generateItem(i, kind: kind)) }
@@ -36,22 +36,22 @@ class FavoritesController: SpotsController {
     showContent()
   }
 
-  override func viewWillAppear(animated: Bool) {
+  override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
 
     if navigationController?.navigationBar.topItem?.rightBarButtonItem == nil {
       navigationController?.navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(
-        barButtonSystemItem: .Organize,
+        barButtonSystemItem: .organize,
         target: self,
         action: #selector(showContent))
     }
   }
 
   func showContent() {
-    let newType = spot(0, Spotable.self)?.component.kind == "grid" ? "list" : "grid"
+    let newType = spot(at: 0)?.component.kind == "grid" ? "list" : "grid"
 
     navigationController?.navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(
-      barButtonSystemItem: newType == "grid" ? .Organize : .Action,
+      barButtonSystemItem: newType == "grid" ? .organize : .action,
       target: self,
       action: #selector(showContent))
 
@@ -64,13 +64,13 @@ class FavoritesController: SpotsController {
       ]
     ], animated: { view in
       view.alpha = 0.0
-      view.transform = CGAffineTransformMakeScale(1.0, 0.0)
-      UIView.animateWithDuration(0.3) {
+      view.transform = CGAffineTransform(scaleX: 1.0, y: 0.0)
+      UIView.animate(withDuration: 0.3) {
         view.alpha = 1.0
-        view.transform = CGAffineTransformIdentity
+        view.transform = CGAffineTransform.identity
       }
     }) {
-      dispatch(queue: .Interactive) { [weak self] in
+      dispatch(queue: .interactive) { [weak self] in
         let items = FavoritesController.generateItems(0, to: 11, kind: newType == "grid" ? Cell.Topic : Cell.Feed)
         self?.update { spot in
           spot.component.items = items

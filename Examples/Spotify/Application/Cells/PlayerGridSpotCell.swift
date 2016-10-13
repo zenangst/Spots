@@ -3,19 +3,19 @@ import Imaginary
 import Sugar
 import Brick
 
-public class PlayerGridSpotCell: UICollectionViewCell, SpotConfigurable {
+open class PlayerGridSpotCell: UICollectionViewCell, SpotConfigurable {
 
-  public var size = CGSize(width: 125, height: 100)
+  open var preferredViewSize: CGSize = CGSize(width: 125, height: 100)
 
   lazy var imageView = UIImageView().then {
-    $0.contentMode = .ScaleAspectFill
-    $0.tintColor = UIColor.whiteColor()
+    $0.contentMode = .scaleAspectFill
+    $0.tintColor = UIColor.white
   }
 
   lazy var textLabel = UILabel().then {
-    $0.textColor = UIColor.whiteColor()
-    $0.textAlignment = .Center
-    $0.font = UIFont.systemFontOfSize(14)
+    $0.textColor = UIColor.white
+    $0.textAlignment = .center
+    $0.font = UIFont.systemFont(ofSize: 14)
   }
 
   override init(frame: CGRect) {
@@ -28,24 +28,24 @@ public class PlayerGridSpotCell: UICollectionViewCell, SpotConfigurable {
     fatalError("init(coder:) has not been implemented")
   }
 
-  public func configure(inout item: Item) {
-    backgroundColor = UIColor.clearColor()
+  open func configure(_ item: inout Item) {
+    backgroundColor = UIColor.clear
 
     if item.image.isPresent {
       imageView.frame.size = CGSize(width: 32, height: 32)
       imageView.x = (width - imageView.frame.width) / 2
       imageView.y = (height - imageView.frame.height) / 2
-      imageView.image = UIImage(named: item.image)?.imageWithRenderingMode(.AlwaysTemplate)
+      imageView.image = UIImage(named: item.image)?.withRenderingMode(.alwaysTemplate)
       textLabel.y = imageView.y + 20
     }
 
-    imageView.tintColor = item.meta("tintColor", UIColor.whiteColor())
-    textLabel.textColor = item.meta("textColor", UIColor.whiteColor())
+    imageView.tintColor = item.meta("tintColor", UIColor.white)
+    textLabel.textColor = item.meta("textColor", UIColor.white)
 
     textLabel.text = item.title
     textLabel.width = width
     textLabel.height = 48
 
-    item.size = size
+    item.size = preferredViewSize
   }
 }

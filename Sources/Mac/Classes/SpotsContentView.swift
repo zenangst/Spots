@@ -1,8 +1,8 @@
 import Cocoa
 
-public class SpotsContentView: NSView {
+open class SpotsContentView: NSView {
 
-  override public var flipped: Bool {
+  override open var isFlipped: Bool {
     get {
       return true
     }
@@ -13,11 +13,11 @@ public class SpotsContentView: NSView {
 
    - parameter subview: The view that was added as a subview.
    */
-  override public func didAddSubview(subview: View) {
+  override open func didAddSubview(_ subview: View) {
     super.didAddSubview(subview)
 
     guard let clipView = superview,
-      containerScrollView = clipView.superview as? SpotsScrollView else { return }
+      let containerScrollView = clipView.superview as? SpotsScrollView else { return }
     containerScrollView.didAddSubviewToContainer(subview)
   }
 
@@ -26,11 +26,11 @@ public class SpotsContentView: NSView {
 
    - parameter subview: Tells the view that a subview is about to be removed.
    */
-  override public func willRemoveSubview(subview: View) {
+  override open func willRemoveSubview(_ subview: View) {
     super.willRemoveSubview(subview)
 
     guard let clipView = superview,
-      containerScrollView = clipView.superview as? SpotsScrollView else { return }
+      let containerScrollView = clipView.superview as? SpotsScrollView else { return }
     containerScrollView.willRemoveSubview(subview)
   }
 }

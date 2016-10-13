@@ -1,7 +1,7 @@
 import Spots
 import Sugar
 
-class SearchController: SpotsController {
+class SearchController: Controller {
 
   convenience init(title: String) {
     let spots: [Spotable] = [
@@ -15,18 +15,18 @@ class SearchController: SpotsController {
     self.title = title
   }
 
-  override func viewWillAppear(animated: Bool) {
+  override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
 
-    dispatch(queue: .Interactive) { [weak self] in
+    dispatch(queue: .interactive) { [weak self] in
       let items = FavoritesController.generateItems(0, to: 4)
       self?.update(spotAtIndex: 2) { spot in
         spot.component.items = items
       }
     }
 
-    if let headerView = spot(1, ListSpot.self)?.tableView.headerViewForSection(0),
-      searchHeader = headerView as? SearchHeaderView {
+    if let headerView = spot(at: 1, ofType: ListSpot.self)?.tableView.headerView(forSection: 0),
+      let searchHeader = headerView as? SearchHeaderView {
       searchHeader.searchField.delegate = self
     }
   }
@@ -34,14 +34,14 @@ class SearchController: SpotsController {
 
 extension SearchController: UITextFieldDelegate {
 
-  func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
-    if textField.text?.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) == 1 &&
-      string.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) == 0 {
+  func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    if textField.text?.lengthOfBytes(using: String.Encoding.utf8) == 1 &&
+      string.lengthOfBytes(using: String.Encoding.utf8) == 0 {
 
-        dispatch(queue: .Interactive) { [weak self] in
+        dispatch(queue: .interactive) { [weak self] in
           let items = FavoritesController.generateItems(0, to: 4)
 
-          if self?.spot(1, Spotable.self)?.component.title == "Results" {
+          if self?.spot(at: 1, ofType: Spotable.self)?.component.title == "Results" {
             self?.update(spotAtIndex: 1) { spot in
               spot.component.title = "Suggestions"
             }
@@ -51,12 +51,12 @@ extension SearchController: UITextFieldDelegate {
             spot.component.items = items
           }
         }
-    } else if textField.text?.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0 ||
-      string.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0 {
+    } else if (textField.text?.lengthOfBytes(using: String.Encoding.utf8))! > 0 ||
+      string.lengthOfBytes(using: String.Encoding.utf8) > 0 {
 
-        dispatch(queue: .Interactive) { [weak self] in
+        dispatch(queue: .interactive) { [weak self] in
 
-          if self?.spot(1, Spotable.self)?.component.title == "Suggestions" {
+          if self?.spot(at: 1, ofType: Spotable.self)?.component.title == "Suggestions" {
             self?.update(spotAtIndex: 1) { spot in
               spot.component.title = "Results"
             }
@@ -72,7 +72,7 @@ extension SearchController: UITextFieldDelegate {
     return true
   }
 
-  func textFieldShouldReturn(textField: UITextField) -> Bool {
+  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     textField.resignFirstResponder()
     return true
   }

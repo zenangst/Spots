@@ -15,7 +15,7 @@ struct AlbumBlueprint: BlueprintContainer {
         spotIndex: 1,
         adapter: { json in
           var list = [Item]()
-          for (index, item) in json.enumerate() {
+          for (index, item) in json.enumerated() {
             let albumFragments: [String : String] = [
               "title" : item.resolve(keyPath: "track.album.name") ?? "",
               "image" : item.resolve(keyPath: "track.album.images.0.url") ?? "",
@@ -33,7 +33,7 @@ struct AlbumBlueprint: BlueprintContainer {
 
             let duration = item.resolve(keyPath: "duration_ms") ?? 0
             let subtitle = item.resolve(keyPath: "artists.0.name") ?? ""
-            let meta: [String : AnyObject] = [
+            let meta: [String : Any] = [
               "duration" : duration,
               "album-fragments" : albumFragments,
               "artist-fragments" : artistFragments,
@@ -48,8 +48,8 @@ struct AlbumBlueprint: BlueprintContainer {
               title: item.resolve(keyPath: "name") ?? "",
               subtitle: "by \(subtitle)",
               image: "iconMyMusic",
-              action: "preview",
               kind: "track",
+              action: "preview",
               size: CGSize(width: 200, height: 50),
               meta: meta
             )
@@ -61,13 +61,13 @@ struct AlbumBlueprint: BlueprintContainer {
       fragmentHandler: { fragments, controller in
         let headerModel = Item(
           title: fragments.resolve(keyPath:"title") ?? "",
-          image: fragments.resolve(keyPath:"image") ?? "",
           subtitle: fragments.resolve(keyPath:"description") ?? "",
+          image: fragments.resolve(keyPath:"image") ?? "",
           kind : "header",
           size: CGSize(width: 700, height: 135)
         )
 
-        controller.updateIfNeeded(spotAtIndex: 0, items: [headerModel], withAnimation: .None) {
+        controller.updateIfNeeded(spotAtIndex: 0, items: [headerModel], withAnimation: .none) {
           controller.cache()
         }
       },

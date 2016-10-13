@@ -2,19 +2,19 @@ import Spots
 import Imaginary
 import Brick
 
-public class PlaylistListSpotCell: UITableViewCell, SpotConfigurable {
+open class PlaylistListSpotCell: UITableViewCell, SpotConfigurable {
 
-  public var size = CGSize(width: 0, height: 60)
-  public var item: Item?
+  open var preferredViewSize: CGSize = CGSize(width: 0, height: 60)
+  open var item: Item?
 
   lazy var selectedView = UIView().then {
-    $0.backgroundColor = UIColor.darkGrayColor().colorWithAlphaComponent(0.4)
+    $0.backgroundColor = UIColor.darkGray.withAlphaComponent(0.4)
   }
 
   lazy var transparentImage = UIImage.transparentImage(CGSize(width: 48, height: 48))
 
   public override init(style: UITableViewCellStyle, reuseIdentifier: String!) {
-    super.init(style: .Subtitle, reuseIdentifier: reuseIdentifier)
+    super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
     selectedBackgroundView = selectedView
   }
 
@@ -22,36 +22,36 @@ public class PlaylistListSpotCell: UITableViewCell, SpotConfigurable {
     fatalError("init(coder:) has not been implemented")
   }
 
-  public func configure(inout item: Item) {
-    backgroundColor = UIColor.blackColor()
-    textLabel?.textColor = UIColor.whiteColor()
-    detailTextLabel?.textColor = UIColor.whiteColor()
+  open func configure(_ item: inout Item) {
+    backgroundColor = UIColor.black
+    textLabel?.textColor = UIColor.white
+    detailTextLabel?.textColor = UIColor.white
 
-    if let textColor = item.meta["background"] as? UIColor where !textColor.isDark {
+    if let textColor = item.meta["background"] as? UIColor, !textColor.isDark {
       textLabel?.textColor = textColor
     }
 
-    if let subtitleColor = item.meta["secondary"] as? UIColor where !subtitleColor.isDark {
+    if let subtitleColor = item.meta["secondary"] as? UIColor, !subtitleColor.isDark {
       detailTextLabel?.textColor = subtitleColor
     }
 
-    if let action = item.action where action.isPresent {
-      accessoryType = .DisclosureIndicator
+    if let action = item.action, action.isPresent {
+      accessoryType = .disclosureIndicator
     } else {
-      accessoryType = .None
+      accessoryType = .none
     }
 
     detailTextLabel?.text = item.subtitle
     textLabel?.text = item.title
 
-    if let url = NSURL(string: item.image) where item.image.isPresent {
+    if let url = URL(string: item.image), item.image.isPresent {
       imageView?.setImage(url, placeholder: transparentImage)
     }
 
-    item.size.height = item.size.height > 0.0 ? item.size.height : size.height
+    item.size.height = item.size.height > 0.0 ? item.size.height : preferredViewSize.height
   }
 
-  public override func layoutSubviews() {
+  open override func layoutSubviews() {
     super.layoutSubviews()
 
     imageView?.y = 6

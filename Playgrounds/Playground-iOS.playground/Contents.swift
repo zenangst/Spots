@@ -172,7 +172,7 @@ ListSpot.register(header: ListHeaderView.self, identifier: "list")
 ListSpot.register(defaultView: ListCell.self)
 
 // Configure spots controller
-SpotsController.configure = {
+Controller.configure = {
   $0.backgroundColor = UIColor.whiteColor()
 }
 
@@ -215,7 +215,7 @@ let gridItems = Component(span: 6, items: [
   Item(title: "Pages", kind: Cell.Featured, meta: ["color" : UIColor.redColor()])
   ])
 
-let controller = SpotsController(spots: [
+let controller = Controller(spots: [
   ListSpot(component: Component(title: "Carousel Spot", meta: ["headerHeight" : 44])),
   CarouselSpot(carouselItems, top: 5, left: 0, bottom: 5, right: 0, itemSpacing: 0),
   ListSpot(component: Component(title: "Grid Spot", meta: ["headerHeight" : 44])),

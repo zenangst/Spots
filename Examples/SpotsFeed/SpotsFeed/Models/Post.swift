@@ -5,20 +5,20 @@ public protocol PostConvertible {
   var wallModel: Post { get }
 }
 
-public class Post {
+open class Post {
 
-  public var id = 0
-  public var publishDate = ""
-  public var text = ""
-  public var liked = false
-  public var seen = false
-  public var likeCount = 0
-  public var seenCount = 0
-  public var commentCount = 0
-  public var author: Author?
-  public var reusableIdentifier = PostTableViewCell.reusableIdentifier
+  open var id = 0
+  open var publishDate = ""
+  open var text = ""
+  open var liked = false
+  open var seen = false
+  open var likeCount = 0
+  open var seenCount = 0
+  open var commentCount = 0
+  open var author: Author?
+  open var reusableIdentifier = PostTableViewCell.reusableIdentifier
 
-  public var media: [Media]
+  open var media: [Media]
 
   // MARK: - Initialization
 

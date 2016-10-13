@@ -2,40 +2,40 @@ import Spots
 import Brick
 import Sugar
 
-public class AlbumGridItem: NSCollectionViewItem, SpotConfigurable {
+open class AlbumGridItem: NSCollectionViewItem, SpotConfigurable {
 
   var item: Item?
 
-  public var size = CGSize(width: 0, height: 88)
-  public var customView = FlippedView().then {
+  open var preferredViewSize: CGSize = CGSize(width: 0, height: 88)
+  open var customView = FlippedView().then {
     let shadow = NSShadow()
-    shadow.shadowColor = NSColor.blackColor().alpha(0.5)
+    shadow.shadowColor = NSColor.black.alpha(0.5)
     shadow.shadowBlurRadius = 10.0
     shadow.shadowOffset = CGSize(width: 0, height: -10)
 
     $0.shadow = shadow
   }
 
-  static public var flipped: Bool {
+  static open var flipped: Bool {
     get {
       return true
     }
   }
 
-  public lazy var titleLabel = NSTextField().then {
-    $0.editable = false
-    $0.selectable = false
-    $0.bezeled = false
-    $0.textColor = NSColor.whiteColor()
+  open lazy var titleLabel = NSTextField().then {
+    $0.isEditable = false
+    $0.isSelectable = false
+    $0.isBezeled = false
+    $0.textColor = NSColor.white
     $0.drawsBackground = false
-    $0.alignment = .Center
+    $0.alignment = .center
   }
 
   lazy var customImageView = NSImageView().then {
-    $0.autoresizingMask = .ViewWidthSizable
+    $0.autoresizingMask = .viewWidthSizable
   }
 
-  override init?(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+  override init?(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     super.init(nibName: nil, bundle: nil)
 
     customView.addSubview(customImageView)
@@ -46,20 +46,20 @@ public class AlbumGridItem: NSCollectionViewItem, SpotConfigurable {
 
   func setupConstraints() {
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
-    titleLabel.leftAnchor.constraintEqualToAnchor(customImageView.superview!.leftAnchor).active = true
-    titleLabel.rightAnchor.constraintEqualToAnchor(customImageView.superview!.rightAnchor).active = true
-    titleLabel.centerXAnchor.constraintEqualToAnchor(titleLabel.superview!.centerXAnchor).active = true
+    titleLabel.leftAnchor.constraint(equalTo: customImageView.superview!.leftAnchor).isActive = true
+    titleLabel.rightAnchor.constraint(equalTo: customImageView.superview!.rightAnchor).isActive = true
+    titleLabel.centerXAnchor.constraint(equalTo: titleLabel.superview!.centerXAnchor).isActive = true
   }
 
   required public init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 
-  public override func loadView() {
+  open override func loadView() {
     view = customView
   }
 
-  public func configure(inout item: Item) {
+  open func configure(_ item: inout Item) {
     self.item = item
 
     customView.frame.size.height = item.size.height
@@ -67,8 +67,8 @@ public class AlbumGridItem: NSCollectionViewItem, SpotConfigurable {
     customImageView.frame.size.height = item.size.height
 
     if item.image.isPresent && item.image.hasPrefix("http") {
-      customImageView.setImage(NSURL(string: item.image)) { [weak self] image in
-        self?.customImageView.contentMode = .ScaleToAspectFill
+      customImageView.setImage(NSURL(string: item.image) as URL?) { [weak self] image in
+        self?.customImageView.contentMode = .scaleToAspectFill
       }
     }
   }

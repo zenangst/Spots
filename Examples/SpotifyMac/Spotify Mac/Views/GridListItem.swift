@@ -4,27 +4,27 @@ import Brick
 import Imaginary
 import Hue
 
-public class GridListItem: NSCollectionViewItem, SpotConfigurable {
+open class GridListItem: NSCollectionViewItem, SpotConfigurable {
 
-  public var item: Item?
-  public var size = CGSize(width: 0, height: 88)
+  open var item: Item?
+  open var preferredViewSize: CGSize = CGSize(width: 0, height: 88)
 
-  static public var flipped: Bool {
+  static open var flipped: Bool {
     get { return true }
   }
 
   lazy var customView = TableRow(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
 
-  public override func loadView() {
+  open override func loadView() {
     view = NSView()
     view.addSubview(customView)
     view.autoresizesSubviews = true
-    customView.autoresizingMask = [.ViewWidthSizable, .ViewHeightSizable]
+    customView.autoresizingMask = [.viewWidthSizable, .viewHeightSizable]
   }
 
-  public func configure(inout item: Item) {
+  open func configure(_ item: inout Item) {
     customView.configure(&item)
     customView.acceptsTouchEvents = false
-    item.size.height = customView.size.height
+    item.size.height = customView.frame.size.height
   }
 }

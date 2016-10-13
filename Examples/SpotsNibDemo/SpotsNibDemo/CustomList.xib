@@ -1,9 +1,10 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -12,34 +13,30 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="66"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="custom-list" tableViewCell="yRU-sz-95M" id="dXq-sm-7eF">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="66"/>
+                <frame key="frameInset" width="320" height="65.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="0QL-vE-arW">
-                        <rect key="frame" x="256" y="18" width="51" height="31"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="31" id="Agc-PJ-8MJ"/>
                             <constraint firstAttribute="width" constant="51" id="bh0-uu-YrJ"/>
                         </constraints>
                     </stackView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sNz-lQ-DGH">
-                        <rect key="frame" x="21" y="12" width="83" height="21"/>
                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
-                        <color key="textColor" red="0.48627450980392156" green="0.52941176470588236" blue="0.64313725490196072" alpha="1" colorSpace="deviceRGB"/>
+                        <color key="textColor" red="0.41157412528991699" green="0.45116338133811951" blue="0.57623225450515747" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subtitle label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xFX-yk-gTH">
-                        <rect key="frame" x="21" y="35" width="83" height="20"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                        <color key="textColor" red="0.27450980392156865" green="0.3411764705882353" blue="0.44313725490196076" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="textColor" red="0.27450980392156865" green="0.3411764705882353" blue="0.44313725490196076" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mgx-FV-wFz">
-                        <rect key="frame" x="256" y="18" width="53" height="31"/>
-                        <color key="onTintColor" red="0.21568627450980393" green="0.42352941176470588" blue="0.72156862745098038" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="onTintColor" red="0.21568627450980393" green="0.42352941176470588" blue="0.72156862745098038" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </switch>
                 </subviews>
-                <color key="backgroundColor" red="0.094117647058823528" green="0.10588235294117647" blue="0.13725490196078433" alpha="1" colorSpace="calibratedRGB"/>
+                <color key="backgroundColor" red="0.094117647058823528" green="0.10588235294117647" blue="0.13725490196078433" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 <constraints>
                     <constraint firstItem="0QL-vE-arW" firstAttribute="centerY" secondItem="dXq-sm-7eF" secondAttribute="centerY" id="6WA-JS-hB9"/>
                     <constraint firstAttribute="trailingMargin" secondItem="0QL-vE-arW" secondAttribute="trailing" constant="5" id="9ho-Zc-KZe"/>

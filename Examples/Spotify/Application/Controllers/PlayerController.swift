@@ -5,13 +5,13 @@ import Imaginary
 import Sugar
 import Brick
 
-class PlayerController: SpotsController {
+class PlayerController: Spots.Controller {
 
-  let screenBounds = UIScreen.mainScreen().bounds
-  var initialOrigin: CGFloat = UIScreen.mainScreen().bounds.height - 108
+  let screenBounds = UIScreen.main.bounds
+  var initialOrigin: CGFloat = UIScreen.main.bounds.height - 108
   let offset: CGFloat = 108
   var lastItem: Item?
-  var currentURIs = [NSURL]()
+  var currentURIs = [URL]()
 
   lazy var panRecognizer: UIPanGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(PlayerController.handlePanGesture(_:)))
   lazy var tapRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(PlayerController.handleTapGesture(_:)))
@@ -20,141 +20,140 @@ class PlayerController: SpotsController {
 
   lazy var player: SPTAudioStreamingController = {
     let player = SPTAudioStreamingController(clientId: SPTAuth.defaultInstance().clientID)
-    player.playbackDelegate = self
+    player?.playbackDelegate = self
 
-    return player
+    return player!
   }()
 
   required init(spots: [Spotable]) {
     super.init(spots: spots)
 
-    view.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.9)
-    spotsScrollView.scrollEnabled = false
-    spotsScrollView.backgroundColor = UIColor.clearColor()
+    view.backgroundColor = UIColor.black.withAlphaComponent(0.9)
+    scrollView.isScrollEnabled = false
+    scrollView.backgroundColor = UIColor.clear
 
-    if let listSpot = spot(0, ListSpot.self) {
-      listSpot.tableView.separatorStyle = .None
+    if let listSpot = spot(at: 0, ofType: ListSpot.self) {
+      listSpot.tableView.separatorStyle = .none
     }
 
-    if let carouselSpot = spot(1, CarouselSpot.self) {
+    if let carouselSpot = spot(at: 1, ofType: CarouselSpot.self) {
       carouselSpot.paginate = true
       carouselSpot.carouselScrollDelegate = self
     }
 
     view.addGestureRecognizer(panRecognizer)
 
-    NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(PlayerController.updatePlayer(_:)), name: "updatePlayer", object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(PlayerController.updatePlayer(_:)), name: NSNotification.Name(rawValue: "updatePlayer"), object: nil)
 
-    currentAlbum.addObserver(self, forKeyPath: "image", options: [.New, .Old], context: nil)
+    currentAlbum.addObserver(self, forKeyPath: "image", options: [.new, .old], context: nil)
   }
 
   required init?(coder aDecoder: NSCoder) {
-      fatalError("init(coder:) has not been implemented")
+    fatalError("init(coder:) has not been implemented")
   }
 
   deinit {
-    NSNotificationCenter.defaultCenter().removeObserver(self)
+    NotificationCenter.default.removeObserver(self)
   }
 
-  override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+  override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
     if let imageView = object as? UIImageView,
-      image = imageView.image
-      where keyPath == "image" {
-        dispatch(queue: .Interactive) {
-          let (background, primary, secondary, detail) = image.colors(CGSize(width: 128, height: 128))
-          dispatch { [weak self] in
-            if let listSpot = self?.spot(0, ListSpot.self) {
-              var item = listSpot.items[0]
+      let image = imageView.image, keyPath == "image" {
+      dispatch(queue: .interactive) {
+        let (background, primary, secondary, detail) = image.colors(CGSize(width: 128, height: 128))
+        dispatch { [weak self] in
+          if let listSpot = self?.spot(at: 0, ofType: ListSpot.self) {
+            var item = listSpot.items[0]
 
-              item.meta["background"] = background
-              item.meta["textColor"] = primary
-              item.meta["secondary"] = secondary
+            item.meta["background"] = background
+            item.meta["textColor"] = primary
+            item.meta["secondary"] = secondary
 
-              self?.update(item, index: 0, spotIndex: 0)
+            self?.update(item, index: 0, spotIndex: 0)
+          }
+
+          if let listSpot = self?.spot(at: 2, ofType: ListSpot.self) {
+            var item = listSpot.items[0]
+
+            item.meta["background"] = background
+            item.meta["textColor"] = primary
+            item.meta["secondary"] = secondary
+
+            self?.update(item, index: 0, spotIndex: 2)
+          }
+
+          if let gridSpot = self?.spot(at: 3, ofType: GridSpot.self) {
+            var items = gridSpot.items
+            items.enumerated().forEach {
+              items[$0.offset].meta["textColor"] = secondary
+              items[$0.offset].meta["tintColor"] = detail
             }
 
-            if let listSpot = self?.spot(2, ListSpot.self) {
-              var item = listSpot.items[0]
-
-              item.meta["background"] = background
-              item.meta["textColor"] = primary
-              item.meta["secondary"] = secondary
-
-              self?.update(item, index: 0, spotIndex: 2)
-            }
-
-            if let gridSpot = self?.spot(3, GridSpot.self) {
-              var items = gridSpot.items
-              items.enumerate().forEach {
-                items[$0.index].meta["textColor"] = secondary
-                items[$0.index].meta["tintColor"] = detail
-              }
-
-              self?.update(spotAtIndex: 3, withAnimation: .Automatic) {
-                $0.items = items
-              }
-            }
-
-            UIView.animateWithDuration(0.3) {
-              self?.spotsScrollView.backgroundColor = background
-              self?.view.backgroundColor = background
+            self?.update(spotAtIndex: 3, withAnimation: .automatic) {
+              $0.items = items
             }
           }
+
+          UIView.animate(withDuration: 0.3) {
+            self?.scrollView.backgroundColor = background
+            self?.view.backgroundColor = background
+          }
         }
+      }
     }
   }
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    spotsDelegate = self
+    delegate = self
   }
 
-  func updatePlayer(userInfo: [String : String]) {
+  func updatePlayer(_ userInfo: [String : String]) {
     if let track = userInfo["track"],
-      artist = userInfo["artist"] {
+      let artist = userInfo["artist"] {
 
-        var newItem: Item
-        if let spot = spot(0, Spotable.self), item = spot.items.first {
-          newItem = item
-          newItem.title = track
-          newItem.subtitle = artist
-          update(newItem, index: 0, spotIndex: 0)
-          newItem.action = nil
-          update(newItem, index: 0, spotIndex: 2)
-        } else {
-          newItem = Item(title: track, subtitle: artist, action: "openPlayer")
+      var newItem: Item
+      if let spot = spot(at: 0, ofType: Spotable.self), let item = spot.items.first {
+        newItem = item
+        newItem.title = track
+        newItem.subtitle = artist
+        update(newItem, index: 0, spotIndex: 0)
+        newItem.action = nil
+        update(newItem, index: 0, spotIndex: 2)
+      } else {
+        newItem = Item(title: track, subtitle: artist, action: "openPlayer")
 
-          insert(newItem, index: 0, spotIndex: 0)
-          newItem.action = nil
-          insert(newItem, index: 0, spotIndex: 2)
-        }
+        insert(newItem, index: 0, spotIndex: 0)
+        newItem.action = nil
+        insert(newItem, index: 0, spotIndex: 2)
+      }
 
-        showPlayer()
+      showPlayer()
     }
   }
 
-  func handleTapGesture(gesture: UITapGestureRecognizer) {
+  func handleTapGesture(_ gesture: UITapGestureRecognizer) {
     let minimumY: CGFloat = -60
-    let maximumY: CGFloat = UIScreen.mainScreen().bounds.height - offset
+    let maximumY: CGFloat = UIScreen.main.bounds.height - offset
 
     if view.y == maximumY {
-      UIView.animateWithDuration(0.2, delay: 0, options: [.AllowUserInteraction], animations: {
+      UIView.animate(withDuration: 0.2, delay: 0, options: [.allowUserInteraction], animations: {
         self.view.y = minimumY
-        UIApplication.sharedApplication().statusBarHidden = true
+        UIApplication.shared.isStatusBarHidden = true
         }, completion: nil)
     }
   }
 
-  func handlePanGesture(gesture: UIPanGestureRecognizer) {
+  func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
     let minimumY: CGFloat = -60
-    let maximumY: CGFloat = UIScreen.mainScreen().bounds.height - offset
-    let translation = gesture.translationInView(self.view)
-    let velocity = gesture.velocityInView(self.view)
+    let maximumY: CGFloat = UIScreen.main.bounds.height - offset
+    let translation = gesture.translation(in: self.view)
+    let velocity = gesture.velocity(in: self.view)
 
     switch gesture.state {
-    case .Began:
+    case .began:
       initialOrigin = view.y
-    case .Changed:
+    case .changed:
       if initialOrigin + translation.y < minimumY {
         view.y = minimumY
       } else if view.y > maximumY {
@@ -162,16 +161,16 @@ class PlayerController: SpotsController {
       } else if view.y <= maximumY {
         view.y = initialOrigin + translation.y
       }
-    case .Ended, .Cancelled:
+    case .ended, .cancelled:
       let endY = velocity.y <= 0 ? minimumY : maximumY
       var time = maximumY / abs(velocity.y)
       if time > 1 {
         time = 0.7
       }
 
-      UIView.animateWithDuration(NSTimeInterval(time), delay: 0, options: [.AllowUserInteraction], animations: {
+      UIView.animate(withDuration: TimeInterval(time), delay: 0, options: [.allowUserInteraction], animations: {
         self.view.y = endY
-        UIApplication.sharedApplication().statusBarHidden = endY == minimumY
+        //        UIApplication.sharedApplication.statusBarHidden = endY == minimumY
         }, completion: { _ in })
 
     default: break
@@ -179,92 +178,91 @@ class PlayerController: SpotsController {
   }
 
   func openPlayer() {
-    UIView.animateWithDuration(0.3) {
+    UIView.animate(withDuration: 0.3) {
       self.view.y = -60
     }
   }
 
   func showPlayer() {
-    if view.y == UIScreen.mainScreen().bounds.height {
-      UIView.animateWithDuration(0.3) {
+    if view.y == UIScreen.main.bounds.height {
+      UIView.animate(withDuration: 0.3) {
         self.view.y -= self.offset
       }
 
-      if let lastItem = lastItem where lastItem.image.isPresent {
-        currentAlbum.setImage(NSURL(string: lastItem.image)!)
+      if let lastItem = lastItem, lastItem.image.isPresent {
+        currentAlbum.setImage(URL(string: lastItem.image)!)
       }
     }
   }
 
   func hidePlayer() {
-    UIView.animateWithDuration(0.3) {
-      self.view.y = UIScreen.mainScreen().bounds.height
+    UIView.animate(withDuration: 0.3) {
+      self.view.y = UIScreen.main.bounds.height
     }
   }
 }
 
 extension PlayerController: SpotsDelegate {
 
-  func spotDidSelectItem(spot: Spotable, item: Item) {
+  func didSelect(item: Item, in spot: Spotable) {
     guard let urn = item.action else { return }
 
     if !["next", "previous"].contains(urn) {
-      Compass.navigate(urn)
+      Compass.navigate(to: urn)
       return
     }
 
-    if let carouselSpot = self.spot(1, CarouselSpot.self),
-      lastItem = lastItem {
-        guard let currentIndex = carouselSpot.items.indexOf({ $0.action == lastItem.action }) else { return }
-        var newIndex = currentIndex
+    if let carouselSpot = self.spot(at: 1, ofType: CarouselSpot.self),
+      let lastItem = lastItem {
+      guard let currentIndex = carouselSpot.items.index(where: { $0.action == lastItem.action }) else { return }
+      var newIndex = currentIndex
 
-        switch urn {
-        case "next":     newIndex = newIndex + 1
-        case "previous": newIndex = newIndex - 1
-        default: break
-        }
+      switch urn {
+      case "next":     newIndex = newIndex + 1
+      case "previous": newIndex = newIndex - 1
+      default: break
+      }
 
-        guard newIndex >= 0 && newIndex < carouselSpot.items.count  else { return }
-        let item = carouselSpot.items[newIndex]
-        carouselSpot.scrollTo({ item.action == $0.action })
-        self.lastItem = item
-        guard let urn = item.action else { return }
-        Compass.navigate(urn)
+      guard newIndex >= 0 && newIndex < carouselSpot.items.count  else { return }
+      let item = carouselSpot.items[newIndex]
+      carouselSpot.scrollTo({ item.action == $0.action })
+      self.lastItem = item
+      guard let urn = item.action else { return }
+      Compass.navigate(to: urn)
 
-        if item.image.isPresent {
-          currentAlbum.setImage(NSURL(string: item.image)!)
-        }
+      if item.image.isPresent {
+        currentAlbum.setImage(URL(string: item.image)!)
+      }
     }
   }
 }
 
-extension PlayerController: SpotsCarouselScrollDelegate {
+extension PlayerController: CarouselScrollDelegate {
 
-  func spotDidScroll(spot: Spotable) { }
+  func didScroll(in spot: Spotable) { }
 
-  func spotDidEndScrolling(spot: Spotable, item: Item) {
-    guard let urn = item.action, lastItem = lastItem
-      where item.action != lastItem.action
+  func didEndScrolling(in spot: Spotable, item: Item) {
+    guard let urn = item.action, let lastItem = lastItem, item.action != lastItem.action
       else { return }
 
-    Compass.navigate(urn)
+    Compass.navigate(to: urn)
     self.lastItem = item
 
     if item.image.isPresent {
-      currentAlbum.setImage(NSURL(string: item.image)!)
+      currentAlbum.setImage(URL(string: item.image)!)
     }
   }
 }
 
 extension PlayerController: SPTAudioStreamingPlaybackDelegate {
 
-  func audioStreaming(audioStreaming: SPTAudioStreamingController!, didChangeToTrack trackMetadata: [NSObject : AnyObject]!) {
+  func audioStreaming(_ audioStreaming: SPTAudioStreamingController!, didChangeToTrack trackMetadata: [AnyHashable: Any]!) {
 
     guard let name = trackMetadata["SPTAudioStreamingMetadataArtistName"] as? String,
-      artist = trackMetadata["SPTAudioStreamingMetadataArtistName"] as? String,
-      track = trackMetadata["SPTAudioStreamingMetadataTrackName"] as? String
+      let artist = trackMetadata["SPTAudioStreamingMetadataArtistName"] as? String,
+      let track = trackMetadata["SPTAudioStreamingMetadataTrackName"] as? String
       else { return }
-
+    
     updatePlayer([
       "title" : name,
       "artist" :artist,

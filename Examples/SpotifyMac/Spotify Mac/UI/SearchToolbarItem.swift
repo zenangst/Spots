@@ -1,17 +1,17 @@
 import Cocoa
 
-public class SearchToolbarItem: NSToolbarItem {
+open class SearchToolbarItem: NSToolbarItem {
 
-  public lazy var titleLabel = NSTextField().then {
-    $0.editable = true
-    $0.selectable = true
-    $0.bezeled = true
-    $0.bezelStyle = .RoundedBezel
-    $0.cell?.backgroundStyle = .Raised
+  open lazy var titleLabel = NSTextField().then {
+    $0.isEditable = true
+    $0.isSelectable = true
+    $0.isBezeled = true
+    $0.bezelStyle = .roundedBezel
+    $0.cell?.backgroundStyle = .raised
     $0.wantsLayer = true
   }
 
-  lazy public var customView = NSView().then {
+  lazy open var customView = NSView().then {
     $0.wantsLayer = true
     $0.layer = CALayer()
   }

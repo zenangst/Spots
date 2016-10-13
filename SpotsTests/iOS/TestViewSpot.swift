@@ -24,8 +24,8 @@ class ViewSpotTests: XCTestCase {
     XCTAssertEqual(component.dictionary["kind"] as? String, spot.dictionary["kind"] as? String)
     XCTAssertEqual(component.dictionary["span"] as? Int, spot.dictionary["span"] as? Int)
     XCTAssertEqual(
-      (component.dictionary["meta"] as! [String : AnyObject])["headerHeight"] as? CGFloat,
-      (spot.dictionary["meta"] as! [String : AnyObject])["headerHeight"] as? CGFloat
+      (component.dictionary["meta"] as! [String : Any])["headerHeight"] as? CGFloat,
+      (spot.dictionary["meta"] as! [String : Any])["headerHeight"] as? CGFloat
     )
   }
 }

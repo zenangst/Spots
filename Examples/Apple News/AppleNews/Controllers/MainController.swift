@@ -9,7 +9,7 @@ class MainController: UITabBarController {
     }
   }
 
-  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
   }
 
@@ -17,7 +17,7 @@ class MainController: UITabBarController {
     fatalError("init(coder:) has not been implemented")
   }
 
-  override func tabBar(tabBar: UITabBar, didSelectItem item: UITabBarItem) {
+  override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
     title = item.title
   }
 }

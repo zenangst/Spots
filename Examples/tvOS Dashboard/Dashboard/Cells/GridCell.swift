@@ -7,10 +7,10 @@ import Imaginary
 
 class GridCell: UICollectionViewCell, SpotConfigurable {
 
-  var size = CGSize(width: 160, height: 340)
+  var preferredViewSize: CGSize = CGSize(width: 160, height: 340)
 
   lazy var imageView = UIImageView().then {
-    $0.contentMode = .ScaleAspectFill
+    $0.contentMode = .scaleAspectFill
     $0.adjustsImageWhenAncestorFocused = true
   }
 
@@ -24,10 +24,10 @@ class GridCell: UICollectionViewCell, SpotConfigurable {
     fatalError("init(coder:) has not been implemented")
   }
 
-  func configure(inout item: Item) {
+  func configure(_ item: inout Item) {
     if item.image.isPresent {
-      imageView.setImage(NSURL(string: item.image))
-      imageView.tintColor = UIColor.whiteColor()
+      imageView.setImage(URL(string: item.image))
+      imageView.tintColor = UIColor.white
       imageView.frame.size = frame.size
       imageView.width -= 20
       imageView.height -= 20
@@ -36,15 +36,15 @@ class GridCell: UICollectionViewCell, SpotConfigurable {
     }
 
     if item.size.height == 0.0 {
-      item.size.height = size.height
+      item.size.height = preferredViewSize.height
     }
 
     item.size.height = item.meta("height", item.size.height)
   }
 
-  override func didUpdateFocusInContext(context: UIFocusUpdateContext, withAnimationCoordinator coordinator: UIFocusAnimationCoordinator) {
+  override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
     coordinator.addCoordinatedAnimations({
-      if self.focused {
+      if self.isFocused {
         self.layer.zPosition = 1000
       } else {
         self.layer.zPosition = 0

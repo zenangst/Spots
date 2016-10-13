@@ -2,8 +2,8 @@ import Cocoa
 
 enum ContentMode: Int {
 
-  case ScaleToAspectFill
-  case ScaleToAspectFit
+  case scaleToAspectFill
+  case scaleToAspectFit
 }
 
 extension NSImageView {
@@ -11,13 +11,13 @@ extension NSImageView {
   var contentMode: ContentMode {
     set {
       guard let image = image else { return }
-      let rect = self.convertRect(self.bounds, toView: nil)
+      let rect = self.convert(self.bounds, to: nil)
       guard var _ = superview?.frame else { return }
 
       var imageSize = CGSize(width: image.size.width, height: image.size.height)
 
       switch newValue {
-      case .ScaleToAspectFill:
+      case .scaleToAspectFill:
         if imageSize.height < imageSize.width {
           imageSize.width = floor((imageSize.width/imageSize.height) * rect.size.height)
           imageSize.height = rect.size.height
@@ -27,7 +27,7 @@ extension NSImageView {
         }
 
         image.size = CGSize(width: imageSize.width, height: imageSize.height)
-      case .ScaleToAspectFit:
+      case .scaleToAspectFit:
         if imageSize.height < imageSize.width {
           imageSize.height = frame.size.height
           imageSize.width = frame.size.width
@@ -40,7 +40,7 @@ extension NSImageView {
       }
     }
     get {
-      return .ScaleToAspectFill
+      return .scaleToAspectFill
     }
   }
 

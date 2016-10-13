@@ -22,32 +22,32 @@ class CarouselSpotTests: XCTestCase {
     XCTAssertEqual(component.dictionary["kind"] as? String, spot.dictionary["kind"] as? String)
     XCTAssertEqual(component.dictionary["span"] as? Int, spot.dictionary["span"] as? Int)
     XCTAssertEqual(
-      (component.dictionary["meta"] as! [String : AnyObject])["headerHeight"] as? CGFloat,
-      (spot.dictionary["meta"] as! [String : AnyObject])["headerHeight"] as? CGFloat
+      (component.dictionary["meta"] as! [String : Any])["headerHeight"] as? CGFloat,
+      (spot.dictionary["meta"] as! [String : Any])["headerHeight"] as? CGFloat
     )
   }
 
   func testSafelyResolveKind() {
     let component = Component(title: "CarouselSpot", kind: "custom-carousel", items: [Item(title: "foo", kind: "custom-item-kind")])
     let carouselSpot = CarouselSpot(component: component)
-    let indexPath = NSIndexPath(forRow: 0, inSection: 0)
+    let indexPath = IndexPath(row: 0, section: 0)
 
-    XCTAssertEqual(carouselSpot.identifier(indexPath), CarouselSpot.views.defaultIdentifier)
-
-    CarouselSpot.views.defaultItem = Registry.Item.classType(CarouselSpotCell.self)
-    XCTAssertEqual(carouselSpot.identifier(indexPath),CarouselSpot.views.defaultIdentifier)
+    XCTAssertEqual(carouselSpot.identifier(at: indexPath), CarouselSpot.views.defaultIdentifier)
 
     CarouselSpot.views.defaultItem = Registry.Item.classType(CarouselSpotCell.self)
-    XCTAssertEqual(carouselSpot.identifier(indexPath),CarouselSpot.views.defaultIdentifier)
+    XCTAssertEqual(carouselSpot.identifier(at: indexPath),CarouselSpot.views.defaultIdentifier)
+
+    CarouselSpot.views.defaultItem = Registry.Item.classType(CarouselSpotCell.self)
+    XCTAssertEqual(carouselSpot.identifier(at: indexPath),CarouselSpot.views.defaultIdentifier)
 
     CarouselSpot.views["custom-item-kind"] = Registry.Item.classType(CarouselSpotCell.self)
-    XCTAssertEqual(carouselSpot.identifier(indexPath), "custom-item-kind")
+    XCTAssertEqual(carouselSpot.identifier(at: indexPath), "custom-item-kind")
 
     CarouselSpot.views.storage.removeAll()
   }
 
   func testMetaMapping() {
-    var json: [String : AnyObject] = [
+    var json: [String : Any] = [
       "meta" : [
         "item-spacing" : 25.0,
         "line-spacing" : 10.0,
@@ -81,7 +81,7 @@ class CarouselSpotTests: XCTestCase {
   }
 
   func testCarouselSetupWithSimpleStructure() {
-    let json: [String : AnyObject] = [
+    let json: [String : Any] = [
       "items" : [
         ["title" : "foo",
           "size" : [
@@ -128,7 +128,7 @@ class CarouselSpotTests: XCTestCase {
   }
 
   func testCarouselSetupWithPagination() {
-    let json: [String : AnyObject] = [
+    let json: [String : Any] = [
       "items" : [
         ["title" : "foo", "kind" : "carousel"],
         ["title" : "bar", "kind" : "carousel"],

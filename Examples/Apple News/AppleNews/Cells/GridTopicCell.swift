@@ -8,37 +8,37 @@ import Brick
 
 class GridTopicCell: UICollectionViewCell, SpotConfigurable {
 
-  var size = CGSize(width: 125, height: 160)
+  var preferredViewSize: CGSize = CGSize(width: 125, height: 160)
 
   lazy var label = UILabel().then {
-    $0.font = UIFont.boldSystemFontOfSize(11)
+    $0.font = UIFont.boldSystemFont(ofSize: 11)
     $0.numberOfLines = 2
-    $0.textAlignment = .Center
+    $0.textAlignment = .center
   }
 
   lazy var imageView = UIImageView().then {
-    $0.contentMode = .ScaleAspectFill
+    $0.contentMode = .scaleAspectFill
   }
 
   lazy var plusButton: UILabel = { [unowned self] in
     let button = UILabel()
-    button.backgroundColor = UIColor.hex("FFF").alpha(0.7)
+    button.backgroundColor = UIColor(hex: "FFF").alpha(0.7)
     button.clipsToBounds = true
-    button.frame = CGRect(x: self.size.width - 48, y: 8, width: 25, height: 25)
+    button.frame = CGRect(x: self.preferredViewSize.width - 48, y: 8, width: 25, height: 25)
     button.layer.cornerRadius = button.frame.width / 2
     button.font = UIFont(name: "Menlo", size: 16)
     button.text = "+"
-    button.textAlignment = .Center
+    button.textAlignment = .center
 
     return button
   }()
 
   lazy var blurView = UIVisualEffectView().then {
-    $0.effect = UIBlurEffect(style: .ExtraLight)
+    $0.effect = UIBlurEffect(style: .extraLight)
   }
 
   lazy var paddedStyle = NSMutableParagraphStyle().then {
-    $0.alignment = .Center
+    $0.alignment = .center
   }
 
   override init(frame: CGRect) {
@@ -56,16 +56,16 @@ class GridTopicCell: UICollectionViewCell, SpotConfigurable {
     fatalError("init(coder:) has not been implemented")
   }
 
-  func configure(inout item: Item) {
+  func configure( _ item: inout Item) {
     if !item.image.isEmpty {
-      imageView.frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+      imageView.frame = CGRect(x: 0, y: 0, width: preferredViewSize.width, height: preferredViewSize.height)
       imageView.image = nil
-      let URL = NSURL(string: item.image)
-      imageView.setImage(URL)
+      let url = URL(string: item.image)
+      imageView.setImage(url)
     }
 
     if let hexColor =  item.meta["color"] as? String {
-      contentView.backgroundColor = UIColor.hex(hexColor)
+      contentView.backgroundColor = UIColor(hex: hexColor)
     }
 
     blurView.width = contentView.width

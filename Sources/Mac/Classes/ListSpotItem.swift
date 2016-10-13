@@ -1,32 +1,32 @@
 import Cocoa
 import Brick
 
-public class ListSpotItem: NSTableRowView, SpotConfigurable {
+open class ListSpotItem: NSTableRowView, SpotConfigurable {
 
-  static public var flipped: Bool {
+  static open var flipped: Bool {
     get {
       return true
     }
   }
 
-  public override var selected: Bool {
+  open override var isSelected: Bool {
     didSet {
-      if selected {
-        layer?.backgroundColor = NSColor.blackColor().colorWithAlphaComponent(0.85).CGColor
+      if isSelected {
+        layer?.backgroundColor = NSColor.black.withAlphaComponent(0.85).cgColor
       } else {
-        layer?.backgroundColor = NSColor.blackColor().CGColor
+        layer?.backgroundColor = NSColor.black.cgColor
       }
     }
   }
 
-  public var preferredViewSize = CGSize(width: 0, height: 88)
+  open var preferredViewSize = CGSize(width: 0, height: 88)
 
   lazy var titleLabel: NSTextField = {
     let titleLabel = NSTextField()
-    titleLabel.editable = false
-    titleLabel.selectable = false
-    titleLabel.bezeled = false
-    titleLabel.textColor = NSColor.whiteColor()
+    titleLabel.isEditable = false
+    titleLabel.isSelectable = false
+    titleLabel.isBezeled = false
+    titleLabel.textColor = NSColor.white
     titleLabel.drawsBackground = false
 
     return titleLabel
@@ -34,10 +34,10 @@ public class ListSpotItem: NSTableRowView, SpotConfigurable {
 
   lazy var subtitleLabel: NSTextField = {
     let subtitleLabel = NSTextField()
-    subtitleLabel.editable = false
-    subtitleLabel.selectable = false
-    subtitleLabel.bezeled = false
-    subtitleLabel.textColor = NSColor.lightGrayColor()
+    subtitleLabel.isEditable = false
+    subtitleLabel.isSelectable = false
+    subtitleLabel.isBezeled = false
+    subtitleLabel.textColor = NSColor.lightGray
     subtitleLabel.drawsBackground = false
 
     return subtitleLabel
@@ -48,8 +48,8 @@ public class ListSpotItem: NSTableRowView, SpotConfigurable {
     lineView.frame.size.height = 1
     lineView.wantsLayer = true
     lineView.layer = CALayer()
-    lineView.layer?.backgroundColor = NSColor.grayColor().colorWithAlphaComponent(0.4).CGColor
-    lineView.autoresizingMask = .ViewWidthSizable
+    lineView.layer?.backgroundColor = NSColor.gray.withAlphaComponent(0.4).cgColor
+    lineView.autoresizingMask = .viewWidthSizable
 
     return lineView
   }()
@@ -59,7 +59,7 @@ public class ListSpotItem: NSTableRowView, SpotConfigurable {
 
     wantsLayer = true
     layer = CALayer()
-    layer?.backgroundColor = NSColor.blackColor().CGColor
+    layer?.backgroundColor = NSColor.black.cgColor
 
     addSubview(titleLabel)
     addSubview(subtitleLabel)
@@ -70,14 +70,14 @@ public class ListSpotItem: NSTableRowView, SpotConfigurable {
     fatalError("init(coder:) has not been implemented")
   }
 
-  public func configure(inout item: Item) {
+  open func configure( _ item: inout Item) {
     titleLabel.stringValue = item.title
     titleLabel.frame.origin.x = 8
 
     titleLabel.sizeToFit()
     if !item.subtitle.isEmpty {
       titleLabel.frame.origin.y = 8
-      titleLabel.font = NSFont.boldSystemFontOfSize(14)
+      titleLabel.font = NSFont.boldSystemFont(ofSize: 14)
     } else {
       titleLabel.frame.origin.y = item.size.height / 2 - titleLabel.frame.size.height / 2
     }

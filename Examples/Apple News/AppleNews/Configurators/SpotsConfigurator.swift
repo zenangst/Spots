@@ -19,12 +19,12 @@ enum Cell: String, StringConvertible {
 
 struct SpotsConfigurator {
   func configure() {
-    SpotsController.configure = {
-      $0.backgroundColor = UIColor.whiteColor()
+    Controller.configure = {
+      $0.backgroundColor = UIColor.white
     }
 
     GridSpot.configure = { collectionView, layout in
-      collectionView.backgroundColor = UIColor.whiteColor()
+      collectionView.backgroundColor = UIColor.white
       layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 0)
       layout.minimumInteritemSpacing = 0
       layout.minimumLineSpacing = 0
@@ -32,7 +32,7 @@ struct SpotsConfigurator {
     }
 
     CarouselSpot.configure = { collectionView, layout in
-      collectionView.backgroundColor = UIColor.whiteColor()
+      collectionView.backgroundColor = UIColor.white
       layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
       layout.minimumInteritemSpacing = 10
       layout.minimumLineSpacing = 10

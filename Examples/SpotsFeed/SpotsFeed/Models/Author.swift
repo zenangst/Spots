@@ -1,13 +1,13 @@
 import Foundation
 
-public class Author {
+open class Author {
 
-  public var name: String
-  public var avatar: NSURL?
+  open var name: String
+  open var avatar: URL?
 
   // MARK: - Initialization
 
-  public init(name: String, avatar: NSURL? = nil) {
+  public init(name: String, avatar: URL? = nil) {
     self.name = name
     self.avatar = avatar
   }

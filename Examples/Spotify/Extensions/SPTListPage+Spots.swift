@@ -2,14 +2,15 @@ import Brick
 
 extension SPTListPage {
 
-  public func viewModels(playlistID: String? = nil, offset: Int = 0) -> [Item] {
+  public func viewModels(_ playlistID: String? = nil, offset: Int = 0) -> [Item] {
     var viewModels = [Item]()
     if let items = items {
-      for (index, item) in items.enumerate() {
+      for (index, item) in items.enumerated() {
         if let playlistID = playlistID {
-          guard let artists = item.artists as? [SPTPartialArtist],
-            artist = artists.first,
-            album = item.album
+          guard let artists = (item as AnyObject).artists as? [SPTPartialArtist],
+            let artist = artists.first?.name,
+            let album = (item as AnyObject).album,
+            let albumName = album.name
             else { continue }
 
           let smallImage = album.smallestCover != nil
@@ -20,27 +21,28 @@ extension SPTListPage {
             : ""
 
           viewModels.append(Item(
-            title: item.name,
-            subtitle:  "\(artist.name) - \(album.name)",
+            title: (item as AnyObject).name,
+            subtitle:  "\(artist) - \(albumName)",
             image: smallImage,
             kind: "playlist",
             action: "play:\(playlistID):\(index + offset)",
             meta: [
-              "notification" : item.name + " by " + artist.name,
-              "track" : item.name,
-              "artist" : artist.name,
+              "notification" : (item as AnyObject).name + " by " + artist,
+              "track" : (item as AnyObject).name ?? "",
+              "artist" : artist,
               "image" : largeImage
             ]
             ))
         } else {
-          guard let image = item.largestImage,
-            uri = item.uri
-            where image != nil
+          guard let image = (item as AnyObject).largestImage,
+            let uri = (item as AnyObject).uri,
+          let subtitle = (item as AnyObject).trackCount,
+            image != nil
             else { continue }
 
           viewModels.append(Item(
-            title: item.name,
-            subtitle: "\(item.trackCount) songs",
+            title: (item as AnyObject).name,
+            subtitle: "\(subtitle) songs",
             image: (image as SPTImage).imageURL.absoluteString,
             kind: "playlist",
             action: "playlist:" + uri.absoluteString.replace(":", with: "-"))
@@ -52,10 +54,10 @@ extension SPTListPage {
     return viewModels
   }
 
-  public func uris() -> [NSURL] {
-    var urls = [NSURL]()
+  public func uris() -> [URL] {
+    var urls = [URL]()
     if let items = items {
-      urls = items.map { $0.uri }
+      urls = items.map { ($0 as AnyObject).uri }
     }
     return urls
   }

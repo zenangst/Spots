@@ -1,16 +1,15 @@
 import UIKit
 
 /**
- A SpotsController extension to handle scrollViewDidScroll
+ A Controller extension to handle scrollViewDidScroll
  */
-extension SpotsController {
+extension Controller {
 
-  /**
-   Tells the delegate when the user scrolls the content view within the receiver.
+  /// Tells the delegate when the user scrolls the content view within the receiver.
+  ///
+  /// - parameter scrollView: The scroll-view object in which the scrolling occurred.
 
-   - parameter scrollView: The scroll-view object in which the scrolling occurred.
-   */
-  public func scrollViewDidScroll(scrollView: UIScrollView) {
+  open func scrollViewDidScroll(_ scrollView: UIScrollView) {
     let offset = scrollView.contentOffset
     let size = scrollView.contentSize
     let multiplier: CGFloat = !refreshPositions.isEmpty
@@ -24,14 +23,14 @@ extension SpotsController {
       offset.y > size.height - scrollView.bounds.height * multiplier &&
       !refreshPositions.contains(size.height - itemOffset)
 
-    guard let delegate = spotsScrollDelegate else { return }
+    guard let delegate = scrollDelegate else { return }
 
     // Scroll did reach top
     if scrollView.contentOffset.y < 0 &&
       abs(scrollView.contentOffset.y) == scrollView.contentInset.top &&
       !refreshing {
       refreshing = true
-      delegate.spotDidReachBeginning {
+      delegate.didReachBeginning(in: scrollView) {
         self.refreshing = false
       }
     }
@@ -40,7 +39,7 @@ extension SpotsController {
       // Infinite scrolling
       refreshPositions.append(size.height - itemOffset)
       refreshing = true
-      delegate.spotDidReachEnd {
+      delegate.didReachEnd(in: scrollView) {
         self.refreshing = false
       }
     }
