@@ -124,9 +124,6 @@
 		BD129F751D7B2F91009AC164 /* Spotable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F391D7B2F91009AC164 /* Spotable.swift */; };
 		BD129F761D7B2F91009AC164 /* Spotable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F391D7B2F91009AC164 /* Spotable.swift */; };
 		BD129F771D7B2F91009AC164 /* Spotable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F391D7B2F91009AC164 /* Spotable.swift */; };
-		BD129F781D7B2F91009AC164 /* SpotAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F3A1D7B2F91009AC164 /* SpotAdapter.swift */; };
-		BD129F791D7B2F91009AC164 /* SpotAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F3A1D7B2F91009AC164 /* SpotAdapter.swift */; };
-		BD129F7A1D7B2F91009AC164 /* SpotAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F3A1D7B2F91009AC164 /* SpotAdapter.swift */; };
 		BD129F7B1D7B2F91009AC164 /* SpotConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F3B1D7B2F91009AC164 /* SpotConfigurable.swift */; };
 		BD129F7C1D7B2F91009AC164 /* SpotConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F3B1D7B2F91009AC164 /* SpotConfigurable.swift */; };
 		BD129F7D1D7B2F91009AC164 /* SpotConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD129F3B1D7B2F91009AC164 /* SpotConfigurable.swift */; };
@@ -276,7 +273,6 @@
 		BD129F371D7B2F91009AC164 /* Gridable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gridable.swift; sourceTree = "<group>"; };
 		BD129F381D7B2F91009AC164 /* Listable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Listable.swift; sourceTree = "<group>"; };
 		BD129F391D7B2F91009AC164 /* Spotable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spotable.swift; sourceTree = "<group>"; };
-		BD129F3A1D7B2F91009AC164 /* SpotAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotAdapter.swift; sourceTree = "<group>"; };
 		BD129F3B1D7B2F91009AC164 /* SpotConfigurable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotConfigurable.swift; sourceTree = "<group>"; };
 		BD129F3C1D7B2F91009AC164 /* SpotsDelegates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsDelegates.swift; sourceTree = "<group>"; };
 		BD129F3D1D7B2F91009AC164 /* SpotsProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsProtocol.swift; sourceTree = "<group>"; };
@@ -530,7 +526,6 @@
 				BD129F381D7B2F91009AC164 /* Listable.swift */,
 				BD1BFB591DA7A9AC00BB55E1 /* ScrollDelegate.swift */,
 				BD129F391D7B2F91009AC164 /* Spotable.swift */,
-				BD129F3A1D7B2F91009AC164 /* SpotAdapter.swift */,
 				BD129F3B1D7B2F91009AC164 /* SpotConfigurable.swift */,
 				BD129F3C1D7B2F91009AC164 /* SpotsDelegates.swift */,
 				BD129F3D1D7B2F91009AC164 /* SpotsProtocol.swift */,
@@ -1042,7 +1037,6 @@
 				BD129F4D1D7B2F91009AC164 /* SpotFactory.swift in Sources */,
 				BD129DC01D7B2B6C009AC164 /* GridComposite.swift in Sources */,
 				BD129F741D7B2F91009AC164 /* Listable.swift in Sources */,
-				BD129F7A1D7B2F91009AC164 /* SpotAdapter.swift in Sources */,
 				BD129D961D7B295F009AC164 /* UITableView+Indexes.swift in Sources */,
 				BD129D921D7B295F009AC164 /* Controller+UIScrollViewDelegate.swift in Sources */,
 				BD129F7D1D7B2F91009AC164 /* SpotConfigurable.swift in Sources */,
@@ -1126,7 +1120,6 @@
 				BD129D911D7B295F009AC164 /* Controller+UIScrollViewDelegate.swift in Sources */,
 				BD129DCD1D7B2B6C009AC164 /* Controller.swift in Sources */,
 				BD129F931D7B2F91009AC164 /* TypeAlias.swift in Sources */,
-				BD129F781D7B2F91009AC164 /* SpotAdapter.swift in Sources */,
 				BD129F541D7B2F91009AC164 /* Component+Extension.swift in Sources */,
 				BD129DCF1D7B2B6C009AC164 /* SpotsScrollView.swift in Sources */,
 				BD129F601D7B2F91009AC164 /* SpotsProtocol+LiveEditing.swift in Sources */,
@@ -1214,7 +1207,6 @@
 				BD129F551D7B2F91009AC164 /* Component+Extension.swift in Sources */,
 				BD129F941D7B2F91009AC164 /* TypeAlias.swift in Sources */,
 				BD129F821D7B2F91009AC164 /* SpotsProtocol.swift in Sources */,
-				BD129F791D7B2F91009AC164 /* SpotAdapter.swift in Sources */,
 				BD1BFB5B1DA7A9AC00BB55E1 /* ScrollDelegate.swift in Sources */,
 				BD129F851D7B2F91009AC164 /* Viewable.swift in Sources */,
 				BD129F701D7B2F91009AC164 /* Gridable.swift in Sources */,
