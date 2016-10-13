@@ -44,7 +44,7 @@ open class ListSpot: NSObject, Listable {
       guard let configure = configure else { return }
       let range = tableView.rows(in: scrollView.contentView.visibleRect)
       (range.location..<range.length).forEach { i in
-        if let view: SpotConfigurable = tableView.rowView(atRow: i, makeIfNecessary: false) {
+        if let view = tableView.rowView(atRow: i, makeIfNecessary: false) as? SpotConfigurable {
           configure(view)
         }
       }
