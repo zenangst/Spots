@@ -54,9 +54,6 @@ open class FeaturedGridItem: NSCollectionViewItem, SpotConfigurable {
 
     addObserver(self, forKeyPath: #keyPath(customImageView.image), options: .new, context: nil)
 
-    let area = NSTrackingArea(rect: customView.bounds, options: [.inVisibleRect, .mouseEnteredAndExited, .activeInKeyWindow], owner: self, userInfo: nil)
-    customView.addTrackingArea(area)
-
     setupConstraints()
   }
 
@@ -120,59 +117,6 @@ open class FeaturedGridItem: NSCollectionViewItem, SpotConfigurable {
         }
       }
     }
-  }
-
-  open override func mouseEntered(with theEvent: NSEvent) {
-    super.mouseEntered(with: theEvent)
-
-    guard customView.layer?.animation(forKey: "animationGroup") == nil else { return }
-
-    let animationGroup = CAAnimationGroup()
-    animationGroup.duration = 0.10
-    animationGroup.isRemovedOnCompletion = false
-    animationGroup.fillMode = kCAFillModeForwards
-
-    let zoomInAnimation = CABasicAnimation(keyPath: "transform.scale")
-    zoomInAnimation.fromValue = 1.0
-    zoomInAnimation.toValue = 1.1
-
-    let positionAnimation = CABasicAnimation(keyPath: "position")
-    let newValue = NSValue(point: CGPoint(
-      x: customView.frame.origin.x + customView.frame.size.width / 2,
-      y: customView.frame.origin.y + customView.frame.size.height / 2))
-    positionAnimation.fromValue = newValue
-    positionAnimation.toValue = newValue
-
-    animationGroup.animations = [zoomInAnimation, positionAnimation]
-
-    customView.layer?.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-    customView.layer?.add(animationGroup, forKey: "animationGroup")
-  }
-
-  open override func mouseExited(with theEvent: NSEvent) {
-    super.mouseExited(with: theEvent)
-
-    guard customView.layer?.animationKeys() != nil else { return }
-
-    let animationGroup = CAAnimationGroup()
-    animationGroup.duration = 0.10
-    animationGroup.isRemovedOnCompletion = false
-    animationGroup.fillMode = kCAFillModeForwards
-
-    let zoomInAnimation = CABasicAnimation(keyPath: "transform.scale")
-    zoomInAnimation.fromValue = 1.1
-    zoomInAnimation.toValue = 1.0
-
-    let positionAnimation = CABasicAnimation(keyPath: "position")
-    let newValue = NSValue(point: CGPoint(
-      x: customView.frame.origin.x + customView.frame.size.width / 2,
-      y: customView.frame.origin.y + customView.frame.size.height / 2))
-    positionAnimation.fromValue = newValue
-    positionAnimation.toValue = newValue
-
-    animationGroup.animations = [zoomInAnimation, positionAnimation]
-    customView.layer?.removeAnimation(forKey: "animationGroup")
-    customView.layer?.add(animationGroup, forKey: "reverseAnimation")
   }
 
   open func configure(_ item: inout Item) {

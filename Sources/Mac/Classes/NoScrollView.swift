@@ -22,7 +22,7 @@ open class NoScrollView: NSScrollView {
   override open func scrollWheel(with theEvent: NSEvent) {
     if theEvent.scrollingDeltaX != 0.0 && horizontalScroller != nil && scrollingEnabled {
       super.scrollWheel(with: theEvent)
-    } else {
+    } else if theEvent.scrollingDeltaY != 0.0 {
       nextResponder?.scrollWheel(with: theEvent)
     }
   }
