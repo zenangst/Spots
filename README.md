@@ -432,6 +432,12 @@ it, simply add the following line to your Podfile:
 pod 'Spots'
 ```
 
+**Spots** is also available through [Carthage](https://github.com/Carthage/Carthage). To install it, add the following to your `Cartfile`:
+
+```ruby
+github "hyperoslo/Spots"
+```
+
 If you want to enable live editing for you debug target. Add the following to your Podfile:
 
 ```ruby
