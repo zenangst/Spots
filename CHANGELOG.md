@@ -2,7 +2,37 @@
 
 ## [Unreleased](https://github.com/hyperoslo/Spots/tree/HEAD)
 
-[Full Changelog](https://github.com/hyperoslo/Spots/compare/3.0.5...HEAD)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.0.0...HEAD)
+
+**Closed issues:**
+
+- Carthage support [\#330](https://github.com/hyperoslo/Spots/issues/330)
+
+**Merged pull requests:**
+
+- Fix height issue in list spot [\#333](https://github.com/hyperoslo/Spots/pull/333) ([zenangst](https://github.com/zenangst))
+
+## [5.0.0](https://github.com/hyperoslo/Spots/tree/5.0.0) (2016-10-13)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/4.0.2...5.0.0)
+
+**Merged pull requests:**
+
+- Remove adapters [\#331](https://github.com/hyperoslo/Spots/pull/331) ([zenangst](https://github.com/zenangst))
+- Spots v.5.0.0 in Swift 3 [\#329](https://github.com/hyperoslo/Spots/pull/329) ([zenangst](https://github.com/zenangst))
+- Seed the initial size for dummy views [\#328](https://github.com/hyperoslo/Spots/pull/328) ([onmyway133](https://github.com/onmyway133))
+
+## [4.0.2](https://github.com/hyperoslo/Spots/tree/4.0.2) (2016-10-03)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/4.0.1...4.0.2)
+
+## [4.0.1](https://github.com/hyperoslo/Spots/tree/4.0.1) (2016-10-03)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/4.0.0...4.0.1)
+
+**Merged pull requests:**
+
+- Fix items [\#327](https://github.com/hyperoslo/Spots/pull/327) ([onmyway133](https://github.com/onmyway133))
+
+## [4.0.0](https://github.com/hyperoslo/Spots/tree/4.0.0) (2016-10-03)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/3.0.5...4.0.0)
 
 **Closed issues:**
 
