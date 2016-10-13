@@ -45,7 +45,14 @@ open class GridSpot: NSObject, Gridable {
   open var component: Component
 
   /// A configuration closure
-  open var configure: ((SpotConfigurable) -> Void)?
+  open var configure: ((SpotConfigurable) -> Void)? {
+    didSet {
+      guard let configure = configure else { return }
+      for case let cell as SpotConfigurable in collectionView.visibleCells {
+        configure(cell)
+      }
+    }
+  }
 
   /// A CompositeDelegate for the GridSpot, used to access composite spots
   open weak var spotsCompositeDelegate: CompositeDelegate?

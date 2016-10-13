@@ -89,7 +89,14 @@ open class CarouselSpot: NSObject, Gridable {
   }
 
   /// A configuration closure
-  open var configure: ((SpotConfigurable) -> Void)?
+  open var configure: ((SpotConfigurable) -> Void)? {
+    didSet {
+      guard let configure = configure else { return }
+      for case let cell as SpotConfigurable in collectionView.visibleCells {
+        configure(cell)
+      }
+    }
+  }
 
   /// A CarouselScrollDelegate, used when a CarouselSpot scrolls
   open weak var carouselScrollDelegate: CarouselScrollDelegate?

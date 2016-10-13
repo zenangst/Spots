@@ -84,7 +84,14 @@ open class GridSpot: NSObject, Gridable {
   open weak var delegate: SpotsDelegate?
 
   open var component: Component
-  open var configure: ((SpotConfigurable) -> Void)?
+  open var configure: ((SpotConfigurable) -> Void)? {
+    didSet {
+      guard let configure = configure else { return }
+      for case let cell as SpotConfigurable in collectionView.visibleItems() {
+        configure(cell)
+      }
+    }
+  }
   /// Indicator to calculate the height based on content
   open var usesDynamicHeight = true
 

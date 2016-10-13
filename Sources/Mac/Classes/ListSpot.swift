@@ -39,7 +39,17 @@ open class ListSpot: NSObject, Listable {
 
   /// A component struct used as configuration and data source for the ListSpot
   open var component: Component
-  open var configure: ((SpotConfigurable) -> Void)?
+  open var configure: ((SpotConfigurable) -> Void)? {
+    didSet {
+      guard let configure = configure else { return }
+      let range = tableView.rows(in: scrollView.contentView.visibleRect)
+      (range.location..<range.length).forEach { i in
+        if let view: SpotConfigurable = tableView.rowView(atRow: i, makeIfNecessary: false) {
+          configure(view)
+        }
+      }
+    }
+  }
   /// Indicator to calculate the height based on content
   open var usesDynamicHeight = true
 
