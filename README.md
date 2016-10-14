@@ -17,7 +17,7 @@
 </a>
 
 <a href="http://cocoadocs.org/docsets/Spots" target="_blank">
-<img src="https://img.shields.io/cocoapods/p/Spots.svg?style=flat">
+<img src="https://img.shields.io/badge/platform-ios | macos | tvos-lightgrey.svg">
 </a>
 
 <a href="http://cocoadocs.org/docsets/Spots" target="_blank">
