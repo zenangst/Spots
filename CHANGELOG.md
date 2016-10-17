@@ -2,7 +2,28 @@
 
 ## [Unreleased](https://github.com/hyperoslo/Spots/tree/HEAD)
 
-[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.0.0...HEAD)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.0.3...HEAD)
+
+**Merged pull requests:**
+
+- Improve diffing with text property on Item [\#336](https://github.com/hyperoslo/Spots/pull/336) ([zenangst](https://github.com/zenangst))
+
+## [5.0.3](https://github.com/hyperoslo/Spots/tree/5.0.3) (2016-10-14)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.0.2...5.0.3)
+
+**Merged pull requests:**
+
+- Fix/carthage version [\#335](https://github.com/hyperoslo/Spots/pull/335) ([zenangst](https://github.com/zenangst))
+
+## [5.0.2](https://github.com/hyperoslo/Spots/tree/5.0.2) (2016-10-13)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.0.1...5.0.2)
+
+**Merged pull requests:**
+
+- Improve macOS scrolling in CarouselSpot [\#334](https://github.com/hyperoslo/Spots/pull/334) ([zenangst](https://github.com/zenangst))
+
+## [5.0.1](https://github.com/hyperoslo/Spots/tree/5.0.1) (2016-10-13)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.0.0...5.0.1)
 
 **Closed issues:**
 
