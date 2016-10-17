@@ -10,7 +10,7 @@ public typealias ItemChanges = (
 )
 
 public enum ItemDiff {
-  case identifier, index, title, subtitle, image, kind, action, meta, children, relations, size, new, removed, none
+  case identifier, index, title, subtitle, text, image, kind, action, meta, children, relations, size, new, removed, none
 }
 
 public extension Item {
@@ -102,6 +102,7 @@ public extension Item {
     if identifier != oldItem.identifier { return .identifier }
     if title != oldItem.title { return .title }
     if subtitle != oldItem.subtitle { return .subtitle }
+    if text != oldItem.text { return .text }
     if image != oldItem.image { return .image }
     if action != oldItem.action { return .action }
     if !(meta as NSDictionary).isEqual(to: oldItem.meta) { return .meta }
