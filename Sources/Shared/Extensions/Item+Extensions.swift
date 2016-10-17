@@ -19,7 +19,7 @@ public extension Item {
     let newChildren = newModels.flatMap { $0.children }
     let oldChildren = oldModels.flatMap { $0.children }
 
-    guard !(oldModels == newModels) || !(newChildren as NSArray).isEqual(to: oldChildren) else {
+    guard !(oldModels === newModels) || !(newChildren as NSArray).isEqual(to: oldChildren) else {
       return nil
     }
 
