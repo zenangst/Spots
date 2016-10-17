@@ -178,6 +178,8 @@
 		BDD63FAC1D941A80008E885A /* Tailor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDD63FAB1D941A80008E885A /* Tailor.framework */; };
 		BDD9ABCB1DB533CE005D8C04 /* TestGridComposite.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD9ABCA1DB533CE005D8C04 /* TestGridComposite.swift */; };
 		BDD9ABCC1DB533CE005D8C04 /* TestGridComposite.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD9ABCA1DB533CE005D8C04 /* TestGridComposite.swift */; };
+		BDD9ABCE1DB53475005D8C04 /* TestCarouselComposite.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD9ABCD1DB53475005D8C04 /* TestCarouselComposite.swift */; };
+		BDD9ABCF1DB53475005D8C04 /* TestCarouselComposite.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD9ABCD1DB53475005D8C04 /* TestCarouselComposite.swift */; };
 		BDEED2E81D8446400030B475 /* TestSpotsScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEED2E71D8446400030B475 /* TestSpotsScrollView.swift */; };
 		BDEED2E91D8446400030B475 /* TestSpotsScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEED2E71D8446400030B475 /* TestSpotsScrollView.swift */; };
 		D2FEDC1F1D9E845A004D5ABF /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2FEDC1E1D9E845A004D5ABF /* UIViewController+Extensions.swift */; };
@@ -300,6 +302,7 @@
 		BDB648551D75EF150041449A /* Info-tvOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-tvOS.plist"; sourceTree = "<group>"; };
 		BDD63FAB1D941A80008E885A /* Tailor.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Tailor.framework; path = Carthage/Build/tvOS/Tailor.framework; sourceTree = "<group>"; };
 		BDD9ABCA1DB533CE005D8C04 /* TestGridComposite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestGridComposite.swift; sourceTree = "<group>"; };
+		BDD9ABCD1DB53475005D8C04 /* TestCarouselComposite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestCarouselComposite.swift; sourceTree = "<group>"; };
 		BDEED2E71D8446400030B475 /* TestSpotsScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSpotsScrollView.swift; sourceTree = "<group>"; };
 		D2FEDC1E1D9E845A004D5ABF /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		D58478091C43FEB8006EBA49 /* Spots.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Spots.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -653,6 +656,7 @@
 				BDEED2E71D8446400030B475 /* TestSpotsScrollView.swift */,
 				BD01BD141DAEA7EE009C10FF /* TestListComposite.swift */,
 				BDD9ABCA1DB533CE005D8C04 /* TestGridComposite.swift */,
+				BDD9ABCD1DB53475005D8C04 /* TestCarouselComposite.swift */,
 			);
 			path = iOS;
 			sourceTree = "<group>";
@@ -1088,6 +1092,7 @@
 				BD01BD131DAEA523009C10FF /* TestParser.swift in Sources */,
 				BD01BD1A1DAEA7FD009C10FF /* TestListComposite.swift in Sources */,
 				BD10D5271D7955AC00DF8E9B /* TestViewModelExtensions.swift in Sources */,
+				BDD9ABCF1DB53475005D8C04 /* TestCarouselComposite.swift in Sources */,
 				BDD9ABCC1DB533CE005D8C04 /* TestGridComposite.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1165,6 +1170,7 @@
 				BD01BD111DAEA522009C10FF /* TestParser.swift in Sources */,
 				BD01BD181DAEA7FC009C10FF /* TestListComposite.swift in Sources */,
 				BD10D5251D7955AB00DF8E9B /* TestViewModelExtensions.swift in Sources */,
+				BDD9ABCE1DB53475005D8C04 /* TestCarouselComposite.swift in Sources */,
 				BDD9ABCB1DB533CE005D8C04 /* TestGridComposite.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
