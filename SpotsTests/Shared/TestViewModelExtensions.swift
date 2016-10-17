@@ -72,5 +72,30 @@ class ItemExtensionsTests : XCTestCase {
     XCTAssertEqual(processedChanges.updates.count, 1)
     XCTAssertEqual(processedChanges.reloads.count, 1)
     XCTAssertEqual(processedChanges.deletions.count, 0)
+
+    /*
+     Diff text attribute on item
+     */
+
+    oldJSON = [
+      ["text" : "foo"],
+      ["text" : "bar"]
+    ]
+    newJSON = [
+      ["text" : "foo"],
+      ["text" : "baz"]
+    ]
+
+    newModels = newJSON.map { Item($0) }
+    oldModels = oldJSON.map { Item($0) }
+    changes = Item.evaluate(oldModels, oldModels: newModels)
+    XCTAssertEqual(changes![0], ItemDiff.none)
+    XCTAssertEqual(changes![1], ItemDiff.text)
+
+    processedChanges = Item.processChanges(changes!)
+    XCTAssertEqual(processedChanges.insertions.count, 0)
+    XCTAssertEqual(processedChanges.updates.count, 1)
+    XCTAssertEqual(processedChanges.reloads.count, 0)
+    XCTAssertEqual(processedChanges.deletions.count, 0)
   }
 }
