@@ -106,4 +106,58 @@ class ComponentTests : XCTestCase {
     XCTAssertTrue(lhs.first?.diff(component: rhs.first!) == .items)
     XCTAssertTrue(lhs[1].diff(component: rhs[1]) == .kind)
   }
+
+  func testComponentExtensions() {
+    let expected: [String : Any] = [
+      "header" : "header",
+      "identifier" : "identifier",
+      "index" : "index",
+      "items" : "items",
+      "kind" : "kind",
+      "meta" : "meta",
+      "span" : "span",
+      "size" : "size",
+      "height" : "height",
+      "width" : "width"
+    ]
+
+    var json: [String : Any] = [:]
+    json[Component.Key.Header] = "header"
+    json[Component.Key.Identifier] =  "identifier"
+    json[Component.Key.Index] = "index"
+    json[Component.Key.Items] = "items"
+    json[Component.Key.Kind] = "kind"
+    json[Component.Key.Meta] = "meta"
+    json[Component.Key.Span] = "span"
+    json[Component.Key.Size] = "size"
+    json[Component.Key.Height] = "height"
+    json[Component.Key.Width] = "width"
+
+    /// Compare creating a normal dictionary with a dictionary created with component keys.
+    XCTAssertTrue((expected as NSDictionary).isEqual(to: json))
+
+    /// Test subscripting with Component.Key
+    XCTAssertEqual(json[Component.Key.Header] as! String, "header")
+    XCTAssertEqual(json[Component.Key.Identifier] as! String, "identifier")
+    XCTAssertEqual(json[Component.Key.Index] as! String, "index")
+    XCTAssertEqual(json[Component.Key.Items] as! String, "items")
+    XCTAssertEqual(json[Component.Key.Kind] as! String, "kind")
+    XCTAssertEqual(json[Component.Key.Meta] as! String, "meta")
+    XCTAssertEqual(json[Component.Key.Span] as! String, "span")
+    XCTAssertEqual(json[Component.Key.Size] as! String, "size")
+    XCTAssertEqual(json[Component.Key.Height] as! String, "height")
+    XCTAssertEqual(json[Component.Key.Width] as! String, "width")
+
+    /// Test lookup using property function with component key
+    XCTAssertEqual(json.property(Component.Key.Header), "header")
+    XCTAssertEqual(json.property(Component.Key.Identifier), "identifier")
+    XCTAssertEqual(json.property(Component.Key.Index), "index")
+    XCTAssertEqual(json.property(Component.Key.Items), "items")
+    XCTAssertEqual(json.property(Component.Key.Kind), "kind")
+    XCTAssertEqual(json.property(Component.Key.Meta), "meta")
+    XCTAssertEqual(json.property(Component.Key.Span), "span")
+    XCTAssertEqual(json.property(Component.Key.Size), "size")
+    XCTAssertEqual(json.property(Component.Key.Height), "height")
+    XCTAssertEqual(json.property(Component.Key.Width), "width")
+  }
 }
