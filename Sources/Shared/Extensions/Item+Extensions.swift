@@ -10,7 +10,7 @@ public typealias ItemChanges = (
 )
 
 public enum ItemDiff {
-  case identifier, index, title, subtitle, image, kind, action, meta, children, relations, size, new, removed, none
+  case identifier, index, title, subtitle, text, image, kind, action, meta, children, relations, size, new, removed, none
 }
 
 public extension Item {
