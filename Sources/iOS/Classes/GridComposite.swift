@@ -5,6 +5,8 @@ class GridComposite: UICollectionViewCell, Composable {
 
   /// Performs any clean up necessary to prepare the view for use again.
   override func prepareForReuse() {
-    contentView.subviews.forEach { $0.removeFromSuperview() }
+    for case let view as ScrollableView in contentView.subviews {
+      view.removeFromSuperview()
+    }
   }
 }
