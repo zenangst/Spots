@@ -63,7 +63,7 @@ class ItemExtensionsTests : XCTestCase {
     newModels = newJSON.map { Item($0) }
     oldModels = oldJSON.map { Item($0) }
 
-    changes = Item.evaluate(oldModels, oldModels: newModels)
+    changes = Item.evaluate(newModels, oldModels: oldModels)
     XCTAssertEqual(changes![0], ItemDiff.title)
     XCTAssertEqual(changes![1], ItemDiff.kind)
 
@@ -88,7 +88,7 @@ class ItemExtensionsTests : XCTestCase {
 
     newModels = newJSON.map { Item($0) }
     oldModels = oldJSON.map { Item($0) }
-    changes = Item.evaluate(oldModels, oldModels: newModels)
+    changes = Item.evaluate(newModels, oldModels: oldModels)
     XCTAssertEqual(changes![0], ItemDiff.none)
     XCTAssertEqual(changes![1], ItemDiff.text)
 
