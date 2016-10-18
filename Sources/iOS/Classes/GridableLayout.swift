@@ -36,8 +36,8 @@ open class GridableLayout: UICollectionViewFlowLayout {
       }
     } else {
       contentSize.width = spot.collectionView.frame.width - spot.collectionView.contentInset.left - spot.collectionView.contentInset.right
-      contentSize.height = spot.items.reduce(0, { $0 + $1.size.height })
       if spot.component.span > 1 {
+        contentSize.height = spot.items.reduce(0, { $0 + $1.size.height })
         let count = spot.items.count
         if let last = spot.items.last, count % Int(spot.component.span) != 0 {
           contentSize.height += last.size.height
@@ -48,7 +48,22 @@ open class GridableLayout: UICollectionViewFlowLayout {
         contentSize.height += sectionInset.top + sectionInset.bottom
         contentSize.height += headerReferenceSize.height
       } else {
-        contentSize.height = spot.items.reduce(0, { $0 + $1.size.height })
+
+        var height: CGFloat = 0.0
+        var remainingHeight: CGFloat = contentSize.width
+        for item in spot.items {
+          remainingHeight -= item.size.height
+          if remainingHeight <= 0.0 {
+            height += item.size.height
+            remainingHeight = contentSize.width
+          }
+        }
+
+        if let last = spot.items.last, remainingHeight > 0.0 {
+          height += last.size.height
+        }
+
+        contentSize.height = height
         contentSize.height += sectionInset.top + sectionInset.bottom
       }
     }
