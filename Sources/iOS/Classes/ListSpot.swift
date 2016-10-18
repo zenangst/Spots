@@ -87,7 +87,6 @@ open class ListSpot: NSObject, Listable {
     }
 
     setupTableView()
-    registerAndPrepare()
   }
 
   /// Instantiate a ListSpot with a cache key.
@@ -106,7 +105,6 @@ open class ListSpot: NSObject, Listable {
     }
 
     setupTableView()
-    registerAndPrepare()
   }
 
   // MARK: - Setup
@@ -115,7 +113,6 @@ open class ListSpot: NSObject, Listable {
   ///
   /// - parameter size: The size of the superview.
   open func setup(_ size: CGSize) {
-    registerAndPrepare()
     let height = component.items.reduce(component.meta(Key.headerHeight, 0.0), { $0 + $1.size.height })
 
     tableView.frame.size = size

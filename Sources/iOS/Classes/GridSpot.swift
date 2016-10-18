@@ -118,8 +118,6 @@ open class GridSpot: NSObject, Gridable {
 
     self.init(component: Component(stateCache.load()))
     self.stateCache = stateCache
-
-    registerAndPrepare()
   }
 
   /// A convenience initializer for GridSpot with base configuration.

@@ -299,7 +299,7 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
     spot.render().frame.origin.x = 0.0
     spot.spotsCompositeDelegate = self
     spots[index].component.index = index
-    spot.registerAndPrepare()
+    spot.register()
     spot.setup(scrollView.frame.size)
     spot.component.size = CGSize(
       width: view.frame.size.width,
