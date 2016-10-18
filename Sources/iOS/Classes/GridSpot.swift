@@ -30,6 +30,10 @@ open class GridSpot: NSObject, Gridable {
     public static var minimumInteritemSpacing: CGFloat = 0.0
     /// Default minimum line spacing
     public static var minimumLineSpacing: CGFloat = 0.0
+    /// Default left section inset
+    public static var contentInsetLeft: CGFloat = 0.0
+    /// Default right section inset
+    public static var contentInsetRight: CGFloat = 0.0
   }
 
   /// A Registry object that holds identifiers and classes for cells used in the GridSpot
@@ -148,6 +152,9 @@ open class GridSpot: NSObject, Gridable {
       right: component.meta(GridableMeta.Key.sectionInsetRight, Default.sectionInsetRight))
     layout.minimumInteritemSpacing = component.meta(GridableMeta.Key.minimumInteritemSpacing, Default.minimumInteritemSpacing)
     layout.minimumLineSpacing = component.meta(GridableMeta.Key.minimumLineSpacing, Default.minimumLineSpacing)
+
+    collectionView.contentInset.left = component.meta(GridableMeta.Key.contentInsetLeft, Default.contentInsetLeft)
+    collectionView.contentInset.right = component.meta(GridableMeta.Key.contentInsetRight, Default.contentInsetRight)
   }
 }
 
