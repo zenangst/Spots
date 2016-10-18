@@ -66,8 +66,8 @@ open class ListSpot: NSObject, Listable {
 
     registerDefault(view: ListSpotCell.self)
     registerComposite(view: ListComposite.self)
-    registerAndPrepare()
     setupTableView()
+    prepareItems()
   }
 
   /// A convenience init for initializing a ListSpot with a custom tableview, title and a kind.
