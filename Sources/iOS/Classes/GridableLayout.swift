@@ -19,21 +19,23 @@ open class GridableLayout: UICollectionViewFlowLayout {
   open override func prepare() {
     super.prepare()
 
-    guard let spot = collectionView?.delegate as? Gridable,
-      let firstItem = spot.items.first else { return }
-    contentSize.width = spot.items.reduce(0, { $0 + $1.size.width })
-    contentSize.width += CGFloat(spot.items.count) * (minimumInteritemSpacing)
-    contentSize.width += sectionInset.left + (sectionInset.right / 2) - 3
-    contentSize.width = ceil(contentSize.width)
+    guard let spot = collectionView?.delegate as? Gridable else { return }
 
     if scrollDirection == .horizontal {
+      guard let firstItem = spot.items.first else { return }
+
       contentSize.height = firstItem.size.height + headerReferenceSize.height
       contentSize.height += sectionInset.top + sectionInset.bottom
-
+      
+      contentSize.width = spot.items.reduce(0, { $0 + $1.size.width })
+      contentSize.width += CGFloat(spot.items.count) * (minimumInteritemSpacing)
+      contentSize.width += sectionInset.left + (sectionInset.right / 2) - 3
+      contentSize.width = ceil(contentSize.width)
       if let spot = spot as? CarouselSpot, spot.pageIndicator {
         contentSize.height += spot.pageControl.frame.height
       }
     } else {
+      contentSize.width = spot.render().frame.width
       contentSize.height = spot.items.reduce(0, { $0 + $1.size.height })
       if spot.component.span > 1 {
         let count = spot.items.count
