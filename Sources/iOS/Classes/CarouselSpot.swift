@@ -145,11 +145,11 @@ open class CarouselSpot: NSObject, Gridable {
   public required init(component: Component) {
     self.component = component
     super.init()
-    configureLayout()
-    configureCollectionView()
     registerDefault(view: CarouselSpotCell.self)
     registerComposite(view: CarouselComposite.self)
     registerDefaultHeader(header: CarouselSpotHeader.self)
+    configureLayout()
+    configureCollectionView()
   }
 
   /// A convenience initializer for CarouselSpot with base configuration.
@@ -180,8 +180,6 @@ open class CarouselSpot: NSObject, Gridable {
     let stateCache = StateCache(key: cacheKey)
     self.init(component: Component(stateCache.load()))
     self.stateCache = stateCache
-
-    registerAndPrepare()
   }
 
   func configureCollectionView() {
