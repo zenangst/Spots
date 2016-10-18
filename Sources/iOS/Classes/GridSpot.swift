@@ -88,10 +88,10 @@ open class GridSpot: NSObject, Gridable {
     self.component = component
     super.init()
 
-    self.configureLayout()
-
     registerDefault(view: GridSpotCell.self)
     registerComposite(view: GridComposite.self)
+    registerAndPrepare()
+    configureLayout()
 
     if GridSpot.views.composite == nil {
       GridSpot.views.composite =  Registry.Item.classType(GridComposite.self)
@@ -118,8 +118,6 @@ open class GridSpot: NSObject, Gridable {
 
     self.init(component: Component(stateCache.load()))
     self.stateCache = stateCache
-
-    registerAndPrepare()
   }
 
   /// A convenience initializer for GridSpot with base configuration.

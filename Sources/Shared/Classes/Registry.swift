@@ -81,14 +81,16 @@ public struct Registry {
     switch item {
     case .classType(let classType):
       registryType = .regular
+
       #if !os(OSX)
-      if let view = cache.object(forKey: "\(registryType.rawValue)\(identifier)" as NSString) {
-        return (type: registryType, view: view)
-      }
+        let cacheIdentifier: String = "\(registryType.rawValue)-\(identifier)"
+        if let view = cache.object(forKey: cacheIdentifier as NSString) {
+          (view as? SpotConfigurable)?.prepareForReuse()
+          return (type: registryType, view: view)
+        }
       #endif
 
       view = classType.init()
-
     case .nib(let nib):
       registryType = .nib
       if let view = cache.object(forKey: "\(registryType.rawValue)\(identifier)" as NSString) {
@@ -105,7 +107,8 @@ public struct Registry {
     }
 
     if let view = view {
-      cache.setObject(view, forKey: "\(registryType.rawValue)\(identifier)" as NSString)
+      let cacheIdentifier: String = "\(registryType.rawValue)-\(identifier)"
+      cache.setObject(view, forKey: cacheIdentifier as NSString)
     }
 
     return (type: registryType, view: view)

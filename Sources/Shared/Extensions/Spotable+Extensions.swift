@@ -294,6 +294,10 @@ public extension Spotable {
         // Set initial size for view
         view.frame.size = render().frame.size
 
+        if view.frame.size == CGSize.zero {
+          view.frame.size = UIScreen.main.bounds.size
+        }
+
         if let view = view as? UITableViewCell {
           view.contentView.frame = view.bounds
         }

@@ -11,4 +11,6 @@ public protocol SpotConfigurable: ItemConfigurable {
 
   /// The perferred view size of the view.
   var preferredViewSize: CGSize { get }
+
+  func prepareForReuse()
 }

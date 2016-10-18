@@ -512,7 +512,7 @@ class ControllerTests : XCTestCase {
       XCTAssertEqual(controller.spots[1].items.first?.title, "First list item")
 
       XCTAssertEqual(controller.spots[0].items[1].kind, "composite")
-      XCTAssertTrue(controller.compositeSpots.count == 1)
+      XCTAssertEqual(controller.compositeSpots.count, 1)
 
       controller.reloadIfNeeded(initialJSON) {
         XCTAssertTrue(controller.spots[0] is ListSpot)

@@ -19,7 +19,7 @@ public extension Item {
     let newChildren = newModels.flatMap { $0.children }
     let oldChildren = oldModels.flatMap { $0.children }
 
-    guard !(oldModels == newModels) || !(newChildren as NSArray).isEqual(to: oldChildren) else {
+    guard !(oldModels === newModels) || !(newChildren as NSArray).isEqual(to: oldChildren) else {
       return nil
     }
 
@@ -100,6 +100,7 @@ public extension Item {
     if kind != oldItem.kind { return .kind }
     if newChildren != oldChildren { return .children }
     if identifier != oldItem.identifier { return .identifier }
+    if size.height != oldItem.size.height { return .size }
     if title != oldItem.title { return .title }
     if subtitle != oldItem.subtitle { return .subtitle }
     if text != oldItem.text { return .text }

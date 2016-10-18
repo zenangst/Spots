@@ -66,8 +66,8 @@ open class ListSpot: NSObject, Listable {
 
     registerDefault(view: ListSpotCell.self)
     registerComposite(view: ListComposite.self)
-    registerAndPrepare()
     setupTableView()
+    prepareItems()
   }
 
   /// A convenience init for initializing a ListSpot with a custom tableview, title and a kind.
@@ -87,7 +87,6 @@ open class ListSpot: NSObject, Listable {
     }
 
     setupTableView()
-    registerAndPrepare()
   }
 
   /// Instantiate a ListSpot with a cache key.
@@ -106,7 +105,6 @@ open class ListSpot: NSObject, Listable {
     }
 
     setupTableView()
-    registerAndPrepare()
   }
 
   // MARK: - Setup
@@ -115,7 +113,6 @@ open class ListSpot: NSObject, Listable {
   ///
   /// - parameter size: The size of the superview.
   open func setup(_ size: CGSize) {
-    registerAndPrepare()
     let height = component.items.reduce(component.meta(Key.headerHeight, 0.0), { $0 + $1.size.height })
 
     tableView.frame.size = size
@@ -128,6 +125,7 @@ open class ListSpot: NSObject, Listable {
 
   /// Configure and setup the data source, delegate and additional configuration options for the table view.
   func setupTableView() {
+    register()
     tableView.dataSource = self
     tableView.delegate = self
     tableView.rowHeight = UITableViewAutomaticDimension

@@ -221,7 +221,7 @@ public struct Component: Mappable, Equatable {
     // Check if meta data for the component changed, this can be up to the developer to decide what course of action to take.
     if !(meta as NSDictionary).isEqual(to: component.meta) { return .meta }
     // Check if the items have changed
-    if !(items == component.items) { return .items }
+    if !(items === component.items) { return .items }
     // Check children
 
     let lhsChildren = items.flatMap { $0.children }
