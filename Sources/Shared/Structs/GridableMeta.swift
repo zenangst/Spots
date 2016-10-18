@@ -14,5 +14,9 @@ public struct GridableMeta {
     public static let minimumInteritemSpacing = "item-spacing"
     /// A key used for looking up meta property line spacing
     public static let minimumLineSpacing = "line-spacing"
+    /// A key used for looking up meta property left content inset
+    public static let contentInsetLeft = "content-inset"
+    /// A key used for looking up meta property right content inset
+    public static let contentInsetRight = "content-right"
   }
 }
