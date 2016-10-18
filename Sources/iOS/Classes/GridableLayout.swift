@@ -35,7 +35,7 @@ open class GridableLayout: UICollectionViewFlowLayout {
         contentSize.height += spot.pageControl.frame.height
       }
     } else {
-      contentSize.width = spot.render().frame.width
+      contentSize.width = spot.collectionView.frame.width - spot.collectionView.contentInset.left - spot.collectionView.contentInset.right
       contentSize.height = spot.items.reduce(0, { $0 + $1.size.height })
       if spot.component.span > 1 {
         let count = spot.items.count
