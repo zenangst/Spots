@@ -104,7 +104,7 @@ open class GridableLayout: UICollectionViewFlowLayout {
             itemAttribute.frame.origin.x = offset
             offset += itemAttribute.size.width + minimumInteritemSpacing
           } else {
-            itemAttribute.frame.origin.y = itemAttribute.frame.origin.y + headerReferenceSize.height
+            itemAttribute.frame.origin.y = itemAttribute.frame.origin.y
             itemAttribute.frame.origin.x = itemAttribute.frame.origin.x
           }
           attributes.append(itemAttribute)
