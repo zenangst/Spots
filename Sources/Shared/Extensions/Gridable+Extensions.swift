@@ -22,7 +22,7 @@ public extension Spotable where Self : Gridable {
   /// - returns: Returns a UICollectionView as a UIScrollView
   ///
   public func render() -> ScrollView {
-  return collectionView
+    return collectionView
   }
   #endif
 
