@@ -125,6 +125,7 @@ open class ListSpot: NSObject, Listable {
 
   /// Configure and setup the data source, delegate and additional configuration options for the table view.
   func setupTableView() {
+    register()
     tableView.dataSource = self
     tableView.delegate = self
     tableView.rowHeight = UITableViewAutomaticDimension
