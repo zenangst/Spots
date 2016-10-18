@@ -41,7 +41,7 @@ import Cache
               var yOffset: CGFloat = 0.0
               for spot in weakSelf.spots {
                 #if !os(OSX)
-                (spot as? Gridable)?.layout.yOffset = yOffset
+                (spot as? CarouselSpot)?.layout.yOffset = yOffset
                 #endif
                 yOffset += spot.render().frame.size.height
               }
