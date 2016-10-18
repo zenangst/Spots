@@ -57,7 +57,14 @@ public extension Spotable where Self : Gridable {
             component.items[index].size.width = collectionView.frame.width / CGFloat(component.span) - layout.sectionInset.left - layout.sectionInset.right
           }
         #else
-          component.items[index].size.width = collectionView.bounds.size.width / CGFloat(component.span)
+          var spotWidth = collectionView.frame.size.width
+
+          if spotWidth == 0.0 {
+            spotWidth = UIScreen.main.bounds.width
+          }
+
+          let newWidth = spotWidth / CGFloat(component.span)
+          component.items[index].size.width = newWidth
         #endif
       }
     }
