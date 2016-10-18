@@ -30,12 +30,28 @@ public extension Spotable where Self : Gridable {
   ///
   /// - parameter size: The size of the superview
   public func setup(_ size: CGSize) {
-    layout.prepare()
     collectionView.frame.size.width = size.width
     #if !os(OSX)
-      collectionView.frame.size.height = layout.contentSize.height
       GridSpot.configure?(collectionView, layout)
+
+      if let resolve = type(of: self).headers.make(component.header),
+        let view = resolve.view as? Componentable,
+        !component.header.isEmpty {
+
+        layout.headerReferenceSize.width = collectionView.frame.size.width
+        layout.headerReferenceSize.height = view.frame.size.height ?? 0.0
+
+        if layout.headerReferenceSize.width == 0.0 {
+          layout.headerReferenceSize.width = size.width
+        }
+
+        if layout.headerReferenceSize.height == 0.0 {
+          layout.headerReferenceSize.height = view.preferredHeaderHeight
+        }
+      }
+      collectionView.frame.size.height = layout.contentSize.height
     #endif
+    layout.prepare()
     component.size = collectionView.frame.size
   }
 
