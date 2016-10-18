@@ -185,6 +185,7 @@ open class CarouselSpot: NSObject, Gridable {
   }
 
   func configureCollectionView() {
+    register()
     collectionView.dataSource = self
     collectionView.delegate = self
     collectionView.backgroundView = backgroundView
