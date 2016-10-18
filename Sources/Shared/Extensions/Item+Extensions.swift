@@ -98,7 +98,7 @@ public extension Item {
     let oldChildren = oldItem.children.map { Component($0 as [String : Any]) }
 
     if kind != oldItem.kind { return .kind }
-    if size != oldItem.size { return .size }
+    if size.height != oldItem.size.height { return .size }
     if newChildren != oldChildren { return .children }
     if identifier != oldItem.identifier { return .identifier }
     if title != oldItem.title { return .title }
