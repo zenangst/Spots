@@ -85,13 +85,13 @@ class CarouselSpotTests: XCTestCase {
       "items" : [
         ["title" : "foo",
           "size" : [
-            "width" : 120,
-            "height" : 180]
+            "width" : 120.0,
+            "height" : 180.0]
         ],
         ["title" : "bar",
           "size" : [
-            "width" : 120,
-            "height" : 180]
+            "width" : 120.0,
+            "height" : 180.0]
         ],
         ["title" : "baz",
           "size" : [
