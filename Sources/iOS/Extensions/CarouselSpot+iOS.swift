@@ -12,7 +12,7 @@ extension CarouselSpot {
     guard indexPath.item < component.items.count else { return CGSize.zero }
     var width = collectionView.frame.width
 
-    if component.span > 0 {
+    if component.span > 0.0 {
       if dynamicSpan && Double(component.items.count) < component.span {
         width = collectionView.frame.width / CGFloat(component.items.count)
         width -= layout.sectionInset.left / CGFloat(component.items.count)
