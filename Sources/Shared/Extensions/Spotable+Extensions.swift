@@ -19,12 +19,12 @@ public extension Spotable {
     guard usesDynamicHeight else {
       return self.render().frame.height
     }
-    
+
     var height: CGFloat = 0
     component.items.forEach {
       height += $0.size.height
     }
-    
+
     return height
   }
 
