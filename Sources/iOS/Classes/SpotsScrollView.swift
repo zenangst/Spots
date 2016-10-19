@@ -154,7 +154,7 @@ public class SpotsScrollView: UIScrollView {
         oldFrame = change[NSKeyValueChangeOldKey]?.CGRectValue() {
         let newFrame = view.frame
 
-        if (!CGRectEqualToRect(newFrame, oldFrame)) {
+        if (!compare(newFrame, oldFrame)) {
           self.setNeedsLayout()
           self.layoutIfNeeded()
         }
@@ -230,4 +230,8 @@ public class SpotsScrollView: UIScrollView {
 
 func compare(p1: CGPoint, _ p2: CGPoint) -> Bool {
   return Int(p1.x) == Int(p2.x) && Int(p1.y) == Int(p2.y)
+}
+
+func compare(r1: CGRect, _ r2: CGRect) -> Bool {
+  return CGRectEqualToRect(CGRectIntegral(r1), CGRectIntegral(r2))
 }
