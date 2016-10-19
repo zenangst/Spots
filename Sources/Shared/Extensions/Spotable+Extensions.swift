@@ -19,8 +19,13 @@ public extension Spotable {
     guard usesDynamicHeight else {
       return self.render().frame.height
     }
-
-    return component.items.reduce(0, { $0 + $1.size.height })
+    
+    var height: CGFloat = 0
+    component.items.forEach {
+      height += $0.size.height
+    }
+    
+    return height
   }
 
   /// Resolve a UI component at index with inferred type
