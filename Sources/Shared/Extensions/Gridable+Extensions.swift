@@ -39,7 +39,7 @@ public extension Spotable where Self : Gridable {
         !component.header.isEmpty {
 
         layout.headerReferenceSize.width = collectionView.frame.size.width
-        layout.headerReferenceSize.height = view.frame.size.height ?? 0.0
+        layout.headerReferenceSize.height = view.frame.size.height
 
         if layout.headerReferenceSize.width == 0.0 {
           layout.headerReferenceSize.width = size.width

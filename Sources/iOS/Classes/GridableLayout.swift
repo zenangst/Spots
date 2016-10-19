@@ -24,13 +24,14 @@ open class GridableLayout: UICollectionViewFlowLayout {
     if scrollDirection == .horizontal {
       guard let firstItem = spot.items.first else { return }
 
-      contentSize.height = firstItem.size.height + headerReferenceSize.height
-      contentSize.height += sectionInset.top + sectionInset.bottom
-      
       contentSize.width = spot.items.reduce(0, { $0 + $1.size.width })
       contentSize.width += CGFloat(spot.items.count) * (minimumInteritemSpacing)
       contentSize.width += sectionInset.left + (sectionInset.right / 2) - 3
       contentSize.width = ceil(contentSize.width)
+
+      contentSize.height = firstItem.size.height + headerReferenceSize.height
+      contentSize.height += sectionInset.top + sectionInset.bottom
+
       if let spot = spot as? CarouselSpot, spot.pageIndicator {
         contentSize.height += spot.pageControl.frame.height
       }
