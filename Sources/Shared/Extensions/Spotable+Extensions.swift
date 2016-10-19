@@ -153,6 +153,24 @@ public extension Spotable {
   func prepareItems() {
     component.items.enumerated().forEach { (index: Int, _) in
       configureItem(at: index, usesViewSize: true)
+
+      if component.span > 0.0 {
+        #if os(OSX)
+          if let gridable = self as? Gridable,
+            let layout = gridable.layout as? NSCollectionViewFlowLayout {
+            component.items[index].size.width = gridable.collectionView.frame.width / CGFloat(component.span) - layout.sectionInset.left - layout.sectionInset.right
+          }
+        #else
+          var spotWidth = render().frame.size.width
+
+          if spotWidth == 0.0 {
+            spotWidth = UIScreen.main.bounds.width
+          }
+
+          let newWidth = spotWidth / CGFloat(component.span)
+          component.items[index].size.width = newWidth
+        #endif
+      }
     }
   }
 
@@ -328,7 +346,7 @@ public extension Spotable {
 
     if index < component.items.count && index > -1 {
       #if !os(OSX)
-        if item.size.width == 0 && component.span > 0 {
+        if component.span > 0.0 || item.size.width == 0 {
           item.size.width = UIScreen.main.bounds.width / CGFloat(component.span)
         }
       #endif
