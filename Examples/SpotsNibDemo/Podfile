@@ -6,5 +6,5 @@ inhibit_all_warnings!
 
 target 'SpotsNibDemo' do
   core_pods
-  pod 'Hue', :git => 'https://github.com/hyperoslo/Hue', :branch => 'swift-3'
+  pod 'Hue', '~> 2.0'
 end

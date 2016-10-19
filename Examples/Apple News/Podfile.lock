@@ -1,97 +1,67 @@
 PODS:
-  - Brick (1.0.0):
-    - Tailor
-  - Cache (1.5.1):
+  - Brick (2.0.1):
+    - Tailor (~> 2.0)
+  - Cache (2.0.0):
     - CryptoSwift
-  - Compass (3.0.0)
+  - Compass (4.0.0)
   - CryptoSwift (0.6.0)
   - Fakery (2.0.0)
   - Hue (2.0.0)
   - Imaginary (0.1.0):
     - Cache
-  - Spots (5.0.0):
-    - Brick (= 1.0.0)
-    - Cache (= 1.5.1)
+  - Spots (5.0.4):
+    - Brick (~> 2.0)
+    - Cache (~> 2.0)
     - CryptoSwift (= 0.6.0)
-    - Tailor (= 2.0.1)
-  - Sugar (1.2.0)
+    - Tailor (~> 2.0)
+  - Sugar (2.0.0)
   - Tailor (2.0.1)
   - Transition (0.1.0)
 
 DEPENDENCIES:
-  - Brick (from `https://github.com/hyperoslo/Brick`, branch `swift-3`)
-  - Cache (from `https://github.com/hyperoslo/Cache`, branch `swift-3`)
-  - Compass (from `https://github.com/hyperoslo/Compass`, branch `swift-3`)
+  - Brick
+  - Cache
+  - Compass (~> 4.0)
   - CryptoSwift (= 0.6.0)
   - Fakery (= 2.0.0)
-  - Hue (from `https://github.com/hyperoslo/Hue`, branch `swift-3`)
+  - Hue (~> 2.0)
   - Imaginary (from `https://github.com/hyperoslo/Imaginary`, branch `swift-3`)
   - Spots (from `../../`)
-  - Sugar (from `https://github.com/hyperoslo/Sugar`, branch `swift-3`)
-  - Tailor (= 2.0.1)
+  - Sugar (~> 2.0)
+  - Tailor
   - Transition (from `https://github.com/hyperoslo/Transition`, branch `swift-3`)
 
 EXTERNAL SOURCES:
-  Brick:
-    :branch: swift-3
-    :git: https://github.com/hyperoslo/Brick
-  Cache:
-    :branch: swift-3
-    :git: https://github.com/hyperoslo/Cache
-  Compass:
-    :branch: swift-3
-    :git: https://github.com/hyperoslo/Compass
-  Hue:
-    :branch: swift-3
-    :git: https://github.com/hyperoslo/Hue
   Imaginary:
     :branch: swift-3
     :git: https://github.com/hyperoslo/Imaginary
   Spots:
     :path: "../../"
-  Sugar:
-    :branch: swift-3
-    :git: https://github.com/hyperoslo/Sugar
   Transition:
     :branch: swift-3
     :git: https://github.com/hyperoslo/Transition
 
 CHECKOUT OPTIONS:
-  Brick:
-    :commit: 8c3040e96b8e8d62b534d40def925de30b7f8853
-    :git: https://github.com/hyperoslo/Brick
-  Cache:
-    :commit: 0246e9e9e8faae93f2c83d15824789577f4720bf
-    :git: https://github.com/hyperoslo/Cache
-  Compass:
-    :commit: 89f4e49c67483d4b7951279d1829ba47876d5ddb
-    :git: https://github.com/hyperoslo/Compass
-  Hue:
-    :commit: d03fe87b19caf00e108d82f7e5c8da578699e3b4
-    :git: https://github.com/hyperoslo/Hue
   Imaginary:
     :commit: 40bb9f4cb935200289976f7c64464b78bb5cea0a
     :git: https://github.com/hyperoslo/Imaginary
-  Sugar:
-    :commit: 7fba82b649ae53636b451762eb165e8c8de69751
-    :git: https://github.com/hyperoslo/Sugar
   Transition:
     :commit: 57174fa92a12e9ef5c5f88a88ef1889bb83e46f7
     :git: https://github.com/hyperoslo/Transition
 
 SPEC CHECKSUMS:
-  Brick: 2de240889550c54ea20b146c72f31e9b256c71ad
-  Cache: db4c6908069c442e5de02c7271fb38b38fb60a67
-  Compass: 107bfda77a4296f1ec213956e50fdacde545e1b5
+  Brick: 76695ebcf3c3a581b0159911c63cd804f63cf02a
+  Cache: 86c7a082ce5a734df15a103581d81d29002a171e
+  Compass: b7802d133b95ffde747515f0e84ed8b5153c3d53
   CryptoSwift: 4a599b7241b8d3b857d6e2c28867d0bd5d1aae24
   Fakery: 97b99c23937d2e025d9135c75e2b17351ccd5031
   Hue: 2b317616a04cc5d7cccdb024c88e6d143e2b9cf1
   Imaginary: 62a9ce1e6d7831ede429c8221a183f03ec2a90bc
-  Spots: 51933c15f351d072e22627ccbd1455daaecb2464
-  Sugar: 80c69044df1b48d4c9e3f66196afac827f076134
+  Spots: dcb63e3502abd314c84fe201adf4b112a03326b1
+  Sugar: f45b46cae3d198222a042b9ecf1ce3d44ab8e764
   Tailor: faa9ec5be402056be8ec67c0e461f00251d19191
   Transition: 66d86e3ae1b8f0b3d9ba2000c7a45fbc17b066f2
 
-PODFILE CHECKSUM: 267d53aa17cf1d77fdc7b5f9ec07b55d5099e97c
+PODFILE CHECKSUM: f42fd0dd8c308aa35c34edf43eb4129a0b53e674
 
-COCOAPODS: 1.1.0.rc.2
+COCOAPODS: 1.1.0.rc.3
