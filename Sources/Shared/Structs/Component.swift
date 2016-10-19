@@ -141,10 +141,9 @@ public struct Component: Mappable, Equatable {
     items     <- map.relations("items")
     meta      <- map.property("meta")
 
-    if let size = map["size"] as? [String : Any] {
-      self.size = CGSize(width: size.property(Key.Width.string) ?? 0.0,
-                         height: size.property(Key.Height.string) ?? 0.0)
-    }
+    let width: Double = map.resolve(keyPath: "size.width") ?? 0.0
+    let height: Double = map.resolve(keyPath: "size.height") ?? 0.0
+    size = CGSize(width: width, height: height)
   }
 
   /// Initializes a component and configures it with the provided parameters
