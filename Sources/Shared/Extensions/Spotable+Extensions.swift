@@ -203,7 +203,10 @@ public extension Spotable {
       return self.render().frame.height
     }
 
-    return component.items.reduce(0, combine: { $0 + $1.size.height })
+    var sum: CGFloat = 0
+    component.items.forEach { sum += $0.size.height }
+    
+    return sum
   }
 
   public func updateHeight(completion: Completion = nil) {
