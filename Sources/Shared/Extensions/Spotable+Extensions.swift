@@ -158,7 +158,6 @@ public extension Spotable {
   func prepareItems() {
     component.items.enumerated().forEach { (index: Int, _) in
       configureItem(at: index, usesViewSize: true)
-
       if component.span > 0.0 {
         #if os(OSX)
           if let gridable = self as? Gridable,
@@ -321,14 +320,8 @@ public extension Spotable {
           view.frame.size = UIScreen.main.bounds.size
         }
 
-        if let view = view as? UITableViewCell {
-          view.contentView.frame = view.bounds
-        }
-
-        if let view = view as? UICollectionViewCell {
-          view.contentView.frame = view.bounds
-        }
-
+        (view as? UITableViewCell)?.contentView.frame = view.bounds
+        (view as? UICollectionViewCell)?.contentView.frame = view.bounds
         (view as? SpotConfigurable)?.configure(&item)
       }
     #else
@@ -336,22 +329,22 @@ public extension Spotable {
     #endif
 
     if let itemView = view as? SpotConfigurable, usesViewSize {
-      if item.size.height == 0 {
+      if item.size.height == 0.0 {
         item.size.height = itemView.preferredViewSize.height
       }
 
-      if item.size.width == 0 {
+      if item.size.width == 0.0 {
         item.size.width = itemView.preferredViewSize.width
       }
 
-      if item.size.width == 0 {
+      if item.size.width == 0.0 {
         item.size.width = view.bounds.width
       }
     }
 
     if index < component.items.count && index > -1 {
       #if !os(OSX)
-        if component.span > 0.0 || item.size.width == 0 {
+        if self is Gridable && (component.span > 0.0 || item.size.width == 0) {
           item.size.width = UIScreen.main.bounds.width / CGFloat(component.span)
         }
       #endif
