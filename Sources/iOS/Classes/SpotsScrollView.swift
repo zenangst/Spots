@@ -145,7 +145,7 @@ public class SpotsScrollView: UIScrollView {
           && (dragging == false && tracking == false) {
           let oldOffset = change.CGPointValue()
           let newOffset = scrollView.contentOffset
-          if !CGPointEqualToPoint(newOffset, oldOffset) {
+          if !compare(newOffset, oldOffset) {
             setNeedsLayout()
             layoutIfNeeded()
           }
@@ -220,8 +220,14 @@ public class SpotsScrollView: UIScrollView {
       self.frame.size.height = superview.frame.size.height
     }
 
-    guard !CGPointEqualToPoint(initialContentOffset, contentOffset) else { return }
+    guard !compare(initialContentOffset, contentOffset) else { return }
     setNeedsLayout()
     layoutIfNeeded()
   }
+}
+
+// MARK: - Helper
+
+func compare(p1: CGPoint, _ p2: CGPoint) -> Bool {
+  return Int(p1.x) == Int(p2.x) && Int(p1.y) == Int(p2.y)
 }
