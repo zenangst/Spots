@@ -10,6 +10,10 @@ open class GridableLayout: UICollectionViewFlowLayout {
 
   // Subclasses must override this method and use it to return the width and height of the collection view’s content. These values represent the width and height of all the content, not just the content that is currently visible. The collection view uses this information to configure its own content size to facilitate scrolling.
   open override var collectionViewContentSize: CGSize {
+    if scrollDirection != .horizontal {
+      contentSize.height = super.collectionViewContentSize.height
+    }
+
     return contentSize
   }
 
@@ -37,36 +41,6 @@ open class GridableLayout: UICollectionViewFlowLayout {
       }
     } else {
       contentSize.width = spot.collectionView.frame.width - spot.collectionView.contentInset.left - spot.collectionView.contentInset.right
-      if spot.component.span > 1 {
-        contentSize.height = spot.items.reduce(0, { $0 + $1.size.height })
-        let count = spot.items.count
-        if let last = spot.items.last, count % Int(spot.component.span) != 0 {
-          contentSize.height += last.size.height
-        }
-
-        contentSize.height += CGFloat(spot.items.count) * minimumLineSpacing
-        contentSize.height /= CGFloat(spot.component.span)
-        contentSize.height += sectionInset.top + sectionInset.bottom
-        contentSize.height += headerReferenceSize.height
-      } else {
-
-        var height: CGFloat = 0.0
-        var remainingHeight: CGFloat = contentSize.width
-        for item in spot.items {
-          remainingHeight -= item.size.height
-          if remainingHeight <= 0.0 {
-            height += item.size.height
-            remainingHeight = contentSize.width
-          }
-        }
-
-        if let last = spot.items.last, remainingHeight > 0.0 {
-          height += last.size.height
-        }
-
-        contentSize.height = height
-        contentSize.height += sectionInset.top + sectionInset.bottom
-      }
     }
   }
 
