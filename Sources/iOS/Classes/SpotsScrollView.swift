@@ -197,8 +197,8 @@ public class SpotsScrollView: UIScrollView {
         frame.size.height = ceil(fmin(remainingBoundsHeight, remainingContentHeight))
         frame.size.width = ceil(contentView.frame.size.width)
 
-        scrollView.frame = frame
-        scrollView.contentOffset = contentOffset
+        scrollView.frame = CGRectIntegral(frame)
+        scrollView.contentOffset = CGPoint(x: Int(contentOffset.x), y: Int(contentOffset.y))
 
         yOffsetOfCurrentSubview += scrollView.contentSize.height + scrollView.contentInset.top + scrollView.contentInset.bottom
       } else if let subview = subview {
