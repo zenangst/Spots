@@ -137,9 +137,16 @@ public struct Component: Mappable, Equatable {
     title     <- map.property("title")
     kind      <- map.property("kind")
     header    <- map.property("header")
-    span      <- map.property("span")
     items     <- map.relations("items")
     meta      <- map.property("meta")
+
+    if let span: Int = map.property("span") {
+      self.span = Double(span)
+    } else if let span: Float = map.property("span") {
+      self.span = Double(span)
+    } else {
+      self.span <- map.property("span")
+    }
 
     let width: Double = map.resolve(keyPath: "size.width") ?? 0.0
     let height: Double = map.resolve(keyPath: "size.height") ?? 0.0
