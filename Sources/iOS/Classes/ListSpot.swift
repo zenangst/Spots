@@ -113,7 +113,10 @@ open class ListSpot: NSObject, Listable {
   ///
   /// - parameter size: The size of the superview.
   open func setup(_ size: CGSize) {
-    let height = component.items.reduce(component.meta(Key.headerHeight, 0.0), { $0 + $1.size.height })
+    var height: CGFloat = component.meta(Key.headerHeight, 0.0)
+    for item in component.items {
+      height += item.size.height
+    }
 
     tableView.frame.size = size
     tableView.contentSize = CGSize(
