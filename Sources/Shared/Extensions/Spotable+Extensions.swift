@@ -327,6 +327,9 @@ public extension Spotable {
     }
 
     if index < component.items.count && index > -1 {
+      if item.size.width == 0 && component.span > 0 {
+        item.size.width = UIScreen.main.bounds.width / CGFloat(component.span)
+      }
       component.items[index] = item
     }
   }
