@@ -116,17 +116,17 @@ open class SpotsScrollView: UIScrollView {
     if let change = change, context == subviewContext {
       if let scrollView = object as? UIScrollView {
         guard let change = change[NSKeyValueChangeKey.oldKey] else { return }
-        if let oldContentSize = (change as AnyObject).cgSizeValue,
-          keyPath == #keyPath(contentSize) {
+        if keyPath == #keyPath(contentSize) {
 
           let newContentSize = scrollView.contentSize
+          let oldContentSize = (change as AnyObject).cgSizeValue
           if !compare(size: newContentSize, to: oldContentSize) {
             setNeedsLayout()
             layoutIfNeeded()
           }
         } else if keyPath == #keyPath(contentOffset)
-          && (isDragging == false && isTracking == false),
-          let oldOffset = (change as AnyObject).cgPointValue {
+          && (isDragging == false && isTracking == false) {
+          let oldOffset = (change as AnyObject).cgPointValue
           let newOffset = scrollView.contentOffset
 
           if !compare(point: newOffset, to: oldOffset) {
@@ -134,13 +134,13 @@ open class SpotsScrollView: UIScrollView {
             layoutIfNeeded()
           }
         }
-      } else if let view = object as? UIView,
-        let oldFrame = (change[NSKeyValueChangeKey.oldKey] as AnyObject).cgRectValue {
+      } else if let view = object as? UIView {
+        let oldFrame = (change[NSKeyValueChangeKey.oldKey] as AnyObject).cgRectValue
         let newFrame = view.frame
 
         if !compare(rect: newFrame, to: oldFrame) {
-          self.setNeedsLayout()
-          self.layoutIfNeeded()
+          setNeedsLayout()
+          layoutIfNeeded()
         }
       }
     } else {
@@ -219,7 +219,8 @@ open class SpotsScrollView: UIScrollView {
   /// - parameter p2: Right hand side CGPoint
   ///
   /// - returns: A boolean value, true if they are equal
-  private func compare(point lhs: CGPoint, to rhs: CGPoint) -> Bool {
+  private func compare(point lhs: CGPoint, to rhs: CGPoint?) -> Bool {
+    guard let rhs = rhs else { return false }
     return Int(lhs.x) == Int(rhs.x) && Int(lhs.y) == Int(rhs.y)
   }
 
@@ -229,7 +230,8 @@ open class SpotsScrollView: UIScrollView {
   /// - parameter p2: Right hand side CGPoint
   ///
   /// - returns: A boolean value, true if they are equal
-  private func compare(size lhs: CGSize, to rhs: CGSize) -> Bool {
+  private func compare(size lhs: CGSize, to rhs: CGSize?) -> Bool {
+    guard let rhs = rhs else { return false }
     return Int(lhs.width) == Int(rhs.width) && Int(lhs.height) == Int(rhs.height)
   }
 
@@ -239,7 +241,8 @@ open class SpotsScrollView: UIScrollView {
   /// - parameter rhs: Right hand side CGRect
   ///
   /// - returns: A boolean value, true if they are equal
-  private func compare(rect lhs: CGRect, to rhs: CGRect) -> Bool {
+  private func compare(rect lhs: CGRect, to rhs: CGRect?) -> Bool {
+    guard let rhs = rhs else { return false }
     return lhs.integral.equalTo(rhs.integral)
   }
 }
