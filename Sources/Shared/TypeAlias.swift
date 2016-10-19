@@ -20,6 +20,8 @@ public typealias Completion = (() -> Void)?
   public typealias Nib = NSNib
   /// A type alias to reference a collection layout
   public typealias CollectionLayout = NSCollectionViewLayout
+  /// A type alias to reference a collection flow layout
+  public typealias FlowLayout = NSCollectionViewFlowLayout
   /// A type alias for scrollable views
   public typealias ScrollableView = SpotsScrollView
 
@@ -40,6 +42,8 @@ public typealias Completion = (() -> Void)?
   public typealias Nib = UINib
   /// A type alias to reference a collection layout
   public typealias CollectionLayout = GridableLayout
+  /// A type alias to reference a collection flow layout
+  public typealias FlowLayout = UICollectionViewFlowLayout
   /// A type alias to reference a edge insets
   public typealias EdgeInsets = UIEdgeInsets
   /// A type alias for scrollable views

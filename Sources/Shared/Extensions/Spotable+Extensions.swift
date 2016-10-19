@@ -161,7 +161,7 @@ public extension Spotable {
       if component.span > 0.0 {
         #if os(OSX)
           if let gridable = self as? Gridable,
-            let layout = gridable.layout as? NSCollectionViewFlowLayout {
+            let layout = gridable.layout as? FlowLayout {
             component.items[index].size.width = gridable.collectionView.frame.width / CGFloat(component.span) - layout.sectionInset.left - layout.sectionInset.right
           }
         #else
