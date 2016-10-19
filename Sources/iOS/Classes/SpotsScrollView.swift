@@ -137,7 +137,7 @@ public class SpotsScrollView: UIScrollView {
         if keyPath == ObservedKeypath.contentSize.rawValue {
           let oldContentSize = change.CGSizeValue()
           let newContentSize = scrollView.contentSize
-          if !CGSizeEqualToSize(newContentSize, oldContentSize) {
+          if !compare(newContentSize, oldContentSize) {
             setNeedsLayout()
             layoutIfNeeded()
           }
@@ -234,4 +234,8 @@ func compare(p1: CGPoint, _ p2: CGPoint) -> Bool {
 
 func compare(r1: CGRect, _ r2: CGRect) -> Bool {
   return CGRectEqualToRect(CGRectIntegral(r1), CGRectIntegral(r2))
+}
+
+func compare(s1: CGSize, _ s2: CGSize) -> Bool {
+  return Int(s1.width) == Int(s2.width) && Int(s1.height) == Int(s2.height)
 }
