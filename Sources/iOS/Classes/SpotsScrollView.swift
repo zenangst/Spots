@@ -116,18 +116,20 @@ open class SpotsScrollView: UIScrollView {
     if let change = change, context == subviewContext {
       if let scrollView = object as? UIScrollView {
         guard let change = change[NSKeyValueChangeKey.oldKey] else { return }
-        if keyPath == #keyPath(contentSize) {
-          let oldContentSize = (change as AnyObject).cgSizeValue
+        if let oldContentSize = (change as AnyObject).cgSizeValue,
+          keyPath == #keyPath(contentSize) {
+
           let newContentSize = scrollView.contentSize
-          if !newContentSize.equalTo(oldContentSize!) {
+          if !compare(size: newContentSize, to: oldContentSize) {
             setNeedsLayout()
             layoutIfNeeded()
           }
         } else if keyPath == #keyPath(contentOffset)
-          && (isDragging == false && isTracking == false) {
-          let oldOffset = (change as AnyObject).cgPointValue
+          && (isDragging == false && isTracking == false),
+          let oldOffset = (change as AnyObject).cgPointValue {
           let newOffset = scrollView.contentOffset
-          if !newOffset.equalTo(oldOffset!) {
+
+          if !compare(point: newOffset, to: oldOffset) {
             setNeedsLayout()
             layoutIfNeeded()
           }
@@ -136,7 +138,7 @@ open class SpotsScrollView: UIScrollView {
         let oldFrame = (change[NSKeyValueChangeKey.oldKey] as AnyObject).cgRectValue {
         let newFrame = view.frame
 
-        if !newFrame.equalTo(oldFrame) {
+        if !compare(rect: newFrame, to: oldFrame) {
           self.setNeedsLayout()
           self.layoutIfNeeded()
         }
@@ -209,5 +211,35 @@ open class SpotsScrollView: UIScrollView {
     guard !initialContentOffset.equalTo(contentOffset) else { return }
     setNeedsLayout()
     layoutIfNeeded()
+  }
+
+  /// Compare points
+  ///
+  /// - parameter p1: Left hand side CGPoint
+  /// - parameter p2: Right hand side CGPoint
+  ///
+  /// - returns: A boolean value, true if they are equal
+  private func compare(point lhs: CGPoint, to rhs: CGPoint) -> Bool {
+    return Int(lhs.x) == Int(rhs.x) && Int(lhs.y) == Int(rhs.y)
+  }
+
+  /// Compare sizes
+  ///
+  /// - parameter p1: Left hand side CGPoint
+  /// - parameter p2: Right hand side CGPoint
+  ///
+  /// - returns: A boolean value, true if they are equal
+  private func compare(size lhs: CGSize, to rhs: CGSize) -> Bool {
+    return Int(lhs.width) == Int(rhs.width) && Int(lhs.height) == Int(rhs.height)
+  }
+
+  /// Compare rectangles
+  ///
+  /// - parameter lhs: Left hand side CGRect
+  /// - parameter rhs: Right hand side CGRect
+  ///
+  /// - returns: A boolean value, true if they are equal
+  private func compare(rect lhs: CGRect, to rhs: CGRect) -> Bool {
+    return lhs.integral.equalTo(rhs.integral)
   }
 }
