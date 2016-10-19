@@ -58,17 +58,17 @@ class FavoritesController: Controller {
     reload([
       "components" : [
         [
-        "kind" : newType,
-        "span" : 3
+          "kind" : newType,
+          "span" : 3
         ]
       ]
-    ], animated: { view in
-      view.alpha = 0.0
-      view.transform = CGAffineTransform(scaleX: 1.0, y: 0.0)
-      UIView.animate(withDuration: 0.3) {
-        view.alpha = 1.0
-        view.transform = CGAffineTransform.identity
-      }
+      ], animated: { view in
+        view.alpha = 0.0
+        view.transform = CGAffineTransform(scaleX: 1.0, y: 0.0)
+        UIView.animate(withDuration: 0.3) {
+          view.alpha = 1.0
+          view.transform = CGAffineTransform.identity
+        }
     }) {
       dispatch(queue: .interactive) { [weak self] in
         let items = FavoritesController.generateItems(0, to: 11, kind: newType == "grid" ? Cell.Topic : Cell.Feed)
