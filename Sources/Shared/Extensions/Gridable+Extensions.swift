@@ -62,27 +62,4 @@ public extension Spotable where Self : Gridable {
     layout.invalidateLayout()
     collectionView.frame.size.width = size.width
   }
-
-  /// Prepare items in component
-  public func prepareItems() {
-    component.items.enumerated().forEach { (index: Int, _) in
-      configureItem(at: index, usesViewSize: true)
-      if component.span > 0 {
-        #if os(OSX)
-          if let layout = layout as? NSCollectionViewFlowLayout {
-            component.items[index].size.width = collectionView.frame.width / CGFloat(component.span) - layout.sectionInset.left - layout.sectionInset.right
-          }
-        #else
-          var spotWidth = collectionView.frame.size.width
-
-          if spotWidth == 0.0 {
-            spotWidth = UIScreen.main.bounds.width
-          }
-
-          let newWidth = spotWidth / CGFloat(component.span)
-          component.items[index].size.width = newWidth
-        #endif
-      }
-    }
-  }
 }
