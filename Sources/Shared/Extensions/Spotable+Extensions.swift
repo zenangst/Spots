@@ -20,7 +20,12 @@ public extension Spotable {
       return self.render().frame.height
     }
 
-    return component.items.reduce(0, { $0 + $1.size.height })
+    var height: CGFloat = 0
+    component.items.forEach {
+      height += $0.size.height
+    }
+
+    return height
   }
 
   /// Resolve a UI component at index with inferred type
@@ -153,6 +158,23 @@ public extension Spotable {
   func prepareItems() {
     component.items.enumerated().forEach { (index: Int, _) in
       configureItem(at: index, usesViewSize: true)
+      if component.span > 0.0 {
+        #if os(OSX)
+          if let gridable = self as? Gridable,
+            let layout = gridable.layout as? FlowLayout {
+            component.items[index].size.width = gridable.collectionView.frame.width / CGFloat(component.span) - layout.sectionInset.left - layout.sectionInset.right
+          }
+        #else
+          var spotWidth = render().frame.size.width
+
+          if spotWidth == 0.0 {
+            spotWidth = UIScreen.main.bounds.width
+          }
+
+          let newWidth = spotWidth / CGFloat(component.span)
+          component.items[index].size.width = newWidth
+        #endif
+      }
     }
   }
 
@@ -298,14 +320,8 @@ public extension Spotable {
           view.frame.size = UIScreen.main.bounds.size
         }
 
-        if let view = view as? UITableViewCell {
-          view.contentView.frame = view.bounds
-        }
-
-        if let view = view as? UICollectionViewCell {
-          view.contentView.frame = view.bounds
-        }
-
+        (view as? UITableViewCell)?.contentView.frame = view.bounds
+        (view as? UICollectionViewCell)?.contentView.frame = view.bounds
         (view as? SpotConfigurable)?.configure(&item)
       }
     #else
@@ -313,20 +329,25 @@ public extension Spotable {
     #endif
 
     if let itemView = view as? SpotConfigurable, usesViewSize {
-      if item.size.height == 0 {
+      if item.size.height == 0.0 {
         item.size.height = itemView.preferredViewSize.height
       }
 
-      if item.size.width == 0 {
+      if item.size.width == 0.0 {
         item.size.width = itemView.preferredViewSize.width
       }
 
-      if item.size.width == 0 {
+      if item.size.width == 0.0 {
         item.size.width = view.bounds.width
       }
     }
 
     if index < component.items.count && index > -1 {
+      #if !os(OSX)
+        if self is Gridable && (component.span > 0.0 || item.size.width == 0) {
+          item.size.width = UIScreen.main.bounds.width / CGFloat(component.span)
+        }
+      #endif
       component.items[index] = item
     }
   }

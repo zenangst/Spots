@@ -6,6 +6,6 @@ inhibit_all_warnings!
 
 target "tvOS Dashboard" do
   core_pods
-  pod 'Sugar', git: 'https://github.com/hyperoslo/Sugar', branch: 'swift-3'
+  pod 'Sugar', '~> 2.0'
   pod 'Imaginary', git: 'https://github.com/hyperoslo/Imaginary', branch: 'swift-3'
 end

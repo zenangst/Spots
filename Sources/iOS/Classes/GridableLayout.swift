@@ -10,6 +10,10 @@ open class GridableLayout: UICollectionViewFlowLayout {
 
   // Subclasses must override this method and use it to return the width and height of the collection view’s content. These values represent the width and height of all the content, not just the content that is currently visible. The collection view uses this information to configure its own content size to facilitate scrolling.
   open override var collectionViewContentSize: CGSize {
+    if scrollDirection != .horizontal {
+      contentSize.height = super.collectionViewContentSize.height
+    }
+
     return contentSize
   }
 
@@ -24,32 +28,19 @@ open class GridableLayout: UICollectionViewFlowLayout {
     if scrollDirection == .horizontal {
       guard let firstItem = spot.items.first else { return }
 
-      contentSize.height = firstItem.size.height + headerReferenceSize.height
-      contentSize.height += sectionInset.top + sectionInset.bottom
-      
       contentSize.width = spot.items.reduce(0, { $0 + $1.size.width })
       contentSize.width += CGFloat(spot.items.count) * (minimumInteritemSpacing)
       contentSize.width += sectionInset.left + (sectionInset.right / 2) - 3
       contentSize.width = ceil(contentSize.width)
+
+      contentSize.height = firstItem.size.height + headerReferenceSize.height
+      contentSize.height += sectionInset.top + sectionInset.bottom
+
       if let spot = spot as? CarouselSpot, spot.pageIndicator {
         contentSize.height += spot.pageControl.frame.height
       }
     } else {
-      contentSize.width = spot.render().frame.width
-      contentSize.height = spot.items.reduce(0, { $0 + $1.size.height })
-      if spot.component.span > 1 {
-        let count = spot.items.count
-        if let last = spot.items.last, count % Int(spot.component.span) != 0 {
-          contentSize.height += last.size.height
-        }
-
-        contentSize.height += CGFloat(spot.items.count) * minimumLineSpacing
-        contentSize.height /= CGFloat(spot.component.span)
-        contentSize.height += sectionInset.top + sectionInset.bottom
-      } else {
-        contentSize.height = spot.items.reduce(0, { $0 + $1.size.height })
-        contentSize.height += sectionInset.top + sectionInset.bottom
-      }
+      contentSize.width = spot.collectionView.frame.width - spot.collectionView.contentInset.left - spot.collectionView.contentInset.right
     }
   }
 
@@ -103,7 +94,7 @@ open class GridableLayout: UICollectionViewFlowLayout {
             itemAttribute.frame.origin.x = offset
             offset += itemAttribute.size.width + minimumInteritemSpacing
           } else {
-            itemAttribute.frame.origin.y = itemAttribute.frame.origin.y + headerReferenceSize.height
+            itemAttribute.frame.origin.y = itemAttribute.frame.origin.y
             itemAttribute.frame.origin.x = itemAttribute.frame.origin.x
           }
           attributes.append(itemAttribute)

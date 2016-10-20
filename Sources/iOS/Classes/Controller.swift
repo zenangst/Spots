@@ -285,7 +285,7 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
       setupSpot(at: index, spot: spot)
       scrollView.contentView.addSubview(spot.render())
       animated?(spot.render())
-      (spot as? Gridable)?.layout.yOffset = yOffset
+      (spot as? CarouselSpot)?.layout.yOffset = yOffset
       yOffset += spot.render().frame.size.height
     }
   }

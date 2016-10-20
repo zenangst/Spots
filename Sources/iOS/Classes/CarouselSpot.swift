@@ -30,6 +30,10 @@ open class CarouselSpot: NSObject, Gridable {
     public static var minimumInteritemSpacing: CGFloat = 0.0
     /// Default minimum line spacing
     public static var minimumLineSpacing: CGFloat = 0.0
+    /// Default left section inset
+    public static var contentInsetLeft: CGFloat = 0.0
+    /// Default right section inset
+    public static var contentInsetRight: CGFloat = 0.0
   }
 
   /// A boolean value that affects the sizing of items when using span, if enabled and the item count is less than the span, the CarouselSpot will even out the space between the items to align them
@@ -55,7 +59,7 @@ open class CarouselSpot: NSObject, Gridable {
     willSet(value) {
       #if os(iOS)
         dynamicSpan = component.meta(Key.dynamicSpan, Default.dynamicSpan)
-        if component.items.count > 1 && component.span > 0 {
+        if component.items.count > 1 && component.span > 0.0 {
           pageControl.numberOfPages = Int(floor(Double(component.items.count) / component.span))
         }
       #endif
@@ -241,6 +245,8 @@ open class CarouselSpot: NSObject, Gridable {
     layout.minimumInteritemSpacing = component.meta(GridableMeta.Key.minimumInteritemSpacing, Default.minimumInteritemSpacing)
     layout.minimumLineSpacing = component.meta(GridableMeta.Key.minimumLineSpacing, Default.minimumLineSpacing)
     dynamicSpan = component.meta(Key.dynamicSpan, false)
+    collectionView.contentInset.left = component.meta(GridableMeta.Key.contentInsetLeft, Default.contentInsetLeft)
+    collectionView.contentInset.right = component.meta(GridableMeta.Key.contentInsetRight, Default.contentInsetRight)
   }
 
   /// Register default header for the CarouselSpot

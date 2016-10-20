@@ -6,9 +6,9 @@ inhibit_all_warnings!
 
 target "AppleNews" do
   core_pods
-  pod 'Sugar', git: 'https://github.com/hyperoslo/Sugar', :branch => 'swift-3'
-  pod 'Hue', git: 'https://github.com/hyperoslo/Hue', :branch => 'swift-3'
-  pod 'Compass', git: 'https://github.com/hyperoslo/Compass', :branch => 'swift-3'
+  pod 'Sugar', '~> 2.0'
+  pod 'Hue', '~> 2.0'
+  pod 'Compass', '~> 4.0'
   pod 'Imaginary', git: 'https://github.com/hyperoslo/Imaginary', :branch => 'swift-3'
   pod 'Fakery', '2.0.0'
   pod 'Transition', git: 'https://github.com/hyperoslo/Transition', :branch => 'swift-3'

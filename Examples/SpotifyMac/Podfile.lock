@@ -1,6 +1,6 @@
 PODS:
   - Alamofire (4.0.1)
-  - Brick (2.0.0):
+  - Brick (2.0.1):
     - Tailor (~> 2.0)
   - Cache (2.0.0):
     - CryptoSwift
@@ -19,7 +19,7 @@ PODS:
     - JWTDecode
     - Keychain
     - Sugar
-  - Spots (5.0.1):
+  - Spots (5.0.4):
     - Brick (~> 2.0)
     - Cache (~> 2.0)
     - CryptoSwift (= 0.6.0)
@@ -66,12 +66,12 @@ CHECKOUT OPTIONS:
     :commit: aba620997062a2082a9d1a57fb5c81e4e0fe79df
     :git: https://github.com/hyperoslo/Keychain.git
   OhMyAuth:
-    :commit: 94360e0e71e7af5ed97d9ac98697889c66b601c4
+    :commit: 11bfb1d489b685c77c8a68eb836e253b8d51383a
     :git: https://github.com/hyperoslo/OhMyAuth.git
 
 SPEC CHECKSUMS:
   Alamofire: 7682d43245de14874acd142ec137b144aa1dd335
-  Brick: a4900b83cef55f0a79ff78b453eff9e95e65df1f
+  Brick: 76695ebcf3c3a581b0159911c63cd804f63cf02a
   Cache: 86c7a082ce5a734df15a103581d81d29002a171e
   Compass: b7802d133b95ffde747515f0e84ed8b5153c3d53
   CryptoSwift: 4a599b7241b8d3b857d6e2c28867d0bd5d1aae24
@@ -81,8 +81,8 @@ SPEC CHECKSUMS:
   JWTDecode: 178e47e5d28d3abcff778bacced8342858cd6cb5
   Keychain: b82fa1a6c20666b74014e7549f53bae6c75d617f
   Malibu: d697d750eba061696ddafa097b6cb325ba6037f7
-  OhMyAuth: 6635daf8b6378ac68db57f313cd2ac06033d975b
-  Spots: 4f51eac13c78f3f872aa0ceed26911efb5054e7c
+  OhMyAuth: e10e5ab7a2a3d77c8e056b0d2aa495b9cefec19c
+  Spots: dcb63e3502abd314c84fe201adf4b112a03326b1
   Sugar: f45b46cae3d198222a042b9ecf1ce3d44ab8e764
   Tailor: faa9ec5be402056be8ec67c0e461f00251d19191
   When: 3df626af4891607ea7dd3f46a451176c5642c528

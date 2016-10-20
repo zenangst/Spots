@@ -73,11 +73,12 @@ public extension UICollectionView {
       return
     }
 
-    performBatchUpdates({
-      self.insertItems(at: insertions)
-      self.reloadItems(at: reloads)
-      self.deleteItems(at: deletions)
-      }) { _ in
+    UIView.performWithoutAnimation {
+      performBatchUpdates({
+        self.insertItems(at: insertions)
+        self.reloadItems(at: reloads)
+        self.deleteItems(at: deletions)
+      }) { _ in }
     }
     completion?()
   }

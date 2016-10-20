@@ -42,15 +42,14 @@ class ExploreController: Controller {
     suggestedSpot.paginateByItem = false
 
     let spots: [Spotable] = [
-      ListSpot(component: Component(title : "Suggested Channels", meta: ["headerHeight" : 33])),
       suggestedSpot,
-      ListSpot(component: Component(title : "Suggested Topics", meta: ["headerHeight" : 33])),
       CarouselSpot(suggestedTopics),
       ListSpot(component: browse)
     ]
 
     self.init(spots: spots)
     self.title = title
+    scrollView.contentInset.top = 10
   }
 
   static func suggestedImage(_ id: Int) -> String {

@@ -95,7 +95,7 @@ extension SpotsProtocol {
     self.spots[index] = spot
     self.setupSpot(at: index, spot: spot)
     self.scrollView.contentView.insertSubview(spot.render(), at: index)
-    (spot as? Gridable)?.layout.yOffset = yOffset
+    (spot as? CarouselSpot)?.layout.yOffset = yOffset
     yOffset += spot.render().frame.size.height
   }
 
@@ -103,7 +103,7 @@ extension SpotsProtocol {
     let spot = Factory.resolve(component: newComponents[index])
     spots.append(spot)
     setupSpot(at: index, spot: spot)
-    (spot as? Gridable)?.layout.yOffset = yOffset
+    (spot as? CarouselSpot)?.layout.yOffset = yOffset
     scrollView.contentView.addSubview(spot.render())
     yOffset += spot.render().frame.size.height
   }

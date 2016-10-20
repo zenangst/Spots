@@ -22,7 +22,7 @@ public extension Spotable where Self : Gridable {
   /// - returns: Returns a UICollectionView as a UIScrollView
   ///
   public func render() -> ScrollView {
-  return collectionView
+    return collectionView
   }
   #endif
 
@@ -30,12 +30,28 @@ public extension Spotable where Self : Gridable {
   ///
   /// - parameter size: The size of the superview
   public func setup(_ size: CGSize) {
-    layout.prepare()
     collectionView.frame.size.width = size.width
     #if !os(OSX)
-      collectionView.frame.size.height = layout.contentSize.height
       GridSpot.configure?(collectionView, layout)
+
+      if let resolve = type(of: self).headers.make(component.header),
+        let view = resolve.view as? Componentable,
+        !component.header.isEmpty {
+
+        layout.headerReferenceSize.width = collectionView.frame.size.width
+        layout.headerReferenceSize.height = view.frame.size.height
+
+        if layout.headerReferenceSize.width == 0.0 {
+          layout.headerReferenceSize.width = size.width
+        }
+
+        if layout.headerReferenceSize.height == 0.0 {
+          layout.headerReferenceSize.height = view.preferredHeaderHeight
+        }
+      }
+      collectionView.frame.size.height = layout.contentSize.height
     #endif
+    layout.prepare()
     component.size = collectionView.frame.size
   }
 
@@ -45,21 +61,5 @@ public extension Spotable where Self : Gridable {
   public func layout(_ size: CGSize) {
     layout.invalidateLayout()
     collectionView.frame.size.width = size.width
-  }
-
-  /// Prepare items in component
-  public func prepareItems() {
-    component.items.enumerated().forEach { (index: Int, _) in
-      configureItem(at: index, usesViewSize: true)
-      if component.span > 0 {
-        #if os(OSX)
-          if let layout = layout as? NSCollectionViewFlowLayout {
-            component.items[index].size.width = collectionView.frame.width / CGFloat(component.span) - layout.sectionInset.left - layout.sectionInset.right
-          }
-        #else
-          component.items[index].size.width = collectionView.bounds.size.width / CGFloat(component.span)
-        #endif
-      }
-    }
   }
 }

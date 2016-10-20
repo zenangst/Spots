@@ -117,9 +117,10 @@ open class SpotsScrollView: UIScrollView {
       if let scrollView = object as? UIScrollView {
         guard let change = change[NSKeyValueChangeKey.oldKey] else { return }
         if keyPath == #keyPath(contentSize) {
-          let oldContentSize = (change as AnyObject).cgSizeValue
+
           let newContentSize = scrollView.contentSize
-          if !newContentSize.equalTo(oldContentSize!) {
+          let oldContentSize = (change as AnyObject).cgSizeValue
+          if !compare(size: newContentSize, to: oldContentSize) {
             setNeedsLayout()
             layoutIfNeeded()
           }
@@ -127,18 +128,19 @@ open class SpotsScrollView: UIScrollView {
           && (isDragging == false && isTracking == false) {
           let oldOffset = (change as AnyObject).cgPointValue
           let newOffset = scrollView.contentOffset
-          if !newOffset.equalTo(oldOffset!) {
+
+          if !compare(point: newOffset, to: oldOffset) {
             setNeedsLayout()
             layoutIfNeeded()
           }
         }
-      } else if let view = object as? UIView,
-        let oldFrame = (change[NSKeyValueChangeKey.oldKey] as AnyObject).cgRectValue {
+      } else if let view = object as? UIView {
+        let oldFrame = (change[NSKeyValueChangeKey.oldKey] as AnyObject).cgRectValue
         let newFrame = view.frame
 
-        if !newFrame.equalTo(oldFrame) {
-          self.setNeedsLayout()
-          self.layoutIfNeeded()
+        if !compare(rect: newFrame, to: oldFrame) {
+          setNeedsLayout()
+          layoutIfNeeded()
         }
       }
     } else {
@@ -172,10 +174,11 @@ open class SpotsScrollView: UIScrollView {
         let remainingContentHeight = fmax(scrollView.contentSize.height - contentOffset.y, 0.0)
 
         frame.size.height = ceil(fmin(remainingBoundsHeight, remainingContentHeight))
-        frame.size.width = ceil(contentView.frame.size.width)
+        frame.size.width = ceil(contentView.frame.size.width) - scrollView.contentInset.left - scrollView.contentInset.right
+        frame.origin.x = scrollView.contentInset.left
 
-        scrollView.frame = frame
-        scrollView.contentOffset = contentOffset
+        scrollView.frame = frame.integral
+        scrollView.contentOffset = CGPoint(x: Int(contentOffset.x), y: Int(contentOffset.y))
 
         yOffsetOfCurrentSubview += scrollView.contentSize.height + scrollView.contentInset.top + scrollView.contentInset.bottom
       } else if let subview = subview {
@@ -208,5 +211,38 @@ open class SpotsScrollView: UIScrollView {
     guard !initialContentOffset.equalTo(contentOffset) else { return }
     setNeedsLayout()
     layoutIfNeeded()
+  }
+
+  /// Compare points
+  ///
+  /// - parameter p1: Left hand side CGPoint
+  /// - parameter p2: Right hand side CGPoint
+  ///
+  /// - returns: A boolean value, true if they are equal
+  private func compare(point lhs: CGPoint, to rhs: CGPoint?) -> Bool {
+    guard let rhs = rhs else { return false }
+    return Int(lhs.x) == Int(rhs.x) && Int(lhs.y) == Int(rhs.y)
+  }
+
+  /// Compare sizes
+  ///
+  /// - parameter p1: Left hand side CGPoint
+  /// - parameter p2: Right hand side CGPoint
+  ///
+  /// - returns: A boolean value, true if they are equal
+  private func compare(size lhs: CGSize, to rhs: CGSize?) -> Bool {
+    guard let rhs = rhs else { return false }
+    return Int(lhs.width) == Int(rhs.width) && Int(lhs.height) == Int(rhs.height)
+  }
+
+  /// Compare rectangles
+  ///
+  /// - parameter lhs: Left hand side CGRect
+  /// - parameter rhs: Right hand side CGRect
+  ///
+  /// - returns: A boolean value, true if they are equal
+  private func compare(rect lhs: CGRect, to rhs: CGRect?) -> Bool {
+    guard let rhs = rhs else { return false }
+    return lhs.integral.equalTo(rhs.integral)
   }
 }
