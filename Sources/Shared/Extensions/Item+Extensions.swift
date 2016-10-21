@@ -100,7 +100,7 @@ public extension Item {
     if kind != oldItem.kind { return .kind }
     if newChildren != oldChildren { return .children }
     if identifier != oldItem.identifier { return .identifier }
-    if size.height != oldItem.size.height { return .size }
+    if size.height != oldItem.size.height && size.height != 0.0 { return .size }
     if title != oldItem.title { return .title }
     if subtitle != oldItem.subtitle { return .subtitle }
     if text != oldItem.text { return .text }
