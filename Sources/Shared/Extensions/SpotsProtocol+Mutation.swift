@@ -44,37 +44,43 @@ extension SpotsProtocol {
       return
     }
 
-    Dispatch.inQueue(queue: .interactive) {
+    Dispatch.inQueue(queue: .interactive) { [weak self] in
+      guard let weakSelf = self else { closure?(); return }
+      let oldComponents = weakSelf.spots.map { $0.component }
       let newComponents = components
-      let oldComponents = self.spots.map { $0.component }
 
       guard newComponents !== oldComponents else {
         Dispatch.mainQueue { closure?() }
         return
       }
 
-      let oldComponentCount = oldComponents.count
+      let changes = weakSelf.generateChanges(from: newComponents, and: oldComponents)
 
-      var changes = [ComponentDiff]()
-      for (index, component) in components.enumerated() {
-        if index >= oldComponentCount {
-          changes.append(.new)
-          continue
-        }
-
-        changes.append(component.diff(component: oldComponents[index]))
-      }
-
-      if oldComponentCount > components.count {
-        oldComponents[components.count..<oldComponents.count].forEach { _ in
-          changes.append(.removed)
-        }
-      }
-
-      self.process(changes: changes, components: newComponents, withAnimation: animation) {
+      weakSelf.process(changes: changes, components: newComponents, withAnimation: animation) {
         closure?()
       }
     }
+  }
+
+  func generateChanges(from components: [Component], and oldComponents: [Component]) -> [ComponentDiff] {
+    let oldComponentCount = oldComponents.count
+    var changes = [ComponentDiff]()
+    for (index, component) in components.enumerated() {
+      if index >= oldComponentCount {
+        changes.append(.new)
+        continue
+      }
+
+      changes.append(component.diff(component: oldComponents[index]))
+    }
+
+    if oldComponentCount > components.count {
+      oldComponents[components.count..<oldComponents.count].forEach { _ in
+        changes.append(.removed)
+      }
+    }
+
+    return changes
   }
 
   func removeCompositeViews() {
@@ -130,7 +136,7 @@ extension SpotsProtocol {
    */
   fileprivate func setupItemsForSpot(_ index: Int, newComponents: [Component], withAnimation animation: Animation = .automatic, closure: Completion = nil) -> Bool {
     guard let spot = self.spot(at: index, ofType: Spotable.self) else { return false }
-    let newItems = newComponents[index].items
+    let newItems = spot.prepare(items: newComponents[index].items)
     let oldItems = spot.items
 
     guard let diff = Item.evaluate(newItems, oldModels: oldItems) else { closure?(); return false }
