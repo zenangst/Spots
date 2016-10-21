@@ -62,6 +62,12 @@ extension SpotsProtocol {
     }
   }
 
+  /// Generate a change set by comparing two component collections
+  ///
+  /// - parameter components:    A collection of components
+  /// - parameter oldComponents: A collection of components
+  ///
+  /// - returns: A ComponentDiff struct
   func generateChanges(from components: [Component], and oldComponents: [Component]) -> [ComponentDiff] {
     let oldComponentCount = oldComponents.count
     var changes = [ComponentDiff]()
@@ -83,6 +89,7 @@ extension SpotsProtocol {
     return changes
   }
 
+  /// Remove composite views from container
   func removeCompositeViews() {
     for (_, cSpots) in self.compositeSpots {
       for (_, spots) in cSpots.enumerated() {
@@ -124,109 +131,150 @@ extension SpotsProtocol {
     self.spots.remove(at: index)
   }
 
-  /**
-   Set up items for a Spotable object
-
-   - parameter index: The index of the Spotable object
-   - parameter newComponents: A collection of new components
-   - parameter animation: A Animation that is used to determine which animation to use when performing the update
-   - parameter closure: A completion closure that is invoked when the setup of the new items is complete
-
-   - returns: A boolean value that determines if the closure should run in `process(changes:)`
-   */
+  /// Set up items for a Spotable object
+  ///
+  /// - parameter index:         The index of the Spotable object
+  /// - parameter newComponents: A collection of new components
+  /// - parameter animation:     A Animation that is used to determine which animation to use when performing the update
+  /// - parameter closure:       A completion closure that is invoked when the setup of the new items is complete
+  ///
+  /// - returns: A boolean value that determines if the closure should run in `process(changes:)`
   fileprivate func setupItemsForSpot(_ index: Int, newComponents: [Component], withAnimation animation: Animation = .automatic, closure: Completion = nil) -> Bool {
     guard let spot = self.spot(at: index, ofType: Spotable.self) else { return false }
     let newItems = spot.prepare(items: newComponents[index].items)
     let oldItems = spot.items
 
     guard let diff = Item.evaluate(newItems, oldModels: oldItems) else { closure?(); return false }
-    let changes = Item.processChanges(diff)
+    let changes: (ItemChanges) = Item.processChanges(diff)
 
     if newItems.count == spot.items.count {
-      var offsets = [CGPoint]()
-      spot.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: {
-        CATransaction.begin()
-        for item in newItems {
-          if let compositeSpots = self.compositeSpots[spot.index],
-            let spots = compositeSpots[item.index] {
-            for spot in spots {
-              offsets.append(spot.render().contentOffset)
-            }
-          }
-        }
-
-        spot.items = newItems
-      }) { [weak self] in
-        for item in newItems {
-          if let compositeSpots = self?.compositeSpots[spot.index],
-            let spots = compositeSpots[item.index] {
-            for (index, spot) in spots.enumerated() {
-              guard index < offsets.count else { continue }
-              spot.render().contentOffset = offsets[index]
-            }
-          }
-        }
-
-        closure?()
-        self?.scrollView.layoutSubviews()
-        CATransaction.commit()
-      }
+      reload(in: spot, with: changes, newItems: newItems, animation: animation, closure: closure)
     } else if newItems.count < spot.items.count {
-      spot.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: {
-        CATransaction.begin()
-        spot.items = newItems
-      }) { [weak self] in
-        guard !newItems.isEmpty else {
-          closure?()
-          self?.scrollView.layoutSubviews()
-          CATransaction.commit()
-          return
-        }
-
-        let executeClosure = newItems.count - 1
-        for (index, item) in newItems.enumerated() {
-          let components = Parser.parse(item.children).map { $0.component }
-          if let compositeSpots = self?.compositeSpots[spot.index],
-            let spots = compositeSpots[item.index] {
-            for (index, removedSpot) in spots.enumerated() {
-              guard !components.contains(removedSpot.component) else { continue }
-              let oldContent = self?.compositeSpots[spot.index]?[item.index]
-              if var oldContent = self?.compositeSpots[spot.index]?[item.index], index < oldContent.count {
-                oldContent.remove(at: index)
-              }
-              self?.compositeSpots[spot.index]?[item.index] = oldContent
-            }
-          }
-          spot.update(item, index: index, withAnimation: animation) {
-            guard index == executeClosure else { return }
-            closure?()
-            self?.scrollView.layoutSubviews()
-            CATransaction.commit()
-          }
-        }
-      }
+      reloadLess(in: spot, with: changes, newItems: newItems, animation: animation, closure: closure)
     } else if newItems.count > spot.items.count {
-      spot.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: {
-        CATransaction.begin()
-        spot.items = newItems
-      }) {
-        spot.reload(nil, withAnimation: animation) { [weak self] in
-          closure?()
-          self?.scrollView.layoutSubviews()
-          Dispatch.delay(for: 0.1) {
-            CATransaction.commit()
-          }
-        }
-      }
+      reloadMore(in: spot, with: changes, newItems: newItems, animation: animation, closure: closure)
     }
 
     return false
   }
 
+  /// Reload Spotable object with changes and new items.
+  ///
+  /// - parameter spot:      The spotable object that should be updated.
+  /// - parameter changes:   A ItemChanges tuple.
+  /// - parameter newItems:  The new items that should be used to updated the data source.
+  /// - parameter animation: The animation that should be used when updating.
+  /// - parameter closure:   A completion closure.
+  private func reload(in spot: Spotable,
+                      with changes: (ItemChanges),
+                      newItems: [Item],
+                      animation: Animation,
+                      closure: (() -> Void)? = nil) {
+    var offsets = [CGPoint]()
+    spot.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: {
+      if spot is Gridable { CATransaction.begin() }
+      for item in newItems {
+        if let compositeSpots = self.compositeSpots[spot.index],
+          let spots = compositeSpots[item.index] {
+          for spot in spots {
+            offsets.append(spot.render().contentOffset)
+          }
+        }
+      }
+
+      spot.items = newItems
+    }) { [weak self] in
+      for item in newItems {
+        if let compositeSpots = self?.compositeSpots[spot.index],
+          let spots = compositeSpots[item.index] {
+          for (index, spot) in spots.enumerated() {
+            guard index < offsets.count else { continue }
+            spot.render().contentOffset = offsets[index]
+          }
+        }
+      }
+
+      closure?()
+      self?.scrollView.layoutSubviews()
+      if spot is Gridable { CATransaction.commit() }
+    }
+  }
+
+  /// Reload Spotable object with less items
+  ///
+  /// - parameter spot:      The spotable object that should be updated.
+  /// - parameter changes:   A ItemChanges tuple.
+  /// - parameter newItems:  The new items that should be used to updated the data source.
+  /// - parameter animation: The animation that should be used when updating.
+  /// - parameter closure:   A completion closure.
+  private func reloadLess(in spot: Spotable,
+                          with changes: (ItemChanges),
+                          newItems: [Item],
+                          animation: Animation,
+                          closure: (() -> Void)? = nil) {
+    spot.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: {
+      if spot is Gridable { CATransaction.begin() }
+      spot.items = newItems
+    }) { [weak self] in
+      guard !newItems.isEmpty else {
+        closure?()
+        self?.scrollView.layoutSubviews()
+        if spot is Gridable { CATransaction.commit() }
+        return
+      }
+
+      let executeClosure = newItems.count - 1
+      for (index, item) in newItems.enumerated() {
+        let components = Parser.parse(item.children).map { $0.component }
+        if let compositeSpots = self?.compositeSpots[spot.index],
+          let spots = compositeSpots[item.index] {
+          for (index, removedSpot) in spots.enumerated() {
+            guard !components.contains(removedSpot.component) else { continue }
+            let oldContent = self?.compositeSpots[spot.index]?[item.index]
+            if var oldContent = self?.compositeSpots[spot.index]?[item.index], index < oldContent.count {
+              oldContent.remove(at: index)
+            }
+            self?.compositeSpots[spot.index]?[item.index] = oldContent
+          }
+        }
+        spot.update(item, index: index, withAnimation: animation) {
+          guard index == executeClosure else { return }
+          closure?()
+          self?.scrollView.layoutSubviews()
+          if spot is Gridable { CATransaction.commit() }
+        }
+      }
+    }
+  }
+
+  /// Reload Spotable object with more items
+  ///
+  /// - parameter spot:      The spotable object that should be updated.
+  /// - parameter changes:   A ItemChanges tuple.
+  /// - parameter newItems:  The new items that should be used to updated the data source.
+  /// - parameter animation: The animation that should be used when updating.
+  /// - parameter closure:   A completion closure.
+  private func reloadMore(in spot: Spotable,
+                          with changes: (ItemChanges),
+                          newItems: [Item],
+                          animation: Animation,
+                          closure: (() -> Void)? = nil) {
+    spot.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: {
+      if spot is Gridable { CATransaction.begin() }
+      spot.items = newItems
+    }) {
+      spot.updateHeight() { [weak self] in
+        self?.scrollView.layoutSubviews()
+        if spot is Gridable { CATransaction.commit() }
+        closure?()
+      }
+    }
+  }
+
   func process(changes: [ComponentDiff],
-                       components newComponents: [Component],
-                                  withAnimation animation: Animation = .automatic,
-                                  closure: Completion = nil) {
+               components newComponents: [Component],
+               withAnimation animation: Animation = .automatic,
+               closure: Completion = nil) {
     Dispatch.mainQueue { [weak self] in
       guard let weakSelf = self else { closure?(); return }
 
@@ -242,9 +290,9 @@ extension SpotsProtocol {
           weakSelf.removeSpot(at: index)
         case .items:
           runClosure = weakSelf.setupItemsForSpot(index,
-            newComponents: newComponents,
-            withAnimation: animation,
-            closure: closure)
+                                                  newComponents: newComponents,
+                                                  withAnimation: animation,
+                                                  closure: closure)
         case .none: break
         }
       }
@@ -391,7 +439,7 @@ extension SpotsProtocol {
     update(spotAtIndex: index, withAnimation: animation, withCompletion: completion, { [weak self] in
       $0.items = items
       self?.scrollView.layoutSubviews()
-    })
+      })
   }
 
   /**
@@ -530,7 +578,7 @@ extension SpotsProtocol {
     }
   }
   #endif
-
+  
   fileprivate func reloadSpotsScrollView() {
     #if os(OSX)
       scrollView.documentView?.subviews.forEach { $0.removeFromSuperview() }
