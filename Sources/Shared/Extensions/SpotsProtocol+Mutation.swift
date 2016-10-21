@@ -499,13 +499,13 @@ extension SpotsProtocol {
     spot(at: spotIndex, ofType: Spotable.self)?.refreshIndexes()
   }
 
-  /**
-   - parameter item: The view model that you want to update
-   - parameter index: The index that you want to insert the view model at
-   - parameter spotIndex: The index of the spot that you want to update into
-   - parameter animation: A Animation struct that determines which animation that should be used to perform the update
-   - parameter completion: A completion closure that will run after the spot has performed updates internally
-   */
+  /// Update item at index inside a specific Spotable object
+  ///
+  /// - parameter item:       The view model that you want to update.
+  /// - parameter index:      The index that you want to insert the view model at.
+  /// - parameter spotIndex:  The index of the spot that you want to update into.
+  /// - parameter animation:  A Animation struct that determines which animation that should be used to perform the update.
+  /// - parameter completion: A completion closure that will run after the spot has performed updates internally.
   public func update(_ item: Item, index: Int = 0, spotIndex: Int, withAnimation animation: Animation = .none, completion: Completion = nil) {
     guard let oldItem = spot(at: spotIndex, ofType: Spotable.self)?.item(at: index), item != oldItem
       else {
