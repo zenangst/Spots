@@ -252,10 +252,7 @@ extension Listable {
    - parameter completion: A completion closure that is run when the updates are finished
    */
   public func process(_ updates: [Int], withAnimation animation: Animation = .automatic, completion: Completion) {
-    guard !updates.isEmpty else {
-      updateHeight() { completion?() }
-      return
-    }
+    guard !updates.isEmpty else { completion?(); return }
 
     let lastUpdate = updates.last
     for index in updates {
