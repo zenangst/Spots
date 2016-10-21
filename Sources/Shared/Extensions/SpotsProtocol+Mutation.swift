@@ -127,8 +127,7 @@ extension SpotsProtocol {
   /// - parameter index: The index of the Spotable object hat you want to remove
   fileprivate func removeSpot(at index: Int) {
     guard index < self.spots.count else { return }
-
-    self.spots.remove(at: index)
+    self.spots[index].render().removeFromSuperview()
   }
 
   /// Set up items for a Spotable object
@@ -263,10 +262,18 @@ extension SpotsProtocol {
       if spot is Gridable { CATransaction.begin() }
       spot.items = newItems
     }) {
-      spot.updateHeight() { [weak self] in
-        self?.scrollView.layoutSubviews()
-        if spot is Gridable { CATransaction.commit() }
-        closure?()
+      if !spot.items.filter({ !$0.children.isEmpty }).isEmpty {
+        spot.reload(nil, withAnimation: animation) { [weak self] in
+          if spot is Gridable { CATransaction.commit() }
+          closure?()
+        }
+      } else {
+        spot.updateHeight() { [weak self] in
+
+          self?.scrollView.layoutSubviews()
+          if spot is Gridable { CATransaction.commit() }
+          closure?()
+        }
       }
     }
   }
@@ -280,6 +287,7 @@ extension SpotsProtocol {
 
       var yOffset: CGFloat = 0.0
       var runClosure = true
+
       for (index, change) in changes.enumerated() {
         switch change {
         case .identifier, .kind, .span, .header, .meta:
@@ -294,6 +302,12 @@ extension SpotsProtocol {
                                                   withAnimation: animation,
                                                   closure: closure)
         case .none: break
+        }
+      }
+
+      for removedSpot in weakSelf.spots where removedSpot.render().superview == nil {
+        if let index = weakSelf.spots.index(where: { removedSpot.component == $0.component }) {
+          weakSelf.spots.remove(at: index)
         }
       }
 
