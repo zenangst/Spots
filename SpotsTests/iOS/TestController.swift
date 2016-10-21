@@ -591,14 +591,14 @@ class ControllerTests : XCTestCase {
 
     /// Test what changed on the items
     let newItems = newComponents.first!.items
-    var oldItems = controller.spots.first!.items
+    let oldItems = controller.spots.first!.items
     var diff = Item.evaluate(newItems, oldModels: oldItems)
-    XCTAssertEqual(diff![0], .text)
-    XCTAssertEqual(diff![1], .none)
-    XCTAssertEqual(diff![2], .text)
-    XCTAssertEqual(diff![3], .text)
-    XCTAssertEqual(diff![4], .subtitle)
-    XCTAssertEqual(diff![5], .text)
+    XCTAssertEqual(diff![0], .size)
+    XCTAssertEqual(diff![1], .size)
+    XCTAssertEqual(diff![2], .size)
+    XCTAssertEqual(diff![3], .size)
+    XCTAssertEqual(diff![4], .size)
+    XCTAssertEqual(diff![5], .size)
     
     var view: ListSpotCell? = controller.ui({ $0.kind == "image" })
     XCTAssertNil(view)
@@ -609,16 +609,6 @@ class ControllerTests : XCTestCase {
 
     view = controller.ui({ $0.kind == "image" })
     XCTAssertNotNil(view)
-
-    /// Test to see if loading the view has any affect on the diff
-    oldItems = controller.spots.first!.items
-    diff = Item.evaluate(newItems, oldModels: oldItems)
-    XCTAssertEqual(diff![0], .text)
-    XCTAssertEqual(diff![1], .none)
-    XCTAssertEqual(diff![2], .text)
-    XCTAssertEqual(diff![3], .text)
-    XCTAssertEqual(diff![4], .subtitle)
-    XCTAssertEqual(diff![5], .text)
 
     XCTAssertEqual(controller.spots.first!.component.items[0].title, initialComponents.first!.items[0].title)
     XCTAssertEqual(controller.spots.first!.component.items[0].subtitle, initialComponents.first!.items[0].subtitle)
