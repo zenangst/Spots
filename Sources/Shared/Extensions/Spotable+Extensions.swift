@@ -163,6 +163,7 @@ public extension Spotable {
     var preparedItems = items
     preparedItems.enumerated().forEach { (index: Int, item: Item) in
       if let configuredItem = configure(item: item, usesViewSize: true) {
+        preparedItems[index].index = index
         preparedItems[index] = configuredItem
       }
       if component.span > 0.0 {
