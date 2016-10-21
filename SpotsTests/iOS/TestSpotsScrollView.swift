@@ -9,6 +9,11 @@ extension Controller {
     let _ = view
   }
 
+  func viewDidAppear() {
+    viewWillAppear(true)
+    viewDidAppear(true)
+  }
+
   func scrollTo(_ point: CGPoint) {
     scrollView.setContentOffset(point, animated: false)
     scrollView.layoutSubviews()
