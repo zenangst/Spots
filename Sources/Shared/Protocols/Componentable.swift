@@ -1,4 +1,4 @@
-#if os(iOS)
+#if os(OSX)
   import Foundation
 #else
   import UIKit
