@@ -263,7 +263,7 @@ extension SpotsProtocol {
       spot.items = newItems
     }) {
       if !spot.items.filter({ !$0.children.isEmpty }).isEmpty {
-        spot.reload(nil, withAnimation: animation) { [weak self] in
+        spot.reload(nil, withAnimation: animation) {
           if spot is Gridable { CATransaction.commit() }
           closure?()
         }
@@ -592,7 +592,7 @@ extension SpotsProtocol {
     }
   }
   #endif
-  
+
   fileprivate func reloadSpotsScrollView() {
     #if os(OSX)
       scrollView.documentView?.subviews.forEach { $0.removeFromSuperview() }

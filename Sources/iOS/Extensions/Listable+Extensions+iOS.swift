@@ -311,7 +311,7 @@ extension Listable {
         ? tableView.reloadSection(0, animation: animation.tableViewAnimation)
         : tableView.reloadData()
     }
-    
+
     updateHeight() {
       completion?()
     }
