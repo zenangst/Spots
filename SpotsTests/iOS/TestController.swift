@@ -533,6 +533,56 @@ class ControllerTests : XCTestCase {
     waitForExpectations(timeout: 0.1, handler: nil)
   }
 
+  func testControllerItemChanges() {
+    let initialComponents = [
+      Component(
+        kind: "list",
+        items: [
+          Item(title: "Fullname", subtitle: "Job title", kind: "image"),
+          Item(title: "Follow", kind: "toggle", meta: ["dynamic-height" : true]),
+          Item(title: "First name", subtitle: "Input first name",kind: "info"),
+          Item(title: "Last name", subtitle: "Input last name",kind: "info"),
+          Item(title: "Twitter", subtitle: "@twitter",kind: "info"),
+          Item(title: "", subtitle: "Biography", kind: "core", meta: ["dynamic-height" : true])
+        ]
+      )
+    ]
+
+    let newComponents = [
+      Component(
+        kind: "list",
+        items: [
+          Item(title: "Fullname", subtitle: "Job title", text: "Bot", kind: "image"),
+          Item(title: "Follow", kind: "toggle", meta: ["dynamic-height" : true]),
+          Item(title: "First name", subtitle: "Input first name", text: "John", kind: "info"),
+          Item(title: "Last name", subtitle: "Input last name", text: "Hyperseed", kind: "info"),
+          Item(title: "Twitter", subtitle: "@johnhyperseed",kind: "info"),
+          Item(subtitle: "Biography", text: "John Hyperseed is a bot", kind: "core", meta: ["dynamic-height" : true])
+        ]
+      )
+    ]
+
+    let spots = initialComponents.map { Factory.resolve(component: $0) }
+    controller = Controller(spots: spots)
+
+    let oldComponents: [Component] = self.controller.spots.map { $0.component }
+
+    let changes = self.controller.generateChanges(from: newComponents, and: oldComponents)
+    XCTAssertEqual(changes.count, 1)
+    XCTAssertEqual(changes.first, .items)
+
+    /// Test what changed on the items
+    let newItems = newComponents.first!.items
+    let oldItems = self.controller.spots.first!.items
+    var diff = Item.evaluate(newItems, oldModels: oldItems)
+    XCTAssertEqual(diff![0], .size)
+    XCTAssertEqual(diff![1], .size)
+    XCTAssertEqual(diff![2], .size)
+    XCTAssertEqual(diff![3], .size)
+    XCTAssertEqual(diff![4], .size)
+    XCTAssertEqual(diff![5], .size)
+  }
+
   func testReloadWithComponents() {
     let initialComponents = [
       Component(
@@ -577,23 +627,6 @@ class ControllerTests : XCTestCase {
 
     XCTAssertTrue(initialComponents !== newComponents)
     XCTAssertEqual(initialComponents.count, newComponents.count)
-
-    let oldComponents: [Component] = self.controller.spots.map { $0.component }
-
-    let changes = self.controller.generateChanges(from: newComponents, and: oldComponents)
-    XCTAssertEqual(changes.count, 1)
-    XCTAssertEqual(changes.first, .items)
-
-    /// Test what changed on the items
-    let newItems = newComponents.first!.items
-    let oldItems = self.controller.spots.first!.items
-    var diff = Item.evaluate(newItems, oldModels: oldItems)
-    XCTAssertEqual(diff![0], .size)
-    XCTAssertEqual(diff![1], .size)
-    XCTAssertEqual(diff![2], .size)
-    XCTAssertEqual(diff![3], .size)
-    XCTAssertEqual(diff![4], .size)
-    XCTAssertEqual(diff![5], .size)
     
     var view: ListSpotCell? = self.controller.ui({ $0.kind == "image" })
     XCTAssertNil(view)
