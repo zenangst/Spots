@@ -164,12 +164,10 @@
 		BD4295521D81D32400E07E1C /* TestListSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4295511D81D32400E07E1C /* TestListSpot.swift */; };
 		BD4295531D81D32400E07E1C /* TestListSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4295511D81D32400E07E1C /* TestListSpot.swift */; };
 		BD4295551D81D39700E07E1C /* TestCarouselSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4295541D81D39700E07E1C /* TestCarouselSpot.swift */; };
-		BD4295561D81D39700E07E1C /* TestCarouselSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4295541D81D39700E07E1C /* TestCarouselSpot.swift */; };
 		BD4295581D81D45D00E07E1C /* TestViewSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4295571D81D45D00E07E1C /* TestViewSpot.swift */; };
 		BD4295591D81D45D00E07E1C /* TestViewSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4295571D81D45D00E07E1C /* TestViewSpot.swift */; };
 		BD7397381D718CDB000AF2DE /* TestComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D584782B1C43FF34006EBA49 /* TestComponent.swift */; };
 		BD73973A1D718CDB000AF2DE /* TestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58478281C43FF34006EBA49 /* TestFactory.swift */; };
-		BD73973B1D718CDB000AF2DE /* TestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58478291C43FF34006EBA49 /* TestController.swift */; };
 		BD7397401D718CDB000AF2DE /* Spots.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478091C43FEB8006EBA49 /* Spots.framework */; };
 		BD73974B1D718D38000AF2DE /* CollectionAdapter+tvOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD73974A1D718D38000AF2DE /* CollectionAdapter+tvOS.swift */; };
 		BD8B1EB21D93D813000C3F53 /* GrandCentralDispatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8B1EB11D93D813000C3F53 /* GrandCentralDispatch.swift */; };
@@ -181,7 +179,6 @@
 		BDD9ABCE1DB53475005D8C04 /* TestCarouselComposite.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD9ABCD1DB53475005D8C04 /* TestCarouselComposite.swift */; };
 		BDD9ABCF1DB53475005D8C04 /* TestCarouselComposite.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD9ABCD1DB53475005D8C04 /* TestCarouselComposite.swift */; };
 		BDEED2E81D8446400030B475 /* TestSpotsScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEED2E71D8446400030B475 /* TestSpotsScrollView.swift */; };
-		BDEED2E91D8446400030B475 /* TestSpotsScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEED2E71D8446400030B475 /* TestSpotsScrollView.swift */; };
 		D2FEDC1F1D9E845A004D5ABF /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2FEDC1E1D9E845A004D5ABF /* UIViewController+Extensions.swift */; };
 		D58478141C43FEB9006EBA49 /* Spots.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478091C43FEB8006EBA49 /* Spots.framework */; };
 		D58478531C43FFEB006EBA49 /* TestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58478281C43FF34006EBA49 /* TestFactory.swift */; };
@@ -194,12 +191,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		BD7397331D718CDB000AF2DE /* PBXContainerItemProxy */ = {
+		BD53211E1DBD38EC007D6C25 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D58478001C43FEB8006EBA49 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = D58478081C43FEB8006EBA49;
-			remoteInfo = Spots;
+			remoteGlobalIDString = BD7396FD1D718CD2000AF2DE;
+			remoteInfo = "Spots-tvOS";
 		};
 		D58478151C43FEB9006EBA49 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -748,7 +745,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				BD7397321D718CDB000AF2DE /* PBXTargetDependency */,
+				BD53211F1DBD38EC007D6C25 /* PBXTargetDependency */,
 			);
 			name = "Spots-tvOS-Tests";
 			productName = SpotsTests;
@@ -1082,13 +1079,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				BD4295591D81D45D00E07E1C /* TestViewSpot.swift in Sources */,
-				BD4295561D81D39700E07E1C /* TestCarouselSpot.swift in Sources */,
 				BD7397381D718CDB000AF2DE /* TestComponent.swift in Sources */,
 				BD4295501D81CE4F00E07E1C /* TestGridSpot.swift in Sources */,
-				BDEED2E91D8446400030B475 /* TestSpotsScrollView.swift in Sources */,
 				BD4295531D81D32400E07E1C /* TestListSpot.swift in Sources */,
 				BD73973A1D718CDB000AF2DE /* TestFactory.swift in Sources */,
-				BD73973B1D718CDB000AF2DE /* TestController.swift in Sources */,
 				BD01BD131DAEA523009C10FF /* TestParser.swift in Sources */,
 				BD01BD1A1DAEA7FD009C10FF /* TestListComposite.swift in Sources */,
 				BD10D5271D7955AC00DF8E9B /* TestViewModelExtensions.swift in Sources */,
@@ -1240,10 +1234,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		BD7397321D718CDB000AF2DE /* PBXTargetDependency */ = {
+		BD53211F1DBD38EC007D6C25 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = D58478081C43FEB8006EBA49 /* Spots-iOS */;
-			targetProxy = BD7397331D718CDB000AF2DE /* PBXContainerItemProxy */;
+			target = BD7396FD1D718CD2000AF2DE /* Spots-tvOS */;
+			targetProxy = BD53211E1DBD38EC007D6C25 /* PBXContainerItemProxy */;
 		};
 		D58478161C43FEB9006EBA49 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1319,7 +1313,7 @@
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/Carthage/Build/tvOS",
 				);
 				INFOPLIST_FILE = "SpotsTests/Info-tvOS.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(FRAMEWORK_SEARCH_PATHS)";
@@ -1335,9 +1329,9 @@
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/Carthage/Build/tvOS",
 				);
-				INFOPLIST_FILE = "Spots-iOS-Tests copy-Info.plist";
+				INFOPLIST_FILE = "SpotsTests/Info-tvOS.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(FRAMEWORK_SEARCH_PATHS)";
 				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.SpotsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
