@@ -55,20 +55,6 @@ class FactoryTests : XCTestCase {
       )
     ]
 
-    let newComponents = [
-      Component(
-        kind: "list",
-        items: [
-          Item(title: "Fullname", subtitle: "Job title", text: "Bot", kind: "image"),
-          Item(title: "Follow", kind: "toggle", meta: ["dynamic-height" : true]),
-          Item(title: "First name", subtitle: "Input first name", text: "John", kind: "info"),
-          Item(title: "Last name", subtitle: "Input last name", text: "Hyperseed", kind: "info"),
-          Item(title: "Twitter", subtitle: "@johnhyperseed",kind: "info"),
-          Item(subtitle: "Biography", text: "John Hyperseed is a bot", kind: "core", meta: ["dynamic-height" : true])
-        ]
-      )
-    ]
-
     let spots = initialComponents.map { Factory.resolve(component: $0) }
 
     /// Validate factory process
