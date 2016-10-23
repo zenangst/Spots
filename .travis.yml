@@ -12,8 +12,8 @@ script:
 - xcodebuild test -project Spots.xcodeproj -scheme "Spots-iOS" -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 6,OS=10.0' | xcpretty && exit ${PIPESTATUS[0]}
 - xcodebuild clean build -project Spots.xcodeproj -scheme "Spots-Mac" -sdk macosx | xcpretty && exit ${PIPESTATUS[0]}
 - xcodebuild test -project Spots.xcodeproj -scheme "Spots-Mac" -sdk macosx | xcpretty && exit ${PIPESTATUS[0]}
-- xcodebuild clean build -project Spots.xcodeproj -scheme "Spots-tvOS" -destination 'platform=tvOS Simulator,name=Apple TV 1080p,OS=9.2' | xcpretty && exit ${PIPESTATUS[0]}
-- xcodebuild test -project Spots.xcodeproj -scheme "Spots-tvOS" -destination 'platform=tvOS Simulator,name=Apple TV 1080p,OS=9.2' | xcpretty && exit ${PIPESTATUS[0]}
+- xcodebuild clean build -project Spots.xcodeproj -scheme "Spots-tvOS" -destination 'platform=tvOS Simulator,name=Apple TV 1080p,OS=10.0' | xcpretty && exit ${PIPESTATUS[0]}
+- xcodebuild test -project Spots.xcodeproj -scheme "Spots-tvOS" -destination 'platform=tvOS Simulator,name=Apple TV 1080p,OS=10.0' | xcpretty && exit ${PIPESTATUS[0]}
 
 notifications:
   email: false
