@@ -20,6 +20,20 @@
                ReferencedContainer = "container:Spots.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "BD7397311D718CDB000AF2DE"
+               BuildableName = "Spots-tvOS-Tests.xctest"
+               BlueprintName = "Spots-tvOS-Tests"
+               ReferencedContainer = "container:Spots.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction

@@ -2,18 +2,15 @@ osx_image: xcode8
 language: objective-c
 
 before_install:
-- brew update
-- if brew outdated | grep -qx xctool; then brew upgrade xctool; fi
-- if brew outdated | grep -qx carthage; then brew upgrade carthage; fi
-- travis_wait 35 carthage bootstrap --platform iOS,Mac
+- travis_wait 35 carthage bootstrap --platform iOS,Mac,tvOS
 
 script:
-- xcodebuild clean build -project Spots.xcodeproj -scheme "Spots-iOS" -sdk iphonesimulator
-- xcodebuild test -project Spots.xcodeproj -scheme "Spots-iOS" -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 6,OS=10.0'
-- xcodebuild clean build -project Spots.xcodeproj -scheme "Spots-Mac" -sdk macosx
-- xcodebuild test -project Spots.xcodeproj -scheme "Spots-Mac" -sdk macosx
-#- xcodebuild clean build -project Spots.xcodeproj -scheme "Spots-tvOS" -destination 'platform=tvOS Simulator,name=Apple TV 1080p,OS=9.2'
-#- xcodebuild test -project Spots.xcodeproj -scheme "Spots-tvOS" -destination 'platform=tvOS Simulator,name=Apple TV 1080p,OS=9.2'
+- xcodebuild clean build -project Spots.xcodeproj -scheme "Spots-iOS" -sdk iphonesimulator | xcpretty
+- xcodebuild test -project Spots.xcodeproj -scheme "Spots-iOS" -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 6,OS=10.0' | xcpretty
+- xcodebuild clean build -project Spots.xcodeproj -scheme "Spots-Mac" -sdk macosx | xcpretty
+- xcodebuild test -project Spots.xcodeproj -scheme "Spots-Mac" -sdk macosx | xcpretty
+- xcodebuild clean build -project Spots.xcodeproj -scheme "Spots-tvOS" -destination 'platform=tvOS Simulator,name=Apple TV 1080p,OS=10.0' | xcpretty
+- xcodebuild test -project Spots.xcodeproj -scheme "Spots-tvOS" -destination 'platform=tvOS Simulator,name=Apple TV 1080p,OS=10.0' | xcpretty
 
 notifications:
   email: false

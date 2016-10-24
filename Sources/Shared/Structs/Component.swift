@@ -1,7 +1,7 @@
-#if os(iOS)
-  import UIKit
-#else
+#if os(OSX)
   import Foundation
+#else
+  import UIKit
 #endif
 
 import Tailor

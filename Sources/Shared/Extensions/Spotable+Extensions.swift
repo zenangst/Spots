@@ -1,7 +1,7 @@
-#if os(iOS)
-  import UIKit
-#else
+#if os(OSX)
   import Foundation
+#else
+  import UIKit
 #endif
 
 import Brick
@@ -156,13 +156,21 @@ public extension Spotable {
 
   /// Prepare items in component
   func prepareItems() {
-    component.items.enumerated().forEach { (index: Int, _) in
-      configureItem(at: index, usesViewSize: true)
+    component.items = prepare(items: component.items)
+  }
+
+  func prepare(items: [Item]) -> [Item] {
+    var preparedItems = items
+    preparedItems.enumerated().forEach { (index: Int, item: Item) in
+      if let configuredItem = configure(item: item, usesViewSize: true) {
+        preparedItems[index].index = index
+        preparedItems[index] = configuredItem
+      }
       if component.span > 0.0 {
         #if os(OSX)
           if let gridable = self as? Gridable,
             let layout = gridable.layout as? FlowLayout {
-            component.items[index].size.width = gridable.collectionView.frame.width / CGFloat(component.span) - layout.sectionInset.left - layout.sectionInset.right
+            preparedItems[index].size.width = gridable.collectionView.frame.width / CGFloat(component.span) - layout.sectionInset.left - layout.sectionInset.right
           }
         #else
           var spotWidth = render().frame.size.width
@@ -172,10 +180,12 @@ public extension Spotable {
           }
 
           let newWidth = spotWidth / CGFloat(component.span)
-          component.items[index].size.width = newWidth
+          preparedItems[index].size.width = newWidth
         #endif
       }
     }
+
+    return preparedItems
   }
 
   /// Resolve item at index.
@@ -290,8 +300,14 @@ public extension Spotable {
   /// - parameter index:        The index of the view model
   /// - parameter usesViewSize: A boolean value to determine if the view uses the views height
   public func configureItem(at index: Int, usesViewSize: Bool = false) {
-    guard var item = item(at: index) else { return }
+    guard let item = item(at: index),
+      let configuredItem = configure(item: item, usesViewSize: usesViewSize) else { return }
 
+    component.items[index] = configuredItem
+  }
+
+  func configure(item: Item, usesViewSize: Bool = false) -> Item? {
+    var item = item
     item.index = index
 
     let kind = item.kind.isEmpty || Self.views.storage[item.kind] == nil
@@ -299,7 +315,7 @@ public extension Spotable {
       : item.kind
 
     guard let (_, resolvedView) = Self.views.make(kind),
-      let view = resolvedView else { return }
+      let view = resolvedView else { return nil }
 
     #if !os(OSX)
       if let composite = view as? Composable {
@@ -348,8 +364,9 @@ public extension Spotable {
           item.size.width = UIScreen.main.bounds.width / CGFloat(component.span)
         }
       #endif
-      component.items[index] = item
     }
+
+    return item
   }
 
   /// Update and return the size for the item at index path.

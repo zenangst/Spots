@@ -312,8 +312,8 @@ extension Listable {
         : tableView.reloadData()
     }
 
-    UIView.setAnimationsEnabled(true)
-    updateHeight()
-    completion?()
+    updateHeight() {
+      completion?()
+    }
   }
 }
