@@ -531,7 +531,6 @@ extension SpotsProtocol {
   public func update(_ item: Item, index: Int = 0, spotIndex: Int, withAnimation animation: Animation = .none, completion: Completion = nil) {
     guard let oldItem = spot(at: spotIndex, ofType: Spotable.self)?.item(at: index), item != oldItem
       else {
-        spot(at: spotIndex, ofType: Spotable.self)?.refreshIndexes()
         completion?()
         return
     }
@@ -547,7 +546,6 @@ extension SpotsProtocol {
         if animation == .none { CATransaction.commit() }
       #endif
     }
-    spot(at: spotIndex, ofType: Spotable.self)?.refreshIndexes()
   }
 
   /**
