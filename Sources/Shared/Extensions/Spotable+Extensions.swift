@@ -162,7 +162,7 @@ public extension Spotable {
   func prepare(items: [Item]) -> [Item] {
     var preparedItems = items
     preparedItems.enumerated().forEach { (index: Int, item: Item) in
-      if let configuredItem = configure(item: item, usesViewSize: true) {
+      if let configuredItem = configure(item: item, at: index, usesViewSize: true) {
         preparedItems[index].index = index
         preparedItems[index] = configuredItem
       }
@@ -301,12 +301,12 @@ public extension Spotable {
   /// - parameter usesViewSize: A boolean value to determine if the view uses the views height
   public func configureItem(at index: Int, usesViewSize: Bool = false) {
     guard let item = item(at: index),
-      let configuredItem = configure(item: item, usesViewSize: usesViewSize) else { return }
+      let configuredItem = configure(item: item, at: index, usesViewSize: usesViewSize) else { return }
 
     component.items[index] = configuredItem
   }
 
-  func configure(item: Item, usesViewSize: Bool = false) -> Item? {
+  func configure(item: Item, at index: Int, usesViewSize: Bool = false) -> Item? {
     var item = item
     item.index = index
 
