@@ -236,11 +236,19 @@ extension SpotsProtocol {
             self?.compositeSpots[spot.index]?[item.index] = oldContent
           }
         }
-        spot.update(item, index: index, withAnimation: animation) {
-          guard index == executeClosure else { return }
-          closure?()
-          self?.scrollView.layoutSubviews()
-          if spot is Gridable { CATransaction.commit() }
+
+        if !spot.items.filter({ !$0.children.isEmpty }).isEmpty {
+          spot.reload(nil, withAnimation: animation) {
+            if spot is Gridable { CATransaction.commit() }
+            closure?()
+          }
+        } else {
+          spot.update(item, index: index, withAnimation: animation) {
+            guard index == executeClosure else { return }
+            closure?()
+            self?.scrollView.layoutSubviews()
+            if spot is Gridable { CATransaction.commit() }
+          }
         }
       }
     }
