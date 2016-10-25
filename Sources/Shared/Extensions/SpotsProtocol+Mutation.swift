@@ -336,7 +336,7 @@ extension SpotsProtocol {
    - parameter completion: A closure that will be run after reload has been performed on all spots
    */
   public func reloadIfNeeded(_ json: [String : Any],
-                             compare: @escaping CompareClosure = { lhs, rhs in return lhs != rhs },
+                             compare: @escaping CompareClosure = { lhs, rhs in return lhs !== rhs },
                              animated: ((_ view: View) -> Void)? = nil,
                              completion: Completion = nil) {
     Dispatch.mainQueue { [weak self] in
