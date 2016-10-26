@@ -227,13 +227,14 @@ public extension Spotable {
   }
 
   /// Refresh indexes for all items to ensure that the indexes are unique and in ascending order.
-  public func refreshIndexes() {
+  public func refreshIndexes(completion: Completion = nil) {
     var updatedItems  = items
     updatedItems.enumerated().forEach {
       updatedItems[$0.offset].index = $0.offset
     }
 
     items = updatedItems
+    completion?()
   }
 
   /// Reloads a spot only if it changes
@@ -414,6 +415,16 @@ public extension Spotable {
     prepareItems()
   }
 
+
+  /// Update height and refresh indexes for the Spotable object.
+  ///
+  /// - parameter completion: A completion closure that will be run when the computations are complete.
+  public func sanitize(completion: Completion = nil) {
+    updateHeight() { [weak self] in
+      self?.refreshIndexes()
+      completion?()
+    }
+  }
 
   /// Register default view for the Spotable object
   ///

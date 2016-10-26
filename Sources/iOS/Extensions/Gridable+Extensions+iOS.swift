@@ -192,9 +192,7 @@ extension Gridable {
       } else {
         weakSelf.collectionView.reloadData()
       }
-      weakSelf.updateHeight() {
-        completion?()
-      }
+      weakSelf.sanitize { completion?() }
     }
   }
 
@@ -217,9 +215,7 @@ extension Gridable {
       guard let weakSelf = self else { completion?(); return }
 
       weakSelf.collectionView.insert(indexes) {
-        weakSelf.updateHeight() {
-          completion?()
-        }
+        weakSelf.sanitize { completion?() }
       }
     }
   }
@@ -240,10 +236,8 @@ extension Gridable {
       weakSelf.component.items.remove(at: index)
       weakSelf.collectionView.delete([index], completion: nil)
       if animation == .none { UIView.setAnimationsEnabled(true) }
-      weakSelf.updateHeight() {
-        self?.refreshIndexes()
-        completion?()
-      }
+
+      weakSelf.sanitize { completion?() }
     }
   }
 
@@ -264,10 +258,7 @@ extension Gridable {
     Dispatch.mainQueue { [weak self] in
       guard let weakSelf = self else { completion?(); return }
       weakSelf.collectionView.delete(indexes) {
-        weakSelf.updateHeight() {
-          self?.refreshIndexes()
-          completion?()
-        }
+        weakSelf.sanitize { completion?() }
       }
     }
   }
@@ -286,9 +277,7 @@ extension Gridable {
         weakSelf.component.items.remove(at: index)
         weakSelf.collectionView.delete([index], completion: nil)
         if animation == .none { UIView.setAnimationsEnabled(true) }
-        weakSelf.updateHeight() {
-          completion?()
-        }
+        weakSelf.sanitize { completion?() }
       }
     }
   }
@@ -302,9 +291,7 @@ extension Gridable {
     Dispatch.mainQueue { [weak self] in
       guard let weakSelf = self else { return }
       weakSelf.collectionView.delete(indexes) {
-        weakSelf.updateHeight() {
-          completion?()
-        }
+        weakSelf.sanitize { completion?() }
       }
     }
   }
