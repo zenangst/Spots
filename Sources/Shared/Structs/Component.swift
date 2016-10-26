@@ -62,19 +62,19 @@ public struct Component: Mappable, Equatable {
   /// Identifier
   public var identifier: String?
   /// The index of the Item when appearing in a list, should be computed and continuously updated by the data source
-  public var index = 0
+  public var index: Int = 0
   /// The title for the component
-  public var title = ""
+  public var title: String = ""
   /// Determines which spotable component that should be used
   /// Default kinds are; list, grid and carousel
-  public var kind = ""
+  public var kind: String = ""
   /// The header identifier
-  public var header = ""
+  public var header: String = ""
   /// Configures the span that should be used for items in one row
   /// Used by gridable components
   public var span: Double = 0
   /// A collection of view models
-  public var items = [Item]()
+  public var items: [Item] = [Item]()
   /// The width and height of the component, usually calculated and updated by the UI component
   public var size: CGSize?
   /// A key-value dictionary for any additional information

@@ -236,11 +236,21 @@ extension SpotsProtocol {
             self?.compositeSpots[spot.index]?[item.index] = oldContent
           }
         }
-        spot.update(item, index: index, withAnimation: animation) {
-          guard index == executeClosure else { return }
-          closure?()
-          self?.scrollView.layoutSubviews()
-          if spot is Gridable { CATransaction.commit() }
+
+        if !spot.items.filter({ !$0.children.isEmpty }).isEmpty {
+          if spot is Gridable { CATransaction.begin() }
+          spot.reload(nil, withAnimation: animation) {
+            if spot is Gridable { CATransaction.commit() }
+            closure?()
+          }
+        } else {
+          if spot is Gridable { CATransaction.begin() }
+          spot.update(item, index: index, withAnimation: animation) {
+            guard index == executeClosure else { return }
+            closure?()
+            self?.scrollView.layoutSubviews()
+            if spot is Gridable { CATransaction.commit() }
+          }
         }
       }
     }
@@ -328,7 +338,7 @@ extension SpotsProtocol {
    - parameter completion: A closure that will be run after reload has been performed on all spots
    */
   public func reloadIfNeeded(_ json: [String : Any],
-                             compare: @escaping CompareClosure = { lhs, rhs in return lhs != rhs },
+                             compare: @escaping CompareClosure = { lhs, rhs in return lhs !== rhs },
                              animated: ((_ view: View) -> Void)? = nil,
                              completion: Completion = nil) {
     Dispatch.mainQueue { [weak self] in
@@ -523,7 +533,6 @@ extension SpotsProtocol {
   public func update(_ item: Item, index: Int = 0, spotIndex: Int, withAnimation animation: Animation = .none, completion: Completion = nil) {
     guard let oldItem = spot(at: spotIndex, ofType: Spotable.self)?.item(at: index), item != oldItem
       else {
-        spot(at: spotIndex, ofType: Spotable.self)?.refreshIndexes()
         completion?()
         return
     }
@@ -539,7 +548,6 @@ extension SpotsProtocol {
         if animation == .none { CATransaction.commit() }
       #endif
     }
-    spot(at: spotIndex, ofType: Spotable.self)?.refreshIndexes()
   }
 
   /**

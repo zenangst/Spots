@@ -99,9 +99,7 @@ extension Listable {
 
     Dispatch.mainQueue { [weak self] in
       self?.tableView.insert([index], animation: animation.tableViewAnimation)
-      self?.updateHeight() {
-        completion?()
-      }
+      self?.sanitize { completion?() }
     }
   }
 
@@ -123,9 +121,7 @@ extension Listable {
       }
 
       self?.tableView.insert(indexes, animation: animation.tableViewAnimation)
-      self?.updateHeight() {
-        completion?()
-      }
+      self?.sanitize { completion?() }
     }
   }
 
@@ -142,9 +138,7 @@ extension Listable {
 
     Dispatch.mainQueue { [weak self] in
       self?.tableView.delete([index], animation: animation.tableViewAnimation)
-      self?.updateHeight() {
-        completion?()
-      }
+      self?.sanitize { completion?() }
     }
   }
 
@@ -164,9 +158,7 @@ extension Listable {
 
     Dispatch.mainQueue { [weak self] in
       self?.tableView.delete(indexPaths, animation: animation.tableViewAnimation)
-      self?.updateHeight() {
-        completion?()
-      }
+      self?.sanitize { completion?() }
     }
   }
 
@@ -179,9 +171,7 @@ extension Listable {
     Dispatch.mainQueue { [weak self] in
       self?.component.items.remove(at: index)
       self?.tableView.delete([index], animation: animation.tableViewAnimation)
-      self?.updateHeight() {
-        completion?()
-      }
+      self?.sanitize { completion?() }
     }
   }
 
@@ -194,9 +184,7 @@ extension Listable {
     Dispatch.mainQueue { [weak self] in
       indexes.forEach { self?.component.items.remove(at: $0) }
       self?.tableView.delete(indexes, section: 0, animation: animation.tableViewAnimation)
-      self?.updateHeight() {
-        completion?()
-      }
+      self?.sanitize { completion?() }
     }
   }
 

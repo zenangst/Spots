@@ -162,7 +162,7 @@ public extension Spotable {
   func prepare(items: [Item]) -> [Item] {
     var preparedItems = items
     preparedItems.enumerated().forEach { (index: Int, item: Item) in
-      if let configuredItem = configure(item: item, usesViewSize: true) {
+      if let configuredItem = configure(item: item, at: index, usesViewSize: true) {
         preparedItems[index].index = index
         preparedItems[index] = configuredItem
       }
@@ -227,13 +227,14 @@ public extension Spotable {
   }
 
   /// Refresh indexes for all items to ensure that the indexes are unique and in ascending order.
-  public func refreshIndexes() {
+  public func refreshIndexes(completion: Completion = nil) {
     var updatedItems  = items
     updatedItems.enumerated().forEach {
       updatedItems[$0.offset].index = $0.offset
     }
 
     items = updatedItems
+    completion?()
   }
 
   /// Reloads a spot only if it changes
@@ -301,12 +302,12 @@ public extension Spotable {
   /// - parameter usesViewSize: A boolean value to determine if the view uses the views height
   public func configureItem(at index: Int, usesViewSize: Bool = false) {
     guard let item = item(at: index),
-      let configuredItem = configure(item: item, usesViewSize: usesViewSize) else { return }
+      let configuredItem = configure(item: item, at: index, usesViewSize: usesViewSize) else { return }
 
     component.items[index] = configuredItem
   }
 
-  func configure(item: Item, usesViewSize: Bool = false) -> Item? {
+  func configure(item: Item, at index: Int, usesViewSize: Bool = false) -> Item? {
     var item = item
     item.index = index
 
@@ -414,6 +415,16 @@ public extension Spotable {
     prepareItems()
   }
 
+
+  /// Update height and refresh indexes for the Spotable object.
+  ///
+  /// - parameter completion: A completion closure that will be run when the computations are complete.
+  public func sanitize(completion: Completion = nil) {
+    updateHeight() { [weak self] in
+      self?.refreshIndexes()
+      completion?()
+    }
+  }
 
   /// Register default view for the Spotable object
   ///
