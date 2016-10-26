@@ -143,6 +143,7 @@ extension Listable {
     Dispatch.mainQueue { [weak self] in
       self?.tableView.delete([index], animation: animation.tableViewAnimation)
       self?.updateHeight() {
+        self?.refreshIndexes()
         completion?()
       }
     }
@@ -165,6 +166,7 @@ extension Listable {
     Dispatch.mainQueue { [weak self] in
       self?.tableView.delete(indexPaths, animation: animation.tableViewAnimation)
       self?.updateHeight() {
+        self?.refreshIndexes()
         completion?()
       }
     }

@@ -241,6 +241,7 @@ extension Gridable {
       weakSelf.collectionView.delete([index], completion: nil)
       if animation == .none { UIView.setAnimationsEnabled(true) }
       weakSelf.updateHeight() {
+        self?.refreshIndexes()
         completion?()
       }
     }
@@ -264,6 +265,7 @@ extension Gridable {
       guard let weakSelf = self else { completion?(); return }
       weakSelf.collectionView.delete(indexes) {
         weakSelf.updateHeight() {
+          self?.refreshIndexes()
           completion?()
         }
       }
