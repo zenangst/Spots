@@ -238,11 +238,13 @@ extension SpotsProtocol {
         }
 
         if !spot.items.filter({ !$0.children.isEmpty }).isEmpty {
+          if spot is Gridable { CATransaction.begin() }
           spot.reload(nil, withAnimation: animation) {
             if spot is Gridable { CATransaction.commit() }
             closure?()
           }
         } else {
+          if spot is Gridable { CATransaction.begin() }
           spot.update(item, index: index, withAnimation: animation) {
             guard index == executeClosure else { return }
             closure?()
