@@ -87,6 +87,7 @@ public protocol CarouselScrollDelegate: class {
 
 public extension CarouselScrollDelegate {
 
+  func didScroll(in spot: Spotable) {}
   func didEndScrolling(in spot: Spotable, item: Item) {}
   func didEndScrollingAnimated(in spot: Spotable) {}
 }
