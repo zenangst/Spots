@@ -66,9 +66,9 @@ public protocol RefreshDelegate: class {
   ///
   /// - parameter refreshControl: A UIRefreshControl
   /// - parameter completion: A completion closure that should be triggered when the update is completed
-#if os(iOS)
+  #if os(iOS)
   func spotsDidReload(_ refreshControl: UIRefreshControl, completion: Completion)
-#endif
+  #endif
 }
 
 public protocol CarouselScrollDelegate: class {
@@ -81,4 +81,12 @@ public protocol CarouselScrollDelegate: class {
   /// - parameter spot: Object that comforms to the Spotable protocol
   /// - parameter item: The last view model in the component
   func didEndScrolling(in spot: Spotable, item: Item)
+
+  func didEndScrollingAnimated(in spot: Spotable)
+}
+
+public extension CarouselScrollDelegate {
+
+  func didEndScrolling(in spot: Spotable, item: Item) {}
+  func didEndScrollingAnimated(in spot: Spotable) {}
 }
