@@ -193,9 +193,7 @@ extension SpotsProtocol {
         }
       }
 
-      closure?()
-      self?.scrollView.layoutSubviews()
-      if spot is Gridable { CATransaction.commit() }
+      self?.finishReloading(spot: spot, withCompletion: closure)
     }
   }
 
@@ -216,9 +214,7 @@ extension SpotsProtocol {
       spot.items = newItems
     }) { [weak self] in
       guard !newItems.isEmpty else {
-        closure?()
-        self?.scrollView.layoutSubviews()
-        if spot is Gridable { CATransaction.commit() }
+        self?.finishReloading(spot: spot, withCompletion: closure)
         return
       }
 
@@ -240,16 +236,13 @@ extension SpotsProtocol {
         if !spot.items.filter({ !$0.children.isEmpty }).isEmpty {
           if spot is Gridable { CATransaction.begin() }
           spot.reload(nil, withAnimation: animation) {
-            if spot is Gridable { CATransaction.commit() }
-            closure?()
+            self?.finishReloading(spot: spot, withCompletion: closure)
           }
         } else {
           if spot is Gridable { CATransaction.begin() }
           spot.update(item, index: index, withAnimation: animation) {
             guard index == executeClosure else { return }
-            closure?()
-            self?.scrollView.layoutSubviews()
-            if spot is Gridable { CATransaction.commit() }
+            self?.finishReloading(spot: spot, withCompletion: closure)
           }
         }
       }
@@ -279,13 +272,16 @@ extension SpotsProtocol {
         }
       } else {
         spot.updateHeight() { [weak self] in
-
-          self?.scrollView.layoutSubviews()
-          if spot is Gridable { CATransaction.commit() }
-          closure?()
+          self?.finishReloading(spot: spot, withCompletion: closure)
         }
       }
     }
+  }
+
+  private func finishReloading(spot: Spotable, withCompletion completion: Completion = nil) {
+    scrollView.layoutSubviews()
+    if spot is Gridable { CATransaction.commit() }
+    completion?()
   }
 
   func process(changes: [ComponentDiff],
