@@ -530,7 +530,7 @@ class ControllerTests : XCTestCase {
         exception.fulfill()
       }
     }
-    waitForExpectations(timeout: 0.1, handler: nil)
+    waitForExpectations(timeout: 0.5, handler: nil)
   }
 
   func testControllerItemChanges() {
