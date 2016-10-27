@@ -86,15 +86,8 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
   weak public var scrollDelegate: ScrollDelegate?
 
   /// A custom scroll view that handles the scrolling for all internal scroll views.
-  lazy open var scrollView: SpotsScrollView = {  [unowned self] in
-    let scrollView = SpotsScrollView()
-    scrollView.alwaysBounceVertical = true
-    scrollView.clipsToBounds = true
-    scrollView.delegate = self
-
-    return scrollView
-  }()
-
+  open var scrollView: SpotsScrollView = SpotsScrollView()
+  
 #if os(iOS)
   /// A UIRefresh control.
   /// Note: Only available on iOS.
@@ -159,6 +152,8 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
     }
     NotificationCenter.default.removeObserver(self)
     #endif
+    
+    scrollView.delegate = nil
   }
 
   ///  A generic look up method for resolving spots based on index
@@ -210,8 +205,12 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
   /// Called after the spot controller's view is loaded into memory.
   open override func viewDidLoad() {
     super.viewDidLoad()
+    
     view.addSubview(scrollView)
     scrollView.frame = view.bounds
+    scrollView.alwaysBounceVertical = true
+    scrollView.clipsToBounds = true
+    scrollView.delegate = self
 
     setupSpots()
 
