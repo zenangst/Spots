@@ -153,6 +153,7 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
     NotificationCenter.default.removeObserver(self)
     #endif
     
+    // http://stackoverflow.com/questions/3686803/uiscrollview-exc-bad-access-crash-in-ios-sdk
     scrollView.delegate = nil
   }
 
