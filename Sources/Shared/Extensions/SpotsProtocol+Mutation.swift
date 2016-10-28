@@ -267,8 +267,7 @@ extension SpotsProtocol {
     }) {
       if !spot.items.filter({ !$0.children.isEmpty }).isEmpty {
         spot.reload(nil, withAnimation: animation) {
-          if spot is Gridable { CATransaction.commit() }
-          closure?()
+          self?.finishReloading(spot: spot, withCompletion: closure)
         }
       } else {
         spot.updateHeight() { [weak self] in
