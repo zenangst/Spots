@@ -266,8 +266,8 @@ extension SpotsProtocol {
       spot.items = newItems
     }) {
       if !spot.items.filter({ !$0.children.isEmpty }).isEmpty {
-        spot.reload(nil, withAnimation: animation) {
-          finishReloading(spot: spot, withCompletion: closure)
+        spot.reload(nil, withAnimation: animation) { [weak self] in
+          self?.finishReloading(spot: spot, withCompletion: closure)
         }
       } else {
         spot.updateHeight() { [weak self] in
