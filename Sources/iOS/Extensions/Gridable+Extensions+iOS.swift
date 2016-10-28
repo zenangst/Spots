@@ -305,6 +305,8 @@ extension Gridable {
   public func update(_ item: Item, index: Int, withAnimation animation: Animation = .none, completion: Completion = nil) {
     guard let oldItem = self.item(at: index) else { completion?(); return }
 
+    var item = item
+    item.index = index
     items[index] = item
     configureItem(at: index)
 

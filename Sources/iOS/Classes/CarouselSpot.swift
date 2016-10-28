@@ -441,6 +441,11 @@ extension CarouselSpot: UIScrollViewDelegate {
     guard paginate else { return }
     paginatedEndScrolling()
   }
+
+  public func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+    carouselScrollDelegate?.didEndScrollingAnimated(in: self)
+  }
+
   #endif
 
   /// Tells the delegate when the user finishes scrolling the content.
@@ -492,5 +497,9 @@ extension CarouselSpot: UIScrollViewDelegate {
 
       collectionView.setContentOffset(CGPoint(x: pageWidth * CGFloat(index), y:0), animated: true)
     }
+  }
+
+  public func scrollTo(index: Int, position: UICollectionViewScrollPosition = .centeredHorizontally, animated: Bool = true) {
+    collectionView.scrollToItem(at: IndexPath(item: index, section: 0), at: position, animated: animated)
   }
 }

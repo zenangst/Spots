@@ -304,6 +304,7 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
     spot.component.size = CGSize(
       width: view.frame.size.width,
       height: ceil(spot.render().frame.size.height))
+    spot.render().layoutIfNeeded()
   }
 
   #if os(iOS)
