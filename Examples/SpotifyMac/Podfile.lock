@@ -19,7 +19,7 @@ PODS:
     - JWTDecode
     - Keychain
     - Sugar
-  - Spots (5.0.4):
+  - Spots (5.1.1):
     - Brick (~> 2.0)
     - Cache (~> 2.0)
     - CryptoSwift (= 0.6.0)
@@ -82,11 +82,11 @@ SPEC CHECKSUMS:
   Keychain: b82fa1a6c20666b74014e7549f53bae6c75d617f
   Malibu: d697d750eba061696ddafa097b6cb325ba6037f7
   OhMyAuth: e10e5ab7a2a3d77c8e056b0d2aa495b9cefec19c
-  Spots: dcb63e3502abd314c84fe201adf4b112a03326b1
+  Spots: 7bacfcb939e2d7c2ade1a2b7f49d9efbe458a00b
   Sugar: f45b46cae3d198222a042b9ecf1ce3d44ab8e764
   Tailor: faa9ec5be402056be8ec67c0e461f00251d19191
   When: 3df626af4891607ea7dd3f46a451176c5642c528
 
 PODFILE CHECKSUM: 39f2a9e027a6ee4ad115021b6dd32f51c3550795
 
-COCOAPODS: 1.1.0.rc.3
+COCOAPODS: 1.1.1
