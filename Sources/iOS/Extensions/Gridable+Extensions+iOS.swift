@@ -415,9 +415,9 @@ extension Gridable {
 
     setup(collectionView.bounds.size)
     collectionView.layoutIfNeeded()
-    completion?()
 
     if animation == .none { UIView.setAnimationsEnabled(true) }
+    completion?()
   }
 
   /// Perform animation before mutation
