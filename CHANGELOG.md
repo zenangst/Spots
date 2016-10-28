@@ -2,7 +2,35 @@
 
 ## [Unreleased](https://github.com/hyperoslo/Spots/tree/HEAD)
 
-[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.0.3...HEAD)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.1.1...HEAD)
+
+**Merged pull requests:**
+
+- Improve/carousel scroll delegates [\#346](https://github.com/hyperoslo/Spots/pull/346) ([zenangst](https://github.com/zenangst))
+- Remove lazy variable and set delegate to nil upon deallocation [\#345](https://github.com/hyperoslo/Spots/pull/345) ([onmyway133](https://github.com/onmyway133))
+- Improve/carousel scroll delegates [\#344](https://github.com/hyperoslo/Spots/pull/344) ([vadymmarkov](https://github.com/vadymmarkov))
+
+## [5.1.1](https://github.com/hyperoslo/Spots/tree/5.1.1) (2016-10-26)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.1.0...5.1.1)
+
+**Merged pull requests:**
+
+- Improve/comparing changes [\#343](https://github.com/hyperoslo/Spots/pull/343) ([zenangst](https://github.com/zenangst))
+
+## [5.1.0](https://github.com/hyperoslo/Spots/tree/5.1.0) (2016-10-24)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.0.4...5.1.0)
+
+**Merged pull requests:**
+
+- Improve reload with components [\#342](https://github.com/hyperoslo/Spots/pull/342) ([zenangst](https://github.com/zenangst))
+- Refactor Gridable layout [\#341](https://github.com/hyperoslo/Spots/pull/341) ([zenangst](https://github.com/zenangst))
+- Fix frame integral [\#340](https://github.com/hyperoslo/Spots/pull/340) ([onmyway133](https://github.com/onmyway133))
+- Integral [\#339](https://github.com/hyperoslo/Spots/pull/339) ([Hyperseed](https://github.com/Hyperseed))
+- Fix comparison [\#338](https://github.com/hyperoslo/Spots/pull/338) ([Hyperseed](https://github.com/Hyperseed))
+- Improve diffing, reduce computation, fix cached views and improve test coverage [\#337](https://github.com/hyperoslo/Spots/pull/337) ([zenangst](https://github.com/zenangst))
+
+## [5.0.4](https://github.com/hyperoslo/Spots/tree/5.0.4) (2016-10-17)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.0.3...5.0.4)
 
 **Merged pull requests:**
 
