@@ -138,7 +138,7 @@ extension SpotsProtocol {
   /// - parameter closure:       A completion closure that is invoked when the setup of the new items is complete
   ///
   /// - returns: A boolean value that determines if the closure should run in `process(changes:)`
-  fileprivate func setupItemsForSpot(_ index: Int, newComponents: [Component], withAnimation animation: Animation = .automatic, closure: Completion = nil) -> Bool {
+  fileprivate func setupItemsForSpot(at index: Int, newComponents: [Component], withAnimation animation: Animation = .automatic, closure: Completion = nil) -> Bool {
     guard let spot = self.spot(at: index, ofType: Spotable.self) else { return false }
     let newItems = spot.prepare(items: newComponents[index].items)
     let oldItems = spot.items
@@ -303,7 +303,7 @@ extension SpotsProtocol {
         case .removed:
           weakSelf.removeSpot(at: index)
         case .items:
-          runClosure = weakSelf.setupItemsForSpot(index,
+          runClosure = weakSelf.setupItemsForSpot(at: index,
                                                   newComponents: newComponents,
                                                   withAnimation: animation,
                                                   closure: closure)
