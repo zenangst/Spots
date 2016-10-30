@@ -24,5 +24,4 @@ class UIViewControllerExtensionsTests: XCTestCase {
     parentController.addChildViewController(controller)
     XCTAssertEqual(controller.spots_shouldAutorotate(), true)
   }
-
 }
