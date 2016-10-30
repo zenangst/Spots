@@ -39,9 +39,6 @@ class StateCacheTests : XCTestCase {
   }
 
   func testRemovingStateCacheFromController() {
-    XCTAssert(controller.stateCache!.load().count != 0)
-    XCTAssertEqual(controller.stateCache!.cacheExists, true)
-
     let exception = self.expectation(description: "Clear state cache")
     controller.stateCache?.clear {
       XCTAssertEqual(self.controller.stateCache!.load().count, 0)
