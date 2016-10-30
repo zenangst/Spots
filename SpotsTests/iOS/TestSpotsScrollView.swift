@@ -3,23 +3,6 @@ import Brick
 import Foundation
 import XCTest
 
-extension Controller {
-
-  func preloadView() {
-    let _ = view
-  }
-
-  func viewDidAppear() {
-    viewWillAppear(true)
-    viewDidAppear(true)
-  }
-
-  func scrollTo(_ point: CGPoint) {
-    scrollView.setContentOffset(point, animated: false)
-    scrollView.layoutSubviews()
-  }
-}
-
 class SpotsScrollViewTests: XCTestCase {
 
   var bounds: CGRect!
@@ -69,13 +52,14 @@ class SpotsScrollViewTests: XCTestCase {
 
   override func setUp() {
     super.setUp()
-
     bounds = CGRect(origin: CGPoint.zero, size: CGSize(width: 375, height: 667))
     controller = Controller(initialJSON)
-    controller.view.autoresizingMask = []
-    controller.view.frame.size = CGSize(width: 375, height: 667)
     controller.preloadView()
+    controller.view.autoresizingMask = []
+    controller.view.frame.size = bounds.size
+    controller.configure(withSize: bounds.size)
     controller.viewWillAppear(true)
+    controller.scrollView.layoutViews()
   }
 
   override func tearDown() {
