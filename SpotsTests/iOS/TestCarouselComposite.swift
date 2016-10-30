@@ -38,5 +38,4 @@ class CarouselCompositeTests: XCTestCase {
     view.prepareForReuse()
     XCTAssertTrue(view.contentView.subviews.count == 1)
   }
-  
 }

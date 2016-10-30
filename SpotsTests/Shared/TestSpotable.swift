@@ -41,5 +41,4 @@ class SpotableTests : XCTestCase {
     }
     XCTAssertEqual(controller.spots[0].items.count, 500)
   }
-
 }
