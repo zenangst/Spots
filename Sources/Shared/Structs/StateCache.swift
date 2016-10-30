@@ -4,10 +4,13 @@ import CryptoSwift
 
 /// A StateCache struct used for Controller and Spotable object caching
 public struct StateCache {
+
   /// A unique identifer string for the StateCache
   public let key: String
+
   /// The cache name used by Cache
   static let cacheName = String(describing: StateCache.self)
+
   /// Computed bundle identifier
   static let bundleIdentifer: String = {
     if let bundleIdentifier = Bundle.main.bundleIdentifier {
