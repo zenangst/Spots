@@ -1,8 +1,12 @@
 osx_image: xcode8
 language: objective-c
 
+cache:
+  directories:
+  - Carthage
+
 before_install:
-- travis_wait 35 carthage bootstrap --platform iOS,Mac,tvOS
+- travis_wait 35; bin/bootstrap-if-needed
 
 script:
 - set -o pipefail && xcodebuild clean build -project Spots.xcodeproj -scheme "Spots-iOS" -sdk iphonesimulator | xcpretty
