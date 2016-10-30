@@ -50,8 +50,10 @@ public struct StateCache {
   }
 
   /// Clear the current StateCache
-  public func clear() {
-    cache.remove(key)
+  public func clear(completion: (() -> Void)? = nil) {
+    cache.remove(key) {
+      completion?()
+    }
   }
 
   /// The StateCache file name
