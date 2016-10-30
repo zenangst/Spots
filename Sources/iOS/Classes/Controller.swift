@@ -87,7 +87,7 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
 
   /// A custom scroll view that handles the scrolling for all internal scroll views.
   open var scrollView: SpotsScrollView = SpotsScrollView()
-  
+
 #if os(iOS)
   /// A UIRefresh control.
   /// Note: Only available on iOS.
@@ -152,7 +152,7 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
     }
     NotificationCenter.default.removeObserver(self)
     #endif
-    
+
     // http://stackoverflow.com/questions/3686803/uiscrollview-exc-bad-access-crash-in-ios-sdk
     scrollView.delegate = nil
   }
@@ -206,7 +206,7 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
   /// Called after the spot controller's view is loaded into memory.
   open override func viewDidLoad() {
     super.viewDidLoad()
-    
+
     view.addSubview(scrollView)
     scrollView.frame = view.bounds
     scrollView.alwaysBounceVertical = true
