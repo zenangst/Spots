@@ -4,12 +4,23 @@ import CryptoSwift
 
 /// A StateCache struct used for Controller and Spotable object caching
 public struct StateCache {
+
   /// A unique identifer string for the StateCache
   public let key: String
+
   /// The cache name used by Cache
   static let cacheName = String(describing: StateCache.self)
+
+  /// Computed bundle identifier
+  static let bundleIdentifer: String = {
+    if let bundleIdentifier = Bundle.main.bundleIdentifier {
+      return bundleIdentifier
+    }
+    return "Spots.bundle.identifier"
+  }()
+
   /// A JSON Cache object
-  let cache = Cache<JSON>(name: "\(StateCache.cacheName)/\(Bundle.main.bundleIdentifier!)")
+  let cache = Cache<JSON>(name: "\(StateCache.cacheName)/\(bundleIdentifer)")
 
   /// The path of the cache
   var path: String {
@@ -50,8 +61,10 @@ public struct StateCache {
   }
 
   /// Clear the current StateCache
-  public func clear() {
-    cache.remove(key)
+  public func clear(completion: (() -> Void)? = nil) {
+    cache.remove(key) {
+      completion?()
+    }
   }
 
   /// The StateCache file name

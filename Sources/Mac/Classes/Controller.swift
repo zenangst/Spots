@@ -175,11 +175,11 @@ open class Controller: NSViewController, SpotsProtocol {
    */
   open override func viewDidLoad() {
     super.viewDidLoad()
-    
+
     view.addSubview(scrollView)
     scrollView.hasVerticalScroller = true
     scrollView.autoresizingMask = [ .viewWidthSizable, .viewHeightSizable ]
-    
+
     setupSpots()
     Controller.configure?(scrollView)
   }
