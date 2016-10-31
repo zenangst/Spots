@@ -1,16 +1,12 @@
-#if os(iOS)
-  import UIKit
-#endif
-#if os(tvOS)
-  import UIKit
-#endif
 #if os(OSX)
   import Cocoa
+#else
+  import UIKit
 #endif
 
-/**
- The type of animation when items are inserted or deleted.
- */
+///
+/// The type of animation when items are inserted or deleted.
+///
 public enum Animation: Int {
   case fade
   case right
@@ -22,7 +18,10 @@ public enum Animation: Int {
   case automatic
 
   #if os(OSX)
-  var tableViewAnimation: NSTableViewAnimationOptions {
+  ///
+  /// Resolves a Animation into a NSTableViewAnimationOptions
+  ///
+  public var tableViewAnimation: NSTableViewAnimationOptions {
     switch self {
     case .fade:
       return .effectFade
@@ -43,10 +42,10 @@ public enum Animation: Int {
     }
   }
   #else
-  /**
-   Resolves a Animation into a UITableViewRowAnimation
-   */
-  var tableViewAnimation: UITableViewRowAnimation {
+  ///
+  /// Resolves a Animation into a UITableViewRowAnimation
+  ///
+  public var tableViewAnimation: UITableViewRowAnimation {
     switch self {
     case .fade:
       return .fade
