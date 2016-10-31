@@ -2,15 +2,15 @@ import UIKit
 import Brick
 
 /// A default cell for the GridSpot
-class GridSpotCell: UICollectionViewCell, SpotConfigurable {
+public class GridSpotCell: UICollectionViewCell, SpotConfigurable {
 
   /// The preferred view size for the view
-  var preferredViewSize = CGSize(width: 88, height: 88)
+  public var preferredViewSize = CGSize(width: 88, height: 88)
   /// A weak referenced Item struct
-  var item: Item?
+  public var item: Item?
 
   /// A UILabel that uses the Item's title as its text
-  var label: UILabel = {
+  public var label: UILabel = {
     let label = UILabel()
     label.frame = CGRect(x: 0, y: 0, width: 200, height: 200)
     label.textAlignment = .center
@@ -20,7 +20,7 @@ class GridSpotCell: UICollectionViewCell, SpotConfigurable {
   }()
 
   /// A UIImageView that uses the Item's image property for its image
-  lazy var imageView: UIImageView = {
+  public lazy var imageView: UIImageView = {
     let imageView = UIImageView()
     imageView.contentMode = .scaleAspectFill
     imageView.autoresizingMask = [.flexibleWidth]
@@ -33,7 +33,7 @@ class GridSpotCell: UICollectionViewCell, SpotConfigurable {
   /// - parameter frame: The frame rectangle for the view, measured in points.
   ///
   /// - returns: An initialized view object.
-  override init(frame: CGRect) {
+  public override init(frame: CGRect) {
     super.init(frame: frame)
 
     [imageView, label].forEach { contentView.addSubview($0) }
@@ -42,14 +42,14 @@ class GridSpotCell: UICollectionViewCell, SpotConfigurable {
   /// Init with coder
   ///
   /// - parameter aDecoder: An NSCoder
-  required init?(coder aDecoder: NSCoder) {
+  public required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 
   /// Configure cell with Item struct
   ///
   /// - parameter item: The Item struct that is used for configuring the view.
-  func configure(_ item: inout Item) {
+  public func configure(_ item: inout Item) {
     imageView.image = UIImage(named: item.image)
     imageView.frame = contentView.frame
     label.text = item.title

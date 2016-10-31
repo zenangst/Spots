@@ -4,7 +4,7 @@ import UIKit
 open class GridableLayout: UICollectionViewFlowLayout {
 
   /// The content size for the Gridable object
-  var contentSize = CGSize.zero
+  public var contentSize = CGSize.zero
   /// The y offset for the Gridable object
   open var yOffset: CGFloat?
 

@@ -3,13 +3,11 @@ import Brick
 
 open class GridSpot: NSObject, Gridable {
 
-  /**
-   An enum layout type
-
-   - Grid: Resolves to NSCollectionViewGridLayout
-   - Left: Resolves to CollectionViewLeftLayout
-   - Flow: Resolves to NSCollectionViewFlowLayout
-   */
+  /// An enum layout type
+  ///
+  /// - Grid: Resolves to NSCollectionViewGridLayout
+  /// - Left: Resolves to CollectionViewLeftLayout
+  /// - Flow: Resolves to NSCollectionViewFlowLayout
   public enum LayoutType: String {
     case Grid = "grid"
     case Left = "left"
