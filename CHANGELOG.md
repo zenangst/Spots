@@ -2,7 +2,23 @@
 
 ## [Unreleased](https://github.com/hyperoslo/Spots/tree/HEAD)
 
-[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.1.1...HEAD)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.1.2...HEAD)
+
+**Fixed bugs:**
+
+- Fix tvOS compiler errors [\#309](https://github.com/hyperoslo/Spots/issues/309)
+
+**Closed issues:**
+
+- Add generator script for registering Spots [\#288](https://github.com/hyperoslo/Spots/issues/288)
+
+**Merged pull requests:**
+
+- Improve documentation and tests [\#348](https://github.com/hyperoslo/Spots/pull/348) ([zenangst](https://github.com/zenangst))
+- Improve/test coverage [\#347](https://github.com/hyperoslo/Spots/pull/347) ([zenangst](https://github.com/zenangst))
+
+## [5.1.2](https://github.com/hyperoslo/Spots/tree/5.1.2) (2016-10-28)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.1.1...5.1.2)
 
 **Merged pull requests:**
 
