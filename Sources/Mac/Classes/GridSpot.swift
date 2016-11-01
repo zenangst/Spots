@@ -16,23 +16,23 @@ open class GridSpot: NSObject, Gridable {
 
   public struct Key {
     /// The key for minimum interitem spacing
-    public static let minimumInteritemSpacing = "itemSpacing"
+    public static let minimumInteritemSpacing = "item-spacing"
     /// The key for minimum line spacing
-    public static let minimumLineSpacing = "lineSpacing"
+    public static let minimumLineSpacing = "line-spacing"
     /// The key for title left margin
-    public static let titleLeftMargin = "titleLeftMargin"
+    public static let titleLeftMargin = "title-left-margin"
     /// The key for title font size
     public static let titleFontSize = "title-font-size"
     /// The key for layout
     public static let layout = "layout"
     /// The key for grid layout maximum item width
-    public static let gridLayoutMaximumItemWidth = "itemWidthMax"
+    public static let gridLayoutMaximumItemWidth = "item-width-max"
     /// The key for grid layout maximum item height
-    public static let gridLayoutMaximumItemHeight = "itemHeightMax"
+    public static let gridLayoutMaximumItemHeight = "item-height-max"
     /// The key for grid layout minimum item width
-    public static let gridLayoutMinimumItemWidth = "itemMinWidth"
+    public static let gridLayoutMinimumItemWidth = "item-min-width"
     /// The key for grid layout minimum item height
-    public static let gridLayoutMinimumItemHeight = "itemMinHeight"
+    public static let gridLayoutMinimumItemHeight = "item-min-height"
   }
 
   public struct Default {

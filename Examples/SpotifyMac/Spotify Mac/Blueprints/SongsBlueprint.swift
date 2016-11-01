@@ -45,9 +45,9 @@ struct SongsBlueprint: BlueprintContainer {
               "title" : "Loading..."
             ],
             "meta" : [
-              "doubleClick" : true,
-              "insetRight" : 10.0,
-              "insetBottom" : 20.0,
+              "double-click" : true,
+              "inset-right" : 10.0,
+              "inset-bottom" : 20.0,
             ]
           ]
         ]

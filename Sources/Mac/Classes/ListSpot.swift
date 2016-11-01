@@ -13,7 +13,7 @@ open class ListSpot: NSObject, Listable {
     public static let contentInsetsLeft = "inset-left"
     public static let contentInsetsBottom = "inset-bottom"
     public static let contentInsetsRight = "inset-right"
-    public static let doubleAction = "doubleClick"
+    public static let doubleAction = "double-click"
   }
 
   public struct Default {

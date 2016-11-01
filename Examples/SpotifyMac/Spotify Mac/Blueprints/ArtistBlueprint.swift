@@ -58,26 +58,27 @@ struct ArtistBlueprint: BlueprintContainer {
             "title" : "Top Albums",
             "kind" : Component.Kind.Carousel.rawValue,
             "meta" : [
-              "insetBottom":  30.0,
-              "insetRight" : 10.0,
+              "inset-bottom":  30.0,
+              "inset-left" : 10.0,
+              "inset-right" : 10.0,
             ]
           ],
           ["kind" : Component.Kind.List.rawValue,
             "span" : 3,
             "title" : "Top Tracks",
             "meta" : [
-              "insetRight" : 10.0,
-              "insetBottom" : 30.0,
-              "itemSpacing" : 0.0,
-              "doubleClick" : true,
+              "inset-right" : 10.0,
+              "inset-bottom" : 30.0,
+              "item-spacing" : 0.0,
+              "double-click" : true,
             ]
           ],
           ["kind" : Component.Kind.Carousel.rawValue,
             "title" : "Related artist",
             "meta" : [
               GridableMeta.Key.sectionInsetBottom: 20,
-              "insetRight" : 10.0,
-              "lineSpacing" : 10.0
+              "inset-right" : 10.0,
+              "line-spacing" : 10.0
             ]
           ],
         ]

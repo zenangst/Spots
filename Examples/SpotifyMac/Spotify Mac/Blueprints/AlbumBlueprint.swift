@@ -87,7 +87,7 @@ struct AlbumBlueprint: BlueprintContainer {
           [
             "kind" : "list",
             "meta" : [
-              "doubleClick" : true,
+              "double-click" : true,
               ListSpot.Key.contentInsetsLeft : 25,
               ListSpot.Key.contentInsetsRight : 20
             ]

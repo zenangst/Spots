@@ -64,7 +64,7 @@ struct TopTracksBlueprint: BlueprintContainer {
             "title" : "Top Tracks",
             "kind" : "list",
             "meta" : [
-              "doubleClick" : true,
+              "double-click" : true,
             ]
           ]
         ]
