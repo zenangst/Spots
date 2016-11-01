@@ -113,20 +113,22 @@ open class SpotsScrollView: UIScrollView {
   /// - parameter change:  A dictionary that describes the changes that have been made to the value of the property at the key path keyPath relative to object.
   /// - parameter context: The value that was provided when the receiver was registered to receive key-value observation notifications.
   open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+    guard let keyPath = keyPath else { return }
+
     if let change = change, context == subviewContext {
       if let scrollView = object as? UIScrollView {
-        guard let change = change[NSKeyValueChangeKey.oldKey] else { return }
-        if keyPath == #keyPath(contentSize) {
+        guard let newValue = change[NSKeyValueChangeKey.oldKey] else { return }
+        if #keyPath(contentSize) == keyPath {
 
           let newContentSize = scrollView.contentSize
-          let oldContentSize = (change as AnyObject).cgSizeValue
+          let oldContentSize = (newValue as AnyObject).cgSizeValue
           if !compare(size: newContentSize, to: oldContentSize) {
             setNeedsLayout()
             layoutIfNeeded()
           }
-        } else if keyPath == #keyPath(contentOffset)
+        } else if #keyPath(contentOffset) == keyPath
           && (isDragging == false && isTracking == false) {
-          let oldOffset = (change as AnyObject).cgPointValue
+          let oldOffset = (newValue as AnyObject).cgPointValue
           let newOffset = scrollView.contentOffset
 
           if !compare(point: newOffset, to: oldOffset) {

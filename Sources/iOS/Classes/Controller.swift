@@ -8,14 +8,19 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
   /// A notification enum
   ///
   /// - deviceDidRotateNotification: Used when the device is rotated
-  enum NotificationKeys: String {
+  private enum NotificationKeys: String {
+    /// A notification key for when the device did rotate
     case deviceDidRotateNotification = "deviceDidRotateNotification"
   }
 
   /// A rotation class that is used in the `deviceDidRotate` notification
-  class RotationSize {
+  private class RotationSize {
+    /// The new size after rotating.
     let size: CGSize
 
+    /// Initialize a new size when rotating
+    ///
+    /// - Parameter size: A CGSize with the new size after rotating the device.
     init(size: CGSize) {
       self.size = size
     }

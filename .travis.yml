@@ -16,5 +16,8 @@ script:
 - set -o pipefail && xcodebuild clean build -project Spots.xcodeproj -scheme "Spots-tvOS" -destination 'platform=tvOS Simulator,name=Apple TV 1080p,OS=10.0' | xcpretty
 - set -o pipefail && xcodebuild test -project Spots.xcodeproj -scheme "Spots-tvOS" -destination 'platform=tvOS Simulator,name=Apple TV 1080p,OS=10.0' | xcpretty
 
+after_success:
+- bash <(curl -s https://codecov.io/bash)
+
 notifications:
   email: false

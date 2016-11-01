@@ -186,7 +186,8 @@ open class CarouselSpot: NSObject, Gridable {
     self.stateCache = stateCache
   }
 
-  func configureCollectionView() {
+  /// Configure collection view with data source, delegate and background view
+  public func configureCollectionView() {
     register()
     collectionView.dataSource = self
     collectionView.delegate = self
@@ -236,7 +237,7 @@ open class CarouselSpot: NSObject, Gridable {
   }
 
   /// Configure section insets and layout spacing for the UICollectionViewFlow using component meta data
-  func configureLayout() {
+  public func configureLayout() {
     layout.sectionInset = UIEdgeInsets(
       top: component.meta(GridableMeta.Key.sectionInsetTop, Default.sectionInsetTop),
       left: component.meta(GridableMeta.Key.sectionInsetLeft, Default.sectionInsetLeft),
@@ -252,7 +253,7 @@ open class CarouselSpot: NSObject, Gridable {
   /// Register default header for the CarouselSpot
   ///
   /// - parameter view: A header view
-  func registerDefaultHeader(header view: View.Type) {
+  public func registerDefaultHeader(header view: View.Type) {
     guard type(of: self).headers.storage[type(of: self).headers.defaultIdentifier] == nil else { return }
     type(of: self).headers.defaultItem = Registry.Item.classType(view)
   }
