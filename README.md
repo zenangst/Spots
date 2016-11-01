@@ -24,6 +24,8 @@
 <img src="https://img.shields.io/cocoapods/metrics/doc-percent/Spots.svg?style=flat">
 </a>
 
+<a href="https://codecov.io/github/hyperoslo/Spots?branch=master"><img src="https://camo.githubusercontent.com/2d1ca5ef586d894442ab3363443d1a27dfa571ac/68747470733a2f2f636f6465636f762e696f2f6769746875622f73706f746966792f4875624672616d65776f726b2f636f7665726167652e7376673f6272616e63683d6d6173746572" alt="Coverage Status" data-canonical-src="https://codecov.io/github/hyperoslo/Spots/coverage.svg?branch=master" style="max-width:100%;"></a>
+
 <img src="https://img.shields.io/badge/%20in-swift%203.0-orange.svg">
 
 <a href="https://gitter.im/hyperoslo/Spots?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge">
