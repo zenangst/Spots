@@ -131,7 +131,7 @@ open class FeaturedGridItem: NSCollectionViewItem, SpotConfigurable {
     titleLabel.rightAnchor.constraint(equalTo: customImageView.rightAnchor).isActive = true
 
     if item.image.isPresent && item.image.hasPrefix("http") {
-      customImageView.setImage(NSURL(string: item.image) as URL?) { [customImageView = customImageView] _ in
+      customImageView.setImage(url: NSURL(string: item.image) as URL?) { [customImageView = customImageView] _ in
         customImageView.contentMode = .scaleToAspectFill
       }
     }

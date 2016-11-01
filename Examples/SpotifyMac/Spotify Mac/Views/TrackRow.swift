@@ -207,7 +207,7 @@ open class TrackRow: NSTableRowView, SpotConfigurable {
     if item.image.isPresent && item.image.hasPrefix("http") {
       imageView.heightAnchor.constraint(equalToConstant: 40).isActive = true
       imageView.widthAnchor.constraint(equalToConstant: 40).isActive = true
-      imageView.setImage(URL(string: item.image))
+      imageView.setImage(url: URL(string: item.image))
     } else {
       imageView.image = NSImage(named: item.image)
       imageView.heightAnchor.constraint(equalToConstant: 18).isActive = true

@@ -75,7 +75,7 @@ open class CategoryGridItem: NSCollectionViewItem, SpotConfigurable {
       customImageView.frame.size.height = item.size.height
       customImageView.frame.origin.y = customView.frame.height - imageView.frame.height
       customImageView.imageAlignment = .alignCenter
-      customImageView.setImage(NSURL(string: item.image) as URL?)
+      customImageView.setImage(url: NSURL(string: item.image) as URL?)
 
       titleLabel.frame.origin.x = imageView.frame.width / 2 - titleLabel.frame.width / 2
       titleLabel.frame.origin.y = imageView.frame.height / 5

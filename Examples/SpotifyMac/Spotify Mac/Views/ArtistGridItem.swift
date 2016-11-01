@@ -93,7 +93,7 @@ open class ArtistGridItem: NSCollectionViewItem, SpotConfigurable {
     customImageView.layer?.cornerRadius = (item.size.width - 40) / 2
 
     if item.image.isPresent && item.image.hasPrefix("http") {
-      customImageView.setImage(NSURL(string: item.image) as URL?) { [weak self] image in
+      customImageView.setImage(url: NSURL(string: item.image) as URL?) { [weak self] image in
         self?.customImageView.contentMode = .scaleToAspectFill
       }
     }

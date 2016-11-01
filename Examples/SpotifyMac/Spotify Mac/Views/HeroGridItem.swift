@@ -84,7 +84,7 @@ open class HeroGridItem: NSTableRowView, SpotConfigurable {
       shadow.shadowOffset = CGSize(width: -20, height: 0)
       shadow.shadowBlurRadius = 20.0
       customImageView.shadow = shadow
-      customImageView.setImage(NSURL(string: item.image) as URL?) { [weak self] _ in
+      customImageView.setImage(url: NSURL(string: item.image) as URL?) { [weak self] _ in
         guard let weakSelf = self else { return }
         weakSelf.customImageView.layer?.mask = weakSelf.gradientLayer
       }
