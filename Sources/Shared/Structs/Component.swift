@@ -184,14 +184,20 @@ public struct Component: Mappable, Equatable {
 
   /// A generic convenience method for resolving meta attributes
   ///
-  /// - parameter key: String
-  /// - parameter defaultValue: A generic value that works as a fallback if the key value object cannot be cast into the generic type
+  /// - Parameter key: String
+  /// - Parameter defaultValue: A generic value that works as a fallback if the key value object cannot be cast into the generic type
   ///
-  /// - returns: A generic value based on `defaultValue`, it falls back to `defaultValue` if type casting fails
+  /// - Returns: A generic value based on `defaultValue`, it falls back to `defaultValue` if type casting fails
   public func meta<T>(_ key: String, _ defaultValue: T) -> T {
     return meta[key] as? T ?? defaultValue
   }
 
+  /// A convenience method for resolving meta attributes for CGFloats.
+  ///
+  /// - Parameter key: String.
+  /// - Parameter defaultValue: A CGFloat value to be used as default if meta key is not found.
+  ///
+  /// - Returns: A generic value based on `defaultValue`, it falls back to `defaultValue` if type casting fails
   public func meta(_ key: String, _ defaultValue: CGFloat) -> CGFloat {
     if let doubleValue = meta[key] as? Double {
       return CGFloat(doubleValue)
