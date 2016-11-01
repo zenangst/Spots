@@ -195,6 +195,8 @@ public struct Component: Mappable, Equatable {
   public func meta(_ key: String, _ defaultValue: CGFloat) -> CGFloat {
     if let doubleValue = meta[key] as? Double {
       return CGFloat(doubleValue)
+    } else if let intValue = meta[key] as? Int {
+      return CGFloat(intValue)
     }
     return defaultValue
   }
