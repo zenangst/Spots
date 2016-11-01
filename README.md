@@ -19,7 +19,7 @@
 <a href="http://cocoadocs.org/docsets/Spots" target="_blank">
 <img src="https://img.shields.io/badge/platform-ios | macos | tvos-lightgrey.svg">
 </a>
-
+<br/>
 <a href="http://cocoadocs.org/docsets/Spots" target="_blank">
 <img src="https://img.shields.io/cocoapods/metrics/doc-percent/Spots.svg?style=flat">
 </a>
