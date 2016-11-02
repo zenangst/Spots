@@ -527,7 +527,7 @@ class ControllerTests : XCTestCase {
     XCTAssertTrue(self.controller.compositeSpots.count == 0)
 
     let exception = self.expectation(description: "Reload multiple times with JSON (if needed)")
-    
+
     controller.reloadIfNeeded(newJSON) {
       XCTAssertEqual(self.controller.spots.count, 2)
       XCTAssertTrue(self.controller.spots[0] is ListSpot)
