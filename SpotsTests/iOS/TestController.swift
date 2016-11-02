@@ -414,8 +414,8 @@ class ControllerTests : XCTestCase {
     let jsonController = Controller([
       "components" : [
         ["kind" : "list",
-          "items" : [
-            ["title" : "First item"]
+         "items" : [
+          ["title" : "First item"]
           ]
         ]
       ]
@@ -428,8 +428,8 @@ class ControllerTests : XCTestCase {
     let initialJSON = [
       "components" : [
         ["kind" : "list",
-          "items" : [
-            ["title" : "First list item"]
+         "items" : [
+          ["title" : "First list item"]
           ]
         ]
       ]
@@ -443,9 +443,9 @@ class ControllerTests : XCTestCase {
     let updateJSON = [
       "components" : [
         ["kind" : "grid",
-          "items" : [
-            ["title" : "First grid item"],
-            ["title" : "Second grid item"]
+         "items" : [
+          ["title" : "First grid item"],
+          ["title" : "Second grid item"]
           ]
         ]
       ]
@@ -465,8 +465,8 @@ class ControllerTests : XCTestCase {
     let initialJSON = [
       "components" : [
         ["kind" : "list",
-          "items" : [
-            ["title" : "First list item"]
+         "items" : [
+          ["title" : "First list item"]
           ]
         ]
       ]
@@ -481,13 +481,13 @@ class ControllerTests : XCTestCase {
     let initialJSON: [String : Any] = [
       "components" : [
         ["kind" : "list",
-          "items" : [
-            ["title" : "First list item"]
+         "items" : [
+          ["title" : "First list item"]
           ]
         ],
         ["kind" : "list",
-          "items" : [
-            ["title" : "First list item"]
+         "items" : [
+          ["title" : "First list item"]
           ]
         ]
       ]
@@ -496,23 +496,23 @@ class ControllerTests : XCTestCase {
     let newJSON: [String : Any] = [
       "components" : [
         ["kind" : "list",
-          "items" : [
-            ["title" : "First list item 2"],
-            [
-              "kind" : "composite",
-              "items" : [
-                ["kind" : "grid",
-                  "items" : [
-                    ["title" : "First list item"]
-                  ]
+         "items" : [
+          ["title" : "First list item 2"],
+          [
+            "kind" : "composite",
+            "items" : [
+              ["kind" : "grid",
+               "items" : [
+                ["title" : "First list item"]
                 ]
               ]
             ]
           ]
+          ]
         ],
         ["kind" : "grid",
-          "items" : [
-            ["title" : "First list item"]
+         "items" : [
+          ["title" : "First list item"]
           ]
         ]
       ]
