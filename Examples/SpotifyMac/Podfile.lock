@@ -31,17 +31,17 @@ DEPENDENCIES:
   - Alamofire (= 4.0.1)
   - Brick
   - Cache
-  - Compass
+  - Compass (~> 4.0)
   - CryptoSwift (= 0.6.0)
   - Fashion (= 2.0.0)
-  - Hue
+  - Hue (~> 2.0)
   - Imaginary (~> 1.0)
   - JWTDecode (= 2.0.0)
   - Keychain (from `https://github.com/hyperoslo/Keychain.git`, branch `swift-3`)
-  - Malibu (= 2.0.0)
+  - Malibu (= 2.0)
   - OhMyAuth (from `https://github.com/hyperoslo/OhMyAuth.git`, branch `swift-3`)
   - Spots (from `../../`)
-  - Sugar
+  - Sugar (~> 3.0)
   - Tailor
 
 EXTERNAL SOURCES:
@@ -80,6 +80,6 @@ SPEC CHECKSUMS:
   Tailor: faa9ec5be402056be8ec67c0e461f00251d19191
   When: 3df626af4891607ea7dd3f46a451176c5642c528
 
-PODFILE CHECKSUM: 2507abbb7eb0b30edb2488a8770928626393a43a
+PODFILE CHECKSUM: 8a1fa072794752056ff8d9cd2131685fcf2d4e30
 
 COCOAPODS: 1.1.1

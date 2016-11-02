@@ -51,8 +51,8 @@ class GridSpotCellCircle: UICollectionViewCell, SpotConfigurable {
     imageView.height = 88
 
     if !item.image.isEmpty {
-      let URL = NSURL(string: item.image)
-      imageView.setImage(URL as URL?)
+      let url = URL(string: item.image)
+      imageView.setImage(url: url)
     }
 
     titleLabel.text = item.title

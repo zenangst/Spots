@@ -6,9 +6,9 @@ inhibit_all_warnings!
 
 target "Spotify" do
   core_pods
-  pod 'Sugar', '~> 2.0'
+  pod 'Sugar', '~> 3.0'
   pod 'Compass', '~> 4.0'
-  pod 'Imaginary', git: 'https://github.com/hyperoslo/Imaginary', :branch =>  'swift-3'
+  pod 'Imaginary', '~> 1.0'
   pod 'Keychain', git: 'https://github.com/hyperoslo/Keychain', :branch => 'swift-3'
   pod 'Whisper', '~> 4.0'
   pod 'Hue', '~> 2.0'

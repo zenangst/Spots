@@ -7,13 +7,13 @@ inhibit_all_warnings!
 target "Spotify Mac" do
   core_pods
   pod 'Alamofire', '4.0.1'
-  pod 'Sugar'
+  pod 'Sugar', '~> 3.0'
   pod 'JWTDecode', '2.0.0'
   pod 'Fashion', '2.0.0'
   pod 'Imaginary', '~> 1.0'
-  pod 'Hue'
-  pod 'Compass'
-  pod 'Malibu', '2.0.0'
+  pod 'Hue', '~> 2.0'
+  pod 'Compass', '~> 4.0'
+  pod 'Malibu', '2.0'
   pod 'OhMyAuth', git: 'https://github.com/hyperoslo/OhMyAuth.git', branch: 'swift-3'
   pod 'Keychain', git: 'https://github.com/hyperoslo/Keychain.git', branch: 'swift-3'
 end

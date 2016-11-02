@@ -43,7 +43,7 @@ open class ListCell: UITableViewCell, SpotConfigurable {
     }
 
     if item.image.isPresent {
-      imageView?.setImage(URL(string: item.image), placeholder: transparentImage)
+      imageView?.setImage(url: URL(string: item.image), placeholder: transparentImage)
     } else {
       imageView?.image = nil
     }

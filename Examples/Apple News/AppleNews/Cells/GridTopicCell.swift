@@ -61,7 +61,7 @@ class GridTopicCell: UICollectionViewCell, SpotConfigurable {
       imageView.frame = CGRect(x: 0, y: 0, width: preferredViewSize.width, height: preferredViewSize.height)
       imageView.image = nil
       let url = URL(string: item.image)
-      imageView.setImage(url)
+      imageView.setImage(url: url)
     }
 
     if let hexColor =  item.meta["color"] as? String {

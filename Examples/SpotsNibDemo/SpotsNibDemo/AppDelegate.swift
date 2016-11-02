@@ -51,8 +51,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let spots: [Spotable] = [ListSpot(component: component)]
     let controller = Controller(cacheKey: "nib-demo")
 
-    controller.spots = spots
-    controller.cache()
+    controller.reloadIfNeeded(spots.map { $0.component }) {
+      controller.cache()
+    }
     controller.title = "Spots .nib feature".uppercased()
     let navigationController = UINavigationController(rootViewController: controller)
 

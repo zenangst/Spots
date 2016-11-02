@@ -190,7 +190,7 @@ class PlayerController: Spots.Controller {
       }
 
       if let lastItem = lastItem, lastItem.image.isPresent {
-        currentAlbum.setImage(URL(string: lastItem.image)!)
+        currentAlbum.setImage(url: URL(string: lastItem.image)!)
       }
     }
   }
@@ -231,7 +231,7 @@ extension PlayerController: SpotsDelegate {
       Compass.navigate(to: urn)
 
       if item.image.isPresent {
-        currentAlbum.setImage(URL(string: item.image)!)
+        currentAlbum.setImage(url: URL(string: item.image)!)
       }
     }
   }
@@ -249,7 +249,7 @@ extension PlayerController: CarouselScrollDelegate {
     self.lastItem = item
 
     if item.image.isPresent {
-      currentAlbum.setImage(URL(string: item.image)!)
+      currentAlbum.setImage(url: URL(string: item.image)!)
     }
   }
 }

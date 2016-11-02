@@ -136,7 +136,7 @@
 		BD69735B1BBFE4FB001DC32F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = Hyper;
 				TargetAttributes = {
 					BD6973621BBFE4FB001DC32F = {

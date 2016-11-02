@@ -75,7 +75,7 @@ class CardSpotCell : UICollectionViewCell, SpotConfigurable {
     if !item.image.isEmpty {
       imageView.image = nil
       let url = URL(string: item.image)
-      imageView.setImage(url)
+      imageView.setImage(url: url)
     }
 
     titleLabel.attributedText = NSAttributedString(string: item.title.uppercased(),

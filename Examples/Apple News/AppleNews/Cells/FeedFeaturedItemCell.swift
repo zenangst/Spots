@@ -42,7 +42,7 @@ open class FeaturedFeedItemCell: UITableViewCell, SpotConfigurable {
 
   open func configure(_ item: inout Item) {
     if let url = URL(string: item.image), !item.image.isEmpty {
-      featuredImage.setImage(url)
+      featuredImage.setImage(url: url)
     }
 
     featuredImage.width = contentView.frame.width - 30

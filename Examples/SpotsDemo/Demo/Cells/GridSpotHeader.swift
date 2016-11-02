@@ -29,7 +29,7 @@ class GridSpotHeader: UICollectionViewCell, SpotConfigurable {
     if !item.image.isEmpty {
       imageView.image = nil
       let url = NSURL(string: item.image)
-      imageView.setImage(url as URL?)
+      imageView.setImage(url: url as URL?)
     }
 
     imageView.frame = contentView.frame
