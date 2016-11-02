@@ -19,6 +19,7 @@ class ControllerTests : XCTestCase {
     let component = Component(title: "Component")
     let listSpot = ListSpot(component: component)
     controller = Controller(spot: listSpot)
+    controller.preloadView()
 
     XCTAssertEqual(self.controller.spot as? ListSpot, listSpot)
   }
@@ -27,6 +28,7 @@ class ControllerTests : XCTestCase {
     let component = Component(title: "Component")
     let listSpot = ListSpot(component: component)
     controller = Controller(spot: listSpot)
+    controller.preloadView()
     let items = [Item(title: "item1")]
 
     controller.update { spot in
@@ -40,6 +42,7 @@ class ControllerTests : XCTestCase {
     let component = Component(title: "Component", kind: "list")
     let listSpot = ListSpot(component: component)
     controller = Controller(spot: listSpot)
+    controller.preloadView()
 
     XCTAssert(self.controller.spot!.component.items.count == 0)
 
@@ -66,6 +69,7 @@ class ControllerTests : XCTestCase {
     let component = Component(title: "Component", kind: "list")
     let listSpot = ListSpot(component: component)
     controller = Controller(spot: listSpot)
+    controller.preloadView()
 
     let items = [
       Item(title: "title1", kind: "list"),
@@ -94,6 +98,7 @@ class ControllerTests : XCTestCase {
     let component = Component(title: "Component", kind: "list")
     let listSpot = ListSpot(component: component)
     controller = Controller(spot: listSpot)
+    controller.preloadView()
 
     let items = [
       Item(title: "title1", kind: "list"),
@@ -124,6 +129,7 @@ class ControllerTests : XCTestCase {
     let initialListSpot = ListSpot(component: component)
 
     controller = Controller(spot: initialListSpot)
+    controller.preloadView()
 
     let firstItem = self.controller.spot!.component.items.first
 
@@ -148,6 +154,7 @@ class ControllerTests : XCTestCase {
     let component = Component(title: "Component", kind: "grid")
     let listSpot = ListSpot(component: component)
     controller = Controller(spot: listSpot)
+    controller.preloadView()
 
     XCTAssert(self.controller.spot!.component.items.count == 0)
 
@@ -174,6 +181,7 @@ class ControllerTests : XCTestCase {
     let component = Component(title: "Component", kind: "grid")
     let listSpot = ListSpot(component: component)
     controller = Controller(spot: listSpot)
+    controller.preloadView()
 
     let items = [
       Item(title: "title1", kind: "grid"),
@@ -202,6 +210,7 @@ class ControllerTests : XCTestCase {
     let component = Component(title: "Component", kind: "grid")
     let listSpot = ListSpot(component: component)
     controller = Controller(spot: listSpot)
+    controller.preloadView()
 
     let items = [
       Item(title: "title1", kind: "grid"),
@@ -232,6 +241,7 @@ class ControllerTests : XCTestCase {
     let initialListSpot = ListSpot(component: component)
 
     controller = Controller(spot: initialListSpot)
+    controller.preloadView()
 
     let firstItem = self.controller.spot!.component.items.first
 
@@ -256,6 +266,7 @@ class ControllerTests : XCTestCase {
     let component = Component(title: "Component", kind: "carousel")
     let listSpot = ListSpot(component: component)
     controller = Controller(spot: listSpot)
+    controller.preloadView()
 
     XCTAssert(self.controller.spot!.component.items.count == 0)
 
@@ -282,6 +293,7 @@ class ControllerTests : XCTestCase {
     let component = Component(title: "Component", kind: "carousel")
     let listSpot = ListSpot(component: component)
     controller = Controller(spot: listSpot)
+    controller.preloadView()
 
     let items = [
       Item(title: "title1", kind: "carousel"),
@@ -310,6 +322,7 @@ class ControllerTests : XCTestCase {
     let component = Component(title: "Component", kind: "carousel")
     let listSpot = ListSpot(component: component)
     controller = Controller(spot: listSpot)
+    controller.preloadView()
 
     let items = [
       Item(title: "title1", kind: "carousel"),
@@ -340,6 +353,7 @@ class ControllerTests : XCTestCase {
     let initialListSpot = ListSpot(component: component)
 
     controller = Controller(spot: initialListSpot)
+    controller.preloadView()
 
     let firstItem = self.controller.spot!.component.items.first
 
