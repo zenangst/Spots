@@ -107,6 +107,11 @@ extension SpotsProtocol {
     spots[index].render().removeFromSuperview()
     spots[index] = spot
     setupSpot(at: index, spot: spot)
+    #if os(OSX)
+      scrollView.spotsContentView.subviews.insert(spot.render(), at: index)
+    #else
+      scrollView.contentView.insertSubview(spot.render(), at: index)
+    #endif
     (spot as? CarouselSpot)?.layout.yOffset = yOffset
     yOffset += spot.render().frame.size.height
   }
