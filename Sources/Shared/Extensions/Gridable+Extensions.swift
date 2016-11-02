@@ -62,4 +62,50 @@ public extension Spotable where Self : Gridable {
     layout.invalidateLayout()
     collectionView.frame.size.width = size.width
   }
+
+  /// Process updates and determine if the updates are done.
+  ///
+  /// - parameter updates:    A collection of updates.
+  /// - parameter animation:  A Animation that is used when performing the mutation.
+  /// - parameter completion: A completion closure that is run when the updates are finished.
+  public func process(_ updates: [Int], withAnimation animation: Animation, completion: Completion) {
+    guard !updates.isEmpty else {
+      completion?()
+      return
+    }
+
+    let lastUpdate = updates.last
+    for index in updates {
+      guard let item = self.item(at: index) else { completion?(); continue }
+      self.update(item, index: index, withAnimation: animation) {
+        if index == lastUpdate {
+          completion?()
+        }
+      }
+    }
+  }
+
+  /// Reload spot with ItemChanges.
+  ///
+  /// - parameter changes:          A collection of changes; inserations, updates, reloads, deletions and updated children.
+  /// - parameter animation:        A Animation that is used when performing the mutation.
+  /// - parameter updateDataSource: A closure to update your data source.
+  /// - parameter completion:       A completion closure that runs when your updates are done.
+  public func reloadIfNeeded(_ changes: ItemChanges, withAnimation animation: Animation = .automatic, updateDataSource: () -> Void, completion: Completion) {
+    collectionView.process((insertions: changes.insertions, reloads: changes.reloads, deletions: changes.deletions), updateDataSource: updateDataSource) {
+      if changes.updates.isEmpty {
+        self.process(changes.updatedChildren, withAnimation: animation) {
+          self.layout(self.collectionView.bounds.size)
+          completion?()
+        }
+      } else {
+        self.process(changes.updates, withAnimation: animation) {
+          self.process(changes.updatedChildren, withAnimation: animation) {
+            self.layout(self.collectionView.bounds.size)
+            completion?()
+          }
+        }
+      }
+    }
+  }
 }

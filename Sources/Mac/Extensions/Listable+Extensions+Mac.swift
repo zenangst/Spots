@@ -165,35 +165,6 @@ extension Listable {
     }
   }
 
-  public func reloadIfNeeded(_ changes: ItemChanges, withAnimation animation: Animation, updateDataSource: () -> Void, completion: Completion) {
-    guard !changes.updates.isEmpty else {
-      tableView.process((insertions: changes.insertions, reloads: changes.reloads, deletions: changes.deletions), updateDataSource: updateDataSource, completion: completion)
-      return
-    }
-
-    tableView.process((insertions: changes.insertions, reloads: changes.reloads, deletions: changes.deletions), updateDataSource: updateDataSource) {
-
-      for index in changes.updates {
-        guard let item = self.item(at: index) else { continue }
-        self.update(item, index: index, withAnimation: animation, completion: completion)
-      }
-    }
-  }
-
-  public func reload(_ indexes: [Int]?, withAnimation animation: Animation, completion: Completion) {
-    Dispatch.mainQueue { [weak self] in
-      guard let tableView = self?.tableView else { completion?(); return }
-      if let indexes = indexes, animation != .none {
-        tableView.reload(indexes, animation: animation.tableViewAnimation) {
-          self?.refreshHeight(completion)
-        }
-      } else {
-        tableView.reloadData()
-        self?.refreshHeight(completion)
-      }
-    }
-  }
-
   public func refreshHeight(_ completion: (() -> Void)? = nil) {
     layout(CGSize(width: tableView.frame.width, height: computedHeight ))
     completion?()
