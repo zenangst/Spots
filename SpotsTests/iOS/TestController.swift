@@ -11,6 +11,10 @@ class ControllerTests : XCTestCase {
     controller = Controller(spots: [])
   }
 
+  override func tearDown() {
+    controller = nil
+  }
+
   func testSpotAtIndex() {
     let component = Component(title: "Component")
     let listSpot = ListSpot(component: component)
