@@ -462,4 +462,12 @@ extension Gridable {
     cell.layer.add(animation, forKey: "Animation")
     completion()
   }
+
+  public func beforeUpdate() {
+    CATransaction.begin()
+  }
+
+  public func afterUpdate() {
+    CATransaction.commit()
+  }
 }
