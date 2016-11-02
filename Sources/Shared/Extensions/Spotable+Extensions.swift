@@ -342,6 +342,7 @@ public extension Spotable {
         (view as? SpotConfigurable)?.configure(&item)
       }
     #else
+      view.frame.size.width = render().frame.size.width
       (view as? SpotConfigurable)?.configure(&item)
     #endif
 
