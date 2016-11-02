@@ -308,7 +308,7 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
     spot.setup(scrollView.frame.size)
     spot.component.size = CGSize(
       width: view.frame.size.width,
-      height: ceil(spot.render().frame.size.height))
+      height: ceil(spot.render().frame.height))
 
     if !spot.items.isEmpty {
       spot.render().layoutIfNeeded()
