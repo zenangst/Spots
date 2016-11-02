@@ -110,8 +110,11 @@ open class CarouselSpot: NSObject, Gridable {
   /// - returns: An initialized carousel spot.
   public required init(component: Component) {
     self.component = component
-
     super.init()
+
+    if component.kind.isEmpty {
+      self.component.kind = "carousel"
+    }
 
     registerAndPrepare()
     setupCollectionView()
