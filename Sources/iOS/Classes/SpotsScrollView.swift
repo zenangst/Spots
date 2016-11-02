@@ -28,7 +28,11 @@ open class SpotsScrollView: UIScrollView {
 
   /// A deinitiazlier that removes all subviews from contentView
   deinit {
-    contentView.subviews.forEach { $0.removeFromSuperview() }
+    for subview in subviewsInLayoutOrder {
+      if let subview = subview {
+        removeObserved(subview: subview)
+      }
+    }
   }
 
   /// Initializes and returns a newly allocated view object with the specified frame rectangle.
@@ -90,6 +94,15 @@ open class SpotsScrollView: UIScrollView {
   ///
   /// - parameter subview: - parameter subview: The subview that will be removed.
   open override func willRemoveSubview(_ subview: UIView) {
+    removeObserved(subview: subview)
+    setNeedsLayout()
+    layoutSubviews()
+  }
+
+  /// Remove observers from subview.
+  ///
+  /// - Parameter subview: The subview that should no longer be observed.
+  private func removeObserved(subview: UIView) {
     if subview is UIScrollView && subview.superview == contentView {
       subview.removeObserver(self, forKeyPath: #keyPath(contentSize), context: subviewContext)
       subview.removeObserver(self, forKeyPath: #keyPath(contentOffset), context: subviewContext)
@@ -101,9 +114,6 @@ open class SpotsScrollView: UIScrollView {
     if let index = subviewsInLayoutOrder.index(where: { $0 == subview }) {
       subviewsInLayoutOrder.remove(at: index)
     }
-
-    setNeedsLayout()
-    layoutSubviews()
   }
 
   /// This message is sent to the receiver when the value at the specified key path relative to the given object has changed.
