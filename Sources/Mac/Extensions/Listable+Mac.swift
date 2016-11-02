@@ -87,7 +87,7 @@ extension Listable {
     Dispatch.mainQueue { [weak self] in
       guard let tableView = self?.tableView else { completion?(); return }
       tableView.insert(indexes, animation: animation.tableViewAnimation) {
-        self?.refreshHeight()
+        self?.refreshHeight(completion)
       }
     }
   }
