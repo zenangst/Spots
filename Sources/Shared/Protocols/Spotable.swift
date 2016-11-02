@@ -164,4 +164,7 @@ public protocol Spotable: class {
   /// Unselect any selected views inside of the spotable object.
   func deselect()
   #endif
+
+  func beforeUpdate()
+  func afterUpdate()
 }
