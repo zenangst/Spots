@@ -98,7 +98,7 @@ extension Listable {
     Dispatch.mainQueue { [weak self] in
       guard let tableView = self?.tableView else { completion?(); return }
       tableView.insert([index], animation: animation.tableViewAnimation) {
-        self?.refreshHeight(completion)
+        self?.sanitize { completion?() }
       }
     }
   }
@@ -109,7 +109,7 @@ extension Listable {
     Dispatch.mainQueue { [weak self] in
       guard let tableView = self?.tableView else { completion?(); return }
       tableView.reload([index], section: 0, animation: animation.tableViewAnimation) {
-        self?.refreshHeight(completion)
+        self?.sanitize { completion?() }
       }
     }
   }
@@ -123,7 +123,7 @@ extension Listable {
     Dispatch.mainQueue { [weak self] in
       guard let tableView = self?.tableView else { completion?(); return }
       tableView.delete([index], animation: animation.tableViewAnimation) {
-        self?.refreshHeight(completion)
+        self?.sanitize { completion?() }
       }
     }
   }
@@ -140,7 +140,7 @@ extension Listable {
     Dispatch.mainQueue { [weak self] in
       guard let tableView = self?.tableView else { completion?(); return }
       tableView.delete(indexPaths, animation: animation.tableViewAnimation) {
-        self?.refreshHeight(completion)
+        self?.sanitize { completion?() }
       }
     }
   }
@@ -150,7 +150,7 @@ extension Listable {
       guard let tableView = self?.tableView else { completion?(); return }
       self?.component.items.remove(at: index)
       tableView.delete([index], animation: animation.tableViewAnimation) {
-        self?.refreshHeight(completion)
+        self?.sanitize { completion?() }
       }
     }
   }
@@ -160,7 +160,7 @@ extension Listable {
       indexes.forEach { self?.component.items.remove(at: $0) }
       guard let tableView = self?.tableView else { completion?(); return }
       tableView.delete(indexes, animation: animation.tableViewAnimation) {
-        self?.refreshHeight(completion)
+        self?.sanitize { completion?() }
       }
     }
   }
