@@ -676,6 +676,11 @@ class ControllerTests : XCTestCase {
       $0.render().layoutSubviews()
     }
 
+    /// Reset layout margins for tvOS
+    #if os(tvOS)
+      self.controller.spot(at: 0, ofType: ListSpot.self)?.tableView.layoutMargins = UIEdgeInsets.zero
+    #endif
+
     #if !os(OSX)
       view = self.controller.ui({ $0.kind == "image" })
       XCTAssertNotNil(view)
