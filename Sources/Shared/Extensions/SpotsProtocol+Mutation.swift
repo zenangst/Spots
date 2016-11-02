@@ -33,7 +33,6 @@ extension SpotsProtocol {
     }
   }
 
-  #if !os(OSX)
   public func reloadIfNeeded(_ components: [Component], withAnimation animation: Animation = .automatic, closure: Completion = nil) {
     guard !components.isEmpty else {
       Dispatch.mainQueue {
@@ -112,7 +111,10 @@ extension SpotsProtocol {
     #else
       scrollView.contentView.insertSubview(spot.render(), at: index)
     #endif
+
+    #if !os(OSX)
     (spot as? CarouselSpot)?.layout.yOffset = yOffset
+    #endif
     yOffset += spot.render().frame.size.height
   }
 
@@ -120,7 +122,9 @@ extension SpotsProtocol {
     let spot = Factory.resolve(component: newComponents[index])
     spots.append(spot)
     setupSpot(at: index, spot: spot)
-    (spot as? CarouselSpot)?.layout.yOffset = yOffset
+    #if !os(OSX)
+      (spot as? CarouselSpot)?.layout.yOffset = yOffset
+    #endif
     scrollView.contentView.addSubview(spot.render())
     yOffset += spot.render().frame.size.height
   }
@@ -175,9 +179,10 @@ extension SpotsProtocol {
                       closure: (() -> Void)? = nil) {
     var offsets = [CGPoint]()
     spot.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: {
-      if spot is Gridable { CATransaction.begin() }
+      spot.beforeUpdate()
+
       for item in newItems {
-        if let compositeSpots = self.compositeSpots[spot.index],
+        if let compositeSpots = compositeSpots[spot.index],
           let spots = compositeSpots[item.index] {
           for spot in spots {
             offsets.append(spot.render().contentOffset)
@@ -214,7 +219,7 @@ extension SpotsProtocol {
                           animation: Animation,
                           closure: (() -> Void)? = nil) {
     spot.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: {
-      if spot is Gridable { CATransaction.begin() }
+      spot.beforeUpdate()
       spot.items = newItems
     }) { [weak self] in
       guard !newItems.isEmpty else {
@@ -238,12 +243,12 @@ extension SpotsProtocol {
         }
 
         if !spot.items.filter({ !$0.children.isEmpty }).isEmpty {
-          if spot is Gridable { CATransaction.begin() }
+          spot.beforeUpdate()
           spot.reload(nil, withAnimation: animation) {
             self?.finishReloading(spot: spot, withCompletion: closure)
           }
         } else {
-          if spot is Gridable { CATransaction.begin() }
+          spot.beforeUpdate()
           spot.update(item, index: index, withAnimation: animation) {
             guard index == executeClosure else { return }
             self?.finishReloading(spot: spot, withCompletion: closure)
@@ -266,7 +271,7 @@ extension SpotsProtocol {
                           animation: Animation,
                           closure: (() -> Void)? = nil) {
     spot.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: {
-      if spot is Gridable { CATransaction.begin() }
+      spot.beforeUpdate()
       spot.items = newItems
     }) {
       if !spot.items.filter({ !$0.children.isEmpty }).isEmpty {
@@ -283,7 +288,7 @@ extension SpotsProtocol {
 
   private func finishReloading(spot: Spotable, withCompletion completion: Completion = nil) {
     scrollView.layoutSubviews()
-    if spot is Gridable { CATransaction.commit() }
+    spot.afterUpdate()
     completion?()
   }
 
@@ -326,7 +331,6 @@ extension SpotsProtocol {
       }
     }
   }
-  #endif
 
   /**
    Reload if needed using JSON
