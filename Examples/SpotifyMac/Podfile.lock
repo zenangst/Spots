@@ -1,30 +1,29 @@
 PODS:
   - Alamofire (4.0.1)
-  - Brick (2.0.1):
+  - Brick (2.0.2):
     - Tailor (~> 2.0)
-  - Cache (2.0.0):
+  - Cache (2.1.1):
     - CryptoSwift
   - Compass (4.0.0)
   - CryptoSwift (0.6.0)
   - Fashion (2.0.0)
   - Hue (2.0.0)
-  - Imaginary (0.1.0):
-    - Cache
+  - Imaginary (1.0.1):
+    - Cache (~> 2.0)
   - JWTDecode (2.0.0)
   - Keychain (1.0.0)
   - Malibu (2.0.0):
     - When (~> 2.0)
   - OhMyAuth (0.2.0):
-    - Alamofire
     - JWTDecode
     - Keychain
-    - Sugar
-  - Spots (5.1.1):
+    - Malibu
+  - Spots (5.1.3):
     - Brick (~> 2.0)
     - Cache (~> 2.0)
     - CryptoSwift (= 0.6.0)
     - Tailor (~> 2.0)
-  - Sugar (2.0.0)
+  - Sugar (3.0.0)
   - Tailor (2.0.1)
   - When (2.0.0)
 
@@ -36,7 +35,7 @@ DEPENDENCIES:
   - CryptoSwift (= 0.6.0)
   - Fashion (= 2.0.0)
   - Hue
-  - Imaginary (from `https://github.com/hyperoslo/Imaginary.git`, branch `swift-3`)
+  - Imaginary (~> 1.0)
   - JWTDecode (= 2.0.0)
   - Keychain (from `https://github.com/hyperoslo/Keychain.git`, branch `swift-3`)
   - Malibu (= 2.0.0)
@@ -46,9 +45,6 @@ DEPENDENCIES:
   - Tailor
 
 EXTERNAL SOURCES:
-  Imaginary:
-    :branch: swift-3
-    :git: https://github.com/hyperoslo/Imaginary.git
   Keychain:
     :branch: swift-3
     :git: https://github.com/hyperoslo/Keychain.git
@@ -59,34 +55,31 @@ EXTERNAL SOURCES:
     :path: "../../"
 
 CHECKOUT OPTIONS:
-  Imaginary:
-    :commit: 40bb9f4cb935200289976f7c64464b78bb5cea0a
-    :git: https://github.com/hyperoslo/Imaginary.git
   Keychain:
     :commit: aba620997062a2082a9d1a57fb5c81e4e0fe79df
     :git: https://github.com/hyperoslo/Keychain.git
   OhMyAuth:
-    :commit: 11bfb1d489b685c77c8a68eb836e253b8d51383a
+    :commit: c3d9c2f5846a8a54a2fb8c1a16c602ca49c8cd2d
     :git: https://github.com/hyperoslo/OhMyAuth.git
 
 SPEC CHECKSUMS:
   Alamofire: 7682d43245de14874acd142ec137b144aa1dd335
-  Brick: 76695ebcf3c3a581b0159911c63cd804f63cf02a
-  Cache: 86c7a082ce5a734df15a103581d81d29002a171e
+  Brick: a7cf051da76f833e46281477d91b04cee63593f7
+  Cache: 525a292370641881d7e350f0d451fd276790243a
   Compass: b7802d133b95ffde747515f0e84ed8b5153c3d53
   CryptoSwift: 4a599b7241b8d3b857d6e2c28867d0bd5d1aae24
   Fashion: f5cd202dcd048edd35217349527ac446d0853cd7
   Hue: 2b317616a04cc5d7cccdb024c88e6d143e2b9cf1
-  Imaginary: 62a9ce1e6d7831ede429c8221a183f03ec2a90bc
+  Imaginary: f37fb0dd81a5881cf7a8232d7854e8c5a689b054
   JWTDecode: 178e47e5d28d3abcff778bacced8342858cd6cb5
   Keychain: b82fa1a6c20666b74014e7549f53bae6c75d617f
   Malibu: d697d750eba061696ddafa097b6cb325ba6037f7
-  OhMyAuth: e10e5ab7a2a3d77c8e056b0d2aa495b9cefec19c
-  Spots: 7bacfcb939e2d7c2ade1a2b7f49d9efbe458a00b
-  Sugar: f45b46cae3d198222a042b9ecf1ce3d44ab8e764
+  OhMyAuth: a18f116df4a9fd1ea06cb6b6e3191537645dc04b
+  Spots: 373205df3c919d96b20291f76b0f6d4c568dd2de
+  Sugar: '079e1375b76c8f0693474417836ef098f507ac50'
   Tailor: faa9ec5be402056be8ec67c0e461f00251d19191
   When: 3df626af4891607ea7dd3f46a451176c5642c528
 
-PODFILE CHECKSUM: 39f2a9e027a6ee4ad115021b6dd32f51c3550795
+PODFILE CHECKSUM: 2507abbb7eb0b30edb2488a8770928626393a43a
 
 COCOAPODS: 1.1.1

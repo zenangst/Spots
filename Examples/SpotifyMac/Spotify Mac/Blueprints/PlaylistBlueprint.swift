@@ -83,7 +83,7 @@ struct PlaylistBlueprint: BlueprintContainer {
             "title" : "Songs",
             "kind" : "list",
             "meta" : [
-              "doubleClick" : true,
+              "double-click" : true,
               ListSpot.Key.contentInsetsLeft : 25.0,
               ListSpot.Key.contentInsetsRight : 25.0,
               GridSpot.Key.minimumInteritemSpacing : 0.0,

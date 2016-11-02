@@ -129,7 +129,7 @@ open class HeaderGridItem: NSTableRowView, SpotConfigurable {
     subtitleLabel.stringValue = item.subtitle
 
     if item.image.isPresent && item.image.hasPrefix("http") {
-      customImageView.setImage(NSURL(string: item.image) as URL?) { [weak self] image in
+      customImageView.setImage(url: NSURL(string: item.image) as URL?) { [weak self] image in
         self?.customImageView.contentMode = .scaleToAspectFill
       }
     }

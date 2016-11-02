@@ -121,7 +121,7 @@ open class TableRow: NSTableRowView, SpotConfigurable {
         imageView.frame.origin.x = 5
         imageView.frame.origin.y = item.size.height / 2 - imageView.frame.size.height / 2
 
-        imageView.setImage(URL(string: item.image))
+        imageView.setImage(url: URL(string: item.image))
       } else {
         imageView.image = NSImage(named: item.image)
         imageView.frame.size.width = 18

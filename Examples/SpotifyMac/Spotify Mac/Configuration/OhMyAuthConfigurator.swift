@@ -23,9 +23,5 @@ public struct OhMyAuthConfigurator: Configurator {
     let locker = UserDefaultsLocker(name: name)
     let service = AuthService(name: name, config: config, locker: locker)
     AuthContainer.addService(service)
-
-    AuthConfig.parse = { response in
-      return response["error"] as? JSONDictionary
-    }
   }
 }
