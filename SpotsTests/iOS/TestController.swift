@@ -408,7 +408,7 @@ class ControllerTests : XCTestCase {
   }
 
   func testJSONInitialiser() {
-    let spot = ListSpot()
+    let spot = ListSpot(component: Component())
     spot.items = [Item(title: "First item")]
     let sourceController = Controller(spot: spot)
     let jsonController = Controller([
