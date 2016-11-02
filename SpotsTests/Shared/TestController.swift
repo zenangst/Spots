@@ -755,8 +755,8 @@ class ControllerTests : XCTestCase {
       XCTAssertEqual(self.controller.spots.first!.component.items[0].action, newComponents.first!.items[0].action)
       XCTAssertEqual(self.controller.spots.first!.component.items[0].kind, newComponents.first!.items[0].kind)
       XCTAssertNotEqual(self.controller.spots.first!.component.items[0].size, newComponents.first!.items[0].size)
-      XCTAssertEqual(self.controller.spots.first!.component.items[0].size, CGSize(width: self.controller.view.frame.width, height: view!.preferredViewSize.height))
       #if !os(OSX)
+        XCTAssertEqual(self.controller.spots.first!.component.items[0].size, CGSize(width: self.controller.view.frame.width, height: view!.preferredViewSize.height))
         XCTAssertEqual(self.controller.spots.first!.component.items[0].size, view!.frame.size)
       #endif
 
@@ -765,8 +765,8 @@ class ControllerTests : XCTestCase {
       XCTAssertEqual(self.controller.spots.first!.component.items[1].action, newComponents.first!.items[1].action)
       XCTAssertEqual(self.controller.spots.first!.component.items[1].kind, newComponents.first!.items[1].kind)
       XCTAssertNotEqual(self.controller.spots.first!.component.items[1].size, newComponents.first!.items[1].size)
-      XCTAssertEqual(self.controller.spots.first!.component.items[1].size, CGSize(width: self.controller.view.frame.width, height: view!.preferredViewSize.height))
       #if !os(OSX)
+        XCTAssertEqual(self.controller.spots.first!.component.items[1].size, CGSize(width: self.controller.view.frame.width, height: view!.preferredViewSize.height))
         XCTAssertEqual(self.controller.spots.first!.component.items[1].size, view!.frame.size)
       #endif
 
@@ -775,8 +775,8 @@ class ControllerTests : XCTestCase {
       XCTAssertEqual(self.controller.spots.first!.component.items[2].action, newComponents.first!.items[2].action)
       XCTAssertEqual(self.controller.spots.first!.component.items[2].kind, newComponents.first!.items[2].kind)
       XCTAssertNotEqual(self.controller.spots.first!.component.items[2].size, newComponents.first!.items[2].size)
-      XCTAssertEqual(self.controller.spots.first!.component.items[2].size, CGSize(width: self.controller.view.frame.width, height: view!.preferredViewSize.height))
       #if !os(OSX)
+        XCTAssertEqual(self.controller.spots.first!.component.items[2].size, CGSize(width: self.controller.view.frame.width, height: view!.preferredViewSize.height))
         XCTAssertEqual(self.controller.spots.first!.component.items[2].size, view!.frame.size)
       #endif
 
@@ -785,8 +785,8 @@ class ControllerTests : XCTestCase {
       XCTAssertEqual(self.controller.spots.first!.component.items[3].action, newComponents.first!.items[3].action)
       XCTAssertEqual(self.controller.spots.first!.component.items[3].kind, newComponents.first!.items[3].kind)
       XCTAssertNotEqual(self.controller.spots.first!.component.items[3].size, newComponents.first!.items[3].size)
-      XCTAssertEqual(self.controller.spots.first!.component.items[3].size, CGSize(width: self.controller.view.frame.width, height: view!.preferredViewSize.height))
       #if !os(OSX)
+        XCTAssertEqual(self.controller.spots.first!.component.items[3].size, CGSize(width: self.controller.view.frame.width, height: view!.preferredViewSize.height))
         XCTAssertEqual(self.controller.spots.first!.component.items[3].size, view!.frame.size)
       #endif
 
@@ -795,8 +795,8 @@ class ControllerTests : XCTestCase {
       XCTAssertEqual(self.controller.spots.first!.component.items[4].action, newComponents.first!.items[4].action)
       XCTAssertEqual(self.controller.spots.first!.component.items[4].kind, newComponents.first!.items[4].kind)
       XCTAssertNotEqual(self.controller.spots.first!.component.items[4].size, newComponents.first!.items[4].size)
-      XCTAssertEqual(self.controller.spots.first!.component.items[4].size, CGSize(width: self.controller.view.frame.width, height: view!.preferredViewSize.height))
       #if !os(OSX)
+        XCTAssertEqual(self.controller.spots.first!.component.items[4].size, CGSize(width: self.controller.view.frame.width, height: view!.preferredViewSize.height))
         XCTAssertEqual(self.controller.spots.first!.component.items[4].size, view!.frame.size)
       #endif
 
@@ -805,8 +805,8 @@ class ControllerTests : XCTestCase {
       XCTAssertEqual(self.controller.spots.first!.component.items[5].action, newComponents.first!.items[5].action)
       XCTAssertEqual(self.controller.spots.first!.component.items[5].kind, newComponents.first!.items[5].kind)
       XCTAssertNotEqual(self.controller.spots.first!.component.items[5].size, newComponents.first!.items[5].size)
-      XCTAssertEqual(self.controller.spots.first!.component.items[5].size, CGSize(width: self.controller.view.frame.width, height: view!.preferredViewSize.height))
       #if !os(OSX)
+        XCTAssertEqual(self.controller.spots.first!.component.items[5].size, CGSize(width: self.controller.view.frame.width, height: view!.preferredViewSize.height))
         XCTAssertEqual(self.controller.spots.first!.component.items[5].size, view!.frame.size)
       #endif
 
