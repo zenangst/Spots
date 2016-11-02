@@ -346,16 +346,12 @@ public extension Spotable {
     #endif
 
     if let itemView = view as? SpotConfigurable, usesViewSize {
-      if item.size.height == 0.0 {
-        item.size.height = itemView.preferredViewSize.height
-      }
+      if item.size.height == 0.0 { item.size.height = itemView.preferredViewSize.height }
+      if item.size.width  == 0.0 { item.size.width  = itemView.preferredViewSize.width  }
+      if item.size.width  == 0.0 { item.size.width = view.bounds.width }
 
-      if item.size.width == 0.0 {
-        item.size.width = itemView.preferredViewSize.width
-      }
-
-      if item.size.width == 0.0 {
-        item.size.width = view.bounds.width
+      if let superview = render().superview, item.size.width == 0.0 {
+        item.size.width = superview.frame.width
       }
     }
 
