@@ -228,8 +228,9 @@ open class Controller: NSViewController, SpotsProtocol {
     }
 
     spots[index].component.index = index
-    spot.registerAndPrepare()
     scrollView.spotsContentView.addSubview(spot.render())
+    spot.registerAndPrepare()
+
     spot.setup(CGSize(width: view.frame.width, height: height))
     spot.component.size = CGSize(
       width: view.frame.width,
