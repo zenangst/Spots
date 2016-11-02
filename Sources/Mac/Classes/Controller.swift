@@ -178,7 +178,7 @@ open class Controller: NSViewController, SpotsProtocol {
 
     view.addSubview(scrollView)
     scrollView.hasVerticalScroller = true
-    scrollView.autoresizingMask = [ .viewWidthSizable, .viewHeightSizable ]
+    scrollView.autoresizingMask = [.viewWidthSizable, .viewHeightSizable]
 
     setupSpots()
     Controller.configure?(scrollView)
