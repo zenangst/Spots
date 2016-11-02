@@ -33,6 +33,12 @@ open class SpotsScrollView: NSScrollView {
     fatalError("init(coder:) has not been implemented")
   }
 
+  /// Cleanup observers.
+  deinit {
+    subviewsInLayoutOrder.forEach {
+      $0.removeObserver(self, forKeyPath: #keyPath(frame), context: subviewContext)
+    }
+  }
   func allowsKeyedCoding() -> Bool {
     return true
   }
