@@ -138,7 +138,7 @@ extension Gridable {
 
       for index in changes.updates {
         guard let item = self.item(at: index) else { continue }
-        self.update(item, index: index, withAnimation: animation, completion: completion)
+        update(item, index: index, withAnimation: animation, completion: completion)
       }
     }
   }
