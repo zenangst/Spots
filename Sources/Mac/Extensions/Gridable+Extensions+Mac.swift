@@ -134,11 +134,11 @@ extension Gridable {
       return
     }
 
-    collectionView.process((insertions: changes.insertions, reloads: changes.reloads, deletions: changes.deletions), updateDataSource: updateDataSource) {
+    collectionView.process((insertions: changes.insertions, reloads: changes.reloads, deletions: changes.deletions), updateDataSource: updateDataSource) { [weak self] in
 
       for index in changes.updates {
-        guard let item = self.item(at: index) else { continue }
-        self.update(item, index: index, withAnimation: animation, completion: completion)
+        guard let item = self?.item(at: index) else { continue }
+        self?.update(item, index: index, withAnimation: animation, completion: completion)
       }
     }
   }

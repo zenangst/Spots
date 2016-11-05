@@ -178,7 +178,7 @@ open class Controller: NSViewController, SpotsProtocol {
 
     view.addSubview(scrollView)
     scrollView.hasVerticalScroller = true
-    scrollView.autoresizingMask = [ .viewWidthSizable, .viewHeightSizable ]
+    scrollView.autoresizingMask = [.viewWidthSizable, .viewHeightSizable]
 
     setupSpots()
     Controller.configure?(scrollView)
@@ -228,8 +228,9 @@ open class Controller: NSViewController, SpotsProtocol {
     }
 
     spots[index].component.index = index
-    spot.registerAndPrepare()
     scrollView.spotsContentView.addSubview(spot.render())
+    spot.registerAndPrepare()
+
     spot.setup(CGSize(width: view.frame.width, height: height))
     spot.component.size = CGSize(
       width: view.frame.width,

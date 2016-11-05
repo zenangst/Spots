@@ -146,6 +146,11 @@ open class GridSpot: NSObject, Gridable {
     self.component = component
     self.layout = GridSpot.setupLayout(component)
     super.init()
+
+    if component.kind.isEmpty {
+      self.component.kind = "grid"
+    }
+
     registerAndPrepare()
     setupCollectionView()
     scrollView.addSubview(titleView)

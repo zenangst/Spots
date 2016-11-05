@@ -26,7 +26,7 @@ class GridCell: UICollectionViewCell, SpotConfigurable {
 
   func configure(_ item: inout Item) {
     if item.image.isPresent {
-      imageView.setImage(URL(string: item.image))
+      imageView.setImage(url: URL(string: item.image))
       imageView.tintColor = UIColor.white
       imageView.frame.size = frame.size
       imageView.width -= 20

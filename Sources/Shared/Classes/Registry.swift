@@ -93,7 +93,8 @@ public struct Registry {
       view = classType.init()
     case .nib(let nib):
       registryType = .nib
-      if let view = cache.object(forKey: "\(registryType.rawValue)\(identifier)" as NSString) {
+      let cacheIdentifier: String = "\(registryType.rawValue)-\(identifier)"
+      if let view = cache.object(forKey: cacheIdentifier as NSString) {
         return (type: registryType, view: view)
       }
       #if os(OSX)

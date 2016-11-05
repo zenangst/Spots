@@ -342,21 +342,12 @@ public extension Spotable {
         (view as? SpotConfigurable)?.configure(&item)
       }
     #else
+      view.frame.size.width = render().frame.size.width
       (view as? SpotConfigurable)?.configure(&item)
     #endif
 
     if let itemView = view as? SpotConfigurable, usesViewSize {
-      if item.size.height == 0.0 {
-        item.size.height = itemView.preferredViewSize.height
-      }
-
-      if item.size.width == 0.0 {
-        item.size.width = itemView.preferredViewSize.width
-      }
-
-      if item.size.width == 0.0 {
-        item.size.width = view.bounds.width
-      }
+      setFallbackViewSize(to: &item, with: itemView)
     }
 
     if index < component.items.count && index > -1 {
@@ -368,6 +359,29 @@ public extension Spotable {
     }
 
     return item
+  }
+
+  /// Set fallback size to view
+  ///
+  /// - Parameters:
+  ///   - item: The item struct that is being configured.
+  ///   - view: The view used for fallback size for the item.
+  private func setFallbackViewSize(to item: inout Item, with view: SpotConfigurable) {
+    if item.size.height == 0.0 {
+      item.size.height = view.preferredViewSize.height
+    }
+
+    if item.size.width  == 0.0 {
+      item.size.width  = view.preferredViewSize.width
+    }
+
+    if let superview = render().superview, item.size.width == 0.0 {
+      item.size.width = superview.frame.width
+    }
+
+    if let view = view as? View, item.size.width  == 0.0 {
+      item.size.width = view.bounds.width
+    }
   }
 
   /// Update and return the size for the item at index path.
@@ -470,4 +484,7 @@ public extension Spotable {
   public static func register(defaultView view: View.Type) {
     self.views.defaultItem = Registry.Item.classType(view)
   }
+
+  public func beforeUpdate() {}
+  public func afterUpdate() {}
 }

@@ -45,7 +45,7 @@ open class PlaylistListSpotCell: UITableViewCell, SpotConfigurable {
     textLabel?.text = item.title
 
     if let url = URL(string: item.image), item.image.isPresent {
-      imageView?.setImage(url, placeholder: transparentImage)
+      imageView?.setImage(url: url, placeholder: transparentImage)
     }
 
     item.size.height = item.size.height > 0.0 ? item.size.height : preferredViewSize.height

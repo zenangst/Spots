@@ -143,7 +143,7 @@ open class CommentTableViewCell: WallTableViewCell, SpotConfigurable {
     avatarImageView.frame = CGRect(x: Dimensions.sideOffset, y: Dimensions.sideOffset,
       width: Dimensions.avatarSize, height: Dimensions.avatarSize)
     if let avatarURL = post.author!.avatar {
-      avatarImageView.setImage(avatarURL)
+      avatarImageView.setImage(url: avatarURL)
     }
 
     authorLabel.frame = CGRect(x: Dimensions.textOffset, y: Dimensions.nameTopOffset,

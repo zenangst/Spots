@@ -28,7 +28,7 @@ class FeaturedCell: UICollectionViewCell, SpotConfigurable {
   func configure(_ item: inout Item) {
 
     if item.image.isPresent {
-      imageView.setImage(URL(string: item.image))
+      imageView.setImage(url: URL(string: item.image))
     } else {
       imageView.image = nil
     }

@@ -96,7 +96,7 @@ open class PostAuthorView: UIView {
 
   open func configureView(_ author: Author, date: String) {
     if let avatarURL = author.avatar {
-      avatarImageView.setImage(avatarURL)
+      avatarImageView.setImage(url: avatarURL)
     }
 
     authorLabel.text = author.name

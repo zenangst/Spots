@@ -5,6 +5,7 @@ open class SpotsScrollView: NSScrollView {
   /// A KVO context used to monitor changes in contentSize, frames and bounds
   let subviewContext: UnsafeMutableRawPointer? = UnsafeMutableRawPointer(mutating: nil)
 
+  /// A collection of NSView's that resemble the order of the views in the scroll view.
   fileprivate var subviewsInLayoutOrder = [NSView]()
 
   open var forceUpdate = false {
@@ -15,6 +16,7 @@ open class SpotsScrollView: NSScrollView {
     }
   }
 
+  /// The document view of SpotsScrollView.
   lazy open var spotsContentView: SpotsContentView = {
     let contentView = SpotsContentView()
     contentView.autoresizingMask = [.viewWidthSizable, .viewHeightSizable]
@@ -33,16 +35,32 @@ open class SpotsScrollView: NSScrollView {
     fatalError("init(coder:) has not been implemented")
   }
 
+  /// Cleanup observers.
+  deinit {
+    subviewsInLayoutOrder.forEach {
+      $0.removeObserver(self, forKeyPath: #keyPath(frame), context: subviewContext)
+    }
+  }
+
+  /// Allows keyed coding.
+  ///
+  /// - Returns: Always returns true.
   func allowsKeyedCoding() -> Bool {
     return true
   }
 
+  /// A subview was added to the container.
+  ///
+  /// - Parameter subview: The subview that was added.
   func didAddSubviewToContainer(_ subview: View) {
     subviewsInLayoutOrder.append(subview)
     subview.addObserver(self, forKeyPath: #keyPath(frame), options: .old, context: subviewContext)
     layoutSubtreeIfNeeded()
   }
 
+  /// Will remove subview from container.
+  ///
+  /// - Parameter subview: The subview that will be removed.
   open override func willRemoveSubview(_ subview: View) {
     if let index = subviewsInLayoutOrder.index(where: { $0 == subview }) {
       subviewsInLayoutOrder.remove(at: index)

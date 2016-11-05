@@ -111,8 +111,13 @@ open class ListSpot: NSObject, Listable {
     self.component = component
     super.init()
 
+    if component.kind.isEmpty {
+      self.component.kind = "list"
+    }
+
     scrollView.contentView.addSubview(tableView)
     configureLayout(component)
+    registerDefault(view: ListSpotItem.self)
   }
 
   public convenience init(cacheKey: String) {

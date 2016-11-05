@@ -44,7 +44,7 @@ open class PlaylistGridSpotCell: UICollectionViewCell, SpotConfigurable {
     backgroundColor = UIColor.clear
 
     if item.image.isPresent {
-      imageView.setImage(URL(string: item.image))
+      imageView.setImage(url: URL(string: item.image))
       imageView.frame = contentView.frame
       blurView.frame = contentView.frame
 

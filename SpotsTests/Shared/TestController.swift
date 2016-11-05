@@ -11,10 +11,15 @@ class ControllerTests : XCTestCase {
     controller = Controller(spots: [])
   }
 
+  override func tearDown() {
+    controller = nil
+  }
+
   func testSpotAtIndex() {
     let component = Component(title: "Component")
     let listSpot = ListSpot(component: component)
     controller = Controller(spot: listSpot)
+    controller.preloadView()
 
     XCTAssertEqual(self.controller.spot as? ListSpot, listSpot)
   }
@@ -23,6 +28,7 @@ class ControllerTests : XCTestCase {
     let component = Component(title: "Component")
     let listSpot = ListSpot(component: component)
     controller = Controller(spot: listSpot)
+    controller.preloadView()
     let items = [Item(title: "item1")]
 
     controller.update { spot in
@@ -36,6 +42,7 @@ class ControllerTests : XCTestCase {
     let component = Component(title: "Component", kind: "list")
     let listSpot = ListSpot(component: component)
     controller = Controller(spot: listSpot)
+    controller.preloadView()
 
     XCTAssert(self.controller.spot!.component.items.count == 0)
 
@@ -62,6 +69,7 @@ class ControllerTests : XCTestCase {
     let component = Component(title: "Component", kind: "list")
     let listSpot = ListSpot(component: component)
     controller = Controller(spot: listSpot)
+    controller.preloadView()
 
     let items = [
       Item(title: "title1", kind: "list"),
@@ -90,6 +98,7 @@ class ControllerTests : XCTestCase {
     let component = Component(title: "Component", kind: "list")
     let listSpot = ListSpot(component: component)
     controller = Controller(spot: listSpot)
+    controller.preloadView()
 
     let items = [
       Item(title: "title1", kind: "list"),
@@ -120,6 +129,7 @@ class ControllerTests : XCTestCase {
     let initialListSpot = ListSpot(component: component)
 
     controller = Controller(spot: initialListSpot)
+    controller.preloadView()
 
     let firstItem = self.controller.spot!.component.items.first
 
@@ -144,6 +154,7 @@ class ControllerTests : XCTestCase {
     let component = Component(title: "Component", kind: "grid")
     let listSpot = ListSpot(component: component)
     controller = Controller(spot: listSpot)
+    controller.preloadView()
 
     XCTAssert(self.controller.spot!.component.items.count == 0)
 
@@ -170,6 +181,7 @@ class ControllerTests : XCTestCase {
     let component = Component(title: "Component", kind: "grid")
     let listSpot = ListSpot(component: component)
     controller = Controller(spot: listSpot)
+    controller.preloadView()
 
     let items = [
       Item(title: "title1", kind: "grid"),
@@ -198,6 +210,7 @@ class ControllerTests : XCTestCase {
     let component = Component(title: "Component", kind: "grid")
     let listSpot = ListSpot(component: component)
     controller = Controller(spot: listSpot)
+    controller.preloadView()
 
     let items = [
       Item(title: "title1", kind: "grid"),
@@ -228,6 +241,7 @@ class ControllerTests : XCTestCase {
     let initialListSpot = ListSpot(component: component)
 
     controller = Controller(spot: initialListSpot)
+    controller.preloadView()
 
     let firstItem = self.controller.spot!.component.items.first
 
@@ -252,6 +266,7 @@ class ControllerTests : XCTestCase {
     let component = Component(title: "Component", kind: "carousel")
     let listSpot = ListSpot(component: component)
     controller = Controller(spot: listSpot)
+    controller.preloadView()
 
     XCTAssert(self.controller.spot!.component.items.count == 0)
 
@@ -278,6 +293,7 @@ class ControllerTests : XCTestCase {
     let component = Component(title: "Component", kind: "carousel")
     let listSpot = ListSpot(component: component)
     controller = Controller(spot: listSpot)
+    controller.preloadView()
 
     let items = [
       Item(title: "title1", kind: "carousel"),
@@ -306,6 +322,7 @@ class ControllerTests : XCTestCase {
     let component = Component(title: "Component", kind: "carousel")
     let listSpot = ListSpot(component: component)
     controller = Controller(spot: listSpot)
+    controller.preloadView()
 
     let items = [
       Item(title: "title1", kind: "carousel"),
@@ -325,7 +342,7 @@ class ControllerTests : XCTestCase {
       XCTAssertEqual(self.controller.spot!.component.items[1].title, "title4")
       exception.fulfill()
     }
-    waitForExpectations(timeout: 0.1, handler: nil)
+    waitForExpectations(timeout: 1.0, handler: nil)
   }
 
   func testDeleteItemInCarouselSpot() {
@@ -336,6 +353,7 @@ class ControllerTests : XCTestCase {
     let initialListSpot = ListSpot(component: component)
 
     controller = Controller(spot: initialListSpot)
+    controller.preloadView()
 
     let firstItem = self.controller.spot!.component.items.first
 
@@ -390,14 +408,14 @@ class ControllerTests : XCTestCase {
   }
 
   func testJSONInitialiser() {
-    let spot = ListSpot()
+    let spot = ListSpot(component: Component())
     spot.items = [Item(title: "First item")]
     let sourceController = Controller(spot: spot)
     let jsonController = Controller([
       "components" : [
         ["kind" : "list",
-          "items" : [
-            ["title" : "First item"]
+         "items" : [
+          ["title" : "First item"]
           ]
         ]
       ]
@@ -410,8 +428,8 @@ class ControllerTests : XCTestCase {
     let initialJSON = [
       "components" : [
         ["kind" : "list",
-          "items" : [
-            ["title" : "First list item"]
+         "items" : [
+          ["title" : "First list item"]
           ]
         ]
       ]
@@ -425,9 +443,9 @@ class ControllerTests : XCTestCase {
     let updateJSON = [
       "components" : [
         ["kind" : "grid",
-          "items" : [
-            ["title" : "First grid item"],
-            ["title" : "Second grid item"]
+         "items" : [
+          ["title" : "First grid item"],
+          ["title" : "Second grid item"]
           ]
         ]
       ]
@@ -447,8 +465,8 @@ class ControllerTests : XCTestCase {
     let initialJSON = [
       "components" : [
         ["kind" : "list",
-          "items" : [
-            ["title" : "First list item"]
+         "items" : [
+          ["title" : "First list item"]
           ]
         ]
       ]
@@ -463,13 +481,13 @@ class ControllerTests : XCTestCase {
     let initialJSON: [String : Any] = [
       "components" : [
         ["kind" : "list",
-          "items" : [
-            ["title" : "First list item"]
+         "items" : [
+          ["title" : "First list item"]
           ]
         ],
         ["kind" : "list",
-          "items" : [
-            ["title" : "First list item"]
+         "items" : [
+          ["title" : "First list item"]
           ]
         ]
       ]
@@ -478,23 +496,23 @@ class ControllerTests : XCTestCase {
     let newJSON: [String : Any] = [
       "components" : [
         ["kind" : "list",
-          "items" : [
-            ["title" : "First list item 2"],
-            [
-              "kind" : "composite",
-              "items" : [
-                ["kind" : "grid",
-                  "items" : [
-                    ["title" : "First list item"]
-                  ]
+         "items" : [
+          ["title" : "First list item 2"],
+          [
+            "kind" : "composite",
+            "items" : [
+              ["kind" : "grid",
+               "items" : [
+                ["title" : "First list item"]
                 ]
               ]
             ]
           ]
+          ]
         ],
         ["kind" : "grid",
-          "items" : [
-            ["title" : "First list item"]
+         "items" : [
+          ["title" : "First list item"]
           ]
         ]
       ]
@@ -509,7 +527,7 @@ class ControllerTests : XCTestCase {
     XCTAssertTrue(self.controller.compositeSpots.count == 0)
 
     let exception = self.expectation(description: "Reload multiple times with JSON (if needed)")
-    
+
     controller.reloadIfNeeded(newJSON) {
       XCTAssertEqual(self.controller.spots.count, 2)
       XCTAssertTrue(self.controller.spots[0] is ListSpot)
@@ -518,7 +536,9 @@ class ControllerTests : XCTestCase {
       XCTAssertEqual(self.controller.spots[1].items.first?.title, "First list item")
 
       XCTAssertEqual(self.controller.spots[0].items[1].kind, "composite")
-      XCTAssertEqual(self.controller.compositeSpots.count, 1)
+      #if !os(OSX)
+        XCTAssertEqual(self.controller.compositeSpots.count, 1)
+      #endif
 
       self.controller.reloadIfNeeded(initialJSON) {
         XCTAssertTrue(self.controller.spots[0] is ListSpot)
@@ -575,12 +595,24 @@ class ControllerTests : XCTestCase {
     let newItems = newComponents.first!.items
     let oldItems = self.controller.spots.first!.items
     var diff = Item.evaluate(newItems, oldModels: oldItems)
-    XCTAssertEqual(diff![0], .size)
-    XCTAssertEqual(diff![1], .size)
-    XCTAssertEqual(diff![2], .size)
-    XCTAssertEqual(diff![3], .size)
-    XCTAssertEqual(diff![4], .size)
-    XCTAssertEqual(diff![5], .size)
+
+    /// macOS cannot prepare the view size because it has no fallback.
+    #if !os(OSX)
+      XCTAssertEqual(diff![0], .size)
+      XCTAssertEqual(diff![1], .size)
+      XCTAssertEqual(diff![2], .size)
+      XCTAssertEqual(diff![3], .size)
+      XCTAssertEqual(diff![4], .size)
+      XCTAssertEqual(diff![5], .size)
+    #else
+      XCTAssertEqual(diff![0], .text)
+      XCTAssertEqual(diff![1], .none)
+      XCTAssertEqual(diff![2], .text)
+      XCTAssertEqual(diff![3], .text)
+      XCTAssertEqual(diff![4], .subtitle)
+      XCTAssertEqual(diff![5], .text)
+    #endif
+
   }
 
   func testReloadWithComponents() {
@@ -627,118 +659,166 @@ class ControllerTests : XCTestCase {
 
     XCTAssertTrue(initialComponents !== newComponents)
     XCTAssertEqual(initialComponents.count, newComponents.count)
-    
-    var view: ListSpotCell? = self.controller.ui({ $0.kind == "image" })
-    XCTAssertNil(view)
+
+    #if os(OSX)
+      var view: ListSpotItem? = self.controller.ui({ $0.kind == "image" })
+    #else
+      var view: ListSpotCell? = self.controller.ui({ $0.kind == "image" })
+      XCTAssertNil(view)
+    #endif
 
     controller.preloadView()
     controller.viewDidAppear()
-    controller.spots.forEach { $0.render().layoutSubviews() }
+    controller.spots.forEach {
+      #if os(OSX)
+        $0.render().layoutSubtreeIfNeeded()
+      #endif
+      $0.render().layoutSubviews()
+    }
 
-    view = self.controller.ui({ $0.kind == "image" })
-    XCTAssertNotNil(view)
+    /// Reset layout margins for tvOS
+    #if os(tvOS)
+      self.controller.spot(at: 0, ofType: ListSpot.self)?.tableView.layoutMargins = UIEdgeInsets.zero
+    #endif
+
+    #if !os(OSX)
+      view = self.controller.ui({ $0.kind == "image" })
+      XCTAssertNotNil(view)
+    #endif
 
     XCTAssertEqual(self.controller.spots.first!.component.items[0].title, initialComponents.first!.items[0].title)
     XCTAssertEqual(self.controller.spots.first!.component.items[0].subtitle, initialComponents.first!.items[0].subtitle)
     XCTAssertEqual(self.controller.spots.first!.component.items[0].action, initialComponents.first!.items[0].action)
     XCTAssertEqual(self.controller.spots.first!.component.items[0].kind, initialComponents.first!.items[0].kind)
     XCTAssertNotEqual(self.controller.spots.first!.component.items[0].size, initialComponents.first!.items[0].size)
-    XCTAssertEqual(self.controller.spots.first!.component.items[0].size, CGSize(width: controller.view.frame.width, height: view!.preferredViewSize.height))
-    XCTAssertEqual(self.controller.spots.first!.component.items[0].size, view!.frame.size)
+
+    #if !os(OSX)
+      XCTAssertEqual(self.controller.spots.first!.component.items[0].size, CGSize(width: controller.view.frame.width, height: view!.preferredViewSize.height))
+      XCTAssertEqual(self.controller.spots.first!.component.items[0].size, view!.frame.size)
+    #endif
 
     XCTAssertEqual(self.controller.spots.first!.component.items[1].title, initialComponents.first!.items[1].title)
     XCTAssertEqual(self.controller.spots.first!.component.items[1].subtitle, initialComponents.first!.items[1].subtitle)
     XCTAssertEqual(self.controller.spots.first!.component.items[1].action, initialComponents.first!.items[1].action)
     XCTAssertEqual(self.controller.spots.first!.component.items[1].kind, initialComponents.first!.items[1].kind)
     XCTAssertNotEqual(self.controller.spots.first!.component.items[1].size, initialComponents.first!.items[1].size)
-    XCTAssertEqual(self.controller.spots.first!.component.items[1].size, CGSize(width: controller.view.frame.width, height: view!.preferredViewSize.height))
-    XCTAssertEqual(self.controller.spots.first!.component.items[1].size, view!.frame.size)
+    #if !os(OSX)
+      XCTAssertEqual(self.controller.spots.first!.component.items[1].size, CGSize(width: controller.view.frame.width, height: view!.preferredViewSize.height))
+      XCTAssertEqual(self.controller.spots.first!.component.items[1].size, view!.frame.size)
+    #endif
+
 
     XCTAssertEqual(self.controller.spots.first!.component.items[2].title, initialComponents.first!.items[2].title)
     XCTAssertEqual(self.controller.spots.first!.component.items[2].subtitle, initialComponents.first!.items[2].subtitle)
     XCTAssertEqual(self.controller.spots.first!.component.items[2].action, initialComponents.first!.items[2].action)
     XCTAssertEqual(self.controller.spots.first!.component.items[2].kind, initialComponents.first!.items[2].kind)
     XCTAssertNotEqual(self.controller.spots.first!.component.items[2].size, initialComponents.first!.items[2].size)
-    XCTAssertEqual(self.controller.spots.first!.component.items[2].size, CGSize(width: controller.view.frame.width, height: view!.preferredViewSize.height))
-    XCTAssertEqual(self.controller.spots.first!.component.items[2].size, view!.frame.size)
+    #if !os(OSX)
+      XCTAssertEqual(self.controller.spots.first!.component.items[2].size, CGSize(width: controller.view.frame.width, height: view!.preferredViewSize.height))
+      XCTAssertEqual(self.controller.spots.first!.component.items[2].size, view!.frame.size)
+    #endif
 
     XCTAssertEqual(self.controller.spots.first!.component.items[3].title, initialComponents.first!.items[3].title)
     XCTAssertEqual(self.controller.spots.first!.component.items[3].subtitle, initialComponents.first!.items[3].subtitle)
     XCTAssertEqual(self.controller.spots.first!.component.items[3].action, initialComponents.first!.items[3].action)
     XCTAssertEqual(self.controller.spots.first!.component.items[3].kind, initialComponents.first!.items[3].kind)
     XCTAssertNotEqual(self.controller.spots.first!.component.items[3].size, initialComponents.first!.items[3].size)
-    XCTAssertEqual(self.controller.spots.first!.component.items[3].size, CGSize(width: controller.view.frame.width, height: view!.preferredViewSize.height))
-    XCTAssertEqual(self.controller.spots.first!.component.items[3].size, view!.frame.size)
+
+    #if !os(OSX)
+      XCTAssertEqual(self.controller.spots.first!.component.items[3].size, CGSize(width: controller.view.frame.width, height: view!.preferredViewSize.height))
+      XCTAssertEqual(self.controller.spots.first!.component.items[3].size, view!.frame.size)
+    #endif
 
     XCTAssertEqual(self.controller.spots.first!.component.items[4].title, initialComponents.first!.items[4].title)
     XCTAssertEqual(self.controller.spots.first!.component.items[4].subtitle, initialComponents.first!.items[4].subtitle)
     XCTAssertEqual(self.controller.spots.first!.component.items[4].action, initialComponents.first!.items[4].action)
     XCTAssertEqual(self.controller.spots.first!.component.items[4].kind, initialComponents.first!.items[4].kind)
     XCTAssertNotEqual(self.controller.spots.first!.component.items[4].size, initialComponents.first!.items[4].size)
-    XCTAssertEqual(self.controller.spots.first!.component.items[4].size, CGSize(width: controller.view.frame.width, height: view!.preferredViewSize.height))
-    XCTAssertEqual(self.controller.spots.first!.component.items[4].size, view!.frame.size)
+
+    #if !os(OSX)
+      XCTAssertEqual(self.controller.spots.first!.component.items[4].size, CGSize(width: controller.view.frame.width, height: view!.preferredViewSize.height))
+      XCTAssertEqual(self.controller.spots.first!.component.items[4].size, view!.frame.size)
+    #endif
+
 
     XCTAssertEqual(self.controller.spots.first!.component.items[5].title, initialComponents.first!.items[5].title)
     XCTAssertEqual(self.controller.spots.first!.component.items[5].subtitle, initialComponents.first!.items[5].subtitle)
     XCTAssertEqual(self.controller.spots.first!.component.items[5].action, initialComponents.first!.items[5].action)
     XCTAssertEqual(self.controller.spots.first!.component.items[5].kind, initialComponents.first!.items[5].kind)
     XCTAssertNotEqual(self.controller.spots.first!.component.items[5].size, initialComponents.first!.items[5].size)
-    XCTAssertEqual(self.controller.spots.first!.component.items[5].size, CGSize(width: controller.view.frame.width, height: view!.preferredViewSize.height))
-    XCTAssertEqual(self.controller.spots.first!.component.items[5].size, view!.frame.size)
 
-    let exception = self.expectation(description: "Reload controller with components")
+    #if !os(OSX)
+      XCTAssertEqual(self.controller.spots.first!.component.items[5].size, CGSize(width: controller.view.frame.width, height: view!.preferredViewSize.height))
+      XCTAssertEqual(self.controller.spots.first!.component.items[5].size, view!.frame.size)
+    #endif
+
+
+    var exception: XCTestExpectation? = expectation(description: "Reload controller with components")
     controller.reloadIfNeeded(newComponents) {
-
       XCTAssertEqual(self.controller.spots.first!.component.items[0].title, newComponents.first!.items[0].title)
       XCTAssertEqual(self.controller.spots.first!.component.items[0].subtitle, newComponents.first!.items[0].subtitle)
       XCTAssertEqual(self.controller.spots.first!.component.items[0].action, newComponents.first!.items[0].action)
       XCTAssertEqual(self.controller.spots.first!.component.items[0].kind, newComponents.first!.items[0].kind)
       XCTAssertNotEqual(self.controller.spots.first!.component.items[0].size, newComponents.first!.items[0].size)
-      XCTAssertEqual(self.controller.spots.first!.component.items[0].size, CGSize(width: self.controller.view.frame.width, height: view!.preferredViewSize.height))
-      XCTAssertEqual(self.controller.spots.first!.component.items[0].size, view!.frame.size)
+      #if !os(OSX)
+        XCTAssertEqual(self.controller.spots.first!.component.items[0].size, CGSize(width: self.controller.view.frame.width, height: view!.preferredViewSize.height))
+        XCTAssertEqual(self.controller.spots.first!.component.items[0].size, view!.frame.size)
+      #endif
 
       XCTAssertEqual(self.controller.spots.first!.component.items[1].title, newComponents.first!.items[1].title)
       XCTAssertEqual(self.controller.spots.first!.component.items[1].subtitle, newComponents.first!.items[1].subtitle)
       XCTAssertEqual(self.controller.spots.first!.component.items[1].action, newComponents.first!.items[1].action)
       XCTAssertEqual(self.controller.spots.first!.component.items[1].kind, newComponents.first!.items[1].kind)
       XCTAssertNotEqual(self.controller.spots.first!.component.items[1].size, newComponents.first!.items[1].size)
-      XCTAssertEqual(self.controller.spots.first!.component.items[1].size, CGSize(width: self.controller.view.frame.width, height: view!.preferredViewSize.height))
-      XCTAssertEqual(self.controller.spots.first!.component.items[1].size, view!.frame.size)
+      #if !os(OSX)
+        XCTAssertEqual(self.controller.spots.first!.component.items[1].size, CGSize(width: self.controller.view.frame.width, height: view!.preferredViewSize.height))
+        XCTAssertEqual(self.controller.spots.first!.component.items[1].size, view!.frame.size)
+      #endif
 
       XCTAssertEqual(self.controller.spots.first!.component.items[2].title, newComponents.first!.items[2].title)
       XCTAssertEqual(self.controller.spots.first!.component.items[2].subtitle, newComponents.first!.items[2].subtitle)
       XCTAssertEqual(self.controller.spots.first!.component.items[2].action, newComponents.first!.items[2].action)
       XCTAssertEqual(self.controller.spots.first!.component.items[2].kind, newComponents.first!.items[2].kind)
       XCTAssertNotEqual(self.controller.spots.first!.component.items[2].size, newComponents.first!.items[2].size)
-      XCTAssertEqual(self.controller.spots.first!.component.items[2].size, CGSize(width: self.controller.view.frame.width, height: view!.preferredViewSize.height))
-      XCTAssertEqual(self.controller.spots.first!.component.items[2].size, view!.frame.size)
+      #if !os(OSX)
+        XCTAssertEqual(self.controller.spots.first!.component.items[2].size, CGSize(width: self.controller.view.frame.width, height: view!.preferredViewSize.height))
+        XCTAssertEqual(self.controller.spots.first!.component.items[2].size, view!.frame.size)
+      #endif
 
       XCTAssertEqual(self.controller.spots.first!.component.items[3].title, newComponents.first!.items[3].title)
       XCTAssertEqual(self.controller.spots.first!.component.items[3].subtitle, newComponents.first!.items[3].subtitle)
       XCTAssertEqual(self.controller.spots.first!.component.items[3].action, newComponents.first!.items[3].action)
       XCTAssertEqual(self.controller.spots.first!.component.items[3].kind, newComponents.first!.items[3].kind)
       XCTAssertNotEqual(self.controller.spots.first!.component.items[3].size, newComponents.first!.items[3].size)
-      XCTAssertEqual(self.controller.spots.first!.component.items[3].size, CGSize(width: self.controller.view.frame.width, height: view!.preferredViewSize.height))
-      XCTAssertEqual(self.controller.spots.first!.component.items[3].size, view!.frame.size)
+      #if !os(OSX)
+        XCTAssertEqual(self.controller.spots.first!.component.items[3].size, CGSize(width: self.controller.view.frame.width, height: view!.preferredViewSize.height))
+        XCTAssertEqual(self.controller.spots.first!.component.items[3].size, view!.frame.size)
+      #endif
 
       XCTAssertEqual(self.controller.spots.first!.component.items[4].title, newComponents.first!.items[4].title)
       XCTAssertEqual(self.controller.spots.first!.component.items[4].subtitle, newComponents.first!.items[4].subtitle)
       XCTAssertEqual(self.controller.spots.first!.component.items[4].action, newComponents.first!.items[4].action)
       XCTAssertEqual(self.controller.spots.first!.component.items[4].kind, newComponents.first!.items[4].kind)
       XCTAssertNotEqual(self.controller.spots.first!.component.items[4].size, newComponents.first!.items[4].size)
-      XCTAssertEqual(self.controller.spots.first!.component.items[4].size, CGSize(width: self.controller.view.frame.width, height: view!.preferredViewSize.height))
-      XCTAssertEqual(self.controller.spots.first!.component.items[4].size, view!.frame.size)
+      #if !os(OSX)
+        XCTAssertEqual(self.controller.spots.first!.component.items[4].size, CGSize(width: self.controller.view.frame.width, height: view!.preferredViewSize.height))
+        XCTAssertEqual(self.controller.spots.first!.component.items[4].size, view!.frame.size)
+      #endif
 
       XCTAssertEqual(self.controller.spots.first!.component.items[5].title, newComponents.first!.items[5].title)
       XCTAssertEqual(self.controller.spots.first!.component.items[5].subtitle, newComponents.first!.items[5].subtitle)
       XCTAssertEqual(self.controller.spots.first!.component.items[5].action, newComponents.first!.items[5].action)
       XCTAssertEqual(self.controller.spots.first!.component.items[5].kind, newComponents.first!.items[5].kind)
       XCTAssertNotEqual(self.controller.spots.first!.component.items[5].size, newComponents.first!.items[5].size)
-      XCTAssertEqual(self.controller.spots.first!.component.items[5].size, CGSize(width: self.controller.view.frame.width, height: view!.preferredViewSize.height))
-      XCTAssertEqual(self.controller.spots.first!.component.items[5].size, view!.frame.size)
+      #if !os(OSX)
+        XCTAssertEqual(self.controller.spots.first!.component.items[5].size, CGSize(width: self.controller.view.frame.width, height: view!.preferredViewSize.height))
+        XCTAssertEqual(self.controller.spots.first!.component.items[5].size, view!.frame.size)
+      #endif
 
-      exception.fulfill()
+      exception?.fulfill()
+      exception = nil
     }
-    waitForExpectations(timeout: 1.0, handler: nil)
+
+    waitForExpectations(timeout: 5.0, handler: nil)
   }
 }

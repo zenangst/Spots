@@ -25,7 +25,7 @@ open class FeaturedGridSpotCell: UICollectionViewCell, SpotConfigurable {
     backgroundColor = UIColor.clear
 
     if item.image.isPresent {
-      imageView.setImage(URL(string: item.image))
+      imageView.setImage(url: URL(string: item.image))
       imageView.frame.size = frame.size
     }
 

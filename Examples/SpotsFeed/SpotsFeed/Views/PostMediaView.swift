@@ -85,7 +85,7 @@ open class PostMediaView: UIView {
 
     for (index, element) in media.enumerated() where index < 3 {
       addSubview(viewsArray[index])
-      viewsArray[index].setImage(element.thumbnail)
+      viewsArray[index].setImage(url: element.thumbnail)
     }
 
     switch media.count {

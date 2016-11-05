@@ -10,6 +10,9 @@ extension Controller {
 
   func preloadView() {
     let _ = view
+    #if os(OSX)
+      view.frame.size = CGSize(width: 100, height: 100)
+    #endif
   }
   #if !os(OSX)
   func viewDidAppear() {

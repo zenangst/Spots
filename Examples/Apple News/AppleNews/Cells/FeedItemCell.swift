@@ -36,7 +36,7 @@ class FeedItemCell: UITableViewCell, SpotConfigurable {
 
   func configure(_ item: inout Item) {
     if !item.image.isEmpty {
-      customImageView.setImage(URL(string: item.image))
+      customImageView.setImage(url: URL(string: item.image))
     }
 
     textLabel?.text = item.title
