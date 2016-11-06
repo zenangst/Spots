@@ -148,7 +148,7 @@ open class GridSpot: NSObject, Gridable {
     super.init()
 
     if component.kind.isEmpty {
-      self.component.kind = "grid"
+      self.component.kind = Component.Kind.Grid.string
     }
 
     registerAndPrepare()

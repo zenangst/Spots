@@ -113,7 +113,7 @@ open class CarouselSpot: NSObject, Gridable {
     super.init()
 
     if component.kind.isEmpty {
-      self.component.kind = "carousel"
+      self.component.kind = Component.Kind.Carousel.string
     }
 
     registerAndPrepare()

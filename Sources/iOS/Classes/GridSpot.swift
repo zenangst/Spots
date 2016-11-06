@@ -92,6 +92,10 @@ open class GridSpot: NSObject, Gridable {
     self.component = component
     super.init()
 
+    if component.kind.isEmpty {
+      self.component.kind = Component.Kind.Grid.string
+    }
+
     registerDefault(view: GridSpotCell.self)
     registerComposite(view: GridComposite.self)
     register()

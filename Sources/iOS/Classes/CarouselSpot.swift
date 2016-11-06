@@ -149,6 +149,11 @@ open class CarouselSpot: NSObject, Gridable {
   public required init(component: Component) {
     self.component = component
     super.init()
+
+    if component.kind.isEmpty {
+      self.component.kind = Component.Kind.Carousel.string
+    }
+
     registerDefault(view: CarouselSpotCell.self)
     registerComposite(view: CarouselComposite.self)
     registerDefaultHeader(header: CarouselSpotHeader.self)
