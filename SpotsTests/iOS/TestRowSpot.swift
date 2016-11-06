@@ -71,6 +71,54 @@ class RowSpotTests: XCTestCase {
     RowSpot.views.storage.removeAll()
   }
 
+  func testAppendItem() {
+    let item = Item(title: "test")
+    let spot = RowSpot(component: Component())
+    var exception: XCTestExpectation? = self.expectation(description: "Append item")
+    spot.append(item) {
+      XCTAssert(spot.component.items.first! == item)
+      exception?.fulfill()
+      exception = nil
+    }
+    waitForExpectations(timeout: 0.5, handler: nil)
+  }
+
+  func testAppendItems() {
+    let items = [Item(title: "test"), Item(title: "test 2")]
+    let spot = RowSpot(component: Component())
+    var exception: XCTestExpectation? = self.expectation(description: "Append items")
+    spot.append(items) {
+      XCTAssert(spot.component.items == items)
+      exception?.fulfill()
+      exception = nil
+    }
+    waitForExpectations(timeout: 0.5, handler: nil)
+  }
+
+  func testInsertItem() {
+    let item = Item(title: "test")
+    let spot = RowSpot(component: Component())
+    var exception: XCTestExpectation? = self.expectation(description: "Insert item")
+    spot.insert(item, index: 0) {
+      XCTAssert(spot.component.items.first! == item)
+      exception?.fulfill()
+      exception = nil
+    }
+    waitForExpectations(timeout: 0.5, handler: nil)
+  }
+
+  func testPrependItems() {
+    let items = [Item(title: "test"), Item(title: "test 2")]
+    let spot = RowSpot(component: Component())
+    var exception: XCTestExpectation? = self.expectation(description: "Prepend items")
+    spot.prepend(items) {
+      XCTAssert(spot.component.items == items)
+      exception?.fulfill()
+      exception = nil
+    }
+    waitForExpectations(timeout: 0.5, handler: nil)
+  }
+
   func testSpotCollectionDelegate() {
     let items = [Item(title: "Test item")]
     let spot = RowSpot(component: Component(items: items))
