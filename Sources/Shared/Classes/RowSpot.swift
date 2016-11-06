@@ -6,7 +6,7 @@ open class RowSpot: GridSpot {
   /// - parameter component: A component.
   ///
   /// - returns: An initialized row spot with component.
-  required init(component: Component) {
+  required public init(component: Component) {
     var component = component
     component.span = 1
 
