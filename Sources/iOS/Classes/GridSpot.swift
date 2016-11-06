@@ -274,8 +274,6 @@ extension GridSpot: UICollectionViewDelegateFlowLayout {
   /// - parameter section:              The index number of the section whose line spacing is needed.
   /// - returns: The minimum space (measured in points) to apply between successive lines in a section.
   public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-    guard layout.scrollDirection == .horizontal else { return layout.sectionInset.bottom }
-
     return layout.minimumLineSpacing
   }
 
