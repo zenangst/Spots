@@ -165,9 +165,13 @@ extension Gridable {
     var indexes = [Int]()
     let itemsCount = component.items.count
 
-    for (index, item) in items.enumerated() {
+    if component.items.isEmpty {
       component.items.append(item)
-      indexes.append(itemsCount + index)
+    } else {
+      for (index, item) in items.enumerated() {
+        component.items.append(item)
+        indexes.append(itemsCount + index)
+      }
     }
 
     Dispatch.mainQueue { [weak self] in
