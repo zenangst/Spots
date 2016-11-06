@@ -15,5 +15,8 @@ open class RowSpot: GridSpot {
     }
 
     super.init(component: component)
+
+    registerDefault(view: RowSpotCell.self)
+    register()
   }
 }
