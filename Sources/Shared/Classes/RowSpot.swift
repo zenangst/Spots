@@ -1,5 +1,5 @@
 /// A RowSpot, a collection view based Spotable object that lays out its items in a vertical order based of the item sizes
-class RowSpot: GridSpot {
+open class RowSpot: GridSpot {
 
   /// A required initializer to instantiate a RowSpot with a component.
   ///
