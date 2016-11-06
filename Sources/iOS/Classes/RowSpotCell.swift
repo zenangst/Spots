@@ -5,15 +5,14 @@ import Brick
 public class RowSpotCell: UICollectionViewCell, SpotConfigurable {
 
   /// The preferred view size for the view
-  public var preferredViewSize = CGSize(width: 88, height: 88)
+  public var preferredViewSize = CGSize(width: 88, height: 44)
   /// A weak referenced Item struct
   public var item: Item?
 
   /// A UILabel that uses the Item's title as its text
   public var label: UILabel = {
     let label = UILabel()
-    label.frame = CGRect(x: 0, y: 0, width: 200, height: 200)
-    label.textAlignment = .center
+    label.textAlignment = .left
     label.autoresizingMask = [.flexibleWidth]
 
     return label
@@ -36,6 +35,8 @@ public class RowSpotCell: UICollectionViewCell, SpotConfigurable {
   public override init(frame: CGRect) {
     super.init(frame: frame)
 
+    label.frame.size.width = contentView.frame.size.width
+
     [imageView, label].forEach { contentView.addSubview($0) }
   }
 
@@ -53,5 +54,6 @@ public class RowSpotCell: UICollectionViewCell, SpotConfigurable {
     imageView.image = UIImage(named: item.image)
     imageView.frame = contentView.frame
     label.text = item.title
+    label.sizeToFit()
   }
 }
