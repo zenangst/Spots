@@ -106,7 +106,7 @@ open class RowSpot: NSObject, Gridable {
     configureLayout()
 
     if RowSpot.views.composite == nil {
-      RowSpot.views.composite =  Registry.Item.classType(GridComposite.self)
+      RowSpot.views.composite = Registry.Item.classType(GridComposite.self)
     }
   }
 
