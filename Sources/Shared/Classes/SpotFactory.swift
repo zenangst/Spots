@@ -8,6 +8,7 @@ public struct Factory {
     "carousel": CarouselSpot.self,
     "list" : ListSpot.self,
     "grid": GridSpot.self,
+    "row": RowSpot.self,
     "view": ViewSpot.self
   ]
 
