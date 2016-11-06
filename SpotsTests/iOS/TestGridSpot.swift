@@ -3,12 +3,26 @@ import Brick
 import Foundation
 import XCTest
 
-class GirdSpotTests: XCTestCase {
+class GridSpotTests: XCTestCase {
+
+  var spot: GridSpot!
+  var cachedSpot: GridSpot!
+
+  override func setUp() {
+    spot = GridSpot(component: Component())
+    cachedSpot = GridSpot(cacheKey: "cached-row-spot")
+  }
+
+  override func tearDown() {
+    spot = nil
+    cachedSpot.stateCache?.clear()
+    cachedSpot = nil
+  }
 
   func testConvenienceInitWithTitleAndKind() {
     let spot = GridSpot(title: "Spot")
-    XCTAssertEqual(spot.component.title, "Spot")
 
+    XCTAssertEqual(spot.component.title, "Spot")
     XCTAssertEqual(spot.component.kind, "grid")
 
     let customKindSpot = GridSpot(title: "Custom Spot", kind: "custom")
@@ -19,14 +33,14 @@ class GirdSpotTests: XCTestCase {
   func testConvenienceInitWithSectionInsets() {
     let component = Component()
     let spot = GridSpot(component,
-                            top: 5, left: 10, bottom: 5, right: 10, itemSpacing: 5)
+                       top: 5, left: 10, bottom: 5, right: 10, itemSpacing: 5)
 
     XCTAssertEqual(spot.layout.sectionInset, UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10))
     XCTAssertEqual(spot.layout.minimumInteritemSpacing, 5)
   }
 
   func testDictionaryRepresentation() {
-    let component = Component(title: "GridSpot", kind: "grid", span: 3, meta: ["headerHeight" : 44.0])
+    let component = Component(title: "GridSpot", kind: "row", span: 3, meta: ["headerHeight" : 44.0])
     let spot = GridSpot(component: component)
     XCTAssertEqual(component.dictionary["index"] as? Int, spot.dictionary["index"] as? Int)
     XCTAssertEqual(component.dictionary["title"] as? String, spot.dictionary["title"] as? String)
@@ -40,20 +54,99 @@ class GirdSpotTests: XCTestCase {
 
   func testSafelyResolveKind() {
     let component = Component(title: "GridSpot", kind: "custom-grid", items: [Item(title: "foo", kind: "custom-item-kind")])
-    let gridSpot = GridSpot(component: component)
+    let rowSpot = GridSpot(component: component)
     let indexPath = IndexPath(row: 0, section: 0)
 
-    XCTAssertEqual(gridSpot.identifier(at: indexPath), GridSpot.views.defaultIdentifier)
-    
+    XCTAssertEqual(rowSpot.identifier(at: indexPath), GridSpot.views.defaultIdentifier)
+
     GridSpot.views.defaultItem = Registry.Item.classType(GridSpotCell.self)
-    XCTAssertEqual(gridSpot.identifier(at: indexPath),GridSpot.views.defaultIdentifier)
-    
+    XCTAssertEqual(rowSpot.identifier(at: indexPath),GridSpot.views.defaultIdentifier)
+
     GridSpot.views.defaultItem = Registry.Item.classType(GridSpotCell.self)
-    XCTAssertEqual(gridSpot.identifier(at: indexPath),GridSpot.views.defaultIdentifier)
-    
+    XCTAssertEqual(rowSpot.identifier(at: indexPath),GridSpot.views.defaultIdentifier)
+
     GridSpot.views["custom-item-kind"] = Registry.Item.classType(GridSpotCell.self)
-    XCTAssertEqual(gridSpot.identifier(at: indexPath), "custom-item-kind")
-    
+    XCTAssertEqual(rowSpot.identifier(at: indexPath), "custom-item-kind")
+
     GridSpot.views.storage.removeAll()
+  }
+
+  func testAppendItem() {
+    let item = Item(title: "test")
+    let spot = GridSpot(component: Component())
+    var exception: XCTestExpectation? = self.expectation(description: "Append item")
+    spot.append(item) {
+      XCTAssert(spot.component.items.first! == item)
+      exception?.fulfill()
+      exception = nil
+    }
+    waitForExpectations(timeout: 0.5, handler: nil)
+  }
+
+  func testAppendItems() {
+    let items = [Item(title: "test"), Item(title: "test 2")]
+    let spot = GridSpot(component: Component())
+    var exception: XCTestExpectation? = self.expectation(description: "Append items")
+    spot.append(items) {
+      XCTAssert(spot.component.items == items)
+      exception?.fulfill()
+      exception = nil
+    }
+    waitForExpectations(timeout: 0.5, handler: nil)
+  }
+
+  func testInsertItem() {
+    let item = Item(title: "test")
+    let spot = GridSpot(component: Component())
+    var exception: XCTestExpectation? = self.expectation(description: "Insert item")
+    spot.insert(item, index: 0) {
+      XCTAssert(spot.component.items.first! == item)
+      exception?.fulfill()
+      exception = nil
+    }
+    waitForExpectations(timeout: 0.5, handler: nil)
+  }
+
+  func testPrependItems() {
+    let items = [Item(title: "test"), Item(title: "test 2")]
+    let spot = GridSpot(component: Component())
+    var exception: XCTestExpectation? = self.expectation(description: "Prepend items")
+    spot.prepend(items) {
+      XCTAssert(spot.component.items == items)
+      exception?.fulfill()
+      exception = nil
+    }
+    waitForExpectations(timeout: 0.5, handler: nil)
+  }
+
+  func testSpotCollectionDelegate() {
+    let items = [Item(title: "Test item")]
+    let spot = GridSpot(component: Component(items: items))
+    spot.render().frame.size = CGSize(width: 100, height: 100)
+    spot.render().layoutSubviews()
+
+    let cell = spot.collectionView.cellForItem(at: IndexPath(item: 0, section: 0))
+    XCTAssertEqual(cell!.frame.size, CGSize(width: 88, height: 88))
+  }
+
+  func testSpotCache() {
+    cachedSpot.stateCache?.clear()
+
+    let item = Item(title: "test")
+
+    XCTAssertEqual(cachedSpot.component.items.count, 0)
+    cachedSpot.append(item) {
+      self.cachedSpot.cache()
+    }
+
+    var exception: XCTestExpectation? = self.expectation(description: "Wait for cache")
+    Dispatch.delay(for: 0.25) {
+      let cachedSpot = GridSpot(cacheKey: self.cachedSpot.stateCache!.key)
+      XCTAssertEqual(cachedSpot.component.items.count, 1)
+      cachedSpot.stateCache?.clear()
+      exception?.fulfill()
+      exception = nil
+    }
+    waitForExpectations(timeout: 0.5, handler: nil)
   }
 }
