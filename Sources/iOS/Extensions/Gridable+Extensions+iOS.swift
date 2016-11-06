@@ -59,6 +59,49 @@ extension Gridable {
     collectionView.frame.size.height = layout.collectionViewContentSize.height
   }
 
+  /// Perform animation before mutation
+  ///
+  /// - parameter spotAnimation: The animation that you want to apply
+  /// - parameter withIndex: The index of the cell
+  /// - parameter completion: A completion block that runs after applying the animation
+  public func perform(_ spotAnimation: Animation, withIndex index: Int, completion: () -> Void) {
+    guard let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0))
+      else { completion(); return }
+
+    let animation = CABasicAnimation()
+
+    switch spotAnimation {
+    case .top:
+      animation.keyPath = "position.y"
+      animation.toValue = -cell.frame.height
+    case .bottom:
+      animation.keyPath = "position.y"
+      animation.toValue = cell.frame.height * 2
+    case .left:
+      animation.keyPath = "position.x"
+      animation.toValue = -cell.frame.width - collectionView.contentOffset.x
+    case .right:
+      animation.keyPath = "position.x"
+      animation.toValue = cell.frame.width + collectionView.frame.size.width + collectionView.contentOffset.x
+    case .fade:
+      animation.keyPath = "opacity"
+      animation.toValue = 0.0
+    case .middle:
+      animation.keyPath = "transform.scale.y"
+      animation.toValue = 0.0
+    case .automatic:
+      animation.keyPath = "transform.scale"
+      animation.toValue = 0.0
+    default:
+      break
+    }
+
+    animation.duration = 0.3
+    cell.layer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+    cell.layer.add(animation, forKey: "Animation")
+    completion()
+  }
+
   // MARK: - Spotable
 
   /// Register all views in Registry on UICollectionView
@@ -372,49 +415,6 @@ extension Gridable {
 
     if animation == .none { UIView.setAnimationsEnabled(true) }
     completion?()
-  }
-
-  /// Perform animation before mutation
-  ///
-  /// - parameter spotAnimation: The animation that you want to apply
-  /// - parameter withIndex: The index of the cell
-  /// - parameter completion: A completion block that runs after applying the animation
-  public func perform(_ spotAnimation: Animation, withIndex index: Int, completion: () -> Void) {
-    guard let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0))
-      else { completion(); return }
-
-    let animation = CABasicAnimation()
-
-    switch spotAnimation {
-    case .top:
-      animation.keyPath = "position.y"
-      animation.toValue = -cell.frame.height
-    case .bottom:
-      animation.keyPath = "position.y"
-      animation.toValue = cell.frame.height * 2
-    case .left:
-      animation.keyPath = "position.x"
-      animation.toValue = -cell.frame.width - collectionView.contentOffset.x
-    case .right:
-      animation.keyPath = "position.x"
-      animation.toValue = cell.frame.width + collectionView.frame.size.width + collectionView.contentOffset.x
-    case .fade:
-      animation.keyPath = "opacity"
-      animation.toValue = 0.0
-    case .middle:
-      animation.keyPath = "transform.scale.y"
-      animation.toValue = 0.0
-    case .automatic:
-      animation.keyPath = "transform.scale"
-      animation.toValue = 0.0
-    default:
-      break
-    }
-
-    animation.duration = 0.3
-    cell.layer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-    cell.layer.add(animation, forKey: "Animation")
-    completion()
   }
 
   public func beforeUpdate() {
