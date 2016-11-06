@@ -1,7 +1,15 @@
 import Cocoa
 import Brick
 
-open class GridSpotItem: NSCollectionViewItem, SpotConfigurable {
+open class FlippedView: NSView {
+  static open var flipped: Bool {
+    get {
+      return true
+    }
+  }
+}
+
+open class RowSpotItem: NSCollectionViewItem, SpotConfigurable {
 
   static open var flipped: Bool {
     get {
