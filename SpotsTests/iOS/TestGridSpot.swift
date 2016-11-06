@@ -10,7 +10,7 @@ class GridSpotTests: XCTestCase {
 
   override func setUp() {
     spot = GridSpot(component: Component())
-    cachedSpot = GridSpot(cacheKey: "cached-row-spot")
+    cachedSpot = GridSpot(cacheKey: "cached-grid-spot")
   }
 
   override func tearDown() {
