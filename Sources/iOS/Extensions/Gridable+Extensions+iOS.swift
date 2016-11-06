@@ -197,11 +197,15 @@ extension Gridable {
     var indexes = [Int]()
     let itemsCount = component.items.count
 
-    for (index, item) in items.enumerated() {
-      component.items.append(item)
-      indexes.append(itemsCount + index)
+    if component.items.isEmpty {
+      component.items.append(contentsOf: items)
+    } else {
+      for (index, item) in items.enumerated() {
+        component.items.append(item)
+        indexes.append(itemsCount + index)
 
-      configureItem(at: itemsCount + index)
+        configureItem(at: itemsCount + index)
+      }
     }
 
     Dispatch.mainQueue { [weak self] in
@@ -225,11 +229,13 @@ extension Gridable {
   /// - parameter animation:  A Animation that is used when performing the mutation (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue.
   public func insert(_ item: Item, index: Int, withAnimation animation: Animation = .none, completion: Completion = nil) {
+    let itemsCount = component.items.count
     component.items.insert(item, at: index)
     var indexes = [Int]()
-    let itemsCount = component.items.count
 
-    indexes.append(index)
+    if itemsCount > 0 {
+      indexes.append(index)
+    }
 
     Dispatch.mainQueue { [weak self] in
       guard let weakSelf = self else { completion?(); return }
@@ -249,19 +255,27 @@ extension Gridable {
   /// - parameter animation:  A Animation that is used when performing the mutation (currently not in use)
   /// - parameter completion: A completion closure that is executed in the main queue.
   public func prepend(_ items: [Item], withAnimation animation: Animation = .none, completion: Completion = nil) {
+    let itemsCount = component.items.count
     var indexes = [Int]()
 
     component.items.insert(contentsOf: items, at: 0)
 
     items.enumerated().forEach {
-      indexes.append(items.count - 1 - $0.offset)
+      if itemsCount > 0 {
+        indexes.append(items.count - 1 - $0.offset)
+      }
       configureItem(at: $0.offset)
     }
 
     Dispatch.mainQueue { [weak self] in
       guard let weakSelf = self else { completion?(); return }
 
-      weakSelf.collectionView.insert(indexes) {
+      if !indexes.isEmpty {
+        weakSelf.collectionView.insert(indexes) {
+          weakSelf.sanitize { completion?() }
+        }
+      } else {
+        weakSelf.collectionView.reloadData()
         weakSelf.sanitize { completion?() }
       }
     }
