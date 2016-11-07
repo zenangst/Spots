@@ -1,0 +1,111 @@
+import UIKit
+
+extension DataSource: UICollectionViewDataSource {
+
+  /// Asks the data source for the number of items in the specified section. (required)
+  ///
+  /// - parameter collectionView: An object representing the collection view requesting this information.
+  /// - parameter section:        An index number identifying a section in collectionView. This index value is 0-based.
+  ///
+  /// - returns: The number of rows in section.
+  @available(iOS 6.0, *)
+  public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    return component.items.count
+  }
+
+  /// Asks your data source object to provide a supplementary view to display in the collection view.
+  /// A configured supplementary view object. You must not return nil from this method.
+  ///
+  /// - parameter collectionView: The collection view requesting this information.
+  /// - parameter kind:           The kind of supplementary view to provide. The value of this string is defined by the layout object that supports the supplementary view.
+  /// - parameter indexPath:      The index path that specifies the location of the new supplementary view.
+  ///
+  /// - returns: A configured supplementary view object.
+  public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+    let identifier: String
+
+    if component.header.isEmpty {
+      identifier = spot.type.headers.defaultIdentifier
+    } else {
+      identifier = component.header
+    }
+
+    let view = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader,
+                                                               withReuseIdentifier: identifier,
+                                                               for: indexPath)
+    (view as? Componentable)?.configure(component)
+
+    return view
+  }
+
+  /// Asks the data source for the number of items in the specified section. (required)
+  ///
+  /// - parameter collectionView: An object representing the collection view requesting this information.
+  /// - parameter section:        An index number identifying a section in collectionView. This index value is 0-based.
+  ///
+  /// - returns: The number of rows in section.
+  public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    component.items[indexPath.item].index = indexPath.item
+
+    let reuseIdentifier = spot.identifier(at: indexPath)
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
+    if let composite = cell as? Composable {
+      let spots = spot.spotsCompositeDelegate?.resolve(component.index, itemIndex: indexPath.item)
+      composite.configure(&component.items[indexPath.item], spots: spots)
+    } else if let cell = cell as? SpotConfigurable {
+      cell.configure(&component.items[indexPath.item])
+      if component.items[indexPath.item].size.height == 0.0 {
+        component.items[indexPath.item].size = cell.preferredViewSize
+      }
+      spot.configure?(cell)
+    }
+
+    return cell
+  }
+}
+
+extension DataSource: UITableViewDataSource {
+
+  /// Tells the data source to return the number of rows in a given section of a table view. (required)
+  ///
+  /// - parameter tableView: The table-view object requesting this information.
+  /// - parameter section: An index number identifying a section in tableView.
+  ///
+  /// - returns: The number of rows in section.
+  public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return component.items.count
+  }
+
+  /// Asks the data source for a cell to insert in a particular location of the table view. (required)
+  ///
+  /// - parameter tableView: A table-view object requesting the cell.
+  /// - parameter indexPath: An index path locating a row in tableView.
+  ///
+  /// - returns: An object inheriting from UITableViewCell that the table view can use for the specified row. Will return the default table view cell for the current component based of kind.
+  public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    if indexPath.item < component.items.count {
+      component.items[indexPath.item].index = indexPath.row
+    }
+
+    let reuseIdentifier = spot.identifier(at: indexPath)
+    let cell: UITableViewCell = tableView
+      .dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
+
+    guard indexPath.item < component.items.count else { return cell }
+
+    if let composite = cell as? Composable {
+      let spots = spot.spotsCompositeDelegate?.resolve(component.index, itemIndex: (indexPath as NSIndexPath).item)
+      composite.configure(&component.items[indexPath.item], spots: spots)
+    } else if let cell = cell as? SpotConfigurable {
+      cell.configure(&component.items[indexPath.item])
+
+      if component.items[indexPath.item].size.height == 0.0 {
+        component.items[indexPath.item].size = cell.preferredViewSize
+      }
+
+      spot.configure?(cell)
+    }
+
+    return cell
+  }
+}
