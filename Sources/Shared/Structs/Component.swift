@@ -52,6 +52,8 @@ public struct Component: Mappable, Equatable {
     case Grid = "grid"
     /// The identifier for ListSpot
     case List = "list"
+    /// The identifier for RowSpot
+    case Row = "row"
 
     /// The lowercase raw value of the case
     public var string: String {

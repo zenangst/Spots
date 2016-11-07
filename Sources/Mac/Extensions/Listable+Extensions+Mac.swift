@@ -48,7 +48,7 @@ extension Listable {
 
     Dispatch.mainQueue { [weak self] in
       guard let tableView = self?.tableView else { completion?(); return }
-      tableView.insert([count], animation: animation.tableViewAnimation) {
+      tableView.insert([count], withAnimation: animation.tableViewAnimation) {
         self?.setup(tableView.frame.size)
         completion?()
       }
@@ -68,7 +68,7 @@ extension Listable {
 
     Dispatch.mainQueue { [weak self] in
       guard let tableView = self?.tableView else { completion?(); return }
-      tableView.insert(indexes, animation: animation.tableViewAnimation) {
+      tableView.insert(indexes, withAnimation: animation.tableViewAnimation) {
         self?.layout(tableView.frame.size)
         completion?()
       }
@@ -86,8 +86,23 @@ extension Listable {
 
     Dispatch.mainQueue { [weak self] in
       guard let tableView = self?.tableView else { completion?(); return }
-      tableView.insert(indexes, animation: animation.tableViewAnimation) {
+      tableView.insert(indexes, withAnimation: animation.tableViewAnimation) {
         self?.refreshHeight(completion)
+      }
+    }
+  }
+
+  public func reload(_ indexes: [Int]?, withAnimation animation: Animation, completion: Completion) {
+    Dispatch.mainQueue { [weak self] in
+      guard let tableView = self?.tableView else { completion?(); return }
+
+      if let indexes = indexes {
+        tableView.reload(indexes, section: 0, withAnimation: animation.tableViewAnimation) {
+          self?.sanitize { completion?() }
+        }
+      } else {
+        tableView.reloadData()
+        self?.sanitize { completion?() }
       }
     }
   }
@@ -97,7 +112,7 @@ extension Listable {
 
     Dispatch.mainQueue { [weak self] in
       guard let tableView = self?.tableView else { completion?(); return }
-      tableView.insert([index], animation: animation.tableViewAnimation) {
+      tableView.insert([index], withAnimation: animation.tableViewAnimation) {
         self?.sanitize { completion?() }
       }
     }
@@ -108,7 +123,7 @@ extension Listable {
 
     Dispatch.mainQueue { [weak self] in
       guard let tableView = self?.tableView else { completion?(); return }
-      tableView.reload([index], section: 0, animation: animation.tableViewAnimation) {
+      tableView.reload([index], section: 0, withAnimation: animation.tableViewAnimation) {
         self?.sanitize { completion?() }
       }
     }
@@ -122,7 +137,7 @@ extension Listable {
 
     Dispatch.mainQueue { [weak self] in
       guard let tableView = self?.tableView else { completion?(); return }
-      tableView.delete([index], animation: animation.tableViewAnimation) {
+      tableView.delete([index], withAnimation: animation.tableViewAnimation) {
         self?.sanitize { completion?() }
       }
     }
@@ -139,7 +154,7 @@ extension Listable {
 
     Dispatch.mainQueue { [weak self] in
       guard let tableView = self?.tableView else { completion?(); return }
-      tableView.delete(indexPaths, animation: animation.tableViewAnimation) {
+      tableView.delete(indexPaths, withAnimation: animation.tableViewAnimation) {
         self?.sanitize { completion?() }
       }
     }
@@ -149,7 +164,7 @@ extension Listable {
     Dispatch.mainQueue { [weak self] in
       guard let tableView = self?.tableView else { completion?(); return }
       self?.component.items.remove(at: index)
-      tableView.delete([index], animation: animation.tableViewAnimation) {
+      tableView.delete([index], withAnimation: animation.tableViewAnimation) {
         self?.sanitize { completion?() }
       }
     }
@@ -159,7 +174,7 @@ extension Listable {
     Dispatch.mainQueue { [weak self] in
       indexes.forEach { self?.component.items.remove(at: $0) }
       guard let tableView = self?.tableView else { completion?(); return }
-      tableView.delete(indexes, animation: animation.tableViewAnimation) {
+      tableView.delete(indexes, withAnimation: animation.tableViewAnimation) {
         self?.sanitize { completion?() }
       }
     }

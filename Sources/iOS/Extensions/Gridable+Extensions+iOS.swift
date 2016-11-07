@@ -59,6 +59,49 @@ extension Gridable {
     collectionView.frame.size.height = layout.collectionViewContentSize.height
   }
 
+  /// Perform animation before mutation
+  ///
+  /// - parameter spotAnimation: The animation that you want to apply
+  /// - parameter withIndex: The index of the cell
+  /// - parameter completion: A completion block that runs after applying the animation
+  public func perform(_ spotAnimation: Animation, withIndex index: Int, completion: () -> Void) {
+    guard let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0))
+      else { completion(); return }
+
+    let animation = CABasicAnimation()
+
+    switch spotAnimation {
+    case .top:
+      animation.keyPath = "position.y"
+      animation.toValue = -cell.frame.height
+    case .bottom:
+      animation.keyPath = "position.y"
+      animation.toValue = cell.frame.height * 2
+    case .left:
+      animation.keyPath = "position.x"
+      animation.toValue = -cell.frame.width - collectionView.contentOffset.x
+    case .right:
+      animation.keyPath = "position.x"
+      animation.toValue = cell.frame.width + collectionView.frame.size.width + collectionView.contentOffset.x
+    case .fade:
+      animation.keyPath = "opacity"
+      animation.toValue = 0.0
+    case .middle:
+      animation.keyPath = "transform.scale.y"
+      animation.toValue = 0.0
+    case .automatic:
+      animation.keyPath = "transform.scale"
+      animation.toValue = 0.0
+    default:
+      break
+    }
+
+    animation.duration = 0.3
+    cell.layer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+    cell.layer.add(animation, forKey: "Animation")
+    completion()
+  }
+
   // MARK: - Spotable
 
   /// Register all views in Registry on UICollectionView
@@ -122,9 +165,13 @@ extension Gridable {
     var indexes = [Int]()
     let itemsCount = component.items.count
 
-    for (index, item) in items.enumerated() {
+    if component.items.isEmpty {
       component.items.append(item)
-      indexes.append(itemsCount + index)
+    } else {
+      for (index, item) in items.enumerated() {
+        component.items.append(item)
+        indexes.append(itemsCount + index)
+      }
     }
 
     Dispatch.mainQueue { [weak self] in
@@ -150,11 +197,15 @@ extension Gridable {
     var indexes = [Int]()
     let itemsCount = component.items.count
 
-    for (index, item) in items.enumerated() {
-      component.items.append(item)
-      indexes.append(itemsCount + index)
+    if component.items.isEmpty {
+      component.items.append(contentsOf: items)
+    } else {
+      for (index, item) in items.enumerated() {
+        component.items.append(item)
+        indexes.append(itemsCount + index)
 
-      configureItem(at: itemsCount + index)
+        configureItem(at: itemsCount + index)
+      }
     }
 
     Dispatch.mainQueue { [weak self] in
@@ -178,11 +229,13 @@ extension Gridable {
   /// - parameter animation:  A Animation that is used when performing the mutation (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue.
   public func insert(_ item: Item, index: Int, withAnimation animation: Animation = .none, completion: Completion = nil) {
+    let itemsCount = component.items.count
     component.items.insert(item, at: index)
     var indexes = [Int]()
-    let itemsCount = component.items.count
 
-    indexes.append(index)
+    if itemsCount > 0 {
+      indexes.append(index)
+    }
 
     Dispatch.mainQueue { [weak self] in
       guard let weakSelf = self else { completion?(); return }
@@ -202,19 +255,27 @@ extension Gridable {
   /// - parameter animation:  A Animation that is used when performing the mutation (currently not in use)
   /// - parameter completion: A completion closure that is executed in the main queue.
   public func prepend(_ items: [Item], withAnimation animation: Animation = .none, completion: Completion = nil) {
+    let itemsCount = component.items.count
     var indexes = [Int]()
 
     component.items.insert(contentsOf: items, at: 0)
 
     items.enumerated().forEach {
-      indexes.append(items.count - 1 - $0.offset)
+      if itemsCount > 0 {
+        indexes.append(items.count - 1 - $0.offset)
+      }
       configureItem(at: $0.offset)
     }
 
     Dispatch.mainQueue { [weak self] in
       guard let weakSelf = self else { completion?(); return }
 
-      weakSelf.collectionView.insert(indexes) {
+      if !indexes.isEmpty {
+        weakSelf.collectionView.insert(indexes) {
+          weakSelf.sanitize { completion?() }
+        }
+      } else {
+        weakSelf.collectionView.reloadData()
         weakSelf.sanitize { completion?() }
       }
     }
@@ -372,49 +433,6 @@ extension Gridable {
 
     if animation == .none { UIView.setAnimationsEnabled(true) }
     completion?()
-  }
-
-  /// Perform animation before mutation
-  ///
-  /// - parameter spotAnimation: The animation that you want to apply
-  /// - parameter withIndex: The index of the cell
-  /// - parameter completion: A completion block that runs after applying the animation
-  public func perform(_ spotAnimation: Animation, withIndex index: Int, completion: () -> Void) {
-    guard let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0))
-      else { completion(); return }
-
-    let animation = CABasicAnimation()
-
-    switch spotAnimation {
-    case .top:
-      animation.keyPath = "position.y"
-      animation.toValue = -cell.frame.height
-    case .bottom:
-      animation.keyPath = "position.y"
-      animation.toValue = cell.frame.height * 2
-    case .left:
-      animation.keyPath = "position.x"
-      animation.toValue = -cell.frame.width - collectionView.contentOffset.x
-    case .right:
-      animation.keyPath = "position.x"
-      animation.toValue = cell.frame.width + collectionView.frame.size.width + collectionView.contentOffset.x
-    case .fade:
-      animation.keyPath = "opacity"
-      animation.toValue = 0.0
-    case .middle:
-      animation.keyPath = "transform.scale.y"
-      animation.toValue = 0.0
-    case .automatic:
-      animation.keyPath = "transform.scale"
-      animation.toValue = 0.0
-    default:
-      break
-    }
-
-    animation.duration = 0.3
-    cell.layer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-    cell.layer.add(animation, forKey: "Animation")
-    completion()
   }
 
   public func beforeUpdate() {

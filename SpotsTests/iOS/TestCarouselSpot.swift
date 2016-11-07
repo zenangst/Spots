@@ -5,6 +5,20 @@ import XCTest
 
 class CarouselSpotTests: XCTestCase {
 
+  var spot: CarouselSpot!
+  var cachedSpot: CarouselSpot!
+
+  override func setUp() {
+    spot = CarouselSpot(component: Component())
+    cachedSpot = CarouselSpot(cacheKey: "cached-carousel-spot")
+  }
+
+  override func tearDown() {
+    spot = nil
+    cachedSpot.stateCache?.clear()
+    cachedSpot = nil
+  }
+
   func testConvenienceInitWithSectionInsets() {
     let component = Component()
     let spot = CarouselSpot(component,
@@ -179,5 +193,74 @@ class CarouselSpotTests: XCTestCase {
     spot.layout.headerReferenceSize.height = 20
     spot.setup(CGSize(width: 100, height: 100))
     XCTAssertEqual(spot.render().frame.size.height, 311)
+  }
+
+  func testAppendItem() {
+    let item = Item(title: "test")
+    let spot = CarouselSpot(component: Component())
+    var exception: XCTestExpectation? = self.expectation(description: "Append item")
+    spot.append(item) {
+      XCTAssert(spot.component.items.first! == item)
+      exception?.fulfill()
+      exception = nil
+    }
+    waitForExpectations(timeout: 0.5, handler: nil)
+  }
+
+  func testAppendItems() {
+    let items = [Item(title: "test"), Item(title: "test 2")]
+    let spot = CarouselSpot(component: Component())
+    var exception: XCTestExpectation? = self.expectation(description: "Append items")
+    spot.append(items) {
+      XCTAssert(spot.component.items == items)
+      exception?.fulfill()
+      exception = nil
+    }
+    waitForExpectations(timeout: 0.5, handler: nil)
+  }
+
+  func testInsertItem() {
+    let item = Item(title: "test")
+    let spot = CarouselSpot(component: Component())
+    var exception: XCTestExpectation? = self.expectation(description: "Insert item")
+    spot.insert(item, index: 0) {
+      XCTAssert(spot.component.items.first! == item)
+      exception?.fulfill()
+      exception = nil
+    }
+    waitForExpectations(timeout: 0.5, handler: nil)
+  }
+
+  func testPrependItems() {
+    let items = [Item(title: "test"), Item(title: "test 2")]
+    let spot = CarouselSpot(component: Component())
+    var exception: XCTestExpectation? = self.expectation(description: "Prepend items")
+    spot.prepend(items) {
+      XCTAssert(spot.component.items == items)
+      exception?.fulfill()
+      exception = nil
+    }
+    waitForExpectations(timeout: 0.5, handler: nil)
+  }
+
+  func testSpotCache() {
+    cachedSpot.stateCache?.clear()
+
+    let item = Item(title: "test")
+
+    XCTAssertEqual(cachedSpot.component.items.count, 0)
+    cachedSpot.append(item) {
+      self.cachedSpot.cache()
+    }
+
+    var exception: XCTestExpectation? = self.expectation(description: "Wait for cache")
+    Dispatch.delay(for: 0.25) {
+      let cachedSpot = CarouselSpot(cacheKey: self.cachedSpot.stateCache!.key)
+      XCTAssertEqual(cachedSpot.component.items.count, 1)
+      cachedSpot.stateCache?.clear()
+      exception?.fulfill()
+      exception = nil
+    }
+    waitForExpectations(timeout: 0.5, handler: nil)
   }
 }

@@ -1,8 +1,8 @@
 import UIKit
 import Brick
 
-/// A GridSpot, a collection view based Spotable object that lays out its items in a vertical order based of the item sizes
-open class GridSpot: NSObject, Gridable {
+/// A RowSpot, a collection view based Spotable object that lays out its items in a vertical order based of the item sizes
+open class RowSpot: NSObject, Gridable {
 
   /**
    *  Keys for meta data lookup
@@ -15,7 +15,7 @@ open class GridSpot: NSObject, Gridable {
   }
 
   /**
-   *  Default configuration values for GridSpot
+   *  Default configuration values for RowSpot
    */
   public struct Default {
     /// Default top section inset
@@ -36,16 +36,16 @@ open class GridSpot: NSObject, Gridable {
     public static var contentInsetRight: CGFloat = 0.0
   }
 
-  /// A Registry object that holds identifiers and classes for cells used in the GridSpot
+  /// A Registry object that holds identifiers and classes for cells used in the RowSpot
   open static var views: Registry = Registry()
 
   /// A configuration closure that is run in setup(_:)
   open static var configure: ((_ view: UICollectionView, _ layout: UICollectionViewFlowLayout) -> Void)?
 
-  /// A Registry object that holds identifiers and classes for headers used in the GridSpot
+  /// A Registry object that holds identifiers and classes for headers used in the RowSpot
   open static var headers = Registry()
 
-  /// A component struct used as configuration and data source for the GridSpot
+  /// A component struct used as configuration and data source for the RowSpot
   open var component: Component
 
   /// A configuration closure
@@ -58,22 +58,22 @@ open class GridSpot: NSObject, Gridable {
     }
   }
 
-  /// A CompositeDelegate for the GridSpot, used to access composite spots
+  /// A CompositeDelegate for the RowSpot, used to access composite spots
   open weak var spotsCompositeDelegate: CompositeDelegate?
 
-  /// A SpotsDelegate that is used for the GridSpot
+  /// A SpotsDelegate that is used for the RowSpot
   open weak var delegate: SpotsDelegate?
 
   /// A custom UICollectionViewFlowLayout
   open lazy var layout: CollectionLayout = CollectionLayout()
 
-  /// A StateCache for the GridSpot
+  /// A StateCache for the RowSpot
   open fileprivate(set) var stateCache: StateCache?
 
   /// Indicator to calculate the height based on content
   open var usesDynamicHeight = true
 
-  /// A UICollectionView, used as the main UI component for a GridSpot
+  /// A UICollectionView, used as the main UI component for a RowSpot
   open lazy var collectionView: UICollectionView = { [unowned self] in
     let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: self.layout)
     collectionView.dataSource = self
@@ -81,47 +81,50 @@ open class GridSpot: NSObject, Gridable {
     collectionView.isScrollEnabled = false
 
     return collectionView
-  }()
+    }()
 
-  /// A required initializer to instantiate a GridSpot with a component.
+  /// A required initializer to instantiate a RowSpot with a component.
   ///
   /// - parameter component: A component.
   ///
-  /// - returns: An initialized grid spot with component.
+  /// - returns: An initialized row spot with component.
   public required init(component: Component) {
+    var component = component
+    component.span = 1
+
     self.component = component
     super.init()
 
     if component.kind.isEmpty {
-      self.component.kind = Component.Kind.Grid.string
+      self.component.kind = Component.Kind.Row.string
     }
 
-    registerDefault(view: GridSpotCell.self)
+    registerDefault(view: RowSpotCell.self)
     registerComposite(view: GridComposite.self)
     register()
     prepareItems()
     configureLayout()
 
-    if GridSpot.views.composite == nil {
-      GridSpot.views.composite =  Registry.Item.classType(GridComposite.self)
+    if RowSpot.views.composite == nil {
+      RowSpot.views.composite = Registry.Item.classType(GridComposite.self)
     }
   }
 
-  /// A convenience init for initializing a Gridspot with a title and a kind.
+  /// A convenience init for initializing a RowSpot with a title and a kind.
   ///
-  ///  - parameter title: A string that is used as a title for the GridSpot.
+  ///  - parameter title: A string that is used as a title for the RowSpot.
   ///  - parameter kind:  An identifier to determine which kind should be set on the Component.
   ///
-  /// - returns: An initialized grid spot with computed component using title and kind.
+  /// - returns: An initialized row spot with computed component using title and kind.
   public convenience init(title: String = "", kind: String? = nil) {
     self.init(component: Component(title: title, kind: kind ?? ""))
   }
 
-  /// Instantiate a GridSpot with a cache key.
+  /// Instantiate a RowSpot with a cache key.
   ///
   /// - parameter cacheKey: A unique cache key for the Spotable object
   ///
-  /// - returns: An initialized grid spot.
+  /// - returns: An initialized row spot.
   public convenience init(cacheKey: String) {
     let stateCache = StateCache(key: cacheKey)
 
@@ -129,7 +132,7 @@ open class GridSpot: NSObject, Gridable {
     self.stateCache = stateCache
   }
 
-  /// A convenience initializer for GridSpot with base configuration.
+  /// A convenience initializer for RowSpot with base configuration.
   ///
   /// - parameter component:   A Component.
   /// - parameter top:         Top section inset.
@@ -139,7 +142,7 @@ open class GridSpot: NSObject, Gridable {
   /// - parameter itemSpacing: The item spacing used in the flow layout.
   /// - parameter lineSpacing: The line spacing used in the flow layout.
   ///
-  /// - returns: An initialized grid spot with configured layout.
+  /// - returns: An initialized row spot with configured layout.
   public convenience init(_ component: Component, top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0, itemSpacing: CGFloat = 0, lineSpacing: CGFloat = 0) {
     self.init(component: component)
 
@@ -162,7 +165,7 @@ open class GridSpot: NSObject, Gridable {
   }
 }
 
-extension GridSpot : UICollectionViewDataSource {
+extension RowSpot : UICollectionViewDataSource {
 
   /// Asks your data source object to provide a supplementary view to display in the collection view.
   /// A configured supplementary view object. You must not return nil from this method.
@@ -219,7 +222,7 @@ extension GridSpot : UICollectionViewDataSource {
   }
 }
 
-extension GridSpot : UICollectionViewDelegate {
+extension RowSpot : UICollectionViewDelegate {
 
   /// Asks the delegate for the size of the specified item’s cell.
   ///
@@ -265,7 +268,7 @@ extension GridSpot : UICollectionViewDelegate {
   }
 }
 
-extension GridSpot: UICollectionViewDelegateFlowLayout {
+extension RowSpot: UICollectionViewDelegateFlowLayout {
 
   /// Asks the delegate for the spacing between successive rows or columns of a section.
   ///

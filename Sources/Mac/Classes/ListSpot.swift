@@ -112,7 +112,7 @@ open class ListSpot: NSObject, Listable {
     super.init()
 
     if component.kind.isEmpty {
-      self.component.kind = "list"
+      self.component.kind = Component.Kind.List.string
     }
 
     scrollView.contentView.addSubview(tableView)

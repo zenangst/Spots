@@ -1,7 +1,7 @@
 import Cocoa
 import Brick
 
-open class GridSpot: NSObject, Gridable {
+open class RowSpot: NSObject, Gridable {
 
   /// An enum layout type
   ///
@@ -128,14 +128,14 @@ open class GridSpot: NSObject, Gridable {
   }()
 
   /**
-   A required initializer for creating a GridSpot
+   A required initializer for creating a RowSpot
 
    - parameter component: A component struct
    */
   public required init(component: Component) {
     self.component = component
     self.collectionView = CollectionView()
-    self.layout = GridSpot.setupLayout(component)
+    self.layout = RowSpot.setupLayout(component)
     super.init()
 
     if component.kind.isEmpty {
@@ -154,17 +154,17 @@ open class GridSpot: NSObject, Gridable {
   }
 
   /**
-   A convenience init for initializing a Gridspot with a title and a kind
+   A convenience init for initializing a RowSpot with a title and a kind
 
-   - parameter title: A string that is used as a title for the GridSpot
+   - parameter title: A string that is used as a title for the RowSpot
    - parameter kind:  An identifier to determine which kind should be set on the Component
    */
   public convenience init(title: String = "", kind: String? = nil) {
-    self.init(component: Component(title: title, kind: kind ?? GridSpot.defaultKind.string))
+    self.init(component: Component(title: title, kind: kind ?? RowSpot.defaultKind.string))
   }
 
   /**
-   A convenience init for initializing a Gridspot
+   A convenience init for initializing a RowSpot
 
    - parameter cacheKey: A cache key
    */
@@ -187,8 +187,8 @@ open class GridSpot: NSObject, Gridable {
       bottom: component.meta(GridableMeta.Key.sectionInsetBottom, Default.sectionInsetBottom),
       right: component.meta(GridableMeta.Key.sectionInsetRight, Default.sectionInsetRight))
 
-    layout.minimumInteritemSpacing = component.meta(GridSpot.Key.minimumInteritemSpacing, Default.Flow.minimumInteritemSpacing)
-    layout.minimumLineSpacing = component.meta(GridSpot.Key.minimumLineSpacing, Default.Flow.minimumLineSpacing)
+    layout.minimumInteritemSpacing = component.meta(RowSpot.Key.minimumInteritemSpacing, Default.Flow.minimumInteritemSpacing)
+    layout.minimumLineSpacing = component.meta(RowSpot.Key.minimumLineSpacing, Default.Flow.minimumLineSpacing)
 
     return layout
   }
@@ -196,7 +196,7 @@ open class GridSpot: NSObject, Gridable {
   /**
    A private method for configuring the layout for the collection view
 
-   - parameter component: The component for the GridSpot
+   - parameter component: The component for the RowSpot
 
    - returns: A NSCollectionView layout determined by the Component
    */
@@ -252,7 +252,7 @@ open class GridSpot: NSObject, Gridable {
   /**
    Layout with size
 
-   - parameter size: A CGSize from the GridSpot superview
+   - parameter size: A CGSize from the RowSpot superview
    */
   open func layout(_ size: CGSize) {
     layout.prepareForTransition(to: layout)
@@ -274,7 +274,7 @@ open class GridSpot: NSObject, Gridable {
     collectionView.frame.size.height = scrollView.frame.size.height - layoutInsets.top + layoutInsets.bottom
     collectionView.frame.size.width = size.width - layoutInsets.right
 
-    GridSpot.configure?(collectionView)
+    RowSpot.configure?(collectionView)
 
     if !component.title.isEmpty {
       configureTitleView(layoutInsets)
@@ -284,7 +284,7 @@ open class GridSpot: NSObject, Gridable {
   /**
    Perform setup with size
 
-   - parameter size: A CGSize from the GridSpot superview
+   - parameter size: A CGSize from the RowSpot superview
    */
   open func setup(_ size: CGSize) {
     var size = size
@@ -311,7 +311,7 @@ open class GridSpot: NSObject, Gridable {
   }
 }
 
-extension GridSpot: NSCollectionViewDataSource {
+extension RowSpot: NSCollectionViewDataSource {
 
   @nonobjc public func numberOfSectionsInCollectionView(_ collectionView: NSCollectionView) -> Int {
     return 1
@@ -330,7 +330,7 @@ extension GridSpot: NSCollectionViewDataSource {
   }
 }
 
-extension GridSpot : NSCollectionViewDelegate {
+extension RowSpot : NSCollectionViewDelegate {
 
   public func collectionView(_ collectionView: NSCollectionView, didSelectItemsAt indexPaths: Set<IndexPath>) {
     /*
@@ -346,7 +346,7 @@ extension GridSpot : NSCollectionViewDelegate {
   }
 }
 
-extension GridSpot: NSCollectionViewDelegateFlowLayout {
+extension RowSpot: NSCollectionViewDelegateFlowLayout {
 
   public func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> NSSize {
     return sizeForItem(at: indexPath)

@@ -82,17 +82,7 @@ open class CarouselSpot: NSObject, Gridable {
   }()
 
   open lazy var scrollView: ScrollView = ScrollView()
-
-  open lazy var collectionView: NSCollectionView = {
-    let collectionView = NSCollectionView()
-    collectionView.isSelectable = true
-    collectionView.backgroundColors = [NSColor.clear]
-
-    let view = NSView()
-    collectionView.backgroundView = view
-
-    return collectionView
-  }()
+  open var collectionView: CollectionView
 
   lazy var lineView: NSView = {
     let lineView = NSView()
@@ -110,10 +100,11 @@ open class CarouselSpot: NSObject, Gridable {
   /// - returns: An initialized carousel spot.
   public required init(component: Component) {
     self.component = component
+    self.collectionView = CollectionView()
     super.init()
 
     if component.kind.isEmpty {
-      self.component.kind = "carousel"
+      self.component.kind = Component.Kind.Carousel.string
     }
 
     registerAndPrepare()
@@ -162,6 +153,11 @@ open class CarouselSpot: NSObject, Gridable {
 
   /// Configure collection view delegate, data source and layout
   open func setupCollectionView() {
+    collectionView.isSelectable = true
+    collectionView.backgroundColors = [NSColor.clear]
+
+    let view = NSView()
+    collectionView.backgroundView = view
     collectionView.delegate = self
     collectionView.dataSource = self
     collectionView.collectionViewLayout = layout
