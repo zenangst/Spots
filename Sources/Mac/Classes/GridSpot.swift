@@ -216,9 +216,6 @@ open class GridSpot: NSObject, Gridable {
       let leftLayout = CollectionViewLeftLayout()
       configureLayoutInsets(component, layout: leftLayout)
       layout = leftLayout
-
-    case .flow:
-      fallthrough
     default:
       let flowLayout = NSCollectionViewFlowLayout()
       configureLayoutInsets(component, layout: flowLayout)
