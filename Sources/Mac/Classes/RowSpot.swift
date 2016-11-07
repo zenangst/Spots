@@ -133,6 +133,8 @@ open class RowSpot: NSObject, Gridable {
    - parameter component: A component struct
    */
   public required init(component: Component) {
+    var component = component
+    component.span = 1
     self.component = component
     self.collectionView = CollectionView()
     self.layout = RowSpot.setupLayout(component)
