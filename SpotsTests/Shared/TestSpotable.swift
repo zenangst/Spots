@@ -1,3 +1,4 @@
+/*
 @testable import Spots
 import Foundation
 import XCTest
@@ -42,3 +43,4 @@ class SpotableTests : XCTestCase {
     XCTAssertEqual(controller.spots[0].items.count, 500)
   }
 }
+*/
