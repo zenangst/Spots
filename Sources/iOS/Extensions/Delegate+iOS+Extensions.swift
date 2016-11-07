@@ -55,7 +55,7 @@ extension Delegate: UITableViewDelegate {
   /// - returns: Returns the `headerHeight` found in `component.meta`, otherwise 0.0.
 
   public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    let header = spot.type.headers.make(component.header)
+    let header = spot.type.headers.make(spot.component.header)
     return (header?.view as? Componentable)?.preferredHeaderHeight ?? 0.0
   }
 
@@ -65,10 +65,10 @@ extension Delegate: UITableViewDelegate {
   /// - parameter section: An index number identifying a section of tableView.
   /// - returns: A string to use as the title of the section header. Will return `nil` if title is not present on Component
   @nonobjc public func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    if let _ = spot.type.headers.make(component.header) {
+    if let _ = spot.type.headers.make(spot.component.header) {
       return nil
     }
-    return !component.title.isEmpty ? component.title : nil
+    return !spot.component.title.isEmpty ? spot.component.title : nil
   }
 
   /// Tells the delegate that the specified row is now selected.
@@ -88,12 +88,12 @@ extension Delegate: UITableViewDelegate {
   /// - parameter section: An index number identifying a section of tableView.
   /// - returns: A view object to be displayed in the header of section based on the kind of the ListSpot and registered headers.
   public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-    guard !component.header.isEmpty else { return nil }
+    guard !spot.component.header.isEmpty else { return nil }
 
-    let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: component.header)
-    view?.frame.size.height = component.meta(ListSpot.Key.headerHeight, 0.0)
+    let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: spot.component.header)
+    view?.frame.size.height = spot.component.meta(ListSpot.Key.headerHeight, 0.0)
     view?.frame.size.width = tableView.frame.size.width
-    (view as? Componentable)?.configure(component)
+    (view as? Componentable)?.configure(spot.component)
 
     return view
   }
@@ -105,7 +105,7 @@ extension Delegate: UITableViewDelegate {
   /// - returns:  A nonnegative floating-point value that specifies the height (in points) that row should be based on the view model height, defaults to 0.0.
 
   public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    component.size = CGSize(
+    spot.component.size = CGSize(
       width: tableView.frame.size.width,
       height: tableView.frame.size.height)
 

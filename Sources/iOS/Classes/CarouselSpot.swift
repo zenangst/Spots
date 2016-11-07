@@ -141,6 +141,9 @@ open class CarouselSpot: NSObject, Gridable {
   /// The collection views background view
   open lazy var backgroundView = UIView()
 
+  var spotDataSource: DataSource
+  var spotDelegate: Delegate
+
   /// A required initializer to instantiate a CarouselSpot with a component.
   ///
   /// - parameter component: A component
@@ -148,7 +151,11 @@ open class CarouselSpot: NSObject, Gridable {
   /// - returns: An initialized carousel spot.
   public required init(component: Component) {
     self.component = component
+    self.spotDataSource = DataSource()
+    self.spotDelegate = Delegate()
     super.init()
+    self.spotDataSource.spot = self
+    self.spotDelegate.spot = self
 
     if component.kind.isEmpty {
       self.component.kind = Component.Kind.Carousel.string
@@ -194,8 +201,8 @@ open class CarouselSpot: NSObject, Gridable {
   /// Configure collection view with data source, delegate and background view
   public func configureCollectionView() {
     register()
-    collectionView.dataSource = self
-    collectionView.delegate = self
+    collectionView.dataSource = spotDataSource
+    collectionView.delegate = spotDelegate
     collectionView.backgroundView = backgroundView
   }
 
@@ -253,117 +260,6 @@ open class CarouselSpot: NSObject, Gridable {
     dynamicSpan = component.meta(Key.dynamicSpan, false)
     collectionView.contentInset.left = component.meta(GridableMeta.Key.contentInsetLeft, Default.contentInsetLeft)
     collectionView.contentInset.right = component.meta(GridableMeta.Key.contentInsetRight, Default.contentInsetRight)
-  }
-
-  /// Register default header for the CarouselSpot
-  ///
-  /// - parameter view: A header view
-  public func registerDefaultHeader(header view: View.Type) {
-    guard type(of: self).headers.storage[type(of: self).headers.defaultIdentifier] == nil else { return }
-    type(of: self).headers.defaultItem = Registry.Item.classType(view)
-  }
-}
-
-extension CarouselSpot : UICollectionViewDataSource {
-
-  /// Asks your data source object to provide a supplementary view to display in the collection view.
-  /// A configured supplementary view object. You must not return nil from this method.
-  ///
-  /// - parameter collectionView: The collection view requesting this information.
-  /// - parameter kind:           The kind of supplementary view to provide. The value of this string is defined by the layout object that supports the supplementary view.
-  /// - parameter indexPath:      The index path that specifies the location of the new supplementary view.
-  ///
-  /// - returns: A configured supplementary view object.
-  public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-    let header = component.header.isEmpty
-      ? type(of: self).headers.defaultIdentifier
-      : component.header
-
-    let view = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: header, for: indexPath)
-    (view as? Componentable)?.configure(component)
-
-    return view
-  }
-
-  /// Asks the data source for the number of items in the specified section. (required)
-  ///
-  /// - parameter collectionView: An object representing the collection view requesting this information.
-  /// - parameter section:        An index number identifying a section in collectionView. This index value is 0-based.
-  ///
-  /// - returns: The number of rows in section.
-  public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return component.items.count
-  }
-
-  /// Asks the data source for the cell that corresponds to the specified item in the collection view. (required)
-  ///
-  /// - parameter collectionView: collectionView: An object representing the collection view requesting this information.
-  /// - parameter indexPath:      The index path that specifies the location of the item.
-  ///
-  /// - returns: A configured cell object. You must not return nil from this method.
-  public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    component.items[indexPath.item].index = indexPath.item
-
-    let reuseIdentifier = identifier(at: indexPath)
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
-    if let composite = cell as? Composable {
-      let spots = spotsCompositeDelegate?.resolve(index, itemIndex: (indexPath as NSIndexPath).item)
-      composite.configure(&component.items[indexPath.item], spots: spots)
-    } else if let cell = cell as? SpotConfigurable {
-      cell.configure(&component.items[indexPath.item])
-      if component.items[indexPath.item].size.height == 0.0 {
-        component.items[indexPath.item].size = cell.preferredViewSize
-      }
-      configure?(cell)
-    }
-
-    return cell
-  }
-}
-
-extension CarouselSpot : UICollectionViewDelegate {
-
-  /// Asks the delegate for the size of the specified item’s cell.
-  ///
-  /// - parameter collectionView: The collection view object displaying the flow layout.
-  /// - parameter collectionViewLayout: The layout object requesting the information.
-  /// - parameter indexPath: The index path of the item.
-  ///
-  /// - returns: The width and height of the specified item. Both values must be greater than 0.
-  @objc(collectionView:layout:sizeForItemAtIndexPath:) public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    return sizeForItem(at: indexPath)
-  }
-
-  /// Tells the delegate that the item at the specified index path was selected.
-  ///
-  /// - parameter collectionView: The collection view object that is notifying you of the selection change.
-  /// - parameter indexPath: The index path of the cell that was selected.
-  public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    guard let item = item(at: indexPath) else { return }
-    delegate?.didSelect(item: item, in: self)
-  }
-
-  /// Asks the delegate whether the item at the specified index path can be focused.
-  ///
-  /// - parameter collectionView: The collection view object requesting this information.
-  /// - parameter indexPath:      The index path of an item in the collection view.
-  ///
-  /// - returns: YES if the item can receive be focused or NO if it can not.
-  public func collectionView(_ collectionView: UICollectionView, canFocusItemAt indexPath: IndexPath) -> Bool {
-    return true
-  }
-
-  ///Asks the delegate whether a change in focus should occur.
-  ///
-  /// - parameter collectionView: The collection view object requesting this information.
-  /// - parameter context:        The context object containing metadata associated with the focus change.
-  /// This object contains the index path of the previously focused item and the item targeted to receive focus next. Use this information to determine if the focus change should occur.
-
-  /// - returns: YES if the focus change should occur or NO if it should not.
-  @available(iOS 9.0, *)
-  public func collectionView(_ collectionView: UICollectionView, shouldUpdateFocusIn context: UICollectionViewFocusUpdateContext) -> Bool {
-    guard let indexPaths = collectionView.indexPathsForSelectedItems else { return true }
-    return indexPaths.isEmpty
   }
 }
 

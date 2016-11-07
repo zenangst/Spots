@@ -10,7 +10,7 @@ extension DataSource: UICollectionViewDataSource {
   /// - returns: The number of rows in section.
   @available(iOS 6.0, *)
   public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return component.items.count
+    return spot.component.items.count
   }
 
   /// Asks your data source object to provide a supplementary view to display in the collection view.
@@ -24,16 +24,16 @@ extension DataSource: UICollectionViewDataSource {
   public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
     let identifier: String
 
-    if component.header.isEmpty {
+    if spot.component.header.isEmpty {
       identifier = spot.type.headers.defaultIdentifier
     } else {
-      identifier = component.header
+      identifier = spot.component.header
     }
 
     let view = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader,
                                                                withReuseIdentifier: identifier,
                                                                for: indexPath)
-    (view as? Componentable)?.configure(component)
+    (view as? Componentable)?.configure(spot.component)
 
     return view
   }
@@ -45,17 +45,17 @@ extension DataSource: UICollectionViewDataSource {
   ///
   /// - returns: The number of rows in section.
   public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    component.items[indexPath.item].index = indexPath.item
+    spot.component.items[indexPath.item].index = indexPath.item
 
     let reuseIdentifier = spot.identifier(at: indexPath)
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
     if let composite = cell as? Composable {
-      let spots = spot.spotsCompositeDelegate?.resolve(component.index, itemIndex: indexPath.item)
-      composite.configure(&component.items[indexPath.item], spots: spots)
+      let spots = spot.spotsCompositeDelegate?.resolve(spot.component.index, itemIndex: indexPath.item)
+      composite.configure(&spot.component.items[indexPath.item], spots: spots)
     } else if let cell = cell as? SpotConfigurable {
-      cell.configure(&component.items[indexPath.item])
-      if component.items[indexPath.item].size.height == 0.0 {
-        component.items[indexPath.item].size = cell.preferredViewSize
+      cell.configure(&spot.component.items[indexPath.item])
+      if spot.component.items[indexPath.item].size.height == 0.0 {
+        spot.component.items[indexPath.item].size = cell.preferredViewSize
       }
       spot.configure?(cell)
     }
@@ -73,7 +73,7 @@ extension DataSource: UITableViewDataSource {
   ///
   /// - returns: The number of rows in section.
   public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return component.items.count
+    return spot.component.items.count
   }
 
   /// Asks the data source for a cell to insert in a particular location of the table view. (required)
@@ -83,24 +83,24 @@ extension DataSource: UITableViewDataSource {
   ///
   /// - returns: An object inheriting from UITableViewCell that the table view can use for the specified row. Will return the default table view cell for the current component based of kind.
   public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    if indexPath.item < component.items.count {
-      component.items[indexPath.item].index = indexPath.row
+    if indexPath.item < spot.component.items.count {
+      spot.component.items[indexPath.item].index = indexPath.row
     }
 
     let reuseIdentifier = spot.identifier(at: indexPath)
     let cell: UITableViewCell = tableView
       .dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
 
-    guard indexPath.item < component.items.count else { return cell }
+    guard indexPath.item < spot.component.items.count else { return cell }
 
     if let composite = cell as? Composable {
-      let spots = spot.spotsCompositeDelegate?.resolve(component.index, itemIndex: (indexPath as NSIndexPath).item)
-      composite.configure(&component.items[indexPath.item], spots: spots)
+      let spots = spot.spotsCompositeDelegate?.resolve(spot.component.index, itemIndex: (indexPath as NSIndexPath).item)
+      composite.configure(&spot.component.items[indexPath.item], spots: spots)
     } else if let cell = cell as? SpotConfigurable {
-      cell.configure(&component.items[indexPath.item])
+      cell.configure(&spot.component.items[indexPath.item])
 
-      if component.items[indexPath.item].size.height == 0.0 {
-        component.items[indexPath.item].size = cell.preferredViewSize
+      if spot.component.items[indexPath.item].size.height == 0.0 {
+        spot.component.items[indexPath.item].size = cell.preferredViewSize
       }
 
       spot.configure?(cell)
