@@ -3,12 +3,6 @@ import Brick
 
 open class GridSpotItem: NSCollectionViewItem, SpotConfigurable {
 
-  static open var flipped: Bool {
-    get {
-      return true
-    }
-  }
-
   open override var isSelected: Bool {
     didSet {
       if isSelected {

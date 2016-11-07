@@ -3,7 +3,7 @@ import Brick
 
 open class ListSpotItem: NSTableRowView, SpotConfigurable {
 
-  static open var flipped: Bool {
+  override open var isFlipped: Bool {
     get {
       return true
     }
