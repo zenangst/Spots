@@ -205,6 +205,16 @@
 		BDDF2CCD1DC7C23500B766BA /* TestAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDF2CCB1DC7C23500B766BA /* TestAnimations.swift */; };
 		BDDF2CD01DC7C50700B766BA /* TestAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDF2CCF1DC7C50700B766BA /* TestAnimations.swift */; };
 		BDEED2E81D8446400030B475 /* TestSpotsScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEED2E71D8446400030B475 /* TestSpotsScrollView.swift */; };
+		BDEFF53C1DD0F18B00FC0537 /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEFF53B1DD0F18B00FC0537 /* DataSource.swift */; };
+		BDEFF53D1DD0F18B00FC0537 /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEFF53B1DD0F18B00FC0537 /* DataSource.swift */; };
+		BDEFF53E1DD0F18B00FC0537 /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEFF53B1DD0F18B00FC0537 /* DataSource.swift */; };
+		BDEFF5401DD0F3CC00FC0537 /* DataSource+iOS+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEFF53F1DD0F3CC00FC0537 /* DataSource+iOS+Extensions.swift */; };
+		BDEFF5421DD0F3CF00FC0537 /* DataSource+iOS+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEFF53F1DD0F3CC00FC0537 /* DataSource+iOS+Extensions.swift */; };
+		BDEFF5441DD0F7FB00FC0537 /* Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEFF5431DD0F7FB00FC0537 /* Delegate.swift */; };
+		BDEFF5451DD0F7FB00FC0537 /* Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEFF5431DD0F7FB00FC0537 /* Delegate.swift */; };
+		BDEFF5461DD0F7FB00FC0537 /* Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEFF5431DD0F7FB00FC0537 /* Delegate.swift */; };
+		BDEFF5481DD0F8C000FC0537 /* Delegate+iOS+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEFF5471DD0F8C000FC0537 /* Delegate+iOS+Extensions.swift */; };
+		BDEFF5491DD0F8C000FC0537 /* Delegate+iOS+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEFF5471DD0F8C000FC0537 /* Delegate+iOS+Extensions.swift */; };
 		D2FEDC1F1D9E845A004D5ABF /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2FEDC1E1D9E845A004D5ABF /* UIViewController+Extensions.swift */; };
 		D58478141C43FEB9006EBA49 /* Spots.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478091C43FEB8006EBA49 /* Spots.framework */; };
 		D58478531C43FFEB006EBA49 /* TestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58478281C43FF34006EBA49 /* TestFactory.swift */; };
@@ -339,6 +349,10 @@
 		BDDF2CCB1DC7C23500B766BA /* TestAnimations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestAnimations.swift; sourceTree = "<group>"; };
 		BDDF2CCF1DC7C50700B766BA /* TestAnimations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestAnimations.swift; sourceTree = "<group>"; };
 		BDEED2E71D8446400030B475 /* TestSpotsScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSpotsScrollView.swift; sourceTree = "<group>"; };
+		BDEFF53B1DD0F18B00FC0537 /* DataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
+		BDEFF53F1DD0F3CC00FC0537 /* DataSource+iOS+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DataSource+iOS+Extensions.swift"; sourceTree = "<group>"; };
+		BDEFF5431DD0F7FB00FC0537 /* Delegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Delegate.swift; sourceTree = "<group>"; };
+		BDEFF5471DD0F8C000FC0537 /* Delegate+iOS+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Delegate+iOS+Extensions.swift"; sourceTree = "<group>"; };
 		D2FEDC1E1D9E845A004D5ABF /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		D58478091C43FEB8006EBA49 /* Spots.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Spots.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D58478131C43FEB9006EBA49 /* Spots-iOS-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Spots-iOS-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -430,6 +444,8 @@
 				BD129D601D7B295F009AC164 /* UICollectionView+Indexes.swift */,
 				BD129D611D7B295F009AC164 /* UITableView+Indexes.swift */,
 				D2FEDC1E1D9E845A004D5ABF /* UIViewController+Extensions.swift */,
+				BDEFF53F1DD0F3CC00FC0537 /* DataSource+iOS+Extensions.swift */,
+				BDEFF5471DD0F8C000FC0537 /* Delegate+iOS+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -534,6 +550,8 @@
 				BD129F271D7B2F91009AC164 /* Registry.swift */,
 				BD129F281D7B2F91009AC164 /* SpotFactory.swift */,
 				BD129F291D7B2F91009AC164 /* ViewSpot.swift */,
+				BDEFF53B1DD0F18B00FC0537 /* DataSource.swift */,
+				BDEFF5431DD0F7FB00FC0537 /* Delegate.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1091,6 +1109,8 @@
 				BD8B1EB41D93D813000C3F53 /* GrandCentralDispatch.swift in Sources */,
 				BD129D901D7B295F009AC164 /* Composable+Extensions.swift in Sources */,
 				BD129F531D7B2F91009AC164 /* Animation.swift in Sources */,
+				BDEFF5491DD0F8C000FC0537 /* Delegate+iOS+Extensions.swift in Sources */,
+				BDEFF5421DD0F3CF00FC0537 /* DataSource+iOS+Extensions.swift in Sources */,
 				BD129DD01D7B2B6C009AC164 /* SpotsScrollView.swift in Sources */,
 				BD129F8F1D7B2F91009AC164 /* Parser.swift in Sources */,
 				BD129DBE1D7B2B6C009AC164 /* GridableLayout.swift in Sources */,
@@ -1124,9 +1144,11 @@
 				BD129F951D7B2F91009AC164 /* TypeAlias.swift in Sources */,
 				BD129F591D7B2F91009AC164 /* Gridable+Extensions.swift in Sources */,
 				BD129F561D7B2F91009AC164 /* Component+Extension.swift in Sources */,
+				BDEFF5461DD0F7FB00FC0537 /* Delegate.swift in Sources */,
 				BD129F6B1D7B2F91009AC164 /* Item+Extensions.swift in Sources */,
 				BD129F801D7B2F91009AC164 /* SpotsDelegates.swift in Sources */,
 				BD129F651D7B2F91009AC164 /* SpotsProtocol+Mutation.swift in Sources */,
+				BDEFF53E1DD0F18B00FC0537 /* DataSource.swift in Sources */,
 				BD129F771D7B2F91009AC164 /* Spotable.swift in Sources */,
 				BD129DC81D7B2B6C009AC164 /* ListSpot.swift in Sources */,
 				BD129F711D7B2F91009AC164 /* Gridable.swift in Sources */,
@@ -1175,6 +1197,8 @@
 				BD129D951D7B295F009AC164 /* UITableView+Indexes.swift in Sources */,
 				BD129F511D7B2F91009AC164 /* Animation.swift in Sources */,
 				BD129F4B1D7B2F91009AC164 /* SpotFactory.swift in Sources */,
+				BDEFF5481DD0F8C000FC0537 /* Delegate+iOS+Extensions.swift in Sources */,
+				BDEFF5401DD0F3CC00FC0537 /* DataSource+iOS+Extensions.swift in Sources */,
 				BD129D8F1D7B295F009AC164 /* Composable+Extensions.swift in Sources */,
 				BD129F691D7B2F91009AC164 /* Item+Extensions.swift in Sources */,
 				BD1BFB561DA7A9A300BB55E1 /* ScrollDelegate+Extensions.swift in Sources */,
@@ -1208,9 +1232,11 @@
 				BD129DB71D7B2B6C009AC164 /* CarouselSpotCell.swift in Sources */,
 				BD129F871D7B2F91009AC164 /* Component.swift in Sources */,
 				BD129DBD1D7B2B6C009AC164 /* GridableLayout.swift in Sources */,
+				BDEFF5441DD0F7FB00FC0537 /* Delegate.swift in Sources */,
 				BD129DBF1D7B2B6C009AC164 /* GridComposite.swift in Sources */,
 				BD129D971D7B295F009AC164 /* Composable.swift in Sources */,
 				BD129F8D1D7B2F91009AC164 /* Parser.swift in Sources */,
+				BDEFF53C1DD0F18B00FC0537 /* DataSource.swift in Sources */,
 				BD129F751D7B2F91009AC164 /* Spotable.swift in Sources */,
 				BD129F901D7B2F91009AC164 /* StateCache.swift in Sources */,
 				BD129D8B1D7B295F009AC164 /* Listable+Extensions+iOS.swift in Sources */,
@@ -1259,10 +1285,12 @@
 				BD129F761D7B2F91009AC164 /* Spotable.swift in Sources */,
 				BD1BFB571DA7A9A300BB55E1 /* ScrollDelegate+Extensions.swift in Sources */,
 				BD129F7F1D7B2F91009AC164 /* SpotsDelegates.swift in Sources */,
+				BDEFF53D1DD0F18B00FC0537 /* DataSource.swift in Sources */,
 				BD129E291D7B2CDE009AC164 /* SpotsContentView.swift in Sources */,
 				BD129F7C1D7B2F91009AC164 /* SpotConfigurable.swift in Sources */,
 				BD129E361D7B2CDE009AC164 /* Viewable+Mac.swift in Sources */,
 				BD129F5B1D7B2F91009AC164 /* Spotable+Extensions.swift in Sources */,
+				BDEFF5451DD0F7FB00FC0537 /* Delegate.swift in Sources */,
 				BDCFCD471DCA82EC0047E84C /* Listable+Extension.swift in Sources */,
 				BD129F671D7B2F91009AC164 /* Viewable+Extensions.swift in Sources */,
 				BD129F611D7B2F91009AC164 /* SpotsProtocol+LiveEditing.swift in Sources */,
