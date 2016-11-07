@@ -9,9 +9,9 @@ open class RowSpot: NSObject, Gridable {
   /// - Left: Resolves to CollectionViewLeftLayout
   /// - Flow: Resolves to NSCollectionViewFlowLayout
   public enum LayoutType: String {
-    case Grid = "grid"
-    case Left = "left"
-    case Flow = "flow"
+    case grid = "grid"
+    case left = "left"
+    case flow = "flow"
   }
 
   public struct Key {
@@ -51,7 +51,7 @@ open class RowSpot: NSObject, Gridable {
     /// Default top inset of the title
     public static var titleTopInset: CGFloat = 10.0
     /// Default layout
-    public static var defaultLayout: String = LayoutType.Flow.rawValue
+    public static var defaultLayout: String = LayoutType.flow.rawValue
     /// Default grid layout maximum item width
     public static var gridLayoutMaximumItemWidth = 120
     /// Default grid layout maximum item height
@@ -76,7 +76,7 @@ open class RowSpot: NSObject, Gridable {
   open static var configure: ((_ view: NSCollectionView) -> Void)?
   open static var defaultView: View.Type = NSView.self
   open static var defaultGrid: NSCollectionViewItem.Type = NSCollectionViewItem.self
-  open static var defaultKind: StringConvertible = LayoutType.Grid.rawValue
+  open static var defaultKind: StringConvertible = LayoutType.grid.rawValue
 
   open weak var spotsCompositeDelegate: CompositeDelegate?
   open weak var delegate: SpotsDelegate?
@@ -203,8 +203,8 @@ open class RowSpot: NSObject, Gridable {
   fileprivate static func setupLayout(_ component: Component) -> NSCollectionViewLayout {
     let layout: NSCollectionViewLayout
 
-    switch LayoutType(rawValue: component.meta(Key.layout, Default.defaultLayout)) ?? LayoutType.Flow {
-    case .Grid:
+    switch LayoutType(rawValue: component.meta(Key.layout, Default.defaultLayout)) ?? LayoutType.flow {
+    case .grid:
       let gridLayout = NSCollectionViewGridLayout()
 
       gridLayout.maximumItemSize = CGSize(width: component.meta(Key.gridLayoutMaximumItemWidth, Default.gridLayoutMaximumItemWidth),
@@ -212,12 +212,12 @@ open class RowSpot: NSObject, Gridable {
       gridLayout.minimumItemSize = CGSize(width: component.meta(Key.gridLayoutMinimumItemWidth, Default.gridLayoutMinimumItemWidth),
                                           height: component.meta(Key.gridLayoutMinimumItemHeight, Default.gridLayoutMinimumItemHeight))
       layout = gridLayout
-    case .Left:
+    case .left:
       let leftLayout = CollectionViewLeftLayout()
       configureLayoutInsets(component, layout: leftLayout)
       layout = leftLayout
 
-    case .Flow:
+    case .flow:
       fallthrough
     default:
       let flowLayout = NSCollectionViewFlowLayout()
