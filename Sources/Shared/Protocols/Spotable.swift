@@ -9,6 +9,7 @@ import Brick
 /// A class protocol that is used for all components inside of Controller
 public protocol Spotable: class {
 
+  static var headers: Registry { get set }
   static var views: Registry { get set }
 
   #if !os(OSX)
