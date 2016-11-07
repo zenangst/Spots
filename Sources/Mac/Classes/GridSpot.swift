@@ -116,17 +116,7 @@ open class GridSpot: NSObject, Gridable {
     return scrollView
   }()
 
-  open lazy var collectionView: NSCollectionView = {
-    let collectionView = NSCollectionView()
-    collectionView.backgroundColors = [NSColor.clear]
-    collectionView.isSelectable = true
-    collectionView.allowsMultipleSelection = false
-    collectionView.allowsEmptySelection = true
-    collectionView.layer = CALayer()
-    collectionView.wantsLayer = true
-
-    return collectionView
-  }()
+  open var collectionView: CollectionView
 
   lazy var lineView: NSView = {
     let lineView = NSView()
@@ -144,6 +134,7 @@ open class GridSpot: NSObject, Gridable {
    */
   public required init(component: Component) {
     self.component = component
+    self.collectionView = CollectionView()
     self.layout = GridSpot.setupLayout(component)
     super.init()
 
@@ -242,6 +233,12 @@ open class GridSpot: NSObject, Gridable {
    Configure delegate, data source and layout for collection view
    */
   open func setupCollectionView() {
+    collectionView.backgroundColors = [NSColor.clear]
+    collectionView.isSelectable = true
+    collectionView.allowsMultipleSelection = false
+    collectionView.allowsEmptySelection = true
+    collectionView.layer = CALayer()
+    collectionView.wantsLayer = true
     collectionView.delegate = self
     collectionView.dataSource = self
     collectionView.collectionViewLayout = layout
