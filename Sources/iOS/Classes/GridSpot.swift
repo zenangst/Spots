@@ -103,7 +103,6 @@ open class GridSpot: NSObject, Gridable {
 
     registerDefault(view: GridSpotCell.self)
     registerComposite(view: GridComposite.self)
-    register()
     configureLayout()
     prepareItems()
     configureCollectionView()
