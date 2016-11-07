@@ -2,7 +2,7 @@ import Cocoa
 
 public extension NSTableView {
 
-  func insert(_ indexes: [Int], section: Int = 0, animation: NSTableViewAnimationOptions = .effectFade, completion: (() -> Void)? = nil) {
+  func insert(_ indexes: [Int], section: Int = 0, withAnimation animation: NSTableViewAnimationOptions = .effectFade, completion: (() -> Void)? = nil) {
     let indexPaths = NSMutableIndexSet()
     indexes.forEach { indexPaths.add($0) }
     performUpdates({ insertRows(at: indexPaths as IndexSet, withAnimation: animation) },
@@ -10,7 +10,7 @@ public extension NSTableView {
 
   }
 
-  func reload(_ indexes: [Int], section: Int = 0, animation: NSTableViewAnimationOptions = .effectFade, completion: (() -> Void)? = nil) {
+  func reload(_ indexes: [Int], section: Int = 0, withAnimation animation: NSTableViewAnimationOptions = .effectFade, completion: (() -> Void)? = nil) {
     /** Manually handle reloading of the cell as reloadDataForRowIndexes does not seems to work with view based table views
      - "For NSView-based table views, this method drops the view-cells in the table row, but not the NSTableRowView instances."
     */
@@ -25,7 +25,7 @@ public extension NSTableView {
     completion?()
   }
 
-  func delete(_ indexes: [Int], animation: NSTableViewAnimationOptions = .effectFade, completion: (() -> Void)? = nil) {
+  func delete(_ indexes: [Int], withAnimation animation: NSTableViewAnimationOptions = .effectFade, completion: (() -> Void)? = nil) {
     let indexPaths = NSMutableIndexSet()
     indexes.forEach { indexPaths.add($0) }
     performUpdates({ removeRows(at: indexPaths as IndexSet, withAnimation: animation) },
