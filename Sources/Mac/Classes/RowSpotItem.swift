@@ -2,7 +2,7 @@ import Cocoa
 import Brick
 
 open class FlippedView: NSView {
-  static open var flipped: Bool {
+  static public var flipped: Bool {
     get {
       return true
     }
