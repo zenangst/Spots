@@ -28,6 +28,13 @@ public extension Spotable {
     return height
   }
 
+  /// A helper method to return self as a Spotable type.
+  ///
+  /// - returns: Self as a Spotable type
+  public var type: Spotable.Type {
+    return type(of: self)
+  }
+
   /// Resolve a UI component at index with inferred type
   ///
   /// - parameter index: The index of the UI component
