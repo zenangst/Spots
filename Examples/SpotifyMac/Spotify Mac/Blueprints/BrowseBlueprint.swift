@@ -7,6 +7,54 @@ struct BrowseBlueprint: BlueprintContainer {
 
   static let key = "browse"
   static var drawing: Blueprint {
+    let template = [
+      "components" : [
+        [
+          "kind" : Component.Kind.List.rawValue,
+          "span" : 1,
+          "items" : [
+            [
+              "title" : "",
+              "image" : "http://i1.wp.com/fusion.net/wp-content/uploads/2015/06/150623-album-covers.png?resize=1600%2C900&quality=80&strip=all",
+              "kind" : "hero",
+              "size" : ["width" : 0.0, "height": 250]
+            ]
+          ],
+          "meta" : [
+            ListSpot.Key.contentInsetsLeft : 0,
+            ListSpot.Key.contentInsetsRight : 0
+          ]
+        ],
+        [
+          "title" : "Featured Playlists",
+          "kind" : Component.Kind.Carousel.rawValue,
+          "meta" : [
+            GridableMeta.Key.sectionInsetRight : 10.0,
+          ]
+        ],
+        ["kind" : Component.Kind.Grid.rawValue,
+         "span" : 3,
+         "title" : "New Releases",
+         "meta" : [
+          GridableMeta.Key.sectionInsetLeft : 10.0,
+          GridableMeta.Key.sectionInsetRight : 0.0,
+          GridSpot.Key.minimumInteritemSpacing : 0.0,
+          GridSpot.Key.minimumLineSpacing : 0.0,
+          GridSpot.Key.layout : GridSpot.LayoutType.left.rawValue
+          ]
+        ],
+        ["kind" : Component.Kind.Grid.rawValue,
+         "title" : "Categories",
+         "meta" : [
+          GridSpot.Key.layout : GridSpot.LayoutType.left.rawValue,
+          GridableMeta.Key.sectionInsetLeft : 10.0,
+          GridableMeta.Key.sectionInsetRight : 0.0,
+          GridableMeta.Key.sectionInsetBottom : 10.0,
+          ]
+        ],
+      ]
+    ]
+
     return Blueprint(
       cacheKey: "browse",
       requests: [
@@ -116,53 +164,7 @@ struct BrowseBlueprint: BlueprintContainer {
           controller.cache()
         }
       },
-      template: [
-        "components" : [
-          [
-            "kind" : Component.Kind.List.rawValue,
-            "span" : 1,
-            "items" : [
-              [
-                "title" : "",
-                "image" : "http://i1.wp.com/fusion.net/wp-content/uploads/2015/06/150623-album-covers.png?resize=1600%2C900&quality=80&strip=all",
-                "kind" : "hero",
-                "size" : ["width" : 0.0, "height": 250]
-              ]
-            ],
-            "meta" : [
-              ListSpot.Key.contentInsetsLeft : 0,
-              ListSpot.Key.contentInsetsRight : 0
-            ]
-          ],
-          [
-            "title" : "Featured Playlists",
-            "kind" : Component.Kind.Carousel.rawValue,
-            "meta" : [
-              GridableMeta.Key.sectionInsetRight : 10.0,
-            ]
-          ],
-          ["kind" : Component.Kind.Grid.rawValue,
-            "span" : 3,
-            "title" : "New Releases",
-            "meta" : [
-              GridableMeta.Key.sectionInsetLeft : 10.0,
-              GridableMeta.Key.sectionInsetRight : 0.0,
-              GridSpot.Key.minimumInteritemSpacing : 0.0,
-              GridSpot.Key.minimumLineSpacing : 0.0,
-              GridSpot.Key.layout : GridSpot.LayoutType.Left.rawValue
-            ]
-          ],
-          ["kind" : Component.Kind.Grid.rawValue,
-            "title" : "Categories",
-            "meta" : [
-              GridSpot.Key.layout : GridSpot.LayoutType.Left.rawValue,
-              GridableMeta.Key.sectionInsetLeft : 10.0,
-              GridableMeta.Key.sectionInsetRight : 0.0,
-              GridableMeta.Key.sectionInsetBottom : 10.0,
-            ]
-          ],
-        ]
-      ]
+      template: template
     )
   }
 }

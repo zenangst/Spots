@@ -7,6 +7,21 @@ struct AlbumsBlueprint: BlueprintContainer {
 
   static let key = "albums"
   static var drawing: Blueprint {
+    let template = [
+      "components" : [
+        [
+          "title" : "Saved albums",
+          "kind" : Component.Kind.Grid.rawValue,
+          "items" : [
+            "title" : "Loading..."
+          ],
+          "meta" : [
+            GridSpot.Key.layout : GridSpot.LayoutType.left.rawValue,
+          ]
+        ]
+      ]
+    ]
+
     return Blueprint(
       cacheKey: "albums",
       requests: [
@@ -39,20 +54,7 @@ struct AlbumsBlueprint: BlueprintContainer {
             return viewModels
           }
         )],
-      template: [
-        "components" : [
-          [
-            "title" : "Saved albums",
-            "kind" : Component.Kind.Grid.rawValue,
-            "items" : [
-              "title" : "Loading..."
-            ],
-            "meta" : [
-              GridSpot.Key.layout : GridSpot.LayoutType.Left.rawValue,
-            ]
-          ]
-        ]
-      ]
+      template: template
     )
   }
 }

@@ -7,6 +7,18 @@ struct PlaylistsBlueprint: BlueprintContainer {
 
   static let key = "playlists"
   static var drawing: Blueprint {
+    let template = [
+      "components" : [
+        [
+          "title" : "Playlists",
+          "kind" : Component.Kind.Grid.rawValue,
+          "meta" : [
+            GridSpot.Key.layout : GridSpot.LayoutType.left.rawValue,
+          ]
+        ]
+      ]
+    ]
+
     return Blueprint(
       cacheKey: "playlists",
       requests: [
@@ -40,17 +52,7 @@ struct PlaylistsBlueprint: BlueprintContainer {
           }
         )
       ],
-      template: [
-        "components" : [
-          [
-            "title" : "Playlists",
-            "kind" : Component.Kind.Grid.rawValue,
-            "meta" : [
-              GridSpot.Key.layout : GridSpot.LayoutType.Left.rawValue,
-            ]
-          ]
-        ]
-      ]
+      template: template
     )
   }
 }

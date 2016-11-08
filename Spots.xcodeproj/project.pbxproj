@@ -215,6 +215,8 @@
 		BDEFF5461DD0F7FB00FC0537 /* Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEFF5431DD0F7FB00FC0537 /* Delegate.swift */; };
 		BDEFF5481DD0F8C000FC0537 /* Delegate+iOS+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEFF5471DD0F8C000FC0537 /* Delegate+iOS+Extensions.swift */; };
 		BDEFF5491DD0F8C000FC0537 /* Delegate+iOS+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEFF5471DD0F8C000FC0537 /* Delegate+iOS+Extensions.swift */; };
+		BDEFF54B1DD1A64400FC0537 /* DataSource+Mac+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEFF54A1DD1A64400FC0537 /* DataSource+Mac+Extensions.swift */; };
+		BDEFF54D1DD1A65800FC0537 /* Delegate+Mac+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEFF54C1DD1A65800FC0537 /* Delegate+Mac+Extensions.swift */; };
 		D2FEDC1F1D9E845A004D5ABF /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2FEDC1E1D9E845A004D5ABF /* UIViewController+Extensions.swift */; };
 		D58478141C43FEB9006EBA49 /* Spots.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478091C43FEB8006EBA49 /* Spots.framework */; };
 		D58478531C43FFEB006EBA49 /* TestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58478281C43FF34006EBA49 /* TestFactory.swift */; };
@@ -353,6 +355,8 @@
 		BDEFF53F1DD0F3CC00FC0537 /* DataSource+iOS+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DataSource+iOS+Extensions.swift"; sourceTree = "<group>"; };
 		BDEFF5431DD0F7FB00FC0537 /* Delegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Delegate.swift; sourceTree = "<group>"; };
 		BDEFF5471DD0F8C000FC0537 /* Delegate+iOS+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Delegate+iOS+Extensions.swift"; sourceTree = "<group>"; };
+		BDEFF54A1DD1A64400FC0537 /* DataSource+Mac+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DataSource+Mac+Extensions.swift"; sourceTree = "<group>"; };
+		BDEFF54C1DD1A65800FC0537 /* Delegate+Mac+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Delegate+Mac+Extensions.swift"; sourceTree = "<group>"; };
 		D2FEDC1E1D9E845A004D5ABF /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		D58478091C43FEB8006EBA49 /* Spots.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Spots.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D58478131C43FEB9006EBA49 /* Spots-iOS-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Spots-iOS-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -519,6 +523,8 @@
 				BD129E1C1D7B2CDE009AC164 /* NSScrollView+Extensions.swift */,
 				BD129E1D1D7B2CDE009AC164 /* NSTableView+Indexes.swift */,
 				BD129E1E1D7B2CDE009AC164 /* Viewable+Mac.swift */,
+				BDEFF54A1DD1A64400FC0537 /* DataSource+Mac+Extensions.swift */,
+				BDEFF54C1DD1A65800FC0537 /* Delegate+Mac+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1310,11 +1316,13 @@
 				BD129E301D7B2CDE009AC164 /* Gridable+Extensions+Mac.swift in Sources */,
 				BD129F5E1D7B2F91009AC164 /* SpotsProtocol+Extensions.swift in Sources */,
 				BD129E241D7B2CDE009AC164 /* GridSpot.swift in Sources */,
+				BDEFF54B1DD1A64400FC0537 /* DataSource+Mac+Extensions.swift in Sources */,
 				BD129E351D7B2CDE009AC164 /* NSTableView+Indexes.swift in Sources */,
 				BD129E2B1D7B2CDE009AC164 /* SpotsScrollView.swift in Sources */,
 				BD129F581D7B2F91009AC164 /* Gridable+Extensions.swift in Sources */,
 				BD129F641D7B2F91009AC164 /* SpotsProtocol+Mutation.swift in Sources */,
 				BD129F551D7B2F91009AC164 /* Component+Extension.swift in Sources */,
+				BDEFF54D1DD1A65800FC0537 /* Delegate+Mac+Extensions.swift in Sources */,
 				BD129F941D7B2F91009AC164 /* TypeAlias.swift in Sources */,
 				BD129F821D7B2F91009AC164 /* SpotsProtocol.swift in Sources */,
 				BDA8DB001DCF4D0A00A4A8DD /* RowSpotItem.swift in Sources */,

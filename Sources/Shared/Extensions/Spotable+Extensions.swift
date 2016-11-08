@@ -421,9 +421,9 @@ public extension Spotable {
   ///
   /// - returns: A string identifier for the view, defaults to the `defaultIdentifier` on the Spotable object.
   public func identifier(at index: Int) -> String {
-    guard let item = item(at: index), type(of: self).views.storage[item.kind] != nil
+    guard let item = item(at: index), type.views.storage[item.kind] != nil
       else {
-        return type(of: self).views.defaultIdentifier
+        return type.views.defaultIdentifier
     }
 
     return item.kind

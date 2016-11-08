@@ -107,9 +107,16 @@ open class ListSpot: NSObject, Listable {
     return lineView
   }()
 
+  var spotDataSource: DataSource
+  var spotDelegate: Delegate
+
   public required init(component: Component) {
     self.component = component
+    self.spotDataSource = DataSource()
+    self.spotDelegate = Delegate()
     super.init()
+    self.spotDataSource.spot = self
+    self.spotDelegate.spot = self
 
     if component.kind.isEmpty {
       self.component.kind = Component.Kind.List.string
@@ -130,6 +137,8 @@ open class ListSpot: NSObject, Listable {
   deinit {
     tableView.delegate = nil
     tableView.dataSource = nil
+    spotDataSource.spot = nil
+    spotDelegate.spot = nil
   }
 
   open func doubleAction(_ sender: Any?) {
@@ -166,8 +175,8 @@ open class ListSpot: NSObject, Listable {
       component.items[$0.offset].size.width = size.width
     }
 
-    tableView.delegate = self
-    tableView.dataSource = self
+    tableView.dataSource = spotDataSource
+    tableView.delegate = spotDelegate
     tableView.target = self
     tableView.addTableColumn(tableColumn)
     tableView.action = #selector(self.action(_:))
@@ -208,72 +217,5 @@ open class ListSpot: NSObject, Listable {
         self.tableView.register(nib, forIdentifier: identifier)
       }
     }
-  }
-}
-
-extension ListSpot: NSTableViewDataSource {
-
-  public func numberOfRows(in tableView: NSTableView) -> Int {
-    return component.items.count
-  }
-
-  public func tableView(_ tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableViewDropOperation) -> Bool {
-    return false
-  }
-}
-
-extension ListSpot: NSTableViewDelegate {
-
-  public func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
-    guard let item = item(at: row), row > -1 && row < component.items.count
-      else {
-        return false
-    }
-
-    if component.meta(ListSpot.Key.doubleAction, type: Bool.self) != true {
-      delegate?.didSelect(item: item, in: self)
-    }
-
-    return true
-  }
-
-  public func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
-    component.size = CGSize(
-      width: tableView.frame.width,
-      height: tableView.frame.height)
-
-    let height = row < component.items.count ? item(at: row)?.size.height ?? 0 : 1.0
-
-    if height == 0 { return 1.0 }
-
-    return height
-  }
-
-  public func tableView(_ tableView: NSTableView, rowViewForRow row: Int) -> NSTableRowView? {
-    guard row >= 0 && row < component.items.count else { return nil }
-
-    let reuseIdentifier = identifier(at: row)
-    guard let cachedView = type(of: self).views.make(reuseIdentifier) else { return nil }
-
-    var view: View? = nil
-    if let type = cachedView.type {
-      switch type {
-      case .regular:
-        view = cachedView.view
-      case .nib:
-        view = tableView.make(withIdentifier: reuseIdentifier, owner: nil)
-      }
-    }
-
-    (view as? SpotConfigurable)?.configure(&component.items[row])
-    (view as? NSTableRowView)?.identifier = reuseIdentifier
-
-    return view as? NSTableRowView
-  }
-
-  public func tableView(_ tableView: NSTableView, willDisplayCell cell: Any, for tableColumn: NSTableColumn?, row: Int) {}
-
-  public func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-    return nil
   }
 }

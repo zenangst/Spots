@@ -127,6 +127,9 @@ open class GridSpot: NSObject, Gridable {
     return lineView
   }()
 
+  var spotDataSource: DataSource
+  var spotDelegate: Delegate
+
   /**
    A required initializer for creating a GridSpot
 
@@ -134,9 +137,13 @@ open class GridSpot: NSObject, Gridable {
    */
   public required init(component: Component) {
     self.component = component
+    self.spotDataSource = DataSource()
+    self.spotDelegate = Delegate()
     self.collectionView = CollectionView()
     self.layout = GridSpot.setupLayout(component)
     super.init()
+    self.spotDataSource.spot = self
+    self.spotDelegate.spot = self
 
     if component.kind.isEmpty {
       self.component.kind = Component.Kind.Grid.string
@@ -178,6 +185,8 @@ open class GridSpot: NSObject, Gridable {
   deinit {
     collectionView.delegate = nil
     collectionView.dataSource = nil
+    spotDataSource.spot = nil
+    spotDelegate.spot = nil
   }
 
   @discardableResult fileprivate static func configureLayoutInsets(_ component: Component, layout: NSCollectionViewFlowLayout) -> NSCollectionViewFlowLayout {
@@ -236,8 +245,8 @@ open class GridSpot: NSObject, Gridable {
     collectionView.allowsEmptySelection = true
     collectionView.layer = CALayer()
     collectionView.wantsLayer = true
-    collectionView.delegate = self
-    collectionView.dataSource = self
+    collectionView.dataSource = spotDataSource
+    collectionView.delegate = spotDelegate
     collectionView.collectionViewLayout = layout
   }
 
@@ -308,47 +317,5 @@ open class GridSpot: NSObject, Gridable {
     titleView.frame.origin.x = component.meta(Key.titleLeftMargin, titleView.frame.origin.x)
     titleView.frame.origin.y = titleView.frame.size.height / 2
     lineView.frame.origin.y = titleView.frame.maxY + 8
-  }
-}
-
-extension GridSpot: NSCollectionViewDataSource {
-
-  @nonobjc public func numberOfSectionsInCollectionView(_ collectionView: NSCollectionView) -> Int {
-    return 1
-  }
-
-  public func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
-    return component.items.count
-  }
-
-  public func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
-    let reuseIdentifier = identifier(at: indexPath.item)
-    let item = collectionView.makeItem(withIdentifier: reuseIdentifier, for: indexPath as IndexPath)
-
-    (item as? SpotConfigurable)?.configure(&component.items[indexPath.item])
-    return item
-  }
-}
-
-extension GridSpot : NSCollectionViewDelegate {
-
-  public func collectionView(_ collectionView: NSCollectionView, didSelectItemsAt indexPaths: Set<IndexPath>) {
-    /*
-     This delay is here to avoid an assertion that happens inside the collection view binding,
-     it tries to resolve the item at index but it no longer exists so the assertion is thrown.
-     This can probably be fixed in a more convenient way in the future without delays.
-     */
-    Dispatch.delay(for: 0.1) { [weak self] in
-      guard let weakSelf = self, let first = indexPaths.first,
-        let item = self?.item(at: first.item), first.item < weakSelf.items.count else { return }
-      weakSelf.delegate?.didSelect(item: item, in: weakSelf)
-    }
-  }
-}
-
-extension GridSpot: NSCollectionViewDelegateFlowLayout {
-
-  public func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> NSSize {
-    return sizeForItem(at: indexPath)
   }
 }
