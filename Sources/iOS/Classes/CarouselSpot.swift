@@ -198,6 +198,11 @@ open class CarouselSpot: NSObject, Gridable {
     self.stateCache = stateCache
   }
 
+  deinit {
+    self.spotDataSource.spot = nil
+    self.spotDelegate.spot = nil
+  }
+
   /// Configure collection view with data source, delegate and background view
   public func configureCollectionView() {
     register()

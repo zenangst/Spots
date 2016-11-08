@@ -160,6 +160,11 @@ open class GridSpot: NSObject, Gridable {
     collectionView.delegate = spotDelegate
   }
 
+  deinit {
+    self.spotDataSource.spot = nil
+    self.spotDelegate.spot = nil
+  }
+
   /// Configure section insets and layout spacing for the UICollectionViewFlow using component meta data
   func configureLayout() {
     layout.sectionInset = UIEdgeInsets(

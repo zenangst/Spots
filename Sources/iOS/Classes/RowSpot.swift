@@ -168,6 +168,11 @@ open class RowSpot: NSObject, Gridable {
     collectionView.contentInset.right = component.meta(GridableMeta.Key.contentInsetRight, Default.contentInsetRight)
   }
 
+  deinit {
+    self.spotDataSource.spot = nil
+    self.spotDelegate.spot = nil
+  }
+
   /// Configure collection view with data source, delegate and background view
   public func configureCollectionView() {
     register()
