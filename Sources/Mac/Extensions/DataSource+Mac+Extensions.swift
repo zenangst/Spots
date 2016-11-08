@@ -22,7 +22,6 @@ extension DataSource: NSCollectionViewDataSource {
     let item = collectionView.makeItem(withIdentifier: reuseIdentifier, for: indexPath)
 
     (item as? SpotConfigurable)?.configure(&spot.component.items[indexPath.item])
-    
     return item
   }
 }

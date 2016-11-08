@@ -45,6 +45,7 @@ extension DataSource: UICollectionViewDataSource {
   ///
   /// - returns: The number of rows in section.
   public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    guard indexPath.item < spot.component.items.count else { return UICollectionViewCell() }
     spot.component.items[indexPath.item].index = indexPath.item
 
     let reuseIdentifier = spot.identifier(at: indexPath)
@@ -83,6 +84,8 @@ extension DataSource: UITableViewDataSource {
   ///
   /// - returns: An object inheriting from UITableViewCell that the table view can use for the specified row. Will return the default table view cell for the current component based of kind.
   public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    guard indexPath.item < spot.component.items.count else { return UITableViewCell() }
+
     if indexPath.item < spot.component.items.count {
       spot.component.items[indexPath.item].index = indexPath.row
     }
@@ -90,8 +93,6 @@ extension DataSource: UITableViewDataSource {
     let reuseIdentifier = spot.identifier(at: indexPath)
     let cell: UITableViewCell = tableView
       .dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
-
-    guard indexPath.item < spot.component.items.count else { return cell }
 
     if let composite = cell as? Composable {
       let spots = spot.spotsCompositeDelegate?.resolve(spot.component.index, itemIndex: (indexPath as NSIndexPath).item)
