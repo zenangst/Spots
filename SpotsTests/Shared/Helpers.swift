@@ -30,6 +30,7 @@ extension Controller {
   }
 }
 
+#if !os(OSX)
 class CustomListCell: UITableViewCell, SpotConfigurable {
 
   var preferredViewSize: CGSize = CGSize(width: 0, height: 44)
@@ -43,7 +44,17 @@ class CustomGridCell: UICollectionViewCell, SpotConfigurable {
 
   var preferredViewSize: CGSize = CGSize(width: 0, height: 44)
 
-  func configure(_ item: inout Item) {
-    
+  func configure(_ item: inout Item) {}
+}
+
+class CustomGridHeaderView: UICollectionReusableView, Componentable {
+
+  var preferredHeaderHeight: CGFloat = 88
+
+  lazy var textLabel = UILabel()
+
+  func configure(_ component: Component) {
+    textLabel.text = component.title
   }
 }
+#endif
