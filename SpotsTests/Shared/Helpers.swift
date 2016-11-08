@@ -1,4 +1,5 @@
 import Spots
+import Brick
 #if os(OSX)
 import Foundation
 #else
@@ -26,5 +27,23 @@ extension Controller {
     scrollView.setContentOffset(point, animated: false)
     scrollView.layoutSubviews()
     #endif
+  }
+}
+
+class CustomListCell: UITableViewCell, SpotConfigurable {
+
+  var preferredViewSize: CGSize = CGSize(width: 0, height: 44)
+
+  func configure(_ item: inout Item) {
+    textLabel?.text = item.text
+  }
+}
+
+class CustomGridCell: UICollectionViewCell, SpotConfigurable {
+
+  var preferredViewSize: CGSize = CGSize(width: 0, height: 44)
+
+  func configure(_ item: inout Item) {
+    
   }
 }
