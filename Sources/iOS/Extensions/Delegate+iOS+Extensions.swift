@@ -29,6 +29,7 @@ extension Delegate: UICollectionViewDelegate {
   ///
   /// - returns: YES if the item can receive be focused or NO if it can not.
   public func collectionView(_ collectionView: UICollectionView, canFocusItemAt indexPath: IndexPath) -> Bool {
+    guard let _ = spot.item(at: indexPath) else { return  false }
     return true
   }
 
