@@ -81,8 +81,8 @@ open class RowSpot: NSObject, Gridable {
     return collectionView
     }()
 
-  var spotDataSource: DataSource
-  var spotDelegate: Delegate
+  var spotDataSource: DataSource?
+  var spotDelegate: Delegate?
 
   /// A required initializer to instantiate a RowSpot with a component.
   ///
@@ -93,11 +93,9 @@ open class RowSpot: NSObject, Gridable {
     var component = component
     component.span = 1
     self.component = component
-    self.spotDataSource = DataSource()
-    self.spotDelegate = Delegate()
     super.init()
-    self.spotDataSource.spot = self
-    self.spotDelegate.spot = self
+    self.spotDataSource = DataSource(spot: self)
+    self.spotDelegate = Delegate(spot: self)
 
     if component.kind.isEmpty {
       self.component.kind = Component.Kind.Row.string
@@ -169,8 +167,8 @@ open class RowSpot: NSObject, Gridable {
   }
 
   deinit {
-    self.spotDataSource.spot = nil
-    self.spotDelegate.spot = nil
+    self.spotDataSource = nil
+    self.spotDelegate = nil
   }
 
   /// Configure collection view with data source, delegate and background view

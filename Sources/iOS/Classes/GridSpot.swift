@@ -81,8 +81,8 @@ open class GridSpot: NSObject, Gridable {
     return collectionView
   }()
 
-  var spotDataSource: DataSource
-  var spotDelegate: Delegate
+  var spotDataSource: DataSource?
+  var spotDelegate: Delegate?
 
   /// A required initializer to instantiate a GridSpot with a component.
   ///
@@ -91,11 +91,9 @@ open class GridSpot: NSObject, Gridable {
   /// - returns: An initialized grid spot with component.
   public required init(component: Component) {
     self.component = component
-    self.spotDataSource = DataSource()
-    self.spotDelegate = Delegate()
     super.init()
-    self.spotDataSource.spot = self
-    self.spotDelegate.spot = self
+    self.spotDataSource = DataSource(spot: self)
+    self.spotDelegate = Delegate(spot: self)
 
     if component.kind.isEmpty {
       self.component.kind = Component.Kind.Grid.string
@@ -161,8 +159,8 @@ open class GridSpot: NSObject, Gridable {
   }
 
   deinit {
-    self.spotDataSource.spot = nil
-    self.spotDelegate.spot = nil
+    self.spotDataSource = nil
+    self.spotDelegate = nil
   }
 
   /// Configure section insets and layout spacing for the UICollectionViewFlow using component meta data

@@ -49,8 +49,8 @@ open class ListSpot: NSObject, Listable {
   /// Indicator to calculate the height based on content
   open var usesDynamicHeight = true
 
-  var spotDataSource: DataSource
-  var spotDelegate: Delegate
+  var spotDataSource: DataSource?
+  var spotDelegate: Delegate?
 
   // MARK: - Initializers
 
@@ -61,11 +61,9 @@ open class ListSpot: NSObject, Listable {
   /// - returns: An initialized list spot with component.
   public required init(component: Component) {
     self.component = component
-    self.spotDataSource = DataSource()
-    self.spotDelegate = Delegate()
     super.init()
-    self.spotDataSource.spot = self
-    self.spotDelegate.spot = self
+    self.spotDataSource = DataSource(spot: self)
+    self.spotDelegate = Delegate(spot: self)
 
     if component.kind.isEmpty {
       self.component.kind = Component.Kind.List.string
@@ -134,8 +132,8 @@ open class ListSpot: NSObject, Listable {
   }
 
   deinit {
-    self.spotDataSource.spot = nil
-    self.spotDelegate.spot = nil
+    self.spotDataSource = nil
+    self.spotDelegate = nil
   }
 
   /// Configure and setup the data source, delegate and additional configuration options for the table view.
