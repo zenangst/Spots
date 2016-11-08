@@ -38,7 +38,7 @@ extension Delegate: UICollectionViewDelegate {
   /// - parameter collectionView: The collection view object requesting this information.
   /// - parameter context:        The context object containing metadata associated with the focus change.
   /// This object contains the index path of the previously focused item and the item targeted to receive focus next. Use this information to determine if the focus change should occur.
-
+  ///
   /// - returns: YES if the focus change should occur or NO if it should not.
   @available(iOS 9.0, *)
   public func collectionView(_ collectionView: UICollectionView, shouldUpdateFocusIn context: UICollectionViewFocusUpdateContext) -> Bool {
@@ -53,8 +53,8 @@ extension Delegate: UITableViewDelegate {
   ///
   /// - parameter tableView: The table-view object requesting this information.
   /// - parameter heightForHeaderInSection: An index number identifying a section of tableView.
+  ///
   /// - returns: Returns the `headerHeight` found in `component.meta`, otherwise 0.0.
-
   public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
     let header = spot.type.headers.make(spot.component.header)
     return (header?.view as? Componentable)?.preferredHeaderHeight ?? 0.0
@@ -64,6 +64,7 @@ extension Delegate: UITableViewDelegate {
   ///
   /// - parameter tableView: The table-view object asking for the title.
   /// - parameter section: An index number identifying a section of tableView.
+  ///
   /// - returns: A string to use as the title of the section header. Will return `nil` if title is not present on Component
   @nonobjc public func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
     if let _ = spot.type.headers.make(spot.component.header) {
@@ -87,6 +88,7 @@ extension Delegate: UITableViewDelegate {
   ///
   /// - parameter tableView: The table-view object asking for the view object.
   /// - parameter section: An index number identifying a section of tableView.
+  ///
   /// - returns: A view object to be displayed in the header of section based on the kind of the ListSpot and registered headers.
   public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
     guard !spot.component.header.isEmpty else { return nil }
@@ -103,8 +105,8 @@ extension Delegate: UITableViewDelegate {
   ///
   /// - parameter tableView: The table-view object requesting this information.
   /// - parameter indexPath: An index path that locates a row in tableView.
+  ///
   /// - returns:  A nonnegative floating-point value that specifies the height (in points) that row should be based on the view model height, defaults to 0.0.
-
   public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     spot.component.size = CGSize(
       width: tableView.frame.size.width,
