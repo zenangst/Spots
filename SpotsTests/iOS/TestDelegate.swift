@@ -49,4 +49,10 @@ class DelegateTests: XCTestCase {
     XCTAssertEqual(spot.spotDelegate.collectionView(spot.collectionView, canFocusItemAt: IndexPath(item: 0, section: 0)), true)
     XCTAssertEqual(spot.spotDelegate.collectionView(spot.collectionView, canFocusItemAt: IndexPath(item: 1, section: 0)), false)
   }
+
+  func testHeightForRowOnListable() {
+    let spot = ListSpot(component: Component(items: [Item(title: "title 1")]))
+    XCTAssertEqual(spot.spotDelegate.tableView(spot.tableView, heightForRowAt: IndexPath(row: 0, section: 0)), 44.0)
+    XCTAssertEqual(spot.spotDelegate.tableView(spot.tableView, heightForRowAt: IndexPath(row: 1, section: 0)), 0.0)
+  }
 }
