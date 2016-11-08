@@ -149,8 +149,8 @@ extension Gridable {
   ///
   /// - parameter view: A header view
   public func registerDefaultHeader(header view: View.Type) {
-    guard type(of: self).headers.storage[type(of: self).headers.defaultIdentifier] == nil else { return }
-    type(of: self).headers.defaultItem = Registry.Item.classType(view)
+    guard type.headers.storage[type.headers.defaultIdentifier] == nil else { return }
+    type.headers.defaultItem = Registry.Item.classType(view)
   }
 
   ///Register a default header for the Gridable component
@@ -158,6 +158,7 @@ extension Gridable {
   /// - parameter defaultHeader: The default header class that should be used by the component
   public static func register(defaultHeader header: View.Type) {
     self.headers.storage[self.views.defaultIdentifier] = Registry.Item.classType(header)
+    self.headers.defaultItem = Registry.Item.classType(header)
   }
 
   public func ui<T>(at index: Int) -> T? {
