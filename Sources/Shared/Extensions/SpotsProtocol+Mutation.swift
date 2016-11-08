@@ -441,7 +441,10 @@ extension SpotsProtocol {
         if animation != .none { spot.render().layer.frame.size.height = spotHeight }
       #endif
 
-      weakSelf.spot(at: index, ofType: Spotable.self)?.reload(nil, withAnimation: animation) { [weak self] in
+      let spot = weakSelf.spot(at: index, ofType: Spotable.self)
+
+      spot?.reload(nil, withAnimation: animation) { [weak self] in
+        spot?.afterUpdate()
         completion?()
         self?.scrollView.layoutSubviews()
       }
