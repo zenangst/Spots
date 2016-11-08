@@ -56,4 +56,37 @@ class DataSourceTests: XCTestCase {
     let spotConfigurable = itemCell1 as! CustomGridCell
     XCTAssertEqual(spot.component.items[0].size.height, spotConfigurable.preferredViewSize.height)
   }
+
+  func testDataSourceForGridableDefaultHeader() {
+    GridSpot.register(defaultHeader: CustomGridHeaderView.self)
+    let spot = GridSpot(component: Component(
+      header: "",
+      items: [
+        Item(title: "title 1"),
+        Item(title: "title 2")
+      ]))
+    spot.render().frame.size = CGSize(width: 100, height: 100)
+    spot.layout.headerReferenceSize = CGSize(width: 100, height: 48)
+    spot.render().layoutSubviews()
+
+    let header = spot.spotDataSource.collectionView(spot.collectionView, viewForSupplementaryElementOfKind: UICollectionElementKindSectionHeader, at: IndexPath(item: 0, section: 0))
+    XCTAssertNotNil(header)
+    XCTAssert(header is CustomGridHeaderView)
+  }
+
+  func testDataSourceForGridableCustomHeader() {
+    GridSpot.register(header: CustomGridHeaderView.self, identifier: "custom-header")
+    let spot = GridSpot(component: Component(
+      header: "custom-header",
+      items: [
+        Item(title: "title 1"),
+        Item(title: "title 2")
+      ]))
+    spot.render().frame.size = CGSize(width: 100, height: 100)
+    spot.layout.headerReferenceSize = CGSize(width: 100, height: 48)
+    spot.render().layoutSubviews()
+
+    let header = spot.spotDataSource.collectionView(spot.collectionView, viewForSupplementaryElementOfKind: UICollectionElementKindSectionHeader, at: IndexPath(item: 0, section: 0))
+    XCTAssertNotNil(header)
+  }
 }
