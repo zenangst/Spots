@@ -47,4 +47,10 @@ class StateCacheTests : XCTestCase {
     }
     waitForExpectations(timeout: 1.0, handler: nil)
   }
+
+  func testCacheWithEmptyKey() {
+    /// Expect to generate a MD5 hash from an empty key
+    let stateCache = StateCache(key: "")
+    XCTAssertNotEqual(stateCache.fileName(), "")
+  }
 }
