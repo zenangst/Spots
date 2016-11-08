@@ -73,9 +73,14 @@ extension Delegate: UITableViewDelegate {
   ///
   /// - returns: A string to use as the title of the section header. Will return `nil` if title is not present on Component
   @nonobjc public func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    guard let spot = spot, let _ = spot.type.headers.make(spot.component.header) else {
+    guard let spot = spot else {
       return nil
     }
+
+    if let _ = spot.type.headers.make(spot.component.header) {
+      return nil
+    }
+
     return !spot.component.title.isEmpty ? spot.component.title : nil
   }
 
