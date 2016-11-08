@@ -31,30 +31,38 @@ extension Controller {
 }
 
 #if !os(OSX)
-class CustomListCell: UITableViewCell, SpotConfigurable {
+  class CustomListCell: UITableViewCell, SpotConfigurable {
 
-  var preferredViewSize: CGSize = CGSize(width: 0, height: 44)
+    var preferredViewSize: CGSize = CGSize(width: 0, height: 44)
 
-  func configure(_ item: inout Item) {
-    textLabel?.text = item.text
+    func configure(_ item: inout Item) {
+      textLabel?.text = item.text
+    }
   }
-}
 
-class CustomGridCell: UICollectionViewCell, SpotConfigurable {
+  class CustomListHeaderView: UITableViewHeaderFooterView, Componentable {
+    var preferredHeaderHeight: CGFloat = 88
 
-  var preferredViewSize: CGSize = CGSize(width: 0, height: 44)
-
-  func configure(_ item: inout Item) {}
-}
-
-class CustomGridHeaderView: UICollectionReusableView, Componentable {
-
-  var preferredHeaderHeight: CGFloat = 88
-
-  lazy var textLabel = UILabel()
-
-  func configure(_ component: Component) {
-    textLabel.text = component.title
+    func configure(_ component: Component) {
+      textLabel?.text = component.title
+    }
   }
-}
+
+  class CustomGridCell: UICollectionViewCell, SpotConfigurable {
+
+    var preferredViewSize: CGSize = CGSize(width: 0, height: 44)
+
+    func configure(_ item: inout Item) {}
+  }
+
+  class CustomGridHeaderView: UICollectionReusableView, Componentable {
+
+    var preferredHeaderHeight: CGFloat = 88
+
+    lazy var textLabel = UILabel()
+
+    func configure(_ component: Component) {
+      textLabel.text = component.title
+    }
+  }
 #endif
