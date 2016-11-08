@@ -218,4 +218,9 @@ open class ListSpot: NSObject, Listable {
       }
     }
   }
+
+  public func afterUpdate() {
+    /// This is to set the proper height after reloading a list when initially it didn't contain any items.
+    layout(render().frame.size)
+  }
 }
