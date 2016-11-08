@@ -127,8 +127,8 @@ open class RowSpot: NSObject, Gridable {
     return lineView
   }()
 
-  var spotDataSource: DataSource
-  var spotDelegate: Delegate
+  var spotDataSource: DataSource?
+  var spotDelegate: Delegate?
 
   /**
    A required initializer for creating a RowSpot
@@ -139,13 +139,11 @@ open class RowSpot: NSObject, Gridable {
     var component = component
     component.span = 1
     self.component = component
-    self.spotDataSource = DataSource()
-    self.spotDelegate = Delegate()
     self.collectionView = CollectionView()
     self.layout = RowSpot.setupLayout(component)
     super.init()
-    self.spotDataSource.spot = self
-    self.spotDelegate.spot = self
+    self.spotDataSource = DataSource(spot: self)
+    self.spotDelegate = Delegate(spot: self)
 
     if component.kind.isEmpty {
       self.component.kind = Component.Kind.Grid.string
@@ -187,8 +185,8 @@ open class RowSpot: NSObject, Gridable {
   deinit {
     collectionView.delegate = nil
     collectionView.dataSource = nil
-    spotDataSource.spot = nil
-    spotDelegate.spot = nil
+    spotDataSource = nil
+    spotDelegate = nil
   }
 
   @discardableResult fileprivate static func configureLayoutInsets(_ component: Component, layout: NSCollectionViewFlowLayout) -> NSCollectionViewFlowLayout {

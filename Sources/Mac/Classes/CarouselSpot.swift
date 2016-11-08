@@ -93,8 +93,8 @@ open class CarouselSpot: NSObject, Gridable {
     return lineView
   }()
 
-  var spotDataSource: DataSource
-  var spotDelegate: Delegate
+  var spotDataSource: DataSource?
+  var spotDelegate: Delegate?
 
   /// A required initializer to instantiate a CarouselSpot with a component.
   ///
@@ -103,12 +103,10 @@ open class CarouselSpot: NSObject, Gridable {
   /// - returns: An initialized carousel spot.
   public required init(component: Component) {
     self.component = component
-    self.spotDataSource = DataSource()
-    self.spotDelegate = Delegate()
     self.collectionView = CollectionView()
     super.init()
-    self.spotDataSource.spot = self
-    self.spotDelegate.spot = self
+    self.spotDataSource = DataSource(spot: self)
+    self.spotDelegate = Delegate(spot: self)
 
     if component.kind.isEmpty {
       self.component.kind = Component.Kind.Carousel.string
@@ -143,8 +141,8 @@ open class CarouselSpot: NSObject, Gridable {
   deinit {
     collectionView.delegate = nil
     collectionView.dataSource = nil
-    spotDataSource.spot = nil
-    spotDelegate.spot = nil
+    spotDataSource = nil
+    spotDelegate = nil
   }
 
   fileprivate func configureLayoutInsets(_ component: Component) {
