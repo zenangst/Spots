@@ -11,11 +11,11 @@ class GridSpotTests: XCTestCase {
   override func setUp() {
     spot = GridSpot(component: Component())
     cachedSpot = GridSpot(cacheKey: "cached-grid-spot")
+    Helper.clearCache(for: cachedSpot.stateCache)
   }
 
   override func tearDown() {
     spot = nil
-    cachedSpot.stateCache?.clear()
     cachedSpot = nil
   }
 
@@ -130,13 +130,11 @@ class GridSpotTests: XCTestCase {
   }
 
   func testSpotCache() {
-    cachedSpot.stateCache?.clear()
-
     let item = Item(title: "test")
 
     XCTAssertEqual(cachedSpot.component.items.count, 0)
-    cachedSpot.append(item) {
-      self.cachedSpot.cache()
+    cachedSpot.append(item) { [weak self] in
+      self?.cachedSpot.cache()
     }
 
     var exception: XCTestExpectation? = self.expectation(description: "Wait for cache")

@@ -1,4 +1,4 @@
-import Spots
+@testable import Spots
 import Brick
 #if os(OSX)
 import Foundation
@@ -27,6 +27,14 @@ extension Controller {
     scrollView.setContentOffset(point, animated: false)
     scrollView.layoutSubviews()
     #endif
+  }
+}
+
+struct Helper {
+  static func clearCache(for stateCache: StateCache?) {
+    if FileManager().fileExists(atPath: stateCache!.path) {
+      try! FileManager().removeItem(atPath: stateCache!.path)
+    }
   }
 }
 

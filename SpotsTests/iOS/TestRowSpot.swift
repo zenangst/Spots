@@ -11,11 +11,11 @@ class RowSpotTests: XCTestCase {
   override func setUp() {
     spot = RowSpot(component: Component())
     cachedSpot = RowSpot(cacheKey: "cached-row-spot")
+    Helper.clearCache(for: cachedSpot.stateCache)
   }
 
   override func tearDown() {
     spot = nil
-    cachedSpot.stateCache?.clear()
     cachedSpot = nil
   }
 
@@ -130,8 +130,6 @@ class RowSpotTests: XCTestCase {
   }
 
   func testSpotCache() {
-    cachedSpot.stateCache?.clear()
-
     let item = Item(title: "test")
 
     XCTAssertEqual(cachedSpot.component.items.count, 0)
