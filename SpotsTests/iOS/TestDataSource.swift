@@ -12,8 +12,8 @@ class DataSourceTests: XCTestCase {
       Item(title: "title 2")
       ]))
 
-    var itemCell1 = spot.spotDataSource.tableView(spot.tableView, cellForRowAt: IndexPath(row: 0, section: 0))
-    let itemCell2 = spot.spotDataSource.tableView(spot.tableView, cellForRowAt: IndexPath(row: 1, section: 0))
+    var itemCell1 = spot.spotDataSource!.tableView(spot.tableView, cellForRowAt: IndexPath(row: 0, section: 0))
+    let itemCell2 = spot.spotDataSource!.tableView(spot.tableView, cellForRowAt: IndexPath(row: 1, section: 0))
 
     XCTAssertNotNil(itemCell1)
     XCTAssertNotNil(itemCell2)
@@ -21,13 +21,13 @@ class DataSourceTests: XCTestCase {
     XCTAssertEqual(itemCell2.textLabel?.text, spot.component.items[1].title)
 
     /// Check that data source always returns a cell
-    let itemCell3 = spot.spotDataSource.tableView(spot.tableView, cellForRowAt: IndexPath(row: 2, section: 0))
+    let itemCell3 = spot.spotDataSource!.tableView(spot.tableView, cellForRowAt: IndexPath(row: 2, section: 0))
     XCTAssertNotNil(itemCell3)
 
     /// Check that preferred view size is applied if height is 0.0
     spot.component.items[0].kind = "custom"
     spot.component.items[0].size.height = 0.0
-    itemCell1 = spot.spotDataSource.tableView(spot.tableView, cellForRowAt: IndexPath(row: 0, section: 0))
+    itemCell1 = spot.spotDataSource!.tableView(spot.tableView, cellForRowAt: IndexPath(row: 0, section: 0))
     let spotConfigurable = itemCell1 as! CustomListCell
     XCTAssertEqual(spot.component.items[0].size.height, spotConfigurable.preferredViewSize.height)
   }
@@ -39,20 +39,20 @@ class DataSourceTests: XCTestCase {
       Item(title: "title 2")
       ]))
 
-    var itemCell1 = spot.spotDataSource.collectionView(spot.collectionView, cellForItemAt: IndexPath(item: 0, section: 0))
-    let itemCell2 = spot.spotDataSource.collectionView(spot.collectionView, cellForItemAt: IndexPath(item: 1, section: 0))
+    var itemCell1 = spot.spotDataSource!.collectionView(spot.collectionView, cellForItemAt: IndexPath(item: 0, section: 0))
+    let itemCell2 = spot.spotDataSource!.collectionView(spot.collectionView, cellForItemAt: IndexPath(item: 1, section: 0))
 
     XCTAssertNotNil(itemCell1)
     XCTAssertNotNil(itemCell2)
 
     /// Check that data source always returns a cell
-    let itemCell3 = spot.spotDataSource.collectionView(spot.collectionView, cellForItemAt: IndexPath(item: 2, section: 0))
+    let itemCell3 = spot.spotDataSource!.collectionView(spot.collectionView, cellForItemAt: IndexPath(item: 2, section: 0))
     XCTAssertNotNil(itemCell3)
 
     /// Check that preferred view size is applied if height is 0.0
     spot.component.items[0].kind = "custom"
     spot.component.items[0].size.height = 0.0
-    itemCell1 = spot.spotDataSource.collectionView(spot.collectionView, cellForItemAt: IndexPath(item: 0, section: 0))
+    itemCell1 = spot.spotDataSource!.collectionView(spot.collectionView, cellForItemAt: IndexPath(item: 0, section: 0))
     let spotConfigurable = itemCell1 as! CustomGridCell
     XCTAssertEqual(spot.component.items[0].size.height, spotConfigurable.preferredViewSize.height)
   }
@@ -69,7 +69,7 @@ class DataSourceTests: XCTestCase {
     spot.layout.headerReferenceSize = CGSize(width: 100, height: 48)
     spot.render().layoutSubviews()
 
-    let header = spot.spotDataSource.collectionView(spot.collectionView, viewForSupplementaryElementOfKind: UICollectionElementKindSectionHeader, at: IndexPath(item: 0, section: 0))
+    let header = spot.spotDataSource!.collectionView(spot.collectionView, viewForSupplementaryElementOfKind: UICollectionElementKindSectionHeader, at: IndexPath(item: 0, section: 0))
     XCTAssertNotNil(header)
     XCTAssert(header is CustomGridHeaderView)
   }
@@ -86,7 +86,7 @@ class DataSourceTests: XCTestCase {
     spot.layout.headerReferenceSize = CGSize(width: 100, height: 48)
     spot.render().layoutSubviews()
 
-    let header = spot.spotDataSource.collectionView(spot.collectionView, viewForSupplementaryElementOfKind: UICollectionElementKindSectionHeader, at: IndexPath(item: 0, section: 0))
+    let header = spot.spotDataSource!.collectionView(spot.collectionView, viewForSupplementaryElementOfKind: UICollectionElementKindSectionHeader, at: IndexPath(item: 0, section: 0))
     XCTAssertNotNil(header)
   }
 }
