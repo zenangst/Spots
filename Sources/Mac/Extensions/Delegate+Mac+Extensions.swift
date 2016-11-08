@@ -10,8 +10,9 @@ extension Delegate: NSCollectionViewDelegate {
      */
     Dispatch.delay(for: 0.1) { [weak self] in
       guard let weakSelf = self, let first = indexPaths.first,
-        let item = self?.spot.item(at: first.item), first.item < weakSelf.spot.items.count else { return }
-      weakSelf.spot.delegate?.didSelect(item: item, in: weakSelf.spot)
+        let spot = weakSelf.spot,
+        let item = spot.item(at: first.item), first.item < spot.items.count else { return }
+      spot.delegate?.didSelect(item: item, in: spot)
     }
   }
 }
@@ -19,6 +20,9 @@ extension Delegate: NSCollectionViewDelegate {
 extension Delegate: NSCollectionViewDelegateFlowLayout {
 
   public func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> NSSize {
+    guard let spot = spot else {
+      return CGSize.zero
+    }
     return spot.sizeForItem(at: indexPath)
   }
 }
@@ -26,7 +30,9 @@ extension Delegate: NSCollectionViewDelegateFlowLayout {
 extension Delegate: NSTableViewDelegate {
 
   public func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
-    guard let item = spot.item(at: row), row > -1 && row < spot.component.items.count
+    guard let spot = spot,
+      let item = spot.item(at: row),
+      row > -1 && row < spot.component.items.count
       else {
         return false
     }
@@ -39,6 +45,10 @@ extension Delegate: NSTableViewDelegate {
   }
 
   public func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
+    guard let spot = spot else {
+      return 1.0
+    }
+
     spot.component.size = CGSize(
       width: tableView.frame.width,
       height: tableView.frame.height)
@@ -53,7 +63,9 @@ extension Delegate: NSTableViewDelegate {
   }
 
   public func tableView(_ tableView: NSTableView, rowViewForRow row: Int) -> NSTableRowView? {
-    guard row >= 0 && row < spot.component.items.count else { return nil }
+    guard let spot = spot, row >= 0 && row < spot.component.items.count else {
+        return nil
+    }
 
     let reuseIdentifier = spot.identifier(at: row)
     guard let cachedView = spot.type.views.make(reuseIdentifier) else { return nil }

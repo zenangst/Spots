@@ -10,6 +10,10 @@ extension DataSource: UICollectionViewDataSource {
   /// - returns: The number of rows in section.
   @available(iOS 6.0, *)
   public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    guard let spot = spot else {
+      return 0
+    }
+
     return spot.component.items.count
   }
 
@@ -22,6 +26,10 @@ extension DataSource: UICollectionViewDataSource {
   ///
   /// - returns: A configured supplementary view object.
   public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+    guard let spot = spot else {
+      return UICollectionReusableView()
+    }
+
     let identifier: String
 
     if spot.component.header.isEmpty {
@@ -45,7 +53,9 @@ extension DataSource: UICollectionViewDataSource {
   ///
   /// - returns: The number of rows in section.
   public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    guard indexPath.item < spot.component.items.count else { return UICollectionViewCell() }
+    guard let spot = spot, indexPath.item < spot.component.items.count else {
+        return UICollectionViewCell()
+    }
     spot.component.items[indexPath.item].index = indexPath.item
 
     let reuseIdentifier = spot.identifier(at: indexPath)
@@ -74,6 +84,8 @@ extension DataSource: UITableViewDataSource {
   ///
   /// - returns: The number of rows in section.
   public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    guard let spot = spot else { return 0 }
+
     return spot.component.items.count
   }
 
@@ -84,7 +96,9 @@ extension DataSource: UITableViewDataSource {
   ///
   /// - returns: An object inheriting from UITableViewCell that the table view can use for the specified row. Will return the default table view cell for the current component based of kind.
   public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    guard indexPath.item < spot.component.items.count else { return UITableViewCell() }
+    guard let spot = spot, indexPath.item < spot.component.items.count else {
+      return UITableViewCell()
+    }
 
     if indexPath.item < spot.component.items.count {
       spot.component.items[indexPath.item].index = indexPath.row

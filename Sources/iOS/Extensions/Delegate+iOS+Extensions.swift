@@ -10,6 +10,8 @@ extension Delegate: UICollectionViewDelegate {
   ///
   /// - returns: The width and height of the specified item. Both values must be greater than 0.
   @objc(collectionView:layout:sizeForItemAtIndexPath:) public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    guard let spot = spot else { return CGSize.zero }
+
     return spot.sizeForItem(at: indexPath)
   }
 
@@ -18,7 +20,7 @@ extension Delegate: UICollectionViewDelegate {
   /// - parameter collectionView: The collection view object that is notifying you of the selection change.
   /// - parameter indexPath: The index path of the cell that was selected.
   public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    guard let item = spot.item(at: indexPath) else { return }
+    guard let spot = spot, let item = spot.item(at: indexPath) else { return }
     spot.delegate?.didSelect(item: item, in: spot)
   }
 
@@ -29,7 +31,7 @@ extension Delegate: UICollectionViewDelegate {
   ///
   /// - returns: YES if the item can receive be focused or NO if it can not.
   public func collectionView(_ collectionView: UICollectionView, canFocusItemAt indexPath: IndexPath) -> Bool {
-    guard let _ = spot.item(at: indexPath) else { return  false }
+    guard let spot = spot, let _ = spot.item(at: indexPath) else { return  false }
     return true
   }
 
@@ -56,6 +58,10 @@ extension Delegate: UITableViewDelegate {
   ///
   /// - returns: Returns the `headerHeight` found in `component.meta`, otherwise 0.0.
   public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    guard let spot = spot else {
+      return 0.0
+    }
+
     let header = spot.type.headers.make(spot.component.header)
     return (header?.view as? Componentable)?.preferredHeaderHeight ?? 0.0
   }
@@ -67,7 +73,7 @@ extension Delegate: UITableViewDelegate {
   ///
   /// - returns: A string to use as the title of the section header. Will return `nil` if title is not present on Component
   @nonobjc public func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    if let _ = spot.type.headers.make(spot.component.header) {
+    guard let spot = spot, let _ = spot.type.headers.make(spot.component.header) else {
       return nil
     }
     return !spot.component.title.isEmpty ? spot.component.title : nil
@@ -79,7 +85,7 @@ extension Delegate: UITableViewDelegate {
   /// - parameter indexPath: An index path locating the new selected row in tableView.
   public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
-    if let item = spot.item(at: indexPath) {
+    if let spot = spot, let item = spot.item(at: indexPath) {
       spot.delegate?.didSelect(item: item, in: spot)
     }
   }
@@ -91,7 +97,7 @@ extension Delegate: UITableViewDelegate {
   ///
   /// - returns: A view object to be displayed in the header of section based on the kind of the ListSpot and registered headers.
   public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-    guard !spot.component.header.isEmpty else { return nil }
+    guard let spot = spot, !spot.component.header.isEmpty else { return nil }
 
     let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: spot.component.header)
     view?.frame.size.height = spot.component.meta(ListSpot.Key.headerHeight, 0.0)
@@ -108,6 +114,10 @@ extension Delegate: UITableViewDelegate {
   ///
   /// - returns:  A nonnegative floating-point value that specifies the height (in points) that row should be based on the view model height, defaults to 0.0.
   public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    guard let spot = spot else {
+      return 0.0
+    }
+
     spot.component.size = CGSize(
       width: tableView.frame.size.width,
       height: tableView.frame.size.height)

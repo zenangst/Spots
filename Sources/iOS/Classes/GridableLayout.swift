@@ -27,10 +27,10 @@ open class GridableLayout: UICollectionViewFlowLayout {
      let spot = delegate.spot as? Gridable else { return }
 
     if scrollDirection == .horizontal {
-      guard let firstItem = delegate.spot.items.first else { return }
+      guard let firstItem = spot.items.first else { return }
 
-      contentSize.width = delegate.spot.items.reduce(0, { $0 + $1.size.width })
-      contentSize.width += CGFloat(delegate.spot.items.count) * (minimumInteritemSpacing)
+      contentSize.width = spot.items.reduce(0, { $0 + $1.size.width })
+      contentSize.width += CGFloat(spot.items.count) * (minimumInteritemSpacing)
       contentSize.width += sectionInset.left + (sectionInset.right / 2) - 3
       contentSize.width = ceil(contentSize.width)
 
@@ -64,8 +64,11 @@ open class GridableLayout: UICollectionViewFlowLayout {
   /// - returns: An array of layout attribute objects containing the layout information for the enclosed items and views. The default implementation of this method returns nil.
   open override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
     guard let collectionView = collectionView,
-      let dataSource = collectionView.dataSource as? DataSource
-      else { return nil }
+      let dataSource = collectionView.dataSource as? DataSource,
+      let spot = dataSource.spot
+      else {
+        return nil
+    }
 
     var attributes = [UICollectionViewLayoutAttributes]()
     var rect = CGRect(origin: CGPoint.zero, size: contentSize)
@@ -88,7 +91,7 @@ open class GridableLayout: UICollectionViewFlowLayout {
           itemAttribute.frame.origin.x = collectionView.contentOffset.x
           attributes.append(itemAttribute)
         } else {
-          itemAttribute.size = dataSource.spot.sizeForItem(at: itemAttribute.indexPath)
+          itemAttribute.size = spot.sizeForItem(at: itemAttribute.indexPath)
 
           if scrollDirection == .horizontal {
             itemAttribute.frame.origin.y = headerReferenceSize.height

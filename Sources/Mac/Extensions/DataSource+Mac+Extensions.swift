@@ -7,10 +7,18 @@ extension DataSource: NSCollectionViewDataSource {
   }
 
   public func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
+    guard let spot = spot else {
+      return 0
+    }
+
     return spot.component.items.count
   }
 
   public func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
+    guard let spot = spot else {
+      return NSCollectionViewItem()
+    }
+
     let reuseIdentifier: String
 
     if let gridable = spot as? Gridable {
@@ -29,6 +37,10 @@ extension DataSource: NSCollectionViewDataSource {
 extension DataSource: NSTableViewDataSource {
 
   public func numberOfRows(in tableView: NSTableView) -> Int {
+    guard let spot = spot else {
+      return 0
+    }
+
     return spot.component.items.count
   }
 
