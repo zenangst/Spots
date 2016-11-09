@@ -2,7 +2,7 @@ import Foundation
 
 final class SpotOperation: ConcurrentOperation {
 
-  typealias Task = () -> Void
+  typealias Task = (() -> Void) -> Void
   fileprivate var task: Task?
 
   // MARK: - Initialization
@@ -18,8 +18,9 @@ final class SpotOperation: ConcurrentOperation {
   // MARK: - Operation
 
   override func execute() {
-    task?()
-    state = .Finished
+    task? { [weak self] in
+      self?.state = .Finished
+    }
   }
 
   override func cancel() {
