@@ -209,7 +209,6 @@ public struct Component: Mappable, Equatable {
     return defaultValue
   }
 
-
   /// A generic convenience method for resolving meta attributes
   ///
   /// - parameter key: String
@@ -218,7 +217,6 @@ public struct Component: Mappable, Equatable {
   public func meta<T>(_ key: String, type: T.Type) -> T? {
     return meta[key] as? T
   }
-
 
   ///Compare two components
   ///
@@ -270,7 +268,6 @@ public func == (lhs: [Component], rhs: [Component]) -> Bool {
   return equal
 }
 
-
 /// Compare two collections of Components to see if they are truly equal
 ///
 /// - parameter lhs: Left hand component
@@ -289,7 +286,6 @@ public func === (lhs: [Component], rhs: [Component]) -> Bool {
   return equal
 }
 
-
 /// Check if to collection of components are not equal
 ///
 /// - parameter lhs: Left hand component
@@ -299,7 +295,6 @@ public func === (lhs: [Component], rhs: [Component]) -> Bool {
 public func != (lhs: [Component], rhs: [Component]) -> Bool {
   return !(lhs == rhs)
 }
-
 
 /// Check if to collection of components are truly not equal
 ///
@@ -312,7 +307,6 @@ public func !== (lhs: [Component], rhs: [Component]) -> Bool {
 }
 
 /// Compare view models
-
 
 /// Check if to components are equal
 ///
@@ -330,7 +324,6 @@ public func == (lhs: Component, rhs: Component) -> Bool {
     (lhs.meta as NSDictionary).isEqual(rhs.meta as NSDictionary) &&
     lhs.items == rhs.items
 }
-
 
 /// Check if to components are truly equal
 ///
@@ -353,7 +346,6 @@ public func === (lhs: Component, rhs: Component) -> Bool {
     lhs.items === rhs.items
 }
 
-
 /// Check if to components are not equal
 ///
 /// - parameter lhs: Left hand component
@@ -363,7 +355,6 @@ public func === (lhs: Component, rhs: Component) -> Bool {
 public func != (lhs: Component, rhs: Component) -> Bool {
   return !(lhs == rhs)
 }
-
 
 /// Check if to components are truly not equal
 ///

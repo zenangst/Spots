@@ -12,7 +12,6 @@ extension Dictionary where Key: ExpressibleByStringLiteral {
     return property(name.string)
   }
 
-
   /// Resolve relations with key
   /// - parameter name: The name of the property that you want to map
   ///

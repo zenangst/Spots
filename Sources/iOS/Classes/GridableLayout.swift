@@ -56,7 +56,6 @@ open class GridableLayout: UICollectionViewFlowLayout {
     }
   }
 
-
   /// Returns the layout attributes for all of the cells and views in the specified rectangle.
   ///
   /// - parameter rect: The rectangle (specified in the collection view’s coordinate system) containing the target views.
@@ -112,7 +111,6 @@ open class GridableLayout: UICollectionViewFlowLayout {
 
     return attributes
   }
-
 
   /// Asks the layout object if the new bounds require a layout update.
   ///

@@ -47,7 +47,6 @@ public extension UICollectionView {
     }
   }
 
-
   /// Process a collection of changes
   ///
   /// - parameter changes:          A tuple with insertions, reloads and delctions

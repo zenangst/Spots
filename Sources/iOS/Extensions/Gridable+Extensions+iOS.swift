@@ -29,7 +29,6 @@ extension Gridable {
     layout.minimumInteritemSpacing = itemSpacing
   }
 
-
   /// Asks the data source for the size of an item in a particular location.
   ///
   /// - parameter indexPath: The index path of the

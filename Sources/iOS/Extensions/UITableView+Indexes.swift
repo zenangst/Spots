@@ -37,7 +37,6 @@ public extension UITableView {
     if animation == .none { UIView.setAnimationsEnabled(true) }
   }
 
-
   /// Process a collection of changes
   ///
   /// - parameter changes:          A tuple with insertions, reloads and delctions
@@ -73,7 +72,6 @@ public extension UITableView {
     }
     if animation == .none { UIView.setAnimationsEnabled(true) }
   }
-
 
   /// Perform updates with closure
   ///

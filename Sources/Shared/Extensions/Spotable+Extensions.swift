@@ -218,7 +218,6 @@ public extension Spotable {
     #endif
   }
 
-
   /// Update the height of the UI Component
   ///
   /// - parameter completion: A completion closure that will be run in the main queue when the size has been updated.
@@ -400,7 +399,6 @@ public extension Spotable {
     return render().frame.size
   }
 
-
   /// Get identifier for item at index path
   ///
   /// - parameter indexPath: The index path for the item
@@ -413,7 +411,6 @@ public extension Spotable {
       return identifier(at: indexPath.row)
     #endif
   }
-
 
   /// Lookup identifier at index.
   ///
@@ -429,13 +426,11 @@ public extension Spotable {
     return item.kind
   }
 
-
   /// Register and prepare all items in the Spotable object.
   func registerAndPrepare() {
     register()
     prepareItems()
   }
-
 
   /// Update height and refresh indexes for the Spotable object.
   ///
@@ -456,7 +451,6 @@ public extension Spotable {
     }
   }
 
-
   /// Register a composite view for the Spotable component.
   ///
   /// - parameter view: The view type that should be used as the composite view for the Spotable object.
@@ -466,7 +460,6 @@ public extension Spotable {
     }
   }
 
-
   /// Register a nib file with identifier on the Spotable object.
   ///
   /// - parameter nib:        A Nib file that should be used for identifier
@@ -475,7 +468,6 @@ public extension Spotable {
     self.views.storage[identifier.string] = Registry.Item.nib(nib)
   }
 
-
   /// Register a view with an identifier
   ///
   /// - parameter view:       The view type that should be registered with an identifier.
@@ -483,7 +475,6 @@ public extension Spotable {
   public static func register(view: View.Type, identifier: StringConvertible) {
     self.views.storage[identifier.string] = Registry.Item.classType(view)
   }
-
 
   /// Register a default view for the Spotable object.
   ///

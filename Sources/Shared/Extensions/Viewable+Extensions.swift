@@ -80,7 +80,6 @@ public extension Spotable where Self : Viewable {
       view.frame.size = size
     }
 
-
     scrollView.addSubview(view)
     component.items.append(item)
   }
