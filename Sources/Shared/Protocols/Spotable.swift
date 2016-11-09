@@ -34,6 +34,8 @@ public protocol Spotable: class {
   var stateCache: StateCache? { get }
   /// Indicator to calculate the height based on content
   var usesDynamicHeight: Bool { get }
+  /// Operation queue for spot mutations
+  var operationQueue: OperationQueue { get }
 
   #if os(OSX)
     /// The current responder for the Spotable object, only available on macOS.
