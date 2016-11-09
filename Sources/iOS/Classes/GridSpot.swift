@@ -81,6 +81,9 @@ open class GridSpot: NSObject, Gridable {
     return collectionView
   }()
 
+  /// Operation queue for spot mutations
+  public var operationQueue: OperationQueue
+
   var spotDataSource: DataSource?
   var spotDelegate: Delegate?
 
@@ -91,6 +94,7 @@ open class GridSpot: NSObject, Gridable {
   /// - returns: An initialized grid spot with component.
   public required init(component: Component) {
     self.component = component
+    operationQueue = OperationQueueBuilder.build()
     super.init()
     self.spotDataSource = DataSource(spot: self)
     self.spotDelegate = Delegate(spot: self)
@@ -159,6 +163,7 @@ open class GridSpot: NSObject, Gridable {
   }
 
   deinit {
+    operationQueue.cancelAllOperations()
     spotDataSource = nil
     spotDelegate = nil
   }

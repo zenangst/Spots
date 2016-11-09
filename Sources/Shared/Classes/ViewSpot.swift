@@ -38,8 +38,12 @@ open class ViewSpot: NSObject, Spotable, Viewable {
   /// Indicator to calculate the height based on content
   open var usesDynamicHeight = true
 
+  /// Operation queue for spot mutations
+  public var operationQueue: OperationQueue
+
   public required init(component: Component) {
     self.component = component
+    operationQueue = OperationQueueBuilder.build()
     super.init()
     registerDefault(view: View.self)
     prepare()

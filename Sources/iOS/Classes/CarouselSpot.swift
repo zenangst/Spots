@@ -141,6 +141,9 @@ open class CarouselSpot: NSObject, Gridable {
   /// The collection views background view
   open lazy var backgroundView = UIView()
 
+  /// Operation queue for spot mutations
+  public var operationQueue: OperationQueue
+
   var spotDataSource: DataSource?
   var spotDelegate: Delegate?
 
@@ -151,6 +154,7 @@ open class CarouselSpot: NSObject, Gridable {
   /// - returns: An initialized carousel spot.
   public required init(component: Component) {
     self.component = component
+    operationQueue = OperationQueueBuilder.build()
     super.init()
     self.spotDataSource = DataSource(spot: self)
     self.spotDelegate = Delegate(spot: self)
@@ -197,6 +201,7 @@ open class CarouselSpot: NSObject, Gridable {
   }
 
   deinit {
+    operationQueue.cancelAllOperations()
     spotDataSource = nil
     spotDelegate = nil
   }
