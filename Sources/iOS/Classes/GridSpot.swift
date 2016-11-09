@@ -159,8 +159,8 @@ open class GridSpot: NSObject, Gridable {
   }
 
   deinit {
-    self.spotDataSource = nil
-    self.spotDelegate = nil
+    spotDataSource = nil
+    spotDelegate = nil
   }
 
   /// Configure section insets and layout spacing for the UICollectionViewFlow using component meta data

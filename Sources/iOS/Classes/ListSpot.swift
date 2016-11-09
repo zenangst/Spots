@@ -132,8 +132,8 @@ open class ListSpot: NSObject, Listable {
   }
 
   deinit {
-    self.spotDataSource = nil
-    self.spotDelegate = nil
+    spotDataSource = nil
+    spotDelegate = nil
   }
 
   /// Configure and setup the data source, delegate and additional configuration options for the table view.

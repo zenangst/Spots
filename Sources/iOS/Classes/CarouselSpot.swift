@@ -197,8 +197,8 @@ open class CarouselSpot: NSObject, Gridable {
   }
 
   deinit {
-    self.spotDataSource = nil
-    self.spotDelegate = nil
+    spotDataSource = nil
+    spotDelegate = nil
   }
 
   /// Configure collection view with data source, delegate and background view
