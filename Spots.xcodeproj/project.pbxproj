@@ -225,6 +225,9 @@
 		D540664B1DD321DC003C1360 /* ConcurrentOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D540664A1DD321DC003C1360 /* ConcurrentOperation.swift */; };
 		D540664C1DD321DC003C1360 /* ConcurrentOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D540664A1DD321DC003C1360 /* ConcurrentOperation.swift */; };
 		D540664D1DD321DC003C1360 /* ConcurrentOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D540664A1DD321DC003C1360 /* ConcurrentOperation.swift */; };
+		D540664F1DD322A1003C1360 /* SpotOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D540664E1DD322A1003C1360 /* SpotOperation.swift */; };
+		D54066501DD322A1003C1360 /* SpotOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D540664E1DD322A1003C1360 /* SpotOperation.swift */; };
+		D54066511DD322A1003C1360 /* SpotOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D540664E1DD322A1003C1360 /* SpotOperation.swift */; };
 		D58478141C43FEB9006EBA49 /* Spots.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478091C43FEB8006EBA49 /* Spots.framework */; };
 		D58478531C43FFEB006EBA49 /* TestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58478281C43FF34006EBA49 /* TestFactory.swift */; };
 		D58478571C43FFFD006EBA49 /* TestComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D584782B1C43FF34006EBA49 /* TestComponent.swift */; };
@@ -368,6 +371,7 @@
 		BDEFF5511DD1DA8000FC0537 /* TestDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestDelegate.swift; sourceTree = "<group>"; };
 		D2FEDC1E1D9E845A004D5ABF /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		D540664A1DD321DC003C1360 /* ConcurrentOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConcurrentOperation.swift; sourceTree = "<group>"; };
+		D540664E1DD322A1003C1360 /* SpotOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotOperation.swift; sourceTree = "<group>"; };
 		D58478091C43FEB8006EBA49 /* Spots.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Spots.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D58478131C43FEB9006EBA49 /* Spots-iOS-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Spots-iOS-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D58478241C43FF34006EBA49 /* Info-iOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
@@ -569,6 +573,7 @@
 				BDEFF53B1DD0F18B00FC0537 /* DataSource.swift */,
 				BDEFF5431DD0F7FB00FC0537 /* Delegate.swift */,
 				D540664A1DD321DC003C1360 /* ConcurrentOperation.swift */,
+				D540664E1DD322A1003C1360 /* SpotOperation.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1123,6 +1128,7 @@
 				BD129F861D7B2F91009AC164 /* Viewable.swift in Sources */,
 				BD129DCE1D7B2B6C009AC164 /* Controller.swift in Sources */,
 				D540664D1DD321DC003C1360 /* ConcurrentOperation.swift in Sources */,
+				D54066511DD322A1003C1360 /* SpotOperation.swift in Sources */,
 				BD129DC41D7B2B6C009AC164 /* GridSpotCell.swift in Sources */,
 				BD129D981D7B295F009AC164 /* Composable.swift in Sources */,
 				BD129D941D7B295F009AC164 /* UICollectionView+Indexes.swift in Sources */,
@@ -1214,6 +1220,7 @@
 				BD129D931D7B295F009AC164 /* UICollectionView+Indexes.swift in Sources */,
 				BD129DC51D7B2B6C009AC164 /* ListComposite.swift in Sources */,
 				D540664B1DD321DC003C1360 /* ConcurrentOperation.swift in Sources */,
+				D540664F1DD322A1003C1360 /* SpotOperation.swift in Sources */,
 				BD129F7B1D7B2F91009AC164 /* SpotConfigurable.swift in Sources */,
 				BD129DB51D7B2B6C009AC164 /* CarouselSpot.swift in Sources */,
 				BD129DCB1D7B2B6C009AC164 /* SpotsContentView.swift in Sources */,
@@ -1332,6 +1339,7 @@
 				BD129F4C1D7B2F91009AC164 /* SpotFactory.swift in Sources */,
 				BD129E341D7B2CDE009AC164 /* NSScrollView+Extensions.swift in Sources */,
 				BD129F8B1D7B2F91009AC164 /* GridableMeta.swift in Sources */,
+				D54066501DD322A1003C1360 /* SpotOperation.swift in Sources */,
 				BD129F911D7B2F91009AC164 /* StateCache.swift in Sources */,
 				BD129E301D7B2CDE009AC164 /* Gridable+Extensions+Mac.swift in Sources */,
 				BD129F5E1D7B2F91009AC164 /* SpotsProtocol+Extensions.swift in Sources */,
