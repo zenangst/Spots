@@ -2,7 +2,23 @@
 
 ## [Unreleased](https://github.com/hyperoslo/Spots/tree/HEAD)
 
-[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.1.2...HEAD)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.1.3...HEAD)
+
+**Closed issues:**
+
+- Spots demo project fails to compile with Xcode 8.1 [\#350](https://github.com/hyperoslo/Spots/issues/350)
+- Improve test coverage [\#279](https://github.com/hyperoslo/Spots/issues/279)
+
+**Merged pull requests:**
+
+- Refactor Delegate and DataSource to use an optional instead of an unwrapped spot [\#354](https://github.com/hyperoslo/Spots/pull/354) ([zenangst](https://github.com/zenangst))
+- Feature data & delegate abstraction [\#353](https://github.com/hyperoslo/Spots/pull/353) ([zenangst](https://github.com/zenangst))
+- Feature/row spot [\#352](https://github.com/hyperoslo/Spots/pull/352) ([zenangst](https://github.com/zenangst))
+- Internal improvements to both iOS and macOS [\#351](https://github.com/hyperoslo/Spots/pull/351) ([zenangst](https://github.com/zenangst))
+- Improve mapping [\#349](https://github.com/hyperoslo/Spots/pull/349) ([zenangst](https://github.com/zenangst))
+
+## [5.1.3](https://github.com/hyperoslo/Spots/tree/5.1.3) (2016-11-01)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.1.2...5.1.3)
 
 **Fixed bugs:**
 
