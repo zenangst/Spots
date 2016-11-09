@@ -84,6 +84,9 @@ open class CarouselSpot: NSObject, Gridable {
   open lazy var scrollView: ScrollView = ScrollView()
   open var collectionView: CollectionView
 
+  /// Operation queue for spot mutations
+  public var operationQueue: OperationQueue
+
   lazy var lineView: NSView = {
     let lineView = NSView()
     lineView.frame.size.height = 1
@@ -104,6 +107,7 @@ open class CarouselSpot: NSObject, Gridable {
   public required init(component: Component) {
     self.component = component
     self.collectionView = CollectionView()
+    operationQueue = OperationQueueBuilder.build()
     super.init()
     self.spotDataSource = DataSource(spot: self)
     self.spotDelegate = Delegate(spot: self)
@@ -139,6 +143,7 @@ open class CarouselSpot: NSObject, Gridable {
   }
 
   deinit {
+    operationQueue.cancelAllOperations()
     collectionView.delegate = nil
     collectionView.dataSource = nil
     spotDataSource = nil
