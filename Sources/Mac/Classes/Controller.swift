@@ -119,18 +119,21 @@ open class Controller: NSViewController, SpotsProtocol {
     fatalError("init(coder:) has not been implemented")
   }
 
-  /**
-   A generic look up method for resolving spots based on index
-
-   - parameter index: The index of the spot that you are trying to resolve
-   - parameter type: The generic type for the spot you are trying to resolve
-
-   - returns: An optional Spotable object
-   */
-  public func spot<T>(at index: Int = 0, ofType type: T.Type) -> T? {
+  ///  A generic look up method for resolving spots based on index
+  ///
+  /// - parameter index: The index of the spot that you are trying to resolve.
+  /// - parameter type: The generic type for the spot you are trying to resolve.
+  ///
+  /// - returns: An optional Spotable object of inferred type.
+  open func spot<T>(at index: Int = 0, ofType type: T.Type) -> T? {
     return spots.filter({ $0.index == index }).first as? T
   }
 
+  /// A look up method for resolving a spot at index as a Spotable object.
+  ///
+  /// - parameter index: The index of the spot that you are trying to resolve.
+  ///
+  /// - returns: An optional Spotable object.
   open func spot(at index: Int = 0) -> Spotable? {
     return spots.filter({ $0.index == index }).first
   }

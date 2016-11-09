@@ -23,7 +23,8 @@ open class GridableLayout: UICollectionViewFlowLayout {
   open override func prepare() {
     super.prepare()
 
-    guard let spot = collectionView?.delegate as? Gridable else { return }
+    guard let delegate = collectionView?.delegate as? Delegate,
+     let spot = delegate.spot as? Gridable else { return }
 
     if scrollDirection == .horizontal {
       guard let firstItem = spot.items.first else { return }
@@ -36,7 +37,7 @@ open class GridableLayout: UICollectionViewFlowLayout {
       contentSize.height = firstItem.size.height + headerReferenceSize.height
       contentSize.height += sectionInset.top + sectionInset.bottom
 
-      if let spot = spot as? CarouselSpot, spot.pageIndicator {
+      if let spot = delegate.spot as? CarouselSpot, spot.pageIndicator {
         contentSize.height += spot.pageControl.frame.height
       }
     } else {
@@ -63,8 +64,11 @@ open class GridableLayout: UICollectionViewFlowLayout {
   /// - returns: An array of layout attribute objects containing the layout information for the enclosed items and views. The default implementation of this method returns nil.
   open override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
     guard let collectionView = collectionView,
-      let spot = collectionView.dataSource as? Gridable
-      else { return nil }
+      let dataSource = collectionView.dataSource as? DataSource,
+      let spot = dataSource.spot
+      else {
+        return nil
+    }
 
     var attributes = [UICollectionViewLayoutAttributes]()
     var rect = CGRect(origin: CGPoint.zero, size: contentSize)

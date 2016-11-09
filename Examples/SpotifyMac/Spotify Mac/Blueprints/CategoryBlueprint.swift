@@ -7,6 +7,17 @@ struct CategoryBlueprint: BlueprintContainer {
 
   static let key = "category"
   static var drawing: Blueprint {
+    let template = [
+      "components" : [
+        [
+          "kind" : Component.Kind.Grid.rawValue,
+          "meta" : [
+            GridSpot.Key.layout : GridSpot.LayoutType.left.rawValue,
+          ]
+        ]
+      ]
+    ]
+
     return Blueprint(cacheKey: "", requests: [(
       request: nil,
       rootKey: "playlists",
@@ -37,15 +48,6 @@ struct CategoryBlueprint: BlueprintContainer {
         }
         return viewModels
       }
-      )], template: [
-        "components" : [
-          [
-            "kind" : Component.Kind.Grid.rawValue,
-            "meta" : [
-              GridSpot.Key.layout : GridSpot.LayoutType.Left.rawValue,
-            ]
-          ]
-        ]
-      ])
+      )], template: template)
   }
 }

@@ -11,11 +11,11 @@ class CarouselSpotTests: XCTestCase {
   override func setUp() {
     spot = CarouselSpot(component: Component())
     cachedSpot = CarouselSpot(cacheKey: "cached-carousel-spot")
+    Helper.clearCache(for: cachedSpot.stateCache)
   }
 
   override func tearDown() {
     spot = nil
-    cachedSpot.stateCache?.clear()
     cachedSpot = nil
   }
 
@@ -244,8 +244,6 @@ class CarouselSpotTests: XCTestCase {
   }
 
   func testSpotCache() {
-    cachedSpot.stateCache?.clear()
-
     let item = Item(title: "test")
 
     XCTAssertEqual(cachedSpot.component.items.count, 0)
@@ -254,8 +252,9 @@ class CarouselSpotTests: XCTestCase {
     }
 
     var exception: XCTestExpectation? = self.expectation(description: "Wait for cache")
-    Dispatch.delay(for: 0.25) {
-      let cachedSpot = CarouselSpot(cacheKey: self.cachedSpot.stateCache!.key)
+    Dispatch.delay(for: 0.25) { [weak self] in
+      guard let weakSelf = self else { return }
+      let cachedSpot = CarouselSpot(cacheKey: weakSelf.cachedSpot.stateCache!.key)
       XCTAssertEqual(cachedSpot.component.items.count, 1)
       cachedSpot.stateCache?.clear()
       exception?.fulfill()

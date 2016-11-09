@@ -49,6 +49,9 @@ open class ListSpot: NSObject, Listable {
   /// Indicator to calculate the height based on content
   open var usesDynamicHeight = true
 
+  var spotDataSource: DataSource?
+  var spotDelegate: Delegate?
+
   // MARK: - Initializers
 
   /// A required initializer to instantiate a ListSpot with a component.
@@ -59,6 +62,8 @@ open class ListSpot: NSObject, Listable {
   public required init(component: Component) {
     self.component = component
     super.init()
+    self.spotDataSource = DataSource(spot: self)
+    self.spotDelegate = Delegate(spot: self)
 
     if component.kind.isEmpty {
       self.component.kind = Component.Kind.List.string
@@ -126,11 +131,16 @@ open class ListSpot: NSObject, Listable {
     ListSpot.configure?(tableView)
   }
 
+  deinit {
+    spotDataSource = nil
+    spotDelegate = nil
+  }
+
   /// Configure and setup the data source, delegate and additional configuration options for the table view.
   public func setupTableView() {
     register()
-    tableView.dataSource = self
-    tableView.delegate = self
+    tableView.dataSource = spotDataSource
+    tableView.delegate = spotDelegate
     tableView.rowHeight = UITableViewAutomaticDimension
 
     #if os(iOS)
@@ -178,122 +188,5 @@ open class ListSpot: NSObject, Listable {
   /// parameter header: The view type that you want to register as default header.
   open static func register(defaultHeader header: View.Type) {
     self.headers.storage[self.views.defaultIdentifier] = Registry.Item.classType(header)
-  }
-}
-
-/**
- A UITableViewDelegate extension on ListAdapter
- */
-extension ListSpot: UITableViewDelegate {
-
-  /// Asks the delegate for the height to use for the header of a particular section.
-  ///
-  /// - parameter tableView: The table-view object requesting this information.
-  /// - parameter heightForHeaderInSection: An index number identifying a section of tableView.
-  /// - returns: Returns the `headerHeight` found in `component.meta`, otherwise 0.0.
-
-  public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    let header = type(of: self).headers.make(component.header)
-    return (header?.view as? Componentable)?.preferredHeaderHeight ?? 0.0
-  }
-
-  /// Asks the data source for the title of the header of the specified section of the table view.
-  ///
-  /// - parameter tableView: The table-view object asking for the title.
-  /// - parameter section: An index number identifying a section of tableView.
-  /// - returns: A string to use as the title of the section header. Will return `nil` if title is not present on Component
-  public func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    if let _ = type(of: self).headers.make(component.header) {
-      return nil
-    }
-    return !component.title.isEmpty ? component.title : nil
-  }
-
-  /// Tells the delegate that the specified row is now selected.
-  ///
-  /// - parameter tableView: A table-view object informing the delegate about the new row selection.
-  /// - parameter indexPath: An index path locating the new selected row in tableView.
-  public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    tableView.deselectRow(at: indexPath, animated: true)
-    if let item = self.item(at: indexPath) {
-      delegate?.didSelect(item: item, in: self)
-    }
-  }
-
-  /// Asks the delegate for a view object to display in the header of the specified section of the table view.
-  ///
-  /// - parameter tableView: The table-view object asking for the view object.
-  /// - parameter section: An index number identifying a section of tableView.
-  /// - returns: A view object to be displayed in the header of section based on the kind of the ListSpot and registered headers.
-  public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-    guard !component.header.isEmpty else { return nil }
-
-    let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: component.header)
-    view?.frame.size.height = component.meta(ListSpot.Key.headerHeight, 0.0)
-    view?.frame.size.width = tableView.frame.size.width
-    (view as? Componentable)?.configure(component)
-
-    return view
-  }
-
-  /// Asks the delegate for the height to use for a row in a specified location.
-  ///
-  /// - parameter tableView: The table-view object requesting this information.
-  /// - parameter indexPath: An index path that locates a row in tableView.
-  /// - returns:  A nonnegative floating-point value that specifies the height (in points) that row should be based on the view model height, defaults to 0.0.
-
-  public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    component.size = CGSize(
-      width: tableView.frame.size.width,
-      height: tableView.frame.size.height)
-
-    return item(at: indexPath)?.size.height ?? 0
-  }
-}
-
-/// MARK: - UITableViewDataSource
-extension ListSpot : UITableViewDataSource {
-
-  /// Tells the data source to return the number of rows in a given section of a table view. (required)
-  ///
-  /// - parameter tableView: The table-view object requesting this information.
-  /// - parameter section: An index number identifying a section in tableView.
-  ///
-  /// - returns: The number of rows in section.
-  public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return component.items.count
-  }
-
-  /// Asks the data source for a cell to insert in a particular location of the table view. (required)
-  ///
-  /// - parameter tableView: A table-view object requesting the cell.
-  /// - parameter indexPath: An index path locating a row in tableView.
-  ///
-  /// - returns: An object inheriting from UITableViewCell that the table view can use for the specified row. Will return the default table view cell for the current component based of kind.
-  public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    if indexPath.item < component.items.count {
-      component.items[indexPath.item].index = indexPath.row
-    }
-
-    let reuseIdentifier = identifier(at: indexPath)
-    let cell: UITableViewCell = tableView
-      .dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
-
-    guard indexPath.item < component.items.count else { return cell }
-
-    if let composite = cell as? Composable {
-      let spots = spotsCompositeDelegate?.resolve(index, itemIndex: (indexPath as NSIndexPath).item)
-      composite.configure(&component.items[indexPath.item], spots: spots)
-    } else if let cell = cell as? SpotConfigurable {
-      cell.configure(&component.items[indexPath.item])
-
-      if component.items[indexPath.item].size.height == 0.0 {
-        component.items[indexPath.item].size = cell.preferredViewSize
-      }
-
-      configure?(cell)
-    }
-
-    return cell
   }
 }

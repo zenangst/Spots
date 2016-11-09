@@ -145,11 +145,20 @@ extension Gridable {
     self.headers.storage[identifier.string] = Registry.Item.nib(nib)
   }
 
+  /// Register default header for the CarouselSpot
+  ///
+  /// - parameter view: A header view
+  public func registerDefaultHeader(header view: View.Type) {
+    guard type.headers.storage[type.headers.defaultIdentifier] == nil else { return }
+    type.headers.defaultItem = Registry.Item.classType(view)
+  }
+
   ///Register a default header for the Gridable component
   ///
   /// - parameter defaultHeader: The default header class that should be used by the component
   public static func register(defaultHeader header: View.Type) {
     self.headers.storage[self.views.defaultIdentifier] = Registry.Item.classType(header)
+    self.headers.defaultItem = Registry.Item.classType(header)
   }
 
   public func ui<T>(at index: Int) -> T? {

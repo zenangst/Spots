@@ -27,7 +27,9 @@ public typealias Completion = (() -> Void)?
 
   /// Extension for macOS to gain layoutSubviews
   extension NSView {
-    func layoutSubviews() { layoutSubtreeIfNeeded() }
+    func layoutSubviews() {
+      layoutSubtreeIfNeeded()
+    }
   }
 #else
   /// A type alias to reference a normal platform view
