@@ -170,8 +170,8 @@ extension Gridable {
   /// - parameter animation:  The animation that should be used (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue.
   public func append(_ item: Item, withAnimation animation: Animation = .none, completion: Completion = nil) {
-    let operation = SpotOperation { [weak self] finish in
-      guard let weakSelf = self else { completion?(); return }
+    let operation = SpotOperation(completion) { [weak self] completion in
+      guard let weakSelf = self else { completion(); return }
 
       var indexes = [Int]()
       let itemsCount = weakSelf.component.items.count
@@ -186,7 +186,7 @@ extension Gridable {
       }
 
       Dispatch.mainQueue { [weak self] in
-        guard let weakSelf = self else { completion?(); return }
+        guard let weakSelf = self else { completion(); return }
 
         if itemsCount > 0 {
           weakSelf.collectionView.insert(indexes, completion: nil)
@@ -194,7 +194,7 @@ extension Gridable {
           weakSelf.collectionView.reloadData()
         }
         weakSelf.updateHeight() {
-          completion?()
+          completion()
         }
       }
     }
