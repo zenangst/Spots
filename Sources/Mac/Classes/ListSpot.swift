@@ -107,11 +107,15 @@ open class ListSpot: NSObject, Listable {
     return lineView
   }()
 
+  /// Operation queue for spot mutations
+  public var operationQueue: OperationQueue
+
   var spotDataSource: DataSource?
   var spotDelegate: Delegate?
 
   public required init(component: Component) {
     self.component = component
+    operationQueue = OperationQueueBuilder.build()
     super.init()
     self.spotDataSource = DataSource(spot: self)
     self.spotDelegate = Delegate(spot: self)
@@ -133,6 +137,7 @@ open class ListSpot: NSObject, Listable {
   }
 
   deinit {
+    operationQueue.cancelAllOperations()
     tableView.delegate = nil
     tableView.dataSource = nil
     spotDataSource = nil

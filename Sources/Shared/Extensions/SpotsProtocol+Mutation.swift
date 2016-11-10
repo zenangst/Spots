@@ -129,7 +129,6 @@ extension SpotsProtocol {
     yOffset += spot.render().frame.size.height
   }
 
-
   /// Remove Spot at index
   ///
   /// - parameter index: The index of the Spotable object hat you want to remove

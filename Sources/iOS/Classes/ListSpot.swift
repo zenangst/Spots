@@ -49,6 +49,8 @@ open class ListSpot: NSObject, Listable {
   /// Indicator to calculate the height based on content
   open var usesDynamicHeight = true
 
+  public var operationQueue: OperationQueue
+
   var spotDataSource: DataSource?
   var spotDelegate: Delegate?
 
@@ -61,6 +63,7 @@ open class ListSpot: NSObject, Listable {
   /// - returns: An initialized list spot with component.
   public required init(component: Component) {
     self.component = component
+    operationQueue = OperationQueueBuilder.build()
     super.init()
     self.spotDataSource = DataSource(spot: self)
     self.spotDelegate = Delegate(spot: self)
@@ -132,6 +135,7 @@ open class ListSpot: NSObject, Listable {
   }
 
   deinit {
+    operationQueue.cancelAllOperations()
     spotDataSource = nil
     spotDelegate = nil
   }

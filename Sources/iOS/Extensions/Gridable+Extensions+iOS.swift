@@ -29,7 +29,6 @@ extension Gridable {
     layout.minimumInteritemSpacing = itemSpacing
   }
 
-
   /// Asks the data source for the size of an item in a particular location.
   ///
   /// - parameter indexPath: The index path of the
@@ -171,30 +170,36 @@ extension Gridable {
   /// - parameter animation:  The animation that should be used (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue.
   public func append(_ item: Item, withAnimation animation: Animation = .none, completion: Completion = nil) {
-    var indexes = [Int]()
-    let itemsCount = component.items.count
+    let operation = SpotOperation(completion) { [weak self] completion in
+      guard let weakSelf = self else { completion(); return }
 
-    if component.items.isEmpty {
-      component.items.append(item)
-    } else {
-      for (index, item) in items.enumerated() {
-        component.items.append(item)
-        indexes.append(itemsCount + index)
-      }
-    }
+      var indexes = [Int]()
+      let itemsCount = weakSelf.component.items.count
 
-    Dispatch.mainQueue { [weak self] in
-      guard let weakSelf = self else { completion?(); return }
-
-      if itemsCount > 0 {
-        weakSelf.collectionView.insert(indexes, completion: nil)
+      if weakSelf.component.items.isEmpty {
+        weakSelf.component.items.append(item)
       } else {
-        weakSelf.collectionView.reloadData()
+        for (index, item) in weakSelf.items.enumerated() {
+          weakSelf.component.items.append(item)
+          indexes.append(itemsCount + index)
+        }
       }
-      weakSelf.updateHeight() {
-        completion?()
+
+      Dispatch.mainQueue { [weak self] in
+        guard let weakSelf = self else { completion(); return }
+
+        if itemsCount > 0 {
+          weakSelf.collectionView.insert(indexes, completion: nil)
+        } else {
+          weakSelf.collectionView.reloadData()
+        }
+        weakSelf.updateHeight() {
+          completion()
+        }
       }
     }
+
+    operationQueue.addOperation(operation)
   }
 
   /// Append a collection of items to collection with animation

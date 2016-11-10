@@ -25,7 +25,6 @@ open class SpotsScrollView: UIScrollView {
   /// A container view that works as a proxy layer for scroll view
   open var contentView: SpotsContentView = SpotsContentView()
 
-
   /// A deinitiazlier that removes all subviews from contentView
   deinit {
     for subview in subviewsInLayoutOrder {
