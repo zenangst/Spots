@@ -296,10 +296,10 @@ class ControllerTests : XCTestCase {
       Item(title: "title1", kind: "carousel"),
       Item(title: "title2", kind: "carousel")
     ]
-    controller.append(items, spotIndex: 0)
-
-    XCTAssert(self.controller.spot!.component.items.count > 0)
-    XCTAssert(self.controller.spot!.component.items == items)
+    controller.append(items, spotIndex: 0) {
+      XCTAssert(self.controller.spot!.component.items.count > 0)
+      XCTAssert(self.controller.spot!.component.items == items)
+    }
 
     // Test appending items without kind
     let exception = self.expectation(description: "Test append items")
@@ -312,7 +312,7 @@ class ControllerTests : XCTestCase {
       XCTAssertEqual(self.controller.spot!.component.items[3].title, "title4")
       exception.fulfill()
     }
-    waitForExpectations(timeout: 0.1, handler: nil)
+    waitForExpectations(timeout: 0.2, handler: nil)
   }
 
   func testPrependItemsInCarouselSpot() {
