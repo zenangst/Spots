@@ -42,142 +42,198 @@ extension Listable {
   }
 
   public func append(_ item: Item, withAnimation animation: Animation, completion: Completion) {
-    let count = component.items.count
-    component.items.append(item)
-    configureItem(at: count, usesViewSize: true)
+    let operation = SpotOperation(completion) { [weak self] completion in
+      guard let weakSelf = self else { completion(); return }
 
-    Dispatch.mainQueue { [weak self] in
-      guard let tableView = self?.tableView else { completion?(); return }
-      tableView.insert([count], withAnimation: animation.tableViewAnimation) {
-        self?.setup(tableView.frame.size)
-        completion?()
+      let count = weakSelf.component.items.count
+      weakSelf.component.items.append(item)
+      weakSelf.configureItem(at: count, usesViewSize: true)
+
+      Dispatch.mainQueue { [weak self] in
+        guard let tableView = self?.tableView else { completion(); return }
+        tableView.insert([count], withAnimation: animation.tableViewAnimation) {
+          self?.setup(tableView.frame.size)
+          completion()
+        }
       }
     }
+
+    operationQueue.addOperation(operation)
   }
   public func append(_ items: [Item], withAnimation animation: Animation, completion: Completion) {
-    var indexes = [Int]()
-    let count = component.items.count
+    let operation = SpotOperation(completion) { [weak self] completion in
+      guard let weakSelf = self else { completion(); return }
+      var indexes = [Int]()
+      let count = weakSelf.component.items.count
 
-    component.items.append(contentsOf: items)
+      weakSelf.component.items.append(contentsOf: items)
 
-    items.enumerated().forEach {
-      let index = count + $0.offset
-      indexes.append(index)
-      configureItem(at: index, usesViewSize: true)
-    }
+      items.enumerated().forEach {
+        let index = count + $0.offset
+        indexes.append(index)
+        weakSelf.configureItem(at: index, usesViewSize: true)
+      }
 
-    Dispatch.mainQueue { [weak self] in
-      guard let tableView = self?.tableView else { completion?(); return }
-      tableView.insert(indexes, withAnimation: animation.tableViewAnimation) {
-        self?.layout(tableView.frame.size)
-        completion?()
+      Dispatch.mainQueue { [weak self] in
+        guard let tableView = self?.tableView else { completion(); return }
+        tableView.insert(indexes, withAnimation: animation.tableViewAnimation) {
+          self?.layout(tableView.frame.size)
+          completion()
+        }
       }
     }
+    operationQueue.addOperation(operation)
   }
 
   public func prepend(_ items: [Item], withAnimation animation: Animation, completion: Completion) {
-    var indexes = [Int]()
+    let operation = SpotOperation(completion) { [weak self] completion in
+      guard let weakSelf = self else { completion(); return }
+      var indexes = [Int]()
 
-    component.items.insert(contentsOf: items, at: 0)
+      weakSelf.component.items.insert(contentsOf: items, at: 0)
 
-    items.enumerated().forEach {
-      indexes.append(items.count - 1 - $0.offset)
-    }
+      items.enumerated().forEach {
+        indexes.append(items.count - 1 - $0.offset)
+      }
 
-    Dispatch.mainQueue { [weak self] in
-      guard let tableView = self?.tableView else { completion?(); return }
-      tableView.insert(indexes, withAnimation: animation.tableViewAnimation) {
-        self?.refreshHeight(completion)
+      Dispatch.mainQueue { [weak self] in
+        guard let tableView = self?.tableView else { completion(); return }
+        tableView.insert(indexes, withAnimation: animation.tableViewAnimation) {
+          self?.refreshHeight(completion)
+        }
       }
     }
+    operationQueue.addOperation(operation)
   }
 
   public func reload(_ indexes: [Int]?, withAnimation animation: Animation, completion: Completion) {
-    Dispatch.mainQueue { [weak self] in
-      guard let tableView = self?.tableView else { completion?(); return }
+    let operation = SpotOperation(completion) { completion in
+      Dispatch.mainQueue { [weak self] in
+        guard let tableView = self?.tableView else { completion(); return }
 
-      if let indexes = indexes {
-        tableView.reload(indexes, section: 0, withAnimation: animation.tableViewAnimation) {
-          self?.sanitize { completion?() }
+        if let indexes = indexes {
+          tableView.reload(indexes, section: 0, withAnimation: animation.tableViewAnimation) {
+            self?.sanitize { completion() }
+          }
+        } else {
+          tableView.reloadData()
+          self?.sanitize { completion() }
         }
-      } else {
-        tableView.reloadData()
-        self?.sanitize { completion?() }
       }
     }
+
+    operationQueue.addOperation(operation)
   }
 
   public func insert(_ item: Item, index: Int, withAnimation animation: Animation, completion: Completion) {
-    component.items.insert(item, at: index)
+    let operation = SpotOperation(completion) { [weak self] completion in
+      guard let weakSelf = self else { completion(); return }
 
-    Dispatch.mainQueue { [weak self] in
-      guard let tableView = self?.tableView else { completion?(); return }
-      tableView.insert([index], withAnimation: animation.tableViewAnimation) {
-        self?.sanitize { completion?() }
+      weakSelf.component.items.insert(item, at: index)
+
+      Dispatch.mainQueue { [weak self] in
+        guard let tableView = self?.tableView else { completion(); return }
+        tableView.insert([index], withAnimation: animation.tableViewAnimation) {
+          self?.sanitize { completion() }
+        }
       }
     }
+    operationQueue.addOperation(operation)
   }
 
   public func update(_ item: Item, index: Int, withAnimation animation: Animation, completion: Completion) {
-    items[index] = item
+    let operation = SpotOperation(completion) { [weak self] completion in
+      guard let weakSelf = self else {
+        completion()
+        return
+      }
 
-    Dispatch.mainQueue { [weak self] in
-      guard let tableView = self?.tableView else { completion?(); return }
-      tableView.reload([index], section: 0, withAnimation: animation.tableViewAnimation) {
-        self?.sanitize { completion?() }
+      weakSelf.items[index] = item
+
+      Dispatch.mainQueue { [weak self] in
+        guard let tableView = self?.tableView else { completion(); return }
+        tableView.reload([index], section: 0, withAnimation: animation.tableViewAnimation) {
+          self?.sanitize { completion() }
+        }
       }
     }
+
+    operationQueue.addOperation(operation)
   }
 
   public func delete(_ item: Item, withAnimation animation: Animation, completion: Completion) {
-    guard let index = component.items.index(where: { $0 == item })
-      else { completion?(); return }
+    let operation = SpotOperation(completion) { [weak self] completion in
+      guard let weakSelf = self,
+        let index = weakSelf.component.items.index(where: { $0 == item })
+        else {
+          completion()
+          return
+      }
 
-    component.items.remove(at: index)
+      weakSelf.component.items.remove(at: index)
 
-    Dispatch.mainQueue { [weak self] in
-      guard let tableView = self?.tableView else { completion?(); return }
-      tableView.delete([index], withAnimation: animation.tableViewAnimation) {
-        self?.sanitize { completion?() }
+      Dispatch.mainQueue { [weak self] in
+        guard let tableView = self?.tableView else { completion(); return }
+        tableView.delete([index], withAnimation: animation.tableViewAnimation) {
+          self?.sanitize { completion() }
+        }
       }
     }
+    operationQueue.addOperation(operation)
   }
 
   public func delete(_ item: [Item], withAnimation animation: Animation, completion: Completion) {
-    var indexPaths = [Int]()
-    let count = component.items.count
+    let operation = SpotOperation(completion) { [weak self] completion in
+      guard let weakSelf = self else {
+        completion()
+        return
+      }
 
-    for (index, item) in items.enumerated() {
-      indexPaths.append(count + index)
-      component.items.append(item)
-    }
+      var indexPaths = [Int]()
+      let count = weakSelf.component.items.count
 
-    Dispatch.mainQueue { [weak self] in
-      guard let tableView = self?.tableView else { completion?(); return }
-      tableView.delete(indexPaths, withAnimation: animation.tableViewAnimation) {
-        self?.sanitize { completion?() }
+      for (index, item) in weakSelf.items.enumerated() {
+        indexPaths.append(count + index)
+        weakSelf.component.items.append(item)
+      }
+
+      Dispatch.mainQueue { [weak self] in
+        guard let tableView = self?.tableView else { completion(); return }
+        tableView.delete(indexPaths, withAnimation: animation.tableViewAnimation) {
+          self?.sanitize { completion() }
+        }
       }
     }
+
+    operationQueue.addOperation(operation)
   }
 
   public func delete(_ index: Int, withAnimation animation: Animation, completion: Completion) {
-    Dispatch.mainQueue { [weak self] in
-      guard let tableView = self?.tableView else { completion?(); return }
-      self?.component.items.remove(at: index)
-      tableView.delete([index], withAnimation: animation.tableViewAnimation) {
-        self?.sanitize { completion?() }
+    let operation = SpotOperation(completion) { completion in
+      Dispatch.mainQueue { [weak self] in
+        guard let tableView = self?.tableView else { completion(); return }
+        self?.component.items.remove(at: index)
+        tableView.delete([index], withAnimation: animation.tableViewAnimation) {
+          self?.sanitize { completion() }
+        }
       }
     }
+
+    operationQueue.addOperation(operation)
   }
 
   public func delete(_ indexes: [Int], withAnimation animation: Animation, completion: Completion) {
-    Dispatch.mainQueue { [weak self] in
-      indexes.forEach { self?.component.items.remove(at: $0) }
-      guard let tableView = self?.tableView else { completion?(); return }
-      tableView.delete(indexes, withAnimation: animation.tableViewAnimation) {
-        self?.sanitize { completion?() }
+    let operation = SpotOperation(completion) { completion in
+      Dispatch.mainQueue { [weak self] in
+        indexes.forEach { self?.component.items.remove(at: $0) }
+        guard let tableView = self?.tableView else { completion(); return }
+        tableView.delete(indexes, withAnimation: animation.tableViewAnimation) {
+          self?.sanitize { completion() }
+        }
       }
     }
+
+    operationQueue.addOperation(operation)
   }
 
   public func refreshHeight(_ completion: (() -> Void)? = nil) {

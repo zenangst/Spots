@@ -8,124 +8,207 @@ extension Gridable {
   }
 
   public func append(_ item: Item, withAnimation animation: Animation, completion: Completion) {
-    let count = component.items.count
-    component.items.append(item)
+    let operation = SpotOperation(completion) { [weak self] completion in
+      guard let weakSelf = self else { completion(); return }
 
-    Dispatch.mainQueue { [weak self] in
-      guard let collectionView = self?.collectionView else { completion?(); return }
-      collectionView.insert([count], completion: {
-        self?.setup(collectionView.frame.size)
-        completion?()
-      })
-    }
-  }
-  public func append(_ items: [Item], withAnimation animation: Animation, completion: Completion) {
-    var indexes = [Int]()
-    let count = component.items.count
+      let count = weakSelf.component.items.count
+      weakSelf.component.items.append(item)
 
-    component.items.append(contentsOf: items)
-
-    items.enumerated().forEach {
-      indexes.append(count + $0.offset)
-    }
-
-    Dispatch.mainQueue { [weak self] in
-      guard let collectionView = self?.collectionView else { completion?(); return }
-      collectionView.insert(indexes) {
-        self?.setup(collectionView.frame.size)
-        completion?()
+      Dispatch.mainQueue { [weak self] in
+        guard let collectionView = self?.collectionView else { completion(); return }
+        collectionView.insert([count], completion: {
+          self?.setup(collectionView.frame.size)
+          completion()
+        })
       }
     }
+
+    operationQueue.addOperation(operation)
+  }
+  public func append(_ items: [Item], withAnimation animation: Animation, completion: Completion) {
+    let operation = SpotOperation(completion) { [weak self] completion in
+      guard let weakSelf = self else { completion(); return }
+      var indexes = [Int]()
+      let count = weakSelf.component.items.count
+
+      weakSelf.component.items.append(contentsOf: items)
+
+      items.enumerated().forEach {
+        indexes.append(count + $0.offset)
+      }
+
+      Dispatch.mainQueue { [weak self] in
+        guard let collectionView = self?.collectionView else {
+          completion()
+          return
+        }
+        collectionView.insert(indexes) {
+          self?.setup(collectionView.frame.size)
+          completion()
+        }
+      }
+    }
+
+    operationQueue.addOperation(operation)
   }
 
   public func prepend(_ items: [Item], withAnimation animation: Animation, completion: Completion) {
-    var indexes = [Int]()
+    let operation = SpotOperation(completion) { [weak self] completion in
+      guard let weakSelf = self else { completion(); return }
+      var indexes = [Int]()
 
-    component.items.insert(contentsOf: items, at: 0)
+      weakSelf.component.items.insert(contentsOf: items, at: 0)
 
-    items.enumerated().forEach {
-      indexes.append(items.count - 1 - $0.offset)
-    }
+      items.enumerated().forEach {
+        indexes.append(items.count - 1 - $0.offset)
+      }
 
-    Dispatch.mainQueue { [weak self] in
-      guard let collectionView = self?.collectionView else { completion?(); return }
-      collectionView.insert(indexes) {
-        self?.refreshHeight()
+      Dispatch.mainQueue { [weak self] in
+        guard let collectionView = self?.collectionView else {
+          completion()
+          return
+        }
+
+        collectionView.insert(indexes) {
+          self?.refreshHeight()
+        }
       }
     }
+
+    operationQueue.addOperation(operation)
   }
 
   public func insert(_ item: Item, index: Int, withAnimation animation: Animation, completion: Completion) {
-    component.items.insert(item, at: index)
+    let operation = SpotOperation(completion) { [weak self] completion in
+      guard let weakSelf = self else { completion(); return }
+      weakSelf.component.items.insert(item, at: index)
 
-    Dispatch.mainQueue { [weak self] in
-      guard let collectionView = self?.collectionView else { completion?(); return }
-      collectionView.insert([index]) {
-        self?.refreshHeight(completion)
+      Dispatch.mainQueue { [weak self] in
+        guard let collectionView = self?.collectionView else {
+          completion()
+          return
+        }
+
+        collectionView.insert([index]) {
+          self?.refreshHeight(completion)
+        }
       }
     }
+
+    operationQueue.addOperation(operation)
   }
 
   public func update(_ item: Item, index: Int, withAnimation animation: Animation, completion: Completion) {
-    items[index] = item
+    let operation = SpotOperation(completion) { [weak self] completion in
+      guard let weakSelf = self else {
+        completion()
+        return
+      }
 
-    Dispatch.mainQueue { [weak self] in
-      guard let collectionView = self?.collectionView else { completion?(); return }
-      collectionView.reload([index], section: 0) {
-        self?.refreshHeight(completion)
+      weakSelf.items[index] = item
+
+      Dispatch.mainQueue { [weak self] in
+        guard let collectionView = self?.collectionView else {
+          completion()
+          return
+        }
+        collectionView.reload([index], section: 0) {
+          self?.refreshHeight(completion)
+        }
       }
     }
+
+    operationQueue.addOperation(operation)
   }
 
   public func delete(_ item: Item, withAnimation animation: Animation, completion: Completion) {
-    guard let index = component.items.index(where: { $0 == item })
-      else { completion?(); return }
+    let operation = SpotOperation(completion) { [weak self] completion in
+      guard let weakSelf = self,
+        let index = weakSelf.component.items.index(where: { $0 == item })
+        else {
+          completion()
+          return
+      }
 
-    component.items.remove(at: index)
+      weakSelf.component.items.remove(at: index)
 
-    Dispatch.mainQueue { [weak self] in
-      guard let collectionView = self?.collectionView else { completion?(); return }
-      collectionView.delete([index]) {
-        self?.refreshHeight(completion)
+      Dispatch.mainQueue { [weak self] in
+        guard let collectionView = self?.collectionView else {
+          completion()
+          return
+        }
+        collectionView.delete([index]) {
+          self?.refreshHeight(completion)
+        }
       }
     }
+
+    operationQueue.addOperation(operation)
   }
 
   public func delete(_ item: [Item], withAnimation animation: Animation, completion: Completion) {
-    var indexPaths = [Int]()
-    let count = component.items.count
+    let operation = SpotOperation(completion) { [weak self] completion in
+      guard let weakSelf = self else {
+        completion()
+        return
+      }
 
-    for (index, item) in items.enumerated() {
-      indexPaths.append(count + index)
-      component.items.append(item)
-    }
+      var indexPaths = [Int]()
+      let count = weakSelf.component.items.count
 
-    Dispatch.mainQueue { [weak self] in
-      guard let collectionView = self?.collectionView else { completion?(); return }
-      collectionView.delete(indexPaths) {
-        self?.refreshHeight(completion)
+      for (index, item) in weakSelf.items.enumerated() {
+        indexPaths.append(count + index)
+        weakSelf.component.items.append(item)
+      }
+
+      Dispatch.mainQueue { [weak self] in
+        guard let collectionView = self?.collectionView else {
+          completion()
+          return
+        }
+
+        collectionView.delete(indexPaths) {
+          self?.refreshHeight(completion)
+        }
       }
     }
+
+    operationQueue.addOperation(operation)
   }
 
   public func delete(_ index: Int, withAnimation animation: Animation, completion: Completion) {
-    Dispatch.mainQueue { [weak self] in
-      guard let collectionView = self?.collectionView else { completion?(); return }
-      self?.component.items.remove(at: index)
-      collectionView.delete([index]) {
-        self?.refreshHeight(completion)
+    let operation = SpotOperation(completion) { [weak self] completion in
+      Dispatch.mainQueue { [weak self] in
+        guard let collectionView = self?.collectionView else {
+          completion()
+          return
+        }
+        self?.component.items.remove(at: index)
+        collectionView.delete([index]) {
+          self?.refreshHeight(completion)
+        }
       }
     }
+
+    operationQueue.addOperation(operation)
   }
 
   public func delete(_ indexes: [Int], withAnimation animation: Animation, completion: Completion) {
-    Dispatch.mainQueue { [weak self] in
-      indexes.forEach { self?.component.items.remove(at: $0) }
-      guard let collectionView = self?.collectionView else { completion?(); return }
-      collectionView.delete(indexes) {
-        self?.refreshHeight(completion)
+    let operation = SpotOperation(completion) { [weak self] completion in
+      Dispatch.mainQueue { [weak self] in
+        indexes.forEach { self?.component.items.remove(at: $0) }
+        guard let collectionView = self?.collectionView else {
+          completion()
+          return
+        }
+
+        collectionView.delete(indexes) {
+          self?.refreshHeight(completion)
+        }
       }
     }
+
+    operationQueue.addOperation(operation)
   }
 
   public func reloadIfNeeded(_ changes: ItemChanges, withAnimation animation: Animation, updateDataSource: () -> Void, completion: Completion) {
