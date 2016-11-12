@@ -101,10 +101,10 @@ class ControllerTests : XCTestCase {
       Item(title: "title1", kind: "list"),
       Item(title: "title2", kind: "list")
     ]
-    controller.prepend(items, spotIndex: 0)
-
-    XCTAssertEqual(self.controller.spot!.component.items.count, 2)
-    XCTAssert(self.controller.spot!.component.items == items)
+    controller.prepend(items, spotIndex: 0) {
+      XCTAssertEqual(self.controller.spot!.component.items.count, 2)
+      XCTAssert(self.controller.spot!.component.items == items)
+    }
 
     let exception = self.expectation(description: "Test prepend items")
     controller.prepend([
