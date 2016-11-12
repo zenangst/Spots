@@ -47,12 +47,9 @@ class ControllerTests : XCTestCase {
     XCTAssert(self.controller.spot!.component.items.count == 0)
 
     let item = Item(title: "title1", kind: "list")
-    controller.append(item, spotIndex: 0)
-
-    XCTAssert(self.controller.spot!.component.items.count == 1)
-
-    if let testItem = self.controller.spot!.component.items.first {
-      XCTAssert(testItem == item)
+    controller.append(item, spotIndex: 0) {
+      XCTAssert(self.controller.spot!.component.items.count == 1)
+      XCTAssert(self.controller.spot!.component.items.first! == item)
     }
 
     // Test appending item without kind
