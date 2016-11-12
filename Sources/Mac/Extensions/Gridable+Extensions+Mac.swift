@@ -201,7 +201,7 @@ extension Gridable {
           completion()
           return
         }
-        
+
         collectionView.delete(indexes) {
           self?.refreshHeight(completion)
         }
