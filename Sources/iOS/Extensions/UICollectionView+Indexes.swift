@@ -7,7 +7,7 @@ public extension UICollectionView {
   ///  - parameter indexes: A collection integers
   ///  - parameter section: The section you want to update
   ///  - parameter completion: A completion block for when the updates are done
-  func insert(_ indexes: [Int], section: Int = 0, completion: (() -> Void)? = nil) {
+  func insert(at indexes: [Int], section: Int = 0, completion: (() -> Void)? = nil) {
     let indexPaths = indexes.map { IndexPath(item: $0, section: section) }
 
     performBatchUpdates({ [weak self] in
@@ -23,7 +23,7 @@ public extension UICollectionView {
   ///  - parameter indexes: A collection integers
   ///  - parameter section: The section you want to update
   ///  - parameter completion: A completion block for when the updates are done
-  func reload(_ indexes: [Int], section: Int = 0, completion: (() -> Void)? = nil) {
+  func reload(at indexes: [Int], section: Int = 0, completion: (() -> Void)? = nil) {
     let indexPaths = indexes.map { IndexPath(item: $0, section: section) }
 
     UIView.performWithoutAnimation {
@@ -37,7 +37,7 @@ public extension UICollectionView {
   ///  - parameter indexes: A collection integers
   ///  - parameter section: The section you want to update
   ///  - parameter completion: A completion block for when the updates are done
-  func delete(_ indexes: [Int], section: Int = 0, completion: (() -> Void)? = nil) {
+  func delete(at indexes: [Int], section: Int = 0, completion: (() -> Void)? = nil) {
     let indexPaths = indexes.map { IndexPath(item: $0, section: section) }
     performBatchUpdates({ [weak self] in
       guard let weakSelf = self else { return }

@@ -51,17 +51,24 @@ extension Listable {
   /// - parameter animation:  The animation that should be used (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue.
   public func append(_ item: Item, withAnimation animation: Animation = .none, completion: Completion = nil) {
-    let count = component.items.count
-    component.items.append(item)
+    let operation = SpotOperation(completion) { [weak self] completion in
+      guard let weakSelf = self else { completion(); return }
 
-    Dispatch.mainQueue { [weak self] in
-      self?.tableView.insert([count], animation: animation.tableViewAnimation)
-      self?.updateHeight() {
-        completion?()
+      let count = weakSelf.component.items.count
+      weakSelf.component.items.append(item)
+
+      Dispatch.mainQueue { [weak self] in
+        guard let weakSelf = self else { completion(); return }
+        weakSelf.tableView.insert([count], animation: animation.tableViewAnimation)
+        weakSelf.updateHeight() {
+          completion()
+        }
       }
+
+      weakSelf.configureItem(at: count)
     }
 
-    configureItem(at: count)
+    operationQueue.addOperation(operation)
   }
 
   /// Append a collection of items to collection with animation
@@ -70,22 +77,28 @@ extension Listable {
   /// - parameter animation:  The animation that should be used (currently not in use)
   /// - parameter completion: A completion closure that is executed in the main queue.
   public func append(_ items: [Item], withAnimation animation: Animation = .none, completion: Completion = nil) {
-    var indexes = [Int]()
-    let count = component.items.count
+    let operation = SpotOperation(completion) { [weak self] completion in
+      guard let weakSelf = self else { completion(); return }
 
-    component.items.append(contentsOf: items)
+      var indexes = [Int]()
+      let count = weakSelf.component.items.count
 
-    items.enumerated().forEach {
-      indexes.append(count + $0.offset)
-      configureItem(at: count + $0.offset)
-    }
+      weakSelf.component.items.append(contentsOf: items)
 
-    Dispatch.mainQueue { [weak self] in
-      self?.tableView.insert(indexes, animation: animation.tableViewAnimation)
-      self?.updateHeight() {
-        completion?()
+      items.enumerated().forEach {
+        indexes.append(count + $0.offset)
+        weakSelf.configureItem(at: count + $0.offset)
+      }
+
+      Dispatch.mainQueue { [weak self] in
+        guard let weakSelf = self else { completion(); return }
+        weakSelf.tableView.insert(indexes, animation: animation.tableViewAnimation)
+        weakSelf.updateHeight() {
+          completion()
+        }
       }
     }
+    operationQueue.addOperation(operation)
   }
 
   /// Insert item into collection at index.
@@ -95,12 +108,17 @@ extension Listable {
   /// - parameter animation:  A Animation that is used when performing the mutation (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue.
   public func insert(_ item: Item, index: Int = 0, withAnimation animation: Animation = .none, completion: Completion = nil) {
-    component.items.insert(item, at: index)
+    let operation = SpotOperation(completion) { [weak self] completion in
+      guard let weakSelf = self else { completion(); return }
+      weakSelf.component.items.insert(item, at: index)
 
-    Dispatch.mainQueue { [weak self] in
-      self?.tableView.insert([index], animation: animation.tableViewAnimation)
-      self?.sanitize { completion?() }
+      Dispatch.mainQueue { [weak self] in
+        guard let weakSelf = self else { completion(); return }
+        weakSelf.tableView.insert([index], animation: animation.tableViewAnimation)
+        weakSelf.sanitize { completion() }
+      }
     }
+    operationQueue.addOperation(operation)
   }
 
   /// Prepend a collection items to the collection with animation
@@ -109,20 +127,25 @@ extension Listable {
   /// - parameter animation:  A Animation that is used when performing the mutation (currently not in use)
   /// - parameter completion: A completion closure that is executed in the main queue.
   public func prepend(_ items: [Item], withAnimation animation: Animation = .none, completion: Completion = nil) {
-    var indexes = [Int]()
+    let operation = SpotOperation(completion) { [weak self] completion in
+      guard let weakSelf = self else { completion(); return }
+      var indexes = [Int]()
 
-    component.items.insert(contentsOf: items, at: 0)
+      weakSelf.component.items.insert(contentsOf: items, at: 0)
 
-    Dispatch.mainQueue { [weak self] in
-      items.enumerated().forEach {
-        let index = items.count - 1 - $0.offset
-        indexes.append(index)
-        self?.configureItem(at: index)
+      Dispatch.mainQueue { [weak self] in
+        guard let weakSelf = self else { completion(); return }
+        items.enumerated().forEach {
+          let index = items.count - 1 - $0.offset
+          indexes.append(index)
+          weakSelf.configureItem(at: index)
+        }
+
+        weakSelf.tableView.insert(indexes, animation: animation.tableViewAnimation)
+        weakSelf.sanitize { completion() }
       }
-
-      self?.tableView.insert(indexes, animation: animation.tableViewAnimation)
-      self?.sanitize { completion?() }
     }
+    operationQueue.addOperation(operation)
   }
 
   /// Delete item from collection with animation
@@ -131,15 +154,22 @@ extension Listable {
   /// - parameter animation:  The animation that should be used (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue.
   public func delete(_ item: Item, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
-    guard let index = component.items.index(where: { $0 == item })
-      else { completion?(); return }
+    let operation = SpotOperation(completion) { [weak self] completion in
+      guard let weakSelf = self,
+        let index = weakSelf.component.items.index(where: { $0 == item }) else {
+          completion()
+          return
+      }
 
-    component.items.remove(at: index)
+      weakSelf.component.items.remove(at: index)
 
-    Dispatch.mainQueue { [weak self] in
-      self?.tableView.delete([index], animation: animation.tableViewAnimation)
-      self?.sanitize { completion?() }
+      Dispatch.mainQueue { [weak self] in
+        guard let weakSelf = self else { completion(); return }
+        weakSelf.tableView.delete([index], animation: animation.tableViewAnimation)
+        weakSelf.sanitize { completion() }
+      }
     }
+    operationQueue.addOperation(operation)
   }
 
   /// Delete items from collection with animation
@@ -148,18 +178,23 @@ extension Listable {
   /// - parameter animation:  The animation that should be used (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue.
   public func delete(_ items: [Item], withAnimation animation: Animation = .automatic, completion: Completion = nil) {
-    var indexPaths = [Int]()
-    let count = component.items.count
+    let operation = SpotOperation(completion) { [weak self] completion in
+      guard let weakSelf = self else { completion(); return }
+      var indexPaths = [Int]()
+      let count = weakSelf.component.items.count
 
-    for (index, item) in items.enumerated() {
-      indexPaths.append(count + index)
-      component.items.append(item)
-    }
+      for (index, item) in items.enumerated() {
+        indexPaths.append(count + index)
+        weakSelf.component.items.append(item)
+      }
 
-    Dispatch.mainQueue { [weak self] in
-      self?.tableView.delete(indexPaths, animation: animation.tableViewAnimation)
-      self?.sanitize { completion?() }
+      Dispatch.mainQueue { [weak self] in
+        guard let weakSelf = self else { completion(); return }
+        weakSelf.tableView.delete(indexPaths, animation: animation.tableViewAnimation)
+        weakSelf.sanitize { completion() }
+      }
     }
+    operationQueue.addOperation(operation)
   }
 
   /// Delete item at index with animation
@@ -168,11 +203,15 @@ extension Listable {
   /// - parameter animation:  The animation that should be used (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue when the view model has been removed.
   public func delete(_ index: Int, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
-    Dispatch.mainQueue { [weak self] in
-      self?.component.items.remove(at: index)
-      self?.tableView.delete([index], animation: animation.tableViewAnimation)
-      self?.sanitize { completion?() }
+    let operation = SpotOperation(completion) { completion in
+      Dispatch.mainQueue { [weak self] in
+        guard let weakSelf = self else { completion(); return }
+        weakSelf.component.items.remove(at: index)
+        weakSelf.tableView.delete([index], animation: animation.tableViewAnimation)
+        weakSelf.sanitize { completion() }
+      }
     }
+    operationQueue.addOperation(operation)
   }
 
   /// Delete a collection
@@ -181,11 +220,19 @@ extension Listable {
   /// - parameter animation:  The animation that should be used (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue when the view model has been removed.
   public func delete(_ indexes: [Int], withAnimation animation: Animation = .automatic, completion: Completion = nil) {
-    Dispatch.mainQueue { [weak self] in
-      indexes.forEach { self?.component.items.remove(at: $0) }
-      self?.tableView.delete(indexes, section: 0, animation: animation.tableViewAnimation)
-      self?.sanitize { completion?() }
+    let operation = SpotOperation(completion) { completion in
+      Dispatch.mainQueue { [weak self] in
+        guard let weakSelf = self else { completion(); return }
+
+        indexes.forEach {
+          weakSelf.component.items.remove(at: $0)
+        }
+
+        weakSelf.tableView.delete(indexes, section: 0, animation: animation.tableViewAnimation)
+        weakSelf.sanitize { completion() }
+      }
     }
+    operationQueue.addOperation(operation)
   }
 
   /// Update item at index with new item.
@@ -195,41 +242,48 @@ extension Listable {
   /// - parameter animation:  A Animation that is used when performing the mutation (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue when the view model has been removed.
   public func update(_ item: Item, index: Int = 0, withAnimation animation: Animation = .none, completion: Completion = nil) {
-    guard let oldItem = self.item(at: index) else { completion?(); return }
-
-    items[index] = item
-    configureItem(at: index)
-
-    let newItem = items[index]
-    let indexPath = IndexPath(row: index, section: 0)
-
-    if let composite = tableView.cellForRow(at: indexPath) as? Composable,
-      let spots = spotsCompositeDelegate?.resolve(index, itemIndex: (indexPath as NSIndexPath).item) {
-      tableView.beginUpdates()
-      composite.configure(&component.items[indexPath.item], spots: spots)
-      tableView.endUpdates()
-      updateHeight() {
-        completion?()
+    let operation = SpotOperation(completion) { [weak self] completion in
+      guard let weakSelf = self,
+        let oldItem = weakSelf.item(at: index) else {
+          completion()
+          return
       }
-      return
-    }
 
-    if newItem.kind != oldItem.kind || newItem.size.height != oldItem.size.height {
-      if let cell = tableView.cellForRow(at: indexPath) as? SpotConfigurable, animation != .none {
-        tableView.beginUpdates()
-        cell.configure(&items[index])
-        tableView.endUpdates()
+      weakSelf.items[index] = item
+      weakSelf.configureItem(at: index)
+
+      let newItem = weakSelf.items[index]
+      let indexPath = IndexPath(row: index, section: 0)
+
+      if let composite = weakSelf.tableView.cellForRow(at: indexPath) as? Composable,
+        let spots = weakSelf.spotsCompositeDelegate?.resolve(index, itemIndex: (indexPath as NSIndexPath).item) {
+        weakSelf.tableView.beginUpdates()
+        composite.configure(&weakSelf.component.items[indexPath.item], spots: spots)
+        weakSelf.tableView.endUpdates()
+        weakSelf.updateHeight() {
+          completion()
+        }
+        return
+      }
+
+      if newItem.kind != oldItem.kind || newItem.size.height != oldItem.size.height {
+        if let cell = weakSelf.tableView.cellForRow(at: indexPath) as? SpotConfigurable, animation != .none {
+          weakSelf.tableView.beginUpdates()
+          cell.configure(&weakSelf.items[index])
+          weakSelf.tableView.endUpdates()
+        } else {
+          weakSelf.tableView.reload([index], section: 0, animation: animation.tableViewAnimation)
+        }
+        weakSelf.updateHeight() { completion() }
+        return
+      } else if let cell = weakSelf.tableView.cellForRow(at: indexPath) as? SpotConfigurable {
+        cell.configure(&weakSelf.items[index])
+        weakSelf.updateHeight() { completion() }
       } else {
-        tableView.reload([index], section: 0, animation: animation.tableViewAnimation)
+        completion()
       }
-      updateHeight() { completion?() }
-      return
-    } else if let cell = tableView.cellForRow(at: indexPath) as? SpotConfigurable {
-      cell.configure(&items[index])
-      updateHeight() { completion?() }
-    } else {
-      completion?()
     }
+    operationQueue.addOperation(operation)
   }
 
   /// Process updates and determine if the updates are done.
@@ -238,28 +292,32 @@ extension Listable {
   /// - parameter animation:  A Animation that is used when performing the mutation.
   /// - parameter completion: A completion closure that is run when the updates are finished.
   public func reload(_ indexes: [Int]? = nil, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
-    refreshIndexes()
+    let operation = SpotOperation(completion) { [weak self] completion in
+      guard let weakSelf = self else { completion(); return }
+      weakSelf.refreshIndexes()
 
-    if let indexes = indexes {
-      indexes.forEach { index  in
-        configureItem(at: index)
+      if let indexes = indexes {
+        indexes.forEach { index  in
+          weakSelf.configureItem(at: index)
+        }
+      } else {
+        for (index, _) in weakSelf.component.items.enumerated() {
+          weakSelf.configureItem(at: index)
+        }
       }
-    } else {
-      for (index, _) in component.items.enumerated() {
-        configureItem(at: index)
+
+      if let indexes = indexes {
+        weakSelf.tableView.reload(indexes, animation: animation.tableViewAnimation)
+      } else {
+        animation != .none
+          ? weakSelf.tableView.reloadSection(0, animation: animation.tableViewAnimation)
+          : weakSelf.tableView.reloadData()
+      }
+
+      weakSelf.updateHeight() {
+        completion()
       }
     }
-
-    if let indexes = indexes {
-      tableView.reload(indexes, animation: animation.tableViewAnimation)
-    } else {
-      animation != .none
-        ? tableView.reloadSection(0, animation: animation.tableViewAnimation)
-        : tableView.reloadData()
-    }
-
-    updateHeight() {
-      completion?()
-    }
+    operationQueue.addOperation(operation)
   }
 }

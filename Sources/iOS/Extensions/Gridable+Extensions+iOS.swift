@@ -189,7 +189,7 @@ extension Gridable {
         guard let weakSelf = self else { completion(); return }
 
         if itemsCount > 0 {
-          weakSelf.collectionView.insert(indexes, completion: nil)
+          weakSelf.collectionView.insert(at: indexes, completion: nil)
         } else {
           weakSelf.collectionView.reloadData()
         }
@@ -208,32 +208,38 @@ extension Gridable {
   /// - parameter animation:  The animation that should be used (currently not in use)
   /// - parameter completion: A completion closure that is executed in the main queue.
   public func append(_ items: [Item], withAnimation animation: Animation = .none, completion: Completion = nil) {
-    var indexes = [Int]()
-    let itemsCount = component.items.count
+    let operation = SpotOperation(completion) { [weak self] completion in
+      guard let weakSelf = self else { completion(); return }
 
-    if component.items.isEmpty {
-      component.items.append(contentsOf: items)
-    } else {
-      for (index, item) in items.enumerated() {
-        component.items.append(item)
-        indexes.append(itemsCount + index)
+      var indexes = [Int]()
+      let itemsCount = weakSelf.component.items.count
 
-        configureItem(at: itemsCount + index)
-      }
-    }
-
-    Dispatch.mainQueue { [weak self] in
-      guard let weakSelf = self else { completion?(); return }
-
-      if itemsCount > 0 {
-        weakSelf.collectionView.insert(indexes, completion: nil)
+      if weakSelf.component.items.isEmpty {
+        weakSelf.component.items.append(contentsOf: items)
       } else {
-        weakSelf.collectionView.reloadData()
+        for (index, item) in items.enumerated() {
+          weakSelf.component.items.append(item)
+          indexes.append(itemsCount + index)
+
+          weakSelf.configureItem(at: itemsCount + index)
+        }
       }
-      weakSelf.updateHeight() {
-        completion?()
+
+      Dispatch.mainQueue { [weak self] in
+        guard let weakSelf = self else { completion(); return }
+
+        if itemsCount > 0 {
+          weakSelf.collectionView.insert(at: indexes, completion: nil)
+        } else {
+          weakSelf.collectionView.reloadData()
+        }
+        weakSelf.updateHeight() {
+          completion()
+        }
       }
     }
+
+    operationQueue.addOperation(operation)
   }
 
   /// Insert item into collection at index.
@@ -243,24 +249,28 @@ extension Gridable {
   /// - parameter animation:  A Animation that is used when performing the mutation (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue.
   public func insert(_ item: Item, index: Int, withAnimation animation: Animation = .none, completion: Completion = nil) {
-    let itemsCount = component.items.count
-    component.items.insert(item, at: index)
-    var indexes = [Int]()
-
-    if itemsCount > 0 {
-      indexes.append(index)
-    }
-
-    Dispatch.mainQueue { [weak self] in
-      guard let weakSelf = self else { completion?(); return }
+    let operation = SpotOperation(completion) { [weak self] completion in
+      guard let weakSelf = self else { completion(); return }
+      let itemsCount = weakSelf.component.items.count
+      weakSelf.component.items.insert(item, at: index)
+      var indexes = [Int]()
 
       if itemsCount > 0 {
-        weakSelf.collectionView.insert(indexes, completion: nil)
-      } else {
-        weakSelf.collectionView.reloadData()
+        indexes.append(index)
       }
-      weakSelf.sanitize { completion?() }
+
+      Dispatch.mainQueue { [weak self] in
+        guard let weakSelf = self else { completion(); return }
+
+        if itemsCount > 0 {
+          weakSelf.collectionView.insert(at: indexes, completion: nil)
+        } else {
+          weakSelf.collectionView.reloadData()
+        }
+        weakSelf.sanitize { completion() }
+      }
     }
+    operationQueue.addOperation(operation)
   }
 
   /// Prepend a collection items to the collection with animation
@@ -269,30 +279,35 @@ extension Gridable {
   /// - parameter animation:  A Animation that is used when performing the mutation (currently not in use)
   /// - parameter completion: A completion closure that is executed in the main queue.
   public func prepend(_ items: [Item], withAnimation animation: Animation = .none, completion: Completion = nil) {
-    let itemsCount = component.items.count
-    var indexes = [Int]()
+    let operation = SpotOperation(completion) { [weak self] completion in
+      guard let weakSelf = self else { completion(); return }
+      let itemsCount = weakSelf.component.items.count
+      var indexes = [Int]()
 
-    component.items.insert(contentsOf: items, at: 0)
+      weakSelf.component.items.insert(contentsOf: items, at: 0)
 
-    items.enumerated().forEach {
-      if itemsCount > 0 {
-        indexes.append(items.count - 1 - $0.offset)
-      }
-      configureItem(at: $0.offset)
-    }
-
-    Dispatch.mainQueue { [weak self] in
-      guard let weakSelf = self else { completion?(); return }
-
-      if !indexes.isEmpty {
-        weakSelf.collectionView.insert(indexes) {
-          weakSelf.sanitize { completion?() }
+      items.enumerated().forEach {
+        if itemsCount > 0 {
+          indexes.append(items.count - 1 - $0.offset)
         }
-      } else {
-        weakSelf.collectionView.reloadData()
-        weakSelf.sanitize { completion?() }
+        weakSelf.configureItem(at: $0.offset)
+      }
+
+      Dispatch.mainQueue { [weak self] in
+        guard let weakSelf = self else { completion(); return }
+
+        if !indexes.isEmpty {
+          weakSelf.collectionView.insert(at: indexes) {
+            weakSelf.sanitize { completion() }
+          }
+        } else {
+          weakSelf.collectionView.reloadData()
+          weakSelf.sanitize { completion() }
+        }
       }
     }
+
+    operationQueue.addOperation(operation)
   }
 
   /// Delete item from collection with animation
@@ -301,19 +316,26 @@ extension Gridable {
   /// - parameter animation:  The animation that should be used (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue.
   public func delete(_ item: Item, withAnimation animation: Animation = .none, completion: Completion = nil) {
-    guard let index = component.items.index(where: { $0 == item })
-      else { completion?(); return }
+    let operation = SpotOperation(completion) { [weak self] completion in
+      guard let weakSelf = self, let index = weakSelf.component.items.index(where: { $0 == item })
+        else {
+          completion()
+          return
+      }
 
-    perform(animation, withIndex: index) { [weak self] in
-      guard let weakSelf = self else { completion?(); return }
+      weakSelf.perform(animation, withIndex: index) { [weak self] in
+        guard let weakSelf = self else { completion(); return }
 
-      if animation == .none { UIView.setAnimationsEnabled(false) }
-      weakSelf.component.items.remove(at: index)
-      weakSelf.collectionView.delete([index], completion: nil)
-      if animation == .none { UIView.setAnimationsEnabled(true) }
+        if animation == .none { UIView.setAnimationsEnabled(false) }
+        weakSelf.component.items.remove(at: index)
+        weakSelf.collectionView.delete(at: [index], completion: nil)
+        if animation == .none { UIView.setAnimationsEnabled(true) }
 
-      weakSelf.sanitize { completion?() }
+        weakSelf.sanitize { completion() }
+      }
     }
+
+    operationQueue.addOperation(operation)
   }
 
   /// Delete items from collection with animation
@@ -322,20 +344,25 @@ extension Gridable {
   /// - parameter animation:  The animation that should be used (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue.
   public func delete(_ items: [Item], withAnimation animation: Animation = .none, completion: Completion = nil) {
-    var indexes = [Int]()
-    let count = component.items.count
+    let operation = SpotOperation(completion) { [weak self] completion in
+      guard let weakSelf = self else { completion(); return }
+      var indexes = [Int]()
+      let count = weakSelf.component.items.count
 
-    for (index, _) in items.enumerated() {
-      indexes.append(count + index)
-      component.items.remove(at: count - index)
-    }
+      for (index, _) in items.enumerated() {
+        indexes.append(count + index)
+        weakSelf.component.items.remove(at: count - index)
+      }
 
-    Dispatch.mainQueue { [weak self] in
-      guard let weakSelf = self else { completion?(); return }
-      weakSelf.collectionView.delete(indexes) {
-        weakSelf.sanitize { completion?() }
+      Dispatch.mainQueue { [weak self] in
+        guard let weakSelf = self else { completion(); return }
+        weakSelf.collectionView.delete(at: indexes) {
+          weakSelf.sanitize { completion() }
+        }
       }
     }
+
+    operationQueue.addOperation(operation)
   }
 
   /// Delete item at index with animation
@@ -344,17 +371,23 @@ extension Gridable {
   /// - parameter animation:  The animation that should be used (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue when the view model has been removed.
   public func delete(_ index: Int, withAnimation animation: Animation = .none, completion: Completion) {
-    perform(animation, withIndex: index) {
-      Dispatch.mainQueue { [weak self] in
-        guard let weakSelf = self else { completion?(); return }
+    let operation = SpotOperation(completion) { [weak self] completion in
+      guard let weakSelf = self else { completion(); return }
 
-        if animation == .none { UIView.setAnimationsEnabled(false) }
-        weakSelf.component.items.remove(at: index)
-        weakSelf.collectionView.delete([index], completion: nil)
-        if animation == .none { UIView.setAnimationsEnabled(true) }
-        weakSelf.sanitize { completion?() }
+      weakSelf.perform(animation, withIndex: index) {
+        Dispatch.mainQueue { [weak self] in
+          guard let weakSelf = self else { completion(); return }
+
+          if animation == .none { UIView.setAnimationsEnabled(false) }
+          weakSelf.component.items.remove(at: index)
+          weakSelf.collectionView.delete(at: [index], completion: nil)
+          if animation == .none { UIView.setAnimationsEnabled(true) }
+          weakSelf.sanitize { completion() }
+        }
       }
     }
+
+    operationQueue.addOperation(operation)
   }
 
   /// Delete a collection
@@ -363,12 +396,15 @@ extension Gridable {
   /// - parameter animation:  The animation that should be used (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue when the view model has been removed.
   public func delete(_ indexes: [Int], withAnimation animation: Animation = .none, completion: Completion) {
-    Dispatch.mainQueue { [weak self] in
-      guard let weakSelf = self else { return }
-      weakSelf.collectionView.delete(indexes) {
-        weakSelf.sanitize { completion?() }
+    let operation = SpotOperation(completion) { [weak self] completion in
+      Dispatch.mainQueue { [weak self] in
+        guard let weakSelf = self else { return }
+        weakSelf.collectionView.delete(at: indexes) {
+          weakSelf.sanitize { completion() }
+        }
       }
     }
+    operationQueue.addOperation(operation)
   }
 
   /// Update item at index with new item.
@@ -378,39 +414,47 @@ extension Gridable {
   /// - parameter animation:  A Animation that is used when performing the mutation (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue when the view model has been removed.
   public func update(_ item: Item, index: Int, withAnimation animation: Animation = .none, completion: Completion = nil) {
-    guard let oldItem = self.item(at: index) else { completion?(); return }
+    let operation = SpotOperation(completion) { [weak self] completion in
+      guard let weakSelf = self,
+        let oldItem = weakSelf.item(at: index)
+        else {
+          completion()
+          return
+      }
 
-    var item = item
-    item.index = index
-    items[index] = item
-    configureItem(at: index)
+      var item = item
+      item.index = index
+      weakSelf.items[index] = item
+      weakSelf.configureItem(at: index)
 
-    let newItem = items[index]
-    let indexPath = IndexPath(item: index, section: 0)
+      let newItem = weakSelf.items[index]
+      let indexPath = IndexPath(item: index, section: 0)
 
-    if let composite = collectionView.cellForItem(at: indexPath) as? Composable {
-      if let spots = spotsCompositeDelegate?.resolve(index, itemIndex: (indexPath as NSIndexPath).item) {
-        collectionView.performBatchUpdates({
-          composite.configure(&self.component.items[indexPath.item], spots: spots)
+      if let composite = weakSelf.collectionView.cellForItem(at: indexPath) as? Composable {
+        if let spots = weakSelf.spotsCompositeDelegate?.resolve(index, itemIndex: (indexPath as NSIndexPath).item) {
+          weakSelf.collectionView.performBatchUpdates({
+            composite.configure(&weakSelf.component.items[indexPath.item], spots: spots)
           }, completion: nil)
-        completion?()
-        return
-      }
-    }
-
-    if newItem.kind != oldItem.kind || newItem.size.height != oldItem.size.height {
-      if let cell = collectionView.cellForItem(at: indexPath) as? SpotConfigurable {
-        if animation != .none {
-          collectionView.performBatchUpdates({
-            }, completion: { (_) in })
+          completion()
+          return
         }
-        cell.configure(&self.items[index])
       }
-    } else if let cell = collectionView.cellForItem(at: indexPath) as? SpotConfigurable {
-      cell.configure(&items[index])
+
+      if newItem.kind != oldItem.kind || newItem.size.height != oldItem.size.height {
+        if let cell = weakSelf.collectionView.cellForItem(at: indexPath) as? SpotConfigurable {
+          if animation != .none {
+            weakSelf.collectionView.performBatchUpdates({
+            }, completion: { (_) in })
+          }
+          cell.configure(&weakSelf.items[index])
+        }
+      } else if let cell = weakSelf.collectionView.cellForItem(at: indexPath) as? SpotConfigurable {
+        cell.configure(&weakSelf.items[index])
+      }
+      completion()
     }
 
-    completion?()
+    operationQueue.addOperation(operation)
   }
 
   /// Reload with indexes
@@ -419,34 +463,40 @@ extension Gridable {
   /// - parameter animation:  Perform reload animation.
   /// - parameter completion: A completion closure that is executed in the main queue when the view model has been reloaded.
   public func reload(_ indexes: [Int]? = nil, withAnimation animation: Animation = .none, completion: Completion) {
-    if animation == .none { UIView.setAnimationsEnabled(false) }
+    let operation = SpotOperation(completion) { [weak self] completion in
+      guard let weakSelf = self else { completion(); return }
 
-    refreshIndexes()
-    var cellCache: [String : SpotConfigurable] = [:]
+      if animation == .none { UIView.setAnimationsEnabled(false) }
 
-    if let indexes = indexes {
-      indexes.forEach { index  in
-        configureItem(at: index)
+      weakSelf.refreshIndexes()
+      var cellCache: [String : SpotConfigurable] = [:]
+
+      if let indexes = indexes {
+        indexes.forEach { index  in
+          weakSelf.configureItem(at: index)
+        }
+      } else {
+        weakSelf.component.items.enumerated().forEach { index, _  in
+          weakSelf.configureItem(at: index)
+        }
       }
-    } else {
-      component.items.enumerated().forEach { index, _  in
-        configureItem(at: index)
+
+      cellCache.removeAll()
+
+      if let indexes = indexes {
+        weakSelf.collectionView.reload(at: indexes)
+      } else {
+        weakSelf.collectionView.reloadData()
       }
+
+      weakSelf.setup(weakSelf.collectionView.bounds.size)
+      weakSelf.collectionView.layoutIfNeeded()
+
+      if animation == .none { UIView.setAnimationsEnabled(true) }
+      completion()
     }
 
-    cellCache.removeAll()
-
-    if let indexes = indexes {
-      collectionView.reload(indexes)
-    } else {
-      collectionView.reloadData()
-    }
-
-    setup(collectionView.bounds.size)
-    collectionView.layoutIfNeeded()
-
-    if animation == .none { UIView.setAnimationsEnabled(true) }
-    completion?()
+    operationQueue.addOperation(operation)
   }
 
   public func beforeUpdate() {
