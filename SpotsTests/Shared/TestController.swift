@@ -159,12 +159,12 @@ class ControllerTests : XCTestCase {
     XCTAssert(self.controller.spot!.component.items.count == 0)
 
     let item = Item(title: "title1", kind: "grid")
-    controller.append(item, spotIndex: 0)
+    controller.append(item, spotIndex: 0) {
+      XCTAssert(self.controller.spot!.component.items.count == 1)
 
-    XCTAssert(self.controller.spot!.component.items.count == 1)
-
-    if let testItem = self.controller.spot!.component.items.first {
-      XCTAssert(testItem == item)
+      if let testItem = self.controller.spot!.component.items.first {
+        XCTAssert(testItem == item)
+      }
     }
 
     // Test appending item without kind
@@ -271,12 +271,9 @@ class ControllerTests : XCTestCase {
     XCTAssert(self.controller.spot!.component.items.count == 0)
 
     let item = Item(title: "title1", kind: "carousel")
-    controller.append(item, spotIndex: 0)
-
-    XCTAssert(self.controller.spot!.component.items.count == 1)
-
-    if let testItem = self.controller.spot!.component.items.first {
-      XCTAssert(testItem == item)
+    controller.append(item, spotIndex: 0) {
+      XCTAssertEqual(self.controller.spot!.component.items.count, 1)
+      XCTAssert(self.controller.spot!.component.items.first! == item)
     }
 
     // Test appending item without kind
@@ -328,10 +325,10 @@ class ControllerTests : XCTestCase {
       Item(title: "title1", kind: "carousel"),
       Item(title: "title2", kind: "carousel")
     ]
-    controller.prepend(items, spotIndex: 0)
-
-    XCTAssertEqual(self.controller.spot!.component.items.count, 2)
-    XCTAssert(self.controller.spot!.component.items == items)
+    controller.prepend(items, spotIndex: 0) {
+      XCTAssertEqual(self.controller.spot!.component.items.count, 2)
+      XCTAssert(self.controller.spot!.component.items == items)
+    }
 
     let exception = self.expectation(description: "Test prepend items")
     controller.prepend([
