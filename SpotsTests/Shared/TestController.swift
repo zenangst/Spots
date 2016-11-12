@@ -72,10 +72,10 @@ class ControllerTests : XCTestCase {
       Item(title: "title1", kind: "list"),
       Item(title: "title2", kind: "list")
     ]
-    controller.append(items, spotIndex: 0)
-
-    XCTAssert(self.controller.spot!.component.items.count > 0)
-    XCTAssert(self.controller.spot!.component.items == items)
+    controller.append(items, spotIndex: 0) {
+      XCTAssert(self.controller.spot!.component.items.count > 0)
+      XCTAssert(self.controller.spot!.component.items == items)
+    }
 
     // Test appending items without kind
     let exception = self.expectation(description: "Test append items")
