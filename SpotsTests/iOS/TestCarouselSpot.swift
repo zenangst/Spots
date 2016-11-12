@@ -228,10 +228,10 @@ class CarouselSpotTests: XCTestCase {
 
   func testInsertItem() {
     let item = Item(title: "test")
-    let spot = CarouselSpot(component: Component())
+    let testSpot = CarouselSpot(component: Component())
     var exception: XCTestExpectation? = self.expectation(description: "Insert item")
-    spot.insert(item, index: 0) {
-      XCTAssert(spot.component.items.first! == item)
+    testSpot.insert(item, index: 0) {
+      XCTAssert(testSpot.component.items.first! == item)
       exception?.fulfill()
       exception = nil
     }
@@ -240,10 +240,10 @@ class CarouselSpotTests: XCTestCase {
 
   func testPrependItems() {
     let items = [Item(title: "test"), Item(title: "test 2")]
-    let spot = CarouselSpot(component: Component())
+    let testSpot = CarouselSpot(component: Component())
     var exception: XCTestExpectation? = self.expectation(description: "Prepend items")
-    spot.prepend(items) {
-      XCTAssert(spot.component.items == items)
+    testSpot.prepend(items) {
+      XCTAssert(testSpot.component.items == items)
       exception?.fulfill()
       exception = nil
     }
