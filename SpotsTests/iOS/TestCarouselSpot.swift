@@ -216,6 +216,13 @@ class CarouselSpotTests: XCTestCase {
       exception?.fulfill()
       exception = nil
     }
+
+    spot.append(items) {
+      XCTAssertEqual(spot.items.count, 4)
+      exception?.fulfill()
+      exception = nil
+    }
+
     waitForExpectations(timeout: 0.5, handler: nil)
   }
 
