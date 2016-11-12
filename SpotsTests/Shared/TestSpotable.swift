@@ -1,4 +1,3 @@
-/*
 @testable import Spots
 import Foundation
 import XCTest
@@ -21,7 +20,15 @@ class SpotableTests : XCTestCase {
         listSpot.render().layoutSubviews()
       }
     }
-    XCTAssertEqual(listSpot.items.count, 500)
+
+    let exception = self.expectation(description: "Wait until done")
+
+    Dispatch.delay(for: 1.0) {
+      XCTAssertEqual(listSpot.items.count, 500)
+      exception.fulfill()
+    }
+
+    waitForExpectations(timeout: 1.0, handler: nil)
   }
 
   func testAppendingMultipleItemsToSpotInController() {
@@ -40,7 +47,13 @@ class SpotableTests : XCTestCase {
         controller.spots.forEach { $0.render().layoutSubviews() }
       }
     }
-    XCTAssertEqual(controller.spots[0].items.count, 500)
+
+    let exception = self.expectation(description: "Wait until done")
+
+    Dispatch.delay(for: 1.0) {
+      XCTAssertEqual(controller.spots[0].items.count, 500)
+      exception.fulfill()
+    }
+    waitForExpectations(timeout: 1.0, handler: nil)
   }
 }
-*/
