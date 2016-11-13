@@ -147,11 +147,11 @@ open class ListSpot: NSObject, Listable {
     tableView.rowHeight = UITableViewAutomaticDimension
 
     #if os(iOS)
-    if let separator = component.meta(Key.separator, type: Bool.self) {
-      tableView.separatorStyle = separator
-        ? .singleLine
-        : .none
-    }
+      if let separator = component.meta(Key.separator, type: Bool.self) {
+        tableView.separatorStyle = separator
+          ? .singleLine
+          : .none
+      }
     #endif
   }
 

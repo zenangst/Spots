@@ -79,7 +79,7 @@ open class GridSpot: NSObject, Gridable {
     collectionView.isScrollEnabled = false
 
     return collectionView
-  }()
+    }()
 
   public var userInterface: UserInterface?
   var spotDataSource: DataSource?

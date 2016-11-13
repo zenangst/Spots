@@ -182,7 +182,7 @@ open class GridSpot: NSObject, Gridable {
     self.stateCache = stateCache
   }
 
-    deinit {
+  deinit {
     collectionView.delegate = nil
     collectionView.dataSource = nil
     spotDataSource = nil
