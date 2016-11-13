@@ -1,6 +1,6 @@
 import UIKit
 
-extension UICollectionView {
+extension UICollectionView: UserInterface {
 
   public func view<T>(at index: Int) -> T? {
     return cellForItem(at: IndexPath(item: index, section: 0)) as? T

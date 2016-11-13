@@ -1,6 +1,6 @@
 import UIKit
 
-public extension UITableView {
+extension UITableView: UserInterface {
 
   public func view<T>(at index: Int) -> T? {
     return cellForRow(at: IndexPath(row: index, section: 0)) as? T
@@ -11,6 +11,7 @@ public extension UITableView {
   }
 
   ///  A convenience method for performing inserts on a UITableView
+  ///
   ///  - parameter indexes: A collection integers
   ///  - parameter section: The section you want to update
   ///  - parameter animation: A constant that indicates how the reloading is to be animated
@@ -23,7 +24,8 @@ public extension UITableView {
     completion?()
   }
 
-  /// A convenience method for performing inserts on a UITableView
+  /// A convenience method for performing reloads on a UITableView
+  ///
   /// - parameter indexes: A collection integers
   /// - parameter section: The section you want to update
   /// - parameter animation: A constant that indicates how the reloading is to be animated
@@ -35,11 +37,11 @@ public extension UITableView {
     completion?()
   }
 
-  /// A convenience method for performing inserts on a UITableView
+  /// A convenience method for performing deletions on a UITableView
+  ///
   /// - parameter indexes: A collection integers
   /// - parameter section: The section you want to update
   /// - parameter animation: A constant that indicates how the reloading is to be animated
-
   public func delete(_ indexes: [Int], withAnimation animation: Animation = .automatic, completion: (() -> Void)? = nil) {
     let indexPaths = indexes.map { IndexPath(row: $0, section: 0) }
     if animation == .none { UIView.setAnimationsEnabled(false) }
@@ -73,10 +75,12 @@ public extension UITableView {
     endUpdates()
   }
 
-  /// A convenience method for performing inserts on a UITableView
-  /// - parameter section: The section you want to update
-  /// - parameter animation: A constant that indicates how the reloading is to be animated
-  func reloadSection(_ section: Int = 0, withAnimation animation: Animation = .automatic, completion: (() -> Void)? = nil) {
+  /// A convenience method for performing inserts on a UITableView.
+  ///
+  /// - parameter section: The section you want to update.
+  /// - parameter animation: A constant that indicates how the reloading is to be animated.
+  /// - parameter completino: A completion closure that will run when the reload is done.
+  public func reloadSection(_ section: Int = 0, withAnimation animation: Animation = .automatic, completion: (() -> Void)? = nil) {
     if animation == .none { UIView.setAnimationsEnabled(false) }
     performUpdates {
       reloadSections(IndexSet(integer: section), with: animation.tableViewAnimation)
