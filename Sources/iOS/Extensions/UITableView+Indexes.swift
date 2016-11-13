@@ -86,6 +86,7 @@ extension UITableView: UserInterface {
       reloadSections(IndexSet(integer: section), with: animation.tableViewAnimation)
     }
     if animation == .none { UIView.setAnimationsEnabled(true) }
+    completion?()
   }
 
 
