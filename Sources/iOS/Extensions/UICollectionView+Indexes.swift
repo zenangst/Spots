@@ -9,7 +9,7 @@ extension UICollectionView: UserInterface {
   public func beginUpdates() {}
   public func endUpdates() {}
   public func reloadDataSource() {
-    self.reloadData()
+    reloadData()
   }
 
   /// A convenience method for performing inserts on a UICollectionView

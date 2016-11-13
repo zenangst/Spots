@@ -7,7 +7,7 @@ extension UITableView: UserInterface {
   }
 
   public func reloadDataSource() {
-    self.reloadData()
+    reloadData()
   }
 
   ///  A convenience method for performing inserts on a UITableView
