@@ -377,8 +377,9 @@ extension Delegate: UIScrollViewDelegate {
   /// - parameter velocity:            The velocity of the scroll view (in points) at the moment the touch was released.
   /// - parameter targetContentOffset: The expected offset when the scrolling action decelerates to a stop.
   public func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+    guard let spot = spot as? CarouselSpot else { return }
     #if os(iOS)
-      guard let spot = spot as? CarouselSpot, spot.paginate else { return }
+      guard spot.paginate else { return }
     #endif
 
     let collectionView = spot.collectionView
