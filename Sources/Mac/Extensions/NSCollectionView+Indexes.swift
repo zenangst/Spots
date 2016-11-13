@@ -1,6 +1,6 @@
 import Cocoa
 
-public extension NSCollectionView {
+extension NSCollectionView: UserInterface {
 
   public func view<T>(at index: Int) -> T? {
     return item(at: index) as? T
@@ -78,7 +78,7 @@ public extension NSCollectionView {
     }
   }
 
-  func reloadDataSource() {
+  public func reloadDataSource() {
     reloadData()
   }
 
@@ -87,7 +87,7 @@ public extension NSCollectionView {
    - parameter index: The section you want to update
    - parameter completion: A completion block for when the updates are done
    **/
-  func reloadSection(_ section: Int, withAnimation animation: Animation, completion: (() -> Void)?) {
+  public func reloadSection(_ section: Int, withAnimation animation: Animation, completion: (() -> Void)?) {
     performBatchUpdates({ [weak self] in
       guard let weakSelf = self else { return }
       weakSelf.reloadSections(IndexSet(integer: section))
@@ -96,6 +96,6 @@ public extension NSCollectionView {
     }
   }
 
-  func beginUpdates() {}
-  func endUpdates() {}
+  public func beginUpdates() {}
+  public func endUpdates() {}
 }

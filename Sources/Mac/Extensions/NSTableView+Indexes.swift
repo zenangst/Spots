@@ -1,6 +1,6 @@
 import Cocoa
 
-public extension NSTableView {
+extension NSTableView: UserInterface {
 
   public func view<T>(at index: Int) -> T? {
     return rowView(atRow: index, makeIfNecessary: false) as? T
