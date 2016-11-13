@@ -6,6 +6,8 @@
 import Brick
 
 open class ViewSpot: NSObject, Spotable, Viewable {
+  public var mutableUI: MutatableUI!
+
   /// Reload spot with ItemChanges.
   ///
   /// - parameter changes:          A collection of changes; inserations, updates, reloads, deletions and updated children.

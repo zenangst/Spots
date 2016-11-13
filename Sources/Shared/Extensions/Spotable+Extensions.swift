@@ -41,7 +41,7 @@ public extension Spotable {
   ///
   /// - returns: An optional view of inferred type
   public func ui<T>(at index: Int) -> T? {
-    return ui(at: index)
+    return mutableUI.view(at: index)
   }
 
   /// Append item to collection with animation
@@ -50,7 +50,27 @@ public extension Spotable {
   /// - parameter animation:  The animation that should be used (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue.
   func append(_ item: Item, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
-    append(item, withAnimation: animation, completion: completion)
+    Dispatch.mainQueue { [weak self] in
+      guard let weakSelf = self else {
+        completion?()
+        return
+      }
+
+      let itemsCount = weakSelf.component.items.count
+      weakSelf.component.items.append(item)
+
+      if itemsCount == 0 {
+        weakSelf.mutableUI.reloadDataSource()
+        weakSelf.afterUpdate()
+        completion?()
+      } else {
+        weakSelf.mutableUI.insert([weakSelf.component.items.count], withAnimation: animation, completion: nil)
+        weakSelf.afterUpdate()
+        completion?()
+      }
+
+      weakSelf.updateHeight()
+    }
   }
 
   /// Append a collection of items to collection with animation
@@ -59,7 +79,33 @@ public extension Spotable {
   /// - parameter animation:  The animation that should be used (currently not in use)
   /// - parameter completion: A completion closure that is executed in the main queue.
   func append(_ items: [Item], withAnimation animation: Animation = .automatic, completion: Completion = nil) {
-    append(items, withAnimation: animation, completion: completion)
+    Dispatch.mainQueue { [weak self] in
+      guard let weakSelf = self else { completion?(); return }
+
+      var indexes = [Int]()
+      let itemsCount = weakSelf.component.items.count
+
+      if weakSelf.component.items.isEmpty {
+        weakSelf.component.items.append(contentsOf: items)
+      } else {
+        for (index, item) in items.enumerated() {
+          weakSelf.component.items.append(item)
+          indexes.append(itemsCount + index)
+
+          weakSelf.configureItem(at: itemsCount + index)
+        }
+      }
+
+      if itemsCount > 0 {
+        weakSelf.mutableUI.insert(indexes, withAnimation: animation, completion: nil)
+      } else {
+        weakSelf.mutableUI.reloadDataSource()
+      }
+      weakSelf.updateHeight() {
+        weakSelf.afterUpdate()
+        completion?()
+      }
+    }
   }
 
   /// Prepend a collection items to the collection with animation
@@ -68,7 +114,32 @@ public extension Spotable {
   /// - parameter animation:  A Animation that is used when performing the mutation (currently not in use)
   /// - parameter completion: A completion closure that is executed in the main queue.
   func prepend(_ items: [Item], withAnimation animation: Animation = .automatic, completion: Completion = nil) {
-    prepend(items, withAnimation: animation, completion: completion)
+    let itemsCount = component.items.count
+    var indexes = [Int]()
+
+    component.items.insert(contentsOf: items, at: 0)
+
+    items.enumerated().forEach {
+      if itemsCount > 0 {
+        indexes.append(items.count - 1 - $0.offset)
+      }
+      configureItem(at: $0.offset)
+    }
+
+    Dispatch.mainQueue { [weak self] in
+      guard let weakSelf = self else { completion?(); return }
+
+      if !indexes.isEmpty {
+        weakSelf.mutableUI.insert(indexes, withAnimation: animation) {
+          weakSelf.afterUpdate()
+          weakSelf.sanitize { completion?() }
+        }
+      } else {
+        weakSelf.mutableUI.reloadDataSource()
+        weakSelf.afterUpdate()
+        weakSelf.sanitize { completion?() }
+      }
+    }
   }
 
   /// Insert item into collection at index.
@@ -78,7 +149,25 @@ public extension Spotable {
   /// - parameter animation:  A Animation that is used when performing the mutation (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue.
   func insert(_ item: Item, index: Int, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
-    insert(item, index: index, withAnimation: animation, completion: completion)
+    let itemsCount = component.items.count
+    component.items.insert(item, at: index)
+    var indexes = [Int]()
+
+    if itemsCount > 0 {
+      indexes.append(index)
+    }
+
+    Dispatch.mainQueue { [weak self] in
+      guard let weakSelf = self else { completion?(); return }
+
+      if itemsCount > 0 {
+        weakSelf.mutableUI.insert(indexes, withAnimation: animation, completion: nil)
+      } else {
+        weakSelf.mutableUI.reloadDataSource()
+      }
+      weakSelf.afterUpdate()
+      weakSelf.sanitize { completion?() }
+    }
   }
 
   /// Delete item from collection with animation
@@ -87,7 +176,16 @@ public extension Spotable {
   /// - parameter animation:  The animation that should be used (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue.
   func delete(_ item: Item, withAnimation animation: Animation = .automatic, completion: Completion) {
-    delete(item, withAnimation: animation, completion: completion)
+    guard let index = component.items.index(where: { $0 == item })
+      else { completion?(); return }
+
+    component.items.remove(at: index)
+
+    Dispatch.mainQueue { [weak self] in
+      self?.mutableUI.delete([index], withAnimation: animation, completion: nil)
+      self?.afterUpdate()
+      self?.sanitize { completion?() }
+    }
   }
 
   /// Delete items from collection with animation
@@ -96,7 +194,19 @@ public extension Spotable {
   /// - parameter animation:  The animation that should be used (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue.
   func delete(_ items: [Item], withAnimation animation: Animation = .automatic, completion: Completion = nil) {
-    delete(items, withAnimation: animation, completion: completion)
+    var indexPaths = [Int]()
+    let count = component.items.count
+
+    for (index, item) in items.enumerated() {
+      indexPaths.append(count + index)
+      component.items.append(item)
+    }
+
+    Dispatch.mainQueue { [weak self] in
+      self?.mutableUI.delete(indexPaths, withAnimation: animation, completion: nil)
+      self?.afterUpdate()
+      self?.sanitize { completion?() }
+    }
   }
 
   /// Delete item at index with animation
@@ -105,7 +215,12 @@ public extension Spotable {
   /// - parameter animation:  The animation that should be used (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue when the view model has been removed.
   func delete(_ index: Int, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
-    delete(index, withAnimation: animation, completion: completion)
+    Dispatch.mainQueue { [weak self] in
+      self?.component.items.remove(at: index)
+      self?.mutableUI.delete([index], withAnimation: animation, completion: nil)
+      self?.afterUpdate()
+      self?.sanitize { completion?() }
+    }
   }
 
   /// Delete a collection
@@ -114,7 +229,12 @@ public extension Spotable {
   /// - parameter animation:  The animation that should be used (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue when the view model has been removed.
   func delete(_ indexes: [Int], withAnimation animation: Animation = .automatic, completion: Completion = nil) {
-    delete(indexes, withAnimation: animation, completion: completion)
+    Dispatch.mainQueue { [weak self] in
+      indexes.forEach { self?.component.items.remove(at: $0) }
+      self?.mutableUI.delete(indexes, withAnimation: animation, completion: nil)
+      self?.afterUpdate()
+      self?.sanitize { completion?() }
+    }
   }
 
   /// Update item at index with new item.
@@ -124,7 +244,45 @@ public extension Spotable {
   /// - parameter animation:  A Animation that is used when performing the mutation (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue when the view model has been removed.
   func update(_ item: Item, index: Int, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
-    update(item, index: index, withAnimation: animation, completion: completion)
+    guard let oldItem = self.item(at: index) else { completion?(); return }
+
+    items[index] = item
+    configureItem(at: index)
+
+    let newItem = items[index]
+
+    #if !os(OSX)
+      if let composite: Composable = mutableUI.view(at: index),
+        let spots = spotsCompositeDelegate?.resolve(index, itemIndex: index) {
+        mutableUI.beginUpdates()
+        composite.configure(&component.items[index], spots: spots)
+        mutableUI.endUpdates()
+        updateHeight() {
+          completion?()
+        }
+        return
+      }
+    #endif
+
+    if newItem.kind != oldItem.kind || newItem.size.height != oldItem.size.height {
+      if let cell: SpotConfigurable = mutableUI.view(at: index), animation != .none {
+        mutableUI.beginUpdates()
+        cell.configure(&items[index])
+        mutableUI.endUpdates()
+      } else {
+        mutableUI.reload([index], withAnimation: animation, completion: nil)
+      }
+      afterUpdate()
+      updateHeight() { completion?() }
+      return
+    } else if let cell: SpotConfigurable = mutableUI.view(at: index) {
+      cell.configure(&items[index])
+      afterUpdate()
+      updateHeight() { completion?() }
+    } else {
+      afterUpdate()
+      completion?()
+    }
   }
 
   /// Reloads a spot only if it changes
@@ -133,7 +291,30 @@ public extension Spotable {
   /// - parameter animation:  The animation that should be used (only works for Listable objects)
   /// - parameter completion: A completion closure that is performed when all mutations are performed
   func reload(_ indexes: [Int]? = nil, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
-    reload(indexes, withAnimation: animation, completion: completion)
+    refreshIndexes()
+
+    if let indexes = indexes {
+      indexes.forEach { index  in
+        configureItem(at: index)
+      }
+    } else {
+      for (index, _) in component.items.enumerated() {
+        configureItem(at: index)
+      }
+    }
+
+    if let indexes = indexes {
+      mutableUI.reload(indexes, withAnimation: animation, completion: nil)
+    } else {
+      animation != .none
+        ? mutableUI.reloadSection(0, withAnimation: animation, completion: nil)
+        : mutableUI.reloadDataSource()
+    }
+
+    afterUpdate()
+    updateHeight() {
+      completion?()
+    }
   }
 
   /// Reload spot with ItemChanges.

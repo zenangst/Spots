@@ -3,6 +3,7 @@ import Brick
 
 /// A GridSpot, a collection view based Spotable object that lays out its items in a vertical order based of the item sizes
 open class GridSpot: NSObject, Gridable {
+  public var mutableUI: MutatableUI!
 
   /**
    *  Keys for meta data lookup
@@ -92,6 +93,7 @@ open class GridSpot: NSObject, Gridable {
   public required init(component: Component) {
     self.component = component
     super.init()
+    self.mutableUI = collectionView
     self.spotDataSource = DataSource(spot: self)
     self.spotDelegate = Delegate(spot: self)
 

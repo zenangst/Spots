@@ -2,6 +2,8 @@ import Cocoa
 import Brick
 
 open class GridSpot: NSObject, Gridable {
+  public var mutableUI: MutatableUI!
+
 
   /// An enum layout type
   ///
@@ -140,6 +142,7 @@ open class GridSpot: NSObject, Gridable {
     self.collectionView = CollectionView()
     self.layout = GridSpot.setupLayout(component)
     super.init()
+    self.mutableUI = collectionView
     self.spotDataSource = DataSource(spot: self)
     self.spotDelegate = Delegate(spot: self)
 

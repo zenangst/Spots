@@ -3,6 +3,7 @@ import Brick
 
 /// A Spotable object that uses UITableView to render its items
 open class ListSpot: NSObject, Listable {
+  public var mutableUI: MutatableUI!
 
   /// Keys for meta data lookup
   public struct Key {
@@ -62,6 +63,7 @@ open class ListSpot: NSObject, Listable {
   public required init(component: Component) {
     self.component = component
     super.init()
+    self.mutableUI = self.tableView
     self.spotDataSource = DataSource(spot: self)
     self.spotDelegate = Delegate(spot: self)
 

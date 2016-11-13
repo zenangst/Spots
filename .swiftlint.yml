@@ -16,7 +16,7 @@ type_body_length:
   - 300
   - 400
 file_length:
-  warning: 650
+  warning: 800
   error: 1200
 cyclomatic_complexity:
   warning: 20

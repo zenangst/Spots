@@ -330,7 +330,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = Hyper;
 				TargetAttributes = {
 					BDDC3E8B1CE78D5B00B608FB = {
@@ -586,7 +586,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/**",
-					"\"$(SRCROOT)/CocoaLibSpotify.framework/Versions/Frameworks\"/**",
 				);
 				INFOPLIST_FILE = "Spotify Mac/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
@@ -610,7 +609,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/**",
-					"\"$(SRCROOT)/CocoaLibSpotify.framework/Versions/Frameworks\"/**",
 				);
 				INFOPLIST_FILE = "Spotify Mac/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
