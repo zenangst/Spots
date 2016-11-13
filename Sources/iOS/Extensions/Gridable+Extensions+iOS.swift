@@ -168,4 +168,26 @@ extension Gridable {
   public func afterUpdate() {
     CATransaction.commit()
   }
+
+  /// Scroll to a specific item based on predicate.
+  ///
+  /// - parameter predicate: A predicate closure to determine which item to scroll to
+  public func scrollTo(_ predicate: (Item) -> Bool) {
+    if let index = items.index(where: predicate) {
+      let pageWidth: CGFloat = collectionView.frame.size.width - layout.sectionInset.right
+        + layout.sectionInset.left
+
+      collectionView.setContentOffset(CGPoint(x: pageWidth * CGFloat(index), y:0), animated: true)
+    }
+  }
+
+  /// Scrolls the collection view contents until the specified item is visible.
+  ///
+  /// - parameter index: The index path of the item to scroll into view.
+  /// - parameter position: An option that specifies where the item should be positioned when scrolling finishes.
+  /// - parameter animated: Specify true to animate the scrolling behavior or false to adjust the scroll view’s visible content immediately.
+  public func scrollTo(index: Int, position: UICollectionViewScrollPosition = .centeredHorizontally, animated: Bool = true) {
+    collectionView.scrollToItem(at: IndexPath(item: index, section: 0),
+                                     at: position, animated: animated)
+  }
 }
