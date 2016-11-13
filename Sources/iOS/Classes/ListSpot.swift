@@ -91,6 +91,7 @@ open class ListSpot: NSObject, Listable {
 
     if let tableView = tableView {
       self.tableView = tableView
+      self.userInterface = tableView
     }
 
     setupTableView()
@@ -109,6 +110,7 @@ open class ListSpot: NSObject, Listable {
 
     if let tableView = tableView {
       self.tableView = tableView
+      self.userInterface = tableView
     }
 
     setupTableView()
@@ -191,5 +193,11 @@ open class ListSpot: NSObject, Listable {
   /// parameter header: The view type that you want to register as default header.
   open static func register(defaultHeader header: View.Type) {
     self.headers.storage[self.views.defaultIdentifier] = Registry.Item.classType(header)
+  }
+
+  public func afterUpdate() {
+    if let superview = tableView.superview {
+      //tableView.reloadDataSource()
+    }
   }
 }
