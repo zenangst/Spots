@@ -2,7 +2,7 @@ import Cocoa
 import Brick
 
 open class RowSpot: NSObject, Gridable {
-  public var mutableUI: MutatableUI!
+  public var userInterface: UserInterface!
 
 
   /// An enum layout type
@@ -144,7 +144,7 @@ open class RowSpot: NSObject, Gridable {
     self.collectionView = CollectionView()
     self.layout = RowSpot.setupLayout(component)
     super.init()
-    self.mutableUI = collectionView
+    self.userInterface = collectionView
     self.spotDataSource = DataSource(spot: self)
     self.spotDelegate = Delegate(spot: self)
 

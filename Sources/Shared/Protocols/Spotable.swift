@@ -35,7 +35,7 @@ public protocol Spotable: class {
   /// Indicator to calculate the height based on content
   var usesDynamicHeight: Bool { get }
 
-  var mutableUI: MutatableUI! { get }
+  var userInterface: UserInterface! { get }
 
   #if os(OSX)
     /// The current responder for the Spotable object, only available on macOS.

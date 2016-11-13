@@ -41,7 +41,7 @@ public extension Spotable {
   ///
   /// - returns: An optional view of inferred type
   public func ui<T>(at index: Int) -> T? {
-    return mutableUI.view(at: index)
+    return userInterface.view(at: index)
   }
 
   /// Append item to collection with animation
@@ -60,11 +60,11 @@ public extension Spotable {
       weakSelf.component.items.append(item)
 
       if itemsCount == 0 {
-        weakSelf.mutableUI.reloadDataSource()
+        weakSelf.userInterface.reloadDataSource()
         weakSelf.afterUpdate()
         completion?()
       } else {
-        weakSelf.mutableUI.insert([weakSelf.component.items.count], withAnimation: animation, completion: nil)
+        weakSelf.userInterface.insert([weakSelf.component.items.count], withAnimation: animation, completion: nil)
         weakSelf.afterUpdate()
         completion?()
       }
@@ -97,9 +97,9 @@ public extension Spotable {
       }
 
       if itemsCount > 0 {
-        weakSelf.mutableUI.insert(indexes, withAnimation: animation, completion: nil)
+        weakSelf.userInterface.insert(indexes, withAnimation: animation, completion: nil)
       } else {
-        weakSelf.mutableUI.reloadDataSource()
+        weakSelf.userInterface.reloadDataSource()
       }
       weakSelf.updateHeight() {
         weakSelf.afterUpdate()
@@ -130,12 +130,12 @@ public extension Spotable {
       guard let weakSelf = self else { completion?(); return }
 
       if !indexes.isEmpty {
-        weakSelf.mutableUI.insert(indexes, withAnimation: animation) {
+        weakSelf.userInterface.insert(indexes, withAnimation: animation) {
           weakSelf.afterUpdate()
           weakSelf.sanitize { completion?() }
         }
       } else {
-        weakSelf.mutableUI.reloadDataSource()
+        weakSelf.userInterface.reloadDataSource()
         weakSelf.afterUpdate()
         weakSelf.sanitize { completion?() }
       }
@@ -161,9 +161,9 @@ public extension Spotable {
       guard let weakSelf = self else { completion?(); return }
 
       if itemsCount > 0 {
-        weakSelf.mutableUI.insert(indexes, withAnimation: animation, completion: nil)
+        weakSelf.userInterface.insert(indexes, withAnimation: animation, completion: nil)
       } else {
-        weakSelf.mutableUI.reloadDataSource()
+        weakSelf.userInterface.reloadDataSource()
       }
       weakSelf.afterUpdate()
       weakSelf.sanitize { completion?() }
@@ -182,7 +182,7 @@ public extension Spotable {
     component.items.remove(at: index)
 
     Dispatch.mainQueue { [weak self] in
-      self?.mutableUI.delete([index], withAnimation: animation, completion: nil)
+      self?.userInterface.delete([index], withAnimation: animation, completion: nil)
       self?.afterUpdate()
       self?.sanitize { completion?() }
     }
@@ -203,7 +203,7 @@ public extension Spotable {
     }
 
     Dispatch.mainQueue { [weak self] in
-      self?.mutableUI.delete(indexPaths, withAnimation: animation, completion: nil)
+      self?.userInterface.delete(indexPaths, withAnimation: animation, completion: nil)
       self?.afterUpdate()
       self?.sanitize { completion?() }
     }
@@ -217,7 +217,7 @@ public extension Spotable {
   func delete(_ index: Int, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     Dispatch.mainQueue { [weak self] in
       self?.component.items.remove(at: index)
-      self?.mutableUI.delete([index], withAnimation: animation, completion: nil)
+      self?.userInterface.delete([index], withAnimation: animation, completion: nil)
       self?.afterUpdate()
       self?.sanitize { completion?() }
     }
@@ -231,7 +231,7 @@ public extension Spotable {
   func delete(_ indexes: [Int], withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     Dispatch.mainQueue { [weak self] in
       indexes.forEach { self?.component.items.remove(at: $0) }
-      self?.mutableUI.delete(indexes, withAnimation: animation, completion: nil)
+      self?.userInterface.delete(indexes, withAnimation: animation, completion: nil)
       self?.afterUpdate()
       self?.sanitize { completion?() }
     }
@@ -252,11 +252,11 @@ public extension Spotable {
     let newItem = items[index]
 
     #if !os(OSX)
-      if let composite: Composable = mutableUI.view(at: index),
+      if let composite: Composable = userInterface.view(at: index),
         let spots = spotsCompositeDelegate?.resolve(index, itemIndex: index) {
-        mutableUI.beginUpdates()
+        userInterface.beginUpdates()
         composite.configure(&component.items[index], spots: spots)
-        mutableUI.endUpdates()
+        userInterface.endUpdates()
         updateHeight() {
           completion?()
         }
@@ -265,17 +265,17 @@ public extension Spotable {
     #endif
 
     if newItem.kind != oldItem.kind || newItem.size.height != oldItem.size.height {
-      if let cell: SpotConfigurable = mutableUI.view(at: index), animation != .none {
-        mutableUI.beginUpdates()
+      if let cell: SpotConfigurable = userInterface.view(at: index), animation != .none {
+        userInterface.beginUpdates()
         cell.configure(&items[index])
-        mutableUI.endUpdates()
+        userInterface.endUpdates()
       } else {
-        mutableUI.reload([index], withAnimation: animation, completion: nil)
+        userInterface.reload([index], withAnimation: animation, completion: nil)
       }
       afterUpdate()
       updateHeight() { completion?() }
       return
-    } else if let cell: SpotConfigurable = mutableUI.view(at: index) {
+    } else if let cell: SpotConfigurable = userInterface.view(at: index) {
       cell.configure(&items[index])
       afterUpdate()
       updateHeight() { completion?() }
@@ -304,11 +304,11 @@ public extension Spotable {
     }
 
     if let indexes = indexes {
-      mutableUI.reload(indexes, withAnimation: animation, completion: nil)
+      userInterface.reload(indexes, withAnimation: animation, completion: nil)
     } else {
       animation != .none
-        ? mutableUI.reloadSection(0, withAnimation: animation, completion: nil)
-        : mutableUI.reloadDataSource()
+        ? userInterface.reloadSection(0, withAnimation: animation, completion: nil)
+        : userInterface.reloadDataSource()
     }
 
     afterUpdate()

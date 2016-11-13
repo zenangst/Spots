@@ -2,7 +2,7 @@ import Cocoa
 import Brick
 
 open class CarouselSpot: NSObject, Gridable {
-  public var mutableUI: MutatableUI!
+  public var userInterface: UserInterface!
 
 
   public struct Key {
@@ -107,7 +107,7 @@ open class CarouselSpot: NSObject, Gridable {
     self.component = component
     self.collectionView = CollectionView()
     super.init()
-    self.mutableUI = collectionView
+    self.userInterface = collectionView
     self.spotDataSource = DataSource(spot: self)
     self.spotDelegate = Delegate(spot: self)
 

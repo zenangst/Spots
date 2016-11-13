@@ -6,7 +6,7 @@
 import Brick
 
 open class ViewSpot: NSObject, Spotable, Viewable {
-  public var mutableUI: MutatableUI!
+  public var userInterface: UserInterface!
 
   /// Reload spot with ItemChanges.
   ///

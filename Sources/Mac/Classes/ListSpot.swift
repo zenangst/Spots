@@ -2,7 +2,7 @@ import Cocoa
 import Brick
 
 open class ListSpot: NSObject, Listable {
-  public var mutableUI: MutatableUI!
+  public var userInterface: UserInterface!
 
   public struct Key {
     public static let titleSeparator = "title-separator"
@@ -114,7 +114,7 @@ open class ListSpot: NSObject, Listable {
   public required init(component: Component) {
     self.component = component
     super.init()
-    self.mutableUI = tableView
+    self.userInterface = tableView
     self.spotDataSource = DataSource(spot: self)
     self.spotDelegate = Delegate(spot: self)
 

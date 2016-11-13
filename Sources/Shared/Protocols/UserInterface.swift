@@ -1,7 +1,7 @@
 import Brick
 
 /// A protocol used for composition inside Spotable objects
-public protocol MutatableUI: class {
+public protocol UserInterface: class {
 
   func insert(_ indexes: [Int], withAnimation animation: Animation, completion: (() -> Void)?)
 
@@ -22,5 +22,5 @@ public protocol MutatableUI: class {
   func reloadDataSource()
 }
 
-extension TableView : MutatableUI {}
-extension CollectionView : MutatableUI {}
+extension TableView : UserInterface {}
+extension CollectionView : UserInterface {}
