@@ -19,6 +19,7 @@ extension UICollectionView: UserInterface {
   ///  - parameter completion: A completion block for when the updates are done
   public func insert(_ indexes: [Int], withAnimation animation: Animation = .automatic, completion: (() -> Void)? = nil) {
     let indexPaths: [IndexPath] = indexes.map { IndexPath(item: $0, section: 0) }
+
     performBatchUpdates({
       self.insertItems(at: indexPaths)
     }, completion: nil)
@@ -46,6 +47,7 @@ extension UICollectionView: UserInterface {
   ///  - parameter completion: A completion block for when the updates are done
   public func delete(_ indexes: [Int], withAnimation animation: Animation = .automatic, completion: (() -> Void)? = nil) {
     let indexPaths = indexes.map { IndexPath(item: $0, section: 0) }
+
     performBatchUpdates({ [weak self] in
       guard let weakSelf = self else { return }
       weakSelf.deleteItems(at: indexPaths)
