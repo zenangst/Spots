@@ -54,14 +54,6 @@ class ControllerTests : XCTestCase {
       exception.fulfill()
     }
 
-    // Test appending item without kind
-
-//    controller.append(Item(title: "title2"), spotIndex: 0) {
-//      XCTAssertEqual(self.controller.spot!.component.items.count, 2)
-//      XCTAssertEqual(self.controller.spot!.component.items[0].title, "title1")
-//      XCTAssertEqual(self.controller.spot!.component.items[1].title, "title2")
-//
-//    }
     waitForExpectations(timeout: 0.1, handler: nil)
   }
 
@@ -82,16 +74,6 @@ class ControllerTests : XCTestCase {
       exception.fulfill()
     }
 
-
-//    controller.append([
-//      Item(title: "title3"),
-//      Item(title: "title4")
-//    ], spotIndex: 0) {
-//      XCTAssertEqual(self.controller.spot!.component.items.count, 4)
-//      XCTAssertEqual(self.controller.spot!.component.items[2].title, "title3")
-//      XCTAssertEqual(self.controller.spot!.component.items[3].title, "title4")
-//      exception.fulfill()
-//    }
     waitForExpectations(timeout: 0.1, handler: nil)
   }
 
@@ -112,14 +94,6 @@ class ControllerTests : XCTestCase {
       exception.fulfill()
     }
 
-//    controller.prepend([
-//      Item(title: "title3"),
-//      Item(title: "title4")
-//    ], spotIndex: 0) {
-//      XCTAssertEqual(self.controller.spot!.component.items[0].title, "title3")
-//      XCTAssertEqual(self.controller.spot!.component.items[1].title, "title4")
-//      exception.fulfill()
-//    }
     waitForExpectations(timeout: 0.1, handler: nil)
   }
 
@@ -162,18 +136,13 @@ class ControllerTests : XCTestCase {
 
     let item = Item(title: "title1", kind: "grid")
     let exception = self.expectation(description: "Test append item")
+
     controller.append(item, spotIndex: 0) {
       XCTAssert(self.controller.spot!.component.items.count == 1)
       XCTAssert(self.controller.spot!.component.items.first! == item)
       exception.fulfill()
     }
-    // Test appending item without kind
 
-//    controller.append(Item(title: "title2"), spotIndex: 0) {
-//      XCTAssert(self.controller.spot!.component.items.count == 2)
-//      XCTAssertEqual(self.controller.spot!.component.items[1].title, "title2")
-//
-//    }
     waitForExpectations(timeout: 0.1, handler: nil)
   }
 
@@ -194,17 +163,6 @@ class ControllerTests : XCTestCase {
       exception.fulfill()
     }
 
-    // Test appending items without kind
-
-//    controller.append([
-//      Item(title: "title3"),
-//      Item(title: "title4")
-//    ], spotIndex: 0) {
-//      XCTAssertEqual(self.controller.spot!.component.items.count, 4)
-//      XCTAssertEqual(self.controller.spot!.component.items[2].title, "title3")
-//      XCTAssertEqual(self.controller.spot!.component.items[3].title, "title4")
-//      exception.fulfill()
-//    }
     waitForExpectations(timeout: 0.1, handler: nil)
   }
 
@@ -225,14 +183,6 @@ class ControllerTests : XCTestCase {
       exception.fulfill()
     }
 
-//    controller.prepend([
-//      Item(title: "title3"),
-//      Item(title: "title4")
-//    ], spotIndex: 0) {
-//      XCTAssertEqual(self.controller.spot!.component.items[0].title, "title3")
-//      XCTAssertEqual(self.controller.spot!.component.items[1].title, "title4")
-//      exception.fulfill()
-//    }
     waitForExpectations(timeout: 0.1, handler: nil)
   }
 
@@ -281,12 +231,7 @@ class ControllerTests : XCTestCase {
       XCTAssert(self.controller.spot!.component.items.first! == item)
       exception.fulfill()
     }
-//    // Test appending item without kind
-//    controller.append(Item(title: "title2"), spotIndex: 0) {
-//      XCTAssert(self.controller.spot!.component.items.count == 2)
-//      XCTAssertEqual(self.controller.spot!.component.items[1].title, "title2")
-//      exception.fulfill()
-//    }
+
     waitForExpectations(timeout: 0.1, handler: nil)
   }
 
@@ -308,17 +253,6 @@ class ControllerTests : XCTestCase {
       exception.fulfill()
     }
 
-    // Test appending items without kind
-
-//    controller.append([
-//      Item(title: "title3"),
-//      Item(title: "title4")
-//    ], spotIndex: 0) {
-//      XCTAssertEqual(self.controller.spot!.component.items.count, 4)
-//      XCTAssertEqual(self.controller.spot!.component.items[2].title, "title3")
-//      XCTAssertEqual(self.controller.spot!.component.items[3].title, "title4")
-//      exception.fulfill()
-//    }
     waitForExpectations(timeout: 0.1, handler: nil)
   }
 
@@ -339,14 +273,6 @@ class ControllerTests : XCTestCase {
       exception.fulfill()
     }
 
-//    controller.prepend([
-//      Item(title: "title3"),
-//      Item(title: "title4")
-//    ], spotIndex: 0) {
-//      XCTAssertEqual(self.controller.spot!.component.items[0].title, "title3")
-//      XCTAssertEqual(self.controller.spot!.component.items[1].title, "title4")
-//      exception.fulfill()
-//    }
     waitForExpectations(timeout: 1.0, handler: nil)
   }
 
