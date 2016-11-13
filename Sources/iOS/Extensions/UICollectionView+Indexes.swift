@@ -19,7 +19,6 @@ extension UICollectionView: UserInterface {
   ///  - parameter completion: A completion block for when the updates are done
   public func insert(_ indexes: [Int], withAnimation animation: Animation = .automatic, completion: (() -> Void)? = nil) {
     let indexPaths: [IndexPath] = indexes.map { IndexPath(item: $0, section: 0) }
-    print(indexPaths)
     performBatchUpdates({
       self.insertItems(at: indexPaths)
     }, completion: nil)
