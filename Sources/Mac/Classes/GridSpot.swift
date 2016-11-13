@@ -2,8 +2,6 @@ import Cocoa
 import Brick
 
 open class GridSpot: NSObject, Gridable {
-  public var userInterface: UserInterface!
-
 
   /// An enum layout type
   ///
@@ -129,6 +127,7 @@ open class GridSpot: NSObject, Gridable {
     return lineView
   }()
 
+  public var userInterface: UserInterface?
   var spotDataSource: DataSource?
   var spotDelegate: Delegate?
 
@@ -183,11 +182,12 @@ open class GridSpot: NSObject, Gridable {
     self.stateCache = stateCache
   }
 
-  deinit {
+    deinit {
     collectionView.delegate = nil
     collectionView.dataSource = nil
     spotDataSource = nil
     spotDelegate = nil
+    userInterface = nil
   }
 
   @discardableResult fileprivate static func configureLayoutInsets(_ component: Component, layout: NSCollectionViewFlowLayout) -> NSCollectionViewFlowLayout {

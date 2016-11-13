@@ -3,7 +3,6 @@ import Brick
 
 /// A GridSpot, a collection view based Spotable object that lays out its items in a vertical order based of the item sizes
 open class GridSpot: NSObject, Gridable {
-  public var userInterface: UserInterface!
 
   /**
    *  Keys for meta data lookup
@@ -82,6 +81,7 @@ open class GridSpot: NSObject, Gridable {
     return collectionView
   }()
 
+  public var userInterface: UserInterface?
   var spotDataSource: DataSource?
   var spotDelegate: Delegate?
 
@@ -163,6 +163,7 @@ open class GridSpot: NSObject, Gridable {
   deinit {
     spotDataSource = nil
     spotDelegate = nil
+    userInterface = nil
   }
 
   /// Configure section insets and layout spacing for the UICollectionViewFlow using component meta data

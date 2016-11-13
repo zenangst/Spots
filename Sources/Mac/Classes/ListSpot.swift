@@ -2,7 +2,6 @@ import Cocoa
 import Brick
 
 open class ListSpot: NSObject, Listable {
-  public var userInterface: UserInterface!
 
   public struct Key {
     public static let titleSeparator = "title-separator"
@@ -108,6 +107,7 @@ open class ListSpot: NSObject, Listable {
     return lineView
   }()
 
+  public var userInterface: UserInterface?
   var spotDataSource: DataSource?
   var spotDelegate: Delegate?
 
@@ -139,6 +139,7 @@ open class ListSpot: NSObject, Listable {
     tableView.dataSource = nil
     spotDataSource = nil
     spotDelegate = nil
+    userInterface = nil
   }
 
   open func doubleAction(_ sender: Any?) {

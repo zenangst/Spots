@@ -6,7 +6,6 @@
 import Brick
 
 open class ViewSpot: NSObject, Spotable, Viewable {
-  public var userInterface: UserInterface!
 
   /// Reload spot with ItemChanges.
   ///
@@ -39,6 +38,8 @@ open class ViewSpot: NSObject, Spotable, Viewable {
 
   /// Indicator to calculate the height based on content
   open var usesDynamicHeight = true
+
+  public var userInterface: UserInterface?
 
   public required init(component: Component) {
     self.component = component

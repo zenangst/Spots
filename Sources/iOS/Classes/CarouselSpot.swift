@@ -3,8 +3,6 @@ import Brick
 
 /// A CarouselSpot, a collection view based Spotable object that lays out its items in a horizontal order
 open class CarouselSpot: NSObject, Gridable {
-  public var userInterface: UserInterface!
-
   /**
    *  A struct that holds keys that is used when mapping meta data to configuration methods
    */
@@ -142,6 +140,7 @@ open class CarouselSpot: NSObject, Gridable {
   /// The collection views background view
   open lazy var backgroundView = UIView()
 
+  public var userInterface: UserInterface?
   var spotDataSource: DataSource?
   var spotDelegate: Delegate?
 
@@ -201,6 +200,7 @@ open class CarouselSpot: NSObject, Gridable {
   deinit {
     spotDataSource = nil
     spotDelegate = nil
+    userInterface = nil
   }
 
   /// Configure collection view with data source, delegate and background view

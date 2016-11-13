@@ -2,8 +2,6 @@ import Cocoa
 import Brick
 
 open class CarouselSpot: NSObject, Gridable {
-  public var userInterface: UserInterface!
-
 
   public struct Key {
     public static let minimumInteritemSpacing = "item-spacing"
@@ -95,6 +93,7 @@ open class CarouselSpot: NSObject, Gridable {
     return lineView
   }()
 
+  public var userInterface: UserInterface?
   var spotDataSource: DataSource?
   var spotDelegate: Delegate?
 
@@ -146,6 +145,7 @@ open class CarouselSpot: NSObject, Gridable {
     collectionView.dataSource = nil
     spotDataSource = nil
     spotDelegate = nil
+    userInterface = nil
   }
 
   fileprivate func configureLayoutInsets(_ component: Component) {

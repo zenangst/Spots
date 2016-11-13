@@ -3,7 +3,6 @@ import Brick
 
 /// A Spotable object that uses UITableView to render its items
 open class ListSpot: NSObject, Listable {
-  public var userInterface: UserInterface!
 
   /// Keys for meta data lookup
   public struct Key {
@@ -50,6 +49,7 @@ open class ListSpot: NSObject, Listable {
   /// Indicator to calculate the height based on content
   open var usesDynamicHeight = true
 
+  public var userInterface: UserInterface?
   var spotDataSource: DataSource?
   var spotDelegate: Delegate?
 
@@ -136,6 +136,7 @@ open class ListSpot: NSObject, Listable {
   deinit {
     spotDataSource = nil
     spotDelegate = nil
+    userInterface = nil
   }
 
   /// Configure and setup the data source, delegate and additional configuration options for the table view.
