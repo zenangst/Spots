@@ -2,7 +2,16 @@
 
 ## [Unreleased](https://github.com/hyperoslo/Spots/tree/HEAD)
 
-[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.1.3...HEAD)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.2.0...HEAD)
+
+**Merged pull requests:**
+
+- Improve/reload with components [\#359](https://github.com/hyperoslo/Spots/pull/359) ([zenangst](https://github.com/zenangst))
+- Internal refactoring to reduce code duplication [\#358](https://github.com/hyperoslo/Spots/pull/358) ([zenangst](https://github.com/zenangst))
+- Enable SpotableTests [\#357](https://github.com/hyperoslo/Spots/pull/357) ([zenangst](https://github.com/zenangst))
+
+## [5.2.0](https://github.com/hyperoslo/Spots/tree/5.2.0) (2016-11-09)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.1.3...5.2.0)
 
 **Closed issues:**
 
