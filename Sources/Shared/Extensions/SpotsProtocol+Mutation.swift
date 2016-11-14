@@ -61,6 +61,9 @@ extension SpotsProtocol {
 
       weakSelf.process(changes: changes, components: newComponents, withAnimation: animation) {
         closure?()
+        if let controller = self as? Controller {
+          Controller.spotsDidReloadComponents?(controller)
+        }
       }
     }
   }
@@ -399,6 +402,10 @@ extension SpotsProtocol {
       offsets.enumerated().forEach {
         newSpots[$0.offset].render().contentOffset = $0.element
       }
+
+      if let controller = self as? Controller {
+        Controller.spotsDidReloadComponents?(controller)
+      }
     }
   }
 
@@ -426,6 +433,9 @@ extension SpotsProtocol {
 
       completion?()
       weakSelf.scrollView.layoutSubviews()
+      if let controller = weakSelf as? Controller {
+        Controller.spotsDidReloadComponents?(controller)
+      }
     }
   }
 
