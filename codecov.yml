@@ -1,0 +1,18 @@
+coverage:
+  ignore:
+  - Applications/Xcode.app/.*
+  - build/.*
+  - bin/.*
+  - Carthage/.*
+  - Examples/.*
+  - Images/.*
+  - Playgrounds/.*
+  - Spots/.*
+  - SpotsTests/.*
+  status:
+    patch:
+      default:
+        target: '99'
+    project:
+      default:
+        target: auto
