@@ -202,7 +202,7 @@ public extension Spotable {
       indexes.append(index)
     }
 
-    indexes.reversed().forEach { component.items.remove(at: $0) }
+    indexes.sorted(by: { $0 > $1 }).forEach { component.items.remove(at: $0) }
 
     Dispatch.mainQueue { [weak self] in
       self?.userInterface?.delete(indexPaths, withAnimation: animation, completion: nil)
@@ -232,7 +232,7 @@ public extension Spotable {
   /// - parameter completion: A completion closure that is executed in the main queue when the view model has been removed.
   func delete(_ indexes: [Int], withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     Dispatch.mainQueue { [weak self] in
-      indexes.forEach { self?.component.items.remove(at: $0) }
+      indexes.sorted(by: { $0 > $1 }).forEach { self?.component.items.remove(at: $0) }
       self?.userInterface?.delete(indexes, withAnimation: animation, completion: nil)
       self?.afterUpdate()
       self?.sanitize { completion?() }
