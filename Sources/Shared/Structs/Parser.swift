@@ -24,9 +24,17 @@ public struct Parser {
   ///
   /// - returns: A collection of `Component`s
   public static func parse(_ json: [String : Any], key: String = "components") -> [Component] {
-    guard let components = json[key] as? [[String : Any]] else { return [] }
+    guard let payloads = json[key] as? [[String : Any]] else { return [] }
 
-    return components.map { Component($0) }
+    var components = [Component]()
+
+    for (index, payload) in payloads.enumerated() {
+      var component = Component(payload)
+      component.index = index
+      components.append(component)
+    }
+
+    return components
   }
 
   /// Parse JSON into a collection of Spotable objects.

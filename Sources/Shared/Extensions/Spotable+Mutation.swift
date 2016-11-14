@@ -213,7 +213,10 @@ public extension Spotable {
   /// - parameter animation:  A Animation that is used when performing the mutation (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue when the view model has been removed.
   func update(_ item: Item, index: Int, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
-    guard let oldItem = self.item(at: index) else { completion?(); return }
+    guard let oldItem = self.item(at: index) else {
+      completion?()
+      return
+    }
 
     items[index] = item
     configureItem(at: index)
@@ -348,7 +351,10 @@ public extension Spotable {
   public func reloadIfNeeded(_ json: [String : Any], withAnimation animation: Animation = .automatic) {
     let newComponent = Component(json)
 
-    guard component != newComponent else { cache(); return }
+    guard component != newComponent else {
+      cache()
+      return
+    }
 
     component = newComponent
     reload(nil, withAnimation: animation) { [weak self] in
