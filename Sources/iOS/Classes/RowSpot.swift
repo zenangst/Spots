@@ -81,6 +81,7 @@ open class RowSpot: NSObject, Gridable {
     return collectionView
     }()
 
+  public var userInterface: UserInterface?
   var spotDataSource: DataSource?
   var spotDelegate: Delegate?
 
@@ -94,6 +95,7 @@ open class RowSpot: NSObject, Gridable {
     component.span = 1
     self.component = component
     super.init()
+    self.userInterface = collectionView
     self.spotDataSource = DataSource(spot: self)
     self.spotDelegate = Delegate(spot: self)
 
@@ -169,6 +171,7 @@ open class RowSpot: NSObject, Gridable {
   deinit {
     spotDataSource = nil
     spotDelegate = nil
+    userInterface = nil
   }
 
   /// Configure collection view with data source, delegate and background view

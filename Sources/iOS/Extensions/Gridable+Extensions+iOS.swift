@@ -161,294 +161,33 @@ extension Gridable {
     self.headers.defaultItem = Registry.Item.classType(header)
   }
 
-  public func ui<T>(at index: Int) -> T? {
-    return collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? T
-  }
-
-  /// Append item to collection with animation
-  ///
-  /// - parameter item: The view model that you want to append.
-  /// - parameter animation:  The animation that should be used (currently not in use).
-  /// - parameter completion: A completion closure that is executed in the main queue.
-  public func append(_ item: Item, withAnimation animation: Animation = .none, completion: Completion = nil) {
-    var indexes = [Int]()
-    let itemsCount = component.items.count
-
-    if component.items.isEmpty {
-      component.items.append(item)
-    } else {
-      for (index, item) in items.enumerated() {
-        component.items.append(item)
-        indexes.append(itemsCount + index)
-      }
-    }
-
-    Dispatch.mainQueue { [weak self] in
-      guard let weakSelf = self else { completion?(); return }
-
-      if itemsCount > 0 {
-        weakSelf.collectionView.insert(indexes, completion: nil)
-      } else {
-        weakSelf.collectionView.reloadData()
-      }
-      weakSelf.updateHeight() {
-        completion?()
-      }
-    }
-  }
-
-  /// Append a collection of items to collection with animation
-  ///
-  /// - parameter items:      A collection of view models that you want to insert
-  /// - parameter animation:  The animation that should be used (currently not in use)
-  /// - parameter completion: A completion closure that is executed in the main queue.
-  public func append(_ items: [Item], withAnimation animation: Animation = .none, completion: Completion = nil) {
-    var indexes = [Int]()
-    let itemsCount = component.items.count
-
-    if component.items.isEmpty {
-      component.items.append(contentsOf: items)
-    } else {
-      for (index, item) in items.enumerated() {
-        component.items.append(item)
-        indexes.append(itemsCount + index)
-
-        configureItem(at: itemsCount + index)
-      }
-    }
-
-    Dispatch.mainQueue { [weak self] in
-      guard let weakSelf = self else { completion?(); return }
-
-      if itemsCount > 0 {
-        weakSelf.collectionView.insert(indexes, completion: nil)
-      } else {
-        weakSelf.collectionView.reloadData()
-      }
-      weakSelf.updateHeight() {
-        completion?()
-      }
-    }
-  }
-
-  /// Insert item into collection at index.
-  ///
-  /// - parameter item:       The view model that you want to insert.
-  /// - parameter index:      The index where the new Item should be inserted.
-  /// - parameter animation:  A Animation that is used when performing the mutation (currently not in use).
-  /// - parameter completion: A completion closure that is executed in the main queue.
-  public func insert(_ item: Item, index: Int, withAnimation animation: Animation = .none, completion: Completion = nil) {
-    let itemsCount = component.items.count
-    component.items.insert(item, at: index)
-    var indexes = [Int]()
-
-    if itemsCount > 0 {
-      indexes.append(index)
-    }
-
-    Dispatch.mainQueue { [weak self] in
-      guard let weakSelf = self else { completion?(); return }
-
-      if itemsCount > 0 {
-        weakSelf.collectionView.insert(indexes, completion: nil)
-      } else {
-        weakSelf.collectionView.reloadData()
-      }
-      weakSelf.sanitize { completion?() }
-    }
-  }
-
-  /// Prepend a collection items to the collection with animation
-  ///
-  /// - parameter items:      A collection of view model that you want to prepend
-  /// - parameter animation:  A Animation that is used when performing the mutation (currently not in use)
-  /// - parameter completion: A completion closure that is executed in the main queue.
-  public func prepend(_ items: [Item], withAnimation animation: Animation = .none, completion: Completion = nil) {
-    let itemsCount = component.items.count
-    var indexes = [Int]()
-
-    component.items.insert(contentsOf: items, at: 0)
-
-    items.enumerated().forEach {
-      if itemsCount > 0 {
-        indexes.append(items.count - 1 - $0.offset)
-      }
-      configureItem(at: $0.offset)
-    }
-
-    Dispatch.mainQueue { [weak self] in
-      guard let weakSelf = self else { completion?(); return }
-
-      if !indexes.isEmpty {
-        weakSelf.collectionView.insert(indexes) {
-          weakSelf.sanitize { completion?() }
-        }
-      } else {
-        weakSelf.collectionView.reloadData()
-        weakSelf.sanitize { completion?() }
-      }
-    }
-  }
-
-  /// Delete item from collection with animation
-  ///
-  /// - parameter item:       The view model that you want to remove.
-  /// - parameter animation:  The animation that should be used (currently not in use).
-  /// - parameter completion: A completion closure that is executed in the main queue.
-  public func delete(_ item: Item, withAnimation animation: Animation = .none, completion: Completion = nil) {
-    guard let index = component.items.index(where: { $0 == item })
-      else { completion?(); return }
-
-    perform(animation, withIndex: index) { [weak self] in
-      guard let weakSelf = self else { completion?(); return }
-
-      if animation == .none { UIView.setAnimationsEnabled(false) }
-      weakSelf.component.items.remove(at: index)
-      weakSelf.collectionView.delete([index], completion: nil)
-      if animation == .none { UIView.setAnimationsEnabled(true) }
-
-      weakSelf.sanitize { completion?() }
-    }
-  }
-
-  /// Delete items from collection with animation
-  ///
-  /// - parameter items:      A collection of view models that you want to delete.
-  /// - parameter animation:  The animation that should be used (currently not in use).
-  /// - parameter completion: A completion closure that is executed in the main queue.
-  public func delete(_ items: [Item], withAnimation animation: Animation = .none, completion: Completion = nil) {
-    var indexes = [Int]()
-    let count = component.items.count
-
-    for (index, _) in items.enumerated() {
-      indexes.append(count + index)
-      component.items.remove(at: count - index)
-    }
-
-    Dispatch.mainQueue { [weak self] in
-      guard let weakSelf = self else { completion?(); return }
-      weakSelf.collectionView.delete(indexes) {
-        weakSelf.sanitize { completion?() }
-      }
-    }
-  }
-
-  /// Delete item at index with animation
-  ///
-  /// - parameter index:      The index of the view model that you want to remove.
-  /// - parameter animation:  The animation that should be used (currently not in use).
-  /// - parameter completion: A completion closure that is executed in the main queue when the view model has been removed.
-  public func delete(_ index: Int, withAnimation animation: Animation = .none, completion: Completion) {
-    perform(animation, withIndex: index) {
-      Dispatch.mainQueue { [weak self] in
-        guard let weakSelf = self else { completion?(); return }
-
-        if animation == .none { UIView.setAnimationsEnabled(false) }
-        weakSelf.component.items.remove(at: index)
-        weakSelf.collectionView.delete([index], completion: nil)
-        if animation == .none { UIView.setAnimationsEnabled(true) }
-        weakSelf.sanitize { completion?() }
-      }
-    }
-  }
-
-  /// Delete a collection
-  ///
-  /// - parameter indexes:    An array of indexes that you want to remove.
-  /// - parameter animation:  The animation that should be used (currently not in use).
-  /// - parameter completion: A completion closure that is executed in the main queue when the view model has been removed.
-  public func delete(_ indexes: [Int], withAnimation animation: Animation = .none, completion: Completion) {
-    Dispatch.mainQueue { [weak self] in
-      guard let weakSelf = self else { return }
-      weakSelf.collectionView.delete(indexes) {
-        weakSelf.sanitize { completion?() }
-      }
-    }
-  }
-
-  /// Update item at index with new item.
-  ///
-  /// - parameter item:       The new update view model that you want to update at an index.
-  /// - parameter index:      The index of the view model, defaults to 0.
-  /// - parameter animation:  A Animation that is used when performing the mutation (currently not in use).
-  /// - parameter completion: A completion closure that is executed in the main queue when the view model has been removed.
-  public func update(_ item: Item, index: Int, withAnimation animation: Animation = .none, completion: Completion = nil) {
-    guard let oldItem = self.item(at: index) else { completion?(); return }
-
-    var item = item
-    item.index = index
-    items[index] = item
-    configureItem(at: index)
-
-    let newItem = items[index]
-    let indexPath = IndexPath(item: index, section: 0)
-
-    if let composite = collectionView.cellForItem(at: indexPath) as? Composable {
-      if let spots = spotsCompositeDelegate?.resolve(index, itemIndex: (indexPath as NSIndexPath).item) {
-        collectionView.performBatchUpdates({
-          composite.configure(&self.component.items[indexPath.item], spots: spots)
-          }, completion: nil)
-        completion?()
-        return
-      }
-    }
-
-    if newItem.kind != oldItem.kind || newItem.size.height != oldItem.size.height {
-      if let cell = collectionView.cellForItem(at: indexPath) as? SpotConfigurable {
-        if animation != .none {
-          collectionView.performBatchUpdates({
-            }, completion: { (_) in })
-        }
-        cell.configure(&self.items[index])
-      }
-    } else if let cell = collectionView.cellForItem(at: indexPath) as? SpotConfigurable {
-      cell.configure(&items[index])
-    }
-
-    completion?()
-  }
-
-  /// Reload with indexes
-  ///
-  /// - parameter indexes:    An array of integers that you want to reload, default is nil.
-  /// - parameter animation:  Perform reload animation.
-  /// - parameter completion: A completion closure that is executed in the main queue when the view model has been reloaded.
-  public func reload(_ indexes: [Int]? = nil, withAnimation animation: Animation = .none, completion: Completion) {
-    if animation == .none { UIView.setAnimationsEnabled(false) }
-
-    refreshIndexes()
-    var cellCache: [String : SpotConfigurable] = [:]
-
-    if let indexes = indexes {
-      indexes.forEach { index  in
-        configureItem(at: index)
-      }
-    } else {
-      component.items.enumerated().forEach { index, _  in
-        configureItem(at: index)
-      }
-    }
-
-    cellCache.removeAll()
-
-    if let indexes = indexes {
-      collectionView.reload(indexes)
-    } else {
-      collectionView.reloadData()
-    }
-
-    setup(collectionView.bounds.size)
-    collectionView.layoutIfNeeded()
-
-    if animation == .none { UIView.setAnimationsEnabled(true) }
-    completion?()
-  }
-
   public func beforeUpdate() {
     CATransaction.begin()
   }
 
   public func afterUpdate() {
     CATransaction.commit()
+  }
+
+  /// Scroll to a specific item based on predicate.
+  ///
+  /// - parameter predicate: A predicate closure to determine which item to scroll to
+  public func scrollTo(_ predicate: (Item) -> Bool) {
+    if let index = items.index(where: predicate) {
+      let pageWidth: CGFloat = collectionView.frame.size.width - layout.sectionInset.right
+        + layout.sectionInset.left
+
+      collectionView.setContentOffset(CGPoint(x: pageWidth * CGFloat(index), y:0), animated: true)
+    }
+  }
+
+  /// Scrolls the collection view contents until the specified item is visible.
+  ///
+  /// - parameter index: The index path of the item to scroll into view.
+  /// - parameter position: An option that specifies where the item should be positioned when scrolling finishes.
+  /// - parameter animated: Specify true to animate the scrolling behavior or false to adjust the scroll view’s visible content immediately.
+  public func scrollTo(index: Int, position: UICollectionViewScrollPosition = .centeredHorizontally, animated: Bool = true) {
+    collectionView.scrollToItem(at: IndexPath(item: index, section: 0),
+                                     at: position, animated: animated)
   }
 }

@@ -79,8 +79,9 @@ open class GridSpot: NSObject, Gridable {
     collectionView.isScrollEnabled = false
 
     return collectionView
-  }()
+    }()
 
+  public var userInterface: UserInterface?
   var spotDataSource: DataSource?
   var spotDelegate: Delegate?
 
@@ -92,6 +93,7 @@ open class GridSpot: NSObject, Gridable {
   public required init(component: Component) {
     self.component = component
     super.init()
+    self.userInterface = collectionView
     self.spotDataSource = DataSource(spot: self)
     self.spotDelegate = Delegate(spot: self)
 
@@ -161,6 +163,7 @@ open class GridSpot: NSObject, Gridable {
   deinit {
     spotDataSource = nil
     spotDelegate = nil
+    userInterface = nil
   }
 
   /// Configure section insets and layout spacing for the UICollectionViewFlow using component meta data

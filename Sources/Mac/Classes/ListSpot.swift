@@ -107,12 +107,14 @@ open class ListSpot: NSObject, Listable {
     return lineView
   }()
 
+  public var userInterface: UserInterface?
   var spotDataSource: DataSource?
   var spotDelegate: Delegate?
 
   public required init(component: Component) {
     self.component = component
     super.init()
+    self.userInterface = tableView
     self.spotDataSource = DataSource(spot: self)
     self.spotDelegate = Delegate(spot: self)
 
@@ -137,6 +139,7 @@ open class ListSpot: NSObject, Listable {
     tableView.dataSource = nil
     spotDataSource = nil
     spotDelegate = nil
+    userInterface = nil
   }
 
   open func doubleAction(_ sender: Any?) {

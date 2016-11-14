@@ -127,6 +127,7 @@ open class RowSpot: NSObject, Gridable {
     return lineView
   }()
 
+  public var userInterface: UserInterface?
   var spotDataSource: DataSource?
   var spotDelegate: Delegate?
 
@@ -142,6 +143,7 @@ open class RowSpot: NSObject, Gridable {
     self.collectionView = CollectionView()
     self.layout = RowSpot.setupLayout(component)
     super.init()
+    self.userInterface = collectionView
     self.spotDataSource = DataSource(spot: self)
     self.spotDelegate = Delegate(spot: self)
 
@@ -187,6 +189,7 @@ open class RowSpot: NSObject, Gridable {
     collectionView.dataSource = nil
     spotDataSource = nil
     spotDelegate = nil
+    userInterface = nil
   }
 
   @discardableResult fileprivate static func configureLayoutInsets(_ component: Component, layout: NSCollectionViewFlowLayout) -> NSCollectionViewFlowLayout {

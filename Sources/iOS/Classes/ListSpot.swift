@@ -49,6 +49,7 @@ open class ListSpot: NSObject, Listable {
   /// Indicator to calculate the height based on content
   open var usesDynamicHeight = true
 
+  public var userInterface: UserInterface?
   var spotDataSource: DataSource?
   var spotDelegate: Delegate?
 
@@ -62,6 +63,7 @@ open class ListSpot: NSObject, Listable {
   public required init(component: Component) {
     self.component = component
     super.init()
+    self.userInterface = self.tableView
     self.spotDataSource = DataSource(spot: self)
     self.spotDelegate = Delegate(spot: self)
 
@@ -89,6 +91,7 @@ open class ListSpot: NSObject, Listable {
 
     if let tableView = tableView {
       self.tableView = tableView
+      self.userInterface = tableView
     }
 
     setupTableView()
@@ -107,6 +110,7 @@ open class ListSpot: NSObject, Listable {
 
     if let tableView = tableView {
       self.tableView = tableView
+      self.userInterface = tableView
     }
 
     setupTableView()
@@ -134,6 +138,7 @@ open class ListSpot: NSObject, Listable {
   deinit {
     spotDataSource = nil
     spotDelegate = nil
+    userInterface = nil
   }
 
   /// Configure and setup the data source, delegate and additional configuration options for the table view.
@@ -144,11 +149,11 @@ open class ListSpot: NSObject, Listable {
     tableView.rowHeight = UITableViewAutomaticDimension
 
     #if os(iOS)
-    if let separator = component.meta(Key.separator, type: Bool.self) {
-      tableView.separatorStyle = separator
-        ? .singleLine
-        : .none
-    }
+      if let separator = component.meta(Key.separator, type: Bool.self) {
+        tableView.separatorStyle = separator
+          ? .singleLine
+          : .none
+      }
     #endif
   }
 

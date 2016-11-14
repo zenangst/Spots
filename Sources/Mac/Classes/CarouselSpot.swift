@@ -93,6 +93,7 @@ open class CarouselSpot: NSObject, Gridable {
     return lineView
   }()
 
+  public var userInterface: UserInterface?
   var spotDataSource: DataSource?
   var spotDelegate: Delegate?
 
@@ -105,6 +106,7 @@ open class CarouselSpot: NSObject, Gridable {
     self.component = component
     self.collectionView = CollectionView()
     super.init()
+    self.userInterface = collectionView
     self.spotDataSource = DataSource(spot: self)
     self.spotDelegate = Delegate(spot: self)
 
@@ -143,6 +145,7 @@ open class CarouselSpot: NSObject, Gridable {
     collectionView.dataSource = nil
     spotDataSource = nil
     spotDelegate = nil
+    userInterface = nil
   }
 
   fileprivate func configureLayoutInsets(_ component: Component) {

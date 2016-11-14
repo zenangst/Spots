@@ -1,16 +1,20 @@
 import Cocoa
 
-public extension NSTableView {
+extension NSTableView: UserInterface {
 
-  func insert(_ indexes: [Int], section: Int = 0, withAnimation animation: NSTableViewAnimationOptions = .effectFade, completion: (() -> Void)? = nil) {
+  public func view<T>(at index: Int) -> T? {
+    return rowView(atRow: index, makeIfNecessary: false) as? T
+  }
+
+  public func insert(_ indexes: [Int], withAnimation animation: Animation = .automatic, completion: (() -> Void)? = nil) {
     let indexPaths = NSMutableIndexSet()
     indexes.forEach { indexPaths.add($0) }
-    performUpdates({ insertRows(at: indexPaths as IndexSet, withAnimation: animation) },
+    performUpdates({ insertRows(at: indexPaths as IndexSet, withAnimation: animation.tableViewAnimation) },
                    endClosure: completion)
 
   }
 
-  func reload(_ indexes: [Int], section: Int = 0, withAnimation animation: NSTableViewAnimationOptions = .effectFade, completion: (() -> Void)? = nil) {
+  public func reload(_ indexes: [Int], withAnimation animation: Animation = .automatic, completion: (() -> Void)? = nil) {
     /** Manually handle reloading of the cell as reloadDataForRowIndexes does not seems to work with view based table views
      - "For NSView-based table views, this method drops the view-cells in the table row, but not the NSTableRowView instances."
     */
@@ -25,18 +29,17 @@ public extension NSTableView {
     completion?()
   }
 
-  func delete(_ indexes: [Int], withAnimation animation: NSTableViewAnimationOptions = .effectFade, completion: (() -> Void)? = nil) {
+  public func delete(_ indexes: [Int], withAnimation animation: Animation = .automatic, completion: (() -> Void)? = nil) {
     let indexPaths = NSMutableIndexSet()
     indexes.forEach { indexPaths.add($0) }
-    performUpdates({ removeRows(at: indexPaths as IndexSet, withAnimation: animation) },
+    performUpdates({ removeRows(at: indexPaths as IndexSet, withAnimation: animation.tableViewAnimation) },
                    endClosure: completion)
   }
 
-  func process(_ changes: (insertions: [Int], reloads: [Int], deletions: [Int]),
-               withAnimation animation: NSTableViewAnimationOptions = .effectFade,
-                             section: Int = 0,
-                             updateDataSource: () -> Void,
-                             completion: ((()) -> Void)? = nil) {
+  public func process(_ changes: (insertions: [Int], reloads: [Int], deletions: [Int]),
+                      withAnimation animation: Animation = .automatic,
+                      updateDataSource: () -> Void,
+                      completion: ((()) -> Void)? = nil) {
     let insertionsSets = NSMutableIndexSet()
     changes.insertions.forEach { insertionsSets.add($0) }
     let reloadSets = NSMutableIndexSet()
@@ -46,8 +49,8 @@ public extension NSTableView {
 
     updateDataSource()
     beginUpdates()
-    removeRows(at: deletionSets as IndexSet, withAnimation: animation)
-    insertRows(at: insertionsSets as IndexSet, withAnimation: animation)
+    removeRows(at: deletionSets as IndexSet, withAnimation: animation.tableViewAnimation)
+    insertRows(at: insertionsSets as IndexSet, withAnimation: animation.tableViewAnimation)
 
     for index in reloadSets {
       guard let view = rowView(atRow: index, makeIfNecessary: false) as? SpotConfigurable,
@@ -59,6 +62,15 @@ public extension NSTableView {
 
     completion?()
     endUpdates()
+  }
+
+  public func reloadSection(_ section: Int, withAnimation animation: Animation, completion: (() -> Void)?) {
+    reloadData()
+    completion?()
+  }
+
+  public func reloadDataSource() {
+    reloadData()
   }
 
   fileprivate func performUpdates( _ closure: () -> Void, endClosure: (() -> Void)? = nil) {

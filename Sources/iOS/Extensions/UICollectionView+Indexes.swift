@@ -1,21 +1,29 @@
 import UIKit
 
-public extension UICollectionView {
+extension UICollectionView: UserInterface {
+
+  public func view<T>(at index: Int) -> T? {
+    return cellForItem(at: IndexPath(item: index, section: 0)) as? T
+  }
+
+  public func beginUpdates() {}
+  public func endUpdates() {}
+  public func reloadDataSource() {
+    reloadData()
+  }
 
   /// A convenience method for performing inserts on a UICollectionView
   ///
   ///  - parameter indexes: A collection integers
   ///  - parameter section: The section you want to update
   ///  - parameter completion: A completion block for when the updates are done
-  func insert(_ indexes: [Int], section: Int = 0, completion: (() -> Void)? = nil) {
-    let indexPaths = indexes.map { IndexPath(item: $0, section: section) }
+  public func insert(_ indexes: [Int], withAnimation animation: Animation = .automatic, completion: (() -> Void)? = nil) {
+    let indexPaths: [IndexPath] = indexes.map { IndexPath(item: $0, section: 0) }
 
-    performBatchUpdates({ [weak self] in
-      guard let weakSelf = self else { return }
-      weakSelf.insertItems(at: indexPaths)
-      }) { _ in
-        completion?()
-    }
+    performBatchUpdates({
+      self.insertItems(at: indexPaths)
+    }, completion: nil)
+    completion?()
   }
 
   /// A convenience method for performing updates on a UICollectionView
@@ -23,8 +31,8 @@ public extension UICollectionView {
   ///  - parameter indexes: A collection integers
   ///  - parameter section: The section you want to update
   ///  - parameter completion: A completion block for when the updates are done
-  func reload(_ indexes: [Int], section: Int = 0, completion: (() -> Void)? = nil) {
-    let indexPaths = indexes.map { IndexPath(item: $0, section: section) }
+  public func reload(_ indexes: [Int], withAnimation animation: Animation = .automatic, completion: (() -> Void)? = nil) {
+    let indexPaths = indexes.map { IndexPath(item: $0, section: 0) }
 
     UIView.performWithoutAnimation {
       self.reloadItems(at: indexPaths)
@@ -37,14 +45,14 @@ public extension UICollectionView {
   ///  - parameter indexes: A collection integers
   ///  - parameter section: The section you want to update
   ///  - parameter completion: A completion block for when the updates are done
-  func delete(_ indexes: [Int], section: Int = 0, completion: (() -> Void)? = nil) {
-    let indexPaths = indexes.map { IndexPath(item: $0, section: section) }
+  public func delete(_ indexes: [Int], withAnimation animation: Animation = .automatic, completion: (() -> Void)? = nil) {
+    let indexPaths = indexes.map { IndexPath(item: $0, section: 0) }
+
     performBatchUpdates({ [weak self] in
       guard let weakSelf = self else { return }
       weakSelf.deleteItems(at: indexPaths)
-      }) { _ in
-        completion?()
-    }
+      }) { _ in }
+    completion?()
   }
 
 
@@ -55,14 +63,13 @@ public extension UICollectionView {
   /// - parameter section:          The section that will be updates
   ///  - parameter updateDataSource: A closure that is used to update the data source before performing the updates on the UI
   ///  - parameter completion:       A completion closure that will run when both data source and UI is updated
-  func process(_ changes: (insertions: [Int], reloads: [Int], deletions: [Int]),
-               withAnimation animation: UITableViewRowAnimation = .automatic,
-                             section: Int = 0,
+  public func process(_ changes: (insertions: [Int], reloads: [Int], deletions: [Int]),
+               withAnimation animation: Animation = .automatic,
                              updateDataSource: () -> Void,
                              completion: ((()) -> Void)? = nil) {
-    let insertions = changes.insertions.map { IndexPath(row: $0, section: section) }
-    let reloads = changes.reloads.map { IndexPath(row: $0, section: section) }
-    let deletions = changes.deletions.map { IndexPath(row: $0, section: section) }
+    let insertions = changes.insertions.map { IndexPath(row: $0, section: 0) }
+    let reloads = changes.reloads.map { IndexPath(row: $0, section: 0) }
+    let deletions = changes.deletions.map { IndexPath(row: $0, section: 0) }
 
     updateDataSource()
 
@@ -86,10 +93,10 @@ public extension UICollectionView {
   ///  A convenience method for reloading a section
   ///  - parameter index: The section you want to update
   ///  - parameter completion: A completion block for when the updates are done
-  func reloadSection(_ index: Int = 0, completion: (() -> Void)? = nil) {
+  public func reloadSection(_ section: Int = 0, withAnimation animation: Animation = .automatic, completion: (() -> Void)? = nil) {
     performBatchUpdates({ [weak self] in
       guard let weakSelf = self else { return }
-      weakSelf.reloadSections(IndexSet(integer: index))
+      weakSelf.reloadSections(IndexSet(integer: section))
       }) { _ in
         completion?()
     }

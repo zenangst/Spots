@@ -44,24 +44,35 @@ class ControllerTests : XCTestCase {
     controller = Controller(spot: listSpot)
     controller.preloadView()
 
-    XCTAssert(self.controller.spot!.component.items.count == 0)
+    XCTAssertEqual(self.controller.spot!.component.items.count, 0)
 
     let item = Item(title: "title1", kind: "list")
-    controller.append(item, spotIndex: 0)
-
-    XCTAssert(self.controller.spot!.component.items.count == 1)
-
-    if let testItem = self.controller.spot!.component.items.first {
-      XCTAssert(testItem == item)
-    }
-
-    // Test appending item without kind
     let exception = self.expectation(description: "Test append item")
-    controller.append(Item(title: "title2"), spotIndex: 0) {
-      XCTAssert(self.controller.spot!.component.items.count == 2)
-      XCTAssertEqual(self.controller.spot!.component.items[1].title, "title2")
+    controller.append(item, spotIndex: 0) {
+      XCTAssertEqual(self.controller.spot!.component.items.count, 1)
+      XCTAssert(self.controller.spot!.component.items.first! == item)
       exception.fulfill()
     }
+
+    waitForExpectations(timeout: 0.1, handler: nil)
+  }
+
+  func testAppendOneMoreItemInListSpot() {
+    let component = Component(title: "Component", kind: "list", items: [Item(title: "title1")])
+    let listSpot = ListSpot(component: component)
+    controller = Controller(spot: listSpot)
+    controller.preloadView()
+
+    XCTAssertEqual(self.controller.spot!.component.items.count, 1)
+
+    let item = Item(title: "title2", kind: "list")
+    let exception = self.expectation(description: "Test append item")
+    controller.append(item, spotIndex: 0) {
+      XCTAssertEqual(self.controller.spot!.component.items.count, 2)
+      XCTAssert(self.controller.spot!.component.items.last! == item)
+      exception.fulfill()
+    }
+
     waitForExpectations(timeout: 0.1, handler: nil)
   }
 
@@ -75,22 +86,13 @@ class ControllerTests : XCTestCase {
       Item(title: "title1", kind: "list"),
       Item(title: "title2", kind: "list")
     ]
-    controller.append(items, spotIndex: 0)
-
-    XCTAssert(self.controller.spot!.component.items.count > 0)
-    XCTAssert(self.controller.spot!.component.items == items)
-
-    // Test appending items without kind
     let exception = self.expectation(description: "Test append items")
-    controller.append([
-      Item(title: "title3"),
-      Item(title: "title4")
-    ], spotIndex: 0) {
-      XCTAssertEqual(self.controller.spot!.component.items.count, 4)
-      XCTAssertEqual(self.controller.spot!.component.items[2].title, "title3")
-      XCTAssertEqual(self.controller.spot!.component.items[3].title, "title4")
+    controller.append(items, spotIndex: 0) {
+      XCTAssert(self.controller.spot!.component.items.count > 0)
+      XCTAssert(self.controller.spot!.component.items == items)
       exception.fulfill()
     }
+
     waitForExpectations(timeout: 0.1, handler: nil)
   }
 
@@ -104,20 +106,40 @@ class ControllerTests : XCTestCase {
       Item(title: "title1", kind: "list"),
       Item(title: "title2", kind: "list")
     ]
-    controller.prepend(items, spotIndex: 0)
-
-    XCTAssertEqual(self.controller.spot!.component.items.count, 2)
-    XCTAssert(self.controller.spot!.component.items == items)
-
     let exception = self.expectation(description: "Test prepend items")
-    controller.prepend([
-      Item(title: "title3"),
-      Item(title: "title4")
-    ], spotIndex: 0) {
-      XCTAssertEqual(self.controller.spot!.component.items[0].title, "title3")
-      XCTAssertEqual(self.controller.spot!.component.items[1].title, "title4")
+    controller.prepend(items, spotIndex: 0) {
+      XCTAssertEqual(self.controller.spot!.component.items.count, 2)
+      XCTAssert(self.controller.spot!.component.items == items)
       exception.fulfill()
     }
+
+    waitForExpectations(timeout: 0.1, handler: nil)
+  }
+
+  func testPrependMoreItemsInListSpot() {
+    let component = Component(title: "Component", kind: "list", items: [
+      Item(title: "title1", kind: "list"),
+      Item(title: "title2", kind: "list")
+      ]
+    )
+    let listSpot = ListSpot(component: component)
+    controller = Controller(spot: listSpot)
+    controller.preloadView()
+
+    let items = [
+      Item(title: "title3", kind: "list"),
+      Item(title: "title4", kind: "list")
+    ]
+    let exception = self.expectation(description: "Test prepend items")
+    controller.prepend(items, spotIndex: 0) {
+      XCTAssertEqual(self.controller.spot!.component.items.count, 4)
+      XCTAssertEqual(self.controller.spot!.component.items[0].title, "title3")
+      XCTAssertEqual(self.controller.spot!.component.items[1].title, "title4")
+      XCTAssertEqual(self.controller.spot!.component.items[2].title, "title1")
+      XCTAssertEqual(self.controller.spot!.component.items[3].title, "title2")
+      exception.fulfill()
+    }
+
     waitForExpectations(timeout: 0.1, handler: nil)
   }
 
@@ -150,6 +172,73 @@ class ControllerTests : XCTestCase {
     waitForExpectations(timeout: 0.1, handler: nil)
   }
 
+  func testDeleteItemsInListSpot() {
+    let component = Component(title: "Component", kind: "list", items: [
+      Item(title: "title1", kind: "list"),
+      Item(title: "title2", kind: "list")
+    ])
+    let initialListSpot = ListSpot(component: component)
+
+    controller = Controller(spot: initialListSpot)
+    controller.preloadView()
+
+    let items = controller.spots.first!.items
+    let exception = self.expectation(description: "Test delete items")
+
+    controller.spots[0].delete(items, withAnimation: .none) {
+      XCTAssertEqual(self.controller.spot!.component.items.count, 0)
+      exception.fulfill()
+    }
+    waitForExpectations(timeout: 0.1, handler: nil)
+  }
+
+  func testDeleteItemAtIndexInListSpot() {
+    let component = Component(title: "Component", kind: "list", items: [
+      Item(title: "title1", kind: "list"),
+      Item(title: "title2", kind: "list"),
+      Item(title: "title3", kind: "list"),
+      Item(title: "title4", kind: "list")
+      ])
+    let initialListSpot = ListSpot(component: component)
+
+    controller = Controller(spot: initialListSpot)
+    controller.preloadView()
+
+    let exception = self.expectation(description: "Test delete items")
+
+    controller.spots[0].delete(1, withAnimation: .none) {
+      XCTAssertEqual(self.controller.spot!.component.items.count, 3)
+      XCTAssertEqual(self.controller.spot!.component.items[0].title, "title1")
+      XCTAssertEqual(self.controller.spot!.component.items[1].title, "title3")
+      XCTAssertEqual(self.controller.spot!.component.items[2].title, "title4")
+      exception.fulfill()
+    }
+    waitForExpectations(timeout: 0.1, handler: nil)
+  }
+
+  func testDeleteItemsWithIndexesInListSpot() {
+    let component = Component(title: "Component", kind: "list", items: [
+      Item(title: "title1", kind: "list"),
+      Item(title: "title2", kind: "list"),
+      Item(title: "title3", kind: "list"),
+      Item(title: "title4", kind: "list")
+      ])
+    let initialListSpot = ListSpot(component: component)
+
+    controller = Controller(spot: initialListSpot)
+    controller.preloadView()
+
+    let exception = self.expectation(description: "Test delete items")
+
+    controller.spots[0].delete([1,2], withAnimation: .none) {
+      XCTAssertEqual(self.controller.spot!.component.items.count, 2)
+      XCTAssertEqual(self.controller.spot!.component.items[0].title, "title1")
+      XCTAssertEqual(self.controller.spot!.component.items[1].title, "title4")
+      exception.fulfill()
+    }
+    waitForExpectations(timeout: 0.1, handler: nil)
+  }
+
   func testAppendItemInGridSpot() {
     let component = Component(title: "Component", kind: "grid")
     let listSpot = ListSpot(component: component)
@@ -159,21 +248,14 @@ class ControllerTests : XCTestCase {
     XCTAssert(self.controller.spot!.component.items.count == 0)
 
     let item = Item(title: "title1", kind: "grid")
-    controller.append(item, spotIndex: 0)
-
-    XCTAssert(self.controller.spot!.component.items.count == 1)
-
-    if let testItem = self.controller.spot!.component.items.first {
-      XCTAssert(testItem == item)
-    }
-
-    // Test appending item without kind
     let exception = self.expectation(description: "Test append item")
-    controller.append(Item(title: "title2"), spotIndex: 0) {
-      XCTAssert(self.controller.spot!.component.items.count == 2)
-      XCTAssertEqual(self.controller.spot!.component.items[1].title, "title2")
+
+    controller.append(item, spotIndex: 0) {
+      XCTAssert(self.controller.spot!.component.items.count == 1)
+      XCTAssert(self.controller.spot!.component.items.first! == item)
       exception.fulfill()
     }
+
     waitForExpectations(timeout: 0.1, handler: nil)
   }
 
@@ -187,22 +269,13 @@ class ControllerTests : XCTestCase {
       Item(title: "title1", kind: "grid"),
       Item(title: "title2", kind: "grid")
     ]
-    controller.append(items, spotIndex: 0)
-
-    XCTAssert(self.controller.spot!.component.items.count > 0)
-    XCTAssert(self.controller.spot!.component.items == items)
-
-    // Test appending items without kind
     let exception = self.expectation(description: "Test append items")
-    controller.append([
-      Item(title: "title3"),
-      Item(title: "title4")
-    ], spotIndex: 0) {
-      XCTAssertEqual(self.controller.spot!.component.items.count, 4)
-      XCTAssertEqual(self.controller.spot!.component.items[2].title, "title3")
-      XCTAssertEqual(self.controller.spot!.component.items[3].title, "title4")
+    controller.append(items, spotIndex: 0) {
+      XCTAssert(self.controller.spot!.component.items.count > 0)
+      XCTAssert(self.controller.spot!.component.items == items)
       exception.fulfill()
     }
+
     waitForExpectations(timeout: 0.1, handler: nil)
   }
 
@@ -216,20 +289,13 @@ class ControllerTests : XCTestCase {
       Item(title: "title1", kind: "grid"),
       Item(title: "title2", kind: "grid")
     ]
-    controller.prepend(items, spotIndex: 0)
-
-    XCTAssertEqual(self.controller.spot!.component.items.count, 2)
-    XCTAssert(self.controller.spot!.component.items == items)
-
     let exception = self.expectation(description: "Test prepend items")
-    controller.prepend([
-      Item(title: "title3"),
-      Item(title: "title4")
-    ], spotIndex: 0) {
-      XCTAssertEqual(self.controller.spot!.component.items[0].title, "title3")
-      XCTAssertEqual(self.controller.spot!.component.items[1].title, "title4")
+    controller.prepend(items, spotIndex: 0) {
+      XCTAssertEqual(self.controller.spot!.component.items.count, 2)
+      XCTAssert(self.controller.spot!.component.items == items)
       exception.fulfill()
     }
+
     waitForExpectations(timeout: 0.1, handler: nil)
   }
 
@@ -264,34 +330,27 @@ class ControllerTests : XCTestCase {
 
   func testAppendItemInCarouselSpot() {
     let component = Component(title: "Component", kind: "carousel")
-    let listSpot = ListSpot(component: component)
+    let listSpot = GridSpot(component: component)
     controller = Controller(spot: listSpot)
     controller.preloadView()
 
     XCTAssert(self.controller.spot!.component.items.count == 0)
 
     let item = Item(title: "title1", kind: "carousel")
-    controller.append(item, spotIndex: 0)
-
-    XCTAssert(self.controller.spot!.component.items.count == 1)
-
-    if let testItem = self.controller.spot!.component.items.first {
-      XCTAssert(testItem == item)
-    }
-
-    // Test appending item without kind
     let exception = self.expectation(description: "Test append item")
-    controller.append(Item(title: "title2"), spotIndex: 0) {
-      XCTAssert(self.controller.spot!.component.items.count == 2)
-      XCTAssertEqual(self.controller.spot!.component.items[1].title, "title2")
+
+    controller.append(item, spotIndex: 0) {
+      XCTAssert(self.controller.spot!.component.items.count == 1)
+      XCTAssert(self.controller.spot!.component.items.first! == item)
       exception.fulfill()
     }
+
     waitForExpectations(timeout: 0.1, handler: nil)
   }
 
   func testAppendItemsInCarouselSpot() {
     let component = Component(title: "Component", kind: "carousel")
-    let listSpot = ListSpot(component: component)
+    let listSpot = GridSpot(component: component)
     controller = Controller(spot: listSpot)
     controller.preloadView()
 
@@ -299,22 +358,14 @@ class ControllerTests : XCTestCase {
       Item(title: "title1", kind: "carousel"),
       Item(title: "title2", kind: "carousel")
     ]
-    controller.append(items, spotIndex: 0)
-
-    XCTAssert(self.controller.spot!.component.items.count > 0)
-    XCTAssert(self.controller.spot!.component.items == items)
-
-    // Test appending items without kind
     let exception = self.expectation(description: "Test append items")
-    controller.append([
-      Item(title: "title3"),
-      Item(title: "title4")
-    ], spotIndex: 0) {
-      XCTAssertEqual(self.controller.spot!.component.items.count, 4)
-      XCTAssertEqual(self.controller.spot!.component.items[2].title, "title3")
-      XCTAssertEqual(self.controller.spot!.component.items[3].title, "title4")
+
+    controller.append(items, spotIndex: 0) {
+      XCTAssert(self.controller.spot!.component.items.count > 0)
+      XCTAssert(self.controller.spot!.component.items == items)
       exception.fulfill()
     }
+
     waitForExpectations(timeout: 0.1, handler: nil)
   }
 
@@ -328,20 +379,13 @@ class ControllerTests : XCTestCase {
       Item(title: "title1", kind: "carousel"),
       Item(title: "title2", kind: "carousel")
     ]
-    controller.prepend(items, spotIndex: 0)
-
-    XCTAssertEqual(self.controller.spot!.component.items.count, 2)
-    XCTAssert(self.controller.spot!.component.items == items)
-
     let exception = self.expectation(description: "Test prepend items")
-    controller.prepend([
-      Item(title: "title3"),
-      Item(title: "title4")
-    ], spotIndex: 0) {
-      XCTAssertEqual(self.controller.spot!.component.items[0].title, "title3")
-      XCTAssertEqual(self.controller.spot!.component.items[1].title, "title4")
+    controller.prepend(items, spotIndex: 0) {
+      XCTAssertEqual(self.controller.spot!.component.items.count, 2)
+      XCTAssert(self.controller.spot!.component.items == items)
       exception.fulfill()
     }
+
     waitForExpectations(timeout: 1.0, handler: nil)
   }
 
