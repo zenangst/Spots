@@ -194,10 +194,4 @@ open class ListSpot: NSObject, Listable {
   open static func register(defaultHeader header: View.Type) {
     self.headers.storage[self.views.defaultIdentifier] = Registry.Item.classType(header)
   }
-
-  public func afterUpdate() {
-    if let superview = tableView.superview {
-      //tableView.reloadDataSource()
-    }
-  }
 }
