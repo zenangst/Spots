@@ -64,7 +64,7 @@ public extension Spotable {
         weakSelf.afterUpdate()
         completion?()
       } else {
-        weakSelf.userInterface?.insert([weakSelf.component.items.count], withAnimation: animation, completion: nil)
+        weakSelf.userInterface?.insert([itemsCount], withAnimation: animation, completion: nil)
         weakSelf.afterUpdate()
         completion?()
       }
@@ -201,6 +201,8 @@ public extension Spotable {
       indexPaths.append(count + index)
       component.items.append(item)
     }
+
+    indexes.reversed().forEach { component.items.remove(at: $0) }
 
     Dispatch.mainQueue { [weak self] in
       self?.userInterface?.delete(indexPaths, withAnimation: animation, completion: nil)
