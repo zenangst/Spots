@@ -5,6 +5,9 @@ import Cache
 /// A controller powered by Spotable objects
 open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScrollViewDelegate {
 
+  /// A closure that is called when the controller is reloaded with components
+  public static var spotsDidReloadComponents: ((Controller) -> Void)?
+
   /// A notification enum
   ///
   /// - deviceDidRotateNotification: Used when the device is rotated
