@@ -26,15 +26,17 @@ public extension Spotable {
 
       if itemsCount == 0 {
         weakSelf.userInterface?.reloadDataSource()
-        weakSelf.afterUpdate()
-        completion?()
+        weakSelf.updateHeight() {
+          weakSelf.afterUpdate()
+          completion?()
+        }
       } else {
         weakSelf.userInterface?.insert([itemsCount], withAnimation: animation, completion: nil)
-        weakSelf.afterUpdate()
-        completion?()
+        weakSelf.updateHeight() {
+          weakSelf.afterUpdate()
+          completion?()
+        }
       }
-
-      weakSelf.updateHeight()
     }
   }
 
