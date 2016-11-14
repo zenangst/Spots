@@ -181,7 +181,6 @@ extension ForYouController: ScrollDelegate {
       let height = spot.items[0..<items.count].reduce(0, { $0 + $1.size.height })
 
       weakSelf.spot(at: 0, ofType: ListSpot.self)?.tableView.insert(Array(0..<(items.count)), withAnimation: .none)
-      weakSelf.spot(at: 0, ofType: ListSpot.self)?.tableView.reload(Array((items.count)..<(items.count)), withAnimation: .none)
 
       weakSelf.scrollView.contentOffset.y = height - weakSelf.scrollView.contentInset.top
 
