@@ -322,7 +322,7 @@ extension SpotsProtocol {
                                                   newComponents: newComponents,
                                                   withAnimation: animation,
                                                   closure: closure)
-        case .none: break
+        case .none: continue
         }
       }
 
