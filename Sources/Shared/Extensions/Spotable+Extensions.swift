@@ -195,11 +195,11 @@ public extension Spotable {
   /// - parameter completion: A completion closure that is executed in the main queue.
   func delete(_ items: [Item], withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     var indexPaths = [Int]()
-    let count = component.items.count
+    var indexes = [Int]()
 
-    for (index, item) in items.enumerated() {
-      indexPaths.append(count + index)
-      component.items.append(item)
+    for (index, _) in items.enumerated() {
+      indexPaths.append(index)
+      indexes.append(index)
     }
 
     indexes.reversed().forEach { component.items.remove(at: $0) }
