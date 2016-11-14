@@ -192,6 +192,29 @@ class ControllerTests : XCTestCase {
     waitForExpectations(timeout: 0.1, handler: nil)
   }
 
+  func testDeleteItemsWithIndexesInListSpot() {
+    let component = Component(title: "Component", kind: "list", items: [
+      Item(title: "title1", kind: "list"),
+      Item(title: "title2", kind: "list"),
+      Item(title: "title3", kind: "list"),
+      Item(title: "title4", kind: "list")
+      ])
+    let initialListSpot = ListSpot(component: component)
+
+    controller = Controller(spot: initialListSpot)
+    controller.preloadView()
+
+    let exception = self.expectation(description: "Test delete items")
+
+    controller.spots[0].delete([1,2], withAnimation: .none) {
+      XCTAssertEqual(self.controller.spot!.component.items.count, 2)
+      XCTAssertEqual(self.controller.spot!.component.items[0].title, "title1")
+      XCTAssertEqual(self.controller.spot!.component.items[1].title, "title4")
+      exception.fulfill()
+    }
+    waitForExpectations(timeout: 0.1, handler: nil)
+  }
+
   func testAppendItemInGridSpot() {
     let component = Component(title: "Component", kind: "grid")
     let listSpot = ListSpot(component: component)
