@@ -44,7 +44,11 @@ extension SpotsProtocol {
     }
 
     Dispatch.inQueue(queue: .interactive) { [weak self] in
-      guard let weakSelf = self else { closure?(); return }
+      guard let weakSelf = self else {
+        closure?()
+        return
+      }
+
       let oldComponents = weakSelf.spots.map { $0.component }
       let newComponents = components
 
@@ -147,7 +151,10 @@ extension SpotsProtocol {
   ///
   /// - returns: A boolean value that determines if the closure should run in `process(changes:)`
   fileprivate func setupItemsForSpot(at index: Int, newComponents: [Component], withAnimation animation: Animation = .automatic, closure: Completion = nil) -> Bool {
-    guard let spot = self.spot(at: index, ofType: Spotable.self) else { return false }
+    guard let spot = self.spot(at: index, ofType: Spotable.self) else {
+      return false
+    }
+
     let newItems = spot.prepare(items: newComponents[index].items)
     let oldItems = spot.items
 
