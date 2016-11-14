@@ -22,11 +22,11 @@ class SpotableTests : XCTestCase {
     }
 
     let exception = self.expectation(description: "Wait until done")
-    Dispatch.delay(for: 0.5) {
+    Dispatch.delay(for: 1.0) {
       XCTAssertEqual(listSpot.items.count, 500)
       exception.fulfill()
     }
-    waitForExpectations(timeout: 1.0, handler: nil)
+    waitForExpectations(timeout: 1.5, handler: nil)
   }
 
   func testAppendingMultipleItemsToSpotInController() {
@@ -47,10 +47,10 @@ class SpotableTests : XCTestCase {
     }
 
     let exception = self.expectation(description: "Wait until done")
-    Dispatch.delay(for: 0.5) {
+    Dispatch.delay(for: 1.0) {
       XCTAssertEqual(controller.spots[0].items.count, 500)
       exception.fulfill()
     }
-    waitForExpectations(timeout: 1.0, handler: nil)
+    waitForExpectations(timeout: 1.5, handler: nil)
   }
 }
