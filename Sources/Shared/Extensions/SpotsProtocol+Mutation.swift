@@ -409,7 +409,10 @@ extension SpotsProtocol {
    */
   public func reload(_ json: [String : Any], animated: ((_ view: View) -> Void)? = nil, completion: Completion = nil) {
     Dispatch.mainQueue { [weak self] in
-      guard let weakSelf = self else { completion?(); return }
+      guard let weakSelf = self else {
+        completion?()
+        return
+      }
 
       weakSelf.spots = Parser.parse(json)
       weakSelf.cache()

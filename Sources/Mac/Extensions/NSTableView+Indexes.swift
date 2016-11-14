@@ -54,7 +54,9 @@ extension NSTableView: UserInterface {
 
     for index in reloadSets {
       guard let view = rowView(atRow: index, makeIfNecessary: false) as? SpotConfigurable,
-        let adapter = dataSource as? Listable else { continue }
+        let adapter = dataSource as? Listable else {
+          continue
+      }
 
       var item = adapter.component.items[index]
       view.configure(&item)
