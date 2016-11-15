@@ -9,12 +9,12 @@ before_install:
 - travis_wait 35; bin/bootstrap-if-needed
 
 script:
-- set -o pipefail && xcodebuild clean build -project Spots.xcodeproj -scheme "Spots-iOS" -sdk iphonesimulator
-- set -o pipefail && xcodebuild test -project Spots.xcodeproj -scheme "Spots-iOS" -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 6,OS=10.0' -enableCodeCoverage YES
-- set -o pipefail && xcodebuild clean build -project Spots.xcodeproj -scheme "Spots-Mac" -sdk macosx
-- set -o pipefail && xcodebuild test -project Spots.xcodeproj -scheme "Spots-Mac" -sdk macosx -enableCodeCoverage YES
-- set -o pipefail && xcodebuild clean build -project Spots.xcodeproj -scheme "Spots-tvOS" -destination 'platform=tvOS Simulator,name=Apple TV 1080p,OS=10.0'
-- set -o pipefail && xcodebuild test -project Spots.xcodeproj -scheme "Spots-tvOS" -destination 'platform=tvOS Simulator,name=Apple TV 1080p,OS=10.0' -enableCodeCoverage YES
+- set -o pipefail && xcodebuild -project Spots.xcodeproj -scheme "Spots-iOS" -sdk iphonesimulator clean build
+- set -o pipefail && xcodebuild -project Spots.xcodeproj -scheme "Spots-iOS" -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 6,OS=10.0' -enableCodeCoverage YES test
+- set -o pipefail && xcodebuild -project Spots.xcodeproj -scheme "Spots-Mac" -sdk macosx clean build
+- set -o pipefail && xcodebuild -project Spots.xcodeproj -scheme "Spots-Mac" -sdk macosx -enableCodeCoverage YES test
+- set -o pipefail && xcodebuild -project Spots.xcodeproj -scheme "Spots-tvOS" -destination 'platform=tvOS Simulator,name=Apple TV 1080p,OS=10.0' clean build
+- set -o pipefail && xcodebuild -project Spots.xcodeproj -scheme "Spots-tvOS" -destination 'platform=tvOS Simulator,name=Apple TV 1080p,OS=10.0' -enableCodeCoverage YES test
 
 after_success:
 - bash <(curl -s https://codecov.io/bash)
