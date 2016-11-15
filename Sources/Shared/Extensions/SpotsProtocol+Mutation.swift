@@ -61,6 +61,9 @@ extension SpotsProtocol {
 
       weakSelf.process(changes: changes, components: newComponents, withAnimation: animation) {
         closure?()
+        if let controller = self as? Controller {
+          Controller.spotsDidReloadComponents?(controller)
+        }
       }
     }
   }
@@ -399,6 +402,10 @@ extension SpotsProtocol {
       offsets.enumerated().forEach {
         newSpots[$0.offset].render().contentOffset = $0.element
       }
+
+      if let controller = self as? Controller {
+        Controller.spotsDidReloadComponents?(controller)
+      }
     }
   }
 
@@ -409,7 +416,10 @@ extension SpotsProtocol {
    */
   public func reload(_ json: [String : Any], animated: ((_ view: View) -> Void)? = nil, completion: Completion = nil) {
     Dispatch.mainQueue { [weak self] in
-      guard let weakSelf = self else { completion?(); return }
+      guard let weakSelf = self else {
+        completion?()
+        return
+      }
 
       weakSelf.spots = Parser.parse(json)
       weakSelf.cache()
@@ -423,6 +433,9 @@ extension SpotsProtocol {
 
       completion?()
       weakSelf.scrollView.layoutSubviews()
+      if let controller = weakSelf as? Controller {
+        Controller.spotsDidReloadComponents?(controller)
+      }
     }
   }
 

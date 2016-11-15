@@ -865,4 +865,57 @@ class ControllerTests : XCTestCase {
 
     waitForExpectations(timeout: 5.0, handler: nil)
   }
+
+  func testSpotsDidReloadComponents() {
+    let initialComponents = [
+      Component(
+        kind: "list",
+        items: [
+          Item(title: "Fullname", subtitle: "Job title", kind: "image"),
+          Item(title: "Follow", kind: "toggle", meta: ["dynamic-height" : true]),
+          Item(title: "First name", subtitle: "Input first name",kind: "info"),
+          Item(title: "Last name", subtitle: "Input last name",kind: "info"),
+          Item(title: "Twitter", subtitle: "@twitter",kind: "info"),
+          Item(title: "", subtitle: "Biography", kind: "core", meta: ["dynamic-height" : true])
+        ]
+      )
+    ]
+
+    let newComponents = [
+      Component(
+        kind: "list",
+        items: [
+          Item(title: "Fullname", subtitle: "Job title", text: "Bot", kind: "image"),
+          Item(title: "Follow", kind: "toggle", meta: ["dynamic-height" : true]),
+          Item(title: "First name", subtitle: "Input first name", text: "John", kind: "info"),
+          Item(title: "Last name", subtitle: "Input last name", text: "Hyperseed", kind: "info"),
+          Item(title: "Twitter", subtitle: "@johnhyperseed",kind: "info"),
+          Item(subtitle: "Biography", text: "John Hyperseed is a bot", kind: "core", meta: ["dynamic-height" : true])
+        ]
+      )
+    ]
+
+    var exception: XCTestExpectation? = expectation(description: "Wait for spotsDidReloadComponents to be called")
+
+    Controller.spotsDidReloadComponents = { controller in
+      XCTAssert(true)
+      exception?.fulfill()
+      exception = nil
+    }
+
+    let spots = initialComponents.map { Factory.resolve(component: $0) }
+    controller = Controller(spots: spots)
+    controller.preloadView()
+    controller.viewDidAppear()
+    controller.spots.forEach {
+      #if os(OSX)
+        $0.render().layoutSubtreeIfNeeded()
+      #endif
+      $0.render().layoutSubviews()
+    }
+    controller.reloadIfNeeded(newComponents)
+
+
+    waitForExpectations(timeout: 2.0, handler: nil)
+  }
 }
