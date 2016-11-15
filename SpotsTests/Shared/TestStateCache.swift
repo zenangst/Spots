@@ -64,7 +64,6 @@ class StateCacheTests : XCTestCase {
     let exception = self.expectation(description: "Wait for cache")
     Dispatch.delay(for: 0.5) {
       do {
-        print(path)
         let files = try FileManager.default.contentsOfDirectory(atPath: path)
         XCTAssertEqual(files.count, 2)
       } catch {}
