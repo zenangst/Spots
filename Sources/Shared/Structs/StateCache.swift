@@ -36,13 +36,7 @@ public struct StateCache {
   public static func removeAll() {
     let path = Cache<JSON>(name: "\(StateCache.cacheName)/\(bundleIdentifer)").path
     do {
-      let files = try FileManager.default.contentsOfDirectory(atPath: path)
-      for file in files {
-        let filePath = path + "/" + file
-        if FileManager.default.fileExists(atPath: filePath) {
-          try FileManager.default.removeItem(atPath: filePath)
-        }
-      }
+      try FileManager.default.removeItem(atPath: path)
     } catch {
       NSLog("🎍 SPOTS: Unable to remove cache.")
     }
