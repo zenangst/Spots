@@ -53,4 +53,32 @@ class StateCacheTests : XCTestCase {
     let stateCache = StateCache(key: "")
     XCTAssertNotEqual(stateCache.fileName(), "")
   }
+
+  func testRemoveAll() {
+    let cacheOne = StateCache(key: "one")
+    let cacheTwo = StateCache(key: "two")
+    let path = cacheOne.path
+
+    [cacheOne, cacheTwo].forEach { $0.save(["foo" : "bar"]) }
+
+    let exception = self.expectation(description: "Wait for cache")
+    Dispatch.delay(for: 0.5) {
+      do {
+        print(path)
+        let files = try FileManager.default.contentsOfDirectory(atPath: path)
+        XCTAssertEqual(files.count, 2)
+      } catch {}
+
+
+      StateCache.removeAll()
+
+      do {
+        let files = try FileManager.default.contentsOfDirectory(atPath: path)
+        XCTAssertEqual(files.count, 0)
+      } catch {}
+
+      exception.fulfill()
+    }
+    waitForExpectations(timeout: 1.0, handler: nil)
+  }
 }
