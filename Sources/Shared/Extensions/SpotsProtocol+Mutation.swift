@@ -467,10 +467,8 @@ extension SpotsProtocol {
         }
       #endif
 
-      let spot = weakSelf.spot(at: index, ofType: Spotable.self)
-
-      spot?.reload(nil, withAnimation: animation) { [weak self] in
-        spot?.afterUpdate()
+      spot.reload(nil, withAnimation: animation) { [weak self] in
+        spot.afterUpdate()
         completion?()
         self?.scrollView.layoutSubviews()
       }
