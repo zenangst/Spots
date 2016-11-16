@@ -279,9 +279,7 @@ public extension Spotable {
     }
 
     afterUpdate()
-    updateHeight() {
-      completion?()
-    }
+    completion?()
   }
 
   /// Reload spot with ItemChanges.

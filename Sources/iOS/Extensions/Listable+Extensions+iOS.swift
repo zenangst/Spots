@@ -32,4 +32,8 @@ public extension Listable {
     return component.items[0...item.index]
       .reduce(0, { $0 + $1.size.height })
   }
+
+  public func afterUpdate() {
+    updateHeight()
+  }
 }
