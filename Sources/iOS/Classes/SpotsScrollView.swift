@@ -8,7 +8,8 @@ open class SpotsScrollView: UIScrollView {
   let subviewContext: UnsafeMutableRawPointer? = UnsafeMutableRawPointer(mutating: nil)
 
   /// A collection of UIView's that resemble the order of the views in the scroll view
-  fileprivate var subviewsInLayoutOrder = [UIView?]()
+  fileprivate var subviewsInLayoutOrder = [UIView]()
+  fileprivate var observedViews = [UIView]()
 
   /// The distance that the content view is inset from the enclosing scroll view.
   open override var contentInset: UIEdgeInsets {
@@ -28,10 +29,8 @@ open class SpotsScrollView: UIScrollView {
 
   /// A deinitiazlier that removes all subviews from contentView
   deinit {
-    for subview in subviewsInLayoutOrder {
-      if let subview = subview {
-        unobserveView(view: subview)
-      }
+    for subview in observedViews {
+      unobserveView(view: subview)
     }
 
     subviewsInLayoutOrder.removeAll()
@@ -106,6 +105,10 @@ open class SpotsScrollView: UIScrollView {
   ///
   /// - Parameter subview: The subview that should no longer be observed.
   private func observeView(view: UIView) {
+    guard observedViews.contains(where: { $0 == view }) else {
+      return
+    }
+
     if view is UIScrollView && view.superview == contentView {
       view.addObserver(self, forKeyPath: #keyPath(contentSize), options: .old, context: subviewContext)
       view.addObserver(self, forKeyPath: #keyPath(contentOffset), options: .old, context: subviewContext)
@@ -113,16 +116,24 @@ open class SpotsScrollView: UIScrollView {
       view.addObserver(self, forKeyPath: #keyPath(frame), options: .old, context: subviewContext)
       view.addObserver(self, forKeyPath: #keyPath(bounds), options: .old, context: subviewContext)
     }
+
+    observedViews.append(view)
   }
 
   private func unobserveView(view: UIView) {
-    if view is UIScrollView && view.superview == contentView {
+    guard let index = observedViews.index(where: { $0 == view }) else {
+      return
+    }
+
+    if view is UIScrollView {
       view.removeObserver(self, forKeyPath: #keyPath(contentSize), context: subviewContext)
       view.removeObserver(self, forKeyPath: #keyPath(contentOffset), context: subviewContext)
-    } else if view.superview == contentView {
+    } else {
       view.removeObserver(self, forKeyPath: #keyPath(frame), context: subviewContext)
       view.removeObserver(self, forKeyPath: #keyPath(bounds), context: subviewContext)
     }
+
+    observedViews.remove(at: index)
   }
 
   /// This message is sent to the receiver when the value at the specified key path relative to the given object has changed.
@@ -202,7 +213,7 @@ open class SpotsScrollView: UIScrollView {
         scrollView.contentOffset = CGPoint(x: Int(contentOffset.x), y: Int(contentOffset.y))
 
         yOffsetOfCurrentSubview += scrollView.contentSize.height + scrollView.contentInset.top + scrollView.contentInset.bottom
-      } else if let subview = subview {
+      } else {
         var frame = subview.frame
         frame.origin.x = 0
         frame.origin.y = yOffsetOfCurrentSubview
