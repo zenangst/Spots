@@ -61,7 +61,11 @@ open class SpotsScrollView: UIScrollView {
     subview.autoresizingMask = UIViewAutoresizing()
 
     guard let index = contentView.subviews.index(of: subview) else { return }
-    subviewsInLayoutOrder.insert(subview, at: index)
+
+    subviewsInLayoutOrder.removeAll()
+    for subview in contentView.subviews {
+      subviewsInLayoutOrder.append(subview)
+    }
 
     if subview.superview == contentView && !(subview is UIScrollView) {
       subview.addObserver(self, forKeyPath: #keyPath(frame), options: .old, context: subviewContext)
