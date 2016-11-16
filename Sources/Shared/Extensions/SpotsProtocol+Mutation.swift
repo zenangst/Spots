@@ -486,10 +486,11 @@ extension SpotsProtocol {
       return
     }
 
-    update(spotAtIndex: index, withAnimation: animation, withCompletion: completion, { [weak self] in
-      $0.items = items
+    update(spotAtIndex: index, withAnimation: animation, withCompletion: { [weak self] in
+      completion?()
       self?.scrollView.layoutSubviews()
-      })
+    }, { [weak self] in
+      $0.items = items })
   }
 
   /**
