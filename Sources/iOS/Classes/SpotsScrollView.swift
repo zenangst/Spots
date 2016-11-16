@@ -30,9 +30,11 @@ open class SpotsScrollView: UIScrollView {
   deinit {
     for subview in subviewsInLayoutOrder {
       if let subview = subview {
-        observeView(view: subview)
+        unobserveView(view: subview)
       }
     }
+
+    subviewsInLayoutOrder.removeAll()
   }
 
   /// Initializes and returns a newly allocated view object with the specified frame rectangle.
@@ -65,11 +67,7 @@ open class SpotsScrollView: UIScrollView {
     subviewsInLayoutOrder.removeAll()
     for subview in contentView.subviews {
       subviewsInLayoutOrder.append(subview)
-    }
-
-    if subview.superview == contentView && !(subview is UIScrollView) {
-      subview.addObserver(self, forKeyPath: #keyPath(frame), options: .old, context: subviewContext)
-      subview.addObserver(self, forKeyPath: #keyPath(bounds), options: .old, context: subviewContext)
+      observeView(view: subview)
     }
 
     guard let scrollView = subview as? UIScrollView else {
@@ -86,10 +84,6 @@ open class SpotsScrollView: UIScrollView {
       let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout, layout.scrollDirection == .horizontal {
       scrollView.isScrollEnabled = true
     }
-
-    scrollView.addObserver(self, forKeyPath: #keyPath(contentSize), options: .old, context: subviewContext)
-    scrollView.addObserver(self, forKeyPath: #keyPath(contentOffset), options: .old, context: subviewContext)
-
     setNeedsLayout()
     layoutSubviews()
   }
@@ -98,7 +92,12 @@ open class SpotsScrollView: UIScrollView {
   ///
   /// - parameter subview: - parameter subview: The subview that will be removed.
   open override func willRemoveSubview(_ subview: UIView) {
-    observeView(view: subview)
+    unobserveView(view: subview)
+
+    if let index = subviewsInLayoutOrder.index(where: { $0 == subview }) {
+      subviewsInLayoutOrder.remove(at: index)
+    }
+
     setNeedsLayout()
     layoutSubviews()
   }
@@ -108,15 +107,21 @@ open class SpotsScrollView: UIScrollView {
   /// - Parameter subview: The subview that should no longer be observed.
   private func observeView(view: UIView) {
     if view is UIScrollView && view.superview == contentView {
+      view.addObserver(self, forKeyPath: #keyPath(contentSize), options: .old, context: subviewContext)
+      view.addObserver(self, forKeyPath: #keyPath(contentOffset), options: .old, context: subviewContext)
+    } else if view.superview == contentView {
+      view.addObserver(self, forKeyPath: #keyPath(frame), options: .old, context: subviewContext)
+      view.addObserver(self, forKeyPath: #keyPath(bounds), options: .old, context: subviewContext)
+    }
+  }
+
+  private func unobserveView(view: UIView) {
+    if view is UIScrollView && view.superview == contentView {
       view.removeObserver(self, forKeyPath: #keyPath(contentSize), context: subviewContext)
       view.removeObserver(self, forKeyPath: #keyPath(contentOffset), context: subviewContext)
     } else if view.superview == contentView {
       view.removeObserver(self, forKeyPath: #keyPath(frame), context: subviewContext)
       view.removeObserver(self, forKeyPath: #keyPath(bounds), context: subviewContext)
-    }
-
-    if let index = subviewsInLayoutOrder.index(where: { $0 == view }) {
-      subviewsInLayoutOrder.remove(at: index)
     }
   }
 
