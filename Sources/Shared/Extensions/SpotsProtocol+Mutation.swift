@@ -451,7 +451,8 @@ extension SpotsProtocol {
       return }
     closure(spot)
     spot.refreshIndexes()
-    spot.registerAndPrepare()
+    spot.prepareItems()
+
     let spotHeight = spot.computedHeight
 
     Dispatch.mainQueue { [weak self] in
