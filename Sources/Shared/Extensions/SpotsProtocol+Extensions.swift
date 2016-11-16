@@ -188,6 +188,7 @@ public extension SpotsProtocol {
   }
 
   /// Clear the Spots cache
+  @available(*, deprecated, message: "Use StateCache.removeAll() instead.")
   public static func clearCache() {
     let path = StateCache(key: "").path
 
