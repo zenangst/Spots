@@ -21,17 +21,17 @@ public extension Spotable {
         return
       }
 
-      let itemsCount = weakSelf.component.items.count
+      let numberOfItems = weakSelf.component.items.count
       weakSelf.component.items.append(item)
 
-      if itemsCount == 0 {
+      if numberOfItems == 0 {
         weakSelf.userInterface?.reloadDataSource()
         weakSelf.updateHeight() {
           weakSelf.afterUpdate()
           completion?()
         }
       } else {
-        weakSelf.userInterface?.insert([itemsCount], withAnimation: animation, completion: nil)
+        weakSelf.userInterface?.insert([numberOfItems], withAnimation: animation, completion: nil)
         weakSelf.updateHeight() {
           weakSelf.afterUpdate()
           completion?()
@@ -50,16 +50,16 @@ public extension Spotable {
       guard let weakSelf = self else { completion?(); return }
 
       var indexes = [Int]()
-      let itemCount = weakSelf.component.items.count
+      let numberOfItems = weakSelf.component.items.count
 
       weakSelf.component.items.append(contentsOf: items)
 
       items.enumerated().forEach {
-        indexes.append(itemCount + $0.offset)
-        weakSelf.configureItem(at: itemCount + $0.offset)
+        indexes.append(numberOfItems + $0.offset)
+        weakSelf.configureItem(at: numberOfItems + $0.offset)
       }
 
-      if itemCount > 0 {
+      if numberOfItems > 0 {
         weakSelf.userInterface?.insert(indexes, withAnimation: animation, completion: nil)
         weakSelf.updateHeight() {
           completion?()
@@ -79,20 +79,23 @@ public extension Spotable {
   /// - parameter animation:  A Animation that is used when performing the mutation (currently not in use)
   /// - parameter completion: A completion closure that is executed in the main queue.
   func prepend(_ items: [Item], withAnimation animation: Animation = .automatic, completion: Completion = nil) {
-    let itemsCount = component.items.count
-    var indexes = [Int]()
-
-    component.items.insert(contentsOf: items, at: 0)
-
-    items.enumerated().forEach {
-      if itemsCount > 0 {
-        indexes.append(items.count - 1 - $0.offset)
-      }
-      configureItem(at: $0.offset)
-    }
-
     Dispatch.mainQueue { [weak self] in
-      guard let weakSelf = self else { completion?(); return }
+      guard let weakSelf = self else {
+        completion?()
+        return
+      }
+
+      let numberOfItems = weakSelf.component.items.count
+      var indexes = [Int]()
+
+      weakSelf.component.items.insert(contentsOf: items, at: 0)
+
+      items.enumerated().forEach {
+        if numberOfItems > 0 {
+          indexes.append(items.count - 1 - $0.offset)
+        }
+        weakSelf.configureItem(at: $0.offset)
+      }
 
       if !indexes.isEmpty {
         weakSelf.userInterface?.insert(indexes, withAnimation: animation) {
@@ -114,18 +117,22 @@ public extension Spotable {
   /// - parameter animation:  A Animation that is used when performing the mutation (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue.
   func insert(_ item: Item, index: Int, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
-    let itemsCount = component.items.count
-    component.items.insert(item, at: index)
-    var indexes = [Int]()
-
-    if itemsCount > 0 {
-      indexes.append(index)
-    }
-
     Dispatch.mainQueue { [weak self] in
-      guard let weakSelf = self else { completion?(); return }
+      guard let weakSelf = self else {
+        completion?()
+        return
+      }
 
-      if itemsCount > 0 {
+      let numberOfItems = weakSelf.component.items.count
+      var indexes = [Int]()
+
+      weakSelf.component.items.insert(item, at: index)
+
+      if numberOfItems > 0 {
+        indexes.append(index)
+      }
+
+      if numberOfItems > 0 {
         weakSelf.userInterface?.insert(indexes, withAnimation: animation, completion: nil)
       } else {
         weakSelf.userInterface?.reloadDataSource()
@@ -141,15 +148,19 @@ public extension Spotable {
   /// - parameter animation:  The animation that should be used (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue.
   func delete(_ item: Item, withAnimation animation: Animation = .automatic, completion: Completion) {
-    guard let index = component.items.index(where: { $0 == item })
-      else { completion?(); return }
-
-    component.items.remove(at: index)
-
     Dispatch.mainQueue { [weak self] in
-      self?.userInterface?.delete([index], withAnimation: animation, completion: nil)
-      self?.afterUpdate()
-      self?.sanitize { completion?() }
+      guard let weakSelf = self,
+        let index = weakSelf.component.items.index(where: { $0 == item }) else {
+          completion?()
+          return
+      }
+
+      weakSelf.component.items.remove(at: index)
+      weakSelf.userInterface?.delete([index], withAnimation: animation, completion: nil)
+      weakSelf.afterUpdate()
+      weakSelf.sanitize {
+        completion?()
+      }
     }
   }
 
@@ -159,20 +170,27 @@ public extension Spotable {
   /// - parameter animation:  The animation that should be used (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue.
   func delete(_ items: [Item], withAnimation animation: Animation = .automatic, completion: Completion = nil) {
-    var indexPaths = [Int]()
-    var indexes = [Int]()
-
-    for (index, _) in items.enumerated() {
-      indexPaths.append(index)
-      indexes.append(index)
-    }
-
-    indexes.sorted(by: { $0 > $1 }).forEach { component.items.remove(at: $0) }
-
     Dispatch.mainQueue { [weak self] in
-      self?.userInterface?.delete(indexPaths, withAnimation: animation, completion: nil)
-      self?.afterUpdate()
-      self?.sanitize { completion?() }
+      guard let weakSelf = self else {
+        completion?()
+        return
+      }
+
+      var indexPaths = [Int]()
+      var indexes = [Int]()
+
+      for (index, _) in items.enumerated() {
+        indexPaths.append(index)
+        indexes.append(index)
+      }
+
+      indexes.sorted(by: { $0 > $1 }).forEach {
+        weakSelf.component.items.remove(at: $0)
+      }
+
+      weakSelf.userInterface?.delete(indexPaths, withAnimation: animation, completion: nil)
+      weakSelf.afterUpdate()
+      weakSelf.sanitize { completion?() }
     }
   }
 
@@ -183,10 +201,17 @@ public extension Spotable {
   /// - parameter completion: A completion closure that is executed in the main queue when the view model has been removed.
   func delete(_ index: Int, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     Dispatch.mainQueue { [weak self] in
-      self?.component.items.remove(at: index)
-      self?.userInterface?.delete([index], withAnimation: animation, completion: nil)
-      self?.afterUpdate()
-      self?.sanitize { completion?() }
+      guard let weakSelf = self else {
+        completion?()
+        return
+      }
+
+      weakSelf.component.items.remove(at: index)
+      weakSelf.userInterface?.delete([index], withAnimation: animation, completion: nil)
+      weakSelf.afterUpdate()
+      weakSelf.sanitize {
+        completion?()
+      }
     }
   }
 
@@ -197,10 +222,20 @@ public extension Spotable {
   /// - parameter completion: A completion closure that is executed in the main queue when the view model has been removed.
   func delete(_ indexes: [Int], withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     Dispatch.mainQueue { [weak self] in
-      indexes.sorted(by: { $0 > $1 }).forEach { self?.component.items.remove(at: $0) }
-      self?.userInterface?.delete(indexes, withAnimation: animation, completion: nil)
-      self?.afterUpdate()
-      self?.sanitize { completion?() }
+      guard let weakSelf = self else {
+        completion?()
+        return
+      }
+
+      indexes.sorted(by: { $0 > $1 }).forEach {
+        weakSelf.component.items.remove(at: $0)
+      }
+
+      weakSelf.userInterface?.delete(indexes, withAnimation: animation, completion: nil)
+      weakSelf.afterUpdate()
+      weakSelf.sanitize {
+        completion?()
+      }
     }
   }
 
@@ -211,48 +246,51 @@ public extension Spotable {
   /// - parameter animation:  A Animation that is used when performing the mutation (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue when the view model has been removed.
   func update(_ item: Item, index: Int, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
-    guard let oldItem = self.item(at: index) else {
-      completion?()
-      return
-    }
+    Dispatch.mainQueue { [weak self] in
+      guard let weakSelf = self,
+        let oldItem = weakSelf.item(at: index) else {
+        completion?()
+        return
+      }
 
-    items[index] = item
-    configureItem(at: index)
+      weakSelf.items[index] = item
+      weakSelf.configureItem(at: index)
 
-    let newItem = items[index]
+      let newItem = weakSelf.items[index]
 
-    #if !os(OSX)
-      if let composite: Composable = userInterface?.view(at: index),
-        let spots = spotsCompositeDelegate?.resolve(index, itemIndex: index) {
-        userInterface?.beginUpdates()
-        composite.configure(&component.items[index], spots: spots)
-        userInterface?.endUpdates()
-        updateHeight() {
+      #if !os(OSX)
+        if let composite: Composable = weakSelf.userInterface?.view(at: index),
+          let spots = weakSelf.spotsCompositeDelegate?.resolve(index, itemIndex: index) {
+          weakSelf.userInterface?.beginUpdates()
+          composite.configure(&weakSelf.component.items[index], spots: spots)
+          weakSelf.userInterface?.endUpdates()
+          weakSelf.updateHeight() {
+            completion?()
+          }
+          return
+        }
+      #endif
+
+      if newItem.kind != oldItem.kind || newItem.size.height != oldItem.size.height {
+        if let cell: SpotConfigurable = weakSelf.userInterface?.view(at: index), animation != .none {
+          weakSelf.userInterface?.beginUpdates()
+          cell.configure(&weakSelf.items[index])
+          weakSelf.userInterface?.endUpdates()
+        } else {
+          weakSelf.userInterface?.reload([index], withAnimation: animation, completion: nil)
+        }
+        weakSelf.afterUpdate()
+        weakSelf.updateHeight {
           completion?()
         }
         return
-      }
-    #endif
-
-    if newItem.kind != oldItem.kind || newItem.size.height != oldItem.size.height {
-      if let cell: SpotConfigurable = userInterface?.view(at: index), animation != .none {
-        userInterface?.beginUpdates()
-        cell.configure(&items[index])
-        userInterface?.endUpdates()
+      } else if let cell: SpotConfigurable = weakSelf.userInterface?.view(at: index) {
+        cell.configure(&weakSelf.items[index])
+        completion?()
       } else {
-        userInterface?.reload([index], withAnimation: animation, completion: nil)
-      }
-      afterUpdate()
-      updateHeight {
+        weakSelf.afterUpdate()
         completion?()
       }
-      return
-    } else if let cell: SpotConfigurable = userInterface?.view(at: index) {
-      cell.configure(&items[index])
-      completion?()
-    } else {
-      afterUpdate()
-      completion?()
     }
   }
 
@@ -262,26 +300,42 @@ public extension Spotable {
   /// - parameter animation:  The animation that should be used (only works for Listable objects)
   /// - parameter completion: A completion closure that is performed when all mutations are performed
   func reload(_ indexes: [Int]? = nil, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
-    refreshIndexes()
-
-    if let indexes = indexes {
-      indexes.forEach { index  in
-        configureItem(at: index)
+    Dispatch.inQueue(queue: .interactive) { [weak self] in
+      guard let weakSelf = self else {
+        completion?()
+        return
       }
-    } else {
-      for (index, _) in component.items.enumerated() {
-        configureItem(at: index)
+
+      weakSelf.refreshIndexes()
+
+      Dispatch.mainQueue {
+        guard let weakSelf = self else {
+          completion?()
+          return
+        }
+
+        if let indexes = indexes {
+          indexes.forEach { index  in
+            weakSelf.configureItem(at: index)
+          }
+        } else {
+          for (index, _) in weakSelf.component.items.enumerated() {
+            weakSelf.configureItem(at: index)
+          }
+        }
+
+        if let indexes = indexes {
+          weakSelf.userInterface?.reload(indexes, withAnimation: animation, completion: nil)
+        } else {
+          if animation != .none {
+            weakSelf.userInterface?.reloadSection(0, withAnimation: animation, completion: nil)
+          } else {
+            weakSelf.userInterface?.reloadDataSource()
+          }
+        }
+        completion?()
       }
     }
-
-    if let indexes = indexes {
-      userInterface?.reload(indexes, withAnimation: animation, completion: nil)
-    } else {
-      animation != .none
-        ? userInterface?.reloadSection(0, withAnimation: animation, completion: nil)
-        : userInterface?.reloadDataSource()
-    }
-    completion?()
   }
 
   /// Reload spot with ItemChanges.
@@ -291,7 +345,10 @@ public extension Spotable {
   /// - parameter updateDataSource: A closure to update your data source.
   /// - parameter completion:       A completion closure that runs when your updates are done.
   func reloadIfNeeded(_ changes: ItemChanges, withAnimation animation: Animation = .automatic, updateDataSource: () -> Void, completion: Completion) {
-    reloadIfNeeded(changes, withAnimation: animation, updateDataSource: updateDataSource, completion: completion)
+    reloadIfNeeded(changes,
+                   withAnimation: animation,
+                   updateDataSource: updateDataSource,
+                   completion: completion)
   }
 
   /// A collection of view models
@@ -299,7 +356,9 @@ public extension Spotable {
     set(items) {
       component.items = items
     }
-    get { return component.items }
+    get {
+      return component.items
+    }
   }
 
   /// Return a dictionary representation of Spotable object
@@ -315,27 +374,41 @@ public extension Spotable {
   /// - parameter animation:  The animation that should be used (only works for Listable objects)
   /// - parameter completion: A completion closure that is performed when all mutations are performed
   public func reloadIfNeeded(_ items: [Item], withAnimation animation: Animation = .automatic, completion: Completion = nil) {
-    guard !(self.items == items) else {
-      cache()
-      return
-    }
-
-    var indexes: [Int]? = nil
-    let oldItems = self.items
-    self.items = items
-
-    if items.count == oldItems.count {
-      for (index, item) in items.enumerated() {
-        guard !(item == oldItems[index]) else { continue }
-
-        if indexes == nil { indexes = [Int]() }
-        indexes?.append(index)
+    Dispatch.inQueue(queue: .interactive) { [weak self] in
+      guard let weakSelf = self else {
+        completion?()
+        return
       }
-    }
 
-    reload(indexes, withAnimation: animation) {
-      self.cache()
-      completion?()
+      if weakSelf.items == items {
+        weakSelf.cache()
+        return
+      }
+
+      Dispatch.mainQueue { [weak self] in
+        guard let weakSelf = self else {
+          completion?()
+          return
+        }
+
+        var indexes: [Int]? = nil
+        let oldItems = weakSelf.items
+        weakSelf.items = items
+
+        if items.count == oldItems.count {
+          for (index, item) in items.enumerated() {
+            guard !(item == oldItems[index]) else { continue }
+
+            if indexes == nil { indexes = [Int]() }
+            indexes?.append(index)
+          }
+        }
+
+        weakSelf.reload(indexes, withAnimation: animation) {
+          weakSelf.cache()
+          completion?()
+        }
+      }
     }
   }
 
@@ -344,16 +417,25 @@ public extension Spotable {
   /// - parameter json:      A JSON dictionary
   /// - parameter animation:  A Animation that is used when performing the mutation (only works for Listable objects)
   public func reloadIfNeeded(_ json: [String : Any], withAnimation animation: Animation = .automatic) {
-    let newComponent = Component(json)
+    Dispatch.inQueue(queue: .interactive) { [weak self] in
+      guard let weakSelf = self else {
+        return
+      }
 
-    guard component != newComponent else {
-      cache()
-      return
-    }
+      let newComponent = Component(json)
 
-    component = newComponent
-    reload(nil, withAnimation: animation) { [weak self] in
-      self?.cache()
+      guard weakSelf.component != newComponent else {
+        weakSelf.cache()
+        return
+      }
+
+      weakSelf.component = newComponent
+      weakSelf.reload(nil, withAnimation: animation) { [weak self] in
+        guard let weakSelf = self else {
+          return
+        }
+        weakSelf.cache()
+      }
     }
   }
 }
