@@ -460,7 +460,7 @@ extension SpotsProtocol {
 
       #if !os(OSX)
         if animation != .none {
-          let isScrolling = weakSelf.scrollView.isDragging == true && weakSelf.scrollView.isTracking == true
+          let isScrolling = weakSelf.scrollView.isDragging == true || weakSelf.scrollView.isTracking == true
           if let superview = spot.render().superview,
             !isScrolling
           {
