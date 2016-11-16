@@ -50,27 +50,20 @@ public extension Spotable {
       guard let weakSelf = self else { completion?(); return }
 
       var indexes = [Int]()
-      let itemsCount = weakSelf.component.items.count
+      let count = weakSelf.component.items.count
 
-      if weakSelf.component.items.isEmpty {
-        weakSelf.component.items.append(contentsOf: items)
-      } else {
-        for (index, item) in items.enumerated() {
-          weakSelf.component.items.append(item)
-          indexes.append(itemsCount + index)
+      weakSelf.component.items.append(contentsOf: items)
 
-          weakSelf.configureItem(at: itemsCount + index)
-        }
+      items.enumerated().forEach {
+        indexes.append(count + $0.offset)
+        weakSelf.configureItem(at: count + $0.offset)
       }
 
-      if itemsCount > 0 {
+      Dispatch.mainQueue { [weak self] in
         weakSelf.userInterface?.insert(indexes, withAnimation: animation, completion: nil)
-      } else {
-        weakSelf.userInterface?.reloadDataSource()
-      }
-      weakSelf.updateHeight() {
-        weakSelf.afterUpdate()
-        completion?()
+        weakSelf.updateHeight() {
+          completion?()
+        }
       }
     }
   }
