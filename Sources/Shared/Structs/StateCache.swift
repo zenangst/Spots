@@ -32,6 +32,16 @@ public struct StateCache {
     return FileManager.default.fileExists(atPath: path)
   }
 
+  /// Remove state cache for all controllers and spotable objects.
+  public static func removeAll() {
+    let path = Cache<JSON>(name: "\(StateCache.cacheName)/\(bundleIdentifer)").path
+    do {
+      try FileManager.default.removeItem(atPath: path)
+    } catch {
+      NSLog("🎍 SPOTS: Unable to remove cache.")
+    }
+  }
+
   // MARK: - Initialization
 
   /// Initialize a StateCache with a unique cache key
