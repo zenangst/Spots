@@ -461,8 +461,10 @@ extension SpotsProtocol {
       #if !os(OSX)
         if animation != .none {
           let isScrolling = weakSelf.scrollView.isDragging == true && weakSelf.scrollView.isTracking == true
-          if let superview = spot.render().superview, !isScrolling {
-            spot.render().layer.frame.size.height = superview.frame.height
+          if let superview = spot.render().superview,
+            !isScrolling
+          {
+            spot.render().frame.size.height = superview.frame.height
           }
         }
       #endif
