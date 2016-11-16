@@ -448,7 +448,6 @@ extension SpotsProtocol {
   public func update(spotAtIndex index: Int = 0, withAnimation animation: Animation = .automatic, withCompletion completion: Completion = nil, _ closure: (_ spot: Spotable) -> Void) {
     guard let spot = spot(at: index, ofType: Spotable.self) else {
       completion?()
-      scrollView.layoutSubviews()
       return }
     closure(spot)
     spot.refreshIndexes()
