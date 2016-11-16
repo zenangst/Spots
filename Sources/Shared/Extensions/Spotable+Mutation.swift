@@ -276,8 +276,6 @@ public extension Spotable {
         ? userInterface?.reloadSection(0, withAnimation: animation, completion: nil)
         : userInterface?.reloadDataSource()
     }
-
-    afterUpdate()
     completion?()
   }
 
