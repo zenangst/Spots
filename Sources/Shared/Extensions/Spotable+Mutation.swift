@@ -244,7 +244,6 @@ public extension Spotable {
       return
     } else if let cell: SpotConfigurable = userInterface?.view(at: index) {
       cell.configure(&items[index])
-      afterUpdate()
       completion?()
     } else {
       afterUpdate()
