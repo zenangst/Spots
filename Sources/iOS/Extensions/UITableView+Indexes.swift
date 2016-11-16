@@ -95,12 +95,16 @@ extension UITableView: UserInterface {
   /// - parameter animation: A constant that indicates how the reloading is to be animated.
   /// - parameter completino: A completion closure that will run when the reload is done.
   public func reloadSection(_ section: Int = 0, withAnimation animation: Animation = .automatic, completion: (() -> Void)? = nil) {
-    if animation == .none { UIView.setAnimationsEnabled(false) }
+    if animation == .none {
+      UIView.setAnimationsEnabled(false)
+    }
 
     performUpdates {
       reloadSections(IndexSet(integer: section), with: animation.tableViewAnimation)
     }
-    if animation == .none { UIView.setAnimationsEnabled(true) }
+    if animation == .none {
+      UIView.setAnimationsEnabled(true)
+    }
     completion?()
   }
 

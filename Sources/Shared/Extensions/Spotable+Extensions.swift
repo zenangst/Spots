@@ -107,7 +107,13 @@ public extension Spotable {
   /// - parameter completion: A completion closure that will be run in the main queue when the size has been updated.
   public func updateHeight(_ completion: Completion = nil) {
     Dispatch.inQueue(queue: .interactive) { [weak self] in
-      guard let weakSelf = self else { Dispatch.mainQueue { completion?(); }; return }
+      guard let weakSelf = self else {
+        Dispatch.mainQueue {
+          completion?()
+        }
+        return
+      }
+
       let spotHeight = weakSelf.computedHeight
       Dispatch.mainQueue { [weak self] in
         self?.render().frame.size.height = spotHeight
