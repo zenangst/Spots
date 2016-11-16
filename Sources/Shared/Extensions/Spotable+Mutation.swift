@@ -238,7 +238,9 @@ public extension Spotable {
         userInterface?.reload([index], withAnimation: animation, completion: nil)
       }
       afterUpdate()
-      updateHeight() { completion?() }
+      updateHeight {
+        completion?()
+      }
       return
     } else if let cell: SpotConfigurable = userInterface?.view(at: index) {
       cell.configure(&items[index])
