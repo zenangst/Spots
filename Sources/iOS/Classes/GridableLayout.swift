@@ -24,7 +24,10 @@ open class GridableLayout: UICollectionViewFlowLayout {
     super.prepare()
 
     guard let delegate = collectionView?.delegate as? Delegate,
-     let spot = delegate.spot as? Gridable else { return }
+      let spot = delegate.spot as? Gridable
+      else {
+        return
+    }
 
     if scrollDirection == .horizontal {
       guard let firstItem = spot.items.first else { return }
