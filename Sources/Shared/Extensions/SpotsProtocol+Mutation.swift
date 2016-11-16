@@ -458,7 +458,11 @@ extension SpotsProtocol {
       guard let weakSelf = self else { return }
 
       #if !os(OSX)
-        if animation != .none { spot.render().layer.frame.size.height = spotHeight }
+        if animation != .none {
+          if let superview = spot.render().superview {
+            spot.render().layer.frame.size.height = superview.frame.height
+          }
+        }
       #endif
 
       let spot = weakSelf.spot(at: index, ofType: Spotable.self)
