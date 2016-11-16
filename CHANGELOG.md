@@ -2,7 +2,15 @@
 
 ## [Unreleased](https://github.com/hyperoslo/Spots/tree/HEAD)
 
-[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.2.0...HEAD)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.3.0...HEAD)
+
+**Merged pull requests:**
+
+- Feature remove all on state cache [\#361](https://github.com/hyperoslo/Spots/pull/361) ([zenangst](https://github.com/zenangst))
+- Feature spotsDidReloadComponents closure [\#360](https://github.com/hyperoslo/Spots/pull/360) ([zenangst](https://github.com/zenangst))
+
+## [5.3.0](https://github.com/hyperoslo/Spots/tree/5.3.0) (2016-11-14)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.2.0...5.3.0)
 
 **Merged pull requests:**
 
