@@ -50,9 +50,12 @@ open class GridableLayout: UICollectionViewFlowLayout {
 
   /// Invalidates the current layout and triggers a layout update.
   open override func invalidateLayout() {
-    super.invalidateLayout()
+    guard let collectionView = collectionView else {
+      return
+    }
 
     guard let collectionView = collectionView else { return }
+    super.invalidateLayout()
 
     if let y = yOffset, collectionView.isDragging && headerReferenceSize.height > 0.0 {
       collectionView.frame.origin.y = y
