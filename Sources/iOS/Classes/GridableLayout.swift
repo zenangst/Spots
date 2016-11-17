@@ -54,7 +54,12 @@ open class GridableLayout: UICollectionViewFlowLayout {
       return
     }
 
-    guard let collectionView = collectionView else { return }
+    if scrollDirection == .horizontal &&
+      (collectionView.frame.size.height <= contentSize.height ||
+      collectionView.contentOffset.y > 0) {
+      return
+    }
+
     super.invalidateLayout()
 
     if let y = yOffset, collectionView.isDragging && headerReferenceSize.height > 0.0 {
