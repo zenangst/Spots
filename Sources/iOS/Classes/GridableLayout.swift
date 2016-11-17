@@ -21,13 +21,13 @@ open class GridableLayout: UICollectionViewFlowLayout {
   /// The collection view calls -prepareLayout again after layout is invalidated and before requerying the layout information.
   /// Subclasses should always call super if they override.
   open override func prepare() {
-    super.prepare()
-
     guard let delegate = collectionView?.delegate as? Delegate,
       let spot = delegate.spot as? Gridable
       else {
         return
     }
+
+    super.prepare()
 
     if scrollDirection == .horizontal {
       guard let firstItem = spot.items.first else { return }
