@@ -451,20 +451,26 @@ extension SpotsProtocol {
       return }
     closure(spot)
     spot.refreshIndexes()
-    spot.registerAndPrepare()
+    spot.prepareItems()
+
     let spotHeight = spot.computedHeight
 
     Dispatch.mainQueue { [weak self] in
       guard let weakSelf = self else { return }
 
       #if !os(OSX)
-        if animation != .none { spot.render().layer.frame.size.height = spotHeight }
+        if animation != .none {
+          let isScrolling = weakSelf.scrollView.isDragging == true || weakSelf.scrollView.isTracking == true
+          if let superview = spot.render().superview,
+            !isScrolling
+          {
+            spot.render().frame.size.height = superview.frame.height
+          }
+        }
       #endif
 
-      let spot = weakSelf.spot(at: index, ofType: Spotable.self)
-
-      spot?.reload(nil, withAnimation: animation) { [weak self] in
-        spot?.afterUpdate()
+      spot.reload(nil, withAnimation: animation) { [weak self] in
+        spot.afterUpdate()
         completion?()
         self?.scrollView.layoutSubviews()
       }
@@ -486,10 +492,11 @@ extension SpotsProtocol {
       return
     }
 
-    update(spotAtIndex: index, withAnimation: animation, withCompletion: completion, { [weak self] in
-      $0.items = items
+    update(spotAtIndex: index, withAnimation: animation, withCompletion: { [weak self] in
+      completion?()
       self?.scrollView.layoutSubviews()
-      })
+    }, { [weak self] in
+      $0.items = items })
   }
 
   /**

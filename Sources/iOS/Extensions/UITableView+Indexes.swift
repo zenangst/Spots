@@ -31,9 +31,23 @@ extension UITableView: UserInterface {
   /// - parameter animation: A constant that indicates how the reloading is to be animated
   public func reload(_ indexes: [Int], withAnimation animation: Animation = .automatic, completion: (() -> Void)? = nil) {
     let indexPaths = indexes.map { IndexPath(row: $0, section: 0) }
-    if animation == .none { UIView.setAnimationsEnabled(false) }
-    performUpdates { reloadRows(at: indexPaths, with: animation.tableViewAnimation) }
-    if animation == .none { UIView.setAnimationsEnabled(true) }
+
+    if animation == .none {
+      UIView.setAnimationsEnabled(false)
+    }
+
+    if !indexPaths.isEmpty {
+      performUpdates {
+        reloadRows(at: indexPaths, with: animation.tableViewAnimation)
+      }
+    } else {
+      reloadDataSource()
+    }
+
+    if animation == .none {
+      UIView.setAnimationsEnabled(true)
+    }
+
     completion?()
   }
 
@@ -81,11 +95,16 @@ extension UITableView: UserInterface {
   /// - parameter animation: A constant that indicates how the reloading is to be animated.
   /// - parameter completino: A completion closure that will run when the reload is done.
   public func reloadSection(_ section: Int = 0, withAnimation animation: Animation = .automatic, completion: (() -> Void)? = nil) {
-    if animation == .none { UIView.setAnimationsEnabled(false) }
+    if animation == .none {
+      UIView.setAnimationsEnabled(false)
+    }
+
     performUpdates {
       reloadSections(IndexSet(integer: section), with: animation.tableViewAnimation)
     }
-    if animation == .none { UIView.setAnimationsEnabled(true) }
+    if animation == .none {
+      UIView.setAnimationsEnabled(true)
+    }
     completion?()
   }
 
