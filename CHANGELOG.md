@@ -2,7 +2,16 @@
 
 ## [Unreleased](https://github.com/hyperoslo/Spots/tree/HEAD)
 
-[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.3.0...HEAD)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.3.1...HEAD)
+
+**Merged pull requests:**
+
+- Fix layout warnings for carousel [\#364](https://github.com/hyperoslo/Spots/pull/364) ([zenangst](https://github.com/zenangst))
+- Fix mutating methods on Listable + improve mutation with proper queuing. [\#363](https://github.com/hyperoslo/Spots/pull/363) ([zenangst](https://github.com/zenangst))
+- Rebuild subviewsInLayoutOrder based on subviews layout order. [\#362](https://github.com/hyperoslo/Spots/pull/362) ([zenangst](https://github.com/zenangst))
+
+## [5.3.1](https://github.com/hyperoslo/Spots/tree/5.3.1) (2016-11-16)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.3.0...5.3.1)
 
 **Merged pull requests:**
 
