@@ -21,13 +21,13 @@ open class GridableLayout: UICollectionViewFlowLayout {
   /// The collection view calls -prepareLayout again after layout is invalidated and before requerying the layout information.
   /// Subclasses should always call super if they override.
   open override func prepare() {
-    super.prepare()
-
     guard let delegate = collectionView?.delegate as? Delegate,
       let spot = delegate.spot as? Gridable
       else {
         return
     }
+
+    super.prepare()
 
     if scrollDirection == .horizontal {
       guard let firstItem = spot.items.first else { return }
@@ -50,15 +50,22 @@ open class GridableLayout: UICollectionViewFlowLayout {
 
   /// Invalidates the current layout and triggers a layout update.
   open override func invalidateLayout() {
-    super.invalidateLayout()
+    guard let collectionView = collectionView else {
+      return
+    }
 
-    guard let collectionView = collectionView else { return }
+    if scrollDirection == .horizontal &&
+      (collectionView.frame.size.height <= contentSize.height ||
+      collectionView.contentOffset.y > 0) {
+      return
+    }
+
+    super.invalidateLayout()
 
     if let y = yOffset, collectionView.isDragging && headerReferenceSize.height > 0.0 {
       collectionView.frame.origin.y = y
     }
   }
-
 
   /// Returns the layout attributes for all of the cells and views in the specified rectangle.
   ///
