@@ -325,10 +325,12 @@ public extension Spotable {
         }
 
         if let indexes = indexes {
-          weakSelf.userInterface?.reload(indexes, withAnimation: animation, completion: nil)
+          weakSelf.userInterface?.reload(indexes, withAnimation: animation, completion: completion)
+          return
         } else {
           if animation != .none {
-            weakSelf.userInterface?.reloadSection(0, withAnimation: animation, completion: nil)
+            weakSelf.userInterface?.reloadSection(0, withAnimation: animation, completion: completion)
+            return
           } else {
             weakSelf.userInterface?.reloadDataSource()
           }
