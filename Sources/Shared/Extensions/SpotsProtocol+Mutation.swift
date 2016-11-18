@@ -423,11 +423,11 @@ extension SpotsProtocol {
     }
   }
 
-  /**
-   - parameter json: A JSON dictionary that gets parsed into UI elements
-   - parameter animated: An animation closure that can be used to perform custom animations when reloading
-   - parameter completion: A closure that will be run after reload has been performed on all spots
-   */
+  /// Reload with JSON
+  ///
+  ///- parameter json: A JSON dictionary that gets parsed into UI elements
+  ///- parameter animated: An animation closure that can be used to perform custom animations when reloading
+  ///- parameter completion: A closure that will be run after reload has been performed on all spots
   public func reload(_ json: [String : Any], animated: ((_ view: View) -> Void)? = nil, completion: Completion = nil) {
     Dispatch.mainQueue { [weak self] in
       guard let weakSelf = self else {
