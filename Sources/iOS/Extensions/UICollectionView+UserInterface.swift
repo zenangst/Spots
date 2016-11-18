@@ -94,16 +94,11 @@ extension UICollectionView: UserInterface {
   ///  - parameter index: The section you want to update
   ///  - parameter completion: A completion block for when the updates are done
   public func reloadSection(_ section: Int = 0, withAnimation animation: Animation = .automatic, completion: (() -> Void)? = nil) {
-    if animation == .none {
-      UIView.setAnimationsEnabled(false)
+    performBatchUpdates({ [weak self] in
+      guard let weakSelf = self else { return }
+      weakSelf.reloadSections(IndexSet(integer: section))
+      }) { _ in
+        completion?()
     }
-
-    reloadDataSource()
-
-    if animation == .none {
-      UIView.setAnimationsEnabled(true)
-    }
-
-    completion?()
   }
 }
