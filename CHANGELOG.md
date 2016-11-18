@@ -2,7 +2,16 @@
 
 ## [Unreleased](https://github.com/hyperoslo/Spots/tree/HEAD)
 
-[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.3.1...HEAD)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.4.0...HEAD)
+
+**Merged pull requests:**
+
+- Improve reload if needed with components [\#367](https://github.com/hyperoslo/Spots/pull/367) ([zenangst](https://github.com/zenangst))
+- Fix/xcode project [\#366](https://github.com/hyperoslo/Spots/pull/366) ([zenangst](https://github.com/zenangst))
+- Refactor/collection reload section [\#365](https://github.com/hyperoslo/Spots/pull/365) ([zenangst](https://github.com/zenangst))
+
+## [5.4.0](https://github.com/hyperoslo/Spots/tree/5.4.0) (2016-11-17)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.3.1...5.4.0)
 
 **Merged pull requests:**
 
