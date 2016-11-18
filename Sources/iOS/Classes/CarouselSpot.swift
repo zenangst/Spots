@@ -268,38 +268,6 @@ open class CarouselSpot: NSObject, Gridable {
   }
 }
 
-extension CarouselSpot: UICollectionViewDelegateFlowLayout {
-
-  /// Asks the delegate for the spacing between successive rows or columns of a section.
-  ///
-  /// - parameter collectionView:       The collection view object displaying the flow layout.
-  /// - parameter collectionViewLayout: The layout object requesting the information.
-  /// - parameter section:              The index number of the section whose line spacing is needed.
-  /// - returns: The minimum space (measured in points) to apply between successive lines in a section.
-  public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-    return layout.sectionInset.bottom
-  }
-
-  /// Asks the delegate for the margins to apply to content in the specified section.
-  ///
-  /// - parameter collectionView:       The collection view object displaying the flow layout.
-  /// - parameter collectionViewLayout: The layout object requesting the information.
-  /// - parameter section:              The index number of the section whose insets are needed.
-  ///
-  /// - returns: The margins to apply to items in the section.
-  public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-    guard layout.scrollDirection == .horizontal else { return layout.sectionInset }
-
-    let left = layout.minimumLineSpacing / 2
-    let right = layout.minimumLineSpacing / 2
-
-    return UIEdgeInsets(top: layout.sectionInset.top,
-                        left: left,
-                        bottom: layout.sectionInset.bottom,
-                        right: right)
-  }
-}
-
 /// A scroll view extension on CarouselSpot to handle scrolling specifically for this object.
 extension Delegate: UIScrollViewDelegate {
 
