@@ -33,34 +33,49 @@ extension SpotsProtocol {
     }
   }
 
-  public func reloadIfNeeded(_ components: [Component], withAnimation animation: Animation = .automatic, closure: Completion = nil) {
+  /// Reload if needed using JSON
+  ///
+  /// - parameter components: A collection of components that gets parsed into UI elements
+  /// - parameter compare: A closure that is used for comparing a Component collections
+  /// - parameter animated: An animation closure that can be used to perform custom animations when reloading
+  /// - parameter completion: A closure that will be run after reload has been performed on all spots
+  public func reloadIfNeeded(_ components: [Component],
+                             compare: @escaping CompareClosure = { lhs, rhs in return lhs !== rhs },
+                             withAnimation animation: Animation = .automatic,
+                             completion: Completion = nil) {
     guard !components.isEmpty else {
-      Dispatch.mainQueue {
-        self.spots.forEach { $0.render().removeFromSuperview() }
-        self.spots = []
-        closure?()
+      Dispatch.mainQueue { [weak self] in
+        self?.spots.forEach { $0.render().removeFromSuperview() }
+        self?.spots = []
+        completion?()
       }
       return
     }
 
     Dispatch.inQueue(queue: .interactive) { [weak self] in
       guard let weakSelf = self else {
-        closure?()
+        completion?()
         return
       }
 
       let oldComponents = weakSelf.spots.map { $0.component }
       let newComponents = components
 
+      guard compare(newComponents, oldComponents) else {
+        weakSelf.cache()
+        Dispatch.mainQueue { completion?() }
+        return
+      }
+
       guard newComponents !== oldComponents else {
-        Dispatch.mainQueue { closure?() }
+        Dispatch.mainQueue { completion?() }
         return
       }
 
       let changes = weakSelf.generateChanges(from: newComponents, and: oldComponents)
 
       weakSelf.process(changes: changes, components: newComponents, withAnimation: animation) {
-        closure?()
+        completion?()
         if let controller = self as? Controller {
           Controller.spotsDidReloadComponents?(controller)
         }
@@ -342,14 +357,13 @@ extension SpotsProtocol {
     }
   }
 
-  /**
-   Reload if needed using JSON
 
-   - parameter json: A JSON dictionary that gets parsed into UI elements
-   - parameter compare: A closure that is used for comparing a Component collections
-   - parameter animated: An animation closure that can be used to perform custom animations when reloading
-   - parameter completion: A closure that will be run after reload has been performed on all spots
-   */
+  ///Reload if needed using JSON
+  ///
+  /// - parameter json: A JSON dictionary that gets parsed into UI elements
+  /// - parameter compare: A closure that is used for comparing a Component collections
+  /// - parameter animated: An animation closure that can be used to perform custom animations when reloading
+  /// - parameter completion: A closure that will be run after reload has been performed on all spots
   public func reloadIfNeeded(_ json: [String : Any],
                              compare: @escaping CompareClosure = { lhs, rhs in return lhs !== rhs },
                              animated: ((_ view: View) -> Void)? = nil,
@@ -409,11 +423,11 @@ extension SpotsProtocol {
     }
   }
 
-  /**
-   - parameter json: A JSON dictionary that gets parsed into UI elements
-   - parameter animated: An animation closure that can be used to perform custom animations when reloading
-   - parameter completion: A closure that will be run after reload has been performed on all spots
-   */
+  /// Reload with JSON
+  ///
+  ///- parameter json: A JSON dictionary that gets parsed into UI elements
+  ///- parameter animated: An animation closure that can be used to perform custom animations when reloading
+  ///- parameter completion: A closure that will be run after reload has been performed on all spots
   public func reload(_ json: [String : Any], animated: ((_ view: View) -> Void)? = nil, completion: Completion = nil) {
     Dispatch.mainQueue { [weak self] in
       guard let weakSelf = self else {
@@ -453,17 +467,13 @@ extension SpotsProtocol {
     spot.refreshIndexes()
     spot.prepareItems()
 
-    let spotHeight = spot.computedHeight
-
     Dispatch.mainQueue { [weak self] in
       guard let weakSelf = self else { return }
 
       #if !os(OSX)
         if animation != .none {
           let isScrolling = weakSelf.scrollView.isDragging == true || weakSelf.scrollView.isTracking == true
-          if let superview = spot.render().superview,
-            !isScrolling
-          {
+          if let superview = spot.render().superview, !isScrolling {
             spot.render().frame.size.height = superview.frame.height
           }
         }
@@ -495,8 +505,9 @@ extension SpotsProtocol {
     update(spotAtIndex: index, withAnimation: animation, withCompletion: { [weak self] in
       completion?()
       self?.scrollView.layoutSubviews()
-    }, { [weak self] in
-      $0.items = items })
+    }, {
+      $0.items = items
+    })
   }
 
   /**

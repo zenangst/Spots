@@ -327,8 +327,7 @@ public func == (lhs: Component, rhs: Component) -> Bool {
     lhs.kind == rhs.kind &&
     lhs.span == rhs.span &&
     lhs.header == rhs.header &&
-    (lhs.meta as NSDictionary).isEqual(rhs.meta as NSDictionary) &&
-    lhs.items == rhs.items
+    (lhs.meta as NSDictionary).isEqual(rhs.meta as NSDictionary)
 }
 
 

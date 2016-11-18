@@ -61,7 +61,7 @@ open class SpotsScrollView: UIScrollView {
   func didAddSubviewToContainer(_ subview: UIView) {
     subview.autoresizingMask = UIViewAutoresizing()
 
-    guard let index = contentView.subviews.index(of: subview) else { return }
+    guard contentView.subviews.index(of: subview) != nil else { return }
 
     subviewsInLayoutOrder.removeAll()
     for subview in contentView.subviews {

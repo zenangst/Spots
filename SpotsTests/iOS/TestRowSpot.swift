@@ -92,7 +92,7 @@ class RowSpotTests: XCTestCase {
       exception?.fulfill()
       exception = nil
     }
-    waitForExpectations(timeout: 0.5, handler: nil)
+    waitForExpectations(timeout: 10.0, handler: nil)
   }
 
   func testInsertItem() {

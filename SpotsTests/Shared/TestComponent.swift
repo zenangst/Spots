@@ -51,10 +51,10 @@ class ComponentTests : XCTestCase {
       kind: json["kind"] as! String,
       span: json["span"] as! Double,
       meta: json["meta"] as! [String : String])
-    XCTAssertFalse(jsonComponent == codeComponent)
+    XCTAssertTrue(jsonComponent == codeComponent)
 
     codeComponent.items.append(Item(title: "item2"))
-    XCTAssertFalse(jsonComponent == codeComponent)
+    XCTAssertTrue(jsonComponent == codeComponent)
   }
 
   func testComponentDictionary() {
