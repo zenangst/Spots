@@ -114,8 +114,14 @@ public extension Spotable {
         return
       }
 
-      let spotHeight = weakSelf.computedHeight
+      var spotHeight = weakSelf.computedHeight
       Dispatch.mainQueue { [weak self] in
+        #if !os(OSX)
+          if spotHeight > UIScreen.main.bounds.height {
+            let superViewHeight = self?.render().frame.size.height ?? UIScreen.main.bounds.height
+            spotHeight = superViewHeight
+          }
+        #endif
         self?.render().frame.size.height = spotHeight
         completion?()
       }
