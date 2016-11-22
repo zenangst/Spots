@@ -2,7 +2,15 @@
 
 ## [Unreleased](https://github.com/hyperoslo/Spots/tree/HEAD)
 
-[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.4.0...HEAD)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.5.0...HEAD)
+
+**Merged pull requests:**
+
+- Refactor spot height calculations [\#369](https://github.com/hyperoslo/Spots/pull/369) ([zenangst](https://github.com/zenangst))
+- Fix CPU spike by constraining Spotable height to parent height [\#368](https://github.com/hyperoslo/Spots/pull/368) ([zenangst](https://github.com/zenangst))
+
+## [5.5.0](https://github.com/hyperoslo/Spots/tree/5.5.0) (2016-11-18)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.4.0...5.5.0)
 
 **Merged pull requests:**
 
