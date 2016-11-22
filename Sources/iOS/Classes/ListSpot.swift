@@ -156,6 +156,7 @@ open class ListSpot: NSObject, Listable {
       }
     #endif
 
+    /// On iOS 8 and prior, the second cell always receives the same height as the first cell. Setting estimatedRowHeight magically fixes this issue. The value being set is not relevant.
     if #available(iOS 9, *) {
       return
     } else {
