@@ -148,12 +148,6 @@ open class ListSpot: NSObject, Listable {
     tableView.delegate = spotDelegate
     tableView.rowHeight = UITableViewAutomaticDimension
 
-    if #available(iOS 9, *) {
-
-    } else {
-      tableView.estimatedRowHeight = 10
-    }
-
     #if os(iOS)
       if let separator = component.meta(Key.separator, type: Bool.self) {
         tableView.separatorStyle = separator
@@ -161,6 +155,12 @@ open class ListSpot: NSObject, Listable {
           : .none
       }
     #endif
+
+    if #available(iOS 9, *) {
+      return
+    } else {
+      tableView.estimatedRowHeight = 10
+    }
   }
 
   // MARK: - Spotable
