@@ -11,7 +11,13 @@ extension Gridable {
 
     layout.prepare()
 
-    return layout.collectionViewContentSize.height + layout.sectionInset.top + layout.sectionInset.bottom
+    var height = layout.collectionViewContentSize.height + layout.sectionInset.top + layout.sectionInset.bottom
+    let superViewHeight = self.render().superview?.frame.size.height ?? UIScreen.main.bounds.height
+    if height > superViewHeight {
+      height = superViewHeight
+    }
+
+    return height
   }
 
   /// Initializes a Gridable container and configures the Spot with the provided component and optional layout properties.

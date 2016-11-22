@@ -21,8 +21,19 @@ public extension Spotable {
     }
 
     var height: CGFloat = 0
-    component.items.forEach {
-      height += $0.size.height
+    #if !os(OSX)
+      let superViewHeight = self.render().superview?.frame.size.height ?? UIScreen.main.bounds.height
+    #endif
+
+    for item in component.items {
+      height += item.size.height
+
+      #if !os(OSX)
+        if height > superViewHeight {
+          height = superViewHeight
+          break
+        }
+      #endif
     }
 
     return height
@@ -114,14 +125,8 @@ public extension Spotable {
         return
       }
 
-      var spotHeight = weakSelf.computedHeight
+      let spotHeight = weakSelf.computedHeight
       Dispatch.mainQueue { [weak self] in
-        #if !os(OSX)
-          if spotHeight > UIScreen.main.bounds.height {
-            let superViewHeight = self?.render().frame.size.height ?? UIScreen.main.bounds.height
-            spotHeight = superViewHeight
-          }
-        #endif
         self?.render().frame.size.height = spotHeight
         completion?()
       }
