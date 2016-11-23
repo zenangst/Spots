@@ -31,10 +31,13 @@ public extension Spotable {
           completion?()
         }
       } else {
-        weakSelf.userInterface?.insert([numberOfItems], withAnimation: animation, completion: nil)
-        weakSelf.updateHeight() {
-          weakSelf.afterUpdate()
-          completion?()
+        Dispatch.mainQueue {
+          weakSelf.configureItem(at: numberOfItems, usesViewSize: true)
+          weakSelf.userInterface?.insert([numberOfItems], withAnimation: animation, completion: nil)
+          weakSelf.updateHeight() {
+            weakSelf.afterUpdate()
+            completion?()
+          }
         }
       }
     }
