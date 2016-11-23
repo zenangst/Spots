@@ -2,7 +2,28 @@
 
 ## [Unreleased](https://github.com/hyperoslo/Spots/tree/HEAD)
 
-[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.5.0...HEAD)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.5.3...HEAD)
+
+**Merged pull requests:**
+
+- Improve/mutable spotable objects [\#372](https://github.com/hyperoslo/Spots/pull/372) ([zenangst](https://github.com/zenangst))
+
+## [5.5.3](https://github.com/hyperoslo/Spots/tree/5.5.3) (2016-11-22)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.5.2...5.5.3)
+
+**Merged pull requests:**
+
+- Fix double page control height calculation [\#371](https://github.com/hyperoslo/Spots/pull/371) ([vadymmarkov](https://github.com/vadymmarkov))
+
+## [5.5.2](https://github.com/hyperoslo/Spots/tree/5.5.2) (2016-11-22)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.5.1...5.5.2)
+
+**Merged pull requests:**
+
+- Declare estimatedRowHeight for iOS 8 [\#370](https://github.com/hyperoslo/Spots/pull/370) ([onmyway133](https://github.com/onmyway133))
+
+## [5.5.1](https://github.com/hyperoslo/Spots/tree/5.5.1) (2016-11-22)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.5.0...5.5.1)
 
 **Merged pull requests:**
 
