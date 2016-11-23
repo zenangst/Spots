@@ -31,10 +31,13 @@ public extension Spotable {
           completion?()
         }
       } else {
-        weakSelf.userInterface?.insert([numberOfItems], withAnimation: animation, completion: nil)
-        weakSelf.updateHeight() {
-          weakSelf.afterUpdate()
-          completion?()
+        Dispatch.mainQueue {
+          weakSelf.configureItem(at: numberOfItems, usesViewSize: true)
+          weakSelf.userInterface?.insert([numberOfItems], withAnimation: animation, completion: nil)
+          weakSelf.updateHeight() {
+            weakSelf.afterUpdate()
+            completion?()
+          }
         }
       }
     }
@@ -56,7 +59,7 @@ public extension Spotable {
 
       items.enumerated().forEach {
         indexes.append(numberOfItems + $0.offset)
-        weakSelf.configureItem(at: numberOfItems + $0.offset)
+        weakSelf.configureItem(at: numberOfItems + $0.offset, usesViewSize: true)
       }
 
       if numberOfItems > 0 {
@@ -94,7 +97,7 @@ public extension Spotable {
         if numberOfItems > 0 {
           indexes.append(items.count - 1 - $0.offset)
         }
-        weakSelf.configureItem(at: $0.offset)
+        weakSelf.configureItem(at: $0.offset, usesViewSize: true)
       }
 
       if !indexes.isEmpty {
@@ -133,6 +136,7 @@ public extension Spotable {
       }
 
       if numberOfItems > 0 {
+        weakSelf.configureItem(at: numberOfItems, usesViewSize: true)
         weakSelf.userInterface?.insert(indexes, withAnimation: animation, completion: nil)
       } else {
         weakSelf.userInterface?.reloadDataSource()
@@ -254,7 +258,7 @@ public extension Spotable {
       }
 
       weakSelf.items[index] = item
-      weakSelf.configureItem(at: index)
+      weakSelf.configureItem(at: index, usesViewSize: true)
 
       let newItem = weakSelf.items[index]
 
@@ -316,11 +320,11 @@ public extension Spotable {
 
         if let indexes = indexes {
           indexes.forEach { index  in
-            weakSelf.configureItem(at: index)
+            weakSelf.configureItem(at: index, usesViewSize: true)
           }
         } else {
           for (index, _) in weakSelf.component.items.enumerated() {
-            weakSelf.configureItem(at: index)
+            weakSelf.configureItem(at: index, usesViewSize: true)
           }
         }
 
