@@ -103,12 +103,16 @@ public extension Spotable {
       if !indexes.isEmpty {
         weakSelf.userInterface?.insert(indexes, withAnimation: animation) {
           weakSelf.afterUpdate()
-          weakSelf.sanitize { completion?() }
+          weakSelf.sanitize {
+            completion?()
+          }
         }
       } else {
         weakSelf.userInterface?.reloadDataSource()
         weakSelf.afterUpdate()
-        weakSelf.sanitize { completion?() }
+        weakSelf.sanitize {
+          completion?()
+        }
       }
     }
   }
