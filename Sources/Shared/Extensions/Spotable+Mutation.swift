@@ -407,11 +407,13 @@ public extension Spotable {
 
         if items.count == oldItems.count {
           for (index, item) in items.enumerated() {
-            guard !(item == oldItems[index]) else { continue }
+            guard !(item == oldItems[index]) else {
+              weakSelf.items[index].size = oldItems[index].size
+              continue
+            }
 
             if indexes == nil { indexes = [Int]() }
             indexes?.append(index)
-            weakSelf.configureItem(at: index, usesViewSize: true)
           }
         } else {
           for (index, _) in items.enumerated() {
