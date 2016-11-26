@@ -411,12 +411,20 @@ public extension Spotable {
 
             if indexes == nil { indexes = [Int]() }
             indexes?.append(index)
+            weakSelf.configureItem(at: index, usesViewSize: true)
+          }
+        } else {
+          for (index, _) in items.enumerated() {
+            weakSelf.configureItem(at: index, usesViewSize: true)
           }
         }
 
-        weakSelf.reload(indexes, withAnimation: animation) {
-          weakSelf.cache()
-          completion?()
+        weakSelf.updateHeight() {
+          weakSelf.reload(indexes, withAnimation: animation) {
+            weakSelf.afterUpdate()
+            weakSelf.cache()
+            completion?()
+          }
         }
       }
     }
@@ -444,6 +452,7 @@ public extension Spotable {
         guard let weakSelf = self else {
           return
         }
+        weakSelf.afterUpdate()
         weakSelf.cache()
       }
     }
