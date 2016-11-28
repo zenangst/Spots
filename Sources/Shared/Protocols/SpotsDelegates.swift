@@ -32,18 +32,18 @@ extension CompositeDelegate {
 /// A generic delegate for Spots
 public protocol SpotsDelegate: class {
 
-  /// A delegate method that is triggered when spots is changed
+  /// A delegate method that is triggered when spots is changed.
   ///
   /// - parameter spots: New collection of Spotable objects
   func didChange(spots: [Spotable])
 
-  /// A delegate method that is triggered when ever a cell is tapped by the user
+  /// A delegate method that is triggered when ever a cell is tapped by the user.
   ///
   /// - parameter item: The data for the view that is going to be displayed.
   /// - parameter spot: An object that conforms to the spotable protocol.
   func didSelect(item: Item, in spot: Spotable)
 
-  /// A delegate method that is triggered when ever a view is going to be displayed
+  /// A delegate method that is triggered when ever a view is going to be displayed.
   ///
   /// - parameter item: The data for the view that is going to be displayed.
   /// - parameter spot: An object that conforms to the spotable protocol.
