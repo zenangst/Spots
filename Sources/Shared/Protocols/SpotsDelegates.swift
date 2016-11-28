@@ -42,6 +42,10 @@ public protocol SpotsDelegate: class {
   /// - parameter item: The view model that was tapped
   /// - parameter spot: An object that conforms to the spotable protocol
   func didSelect(item: Item, in spot: Spotable)
+
+  #if !os(OSX)
+  func willDisplay(item: Item, in spot: Spotable)
+  #endif
 }
 
 // MARK: - SpotsDelegate extension
@@ -57,6 +61,8 @@ public extension SpotsDelegate {
   ///
   /// - parameter spots: The collection of new Spotable objects.
   func didChange(spots: [Spotable]) {}
+
+  func willDisplay(item: Item, in spot: Spotable) {}
 }
 
 /// A refresh delegate for handling reloading of a Spot
