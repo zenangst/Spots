@@ -43,9 +43,7 @@ public protocol SpotsDelegate: class {
   /// - parameter spot: An object that conforms to the spotable protocol
   func didSelect(item: Item, in spot: Spotable)
 
-  #if !os(OSX)
   func willDisplay(item: Item, in spot: Spotable)
-  #endif
 }
 
 // MARK: - SpotsDelegate extension
