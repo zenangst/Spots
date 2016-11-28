@@ -37,6 +37,19 @@ extension Delegate: UICollectionViewDelegate {
     spot.delegate?.willDisplay(item: item, in: spot)
   }
 
+  /// Tells the delegate that the specified cell was removed from the collection view.
+  ///
+  /// - parameter collectionView: The collection view object that removed the cell.
+  /// - parameter cell: The cell object that was removed.
+  /// - parameter indexPath: The index path of the data item that the cell represented.
+  public func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+    guard let spot = spot, let item = spot.item(at: indexPath) else {
+      return
+    }
+
+    spot.delegate?.endDisplay(item: item, in: spot)
+  }
+
   /// Asks the delegate whether the item at the specified index path can be focused.
   ///
   /// - parameter collectionView: The collection view object requesting this information.
@@ -120,6 +133,19 @@ extension Delegate: UITableViewDelegate {
     }
 
     spot.delegate?.willDisplay(item: item, in: spot)
+  }
+
+  /// Tells the delegate that the specified cell was removed from the table.
+  ///
+  /// - parameter tableView: The table-view object that removed the view.
+  /// - parameter cell: The cell that was removed.
+  /// - parameter indexPath: The index path of the cell.
+  public func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    guard let spot = spot, let item = spot.item(at: indexPath) else {
+      return
+    }
+
+    spot.delegate?.endDisplay(item: item, in: spot)
   }
 
   /// Asks the delegate for a view object to display in the header of the specified section of the table view.
