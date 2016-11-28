@@ -392,6 +392,7 @@ public extension Spotable {
 
       if weakSelf.items == items {
         weakSelf.cache()
+        completion?()
         return
       }
 
