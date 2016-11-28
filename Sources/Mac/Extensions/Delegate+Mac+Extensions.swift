@@ -100,7 +100,7 @@ extension Delegate: NSTableViewDelegate {
   }
 
   public func tableView(_ tableView: NSTableView, willDisplayCell cell: Any, for tableColumn: NSTableColumn?, row: Int) {
-    guard let spot = spot, let item = spot.item(at: indexPath) else {
+    guard let spot = spot, let item = spot.item(at: row) else {
       return
     }
 
