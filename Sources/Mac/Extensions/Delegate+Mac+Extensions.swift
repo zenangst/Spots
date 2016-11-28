@@ -15,6 +15,19 @@ extension Delegate: NSCollectionViewDelegate {
       spot.delegate?.didSelect(item: item, in: spot)
     }
   }
+
+  /// Notifies the delegate that the specified item is about to be displayed by the collection view.
+  ///
+  /// - parameter collectionView: The collection view that is adding the item.
+  /// - parameter item: The item being added.
+  /// - parameter indexPath: The index path of the item.
+  public func collectionView(_ collectionView: NSCollectionView, willDisplay item: NSCollectionViewItem, forRepresentedObjectAt indexPath: IndexPath) {
+    guard let spot = spot, let item = spot.item(at: indexPath) else {
+      return
+    }
+
+    spot.delegate?.willDisplay(item: item, in: spot)
+  }
 }
 
 extension Delegate: NSCollectionViewDelegateFlowLayout {
@@ -86,7 +99,13 @@ extension Delegate: NSTableViewDelegate {
     return view as? NSTableRowView
   }
 
-  public func tableView(_ tableView: NSTableView, willDisplayCell cell: Any, for tableColumn: NSTableColumn?, row: Int) {}
+  public func tableView(_ tableView: NSTableView, willDisplayCell cell: Any, for tableColumn: NSTableColumn?, row: Int) {
+    guard let spot = spot, let item = spot.item(at: row) else {
+      return
+    }
+
+    spot.delegate?.willDisplay(item: item, in: spot)
+  }
 
   public func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
     return nil
