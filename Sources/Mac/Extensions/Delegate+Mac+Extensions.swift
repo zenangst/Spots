@@ -28,6 +28,19 @@ extension Delegate: NSCollectionViewDelegate {
 
     spot.delegate?.willDisplay(item: item, in: spot)
   }
+
+  /// Notifies the delegate that the specified item was removed from the collection view.
+  ///
+  /// - parameter collectionView: The collection view that removed the item.
+  /// - parameter item: The item that was removed.
+  /// - parameter indexPath: The index path of the item.
+  public func collectionView(_ collectionView: NSCollectionView, didEndDisplaying item: NSCollectionViewItem, forRepresentedObjectAt indexPath: IndexPath) {
+    guard let spot = spot, let item = spot.item(at: indexPath) else {
+      return
+    }
+
+    spot.delegate?.endDisplay(item: item, in: spot)
+  }
 }
 
 extension Delegate: NSCollectionViewDelegateFlowLayout {
