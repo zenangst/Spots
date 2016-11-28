@@ -95,6 +95,18 @@ extension Delegate: UITableViewDelegate {
     }
   }
 
+  /// Tells the delegate the table view is about to draw a cell for a particular row.
+  ///
+  /// - Parameters:
+  ///   - tableView: The table-view object informing the delegate of this impending event.
+  ///   - cell: A table-view cell object that tableView is going to use when drawing the row.
+  ///   - indexPath: An index path locating the row in tableView.
+  public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    if let spot = spot, let item = spot.item(at: indexPath) {
+      spot.delegate?.willDisplay(item: item, in: spot)
+    }
+  }
+
   /// Asks the delegate for a view object to display in the header of the specified section of the table view.
   ///
   /// - parameter tableView: The table-view object asking for the view object.
