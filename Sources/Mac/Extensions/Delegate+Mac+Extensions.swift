@@ -99,7 +99,13 @@ extension Delegate: NSTableViewDelegate {
     return view as? NSTableRowView
   }
 
-  public func tableView(_ tableView: NSTableView, willDisplayCell cell: Any, for tableColumn: NSTableColumn?, row: Int) {}
+  public func tableView(_ tableView: NSTableView, willDisplayCell cell: Any, for tableColumn: NSTableColumn?, row: Int) {
+    guard let spot = spot, let item = spot.item(at: indexPath) else {
+      return
+    }
+
+    spot.delegate?.willDisplay(item: item, in: spot)
+  }
 
   public func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
     return nil
