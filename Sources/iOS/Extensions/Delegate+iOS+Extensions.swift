@@ -24,6 +24,19 @@ extension Delegate: UICollectionViewDelegate {
     spot.delegate?.didSelect(item: item, in: spot)
   }
 
+  /// Tells the delegate that the specified cell is about to be displayed in the collection view.
+  ///
+  /// - parameter collectionView: The collection view object that is adding the cell.
+  /// - parameter cell: The cell object being added.
+  /// - parameter indexPath: The index path of the data item that the cell represents.
+  public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+    guard let spot = spot, let item = spot.item(at: indexPath) else {
+      return
+    }
+
+    spot.delegate?.willDisplay(item: item, in: spot)
+  }
+
   /// Asks the delegate whether the item at the specified index path can be focused.
   ///
   /// - parameter collectionView: The collection view object requesting this information.
