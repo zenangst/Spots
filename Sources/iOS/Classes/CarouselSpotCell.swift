@@ -26,7 +26,6 @@ public class CarouselSpotCell: UICollectionViewCell, SpotConfigurable {
     return imageView
   }()
 
-
   /// Initializes and returns a newly allocated view object with the specified frame rectangle.
   ///
   /// - parameter frame: The frame rectangle for the view, measured in points.

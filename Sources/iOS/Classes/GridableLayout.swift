@@ -117,7 +117,6 @@ open class GridableLayout: UICollectionViewFlowLayout {
     return attributes
   }
 
-
   /// Asks the layout object if the new bounds require a layout update.
   ///
   /// - parameter newBounds: The new bounds of the collection view.

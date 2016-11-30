@@ -282,7 +282,6 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
     }
   }
 
-
   /// Set up Spotable objects.
   ///
   /// - parameter animated: An optional animation closure that is invoked when setting up the spot.

@@ -34,7 +34,7 @@ extension Delegate: UICollectionViewDelegate {
       return
     }
 
-    spot.delegate?.willDisplay(item: item, in: spot)
+    spot.delegate?.willDisplay(view: cell, item: item, in: spot)
   }
 
   /// Tells the delegate that the specified cell was removed from the collection view.
@@ -47,7 +47,7 @@ extension Delegate: UICollectionViewDelegate {
       return
     }
 
-    spot.delegate?.endDisplay(item: item, in: spot)
+    spot.delegate?.endDisplay(view: cell, item: item, in: spot)
   }
 
   /// Asks the delegate whether the item at the specified index path can be focused.
@@ -132,7 +132,7 @@ extension Delegate: UITableViewDelegate {
       return
     }
 
-    spot.delegate?.willDisplay(item: item, in: spot)
+    spot.delegate?.willDisplay(view: cell, item: item, in: spot)
   }
 
   /// Tells the delegate that the specified cell was removed from the table.
@@ -145,7 +145,7 @@ extension Delegate: UITableViewDelegate {
       return
     }
 
-    spot.delegate?.endDisplay(item: item, in: spot)
+    spot.delegate?.endDisplay(view: cell, item: item, in: spot)
   }
 
   /// Asks the delegate for a view object to display in the header of the specified section of the table view.

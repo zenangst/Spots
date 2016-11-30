@@ -17,7 +17,6 @@ open class ViewSpot: NSObject, Spotable, Viewable {
     completion?()
   }
 
-
   /// A Registry struct that contains all register components, used for resolving what UI component to use
   open static var headers = Registry()
   open static var views = Registry()

@@ -64,7 +64,6 @@ extension UITableView: UserInterface {
     completion?()
   }
 
-
   /// Process a collection of changes
   ///
   /// - parameter changes:          A tuple with insertions, reloads and delctions
@@ -107,7 +106,6 @@ extension UITableView: UserInterface {
     }
     completion?()
   }
-
 
   /// Perform updates with closure
   ///
