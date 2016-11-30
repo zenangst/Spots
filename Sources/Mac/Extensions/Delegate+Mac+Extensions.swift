@@ -22,14 +22,16 @@ extension Delegate: NSCollectionViewDelegate {
   /// - parameter item: The item being added.
   /// - parameter indexPath: The index path of the item.
   public func collectionView(_ collectionView: NSCollectionView, willDisplay item: NSCollectionViewItem, forRepresentedObjectAt indexPath: IndexPath) {
+    let view = item
+
     guard
       let spot = spot,
-      let data = spot.item(at: indexPath)
+      let item = spot.item(at: indexPath)
       else {
         return
     }
 
-    spot.delegate?.willDisplay(view: item, item: data, in: spot)
+    spot.delegate?.willDisplay(view: view, item: item, in: spot)
   }
 
   /// Notifies the delegate that the specified item was removed from the collection view.
@@ -38,14 +40,16 @@ extension Delegate: NSCollectionViewDelegate {
   /// - parameter item: The item that was removed.
   /// - parameter indexPath: The index path of the item.
   public func collectionView(_ collectionView: NSCollectionView, didEndDisplaying item: NSCollectionViewItem, forRepresentedObjectAt indexPath: IndexPath) {
+    let view = item
+
     guard
       let spot = spot,
-      let data = spot.item(at: indexPath)
+      let item = spot.item(at: indexPath)
       else {
         return
     }
 
-    spot.delegate?.endDisplay(view: item, item: data, in: spot)
+    spot.delegate?.endDisplay(view: view, item: item, in: spot)
   }
 }
 
