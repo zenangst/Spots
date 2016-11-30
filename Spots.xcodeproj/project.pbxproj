@@ -178,6 +178,7 @@
 		BD73973A1D718CDB000AF2DE /* TestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58478281C43FF34006EBA49 /* TestFactory.swift */; };
 		BD7397401D718CDB000AF2DE /* Spots.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478091C43FEB8006EBA49 /* Spots.framework */; };
 		BD73974B1D718D38000AF2DE /* CollectionAdapter+tvOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD73974A1D718D38000AF2DE /* CollectionAdapter+tvOS.swift */; };
+		BD7861831DEEDF2B003FF40F /* SpotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7861821DEEDF2B003FF40F /* SpotView.swift */; };
 		BD8B1EB21D93D813000C3F53 /* GrandCentralDispatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8B1EB11D93D813000C3F53 /* GrandCentralDispatch.swift */; };
 		BD8B1EB31D93D813000C3F53 /* GrandCentralDispatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8B1EB11D93D813000C3F53 /* GrandCentralDispatch.swift */; };
 		BD8B1EB41D93D813000C3F53 /* GrandCentralDispatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8B1EB11D93D813000C3F53 /* GrandCentralDispatch.swift */; };
@@ -345,6 +346,7 @@
 		BD73972F1D718CD2000AF2DE /* Spots.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Spots.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD7397461D718CDB000AF2DE /* Spots-tvOS-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Spots-tvOS-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD73974A1D718D38000AF2DE /* CollectionAdapter+tvOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CollectionAdapter+tvOS.swift"; sourceTree = "<group>"; };
+		BD7861821DEEDF2B003FF40F /* SpotView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotView.swift; sourceTree = "<group>"; };
 		BD8B1EB11D93D813000C3F53 /* GrandCentralDispatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GrandCentralDispatch.swift; sourceTree = "<group>"; };
 		BD978ACC1DD99A4700B8F7AB /* Spotable+Mutation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Spotable+Mutation.swift"; sourceTree = "<group>"; };
 		BDA8DAF41DCF3AED00A4A8DD /* TestRowSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestRowSpot.swift; sourceTree = "<group>"; };
@@ -616,6 +618,7 @@
 				BD129F3D1D7B2F91009AC164 /* SpotsProtocol.swift */,
 				BD63B04F1DD8D30400C52D73 /* UserInterface.swift */,
 				BD129F3E1D7B2F91009AC164 /* Viewable.swift */,
+				BD7861821DEEDF2B003FF40F /* SpotView.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -1336,6 +1339,7 @@
 				BD129F491D7B2F91009AC164 /* Registry.swift in Sources */,
 				BD129E281D7B2CDE009AC164 /* NoScrollView.swift in Sources */,
 				BD129E331D7B2CDE009AC164 /* NSCollectionView+UserInterface.swift in Sources */,
+				BD7861831DEEDF2B003FF40F /* SpotView.swift in Sources */,
 				BD129E2A1D7B2CDE009AC164 /* Controller.swift in Sources */,
 				BD129F8E1D7B2F91009AC164 /* Parser.swift in Sources */,
 				BD129F4C1D7B2F91009AC164 /* SpotFactory.swift in Sources */,
