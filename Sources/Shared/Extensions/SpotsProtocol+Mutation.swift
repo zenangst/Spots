@@ -167,7 +167,7 @@ extension SpotsProtocol {
   /// - parameter closure:       A completion closure that is invoked when the setup of the new items is complete
   ///
   /// - returns: A boolean value that determines if the closure should run in `process(changes:)`
-  fileprivate func setupItemsForSpot(at index: Int, newComponents: [Component], withAnimation animation: Animation = .automatic, closure: Completion = nil) -> Bool {
+  fileprivate func setupItemsForSpot(at index: Int, newComponents: [Component], withAnimation animation: Animation = .automatic, completion: Completion = nil) -> Bool {
     guard let spot = self.spot(at: index, ofType: Spotable.self) else {
       return false
     }
@@ -175,15 +175,15 @@ extension SpotsProtocol {
     let newItems = spot.prepare(items: newComponents[index].items)
     let oldItems = spot.items
 
-    guard let diff = Item.evaluate(newItems, oldModels: oldItems) else { closure?(); return false }
+    guard let diff = Item.evaluate(newItems, oldModels: oldItems) else { completion?(); return false }
     let changes: (ItemChanges) = Item.processChanges(diff)
 
     if newItems.count == spot.items.count {
-      reload(in: spot, with: changes, newItems: newItems, animation: animation, closure: closure)
+      reload(in: spot, with: changes, newItems: newItems, animation: animation, completion: completion)
     } else if newItems.count < spot.items.count {
-      reloadLess(in: spot, with: changes, newItems: newItems, animation: animation, closure: closure)
+      reloadLess(in: spot, with: changes, newItems: newItems, animation: animation, completion: completion)
     } else if newItems.count > spot.items.count {
-      reloadMore(in: spot, with: changes, newItems: newItems, animation: animation, closure: closure)
+      reloadMore(in: spot, with: changes, newItems: newItems, animation: animation, completion: completion)
     }
 
     return false
@@ -200,7 +200,7 @@ extension SpotsProtocol {
                       with changes: (ItemChanges),
                       newItems: [Item],
                       animation: Animation,
-                      closure: (() -> Void)? = nil) {
+                      completion: (() -> Void)? = nil) {
     var offsets = [CGPoint]()
     spot.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: {
       spot.beforeUpdate()
@@ -226,7 +226,7 @@ extension SpotsProtocol {
         }
       }
 
-      self?.finishReloading(spot: spot, withCompletion: closure)
+      self?.finishReloading(spot: spot, withCompletion: completion)
     }
   }
 
@@ -241,13 +241,13 @@ extension SpotsProtocol {
                           with changes: (ItemChanges),
                           newItems: [Item],
                           animation: Animation,
-                          closure: (() -> Void)? = nil) {
+                          completion: (() -> Void)? = nil) {
     spot.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: {
       spot.beforeUpdate()
       spot.items = newItems
     }) { [weak self] in
       guard !newItems.isEmpty else {
-        self?.finishReloading(spot: spot, withCompletion: closure)
+        self?.finishReloading(spot: spot, withCompletion: completion)
         return
       }
 
@@ -269,13 +269,13 @@ extension SpotsProtocol {
         if !spot.items.filter({ !$0.children.isEmpty }).isEmpty {
           spot.beforeUpdate()
           spot.reload(nil, withAnimation: animation) {
-            self?.finishReloading(spot: spot, withCompletion: closure)
+            self?.finishReloading(spot: spot, withCompletion: completion)
           }
         } else {
           spot.beforeUpdate()
           spot.update(item, index: index, withAnimation: animation) {
             guard index == executeClosure else { return }
-            self?.finishReloading(spot: spot, withCompletion: closure)
+            self?.finishReloading(spot: spot, withCompletion: completion)
           }
         }
       }
@@ -293,18 +293,18 @@ extension SpotsProtocol {
                           with changes: (ItemChanges),
                           newItems: [Item],
                           animation: Animation,
-                          closure: (() -> Void)? = nil) {
+                          completion: (() -> Void)? = nil) {
     spot.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: {
       spot.beforeUpdate()
       spot.items = newItems
     }) {
       if !spot.items.filter({ !$0.children.isEmpty }).isEmpty {
         spot.reload(nil, withAnimation: animation) { [weak self] in
-          self?.finishReloading(spot: spot, withCompletion: closure)
+          self?.finishReloading(spot: spot, withCompletion: completion)
         }
       } else {
         spot.updateHeight() { [weak self] in
-          self?.finishReloading(spot: spot, withCompletion: closure)
+          self?.finishReloading(spot: spot, withCompletion: completion)
         }
       }
     }
@@ -319,12 +319,12 @@ extension SpotsProtocol {
   func process(changes: [ComponentDiff],
                components newComponents: [Component],
                withAnimation animation: Animation = .automatic,
-               closure: Completion = nil) {
+               completion: Completion = nil) {
     Dispatch.mainQueue { [weak self] in
-      guard let weakSelf = self else { closure?(); return }
+      guard let weakSelf = self else { completion?(); return }
 
       var yOffset: CGFloat = 0.0
-      var runClosure = true
+      var runCompletion = true
 
       for (index, change) in changes.enumerated() {
         switch change {
@@ -335,10 +335,10 @@ extension SpotsProtocol {
         case .removed:
           weakSelf.removeSpot(at: index)
         case .items:
-          runClosure = weakSelf.setupItemsForSpot(at: index,
+          runCompletion = weakSelf.setupItemsForSpot(at: index,
                                                   newComponents: newComponents,
                                                   withAnimation: animation,
-                                                  closure: closure)
+                                                  completion: completion)
         case .none: continue
         }
       }
@@ -349,8 +349,8 @@ extension SpotsProtocol {
         }
       }
 
-      if runClosure {
-        closure?()
+      if runCompletion {
+        completion?()
         weakSelf.scrollView.layoutSubviews()
       }
     }
