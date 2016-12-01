@@ -477,10 +477,12 @@ extension SpotsProtocol {
         }
       #endif
 
-      spot.reload(nil, withAnimation: animation) { [weak self] in
-        spot.afterUpdate()
-        completion?()
-        self?.scrollView.layoutSubviews()
+      spot.reload(nil, withAnimation: animation) {
+        spot.updateHeight() { [weak self] in
+          spot.afterUpdate()
+          completion?()
+          self?.scrollView.layoutSubviews()
+        }
       }
     }
   }
