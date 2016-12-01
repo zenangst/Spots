@@ -36,6 +36,7 @@ public extension Spotable {
           weakSelf.userInterface?.insert([numberOfItems], withAnimation: animation, completion: nil)
           weakSelf.updateHeight() {
             weakSelf.afterUpdate()
+            weakSelf.render().superview?.layoutSubviews()
             completion?()
           }
         }
@@ -70,6 +71,7 @@ public extension Spotable {
       } else {
         weakSelf.userInterface?.reloadDataSource()
         weakSelf.updateHeight() {
+          weakSelf.render().superview?.layoutSubviews()
           completion?()
         }
       }
@@ -111,6 +113,7 @@ public extension Spotable {
         weakSelf.userInterface?.reloadDataSource()
         weakSelf.afterUpdate()
         weakSelf.sanitize {
+          weakSelf.render().superview?.layoutSubviews()
           completion?()
         }
       }
@@ -146,7 +149,10 @@ public extension Spotable {
         weakSelf.userInterface?.reloadDataSource()
       }
       weakSelf.afterUpdate()
-      weakSelf.sanitize { completion?() }
+      weakSelf.sanitize {
+        weakSelf.render().superview?.layoutSubviews()
+        completion?()
+      }
     }
   }
 
@@ -167,6 +173,7 @@ public extension Spotable {
       weakSelf.userInterface?.delete([index], withAnimation: animation, completion: nil)
       weakSelf.afterUpdate()
       weakSelf.sanitize {
+        weakSelf.render().superview?.layoutSubviews()
         completion?()
       }
     }
@@ -198,7 +205,10 @@ public extension Spotable {
 
       weakSelf.userInterface?.delete(indexPaths, withAnimation: animation, completion: nil)
       weakSelf.afterUpdate()
-      weakSelf.sanitize { completion?() }
+      weakSelf.sanitize {
+        weakSelf.render().superview?.layoutSubviews()
+        completion?()
+      }
     }
   }
 
@@ -218,6 +228,7 @@ public extension Spotable {
       weakSelf.userInterface?.delete([index], withAnimation: animation, completion: nil)
       weakSelf.afterUpdate()
       weakSelf.sanitize {
+        weakSelf.render().superview?.layoutSubviews()
         completion?()
       }
     }
@@ -242,6 +253,7 @@ public extension Spotable {
       weakSelf.userInterface?.delete(indexes, withAnimation: animation, completion: nil)
       weakSelf.afterUpdate()
       weakSelf.sanitize {
+        weakSelf.render().superview?.layoutSubviews()
         completion?()
       }
     }
@@ -257,8 +269,8 @@ public extension Spotable {
     Dispatch.mainQueue { [weak self] in
       guard let weakSelf = self,
         let oldItem = weakSelf.item(at: index) else {
-        completion?()
-        return
+          completion?()
+          return
       }
 
       weakSelf.items[index] = item
@@ -273,6 +285,7 @@ public extension Spotable {
           composite.configure(&weakSelf.component.items[index], spots: spots)
           weakSelf.userInterface?.endUpdates()
           weakSelf.updateHeight() {
+            weakSelf.render().superview?.layoutSubviews()
             completion?()
           }
           return
@@ -289,14 +302,17 @@ public extension Spotable {
         }
         weakSelf.afterUpdate()
         weakSelf.updateHeight {
+          weakSelf.render().superview?.layoutSubviews()
           completion?()
         }
         return
       } else if let cell: SpotConfigurable = weakSelf.userInterface?.view(at: index) {
         cell.configure(&weakSelf.items[index])
+        weakSelf.render().superview?.layoutSubviews()
         completion?()
       } else {
         weakSelf.afterUpdate()
+        weakSelf.render().superview?.layoutSubviews()
         completion?()
       }
     }
@@ -343,6 +359,7 @@ public extension Spotable {
             weakSelf.userInterface?.reloadDataSource()
           }
         }
+        weakSelf.render().superview?.layoutSubviews()
         completion?()
       }
     }
@@ -391,8 +408,11 @@ public extension Spotable {
       }
 
       if weakSelf.items == items {
-        weakSelf.cache()
-        completion?()
+        Dispatch.mainQueue { [weak self] in
+          weakSelf.cache()
+          completion?()
+          weakSelf.render().superview?.layoutSubviews()
+        }
         return
       }
 
@@ -416,14 +436,10 @@ public extension Spotable {
             if indexes == nil { indexes = [Int]() }
             indexes?.append(index)
           }
-        } else {
-          for (index, _) in items.enumerated() {
-            weakSelf.configureItem(at: index, usesViewSize: true)
-          }
         }
 
-        weakSelf.updateHeight() {
-          weakSelf.reload(indexes, withAnimation: animation) {
+        weakSelf.reload(indexes, withAnimation: animation) {
+          weakSelf.updateHeight() {
             weakSelf.afterUpdate()
             weakSelf.cache()
             completion?()
@@ -456,6 +472,7 @@ public extension Spotable {
           return
         }
         weakSelf.afterUpdate()
+        weakSelf.render().superview?.layoutSubviews()
         weakSelf.cache()
       }
     }
