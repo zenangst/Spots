@@ -257,8 +257,8 @@ public extension Spotable {
     Dispatch.mainQueue { [weak self] in
       guard let weakSelf = self,
         let oldItem = weakSelf.item(at: index) else {
-        completion?()
-        return
+          completion?()
+          return
       }
 
       weakSelf.items[index] = item
