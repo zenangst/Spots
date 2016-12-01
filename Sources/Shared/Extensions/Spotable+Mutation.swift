@@ -419,10 +419,6 @@ public extension Spotable {
             if indexes == nil { indexes = [Int]() }
             indexes?.append(index)
           }
-        } else {
-          for (index, _) in items.enumerated() {
-            weakSelf.configureItem(at: index, usesViewSize: true)
-          }
         }
 
         weakSelf.reload(indexes, withAnimation: animation) {
