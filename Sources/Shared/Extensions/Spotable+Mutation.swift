@@ -146,7 +146,9 @@ public extension Spotable {
         weakSelf.userInterface?.reloadDataSource()
       }
       weakSelf.afterUpdate()
-      weakSelf.sanitize { completion?() }
+      weakSelf.sanitize {
+        completion?()
+      }
     }
   }
 
@@ -198,7 +200,9 @@ public extension Spotable {
 
       weakSelf.userInterface?.delete(indexPaths, withAnimation: animation, completion: nil)
       weakSelf.afterUpdate()
-      weakSelf.sanitize { completion?() }
+      weakSelf.sanitize {
+        completion?()
+      }
     }
   }
 
