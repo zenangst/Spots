@@ -504,7 +504,6 @@ extension SpotsProtocol {
 
     update(spotAtIndex: index, withAnimation: animation, withCompletion: { [weak self] in
       completion?()
-      self?.scrollView.layoutSubviews()
     }, {
       $0.items = items
     })
