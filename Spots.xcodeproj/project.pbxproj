@@ -155,6 +155,7 @@
 		BD1BFB5C1DA7A9AC00BB55E1 /* ScrollDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1BFB591DA7A9AC00BB55E1 /* ScrollDelegate.swift */; };
 		BD352E5F1CBAD6EC002CD032 /* Brick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD352E5E1CBAD6EC002CD032 /* Brick.framework */; };
 		BD352E611CBAD6F9002CD032 /* Brick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD352E601CBAD6F9002CD032 /* Brick.framework */; };
+		BD412B671DEFF9590064FD12 /* SpotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD412B651DEFF9080064FD12 /* SpotView.swift */; };
 		BD42954F1D81CE4F00E07E1C /* TestGridSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD42954E1D81CE4F00E07E1C /* TestGridSpot.swift */; };
 		BD4295501D81CE4F00E07E1C /* TestGridSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD42954E1D81CE4F00E07E1C /* TestGridSpot.swift */; };
 		BD4295521D81D32400E07E1C /* TestListSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4295511D81D32400E07E1C /* TestListSpot.swift */; };
@@ -178,7 +179,6 @@
 		BD73973A1D718CDB000AF2DE /* TestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58478281C43FF34006EBA49 /* TestFactory.swift */; };
 		BD7397401D718CDB000AF2DE /* Spots.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478091C43FEB8006EBA49 /* Spots.framework */; };
 		BD73974B1D718D38000AF2DE /* CollectionAdapter+tvOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD73974A1D718D38000AF2DE /* CollectionAdapter+tvOS.swift */; };
-		BD7861831DEEDF2B003FF40F /* SpotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7861821DEEDF2B003FF40F /* SpotView.swift */; };
 		BD8B1EB21D93D813000C3F53 /* GrandCentralDispatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8B1EB11D93D813000C3F53 /* GrandCentralDispatch.swift */; };
 		BD8B1EB31D93D813000C3F53 /* GrandCentralDispatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8B1EB11D93D813000C3F53 /* GrandCentralDispatch.swift */; };
 		BD8B1EB41D93D813000C3F53 /* GrandCentralDispatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8B1EB11D93D813000C3F53 /* GrandCentralDispatch.swift */; };
@@ -334,6 +334,7 @@
 		BD1BFB591DA7A9AC00BB55E1 /* ScrollDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollDelegate.swift; sourceTree = "<group>"; };
 		BD352E5E1CBAD6EC002CD032 /* Brick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Brick.framework; path = Carthage/Build/iOS/Brick.framework; sourceTree = "<group>"; };
 		BD352E601CBAD6F9002CD032 /* Brick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Brick.framework; path = Carthage/Build/Mac/Brick.framework; sourceTree = "<group>"; };
+		BD412B651DEFF9080064FD12 /* SpotView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotView.swift; sourceTree = "<group>"; };
 		BD42954E1D81CE4F00E07E1C /* TestGridSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestGridSpot.swift; sourceTree = "<group>"; };
 		BD4295511D81D32400E07E1C /* TestListSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestListSpot.swift; sourceTree = "<group>"; };
 		BD4295541D81D39700E07E1C /* TestCarouselSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestCarouselSpot.swift; sourceTree = "<group>"; };
@@ -346,7 +347,6 @@
 		BD73972F1D718CD2000AF2DE /* Spots.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Spots.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD7397461D718CDB000AF2DE /* Spots-tvOS-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Spots-tvOS-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD73974A1D718D38000AF2DE /* CollectionAdapter+tvOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CollectionAdapter+tvOS.swift"; sourceTree = "<group>"; };
-		BD7861821DEEDF2B003FF40F /* SpotView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotView.swift; sourceTree = "<group>"; };
 		BD8B1EB11D93D813000C3F53 /* GrandCentralDispatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GrandCentralDispatch.swift; sourceTree = "<group>"; };
 		BD978ACC1DD99A4700B8F7AB /* Spotable+Mutation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Spotable+Mutation.swift"; sourceTree = "<group>"; };
 		BDA8DAF41DCF3AED00A4A8DD /* TestRowSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestRowSpot.swift; sourceTree = "<group>"; };
@@ -447,6 +447,7 @@
 		BD129D471D7B295F009AC164 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
+				BD412B641DEFF9080064FD12 /* Protocols */,
 				BD129DA31D7B2B6C009AC164 /* Classes */,
 				BD129D561D7B295F009AC164 /* Extensions */,
 				BD129D621D7B295F009AC164 /* Protocols */,
@@ -618,7 +619,6 @@
 				BD129F3D1D7B2F91009AC164 /* SpotsProtocol.swift */,
 				BD63B04F1DD8D30400C52D73 /* UserInterface.swift */,
 				BD129F3E1D7B2F91009AC164 /* Viewable.swift */,
-				BD7861821DEEDF2B003FF40F /* SpotView.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -645,6 +645,15 @@
 			);
 			path = Sources;
 			sourceTree = "<group>";
+		};
+		BD412B641DEFF9080064FD12 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				BD412B651DEFF9080064FD12 /* SpotView.swift */,
+			);
+			name = Protocols;
+			path = Sources/Mac/Protocols;
+			sourceTree = SOURCE_ROOT;
 		};
 		BD7397481D718D20000AF2DE /* tvOS */ = {
 			isa = PBXGroup;
@@ -1339,7 +1348,7 @@
 				BD129F491D7B2F91009AC164 /* Registry.swift in Sources */,
 				BD129E281D7B2CDE009AC164 /* NoScrollView.swift in Sources */,
 				BD129E331D7B2CDE009AC164 /* NSCollectionView+UserInterface.swift in Sources */,
-				BD7861831DEEDF2B003FF40F /* SpotView.swift in Sources */,
+				BD412B671DEFF9590064FD12 /* SpotView.swift in Sources */,
 				BD129E2A1D7B2CDE009AC164 /* Controller.swift in Sources */,
 				BD129F8E1D7B2F91009AC164 /* Parser.swift in Sources */,
 				BD129F4C1D7B2F91009AC164 /* SpotFactory.swift in Sources */,
