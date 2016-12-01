@@ -408,7 +408,7 @@ public extension Spotable {
       }
 
       if weakSelf.items == items {
-        Dispatch.mainQueue { [weak self] in
+        Dispatch.mainQueue {
           weakSelf.cache()
           completion?()
           weakSelf.render().superview?.layoutSubviews()
