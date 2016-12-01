@@ -391,8 +391,11 @@ public extension Spotable {
       }
 
       if weakSelf.items == items {
-        weakSelf.cache()
-        completion?()
+        Dispatch.mainQueue { [weak self] in
+          weakSelf.cache()
+          completion?()
+          weakSelf.render().superview?.layoutSubviews()
+        }
         return
       }
 
@@ -422,8 +425,8 @@ public extension Spotable {
           }
         }
 
-        weakSelf.updateHeight() {
-          weakSelf.reload(indexes, withAnimation: animation) {
+        weakSelf.reload(indexes, withAnimation: animation) {
+          weakSelf.updateHeight() {
             weakSelf.afterUpdate()
             weakSelf.cache()
             completion?()
