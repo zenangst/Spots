@@ -25,9 +25,15 @@ extension Controller {
 
     guard let delegate = scrollDelegate else { return }
 
+    if scrollView.contentOffset.y < 0 && !refreshing {
+      refreshing = true
+      delegate.didReachBeginning(in: scrollView) {
+        self.refreshing = false
+      }
+    }
+
     // Scroll did reach top
-    if scrollView.contentOffset.y < 0 &&
-      abs(scrollView.contentOffset.y) == scrollView.contentInset.top &&
+    if abs(scrollView.contentOffset.y) == scrollView.contentInset.top &&
       !refreshing {
       refreshing = true
       delegate.didReachBeginning(in: scrollView) {
