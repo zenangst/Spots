@@ -1,8 +1,30 @@
 # Change Log
 
-## [Unreleased](https://github.com/hyperoslo/Spots/tree/HEAD)
+## [5.6.1](https://github.com/hyperoslo/Spots/tree/5.6.1) (2016-12-06)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.6.0...5.6.1)
 
-[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.5.3...HEAD)
+**Merged pull requests:**
+
+- Refactor live editing method [\#384](https://github.com/hyperoslo/Spots/pull/384) ([zenangst](https://github.com/zenangst))
+
+## [5.6.0](https://github.com/hyperoslo/Spots/tree/5.6.0) (2016-12-04)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.5.4...5.6.0)
+
+**Merged pull requests:**
+
+- Add docs to DataSource on macOS [\#383](https://github.com/hyperoslo/Spots/pull/383) ([zenangst](https://github.com/zenangst))
+- Improve reload methods [\#382](https://github.com/hyperoslo/Spots/pull/382) ([zenangst](https://github.com/zenangst))
+- Improve/spotable mutation [\#381](https://github.com/hyperoslo/Spots/pull/381) ([zenangst](https://github.com/zenangst))
+- Move SpotView to macOS folder [\#380](https://github.com/hyperoslo/Spots/pull/380) ([zenangst](https://github.com/zenangst))
+- Improve/will display end display [\#379](https://github.com/hyperoslo/Spots/pull/379) ([zenangst](https://github.com/zenangst))
+- Feature end display cell [\#377](https://github.com/hyperoslo/Spots/pull/377) ([zenangst](https://github.com/zenangst))
+- Add missing completion in reload if needed with items [\#376](https://github.com/hyperoslo/Spots/pull/376) ([zenangst](https://github.com/zenangst))
+- Feature will display view on SpotsProtocol [\#375](https://github.com/hyperoslo/Spots/pull/375) ([zenangst](https://github.com/zenangst))
+- Refactor reload if needed to update height before calling completion [\#374](https://github.com/hyperoslo/Spots/pull/374) ([zenangst](https://github.com/zenangst))
+- Remove/after update on listable [\#373](https://github.com/hyperoslo/Spots/pull/373) ([zenangst](https://github.com/zenangst))
+
+## [5.5.4](https://github.com/hyperoslo/Spots/tree/5.5.4) (2016-11-23)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.5.3...5.5.4)
 
 **Merged pull requests:**
 
