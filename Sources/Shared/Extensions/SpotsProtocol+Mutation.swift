@@ -498,11 +498,10 @@ extension SpotsProtocol {
   public func updateIfNeeded(spotAtIndex index: Int = 0, items: [Item], withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     guard let spot = spot(at: index, ofType: Spotable.self), !(spot.items == items) else {
       completion?()
-      scrollView.layoutSubviews()
       return
     }
 
-    update(spotAtIndex: index, withAnimation: animation, withCompletion: { [weak self] in
+    update(spotAtIndex: index, withAnimation: animation, withCompletion: {
       completion?()
     }, {
       $0.items = items

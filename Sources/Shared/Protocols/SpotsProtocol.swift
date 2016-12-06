@@ -44,7 +44,7 @@ public protocol SpotsProtocol: class {
   /// A dispatch queue is a lightweight object to which your application submits blocks for subsequent execution.
   var fileQueue: DispatchQueue { get }
   /// An identifier for the type system object being monitored by a dispatch source.
-  var source: DispatchSourceFileSystemObject! { get set }
+  var source: DispatchSourceFileSystemObject? { get set }
   #endif
 
   /// Set up Spotable objects.

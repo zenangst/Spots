@@ -1,3 +1,9 @@
+#if os(OSX)
+  import Cocoa
+#else
+  import UIKit
+#endif
+
 import Cache
 
 #if DEVMODE
@@ -14,10 +20,10 @@ import Cache
                                                          eventMask: eventMask,
                                                          queue: fileQueue)
 
-      source.setEventHandler(handler: { [weak self] in
+      source?.setEventHandler(handler: { [weak self] in
         // Check that file still exists, otherwise cancel observering
         guard let weakSelf = self, FileManager.default.fileExists(atPath: filePath) else {
-          self?.source.cancel()
+          self?.source?.cancel()
           self?.source = nil
           return
         }
@@ -25,7 +31,7 @@ import Cache
         do {
           if let data = NSData(contentsOfFile: filePath),
             let json = try JSONSerialization.jsonObject(with: data as Data, options: .mutableContainers) as? [String : Any] {
-            weakSelf.source.cancel()
+            weakSelf.source?.cancel()
             weakSelf.source = nil
             let offset = weakSelf.scrollView.contentOffset
 
@@ -48,22 +54,22 @@ import Cache
 
               #if !os(OSX)
               for case let gridable as CarouselSpot in weakSelf.spots {
-                (gridable.layout as? GridableLayout)?.yOffset = gridable.render().frame.origin.y
+                gridable.layout.yOffset = gridable.render().frame.origin.y
               }
               #endif
             }
-            print("Spots reloaded: \(weakSelf.spots.count)")
+            print("🎍 Spots reloaded: \(weakSelf.spots.count)")
             weakSelf.liveEditing(stateCache: weakSelf.stateCache)
           }
-        } catch let error {
+        } catch _ {
           weakSelf.source = nil
 
-          print("Error: could not parse file")
+          print("⚠️ Error: could not parse file")
           weakSelf.liveEditing(stateCache: weakSelf.stateCache)
         }
       })
 
-      source.resume()
+      source?.resume()
     }
 
     /// Enable live editing with state cache
@@ -76,9 +82,6 @@ import Cache
         guard let stateCache = stateCache else { return }
       #endif
       CacheJSONOptions.writeOptions = .prettyPrinted
-
-      let paths = NSSearchPathForDirectoriesInDomains(.cachesDirectory,
-                                                      FileManager.SearchPathDomainMask.userDomainMask, true)
       print("🎍 SPOTS: Caching...")
       print("Cache key: \(stateCache.key)")
       print("File path: file://\(stateCache.path)\n")
