@@ -64,7 +64,7 @@ import Cache
         } catch _ {
           weakSelf.source = nil
 
-          print("⚠️ Error: could not parse file")
+          print("⛔️ Error: could not parse file")
           weakSelf.liveEditing(stateCache: weakSelf.stateCache)
         }
       })
