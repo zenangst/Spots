@@ -74,6 +74,7 @@ extension SpotsProtocol {
       let changes = weakSelf.generateChanges(from: newComponents, and: oldComponents)
 
       weakSelf.process(changes: changes, components: newComponents, withAnimation: animation) {
+        weakSelf.cache()
         completion?()
         if let controller = self as? Controller {
           Controller.spotsDidReloadComponents?(controller)
