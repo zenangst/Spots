@@ -45,7 +45,9 @@ extension SpotsProtocol {
                              completion: Completion = nil) {
     guard !components.isEmpty else {
       Dispatch.mainQueue { [weak self] in
-        self?.spots.forEach { $0.render().removeFromSuperview() }
+        self?.spots.forEach {
+          $0.render().removeFromSuperview()
+        }
         self?.spots = []
         completion?()
       }
@@ -62,7 +64,10 @@ extension SpotsProtocol {
       let newComponents = components
 
       guard compare(newComponents, oldComponents) else {
-        Dispatch.mainQueue { completion?() }
+        weakSelf.cache()
+        Dispatch.mainQueue {
+          completion?()
+        }
         return
       }
 
