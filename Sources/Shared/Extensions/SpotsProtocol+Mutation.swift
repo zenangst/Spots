@@ -174,7 +174,7 @@ extension SpotsProtocol {
     let newItems = spot.prepare(items: newComponents[index].items)
     let oldItems = spot.items
 
-    guard let diff = Item.evaluate(newItems, oldModels: oldItems) else { completion?(); return false }
+    guard let diff = Item.evaluate(newItems, oldModels: oldItems) else { return true }
     let changes: (ItemChanges) = Item.processChanges(diff)
 
     if newItems.count == spot.items.count {
