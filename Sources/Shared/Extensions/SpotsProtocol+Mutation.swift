@@ -62,12 +62,6 @@ extension SpotsProtocol {
       let newComponents = components
 
       guard compare(newComponents, oldComponents) else {
-        weakSelf.cache()
-        Dispatch.mainQueue { completion?() }
-        return
-      }
-
-      guard newComponents !== oldComponents else {
         Dispatch.mainQueue { completion?() }
         return
       }
