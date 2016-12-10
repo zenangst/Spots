@@ -45,7 +45,9 @@ extension SpotsProtocol {
                              completion: Completion = nil) {
     guard !components.isEmpty else {
       Dispatch.mainQueue { [weak self] in
-        self?.spots.forEach { $0.render().removeFromSuperview() }
+        self?.spots.forEach {
+          $0.render().removeFromSuperview()
+        }
         self?.spots = []
         completion?()
       }
@@ -63,18 +65,16 @@ extension SpotsProtocol {
 
       guard compare(newComponents, oldComponents) else {
         weakSelf.cache()
-        Dispatch.mainQueue { completion?() }
-        return
-      }
-
-      guard newComponents !== oldComponents else {
-        Dispatch.mainQueue { completion?() }
+        Dispatch.mainQueue {
+          completion?()
+        }
         return
       }
 
       let changes = weakSelf.generateChanges(from: newComponents, and: oldComponents)
 
       weakSelf.process(changes: changes, components: newComponents, withAnimation: animation) {
+        weakSelf.cache()
         completion?()
         if let controller = self as? Controller {
           Controller.spotsDidReloadComponents?(controller)
@@ -175,7 +175,9 @@ extension SpotsProtocol {
     let newItems = spot.prepare(items: newComponents[index].items)
     let oldItems = spot.items
 
-    guard let diff = Item.evaluate(newItems, oldModels: oldItems) else { completion?(); return false }
+    guard let diff = Item.evaluate(newItems, oldModels: oldItems) else {
+      return true
+    }
     let changes: (ItemChanges) = Item.processChanges(diff)
 
     if newItems.count == spot.items.count {
