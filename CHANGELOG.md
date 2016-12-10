@@ -1,5 +1,14 @@
 # Change Log
 
+## [Unreleased](https://github.com/hyperoslo/Spots/tree/HEAD)
+
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.6.1...HEAD)
+
+**Merged pull requests:**
+
+- Internal/refactoring [\#386](https://github.com/hyperoslo/Spots/pull/386) ([zenangst](https://github.com/zenangst))
+- Fix to use a more proper error emoji 😉 [\#385](https://github.com/hyperoslo/Spots/pull/385) ([onmyway133](https://github.com/onmyway133))
+
 ## [5.6.1](https://github.com/hyperoslo/Spots/tree/5.6.1) (2016-12-06)
 [Full Changelog](https://github.com/hyperoslo/Spots/compare/5.6.0...5.6.1)
 
