@@ -18,7 +18,7 @@ PODS:
     - JWTDecode
     - Keychain
     - Malibu
-  - Spots (5.6.0):
+  - Spots (5.6.2):
     - Brick (~> 2.0)
     - Cache (~> 2.0)
     - CryptoSwift (= 0.6.0)
@@ -75,7 +75,7 @@ SPEC CHECKSUMS:
   Keychain: b82fa1a6c20666b74014e7549f53bae6c75d617f
   Malibu: d697d750eba061696ddafa097b6cb325ba6037f7
   OhMyAuth: a18f116df4a9fd1ea06cb6b6e3191537645dc04b
-  Spots: 02c9598896ea89ec298565859c6bcc70facfd9b2
+  Spots: a61f398c2f493ece737120dbeb789a74ec2191df
   Sugar: 079e1375b76c8f0693474417836ef098f507ac50
   Tailor: 6f03d033af361a7cf1f25627a1877c5b91a9618c
   When: 3df626af4891607ea7dd3f46a451176c5642c528

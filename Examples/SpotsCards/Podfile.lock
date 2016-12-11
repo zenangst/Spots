@@ -8,13 +8,13 @@ PODS:
   - Hue (2.0.1)
   - Imaginary (1.0.1):
     - Cache (~> 2.0)
-  - Spots (5.3.1):
+  - Spots (5.6.2):
     - Brick (~> 2.0)
     - Cache (~> 2.0)
     - CryptoSwift (= 0.6.0)
     - Tailor (~> 2.0)
   - Sugar (3.0.0)
-  - Tailor (2.0.1)
+  - Tailor (2.0.2)
 
 DEPENDENCIES:
   - Brick
@@ -38,9 +38,9 @@ SPEC CHECKSUMS:
   CryptoSwift: 4a599b7241b8d3b857d6e2c28867d0bd5d1aae24
   Hue: 354caec055fdc9d38b5ef33ca2e7224721843baf
   Imaginary: f37fb0dd81a5881cf7a8232d7854e8c5a689b054
-  Spots: f60f1f1ef165766672087bc72d7018915ebd48fe
-  Sugar: '079e1375b76c8f0693474417836ef098f507ac50'
-  Tailor: faa9ec5be402056be8ec67c0e461f00251d19191
+  Spots: a61f398c2f493ece737120dbeb789a74ec2191df
+  Sugar: 079e1375b76c8f0693474417836ef098f507ac50
+  Tailor: 6f03d033af361a7cf1f25627a1877c5b91a9618c
 
 PODFILE CHECKSUM: c267c808baa92911fe48562f4eea27ee420a6f6b
 
