@@ -112,12 +112,8 @@ extension SpotsProtocol {
 
   /// Remove composite views from container
   func removeCompositeViews() {
-    for (_, cSpots) in self.compositeSpots {
-      for (_, spots) in cSpots.enumerated() {
-        for spot in spots.1 {
-          spot.render().removeFromSuperview()
-        }
-      }
+    compositeSpots.forEach {
+      $0.spot.render().removeFromSuperview()
     }
   }
 
