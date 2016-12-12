@@ -44,12 +44,10 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
   }
 
   /// A collection of composite Spotable objects.
-  open var compositeSpots: [Int : [Int : [Spotable]]] {
+  open var compositeSpots: [CompositeSpot] {
     didSet {
-      for (_, items) in compositeSpots {
-        for (_, container) in items.enumerated() {
-          container.1.forEach { $0.delegate = delegate }
-        }
+      for compositeSpot in compositeSpots {
+        compositeSpot.spot.delegate = delegate
       }
     }
   }
