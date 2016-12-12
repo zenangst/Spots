@@ -109,7 +109,7 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
   /// - returns: An initalized controller.
   public required init(spots: [Spotable] = []) {
     self.spots = spots
-    self.compositeSpots = [:]
+    self.compositeSpots = []
     super.init(nibName: nil, bundle: nil)
 
     NotificationCenter.default.addObserver(self, selector:#selector(self.deviceDidRotate(_:)), name: NSNotification.Name(rawValue: NotificationKeys.deviceDidRotateNotification.rawValue), object: nil)
