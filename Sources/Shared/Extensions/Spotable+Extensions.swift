@@ -183,12 +183,11 @@ public extension Spotable {
       if let composite = view as? Composable {
         let spots = composite.parse(item)
 
-        spots.forEach { $0.registerAndPrepare() }
+        spots.forEach {
+          $0.registerAndPrepare()
 
-        if spotsCompositeDelegate?.compositeSpots[component.index] == nil {
-          spotsCompositeDelegate?.compositeSpots[component.index] = [index : spots]
-        } else {
-          spotsCompositeDelegate?.compositeSpots[component.index]?[index] = spots
+          let compositeSpot = CompositeSpot(parentSpot: self, spot: $0, spotableIndex: index, itemIndex: index)
+          spotsCompositeDelegate?.compositeSpots.append(compositeSpot)
         }
       } else {
         // Set initial size for view
