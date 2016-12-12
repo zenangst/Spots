@@ -376,7 +376,7 @@ extension SpotsProtocol {
       }
 
       var offsets = [CGPoint]()
-      var oldComposite = weakSelf.compositeSpots
+      let oldComposites = weakSelf.compositeSpots
 
       if newComponents.count == oldComponents.count {
         offsets = weakSelf.spots.map { $0.render().contentOffset }
@@ -392,16 +392,12 @@ extension SpotsProtocol {
       weakSelf.setupSpots(animated: animated)
       weakSelf.cache()
 
-      for (index, container) in weakSelf.compositeSpots.enumerated() {
-        guard let itemIndex = container.1.keys.first,
-          let foundContainer = weakSelf.compositeSpots[index]?[itemIndex] else { continue }
-
-        for (spotIndex, spot) in foundContainer.enumerated() {
-          guard let rootContainer = oldComposite[index],
-            let itemContainer = rootContainer[itemIndex], spotIndex < itemContainer.count else { continue }
-
-          spot.render().contentOffset = itemContainer[spotIndex].render().contentOffset
+      for (index, compositeSpot) in oldComposites.enumerated() {
+        if index == weakSelf.compositeSpots.count {
+          break
         }
+
+        weakSelf.compositeSpots[index].spot.render().contentOffset = compositeSpot.spot.render().contentOffset
       }
 
       completion?()
