@@ -7,12 +7,11 @@ public struct CompositeSpot: Equatable {
   /// - Parameters:
   ///   - lhs: A value to compare.
   ///   - rhs: Another value to compare.
-  public static func ==(lhs: CompositeSpot, rhs: CompositeSpot) -> Bool {
+  public static func == (lhs: CompositeSpot, rhs: CompositeSpot) -> Bool {
     return lhs.spot.component == rhs.spot.component &&
       lhs.spotableIndex == rhs.spotableIndex &&
       lhs.itemIndex == rhs.itemIndex
   }
-
 
   var parentSpot: Spotable?
   var spot: Spotable
