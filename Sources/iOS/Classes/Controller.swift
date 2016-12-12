@@ -249,13 +249,13 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
   func configure(withSize size: CGSize) {
     scrollView.frame.size = size
     scrollView.contentView.frame.size = size
-    spots.enumerated().forEach { index, spot in
-      compositeSpots[index]?.forEach { cIndex, cSpots in
-        cSpots.forEach {
-          $0.layout(size)
-        }
-      }
-      spot.layout(size)
+
+    compositeSpots.enumerated().forEach { _, compositeSpot in
+      compositeSpot.spot.layout(size)
+    }
+
+    spots.forEach {
+      $0.layout(size)
     }
   }
 
