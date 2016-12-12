@@ -285,7 +285,7 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
   /// - parameter animated: An optional animation closure that is invoked when setting up the spot.
   open func setupSpots(animated: ((_ view: UIView) -> Void)? = nil) {
     var yOffset: CGFloat = 0.0
-    compositeSpots = [:]
+    compositeSpots = []
     spots.enumerated().forEach { index, spot in
       setupSpot(at: index, spot: spot)
       scrollView.contentView.addSubview(spot.render())
