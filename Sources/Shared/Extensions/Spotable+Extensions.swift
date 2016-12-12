@@ -186,7 +186,10 @@ public extension Spotable {
         spots.forEach {
           $0.registerAndPrepare()
 
-          let compositeSpot = CompositeSpot(parentSpot: self, spot: $0, spotableIndex: index, itemIndex: index)
+          let compositeSpot = CompositeSpot(parentSpot: self,
+                                            spot: $0,
+                                            spotableIndex: component.index,
+                                            itemIndex: index)
           spotsCompositeDelegate?.compositeSpots.append(compositeSpot)
         }
       } else {
