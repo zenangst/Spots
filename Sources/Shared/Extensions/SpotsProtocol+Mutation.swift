@@ -204,22 +204,20 @@ extension SpotsProtocol {
       spot.beforeUpdate()
 
       for item in newItems {
-        if let compositeSpots = compositeSpots[spot.index],
-          let spots = compositeSpots[item.index] {
-          for spot in spots {
-            offsets.append(spot.render().contentOffset)
-          }
+        let results = compositeSpots.filter({ $0.spotableIndex == spot.index && $0.itemIndex == item.index })
+        for compositeSpot in results {
+          offsets.append(compositeSpot.spot.render().contentOffset)
         }
       }
 
       spot.items = newItems
     }) { [weak self] in
       for item in newItems {
-        if let compositeSpots = self?.compositeSpots[spot.index],
-          let spots = compositeSpots[item.index] {
-          for (index, spot) in spots.enumerated() {
+        if let compositeSpots = self?.compositeSpots
+          .filter({ $0.spotableIndex == spot.index && $0.itemIndex == item.index }) {
+          for (index, compositeSpot) in compositeSpots.enumerated() {
             guard index < offsets.count else { continue }
-            spot.render().contentOffset = offsets[index]
+            compositeSpot.spot.render().contentOffset = offsets[index]
           }
         }
       }
