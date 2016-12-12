@@ -71,7 +71,7 @@ open class Controller: NSViewController, SpotsProtocol {
    - parameter backgroundType: The type of background that the Controller should use, .Regular or .Dynamic
    */
   public required init(spots: [Spotable] = [], backgroundType: ControllerBackground = .regular) {
-    self.compositeSpots = [:]
+    self.compositeSpots = []
     self.spots = spots
     self.backgroundType = backgroundType
     super.init(nibName: nil, bundle: nil)!
@@ -215,7 +215,7 @@ open class Controller: NSViewController, SpotsProtocol {
    - parameter animated: An optional animation closure that runs when a spot is being rendered
    */
   public func setupSpots(animated: ((_ view: View) -> Void)? = nil) {
-    compositeSpots = [:]
+    compositeSpots = []
     spots.enumerated().forEach { index, spot in
       setupSpot(at: index, spot: spot)
       animated?(spot.render())
