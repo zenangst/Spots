@@ -20,12 +20,10 @@ extension CompositeDelegate {
   ///
   /// - returns: A collection of Spotable objects.
   func resolve(_ spotIndex: Int, itemIndex: Int) -> [Spotable]? {
-    guard let compositeContainer = compositeSpots[spotIndex],
-      let result = compositeContainer[itemIndex] else {
-        return nil
-    }
-
-    return result
+    let spots = compositeSpots
+      .filter({ $0.spotableIndex == spotIndex && $0.itemIndex == itemIndex })
+      .map({ $0.spot })
+    return spots
   }
 }
 
