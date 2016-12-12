@@ -242,7 +242,7 @@ extension SpotsProtocol {
       spot.beforeUpdate()
       spot.items = newItems
     }) { [weak self] in
-      guard !newItems.isEmpty else {
+      guard let weakSelf = self, !newItems.isEmpty else {
         self?.finishReloading(spot: spot, withCompletion: completion)
         return
       }
@@ -250,28 +250,28 @@ extension SpotsProtocol {
       let executeClosure = newItems.count - 1
       for (index, item) in newItems.enumerated() {
         let components = Parser.parse(item.children).map { $0.component }
-        if let compositeSpots = self?.compositeSpots[spot.index],
-          let spots = compositeSpots[item.index] {
-          for (index, removedSpot) in spots.enumerated() {
-            guard !components.contains(removedSpot.component) else { continue }
-            let oldContent = self?.compositeSpots[spot.index]?[item.index]
-            if var oldContent = self?.compositeSpots[spot.index]?[item.index], index < oldContent.count {
-              oldContent.remove(at: index)
-            }
-            self?.compositeSpots[spot.index]?[item.index] = oldContent
+
+        let oldSpots = weakSelf.compositeSpots.filter({ $0.spotableIndex == spot.index })
+        for removedSpot in oldSpots {
+          guard !components.contains(removedSpot.spot.component) else {
+            continue
+          }
+
+          if let index = weakSelf.compositeSpots.index(of: removedSpot) {
+            weakSelf.compositeSpots.remove(at: index)
           }
         }
 
         if !spot.items.filter({ !$0.children.isEmpty }).isEmpty {
           spot.beforeUpdate()
           spot.reload(nil, withAnimation: animation) {
-            self?.finishReloading(spot: spot, withCompletion: completion)
+            weakSelf.finishReloading(spot: spot, withCompletion: completion)
           }
         } else {
           spot.beforeUpdate()
           spot.update(item, index: index, withAnimation: animation) {
             guard index == executeClosure else { return }
-            self?.finishReloading(spot: spot, withCompletion: completion)
+            weakSelf.finishReloading(spot: spot, withCompletion: completion)
           }
         }
       }
