@@ -49,12 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     )
 
     let spots: [Spotable] = [ListSpot(component: component)]
-    let controller = Controller(cacheKey: "nib-demo")
-
-    controller.reloadIfNeeded(spots.map { $0.component }) {
-      controller.cache()
-    }
-    controller.title = "Spots .nib feature".uppercased()
+    let controller = MainViewController(title: "Spots .nib feature".uppercased(), spots: spots)
     let navigationController = UINavigationController(rootViewController: controller)
 
     window?.rootViewController = navigationController
@@ -62,5 +57,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     return true
   }
-
 }
