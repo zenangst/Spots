@@ -155,6 +155,8 @@
 		BD1BFB5C1DA7A9AC00BB55E1 /* ScrollDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1BFB591DA7A9AC00BB55E1 /* ScrollDelegate.swift */; };
 		BD352E5F1CBAD6EC002CD032 /* Brick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD352E5E1CBAD6EC002CD032 /* Brick.framework */; };
 		BD352E611CBAD6F9002CD032 /* Brick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD352E601CBAD6F9002CD032 /* Brick.framework */; };
+		BD39001B1DFE8E91007C0411 /* CompositeSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE77F0D1DFDE4CF0012D2B0 /* CompositeSpot.swift */; };
+		BD39001C1DFE8E92007C0411 /* CompositeSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE77F0D1DFDE4CF0012D2B0 /* CompositeSpot.swift */; };
 		BD412B671DEFF9590064FD12 /* SpotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD412B651DEFF9080064FD12 /* SpotView.swift */; };
 		BD42954F1D81CE4F00E07E1C /* TestGridSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD42954E1D81CE4F00E07E1C /* TestGridSpot.swift */; };
 		BD4295501D81CE4F00E07E1C /* TestGridSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD42954E1D81CE4F00E07E1C /* TestGridSpot.swift */; };
@@ -213,6 +215,7 @@
 		BDE152DB1DDEFA5500DB3145 /* UICollectionView+UserInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE152DA1DDEFA5500DB3145 /* UICollectionView+UserInterface.swift */; };
 		BDE152DC1DDEFA5500DB3145 /* UICollectionView+UserInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE152DA1DDEFA5500DB3145 /* UICollectionView+UserInterface.swift */; };
 		BDE152DD1DDEFA6200DB3145 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE152D51DDEF94500DB3145 /* UIViewController+Extensions.swift */; };
+		BDE77F0E1DFDE4CF0012D2B0 /* CompositeSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE77F0D1DFDE4CF0012D2B0 /* CompositeSpot.swift */; };
 		BDEED2E81D8446400030B475 /* TestSpotsScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEED2E71D8446400030B475 /* TestSpotsScrollView.swift */; };
 		BDEFF53C1DD0F18B00FC0537 /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEFF53B1DD0F18B00FC0537 /* DataSource.swift */; };
 		BDEFF53D1DD0F18B00FC0537 /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEFF53B1DD0F18B00FC0537 /* DataSource.swift */; };
@@ -366,6 +369,7 @@
 		BDE152D41DDEF94500DB3145 /* UITableView+UserInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+UserInterface.swift"; sourceTree = "<group>"; };
 		BDE152D51DDEF94500DB3145 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		BDE152DA1DDEFA5500DB3145 /* UICollectionView+UserInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UICollectionView+UserInterface.swift"; sourceTree = "<group>"; };
+		BDE77F0D1DFDE4CF0012D2B0 /* CompositeSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositeSpot.swift; sourceTree = "<group>"; };
 		BDEED2E71D8446400030B475 /* TestSpotsScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSpotsScrollView.swift; sourceTree = "<group>"; };
 		BDEFF53B1DD0F18B00FC0537 /* DataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
 		BDEFF53F1DD0F3CC00FC0537 /* DataSource+iOS+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DataSource+iOS+Extensions.swift"; sourceTree = "<group>"; };
@@ -571,11 +575,12 @@
 		BD129F251D7B2F91009AC164 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				BDEFF53B1DD0F18B00FC0537 /* DataSource.swift */,
+				BDEFF5431DD0F7FB00FC0537 /* Delegate.swift */,
 				BD129F271D7B2F91009AC164 /* Registry.swift */,
 				BD129F281D7B2F91009AC164 /* SpotFactory.swift */,
 				BD129F291D7B2F91009AC164 /* ViewSpot.swift */,
-				BDEFF53B1DD0F18B00FC0537 /* DataSource.swift */,
-				BDEFF5431DD0F7FB00FC0537 /* Delegate.swift */,
+				BDE77F0D1DFDE4CF0012D2B0 /* CompositeSpot.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1175,6 +1180,7 @@
 				BD129F5C1D7B2F91009AC164 /* Spotable+Extensions.swift in Sources */,
 				BD129F8C1D7B2F91009AC164 /* GridableMeta.swift in Sources */,
 				BD129F891D7B2F91009AC164 /* Component.swift in Sources */,
+				BD39001C1DFE8E92007C0411 /* CompositeSpot.swift in Sources */,
 				BD129D8C1D7B295F009AC164 /* Listable+Extensions+iOS.swift in Sources */,
 				BD129DBA1D7B2B6C009AC164 /* CarouselSpotHeader.swift in Sources */,
 				BD129F831D7B2F91009AC164 /* SpotsProtocol.swift in Sources */,
@@ -1240,6 +1246,7 @@
 				BD129F511D7B2F91009AC164 /* Animation.swift in Sources */,
 				BD129F4B1D7B2F91009AC164 /* SpotFactory.swift in Sources */,
 				BDEFF5481DD0F8C000FC0537 /* Delegate+iOS+Extensions.swift in Sources */,
+				BDE77F0E1DFDE4CF0012D2B0 /* CompositeSpot.swift in Sources */,
 				BDEFF5401DD0F3CC00FC0537 /* DataSource+iOS+Extensions.swift in Sources */,
 				BD129D8F1D7B295F009AC164 /* Composable+Extensions.swift in Sources */,
 				BD129F691D7B2F91009AC164 /* Item+Extensions.swift in Sources */,
@@ -1375,6 +1382,7 @@
 				BD129F701D7B2F91009AC164 /* Gridable.swift in Sources */,
 				BD129E251D7B2CDE009AC164 /* GridSpotItem.swift in Sources */,
 				BD129F521D7B2F91009AC164 /* Animation.swift in Sources */,
+				BD39001B1DFE8E91007C0411 /* CompositeSpot.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

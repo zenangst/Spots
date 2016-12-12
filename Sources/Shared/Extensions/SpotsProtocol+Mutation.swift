@@ -112,12 +112,8 @@ extension SpotsProtocol {
 
   /// Remove composite views from container
   func removeCompositeViews() {
-    for (_, cSpots) in self.compositeSpots {
-      for (_, spots) in cSpots.enumerated() {
-        for spot in spots.1 {
-          spot.render().removeFromSuperview()
-        }
-      }
+    compositeSpots.forEach {
+      $0.spot.render().removeFromSuperview()
     }
   }
 
@@ -208,22 +204,20 @@ extension SpotsProtocol {
       spot.beforeUpdate()
 
       for item in newItems {
-        if let compositeSpots = compositeSpots[spot.index],
-          let spots = compositeSpots[item.index] {
-          for spot in spots {
-            offsets.append(spot.render().contentOffset)
-          }
+        let results = compositeSpots.filter({ $0.spotableIndex == spot.index && $0.itemIndex == item.index })
+        for compositeSpot in results {
+          offsets.append(compositeSpot.spot.render().contentOffset)
         }
       }
 
       spot.items = newItems
     }) { [weak self] in
       for item in newItems {
-        if let compositeSpots = self?.compositeSpots[spot.index],
-          let spots = compositeSpots[item.index] {
-          for (index, spot) in spots.enumerated() {
+        if let compositeSpots = self?.compositeSpots
+          .filter({ $0.spotableIndex == spot.index && $0.itemIndex == item.index }) {
+          for (index, compositeSpot) in compositeSpots.enumerated() {
             guard index < offsets.count else { continue }
-            spot.render().contentOffset = offsets[index]
+            compositeSpot.spot.render().contentOffset = offsets[index]
           }
         }
       }
@@ -248,7 +242,7 @@ extension SpotsProtocol {
       spot.beforeUpdate()
       spot.items = newItems
     }) { [weak self] in
-      guard !newItems.isEmpty else {
+      guard let weakSelf = self, !newItems.isEmpty else {
         self?.finishReloading(spot: spot, withCompletion: completion)
         return
       }
@@ -256,28 +250,28 @@ extension SpotsProtocol {
       let executeClosure = newItems.count - 1
       for (index, item) in newItems.enumerated() {
         let components = Parser.parse(item.children).map { $0.component }
-        if let compositeSpots = self?.compositeSpots[spot.index],
-          let spots = compositeSpots[item.index] {
-          for (index, removedSpot) in spots.enumerated() {
-            guard !components.contains(removedSpot.component) else { continue }
-            let oldContent = self?.compositeSpots[spot.index]?[item.index]
-            if var oldContent = self?.compositeSpots[spot.index]?[item.index], index < oldContent.count {
-              oldContent.remove(at: index)
-            }
-            self?.compositeSpots[spot.index]?[item.index] = oldContent
+
+        let oldSpots = weakSelf.compositeSpots.filter({ $0.spotableIndex == spot.index })
+        for removedSpot in oldSpots {
+          guard !components.contains(removedSpot.spot.component) else {
+            continue
+          }
+
+          if let index = weakSelf.compositeSpots.index(of: removedSpot) {
+            weakSelf.compositeSpots.remove(at: index)
           }
         }
 
         if !spot.items.filter({ !$0.children.isEmpty }).isEmpty {
           spot.beforeUpdate()
           spot.reload(nil, withAnimation: animation) {
-            self?.finishReloading(spot: spot, withCompletion: completion)
+            weakSelf.finishReloading(spot: spot, withCompletion: completion)
           }
         } else {
           spot.beforeUpdate()
           spot.update(item, index: index, withAnimation: animation) {
             guard index == executeClosure else { return }
-            self?.finishReloading(spot: spot, withCompletion: completion)
+            weakSelf.finishReloading(spot: spot, withCompletion: completion)
           }
         }
       }
@@ -382,7 +376,7 @@ extension SpotsProtocol {
       }
 
       var offsets = [CGPoint]()
-      var oldComposite = weakSelf.compositeSpots
+      let oldComposites = weakSelf.compositeSpots
 
       if newComponents.count == oldComponents.count {
         offsets = weakSelf.spots.map { $0.render().contentOffset }
@@ -398,16 +392,12 @@ extension SpotsProtocol {
       weakSelf.setupSpots(animated: animated)
       weakSelf.cache()
 
-      for (index, container) in weakSelf.compositeSpots.enumerated() {
-        guard let itemIndex = container.1.keys.first,
-          let foundContainer = weakSelf.compositeSpots[index]?[itemIndex] else { continue }
-
-        for (spotIndex, spot) in foundContainer.enumerated() {
-          guard let rootContainer = oldComposite[index],
-            let itemContainer = rootContainer[itemIndex], spotIndex < itemContainer.count else { continue }
-
-          spot.render().contentOffset = itemContainer[spotIndex].render().contentOffset
+      for (index, compositeSpot) in oldComposites.enumerated() {
+        if index == weakSelf.compositeSpots.count {
+          break
         }
+
+        weakSelf.compositeSpots[index].spot.render().contentOffset = compositeSpot.spot.render().contentOffset
       }
 
       completion?()

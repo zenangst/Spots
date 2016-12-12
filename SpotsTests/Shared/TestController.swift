@@ -544,7 +544,7 @@ class ControllerTests : XCTestCase {
           ["title" : "First list item 2"],
           [
             "kind" : "composite",
-            "items" : [
+            "children" : [
               ["kind" : "grid",
                "items" : [
                 ["title" : "First list item"]

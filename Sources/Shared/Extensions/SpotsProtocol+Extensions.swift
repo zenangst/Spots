@@ -58,18 +58,21 @@ public extension SpotsProtocol {
     for spot in spots {
       var spotJSON = spot.component.dictionary(amountOfItems)
       for item in spot.items where item.kind == "composite" {
-        if let compositeSpots = compositeSpots[spot.index]?[item.index] {
-          var newItem = item
-          var children = [[String : Any]]()
-          for itemSpot in compositeSpots {
-            children.append(itemSpot.dictionary)
-          }
-          newItem.children = children
-          var newItems = spotJSON[Component.Key.Items] as? [[String : Any]]
+        let results = compositeSpots
+          .filter({ $0.spotableIndex == spot.index && $0.itemIndex == item.index })
 
-          newItems?[item.index] = newItem.dictionary
-          spotJSON[Component.Key.Items] = newItems
+        var newItem = item
+        var children = [[String : Any]]()
+
+        for compositeSpot in results {
+          children.append(compositeSpot.spot.dictionary)
         }
+
+        newItem.children = children
+
+        var newItems = spotJSON[Component.Key.Items] as? [[String : Any]]
+        newItems?[item.index] = newItem.dictionary
+        spotJSON[Component.Key.Items] = newItems
       }
 
       result.append(spotJSON)
@@ -90,13 +93,9 @@ public extension SpotsProtocol {
       }
     }
 
-    for (_, cSpots) in compositeSpots {
-      for (_, spots) in cSpots.enumerated() {
-        for spot in spots.1 {
-          if let first = spot.items.filter(includeElement).first {
-            return spot.ui(at: first.index)
-          }
-        }
+    for compositeSpot in compositeSpots {
+      if let first = compositeSpot.spot.items.filter(includeElement).first {
+        return spot?.ui(at: first.index)
       }
     }
 
@@ -110,13 +109,8 @@ public extension SpotsProtocol {
   /// - returns: A collection of Spotable objects that match the includeElements predicate
   public func filter(spots includeElement: (Spotable) -> Bool) -> [Spotable] {
     var result = spots.filter(includeElement)
-
-    for (_, cSpots) in compositeSpots {
-      for (_, spots) in cSpots.enumerated() {
-        let compositeResults = spots.1.filter(includeElement)
-        if !compositeResults.isEmpty { result.append(contentsOf: compositeResults) }
-      }
-    }
+    let compositeResults: [Spotable] = compositeSpots.map({ $0.spot }).filter(includeElement)
+    result.append(contentsOf: compositeResults)
 
     return result
   }
@@ -135,14 +129,11 @@ public extension SpotsProtocol {
       }
     }
 
-    for (_, cSpots) in compositeSpots {
-      for (_, spots) in cSpots.enumerated() {
-        for spot in spots.1 {
-          let items = spot.items.filter(includeElement)
-          if !items.isEmpty {
-            result.append((spot: spot, items: items))
-          }
-        }
+    let compositeResults: [Spotable] = compositeSpots.map({ $0.spot })
+    for spot in compositeResults {
+      let items = spot.items.filter(includeElement)
+      if !items.isEmpty {
+        result.append((spot: spot, items: items))
       }
     }
 

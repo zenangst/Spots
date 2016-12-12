@@ -44,12 +44,10 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
   }
 
   /// A collection of composite Spotable objects.
-  open var compositeSpots: [Int : [Int : [Spotable]]] {
+  open var compositeSpots: [CompositeSpot] {
     didSet {
-      for (_, items) in compositeSpots {
-        for (_, container) in items.enumerated() {
-          container.1.forEach { $0.delegate = delegate }
-        }
+      for compositeSpot in compositeSpots {
+        compositeSpot.spot.delegate = delegate
       }
     }
   }
@@ -111,7 +109,7 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
   /// - returns: An initalized controller.
   public required init(spots: [Spotable] = []) {
     self.spots = spots
-    self.compositeSpots = [:]
+    self.compositeSpots = []
     super.init(nibName: nil, bundle: nil)
 
     NotificationCenter.default.addObserver(self, selector:#selector(self.deviceDidRotate(_:)), name: NSNotification.Name(rawValue: NotificationKeys.deviceDidRotateNotification.rawValue), object: nil)
@@ -251,13 +249,13 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
   func configure(withSize size: CGSize) {
     scrollView.frame.size = size
     scrollView.contentView.frame.size = size
-    spots.enumerated().forEach { index, spot in
-      compositeSpots[index]?.forEach { cIndex, cSpots in
-        cSpots.forEach {
-          $0.layout(size)
-        }
-      }
-      spot.layout(size)
+
+    compositeSpots.enumerated().forEach { _, compositeSpot in
+      compositeSpot.spot.layout(size)
+    }
+
+    spots.forEach {
+      $0.layout(size)
     }
   }
 
@@ -287,7 +285,7 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
   /// - parameter animated: An optional animation closure that is invoked when setting up the spot.
   open func setupSpots(animated: ((_ view: UIView) -> Void)? = nil) {
     var yOffset: CGFloat = 0.0
-    compositeSpots = [:]
+    compositeSpots = []
     spots.enumerated().forEach { index, spot in
       setupSpot(at: index, spot: spot)
       scrollView.contentView.addSubview(spot.render())

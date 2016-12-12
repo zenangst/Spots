@@ -7,7 +7,7 @@ import Brick
 /// A protocol for composite delegates
 public protocol CompositeDelegate: class {
   /// A collection of composite spotable objects, indexed by Spotable object index and Item index.
-  var compositeSpots: [Int : [Int : [Spotable]]] { get set }
+  var compositeSpots: [CompositeSpot] { get set }
 }
 
 // MARK: - CompositeDelegate extension
@@ -20,12 +20,10 @@ extension CompositeDelegate {
   ///
   /// - returns: A collection of Spotable objects.
   func resolve(_ spotIndex: Int, itemIndex: Int) -> [Spotable]? {
-    guard let compositeContainer = compositeSpots[spotIndex],
-      let result = compositeContainer[itemIndex] else {
-        return nil
-    }
-
-    return result
+    let spots = compositeSpots
+      .filter({ $0.spotableIndex == spotIndex && $0.itemIndex == itemIndex })
+      .map({ $0.spot })
+    return spots
   }
 }
 

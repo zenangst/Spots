@@ -204,7 +204,7 @@ class CarouselSpotTests: XCTestCase {
       exception?.fulfill()
       exception = nil
     }
-    waitForExpectations(timeout: 0.5, handler: nil)
+    waitForExpectations(timeout: 1.0, handler: nil)
   }
 
   func testAppendItems() {
@@ -216,7 +216,7 @@ class CarouselSpotTests: XCTestCase {
       exception?.fulfill()
       exception = nil
     }
-    waitForExpectations(timeout: 0.5, handler: nil)
+    waitForExpectations(timeout: 1.0, handler: nil)
   }
 
   func testInsertItem() {
@@ -228,7 +228,7 @@ class CarouselSpotTests: XCTestCase {
       exception?.fulfill()
       exception = nil
     }
-    waitForExpectations(timeout: 0.5, handler: nil)
+    waitForExpectations(timeout: 1.0, handler: nil)
   }
 
   func testPrependItems() {
@@ -240,7 +240,7 @@ class CarouselSpotTests: XCTestCase {
       exception?.fulfill()
       exception = nil
     }
-    waitForExpectations(timeout: 0.5, handler: nil)
+    waitForExpectations(timeout: 1.0, handler: nil)
   }
 
   func testSpotCache() {

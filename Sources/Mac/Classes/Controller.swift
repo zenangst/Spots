@@ -20,12 +20,11 @@ open class Controller: NSViewController, SpotsProtocol {
     }
   }
 
-  open var compositeSpots: [Int : [Int : [Spotable]]] {
+  /// A collection of composite Spotable objects.
+  open var compositeSpots: [CompositeSpot] {
     didSet {
-      for (_, items) in compositeSpots {
-        for (_, container) in items.enumerated() {
-          container.1.forEach { $0.delegate = delegate }
-        }
+      for compositeSpot in compositeSpots {
+        compositeSpot.spot.delegate = delegate
       }
     }
   }
@@ -72,7 +71,7 @@ open class Controller: NSViewController, SpotsProtocol {
    - parameter backgroundType: The type of background that the Controller should use, .Regular or .Dynamic
    */
   public required init(spots: [Spotable] = [], backgroundType: ControllerBackground = .regular) {
-    self.compositeSpots = [:]
+    self.compositeSpots = []
     self.spots = spots
     self.backgroundType = backgroundType
     super.init(nibName: nil, bundle: nil)!
@@ -216,7 +215,7 @@ open class Controller: NSViewController, SpotsProtocol {
    - parameter animated: An optional animation closure that runs when a spot is being rendered
    */
   public func setupSpots(animated: ((_ view: View) -> Void)? = nil) {
-    compositeSpots = [:]
+    compositeSpots = []
     spots.enumerated().forEach { index, spot in
       setupSpot(at: index, spot: spot)
       animated?(spot.render())
