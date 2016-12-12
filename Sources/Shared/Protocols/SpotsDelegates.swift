@@ -7,7 +7,7 @@ import Brick
 /// A protocol for composite delegates
 public protocol CompositeDelegate: class {
   /// A collection of composite spotable objects, indexed by Spotable object index and Item index.
-  var compositeSpots: [Int : [Int : [Spotable]]] { get set }
+  var compositeSpots: [CompositeSpot] { get set }
 }
 
 // MARK: - CompositeDelegate extension
