@@ -19,7 +19,7 @@ import Brick
 /// - removed:    Indicates that the component was removed
 /// - none:       Indicates that nothing did change
 public enum ComponentDiff {
-  case identifier, kind, span, header, meta, items, new, removed, none
+  case identifier, title, kind, span, header, meta, items, new, removed, none
 }
 
 /// The Component struct is used to configure a Spotable object
@@ -234,6 +234,8 @@ public struct Component: Mappable, Equatable {
     if header != component.header { return .header }
     // Check if meta data for the component changed, this can be up to the developer to decide what course of action to take.
     if !(meta as NSDictionary).isEqual(to: component.meta) { return .meta }
+    // Check if title changed
+    if title != component.title { return .title }
     // Check if the items have changed
     if !(items === component.items) { return .items }
     // Check children
