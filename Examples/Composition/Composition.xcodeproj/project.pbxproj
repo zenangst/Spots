@@ -303,6 +303,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2D83C9BB2D50BEBED8417409 /* Pods-Composition tvOS.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				DEVELOPMENT_TEAM = LG4DBY4QF9;
@@ -318,6 +319,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 138B6DC28C823C7C75E60592 /* Pods-Composition tvOS.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				DEVELOPMENT_TEAM = LG4DBY4QF9;
@@ -348,6 +350,7 @@
 				BDD121181E06F9080021CC41 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
