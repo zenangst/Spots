@@ -9,4 +9,8 @@ public class ListComposite: UITableViewCell, Composable {
       view.removeFromSuperview()
     }
   }
+
+  override public var canBecomeFocused: Bool {
+    return false
+  }
 }
