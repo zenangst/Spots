@@ -10,6 +10,7 @@
 		B076717841CF8CB0BA7A1539 /* Pods_Composition_tvOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCD589B62B8FBEE0364BF3AE /* Pods_Composition_tvOS.framework */; };
 		BDD1210B1E06F9080021CC41 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD1210A1E06F9080021CC41 /* AppDelegate.swift */; };
 		BDD121121E06F9080021CC41 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BDD121111E06F9080021CC41 /* Assets.xcassets */; };
+		BDD1211A1E06FA000021CC41 /* CompositionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD121191E06FA000021CC41 /* CompositionController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +20,7 @@
 		BDD1210A1E06F9080021CC41 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BDD121111E06F9080021CC41 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BDD121131E06F9080021CC41 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BDD121191E06FA000021CC41 /* CompositionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositionController.swift; sourceTree = "<group>"; };
 		DCD589B62B8FBEE0364BF3AE /* Pods_Composition_tvOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Composition_tvOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -66,6 +68,7 @@
 				BDD1210A1E06F9080021CC41 /* AppDelegate.swift */,
 				BDD121111E06F9080021CC41 /* Assets.xcassets */,
 				BDD121131E06F9080021CC41 /* Info.plist */,
+				BDD121191E06FA000021CC41 /* CompositionController.swift */,
 			);
 			path = Composition;
 			sourceTree = "<group>";
@@ -201,6 +204,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BDD1211A1E06FA000021CC41 /* CompositionController.swift in Sources */,
 				BDD1210B1E06F9080021CC41 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
