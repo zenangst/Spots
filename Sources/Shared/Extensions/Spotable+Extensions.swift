@@ -45,6 +45,11 @@ public extension Spotable {
 
     /// Add extra height to make room for focus shadow
     #if os(tvOS)
+      if component.kind == Component.Kind.List.string {
+        height += 28
+      }
+    #endif
+
     return height
   }
 
