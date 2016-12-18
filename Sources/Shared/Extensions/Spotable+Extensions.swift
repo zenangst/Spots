@@ -199,6 +199,10 @@ public extension Spotable {
                                             spotableIndex: component.index,
                                             itemIndex: index)
           height += compositeSpot.spot.computedHeight
+
+          let header = compositeSpot.spot.type.headers.make(compositeSpot.spot.component.header)
+          height += (header?.view as? Componentable)?.preferredHeaderHeight ?? 0.0
+
           spotsCompositeDelegate?.compositeSpots.append(compositeSpot)
         }
 
