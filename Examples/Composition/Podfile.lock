@@ -1,0 +1,34 @@
+PODS:
+  - Brick (2.0.2):
+    - Tailor (~> 2.0)
+  - Cache (2.1.1):
+    - CryptoSwift
+  - CryptoSwift (0.6.0)
+  - Spots (5.6.2):
+    - Brick (~> 2.0)
+    - Cache (~> 2.0)
+    - CryptoSwift (= 0.6.0)
+    - Tailor (~> 2.0)
+  - Tailor (2.0.2)
+
+DEPENDENCIES:
+  - Brick
+  - Cache
+  - CryptoSwift (= 0.6.0)
+  - Spots (from `../../`)
+  - Tailor
+
+EXTERNAL SOURCES:
+  Spots:
+    :path: "../../"
+
+SPEC CHECKSUMS:
+  Brick: a7cf051da76f833e46281477d91b04cee63593f7
+  Cache: 525a292370641881d7e350f0d451fd276790243a
+  CryptoSwift: 4a599b7241b8d3b857d6e2c28867d0bd5d1aae24
+  Spots: a61f398c2f493ece737120dbeb789a74ec2191df
+  Tailor: 6f03d033af361a7cf1f25627a1877c5b91a9618c
+
+PODFILE CHECKSUM: fabd8cdae5b66ab84f96a9c8010a311030ba85e7
+
+COCOAPODS: 1.1.1
