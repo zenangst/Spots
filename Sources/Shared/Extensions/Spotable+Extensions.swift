@@ -43,6 +43,8 @@ public extension Spotable {
       #endif
     }
 
+    /// Add extra height to make room for focus shadow
+    #if os(tvOS)
     return height
   }
 
