@@ -7,15 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B076717841CF8CB0BA7A1539 /* Pods_Composition_tvOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCD589B62B8FBEE0364BF3AE /* Pods_Composition_tvOS.framework */; };
 		BDD1210B1E06F9080021CC41 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD1210A1E06F9080021CC41 /* AppDelegate.swift */; };
 		BDD121121E06F9080021CC41 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BDD121111E06F9080021CC41 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		BDD121071E06F9080021CC41 /* Composition.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Composition.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		138B6DC28C823C7C75E60592 /* Pods-Composition tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Composition tvOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-Composition tvOS/Pods-Composition tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		2D83C9BB2D50BEBED8417409 /* Pods-Composition tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Composition tvOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Composition tvOS/Pods-Composition tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		BDD121071E06F9080021CC41 /* Composition tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Composition tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDD1210A1E06F9080021CC41 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BDD121111E06F9080021CC41 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BDD121131E06F9080021CC41 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DCD589B62B8FBEE0364BF3AE /* Pods_Composition_tvOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Composition_tvOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -23,24 +27,35 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B076717841CF8CB0BA7A1539 /* Pods_Composition_tvOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2657B09EE20F66A8F684F0AF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DCD589B62B8FBEE0364BF3AE /* Pods_Composition_tvOS.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		BDD120FE1E06F9080021CC41 = {
 			isa = PBXGroup;
 			children = (
 				BDD121091E06F9080021CC41 /* Composition */,
 				BDD121081E06F9080021CC41 /* Products */,
+				F16E7B9D03A31425DC527CBA /* Pods */,
+				2657B09EE20F66A8F684F0AF /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
 		BDD121081E06F9080021CC41 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				BDD121071E06F9080021CC41 /* Composition.app */,
+				BDD121071E06F9080021CC41 /* Composition tvOS.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -55,24 +70,36 @@
 			path = Composition;
 			sourceTree = "<group>";
 		};
+		F16E7B9D03A31425DC527CBA /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				2D83C9BB2D50BEBED8417409 /* Pods-Composition tvOS.debug.xcconfig */,
+				138B6DC28C823C7C75E60592 /* Pods-Composition tvOS.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		BDD121061E06F9080021CC41 /* Composition */ = {
+		BDD121061E06F9080021CC41 /* Composition tvOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = BDD121161E06F9080021CC41 /* Build configuration list for PBXNativeTarget "Composition" */;
+			buildConfigurationList = BDD121161E06F9080021CC41 /* Build configuration list for PBXNativeTarget "Composition tvOS" */;
 			buildPhases = (
+				A5845539D665FC7D694DAE26 /* [CP] Check Pods Manifest.lock */,
 				BDD121031E06F9080021CC41 /* Sources */,
 				BDD121041E06F9080021CC41 /* Frameworks */,
 				BDD121051E06F9080021CC41 /* Resources */,
+				575D9DE904B0AE11117344D4 /* [CP] Embed Pods Frameworks */,
+				4183E2F3D2F2F3DB4B22DE53 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = Composition;
+			name = "Composition tvOS";
 			productName = Composition;
-			productReference = BDD121071E06F9080021CC41 /* Composition.app */;
+			productReference = BDD121071E06F9080021CC41 /* Composition tvOS.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -105,7 +132,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				BDD121061E06F9080021CC41 /* Composition */,
+				BDD121061E06F9080021CC41 /* Composition tvOS */,
 			);
 		};
 /* End PBXProject section */
@@ -120,6 +147,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4183E2F3D2F2F3DB4B22DE53 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Composition tvOS/Pods-Composition tvOS-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		575D9DE904B0AE11117344D4 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Composition tvOS/Pods-Composition tvOS-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A5845539D665FC7D694DAE26 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		BDD121031E06F9080021CC41 /* Sources */ = {
@@ -226,6 +301,7 @@
 		};
 		BDD121171E06F9080021CC41 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2D83C9BB2D50BEBED8417409 /* Pods-Composition tvOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -240,6 +316,7 @@
 		};
 		BDD121181E06F9080021CC41 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 138B6DC28C823C7C75E60592 /* Pods-Composition tvOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -264,7 +341,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		BDD121161E06F9080021CC41 /* Build configuration list for PBXNativeTarget "Composition" */ = {
+		BDD121161E06F9080021CC41 /* Build configuration list for PBXNativeTarget "Composition tvOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BDD121171E06F9080021CC41 /* Debug */,
