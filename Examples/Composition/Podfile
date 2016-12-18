@@ -1,0 +1,9 @@
+require "../../core-pods.rb"
+source 'https://github.com/CocoaPods/Specs.git'
+platform :tvos, '10.0'
+use_frameworks!
+inhibit_all_warnings!
+
+target "Composition tvOS" do
+  core_pods
+end
