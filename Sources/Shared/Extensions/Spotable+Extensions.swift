@@ -182,6 +182,7 @@ public extension Spotable {
     #if !os(OSX)
       if let composite = view as? Composable {
         let spots = composite.parse(item)
+        var height: CGFloat = 0.0
 
         spots.forEach {
           $0.registerAndPrepare()
@@ -190,8 +191,11 @@ public extension Spotable {
                                             spot: $0,
                                             spotableIndex: component.index,
                                             itemIndex: index)
+          height += compositeSpot.spot.computedHeight
           spotsCompositeDelegate?.compositeSpots.append(compositeSpot)
         }
+
+        item.size.height = height
       } else {
         // Set initial size for view
         view.frame.size = render().frame.size
