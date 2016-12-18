@@ -29,6 +29,13 @@ public extension Spotable {
       height += item.size.height
 
       #if !os(OSX)
+        /// tvOS adds spacing between cells (it seems to be locked to 14 pixels in height).
+        #if os(tvOS)
+          if component.kind == Component.Kind.List.string {
+            height += 14
+          }
+        #endif
+
         if height > superViewHeight {
           height = superViewHeight
           break
