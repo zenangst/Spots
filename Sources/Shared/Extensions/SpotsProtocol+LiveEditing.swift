@@ -58,7 +58,7 @@ import Cache
               }
               #endif
             }
-            print("🎍 Spots reloaded: \(weakSelf.spots.count)")
+            print("🎍 SPOTS reloaded: \(weakSelf.spots.count) -> items: \(weakSelf.spots.reduce(0, { $0.1.items.count }))")
             weakSelf.liveEditing(stateCache: weakSelf.stateCache)
           }
         } catch _ {
