@@ -11,6 +11,8 @@
 		BDD1210B1E06F9080021CC41 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD1210A1E06F9080021CC41 /* AppDelegate.swift */; };
 		BDD121121E06F9080021CC41 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BDD121111E06F9080021CC41 /* Assets.xcassets */; };
 		BDD1211A1E06FA000021CC41 /* CompositionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD121191E06FA000021CC41 /* CompositionController.swift */; };
+		BDD1211D1E07012A0021CC41 /* CompositionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD1211B1E07012A0021CC41 /* CompositionListView.swift */; };
+		BDD1211E1E07012A0021CC41 /* CompositionListHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD1211C1E07012A0021CC41 /* CompositionListHeader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +23,8 @@
 		BDD121111E06F9080021CC41 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BDD121131E06F9080021CC41 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BDD121191E06FA000021CC41 /* CompositionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositionController.swift; sourceTree = "<group>"; };
+		BDD1211B1E07012A0021CC41 /* CompositionListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CompositionListView.swift; path = "../../../../dashboard-client/Dashboard/tvOS/Views/CompositionListView.swift"; sourceTree = "<group>"; };
+		BDD1211C1E07012A0021CC41 /* CompositionListHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CompositionListHeader.swift; path = "../../../../dashboard-client/Dashboard/tvOS/Views/CompositionListHeader.swift"; sourceTree = "<group>"; };
 		DCD589B62B8FBEE0364BF3AE /* Pods_Composition_tvOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Composition_tvOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -69,6 +73,8 @@
 				BDD121111E06F9080021CC41 /* Assets.xcassets */,
 				BDD121131E06F9080021CC41 /* Info.plist */,
 				BDD121191E06FA000021CC41 /* CompositionController.swift */,
+				BDD1211B1E07012A0021CC41 /* CompositionListView.swift */,
+				BDD1211C1E07012A0021CC41 /* CompositionListHeader.swift */,
 			);
 			path = Composition;
 			sourceTree = "<group>";
@@ -205,6 +211,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				BDD1211A1E06FA000021CC41 /* CompositionController.swift in Sources */,
+				BDD1211D1E07012A0021CC41 /* CompositionListView.swift in Sources */,
+				BDD1211E1E07012A0021CC41 /* CompositionListHeader.swift in Sources */,
 				BDD1210B1E06F9080021CC41 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

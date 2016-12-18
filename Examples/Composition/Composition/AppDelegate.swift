@@ -8,21 +8,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
+    ListSpot.register(header: CompositionListHeader.self, identifier: "header")
+    ListSpot.register(view: CompositionListView.self, identifier: "view")
+
     let controller = CompositionController()
 
     window = UIWindow(frame: UIScreen.main.bounds)
     window?.rootViewController = controller
 
     controller.reloadIfNeeded(CompositionController.components)
-    controller.scrollView.backgroundColor = UIColor.green.withAlphaComponent(0.2)
-
-    GridSpot.configure = { collectionView, layout in
-      collectionView.backgroundColor = UIColor.yellow.withAlphaComponent(0.2)
-    }
-
-    ListSpot.configure = { tableView in
-      tableView.backgroundColor = UIColor.red.withAlphaComponent(0.2)
-    }
 
     window?.makeKeyAndVisible()
 

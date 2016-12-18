@@ -9,10 +9,12 @@ class CompositionController : Controller {
       "children" : [
         [
           "kind" : "list",
+          "header" : "header",
+          "title" : "foo bar baz",
           "items" : [
-            ["title" : "foo"],
-            ["title" : "bar"],
-            ["title" : "baz"]
+            ["title" : "foo", "kind" : "view", "size" : ["height" : 88.0]],
+            ["title" : "bar", "kind" : "view", "size" : ["height" : 88.0]],
+            ["title" : "baz", "kind" : "view", "size" : ["height" : 88.0]],
           ]
         ]
       ]
