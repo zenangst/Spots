@@ -8,23 +8,23 @@
 
 /* Begin PBXBuildFile section */
 		B076717841CF8CB0BA7A1539 /* Pods_Composition_tvOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCD589B62B8FBEE0364BF3AE /* Pods_Composition_tvOS.framework */; };
-		BDD1210B1E06F9080021CC41 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD1210A1E06F9080021CC41 /* AppDelegate.swift */; };
 		BDD121121E06F9080021CC41 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BDD121111E06F9080021CC41 /* Assets.xcassets */; };
-		BDD1211A1E06FA000021CC41 /* CompositionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD121191E06FA000021CC41 /* CompositionController.swift */; };
-		BDD121291E085DE90021CC41 /* CompositionListHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD121271E085DE90021CC41 /* CompositionListHeader.swift */; };
-		BDD1212A1E085DE90021CC41 /* CompositionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD121281E085DE90021CC41 /* CompositionListView.swift */; };
+		BDD121351E0865CE0021CC41 /* CompositionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD1212E1E0865CE0021CC41 /* CompositionController.swift */; };
+		BDD121361E0865CE0021CC41 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD121301E0865CE0021CC41 /* AppDelegate.swift */; };
+		BDD121371E0865CE0021CC41 /* CompositionListHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD121331E0865CE0021CC41 /* CompositionListHeader.swift */; };
+		BDD121381E0865CE0021CC41 /* CompositionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD121341E0865CE0021CC41 /* CompositionListView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		138B6DC28C823C7C75E60592 /* Pods-Composition tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Composition tvOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-Composition tvOS/Pods-Composition tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		2D83C9BB2D50BEBED8417409 /* Pods-Composition tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Composition tvOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Composition tvOS/Pods-Composition tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		BDD121071E06F9080021CC41 /* Composition tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Composition tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		BDD1210A1E06F9080021CC41 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BDD121111E06F9080021CC41 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BDD121131E06F9080021CC41 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		BDD121191E06FA000021CC41 /* CompositionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositionController.swift; sourceTree = "<group>"; };
-		BDD121271E085DE90021CC41 /* CompositionListHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositionListHeader.swift; sourceTree = "<group>"; };
-		BDD121281E085DE90021CC41 /* CompositionListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositionListView.swift; sourceTree = "<group>"; };
+		BDD1212E1E0865CE0021CC41 /* CompositionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositionController.swift; sourceTree = "<group>"; };
+		BDD121301E0865CE0021CC41 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		BDD121331E0865CE0021CC41 /* CompositionListHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositionListHeader.swift; sourceTree = "<group>"; };
+		BDD121341E0865CE0021CC41 /* CompositionListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositionListView.swift; sourceTree = "<group>"; };
 		DCD589B62B8FBEE0364BF3AE /* Pods_Composition_tvOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Composition_tvOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -69,14 +69,62 @@
 		BDD121091E06F9080021CC41 /* Composition */ = {
 			isa = PBXGroup;
 			children = (
-				BDD121271E085DE90021CC41 /* CompositionListHeader.swift */,
-				BDD121281E085DE90021CC41 /* CompositionListView.swift */,
-				BDD1210A1E06F9080021CC41 /* AppDelegate.swift */,
+				BDD1212B1E0865CE0021CC41 /* iOS */,
+				BDD1212C1E0865CE0021CC41 /* macOS */,
+				BDD1212D1E0865CE0021CC41 /* Shared */,
+				BDD1212F1E0865CE0021CC41 /* Shared-tvOS-iOS */,
+				BDD121311E0865CE0021CC41 /* tvOS */,
 				BDD121111E06F9080021CC41 /* Assets.xcassets */,
 				BDD121131E06F9080021CC41 /* Info.plist */,
-				BDD121191E06FA000021CC41 /* CompositionController.swift */,
 			);
 			path = Composition;
+			sourceTree = "<group>";
+		};
+		BDD1212B1E0865CE0021CC41 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = iOS;
+			sourceTree = "<group>";
+		};
+		BDD1212C1E0865CE0021CC41 /* macOS */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = macOS;
+			sourceTree = "<group>";
+		};
+		BDD1212D1E0865CE0021CC41 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				BDD1212E1E0865CE0021CC41 /* CompositionController.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		BDD1212F1E0865CE0021CC41 /* Shared-tvOS-iOS */ = {
+			isa = PBXGroup;
+			children = (
+				BDD121301E0865CE0021CC41 /* AppDelegate.swift */,
+			);
+			path = "Shared-tvOS-iOS";
+			sourceTree = "<group>";
+		};
+		BDD121311E0865CE0021CC41 /* tvOS */ = {
+			isa = PBXGroup;
+			children = (
+				BDD121321E0865CE0021CC41 /* Views */,
+			);
+			path = tvOS;
+			sourceTree = "<group>";
+		};
+		BDD121321E0865CE0021CC41 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				BDD121331E0865CE0021CC41 /* CompositionListHeader.swift */,
+				BDD121341E0865CE0021CC41 /* CompositionListView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		F16E7B9D03A31425DC527CBA /* Pods */ = {
@@ -210,10 +258,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BDD1211A1E06FA000021CC41 /* CompositionController.swift in Sources */,
-				BDD121291E085DE90021CC41 /* CompositionListHeader.swift in Sources */,
-				BDD1212A1E085DE90021CC41 /* CompositionListView.swift in Sources */,
-				BDD1210B1E06F9080021CC41 /* AppDelegate.swift in Sources */,
+				BDD121371E0865CE0021CC41 /* CompositionListHeader.swift in Sources */,
+				BDD121361E0865CE0021CC41 /* AppDelegate.swift in Sources */,
+				BDD121351E0865CE0021CC41 /* CompositionController.swift in Sources */,
+				BDD121381E0865CE0021CC41 /* CompositionListView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -37,13 +37,31 @@ class CompositionController : Controller, SpotsDelegate {
 
     let components = [
       Component(
+        kind: Component.Kind.List.string,
+        items: [
+          Item(title: "foo", size: CGSize(width: 0, height: 88)),
+          Item(title: "bar", size: CGSize(width: 0, height: 88)),
+          Item(title: "baz", size: CGSize(width: 0, height: 88))
+        ]
+      ),
+      Component(
         kind : Component.Kind.Grid.string,
         span: 2,
         items: [
           Item(json1),
           Item(json2)
         ]
-      )]
+      ),
+      Component(
+        kind : Component.Kind.Grid.string,
+        span: 3,
+        items: [
+          Item(json1),
+          Item(json2),
+          Item(json1)
+        ]
+      )
+    ]
     return components
   }
 
