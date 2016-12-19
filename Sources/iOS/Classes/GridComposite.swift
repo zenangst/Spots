@@ -13,4 +13,11 @@ public class GridComposite: UICollectionViewCell, Composable {
   override public var canBecomeFocused: Bool {
     return false
   }
+
+  /// This fixes the which view should be focused when navigating between composite spots on tvOS.
+  #if os(tvOS)
+  public override func didMoveToSuperview() {
+    superview?.sendSubview(toBack: self)
+  }
+  #endif
 }
