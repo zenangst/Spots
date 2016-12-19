@@ -13,11 +13,21 @@
 		BDD121361E0865CE0021CC41 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD121301E0865CE0021CC41 /* AppDelegate.swift */; };
 		BDD121371E0865CE0021CC41 /* CompositionListHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD121331E0865CE0021CC41 /* CompositionListHeader.swift */; };
 		BDD121381E0865CE0021CC41 /* CompositionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD121341E0865CE0021CC41 /* CompositionListView.swift */; };
+		BDDB19FD1E08665200DFF834 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BDDB19FC1E08665200DFF834 /* Assets.xcassets */; };
+		BDDB1A001E08665200DFF834 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BDDB19FE1E08665200DFF834 /* LaunchScreen.storyboard */; };
+		BDDB1A051E08666A00DFF834 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD121301E0865CE0021CC41 /* AppDelegate.swift */; };
+		BDDB1A061E08667100DFF834 /* CompositionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD1212E1E0865CE0021CC41 /* CompositionController.swift */; };
+		BDDB1A0A1E08684F00DFF834 /* CompositionListHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDB1A081E08684F00DFF834 /* CompositionListHeader.swift */; };
+		BDDB1A0B1E08684F00DFF834 /* CompositionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDB1A091E08684F00DFF834 /* CompositionListView.swift */; };
+		D610178A6C3E2CA9A26E4E59 /* Pods_Composition_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DF507F311D230EC07104487 /* Pods_Composition_iOS.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		138B6DC28C823C7C75E60592 /* Pods-Composition tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Composition tvOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-Composition tvOS/Pods-Composition tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		1A4EC7C57AB20E70B6BCF92D /* Pods-Composition iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Composition iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-Composition iOS/Pods-Composition iOS.release.xcconfig"; sourceTree = "<group>"; };
 		2D83C9BB2D50BEBED8417409 /* Pods-Composition tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Composition tvOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Composition tvOS/Pods-Composition tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		6DF507F311D230EC07104487 /* Pods_Composition_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Composition_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B19134F37CE9C9E607EDE507 /* Pods-Composition iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Composition iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Composition iOS/Pods-Composition iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		BDD121071E06F9080021CC41 /* Composition tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Composition tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDD121111E06F9080021CC41 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BDD121131E06F9080021CC41 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -25,6 +35,12 @@
 		BDD121301E0865CE0021CC41 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BDD121331E0865CE0021CC41 /* CompositionListHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositionListHeader.swift; sourceTree = "<group>"; };
 		BDD121341E0865CE0021CC41 /* CompositionListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositionListView.swift; sourceTree = "<group>"; };
+		BDDB19F31E08665200DFF834 /* Composition iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Composition iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BDDB19FC1E08665200DFF834 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		BDDB19FF1E08665200DFF834 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		BDDB1A011E08665200DFF834 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BDDB1A081E08684F00DFF834 /* CompositionListHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositionListHeader.swift; sourceTree = "<group>"; };
+		BDDB1A091E08684F00DFF834 /* CompositionListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositionListView.swift; sourceTree = "<group>"; };
 		DCD589B62B8FBEE0364BF3AE /* Pods_Composition_tvOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Composition_tvOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -37,6 +53,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		BDDB19F01E08665200DFF834 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D610178A6C3E2CA9A26E4E59 /* Pods_Composition_iOS.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -44,6 +68,7 @@
 			isa = PBXGroup;
 			children = (
 				DCD589B62B8FBEE0364BF3AE /* Pods_Composition_tvOS.framework */,
+				6DF507F311D230EC07104487 /* Pods_Composition_iOS.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -52,6 +77,7 @@
 			isa = PBXGroup;
 			children = (
 				BDD121091E06F9080021CC41 /* Composition */,
+				BDDB19F41E08665200DFF834 /* Composition */,
 				BDD121081E06F9080021CC41 /* Products */,
 				F16E7B9D03A31425DC527CBA /* Pods */,
 				2657B09EE20F66A8F684F0AF /* Frameworks */,
@@ -62,6 +88,7 @@
 			isa = PBXGroup;
 			children = (
 				BDD121071E06F9080021CC41 /* Composition tvOS.app */,
+				BDDB19F31E08665200DFF834 /* Composition iOS.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -83,6 +110,7 @@
 		BDD1212B1E0865CE0021CC41 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
+				BDDB1A071E08684F00DFF834 /* Views */,
 			);
 			path = iOS;
 			sourceTree = "<group>";
@@ -127,11 +155,32 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		BDDB19F41E08665200DFF834 /* Composition */ = {
+			isa = PBXGroup;
+			children = (
+				BDDB19FC1E08665200DFF834 /* Assets.xcassets */,
+				BDDB19FE1E08665200DFF834 /* LaunchScreen.storyboard */,
+				BDDB1A011E08665200DFF834 /* Info.plist */,
+			);
+			path = Composition;
+			sourceTree = "<group>";
+		};
+		BDDB1A071E08684F00DFF834 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				BDDB1A081E08684F00DFF834 /* CompositionListHeader.swift */,
+				BDDB1A091E08684F00DFF834 /* CompositionListView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		F16E7B9D03A31425DC527CBA /* Pods */ = {
 			isa = PBXGroup;
 			children = (
 				2D83C9BB2D50BEBED8417409 /* Pods-Composition tvOS.debug.xcconfig */,
 				138B6DC28C823C7C75E60592 /* Pods-Composition tvOS.release.xcconfig */,
+				B19134F37CE9C9E607EDE507 /* Pods-Composition iOS.debug.xcconfig */,
+				1A4EC7C57AB20E70B6BCF92D /* Pods-Composition iOS.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -159,6 +208,26 @@
 			productReference = BDD121071E06F9080021CC41 /* Composition tvOS.app */;
 			productType = "com.apple.product-type.application";
 		};
+		BDDB19F21E08665200DFF834 /* Composition iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BDDB1A041E08665200DFF834 /* Build configuration list for PBXNativeTarget "Composition iOS" */;
+			buildPhases = (
+				6FCF2DE62DBD59FBB46A57E3 /* [CP] Check Pods Manifest.lock */,
+				BDDB19EF1E08665200DFF834 /* Sources */,
+				BDDB19F01E08665200DFF834 /* Frameworks */,
+				BDDB19F11E08665200DFF834 /* Resources */,
+				673ED97DFC2203B3381512EE /* [CP] Embed Pods Frameworks */,
+				6C42F1599937A870E0D10893 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Composition iOS";
+			productName = Composition;
+			productReference = BDDB19F31E08665200DFF834 /* Composition iOS.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -170,6 +239,11 @@
 				ORGANIZATIONNAME = "Christoffer Winterkvist";
 				TargetAttributes = {
 					BDD121061E06F9080021CC41 = {
+						CreatedOnToolsVersion = 8.2;
+						DevelopmentTeam = LG4DBY4QF9;
+						ProvisioningStyle = Automatic;
+					};
+					BDDB19F21E08665200DFF834 = {
 						CreatedOnToolsVersion = 8.2;
 						DevelopmentTeam = LG4DBY4QF9;
 						ProvisioningStyle = Automatic;
@@ -190,6 +264,7 @@
 			projectRoot = "";
 			targets = (
 				BDD121061E06F9080021CC41 /* Composition tvOS */,
+				BDDB19F21E08665200DFF834 /* Composition iOS */,
 			);
 		};
 /* End PBXProject section */
@@ -200,6 +275,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				BDD121121E06F9080021CC41 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BDDB19F11E08665200DFF834 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BDDB1A001E08665200DFF834 /* LaunchScreen.storyboard in Resources */,
+				BDDB19FD1E08665200DFF834 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -236,6 +320,51 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Composition tvOS/Pods-Composition tvOS-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		673ED97DFC2203B3381512EE /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Composition iOS/Pods-Composition iOS-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6C42F1599937A870E0D10893 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Composition iOS/Pods-Composition iOS-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6FCF2DE62DBD59FBB46A57E3 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		A5845539D665FC7D694DAE26 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -265,7 +394,29 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		BDDB19EF1E08665200DFF834 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BDDB1A0A1E08684F00DFF834 /* CompositionListHeader.swift in Sources */,
+				BDDB1A051E08666A00DFF834 /* AppDelegate.swift in Sources */,
+				BDDB1A061E08667100DFF834 /* CompositionController.swift in Sources */,
+				BDDB1A0B1E08684F00DFF834 /* CompositionListView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		BDDB19FE1E08665200DFF834 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BDDB19FF1E08665200DFF834 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		BDD121141E06F9080021CC41 /* Debug */ = {
@@ -391,6 +542,42 @@
 			};
 			name = Release;
 		};
+		BDDB1A021E08665200DFF834 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B19134F37CE9C9E607EDE507 /* Pods-Composition iOS.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = LG4DBY4QF9;
+				INFOPLIST_FILE = Composition/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = hyper.no.Composition;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		BDDB1A031E08665200DFF834 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1A4EC7C57AB20E70B6BCF92D /* Pods-Composition iOS.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = LG4DBY4QF9;
+				INFOPLIST_FILE = Composition/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = hyper.no.Composition;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -408,6 +595,15 @@
 			buildConfigurations = (
 				BDD121171E06F9080021CC41 /* Debug */,
 				BDD121181E06F9080021CC41 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BDDB1A041E08665200DFF834 /* Build configuration list for PBXNativeTarget "Composition iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BDDB1A021E08665200DFF834 /* Debug */,
+				BDDB1A031E08665200DFF834 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
