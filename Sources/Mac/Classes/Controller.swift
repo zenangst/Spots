@@ -4,7 +4,7 @@ public enum ControllerBackground {
   case regular, dynamic
 }
 
-open class Controller: NSViewController, SpotsProtocol {
+open class Controller: NSViewController, SpotsProtocol, CompositeDelegate {
 
   /// A closure that is called when the controller is reloaded with components
   public static var spotsDidReloadComponents: ((Controller) -> Void)?
