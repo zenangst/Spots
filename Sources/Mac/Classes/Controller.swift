@@ -10,7 +10,6 @@ open class Controller: NSViewController, SpotsProtocol, CompositeDelegate {
   public static var spotsDidReloadComponents: ((Controller) -> Void)?
 
   open static var configure: ((_ container: SpotsScrollView) -> Void)?
-  let KVOWindowContext: UnsafeMutableRawPointer? = UnsafeMutableRawPointer(mutating: nil)
 
   /// A collection of Spotable objects
   open var spots: [Spotable] {
