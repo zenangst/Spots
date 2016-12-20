@@ -128,6 +128,7 @@ open class ListSpot: NSObject, Listable {
     scrollView.contentView.addSubview(tableView)
     configureLayout(component)
     registerDefault(view: ListSpotItem.self)
+    registerComposite(view: ListComposite.self)
   }
 
   public convenience init(cacheKey: String) {

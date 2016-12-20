@@ -150,6 +150,7 @@ open class GridSpot: NSObject, Gridable {
       self.component.kind = Component.Kind.Grid.string
     }
 
+    registerComposite(view: GridComposite.self)
     registerAndPrepare()
     setupCollectionView()
     scrollView.addSubview(titleView)

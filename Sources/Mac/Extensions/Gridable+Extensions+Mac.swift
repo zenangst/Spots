@@ -134,6 +134,12 @@ extension Gridable {
     }
   }
 
+  func registerComposite(view: NSCollectionViewItem.Type) {
+    if type(of: self).grids.composite == nil {
+      type(of: self).grids.composite = GridRegistry.Item.classType(view)
+    }
+  }
+
   public static func register(nib: Nib, identifier: StringConvertible) {
     self.grids.storage[identifier.string] = GridRegistry.Item.nib(nib)
   }
