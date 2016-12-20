@@ -217,7 +217,6 @@ open class Controller: NSViewController, SpotsProtocol, CompositeDelegate {
     compositeSpots = []
     spots.enumerated().forEach { index, spot in
       setupSpot(at: index, spot: spot)
-      scrollView.spotsContentView.addSubview(spot.render())
       animated?(spot.render())
     }
   }
@@ -236,6 +235,7 @@ open class Controller: NSViewController, SpotsProtocol, CompositeDelegate {
     spot.component.size = CGSize(
       width: view.frame.width,
       height: ceil(spot.render().frame.height))
+    scrollView.spotsContentView.addSubview(spot.render())
   }
 
   open override func viewDidLayout() {
