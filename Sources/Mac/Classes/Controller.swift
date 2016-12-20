@@ -212,7 +212,7 @@ open class Controller: NSViewController, SpotsProtocol, CompositeDelegate {
 
     setupSpots()
     closure?()
-    scrollView.layoutSubtreeIfNeeded()
+    scrollView.layoutSubviews()
   }
 
   /**
