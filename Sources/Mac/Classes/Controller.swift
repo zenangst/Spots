@@ -225,15 +225,15 @@ open class Controller: NSViewController, SpotsProtocol, CompositeDelegate {
 
   public func setupSpot(at index: Int, spot: Spotable) {
     spot.spotsCompositeDelegate = self
-    spot.registerAndPrepare()
 
+    spots[index].component.index = index
+    spot.registerAndPrepare()
 
     var height = spot.computedHeight
     if let componentSize = spot.component.size, componentSize.height > height {
       height = componentSize.height
     }
 
-    spots[index].component.index = index
     spot.setup(CGSize(width: view.frame.width, height: height))
     spot.component.size = CGSize(
       width: view.frame.width,
