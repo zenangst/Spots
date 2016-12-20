@@ -8,9 +8,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
   func applicationDidFinishLaunching(_ aNotification: Notification) {
     windowController.window?.styleMask = [.closable, .borderless, .miniaturizable, .resizable, .titled, .fullSizeContentView]
-    windowController.window?.minSize = NSSize(width: 985, height: 640)
+    windowController.window?.minSize = NSSize(width: 960, height: 640)
+    windowController.windowFrameAutosaveName = "Window"
 
     ListSpot.register(view: CompositionListView.self, identifier: "view")
+    ListSpot.register(defaultView: CompositionListView.self)
 
     let controller = CompositionController()
     windowController.contentViewController = controller
@@ -18,6 +20,4 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     controller.reloadIfNeeded(CompositionController.components)
   }
-
 }
-
