@@ -269,7 +269,6 @@ open class GridSpot: NSObject, Gridable {
    */
   open func layout(_ size: CGSize) {
     layout.prepareForTransition(to: layout)
-
     var layoutInsets = EdgeInsets()
     if let layout = layout as? NSCollectionViewFlowLayout {
       layout.sectionInset.top = component.meta(GridableMeta.Key.sectionInsetTop, Default.sectionInsetTop) + titleView.frame.size.height + 8
@@ -302,6 +301,7 @@ open class GridSpot: NSObject, Gridable {
   open func setup(_ size: CGSize) {
     var size = size
     size.height = layout.collectionViewContentSize.height
+    layout.invalidateLayout()
     layout(size)
   }
 
