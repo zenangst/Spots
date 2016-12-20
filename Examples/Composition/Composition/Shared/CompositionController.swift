@@ -58,6 +58,33 @@ class CompositionController : Controller, SpotsDelegate {
       ]
     ]
 
+    var secondComponent = Component(
+      kind : Component.Kind.Grid.string,
+      span: 2
+    )
+
+    secondComponent.add(children: [
+      Component(
+        title: "First header",
+        kind: "list",
+        items: [
+          Item(title: "First", kind: "view", size: CGSize(width: 0, height: 66)),
+          Item(title: "Second", kind: "view", size: CGSize(width: 0, height: 66)),
+          Item(title: "Third", kind: "view", size: CGSize(width: 0, height: 66))
+        ]
+      ),
+      Component(
+        title: "Second header",
+        kind: "list",
+        items: [
+          Item(title: "Forth", kind: "view", size: CGSize(width: 0, height: 66)),
+          Item(title: "Fifth", kind: "view", size: CGSize(width: 0, height: 66)),
+          Item(title: "Sixt", kind: "view", size: CGSize(width: 0, height: 66))
+        ]
+      )
+      ]
+    )
+
     let components = [
       Component(
         title: "The very first Header",
@@ -69,14 +96,7 @@ class CompositionController : Controller, SpotsDelegate {
           Item(title: "baz", kind: "view", size: CGSize(width: 0, height: 66))
         ]
       ),
-      Component(
-        kind : Component.Kind.Grid.string,
-        span: 2,
-        items: [
-          Item(json1),
-          Item(json2)
-        ]
-      ),
+      secondComponent,
       Component(
         kind : Component.Kind.Grid.string,
         span: 3,
