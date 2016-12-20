@@ -287,7 +287,7 @@ public extension Spotable {
       let compositeSpot = CompositeSpot(parentSpot: self,
                                         spot: $0,
                                         spotableIndex: component.index,
-                                        itemIndex: index)
+                                        itemIndex: item.index)
       height += compositeSpot.spot.computedHeight
 
       #if !os(OSX)
