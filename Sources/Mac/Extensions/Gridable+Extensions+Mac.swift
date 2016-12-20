@@ -156,6 +156,15 @@ extension Gridable {
     self.grids.storage[self.grids.defaultIdentifier] = GridRegistry.Item.classType(defaultView)
   }
 
+  /// Register default view for the Spotable object
+  ///
+  /// - parameter view: The view type that should be used as the default view
+  func registerDefault(view: NSCollectionViewItem.Type) {
+    if type(of: self).grids.storage[type(of: self).views.defaultIdentifier] == nil {
+      type(of: self).grids.defaultItem = GridRegistry.Item.classType(view)
+    }
+  }
+
   public func afterUpdate() {
     setup(collectionView.frame.size)
   }
