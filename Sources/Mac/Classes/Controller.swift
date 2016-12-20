@@ -49,7 +49,9 @@ open class Controller: NSViewController, SpotsProtocol, CompositeDelegate {
   /// A delegate for when an item is tapped within a Spot
   weak public var delegate: SpotsDelegate? {
     didSet {
-      spots.forEach { $0.delegate = delegate }
+      spots.forEach {
+        $0.delegate = delegate
+      }
       delegate?.didChange(spots: spots)
     }
   }
