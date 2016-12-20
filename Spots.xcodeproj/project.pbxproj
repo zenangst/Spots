@@ -521,17 +521,17 @@
 				BD129E081D7B2CDE009AC164 /* CarouselSpot.swift */,
 				BD129E0A1D7B2CDE009AC164 /* CollectionViewLeftLayout.swift */,
 				BD129E111D7B2CDE009AC164 /* Controller.swift */,
+				BDDB1A431E093AED00DFF834 /* GridComposite.swift */,
 				BD129E0B1D7B2CDE009AC164 /* GridSpot.swift */,
 				BD129E0C1D7B2CDE009AC164 /* GridSpotItem.swift */,
+				BDDB1A451E093AF400DFF834 /* ListComposite.swift */,
 				BD129E0D1D7B2CDE009AC164 /* ListSpot.swift */,
 				BD129E0E1D7B2CDE009AC164 /* ListSpotItem.swift */,
 				BD129E0F1D7B2CDE009AC164 /* NoScrollView.swift */,
-				BD129E101D7B2CDE009AC164 /* SpotsContentView.swift */,
-				BD129E121D7B2CDE009AC164 /* SpotsScrollView.swift */,
 				BDA8DAFD1DCF4CE100A4A8DD /* RowSpot.swift */,
 				BDA8DAFF1DCF4D0A00A4A8DD /* RowSpotItem.swift */,
-				BDDB1A431E093AED00DFF834 /* GridComposite.swift */,
-				BDDB1A451E093AF400DFF834 /* ListComposite.swift */,
+				BD129E101D7B2CDE009AC164 /* SpotsContentView.swift */,
+				BD129E121D7B2CDE009AC164 /* SpotsScrollView.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -539,15 +539,15 @@
 		BD129E131D7B2CDE009AC164 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				BDDB1A471E093BF500DFF834 /* Composable+Mac.swift */,
+				BDEFF54A1DD1A64400FC0537 /* DataSource+Mac+Extensions.swift */,
+				BDEFF54C1DD1A65800FC0537 /* Delegate+Mac+Extensions.swift */,
 				BD129E181D7B2CDE009AC164 /* Gridable+Extensions+Mac.swift */,
 				BD129E191D7B2CDE009AC164 /* Listable+Extensions+Mac.swift */,
 				BD129E1B1D7B2CDE009AC164 /* NSCollectionView+UserInterface.swift */,
 				BD129E1C1D7B2CDE009AC164 /* NSScrollView+Extensions.swift */,
 				BD129E1D1D7B2CDE009AC164 /* NSTableView+UserInterface.swift */,
 				BD129E1E1D7B2CDE009AC164 /* Viewable+Mac.swift */,
-				BDEFF54A1DD1A64400FC0537 /* DataSource+Mac+Extensions.swift */,
-				BDEFF54C1DD1A65800FC0537 /* Delegate+Mac+Extensions.swift */,
-				BDDB1A471E093BF500DFF834 /* Composable+Mac.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
