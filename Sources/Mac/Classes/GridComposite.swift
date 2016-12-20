@@ -4,6 +4,26 @@ import Cocoa
 /// A proxy cell that is used for composite views inside other Spotable objects
 public class GridComposite: NSCollectionViewItem, Composable {
 
+  open var customView = FlippedView()
+
+  static open var isFlipped: Bool {
+    get {
+      return true
+    }
+  }
+
+  override init?(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+    super.init(nibName: nil, bundle: nil)
+  }
+
+  required public init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
+  open override func loadView() {
+    view = customView
+  }
+
   /// A configuration method to configure the Composable view with a collection of Spotable objects
   ///
   ///  - parameter item:  The item that is currently being configured in the list
@@ -24,7 +44,6 @@ public class GridComposite: NSCollectionViewItem, Composable {
 
       view.addSubview(spot.render())
       spot.render().frame.origin.y = height
-      spot.render().layoutSubtreeIfNeeded()
       height += spot.render().contentSize.height
     }
 
