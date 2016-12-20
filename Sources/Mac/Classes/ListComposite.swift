@@ -4,6 +4,12 @@ import Brick
 /// A proxy cell that is used for composite views inside other Spotable objects
 public class ListComposite: NSTableRowView, Composable {
 
+  static open var isFlipped: Bool {
+    get {
+      return true
+    }
+  }
+
   /// A configuration method to configure the Composable view with a collection of Spotable objects
   ///
   ///  - parameter item:  The item that is currently being configured in the list
