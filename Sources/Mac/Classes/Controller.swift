@@ -218,12 +218,15 @@ open class Controller: NSViewController, SpotsProtocol, CompositeDelegate {
     compositeSpots = []
     spots.enumerated().forEach { index, spot in
       setupSpot(at: index, spot: spot)
+      scrollView.spotsContentView.addSubview(spot.render())
       animated?(spot.render())
     }
   }
 
   public func setupSpot(at index: Int, spot: Spotable) {
     spot.spotsCompositeDelegate = self
+    spot.registerAndPrepare()
+
 
     var height = spot.computedHeight
     if let componentSize = spot.component.size, componentSize.height > height {
@@ -231,9 +234,6 @@ open class Controller: NSViewController, SpotsProtocol, CompositeDelegate {
     }
 
     spots[index].component.index = index
-    scrollView.spotsContentView.addSubview(spot.render())
-    spot.registerAndPrepare()
-
     spot.setup(CGSize(width: view.frame.width, height: height))
     spot.component.size = CGSize(
       width: view.frame.width,
