@@ -249,6 +249,18 @@ public struct Component: Mappable, Equatable {
 
     return .none
   }
+
+  mutating public func add(child: Component) {
+    var item = Item(kind: "composite")
+    item.children = [child.dictionary]
+    items.append(item)
+  }
+
+  mutating public func add(children: [Component]) {
+    for child in children {
+      add(child: child)
+    }
+  }
 }
 
 // Compare a collection of view models
