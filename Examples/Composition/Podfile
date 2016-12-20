@@ -2,22 +2,31 @@ source 'https://github.com/CocoaPods/Specs.git'
 use_frameworks!
 inhibit_all_warnings!
 
-target "Composition tvOS" do
-  platform :tvos, '10.0'
-  pod 'Spots', path: '../../'
-  pod 'Brick'
-  pod 'Tailor'
-  pod 'CryptoSwift', '0.6.0'
-  pod 'Cache'
-end
+abstract_target 'Composition' do
+  target "Composition tvOS" do
+    platform :tvos, '10.0'
+    pod 'Spots', path: '../../'
+    pod 'Brick'
+    pod 'Tailor'
+    pod 'CryptoSwift', '0.6.0'
+    pod 'Cache'
+  end
 
-target "Composition iOS" do
-  platform :ios, '10.0'
-  pod 'Spots', path: '../../'
-  pod 'Brick'
-  pod 'Tailor'
-  pod 'CryptoSwift', '0.6.0'
-  pod 'Cache'
+  target "Composition iOS" do
+    platform :ios, '10.0'
+    pod 'Spots', path: '../../'
+    pod 'Brick'
+    pod 'Tailor'
+    pod 'CryptoSwift', '0.6.0'
+    pod 'Cache'
+  end
+
+  target "Composition macOS" do
+    platform :osx, '10.11'
+    pod 'Spots', path: '../../'
+    pod 'Brick'
+    pod 'Tailor'
+  end
 end
 
 post_install do |installer|
