@@ -416,6 +416,7 @@ extension SpotsProtocol {
       if let controller = self as? Controller {
         Controller.spotsDidReloadComponents?(controller)
       }
+
       weakSelf.scrollView.layoutSubviews()
     }
   }
