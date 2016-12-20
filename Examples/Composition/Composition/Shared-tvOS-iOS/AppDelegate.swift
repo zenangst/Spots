@@ -12,12 +12,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     ListSpot.register(view: CompositionListView.self, identifier: "view")
 
     let controller = CompositionController()
+    controller.reloadIfNeeded(CompositionController.components)
 
     window = UIWindow(frame: UIScreen.main.bounds)
     window?.rootViewController = controller
-
-    controller.reloadIfNeeded(CompositionController.components)
-
     window?.makeKeyAndVisible()
 
     return true
