@@ -1,4 +1,3 @@
-import UIKit
 import Brick
 
 /// A protocol used for composition inside Spotable objects
