@@ -193,28 +193,30 @@ public extension Spotable {
     guard let (_, resolvedView) = Self.views.make(kind),
       let view = resolvedView else { return nil }
 
-    #if !os(OSX)
-      if let composite = view as? Composable {
-        let spots = composite.parse(item)
-        var height: CGFloat = 0.0
+    if let composite = view as? Composable {
+      let spots = composite.parse(item)
+      var height: CGFloat = 0.0
 
-        spots.forEach {
-          $0.registerAndPrepare()
+      spots.forEach {
+        $0.registerAndPrepare()
 
-          let compositeSpot = CompositeSpot(parentSpot: self,
-                                            spot: $0,
-                                            spotableIndex: component.index,
-                                            itemIndex: index)
-          height += compositeSpot.spot.computedHeight
+        let compositeSpot = CompositeSpot(parentSpot: self,
+                                          spot: $0,
+                                          spotableIndex: component.index,
+                                          itemIndex: index)
+        height += compositeSpot.spot.computedHeight
 
-          let header = compositeSpot.spot.type.headers.make(compositeSpot.spot.component.header)
-          height += (header?.view as? Componentable)?.preferredHeaderHeight ?? 0.0
+        #if !os(OSX)
+        let header = compositeSpot.spot.type.headers.make(compositeSpot.spot.component.header)
+        height += (header?.view as? Componentable)?.preferredHeaderHeight ?? 0.0
+        #endif
 
-          spotsCompositeDelegate?.compositeSpots.append(compositeSpot)
-        }
+        spotsCompositeDelegate?.compositeSpots.append(compositeSpot)
+      }
 
-        item.size.height = height
-      } else {
+      item.size.height = height
+    } else {
+      #if !os(OSX)
         // Set initial size for view
         view.frame.size = render().frame.size
 
@@ -225,11 +227,12 @@ public extension Spotable {
         (view as? UITableViewCell)?.contentView.frame = view.bounds
         (view as? UICollectionViewCell)?.contentView.frame = view.bounds
         (view as? SpotConfigurable)?.configure(&item)
-      }
-    #else
-      view.frame.size.width = render().frame.size.width
-      (view as? SpotConfigurable)?.configure(&item)
-    #endif
+
+      #else
+        view.frame.size.width = render().frame.size.width
+        (view as? SpotConfigurable)?.configure(&item)
+      #endif
+    }
 
     if let itemView = view as? SpotConfigurable, usesViewSize {
       setFallbackViewSize(to: &item, with: itemView)
