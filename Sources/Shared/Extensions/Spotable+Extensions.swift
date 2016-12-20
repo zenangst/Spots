@@ -186,14 +186,41 @@ public extension Spotable {
     var item = item
     item.index = index
 
-    let kind = item.kind.isEmpty || Self.views.storage[item.kind] == nil
-      ? Self.views.defaultIdentifier
-      : item.kind
+    let kind: String
+    var view: View?
+    var composableView: Composable?
 
-    guard let (_, resolvedView) = Self.views.make(kind),
-      let view = resolvedView else { return nil }
+    #if !os(OSX)
+      kind = item.kind.isEmpty || Self.views.storage[item.kind] == nil
+        ? Self.views.defaultIdentifier
+        : item.kind
 
-    if let composite = view as? Composable {
+      guard let (_, resolvedView) = Self.views.make(kind),
+        let view = resolvedView else { return nil }
+
+      composableView = view as? Composable
+    #else
+      if let gridable = self as? Gridable {
+        kind = item.kind.isEmpty || type(of: gridable).grids.storage[item.kind] == nil
+          ? type(of: gridable).grids.defaultIdentifier
+          : item.kind
+
+        if let (_, resolvedView) = type(of: gridable).grids.make(kind) {
+          composableView = resolvedView as? Composable
+        }
+      } else if self is Listable {
+        kind = item.kind.isEmpty || Self.views.storage[item.kind] == nil
+          ? Self.views.defaultIdentifier
+          : item.kind
+
+        if let (_, resolvedView) = Self.views.make(kind) {
+          view = resolvedView
+          composableView = resolvedView as? Composable
+        }
+      }
+    #endif
+
+    if let composite = composableView {
       let spots = composite.parse(item)
       var height: CGFloat = 0.0
 
@@ -229,7 +256,7 @@ public extension Spotable {
         (view as? SpotConfigurable)?.configure(&item)
 
       #else
-        view.frame.size.width = render().frame.size.width
+        view?.frame.size.width = render().frame.size.width
         (view as? SpotConfigurable)?.configure(&item)
       #endif
     }
