@@ -1,9 +1,11 @@
-//
-//  ListSpotCell.swift
-//  Spots
-//
-//  Created by Christoffer Winterkvist on 12/20/16.
-//  Copyright © 2016 Hyper Interaktiv AS. All rights reserved.
-//
+import Cocoa
+import Brick
 
-import Foundation
+class ListSpotCell: NSTableRowView, SpotConfigurable {
+
+  var preferredViewSize: CGSize = CGSize(width: 0, height: 120)
+
+  func configure(_ item: inout Item) {
+    backgroundColor = NSColor.red
+  }
+}
