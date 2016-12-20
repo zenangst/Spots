@@ -247,6 +247,11 @@ public extension Spotable {
       item.size.height = height
     } else {
       #if !os(OSX)
+
+        guard let view = view else {
+          return nil
+        }
+
         // Set initial size for view
         view.frame.size = render().frame.size
 
