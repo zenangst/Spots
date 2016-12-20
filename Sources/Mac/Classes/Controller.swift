@@ -76,6 +76,10 @@ open class Controller: NSViewController, SpotsProtocol, CompositeDelegate {
     super.init(nibName: nil, bundle: nil)!
 
     NotificationCenter.default.addObserver(self, selector: #selector(Controller.scrollViewDidScroll(_:)), name: NSNotification.Name.NSScrollViewDidLiveScroll, object: scrollView)
+
+    NotificationCenter.default.addObserver(self, selector: #selector(windowDidResize(_:)), name: NSNotification.Name.NSWindowDidResize, object: nil)
+
+    NotificationCenter.default.addObserver(self, selector: #selector(windowDidEndLiveResize(_:)), name: NSNotification.Name.NSWindowDidEndLiveResize, object: nil)
   }
 
   /**
@@ -251,6 +255,28 @@ open class Controller: NSViewController, SpotsProtocol, CompositeDelegate {
       if selectedSpot.render() != spot.render() {
         spot.deselect()
       }
+    }
+  }
+
+  public func windowDidResize(_ notification: Notification) {
+    for case let spot as Gridable in spots {
+      guard spot.component.span > 1 else {
+        continue
+      }
+      
+      spot.layout.prepareForTransition(from: spot.layout)
+      spot.layout.invalidateLayout()
+    }
+  }
+
+  public func windowDidEndLiveResize(_ notification: Notification) {
+    for case let spot as Gridable in spots {
+      guard spot.component.span > 1 else {
+        continue
+      }
+
+      spot.layout.prepareForTransition(to: spot.layout)
+      spot.layout.invalidateLayout()
     }
   }
 
