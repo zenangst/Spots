@@ -223,47 +223,19 @@ public extension Spotable {
       }
     #endif
 
-    if let composite = composableView {
-      let spots = composite.parse(item)
-      var height: CGFloat = 0.0
-
-      spots.forEach {
-        $0.registerAndPrepare()
-
-        let compositeSpot = CompositeSpot(parentSpot: self,
-                                          spot: $0,
-                                          spotableIndex: component.index,
-                                          itemIndex: index)
-        height += compositeSpot.spot.computedHeight
-
-        #if !os(OSX)
-        let header = compositeSpot.spot.type.headers.make(compositeSpot.spot.component.header)
-        height += (header?.view as? Componentable)?.preferredHeaderHeight ?? 0.0
-        #endif
-
-        spotsCompositeDelegate?.compositeSpots.append(compositeSpot)
-      }
-
-      item.size.height = height
+    if let composable = composableView {
+      item.size.height = prepare(composable: composable, item: item)
     } else {
-      #if !os(OSX)
-
+      #if os(OSX)
+        view?.frame.size.width = render().frame.size.width
+      #else
         guard let view = view else {
           return nil
         }
 
-        // Set initial size for view
-        view.frame.size = render().frame.size
-
-        if view.frame.size == CGSize.zero {
-          view.frame.size = UIScreen.main.bounds.size
-        }
-
-        (view as? UITableViewCell)?.contentView.frame = view.bounds
-        (view as? UICollectionViewCell)?.contentView.frame = view.bounds
-      #else
-        view?.frame.size.width = render().frame.size.width
+        prepare(view: view)
       #endif
+
       (view as? SpotConfigurable)?.configure(&item)
     }
 
@@ -280,6 +252,53 @@ public extension Spotable {
     }
 
     return item
+  }
+
+  #if !os(OSX)
+  /// Prepare view frame for item
+  ///
+  /// - parameter view: The view that is going to be prepared.
+  func prepare(view: View) {
+    // Set initial size for view
+    view.frame.size = render().frame.size
+
+    if view.frame.size == CGSize.zero {
+      view.frame.size = UIScreen.main.bounds.size
+    }
+
+    (view as? UITableViewCell)?.contentView.frame = view.bounds
+    (view as? UICollectionViewCell)?.contentView.frame = view.bounds
+  }
+  #endif
+
+  /// Prepares a composable view and returns the height for the item
+  ///
+  /// - parameter composable:        A composable object
+  /// - parameter usesViewSize:      A boolean value to determine if the view uses the views height
+  ///
+  /// - returns: The height for the item based of the composable spots
+  func prepare(composable: Composable, item: Item) -> CGFloat {
+    let spots = composable.parse(item)
+    var height: CGFloat = 0.0
+
+    spots.forEach {
+      $0.registerAndPrepare()
+
+      let compositeSpot = CompositeSpot(parentSpot: self,
+                                        spot: $0,
+                                        spotableIndex: component.index,
+                                        itemIndex: index)
+      height += compositeSpot.spot.computedHeight
+
+      #if !os(OSX)
+        let header = compositeSpot.spot.type.headers.make(compositeSpot.spot.component.header)
+        height += (header?.view as? Componentable)?.preferredHeaderHeight ?? 0.0
+      #endif
+
+      spotsCompositeDelegate?.compositeSpots.append(compositeSpot)
+    }
+
+    return height
   }
 
   /// Set fallback size to view
