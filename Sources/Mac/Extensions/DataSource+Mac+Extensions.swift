@@ -42,7 +42,13 @@ extension DataSource: NSCollectionViewDataSource {
 
     let item = collectionView.makeItem(withIdentifier: reuseIdentifier, for: indexPath)
 
-    (item as? SpotConfigurable)?.configure(&spot.component.items[indexPath.item])
+    if let composite = item as? Composable {
+      let spots = spot.spotsCompositeDelegate?.resolve(spot.component.index, itemIndex: indexPath.item)
+      composite.configure(&spot.component.items[indexPath.item], spots: spots)
+    } else if let cell = item as? SpotConfigurable {
+      cell.configure(&spot.component.items[indexPath.item])
+    }
+
     return item
   }
 }
