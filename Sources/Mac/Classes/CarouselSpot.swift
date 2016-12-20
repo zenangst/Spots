@@ -93,6 +93,9 @@ open class CarouselSpot: NSObject, Gridable {
     return lineView
   }()
 
+  /// A CompositeDelegate for the CarouselSpot, used to access composite spots
+  open weak var spotsCompositeDelegate: CompositeDelegate?
+
   public var userInterface: UserInterface?
   var spotDataSource: DataSource?
   var spotDelegate: Delegate?
