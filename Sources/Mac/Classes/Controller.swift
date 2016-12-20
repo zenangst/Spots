@@ -223,9 +223,8 @@ open class Controller: NSViewController, SpotsProtocol, CompositeDelegate {
   }
 
   public func setupSpot(at index: Int, spot: Spotable) {
-    spot.spotsCompositeDelegate = self
-
     spots[index].component.index = index
+    spot.spotsCompositeDelegate = self
     spot.registerAndPrepare()
 
     var height = spot.computedHeight
