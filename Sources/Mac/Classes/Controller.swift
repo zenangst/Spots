@@ -194,7 +194,6 @@ open class Controller: NSViewController, SpotsProtocol, CompositeDelegate {
     for spot in spots {
       spot.layout(scrollView.frame.size)
     }
-    scrollView.forceUpdate = true
   }
 
   public func reloadSpots(spots: [Spotable], closure: (() -> Void)?) {
