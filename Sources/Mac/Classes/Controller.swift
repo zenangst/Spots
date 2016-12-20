@@ -223,9 +223,7 @@ open class Controller: NSViewController, SpotsProtocol {
   }
 
   public func setupSpot(at index: Int, spot: Spotable) {
-    #if !os(OSX)
-      spot.spotsCompositeDelegate = self
-    #endif
+    spot.spotsCompositeDelegate = self
 
     var height = spot.computedHeight
     if let componentSize = spot.component.size, componentSize.height > height {
