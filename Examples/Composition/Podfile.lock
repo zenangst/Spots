@@ -13,8 +13,6 @@ PODS:
 
 DEPENDENCIES:
   - Brick
-  - Cache
-  - CryptoSwift (= 0.6.0)
   - Spots (from `../../`)
   - Tailor
 
@@ -29,6 +27,6 @@ SPEC CHECKSUMS:
   Spots: a61f398c2f493ece737120dbeb789a74ec2191df
   Tailor: 6f03d033af361a7cf1f25627a1877c5b91a9618c
 
-PODFILE CHECKSUM: 7f89a03e56a679d022a7a5fbf50c9253fcccb2f4
+PODFILE CHECKSUM: e2adb6f845222f3933cd8694339f8ed5e0eca9bb
 
 COCOAPODS: 1.1.1
