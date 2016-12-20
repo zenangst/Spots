@@ -117,6 +117,7 @@ open class CarouselSpot: NSObject, Gridable {
       self.component.kind = Component.Kind.Carousel.string
     }
 
+    registerDefault(view: CarouselSpotCell.self)
     registerComposite(view: GridComposite.self)
     registerAndPrepare()
     setupCollectionView()
