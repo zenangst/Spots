@@ -241,6 +241,8 @@ open class Controller: NSViewController, SpotsProtocol, CompositeDelegate {
       width: view.frame.width,
       height: ceil(spot.render().frame.height))
     scrollView.spotsContentView.addSubview(spot.render())
+
+    (spot as? Gridable)?.layout(CGSize(width: view.frame.width, height: height))
   }
 
   open override func viewDidLayout() {
