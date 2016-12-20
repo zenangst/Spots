@@ -79,6 +79,7 @@ extension SpotsProtocol {
         if let controller = self as? Controller {
           Controller.spotsDidReloadComponents?(controller)
         }
+        weakSelf.scrollView.layoutSubviews()
       }
     }
   }
@@ -143,7 +144,6 @@ extension SpotsProtocol {
     #if !os(OSX)
       (spot as? CarouselSpot)?.layout.yOffset = yOffset
     #endif
-    scrollView.contentView.addSubview(spot.render())
     yOffset += spot.render().frame.size.height
   }
 
@@ -307,9 +307,9 @@ extension SpotsProtocol {
   }
 
   private func finishReloading(spot: Spotable, withCompletion completion: Completion = nil) {
-    scrollView.layoutSubviews()
     spot.afterUpdate()
     completion?()
+    scrollView.layoutSubviews()
   }
 
   func process(changes: [ComponentDiff],
@@ -347,6 +347,13 @@ extension SpotsProtocol {
 
       if runCompletion {
         completion?()
+
+        #if os(OSX)
+        for spot in weakSelf.spots {
+          spot.setup(weakSelf.scrollView.frame.size)
+        }
+        #endif
+
         weakSelf.scrollView.layoutSubviews()
       }
     }
@@ -401,7 +408,6 @@ extension SpotsProtocol {
       }
 
       completion?()
-      weakSelf.scrollView.layoutSubviews()
 
       offsets.enumerated().forEach {
         newSpots[$0.offset].render().contentOffset = $0.element
@@ -410,6 +416,7 @@ extension SpotsProtocol {
       if let controller = self as? Controller {
         Controller.spotsDidReloadComponents?(controller)
       }
+      weakSelf.scrollView.layoutSubviews()
     }
   }
 
@@ -436,10 +443,10 @@ extension SpotsProtocol {
       weakSelf.setupSpots(animated: animated)
 
       completion?()
-      weakSelf.scrollView.layoutSubviews()
       if let controller = weakSelf as? Controller {
         Controller.spotsDidReloadComponents?(controller)
       }
+      weakSelf.scrollView.layoutSubviews()
     }
   }
 
