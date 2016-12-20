@@ -253,12 +253,10 @@ public extension Spotable {
 
         (view as? UITableViewCell)?.contentView.frame = view.bounds
         (view as? UICollectionViewCell)?.contentView.frame = view.bounds
-        (view as? SpotConfigurable)?.configure(&item)
-
       #else
         view?.frame.size.width = render().frame.size.width
-        (view as? SpotConfigurable)?.configure(&item)
       #endif
+      (view as? SpotConfigurable)?.configure(&item)
     }
 
     if let itemView = view as? SpotConfigurable, usesViewSize {
