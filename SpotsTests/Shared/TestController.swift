@@ -638,23 +638,12 @@ class ControllerTests : XCTestCase {
     let oldItems = self.controller.spots.first!.items
     var diff = Item.evaluate(newItems, oldModels: oldItems)
 
-    /// macOS cannot prepare the view size because it has no fallback.
-    #if !os(OSX)
-      XCTAssertEqual(diff![0], .size)
-      XCTAssertEqual(diff![1], .size)
-      XCTAssertEqual(diff![2], .size)
-      XCTAssertEqual(diff![3], .size)
-      XCTAssertEqual(diff![4], .size)
-      XCTAssertEqual(diff![5], .size)
-    #else
-      XCTAssertEqual(diff![0], .text)
-      XCTAssertEqual(diff![1], .none)
-      XCTAssertEqual(diff![2], .text)
-      XCTAssertEqual(diff![3], .text)
-      XCTAssertEqual(diff![4], .subtitle)
-      XCTAssertEqual(diff![5], .text)
-    #endif
-
+    XCTAssertEqual(diff![0], .size)
+    XCTAssertEqual(diff![1], .size)
+    XCTAssertEqual(diff![2], .size)
+    XCTAssertEqual(diff![3], .size)
+    XCTAssertEqual(diff![4], .size)
+    XCTAssertEqual(diff![5], .size)
   }
 
   func testReloadWithComponents() {
@@ -712,9 +701,6 @@ class ControllerTests : XCTestCase {
     controller.preloadView()
     controller.viewDidAppear()
     controller.spots.forEach {
-      #if os(OSX)
-        $0.render().layoutSubtreeIfNeeded()
-      #endif
       $0.render().layoutSubviews()
     }
 
