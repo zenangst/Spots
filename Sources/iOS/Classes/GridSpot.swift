@@ -77,6 +77,7 @@ open class GridSpot: NSObject, Gridable {
   open lazy var collectionView: UICollectionView = { [unowned self] in
     let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: self.layout)
     collectionView.isScrollEnabled = false
+    collectionView.clipsToBounds = false
 
     return collectionView
     }()
