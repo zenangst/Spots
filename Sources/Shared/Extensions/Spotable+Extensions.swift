@@ -281,11 +281,11 @@ public extension Spotable {
     let spots = composable.parse(item)
     var height: CGFloat = 0.0
 
-    spots.forEach {
-      $0.registerAndPrepare()
+    spots.forEach { spot in
+      spot.registerAndPrepare()
 
       let compositeSpot = CompositeSpot(parentSpot: self,
-                                        spot: $0,
+                                        spot: spot,
                                         spotableIndex: component.index,
                                         itemIndex: item.index)
       height += compositeSpot.spot.computedHeight
