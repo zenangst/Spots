@@ -278,16 +278,25 @@ public extension Spotable {
 
       let newItem = weakSelf.items[index]
 
-      if let composite: Composable = weakSelf.userInterface?.view(at: index),
-        let spots = weakSelf.spotsCompositeDelegate?.resolve(weakSelf.component.index, itemIndex: item.index) {
+      if let composite: Composable = weakSelf.userInterface?.view(at: index) {
+        weakSelf.spotsCompositeDelegate?.purge(atIndex: weakSelf.component.index,
+                                               withItem: item,
+                                               forComposite: composite)
+        weakSelf.prepare(composable: composite, item: item)
+
+        let spots = weakSelf.spotsCompositeDelegate?.resolve(weakSelf.component.index, itemIndex: item.index)
+
         weakSelf.userInterface?.beginUpdates()
-        composite.configure(&weakSelf.component.items[index], spots: spots)
+        weakSelf.reload([item.index])
+        composite.configure(&weakSelf.component.items[item.index], spots: spots)
         weakSelf.userInterface?.endUpdates()
+        weakSelf.afterUpdate()
         weakSelf.updateHeight() {
+          weakSelf.userInterface?.beginUpdates()
+          weakSelf.userInterface?.endUpdates()
           weakSelf.render().superview?.layoutSubviews()
           completion?()
         }
-        return
       }
 
       if newItem.kind != oldItem.kind || newItem.size.height != oldItem.size.height {
