@@ -25,6 +25,20 @@ extension CompositeDelegate {
       .map({ $0.spot })
     return spots
   }
+
+  func purge(atIndex componentIndex: Int, withItem item: Item, forComposite composite: Composable) {
+    for compositeSpot in compositeSpots {
+      if compositeSpot.spotableIndex == componentIndex && compositeSpot.itemIndex == item.index {
+        if let index = compositeSpots.index(of: compositeSpot) {
+          composite.contentView.subviews.forEach {
+            $0.removeFromSuperview()
+          }
+
+          compositeSpots.remove(at: index)
+        }
+      }
+    }
+  }
 }
 
 /// A generic delegate for Spots
