@@ -221,7 +221,9 @@ open class CarouselSpot: NSObject, Gridable {
     if collectionView.contentSize.height > 0 {
       collectionView.frame.size.height = collectionView.contentSize.height
     } else {
-      collectionView.frame.size.height = component.items.sorted(by: { $0.size.height > $1.size.height }).first?.size.height ?? 0
+      collectionView.frame.size.height = component.items.sorted(by: {
+        $0.size.height > $1.size.height
+      }).first?.size.height ?? 0
 
       if collectionView.frame.size.height > 0 {
         collectionView.frame.size.height += layout.sectionInset.top + layout.sectionInset.bottom
