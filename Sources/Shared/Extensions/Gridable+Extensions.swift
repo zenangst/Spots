@@ -77,8 +77,12 @@ public extension Spotable where Self : Gridable {
 
     let lastUpdate = updates.last
     for index in updates {
-      guard let item = self.item(at: index) else { completion?(); continue }
-      self.update(item, index: index, withAnimation: animation) {
+      guard let item = self.item(at: index) else {
+        completion?()
+        continue
+      }
+
+      update(item, index: index, withAnimation: animation) {
         if index == lastUpdate {
           completion?()
         }
