@@ -68,7 +68,7 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
   /// The title for the component
   public var title: String = ""
   /// Determines which spotable component that should be used
-  /// Default kinds are; list, grid and carousel
+  /// Default kinds are: list, grid and carousel
   public var kind: String = ""
   /// The header identifier
   public var header: String = ""
