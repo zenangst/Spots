@@ -32,6 +32,8 @@ class GridCell: UICollectionViewCell, SpotConfigurable {
       imageView.frame.size = frame.size
       imageView.frame.size.width -= 20
       imageView.frame.size.height -= 20
+      imageView.frame.origin.x += 10
+      imageView.frame.origin.y += 10
     } else {
       imageView.image = nil
     }
