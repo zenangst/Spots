@@ -288,27 +288,14 @@ public extension Spotable {
           let header = spot.type.headers.make(spot.component.header)
           height += (header?.view as? Componentable)?.preferredHeaderHeight ?? 0.0
         #endif
-
-        switch spot {
-        case let grid as Gridable:
-          if grid.layout.scrollDirection == .horizontal {
-            grid.setup(spot.render().frame.size)
-          } else {
-            grid.layout(spot.render().frame.size)
-          }
-        default:
-          break
-        }
       }
 
       return height
     } else {
       let spots = composable.parse(item)
 
-
       spots.forEach { spot in
-        spot.registerAndPrepare()
-
+        spot.prepareItems()
         let compositeSpot = CompositeSpot(parentSpot: self,
                                           spot: spot,
                                           spotableIndex: component.index,
@@ -319,6 +306,10 @@ public extension Spotable {
           let header = compositeSpot.spot.type.headers.make(compositeSpot.spot.component.header)
           height += (header?.view as? Componentable)?.preferredHeaderHeight ?? 0.0
         #endif
+
+        if (spot as? Gridable)?.layout.scrollDirection != .horizontal {
+          spot.setup(render().frame.size)
+        }
 
         spotsCompositeDelegate?.compositeSpots.append(compositeSpot)
       }
