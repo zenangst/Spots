@@ -45,7 +45,9 @@ open class ListCell: UITableViewCell, SpotConfigurable {
     }
 
     if !item.image.isEmpty {
-      imageView?.setImage(url: URL(string: item.image), placeholder: transparentImage)
+      imageView?.setImage(url: URL(string: item.image), placeholder: transparentImage) { [weak self] _ in
+        self?.layoutSubviews()
+      }
     } else {
       imageView?.image = nil
     }
@@ -66,6 +68,7 @@ open class ListCell: UITableViewCell, SpotConfigurable {
     imageView?.frame.origin.y = 16
     imageView?.frame.size = CGSize(width: 96, height: 96)
     imageView?.layer.cornerRadius = 96 / 2
+    imageView?.clipsToBounds = true
 
     if imageView?.image != nil {
       textLabel?.frame.origin.x = 132
