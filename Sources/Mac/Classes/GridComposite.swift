@@ -4,6 +4,11 @@ import Cocoa
 /// A proxy cell that is used for composite views inside other Spotable objects
 public class GridComposite: NSCollectionViewItem, Composable {
 
+  /// A required content view, needed because of Composable extensions
+  public var contentView: View {
+    return view
+  }
+
   open var customView = FlippedView()
 
   static open var isFlipped: Bool {
