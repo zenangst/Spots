@@ -305,11 +305,11 @@ public extension Spotable {
         #if !os(OSX)
           let header = compositeSpot.spot.type.headers.make(compositeSpot.spot.component.header)
           height += (header?.view as? Componentable)?.preferredHeaderHeight ?? 0.0
-        #endif
 
-        if (spot as? Gridable)?.layout.scrollDirection != .horizontal {
-          spot.setup(render().frame.size)
-        }
+          if (spot as? Gridable)?.layout.scrollDirection != .horizontal {
+            spot.setup(render().frame.size)
+          }
+        #endif
 
         spotsCompositeDelegate?.compositeSpots.append(compositeSpot)
       }
