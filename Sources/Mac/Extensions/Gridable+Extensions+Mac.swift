@@ -21,8 +21,8 @@ extension Gridable {
   public func refreshHeight(_ completion: (() -> Void)? = nil) {
     Dispatch.delay(for: 0.2) { [weak self] in
       guard let weakSelf = self, let collectionView = self?.collectionView else {
-        return
         completion?()
+        return
       }
 
       weakSelf.setup(CGSize(width: collectionView.frame.width, height: weakSelf.computedHeight ))
