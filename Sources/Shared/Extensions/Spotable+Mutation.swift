@@ -279,7 +279,7 @@ public extension Spotable {
       let newItem = weakSelf.items[index]
 
       if let composite: Composable = weakSelf.userInterface?.view(at: index),
-        let spots = weakSelf.spotsCompositeDelegate?.resolve(index, itemIndex: index) {
+        let spots = weakSelf.spotsCompositeDelegate?.resolve(weakSelf.component.index, itemIndex: item.index) {
         weakSelf.userInterface?.beginUpdates()
         composite.configure(&weakSelf.component.items[index], spots: spots)
         weakSelf.userInterface?.endUpdates()
