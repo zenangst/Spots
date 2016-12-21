@@ -11,16 +11,23 @@ public extension Composable where Self : View {
   func configure(_ item: inout Item, spots: [Spotable]?) {
     guard let spots = spots else { return }
 
+    var size = contentView.frame.size
+    var width = contentView.frame.width
     var height: CGFloat = 0.0
+
+    #if os(tvOS)
+      if let tableView = superview?.superview as? UITableView {
+        size.width = tableView.frame.size.width
+      }
+    #endif
 
     spots.enumerated().forEach { index, spot in
       spot.component.size = CGSize(
-        width: contentView.frame.width,
+        width: width,
         height: ceil(spot.render().frame.size.height))
-
       spot.component.size?.height == Optional(0.0)
-        ? spot.setup(contentView.frame.size)
-        : spot.layout(contentView.frame.size)
+        ? spot.setup(size)
+        : spot.layout(size)
 
       contentView.addSubview(spot.render())
       spot.render().frame.origin.y = height
