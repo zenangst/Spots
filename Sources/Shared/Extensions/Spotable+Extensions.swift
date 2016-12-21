@@ -290,10 +290,12 @@ public extension Spotable {
         #endif
 
         switch spot {
-        case let carousel as CarouselSpot:
-          carousel.setup(spot.render().frame.size)
-        case let grid as GridSpot:
-          grid.layout(spot.render().frame.size)
+        case let grid as Gridable:
+          if grid.layout.scrollDirection == .horizontal {
+            grid.setup(spot.render().frame.size)
+          } else {
+            grid.layout(spot.render().frame.size)
+          }
         default:
           break
         }
