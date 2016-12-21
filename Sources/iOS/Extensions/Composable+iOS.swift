@@ -32,7 +32,7 @@ public extension Composable where Self : View {
       contentView.addSubview(spot.render())
       spot.render().frame.origin.y = height
       spot.render().layoutIfNeeded()
-      /// Disable scrolling for listable objects 
+      /// Disable scrolling for listable objects
       spot.render().isScrollEnabled = !(spot is Listable)
       height += spot.render().contentSize.height
     }
