@@ -278,26 +278,50 @@ public extension Spotable {
   ///
   /// - returns: The height for the item based of the composable spots
   func prepare(composable: Composable, item: Item) -> CGFloat {
-    let spots = composable.parse(item)
     var height: CGFloat = 0.0
 
-    spots.forEach { spot in
-      spot.registerAndPrepare()
+    if let foundCompositeSpots = spotsCompositeDelegate?.resolve(component.index, itemIndex: item.index), !foundCompositeSpots.isEmpty {
 
-      let compositeSpot = CompositeSpot(parentSpot: self,
-                                        spot: spot,
-                                        spotableIndex: component.index,
-                                        itemIndex: item.index)
-      height += compositeSpot.spot.computedHeight
+      for spot in foundCompositeSpots {
+        height += spot.computedHeight
+        #if !os(OSX)
+          let header = spot.type.headers.make(spot.component.header)
+          height += (header?.view as? Componentable)?.preferredHeaderHeight ?? 0.0
+        #endif
 
-      #if !os(OSX)
-        let header = compositeSpot.spot.type.headers.make(compositeSpot.spot.component.header)
-        height += (header?.view as? Componentable)?.preferredHeaderHeight ?? 0.0
-      #endif
+        switch spot {
+        case let carousel as CarouselSpot:
+          carousel.setup(spot.render().frame.size)
+        case let grid as GridSpot:
+          grid.layout(spot.render().frame.size)
+        default:
+          break
+        }
+      }
 
-      spotsCompositeDelegate?.compositeSpots.append(compositeSpot)
+      return height
+    } else {
+      let spots = composable.parse(item)
+
+
+      spots.forEach { spot in
+        spot.registerAndPrepare()
+
+        let compositeSpot = CompositeSpot(parentSpot: self,
+                                          spot: spot,
+                                          spotableIndex: component.index,
+                                          itemIndex: item.index)
+        height += compositeSpot.spot.computedHeight
+
+        #if !os(OSX)
+          let header = compositeSpot.spot.type.headers.make(compositeSpot.spot.component.header)
+          height += (header?.view as? Componentable)?.preferredHeaderHeight ?? 0.0
+        #endif
+
+        spotsCompositeDelegate?.compositeSpots.append(compositeSpot)
+      }
     }
-
+    
     return height
   }
 
