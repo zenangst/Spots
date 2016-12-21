@@ -114,22 +114,3 @@ public extension Item {
     return .none
   }
 }
-
-public func == (lhs: [Item], rhs: [Item]) -> Bool {
-  var equal = lhs.count == rhs.count
-
-  if !equal { return false }
-
-  for (index, item) in lhs.enumerated() {
-    if item != rhs[index] {
-      equal = false
-      break
-    }
-  }
-
-  return equal
-}
-
-public func != (lhs: [Item], rhs: [Item]) -> Bool {
-  return !(lhs == rhs)
-}
