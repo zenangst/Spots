@@ -2,10 +2,9 @@ import Brick
 
 /// A protocol used for composition inside Spotable objects
 public protocol Composable: class {
-  #if !os(OSX)
+
   /// A required content view, needed because of Composable extensions
   var contentView: View { get }
-  #endif
 
   /// Configure a Composable with an item and a collection of Spotable objects
   ///
