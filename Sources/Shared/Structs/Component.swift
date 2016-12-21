@@ -23,7 +23,7 @@ public enum ComponentDiff {
 }
 
 /// The Component struct is used to configure a Spotable object
-public struct Component: Mappable, Equatable {
+public struct Component: Mappable, Equatable, DictionaryConvertible {
 
   /// An enum with all the string keys used in the view model
   public enum Key: String, StringConvertible {
