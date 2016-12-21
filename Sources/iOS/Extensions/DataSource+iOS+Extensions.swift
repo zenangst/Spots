@@ -56,6 +56,7 @@ extension DataSource: UICollectionViewDataSource {
     guard let spot = spot, indexPath.item < spot.component.items.count else {
         return UICollectionViewCell()
     }
+
     spot.component.items[indexPath.item].index = indexPath.item
 
     let reuseIdentifier = spot.identifier(at: indexPath)
