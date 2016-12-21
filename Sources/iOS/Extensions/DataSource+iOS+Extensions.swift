@@ -110,7 +110,7 @@ extension DataSource: UITableViewDataSource {
       .dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
 
     if let composite = cell as? Composable {
-      let spots = spot.spotsCompositeDelegate?.resolve(spot.component.index, itemIndex: (indexPath as NSIndexPath).item)
+      let spots = spot.spotsCompositeDelegate?.resolve(spot.component.index, itemIndex: indexPath.item)
       composite.configure(&spot.component.items[indexPath.item], spots: spots)
     } else if let cell = cell as? SpotConfigurable {
       cell.configure(&spot.component.items[indexPath.item])
