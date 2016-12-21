@@ -9,14 +9,20 @@ extension Listable {
    */
   public func process(_ updates: [Int], withAnimation animation: Animation = .automatic, completion: Completion) {
     guard !updates.isEmpty else {
-      updateHeight() { completion?() }
+      updateHeight() {
+        completion?()
+      }
       return
     }
 
     let lastUpdate = updates.last
     for index in updates {
-      guard let item = self.item(at: index) else { completion?(); continue }
-      self.update(item, index: index, withAnimation: animation) {
+      guard let item = self.item(at: index) else {
+        completion?()
+        continue
+      }
+      
+      update(item, index: index, withAnimation: animation) {
         if index == lastUpdate {
           completion?()
         }
