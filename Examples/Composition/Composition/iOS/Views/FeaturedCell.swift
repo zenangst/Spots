@@ -6,11 +6,19 @@ import Imaginary
 
 class FeaturedCell: UICollectionViewCell, SpotConfigurable {
 
+  #if os(iOS)
+    var preferredViewSize: CGSize = CGSize(width: 500, height: 240)
+  #endif
+
+  #if os(tvOS)
   var preferredViewSize: CGSize = CGSize(width: 500, height: 500)
+  #endif
 
   lazy var imageView: UIImageView = {
     let imageView = UIImageView()
+    #if os(tvOS)
     imageView.adjustsImageWhenAncestorFocused = true
+    #endif
     return imageView
   }()
 

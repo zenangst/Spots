@@ -13,7 +13,7 @@ class CompositionController : Controller, SpotsDelegate {
       items: [
         Item(title: "Whisper", image: "https://github.com/hyperoslo/Whisper/raw/master/Resources/whisper-cover.png", kind: "featured"),
         Item(title: "Spots", image: "https://raw.githubusercontent.com/hyperoslo/Spots/master/Images/cover_v2.png", kind: "featured"),
-        Item(title: "Sync", image: "https://raw.githubusercontent.com/hyperoslo/Sync/master/Images/logo-v2.png", kind: "featured"),
+        Item(title: "Hue", image: "https://github.com/hyperoslo/Hue/raw/master/Images/cover.png", kind: "featured"),
         ]
       )
     )
@@ -29,7 +29,15 @@ class CompositionController : Controller, SpotsDelegate {
       )
     )
 
-    var developerComponent = Component(kind: "grid", span: 2.0)
+    #if os(tvOS)
+      let span: Double = 2.0
+    #endif
+
+    #if os(iOS)
+      let span: Double = 1.0
+    #endif
+
+    var developerComponent = Component(kind: "grid", span: span)
 
     developerComponent.add(children:
       [

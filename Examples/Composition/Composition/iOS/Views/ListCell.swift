@@ -14,7 +14,14 @@ extension UIImage {
 
 open class ListCell: UITableViewCell, SpotConfigurable {
 
-  open var preferredViewSize: CGSize = CGSize(width: 0, height: 128)
+  #if os(tvOS)
+    open var preferredViewSize: CGSize = CGSize(width: 0, height: 128)
+  #endif
+
+  #if os(iOS)
+    open var preferredViewSize: CGSize = CGSize(width: 0, height: 67)
+  #endif
+
   open var item: Item?
 
   lazy var transparentImage = UIImage.transparentImage(CGSize(width: 60, height: 60))
@@ -61,18 +68,29 @@ open class ListCell: UITableViewCell, SpotConfigurable {
   open override func layoutSubviews() {
     super.layoutSubviews()
 
-    textLabel?.frame.origin.x = 16
-    detailTextLabel?.frame.origin.x = 16
+    #if os(tvOS)
+      textLabel?.frame.origin.x = 16
+      detailTextLabel?.frame.origin.x = 16
+      imageView?.frame.origin.x = 24
+      imageView?.frame.origin.y = 16
+      imageView?.frame.size = CGSize(width: 96, height: 96)
+      imageView?.layer.cornerRadius = 96 / 2
 
-    imageView?.frame.origin.x = 24
-    imageView?.frame.origin.y = 16
-    imageView?.frame.size = CGSize(width: 96, height: 96)
-    imageView?.layer.cornerRadius = 96 / 2
+      if imageView?.image != nil {
+        textLabel?.frame.origin.x = 132
+        detailTextLabel?.frame.origin.x = 132
+      }
+    #endif
+
+    #if os(iOS)
+      imageView?.frame.size = CGSize(width: 48, height: 48)
+      imageView?.layer.cornerRadius = 48 / 2
+      imageView?.frame.origin.y = 12
+      textLabel?.frame.origin.x = 72
+      detailTextLabel?.frame.origin.x = 72
+      separatorInset.left = 72
+    #endif
+
     imageView?.clipsToBounds = true
-
-    if imageView?.image != nil {
-      textLabel?.frame.origin.x = 132
-      detailTextLabel?.frame.origin.x = 132
-    }
   }
 }

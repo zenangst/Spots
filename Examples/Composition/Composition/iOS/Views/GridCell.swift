@@ -6,18 +6,25 @@ import Imaginary
 
 class GridCell: UICollectionViewCell, SpotConfigurable {
 
+  #if os(iOS)
+  var preferredViewSize: CGSize = CGSize(width: 120, height: 80)
+  #endif
+  
+  #if os(tvOS)
   var preferredViewSize: CGSize = CGSize(width: 160, height: 340)
+  #endif
 
   lazy var imageView: UIImageView = {
     let imageView = UIImageView()
     imageView.contentMode = .scaleAspectFill
+    #if os(tvOS)
     imageView.adjustsImageWhenAncestorFocused = true
+    #endif
     return imageView
   }()
 
   override init(frame: CGRect) {
     super.init(frame: frame)
-
     addSubview(imageView)
   }
 
