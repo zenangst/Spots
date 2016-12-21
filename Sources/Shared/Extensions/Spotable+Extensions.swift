@@ -277,7 +277,7 @@ public extension Spotable {
   /// - parameter usesViewSize:      A boolean value to determine if the view uses the views height
   ///
   /// - returns: The height for the item based of the composable spots
-  func prepare(composable: Composable, item: Item) -> CGFloat {
+  @discardableResult func prepare(composable: Composable, item: Item) -> CGFloat {
     var height: CGFloat = 0.0
 
     if let foundCompositeSpots = spotsCompositeDelegate?.resolve(component.index, itemIndex: item.index), !foundCompositeSpots.isEmpty {
