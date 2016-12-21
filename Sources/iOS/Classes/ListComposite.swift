@@ -14,7 +14,7 @@ public class ListComposite: UITableViewCell, Composable {
     return false
   }
 
-  /// This fixes the which view should be focused when navigating between composite spots on tvOS.
+  /// This methods fixes which view should become the next responder when navigating between views on tvOS.
   #if os(tvOS)
   public override func didMoveToSuperview() {
     superview?.sendSubview(toBack: self)
