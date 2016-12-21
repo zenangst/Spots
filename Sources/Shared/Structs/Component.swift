@@ -276,7 +276,10 @@ public func == (lhs: [Component], rhs: [Component]) -> Bool {
   if !equal { return false }
 
   for (index, item) in lhs.enumerated() {
-    if item != rhs[index] { equal = false; break }
+    if item != rhs[index] {
+      equal = false
+      break
+    }
   }
 
   return equal
@@ -294,7 +297,10 @@ public func === (lhs: [Component], rhs: [Component]) -> Bool {
   if !equal { return false }
 
   for (index, item) in lhs.enumerated() {
-    if item !== rhs[index] { equal = false; break }
+    if item !== rhs[index] {
+      equal = false
+      break
+    }
   }
 
   return equal

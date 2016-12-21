@@ -121,7 +121,10 @@ public func == (lhs: [Item], rhs: [Item]) -> Bool {
   if !equal { return false }
 
   for (index, item) in lhs.enumerated() {
-    if item != rhs[index] { equal = false; break }
+    if item != rhs[index] {
+      equal = false
+      break
+    }
   }
 
   return equal
