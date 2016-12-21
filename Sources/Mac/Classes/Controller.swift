@@ -267,7 +267,7 @@ open class Controller: NSViewController, SpotsProtocol, CompositeDelegate {
       guard spot.component.span > 1 else {
         continue
       }
-      
+
       spot.layout.prepareForTransition(from: spot.layout)
       spot.layout.invalidateLayout()
     }

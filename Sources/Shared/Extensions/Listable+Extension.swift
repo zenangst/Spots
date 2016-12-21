@@ -21,7 +21,7 @@ extension Listable {
         completion?()
         continue
       }
-      
+
       update(item, index: index, withAnimation: animation) {
         if index == lastUpdate {
           completion?()

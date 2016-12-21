@@ -314,7 +314,7 @@ public extension Spotable {
         spotsCompositeDelegate?.compositeSpots.append(compositeSpot)
       }
     }
-    
+
     return height
   }
 
