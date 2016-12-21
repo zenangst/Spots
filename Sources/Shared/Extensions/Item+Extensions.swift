@@ -101,7 +101,7 @@ public extension Item {
     let oldChildItems: [Item] = oldChildren.flatMap { $0.items }
 
     if kind != oldItem.kind { return .kind }
-    if newChildren != oldChildren || newChildItems != oldChildItems { return .children }
+    if newChildren != oldChildren || !(newChildItems == oldChildItems) { return .children }
     if identifier != oldItem.identifier { return .identifier }
     if size != oldItem.size { return .size }
     if title != oldItem.title { return .title }
