@@ -317,7 +317,10 @@ extension SpotsProtocol {
                withAnimation animation: Animation = .automatic,
                completion: Completion = nil) {
     Dispatch.mainQueue { [weak self] in
-      guard let weakSelf = self else { completion?(); return }
+      guard let weakSelf = self else {
+        completion?()
+        return
+      }
 
       var yOffset: CGFloat = 0.0
       var runCompletion = true
@@ -370,7 +373,10 @@ extension SpotsProtocol {
                              animated: ((_ view: View) -> Void)? = nil,
                              completion: Completion = nil) {
     Dispatch.mainQueue { [weak self] in
-      guard let weakSelf = self else { completion?(); return }
+      guard let weakSelf = self else {
+        completion?()
+        return
+      }
 
       let newSpots: [Spotable] = Parser.parse(json)
       let newComponents = newSpots.map { $0.component }

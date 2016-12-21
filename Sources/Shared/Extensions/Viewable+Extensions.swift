@@ -173,7 +173,10 @@ public extension Spotable where Self : Viewable {
   /// - parameter completion: A completion closure that is executed in the main queue.
   public func delete(_ item: Item, withAnimation animation: Animation = .none, completion: Completion = nil) {
     guard let index = component.items.index(where: { $0 == item })
-      else { completion?(); return }
+      else {
+        completion?()
+        return
+    }
 
     Dispatch.mainQueue { [weak self] in
       self?.component.items.remove(at: index)

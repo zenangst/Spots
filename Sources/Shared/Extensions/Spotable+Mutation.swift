@@ -51,7 +51,10 @@ public extension Spotable {
   /// - parameter completion: A completion closure that is executed in the main queue.
   func append(_ items: [Item], withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     Dispatch.mainQueue { [weak self] in
-      guard let weakSelf = self else { completion?(); return }
+      guard let weakSelf = self else {
+        completion?()
+        return
+      }
 
       var indexes = [Int]()
       let numberOfItems = weakSelf.component.items.count

@@ -71,7 +71,10 @@ extension Gridable {
   /// - parameter completion: A completion block that runs after applying the animation
   public func perform(_ spotAnimation: Animation, withIndex index: Int, completion: () -> Void) {
     guard let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0))
-      else { completion(); return }
+      else {
+        completion()
+        return
+    }
 
     let animation = CABasicAnimation()
 
