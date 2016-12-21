@@ -5,109 +5,52 @@ class CompositionController : Controller, SpotsDelegate {
 
   static var components: [Component] {
 
-    let items1: [[String : Any]] = [
-      ["title" : "First", "kind" : "view", "size" : ["height" : 66.0]],
-      ["title" : "Second", "kind" : "view", "size" : ["height" : 66.0]],
-      ["title" : "Third", "kind" : "view", "size" : ["height" : 66.0]]
-    ]
-    let items2: [[String : Any]] = [
-      ["title" : "Forth", "kind" : "view", "size" : ["height" : 66.0]],
-      ["title" : "Fifth", "kind" : "view", "size" : ["height" : 66.0]],
-      ["title" : "Sixt", "kind" : "view", "size" : ["height" : 66.0]]
-    ]
+    var mainComponent = Component(kind : "list")
 
-    let items3: [[String : Any]] = [
-      ["title" : "Seventh", "kind" : "view", "size" : ["height" : 66.0]],
-      ["title" : "Eight", "kind" : "view", "size" : ["height" : 66.0]],
-      ["title" : "Ninth", "kind" : "view", "size" : ["height" : 66.0]]
-    ]
-
-    let json1: [String : Any] = [
-      "kind" : "composite",
-      "children" : [
-        [
-          "kind" : "list",
-          "header" : "header",
-          "title" : "First Header",
-          "items" : items1
-        ]
-      ]
-    ]
-
-    let json2: [String : Any] = [
-      "kind" : "composite",
-      "children" : [
-        [
-          "kind" : "list",
-          "header" : "header",
-          "title" : "Second Header",
-          "items" : items2
-        ]
-      ]
-    ]
-
-    let json3: [String : Any] = [
-      "kind" : "composite",
-      "children" : [
-        [
-          "kind" : "list",
-          "header" : "header",
-          "title" : "Third Header",
-          "items" : items3
-        ]
-      ]
-    ]
-
-    var secondComponent = Component(
-      kind : Component.Kind.Grid.string,
-      span: 2
-    )
-
-    secondComponent.add(children: [
-      Component(
-        title: "First header",
-        kind: "list",
-        items: [
-          Item(title: "First", kind: "view", size: CGSize(width: 0, height: 66)),
-          Item(title: "Second", kind: "view", size: CGSize(width: 0, height: 66)),
-          Item(title: "Third", kind: "view", size: CGSize(width: 0, height: 66))
-        ]
-      ),
-      Component(
-        title: "Second header",
-        kind: "list",
-        items: [
-          Item(title: "Forth", kind: "view", size: CGSize(width: 0, height: 66)),
-          Item(title: "Fifth", kind: "view", size: CGSize(width: 0, height: 66)),
-          Item(title: "Sixt", kind: "view", size: CGSize(width: 0, height: 66))
+    mainComponent.add(child: Component(
+      kind: Component.Kind.Carousel.string,
+      span: 1.0,
+      items: [
+        Item(title: "Whisper", image: "https://github.com/hyperoslo/Whisper/raw/master/Resources/whisper-cover.png", kind: "featured"),
+        Item(title: "Spots", image: "https://raw.githubusercontent.com/hyperoslo/Spots/master/Images/cover_v2.png", kind: "featured"),
+        Item(title: "Sync", image: "https://raw.githubusercontent.com/hyperoslo/Sync/master/Images/logo-v2.png", kind: "featured"),
         ]
       )
+    )
+
+    mainComponent.add(child: Component(
+      kind: Component.Kind.Grid.string,
+      span: 3.0,
+      items: [
+        Item(title: "ImagePicker", image: "https://github.com/hyperoslo/ImagePicker/raw/master/Resources/ImagePickerPresentation.png", kind: "grid"),
+        Item(title: "Spots", image: "https://raw.githubusercontent.com/hyperoslo/Spots/master/Images/cover_v2.png", kind: "grid"),
+        Item(title: "Cache", image: "https://github.com/hyperoslo/Cache/raw/master/Resources/CachePresentation.png", kind: "grid")
+      ]
+      )
+    )
+
+    var developerComponent = Component(kind: "grid", span: 2.0)
+
+    developerComponent.add(children:
+      [
+        Component(
+          kind: "list",
+          items: [
+            Item(title: "Vadym Markov", subtitle: "iOS Developer", image: "https://avatars2.githubusercontent.com/u/10529867?v=3&s=460", action: "1"),
+            Item(title: "Ramon Gilabert Llop", subtitle: "iOS Developer", image: "https://avatars1.githubusercontent.com/u/6138120?v=3&s=460", action: "2")
+          ]
+        ),
+        Component(
+          kind: "list",
+          items: [
+            Item(title: "Khoa Pham", subtitle: "iOS Developer", image: "https://avatars0.githubusercontent.com/u/2284279?v=3&s=460", action: "3"),
+            Item(title: "Christoffer Winterkvist", subtitle: "iOS Developer", image: "https://avatars2.githubusercontent.com/u/57446?v=3&s=460", action: "4")
+          ]
+        )
       ]
     )
 
-    let components = [
-      Component(
-        title: "The very first Header",
-        header: "header",
-        kind: Component.Kind.List.string,
-        items: [
-          Item(title: "foo", kind: "view", size: CGSize(width: 0, height: 66)),
-          Item(title: "bar", kind: "view", size: CGSize(width: 0, height: 66)),
-          Item(title: "baz", kind: "view", size: CGSize(width: 0, height: 66))
-        ]
-      ),
-      secondComponent,
-      Component(
-        kind : Component.Kind.Grid.string,
-        span: 3,
-        items: [
-          Item(json1),
-          Item(json2),
-          Item(json3)
-        ]
-      )
-    ]
-    return components
+    return [mainComponent, developerComponent]
   }
 
   func didSelect(item: Item, in spot: Spotable) {
