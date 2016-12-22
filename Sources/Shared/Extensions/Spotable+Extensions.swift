@@ -217,7 +217,7 @@ public extension Spotable {
         prepare(view: view)
       }
 
-      prepare(kind: kind, view: view, item: &item)
+      prepare(kind: kind, view: view as Any, item: &item)
     #else
       let spotableKind = self
       fullWidth = render().superview?.frame.size.width ?? render().frame.size.width
@@ -256,7 +256,7 @@ public extension Spotable {
     return item
   }
 
-  func prepare(kind: String, view: Any?, item: inout Item) {
+  func prepare(kind: String, view: Any, item: inout Item) {
     switch view {
     case let view as Composable:
       item.size.height = prepare(composable: view, item: item)
