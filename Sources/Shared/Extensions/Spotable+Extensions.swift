@@ -76,16 +76,23 @@ public extension Spotable {
 
   func prepare(items: [Item]) -> [Item] {
     var preparedItems = items
+
     preparedItems.enumerated().forEach { (index: Int, item: Item) in
+
       if let configuredItem = configure(item: item, at: index, usesViewSize: true) {
         preparedItems[index].index = index
         preparedItems[index] = configuredItem
       }
+
       if component.span > 0.0 {
         #if os(OSX)
           if let gridable = self as? Gridable,
             let layout = gridable.layout as? FlowLayout {
-            preparedItems[index].size.width = gridable.collectionView.frame.width / CGFloat(component.span) - layout.sectionInset.left - layout.sectionInset.right
+            let newWidth = gridable.collectionView.frame.width / CGFloat(component.span) - layout.sectionInset.left - layout.sectionInset.right
+
+            if newWidth > 0.0 {
+              preparedItems[index].size.width = newWidth
+            }
           }
         #else
           var spotWidth = render().frame.size.width
@@ -109,7 +116,10 @@ public extension Spotable {
   ///
   /// - returns: An optional Item that corresponds to the index.
   public func item(at index: Int) -> Item? {
-    guard index < component.items.count && index > -1 else { return nil }
+    guard index < component.items.count && index > -1 else {
+      return nil
+    }
+
     return component.items[index]
   }
 
@@ -148,7 +158,8 @@ public extension Spotable {
 
   /// Refresh indexes for all items to ensure that the indexes are unique and in ascending order.
   public func refreshIndexes(completion: Completion = nil) {
-    var updatedItems  = items
+    var updatedItems = items
+
     updatedItems.enumerated().forEach {
       updatedItems[$0.offset].index = $0.offset
     }
@@ -177,7 +188,10 @@ public extension Spotable {
   /// - parameter usesViewSize: A boolean value to determine if the view uses the views height
   public func configureItem(at index: Int, usesViewSize: Bool = false) {
     guard let item = item(at: index),
-      let configuredItem = configure(item: item, at: index, usesViewSize: usesViewSize) else { return }
+      let configuredItem = configure(item: item, at: index, usesViewSize: usesViewSize)
+      else {
+        return
+    }
 
     component.items[index] = configuredItem
   }
@@ -186,72 +200,72 @@ public extension Spotable {
     var item = item
     item.index = index
 
+    let fullWidth: CGFloat
     let kind: String
-    var view: View?
     var composableView: Composable?
 
     #if !os(OSX)
+      fullWidth = UIScreen.main.bounds.width
       kind = item.kind.isEmpty || Self.views.storage[item.kind] == nil
         ? Self.views.defaultIdentifier
         : item.kind
 
-      if let (_, resolvedView) = Self.views.make(kind) {
-        view = resolvedView
-      } else {
+      guard let (_, view) = Self.views.make(kind) else {
         return nil
       }
 
-      composableView = view as? Composable
+      if let view = view {
+        prepare(view: view)
+      }
+
+      prepare(kind: kind, view: view, item: &item)
     #else
-      if let gridable = self as? Gridable {
-        kind = item.kind.isEmpty || type(of: gridable).grids.storage[item.kind] == nil
-          ? type(of: gridable).grids.defaultIdentifier
+      let spotableKind = self
+      fullWidth = render().superview?.frame.size.width ?? render().frame.size.width
+
+      switch spotableKind {
+      case let spotableKind as Gridable:
+        kind = item.kind.isEmpty || type(of: spotableKind).grids.storage[item.kind] == nil
+          ? type(of: spotableKind).grids.defaultIdentifier
           : item.kind
 
-        if let (_, resolvedView) = type(of: gridable).grids.make(kind) {
-          composableView = resolvedView as? Composable
+        guard let (_, view) = type(of: spotableKind).grids.make(kind) else {
+          return nil
         }
-      } else if self is Listable {
+
+        prepare(kind: kind, view: view, item: &item)
+      case let spotableKind as Listable:
         kind = item.kind.isEmpty || Self.views.storage[item.kind] == nil
           ? Self.views.defaultIdentifier
           : item.kind
 
-        if let (_, resolvedView) = Self.views.make(kind) {
-          view = resolvedView
-          composableView = resolvedView as? Composable
-        }
-      }
-    #endif
-
-    if let composable = composableView {
-      item.size.height = prepare(composable: composable, item: item)
-    } else {
-      #if os(OSX)
-        view?.frame.size.width = render().frame.size.width
-      #else
-        guard let view = view else {
+        guard let (_, view) = Self.views.make(kind) else {
           return nil
         }
 
-        prepare(view: view)
-      #endif
+        prepare(kind: kind, view: view, item: &item)
+      default: break
+      }
+    #endif
 
-      (view as? SpotConfigurable)?.configure(&item)
-    }
-
-    if let itemView = view as? SpotConfigurable, usesViewSize {
-      setFallbackViewSize(to: &item, with: itemView)
-    }
-
-    if index < component.items.count && index > -1 {
-      #if !os(OSX)
-        if self is Gridable && (component.span > 0.0 || item.size.width == 0) {
-          item.size.width = UIScreen.main.bounds.width / CGFloat(component.span)
-        }
-      #endif
+    if index < component.items.count && index > -1 &&
+      self is Gridable &&
+      (component.span > 0.0 || item.size.width == 0) && fullWidth > 0.0 {
+      item.size.width = fullWidth / CGFloat(component.span)
     }
 
     return item
+  }
+
+  func prepare(kind: String, view: Any, item: inout Item) {
+    switch view {
+    case let view as Composable:
+      item.size.height = prepare(composable: view, item: item)
+    case let view as SpotConfigurable:
+      view.configure(&item)
+      setFallbackViewSize(to: &item, with: view)
+    default: break
+    }
   }
 
   #if !os(OSX)
@@ -295,21 +309,28 @@ public extension Spotable {
       let spots = composable.parse(item)
 
       spots.forEach { spot in
-        spot.prepareItems()
-
         let compositeSpot = CompositeSpot(parentSpot: self,
                                           spot: spot,
                                           spotableIndex: component.index,
                                           itemIndex: item.index)
-        height += compositeSpot.spot.computedHeight
 
         #if !os(OSX)
+          spot.prepareItems()
+          height += compositeSpot.spot.computedHeight
           let header = compositeSpot.spot.type.headers.make(compositeSpot.spot.component.header)
           height += (header?.view as? Componentable)?.preferredHeaderHeight ?? 0.0
 
           if (spot as? Gridable)?.layout.scrollDirection != .horizontal {
             spot.setup(render().frame.size)
           }
+        #else
+          spot.registerAndPrepare()
+
+          if let frame = spotsCompositeDelegate?.view.frame {
+            spot.setup(frame.size)
+          }
+
+          height += compositeSpot.spot.computedHeight
         #endif
 
         spotsCompositeDelegate?.compositeSpots.append(compositeSpot)
@@ -434,7 +455,7 @@ public extension Spotable {
   public static func register(defaultView view: View.Type) {
     self.views.defaultItem = Registry.Item.classType(view)
   }
-
+  
   public func beforeUpdate() {}
   public func afterUpdate() {}
 }
