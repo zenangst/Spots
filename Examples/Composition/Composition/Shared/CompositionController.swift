@@ -11,6 +11,7 @@ class CompositionController : Controller, SpotsDelegate {
       kind: Component.Kind.Carousel.string,
       span: 1.0,
       items: [
+        Item(title: "Spots", image: "https://raw.githubusercontent.com/hyperoslo/Spots/master/Images/cover_v6.jpg", kind: "featured"),
         Item(title: "Whisper", image: "https://github.com/hyperoslo/Whisper/raw/master/Resources/whisper-cover.png", kind: "featured"),
         Item(title: "Spots", image: "https://raw.githubusercontent.com/hyperoslo/Spots/master/Images/cover_v2.png", kind: "featured"),
         Item(title: "Hue", image: "https://github.com/hyperoslo/Hue/raw/master/Images/cover.png", kind: "featured"),
@@ -65,6 +66,20 @@ class CompositionController : Controller, SpotsDelegate {
     )
 
     return [mainComponent, developerComponent]
+  }
+
+  #if os(iOS)
+  override var prefersStatusBarHidden: Bool {
+    return true
+  }
+  #endif
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+
+    #if os(OSX)
+      scrollView.frame.origin.y = -21
+    #endif
   }
 
   func didSelect(item: Item, in spot: Spotable) {
