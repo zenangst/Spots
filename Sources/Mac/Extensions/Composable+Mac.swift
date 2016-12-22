@@ -11,7 +11,7 @@ public extension Composable {
   func configure(_ item: inout Item, spots: [Spotable]?) {
     guard let spots = spots else { return }
 
-    var size = contentView.frame.size
+    let size = contentView.frame.size
     let width = contentView.frame.width
     var height: CGFloat = 0.0
 
