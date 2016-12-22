@@ -202,7 +202,6 @@ public extension Spotable {
 
     let fullWidth: CGFloat
     let kind: String
-    var composableView: Composable?
 
     #if !os(OSX)
       fullWidth = UIScreen.main.bounds.width
