@@ -296,6 +296,7 @@ public extension Spotable {
 
       spots.forEach { spot in
         spot.prepareItems()
+
         let compositeSpot = CompositeSpot(parentSpot: self,
                                           spot: spot,
                                           spotableIndex: component.index,
