@@ -39,17 +39,25 @@ class CompositionController : Controller, SpotsDelegate {
 
     var developerComponent = Component(kind: "grid", span: span)
 
+    developerComponent.items.append(
+      Item(
+        kind: "composite",
+        children: [
+          Component(
+            kind: Component.Kind.List.string,
+            items: [
+              Item(title: "Vadym Markov", subtitle: "iOS Developer", image: "https://avatars2.githubusercontent.com/u/10529867?v=3&s=460", action: "1"),
+              Item(title: "Ramon Gilabert Llop", subtitle: "iOS Developer", image: "https://avatars1.githubusercontent.com/u/6138120?v=3&s=460", action: "2")
+            ]
+          )
+        ]
+      )
+    )
+
     developerComponent.add(children:
       [
         Component(
-          kind: "list",
-          items: [
-            Item(title: "Vadym Markov", subtitle: "iOS Developer", image: "https://avatars2.githubusercontent.com/u/10529867?v=3&s=460", action: "1"),
-            Item(title: "Ramon Gilabert Llop", subtitle: "iOS Developer", image: "https://avatars1.githubusercontent.com/u/6138120?v=3&s=460", action: "2")
-          ]
-        ),
-        Component(
-          kind: "list",
+          kind: Component.Kind.List.string,
           items: [
             Item(title: "Khoa Pham", subtitle: "iOS Developer", image: "https://avatars0.githubusercontent.com/u/2284279?v=3&s=460", action: "3"),
             Item(title: "Christoffer Winterkvist", subtitle: "iOS Developer", image: "https://avatars2.githubusercontent.com/u/57446?v=3&s=460", action: "4")
