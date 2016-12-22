@@ -252,6 +252,10 @@ open class GridSpot: NSObject, Gridable {
     collectionView.dataSource = spotDataSource
     collectionView.delegate = spotDelegate
     collectionView.collectionViewLayout = layout
+    
+    let backgroundView = NSView()
+    backgroundView.wantsLayer = true
+    collectionView.backgroundView = backgroundView
   }
 
   /// Return collection view as a scroll view
