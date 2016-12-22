@@ -286,8 +286,6 @@ open class GridSpot: NSObject, Gridable {
     collectionView.frame.size.height = scrollView.frame.size.height - layoutInsets.top + layoutInsets.bottom
     collectionView.frame.size.width = size.width - layoutInsets.right
 
-    GridSpot.configure?(collectionView)
-
     if !component.title.isEmpty {
       configureTitleView(layoutInsets)
     }
@@ -303,6 +301,7 @@ open class GridSpot: NSObject, Gridable {
     size.height = layout.collectionViewContentSize.height
     layout.invalidateLayout()
     layout(size)
+    GridSpot.configure?(collectionView)
   }
 
   /**
