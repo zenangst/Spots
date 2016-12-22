@@ -5,6 +5,11 @@ import Cache
 /// A controller powered by Spotable objects
 open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScrollViewDelegate {
 
+  open var contentView: View {
+    return view
+  }
+
+
   /// A closure that is called when the controller is reloaded with components
   public static var spotsDidReloadComponents: ((Controller) -> Void)?
 

@@ -326,7 +326,7 @@ public extension Spotable {
         #else
           spot.registerAndPrepare()
 
-          if let frame = spotsCompositeDelegate?.view.frame {
+          if let frame = spotsCompositeDelegate?.contentView.frame {
             spot.setup(frame.size)
           }
 

@@ -28,6 +28,10 @@ open class Controller: NSViewController, SpotsProtocol, CompositeDelegate {
     }
   }
 
+  public var contentView: View {
+    return view
+  }
+
   /// A convenience method for resolving the first spot
   open var spot: Spotable? {
     get { return spot(at: 0) }
