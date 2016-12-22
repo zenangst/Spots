@@ -9,7 +9,6 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
     return view
   }
 
-
   /// A closure that is called when the controller is reloaded with components
   public static var spotsDidReloadComponents: ((Controller) -> Void)?
 
