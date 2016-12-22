@@ -23,12 +23,15 @@ target "Composition iOS" do
   pod 'Imaginary'
 end
 
-#  target "Composition macOS" do
-#    platform :osx, '10.11'
-#    pod 'Spots', path: '../../'
-#    pod 'Brick'
-#    pod 'Tailor'
-#  end
+#target "Composition macOS" do
+#  platform :osx, '10.11'
+#  pod 'Spots', path: '../../'
+#  pod 'Brick'
+#  pod 'Tailor'
+#  pod 'Imaginary'
+#  pod 'Sugar'
+#  pod 'Hue'
+#end
 
 post_install do |installer|
   puts("Enabling dev mode for Spots")
@@ -36,7 +39,7 @@ post_install do |installer|
     File.open(file, 'a') { |f| f.puts "\nDEBUG_INFORMATION_FORMAT = dwarf" }
   end
   installer.pods_project.targets.each do |target|
-    if target.name == 'Spots-tvOS'
+    if target.name == 'Spots-iOS'
       target.build_configurations.each do |config|
         if config.name == 'Debug'
           config.build_settings['OTHER_SWIFT_FLAGS'] = '-DDEBUG -DDEVMODE'
