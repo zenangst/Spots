@@ -93,6 +93,9 @@ open class CarouselSpot: NSObject, Gridable {
     return lineView
   }()
 
+  /// A CompositeDelegate for the CarouselSpot, used to access composite spots
+  open weak var spotsCompositeDelegate: CompositeDelegate?
+
   public var userInterface: UserInterface?
   var spotDataSource: DataSource?
   var spotDelegate: Delegate?
@@ -114,6 +117,8 @@ open class CarouselSpot: NSObject, Gridable {
       self.component.kind = Component.Kind.Carousel.string
     }
 
+    registerDefault(view: CarouselSpotCell.self)
+    registerComposite(view: GridComposite.self)
     registerAndPrepare()
     setupCollectionView()
     configureLayoutInsets(component)
@@ -136,8 +141,6 @@ open class CarouselSpot: NSObject, Gridable {
 
     self.init(component: Component(stateCache.load()))
     self.stateCache = stateCache
-
-    registerAndPrepare()
   }
 
   deinit {

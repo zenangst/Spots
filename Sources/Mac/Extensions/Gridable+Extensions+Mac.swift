@@ -20,7 +20,11 @@ extension Gridable {
 
   public func refreshHeight(_ completion: (() -> Void)? = nil) {
     Dispatch.delay(for: 0.2) { [weak self] in
-      guard let weakSelf = self, let collectionView = self?.collectionView else { return; completion?() }
+      guard let weakSelf = self, let collectionView = self?.collectionView else {
+        completion?()
+        return
+      }
+
       weakSelf.setup(CGSize(width: collectionView.frame.width, height: weakSelf.computedHeight ))
       completion?()
     }
@@ -134,6 +138,12 @@ extension Gridable {
     }
   }
 
+  func registerComposite(view: NSCollectionViewItem.Type) {
+    if type(of: self).grids.composite == nil {
+      type(of: self).grids.composite = GridRegistry.Item.classType(view)
+    }
+  }
+
   public static func register(nib: Nib, identifier: StringConvertible) {
     self.grids.storage[identifier.string] = GridRegistry.Item.nib(nib)
   }
@@ -148,6 +158,15 @@ extension Gridable {
 
   public static func register(defaultView: NSCollectionViewItem.Type) {
     self.grids.storage[self.grids.defaultIdentifier] = GridRegistry.Item.classType(defaultView)
+  }
+
+  /// Register default view for the Spotable object
+  ///
+  /// - parameter view: The view type that should be used as the default view
+  func registerDefault(view: NSCollectionViewItem.Type) {
+    if type(of: self).grids.storage[type(of: self).views.defaultIdentifier] == nil {
+      type(of: self).grids.defaultItem = GridRegistry.Item.classType(view)
+    }
   }
 
   public func afterUpdate() {

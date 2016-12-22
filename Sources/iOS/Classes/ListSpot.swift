@@ -37,7 +37,7 @@ open class ListSpot: NSObject, Listable {
   /// A CompositeDelegate for the GridSpot, used to access composite spots
   open weak var spotsCompositeDelegate: CompositeDelegate?
 
-  /// A SpotsDelegate that is used for the GridSpot
+  /// A SpotsDelegate that is used for the ListSpot
   open weak var delegate: SpotsDelegate?
 
   /// A UITableView, used as the main UI component for a ListSpot

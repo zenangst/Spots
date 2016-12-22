@@ -36,5 +36,7 @@ variable_name:
     - id
     - URL
     - GlobalAPIKey
+function_body_length:
+  warning: 50
 reporter: "xcode"
 missing_docs: internal

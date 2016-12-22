@@ -8,6 +8,7 @@ import Brick
 public protocol CompositeDelegate: class {
   /// A collection of composite spotable objects, indexed by Spotable object index and Item index.
   var compositeSpots: [CompositeSpot] { get set }
+  var contentView: View { get }
 }
 
 // MARK: - CompositeDelegate extension
@@ -24,6 +25,20 @@ extension CompositeDelegate {
       .filter({ $0.spotableIndex == spotIndex && $0.itemIndex == itemIndex })
       .map({ $0.spot })
     return spots
+  }
+
+  func purge(atIndex componentIndex: Int, withItem item: Item, forComposite composite: Composable) {
+    for compositeSpot in compositeSpots {
+      if compositeSpot.spotableIndex == componentIndex && compositeSpot.itemIndex == item.index {
+        if let index = compositeSpots.index(of: compositeSpot) {
+          composite.contentView.subviews.forEach {
+            $0.removeFromSuperview()
+          }
+
+          compositeSpots.remove(at: index)
+        }
+      }
+    }
   }
 }
 

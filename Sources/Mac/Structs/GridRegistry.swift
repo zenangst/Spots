@@ -24,6 +24,13 @@ public struct GridRegistry {
     return String(describing: defaultItem)
   }
 
+  /// A composite item
+  var composite: Item? {
+    didSet {
+      storage["composite"] = composite
+    }
+  }
+
   /**
    A subscripting method for getting a value from storage using a StringConvertible key
 

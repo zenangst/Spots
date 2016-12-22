@@ -5,6 +5,10 @@ import Cache
 /// A controller powered by Spotable objects
 open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScrollViewDelegate {
 
+  open var contentView: View {
+    return view
+  }
+
   /// A closure that is called when the controller is reloaded with components
   public static var spotsDidReloadComponents: ((Controller) -> Void)?
 
@@ -288,7 +292,6 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
     compositeSpots = []
     spots.enumerated().forEach { index, spot in
       setupSpot(at: index, spot: spot)
-      scrollView.contentView.addSubview(spot.render())
       animated?(spot.render())
       (spot as? CarouselSpot)?.layout.yOffset = yOffset
       yOffset += spot.render().frame.size.height
@@ -313,6 +316,7 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
     if !spot.items.isEmpty {
       spot.render().layoutIfNeeded()
     }
+    scrollView.contentView.addSubview(spot.render())
   }
 
   #if os(iOS)

@@ -41,6 +41,7 @@ open class GridableLayout: UICollectionViewFlowLayout {
       contentSize.height += sectionInset.top + sectionInset.bottom
     } else {
       contentSize.width = spot.collectionView.frame.width - spot.collectionView.contentInset.left - spot.collectionView.contentInset.right
+      contentSize.height = super.collectionViewContentSize.height
     }
   }
 

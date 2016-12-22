@@ -100,7 +100,7 @@ extension Delegate: NSTableViewDelegate {
 
   public func tableView(_ tableView: NSTableView, rowViewForRow row: Int) -> NSTableRowView? {
     guard let spot = spot, row >= 0 && row < spot.component.items.count else {
-        return nil
+      return nil
     }
 
     let reuseIdentifier = spot.identifier(at: row)
@@ -116,7 +116,17 @@ extension Delegate: NSTableViewDelegate {
       }
     }
 
-    (view as? SpotConfigurable)?.configure(&spot.component.items[row])
+    switch view {
+    case let view as Composable:
+      let spots = spot.spotsCompositeDelegate?.resolve(spot.component.index, itemIndex: row)
+      view.contentView.frame.size.width = tableView.frame.size.width
+      view.contentView.frame.size.height = spot.computedHeight
+      view.configure(&spot.component.items[row], spots: spots)
+    case let view as SpotConfigurable:
+      view.configure(&spot.component.items[row])
+    default: break
+    }
+
     (view as? NSTableRowView)?.identifier = reuseIdentifier
 
     return view as? NSTableRowView

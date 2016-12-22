@@ -51,7 +51,10 @@ public extension Spotable {
   /// - parameter completion: A completion closure that is executed in the main queue.
   func append(_ items: [Item], withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     Dispatch.mainQueue { [weak self] in
-      guard let weakSelf = self else { completion?(); return }
+      guard let weakSelf = self else {
+        completion?()
+        return
+      }
 
       var indexes = [Int]()
       let numberOfItems = weakSelf.component.items.count
@@ -278,19 +281,26 @@ public extension Spotable {
 
       let newItem = weakSelf.items[index]
 
-      #if !os(OSX)
-        if let composite: Composable = weakSelf.userInterface?.view(at: index),
-          let spots = weakSelf.spotsCompositeDelegate?.resolve(index, itemIndex: index) {
+      if let composite: Composable = weakSelf.userInterface?.view(at: index) {
+        weakSelf.spotsCompositeDelegate?.purge(atIndex: weakSelf.component.index,
+                                               withItem: item,
+                                               forComposite: composite)
+        weakSelf.prepare(composable: composite, item: item)
+
+        let spots = weakSelf.spotsCompositeDelegate?.resolve(weakSelf.component.index, itemIndex: item.index)
+
+        weakSelf.userInterface?.beginUpdates()
+        weakSelf.reload([item.index])
+        composite.configure(&weakSelf.component.items[item.index], spots: spots)
+        weakSelf.userInterface?.endUpdates()
+        weakSelf.afterUpdate()
+        weakSelf.updateHeight() {
           weakSelf.userInterface?.beginUpdates()
-          composite.configure(&weakSelf.component.items[index], spots: spots)
           weakSelf.userInterface?.endUpdates()
-          weakSelf.updateHeight() {
-            weakSelf.render().superview?.layoutSubviews()
-            completion?()
-          }
-          return
+          weakSelf.render().superview?.layoutSubviews()
+          completion?()
         }
-      #endif
+      }
 
       if newItem.kind != oldItem.kind || newItem.size.height != oldItem.size.height {
         if let cell: SpotConfigurable = weakSelf.userInterface?.view(at: index), animation != .none {
@@ -367,7 +377,7 @@ public extension Spotable {
 
   /// Reload spot with ItemChanges.
   ///
-  /// - parameter changes:          A collection of changes; inserations, updates, reloads, deletions and updated children.
+  /// - parameter changes:          A collection of changes: inserations, updates, reloads, deletions and updated children.
   /// - parameter animation:        A Animation that is used when performing the mutation.
   /// - parameter updateDataSource: A closure to update your data source.
   /// - parameter completion:       A completion closure that runs when your updates are done.

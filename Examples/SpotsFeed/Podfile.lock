@@ -1,5 +1,5 @@
 PODS:
-  - Brick (2.0.2):
+  - Brick (2.0.5):
     - Tailor (~> 2.0)
   - Cache (2.1.1):
     - CryptoSwift
@@ -34,7 +34,7 @@ EXTERNAL SOURCES:
     :path: "../../"
 
 SPEC CHECKSUMS:
-  Brick: a7cf051da76f833e46281477d91b04cee63593f7
+  Brick: 08788c20c9b9aded5b9e89b8a8942c1b4933e91a
   Cache: 525a292370641881d7e350f0d451fd276790243a
   Compass: b7802d133b95ffde747515f0e84ed8b5153c3d53
   CryptoSwift: 4a599b7241b8d3b857d6e2c28867d0bd5d1aae24

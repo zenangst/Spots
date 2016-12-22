@@ -97,8 +97,11 @@ public extension Item {
     let newChildren = children.map { Component($0 as [String : Any]) }
     let oldChildren = oldItem.children.map { Component($0 as [String : Any]) }
 
+    let newChildItems: [Item] = newChildren.flatMap { $0.items }
+    let oldChildItems: [Item] = oldChildren.flatMap { $0.items }
+
     if kind != oldItem.kind { return .kind }
-    if newChildren != oldChildren { return .children }
+    if newChildren != oldChildren || newChildItems != oldChildItems { return .children }
     if identifier != oldItem.identifier { return .identifier }
     if size != oldItem.size { return .size }
     if title != oldItem.title { return .title }
@@ -110,5 +113,4 @@ public extension Item {
 
     return .none
   }
-
 }

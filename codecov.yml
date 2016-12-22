@@ -1,4 +1,6 @@
 coverage:
+  comment: "header diff changes sunburst"
+  behavior: new
   ignore:
   - Applications/Xcode.app/.*
   - build/.*
@@ -12,7 +14,7 @@ coverage:
   status:
     patch:
       default:
-        target: '99'
+        target: 55%
     project:
       default:
         target: auto

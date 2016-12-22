@@ -9,4 +9,15 @@ public class ListComposite: UITableViewCell, Composable {
       view.removeFromSuperview()
     }
   }
+
+  override public var canBecomeFocused: Bool {
+    return false
+  }
+
+  /// This methods fixes which view should become the next responder when navigating between views on tvOS.
+  #if os(tvOS)
+  public override func didMoveToSuperview() {
+    superview?.sendSubview(toBack: self)
+  }
+  #endif
 }

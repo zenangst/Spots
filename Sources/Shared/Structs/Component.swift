@@ -23,7 +23,7 @@ public enum ComponentDiff {
 }
 
 /// The Component struct is used to configure a Spotable object
-public struct Component: Mappable, Equatable {
+public struct Component: Mappable, Equatable, DictionaryConvertible {
 
   /// An enum with all the string keys used in the view model
   public enum Key: String, StringConvertible {
@@ -68,7 +68,7 @@ public struct Component: Mappable, Equatable {
   /// The title for the component
   public var title: String = ""
   /// Determines which spotable component that should be used
-  /// Default kinds are; list, grid and carousel
+  /// Default kinds are: list, grid and carousel
   public var kind: String = ""
   /// The header identifier
   public var header: String = ""
@@ -249,6 +249,18 @@ public struct Component: Mappable, Equatable {
 
     return .none
   }
+
+  mutating public func add(child: Component) {
+    var item = Item(kind: "composite")
+    item.children = [child.dictionary]
+    items.append(item)
+  }
+
+  mutating public func add(children: [Component]) {
+    for child in children {
+      add(child: child)
+    }
+  }
 }
 
 // Compare a collection of view models
@@ -264,7 +276,10 @@ public func == (lhs: [Component], rhs: [Component]) -> Bool {
   if !equal { return false }
 
   for (index, item) in lhs.enumerated() {
-    if item != rhs[index] { equal = false; break }
+    if item != rhs[index] {
+      equal = false
+      break
+    }
   }
 
   return equal
@@ -282,7 +297,10 @@ public func === (lhs: [Component], rhs: [Component]) -> Bool {
   if !equal { return false }
 
   for (index, item) in lhs.enumerated() {
-    if item !== rhs[index] { equal = false; break }
+    if item !== rhs[index] {
+      equal = false
+      break
+    }
   }
 
   return equal

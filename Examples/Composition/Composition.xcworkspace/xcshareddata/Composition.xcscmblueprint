@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "38A0E0B8CC71517BD0065D1A89290295EBFA6A7C",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "38A0E0B8CC71517BD0065D1A89290295EBFA6A7C" : 9223372036854775807,
+    "A563A72E4B52D080CF97F07BB3BA38193CC71DD5" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "F0A25AF5-1959-4F28-A0FF-AE8F25B2B02B",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "38A0E0B8CC71517BD0065D1A89290295EBFA6A7C" : "Spots\/",
+    "A563A72E4B52D080CF97F07BB3BA38193CC71DD5" : "dashboard-client\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "Composition",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Examples\/Composition\/Composition.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:hyperoslo\/Spots.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "38A0E0B8CC71517BD0065D1A89290295EBFA6A7C"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:hyperoslo\/dashboard-client.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "A563A72E4B52D080CF97F07BB3BA38193CC71DD5"
+    }
+  ]
+}

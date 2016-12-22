@@ -4,13 +4,12 @@ public enum ControllerBackground {
   case regular, dynamic
 }
 
-open class Controller: NSViewController, SpotsProtocol {
+open class Controller: NSViewController, SpotsProtocol, CompositeDelegate {
 
   /// A closure that is called when the controller is reloaded with components
   public static var spotsDidReloadComponents: ((Controller) -> Void)?
 
   open static var configure: ((_ container: SpotsScrollView) -> Void)?
-  let KVOWindowContext: UnsafeMutableRawPointer? = UnsafeMutableRawPointer(mutating: nil)
 
   /// A collection of Spotable objects
   open var spots: [Spotable] {
@@ -27,6 +26,10 @@ open class Controller: NSViewController, SpotsProtocol {
         compositeSpot.spot.delegate = delegate
       }
     }
+  }
+
+  public var contentView: View {
+    return view
   }
 
   /// A convenience method for resolving the first spot
@@ -50,7 +53,9 @@ open class Controller: NSViewController, SpotsProtocol {
   /// A delegate for when an item is tapped within a Spot
   weak public var delegate: SpotsDelegate? {
     didSet {
-      spots.forEach { $0.delegate = delegate }
+      spots.forEach {
+        $0.delegate = delegate
+      }
       delegate?.didChange(spots: spots)
     }
   }
@@ -77,6 +82,10 @@ open class Controller: NSViewController, SpotsProtocol {
     super.init(nibName: nil, bundle: nil)!
 
     NotificationCenter.default.addObserver(self, selector: #selector(Controller.scrollViewDidScroll(_:)), name: NSNotification.Name.NSScrollViewDidLiveScroll, object: scrollView)
+
+    NotificationCenter.default.addObserver(self, selector: #selector(windowDidResize(_:)), name: NSNotification.Name.NSWindowDidResize, object: nil)
+
+    NotificationCenter.default.addObserver(self, selector: #selector(windowDidEndLiveResize(_:)), name: NSNotification.Name.NSWindowDidEndLiveResize, object: nil)
   }
 
   /**
@@ -195,7 +204,6 @@ open class Controller: NSViewController, SpotsProtocol {
     for spot in spots {
       spot.layout(scrollView.frame.size)
     }
-    scrollView.forceUpdate = true
   }
 
   public func reloadSpots(spots: [Spotable], closure: (() -> Void)?) {
@@ -208,7 +216,7 @@ open class Controller: NSViewController, SpotsProtocol {
 
     setupSpots()
     closure?()
-    scrollView.layoutSubtreeIfNeeded()
+    scrollView.layoutSubviews()
   }
 
   /**
@@ -223,31 +231,37 @@ open class Controller: NSViewController, SpotsProtocol {
   }
 
   public func setupSpot(at index: Int, spot: Spotable) {
-    #if !os(OSX)
-      spot.spotsCompositeDelegate = self
-    #endif
+    spots[index].component.index = index
+    spot.spotsCompositeDelegate = self
+    spot.registerAndPrepare()
 
     var height = spot.computedHeight
     if let componentSize = spot.component.size, componentSize.height > height {
       height = componentSize.height
     }
 
-    spots[index].component.index = index
-    scrollView.spotsContentView.addSubview(spot.render())
-    spot.registerAndPrepare()
-
     spot.setup(CGSize(width: view.frame.width, height: height))
     spot.component.size = CGSize(
       width: view.frame.width,
       height: ceil(spot.render().frame.height))
+    scrollView.spotsContentView.addSubview(spot.render())
+
+    (spot as? Gridable)?.layout(CGSize(width: view.frame.width, height: height))
   }
 
   open override func viewDidLayout() {
     super.viewDidLayout()
+
     for spot in spots {
       spot.layout(CGSize(width: view.frame.width,
-        height: spot.computedHeight ))
+        height: spot.computedHeight))
     }
+
+    for compositeSpot in compositeSpots {
+      compositeSpot.spot.setup(CGSize(width: view.frame.width,
+                                       height: compositeSpot.spot.computedHeight))
+    }
+
     scrollView.layoutSubtreeIfNeeded()
   }
 
@@ -256,6 +270,28 @@ open class Controller: NSViewController, SpotsProtocol {
       if selectedSpot.render() != spot.render() {
         spot.deselect()
       }
+    }
+  }
+
+  public func windowDidResize(_ notification: Notification) {
+    for case let spot as Gridable in spots {
+      guard spot.component.span > 1 else {
+        continue
+      }
+
+      spot.layout.prepareForTransition(from: spot.layout)
+      spot.layout.invalidateLayout()
+    }
+  }
+
+  public func windowDidEndLiveResize(_ notification: Notification) {
+    for case let spot as Gridable in spots {
+      guard spot.component.span > 1 else {
+        continue
+      }
+
+      spot.layout.prepareForTransition(to: spot.layout)
+      spot.layout.invalidateLayout()
     }
   }
 

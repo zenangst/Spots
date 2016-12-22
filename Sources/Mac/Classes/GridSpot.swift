@@ -78,6 +78,7 @@ open class GridSpot: NSObject, Gridable {
   open static var defaultGrid: NSCollectionViewItem.Type = NSCollectionViewItem.self
   open static var defaultKind: StringConvertible = LayoutType.grid.rawValue
 
+  /// A CompositeDelegate for the GridSpot, used to access composite spots
   open weak var spotsCompositeDelegate: CompositeDelegate?
   open weak var delegate: SpotsDelegate?
 
@@ -149,6 +150,8 @@ open class GridSpot: NSObject, Gridable {
       self.component.kind = Component.Kind.Grid.string
     }
 
+    registerDefault(view: GridSpotCell.self)
+    registerComposite(view: GridComposite.self)
     registerAndPrepare()
     setupCollectionView()
     scrollView.addSubview(titleView)
@@ -249,6 +252,10 @@ open class GridSpot: NSObject, Gridable {
     collectionView.dataSource = spotDataSource
     collectionView.delegate = spotDelegate
     collectionView.collectionViewLayout = layout
+
+    let backgroundView = NSView()
+    backgroundView.wantsLayer = true
+    collectionView.backgroundView = backgroundView
   }
 
   /// Return collection view as a scroll view
@@ -266,7 +273,6 @@ open class GridSpot: NSObject, Gridable {
    */
   open func layout(_ size: CGSize) {
     layout.prepareForTransition(to: layout)
-
     var layoutInsets = EdgeInsets()
     if let layout = layout as? NSCollectionViewFlowLayout {
       layout.sectionInset.top = component.meta(GridableMeta.Key.sectionInsetTop, Default.sectionInsetTop) + titleView.frame.size.height + 8
@@ -284,8 +290,6 @@ open class GridSpot: NSObject, Gridable {
     collectionView.frame.size.height = scrollView.frame.size.height - layoutInsets.top + layoutInsets.bottom
     collectionView.frame.size.width = size.width - layoutInsets.right
 
-    GridSpot.configure?(collectionView)
-
     if !component.title.isEmpty {
       configureTitleView(layoutInsets)
     }
@@ -299,7 +303,9 @@ open class GridSpot: NSObject, Gridable {
   open func setup(_ size: CGSize) {
     var size = size
     size.height = layout.collectionViewContentSize.height
+    layout.invalidateLayout()
     layout(size)
+    GridSpot.configure?(collectionView)
   }
 
   /**
