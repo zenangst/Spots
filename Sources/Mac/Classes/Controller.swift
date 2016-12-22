@@ -247,10 +247,17 @@ open class Controller: NSViewController, SpotsProtocol, CompositeDelegate {
 
   open override func viewDidLayout() {
     super.viewDidLayout()
+    
     for spot in spots {
       spot.layout(CGSize(width: view.frame.width,
-        height: spot.computedHeight ))
+        height: spot.computedHeight))
     }
+
+    for compositeSpot in compositeSpots {
+      compositeSpot.spot.setup(CGSize(width: view.frame.width,
+                                       height: compositeSpot.spot.computedHeight))
+    }
+
     scrollView.layoutSubtreeIfNeeded()
   }
 
