@@ -232,17 +232,17 @@ public extension Spotable {
           return nil
         }
 
-        prepare(kind: kind, view: view, item: &item)
+        prepare(kind: kind, view: view as Any, item: &item)
       case let spotableKind as Listable:
-        kind = item.kind.isEmpty || Self.views.storage[item.kind] == nil
-          ? Self.views.defaultIdentifier
+        kind = item.kind.isEmpty || type(of: spotableKind).views.storage[item.kind] == nil
+          ? type(of: spotableKind).views.defaultIdentifier
           : item.kind
 
         guard let (_, view) = Self.views.make(kind) else {
           return nil
         }
 
-        prepare(kind: kind, view: view, item: &item)
+        prepare(kind: kind, view: view as Any, item: &item)
       default: break
       }
     #endif
