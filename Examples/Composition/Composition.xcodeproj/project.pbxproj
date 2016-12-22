@@ -7,10 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2DDA53373DAA2048B472AD55 /* Pods_Composition_Composition_tvOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4259194A57D8D4C02F1EB326 /* Pods_Composition_Composition_tvOS.framework */; };
-		35B838089D6F402531B7AF14 /* Pods_Composition_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DF507F311D230EC07104487 /* Pods_Composition_iOS.framework */; };
-		5AA0FB57C5AE3A82A2E7021F /* Pods_Composition_Composition_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D7EF041CD42A26C17FAD2ED /* Pods_Composition_Composition_iOS.framework */; };
-		BBE0072F451E2903A5E10EC0 /* Pods_Composition_tvOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCD589B62B8FBEE0364BF3AE /* Pods_Composition_tvOS.framework */; };
+		519673FEF5EC45ED64C17DF9 /* Pods_Composition_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DF507F311D230EC07104487 /* Pods_Composition_iOS.framework */; };
+		A92B10CBC69B6C35FF45F38B /* Pods_Composition_tvOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCD589B62B8FBEE0364BF3AE /* Pods_Composition_tvOS.framework */; };
+		BD7E395F1E0BF69200608B71 /* FeaturedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7E395C1E0BF69200608B71 /* FeaturedCell.swift */; };
+		BD7E39601E0BF69200608B71 /* GridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7E395D1E0BF69200608B71 /* GridCell.swift */; };
+		BD7E39611E0BF69200608B71 /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7E395E1E0BF69200608B71 /* ListCell.swift */; };
+		BD7E39631E0BF7C800608B71 /* NSImage+contentMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7E39621E0BF7C800608B71 /* NSImage+contentMode.swift */; };
+		BD7E39651E0BF7EC00608B71 /* NSImage+tintColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7E39641E0BF7EC00608B71 /* NSImage+tintColor.swift */; };
 		BDD121121E06F9080021CC41 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BDD121111E06F9080021CC41 /* Assets.xcassets */; };
 		BDD121351E0865CE0021CC41 /* CompositionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD1212E1E0865CE0021CC41 /* CompositionController.swift */; };
 		BDD121361E0865CE0021CC41 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD121301E0865CE0021CC41 /* AppDelegate.swift */; };
@@ -34,19 +37,22 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0DB7D45DAD43FCF6C85D13E6 /* Pods-Composition iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Composition iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Composition iOS/Pods-Composition iOS.debug.xcconfig"; sourceTree = "<group>"; };
-		22A669E35ADDAE4A9188BCC3 /* Pods-Composition tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Composition tvOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Composition tvOS/Pods-Composition tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		3017FC01C3B0C38280F4A866 /* Pods-Composition iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Composition iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-Composition iOS/Pods-Composition iOS.release.xcconfig"; sourceTree = "<group>"; };
+		31637A2623F03E39F9162FDF /* Pods-Composition tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Composition tvOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-Composition tvOS/Pods-Composition tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		3B2FCEB29703DD25068E0BE2 /* Pods-Composition-Composition tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Composition-Composition tvOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Composition-Composition tvOS/Pods-Composition-Composition tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		3C242627076C8330B33AA41A /* Pods-Composition tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Composition tvOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Composition tvOS/Pods-Composition tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		3E97EB611444460FBF22CD70 /* Pods_Composition_macOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Composition_macOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4259194A57D8D4C02F1EB326 /* Pods_Composition_Composition_tvOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Composition_Composition_tvOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		488D8C145C98A8811AEE5B7A /* Pods-Composition macOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Composition macOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Composition macOS/Pods-Composition macOS.debug.xcconfig"; sourceTree = "<group>"; };
-		60CE6D2B4A1F22A0D8F3A4CD /* Pods-Composition macOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Composition macOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-Composition macOS/Pods-Composition macOS.release.xcconfig"; sourceTree = "<group>"; };
 		6DF507F311D230EC07104487 /* Pods_Composition_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Composition_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D2C348823F95D3D1C5A6CB8 /* Pods-Composition-Composition iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Composition-Composition iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-Composition-Composition iOS/Pods-Composition-Composition iOS.release.xcconfig"; sourceTree = "<group>"; };
 		8D7EF041CD42A26C17FAD2ED /* Pods_Composition_Composition_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Composition_Composition_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8FB8DE3B43771B0658D973A7 /* Pods-Composition-Composition tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Composition-Composition tvOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-Composition-Composition tvOS/Pods-Composition-Composition tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		AEF09C9083B8D7F0B5F647C5 /* Pods-Composition-Composition iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Composition-Composition iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Composition-Composition iOS/Pods-Composition-Composition iOS.debug.xcconfig"; sourceTree = "<group>"; };
-		B7EDBF87D9D4949990B016C1 /* Pods-Composition tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Composition tvOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-Composition tvOS/Pods-Composition tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		BD7E395C1E0BF69200608B71 /* FeaturedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeaturedCell.swift; sourceTree = "<group>"; };
+		BD7E395D1E0BF69200608B71 /* GridCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridCell.swift; sourceTree = "<group>"; };
+		BD7E395E1E0BF69200608B71 /* ListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
+		BD7E39621E0BF7C800608B71 /* NSImage+contentMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSImage+contentMode.swift"; sourceTree = "<group>"; };
+		BD7E39641E0BF7EC00608B71 /* NSImage+tintColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSImage+tintColor.swift"; sourceTree = "<group>"; };
 		BDD121071E06F9080021CC41 /* Composition tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Composition tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDD121111E06F9080021CC41 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BDD121131E06F9080021CC41 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -68,7 +74,7 @@
 		BDDB1A591E0A784800DFF834 /* FeaturedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeaturedCell.swift; sourceTree = "<group>"; };
 		DAF9FE50BD6405E64FD46350 /* Pods_Composition_Composition_macOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Composition_Composition_macOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCD589B62B8FBEE0364BF3AE /* Pods_Composition_tvOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Composition_tvOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		DF54558F4170D30EE53953D9 /* Pods-Composition iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Composition iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-Composition iOS/Pods-Composition iOS.release.xcconfig"; sourceTree = "<group>"; };
+		E1FCBFC4780F14CE7CA40509 /* Pods-Composition iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Composition iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Composition iOS/Pods-Composition iOS.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,8 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2DDA53373DAA2048B472AD55 /* Pods_Composition_Composition_tvOS.framework in Frameworks */,
-				BBE0072F451E2903A5E10EC0 /* Pods_Composition_tvOS.framework in Frameworks */,
+				A92B10CBC69B6C35FF45F38B /* Pods_Composition_tvOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,8 +90,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5AA0FB57C5AE3A82A2E7021F /* Pods_Composition_Composition_iOS.framework in Frameworks */,
-				35B838089D6F402531B7AF14 /* Pods_Composition_iOS.framework in Frameworks */,
+				519673FEF5EC45ED64C17DF9 /* Pods_Composition_iOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -159,6 +163,8 @@
 		BDD1212C1E0865CE0021CC41 /* macOS */ = {
 			isa = PBXGroup;
 			children = (
+				BD7E39621E0BF7C800608B71 /* NSImage+contentMode.swift */,
+				BD7E39641E0BF7EC00608B71 /* NSImage+tintColor.swift */,
 				BDDB1A491E093E8000DFF834 /* Views */,
 				BDDB1A361E09246300DFF834 /* AppDelegate.swift */,
 			);
@@ -201,11 +207,11 @@
 		BDDB1A071E08684F00DFF834 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				BDDB1A571E0A784800DFF834 /* GridCell.swift */,
-				BDDB1A581E0A784800DFF834 /* ListCell.swift */,
-				BDDB1A591E0A784800DFF834 /* FeaturedCell.swift */,
 				BDDB1A081E08684F00DFF834 /* CompositionListHeader.swift */,
 				BDDB1A091E08684F00DFF834 /* CompositionListView.swift */,
+				BDDB1A591E0A784800DFF834 /* FeaturedCell.swift */,
+				BDDB1A571E0A784800DFF834 /* GridCell.swift */,
+				BDDB1A581E0A784800DFF834 /* ListCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -223,6 +229,9 @@
 		BDDB1A491E093E8000DFF834 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				BD7E395C1E0BF69200608B71 /* FeaturedCell.swift */,
+				BD7E395D1E0BF69200608B71 /* GridCell.swift */,
+				BD7E395E1E0BF69200608B71 /* ListCell.swift */,
 				BDDB1A4A1E093E8000DFF834 /* CompositionListView.swift */,
 			);
 			path = Views;
@@ -231,16 +240,14 @@
 		F16E7B9D03A31425DC527CBA /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				488D8C145C98A8811AEE5B7A /* Pods-Composition macOS.debug.xcconfig */,
-				60CE6D2B4A1F22A0D8F3A4CD /* Pods-Composition macOS.release.xcconfig */,
 				AEF09C9083B8D7F0B5F647C5 /* Pods-Composition-Composition iOS.debug.xcconfig */,
 				7D2C348823F95D3D1C5A6CB8 /* Pods-Composition-Composition iOS.release.xcconfig */,
 				3B2FCEB29703DD25068E0BE2 /* Pods-Composition-Composition tvOS.debug.xcconfig */,
 				8FB8DE3B43771B0658D973A7 /* Pods-Composition-Composition tvOS.release.xcconfig */,
-				0DB7D45DAD43FCF6C85D13E6 /* Pods-Composition iOS.debug.xcconfig */,
-				DF54558F4170D30EE53953D9 /* Pods-Composition iOS.release.xcconfig */,
-				22A669E35ADDAE4A9188BCC3 /* Pods-Composition tvOS.debug.xcconfig */,
-				B7EDBF87D9D4949990B016C1 /* Pods-Composition tvOS.release.xcconfig */,
+				E1FCBFC4780F14CE7CA40509 /* Pods-Composition iOS.debug.xcconfig */,
+				3017FC01C3B0C38280F4A866 /* Pods-Composition iOS.release.xcconfig */,
+				3C242627076C8330B33AA41A /* Pods-Composition tvOS.debug.xcconfig */,
+				31637A2623F03E39F9162FDF /* Pods-Composition tvOS.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -252,12 +259,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BDD121161E06F9080021CC41 /* Build configuration list for PBXNativeTarget "Composition tvOS" */;
 			buildPhases = (
-				9DECF436BD2090657309FDE2 /* [CP] Check Pods Manifest.lock */,
+				E1E09344301309B3A9F9D93C /* [CP] Check Pods Manifest.lock */,
 				BDD121031E06F9080021CC41 /* Sources */,
 				BDD121041E06F9080021CC41 /* Frameworks */,
 				BDD121051E06F9080021CC41 /* Resources */,
-				AE2ECABBB4C0BDEF39A4753F /* [CP] Embed Pods Frameworks */,
-				62067CA970612723A320DCCA /* [CP] Copy Pods Resources */,
+				D5D1C8FC7FA5B2B7A0747D99 /* [CP] Embed Pods Frameworks */,
+				B5287B8D65D9F29E0A5486B7 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -272,12 +279,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BDDB1A041E08665200DFF834 /* Build configuration list for PBXNativeTarget "Composition iOS" */;
 			buildPhases = (
-				D59C96CBB9B64FFB3BBB65F9 /* [CP] Check Pods Manifest.lock */,
+				5AA20B8A349C3EB137B3F155 /* [CP] Check Pods Manifest.lock */,
 				BDDB19EF1E08665200DFF834 /* Sources */,
 				BDDB19F01E08665200DFF834 /* Frameworks */,
 				BDDB19F11E08665200DFF834 /* Resources */,
-				E24771B32CDC80FAACFB673A /* [CP] Embed Pods Frameworks */,
-				0833E5BE2BDA2A88D3EBE6DD /* [CP] Copy Pods Resources */,
+				EDBADADEFA5FF6B715BE6D4D /* [CP] Embed Pods Frameworks */,
+				A5F97A2A69DF72D05D2D9448 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -380,7 +387,22 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0833E5BE2BDA2A88D3EBE6DD /* [CP] Copy Pods Resources */ = {
+		5AA20B8A349C3EB137B3F155 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		A5F97A2A69DF72D05D2D9448 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -395,7 +417,7 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Composition iOS/Pods-Composition iOS-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		62067CA970612723A320DCCA /* [CP] Copy Pods Resources */ = {
+		B5287B8D65D9F29E0A5486B7 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -410,22 +432,7 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Composition tvOS/Pods-Composition tvOS-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		9DECF436BD2090657309FDE2 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		AE2ECABBB4C0BDEF39A4753F /* [CP] Embed Pods Frameworks */ = {
+		D5D1C8FC7FA5B2B7A0747D99 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -440,7 +447,7 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Composition tvOS/Pods-Composition tvOS-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		D59C96CBB9B64FFB3BBB65F9 /* [CP] Check Pods Manifest.lock */ = {
+		E1E09344301309B3A9F9D93C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -455,7 +462,7 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		E24771B32CDC80FAACFB673A /* [CP] Embed Pods Frameworks */ = {
+		EDBADADEFA5FF6B715BE6D4D /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -505,9 +512,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BD7E39631E0BF7C800608B71 /* NSImage+contentMode.swift in Sources */,
 				BDDB1A381E09260C00DFF834 /* CompositionController.swift in Sources */,
+				BD7E395F1E0BF69200608B71 /* FeaturedCell.swift in Sources */,
 				BDDB1A4B1E093E8000DFF834 /* CompositionListView.swift in Sources */,
+				BD7E39611E0BF69200608B71 /* ListCell.swift in Sources */,
 				BDDB1A371E09246300DFF834 /* AppDelegate.swift in Sources */,
+				BD7E39601E0BF69200608B71 /* GridCell.swift in Sources */,
+				BD7E39651E0BF7EC00608B71 /* NSImage+tintColor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -607,7 +619,7 @@
 		};
 		BDD121171E06F9080021CC41 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 22A669E35ADDAE4A9188BCC3 /* Pods-Composition tvOS.debug.xcconfig */;
+			baseConfigurationReference = 3C242627076C8330B33AA41A /* Pods-Composition tvOS.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
@@ -623,7 +635,7 @@
 		};
 		BDD121181E06F9080021CC41 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B7EDBF87D9D4949990B016C1 /* Pods-Composition tvOS.release.xcconfig */;
+			baseConfigurationReference = 31637A2623F03E39F9162FDF /* Pods-Composition tvOS.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
@@ -639,7 +651,7 @@
 		};
 		BDDB1A021E08665200DFF834 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0DB7D45DAD43FCF6C85D13E6 /* Pods-Composition iOS.debug.xcconfig */;
+			baseConfigurationReference = E1FCBFC4780F14CE7CA40509 /* Pods-Composition iOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -657,7 +669,7 @@
 		};
 		BDDB1A031E08665200DFF834 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DF54558F4170D30EE53953D9 /* Pods-Composition iOS.release.xcconfig */;
+			baseConfigurationReference = 3017FC01C3B0C38280F4A866 /* Pods-Composition iOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
