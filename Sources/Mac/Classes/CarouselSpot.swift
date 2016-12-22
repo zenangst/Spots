@@ -141,8 +141,6 @@ open class CarouselSpot: NSObject, Gridable {
 
     self.init(component: Component(stateCache.load()))
     self.stateCache = stateCache
-
-    registerAndPrepare()
   }
 
   deinit {
