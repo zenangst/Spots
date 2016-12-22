@@ -12,7 +12,7 @@ public extension Composable where Self : View {
     guard let spots = spots else { return }
 
     var size = contentView.frame.size
-    var width = contentView.frame.width
+    let width = contentView.frame.width
     var height: CGFloat = 0.0
 
     #if os(tvOS)
