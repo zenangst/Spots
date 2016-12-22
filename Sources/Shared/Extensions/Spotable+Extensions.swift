@@ -256,7 +256,7 @@ public extension Spotable {
     return item
   }
 
-  func prepare(kind: String, view: Any, item: inout Item) {
+  func prepare(kind: String, view: Any?, item: inout Item) {
     switch view {
     case let view as Composable:
       item.size.height = prepare(composable: view, item: item)
