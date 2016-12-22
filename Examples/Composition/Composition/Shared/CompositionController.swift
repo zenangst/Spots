@@ -29,13 +29,13 @@ class CompositionController : Controller, SpotsDelegate {
       )
     )
 
-    #if os(tvOS)
+    #if os(iOS)
+      let span: Double = 1.0
+    #else
       let span: Double = 2.0
     #endif
 
-    #if os(iOS)
-      let span: Double = 1.0
-    #endif
+
 
     var developerComponent = Component(kind: "grid", span: span)
 
