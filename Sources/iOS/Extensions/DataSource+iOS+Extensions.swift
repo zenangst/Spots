@@ -61,15 +61,18 @@ extension DataSource: UICollectionViewDataSource {
 
     let reuseIdentifier = spot.identifier(at: indexPath)
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
-    if let composite = cell as? Composable {
+
+    switch cell {
+    case let cell as Composable:
       let spots = spot.spotsCompositeDelegate?.resolve(spot.component.index, itemIndex: indexPath.item)
-      composite.configure(&spot.component.items[indexPath.item], spots: spots)
-    } else if let cell = cell as? SpotConfigurable {
+      cell.configure(&spot.component.items[indexPath.item], spots: spots)
+    case let cell as SpotConfigurable:
       cell.configure(&spot.component.items[indexPath.item])
       if spot.component.items[indexPath.item].size.height == 0.0 {
         spot.component.items[indexPath.item].size = cell.preferredViewSize
       }
       spot.configure?(cell)
+    default: break
     }
 
     return cell
@@ -109,10 +112,11 @@ extension DataSource: UITableViewDataSource {
     let cell: UITableViewCell = tableView
       .dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
 
-    if let composite = cell as? Composable {
+    switch cell {
+    case let cell as Composable:
       let spots = spot.spotsCompositeDelegate?.resolve(spot.component.index, itemIndex: indexPath.item)
-      composite.configure(&spot.component.items[indexPath.item], spots: spots)
-    } else if let cell = cell as? SpotConfigurable {
+      cell.configure(&spot.component.items[indexPath.item], spots: spots)
+    case let cell as SpotConfigurable:
       cell.configure(&spot.component.items[indexPath.item])
 
       if spot.component.items[indexPath.item].size.height == 0.0 {
@@ -120,6 +124,7 @@ extension DataSource: UITableViewDataSource {
       }
 
       spot.configure?(cell)
+    default: break
     }
 
     return cell
