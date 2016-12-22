@@ -28,11 +28,11 @@ extension DataSource: NSCollectionViewDataSource {
   ///
   /// - returns: A configured item object. You must not return nil from this method.
   public func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
+    let reuseIdentifier: String
+
     guard let spot = spot else {
       return NSCollectionViewItem()
     }
-
-    let reuseIdentifier: String
 
     if let gridable = spot as? Gridable {
       reuseIdentifier = gridable.identifier(at: indexPath.item)
@@ -42,11 +42,15 @@ extension DataSource: NSCollectionViewDataSource {
 
     let item = collectionView.makeItem(withIdentifier: reuseIdentifier, for: indexPath)
 
-    if let composite = item as? Composable {
+    switch item {
+    case let item as Composable:
       let spots = spot.spotsCompositeDelegate?.resolve(spot.component.index, itemIndex: indexPath.item)
-      composite.configure(&spot.component.items[indexPath.item], spots: spots)
-    } else if let cell = item as? SpotConfigurable {
-      cell.configure(&spot.component.items[indexPath.item])
+      item.contentView.frame.size.width = collectionView.frame.size.width
+      item.contentView.frame.size.height = spot.computedHeight
+      item.configure(&spot.component.items[indexPath.item], spots: spots)
+    case let item as SpotConfigurable:
+      item.configure(&spot.component.items[indexPath.item])
+    default: break
     }
 
     return item
