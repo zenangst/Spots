@@ -35,8 +35,6 @@ class CompositionController : Controller, SpotsDelegate {
       let span: Double = 2.0
     #endif
 
-
-
     var developerComponent = Component(kind: "grid", span: span)
 
     developerComponent.items.append(
