@@ -68,9 +68,11 @@ extension DataSource: UICollectionViewDataSource {
       cell.configure(&spot.component.items[indexPath.item], spots: spots)
     case let cell as SpotConfigurable:
       cell.configure(&spot.component.items[indexPath.item])
+
       if spot.component.items[indexPath.item].size.height == 0.0 {
         spot.component.items[indexPath.item].size = cell.preferredViewSize
       }
+
       spot.configure?(cell)
     default: break
     }
