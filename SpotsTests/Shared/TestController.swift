@@ -568,7 +568,7 @@ class ControllerTests : XCTestCase {
     XCTAssertEqual(self.controller.spots[1].items.first?.title, "First list item")
     XCTAssertTrue(self.controller.spots[1] is ListSpot)
     XCTAssertTrue(self.controller.spots.count == 2)
-    XCTAssertTrue(self.controller.compositeSpots.count == 0)
+    XCTAssertTrue(self.controller.spots[0].compositeSpots.count == 0)
 
     let exception = self.expectation(description: "Reload multiple times with JSON (if needed)")
 
@@ -580,7 +580,7 @@ class ControllerTests : XCTestCase {
       XCTAssertEqual(self.controller.spots[1].items.first?.title, "First list item")
 
       XCTAssertEqual(self.controller.spots[0].items[1].kind, "composite")
-      XCTAssertEqual(self.controller.compositeSpots.count, 1)
+      XCTAssertEqual(self.controller.spots[0].compositeSpots.count, 1)
 
       self.controller.reloadIfNeeded(initialJSON) {
         XCTAssertTrue(self.controller.spots[0] is ListSpot)
@@ -588,7 +588,7 @@ class ControllerTests : XCTestCase {
         XCTAssertEqual(self.controller.spots[1].items.first?.title, "First list item")
         XCTAssertTrue(self.controller.spots[1] is ListSpot)
         XCTAssertTrue(self.controller.spots.count == 2)
-        XCTAssertTrue(self.controller.compositeSpots.count == 0)
+        XCTAssertTrue(self.controller.spots[0].compositeSpots.count == 0)
         exception.fulfill()
       }
     }

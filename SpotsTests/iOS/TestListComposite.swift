@@ -8,14 +8,14 @@ class ListCompositeTests: XCTestCase {
   func testListComposite() {
     let view = ListComposite()
     var item = Item()
-    let gridSpot = GridSpot(component: Component())
-    view.configure(&item, spots: [gridSpot])
+    let gridSpot = CompositeSpot(spot: GridSpot(component: Component()), itemIndex: 0)
+    view.configure(&item, compositeSpots: [gridSpot])
 
     XCTAssertTrue(view.contentView.subviews.count == 1)
 
-    let carouselSpot = CarouselSpot(component: Component())
-    let listSpot = ListSpot(component: Component())
-    view.configure(&item, spots: [carouselSpot, listSpot])
+    let carouselSpot = CompositeSpot(spot: CarouselSpot(component: Component()), itemIndex: 0)
+    let listSpot = CompositeSpot(spot: ListSpot(component: Component()), itemIndex: 0)
+    view.configure(&item, compositeSpots: [carouselSpot, listSpot])
 
     XCTAssertTrue(view.contentView.subviews.count == 3)
     XCTAssertTrue(view.contentView.subviews[0] is UICollectionView)
@@ -25,10 +25,10 @@ class ListCompositeTests: XCTestCase {
     view.prepareForReuse()
     XCTAssertTrue(view.contentView.subviews.count == 0)
 
-    view.configure(&item, spots: nil)
+    view.configure(&item, compositeSpots: nil)
     XCTAssertTrue(view.contentView.subviews.count == 0)
 
-    view.configure(&item, spots: [carouselSpot, listSpot])
+    view.configure(&item, compositeSpots: [carouselSpot, listSpot])
     XCTAssertTrue(view.contentView.subviews.count == 2)
     XCTAssertTrue(view.contentView.subviews[0] is UICollectionView)
     XCTAssertTrue(view.contentView.subviews[1] is UITableView)
