@@ -3,6 +3,9 @@ import Brick
 
 open class ListSpot: NSObject, Listable {
 
+  /// Child spots
+  public var compositeSpots: [CompositeSpot] = []
+
   public struct Key {
     public static let titleSeparator = "title-separator"
     public static let titleFontSize = "title-font-size"
@@ -33,9 +36,6 @@ open class ListSpot: NSObject, Listable {
   open static var configure: ((_ view: NSTableView) -> Void)?
   open static var defaultView: View.Type = ListSpotItem.self
   open static var defaultKind: StringConvertible = Component.Kind.List.string
-
-  /// A CompositeDelegate for the ListSpot, used to access composite spots
-  open weak var spotsCompositeDelegate: CompositeDelegate?
 
   /// A SpotsDelegate that is used for the ListSpot
   open weak var delegate: SpotsDelegate?

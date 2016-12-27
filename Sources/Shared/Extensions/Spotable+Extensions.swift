@@ -293,47 +293,31 @@ public extension Spotable {
   @discardableResult func prepare(composable: Composable, item: Item) -> CGFloat {
     var height: CGFloat = 0.0
 
-    if let foundCompositeSpots = spotsCompositeDelegate?.resolve(component.index, itemIndex: item.index), !foundCompositeSpots.isEmpty {
+    compositeSpots.filter({ $0.itemIndex == item.index }).forEach {
+      $0.spot.render().removeFromSuperview()
 
-      for spot in foundCompositeSpots {
-        height += spot.computedHeight
-        #if !os(OSX)
-          let header = spot.type.headers.make(spot.component.header)
-          height += (header?.view as? Componentable)?.preferredHeaderHeight ?? 0.0
-        #endif
+      if let index = compositeSpots.index(of: $0) {
+        compositeSpots.remove(at: index)
       }
+    }
 
-      return height
-    } else {
-      let spots = composable.parse(item)
+    let spots = Parser.parse(item: item)
 
-      spots.forEach { spot in
-        let compositeSpot = CompositeSpot(parentSpot: self,
-                                          spot: spot,
-                                          spotableIndex: component.index,
-                                          itemIndex: item.index)
+    spots.forEach { spot in
+      let compositeSpot = CompositeSpot(spot: spot,
+                                        parentSpot: self,
+                                        itemIndex: item.index)
 
-        #if !os(OSX)
-          spot.prepareItems()
-          height += compositeSpot.spot.computedHeight
-          let header = compositeSpot.spot.type.headers.make(compositeSpot.spot.component.header)
-          height += (header?.view as? Componentable)?.preferredHeaderHeight ?? 0.0
+      spot.registerAndPrepare()
+      spot.setup(render().frame.size)
 
-          if (spot as? Gridable)?.layout.scrollDirection != .horizontal {
-            spot.setup(render().frame.size)
-          }
-        #else
-          spot.registerAndPrepare()
+      #if !os(OSX)
+        let header = compositeSpot.spot.type.headers.make(compositeSpot.spot.component.header)
+        height += (header?.view as? Componentable)?.preferredHeaderHeight ?? 0.0
+      #endif
 
-          if let frame = spotsCompositeDelegate?.contentView.frame {
-            spot.setup(frame.size)
-          }
-
-          height += compositeSpot.spot.computedHeight
-        #endif
-
-        spotsCompositeDelegate?.compositeSpots.append(compositeSpot)
-      }
+      height += compositeSpot.spot.computedHeight
+      compositeSpots.append(compositeSpot)
     }
 
     return height
@@ -357,7 +341,7 @@ public extension Spotable {
       item.size.width = superview.frame.width
     }
 
-    if let view = view as? View, item.size.width  == 0.0 {
+    if let view = view as? View, item.size.width == 0.0 {
       item.size.width = view.bounds.width
     }
   }

@@ -10,12 +10,5 @@ public protocol Composable: class {
   ///
   /// - parameter item:  The Item struct that is Composable
   /// - parameter spots: A collection of Spotable objects that should be used to configure the child
-  func configure(_ item: inout Item, spots: [Spotable]?)
-
-  /// Parse children of an Item into Spotable components
-  ///
-  /// - parameter item: The item you want to parse
-  ///
-  /// - returns: A collection of Spotable objects
-  func parse(_ item: Item) -> [Spotable]
+  func configure(_ item: inout Item, compositeSpots: [CompositeSpot]?)
 }

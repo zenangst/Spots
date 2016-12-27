@@ -111,17 +111,9 @@ extension SpotsProtocol {
     return changes
   }
 
-  /// Remove composite views from container
-  func removeCompositeViews() {
-    compositeSpots.forEach {
-      $0.spot.render().removeFromSuperview()
-    }
-  }
-
   fileprivate func replaceSpot(_ index: Int, newComponents: [Component], yOffset: inout CGFloat) {
     let spot = Factory.resolve(component: newComponents[index])
 
-    removeCompositeViews()
     spots[index].render().removeFromSuperview()
     spots[index] = spot
     setupSpot(at: index, spot: spot)
@@ -204,7 +196,7 @@ extension SpotsProtocol {
       spot.beforeUpdate()
 
       for item in newItems {
-        let results = compositeSpots.filter({ $0.spotableIndex == spot.index && $0.itemIndex == item.index })
+        let results = spot.compositeSpots.filter({ $0.itemIndex == item.index })
         for compositeSpot in results {
           offsets.append(compositeSpot.spot.render().contentOffset)
         }
@@ -212,15 +204,15 @@ extension SpotsProtocol {
 
       spot.items = newItems
     }) { [weak self] in
-      for item in newItems {
-        if let compositeSpots = self?.compositeSpots
-          .filter({ $0.spotableIndex == spot.index && $0.itemIndex == item.index }) {
-          for (index, compositeSpot) in compositeSpots.enumerated() {
-            guard index < offsets.count else { continue }
-            compositeSpot.spot.render().contentOffset = offsets[index]
-          }
-        }
-      }
+//      for item in newItems {
+//        if let compositeSpots = self?.compositeSpots
+//          .filter({ $0.itemIndex == item.index }) {
+//          for (index, compositeSpot) in compositeSpots.enumerated() {
+//            guard index < offsets.count else { continue }
+//            compositeSpot.spot.render().contentOffset = offsets[index]
+//          }
+//        }
+//      }
 
       self?.finishReloading(spot: spot, withCompletion: completion)
     }
@@ -249,18 +241,18 @@ extension SpotsProtocol {
 
       let executeClosure = newItems.count - 1
       for (index, item) in newItems.enumerated() {
-        let components = Parser.parse(item.children).map { $0.component }
+//        let components = Parser.parse(item.children).map { $0.component }
 
-        let oldSpots = weakSelf.compositeSpots.filter({ $0.spotableIndex == spot.index })
-        for removedSpot in oldSpots {
-          guard !components.contains(removedSpot.spot.component) else {
-            continue
-          }
-
-          if let index = weakSelf.compositeSpots.index(of: removedSpot) {
-            weakSelf.compositeSpots.remove(at: index)
-          }
-        }
+//        let oldSpots = weakSelf.compositeSpots.filter({ $0.spotableIndex == spot.index })
+//        for removedSpot in oldSpots {
+//          guard !components.contains(removedSpot.spot.component) else {
+//            continue
+//          }
+//
+//          if let index = weakSelf.compositeSpots.index(of: removedSpot) {
+//            weakSelf.compositeSpots.remove(at: index)
+//          }
+//        }
 
         if !spot.items.filter({ !$0.children.isEmpty }).isEmpty {
           spot.beforeUpdate()
@@ -389,7 +381,7 @@ extension SpotsProtocol {
       }
 
       var offsets = [CGPoint]()
-      let oldComposites = weakSelf.compositeSpots
+//      let oldComposites = weakSelf.compositeSpots
 
       if newComponents.count == oldComponents.count {
         offsets = weakSelf.spots.map { $0.render().contentOffset }
@@ -405,13 +397,13 @@ extension SpotsProtocol {
       weakSelf.setupSpots(animated: animated)
       weakSelf.cache()
 
-      for (index, compositeSpot) in oldComposites.enumerated() {
-        if index == weakSelf.compositeSpots.count {
-          break
-        }
-
-        weakSelf.compositeSpots[index].spot.render().contentOffset = compositeSpot.spot.render().contentOffset
-      }
+//      for (index, compositeSpot) in oldComposites.enumerated() {
+//        if index == weakSelf.compositeSpots.count {
+//          break
+//        }
+//
+//        weakSelf.compositeSpots[index].spot.render().contentOffset = compositeSpot.spot.render().contentOffset
+//      }
 
       completion?()
 
@@ -585,15 +577,19 @@ extension SpotsProtocol {
         return
     }
 
-    #if !os(OSX)
-      if animation == .none { CATransaction.begin() }
+    #if os(iOS)
+      if animation == .none {
+        CATransaction.begin()
+      }
     #endif
 
     spot(at: spotIndex, ofType: Spotable.self)?.update(item, index: index, withAnimation: animation) { [weak self] in
       completion?()
       self?.scrollView.layoutSubviews()
-      #if !os(OSX)
-        if animation == .none { CATransaction.commit() }
+      #if os(iOS)
+        if animation == .none {
+          CATransaction.commit()
+        }
       #endif
     }
   }

@@ -4,6 +4,9 @@ import Brick
 /// A RowSpot, a collection view based Spotable object that lays out its items in a vertical order based of the item sizes
 open class RowSpot: NSObject, Gridable {
 
+  /// Child spots
+  public var compositeSpots: [CompositeSpot] = []
+
   /**
    *  Keys for meta data lookup
    */
@@ -57,9 +60,6 @@ open class RowSpot: NSObject, Gridable {
       }
     }
   }
-
-  /// A CompositeDelegate for the RowSpot, used to access composite spots
-  open weak var spotsCompositeDelegate: CompositeDelegate?
 
   /// A SpotsDelegate that is used for the RowSpot
   open weak var delegate: SpotsDelegate?

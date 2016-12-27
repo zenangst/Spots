@@ -4,6 +4,9 @@ import Brick
 /// A GridSpot, a collection view based Spotable object that lays out its items in a vertical order based of the item sizes
 open class GridSpot: NSObject, Gridable {
 
+  /// Child spots
+  public var compositeSpots: [CompositeSpot] = []
+
   /**
    *  Keys for meta data lookup
    */
@@ -58,9 +61,6 @@ open class GridSpot: NSObject, Gridable {
     }
   }
 
-  /// A CompositeDelegate for the GridSpot, used to access composite spots
-  open weak var spotsCompositeDelegate: CompositeDelegate?
-
   /// A SpotsDelegate that is used for the GridSpot
   open weak var delegate: SpotsDelegate?
 
@@ -105,7 +105,7 @@ open class GridSpot: NSObject, Gridable {
     registerDefault(view: GridSpotCell.self)
     registerComposite(view: GridComposite.self)
     configureLayout()
-    prepareItems()
+    registerAndPrepare()
     configureCollectionView()
 
     if GridSpot.views.composite == nil {

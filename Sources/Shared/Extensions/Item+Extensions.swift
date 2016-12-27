@@ -16,10 +16,10 @@ public enum ItemDiff {
 public extension Item {
 
   static func evaluate(_ newModels: [Item], oldModels: [Item]) -> [ItemDiff]? {
-    let newChildren = newModels.flatMap { $0.children }
-    let oldChildren = oldModels.flatMap { $0.children }
+    let newChildren = newModels.flatMap { $0.children.map { Component($0) } }
+    let oldChildren = oldModels.flatMap { $0.children.map { Component($0) } }
 
-    guard !(oldModels === newModels) || !(newChildren as NSArray).isEqual(to: oldChildren) else {
+    guard !(oldModels === newModels) || newChildren !== oldChildren else {
       return nil
     }
 

@@ -3,6 +3,10 @@ import Brick
 
 /// A CarouselSpot, a collection view based Spotable object that lays out its items in a horizontal order
 open class CarouselSpot: NSObject, Gridable {
+
+  /// Child spots
+  public var compositeSpots: [CompositeSpot] = []
+
   /**
    *  A struct that holds keys that is used when mapping meta data to configuration methods
    */
@@ -103,9 +107,6 @@ open class CarouselSpot: NSObject, Gridable {
 
   /// A CarouselScrollDelegate, used when a CarouselSpot scrolls
   open weak var carouselScrollDelegate: CarouselScrollDelegate?
-
-  /// A CompositeDelegate for the CarouselSpot, used to access composite spots
-  open weak var spotsCompositeDelegate: CompositeDelegate?
 
   /// A SpotsDelegate that is used for the CarouselSpot
   open weak var delegate: SpotsDelegate?

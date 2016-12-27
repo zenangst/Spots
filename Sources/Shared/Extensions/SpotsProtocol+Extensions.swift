@@ -58,8 +58,8 @@ public extension SpotsProtocol {
     for spot in spots {
       var spotJSON = spot.component.dictionary(amountOfItems)
       for item in spot.items where item.kind == "composite" {
-        let results = compositeSpots
-          .filter({ $0.spotableIndex == spot.index && $0.itemIndex == item.index })
+        let results = spot.compositeSpots
+          .filter({ $0.itemIndex == item.index })
 
         var newItem = item
         var children = [[String : Any]]()
@@ -91,11 +91,12 @@ public extension SpotsProtocol {
       if let first = spot.items.filter(includeElement).first {
         return spot.ui(at: first.index)
       }
-    }
 
-    for compositeSpot in compositeSpots {
-      if let first = compositeSpot.spot.items.filter(includeElement).first {
-        return spot?.ui(at: first.index)
+      let cSpots = spot.compositeSpots.map { $0.spot }
+      for compositeSpot in cSpots {
+        if let first = compositeSpot.items.filter(includeElement).first {
+          return compositeSpot.ui(at: first.index)
+        }
       }
     }
 
@@ -109,7 +110,10 @@ public extension SpotsProtocol {
   /// - returns: A collection of Spotable objects that match the includeElements predicate
   public func filter(spots includeElement: (Spotable) -> Bool) -> [Spotable] {
     var result = spots.filter(includeElement)
-    let compositeResults: [Spotable] = compositeSpots.map({ $0.spot }).filter(includeElement)
+
+    let cSpots = spots.flatMap({ $0.compositeSpots.map { $0.spot } })
+    let compositeResults: [Spotable] = cSpots.filter(includeElement)
+
     result.append(contentsOf: compositeResults)
 
     return result
@@ -127,13 +131,13 @@ public extension SpotsProtocol {
       if !items.isEmpty {
         result.append((spot: spot, items: items))
       }
-    }
 
-    let compositeResults: [Spotable] = compositeSpots.map({ $0.spot })
-    for spot in compositeResults {
-      let items = spot.items.filter(includeElement)
-      if !items.isEmpty {
-        result.append((spot: spot, items: items))
+      let childSpots = spot.compositeSpots.map { $0.spot }
+      for spot in childSpots {
+        let items = spot.items.filter(includeElement)
+        if !items.isEmpty {
+          result.append((spot: spot, items: items))
+        }
       }
     }
 

@@ -17,8 +17,6 @@ public protocol SpotsProtocol: class {
   var scrollView: SpotsScrollView { get }
   /// A delegate that conforms to SpotsDelegate
   var delegate: SpotsDelegate? { get }
-  /// A collection of Spotable objects used in composition
-  var compositeSpots: [CompositeSpot] { get set }
   /// A collection of Spotable objects
   var spots: [Spotable] { get set }
   /// An array of refresh position to avoid calling multiple refreshes

@@ -8,13 +8,16 @@ public struct CompositeSpot: Equatable {
   ///   - lhs: A value to compare.
   ///   - rhs: Another value to compare.
   public static func == (lhs: CompositeSpot, rhs: CompositeSpot) -> Bool {
-    return lhs.spot.component == rhs.spot.component &&
-      lhs.spotableIndex == rhs.spotableIndex &&
-      lhs.itemIndex == rhs.itemIndex
+    return lhs.itemIndex == rhs.itemIndex
   }
 
-  var parentSpot: Spotable?
+  weak var parentSpot: Spotable?
   var spot: Spotable
-  var spotableIndex: Int
   var itemIndex: Int
+
+  init(spot: Spotable, parentSpot: Spotable? = nil, itemIndex: Int) {
+    self.spot = spot
+    self.parentSpot = parentSpot
+    self.itemIndex = itemIndex
+  }
 }

@@ -3,6 +3,9 @@ import Brick
 
 open class CarouselSpot: NSObject, Gridable {
 
+  /// Child spots
+  public var compositeSpots: [CompositeSpot] = []
+
   public struct Key {
     public static let minimumInteritemSpacing = "item-spacing"
     public static let minimumLineSpacing = "line-spacing"
@@ -92,9 +95,6 @@ open class CarouselSpot: NSObject, Gridable {
 
     return lineView
   }()
-
-  /// A CompositeDelegate for the CarouselSpot, used to access composite spots
-  open weak var spotsCompositeDelegate: CompositeDelegate?
 
   public var userInterface: UserInterface?
   var spotDataSource: DataSource?

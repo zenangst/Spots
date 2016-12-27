@@ -4,6 +4,9 @@ import Brick
 /// A Spotable object that uses UITableView to render its items
 open class ListSpot: NSObject, Listable {
 
+  /// Child spots
+  public var compositeSpots: [CompositeSpot] = []
+
   /// Keys for meta data lookup
   public struct Key {
     /// The meta key for setting the header height
@@ -33,9 +36,6 @@ open class ListSpot: NSObject, Listable {
       }
     }
   }
-
-  /// A CompositeDelegate for the GridSpot, used to access composite spots
-  open weak var spotsCompositeDelegate: CompositeDelegate?
 
   /// A SpotsDelegate that is used for the ListSpot
   open weak var delegate: SpotsDelegate?

@@ -281,49 +281,45 @@ public extension Spotable {
 
       let newItem = weakSelf.items[index]
 
-      if let composite: Composable = weakSelf.userInterface?.view(at: index) {
-        weakSelf.spotsCompositeDelegate?.purge(atIndex: weakSelf.component.index,
-                                               withItem: item,
-                                               forComposite: composite)
-        weakSelf.prepare(composable: composite, item: item)
-
-        let spots = weakSelf.spotsCompositeDelegate?.resolve(weakSelf.component.index, itemIndex: item.index)
-
-        weakSelf.userInterface?.beginUpdates()
-        weakSelf.reload([item.index])
-        composite.configure(&weakSelf.component.items[item.index], spots: spots)
-        weakSelf.userInterface?.endUpdates()
-        weakSelf.afterUpdate()
-        weakSelf.updateHeight() {
-          weakSelf.userInterface?.beginUpdates()
-          weakSelf.userInterface?.endUpdates()
-          weakSelf.render().superview?.layoutSubviews()
-          completion?()
-        }
-      }
-
-      if newItem.kind != oldItem.kind || newItem.size.height != oldItem.size.height {
-        if let cell: SpotConfigurable = weakSelf.userInterface?.view(at: index), animation != .none {
-          weakSelf.userInterface?.beginUpdates()
-          cell.configure(&weakSelf.items[index])
-          weakSelf.userInterface?.endUpdates()
+      if newItem.kind == "composite" {
+        if let compositeView: Composable? = weakSelf.userInterface?.view(at: index) {
+          compositeView?.configure(&weakSelf.items[index],
+                                   compositeSpots: weakSelf.compositeSpots.filter { $0.itemIndex == item.index })
         } else {
-          weakSelf.userInterface?.reload([index], withAnimation: animation, completion: nil)
+          for compositeSpot in weakSelf.compositeSpots {
+            compositeSpot.spot.setup(weakSelf.render().frame.size)
+            compositeSpot.spot.reload([])
+          }
         }
+
+        weakSelf.render().superview?.layoutSubviews()
         weakSelf.afterUpdate()
-        weakSelf.updateHeight {
+        completion?()
+        return
+      } else {
+        if newItem.kind != oldItem.kind || newItem.size.height != oldItem.size.height {
+          if let cell: SpotConfigurable = weakSelf.userInterface?.view(at: index), animation != .none {
+            weakSelf.userInterface?.beginUpdates()
+            cell.configure(&weakSelf.items[index])
+            weakSelf.userInterface?.endUpdates()
+          } else {
+            weakSelf.userInterface?.reload([index], withAnimation: animation, completion: nil)
+          }
+          weakSelf.afterUpdate()
+          weakSelf.updateHeight {
+            weakSelf.render().superview?.layoutSubviews()
+            completion?()
+          }
+          return
+        } else if let cell: SpotConfigurable = weakSelf.userInterface?.view(at: index) {
+          cell.configure(&weakSelf.items[index])
+          weakSelf.render().superview?.layoutSubviews()
+          completion?()
+        } else {
+          weakSelf.afterUpdate()
           weakSelf.render().superview?.layoutSubviews()
           completion?()
         }
-        return
-      } else if let cell: SpotConfigurable = weakSelf.userInterface?.view(at: index) {
-        cell.configure(&weakSelf.items[index])
-        weakSelf.render().superview?.layoutSubviews()
-        completion?()
-      } else {
-        weakSelf.afterUpdate()
-        weakSelf.render().superview?.layoutSubviews()
-        completion?()
       }
     }
   }
