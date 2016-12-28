@@ -74,12 +74,14 @@ extension SpotsProtocol {
       let changes = weakSelf.generateChanges(from: newComponents, and: oldComponents)
 
       weakSelf.process(changes: changes, components: newComponents, withAnimation: animation) {
-        weakSelf.cache()
-        completion?()
-        if let controller = self as? Controller {
-          Controller.spotsDidReloadComponents?(controller)
+        Dispatch.mainQueue {
+          weakSelf.cache()
+          if let controller = self as? Controller {
+            Controller.spotsDidReloadComponents?(controller)
+          }
+          completion?()
+          weakSelf.scrollView.layoutSubviews()
         }
-        weakSelf.scrollView.layoutSubviews()
       }
     }
   }
