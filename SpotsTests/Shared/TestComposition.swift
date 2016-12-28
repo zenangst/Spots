@@ -10,8 +10,10 @@ class CompositionTests: XCTestCase {
 
   #if os(tvOS)
   let heightOffset: CGFloat = 14
-  #else
+  #elseif os(iOS)
   let heightOffset: CGFloat = 0
+  #else
+  let heightOffset: CGFloat = 2
   #endif
 
   override func tearDown() {
@@ -209,6 +211,12 @@ class CompositionTests: XCTestCase {
     ]
 
     let controller = Controller(spots: Parser.parse(initialComponents))
+
+    #if os(OSX)
+      controller.view.frame.size = CGSize(width: 400, height: 400)
+      controller.setupSpots()
+    #endif
+
     controller.view.layoutIfNeeded()
     let spots = controller.spots
 
