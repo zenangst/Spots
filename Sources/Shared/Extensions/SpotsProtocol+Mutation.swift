@@ -205,6 +205,7 @@ extension SpotsProtocol {
                       animation: Animation,
                       completion: (() -> Void)? = nil) {
     var offsets = [CGPoint]()
+
     spot.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: {
       spot.beforeUpdate()
 
