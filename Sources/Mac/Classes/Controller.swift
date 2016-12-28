@@ -220,10 +220,6 @@ open class Controller: NSViewController, SpotsProtocol {
   }
 
   public func setupSpot(at index: Int, spot: Spotable) {
-    if spot.render().superview == nil {
-      scrollView.contentView.addSubview(spot.render())
-    }
-
     spots[index].component.index = index
     spot.registerAndPrepare()
 
@@ -236,6 +232,10 @@ open class Controller: NSViewController, SpotsProtocol {
     spot.component.size = CGSize(
       width: view.frame.width,
       height: ceil(spot.render().frame.height))
+
+    if spot.render().superview == nil {
+      scrollView.spotsContentView.addSubview(spot.render())
+    }
 
     (spot as? Gridable)?.layout(CGSize(width: view.frame.width, height: height))
   }
