@@ -34,6 +34,9 @@ extension DataSource: NSCollectionViewDataSource {
       return NSCollectionViewItem()
     }
 
+    /// This is to make sure that all views are registered on the collection view
+    spot.register()
+
     if let gridable = spot as? Gridable {
       reuseIdentifier = gridable.identifier(at: indexPath.item)
     } else {
