@@ -239,7 +239,6 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
     // Check if the items have changed
     if !(items === component.items) { return .items }
     // Check children
-
     let lhsChildren = items.flatMap { $0.children }
     let rhsChildren = component.items.flatMap { $0.children }
 
