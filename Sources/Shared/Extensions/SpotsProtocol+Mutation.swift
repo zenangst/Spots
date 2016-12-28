@@ -113,20 +113,31 @@ extension SpotsProtocol {
 
   fileprivate func replaceSpot(_ index: Int, newComponents: [Component], yOffset: inout CGFloat) {
     let spot = Factory.resolve(component: newComponents[index])
+    let oldSpot = spots[index]
 
-    spots[index].render().removeFromSuperview()
+    /// Remove old composite spots from superview and empty container
+    for compositeSpot in oldSpot.compositeSpots {
+      compositeSpot.spot.render().removeFromSuperview()
+    }
+    oldSpot.compositeSpots = []
+
+    spot.render().frame = oldSpot.render().frame
+
+    oldSpot.render().removeFromSuperview()
     spots[index] = spot
-    setupSpot(at: index, spot: spot)
     #if os(OSX)
       scrollView.spotsContentView.subviews.insert(spot.render(), at: index)
     #else
       scrollView.contentView.insertSubview(spot.render(), at: index)
     #endif
+    setupSpot(at: index, spot: spot)
 
     #if !os(OSX)
     (spot as? CarouselSpot)?.layout.yOffset = yOffset
     #endif
     yOffset += spot.render().frame.size.height
+
+    scrollView.layoutIfNeeded()
   }
 
   fileprivate func newSpot(_ index: Int, newComponents: [Component], yOffset: inout CGFloat) {
