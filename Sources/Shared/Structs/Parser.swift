@@ -52,7 +52,7 @@ public struct Parser {
     }
   }
 
-  public static func parse(components: [Component]) -> [Spotable] {
+  public static func parse(_ components: [Component]) -> [Spotable] {
     return components.map {
       Factory.resolve(component: $0)
     }
@@ -62,8 +62,8 @@ public struct Parser {
   /// - parameter item: A view model with children
   ///
   ///  - returns: A collection of Spotable objects
-  public static func parse(item: Item) -> [Spotable] {
-    let spots = Parser.parse(item.children)
+  public static func parse(_ item: Item) -> [Spotable] {
+    let spots: [Spotable] = Parser.parse(item.children)
     return spots
   }
 }
