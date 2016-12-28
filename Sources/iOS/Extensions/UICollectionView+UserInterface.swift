@@ -72,7 +72,8 @@ extension UICollectionView: UserInterface {
 
     if insertions.isEmpty &&
       reloads.isEmpty &&
-      deletions.isEmpty {
+      deletions.isEmpty &&
+      changes.childUpdates.isEmpty {
       completion?()
       return
     }
