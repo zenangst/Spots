@@ -87,9 +87,7 @@ open class SpotsScrollView: NSScrollView {
     layoutSubtreeIfNeeded()
   }
 
-  open override func layoutSubtreeIfNeeded() {
-    super.layoutSubtreeIfNeeded()
-
+  func layoutInOrder() {
     var yOffsetOfCurrentSubview: CGFloat = 0.0
 
     for subview in subviewsInLayoutOrder {
@@ -129,5 +127,11 @@ open class SpotsScrollView: NSScrollView {
     if let view = superview {
       view.layout()
     }
+  }
+
+  open override func layoutSubtreeIfNeeded() {
+    super.layoutSubtreeIfNeeded()
+
+    layoutInOrder()
   }
 }
