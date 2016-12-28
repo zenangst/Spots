@@ -236,7 +236,7 @@ class CompositionTests: XCTestCase {
     XCTAssertNotNil(composite)
     XCTAssertNotNil(spotConfigurable)
     XCTAssertEqual(composite?.contentView.subviews.count, 1)
-    XCTAssertTrue(spots[1].compositeSpots[0].parentSpot!.component == spots[0].component)
+    XCTAssertTrue(spots[1].compositeSpots[0].parentSpot!.component == spots[1].component)
     XCTAssertTrue(spots[1].compositeSpots[0].spot is Listable)
     XCTAssertEqual(spots[1].compositeSpots[0].spot.items.count, 10)
     XCTAssertEqual(spots[1].compositeSpots[0].spot.render().frame.size.height,
@@ -246,7 +246,7 @@ class CompositionTests: XCTestCase {
 
     XCTAssertNotNil(spotConfigurable)
     XCTAssertEqual(composite?.contentView.subviews.count, 1)
-    XCTAssertTrue(spots[1].compositeSpots[1].parentSpot!.component == spots[0].component)
+    XCTAssertTrue(spots[1].compositeSpots[1].parentSpot!.component == spots[1].component)
     XCTAssertTrue(spots[1].compositeSpots[1].spot is Listable)
     XCTAssertEqual(spots[1].compositeSpots[1].spot.items.count, 10)
     XCTAssertEqual(spots[1].compositeSpots[1].spot.render().frame.size.height,
@@ -335,6 +335,49 @@ class CompositionTests: XCTestCase {
 
     let exception = self.expectation(description: "Reload controller with components")
     controller.reloadIfNeeded(newComponents) {
+      let spots = controller.spots
+
+      composite = spots[0].ui(at: 0)
+      spotConfigurable = spots[0].compositeSpots[0].spot.ui(at: 0)
+
+      XCTAssertNotNil(composite)
+      XCTAssertNotNil(spotConfigurable)
+      XCTAssertEqual(composite?.contentView.subviews.count, 1)
+      XCTAssertTrue(spots[0].compositeSpots[0].parentSpot!.component == spots[0].component)
+      XCTAssertTrue(spots[0].compositeSpots[0].spot is Listable)
+      XCTAssertEqual(spots[0].compositeSpots[0].spot.items.count, 10)
+      XCTAssertEqual(spots[0].compositeSpots[0].spot.render().frame.size.height,
+                     spotConfigurable!.preferredViewSize.height * CGFloat(spots[0].compositeSpots[0].spot.items.count))
+
+      spotConfigurable = spots[0].compositeSpots[1].spot.ui(at: 0)
+
+      XCTAssertNotNil(spotConfigurable)
+      XCTAssertEqual(composite?.contentView.subviews.count, 1)
+      XCTAssertTrue(spots[0].compositeSpots[1].parentSpot!.component == spots[0].component)
+      XCTAssertTrue(spots[0].compositeSpots[1].spot is Listable)
+      XCTAssertEqual(spots[0].compositeSpots[1].spot.items.count, 10)
+      XCTAssertEqual(spots[0].compositeSpots[1].spot.render().frame.size.height,
+                     spotConfigurable!.preferredViewSize.height * CGFloat(spots[0].compositeSpots[1].spot.items.count))
+
+      XCTAssertNotNil(composite)
+      XCTAssertNotNil(spotConfigurable)
+      XCTAssertEqual(composite?.contentView.subviews.count, 1)
+      XCTAssertTrue(spots[1].compositeSpots[0].parentSpot!.component == spots[1].component)
+      XCTAssertTrue(spots[1].compositeSpots[0].spot is Listable)
+      XCTAssertEqual(spots[1].compositeSpots[0].spot.items.count, 10)
+      XCTAssertEqual(spots[1].compositeSpots[0].spot.render().frame.size.height,
+                     spotConfigurable!.preferredViewSize.height * CGFloat(spots[1].compositeSpots[0].spot.items.count))
+
+      spotConfigurable = spots[0].compositeSpots[1].spot.ui(at: 0)
+
+      XCTAssertNotNil(spotConfigurable)
+      XCTAssertEqual(composite?.contentView.subviews.count, 1)
+      XCTAssertTrue(spots[1].compositeSpots[1].parentSpot!.component == spots[1].component)
+      XCTAssertTrue(spots[1].compositeSpots[1].spot is Listable)
+      XCTAssertEqual(spots[1].compositeSpots[1].spot.items.count, 10)
+      XCTAssertEqual(spots[1].compositeSpots[1].spot.render().frame.size.height,
+                     spotConfigurable!.preferredViewSize.height * CGFloat(spots[1].compositeSpots[1].spot.items.count))
+
       exception.fulfill()
     }
     waitForExpectations(timeout: 1.0, handler: nil)
