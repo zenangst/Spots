@@ -218,15 +218,26 @@ extension SpotsProtocol {
 
       spot.items = newItems
     }) { [weak self] in
-      for item in newItems {
-        if let spot = self?.spots[item.index] {
-          let compositeSpots = spot.compositeSpots
-            .filter({ $0.itemIndex == item.index })
-          for (index, compositeSpot) in compositeSpots.enumerated() {
-            guard index < offsets.count else { continue }
-            compositeSpot.spot.render().contentOffset = offsets[index]
-          }
+      guard let weakSelf = self else {
+        return
+      }
+
+      for (index, item) in newItems.enumerated() {
+
+        guard index < weakSelf.spots.count else {
+          break
         }
+
+        let compositeSpots = weakSelf.spots[item.index].compositeSpots
+          .filter({ $0.itemIndex == item.index })
+        for (index, compositeSpot) in compositeSpots.enumerated() {
+          guard index < offsets.count else {
+            continue
+          }
+
+          compositeSpot.spot.render().contentOffset = offsets[index]
+        }
+
       }
 
       self?.finishReloading(spot: spot, withCompletion: completion)
