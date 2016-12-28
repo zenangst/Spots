@@ -301,7 +301,7 @@ public extension Spotable {
       }
     }
 
-    let spots = Parser.parse(item: item)
+    let spots: [Spotable] = Parser.parse(item)
 
     spots.forEach { spot in
       let compositeSpot = CompositeSpot(spot: spot,
