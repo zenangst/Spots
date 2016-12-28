@@ -293,7 +293,7 @@ open class Controller: UIViewController, SpotsProtocol, UIScrollViewDelegate {
   /// - parameter index: The index of the Spotable object
   /// - parameter spot:  The spotable object that is going to be setup
   open func setupSpot(at index: Int, spot: Spotable) {
-    if spot.render().superview != scrollView {
+    if spot.render().superview == nil {
       scrollView.contentView.addSubview(spot.render())
     }
 
