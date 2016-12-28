@@ -293,27 +293,30 @@ open class Controller: UIViewController, SpotsProtocol, UIScrollViewDelegate {
   /// - parameter index: The index of the Spotable object
   /// - parameter spot:  The spotable object that is going to be setup
   open func setupSpot(at index: Int, spot: Spotable) {
-    spot.render().bounds.size.width = view.bounds.width
+    if spot.render().superview != scrollView {
+      scrollView.contentView.addSubview(spot.render())
+    }
+
     spot.render().frame.origin.x = 0.0
     spots[index].component.index = index
+
+    if let superview = spot.render().superview {
+      spot.setup(superview.frame.size)
+      spot.component.size = CGSize(
+        width: superview.frame.width,
+        height: ceil(spot.render().frame.height))
+    }
+
     spot.registerAndPrepare()
-    spot.setup(scrollView.frame.size)
-    spot.component.size = CGSize(
-      width: view.frame.size.width,
-      height: ceil(spot.render().frame.height))
 
     if !spot.items.isEmpty {
       spot.render().layoutIfNeeded()
     }
 
-    if spot.render().superview != scrollView {
-      scrollView.contentView.addSubview(spot.render())
-    }
-
     for compositeSpot in spot.compositeSpots {
       compositeSpot.spot.setup(spot.render().frame.size)
       if compositeSpot.spot.render().frame.size.height == 0.0 {
-        compositeSpot.spot.render().frame.size = compositeSpot.spot.render().contentSize
+        compositeSpot.spot.render().frame.size.height = compositeSpot.spot.render().contentSize.height
       }
     }
   }
