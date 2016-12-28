@@ -252,8 +252,6 @@ open class Controller: NSViewController, SpotsProtocol {
                                         height: compositeSpot.spot.computedHeight))
       }
     }
-
-    scrollView.layoutSubtreeIfNeeded()
   }
 
   public func deselectAllExcept(selectedSpot: Spotable) {
