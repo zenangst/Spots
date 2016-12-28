@@ -36,7 +36,7 @@ extension NSTableView: UserInterface {
                    endClosure: completion)
   }
 
-  public func process(_ changes: (insertions: [Int], reloads: [Int], deletions: [Int]),
+  public func process(_ changes: (insertions: [Int], reloads: [Int], deletions: [Int], childUpdates: [Int]),
                       withAnimation animation: Animation = .automatic,
                       updateDataSource: () -> Void,
                       completion: ((()) -> Void)? = nil) {

@@ -5,11 +5,11 @@ extension Gridable {
 
   public func reloadIfNeeded(_ changes: ItemChanges, withAnimation animation: Animation, updateDataSource: () -> Void, completion: Completion) {
     guard !changes.updates.isEmpty else {
-      collectionView.process((insertions: changes.insertions, reloads: changes.reloads, deletions: changes.deletions), updateDataSource: updateDataSource, completion: completion)
+      collectionView.process((insertions: changes.insertions, reloads: changes.reloads, deletions: changes.deletions, childUpdates: changes.updatedChildren), updateDataSource: updateDataSource, completion: completion)
       return
     }
 
-    collectionView.process((insertions: changes.insertions, reloads: changes.reloads, deletions: changes.deletions), updateDataSource: updateDataSource) { [weak self] in
+    collectionView.process((insertions: changes.insertions, reloads: changes.reloads, deletions: changes.deletions, childUpdates: changes.updatedChildren), updateDataSource: updateDataSource) { [weak self] in
 
       for index in changes.updates {
         guard let item = self?.item(at: index) else { continue }
