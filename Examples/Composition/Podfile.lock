@@ -4,21 +4,23 @@ PODS:
   - Cache (2.1.1):
     - CryptoSwift
   - CryptoSwift (0.6.0)
+  - Hue (2.0.1)
   - Imaginary (1.0.1):
     - Cache (~> 2.0)
-  - Spots (5.6.2):
+  - Spots (5.7.0):
     - Brick (~> 2.0)
     - Cache (~> 2.0)
     - CryptoSwift (= 0.6.0)
     - Tailor (~> 2.0)
+  - Sugar (3.0.0)
   - Tailor (2.0.2)
 
 DEPENDENCIES:
   - Brick
-  - Cache
-  - CryptoSwift (= 0.6.0)
+  - Hue
   - Imaginary
   - Spots (from `../../`)
+  - Sugar
   - Tailor
 
 EXTERNAL SOURCES:
@@ -29,10 +31,12 @@ SPEC CHECKSUMS:
   Brick: 08788c20c9b9aded5b9e89b8a8942c1b4933e91a
   Cache: 525a292370641881d7e350f0d451fd276790243a
   CryptoSwift: 4a599b7241b8d3b857d6e2c28867d0bd5d1aae24
+  Hue: 354caec055fdc9d38b5ef33ca2e7224721843baf
   Imaginary: f37fb0dd81a5881cf7a8232d7854e8c5a689b054
-  Spots: a61f398c2f493ece737120dbeb789a74ec2191df
+  Spots: 2f897a2fe5f047e84a0a1e03b0e5763c5e1d1258
+  Sugar: 079e1375b76c8f0693474417836ef098f507ac50
   Tailor: 6f03d033af361a7cf1f25627a1877c5b91a9618c
 
-PODFILE CHECKSUM: c0b2ff201b0af733969d662182a373cd87b38d78
+PODFILE CHECKSUM: 7d4d192ec1aa36784f968da698efcfa47d24fb3b
 
 COCOAPODS: 1.1.1

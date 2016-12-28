@@ -5,7 +5,7 @@ PODS:
     - CryptoSwift
   - CryptoSwift (0.6.0)
   - Hue (2.0.1)
-  - Spots (5.6.2):
+  - Spots (5.7.0):
     - Brick (~> 2.0)
     - Cache (~> 2.0)
     - CryptoSwift (= 0.6.0)
@@ -29,7 +29,7 @@ SPEC CHECKSUMS:
   Cache: 525a292370641881d7e350f0d451fd276790243a
   CryptoSwift: 4a599b7241b8d3b857d6e2c28867d0bd5d1aae24
   Hue: 354caec055fdc9d38b5ef33ca2e7224721843baf
-  Spots: a61f398c2f493ece737120dbeb789a74ec2191df
+  Spots: 2f897a2fe5f047e84a0a1e03b0e5763c5e1d1258
   Tailor: 6f03d033af361a7cf1f25627a1877c5b91a9618c
 
 PODFILE CHECKSUM: 0f82781f79b3957e854c3d49f6f54f3271306b76
