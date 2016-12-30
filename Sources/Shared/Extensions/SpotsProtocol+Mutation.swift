@@ -259,18 +259,21 @@ extension SpotsProtocol {
 
       let executeClosure = newItems.count - 1
       for (index, item) in newItems.enumerated() {
-//        let components = Parser.parse(item.children).map { $0.component }
+        let components = Parser.parse(item.children).map { $0.component }
 
-//        let oldSpots = weakSelf.compositeSpots.filter({ $0.spotableIndex == spot.index })
-//        for removedSpot in oldSpots {
-//          guard !components.contains(removedSpot.spot.component) else {
-//            continue
-//          }
-//
-//          if let index = weakSelf.compositeSpots.index(of: removedSpot) {
-//            weakSelf.compositeSpots.remove(at: index)
-//          }
-//        }
+        let oldSpots = weakSelf.spots.flatMap({
+          $0.compositeSpots
+        })
+
+        for removedSpot in oldSpots {
+          guard !components.contains(removedSpot.spot.component) else {
+            continue
+          }
+
+          if let index = removedSpot.parentSpot?.compositeSpots.index(of: removedSpot) {
+            removedSpot.parentSpot?.compositeSpots.remove(at: index)
+          }
+        }
 
         if !spot.items.filter({ !$0.children.isEmpty }).isEmpty {
           spot.beforeUpdate()
@@ -402,7 +405,7 @@ extension SpotsProtocol {
       }
 
       var offsets = [CGPoint]()
-//      let oldComposites = weakSelf.compositeSpots
+      let oldComposites = weakSelf.spots.flatMap { $0.compositeSpots }
 
       if newComponents.count == oldComponents.count {
         offsets = weakSelf.spots.map { $0.render().contentOffset }
@@ -418,13 +421,15 @@ extension SpotsProtocol {
       weakSelf.setupSpots(animated: animated)
       weakSelf.cache()
 
-//      for (index, compositeSpot) in oldComposites.enumerated() {
-//        if index == weakSelf.compositeSpots.count {
-//          break
-//        }
-//
-//        weakSelf.compositeSpots[index].spot.render().contentOffset = compositeSpot.spot.render().contentOffset
-//      }
+      let newComposites = weakSelf.spots.flatMap { $0.compositeSpots }
+
+      for (index, compositeSpot) in oldComposites.enumerated() {
+        if index == newComposites.count {
+          break
+        }
+
+        newComposites[index].spot.render().contentOffset = compositeSpot.spot.render().contentOffset
+      }
 
       completion?()
 
