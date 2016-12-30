@@ -259,7 +259,7 @@ public extension Spotable {
   func prepare(kind: String, view: Any, item: inout Item) {
     switch view {
     case let view as Composable:
-      item.size.height = prepare(composable: view, item: item)
+      prepare(composable: view, item: &item)
     case let view as SpotConfigurable:
       view.configure(&item)
       setFallbackViewSize(to: &item, with: view)
@@ -290,7 +290,7 @@ public extension Spotable {
   /// - parameter usesViewSize:      A boolean value to determine if the view uses the views height
   ///
   /// - returns: The height for the item based of the composable spots
-  @discardableResult func prepare(composable: Composable, item: Item) -> CGFloat {
+  func prepare(composable: Composable, item: inout Item) {
     var height: CGFloat = 0.0
 
     compositeSpots.filter({ $0.itemIndex == item.index }).forEach {
@@ -320,7 +320,8 @@ public extension Spotable {
       compositeSpots.append(compositeSpot)
     }
 
-    return height
+    item.children = compositeSpots.map { $0.spot.dictionary }
+    item.size.height = height
   }
 
   /// Set fallback size to view
