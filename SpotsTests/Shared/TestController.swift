@@ -638,12 +638,12 @@ class ControllerTests : XCTestCase {
     let oldItems = self.controller.spots.first!.items
     var diff = Item.evaluate(newItems, oldModels: oldItems)
 
-    XCTAssertEqual(diff![0], .size)
+    XCTAssertEqual(diff![0], .text)
     XCTAssertEqual(diff![1], .size)
-    XCTAssertEqual(diff![2], .size)
-    XCTAssertEqual(diff![3], .size)
-    XCTAssertEqual(diff![4], .size)
-    XCTAssertEqual(diff![5], .size)
+    XCTAssertEqual(diff![2], .text)
+    XCTAssertEqual(diff![3], .text)
+    XCTAssertEqual(diff![4], .subtitle)
+    XCTAssertEqual(diff![5], .text)
   }
 
   func testReloadWithComponents() {
