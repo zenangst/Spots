@@ -70,9 +70,9 @@ extension NSCollectionView: UserInterface {
       .map { IndexPath(item: $0, section: 0) })
 
     performBatchUpdates({ [weak self] in
-      self?.deleteItems(at: deletionSets as Set<IndexPath>)
-      self?.insertItems(at: insertionsSets as Set<IndexPath>)
-      self?.reloadItems(at: reloadSets as Set<IndexPath>)
+      self?.deleteItems(at: deletionSets)
+      self?.insertItems(at: insertionsSets)
+      self?.reloadItems(at: reloadSets)
       }) { _ in
         completion?()
     }
