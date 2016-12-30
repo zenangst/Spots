@@ -127,11 +127,7 @@ extension SpotsProtocol {
 
     oldSpot.render().removeFromSuperview()
     spots[index] = spot
-    #if os(OSX)
-      scrollView.spotsContentView.subviews.insert(spot.render(), at: index)
-    #else
-      scrollView.contentView.insertSubview(spot.render(), at: index)
-    #endif
+    scrollView.spotsContentView.insertSubview(spot.render(), at: index)
     setupSpot(at: index, spot: spot)
 
     #if !os(OSX)
