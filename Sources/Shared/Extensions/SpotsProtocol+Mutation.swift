@@ -335,8 +335,18 @@ extension SpotsProtocol {
         return
       }
 
+      let finalCompletion = completion
+
       var yOffset: CGFloat = 0.0
       var runCompletion = true
+      var completion: Completion = nil
+      var lastItemChange: Int?
+
+      for (index, change) in changes.enumerated() {
+        if change == .items {
+          lastItemChange = index
+        }
+      }
 
       for (index, change) in changes.enumerated() {
         switch change {
@@ -347,6 +357,10 @@ extension SpotsProtocol {
         case .removed:
           weakSelf.removeSpot(at: index)
         case .items:
+          if index == lastItemChange {
+            completion = finalCompletion
+          }
+
           runCompletion = weakSelf.setupItemsForSpot(at: index,
                                                   newComponents: newComponents,
                                                   withAnimation: animation,
@@ -362,7 +376,7 @@ extension SpotsProtocol {
       }
 
       if runCompletion {
-        completion?()
+        finalCompletion?()
 
         #if os(OSX)
           for spot in weakSelf.spots {
