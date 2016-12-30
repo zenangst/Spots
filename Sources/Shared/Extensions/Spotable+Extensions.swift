@@ -320,7 +320,6 @@ public extension Spotable {
       compositeSpots.append(compositeSpot)
     }
 
-    item.children = compositeSpots.map { $0.spot.dictionary }
     item.size.height = height
   }
 
