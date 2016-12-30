@@ -378,15 +378,12 @@ extension SpotsProtocol {
       }
 
       if runCompletion {
-        #if os(OSX)
-          for spot in weakSelf.spots {
-            spot.setup(weakSelf.scrollView.frame.size)
-            spot.render().layoutSubviews()
-          }
-        #else
-          for spot in weakSelf.spots {
-            spot.render().layoutSubviews()
-          }
+        for spot in weakSelf.spots {
+          spot.setup(weakSelf.scrollView.frame.size)
+          spot.render().layoutSubviews()
+        }
+        #if !os(OSX)
+          weakSelf.scrollView.layoutSubviews()
         #endif
 
         finalCompletion?()
