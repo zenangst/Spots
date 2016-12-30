@@ -103,10 +103,10 @@ public extension Item {
     if kind != oldItem.kind { return .kind }
     if newChildren != oldChildren || newChildItems != oldChildItems { return .children }
     if identifier != oldItem.identifier { return .identifier }
-    if size != oldItem.size { return .size }
     if title != oldItem.title { return .title }
     if subtitle != oldItem.subtitle { return .subtitle }
     if text != oldItem.text { return .text }
+    if size != oldItem.size { return .size }
     if image != oldItem.image { return .image }
     if action != oldItem.action { return .action }
     if !(meta as NSDictionary).isEqual(to: oldItem.meta) { return .meta }
