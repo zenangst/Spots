@@ -211,13 +211,9 @@ class CompositionTests: XCTestCase {
     ]
 
     let controller = Controller(spots: Parser.parse(initialComponents))
-
-    #if os(OSX)
-      controller.view.frame.size = CGSize(width: 400, height: 400)
-      controller.setupSpots()
-    #endif
-
+    controller.prepareController()
     controller.view.layoutIfNeeded()
+
     let spots = controller.spots
 
     XCTAssertEqual(spots.count, 2)
@@ -361,7 +357,7 @@ class CompositionTests: XCTestCase {
       XCTAssertTrue(spots[0].compositeSpots[0].spot is Listable)
       XCTAssertEqual(spots[0].compositeSpots[0].spot.items.count, 10)
       XCTAssertEqual(spots[0].compositeSpots[0].spot.render().frame.size.height,
-                     (spotConfigurable!.preferredViewSize.height + self.heightOffset) * CGFloat(spots[0].compositeSpots[0].spot.items.count))
+                     ((spotConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(spots[0].compositeSpots[0].spot.items.count))
 
       spotConfigurable = spots[0].compositeSpots[1].spot.ui(at: 0)
 
@@ -371,7 +367,7 @@ class CompositionTests: XCTestCase {
       XCTAssertTrue(spots[0].compositeSpots[1].spot is Listable)
       XCTAssertEqual(spots[0].compositeSpots[1].spot.items.count, 10)
       XCTAssertEqual(spots[0].compositeSpots[1].spot.render().frame.size.height,
-                     (spotConfigurable!.preferredViewSize.height + self.heightOffset) * CGFloat(spots[0].compositeSpots[1].spot.items.count))
+                     ((spotConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(spots[0].compositeSpots[1].spot.items.count))
 
       XCTAssertNotNil(composite)
       XCTAssertNotNil(spotConfigurable)
@@ -380,7 +376,7 @@ class CompositionTests: XCTestCase {
       XCTAssertTrue(spots[1].compositeSpots[0].spot is Listable)
       XCTAssertEqual(spots[1].compositeSpots[0].spot.items.count, 10)
       XCTAssertEqual(spots[1].compositeSpots[0].spot.render().frame.size.height,
-                     spotConfigurable!.preferredViewSize.height * CGFloat(spots[1].compositeSpots[0].spot.items.count))
+                     ((spotConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(spots[1].compositeSpots[0].spot.items.count))
 
       spotConfigurable = spots[0].compositeSpots[1].spot.ui(at: 0)
 
@@ -390,7 +386,7 @@ class CompositionTests: XCTestCase {
       XCTAssertTrue(spots[1].compositeSpots[1].spot is Listable)
       XCTAssertEqual(spots[1].compositeSpots[1].spot.items.count, 10)
       XCTAssertEqual(spots[1].compositeSpots[1].spot.render().frame.size.height,
-                     spotConfigurable!.preferredViewSize.height * CGFloat(spots[1].compositeSpots[1].spot.items.count))
+                     ((spotConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(spots[1].compositeSpots[1].spot.items.count))
 
       exception.fulfill()
     }

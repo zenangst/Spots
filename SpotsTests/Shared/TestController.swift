@@ -698,11 +698,7 @@ class ControllerTests : XCTestCase {
       XCTAssertNil(view)
     #endif
 
-    controller.preloadView()
-    controller.viewDidAppear()
-    controller.spots.forEach {
-      $0.render().layoutSubviews()
-    }
+    controller.prepareController()
 
     /// Reset layout margins for tvOS
     #if os(tvOS)
@@ -889,14 +885,7 @@ class ControllerTests : XCTestCase {
 
     let spots = initialComponents.map { Factory.resolve(component: $0) }
     controller = Controller(spots: spots)
-    controller.preloadView()
-    controller.viewDidAppear()
-    controller.spots.forEach {
-      #if os(OSX)
-        $0.render().layoutSubtreeIfNeeded()
-      #endif
-      $0.render().layoutSubviews()
-    }
+    controller.prepareController()
     controller.reloadIfNeeded(newComponents)
 
 
