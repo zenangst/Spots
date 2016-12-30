@@ -128,7 +128,7 @@ class CompositionTests: XCTestCase {
     XCTAssertNil(composite)
   }
 
-  func testReloadWithComponentsUsingComposition() {
+  func testReloadWithComponentsUsingCompositionTriggeringReplaceSpot() {
     let initialComponents: [Component] = [
       Component(kind: Component.Kind.Grid.rawValue,
                 span: 2.0,
