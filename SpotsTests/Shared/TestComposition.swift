@@ -343,8 +343,12 @@ class CompositionTests: XCTestCase {
       )
     ]
 
-    let exception = self.expectation(description: "Reload controller with components")
+    let exception = self.expectation(description: "Reload controller with components replaceSpot")
+    var reloadTimes: Int = 0
+
     controller.reloadIfNeeded(newComponents) {
+      reloadTimes += 1
+
       let spots = controller.spots
 
       composite = spots[0].ui(at: 0)
@@ -387,6 +391,8 @@ class CompositionTests: XCTestCase {
       XCTAssertEqual(spots[1].compositeSpots[1].spot.items.count, 10)
       XCTAssertEqual(spots[1].compositeSpots[1].spot.render().frame.size.height,
                      ((spotConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(spots[1].compositeSpots[1].spot.items.count))
+
+      XCTAssertEqual(reloadTimes, 1)
 
       exception.fulfill()
     }
@@ -487,8 +493,12 @@ class CompositionTests: XCTestCase {
       )
     ]
 
-    let exception = self.expectation(description: "Reload controller with components")
+    let exception = self.expectation(description: "Reload controller with components newSpot")
+    var reloadTimes: Int = 0
+
     controller.reloadIfNeeded(newComponents) {
+      reloadTimes += 1
+
       let spots = controller.spots
 
       composite = spots[0].ui(at: 0)
@@ -531,7 +541,9 @@ class CompositionTests: XCTestCase {
       XCTAssertEqual(spots[1].compositeSpots[1].spot.items.count, 10)
       XCTAssertEqual(spots[1].compositeSpots[1].spot.render().frame.size.height,
                      ((spotConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(spots[1].compositeSpots[1].spot.items.count))
-      
+
+      XCTAssertEqual(reloadTimes, 1)
+
       exception.fulfill()
     }
     waitForExpectations(timeout: 1.0, handler: nil)
@@ -791,8 +803,12 @@ class CompositionTests: XCTestCase {
       )
     ]
 
-    let exception = self.expectation(description: "Reload controller with components")
+    var exception: XCTestExpectation? = self.expectation(description: "Reload controller with components triggering reloadMore")
+    var reloadTimes: Int = 0
+
     controller.reloadIfNeeded(newComponents) {
+      reloadTimes += 1
+
       let spots = controller.spots
 
       XCTAssertEqual(spots.count, 3)
@@ -837,8 +853,11 @@ class CompositionTests: XCTestCase {
       XCTAssertEqual(spots[1].compositeSpots[1].spot.items.count, 10)
       XCTAssertEqual(spots[1].compositeSpots[1].spot.render().frame.size.height,
                      ((spotConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(spots[1].compositeSpots[1].spot.items.count))
-      
-      exception.fulfill()
+
+      XCTAssertEqual(reloadTimes, 1)
+
+      exception?.fulfill()
+      exception = nil
     }
     waitForExpectations(timeout: 1.0, handler: nil)
   }
@@ -1019,8 +1038,12 @@ class CompositionTests: XCTestCase {
       )
     ]
 
-    let exception = self.expectation(description: "Reload controller with components")
+    var exception: XCTestExpectation? = self.expectation(description: "Reload controller with components  triggering reloadLess")
+    var reloadTimes: Int = 0
+
     controller.reloadIfNeeded(newComponents) {
+      reloadTimes += 1
+
       let spots = controller.spots
 
       XCTAssertEqual(spots.count, 1)
@@ -1047,7 +1070,10 @@ class CompositionTests: XCTestCase {
       XCTAssertEqual(spots[0].compositeSpots[1].spot.render().frame.size.height,
                      ((spotConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(spots[0].compositeSpots[1].spot.items.count))
 
-      exception.fulfill()
+      XCTAssertEqual(reloadTimes, 1)
+
+      exception?.fulfill()
+      exception = nil
     }
     waitForExpectations(timeout: 1.0, handler: nil)
   }
