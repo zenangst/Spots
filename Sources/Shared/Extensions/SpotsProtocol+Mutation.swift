@@ -219,7 +219,6 @@ extension SpotsProtocol {
       }
 
       for (index, item) in newItems.enumerated() {
-
         guard index < weakSelf.spots.count else {
           break
         }
@@ -233,7 +232,6 @@ extension SpotsProtocol {
 
           compositeSpot.spot.render().contentOffset = offsets[index]
         }
-
       }
 
       self?.finishReloading(spot: spot, withCompletion: completion)
