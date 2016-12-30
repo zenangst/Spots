@@ -150,7 +150,9 @@ extension SpotsProtocol {
   ///
   /// - parameter index: The index of the Spotable object hat you want to remove
   fileprivate func removeSpot(at index: Int) {
-    guard index < spots.count else { return }
+    guard index < spots.count else {
+      return
+    }
     spots[index].render().removeFromSuperview()
   }
 

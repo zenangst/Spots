@@ -312,13 +312,6 @@ open class Controller: UIViewController, SpotsProtocol, UIScrollViewDelegate {
     if !spot.items.isEmpty {
       spot.render().layoutIfNeeded()
     }
-
-    for compositeSpot in spot.compositeSpots {
-      compositeSpot.spot.setup(spot.render().frame.size)
-      if compositeSpot.spot.render().frame.size.height == 0.0 {
-        compositeSpot.spot.render().frame.size.height = compositeSpot.spot.render().contentSize.height
-      }
-    }
   }
 
   #if os(iOS)
