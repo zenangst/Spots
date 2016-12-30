@@ -54,7 +54,7 @@ class ControllerTests : XCTestCase {
       exception.fulfill()
     }
 
-    waitForExpectations(timeout: 0.1, handler: nil)
+    waitForExpectations(timeout: 0.5, handler: nil)
   }
 
   func testAppendOneMoreItemInListSpot() {
@@ -73,7 +73,7 @@ class ControllerTests : XCTestCase {
       exception.fulfill()
     }
 
-    waitForExpectations(timeout: 0.1, handler: nil)
+    waitForExpectations(timeout: 0.5, handler: nil)
   }
 
   func testAppendItemsInListSpot() {
@@ -93,7 +93,7 @@ class ControllerTests : XCTestCase {
       exception.fulfill()
     }
 
-    waitForExpectations(timeout: 0.1, handler: nil)
+    waitForExpectations(timeout: 0.5, handler: nil)
   }
 
   func testPrependItemsInListSpot() {
@@ -113,7 +113,7 @@ class ControllerTests : XCTestCase {
       exception.fulfill()
     }
 
-    waitForExpectations(timeout: 0.1, handler: nil)
+    waitForExpectations(timeout: 0.5, handler: nil)
   }
 
   func testPrependMoreItemsInListSpot() {
@@ -140,7 +140,7 @@ class ControllerTests : XCTestCase {
       exception.fulfill()
     }
 
-    waitForExpectations(timeout: 0.1, handler: nil)
+    waitForExpectations(timeout: 0.5, handler: nil)
   }
 
   func testDeleteItemInListSpot() {
@@ -169,7 +169,7 @@ class ControllerTests : XCTestCase {
       XCTAssertEqual(self.controller.spot!.component.items.count, 1)
       exception.fulfill()
     }
-    waitForExpectations(timeout: 0.1, handler: nil)
+    waitForExpectations(timeout: 0.5, handler: nil)
   }
 
   func testDeleteItemsInListSpot() {
@@ -189,7 +189,7 @@ class ControllerTests : XCTestCase {
       XCTAssertEqual(self.controller.spot!.component.items.count, 0)
       exception.fulfill()
     }
-    waitForExpectations(timeout: 0.1, handler: nil)
+    waitForExpectations(timeout: 0.5, handler: nil)
   }
 
   func testDeleteItemAtIndexInListSpot() {
@@ -213,7 +213,7 @@ class ControllerTests : XCTestCase {
       XCTAssertEqual(self.controller.spot!.component.items[2].title, "title4")
       exception.fulfill()
     }
-    waitForExpectations(timeout: 0.1, handler: nil)
+    waitForExpectations(timeout: 0.5, handler: nil)
   }
 
   func testDeleteItemsWithIndexesInListSpot() {
@@ -236,7 +236,7 @@ class ControllerTests : XCTestCase {
       XCTAssertEqual(self.controller.spot!.component.items[1].title, "title4")
       exception.fulfill()
     }
-    waitForExpectations(timeout: 0.1, handler: nil)
+    waitForExpectations(timeout: 0.5, handler: nil)
   }
 
   func testAppendItemInGridSpot() {
@@ -256,7 +256,7 @@ class ControllerTests : XCTestCase {
       exception.fulfill()
     }
 
-    waitForExpectations(timeout: 0.1, handler: nil)
+    waitForExpectations(timeout: 0.5, handler: nil)
   }
 
   func testAppendItemsInGridSpot() {
@@ -276,7 +276,7 @@ class ControllerTests : XCTestCase {
       exception.fulfill()
     }
 
-    waitForExpectations(timeout: 0.1, handler: nil)
+    waitForExpectations(timeout: 0.5, handler: nil)
   }
 
   func testPrependItemsInGridSpot() {
@@ -296,7 +296,7 @@ class ControllerTests : XCTestCase {
       exception.fulfill()
     }
 
-    waitForExpectations(timeout: 0.1, handler: nil)
+    waitForExpectations(timeout: 0.5, handler: nil)
   }
 
   func testDeleteItemInGridSpot() {
@@ -325,7 +325,7 @@ class ControllerTests : XCTestCase {
       XCTAssertEqual(self.controller.spot!.component.items.count, 1)
       exception.fulfill()
     }
-    waitForExpectations(timeout: 0.1, handler: nil)
+    waitForExpectations(timeout: 0.5, handler: nil)
   }
 
   func testAppendItemInCarouselSpot() {
@@ -345,7 +345,7 @@ class ControllerTests : XCTestCase {
       exception.fulfill()
     }
 
-    waitForExpectations(timeout: 0.1, handler: nil)
+    waitForExpectations(timeout: 0.5, handler: nil)
   }
 
   func testAppendItemsInCarouselSpot() {
@@ -366,7 +366,7 @@ class ControllerTests : XCTestCase {
       exception.fulfill()
     }
 
-    waitForExpectations(timeout: 0.1, handler: nil)
+    waitForExpectations(timeout: 0.5, handler: nil)
   }
 
   func testPrependItemsInCarouselSpot() {
@@ -415,7 +415,7 @@ class ControllerTests : XCTestCase {
       XCTAssertEqual(self.controller.spot!.component.items.count, 1)
       exception.fulfill()
     }
-    waitForExpectations(timeout: 0.1, handler: nil)
+    waitForExpectations(timeout: 0.5, handler: nil)
   }
 
   func testComputedPropertiesOnSpotable() {
@@ -502,7 +502,7 @@ class ControllerTests : XCTestCase {
       XCTAssert(jsonController.spot!.component.items.first?.title == "First grid item")
       exception.fulfill()
     }
-    waitForExpectations(timeout: 0.1, handler: nil)
+    waitForExpectations(timeout: 0.5, handler: nil)
   }
 
   func testDictionaryOnController() {
