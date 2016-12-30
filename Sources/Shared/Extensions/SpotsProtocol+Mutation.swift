@@ -666,10 +666,8 @@ extension SpotsProtocol {
   #endif
 
   fileprivate func reloadSpotsScrollView() {
-    #if os(OSX)
-      scrollView.documentView?.subviews.forEach { $0.removeFromSuperview() }
-    #else
-      scrollView.contentView.subviews.forEach { $0.removeFromSuperview() }
-    #endif
+    scrollView.spotsContentView.subviews.forEach {
+      $0.removeFromSuperview()
+    }
   }
 }
