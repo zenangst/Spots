@@ -33,13 +33,9 @@ import Cache
             let json = try JSONSerialization.jsonObject(with: data as Data, options: .mutableContainers) as? [String : Any] {
             weakSelf.source?.cancel()
             weakSelf.source = nil
-            let offset = weakSelf.scrollView.contentOffset
 
-            #if os(OSX)
-              let components = json
-            #else
-              let components: [Component] = Parser.parse(json)
-            #endif
+            let offset = weakSelf.scrollView.contentOffset
+            let components: [Component] = Parser.parse(json)
 
             weakSelf.reloadIfNeeded(components) {
               weakSelf.scrollView.contentOffset = offset
