@@ -128,6 +128,8 @@ open class ListSpot: NSObject, Listable {
     }
 
     tableView.frame.size = size
+    tableView.frame.size.width = size.width - (tableView.contentInset.left)
+    tableView.frame.origin.x = size.width / 2 - tableView.frame.width / 2
     tableView.contentSize = CGSize(
       width: tableView.frame.size.width,
       height: height - tableView.contentInset.top - tableView.contentInset.bottom)
