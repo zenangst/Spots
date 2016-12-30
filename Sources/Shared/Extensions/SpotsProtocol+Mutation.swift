@@ -134,8 +134,6 @@ extension SpotsProtocol {
     (spot as? CarouselSpot)?.layout.yOffset = yOffset
     #endif
     yOffset += spot.render().frame.size.height
-
-    scrollView.layoutIfNeeded()
   }
 
   fileprivate func newSpot(_ index: Int, newComponents: [Component], yOffset: inout CGFloat) {
