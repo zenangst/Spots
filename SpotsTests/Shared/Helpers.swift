@@ -9,6 +9,14 @@ import UIKit
 
 extension Controller {
 
+  func prepareController() {
+    preloadView()
+    viewDidAppear()
+    spots.forEach {
+      $0.render().layoutSubviews()
+    }
+  }
+
   func preloadView() {
     let _ = view
     #if os(OSX)
