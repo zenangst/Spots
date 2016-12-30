@@ -242,7 +242,7 @@ open class Controller: UIViewController, SpotsProtocol, UIScrollViewDelegate {
   /// - parameter size: The size that should be used to configure the views.
   func configure(withSize size: CGSize) {
     scrollView.frame.size = size
-    scrollView.contentView.frame.size = size
+    scrollView.spotsContentView.frame.size = size
 
     spots.forEach { spot in
       spot.layout(size)
@@ -294,7 +294,7 @@ open class Controller: UIViewController, SpotsProtocol, UIScrollViewDelegate {
   /// - parameter spot:  The spotable object that is going to be setup
   open func setupSpot(at index: Int, spot: Spotable) {
     if spot.render().superview == nil {
-      scrollView.contentView.addSubview(spot.render())
+      scrollView.spotsContentView.addSubview(spot.render())
     }
 
     spot.render().frame.origin.x = 0.0
