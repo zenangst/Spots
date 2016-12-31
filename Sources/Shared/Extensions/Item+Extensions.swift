@@ -19,7 +19,7 @@ public extension Item {
     let newChildren = newModels.flatMap { $0.children.map { Component($0) } }
     let oldChildren = oldModels.flatMap { $0.children.map { Component($0) } }
 
-    guard !(oldModels === newModels) || newChildren !== oldChildren else {
+    guard !(oldModels == newModels) else {
       return nil
     }
 
