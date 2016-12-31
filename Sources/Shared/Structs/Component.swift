@@ -352,15 +352,15 @@ public func == (lhs: Component, rhs: Component) -> Bool {
 public func === (lhs: Component, rhs: Component) -> Bool {
   guard lhs.identifier == rhs.identifier else { return false }
 
-  let lhsChildren = lhs.items.flatMap { $0.children }
-  let rhsChildren = rhs.items.flatMap { $0.children }
+  let lhsChildren = lhs.items.flatMap { $0.children.flatMap({ Component($0) }) }
+  let rhsChildren = rhs.items.flatMap { $0.children.flatMap({ Component($0) }) }
 
   return lhs.title == rhs.title &&
     lhs.kind == rhs.kind &&
     lhs.span == rhs.span &&
     lhs.header == rhs.header &&
     (lhs.meta as NSDictionary).isEqual(rhs.meta as NSDictionary) &&
-    (lhsChildren as NSArray).isEqual(to: rhsChildren) &&
+    lhsChildren == rhsChildren &&
     lhs.items === rhs.items
 }
 
