@@ -307,8 +307,6 @@ public extension Spotable {
       let compositeSpot = CompositeSpot(spot: spot,
                                         parentSpot: self,
                                         itemIndex: item.index)
-
-      spot.registerAndPrepare()
       spot.setup(render().frame.size)
 
       #if !os(OSX)
@@ -317,6 +315,7 @@ public extension Spotable {
       #endif
 
       height += compositeSpot.spot.computedHeight
+
       compositeSpots.append(compositeSpot)
     }
 
