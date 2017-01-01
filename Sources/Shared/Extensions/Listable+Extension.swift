@@ -37,7 +37,7 @@ extension Listable {
   /// - parameter updateDataSource: A closure to update your data source.
   /// - parameter completion:       A completion closure that runs when your updates are done.
   public func reloadIfNeeded(_ changes: ItemChanges, withAnimation animation: Animation = .automatic, updateDataSource: () -> Void, completion: Completion) {
-    tableView.process((insertions: changes.insertions, reloads: changes.reloads, deletions: changes.deletions), withAnimation: animation, updateDataSource: updateDataSource) { [weak self] in
+    tableView.process((insertions: changes.insertions, reloads: changes.reloads, deletions: changes.deletions, childUpdates: changes.updatedChildren), withAnimation: animation, updateDataSource: updateDataSource) { [weak self] in
       guard let weakSelf = self else {
         completion?()
         return

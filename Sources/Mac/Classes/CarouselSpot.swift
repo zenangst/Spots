@@ -3,6 +3,9 @@ import Brick
 
 open class CarouselSpot: NSObject, Gridable {
 
+  /// Child spots
+  public var compositeSpots: [CompositeSpot] = []
+
   public struct Key {
     public static let minimumInteritemSpacing = "item-spacing"
     public static let minimumLineSpacing = "line-spacing"
@@ -92,9 +95,6 @@ open class CarouselSpot: NSObject, Gridable {
 
     return lineView
   }()
-
-  /// A CompositeDelegate for the CarouselSpot, used to access composite spots
-  open weak var spotsCompositeDelegate: CompositeDelegate?
 
   public var userInterface: UserInterface?
   var spotDataSource: DataSource?
@@ -202,7 +202,8 @@ open class CarouselSpot: NSObject, Gridable {
       }
     }
 
-    if component.span == 1 && component.items.count == 1 {
+    if component.span == 1 {
+      scrollView.frame.size.width = size.width - layoutInsets.right
       scrollView.scrollingEnabled = (component.items.count > 1)
       scrollView.hasHorizontalScroller = (component.items.count > 1)
       component.items.enumerated().forEach {

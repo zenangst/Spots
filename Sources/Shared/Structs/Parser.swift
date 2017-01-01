@@ -1,3 +1,5 @@
+import Brick
+
 /// A JSON to UI parser to produce components for Controller
 public struct Parser {
 
@@ -48,5 +50,20 @@ public struct Parser {
     return json.map {
       Factory.resolve(component: Component($0))
     }
+  }
+
+  public static func parse(_ components: [Component]) -> [Spotable] {
+    return components.map {
+      Factory.resolve(component: $0)
+    }
+  }
+
+  /// Parse view model children into Spotable objects
+  /// - parameter item: A view model with children
+  ///
+  ///  - returns: A collection of Spotable objects
+  public static func parse(_ item: Item) -> [Spotable] {
+    let spots: [Spotable] = Parser.parse(item.children)
+    return spots
   }
 }

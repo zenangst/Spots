@@ -14,8 +14,8 @@ public protocol Spotable: class {
   #endif
   static var views: Registry { get set }
 
-  /// A CompositeDelegate object
-  weak var spotsCompositeDelegate: CompositeDelegate? { get set }
+  /// Child spots
+  var compositeSpots: [CompositeSpot] { get set }
 
   /// A SpotsDelegate object
   weak var delegate: SpotsDelegate? { get set }

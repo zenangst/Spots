@@ -16,7 +16,9 @@ public extension Listable {
   /// - parameter size: A CGSize to set the width of the table view
   ///
   public func layout(_ size: CGSize) {
-    tableView.frame.size.width = size.width
+    tableView.frame.size.width = size.width - (tableView.contentInset.left + tableView.contentInset.right)
+    tableView.frame.origin.x = size.width / 2 - tableView.frame.width / 2
+
     guard let componentSize = component.size else { return }
     tableView.frame.size.height = componentSize.height
   }

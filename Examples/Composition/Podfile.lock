@@ -6,7 +6,7 @@ PODS:
   - CryptoSwift (0.6.0)
   - Imaginary (1.0.1):
     - Cache (~> 2.0)
-  - Spots (5.6.2):
+  - Spots (5.7.0):
     - Brick (~> 2.0)
     - Cache (~> 2.0)
     - CryptoSwift (= 0.6.0)
@@ -30,9 +30,9 @@ SPEC CHECKSUMS:
   Cache: 525a292370641881d7e350f0d451fd276790243a
   CryptoSwift: 4a599b7241b8d3b857d6e2c28867d0bd5d1aae24
   Imaginary: f37fb0dd81a5881cf7a8232d7854e8c5a689b054
-  Spots: a61f398c2f493ece737120dbeb789a74ec2191df
+  Spots: 2f897a2fe5f047e84a0a1e03b0e5763c5e1d1258
   Tailor: 6f03d033af361a7cf1f25627a1877c5b91a9618c
 
-PODFILE CHECKSUM: c0b2ff201b0af733969d662182a373cd87b38d78
+PODFILE CHECKSUM: 4937385a6fa7b7309954d0cb7876bb64a40f8d2d
 
 COCOAPODS: 1.1.1

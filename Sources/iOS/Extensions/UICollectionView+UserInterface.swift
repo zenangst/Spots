@@ -62,7 +62,7 @@ extension UICollectionView: UserInterface {
   /// - parameter section:          The section that will be updates
   ///  - parameter updateDataSource: A closure that is used to update the data source before performing the updates on the UI
   ///  - parameter completion:       A completion closure that will run when both data source and UI is updated
-  public func process(_ changes: (insertions: [Int], reloads: [Int], deletions: [Int]),
+  public func process(_ changes: (insertions: [Int], reloads: [Int], deletions: [Int], childUpdates: [Int]),
                withAnimation animation: Animation = .automatic,
                              updateDataSource: () -> Void,
                              completion: ((()) -> Void)? = nil) {
@@ -70,14 +70,15 @@ extension UICollectionView: UserInterface {
     let reloads = changes.reloads.map { IndexPath(row: $0, section: 0) }
     let deletions = changes.deletions.map { IndexPath(row: $0, section: 0) }
 
-    updateDataSource()
-
     if insertions.isEmpty &&
       reloads.isEmpty &&
-      deletions.isEmpty {
+      deletions.isEmpty &&
+      changes.childUpdates.isEmpty {
       completion?()
       return
     }
+
+    updateDataSource()
 
     UIView.performWithoutAnimation {
       performBatchUpdates({

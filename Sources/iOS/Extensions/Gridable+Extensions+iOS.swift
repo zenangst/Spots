@@ -57,7 +57,10 @@ extension Gridable {
   ///
   /// - parameter size: A CGSize to set the width and height of the collection view
   public func layout(_ size: CGSize) {
-    prepareItems()
+    if compositeSpots.isEmpty {
+      prepareItems()
+    }
+
     layout.prepare()
     layout.invalidateLayout()
     collectionView.frame.size.width = layout.collectionViewContentSize.width
@@ -169,6 +172,7 @@ extension Gridable {
     self.headers.defaultItem = Registry.Item.classType(header)
   }
 
+#if os(iOS)
   public func beforeUpdate() {
     CATransaction.begin()
   }
@@ -176,6 +180,7 @@ extension Gridable {
   public func afterUpdate() {
     CATransaction.commit()
   }
+#endif
 
   /// Scroll to a specific item based on predicate.
   ///

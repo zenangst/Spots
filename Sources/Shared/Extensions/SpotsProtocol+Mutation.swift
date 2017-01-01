@@ -74,12 +74,14 @@ extension SpotsProtocol {
       let changes = weakSelf.generateChanges(from: newComponents, and: oldComponents)
 
       weakSelf.process(changes: changes, components: newComponents, withAnimation: animation) {
-        weakSelf.cache()
-        completion?()
-        if let controller = self as? Controller {
-          Controller.spotsDidReloadComponents?(controller)
+        Dispatch.mainQueue {
+          weakSelf.scrollView.layoutSubviews()
+          weakSelf.cache()
+          if let controller = self as? Controller {
+            Controller.spotsDidReloadComponents?(controller)
+          }
+          completion?()
         }
-        weakSelf.scrollView.layoutSubviews()
       }
     }
   }
@@ -111,25 +113,22 @@ extension SpotsProtocol {
     return changes
   }
 
-  /// Remove composite views from container
-  func removeCompositeViews() {
-    compositeSpots.forEach {
-      $0.spot.render().removeFromSuperview()
-    }
-  }
-
   fileprivate func replaceSpot(_ index: Int, newComponents: [Component], yOffset: inout CGFloat) {
     let spot = Factory.resolve(component: newComponents[index])
+    let oldSpot = spots[index]
 
-    removeCompositeViews()
-    spots[index].render().removeFromSuperview()
+    /// Remove old composite spots from superview and empty container
+    for compositeSpot in oldSpot.compositeSpots {
+      compositeSpot.spot.render().removeFromSuperview()
+    }
+    oldSpot.compositeSpots = []
+
+    spot.render().frame = oldSpot.render().frame
+
+    oldSpot.render().removeFromSuperview()
     spots[index] = spot
+    scrollView.spotsContentView.insertSubview(spot.render(), at: index)
     setupSpot(at: index, spot: spot)
-    #if os(OSX)
-      scrollView.spotsContentView.subviews.insert(spot.render(), at: index)
-    #else
-      scrollView.contentView.insertSubview(spot.render(), at: index)
-    #endif
 
     #if !os(OSX)
     (spot as? CarouselSpot)?.layout.yOffset = yOffset
@@ -151,7 +150,9 @@ extension SpotsProtocol {
   ///
   /// - parameter index: The index of the Spotable object hat you want to remove
   fileprivate func removeSpot(at index: Int) {
-    guard index < spots.count else { return }
+    guard index < spots.count else {
+      return
+    }
     spots[index].render().removeFromSuperview()
   }
 
@@ -168,20 +169,26 @@ extension SpotsProtocol {
       return false
     }
 
-    let newItems = spot.prepare(items: newComponents[index].items)
     let oldItems = spot.items
+    let newItems = spot.prepare(items: newComponents[index].items)
 
     guard let diff = Item.evaluate(newItems, oldModels: oldItems) else {
+      if !spot.compositeSpots.isEmpty {
+        spot.userInterface?.reloadSection(0, withAnimation: .none, completion: completion)
+        scrollView.layoutViews()
+        return false
+      }
       return true
     }
+
     let changes: (ItemChanges) = Item.processChanges(diff)
 
     if newItems.count == spot.items.count {
-      reload(in: spot, with: changes, newItems: newItems, animation: animation, completion: completion)
+      reload(with: changes, in: spot, newItems: newItems, animation: animation, completion: completion)
     } else if newItems.count < spot.items.count {
-      reloadLess(in: spot, with: changes, newItems: newItems, animation: animation, completion: completion)
+      reload(with: changes, in: spot, lessItems: newItems, animation: animation, completion: completion)
     } else if newItems.count > spot.items.count {
-      reloadMore(in: spot, with: changes, newItems: newItems, animation: animation, completion: completion)
+      reload(with: changes, in: spot, moreItems: newItems, animation: animation, completion: completion)
     }
 
     return false
@@ -189,22 +196,23 @@ extension SpotsProtocol {
 
   /// Reload Spotable object with changes and new items.
   ///
-  /// - parameter spot:      The spotable object that should be updated.
   /// - parameter changes:   A ItemChanges tuple.
+  /// - parameter spot:      The spotable object that should be updated.
   /// - parameter newItems:  The new items that should be used to updated the data source.
   /// - parameter animation: The animation that should be used when updating.
   /// - parameter closure:   A completion closure.
-  private func reload(in spot: Spotable,
-                      with changes: (ItemChanges),
+  private func reload(with changes: (ItemChanges),
+                      in spot: Spotable,
                       newItems: [Item],
                       animation: Animation,
                       completion: (() -> Void)? = nil) {
     var offsets = [CGPoint]()
+
     spot.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: {
       spot.beforeUpdate()
 
       for item in newItems {
-        let results = compositeSpots.filter({ $0.spotableIndex == spot.index && $0.itemIndex == item.index })
+        let results = spot.compositeSpots.filter({ $0.itemIndex == item.index })
         for compositeSpot in results {
           offsets.append(compositeSpot.spot.render().contentOffset)
         }
@@ -212,13 +220,23 @@ extension SpotsProtocol {
 
       spot.items = newItems
     }) { [weak self] in
-      for item in newItems {
-        if let compositeSpots = self?.compositeSpots
-          .filter({ $0.spotableIndex == spot.index && $0.itemIndex == item.index }) {
-          for (index, compositeSpot) in compositeSpots.enumerated() {
-            guard index < offsets.count else { continue }
-            compositeSpot.spot.render().contentOffset = offsets[index]
+      guard let weakSelf = self else {
+        return
+      }
+
+      for (index, item) in newItems.enumerated() {
+        guard index < weakSelf.spots.count else {
+          break
+        }
+
+        let compositeSpots = weakSelf.spots[item.index].compositeSpots
+          .filter({ $0.itemIndex == item.index })
+        for (index, compositeSpot) in compositeSpots.enumerated() {
+          guard index < offsets.count else {
+            continue
           }
+
+          compositeSpot.spot.render().contentOffset = offsets[index]
         }
       }
 
@@ -228,15 +246,15 @@ extension SpotsProtocol {
 
   /// Reload Spotable object with less items
   ///
-  /// - parameter spot:      The spotable object that should be updated.
   /// - parameter changes:   A ItemChanges tuple.
+  /// - parameter spot:      The spotable object that should be updated.
   /// - parameter newItems:  The new items that should be used to updated the data source.
   /// - parameter animation: The animation that should be used when updating.
   /// - parameter closure:   A completion closure.
-  private func reloadLess(in spot: Spotable,
-                          with changes: (ItemChanges),
-                          newItems: [Item],
-                          animation: Animation,
+  private func reload(with changes: (ItemChanges),
+                      in spot: Spotable,
+                      lessItems newItems: [Item],
+                      animation: Animation,
                           completion: (() -> Void)? = nil) {
     spot.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: {
       spot.beforeUpdate()
@@ -251,14 +269,17 @@ extension SpotsProtocol {
       for (index, item) in newItems.enumerated() {
         let components = Parser.parse(item.children).map { $0.component }
 
-        let oldSpots = weakSelf.compositeSpots.filter({ $0.spotableIndex == spot.index })
+        let oldSpots = weakSelf.spots.flatMap({
+          $0.compositeSpots
+        })
+
         for removedSpot in oldSpots {
           guard !components.contains(removedSpot.spot.component) else {
             continue
           }
 
-          if let index = weakSelf.compositeSpots.index(of: removedSpot) {
-            weakSelf.compositeSpots.remove(at: index)
+          if let index = removedSpot.parentSpot?.compositeSpots.index(of: removedSpot) {
+            removedSpot.parentSpot?.compositeSpots.remove(at: index)
           }
         }
 
@@ -280,16 +301,16 @@ extension SpotsProtocol {
 
   /// Reload Spotable object with more items
   ///
-  /// - parameter spot:      The spotable object that should be updated.
   /// - parameter changes:   A ItemChanges tuple.
+  /// - parameter spot:      The spotable object that should be updated.
   /// - parameter newItems:  The new items that should be used to updated the data source.
   /// - parameter animation: The animation that should be used when updating.
   /// - parameter closure:   A completion closure.
-  private func reloadMore(in spot: Spotable,
-                          with changes: (ItemChanges),
-                          newItems: [Item],
-                          animation: Animation,
-                          completion: (() -> Void)? = nil) {
+  private func reload(with changes: (ItemChanges),
+                      in spot: Spotable,
+                      moreItems newItems: [Item],
+                      animation: Animation,
+                      completion: (() -> Void)? = nil) {
     spot.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: {
       spot.beforeUpdate()
       spot.items = newItems
@@ -322,8 +343,18 @@ extension SpotsProtocol {
         return
       }
 
+      let finalCompletion = completion
+
       var yOffset: CGFloat = 0.0
       var runCompletion = true
+      var completion: Completion = nil
+      var lastItemChange: Int?
+
+      for (index, change) in changes.enumerated() {
+        if change == .items {
+          lastItemChange = index
+        }
+      }
 
       for (index, change) in changes.enumerated() {
         switch change {
@@ -334,6 +365,10 @@ extension SpotsProtocol {
         case .removed:
           weakSelf.removeSpot(at: index)
         case .items:
+          if index == lastItemChange {
+            completion = finalCompletion
+          }
+
           runCompletion = weakSelf.setupItemsForSpot(at: index,
                                                   newComponents: newComponents,
                                                   withAnimation: animation,
@@ -349,15 +384,15 @@ extension SpotsProtocol {
       }
 
       if runCompletion {
-        completion?()
-
-        #if os(OSX)
         for spot in weakSelf.spots {
           spot.setup(weakSelf.scrollView.frame.size)
+          spot.render().layoutSubviews()
         }
+        #if !os(OSX)
+          weakSelf.scrollView.layoutSubviews()
         #endif
 
-        weakSelf.scrollView.layoutSubviews()
+        finalCompletion?()
       }
     }
   }
@@ -389,7 +424,7 @@ extension SpotsProtocol {
       }
 
       var offsets = [CGPoint]()
-      let oldComposites = weakSelf.compositeSpots
+      let oldComposites = weakSelf.spots.flatMap { $0.compositeSpots }
 
       if newComponents.count == oldComponents.count {
         offsets = weakSelf.spots.map { $0.render().contentOffset }
@@ -405,12 +440,14 @@ extension SpotsProtocol {
       weakSelf.setupSpots(animated: animated)
       weakSelf.cache()
 
+      let newComposites = weakSelf.spots.flatMap { $0.compositeSpots }
+
       for (index, compositeSpot) in oldComposites.enumerated() {
-        if index == weakSelf.compositeSpots.count {
+        if index == newComposites.count {
           break
         }
 
-        weakSelf.compositeSpots[index].spot.render().contentOffset = compositeSpot.spot.render().contentOffset
+        newComposites[index].spot.render().contentOffset = compositeSpot.spot.render().contentOffset
       }
 
       completion?()
@@ -585,15 +622,19 @@ extension SpotsProtocol {
         return
     }
 
-    #if !os(OSX)
-      if animation == .none { CATransaction.begin() }
+    #if os(iOS)
+      if animation == .none {
+        CATransaction.begin()
+      }
     #endif
 
     spot(at: spotIndex, ofType: Spotable.self)?.update(item, index: index, withAnimation: animation) { [weak self] in
       completion?()
       self?.scrollView.layoutSubviews()
-      #if !os(OSX)
-        if animation == .none { CATransaction.commit() }
+      #if os(iOS)
+        if animation == .none {
+          CATransaction.commit()
+        }
       #endif
     }
   }
@@ -650,10 +691,8 @@ extension SpotsProtocol {
   #endif
 
   fileprivate func reloadSpotsScrollView() {
-    #if os(OSX)
-      scrollView.documentView?.subviews.forEach { $0.removeFromSuperview() }
-    #else
-      scrollView.contentView.subviews.forEach { $0.removeFromSuperview() }
-    #endif
+    scrollView.spotsContentView.subviews.forEach {
+      $0.removeFromSuperview()
+    }
   }
 }

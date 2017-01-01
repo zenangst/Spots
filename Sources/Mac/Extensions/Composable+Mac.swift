@@ -8,28 +8,30 @@ public extension Composable {
   ///
   ///  - parameter item:  The item that is currently being configured in the list
   ///  - parameter spots: A collection of Spotable objects created from the children of the item
-  func configure(_ item: inout Item, spots: [Spotable]?) {
-    guard let spots = spots else { return }
+  func configure(_ item: inout Item, compositeSpots: [CompositeSpot]?) {
+    guard let compositeSpots = compositeSpots else {
+      return
+    }
 
     let size = contentView.frame.size
     let width = contentView.frame.width
     var height: CGFloat = 0.0
 
-    spots.enumerated().forEach { index, spot in
-      spot.component.size = CGSize(
+    compositeSpots.enumerated().forEach { index, compositeSpot in
+      compositeSpot.spot.component.size = CGSize(
         width: width,
-        height: ceil(spot.render().frame.size.height))
-      spot.component.size?.height == Optional(0.0)
-        ? spot.setup(size)
-        : spot.layout(size)
+        height: ceil(compositeSpot.spot.render().frame.size.height))
+      compositeSpot.spot.component.size?.height == Optional(0.0)
+        ? compositeSpot.spot.setup(size)
+        : compositeSpot.spot.layout(size)
 
-      contentView.addSubview(spot.render())
-      spot.render().frame.origin.y = height
-      spot.render().frame.size.width = contentView.frame.size.width
-      spot.render().frame.size.height = spot.render().contentSize.height
-      height += spot.render().contentSize.height
+      contentView.addSubview(compositeSpot.spot.render())
+      compositeSpot.spot.render().frame.origin.y = height
+      compositeSpot.spot.render().frame.size.width = contentView.frame.size.width
+      compositeSpot.spot.render().frame.size.height = compositeSpot.spot.render().contentSize.height
+      height += compositeSpot.spot.render().contentSize.height
 
-      (spot as? Gridable)?.layout.invalidateLayout()
+      (compositeSpot.spot as? Gridable)?.layout.invalidateLayout()
     }
 
     item.size.height = height

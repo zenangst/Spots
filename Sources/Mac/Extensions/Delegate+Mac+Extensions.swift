@@ -118,10 +118,10 @@ extension Delegate: NSTableViewDelegate {
 
     switch view {
     case let view as Composable:
-      let spots = spot.spotsCompositeDelegate?.resolve(spot.component.index, itemIndex: row)
+      let spots = spot.compositeSpots.filter { $0.itemIndex == row }
       view.contentView.frame.size.width = tableView.frame.size.width
       view.contentView.frame.size.height = spot.computedHeight
-      view.configure(&spot.component.items[row], spots: spots)
+      view.configure(&spot.component.items[row], compositeSpots: spots)
     case let view as SpotConfigurable:
       view.configure(&spot.component.items[row])
     default: break

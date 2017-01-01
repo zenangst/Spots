@@ -3,6 +3,9 @@ import Brick
 
 open class GridSpot: NSObject, Gridable {
 
+  /// Child spots
+  public var compositeSpots: [CompositeSpot] = []
+
   /// An enum layout type
   ///
   /// - Grid: Resolves to NSCollectionViewGridLayout
@@ -78,8 +81,6 @@ open class GridSpot: NSObject, Gridable {
   open static var defaultGrid: NSCollectionViewItem.Type = NSCollectionViewItem.self
   open static var defaultKind: StringConvertible = LayoutType.grid.rawValue
 
-  /// A CompositeDelegate for the GridSpot, used to access composite spots
-  open weak var spotsCompositeDelegate: CompositeDelegate?
   open weak var delegate: SpotsDelegate?
 
   open var component: Component

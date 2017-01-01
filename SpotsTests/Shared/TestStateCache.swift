@@ -9,6 +9,7 @@ class StateCacheTests : XCTestCase {
   var controller: Controller!
 
   override func setUp() {
+    StateCache.removeAll()
     controller = Controller(cacheKey: cacheKey)
   }
 

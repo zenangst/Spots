@@ -8,8 +8,10 @@ public extension Composable where Self : View {
   ///
   ///  - parameter item:  The item that is currently being configured in the list
   ///  - parameter spots: A collection of Spotable objects created from the children of the item
-  func configure(_ item: inout Item, spots: [Spotable]?) {
-    guard let spots = spots else { return }
+  func configure(_ item: inout Item, compositeSpots: [CompositeSpot]?) {
+    guard let compositeSpots = compositeSpots else {
+      return
+    }
 
     var size = contentView.frame.size
     let width = contentView.frame.width
@@ -21,32 +23,24 @@ public extension Composable where Self : View {
       }
     #endif
 
-    spots.enumerated().forEach { index, spot in
-      spot.component.size = CGSize(
+    compositeSpots.enumerated().forEach { index, compositeSpot in
+      compositeSpot.spot.component.size?.height == Optional(0.0)
+        ? compositeSpot.spot.setup(size)
+        : compositeSpot.spot.layout(size)
+      compositeSpot.spot.component.size = CGSize(
         width: width,
-        height: ceil(spot.render().frame.size.height))
-      spot.component.size?.height == Optional(0.0)
-        ? spot.setup(size)
-        : spot.layout(size)
-
-      contentView.addSubview(spot.render())
-      spot.render().frame.origin.y = height
-      spot.render().layoutIfNeeded()
+        height: ceil(compositeSpot.spot.render().frame.size.height))
+      compositeSpot.spot.render().layoutIfNeeded()
+      compositeSpot.spot.render().frame.origin.y = height
       /// Disable scrolling for listable objects
-      spot.render().isScrollEnabled = !(spot is Listable)
-      spot.render().frame.size.height = spot.render().contentSize.height
-      height += spot.render().contentSize.height
+      compositeSpot.spot.render().isScrollEnabled = !(compositeSpot.spot is Listable)
+      compositeSpot.spot.render().frame.size.height = compositeSpot.spot.render().contentSize.height
+
+      height += compositeSpot.spot.render().contentSize.height
+
+      contentView.addSubview(compositeSpot.spot.render())
     }
 
     item.size.height = height
-  }
-
-  /// Parse view model children into Spotable objects
-  /// - parameter item: A view model with children
-  ///
-  ///  - returns: A collection of Spotable objects
-  public func parse(_ item: Item) -> [Spotable] {
-    let spots = Parser.parse(item.children)
-    return spots
   }
 }

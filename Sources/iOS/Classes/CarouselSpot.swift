@@ -3,6 +3,10 @@ import Brick
 
 /// A CarouselSpot, a collection view based Spotable object that lays out its items in a horizontal order
 open class CarouselSpot: NSObject, Gridable {
+
+  /// Child spots
+  public var compositeSpots: [CompositeSpot] = []
+
   /**
    *  A struct that holds keys that is used when mapping meta data to configuration methods
    */
@@ -104,9 +108,6 @@ open class CarouselSpot: NSObject, Gridable {
   /// A CarouselScrollDelegate, used when a CarouselSpot scrolls
   open weak var carouselScrollDelegate: CarouselScrollDelegate?
 
-  /// A CompositeDelegate for the CarouselSpot, used to access composite spots
-  open weak var spotsCompositeDelegate: CompositeDelegate?
-
   /// A SpotsDelegate that is used for the CarouselSpot
   open weak var delegate: SpotsDelegate?
 
@@ -164,6 +165,7 @@ open class CarouselSpot: NSObject, Gridable {
     registerDefault(view: CarouselSpotCell.self)
     registerComposite(view: CarouselComposite.self)
     registerDefaultHeader(header: CarouselSpotHeader.self)
+    register()
     configureLayout()
     configureCollectionView()
   }
@@ -217,6 +219,7 @@ open class CarouselSpot: NSObject, Gridable {
   /// - parameter size: The size of the superview
   open func setup(_ size: CGSize) {
     collectionView.frame.size = size
+    prepareItems()
 
     if collectionView.contentSize.height > 0 {
       collectionView.frame.size.height = collectionView.contentSize.height
@@ -250,7 +253,10 @@ open class CarouselSpot: NSObject, Gridable {
 
     collectionView.frame.size.height += layout.headerReferenceSize.height
 
-    guard pageIndicator else { return }
+    guard pageIndicator else {
+      return
+    }
+
     layout.sectionInset.bottom = layout.sectionInset.bottom + pageControl.frame.size.height
     collectionView.frame.size.height += layout.sectionInset.top + layout.sectionInset.bottom
     pageControl.frame.origin.y = collectionView.frame.size.height - pageControl.frame.size.height

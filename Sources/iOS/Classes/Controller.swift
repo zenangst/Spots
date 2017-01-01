@@ -3,7 +3,7 @@ import Brick
 import Cache
 
 /// A controller powered by Spotable objects
-open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScrollViewDelegate {
+open class Controller: UIViewController, SpotsProtocol, UIScrollViewDelegate {
 
   open var contentView: View {
     return view
@@ -44,15 +44,6 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
     didSet {
       spots.forEach { $0.delegate = delegate }
       delegate?.didChange(spots: spots)
-    }
-  }
-
-  /// A collection of composite Spotable objects.
-  open var compositeSpots: [CompositeSpot] {
-    didSet {
-      for compositeSpot in compositeSpots {
-        compositeSpot.spot.delegate = delegate
-      }
     }
   }
 
@@ -113,7 +104,6 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
   /// - returns: An initalized controller.
   public required init(spots: [Spotable] = []) {
     self.spots = spots
-    self.compositeSpots = []
     super.init(nibName: nil, bundle: nil)
 
     NotificationCenter.default.addObserver(self, selector:#selector(self.deviceDidRotate(_:)), name: NSNotification.Name(rawValue: NotificationKeys.deviceDidRotateNotification.rawValue), object: nil)
@@ -252,14 +242,14 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
   /// - parameter size: The size that should be used to configure the views.
   func configure(withSize size: CGSize) {
     scrollView.frame.size = size
-    scrollView.contentView.frame.size = size
+    scrollView.spotsContentView.frame.size = size
 
-    compositeSpots.enumerated().forEach { _, compositeSpot in
-      compositeSpot.spot.layout(size)
-    }
+    spots.forEach { spot in
+      spot.layout(size)
 
-    spots.forEach {
-      $0.layout(size)
+      spot.compositeSpots.forEach {
+        $0.spot.layout(spot.render().frame.size)
+      }
     }
   }
 
@@ -289,7 +279,7 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
   /// - parameter animated: An optional animation closure that is invoked when setting up the spot.
   open func setupSpots(animated: ((_ view: UIView) -> Void)? = nil) {
     var yOffset: CGFloat = 0.0
-    compositeSpots = []
+
     spots.enumerated().forEach { index, spot in
       setupSpot(at: index, spot: spot)
       animated?(spot.render())
@@ -303,20 +293,25 @@ open class Controller: UIViewController, SpotsProtocol, CompositeDelegate, UIScr
   /// - parameter index: The index of the Spotable object
   /// - parameter spot:  The spotable object that is going to be setup
   open func setupSpot(at index: Int, spot: Spotable) {
-    spot.render().bounds.size.width = view.bounds.width
+    if spot.render().superview == nil {
+      scrollView.spotsContentView.addSubview(spot.render())
+    }
+
+    guard let superview = spot.render().superview else {
+      return
+    }
+
     spot.render().frame.origin.x = 0.0
-    spot.spotsCompositeDelegate = self
     spots[index].component.index = index
-    spot.registerAndPrepare()
-    spot.setup(scrollView.frame.size)
+    spot.setup(superview.frame.size)
     spot.component.size = CGSize(
-      width: view.frame.size.width,
+      width: superview.frame.width,
       height: ceil(spot.render().frame.height))
+    spot.registerAndPrepare()
 
     if !spot.items.isEmpty {
       spot.render().layoutIfNeeded()
     }
-    scrollView.contentView.addSubview(spot.render())
   }
 
   #if os(iOS)

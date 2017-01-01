@@ -3,7 +3,7 @@ import Cocoa
 extension NSTableView: UserInterface {
 
   public func view<T>(at index: Int) -> T? {
-    return rowView(atRow: index, makeIfNecessary: false) as? T
+    return rowView(atRow: index, makeIfNecessary: true) as? T
   }
 
   public func insert(_ indexes: [Int], withAnimation animation: Animation = .automatic, completion: (() -> Void)? = nil) {
@@ -36,7 +36,7 @@ extension NSTableView: UserInterface {
                    endClosure: completion)
   }
 
-  public func process(_ changes: (insertions: [Int], reloads: [Int], deletions: [Int]),
+  public func process(_ changes: (insertions: [Int], reloads: [Int], deletions: [Int], childUpdates: [Int]),
                       withAnimation animation: Animation = .automatic,
                       updateDataSource: () -> Void,
                       completion: ((()) -> Void)? = nil) {

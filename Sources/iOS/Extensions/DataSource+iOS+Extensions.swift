@@ -64,8 +64,8 @@ extension DataSource: UICollectionViewDataSource {
 
     switch cell {
     case let cell as Composable:
-      let spots = spot.spotsCompositeDelegate?.resolve(spot.component.index, itemIndex: indexPath.item)
-      cell.configure(&spot.component.items[indexPath.item], spots: spots)
+      let compositeSpots = spot.compositeSpots.filter({ $0.itemIndex == indexPath.item })
+      cell.configure(&spot.component.items[indexPath.item], compositeSpots: compositeSpots)
     case let cell as SpotConfigurable:
       cell.configure(&spot.component.items[indexPath.item])
 
@@ -116,8 +116,8 @@ extension DataSource: UITableViewDataSource {
 
     switch cell {
     case let cell as Composable:
-      let spots = spot.spotsCompositeDelegate?.resolve(spot.component.index, itemIndex: indexPath.item)
-      cell.configure(&spot.component.items[indexPath.item], spots: spots)
+      let compositeSpots = spot.compositeSpots.filter({ $0.itemIndex == indexPath.item })
+      cell.configure(&spot.component.items[indexPath.item], compositeSpots: compositeSpots)
     case let cell as SpotConfigurable:
       cell.configure(&spot.component.items[indexPath.item])
 

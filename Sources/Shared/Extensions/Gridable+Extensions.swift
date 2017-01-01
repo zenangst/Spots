@@ -78,7 +78,6 @@ public extension Spotable where Self : Gridable {
     let lastUpdate = updates.last
     for index in updates {
       guard let item = self.item(at: index) else {
-        completion?()
         continue
       }
 
@@ -97,7 +96,7 @@ public extension Spotable where Self : Gridable {
   /// - parameter updateDataSource: A closure to update your data source.
   /// - parameter completion:       A completion closure that runs when your updates are done.
   public func reloadIfNeeded(_ changes: ItemChanges, withAnimation animation: Animation = .automatic, updateDataSource: () -> Void, completion: Completion) {
-    collectionView.process((insertions: changes.insertions, reloads: changes.reloads, deletions: changes.deletions), updateDataSource: updateDataSource) { [weak self] in
+    collectionView.process((insertions: changes.insertions, reloads: changes.reloads, deletions: changes.deletions, childUpdates: changes.updatedChildren), updateDataSource: updateDataSource) { [weak self] in
       guard let weakSelf = self else {
         completion?()
         return

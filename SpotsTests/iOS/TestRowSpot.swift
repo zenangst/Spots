@@ -126,7 +126,7 @@ class RowSpotTests: XCTestCase {
     spot.render().layoutSubviews()
     
     let cell = spot.collectionView.cellForItem(at: IndexPath(item: 0, section: 0))
-    XCTAssertEqual(cell!.frame.size, CGSize(width: UIScreen.main.bounds.width, height: 44))
+    XCTAssertEqual(cell?.frame.size, CGSize(width: UIScreen.main.bounds.width, height: 44))
   }
 
   func testSpotCache() {

@@ -39,7 +39,7 @@ post_install do |installer|
     File.open(file, 'a') { |f| f.puts "\nDEBUG_INFORMATION_FORMAT = dwarf" }
   end
   installer.pods_project.targets.each do |target|
-    if target.name == 'Spots-iOS'
+    if target.name == 'Spots'
       target.build_configurations.each do |config|
         if config.name == 'Debug'
           config.build_settings['OTHER_SWIFT_FLAGS'] = '-DDEBUG -DDEVMODE'

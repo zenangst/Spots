@@ -34,6 +34,9 @@ extension DataSource: NSCollectionViewDataSource {
       return NSCollectionViewItem()
     }
 
+    /// This is to make sure that all views are registered on the collection view
+    spot.register()
+
     if let gridable = spot as? Gridable {
       reuseIdentifier = gridable.identifier(at: indexPath.item)
     } else {
@@ -44,10 +47,10 @@ extension DataSource: NSCollectionViewDataSource {
 
     switch item {
     case let item as Composable:
-      let spots = spot.spotsCompositeDelegate?.resolve(spot.component.index, itemIndex: indexPath.item)
+      let spots = spot.compositeSpots.filter { $0.itemIndex == indexPath.item }
       item.contentView.frame.size.width = collectionView.frame.size.width
       item.contentView.frame.size.height = spot.computedHeight
-      item.configure(&spot.component.items[indexPath.item], spots: spots)
+      item.configure(&spot.component.items[indexPath.item], compositeSpots: spots)
     case let item as SpotConfigurable:
       item.configure(&spot.component.items[indexPath.item])
     default: break

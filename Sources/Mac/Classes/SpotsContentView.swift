@@ -8,6 +8,10 @@ open class SpotsContentView: NSView {
     }
   }
 
+  func insertSubview(_ view: View, at index: Int) {
+    subviews.insert(view, at: index)
+  }
+
   /**
    Tells the view that a subview was added.
 

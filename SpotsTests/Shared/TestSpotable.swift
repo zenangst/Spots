@@ -31,8 +31,7 @@ class SpotableTests : XCTestCase {
 
   func testAppendingMultipleItemsToSpotInController() {
     let controller = Controller(spots: [ListSpot(component: Component(title: "Component"))])
-    controller.preloadView()
-    controller.viewDidAppear()
+    controller.prepareController()
     var items: [Item] = []
 
     for i in 0..<10 {

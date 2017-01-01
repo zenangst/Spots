@@ -4,7 +4,7 @@ public enum ControllerBackground {
   case regular, dynamic
 }
 
-open class Controller: NSViewController, SpotsProtocol, CompositeDelegate {
+open class Controller: NSViewController, SpotsProtocol {
 
   /// A closure that is called when the controller is reloaded with components
   public static var spotsDidReloadComponents: ((Controller) -> Void)?
@@ -16,15 +16,6 @@ open class Controller: NSViewController, SpotsProtocol, CompositeDelegate {
     didSet {
       spots.forEach { $0.delegate = delegate }
       delegate?.didChange(spots: spots)
-    }
-  }
-
-  /// A collection of composite Spotable objects.
-  open var compositeSpots: [CompositeSpot] {
-    didSet {
-      for compositeSpot in compositeSpots {
-        compositeSpot.spot.delegate = delegate
-      }
     }
   }
 
@@ -76,7 +67,6 @@ open class Controller: NSViewController, SpotsProtocol, CompositeDelegate {
    - parameter backgroundType: The type of background that the Controller should use, .Regular or .Dynamic
    */
   public required init(spots: [Spotable] = [], backgroundType: ControllerBackground = .regular) {
-    self.compositeSpots = []
     self.spots = spots
     self.backgroundType = backgroundType
     super.init(nibName: nil, bundle: nil)!
@@ -223,7 +213,6 @@ open class Controller: NSViewController, SpotsProtocol, CompositeDelegate {
    - parameter animated: An optional animation closure that runs when a spot is being rendered
    */
   public func setupSpots(animated: ((_ view: View) -> Void)? = nil) {
-    compositeSpots = []
     spots.enumerated().forEach { index, spot in
       setupSpot(at: index, spot: spot)
       animated?(spot.render())
@@ -231,8 +220,11 @@ open class Controller: NSViewController, SpotsProtocol, CompositeDelegate {
   }
 
   public func setupSpot(at index: Int, spot: Spotable) {
+    if spot.render().superview == nil {
+      scrollView.spotsContentView.addSubview(spot.render())
+    }
+
     spots[index].component.index = index
-    spot.spotsCompositeDelegate = self
     spot.registerAndPrepare()
 
     var height = spot.computedHeight
@@ -244,7 +236,6 @@ open class Controller: NSViewController, SpotsProtocol, CompositeDelegate {
     spot.component.size = CGSize(
       width: view.frame.width,
       height: ceil(spot.render().frame.height))
-    scrollView.spotsContentView.addSubview(spot.render())
 
     (spot as? Gridable)?.layout(CGSize(width: view.frame.width, height: height))
   }
@@ -255,14 +246,12 @@ open class Controller: NSViewController, SpotsProtocol, CompositeDelegate {
     for spot in spots {
       spot.layout(CGSize(width: view.frame.width,
         height: spot.computedHeight))
-    }
 
-    for compositeSpot in compositeSpots {
-      compositeSpot.spot.setup(CGSize(width: view.frame.width,
-                                       height: compositeSpot.spot.computedHeight))
+      for compositeSpot in spot.compositeSpots {
+        compositeSpot.spot.setup(CGSize(width: view.frame.width,
+                                        height: compositeSpot.spot.computedHeight))
+      }
     }
-
-    scrollView.layoutSubtreeIfNeeded()
   }
 
   public func deselectAllExcept(selectedSpot: Spotable) {

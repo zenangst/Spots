@@ -259,7 +259,7 @@ public extension Spotable {
   func prepare(kind: String, view: Any, item: inout Item) {
     switch view {
     case let view as Composable:
-      item.size.height = prepare(composable: view, item: item)
+      prepare(composable: view, item: &item)
     case let view as SpotConfigurable:
       view.configure(&item)
       setFallbackViewSize(to: &item, with: view)
@@ -290,53 +290,36 @@ public extension Spotable {
   /// - parameter usesViewSize:      A boolean value to determine if the view uses the views height
   ///
   /// - returns: The height for the item based of the composable spots
-  @discardableResult func prepare(composable: Composable, item: Item) -> CGFloat {
+  func prepare(composable: Composable, item: inout Item) {
     var height: CGFloat = 0.0
 
-    if let foundCompositeSpots = spotsCompositeDelegate?.resolve(component.index, itemIndex: item.index), !foundCompositeSpots.isEmpty {
+    compositeSpots.filter({ $0.itemIndex == item.index }).forEach {
+      $0.spot.render().removeFromSuperview()
 
-      for spot in foundCompositeSpots {
-        height += spot.computedHeight
-        #if !os(OSX)
-          let header = spot.type.headers.make(spot.component.header)
-          height += (header?.view as? Componentable)?.preferredHeaderHeight ?? 0.0
-        #endif
-      }
-
-      return height
-    } else {
-      let spots = composable.parse(item)
-
-      spots.forEach { spot in
-        let compositeSpot = CompositeSpot(parentSpot: self,
-                                          spot: spot,
-                                          spotableIndex: component.index,
-                                          itemIndex: item.index)
-
-        #if !os(OSX)
-          spot.prepareItems()
-          height += compositeSpot.spot.computedHeight
-          let header = compositeSpot.spot.type.headers.make(compositeSpot.spot.component.header)
-          height += (header?.view as? Componentable)?.preferredHeaderHeight ?? 0.0
-
-          if (spot as? Gridable)?.layout.scrollDirection != .horizontal {
-            spot.setup(render().frame.size)
-          }
-        #else
-          spot.registerAndPrepare()
-
-          if let frame = spotsCompositeDelegate?.contentView.frame {
-            spot.setup(frame.size)
-          }
-
-          height += compositeSpot.spot.computedHeight
-        #endif
-
-        spotsCompositeDelegate?.compositeSpots.append(compositeSpot)
+      if let index = compositeSpots.index(of: $0) {
+        compositeSpots.remove(at: index)
       }
     }
 
-    return height
+    let spots: [Spotable] = Parser.parse(item)
+
+    spots.forEach { spot in
+      let compositeSpot = CompositeSpot(spot: spot,
+                                        parentSpot: self,
+                                        itemIndex: item.index)
+      spot.setup(render().frame.size)
+
+      #if !os(OSX)
+        let header = compositeSpot.spot.type.headers.make(compositeSpot.spot.component.header)
+        height += (header?.view as? Componentable)?.preferredHeaderHeight ?? 0.0
+      #endif
+
+      height += compositeSpot.spot.computedHeight
+
+      compositeSpots.append(compositeSpot)
+    }
+
+    item.size.height = height
   }
 
   /// Set fallback size to view
@@ -357,7 +340,7 @@ public extension Spotable {
       item.size.width = superview.frame.width
     }
 
-    if let view = view as? View, item.size.width  == 0.0 {
+    if let view = view as? View, item.size.width == 0.0 {
       item.size.width = view.bounds.width
     }
   }
