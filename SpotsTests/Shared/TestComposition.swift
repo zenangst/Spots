@@ -6,7 +6,7 @@ import Brick
 class CompositionTests: XCTestCase {
 
   #if os(tvOS)
-  let heightOffset: CGFloat = 14
+  let heightOffset: CGFloat = 0
   #elseif os(iOS)
   let heightOffset: CGFloat = 0
   #else
