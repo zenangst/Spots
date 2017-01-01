@@ -169,8 +169,9 @@ extension SpotsProtocol {
       return false
     }
 
+    let tempSpot = Factory.resolve(component: spot.component)
     let oldItems = spot.items
-    let newItems = spot.prepare(items: newComponents[index].items)
+    let newItems = tempSpot.prepare(items: newComponents[index].items)
 
     guard let diff = Item.evaluate(newItems, oldModels: oldItems) else {
       return true
