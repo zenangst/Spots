@@ -691,7 +691,8 @@ class CompositionTests: XCTestCase {
                         Item(title: "Item 7"),
                         Item(title: "Item 8"),
                         Item(title: "Item 9"),
-                        Item(title: "Item 10")
+                        Item(title: "Item 10"),
+                        Item(title: "Item 11")
                         ]
                       )
                     ]
@@ -730,7 +731,8 @@ class CompositionTests: XCTestCase {
                         Item(title: "Item 7"),
                         Item(title: "Item 8"),
                         Item(title: "Item 9"),
-                        Item(title: "Item 10")
+                        Item(title: "Item 10"),
+                        Item(title: "Item 11")
                         ]
                       )
                     ]
@@ -747,7 +749,8 @@ class CompositionTests: XCTestCase {
                         Item(title: "Item 7"),
                         Item(title: "Item 8"),
                         Item(title: "Item 9"),
-                        Item(title: "Item 10")
+                        Item(title: "Item 10"),
+                        Item(title: "Item 11")
                         ]
                       )
                     ]
@@ -769,7 +772,8 @@ class CompositionTests: XCTestCase {
                         Item(title: "Item 7"),
                         Item(title: "Item 8"),
                         Item(title: "Item 9"),
-                        Item(title: "Item 10")
+                        Item(title: "Item 10"),
+                        Item(title: "Item 11")
                         ]
                       )
                     ]
@@ -786,7 +790,8 @@ class CompositionTests: XCTestCase {
                         Item(title: "Item 7"),
                         Item(title: "Item 8"),
                         Item(title: "Item 9"),
-                        Item(title: "Item 10")
+                        Item(title: "Item 10"),
+                        Item(title: "Item 11")
                         ]
                       )
                     ]
@@ -813,7 +818,7 @@ class CompositionTests: XCTestCase {
       XCTAssertEqual(composite?.contentView.subviews.count, 1)
       XCTAssertTrue(spots[0].compositeSpots[0].parentSpot!.component == spots[0].component)
       XCTAssertTrue(spots[0].compositeSpots[0].spot is Listable)
-      XCTAssertEqual(spots[0].compositeSpots[0].spot.items.count, 10)
+      XCTAssertEqual(spots[0].compositeSpots[0].spot.items.count, 11)
       XCTAssertEqual(spots[0].compositeSpots[0].spot.render().frame.size.height,
                      ((spotConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(spots[0].compositeSpots[0].spot.items.count))
 
@@ -832,7 +837,7 @@ class CompositionTests: XCTestCase {
       XCTAssertEqual(composite?.contentView.subviews.count, 1)
       XCTAssertTrue(spots[1].compositeSpots[0].parentSpot!.component == spots[1].component)
       XCTAssertTrue(spots[1].compositeSpots[0].spot is Listable)
-      XCTAssertEqual(spots[1].compositeSpots[0].spot.items.count, 10)
+      XCTAssertEqual(spots[1].compositeSpots[0].spot.items.count, 11)
       XCTAssertEqual(spots[1].compositeSpots[0].spot.render().frame.size.height,
                      ((spotConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(spots[1].compositeSpots[0].spot.items.count))
 
@@ -842,9 +847,25 @@ class CompositionTests: XCTestCase {
       XCTAssertEqual(composite?.contentView.subviews.count, 1)
       XCTAssertTrue(spots[1].compositeSpots[1].parentSpot!.component == spots[1].component)
       XCTAssertTrue(spots[1].compositeSpots[1].spot is Listable)
-      XCTAssertEqual(spots[1].compositeSpots[1].spot.items.count, 10)
+      XCTAssertEqual(spots[1].compositeSpots[1].spot.items.count, 11)
       XCTAssertEqual(spots[1].compositeSpots[1].spot.render().frame.size.height,
                      ((spotConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(spots[1].compositeSpots[1].spot.items.count))
+
+      XCTAssertNotNil(spotConfigurable)
+      XCTAssertEqual(composite?.contentView.subviews.count, 1)
+      XCTAssertTrue(spots[2].compositeSpots[0].parentSpot!.component == spots[2].component)
+      XCTAssertTrue(spots[2].compositeSpots[0].spot is Listable)
+      XCTAssertEqual(spots[2].compositeSpots[0].spot.items.count, 11)
+      XCTAssertEqual(spots[2].compositeSpots[0].spot.render().frame.size.height,
+                     ((spotConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(spots[2].compositeSpots[1].spot.items.count))
+
+      XCTAssertNotNil(spotConfigurable)
+      XCTAssertEqual(composite?.contentView.subviews.count, 1)
+      XCTAssertTrue(spots[2].compositeSpots[1].parentSpot!.component == spots[2].component)
+      XCTAssertTrue(spots[2].compositeSpots[1].spot is Listable)
+      XCTAssertEqual(spots[2].compositeSpots[1].spot.items.count, 11)
+      XCTAssertEqual(spots[2].compositeSpots[1].spot.render().frame.size.height,
+                     ((spotConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(spots[2].compositeSpots[1].spot.items.count))
 
       XCTAssertEqual(reloadTimes, 1)
 
