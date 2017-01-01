@@ -277,11 +277,9 @@ public extension Spotable {
       }
 
       weakSelf.items[index] = item
-      weakSelf.configureItem(at: index, usesViewSize: true)
 
-      let newItem = weakSelf.items[index]
-
-      if newItem.kind == "composite" {
+      if weakSelf.items[index].kind == "composite" {
+        let newItem = weakSelf.items[index]
         if let compositeView: Composable? = weakSelf.userInterface?.view(at: index) {
           compositeView?.configure(&weakSelf.items[index],
                                    compositeSpots: weakSelf.compositeSpots.filter { $0.itemIndex == item.index })
@@ -297,6 +295,9 @@ public extension Spotable {
         completion?()
         return
       } else {
+        weakSelf.configureItem(at: index, usesViewSize: true)
+        let newItem = weakSelf.items[index]
+
         if newItem.kind != oldItem.kind || newItem.size.height != oldItem.size.height {
           if let cell: SpotConfigurable = weakSelf.userInterface?.view(at: index), animation != .none {
             weakSelf.userInterface?.beginUpdates()
