@@ -24,9 +24,8 @@ public extension Composable where Self : View {
     #endif
 
     compositeSpots.enumerated().forEach { index, compositeSpot in
-      compositeSpot.spot.component.size?.height == Optional(0.0)
-        ? compositeSpot.spot.setup(size)
-        : compositeSpot.spot.layout(size)
+      compositeSpot.spot.setup(size)
+      compositeSpot.spot.layout(size)
       compositeSpot.spot.component.size = CGSize(
         width: width,
         height: ceil(compositeSpot.spot.render().frame.size.height))
