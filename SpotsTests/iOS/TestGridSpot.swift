@@ -126,7 +126,7 @@ class GridSpotTests: XCTestCase {
     spot.render().layoutSubviews()
 
     let cell = spot.collectionView.cellForItem(at: IndexPath(item: 0, section: 0))
-    XCTAssertEqual(cell!.frame.size, CGSize(width: 88, height: 88))
+    XCTAssertEqual(cell?.frame.size, CGSize(width: 88, height: 88))
   }
 
   func testSpotCache() {
