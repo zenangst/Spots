@@ -173,11 +173,6 @@ extension SpotsProtocol {
     let newItems = spot.prepare(items: newComponents[index].items)
 
     guard let diff = Item.evaluate(newItems, oldModels: oldItems) else {
-      if !spot.compositeSpots.isEmpty {
-        spot.userInterface?.reloadSection(0, withAnimation: .none, completion: completion)
-        scrollView.layoutViews()
-        return false
-      }
       return true
     }
 
