@@ -184,11 +184,11 @@ extension SpotsProtocol {
     let changes: (ItemChanges) = Item.processChanges(diff)
 
     if newItems.count == spot.items.count {
-      reload(in: spot, with: changes, newItems: newItems, animation: animation, completion: completion)
+      reload(with: changes, in: spot, newItems: newItems, animation: animation, completion: completion)
     } else if newItems.count < spot.items.count {
-      reloadLess(in: spot, with: changes, newItems: newItems, animation: animation, completion: completion)
+      reload(with: changes, in: spot, lessItems: newItems, animation: animation, completion: completion)
     } else if newItems.count > spot.items.count {
-      reloadMore(in: spot, with: changes, newItems: newItems, animation: animation, completion: completion)
+      reload(with: changes, in: spot, moreItems: newItems, animation: animation, completion: completion)
     }
 
     return false
@@ -196,13 +196,13 @@ extension SpotsProtocol {
 
   /// Reload Spotable object with changes and new items.
   ///
-  /// - parameter spot:      The spotable object that should be updated.
   /// - parameter changes:   A ItemChanges tuple.
+  /// - parameter spot:      The spotable object that should be updated.
   /// - parameter newItems:  The new items that should be used to updated the data source.
   /// - parameter animation: The animation that should be used when updating.
   /// - parameter closure:   A completion closure.
-  private func reload(in spot: Spotable,
-                      with changes: (ItemChanges),
+  private func reload(with changes: (ItemChanges),
+                      in spot: Spotable,
                       newItems: [Item],
                       animation: Animation,
                       completion: (() -> Void)? = nil) {
@@ -246,15 +246,15 @@ extension SpotsProtocol {
 
   /// Reload Spotable object with less items
   ///
-  /// - parameter spot:      The spotable object that should be updated.
   /// - parameter changes:   A ItemChanges tuple.
+  /// - parameter spot:      The spotable object that should be updated.
   /// - parameter newItems:  The new items that should be used to updated the data source.
   /// - parameter animation: The animation that should be used when updating.
   /// - parameter closure:   A completion closure.
-  private func reloadLess(in spot: Spotable,
-                          with changes: (ItemChanges),
-                          newItems: [Item],
-                          animation: Animation,
+  private func reload(with changes: (ItemChanges),
+                      in spot: Spotable,
+                      lessItems newItems: [Item],
+                      animation: Animation,
                           completion: (() -> Void)? = nil) {
     spot.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: {
       spot.beforeUpdate()
@@ -301,16 +301,16 @@ extension SpotsProtocol {
 
   /// Reload Spotable object with more items
   ///
-  /// - parameter spot:      The spotable object that should be updated.
   /// - parameter changes:   A ItemChanges tuple.
+  /// - parameter spot:      The spotable object that should be updated.
   /// - parameter newItems:  The new items that should be used to updated the data source.
   /// - parameter animation: The animation that should be used when updating.
   /// - parameter closure:   A completion closure.
-  private func reloadMore(in spot: Spotable,
-                          with changes: (ItemChanges),
-                          newItems: [Item],
-                          animation: Animation,
-                          completion: (() -> Void)? = nil) {
+  private func reload(with changes: (ItemChanges),
+                      in spot: Spotable,
+                      moreItems newItems: [Item],
+                      animation: Animation,
+                      completion: (() -> Void)? = nil) {
     spot.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: {
       spot.beforeUpdate()
       spot.items = newItems
