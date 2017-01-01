@@ -165,6 +165,7 @@ open class CarouselSpot: NSObject, Gridable {
     registerDefault(view: CarouselSpotCell.self)
     registerComposite(view: CarouselComposite.self)
     registerDefaultHeader(header: CarouselSpotHeader.self)
+    registerAndPrepare()
     configureLayout()
     configureCollectionView()
   }
