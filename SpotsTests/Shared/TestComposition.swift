@@ -5,9 +5,6 @@ import Brick
 
 class CompositionTests: XCTestCase {
 
-  var component: Component!
-  var spot: Spotable!
-
   #if os(tvOS)
   let heightOffset: CGFloat = 14
   #elseif os(iOS)
@@ -16,13 +13,8 @@ class CompositionTests: XCTestCase {
   let heightOffset: CGFloat = 2
   #endif
 
-  override func tearDown() {
-    component = nil
-    spot = nil
-  }
-
   func testComponentCreation() {
-    component = Component(
+    var component = Component(
       kind: Component.Kind.Grid.rawValue
     )
 
@@ -40,7 +32,7 @@ class CompositionTests: XCTestCase {
   }
 
   func testSpotableCreation() {
-    component = Component(kind: Component.Kind.Grid.rawValue, span: 2.0)
+    var component = Component(kind: Component.Kind.Grid.rawValue, span: 2.0)
 
     component.add(children: [
       Component(
@@ -60,7 +52,7 @@ class CompositionTests: XCTestCase {
       ]
     )
 
-    spot = GridSpot(component: component)
+    let spot = GridSpot(component: component)
 
     XCTAssertEqual(spot.items.count, 2)
     XCTAssertEqual(spot.compositeSpots.count, 2)
@@ -76,7 +68,7 @@ class CompositionTests: XCTestCase {
   }
 
   func testUICreation() {
-    component = Component(kind: Component.Kind.Grid.rawValue, span: 2.0)
+    var component = Component(kind: Component.Kind.Grid.rawValue, span: 2.0)
 
     component.add(children: [
       Component(
@@ -96,7 +88,7 @@ class CompositionTests: XCTestCase {
       ]
     )
 
-    spot = GridSpot(component: component)
+    let spot = GridSpot(component: component)
     spot.render().frame.size = CGSize(width: 200, height: 200)
     spot.render().layoutIfNeeded()
 
