@@ -24,16 +24,17 @@ public extension Composable where Self : View {
     #endif
 
     compositeSpots.enumerated().forEach { index, compositeSpot in
-      compositeSpot.spot.component.size = CGSize(
-        width: width,
-        height: ceil(compositeSpot.spot.render().frame.size.height))
       compositeSpot.spot.component.size?.height == Optional(0.0)
         ? compositeSpot.spot.setup(size)
         : compositeSpot.spot.layout(size)
-      compositeSpot.spot.render().frame.origin.y = height
+      compositeSpot.spot.component.size = CGSize(
+        width: width,
+        height: ceil(compositeSpot.spot.render().frame.size.height))
       compositeSpot.spot.render().layoutIfNeeded()
+      compositeSpot.spot.render().frame.origin.y = height
       /// Disable scrolling for listable objects
       compositeSpot.spot.render().isScrollEnabled = !(compositeSpot.spot is Listable)
+      compositeSpot.spot.render().frame.size.width = width
       compositeSpot.spot.render().frame.size.height = compositeSpot.spot.render().contentSize.height
 
       height += compositeSpot.spot.render().contentSize.height
