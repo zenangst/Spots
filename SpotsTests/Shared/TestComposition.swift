@@ -800,7 +800,7 @@ class CompositionTests: XCTestCase {
       )
     ]
 
-    var exception: XCTestExpectation = self.expectation(description: "Reload controller with components triggering reloadMore")
+    let exception: XCTestExpectation = self.expectation(description: "Reload controller with components triggering reloadMore")
     var reloadTimes: Int = 0
 
     controller.reloadIfNeeded(newComponents) {
