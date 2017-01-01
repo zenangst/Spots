@@ -34,7 +34,6 @@ public extension Composable where Self : View {
       compositeSpot.spot.render().frame.origin.y = height
       /// Disable scrolling for listable objects
       compositeSpot.spot.render().isScrollEnabled = !(compositeSpot.spot is Listable)
-      compositeSpot.spot.render().frame.size.width = width
       compositeSpot.spot.render().frame.size.height = compositeSpot.spot.render().contentSize.height
 
       height += compositeSpot.spot.render().contentSize.height
