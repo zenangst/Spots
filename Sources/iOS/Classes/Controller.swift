@@ -297,16 +297,16 @@ open class Controller: UIViewController, SpotsProtocol, UIScrollViewDelegate {
       scrollView.spotsContentView.addSubview(spot.render())
     }
 
-    spot.render().frame.origin.x = 0.0
-    spots[index].component.index = index
-
-    if let superview = spot.render().superview {
-      spot.setup(superview.frame.size)
-      spot.component.size = CGSize(
-        width: superview.frame.width,
-        height: ceil(spot.render().frame.height))
+    guard let superview = spot.render().superview else {
+      return
     }
 
+    spot.render().frame.origin.x = 0.0
+    spots[index].component.index = index
+    spot.setup(superview.frame.size)
+    spot.component.size = CGSize(
+      width: superview.frame.width,
+      height: ceil(spot.render().frame.height))
     spot.registerAndPrepare()
 
     if !spot.items.isEmpty {
