@@ -5,29 +5,19 @@ import Brick
 
 class ControllerTests : XCTestCase {
 
-  var controller: Controller!
-
-  override func setUp() {
-    controller = Controller(spots: [])
-  }
-
-  override func tearDown() {
-    controller = nil
-  }
-
   func testSpotAtIndex() {
     let component = Component(title: "Component")
     let listSpot = ListSpot(component: component)
-    controller = Controller(spot: listSpot)
+    let controller = Controller(spot: listSpot)
     controller.preloadView()
 
-    XCTAssertEqual(self.controller.spot as? ListSpot, listSpot)
+    XCTAssertEqual(controller.spot as? ListSpot, listSpot)
   }
 
   func testUpdateSpotAtIndex() {
     let component = Component(title: "Component")
     let listSpot = ListSpot(component: component)
-    controller = Controller(spot: listSpot)
+    let controller = Controller(spot: listSpot)
     controller.preloadView()
     let items = [Item(title: "item1")]
 
@@ -35,22 +25,22 @@ class ControllerTests : XCTestCase {
       spot.component.items = items
     }
 
-    XCTAssert(self.controller.spot!.component.items == items)
+    XCTAssert(controller.spot!.component.items == items)
   }
 
   func testAppendItemInListSpot() {
     let component = Component(title: "Component", kind: "list")
     let listSpot = ListSpot(component: component)
-    controller = Controller(spot: listSpot)
+    let controller = Controller(spot: listSpot)
     controller.preloadView()
 
-    XCTAssertEqual(self.controller.spot!.component.items.count, 0)
+    XCTAssertEqual(controller.spot!.component.items.count, 0)
 
     let item = Item(title: "title1", kind: "list")
     let exception = self.expectation(description: "Test append item")
     controller.append(item, spotIndex: 0) {
-      XCTAssertEqual(self.controller.spot!.component.items.count, 1)
-      XCTAssert(self.controller.spot!.component.items.first! == item)
+      XCTAssertEqual(controller.spot!.component.items.count, 1)
+      XCTAssert(controller.spot!.component.items.first! == item)
       exception.fulfill()
     }
 
@@ -60,16 +50,16 @@ class ControllerTests : XCTestCase {
   func testAppendOneMoreItemInListSpot() {
     let component = Component(title: "Component", kind: "list", items: [Item(title: "title1")])
     let listSpot = ListSpot(component: component)
-    controller = Controller(spot: listSpot)
+    let controller = Controller(spot: listSpot)
     controller.preloadView()
 
-    XCTAssertEqual(self.controller.spot!.component.items.count, 1)
+    XCTAssertEqual(controller.spot!.component.items.count, 1)
 
     let item = Item(title: "title2", kind: "list")
     let exception = self.expectation(description: "Test append item")
     controller.append(item, spotIndex: 0) {
-      XCTAssertEqual(self.controller.spot!.component.items.count, 2)
-      XCTAssert(self.controller.spot!.component.items.last! == item)
+      XCTAssertEqual(controller.spot!.component.items.count, 2)
+      XCTAssert(controller.spot!.component.items.last! == item)
       exception.fulfill()
     }
 
@@ -79,7 +69,7 @@ class ControllerTests : XCTestCase {
   func testAppendItemsInListSpot() {
     let component = Component(title: "Component", kind: "list")
     let listSpot = ListSpot(component: component)
-    controller = Controller(spot: listSpot)
+    let controller = Controller(spot: listSpot)
     controller.preloadView()
 
     let items = [
@@ -88,8 +78,8 @@ class ControllerTests : XCTestCase {
     ]
     let exception = self.expectation(description: "Test append items")
     controller.append(items, spotIndex: 0) {
-      XCTAssert(self.controller.spot!.component.items.count > 0)
-      XCTAssert(self.controller.spot!.component.items == items)
+      XCTAssert(controller.spot!.component.items.count > 0)
+      XCTAssert(controller.spot!.component.items == items)
       exception.fulfill()
     }
 
@@ -99,7 +89,7 @@ class ControllerTests : XCTestCase {
   func testPrependItemsInListSpot() {
     let component = Component(title: "Component", kind: "list")
     let listSpot = ListSpot(component: component)
-    controller = Controller(spot: listSpot)
+    let controller = Controller(spot: listSpot)
     controller.preloadView()
 
     let items = [
@@ -108,8 +98,8 @@ class ControllerTests : XCTestCase {
     ]
     let exception = self.expectation(description: "Test prepend items")
     controller.prepend(items, spotIndex: 0) {
-      XCTAssertEqual(self.controller.spot!.component.items.count, 2)
-      XCTAssert(self.controller.spot!.component.items == items)
+      XCTAssertEqual(controller.spot!.component.items.count, 2)
+      XCTAssert(controller.spot!.component.items == items)
       exception.fulfill()
     }
 
@@ -123,7 +113,8 @@ class ControllerTests : XCTestCase {
       ]
     )
     let listSpot = ListSpot(component: component)
-    controller = Controller(spot: listSpot)
+    let controller = Controller(spot: listSpot)
+
     controller.preloadView()
 
     let items = [
@@ -132,11 +123,11 @@ class ControllerTests : XCTestCase {
     ]
     let exception = self.expectation(description: "Test prepend items")
     controller.prepend(items, spotIndex: 0) {
-      XCTAssertEqual(self.controller.spot!.component.items.count, 4)
-      XCTAssertEqual(self.controller.spot!.component.items[0].title, "title3")
-      XCTAssertEqual(self.controller.spot!.component.items[1].title, "title4")
-      XCTAssertEqual(self.controller.spot!.component.items[2].title, "title1")
-      XCTAssertEqual(self.controller.spot!.component.items[3].title, "title2")
+      XCTAssertEqual(controller.spot!.component.items.count, 4)
+      XCTAssertEqual(controller.spot!.component.items[0].title, "title3")
+      XCTAssertEqual(controller.spot!.component.items[1].title, "title4")
+      XCTAssertEqual(controller.spot!.component.items[2].title, "title1")
+      XCTAssertEqual(controller.spot!.component.items[3].title, "title2")
       exception.fulfill()
     }
 
@@ -149,24 +140,24 @@ class ControllerTests : XCTestCase {
       Item(title: "title2", kind: "list")
       ])
     let initialListSpot = ListSpot(component: component)
+    let controller = Controller(spot: initialListSpot)
 
-    controller = Controller(spot: initialListSpot)
     controller.preloadView()
 
-    let firstItem = self.controller.spot!.component.items.first
+    let firstItem = controller.spot!.component.items.first
 
     XCTAssertEqual(firstItem?.title, "title1")
     XCTAssertEqual(firstItem?.index, 0)
 
     let exception = self.expectation(description: "Test delete item")
-    let listSpot = (self.controller.spot as! ListSpot)
+    let listSpot = (controller.spot as! ListSpot)
     listSpot.delete(component.items.first!) {
-      let lastItem = self.controller.spot!.component.items.first
+      let lastItem = controller.spot!.component.items.first
 
       XCTAssertNotEqual(lastItem?.title, "title1")
       XCTAssertEqual(lastItem?.index, 0)
       XCTAssertEqual(lastItem?.title, "title2")
-      XCTAssertEqual(self.controller.spot!.component.items.count, 1)
+      XCTAssertEqual(controller.spot!.component.items.count, 1)
       exception.fulfill()
     }
     waitForExpectations(timeout: 0.5, handler: nil)
@@ -178,15 +169,15 @@ class ControllerTests : XCTestCase {
       Item(title: "title2", kind: "list")
     ])
     let initialListSpot = ListSpot(component: component)
+    let controller = Controller(spot: initialListSpot)
 
-    controller = Controller(spot: initialListSpot)
     controller.preloadView()
 
     let items = controller.spots.first!.items
     let exception = self.expectation(description: "Test delete items")
 
     controller.spots[0].delete(items, withAnimation: .none) {
-      XCTAssertEqual(self.controller.spot!.component.items.count, 0)
+      XCTAssertEqual(controller.spot!.component.items.count, 0)
       exception.fulfill()
     }
     waitForExpectations(timeout: 0.5, handler: nil)
@@ -200,17 +191,17 @@ class ControllerTests : XCTestCase {
       Item(title: "title4", kind: "list")
       ])
     let initialListSpot = ListSpot(component: component)
+    let controller = Controller(spot: initialListSpot)
 
-    controller = Controller(spot: initialListSpot)
     controller.preloadView()
 
     let exception = self.expectation(description: "Test delete items")
 
     controller.spots[0].delete(1, withAnimation: .none) {
-      XCTAssertEqual(self.controller.spot!.component.items.count, 3)
-      XCTAssertEqual(self.controller.spot!.component.items[0].title, "title1")
-      XCTAssertEqual(self.controller.spot!.component.items[1].title, "title3")
-      XCTAssertEqual(self.controller.spot!.component.items[2].title, "title4")
+      XCTAssertEqual(controller.spot!.component.items.count, 3)
+      XCTAssertEqual(controller.spot!.component.items[0].title, "title1")
+      XCTAssertEqual(controller.spot!.component.items[1].title, "title3")
+      XCTAssertEqual(controller.spot!.component.items[2].title, "title4")
       exception.fulfill()
     }
     waitForExpectations(timeout: 0.5, handler: nil)
@@ -224,16 +215,16 @@ class ControllerTests : XCTestCase {
       Item(title: "title4", kind: "list")
       ])
     let initialListSpot = ListSpot(component: component)
+    let controller = Controller(spot: initialListSpot)
 
-    controller = Controller(spot: initialListSpot)
     controller.preloadView()
 
     let exception = self.expectation(description: "Test delete items")
 
     controller.spots[0].delete([1,2], withAnimation: .none) {
-      XCTAssertEqual(self.controller.spot!.component.items.count, 2)
-      XCTAssertEqual(self.controller.spot!.component.items[0].title, "title1")
-      XCTAssertEqual(self.controller.spot!.component.items[1].title, "title4")
+      XCTAssertEqual(controller.spot!.component.items.count, 2)
+      XCTAssertEqual(controller.spot!.component.items[0].title, "title1")
+      XCTAssertEqual(controller.spot!.component.items[1].title, "title4")
       exception.fulfill()
     }
     waitForExpectations(timeout: 0.5, handler: nil)
@@ -242,17 +233,18 @@ class ControllerTests : XCTestCase {
   func testAppendItemInGridSpot() {
     let component = Component(title: "Component", kind: "grid")
     let listSpot = ListSpot(component: component)
-    controller = Controller(spot: listSpot)
+    let controller = Controller(spot: listSpot)
+
     controller.preloadView()
 
-    XCTAssert(self.controller.spot!.component.items.count == 0)
+    XCTAssert(controller.spot!.component.items.count == 0)
 
     let item = Item(title: "title1", kind: "grid")
     let exception = self.expectation(description: "Test append item")
 
     controller.append(item, spotIndex: 0) {
-      XCTAssert(self.controller.spot!.component.items.count == 1)
-      XCTAssert(self.controller.spot!.component.items.first! == item)
+      XCTAssert(controller.spot!.component.items.count == 1)
+      XCTAssert(controller.spot!.component.items.first! == item)
       exception.fulfill()
     }
 
@@ -262,7 +254,8 @@ class ControllerTests : XCTestCase {
   func testAppendItemsInGridSpot() {
     let component = Component(title: "Component", kind: "grid")
     let listSpot = ListSpot(component: component)
-    controller = Controller(spot: listSpot)
+    let controller = Controller(spot: listSpot)
+
     controller.preloadView()
 
     let items = [
@@ -271,8 +264,8 @@ class ControllerTests : XCTestCase {
     ]
     let exception = self.expectation(description: "Test append items")
     controller.append(items, spotIndex: 0) {
-      XCTAssert(self.controller.spot!.component.items.count > 0)
-      XCTAssert(self.controller.spot!.component.items == items)
+      XCTAssert(controller.spot!.component.items.count > 0)
+      XCTAssert(controller.spot!.component.items == items)
       exception.fulfill()
     }
 
@@ -282,7 +275,8 @@ class ControllerTests : XCTestCase {
   func testPrependItemsInGridSpot() {
     let component = Component(title: "Component", kind: "grid")
     let listSpot = ListSpot(component: component)
-    controller = Controller(spot: listSpot)
+    let controller = Controller(spot: listSpot)
+
     controller.preloadView()
 
     let items = [
@@ -291,8 +285,8 @@ class ControllerTests : XCTestCase {
     ]
     let exception = self.expectation(description: "Test prepend items")
     controller.prepend(items, spotIndex: 0) {
-      XCTAssertEqual(self.controller.spot!.component.items.count, 2)
-      XCTAssert(self.controller.spot!.component.items == items)
+      XCTAssertEqual(controller.spot!.component.items.count, 2)
+      XCTAssert(controller.spot!.component.items == items)
       exception.fulfill()
     }
 
@@ -305,24 +299,24 @@ class ControllerTests : XCTestCase {
       Item(title: "title2", kind: "grid")
       ])
     let initialListSpot = ListSpot(component: component)
+    let controller = Controller(spot: initialListSpot)
 
-    controller = Controller(spot: initialListSpot)
     controller.preloadView()
 
-    let firstItem = self.controller.spot!.component.items.first
+    let firstItem = controller.spot!.component.items.first
 
     XCTAssertEqual(firstItem?.title, "title1")
     XCTAssertEqual(firstItem?.index, 0)
 
     let exception = self.expectation(description: "Test delete item")
-    let listSpot = (self.controller.spot as! ListSpot)
+    let listSpot = (controller.spot as! ListSpot)
     listSpot.delete(component.items.first!) {
-      let lastItem = self.controller.spot!.component.items.first
+      let lastItem = controller.spot!.component.items.first
 
       XCTAssertNotEqual(lastItem?.title, "title1")
       XCTAssertEqual(lastItem?.index, 0)
       XCTAssertEqual(lastItem?.title, "title2")
-      XCTAssertEqual(self.controller.spot!.component.items.count, 1)
+      XCTAssertEqual(controller.spot!.component.items.count, 1)
       exception.fulfill()
     }
     waitForExpectations(timeout: 0.5, handler: nil)
@@ -331,17 +325,18 @@ class ControllerTests : XCTestCase {
   func testAppendItemInCarouselSpot() {
     let component = Component(title: "Component", kind: "carousel")
     let listSpot = GridSpot(component: component)
-    controller = Controller(spot: listSpot)
+    let controller = Controller(spot: listSpot)
+
     controller.preloadView()
 
-    XCTAssert(self.controller.spot!.component.items.count == 0)
+    XCTAssert(controller.spot!.component.items.count == 0)
 
     let item = Item(title: "title1", kind: "carousel")
     let exception = self.expectation(description: "Test append item")
 
     controller.append(item, spotIndex: 0) {
-      XCTAssert(self.controller.spot!.component.items.count == 1)
-      XCTAssert(self.controller.spot!.component.items.first! == item)
+      XCTAssert(controller.spot!.component.items.count == 1)
+      XCTAssert(controller.spot!.component.items.first! == item)
       exception.fulfill()
     }
 
@@ -351,7 +346,8 @@ class ControllerTests : XCTestCase {
   func testAppendItemsInCarouselSpot() {
     let component = Component(title: "Component", kind: "carousel")
     let listSpot = GridSpot(component: component)
-    controller = Controller(spot: listSpot)
+    let controller = Controller(spot: listSpot)
+
     controller.preloadView()
 
     let items = [
@@ -361,8 +357,8 @@ class ControllerTests : XCTestCase {
     let exception = self.expectation(description: "Test append items")
 
     controller.append(items, spotIndex: 0) {
-      XCTAssert(self.controller.spot!.component.items.count > 0)
-      XCTAssert(self.controller.spot!.component.items == items)
+      XCTAssert(controller.spot!.component.items.count > 0)
+      XCTAssert(controller.spot!.component.items == items)
       exception.fulfill()
     }
 
@@ -372,7 +368,8 @@ class ControllerTests : XCTestCase {
   func testPrependItemsInCarouselSpot() {
     let component = Component(title: "Component", kind: "carousel")
     let listSpot = ListSpot(component: component)
-    controller = Controller(spot: listSpot)
+    let controller = Controller(spot: listSpot)
+
     controller.preloadView()
 
     let items = [
@@ -381,8 +378,8 @@ class ControllerTests : XCTestCase {
     ]
     let exception = self.expectation(description: "Test prepend items")
     controller.prepend(items, spotIndex: 0) {
-      XCTAssertEqual(self.controller.spot!.component.items.count, 2)
-      XCTAssert(self.controller.spot!.component.items == items)
+      XCTAssertEqual(controller.spot!.component.items.count, 2)
+      XCTAssert(controller.spot!.component.items == items)
       exception.fulfill()
     }
 
@@ -395,24 +392,24 @@ class ControllerTests : XCTestCase {
       Item(title: "title2", kind: "carousel")
       ])
     let initialListSpot = ListSpot(component: component)
+    let controller = Controller(spot: initialListSpot)
 
-    controller = Controller(spot: initialListSpot)
     controller.preloadView()
 
-    let firstItem = self.controller.spot!.component.items.first
+    let firstItem = controller.spot!.component.items.first
 
     XCTAssertEqual(firstItem?.title, "title1")
     XCTAssertEqual(firstItem?.index, 0)
 
     let exception = self.expectation(description: "Test delete item")
-    let listSpot = (self.controller.spot as! ListSpot)
+    let listSpot = (controller.spot as! ListSpot)
     listSpot.delete(component.items.first!) {
-      let lastItem = self.controller.spot!.component.items.first
+      let lastItem = controller.spot!.component.items.first
 
       XCTAssertNotEqual(lastItem?.title, "title1")
       XCTAssertEqual(lastItem?.index, 0)
       XCTAssertEqual(lastItem?.title, "title2")
-      XCTAssertEqual(self.controller.spot!.component.items.count, 1)
+      XCTAssertEqual(controller.spot!.component.items.count, 1)
       exception.fulfill()
     }
     waitForExpectations(timeout: 0.5, handler: nil)
@@ -437,18 +434,18 @@ class ControllerTests : XCTestCase {
     let listSpot = ListSpot(component: Component(title: "ListSpot"))
     let listSpot2 = ListSpot(component: Component(title: "ListSpot2"))
     let gridSpot = GridSpot(component: Component(title: "GridSpot", items: [Item(title: "Item")]))
-    controller = Controller(spots: [listSpot, listSpot2, gridSpot])
+    let controller = Controller(spots: [listSpot, listSpot2, gridSpot])
 
-    XCTAssertNotNil(self.controller.resolve(spot: { $1.component.title == "ListSpot" }))
-    XCTAssertNotNil(self.controller.resolve(spot: { $1.component.title == "GridSpot" }))
-    XCTAssertNotNil(self.controller.resolve(spot: { $1 is Listable }))
-    XCTAssertNotNil(self.controller.resolve(spot: { $1 is Gridable }))
-    XCTAssertNotNil(self.controller.resolve(spot: { $1.items.filter{ $0.title == "Item" }.first != nil }))
-    XCTAssertEqual(self.controller.resolve(spot: { $0.0 == 0 })?.component.title, "ListSpot")
-    XCTAssertEqual(self.controller.resolve(spot: { $0.0 == 1 })?.component.title, "ListSpot2")
-    XCTAssertEqual(self.controller.resolve(spot: { $0.0 == 2 })?.component.title, "GridSpot")
+    XCTAssertNotNil(controller.resolve(spot: { $1.component.title == "ListSpot" }))
+    XCTAssertNotNil(controller.resolve(spot: { $1.component.title == "GridSpot" }))
+    XCTAssertNotNil(controller.resolve(spot: { $1 is Listable }))
+    XCTAssertNotNil(controller.resolve(spot: { $1 is Gridable }))
+    XCTAssertNotNil(controller.resolve(spot: { $1.items.filter{ $0.title == "Item" }.first != nil }))
+    XCTAssertEqual(controller.resolve(spot: { $0.0 == 0 })?.component.title, "ListSpot")
+    XCTAssertEqual(controller.resolve(spot: { $0.0 == 1 })?.component.title, "ListSpot2")
+    XCTAssertEqual(controller.resolve(spot: { $0.0 == 2 })?.component.title, "GridSpot")
 
-    XCTAssert(self.controller.filter(spots: { $0 is Listable }).count == 2)
+    XCTAssert(controller.filter(spots: { $0 is Listable }).count == 2)
   }
 
   func testJSONInitialiser() {
@@ -625,17 +622,17 @@ class ControllerTests : XCTestCase {
     ]
 
     let spots = initialComponents.map { Factory.resolve(component: $0) }
-    controller = Controller(spots: spots)
+    let controller = Controller(spots: spots)
 
-    let oldComponents: [Component] = self.controller.spots.map { $0.component }
+    let oldComponents: [Component] = controller.spots.map { $0.component }
 
-    let changes = self.controller.generateChanges(from: newComponents, and: oldComponents)
+    let changes = controller.generateChanges(from: newComponents, and: oldComponents)
     XCTAssertEqual(changes.count, 1)
     XCTAssertEqual(changes.first, .items)
 
     /// Test what changed on the items
     let newItems = newComponents.first!.items
-    let oldItems = self.controller.spots.first!.items
+    let oldItems = controller.spots.first!.items
     var diff = Item.evaluate(newItems, oldModels: oldItems)
 
     XCTAssertEqual(diff![0], .text)
@@ -692,9 +689,9 @@ class ControllerTests : XCTestCase {
     XCTAssertEqual(initialComponents.count, newComponents.count)
 
     #if os(OSX)
-      var view: ListSpotItem? = self.controller.ui({ $0.kind == "image" })
+      var view: ListSpotItem? = controller.ui({ $0.kind == "image" })
     #else
-      var view: ListSpotCell? = self.controller.ui({ $0.kind == "image" })
+      var view: ListSpotCell? = controller.ui({ $0.kind == "image" })
       XCTAssertNil(view)
     #endif
 
@@ -884,7 +881,8 @@ class ControllerTests : XCTestCase {
     }
 
     let spots = initialComponents.map { Factory.resolve(component: $0) }
-    controller = Controller(spots: spots)
+    let controller = Controller(spots: spots)
+
     controller.prepareController()
     controller.reloadIfNeeded(newComponents)
 
