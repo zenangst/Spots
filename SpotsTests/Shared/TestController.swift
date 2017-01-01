@@ -562,33 +562,33 @@ class ControllerTests : XCTestCase {
       ]
     ]
 
-    controller = Controller(initialJSON)
-    XCTAssertTrue(self.controller.spots[0] is ListSpot)
-    XCTAssertEqual(self.controller.spots[0].items.first?.title, "First list item")
-    XCTAssertEqual(self.controller.spots[1].items.first?.title, "First list item")
-    XCTAssertTrue(self.controller.spots[1] is ListSpot)
-    XCTAssertTrue(self.controller.spots.count == 2)
-    XCTAssertTrue(self.controller.spots[0].compositeSpots.count == 0)
+    let controller = Controller(initialJSON)
+    XCTAssertTrue(controller.spots[0] is ListSpot)
+    XCTAssertEqual(controller.spots[0].items.first?.title, "First list item")
+    XCTAssertEqual(controller.spots[1].items.first?.title, "First list item")
+    XCTAssertTrue(controller.spots[1] is ListSpot)
+    XCTAssertTrue(controller.spots.count == 2)
+    XCTAssertTrue(controller.spots[0].compositeSpots.count == 0)
 
     let exception = self.expectation(description: "Reload multiple times with JSON (if needed)")
 
     controller.reloadIfNeeded(newJSON) {
-      XCTAssertEqual(self.controller.spots.count, 2)
-      XCTAssertTrue(self.controller.spots[0] is ListSpot)
-      XCTAssertTrue(self.controller.spots[1] is GridSpot)
-      XCTAssertEqual(self.controller.spots[0].items.first?.title, "First list item 2")
-      XCTAssertEqual(self.controller.spots[1].items.first?.title, "First list item")
+      XCTAssertEqual(controller.spots.count, 2)
+      XCTAssertTrue(controller.spots[0] is ListSpot)
+      XCTAssertTrue(controller.spots[1] is GridSpot)
+      XCTAssertEqual(controller.spots[0].items.first?.title, "First list item 2")
+      XCTAssertEqual(controller.spots[1].items.first?.title, "First list item")
 
-      XCTAssertEqual(self.controller.spots[0].items[1].kind, "composite")
-      XCTAssertEqual(self.controller.spots[0].compositeSpots.count, 1)
+      XCTAssertEqual(controller.spots[0].items[1].kind, "composite")
+      XCTAssertEqual(controller.spots[0].compositeSpots.count, 1)
 
-      self.controller.reloadIfNeeded(initialJSON) {
-        XCTAssertTrue(self.controller.spots[0] is ListSpot)
-        XCTAssertEqual(self.controller.spots[0].items.first?.title, "First list item")
-        XCTAssertEqual(self.controller.spots[1].items.first?.title, "First list item")
-        XCTAssertTrue(self.controller.spots[1] is ListSpot)
-        XCTAssertTrue(self.controller.spots.count == 2)
-        XCTAssertTrue(self.controller.spots[0].compositeSpots.count == 0)
+      controller.reloadIfNeeded(initialJSON) {
+        XCTAssertTrue(controller.spots[0] is ListSpot)
+        XCTAssertEqual(controller.spots[0].items.first?.title, "First list item")
+        XCTAssertEqual(controller.spots[1].items.first?.title, "First list item")
+        XCTAssertTrue(controller.spots[1] is ListSpot)
+        XCTAssertTrue(controller.spots.count == 2)
+        XCTAssertTrue(controller.spots[0].compositeSpots.count == 0)
         exception.fulfill()
       }
     }
