@@ -90,8 +90,12 @@ public extension Item {
    - returns: An `ItemDiff` enum key
    */
   public func diff(_ oldItem: Item) -> ItemDiff {
+
+    let oldChildComponents: [Component] = oldItem.children.map { Component($0) }
+    let newChildComponents: [Component] = children.map { Component($0) }
+
     if kind != oldItem.kind { return .kind }
-    if !(children as NSArray).isEqual(to: oldItem.children) { return .children }
+    if newChildComponents !== oldChildComponents { return .children }
     if identifier != oldItem.identifier { return .identifier }
     if title != oldItem.title { return .title }
     if subtitle != oldItem.subtitle { return .subtitle }

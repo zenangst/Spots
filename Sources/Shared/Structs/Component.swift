@@ -360,8 +360,8 @@ public func === (lhs: Component, rhs: Component) -> Bool {
     lhs.span == rhs.span &&
     lhs.header == rhs.header &&
     (lhs.meta as NSDictionary).isEqual(rhs.meta as NSDictionary) &&
-    lhsChildren == rhsChildren &&
-    lhs.items === rhs.items
+    lhsChildren === rhsChildren &&
+    lhs.items == rhs.items
 }
 
 /// Check if to components are not equal
