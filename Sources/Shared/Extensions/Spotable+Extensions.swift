@@ -316,8 +316,11 @@ public extension Spotable {
         height: ceil(compositeSpot.spot.render().frame.size.height))
       compositeSpot.spot.render().layoutIfNeeded()
       compositeSpot.spot.render().frame.origin.y = height
-      /// Disable scrolling for listable objects
-      compositeSpot.spot.render().isScrollEnabled = !(compositeSpot.spot is Listable)
+
+      #if !os(OSX)
+        /// Disable scrolling for listable objects
+        compositeSpot.spot.render().isScrollEnabled = !(compositeSpot.spot is Listable)
+      #endif
       compositeSpot.spot.render().frame.size.height = compositeSpot.spot.render().contentSize.height
 
       height += compositeSpot.spot.render().frame.size.height
