@@ -3,7 +3,7 @@ import Cocoa
 extension NSTableView: UserInterface {
 
   public func view<T>(at index: Int) -> T? {
-    return rowView(atRow: index, makeIfNecessary: true) as? T
+    return rowView(atRow: index, makeIfNecessary: false) as? T
   }
 
   public func insert(_ indexes: [Int], withAnimation animation: Animation = .automatic, completion: (() -> Void)? = nil) {
