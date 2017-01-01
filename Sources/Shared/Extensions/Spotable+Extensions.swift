@@ -309,6 +309,12 @@ public extension Spotable {
       let compositeSpot = CompositeSpot(spot: spot,
                                         parentSpot: self,
                                         itemIndex: item.index)
+
+      #if !os(OSX)
+      let header = compositeSpot.spot.type.headers.make(compositeSpot.spot.component.header)
+      height += (header?.view as? Componentable)?.preferredHeaderHeight ?? 0.0
+      #endif
+
       compositeSpot.spot.setup(size)
       compositeSpot.spot.layout(size)
       compositeSpot.spot.component.size = CGSize(
@@ -321,6 +327,7 @@ public extension Spotable {
         /// Disable scrolling for listable objects
         compositeSpot.spot.render().isScrollEnabled = !(compositeSpot.spot is Listable)
       #endif
+
       compositeSpot.spot.render().frame.size.height = compositeSpot.spot.render().contentSize.height
 
       height += compositeSpot.spot.render().frame.size.height
