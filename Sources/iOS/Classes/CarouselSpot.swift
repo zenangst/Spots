@@ -165,7 +165,7 @@ open class CarouselSpot: NSObject, Gridable {
     registerDefault(view: CarouselSpotCell.self)
     registerComposite(view: CarouselComposite.self)
     registerDefaultHeader(header: CarouselSpotHeader.self)
-    registerAndPrepare()
+    register()
     configureLayout()
     configureCollectionView()
   }
@@ -219,6 +219,7 @@ open class CarouselSpot: NSObject, Gridable {
   /// - parameter size: The size of the superview
   open func setup(_ size: CGSize) {
     collectionView.frame.size = size
+    prepareItems()
 
     if collectionView.contentSize.height > 0 {
       collectionView.frame.size.height = collectionView.contentSize.height
