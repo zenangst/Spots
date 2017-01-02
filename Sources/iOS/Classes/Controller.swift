@@ -302,7 +302,7 @@ open class Controller: UIViewController, SpotsProtocol, UIScrollViewDelegate {
     }
 
     spot.render().frame.origin.x = 0.0
-    spots[index].component.index = index
+    spot.component.index = index
     spot.setup(superview.frame.size)
     spot.component.size = CGSize(
       width: superview.frame.width,

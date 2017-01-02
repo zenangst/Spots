@@ -39,6 +39,18 @@ public struct Parser {
     return components
   }
 
+  /// Parse JSON into a collection of Components.
+  ///
+  /// - parameter json: A JSON dictionary of components and items.
+  /// - parameter key: The key that should be used for parsing JSON, defaults to `components`.
+  ///
+  /// - returns: A collection of `Component`s
+  public static func parse(_ json: [String : Any]?, key: String = "components") -> [Component] {
+    guard let payload = json else { return [] }
+
+    return Parser.parse(payload)
+  }
+
   /// Parse JSON into a collection of Spotable objects.
   ///
   /// - parameter json: A JSON dictionary of components and items.

@@ -390,7 +390,7 @@ extension SpotsProtocol {
       }
 
       for removedSpot in weakSelf.spots where removedSpot.render().superview == nil {
-        if let index = weakSelf.spots.index(where: { removedSpot.component == $0.component }) {
+        if let index = weakSelf.spots.index(where: { removedSpot.render().isEqual($0.render()) }) {
           weakSelf.spots.remove(at: index)
         }
       }
@@ -534,7 +534,7 @@ extension SpotsProtocol {
       #endif
 
       spot.reload(nil, withAnimation: animation) {
-        spot.updateHeight() { [weak self] in
+        spot.updateHeight() {
           spot.afterUpdate()
           completion?()
           spot.render().layoutIfNeeded()
