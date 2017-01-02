@@ -6,7 +6,7 @@ import Brick
 class CompositionTests: XCTestCase {
 
   #if os(tvOS)
-  let heightOffset: CGFloat = 14
+  let heightOffset: CGFloat = 0
   #elseif os(iOS)
   let heightOffset: CGFloat = 0
   #else
@@ -800,7 +800,7 @@ class CompositionTests: XCTestCase {
       )
     ]
 
-    var exception: XCTestExpectation? = self.expectation(description: "Reload controller with components triggering reloadMore")
+    let exception: XCTestExpectation = self.expectation(description: "Reload controller with components triggering reloadMore")
     var reloadTimes: Int = 0
 
     controller.reloadIfNeeded(newComponents) {
@@ -816,7 +816,7 @@ class CompositionTests: XCTestCase {
       XCTAssertNotNil(composite)
       XCTAssertNotNil(spotConfigurable)
       XCTAssertEqual(composite?.contentView.subviews.count, 1)
-      XCTAssertTrue(spots[0].compositeSpots[0].parentSpot!.component == spots[0].component)
+      XCTAssertTrue(spots[0].compositeSpots[0].parentSpot?.component == spots[0].component)
       XCTAssertTrue(spots[0].compositeSpots[0].spot is Listable)
       XCTAssertEqual(spots[0].compositeSpots[0].spot.items.count, 11)
       XCTAssertEqual(spots[0].compositeSpots[0].spot.render().frame.size.height,
@@ -837,7 +837,7 @@ class CompositionTests: XCTestCase {
       XCTAssertNotNil(composite)
       XCTAssertNotNil(spotConfigurable)
       XCTAssertEqual(composite?.contentView.subviews.count, 1)
-      XCTAssertTrue(spots[1].compositeSpots[0].parentSpot!.component == spots[1].component)
+      XCTAssertTrue(spots[1].compositeSpots[0].parentSpot?.component == spots[1].component)
       XCTAssertTrue(spots[1].compositeSpots[0].spot is Listable)
       XCTAssertEqual(spots[1].compositeSpots[0].spot.items.count, 11)
       XCTAssertEqual(spots[1].compositeSpots[0].spot.render().frame.size.height,
@@ -855,8 +855,7 @@ class CompositionTests: XCTestCase {
 
       XCTAssertEqual(reloadTimes, 1)
 
-      exception?.fulfill()
-      exception = nil
+      exception.fulfill()
     }
     waitForExpectations(timeout: 1.0, handler: nil)
   }

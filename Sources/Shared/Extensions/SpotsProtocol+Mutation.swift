@@ -169,19 +169,31 @@ extension SpotsProtocol {
       return false
     }
 
-    let oldItems = spot.items
-    let newItems = spot.prepare(items: newComponents[index].items)
+    let tempSpot = Factory.resolve(component: newComponents[index])
+    tempSpot.render().frame = spot.render().frame
+    tempSpot.setup(tempSpot.render().frame.size)
+    tempSpot.layout(tempSpot.render().frame.size)
+    tempSpot.render().layoutIfNeeded()
+    tempSpot.registerAndPrepare()
 
-    guard let diff = Item.evaluate(newItems, oldModels: oldItems) else {
-      if !spot.compositeSpots.isEmpty {
-        spot.userInterface?.reloadSection(0, withAnimation: .none, completion: completion)
-        scrollView.layoutViews()
-        return false
-      }
+    tempSpot.component.size = CGSize(
+      width: view.frame.width,
+      height: ceil(tempSpot.render().frame.height))
+
+    guard let diff = Item.evaluate(tempSpot.items, oldModels: spot.items) else {
       return true
     }
 
+    let newItems = tempSpot.items
     let changes: (ItemChanges) = Item.processChanges(diff)
+
+    for index in changes.updatedChildren {
+      if index < tempSpot.compositeSpots.count {
+        spot.compositeSpots[index].spot.render().removeFromSuperview()
+        spot.compositeSpots[index] = tempSpot.compositeSpots[index]
+        spot.compositeSpots[index].parentSpot = spot
+      }
+    }
 
     if newItems.count == spot.items.count {
       reload(with: changes, in: spot, newItems: newItems, animation: animation, completion: completion)
@@ -386,6 +398,7 @@ extension SpotsProtocol {
       if runCompletion {
         for spot in weakSelf.spots {
           spot.setup(weakSelf.scrollView.frame.size)
+          spot.layout(weakSelf.scrollView.frame.size)
           spot.render().layoutSubviews()
         }
         #if !os(OSX)

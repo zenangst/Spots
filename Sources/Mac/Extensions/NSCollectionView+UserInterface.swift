@@ -68,14 +68,18 @@ extension NSCollectionView: UserInterface {
       .map { IndexPath(item: $0, section: 0) })
     let reloadSets = Set<IndexPath>(changes.reloads
       .map { IndexPath(item: $0, section: 0) })
+    let childUpdates = Set<IndexPath>(changes.childUpdates
+      .map { IndexPath(item: $0, section: 0) })
 
     performBatchUpdates({ [weak self] in
       self?.deleteItems(at: deletionSets)
       self?.insertItems(at: insertionsSets)
       self?.reloadItems(at: reloadSets)
-      }) { _ in
-        completion?()
-    }
+      /// Use reload items for child updates, this might need improvements in the future.
+      self?.reloadItems(at: childUpdates)
+    }, completionHandler: nil)
+
+    completion?()
   }
 
   public func reloadDataSource() {

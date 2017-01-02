@@ -16,7 +16,7 @@ public enum ItemDiff {
 public extension Item {
 
   static func evaluate(_ newModels: [Item], oldModels: [Item]) -> [ItemDiff]? {
-    guard !(oldModels == newModels) else {
+    guard !(oldModels === newModels) else {
       return nil
     }
 
@@ -91,14 +91,11 @@ public extension Item {
    */
   public func diff(_ oldItem: Item) -> ItemDiff {
 
-    let newChildren = children.map { Component($0 as [String : Any]) }
-    let oldChildren = oldItem.children.map { Component($0 as [String : Any]) }
-
-    let newChildItems: [Item] = newChildren.flatMap { $0.items }
-    let oldChildItems: [Item] = oldChildren.flatMap { $0.items }
+    let oldChildComponents: [Component] = oldItem.children.map { Component($0) }
+    let newChildComponents: [Component] = children.map { Component($0) }
 
     if kind != oldItem.kind { return .kind }
-    if newChildren != oldChildren || newChildItems != oldChildItems { return .children }
+    if newChildComponents !== oldChildComponents { return .children }
     if identifier != oldItem.identifier { return .identifier }
     if title != oldItem.title { return .title }
     if subtitle != oldItem.subtitle { return .subtitle }

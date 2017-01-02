@@ -302,19 +302,30 @@ public extension Spotable {
     }
 
     let spots: [Spotable] = Parser.parse(item)
+    let size = render().frame.size
+    let width = size.width
 
     spots.forEach { spot in
       let compositeSpot = CompositeSpot(spot: spot,
                                         parentSpot: self,
                                         itemIndex: item.index)
-      spot.setup(render().frame.size)
+
+      compositeSpot.spot.setup(size)
+      compositeSpot.spot.component.size = CGSize(
+        width: width,
+        height: ceil(compositeSpot.spot.render().frame.size.height))
+      compositeSpot.spot.layout(size)
+      compositeSpot.spot.render().layoutIfNeeded()
+      compositeSpot.spot.render().frame.origin.y = height
 
       #if !os(OSX)
-        let header = compositeSpot.spot.type.headers.make(compositeSpot.spot.component.header)
-        height += (header?.view as? Componentable)?.preferredHeaderHeight ?? 0.0
+        /// Disable scrolling for listable objects
+        compositeSpot.spot.render().isScrollEnabled = !(compositeSpot.spot is Listable)
       #endif
 
-      height += compositeSpot.spot.computedHeight
+      compositeSpot.spot.render().frame.size.height = compositeSpot.spot.render().contentSize.height
+
+      height += compositeSpot.spot.render().frame.size.height
 
       compositeSpots.append(compositeSpot)
     }
