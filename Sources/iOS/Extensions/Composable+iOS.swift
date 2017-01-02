@@ -31,9 +31,6 @@ public extension Composable where Self : View {
         height: ceil(compositeSpot.spot.render().frame.size.height))
       compositeSpot.spot.render().layoutIfNeeded()
 
-      let header = compositeSpot.spot.type.headers.make(compositeSpot.spot.component.header)
-      height += (header?.view as? Componentable)?.preferredHeaderHeight ?? 0.0
-
       compositeSpot.spot.render().frame.origin.y = height
       /// Disable scrolling for listable objects
       compositeSpot.spot.render().isScrollEnabled = !(compositeSpot.spot is Listable)

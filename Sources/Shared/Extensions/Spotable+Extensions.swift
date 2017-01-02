@@ -310,11 +310,6 @@ public extension Spotable {
                                         parentSpot: self,
                                         itemIndex: item.index)
 
-      #if !os(OSX)
-      let header = compositeSpot.spot.type.headers.make(compositeSpot.spot.component.header)
-      height += (header?.view as? Componentable)?.preferredHeaderHeight ?? 0.0
-      #endif
-
       compositeSpot.spot.setup(size)
       compositeSpot.spot.layout(size)
       compositeSpot.spot.component.size = CGSize(
