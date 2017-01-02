@@ -196,11 +196,47 @@ extension SpotsProtocol {
     }
 
     if newItems.count == spot.items.count {
-      reload(with: changes, in: spot, newItems: newItems, animation: animation, completion: completion)
+      reload(with: changes, in: spot, newItems: newItems, animation: animation) { [weak self] in
+        if let weakSelf = self, let completion = completion {
+          for spot in weakSelf.spots {
+            spot.setup(weakSelf.scrollView.frame.size)
+            spot.layout(weakSelf.scrollView.frame.size)
+            spot.render().layoutSubviews()
+          }
+
+          weakSelf.scrollView.layoutViews()
+
+          completion()
+        }
+      }
     } else if newItems.count < spot.items.count {
-      reload(with: changes, in: spot, lessItems: newItems, animation: animation, completion: completion)
+      reload(with: changes, in: spot, lessItems: newItems, animation: animation) { [weak self] in
+        if let weakSelf = self, let completion = completion {
+          for spot in weakSelf.spots {
+            spot.setup(weakSelf.scrollView.frame.size)
+            spot.layout(weakSelf.scrollView.frame.size)
+            spot.render().layoutSubviews()
+          }
+
+          weakSelf.scrollView.layoutViews()
+
+          completion()
+        }
+      }
     } else if newItems.count > spot.items.count {
-      reload(with: changes, in: spot, moreItems: newItems, animation: animation, completion: completion)
+      reload(with: changes, in: spot, moreItems: newItems, animation: animation) { [weak self] in
+        if let weakSelf = self, let completion = completion {
+          for spot in weakSelf.spots {
+            spot.setup(weakSelf.scrollView.frame.size)
+            spot.layout(weakSelf.scrollView.frame.size)
+            spot.render().layoutSubviews()
+          }
+
+          weakSelf.scrollView.layoutViews()
+
+          completion()
+        }
+      }
     }
 
     return false
