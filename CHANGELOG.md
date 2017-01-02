@@ -2,10 +2,33 @@
 
 ## [Unreleased](https://github.com/hyperoslo/Spots/tree/HEAD)
 
-[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.6.1...HEAD)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.7.0...HEAD)
+
+**Implemented enhancements:**
+
+- Improve composition [\#390](https://github.com/hyperoslo/Spots/issues/390)
 
 **Merged pull requests:**
 
+- Call layoutIfNeeded instead of scrollView.layoutSubviews\(\) [\#402](https://github.com/hyperoslo/Spots/pull/402) ([zenangst](https://github.com/zenangst))
+- Improve prepare view methods [\#401](https://github.com/hyperoslo/Spots/pull/401) ([zenangst](https://github.com/zenangst))
+
+## [5.7.0](https://github.com/hyperoslo/Spots/tree/5.7.0) (2017-01-02)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.6.1...5.7.0)
+
+**Fixed bugs:**
+
+- SpotsNibDemo or just adding an empty xib to any project crash [\#378](https://github.com/hyperoslo/Spots/issues/378)
+
+**Merged pull requests:**
+
+- Further improve composition [\#400](https://github.com/hyperoslo/Spots/pull/400) ([zenangst](https://github.com/zenangst))
+- Improve composition [\#399](https://github.com/hyperoslo/Spots/pull/399) ([zenangst](https://github.com/zenangst))
+- Feature universal composition support [\#394](https://github.com/hyperoslo/Spots/pull/394) ([zenangst](https://github.com/zenangst))
+- Add amount of items to print statement when using live reloading [\#393](https://github.com/hyperoslo/Spots/pull/393) ([zenangst](https://github.com/zenangst))
+- Compare title when diffing Component [\#389](https://github.com/hyperoslo/Spots/pull/389) ([zenangst](https://github.com/zenangst))
+- Fix crash in SpotsNibDemo [\#388](https://github.com/hyperoslo/Spots/pull/388) ([aashishdhawan](https://github.com/aashishdhawan))
+- Refactor/composition [\#387](https://github.com/hyperoslo/Spots/pull/387) ([zenangst](https://github.com/zenangst))
 - Internal/refactoring [\#386](https://github.com/hyperoslo/Spots/pull/386) ([zenangst](https://github.com/zenangst))
 - Fix to use a more proper error emoji 😉 [\#385](https://github.com/hyperoslo/Spots/pull/385) ([onmyway133](https://github.com/onmyway133))
 
