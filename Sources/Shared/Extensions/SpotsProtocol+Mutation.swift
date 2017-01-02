@@ -534,7 +534,7 @@ extension SpotsProtocol {
       #endif
 
       spot.reload(nil, withAnimation: animation) {
-        spot.updateHeight() { [weak self] in
+        spot.updateHeight() {
           spot.afterUpdate()
           completion?()
           spot.render().layoutIfNeeded()
