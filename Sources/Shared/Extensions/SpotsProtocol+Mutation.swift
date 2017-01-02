@@ -198,42 +198,21 @@ extension SpotsProtocol {
     if newItems.count == spot.items.count {
       reload(with: changes, in: spot, newItems: newItems, animation: animation) { [weak self] in
         if let weakSelf = self, let completion = completion {
-          for spot in weakSelf.spots {
-            spot.setup(weakSelf.scrollView.frame.size)
-            spot.layout(weakSelf.scrollView.frame.size)
-            spot.render().layoutSubviews()
-          }
-
-          weakSelf.scrollView.layoutViews()
-
+          weakSelf.setupAndLayoutSpots()
           completion()
         }
       }
     } else if newItems.count < spot.items.count {
       reload(with: changes, in: spot, lessItems: newItems, animation: animation) { [weak self] in
         if let weakSelf = self, let completion = completion {
-          for spot in weakSelf.spots {
-            spot.setup(weakSelf.scrollView.frame.size)
-            spot.layout(weakSelf.scrollView.frame.size)
-            spot.render().layoutSubviews()
-          }
-
-          weakSelf.scrollView.layoutViews()
-
+          weakSelf.setupAndLayoutSpots()
           completion()
         }
       }
     } else if newItems.count > spot.items.count {
       reload(with: changes, in: spot, moreItems: newItems, animation: animation) { [weak self] in
         if let weakSelf = self, let completion = completion {
-          for spot in weakSelf.spots {
-            spot.setup(weakSelf.scrollView.frame.size)
-            spot.layout(weakSelf.scrollView.frame.size)
-            spot.render().layoutSubviews()
-          }
-
-          weakSelf.scrollView.layoutViews()
-
+          weakSelf.setupAndLayoutSpots()
           completion()
         }
       }
@@ -743,5 +722,18 @@ extension SpotsProtocol {
     scrollView.spotsContentView.subviews.forEach {
       $0.removeFromSuperview()
     }
+  }
+
+  fileprivate func setupAndLayoutSpots() {
+    for spot in spots {
+      spot.setup(scrollView.frame.size)
+      spot.component.size = CGSize(
+        width: spot.render().frame.size.width,
+        height: ceil(spot.render().frame.size.height))
+      spot.layout(scrollView.frame.size)
+      spot.render().layoutSubviews()
+    }
+
+    scrollView.layoutSubviews()
   }
 }
