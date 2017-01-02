@@ -273,10 +273,14 @@ public extension Spotable {
   /// - parameter view: The view that is going to be prepared.
   func prepare(view: View) {
     // Set initial size for view
-    view.frame.size = render().frame.size
+    view.frame.size.width = render().frame.size.width
 
-    if view.frame.size == CGSize.zero {
-      view.frame.size = UIScreen.main.bounds.size
+    if let spotConfigurable = view as? SpotConfigurable, view.frame.size.height == 0.0 {
+      view.frame.size = spotConfigurable.preferredViewSize
+    }
+
+    if view.frame.size.width == 0.0 {
+      view.frame.size.width = UIScreen.main.bounds.size.width
     }
 
     (view as? UITableViewCell)?.contentView.frame = view.bounds
