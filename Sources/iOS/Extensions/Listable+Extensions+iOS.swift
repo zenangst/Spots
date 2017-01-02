@@ -19,7 +19,9 @@ public extension Listable {
     tableView.frame.size.width = size.width - (tableView.contentInset.left)
     tableView.frame.origin.x = size.width / 2 - tableView.frame.width / 2
 
-    guard let componentSize = component.size else { return }
+    guard let componentSize = component.size else {
+      return
+    }
     tableView.frame.size.height = componentSize.height
   }
 
