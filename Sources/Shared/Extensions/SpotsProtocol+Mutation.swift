@@ -537,7 +537,7 @@ extension SpotsProtocol {
         spot.updateHeight() { [weak self] in
           spot.afterUpdate()
           completion?()
-          self?.scrollView.layoutSubviews()
+          spot.render().layoutIfNeeded()
         }
       }
     }
