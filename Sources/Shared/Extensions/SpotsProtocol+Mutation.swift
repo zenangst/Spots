@@ -411,15 +411,7 @@ extension SpotsProtocol {
       }
 
       if runCompletion {
-        for spot in weakSelf.spots {
-          spot.setup(weakSelf.scrollView.frame.size)
-          spot.layout(weakSelf.scrollView.frame.size)
-          spot.render().layoutSubviews()
-        }
-        #if !os(OSX)
-          weakSelf.scrollView.layoutSubviews()
-        #endif
-
+        weakSelf.setupAndLayoutSpots()
         finalCompletion?()
       }
     }
@@ -724,16 +716,22 @@ extension SpotsProtocol {
     }
   }
 
+  func setupAndLayoutSpot(spot: Spotable) {
+    spot.setup(scrollView.frame.size)
+    spot.component.size = CGSize(
+      width: spot.render().frame.size.width,
+      height: ceil(spot.render().frame.size.height))
+    spot.layout(scrollView.frame.size)
+    spot.render().layoutSubviews()
+  }
+
   fileprivate func setupAndLayoutSpots() {
     for spot in spots {
-      spot.setup(scrollView.frame.size)
-      spot.component.size = CGSize(
-        width: spot.render().frame.size.width,
-        height: ceil(spot.render().frame.size.height))
-      spot.layout(scrollView.frame.size)
-      spot.render().layoutSubviews()
+      setupAndLayoutSpot(spot: spot)
     }
 
-    scrollView.layoutSubviews()
+    #if !os(OSX)
+      scrollView.layoutSubviews()
+    #endif
   }
 }
