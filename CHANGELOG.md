@@ -2,7 +2,14 @@
 
 ## [Unreleased](https://github.com/hyperoslo/Spots/tree/HEAD)
 
-[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.7.0...HEAD)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.7.1...HEAD)
+
+**Merged pull requests:**
+
+- Improve/reload with components [\#403](https://github.com/hyperoslo/Spots/pull/403) ([zenangst](https://github.com/zenangst))
+
+## [5.7.1](https://github.com/hyperoslo/Spots/tree/5.7.1) (2017-01-02)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.7.0...5.7.1)
 
 **Implemented enhancements:**
 
