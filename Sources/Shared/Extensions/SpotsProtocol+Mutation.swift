@@ -721,9 +721,11 @@ extension SpotsProtocol {
 
     switch spot {
     case let spot as Gridable:
-      guard spot.layout.scrollDirection == .horizontal else {
-        fallthrough
-      }
+      #if !os(OSX)
+        guard spot.layout.scrollDirection == .horizontal else {
+          fallthrough
+        }
+      #endif
 
       spot.layout.prepare()
       spot.layout.invalidateLayout()
