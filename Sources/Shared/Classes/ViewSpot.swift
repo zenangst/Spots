@@ -7,9 +7,6 @@ import Brick
 
 open class ViewSpot: NSObject, Spotable, Viewable {
 
-  /// Child spots
-  public var compositeSpots: [CompositeSpot] = []
-
   /// Reload spot with ItemChanges.
   ///
   /// - parameter changes:          A collection of changes: inserations, updates, reloads, deletions and updated children.
@@ -30,8 +27,13 @@ open class ViewSpot: NSObject, Spotable, Viewable {
   open weak var delegate: SpotsDelegate?
   open var component: Component
   open var index = 0
-
   open var configure: ((SpotConfigurable) -> Void)?
+
+  /// A SpotsFocusDelegate object
+  weak public var focusDelegate: SpotsFocusDelegate?
+
+  /// Child spots
+  public var compositeSpots: [CompositeSpot] = []
 
   open lazy var scrollView: ScrollView = ScrollView()
 
