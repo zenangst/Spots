@@ -4,9 +4,6 @@ import Brick
 /// A RowSpot, a collection view based Spotable object that lays out its items in a vertical order based of the item sizes
 open class RowSpot: NSObject, Gridable {
 
-  /// Child spots
-  public var compositeSpots: [CompositeSpot] = []
-
   /**
    *  Keys for meta data lookup
    */
@@ -47,6 +44,12 @@ open class RowSpot: NSObject, Gridable {
 
   /// A Registry object that holds identifiers and classes for headers used in the RowSpot
   open static var headers = Registry()
+
+  /// A SpotsFocusDelegate object
+  weak public var focusDelegate: SpotsFocusDelegate?
+
+  /// Child spots
+  public var compositeSpots: [CompositeSpot] = []
 
   /// A component struct used as configuration and data source for the RowSpot
   open var component: Component

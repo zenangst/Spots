@@ -4,9 +4,6 @@ import Brick
 /// A CarouselSpot, a collection view based Spotable object that lays out its items in a horizontal order
 open class CarouselSpot: NSObject, Gridable {
 
-  /// Child spots
-  public var compositeSpots: [CompositeSpot] = []
-
   /**
    *  A struct that holds keys that is used when mapping meta data to configuration methods
    */
@@ -38,6 +35,12 @@ open class CarouselSpot: NSObject, Gridable {
     /// Default right section inset
     public static var contentInsetRight: CGFloat = 0.0
   }
+
+  /// Child spots
+  public var compositeSpots: [CompositeSpot] = []
+
+  /// A SpotsFocusDelegate object
+  weak public var focusDelegate: SpotsFocusDelegate?
 
   /// A boolean value that affects the sizing of items when using span, if enabled and the item count is less than the span, the CarouselSpot will even out the space between the items to align them
   open var dynamicSpan = false
