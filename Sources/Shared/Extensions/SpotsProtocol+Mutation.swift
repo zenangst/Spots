@@ -173,6 +173,7 @@ extension SpotsProtocol {
     tempSpot.render().frame = spot.render().frame
     tempSpot.setup(tempSpot.render().frame.size)
     tempSpot.layout(tempSpot.render().frame.size)
+    tempSpot.render().frame.size.height = tempSpot.computedHeight
     tempSpot.render().layoutIfNeeded()
     tempSpot.registerAndPrepare()
 
