@@ -3,12 +3,34 @@ import Brick
 /// A protocol used for composition inside Spotable objects
 public protocol UserInterface: class {
 
+  /// The index of the current selected item
+  var selectedIndex: Int { get }
+  /// The index of the current focused item
+  var focusedIndex: Int { get }
+
   /// Find a generic UI component at index
   ///
   /// - parameter index: The index of the UI that you are looking for.
   ///
   /// - returns: Find UI element with generic type inferred.
   func view<T>(at index: Int) -> T?
+
+  /// Focus on item at index
+  ///
+  /// - parameter index: The index of the item you want to focus.
+  func focusOn(itemAt index: Int)
+
+  /// Select item at index
+  ///
+  /// - parameter index: The index of the item you want to select.
+  /// - parameter animated: Performs an animation if set to true
+  func select(itemAt index: Int, animated: Bool)
+
+  /// Deselect item at index
+  ///
+  /// - parameter index: The index of the item you want to deselect.
+  /// - parameter animated: Performs an animation if set to true
+  func deselect(itemAt index: Int, animated: Bool)
 
   ///  A convenience method for performing inserts on a UserInterface
   ///
