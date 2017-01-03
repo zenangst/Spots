@@ -7,7 +7,7 @@
 import Brick
 import Cache
 
-public protocol SpotsProtocol: class {
+public protocol SpotsProtocol: class, SpotsFocusDelegate {
 
   /// A closure that is called when the controller is reloaded with components
   static var spotsDidReloadComponents: ((_ controller: Controller) -> Void)? { get set }
