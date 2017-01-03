@@ -12,7 +12,6 @@ extension CarouselSpot {
       collectionView.deselectItem(at: indexPath, animated: true)
       return false
     }
-
     return true
   }
 }
