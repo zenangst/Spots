@@ -17,6 +17,9 @@ public protocol Spotable: class {
   /// Child spots
   var compositeSpots: [CompositeSpot] { get set }
 
+  /// A SpotsFocusDelegate object
+  weak var focusDelegate: SpotsFocusDelegate? { get set }
+
   /// A SpotsDelegate object
   weak var delegate: SpotsDelegate? { get set }
 
