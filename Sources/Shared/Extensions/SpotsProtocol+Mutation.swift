@@ -66,6 +66,7 @@ extension SpotsProtocol {
       guard compare(newComponents, oldComponents) else {
         weakSelf.cache()
         Dispatch.mainQueue {
+          weakSelf.scrollView.layoutViews()
           completion?()
         }
         return
