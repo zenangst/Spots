@@ -2,6 +2,52 @@ import UIKit
 
 extension UICollectionView: UserInterface {
 
+  /// The index of the current selected item
+  public var selectedIndex: Int {
+    return indexPathsForSelectedItems?.first?.item ?? 0
+  }
+
+  public var focusedIndex: Int {
+    return delegate?.indexPathForPreferredFocusedView?(in: self)?.item ?? 0
+  }
+
+  /// Focus on item at index
+  ///
+  /// - parameter index: The index of the item you want to focus.
+  public func focusOn(itemAt index: Int) {
+    guard index < numberOfItems(inSection: 0) else {
+      return
+    }
+
+    select(itemAt: index, animated: false)
+    setNeedsFocusUpdate()
+    deselect(itemAt: index, animated: false)
+  }
+
+  /// Select item at index
+  ///
+  /// - parameter index: The index of the item you want to select.
+  /// - parameter animated: Performs an animation if set to true
+  public func select(itemAt index: Int, animated: Bool) {
+    guard let delegate = delegate, index < numberOfItems(inSection: 0) else {
+      return
+    }
+
+    selectItem(at: IndexPath(row: index, section: 0), animated: animated, scrollPosition: [])
+  }
+
+  /// Deselect item at index
+  ///
+  /// - parameter index: The index of the item you want to deselect.
+  /// - parameter animated: Performs an animation if set to true
+  public func deselect(itemAt index: Int, animated: Bool) {
+    guard let delegate = delegate, index < numberOfItems(inSection: 0) else {
+      return
+    }
+
+    deselectItem(at: IndexPath(row: index, section: 0), animated: animated)
+  }
+
   public func view<T>(at index: Int) -> T? {
     return cellForItem(at: IndexPath(item: index, section: 0)) as? T
   }
