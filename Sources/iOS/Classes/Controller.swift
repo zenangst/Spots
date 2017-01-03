@@ -9,6 +9,9 @@ open class Controller: UIViewController, SpotsProtocol, UIScrollViewDelegate {
     return view
   }
 
+  public weak var focusedSpot: Spotable?
+  public var focusedItemIndex: Int?
+
   /// A closure that is called when the controller is reloaded with components
   public static var spotsDidReloadComponents: ((Controller) -> Void)?
 
