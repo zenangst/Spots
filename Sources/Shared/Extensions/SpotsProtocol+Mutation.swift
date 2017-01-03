@@ -717,12 +717,25 @@ extension SpotsProtocol {
   }
 
   func setupAndLayoutSpot(spot: Spotable) {
-    spot.setup(scrollView.frame.size)
-    spot.component.size = CGSize(
-      width: spot.render().frame.size.width,
-      height: ceil(spot.render().frame.size.height))
-    spot.layout(scrollView.frame.size)
-    spot.render().layoutSubviews()
+
+    switch spot {
+    case let spot as Gridable:
+      guard spot.layout.scrollDirection == .horizontal else {
+        fallthrough
+      }
+
+      spot.layout.prepare()
+      spot.layout.invalidateLayout()
+      spot.collectionView.frame.size.width = spot.layout.collectionViewContentSize.width
+      spot.collectionView.frame.size.height = spot.layout.collectionViewContentSize.height
+    default:
+      spot.setup(scrollView.frame.size)
+      spot.component.size = CGSize(
+        width: spot.render().frame.size.width,
+        height: ceil(spot.render().frame.size.height))
+      spot.layout(scrollView.frame.size)
+      spot.render().layoutSubviews()
+    }
   }
 
   fileprivate func setupAndLayoutSpots() {
