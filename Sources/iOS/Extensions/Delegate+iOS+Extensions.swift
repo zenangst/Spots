@@ -43,7 +43,8 @@ extension Delegate: UICollectionViewDelegate {
   /// - parameter cell: The cell object that was removed.
   /// - parameter indexPath: The index path of the data item that the cell represented.
   public func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-    guard let spot = spot, let item = spot.item(at: indexPath) else {
+    guard let spot = spot, indexPath.item < spot.items.count,
+      let item = spot.item(at: indexPath) else {
       return
     }
 
@@ -57,7 +58,9 @@ extension Delegate: UICollectionViewDelegate {
   ///
   /// - returns: YES if the item can receive be focused or NO if it can not.
   public func collectionView(_ collectionView: UICollectionView, canFocusItemAt indexPath: IndexPath) -> Bool {
-    guard let spot = spot, let _ = spot.item(at: indexPath) else { return  false }
+    guard let spot = spot, let _ = spot.item(at: indexPath) else {
+      return  false
+    }
     return true
   }
 
@@ -70,8 +73,18 @@ extension Delegate: UICollectionViewDelegate {
   /// - returns: YES if the focus change should occur or NO if it should not.
   @available(iOS 9.0, *)
   public func collectionView(_ collectionView: UICollectionView, shouldUpdateFocusIn context: UICollectionViewFocusUpdateContext) -> Bool {
-    guard let indexPaths = collectionView.indexPathsForSelectedItems else { return true }
-    return indexPaths.isEmpty
+    guard let indexPath = context.nextFocusedIndexPath else {
+      return true
+    }
+
+    if let spot = spot,
+      spot.items[indexPath.item].kind != "composite",
+      indexPath.item < spot.items.count {
+      spot.focusDelegate?.focusedSpot = spot
+      spot.focusDelegate?.focusedItemIndex = indexPath.item
+    }
+
+    return !indexPath.isEmpty
   }
 }
 
@@ -115,7 +128,9 @@ extension Delegate: UITableViewDelegate {
   /// - parameter tableView: A table-view object informing the delegate about the new row selection.
   /// - parameter indexPath: An index path locating the new selected row in tableView.
   public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    tableView.deselectRow(at: indexPath, animated: true)
+    #if os(iOS)
+      tableView.deselectRow(at: indexPath, animated: true)
+    #endif
     if let spot = spot, let item = spot.item(at: indexPath) {
       spot.delegate?.didSelect(item: item, in: spot)
     }
@@ -163,6 +178,22 @@ extension Delegate: UITableViewDelegate {
     (view as? Componentable)?.configure(spot.component)
 
     return view
+  }
+
+  @available(iOS 9.0, *)
+  public func tableView(_ tableView: UITableView, shouldUpdateFocusIn context: UITableViewFocusUpdateContext) -> Bool {
+    guard let indexPath = context.nextFocusedIndexPath else {
+      return true
+    }
+
+    if let spot = spot,
+      spot.items[indexPath.item].kind != "composite",
+      indexPath.item < spot.items.count {
+      spot.focusDelegate?.focusedSpot = spot
+      spot.focusDelegate?.focusedItemIndex = indexPath.item
+    }
+
+    return true
   }
 
   /// Asks the delegate for the height to use for a row in a specified location.

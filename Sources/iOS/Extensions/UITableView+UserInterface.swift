@@ -2,6 +2,55 @@ import UIKit
 
 extension UITableView: UserInterface {
 
+  public var selectedIndex: Int {
+    return indexPathForSelectedRow?.row ?? 0
+  }
+
+  @available(iOS 9.0, *)
+  public var focusedIndex: Int {
+    updateFocusIfNeeded()
+
+    return delegate?.indexPathForPreferredFocusedView?(in: self)?.row ?? 0
+  }
+
+  /// Focus on item at index
+  ///
+  /// - parameter index: The index of the item you want to select.
+  @available(iOS 9.0, *)
+  public func focusOn(itemAt index: Int) {
+    guard index < numberOfRows(inSection: 0) else {
+      return
+    }
+
+    select(itemAt: index, animated: true)
+    setNeedsFocusUpdate()
+    deselect(itemAt: index, animated: true)
+  }
+
+  /// Select item at index
+  ///
+  /// - parameter index: The index of the item you want to select.
+  /// - parameter animated: Performs an animation if set to true
+  public func select(itemAt index: Int, animated: Bool = true) {
+    guard index < numberOfRows(inSection: 0) else {
+      return
+    }
+
+    selectRow(at: IndexPath(row: index, section: 0), animated: animated, scrollPosition: .none)
+  }
+
+  /// Deselect item at index
+  ///
+  /// - parameter index: The index of the item you want to deselect.
+  /// - parameter animated: Performs an animation if set to true
+  public func deselect(itemAt index: Int, animated: Bool = true) {
+    guard index < numberOfRows(inSection: 0) else {
+      return
+    }
+
+    deselectRow(at: IndexPath(row: index, section: 0), animated: animated)
+  }
+
   public func view<T>(at index: Int) -> T? {
     return cellForRow(at: IndexPath(row: index, section: 0)) as? T
   }

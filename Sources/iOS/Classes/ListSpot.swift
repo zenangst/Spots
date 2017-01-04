@@ -4,9 +4,6 @@ import Brick
 /// A Spotable object that uses UITableView to render its items
 open class ListSpot: NSObject, Listable {
 
-  /// Child spots
-  public var compositeSpots: [CompositeSpot] = []
-
   /// Keys for meta data lookup
   public struct Key {
     /// The meta key for setting the header height
@@ -26,6 +23,12 @@ open class ListSpot: NSObject, Listable {
 
   /// A component struct used as configuration and data source for the ListSpot
   open var component: Component
+
+  /// A SpotsFocusDelegate object
+  weak public var focusDelegate: SpotsFocusDelegate?
+
+  /// Child spots
+  public var compositeSpots: [CompositeSpot] = []
 
   /// A configuration closure
   open var configure: ((SpotConfigurable) -> Void)? {

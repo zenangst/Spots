@@ -3,11 +3,14 @@ import Brick
 import Cache
 
 /// A controller powered by Spotable objects
-open class Controller: UIViewController, SpotsProtocol, UIScrollViewDelegate {
+open class Controller: UIViewController, SpotsProtocol, SpotsFocusDelegate, UIScrollViewDelegate {
 
   open var contentView: View {
     return view
   }
+
+  public weak var focusedSpot: Spotable?
+  public var focusedItemIndex: Int?
 
   /// A closure that is called when the controller is reloaded with components
   public static var spotsDidReloadComponents: ((Controller) -> Void)?
@@ -42,7 +45,14 @@ open class Controller: UIViewController, SpotsProtocol, UIScrollViewDelegate {
   /// A collection of Spotable objects.
   open var spots: [Spotable] {
     didSet {
-      spots.forEach { $0.delegate = delegate }
+      spots.forEach {
+        $0.delegate = delegate
+        $0.focusDelegate = self
+
+        $0.compositeSpots.forEach {
+          $0.spot.focusDelegate = self
+        }
+      }
       delegate?.didChange(spots: spots)
     }
   }
@@ -307,6 +317,7 @@ open class Controller: UIViewController, SpotsProtocol, UIScrollViewDelegate {
     spot.component.size = CGSize(
       width: superview.frame.width,
       height: ceil(spot.render().frame.height))
+    spot.focusDelegate = self
     spot.registerAndPrepare()
 
     if !spot.items.isEmpty {

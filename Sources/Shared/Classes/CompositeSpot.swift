@@ -16,8 +16,11 @@ public struct CompositeSpot: Equatable {
   var itemIndex: Int
 
   init(spot: Spotable, parentSpot: Spotable? = nil, itemIndex: Int) {
-    self.spot = spot
-    self.parentSpot = parentSpot
     self.itemIndex = itemIndex
+    self.parentSpot = parentSpot
+    self.spot = spot
+    #if !os(OSX)
+    self.spot.focusDelegate = parentSpot?.focusDelegate
+    #endif
   }
 }

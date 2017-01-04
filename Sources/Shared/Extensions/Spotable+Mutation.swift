@@ -280,8 +280,9 @@ public extension Spotable {
 
       if weakSelf.items[index].kind == "composite" {
         if let compositeView: Composable? = weakSelf.userInterface?.view(at: index) {
+          let compositeSpots = weakSelf.compositeSpots.filter { $0.itemIndex == item.index }
           compositeView?.configure(&weakSelf.items[index],
-                                   compositeSpots: weakSelf.compositeSpots.filter { $0.itemIndex == item.index })
+                                   compositeSpots: compositeSpots)
         } else {
           for compositeSpot in weakSelf.compositeSpots {
             compositeSpot.spot.setup(weakSelf.render().frame.size)

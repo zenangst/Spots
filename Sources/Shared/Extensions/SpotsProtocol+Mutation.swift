@@ -66,6 +66,7 @@ extension SpotsProtocol {
       guard compare(newComponents, oldComponents) else {
         weakSelf.cache()
         Dispatch.mainQueue {
+          weakSelf.scrollView.layoutViews()
           completion?()
         }
         return
@@ -80,6 +81,7 @@ extension SpotsProtocol {
           if let controller = self as? Controller {
             Controller.spotsDidReloadComponents?(controller)
           }
+
           completion?()
         }
       }

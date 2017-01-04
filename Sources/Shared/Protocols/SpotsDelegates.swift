@@ -4,6 +4,11 @@ import Brick
   import UIKit
 #endif
 
+public protocol SpotsFocusDelegate: class {
+  var focusedSpot: Spotable? { get set }
+  var focusedItemIndex: Int? { get set }
+}
+
 /// A generic delegate for Spots
 public protocol SpotsDelegate: class {
 
