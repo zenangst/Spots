@@ -29,7 +29,7 @@ extension UITableView: UserInterface {
   /// - parameter index: The index of the item you want to select.
   /// - parameter animated: Performs an animation if set to true
   public func select(itemAt index: Int, animated: Bool = true) {
-    guard let delegate = delegate, index < numberOfRows(inSection: 0) else {
+    guard index < numberOfRows(inSection: 0) else {
       return
     }
 
@@ -41,7 +41,7 @@ extension UITableView: UserInterface {
   /// - parameter index: The index of the item you want to deselect.
   /// - parameter animated: Performs an animation if set to true
   public func deselect(itemAt index: Int, animated: Bool = true) {
-    guard let delegate = delegate, index < numberOfRows(inSection: 0) else {
+    guard index < numberOfRows(inSection: 0) else {
       return
     }
 
