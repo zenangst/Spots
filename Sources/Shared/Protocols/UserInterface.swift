@@ -5,13 +5,16 @@ public protocol UserInterface: class {
 
   #if !os(OSX)
   /// The index of the current selected item
+  @available(iOS 9.0, *)
   var selectedIndex: Int { get }
   /// The index of the current focused item
+  @available(iOS 9.0, *)
   var focusedIndex: Int { get }
 
   /// Focus on item at index
   ///
   /// - parameter index: The index of the item you want to focus.
+  @available(iOS 9.0, *)
   func focusOn(itemAt index: Int)
 
   /// Select item at index

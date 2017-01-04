@@ -6,14 +6,17 @@ extension UITableView: UserInterface {
     return indexPathForSelectedRow?.row ?? 0
   }
 
+  @available(iOS 9.0, *)
   public var focusedIndex: Int {
     updateFocusIfNeeded()
+
     return delegate?.indexPathForPreferredFocusedView?(in: self)?.row ?? 0
   }
 
   /// Focus on item at index
   ///
   /// - parameter index: The index of the item you want to select.
+  @available(iOS 9.0, *)
   public func focusOn(itemAt index: Int) {
     guard index < numberOfRows(inSection: 0) else {
       return

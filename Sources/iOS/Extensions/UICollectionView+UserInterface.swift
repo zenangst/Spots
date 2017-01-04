@@ -3,10 +3,13 @@ import UIKit
 extension UICollectionView: UserInterface {
 
   /// The index of the current selected item
+  @available(iOS 9.0, *)
   public var selectedIndex: Int {
     return indexPathsForSelectedItems?.first?.item ?? 0
   }
 
+  @available(iOS 9.0, *)
+  /// The index of the current focused item
   public var focusedIndex: Int {
     return delegate?.indexPathForPreferredFocusedView?(in: self)?.item ?? 0
   }
@@ -14,6 +17,7 @@ extension UICollectionView: UserInterface {
   /// Focus on item at index
   ///
   /// - parameter index: The index of the item you want to focus.
+  @available(iOS 9.0, *)
   public func focusOn(itemAt index: Int) {
     guard index < numberOfItems(inSection: 0) else {
       return

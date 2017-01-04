@@ -180,6 +180,7 @@ extension Delegate: UITableViewDelegate {
     return view
   }
 
+  @available(iOS 9.0, *)
   public func tableView(_ tableView: UITableView, shouldUpdateFocusIn context: UITableViewFocusUpdateContext) -> Bool {
     guard let indexPath = context.nextFocusedIndexPath else {
       return true
