@@ -82,9 +82,6 @@ extension SpotsProtocol {
             Controller.spotsDidReloadComponents?(controller)
           }
 
-          print("weakSelf.focusedSpot: \(weakSelf.focusedSpot)")
-          print("selectedIndex: \(weakSelf.focusedItemIndex)")
-
           completion?()
         }
       }

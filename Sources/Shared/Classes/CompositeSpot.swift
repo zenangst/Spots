@@ -19,6 +19,8 @@ public struct CompositeSpot: Equatable {
     self.itemIndex = itemIndex
     self.parentSpot = parentSpot
     self.spot = spot
+    #if !os(OSX)
     self.spot.focusDelegate = parentSpot?.focusDelegate
+    #endif
   }
 }

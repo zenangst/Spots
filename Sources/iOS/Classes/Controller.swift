@@ -3,7 +3,7 @@ import Brick
 import Cache
 
 /// A controller powered by Spotable objects
-open class Controller: UIViewController, SpotsProtocol, UIScrollViewDelegate {
+open class Controller: UIViewController, SpotsProtocol, SpotsFocusDelegate, UIScrollViewDelegate {
 
   open var contentView: View {
     return view
