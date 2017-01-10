@@ -88,6 +88,8 @@ open class GridableLayout: UICollectionViewFlowLayout {
 
     if let newAttributes = super.layoutAttributesForElements(in: rect) {
       var offset: CGFloat = sectionInset.left
+      var previousAttribute: UICollectionViewLayoutAttributes?
+
       for attribute in newAttributes {
         guard let itemAttribute = attribute.copy() as? UICollectionViewLayoutAttributes
           else { continue }
@@ -104,10 +106,18 @@ open class GridableLayout: UICollectionViewFlowLayout {
             itemAttribute.frame.origin.y = headerReferenceSize.height
             itemAttribute.frame.origin.x = offset
             offset += itemAttribute.size.width + minimumInteritemSpacing
+          } else {
+            if let previousAttribute = previousAttribute {
+              if itemAttribute.frame.maxY < previousAttribute.frame.maxY {
+                itemAttribute.frame.origin.y = previousAttribute.frame.origin.y
+              }
+            }
           }
 
           attributes.append(itemAttribute)
         }
+
+        previousAttribute = itemAttribute
       }
     }
 
