@@ -120,6 +120,8 @@ extension UICollectionView: UserInterface {
     let reloads = changes.reloads.map { IndexPath(row: $0, section: 0) }
     let deletions = changes.deletions.map { IndexPath(row: $0, section: 0) }
 
+    updateDataSource()
+
     if insertions.isEmpty &&
       reloads.isEmpty &&
       deletions.isEmpty &&
@@ -127,8 +129,6 @@ extension UICollectionView: UserInterface {
       completion?()
       return
     }
-
-    updateDataSource()
 
     UIView.performWithoutAnimation {
       performBatchUpdates({
