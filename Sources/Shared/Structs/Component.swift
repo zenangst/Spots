@@ -142,9 +142,9 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
     items     <- map.relations("items")
     meta      <- map.property("meta")
 
-    if let span: Int = map.property("span") {
+    if let span: Float = map.property("span") {
       self.span = Double(span)
-    } else if let span: Float = map.property("span") {
+    } else if let span: Int = map.property("span") {
       self.span = Double(span)
     } else {
       self.span <- map.property("span")
