@@ -133,8 +133,8 @@ extension UITableView: UserInterface {
     deleteRows(at: deletions, with: animation.tableViewAnimation)
     insertRows(at: insertions, with: animation.tableViewAnimation)
     reloadRows(at: reloads, with: animation.tableViewAnimation)
-    completion?()
     endUpdates()
+    completion?()
   }
 
   /// A convenience method for performing inserts on a UITableView.
