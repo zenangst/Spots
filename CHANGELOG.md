@@ -6,6 +6,11 @@
 
 **Merged pull requests:**
 
+- Improve/reload with components [\#410](https://github.com/hyperoslo/Spots/pull/410) ([zenangst](https://github.com/zenangst))
+- Initial implementation of improved focus for tvOS [\#408](https://github.com/hyperoslo/Spots/pull/408) ([zenangst](https://github.com/zenangst))
+- Fix broken macOS target [\#406](https://github.com/hyperoslo/Spots/pull/406) ([zenangst](https://github.com/zenangst))
+- Fix/layout issue with carousel [\#405](https://github.com/hyperoslo/Spots/pull/405) ([zenangst](https://github.com/zenangst))
+- Improve layouting after reload [\#404](https://github.com/hyperoslo/Spots/pull/404) ([zenangst](https://github.com/zenangst))
 - Improve/reload with components [\#403](https://github.com/hyperoslo/Spots/pull/403) ([zenangst](https://github.com/zenangst))
 
 ## [5.7.1](https://github.com/hyperoslo/Spots/tree/5.7.1) (2017-01-02)
