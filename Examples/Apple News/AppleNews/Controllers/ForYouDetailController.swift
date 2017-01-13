@@ -34,11 +34,8 @@ extension ForYouDetailController {
       else { return }
 
     if let lastContentYOffset = lastContentOffset?.y {
-        if scrollView.contentOffset.y >= lastContentYOffset && scrollView.contentOffset.y > 64 {
-            navigationController.setNavigationBarHidden(true, animated: true)
-        } else {
-            navigationController.setNavigationBarHidden(false, animated: true)
-        }
+        let hideNavigationBar = scrollView.contentOffset.y >= lastContentYOffset && scrollView.contentOffset.y > 64
+        navigationController.setNavigationBarHidden(hideNavigationBar, animated: true)
     }
     
     lastContentOffset = scrollView.contentOffset
