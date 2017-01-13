@@ -115,9 +115,9 @@ extension UITableView: UserInterface {
 
   /// Process a collection of changes
   ///
-  /// - parameter changes:          A tuple with insertions, reloads and delctions
+  /// - parameter changes:          A tuple with insertions, reloads and deletions
   /// - parameter animation:        The animation that should be used to perform the updates
-  /// - parameter section:          The section that will be updates
+  /// - parameter section:          The section that will be updated
   /// - parameter updateDataSource: A closure that is used to update the data source before performing the updates on the UI
   /// - parameter completion:       A completion closure that will run when both data source and UI is updated
   public func process(_ changes: (insertions: [Int], reloads: [Int], deletions: [Int], childUpdates: [Int]),
@@ -146,11 +146,11 @@ extension UITableView: UserInterface {
     completion?()
   }
 
-  /// A convenience method for performing inserts on a UITableView.
+  /// A convenience method for reloading section in a UITableView.
   ///
   /// - parameter section: The section you want to update.
   /// - parameter animation: A constant that indicates how the reloading is to be animated.
-  /// - parameter completino: A completion closure that will run when the reload is done.
+  /// - parameter completion: A completion closure that will run when the reload is done.
   public func reloadSection(_ section: Int = 0, withAnimation animation: Animation = .automatic, completion: (() -> Void)? = nil) {
     if animation == .none {
       UIView.setAnimationsEnabled(false)
