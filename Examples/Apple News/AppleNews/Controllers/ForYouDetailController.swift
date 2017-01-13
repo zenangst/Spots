@@ -33,13 +33,11 @@ extension ForYouDetailController {
     guard let navigationController = navigationController, scrollView.isTracking
       else { return }
 
-    if scrollView.contentOffset.y >= (lastContentOffset?.y)! && scrollView.contentOffset.y > 64 {
-      navigationController.setNavigationBarHidden(true, animated: true)
-    } else {
-      navigationController.setNavigationBarHidden(false, animated: true)
+    if let lastContentYOffset = lastContentOffset?.y {
+        let hideNavigationBar = scrollView.contentOffset.y >= lastContentYOffset && scrollView.contentOffset.y > 64
+        navigationController.setNavigationBarHidden(hideNavigationBar, animated: true)
     }
-
+    
     lastContentOffset = scrollView.contentOffset
   }
-
 }
