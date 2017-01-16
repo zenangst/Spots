@@ -238,13 +238,14 @@ open class Controller: UIViewController, SpotsProtocol, SpotsFocusDelegate, UISc
         scrollView.contentInset.bottom = tabBarController.tabBar.frame.size.height
         scrollView.scrollIndicatorInsets.bottom = scrollView.contentInset.bottom
     }
-#if os(iOS)
-    guard let _ = refreshDelegate, refreshControl.superview == nil
-      else { return }
 
-    refreshControl.addTarget(self, action: #selector(refreshSpots(_:)), for: .valueChanged)
-    scrollView.insertSubview(refreshControl, at: 0)
-#endif
+    #if os(iOS)
+      refreshControl.addTarget(self, action: #selector(refreshSpots(_:)), for: .valueChanged)
+
+      guard let _ = refreshDelegate, refreshControl.superview == nil
+        else { return }
+      scrollView.insertSubview(refreshControl, at: 0)
+    #endif
   }
 
   /// Configure scrollview and composite views with new size.
