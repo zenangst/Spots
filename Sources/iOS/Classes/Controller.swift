@@ -84,14 +84,14 @@ open class Controller: UIViewController, SpotsProtocol, SpotsFocusDelegate, UISc
     }
   }
 
-#if os(iOS)
+  #if os(iOS)
   /// A refresh delegate for handling reloading of a Spot.
   weak public var refreshDelegate: RefreshDelegate? {
     didSet {
       refreshControl.isHidden = refreshDelegate == nil
     }
   }
-#endif
+  #endif
 
   /// A scroll delegate for handling didReachBeginning and didReachEnd.
   weak public var scrollDelegate: ScrollDelegate?
@@ -99,11 +99,11 @@ open class Controller: UIViewController, SpotsProtocol, SpotsFocusDelegate, UISc
   /// A custom scroll view that handles the scrolling for all internal scroll views.
   open var scrollView: SpotsScrollView = SpotsScrollView()
 
-#if os(iOS)
+  #if os(iOS)
   /// A UIRefresh control.
   /// Note: Only available on iOS.
   public lazy var refreshControl = UIRefreshControl()
-#endif
+  #endif
 
   // MARK: Initializer
 
@@ -157,10 +157,10 @@ open class Controller: UIViewController, SpotsProtocol, SpotsFocusDelegate, UISc
 
   deinit {
     #if DEVMODE
-    if let source = source {
-      source.cancel()
-    }
-    NotificationCenter.default.removeObserver(self)
+      if let source = source {
+        source.cancel()
+      }
+      NotificationCenter.default.removeObserver(self)
     #endif
 
     // http://stackoverflow.com/questions/3686803/uiscrollview-exc-bad-access-crash-in-ios-sdk
@@ -235,16 +235,17 @@ open class Controller: UIViewController, SpotsProtocol, SpotsFocusDelegate, UISc
     super.viewWillAppear(animated)
 
     if let tabBarController = self.tabBarController, tabBarController.tabBar.isTranslucent {
-        scrollView.contentInset.bottom = tabBarController.tabBar.frame.size.height
-        scrollView.scrollIndicatorInsets.bottom = scrollView.contentInset.bottom
+      scrollView.contentInset.bottom = tabBarController.tabBar.frame.size.height
+      scrollView.scrollIndicatorInsets.bottom = scrollView.contentInset.bottom
     }
-#if os(iOS)
-    guard let _ = refreshDelegate, refreshControl.superview == nil
-      else { return }
 
-    refreshControl.addTarget(self, action: #selector(refreshSpots(_:)), for: .valueChanged)
-    scrollView.insertSubview(refreshControl, at: 0)
-#endif
+    #if os(iOS)
+      refreshControl.addTarget(self, action: #selector(refreshSpots(_:)), for: .valueChanged)
+
+      guard let _ = refreshDelegate, refreshControl.superview == nil
+        else { return }
+      scrollView.insertSubview(refreshControl, at: 0)
+    #endif
   }
 
   /// Configure scrollview and composite views with new size.
@@ -276,11 +277,11 @@ open class Controller: UIViewController, SpotsProtocol, SpotsFocusDelegate, UISc
 
     coordinator.animate(alongsideTransition: { (UIViewControllerTransitionCoordinatorContext) in
       self.configure(withSize: size)
-      }) { (UIViewControllerTransitionCoordinatorContext) in
-        self.configure(withSize: size)
-        NotificationCenter.default.post(name: Notification.Name(rawValue: NotificationKeys.deviceDidRotateNotification.rawValue),
-                                                                  object: nil,
-                                                                  userInfo: ["size" : RotationSize(size: size)])
+    }) { (UIViewControllerTransitionCoordinatorContext) in
+      self.configure(withSize: size)
+      NotificationCenter.default.post(name: Notification.Name(rawValue: NotificationKeys.deviceDidRotateNotification.rawValue),
+                                      object: nil,
+                                      userInfo: ["size" : RotationSize(size: size)])
     }
   }
 
