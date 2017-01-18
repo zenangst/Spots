@@ -54,7 +54,7 @@ class ComponentTests : XCTestCase {
     var codeComponent = Component(
       title: json["title"] as! String,
       kind: json["kind"] as! String,
-      span: (json["layout"] as? [String : Any])!["span"] as! Double,
+      span: (json["layout"] as? [String : Any])?["span"] as? Double,
       meta: json["meta"] as! [String : String])
     XCTAssertTrue(jsonComponent == codeComponent)
 
