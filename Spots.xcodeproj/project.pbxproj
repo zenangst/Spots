@@ -176,8 +176,8 @@
 		BD45D9711E2F408100C2D6B2 /* ContentInset.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD45D9701E2F408100C2D6B2 /* ContentInset.swift */; };
 		BD45D9721E2F408100C2D6B2 /* ContentInset.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD45D9701E2F408100C2D6B2 /* ContentInset.swift */; };
 		BD45D9731E2F408100C2D6B2 /* ContentInset.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD45D9701E2F408100C2D6B2 /* ContentInset.swift */; };
-		BD45D9751E2F414000C2D6B2 /* LayoutTrait+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD45D9741E2F414000C2D6B2 /* LayoutTrait+iOS.swift */; };
-		BD45D9761E2F414000C2D6B2 /* LayoutTrait+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD45D9741E2F414000C2D6B2 /* LayoutTrait+iOS.swift */; };
+		BD45D97A1E2F42EE00C2D6B2 /* SectionInset+Mac.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD45D9791E2F42EE00C2D6B2 /* SectionInset+Mac.swift */; };
+		BD45D97C1E2F42F800C2D6B2 /* ContentInset+Mac.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD45D97B1E2F42F800C2D6B2 /* ContentInset+Mac.swift */; };
 		BD63B0501DD8D30400C52D73 /* UserInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD63B04F1DD8D30400C52D73 /* UserInterface.swift */; };
 		BD63B0511DD8D30400C52D73 /* UserInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD63B04F1DD8D30400C52D73 /* UserInterface.swift */; };
 		BD63B0521DD8D30400C52D73 /* UserInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD63B04F1DD8D30400C52D73 /* UserInterface.swift */; };
@@ -371,7 +371,8 @@
 		BD45D96A1E2F403500C2D6B2 /* SectionInset+iOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SectionInset+iOS.swift"; sourceTree = "<group>"; };
 		BD45D96D1E2F406600C2D6B2 /* ContentInset+iOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ContentInset+iOS.swift"; sourceTree = "<group>"; };
 		BD45D9701E2F408100C2D6B2 /* ContentInset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentInset.swift; sourceTree = "<group>"; };
-		BD45D9741E2F414000C2D6B2 /* LayoutTrait+iOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LayoutTrait+iOS.swift"; sourceTree = "<group>"; };
+		BD45D9791E2F42EE00C2D6B2 /* SectionInset+Mac.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SectionInset+Mac.swift"; sourceTree = "<group>"; };
+		BD45D97B1E2F42F800C2D6B2 /* ContentInset+Mac.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ContentInset+Mac.swift"; sourceTree = "<group>"; };
 		BD63B04F1DD8D30400C52D73 /* UserInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInterface.swift; sourceTree = "<group>"; };
 		BD677E841DC616B2006D1654 /* TestSpotable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSpotable.swift; sourceTree = "<group>"; };
 		BD677E881DC61EFC006D1654 /* TestStateCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestStateCache.swift; sourceTree = "<group>"; };
@@ -511,7 +512,6 @@
 				BDE152D51DDEF94500DB3145 /* UIViewController+Extensions.swift */,
 				BD45D96A1E2F403500C2D6B2 /* SectionInset+iOS.swift */,
 				BD45D96D1E2F406600C2D6B2 /* ContentInset+iOS.swift */,
-				BD45D9741E2F414000C2D6B2 /* LayoutTrait+iOS.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -585,6 +585,8 @@
 				BD129E1C1D7B2CDE009AC164 /* NSScrollView+Extensions.swift */,
 				BD129E1D1D7B2CDE009AC164 /* NSTableView+UserInterface.swift */,
 				BD129E1E1D7B2CDE009AC164 /* Viewable+Mac.swift */,
+				BD45D9791E2F42EE00C2D6B2 /* SectionInset+Mac.swift */,
+				BD45D97B1E2F42F800C2D6B2 /* ContentInset+Mac.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1228,7 +1230,6 @@
 				BD129F891D7B2F91009AC164 /* Component.swift in Sources */,
 				BD39001C1DFE8E92007C0411 /* CompositeSpot.swift in Sources */,
 				BD129D8C1D7B295F009AC164 /* Listable+Extensions+iOS.swift in Sources */,
-				BD45D9761E2F414000C2D6B2 /* LayoutTrait+iOS.swift in Sources */,
 				BD129DBA1D7B2B6C009AC164 /* CarouselSpotHeader.swift in Sources */,
 				BD129F831D7B2F91009AC164 /* SpotsProtocol.swift in Sources */,
 				BD45D96F1E2F406600C2D6B2 /* ContentInset+iOS.swift in Sources */,
@@ -1317,7 +1318,6 @@
 				BD129DCD1D7B2B6C009AC164 /* Controller.swift in Sources */,
 				BD129F931D7B2F91009AC164 /* TypeAlias.swift in Sources */,
 				BDE152DB1DDEFA5500DB3145 /* UICollectionView+UserInterface.swift in Sources */,
-				BD45D9751E2F414000C2D6B2 /* LayoutTrait+iOS.swift in Sources */,
 				BD129F541D7B2F91009AC164 /* Component+Extension.swift in Sources */,
 				BDA8DAF81DCF423A00A4A8DD /* RowSpotCell.swift in Sources */,
 				BD129DCF1D7B2B6C009AC164 /* SpotsScrollView.swift in Sources */,
@@ -1425,7 +1425,9 @@
 				BD129E341D7B2CDE009AC164 /* NSScrollView+Extensions.swift in Sources */,
 				BD129F8B1D7B2F91009AC164 /* GridableMeta.swift in Sources */,
 				BD129F911D7B2F91009AC164 /* StateCache.swift in Sources */,
+				BD45D97A1E2F42EE00C2D6B2 /* SectionInset+Mac.swift in Sources */,
 				BD129E301D7B2CDE009AC164 /* Gridable+Extensions+Mac.swift in Sources */,
+				BD45D97C1E2F42F800C2D6B2 /* ContentInset+Mac.swift in Sources */,
 				BD129F5E1D7B2F91009AC164 /* SpotsProtocol+Extensions.swift in Sources */,
 				BD129E241D7B2CDE009AC164 /* GridSpot.swift in Sources */,
 				BDEFF54B1DD1A64400FC0537 /* DataSource+Mac+Extensions.swift in Sources */,

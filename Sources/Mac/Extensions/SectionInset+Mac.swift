@@ -1,8 +1,8 @@
-import UIKit
+import Cocoa
 
 extension SectionInset {
 
-  public func configure(layout: FlowLayout) {
+  func configure(layout: FlowLayout) {
     layout.sectionInset.top = CGFloat(self.top)
     layout.sectionInset.left = CGFloat(self.left)
     layout.sectionInset.bottom = CGFloat(self.bottom)
