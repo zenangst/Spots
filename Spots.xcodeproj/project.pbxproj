@@ -166,6 +166,9 @@
 		BD45D9631E2EADA600C2D6B2 /* LayoutTrait.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD45D9621E2EADA600C2D6B2 /* LayoutTrait.swift */; };
 		BD45D9641E2EADA600C2D6B2 /* LayoutTrait.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD45D9621E2EADA600C2D6B2 /* LayoutTrait.swift */; };
 		BD45D9651E2EADA600C2D6B2 /* LayoutTrait.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD45D9621E2EADA600C2D6B2 /* LayoutTrait.swift */; };
+		BD45D9671E2F400100C2D6B2 /* SectionInset.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD45D9661E2F400100C2D6B2 /* SectionInset.swift */; };
+		BD45D9681E2F400100C2D6B2 /* SectionInset.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD45D9661E2F400100C2D6B2 /* SectionInset.swift */; };
+		BD45D9691E2F400100C2D6B2 /* SectionInset.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD45D9661E2F400100C2D6B2 /* SectionInset.swift */; };
 		BD63B0501DD8D30400C52D73 /* UserInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD63B04F1DD8D30400C52D73 /* UserInterface.swift */; };
 		BD63B0511DD8D30400C52D73 /* UserInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD63B04F1DD8D30400C52D73 /* UserInterface.swift */; };
 		BD63B0521DD8D30400C52D73 /* UserInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD63B04F1DD8D30400C52D73 /* UserInterface.swift */; };
@@ -355,6 +358,7 @@
 		BD4295541D81D39700E07E1C /* TestCarouselSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestCarouselSpot.swift; sourceTree = "<group>"; };
 		BD4295571D81D45D00E07E1C /* TestViewSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewSpot.swift; sourceTree = "<group>"; };
 		BD45D9621E2EADA600C2D6B2 /* LayoutTrait.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutTrait.swift; sourceTree = "<group>"; };
+		BD45D9661E2F400100C2D6B2 /* SectionInset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionInset.swift; sourceTree = "<group>"; };
 		BD63B04F1DD8D30400C52D73 /* UserInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInterface.swift; sourceTree = "<group>"; };
 		BD677E841DC616B2006D1654 /* TestSpotable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSpotable.swift; sourceTree = "<group>"; };
 		BD677E881DC61EFC006D1654 /* TestStateCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestStateCache.swift; sourceTree = "<group>"; };
@@ -656,6 +660,7 @@
 				BD129F431D7B2F91009AC164 /* StateCache.swift */,
 				BD8B1EB11D93D813000C3F53 /* GrandCentralDispatch.swift */,
 				BD45D9621E2EADA600C2D6B2 /* LayoutTrait.swift */,
+				BD45D9661E2F400100C2D6B2 /* SectionInset.swift */,
 			);
 			path = Structs;
 			sourceTree = "<group>";
@@ -1163,6 +1168,7 @@
 				BD73974B1D718D38000AF2DE /* CollectionAdapter+tvOS.swift in Sources */,
 				BD129F4A1D7B2F91009AC164 /* Registry.swift in Sources */,
 				BDE152D71DDEF94500DB3145 /* UITableView+UserInterface.swift in Sources */,
+				BD45D9691E2F400100C2D6B2 /* SectionInset.swift in Sources */,
 				BD1BFB5C1DA7A9AC00BB55E1 /* ScrollDelegate.swift in Sources */,
 				BD129F921D7B2F91009AC164 /* StateCache.swift in Sources */,
 				BD129F861D7B2F91009AC164 /* Viewable.swift in Sources */,
@@ -1259,6 +1265,7 @@
 				BD129DA11D7B2A3D009AC164 /* CarouselSpot+iOS.swift in Sources */,
 				BD129F571D7B2F91009AC164 /* Gridable+Extensions.swift in Sources */,
 				BDE152D61DDEF94500DB3145 /* UITableView+UserInterface.swift in Sources */,
+				BD45D9671E2F400100C2D6B2 /* SectionInset.swift in Sources */,
 				BD1BFB5A1DA7A9AC00BB55E1 /* ScrollDelegate.swift in Sources */,
 				BD129DC91D7B2B6C009AC164 /* ListSpotCell.swift in Sources */,
 				BD129DC51D7B2B6C009AC164 /* ListComposite.swift in Sources */,
@@ -1385,6 +1392,7 @@
 				BD129F491D7B2F91009AC164 /* Registry.swift in Sources */,
 				BD129E281D7B2CDE009AC164 /* NoScrollView.swift in Sources */,
 				BD129E331D7B2CDE009AC164 /* NSCollectionView+UserInterface.swift in Sources */,
+				BD45D9681E2F400100C2D6B2 /* SectionInset.swift in Sources */,
 				BD412B671DEFF9590064FD12 /* SpotView.swift in Sources */,
 				BD129E2A1D7B2CDE009AC164 /* Controller.swift in Sources */,
 				BD129F8E1D7B2F91009AC164 /* Parser.swift in Sources */,
