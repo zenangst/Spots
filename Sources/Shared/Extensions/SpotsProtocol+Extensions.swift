@@ -44,7 +44,7 @@ public extension SpotsProtocol {
 
   /// A convenience property for getting a dictionary representation of the controller wihtout item reduction.
   public var dictionary: [String : Any] {
-    get { return dictionary() }
+    return dictionary()
   }
 
   /// Produce a dictionary representation of the controller.

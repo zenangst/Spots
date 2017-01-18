@@ -3,9 +3,7 @@ import Cocoa
 open class SpotsContentView: NSView {
 
   override open var isFlipped: Bool {
-    get {
-      return true
-    }
+    return true
   }
 
   func insertSubview(_ view: View, at index: Int) {

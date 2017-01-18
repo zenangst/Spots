@@ -40,7 +40,7 @@ public struct SectionInset: Mappable, DictionaryConvertible, Equatable {
     self.right  <- JSON.property(GridableMeta.Key.sectionInsetRight)
   }
 
-  public static func ==(lhs: SectionInset, rhs: SectionInset) -> Bool {
+  public static func == (lhs: SectionInset, rhs: SectionInset) -> Bool {
     return lhs.top == rhs.top &&
       lhs.left == rhs.left &&
       lhs.bottom == rhs.bottom &&

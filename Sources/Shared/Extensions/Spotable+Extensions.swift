@@ -408,7 +408,7 @@ public extension Spotable {
   ///
   /// - parameter completion: A completion closure that will be run when the computations are complete.
   public func sanitize(completion: Completion = nil) {
-    updateHeight() { [weak self] in
+    updateHeight { [weak self] in
       self?.refreshIndexes()
       completion?()
     }

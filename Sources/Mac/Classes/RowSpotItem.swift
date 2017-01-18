@@ -3,9 +3,7 @@ import Brick
 
 open class FlippedView: NSView {
   override open var isFlipped: Bool {
-    get {
-      return true
-    }
+    return true
   }
 }
 

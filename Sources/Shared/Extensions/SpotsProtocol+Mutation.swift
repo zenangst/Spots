@@ -350,7 +350,7 @@ extension SpotsProtocol {
           self?.finishReloading(spot: spot, withCompletion: completion)
         }
       } else {
-        spot.updateHeight() { [weak self] in
+        spot.updateHeight { [weak self] in
           self?.finishReloading(spot: spot, withCompletion: completion)
         }
       }
@@ -544,7 +544,7 @@ extension SpotsProtocol {
       #endif
 
       spot.reload(nil, withAnimation: animation) {
-        spot.updateHeight() {
+        spot.updateHeight {
           spot.afterUpdate()
           completion?()
           spot.render().layoutIfNeeded()

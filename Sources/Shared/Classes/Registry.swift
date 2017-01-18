@@ -6,8 +6,8 @@ import Cocoa
 #endif
 
 public enum RegistryType: String {
-  case nib = "nib"
-  case regular = "regular"
+  case nib
+  case regular
 }
 
 /// A registry that is used internally when resolving kind to the corresponding spot.
