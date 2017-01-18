@@ -176,4 +176,5 @@ public protocol Spotable: class {
 
   func beforeUpdate()
   func afterUpdate()
+  func configure(with layoutTrait: LayoutTrait)
 }

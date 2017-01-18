@@ -98,4 +98,8 @@ open class ViewSpot: NSObject, Spotable, Viewable {
   A placeholder method, it is left empty as it holds no value for ViewSpot
    */
   open func register() {}
+
+  public func configure(with layoutTrait: LayoutTrait) {
+    /// Do nothing
+  }
 }
