@@ -30,7 +30,7 @@ public struct LayoutTrait: Mappable, DictionaryConvertible, Equatable {
     ]
   }
 
-  public init(_ map: [String : Any]) {
+  public init(_ map: [String : Any] = [:]) {
     self.sectionInset = SectionInset(map)
     self.contentInset = ContentInset(map)
     self.itemMargin <- map.property(GridableMeta.Key.minimumInteritemSpacing)
@@ -42,6 +42,12 @@ public struct LayoutTrait: Mappable, DictionaryConvertible, Equatable {
     self.sectionInset.configure(withJSON: JSON)
     self.itemMargin <- JSON.property(GridableMeta.Key.minimumInteritemSpacing)
     self.lineSpacing <- JSON.property(GridableMeta.Key.minimumLineSpacing)
+  }
+
+  public func mutate(_ closure: (inout LayoutTrait) -> Void) -> LayoutTrait {
+    var copy = self
+    closure(&copy)
+    return copy
   }
 
   public func configure(spot: Gridable) {
