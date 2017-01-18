@@ -73,4 +73,24 @@ class LayoutTraitTests: XCTestCase {
     XCTAssertEqual((layoutJSON["section-inset"] as? [String : Double])?["right"], layoutTrait.sectionInset.right)
   }
 
+  func testLayoutTraitConfigureWithJSON() {
+    var layoutTrait = LayoutTrait([:])
+
+    XCTAssertNotEqual(layoutTrait.span, 4.0)
+    XCTAssertNotEqual(layoutTrait.itemSpacing, 8.0)
+    XCTAssertNotEqual(layoutTrait.lineSpacing, 6.0)
+    XCTAssertNotEqual(layoutTrait.dynamicSpan, true)
+    XCTAssertNotEqual(layoutTrait.contentInset, ContentInset(top: 1, left: 2, bottom: 3, right: 4))
+    XCTAssertNotEqual(layoutTrait.sectionInset, SectionInset(top: 5, left: 6, bottom: 7, right: 8))
+
+    layoutTrait.configure(withJSON: json)
+
+    XCTAssertEqual(layoutTrait.span, 4.0)
+    XCTAssertEqual(layoutTrait.itemSpacing, 8.0)
+    XCTAssertEqual(layoutTrait.lineSpacing, 6.0)
+    XCTAssertEqual(layoutTrait.dynamicSpan, true)
+    XCTAssertEqual(layoutTrait.contentInset, ContentInset(top: 1, left: 2, bottom: 3, right: 4))
+    XCTAssertEqual(layoutTrait.sectionInset, SectionInset(top: 5, left: 6, bottom: 7, right: 8))
+  }
+
 }
