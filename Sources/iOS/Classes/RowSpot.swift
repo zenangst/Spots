@@ -109,7 +109,7 @@ open class RowSpot: NSObject, Gridable {
   ///
   /// - returns: An initialized row spot with computed component using title and kind.
   public convenience init(title: String = "", kind: String? = nil) {
-    self.init(component: Component(title: title, kind: kind ?? ""))
+    self.init(component: Component(title: title, kind: kind ?? "", span: 1.0))
   }
 
   /// Instantiate a RowSpot with a cache key.

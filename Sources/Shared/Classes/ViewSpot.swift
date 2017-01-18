@@ -65,7 +65,7 @@ open class ViewSpot: NSObject, Spotable, Viewable {
    - parameter kind:  The kind that will be used on the Component
    */
   public convenience init(title: String = "", kind: String? = nil) {
-    self.init(component: Component(title: title, kind: kind ?? ViewSpot.defaultKind.string))
+    self.init(component: Component(title: title, kind: kind ?? ViewSpot.defaultKind.string, span: 1.0))
   }
 
   public func ui<T>(at index: Int) -> T? {

@@ -100,7 +100,7 @@ open class ListSpot: NSObject, Listable {
   /// - returns: An initialized list spot with component.
   public convenience init(tableView: UITableView? = nil, title: String = "",
                           kind: String = "list", header: String = "") {
-    self.init(component: Component(title: title, header: header, kind: kind))
+    self.init(component: Component(title: title, header: header, kind: kind, span: 1.0))
 
     if let tableView = tableView {
       self.tableView = tableView
