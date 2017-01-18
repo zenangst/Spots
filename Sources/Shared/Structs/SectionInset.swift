@@ -1,7 +1,7 @@
 import Tailor
 import Brick
 
-public struct SectionInset: Mappable, DictionaryConvertible {
+public struct SectionInset: Mappable, DictionaryConvertible, Equatable {
 
   static let rootKey: String = "section-insets"
 
@@ -38,5 +38,12 @@ public struct SectionInset: Mappable, DictionaryConvertible {
     self.left   <- JSON.property(GridableMeta.Key.sectionInsetLeft)
     self.bottom <- JSON.property(GridableMeta.Key.sectionInsetBottom)
     self.right  <- JSON.property(GridableMeta.Key.sectionInsetRight)
+  }
+
+  public static func ==(lhs: SectionInset, rhs: SectionInset) -> Bool {
+    return lhs.top == rhs.top &&
+      lhs.left == rhs.left &&
+      lhs.bottom == rhs.bottom &&
+      lhs.right == rhs.right
   }
 }
