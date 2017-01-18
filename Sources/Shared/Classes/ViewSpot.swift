@@ -7,6 +7,8 @@ import Brick
 
 open class ViewSpot: NSObject, Spotable, Viewable {
 
+  public static var layoutTrait: LayoutTrait = LayoutTrait([:])
+
   /// Reload spot with ItemChanges.
   ///
   /// - parameter changes:          A collection of changes: inserations, updates, reloads, deletions and updated children.
@@ -46,6 +48,11 @@ open class ViewSpot: NSObject, Spotable, Viewable {
 
   public required init(component: Component) {
     self.component = component
+
+    if self.component.layoutTrait == nil {
+      self.component.layoutTrait = type(of: self).layoutTrait
+    }
+
     super.init()
     registerDefault(view: View.self)
     prepare()
