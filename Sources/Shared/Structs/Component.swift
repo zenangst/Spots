@@ -34,6 +34,7 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
     case Kind
     case Meta
     case Span
+    case Layout
     case Items
     case Size
     case Width
@@ -75,6 +76,8 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
   /// Configures the span that should be used for items in one row
   /// Used by gridable components
   public var span: Double = 0
+  /// Layout traits
+  public var layoutTrait: LayoutTrait?
   /// A collection of view models
   public var items: [Item] = [Item]()
   /// The width and height of the component, usually calculated and updated by the UI component
@@ -110,15 +113,19 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
     }
 
     var JSONComponents: [String : Any] = [
-      Key.Index.string : index,
-      Key.Kind.string : kind,
-      Key.Span.string : span,
-      Key.Size.string : [
-        Key.Width.string : width,
-        Key.Height.string : height
+      Key.Index.string: index,
+      Key.Kind.string: kind,
+      Key.Span.string: span,
+      Key.Size.string: [
+        Key.Width.string: width,
+        Key.Height.string: height
       ],
-      Key.Items.string: JSONItems,
+      Key.Items.string: JSONItems
       ]
+
+    if let layoutTrait = layoutTrait {
+      JSONComponents[Key.Layout] = layoutTrait.dictionary
+    }
 
     JSONComponents[Key.Identifier.string] = identifier
 
@@ -150,6 +157,8 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
       self.span <- map.property("span")
     }
 
+    self.layoutTrait = map.property("layout")
+
     let width: Double = map.resolve(keyPath: "size.width") ?? 0.0
     let height: Double = map.resolve(keyPath: "size.height") ?? 0.0
     size = CGSize(width: width, height: height)
@@ -171,6 +180,7 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
               header: String = "",
               kind: String = "",
               span: Double = 0,
+              layoutTrait: LayoutTrait? = nil,
               items: [Item] = [],
               meta: [String : Any] = [:]) {
     self.identifier = identifier
@@ -178,6 +188,7 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
     self.kind = kind
     self.header = header
     self.span = span
+    self.layoutTrait = layoutTrait
     self.items = items
     self.meta = meta
   }
