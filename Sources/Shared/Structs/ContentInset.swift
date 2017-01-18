@@ -1,7 +1,7 @@
 import Tailor
 import Brick
 
-struct ContentInset: Mappable, DictionaryConvertible {
+public struct ContentInset: Mappable, DictionaryConvertible {
 
   static let rootKey: String = "content-insets"
 

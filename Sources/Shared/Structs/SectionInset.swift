@@ -1,7 +1,7 @@
 import Tailor
 import Brick
 
-struct SectionInset: Mappable, DictionaryConvertible {
+public struct SectionInset: Mappable, DictionaryConvertible {
 
   static let rootKey: String = "section-insets"
 
