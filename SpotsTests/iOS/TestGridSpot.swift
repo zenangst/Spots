@@ -121,7 +121,7 @@ class GridSpotTests: XCTestCase {
 
   func testSpotCollectionDelegate() {
     let items = [Item(title: "Test item")]
-    let spot = GridSpot(component: Component(span: 1.0, items: items))
+    let spot = GridSpot(component: Component(span: 0.0, items: items))
     spot.render().frame.size = CGSize(width: 100, height: 100)
     spot.render().layoutSubviews()
 

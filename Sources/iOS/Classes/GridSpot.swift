@@ -14,7 +14,7 @@ open class GridSpot: NSObject, Gridable {
     public static let minimumLineSpacing = "line-spacing"
   }
 
-  public static var layoutTrait = LayoutTrait([:])
+  public static var layoutTrait = LayoutTrait().mutate { $0.span = 0.0 }
 
   /// A Registry object that holds identifiers and classes for cells used in the GridSpot
   open static var views: Registry = Registry()
@@ -108,7 +108,7 @@ open class GridSpot: NSObject, Gridable {
   ///
   /// - returns: An initialized grid spot with computed component using title and kind.
   public convenience init(title: String = "", kind: String? = nil) {
-    self.init(component: Component(title: title, kind: kind ?? "", span: 1.0))
+    self.init(component: Component(title: title, kind: kind ?? "", span: 0.0))
   }
 
   /// Instantiate a GridSpot with a cache key.
