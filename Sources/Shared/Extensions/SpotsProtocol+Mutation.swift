@@ -388,7 +388,7 @@ extension SpotsProtocol {
 
       for (index, change) in changes.enumerated() {
         switch change {
-        case .identifier, .title, .kind, .span, .header, .meta:
+        case .identifier, .title, .kind, .layout, .header, .meta:
           weakSelf.replaceSpot(index, newComponents: newComponents, yOffset: &yOffset)
         case .new:
           weakSelf.newSpot(index, newComponents: newComponents, yOffset: &yOffset)

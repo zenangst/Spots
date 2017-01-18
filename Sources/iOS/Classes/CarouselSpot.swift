@@ -66,9 +66,11 @@ open class CarouselSpot: NSObject, Gridable {
   open var component: Component {
     willSet(value) {
       #if os(iOS)
-        dynamicSpan = component.meta(Key.dynamicSpan, Default.dynamicSpan)
-        if component.items.count > 1 && component.span > 0.0 {
-          pageControl.numberOfPages = Int(floor(Double(component.items.count) / component.span))
+        if let layoutTrait = component.layoutTrait {
+          dynamicSpan = component.meta(Key.dynamicSpan, Default.dynamicSpan)
+          if component.items.count > 1 && layoutTrait.span > 0.0 {
+            pageControl.numberOfPages = Int(floor(Double(component.items.count) / layoutTrait.span))
+          }
         }
       #endif
     }
@@ -78,8 +80,10 @@ open class CarouselSpot: NSObject, Gridable {
   /// A boolean value that configures the collection views pagination
   open var paginate = false {
     willSet(newValue) {
-      if component.span == 1 {
-        collectionView.isPagingEnabled = newValue
+      if let layoutTrait = component.layoutTrait {
+        if layoutTrait.span == 1 {
+          collectionView.isPagingEnabled = newValue
+        }
       }
     }
   }
@@ -391,10 +395,12 @@ extension Delegate: UIScrollViewDelegate {
       spot.carouselScrollDelegate?.didEndScrolling(in: spot, item: spot.items[index])
     }
 
-    let floatIndex = ceil(CGFloat(index) / CGFloat(spot.component.span))
-
     #if os(iOS)
-      spot.pageControl.currentPage = Int(floatIndex)
+    if let layoutTrait = spot.component.layoutTrait {
+      let floatIndex = ceil(CGFloat(index) / CGFloat(layoutTrait.span))
+        spot.pageControl.currentPage = Int(floatIndex)
+
+    }
     #endif
 
     paginatedEndScrolling()

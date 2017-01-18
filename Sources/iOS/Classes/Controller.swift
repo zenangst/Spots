@@ -20,7 +20,7 @@ open class Controller: UIViewController, SpotsProtocol, SpotsFocusDelegate, UISc
   /// - deviceDidRotateNotification: Used when the device is rotated
   private enum NotificationKeys: String {
     /// A notification key for when the device did rotate
-    case deviceDidRotateNotification = "deviceDidRotateNotification"
+    case deviceDidRotateNotification
   }
 
   /// A rotation class that is used in the `deviceDidRotate` notification
@@ -63,7 +63,7 @@ open class Controller: UIViewController, SpotsProtocol, SpotsFocusDelegate, UISc
   public var refreshing = false
   /// A convenience method for resolving the first spot.
   public var spot: Spotable? {
-    get { return spot(at: 0, ofType: Spotable.self) }
+    return spot(at: 0, ofType: Spotable.self)
   }
 
   #if DEVMODE
@@ -281,7 +281,7 @@ open class Controller: UIViewController, SpotsProtocol, SpotsFocusDelegate, UISc
       self.configure(withSize: size)
       NotificationCenter.default.post(name: Notification.Name(rawValue: NotificationKeys.deviceDidRotateNotification.rawValue),
                                       object: nil,
-                                      userInfo: ["size" : RotationSize(size: size)])
+                                      userInfo: ["size": RotationSize(size: size)])
     }
   }
 

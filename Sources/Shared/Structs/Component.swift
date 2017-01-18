@@ -11,7 +11,7 @@ import Brick
 ///
 /// - identifier: Indicates that the identifier changed
 /// - kind:       Indicates that the kind changed
-/// - span:       Indicates that the span changed
+/// - layout:     Indicates that the layout changed
 /// - header:     Indicates that the header changed
 /// - meta:       Indicates that the meta changed
 /// - items:      Indicates that the items changed
@@ -19,7 +19,7 @@ import Brick
 /// - removed:    Indicates that the component was removed
 /// - none:       Indicates that nothing did change
 public enum ComponentDiff {
-  case identifier, title, kind, layout, span, header, meta, items, new, removed, none
+  case identifier, title, kind, layout, header, meta, items, new, removed, none
 }
 
 /// The Component struct is used to configure a Spotable object
@@ -73,9 +73,6 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
   public var kind: String = ""
   /// The header identifier
   public var header: String = ""
-  /// Configures the span that should be used for items in one row
-  /// Used by gridable components
-  public var span: Double = 0
   /// Layout traits
   public var layoutTrait: LayoutTrait?
   /// A collection of view models
@@ -83,7 +80,7 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
   /// The width and height of the component, usually calculated and updated by the UI component
   public var size: CGSize?
   /// A key-value dictionary for any additional information
-  public var meta = [String : Any]()
+  public var meta = [String: Any]()
 
   /// A dictionary representation of the component
   public var dictionary: [String : Any] {
@@ -115,7 +112,6 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
     var JSONComponents: [String : Any] = [
       Key.Index.string: index,
       Key.Kind.string: kind,
-      Key.Span.string: span,
       Key.Size.string: [
         Key.Width.string: width,
         Key.Height.string: height
@@ -142,21 +138,12 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
   ///
   /// - returns: An initialized component using JSON.
   public init(_ map: [String : Any]) {
-    identifier = map.property("identifier")
-    title     <- map.property("title")
-    kind      <- map.property("kind")
-    header    <- map.property("header")
-    items     <- map.relations("items")
-    meta      <- map.property("meta")
-
-    if let span: Float = map.property("span") {
-      self.span = Double(span)
-    } else if let span: Int = map.property("span") {
-      self.span = Double(span)
-    } else {
-      self.span <- map.property("span")
-    }
-
+    self.identifier = map.property("identifier")
+    self.title     <- map.property("title")
+    self.kind      <- map.property("kind")
+    self.header    <- map.property("header")
+    self.items     <- map.relations("items")
+    self.meta      <- map.property("meta")
     self.layoutTrait = map.property("layout")
 
     let width: Double = map.resolve(keyPath: "size.width") ?? 0.0
@@ -187,7 +174,6 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
     self.title = title
     self.kind = kind
     self.header = header
-    self.span = span
     self.layoutTrait = layoutTrait
     self.items = items
     self.meta = meta
@@ -241,8 +227,6 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
     if identifier != component.identifier { return .identifier }
     // Determine if the component layout changed, this can be used to trigger layout related processes
     if layoutTrait != component.layoutTrait { return .layout }
-    // Determine if the component span layout changed, this can be used to trigger layout related processes
-    if span != component.span { return .span }
     // Determine if the header for the component has changed
     if header != component.header { return .header }
     // Check if meta data for the component changed, this can be up to the developer to decide what course of action to take.
@@ -351,7 +335,7 @@ public func == (lhs: Component, rhs: Component) -> Bool {
 
   return lhs.title == rhs.title &&
     lhs.kind == rhs.kind &&
-    lhs.span == rhs.span &&
+    lhs.layoutTrait == rhs.layoutTrait &&
     lhs.header == rhs.header &&
     (lhs.meta as NSDictionary).isEqual(rhs.meta as NSDictionary)
 }
@@ -370,7 +354,7 @@ public func === (lhs: Component, rhs: Component) -> Bool {
 
   return lhs.title == rhs.title &&
     lhs.kind == rhs.kind &&
-    lhs.span == rhs.span &&
+    lhs.layoutTrait == rhs.layoutTrait &&
     lhs.header == rhs.header &&
     (lhs.meta as NSDictionary).isEqual(rhs.meta as NSDictionary) &&
     lhsChildren === rhsChildren &&

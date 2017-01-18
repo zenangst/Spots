@@ -3,8 +3,9 @@ import Brick
 
 /// A RowSpot, a collection view based Spotable object that lays out its items in a vertical order based of the item sizes
 open class RowSpot: NSObject, Gridable {
-  public static var layoutTrait: LayoutTrait = LayoutTrait([:])
-
+  public static var layoutTrait: LayoutTrait = LayoutTrait([
+    "span": 1.0
+    ])
 
   /**
    *  Keys for meta data lookup
@@ -96,9 +97,6 @@ open class RowSpot: NSObject, Gridable {
   ///
   /// - returns: An initialized row spot with component.
   public required init(component: Component) {
-    var component = component
-    component.span = 1
-
     self.component = component
 
     if self.component.layoutTrait == nil {

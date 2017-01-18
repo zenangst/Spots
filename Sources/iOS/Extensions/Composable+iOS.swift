@@ -23,7 +23,7 @@ public extension Composable where Self : View {
       }
     #endif
 
-    compositeSpots.enumerated().forEach { index, compositeSpot in
+    compositeSpots.enumerated().forEach { _, compositeSpot in
       compositeSpot.spot.setup(size)
       compositeSpot.spot.component.size = CGSize(
         width: width,

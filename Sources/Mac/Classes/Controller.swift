@@ -25,7 +25,7 @@ open class Controller: NSViewController, SpotsProtocol {
 
   /// A convenience method for resolving the first spot
   open var spot: Spotable? {
-    get { return spot(at: 0) }
+    return spot(at: 0)
   }
 
   /// An array of refresh positions to avoid refreshing multiple times when using infinite scrolling

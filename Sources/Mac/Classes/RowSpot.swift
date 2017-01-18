@@ -12,9 +12,9 @@ open class RowSpot: NSObject, Gridable {
   /// - Left: Resolves to CollectionViewLeftLayout
   /// - Flow: Resolves to NSCollectionViewFlowLayout
   public enum LayoutType: String {
-    case grid = "grid"
-    case left = "left"
-    case flow = "flow"
+    case grid
+    case left
+    case flow
   }
 
   public struct Key {

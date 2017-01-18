@@ -4,20 +4,28 @@ import Brick
 
 public struct LayoutTrait: Mappable, DictionaryConvertible, Equatable {
 
+  enum Keys: String {
+    case itemMargin = "item-margin"
+    case lineSpacing = "line-spacing"
+    case span = "span"
+  }
+
   static let rootKey: String = "layout"
 
   public var contentInset: ContentInset = ContentInset()
   public var sectionInset: SectionInset = SectionInset()
   public var itemMargin: Double = 0.0
   public var lineSpacing: Double = 0.0
+  public var span: Double = 0.0
 
   public var dictionary: [String : Any] {
     return [LayoutTrait.rootKey:
       [
         ContentInset.rootKey: contentInset.dictionary,
         SectionInset.rootKey: sectionInset.dictionary,
-        "item-margin": itemMargin,
-        "line-spacing": lineSpacing
+        Keys.itemMargin.rawValue: itemMargin,
+        Keys.lineSpacing.rawValue: lineSpacing,
+        Keys.span.rawValue: span
       ]
     ]
   }

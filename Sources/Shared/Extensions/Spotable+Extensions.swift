@@ -84,26 +84,28 @@ public extension Spotable {
         preparedItems[index] = configuredItem
       }
 
-      if component.span > 0.0 {
-        #if os(OSX)
-          if let gridable = self as? Gridable,
-            let layout = gridable.layout as? FlowLayout {
-            let newWidth = gridable.collectionView.frame.width / CGFloat(component.span) - layout.sectionInset.left - layout.sectionInset.right
+      if let layoutTrait = component.layoutTrait {
+        if layoutTrait.span > 0.0 {
+          #if os(OSX)
+            if let gridable = self as? Gridable,
+              let layout = gridable.layout as? FlowLayout {
+              let newWidth = gridable.collectionView.frame.width / CGFloat(component.span) - layout.sectionInset.left - layout.sectionInset.right
 
-            if newWidth > 0.0 {
-              preparedItems[index].size.width = newWidth
+              if newWidth > 0.0 {
+                preparedItems[index].size.width = newWidth
+              }
             }
-          }
-        #else
-          var spotWidth = render().frame.size.width
+          #else
+            var spotWidth = render().frame.size.width
 
-          if spotWidth == 0.0 {
-            spotWidth = UIScreen.main.bounds.width
-          }
+            if spotWidth == 0.0 {
+              spotWidth = UIScreen.main.bounds.width
+            }
 
-          let newWidth = spotWidth / CGFloat(component.span)
-          preparedItems[index].size.width = newWidth
-        #endif
+            let newWidth = spotWidth / CGFloat(layoutTrait.span)
+            preparedItems[index].size.width = newWidth
+          #endif
+        }
       }
     }
 
@@ -247,10 +249,10 @@ public extension Spotable {
       }
     #endif
 
-    if index < component.items.count && index > -1 &&
+    if let layoutTrait = component.layoutTrait, index < component.items.count && index > -1 &&
       self is Gridable &&
-      (component.span > 0.0 || item.size.width == 0) && fullWidth > 0.0 {
-      item.size.width = fullWidth / CGFloat(component.span)
+      (layoutTrait.span > 0.0 || item.size.width == 0) && fullWidth > 0.0 {
+      item.size.width = fullWidth / CGFloat(layoutTrait.span)
     }
 
     return item
