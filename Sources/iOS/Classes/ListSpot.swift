@@ -4,7 +4,9 @@ import Brick
 /// A Spotable object that uses UITableView to render its items
 open class ListSpot: NSObject, Listable {
 
-  public static var layoutTrait: LayoutTrait = LayoutTrait([:])
+  public static var layoutTrait: LayoutTrait = LayoutTrait().mutate {
+    $0.span = 1
+  }
 
   /// Keys for meta data lookup
   public struct Key {
