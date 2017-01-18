@@ -12,10 +12,10 @@ public struct SectionInset: Mappable, DictionaryConvertible, Equatable {
 
   public var dictionary: [String : Any] {
     return [
-      GridableMeta.Key.sectionInsetTop    : self.top,
-      GridableMeta.Key.sectionInsetLeft   : self.left,
-      GridableMeta.Key.sectionInsetBottom : self.bottom,
-      GridableMeta.Key.sectionInsetRight  : self.right
+      GridableMeta.Key.sectionInsetTop: self.top,
+      GridableMeta.Key.sectionInsetLeft: self.left,
+      GridableMeta.Key.sectionInsetBottom: self.bottom,
+      GridableMeta.Key.sectionInsetRight: self.right
     ]
   }
 
