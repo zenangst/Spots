@@ -1,7 +1,7 @@
 import Tailor
 import Brick
 
-public struct ContentInset: Mappable, DictionaryConvertible {
+public struct ContentInset: Mappable, DictionaryConvertible, Equatable {
 
   static let rootKey: String = "content-insets"
 
@@ -12,10 +12,10 @@ public struct ContentInset: Mappable, DictionaryConvertible {
 
   public var dictionary: [String : Any] {
     return [
-      GridableMeta.Key.contentInsetTop    : self.top,
-      GridableMeta.Key.contentInsetLeft   : self.left,
-      GridableMeta.Key.contentInsetBottom : self.bottom,
-      GridableMeta.Key.contentInsetRight  : self.right
+      GridableMeta.Key.contentInsetTop: self.top,
+      GridableMeta.Key.contentInsetLeft: self.left,
+      GridableMeta.Key.contentInsetBottom: self.bottom,
+      GridableMeta.Key.contentInsetRight: self.right
     ]
   }
 
@@ -38,5 +38,12 @@ public struct ContentInset: Mappable, DictionaryConvertible {
     self.left   <- JSON.property(GridableMeta.Key.contentInsetLeft)
     self.bottom <- JSON.property(GridableMeta.Key.contentInsetBottom)
     self.right  <- JSON.property(GridableMeta.Key.contentInsetRight)
+  }
+
+  public static func ==(lhs: ContentInset, rhs: ContentInset) -> Bool {
+    return lhs.top == rhs.top &&
+    lhs.left == rhs.left &&
+    lhs.bottom == rhs.bottom &&
+    lhs.right == rhs.right
   }
 }
