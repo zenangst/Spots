@@ -3,6 +3,10 @@ import Brick
 
 open class RowSpot: NSObject, Gridable {
 
+  public static var layoutTrait: LayoutTrait = LayoutTrait().mutate {
+    $0.span = 1
+  }
+
   /// Child spots
   public var compositeSpots: [CompositeSpot] = []
 
@@ -139,13 +143,12 @@ open class RowSpot: NSObject, Gridable {
    - parameter component: A component struct
    */
   public required init(component: Component) {
-    var component = component
-    component.span = 1
     self.component = component
     self.collectionView = CollectionView()
     self.layout = RowSpot.setupLayout(component)
     super.init()
     self.userInterface = collectionView
+    self.component.layoutTrait?.configure(spot: self)
     self.spotDataSource = DataSource(spot: self)
     self.spotDelegate = Delegate(spot: self)
 

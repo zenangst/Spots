@@ -65,14 +65,6 @@ public struct LayoutTrait: Mappable, DictionaryConvertible, Equatable {
     return copy
   }
 
-  public func configure(spot: Gridable) {
-    sectionInset.configure(layout: spot.layout)
-    contentInset.configure(scrollView: spot.render())
-
-    spot.layout.minimumInteritemSpacing = CGFloat(itemSpacing)
-    spot.layout.minimumLineSpacing = CGFloat(lineSpacing)
-  }
-
   public func configure(spot: Listable) {
     contentInset.configure(scrollView: spot.render())
   }

@@ -3,6 +3,8 @@ import Brick
 
 open class ListSpot: NSObject, Listable {
 
+  public static var layoutTrait: LayoutTrait = LayoutTrait()
+
   /// Child spots
   public var compositeSpots: [CompositeSpot] = []
 
@@ -118,6 +120,7 @@ open class ListSpot: NSObject, Listable {
     self.component = component
     super.init()
     self.userInterface = tableView
+    self.component.layoutTrait?.configure(spot: self)
     self.spotDataSource = DataSource(spot: self)
     self.spotDelegate = Delegate(spot: self)
 
