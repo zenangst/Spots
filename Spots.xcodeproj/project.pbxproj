@@ -500,18 +500,18 @@
 		BD129D561D7B295F009AC164 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				BDE152DA1DDEFA5500DB3145 /* UICollectionView+UserInterface.swift */,
 				BD129DA01D7B2A3D009AC164 /* CarouselSpot+iOS.swift */,
 				BD129D5E1D7B295F009AC164 /* Composable+iOS.swift */,
+				BD45D96D1E2F406600C2D6B2 /* ContentInset+iOS.swift */,
 				BD129D5F1D7B295F009AC164 /* Controller+UIScrollViewDelegate.swift */,
 				BDEFF53F1DD0F3CC00FC0537 /* DataSource+iOS+Extensions.swift */,
 				BDEFF5471DD0F8C000FC0537 /* Delegate+iOS+Extensions.swift */,
 				BD129D5B1D7B295F009AC164 /* Gridable+Extensions+iOS.swift */,
 				BD129D5C1D7B295F009AC164 /* Listable+Extensions+iOS.swift */,
+				BD45D96A1E2F403500C2D6B2 /* SectionInset+iOS.swift */,
+				BDE152DA1DDEFA5500DB3145 /* UICollectionView+UserInterface.swift */,
 				BDE152D41DDEF94500DB3145 /* UITableView+UserInterface.swift */,
 				BDE152D51DDEF94500DB3145 /* UIViewController+Extensions.swift */,
-				BD45D96A1E2F403500C2D6B2 /* SectionInset+iOS.swift */,
-				BD45D96D1E2F406600C2D6B2 /* ContentInset+iOS.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -577,6 +577,7 @@
 			isa = PBXGroup;
 			children = (
 				BDDB1A471E093BF500DFF834 /* Composable+Mac.swift */,
+				BD45D97B1E2F42F800C2D6B2 /* ContentInset+Mac.swift */,
 				BDEFF54A1DD1A64400FC0537 /* DataSource+Mac+Extensions.swift */,
 				BDEFF54C1DD1A65800FC0537 /* Delegate+Mac+Extensions.swift */,
 				BD129E181D7B2CDE009AC164 /* Gridable+Extensions+Mac.swift */,
@@ -584,9 +585,8 @@
 				BD129E1B1D7B2CDE009AC164 /* NSCollectionView+UserInterface.swift */,
 				BD129E1C1D7B2CDE009AC164 /* NSScrollView+Extensions.swift */,
 				BD129E1D1D7B2CDE009AC164 /* NSTableView+UserInterface.swift */,
-				BD129E1E1D7B2CDE009AC164 /* Viewable+Mac.swift */,
 				BD45D9791E2F42EE00C2D6B2 /* SectionInset+Mac.swift */,
-				BD45D97B1E2F42F800C2D6B2 /* ContentInset+Mac.swift */,
+				BD129E1E1D7B2CDE009AC164 /* Viewable+Mac.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -673,13 +673,13 @@
 			isa = PBXGroup;
 			children = (
 				BD129F401D7B2F91009AC164 /* Component.swift */,
-				BD129F411D7B2F91009AC164 /* GridableMeta.swift */,
-				BD129F421D7B2F91009AC164 /* Parser.swift */,
-				BD129F431D7B2F91009AC164 /* StateCache.swift */,
-				BD8B1EB11D93D813000C3F53 /* GrandCentralDispatch.swift */,
-				BD45D9621E2EADA600C2D6B2 /* LayoutTrait.swift */,
-				BD45D9661E2F400100C2D6B2 /* SectionInset.swift */,
 				BD45D9701E2F408100C2D6B2 /* ContentInset.swift */,
+				BD8B1EB11D93D813000C3F53 /* GrandCentralDispatch.swift */,
+				BD129F411D7B2F91009AC164 /* GridableMeta.swift */,
+				BD45D9621E2EADA600C2D6B2 /* LayoutTrait.swift */,
+				BD129F421D7B2F91009AC164 /* Parser.swift */,
+				BD45D9661E2F400100C2D6B2 /* SectionInset.swift */,
+				BD129F431D7B2F91009AC164 /* StateCache.swift */,
 			);
 			path = Structs;
 			sourceTree = "<group>";
