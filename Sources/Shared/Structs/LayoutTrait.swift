@@ -5,7 +5,7 @@ import Brick
 public struct LayoutTrait: Mappable, DictionaryConvertible, Equatable {
 
   enum Keys: String {
-    case itemMargin = "item-margin"
+    case itemSpacing = "item-spacing"
     case lineSpacing = "line-spacing"
     case span = "span"
   }
@@ -23,7 +23,7 @@ public struct LayoutTrait: Mappable, DictionaryConvertible, Equatable {
       [
         ContentInset.rootKey: contentInset.dictionary,
         SectionInset.rootKey: sectionInset.dictionary,
-        Keys.itemMargin.rawValue: itemMargin,
+        Keys.itemSpacing.rawValue: itemMargin,
         Keys.lineSpacing.rawValue: lineSpacing,
         Keys.span.rawValue: span
       ]
