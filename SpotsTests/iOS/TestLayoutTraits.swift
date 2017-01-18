@@ -93,4 +93,21 @@ class LayoutTraitTests: XCTestCase {
     XCTAssertEqual(layoutTrait.sectionInset, SectionInset(top: 5, left: 6, bottom: 7, right: 8))
   }
 
+  func testLayoutTraitBlockConfiguration() {
+    let layoutTrait = LayoutTrait {
+      $0.span = 4.0
+      $0.itemSpacing = 8.0
+      $0.lineSpacing = 6.0
+      $0.dynamicSpan = true
+      $0.contentInset = ContentInset(top: 1, left: 2, bottom: 3, right: 4)
+      $0.sectionInset = SectionInset(top: 5, left: 6, bottom: 7, right: 8)
+    }
+
+    XCTAssertEqual(layoutTrait.span, 4.0)
+    XCTAssertEqual(layoutTrait.itemSpacing, 8.0)
+    XCTAssertEqual(layoutTrait.lineSpacing, 6.0)
+    XCTAssertEqual(layoutTrait.dynamicSpan, true)
+    XCTAssertEqual(layoutTrait.contentInset, ContentInset(top: 1, left: 2, bottom: 3, right: 4))
+    XCTAssertEqual(layoutTrait.sectionInset, SectionInset(top: 5, left: 6, bottom: 7, right: 8))
+  }
 }
