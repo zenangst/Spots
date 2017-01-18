@@ -76,6 +76,7 @@ open class ListSpot: NSObject, Listable {
 
     super.init()
     self.userInterface = self.tableView
+    self.component.layoutTrait?.configure(spot: self)
     self.spotDataSource = DataSource(spot: self)
     self.spotDelegate = Delegate(spot: self)
 

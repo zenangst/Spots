@@ -6,38 +6,6 @@ open class CarouselSpot: NSObject, Gridable {
 
   public static var layoutTrait: LayoutTrait = LayoutTrait([:])
 
-  /**
-   *  A struct that holds keys that is used when mapping meta data to configuration methods
-   */
-  public struct Key {
-    /// Dynamic span key used when looking up meta properties
-    public static let dynamicSpan = "dynamic-span"
-  }
-
-  /**
-   *  A struct with default values for the CarouselSpot
-   */
-  public struct Default {
-    /// Default dynamicSpan value
-    public static var dynamicSpan: Bool = false
-    /// Default section inset top
-    public static var sectionInsetTop: CGFloat = 0.0
-    /// Default section inset left
-    public static var sectionInsetLeft: CGFloat = 0.0
-    /// Default section inset right
-    public static var sectionInsetRight: CGFloat = 0.0
-    /// Default section inset bottom
-    public static var sectionInsetBottom: CGFloat = 0.0
-    /// Default default minimum interitem spacing
-    public static var minimumInteritemSpacing: CGFloat = 0.0
-    /// Default minimum line spacing
-    public static var minimumLineSpacing: CGFloat = 0.0
-    /// Default left section inset
-    public static var contentInsetLeft: CGFloat = 0.0
-    /// Default right section inset
-    public static var contentInsetRight: CGFloat = 0.0
-  }
-
   /// Child spots
   public var compositeSpots: [CompositeSpot] = []
 
@@ -67,7 +35,7 @@ open class CarouselSpot: NSObject, Gridable {
     willSet(value) {
       #if os(iOS)
         if let layoutTrait = component.layoutTrait {
-          dynamicSpan = component.meta(Key.dynamicSpan, Default.dynamicSpan)
+          dynamicSpan = layoutTrait.dynamicSpan
           if component.items.count > 1 && layoutTrait.span > 0.0 {
             pageControl.numberOfPages = Int(floor(Double(component.items.count) / layoutTrait.span))
           }
@@ -169,6 +137,8 @@ open class CarouselSpot: NSObject, Gridable {
 
     super.init()
     self.userInterface = collectionView
+    self.component.layoutTrait?.configure(spot: self)
+    self.dynamicSpan = self.component.layoutTrait?.dynamicSpan ?? false
     self.spotDataSource = DataSource(spot: self)
     self.spotDelegate = Delegate(spot: self)
 
@@ -180,7 +150,6 @@ open class CarouselSpot: NSObject, Gridable {
     registerComposite(view: CarouselComposite.self)
     registerDefaultHeader(header: CarouselSpotHeader.self)
     register()
-    configureLayout()
     configureCollectionView()
   }
 
@@ -274,20 +243,6 @@ open class CarouselSpot: NSObject, Gridable {
     layout.sectionInset.bottom = layout.sectionInset.bottom + pageControl.frame.size.height
     collectionView.frame.size.height += layout.sectionInset.top + layout.sectionInset.bottom
     pageControl.frame.origin.y = collectionView.frame.size.height - pageControl.frame.size.height
-  }
-
-  /// Configure section insets and layout spacing for the UICollectionViewFlow using component meta data
-  public func configureLayout() {
-    layout.sectionInset = UIEdgeInsets(
-      top: component.meta(GridableMeta.Key.sectionInsetTop, Default.sectionInsetTop),
-      left: component.meta(GridableMeta.Key.sectionInsetLeft, Default.sectionInsetLeft),
-      bottom: component.meta(GridableMeta.Key.sectionInsetBottom, Default.sectionInsetBottom),
-      right: component.meta(GridableMeta.Key.sectionInsetRight, Default.sectionInsetRight))
-    layout.minimumInteritemSpacing = component.meta(GridableMeta.Key.minimumInteritemSpacing, Default.minimumInteritemSpacing)
-    layout.minimumLineSpacing = component.meta(GridableMeta.Key.minimumLineSpacing, Default.minimumLineSpacing)
-    dynamicSpan = component.meta(Key.dynamicSpan, false)
-    collectionView.contentInset.left = component.meta(GridableMeta.Key.contentInsetLeft, Default.contentInsetLeft)
-    collectionView.contentInset.right = component.meta(GridableMeta.Key.contentInsetRight, Default.contentInsetRight)
   }
 }
 

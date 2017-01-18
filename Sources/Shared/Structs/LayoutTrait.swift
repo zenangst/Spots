@@ -14,6 +14,7 @@ public struct LayoutTrait: Mappable, DictionaryConvertible, Equatable {
     case itemSpacing = "item-spacing"
     case lineSpacing = "line-spacing"
     case span = "span"
+    case dynamicSpan = "dynamic-span"
   }
 
   static let rootKey: String = "layout"
@@ -27,6 +28,7 @@ public struct LayoutTrait: Mappable, DictionaryConvertible, Equatable {
   /// For a horizontally scrolling layout, the value represents the minimum spacing between successive columns.
   public var lineSpacing: Double = 0.0
   public var span: Double = 0.0
+  public var dynamicSpan: Bool = false
 
   public var dictionary: [String : Any] {
     return [LayoutTrait.rootKey:
@@ -35,7 +37,8 @@ public struct LayoutTrait: Mappable, DictionaryConvertible, Equatable {
         SectionInset.rootKey: sectionInset.dictionary,
         Keys.itemSpacing.rawValue: itemSpacing,
         Keys.lineSpacing.rawValue: lineSpacing,
-        Keys.span.rawValue: span
+        Keys.span.rawValue: span,
+        Keys.dynamicSpan.rawValue: dynamicSpan
       ]
     ]
   }
@@ -43,15 +46,17 @@ public struct LayoutTrait: Mappable, DictionaryConvertible, Equatable {
   public init(_ map: [String : Any] = [:]) {
     self.sectionInset = SectionInset(map)
     self.contentInset = ContentInset(map)
-    self.itemSpacing <- map.property(GridableMeta.Key.minimumInteritemSpacing)
-    self.lineSpacing <- map.property(GridableMeta.Key.minimumLineSpacing)
+    self.itemSpacing <- map.property(Keys.itemSpacing.rawValue)
+    self.lineSpacing <- map.property(Keys.lineSpacing.rawValue)
+    self.dynamicSpan <- map.property(Keys.dynamicSpan.rawValue)
   }
 
   public mutating func configure(withJSON JSON: [String : Any]) {
     self.contentInset.configure(withJSON: JSON)
     self.sectionInset.configure(withJSON: JSON)
-    self.itemSpacing <- JSON.property(GridableMeta.Key.minimumInteritemSpacing)
-    self.lineSpacing <- JSON.property(GridableMeta.Key.minimumLineSpacing)
+    self.itemSpacing <- JSON.property(Keys.itemSpacing.rawValue)
+    self.lineSpacing <- JSON.property(Keys.lineSpacing.rawValue)
+    self.dynamicSpan <- JSON.property(Keys.dynamicSpan.rawValue)
   }
 
   public func mutate(_ closure: (inout LayoutTrait) -> Void) -> LayoutTrait {

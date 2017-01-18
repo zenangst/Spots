@@ -18,28 +18,6 @@ open class RowSpot: NSObject, Gridable {
     public static let minimumLineSpacing = "line-spacing"
   }
 
-  /**
-   *  Default configuration values for RowSpot
-   */
-  public struct Default {
-    /// Default top section inset
-    public static var sectionInsetTop: CGFloat = 0.0
-    /// Default left section inset
-    public static var sectionInsetLeft: CGFloat = 0.0
-    /// Default right section inset
-    public static var sectionInsetRight: CGFloat = 0.0
-    /// Default bottom section inset
-    public static var sectionInsetBottom: CGFloat = 0.0
-    /// Default minimum interitem spacing
-    public static var minimumInteritemSpacing: CGFloat = 0.0
-    /// Default minimum line spacing
-    public static var minimumLineSpacing: CGFloat = 0.0
-    /// Default left section inset
-    public static var contentInsetLeft: CGFloat = 0.0
-    /// Default right section inset
-    public static var contentInsetRight: CGFloat = 0.0
-  }
-
   /// A Registry object that holds identifiers and classes for cells used in the RowSpot
   open static var views: Registry = Registry()
 
@@ -106,6 +84,7 @@ open class RowSpot: NSObject, Gridable {
 
     super.init()
     self.userInterface = collectionView
+    self.component.layoutTrait?.configure(spot: self)
     self.spotDataSource = DataSource(spot: self)
     self.spotDelegate = Delegate(spot: self)
 
@@ -116,7 +95,6 @@ open class RowSpot: NSObject, Gridable {
     registerDefault(view: RowSpotCell.self)
     registerComposite(view: GridComposite.self)
     prepareItems()
-    configureLayout()
     configureCollectionView()
 
     if RowSpot.views.composite == nil {
@@ -163,19 +141,6 @@ open class RowSpot: NSObject, Gridable {
     layout.sectionInset = UIEdgeInsets(top: top, left: left, bottom: bottom, right: right)
     layout.minimumInteritemSpacing = itemSpacing
     layout.minimumLineSpacing = lineSpacing
-  }
-
-  /// Configure section insets and layout spacing for the UICollectionViewFlow using component meta data
-  func configureLayout() {
-    layout.sectionInset = UIEdgeInsets(
-      top: component.meta(GridableMeta.Key.sectionInsetTop, Default.sectionInsetTop),
-      left: component.meta(GridableMeta.Key.sectionInsetLeft, Default.sectionInsetLeft),
-      bottom: component.meta(GridableMeta.Key.sectionInsetBottom, Default.sectionInsetBottom),
-      right: component.meta(GridableMeta.Key.sectionInsetRight, Default.sectionInsetRight))
-    layout.minimumInteritemSpacing = component.meta(GridableMeta.Key.minimumInteritemSpacing, Default.minimumInteritemSpacing)
-    layout.minimumLineSpacing = component.meta(GridableMeta.Key.minimumLineSpacing, Default.minimumLineSpacing)
-    collectionView.contentInset.left = component.meta(GridableMeta.Key.contentInsetLeft, Default.contentInsetLeft)
-    collectionView.contentInset.right = component.meta(GridableMeta.Key.contentInsetRight, Default.contentInsetRight)
   }
 
   deinit {
