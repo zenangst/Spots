@@ -19,7 +19,7 @@ import Brick
 /// - removed:    Indicates that the component was removed
 /// - none:       Indicates that nothing did change
 public enum ComponentDiff {
-  case identifier, title, kind, span, header, meta, items, new, removed, none
+  case identifier, title, kind, layout, span, header, meta, items, new, removed, none
 }
 
 /// The Component struct is used to configure a Spotable object
@@ -239,6 +239,8 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
     if kind != component.kind { return .kind }
     // Determine if the unqiue identifier for the component changed
     if identifier != component.identifier { return .identifier }
+    // Determine if the component layout changed, this can be used to trigger layout related processes
+    if layoutTrait != component.layoutTrait { return .layout }
     // Determine if the component span layout changed, this can be used to trigger layout related processes
     if span != component.span { return .span }
     // Determine if the header for the component has changed
