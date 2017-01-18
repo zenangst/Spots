@@ -20,7 +20,7 @@ public struct LayoutTrait: Mappable, DictionaryConvertible, Equatable {
 
   public var contentInset: ContentInset = ContentInset()
   public var sectionInset: SectionInset = SectionInset()
-  public var itemMargin: Double = 0.0
+  public var itemSpacing: Double = 0.0
   public var lineSpacing: Double = 0.0
   public var span: Double = 0.0
 
@@ -29,7 +29,7 @@ public struct LayoutTrait: Mappable, DictionaryConvertible, Equatable {
       [
         ContentInset.rootKey: contentInset.dictionary,
         SectionInset.rootKey: sectionInset.dictionary,
-        Keys.itemSpacing.rawValue: itemMargin,
+        Keys.itemSpacing.rawValue: itemSpacing,
         Keys.lineSpacing.rawValue: lineSpacing,
         Keys.span.rawValue: span
       ]
@@ -39,14 +39,14 @@ public struct LayoutTrait: Mappable, DictionaryConvertible, Equatable {
   public init(_ map: [String : Any] = [:]) {
     self.sectionInset = SectionInset(map)
     self.contentInset = ContentInset(map)
-    self.itemMargin <- map.property(GridableMeta.Key.minimumInteritemSpacing)
+    self.itemSpacing <- map.property(GridableMeta.Key.minimumInteritemSpacing)
     self.lineSpacing <- map.property(GridableMeta.Key.minimumLineSpacing)
   }
 
   public mutating func configure(withJSON JSON: [String : Any]) {
     self.contentInset.configure(withJSON: JSON)
     self.sectionInset.configure(withJSON: JSON)
-    self.itemMargin <- JSON.property(GridableMeta.Key.minimumInteritemSpacing)
+    self.itemSpacing <- JSON.property(GridableMeta.Key.minimumInteritemSpacing)
     self.lineSpacing <- JSON.property(GridableMeta.Key.minimumLineSpacing)
   }
 
@@ -60,7 +60,7 @@ public struct LayoutTrait: Mappable, DictionaryConvertible, Equatable {
     sectionInset.configure(layout: spot.layout)
     contentInset.configure(scrollView: spot.render())
 
-    spot.layout.minimumInteritemSpacing = CGFloat(itemMargin)
+    spot.layout.minimumInteritemSpacing = CGFloat(itemSpacing)
     spot.layout.minimumLineSpacing = CGFloat(lineSpacing)
   }
 
