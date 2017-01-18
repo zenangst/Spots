@@ -31,24 +31,28 @@ public struct LayoutTrait: Mappable, DictionaryConvertible, Equatable {
   public var dynamicSpan: Bool = false
 
   public var dictionary: [String : Any] {
-    return [LayoutTrait.rootKey:
-      [
-        ContentInset.rootKey: contentInset.dictionary,
-        SectionInset.rootKey: sectionInset.dictionary,
-        Keys.itemSpacing.rawValue: itemSpacing,
-        Keys.lineSpacing.rawValue: lineSpacing,
-        Keys.span.rawValue: span,
-        Keys.dynamicSpan.rawValue: dynamicSpan
-      ]
+    return [
+      ContentInset.rootKey: contentInset.dictionary,
+      SectionInset.rootKey: sectionInset.dictionary,
+      Keys.itemSpacing.rawValue: itemSpacing,
+      Keys.lineSpacing.rawValue: lineSpacing,
+      Keys.span.rawValue: span,
+      Keys.dynamicSpan.rawValue: dynamicSpan
     ]
   }
 
   public init(_ map: [String : Any] = [:]) {
-    self.sectionInset = SectionInset(map)
-    self.contentInset = ContentInset(map)
+    self.sectionInset = SectionInset(map.property(SectionInset.rootKey) ?? [:])
+    self.contentInset = ContentInset(map.property(ContentInset.rootKey) ?? [:])
     self.itemSpacing <- map.property(Keys.itemSpacing.rawValue)
     self.lineSpacing <- map.property(Keys.lineSpacing.rawValue)
     self.dynamicSpan <- map.property(Keys.dynamicSpan.rawValue)
+    self.span <- map.property(Keys.span.rawValue)
+  }
+
+  public init(_ block: (inout LayoutTrait) -> Void) {
+    self.init([:])
+    block(&self)
   }
 
   public mutating func configure(withJSON JSON: [String : Any]) {
