@@ -13,6 +13,7 @@ public protocol Spotable: class {
   static var headers: Registry { get set }
   #endif
   static var views: Registry { get set }
+  static var layoutTrait: LayoutTrait { get set }
 
   /// Child spots
   var compositeSpots: [CompositeSpot] { get set }
