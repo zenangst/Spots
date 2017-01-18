@@ -25,6 +25,8 @@ public enum ComponentDiff {
 /// The Component struct is used to configure a Spotable object
 public struct Component: Mappable, Equatable, DictionaryConvertible {
 
+  public static var legacyMapping: Bool = false
+
   /// An enum with all the string keys used in the view model
   public enum Key: String, StringConvertible {
     case Index
@@ -144,7 +146,12 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
     self.header    <- map.property("header")
     self.items     <- map.relations("items")
     self.meta      <- map.property("meta")
-    self.layoutTrait = map.property("layout")
+
+    if Component.legacyMapping {
+      self.layoutTrait = LayoutTrait(map.property("meta") ?? [:])
+    } else {
+      self.layoutTrait = LayoutTrait(map.property("layout") ?? [:])
+    }
 
     let width: Double = map.resolve(keyPath: "size.width") ?? 0.0
     let height: Double = map.resolve(keyPath: "size.height") ?? 0.0
@@ -157,7 +164,7 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
   /// - parameter title: The title for your UI component.
   /// - parameter header: Determines which header item that should be used for the component.
   /// - parameter kind: The type of Component that should be used.
-  /// - parameter span: Configures the span that should be used for items in one row
+  /// - parameter layout: Configures the layout trait for the component.
   /// - parameter items: A collection of view models
   /// - parameter meta: A key-value dictionary for any additional information
   ///
@@ -166,8 +173,8 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
               title: String = "",
               header: String = "",
               kind: String = "",
-              span: Double = 0,
               layoutTrait: LayoutTrait? = nil,
+              span: Double? = nil,
               items: [Item] = [],
               meta: [String : Any] = [:]) {
     self.identifier = identifier
@@ -177,6 +184,10 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
     self.layoutTrait = layoutTrait
     self.items = items
     self.meta = meta
+
+    if let span = span, layoutTrait == nil {
+      self.layoutTrait = LayoutTrait(["span" : span])
+    }
   }
 
   // MARK: - Helpers
@@ -256,6 +267,16 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
     for child in children {
       add(child: child)
     }
+  }
+
+  mutating func add(layoutTrait: LayoutTrait) {
+    self.layoutTrait = layoutTrait
+  }
+
+  mutating func configure(with layoutTrait: LayoutTrait) -> Component {
+    var copy = self
+    copy.layoutTrait = layoutTrait
+    return copy
   }
 }
 
