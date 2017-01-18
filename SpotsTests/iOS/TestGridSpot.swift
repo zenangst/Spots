@@ -9,7 +9,7 @@ class GridSpotTests: XCTestCase {
   var cachedSpot: GridSpot!
 
   override func setUp() {
-    spot = GridSpot(component: Component())
+    spot = GridSpot(component: Component(span: 1.0))
     cachedSpot = GridSpot(cacheKey: "cached-grid-spot")
     Helper.clearCache(for: cachedSpot.stateCache)
   }
@@ -31,7 +31,7 @@ class GridSpotTests: XCTestCase {
   }
 
   func testConvenienceInitWithSectionInsets() {
-    let component = Component()
+    let component = Component(span: 1.0)
     let spot = GridSpot(component,
                        top: 5, left: 10, bottom: 5, right: 10, itemSpacing: 5)
 
@@ -53,7 +53,7 @@ class GridSpotTests: XCTestCase {
   }
 
   func testSafelyResolveKind() {
-    let component = Component(title: "GridSpot", kind: "custom-grid", items: [Item(title: "foo", kind: "custom-item-kind")])
+    let component = Component(title: "GridSpot", kind: "custom-grid", span: 1.0, items: [Item(title: "foo", kind: "custom-item-kind")])
     let rowSpot = GridSpot(component: component)
     let indexPath = IndexPath(row: 0, section: 0)
 
@@ -73,7 +73,7 @@ class GridSpotTests: XCTestCase {
 
   func testAppendItem() {
     let item = Item(title: "test")
-    let spot = GridSpot(component: Component())
+    let spot = GridSpot(component: Component(span: 1.0))
     var exception: XCTestExpectation? = self.expectation(description: "Append item")
     spot.append(item) {
       XCTAssert(spot.component.items.first! == item)
@@ -85,7 +85,7 @@ class GridSpotTests: XCTestCase {
 
   func testAppendItems() {
     let items = [Item(title: "test"), Item(title: "test 2")]
-    let spot = GridSpot(component: Component())
+    let spot = GridSpot(component: Component(span: 1.0))
     var exception: XCTestExpectation? = self.expectation(description: "Append items")
     spot.append(items) {
       XCTAssert(spot.component.items == items)
@@ -97,7 +97,7 @@ class GridSpotTests: XCTestCase {
 
   func testInsertItem() {
     let item = Item(title: "test")
-    let spot = GridSpot(component: Component())
+    let spot = GridSpot(component: Component(span: 1.0))
     var exception: XCTestExpectation? = self.expectation(description: "Insert item")
     spot.insert(item, index: 0) {
       XCTAssert(spot.component.items.first! == item)
@@ -109,7 +109,7 @@ class GridSpotTests: XCTestCase {
 
   func testPrependItems() {
     let items = [Item(title: "test"), Item(title: "test 2")]
-    let spot = GridSpot(component: Component())
+    let spot = GridSpot(component: Component(span: 1.0))
     var exception: XCTestExpectation? = self.expectation(description: "Prepend items")
     spot.prepend(items) {
       XCTAssert(spot.component.items == items)
@@ -121,7 +121,7 @@ class GridSpotTests: XCTestCase {
 
   func testSpotCollectionDelegate() {
     let items = [Item(title: "Test item")]
-    let spot = GridSpot(component: Component(items: items))
+    let spot = GridSpot(component: Component(span: 1.0, items: items))
     spot.render().frame.size = CGSize(width: 100, height: 100)
     spot.render().layoutSubviews()
 

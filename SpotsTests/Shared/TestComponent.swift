@@ -8,7 +8,9 @@ class ComponentTests : XCTestCase {
   let json: [String : Any] = [
     "title" : "title1",
     "kind" : "list",
-    "span" : 1.0,
+    "layout" : [
+      "span" : 1.0
+    ],
     "meta" : ["foo" : "bar"],
     "items" : [["title" : "item1"]]
   ]
@@ -18,24 +20,27 @@ class ComponentTests : XCTestCase {
     let jsonComponent = Component(json)
     XCTAssertEqual(jsonComponent.title, json["title"] as? String)
     XCTAssertEqual(jsonComponent.kind,  json["kind"] as? String)
-    XCTAssertEqual(jsonComponent.span,  json["span"] as? Double)
+    XCTAssertEqual(jsonComponent.layoutTrait?.span,  (json["layout"] as? [String : Any])?["span"] as? Double)
 
     XCTAssert((jsonComponent.meta as NSDictionary).isEqual(json["meta"] as! NSDictionary))
     XCTAssert(jsonComponent.items.count == 1)
 
     XCTAssertEqual(jsonComponent.items.first?.title, "item1")
 
+    let layout = LayoutTrait(json["layout"] as! [String : Any])
+    let item = Item(title: "item1")
+
     // Test component created programmatically
     let codeComponent = Component(
       title: json["title"] as! String,
       kind: json["kind"] as! String,
-      span: json["span"] as! Double,
-      items: [Item(title: "item1")],
+      layoutTrait: layout,
+      items: [item],
       meta: json["meta"] as! [String : String])
 
     XCTAssertEqual(codeComponent.title, json["title"] as? String)
     XCTAssertEqual(codeComponent.kind,  json["kind"] as? String)
-    XCTAssertEqual(codeComponent.span,  json["span"] as? Double)
+    XCTAssertEqual(codeComponent.layoutTrait?.span,  (json["layout"] as? [String : Any])?["span"] as? Double)
 
     XCTAssert((codeComponent.meta as NSDictionary).isEqual(json["meta"] as! NSDictionary))
     XCTAssert(codeComponent.items.count == 1)
@@ -49,7 +54,7 @@ class ComponentTests : XCTestCase {
     var codeComponent = Component(
       title: json["title"] as! String,
       kind: json["kind"] as! String,
-      span: json["span"] as! Double,
+      span: (json["layout"] as? [String : Any])!["span"] as! Double,
       meta: json["meta"] as! [String : String])
     XCTAssertTrue(jsonComponent == codeComponent)
 

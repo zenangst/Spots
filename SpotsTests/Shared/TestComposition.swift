@@ -15,16 +15,17 @@ class CompositionTests: XCTestCase {
 
   func testComponentCreation() {
     var component = Component(
-      kind: Component.Kind.Grid.rawValue
+      kind: Component.Kind.Grid.rawValue,
+      span: 1.0
     )
 
-    component.add(child: Component(kind: Component.Kind.List.rawValue))
+    component.add(child: Component(kind: Component.Kind.List.rawValue, span: 1.0))
 
     XCTAssertEqual(component.items.count, 1)
 
     component.add(children: [
-      Component(kind: Component.Kind.List.rawValue),
-      Component(kind: Component.Kind.List.rawValue)
+      Component(kind: Component.Kind.List.rawValue, span: 1.0),
+      Component(kind: Component.Kind.List.rawValue, span: 1.0)
       ]
     )
 
@@ -32,11 +33,13 @@ class CompositionTests: XCTestCase {
   }
 
   func testSpotableCreation() {
-    var component = Component(kind: Component.Kind.Grid.rawValue, span: 2.0)
+    let layoutTrait = LayoutTrait().mutate { $0.span = 2.0 }
+    var component = Component(kind: Component.Kind.Grid.rawValue, layoutTrait: layoutTrait)
 
     component.add(children: [
       Component(
         kind: Component.Kind.List.rawValue,
+        span: 1.0,
         items: [
           Item(title: "foo"),
           Item(title: "bar")
@@ -44,6 +47,7 @@ class CompositionTests: XCTestCase {
       ),
       Component(
         kind: Component.Kind.List.rawValue,
+        span: 1.0,
         items: [
           Item(title: "baz"),
           Item(title: "bal")
@@ -60,7 +64,7 @@ class CompositionTests: XCTestCase {
     XCTAssertEqual(spot.compositeSpots[0].spot.items.count, 2)
     XCTAssertEqual(spot.compositeSpots[0].spot.items[0].title, "foo")
     XCTAssertEqual(spot.compositeSpots[0].spot.items[1].title, "bar")
-    
+
     XCTAssertEqual(spot.compositeSpots[1].spot.component.kind, Component.Kind.List.rawValue)
     XCTAssertEqual(spot.compositeSpots[1].spot.items.count, 2)
     XCTAssertEqual(spot.compositeSpots[1].spot.items[0].title, "baz")
@@ -73,6 +77,7 @@ class CompositionTests: XCTestCase {
     component.add(children: [
       Component(
         kind: Component.Kind.List.rawValue,
+        span: 1,
         items: [
           Item(title: "foo"),
           Item(title: "bar")
@@ -80,6 +85,7 @@ class CompositionTests: XCTestCase {
       ),
       Component(
         kind: Component.Kind.List.rawValue,
+        span: 1,
         items: [
           Item(title: "baz"),
           Item(title: "bal")
@@ -94,7 +100,7 @@ class CompositionTests: XCTestCase {
 
     var composite: Composable?
     var spotConfigurable: SpotConfigurable?
-    
+
     composite = spot.ui(at: 0)
     spotConfigurable = spot.compositeSpots[0].spot.ui(at: 0)
 
@@ -127,7 +133,7 @@ class CompositionTests: XCTestCase {
                 items: [
                   Item(kind: "composite", children:
                     [
-                      Component(kind: Component.Kind.List.rawValue, items: [
+                      Component(kind: Component.Kind.List.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -144,7 +150,7 @@ class CompositionTests: XCTestCase {
                   ),
                   Item(kind: "composite", children:
                     [
-                      Component(kind: Component.Kind.List.rawValue, items: [
+                      Component(kind: Component.Kind.List.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -166,7 +172,7 @@ class CompositionTests: XCTestCase {
                 items: [
                   Item(kind: "composite", children:
                     [
-                      Component(kind: Component.Kind.List.rawValue, items: [
+                      Component(kind: Component.Kind.List.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -183,7 +189,7 @@ class CompositionTests: XCTestCase {
                   ),
                   Item(kind: "composite", children:
                     [
-                      Component(kind: Component.Kind.List.rawValue, items: [
+                      Component(kind: Component.Kind.List.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -260,7 +266,7 @@ class CompositionTests: XCTestCase {
                 items: [
                   Item(kind: "composite", children:
                     [
-                      Component(kind: Component.Kind.List.rawValue, items: [
+                      Component(kind: Component.Kind.List.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -277,7 +283,7 @@ class CompositionTests: XCTestCase {
                   ),
                   Item(kind: "composite", children:
                     [
-                      Component(kind: Component.Kind.List.rawValue, items: [
+                      Component(kind: Component.Kind.List.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -299,7 +305,7 @@ class CompositionTests: XCTestCase {
                 items: [
                   Item(kind: "composite", children:
                     [
-                      Component(kind: Component.Kind.List.rawValue, items: [
+                      Component(kind: Component.Kind.List.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -316,7 +322,7 @@ class CompositionTests: XCTestCase {
                   ),
                   Item(kind: "composite", children:
                     [
-                      Component(kind: Component.Kind.List.rawValue, items: [
+                      Component(kind: Component.Kind.List.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -410,7 +416,7 @@ class CompositionTests: XCTestCase {
                 items: [
                   Item(kind: "composite", children:
                     [
-                      Component(kind: Component.Kind.List.rawValue, items: [
+                      Component(kind: Component.Kind.List.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -427,7 +433,7 @@ class CompositionTests: XCTestCase {
                   ),
                   Item(kind: "composite", children:
                     [
-                      Component(kind: Component.Kind.List.rawValue, items: [
+                      Component(kind: Component.Kind.List.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -548,7 +554,7 @@ class CompositionTests: XCTestCase {
                 items: [
                   Item(kind: "composite", children:
                     [
-                      Component(kind: Component.Kind.List.rawValue, items: [
+                      Component(kind: Component.Kind.List.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -565,7 +571,7 @@ class CompositionTests: XCTestCase {
                   ),
                   Item(kind: "composite", children:
                     [
-                      Component(kind: Component.Kind.List.rawValue, items: [
+                      Component(kind: Component.Kind.List.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -587,7 +593,7 @@ class CompositionTests: XCTestCase {
                 items: [
                   Item(kind: "composite", children:
                     [
-                      Component(kind: Component.Kind.List.rawValue, items: [
+                      Component(kind: Component.Kind.List.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -604,7 +610,7 @@ class CompositionTests: XCTestCase {
                   ),
                   Item(kind: "composite", children:
                     [
-                      Component(kind: Component.Kind.List.rawValue, items: [
+                      Component(kind: Component.Kind.List.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -681,7 +687,7 @@ class CompositionTests: XCTestCase {
                 items: [
                   Item(kind: "composite", children:
                     [
-                      Component(kind: Component.Kind.List.rawValue, items: [
+                      Component(kind: Component.Kind.List.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -699,7 +705,7 @@ class CompositionTests: XCTestCase {
                   ),
                   Item(kind: "composite", children:
                     [
-                      Component(kind: Component.Kind.List.rawValue, items: [
+                      Component(kind: Component.Kind.List.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -867,7 +873,7 @@ class CompositionTests: XCTestCase {
                 items: [
                   Item(kind: "composite", children:
                     [
-                      Component(kind: Component.Kind.List.rawValue, items: [
+                      Component(kind: Component.Kind.List.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -884,7 +890,7 @@ class CompositionTests: XCTestCase {
                   ),
                   Item(kind: "composite", children:
                     [
-                      Component(kind: Component.Kind.List.rawValue, items: [
+                      Component(kind: Component.Kind.List.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -906,7 +912,7 @@ class CompositionTests: XCTestCase {
                 items: [
                   Item(kind: "composite", children:
                     [
-                      Component(kind: Component.Kind.List.rawValue, items: [
+                      Component(kind: Component.Kind.List.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -923,7 +929,7 @@ class CompositionTests: XCTestCase {
                   ),
                   Item(kind: "composite", children:
                     [
-                      Component(kind: Component.Kind.List.rawValue, items: [
+                      Component(kind: Component.Kind.List.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -1000,7 +1006,7 @@ class CompositionTests: XCTestCase {
                 items: [
                   Item(kind: "composite", children:
                     [
-                      Component(kind: Component.Kind.List.rawValue, items: [
+                      Component(kind: Component.Kind.List.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -1017,7 +1023,7 @@ class CompositionTests: XCTestCase {
                   ),
                   Item(kind: "composite", children:
                     [
-                      Component(kind: Component.Kind.List.rawValue, items: [
+                      Component(kind: Component.Kind.List.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -1067,9 +1073,9 @@ class CompositionTests: XCTestCase {
       XCTAssertEqual(spots[0].compositeSpots[1].spot.items.count, 10)
       XCTAssertEqual(spots[0].compositeSpots[1].spot.render().frame.size.height,
                      ((spotConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(spots[0].compositeSpots[1].spot.items.count))
-
+      
       XCTAssertEqual(reloadTimes, 1)
-
+      
       exception?.fulfill()
       exception = nil
     }

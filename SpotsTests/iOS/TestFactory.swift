@@ -44,6 +44,7 @@ class FactoryTests : XCTestCase {
     let initialComponents = [
       Component(
         kind: "list",
+        span: 1.0,
         items: [
           Item(title: "Fullname", subtitle: "Job title", kind: "image"),
           Item(title: "Follow", kind: "toggle", meta: ["dynamic-height" : true]),
