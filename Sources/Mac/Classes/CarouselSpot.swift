@@ -124,11 +124,15 @@ open class CarouselSpot: NSObject, Gridable {
     registerComposite(view: GridComposite.self)
     registerAndPrepare()
     setupCollectionView()
-    configureLayoutInsets(component)
 
-    if let layout = layout as? NSCollectionViewFlowLayout, !component.title.isEmpty {
-      configureTitleView(layout.sectionInset)
+    if let layout = layout as? FlowLayout {
+      layout.scrollDirection = .horizontal
+
+      if !component.title.isEmpty {
+        configureTitleView(layout.sectionInset)
+      }
     }
+
     scrollView.addSubview(titleView)
     scrollView.addSubview(lineView)
     scrollView.documentView = collectionView
@@ -152,19 +156,6 @@ open class CarouselSpot: NSObject, Gridable {
     spotDataSource = nil
     spotDelegate = nil
     userInterface = nil
-  }
-
-  fileprivate func configureLayoutInsets(_ component: Component) {
-    guard let layout = layout as? NSCollectionViewFlowLayout else { return }
-
-    layout.sectionInset = EdgeInsets(
-      top: component.meta(GridableMeta.Key.sectionInsetTop, Default.sectionInsetTop),
-      left: component.meta(GridableMeta.Key.sectionInsetLeft, Default.sectionInsetLeft),
-      bottom: component.meta(GridableMeta.Key.sectionInsetBottom, Default.sectionInsetBottom),
-      right: component.meta(GridableMeta.Key.sectionInsetRight, Default.sectionInsetRight))
-    layout.minimumInteritemSpacing = component.meta(Key.minimumInteritemSpacing, Default.minimumInteritemSpacing)
-    layout.minimumLineSpacing = component.meta(Key.minimumLineSpacing, Default.minimumLineSpacing)
-    layout.scrollDirection = .horizontal
   }
 
   /// Configure collection view delegate, data source and layout
