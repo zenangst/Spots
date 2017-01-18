@@ -3,7 +3,11 @@ import Brick
 
 public struct SectionInset: Mappable, DictionaryConvertible, Equatable {
 
-  static let rootKey: String = "section-insets"
+  static let rootKey: String = "section-inset"
+
+  enum Key: String {
+    case top, left, bottom, right
+  }
 
   var top: Double = 0.0
   var left: Double = 0.0
@@ -12,10 +16,10 @@ public struct SectionInset: Mappable, DictionaryConvertible, Equatable {
 
   public var dictionary: [String : Any] {
     return [
-      GridableMeta.Key.sectionInsetTop: self.top,
-      GridableMeta.Key.sectionInsetLeft: self.left,
-      GridableMeta.Key.sectionInsetBottom: self.bottom,
-      GridableMeta.Key.sectionInsetRight: self.right
+      Key.top.rawValue: self.top,
+      Key.left.rawValue: self.left,
+      Key.bottom.rawValue: self.bottom,
+      Key.right.rawValue: self.right
     ]
   }
 
@@ -27,17 +31,17 @@ public struct SectionInset: Mappable, DictionaryConvertible, Equatable {
   }
 
   public init(_ map: [String : Any]) {
-    self.top    <- map.property(GridableMeta.Key.sectionInsetTop)
-    self.left   <- map.property(GridableMeta.Key.sectionInsetLeft)
-    self.bottom <- map.property(GridableMeta.Key.sectionInsetBottom)
-    self.right  <- map.property(GridableMeta.Key.sectionInsetRight)
+    self.top    <- map.property(Key.top.rawValue)
+    self.left   <- map.property(Key.left.rawValue)
+    self.bottom <- map.property(Key.bottom.rawValue)
+    self.right  <- map.property(Key.right.rawValue)
   }
 
   public mutating func configure(withJSON JSON: [String : Any]) {
-    self.top    <- JSON.property(GridableMeta.Key.sectionInsetTop)
-    self.left   <- JSON.property(GridableMeta.Key.sectionInsetLeft)
-    self.bottom <- JSON.property(GridableMeta.Key.sectionInsetBottom)
-    self.right  <- JSON.property(GridableMeta.Key.sectionInsetRight)
+    self.top    <- JSON.property(Key.top.rawValue)
+    self.left   <- JSON.property(Key.left.rawValue)
+    self.bottom <- JSON.property(Key.bottom.rawValue)
+    self.right  <- JSON.property(Key.right.rawValue)
   }
 
   public static func == (lhs: SectionInset, rhs: SectionInset) -> Bool {
