@@ -20,7 +20,11 @@ public struct LayoutTrait: Mappable, DictionaryConvertible, Equatable {
 
   public var contentInset: ContentInset = ContentInset()
   public var sectionInset: SectionInset = SectionInset()
+  /// For a vertically scrolling grid, this value represents the minimum spacing between items in the same row. 
+  /// For a horizontally scrolling grid, this value represents the minimum spacing between items in the same column.
   public var itemSpacing: Double = 0.0
+  /// For a vertically scrolling layout, the value represents the minimum spacing between successive rows. 
+  /// For a horizontally scrolling layout, the value represents the minimum spacing between successive columns.
   public var lineSpacing: Double = 0.0
   public var span: Double = 0.0
 
