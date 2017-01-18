@@ -3,7 +3,7 @@ import Brick
 
 open class CarouselSpot: NSObject, Gridable {
 
-  public static var layoutTrait: LayoutTrait = LayoutTrait()
+  public static var layout: Layout = Layout()
 
   /// Child spots
   public var compositeSpots: [CompositeSpot] = []
@@ -112,7 +112,7 @@ open class CarouselSpot: NSObject, Gridable {
     self.collectionView = CollectionView()
     super.init()
     self.userInterface = collectionView
-    self.component.layoutTrait?.configure(spot: self)
+    self.component.layout?.configure(spot: self)
     self.spotDataSource = DataSource(spot: self)
     self.spotDelegate = Delegate(spot: self)
 
@@ -190,19 +190,19 @@ open class CarouselSpot: NSObject, Gridable {
       configureTitleView(layoutInsets)
     }
 
-    if let layoutTrait = component.layoutTrait {
-      if layoutTrait.span > 0 {
+    if let layout = component.layout {
+      if layout.span > 0 {
         component.items.enumerated().forEach {
-          component.items[$0.offset].size.width = size.width / CGFloat(layoutTrait.span)
+          component.items[$0.offset].size.width = size.width / CGFloat(layout.span)
         }
       }
 
-      if layoutTrait.span == 1 {
+      if layout.span == 1 {
         scrollView.frame.size.width = size.width - layoutInsets.right
         scrollView.scrollingEnabled = (component.items.count > 1)
         scrollView.hasHorizontalScroller = (component.items.count > 1)
         component.items.enumerated().forEach {
-          component.items[$0.offset].size.width = size.width / CGFloat(layoutTrait.span)
+          component.items[$0.offset].size.width = size.width / CGFloat(layout.span)
         }
         layout.invalidateLayout()
       }
@@ -213,10 +213,10 @@ open class CarouselSpot: NSObject, Gridable {
   ///
   /// - parameter size: The size of the superview
   open func setup(_ size: CGSize) {
-    if let layoutTrait = component.layoutTrait {
-      if layoutTrait.span > 0 {
+    if let layout = component.layout {
+      if layout.span > 0 {
         component.items.enumerated().forEach {
-          component.items[$0.offset].size.width = size.width / CGFloat(layoutTrait.span)
+          component.items[$0.offset].size.width = size.width / CGFloat(layout.span)
         }
       }
     }
@@ -244,9 +244,9 @@ open class CarouselSpot: NSObject, Gridable {
 
     var width: CGFloat
 
-    if let layoutTrait = component.layoutTrait {
-      width = layoutTrait.span > 0
-        ? collectionView.frame.width / CGFloat(layoutTrait.span)
+    if let layout = component.layout {
+      width = layout.span > 0
+        ? collectionView.frame.width / CGFloat(layout.span)
         : collectionView.frame.width
     } else {
       width = collectionView.frame.width

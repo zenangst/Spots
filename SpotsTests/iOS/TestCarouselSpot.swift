@@ -169,7 +169,7 @@ class CarouselSpotTests: XCTestCase {
     spot.render().layoutIfNeeded()
 
     // Check `span` mapping
-    XCTAssertEqual(spot.component.layoutTrait!.span, 4.0)
+    XCTAssertEqual(spot.component.layout!.span, 4.0)
 
     spot.setup(CGSize(width: 667, height: 225))
     spot.prepareItems()

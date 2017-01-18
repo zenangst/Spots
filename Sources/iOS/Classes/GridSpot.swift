@@ -14,7 +14,7 @@ open class GridSpot: NSObject, Gridable {
     public static let minimumLineSpacing = "line-spacing"
   }
 
-  public static var layoutTrait = LayoutTrait().mutate { $0.span = 0.0 }
+  public static var layout = Layout().mutate { $0.span = 0.0 }
 
   /// A Registry object that holds identifiers and classes for cells used in the GridSpot
   open static var views: Registry = Registry()
@@ -77,13 +77,13 @@ open class GridSpot: NSObject, Gridable {
   public required init(component: Component) {
     self.component = component
 
-    if self.component.layoutTrait == nil {
-      self.component.layoutTrait = type(of: self).layoutTrait
+    if self.component.layout == nil {
+      self.component.layout = type(of: self).layout
     }
 
     super.init()
     self.userInterface = collectionView
-    self.component.layoutTrait?.configure(spot: self)
+    self.component.layout?.configure(spot: self)
     self.spotDataSource = DataSource(spot: self)
     self.spotDelegate = Delegate(spot: self)
 

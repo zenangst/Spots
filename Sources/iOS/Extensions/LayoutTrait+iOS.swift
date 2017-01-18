@@ -1,6 +1,6 @@
 import UIKit
 
-extension LayoutTrait {
+extension Layout {
 
   public func configure(spot: Gridable) {
     sectionInset.configure(layout: spot.layout)

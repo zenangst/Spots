@@ -7,7 +7,7 @@ import Brick
 
 open class ViewSpot: NSObject, Spotable, Viewable {
 
-  public static var layoutTrait: LayoutTrait = LayoutTrait([:])
+  public static var layout: Layout = Layout([:])
 
   /// Reload spot with ItemChanges.
   ///
@@ -49,8 +49,8 @@ open class ViewSpot: NSObject, Spotable, Viewable {
   public required init(component: Component) {
     self.component = component
 
-    if self.component.layoutTrait == nil {
-      self.component.layoutTrait = type(of: self).layoutTrait
+    if self.component.layout == nil {
+      self.component.layout = type(of: self).layout
     }
 
     super.init()
@@ -99,7 +99,7 @@ open class ViewSpot: NSObject, Spotable, Viewable {
    */
   open func register() {}
 
-  public func configure(with layoutTrait: LayoutTrait) {
+  public func configure(with layout: Layout) {
     /// Do nothing
   }
 }

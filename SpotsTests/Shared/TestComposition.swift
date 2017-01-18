@@ -33,8 +33,8 @@ class CompositionTests: XCTestCase {
   }
 
   func testSpotableCreation() {
-    let layoutTrait = LayoutTrait().mutate { $0.span = 2.0 }
-    var component = Component(kind: Component.Kind.Grid.rawValue, layoutTrait: layoutTrait)
+    let layout = Layout().mutate { $0.span = 2.0 }
+    var component = Component(kind: Component.Kind.Grid.rawValue, layout: layout)
 
     component.add(children: [
       Component(

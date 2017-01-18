@@ -4,7 +4,7 @@ import Brick
 /// A Spotable object that uses UITableView to render its items
 open class ListSpot: NSObject, Listable {
 
-  public static var layoutTrait: LayoutTrait = LayoutTrait().mutate {
+  public static var layout: Layout = Layout().mutate {
     $0.span = 1
   }
 
@@ -70,13 +70,13 @@ open class ListSpot: NSObject, Listable {
   public required init(component: Component) {
     self.component = component
 
-    if self.component.layoutTrait == nil {
-      self.component.layoutTrait = type(of: self).layoutTrait
+    if self.component.layout == nil {
+      self.component.layout = type(of: self).layout
     }
 
     super.init()
     self.userInterface = self.tableView
-    self.component.layoutTrait?.configure(spot: self)
+    self.component.layout?.configure(spot: self)
     self.spotDataSource = DataSource(spot: self)
     self.spotDelegate = Delegate(spot: self)
 

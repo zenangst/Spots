@@ -4,7 +4,7 @@ import Brick
 /// A CarouselSpot, a collection view based Spotable object that lays out its items in a horizontal order
 open class CarouselSpot: NSObject, Gridable {
 
-  public static var layoutTrait: LayoutTrait = LayoutTrait([:])
+  public static var layout: Layout = Layout([:])
 
   /// Child spots
   public var compositeSpots: [CompositeSpot] = []
@@ -34,10 +34,10 @@ open class CarouselSpot: NSObject, Gridable {
   open var component: Component {
     willSet(value) {
       #if os(iOS)
-        if let layoutTrait = component.layoutTrait {
-          dynamicSpan = layoutTrait.dynamicSpan
-          if component.items.count > 1 && layoutTrait.span > 0.0 {
-            pageControl.numberOfPages = Int(floor(Double(component.items.count) / layoutTrait.span))
+        if let layout = component.layout {
+          dynamicSpan = layout.dynamicSpan
+          if component.items.count > 1 && layout.span > 0.0 {
+            pageControl.numberOfPages = Int(floor(Double(component.items.count) / layout.span))
           }
         }
       #endif
@@ -48,8 +48,8 @@ open class CarouselSpot: NSObject, Gridable {
   /// A boolean value that configures the collection views pagination
   open var paginate = false {
     willSet(newValue) {
-      if let layoutTrait = component.layoutTrait {
-        if layoutTrait.span == 1 {
+      if let layout = component.layout {
+        if layout.span == 1 {
           collectionView.isPagingEnabled = newValue
         }
       }
@@ -131,14 +131,14 @@ open class CarouselSpot: NSObject, Gridable {
   public required init(component: Component) {
     self.component = component
 
-    if self.component.layoutTrait == nil {
-      self.component.layoutTrait = type(of: self).layoutTrait
+    if self.component.layout == nil {
+      self.component.layout = type(of: self).layout
     }
 
     super.init()
     self.userInterface = collectionView
-    self.component.layoutTrait?.configure(spot: self)
-    self.dynamicSpan = self.component.layoutTrait?.dynamicSpan ?? false
+    self.component.layout?.configure(spot: self)
+    self.dynamicSpan = self.component.layout?.dynamicSpan ?? false
     self.spotDataSource = DataSource(spot: self)
     self.spotDelegate = Delegate(spot: self)
 
@@ -351,8 +351,8 @@ extension Delegate: UIScrollViewDelegate {
     }
 
     #if os(iOS)
-    if let layoutTrait = spot.component.layoutTrait {
-      let floatIndex = ceil(CGFloat(index) / CGFloat(layoutTrait.span))
+    if let layout = spot.component.layout {
+      let floatIndex = ceil(CGFloat(index) / CGFloat(layout.span))
         spot.pageControl.currentPage = Int(floatIndex)
 
     }

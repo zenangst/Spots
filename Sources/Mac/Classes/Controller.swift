@@ -264,7 +264,7 @@ open class Controller: NSViewController, SpotsProtocol {
 
   public func windowDidResize(_ notification: Notification) {
     for case let spot as Gridable in spots {
-      guard let layoutTrait = spot.component.layoutTrait, layoutTrait.span > 1 else {
+      guard let layout = spot.component.layout, layout.span > 1 else {
         continue
       }
 
@@ -275,7 +275,7 @@ open class Controller: NSViewController, SpotsProtocol {
 
   public func windowDidEndLiveResize(_ notification: Notification) {
     for case let spot as Gridable in spots {
-      guard let layoutTrait = spot.component.layoutTrait, layoutTrait.span > 1 else {
+      guard let layout = spot.component.layout, layout.span > 1 else {
         continue
       }
 

@@ -13,7 +13,7 @@ public protocol Spotable: class {
   static var headers: Registry { get set }
   #endif
   static var views: Registry { get set }
-  static var layoutTrait: LayoutTrait { get set }
+  static var layout: Layout { get set }
 
   /// Child spots
   var compositeSpots: [CompositeSpot] { get set }
@@ -176,5 +176,5 @@ public protocol Spotable: class {
 
   func beforeUpdate()
   func afterUpdate()
-  func configure(with layoutTrait: LayoutTrait)
+  func configure(with layout: Layout)
 }

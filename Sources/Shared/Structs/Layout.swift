@@ -8,7 +8,7 @@ import Brick
   import UIKit
 #endif
 
-public struct LayoutTrait: Mappable, DictionaryConvertible, Equatable {
+public struct Layout: Mappable, DictionaryConvertible, Equatable {
 
   enum Keys: String {
     case itemSpacing = "item-spacing"
@@ -50,7 +50,7 @@ public struct LayoutTrait: Mappable, DictionaryConvertible, Equatable {
     self.span <- map.property(Keys.span.rawValue)
   }
 
-  public init(_ block: (inout LayoutTrait) -> Void) {
+  public init(_ block: (inout Layout) -> Void) {
     self.init([:])
     block(&self)
   }
@@ -64,7 +64,7 @@ public struct LayoutTrait: Mappable, DictionaryConvertible, Equatable {
     self.span <- map.property(Keys.span.rawValue)
   }
 
-  public func mutate(_ closure: (inout LayoutTrait) -> Void) -> LayoutTrait {
+  public func mutate(_ closure: (inout Layout) -> Void) -> Layout {
     var copy = self
     closure(&copy)
     return copy
@@ -74,7 +74,7 @@ public struct LayoutTrait: Mappable, DictionaryConvertible, Equatable {
     contentInset.configure(scrollView: spot.render())
   }
 
-  public static func == (lhs: LayoutTrait, rhs: LayoutTrait) -> Bool {
+  public static func == (lhs: Layout, rhs: Layout) -> Bool {
     return lhs.contentInset == rhs.contentInset &&
     lhs.sectionInset == rhs.sectionInset
   }

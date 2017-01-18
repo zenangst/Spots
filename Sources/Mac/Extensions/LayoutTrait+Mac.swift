@@ -1,6 +1,6 @@
 import Cocoa
 
-extension LayoutTrait {
+extension Layout {
 
   public func configure(spot: Gridable) {
     contentInset.configure(scrollView: spot.render())

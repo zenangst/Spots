@@ -20,27 +20,27 @@ class ComponentTests : XCTestCase {
     let jsonComponent = Component(json)
     XCTAssertEqual(jsonComponent.title, json["title"] as? String)
     XCTAssertEqual(jsonComponent.kind,  json["kind"] as? String)
-    XCTAssertEqual(jsonComponent.layoutTrait?.span,  (json["layout"] as? [String : Any])?["span"] as? Double)
+    XCTAssertEqual(jsonComponent.layout?.span,  (json["layout"] as? [String : Any])?["span"] as? Double)
 
     XCTAssert((jsonComponent.meta as NSDictionary).isEqual(json["meta"] as! NSDictionary))
     XCTAssert(jsonComponent.items.count == 1)
 
     XCTAssertEqual(jsonComponent.items.first?.title, "item1")
 
-    let layout = LayoutTrait(json["layout"] as! [String : Any])
+    let layout = Layout(json["layout"] as! [String : Any])
     let item = Item(title: "item1")
 
     // Test component created programmatically
     let codeComponent = Component(
       title: json["title"] as! String,
       kind: json["kind"] as! String,
-      layoutTrait: layout,
+      layout: layout,
       items: [item],
       meta: json["meta"] as! [String : String])
 
     XCTAssertEqual(codeComponent.title, json["title"] as? String)
     XCTAssertEqual(codeComponent.kind,  json["kind"] as? String)
-    XCTAssertEqual(codeComponent.layoutTrait?.span,  (json["layout"] as? [String : Any])?["span"] as? Double)
+    XCTAssertEqual(codeComponent.layout?.span,  (json["layout"] as? [String : Any])?["span"] as? Double)
 
     XCTAssert((codeComponent.meta as NSDictionary).isEqual(json["meta"] as! NSDictionary))
     XCTAssert(codeComponent.items.count == 1)

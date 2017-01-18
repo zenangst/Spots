@@ -12,16 +12,18 @@ extension CarouselSpot {
     guard indexPath.item < component.items.count else { return CGSize.zero }
     var width = collectionView.frame.width
 
-    if let layoutTrait = component.layoutTrait {
-      if layoutTrait.span > 0.0 {
-        if dynamicSpan && Double(component.items.count) < layoutTrait.span {
+    let gridableLayout = layout
+
+    if let layout = component.layout {
+      if layout.span > 0.0 {
+        if dynamicSpan && Double(component.items.count) < layout.span {
           width = collectionView.frame.width / CGFloat(component.items.count)
-          width -= layout.sectionInset.left / CGFloat(component.items.count)
-          width -= layout.minimumInteritemSpacing
+          width -= gridableLayout.sectionInset.left / CGFloat(component.items.count)
+          width -= gridableLayout.minimumInteritemSpacing
         } else {
-          width = collectionView.frame.width / CGFloat(layoutTrait.span)
-          width -= layout.sectionInset.left / CGFloat(layoutTrait.span)
-          width -= layout.minimumInteritemSpacing
+          width = collectionView.frame.width / CGFloat(layout.span)
+          width -= gridableLayout.sectionInset.left / CGFloat(layout.span)
+          width -= gridableLayout.minimumInteritemSpacing
         }
 
         component.items[indexPath.item].size.width = width

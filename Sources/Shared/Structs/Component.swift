@@ -75,8 +75,8 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
   public var kind: String = ""
   /// The header identifier
   public var header: String = ""
-  /// Layout traits
-  public var layoutTrait: LayoutTrait?
+  /// Layout properties
+  public var layout: Layout?
   /// A collection of view models
   public var items: [Item] = [Item]()
   /// The width and height of the component, usually calculated and updated by the UI component
@@ -121,8 +121,8 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
       Key.Items.string: JSONItems
       ]
 
-    if let layoutTrait = layoutTrait {
-      JSONComponents[Key.Layout] = layoutTrait.dictionary
+    if let layout = layout {
+      JSONComponents[Key.Layout] = layout.dictionary
     }
 
     JSONComponents[Key.Identifier.string] = identifier
@@ -148,9 +148,9 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
     self.meta      <- map.property("meta")
 
     if Component.legacyMapping {
-      self.layoutTrait = LayoutTrait(map.property("meta") ?? [:])
+      self.layout = Layout(map.property("meta") ?? [:])
     } else {
-      self.layoutTrait = LayoutTrait(map.property("layout") ?? [:])
+      self.layout = Layout(map.property("layout") ?? [:])
     }
 
     let width: Double = map.resolve(keyPath: "size.width") ?? 0.0
@@ -164,7 +164,7 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
   /// - parameter title: The title for your UI component.
   /// - parameter header: Determines which header item that should be used for the component.
   /// - parameter kind: The type of Component that should be used.
-  /// - parameter layout: Configures the layout trait for the component.
+  /// - parameter layout: Configures the layout properties for the component.
   /// - parameter items: A collection of view models
   /// - parameter meta: A key-value dictionary for any additional information
   ///
@@ -173,7 +173,7 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
               title: String = "",
               header: String = "",
               kind: String = "",
-              layoutTrait: LayoutTrait? = nil,
+              layout: Layout? = nil,
               span: Double? = nil,
               items: [Item] = [],
               meta: [String : Any] = [:]) {
@@ -181,12 +181,12 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
     self.title = title
     self.kind = kind
     self.header = header
-    self.layoutTrait = layoutTrait
+    self.layout = layout
     self.items = items
     self.meta = meta
 
-    if let span = span, layoutTrait == nil {
-      self.layoutTrait = LayoutTrait(["span" : span])
+    if let span = span, layout == nil {
+      self.layout = Layout(["span" : span])
     }
   }
 
@@ -237,7 +237,7 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
     // Determine if the unqiue identifier for the component changed
     if identifier != component.identifier { return .identifier }
     // Determine if the component layout changed, this can be used to trigger layout related processes
-    if layoutTrait != component.layoutTrait { return .layout }
+    if layout != component.layout { return .layout }
     // Determine if the header for the component has changed
     if header != component.header { return .header }
     // Check if meta data for the component changed, this can be up to the developer to decide what course of action to take.
@@ -269,13 +269,13 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
     }
   }
 
-  mutating func add(layoutTrait: LayoutTrait) {
-    self.layoutTrait = layoutTrait
+  mutating func add(layout: Layout) {
+    self.layout = layout
   }
 
-  mutating func configure(with layoutTrait: LayoutTrait) -> Component {
+  mutating func configure(with layout: Layout) -> Component {
     var copy = self
-    copy.layoutTrait = layoutTrait
+    copy.layout = layout
     return copy
   }
 }
@@ -356,7 +356,7 @@ public func == (lhs: Component, rhs: Component) -> Bool {
 
   return lhs.title == rhs.title &&
     lhs.kind == rhs.kind &&
-    lhs.layoutTrait == rhs.layoutTrait &&
+    lhs.layout == rhs.layout &&
     lhs.header == rhs.header &&
     (lhs.meta as NSDictionary).isEqual(rhs.meta as NSDictionary)
 }
@@ -375,7 +375,7 @@ public func === (lhs: Component, rhs: Component) -> Bool {
 
   return lhs.title == rhs.title &&
     lhs.kind == rhs.kind &&
-    lhs.layoutTrait == rhs.layoutTrait &&
+    lhs.layout == rhs.layout &&
     lhs.header == rhs.header &&
     (lhs.meta as NSDictionary).isEqual(rhs.meta as NSDictionary) &&
     lhsChildren === rhsChildren &&
