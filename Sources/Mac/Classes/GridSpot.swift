@@ -202,19 +202,6 @@ open class GridSpot: NSObject, Gridable {
     userInterface = nil
   }
 
-  @discardableResult fileprivate static func configureLayoutInsets(_ component: Component, layout: NSCollectionViewFlowLayout) -> NSCollectionViewFlowLayout {
-    layout.sectionInset = EdgeInsets(
-      top: component.meta(GridableMeta.Key.sectionInsetTop, Default.sectionInsetTop),
-      left: component.meta(GridableMeta.Key.sectionInsetLeft, Default.sectionInsetLeft),
-      bottom: component.meta(GridableMeta.Key.sectionInsetBottom, Default.sectionInsetBottom),
-      right: component.meta(GridableMeta.Key.sectionInsetRight, Default.sectionInsetRight))
-
-    layout.minimumInteritemSpacing = component.meta(GridSpot.Key.minimumInteritemSpacing, Default.Flow.minimumInteritemSpacing)
-    layout.minimumLineSpacing = component.meta(GridSpot.Key.minimumLineSpacing, Default.Flow.minimumLineSpacing)
-
-    return layout
-  }
-
   /**
    A private method for configuring the layout for the collection view
 
@@ -236,11 +223,9 @@ open class GridSpot: NSObject, Gridable {
       layout = gridLayout
     case .left:
       let leftLayout = CollectionViewLeftLayout()
-      configureLayoutInsets(component, layout: leftLayout)
       layout = leftLayout
     default:
       let flowLayout = NSCollectionViewFlowLayout()
-      configureLayoutInsets(component, layout: flowLayout)
       flowLayout.scrollDirection = .vertical
       layout = flowLayout
     }
