@@ -2,6 +2,12 @@ import Foundation
 import Tailor
 import Brick
 
+#if os(OSX)
+  import Cocoa
+#else
+  import UIKit
+#endif
+
 public struct LayoutTrait: Mappable, DictionaryConvertible, Equatable {
 
   enum Keys: String {
@@ -53,6 +59,9 @@ public struct LayoutTrait: Mappable, DictionaryConvertible, Equatable {
   public func configure(spot: Gridable) {
     sectionInset.configure(layout: spot.layout)
     contentInset.configure(scrollView: spot.render())
+
+    spot.layout.minimumInteritemSpacing = CGFloat(itemMargin)
+    spot.layout.minimumLineSpacing = CGFloat(lineSpacing)
   }
 
   public func configure(spot: Listable) {
