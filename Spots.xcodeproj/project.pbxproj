@@ -169,6 +169,8 @@
 		BD45D9671E2F400100C2D6B2 /* SectionInset.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD45D9661E2F400100C2D6B2 /* SectionInset.swift */; };
 		BD45D9681E2F400100C2D6B2 /* SectionInset.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD45D9661E2F400100C2D6B2 /* SectionInset.swift */; };
 		BD45D9691E2F400100C2D6B2 /* SectionInset.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD45D9661E2F400100C2D6B2 /* SectionInset.swift */; };
+		BD45D96B1E2F403500C2D6B2 /* SectionInset+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD45D96A1E2F403500C2D6B2 /* SectionInset+iOS.swift */; };
+		BD45D96C1E2F403500C2D6B2 /* SectionInset+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD45D96A1E2F403500C2D6B2 /* SectionInset+iOS.swift */; };
 		BD63B0501DD8D30400C52D73 /* UserInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD63B04F1DD8D30400C52D73 /* UserInterface.swift */; };
 		BD63B0511DD8D30400C52D73 /* UserInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD63B04F1DD8D30400C52D73 /* UserInterface.swift */; };
 		BD63B0521DD8D30400C52D73 /* UserInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD63B04F1DD8D30400C52D73 /* UserInterface.swift */; };
@@ -359,6 +361,7 @@
 		BD4295571D81D45D00E07E1C /* TestViewSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewSpot.swift; sourceTree = "<group>"; };
 		BD45D9621E2EADA600C2D6B2 /* LayoutTrait.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutTrait.swift; sourceTree = "<group>"; };
 		BD45D9661E2F400100C2D6B2 /* SectionInset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionInset.swift; sourceTree = "<group>"; };
+		BD45D96A1E2F403500C2D6B2 /* SectionInset+iOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SectionInset+iOS.swift"; sourceTree = "<group>"; };
 		BD63B04F1DD8D30400C52D73 /* UserInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInterface.swift; sourceTree = "<group>"; };
 		BD677E841DC616B2006D1654 /* TestSpotable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSpotable.swift; sourceTree = "<group>"; };
 		BD677E881DC61EFC006D1654 /* TestStateCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestStateCache.swift; sourceTree = "<group>"; };
@@ -496,6 +499,7 @@
 				BD129D5C1D7B295F009AC164 /* Listable+Extensions+iOS.swift */,
 				BDE152D41DDEF94500DB3145 /* UITableView+UserInterface.swift */,
 				BDE152D51DDEF94500DB3145 /* UIViewController+Extensions.swift */,
+				BD45D96A1E2F403500C2D6B2 /* SectionInset+iOS.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1185,6 +1189,7 @@
 				BD129F8F1D7B2F91009AC164 /* Parser.swift in Sources */,
 				BD129DBE1D7B2B6C009AC164 /* GridableLayout.swift in Sources */,
 				BD129D8A1D7B295F009AC164 /* Gridable+Extensions+iOS.swift in Sources */,
+				BD45D96C1E2F403500C2D6B2 /* SectionInset+iOS.swift in Sources */,
 				BD1BFB581DA7A9A300BB55E1 /* ScrollDelegate+Extensions.swift in Sources */,
 				BD129F4D1D7B2F91009AC164 /* SpotFactory.swift in Sources */,
 				BD129DC01D7B2B6C009AC164 /* GridComposite.swift in Sources */,
@@ -1323,6 +1328,7 @@
 				BD129D8B1D7B295F009AC164 /* Listable+Extensions+iOS.swift in Sources */,
 				BD129F6F1D7B2F91009AC164 /* Gridable.swift in Sources */,
 				BD63B0501DD8D30400C52D73 /* UserInterface.swift in Sources */,
+				BD45D96B1E2F403500C2D6B2 /* SectionInset+iOS.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
