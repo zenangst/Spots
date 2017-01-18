@@ -1,4 +1,4 @@
 github "krzyzanowskim/CryptoSwift" "0.6.7"
 github "zenangst/Tailor" "2.0.2"
 github "hyperoslo/Brick" "2.0.5"
-github "hyperoslo/Cache" "2.1.1"
+github "hyperoslo/Cache" "2.2.1"
