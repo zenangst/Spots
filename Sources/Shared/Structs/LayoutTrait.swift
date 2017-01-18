@@ -55,12 +55,13 @@ public struct LayoutTrait: Mappable, DictionaryConvertible, Equatable {
     block(&self)
   }
 
-  public mutating func configure(withJSON JSON: [String : Any]) {
-    self.contentInset.configure(withJSON: JSON)
-    self.sectionInset.configure(withJSON: JSON)
-    self.itemSpacing <- JSON.property(Keys.itemSpacing.rawValue)
-    self.lineSpacing <- JSON.property(Keys.lineSpacing.rawValue)
-    self.dynamicSpan <- JSON.property(Keys.dynamicSpan.rawValue)
+  public mutating func configure(withJSON map: [String : Any]) {
+    self.sectionInset = SectionInset(map.property(SectionInset.rootKey) ?? [:])
+    self.contentInset = ContentInset(map.property(ContentInset.rootKey) ?? [:])
+    self.itemSpacing <- map.property(Keys.itemSpacing.rawValue)
+    self.lineSpacing <- map.property(Keys.lineSpacing.rawValue)
+    self.dynamicSpan <- map.property(Keys.dynamicSpan.rawValue)
+    self.span <- map.property(Keys.span.rawValue)
   }
 
   public func mutate(_ closure: (inout LayoutTrait) -> Void) -> LayoutTrait {
