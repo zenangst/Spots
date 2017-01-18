@@ -14,6 +14,8 @@ open class GridSpot: NSObject, Gridable {
     public static let minimumLineSpacing = "line-spacing"
   }
 
+  public static var layoutTrait = LayoutTrait([:])
+
   /**
    *  Default configuration values for GridSpot
    */
@@ -96,6 +98,11 @@ open class GridSpot: NSObject, Gridable {
   /// - returns: An initialized grid spot with component.
   public required init(component: Component) {
     self.component = component
+
+    if self.component.layoutTrait == nil {
+      self.component.layoutTrait = type(of: self).layoutTrait
+    }
+
     super.init()
     self.userInterface = collectionView
     self.spotDataSource = DataSource(spot: self)

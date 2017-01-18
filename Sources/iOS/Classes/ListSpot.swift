@@ -4,6 +4,8 @@ import Brick
 /// A Spotable object that uses UITableView to render its items
 open class ListSpot: NSObject, Listable {
 
+  public static var layoutTrait: LayoutTrait = LayoutTrait([:])
+
   /// Keys for meta data lookup
   public struct Key {
     /// The meta key for setting the header height
@@ -65,6 +67,11 @@ open class ListSpot: NSObject, Listable {
   /// - returns: An initialized list spot with component.
   public required init(component: Component) {
     self.component = component
+
+    if self.component.layoutTrait == nil {
+      self.component.layoutTrait = type(of: self).layoutTrait
+    }
+
     super.init()
     self.userInterface = self.tableView
     self.spotDataSource = DataSource(spot: self)

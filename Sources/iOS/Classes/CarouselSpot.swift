@@ -4,6 +4,8 @@ import Brick
 /// A CarouselSpot, a collection view based Spotable object that lays out its items in a horizontal order
 open class CarouselSpot: NSObject, Gridable {
 
+  public static var layoutTrait: LayoutTrait = LayoutTrait([:])
+
   /**
    *  A struct that holds keys that is used when mapping meta data to configuration methods
    */
@@ -156,6 +158,11 @@ open class CarouselSpot: NSObject, Gridable {
   /// - returns: An initialized carousel spot.
   public required init(component: Component) {
     self.component = component
+
+    if self.component.layoutTrait == nil {
+      self.component.layoutTrait = type(of: self).layoutTrait
+    }
+
     super.init()
     self.userInterface = collectionView
     self.spotDataSource = DataSource(spot: self)

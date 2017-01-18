@@ -140,6 +140,11 @@ open class GridSpot: NSObject, Gridable {
    */
   public required init(component: Component) {
     self.component = component
+
+    if self.component.layoutTrait == nil {
+      self.component.layoutTrait = type(of: self).layoutTrait
+    }
+
     self.collectionView = CollectionView()
     self.layout = GridSpot.setupLayout(component)
     super.init()
