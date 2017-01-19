@@ -3,7 +3,7 @@ import Brick
 
 open class ListSpot: NSObject, Listable {
 
-  public static var layout: Layout = Layout()
+  public static var layout: Layout = Layout(span: 1.0)
 
   /// Child spots
   public var compositeSpots: [CompositeSpot] = []
@@ -118,6 +118,11 @@ open class ListSpot: NSObject, Listable {
 
   public required init(component: Component) {
     self.component = component
+
+    if self.component.layout == nil {
+      self.component.layout = type(of: self).layout
+    }
+
     super.init()
     self.userInterface = tableView
     self.component.layout?.configure(spot: self)
