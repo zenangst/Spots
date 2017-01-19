@@ -87,10 +87,10 @@ public extension Spotable {
       if let layout = component.layout {
         if layout.span > 0.0 {
           #if os(OSX)
-            if let layout = component.layout,
+            if let componentLayout = component.layout,
               let gridable = self as? Gridable,
-              let gridableLayout = gridable.layout as? FlowLayout {
-              let newWidth = gridable.collectionView.frame.width / CGFloat(layout.span) - layout.sectionInset.left - layout.sectionInset.right
+              let layout = gridable.layout as? FlowLayout {
+              let newWidth = gridable.collectionView.frame.width / CGFloat(componentLayout.span) - layout.sectionInset.left - layout.sectionInset.right
 
               if newWidth > 0.0 {
                 preparedItems[index].size.width = newWidth

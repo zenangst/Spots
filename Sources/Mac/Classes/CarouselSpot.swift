@@ -190,19 +190,19 @@ open class CarouselSpot: NSObject, Gridable {
       configureTitleView(layoutInsets)
     }
 
-    if let layout = component.layout {
-      if layout.span > 0 {
+    if let componentLayout = component.layout {
+      if componentLayout.span > 0 {
         component.items.enumerated().forEach {
-          component.items[$0.offset].size.width = size.width / CGFloat(layout.span)
+          component.items[$0.offset].size.width = size.width / CGFloat(componentLayout.span)
         }
       }
 
-      if layout.span == 1 {
+      if componentLayout.span == 1 {
         scrollView.frame.size.width = size.width - layoutInsets.right
         scrollView.scrollingEnabled = (component.items.count > 1)
         scrollView.hasHorizontalScroller = (component.items.count > 1)
         component.items.enumerated().forEach {
-          component.items[$0.offset].size.width = size.width / CGFloat(layout.span)
+          component.items[$0.offset].size.width = size.width / CGFloat(componentLayout.span)
         }
         layout.invalidateLayout()
       }
