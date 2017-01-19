@@ -54,7 +54,6 @@ open class GridableLayout: UICollectionViewFlowLayout {
     } else {
       contentSize.width = spot.collectionView.frame.width - spot.collectionView.contentInset.left - spot.collectionView.contentInset.right
       contentSize.height = super.collectionViewContentSize.height
-//      collectionView?.frame.size = super.collectionViewContentSize
     }
   }
 
