@@ -64,6 +64,10 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
     }
   }
 
+  public var span: Double {
+    return layout?.span ?? 0.0
+  }
+
   /// Identifier
   public var identifier: String?
   /// The index of the Item when appearing in a list, should be computed and continuously updated by the data source
