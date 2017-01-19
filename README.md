@@ -50,6 +50,7 @@ Data source and delegate setup is handled by **Spots**, so there is no need for 
 * [Live editing](#live-editing)
 * [How does it work?](#how-does-it-work)
 * [Performing mutation](#performing-mutation)
+* [Layout](#layout)
 * [Usage](#usage)
 * [View models in the Cloud](#view-models-in-the-cloud)
 * [Programmatic approach](#programmatic-approach)
@@ -233,6 +234,41 @@ This method has a corresponding method called `updateIfNeeded`, which applies th
 You can also `append` `prepend`, `insert`, `update` or `delete` with a series to similar methods that are publicly available on **Controller**.
 
 All methods take an `Item` as their first argument, the second is the index of the **Spotable** object that you want to update. Just like `reload` and `update`, it also has an animation label to give you control over what animation should be used. As an added bonus, these methods also work with multiple items, so instead of passing just one item, you can pass a collection of items that you want to `append`, `prepend` etc.
+
+## Layout
+
+Configuring layout for different components can be tricky, Spots helps to solve this problem with a neat and tidy `Layout` struct that lives on `Component`. It is used to customize your UI related elements. It can set `contentInset`, `sectionInset` and collection view related properties like `minimumInteritemSpacing` and `minimumLineSpacing`. It works great both programmatical and with JSON. It is supported on all three platforms.
+
+```swift
+let layout = Layout() {
+  $0.span = 3.0
+  $0.itemSpacing = 10.0
+  $0.lineSpacing = 0.0
+  $0.contentInset = ContentInset(top: 0, left: 0, bottom: 0, right: 0)
+  $0.sectionInset = SectionInset(top: 10, left: 10, bottom: 10, right: 10)
+}
+
+let jsonLayout = Layout(
+  [
+    "span" : 3.0,
+    "item-spacing" : 10.0,
+    "line-spacing" : 0.0,
+    "dynamic-span" : true,
+    "content-inset" : [
+      "top" : 0.0,
+      "left" : 0.0,
+      "bottom" : 0.0,
+      "right" : 0.0
+    ],
+    "section-inset" : [
+      "top" : 10.0,
+      "left" : 10.0,
+      "bottom" : 10.0,
+      "right" : 10.0
+    ]
+  ]
+)
+```
 
 ## Usage
 
