@@ -4,6 +4,10 @@ import Brick
 /// A Spotable object that uses UITableView to render its items
 open class ListSpot: NSObject, Listable {
 
+  public static var layout: Layout = Layout().mutate {
+    $0.span = 1
+  }
+
   /// Keys for meta data lookup
   public struct Key {
     /// The meta key for setting the header height
@@ -65,8 +69,14 @@ open class ListSpot: NSObject, Listable {
   /// - returns: An initialized list spot with component.
   public required init(component: Component) {
     self.component = component
+
+    if self.component.layout == nil {
+      self.component.layout = type(of: self).layout
+    }
+
     super.init()
     self.userInterface = self.tableView
+    self.component.layout?.configure(spot: self)
     self.spotDataSource = DataSource(spot: self)
     self.spotDelegate = Delegate(spot: self)
 
@@ -90,7 +100,7 @@ open class ListSpot: NSObject, Listable {
   /// - returns: An initialized list spot with component.
   public convenience init(tableView: UITableView? = nil, title: String = "",
                           kind: String = "list", header: String = "") {
-    self.init(component: Component(title: title, header: header, kind: kind))
+    self.init(component: Component(title: title, header: header, kind: kind, span: 1.0))
 
     if let tableView = tableView {
       self.tableView = tableView

@@ -14,27 +14,7 @@ open class GridSpot: NSObject, Gridable {
     public static let minimumLineSpacing = "line-spacing"
   }
 
-  /**
-   *  Default configuration values for GridSpot
-   */
-  public struct Default {
-    /// Default top section inset
-    public static var sectionInsetTop: CGFloat = 0.0
-    /// Default left section inset
-    public static var sectionInsetLeft: CGFloat = 0.0
-    /// Default right section inset
-    public static var sectionInsetRight: CGFloat = 0.0
-    /// Default bottom section inset
-    public static var sectionInsetBottom: CGFloat = 0.0
-    /// Default minimum interitem spacing
-    public static var minimumInteritemSpacing: CGFloat = 0.0
-    /// Default minimum line spacing
-    public static var minimumLineSpacing: CGFloat = 0.0
-    /// Default left section inset
-    public static var contentInsetLeft: CGFloat = 0.0
-    /// Default right section inset
-    public static var contentInsetRight: CGFloat = 0.0
-  }
+  public static var layout = Layout().mutate { $0.span = 0.0 }
 
   /// A Registry object that holds identifiers and classes for cells used in the GridSpot
   open static var views: Registry = Registry()
@@ -96,8 +76,14 @@ open class GridSpot: NSObject, Gridable {
   /// - returns: An initialized grid spot with component.
   public required init(component: Component) {
     self.component = component
+
+    if self.component.layout == nil {
+      self.component.layout = type(of: self).layout
+    }
+
     super.init()
     self.userInterface = collectionView
+    self.component.layout?.configure(spot: self)
     self.spotDataSource = DataSource(spot: self)
     self.spotDelegate = Delegate(spot: self)
 
@@ -107,7 +93,6 @@ open class GridSpot: NSObject, Gridable {
 
     registerDefault(view: GridSpotCell.self)
     registerComposite(view: GridComposite.self)
-    configureLayout()
     registerAndPrepare()
     configureCollectionView()
 
@@ -123,7 +108,7 @@ open class GridSpot: NSObject, Gridable {
   ///
   /// - returns: An initialized grid spot with computed component using title and kind.
   public convenience init(title: String = "", kind: String? = nil) {
-    self.init(component: Component(title: title, kind: kind ?? ""))
+    self.init(component: Component(title: title, kind: kind ?? "", span: 0.0))
   }
 
   /// Instantiate a GridSpot with a cache key.
@@ -168,18 +153,5 @@ open class GridSpot: NSObject, Gridable {
     spotDataSource = nil
     spotDelegate = nil
     userInterface = nil
-  }
-
-  /// Configure section insets and layout spacing for the UICollectionViewFlow using component meta data
-  func configureLayout() {
-    layout.sectionInset = UIEdgeInsets(
-      top: component.meta(GridableMeta.Key.sectionInsetTop, Default.sectionInsetTop),
-      left: component.meta(GridableMeta.Key.sectionInsetLeft, Default.sectionInsetLeft),
-      bottom: component.meta(GridableMeta.Key.sectionInsetBottom, Default.sectionInsetBottom),
-      right: component.meta(GridableMeta.Key.sectionInsetRight, Default.sectionInsetRight))
-    layout.minimumInteritemSpacing = component.meta(GridableMeta.Key.minimumInteritemSpacing, Default.minimumInteritemSpacing)
-    layout.minimumLineSpacing = component.meta(GridableMeta.Key.minimumLineSpacing, Default.minimumLineSpacing)
-    collectionView.contentInset.left = component.meta(GridableMeta.Key.contentInsetLeft, Default.contentInsetLeft)
-    collectionView.contentInset.right = component.meta(GridableMeta.Key.contentInsetRight, Default.contentInsetRight)
   }
 }

@@ -6,7 +6,7 @@ import Brick
 class SpotableTests : XCTestCase {
 
   func testAppendingMultipleItemsToSpot() {
-    let listSpot = ListSpot(component: Component(title: "Component"))
+    let listSpot = ListSpot(component: Component(title: "Component", span: 1.0))
     listSpot.setup(UIScreen.main.bounds.size)
     var items: [Item] = []
 
@@ -30,7 +30,7 @@ class SpotableTests : XCTestCase {
   }
 
   func testAppendingMultipleItemsToSpotInController() {
-    let controller = Controller(spots: [ListSpot(component: Component(title: "Component"))])
+    let controller = Controller(spots: [ListSpot(component: Component(title: "Component", span: 1.0))])
     controller.prepareController()
     var items: [Item] = []
 

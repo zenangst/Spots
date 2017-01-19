@@ -7,6 +7,8 @@ import Brick
 
 open class ViewSpot: NSObject, Spotable, Viewable {
 
+  public static var layout: Layout = Layout([:])
+
   /// Reload spot with ItemChanges.
   ///
   /// - parameter changes:          A collection of changes: inserations, updates, reloads, deletions and updated children.
@@ -46,6 +48,11 @@ open class ViewSpot: NSObject, Spotable, Viewable {
 
   public required init(component: Component) {
     self.component = component
+
+    if self.component.layout == nil {
+      self.component.layout = type(of: self).layout
+    }
+
     super.init()
     registerDefault(view: View.self)
     prepare()
@@ -58,7 +65,7 @@ open class ViewSpot: NSObject, Spotable, Viewable {
    - parameter kind:  The kind that will be used on the Component
    */
   public convenience init(title: String = "", kind: String? = nil) {
-    self.init(component: Component(title: title, kind: kind ?? ViewSpot.defaultKind.string))
+    self.init(component: Component(title: title, kind: kind ?? ViewSpot.defaultKind.string, span: 1.0))
   }
 
   public func ui<T>(at index: Int) -> T? {
@@ -91,4 +98,8 @@ open class ViewSpot: NSObject, Spotable, Viewable {
   A placeholder method, it is left empty as it holds no value for ViewSpot
    */
   open func register() {}
+
+  public func configure(with layout: Layout) {
+    /// Do nothing
+  }
 }

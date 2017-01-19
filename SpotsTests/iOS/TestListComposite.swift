@@ -8,13 +8,13 @@ class ListCompositeTests: XCTestCase {
   func testListComposite() {
     let view = ListComposite()
     var item = Item()
-    let gridSpot = CompositeSpot(spot: GridSpot(component: Component()), itemIndex: 0)
+    let gridSpot = CompositeSpot(spot: GridSpot(component: Component(span: 1)), itemIndex: 0)
     view.configure(&item, compositeSpots: [gridSpot])
 
     XCTAssertTrue(view.contentView.subviews.count == 1)
 
-    let carouselSpot = CompositeSpot(spot: CarouselSpot(component: Component()), itemIndex: 0)
-    let listSpot = CompositeSpot(spot: ListSpot(component: Component()), itemIndex: 0)
+    let carouselSpot = CompositeSpot(spot: CarouselSpot(component: Component(span: 1)), itemIndex: 0)
+    let listSpot = CompositeSpot(spot: ListSpot(component: Component(span: 1)), itemIndex: 0)
     view.configure(&item, compositeSpots: [carouselSpot, listSpot])
 
     XCTAssertTrue(view.contentView.subviews.count == 3)

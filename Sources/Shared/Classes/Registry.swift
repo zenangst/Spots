@@ -6,8 +6,8 @@ import Cocoa
 #endif
 
 public enum RegistryType: String {
-  case nib = "nib"
-  case regular = "regular"
+  case nib
+  case regular
 }
 
 /// A registry that is used internally when resolving kind to the corresponding spot.
@@ -19,7 +19,7 @@ public struct Registry {
   }
 
   /// A Key-value dictionary of registred types
-  var storage = [String : Item]()
+  var storage = [String: Item]()
 
   /// The default item for the registry
   var defaultItem: Item? {

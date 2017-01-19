@@ -18,7 +18,7 @@ class DelegateTests: XCTestCase {
 
   func testCollectionViewDelegateSelection() {
     let delegate = TestDelegate()
-    let spot = GridSpot(component: Component(items: [
+    let spot = GridSpot(component: Component(span: 1, items: [
       Item(title: "title 1")
       ]))
     spot.delegate = delegate
@@ -32,7 +32,7 @@ class DelegateTests: XCTestCase {
   }
 
   func testCollectionViewCanFocus() {
-    let spot = GridSpot(component: Component(items: [Item(title: "title 1")]))
+    let spot = GridSpot(component: Component(span: 1, items: [Item(title: "title 1")]))
     XCTAssertEqual(spot.spotDelegate?.collectionView(spot.collectionView, canFocusItemAt: IndexPath(item: 0, section: 0)), true)
     XCTAssertEqual(spot.spotDelegate?.collectionView(spot.collectionView, canFocusItemAt: IndexPath(item: 1, section: 0)), false)
   }
@@ -41,7 +41,7 @@ class DelegateTests: XCTestCase {
 
   func testTableViewDelegateSelection() {
     let delegate = TestDelegate()
-    let spot = ListSpot(component: Component(items: [
+    let spot = ListSpot(component: Component(span: 1, items: [
       Item(title: "title 1")
       ]))
     spot.delegate = delegate
@@ -55,7 +55,7 @@ class DelegateTests: XCTestCase {
   }
 
   func testTableViewHeightForRowOnListable() {
-    let spot = ListSpot(component: Component(items: [Item(title: "title 1")]))
+    let spot = ListSpot(component: Component(span: 1, items: [Item(title: "title 1")]))
     XCTAssertEqual(spot.spotDelegate?.tableView(spot.tableView, heightForRowAt: IndexPath(row: 0, section: 0)), 44.0)
     XCTAssertEqual(spot.spotDelegate?.tableView(spot.tableView, heightForRowAt: IndexPath(row: 1, section: 0)), 0.0)
   }
@@ -65,6 +65,7 @@ class DelegateTests: XCTestCase {
     let spot = ListSpot(component: Component(
       title: "title",
       header: "list",
+      span: 1,
       items: [
         Item(title: "title 1"),
         Item(title: "title 2")

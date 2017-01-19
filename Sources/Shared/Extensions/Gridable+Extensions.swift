@@ -117,4 +117,8 @@ public extension Spotable where Self : Gridable {
       }
     }
   }
+
+  public func configure(with layout: Layout) {
+    layout.configure(spot: self)
+  }
 }

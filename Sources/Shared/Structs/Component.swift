@@ -11,7 +11,7 @@ import Brick
 ///
 /// - identifier: Indicates that the identifier changed
 /// - kind:       Indicates that the kind changed
-/// - span:       Indicates that the span changed
+/// - layout:     Indicates that the layout changed
 /// - header:     Indicates that the header changed
 /// - meta:       Indicates that the meta changed
 /// - items:      Indicates that the items changed
@@ -19,11 +19,13 @@ import Brick
 /// - removed:    Indicates that the component was removed
 /// - none:       Indicates that nothing did change
 public enum ComponentDiff {
-  case identifier, title, kind, span, header, meta, items, new, removed, none
+  case identifier, title, kind, layout, header, meta, items, new, removed, none
 }
 
 /// The Component struct is used to configure a Spotable object
 public struct Component: Mappable, Equatable, DictionaryConvertible {
+
+  public static var legacyMapping: Bool = false
 
   /// An enum with all the string keys used in the view model
   public enum Key: String, StringConvertible {
@@ -34,6 +36,7 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
     case Kind
     case Meta
     case Span
+    case Layout
     case Items
     case Size
     case Width
@@ -61,6 +64,19 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
     }
   }
 
+  public var span: Double {
+    get {
+      return layout?.span ?? 0.0
+    }
+    set {
+      if layout == nil {
+        self.layout = Layout()
+      }
+
+      self.layout?.span = newValue
+    }
+  }
+
   /// Identifier
   public var identifier: String?
   /// The index of the Item when appearing in a list, should be computed and continuously updated by the data source
@@ -72,15 +88,14 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
   public var kind: String = ""
   /// The header identifier
   public var header: String = ""
-  /// Configures the span that should be used for items in one row
-  /// Used by gridable components
-  public var span: Double = 0
+  /// Layout properties
+  public var layout: Layout?
   /// A collection of view models
   public var items: [Item] = [Item]()
   /// The width and height of the component, usually calculated and updated by the UI component
   public var size: CGSize?
   /// A key-value dictionary for any additional information
-  public var meta = [String : Any]()
+  public var meta = [String: Any]()
 
   /// A dictionary representation of the component
   public var dictionary: [String : Any] {
@@ -110,15 +125,18 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
     }
 
     var JSONComponents: [String : Any] = [
-      Key.Index.string : index,
-      Key.Kind.string : kind,
-      Key.Span.string : span,
-      Key.Size.string : [
-        Key.Width.string : width,
-        Key.Height.string : height
+      Key.Index.string: index,
+      Key.Kind.string: kind,
+      Key.Size.string: [
+        Key.Width.string: width,
+        Key.Height.string: height
       ],
-      Key.Items.string: JSONItems,
+      Key.Items.string: JSONItems
       ]
+
+    if let layout = layout {
+      JSONComponents[Key.Layout] = layout.dictionary
+    }
 
     JSONComponents[Key.Identifier.string] = identifier
 
@@ -135,19 +153,17 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
   ///
   /// - returns: An initialized component using JSON.
   public init(_ map: [String : Any]) {
-    identifier = map.property("identifier")
-    title     <- map.property("title")
-    kind      <- map.property("kind")
-    header    <- map.property("header")
-    items     <- map.relations("items")
-    meta      <- map.property("meta")
+    self.identifier = map.property("identifier")
+    self.title     <- map.property("title")
+    self.kind      <- map.property("kind")
+    self.header    <- map.property("header")
+    self.items     <- map.relations("items")
+    self.meta      <- map.property("meta")
 
-    if let span: Float = map.property("span") {
-      self.span = Double(span)
-    } else if let span: Int = map.property("span") {
-      self.span = Double(span)
+    if Component.legacyMapping {
+      self.layout = Layout(map.property("meta") ?? [:])
     } else {
-      self.span <- map.property("span")
+      self.layout = Layout(map.property("layout") ?? [:])
     }
 
     let width: Double = map.resolve(keyPath: "size.width") ?? 0.0
@@ -161,7 +177,7 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
   /// - parameter title: The title for your UI component.
   /// - parameter header: Determines which header item that should be used for the component.
   /// - parameter kind: The type of Component that should be used.
-  /// - parameter span: Configures the span that should be used for items in one row
+  /// - parameter layout: Configures the layout properties for the component.
   /// - parameter items: A collection of view models
   /// - parameter meta: A key-value dictionary for any additional information
   ///
@@ -170,16 +186,25 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
               title: String = "",
               header: String = "",
               kind: String = "",
-              span: Double = 0,
+              layout: Layout? = nil,
+              span: Double? = nil,
               items: [Item] = [],
               meta: [String : Any] = [:]) {
     self.identifier = identifier
     self.title = title
     self.kind = kind
     self.header = header
-    self.span = span
+    self.layout = layout
     self.items = items
     self.meta = meta
+
+    if let span = span, layout == nil {
+      self.layout = Layout(["span" : span])
+
+      if Component.legacyMapping {
+        self.layout?.configure(withJSON: meta)
+      }
+    }
   }
 
   // MARK: - Helpers
@@ -228,8 +253,8 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
     if kind != component.kind { return .kind }
     // Determine if the unqiue identifier for the component changed
     if identifier != component.identifier { return .identifier }
-    // Determine if the component span layout changed, this can be used to trigger layout related processes
-    if span != component.span { return .span }
+    // Determine if the component layout changed, this can be used to trigger layout related processes
+    if layout != component.layout { return .layout }
     // Determine if the header for the component has changed
     if header != component.header { return .header }
     // Check if meta data for the component changed, this can be up to the developer to decide what course of action to take.
@@ -259,6 +284,16 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
     for child in children {
       add(child: child)
     }
+  }
+
+  mutating func add(layout: Layout) {
+    self.layout = layout
+  }
+
+  mutating func configure(with layout: Layout) -> Component {
+    var copy = self
+    copy.layout = layout
+    return copy
   }
 }
 
@@ -338,7 +373,7 @@ public func == (lhs: Component, rhs: Component) -> Bool {
 
   return lhs.title == rhs.title &&
     lhs.kind == rhs.kind &&
-    lhs.span == rhs.span &&
+    lhs.layout == rhs.layout &&
     lhs.header == rhs.header &&
     (lhs.meta as NSDictionary).isEqual(rhs.meta as NSDictionary)
 }
@@ -357,7 +392,7 @@ public func === (lhs: Component, rhs: Component) -> Bool {
 
   return lhs.title == rhs.title &&
     lhs.kind == rhs.kind &&
-    lhs.span == rhs.span &&
+    lhs.layout == rhs.layout &&
     lhs.header == rhs.header &&
     (lhs.meta as NSDictionary).isEqual(rhs.meta as NSDictionary) &&
     lhsChildren === rhsChildren &&

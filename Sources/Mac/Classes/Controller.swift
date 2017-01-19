@@ -25,7 +25,7 @@ open class Controller: NSViewController, SpotsProtocol {
 
   /// A convenience method for resolving the first spot
   open var spot: Spotable? {
-    get { return spot(at: 0) }
+    return spot(at: 0)
   }
 
   /// An array of refresh positions to avoid refreshing multiple times when using infinite scrolling
@@ -264,7 +264,7 @@ open class Controller: NSViewController, SpotsProtocol {
 
   public func windowDidResize(_ notification: Notification) {
     for case let spot as Gridable in spots {
-      guard spot.component.span > 1 else {
+      guard let layout = spot.component.layout, layout.span > 1 else {
         continue
       }
 
@@ -275,7 +275,7 @@ open class Controller: NSViewController, SpotsProtocol {
 
   public func windowDidEndLiveResize(_ notification: Notification) {
     for case let spot as Gridable in spots {
-      guard spot.component.span > 1 else {
+      guard let layout = spot.component.layout, layout.span > 1 else {
         continue
       }
 

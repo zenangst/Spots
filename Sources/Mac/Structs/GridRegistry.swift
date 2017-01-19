@@ -10,7 +10,7 @@ public struct GridRegistry {
   }
 
   /// A Key-value dictionary of registred types
-  var storage = [String : Item]()
+  var storage = [String: Item]()
 
   /// The default item for the registry
   var defaultItem: Item? {

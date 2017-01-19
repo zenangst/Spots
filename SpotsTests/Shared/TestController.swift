@@ -6,7 +6,7 @@ import Brick
 class ControllerTests : XCTestCase {
 
   func testSpotAtIndex() {
-    let component = Component(title: "Component")
+    let component = Component(title: "Component", span: 1.0)
     let listSpot = ListSpot(component: component)
     let controller = Controller(spot: listSpot)
     controller.preloadView()
@@ -15,7 +15,7 @@ class ControllerTests : XCTestCase {
   }
 
   func testUpdateSpotAtIndex() {
-    let component = Component(title: "Component")
+    let component = Component(title: "Component", span: 1.0)
     let listSpot = ListSpot(component: component)
     let controller = Controller(spot: listSpot)
     controller.preloadView()
@@ -29,7 +29,7 @@ class ControllerTests : XCTestCase {
   }
 
   func testAppendItemInListSpot() {
-    let component = Component(title: "Component", kind: "list")
+    let component = Component(title: "Component", kind: "list", span: 1.0)
     let listSpot = ListSpot(component: component)
     let controller = Controller(spot: listSpot)
     controller.preloadView()
@@ -48,7 +48,7 @@ class ControllerTests : XCTestCase {
   }
 
   func testAppendOneMoreItemInListSpot() {
-    let component = Component(title: "Component", kind: "list", items: [Item(title: "title1")])
+    let component = Component(title: "Component", kind: "list", span: 1.0, items: [Item(title: "title1")])
     let listSpot = ListSpot(component: component)
     let controller = Controller(spot: listSpot)
     controller.preloadView()
@@ -67,7 +67,7 @@ class ControllerTests : XCTestCase {
   }
 
   func testAppendItemsInListSpot() {
-    let component = Component(title: "Component", kind: "list")
+    let component = Component(title: "Component", kind: "list", span: 1.0)
     let listSpot = ListSpot(component: component)
     let controller = Controller(spot: listSpot)
     controller.preloadView()
@@ -87,7 +87,7 @@ class ControllerTests : XCTestCase {
   }
 
   func testPrependItemsInListSpot() {
-    let component = Component(title: "Component", kind: "list")
+    let component = Component(title: "Component", kind: "list", span: 1.0)
     let listSpot = ListSpot(component: component)
     let controller = Controller(spot: listSpot)
     controller.preloadView()
@@ -107,7 +107,7 @@ class ControllerTests : XCTestCase {
   }
 
   func testPrependMoreItemsInListSpot() {
-    let component = Component(title: "Component", kind: "list", items: [
+    let component = Component(title: "Component", kind: "list", span: 1.0, items: [
       Item(title: "title1", kind: "list"),
       Item(title: "title2", kind: "list")
       ]
@@ -135,7 +135,7 @@ class ControllerTests : XCTestCase {
   }
 
   func testDeleteItemInListSpot() {
-    let component = Component(title: "Component", kind: "list", items: [
+    let component = Component(title: "Component", kind: "list", span: 1.0, items: [
       Item(title: "title1", kind: "list"),
       Item(title: "title2", kind: "list")
       ])
@@ -164,7 +164,7 @@ class ControllerTests : XCTestCase {
   }
 
   func testDeleteItemsInListSpot() {
-    let component = Component(title: "Component", kind: "list", items: [
+    let component = Component(title: "Component", kind: "list", span: 1.0, items: [
       Item(title: "title1", kind: "list"),
       Item(title: "title2", kind: "list")
     ])
@@ -184,7 +184,7 @@ class ControllerTests : XCTestCase {
   }
 
   func testDeleteItemAtIndexInListSpot() {
-    let component = Component(title: "Component", kind: "list", items: [
+    let component = Component(title: "Component", kind: "list", span: 1.0, items: [
       Item(title: "title1", kind: "list"),
       Item(title: "title2", kind: "list"),
       Item(title: "title3", kind: "list"),
@@ -208,7 +208,7 @@ class ControllerTests : XCTestCase {
   }
 
   func testDeleteItemsWithIndexesInListSpot() {
-    let component = Component(title: "Component", kind: "list", items: [
+    let component = Component(title: "Component", kind: "list", span: 1.0, items: [
       Item(title: "title1", kind: "list"),
       Item(title: "title2", kind: "list"),
       Item(title: "title3", kind: "list"),
@@ -231,7 +231,7 @@ class ControllerTests : XCTestCase {
   }
 
   func testAppendItemInGridSpot() {
-    let component = Component(title: "Component", kind: "grid")
+    let component = Component(title: "Component", kind: "grid", span: 1.0)
     let listSpot = ListSpot(component: component)
     let controller = Controller(spot: listSpot)
 
@@ -252,7 +252,7 @@ class ControllerTests : XCTestCase {
   }
 
   func testAppendItemsInGridSpot() {
-    let component = Component(title: "Component", kind: "grid")
+    let component = Component(title: "Component", kind: "grid", span: 1.0)
     let listSpot = ListSpot(component: component)
     let controller = Controller(spot: listSpot)
 
@@ -273,7 +273,7 @@ class ControllerTests : XCTestCase {
   }
 
   func testPrependItemsInGridSpot() {
-    let component = Component(title: "Component", kind: "grid")
+    let component = Component(title: "Component", kind: "grid", span: 1.0)
     let listSpot = ListSpot(component: component)
     let controller = Controller(spot: listSpot)
 
@@ -294,7 +294,7 @@ class ControllerTests : XCTestCase {
   }
 
   func testDeleteItemInGridSpot() {
-    let component = Component(title: "Component", kind: "grid", items: [
+    let component = Component(title: "Component", kind: "grid", span: 1.0, items: [
       Item(title: "title1", kind: "grid"),
       Item(title: "title2", kind: "grid")
       ])
@@ -323,7 +323,7 @@ class ControllerTests : XCTestCase {
   }
 
   func testAppendItemInCarouselSpot() {
-    let component = Component(title: "Component", kind: "carousel")
+    let component = Component(title: "Component", kind: "carousel", span: 1.0)
     let listSpot = GridSpot(component: component)
     let controller = Controller(spot: listSpot)
 
@@ -344,7 +344,7 @@ class ControllerTests : XCTestCase {
   }
 
   func testAppendItemsInCarouselSpot() {
-    let component = Component(title: "Component", kind: "carousel")
+    let component = Component(title: "Component", kind: "carousel", span: 1.0)
     let listSpot = GridSpot(component: component)
     let controller = Controller(spot: listSpot)
 
@@ -366,7 +366,7 @@ class ControllerTests : XCTestCase {
   }
 
   func testPrependItemsInCarouselSpot() {
-    let component = Component(title: "Component", kind: "carousel")
+    let component = Component(title: "Component", kind: "carousel", span: 1.0)
     let listSpot = ListSpot(component: component)
     let controller = Controller(spot: listSpot)
 
@@ -387,7 +387,7 @@ class ControllerTests : XCTestCase {
   }
 
   func testDeleteItemInCarouselSpot() {
-    let component = Component(title: "Component", kind: "carousel", items: [
+    let component = Component(title: "Component", kind: "carousel", span: 1.0, items: [
       Item(title: "title1", kind: "carousel"),
       Item(title: "title2", kind: "carousel")
       ])
@@ -416,7 +416,7 @@ class ControllerTests : XCTestCase {
   }
 
   func testComputedPropertiesOnSpotable() {
-    let component = Component(title: "Component", kind: "list", items: [
+    let component = Component(title: "Component", kind: "list", span: 1.0, items: [
       Item(title: "title1", kind: "list"),
       Item(title: "title2", kind: "list")
       ])
@@ -431,9 +431,9 @@ class ControllerTests : XCTestCase {
   }
 
   func testFindAndFilterSpotWithClosure() {
-    let listSpot = ListSpot(component: Component(title: "ListSpot"))
-    let listSpot2 = ListSpot(component: Component(title: "ListSpot2"))
-    let gridSpot = GridSpot(component: Component(title: "GridSpot", items: [Item(title: "Item")]))
+    let listSpot = ListSpot(component: Component(title: "ListSpot", span: 1.0))
+    let listSpot2 = ListSpot(component: Component(title: "ListSpot2", span: 1.0))
+    let gridSpot = GridSpot(component: Component(title: "GridSpot", span: 1.0, items: [Item(title: "Item")]))
     let controller = Controller(spots: [listSpot, listSpot2, gridSpot])
 
     XCTAssertNotNil(controller.resolve(spot: { $1.component.title == "ListSpot" }))
@@ -449,7 +449,7 @@ class ControllerTests : XCTestCase {
   }
 
   func testJSONInitialiser() {
-    let spot = ListSpot(component: Component())
+    let spot = ListSpot(component: Component(span: 1.0))
     spot.items = [Item(title: "First item")]
     let sourceController = Controller(spot: spot)
     let jsonController = Controller([
@@ -596,6 +596,7 @@ class ControllerTests : XCTestCase {
     let initialComponents = [
       Component(
         kind: "list",
+        span: 1.0,
         items: [
           Item(title: "Fullname", subtitle: "Job title", kind: "image"),
           Item(title: "Follow", kind: "toggle", meta: ["dynamic-height" : true]),
@@ -610,6 +611,7 @@ class ControllerTests : XCTestCase {
     let newComponents = [
       Component(
         kind: "list",
+        span: 1.0,
         items: [
           Item(title: "Fullname", subtitle: "Job title", text: "Bot", kind: "image"),
           Item(title: "Follow", kind: "toggle", meta: ["dynamic-height" : true]),
@@ -647,6 +649,7 @@ class ControllerTests : XCTestCase {
     let initialComponents = [
       Component(
         kind: "list",
+        span: 1.0,
         items: [
           Item(title: "Fullname", subtitle: "Job title", kind: "image"),
           Item(title: "Follow", kind: "toggle", meta: ["dynamic-height" : true]),
@@ -661,6 +664,7 @@ class ControllerTests : XCTestCase {
     let newComponents = [
       Component(
         kind: "list",
+        span: 1.0,
         items: [
           Item(title: "Fullname", subtitle: "Job title", text: "Bot", kind: "image"),
           Item(title: "Follow", kind: "toggle", meta: ["dynamic-height" : true]),
@@ -847,6 +851,7 @@ class ControllerTests : XCTestCase {
     let initialComponents = [
       Component(
         kind: "list",
+        span: 1.0,
         items: [
           Item(title: "Fullname", subtitle: "Job title", kind: "image"),
           Item(title: "Follow", kind: "toggle", meta: ["dynamic-height" : true]),
@@ -861,6 +866,7 @@ class ControllerTests : XCTestCase {
     let newComponents = [
       Component(
         kind: "list",
+        span: 1.0,
         items: [
           Item(title: "Fullname", subtitle: "Job title", text: "Bot", kind: "image"),
           Item(title: "Follow", kind: "toggle", meta: ["dynamic-height" : true]),

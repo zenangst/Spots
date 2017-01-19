@@ -40,7 +40,7 @@ class ListSpotTests: XCTestCase {
   }
 
   func testSafelyResolveKind() {
-    let component = Component(title: "ListSpot", kind: "custom-list", items: [Item(title: "foo", kind: "custom-item-kind")])
+    let component = Component(title: "ListSpot", kind: "custom-list", span: 1.0, items: [Item(title: "foo", kind: "custom-item-kind")])
     let listSpot = ListSpot(component: component)
     let indexPath = IndexPath(row: 0, section: 0)
 

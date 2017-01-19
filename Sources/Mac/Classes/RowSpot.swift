@@ -3,6 +3,10 @@ import Brick
 
 open class RowSpot: NSObject, Gridable {
 
+  public static var layout: Layout = Layout().mutate {
+    $0.span = 1
+  }
+
   /// Child spots
   public var compositeSpots: [CompositeSpot] = []
 
@@ -12,9 +16,9 @@ open class RowSpot: NSObject, Gridable {
   /// - Left: Resolves to CollectionViewLeftLayout
   /// - Flow: Resolves to NSCollectionViewFlowLayout
   public enum LayoutType: String {
-    case grid = "grid"
-    case left = "left"
-    case flow = "flow"
+    case grid
+    case left
+    case flow
   }
 
   public struct Key {
@@ -139,13 +143,12 @@ open class RowSpot: NSObject, Gridable {
    - parameter component: A component struct
    */
   public required init(component: Component) {
-    var component = component
-    component.span = 1
     self.component = component
     self.collectionView = CollectionView()
     self.layout = RowSpot.setupLayout(component)
     super.init()
     self.userInterface = collectionView
+    self.component.layout?.configure(spot: self)
     self.spotDataSource = DataSource(spot: self)
     self.spotDelegate = Delegate(spot: self)
 
@@ -194,19 +197,6 @@ open class RowSpot: NSObject, Gridable {
     userInterface = nil
   }
 
-  @discardableResult fileprivate static func configureLayoutInsets(_ component: Component, layout: NSCollectionViewFlowLayout) -> NSCollectionViewFlowLayout {
-    layout.sectionInset = EdgeInsets(
-      top: component.meta(GridableMeta.Key.sectionInsetTop, Default.sectionInsetTop),
-      left: component.meta(GridableMeta.Key.sectionInsetLeft, Default.sectionInsetLeft),
-      bottom: component.meta(GridableMeta.Key.sectionInsetBottom, Default.sectionInsetBottom),
-      right: component.meta(GridableMeta.Key.sectionInsetRight, Default.sectionInsetRight))
-
-    layout.minimumInteritemSpacing = component.meta(RowSpot.Key.minimumInteritemSpacing, Default.Flow.minimumInteritemSpacing)
-    layout.minimumLineSpacing = component.meta(RowSpot.Key.minimumLineSpacing, Default.Flow.minimumLineSpacing)
-
-    return layout
-  }
-
   /**
    A private method for configuring the layout for the collection view
 
@@ -228,11 +218,9 @@ open class RowSpot: NSObject, Gridable {
       layout = gridLayout
     case .left:
       let leftLayout = CollectionViewLeftLayout()
-      configureLayoutInsets(component, layout: leftLayout)
       layout = leftLayout
     default:
       let flowLayout = NSCollectionViewFlowLayout()
-      configureLayoutInsets(component, layout: flowLayout)
       flowLayout.scrollDirection = .vertical
       layout = flowLayout
     }

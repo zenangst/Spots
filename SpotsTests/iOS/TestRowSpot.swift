@@ -9,7 +9,7 @@ class RowSpotTests: XCTestCase {
   var cachedSpot: RowSpot!
 
   override func setUp() {
-    spot = RowSpot(component: Component())
+    spot = RowSpot(component: Component(span: 1))
     cachedSpot = RowSpot(cacheKey: "cached-row-spot")
     Helper.clearCache(for: cachedSpot.stateCache)
   }
@@ -31,7 +31,7 @@ class RowSpotTests: XCTestCase {
   }
 
   func testConvenienceInitWithSectionInsets() {
-    let component = Component()
+    let component = Component(span: 1)
     let spot = RowSpot(component,
                         top: 5, left: 10, bottom: 5, right: 10, itemSpacing: 5)
 
@@ -53,7 +53,7 @@ class RowSpotTests: XCTestCase {
   }
 
   func testSafelyResolveKind() {
-    let component = Component(title: "RowSpot", kind: "custom-grid", items: [Item(title: "foo", kind: "custom-item-kind")])
+    let component = Component(title: "RowSpot", kind: "custom-grid", span: 1, items: [Item(title: "foo", kind: "custom-item-kind")])
     let rowSpot = RowSpot(component: component)
     let indexPath = IndexPath(row: 0, section: 0)
 
@@ -73,7 +73,7 @@ class RowSpotTests: XCTestCase {
 
   func testAppendItem() {
     let item = Item(title: "test")
-    let spot = RowSpot(component: Component())
+    let spot = RowSpot(component: Component(span: 1))
     var exception: XCTestExpectation? = self.expectation(description: "Append item")
     spot.append(item) {
       XCTAssert(spot.component.items.first! == item)
@@ -85,7 +85,7 @@ class RowSpotTests: XCTestCase {
 
   func testAppendItems() {
     let items = [Item(title: "test"), Item(title: "test 2")]
-    let spot = RowSpot(component: Component())
+    let spot = RowSpot(component: Component(span: 1))
     var exception: XCTestExpectation? = self.expectation(description: "Append items")
     spot.append(items) {
       XCTAssert(spot.component.items == items)
@@ -97,7 +97,7 @@ class RowSpotTests: XCTestCase {
 
   func testInsertItem() {
     let item = Item(title: "test")
-    let spot = RowSpot(component: Component())
+    let spot = RowSpot(component: Component(span: 1))
     var exception: XCTestExpectation? = self.expectation(description: "Insert item")
     spot.insert(item, index: 0) {
       XCTAssert(spot.component.items.first! == item)
@@ -109,7 +109,7 @@ class RowSpotTests: XCTestCase {
 
   func testPrependItems() {
     let items = [Item(title: "test"), Item(title: "test 2")]
-    let spot = RowSpot(component: Component())
+    let spot = RowSpot(component: Component(span: 1))
     var exception: XCTestExpectation? = self.expectation(description: "Prepend items")
     spot.prepend(items) {
       XCTAssert(spot.component.items == items)
@@ -121,7 +121,7 @@ class RowSpotTests: XCTestCase {
 
   func testSpotCollectionDelegate() {
     let items = [Item(title: "Test item")]
-    let spot = RowSpot(component: Component(items: items))
+    let spot = RowSpot(component: Component(span: 1, items: items))
     spot.render().frame.size = CGSize(width: 100, height: 100)
     spot.render().layoutSubviews()
     

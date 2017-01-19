@@ -26,7 +26,7 @@ public extension Spotable {
 
       if numberOfItems == 0 {
         weakSelf.userInterface?.reloadDataSource()
-        weakSelf.updateHeight() {
+        weakSelf.updateHeight {
           weakSelf.afterUpdate()
           completion?()
         }
@@ -34,7 +34,7 @@ public extension Spotable {
         Dispatch.mainQueue {
           weakSelf.configureItem(at: numberOfItems, usesViewSize: true)
           weakSelf.userInterface?.insert([numberOfItems], withAnimation: animation, completion: nil)
-          weakSelf.updateHeight() {
+          weakSelf.updateHeight {
             weakSelf.afterUpdate()
             weakSelf.render().superview?.layoutSubviews()
             completion?()
@@ -68,12 +68,12 @@ public extension Spotable {
 
       if numberOfItems > 0 {
         weakSelf.userInterface?.insert(indexes, withAnimation: animation, completion: nil)
-        weakSelf.updateHeight() {
+        weakSelf.updateHeight {
           completion?()
         }
       } else {
         weakSelf.userInterface?.reloadDataSource()
-        weakSelf.updateHeight() {
+        weakSelf.updateHeight {
           weakSelf.render().superview?.layoutSubviews()
           completion?()
         }
@@ -397,9 +397,7 @@ public extension Spotable {
 
   /// Return a dictionary representation of Spotable object
   public var dictionary: [String : Any] {
-    get {
-      return component.dictionary
-    }
+    return component.dictionary
   }
 
   /// Reloads a spot only if it changes
@@ -446,7 +444,7 @@ public extension Spotable {
         }
 
         weakSelf.reload(indexes, withAnimation: animation) {
-          weakSelf.updateHeight() {
+          weakSelf.updateHeight {
             weakSelf.afterUpdate()
             weakSelf.cache()
             completion?()

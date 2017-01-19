@@ -27,7 +27,7 @@ class StateCacheTests : XCTestCase {
     /// Check that cache is empty
     XCTAssertEqual(controller.stateCache!.load().count, 0)
 
-    controller.spots = [ListSpot(component: Component())]
+    controller.spots = [ListSpot(component: Component(span: 1.0))]
 
     let exception = self.expectation(description: "Append item to Spotable object")
     controller.append(Item(title: "foo"), spotIndex: 0, withAnimation: .automatic) {

@@ -3,6 +3,8 @@ import Brick
 
 open class CarouselSpot: NSObject, Gridable {
 
+  public static var layout: Layout = Layout()
+
   /// Child spots
   public var compositeSpots: [CompositeSpot] = []
 
@@ -110,6 +112,7 @@ open class CarouselSpot: NSObject, Gridable {
     self.collectionView = CollectionView()
     super.init()
     self.userInterface = collectionView
+    self.component.layout?.configure(spot: self)
     self.spotDataSource = DataSource(spot: self)
     self.spotDelegate = Delegate(spot: self)
 
@@ -121,11 +124,15 @@ open class CarouselSpot: NSObject, Gridable {
     registerComposite(view: GridComposite.self)
     registerAndPrepare()
     setupCollectionView()
-    configureLayoutInsets(component)
 
-    if let layout = layout as? NSCollectionViewFlowLayout, !component.title.isEmpty {
-      configureTitleView(layout.sectionInset)
+    if let layout = layout as? FlowLayout {
+      layout.scrollDirection = .horizontal
+
+      if !component.title.isEmpty {
+        configureTitleView(layout.sectionInset)
+      }
     }
+
     scrollView.addSubview(titleView)
     scrollView.addSubview(lineView)
     scrollView.documentView = collectionView
@@ -149,19 +156,6 @@ open class CarouselSpot: NSObject, Gridable {
     spotDataSource = nil
     spotDelegate = nil
     userInterface = nil
-  }
-
-  fileprivate func configureLayoutInsets(_ component: Component) {
-    guard let layout = layout as? NSCollectionViewFlowLayout else { return }
-
-    layout.sectionInset = EdgeInsets(
-      top: component.meta(GridableMeta.Key.sectionInsetTop, Default.sectionInsetTop),
-      left: component.meta(GridableMeta.Key.sectionInsetLeft, Default.sectionInsetLeft),
-      bottom: component.meta(GridableMeta.Key.sectionInsetBottom, Default.sectionInsetBottom),
-      right: component.meta(GridableMeta.Key.sectionInsetRight, Default.sectionInsetRight))
-    layout.minimumInteritemSpacing = component.meta(Key.minimumInteritemSpacing, Default.minimumInteritemSpacing)
-    layout.minimumLineSpacing = component.meta(Key.minimumLineSpacing, Default.minimumLineSpacing)
-    layout.scrollDirection = .horizontal
   }
 
   /// Configure collection view delegate, data source and layout
@@ -196,20 +190,20 @@ open class CarouselSpot: NSObject, Gridable {
       configureTitleView(layoutInsets)
     }
 
-    if component.span > 0 {
-      component.items.enumerated().forEach {
-        component.items[$0.offset].size.width = size.width / CGFloat(component.span)
+    if let componentLayout = component.layout {
+      if componentLayout.span > 0 {
+        component.items.enumerated().forEach {
+          component.items[$0.offset].size.width = size.width / CGFloat(componentLayout.span)
+        }
+      } else if componentLayout.span == 1 {
+        scrollView.frame.size.width = size.width - layoutInsets.right
+        scrollView.scrollingEnabled = (component.items.count > 1)
+        scrollView.hasHorizontalScroller = (component.items.count > 1)
+        component.items.enumerated().forEach {
+          component.items[$0.offset].size.width = size.width / CGFloat(componentLayout.span)
+        }
+        layout.invalidateLayout()
       }
-    }
-
-    if component.span == 1 {
-      scrollView.frame.size.width = size.width - layoutInsets.right
-      scrollView.scrollingEnabled = (component.items.count > 1)
-      scrollView.hasHorizontalScroller = (component.items.count > 1)
-      component.items.enumerated().forEach {
-        component.items[$0.offset].size.width = size.width / CGFloat(component.span)
-      }
-      layout.invalidateLayout()
     }
   }
 
@@ -217,9 +211,11 @@ open class CarouselSpot: NSObject, Gridable {
   ///
   /// - parameter size: The size of the superview
   open func setup(_ size: CGSize) {
-    if component.span > 0 {
-      component.items.enumerated().forEach {
-        component.items[$0.offset].size.width = size.width / CGFloat(component.span)
+    if let layout = component.layout {
+      if layout.span > 0 {
+        component.items.enumerated().forEach {
+          component.items[$0.offset].size.width = size.width / CGFloat(layout.span)
+        }
       }
     }
 
@@ -243,9 +239,16 @@ open class CarouselSpot: NSObject, Gridable {
   }
 
   public func sizeForItem(at indexPath: IndexPath) -> CGSize {
-    var width = component.span > 0
-      ? collectionView.frame.width / CGFloat(component.span)
-      : collectionView.frame.width
+
+    var width: CGFloat
+
+    if let layout = component.layout {
+      width = layout.span > 0
+        ? collectionView.frame.width / CGFloat(layout.span)
+        : collectionView.frame.width
+    } else {
+      width = collectionView.frame.width
+    }
 
     if let layout = layout as? NSCollectionViewFlowLayout {
       width -= layout.sectionInset.left - layout.sectionInset.right

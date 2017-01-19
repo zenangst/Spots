@@ -350,7 +350,7 @@ extension SpotsProtocol {
           self?.finishReloading(spot: spot, withCompletion: completion)
         }
       } else {
-        spot.updateHeight() { [weak self] in
+        spot.updateHeight { [weak self] in
           self?.finishReloading(spot: spot, withCompletion: completion)
         }
       }
@@ -388,7 +388,7 @@ extension SpotsProtocol {
 
       for (index, change) in changes.enumerated() {
         switch change {
-        case .identifier, .title, .kind, .span, .header, .meta:
+        case .identifier, .title, .kind, .layout, .header, .meta:
           weakSelf.replaceSpot(index, newComponents: newComponents, yOffset: &yOffset)
         case .new:
           weakSelf.newSpot(index, newComponents: newComponents, yOffset: &yOffset)
@@ -544,7 +544,7 @@ extension SpotsProtocol {
       #endif
 
       spot.reload(nil, withAnimation: animation) {
-        spot.updateHeight() {
+        spot.updateHeight {
           spot.afterUpdate()
           completion?()
           spot.render().layoutIfNeeded()

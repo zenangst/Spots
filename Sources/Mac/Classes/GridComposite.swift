@@ -12,7 +12,7 @@ public class GridComposite: NSCollectionViewItem, Composable {
   open lazy var customView: FlippedView = FlippedView()
 
   static open var isFlipped: Bool {
-    get { return true }
+    return true
   }
 
   open override func loadView() {

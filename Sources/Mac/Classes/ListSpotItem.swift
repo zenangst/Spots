@@ -4,9 +4,7 @@ import Brick
 open class ListSpotItem: NSTableRowView, SpotConfigurable {
 
   override open var isFlipped: Bool {
-    get {
-      return true
-    }
+    return true
   }
 
   open override var isSelected: Bool {

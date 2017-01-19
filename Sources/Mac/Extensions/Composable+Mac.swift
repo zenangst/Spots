@@ -17,7 +17,7 @@ public extension Composable {
     let width = contentView.frame.width
     var height: CGFloat = 0.0
 
-    compositeSpots.enumerated().forEach { index, compositeSpot in
+    compositeSpots.enumerated().forEach { _, compositeSpot in
       compositeSpot.spot.setup(size)
       compositeSpot.spot.layout(size)
 

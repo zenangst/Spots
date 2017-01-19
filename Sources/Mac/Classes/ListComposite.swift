@@ -10,6 +10,6 @@ public class ListComposite: NSTableRowView, Composable {
   }
 
   static open var isFlipped: Bool {
-    get { return true }
+    return true
   }
 }

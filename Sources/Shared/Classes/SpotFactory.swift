@@ -6,7 +6,7 @@ public struct Factory {
   /// Defaults spots, it includes carousel, list, grid and view
   private static var spots: [String: Spotable.Type] = [
     "carousel": CarouselSpot.self,
-    "list" : ListSpot.self,
+    "list": ListSpot.self,
     "grid": GridSpot.self,
     "row": RowSpot.self,
     "view": ViewSpot.self

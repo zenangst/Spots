@@ -9,7 +9,7 @@ extension Listable {
    */
   public func process(_ updates: [Int], withAnimation animation: Animation = .automatic, completion: Completion) {
     guard !updates.isEmpty else {
-      updateHeight() {
+      updateHeight {
         completion?()
       }
       return
@@ -51,5 +51,9 @@ extension Listable {
         }
       }
     }
+  }
+
+  public func configure(with layout: Layout) {
+    layout.configure(spot: self)
   }
 }

@@ -44,7 +44,7 @@ public extension SpotsProtocol {
 
   /// A convenience property for getting a dictionary representation of the controller wihtout item reduction.
   public var dictionary: [String : Any] {
-    get { return dictionary() }
+    return dictionary()
   }
 
   /// Produce a dictionary representation of the controller.
@@ -53,7 +53,7 @@ public extension SpotsProtocol {
   ///
   /// - returns: A dictionary representation of the controller.
   public func dictionary(_ amountOfItems: Int? = nil) -> [String : Any] {
-    var result = [[String : Any]]()
+    var result = [[String: Any]]()
 
     for spot in spots {
       var spotJSON = spot.component.dictionary(amountOfItems)
@@ -62,7 +62,7 @@ public extension SpotsProtocol {
           .filter({ $0.itemIndex == item.index })
 
         var newItem = item
-        var children = [[String : Any]]()
+        var children = [[String: Any]]()
 
         for compositeSpot in results {
           children.append(compositeSpot.spot.dictionary)
@@ -78,7 +78,7 @@ public extension SpotsProtocol {
       result.append(spotJSON)
     }
 
-    return ["components" : result as AnyObject ]
+    return ["components": result as AnyObject ]
   }
 
   /// Resolve UI component based on a predicate.
