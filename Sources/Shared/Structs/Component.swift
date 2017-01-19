@@ -199,6 +199,8 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
 
     if layout == nil {
       self.layout = Layout()
+    } else {
+      self.layout = layout
     }
 
     if let span = span, layout == nil {
