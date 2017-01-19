@@ -70,10 +70,10 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
     }
     set {
       if layout == nil {
-        self.layout = Layout()
+        self.layout = Layout(span: newValue)
+      } else {
+        self.layout?.span = newValue
       }
-
-      self.layout?.span = newValue
     }
   }
 
@@ -162,8 +162,8 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
 
     if Component.legacyMapping {
       self.layout = Layout(map.property("meta") ?? [:])
-    } else {
-      self.layout = Layout(map.property("layout") ?? [:])
+    } else if let layoutDictionary: [String : Any] = map.property("layout") {
+      self.layout = Layout(layoutDictionary)
     }
 
     let width: Double = map.resolve(keyPath: "size.width") ?? 0.0
@@ -178,6 +178,7 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
   /// - parameter header: Determines which header item that should be used for the component.
   /// - parameter kind: The type of Component that should be used.
   /// - parameter layout: Configures the layout properties for the component.
+  /// - parameter span: Configures the layout span for the component.
   /// - parameter items: A collection of view models
   /// - parameter meta: A key-value dictionary for any additional information
   ///
@@ -193,17 +194,17 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
     self.identifier = identifier
     self.title = title
     self.kind = kind
-    self.header = header
     self.layout = layout
+    self.header = header
     self.items = items
     self.meta = meta
 
     if let span = span, layout == nil {
-      self.layout = Layout(["span" : span])
+      self.layout = Layout(span: span)
+    }
 
-      if Component.legacyMapping {
-        self.layout?.configure(withJSON: meta)
-      }
+    if Component.legacyMapping {
+      self.layout?.configure(withJSON: meta)
     }
   }
 

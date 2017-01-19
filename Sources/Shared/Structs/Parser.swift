@@ -16,7 +16,9 @@ public struct Parser {
       components[index].index = index
     }
 
-    return components.map { Factory.resolve(component: $0) }
+    return components.map {
+      Factory.resolve(component: $0)
+    }
   }
 
   /// Parse JSON into a collection of Components.

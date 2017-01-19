@@ -41,8 +41,25 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
     ]
   }
 
-  public init(_ map: [String : Any] = [:]) {
+  public init() {
+    self.span = 0.0
+    self.dynamicSpan = false
+    self.itemSpacing = 0.0
+    self.lineSpacing = 0.0
+    self.sectionInset = SectionInset()
+    self.contentInset = ContentInset()
+  }
 
+  public init(span: Double = 0.0, dynamicSpan: Bool = false, itemSpacing: Double = 0.0, lineSpacing: Double = 0.0, sectionInset: SectionInset = SectionInset(), contentInset: ContentInset = ContentInset()) {
+    self.span = span
+    self.dynamicSpan = dynamicSpan
+    self.itemSpacing = itemSpacing
+    self.lineSpacing = lineSpacing
+    self.sectionInset = sectionInset
+    self.contentInset = contentInset
+  }
+
+  public init(_ map: [String : Any] = [:]) {
     switch Component.legacyMapping {
     case true:
       self.sectionInset = SectionInset(map)
@@ -64,7 +81,6 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
   }
 
   public mutating func configure(withJSON map: [String : Any]) {
-
     switch Component.legacyMapping {
     case true:
       self.sectionInset = SectionInset(map)
@@ -92,6 +108,14 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
 
   public static func == (lhs: Layout, rhs: Layout) -> Bool {
     return lhs.contentInset == rhs.contentInset &&
-    lhs.sectionInset == rhs.sectionInset
+    lhs.sectionInset == rhs.sectionInset &&
+    lhs.itemSpacing == rhs.itemSpacing &&
+    lhs.lineSpacing == rhs.lineSpacing &&
+    lhs.span == rhs.span &&
+    lhs.dynamicSpan == rhs.dynamicSpan
+  }
+
+  public static func != (lhs: Layout, rhs: Layout) -> Bool {
+    return !(lhs == rhs)
   }
 }
