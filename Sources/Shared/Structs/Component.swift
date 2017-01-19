@@ -194,16 +194,19 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
     self.title = title
     self.kind = kind
     self.header = header
-    self.layout = layout
     self.items = items
     self.meta = meta
 
-    if let span = span, layout == nil {
-      self.layout = Layout(["span" : span])
+    if layout == nil {
+      self.layout = Layout()
+    }
 
-      if Component.legacyMapping {
-        self.layout?.configure(withJSON: meta)
-      }
+    if let span = span, layout == nil {
+      self.layout?.span = span
+    }
+
+    if Component.legacyMapping {
+      self.layout?.configure(withJSON: meta)
     }
   }
 
