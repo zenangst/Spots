@@ -41,8 +41,16 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
     ]
   }
 
-  public init(_ map: [String : Any] = [:]) {
+  public init(span: Double = 0.0, dynamicSpan: Bool = false, itemSpacing: Double = 0.0, lineSpacing: Double = 0.0, sectionInset: SectionInset = SectionInset(), contentInset: ContentInset = ContentInset()) {
+    self.span = span
+    self.dynamicSpan = dynamicSpan
+    self.itemSpacing = itemSpacing
+    self.lineSpacing = lineSpacing
+    self.sectionInset = sectionInset
+    self.contentInset = contentInset
+  }
 
+  public init(_ map: [String : Any] = [:]) {
     switch Component.legacyMapping {
     case true:
       self.sectionInset = SectionInset(map)
@@ -64,7 +72,6 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
   }
 
   public mutating func configure(withJSON map: [String : Any]) {
-
     switch Component.legacyMapping {
     case true:
       self.sectionInset = SectionInset(map)
