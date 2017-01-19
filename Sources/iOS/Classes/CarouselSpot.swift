@@ -351,13 +351,12 @@ extension Delegate: UIScrollViewDelegate {
     }
 
     #if os(iOS)
-    if let layout = spot.component.layout {
-      let floatIndex = ceil(CGFloat(index) / CGFloat(layout.span))
+      if let layout = spot.component.layout {
+        let floatIndex = ceil(CGFloat(index) / CGFloat(layout.span))
         spot.pageControl.currentPage = Int(floatIndex)
-
-    }
+      }
     #endif
-
+    
     paginatedEndScrolling()
   }
 }
