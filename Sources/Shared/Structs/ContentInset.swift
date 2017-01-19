@@ -30,6 +30,11 @@ public struct ContentInset: Mappable, DictionaryConvertible, Equatable {
     self.right = right
   }
 
+  public init(_ block: (inout ContentInset) -> Void) {
+    self.init([:])
+    block(&self)
+  }
+
   public init(_ map: [String : Any]) {
     self.top    <- map.property(Key.top.rawValue)
     self.left   <- map.property(Key.left.rawValue)
