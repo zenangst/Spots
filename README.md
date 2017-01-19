@@ -237,6 +237,8 @@ All methods take an `Item` as their first argument, the second is the index of t
 
 ## Layout
 
+#### Available in version 5.8.x >
+
 Configuring layout for different components can be tricky, Spots helps to solve this problem with a neat and tidy `Layout` struct that lives on `Component`. It is used to customize your UI related elements. It can set `contentInset`, `sectionInset` and collection view related properties like `minimumInteritemSpacing` and `minimumLineSpacing`. It works great both programmatical and with JSON. It is supported on all three platforms.
 
 ```swift
@@ -268,6 +270,12 @@ let jsonLayout = Layout(
     ]
   ]
 )
+```
+
+**If you update to a newer version of Spots, you might want to enable `legacyMapping` on `Component`.
+
+```swift
+Component.legacyMapping = true
 ```
 
 ## Usage
