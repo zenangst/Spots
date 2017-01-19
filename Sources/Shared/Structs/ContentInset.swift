@@ -78,7 +78,7 @@ public struct ContentInset: Mappable, Equatable {
   /// - parameter lhs: Left hand content inset.
   /// - parameter rhs: Right hand content inset.
   ///
-  /// - returns: A boolean value, true if both content insts are equal.
+  /// - returns: A boolean value, true if both content insets are equal.
   public static func==(lhs: ContentInset, rhs: ContentInset) -> Bool {
     return lhs.top == rhs.top &&
     lhs.left == rhs.left &&
