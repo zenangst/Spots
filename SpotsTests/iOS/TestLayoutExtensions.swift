@@ -39,4 +39,16 @@ class LayoutExtensionsTests: XCTestCase {
     XCTAssertEqual(gridSpot.layout.sectionInset.bottom, CGFloat(layout.sectionInset.bottom))
     XCTAssertEqual(gridSpot.layout.sectionInset.right, CGFloat(layout.sectionInset.right))
   }
+
+  func testConfigureListableSpot() {
+    let listSpot = ListSpot(component: Component(span: 1))
+    let layout = Layout(json)
+
+    layout.configure(spot: listSpot)
+
+    XCTAssertEqual(listSpot.render().contentInset.top, CGFloat(layout.contentInset.top))
+    XCTAssertEqual(listSpot.render().contentInset.left, CGFloat(layout.contentInset.left))
+    XCTAssertEqual(listSpot.render().contentInset.bottom, CGFloat(layout.contentInset.bottom))
+    XCTAssertEqual(listSpot.render().contentInset.right, CGFloat(layout.contentInset.right))
+  }
 }
