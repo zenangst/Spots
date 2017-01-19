@@ -187,6 +187,9 @@
 		BD45D9911E30A57B00C2D6B2 /* TestSectionInset.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD45D9901E30A57B00C2D6B2 /* TestSectionInset.swift */; };
 		BD45D9921E30A57B00C2D6B2 /* TestSectionInset.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD45D9901E30A57B00C2D6B2 /* TestSectionInset.swift */; };
 		BD45D9931E30A57B00C2D6B2 /* TestSectionInset.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD45D9901E30A57B00C2D6B2 /* TestSectionInset.swift */; };
+		BD45D9951E30A8A000C2D6B2 /* TestContentInset.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD45D9941E30A8A000C2D6B2 /* TestContentInset.swift */; };
+		BD45D9961E30A8A000C2D6B2 /* TestContentInset.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD45D9941E30A8A000C2D6B2 /* TestContentInset.swift */; };
+		BD45D9971E30A8A000C2D6B2 /* TestContentInset.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD45D9941E30A8A000C2D6B2 /* TestContentInset.swift */; };
 		BD63B0501DD8D30400C52D73 /* UserInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD63B04F1DD8D30400C52D73 /* UserInterface.swift */; };
 		BD63B0511DD8D30400C52D73 /* UserInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD63B04F1DD8D30400C52D73 /* UserInterface.swift */; };
 		BD63B0521DD8D30400C52D73 /* UserInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD63B04F1DD8D30400C52D73 /* UserInterface.swift */; };
@@ -389,6 +392,7 @@
 		BD45D98A1E30909700C2D6B2 /* TestLayoutExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestLayoutExtensions.swift; sourceTree = "<group>"; };
 		BD45D98E1E30935500C2D6B2 /* TestLayoutExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestLayoutExtensions.swift; sourceTree = "<group>"; };
 		BD45D9901E30A57B00C2D6B2 /* TestSectionInset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSectionInset.swift; sourceTree = "<group>"; };
+		BD45D9941E30A8A000C2D6B2 /* TestContentInset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestContentInset.swift; sourceTree = "<group>"; };
 		BD63B04F1DD8D30400C52D73 /* UserInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInterface.swift; sourceTree = "<group>"; };
 		BD677E841DC616B2006D1654 /* TestSpotable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSpotable.swift; sourceTree = "<group>"; };
 		BD677E881DC61EFC006D1654 /* TestStateCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestStateCache.swift; sourceTree = "<group>"; };
@@ -850,6 +854,7 @@
 				BD677E881DC61EFC006D1654 /* TestStateCache.swift */,
 				BD10D5211D79533C00DF8E9B /* TestViewModelExtensions.swift */,
 				BD45D9901E30A57B00C2D6B2 /* TestSectionInset.swift */,
+				BD45D9941E30A8A000C2D6B2 /* TestContentInset.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -1303,6 +1308,7 @@
 				BDD9ABCF1DB53475005D8C04 /* TestCarouselComposite.swift in Sources */,
 				BD6FBEF21E12B5F000AA58BD /* TestComposition.swift in Sources */,
 				BDD9ABCC1DB533CE005D8C04 /* TestGridComposite.swift in Sources */,
+				BD45D9971E30A8A000C2D6B2 /* TestContentInset.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1407,6 +1413,7 @@
 				BDD9ABCE1DB53475005D8C04 /* TestCarouselComposite.swift in Sources */,
 				BD45D9911E30A57B00C2D6B2 /* TestSectionInset.swift in Sources */,
 				BDA8DAF51DCF3AED00A4A8DD /* TestRowSpot.swift in Sources */,
+				BD45D9951E30A8A000C2D6B2 /* TestContentInset.swift in Sources */,
 				BDD9ABCB1DB533CE005D8C04 /* TestGridComposite.swift in Sources */,
 				BDEFF5521DD1DA8000FC0537 /* TestDelegate.swift in Sources */,
 			);
@@ -1499,6 +1506,7 @@
 				BD01BD121DAEA523009C10FF /* TestParser.swift in Sources */,
 				BD45D98F1E30935500C2D6B2 /* TestLayoutExtensions.swift in Sources */,
 				BD45D9881E30906300C2D6B2 /* TestLayout.swift in Sources */,
+				BD45D9961E30A8A000C2D6B2 /* TestContentInset.swift in Sources */,
 				BD45D9921E30A57B00C2D6B2 /* TestSectionInset.swift in Sources */,
 				BD6FBEF11E12B5F000AA58BD /* TestComposition.swift in Sources */,
 				BDDF2CD01DC7C50700B766BA /* TestAnimations.swift in Sources */,
