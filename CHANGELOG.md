@@ -2,7 +2,14 @@
 
 ## [Unreleased](https://github.com/hyperoslo/Spots/tree/HEAD)
 
-[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.8.1...HEAD)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.8.2...HEAD)
+
+**Merged pull requests:**
+
+- Add prepare method for missing layouts on Component [\#420](https://github.com/hyperoslo/Spots/pull/420) ([zenangst](https://github.com/zenangst))
+
+## [5.8.2](https://github.com/hyperoslo/Spots/tree/5.8.2) (2017-01-19)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.8.1...5.8.2)
 
 **Merged pull requests:**
 
