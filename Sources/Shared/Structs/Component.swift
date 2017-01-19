@@ -286,11 +286,11 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
     }
   }
 
-  mutating func add(layout: Layout) {
+  mutating public func add(layout: Layout) {
     self.layout = layout
   }
 
-  mutating func configure(with layout: Layout) -> Component {
+  mutating public func configure(with layout: Layout) -> Component {
     var copy = self
     copy.layout = layout
     return copy
