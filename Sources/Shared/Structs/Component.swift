@@ -162,8 +162,8 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
 
     if Component.legacyMapping {
       self.layout = Layout(map.property("meta") ?? [:])
-    } else {
-      self.layout = Layout(map.property("layout") ?? [:])
+    } else if let layoutDictionary: [String : Any] = map.property("layout") {
+      self.layout = Layout(layoutDictionary)
     }
 
     let width: Double = map.resolve(keyPath: "size.width") ?? 0.0
@@ -194,18 +194,13 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
     self.identifier = identifier
     self.title = title
     self.kind = kind
+    self.layout = layout
     self.header = header
     self.items = items
     self.meta = meta
 
-    if layout == nil {
-      self.layout = Layout()
-    } else {
-      self.layout = layout
-    }
-
     if let span = span, layout == nil {
-      self.layout?.span = span
+      self.layout = Layout(span: span)
     }
 
     if Component.legacyMapping {
