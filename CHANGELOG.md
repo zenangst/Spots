@@ -2,7 +2,24 @@
 
 ## [Unreleased](https://github.com/hyperoslo/Spots/tree/HEAD)
 
-[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.7.1...HEAD)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.7.3...HEAD)
+
+**Merged pull requests:**
+
+- Feature layout [\#416](https://github.com/hyperoslo/Spots/pull/416) ([zenangst](https://github.com/zenangst))
+
+## [5.7.3](https://github.com/hyperoslo/Spots/tree/5.7.3) (2017-01-17)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.7.2...5.7.3)
+
+**Merged pull requests:**
+
+- Improve/refresh control [\#414](https://github.com/hyperoslo/Spots/pull/414) ([zenangst](https://github.com/zenangst))
+- refactor: Fix typos in UITableView+UserInterface [\#413](https://github.com/hyperoslo/Spots/pull/413) ([aashishdhawan](https://github.com/aashishdhawan))
+- Bug/fix crash [\#412](https://github.com/hyperoslo/Spots/pull/412) ([aashishdhawan](https://github.com/aashishdhawan))
+- Change type precedence [\#411](https://github.com/hyperoslo/Spots/pull/411) ([zenangst](https://github.com/zenangst))
+
+## [5.7.2](https://github.com/hyperoslo/Spots/tree/5.7.2) (2017-01-11)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.7.1...5.7.2)
 
 **Merged pull requests:**
 
