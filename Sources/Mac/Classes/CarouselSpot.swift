@@ -195,9 +195,7 @@ open class CarouselSpot: NSObject, Gridable {
         component.items.enumerated().forEach {
           component.items[$0.offset].size.width = size.width / CGFloat(componentLayout.span)
         }
-      }
-
-      if componentLayout.span == 1 {
+      } else if componentLayout.span == 1 {
         scrollView.frame.size.width = size.width - layoutInsets.right
         scrollView.scrollingEnabled = (component.items.count > 1)
         scrollView.hasHorizontalScroller = (component.items.count > 1)
