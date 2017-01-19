@@ -393,6 +393,8 @@
 		BD45D98E1E30935500C2D6B2 /* TestLayoutExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestLayoutExtensions.swift; sourceTree = "<group>"; };
 		BD45D9901E30A57B00C2D6B2 /* TestSectionInset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSectionInset.swift; sourceTree = "<group>"; };
 		BD45D9941E30A8A000C2D6B2 /* TestContentInset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestContentInset.swift; sourceTree = "<group>"; };
+		BD45D9981E30B0F700C2D6B2 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		BD45D9991E30B0F700C2D6B2 /* Spots.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = Spots.podspec; sourceTree = "<group>"; };
 		BD63B04F1DD8D30400C52D73 /* UserInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInterface.swift; sourceTree = "<group>"; };
 		BD677E841DC616B2006D1654 /* TestSpotable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSpotable.swift; sourceTree = "<group>"; };
 		BD677E881DC61EFC006D1654 /* TestStateCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestStateCache.swift; sourceTree = "<group>"; };
@@ -772,6 +774,8 @@
 		D58477FF1C43FEB8006EBA49 = {
 			isa = PBXGroup;
 			children = (
+				BD45D9981E30B0F700C2D6B2 /* README.md */,
+				BD45D9991E30B0F700C2D6B2 /* Spots.podspec */,
 				BDD63FAA1D941A4A008E885A /* Frameworks-tvOS */,
 				D58478F11C44072B006EBA49 /* Frameworks-iOS */,
 				D58479001C44078B006EBA49 /* Frameworks-Mac */,
