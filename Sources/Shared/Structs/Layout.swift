@@ -42,8 +42,16 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
   }
 
   public init(_ map: [String : Any] = [:]) {
-    self.sectionInset = SectionInset(map.property(SectionInset.rootKey) ?? [:])
-    self.contentInset = ContentInset(map.property(ContentInset.rootKey) ?? [:])
+
+    switch Component.legacyMapping {
+    case true:
+      self.sectionInset = SectionInset(map)
+      self.contentInset = ContentInset(map)
+    case false:
+      self.sectionInset = SectionInset(map.property(SectionInset.rootKey) ?? [:])
+      self.contentInset = ContentInset(map.property(ContentInset.rootKey) ?? [:])
+    }
+
     self.itemSpacing <- map.property(Keys.itemSpacing.rawValue)
     self.lineSpacing <- map.property(Keys.lineSpacing.rawValue)
     self.dynamicSpan <- map.property(Keys.dynamicSpan.rawValue)
@@ -56,8 +64,16 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
   }
 
   public mutating func configure(withJSON map: [String : Any]) {
-    self.sectionInset = SectionInset(map.property(SectionInset.rootKey) ?? [:])
-    self.contentInset = ContentInset(map.property(ContentInset.rootKey) ?? [:])
+
+    switch Component.legacyMapping {
+    case true:
+      self.sectionInset = SectionInset(map)
+      self.contentInset = ContentInset(map)
+    case false:
+      self.sectionInset = SectionInset(map.property(SectionInset.rootKey) ?? [:])
+      self.contentInset = ContentInset(map.property(ContentInset.rootKey) ?? [:])
+    }
+
     self.itemSpacing <- map.property(Keys.itemSpacing.rawValue)
     self.lineSpacing <- map.property(Keys.lineSpacing.rawValue)
     self.dynamicSpan <- map.property(Keys.dynamicSpan.rawValue)

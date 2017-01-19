@@ -57,10 +57,19 @@ public struct SectionInset: Mappable, Equatable {
   ///
   /// - Parameter map: A JSON dictionary that will be mapped into the section insets.
   public init(_ map: [String : Any]) {
-    self.top    <- map.property(Key.top.rawValue)
-    self.left   <- map.property(Key.left.rawValue)
-    self.bottom <- map.property(Key.bottom.rawValue)
-    self.right  <- map.property(Key.right.rawValue)
+
+    switch Component.legacyMapping {
+    case true:
+      self.top    <- map.property(GridableMeta.Key.sectionInsetTop)
+      self.left   <- map.property(GridableMeta.Key.sectionInsetLeft)
+      self.bottom <- map.property(GridableMeta.Key.sectionInsetBottom)
+      self.right  <- map.property(GridableMeta.Key.sectionInsetRight)
+    case false:
+      self.top    <- map.property(Key.top.rawValue)
+      self.left   <- map.property(Key.left.rawValue)
+      self.bottom <- map.property(Key.bottom.rawValue)
+      self.right  <- map.property(Key.right.rawValue)
+    }
   }
 
   /// Configure struct with a JSON dictionary.

@@ -200,6 +200,10 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
 
     if let span = span, layout == nil {
       self.layout = Layout(["span" : span])
+
+      if Component.legacyMapping {
+        self.layout?.configure(withJSON: meta)
+      }
     }
   }
 
