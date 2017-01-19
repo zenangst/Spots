@@ -33,6 +33,17 @@ class LayoutTests: XCTestCase {
     XCTAssertEqual(layout.sectionInset, SectionInset())
   }
 
+  func testRegularInit() {
+    let layout = Layout(span: 2.0, dynamicSpan: true, itemSpacing: 20.0, lineSpacing: 20.0, sectionInset: SectionInset(top: 10.0), contentInset: ContentInset(top: 10.0))
+
+    XCTAssertEqual(layout.span, 2.0)
+    XCTAssertEqual(layout.itemSpacing, 20.0)
+    XCTAssertEqual(layout.lineSpacing, 20.0)
+    XCTAssertEqual(layout.dynamicSpan, true)
+    XCTAssertEqual(layout.contentInset, ContentInset(top: 10.0))
+    XCTAssertEqual(layout.sectionInset, SectionInset(top: 10.0))
+  }
+
   func testJSONMapping() {
     let layout = Layout(json)
 
