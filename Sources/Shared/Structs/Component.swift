@@ -65,7 +65,16 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
   }
 
   public var span: Double {
-    return layout?.span ?? 0.0
+    get {
+      return layout?.span ?? 0.0
+    }
+    set {
+      if layout == nil {
+        self.layout = Layout()
+      }
+
+      self.layout?.span = newValue
+    }
   }
 
   /// Identifier
