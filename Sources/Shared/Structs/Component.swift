@@ -70,10 +70,10 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
     }
     set {
       if layout == nil {
-        self.layout = Layout()
+        self.layout = Layout(span: newValue)
+      } else {
+        self.layout?.span = newValue
       }
-
-      self.layout?.span = newValue
     }
   }
 

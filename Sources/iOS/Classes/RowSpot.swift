@@ -4,9 +4,7 @@ import Brick
 /// A RowSpot, a collection view based Spotable object that lays out its items in a vertical order based of the item sizes
 open class RowSpot: NSObject, Gridable {
 
-  public static var layout: Layout = Layout().mutate {
-    $0.span = 1
-  }
+  public static var layout: Layout = Layout(span: 1.0)
 
   /**
    *  Keys for meta data lookup
