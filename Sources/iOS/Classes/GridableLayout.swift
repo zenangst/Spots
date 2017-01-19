@@ -8,6 +8,8 @@ open class GridableLayout: UICollectionViewFlowLayout {
   /// The y offset for the Gridable object
   open var yOffset: CGFloat?
 
+  private var layoutAttributes: [UICollectionViewLayoutAttributes]?
+
   // Subclasses must override this method and use it to return the width and height of the collection view’s content. These values represent the width and height of all the content, not just the content that is currently visible. The collection view uses this information to configure its own content size to facilitate scrolling.
   open override var collectionViewContentSize: CGSize {
     if scrollDirection != .horizontal {
@@ -29,6 +31,16 @@ open class GridableLayout: UICollectionViewFlowLayout {
 
     super.prepare()
 
+    var layoutAttributes = [UICollectionViewLayoutAttributes]()
+
+    for (index, _) in spot.items.enumerated() {
+      if let attribute = self.layoutAttributesForItem(at: IndexPath(item: index, section: 0)) {
+        layoutAttributes.append(attribute)
+      }
+    }
+
+    self.layoutAttributes = layoutAttributes
+
     if scrollDirection == .horizontal {
       guard let firstItem = spot.items.first else { return }
 
@@ -42,6 +54,7 @@ open class GridableLayout: UICollectionViewFlowLayout {
     } else {
       contentSize.width = spot.collectionView.frame.width - spot.collectionView.contentInset.left - spot.collectionView.contentInset.right
       contentSize.height = super.collectionViewContentSize.height
+//      collectionView?.frame.size = super.collectionViewContentSize
     }
   }
 
@@ -62,6 +75,14 @@ open class GridableLayout: UICollectionViewFlowLayout {
     if let y = yOffset, collectionView.isDragging && headerReferenceSize.height > 0.0 {
       collectionView.frame.origin.y = y
     }
+  }
+
+  open override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+    guard var attribute = super.layoutAttributesForItem(at: indexPath) else {
+      return nil
+    }
+
+    return attribute
   }
 
   /// Returns the layout attributes for all of the cells and views in the specified rectangle.
@@ -86,10 +107,11 @@ open class GridableLayout: UICollectionViewFlowLayout {
       rect.size.width = collectionView.bounds.width * 3
     }
 
-    if let newAttributes = super.layoutAttributesForElements(in: rect) {
+    if let newAttributes = self.layoutAttributes {
       var offset: CGFloat = sectionInset.left
       for attribute in newAttributes {
-        guard let itemAttribute = attribute.copy() as? UICollectionViewLayoutAttributes
+        guard let itemAttribute = attribute.copy() as? UICollectionViewLayoutAttributes,
+          rect.intersects(attribute.frame)
           else { continue }
 
         if itemAttribute.representedElementKind == UICollectionElementKindSectionHeader {
@@ -116,14 +138,5 @@ open class GridableLayout: UICollectionViewFlowLayout {
     }
 
     return attributes
-  }
-
-  /// Asks the layout object if the new bounds require a layout update.
-  ///
-  /// - parameter newBounds: The new bounds of the collection view.
-  ///
-  /// - returns: Always returns true
-  open override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
-    return true
   }
 }
