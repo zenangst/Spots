@@ -55,7 +55,7 @@ class LayoutTests: XCTestCase {
     XCTAssertEqual(layout.sectionInset, SectionInset(top: 5, left: 6, bottom: 7, right: 8))
   }
 
-  func testLayoutDictionaryConvertible() {
+  func testDictionary() {
     let layout = Layout(json)
     let layoutJSON = layout.dictionary
 
@@ -73,7 +73,7 @@ class LayoutTests: XCTestCase {
     XCTAssertEqual((layoutJSON["section-inset"] as? [String : Double])?["right"], layout.sectionInset.right)
   }
 
-  func testLayoutConfigureWithJSON() {
+  func testConfigureWithJSON() {
     var layout = Layout([:])
 
     XCTAssertNotEqual(layout.span, 4.0)
@@ -101,7 +101,7 @@ class LayoutTests: XCTestCase {
     XCTAssertEqual(layout.sectionInset, SectionInset(top: 0, left: 0, bottom: 0, right: 0))
   }
 
-  func testLayoutBlockConfiguration() {
+  func testBlockConfiguration() {
     let layout = Layout {
       $0.span = 4.0
       $0.itemSpacing = 8.0
