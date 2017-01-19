@@ -2,7 +2,19 @@
 
 ## [Unreleased](https://github.com/hyperoslo/Spots/tree/HEAD)
 
-[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.7.3...HEAD)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.8.1...HEAD)
+
+**Merged pull requests:**
+
+- Set default component layout in Spotable object on macOS [\#419](https://github.com/hyperoslo/Spots/pull/419) ([zenangst](https://github.com/zenangst))
+- Fix field offset [\#418](https://github.com/hyperoslo/Spots/pull/418) ([onmyway133](https://github.com/onmyway133))
+- Improve Layout struct [\#417](https://github.com/hyperoslo/Spots/pull/417) ([zenangst](https://github.com/zenangst))
+
+## [5.8.1](https://github.com/hyperoslo/Spots/tree/5.8.1) (2017-01-19)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.8.0...5.8.1)
+
+## [5.8.0](https://github.com/hyperoslo/Spots/tree/5.8.0) (2017-01-19)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/5.7.3...5.8.0)
 
 **Merged pull requests:**
 
