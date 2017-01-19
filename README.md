@@ -505,10 +505,6 @@ If you want to enable live editing for you debug target. Add the following to yo
 ```ruby
 target 'YOUR TARGET HERE' do
   post_install do |installer|
-    puts("Update debug pod settings to speed up build time")
-    Dir.glob(File.join("Pods", "**", "Pods*{debug,Private}.xcconfig")).each do |file|
-      File.open(file, 'a') { |f| f.puts "\nDEBUG_INFORMATION_FORMAT = dwarf" }
-    end
     installer.pods_project.targets.each do |target|
       if target.name == 'Spots'
         target.build_configurations.each do |config|
