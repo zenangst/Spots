@@ -272,7 +272,7 @@ let jsonLayout = Layout(
 )
 ```
 
-**If you update to a newer version of Spots, you might want to enable `legacyMapping` on `Component`.
+**NOTE** If you update to a newer version of Spots, you might want to enable `legacyMapping` on `Component`.
 
 ```swift
 Component.legacyMapping = true
