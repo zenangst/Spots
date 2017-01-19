@@ -60,8 +60,20 @@ extension SpotsProtocol {
         return
       }
 
-      let oldComponents = weakSelf.spots.map { $0.component }
-      let newComponents = components
+      let oldSpots = weakSelf.spots
+      let oldComponents = oldSpots.map { $0.component }
+      var newComponents = components
+
+      /// Prepare default layouts for new components based of previous Spotable kind.
+      for (index, component) in newComponents.enumerated() {
+        guard index < oldComponents.count else {
+          break
+        }
+
+        if newComponents[index].layout == nil {
+          newComponents[index].layout = type(of: oldSpots[index]).layout
+        }
+      }
 
       guard compare(newComponents, oldComponents) else {
         weakSelf.cache()
