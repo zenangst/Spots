@@ -84,8 +84,15 @@ extension UICollectionView: UserInterface {
   public func reload(_ indexes: [Int], withAnimation animation: Animation = .automatic, completion: (() -> Void)? = nil) {
     let indexPaths = indexes.map { IndexPath(item: $0, section: 0) }
 
-    UIView.performWithoutAnimation {
-      self.reloadItems(at: indexPaths)
+    switch animation {
+      case .none:
+        UIView.performWithoutAnimation {
+          reloadItems(at: indexPaths)
+          completion?()
+      }
+    default:
+      reloadItems(at: indexPaths)
+      collectionViewLayout.finalizeCollectionViewUpdates()
       completion?()
     }
   }
