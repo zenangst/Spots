@@ -108,6 +108,14 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
 
   public static func == (lhs: Layout, rhs: Layout) -> Bool {
     return lhs.contentInset == rhs.contentInset &&
-    lhs.sectionInset == rhs.sectionInset
+    lhs.sectionInset == rhs.sectionInset &&
+    lhs.itemSpacing == rhs.itemSpacing &&
+    lhs.lineSpacing == rhs.lineSpacing &&
+    lhs.span == rhs.span &&
+    lhs.dynamicSpan == rhs.dynamicSpan
+  }
+
+  public static func != (lhs: Layout, rhs: Layout) -> Bool {
+    return !(lhs == rhs)
   }
 }
