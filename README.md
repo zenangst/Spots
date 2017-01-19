@@ -43,7 +43,9 @@ Data source and delegate setup is handled by **Spots**, so there is no need for 
 
 * [Key features](#key-features)
 * [Origin Story](#origin-story)
+* [Universal support](#universal-support)
 * [Why JSON?](#why-json)
+* [Composition](#composition)
 * [View state caching](#view-state-caching)
 * [Live editing](#live-editing)
 * [How does it work?](#how-does-it-work)
@@ -103,6 +105,10 @@ on the view model.
 We wrote a Medium article about how and why we built `Spots`.
 You can find it here: [Hitting the sweet spot of inspiration](https://medium.com/@zenangst/hitting-the-sweet-spot-of-inspiration-637d387bc629#.b9a1mun2i)
 
+## Universal support
+
+Apple's definition of a universal applications is iPhone and iPad. Spots takes this a step further with one controller tailored to each platform to support all your UI related update needs. Internally, everything conforms to the same shared protocol. What this means for you, is that get a unified experience when developing for iOS, tvOS or macOS.
+
 ## Why JSON?
 
 JSON works great as a common transport language, it is platform agnostic and it is something that developers are already using regularly when building application that fetch data from an external resource. **Spots** uses JSON internally to save a snapshot of the view state to disk, the only thing that you have to do is to give the **Controller** a cache key and call save whenever you have performed your update.
@@ -116,6 +122,16 @@ As mentioned above, **Spots** features a view state cache. Instead of saving all
 **ListSpot**, **GridSpot**, **CarouselSpot** also have support for view state caching because these components can be used separately without using **Controller**.
 
 View state caching is optional but we encourage you to use it, as it renders the need to use a database as optional.
+
+## Composition
+
+A common problem when developing for Apple's platforms is that you often have to choose between which core framework component to base your foundation on. Depending on what you need then and there. This is a not a problem in itself, it becomes a problem when you need to iterate and combine two of them together, like displaying a collection view inside of a table view. This is where composition comes in. Spots supports composition out-of-the box and it is super easy to use and iterate on.
+
+`Item`s inside of a `Spotable` object have a property called `children`. In the case of Spots, children are `Component`'s that represent other `Spotable` objects. This means that you can easily add a grid, carousel or list inside any `Spotable` object of your choice. On larger screens this becomes incredibly useful as composition can be used as a sane way of laying out your views on screen without the need for child view controllers, unmaintainable auto layout or frame based implementations.
+
+You can create `Spotable` pseudo objects that handle layout, this is especially useful for `Gridable` objects like the `GridSpot`, where you can use `layout.span` to define how many objects should be displayed side-by-side.
+
+Composition is supported on iOS, tvOS and macOS.
 
 ## Live editing
 
