@@ -1,7 +1,7 @@
 import Tailor
 import Brick
 
-public struct SectionInset: Mappable, DictionaryConvertible, Equatable {
+public struct SectionInset: Mappable, Equatable {
 
   static let rootKey: String = "section-inset"
 
@@ -14,7 +14,7 @@ public struct SectionInset: Mappable, DictionaryConvertible, Equatable {
   var bottom: Double = 0.0
   var right: Double = 0.0
 
-  public var dictionary: [String : Any] {
+  public var dictionary: [String : Double] {
     return [
       Key.top.rawValue: self.top,
       Key.left.rawValue: self.left,

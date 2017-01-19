@@ -1,8 +1,8 @@
 import Tailor
 import Brick
 
-public struct ContentInset: Mappable, DictionaryConvertible, Equatable {
-
+public struct ContentInset: Mappable, Equatable {
+ 
   static let rootKey: String = "content-inset"
 
   enum Key: String {
@@ -14,7 +14,7 @@ public struct ContentInset: Mappable, DictionaryConvertible, Equatable {
   var bottom: Double = 0.0
   var right: Double = 0.0
 
-  public var dictionary: [String : Any] {
+  public var dictionary: [String : Double] {
     return [
       Key.top.rawValue: self.top,
       Key.left.rawValue: self.left,
