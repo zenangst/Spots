@@ -41,6 +41,15 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
     ]
   }
 
+  public init() {
+    self.span = 0.0
+    self.dynamicSpan = false
+    self.itemSpacing = 0.0
+    self.lineSpacing = 0.0
+    self.sectionInset = SectionInset()
+    self.contentInset = ContentInset()
+  }
+
   public init(span: Double = 0.0, dynamicSpan: Bool = false, itemSpacing: Double = 0.0, lineSpacing: Double = 0.0, sectionInset: SectionInset = SectionInset(), contentInset: ContentInset = ContentInset()) {
     self.span = span
     self.dynamicSpan = dynamicSpan
