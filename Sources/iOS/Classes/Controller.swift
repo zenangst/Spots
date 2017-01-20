@@ -53,7 +53,7 @@ open class Controller: UIViewController, SpotsProtocol, SpotsFocusDelegate, UISc
           $0.spot.focusDelegate = self
         }
       }
-      delegate?.didChange(spots: spots)
+      delegate?.spotsDidChange(spots: spots)
     }
   }
 
@@ -80,7 +80,7 @@ open class Controller: UIViewController, SpotsProtocol, SpotsFocusDelegate, UISc
   weak open var delegate: SpotsDelegate? {
     didSet {
       spots.forEach { $0.delegate = delegate }
-      delegate?.didChange(spots: spots)
+      delegate?.spotsDidChange(spots: spots)
     }
   }
 

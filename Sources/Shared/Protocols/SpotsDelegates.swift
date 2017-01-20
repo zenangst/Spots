@@ -12,28 +12,28 @@ public protocol SpotsFocusDelegate: class {
 /// A generic delegate for Spots
 public protocol SpotsDelegate: class {
 
+  /// A delegate method that is triggered when ever a cell is tapped by the user.
+  ///
+  /// - parameter spot: An object that conforms to the spotable protocol.
+  /// - parameter itemSelected: The data for the view that is going to be displayed.
+  func spotable(_ spot: Spotable, itemSelected item: Item)
+
   /// A delegate method that is triggered when spots is changed.
   ///
   /// - parameter spots: New collection of Spotable objects
-  func didChange(spots: [Spotable])
-
-  /// A delegate method that is triggered when ever a cell is tapped by the user.
-  ///
-  /// - parameter item: The data for the view that is going to be displayed.
-  /// - parameter spot: An object that conforms to the spotable protocol.
-  func didSelect(item: Item, in spot: Spotable)
+  func spotsDidChange(spots: [Spotable])
 
   /// A delegate method that is triggered when ever a view is going to be displayed.
   ///
   /// - parameter item: The data for the view that is going to be displayed.
   /// - parameter spot: An object that conforms to the spotable protocol.
-  func willDisplay(view: SpotView, item: Item, in spot: Spotable)
+  func spotsWillDisplay(view: SpotView, item: Item, in spot: Spotable)
 
   /// A delegate method that is triggered when ever a view will no longer be displayed.
   ///
   /// - parameter item: The data for the view that is going to be displayed.
   /// - parameter spot: An object that conforms to the spotable protocol.
-  func endDisplay(view: SpotView, item: Item, in spot: Spotable)
+  func spotsEndDisplay(view: SpotView, item: Item, in spot: Spotable)
 }
 
 // MARK: - SpotsDelegate extension
@@ -43,15 +43,15 @@ public extension SpotsDelegate {
   ///
   /// - parameter item: The item struct that the user tapped on.
   /// - parameter spot: The spotable object that the item belongs to.
-  func didSelect(item: Item, in spot: Spotable) {}
+  func spotable(_ spot: Spotable, itemSelected item: Item) {}
 
   /// Invoked when ever the collection of spotable objects changes on the Controller.
   ///
   /// - parameter spots: The collection of new Spotable objects.
-  func didChange(spots: [Spotable]) {}
+  func spotsDidChange(_ spots: [Spotable]) {}
 
-  func willDisplay(view: SpotView, item: Item, in spot: Spotable) {}
-  func endDisplay(view: SpotView, item: Item, in spot: Spotable) {}
+  func spotsWillDisplay(view: SpotView, item: Item, in spot: Spotable) {}
+  func spotsEndDisplay(view: SpotView, item: Item, in spot: Spotable) {}
 }
 
 /// A refresh delegate for handling reloading of a Spot
@@ -71,18 +71,18 @@ public protocol CarouselScrollDelegate: class {
   /// Invoked when ever a user scrolls a CarouselSpot.
   ///
   /// - parameter spot: The spotable object that was scrolled.
-  func didScroll(in spot: Spotable)
+  func spotsCarouselDidScroll(in spot: Spotable)
 
   /// - parameter spot: Object that comforms to the Spotable protocol
   /// - parameter item: The last view model in the component
-  func didEndScrolling(in spot: Spotable, item: Item)
+  func spotsCarouselDidEndScrolling(in spot: Spotable, item: Item)
 
-  func didEndScrollingAnimated(in spot: Spotable)
+  func spotsCarouselDidEndScrollingAnimated(in spot: Spotable)
 }
 
 public extension CarouselScrollDelegate {
 
-  func didScroll(in spot: Spotable) {}
-  func didEndScrolling(in spot: Spotable, item: Item) {}
-  func didEndScrollingAnimated(in spot: Spotable) {}
+  func spotsCarouselDidScroll(in spot: Spotable) {}
+  func spotsCarouselDidEndScrolling(in spot: Spotable, item: Item) {}
+  func spotsCarouselDidEndScrollingAnimated(in spot: Spotable) {}
 }
