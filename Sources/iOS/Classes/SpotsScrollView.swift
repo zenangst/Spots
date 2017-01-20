@@ -205,8 +205,7 @@ open class SpotsScrollView: UIScrollView {
         let remainingContentHeight = fmax(scrollView.contentSize.height - contentOffset.y, 0.0)
 
         frame.size.height = ceil(fmin(remainingBoundsHeight, remainingContentHeight))
-        frame.size.width = ceil(spotsContentView.frame.size.width) - scrollView.contentInset.left - scrollView.contentInset.right
-        frame.origin.x = scrollView.contentInset.left
+        frame.size.width = ceil(spotsContentView.frame.size.width)
 
         scrollView.frame = frame.integral
         scrollView.contentOffset = CGPoint(x: Int(contentOffset.x), y: Int(contentOffset.y))
