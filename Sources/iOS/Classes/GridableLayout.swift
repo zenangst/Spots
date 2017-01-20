@@ -109,9 +109,10 @@ open class GridableLayout: UICollectionViewFlowLayout {
     if let newAttributes = self.layoutAttributes {
       var offset: CGFloat = sectionInset.left
       for attribute in newAttributes {
-        guard let itemAttribute = attribute.copy() as? UICollectionViewLayoutAttributes,
-          rect.intersects(attribute.frame)
-          else { continue }
+        guard let itemAttribute = attribute.copy() as? UICollectionViewLayoutAttributes
+          else {
+            continue
+        }
 
         if itemAttribute.representedElementKind == UICollectionElementKindSectionHeader {
           itemAttribute.zIndex = 1024
@@ -127,7 +128,9 @@ open class GridableLayout: UICollectionViewFlowLayout {
             offset += itemAttribute.size.width + minimumInteritemSpacing
           }
 
-          attributes.append(itemAttribute)
+          if rect.intersects(itemAttribute.frame) {
+            attributes.append(itemAttribute)
+          }
         }
       }
     }
