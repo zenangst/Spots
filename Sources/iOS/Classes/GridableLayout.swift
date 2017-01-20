@@ -33,7 +33,7 @@ open class GridableLayout: UICollectionViewFlowLayout {
 
     var layoutAttributes = [UICollectionViewLayoutAttributes]()
 
-    for (index, _) in spot.items.enumerated() {
+    for index in 0..<(collectionView?.numberOfItems(inSection: 0) ?? 0) {
       if let attribute = self.layoutAttributesForItem(at: IndexPath(item: index, section: 0)) {
         layoutAttributes.append(attribute)
       }
