@@ -6,9 +6,9 @@ import Brick
 class FactoryTests : XCTestCase {
 
   let json: [String : Any] = [
-    "title" : "title1" as AnyObject,
-    "kind" : "merry-go-round" as AnyObject,
-    "span" : 1 as AnyObject,
+    "title" : "title1",
+    "kind" : "merry-go-round",
+    "span" : 1.0,
     "meta" : ["foo" : "bar"],
     "items" : [["title" : "item1"]]
   ]

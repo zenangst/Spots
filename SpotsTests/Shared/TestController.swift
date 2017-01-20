@@ -455,6 +455,7 @@ class ControllerTests : XCTestCase {
     let jsonController = Controller([
       "components" : [
         ["kind" : "list",
+         "layout" : ListSpot.layout.dictionary,
          "items" : [
           ["title" : "First item"]
           ]

@@ -8,6 +8,8 @@ open class GridableLayout: UICollectionViewFlowLayout {
   /// The y offset for the Gridable object
   open var yOffset: CGFloat?
 
+  private var layoutAttributes: [UICollectionViewLayoutAttributes]?
+
   // Subclasses must override this method and use it to return the width and height of the collection view’s content. These values represent the width and height of all the content, not just the content that is currently visible. The collection view uses this information to configure its own content size to facilitate scrolling.
   open override var collectionViewContentSize: CGSize {
     if scrollDirection != .horizontal {
@@ -28,6 +30,16 @@ open class GridableLayout: UICollectionViewFlowLayout {
     }
 
     super.prepare()
+
+    var layoutAttributes = [UICollectionViewLayoutAttributes]()
+
+    for index in 0..<(collectionView?.numberOfItems(inSection: 0) ?? 0) {
+      if let attribute = self.layoutAttributesForItem(at: IndexPath(item: index, section: 0)) {
+        layoutAttributes.append(attribute)
+      }
+    }
+
+    self.layoutAttributes = layoutAttributes
 
     if scrollDirection == .horizontal {
       guard let firstItem = spot.items.first else { return }
@@ -64,6 +76,14 @@ open class GridableLayout: UICollectionViewFlowLayout {
     }
   }
 
+  open override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+    guard var attribute = super.layoutAttributesForItem(at: indexPath) else {
+      return nil
+    }
+
+    return attribute
+  }
+
   /// Returns the layout attributes for all of the cells and views in the specified rectangle.
   ///
   /// - parameter rect: The rectangle (specified in the collection view’s coordinate system) containing the target views.
@@ -86,10 +106,11 @@ open class GridableLayout: UICollectionViewFlowLayout {
       rect.size.width = collectionView.bounds.width * 3
     }
 
-    if let newAttributes = super.layoutAttributesForElements(in: rect) {
+    if let newAttributes = self.layoutAttributes {
       var offset: CGFloat = sectionInset.left
       for attribute in newAttributes {
-        guard let itemAttribute = attribute.copy() as? UICollectionViewLayoutAttributes
+        guard let itemAttribute = attribute.copy() as? UICollectionViewLayoutAttributes,
+          rect.intersects(attribute.frame)
           else { continue }
 
         if itemAttribute.representedElementKind == UICollectionElementKindSectionHeader {
