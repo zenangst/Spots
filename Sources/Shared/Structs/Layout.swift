@@ -19,9 +19,8 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
 
   static let rootKey: String = "layout"
 
-  public var contentInset: ContentInset = ContentInset()
-  public var sectionInset: SectionInset = SectionInset()
-  /// For a vertically scrolling grid, this value represents the minimum spacing between items in the same row. 
+  public var inset: Inset = Inset()
+  /// For a vertically scrolling grid, this value represents the minimum spacing between items in the same row.
   /// For a horizontally scrolling grid, this value represents the minimum spacing between items in the same column.
   public var itemSpacing: Double = 0.0
   /// For a vertically scrolling layout, the value represents the minimum spacing between successive rows. 
@@ -32,8 +31,7 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
 
   public var dictionary: [String : Any] {
     return [
-      ContentInset.rootKey: contentInset.dictionary,
-      SectionInset.rootKey: sectionInset.dictionary,
+      Inset.rootKey: inset.dictionary,
       Keys.itemSpacing.rawValue: itemSpacing,
       Keys.lineSpacing.rawValue: lineSpacing,
       Keys.span.rawValue: span,
@@ -46,27 +44,23 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
     self.dynamicSpan = false
     self.itemSpacing = 0.0
     self.lineSpacing = 0.0
-    self.sectionInset = SectionInset()
-    self.contentInset = ContentInset()
+    self.inset = Inset()
   }
 
-  public init(span: Double = 0.0, dynamicSpan: Bool = false, itemSpacing: Double = 0.0, lineSpacing: Double = 0.0, sectionInset: SectionInset = SectionInset(), contentInset: ContentInset = ContentInset()) {
+  public init(span: Double = 0.0, dynamicSpan: Bool = false, itemSpacing: Double = 0.0, lineSpacing: Double = 0.0, inset: Inset = Inset()) {
     self.span = span
     self.dynamicSpan = dynamicSpan
     self.itemSpacing = itemSpacing
     self.lineSpacing = lineSpacing
-    self.sectionInset = sectionInset
-    self.contentInset = contentInset
+    self.inset = inset
   }
 
   public init(_ map: [String : Any] = [:]) {
     switch Component.legacyMapping {
     case true:
-      self.sectionInset = SectionInset(map)
-      self.contentInset = ContentInset(map)
+      self.inset = Inset(map)
     case false:
-      self.sectionInset = SectionInset(map.property(SectionInset.rootKey) ?? [:])
-      self.contentInset = ContentInset(map.property(ContentInset.rootKey) ?? [:])
+      self.inset = Inset(map.property(Inset.rootKey) ?? [:])
     }
 
     self.itemSpacing <- map.property(Keys.itemSpacing.rawValue)
@@ -83,11 +77,9 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
   public mutating func configure(withJSON map: [String : Any]) {
     switch Component.legacyMapping {
     case true:
-      self.sectionInset = SectionInset(map)
-      self.contentInset = ContentInset(map)
+      self.inset = Inset(map)
     case false:
-      self.sectionInset = SectionInset(map.property(SectionInset.rootKey) ?? [:])
-      self.contentInset = ContentInset(map.property(ContentInset.rootKey) ?? [:])
+      self.inset = Inset(map.property(Inset.rootKey) ?? [:])
     }
 
     self.itemSpacing <- map.property(Keys.itemSpacing.rawValue)
@@ -103,12 +95,11 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
   }
 
   public func configure(spot: Listable) {
-    contentInset.configure(scrollView: spot.render())
+    inset.configure(scrollView: spot.render())
   }
 
   public static func == (lhs: Layout, rhs: Layout) -> Bool {
-    return lhs.contentInset == rhs.contentInset &&
-    lhs.sectionInset == rhs.sectionInset &&
+    return lhs.inset == rhs.inset &&
     lhs.itemSpacing == rhs.itemSpacing &&
     lhs.lineSpacing == rhs.lineSpacing &&
     lhs.span == rhs.span &&

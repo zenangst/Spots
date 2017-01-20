@@ -29,15 +29,10 @@ class LayoutExtensionsTests: XCTestCase {
     XCTAssertEqual(gridSpot.layout.minimumInteritemSpacing, CGFloat(layout.itemSpacing))
     XCTAssertEqual(gridSpot.layout.minimumLineSpacing, CGFloat(layout.lineSpacing))
 
-    XCTAssertEqual(gridSpot.render().contentInset.top, CGFloat(layout.contentInset.top))
-    XCTAssertEqual(gridSpot.render().contentInset.left, CGFloat(layout.contentInset.left))
-    XCTAssertEqual(gridSpot.render().contentInset.bottom, CGFloat(layout.contentInset.bottom))
-    XCTAssertEqual(gridSpot.render().contentInset.right, CGFloat(layout.contentInset.right))
-
-    XCTAssertEqual(gridSpot.layout.sectionInset.top, CGFloat(layout.sectionInset.top))
-    XCTAssertEqual(gridSpot.layout.sectionInset.left, CGFloat(layout.sectionInset.left))
-    XCTAssertEqual(gridSpot.layout.sectionInset.bottom, CGFloat(layout.sectionInset.bottom))
-    XCTAssertEqual(gridSpot.layout.sectionInset.right, CGFloat(layout.sectionInset.right))
+    XCTAssertEqual(gridSpot.render().contentInset.top, CGFloat(layout.inset.top))
+    XCTAssertEqual(gridSpot.render().contentInset.left, CGFloat(layout.inset.left))
+    XCTAssertEqual(gridSpot.render().contentInset.bottom, CGFloat(layout.inset.bottom))
+    XCTAssertEqual(gridSpot.render().contentInset.right, CGFloat(layout.inset.right))
   }
 
   func testConfigureListableSpot() {
@@ -46,9 +41,9 @@ class LayoutExtensionsTests: XCTestCase {
 
     layout.configure(spot: listSpot)
 
-    XCTAssertEqual(listSpot.render().contentInset.top, CGFloat(layout.contentInset.top))
-    XCTAssertEqual(listSpot.render().contentInset.left, CGFloat(layout.contentInset.left))
-    XCTAssertEqual(listSpot.render().contentInset.bottom, CGFloat(layout.contentInset.bottom))
-    XCTAssertEqual(listSpot.render().contentInset.right, CGFloat(layout.contentInset.right))
+    XCTAssertEqual(listSpot.render().contentInset.top, CGFloat(layout.inset.top))
+    XCTAssertEqual(listSpot.render().contentInset.left, CGFloat(layout.inset.left))
+    XCTAssertEqual(listSpot.render().contentInset.bottom, CGFloat(layout.inset.bottom))
+    XCTAssertEqual(listSpot.render().contentInset.right, CGFloat(layout.inset.right))
   }
 }

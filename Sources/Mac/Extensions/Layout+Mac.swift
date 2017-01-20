@@ -3,10 +3,10 @@ import Cocoa
 extension Layout {
 
   public func configure(spot: Gridable) {
-    contentInset.configure(scrollView: spot.render())
+    inset.configure(scrollView: spot.render())
 
     if let layout = spot.layout as? FlowLayout {
-      sectionInset.configure(layout: layout)
+      inset.configure(layout: layout)
       layout.minimumInteritemSpacing = CGFloat(itemSpacing)
       layout.minimumLineSpacing = CGFloat(lineSpacing)
     }
