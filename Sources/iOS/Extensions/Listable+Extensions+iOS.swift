@@ -8,7 +8,7 @@ public extension Listable {
   ///
   /// - returns: UIScrollView: Returns a UITableView as a UIScrollView
   ///
-  public func render() -> UIScrollView {
+  var view: UIScrollView {
     return tableView
   }
 

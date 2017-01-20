@@ -22,7 +22,7 @@ extension Listable {
     let bottom: CGFloat = component.meta("inset-bottom", 0.0)
     let right: CGFloat = component.meta("inset-right", 0.0)
 
-    render().contentInsets = EdgeInsets(top: top, left: left, bottom: bottom, right: right)
+    view.contentInsets = EdgeInsets(top: top, left: left, bottom: bottom, right: right)
   }
 
   public func deselect() {

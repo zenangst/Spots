@@ -29,10 +29,10 @@ class LayoutExtensionsTests: XCTestCase {
     XCTAssertEqual(gridSpot.layout.minimumInteritemSpacing, CGFloat(layout.itemSpacing))
     XCTAssertEqual(gridSpot.layout.minimumLineSpacing, CGFloat(layout.lineSpacing))
 
-    XCTAssertEqual(gridSpot.render().contentInset.top, CGFloat(layout.inset.top))
-    XCTAssertEqual(gridSpot.render().contentInset.left, CGFloat(layout.inset.left))
-    XCTAssertEqual(gridSpot.render().contentInset.bottom, CGFloat(layout.inset.bottom))
-    XCTAssertEqual(gridSpot.render().contentInset.right, CGFloat(layout.inset.right))
+    XCTAssertEqual(gridSpot.view.contentInset.top, CGFloat(layout.inset.top))
+    XCTAssertEqual(gridSpot.view.contentInset.left, CGFloat(layout.inset.left))
+    XCTAssertEqual(gridSpot.view.contentInset.bottom, CGFloat(layout.inset.bottom))
+    XCTAssertEqual(gridSpot.view.contentInset.right, CGFloat(layout.inset.right))
   }
 
   func testConfigureListableSpot() {
@@ -41,9 +41,9 @@ class LayoutExtensionsTests: XCTestCase {
 
     layout.configure(spot: listSpot)
 
-    XCTAssertEqual(listSpot.render().contentInset.top, CGFloat(layout.inset.top))
-    XCTAssertEqual(listSpot.render().contentInset.left, CGFloat(layout.inset.left))
-    XCTAssertEqual(listSpot.render().contentInset.bottom, CGFloat(layout.inset.bottom))
-    XCTAssertEqual(listSpot.render().contentInset.right, CGFloat(layout.inset.right))
+    XCTAssertEqual(listSpot.view.contentInset.top, CGFloat(layout.inset.top))
+    XCTAssertEqual(listSpot.view.contentInset.left, CGFloat(layout.inset.left))
+    XCTAssertEqual(listSpot.view.contentInset.bottom, CGFloat(layout.inset.bottom))
+    XCTAssertEqual(listSpot.view.contentInset.right, CGFloat(layout.inset.right))
   }
 }

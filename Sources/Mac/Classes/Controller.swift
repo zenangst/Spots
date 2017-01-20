@@ -199,7 +199,7 @@ open class Controller: NSViewController, SpotsProtocol {
   public func reloadSpots(spots: [Spotable], closure: (() -> Void)?) {
     for spot in self.spots {
       spot.delegate = nil
-      spot.render().removeFromSuperview()
+      spot.view.removeFromSuperview()
     }
     self.spots = spots
     delegate = nil
@@ -215,13 +215,13 @@ open class Controller: NSViewController, SpotsProtocol {
   public func setupSpots(animated: ((_ view: View) -> Void)? = nil) {
     spots.enumerated().forEach { index, spot in
       setupSpot(at: index, spot: spot)
-      animated?(spot.render())
+      animated?(spot.view)
     }
   }
 
   public func setupSpot(at index: Int, spot: Spotable) {
-    if spot.render().superview == nil {
-      scrollView.spotsContentView.addSubview(spot.render())
+    if spot.view.superview == nil {
+      scrollView.spotsContentView.addSubview(spot.view)
     }
 
     spots[index].component.index = index
@@ -235,7 +235,7 @@ open class Controller: NSViewController, SpotsProtocol {
     spot.setup(CGSize(width: view.frame.width, height: height))
     spot.component.size = CGSize(
       width: view.frame.width,
-      height: ceil(spot.render().frame.height))
+      height: ceil(spot.view.frame.height))
 
     (spot as? Gridable)?.layout(CGSize(width: view.frame.width, height: height))
   }
@@ -256,7 +256,7 @@ open class Controller: NSViewController, SpotsProtocol {
 
   public func deselectAllExcept(selectedSpot: Spotable) {
     for spot in spots {
-      if selectedSpot.render() != spot.render() {
+      if selectedSpot.view != spot.view {
         spot.deselect()
       }
     }

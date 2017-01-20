@@ -40,6 +40,8 @@ public protocol Spotable: class {
   var usesDynamicHeight: Bool { get }
   /// The user interface that will be used to represent the spotable object.
   var userInterface: UserInterface? { get }
+  /// Return a Spotable object as a UIScrollView
+  var view: ScrollView { get }
 
   #if os(OSX)
     /// The current responder for the Spotable object, only available on macOS.
@@ -146,11 +148,6 @@ public protocol Spotable: class {
   /// - parameter animation:  Perform reload animation.
   /// - parameter completion: A completion closure that is executed in the main queue when the view model has been reloaded.
   func reload(_ indexes: [Int]?, withAnimation animation: Animation, completion: Completion)
-
-  /// Return a Spotable object as a UIScrollView
-  ///
-  /// - returns: The UI component that the Spotable object is based on cast as a ScrollView.
-  func render() -> ScrollView
 
   /// Layout using size
   /// - parameter size: A CGSize to set the width of the UI view

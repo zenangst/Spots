@@ -122,8 +122,8 @@ class GridSpotTests: XCTestCase {
   func testSpotCollectionDelegate() {
     let items = [Item(title: "Test item")]
     let spot = GridSpot(component: Component(span: 0.0, items: items))
-    spot.render().frame.size = CGSize(width: 100, height: 100)
-    spot.render().layoutSubviews()
+    spot.view.frame.size = CGSize(width: 100, height: 100)
+    spot.view.layoutSubviews()
 
     let cell = spot.collectionView.cellForItem(at: IndexPath(item: 0, section: 0))
     XCTAssertEqual(cell?.frame.size, CGSize(width: 88, height: 88))

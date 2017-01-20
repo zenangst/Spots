@@ -17,7 +17,7 @@ class SpotableTests : XCTestCase {
     measure {
       for _ in 0..<5 {
         listSpot.append(items)
-        listSpot.render().layoutSubviews()
+        listSpot.view.layoutSubviews()
       }
     }
 
@@ -41,7 +41,7 @@ class SpotableTests : XCTestCase {
     measure {
       for _ in 0..<5 {
         controller.append(items, spotIndex: 0, withAnimation: .automatic, completion: nil)
-        controller.spots.forEach { $0.render().layoutSubviews() }
+        controller.spots.forEach { $0.view.layoutSubviews() }
       }
     }
 

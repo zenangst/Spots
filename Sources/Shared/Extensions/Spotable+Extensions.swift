@@ -17,12 +17,12 @@ public extension Spotable {
   /// A computed CGFloat of the total height of all items inside of a component
   public var computedHeight: CGFloat {
     guard usesDynamicHeight else {
-      return self.render().frame.height
+      return self.view.frame.height
     }
 
     var height: CGFloat = 0
     #if !os(OSX)
-      let superViewHeight = self.render().superview?.frame.size.height ?? UIScreen.main.bounds.height
+      let superViewHeight = self.view.superview?.frame.size.height ?? UIScreen.main.bounds.height
     #endif
 
     for item in component.items {
@@ -97,7 +97,7 @@ public extension Spotable {
               }
             }
           #else
-            var spotWidth = render().frame.size.width
+            var spotWidth = view.frame.size.width
 
             if spotWidth == 0.0 {
               spotWidth = UIScreen.main.bounds.width
@@ -153,7 +153,7 @@ public extension Spotable {
 
       let spotHeight = weakSelf.computedHeight
       Dispatch.mainQueue { [weak self] in
-        self?.render().frame.size.height = spotHeight
+        self?.view.frame.size.height = spotHeight
         completion?()
       }
     }
@@ -223,7 +223,7 @@ public extension Spotable {
       prepare(kind: kind, view: view as Any, item: &item)
     #else
       let spotableKind = self
-      fullWidth = render().superview?.frame.size.width ?? render().frame.size.width
+      fullWidth = view.superview?.frame.size.width ?? view.frame.size.width
 
       switch spotableKind {
       case let spotableKind as Gridable:
@@ -276,7 +276,7 @@ public extension Spotable {
   /// - parameter view: The view that is going to be prepared.
   func prepare(view: View) {
     // Set initial size for view
-    view.frame.size.width = render().frame.size.width
+    view.frame.size.width = view.frame.size.width
 
     if let spotConfigurable = view as? SpotConfigurable, view.frame.size.height == 0.0 {
       view.frame.size = spotConfigurable.preferredViewSize
@@ -301,7 +301,7 @@ public extension Spotable {
     var height: CGFloat = 0.0
 
     compositeSpots.filter({ $0.itemIndex == item.index }).forEach {
-      $0.spot.render().removeFromSuperview()
+      $0.spot.view.removeFromSuperview()
 
       if let index = compositeSpots.index(of: $0) {
         compositeSpots.remove(at: index)
@@ -309,7 +309,7 @@ public extension Spotable {
     }
 
     let spots: [Spotable] = Parser.parse(item)
-    let size = render().frame.size
+    let size = view.frame.size
     let width = size.width
 
     spots.forEach { spot in
@@ -320,19 +320,19 @@ public extension Spotable {
       compositeSpot.spot.setup(size)
       compositeSpot.spot.component.size = CGSize(
         width: width,
-        height: ceil(compositeSpot.spot.render().frame.size.height))
+        height: ceil(compositeSpot.spot.view.frame.size.height))
       compositeSpot.spot.layout(size)
-      compositeSpot.spot.render().layoutIfNeeded()
-      compositeSpot.spot.render().frame.origin.y = height
+      compositeSpot.spot.view.layoutIfNeeded()
+      compositeSpot.spot.view.frame.origin.y = height
 
       #if !os(OSX)
         /// Disable scrolling for listable objects
-        compositeSpot.spot.render().isScrollEnabled = !(compositeSpot.spot is Listable)
+        compositeSpot.spot.view.isScrollEnabled = !(compositeSpot.spot is Listable)
       #endif
 
-      compositeSpot.spot.render().frame.size.height = compositeSpot.spot.render().contentSize.height
+      compositeSpot.spot.view.frame.size.height = compositeSpot.spot.view.contentSize.height
 
-      height += compositeSpot.spot.render().frame.size.height
+      height += compositeSpot.spot.view.frame.size.height
 
       compositeSpots.append(compositeSpot)
     }
@@ -354,7 +354,7 @@ public extension Spotable {
       item.size.width  = view.preferredViewSize.width
     }
 
-    if let superview = render().superview, item.size.width == 0.0 {
+    if let superview = self.view.superview, item.size.width == 0.0 {
       item.size.width = superview.frame.width
     }
 
@@ -369,7 +369,7 @@ public extension Spotable {
   ///
   /// - returns: CGSize of the item at index path.
   public func sizeForItem(at indexPath: IndexPath) -> CGSize {
-    return render().frame.size
+    return view.frame.size
   }
 
   /// Get identifier for item at index path

@@ -24,10 +24,10 @@ class LayoutExtensionsTests: XCTestCase {
     XCTAssertEqual(gridableLayout?.minimumInteritemSpacing, CGFloat(layout.itemSpacing))
     XCTAssertEqual(gridableLayout?.minimumLineSpacing, CGFloat(layout.lineSpacing))
 
-    XCTAssertEqual(gridSpot.render().contentInsets.top, CGFloat(layout.inset.top))
-    XCTAssertEqual(gridSpot.render().contentInsets.left, CGFloat(layout.inset.left))
-    XCTAssertEqual(gridSpot.render().contentInsets.bottom, CGFloat(layout.inset.bottom))
-    XCTAssertEqual(gridSpot.render().contentInsets.right, CGFloat(layout.inset.right))
+    XCTAssertEqual(gridSpot.view.contentInsets.top, CGFloat(layout.inset.top))
+    XCTAssertEqual(gridSpot.view.contentInsets.left, CGFloat(layout.inset.left))
+    XCTAssertEqual(gridSpot.view.contentInsets.bottom, CGFloat(layout.inset.bottom))
+    XCTAssertEqual(gridSpot.view.contentInsets.right, CGFloat(layout.inset.right))
 
     XCTAssertEqual(gridableLayout?.sectionInset.top, CGFloat(layout.inset.top))
     XCTAssertEqual(gridableLayout?.sectionInset.left, CGFloat(layout.inset.left))
@@ -41,9 +41,9 @@ class LayoutExtensionsTests: XCTestCase {
 
     layout.configure(spot: listSpot)
 
-    XCTAssertEqual(listSpot.render().contentInsets.top, CGFloat(layout.inset.top))
-    XCTAssertEqual(listSpot.render().contentInsets.left, CGFloat(layout.inset.left))
-    XCTAssertEqual(listSpot.render().contentInsets.bottom, CGFloat(layout.inset.bottom))
-    XCTAssertEqual(listSpot.render().contentInsets.right, CGFloat(layout.inset.right))
+    XCTAssertEqual(listSpot.view.contentInsets.top, CGFloat(layout.inset.top))
+    XCTAssertEqual(listSpot.view.contentInsets.left, CGFloat(layout.inset.left))
+    XCTAssertEqual(listSpot.view.contentInsets.bottom, CGFloat(layout.inset.bottom))
+    XCTAssertEqual(listSpot.view.contentInsets.right, CGFloat(layout.inset.right))
   }
 }

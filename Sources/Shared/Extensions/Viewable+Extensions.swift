@@ -12,7 +12,7 @@ public extension Spotable where Self : Viewable {
   /**
    - returns: UIScrollView: A UIScrollView container for your view
    */
-  func render() -> ScrollView {
+  var view: ScrollView {
     return scrollView
   }
 
@@ -20,7 +20,7 @@ public extension Spotable where Self : Viewable {
    - parameter size: A CGSize to set the size of the view
    */
   func layout(_ size: CGSize) {
-    render().frame.size = size
+    view.frame.size = size
     #if os(iOS)
       scrollView.contentSize = size
     #endif
@@ -53,7 +53,7 @@ public extension Spotable where Self : Viewable {
   func setup(_ size: CGSize) {
     let height = component.items.reduce(0, { $0 + $1.size.height })
     let size = CGSize(width: size.width, height: height)
-    render().frame.size = size
+    view.frame.size = size
     #if os(iOS)
       scrollView.contentSize = size
     #endif

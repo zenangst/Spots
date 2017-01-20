@@ -6,13 +6,13 @@ extension Gridable {
   /// A computed CGFloat of the total height of all items inside of a component.
   public var computedHeight: CGFloat {
     guard usesDynamicHeight else {
-      return self.render().frame.height
+      return self.view.frame.height
     }
 
     layout.prepare()
 
     var height = layout.collectionViewContentSize.height + layout.sectionInset.top + layout.sectionInset.bottom
-    let superViewHeight = self.render().superview?.frame.size.height ?? UIScreen.main.bounds.height
+    let superViewHeight = self.view.superview?.frame.size.height ?? UIScreen.main.bounds.height
     if height > superViewHeight {
       height = superViewHeight
     }

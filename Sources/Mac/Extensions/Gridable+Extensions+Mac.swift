@@ -33,7 +33,7 @@ extension Gridable {
   /// A computed CGFloat of the total height of all items inside of a component
   public var computedHeight: CGFloat {
     guard usesDynamicHeight else {
-      return self.render().frame.height
+      return self.view.frame.height
     }
 
     return layout.collectionViewContentSize.height

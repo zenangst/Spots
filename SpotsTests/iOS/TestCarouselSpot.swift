@@ -134,7 +134,7 @@ class CarouselSpotTests: XCTestCase {
     XCTAssertEqual(spot.items[2].title, "baz")
     XCTAssertEqual(spot.items.first?.size.width, 120)
     XCTAssertEqual(spot.items.first?.size.height, 180)
-    XCTAssertEqual(spot.render().frame.size.height, 180)
+    XCTAssertEqual(spot.view.frame.size.height, 180)
 
     // Check default value of `paginate`
     XCTAssertFalse(spot.paginate)
@@ -142,7 +142,7 @@ class CarouselSpotTests: XCTestCase {
     // Check that header height gets added to the calculation
     spot.layout.headerReferenceSize.height = 20
     spot.setup(CGSize(width: 100, height: 100))
-    XCTAssertEqual(spot.render().frame.size.height, 200)
+    XCTAssertEqual(spot.view.frame.size.height, 200)
   }
 
   func testCarouselSetupWithPagination() {
@@ -166,7 +166,7 @@ class CarouselSpotTests: XCTestCase {
 
     let component = Component(json)
     let spot = CarouselSpot(component: component)
-    spot.render().layoutIfNeeded()
+    spot.view.layoutIfNeeded()
 
     // Check `span` mapping
     XCTAssertEqual(spot.component.layout!.span, 4.0)
@@ -177,7 +177,7 @@ class CarouselSpotTests: XCTestCase {
     // Check `paginate` mapping
     XCTAssertTrue(spot.paginate)
 
-    let width = spot.render().bounds.width / 4
+    let width = spot.view.bounds.width / 4
 
     // Test that spot height is equal to first item in the list
     XCTAssertEqual(spot.items.count, 4)
@@ -193,12 +193,12 @@ class CarouselSpotTests: XCTestCase {
     XCTAssertEqual(spot.items[2].size.height, 225)
     XCTAssertEqual(spot.items[3].size.width, width)
     XCTAssertEqual(spot.items[3].size.height, 225)
-    XCTAssertEqual(spot.render().frame.size.height, 247)
+    XCTAssertEqual(spot.view.frame.size.height, 247)
 
     // Check that header height gets added to the calculation
     spot.layout.headerReferenceSize.height = 20
     spot.setup(CGSize(width: 100, height: 100))
-    XCTAssertEqual(spot.render().frame.size.height, 311)
+    XCTAssertEqual(spot.view.frame.size.height, 311)
   }
 
   func testAppendItem() {

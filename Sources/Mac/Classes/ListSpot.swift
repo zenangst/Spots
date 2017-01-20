@@ -3,6 +3,11 @@ import Brick
 
 open class ListSpot: NSObject, Listable {
 
+  /// Return collection view as a scroll view
+  open var view: ScrollView {
+    return scrollView
+  }
+
   public static var layout: Layout = Layout(span: 1.0)
 
   /// Child spots
@@ -165,10 +170,6 @@ open class ListSpot: NSObject, Listable {
     delegate?.didSelect(item: item, in: self)
   }
 
-  open func render() -> ScrollView {
-    return scrollView
-  }
-
   open func layout(_ size: CGSize) {
     scrollView.contentInsets.top = component.meta(Key.contentInsetsTop, Default.contentInsetsTop)
     scrollView.contentInsets.left = component.meta(Key.contentInsetsLeft, Default.contentInsetsLeft)
@@ -235,6 +236,6 @@ open class ListSpot: NSObject, Listable {
 
   public func afterUpdate() {
     /// This is to set the proper height after reloading a list when initially it didn't contain any items.
-    layout(render().frame.size)
+    layout(view.frame.size)
   }
 }
