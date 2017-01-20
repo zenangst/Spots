@@ -166,6 +166,10 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
       self.layout = Layout(layoutDictionary)
     }
 
+    if self.layout == nil {
+      self.span <- map.property("span")
+    }
+
     let width: Double = map.resolve(keyPath: "size.width") ?? 0.0
     let height: Double = map.resolve(keyPath: "size.height") ?? 0.0
     size = CGSize(width: width, height: height)
