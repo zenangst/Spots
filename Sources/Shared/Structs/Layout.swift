@@ -10,7 +10,7 @@ import Brick
 
 public struct Layout: Mappable, DictionaryConvertible, Equatable {
 
-  enum Keys: String {
+  enum Key: String {
     case itemSpacing = "item-spacing"
     case lineSpacing = "line-spacing"
     case span = "span"
@@ -32,10 +32,10 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
   public var dictionary: [String : Any] {
     return [
       Inset.rootKey: inset.dictionary,
-      Keys.itemSpacing.rawValue: itemSpacing,
-      Keys.lineSpacing.rawValue: lineSpacing,
-      Keys.span.rawValue: span,
-      Keys.dynamicSpan.rawValue: dynamicSpan
+      Key.itemSpacing.rawValue: itemSpacing,
+      Key.lineSpacing.rawValue: lineSpacing,
+      Key.span.rawValue: span,
+      Key.dynamicSpan.rawValue: dynamicSpan
     ]
   }
 
@@ -63,10 +63,10 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
       self.inset = Inset(map.property(Inset.rootKey) ?? [:])
     }
 
-    self.itemSpacing <- map.property(Keys.itemSpacing.rawValue)
-    self.lineSpacing <- map.property(Keys.lineSpacing.rawValue)
-    self.dynamicSpan <- map.property(Keys.dynamicSpan.rawValue)
-    self.span <- map.property(Keys.span.rawValue)
+    self.itemSpacing <- map.property(Key.itemSpacing.rawValue)
+    self.lineSpacing <- map.property(Key.lineSpacing.rawValue)
+    self.dynamicSpan <- map.property(Key.dynamicSpan.rawValue)
+    self.span <- map.property(Key.span.rawValue)
   }
 
   public init(_ block: (inout Layout) -> Void) {
@@ -82,10 +82,10 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
       self.inset = Inset(map.property(Inset.rootKey) ?? [:])
     }
 
-    self.itemSpacing <- map.property(Keys.itemSpacing.rawValue)
-    self.lineSpacing <- map.property(Keys.lineSpacing.rawValue)
-    self.dynamicSpan <- map.property(Keys.dynamicSpan.rawValue)
-    self.span <- map.property(Keys.span.rawValue)
+    self.itemSpacing <- map.property(Key.itemSpacing.rawValue)
+    self.lineSpacing <- map.property(Key.lineSpacing.rawValue)
+    self.dynamicSpan <- map.property(Key.dynamicSpan.rawValue)
+    self.span <- map.property(Key.span.rawValue)
   }
 
   public func mutate(_ closure: (inout Layout) -> Void) -> Layout {

@@ -29,18 +29,18 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
 
   /// An enum with all the string keys used in the view model
   public enum Key: String, StringConvertible {
-    case Index
-    case Identifier
-    case Title
-    case Header
-    case Kind
-    case Meta
-    case Span
-    case Layout
-    case Items
-    case Size
-    case Width
-    case Height
+    case index
+    case identifier
+    case title
+    case header
+    case kind
+    case meta
+    case span
+    case layout
+    case items
+    case size
+    case width
+    case height
 
     public var string: String {
       return rawValue.lowercased()
@@ -50,13 +50,13 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
   /// An enum for identifing the Component kind
   public enum Kind: String {
     /// The identifier for CarouselSpot
-    case Carousel = "carousel"
+    case carousel
     /// The identifier for GridSpot
-    case Grid = "grid"
+    case grid
     /// The identifier for ListSpot
-    case List = "list"
+    case list
     /// The identifier for RowSpot
-    case Row = "row"
+    case row
 
     /// The lowercase raw value of the case
     public var string: String {
@@ -125,24 +125,24 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
     }
 
     var JSONComponents: [String : Any] = [
-      Key.Index.string: index,
-      Key.Kind.string: kind,
-      Key.Size.string: [
-        Key.Width.string: width,
-        Key.Height.string: height
+      Key.index.string: index,
+      Key.kind.string: kind,
+      Key.size.string: [
+        Key.width.string: width,
+        Key.height.string: height
       ],
-      Key.Items.string: JSONItems
+      Key.items.string: JSONItems
       ]
 
     if let layout = layout {
-      JSONComponents[Key.Layout] = layout.dictionary
+      JSONComponents[Key.layout] = layout.dictionary
     }
 
-    JSONComponents[Key.Identifier.string] = identifier
+    JSONComponents[Key.identifier.string] = identifier
 
-    if !title.isEmpty { JSONComponents[Key.Title.string] = title }
-    if !header.isEmpty { JSONComponents[Key.Header.string] = header }
-    if !meta.isEmpty { JSONComponents[Key.Meta.string] = meta }
+    if !title.isEmpty { JSONComponents[Key.title.string] = title }
+    if !header.isEmpty { JSONComponents[Key.header.string] = header }
+    if !meta.isEmpty { JSONComponents[Key.meta.string] = meta }
 
     return JSONComponents
   }

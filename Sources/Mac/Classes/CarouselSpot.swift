@@ -51,7 +51,7 @@ open class CarouselSpot: NSObject, Gridable {
 
   open static var defaultView: View.Type = NSView.self
 
-  open static var defaultKind: StringConvertible = Component.Kind.Carousel.string
+  open static var defaultKind: StringConvertible = Component.Kind.carousel.string
 
   /// A SpotsDelegate that is used for the CarouselSpot
   open weak var delegate: SpotsDelegate?
@@ -122,7 +122,7 @@ open class CarouselSpot: NSObject, Gridable {
     self.spotDelegate = Delegate(spot: self)
 
     if component.kind.isEmpty {
-      self.component.kind = Component.Kind.Carousel.string
+      self.component.kind = Component.Kind.carousel.string
     }
 
     registerDefault(view: CarouselSpotCell.self)

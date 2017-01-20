@@ -79,7 +79,7 @@ open class ListSpot: NSObject, Listable {
     self.spotDelegate = Delegate(spot: self)
 
     if component.kind.isEmpty {
-      self.component.kind = Component.Kind.List.string
+      self.component.kind = Component.Kind.list.string
     }
 
     registerDefault(view: ListSpotCell.self)

@@ -65,7 +65,7 @@ extension SpotsProtocol {
       var newComponents = components
 
       /// Prepare default layouts for new components based of previous Spotable kind.
-      for (index, component) in newComponents.enumerated() {
+      for (index, _) in newComponents.enumerated() {
         guard index < oldComponents.count else {
           break
         }

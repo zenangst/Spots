@@ -70,9 +70,9 @@ public extension SpotsProtocol {
 
         newItem.children = children
 
-        var newItems = spotJSON[Component.Key.Items] as? [[String : Any]]
+        var newItems = spotJSON[Component.Key.items] as? [[String : Any]]
         newItems?[item.index] = newItem.dictionary
-        spotJSON[Component.Key.Items] = newItems
+        spotJSON[Component.Key.items] = newItems
       }
 
       result.append(spotJSON)

@@ -37,7 +37,7 @@ open class ListSpot: NSObject, Listable {
   open static var views = Registry()
   open static var configure: ((_ view: NSTableView) -> Void)?
   open static var defaultView: View.Type = ListSpotItem.self
-  open static var defaultKind: StringConvertible = Component.Kind.List.string
+  open static var defaultKind: StringConvertible = Component.Kind.list.string
 
   /// A SpotsDelegate that is used for the ListSpot
   open weak var delegate: SpotsDelegate?
@@ -130,7 +130,7 @@ open class ListSpot: NSObject, Listable {
     self.spotDelegate = Delegate(spot: self)
 
     if component.kind.isEmpty {
-      self.component.kind = Component.Kind.List.string
+      self.component.kind = Component.Kind.list.string
     }
 
     scrollView.contentView.addSubview(tableView)
