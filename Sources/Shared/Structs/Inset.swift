@@ -2,10 +2,10 @@ import Tailor
 import Brick
 
 /// A content inset struct used for configuring layout on Spotable objects.
-public struct ContentInset: Mappable, Equatable {
+public struct Inset: Mappable, Equatable {
 
   /// The root key for the JSON dictionary.
-  static let rootKey: String = "content-inset"
+  static let rootKey: String = "inset"
 
   /// A string enum use for constructing a JSON dictionary representation.
   enum Key: String {
@@ -48,7 +48,7 @@ public struct ContentInset: Mappable, Equatable {
   /// A convenience init for initializing a content inset using block syntax.
   ///
   /// - Parameter block: A mutating closure.
-  public init(_ block: (inout ContentInset) -> Void) {
+  public init(_ block: (inout Inset) -> Void) {
     self.init([:])
     block(&self)
   }
@@ -87,7 +87,7 @@ public struct ContentInset: Mappable, Equatable {
   /// - parameter rhs: Right hand content inset.
   ///
   /// - returns: A boolean value, true if both content insets are equal.
-  public static func==(lhs: ContentInset, rhs: ContentInset) -> Bool {
+  public static func==(lhs: Inset, rhs: Inset) -> Bool {
     return lhs.top == rhs.top &&
     lhs.left == rhs.left &&
     lhs.bottom == rhs.bottom &&

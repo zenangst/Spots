@@ -1,7 +1,7 @@
 @testable import Spots
 import XCTest
 
-class TestContentInset: XCTestCase {
+class TestInset: XCTestCase {
 
   let json: [String : Any] = [
     "top" : 1.0,
@@ -11,7 +11,7 @@ class TestContentInset: XCTestCase {
   ]
 
   func testDefaultValues() {
-    let contentInset = ContentInset()
+    let contentInset = Inset()
 
     XCTAssertEqual(contentInset.top, 0.0)
     XCTAssertEqual(contentInset.left, 0.0)
@@ -20,14 +20,14 @@ class TestContentInset: XCTestCase {
   }
 
   func testJSONMapping() {
-    var contentInset = ContentInset([:])
+    var contentInset = Inset([:])
     contentInset.configure(withJSON: json)
 
-    XCTAssertEqual(contentInset, ContentInset(top: 1, left: 2, bottom: 3, right: 4))
+    XCTAssertEqual(contentInset, Inset(top: 1, left: 2, bottom: 3, right: 4))
   }
 
   func testDictionaryConvertible() {
-    let contentInset = ContentInset(json)
+    let contentInset = Inset(json)
     let contentInsetJSON = contentInset.dictionary
 
     XCTAssertEqual(contentInsetJSON["top"], contentInset.top)
@@ -37,13 +37,13 @@ class TestContentInset: XCTestCase {
   }
 
   func testBlockConfiguration() {
-    let contentInset = ContentInset {
+    let contentInset = Inset {
       $0.top = 1
       $0.left = 2
       $0.bottom = 3
       $0.right = 4
     }
 
-    XCTAssertEqual(contentInset, ContentInset(top: 1, left: 2, bottom: 3, right: 4))
+    XCTAssertEqual(contentInset, Inset(top: 1, left: 2, bottom: 3, right: 4))
   }
 }

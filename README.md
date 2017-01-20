@@ -246,8 +246,7 @@ let layout = Layout() {
   $0.span = 3.0
   $0.itemSpacing = 10.0
   $0.lineSpacing = 0.0
-  $0.contentInset = ContentInset(top: 0, left: 0, bottom: 0, right: 0)
-  $0.sectionInset = SectionInset(top: 10, left: 10, bottom: 10, right: 10)
+  $0.inset = Inset(top: 0, left: 0, bottom: 0, right: 0)
 }
 
 let jsonLayout = Layout(
@@ -256,13 +255,7 @@ let jsonLayout = Layout(
     "item-spacing" : 10.0,
     "line-spacing" : 0.0,
     "dynamic-span" : true,
-    "content-inset" : [
-      "top" : 0.0,
-      "left" : 0.0,
-      "bottom" : 0.0,
-      "right" : 0.0
-    ],
-    "section-inset" : [
+    "inset" : [
       "top" : 10.0,
       "left" : 10.0,
       "bottom" : 10.0,

@@ -40,7 +40,7 @@ open class Controller: UIViewController, SpotsProtocol, SpotsFocusDelegate, UISc
   open static var configure: ((_ container: SpotsScrollView) -> Void)?
 
   /// Initial content offset for Controller, defaults to UIEdgeInsetsZero.
-  open fileprivate(set) var initialContentInset: UIEdgeInsets = UIEdgeInsets.zero
+  open fileprivate(set) var initialInset: UIEdgeInsets = UIEdgeInsets.zero
 
   /// A collection of Spotable objects.
   open var spots: [Spotable] {
