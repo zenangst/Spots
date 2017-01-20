@@ -7,6 +7,10 @@ import Brick
 
 open class ViewSpot: NSObject, Spotable, Viewable {
 
+  public var view: View {
+    return scrollView
+  }
+
   public static var layout: Layout = Layout([:])
 
   /// Reload spot with ItemChanges.
@@ -70,10 +74,6 @@ open class ViewSpot: NSObject, Spotable, Viewable {
 
   public func ui<T>(at index: Int) -> T? {
     return nil
-  }
-
-  open func render() -> View {
-    return scrollView
   }
 
   /**

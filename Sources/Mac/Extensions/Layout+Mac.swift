@@ -3,7 +3,7 @@ import Cocoa
 extension Layout {
 
   public func configure(spot: Gridable) {
-    inset.configure(scrollView: spot.render())
+    inset.configure(scrollView: spot.view)
 
     if let layout = spot.layout as? FlowLayout {
       inset.configure(layout: layout)

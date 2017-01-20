@@ -259,7 +259,7 @@ open class Controller: UIViewController, SpotsProtocol, SpotsFocusDelegate, UISc
       spot.layout(size)
 
       spot.compositeSpots.forEach {
-        $0.spot.layout(spot.render().frame.size)
+        $0.spot.layout(spot.view.frame.size)
       }
     }
   }
@@ -293,9 +293,9 @@ open class Controller: UIViewController, SpotsProtocol, SpotsFocusDelegate, UISc
 
     spots.enumerated().forEach { index, spot in
       setupSpot(at: index, spot: spot)
-      animated?(spot.render())
+      animated?(spot.view)
       (spot as? CarouselSpot)?.layout.yOffset = yOffset
-      yOffset += spot.render().frame.size.height
+      yOffset += spot.view.frame.size.height
     }
   }
 
@@ -304,25 +304,25 @@ open class Controller: UIViewController, SpotsProtocol, SpotsFocusDelegate, UISc
   /// - parameter index: The index of the Spotable object
   /// - parameter spot:  The spotable object that is going to be setup
   open func setupSpot(at index: Int, spot: Spotable) {
-    if spot.render().superview == nil {
-      scrollView.spotsContentView.addSubview(spot.render())
+    if spot.view.superview == nil {
+      scrollView.spotsContentView.addSubview(spot.view)
     }
 
-    guard let superview = spot.render().superview else {
+    guard let superview = spot.view.superview else {
       return
     }
 
-    spot.render().frame.origin.x = 0.0
+    spot.view.frame.origin.x = 0.0
     spot.component.index = index
     spot.setup(superview.frame.size)
     spot.component.size = CGSize(
       width: superview.frame.width,
-      height: ceil(spot.render().frame.height))
+      height: ceil(spot.view.frame.height))
     spot.focusDelegate = self
     spot.registerAndPrepare()
 
     if !spot.items.isEmpty {
-      spot.render().layoutIfNeeded()
+      spot.view.layoutIfNeeded()
     }
   }
 

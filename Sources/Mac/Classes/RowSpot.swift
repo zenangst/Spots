@@ -3,6 +3,13 @@ import Brick
 
 open class RowSpot: NSObject, Gridable {
 
+  /// Return collection view as a scroll view
+  ///
+  /// - returns: UIScrollView: Returns a UICollectionView as a UIScrollView
+  open var view: ScrollView {
+    return scrollView
+  }
+
   public static var layout: Layout = Layout(span: 1.0)
 
   /// Child spots
@@ -244,13 +251,6 @@ open class RowSpot: NSObject, Gridable {
     collectionView.dataSource = spotDataSource
     collectionView.delegate = spotDelegate
     collectionView.collectionViewLayout = layout
-  }
-
-  /// Return collection view as a scroll view
-  ///
-  /// - returns: UIScrollView: Returns a UICollectionView as a UIScrollView
-  open func render() -> ScrollView {
-    return scrollView
   }
 
   /**

@@ -46,7 +46,7 @@ extension SpotsProtocol {
     guard !components.isEmpty else {
       Dispatch.mainQueue { [weak self] in
         self?.spots.forEach {
-          $0.render().removeFromSuperview()
+          $0.view.removeFromSuperview()
         }
         self?.spots = []
         completion?()
@@ -136,21 +136,21 @@ extension SpotsProtocol {
 
     /// Remove old composite spots from superview and empty container
     for compositeSpot in oldSpot.compositeSpots {
-      compositeSpot.spot.render().removeFromSuperview()
+      compositeSpot.spot.view.removeFromSuperview()
     }
     oldSpot.compositeSpots = []
 
-    spot.render().frame = oldSpot.render().frame
+    spot.view.frame = oldSpot.view.frame
 
-    oldSpot.render().removeFromSuperview()
+    oldSpot.view.removeFromSuperview()
     spots[index] = spot
-    scrollView.spotsContentView.insertSubview(spot.render(), at: index)
+    scrollView.spotsContentView.insertSubview(spot.view, at: index)
     setupSpot(at: index, spot: spot)
 
     #if !os(OSX)
     (spot as? CarouselSpot)?.layout.yOffset = yOffset
     #endif
-    yOffset += spot.render().frame.size.height
+    yOffset += spot.view.frame.size.height
   }
 
   fileprivate func newSpot(_ index: Int, newComponents: [Component], yOffset: inout CGFloat) {
@@ -160,7 +160,7 @@ extension SpotsProtocol {
     #if !os(OSX)
       (spot as? CarouselSpot)?.layout.yOffset = yOffset
     #endif
-    yOffset += spot.render().frame.size.height
+    yOffset += spot.view.frame.size.height
   }
 
   /// Remove Spot at index
@@ -170,7 +170,7 @@ extension SpotsProtocol {
     guard index < spots.count else {
       return
     }
-    spots[index].render().removeFromSuperview()
+    spots[index].view.removeFromSuperview()
   }
 
   /// Set up items for a Spotable object
@@ -187,16 +187,16 @@ extension SpotsProtocol {
     }
 
     let tempSpot = Factory.resolve(component: newComponents[index])
-    tempSpot.render().frame = spot.render().frame
-    tempSpot.setup(tempSpot.render().frame.size)
-    tempSpot.layout(tempSpot.render().frame.size)
-    tempSpot.render().frame.size.height = tempSpot.computedHeight
-    tempSpot.render().layoutIfNeeded()
+    tempSpot.view.frame = spot.view.frame
+    tempSpot.setup(tempSpot.view.frame.size)
+    tempSpot.layout(tempSpot.view.frame.size)
+    tempSpot.view.frame.size.height = tempSpot.computedHeight
+    tempSpot.view.layoutIfNeeded()
     tempSpot.registerAndPrepare()
 
     tempSpot.component.size = CGSize(
       width: view.frame.width,
-      height: ceil(tempSpot.render().frame.height))
+      height: ceil(tempSpot.view.frame.height))
 
     guard let diff = Item.evaluate(tempSpot.items, oldModels: spot.items) else {
       return true
@@ -207,7 +207,7 @@ extension SpotsProtocol {
 
     for index in changes.updatedChildren {
       if index < tempSpot.compositeSpots.count {
-        spot.compositeSpots[index].spot.render().removeFromSuperview()
+        spot.compositeSpots[index].spot.view.removeFromSuperview()
         spot.compositeSpots[index] = tempSpot.compositeSpots[index]
         spot.compositeSpots[index].parentSpot = spot
       }
@@ -259,7 +259,7 @@ extension SpotsProtocol {
       for item in newItems {
         let results = spot.compositeSpots.filter({ $0.itemIndex == item.index })
         for compositeSpot in results {
-          offsets.append(compositeSpot.spot.render().contentOffset)
+          offsets.append(compositeSpot.spot.view.contentOffset)
         }
       }
 
@@ -281,7 +281,7 @@ extension SpotsProtocol {
             continue
           }
 
-          compositeSpot.spot.render().contentOffset = offsets[index]
+          compositeSpot.spot.view.contentOffset = offsets[index]
         }
       }
 
@@ -422,8 +422,8 @@ extension SpotsProtocol {
         }
       }
 
-      for removedSpot in weakSelf.spots where removedSpot.render().superview == nil {
-        if let index = weakSelf.spots.index(where: { removedSpot.render().isEqual($0.render()) }) {
+      for removedSpot in weakSelf.spots where removedSpot.view.superview == nil {
+        if let index = weakSelf.spots.index(where: { removedSpot.view.isEqual($0.view) }) {
           weakSelf.spots.remove(at: index)
         }
       }
@@ -468,7 +468,7 @@ extension SpotsProtocol {
       let oldComposites = weakSelf.spots.flatMap { $0.compositeSpots }
 
       if newComponents.count == oldComponents.count {
-        offsets = weakSelf.spots.map { $0.render().contentOffset }
+        offsets = weakSelf.spots.map { $0.view.contentOffset }
       }
 
       weakSelf.spots = newSpots
@@ -488,13 +488,13 @@ extension SpotsProtocol {
           break
         }
 
-        newComposites[index].spot.render().contentOffset = compositeSpot.spot.render().contentOffset
+        newComposites[index].spot.view.contentOffset = compositeSpot.spot.view.contentOffset
       }
 
       completion?()
 
       offsets.enumerated().forEach {
-        newSpots[$0.offset].render().contentOffset = $0.element
+        newSpots[$0.offset].view.contentOffset = $0.element
       }
 
       if let controller = self as? Controller {
@@ -555,8 +555,8 @@ extension SpotsProtocol {
       #if !os(OSX)
         if animation != .none {
           let isScrolling = weakSelf.scrollView.isDragging == true || weakSelf.scrollView.isTracking == true
-          if let superview = spot.render().superview, !isScrolling {
-            spot.render().frame.size.height = superview.frame.height
+          if let superview = spot.view.superview, !isScrolling {
+            spot.view.frame.size.height = superview.frame.height
           }
         }
       #endif
@@ -565,7 +565,7 @@ extension SpotsProtocol {
         spot.updateHeight {
           spot.afterUpdate()
           completion?()
-          spot.render().layoutIfNeeded()
+          spot.view.layoutIfNeeded()
         }
       }
     }
@@ -754,10 +754,10 @@ extension SpotsProtocol {
     default:
       spot.setup(scrollView.frame.size)
       spot.component.size = CGSize(
-        width: spot.render().frame.size.width,
-        height: ceil(spot.render().frame.size.height))
+        width: spot.view.frame.size.width,
+        height: ceil(spot.view.frame.size.height))
       spot.layout(scrollView.frame.size)
-      spot.render().layoutSubviews()
+      spot.view.layoutSubviews()
     }
   }
 

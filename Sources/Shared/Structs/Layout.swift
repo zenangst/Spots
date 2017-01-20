@@ -95,7 +95,7 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
   }
 
   public func configure(spot: Listable) {
-    inset.configure(scrollView: spot.render())
+    inset.configure(scrollView: spot.view)
   }
 
   public static func == (lhs: Layout, rhs: Layout) -> Bool {

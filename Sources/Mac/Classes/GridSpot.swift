@@ -3,6 +3,11 @@ import Brick
 
 open class GridSpot: NSObject, Gridable {
 
+  /// Return collection view as a scroll view
+  open var view: ScrollView {
+    return scrollView
+  }
+
   public static var layout: Layout = Layout()
 
   /// Child spots
@@ -250,14 +255,6 @@ open class GridSpot: NSObject, Gridable {
     let backgroundView = NSView()
     backgroundView.wantsLayer = true
     collectionView.backgroundView = backgroundView
-  }
-
-  /// Return collection view as a scroll view
-  ///
-  /// - returns: UIScrollView: Returns a UICollectionView as a UIScrollView
-  ///
-  open func render() -> ScrollView {
-    return scrollView
   }
 
   /**

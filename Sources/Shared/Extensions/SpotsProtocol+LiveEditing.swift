@@ -45,12 +45,12 @@ import Cache
                 #if !os(OSX)
                 (spot as? CarouselSpot)?.layout.yOffset = yOffset
                 #endif
-                yOffset += spot.render().frame.size.height
+                yOffset += spot.view.frame.size.height
               }
 
               #if !os(OSX)
               for case let gridable as CarouselSpot in weakSelf.spots {
-                gridable.layout.yOffset = gridable.render().frame.origin.y
+                gridable.layout.yOffset = gridable.view.frame.origin.y
               }
               #endif
             }

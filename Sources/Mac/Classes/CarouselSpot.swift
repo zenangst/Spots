@@ -3,6 +3,11 @@ import Brick
 
 open class CarouselSpot: NSObject, Gridable {
 
+  /// Return collection view as a scroll view
+  open var view: ScrollView {
+    return scrollView
+  }
+
   public static var layout: Layout = Layout()
 
   /// Child spots
@@ -173,10 +178,6 @@ open class CarouselSpot: NSObject, Gridable {
     collectionView.dataSource = spotDataSource
     collectionView.delegate = spotDelegate
     collectionView.collectionViewLayout = layout
-  }
-
-  open func render() -> ScrollView {
-    return scrollView
   }
 
   open func layout(_ size: CGSize) {

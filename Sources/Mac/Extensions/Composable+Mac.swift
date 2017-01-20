@@ -23,17 +23,17 @@ public extension Composable {
 
       compositeSpot.spot.component.size = CGSize(
         width: width,
-        height: ceil(compositeSpot.spot.render().frame.size.height))
+        height: ceil(compositeSpot.spot.view.frame.size.height))
 
-      compositeSpot.spot.render().frame.origin.y = height
-      compositeSpot.spot.render().frame.size.width = contentView.frame.size.width
-      compositeSpot.spot.render().frame.size.height = compositeSpot.spot.render().contentSize.height
+      compositeSpot.spot.view.frame.origin.y = height
+      compositeSpot.spot.view.frame.size.width = contentView.frame.size.width
+      compositeSpot.spot.view.frame.size.height = compositeSpot.spot.view.contentSize.height
 
-      height += compositeSpot.spot.render().contentSize.height
+      height += compositeSpot.spot.view.contentSize.height
 
       (compositeSpot.spot as? Gridable)?.layout.invalidateLayout()
 
-      contentView.addSubview(compositeSpot.spot.render())
+      contentView.addSubview(compositeSpot.spot.view)
     }
 
     item.size.height = height

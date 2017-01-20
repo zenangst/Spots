@@ -13,7 +13,7 @@ extension Controller {
     preloadView()
     viewDidAppear()
     spots.forEach {
-      $0.render().layoutSubviews()
+      $0.view.layoutSubviews()
     }
   }
 

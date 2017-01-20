@@ -70,8 +70,8 @@ class DelegateTests: XCTestCase {
         Item(title: "title 1"),
         Item(title: "title 2")
       ]))
-    spot.render().frame.size = CGSize(width: 100, height: 100)
-    spot.render().layoutSubviews()
+    spot.view.frame.size = CGSize(width: 100, height: 100)
+    spot.view.layoutSubviews()
 
     var view = spot.spotDelegate?.tableView(spot.tableView, viewForHeaderInSection: 0)
     XCTAssert(view is CustomListHeaderView)

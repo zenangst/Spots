@@ -66,9 +66,9 @@ class DataSourceTests: XCTestCase {
         Item(title: "title 1"),
         Item(title: "title 2")
       ]))
-    spot.render().frame.size = CGSize(width: 100, height: 100)
+    spot.view.frame.size = CGSize(width: 100, height: 100)
     spot.layout.headerReferenceSize = CGSize(width: 100, height: 48)
-    spot.render().layoutSubviews()
+    spot.view.layoutSubviews()
 
     let header = spot.spotDataSource!.collectionView(spot.collectionView, viewForSupplementaryElementOfKind: UICollectionElementKindSectionHeader, at: IndexPath(item: 0, section: 0))
     XCTAssertNotNil(header)
@@ -84,9 +84,9 @@ class DataSourceTests: XCTestCase {
         Item(title: "title 1"),
         Item(title: "title 2")
       ]))
-    spot.render().frame.size = CGSize(width: 100, height: 100)
+    spot.view.frame.size = CGSize(width: 100, height: 100)
     spot.layout.headerReferenceSize = CGSize(width: 100, height: 48)
-    spot.render().layoutSubviews()
+    spot.view.layoutSubviews()
 
     let header = spot.spotDataSource!.collectionView(spot.collectionView, viewForSupplementaryElementOfKind: UICollectionElementKindSectionHeader, at: IndexPath(item: 0, section: 0))
     XCTAssertNotNil(header)

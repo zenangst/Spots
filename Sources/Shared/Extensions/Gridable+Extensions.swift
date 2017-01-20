@@ -13,7 +13,7 @@ public extension Spotable where Self : Gridable {
   ///
   /// - returns: Returns a UICollectionView as a UIScrollView
   ///
-  public func render() -> CollectionView {
+  var view: CollectionView {
     return collectionView
   }
   #else
@@ -21,7 +21,7 @@ public extension Spotable where Self : Gridable {
   ///
   /// - returns: Returns a UICollectionView as a UIScrollView
   ///
-  public func render() -> ScrollView {
+  var view: ScrollView {
     return collectionView
   }
   #endif
