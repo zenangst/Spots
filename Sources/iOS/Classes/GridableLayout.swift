@@ -83,7 +83,7 @@ open class GridableLayout: UICollectionViewFlowLayout {
   }
 
   open override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-    guard var attribute = super.layoutAttributesForItem(at: indexPath) else {
+    guard let attribute = super.layoutAttributesForItem(at: indexPath) else {
       return nil
     }
 

@@ -87,7 +87,7 @@ open class RowSpot: NSObject, Gridable {
     self.spotDelegate = Delegate(spot: self)
 
     if component.kind.isEmpty {
-      self.component.kind = Component.Kind.Row.string
+      self.component.kind = Component.Kind.row.string
     }
 
     registerDefault(view: RowSpotCell.self)

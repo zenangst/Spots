@@ -143,7 +143,7 @@ open class CarouselSpot: NSObject, Gridable {
     self.spotDelegate = Delegate(spot: self)
 
     if component.kind.isEmpty {
-      self.component.kind = Component.Kind.Carousel.string
+      self.component.kind = Component.Kind.carousel.string
     }
 
     registerDefault(view: CarouselSpotCell.self)
