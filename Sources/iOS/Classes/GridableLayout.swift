@@ -33,9 +33,15 @@ open class GridableLayout: UICollectionViewFlowLayout {
 
     var layoutAttributes = [UICollectionViewLayoutAttributes]()
 
+    if !spot.component.header.isEmpty {
+      if let headerAttribute = super.layoutAttributesForSupplementaryView(ofKind: UICollectionElementKindSectionHeader, at: IndexPath(item: 0, section: 0)) {
+        layoutAttributes.append(headerAttribute)
+      }
+    }
+
     for index in 0..<(collectionView?.numberOfItems(inSection: 0) ?? 0) {
-      if let attribute = self.layoutAttributesForItem(at: IndexPath(item: index, section: 0)) {
-        layoutAttributes.append(attribute)
+      if let itemAttribute = self.layoutAttributesForItem(at: IndexPath(item: index, section: 0)) {
+        layoutAttributes.append(itemAttribute)
       }
     }
 
