@@ -69,13 +69,13 @@ open class GridableLayout: UICollectionViewFlowLayout {
       return
     }
 
+    super.invalidateLayout()
+
     if scrollDirection == .horizontal &&
       (collectionView.frame.size.height <= contentSize.height ||
       collectionView.contentOffset.y > 0) {
       return
     }
-
-    super.invalidateLayout()
 
     if let y = yOffset, collectionView.isDragging && headerReferenceSize.height > 0.0 {
       collectionView.frame.origin.y = y
@@ -104,13 +104,6 @@ open class GridableLayout: UICollectionViewFlowLayout {
     }
 
     var attributes = [UICollectionViewLayoutAttributes]()
-    var rect = CGRect(origin: CGPoint.zero, size: contentSize)
-
-    if headerReferenceSize.height > 0.0 {
-      rect.origin = CGPoint(x: -collectionView.bounds.width, y: 0)
-      rect.size.height = contentSize.height
-      rect.size.width = collectionView.bounds.width * 3
-    }
 
     if let newAttributes = self.layoutAttributes {
       var offset: CGFloat = sectionInset.left
@@ -134,9 +127,7 @@ open class GridableLayout: UICollectionViewFlowLayout {
             offset += itemAttribute.size.width + minimumInteritemSpacing
           }
 
-          if rect.intersects(itemAttribute.frame) {
-            attributes.append(itemAttribute)
-          }
+          attributes.append(itemAttribute)
         }
       }
     }
