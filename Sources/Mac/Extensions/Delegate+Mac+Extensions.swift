@@ -11,7 +11,9 @@ extension Delegate: NSCollectionViewDelegate {
     Dispatch.delay(for: 0.1) { [weak self] in
       guard let weakSelf = self, let first = indexPaths.first,
         let spot = weakSelf.spot,
-        let item = spot.item(at: first.item), first.item < spot.items.count else { return }
+        let item = spot.item(at: first.item), first.item < spot.items.count else {
+          return
+      }
       spot.delegate?.spotable(spot, itemSelected: item)
     }
   }
