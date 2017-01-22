@@ -39,36 +39,19 @@ open class CarouselSpot: NSObject, Gridable {
           if component.items.count > 1 && layout.span > 0.0 {
             pageControl.numberOfPages = Int(floor(Double(component.items.count) / layout.span))
           }
+
+          if layout.pageIndicator {
+            pageControl.frame.size.width = backgroundView.frame.width
+            collectionView.backgroundView?.addSubview(pageControl)
+          } else {
+            pageControl.removeFromSuperview()
+          }
+
+          if layout.span == 1 {
+            collectionView.isPagingEnabled = component.userInteraction?.paginate == .byPage
+          }
         }
       #endif
-    }
-  }
-
-  #if os(iOS)
-  /// A boolean value that configures the collection views pagination
-  open var paginate = false {
-    willSet(newValue) {
-      if let layout = component.layout {
-        if layout.span == 1 {
-          collectionView.isPagingEnabled = newValue
-        }
-      }
-    }
-  }
-
-  /// Determines how the CarouselSpot should handle pagination, if enabled, it will snap to each item in the carousel
-  open var paginateByItem: Bool = false
-  #endif
-
-  /// A boolean value that determines if the CarouselSpot should show a page indicator
-  open var pageIndicator: Bool = false {
-    willSet(value) {
-      if value {
-        pageControl.frame.size.width = backgroundView.frame.width
-        collectionView.backgroundView?.addSubview(pageControl)
-      } else {
-        pageControl.removeFromSuperview()
-      }
     }
   }
 
@@ -216,16 +199,6 @@ open class CarouselSpot: NSObject, Gridable {
       }
     }
 
-    #if os(iOS)
-      if let paginate = component.meta("paginate", type: Bool.self) {
-        self.paginate = paginate
-      }
-
-      if let pageIndicator = component.meta("paginate", type: Bool.self) {
-        self.pageIndicator = pageIndicator
-      }
-    #endif
-
     if !component.header.isEmpty {
       let resolve = type(of: self).headers.make(component.header)
       layout.headerReferenceSize.width = collectionView.frame.size.width
@@ -236,7 +209,7 @@ open class CarouselSpot: NSObject, Gridable {
 
     collectionView.frame.size.height += layout.headerReferenceSize.height
 
-    guard pageIndicator else {
+    guard component.layout?.pageIndicator == Optional(true) else {
       return
     }
 
@@ -260,7 +233,7 @@ extension Delegate: UIScrollViewDelegate {
 
     var currentCellOffset = collectionView.contentOffset
     #if os(iOS)
-      if spot.paginateByItem {
+      if spot.component.userInteraction?.paginate == .byItem {
         currentCellOffset.x += collectionView.frame.size.width / 2
       } else {
         if spot.pageControl.currentPage == 0 {
@@ -303,7 +276,7 @@ extension Delegate: UIScrollViewDelegate {
       return
     }
 
-    guard spot.paginate else { return }
+    guard spot.component.userInteraction?.paginate == .byPage else { return }
     paginatedEndScrolling()
   }
 
@@ -325,7 +298,7 @@ extension Delegate: UIScrollViewDelegate {
   public func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
     guard let spot = spot as? CarouselSpot else { return }
     #if os(iOS)
-      guard spot.paginate else { return }
+      guard spot.component.userInteraction?.paginate == .byPage else { return }
     #endif
 
     let collectionView = spot.collectionView
