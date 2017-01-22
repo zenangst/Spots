@@ -99,8 +99,6 @@ open class GridSpot: NSObject, Gridable {
       }
     }
   }
-  /// Indicator to calculate the height based on content
-  open var usesDynamicHeight = true
 
   open fileprivate(set) var stateCache: StateCache?
 

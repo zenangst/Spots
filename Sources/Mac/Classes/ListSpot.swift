@@ -60,8 +60,6 @@ open class ListSpot: NSObject, Listable {
       }
     }
   }
-  /// Indicator to calculate the height based on content
-  open var usesDynamicHeight = true
 
   open fileprivate(set) var stateCache: StateCache?
 

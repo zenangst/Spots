@@ -15,9 +15,6 @@ open class CarouselSpot: NSObject, Gridable {
   /// A boolean value that affects the sizing of items when using span, if enabled and the item count is less than the span, the CarouselSpot will even out the space between the items to align them
   open var dynamicSpan = false
 
-  /// Indicator to calculate the height based on content
-  open var usesDynamicHeight = true
-
   /// A Registry object that holds identifiers and classes for cells used in the CarouselSpot
   open static var views: Registry = Registry()
 
