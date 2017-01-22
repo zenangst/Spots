@@ -15,6 +15,8 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
     case lineSpacing = "line-spacing"
     case span = "span"
     case dynamicSpan = "dynamic-span"
+    case dynamicHeight = "dynamic-height"
+    case pageIndicator = "page-indicator"
   }
 
   static let rootKey: String = "layout"
@@ -28,6 +30,8 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
   public var lineSpacing: Double = 0.0
   public var span: Double = 0.0
   public var dynamicSpan: Bool = false
+  public var dynamicHeight: Bool = false
+  public var pageIndicator: Bool = false
 
   public var dictionary: [String : Any] {
     return [
@@ -35,7 +39,8 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
       Key.itemSpacing.rawValue: itemSpacing,
       Key.lineSpacing.rawValue: lineSpacing,
       Key.span.rawValue: span,
-      Key.dynamicSpan.rawValue: dynamicSpan
+      Key.dynamicSpan.rawValue: dynamicSpan,
+      Key.pageIndicator.rawValue: pageIndicator
     ]
   }
 
@@ -44,29 +49,22 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
     self.dynamicSpan = false
     self.itemSpacing = 0.0
     self.lineSpacing = 0.0
+    self.pageIndicator = false
     self.inset = Inset()
   }
 
-  public init(span: Double = 0.0, dynamicSpan: Bool = false, itemSpacing: Double = 0.0, lineSpacing: Double = 0.0, inset: Inset = Inset()) {
+  public init(span: Double = 0.0, dynamicSpan: Bool = false, dynamicHeight: Bool = false, pageIndicator: Bool = false, itemSpacing: Double = 0.0, lineSpacing: Double = 0.0, inset: Inset = Inset()) {
     self.span = span
     self.dynamicSpan = dynamicSpan
+    self.dynamicHeight = dynamicHeight
     self.itemSpacing = itemSpacing
     self.lineSpacing = lineSpacing
     self.inset = inset
+    self.pageIndicator = pageIndicator
   }
 
   public init(_ map: [String : Any] = [:]) {
-    switch Component.legacyMapping {
-    case true:
-      self.inset = Inset(map)
-    case false:
-      self.inset = Inset(map.property(Inset.rootKey) ?? [:])
-    }
-
-    self.itemSpacing <- map.property(Key.itemSpacing.rawValue)
-    self.lineSpacing <- map.property(Key.lineSpacing.rawValue)
-    self.dynamicSpan <- map.property(Key.dynamicSpan.rawValue)
-    self.span <- map.property(Key.span.rawValue)
+    configure(withJSON: map)
   }
 
   public init(_ block: (inout Layout) -> Void) {
@@ -85,7 +83,9 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
     self.itemSpacing <- map.property(Key.itemSpacing.rawValue)
     self.lineSpacing <- map.property(Key.lineSpacing.rawValue)
     self.dynamicSpan <- map.property(Key.dynamicSpan.rawValue)
+    self.dynamicHeight <- map.property(Key.dynamicHeight.rawValue)
     self.span <- map.property(Key.span.rawValue)
+    self.pageIndicator <- map.property(Key.pageIndicator.rawValue)
   }
 
   public func mutate(_ closure: (inout Layout) -> Void) -> Layout {
@@ -103,7 +103,9 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
     lhs.itemSpacing == rhs.itemSpacing &&
     lhs.lineSpacing == rhs.lineSpacing &&
     lhs.span == rhs.span &&
-    lhs.dynamicSpan == rhs.dynamicSpan
+    lhs.dynamicSpan == rhs.dynamicSpan &&
+    lhs.dynamicHeight == rhs.dynamicHeight &&
+    lhs.pageIndicator == rhs.pageIndicator
   }
 
   public static func != (lhs: Layout, rhs: Layout) -> Bool {
