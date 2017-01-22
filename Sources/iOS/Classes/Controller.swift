@@ -53,7 +53,7 @@ open class Controller: UIViewController, SpotsProtocol, SpotsFocusDelegate, UISc
           $0.spot.focusDelegate = self
         }
       }
-      delegate?.spotsDidChange(spots: spots)
+      delegate?.spotablesDidChange(spots)
     }
   }
 
@@ -80,7 +80,7 @@ open class Controller: UIViewController, SpotsProtocol, SpotsFocusDelegate, UISc
   weak open var delegate: SpotsDelegate? {
     didSet {
       spots.forEach { $0.delegate = delegate }
-      delegate?.spotsDidChange(spots: spots)
+      delegate?.spotablesDidChange(spots)
     }
   }
 
@@ -334,7 +334,7 @@ open class Controller: UIViewController, SpotsProtocol, SpotsFocusDelegate, UISc
     Dispatch.mainQueue { [weak self] in
       guard let weakSelf = self else { return }
       weakSelf.refreshPositions.removeAll()
-      weakSelf.refreshDelegate?.spotsDidReload(refreshControl) {
+      weakSelf.refreshDelegate?.spotablesDidReload(weakSelf.spots, refreshControl: refreshControl) {
         refreshControl.endRefreshing()
       }
     }

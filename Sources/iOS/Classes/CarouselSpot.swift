@@ -290,7 +290,7 @@ extension Delegate: UIScrollViewDelegate {
       return
     }
 
-    spot.carouselScrollDelegate?.spotsCarouselDidScroll(in: spot)
+    spot.carouselScrollDelegate?.spotableCarouselDidScroll(spot)
   }
 
   #if os(iOS)
@@ -312,7 +312,7 @@ extension Delegate: UIScrollViewDelegate {
       return
     }
 
-    spot.carouselScrollDelegate?.spotsCarouselDidEndScrollingAnimated(in: spot)
+    spot.carouselScrollDelegate?.spotableCarouselDidEndScrollingAnimated(spot)
   }
 
   #endif
@@ -347,7 +347,7 @@ extension Delegate: UIScrollViewDelegate {
     let index: Int = Int(floor(newTargetOffset * CGFloat(spot.items.count) / scrollView.contentSize.width))
 
     if index >= 0 && index <= spot.items.count {
-      spot.carouselScrollDelegate?.spotsCarouselDidEndScrolling(in: spot, item: spot.items[index])
+      spot.carouselScrollDelegate?.spotableCarouselDidEndScrolling(spot, item: spot.items[index])
     }
 
     #if os(iOS)

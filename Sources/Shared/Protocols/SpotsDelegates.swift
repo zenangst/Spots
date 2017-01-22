@@ -35,7 +35,7 @@ public protocol SpotsDelegate: class {
   /// - parameter spot: An object that conforms to the spotable protocol.
   /// - parameter view: The UI element that did end display.
   /// - parameter item: The data for the view that is going to be displayed.
-  func spotable(_ spot: Spotable, didEndDisplay view: SpotView, item: Item)
+  func spotable(_ spot: Spotable, didEndDisplaying view: SpotView, item: Item)
 }
 
 // MARK: - SpotsDelegate extension
@@ -64,7 +64,7 @@ public extension SpotsDelegate {
   /// - parameter spot: An object that conforms to the spotable protocol.
   /// - parameter view: The UI element that did end display.
   /// - parameter item: The data for the view that is going to be displayed.
-  func spotable(_ spot: Spotable, didEndDisplay view: SpotView, item: Item) {}
+  func spotable(_ spot: Spotable, didEndDisplaying view: SpotView, item: Item) {}
 }
 
 /// A refresh delegate for handling reloading of a Spot
@@ -75,7 +75,7 @@ public protocol RefreshDelegate: class {
   /// - parameter refreshControl: A UIRefreshControl
   /// - parameter completion: A completion closure that should be triggered when the update is completed
   #if os(iOS)
-  func spotablesDidReload(_ refreshControl: UIRefreshControl, completion: Completion)
+  func spotablesDidReload(_ spots: [Spotable], refreshControl: UIRefreshControl, completion: Completion)
   #endif
 }
 
