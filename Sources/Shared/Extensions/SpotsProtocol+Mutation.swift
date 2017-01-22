@@ -724,7 +724,8 @@ extension SpotsProtocol {
     Dispatch.mainQueue { [weak self] in
       guard let weakSelf = self else { return }
       weakSelf.refreshPositions.removeAll()
-      weakSelf.refreshDelegate?.spotsDidReload(refreshControl) {
+
+      weakSelf.refreshDelegate?.spotablesDidReload(weakSelf.spots, refreshControl: refreshControl) {
         refreshControl.endRefreshing()
       }
     }

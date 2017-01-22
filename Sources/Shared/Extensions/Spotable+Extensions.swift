@@ -31,7 +31,7 @@ public extension Spotable {
       #if !os(OSX)
         /// tvOS adds spacing between cells (it seems to be locked to 14 pixels in height).
         #if os(tvOS)
-          if component.kind == Component.Kind.List.string {
+          if component.kind == Component.Kind.list.string {
             height += 14
           }
         #endif
@@ -45,7 +45,7 @@ public extension Spotable {
 
     /// Add extra height to make room for focus shadow
     #if os(tvOS)
-      if component.kind == Component.Kind.List.string {
+      if component.kind == Component.Kind.list.string {
         height += 28
       }
     #endif

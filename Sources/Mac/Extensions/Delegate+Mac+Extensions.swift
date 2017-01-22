@@ -11,8 +11,10 @@ extension Delegate: NSCollectionViewDelegate {
     Dispatch.delay(for: 0.1) { [weak self] in
       guard let weakSelf = self, let first = indexPaths.first,
         let spot = weakSelf.spot,
-        let item = spot.item(at: first.item), first.item < spot.items.count else { return }
-      spot.delegate?.didSelect(item: item, in: spot)
+        let item = spot.item(at: first.item), first.item < spot.items.count else {
+          return
+      }
+      spot.delegate?.spotable(spot, itemSelected: item)
     }
   }
 
@@ -31,7 +33,8 @@ extension Delegate: NSCollectionViewDelegate {
         return
     }
 
-    spot.delegate?.willDisplay(view: view, item: item, in: spot)
+
+    spot.delegate?.spotable(spot, willDisplay: view, item: item)
   }
 
   /// Notifies the delegate that the specified item was removed from the collection view.
@@ -49,7 +52,7 @@ extension Delegate: NSCollectionViewDelegate {
         return
     }
 
-    spot.delegate?.endDisplay(view: view, item: item, in: spot)
+    spot.delegate?.spotable(spot, didEndDisplaying: view, item: item)
   }
 }
 
@@ -74,7 +77,7 @@ extension Delegate: NSTableViewDelegate {
     }
 
     if spot.component.meta(ListSpot.Key.doubleAction, type: Bool.self) != true {
-      spot.delegate?.didSelect(item: item, in: spot)
+      spot.delegate?.spotable(spot, itemSelected: item)
     }
 
     return true
@@ -141,7 +144,7 @@ extension Delegate: NSTableViewDelegate {
         return
     }
 
-    spot.delegate?.willDisplay(view: view, item: item, in: spot)
+    spot.delegate?.spotable(spot, willDisplay: view, item: item)
   }
 
   public func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {

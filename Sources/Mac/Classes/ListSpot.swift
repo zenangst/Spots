@@ -162,12 +162,12 @@ open class ListSpot: NSObject, Listable {
 
   open func doubleAction(_ sender: Any?) {
     guard let item = item(at: tableView.clickedRow), component.meta(Key.doubleAction, type: Bool.self) == true else { return }
-    delegate?.didSelect(item: item, in: self)
+    delegate?.spotable(self, itemSelected: item)
   }
 
   open func action(_ sender: Any?) {
     guard let item = item(at: tableView.clickedRow), component.meta(Key.doubleAction, false) == false else { return }
-    delegate?.didSelect(item: item, in: self)
+    delegate?.spotable(self, itemSelected: item)
   }
 
   open func layout(_ size: CGSize) {
