@@ -33,7 +33,6 @@ extension Delegate: NSCollectionViewDelegate {
         return
     }
 
-
     spot.delegate?.spotable(spot, willDisplay: view, item: item)
   }
 

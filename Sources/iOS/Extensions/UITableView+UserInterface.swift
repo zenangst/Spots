@@ -121,9 +121,9 @@ extension UITableView: UserInterface {
   /// - parameter updateDataSource: A closure that is used to update the data source before performing the updates on the UI
   /// - parameter completion:       A completion closure that will run when both data source and UI is updated
   public func process(_ changes: (insertions: [Int], reloads: [Int], deletions: [Int], childUpdates: [Int]),
-               withAnimation animation: Animation = .automatic,
-               updateDataSource: () -> Void,
-               completion: ((()) -> Void)? = nil) {
+                      withAnimation animation: Animation = .automatic,
+                      updateDataSource: () -> Void,
+                      completion: ((()) -> Void)? = nil) {
     let insertions = changes.insertions.map { IndexPath(row: $0, section: 0) }
     let reloads = changes.reloads.map { IndexPath(row: $0, section: 0) }
     let deletions = changes.deletions.map { IndexPath(row: $0, section: 0) }

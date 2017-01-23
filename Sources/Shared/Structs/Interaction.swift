@@ -9,7 +9,7 @@ public struct Interaction: Mappable {
   ///
   /// - paginate: Used for mapping pagination behavior.
   enum Key: String {
-    case paginate = "paginate"
+    case paginate
   }
 
   /// Delcares what kind of interaction should be used for pagination. See `Paginate` struct for more information.

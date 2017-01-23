@@ -148,7 +148,7 @@ extension SpotsProtocol {
     setupSpot(at: index, spot: spot)
 
     #if !os(OSX)
-    (spot as? CarouselSpot)?.layout.yOffset = yOffset
+      (spot as? CarouselSpot)?.layout.yOffset = yOffset
     #endif
     yOffset += spot.view.frame.size.height
   }
@@ -300,7 +300,7 @@ extension SpotsProtocol {
                       in spot: Spotable,
                       lessItems newItems: [Item],
                       animation: Animation,
-                          completion: (() -> Void)? = nil) {
+                      completion: (() -> Void)? = nil) {
     spot.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: {
       spot.beforeUpdate()
       spot.items = newItems
@@ -415,9 +415,9 @@ extension SpotsProtocol {
           }
 
           runCompletion = weakSelf.setupItemsForSpot(at: index,
-                                                  newComponents: newComponents,
-                                                  withAnimation: animation,
-                                                  completion: completion)
+                                                     newComponents: newComponents,
+                                                     withAnimation: animation,
+                                                     completion: completion)
         case .none: continue
         }
       }
