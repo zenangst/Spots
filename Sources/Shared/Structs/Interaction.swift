@@ -3,7 +3,7 @@ import Tailor
 
 /// A user interaction struct used for mapping behavior to a Spotable object.
 /// Note: `paginate` is currently only available on iOS.
-public struct UserInteraction: Mappable {
+public struct Interaction: Mappable {
 
   /// A string based enum for keys used when encoding and decoding the struct from and to JSON.
   ///
@@ -15,7 +15,7 @@ public struct UserInteraction: Mappable {
   /// Delcares what kind of interaction should be used for pagination. See `Paginate` struct for more information.
   var paginate: Paginate = .disabled
 
-  /// The root key used when parsing JSON into a UserInteraction struct.
+  /// The root key used when parsing JSON into a Interaction struct.
   static let rootKey: String = "user-interaction"
 
   /// A dictionary representation of the struct.
@@ -37,7 +37,7 @@ public struct UserInteraction: Mappable {
     self.paginate = .disabled
   }
 
-  /// Default initializer for creating a UserInteraction struct.
+  /// Default initializer for creating a Interaction struct.
   ///
   /// - Parameter paginate: Declares which pagination behavior that should be used, `.disabled` is default.
   public init(paginate: Paginate = .disabled) {
@@ -57,23 +57,23 @@ public struct UserInteraction: Mappable {
     }
   }
 
-  /// Compare UserInteraction structs.
+  /// Compare Interaction structs.
   ///
   /// - Parameters:
-  ///   - lhs: Left hand side UserInteraction
-  ///   - rhs: Right hand side UserInteraction
+  ///   - lhs: Left hand side Interaction
+  ///   - rhs: Right hand side Interaction
   /// - Returns: A boolean value that is true if all properties are equal on the struct.
-  public static func == (lhs: UserInteraction, rhs: UserInteraction) -> Bool {
+  public static func == (lhs: Interaction, rhs: Interaction) -> Bool {
     return lhs.paginate == rhs.paginate
   }
 
-  /// Compare UserInteraction structs.
+  /// Compare Interaction structs.
   ///
   /// - Parameters:
-  ///   - lhs: Left hand side UserInteraction
-  ///   - rhs: Right hand side UserInteraction
+  ///   - lhs: Left hand side Interaction
+  ///   - rhs: Right hand side Interaction
   /// - Returns: A boolean value that is true if all properties are not equal on the struct.
-  public static func != (lhs: UserInteraction, rhs: UserInteraction) -> Bool {
+  public static func != (lhs: Interaction, rhs: Interaction) -> Bool {
     return !(lhs == rhs)
   }
 }

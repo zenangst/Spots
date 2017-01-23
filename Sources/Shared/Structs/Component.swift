@@ -37,7 +37,7 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
     case meta
     case span
     case layout
-    case userInteraction = "user-interaction"
+    case interaction = "user-interaction"
     case items
     case size
     case width
@@ -90,7 +90,7 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
   /// The header identifier
   public var header: String = ""
   /// User interaction properties
-  public var userInteraction: UserInteraction?
+  public var interaction: Interaction?
   /// Layout properties
   public var layout: Layout?
   /// A collection of view models
@@ -141,8 +141,8 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
       JSONComponents[Key.layout] = layout.dictionary
     }
 
-    if let userInteraction = userInteraction {
-      JSONComponents[Key.userInteraction] = userInteraction.dictionary
+    if let interaction = interaction {
+      JSONComponents[Key.interaction] = interaction.dictionary
     }
 
     JSONComponents[Key.identifier.string] = identifier
@@ -169,14 +169,14 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
 
     if Component.legacyMapping {
       self.layout = Layout(map.property("meta") ?? [:])
-      self.userInteraction = UserInteraction(map.property("meta") ?? [:])
+      self.interaction = Interaction(map.property("meta") ?? [:])
     } else {
       if let layoutDictionary: [String : Any] = map.property(Layout.rootKey) {
         self.layout = Layout(layoutDictionary)
       }
 
-      if let userInteractionDictionary: [String : Any] = map.property(UserInteraction.rootKey) {
-        self.userInteraction = UserInteraction(userInteractionDictionary)
+      if let interactionDictionary: [String : Any] = map.property(Interaction.rootKey) {
+        self.interaction = Interaction(interactionDictionary)
       }
     }
 
@@ -206,7 +206,7 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
               header: String = "",
               kind: String = "",
               layout: Layout? = nil,
-              userInteraction: UserInteraction? = nil,
+              interaction: Interaction? = nil,
               span: Double? = nil,
               items: [Item] = [],
               meta: [String : Any] = [:]) {
@@ -214,7 +214,7 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
     self.title = title
     self.kind = kind
     self.layout = layout
-    self.userInteraction = userInteraction
+    self.interaction = interaction
     self.header = header
     self.items = items
     self.meta = meta

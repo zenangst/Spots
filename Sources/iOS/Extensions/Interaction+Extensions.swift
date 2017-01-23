@@ -1,6 +1,6 @@
 import UIKit
 
-extension UserInteraction {
+extension Interaction {
 
   public func configure(spot: Gridable) {
     #if os(iOS)

@@ -1,30 +1,30 @@
 @testable import Spots
 import XCTest
 
-class UserInteractionTests: XCTestCase {
+class InteractionTests: XCTestCase {
 
   func testDefaultValues() {
-    let userInteraction = UserInteraction()
+    let interaction = Interaction()
 
-    XCTAssertEqual(userInteraction.paginate, .disabled)
+    XCTAssertEqual(interaction.paginate, .disabled)
   }
 
   func testRegularInit() {
-    let userInteraction = UserInteraction()
+    let interaction = Interaction()
 
-    XCTAssertEqual(userInteraction.paginate, .disabled)
+    XCTAssertEqual(interaction.paginate, .disabled)
   }
 
   func testInitWithPaginateByPage() {
-    let userInteraction = UserInteraction(paginate: .byPage)
+    let interaction = Interaction(paginate: .byPage)
 
-    XCTAssertEqual(userInteraction.paginate, .byPage)
+    XCTAssertEqual(interaction.paginate, .byPage)
   }
 
   func testInitWithPaginateByItem() {
-    let userInteraction = UserInteraction(paginate: .byItem)
+    let interaction = Interaction(paginate: .byItem)
 
-    XCTAssertEqual(userInteraction.paginate, .byItem)
+    XCTAssertEqual(interaction.paginate, .byItem)
   }
 
   func testJSONMapping() {
@@ -32,25 +32,25 @@ class UserInteractionTests: XCTestCase {
       "paginate" : "by-page"
     ]
 
-    var userInteraction = UserInteraction(json)
-    XCTAssertEqual(userInteraction.paginate, .byPage)
+    var interaction = Interaction(json)
+    XCTAssertEqual(interaction.paginate, .byPage)
 
     json = [
       "paginate" : "by-item"
     ]
 
-    userInteraction = UserInteraction(json)
-    XCTAssertEqual(userInteraction.paginate, .byItem)
+    interaction = Interaction(json)
+    XCTAssertEqual(interaction.paginate, .byItem)
 
     json = [
       "paginate" : "disabled"
     ]
 
-    userInteraction = UserInteraction(json)
-    XCTAssertEqual(userInteraction.paginate, .disabled)
+    interaction = Interaction(json)
+    XCTAssertEqual(interaction.paginate, .disabled)
 
-    userInteraction = UserInteraction([:])
-    XCTAssertEqual(userInteraction.paginate, .disabled)
+    interaction = Interaction([:])
+    XCTAssertEqual(interaction.paginate, .disabled)
   }
 
   func testLegacyMapping() {
@@ -59,10 +59,10 @@ class UserInteractionTests: XCTestCase {
     ]
 
     Component.legacyMapping = true
-    let userInteraction = UserInteraction(json)
+    let interaction = Interaction(json)
     Component.legacyMapping = false
 
-    XCTAssertTrue(userInteraction.paginate == .byPage)
+    XCTAssertTrue(interaction.paginate == .byPage)
   }
 
   func testDictionary() {
@@ -70,9 +70,9 @@ class UserInteractionTests: XCTestCase {
       "paginate" : "by-page"
     ]
 
-    let userInteraction = UserInteraction(json)
+    let interaction = Interaction(json)
 
-    XCTAssertTrue((userInteraction.dictionary as NSDictionary).isEqual(to: json))
+    XCTAssertTrue((interaction.dictionary as NSDictionary).isEqual(to: json))
   }
 
   func testEquality() {
@@ -80,12 +80,12 @@ class UserInteractionTests: XCTestCase {
       "paginate" : "by-page"
     ]
 
-    var lhs = UserInteraction(paginate: .byPage)
-    let rhs = UserInteraction(json)
+    var lhs = Interaction(paginate: .byPage)
+    let rhs = Interaction(json)
 
     XCTAssertTrue(lhs == rhs)
 
-    lhs = UserInteraction(paginate: .byItem)
+    lhs = Interaction(paginate: .byItem)
     XCTAssertTrue(lhs != rhs)
   }
 }
