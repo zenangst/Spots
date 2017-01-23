@@ -20,7 +20,7 @@ extension SpotsProtocol {
   public func reload(_ animated: Bool = true, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     var spotsLeft = spots.count
 
-    Dispatch.mainQueue { [weak self] in
+    Dispatch.main { [weak self] in
       self?.spots.forEach { spot in
         spot.reload([], withAnimation: animation) {
           spotsLeft -= 1
@@ -44,7 +44,7 @@ extension SpotsProtocol {
                              withAnimation animation: Animation = .automatic,
                              completion: Completion = nil) {
     guard !components.isEmpty else {
-      Dispatch.mainQueue { [weak self] in
+      Dispatch.main { [weak self] in
         self?.spots.forEach {
           $0.view.removeFromSuperview()
         }
@@ -54,7 +54,7 @@ extension SpotsProtocol {
       return
     }
 
-    Dispatch.inQueue(queue: .interactive) { [weak self] in
+    Dispatch.interactive { [weak self] in
       guard let weakSelf = self else {
         completion?()
         return
@@ -77,7 +77,7 @@ extension SpotsProtocol {
 
       guard compare(newComponents, oldComponents) else {
         weakSelf.cache()
-        Dispatch.mainQueue {
+        Dispatch.main {
           weakSelf.scrollView.layoutViews()
           if let controller = self as? Controller {
             Controller.spotsDidReloadComponents?(controller)
@@ -90,7 +90,7 @@ extension SpotsProtocol {
       let changes = weakSelf.generateChanges(from: newComponents, and: oldComponents)
 
       weakSelf.process(changes: changes, components: newComponents, withAnimation: animation) {
-        Dispatch.mainQueue {
+        Dispatch.main {
           weakSelf.scrollView.layoutSubviews()
           weakSelf.cache()
           if let controller = self as? Controller {
@@ -382,7 +382,7 @@ extension SpotsProtocol {
                components newComponents: [Component],
                withAnimation animation: Animation = .automatic,
                completion: Completion = nil) {
-    Dispatch.mainQueue { [weak self] in
+    Dispatch.main { [weak self] in
       guard let weakSelf = self else {
         completion?()
         return
@@ -445,7 +445,7 @@ extension SpotsProtocol {
                              compare: @escaping CompareClosure = { lhs, rhs in return lhs !== rhs },
                              animated: ((_ view: View) -> Void)? = nil,
                              completion: Completion = nil) {
-    Dispatch.mainQueue { [weak self] in
+    Dispatch.main { [weak self] in
       guard let weakSelf = self else {
         completion?()
         return
@@ -511,7 +511,7 @@ extension SpotsProtocol {
   ///- parameter animated: An animation closure that can be used to perform custom animations when reloading
   ///- parameter completion: A closure that will be run after reload has been performed on all spots
   public func reload(_ json: [String : Any], animated: ((_ view: View) -> Void)? = nil, completion: Completion = nil) {
-    Dispatch.mainQueue { [weak self] in
+    Dispatch.main { [weak self] in
       guard let weakSelf = self else {
         completion?()
         return
@@ -549,7 +549,7 @@ extension SpotsProtocol {
     spot.refreshIndexes()
     spot.prepareItems()
 
-    Dispatch.mainQueue { [weak self] in
+    Dispatch.main { [weak self] in
       guard let weakSelf = self else { return }
 
       #if !os(OSX)
@@ -721,7 +721,7 @@ extension SpotsProtocol {
 
   #if os(iOS)
   public func refreshSpots(_ refreshControl: UIRefreshControl) {
-    Dispatch.mainQueue { [weak self] in
+    Dispatch.main { [weak self] in
       guard let weakSelf = self else { return }
       weakSelf.refreshPositions.removeAll()
 

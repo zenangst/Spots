@@ -63,7 +63,7 @@ class StateCacheTests : XCTestCase {
     [cacheOne, cacheTwo].forEach { $0.save(["foo" : "bar"]) }
 
     let exception = self.expectation(description: "Wait for cache")
-    Dispatch.delay(for: 0.5) {
+    Dispatch.after(seconds: 0.5) {
       do {
         let files = try FileManager.default.contentsOfDirectory(atPath: path)
         XCTAssertEqual(files.count, 2)

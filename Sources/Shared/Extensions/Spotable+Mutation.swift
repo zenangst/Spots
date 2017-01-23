@@ -15,7 +15,7 @@ public extension Spotable {
   /// - parameter animation:  The animation that should be used (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue.
   func append(_ item: Item, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
-    Dispatch.mainQueue { [weak self] in
+    Dispatch.main { [weak self] in
       guard let weakSelf = self else {
         completion?()
         return
@@ -31,7 +31,7 @@ public extension Spotable {
           completion?()
         }
       } else {
-        Dispatch.mainQueue {
+        Dispatch.main {
           weakSelf.configureItem(at: numberOfItems, usesViewSize: true)
           weakSelf.userInterface?.insert([numberOfItems], withAnimation: animation, completion: nil)
           weakSelf.updateHeight {
@@ -50,7 +50,7 @@ public extension Spotable {
   /// - parameter animation:  The animation that should be used (currently not in use)
   /// - parameter completion: A completion closure that is executed in the main queue.
   func append(_ items: [Item], withAnimation animation: Animation = .automatic, completion: Completion = nil) {
-    Dispatch.mainQueue { [weak self] in
+    Dispatch.main { [weak self] in
       guard let weakSelf = self else {
         completion?()
         return
@@ -87,7 +87,7 @@ public extension Spotable {
   /// - parameter animation:  A Animation that is used when performing the mutation (currently not in use)
   /// - parameter completion: A completion closure that is executed in the main queue.
   func prepend(_ items: [Item], withAnimation animation: Animation = .automatic, completion: Completion = nil) {
-    Dispatch.mainQueue { [weak self] in
+    Dispatch.main { [weak self] in
       guard let weakSelf = self else {
         completion?()
         return
@@ -130,7 +130,7 @@ public extension Spotable {
   /// - parameter animation:  A Animation that is used when performing the mutation (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue.
   func insert(_ item: Item, index: Int, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
-    Dispatch.mainQueue { [weak self] in
+    Dispatch.main { [weak self] in
       guard let weakSelf = self else {
         completion?()
         return
@@ -165,7 +165,7 @@ public extension Spotable {
   /// - parameter animation:  The animation that should be used (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue.
   func delete(_ item: Item, withAnimation animation: Animation = .automatic, completion: Completion) {
-    Dispatch.mainQueue { [weak self] in
+    Dispatch.main { [weak self] in
       guard let weakSelf = self,
         let index = weakSelf.component.items.index(where: { $0 == item }) else {
           completion?()
@@ -188,7 +188,7 @@ public extension Spotable {
   /// - parameter animation:  The animation that should be used (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue.
   func delete(_ items: [Item], withAnimation animation: Animation = .automatic, completion: Completion = nil) {
-    Dispatch.mainQueue { [weak self] in
+    Dispatch.main { [weak self] in
       guard let weakSelf = self else {
         completion?()
         return
@@ -221,7 +221,7 @@ public extension Spotable {
   /// - parameter animation:  The animation that should be used (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue when the view model has been removed.
   func delete(_ index: Int, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
-    Dispatch.mainQueue { [weak self] in
+    Dispatch.main { [weak self] in
       guard let weakSelf = self else {
         completion?()
         return
@@ -243,7 +243,7 @@ public extension Spotable {
   /// - parameter animation:  The animation that should be used (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue when the view model has been removed.
   func delete(_ indexes: [Int], withAnimation animation: Animation = .automatic, completion: Completion = nil) {
-    Dispatch.mainQueue { [weak self] in
+    Dispatch.main { [weak self] in
       guard let weakSelf = self else {
         completion?()
         return
@@ -269,7 +269,7 @@ public extension Spotable {
   /// - parameter animation:  A Animation that is used when performing the mutation (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue when the view model has been removed.
   func update(_ item: Item, index: Int, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
-    Dispatch.mainQueue { [weak self] in
+    Dispatch.main { [weak self] in
       guard let weakSelf = self,
         let oldItem = weakSelf.item(at: index) else {
           completion?()
@@ -331,7 +331,7 @@ public extension Spotable {
   /// - parameter animation:  The animation that should be used (only works for Listable objects)
   /// - parameter completion: A completion closure that is performed when all mutations are performed
   func reload(_ indexes: [Int]? = nil, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
-    Dispatch.inQueue(queue: .interactive) { [weak self] in
+    Dispatch.interactive { [weak self] in
       guard let weakSelf = self else {
         completion?()
         return
@@ -339,7 +339,7 @@ public extension Spotable {
 
       weakSelf.refreshIndexes()
 
-      Dispatch.mainQueue {
+      Dispatch.main {
         guard let weakSelf = self else {
           completion?()
           return
@@ -406,14 +406,14 @@ public extension Spotable {
   /// - parameter animation:  The animation that should be used (only works for Listable objects)
   /// - parameter completion: A completion closure that is performed when all mutations are performed
   public func reloadIfNeeded(_ items: [Item], withAnimation animation: Animation = .automatic, completion: Completion = nil) {
-    Dispatch.inQueue(queue: .interactive) { [weak self] in
+    Dispatch.interactive { [weak self] in
       guard let weakSelf = self else {
         completion?()
         return
       }
 
       if weakSelf.items == items {
-        Dispatch.mainQueue {
+        Dispatch.main {
           weakSelf.cache()
           completion?()
           weakSelf.view.superview?.layoutSubviews()
@@ -421,7 +421,7 @@ public extension Spotable {
         return
       }
 
-      Dispatch.mainQueue { [weak self] in
+      Dispatch.main { [weak self] in
         guard let weakSelf = self else {
           completion?()
           return
@@ -459,7 +459,7 @@ public extension Spotable {
   /// - parameter json:      A JSON dictionary
   /// - parameter animation:  A Animation that is used when performing the mutation (only works for Listable objects)
   public func reloadIfNeeded(_ json: [String : Any], withAnimation animation: Animation = .automatic) {
-    Dispatch.inQueue(queue: .interactive) { [weak self] in
+    Dispatch.interactive { [weak self] in
       guard let weakSelf = self else {
         return
       }

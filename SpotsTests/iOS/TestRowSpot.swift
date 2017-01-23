@@ -138,7 +138,7 @@ class RowSpotTests: XCTestCase {
     }
 
     var exception: XCTestExpectation? = self.expectation(description: "Wait for cache")
-    Dispatch.delay(for: 0.25) {
+    Dispatch.after(seconds: 0.25) {
       let cachedSpot = RowSpot(cacheKey: self.cachedSpot.stateCache!.key)
       XCTAssertEqual(cachedSpot.component.items.count, 1)
       cachedSpot.stateCache?.clear()
