@@ -25,13 +25,6 @@ public struct Interaction: Mappable {
     ]
   }
 
-  /// Initialize with a JSON payload.
-  ///
-  /// - Parameter map: A JSON dictionary.
-  public init(_ map: [String : Any] = [:]) {
-    configure(withJSON: map)
-  }
-
   /// A convenience initializer with default values.
   public init() {
     self.paginate = .disabled
@@ -42,6 +35,13 @@ public struct Interaction: Mappable {
   /// - Parameter paginate: Declares which pagination behavior that should be used, `.disabled` is default.
   public init(paginate: Paginate = .disabled) {
     self.paginate = paginate
+  }
+
+  /// Initialize with a JSON payload.
+  ///
+  /// - Parameter map: A JSON dictionary.
+  public init(_ map: [String : Any] = [:]) {
+    configure(withJSON: map)
   }
 
   /// Configure struct with a JSON dictionary.
