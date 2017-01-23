@@ -1,3 +1,5 @@
 public enum Paginate: String {
-  case byItem = "by-item", byPage = "by-page", disabled
+  case item
+  case page
+  case disabled
 }

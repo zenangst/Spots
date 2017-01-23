@@ -4,7 +4,7 @@ extension Interaction {
 
   public func configure(spot: Gridable) {
     #if os(iOS)
-      spot.collectionView.isPagingEnabled = paginate == .byPage
+      spot.collectionView.isPagingEnabled = paginate == .page
     #endif
   }
 }

@@ -48,7 +48,7 @@ open class CarouselSpot: NSObject, Gridable {
           }
 
           if layout.span == 1 {
-            collectionView.isPagingEnabled = component.interaction?.paginate == .byPage
+            collectionView.isPagingEnabled = component.interaction?.paginate == .page
           }
         }
       #endif
@@ -239,7 +239,7 @@ extension Delegate: UIScrollViewDelegate {
 
     var currentCellOffset = collectionView.contentOffset
     #if os(iOS)
-      if spot.component.interaction?.paginate == .byItem {
+      if spot.component.interaction?.paginate == .item {
         currentCellOffset.x += collectionView.frame.size.width / 2
       } else {
         if spot.pageControl.currentPage == 0 {
@@ -282,7 +282,7 @@ extension Delegate: UIScrollViewDelegate {
       return
     }
 
-    guard spot.component.interaction?.paginate == .byPage else { return }
+    guard spot.component.interaction?.paginate == .page else { return }
     paginatedEndScrolling()
   }
 
@@ -304,7 +304,7 @@ extension Delegate: UIScrollViewDelegate {
   public func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
     guard let spot = spot as? CarouselSpot else { return }
     #if os(iOS)
-      guard spot.component.interaction?.paginate == .byPage else { return }
+      guard spot.component.interaction?.paginate == .page else { return }
     #endif
 
     let collectionView = spot.collectionView

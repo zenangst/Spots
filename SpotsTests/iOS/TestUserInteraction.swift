@@ -16,31 +16,31 @@ class InteractionTests: XCTestCase {
   }
 
   func testInitWithPaginateByPage() {
-    let interaction = Interaction(paginate: .byPage)
+    let interaction = Interaction(paginate: .page)
 
-    XCTAssertEqual(interaction.paginate, .byPage)
+    XCTAssertEqual(interaction.paginate, .page)
   }
 
   func testInitWithPaginateByItem() {
-    let interaction = Interaction(paginate: .byItem)
+    let interaction = Interaction(paginate: .item)
 
-    XCTAssertEqual(interaction.paginate, .byItem)
+    XCTAssertEqual(interaction.paginate, .item)
   }
 
   func testJSONMapping() {
     var json: [String : Any] = [
-      "paginate" : "by-page"
+      "paginate" : "page"
     ]
 
     var interaction = Interaction(json)
-    XCTAssertEqual(interaction.paginate, .byPage)
+    XCTAssertEqual(interaction.paginate, .page)
 
     json = [
-      "paginate" : "by-item"
+      "paginate" : "item"
     ]
 
     interaction = Interaction(json)
-    XCTAssertEqual(interaction.paginate, .byItem)
+    XCTAssertEqual(interaction.paginate, .item)
 
     json = [
       "paginate" : "disabled"
@@ -62,12 +62,12 @@ class InteractionTests: XCTestCase {
     let interaction = Interaction(json)
     Component.legacyMapping = false
 
-    XCTAssertTrue(interaction.paginate == .byPage)
+    XCTAssertTrue(interaction.paginate == .page)
   }
 
   func testDictionary() {
     let json: [String : Any] = [
-      "paginate" : "by-page"
+      "paginate" : "page"
     ]
 
     let interaction = Interaction(json)
@@ -77,15 +77,15 @@ class InteractionTests: XCTestCase {
 
   func testEquality() {
     let json: [String : Any] = [
-      "paginate" : "by-page"
+      "paginate" : "page"
     ]
 
-    var lhs = Interaction(paginate: .byPage)
+    var lhs = Interaction(paginate: .page)
     let rhs = Interaction(json)
 
     XCTAssertTrue(lhs == rhs)
 
-    lhs = Interaction(paginate: .byItem)
+    lhs = Interaction(paginate: .item)
     XCTAssertTrue(lhs != rhs)
   }
 }

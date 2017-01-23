@@ -154,7 +154,7 @@ class CarouselSpotTests: XCTestCase {
         ["title" : "bazar", "kind" : "carousel"]
       ],
       "interaction" : [
-        "paginate" : "by-page"
+        "paginate" : "page"
       ],
       "layout" : [
         "page-indicator" : true,

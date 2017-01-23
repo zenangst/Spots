@@ -50,7 +50,7 @@ public struct Interaction: Mappable {
   public mutating func configure(withJSON map: [String : Any]) {
     if Component.legacyMapping {
       if let _: Bool = map.property(Key.paginate.rawValue) {
-        self.paginate = .byPage
+        self.paginate = .page
       }
     } else if let paginate: String = map.property(Key.paginate.rawValue) {
       self.paginate <- Paginate(rawValue: paginate)
