@@ -30,7 +30,7 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
   public var lineSpacing: Double = 0.0
   public var span: Double = 0.0
   public var dynamicSpan: Bool = false
-  public var dynamicHeight: Bool = false
+  public var dynamicHeight: Bool = true
   public var pageIndicator: Bool = false
 
   public var dictionary: [String : Any] {
@@ -40,6 +40,7 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
       Key.lineSpacing.rawValue: lineSpacing,
       Key.span.rawValue: span,
       Key.dynamicSpan.rawValue: dynamicSpan,
+      Key.dynamicHeight.rawValue: dynamicHeight,
       Key.pageIndicator.rawValue: pageIndicator
     ]
   }
@@ -53,7 +54,7 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
     self.inset = Inset()
   }
 
-  public init(span: Double = 0.0, dynamicSpan: Bool = false, dynamicHeight: Bool = false, pageIndicator: Bool = false, itemSpacing: Double = 0.0, lineSpacing: Double = 0.0, inset: Inset = Inset()) {
+  public init(span: Double = 0.0, dynamicSpan: Bool = false, dynamicHeight: Bool = true, pageIndicator: Bool = false, itemSpacing: Double = 0.0, lineSpacing: Double = 0.0, inset: Inset = Inset()) {
     self.span = span
     self.dynamicSpan = dynamicSpan
     self.dynamicHeight = dynamicHeight
