@@ -830,19 +830,19 @@
 				BDDF2CCB1DC7C23500B766BA /* TestAnimations.swift */,
 				BDD9ABCD1DB53475005D8C04 /* TestCarouselComposite.swift */,
 				BD4295541D81D39700E07E1C /* TestCarouselSpot.swift */,
+				BDEFF54E1DD1C85300FC0537 /* TestDataSource.swift */,
+				BDEFF5511DD1DA8000FC0537 /* TestDelegate.swift */,
 				D58478281C43FF34006EBA49 /* TestFactory.swift */,
 				BDD9ABCA1DB533CE005D8C04 /* TestGridComposite.swift */,
 				BD42954E1D81CE4F00E07E1C /* TestGridSpot.swift */,
+				BD4345981E35EB470032EB3E /* TestInteraction.swift */,
+				BD45D98A1E30909700C2D6B2 /* TestLayoutExtensions.swift */,
 				BD01BD141DAEA7EE009C10FF /* TestListComposite.swift */,
 				BD4295511D81D32400E07E1C /* TestListSpot.swift */,
 				BDA8DAF41DCF3AED00A4A8DD /* TestRowSpot.swift */,
 				BDEED2E71D8446400030B475 /* TestSpotsScrollView.swift */,
 				BD677E8C1DC62575006D1654 /* TestUIViewControllerExtensions.swift */,
 				BD4295571D81D45D00E07E1C /* TestViewSpot.swift */,
-				BDEFF54E1DD1C85300FC0537 /* TestDataSource.swift */,
-				BDEFF5511DD1DA8000FC0537 /* TestDelegate.swift */,
-				BD45D98A1E30909700C2D6B2 /* TestLayoutExtensions.swift */,
-				BD4345981E35EB470032EB3E /* TestInteraction.swift */,
 			);
 			path = iOS;
 			sourceTree = "<group>";
