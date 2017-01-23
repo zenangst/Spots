@@ -5,7 +5,7 @@ import Brick
 public struct Inset: Mappable, Equatable {
 
   /// The root key for the JSON dictionary.
-  static let rootKey: String = "inset"
+  static let rootKey: String = String(describing: Inset.self).lowercased()
 
   /// A string enum use for constructing a JSON dictionary representation.
   enum Key: String {

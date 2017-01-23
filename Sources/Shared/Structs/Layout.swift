@@ -19,7 +19,7 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
     case pageIndicator = "page-indicator"
   }
 
-  static let rootKey: String = "layout"
+  static let rootKey: String = String(describing: Layout.self).lowercased()
 
   public var inset: Inset = Inset()
   /// For a vertically scrolling grid, this value represents the minimum spacing between items in the same row.
