@@ -37,7 +37,6 @@ public struct UserInteraction: Mappable {
     } else if let paginate: String = map.property(Key.paginate.rawValue) {
       self.paginate <- Paginate(rawValue: paginate)
     }
-
   }
 
   public static func == (lhs: UserInteraction, rhs: UserInteraction) -> Bool {
