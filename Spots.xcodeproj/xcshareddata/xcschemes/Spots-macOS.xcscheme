@@ -16,7 +16,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D58478C71C440567006EBA49"
                BuildableName = "Spots.framework"
-               BlueprintName = "Spots-Mac"
+               BlueprintName = "Spots-macOS"
                ReferencedContainer = "container:Spots.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -34,8 +34,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D58478D01C440567006EBA49"
-               BuildableName = "Spots-Mac-Tests.xctest"
-               BlueprintName = "Spots-Mac-Tests"
+               BuildableName = "Spots-macOS-Tests.xctest"
+               BlueprintName = "Spots-macOS-Tests"
                ReferencedContainer = "container:Spots.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -45,7 +45,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D58478C71C440567006EBA49"
             BuildableName = "Spots.framework"
-            BlueprintName = "Spots-Mac"
+            BlueprintName = "Spots-macOS"
             ReferencedContainer = "container:Spots.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -67,7 +67,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D58478C71C440567006EBA49"
             BuildableName = "Spots.framework"
-            BlueprintName = "Spots-Mac"
+            BlueprintName = "Spots-macOS"
             ReferencedContainer = "container:Spots.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -85,7 +85,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D58478C71C440567006EBA49"
             BuildableName = "Spots.framework"
-            BlueprintName = "Spots-Mac"
+            BlueprintName = "Spots-macOS"
             ReferencedContainer = "container:Spots.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

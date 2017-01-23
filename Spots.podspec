@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
 
   s.requires_arc = true
   s.ios.source_files = 'Sources/{iOS,Shared}/**/*'
-  s.osx.source_files = 'Sources/{Mac,Shared}/**/*'
+  s.osx.source_files = 'Sources/{macOS,Shared}/**/*'
   s.tvos.source_files = 'Sources/{iOS,tvOS,Shared}/**/*'
 
   s.frameworks = 'Foundation'
