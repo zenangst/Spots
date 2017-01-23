@@ -261,7 +261,7 @@ class CarouselSpotTests: XCTestCase {
     }
 
     var exception: XCTestExpectation? = self.expectation(description: "Wait for cache")
-    Dispatch.delay(for: 0.25) { [weak self] in
+    Dispatch.after(seconds: 0.25) { [weak self] in
       guard let weakSelf = self else { return }
       let cachedSpot = CarouselSpot(cacheKey: weakSelf.cachedSpot.stateCache!.key)
       XCTAssertEqual(cachedSpot.component.items.count, 1)

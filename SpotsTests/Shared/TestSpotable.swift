@@ -22,7 +22,7 @@ class SpotableTests : XCTestCase {
     }
 
     let exception = self.expectation(description: "Wait until done")
-    Dispatch.delay(for: 1.0) {
+    Dispatch.after(seconds: 1.0) {
       XCTAssertEqual(listSpot.items.count, 500)
       exception.fulfill()
     }
@@ -46,7 +46,7 @@ class SpotableTests : XCTestCase {
     }
 
     let exception = self.expectation(description: "Wait until done")
-    Dispatch.delay(for: 1.0) {
+    Dispatch.after(seconds: 1.0) {
       XCTAssertEqual(controller.spots[0].items.count, 500)
       exception.fulfill()
     }
