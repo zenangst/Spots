@@ -1,19 +1,7 @@
 import Foundation
 
-/// A dispatch enum
-///
-/// - main:        DispatchQueue.main
-/// - interactive: DispatchQueue.global(qos: DispatchQoS.QoSClass.userInteractive)
-/// - initiated:   DispatchQueue.global(qos: DispatchQoS.QoSClass.userInitiated)
-/// - utility:     DispatchQueue.global(qos: DispatchQoS.QoSClass.utility)
-/// - background:  DispatchQueue.global(qos: DispatchQoS.QoSClass.background)
-/// - custom:      A user defined queue
-public enum SpotDispatchQueue {
-  case main, interactive, initiated, utility, background, custom(DispatchQueue)
-}
-
 /// A static struct to scope dispatch commands
-struct Dispatch {
+public struct Dispatch {
 
   /// Determines which queue should be used for dispatching
   ///
