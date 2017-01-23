@@ -1,3 +1,5 @@
+// swiftlint:disable weak_delegate
+
 import Cocoa
 import Brick
 
