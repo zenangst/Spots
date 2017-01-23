@@ -153,7 +153,7 @@ class CarouselSpotTests: XCTestCase {
         ["title" : "baz", "kind" : "carousel"],
         ["title" : "bazar", "kind" : "carousel"]
       ],
-      "user-interaction" : [
+      "interaction" : [
         "paginate" : "by-page"
       ],
       "layout" : [

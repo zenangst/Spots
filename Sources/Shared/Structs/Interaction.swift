@@ -16,7 +16,7 @@ public struct Interaction: Mappable {
   var paginate: Paginate = .disabled
 
   /// The root key used when parsing JSON into a Interaction struct.
-  static let rootKey: String = "user-interaction"
+  static let rootKey: String = String(describing: Interaction.self).lowercased()
 
   /// A dictionary representation of the struct.
   public var dictionary: [String : Any] {
