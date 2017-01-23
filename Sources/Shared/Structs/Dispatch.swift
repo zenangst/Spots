@@ -3,12 +3,18 @@ import Foundation
 /// A static struct to scope dispatch commands
 public struct Dispatch {
 
+  /// Dispatch in the main queue.
+  ///
+  /// - Parameter closure: The closure that should be dispatched.
   static func main(closure: @escaping () -> Void) {
     DispatchQueue.main.async {
       closure()
     }
   }
 
+  /// Dispatch in an interactive queue.
+  ///
+  /// - Parameter closure: The closure that should be dispatched.
   static func interactive(closure: @escaping () -> Void) {
     DispatchQueue.global(qos: DispatchQoS.QoSClass.userInteractive).async {
       closure()
