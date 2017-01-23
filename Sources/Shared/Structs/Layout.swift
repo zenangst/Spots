@@ -8,8 +8,17 @@ import Brick
   import UIKit
 #endif
 
+/// A layout struct used for mapping layout to a Spotable object.
 public struct Layout: Mappable, DictionaryConvertible, Equatable {
 
+  /// A string based enum for keys used when encoding and decoding the struct from and to JSON.
+  ///
+  /// - itemSpacing: Used to set `minimumInteritemSpacing` on collection view based UI.
+  /// - lineSpacing: Used to set `minimumLineSpacing` on collection view based UI.
+  /// - span: Used to set which span the component should use.
+  /// - dynamicSpan: Used to map dynamic span.
+  /// - dynamicHeight: Used to map if component should use dynamic height.
+  /// - pageIndicator: Used to map if component should display a page indicator.
   enum Key: String {
     case itemSpacing = "item-spacing"
     case lineSpacing = "line-spacing"
@@ -28,11 +37,16 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
   /// For a vertically scrolling layout, the value represents the minimum spacing between successive rows. 
   /// For a horizontally scrolling layout, the value represents the minimum spacing between successive columns.
   public var lineSpacing: Double = 0.0
+  /// Defines how many items to show per row for `Gridable` components.
   public var span: Double = 0.0
+  /// If enabled and the item count is less than the span, the CarouselSpot will even out the space between the items to align them.
   public var dynamicSpan: Bool = false
+  /// Defines if the component uses computed content height or relies on `view.frame.height`.
   public var dynamicHeight: Bool = true
+  /// Declares if the component should display a page indicator.
   public var pageIndicator: Bool = false
 
+  /// A dictionary representation of the struct.
   public var dictionary: [String : Any] {
     return [
       Inset.rootKey: inset.dictionary,
@@ -45,6 +59,7 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
     ]
   }
 
+  /// A convenience initializer with default values.
   public init() {
     self.span = 0.0
     self.dynamicSpan = false
@@ -54,6 +69,16 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
     self.inset = Inset()
   }
 
+  /// Default initializer for creating a Layout struct.
+  ///
+  /// - Parameters:
+  ///   - span: The span that should be used for the component.
+  ///   - dynamicSpan: Enable or disable dynamic span.
+  ///   - dynamicHeight: Enable or disable dynamic height.
+  ///   - pageIndicator: Enable or disable page indicator for component.
+  ///   - itemSpacing: Sets minimum item spacing for the component.
+  ///   - lineSpacing: Sets minimum lines spacing for items in component.
+  ///   - inset: An inset struct used to insert margins for the component.
   public init(span: Double = 0.0, dynamicSpan: Bool = false, dynamicHeight: Bool = true, pageIndicator: Bool = false, itemSpacing: Double = 0.0, lineSpacing: Double = 0.0, inset: Inset = Inset()) {
     self.span = span
     self.dynamicSpan = dynamicSpan
@@ -64,6 +89,9 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
     self.pageIndicator = pageIndicator
   }
 
+  /// Initialize with a JSON payload.
+  ///
+  /// - Parameter map: A JSON dictionary.
   public init(_ map: [String : Any] = [:]) {
     configure(withJSON: map)
   }
@@ -73,6 +101,9 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
     block(&self)
   }
 
+  /// Configure struct with a JSON dictionary.
+  ///
+  /// - Parameter map: A JSON dictionary.
   public mutating func configure(withJSON map: [String : Any]) {
     switch Component.legacyMapping {
     case true:
@@ -89,16 +120,29 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
     self.pageIndicator <- map.property(Key.pageIndicator.rawValue)
   }
 
+  /// Perform mutation with closure.
+  ///
+  /// - Parameter closure: A mutation closure used to change values for a layout.
+  /// - Returns: A mutated Layout struct.
   public func mutate(_ closure: (inout Layout) -> Void) -> Layout {
     var copy = self
     closure(&copy)
     return copy
   }
 
+  /// Configure scroll view with layout
+  ///
+  /// - Parameter spot: The Spotable object that should be configured.
   public func configure(spot: Listable) {
     inset.configure(scrollView: spot.view)
   }
 
+  /// Compare Layout structs.
+  ///
+  /// - Parameters:
+  ///   - lhs: Left hand side Layout
+  ///   - rhs: Right hand side Layout
+  /// - Returns: A boolean value that is true if all properties are equal on the struct.
   public static func == (lhs: Layout, rhs: Layout) -> Bool {
     return lhs.inset == rhs.inset &&
     lhs.itemSpacing == rhs.itemSpacing &&
@@ -109,6 +153,12 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
     lhs.pageIndicator == rhs.pageIndicator
   }
 
+  /// Compare Layout structs.
+  ///
+  /// - Parameters:
+  ///   - lhs: Left hand side Layout
+  ///   - rhs: Right hand side Layout
+  /// - Returns: A boolean value that is true if all properties are not equal on the struct.
   public static func != (lhs: Layout, rhs: Layout) -> Bool {
     return !(lhs == rhs)
   }
