@@ -13,7 +13,7 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
   enum Key: String {
     case itemSpacing = "item-spacing"
     case lineSpacing = "line-spacing"
-    case span = "span"
+    case span
     case dynamicSpan = "dynamic-span"
     case dynamicHeight = "dynamic-height"
     case pageIndicator = "page-indicator"
