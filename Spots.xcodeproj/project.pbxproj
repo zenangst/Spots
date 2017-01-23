@@ -185,12 +185,12 @@
 		BD4345B61E36A2760032EB3E /* RefreshDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4345B51E36A2760032EB3E /* RefreshDelegate.swift */; };
 		BD4345B71E36A2760032EB3E /* RefreshDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4345B51E36A2760032EB3E /* RefreshDelegate.swift */; };
 		BD4345B81E36A2760032EB3E /* RefreshDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4345B51E36A2760032EB3E /* RefreshDelegate.swift */; };
-		BD4345BA1E36A2A50032EB3E /* CarouselSpotScrollDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4345B91E36A2A50032EB3E /* CarouselSpotScrollDelegate.swift */; };
-		BD4345BB1E36A2A50032EB3E /* CarouselSpotScrollDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4345B91E36A2A50032EB3E /* CarouselSpotScrollDelegate.swift */; };
-		BD4345BC1E36A2A50032EB3E /* CarouselSpotScrollDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4345B91E36A2A50032EB3E /* CarouselSpotScrollDelegate.swift */; };
-		BD4345BE1E36A2CE0032EB3E /* CarouselSpotDelegate+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4345BD1E36A2CE0032EB3E /* CarouselSpotDelegate+Extensions.swift */; };
-		BD4345BF1E36A2CE0032EB3E /* CarouselSpotDelegate+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4345BD1E36A2CE0032EB3E /* CarouselSpotDelegate+Extensions.swift */; };
-		BD4345C01E36A2CE0032EB3E /* CarouselSpotDelegate+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4345BD1E36A2CE0032EB3E /* CarouselSpotDelegate+Extensions.swift */; };
+		BD4345BA1E36A2A50032EB3E /* CarouselScrollDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4345B91E36A2A50032EB3E /* CarouselScrollDelegate.swift */; };
+		BD4345BB1E36A2A50032EB3E /* CarouselScrollDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4345B91E36A2A50032EB3E /* CarouselScrollDelegate.swift */; };
+		BD4345BC1E36A2A50032EB3E /* CarouselScrollDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4345B91E36A2A50032EB3E /* CarouselScrollDelegate.swift */; };
+		BD4345BE1E36A2CE0032EB3E /* CarouselScrollDelegate+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4345BD1E36A2CE0032EB3E /* CarouselScrollDelegate+Extensions.swift */; };
+		BD4345BF1E36A2CE0032EB3E /* CarouselScrollDelegate+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4345BD1E36A2CE0032EB3E /* CarouselScrollDelegate+Extensions.swift */; };
+		BD4345C01E36A2CE0032EB3E /* CarouselScrollDelegate+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4345BD1E36A2CE0032EB3E /* CarouselScrollDelegate+Extensions.swift */; };
 		BD4345C21E36A4DB0032EB3E /* Paginate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4345C11E36A4DB0032EB3E /* Paginate.swift */; };
 		BD4345C31E36A4DB0032EB3E /* Paginate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4345C11E36A4DB0032EB3E /* Paginate.swift */; };
 		BD4345C41E36A4DB0032EB3E /* Paginate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4345C11E36A4DB0032EB3E /* Paginate.swift */; };
@@ -411,8 +411,8 @@
 		BD4345AD1E36A2250032EB3E /* SpotsFocusDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsFocusDelegate.swift; sourceTree = "<group>"; };
 		BD4345B11E36A2540032EB3E /* SpotsDelegate+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SpotsDelegate+Extensions.swift"; sourceTree = "<group>"; };
 		BD4345B51E36A2760032EB3E /* RefreshDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshDelegate.swift; sourceTree = "<group>"; };
-		BD4345B91E36A2A50032EB3E /* CarouselSpotScrollDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselSpotScrollDelegate.swift; sourceTree = "<group>"; };
-		BD4345BD1E36A2CE0032EB3E /* CarouselSpotDelegate+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CarouselSpotDelegate+Extensions.swift"; sourceTree = "<group>"; };
+		BD4345B91E36A2A50032EB3E /* CarouselScrollDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselScrollDelegate.swift; sourceTree = "<group>"; };
+		BD4345BD1E36A2CE0032EB3E /* CarouselScrollDelegate+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CarouselScrollDelegate+Extensions.swift"; sourceTree = "<group>"; };
 		BD4345C11E36A4DB0032EB3E /* Paginate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Paginate.swift; sourceTree = "<group>"; };
 		BD45D9621E2EADA600C2D6B2 /* Layout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Layout.swift; sourceTree = "<group>"; };
 		BD45D96D1E2F406600C2D6B2 /* Inset+iOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Inset+iOS.swift"; sourceTree = "<group>"; };
@@ -692,7 +692,7 @@
 		BD129F2C1D7B2F91009AC164 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				BD4345BD1E36A2CE0032EB3E /* CarouselSpotDelegate+Extensions.swift */,
+				BD4345BD1E36A2CE0032EB3E /* CarouselScrollDelegate+Extensions.swift */,
 				BD129F2D1D7B2F91009AC164 /* Component+Extension.swift */,
 				BD129F2E1D7B2F91009AC164 /* Gridable+Extensions.swift */,
 				BD129F341D7B2F91009AC164 /* Item+Extensions.swift */,
@@ -712,7 +712,7 @@
 		BD129F351D7B2F91009AC164 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				BD4345B91E36A2A50032EB3E /* CarouselSpotScrollDelegate.swift */,
+				BD4345B91E36A2A50032EB3E /* CarouselScrollDelegate.swift */,
 				BD129F361D7B2F91009AC164 /* Componentable.swift */,
 				BDDB1A3F1E0937BF00DFF834 /* Composable.swift */,
 				BD129F371D7B2F91009AC164 /* Gridable.swift */,
@@ -1253,7 +1253,7 @@
 			files = (
 				BD129F501D7B2F91009AC164 /* ViewSpot.swift in Sources */,
 				BD129DC21D7B2B6C009AC164 /* GridSpot.swift in Sources */,
-				BD4345BC1E36A2A50032EB3E /* CarouselSpotScrollDelegate.swift in Sources */,
+				BD4345BC1E36A2A50032EB3E /* CarouselScrollDelegate.swift in Sources */,
 				BD4345A01E36A1060032EB3E /* RegistryType.swift in Sources */,
 				BD73974B1D718D38000AF2DE /* CollectionAdapter+tvOS.swift in Sources */,
 				BD4345A41E36A12A0032EB3E /* Registry.swift in Sources */,
@@ -1323,7 +1323,7 @@
 				BDEFF53E1DD0F18B00FC0537 /* DataSource.swift in Sources */,
 				BD129F771D7B2F91009AC164 /* Spotable.swift in Sources */,
 				BD129DC81D7B2B6C009AC164 /* ListSpot.swift in Sources */,
-				BD4345C01E36A2CE0032EB3E /* CarouselSpotDelegate+Extensions.swift in Sources */,
+				BD4345C01E36A2CE0032EB3E /* CarouselScrollDelegate+Extensions.swift in Sources */,
 				BD129F711D7B2F91009AC164 /* Gridable.swift in Sources */,
 				BD129DB61D7B2B6C009AC164 /* CarouselSpot.swift in Sources */,
 				BD63B0521DD8D30400C52D73 /* UserInterface.swift in Sources */,
@@ -1382,7 +1382,7 @@
 				BD129F4B1D7B2F91009AC164 /* SpotFactory.swift in Sources */,
 				BDEFF5481DD0F8C000FC0537 /* Delegate+iOS+Extensions.swift in Sources */,
 				BDE77F0E1DFDE4CF0012D2B0 /* CompositeSpot.swift in Sources */,
-				BD4345BE1E36A2CE0032EB3E /* CarouselSpotDelegate+Extensions.swift in Sources */,
+				BD4345BE1E36A2CE0032EB3E /* CarouselScrollDelegate+Extensions.swift in Sources */,
 				BDEFF5401DD0F3CC00FC0537 /* DataSource+iOS+Extensions.swift in Sources */,
 				BD129D8F1D7B295F009AC164 /* Composable+iOS.swift in Sources */,
 				BD129F691D7B2F91009AC164 /* Item+Extensions.swift in Sources */,
@@ -1400,7 +1400,7 @@
 				BD43458B1E352B9B0032EB3E /* Interaction.swift in Sources */,
 				BDCFCD461DCA82EC0047E84C /* Listable+Extension.swift in Sources */,
 				BD129DCD1D7B2B6C009AC164 /* Controller.swift in Sources */,
-				BD4345BA1E36A2A50032EB3E /* CarouselSpotScrollDelegate.swift in Sources */,
+				BD4345BA1E36A2A50032EB3E /* CarouselScrollDelegate.swift in Sources */,
 				BD129F931D7B2F91009AC164 /* TypeAlias.swift in Sources */,
 				BDE152DB1DDEFA5500DB3145 /* UICollectionView+UserInterface.swift in Sources */,
 				BD43459E1E36A1060032EB3E /* RegistryType.swift in Sources */,
@@ -1481,7 +1481,7 @@
 			files = (
 				BD129E371D7B2CDE009AC164 /* GridRegistry.swift in Sources */,
 				BDDB1A501E09530C00DFF834 /* ListSpotCell.swift in Sources */,
-				BD4345BB1E36A2A50032EB3E /* CarouselSpotScrollDelegate.swift in Sources */,
+				BD4345BB1E36A2A50032EB3E /* CarouselScrollDelegate.swift in Sources */,
 				BD43459F1E36A1060032EB3E /* RegistryType.swift in Sources */,
 				BD129F731D7B2F91009AC164 /* Listable.swift in Sources */,
 				BD4345A31E36A12A0032EB3E /* Registry.swift in Sources */,
@@ -1551,7 +1551,7 @@
 				BD1BFB5B1DA7A9AC00BB55E1 /* ScrollDelegate.swift in Sources */,
 				BD129F851D7B2F91009AC164 /* Viewable.swift in Sources */,
 				BD129F701D7B2F91009AC164 /* Gridable.swift in Sources */,
-				BD4345BF1E36A2CE0032EB3E /* CarouselSpotDelegate+Extensions.swift in Sources */,
+				BD4345BF1E36A2CE0032EB3E /* CarouselScrollDelegate+Extensions.swift in Sources */,
 				BD129E251D7B2CDE009AC164 /* GridSpotItem.swift in Sources */,
 				BD129F521D7B2F91009AC164 /* Animation.swift in Sources */,
 				BD39001B1DFE8E91007C0411 /* CompositeSpot.swift in Sources */,
