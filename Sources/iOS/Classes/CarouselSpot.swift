@@ -5,6 +5,7 @@ import Brick
 open class CarouselSpot: NSObject, Gridable {
 
   public static var layout: Layout = Layout([:])
+  public static var userInteraction: UserInteraction = UserInteraction([:])
 
   /// Child spots
   public var compositeSpots: [CompositeSpot] = []
@@ -115,9 +116,14 @@ open class CarouselSpot: NSObject, Gridable {
       self.component.layout = type(of: self).layout
     }
 
+    if self.component.userInteraction == nil {
+      self.component.userInteraction = type(of: self).userInteraction
+    }
+
     super.init()
     self.userInterface = collectionView
     self.component.layout?.configure(spot: self)
+    self.component.userInteraction?.configure(spot: self)
     self.dynamicSpan = self.component.layout?.dynamicSpan ?? false
     self.spotDataSource = DataSource(spot: self)
     self.spotDelegate = Delegate(spot: self)
