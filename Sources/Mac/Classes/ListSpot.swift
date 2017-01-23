@@ -1,3 +1,5 @@
+// swiftlint:disable weak_delegate
+
 import Cocoa
 import Brick
 
@@ -60,8 +62,6 @@ open class ListSpot: NSObject, Listable {
       }
     }
   }
-  /// Indicator to calculate the height based on content
-  open var usesDynamicHeight = true
 
   open fileprivate(set) var stateCache: StateCache?
 

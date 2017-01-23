@@ -45,9 +45,6 @@ open class ViewSpot: NSObject, Spotable, Viewable {
 
   open fileprivate(set) var stateCache: StateCache?
 
-  /// Indicator to calculate the height based on content
-  open var usesDynamicHeight = true
-
   public var userInterface: UserInterface?
 
   public required init(component: Component) {

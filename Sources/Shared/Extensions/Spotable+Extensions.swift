@@ -14,6 +14,15 @@ public extension Spotable {
     return component.index
   }
 
+  public var usesDynamicHeight: Bool {
+    get {
+      return component.layout?.dynamicHeight ?? true
+    }
+    set {
+      component.layout?.dynamicHeight = newValue
+    }
+  }
+
   /// A computed CGFloat of the total height of all items inside of a component
   public var computedHeight: CGFloat {
     guard usesDynamicHeight else {

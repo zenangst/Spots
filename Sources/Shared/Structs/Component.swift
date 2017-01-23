@@ -37,6 +37,7 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
     case meta
     case span
     case layout
+    case interaction
     case items
     case size
     case width
@@ -88,6 +89,8 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
   public var kind: String = ""
   /// The header identifier
   public var header: String = ""
+  /// User interaction properties
+  public var interaction: Interaction?
   /// Layout properties
   public var layout: Layout?
   /// A collection of view models
@@ -138,6 +141,10 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
       JSONComponents[Key.layout] = layout.dictionary
     }
 
+    if let interaction = interaction {
+      JSONComponents[Key.interaction] = interaction.dictionary
+    }
+
     JSONComponents[Key.identifier.string] = identifier
 
     if !title.isEmpty { JSONComponents[Key.title.string] = title }
@@ -162,8 +169,15 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
 
     if Component.legacyMapping {
       self.layout = Layout(map.property("meta") ?? [:])
-    } else if let layoutDictionary: [String : Any] = map.property("layout") {
-      self.layout = Layout(layoutDictionary)
+      self.interaction = Interaction(map.property("meta") ?? [:])
+    } else {
+      if let layoutDictionary: [String : Any] = map.property(Layout.rootKey) {
+        self.layout = Layout(layoutDictionary)
+      }
+
+      if let interactionDictionary: [String : Any] = map.property(Interaction.rootKey) {
+        self.interaction = Interaction(interactionDictionary)
+      }
     }
 
     if self.layout == nil {
@@ -192,6 +206,7 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
               header: String = "",
               kind: String = "",
               layout: Layout? = nil,
+              interaction: Interaction? = nil,
               span: Double? = nil,
               items: [Item] = [],
               meta: [String : Any] = [:]) {
@@ -199,6 +214,7 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
     self.title = title
     self.kind = kind
     self.layout = layout
+    self.interaction = interaction
     self.header = header
     self.items = items
     self.meta = meta

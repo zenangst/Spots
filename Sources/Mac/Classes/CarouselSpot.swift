@@ -1,3 +1,5 @@
+// swiftlint:disable weak_delegate
+
 import Cocoa
 import Brick
 
@@ -71,9 +73,6 @@ open class CarouselSpot: NSObject, Gridable {
     }
   }
 
-  /// Indicator to calculate the height based on content
-  open var usesDynamicHeight = true
-
   open fileprivate(set) var stateCache: StateCache?
 
   open var gradientLayer: CAGradientLayer?
@@ -114,7 +113,7 @@ open class CarouselSpot: NSObject, Gridable {
   /// - returns: An initialized carousel spot.
   public required init(component: Component) {
     self.component = component
-    
+
     if self.component.layout == nil {
       self.component.layout = type(of: self).layout
     }

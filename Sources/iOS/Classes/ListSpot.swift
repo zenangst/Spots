@@ -1,3 +1,5 @@
+// swiftlint:disable weak_delegate
+
 import UIKit
 import Brick
 
@@ -50,9 +52,6 @@ open class ListSpot: NSObject, Listable {
 
   /// A StateCache for the ListSpot
   open fileprivate(set) var stateCache: StateCache?
-
-  /// Indicator to calculate the height based on content
-  open var usesDynamicHeight = true
 
   public var userInterface: UserInterface?
   var spotDataSource: DataSource?

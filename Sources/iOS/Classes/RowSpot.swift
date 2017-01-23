@@ -1,3 +1,5 @@
+// swiftlint:disable weak_delegate
+
 import UIKit
 import Brick
 
@@ -52,9 +54,6 @@ open class RowSpot: NSObject, Gridable {
 
   /// A StateCache for the RowSpot
   open fileprivate(set) var stateCache: StateCache?
-
-  /// Indicator to calculate the height based on content
-  open var usesDynamicHeight = true
 
   /// A UICollectionView, used as the main UI component for a RowSpot
   open lazy var collectionView: UICollectionView = { [unowned self] in
