@@ -2,7 +2,7 @@ import Foundation
 import Tailor
 
 /// A user interaction struct used for mapping behavior to a Spotable object.
-/// Note: `paginate` is currently only available on iOS. 
+/// Note: `paginate` is currently only available on iOS.
 public struct UserInteraction: Mappable {
 
   /// A string based enum for keys used when encoding and decoding the struct from and to JSON.
