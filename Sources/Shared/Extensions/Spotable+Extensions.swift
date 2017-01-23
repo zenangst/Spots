@@ -16,7 +16,7 @@ public extension Spotable {
 
   public var usesDynamicHeight: Bool {
     get {
-      return component.layout?.dynamicHeight ?? false
+      return component.layout?.dynamicHeight ?? true
     }
     set {
       component.layout?.dynamicHeight = newValue
