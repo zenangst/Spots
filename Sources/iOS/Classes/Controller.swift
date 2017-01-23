@@ -331,7 +331,7 @@ open class Controller: UIViewController, SpotsProtocol, SpotsFocusDelegate, UISc
   ///
   /// - parameter refreshControl: The refresh control used to refresh the controller.
   open func refreshSpots(_ refreshControl: UIRefreshControl) {
-    Dispatch.mainQueue { [weak self] in
+    Dispatch.main { [weak self] in
       guard let weakSelf = self else { return }
       weakSelf.refreshPositions.removeAll()
       weakSelf.refreshDelegate?.spotablesDidReload(weakSelf.spots, refreshControl: refreshControl) {

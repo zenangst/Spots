@@ -178,7 +178,7 @@ public extension Spotable where Self : Viewable {
         return
     }
 
-    Dispatch.mainQueue { [weak self] in
+    Dispatch.main { [weak self] in
       self?.component.items.remove(at: index)
       self?.scrollView.subviews[index].removeFromSuperview()
     }
@@ -192,7 +192,7 @@ public extension Spotable where Self : Viewable {
   public func delete(_ items: [Item], withAnimation animation: Animation = .none, completion: Completion = nil) {
     let count = component.items.count
 
-    Dispatch.mainQueue { [weak self] in
+    Dispatch.main { [weak self] in
       for (index, _) in items.enumerated() {
         self?.component.items.remove(at: count - index)
         self?.scrollView.subviews[count - index].removeFromSuperview()

@@ -8,7 +8,7 @@ extension Delegate: NSCollectionViewDelegate {
      it tries to resolve the item at index but it no longer exists so the assertion is thrown.
      This can probably be fixed in a more convenient way in the future without delays.
      */
-    Dispatch.delay(for: 0.1) { [weak self] in
+    Dispatch.after(seconds: 0.1) { [weak self] in
       guard let weakSelf = self, let first = indexPaths.first,
         let spot = weakSelf.spot,
         let item = spot.item(at: first.item), first.item < spot.items.count else {
