@@ -176,7 +176,7 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
       }
 
       if let userInteractionDictionary: [String : Any] = map.property(UserInteraction.rootKey) {
-        self.layout = Layout(userInteractionDictionary)
+        self.userInteraction = UserInteraction(userInteractionDictionary)
       }
     }
 
