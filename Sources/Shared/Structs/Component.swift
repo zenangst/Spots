@@ -37,7 +37,7 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
     case meta
     case span
     case layout
-    case interaction = "interaction"
+    case interaction
     case items
     case size
     case width
