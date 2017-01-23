@@ -53,6 +53,18 @@ class UserInteractionTests: XCTestCase {
     XCTAssertEqual(userInteraction.paginate, .disabled)
   }
 
+  func testLegacyMapping() {
+    let json = [
+      "paginate" : true
+    ]
+
+    Component.legacyMapping = true
+    let userInteraction = UserInteraction(json)
+    Component.legacyMapping = false
+
+    XCTAssertTrue(userInteraction.paginate == .byPage)
+  }
+
   func testDictionary() {
     let json = [
       "paginate" : "by-page"
