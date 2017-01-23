@@ -3,6 +3,8 @@ import UIKit
 extension UserInteraction {
 
   public func configure(spot: Gridable) {
-    spot.collectionView.isPagingEnabled = paginate == .byPage
+    #if os(iOS)
+      spot.collectionView.isPagingEnabled = paginate == .byPage
+    #endif
   }
 }
