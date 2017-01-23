@@ -21,6 +21,14 @@ public struct UserInteraction: Mappable {
     configure(withJSON: map)
   }
 
+  public init() {
+    self.paginate = .disabled
+  }
+
+  public init(paginate: Paginate = .disabled) {
+    self.paginate = paginate
+  }
+
   public mutating func configure(withJSON map: [String : Any]) {
     if Component.legacyMapping {
       if let _: Bool = map.property(Key.paginate.rawValue) {
