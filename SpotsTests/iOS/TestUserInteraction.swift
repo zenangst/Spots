@@ -28,7 +28,7 @@ class UserInteractionTests: XCTestCase {
   }
 
   func testJSONMapping() {
-    var json = [
+    var json: [String : Any] = [
       "paginate" : "by-page"
     ]
 
@@ -54,7 +54,7 @@ class UserInteractionTests: XCTestCase {
   }
 
   func testLegacyMapping() {
-    let json = [
+    let json: [String : Any] = [
       "paginate" : true
     ]
 
@@ -66,7 +66,7 @@ class UserInteractionTests: XCTestCase {
   }
 
   func testDictionary() {
-    let json = [
+    let json: [String : Any] = [
       "paginate" : "by-page"
     ]
 
@@ -76,7 +76,7 @@ class UserInteractionTests: XCTestCase {
   }
 
   func testEquality() {
-    let json = [
+    let json: [String : Any] = [
       "paginate" : "by-page"
     ]
 
