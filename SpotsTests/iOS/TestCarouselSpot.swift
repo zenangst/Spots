@@ -137,7 +137,7 @@ class CarouselSpotTests: XCTestCase {
     XCTAssertEqual(spot.view.frame.size.height, 180)
 
     // Check default value of `paginate`
-    XCTAssertFalse(spot.paginate)
+    XCTAssertFalse(spot.collectionView.isPagingEnabled)
 
     // Check that header height gets added to the calculation
     spot.layout.headerReferenceSize.height = 20
@@ -153,14 +153,17 @@ class CarouselSpotTests: XCTestCase {
         ["title" : "baz", "kind" : "carousel"],
         ["title" : "bazar", "kind" : "carousel"]
       ],
+      "user-interaction" : [
+        "paginate" : "by-page"
+      ],
       "layout" : [
+        "page-indicator" : true,
+        "dynamic-span" : true,
         "span" : 4.0
       ],
       "meta" : [
         "item-spacing" : 25.0,
         "line-spacing" : 10.0,
-        "dynamic-span" :  false,
-        "paginate" : true,
       ]
     ]
 
@@ -175,7 +178,7 @@ class CarouselSpotTests: XCTestCase {
     spot.prepareItems()
 
     // Check `paginate` mapping
-    XCTAssertTrue(spot.paginate)
+    XCTAssertTrue(spot.collectionView.isPagingEnabled)
 
     let width = spot.view.bounds.width / 4
 
