@@ -22,9 +22,14 @@ public struct UserInteraction: Mappable {
   }
 
   public mutating func configure(withJSON map: [String : Any]) {
-    if let paginate: String = map.property(Key.paginate.rawValue) {
+    if Component.legacyMapping {
+      if let _: Bool = map.property(Key.paginate.rawValue) {
+        self.paginate = .byPage
+      }
+    } else if let paginate: String = map.property(Key.paginate.rawValue) {
       self.paginate <- Paginate(rawValue: paginate)
     }
+
   }
 
   public static func == (lhs: UserInteraction, rhs: UserInteraction) -> Bool {
