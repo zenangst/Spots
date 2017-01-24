@@ -581,11 +581,13 @@ extension SpotsProtocol {
    */
   public func updateIfNeeded(spotAtIndex index: Int = 0, items: [Item], withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     guard let spot = spot(at: index, ofType: Spotable.self), !(spot.items == items) else {
+      scrollView.layoutSubviews()
       completion?()
       return
     }
 
-    update(spotAtIndex: index, withAnimation: animation, withCompletion: {
+    update(spotAtIndex: index, withAnimation: animation, withCompletion: { [weak self] in
+      self?.scrollView.layoutSubviews()
       completion?()
     }, {
       $0.items = items
