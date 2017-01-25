@@ -178,16 +178,6 @@ open class GridSpot: NSObject, Gridable {
   }
 
   /**
-   A convenience init for initializing a Gridspot with a title and a kind
-
-   - parameter title: A string that is used as a title for the GridSpot
-   - parameter kind:  An identifier to determine which kind should be set on the Component
-   */
-  public convenience init(title: String = "", kind: String? = nil) {
-    self.init(component: Component(title: title, kind: kind ?? GridSpot.defaultKind.string))
-  }
-
-  /**
    A convenience init for initializing a Gridspot
 
    - parameter cacheKey: A cache key

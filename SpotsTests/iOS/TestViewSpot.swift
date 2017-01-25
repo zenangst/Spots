@@ -5,17 +5,6 @@ import XCTest
 
 class ViewSpotTests: XCTestCase {
 
-  func testConvenienceInitWithTitleAndKind() {
-    let spot = ViewSpot(title: "Spot")
-    XCTAssertEqual(spot.component.title, "Spot")
-
-    XCTAssertEqual(spot.component.kind, "view")
-
-    let customKindSpot = ViewSpot(title: "Custom Spot", kind: "custom")
-    XCTAssertEqual(customKindSpot.component.title, "Custom Spot")
-    XCTAssertEqual(customKindSpot.component.kind, "custom")
-  }
-
   func testDictionaryRepresentation() {
     let component = Component(title: "ViewSpot", kind: "view", span: 3, meta: ["headerHeight" : 44.0])
     let spot = ViewSpot(component: component)
