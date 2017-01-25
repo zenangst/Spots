@@ -19,17 +19,6 @@ class GridSpotTests: XCTestCase {
     cachedSpot = nil
   }
 
-  func testConvenienceInitWithTitleAndKind() {
-    let spot = GridSpot(title: "Spot")
-
-    XCTAssertEqual(spot.component.title, "Spot")
-    XCTAssertEqual(spot.component.kind, "grid")
-
-    let customKindSpot = GridSpot(title: "Custom Spot", kind: "custom")
-    XCTAssertEqual(customKindSpot.component.title, "Custom Spot")
-    XCTAssertEqual(customKindSpot.component.kind, "custom")
-  }
-
   func testConvenienceInitWithSectionInsets() {
     let component = Component(span: 1.0)
     let spot = GridSpot(component,

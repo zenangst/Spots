@@ -19,17 +19,6 @@ class RowSpotTests: XCTestCase {
     cachedSpot = nil
   }
 
-  func testConvenienceInitWithTitleAndKind() {
-    let spot = RowSpot(title: "Spot")
-
-    XCTAssertEqual(spot.component.title, "Spot")
-    XCTAssertEqual(spot.component.kind, "row")
-
-    let customKindSpot = RowSpot(title: "Custom Spot", kind: "custom")
-    XCTAssertEqual(customKindSpot.component.title, "Custom Spot")
-    XCTAssertEqual(customKindSpot.component.kind, "custom")
-  }
-
   func testConvenienceInitWithSectionInsets() {
     let component = Component(span: 1)
     let spot = RowSpot(component,

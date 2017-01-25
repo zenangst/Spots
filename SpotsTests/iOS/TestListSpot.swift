@@ -16,16 +16,6 @@ class ListSpotTests: XCTestCase {
     cachedSpot = nil
   }
 
-  func testConvenienceInitWithTitleAndKind() {
-    let spot = ListSpot(title: "Spot")
-    XCTAssertEqual(spot.component.title, "Spot")
-    XCTAssertEqual(spot.component.kind, "list")
-
-    let customKindSpot = ListSpot(title: "Custom Spot", kind: "custom")
-    XCTAssertEqual(customKindSpot.component.title, "Custom Spot")
-    XCTAssertEqual(customKindSpot.component.kind, "custom")
-  }
-
   func testDictionaryRepresentation() {
     let component = Component(title: "ListSpot", kind: "list", span: 3, meta: ["headerHeight" : 44.0])
     let spot = ListSpot(component: component)

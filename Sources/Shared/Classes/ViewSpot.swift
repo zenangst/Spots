@@ -59,16 +59,6 @@ open class ViewSpot: NSObject, Spotable, Viewable {
     prepare()
   }
 
-  /**
-   A convenience initializer for creating a new ViewSpot with title and kind
-
-   - parameter title: A string that will be set as the title for the Component
-   - parameter kind:  The kind that will be used on the Component
-   */
-  public convenience init(title: String = "", kind: String? = nil) {
-    self.init(component: Component(title: title, kind: kind ?? ViewSpot.defaultKind.string, span: 1.0))
-  }
-
   public func ui<T>(at index: Int) -> T? {
     return nil
   }
