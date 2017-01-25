@@ -6,16 +6,6 @@ import Brick
 /// A GridSpot, a collection view based Spotable object that lays out its items in a vertical order based of the item sizes
 open class GridSpot: NSObject, Gridable {
 
-  /**
-   *  Keys for meta data lookup
-   */
-  public struct Key {
-    /// The key for minimum interitem spacing
-    public static let minimumInteritemSpacing = "item-spacing"
-    /// The key for minimum line spacing
-    public static let minimumLineSpacing = "line-spacing"
-  }
-
   public static var layout = Layout(span: 0.0)
 
   /// A Registry object that holds identifiers and classes for cells used in the GridSpot
@@ -120,25 +110,6 @@ open class GridSpot: NSObject, Gridable {
 
     self.init(component: Component(stateCache.load()))
     self.stateCache = stateCache
-  }
-
-  /// A convenience initializer for GridSpot with base configuration.
-  ///
-  /// - parameter component:   A Component.
-  /// - parameter top:         Top section inset.
-  /// - parameter left:        Left section inset.
-  /// - parameter bottom:      Bottom section inset.
-  /// - parameter right:       Right section inset.
-  /// - parameter itemSpacing: The item spacing used in the flow layout.
-  /// - parameter lineSpacing: The line spacing used in the flow layout.
-  ///
-  /// - returns: An initialized grid spot with configured layout.
-  public convenience init(_ component: Component, top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0, itemSpacing: CGFloat = 0, lineSpacing: CGFloat = 0) {
-    self.init(component: component)
-
-    layout.sectionInset = UIEdgeInsets(top: top, left: left, bottom: bottom, right: right)
-    layout.minimumInteritemSpacing = itemSpacing
-    layout.minimumLineSpacing = lineSpacing
   }
 
   /// Configure collection view with data source, delegate and background view
