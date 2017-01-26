@@ -106,32 +106,53 @@ extension Delegate: NSTableViewDelegate {
     }
 
     let reuseIdentifier = spot.identifier(at: row)
-    guard let cachedView = spot.type.views.make(reuseIdentifier) else { return nil }
+    var useWrapper = false
+    var craftedView = spot.type.views.make(reuseIdentifier)
 
-    var view: View? = nil
+
+    if craftedView == nil {
+      craftedView = Configuration.views.make(reuseIdentifier)
+      useWrapper = true
+    }
+
+    guard let cachedView = craftedView else {
+      return nil
+    }
+
+    var resolvedView: View? = nil
     if let type = cachedView.type {
       switch type {
       case .regular:
-        view = cachedView.view
+        resolvedView = cachedView.view
       case .nib:
-        view = tableView.make(withIdentifier: reuseIdentifier, owner: nil)
+        resolvedView = tableView.make(withIdentifier: reuseIdentifier, owner: nil)
       }
     }
 
-    switch view {
+    switch resolvedView {
     case let view as Composable:
       let spots = spot.compositeSpots.filter { $0.itemIndex == row }
       view.contentView.frame.size.width = tableView.frame.size.width
       view.contentView.frame.size.height = spot.computedHeight
       view.configure(&spot.component.items[row], compositeSpots: spots)
+    case let view as View:
+      let customView = view
+
+      if !(view is NSTableRowView) {
+        let wrapper = ListWrapper()
+        wrapper.configure(with: view)
+        resolvedView = wrapper
+      }
+
+      (customView as? SpotConfigurable)?.configure(&spot.component.items[row])
     case let view as SpotConfigurable:
       view.configure(&spot.component.items[row])
     default: break
     }
 
-    (view as? NSTableRowView)?.identifier = reuseIdentifier
+    (resolvedView as? NSTableRowView)?.identifier = reuseIdentifier
 
-    return view as? NSTableRowView
+    return resolvedView as? NSTableRowView
   }
 
   public func tableView(_ tableView: NSTableView, willDisplayCell cell: Any, for tableColumn: NSTableColumn?, row: Int) {

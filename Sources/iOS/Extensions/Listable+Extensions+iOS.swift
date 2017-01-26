@@ -39,9 +39,22 @@ public extension Listable {
 
   /// Register all identifier to UITableView.
   public func register() {
+    for (identifier, item) in Configuration.views.storage {
+      switch item {
+      case .classType(_):
+        self.tableView.register(ListWrapper.self, forCellReuseIdentifier: identifier)
+      case .nib(let nib):
+        self.tableView.register(nib, forCellReuseIdentifier: identifier)
+      }
+    }
+
     for (identifier, item) in type(of: self).views.storage {
       switch item {
       case .classType(let classType):
+        guard classType.init() is UITableViewCell else {
+          self.tableView.register(ListWrapper.self, forCellReuseIdentifier: identifier)
+          return
+        }
         self.tableView.register(classType, forCellReuseIdentifier: identifier)
       case .nib(let nib):
         self.tableView.register(nib, forCellReuseIdentifier: identifier)

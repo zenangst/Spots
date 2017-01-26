@@ -117,6 +117,15 @@ extension Gridable {
 
   /// Register all views in Registry on UICollectionView
   public func register() {
+    for (identifier, item) in Configuration.views.storage {
+      switch item {
+      case .classType(let _):
+        self.collectionView.register(GridWrapper.self, forCellWithReuseIdentifier: identifier)
+      case .nib(let nib):
+        self.collectionView.register(nib, forCellWithReuseIdentifier: identifier)
+      }
+    }
+
     for (identifier, item) in type(of: self).views.storage {
       switch item {
       case .classType(let classType):
