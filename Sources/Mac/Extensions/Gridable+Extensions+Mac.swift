@@ -55,6 +55,15 @@ extension Gridable {
   // MARK: - Spotable
 
   public func register() {
+    for (identifier, item) in Configuration.views.storage {
+      switch item {
+      case .classType(let _):
+        self.collectionView.register(GridWrapper.self, forItemWithIdentifier: identifier)
+      case .nib(let nib):
+        self.collectionView.register(nib, forItemWithIdentifier: identifier)
+      }
+    }
+
     for (identifier, item) in type(of: self).grids.storage {
       switch item {
       case .classType(let classType):
@@ -99,12 +108,14 @@ extension Gridable {
   }
 
   public func identifier(at index: Int) -> String {
-    guard let item = item(at: index), type(of: self).grids.storage[item.kind] != nil
-      else {
-        return type(of: self).grids.defaultIdentifier
-    }
 
-    return item.kind
+    if let item = item(at: index), type(of: self).grids.storage[item.kind] != nil {
+      return item.kind
+    } else if let item = item(at: index), Configuration.views.storage[item.kind] != nil {
+      return item.kind
+    } else {
+      return type(of: self).grids.defaultIdentifier
+    }
   }
 
   /// Prepares a view model item before being used by the UI component

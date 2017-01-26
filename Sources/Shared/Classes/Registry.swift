@@ -13,6 +13,8 @@ public enum RegistryType: String {
 /// A registry that is used internally when resolving kind to the corresponding spot.
 public struct Registry {
 
+  var useCache: Bool = false
+
   public enum Item {
     case classType(View.Type)
     case nib(Nib)
@@ -58,6 +60,10 @@ public struct Registry {
 
   /// A cache that stores instances of created views
   fileprivate var cache: NSCache = NSCache<NSString, View>()
+
+  init(useCache: Bool = true) {
+    self.useCache = useCache
+  }
 
   /**
    Empty the current view cache
@@ -107,7 +113,7 @@ public struct Registry {
       #endif
     }
 
-    if let view = view {
+    if let view = view, useCache {
       let cacheIdentifier: String = "\(registryType.rawValue)-\(identifier)"
       cache.setObject(view, forKey: cacheIdentifier as NSString)
     }
