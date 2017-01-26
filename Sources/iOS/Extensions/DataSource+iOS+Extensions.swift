@@ -63,6 +63,22 @@ extension DataSource: UICollectionViewDataSource {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
 
     switch cell {
+    case let cell as GridWrapper:
+      if let (_, view) = Configuration.views.make(spot.component.items[indexPath.item].kind),
+        let customView = view {
+        cell.configure(with: customView)
+
+        if let configurableView = customView as? SpotConfigurable {
+          configurableView.configure(&spot.component.items[indexPath.item])
+
+          if spot.component.items[indexPath.item].size.height == 0.0 {
+            spot.component.items[indexPath.item].size = configurableView.preferredViewSize
+          }
+
+        } else {
+          spot.component.items[indexPath.item].size.height = customView.frame.size.height
+        }
+      }
     case let cell as Composable:
       let compositeSpots = spot.compositeSpots.filter({ $0.itemIndex == indexPath.item })
       cell.configure(&spot.component.items[indexPath.item], compositeSpots: compositeSpots)
@@ -115,6 +131,22 @@ extension DataSource: UITableViewDataSource {
       .dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
 
     switch cell {
+    case let cell as ListWrapper:
+      if let (_, view) = Configuration.views.make(spot.component.items[indexPath.item].kind),
+        let customView = view {
+        cell.configure(with: customView)
+
+        if let configurableView = customView as? SpotConfigurable {
+          configurableView.configure(&spot.component.items[indexPath.item])
+
+          if spot.component.items[indexPath.item].size.height == 0.0 {
+            spot.component.items[indexPath.item].size = configurableView.preferredViewSize
+          }
+
+        } else {
+          spot.component.items[indexPath.item].size.height = customView.frame.size.height
+        }
+      }
     case let cell as Composable:
       let compositeSpots = spot.compositeSpots.filter({ $0.itemIndex == indexPath.item })
       cell.configure(&spot.component.items[indexPath.item], compositeSpots: compositeSpots)
