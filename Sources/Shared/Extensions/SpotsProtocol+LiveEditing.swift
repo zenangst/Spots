@@ -81,7 +81,7 @@ import Cache
       print("🎍 SPOTS: Caching...")
       print("Cache key: \(stateCache.key)")
       print("File path: file://\(stateCache.path)\n")
-      Dispatch.delay(for: 0.5) { [weak self] in self?.monitor(filePath: stateCache.path) }
+      Dispatch.after(seconds: 0.5) { [weak self] in self?.monitor(filePath: stateCache.path) }
     }
   }
 #endif
