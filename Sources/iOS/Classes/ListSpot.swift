@@ -177,29 +177,6 @@ open class ListSpot: NSObject, Listable {
     }
   }
 
-  // MARK: - Spotable
-
-  /// Register all identifier to UITableView.
-  open func register() {
-    for (identifier, item) in type(of: self).views.storage {
-      switch item {
-      case .classType(let classType):
-        self.tableView.register(classType, forCellReuseIdentifier: identifier)
-      case .nib(let nib):
-        self.tableView.register(nib, forCellReuseIdentifier: identifier)
-      }
-    }
-
-    for (identifier, item) in type(of: self).headers.storage {
-      switch item {
-      case .classType(let classType):
-        self.tableView.register(classType, forHeaderFooterViewReuseIdentifier: identifier)
-      case .nib(let nib):
-        self.tableView.register(nib, forHeaderFooterViewReuseIdentifier: identifier)
-      }
-    }
-  }
-
   /// Register header view with identifier
   ///
   /// - parameter header:     The view type that you want to register.
