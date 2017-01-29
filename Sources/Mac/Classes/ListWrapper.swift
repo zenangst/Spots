@@ -1,35 +1,23 @@
 import Cocoa
 
-class ListWrapper: NSTableRowView {
-
-  weak var view: View?
-
-  override init(frame frameRect: NSRect) {
-    super.init(frame: frameRect)
+class ListWrapper: NSTableRowView, Wrappable {
+  public var contentView: View {
+    return self
   }
 
-  required init?(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
+  weak var wrappedView: View?
 
-  func configure(with view: View) {
-    if let previousView = self.view {
-      previousView.removeFromSuperview()
-    }
-
-    view.autoresizingMask = [.viewWidthSizable, .viewHeightSizable]
-
-    addSubview(view)
-    self.view = view
+  func configureWrappedView() {
+    wrappedView?.autoresizingMask = [.viewWidthSizable, .viewHeightSizable]
   }
 
   override func layoutSubtreeIfNeeded() {
     super.layoutSubtreeIfNeeded()
 
-    self.view?.frame = bounds
+    self.wrappedView?.frame = bounds
   }
 
   override func prepareForReuse() {
-    view?.removeFromSuperview()
+    wrappedView?.removeFromSuperview()
   }
 }
