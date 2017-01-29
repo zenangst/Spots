@@ -586,7 +586,7 @@ extension SpotsProtocol {
       return
     }
 
-    update(spotAtIndex: index, withAnimation: animation, withCompletion: { [weak self] in
+    update(spotAtIndex: index, withAnimation: animation, withCompletion: {
       completion?()
     }, {
       $0.items = items
