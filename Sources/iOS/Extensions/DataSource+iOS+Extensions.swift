@@ -59,18 +59,7 @@ extension DataSource: UICollectionViewDataSource {
         let customView = resolvedView {
         view.configure(with: customView)
 
-        let height: CGFloat
-
-        switch kind {
-        case UICollectionElementKindSectionHeader:
-          height = spot.layout.headerReferenceSize.height
-        case UICollectionElementKindSectionFooter:
-          height = spot.layout.footerHeight
-        default:
-          height = 0.0
-        }
-
-        view.frame.size.height = height
+        view.frame.size.height = viewHeight
         view.frame.size.width = collectionView.frame.size.width
 
         (customView as? Componentable)?.configure(spot.component)
