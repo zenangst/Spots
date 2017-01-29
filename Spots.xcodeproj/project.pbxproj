@@ -304,6 +304,16 @@
 		BDEFF5501DD1C85300FC0537 /* TestDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEFF54E1DD1C85300FC0537 /* TestDataSource.swift */; };
 		BDEFF5521DD1DA8000FC0537 /* TestDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEFF5511DD1DA8000FC0537 /* TestDelegate.swift */; };
 		BDEFF5531DD1DA8000FC0537 /* TestDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEFF5511DD1DA8000FC0537 /* TestDelegate.swift */; };
+		BDF931E21E3E272D00F626FE /* GridHeaderFooterWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF931E11E3E272D00F626FE /* GridHeaderFooterWrapper.swift */; };
+		BDF931E31E3E272D00F626FE /* GridHeaderFooterWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF931E11E3E272D00F626FE /* GridHeaderFooterWrapper.swift */; };
+		BDF931E51E3E27A700F626FE /* Wrappable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF931E41E3E27A700F626FE /* Wrappable.swift */; };
+		BDF931E61E3E27A700F626FE /* Wrappable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF931E41E3E27A700F626FE /* Wrappable.swift */; };
+		BDF931E71E3E27A700F626FE /* Wrappable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF931E41E3E27A700F626FE /* Wrappable.swift */; };
+		BDF931E91E3E282700F626FE /* Wrappable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF931E81E3E282700F626FE /* Wrappable+Extensions.swift */; };
+		BDF931EA1E3E282700F626FE /* Wrappable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF931E81E3E282700F626FE /* Wrappable+Extensions.swift */; };
+		BDF931EB1E3E282700F626FE /* Wrappable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF931E81E3E282700F626FE /* Wrappable+Extensions.swift */; };
+		BDF931F01E3E3E7D00F626FE /* ListHeaderFooterWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF931EF1E3E3E7D00F626FE /* ListHeaderFooterWrapper.swift */; };
+		BDF931F11E3E3E7D00F626FE /* ListHeaderFooterWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF931EF1E3E3E7D00F626FE /* ListHeaderFooterWrapper.swift */; };
 		D58478141C43FEB9006EBA49 /* Spots.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478091C43FEB8006EBA49 /* Spots.framework */; };
 		D58478531C43FFEB006EBA49 /* TestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58478281C43FF34006EBA49 /* TestFactory.swift */; };
 		D58478571C43FFFD006EBA49 /* TestComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D584782B1C43FF34006EBA49 /* TestComponent.swift */; };
@@ -485,6 +495,10 @@
 		BDEED2E71D8446400030B475 /* TestSpotsScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSpotsScrollView.swift; sourceTree = "<group>"; };
 		BDEFF54E1DD1C85300FC0537 /* TestDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestDataSource.swift; sourceTree = "<group>"; };
 		BDEFF5511DD1DA8000FC0537 /* TestDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestDelegate.swift; sourceTree = "<group>"; };
+		BDF931E11E3E272D00F626FE /* GridHeaderFooterWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridHeaderFooterWrapper.swift; sourceTree = "<group>"; };
+		BDF931E41E3E27A700F626FE /* Wrappable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Wrappable.swift; sourceTree = "<group>"; };
+		BDF931E81E3E282700F626FE /* Wrappable+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Wrappable+Extensions.swift"; sourceTree = "<group>"; };
+		BDF931EF1E3E3E7D00F626FE /* ListHeaderFooterWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListHeaderFooterWrapper.swift; sourceTree = "<group>"; };
 		D58478091C43FEB8006EBA49 /* Spots.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Spots.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D58478131C43FEB9006EBA49 /* Spots-iOS-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Spots-iOS-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D58478241C43FF34006EBA49 /* Info-iOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
@@ -1471,6 +1485,53 @@
 				BD972FE11E3A070E00046F21 /* SpotsDelegate+Extensions.swift in Sources */,
 				BD97312C1E3A072900046F21 /* CarouselSpotCell.swift in Sources */,
 				BD9731521E3A072900046F21 /* DataSource+iOS+Extensions.swift in Sources */,
+				BD129F661D7B2F91009AC164 /* Viewable+Extensions.swift in Sources */,
+				BD129DC71D7B2B6C009AC164 /* ListSpot.swift in Sources */,
+				BD129F481D7B2F91009AC164 /* Registry.swift in Sources */,
+				BD129F811D7B2F91009AC164 /* SpotsProtocol.swift in Sources */,
+				BD129DB31D7B2B6C009AC164 /* CarouselComposite.swift in Sources */,
+				BD129DB91D7B2B6C009AC164 /* CarouselSpotHeader.swift in Sources */,
+				BD129D911D7B295F009AC164 /* Controller+UIScrollViewDelegate.swift in Sources */,
+				BDCFCD461DCA82EC0047E84C /* Listable+Extension.swift in Sources */,
+				BD129DCD1D7B2B6C009AC164 /* Controller.swift in Sources */,
+				BD129F931D7B2F91009AC164 /* TypeAlias.swift in Sources */,
+				BDE152DB1DDEFA5500DB3145 /* UICollectionView+UserInterface.swift in Sources */,
+				BDB34C241E2F87B2007A1C3B /* Layout+iOS.swift in Sources */,
+				BD129F541D7B2F91009AC164 /* Component+Extension.swift in Sources */,
+				BDA8DAF81DCF423A00A4A8DD /* RowSpotCell.swift in Sources */,
+				BD129DCF1D7B2B6C009AC164 /* SpotsScrollView.swift in Sources */,
+				BD129F601D7B2F91009AC164 /* SpotsProtocol+LiveEditing.swift in Sources */,
+				BDF931E21E3E272D00F626FE /* GridHeaderFooterWrapper.swift in Sources */,
+				BDDB1A401E0937BF00DFF834 /* Composable.swift in Sources */,
+				BDA8DAFB1DCF42D800A4A8DD /* RowSpot.swift in Sources */,
+				BD129DC31D7B2B6C009AC164 /* GridSpotCell.swift in Sources */,
+				BD21000E1E39DFB2005AE919 /* GridWrapper.swift in Sources */,
+				BD129F4E1D7B2F91009AC164 /* ViewSpot.swift in Sources */,
+				BD129F5D1D7B2F91009AC164 /* SpotsProtocol+Extensions.swift in Sources */,
+				BD129DC11D7B2B6C009AC164 /* GridSpot.swift in Sources */,
+				BDC4B6731E39E0C80012583F /* SpotConfigurable+Extensions.swift in Sources */,
+				BD8B1EB21D93D813000C3F53 /* GrandCentralDispatch.swift in Sources */,
+				BD129F7E1D7B2F91009AC164 /* SpotsDelegates.swift in Sources */,
+				BD45D9631E2EADA600C2D6B2 /* Layout.swift in Sources */,
+				BD129D891D7B295F009AC164 /* Gridable+Extensions+iOS.swift in Sources */,
+				BD129F5A1D7B2F91009AC164 /* Spotable+Extensions.swift in Sources */,
+				BD129DB71D7B2B6C009AC164 /* CarouselSpotCell.swift in Sources */,
+				BD129F871D7B2F91009AC164 /* Component.swift in Sources */,
+				BD129DBD1D7B2B6C009AC164 /* GridableLayout.swift in Sources */,
+				BDEFF5441DD0F7FB00FC0537 /* Delegate.swift in Sources */,
+				BD129DBF1D7B2B6C009AC164 /* GridComposite.swift in Sources */,
+				BDE152DD1DDEFA6200DB3145 /* UIViewController+Extensions.swift in Sources */,
+				BD129F8D1D7B2F91009AC164 /* Parser.swift in Sources */,
+				BDEFF53C1DD0F18B00FC0537 /* DataSource.swift in Sources */,
+				BD45D9711E2F408100C2D6B2 /* ContentInset.swift in Sources */,
+				BDF931E51E3E27A700F626FE /* Wrappable.swift in Sources */,
+				BD129F751D7B2F91009AC164 /* Spotable.swift in Sources */,
+				BD129F901D7B2F91009AC164 /* StateCache.swift in Sources */,
+				BD129D8B1D7B295F009AC164 /* Listable+Extensions+iOS.swift in Sources */,
+				BD21000C1E39DFB2005AE919 /* ListWrapper.swift in Sources */,
+				BD129F6F1D7B2F91009AC164 /* Gridable.swift in Sources */,
+				BD63B0501DD8D30400C52D73 /* UserInterface.swift in Sources */,
+				BD45D96B1E2F403500C2D6B2 /* SectionInset+iOS.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

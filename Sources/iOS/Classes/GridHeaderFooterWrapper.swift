@@ -1,8 +1,12 @@
 import UIKit
 
-class ListWrapper: UITableViewCell, Wrappable {
+class GridHeaderFooterWrapper: UICollectionReusableView, Wrappable {
 
-  weak var wrappedView: View?
+  public var wrappedView: View?
+
+  public var contentView: View {
+    return self
+  }
 
   override func layoutSubviews() {
     super.layoutSubviews()

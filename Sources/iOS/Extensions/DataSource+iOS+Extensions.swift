@@ -26,22 +26,59 @@ extension DataSource: UICollectionViewDataSource {
   ///
   /// - returns: A configured supplementary view object.
   public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-    guard let spot = spot else {
+    guard let spot = spot as? Gridable, !kind.isEmpty else {
       return UICollectionReusableView()
     }
 
     let identifier: String
+    var viewHeight: CGFloat = 0.0
 
-    if spot.component.header.isEmpty {
-      identifier = spot.type.headers.defaultIdentifier
-    } else {
-      identifier = spot.component.header
+    switch kind {
+    case UICollectionElementKindSectionHeader:
+      if spot.component.header.isEmpty {
+        identifier = spot.type.headers.defaultIdentifier
+      } else {
+        identifier = spot.component.header
+      }
+      viewHeight = spot.layout.headerReferenceSize.height
+    case UICollectionElementKindSectionFooter:
+      identifier = spot.component.footer
+      viewHeight = spot.layout.footerHeight
+    default:
+      return UICollectionReusableView()
     }
 
-    let view = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader,
+
+    let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
                                                                withReuseIdentifier: identifier,
                                                                for: indexPath)
-    (view as? Componentable)?.configure(spot.component)
+
+    switch view {
+    case let view as GridHeaderFooterWrapper:
+      if let (_, resolvedView) = Configuration.views.make(identifier),
+        let customView = resolvedView {
+        view.configure(with: customView)
+
+        let height: CGFloat
+
+        switch kind {
+        case UICollectionElementKindSectionHeader:
+          height = spot.layout.headerReferenceSize.height
+        case UICollectionElementKindSectionFooter:
+          height = spot.layout.footerHeight
+        default:
+          height = 0.0
+        }
+
+        view.frame.size.height = height
+        view.frame.size.width = collectionView.frame.size.width
+
+        (customView as? Componentable)?.configure(spot.component)
+      }
+    case let view as Componentable:
+      view.configure(spot.component)
+    default: break
+    }
 
     return view
   }
