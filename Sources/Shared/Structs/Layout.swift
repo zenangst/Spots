@@ -34,7 +34,7 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
   /// For a vertically scrolling grid, this value represents the minimum spacing between items in the same row.
   /// For a horizontally scrolling grid, this value represents the minimum spacing between items in the same column.
   public var itemSpacing: Double = 0.0
-  /// For a vertically scrolling layout, the value represents the minimum spacing between successive rows. 
+  /// For a vertically scrolling layout, the value represents the minimum spacing between successive rows.
   /// For a horizontally scrolling layout, the value represents the minimum spacing between successive columns.
   public var lineSpacing: Double = 0.0
   /// Defines how many items to show per row for `Gridable` components.
