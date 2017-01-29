@@ -151,10 +151,10 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
 
     JSONComponents[Key.identifier.string] = identifier
 
-    if !title.isEmpty { JSONComponents[Key.Title.string] = title }
-    if !header.isEmpty { JSONComponents[Key.Header.string] = header }
-    if !footer.isEmpty { JSONComponents[Key.Footer.string] = footer }
-    if !meta.isEmpty { JSONComponents[Key.Meta.string] = meta }
+    if !title.isEmpty { JSONComponents[Key.title.string] = title }
+    if !header.isEmpty { JSONComponents[Key.header.string] = header }
+    if !footer.isEmpty { JSONComponents[Key.footer.string] = footer }
+    if !meta.isEmpty { JSONComponents[Key.meta.string] = meta }
 
     return JSONComponents
   }
