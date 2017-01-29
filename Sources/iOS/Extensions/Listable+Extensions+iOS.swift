@@ -42,6 +42,7 @@ public extension Listable {
     for (identifier, item) in Configuration.views.storage {
       switch item {
       case .classType(_):
+        self.tableView.register(ListHeaderFooterWrapper.self, forHeaderFooterViewReuseIdentifier: identifier)
         self.tableView.register(ListWrapper.self, forCellReuseIdentifier: identifier)
       case .nib(let nib):
         self.tableView.register(nib, forCellReuseIdentifier: identifier)
