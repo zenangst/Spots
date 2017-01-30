@@ -119,8 +119,15 @@ extension Gridable {
   public func register() {
     for (identifier, item) in Configuration.views.storage {
       switch item {
-      case .classType(let _):
-        self.collectionView.register(GridWrapper.self, forCellWithReuseIdentifier: identifier)
+      case .classType(_):
+        self.collectionView.register(GridHeaderFooterWrapper.self,
+                                     forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
+                                     withReuseIdentifier: identifier)
+        self.collectionView.register(GridHeaderFooterWrapper.self,
+                                     forSupplementaryViewOfKind: UICollectionElementKindSectionFooter,
+                                     withReuseIdentifier: identifier)
+        self.collectionView.register(GridWrapper.self,
+                                     forCellWithReuseIdentifier: identifier)
       case .nib(let nib):
         self.collectionView.register(nib, forCellWithReuseIdentifier: identifier)
       }

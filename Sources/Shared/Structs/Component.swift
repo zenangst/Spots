@@ -13,13 +13,14 @@ import Brick
 /// - kind:       Indicates that the kind changed
 /// - layout:     Indicates that the layout changed
 /// - header:     Indicates that the header changed
+/// - footer:     Indicates that the footer changed
 /// - meta:       Indicates that the meta changed
 /// - items:      Indicates that the items changed
 /// - new:        Indicates that the component is new
 /// - removed:    Indicates that the component was removed
 /// - none:       Indicates that nothing did change
 public enum ComponentDiff {
-  case identifier, title, kind, layout, header, meta, items, new, removed, none
+  case identifier, title, kind, layout, header, footer, meta, items, new, removed, none
 }
 
 /// The Component struct is used to configure a Spotable object
@@ -42,6 +43,7 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
     case size
     case width
     case height
+    case footer
 
     public var string: String {
       return rawValue.lowercased()
@@ -91,6 +93,8 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
   public var header: String = ""
   /// User interaction properties
   public var interaction: Interaction?
+  /// The footer identifier
+  public var footer: String = ""
   /// Layout properties
   public var layout: Layout?
   /// A collection of view models
@@ -149,6 +153,7 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
 
     if !title.isEmpty { JSONComponents[Key.title.string] = title }
     if !header.isEmpty { JSONComponents[Key.header.string] = header }
+    if !footer.isEmpty { JSONComponents[Key.footer.string] = footer }
     if !meta.isEmpty { JSONComponents[Key.meta.string] = meta }
 
     return JSONComponents
@@ -164,6 +169,7 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
     self.title     <- map.property("title")
     self.kind      <- map.property("kind")
     self.header    <- map.property("header")
+    self.footer    <- map.property("footer")
     self.items     <- map.relations("items")
     self.meta      <- map.property("meta")
 
@@ -204,6 +210,7 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
   public init(identifier: String? = nil,
               title: String = "",
               header: String = "",
+              footer: String = "",
               kind: String = "",
               layout: Layout? = nil,
               interaction: Interaction? = nil,
@@ -216,6 +223,7 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
     self.layout = layout
     self.interaction = interaction
     self.header = header
+    self.footer = footer
     self.items = items
     self.meta = meta
 
@@ -278,6 +286,8 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
     if layout != component.layout { return .layout }
     // Determine if the header for the component has changed
     if header != component.header { return .header }
+    // Determine if the header for the component has changed
+    if footer != component.footer { return .footer }
     // Check if meta data for the component changed, this can be up to the developer to decide what course of action to take.
     if !(meta as NSDictionary).isEqual(to: component.meta) { return .meta }
     // Check if title changed
@@ -396,6 +406,7 @@ public func == (lhs: Component, rhs: Component) -> Bool {
     lhs.kind == rhs.kind &&
     lhs.layout == rhs.layout &&
     lhs.header == rhs.header &&
+    lhs.footer == rhs.footer &&
     (lhs.meta as NSDictionary).isEqual(rhs.meta as NSDictionary)
 }
 
@@ -415,6 +426,7 @@ public func === (lhs: Component, rhs: Component) -> Bool {
     lhs.kind == rhs.kind &&
     lhs.layout == rhs.layout &&
     lhs.header == rhs.header &&
+    lhs.footer == rhs.footer &&
     (lhs.meta as NSDictionary).isEqual(rhs.meta as NSDictionary) &&
     lhsChildren === rhsChildren &&
     lhs.items == rhs.items

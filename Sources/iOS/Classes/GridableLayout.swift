@@ -8,12 +8,14 @@ open class GridableLayout: UICollectionViewFlowLayout {
   /// The y offset for the Gridable object
   open var yOffset: CGFloat?
 
+  var footerHeight: CGFloat = 0.0
+
   private var layoutAttributes: [UICollectionViewLayoutAttributes]?
 
   // Subclasses must override this method and use it to return the width and height of the collection view’s content. These values represent the width and height of all the content, not just the content that is currently visible. The collection view uses this information to configure its own content size to facilitate scrolling.
   open override var collectionViewContentSize: CGSize {
     if scrollDirection != .horizontal {
-      contentSize.height = super.collectionViewContentSize.height
+      contentSize.height = super.collectionViewContentSize.height + footerHeight
     }
 
     return contentSize
@@ -34,7 +36,23 @@ open class GridableLayout: UICollectionViewFlowLayout {
     var layoutAttributes = [UICollectionViewLayoutAttributes]()
 
     if !spot.component.header.isEmpty {
-      if let headerAttribute = super.layoutAttributesForSupplementaryView(ofKind: UICollectionElementKindSectionHeader, at: IndexPath(item: 0, section: 0)) {
+
+      var view: View?
+
+      if let (_, header) = spot.type.headers.make(spot.component.header) {
+        view = header
+      }
+
+      if view == nil, let (_, header) = Configuration.views.make(spot.component.header) {
+        view = header
+      }
+
+      if let resolvedView = view {
+        if let componentView = resolvedView as? Componentable {
+          headerReferenceSize.height = componentView.preferredHeaderHeight
+        }
+
+        let headerAttribute = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, with: IndexPath(item: 0, section: 0))
         layoutAttributes.append(headerAttribute)
       }
     }
@@ -43,6 +61,18 @@ open class GridableLayout: UICollectionViewFlowLayout {
       if let itemAttribute = self.layoutAttributesForItem(at: IndexPath(item: index, section: 0)) {
         layoutAttributes.append(itemAttribute)
       }
+    }
+
+    if !spot.component.footer.isEmpty,
+      let (_, view) = Configuration.views.make(spot.component.footer),
+      let resolvedView = view {
+
+      if let componentView = resolvedView as? Componentable {
+        footerHeight = componentView.preferredHeaderHeight
+      }
+
+      let footerAttribute = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, with: IndexPath(item: 0, section: 0))
+      layoutAttributes.append(footerAttribute)
     }
 
     self.layoutAttributes = layoutAttributes
@@ -55,7 +85,7 @@ open class GridableLayout: UICollectionViewFlowLayout {
       contentSize.width += sectionInset.left + (sectionInset.right / 2) - 3
       contentSize.width = ceil(contentSize.width)
 
-      contentSize.height = firstItem.size.height + headerReferenceSize.height
+      contentSize.height = firstItem.size.height + headerReferenceSize.height + footerHeight
       contentSize.height += sectionInset.top + sectionInset.bottom
     } else {
       contentSize.width = spot.collectionView.frame.width - spot.collectionView.contentInset.left - spot.collectionView.contentInset.right
@@ -113,12 +143,21 @@ open class GridableLayout: UICollectionViewFlowLayout {
             continue
         }
 
-        if itemAttribute.representedElementKind == UICollectionElementKindSectionHeader {
+        switch itemAttribute.representedElementKind {
+        case UICollectionElementKindSectionHeader?:
           itemAttribute.zIndex = 1024
+          itemAttribute.frame.size.width = collectionView.frame.size.width
           itemAttribute.frame.size.height = headerReferenceSize.height
           itemAttribute.frame.origin.x = collectionView.contentOffset.x
           attributes.append(itemAttribute)
-        } else {
+        case UICollectionElementKindSectionFooter?:
+          itemAttribute.zIndex = 1024
+          itemAttribute.frame.size.width = collectionView.frame.size.width
+          itemAttribute.frame.size.height = headerReferenceSize.height
+          itemAttribute.frame.origin.y = contentSize.height - footerHeight
+          itemAttribute.frame.origin.x = collectionView.contentOffset.x
+          attributes.append(itemAttribute)
+        default:
           itemAttribute.size = spot.sizeForItem(at: itemAttribute.indexPath)
 
           if scrollDirection == .horizontal {
