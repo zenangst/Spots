@@ -65,7 +65,7 @@ extension SpotsProtocol {
       var newComponents = components
 
       /// Prepare default layouts for new components based of previous Spotable kind.
-      for (index, component) in newComponents.enumerated() {
+      for (index, _) in newComponents.enumerated() {
         guard index < oldComponents.count else {
           break
         }
@@ -403,7 +403,7 @@ extension SpotsProtocol {
 
       for (index, change) in changes.enumerated() {
         switch change {
-        case .identifier, .title, .kind, .layout, .header, .meta:
+        case .identifier, .title, .kind, .layout, .header, .footer, .meta:
           weakSelf.replaceSpot(index, newComponents: newComponents, yOffset: &yOffset)
         case .new:
           weakSelf.newSpot(index, newComponents: newComponents, yOffset: &yOffset)
@@ -586,7 +586,7 @@ extension SpotsProtocol {
       return
     }
 
-    update(spotAtIndex: index, withAnimation: animation, withCompletion: { [weak self] in
+    update(spotAtIndex: index, withAnimation: animation, withCompletion: {
       completion?()
     }, {
       $0.items = items

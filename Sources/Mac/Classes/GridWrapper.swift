@@ -1,22 +1,16 @@
 import Cocoa
 
-class GridWrapper: NSCollectionViewItem {
+class GridWrapper: NSCollectionViewItem, Wrappable {
 
-  static open var flipped: Bool = true
+  weak var wrappedView: View?
+
+  public var contentView: View {
+    return coreView
+  }
 
   var isFlipped: Bool = true
 
   open var coreView: FlippedView = FlippedView()
-  weak var customView: View?
-
-  func configure(with view: View) {
-    if let previousView = self.customView {
-      previousView.removeFromSuperview()
-    }
-
-    coreView.addSubview(view)
-    self.customView = view
-  }
 
   open override func loadView() {
     view = coreView
@@ -25,10 +19,10 @@ class GridWrapper: NSCollectionViewItem {
   override func viewWillLayout() {
     super.viewWillLayout()
 
-    self.customView?.frame = coreView.bounds
+    self.wrappedView?.frame = coreView.bounds
   }
 
   override func prepareForReuse() {
-    customView?.removeFromSuperview()
+    wrappedView?.removeFromSuperview()
   }
 }
