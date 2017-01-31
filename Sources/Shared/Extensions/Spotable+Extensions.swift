@@ -221,7 +221,13 @@ public extension Spotable {
         ? Self.views.defaultIdentifier
         : item.kind
 
-      guard let (_, view) = Self.views.make(kind) else {
+      let view: View?
+
+      if let (_, resolvedView) = Self.views.make(kind) {
+        view = resolvedView
+      } else if let (_, resolvedView) = Configuration.views.make(kind) {
+        view = resolvedView
+      } else {
         return nil
       }
 
