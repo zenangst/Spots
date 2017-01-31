@@ -217,9 +217,7 @@ public extension Spotable {
 
     #if !os(OSX)
       fullWidth = UIScreen.main.bounds.width
-      kind = item.kind.isEmpty || Self.views.storage[item.kind] == nil
-        ? Self.views.defaultIdentifier
-        : item.kind
+      kind = identifier(at: index)
 
       let view: View?
 
