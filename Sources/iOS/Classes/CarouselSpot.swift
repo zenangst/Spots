@@ -214,13 +214,16 @@ open class CarouselSpot: NSObject, Gridable {
 
     collectionView.frame.size.height += layout.headerReferenceSize.height
 
+    if let componentLayout = component.layout {
+      collectionView.frame.size.height += CGFloat(componentLayout.inset.top + componentLayout.inset.bottom)
+    }
+
     guard component.layout?.pageIndicator == Optional(true) else {
       return
     }
 
     layout.sectionInset.bottom = layout.sectionInset.bottom
     layout.sectionInset.bottom += pageControl.frame.size.height
-    collectionView.frame.size.height += layout.sectionInset.top + layout.sectionInset.bottom
     pageControl.frame.origin.y = collectionView.frame.size.height - pageControl.frame.size.height
   }
 }
