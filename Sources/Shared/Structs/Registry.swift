@@ -91,7 +91,7 @@ public struct Registry {
         }
       #endif
 
-      view = classType.init(frame: frame)
+      view = classType.init(frame: parentFrame)
     case .nib(let nib):
       registryType = .nib
       let cacheIdentifier: String = "\(registryType.rawValue)-\(identifier)"
