@@ -106,13 +106,10 @@ extension Delegate: NSTableViewDelegate {
     }
 
     let reuseIdentifier = spot.identifier(at: row)
-    var useWrapper = false
     var craftedView = spot.type.views.make(reuseIdentifier)
-
 
     if craftedView == nil {
       craftedView = Configuration.views.make(reuseIdentifier)
-      useWrapper = true
     }
 
     guard let cachedView = craftedView else {

@@ -43,7 +43,7 @@ extension DataSource: NSCollectionViewDataSource {
       reuseIdentifier = spot.identifier(at: indexPath.item)
     }
 
-    var item = collectionView.makeItem(withIdentifier: reuseIdentifier, for: indexPath)
+    let item = collectionView.makeItem(withIdentifier: reuseIdentifier, for: indexPath)
 
     switch item {
     case let item as GridWrapper:
