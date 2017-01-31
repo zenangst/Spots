@@ -48,7 +48,6 @@ extension DataSource: UICollectionViewDataSource {
       return UICollectionReusableView()
     }
 
-
     let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
                                                                withReuseIdentifier: identifier,
                                                                for: indexPath)

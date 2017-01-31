@@ -57,7 +57,7 @@ extension Gridable {
   public func register() {
     for (identifier, item) in Configuration.views.storage {
       switch item {
-      case .classType(let _):
+      case .classType( _):
         self.collectionView.register(GridWrapper.self, forItemWithIdentifier: identifier)
       case .nib(let nib):
         self.collectionView.register(nib, forItemWithIdentifier: identifier)
