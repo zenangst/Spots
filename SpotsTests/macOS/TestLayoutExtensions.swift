@@ -28,11 +28,6 @@ class LayoutExtensionsTests: XCTestCase {
     XCTAssertEqual(gridSpot.view.contentInsets.left, CGFloat(layout.inset.left))
     XCTAssertEqual(gridSpot.view.contentInsets.bottom, CGFloat(layout.inset.bottom))
     XCTAssertEqual(gridSpot.view.contentInsets.right, CGFloat(layout.inset.right))
-
-    XCTAssertEqual(gridableLayout?.sectionInset.top, CGFloat(layout.inset.top))
-    XCTAssertEqual(gridableLayout?.sectionInset.left, CGFloat(layout.inset.left))
-    XCTAssertEqual(gridableLayout?.sectionInset.bottom, CGFloat(layout.inset.bottom))
-    XCTAssertEqual(gridableLayout?.sectionInset.right, CGFloat(layout.inset.right))
   }
 
   func testConfigureListableSpot() {
