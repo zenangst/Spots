@@ -84,9 +84,11 @@ open class GridableLayout: UICollectionViewFlowLayout {
       contentSize.width += CGFloat(spot.items.count) * (minimumInteritemSpacing)
       contentSize.width += sectionInset.left + (sectionInset.right / 2) - 3
       contentSize.width = ceil(contentSize.width)
-
       contentSize.height = firstItem.size.height + headerReferenceSize.height + footerHeight
-      contentSize.height += sectionInset.top + sectionInset.bottom
+
+      if let componentLayout = spot.component.layout {
+        contentSize.height += CGFloat(componentLayout.inset.top + componentLayout.inset.bottom)
+      }
     } else {
       contentSize.width = spot.collectionView.frame.width - spot.collectionView.contentInset.left - spot.collectionView.contentInset.right
       contentSize.height = super.collectionViewContentSize.height
@@ -184,6 +186,6 @@ open class GridableLayout: UICollectionViewFlowLayout {
   ///
   /// - returns: Always returns true
   open override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
-    return true
+    return newBounds.size.height >= contentSize.height
   }
 }

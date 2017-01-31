@@ -96,8 +96,7 @@ public extension Spotable {
       if let layout = component.layout {
         if layout.span > 0.0 {
           #if os(OSX)
-            if let componentLayout = component.layout,
-              let gridable = self as? Gridable,
+            if let gridable = self as? Gridable,
               let layout = gridable.layout as? FlowLayout {
               let newWidth = gridable.collectionView.frame.width / CGFloat(componentLayout.span) - layout.sectionInset.left - layout.sectionInset.right
 
@@ -106,14 +105,15 @@ public extension Spotable {
               }
             }
           #else
-            var spotWidth = view.frame.size.width
+            var spotWidth: CGFloat
 
-            if spotWidth == 0.0 {
-              spotWidth = UIScreen.main.bounds.width
+            if view.frame.size.width == 0.0 {
+              spotWidth = UIScreen.main.bounds.width - CGFloat(layout.inset.left + layout.inset.right)
+            } else {
+              spotWidth = view.frame.size.width - CGFloat(layout.inset.left + layout.inset.right)
             }
 
-            let newWidth = spotWidth / CGFloat(layout.span)
-            preparedItems[index].size.width = newWidth
+            preparedItems[index].size.width = (spotWidth / CGFloat(layout.span)) - CGFloat(layout.itemSpacing)
           #endif
         }
       }
