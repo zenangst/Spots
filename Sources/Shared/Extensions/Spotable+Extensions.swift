@@ -221,9 +221,9 @@ public extension Spotable {
 
       let view: View?
 
-      if let (_, resolvedView) = Self.views.make(kind) {
+      if let (_, resolvedView) = Self.views.make(kind, parentFrame: self.view.frame) {
         view = resolvedView
-      } else if let (_, resolvedView) = Configuration.views.make(kind) {
+      } else if let (_, resolvedView) = Configuration.views.make(kind, parentFrame: self.view.frame) {
         view = resolvedView
       } else {
         return nil

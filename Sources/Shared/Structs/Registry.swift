@@ -73,7 +73,7 @@ public struct Registry {
    - parameter identifier: A reusable identifier for the view
    - returns: A tuple with an optional registry type and view
    */
-  func make(_ identifier: String) -> (type: RegistryType?, view: View?)? {
+  func make(_ identifier: String, parentFrame: CGRect = CGRect.zero) -> (type: RegistryType?, view: View?)? {
     guard let item = storage[identifier] else { return nil }
 
     let registryType: RegistryType
@@ -91,7 +91,7 @@ public struct Registry {
         }
       #endif
 
-      view = classType.init()
+      view = classType.init(frame: frame)
     case .nib(let nib):
       registryType = .nib
       let cacheIdentifier: String = "\(registryType.rawValue)-\(identifier)"
