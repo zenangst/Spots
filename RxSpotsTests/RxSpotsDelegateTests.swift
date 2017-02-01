@@ -35,11 +35,23 @@ class RxSpotsDelegateTests: XCTestCase {
   }
   
   func testDidChange() {
+    let listSpot = ListSpot()
+    let gridSpot = GridSpot()
+    var isCalled = false
 
+    delegateProxy.didChange
+      .bindNext({ spots in
+        isCalled = (spots[0] is ListSpot) && (spots[1] is GridSpot)
+      })
+      .addDisposableTo(disposeBag)
+
+    delegateProxy.spotablesDidChange([listSpot, gridSpot])
+
+    XCTAssertTrue(isCalled)
   }
 
   func testWillDisplayView() {
-    
+
   }
 
   func testDidEndDisplayingView() {
