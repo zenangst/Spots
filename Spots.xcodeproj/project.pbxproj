@@ -317,6 +317,9 @@
 		D55B7B081E4231A4000125C8 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D55B7B071E4231A4000125C8 /* RxCocoa.framework */; };
 		D55B7B0C1E4234C3000125C8 /* SpotsDelegate+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B7B0A1E423417000125C8 /* SpotsDelegate+Rx.swift */; };
 		D55B7B0D1E4234CE000125C8 /* Spots.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478091C43FEB8006EBA49 /* Spots.framework */; };
+		D55B7B431E423B86000125C8 /* Spots.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478091C43FEB8006EBA49 /* Spots.framework */; };
+		D55B7B4C1E423BC0000125C8 /* RxSpots.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D55B7B021E423122000125C8 /* RxSpots.framework */; };
+		D55B7B4F1E423C65000125C8 /* RxSpotsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B7B4E1E423C65000125C8 /* RxSpotsDelegate.swift */; };
 		D58478141C43FEB9006EBA49 /* Spots.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478091C43FEB8006EBA49 /* Spots.framework */; };
 		D58478531C43FFEB006EBA49 /* TestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58478281C43FF34006EBA49 /* TestFactory.swift */; };
 		D58478571C43FFFD006EBA49 /* TestComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D584782B1C43FF34006EBA49 /* TestComponent.swift */; };
@@ -333,6 +336,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = BD7396FD1D718CD2000AF2DE;
 			remoteInfo = "Spots-tvOS";
+		};
+		D55B7B261E423B86000125C8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D58478001C43FEB8006EBA49 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D58478081C43FEB8006EBA49;
+			remoteInfo = Spots;
+		};
+		D55B7B4A1E423BAA000125C8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D58478001C43FEB8006EBA49 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D55B7AA51E423122000125C8;
+			remoteInfo = "RxSpots-iOS";
 		};
 		D58478151C43FEB9006EBA49 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -505,6 +522,9 @@
 		D55B7B041E42315A000125C8 /* Rx-Info-iOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Rx-Info-iOS.plist"; sourceTree = "<group>"; };
 		D55B7B071E4231A4000125C8 /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = Carthage/Build/iOS/RxCocoa.framework; sourceTree = "<group>"; };
 		D55B7B0A1E423417000125C8 /* SpotsDelegate+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SpotsDelegate+Rx.swift"; sourceTree = "<group>"; };
+		D55B7B481E423B86000125C8 /* RxSpots-iOS-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "RxSpots-iOS-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D55B7B491E423B86000125C8 /* Spots-iOS-Tests copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Spots-iOS-Tests copy-Info.plist"; path = "/Users/vadym/Development/hyper/ios/opensource/Spots/Spots-iOS-Tests copy-Info.plist"; sourceTree = "<absolute>"; };
+		D55B7B4E1E423C65000125C8 /* RxSpotsDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxSpotsDelegate.swift; sourceTree = "<group>"; };
 		D58478091C43FEB8006EBA49 /* Spots.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Spots.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D58478131C43FEB9006EBA49 /* Spots-iOS-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Spots-iOS-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D58478241C43FF34006EBA49 /* Info-iOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
@@ -545,6 +565,15 @@
 				D55B7B081E4231A4000125C8 /* RxCocoa.framework in Frameworks */,
 				D55B7AF91E423122000125C8 /* Tailor.framework in Frameworks */,
 				D55B7AFA1E423122000125C8 /* Brick.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D55B7B421E423B86000125C8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D55B7B4C1E423BC0000125C8 /* RxSpots.framework in Frameworks */,
+				D55B7B431E423B86000125C8 /* Spots.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -875,9 +904,18 @@
 			path = RxSpots;
 			sourceTree = "<group>";
 		};
+		D55B7B4D1E423C0D000125C8 /* RxSpotsTests */ = {
+			isa = PBXGroup;
+			children = (
+				D55B7B4E1E423C65000125C8 /* RxSpotsDelegate.swift */,
+			);
+			path = RxSpotsTests;
+			sourceTree = "<group>";
+		};
 		D58477FF1C43FEB8006EBA49 = {
 			isa = PBXGroup;
 			children = (
+				D55B7B4D1E423C0D000125C8 /* RxSpotsTests */,
 				BD45D9981E30B0F700C2D6B2 /* README.md */,
 				BD45D9991E30B0F700C2D6B2 /* Spots.podspec */,
 				BDD63FAA1D941A4A008E885A /* Frameworks-tvOS */,
@@ -890,6 +928,7 @@
 				D55B7B091E4233FC000125C8 /* RxSpots */,
 				D58478251C43FF34006EBA49 /* SpotsTests */,
 				D55B7B061E4231A3000125C8 /* Frameworks */,
+				D55B7B491E423B86000125C8 /* Spots-iOS-Tests copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -903,6 +942,7 @@
 				BD73972F1D718CD2000AF2DE /* Spots.framework */,
 				BD7397461D718CDB000AF2DE /* Spots-tvOS-Tests.xctest */,
 				D55B7B021E423122000125C8 /* RxSpots.framework */,
+				D55B7B481E423B86000125C8 /* RxSpots-iOS-Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1082,6 +1122,25 @@
 			productReference = D55B7B021E423122000125C8 /* RxSpots.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		D55B7B241E423B86000125C8 /* RxSpots-iOS-Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D55B7B451E423B86000125C8 /* Build configuration list for PBXNativeTarget "RxSpots-iOS-Tests" */;
+			buildPhases = (
+				D55B7B271E423B86000125C8 /* Sources */,
+				D55B7B421E423B86000125C8 /* Frameworks */,
+				D55B7B441E423B86000125C8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D55B7B4B1E423BAA000125C8 /* PBXTargetDependency */,
+				D55B7B251E423B86000125C8 /* PBXTargetDependency */,
+			);
+			name = "RxSpots-iOS-Tests";
+			productName = SpotsTests;
+			productReference = D55B7B481E423B86000125C8 /* RxSpots-iOS-Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		D58478081C43FEB8006EBA49 /* Spots-iOS */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D584781D1C43FEB9006EBA49 /* Build configuration list for PBXNativeTarget "Spots-iOS" */;
@@ -1174,6 +1233,9 @@
 					BD7397311D718CDB000AF2DE = {
 						LastSwiftMigration = 0800;
 					};
+					D55B7B241E423B86000125C8 = {
+						LastSwiftMigration = 0820;
+					};
 					D58478081C43FEB8006EBA49 = {
 						CreatedOnToolsVersion = 7.2;
 						LastSwiftMigration = 0800;
@@ -1210,6 +1272,7 @@
 				BD7396FD1D718CD2000AF2DE /* Spots-tvOS */,
 				BD7397311D718CDB000AF2DE /* Spots-tvOS-Tests */,
 				D55B7AA51E423122000125C8 /* RxSpots-iOS */,
+				D55B7B241E423B86000125C8 /* RxSpots-iOS-Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -1230,6 +1293,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		D55B7AFC1E423122000125C8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D55B7B441E423B86000125C8 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1509,6 +1579,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D55B7B271E423B86000125C8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D55B7B4F1E423C65000125C8 /* RxSpotsDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D58478041C43FEB8006EBA49 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1744,6 +1822,16 @@
 			target = BD7396FD1D718CD2000AF2DE /* Spots-tvOS */;
 			targetProxy = BD53211E1DBD38EC007D6C25 /* PBXContainerItemProxy */;
 		};
+		D55B7B251E423B86000125C8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D58478081C43FEB8006EBA49 /* Spots-iOS */;
+			targetProxy = D55B7B261E423B86000125C8 /* PBXContainerItemProxy */;
+		};
+		D55B7B4B1E423BAA000125C8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D55B7AA51E423122000125C8 /* RxSpots-iOS */;
+			targetProxy = D55B7B4A1E423BAA000125C8 /* PBXContainerItemProxy */;
+		};
 		D58478161C43FEB9006EBA49 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = D58478081C43FEB8006EBA49 /* Spots-iOS */;
@@ -1889,6 +1977,39 @@
 				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.Spots;
 				PRODUCT_NAME = RxSpots;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+		D55B7B461E423B86000125C8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = "Spots-iOS-Tests copy-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(FRAMEWORK_SEARCH_PATHS)";
+				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.SpotsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		D55B7B471E423B86000125C8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = "Spots-iOS-Tests copy-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(FRAMEWORK_SEARCH_PATHS)";
+				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.SpotsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
@@ -2181,6 +2302,15 @@
 			buildConfigurations = (
 				D55B7B001E423122000125C8 /* Debug */,
 				D55B7B011E423122000125C8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D55B7B451E423B86000125C8 /* Build configuration list for PBXNativeTarget "RxSpots-iOS-Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D55B7B461E423B86000125C8 /* Debug */,
+				D55B7B471E423B86000125C8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
