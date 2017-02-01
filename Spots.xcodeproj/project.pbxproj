@@ -312,6 +312,11 @@
 		BDEFF5501DD1C85300FC0537 /* TestDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEFF54E1DD1C85300FC0537 /* TestDataSource.swift */; };
 		BDEFF5521DD1DA8000FC0537 /* TestDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEFF5511DD1DA8000FC0537 /* TestDelegate.swift */; };
 		BDEFF5531DD1DA8000FC0537 /* TestDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEFF5511DD1DA8000FC0537 /* TestDelegate.swift */; };
+		D55B7AF91E423122000125C8 /* Tailor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478E91C440726006EBA49 /* Tailor.framework */; };
+		D55B7AFA1E423122000125C8 /* Brick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD352E5E1CBAD6EC002CD032 /* Brick.framework */; };
+		D55B7B081E4231A4000125C8 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D55B7B071E4231A4000125C8 /* RxCocoa.framework */; };
+		D55B7B0C1E4234C3000125C8 /* SpotsDelegate+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B7B0A1E423417000125C8 /* SpotsDelegate+Rx.swift */; };
+		D55B7B0D1E4234CE000125C8 /* Spots.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478091C43FEB8006EBA49 /* Spots.framework */; };
 		D58478141C43FEB9006EBA49 /* Spots.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478091C43FEB8006EBA49 /* Spots.framework */; };
 		D58478531C43FFEB006EBA49 /* TestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58478281C43FF34006EBA49 /* TestFactory.swift */; };
 		D58478571C43FFFD006EBA49 /* TestComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D584782B1C43FF34006EBA49 /* TestComponent.swift */; };
@@ -496,6 +501,10 @@
 		BDEED2E71D8446400030B475 /* TestSpotsScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSpotsScrollView.swift; sourceTree = "<group>"; };
 		BDEFF54E1DD1C85300FC0537 /* TestDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestDataSource.swift; sourceTree = "<group>"; };
 		BDEFF5511DD1DA8000FC0537 /* TestDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestDelegate.swift; sourceTree = "<group>"; };
+		D55B7B021E423122000125C8 /* RxSpots.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxSpots.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D55B7B041E42315A000125C8 /* Rx-Info-iOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Rx-Info-iOS.plist"; sourceTree = "<group>"; };
+		D55B7B071E4231A4000125C8 /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = Carthage/Build/iOS/RxCocoa.framework; sourceTree = "<group>"; };
+		D55B7B0A1E423417000125C8 /* SpotsDelegate+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SpotsDelegate+Rx.swift"; sourceTree = "<group>"; };
 		D58478091C43FEB8006EBA49 /* Spots.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Spots.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D58478131C43FEB9006EBA49 /* Spots-iOS-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Spots-iOS-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D58478241C43FF34006EBA49 /* Info-iOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
@@ -525,6 +534,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				BD7397401D718CDB000AF2DE /* Spots.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D55B7AF81E423122000125C8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D55B7B0D1E4234CE000125C8 /* Spots.framework in Frameworks */,
+				D55B7B081E4231A4000125C8 /* RxCocoa.framework in Frameworks */,
+				D55B7AF91E423122000125C8 /* Tailor.framework in Frameworks */,
+				D55B7AFA1E423122000125C8 /* Brick.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -839,6 +859,22 @@
 			path = macOS;
 			sourceTree = "<group>";
 		};
+		D55B7B061E4231A3000125C8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D55B7B071E4231A4000125C8 /* RxCocoa.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D55B7B091E4233FC000125C8 /* RxSpots */ = {
+			isa = PBXGroup;
+			children = (
+				D55B7B0A1E423417000125C8 /* SpotsDelegate+Rx.swift */,
+			);
+			path = RxSpots;
+			sourceTree = "<group>";
+		};
 		D58477FF1C43FEB8006EBA49 = {
 			isa = PBXGroup;
 			children = (
@@ -851,7 +887,9 @@
 				D584780A1C43FEB8006EBA49 /* Products */,
 				BD38DC2C1D1854D700094941 /* Sources */,
 				D58478231C43FF34006EBA49 /* Spots */,
+				D55B7B091E4233FC000125C8 /* RxSpots */,
 				D58478251C43FF34006EBA49 /* SpotsTests */,
+				D55B7B061E4231A3000125C8 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -864,6 +902,7 @@
 				D58478D11C440567006EBA49 /* Spots-macOS-Tests.xctest */,
 				BD73972F1D718CD2000AF2DE /* Spots.framework */,
 				BD7397461D718CDB000AF2DE /* Spots-tvOS-Tests.xctest */,
+				D55B7B021E423122000125C8 /* RxSpots.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -871,6 +910,7 @@
 		D58478231C43FF34006EBA49 /* Spots */ = {
 			isa = PBXGroup;
 			children = (
+				D55B7B041E42315A000125C8 /* Rx-Info-iOS.plist */,
 				BD129E3A1D7B2DE2009AC164 /* Info-tvOS.plist */,
 				D584784F1C43FFA1006EBA49 /* Info-macOS.plist */,
 				D58478241C43FF34006EBA49 /* Info-iOS.plist */,
@@ -960,6 +1000,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D55B7AFB1E423122000125C8 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D58478061C43FEB8006EBA49 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -1014,6 +1061,26 @@
 			productName = SpotsTests;
 			productReference = BD7397461D718CDB000AF2DE /* Spots-tvOS-Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		D55B7AA51E423122000125C8 /* RxSpots-iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D55B7AFF1E423122000125C8 /* Build configuration list for PBXNativeTarget "RxSpots-iOS" */;
+			buildPhases = (
+				D55B7AA61E423122000125C8 /* Sources */,
+				D55B7AF81E423122000125C8 /* Frameworks */,
+				D55B7AFB1E423122000125C8 /* Headers */,
+				D55B7AFC1E423122000125C8 /* Resources */,
+				D55B7AFD1E423122000125C8 /* ShellScript */,
+				D55B7AFE1E423122000125C8 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "RxSpots-iOS";
+			productName = Spots;
+			productReference = D55B7B021E423122000125C8 /* RxSpots.framework */;
+			productType = "com.apple.product-type.framework";
 		};
 		D58478081C43FEB8006EBA49 /* Spots-iOS */ = {
 			isa = PBXNativeTarget;
@@ -1142,6 +1209,7 @@
 				D58478D01C440567006EBA49 /* Spots-macOS-Tests */,
 				BD7396FD1D718CD2000AF2DE /* Spots-tvOS */,
 				BD7397311D718CDB000AF2DE /* Spots-tvOS-Tests */,
+				D55B7AA51E423122000125C8 /* RxSpots-iOS */,
 			);
 		};
 /* End PBXProject section */
@@ -1155,6 +1223,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		BD7397411D718CDB000AF2DE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D55B7AFC1E423122000125C8 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1234,6 +1309,34 @@
 			shellScript = "/usr/local/bin/carthage copy-frameworks";
 		};
 		BD73972B1D718CD2000AF2DE /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
+		};
+		D55B7AFD1E423122000125C8 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/Tailor.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Brick.framework",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
+		D55B7AFE1E423122000125C8 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1395,6 +1498,14 @@
 				BD6FBEF21E12B5F000AA58BD /* TestComposition.swift in Sources */,
 				BDD9ABCC1DB533CE005D8C04 /* TestGridComposite.swift in Sources */,
 				BD45D9971E30A8A000C2D6B2 /* TestInset.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D55B7AA61E423122000125C8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D55B7B0C1E4234C3000125C8 /* SpotsDelegate+Rx.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1736,6 +1847,52 @@
 			};
 			name = Release;
 		};
+		D55B7B001E423122000125C8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = "Spots/Rx-Info-iOs.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.Spots;
+				PRODUCT_NAME = RxSpots;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		D55B7B011E423122000125C8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = "Spots/Rx-Info-iOs.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.Spots;
+				PRODUCT_NAME = RxSpots;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
 		D584781B1C43FEB9006EBA49 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2015,6 +2172,15 @@
 			buildConfigurations = (
 				BD7397441D718CDB000AF2DE /* Debug */,
 				BD7397451D718CDB000AF2DE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D55B7AFF1E423122000125C8 /* Build configuration list for PBXNativeTarget "RxSpots-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D55B7B001E423122000125C8 /* Debug */,
+				D55B7B011E423122000125C8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
