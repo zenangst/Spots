@@ -15,7 +15,7 @@ class RxSpotsDelegateTests: XCTestCase {
 
     delegateProxy = RxSpotsDelegate(parentObject: controller)
   }
-  
+
   func testDidSelectItem() {
     let spot = ListSpot()
     let item = Item(title: "Test")
