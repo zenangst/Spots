@@ -1,30 +1,48 @@
 import XCTest
+import Spots
 import RxSpots
+import RxSwift
 import Brick
 
 class RxSpotsDelegateTests: XCTestCase {
 
-  var depegateProxy: RxSpotsDelegate!
+  var delegateProxy: RxSpotsDelegate!
+  private let disposeBag = DisposeBag()
 
   override func setUp() {
-      super.setUp()
-      // Put setup code here. This method is called before the invocation of each test method in the class.
+    super.setUp()
+    let controller = Controller()
+
+    delegateProxy = RxSpotsDelegate(parentObject: controller)
   }
   
   override func tearDown() {
-      // Put teardown code here. This method is called after the invocation of each test method in the class.
-      super.tearDown()
+    super.tearDown()
   }
   
-  func testExample() {
-      // This is an example of a functional test case.
-      // Use XCTAssert and related functions to verify your tests produce the correct results.
+  func testDidSelectItem() {
+    let spot = ListSpot()
+    let item = Item(title: "Test")
+    var isCalled = false
+
+    delegateProxy.didSelectItem.bindNext { spot, item in
+      isCalled = (spot is ListSpot) && item.title == "Test"
+    }.addDisposableTo(disposeBag)
+
+    delegateProxy.spotable(spot, itemSelected: item)
+
+    XCTAssertTrue(isCalled)
   }
   
-  func testPerformanceExample() {
-      // This is an example of a performance test case.
-      self.measure {
-          // Put the code you want to measure the time of here.
-      }
+  func testDidChange() {
+
+  }
+
+  func testWillDisplayView() {
+    
+  }
+
+  func testDidEndDisplayingView() {
+
   }
 }
