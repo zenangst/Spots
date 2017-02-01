@@ -77,7 +77,8 @@ open class GridableLayout: UICollectionViewFlowLayout {
 
     self.layoutAttributes = layoutAttributes
 
-    if scrollDirection == .horizontal {
+    switch scrollDirection {
+    case .horizontal:
       guard let firstItem = spot.items.first else { return }
 
       contentSize.width = spot.items.reduce(0, { $0 + $1.size.width })
@@ -89,7 +90,7 @@ open class GridableLayout: UICollectionViewFlowLayout {
       if let componentLayout = spot.component.layout {
         contentSize.height += CGFloat(componentLayout.inset.top + componentLayout.inset.bottom)
       }
-    } else {
+    case .vertical:
       contentSize.width = spot.collectionView.frame.width - spot.collectionView.contentInset.left - spot.collectionView.contentInset.right
       contentSize.height = super.collectionViewContentSize.height
     }
