@@ -210,7 +210,7 @@ open class SpotsScrollView: UIScrollView {
         scrollView.frame = frame.integral
         scrollView.contentOffset = CGPoint(x: Int(contentOffset.x), y: Int(contentOffset.y))
 
-        yOffsetOfCurrentSubview += scrollView.contentSize.height + scrollView.contentInset.top + scrollView.contentInset.bottom
+        yOffsetOfCurrentSubview += scrollView.contentSize.height
       } else {
         var frame = subview.frame
         frame.origin.x = 0
