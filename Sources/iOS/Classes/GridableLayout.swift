@@ -163,7 +163,7 @@ open class GridableLayout: UICollectionViewFlowLayout {
           itemAttribute.size = spot.sizeForItem(at: itemAttribute.indexPath)
 
           if scrollDirection == .horizontal {
-            itemAttribute.frame.origin.y = headerReferenceSize.height
+            itemAttribute.frame.origin.y = headerReferenceSize.height + collectionView.contentInset.top
             itemAttribute.frame.origin.x = offset
             offset += itemAttribute.size.width + minimumInteritemSpacing
           }
