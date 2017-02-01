@@ -16,10 +16,6 @@ class RxSpotsDelegateTests: XCTestCase {
     delegateProxy = RxSpotsDelegate(parentObject: controller)
   }
   
-  override func tearDown() {
-    super.tearDown()
-  }
-  
   func testDidSelectItem() {
     let spot = ListSpot()
     let item = Item(title: "Test")
@@ -30,7 +26,6 @@ class RxSpotsDelegateTests: XCTestCase {
     }.addDisposableTo(disposeBag)
 
     delegateProxy.spotable(spot, itemSelected: item)
-
     XCTAssertTrue(isCalled)
   }
   
@@ -46,7 +41,6 @@ class RxSpotsDelegateTests: XCTestCase {
       .addDisposableTo(disposeBag)
 
     delegateProxy.spotablesDidChange([listSpot, gridSpot])
-
     XCTAssertTrue(isCalled)
   }
 
@@ -63,11 +57,22 @@ class RxSpotsDelegateTests: XCTestCase {
       .addDisposableTo(disposeBag)
 
     delegateProxy.spotable(listSpot, willDisplay: spotView, item: item)
-
     XCTAssertTrue(isCalled)
   }
 
   func testDidEndDisplayingView() {
+    let listSpot = ListSpot()
+    let spotView = SpotView()
+    let item = Item(title: "Test")
+    var isCalled = false
 
+    delegateProxy.didEndDisplayingView
+      .bindNext({ spot, view, item in
+        isCalled = (spot is ListSpot) && (view == spotView) && item.title == "Test"
+      })
+      .addDisposableTo(disposeBag)
+
+    delegateProxy.spotable(listSpot, didEndDisplaying: spotView, item: item)
+    XCTAssertTrue(isCalled)
   }
 }
