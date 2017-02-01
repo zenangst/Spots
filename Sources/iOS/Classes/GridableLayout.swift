@@ -81,10 +81,9 @@ open class GridableLayout: UICollectionViewFlowLayout {
     case .horizontal:
       guard let firstItem = spot.items.first else { return }
 
-      contentSize.width = spot.items.reduce(0, { $0 + $1.size.width })
-      contentSize.width += CGFloat(spot.items.count) * (minimumInteritemSpacing)
-      contentSize.width += sectionInset.left + (sectionInset.right / 2) - 3
-      contentSize.width = ceil(contentSize.width)
+      contentSize.width = spot.items.reduce(0, { $0 + floor($1.size.width) })
+      contentSize.width += minimumInteritemSpacing * CGFloat(spot.items.count - 1)
+
       contentSize.height = firstItem.size.height + headerReferenceSize.height + footerHeight
 
       if let componentLayout = spot.component.layout {
