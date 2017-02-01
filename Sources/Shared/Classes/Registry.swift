@@ -1,9 +1,6 @@
 import Foundation
 import Brick
-
-#if os(OSX)
-import Cocoa
-#endif
+import CoreGraphics
 
 public enum RegistryType: String {
   case nib
