@@ -7,11 +7,13 @@ import RxCocoa
 
 final class SpotDelegateProxy: DelegateProxy, DelegateProxyType, SpotsDelegate {
 
+  // Delegate methods subjects
   private let spotDidSelectItem = PublishSubject<(Spotable, Item)>()
   private let spotDidChange = PublishSubject<[Spotable]>()
   private let spotWillDisplayView = PublishSubject<(Spotable, SpotView, Item)>()
   private let spotDidEndDisplayingView = PublishSubject<(Spotable, SpotView, Item)>()
 
+  // Delegate method observables
   let didSelectItem: Observable<(Spotable, Item)>
   let didChange: Observable<[Spotable]>
   let willDisplayView: Observable<(Spotable, SpotView, Item)>
@@ -54,3 +56,14 @@ final class SpotDelegateProxy: DelegateProxy, DelegateProxyType, SpotsDelegate {
     spotDidEndDisplayingView.onNext(spot, view, item)
   }
 }
+
+// MARK: - Reactive extensions
+
+extension Reactive where Base: Spotable {
+
+  var delegate: SpotDelegateProxy {
+    return SpotDelegateProxy.proxyForObject(base)
+  }
+}
+
+
