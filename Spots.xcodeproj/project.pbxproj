@@ -107,8 +107,6 @@
 		BDAD84D51E3E701C008289AE /* Gridable+Extensions+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD849A1E3E701C008289AE /* Gridable+Extensions+iOS.swift */; };
 		BDAD84D61E3E701C008289AE /* Inset+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD849B1E3E701C008289AE /* Inset+iOS.swift */; };
 		BDAD84D71E3E701C008289AE /* Inset+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD849B1E3E701C008289AE /* Inset+iOS.swift */; };
-		BDAD84D81E3E701C008289AE /* Interaction+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD849C1E3E701C008289AE /* Interaction+Extensions.swift */; };
-		BDAD84D91E3E701C008289AE /* Interaction+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD849C1E3E701C008289AE /* Interaction+Extensions.swift */; };
 		BDAD84DA1E3E701C008289AE /* Layout+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD849D1E3E701C008289AE /* Layout+iOS.swift */; };
 		BDAD84DB1E3E701C008289AE /* Layout+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD849D1E3E701C008289AE /* Layout+iOS.swift */; };
 		BDAD84DC1E3E701C008289AE /* Listable+Extensions+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD849E1E3E701C008289AE /* Listable+Extensions+iOS.swift */; };
@@ -423,7 +421,6 @@
 		BDAD84991E3E701C008289AE /* Delegate+iOS+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Delegate+iOS+Extensions.swift"; sourceTree = "<group>"; };
 		BDAD849A1E3E701C008289AE /* Gridable+Extensions+iOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Gridable+Extensions+iOS.swift"; sourceTree = "<group>"; };
 		BDAD849B1E3E701C008289AE /* Inset+iOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Inset+iOS.swift"; sourceTree = "<group>"; };
-		BDAD849C1E3E701C008289AE /* Interaction+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Interaction+Extensions.swift"; sourceTree = "<group>"; };
 		BDAD849D1E3E701C008289AE /* Layout+iOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Layout+iOS.swift"; sourceTree = "<group>"; };
 		BDAD849E1E3E701C008289AE /* Listable+Extensions+iOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Listable+Extensions+iOS.swift"; sourceTree = "<group>"; };
 		BDAD849F1E3E701C008289AE /* UICollectionView+UserInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UICollectionView+UserInterface.swift"; sourceTree = "<group>"; };
@@ -674,7 +671,6 @@
 				BDAD84991E3E701C008289AE /* Delegate+iOS+Extensions.swift */,
 				BDAD849A1E3E701C008289AE /* Gridable+Extensions+iOS.swift */,
 				BDAD849B1E3E701C008289AE /* Inset+iOS.swift */,
-				BDAD849C1E3E701C008289AE /* Interaction+Extensions.swift */,
 				BDAD849D1E3E701C008289AE /* Layout+iOS.swift */,
 				BDAD849E1E3E701C008289AE /* Listable+Extensions+iOS.swift */,
 				BDAD849F1E3E701C008289AE /* UICollectionView+UserInterface.swift */,
@@ -1471,7 +1467,6 @@
 				BDAD85B91E3E7032008289AE /* ScrollDelegate.swift in Sources */,
 				BDAD84BF1E3E701C008289AE /* ListSpotCell.swift in Sources */,
 				BDAD84B91E3E701C008289AE /* ListComposite.swift in Sources */,
-				BDAD84D91E3E701C008289AE /* Interaction+Extensions.swift in Sources */,
 				BDAD85E01E3E7032008289AE /* Inset.swift in Sources */,
 				BDAD84CD1E3E701C008289AE /* Composable+iOS.swift in Sources */,
 				BDAD85921E3E7032008289AE /* SpotConfigurable+Extensions.swift in Sources */,
@@ -1652,7 +1647,6 @@
 				BDAD85631E3E7032008289AE /* DataSource.swift in Sources */,
 				BDAD85AB1E3E7032008289AE /* Composable.swift in Sources */,
 				BDAD84B61E3E701C008289AE /* GridWrapper.swift in Sources */,
-				BDAD84D81E3E701C008289AE /* Interaction+Extensions.swift in Sources */,
 				BDAD857E1E3E7032008289AE /* Gridable+Extensions.swift in Sources */,
 				BDAD84C61E3E701C008289AE /* SpotsContentView.swift in Sources */,
 				BDAD84E01E3E701C008289AE /* UITableView+UserInterface.swift in Sources */,

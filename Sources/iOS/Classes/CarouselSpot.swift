@@ -46,10 +46,6 @@ open class CarouselSpot: NSObject, Gridable {
           } else if layout.pageIndicator == false {
             pageControl.removeFromSuperview()
           }
-
-          if layout.span == 1 {
-            collectionView.isPagingEnabled = component.interaction?.paginate == .page
-          }
         }
       #endif
     }
@@ -125,7 +121,6 @@ open class CarouselSpot: NSObject, Gridable {
     super.init()
     self.userInterface = collectionView
     self.component.layout?.configure(spot: self)
-    self.component.interaction?.configure(spot: self)
     self.dynamicSpan = self.component.layout?.dynamicSpan ?? false
     self.spotDataSource = DataSource(spot: self)
     self.spotDelegate = Delegate(spot: self)
@@ -231,39 +226,6 @@ open class CarouselSpot: NSObject, Gridable {
 /// A scroll view extension on CarouselSpot to handle scrolling specifically for this object.
 extension Delegate: UIScrollViewDelegate {
 
-  /// A method that handles what type of scrollling the CarouselSpot should use when pagination is enabled.
-  /// It can snap to the nearest item or scroll page by page.
-  fileprivate func paginatedEndScrolling() {
-    guard let spot = spot as? CarouselSpot else {
-      return
-    }
-
-    let collectionView = spot.collectionView
-
-    var currentCellOffset = collectionView.contentOffset
-    #if os(iOS)
-      if spot.component.interaction?.paginate == .item {
-        currentCellOffset.x += collectionView.frame.size.width / 2
-      } else {
-        if spot.pageControl.currentPage == 0 {
-          currentCellOffset.x = collectionView.frame.size.width / 2
-        } else {
-          currentCellOffset.x = (collectionView.frame.size.width * CGFloat(spot.pageControl.currentPage)) + collectionView.frame.size.width / 2
-          currentCellOffset.x += spot.layout.sectionInset.left * CGFloat(spot.pageControl.currentPage)
-        }
-      }
-    #endif
-
-    if let indexPath = collectionView.indexPathForItem(at: currentCellOffset) {
-      collectionView.scrollToItem(at: indexPath, at: UICollectionViewScrollPosition.centeredHorizontally, animated: true)
-    } else {
-      currentCellOffset.x += spot.layout.sectionInset.left
-      if let indexPath = collectionView.indexPathForItem(at: currentCellOffset) {
-        spot.collectionView.scrollToItem(at: indexPath, at: UICollectionViewScrollPosition.centeredHorizontally, animated: true)
-      }
-    }
-  }
-
   /// Tells the delegate when the user scrolls the content view within the receiver.
   ///
   /// - parameter scrollView: The scroll-view object in which the scrolling occurred.
@@ -276,18 +238,6 @@ extension Delegate: UIScrollViewDelegate {
   }
 
   #if os(iOS)
-  /// Tells the delegate when dragging ended in the scroll view.
-  ///
-  /// - parameter scrollView: The scroll-view object that finished scrolling the content view.
-  /// - parameter decelerate: true if the scrolling movement will continue, but decelerate, after a touch-up gesture during a dragging operation.
-  public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-    guard let spot = spot as? CarouselSpot else {
-      return
-    }
-
-    guard spot.component.interaction?.paginate == .page else { return }
-    paginatedEndScrolling()
-  }
 
   public func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
     guard let spot = spot as? CarouselSpot else {
@@ -305,40 +255,34 @@ extension Delegate: UIScrollViewDelegate {
   /// - parameter velocity:            The velocity of the scroll view (in points) at the moment the touch was released.
   /// - parameter targetContentOffset: The expected offset when the scrolling action decelerates to a stop.
   public func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-    guard let spot = spot as? CarouselSpot else { return }
-    #if os(iOS)
-      guard spot.component.interaction?.paginate == .page else { return }
-    #endif
-
-    let collectionView = spot.collectionView
-
-    let pageWidth: CGFloat = collectionView.frame.size.width
-    let currentOffset = scrollView.contentOffset.x
-    let targetOffset = targetContentOffset.pointee.x
-
-    var newTargetOffset: CGFloat = targetOffset > currentOffset
-      ? ceil(currentOffset / pageWidth) * pageWidth
-      : floor(currentOffset / pageWidth) * pageWidth
-
-    if newTargetOffset > scrollView.contentSize.width {
-      newTargetOffset = scrollView.contentSize.width
-    } else if newTargetOffset < 0 {
-      newTargetOffset = 0
-    }
-
-    let index: Int = Int(floor(newTargetOffset * CGFloat(spot.items.count) / scrollView.contentSize.width))
-
-    if index >= 0 && index <= spot.items.count {
-      spot.carouselScrollDelegate?.spotableCarouselDidEndScrolling(spot, item: spot.items[index])
+    guard let spot = spot as? CarouselSpot else {
+      return
     }
 
     #if os(iOS)
-      if let layout = spot.component.layout {
-        let floatIndex = ceil(CGFloat(index) / CGFloat(layout.span))
-        spot.pageControl.currentPage = Int(floatIndex)
+      guard spot.component.interaction?.paginate == .page else {
+        return
       }
     #endif
 
-    paginatedEndScrolling()
+    let pointXUpperBound = spot.layout.collectionViewContentSize.width - scrollView.frame.width / 2
+    var point = targetContentOffset.pointee
+    point.x += scrollView.frame.width / 2
+    var indexPath: IndexPath?
+
+    while indexPath == nil && point.x < pointXUpperBound {
+      indexPath = spot.collectionView.indexPathForItem(at: point)
+      point.x += max(spot.layout.minimumInteritemSpacing, 1)
+    }
+
+    guard let centerIndexPath = indexPath else {
+      return
+    }
+
+    guard let centerLayoutAttributes = spot.layout.layoutAttributesForItem(at: centerIndexPath) else {
+      return
+    }
+
+    targetContentOffset.pointee.x = centerLayoutAttributes.frame.midX - scrollView.frame.width / 2
   }
 }
