@@ -51,7 +51,20 @@ class RxSpotsDelegateTests: XCTestCase {
   }
 
   func testWillDisplayView() {
+    let listSpot = ListSpot()
+    let spotView = SpotView()
+    let item = Item(title: "Test")
+    var isCalled = false
 
+    delegateProxy.willDisplayView
+      .bindNext({ spot, view, item in
+        isCalled = (spot is ListSpot) && (view == spotView) && item.title == "Test"
+      })
+      .addDisposableTo(disposeBag)
+
+    delegateProxy.spotable(listSpot, willDisplay: spotView, item: item)
+
+    XCTAssertTrue(isCalled)
   }
 
   func testDidEndDisplayingView() {
