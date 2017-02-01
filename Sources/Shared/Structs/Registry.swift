@@ -1,6 +1,10 @@
 import Foundation
 import Brick
 
+#if os(iOS)
+  import UIKit
+#endif
+
 #if os(OSX)
 import Cocoa
 #endif
