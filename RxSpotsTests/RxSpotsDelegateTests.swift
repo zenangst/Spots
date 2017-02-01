@@ -21,9 +21,10 @@ class RxSpotsDelegateTests: XCTestCase {
     let item = Item(title: "Test")
     var isCalled = false
 
-    delegateProxy.didSelectItem.bindNext { spot, item in
-      isCalled = (spot is ListSpot) && item.title == "Test"
-    }.addDisposableTo(disposeBag)
+    delegateProxy.didSelectItem
+      .bindNext({ spot, item in
+        isCalled = (spot is ListSpot) && item.title == "Test"
+      }).addDisposableTo(disposeBag)
 
     delegateProxy.spotable(spot, itemSelected: item)
     XCTAssertTrue(isCalled)
