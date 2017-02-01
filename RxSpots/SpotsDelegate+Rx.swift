@@ -66,4 +66,9 @@ extension Reactive where Base: Spotable {
   }
 }
 
+extension Reactive where Base: SpotsProtocol {
 
+  var delegate: SpotDelegateProxy {
+    return SpotDelegateProxy.proxyForObject(base)
+  }
+}
