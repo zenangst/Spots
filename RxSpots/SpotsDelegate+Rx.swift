@@ -5,7 +5,10 @@ import RxCocoa
 
 // MARK: - Delegate proxy
 
-final class SpotDelegateProxy: DelegateProxy, DelegateProxyType, SpotsDelegate {
+/**
+ Delegate proxy for SpotsDelegate
+ */
+final class SpotsDelegateProxy: DelegateProxy, DelegateProxyType, SpotsDelegate {
 
   // Delegate methods subjects
   private let spotDidSelectItem = PublishSubject<(Spotable, Item)>()
@@ -61,14 +64,14 @@ final class SpotDelegateProxy: DelegateProxy, DelegateProxyType, SpotsDelegate {
 
 extension Reactive where Base: Spotable {
 
-  var delegate: SpotDelegateProxy {
-    return SpotDelegateProxy.proxyForObject(base)
+  var delegate: SpotsDelegateProxy {
+    return SpotsDelegateProxy.proxyForObject(base)
   }
 }
 
 extension Reactive where Base: SpotsProtocol {
 
-  var delegate: SpotDelegateProxy {
-    return SpotDelegateProxy.proxyForObject(base)
+  var delegate: SpotsDelegateProxy {
+    return SpotsDelegateProxy.proxyForObject(base)
   }
 }
