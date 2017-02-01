@@ -315,11 +315,11 @@
 		D55B7AF91E423122000125C8 /* Tailor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478E91C440726006EBA49 /* Tailor.framework */; };
 		D55B7AFA1E423122000125C8 /* Brick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD352E5E1CBAD6EC002CD032 /* Brick.framework */; };
 		D55B7B081E4231A4000125C8 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D55B7B071E4231A4000125C8 /* RxCocoa.framework */; };
-		D55B7B0C1E4234C3000125C8 /* SpotsDelegate+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B7B0A1E423417000125C8 /* SpotsDelegate+Rx.swift */; };
+		D55B7B0C1E4234C3000125C8 /* RxSpotsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B7B0A1E423417000125C8 /* RxSpotsDelegate.swift */; };
 		D55B7B0D1E4234CE000125C8 /* Spots.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478091C43FEB8006EBA49 /* Spots.framework */; };
 		D55B7B431E423B86000125C8 /* Spots.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478091C43FEB8006EBA49 /* Spots.framework */; };
 		D55B7B4C1E423BC0000125C8 /* RxSpots.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D55B7B021E423122000125C8 /* RxSpots.framework */; };
-		D55B7B4F1E423C65000125C8 /* RxSpotsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B7B4E1E423C65000125C8 /* RxSpotsDelegate.swift */; };
+		D55B7B4F1E423C65000125C8 /* RxSpotsDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B7B4E1E423C65000125C8 /* RxSpotsDelegateTests.swift */; };
 		D58478141C43FEB9006EBA49 /* Spots.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478091C43FEB8006EBA49 /* Spots.framework */; };
 		D58478531C43FFEB006EBA49 /* TestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58478281C43FF34006EBA49 /* TestFactory.swift */; };
 		D58478571C43FFFD006EBA49 /* TestComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D584782B1C43FF34006EBA49 /* TestComponent.swift */; };
@@ -521,10 +521,10 @@
 		D55B7B021E423122000125C8 /* RxSpots.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxSpots.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D55B7B041E42315A000125C8 /* Rx-Info-iOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Rx-Info-iOS.plist"; sourceTree = "<group>"; };
 		D55B7B071E4231A4000125C8 /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = Carthage/Build/iOS/RxCocoa.framework; sourceTree = "<group>"; };
-		D55B7B0A1E423417000125C8 /* SpotsDelegate+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SpotsDelegate+Rx.swift"; sourceTree = "<group>"; };
+		D55B7B0A1E423417000125C8 /* RxSpotsDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxSpotsDelegate.swift; sourceTree = "<group>"; };
 		D55B7B481E423B86000125C8 /* RxSpots-iOS-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "RxSpots-iOS-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D55B7B491E423B86000125C8 /* Spots-iOS-Tests copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Spots-iOS-Tests copy-Info.plist"; path = "/Users/vadym/Development/hyper/ios/opensource/Spots/Spots-iOS-Tests copy-Info.plist"; sourceTree = "<absolute>"; };
-		D55B7B4E1E423C65000125C8 /* RxSpotsDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxSpotsDelegate.swift; sourceTree = "<group>"; };
+		D55B7B4E1E423C65000125C8 /* RxSpotsDelegateTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxSpotsDelegateTests.swift; sourceTree = "<group>"; };
 		D58478091C43FEB8006EBA49 /* Spots.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Spots.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D58478131C43FEB9006EBA49 /* Spots-iOS-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Spots-iOS-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D58478241C43FF34006EBA49 /* Info-iOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
@@ -899,7 +899,7 @@
 		D55B7B091E4233FC000125C8 /* RxSpots */ = {
 			isa = PBXGroup;
 			children = (
-				D55B7B0A1E423417000125C8 /* SpotsDelegate+Rx.swift */,
+				D55B7B0A1E423417000125C8 /* RxSpotsDelegate.swift */,
 			);
 			path = RxSpots;
 			sourceTree = "<group>";
@@ -907,7 +907,7 @@
 		D55B7B4D1E423C0D000125C8 /* RxSpotsTests */ = {
 			isa = PBXGroup;
 			children = (
-				D55B7B4E1E423C65000125C8 /* RxSpotsDelegate.swift */,
+				D55B7B4E1E423C65000125C8 /* RxSpotsDelegateTests.swift */,
 			);
 			path = RxSpotsTests;
 			sourceTree = "<group>";
@@ -1575,7 +1575,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D55B7B0C1E4234C3000125C8 /* SpotsDelegate+Rx.swift in Sources */,
+				D55B7B0C1E4234C3000125C8 /* RxSpotsDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1583,7 +1583,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D55B7B4F1E423C65000125C8 /* RxSpotsDelegate.swift in Sources */,
+				D55B7B4F1E423C65000125C8 /* RxSpotsDelegateTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

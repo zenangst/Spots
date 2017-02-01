@@ -8,7 +8,7 @@ import RxCocoa
 /**
  Delegate proxy for SpotsDelegate
  */
-final class SpotsDelegateProxy: DelegateProxy, DelegateProxyType, SpotsDelegate {
+public final class RxSpotsDelegate: DelegateProxy, DelegateProxyType, SpotsDelegate {
 
   // Delegate methods subjects
   private let spotDidSelectItem = PublishSubject<(Spotable, Item)>()
@@ -17,16 +17,16 @@ final class SpotsDelegateProxy: DelegateProxy, DelegateProxyType, SpotsDelegate 
   private let spotDidEndDisplayingView = PublishSubject<(Spotable, SpotView, Item)>()
 
   // Delegate method observables
-  let didSelectItem: Observable<(Spotable, Item)>
-  let didChange: Observable<[Spotable]>
-  let willDisplayView: Observable<(Spotable, SpotView, Item)>
-  let didEndDisplayingView: Observable<(Spotable, SpotView, Item)>
+  public let didSelectItem: Observable<(Spotable, Item)>
+  public let didChange: Observable<[Spotable]>
+  public let willDisplayView: Observable<(Spotable, SpotView, Item)>
+  public let didEndDisplayingView: Observable<(Spotable, SpotView, Item)>
 
-  class func currentDelegateFor(_ object: AnyObject) -> AnyObject? {
+  public class func currentDelegateFor(_ object: AnyObject) -> AnyObject? {
     return (object as? Spotable)?.delegate ?? (object as? Controller)?.delegate
   }
 
-  class func setCurrentDelegate(_ delegate: AnyObject?, toObject object: AnyObject) {
+  public class func setCurrentDelegate(_ delegate: AnyObject?, toObject object: AnyObject) {
     if let spot = object as? Spotable {
       spot.delegate = delegate as? SpotsDelegate
     } else if let controller = object as? Controller {
@@ -34,7 +34,7 @@ final class SpotsDelegateProxy: DelegateProxy, DelegateProxyType, SpotsDelegate 
     }
   }
 
-  required init(parentObject: AnyObject) {
+  public required init(parentObject: AnyObject) {
     didSelectItem = spotDidSelectItem.observeOn(MainScheduler.instance)
     didChange = spotDidChange.observeOn(MainScheduler.instance)
     willDisplayView = spotWillDisplayView.observeOn(MainScheduler.instance)
@@ -43,19 +43,19 @@ final class SpotsDelegateProxy: DelegateProxy, DelegateProxyType, SpotsDelegate 
     super.init(parentObject: parentObject)
   }
 
-  func spotable(_ spot: Spotable, itemSelected item: Item) {
+  public func spotable(_ spot: Spotable, itemSelected item: Item) {
     spotDidSelectItem.onNext(spot, item)
   }
 
-  func spotablesDidChange(_ spots: [Spotable]) {
+  public func spotablesDidChange(_ spots: [Spotable]) {
     spotDidChange.onNext(spots)
   }
 
-  func spotable(_ spot: Spotable, willDisplay view: SpotView, item: Item) {
+  public func spotable(_ spot: Spotable, willDisplay view: SpotView, item: Item) {
     spotWillDisplayView.onNext(spot, view, item)
   }
 
-  func spotable(_ spot: Spotable, didEndDisplaying view: SpotView, item: Item) {
+  public func spotable(_ spot: Spotable, didEndDisplaying view: SpotView, item: Item) {
     spotDidEndDisplayingView.onNext(spot, view, item)
   }
 }
@@ -64,14 +64,14 @@ final class SpotsDelegateProxy: DelegateProxy, DelegateProxyType, SpotsDelegate 
 
 extension Reactive where Base: Spotable {
 
-  var delegate: SpotsDelegateProxy {
-    return SpotsDelegateProxy.proxyForObject(base)
+  public var delegate: RxSpotsDelegate {
+    return RxSpotsDelegate.proxyForObject(base)
   }
 }
 
 extension Reactive where Base: SpotsProtocol {
 
-  var delegate: SpotsDelegateProxy {
-    return SpotsDelegateProxy.proxyForObject(base)
+  public var delegate: RxSpotsDelegate {
+    return RxSpotsDelegate.proxyForObject(base)
   }
 }
