@@ -179,8 +179,6 @@ class CarouselSpotTests: XCTestCase {
 
     let width = spot.view.bounds.width / 4
 
-    let view: View? = spot.ui(at: 0)
-
     // Test that spot height is equal to first item in the list
     XCTAssertEqual(spot.items.count, 4)
     XCTAssertEqual(spot.items[0].title, "foo")
