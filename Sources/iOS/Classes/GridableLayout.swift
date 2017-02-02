@@ -88,6 +88,12 @@ open class GridableLayout: UICollectionViewFlowLayout {
 
       if let componentLayout = spot.component.layout {
         contentSize.height += CGFloat(componentLayout.inset.top + componentLayout.inset.bottom)
+
+        #if os(iOS)
+        if let pageControl = collectionView?.backgroundView?.subviews.filter({ $0 is UIPageControl }).first {
+          contentSize.height += pageControl.frame.size.height
+        }
+        #endif
       }
     case .vertical:
       contentSize.width = spot.collectionView.frame.width - spot.collectionView.contentInset.left - spot.collectionView.contentInset.right

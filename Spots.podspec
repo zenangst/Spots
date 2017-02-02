@@ -13,15 +13,24 @@ Pod::Spec.new do |s|
   s.tvos.deployment_target = '9.2'
 
   s.requires_arc = true
-  s.ios.source_files = 'Sources/{iOS,Shared}/**/*'
-  s.osx.source_files = 'Sources/{macOS,Shared}/**/*'
-  s.tvos.source_files = 'Sources/{iOS,tvOS,Shared}/**/*'
+  s.default_subspec = "Core"
 
-  s.frameworks = 'Foundation'
-  s.dependency 'Tailor', '~> 2.0'
-  s.dependency 'Brick', '~> 2.0'
-  s.dependency 'Cache', '~> 2.0'
-  s.dependency 'CryptoSwift', '0.6.0'
+  s.subspec "Core" do |ss|
+    ss.ios.source_files = 'Sources/{iOS,Shared}/**/*'
+    ss.osx.source_files = 'Sources/{macOS,Shared}/**/*'
+    ss.tvos.source_files = 'Sources/{iOS,tvOS,Shared}/**/*'
+    ss.dependency 'Tailor', '~> 2.0'
+    ss.dependency 'Brick', '~> 2.0'
+    ss.dependency 'Cache', '~> 2.0'
+    ss.dependency 'CryptoSwift', '0.6.0'
+    ss.framework  = "Foundation"
+  end
+
+  s.subspec "RxSwift" do |ss|
+    ss.source_files = "RxSpots/**/*"
+    ss.dependency "Spots/Core"
+    ss.dependency "RxCocoa", "~> 3.2.0"
+  end
 
   s.pod_target_xcconfig = { 'SWIFT_VERSION' => '3.0' }
 end
