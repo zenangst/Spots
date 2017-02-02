@@ -97,7 +97,8 @@ public extension Spotable {
         if layout.span > 0.0 {
           #if os(OSX)
             if let gridable = self as? Gridable,
-              let layout = gridable.layout as? FlowLayout {
+              let layout = gridable.layout as? FlowLayout,
+              let componentLayout = component.layout {
               let newWidth = gridable.collectionView.frame.width / CGFloat(componentLayout.span) - layout.sectionInset.left - layout.sectionInset.right
 
               if newWidth > 0.0 {
@@ -360,23 +361,29 @@ public extension Spotable {
   ///   - view: The view used for fallback size for the item.
   private func setFallbackViewSize(to item: inout Item, with view: SpotConfigurable) {
 
-    switch self {
-    case let grid as Gridable:
-      if let view = view as? View,
-      grid.layout.scrollDirection == .horizontal {
-        if item.size.height == 0.0, grid.component.layout?.span != Optional(0.0) {
-          item.size.height = view.frame.size.height
+      #if os(OSX)
+        if item.size.height == 0.0 {
+          item.size.height = view.preferredViewSize.height
         }
-      } else if item.size.height == 0.0 {
-        item.size.height = view.preferredViewSize.height
+      #else
+      switch self {
+      case let grid as Gridable:
+        if let view = view as? View,
+          grid.layout.scrollDirection == .horizontal {
+          if item.size.height == 0.0, grid.component.layout?.span != Optional(0.0) {
+            item.size.height = view.frame.size.height
+          }
+        } else if item.size.height == 0.0 {
+          item.size.height = view.preferredViewSize.height
+        }
+      default:
+        if item.size.height == 0.0 {
+          item.size.height = view.preferredViewSize.height
+        }
       }
-    default:
-      if item.size.height == 0.0 {
-        item.size.height = view.preferredViewSize.height
-      }
-    }
+      #endif
 
-    if item.size.width  == 0.0 {
+    if item.size.width == 0.0 {
       item.size.width  = view.preferredViewSize.width
     }
 

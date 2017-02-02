@@ -172,7 +172,7 @@ class CarouselSpotTests: XCTestCase {
     spot.setup(parentSize)
     spot.layout(parentSize)
     spot.prepareItems()
-    spot.view.layoutIfNeeded()
+    spot.view.layoutSubviews()
 
     // Check `paginate` mapping
     XCTAssertTrue(spot.collectionView.isPagingEnabled)
@@ -200,7 +200,6 @@ class CarouselSpotTests: XCTestCase {
     spot.layout.headerReferenceSize.height = 20
     spot.setup(CGSize(width: 667, height: 225))
     spot.layout(CGSize(width: 667, height: 225))
-    spot.view.layoutIfNeeded()
     XCTAssertEqual(spot.view.frame.size.height, 130)
     XCTAssertEqual(spot.view.contentSize.height, 130)
   }
