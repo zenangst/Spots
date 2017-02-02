@@ -57,6 +57,7 @@ class CarouselSpotTests: XCTestCase {
     CarouselSpot.views["custom-item-kind"] = Registry.Item.classType(CarouselSpotCell.self)
     XCTAssertEqual(carouselSpot.identifier(at: indexPath), "custom-item-kind")
 
+    CarouselSpot.views.purge()
     CarouselSpot.views.storage.removeAll()
   }
 
@@ -153,27 +154,23 @@ class CarouselSpotTests: XCTestCase {
         ["title" : "baz", "kind" : "carousel"],
         ["title" : "bazar", "kind" : "carousel"]
       ],
-      "interaction" : [
-        "paginate" : "page"
-      ],
-      "layout" : [
-        "page-indicator" : true,
-        "dynamic-span" : true,
-        "span" : 4.0
-      ],
-      "meta" : [
-        "item-spacing" : 25.0,
-        "line-spacing" : 10.0,
-      ]
+      "interaction" : Interaction(paginate: .page).dictionary,
+      "layout" : Layout(
+        span: 4.0,
+        dynamicSpan: false,
+        pageIndicator: true
+        ).dictionary
     ]
 
     let component = Component(json)
     let spot = CarouselSpot(component: component)
+    let parentSize = CGSize(width: 667, height: 225)
 
     // Check `span` mapping
     XCTAssertEqual(spot.component.layout!.span, 4.0)
 
-    spot.setup(CGSize(width: 667, height: 225))
+    spot.setup(parentSize)
+    spot.layout(parentSize)
     spot.prepareItems()
     spot.view.layoutSubviews()
 
@@ -196,13 +193,16 @@ class CarouselSpotTests: XCTestCase {
     XCTAssertEqual(spot.items[2].size.height, 88)
     XCTAssertEqual(spot.items[3].size.width, width)
     XCTAssertEqual(spot.items[3].size.height, 88)
-    XCTAssertEqual(spot.view.frame.size.height, 88)
+    XCTAssertEqual(spot.view.frame.size.height, 110)
+    XCTAssertEqual(spot.view.contentSize.height, 110)
 
     // Check that header height gets added to the calculation
     spot.layout.headerReferenceSize.height = 20
-    spot.setup(CGSize(width: 100, height: 100))
+    spot.setup(CGSize(width: 667, height: 225))
+    spot.layout(CGSize(width: 667, height: 225))
     spot.view.layoutSubviews()
-    XCTAssertEqual(spot.view.frame.size.height, 108)
+    XCTAssertEqual(spot.view.frame.size.height, 130)
+    XCTAssertEqual(spot.view.contentSize.height, 130)
   }
 
   func testAppendItem() {
