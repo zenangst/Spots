@@ -111,8 +111,11 @@ open class CarouselSpot: NSObject, Gridable {
     }
 
     collectionView.showsHorizontalScrollIndicator = false
+    collectionView.showsVerticalScrollIndicator = false
     collectionView.alwaysBounceHorizontal = true
+    collectionView.alwaysBounceVertical = false
     collectionView.clipsToBounds = false
+
     self.collectionView = collectionView
     self.layout = layout
 
@@ -240,6 +243,12 @@ extension Delegate: UIScrollViewDelegate {
   public func scrollViewDidScroll(_ scrollView: UIScrollView) {
     guard let spot = spot as? CarouselSpot else {
       return
+    }
+
+    /// This will restrict the scroll view to only scroll horizontally.
+    let constrainedYOffset = spot.collectionView.contentSize.height - spot.collectionView.frame.size.height
+    if constrainedYOffset >= 0.0 {
+      spot.collectionView.contentOffset.y = constrainedYOffset
     }
 
     spot.carouselScrollDelegate?.spotableCarouselDidScroll(spot)
