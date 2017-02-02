@@ -174,9 +174,6 @@ class CarouselSpotTests: XCTestCase {
     spot.prepareItems()
     spot.view.layoutSubviews()
 
-    // Check `paginate` mapping
-    XCTAssertTrue(spot.collectionView.isPagingEnabled)
-
     let width = spot.view.bounds.width / 4
 
     // Test that spot height is equal to first item in the list
@@ -203,6 +200,94 @@ class CarouselSpotTests: XCTestCase {
     spot.view.layoutSubviews()
     XCTAssertEqual(spot.view.frame.size.height, 130)
     XCTAssertEqual(spot.view.contentSize.height, 130)
+  }
+    
+  func testPaginatedCarouselSnapping() {
+    class CollectionViewMock: UICollectionView {
+      var itemSize = CGSize.zero
+      
+      override func indexPathForItem(at point: CGPoint) -> IndexPath? {
+        return IndexPath(item: Int(point.x / itemSize.width), section: 0)
+      }
+    }
+    
+    let json: [String : Any] = [
+      "items" : [
+        [
+          "title" : "title",
+          "kind" : "carousel",
+          "size": [
+            "width": 200.0,
+            "height": 100.0
+          ]
+        ],
+        [
+          "title" : "title",
+          "kind" : "carousel",
+          "size": [
+            "width": 200.0,
+            "height": 100.0
+          ]
+        ],
+        [
+          "title" : "title",
+          "kind" : "carousel",
+          "size": [
+            "width": 200.0,
+            "height": 100.0
+          ]
+        ],
+        [
+          "title" : "title",
+          "kind" : "carousel",
+          "size": [
+            "width": 200.0,
+            "height": 100.0
+          ]
+        ]
+      ],
+      "interaction" : Interaction(paginate: .page).dictionary,
+      "layout" : Layout(
+        span: 0,
+        dynamicSpan: false,
+        pageIndicator: true,
+        itemSpacing: 0
+      ).dictionary
+    ]
+    
+    let layout = CollectionLayout()
+    let collectionView = CollectionViewMock(frame: .zero, collectionViewLayout: layout)
+    collectionView.itemSize = CGSize(width: 200, height: 100)
+    
+    let component = Component(json)
+    let spot = CarouselSpot(component: component, collectionView: collectionView, layout: layout)
+    let parentSize = CGSize(width: 300, height: 100)
+    
+    spot.setup(parentSize)
+    spot.layout(parentSize)
+    spot.prepareItems()
+    spot.view.layoutSubviews()
+    
+    // Make sure our mocked item size is correct
+    XCTAssertEqual(collectionView.itemSize, spot.items[0].size)
+    
+    // When scrolling, make sure the closest item is centered
+    var originalPoint = CGPoint(x: 350, y: 0)
+    let targetContentOffset = UnsafeMutablePointer(mutating: &originalPoint)
+    collectionView.delegate!.scrollViewWillEndDragging!(collectionView, withVelocity: .zero, targetContentOffset: targetContentOffset)
+    XCTAssertEqual(targetContentOffset.pointee.x, 350)
+    
+    // When scrolling back to origin, no centering should occur
+    targetContentOffset.pointee.x = 0
+    collectionView.delegate!.scrollViewWillEndDragging!(collectionView, withVelocity: .zero, targetContentOffset: targetContentOffset)
+    XCTAssertEqual(targetContentOffset.pointee.x, 0)
+    
+    // Make sure an out of bounds content offset is not manipulated
+    targetContentOffset.pointee.x = 100000
+    targetContentOffset.pointee.y = 100000
+    collectionView.delegate!.scrollViewWillEndDragging!(collectionView, withVelocity: .zero, targetContentOffset: targetContentOffset)
+    XCTAssertEqual(targetContentOffset.pointee.x, 100000)
+    XCTAssertEqual(targetContentOffset.pointee.y, 100000)
   }
 
   func testAppendItem() {
