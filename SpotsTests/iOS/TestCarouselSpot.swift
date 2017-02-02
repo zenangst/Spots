@@ -169,13 +169,13 @@ class CarouselSpotTests: XCTestCase {
 
     let component = Component(json)
     let spot = CarouselSpot(component: component)
-    spot.view.layoutIfNeeded()
 
     // Check `span` mapping
     XCTAssertEqual(spot.component.layout!.span, 4.0)
 
     spot.setup(CGSize(width: 667, height: 225))
     spot.prepareItems()
+    spot.view.layoutSubviews()
 
     // Check `paginate` mapping
     XCTAssertTrue(spot.collectionView.isPagingEnabled)
@@ -189,19 +189,20 @@ class CarouselSpotTests: XCTestCase {
     XCTAssertEqual(spot.items[2].title, "baz")
     XCTAssertEqual(spot.items[3].title, "bazar")
     XCTAssertEqual(spot.items[0].size.width, width)
-    XCTAssertEqual(spot.items[0].size.height, 225)
+    XCTAssertEqual(spot.items[0].size.height, 88)
     XCTAssertEqual(spot.items[1].size.width, width)
-    XCTAssertEqual(spot.items[1].size.height, 225)
+    XCTAssertEqual(spot.items[1].size.height, 88)
     XCTAssertEqual(spot.items[2].size.width, width)
-    XCTAssertEqual(spot.items[2].size.height, 225)
+    XCTAssertEqual(spot.items[2].size.height, 88)
     XCTAssertEqual(spot.items[3].size.width, width)
-    XCTAssertEqual(spot.items[3].size.height, 225)
-    XCTAssertEqual(spot.view.frame.size.height, 247)
+    XCTAssertEqual(spot.items[3].size.height, 88)
+    XCTAssertEqual(spot.view.frame.size.height, 88)
 
     // Check that header height gets added to the calculation
     spot.layout.headerReferenceSize.height = 20
     spot.setup(CGSize(width: 100, height: 100))
-    XCTAssertEqual(spot.view.frame.size.height, 311)
+    spot.view.layoutSubviews()
+    XCTAssertEqual(spot.view.frame.size.height, 108)
   }
 
   func testAppendItem() {
