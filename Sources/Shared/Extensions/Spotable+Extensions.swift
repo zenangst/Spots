@@ -360,24 +360,25 @@ public extension Spotable {
   ///   - item: The item struct that is being configured.
   ///   - view: The view used for fallback size for the item.
   private func setFallbackViewSize(to item: inout Item, with view: SpotConfigurable) {
+    let hasExplicitHeight: Bool = item.size.height == 0.0
 
-      #if os(OSX)
-        if item.size.height == 0.0 {
-          item.size.height = view.preferredViewSize.height
-        }
-      #else
+    #if os(OSX)
+      if hasExplicitHeight {
+        item.size.height = view.preferredViewSize.height
+      }
+    #else
       switch self {
       case let grid as Gridable:
         if let view = view as? View,
           grid.layout.scrollDirection == .horizontal {
-          if item.size.height == 0.0, grid.component.layout?.span != Optional(0.0) {
+          if hasExplicitHeight, grid.component.layout?.span != Optional(0.0) {
             item.size.height = view.frame.size.height
           }
-        } else if item.size.height == 0.0 {
+        } else if hasExplicitHeight {
           item.size.height = view.preferredViewSize.height
         }
       default:
-        if item.size.height == 0.0 {
+        if hasExplicitHeight {
           item.size.height = view.preferredViewSize.height
         }
       }
