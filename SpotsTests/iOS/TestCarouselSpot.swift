@@ -189,19 +189,19 @@ class CarouselSpotTests: XCTestCase {
     XCTAssertEqual(spot.items[2].title, "baz")
     XCTAssertEqual(spot.items[3].title, "bazar")
     XCTAssertEqual(spot.items[0].size.width, width)
-    XCTAssertEqual(spot.items[0].size.height, 225)
+    XCTAssertEqual(spot.items[0].size.height, 88)
     XCTAssertEqual(spot.items[1].size.width, width)
-    XCTAssertEqual(spot.items[1].size.height, 225)
+    XCTAssertEqual(spot.items[1].size.height, 88)
     XCTAssertEqual(spot.items[2].size.width, width)
-    XCTAssertEqual(spot.items[2].size.height, 225)
+    XCTAssertEqual(spot.items[2].size.height, 88)
     XCTAssertEqual(spot.items[3].size.width, width)
-    XCTAssertEqual(spot.items[3].size.height, 225)
-    XCTAssertEqual(spot.view.frame.size.height, 247)
+    XCTAssertEqual(spot.items[3].size.height, 88)
+    XCTAssertEqual(spot.view.frame.size.height, 88)
 
     // Check that header height gets added to the calculation
     spot.layout.headerReferenceSize.height = 20
     spot.setup(CGSize(width: 100, height: 100))
-    XCTAssertEqual(spot.view.frame.size.height, 311)
+    XCTAssertEqual(spot.view.frame.size.height, 130)
   }
 
   func testAppendItem() {
