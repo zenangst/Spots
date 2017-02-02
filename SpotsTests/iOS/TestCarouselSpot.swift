@@ -57,6 +57,7 @@ class CarouselSpotTests: XCTestCase {
     CarouselSpot.views["custom-item-kind"] = Registry.Item.classType(CarouselSpotCell.self)
     XCTAssertEqual(carouselSpot.identifier(at: indexPath), "custom-item-kind")
 
+    CarouselSpot.views.purge()
     CarouselSpot.views.storage.removeAll()
   }
 
@@ -153,34 +154,32 @@ class CarouselSpotTests: XCTestCase {
         ["title" : "baz", "kind" : "carousel"],
         ["title" : "bazar", "kind" : "carousel"]
       ],
-      "interaction" : [
-        "paginate" : "page"
-      ],
-      "layout" : [
-        "page-indicator" : true,
-        "dynamic-span" : true,
-        "span" : 4.0
-      ],
-      "meta" : [
-        "item-spacing" : 25.0,
-        "line-spacing" : 10.0,
-      ]
+      "interaction" : Interaction(paginate: .page).dictionary,
+      "layout" : Layout(
+        span: 4.0,
+        dynamicSpan: false,
+        pageIndicator: true
+        ).dictionary
     ]
 
     let component = Component(json)
     let spot = CarouselSpot(component: component)
-    spot.view.layoutIfNeeded()
+    let parentSize = CGSize(width: 667, height: 225)
 
     // Check `span` mapping
     XCTAssertEqual(spot.component.layout!.span, 4.0)
 
-    spot.setup(CGSize(width: 667, height: 225))
+    spot.setup(parentSize)
+    spot.layout(parentSize)
     spot.prepareItems()
+    spot.view.layoutIfNeeded()
 
     // Check `paginate` mapping
     XCTAssertTrue(spot.collectionView.isPagingEnabled)
 
     let width = spot.view.bounds.width / 4
+
+    let view: View? = spot.ui(at: 0)
 
     // Test that spot height is equal to first item in the list
     XCTAssertEqual(spot.items.count, 4)
@@ -189,19 +188,23 @@ class CarouselSpotTests: XCTestCase {
     XCTAssertEqual(spot.items[2].title, "baz")
     XCTAssertEqual(spot.items[3].title, "bazar")
     XCTAssertEqual(spot.items[0].size.width, width)
-    XCTAssertEqual(spot.items[0].size.height, 225)
+    XCTAssertEqual(spot.items[0].size.height, 88)
     XCTAssertEqual(spot.items[1].size.width, width)
-    XCTAssertEqual(spot.items[1].size.height, 225)
+    XCTAssertEqual(spot.items[1].size.height, 88)
     XCTAssertEqual(spot.items[2].size.width, width)
-    XCTAssertEqual(spot.items[2].size.height, 225)
+    XCTAssertEqual(spot.items[2].size.height, 88)
     XCTAssertEqual(spot.items[3].size.width, width)
-    XCTAssertEqual(spot.items[3].size.height, 225)
-    XCTAssertEqual(spot.view.frame.size.height, 247)
+    XCTAssertEqual(spot.items[3].size.height, 88)
+    XCTAssertEqual(spot.view.frame.size.height, 110)
+    XCTAssertEqual(spot.view.contentSize.height, 110)
 
     // Check that header height gets added to the calculation
     spot.layout.headerReferenceSize.height = 20
-    spot.setup(CGSize(width: 100, height: 100))
-    XCTAssertEqual(spot.view.frame.size.height, 311)
+    spot.setup(CGSize(width: 667, height: 225))
+    spot.layout(CGSize(width: 667, height: 225))
+    spot.view.layoutIfNeeded()
+    XCTAssertEqual(spot.view.frame.size.height, 130)
+    XCTAssertEqual(spot.view.contentSize.height, 130)
   }
 
   func testAppendItem() {
@@ -253,18 +256,19 @@ class CarouselSpotTests: XCTestCase {
   }
 
   func testSpotCache() {
+    let cachedSpot = CarouselSpot(cacheKey: "cached-carousel-spot")
+    Helper.clearCache(for: cachedSpot.stateCache)
     let item = Item(title: "test")
 
     XCTAssertEqual(cachedSpot.component.items.count, 0)
     cachedSpot.append(item) {
-      self.cachedSpot.cache()
+      cachedSpot.cache()
     }
 
     var exception: XCTestExpectation? = self.expectation(description: "Wait for cache")
-    Dispatch.after(seconds: 0.25) { [weak self] in
-      guard let weakSelf = self else { return }
-      let cachedSpot = CarouselSpot(cacheKey: weakSelf.cachedSpot.stateCache!.key)
-      XCTAssertEqual(cachedSpot.component.items.count, 1)
+    Dispatch.after(seconds: 0.25) {
+      let secondCachedSpot = CarouselSpot(cacheKey: cachedSpot.stateCache!.key)
+      XCTAssertEqual(secondCachedSpot.component.items.count, 1)
       cachedSpot.stateCache?.clear()
       exception?.fulfill()
       exception = nil
