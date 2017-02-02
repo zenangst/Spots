@@ -1,6 +1,11 @@
 import Foundation
 import Brick
-import CoreGraphics
+
+#if os(OSX)
+  import Cocoa
+#else
+  import CoreGraphics
+#endif
 
 /// A registry that is used internally when resolving kind to the corresponding spot.
 public struct Registry {
