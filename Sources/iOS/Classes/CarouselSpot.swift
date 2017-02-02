@@ -78,22 +78,10 @@ open class CarouselSpot: NSObject, Gridable {
   }()
 
   /// A custom UICollectionViewFlowLayout
-  open lazy var layout: CollectionLayout = {
-    let layout = GridableLayout()
-    layout.scrollDirection = .horizontal
-
-    return layout
-  }()
+  open var layout: CollectionLayout
 
   /// A UICollectionView, used as the main UI component for a CarouselSpot
-  open lazy var collectionView: UICollectionView = {
-    let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: self.layout)
-    collectionView.showsHorizontalScrollIndicator = false
-    collectionView.alwaysBounceHorizontal = true
-    collectionView.clipsToBounds = false
-
-    return collectionView
-  }()
+  open var collectionView: UICollectionView
 
   /// The collection views background view
   open lazy var backgroundView = UIView()
@@ -102,12 +90,16 @@ open class CarouselSpot: NSObject, Gridable {
   var spotDataSource: DataSource?
   var spotDelegate: Delegate?
 
-  /// A required initializer to instantiate a CarouselSpot with a component.
+  /// Initialize an instantiate of CarouselSpot
   ///
   /// - parameter component: A component
+  /// - parameter collectionView: The collection view that the carousel should use for rendering
+  /// - parameter layout: The object that the carousel should use for item layout
   ///
   /// - returns: An initialized carousel spot.
-  public required init(component: Component) {
+  ///
+  /// In case you want to use a default collection view & layout, use `init(component:)`.
+  public init(component: Component, collectionView: UICollectionView, layout: CollectionLayout) {
     self.component = component
 
     if self.component.layout == nil {
@@ -117,6 +109,12 @@ open class CarouselSpot: NSObject, Gridable {
     if self.component.interaction == nil {
       self.component.interaction = type(of: self).interaction
     }
+
+    collectionView.showsHorizontalScrollIndicator = false
+    collectionView.alwaysBounceHorizontal = true
+    collectionView.clipsToBounds = false
+    self.collectionView = collectionView
+    self.layout = layout
 
     super.init()
     self.userInterface = collectionView
@@ -134,6 +132,16 @@ open class CarouselSpot: NSObject, Gridable {
     registerDefaultHeader(header: CarouselSpotHeader.self)
     register()
     configureCollectionView()
+  }
+
+  /// Convenience initializer that creates an instance with a component
+  ///
+  /// - parameter component: The component model that the carousel should render
+  public required convenience init(component: Component) {
+    let layout = GridableLayout()
+    layout.scrollDirection = .horizontal
+    let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+    self.init(component: component, collectionView: collectionView, layout: layout)
   }
 
   /// A convenience initializer for CarouselSpot with base configuration.
