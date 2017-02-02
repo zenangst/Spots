@@ -200,6 +200,7 @@ class CarouselSpotTests: XCTestCase {
     spot.layout.headerReferenceSize.height = 20
     spot.setup(CGSize(width: 667, height: 225))
     spot.layout(CGSize(width: 667, height: 225))
+    spot.view.layoutSubviews()
     XCTAssertEqual(spot.view.frame.size.height, 130)
     XCTAssertEqual(spot.view.contentSize.height, 130)
   }
