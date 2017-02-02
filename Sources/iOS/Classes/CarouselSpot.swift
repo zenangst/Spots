@@ -40,10 +40,10 @@ open class CarouselSpot: NSObject, Gridable {
             pageControl.numberOfPages = Int(floor(Double(component.items.count) / layout.span))
           }
 
-          if layout.pageIndicator {
+          if layout.pageIndicator && pageControl.superview == nil {
             pageControl.frame.size.width = backgroundView.frame.width
             collectionView.backgroundView?.addSubview(pageControl)
-          } else {
+          } else if layout.pageIndicator == false {
             pageControl.removeFromSuperview()
           }
 
