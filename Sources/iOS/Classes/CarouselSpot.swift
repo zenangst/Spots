@@ -111,6 +111,7 @@ open class CarouselSpot: NSObject, Gridable {
     }
 
     collectionView.showsHorizontalScrollIndicator = false
+    collectionView.showsVerticalScrollIndicator = false
     collectionView.alwaysBounceHorizontal = true
     collectionView.clipsToBounds = false
     self.collectionView = collectionView
