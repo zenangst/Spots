@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		52CD427A1E4477C800187E09 /* PageIndicatorPlacement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CD42791E4477C800187E09 /* PageIndicatorPlacement.swift */; };
+		52CD427B1E4477C800187E09 /* PageIndicatorPlacement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CD42791E4477C800187E09 /* PageIndicatorPlacement.swift */; };
+		52CD427C1E4477C800187E09 /* PageIndicatorPlacement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CD42791E4477C800187E09 /* PageIndicatorPlacement.swift */; };
 		BD01BD111DAEA522009C10FF /* TestParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD01BD0D1DAEA464009C10FF /* TestParser.swift */; };
 		BD01BD121DAEA523009C10FF /* TestParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD01BD0D1DAEA464009C10FF /* TestParser.swift */; };
 		BD01BD131DAEA523009C10FF /* TestParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD01BD0D1DAEA464009C10FF /* TestParser.swift */; };
@@ -369,6 +372,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		52CD42791E4477C800187E09 /* PageIndicatorPlacement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageIndicatorPlacement.swift; sourceTree = "<group>"; };
 		BD01BD0D1DAEA464009C10FF /* TestParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestParser.swift; sourceTree = "<group>"; };
 		BD01BD141DAEA7EE009C10FF /* TestListComposite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestListComposite.swift; sourceTree = "<group>"; };
 		BD10D5211D79533C00DF8E9B /* TestViewModelExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewModelExtensions.swift; sourceTree = "<group>"; };
@@ -782,6 +786,7 @@
 				BDAD85311E3E7032008289AE /* Animation.swift */,
 				BDAD85321E3E7032008289AE /* Paginate.swift */,
 				BDAD85331E3E7032008289AE /* RegistryType.swift */,
+				52CD42791E4477C800187E09 /* PageIndicatorPlacement.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -1483,6 +1488,7 @@
 				BDAD85C81E3E7032008289AE /* SpotsProtocol.swift in Sources */,
 				BDAD85B31E3E7032008289AE /* Listable.swift in Sources */,
 				BDAD84B71E3E701C008289AE /* GridWrapper.swift in Sources */,
+				52CD427C1E4477C800187E09 /* PageIndicatorPlacement.swift in Sources */,
 				BDAD85891E3E7032008289AE /* ScrollDelegate+Extensions.swift in Sources */,
 				BDAD85861E3E7032008289AE /* Listable+Extension.swift in Sources */,
 				BDAD84C71E3E701C008289AE /* SpotsContentView.swift in Sources */,
@@ -1657,6 +1663,7 @@
 				BDAD85871E3E7032008289AE /* ScrollDelegate+Extensions.swift in Sources */,
 				BDAD85601E3E7032008289AE /* CompositeSpot.swift in Sources */,
 				BDAD84BC1E3E701C008289AE /* ListSpot.swift in Sources */,
+				52CD427A1E4477C800187E09 /* PageIndicatorPlacement.swift in Sources */,
 				BDAD84DC1E3E701C008289AE /* Listable+Extensions+iOS.swift in Sources */,
 				BDAD85781E3E7032008289AE /* CarouselScrollDelegate+Extensions.swift in Sources */,
 				BDAD85C91E3E7032008289AE /* UserInterface.swift in Sources */,
@@ -1740,6 +1747,7 @@
 				BDAD85221E3E7025008289AE /* Listable+macOS+Extensions.swift in Sources */,
 				BDAD85CD1E3E7032008289AE /* Viewable.swift in Sources */,
 				BDAD85141E3E7025008289AE /* ListSpotCell.swift in Sources */,
+				52CD427B1E4477C800187E09 /* PageIndicatorPlacement.swift in Sources */,
 				BDAD85AC1E3E7032008289AE /* Composable.swift in Sources */,
 				BDAD85DF1E3E7032008289AE /* Inset.swift in Sources */,
 				BDAD85A31E3E7032008289AE /* Wrappable+Extensions.swift in Sources */,

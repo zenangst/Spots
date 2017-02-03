@@ -32,23 +32,7 @@ open class CarouselSpot: NSObject, Gridable {
 
   /// A component struct used as configuration and data source for the CarouselSpot
   open var component: Component {
-    willSet(value) {
-      #if os(iOS)
-        if let layout = component.layout {
-          dynamicSpan = layout.dynamicSpan
-          if component.items.count > 1 && layout.span > 0.0 {
-            pageControl.numberOfPages = Int(floor(Double(component.items.count) / layout.span))
-          }
-
-          if layout.pageIndicator && pageControl.superview == nil {
-            pageControl.frame.size.width = backgroundView.frame.width
-            collectionView.backgroundView?.addSubview(pageControl)
-          } else if layout.pageIndicator == false {
-            pageControl.removeFromSuperview()
-          }
-        }
-      #endif
-    }
+    didSet { configurePageControl() }
   }
 
   /// A configuration closure
@@ -68,14 +52,7 @@ open class CarouselSpot: NSObject, Gridable {
   open weak var delegate: SpotsDelegate?
 
   /// A UIPageControl, enable by setting pageIndicator to true
-  open lazy var pageControl: UIPageControl = {
-    let pageControl = UIPageControl()
-    pageControl.frame.size.height = 22
-    pageControl.pageIndicatorTintColor = UIColor.lightGray
-    pageControl.currentPageIndicatorTintColor = UIColor.gray
-
-    return pageControl
-  }()
+  open lazy var pageControl = UIPageControl()
 
   /// A custom UICollectionViewFlowLayout
   open var layout: CollectionLayout
@@ -197,6 +174,7 @@ open class CarouselSpot: NSObject, Gridable {
   open func setup(_ size: CGSize) {
     collectionView.frame.size = size
     prepareItems()
+    configurePageControl()
 
     if collectionView.contentSize.height > 0 {
       collectionView.frame.size.height = collectionView.contentSize.height
@@ -224,13 +202,41 @@ open class CarouselSpot: NSObject, Gridable {
       collectionView.frame.size.height += CGFloat(componentLayout.inset.top + componentLayout.inset.bottom)
     }
 
-    guard component.layout?.pageIndicator == Optional(true) else {
+    if let pageIndicatorPlacement = component.layout?.pageIndicatorPlacement {
+      switch pageIndicatorPlacement {
+      case .below:
+        layout.sectionInset.bottom += pageControl.frame.height
+        pageControl.frame.origin.y = collectionView.frame.height
+      case .overlay:
+        let verticalAdjustment = CGFloat(2)
+        pageControl.frame.origin.y = collectionView.frame.height - pageControl.frame.height - verticalAdjustment
+        break
+      }
+    }
+  }
+
+  private func configurePageControl() {
+    guard let placement = component.layout?.pageIndicatorPlacement else {
+      pageControl.removeFromSuperview()
       return
     }
 
-    layout.sectionInset.bottom = layout.sectionInset.bottom
-    layout.sectionInset.bottom += pageControl.frame.size.height
-    pageControl.frame.origin.y = collectionView.frame.size.height - pageControl.frame.size.height
+    pageControl.numberOfPages = component.items.count
+    pageControl.frame.origin.x = 0
+    pageControl.frame.size.height = 22
+
+    switch placement {
+    case .below:
+      pageControl.frame.size.width = backgroundView.frame.width
+      pageControl.pageIndicatorTintColor = .lightGray
+      pageControl.currentPageIndicatorTintColor = .gray
+      backgroundView.addSubview(pageControl)
+    case .overlay:
+      pageControl.frame.size.width = collectionView.frame.width
+      pageControl.pageIndicatorTintColor = nil
+      pageControl.currentPageIndicatorTintColor = nil
+      collectionView.addSubview(pageControl)
+    }
   }
 }
 
@@ -252,6 +258,28 @@ extension Delegate: UIScrollViewDelegate {
     }
 
     spot.carouselScrollDelegate?.spotableCarouselDidScroll(spot)
+
+    if spot.component.layout?.pageIndicatorPlacement == .overlay {
+      spot.pageControl.frame.origin.x = scrollView.contentOffset.x
+    }
+  }
+
+  public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+    guard let spot = spot as? CarouselSpot else {
+      return
+    }
+
+    let itemIndex = Int(scrollView.contentOffset.x / scrollView.frame.width)
+
+    guard itemIndex >= 0 else {
+      return
+    }
+
+    guard itemIndex < spot.items.count else {
+      return
+    }
+
+    spot.pageControl.currentPage = itemIndex
   }
 
   #if os(iOS)
