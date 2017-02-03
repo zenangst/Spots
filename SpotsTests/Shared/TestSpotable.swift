@@ -61,12 +61,17 @@ class SpotableTests : XCTestCase {
     let parentSize = CGSize(width: 100, height: 100)
     let component = Component(items: [Item(title: "foo", kind: kind)])
     let spot = GridSpot(component: component)
-
+    spot.view.frame.size = parentSize
     spot.setup(parentSize)
     spot.layout(parentSize)
-    spot.view.layoutSubviews()
+    spot.view.layoutIfNeeded()
 
-    let genericView: View? = spot.ui(at: 0)
+    #if os(OSX)
+      let genericView: NSCollectionViewItem? = spot.ui(at: 0)
+    #else
+      let genericView: View? = spot.ui(at: 0)
+    #endif
+
 
     XCTAssertNotNil(genericView)
     XCTAssertFalse(type(of: genericView!) === GridWrapper.self)
