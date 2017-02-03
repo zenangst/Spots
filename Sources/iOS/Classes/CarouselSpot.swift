@@ -210,7 +210,6 @@ open class CarouselSpot: NSObject, Gridable {
       case .overlay:
         let verticalAdjustment = CGFloat(2)
         pageControl.frame.origin.y = collectionView.frame.height - pageControl.frame.height - verticalAdjustment
-        break
       }
     }
   }
