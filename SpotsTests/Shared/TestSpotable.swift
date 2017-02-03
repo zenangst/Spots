@@ -7,7 +7,7 @@ class SpotableTests : XCTestCase {
 
   func testAppendingMultipleItemsToSpot() {
     let listSpot = ListSpot(component: Component(title: "Component", span: 1.0))
-    listSpot.setup(UIScreen.main.bounds.size)
+    listSpot.setup(CGSize(width: 100, height: 100))
     var items: [Item] = []
 
     for i in 0..<10 {
