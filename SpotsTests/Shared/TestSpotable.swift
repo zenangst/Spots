@@ -66,11 +66,13 @@ class SpotableTests : XCTestCase {
     spot.layout(parentSize)
     spot.view.layoutIfNeeded()
 
-    let genericView: View? = spot.ui(at: 0)
+    guard let genericView: View = spot.ui(at: 0) else {
+      XCTFail()
+      return
+    }
 
-    XCTAssertNotNil(genericView)
-    XCTAssertFalse(type(of: genericView!) === GridWrapper.self)
-    XCTAssertTrue(type(of: genericView!) === TestView.self)
+    XCTAssertFalse(type(of: genericView) === GridWrapper.self)
+    XCTAssertTrue(type(of: genericView) === TestView.self)
   }
 
   func testResolvingUIFromListableSpot() {
@@ -86,10 +88,12 @@ class SpotableTests : XCTestCase {
     spot.layout(parentSize)
     spot.view.layoutSubviews()
 
-    let genericView: View? = spot.ui(at: 0)
+    guard let genericView: View = spot.ui(at: 0) else {
+      XCTFail()
+      return
+    }
 
-    XCTAssertNotNil(genericView)
-    XCTAssertFalse(type(of: genericView!) === ListWrapper.self)
-    XCTAssertTrue(type(of: genericView!) === TestView.self)
+    XCTAssertFalse(type(of: genericView) === ListWrapper.self)
+    XCTAssertTrue(type(of: genericView) === TestView.self)
   }
 }
