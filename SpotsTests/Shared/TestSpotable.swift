@@ -65,9 +65,11 @@ class SpotableTests : XCTestCase {
     spot.setup(parentSize)
     spot.layout(parentSize)
     spot.view.layoutSubviews()
-    let view: View? = spot.ui(at: 0)
 
-    XCTAssertNotNil(view)
-    XCTAssertFalse(view is GridWrapper)
+    let genericView: View? = spot.ui(at: 0)
+
+    XCTAssertNotNil(genericView)
+    XCTAssertFalse(type(of: genericView!) === GridWrapper.self)
+    XCTAssertTrue(type(of: genericView!) === TestView.self)
   }
 }
