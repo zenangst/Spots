@@ -52,4 +52,22 @@ class SpotableTests : XCTestCase {
     }
     waitForExpectations(timeout: 1.5, handler: nil)
   }
+
+  func testResolvingUIFromGridableSpot() {
+    let kind = "test-view"
+
+    Configuration.register(view: TestView.self, identifier: kind)
+
+    let parentSize = CGSize(width: 100, height: 100)
+    let component = Component(items: [Item(title: "foo", kind: kind)])
+    let spot = GridSpot(component: component)
+
+    spot.setup(parentSize)
+    spot.layout(parentSize)
+    spot.view.layoutSubviews()
+    let view: View? = spot.ui(at: 0)
+
+    XCTAssertNotNil(view)
+    XCTAssertFalse(view is GridWrapper)
+  }
 }
