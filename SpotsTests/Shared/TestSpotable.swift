@@ -66,12 +66,7 @@ class SpotableTests : XCTestCase {
     spot.layout(parentSize)
     spot.view.layoutIfNeeded()
 
-    #if os(OSX)
-      let genericView: NSCollectionViewItem? = spot.ui(at: 0)
-    #else
-      let genericView: View? = spot.ui(at: 0)
-    #endif
-
+    let genericView: View? = spot.ui(at: 0)
 
     XCTAssertNotNil(genericView)
     XCTAssertFalse(type(of: genericView!) === GridWrapper.self)
