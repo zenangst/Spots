@@ -82,3 +82,11 @@ struct Helper {
     }
   }
 #endif
+
+class TestView: View, SpotConfigurable {
+  var preferredViewSize: CGSize = CGSize(width: 50, height: 50)
+
+  func configure(_ item: inout Item) {
+
+  }
+}
