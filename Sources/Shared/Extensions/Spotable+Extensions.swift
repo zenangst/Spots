@@ -233,7 +233,7 @@ public extension Spotable {
       prepare(kind: kind, view: view as Any, item: &item)
     #else
       let spotableKind = self
-      let fullWidth = self.view.superview?.frame.size.width ?? self.view.frame.size.width
+      let fullWidth = view.superview?.frame.size.width ?? view.frame.size.width
 
       switch spotableKind {
       case let grid as Gridable:
