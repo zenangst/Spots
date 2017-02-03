@@ -213,13 +213,9 @@ public extension Spotable {
     var item = item
     item.index = index
 
-    let fullWidth: CGFloat
-    let kind: String
-
     #if !os(OSX)
-      fullWidth = UIScreen.main.bounds.width
-      kind = identifier(at: index)
-
+      let fullWidth: CGFloat = UIScreen.main.bounds.width
+      let kind = identifier(at: index)
       let view: View?
 
       if let (_, resolvedView) = Self.views.make(kind, parentFrame: self.view.frame) {
@@ -237,30 +233,34 @@ public extension Spotable {
       prepare(kind: kind, view: view as Any, item: &item)
     #else
       let spotableKind = self
-      fullWidth = view.superview?.frame.size.width ?? view.frame.size.width
+      let fullWidth = self.view.superview?.frame.size.width ?? self.view.frame.size.width
 
       switch spotableKind {
-      case let spotableKind as Gridable:
-        kind = item.kind.isEmpty || type(of: spotableKind).grids.storage[item.kind] == nil
-          ? type(of: spotableKind).grids.defaultIdentifier
+      case let grid as Gridable:
+        var kind = item.kind.isEmpty || type(of: grid).grids.storage[item.kind] == nil
+          ? identifier(at: index)
           : item.kind
 
-        guard let (_, view) = type(of: spotableKind).grids.make(kind) else {
-          return nil
+        if kind == "" {
+          kind = type(of: grid).grids.defaultIdentifier
         }
 
-        prepare(kind: kind, view: view as Any, item: &item)
-      case let spotableKind as Listable:
-        kind = item.kind.isEmpty || type(of: spotableKind).views.storage[item.kind] == nil
-          ? type(of: spotableKind).views.defaultIdentifier
-          : item.kind
-
-        guard let (_, view) = Self.views.make(kind) else {
+        if let (_, resolvedView) = type(of: grid).grids.make(kind) {
+          prepare(kind: kind, view: resolvedView as Any, item: &item)
+        } else if let (_, resolvedView) = Configuration.views.make(kind, parentFrame: self.view.frame) {
+          prepare(kind: kind, view: resolvedView as Any, item: &item)
+        } else {
           return nil
         }
-
-        prepare(kind: kind, view: view as Any, item: &item)
-      default: break
+      default:
+        let kind = identifier(at: index)
+        if let (_, resolvedView) = Self.views.make(kind, parentFrame: self.view.frame) {
+          prepare(kind: kind, view: resolvedView as Any, item: &item)
+        } else if let (_, resolvedView) = Configuration.views.make(kind, parentFrame: self.view.frame) {
+          prepare(kind: kind, view: resolvedView as Any, item: &item)
+        } else {
+          return nil
+        }
       }
     #endif
 
