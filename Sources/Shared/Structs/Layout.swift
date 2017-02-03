@@ -43,20 +43,25 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
   public var dynamicSpan: Bool = false
   /// Defines if the component uses computed content height or relies on `view.frame.height`.
   public var dynamicHeight: Bool = true
-  /// Declares if the component should display a page indicator.
-  public var pageIndicator: Bool = false
+  /// The placement of any page indicator (`nil` if no indicator should be displayed)
+  public var pageIndicatorPlacement: PageIndicatorPlacement?
 
   /// A dictionary representation of the struct.
   public var dictionary: [String : Any] {
-    return [
+    var dictionary: [String : Any] = [
       Inset.rootKey: inset.dictionary,
       Key.itemSpacing.rawValue: itemSpacing,
       Key.lineSpacing.rawValue: lineSpacing,
       Key.span.rawValue: span,
       Key.dynamicSpan.rawValue: dynamicSpan,
-      Key.dynamicHeight.rawValue: dynamicHeight,
-      Key.pageIndicator.rawValue: pageIndicator
+      Key.dynamicHeight.rawValue: dynamicHeight
     ]
+
+    if let pageIndicatorPlacement = pageIndicatorPlacement {
+      dictionary[Key.pageIndicator.rawValue] = pageIndicatorPlacement.rawValue
+    }
+
+    return dictionary
   }
 
   /// A convenience initializer with default values.
@@ -65,7 +70,6 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
     self.dynamicSpan = false
     self.itemSpacing = 0.0
     self.lineSpacing = 0.0
-    self.pageIndicator = false
     self.inset = Inset()
   }
 
@@ -75,18 +79,18 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
   ///   - span: The span that should be used for the component.
   ///   - dynamicSpan: Enable or disable dynamic span.
   ///   - dynamicHeight: Enable or disable dynamic height.
-  ///   - pageIndicator: Enable or disable page indicator for component.
+  ///   - pageIndicatorPlacement: Where any page indicator (if any) should be displayed in the component.
   ///   - itemSpacing: Sets minimum item spacing for the component.
   ///   - lineSpacing: Sets minimum lines spacing for items in component.
   ///   - inset: An inset struct used to insert margins for the component.
-  public init(span: Double = 0.0, dynamicSpan: Bool = false, dynamicHeight: Bool = true, pageIndicator: Bool = false, itemSpacing: Double = 0.0, lineSpacing: Double = 0.0, inset: Inset = Inset()) {
+  public init(span: Double = 0.0, dynamicSpan: Bool = false, dynamicHeight: Bool = true, pageIndicatorPlacement: PageIndicatorPlacement? = nil, itemSpacing: Double = 0.0, lineSpacing: Double = 0.0, inset: Inset = Inset()) {
     self.span = span
     self.dynamicSpan = dynamicSpan
     self.dynamicHeight = dynamicHeight
     self.itemSpacing = itemSpacing
     self.lineSpacing = lineSpacing
     self.inset = inset
-    self.pageIndicator = pageIndicator
+    self.pageIndicatorPlacement = pageIndicatorPlacement
   }
 
   /// Initialize with a JSON payload.
@@ -117,7 +121,7 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
     self.dynamicSpan <- map.property(Key.dynamicSpan.rawValue)
     self.dynamicHeight <- map.property(Key.dynamicHeight.rawValue)
     self.span <- map.property(Key.span.rawValue)
-    self.pageIndicator <- map.property(Key.pageIndicator.rawValue)
+    self.pageIndicatorPlacement <- map.enum(Key.pageIndicator.rawValue)
   }
 
   /// Perform mutation with closure.
@@ -150,7 +154,7 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
     lhs.span == rhs.span &&
     lhs.dynamicSpan == rhs.dynamicSpan &&
     lhs.dynamicHeight == rhs.dynamicHeight &&
-    lhs.pageIndicator == rhs.pageIndicator
+    lhs.pageIndicatorPlacement == rhs.pageIndicatorPlacement
   }
 
   /// Compare Layout structs.

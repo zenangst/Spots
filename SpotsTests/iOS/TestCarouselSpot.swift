@@ -158,8 +158,8 @@ class CarouselSpotTests: XCTestCase {
       "layout" : Layout(
         span: 4.0,
         dynamicSpan: false,
-        pageIndicator: true
-        ).dictionary
+        pageIndicatorPlacement: .below
+      ).dictionary
     ]
 
     let component = Component(json)
@@ -190,6 +190,8 @@ class CarouselSpotTests: XCTestCase {
     XCTAssertEqual(spot.items[2].size.height, 88)
     XCTAssertEqual(spot.items[3].size.width, width)
     XCTAssertEqual(spot.items[3].size.height, 88)
+
+    // Assert that height has been added for the page indicator
     XCTAssertEqual(spot.view.frame.size.height, 110)
     XCTAssertEqual(spot.view.contentSize.height, 110)
 
@@ -200,6 +202,44 @@ class CarouselSpotTests: XCTestCase {
     spot.view.layoutSubviews()
     XCTAssertEqual(spot.view.frame.size.height, 130)
     XCTAssertEqual(spot.view.contentSize.height, 130)
+  }
+
+  func testPageIndicatorOverlayPlacement() {
+    let json: [String : Any] = [
+      "items" : [
+        ["title" : "foo", "kind" : "carousel"],
+        ["title" : "bar", "kind" : "carousel"],
+        ["title" : "baz", "kind" : "carousel"],
+        ["title" : "bazar", "kind" : "carousel"]
+      ],
+      "interaction" : Interaction(paginate: .page).dictionary,
+      "layout" : Layout(
+        span: 4.0,
+        dynamicSpan: false,
+        pageIndicatorPlacement: .overlay
+      ).dictionary
+    ]
+
+    let component = Component(json)
+    let spot = CarouselSpot(component: component)
+    let parentSize = CGSize(width: 667, height: 225)
+
+    spot.setup(parentSize)
+    spot.layout(parentSize)
+    spot.prepareItems()
+    spot.view.layoutSubviews()
+
+    // Sanity check, to make sure we have our page indicator in overlay mode
+    XCTAssertEqual(component.layout!.pageIndicatorPlacement, .overlay)
+
+    // Assert item layout (derived from preferred view size)
+    XCTAssertEqual(spot.items[0].size.height, 88)
+    XCTAssertEqual(spot.items[1].size.height, 88)
+    XCTAssertEqual(spot.items[2].size.height, 88)
+    XCTAssertEqual(spot.items[3].size.height, 88)
+
+    // Assert that no height has been added for a page indicator
+    XCTAssertEqual(spot.view.frame.height, 88)
   }
     
   func testPaginatedCarouselSnapping() {
@@ -250,7 +290,7 @@ class CarouselSpotTests: XCTestCase {
       "layout" : Layout(
         span: 0,
         dynamicSpan: false,
-        pageIndicator: true,
+        pageIndicatorPlacement: .below,
         itemSpacing: 0
       ).dictionary
     ]
