@@ -52,7 +52,7 @@ extension UICollectionView: UserInterface {
     deselectItem(at: IndexPath(row: index, section: 0), animated: animated)
   }
 
-  /// Resolve view at index
+  /// Resolve a view at index
   ///
   /// - Parameter index: The item index that should be used to resolve the view.
   /// - Returns: The view that is resolved at the index casted into the inferred type.
