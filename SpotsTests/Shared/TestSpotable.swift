@@ -72,4 +72,24 @@ class SpotableTests : XCTestCase {
     XCTAssertFalse(type(of: genericView!) === GridWrapper.self)
     XCTAssertTrue(type(of: genericView!) === TestView.self)
   }
+
+  func testResolvingUIFromListableSpot() {
+    let kind = "test-view"
+
+    Configuration.register(view: TestView.self, identifier: kind)
+
+    let parentSize = CGSize(width: 100, height: 100)
+    let component = Component(items: [Item(title: "foo", kind: kind)])
+    let spot = ListSpot(component: component)
+
+    spot.setup(parentSize)
+    spot.layout(parentSize)
+    spot.view.layoutSubviews()
+
+    let genericView: View? = spot.ui(at: 0)
+
+    XCTAssertNotNil(genericView)
+    XCTAssertFalse(type(of: genericView!) === ListWrapper.self)
+    XCTAssertTrue(type(of: genericView!) === TestView.self)
+  }
 }
