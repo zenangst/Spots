@@ -3,7 +3,14 @@ import Cocoa
 extension NSCollectionView: UserInterface {
 
   public func view<T>(at index: Int) -> T? {
-    return item(at: index) as? T
+    let view = item(at: index)
+
+    switch view {
+    case let view as GridWrapper:
+      return view.wrappedView as? T
+    default:
+      return view as? T
+    }
   }
 
   /**

@@ -7,7 +7,7 @@ class SpotableTests : XCTestCase {
 
   func testAppendingMultipleItemsToSpot() {
     let listSpot = ListSpot(component: Component(title: "Component", span: 1.0))
-    listSpot.setup(UIScreen.main.bounds.size)
+    listSpot.setup(CGSize(width: 100, height: 100))
     var items: [Item] = []
 
     for i in 0..<10 {
@@ -51,5 +51,49 @@ class SpotableTests : XCTestCase {
       exception.fulfill()
     }
     waitForExpectations(timeout: 1.5, handler: nil)
+  }
+
+  func testResolvingUIFromGridableSpot() {
+    let kind = "test-view"
+
+    Configuration.register(view: TestView.self, identifier: kind)
+
+    let parentSize = CGSize(width: 100, height: 100)
+    let component = Component(items: [Item(title: "foo", kind: kind)])
+    let spot = GridSpot(component: component)
+    spot.view.frame.size = parentSize
+    spot.setup(parentSize)
+    spot.layout(parentSize)
+    spot.view.layoutIfNeeded()
+
+    guard let genericView: View = spot.ui(at: 0) else {
+      XCTFail()
+      return
+    }
+
+    XCTAssertFalse(type(of: genericView) === GridWrapper.self)
+    XCTAssertTrue(type(of: genericView) === TestView.self)
+  }
+
+  func testResolvingUIFromListableSpot() {
+    let kind = "test-view"
+
+    Configuration.register(view: TestView.self, identifier: kind)
+
+    let parentSize = CGSize(width: 100, height: 100)
+    let component = Component(items: [Item(title: "foo", kind: kind)])
+    let spot = ListSpot(component: component)
+
+    spot.setup(parentSize)
+    spot.layout(parentSize)
+    spot.view.layoutSubviews()
+
+    guard let genericView: View = spot.ui(at: 0) else {
+      XCTFail()
+      return
+    }
+
+    XCTAssertFalse(type(of: genericView) === ListWrapper.self)
+    XCTAssertTrue(type(of: genericView) === TestView.self)
   }
 }

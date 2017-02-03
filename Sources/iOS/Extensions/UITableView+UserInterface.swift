@@ -52,7 +52,14 @@ extension UITableView: UserInterface {
   }
 
   public func view<T>(at index: Int) -> T? {
-    return cellForRow(at: IndexPath(row: index, section: 0)) as? T
+    let view = cellForRow(at: IndexPath(row: index, section: 0))
+
+    switch view {
+    case let view as ListWrapper:
+      return view.wrappedView as? T
+    default:
+      return view as? T
+    }
   }
 
   public func reloadDataSource() {
