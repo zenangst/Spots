@@ -83,4 +83,6 @@ public protocol UserInterface: class {
   func endUpdates()
   /// A proxy method to call reloadData
   func reloadDataSource()
+
+  func register()
 }
