@@ -9,7 +9,7 @@ extension Delegate: UICollectionViewDelegate {
   /// - parameter indexPath: The index path of the item.
   ///
   /// - returns: The width and height of the specified item. Both values must be greater than 0.
-  @objc(collectionView:layout:sizeForItemAtIndexPath:) public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+  public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     guard let spot = spot else { return CGSize.zero }
 
     return spot.sizeForItem(at: indexPath)
