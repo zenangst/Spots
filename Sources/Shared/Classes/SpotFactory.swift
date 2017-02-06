@@ -9,7 +9,8 @@ public struct Factory {
     "list": ListSpot.self,
     "grid": GridSpot.self,
     "row": RowSpot.self,
-    "view": ViewSpot.self
+    "view": ViewSpot.self,
+    "spot": Spot.self
   ]
 
   /// Register a spot for a specfic spot type
@@ -26,7 +27,13 @@ public struct Factory {
   ///
   /// - returns: A spotable object.
   public static func resolve(component: Component) -> Spotable {
-    let spot: Spotable.Type = spots[component.kind] ?? DefaultSpot
+    var resolvedKind = component.kind
+    if component.hybrid {
+      resolvedKind = "spot"
+    }
+
+    let spot: Spotable.Type = spots[resolvedKind] ?? DefaultSpot
+
     return spot.init(component: component)
   }
 }
