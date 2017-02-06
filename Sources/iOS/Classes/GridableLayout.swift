@@ -192,6 +192,8 @@ open class GridableLayout: UICollectionViewFlowLayout {
   ///
   /// - returns: Always returns true
   open override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
-    return newBounds.size.height >= contentSize.height
+    let shouldInvalidateLayout = newBounds.size.height > contentSize.height || collectionView!.frame.width != newBounds.width
+
+    return shouldInvalidateLayout
   }
 }
