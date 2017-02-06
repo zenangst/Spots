@@ -61,8 +61,8 @@ extension Gridable {
       prepareItems()
     }
 
-    layout.prepare()
-    layout.invalidateLayout()
+    collectionView.collectionViewLayout.prepare()
+    collectionView.collectionViewLayout.invalidateLayout()
     collectionView.frame.size.width = layout.collectionViewContentSize.width
     collectionView.frame.size.height = layout.collectionViewContentSize.height
   }
