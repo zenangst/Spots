@@ -2,6 +2,8 @@ import Cocoa
 
 extension NSTableView: UserInterface {
 
+  public func register() {}
+
   public func view<T>(at index: Int) -> T? {
     let view = rowView(atRow: index, makeIfNecessary: true)
 

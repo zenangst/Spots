@@ -2,6 +2,17 @@ import Cocoa
 
 extension NSCollectionView: UserInterface {
 
+  public func register() {
+    for (identifier, item) in Configuration.views.storage {
+      switch item {
+      case .classType(_):
+        register(GridWrapper.self, forItemWithIdentifier: identifier)
+      case .nib(let nib):
+        register(nib, forItemWithIdentifier: identifier)
+      }
+    }
+  }
+
   public func view<T>(at index: Int) -> T? {
     let view = item(at: index)
 
