@@ -294,7 +294,6 @@ open class Controller: UIViewController, SpotsProtocol, SpotsFocusDelegate, UISc
     spots.enumerated().forEach { index, spot in
       setupSpot(at: index, spot: spot)
       animated?(spot.view)
-      (spot as? CarouselSpot)?.layout.yOffset = yOffset
       yOffset += spot.view.frame.size.height
     }
   }

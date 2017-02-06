@@ -39,20 +39,6 @@ import Cache
 
             weakSelf.reloadIfNeeded(components) {
               weakSelf.scrollView.contentOffset = offset
-
-              var yOffset: CGFloat = 0.0
-              for spot in weakSelf.spots {
-                #if !os(OSX)
-                (spot as? CarouselSpot)?.layout.yOffset = yOffset
-                #endif
-                yOffset += spot.view.frame.size.height
-              }
-
-              #if !os(OSX)
-              for case let gridable as CarouselSpot in weakSelf.spots {
-                gridable.layout.yOffset = gridable.view.frame.origin.y
-              }
-              #endif
             }
             print("🎍 SPOTS reloaded: \(weakSelf.spots.count) -> items: \(weakSelf.spots.reduce(0, { $0.1.items.count }))")
             weakSelf.liveEditing(stateCache: weakSelf.stateCache)

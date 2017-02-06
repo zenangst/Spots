@@ -146,10 +146,6 @@ extension SpotsProtocol {
     spots[index] = spot
     scrollView.spotsContentView.insertSubview(spot.view, at: index)
     setupSpot(at: index, spot: spot)
-
-    #if !os(OSX)
-      (spot as? CarouselSpot)?.layout.yOffset = yOffset
-    #endif
     yOffset += spot.view.frame.size.height
   }
 
@@ -157,9 +153,6 @@ extension SpotsProtocol {
     let spot = Factory.resolve(component: newComponents[index])
     spots.append(spot)
     setupSpot(at: index, spot: spot)
-    #if !os(OSX)
-      (spot as? CarouselSpot)?.layout.yOffset = yOffset
-    #endif
     yOffset += spot.view.frame.size.height
   }
 
