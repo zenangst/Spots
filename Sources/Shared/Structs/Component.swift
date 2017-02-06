@@ -44,6 +44,7 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
     case width
     case height
     case footer
+    case hybrid
 
     public var string: String {
       return rawValue.lowercased()
@@ -80,6 +81,7 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
     }
   }
 
+  public var hybrid: Bool = false
   /// Identifier
   public var identifier: String?
   /// The index of the Item when appearing in a list, should be computed and continuously updated by the data source
@@ -155,6 +157,8 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
     if !header.isEmpty { JSONComponents[Key.header.string] = header }
     if !footer.isEmpty { JSONComponents[Key.footer.string] = footer }
     if !meta.isEmpty { JSONComponents[Key.meta.string] = meta }
+    
+    JSONComponents[Key.hybrid.string] = hybrid
 
     return JSONComponents
   }
@@ -172,6 +176,7 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
     self.footer    <- map.property("footer")
     self.items     <- map.relations("items")
     self.meta      <- map.property("meta")
+    self.hybrid    <- map.property("hybrid")
 
     if Component.legacyMapping {
       self.layout = Layout(map.property("meta") ?? [:])
@@ -216,7 +221,8 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
               interaction: Interaction? = nil,
               span: Double? = nil,
               items: [Item] = [],
-              meta: [String : Any] = [:]) {
+              meta: [String : Any] = [:],
+              hybrid: Bool = false) {
     self.identifier = identifier
     self.title = title
     self.kind = kind
@@ -226,6 +232,7 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
     self.footer = footer
     self.items = items
     self.meta = meta
+    self.hybrid = hybrid
 
     if let span = span, layout == nil {
       self.layout = Layout(span: span)
