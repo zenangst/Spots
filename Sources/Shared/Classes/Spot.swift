@@ -4,6 +4,8 @@
   import UIKit
 #endif
 
+import Tailor
+
 public class Spot: NSObject, Spotable {
 
   /// These are deprecated
@@ -93,34 +95,32 @@ public class Spot: NSObject, Spotable {
 
     let UIComponent: ScrollView
 
-    switch componentKind {
-    case .row:
-      let collectionViewLayout = CollectionLayout()
-      component.layout?.configure(collectionViewLayout: collectionViewLayout)
-
-      collectionViewLayout.scrollDirection = componentKind == .carousel
-        ? .horizontal : .vertical
-
-      let collectionView = CollectionView(frame: CGRect.zero, collectionViewLayout: collectionViewLayout)
-      registerDefault(view: RowSpotCell.self)
-      self.userInterface = collectionView
-      UIComponent = collectionView
-    case .carousel, .grid:
-      let collectionViewLayout = CollectionLayout()
-      component.layout?.configure(collectionViewLayout: collectionViewLayout)
-
-      collectionViewLayout.scrollDirection = componentKind == .carousel
-        ? .horizontal : .vertical
-
-      let collectionView = CollectionView(frame: CGRect.zero, collectionViewLayout: collectionViewLayout)
-      registerDefault(view: GridSpotCell.self)
-      self.userInterface = collectionView
-      UIComponent = collectionView
-    case .list:
+    if componentKind == .list {
       let tableView = TableView()
-      registerDefault(view: ListSpotCell.self)
       self.userInterface = tableView
       UIComponent = tableView
+    } else {
+      let collectionViewLayout = CollectionLayout()
+      component.layout?.configure(collectionViewLayout: collectionViewLayout)
+      let collectionView = CollectionView(frame: CGRect.zero, collectionViewLayout: collectionViewLayout)
+      self.userInterface = collectionView
+
+      if componentKind == .carousel {
+        collectionViewLayout.scrollDirection = .horizontal
+      } else {
+        collectionViewLayout.scrollDirection = .vertical
+      }
+
+      UIComponent = collectionView
+    }
+
+    switch componentKind {
+    case .carousel, .grid:
+      registerDefault(view: GridSpotCell.self)
+    case .list:
+      registerDefault(view: ListSpotCell.self)
+    case .row:
+      registerDefault(view: RowSpotCell.self)
     }
 
     return UIComponent
@@ -266,19 +266,24 @@ public class Spot: NSObject, Spotable {
     if collectionView.contentSize.height > 0 {
       collectionView.frame.size.height = collectionView.contentSize.height
     } else {
-      collectionView.frame.size.height = component.items.sorted(by: {
+      var newCollectionViewHeight: CGFloat = 0.0
+
+      newCollectionViewHeight <- component.items.sorted(by: {
         $0.size.height > $1.size.height
-      }).first?.size.height ?? 0
+      }).first?.size.height
+
+      collectionView.frame.size.height = newCollectionViewHeight
 
       if collectionView.frame.size.height > 0 {
         collectionView.frame.size.height += layout.sectionInset.top + layout.sectionInset.bottom
       }
     }
 
-    if !component.header.isEmpty {
-      let resolve = type(of: self).headers.make(component.header)
+    if !component.header.isEmpty,
+      let resolve = Configuration.views.make(component.header),
+      let view = resolve.view {
       layout.headerReferenceSize.width = collectionView.frame.size.width
-      layout.headerReferenceSize.height = resolve?.view?.frame.size.height ?? 0.0
+      layout.headerReferenceSize.height = view.frame.size.height
     }
 
     CarouselSpot.configure?(collectionView, layout)
@@ -310,7 +315,7 @@ public class Spot: NSObject, Spotable {
     #if !os(OSX)
       GridSpot.configure?(collectionView, layout)
 
-      if let resolve = type(of: self).headers.make(component.header),
+      if let resolve = Configuration.views.make(component.header),
         let view = resolve.view as? Componentable,
         !component.header.isEmpty {
 
@@ -346,21 +351,17 @@ public class Spot: NSObject, Spotable {
   func layoutTableView(_ tableView: TableView, with size: CGSize) {
     tableView.frame.size.width = size.width - (tableView.contentInset.left)
     tableView.frame.origin.x = size.width / 2 - tableView.frame.width / 2
-
-    guard let componentSize = component.size else {
-      return
-    }
-    tableView.frame.size.height = componentSize.height
   }
 
   func layoutCollectionView(_ collectionView: CollectionView, with size: CGSize) {
-    view.frame.size.width = size.width
-    if compositeSpots.isEmpty {
-      prepareItems()
-    }
-
     guard let layout = collectionView.collectionViewLayout as? CollectionLayout else {
       return
+    }
+
+    view.frame.size.width = size.width
+
+    if compositeSpots.isEmpty {
+      prepareItems()
     }
 
     switch layout.scrollDirection {
@@ -416,11 +417,11 @@ public class Spot: NSObject, Spotable {
   }
 
   public func sizeForItem(at indexPath: IndexPath) -> CGSize {
-    let width =  item(at: indexPath)?.size.width ?? 0
-    let height = item(at: indexPath)?.size.height ?? 0
+    var width: CGFloat = 0.0
+    var height: CGFloat = 0.0
 
-    // Never return a negative width
-    guard width > -1 else { return CGSize.zero }
+    width  <- item(at: indexPath)?.size.width
+    height <- item(at: indexPath)?.size.height
 
     return CGSize(
       width: floor(width),
