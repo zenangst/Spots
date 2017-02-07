@@ -13,7 +13,7 @@ open class GridSpotItem: NSCollectionViewItem, SpotConfigurable {
     }
   }
 
-  open var preferredViewSize = CGSize(width: 0, height: 88)
+  open var preferredViewSize = CGSize(width: 88, height: 88)
   open var customView = FlippedView()
 
   open lazy var customImageView: NSImageView = {
