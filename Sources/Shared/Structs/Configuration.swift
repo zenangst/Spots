@@ -19,5 +19,4 @@ public struct Configuration {
   public static func register(view: View.Type, identifier: StringConvertible) {
     self.views.storage[identifier.string] = Registry.Item.classType(view)
   }
-
 }
