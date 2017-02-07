@@ -253,7 +253,7 @@ open class GridSpot: NSObject, Gridable {
    - parameter size: A CGSize from the GridSpot superview
    */
   open func layout(_ size: CGSize) {
-    layout.prepareForTransition(to: layout)
+    layout.invalidateLayout()
     var layoutInsets = EdgeInsets()
     if let layout = layout as? NSCollectionViewFlowLayout {
       layout.sectionInset.top = component.meta(GridableMeta.Key.sectionInsetTop, Default.sectionInsetTop) + titleView.frame.size.height + 8
