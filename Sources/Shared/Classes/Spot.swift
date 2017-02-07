@@ -147,6 +147,19 @@ public class Spot: NSObject, Spotable {
       self.componentKind = componentKind
     }
 
+    if component.layout == nil {
+      switch componentKind {
+      case .carousel:
+        self.component.layout = CarouselSpot.layout
+      case .grid:
+        self.component.layout = GridSpot.layout
+      case .list:
+        self.component.layout = ListSpot.layout
+      case .row:
+        self.component.layout = RowSpot.layout
+      }
+    }
+
     super.init()
 
     self.spotDataSource = DataSource(spot: self)
