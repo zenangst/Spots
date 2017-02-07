@@ -41,10 +41,10 @@ extension DataSource: UICollectionViewDataSource {
       } else {
         identifier = spot.component.header
       }
-      viewHeight += gridableLayout.headerReferenceSize.height
+      viewHeight = gridableLayout.headerReferenceSize.height
     case UICollectionElementKindSectionFooter:
       identifier = spot.component.footer
-      viewHeight += gridableLayout.footerHeight
+      viewHeight = gridableLayout.footerHeight
     default:
       return UICollectionReusableView()
     }
