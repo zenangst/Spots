@@ -104,4 +104,25 @@ class TestSpot: XCTestCase {
     XCTAssertEqual(spot.view.frame, rowSpot.view.frame)
     XCTAssertEqual(spot.view.contentSize, rowSpot.view.contentSize)
   }
+
+  func testHybridGridSpotWithHeaderAndFooter() {
+    let component = Component(
+      header: "Header",
+      footer: "Footer",
+      kind: Component.Kind.grid.string,
+      layout: Layout(span: 2.0),
+      items: [
+        Item(title: "A"),
+        Item(title: "B"),
+        Item(title: "C"),
+        Item(title: "D")
+      ],
+      hybrid: true
+    )
+    let spot = Spot(component: component)
+    spot.setup(CGSize(width: 100, height: 100))
+
+    XCTAssertEqual(spot.view.frame.size, CGSize(width: 100, height: 276))
+    XCTAssertEqual(spot.view.contentSize, CGSize(width: 100, height: 276))
+  }
 }
