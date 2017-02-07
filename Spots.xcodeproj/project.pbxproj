@@ -15,6 +15,9 @@
 		BD01BD131DAEA523009C10FF /* TestParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD01BD0D1DAEA464009C10FF /* TestParser.swift */; };
 		BD01BD181DAEA7FC009C10FF /* TestListComposite.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD01BD141DAEA7EE009C10FF /* TestListComposite.swift */; };
 		BD01BD1A1DAEA7FD009C10FF /* TestListComposite.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD01BD141DAEA7EE009C10FF /* TestListComposite.swift */; };
+		BD108DB91E499EE600623CEA /* TestSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD108DB81E499EE600623CEA /* TestSpot.swift */; };
+		BD108DBA1E499EE600623CEA /* TestSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD108DB81E499EE600623CEA /* TestSpot.swift */; };
+		BD108DBB1E499EE600623CEA /* TestSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD108DB81E499EE600623CEA /* TestSpot.swift */; };
 		BD10D5251D7955AB00DF8E9B /* TestViewModelExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD10D5211D79533C00DF8E9B /* TestViewModelExtensions.swift */; };
 		BD10D5261D7955AC00DF8E9B /* TestViewModelExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD10D5211D79533C00DF8E9B /* TestViewModelExtensions.swift */; };
 		BD10D5271D7955AC00DF8E9B /* TestViewModelExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD10D5211D79533C00DF8E9B /* TestViewModelExtensions.swift */; };
@@ -379,6 +382,7 @@
 		52CD42791E4477C800187E09 /* PageIndicatorPlacement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageIndicatorPlacement.swift; sourceTree = "<group>"; };
 		BD01BD0D1DAEA464009C10FF /* TestParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestParser.swift; sourceTree = "<group>"; };
 		BD01BD141DAEA7EE009C10FF /* TestListComposite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestListComposite.swift; sourceTree = "<group>"; };
+		BD108DB81E499EE600623CEA /* TestSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSpot.swift; sourceTree = "<group>"; };
 		BD10D5211D79533C00DF8E9B /* TestViewModelExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewModelExtensions.swift; sourceTree = "<group>"; };
 		BD129E3A1D7B2DE2009AC164 /* Info-tvOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-tvOS.plist"; sourceTree = "<group>"; };
 		BD21C2511E4358B900FE2B26 /* TestGridableLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestGridableLayout.swift; sourceTree = "<group>"; };
@@ -1019,6 +1023,7 @@
 				BD677E881DC61EFC006D1654 /* TestStateCache.swift */,
 				BD10D5211D79533C00DF8E9B /* TestViewModelExtensions.swift */,
 				BD45D9941E30A8A000C2D6B2 /* TestInset.swift */,
+				BD108DB81E499EE600623CEA /* TestSpot.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -1566,6 +1571,7 @@
 				BD677E8B1DC61EFC006D1654 /* TestStateCache.swift in Sources */,
 				BD4295591D81D45D00E07E1C /* TestViewSpot.swift in Sources */,
 				BD7397381D718CDB000AF2DE /* TestComponent.swift in Sources */,
+				BD108DBB1E499EE600623CEA /* TestSpot.swift in Sources */,
 				BD4295501D81CE4F00E07E1C /* TestGridSpot.swift in Sources */,
 				BDA8DAF61DCF3AED00A4A8DD /* TestRowSpot.swift in Sources */,
 				BD4295531D81D32400E07E1C /* TestListSpot.swift in Sources */,
@@ -1714,6 +1720,7 @@
 				BD01BD111DAEA522009C10FF /* TestParser.swift in Sources */,
 				BD01BD181DAEA7FC009C10FF /* TestListComposite.swift in Sources */,
 				BD677E8D1DC62575006D1654 /* TestUIViewControllerExtensions.swift in Sources */,
+				BD108DB91E499EE600623CEA /* TestSpot.swift in Sources */,
 				BD10D5251D7955AB00DF8E9B /* TestViewModelExtensions.swift in Sources */,
 				BDCFCD441DCA7F830047E84C /* TestController.swift in Sources */,
 				BDD9ABCE1DB53475005D8C04 /* TestCarouselComposite.swift in Sources */,
@@ -1824,6 +1831,7 @@
 				BD10D5261D7955AC00DF8E9B /* TestViewModelExtensions.swift in Sources */,
 				BD9AB9F61E44AD9700085677 /* TestSpotable.swift in Sources */,
 				BDCFCD421DCA7EFF0047E84C /* TestController.swift in Sources */,
+				BD108DBA1E499EE600623CEA /* TestSpot.swift in Sources */,
 				BD01BD121DAEA523009C10FF /* TestParser.swift in Sources */,
 				BD45D98F1E30935500C2D6B2 /* TestLayoutExtensions.swift in Sources */,
 				BD45D9881E30906300C2D6B2 /* TestLayout.swift in Sources */,
