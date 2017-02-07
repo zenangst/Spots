@@ -1,9 +1,4 @@
-#if os(OSX)
-  import Cocoa
-#else
-  import UIKit
-#endif
-
+import UIKit
 import Tailor
 
 public class Spot: NSObject, Spotable {
@@ -31,61 +26,6 @@ public class Spot: NSObject, Spotable {
   open lazy var pageControl = UIPageControl()
   open lazy var backgroundView = UIView()
 
-  #if os(OSX)
-  public var responder: NSResponder {
-    switch self.userInterface {
-    case let tableView as TableView:
-      return tableView
-    case let collectionView as CollectionView:
-      return collectionView
-    default:
-      return scrollView
-    }
-  }
-
-  public var nextResponder: NSResponder? {
-    get {
-      switch self.userInterface {
-      case let tableView as TableView:
-        return tableView.nextResponder
-      case let collectionView as CollectionView:
-        return collectionView.nextResponder
-      default:
-        return scrollView.nextResponder
-      }
-    }
-    set {
-      switch self.userInterface {
-      case let tableView as TableView:
-        tableView.nextResponder = newValue
-      case let collectionView as CollectionView:
-        collectionView.nextResponder = newValue
-      default:
-        scrollView.nextResponder = newValue
-      }
-    }
-  }
-
-  public func deselect() {
-    switch self.userInterface {
-    case let tableView as TableView:
-      tableView.deselectAll(nil)
-    case let collectionView as CollectionView:
-      collectionView.deselectAll(nil)
-    default: break
-    }
-  }
-
-  open lazy var scrollView: ScrollView = {
-    let scrollView = ScrollView()
-    scrollView.documentView = NSView()
-    return scrollView
-  }()
-
-  public var view: ScrollView {
-    return scrollView
-  }
-  #else
   var collectionViewLayout: CollectionLayout?
 
   public var view: ScrollView {
@@ -125,7 +65,6 @@ public class Spot: NSObject, Spotable {
 
     return UIComponent
   }
-  #endif
 
   public var tableView: TableView? {
     return userInterface as? TableView
@@ -188,17 +127,9 @@ public class Spot: NSObject, Spotable {
   @discardableResult public func configureUserInterface(with component: Component, userInterface: UserInterface? = nil) {
     userInterface?.register()
 
-    #if os(OSX)
-      if let tableView = self.table {
-        scrollView.contentView.addSubview(tableView)
-      } else if let collectionView = self.collection {
-        scrollView.contentView.addSubview(collectionView)
-      }
-    #else
-      if let collectionView = self.collectionView {
-        collectionView.backgroundView = backgroundView
-      }
-    #endif
+    if let collectionView = self.collectionView {
+      collectionView.backgroundView = backgroundView
+    }
     configureDataSourceAndDelegate()
   }
 
@@ -240,18 +171,16 @@ public class Spot: NSObject, Spotable {
 
   public func setupCollectionView(_ collectionView: CollectionView, with size: CGSize) {
     collectionView.frame.size.width = size.width
-    #if !os(OSX)
-      guard let layout = collectionView.collectionViewLayout as? CollectionLayout else {
-        return
-      }
+    guard let layout = collectionView.collectionViewLayout as? CollectionLayout else {
+      return
+    }
 
-      switch layout.scrollDirection {
-      case .horizontal:
-        setupHorizontalCollectionView(collectionView, with: size)
-      case .vertical:
-        setupVerticalCollectionView(collectionView, with: size)
-      }
-    #endif
+    switch layout.scrollDirection {
+    case .horizontal:
+      setupHorizontalCollectionView(collectionView, with: size)
+    case .vertical:
+      setupVerticalCollectionView(collectionView, with: size)
+    }
   }
 
   public func setupHorizontalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
@@ -312,29 +241,25 @@ public class Spot: NSObject, Spotable {
     }
 
     collectionView.isScrollEnabled = false
-    #if !os(OSX)
-      GridSpot.configure?(collectionView, layout)
+    GridSpot.configure?(collectionView, layout)
 
-      if let resolve = Configuration.views.make(component.header),
-        let view = resolve.view as? Componentable,
-        !component.header.isEmpty {
+    if let resolve = Configuration.views.make(component.header),
+      let view = resolve.view as? Componentable,
+      !component.header.isEmpty {
 
-        layout.headerReferenceSize.width = collectionView.frame.size.width
-        layout.headerReferenceSize.height = view.frame.size.height
+      layout.headerReferenceSize.width = collectionView.frame.size.width
+      layout.headerReferenceSize.height = view.frame.size.height
 
-        if layout.headerReferenceSize.width == 0.0 {
-          layout.headerReferenceSize.width = size.width
-        }
-
-        if layout.headerReferenceSize.height == 0.0 {
-          layout.headerReferenceSize.height = view.preferredHeaderHeight
-        }
+      if layout.headerReferenceSize.width == 0.0 {
+        layout.headerReferenceSize.width = size.width
       }
-      layout.prepare()
-      collectionView.frame.size.height = layout.contentSize.height
-    #else
-      layout.prepare()
-    #endif
+
+      if layout.headerReferenceSize.height == 0.0 {
+        layout.headerReferenceSize.height = view.preferredHeaderHeight
+      }
+    }
+    layout.prepare()
+    collectionView.frame.size.height = layout.contentSize.height
     component.size = collectionView.frame.size
   }
 
