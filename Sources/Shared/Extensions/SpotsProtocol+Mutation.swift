@@ -130,7 +130,7 @@ extension SpotsProtocol {
     return changes
   }
 
-  fileprivate func replaceSpot(_ index: Int, newComponents: [Component], yOffset: inout CGFloat) {
+  fileprivate func replaceSpot(_ index: Int, newComponents: [Component]) {
     let spot = Factory.resolve(component: newComponents[index])
     let oldSpot = spots[index]
 
@@ -146,14 +146,12 @@ extension SpotsProtocol {
     spots[index] = spot
     scrollView.spotsContentView.insertSubview(spot.view, at: index)
     setupSpot(at: index, spot: spot)
-    yOffset += spot.view.frame.size.height
   }
 
-  fileprivate func newSpot(_ index: Int, newComponents: [Component], yOffset: inout CGFloat) {
+  fileprivate func newSpot(_ index: Int, newComponents: [Component]) {
     let spot = Factory.resolve(component: newComponents[index])
     spots.append(spot)
     setupSpot(at: index, spot: spot)
-    yOffset += spot.view.frame.size.height
   }
 
   /// Remove Spot at index
@@ -383,7 +381,6 @@ extension SpotsProtocol {
 
       let finalCompletion = completion
 
-      var yOffset: CGFloat = 0.0
       var runCompletion = true
       var completion: Completion = nil
       var lastItemChange: Int?
@@ -397,9 +394,9 @@ extension SpotsProtocol {
       for (index, change) in changes.enumerated() {
         switch change {
         case .identifier, .title, .kind, .layout, .header, .footer, .meta:
-          weakSelf.replaceSpot(index, newComponents: newComponents, yOffset: &yOffset)
+          weakSelf.replaceSpot(index, newComponents: newComponents)
         case .new:
-          weakSelf.newSpot(index, newComponents: newComponents, yOffset: &yOffset)
+          weakSelf.newSpot(index, newComponents: newComponents)
         case .removed:
           weakSelf.removeSpot(at: index)
         case .items:
@@ -733,15 +730,8 @@ extension SpotsProtocol {
   }
 
   func setupAndLayoutSpot(spot: Spotable) {
-
+    print("🎉 \(type(of:spot)) \(spot.view.frame) \(spot.view.contentSize)")
     switch spot {
-    case let spot as Spot:
-      if let collectionViewLayout = spot.collectionViewLayout {
-        collectionViewLayout.prepare()
-        collectionViewLayout.invalidateLayout()
-        spot.view.frame.size.width = collectionViewLayout.collectionViewContentSize.width
-        spot.view.frame.size.height = collectionViewLayout.collectionViewContentSize.height
-      }
     case let spot as Gridable:
       #if !os(OSX)
         guard spot.layout.scrollDirection == .horizontal else {
@@ -759,8 +749,8 @@ extension SpotsProtocol {
         width: spot.view.frame.size.width,
         height: ceil(spot.view.frame.size.height))
       spot.layout(scrollView.frame.size)
-      spot.view.layoutSubviews()
     }
+    spot.view.layoutSubviews()
   }
 
   fileprivate func setupAndLayoutSpots() {
