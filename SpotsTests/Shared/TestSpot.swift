@@ -146,4 +146,25 @@ class TestSpot: XCTestCase {
     XCTAssertEqual(spot.view.frame.size, CGSize(width: 200, height: 188))
     XCTAssertEqual(spot.view.contentSize, CGSize(width: 200, height: 188))
   }
+
+  func testHybridCarouselSpotWithHeaderAndFooterAndOverlayPageIndicator() {
+    let component = Component(
+      header: "Header",
+      footer: "Footer",
+      kind: Component.Kind.carousel.string,
+      layout: Layout(span: 2.0, pageIndicatorPlacement: .overlay),
+      items: [
+        Item(title: "A"),
+        Item(title: "B"),
+        Item(title: "C"),
+        Item(title: "D")
+      ],
+      hybrid: true
+    )
+    let spot = Spot(component: component)
+    spot.setup(CGSize(width: 100, height: 100))
+
+    XCTAssertEqual(spot.view.frame.size, CGSize(width: 200, height: 188))
+    XCTAssertEqual(spot.view.contentSize, CGSize(width: 200, height: 188))
+  }
 }
