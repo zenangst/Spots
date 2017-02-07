@@ -135,10 +135,9 @@ public class Spot: NSObject, Spotable {
 
     self.spotDataSource = DataSource(spot: self)
     self.spotDelegate = Delegate(spot: self)
+
     configureUserInterface(with: component,
                            userInterface: self.view as? UserInterface)
-    configureDataSource()
-    configureDelegate()
 
     if let componentLayout = component.layout {
       configure(with: componentLayout)
@@ -161,170 +160,206 @@ public class Spot: NSObject, Spotable {
     userInterface?.register()
 
     #if os(OSX)
-      switch self.userInterface {
-      case let tableView as TableView:
+      if let tableView = self.table {
         scrollView.contentView.addSubview(tableView)
-      case let collectionView as CollectionView:
+      } else if let collectionView = self.collection {
         scrollView.contentView.addSubview(collectionView)
-      default: break
       }
     #else
-      if let collectionView = userInterface as? CollectionView {
+      if let collectionView = self.collectionView {
         collectionView.backgroundView = backgroundView
       }
     #endif
+    configureDataSourceAndDelegate()
   }
 
-  func configureDataSource() {
-    switch self.userInterface {
-    case let tableView as TableView:
+  func configureDataSourceAndDelegate() {
+    if let tableView = self.tableView {
       tableView.dataSource = spotDataSource
-    case let collectionView as CollectionView:
-      collectionView.dataSource = spotDataSource
-    default: break
-    }
-  }
-
-  func configureDelegate() {
-    switch self.userInterface {
-    case let tableView as TableView:
       tableView.delegate = spotDelegate
-    case let collectionView as CollectionView:
+    } else if let collectionView = self.collectionView {
+      collectionView.dataSource = spotDataSource
       collectionView.delegate = spotDelegate
-    default: break
     }
   }
 
   public func setup(_ size: CGSize) {
-    switch self.userInterface {
-    case let collectionView as CollectionView:
-      collectionView.frame.size.width = size.width
-      #if !os(OSX)
-        guard let layout = collectionView.collectionViewLayout as? CollectionLayout else {
-          return
-        }
+    type(of: self).configure?(view)
 
-        switch layout.scrollDirection {
-        case .horizontal:
-          collectionView.frame.size = size
-          prepareItems()
-          configurePageControl()
-
-          if collectionView.contentSize.height > 0 {
-            collectionView.frame.size.height = collectionView.contentSize.height
-          } else {
-            collectionView.frame.size.height = component.items.sorted(by: {
-              $0.size.height > $1.size.height
-            }).first?.size.height ?? 0
-
-            if collectionView.frame.size.height > 0 {
-              collectionView.frame.size.height += layout.sectionInset.top + layout.sectionInset.bottom
-            }
-          }
-
-          if !component.header.isEmpty {
-            let resolve = type(of: self).headers.make(component.header)
-            layout.headerReferenceSize.width = collectionView.frame.size.width
-            layout.headerReferenceSize.height = resolve?.view?.frame.size.height ?? 0.0
-          }
-
-          CarouselSpot.configure?(collectionView, layout)
-
-          collectionView.frame.size.height += layout.headerReferenceSize.height
-
-          if let componentLayout = component.layout {
-            collectionView.frame.size.height += CGFloat(componentLayout.inset.top + componentLayout.inset.bottom)
-          }
-
-          if let pageIndicatorPlacement = component.layout?.pageIndicatorPlacement {
-            switch pageIndicatorPlacement {
-            case .below:
-              layout.sectionInset.bottom += pageControl.frame.height
-              pageControl.frame.origin.y = collectionView.frame.height
-            case .overlay:
-              let verticalAdjustment = CGFloat(2)
-              pageControl.frame.origin.y = collectionView.frame.height - pageControl.frame.height - verticalAdjustment
-            }
-          }
-        case .vertical:
-          collectionView.frame.size.width = size.width
-          #if !os(OSX)
-            GridSpot.configure?(collectionView, layout)
-
-            if let resolve = type(of: self).headers.make(component.header),
-              let view = resolve.view as? Componentable,
-              !component.header.isEmpty {
-
-              layout.headerReferenceSize.width = collectionView.frame.size.width
-              layout.headerReferenceSize.height = view.frame.size.height
-
-              if layout.headerReferenceSize.width == 0.0 {
-                layout.headerReferenceSize.width = size.width
-              }
-
-              if layout.headerReferenceSize.height == 0.0 {
-                layout.headerReferenceSize.height = view.preferredHeaderHeight
-              }
-            }
-            collectionView.frame.size.height = layout.contentSize.height
-          #endif
-          layout.prepare()
-
-          component.size = collectionView.frame.size
-        }
-      #endif
-    case let tableView as TableView:
-      var height: CGFloat = 0.0
-      for item in component.items {
-        height += item.size.height
-      }
-
-      tableView.frame.size = size
-      tableView.frame.size.width = size.width - (tableView.contentInset.left)
-      tableView.frame.origin.x = size.width / 2 - tableView.frame.width / 2
-      tableView.contentSize = CGSize(
-        width: tableView.frame.size.width,
-        height: height - tableView.contentInset.top - tableView.contentInset.bottom)
-
-    default: break
+    if let tableView = self.tableView {
+      setupTableView(tableView, with: size)
+    } else if let collectionView = self.collectionView {
+      setupCollectionView(collectionView, with: size)
     }
 
     layout(size)
   }
 
-  public func layout(_ size: CGSize) {
-    switch self.userInterface {
-    case let tableView as TableView:
-      tableView.frame.size.width = size.width - (tableView.contentInset.left)
-      tableView.frame.origin.x = size.width / 2 - tableView.frame.width / 2
+  public func setupTableView(_ tableView: TableView, with size: CGSize) {
+    var height: CGFloat = 0.0
+    for item in component.items {
+      height += item.size.height
+    }
 
-      guard let componentSize = component.size else {
+    tableView.frame.size = size
+    tableView.frame.size.width = size.width - (tableView.contentInset.left)
+    tableView.frame.origin.x = size.width / 2 - tableView.frame.width / 2
+    tableView.contentSize = CGSize(
+      width: tableView.frame.size.width,
+      height: height - tableView.contentInset.top - tableView.contentInset.bottom)
+  }
+
+  public func setupCollectionView(_ collectionView: CollectionView, with size: CGSize) {
+    collectionView.frame.size.width = size.width
+    #if !os(OSX)
+      guard let layout = collectionView.collectionViewLayout as? CollectionLayout else {
         return
       }
-      tableView.frame.size.height = componentSize.height
-    case let collectionView as CollectionView:
-      if compositeSpots.isEmpty {
-        prepareItems()
+
+      switch layout.scrollDirection {
+      case .horizontal:
+        setupHorizontalCollectionView(collectionView, with: size)
+      case .vertical:
+        setupVerticalCollectionView(collectionView, with: size)
       }
+    #endif
+  }
 
-      if let collectionViewLayout = collectionView.collectionViewLayout as? GridableLayout {
-        collectionViewLayout.prepare()
-        collectionViewLayout.invalidateLayout()
+  public func setupHorizontalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
+    guard let layout = collectionView.collectionViewLayout as? GridableLayout else {
+      return
+    }
 
-        collectionView.frame.size.width = collectionViewLayout.contentSize.width
-        collectionView.frame.size.height = collectionViewLayout.contentSize.height
-        collectionView.contentSize.height = collectionView.frame.size.height
-      } else {
-        collectionView.collectionViewLayout.prepare()
-        collectionView.collectionViewLayout.invalidateLayout()
+    collectionView.isScrollEnabled = true
+    prepareItems()
+    configurePageControl()
 
-        collectionView.frame.size.width = collectionView.collectionViewLayout.collectionViewContentSize.width
-        collectionView.frame.size.height = collectionView.collectionViewLayout.collectionViewContentSize.height
+    if collectionView.contentSize.height > 0 {
+      collectionView.frame.size.height = collectionView.contentSize.height
+    } else {
+      collectionView.frame.size.height = component.items.sorted(by: {
+        $0.size.height > $1.size.height
+      }).first?.size.height ?? 0
+
+      if collectionView.frame.size.height > 0 {
+        collectionView.frame.size.height += layout.sectionInset.top + layout.sectionInset.bottom
       }
-    default: break
+    }
+
+    if !component.header.isEmpty {
+      let resolve = type(of: self).headers.make(component.header)
+      layout.headerReferenceSize.width = collectionView.frame.size.width
+      layout.headerReferenceSize.height = resolve?.view?.frame.size.height ?? 0.0
+    }
+
+    CarouselSpot.configure?(collectionView, layout)
+
+    collectionView.frame.size.height += layout.headerReferenceSize.height
+
+    if let componentLayout = component.layout {
+      collectionView.frame.size.height += CGFloat(componentLayout.inset.top + componentLayout.inset.bottom)
+    }
+
+    if let pageIndicatorPlacement = component.layout?.pageIndicatorPlacement {
+      switch pageIndicatorPlacement {
+      case .below:
+        layout.sectionInset.bottom += pageControl.frame.height
+        pageControl.frame.origin.y = collectionView.frame.height
+      case .overlay:
+        let verticalAdjustment = CGFloat(2)
+        pageControl.frame.origin.y = collectionView.frame.height - pageControl.frame.height - verticalAdjustment
+      }
+    }
+  }
+
+  public func setupVerticalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
+    guard let layout = collectionView.collectionViewLayout as? GridableLayout else {
+      return
+    }
+
+    collectionView.isScrollEnabled = false
+    #if !os(OSX)
+      GridSpot.configure?(collectionView, layout)
+
+      if let resolve = type(of: self).headers.make(component.header),
+        let view = resolve.view as? Componentable,
+        !component.header.isEmpty {
+
+        layout.headerReferenceSize.width = collectionView.frame.size.width
+        layout.headerReferenceSize.height = view.frame.size.height
+
+        if layout.headerReferenceSize.width == 0.0 {
+          layout.headerReferenceSize.width = size.width
+        }
+
+        if layout.headerReferenceSize.height == 0.0 {
+          layout.headerReferenceSize.height = view.preferredHeaderHeight
+        }
+      }
+      layout.prepare()
+      collectionView.frame.size.height = layout.contentSize.height
+    #else
+      layout.prepare()
+    #endif
+    component.size = collectionView.frame.size
+  }
+
+  public func layout(_ size: CGSize) {
+    if let tableView = self.tableView {
+      layoutTableView(tableView, with: size)
+    } else if let collectionView = self.collectionView {
+      layoutCollectionView(collectionView, with: size)
     }
 
     view.layoutSubviews()
+  }
+
+  func layoutTableView(_ tableView: TableView, with size: CGSize) {
+    tableView.frame.size.width = size.width - (tableView.contentInset.left)
+    tableView.frame.origin.x = size.width / 2 - tableView.frame.width / 2
+
+    guard let componentSize = component.size else {
+      return
+    }
+    tableView.frame.size.height = componentSize.height
+  }
+
+  func layoutCollectionView(_ collectionView: CollectionView, with size: CGSize) {
+    view.frame.size.width = size.width
+    if compositeSpots.isEmpty {
+      prepareItems()
+    }
+
+    guard let layout = collectionView.collectionViewLayout as? CollectionLayout else {
+      return
+    }
+
+    switch layout.scrollDirection {
+    case .horizontal:
+      layoutHorizontalCollectionView(collectionView, with: size)
+    case .vertical:
+      layoutVerticalCollectionView(collectionView, with: size)
+    }
+  }
+
+  public func layoutHorizontalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
+    guard let collectionViewLayout = collectionView.collectionViewLayout as? GridableLayout else {
+      return
+    }
+
+    collectionViewLayout.prepare()
+    collectionViewLayout.invalidateLayout()
+
+    collectionView.frame.size.width = collectionViewLayout.contentSize.width
+    collectionView.frame.size.height = collectionViewLayout.contentSize.height
+  }
+
+  public func layoutVerticalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
+    collectionView.collectionViewLayout.prepare()
+    collectionView.collectionViewLayout.invalidateLayout()
+
+    collectionView.frame.size.width = collectionView.collectionViewLayout.collectionViewContentSize.width
+    collectionView.frame.size.height = collectionView.collectionViewLayout.collectionViewContentSize.height
   }
 
   private func configurePageControl() {
@@ -351,11 +386,6 @@ public class Spot: NSObject, Spotable {
     }
   }
 
-  /// Asks the data source for the size of an item in a particular location.
-  ///
-  /// - parameter indexPath: The index path of the
-  ///
-  /// - returns: Size of the object at index path as CGSize
   public func sizeForItem(at indexPath: IndexPath) -> CGSize {
     let width =  item(at: indexPath)?.size.width ?? 0
     let height = item(at: indexPath)?.size.height ?? 0
@@ -368,8 +398,8 @@ public class Spot: NSObject, Spotable {
       height: ceil(height)
     )
   }
-  
+
   public func register() {
-    
+
   }
 }
