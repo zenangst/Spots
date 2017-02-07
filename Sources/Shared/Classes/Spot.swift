@@ -7,7 +7,7 @@
 public class Spot: NSObject, Spotable {
 
   /// These are deprecated
-  public static var layout: Layout = Layout()
+  public static var layout: Layout = Layout(span: 1.0)
   public static var headers: Registry = Registry()
   public static var views: Registry = Registry()
   public static var defaultKind: String = Component.Kind.list.string
