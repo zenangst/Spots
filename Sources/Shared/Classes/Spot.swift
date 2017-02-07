@@ -18,7 +18,7 @@ public class Spot: NSObject, Spotable {
   weak public var delegate: SpotsDelegate?
 
   public var component: Component
-  public var componentKind: Component.Kind
+  public var componentKind: Component.Kind = .list
   public var compositeSpots: [CompositeSpot] = []
   public var configure: ((SpotConfigurable) -> Void)?
   public var spotDelegate: Delegate?
@@ -129,7 +129,10 @@ public class Spot: NSObject, Spotable {
     }
 
     self.component = component
-    self.componentKind = Component.Kind(rawValue: component.kind) ?? .list
+
+    if let componentKind = Component.Kind(rawValue: component.kind) {
+      self.componentKind = componentKind
+    }
 
     super.init()
 
