@@ -157,7 +157,7 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
     if !header.isEmpty { JSONComponents[Key.header.string] = header }
     if !footer.isEmpty { JSONComponents[Key.footer.string] = footer }
     if !meta.isEmpty { JSONComponents[Key.meta.string] = meta }
-    
+
     JSONComponents[Key.hybrid.string] = hybrid
 
     return JSONComponents
