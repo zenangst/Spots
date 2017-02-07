@@ -14,6 +14,8 @@ extension UICollectionView: UserInterface {
                  withReuseIdentifier: identifier)
         register(GridWrapper.self,
                  forCellWithReuseIdentifier: identifier)
+        register(GridWrapper.self,
+                 forCellWithReuseIdentifier: Configuration.views.defaultIdentifier)
       case .nib(let nib):
         register(nib, forCellWithReuseIdentifier: identifier)
       }

@@ -7,6 +7,7 @@ extension UITableView: UserInterface {
       switch item {
       case .classType(_):
         register(ListHeaderFooterWrapper.self, forHeaderFooterViewReuseIdentifier: identifier)
+        register(ListWrapper.self, forCellReuseIdentifier: Configuration.views.defaultIdentifier)
         register(ListWrapper.self, forCellReuseIdentifier: identifier)
       case .nib(let nib):
         register(nib, forCellReuseIdentifier: identifier)
