@@ -72,7 +72,6 @@ open class GridSpot: NSObject, Gridable {
 
     super.init()
     self.userInterface = collectionView
-    self.component.layout?.configure(spot: self)
     self.spotDataSource = DataSource(spot: self)
     self.spotDelegate = Delegate(spot: self)
 

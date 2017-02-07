@@ -120,14 +120,6 @@ open class GridableLayout: UICollectionViewFlowLayout {
     }
   }
 
-  open override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-    guard let attribute = super.layoutAttributesForItem(at: indexPath) else {
-      return nil
-    }
-
-    return attribute
-  }
-
   /// Returns the layout attributes for all of the cells and views in the specified rectangle.
   ///
   /// - parameter rect: The rectangle (specified in the collection view’s coordinate system) containing the target views.
@@ -169,7 +161,7 @@ open class GridableLayout: UICollectionViewFlowLayout {
           itemAttribute.size = spot.sizeForItem(at: itemAttribute.indexPath)
 
           if scrollDirection == .horizontal {
-            itemAttribute.frame.origin.y = headerReferenceSize.height + collectionView.contentInset.top
+            itemAttribute.frame.origin.y = headerReferenceSize.height + sectionInset.top
             itemAttribute.frame.origin.x = offset
             offset += itemAttribute.size.width + minimumInteritemSpacing
           }
