@@ -94,7 +94,7 @@ public class Spot: NSObject, Spotable {
     let UIComponent: ScrollView
 
     switch componentKind {
-    case .carousel, .grid, .row:
+    case .row:
       let collectionViewLayout = CollectionLayout()
       component.layout?.configure(collectionViewLayout: collectionViewLayout)
 
@@ -102,10 +102,23 @@ public class Spot: NSObject, Spotable {
         ? .horizontal : .vertical
 
       let collectionView = CollectionView(frame: CGRect.zero, collectionViewLayout: collectionViewLayout)
+      registerDefault(view: RowSpotCell.self)
+      self.userInterface = collectionView
+      UIComponent = collectionView
+    case .carousel, .grid:
+      let collectionViewLayout = CollectionLayout()
+      component.layout?.configure(collectionViewLayout: collectionViewLayout)
+
+      collectionViewLayout.scrollDirection = componentKind == .carousel
+        ? .horizontal : .vertical
+
+      let collectionView = CollectionView(frame: CGRect.zero, collectionViewLayout: collectionViewLayout)
+      registerDefault(view: GridSpotCell.self)
       self.userInterface = collectionView
       UIComponent = collectionView
     case .list:
       let tableView = TableView()
+      registerDefault(view: ListSpotCell.self)
       self.userInterface = tableView
       UIComponent = tableView
     }
