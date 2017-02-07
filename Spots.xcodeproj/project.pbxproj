@@ -305,7 +305,6 @@
 		BDAD85F21E3E7032008289AE /* TypeAlias.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD855F1E3E7032008289AE /* TypeAlias.swift */; };
 		BDAD85F61E3E703A008289AE /* CollectionAdapter+tvOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD85F51E3E703A008289AE /* CollectionAdapter+tvOS.swift */; };
 		BDAE76BA1E46542900415051 /* Spot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAE76B91E46542900415051 /* Spot.swift */; };
-		BDAE76BB1E46542900415051 /* Spot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAE76B91E46542900415051 /* Spot.swift */; };
 		BDAE76BC1E46542900415051 /* Spot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAE76B91E46542900415051 /* Spot.swift */; };
 		BDCFCD421DCA7EFF0047E84C /* TestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCFCD401DCA7EFF0047E84C /* TestController.swift */; };
 		BDCFCD431DCA7EFF0047E84C /* TestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCFCD401DCA7EFF0047E84C /* TestController.swift */; };
@@ -1785,7 +1784,6 @@
 				BDAD85641E3E7032008289AE /* DataSource.swift in Sources */,
 				BDAD85131E3E7025008289AE /* ListSpot.swift in Sources */,
 				BDAD85881E3E7032008289AE /* ScrollDelegate+Extensions.swift in Sources */,
-				BDAE76BB1E46542900415051 /* Spot.swift in Sources */,
 				BDAD85191E3E7025008289AE /* RowSpotItem.swift in Sources */,
 				BDAD85EE1E3E7032008289AE /* StateCache.swift in Sources */,
 				BDAD856D1E3E7032008289AE /* ViewSpot.swift in Sources */,
