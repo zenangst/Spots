@@ -7,6 +7,9 @@ class TestSpot: XCTestCase {
   override func setUp() {
     Configuration.views.storage = [:]
     Configuration.views.defaultItem = nil
+    Configuration.register(view: HeaderView.self, identifier: "Header")
+    Configuration.register(view: TextView.self,   identifier: "TextView")
+    Configuration.register(view: FooterView.self, identifier: "Footer")
   }
 
   func testDefaultValues() {
