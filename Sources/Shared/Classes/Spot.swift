@@ -12,6 +12,8 @@ public class Spot: NSObject, Spotable {
   public static var views: Registry = Registry()
   public static var defaultKind: String = Component.Kind.list.string
 
+  open static var configure: ((_ view: View) -> Void)?
+
   weak public var focusDelegate: SpotsFocusDelegate?
   weak public var delegate: SpotsDelegate?
 
