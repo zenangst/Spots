@@ -50,8 +50,11 @@ public extension Spotable where Self : Gridable {
         }
       }
       collectionView.frame.size.height = layout.contentSize.height
+      collectionView.collectionViewLayout.prepare()
+    #else
+      collectionView.collectionViewLayout?.prepare()
     #endif
-    collectionView.collectionViewLayout.prepare()
+
 
     component.size = collectionView.frame.size
   }
