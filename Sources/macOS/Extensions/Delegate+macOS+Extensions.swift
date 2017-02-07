@@ -132,19 +132,16 @@ extension Delegate: NSTableViewDelegate {
       view.contentView.frame.size.width = tableView.frame.size.width
       view.contentView.frame.size.height = spot.computedHeight
       view.configure(&spot.component.items[row], compositeSpots: spots)
-    case let view as View:
-      let customView = view
+    case let view:
+      if let customView = view {
+        if !(view is NSTableRowView) {
+          let wrapper = ListWrapper()
+          wrapper.configure(with: customView)
+          resolvedView = wrapper
+        }
 
-      if !(view is NSTableRowView) {
-        let wrapper = ListWrapper()
-        wrapper.configure(with: view)
-        resolvedView = wrapper
+        (customView as? SpotConfigurable)?.configure(&spot.component.items[row])
       }
-
-      (customView as? SpotConfigurable)?.configure(&spot.component.items[row])
-    case let view as SpotConfigurable:
-      view.configure(&spot.component.items[row])
-    default: break
     }
 
     (resolvedView as? NSTableRowView)?.identifier = reuseIdentifier
