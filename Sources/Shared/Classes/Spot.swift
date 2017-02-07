@@ -114,6 +114,14 @@ public class Spot: NSObject, Spotable {
   }
   #endif
 
+  public var tableView: TableView? {
+    return userInterface as? TableView
+  }
+
+  public var collectionView: CollectionView? {
+    return userInterface as? CollectionView
+  }
+
   public required init(component: Component) {
     var component = component
     if component.kind.isEmpty {
