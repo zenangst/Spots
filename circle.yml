@@ -1,0 +1,22 @@
+machine:
+  xcode:
+    version: "8.2.1"
+
+dependencies:
+  override:
+    - bin/bootstrap-if-needed
+  cache_directories:
+    - "Carthage"
+
+test:
+  override:
+    - set -o pipefail && xcodebuild -project Spots.xcodeproj -scheme "Spots-iOS" -sdk iphonesimulator clean build | xcpretty
+    - set -o pipefail && xcodebuild -project Spots.xcodeproj -scheme "Spots-iOS" -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 6,OS=10.0' -enableCodeCoverage YES test | xcpretty
+    - set -o pipefail && xcodebuild -project Spots.xcodeproj -scheme "Spots-macOS" -sdk macosx clean build | xcpretty
+    - set -o pipefail && xcodebuild -project Spots.xcodeproj -scheme "Spots-macOS" -sdk macosx -enableCodeCoverage YES test | xcpretty
+    - set -o pipefail && xcodebuild -project Spots.xcodeproj -scheme "Spots-tvOS" -destination 'platform=tvOS Simulator,name=Apple TV 1080p,OS=10.0' clean build | xcpretty
+    - set -o pipefail && xcodebuild -project Spots.xcodeproj -scheme "Spots-tvOS" -destination 'platform=tvOS Simulator,name=Apple TV 1080p,OS=10.0' -enableCodeCoverage YES test | xcpretty
+    - set -o pipefail && xcodebuild -project Spots.xcodeproj -scheme "RxSpots-iOS" -sdk iphonesimulator clean build | xcpretty
+    - set -o pipefail && xcodebuild -project Spots.xcodeproj -scheme "RxSpots-iOS" -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 6,OS=10.0' -enableCodeCoverage YES test | xcpretty
+  post:
+    - bash <(curl -s https://codecov.io/bash)
