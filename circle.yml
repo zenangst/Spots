@@ -10,6 +10,7 @@ dependencies:
 
 test:
   override:
+    - xcodebuild clean
     - set -o pipefail && xcodebuild -project Spots.xcodeproj -scheme "Spots-iOS" -sdk iphonesimulator clean build | xcpretty
     - set -o pipefail && xcodebuild -project Spots.xcodeproj -scheme "Spots-iOS" -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 6,OS=10.0' -enableCodeCoverage YES test | xcpretty
     - set -o pipefail && xcodebuild -project Spots.xcodeproj -scheme "Spots-macOS" -sdk macosx clean build | xcpretty
