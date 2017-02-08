@@ -58,7 +58,8 @@ extension DataSource: NSCollectionViewDataSource {
       item.configure(&spot.component.items[indexPath.item], compositeSpots: spots)
     case let item as SpotConfigurable:
       item.configure(&spot.component.items[indexPath.item])
-    default: break
+    default:
+      break
     }
 
     return item

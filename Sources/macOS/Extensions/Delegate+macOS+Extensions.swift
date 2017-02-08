@@ -144,7 +144,8 @@ extension Delegate: NSTableViewDelegate {
       (customView as? SpotConfigurable)?.configure(&spot.component.items[row])
     case let view as SpotConfigurable:
       view.configure(&spot.component.items[row])
-    default: break
+    default:
+      break
     }
 
     (resolvedView as? NSTableRowView)?.identifier = reuseIdentifier

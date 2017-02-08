@@ -65,7 +65,8 @@ extension DataSource: UICollectionViewDataSource {
       }
     case let view as Componentable:
       view.configure(spot.component)
-    default: break
+    default:
+      break
     }
 
     return view
@@ -115,7 +116,8 @@ extension DataSource: UICollectionViewDataSource {
       }
 
       spot.configure?(cell)
-    default: break
+    default:
+      break
     }
 
     return cell
@@ -183,7 +185,8 @@ extension DataSource: UITableViewDataSource {
       }
 
       spot.configure?(cell)
-    default: break
+    default:
+      break
     }
 
     return cell
