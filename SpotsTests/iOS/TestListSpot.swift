@@ -66,4 +66,20 @@ class ListSpotTests: XCTestCase {
     }
     waitForExpectations(timeout: 0.5, handler: nil)
   }
+
+  func testSpotConfigurationClosure() {
+    Configuration.register(view: TestView.self, identifier: "test-view")
+
+    let items = [Item(title: "Item A", kind: "test-view"), Item(title: "Item B")]
+    let spot = ListSpot(component: Component(span: 0.0, items: items))
+    spot.setup(CGSize(width: 100, height: 100))
+    spot.layout(CGSize(width: 100, height: 100))
+    spot.view.layoutSubviews()
+
+    var invokeCount = 0
+    spot.configure = { view in
+      invokeCount += 1
+    }
+    XCTAssertEqual(invokeCount, 2)
+  }
 }
