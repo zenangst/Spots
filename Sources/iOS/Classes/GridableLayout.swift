@@ -26,7 +26,7 @@ open class GridableLayout: UICollectionViewFlowLayout {
   /// Subclasses should always call super if they override.
   open override func prepare() {
     guard let delegate = collectionView?.delegate as? Delegate,
-      let spot = delegate.spot as? Gridable
+      let spot = delegate.spot
       else {
         return
     }
@@ -96,7 +96,7 @@ open class GridableLayout: UICollectionViewFlowLayout {
         #endif
       }
     case .vertical:
-      contentSize.width = spot.collectionView.frame.width - spot.collectionView.contentInset.left - spot.collectionView.contentInset.right
+      contentSize.width = spot.view.frame.width - sectionInset.left - sectionInset.right
       contentSize.height = super.collectionViewContentSize.height
     }
   }
