@@ -50,7 +50,8 @@ open class CarouselSpot: NSObject, Gridable {
           if let wrappedView = cell.wrappedView as? SpotConfigurable {
             configure(wrappedView)
           }
-        default: break
+        default:
+          break
         }
       }
     }

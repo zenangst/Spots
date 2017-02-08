@@ -280,7 +280,8 @@ public extension Spotable {
     case let view as SpotConfigurable:
       view.configure(&item)
       setFallbackViewSize(to: &item, with: view)
-    default: break
+    default:
+      break
     }
   }
 
