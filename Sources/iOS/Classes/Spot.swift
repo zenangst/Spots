@@ -84,7 +84,7 @@ public class Spot: NSObject, Spotable {
 
   }
 
-  func configureDataSourceAndDelegate() {
+  fileprivate func configureDataSourceAndDelegate() {
     if let tableView = self.tableView {
       tableView.dataSource = spotDataSource
       tableView.delegate = spotDelegate
