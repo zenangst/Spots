@@ -5,8 +5,6 @@ open class GridableLayout: UICollectionViewFlowLayout {
 
   /// The content size for the Gridable object
   public var contentSize = CGSize.zero
-  /// The y offset for the Gridable object
-  open var yOffset: CGFloat?
 
   var footerHeight: CGFloat = 0.0
 
@@ -26,7 +24,7 @@ open class GridableLayout: UICollectionViewFlowLayout {
   /// Subclasses should always call super if they override.
   open override func prepare() {
     guard let delegate = collectionView?.delegate as? Delegate,
-      let spot = delegate.spot as? Gridable
+      let spot = delegate.spot
       else {
         return
     }
@@ -96,7 +94,7 @@ open class GridableLayout: UICollectionViewFlowLayout {
         #endif
       }
     case .vertical:
-      contentSize.width = spot.collectionView.frame.width - spot.collectionView.contentInset.left - spot.collectionView.contentInset.right
+      contentSize.width = spot.view.frame.width - spot.view.contentInset.left - spot.view.contentInset.right
       contentSize.height = super.collectionViewContentSize.height
     }
   }
@@ -113,10 +111,6 @@ open class GridableLayout: UICollectionViewFlowLayout {
       (collectionView.frame.size.height <= contentSize.height ||
       collectionView.contentOffset.y > 0) {
       return
-    }
-
-    if let y = yOffset, collectionView.isDragging && headerReferenceSize.height > 0.0 {
-      collectionView.frame.origin.y = y
     }
   }
 
@@ -179,10 +173,6 @@ open class GridableLayout: UICollectionViewFlowLayout {
       }
     }
 
-    if let y = yOffset, headerReferenceSize.height > 0.0 {
-      collectionView.frame.origin.y = y
-    }
-
     return attributes
   }
 
@@ -192,6 +182,8 @@ open class GridableLayout: UICollectionViewFlowLayout {
   ///
   /// - returns: Always returns true
   open override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
-    return newBounds.size.height >= contentSize.height
+    let shouldInvalidateLayout = newBounds.size.height > contentSize.height || collectionView!.frame.width != newBounds.width
+
+    return shouldInvalidateLayout
   }
 }

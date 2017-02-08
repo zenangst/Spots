@@ -372,19 +372,6 @@ public extension Spotable {
     }
   }
 
-  /// Reload spot with ItemChanges.
-  ///
-  /// - parameter changes:          A collection of changes: inserations, updates, reloads, deletions and updated children.
-  /// - parameter animation:        A Animation that is used when performing the mutation.
-  /// - parameter updateDataSource: A closure to update your data source.
-  /// - parameter completion:       A completion closure that runs when your updates are done.
-  func reloadIfNeeded(_ changes: ItemChanges, withAnimation animation: Animation = .automatic, updateDataSource: () -> Void, completion: Completion) {
-    reloadIfNeeded(changes,
-                   withAnimation: animation,
-                   updateDataSource: updateDataSource,
-                   completion: completion)
-  }
-
   /// A collection of view models
   var items: [Item] {
     set(items) {
@@ -479,6 +466,60 @@ public extension Spotable {
         weakSelf.afterUpdate()
         weakSelf.view.superview?.layoutSubviews()
         weakSelf.cache()
+      }
+    }
+  }
+
+  /// Reload spot with ItemChanges.
+  ///
+  /// - parameter changes:          A collection of changes: inserations, updates, reloads, deletions and updated children.
+  /// - parameter animation:        A Animation that is used when performing the mutation.
+  /// - parameter updateDataSource: A closure to update your data source.
+  /// - parameter completion:       A completion closure that runs when your updates are done.
+  public func reloadIfNeeded(_ changes: ItemChanges, withAnimation animation: Animation = .automatic, updateDataSource: () -> Void, completion: Completion) {
+    userInterface?.process((insertions: changes.insertions, reloads: changes.reloads, deletions: changes.deletions, childUpdates: changes.updatedChildren), withAnimation: animation, updateDataSource: updateDataSource) { [weak self] in
+      guard let weakSelf = self else {
+        completion?()
+        return
+      }
+
+      if changes.updates.isEmpty {
+        weakSelf.process(changes.updatedChildren, withAnimation: animation) {
+          weakSelf.layout(weakSelf.view.bounds.size)
+          completion?()
+        }
+      } else {
+        weakSelf.process(changes.updates, withAnimation: animation) {
+          weakSelf.process(changes.updatedChildren, withAnimation: animation) {
+            weakSelf.layout(weakSelf.view.bounds.size)
+            completion?()
+          }
+        }
+      }
+    }
+  }
+
+  /// Process updates and determine if the updates are done.
+  ///
+  /// - parameter updates:    A collection of updates.
+  /// - parameter animation:  A Animation that is used when performing the mutation.
+  /// - parameter completion: A completion closure that is run when the updates are finished.
+  public func process(_ updates: [Int], withAnimation animation: Animation, completion: Completion) {
+    guard !updates.isEmpty else {
+      completion?()
+      return
+    }
+
+    let lastUpdate = updates.last
+    for index in updates {
+      guard let item = self.item(at: index) else {
+        continue
+      }
+
+      update(item, index: index, withAnimation: animation) {
+        if index == lastUpdate {
+          completion?()
+        }
       }
     }
   }

@@ -10,4 +10,8 @@ extension Layout {
       layout.minimumLineSpacing = CGFloat(lineSpacing)
     }
   }
+
+  public func configure(spot: Spot) {
+    inset.configure(scrollView: spot.view)
+  }
 }

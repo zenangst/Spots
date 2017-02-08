@@ -2,6 +2,19 @@ import UIKit
 
 extension UITableView: UserInterface {
 
+  public func register() {
+    for (identifier, item) in Configuration.views.storage {
+      switch item {
+      case .classType(_):
+        register(ListHeaderFooterWrapper.self, forHeaderFooterViewReuseIdentifier: identifier)
+        register(ListWrapper.self, forCellReuseIdentifier: Configuration.views.defaultIdentifier)
+        register(ListWrapper.self, forCellReuseIdentifier: identifier)
+      case .nib(let nib):
+        register(nib, forCellReuseIdentifier: identifier)
+      }
+    }
+  }
+
   public var selectedIndex: Int {
     return indexPathForSelectedRow?.row ?? 0
   }

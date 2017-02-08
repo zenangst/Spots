@@ -896,4 +896,55 @@ class ControllerTests : XCTestCase {
 
     waitForExpectations(timeout: 2.0, handler: nil)
   }
+
+  func testReloadWithHybridSpots() {
+    Configuration.register(view: HeaderView.self, identifier: "header-view")
+    Configuration.register(view: FooterView.self, identifier: "footer-view")
+    Configuration.register(view: TextView.self, identifier: "text-view")
+
+    let inset = Inset(left: 10.0, right: 10.0)
+    let layout = Layout(span: 3.0, itemSpacing: 1.0, lineSpacing: 1.0, inset: inset)
+    var component = Component(
+      title: "This is a header",
+      header: "header-view",
+      footer: "footer-view",
+      kind: "grid",
+      layout: layout,
+      hybrid: false
+    )
+
+    for x in 0...10 {
+      component.items.append(
+        Item(title: "Testing \(x)", kind: "text-view")
+      )
+    }
+
+    let controller = Controller()
+    var components = [component]
+
+    component.hybrid = true
+    components.append(component)
+
+    controller.prepareController()
+
+    var exception: XCTestExpectation? = expectation(description: "Wait for reloadIfNeeded to be called")
+
+    controller.reloadIfNeeded(components) {
+      guard let spotA = controller.spots.first, let spotB = controller.spots.last else {
+        XCTFail()
+        return
+      }
+
+      XCTAssertTrue(spotA is Gridable)
+      XCTAssertTrue(spotB is Spot)
+
+      XCTAssertEqual(spotA.view.frame.size, spotB.view.frame.size)
+      XCTAssertEqual(spotA.view.contentSize, spotB.view.contentSize)
+
+      exception?.fulfill()
+      exception = nil
+    }
+
+    waitForExpectations(timeout: 1.0, handler: nil)
+  }
 }
