@@ -61,8 +61,10 @@ extension Gridable {
       prepareItems()
     }
 
+    component.layout?.configure(spot: self)
     layout.prepare()
     layout.invalidateLayout()
+
     collectionView.frame.size.width = layout.collectionViewContentSize.width
     collectionView.frame.size.height = layout.collectionViewContentSize.height
   }
