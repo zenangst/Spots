@@ -2,6 +2,26 @@ import UIKit
 
 extension UICollectionView: UserInterface {
 
+  public func register() {
+    for (identifier, item) in Configuration.views.storage {
+      switch item {
+      case .classType(_):
+        register(GridHeaderFooterWrapper.self,
+                 forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
+                 withReuseIdentifier: identifier)
+        register(GridHeaderFooterWrapper.self,
+                 forSupplementaryViewOfKind: UICollectionElementKindSectionFooter,
+                 withReuseIdentifier: identifier)
+        register(GridWrapper.self,
+                 forCellWithReuseIdentifier: identifier)
+        register(GridWrapper.self,
+                 forCellWithReuseIdentifier: Configuration.views.defaultIdentifier)
+      case .nib(let nib):
+        register(nib, forCellWithReuseIdentifier: identifier)
+      }
+    }
+  }
+
   public var visibleViews: [View] {
     return visibleCells
   }
