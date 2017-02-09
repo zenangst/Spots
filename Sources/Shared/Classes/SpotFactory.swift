@@ -29,7 +29,7 @@ public struct Factory {
   public static func resolve(component: Component) -> Spotable {
     var resolvedKind = component.kind
     if component.isHybrid {
-      resolvedKind = "spot"
+      resolvedKind = Component.Kind.row.string
     }
 
     let spot: Spotable.Type = spots[resolvedKind] ?? DefaultSpot
