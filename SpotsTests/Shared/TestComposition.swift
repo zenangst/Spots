@@ -354,6 +354,7 @@ class CompositionTests: XCTestCase {
 
       XCTAssertNotNil(composite)
       XCTAssertNotNil(spotConfigurable)
+      XCTAssertNotNil(composite?.contentView)
       XCTAssertEqual(composite?.contentView.subviews.count, 1)
       XCTAssertTrue(spots[0].compositeSpots[0].parentSpot!.component == spots[0].component)
       XCTAssertTrue(spots[0].compositeSpots[0].spot is Listable)
