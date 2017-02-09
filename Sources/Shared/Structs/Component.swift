@@ -61,6 +61,10 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
     case list
     /// The identifier for RowSpot
     case row
+    /// The identifier for ViewSpot
+    case view
+    /// The identifier for Spot
+    case spot
 
     /// The lowercase raw value of the case
     public var string: String {
