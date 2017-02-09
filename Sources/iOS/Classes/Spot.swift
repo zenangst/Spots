@@ -67,7 +67,7 @@ public class Spot: NSObject, Spotable {
 
     self.spotDataSource = DataSource(spot: self)
     self.spotDelegate = Delegate(spot: self)
-    registerDefault(view: ListSpotCell.self)
+    registerDefaultIfNeeded(view: ListSpotCell.self)
     prepareItems()
   }
 
@@ -145,7 +145,7 @@ public class Spot: NSObject, Spotable {
 
   }
 
-  func registerDefault(view: View.Type) {
+  func registerDefaultIfNeeded(view: View.Type) {
     if Configuration.views.storage[Configuration.views.defaultIdentifier] == nil {
       Configuration.views.defaultItem = Registry.Item.classType(view)
     }
