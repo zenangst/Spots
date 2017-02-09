@@ -28,26 +28,17 @@ public class Spot: NSObject, Spotable {
   public var spotDelegate: Delegate?
   public var spotDataSource: DataSource?
   public var stateCache: StateCache?
-  public var userInterface: UserInterface?
+
+  public var userInterface: UserInterface? {
+    return self.view as? UserInterface
+  }
 
   open lazy var pageControl = UIPageControl()
   open lazy var backgroundView = UIView()
 
   var collectionViewLayout: CollectionLayout?
 
-  public var view: ScrollView {
-    if let userInterface = userInterface as? ScrollView {
-      return userInterface
-    }
-
-    let UIComponent: ScrollView
-    let tableView = TableView()
-    self.userInterface = tableView
-    registerDefault(view: ListSpotCell.self)
-    UIComponent = tableView
-
-    return UIComponent
-  }
+  public var view: ScrollView
 
   public var tableView: TableView? {
     return userInterface as? TableView
@@ -69,34 +60,16 @@ public class Spot: NSObject, Spotable {
       self.componentKind = componentKind
     }
 
-    if component.layout == nil {
-      switch componentKind {
-      case .carousel:
-        self.component.layout = CarouselSpot.layout
-      case .grid:
-        self.component.layout = GridSpot.layout
-      case .list:
-        self.component.layout = ListSpot.layout
-      case .row:
-        self.component.layout = RowSpot.layout
-      case .view:
-        self.component.layout = ViewSpot.layout
-      default:
-        break
-      }
-    }
+    self.component.layout = ListSpot.layout
+    self.view = TableView()
 
     super.init()
 
+    registerDefault(view: ListSpotCell.self)
+
     self.spotDataSource = DataSource(spot: self)
     self.spotDelegate = Delegate(spot: self)
-
-    configureUserInterface(with: component,
-                           userInterface: self.view as? UserInterface)
-
-    if let componentLayout = component.layout {
-      configure(with: componentLayout)
-    }
+    configureDataSourceAndDelegate()
 
     prepareItems()
   }
@@ -104,16 +77,10 @@ public class Spot: NSObject, Spotable {
   deinit {
     spotDataSource = nil
     spotDelegate = nil
-    userInterface = nil
   }
 
   public func configure(with layout: Layout) {
 
-  }
-
-  fileprivate func configureUserInterface(with component: Component, userInterface: UserInterface? = nil) {
-    userInterface?.register()
-    configureDataSourceAndDelegate()
   }
 
   fileprivate func configureDataSourceAndDelegate() {
