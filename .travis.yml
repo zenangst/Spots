@@ -12,8 +12,8 @@ script:
 - set -o pipefail && xcodebuild -project Spots.xcodeproj -scheme "Spots-macOS" -sdk macosx clean build | xcpretty
 - set -o pipefail && xcodebuild -project Spots.xcodeproj -scheme "Spots-macOS" -sdk macosx -enableCodeCoverage YES test | xcpretty
 
-after_success:
-- bash <(curl -s https://codecov.io/bash)
+#after_success:
+#- bash <(curl -s https://codecov.io/bash)
 
 notifications:
 email: false
