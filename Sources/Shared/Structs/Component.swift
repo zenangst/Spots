@@ -222,7 +222,8 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
               interaction: Interaction? = nil,
               span: Double? = nil,
               items: [Item] = [],
-              meta: [String : Any] = [:]) {
+              meta: [String : Any] = [:],
+              hybrid: Bool = false) {
     self.identifier = identifier
     self.title = title
     self.kind = kind
@@ -232,6 +233,7 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
     self.footer = footer
     self.items = items
     self.meta = meta
+    self.isHybrid = hybrid
 
     if let span = span, layout == nil {
       self.layout = Layout(span: span)
