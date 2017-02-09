@@ -95,8 +95,9 @@ class CompositionTests: XCTestCase {
     )
 
     let spot = GridSpot(component: component)
-    spot.view.frame.size = CGSize(width: 200, height: 200)
-    spot.view.layoutIfNeeded()
+    spot.setup(CGSize(width: 200, height: 200))
+    spot.layout(CGSize(width: 200, height: 200))
+    spot.view.layoutSubviews()
 
     var composite: Composable?
     var spotConfigurable: SpotConfigurable?
@@ -354,6 +355,7 @@ class CompositionTests: XCTestCase {
 
       XCTAssertNotNil(composite)
       XCTAssertNotNil(spotConfigurable)
+      XCTAssertNotNil(composite?.contentView)
       XCTAssertEqual(composite?.contentView.subviews.count, 1)
       XCTAssertTrue(spots[0].compositeSpots[0].parentSpot!.component == spots[0].component)
       XCTAssertTrue(spots[0].compositeSpots[0].spot is Listable)
