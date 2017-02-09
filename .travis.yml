@@ -2,15 +2,15 @@ osx_image: xcode8.2
 language: objective-c
 
 cache:
-directories:
-- Carthage
+  directories:
+    - Carthage
 
 before_install:
-- travis_wait 35; bin/bootstrap-if-needed
+  - travis_wait 35; bin/bootstrap-if-needed
 
 script:
-- set -o pipefail && xcodebuild -project Spots.xcodeproj -scheme "Spots-macOS" -sdk macosx clean build | xcpretty
-- set -o pipefail && xcodebuild -project Spots.xcodeproj -scheme "Spots-macOS" -sdk macosx -enableCodeCoverage YES test | xcpretty
+  - set -o pipefail && xcodebuild -project Spots.xcodeproj -scheme "Spots-macOS" -sdk macosx clean build | xcpretty
+  - set -o pipefail && xcodebuild -project Spots.xcodeproj -scheme "Spots-macOS" -sdk macosx -enableCodeCoverage YES test | xcpretty
 
 #after_success:
 #- bash <(curl -s https://codecov.io/bash)
