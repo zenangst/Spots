@@ -35,7 +35,19 @@ public class Spot: NSObject, Spotable {
 
   var collectionViewLayout: CollectionLayout?
 
-  public var view: ScrollView = ScrollView()
+  public var view: ScrollView {
+    if let userInterface = userInterface as? ScrollView {
+      return userInterface
+    }
+
+    let UIComponent: ScrollView
+    let tableView = TableView()
+    self.userInterface = tableView
+    registerDefault(view: ListSpotCell.self)
+    UIComponent = tableView
+
+    return UIComponent
+  }
 
   public var tableView: TableView? {
     return userInterface as? TableView
