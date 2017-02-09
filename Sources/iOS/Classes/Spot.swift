@@ -65,12 +65,11 @@ public class Spot: NSObject, Spotable {
 
     super.init()
 
-    registerDefault(view: ListSpotCell.self)
-
     self.spotDataSource = DataSource(spot: self)
     self.spotDelegate = Delegate(spot: self)
-    configureDataSourceAndDelegate()
 
+    configureDataSourceAndDelegate()
+    registerDefault(view: ListSpotCell.self)
     prepareItems()
   }
 
