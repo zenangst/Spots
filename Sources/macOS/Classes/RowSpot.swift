@@ -166,6 +166,8 @@ open class RowSpot: NSObject, Gridable {
       self.component.kind = Component.Kind.grid.string
     }
 
+    registerDefault(view: RowSpotItem.self)
+    registerComposite(view: GridComposite.self)
     registerAndPrepare()
     setupCollectionView()
     scrollView.addSubview(titleView)

@@ -116,7 +116,8 @@ extension Delegate: UITableViewDelegate {
         }
       case let view as Componentable:
         view.configure(spot.component)
-      default: break
+      default:
+        break
       }
 
       return view?.frame.size.height ?? 0.0
@@ -145,7 +146,8 @@ extension Delegate: UITableViewDelegate {
         }
       case let view as Componentable:
         view.configure(spot.component)
-      default: break
+      default:
+        break
       }
 
       return view?.frame.size.height ?? 0.0
@@ -239,7 +241,8 @@ extension Delegate: UITableViewDelegate {
       }
       case let view as Componentable:
       view.configure(spot.component)
-      default: break
+      default:
+        break
     }
 
     return view
@@ -266,7 +269,8 @@ extension Delegate: UITableViewDelegate {
       }
     case let view as Componentable:
       view.configure(spot.component)
-    default: break
+    default:
+      break
     }
 
     return view

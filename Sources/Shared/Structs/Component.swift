@@ -44,6 +44,7 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
     case width
     case height
     case footer
+    case hybrid
 
     public var string: String {
       return rawValue.lowercased()
@@ -103,6 +104,8 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
   public var size: CGSize?
   /// A key-value dictionary for any additional information
   public var meta = [String: Any]()
+  /// Delcares if the Component uses core types or Spot class as it's base class.
+  public var isHybrid: Bool = false
 
   /// A dictionary representation of the component
   public var dictionary: [String : Any] {
@@ -156,6 +159,8 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
     if !footer.isEmpty { JSONComponents[Key.footer.string] = footer }
     if !meta.isEmpty { JSONComponents[Key.meta.string] = meta }
 
+    JSONComponents[Key.hybrid.string] = isHybrid
+
     return JSONComponents
   }
 
@@ -172,6 +177,7 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
     self.footer    <- map.property("footer")
     self.items     <- map.relations("items")
     self.meta      <- map.property("meta")
+    self.isHybrid  <- map.property("hybrid")
 
     if Component.legacyMapping {
       self.layout = Layout(map.property("meta") ?? [:])
@@ -216,7 +222,8 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
               interaction: Interaction? = nil,
               span: Double? = nil,
               items: [Item] = [],
-              meta: [String : Any] = [:]) {
+              meta: [String : Any] = [:],
+              hybrid: Bool = false) {
     self.identifier = identifier
     self.title = title
     self.kind = kind
@@ -226,6 +233,7 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
     self.footer = footer
     self.items = items
     self.meta = meta
+    self.isHybrid = hybrid
 
     if let span = span, layout == nil {
       self.layout = Layout(span: span)

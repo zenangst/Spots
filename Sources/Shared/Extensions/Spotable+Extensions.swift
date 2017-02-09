@@ -62,6 +62,27 @@ public extension Spotable {
     return height
   }
 
+  #if !os(OSX)
+  public func configureClosureDidChange() {
+    guard let configure = configure else {
+      return
+    }
+
+    userInterface?.visibleViews.forEach { view in
+      switch view {
+      case let view as SpotConfigurable:
+        configure(view)
+      case let view as Wrappable:
+        if let wrappedView = view.wrappedView as? SpotConfigurable {
+          configure(wrappedView)
+        }
+      default:
+        break
+      }
+    }
+  }
+  #endif
+
   /// A helper method to return self as a Spotable type.
   ///
   /// - returns: Self as a Spotable type
@@ -280,7 +301,8 @@ public extension Spotable {
     case let view as SpotConfigurable:
       view.configure(&item)
       setFallbackViewSize(to: &item, with: view)
-    default: break
+    default:
+      break
     }
   }
 

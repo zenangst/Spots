@@ -2,6 +2,10 @@ import UIKit
 
 extension UICollectionView: UserInterface {
 
+  public var visibleViews: [View] {
+    return visibleCells
+  }
+
   /// The index of the current selected item
   @available(iOS 9.0, *)
   public var selectedIndex: Int {

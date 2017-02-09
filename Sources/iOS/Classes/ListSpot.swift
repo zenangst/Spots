@@ -37,10 +37,7 @@ open class ListSpot: NSObject, Listable {
   /// A configuration closure
   open var configure: ((SpotConfigurable) -> Void)? {
     didSet {
-      guard let configure = configure else { return }
-      for case let cell as SpotConfigurable in tableView.visibleCells {
-        configure(cell)
-      }
+      configureClosureDidChange()
     }
   }
 

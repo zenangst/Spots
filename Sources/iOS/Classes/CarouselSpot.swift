@@ -32,16 +32,15 @@ open class CarouselSpot: NSObject, Gridable {
 
   /// A component struct used as configuration and data source for the CarouselSpot
   open var component: Component {
-    didSet { configurePageControl() }
+    didSet {
+      configurePageControl()
+    }
   }
 
   /// A configuration closure
   open var configure: ((SpotConfigurable) -> Void)? {
     didSet {
-      guard let configure = configure else { return }
-      for case let cell as SpotConfigurable in collectionView.visibleCells {
-        configure(cell)
-      }
+      configureClosureDidChange()
     }
   }
 
