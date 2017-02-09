@@ -433,9 +433,13 @@ public extension Spotable {
       return item.kind
     } else if let item = item(at: index), Configuration.views.storage[item.kind] != nil {
       return item.kind
-    } else {
+    } else if type.views.defaultItem != nil {
       return type.views.defaultIdentifier
+    } else if let _ = item(at: index), Configuration.views.defaultItem != nil {
+      return Configuration.views.defaultIdentifier
     }
+
+    return type.views.defaultIdentifier
   }
 
   /// Register and prepare all items in the Spotable object.
