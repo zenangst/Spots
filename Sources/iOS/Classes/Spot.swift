@@ -87,6 +87,9 @@ public class Spot: NSObject, Spotable {
     self.spotDataSource = DataSource(spot: self)
     self.spotDelegate = Delegate(spot: self)
 
+    configureUserInterface(with: component,
+                           userInterface: self.view as? UserInterface)
+
     if let componentLayout = component.layout {
       configure(with: componentLayout)
     }
