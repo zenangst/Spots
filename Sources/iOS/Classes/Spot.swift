@@ -18,7 +18,9 @@ public class Spot: NSObject, Spotable {
   public var compositeSpots: [CompositeSpot] = []
 
   public var configure: ((SpotConfigurable) -> Void)? {
-    didSet { configureClosureDidChange() }
+    didSet {
+      configureClosureDidChange()
+    }
   }
 
   public var spotDelegate: Delegate?

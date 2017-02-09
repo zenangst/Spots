@@ -32,12 +32,16 @@ open class CarouselSpot: NSObject, Gridable {
 
   /// A component struct used as configuration and data source for the CarouselSpot
   open var component: Component {
-    didSet { configurePageControl() }
+    didSet {
+      configurePageControl()
+    }
   }
 
   /// A configuration closure
   open var configure: ((SpotConfigurable) -> Void)? {
-    didSet { configureClosureDidChange() }
+    didSet {
+      configureClosureDidChange()
+    }
   }
 
   /// A CarouselScrollDelegate, used when a CarouselSpot scrolls

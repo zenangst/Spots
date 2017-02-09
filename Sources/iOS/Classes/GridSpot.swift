@@ -28,7 +28,9 @@ open class GridSpot: NSObject, Gridable {
 
   /// A configuration closure
   open var configure: ((SpotConfigurable) -> Void)? {
-    didSet { configureClosureDidChange() }
+    didSet {
+      configureClosureDidChange()
+    }
   }
 
   /// A SpotsDelegate that is used for the GridSpot

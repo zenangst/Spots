@@ -36,7 +36,9 @@ open class ListSpot: NSObject, Listable {
 
   /// A configuration closure
   open var configure: ((SpotConfigurable) -> Void)? {
-    didSet { configureClosureDidChange() }
+    didSet {
+      configureClosureDidChange()
+    }
   }
 
   /// A SpotsDelegate that is used for the ListSpot
