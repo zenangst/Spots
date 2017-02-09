@@ -2,6 +2,10 @@ import UIKit
 
 extension UITableView: UserInterface {
 
+  public var visibleViews: [View] {
+    return visibleCells
+  }
+
   public var selectedIndex: Int {
     return indexPathForSelectedRow?.row ?? 0
   }
