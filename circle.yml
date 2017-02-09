@@ -5,6 +5,7 @@ machine:
 dependencies:
   override:
     - bin/bootstrap-if-needed
+    - brew install swiftlint
   cache_directories:
     - "Carthage"
 
