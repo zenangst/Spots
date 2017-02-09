@@ -79,6 +79,10 @@ public class Spot: NSObject, Spotable {
         self.component.layout = ListSpot.layout
       case .row:
         self.component.layout = RowSpot.layout
+      case .view:
+        self.component.layout = ViewSpot.layout
+      default:
+        break
       }
     }
 
