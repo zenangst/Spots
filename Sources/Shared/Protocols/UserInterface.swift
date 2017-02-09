@@ -86,8 +86,6 @@ public protocol UserInterface: class {
   /// A proxy method to call reloadData
   func reloadDataSource()
 
-  #if !os(OSX)
   /// Register all views from Configuration on user interface object.
   func register()
-  #endif
 }
