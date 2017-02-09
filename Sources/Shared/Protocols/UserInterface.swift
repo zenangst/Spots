@@ -4,6 +4,8 @@ import Brick
 public protocol UserInterface: class {
 
   #if !os(OSX)
+  var visibleViews: [View] { get }
+
   /// The index of the current selected item
   @available(iOS 9.0, *)
   var selectedIndex: Int { get }
