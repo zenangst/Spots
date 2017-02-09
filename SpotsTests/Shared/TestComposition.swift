@@ -95,7 +95,8 @@ class CompositionTests: XCTestCase {
     )
 
     let spot = GridSpot(component: component)
-    spot.view.frame.size = CGSize(width: 200, height: 200)
+    spot.setup(CGSize(width: 200, height: 200))
+    spot.layout(CGSize(width: 200, height: 200))
     spot.view.layoutIfNeeded()
 
     var composite: Composable?
