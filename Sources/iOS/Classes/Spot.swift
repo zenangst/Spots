@@ -172,7 +172,8 @@ public class Spot: NSObject, Spotable {
   }
 
   fileprivate func layoutTableView(_ tableView: TableView, with size: CGSize) {
-
+    tableView.frame.size.width = size.width - (tableView.contentInset.left)
+    tableView.frame.origin.x = size.width / 2 - tableView.frame.width / 2
   }
 
   fileprivate func layoutHorizontalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
