@@ -16,4 +16,4 @@ script:
 #- bash <(curl -s https://codecov.io/bash)
 
 notifications:
-email: false
+  email: false
