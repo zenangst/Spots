@@ -27,7 +27,13 @@ public struct Factory {
   ///
   /// - returns: A spotable object.
   public static func resolve(component: Component) -> Spotable {
-    let spot: Spotable.Type = spots[component.kind] ?? DefaultSpot
+    var resolvedKind = component.kind
+    if component.isHybrid {
+      resolvedKind = "spot"
+    }
+
+    let spot: Spotable.Type = spots[resolvedKind] ?? DefaultSpot
+
     return spot.init(component: component)
   }
 }
