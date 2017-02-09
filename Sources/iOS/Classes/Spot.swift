@@ -92,6 +92,11 @@ public class Spot: NSObject, Spotable {
 
   }
 
+  fileprivate func configureUserInterface(with component: Component, userInterface: UserInterface? = nil) {
+    userInterface?.register()
+    configureDataSourceAndDelegate()
+  }
+
   fileprivate func configureDataSourceAndDelegate() {
     if let tableView = self.tableView {
       tableView.dataSource = spotDataSource
