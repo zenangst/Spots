@@ -5,11 +5,12 @@ public struct Factory {
 
   /// Defaults spots, it includes carousel, list, grid and view
   private static var spots: [String: Spotable.Type] = [
-    "carousel": CarouselSpot.self,
-    "list": ListSpot.self,
-    "grid": GridSpot.self,
-    "row": RowSpot.self,
-    "view": ViewSpot.self
+    Component.Kind.carousel.string: CarouselSpot.self,
+    Component.Kind.list.string: ListSpot.self,
+    Component.Kind.grid.string: GridSpot.self,
+    Component.Kind.row.string: RowSpot.self,
+    Component.Kind.view.string: ViewSpot.self,
+    Component.Kind.spot.string: Spot.self
   ]
 
   /// Register a spot for a specfic spot type
