@@ -67,8 +67,6 @@ public class Spot: NSObject, Spotable {
 
     self.spotDataSource = DataSource(spot: self)
     self.spotDelegate = Delegate(spot: self)
-
-    configureDataSourceAndDelegate()
     registerDefault(view: ListSpotCell.self)
     prepareItems()
   }
@@ -80,16 +78,6 @@ public class Spot: NSObject, Spotable {
 
   public func configure(with layout: Layout) {
 
-  }
-
-  fileprivate func configureDataSourceAndDelegate() {
-    if let tableView = self.tableView {
-      tableView.dataSource = spotDataSource
-      tableView.delegate = spotDelegate
-    } else if let collectionView = self.collectionView {
-      collectionView.dataSource = spotDataSource
-      collectionView.delegate = spotDelegate
-    }
   }
 
   public func setup(_ size: CGSize) {
@@ -118,6 +106,8 @@ public class Spot: NSObject, Spotable {
       height += item.size.height
     }
 
+    tableView.dataSource = spotDataSource
+    tableView.delegate = spotDelegate
     tableView.frame.size = size
     tableView.frame.size.width = size.width - (tableView.contentInset.left)
     tableView.frame.origin.x = size.width / 2 - tableView.frame.width / 2
@@ -127,7 +117,8 @@ public class Spot: NSObject, Spotable {
   }
 
   fileprivate func setupCollectionView(_ collectionView: CollectionView, with size: CGSize) {
-
+    collectionView.dataSource = spotDataSource
+    collectionView.delegate = spotDelegate
   }
 
   fileprivate func setupHorizontalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
