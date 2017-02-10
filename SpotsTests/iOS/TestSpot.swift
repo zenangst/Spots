@@ -70,7 +70,6 @@ class TestSpot: XCTestCase {
       header: "Header",
       footer: "Footer",
       kind: Component.Kind.list.string,
-      layout: Layout(span: 2.0),
       items: [
         Item(title: "A"),
         Item(title: "B"),
