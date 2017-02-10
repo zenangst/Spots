@@ -61,7 +61,12 @@ public class Spot: NSObject, Spotable {
     }
 
     self.component.layout = ListSpot.layout
-    self.view = TableView()
+
+    if componentKind == .list {
+      self.view = TableView()
+    } else {
+      self.view = CollectionView()
+    }
 
     super.init()
 
