@@ -383,7 +383,10 @@ func compareRelations(_ lhs: Item, _ rhs: Item) -> Bool {
 
   for (key, value) in lhs.relations {
     guard let rightValue = rhs.relations[key], value == rightValue
-      else { equal = false; break }
+      else {
+        equal = false
+        break
+    }
   }
 
   return equal
