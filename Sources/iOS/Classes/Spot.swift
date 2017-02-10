@@ -82,7 +82,6 @@ public class Spot: NSObject, Spotable {
 
     self.spotDataSource = DataSource(spot: self)
     self.spotDelegate = Delegate(spot: self)
-    ¸
     prepareItems()
   }
 
