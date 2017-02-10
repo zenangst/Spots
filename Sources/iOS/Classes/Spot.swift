@@ -171,7 +171,6 @@ public class Spot: NSObject, Spotable {
       return
     }
 
-    collectionView.isScrollEnabled = false
     GridSpot.configure?(collectionView, collectionViewLayout)
 
     guard !component.header.isEmpty else {
