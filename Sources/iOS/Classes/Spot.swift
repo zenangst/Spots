@@ -76,6 +76,7 @@ public class Spot: NSObject, Spotable {
         self.component.layout = CarouselSpot.layout
       case .grid:
         self.component.layout = GridSpot.layout
+        registerDefaultIfNeeded(view: GridSpotCell.self)
       case .list:
         self.component.layout = ListSpot.layout
         registerDefaultIfNeeded(view: ListSpotCell.self)
