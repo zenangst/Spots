@@ -91,7 +91,6 @@ public class Spot: NSObject, Spotable {
 
     self.spotDataSource = DataSource(spot: self)
     self.spotDelegate = Delegate(spot: self)
-    prepareItems()
   }
 
   deinit {
@@ -124,13 +123,23 @@ public class Spot: NSObject, Spotable {
   }
 
   fileprivate func setupTableView(_ tableView: TableView, with size: CGSize) {
+    guard let layout = component.layout else {
+      return
+    }
+
+    if layout.span >= 1.0 {
+      prepareItems()
+    }
+
     tableView.dataSource = spotDataSource
     tableView.delegate = spotDelegate
     tableView.frame.size = size
     tableView.frame.size.width = round(size.width - (tableView.contentInset.left))
     tableView.frame.origin.x = round(size.width / 2 - tableView.frame.width / 2)
 
-    prepareItems()
+    if layout.span < 1.0 {
+      prepareItems()
+    }
 
     var height: CGFloat = 0.0
     for item in component.items {
