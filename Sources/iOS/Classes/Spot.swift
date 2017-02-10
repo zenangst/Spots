@@ -66,6 +66,7 @@ public class Spot: NSObject, Spotable {
       let collectionViewLayout = CollectionLayout()
       let collectionView = CollectionView(frame: CGRect.zero, collectionViewLayout: collectionViewLayout)
       self.view = collectionView
+      self.collectionViewLayout = collectionViewLayout
     }
 
     super.init()
