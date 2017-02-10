@@ -228,15 +228,9 @@ public class Spot: NSObject, Spotable {
   }
 
   public func sizeForItem(at indexPath: IndexPath) -> CGSize {
-    var width: CGFloat = 0.0
-    var height: CGFloat = 0.0
-
-    width  <- item(at: indexPath)?.size.width
-    height <- item(at: indexPath)?.size.height
-
     return CGSize(
-      width: floor(width),
-      height: ceil(height)
+      width:  item(at: indexPath)?.size.width  ?? 0.0,
+      height: item(at: indexPath)?.size.height ?? 0.0
     )
   }
 
