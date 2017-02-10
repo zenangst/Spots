@@ -515,8 +515,6 @@ end
 
 ## Dependencies
 
-- **[Brick](https://github.com/hyperoslo/Brick)**
-`Item` comes from `Brick`.
 - **[Cache](https://github.com/hyperoslo/Cache)**
 Used for `Component` and `Item` caching when initializing a `Controller` or `Spotable` object with a cache key.
 - **[Tailor](https://github.com/zenangst/Tailor)**
