@@ -82,6 +82,6 @@ class TestSpot: XCTestCase {
     spot.setup(CGSize(width: 100, height: 100))
 
     XCTAssertEqual(spot.view.frame.size, CGSize(width: 100, height: 100))
-    XCTAssertEqual(spot.view.contentSize, CGSize(width: 100, height: 176))
+    XCTAssertEqual(spot.view.contentSize, CGSize(width: 100, height: 276))
   }
 }
