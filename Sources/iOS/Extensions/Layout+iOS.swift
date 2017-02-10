@@ -13,4 +13,16 @@ extension Layout {
     spot.layout.minimumInteritemSpacing = CGFloat(itemSpacing)
     spot.layout.minimumLineSpacing = CGFloat(lineSpacing)
   }
+
+  public func configure(spot: Spot) {
+    spot.collectionViewLayout?.sectionInset = UIEdgeInsets(
+      top: CGFloat(inset.top),
+      left: CGFloat(inset.left),
+      bottom: CGFloat(inset.bottom),
+      right: CGFloat(inset.right)
+    )
+
+    spot.collectionViewLayout?.minimumInteritemSpacing = CGFloat(itemSpacing)
+    spot.collectionViewLayout?.minimumLineSpacing = CGFloat(lineSpacing)
+  }
 }
