@@ -1,4 +1,3 @@
-import Brick
 import Cocoa
 
 // MARK: - An extension on Composable views

@@ -165,8 +165,8 @@ What all **Spotable** objects have in common is that all of them use the same **
 They also share the same **Item** struct for its children.
 The child is a data container that includes the size of the view on screen and the remaining information to configure your view.
 
-To add your own view to **Spots**, you need the view to conform to **SpotConfigurable** and inherit from the core class that your component is based on (UITableViewCell on ListSpot, UICollectionViewCell on CarouselSpot and GridSpot).
-**SpotConfigurable** requires you to implement one property and one method.
+To add your own view to **Spots**, you need the view to conform to **ItemConfigurable** and inherit from the core class that your component is based on (UITableViewCell on ListSpot, UICollectionViewCell on CarouselSpot and GridSpot).
+**ItemConfigurable** requires you to implement one property and one method.
 
 We don’t like to dictate the terms of how you build your views, if you prefer to build them using `.nib` files, you should be free to do so, and with **Spots** you can. The only thing that differs is how you register the view on the component.
 
@@ -191,7 +191,7 @@ func configure(inout item: Item) {
 
 **Item** is a struct, but because of the **inout** keyword in the method declaration it can perform mutation and pass that back to the data source. If you prefer the size to be static, you can simply not set the height and **Spots** will handle setting it for you based on the **preferredViewSize**.
 
-When your view conforms to **SpotConfigurable**, you need to register it with a unique identifier for that view.
+When your view conforms to **ItemConfigurable**, you need to register it with a unique identifier for that view.
 
 You register your view on the component that you want to display it in.
 

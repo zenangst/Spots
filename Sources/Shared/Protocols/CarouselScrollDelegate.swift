@@ -1,5 +1,3 @@
-import Brick
-
 public protocol CarouselScrollDelegate: class {
 
   /// Invoked when ever a user scrolls a CarouselSpot.

@@ -1,8 +1,7 @@
 import UIKit
-import Brick
 
 /// A boilerplate cell for ListSpot
-open class ListSpotCell: UITableViewCell, SpotConfigurable {
+open class ListSpotCell: UITableViewCell, ItemConfigurable {
 
   /// The preferred view size for the view, width will be ignored for ListSpot cells
   open var preferredViewSize = CGSize(width: 0, height: 44)

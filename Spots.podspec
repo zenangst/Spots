@@ -20,7 +20,6 @@ Pod::Spec.new do |s|
     ss.osx.source_files = 'Sources/{macOS,Shared}/**/*'
     ss.tvos.source_files = 'Sources/{iOS,tvOS,Shared}/**/*'
     ss.dependency 'Tailor', '~> 2.0'
-    ss.dependency 'Brick', '~> 2.0'
     ss.dependency 'Cache', '~> 2.0'
     ss.dependency 'CryptoSwift', '0.6.0'
     ss.framework  = "Foundation"

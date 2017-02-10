@@ -1,5 +1,4 @@
 import UIKit
-import Brick
 
 // MARK: - Extensions for Spotable objects that also confirm to Listable
 public extension Listable {

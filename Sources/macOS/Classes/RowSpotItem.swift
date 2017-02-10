@@ -1,5 +1,4 @@
 import Cocoa
-import Brick
 
 open class FlippedView: NSView {
   override open var isFlipped: Bool {
@@ -7,7 +6,7 @@ open class FlippedView: NSView {
   }
 }
 
-open class RowSpotItem: NSCollectionViewItem, SpotConfigurable {
+open class RowSpotItem: NSCollectionViewItem, ItemConfigurable {
 
   open override var isSelected: Bool {
     didSet {

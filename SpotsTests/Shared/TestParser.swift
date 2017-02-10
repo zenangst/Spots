@@ -1,7 +1,6 @@
 @testable import Spots
 import Foundation
 import XCTest
-import Brick
 
 class ParserTests : XCTestCase {
 

@@ -1,5 +1,4 @@
 @testable import Spots
-import Brick
 import Foundation
 import XCTest
 

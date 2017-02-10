@@ -1,5 +1,4 @@
 import Tailor
-import Brick
 
 /// A content inset struct used for configuring layout on Spotable objects.
 public struct Inset: Mappable, Equatable {

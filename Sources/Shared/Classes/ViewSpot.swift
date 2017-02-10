@@ -3,7 +3,6 @@
 #else
   import UIKit
 #endif
-import Brick
 
 open class ViewSpot: NSObject, Spotable, Viewable {
 
@@ -33,7 +32,7 @@ open class ViewSpot: NSObject, Spotable, Viewable {
   open weak var delegate: SpotsDelegate?
   open var component: Component
   open var index = 0
-  open var configure: ((SpotConfigurable) -> Void)?
+  open var configure: ((ItemConfigurable) -> Void)?
 
   /// A SpotsFocusDelegate object
   weak public var focusDelegate: SpotsFocusDelegate?

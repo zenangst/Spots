@@ -1,4 +1,3 @@
-import Brick
 import Foundation
 
 public typealias ItemChanges = (

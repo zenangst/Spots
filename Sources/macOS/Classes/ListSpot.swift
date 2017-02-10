@@ -1,7 +1,6 @@
 // swiftlint:disable weak_delegate
 
 import Cocoa
-import Brick
 
 open class ListSpot: NSObject, Listable {
 
@@ -51,12 +50,12 @@ open class ListSpot: NSObject, Listable {
 
   /// A component struct used as configuration and data source for the ListSpot
   open var component: Component
-  open var configure: ((SpotConfigurable) -> Void)? {
+  open var configure: ((ItemConfigurable) -> Void)? {
     didSet {
       guard let configure = configure else { return }
       let range = tableView.rows(in: scrollView.contentView.visibleRect)
       (range.location..<range.length).forEach { i in
-        if let view = tableView.rowView(atRow: i, makeIfNecessary: false) as? SpotConfigurable {
+        if let view = tableView.rowView(atRow: i, makeIfNecessary: false) as? ItemConfigurable {
           configure(view)
         }
       }

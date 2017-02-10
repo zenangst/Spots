@@ -1,7 +1,6 @@
 // swiftlint:disable weak_delegate
 
 import UIKit
-import Brick
 
 /// A Spotable object that uses UITableView to render its items
 open class ListSpot: NSObject, Listable {
@@ -35,7 +34,7 @@ open class ListSpot: NSObject, Listable {
   public var compositeSpots: [CompositeSpot] = []
 
   /// A configuration closure
-  open var configure: ((SpotConfigurable) -> Void)? {
+  open var configure: ((ItemConfigurable) -> Void)? {
     didSet {
       configureClosureDidChange()
     }

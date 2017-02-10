@@ -4,8 +4,6 @@
   import UIKit
 #endif
 
-import Brick
-
 // MARK: - Spotable extension
 public extension Spotable {
 
@@ -70,10 +68,10 @@ public extension Spotable {
 
     userInterface?.visibleViews.forEach { view in
       switch view {
-      case let view as SpotConfigurable:
+      case let view as ItemConfigurable:
         configure(view)
       case let view as Wrappable:
-        if let wrappedView = view.wrappedView as? SpotConfigurable {
+        if let wrappedView = view.wrappedView as? ItemConfigurable {
           configure(wrappedView)
         }
       default:
@@ -298,7 +296,7 @@ public extension Spotable {
     switch view {
     case let view as Composable:
       prepare(composable: view, item: &item)
-    case let view as SpotConfigurable:
+    case let view as ItemConfigurable:
       view.configure(&item)
       setFallbackViewSize(to: &item, with: view)
     default:
@@ -314,8 +312,8 @@ public extension Spotable {
     // Set initial size for view
     view.frame.size.width = view.frame.size.width
 
-    if let spotConfigurable = view as? SpotConfigurable, view.frame.size.height == 0.0 {
-      view.frame.size = spotConfigurable.preferredViewSize
+    if let ItemConfigurable = view as? ItemConfigurable, view.frame.size.height == 0.0 {
+      view.frame.size = ItemConfigurable.preferredViewSize
     }
 
     if view.frame.size.width == 0.0 {
@@ -381,7 +379,7 @@ public extension Spotable {
   /// - Parameters:
   ///   - item: The item struct that is being configured.
   ///   - view: The view used for fallback size for the item.
-  private func setFallbackViewSize(to item: inout Item, with view: SpotConfigurable) {
+  private func setFallbackViewSize(to item: inout Item, with view: ItemConfigurable) {
     let hasExplicitHeight: Bool = item.size.height == 0.0
 
     if hasExplicitHeight {
