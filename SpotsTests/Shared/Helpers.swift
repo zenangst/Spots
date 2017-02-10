@@ -1,11 +1,24 @@
 @testable import Spots
-import Brick
 #if os(OSX)
 import Foundation
 #else
 import UIKit
 #endif
 
+import Tailor
+
+struct Meta {
+  var id = 0
+  var name: String?
+}
+
+extension Meta: Mappable {
+
+  init(_ map: [String : Any]) {
+    id = map.property("id") ?? 0
+    name = map.property("name") ?? ""
+  }
+}
 
 extension Controller {
 
@@ -47,7 +60,7 @@ struct Helper {
 }
 
 #if !os(OSX)
-  class HeaderView: UIView, SpotConfigurable, Componentable {
+  class HeaderView: UIView, ItemConfigurable, Componentable {
 
     public var preferredHeaderHeight: CGFloat = 50.0
 
@@ -87,7 +100,7 @@ struct Helper {
     }
   }
 
-  class FooterView: UIView, SpotConfigurable, Componentable {
+  class FooterView: UIView, ItemConfigurable, Componentable {
 
     var preferredHeaderHeight: CGFloat = 50
 
@@ -127,7 +140,7 @@ struct Helper {
     }
   }
 
-  class TextView: UIView, SpotConfigurable {
+  class TextView: UIView, ItemConfigurable {
 
     var preferredViewSize: CGSize = CGSize(width: 200, height: 50)
 
@@ -163,7 +176,7 @@ struct Helper {
     }
   }
 
-  class CustomListCell: UITableViewCell, SpotConfigurable {
+  class CustomListCell: UITableViewCell, ItemConfigurable {
 
     var preferredViewSize: CGSize = CGSize(width: 0, height: 44)
 
@@ -180,7 +193,7 @@ struct Helper {
     }
   }
 
-  class CustomGridCell: UICollectionViewCell, SpotConfigurable {
+  class CustomGridCell: UICollectionViewCell, ItemConfigurable {
 
     var preferredViewSize: CGSize = CGSize(width: 0, height: 44)
 
@@ -199,7 +212,7 @@ struct Helper {
   }
 #endif
 
-class TestView: View, SpotConfigurable {
+class TestView: View, ItemConfigurable {
   var preferredViewSize: CGSize = CGSize(width: 50, height: 50)
 
   func configure(_ item: inout Item) {
