@@ -15,20 +15,20 @@ public struct Item: Mappable, Indexable, DictionaryConvertible {
    An enum with all the string keys used in the view model
    */
   public enum Key: String {
-    case Index
-    case Identifier
-    case Title
-    case Subtitle
-    case Text
-    case Image
-    case Kind
-    case Action
-    case Meta
-    case Children
-    case Relations
-    case Size
-    case Width
-    case Height
+    case index
+    case identifier
+    case title
+    case subtitle
+    case text
+    case image
+    case kind
+    case action
+    case meta
+    case children
+    case relations
+    case size
+    case width
+    case height
 
     var string: String {
       return rawValue.lowercased()
@@ -63,30 +63,30 @@ public struct Item: Mappable, Indexable, DictionaryConvertible {
   /// A dictionary representation of the view model
   public var dictionary: [String : Any] {
     var dictionary: [String: Any] = [
-      Key.Index.string: index,
-      Key.Kind.string: kind,
-      Key.Size.string: [
-        Key.Width.string: Double(size.width),
-        Key.Height.string: Double(size.height)
+      Key.index.string: index,
+      Key.kind.string: kind,
+      Key.size.string: [
+        Key.width.string: Double(size.width),
+        Key.height.string: Double(size.height)
       ]
     ]
 
-    if !title.isEmpty { dictionary[Key.Title.string] = title }
-    if !subtitle.isEmpty { dictionary[Key.Subtitle.string] = subtitle }
-    if !text.isEmpty { dictionary[Key.Text.string] = text }
-    if !image.isEmpty { dictionary[Key.Image.string] = image }
-    if !meta.isEmpty { dictionary[Key.Meta.string] = meta }
+    if !title.isEmpty { dictionary[Key.title.string] = title }
+    if !subtitle.isEmpty { dictionary[Key.subtitle.string] = subtitle }
+    if !text.isEmpty { dictionary[Key.text.string] = text }
+    if !image.isEmpty { dictionary[Key.image.string] = image }
+    if !meta.isEmpty { dictionary[Key.meta.string] = meta }
 
     if let identifier = identifier {
-      dictionary[Key.Identifier.string] = identifier
+      dictionary[Key.identifier.string] = identifier
     }
 
     if let action = action {
-      dictionary[Key.Action.string] = action
+      dictionary[Key.action.string] = action
     }
 
     if !children.isEmpty {
-      dictionary[Key.Children.string] = children
+      dictionary[Key.children.string] = children
     }
 
     var relationItems = [String: [[String: Any]]]()
@@ -97,7 +97,7 @@ public struct Item: Mappable, Indexable, DictionaryConvertible {
     }
 
     if !relationItems.isEmpty {
-      dictionary[Key.Relations.string] = relationItems
+      dictionary[Key.relations.string] = relationItems
     }
 
     return dictionary
@@ -111,22 +111,22 @@ public struct Item: Mappable, Indexable, DictionaryConvertible {
    - parameter map: A JSON dictionary
    */
   public init(_ map: [String : Any]) {
-    index    <- map.property(.Index)
-    identifier = map.property(.Identifier)
-    title    <- map.property(.Title)
-    subtitle <- map.property(.Subtitle)
-    text     <- map.property(.Text)
-    image    <- map.property(.Image)
-    kind     <- map.property(.Kind)
-    action   = map.property(.Action) ?? nil
-    meta     <- map.property(.Meta)
-    children = map[.Children] as? [[String : Any]] ?? []
+    index    <- map.property(Key.index)
+    identifier = map.property(Key.identifier)
+    title    <- map.property(Key.title)
+    subtitle <- map.property(Key.subtitle)
+    text     <- map.property(Key.text)
+    image    <- map.property(Key.image)
+    kind     <- map.property(Key.kind)
+    action   = map.property(Key.action) ?? nil
+    meta     <- map.property(Key.meta)
+    children = map[.children] as? [[String : Any]] ?? []
 
-    if let relation = map[.Relations] as? [String : [Item]] {
+    if let relation = map[.relations] as? [String : [Item]] {
       relations = relation
     }
 
-    if let relations = map[.Relations] as? [String : [[String : Any]]] {
+    if let relations = map[.relations] as? [String : [[String : Any]]] {
       var newRelations = [String: [Item]]()
       relations.forEach { key, array in
         if newRelations[key] == nil { newRelations[key] = [Item]() }
