@@ -104,7 +104,7 @@ public class Spot: NSObject, Spotable {
   }
 
   public func configure(with layout: Layout) {
-
+    layout.configure(spot: self)
   }
 
   public func setup(_ size: CGSize) {
