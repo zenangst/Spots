@@ -172,9 +172,12 @@ public class Spot: NSObject, Spotable {
     collectionView.isScrollEnabled = false
     GridSpot.configure?(collectionView, collectionViewLayout)
 
+    guard !component.header.isEmpty else {
+      return
+    }
+
     guard let resolve = Configuration.views.make(component.header),
-      let view = resolve.view as? Componentable,
-      !component.header.isEmpty else {
+      let view = resolve.view as? Componentable else {
         return
     }
 
