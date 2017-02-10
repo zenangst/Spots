@@ -60,8 +60,6 @@ public class Spot: NSObject, Spotable {
       self.componentKind = componentKind
     }
 
-    self.component.layout = ListSpot.layout
-
     if componentKind == .list {
       self.view = TableView()
     } else {
@@ -80,6 +78,7 @@ public class Spot: NSObject, Spotable {
         self.component.layout = GridSpot.layout
       case .list:
         self.component.layout = ListSpot.layout
+        registerDefaultIfNeeded(view: ListSpotCell.self)
       case .row:
         self.component.layout = RowSpot.layout
       default:
