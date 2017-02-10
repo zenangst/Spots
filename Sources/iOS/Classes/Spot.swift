@@ -36,8 +36,6 @@ public class Spot: NSObject, Spotable {
   open lazy var pageControl = UIPageControl()
   open lazy var backgroundView = UIView()
 
-  var collectionViewLayout: CollectionLayout?
-
   public var view: ScrollView
 
   public var tableView: TableView? {
@@ -66,7 +64,6 @@ public class Spot: NSObject, Spotable {
       let collectionViewLayout = CollectionLayout()
       let collectionView = CollectionView(frame: CGRect.zero, collectionViewLayout: collectionViewLayout)
       self.view = collectionView
-      self.collectionViewLayout = collectionViewLayout
     }
 
     super.init()
@@ -90,8 +87,9 @@ public class Spot: NSObject, Spotable {
 
     userInterface?.register()
 
-    if let componentLayout = self.component.layout {
-      componentLayout.configure(spot: self)
+    if let componentLayout = self.component.layout,
+      let collectionViewLayout = collectionView?.collectionViewLayout as? GridableLayout {
+      componentLayout.configure(collectionViewLayout: collectionViewLayout)
     }
 
     self.spotDataSource = DataSource(spot: self)
@@ -101,10 +99,6 @@ public class Spot: NSObject, Spotable {
   deinit {
     spotDataSource = nil
     spotDelegate = nil
-  }
-
-  public func configure(with layout: Layout) {
-    layout.configure(spot: self)
   }
 
   public func setup(_ size: CGSize) {
@@ -171,7 +165,7 @@ public class Spot: NSObject, Spotable {
   }
 
   fileprivate func setupVerticalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
-    guard let collectionViewLayout = collectionViewLayout else {
+    guard let collectionViewLayout = collectionView.collectionViewLayout as? GridableLayout else {
       return
     }
 
@@ -211,7 +205,7 @@ public class Spot: NSObject, Spotable {
   }
 
   fileprivate func layoutVerticalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
-    guard let collectionViewLayout = collectionViewLayout else {
+    guard let collectionViewLayout = collectionView.collectionViewLayout as? GridableLayout else {
       return
     }
 
