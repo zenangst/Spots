@@ -65,9 +65,24 @@ public class Spot: NSObject, Spotable {
 
     super.init()
 
+    if component.layout == nil {
+      switch componentKind {
+      case .carousel:
+        self.component.layout = CarouselSpot.layout
+      case .grid:
+        self.component.layout = GridSpot.layout
+      case .list:
+        self.component.layout = ListSpot.layout
+      case .row:
+        self.component.layout = RowSpot.layout
+      default:
+        break
+      }
+    }
+
     self.spotDataSource = DataSource(spot: self)
     self.spotDelegate = Delegate(spot: self)
-    registerDefaultIfNeeded(view: ListSpotCell.self)
+    ¸
     prepareItems()
   }
 
