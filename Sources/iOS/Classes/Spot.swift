@@ -128,6 +128,7 @@ public class Spot: NSObject, Spotable {
       return
     }
 
+    /// Prepare items with the help of span.
     if layout.span >= 1.0 {
       prepareItems()
     }
@@ -138,6 +139,7 @@ public class Spot: NSObject, Spotable {
     tableView.frame.size.width = round(size.width - (tableView.contentInset.left))
     tableView.frame.origin.x = round(size.width / 2 - tableView.frame.width / 2)
 
+    /// Prepare items based of UI element frame.
     if layout.span < 1.0 {
       prepareItems()
     }
