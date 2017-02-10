@@ -169,6 +169,28 @@ public class Spot: NSObject, Spotable {
   }
 
   fileprivate func setupVerticalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
+    guard let collectionViewLayout = collectionViewLayout else {
+      return
+    }
+
+    collectionView.isScrollEnabled = false
+    GridSpot.configure?(collectionView, collectionViewLayout)
+
+    if let resolve = Configuration.views.make(component.header),
+      let view = resolve.view as? Componentable,
+      !component.header.isEmpty {
+
+      collectionViewLayout.headerReferenceSize.width = collectionView.frame.size.width
+      collectionViewLayout.headerReferenceSize.height = view.frame.size.height
+
+      if collectionViewLayout.headerReferenceSize.width == 0.0 {
+        collectionViewLayout.headerReferenceSize.width = size.width
+      }
+
+      if collectionViewLayout.headerReferenceSize.height == 0.0 {
+        collectionViewLayout.headerReferenceSize.height = view.preferredHeaderHeight
+      }
+    }
   }
 
   fileprivate func layoutCollectionView(_ collectionView: CollectionView, with size: CGSize) {
