@@ -166,9 +166,11 @@ public class Spot: NSObject, Spotable {
   }
 
   func registerDefaultIfNeeded(view: View.Type) {
-    if Configuration.views.storage[Configuration.views.defaultIdentifier] == nil {
-      Configuration.views.defaultItem = Registry.Item.classType(view)
+    guard Configuration.views.storage[Configuration.views.defaultIdentifier] == nil else {
+      return
     }
+
+    Configuration.views.defaultItem = Registry.Item.classType(view)
   }
 
   public func register() {
