@@ -86,6 +86,8 @@ public class Spot: NSObject, Spotable {
       }
     }
 
+    userInterface?.register()
+
     self.spotDataSource = DataSource(spot: self)
     self.spotDelegate = Delegate(spot: self)
     prepareItems()
