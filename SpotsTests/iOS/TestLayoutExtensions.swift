@@ -4,19 +4,19 @@ import XCTest
 class LayoutExtensionsTests: XCTestCase {
 
   let json: [String : Any] = [
-    "item-spacing" : 8.0,
-    "line-spacing" : 6.0,
-    "content-inset" : [
-      "top" : 1.0,
-      "left" : 2.0,
-      "bottom" : 3.0,
-      "right" : 4.0
+    "item-spacing": 8.0,
+    "line-spacing": 6.0,
+    "content-inset": [
+      "top": 1.0,
+      "left": 2.0,
+      "bottom": 3.0,
+      "right": 4.0
     ],
-    "section-inset" : [
-      "top" : 5.0,
-      "left" : 6.0,
-      "bottom" : 7.0,
-      "right" : 8.0
+    "section-inset": [
+      "top": 5.0,
+      "left": 6.0,
+      "bottom": 7.0,
+      "right": 8.0
     ]
   ]
 

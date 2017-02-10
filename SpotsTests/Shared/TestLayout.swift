@@ -4,16 +4,16 @@ import XCTest
 class LayoutTests: XCTestCase {
 
   let json: [String : Any] = [
-    "span" : 4.0,
-    "item-spacing" : 8.0,
-    "line-spacing" : 6.0,
-    "dynamic-height" : true,
-    "dynamic-span" : true,
-    "inset" : [
-      "top" : 1.0,
-      "left" : 2.0,
-      "bottom" : 3.0,
-      "right" : 4.0
+    "span": 4.0,
+    "item-spacing": 8.0,
+    "line-spacing": 6.0,
+    "dynamic-height": true,
+    "dynamic-span": true,
+    "inset": [
+      "top": 1.0,
+      "left": 2.0,
+      "bottom": 3.0,
+      "right": 4.0
     ]
   ]
 

@@ -1,7 +1,6 @@
 // swiftlint:disable weak_delegate
 
 import UIKit
-import Brick
 
 /// A GridSpot, a collection view based Spotable object that lays out its items in a vertical order based of the item sizes
 open class GridSpot: NSObject, Gridable {
@@ -27,7 +26,7 @@ open class GridSpot: NSObject, Gridable {
   open var component: Component
 
   /// A configuration closure
-  open var configure: ((SpotConfigurable) -> Void)? {
+  open var configure: ((ItemConfigurable) -> Void)? {
     didSet {
       configureClosureDidChange()
     }

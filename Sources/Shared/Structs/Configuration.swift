@@ -1,5 +1,3 @@
-import Brick
-
 public struct Configuration {
 
   public static var views: Registry = Registry(useCache: false)

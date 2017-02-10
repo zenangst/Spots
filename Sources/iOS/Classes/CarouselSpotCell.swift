@@ -1,8 +1,7 @@
 import UIKit
-import Brick
 
 /// A default cell for the CarouselSpot
-public class CarouselSpotCell: UICollectionViewCell, SpotConfigurable {
+public class CarouselSpotCell: UICollectionViewCell, ItemConfigurable {
 
   /// The preferred view size for the cell
   public var preferredViewSize: CGSize = CGSize(width: 88, height: 88)

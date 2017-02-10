@@ -1,5 +1,4 @@
 import UIKit
-import Brick
 import Cache
 
 /// A controller powered by Spotable objects

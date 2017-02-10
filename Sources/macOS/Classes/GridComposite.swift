@@ -1,4 +1,3 @@
-import Brick
 import Cocoa
 
 /// A proxy cell that is used for composite views inside other Spotable objects

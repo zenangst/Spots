@@ -1,9 +1,8 @@
 @testable import Spots
 import Foundation
 import XCTest
-import Brick
 
-class ControllerTests : XCTestCase {
+class ControllerTests: XCTestCase {
 
   func testSpotAtIndex() {
     let component = Component(title: "Component", span: 1.0)
@@ -221,7 +220,7 @@ class ControllerTests : XCTestCase {
 
     let exception = self.expectation(description: "Test delete items")
 
-    controller.spots[0].delete([1,2], withAnimation: .none) {
+    controller.spots[0].delete([1, 2], withAnimation: .none) {
       XCTAssertEqual(controller.spot!.component.items.count, 2)
       XCTAssertEqual(controller.spot!.component.items[0].title, "title1")
       XCTAssertEqual(controller.spot!.component.items[1].title, "title4")
@@ -440,7 +439,7 @@ class ControllerTests : XCTestCase {
     XCTAssertNotNil(controller.resolve(spot: { $1.component.title == "GridSpot" }))
     XCTAssertNotNil(controller.resolve(spot: { $1 is Listable }))
     XCTAssertNotNil(controller.resolve(spot: { $1 is Gridable }))
-    XCTAssertNotNil(controller.resolve(spot: { $1.items.filter{ $0.title == "Item" }.first != nil }))
+    XCTAssertNotNil(controller.resolve(spot: { $1.items.filter { $0.title == "Item" }.first != nil }))
     XCTAssertEqual(controller.resolve(spot: { $0.0 == 0 })?.component.title, "ListSpot")
     XCTAssertEqual(controller.resolve(spot: { $0.0 == 1 })?.component.title, "ListSpot2")
     XCTAssertEqual(controller.resolve(spot: { $0.0 == 2 })?.component.title, "GridSpot")
@@ -453,11 +452,11 @@ class ControllerTests : XCTestCase {
     spot.items = [Item(title: "First item")]
     let sourceController = Controller(spot: spot)
     let jsonController = Controller([
-      "components" : [
-        ["kind" : "list",
-         "layout" : ListSpot.layout.dictionary,
-         "items" : [
-          ["title" : "First item"]
+      "components": [
+        ["kind": "list",
+         "layout": ListSpot.layout.dictionary,
+         "items": [
+          ["title": "First item"]
           ]
         ]
       ]
@@ -468,10 +467,10 @@ class ControllerTests : XCTestCase {
 
   func testJSONReload() {
     let initialJSON = [
-      "components" : [
-        ["kind" : "list",
-         "items" : [
-          ["title" : "First list item"]
+      "components": [
+        ["kind": "list",
+         "items": [
+          ["title": "First list item"]
           ]
         ]
       ]
@@ -483,11 +482,11 @@ class ControllerTests : XCTestCase {
     XCTAssert(jsonController.spot!.component.items.first?.title == "First list item")
 
     let updateJSON = [
-      "components" : [
-        ["kind" : "grid",
-         "items" : [
-          ["title" : "First grid item"],
-          ["title" : "Second grid item"]
+      "components": [
+        ["kind": "grid",
+         "items": [
+          ["title": "First grid item"],
+          ["title": "Second grid item"]
           ]
         ]
       ]
@@ -505,10 +504,10 @@ class ControllerTests : XCTestCase {
 
   func testDictionaryOnController() {
     let initialJSON = [
-      "components" : [
-        ["kind" : "list",
-         "items" : [
-          ["title" : "First list item"]
+      "components": [
+        ["kind": "list",
+         "items": [
+          ["title": "First list item"]
           ]
         ]
       ]
@@ -521,40 +520,40 @@ class ControllerTests : XCTestCase {
 
   func testReloadIfNeededWithJSON() {
     let initialJSON: [String : Any] = [
-      "components" : [
-        ["kind" : "list",
-         "items" : [
-          ["title" : "First list item"]
+      "components": [
+        ["kind": "list",
+         "items": [
+          ["title": "First list item"]
           ]
         ],
-        ["kind" : "list",
-         "items" : [
-          ["title" : "First list item"]
+        ["kind": "list",
+         "items": [
+          ["title": "First list item"]
           ]
         ]
       ]
     ]
 
     let newJSON: [String : Any] = [
-      "components" : [
-        ["kind" : "list",
-         "items" : [
-          ["title" : "First list item 2"],
+      "components": [
+        ["kind": "list",
+         "items": [
+          ["title": "First list item 2"],
           [
-            "kind" : "composite",
-            "children" : [
-              ["kind" : "grid",
-               "items" : [
-                ["title" : "First list item"]
+            "kind": "composite",
+            "children": [
+              ["kind": "grid",
+               "items": [
+                ["title": "First list item"]
                 ]
               ]
             ]
           ]
           ]
         ],
-        ["kind" : "grid",
-         "items" : [
-          ["title" : "First list item"]
+        ["kind": "grid",
+         "items": [
+          ["title": "First list item"]
           ]
         ]
       ]
@@ -600,11 +599,11 @@ class ControllerTests : XCTestCase {
         span: 1.0,
         items: [
           Item(title: "Fullname", subtitle: "Job title", kind: "image"),
-          Item(title: "Follow", kind: "toggle", meta: ["dynamic-height" : true]),
-          Item(title: "First name", subtitle: "Input first name",kind: "info"),
-          Item(title: "Last name", subtitle: "Input last name",kind: "info"),
-          Item(title: "Twitter", subtitle: "@twitter",kind: "info"),
-          Item(title: "", subtitle: "Biography", kind: "core", meta: ["dynamic-height" : true])
+          Item(title: "Follow", kind: "toggle", meta: ["dynamic-height": true]),
+          Item(title: "First name", subtitle: "Input first name", kind: "info"),
+          Item(title: "Last name", subtitle: "Input last name", kind: "info"),
+          Item(title: "Twitter", subtitle: "@twitter", kind: "info"),
+          Item(title: "", subtitle: "Biography", kind: "core", meta: ["dynamic-height": true])
         ]
       )
     ]
@@ -615,11 +614,11 @@ class ControllerTests : XCTestCase {
         span: 1.0,
         items: [
           Item(title: "Fullname", subtitle: "Job title", text: "Bot", kind: "image"),
-          Item(title: "Follow", kind: "toggle", meta: ["dynamic-height" : true]),
+          Item(title: "Follow", kind: "toggle", meta: ["dynamic-height": true]),
           Item(title: "First name", subtitle: "Input first name", text: "John", kind: "info"),
           Item(title: "Last name", subtitle: "Input last name", text: "Hyperseed", kind: "info"),
-          Item(title: "Twitter", subtitle: "@johnhyperseed",kind: "info"),
-          Item(subtitle: "Biography", text: "John Hyperseed is a bot", kind: "core", meta: ["dynamic-height" : true])
+          Item(title: "Twitter", subtitle: "@johnhyperseed", kind: "info"),
+          Item(subtitle: "Biography", text: "John Hyperseed is a bot", kind: "core", meta: ["dynamic-height": true])
         ]
       )
     ]
@@ -653,11 +652,11 @@ class ControllerTests : XCTestCase {
         span: 1.0,
         items: [
           Item(title: "Fullname", subtitle: "Job title", kind: "image"),
-          Item(title: "Follow", kind: "toggle", meta: ["dynamic-height" : true]),
-          Item(title: "First name", subtitle: "Input first name",kind: "info"),
-          Item(title: "Last name", subtitle: "Input last name",kind: "info"),
-          Item(title: "Twitter", subtitle: "@twitter",kind: "info"),
-          Item(title: "", subtitle: "Biography", kind: "core", meta: ["dynamic-height" : true])
+          Item(title: "Follow", kind: "toggle", meta: ["dynamic-height": true]),
+          Item(title: "First name", subtitle: "Input first name", kind: "info"),
+          Item(title: "Last name", subtitle: "Input last name", kind: "info"),
+          Item(title: "Twitter", subtitle: "@twitter", kind: "info"),
+          Item(title: "", subtitle: "Biography", kind: "core", meta: ["dynamic-height": true])
         ]
       )
     ]
@@ -668,11 +667,11 @@ class ControllerTests : XCTestCase {
         span: 1.0,
         items: [
           Item(title: "Fullname", subtitle: "Job title", text: "Bot", kind: "image"),
-          Item(title: "Follow", kind: "toggle", meta: ["dynamic-height" : true]),
+          Item(title: "Follow", kind: "toggle", meta: ["dynamic-height": true]),
           Item(title: "First name", subtitle: "Input first name", text: "John", kind: "info"),
           Item(title: "Last name", subtitle: "Input last name", text: "Hyperseed", kind: "info"),
-          Item(title: "Twitter", subtitle: "@johnhyperseed",kind: "info"),
-          Item(subtitle: "Biography", text: "John Hyperseed is a bot", kind: "core", meta: ["dynamic-height" : true])
+          Item(title: "Twitter", subtitle: "@johnhyperseed", kind: "info"),
+          Item(subtitle: "Biography", text: "John Hyperseed is a bot", kind: "core", meta: ["dynamic-height": true])
         ]
       )
     ]
@@ -733,7 +732,6 @@ class ControllerTests : XCTestCase {
       XCTAssertEqual(controller.spots.first!.component.items[1].size, view!.frame.size)
     #endif
 
-
     XCTAssertEqual(controller.spots.first!.component.items[2].title, initialComponents.first!.items[2].title)
     XCTAssertEqual(controller.spots.first!.component.items[2].subtitle, initialComponents.first!.items[2].subtitle)
     XCTAssertEqual(controller.spots.first!.component.items[2].action, initialComponents.first!.items[2].action)
@@ -766,7 +764,6 @@ class ControllerTests : XCTestCase {
       XCTAssertEqual(controller.spots.first!.component.items[4].size, view!.frame.size)
     #endif
 
-
     XCTAssertEqual(controller.spots.first!.component.items[5].title, initialComponents.first!.items[5].title)
     XCTAssertEqual(controller.spots.first!.component.items[5].subtitle, initialComponents.first!.items[5].subtitle)
     XCTAssertEqual(controller.spots.first!.component.items[5].action, initialComponents.first!.items[5].action)
@@ -777,7 +774,6 @@ class ControllerTests : XCTestCase {
       XCTAssertEqual(controller.spots.first!.component.items[5].size, CGSize(width: controller.view.frame.width, height: view!.preferredViewSize.height))
       XCTAssertEqual(controller.spots.first!.component.items[5].size, view!.frame.size)
     #endif
-
 
     var exception: XCTestExpectation? = expectation(description: "Reload controller with components")
     controller.reloadIfNeeded(newComponents) {
@@ -855,11 +851,11 @@ class ControllerTests : XCTestCase {
         span: 1.0,
         items: [
           Item(title: "Fullname", subtitle: "Job title", kind: "image"),
-          Item(title: "Follow", kind: "toggle", meta: ["dynamic-height" : true]),
-          Item(title: "First name", subtitle: "Input first name",kind: "info"),
-          Item(title: "Last name", subtitle: "Input last name",kind: "info"),
-          Item(title: "Twitter", subtitle: "@twitter",kind: "info"),
-          Item(title: "", subtitle: "Biography", kind: "core", meta: ["dynamic-height" : true])
+          Item(title: "Follow", kind: "toggle", meta: ["dynamic-height": true]),
+          Item(title: "First name", subtitle: "Input first name", kind: "info"),
+          Item(title: "Last name", subtitle: "Input last name", kind: "info"),
+          Item(title: "Twitter", subtitle: "@twitter", kind: "info"),
+          Item(title: "", subtitle: "Biography", kind: "core", meta: ["dynamic-height": true])
         ]
       )
     ]
@@ -870,11 +866,11 @@ class ControllerTests : XCTestCase {
         span: 1.0,
         items: [
           Item(title: "Fullname", subtitle: "Job title", text: "Bot", kind: "image"),
-          Item(title: "Follow", kind: "toggle", meta: ["dynamic-height" : true]),
+          Item(title: "Follow", kind: "toggle", meta: ["dynamic-height": true]),
           Item(title: "First name", subtitle: "Input first name", text: "John", kind: "info"),
           Item(title: "Last name", subtitle: "Input last name", text: "Hyperseed", kind: "info"),
-          Item(title: "Twitter", subtitle: "@johnhyperseed",kind: "info"),
-          Item(subtitle: "Biography", text: "John Hyperseed is a bot", kind: "core", meta: ["dynamic-height" : true])
+          Item(title: "Twitter", subtitle: "@johnhyperseed", kind: "info"),
+          Item(subtitle: "Biography", text: "John Hyperseed is a bot", kind: "core", meta: ["dynamic-height": true])
         ]
       )
     ]
@@ -892,7 +888,6 @@ class ControllerTests : XCTestCase {
 
     controller.prepareController()
     controller.reloadIfNeeded(newComponents)
-
 
     waitForExpectations(timeout: 2.0, handler: nil)
   }

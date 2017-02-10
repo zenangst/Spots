@@ -1,7 +1,6 @@
 #if !COCOAPODS
 import Spots
 #endif
-import Brick
 import RxSwift
 import RxCocoa
 

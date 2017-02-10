@@ -4,8 +4,6 @@
   import UIKit
 #endif
 
-import Brick
-
 // MARK: - Spotable extension
 public extension Spotable {
 
@@ -299,7 +297,7 @@ public extension Spotable {
         let newItem = weakSelf.items[index]
 
         if newItem.kind != oldItem.kind || newItem.size.height != oldItem.size.height {
-          if let cell: SpotConfigurable = weakSelf.userInterface?.view(at: index), animation != .none {
+          if let cell: ItemConfigurable = weakSelf.userInterface?.view(at: index), animation != .none {
             weakSelf.userInterface?.beginUpdates()
             cell.configure(&weakSelf.items[index])
             weakSelf.userInterface?.endUpdates()
@@ -312,7 +310,7 @@ public extension Spotable {
             completion?()
           }
           return
-        } else if let cell: SpotConfigurable = weakSelf.userInterface?.view(at: index) {
+        } else if let cell: ItemConfigurable = weakSelf.userInterface?.view(at: index) {
           cell.configure(&weakSelf.items[index])
           weakSelf.view.superview?.layoutSubviews()
           completion?()

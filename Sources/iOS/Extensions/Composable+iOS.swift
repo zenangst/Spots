@@ -1,5 +1,4 @@
 import UIKit
-import Brick
 
 // MARK: - An extension on Composable views
 public extension Composable where Self : View {

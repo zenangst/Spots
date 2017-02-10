@@ -4,7 +4,6 @@
   import UIKit
 #endif
 
-import Brick
 import Cache
 
 public protocol SpotsProtocol: class {

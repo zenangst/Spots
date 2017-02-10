@@ -4,7 +4,6 @@
   import Foundation
 #endif
 
-import Brick
 import Cache
 
 /// Compare method for generic types that conform to Comparable

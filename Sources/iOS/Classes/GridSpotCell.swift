@@ -1,8 +1,7 @@
 import UIKit
-import Brick
 
 /// A default cell for the GridSpot
-public class GridSpotCell: UICollectionViewCell, SpotConfigurable {
+public class GridSpotCell: UICollectionViewCell, ItemConfigurable {
 
   /// The preferred view size for the view
   public var preferredViewSize = CGSize(width: 88, height: 88)

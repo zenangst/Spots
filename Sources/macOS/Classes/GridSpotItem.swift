@@ -1,7 +1,6 @@
 import Cocoa
-import Brick
 
-open class GridSpotItem: NSCollectionViewItem, SpotConfigurable {
+open class GridSpotItem: NSCollectionViewItem, ItemConfigurable {
 
   open override var isSelected: Bool {
     didSet {

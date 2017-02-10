@@ -4,8 +4,6 @@
   import UIKit
 #endif
 
-import Brick
-
 /// A class protocol that is used for all components inside of Controller
 public protocol Spotable: class {
 
@@ -32,8 +30,8 @@ public protocol Spotable: class {
   var computedHeight: CGFloat { get }
   /// The component of a Spotable object
   var component: Component { get set }
-  /// A configuration closure for a SpotConfigurable object
-  var configure: ((SpotConfigurable) -> Void)? { get set }
+  /// A configuration closure for a ItemConfigurable object
+  var configure: ((ItemConfigurable) -> Void)? { get set }
   /// A cache for a Spotable object
   var stateCache: StateCache? { get }
   /// Indicator to calculate the height based on content

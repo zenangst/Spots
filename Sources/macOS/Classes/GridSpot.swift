@@ -1,7 +1,6 @@
 // swiftlint:disable weak_delegate
 
 import Cocoa
-import Brick
 
 open class GridSpot: NSObject, Gridable {
 
@@ -93,10 +92,10 @@ open class GridSpot: NSObject, Gridable {
   open weak var delegate: SpotsDelegate?
 
   open var component: Component
-  open var configure: ((SpotConfigurable) -> Void)? {
+  open var configure: ((ItemConfigurable) -> Void)? {
     didSet {
       guard let configure = configure else { return }
-      for case let cell as SpotConfigurable in collectionView.visibleItems() {
+      for case let cell as ItemConfigurable in collectionView.visibleItems() {
         configure(cell)
       }
     }

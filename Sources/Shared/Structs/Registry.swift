@@ -1,5 +1,4 @@
 import Foundation
-import Brick
 
 #if os(OSX)
   import Cocoa
@@ -88,7 +87,7 @@ public struct Registry {
       #if !os(OSX)
         let cacheIdentifier: String = "\(registryType.rawValue)-\(identifier)"
         if let view = cache.object(forKey: cacheIdentifier as NSString) {
-          (view as? SpotConfigurable)?.prepareForReuse()
+          (view as? ItemConfigurable)?.prepareForReuse()
           return (type: registryType, view: view)
         }
       #endif

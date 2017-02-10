@@ -5,7 +5,6 @@
 #endif
 
 import Tailor
-import Brick
 
 /// A component diff enum
 ///

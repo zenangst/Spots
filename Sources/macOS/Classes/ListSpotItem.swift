@@ -1,7 +1,6 @@
 import Cocoa
-import Brick
 
-open class ListSpotItem: NSTableRowView, SpotConfigurable {
+open class ListSpotItem: NSTableRowView, ItemConfigurable {
 
   override open var isFlipped: Bool {
     return true

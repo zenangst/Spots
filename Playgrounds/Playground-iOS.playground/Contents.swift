@@ -2,7 +2,6 @@
 
 import UIKit
 import Spots
-import Brick
 import XCPlayground
 
 enum Cell: String, StringConvertible {
@@ -13,7 +12,7 @@ enum Cell: String, StringConvertible {
   }
 }
 
-public class ListCell: UITableViewCell, SpotConfigurable {
+public class ListCell: UITableViewCell, ItemConfigurable {
 
   public var preferredViewSize: CGSize(width: 0, height: 60)
   public var item: Item?
@@ -97,7 +96,7 @@ public class ListHeaderView: UIView, Componentable {
   }
 }
 
-class GridTopicCell: UICollectionViewCell, SpotConfigurable {
+class GridTopicCell: UICollectionViewCell, ItemConfigurable {
 
   var preferredViewSize: CGSize(width: 125, height: 160)
 

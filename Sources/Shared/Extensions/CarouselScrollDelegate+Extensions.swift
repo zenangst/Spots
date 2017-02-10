@@ -1,5 +1,3 @@
-import Brick
-
 public extension CarouselScrollDelegate {
 
   /// Invoked when ever a user scrolls a CarouselSpot.

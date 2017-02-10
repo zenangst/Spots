@@ -1,5 +1,4 @@
 import Cocoa
-import Brick
 
 /// A proxy cell that is used for composite views inside other Spotable objects
 public class ListComposite: NSTableRowView, Composable {
