@@ -162,6 +162,8 @@ public class Spot: NSObject, Spotable {
     collectionView.frame.size = size
     collectionView.dataSource = spotDataSource
     collectionView.delegate = spotDelegate
+
+    setupVerticalCollectionView(collectionView, with: size)
   }
 
   fileprivate func setupHorizontalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
