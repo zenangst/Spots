@@ -165,6 +165,7 @@ class TestItem: XCTestCase {
 
     data["relations"] = ["Items" : [data, data, data]]
 
+    item = Item(data)
     var item2 = Item(data)
     XCTAssertTrue(compareRelations(item, item2))
 
