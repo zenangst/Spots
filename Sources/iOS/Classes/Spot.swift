@@ -176,9 +176,8 @@ public class Spot: NSObject, Spotable {
       return
     }
 
-    guard let resolve = Configuration.views.make(component.header),
-      let view = resolve.view as? Componentable else {
-        return
+    guard let view = Configuration.views.make(component.header)?.view as? Componentable else {
+      return
     }
 
     collectionViewLayout.headerReferenceSize.width = collectionView.frame.size.width
