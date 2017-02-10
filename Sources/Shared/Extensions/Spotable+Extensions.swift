@@ -501,4 +501,5 @@ public extension Spotable {
 
   public func beforeUpdate() {}
   public func afterUpdate() {}
+  func configure(with layout: Layout) {}
 }

@@ -26,8 +26,10 @@ extension DataSource: UICollectionViewDataSource {
   ///
   /// - returns: A configured supplementary view object.
   public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-    guard let spot = spot as? Gridable, !kind.isEmpty else {
-      return UICollectionReusableView()
+    guard let spot = spot,
+      let collectionViewLayout = collectionView.collectionViewLayout as? GridableLayout,
+      !kind.isEmpty else {
+        return UICollectionReusableView()
     }
 
     let identifier: String
@@ -40,10 +42,10 @@ extension DataSource: UICollectionViewDataSource {
       } else {
         identifier = spot.component.header
       }
-      viewHeight = spot.layout.headerReferenceSize.height
+      viewHeight = collectionViewLayout.headerReferenceSize.height
     case UICollectionElementKindSectionFooter:
       identifier = spot.component.footer
-      viewHeight = spot.layout.footerHeight
+      viewHeight = collectionViewLayout.footerHeight
     default:
       return UICollectionReusableView()
     }
