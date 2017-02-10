@@ -178,20 +178,21 @@ public class Spot: NSObject, Spotable {
     collectionView.isScrollEnabled = false
     GridSpot.configure?(collectionView, collectionViewLayout)
 
-    if let resolve = Configuration.views.make(component.header),
+    guard let resolve = Configuration.views.make(component.header),
       let view = resolve.view as? Componentable,
-      !component.header.isEmpty {
+      !component.header.isEmpty else {
+        return
+    }
 
-      collectionViewLayout.headerReferenceSize.width = collectionView.frame.size.width
-      collectionViewLayout.headerReferenceSize.height = view.frame.size.height
+    collectionViewLayout.headerReferenceSize.width = collectionView.frame.size.width
+    collectionViewLayout.headerReferenceSize.height = view.frame.size.height
 
-      if collectionViewLayout.headerReferenceSize.width == 0.0 {
-        collectionViewLayout.headerReferenceSize.width = size.width
-      }
+    if collectionViewLayout.headerReferenceSize.width == 0.0 {
+      collectionViewLayout.headerReferenceSize.width = size.width
+    }
 
-      if collectionViewLayout.headerReferenceSize.height == 0.0 {
-        collectionViewLayout.headerReferenceSize.height = view.preferredHeaderHeight
-      }
+    if collectionViewLayout.headerReferenceSize.height == 0.0 {
+      collectionViewLayout.headerReferenceSize.height = view.preferredHeaderHeight
     }
   }
 
