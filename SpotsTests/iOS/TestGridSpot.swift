@@ -28,7 +28,7 @@ class GridSpotTests: XCTestCase {
   }
 
   func testDictionaryRepresentation() {
-    let component = Component(title: "GridSpot", kind: "row", span: 3, meta: ["headerHeight" : 44.0])
+    let component = Component(title: "GridSpot", kind: "row", span: 3, meta: ["headerHeight": 44.0])
     let spot = GridSpot(component: component)
     XCTAssertEqual(component.dictionary["index"] as? Int, spot.dictionary["index"] as? Int)
     XCTAssertEqual(component.dictionary["title"] as? String, spot.dictionary["title"] as? String)
@@ -48,10 +48,10 @@ class GridSpotTests: XCTestCase {
     XCTAssertEqual(rowSpot.identifier(at: indexPath), GridSpot.views.defaultIdentifier)
 
     GridSpot.views.defaultItem = Registry.Item.classType(GridSpotCell.self)
-    XCTAssertEqual(rowSpot.identifier(at: indexPath),GridSpot.views.defaultIdentifier)
+    XCTAssertEqual(rowSpot.identifier(at: indexPath), GridSpot.views.defaultIdentifier)
 
     GridSpot.views.defaultItem = Registry.Item.classType(GridSpotCell.self)
-    XCTAssertEqual(rowSpot.identifier(at: indexPath),GridSpot.views.defaultIdentifier)
+    XCTAssertEqual(rowSpot.identifier(at: indexPath), GridSpot.views.defaultIdentifier)
 
     GridSpot.views["custom-item-kind"] = Registry.Item.classType(GridSpotCell.self)
     XCTAssertEqual(rowSpot.identifier(at: indexPath), "custom-item-kind")

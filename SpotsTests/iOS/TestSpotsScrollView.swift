@@ -10,40 +10,40 @@ class SpotsScrollViewTests: XCTestCase {
   var initialJSON: [String : Any] {
     let listItems: [[String : Any]] = [
       [
-        "title" : "Item",
-        "size" : ["height" : 80.0]
+        "title": "Item",
+        "size": ["height": 80.0]
       ],
       [
-        "title" : "Item",
-        "size" : ["height" : 80.0]
+        "title": "Item",
+        "size": ["height": 80.0]
       ],
       [
-        "title" : "Item",
-        "size" : ["height" : 80.0]
+        "title": "Item",
+        "size": ["height": 80.0]
       ],
       [
-        "title" : "Item",
-        "size" : ["height" : 80.0]
+        "title": "Item",
+        "size": ["height": 80.0]
       ]
     ]
 
     return [
-      "components" : [
+      "components": [
         [
-          "kind" : "list",
-          "items" : listItems
+          "kind": "list",
+          "items": listItems
         ],
         [
-          "kind" : "list",
-          "items" : listItems
+          "kind": "list",
+          "items": listItems
         ],
         [
-          "kind" : "list",
-          "items" : listItems
+          "kind": "list",
+          "items": listItems
         ],
         [
-          "kind" : "list",
-          "items" : listItems
+          "kind": "list",
+          "items": listItems
         ],
       ]
     ]

@@ -5,7 +5,6 @@ import XCTest
 class TestDelegate: SpotsDelegate {
   var countsInvoked = 0
 
-
   func spotable(_ spot: Spotable, itemSelected item: Item) {
     spot.component.items[item.index].meta["selected"] = true
     countsInvoked += 1
@@ -23,7 +22,7 @@ class DelegateTests: XCTestCase {
       ]))
     spot.delegate = delegate
     spot.spotDelegate?.collectionView(spot.collectionView, didSelectItemAt: IndexPath(item: 0, section: 0))
-    
+
     XCTAssertEqual(spot.component.items[0].meta["selected"] as? Bool, true)
     XCTAssertEqual(delegate.countsInvoked, 1)
 
@@ -92,7 +91,6 @@ class DelegateTests: XCTestCase {
 
     view = spot.spotDelegate?.tableView(spot.tableView, viewForHeaderInSection: 0)
     XCTAssertEqual(view, nil)
-
 
   }
 }

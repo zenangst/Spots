@@ -7,16 +7,16 @@ class TestItem: XCTestCase {
     "title": "A",
     "subtitle": "B",
     "text": "C",
-    "image" : "D",
-    "kind" : "E",
-    "size" : ["width" : 320.0, "height" : 240.0],
-    "action" : "F",
-    "children" : [
-      "child 1" : "G",
-      "child 2" : "H"
+    "image": "D",
+    "kind": "E",
+    "size": ["width": 320.0, "height": 240.0],
+    "action": "F",
+    "children": [
+      "child 1": "G",
+      "child 2": "H"
     ],
-    "meta" : [
-      "domain" : "I"
+    "meta": [
+      "domain": "I"
     ]
   ]
   var item: Item!
@@ -37,10 +37,10 @@ class TestItem: XCTestCase {
   }
 
   func testRelations() {
-    data["relations"] = ["Items" : [data, data, data]]
+    data["relations"] = ["Items": [data, data, data]]
     item = Item(data)
 
-    XCTAssertEqual(item.relations["Items"]!.count,3)
+    XCTAssertEqual(item.relations["Items"]!.count, 3)
     XCTAssertEqual(item.relations["Items"]!.first!.title, data["title"] as? String)
     XCTAssertEqual(item.relations["Items"]!.first!.subtitle, data["subtitle"] as? String)
     XCTAssertEqual(item.relations["Items"]!.first!.image, data["image"] as? String)
@@ -116,7 +116,6 @@ class TestItem: XCTestCase {
 
     XCTAssertTrue(left === right)
 
-
     left = [
       Item(title: "foo", size: CGSize(width: 40, height: 40)),
       Item(title: "foo", size: CGSize(width: 60, height: 40))
@@ -130,7 +129,7 @@ class TestItem: XCTestCase {
   }
 
   func testItemDictionary() {
-    data["relations"] = ["Items" : [data, data]]
+    data["relations"] = ["Items": [data, data]]
     item = Item(data)
 
     let newItem: Item! = Item(item.dictionary)
@@ -157,13 +156,13 @@ class TestItem: XCTestCase {
   func testCompareChildren() {
     let sameItem = Item(data)
     var newData: [String : Any] = data
-    newData["children"] = [["child 1" : "Anna"]]
+    newData["children"] = [["child 1": "Anna"]]
     let otherItem = Item(newData)
 
     XCTAssertTrue(item === sameItem)
     XCTAssertFalse(item === otherItem)
 
-    data["relations"] = ["Items" : [data, data, data]]
+    data["relations"] = ["Items": [data, data, data]]
 
     item = Item(data)
     var item2 = Item(data)
@@ -172,7 +171,7 @@ class TestItem: XCTestCase {
     item2.relations["Items"]![2].title = "new"
     XCTAssertFalse(compareRelations(item, item2))
 
-    data["relations"] = ["Items" : [data, data]]
+    data["relations"] = ["Items": [data, data]]
     item2 = Item(data)
     XCTAssertFalse(compareRelations(item, item2))
   }

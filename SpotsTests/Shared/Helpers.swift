@@ -170,7 +170,7 @@ struct Helper {
       titleLabel.rightAnchor.constraint(equalTo: titleLabel.superview!.rightAnchor).isActive = true
       titleLabel.centerYAnchor.constraint(equalTo: titleLabel.superview!.centerYAnchor).isActive = true
     }
-    
+
     func configure(_ item: inout Item) {
       titleLabel.text = item.title
     }

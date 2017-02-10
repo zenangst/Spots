@@ -5,7 +5,7 @@ import XCTest
 class ViewSpotTests: XCTestCase {
 
   func testDictionaryRepresentation() {
-    let component = Component(title: "ViewSpot", kind: "view", span: 3, meta: ["headerHeight" : 44.0])
+    let component = Component(title: "ViewSpot", kind: "view", span: 3, meta: ["headerHeight": 44.0])
     let spot = ViewSpot(component: component)
     XCTAssertEqual(component.dictionary["index"] as? Int, spot.dictionary["index"] as? Int)
     XCTAssertEqual(component.dictionary["title"] as? String, spot.dictionary["title"] as? String)

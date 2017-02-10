@@ -17,7 +17,7 @@ class TestGridableLayout: XCTestCase {
     carouselSpot.setup(parentSize)
     carouselSpot.layout(parentSize)
     carouselSpot.view.layoutSubviews()
-    
+
     XCTAssertEqual(carouselSpot.layout.contentSize, CGSize(width: 100, height: 50))
     XCTAssertEqual(carouselSpot.view.frame.size, CGSize(width: 100, height: 50))
   }

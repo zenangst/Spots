@@ -266,7 +266,7 @@ public struct Item: Mappable, Indexable, DictionaryConvertible {
  - parameter rhs: Right hand collection of Items
  - returns: A boolean value, true if both Item are equal
  */
-public func ==(lhs: [Item], rhs: [Item]) -> Bool {
+public func == (lhs: [Item], rhs: [Item]) -> Bool {
   var equal = lhs.count == rhs.count
 
   if !equal { return false }
@@ -284,7 +284,7 @@ public func ==(lhs: [Item], rhs: [Item]) -> Bool {
  - parameter rhs: Right hand collection of Items
  - returns: A boolean value, true if both Item are equal
  */
-public func ===(lhs: [Item], rhs: [Item]) -> Bool {
+public func === (lhs: [Item], rhs: [Item]) -> Bool {
   var equal = lhs.count == rhs.count
 
   if !equal { return false }
@@ -306,7 +306,7 @@ public func ===(lhs: [Item], rhs: [Item]) -> Bool {
 
  - returns: A boolean value, true if both Item are equal
  */
-public func ==(lhs: Item, rhs: Item) -> Bool {
+public func == (lhs: Item, rhs: Item) -> Bool {
   return lhs.identifier == rhs.identifier &&
     lhs.title == rhs.title &&
     lhs.subtitle == rhs.subtitle &&
@@ -337,7 +337,7 @@ public func != (lhs: [Item], rhs: [Item]) -> Bool {
 
  - returns: A boolean value, true if both Item are equal
  */
-public func ===(lhs: Item, rhs: Item) -> Bool {
+public func === (lhs: Item, rhs: Item) -> Bool {
   let equal = lhs.identifier == rhs.identifier &&
     lhs.title == rhs.title &&
     lhs.subtitle == rhs.subtitle &&
@@ -370,7 +370,7 @@ public func !== (lhs: [Item], rhs: [Item]) -> Bool {
 
  - returns: A boolean value, false if both Item are equal
  */
-public func !=(lhs: Item, rhs: Item) -> Bool {
+public func != (lhs: Item, rhs: Item) -> Bool {
   return !(lhs == rhs)
 }
 

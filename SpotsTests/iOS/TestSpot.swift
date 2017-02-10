@@ -7,7 +7,7 @@ class TestSpot: XCTestCase {
     Configuration.views.storage = [:]
     Configuration.views.defaultItem = nil
     Configuration.register(view: HeaderView.self, identifier: "Header")
-    Configuration.register(view: TextView.self,   identifier: "TextView")
+    Configuration.register(view: TextView.self, identifier: "TextView")
     Configuration.register(view: FooterView.self, identifier: "Footer")
   }
 
@@ -20,8 +20,8 @@ class TestSpot: XCTestCase {
 
     XCTAssertTrue(spot.view is TableView)
     XCTAssertTrue(spot.view.isEqual(spot.tableView))
-    XCTAssertEqual(spot.items[0].size,    CGSize(width: UIScreen.main.bounds.width, height: 44))
-    XCTAssertEqual(spot.items[1].size,    CGSize(width: UIScreen.main.bounds.width, height: 44))
+    XCTAssertEqual(spot.items[0].size, CGSize(width: UIScreen.main.bounds.width, height: 44))
+    XCTAssertEqual(spot.items[1].size, CGSize(width: UIScreen.main.bounds.width, height: 44))
     XCTAssertEqual(spot.view.contentSize, CGSize(width: 100, height: 88))
   }
 

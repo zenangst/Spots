@@ -1074,9 +1074,9 @@ class CompositionTests: XCTestCase {
       XCTAssertEqual(spots[0].compositeSpots[1].spot.items.count, 10)
       XCTAssertEqual(spots[0].compositeSpots[1].spot.view.frame.size.height,
                      ((ItemConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(spots[0].compositeSpots[1].spot.items.count))
-      
+
       XCTAssertEqual(reloadTimes, 1)
-      
+
       exception?.fulfill()
       exception = nil
     }

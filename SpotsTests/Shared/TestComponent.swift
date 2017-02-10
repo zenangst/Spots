@@ -2,24 +2,24 @@
 import Foundation
 import XCTest
 
-class ComponentTests : XCTestCase {
+class ComponentTests: XCTestCase {
 
   let json: [String : Any] = [
-    "title" : "title1",
-    "kind" : "list",
-    "layout" : [
-      "span" : 1.0
+    "title": "title1",
+    "kind": "list",
+    "layout": [
+      "span": 1.0
     ],
-    "meta" : ["foo" : "bar"],
-    "items" : [["title" : "item1"]]
+    "meta": ["foo": "bar"],
+    "items": [["title": "item1"]]
   ]
 
   func testInit() {
     // Test component created with JSON
     let jsonComponent = Component(json)
     XCTAssertEqual(jsonComponent.title, json["title"] as? String)
-    XCTAssertEqual(jsonComponent.kind,  json["kind"] as? String)
-    XCTAssertEqual(jsonComponent.layout?.span,  (json["layout"] as? [String : Any])?["span"] as? Double)
+    XCTAssertEqual(jsonComponent.kind, json["kind"] as? String)
+    XCTAssertEqual(jsonComponent.layout?.span, (json["layout"] as? [String : Any])?["span"] as? Double)
 
     XCTAssert((jsonComponent.meta as NSDictionary).isEqual(json["meta"] as! NSDictionary))
     XCTAssert(jsonComponent.items.count == 1)
@@ -38,8 +38,8 @@ class ComponentTests : XCTestCase {
       meta: json["meta"] as! [String : String])
 
     XCTAssertEqual(codeComponent.title, json["title"] as? String)
-    XCTAssertEqual(codeComponent.kind,  json["kind"] as? String)
-    XCTAssertEqual(codeComponent.layout?.span,  (json["layout"] as? [String : Any])?["span"] as? Double)
+    XCTAssertEqual(codeComponent.kind, json["kind"] as? String)
+    XCTAssertEqual(codeComponent.layout?.span, (json["layout"] as? [String : Any])?["span"] as? Double)
 
     XCTAssert((codeComponent.meta as NSDictionary).isEqual(json["meta"] as! NSDictionary))
     XCTAssert(codeComponent.items.count == 1)
@@ -75,30 +75,30 @@ class ComponentTests : XCTestCase {
 
   func testComponentDiffing() {
     let initialJSON: [String : Any] = [
-      "components" : [
-        ["kind" : "list",
-          "items" : [
-            ["title" : "First list item"]
+      "components": [
+        ["kind": "list",
+          "items": [
+            ["title": "First list item"]
           ]
         ],
-        ["kind" : "list",
-          "items" : [
-            ["title" : "First list item"]
+        ["kind": "list",
+          "items": [
+            ["title": "First list item"]
           ]
         ]
       ]
     ]
 
     let newJSON: [String : Any] = [
-      "components" : [
-        ["kind" : "list",
-          "items" : [
-            ["title" : "First list item 2"]
+      "components": [
+        ["kind": "list",
+          "items": [
+            ["title": "First list item 2"]
           ]
         ],
-        ["kind" : "grid",
-          "items" : [
-            ["title" : "First list item"]
+        ["kind": "grid",
+          "items": [
+            ["title": "First list item"]
           ]
         ]
       ]
@@ -113,16 +113,16 @@ class ComponentTests : XCTestCase {
 
   func testComponentExtensions() {
     let expected: [String : Any] = [
-      "header" : "header",
-      "identifier" : "identifier",
-      "index" : "index",
-      "items" : "items",
-      "kind" : "kind",
-      "meta" : "meta",
-      "span" : "span",
-      "size" : "size",
-      "height" : "height",
-      "width" : "width"
+      "header": "header",
+      "identifier": "identifier",
+      "index": "index",
+      "items": "items",
+      "kind": "kind",
+      "meta": "meta",
+      "span": "span",
+      "size": "size",
+      "height": "height",
+      "width": "width"
     ]
 
     var json: [String : Any] = [:]

@@ -2,7 +2,7 @@
 import Foundation
 import XCTest
 
-class StateCacheTests : XCTestCase {
+class StateCacheTests: XCTestCase {
 
   let cacheKey: String = "state-cache-test"
   var controller: Controller!
@@ -59,7 +59,7 @@ class StateCacheTests : XCTestCase {
     let cacheTwo = StateCache(key: "two")
     let path = cacheOne.path
 
-    [cacheOne, cacheTwo].forEach { $0.save(["foo" : "bar"]) }
+    [cacheOne, cacheTwo].forEach { $0.save(["foo": "bar"]) }
 
     let exception = self.expectation(description: "Wait for cache")
     Dispatch.after(seconds: 0.5) {
@@ -67,7 +67,6 @@ class StateCacheTests : XCTestCase {
         let files = try FileManager.default.contentsOfDirectory(atPath: path)
         XCTAssertEqual(files.count, 2)
       } catch {}
-
 
       StateCache.removeAll()
 

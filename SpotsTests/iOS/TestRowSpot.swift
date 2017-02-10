@@ -28,7 +28,7 @@ class RowSpotTests: XCTestCase {
   }
 
   func testDictionaryRepresentation() {
-    let component = Component(title: "RowSpot", kind: "row", span: 3, meta: ["headerHeight" : 44.0])
+    let component = Component(title: "RowSpot", kind: "row", span: 3, meta: ["headerHeight": 44.0])
     let spot = RowSpot(component: component)
     XCTAssertEqual(component.dictionary["index"] as? Int, spot.dictionary["index"] as? Int)
     XCTAssertEqual(component.dictionary["title"] as? String, spot.dictionary["title"] as? String)
@@ -48,10 +48,10 @@ class RowSpotTests: XCTestCase {
     XCTAssertEqual(rowSpot.identifier(at: indexPath), RowSpot.views.defaultIdentifier)
 
     RowSpot.views.defaultItem = Registry.Item.classType(GridSpotCell.self)
-    XCTAssertEqual(rowSpot.identifier(at: indexPath),RowSpot.views.defaultIdentifier)
+    XCTAssertEqual(rowSpot.identifier(at: indexPath), RowSpot.views.defaultIdentifier)
 
     RowSpot.views.defaultItem = Registry.Item.classType(GridSpotCell.self)
-    XCTAssertEqual(rowSpot.identifier(at: indexPath),RowSpot.views.defaultIdentifier)
+    XCTAssertEqual(rowSpot.identifier(at: indexPath), RowSpot.views.defaultIdentifier)
 
     RowSpot.views["custom-item-kind"] = Registry.Item.classType(GridSpotCell.self)
     XCTAssertEqual(rowSpot.identifier(at: indexPath), "custom-item-kind")
@@ -112,7 +112,7 @@ class RowSpotTests: XCTestCase {
     let spot = RowSpot(component: Component(span: 1, items: items))
     spot.view.frame.size = CGSize(width: 100, height: 100)
     spot.view.layoutSubviews()
-    
+
     let cell = spot.collectionView.cellForItem(at: IndexPath(item: 0, section: 0))
     XCTAssertEqual(cell?.frame.size, CGSize(width: UIScreen.main.bounds.width, height: 44))
   }

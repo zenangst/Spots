@@ -29,21 +29,21 @@ class InteractionTests: XCTestCase {
 
   func testJSONMapping() {
     var json: [String : Any] = [
-      "paginate" : "page"
+      "paginate": "page"
     ]
 
     var interaction = Interaction(json)
     XCTAssertEqual(interaction.paginate, .page)
 
     json = [
-      "paginate" : "item"
+      "paginate": "item"
     ]
 
     interaction = Interaction(json)
     XCTAssertEqual(interaction.paginate, .item)
 
     json = [
-      "paginate" : "disabled"
+      "paginate": "disabled"
     ]
 
     interaction = Interaction(json)
@@ -55,7 +55,7 @@ class InteractionTests: XCTestCase {
 
   func testLegacyMapping() {
     let json: [String : Any] = [
-      "paginate" : true
+      "paginate": true
     ]
 
     Component.legacyMapping = true
@@ -67,7 +67,7 @@ class InteractionTests: XCTestCase {
 
   func testDictionary() {
     let json: [String : Any] = [
-      "paginate" : "page"
+      "paginate": "page"
     ]
 
     let interaction = Interaction(json)
@@ -77,7 +77,7 @@ class InteractionTests: XCTestCase {
 
   func testEquality() {
     let json: [String : Any] = [
-      "paginate" : "page"
+      "paginate": "page"
     ]
 
     var lhs = Interaction(paginate: .page)

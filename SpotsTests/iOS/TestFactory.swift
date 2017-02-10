@@ -2,14 +2,14 @@
 import Foundation
 import XCTest
 
-class FactoryTests : XCTestCase {
+class FactoryTests: XCTestCase {
 
   let json: [String : Any] = [
-    "title" : "title1",
-    "kind" : "merry-go-round",
-    "span" : 1.0,
-    "meta" : ["foo" : "bar"],
-    "items" : [["title" : "item1"]]
+    "title": "title1",
+    "kind": "merry-go-round",
+    "span": 1.0,
+    "meta": ["foo": "bar"],
+    "items": [["title": "item1"]]
   ]
 
   func testRegisterAndResolve() {
@@ -46,11 +46,11 @@ class FactoryTests : XCTestCase {
         span: 1.0,
         items: [
           Item(title: "Fullname", subtitle: "Job title", kind: "image"),
-          Item(title: "Follow", kind: "toggle", meta: ["dynamic-height" : true]),
-          Item(title: "First name", subtitle: "Input first name",kind: "info"),
-          Item(title: "Last name", subtitle: "Input last name",kind: "info"),
-          Item(title: "Twitter", subtitle: "@twitter",kind: "info"),
-          Item(title: "", subtitle: "Biography", kind: "core", meta: ["dynamic-height" : true])
+          Item(title: "Follow", kind: "toggle", meta: ["dynamic-height": true]),
+          Item(title: "First name", subtitle: "Input first name", kind: "info"),
+          Item(title: "Last name", subtitle: "Input last name", kind: "info"),
+          Item(title: "Twitter", subtitle: "@twitter", kind: "info"),
+          Item(title: "", subtitle: "Biography", kind: "core", meta: ["dynamic-height": true])
         ]
       )
     ]

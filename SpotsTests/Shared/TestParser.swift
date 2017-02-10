@@ -2,11 +2,11 @@
 import Foundation
 import XCTest
 
-class ParserTests : XCTestCase {
+class ParserTests: XCTestCase {
 
   func testParsingJSONIntoSpotableObjects() {
     let json: [String : Any] = [
-      "components" : [["title" : "test"], ["title" : "test"]]
+      "components": [["title": "test"], ["title": "test"]]
     ]
 
     let objects: [Spotable] = Parser.parse(json)
@@ -15,7 +15,7 @@ class ParserTests : XCTestCase {
 
   func testParsingJSONIntoSpotableObjectsWithCustomKey() {
     let json: [String : Any] = [
-      "custom-key" : [["title" : "test"], ["title" : "test"]]
+      "custom-key": [["title": "test"], ["title": "test"]]
     ]
 
     let objects: [Spotable] = Parser.parse(json, key: "custom-key")
@@ -24,7 +24,7 @@ class ParserTests : XCTestCase {
 
   func testParsingJSONIntoSpotableObjectsWithoutKey() {
     let json: [[String : Any]] = [
-      ["title" : "test"], ["title" : "test"]
+      ["title": "test"], ["title": "test"]
     ]
 
     let objects: [Spotable] = Parser.parse(json)
@@ -38,7 +38,7 @@ class ParserTests : XCTestCase {
 
   func testParsingJSONIntoComponents() {
     let json: [String : Any] = [
-      "components" : [["title" : "test"], ["title" : "test"]]
+      "components": [["title": "test"], ["title": "test"]]
     ]
 
     let components: [Component] = Parser.parse(json)
@@ -47,7 +47,7 @@ class ParserTests : XCTestCase {
 
   func testParsingJSONIntoComponentsWithCustomKey() {
     let json: [String : Any] = [
-      "objects" : [["title" : "test"], ["title" : "test"]]
+      "objects": [["title": "test"], ["title": "test"]]
     ]
 
     let components: [Component] = Parser.parse(json, key: "objects")
@@ -56,7 +56,7 @@ class ParserTests : XCTestCase {
 
   func testParsingJSONIntoComponentsWithFaultyCustomKey() {
     let json: [String : Any] = [
-      "components" : [["title" : "test"], ["title" : "test"]]
+      "components": [["title": "test"], ["title": "test"]]
     ]
 
     let components: [Component] = Parser.parse(json, key: "objects")
