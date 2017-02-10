@@ -210,7 +210,13 @@ public class Spot: NSObject, Spotable {
   }
 
   fileprivate func layoutVerticalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
+    guard let collectionViewLayout = collectionViewLayout else {
+      return
+    }
 
+    collectionViewLayout.prepare()
+    collectionViewLayout.invalidateLayout()
+    collectionView.frame.size = collectionViewLayout.collectionViewContentSize
   }
 
   func registerDefaultIfNeeded(view: View.Type) {
