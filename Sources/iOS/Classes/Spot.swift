@@ -65,7 +65,9 @@ public class Spot: NSObject, Spotable {
     if componentKind == .list {
       self.view = TableView()
     } else {
-      self.view = CollectionView()
+      let collectionViewLayout = CollectionLayout()
+      let collectionView = CollectionView(frame: CGRect.zero, collectionViewLayout: collectionViewLayout)
+      self.view = collectionView
     }
 
     super.init()
