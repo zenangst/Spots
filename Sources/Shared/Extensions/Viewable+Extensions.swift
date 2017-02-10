@@ -38,9 +38,9 @@ public extension Spotable where Self : Viewable {
       if case let Registry.Item.classType(classType)? = T.views.storage[item.kind], T.views.storage.keys.contains(item.kind) {
         let view = classType.init()
 
-        if let ItemConfigurable = view as? ItemConfigurable {
-          ItemConfigurable.configure(&component.items[index])
-          view.frame.size = ItemConfigurable.preferredViewSize
+        if let itemConfigurable = view as? ItemConfigurable {
+          itemConfigurable.configure(&component.items[index])
+          view.frame.size = itemConfigurable.preferredViewSize
         }
 
         scrollView.addSubview(view)

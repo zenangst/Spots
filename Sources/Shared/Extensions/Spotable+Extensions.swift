@@ -312,8 +312,8 @@ public extension Spotable {
     // Set initial size for view
     view.frame.size.width = view.frame.size.width
 
-    if let ItemConfigurable = view as? ItemConfigurable, view.frame.size.height == 0.0 {
-      view.frame.size = ItemConfigurable.preferredViewSize
+    if let itemConfigurable = view as? ItemConfigurable, view.frame.size.height == 0.0 {
+      view.frame.size = itemConfigurable.preferredViewSize
     }
 
     if view.frame.size.width == 0.0 {

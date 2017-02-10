@@ -27,8 +27,8 @@ class DataSourceTests: XCTestCase {
     spot.component.items[0].kind = "custom"
     spot.component.items[0].size.height = 0.0
     itemCell1 = spot.spotDataSource!.tableView(spot.tableView, cellForRowAt: IndexPath(row: 0, section: 0))
-    let ItemConfigurable = itemCell1 as! CustomListCell
-    XCTAssertEqual(spot.component.items[0].size.height, ItemConfigurable.preferredViewSize.height)
+    let itemConfigurable = itemCell1 as! CustomListCell
+    XCTAssertEqual(spot.component.items[0].size.height, itemConfigurable.preferredViewSize.height)
   }
 
   func testDataSourceForGridableObject() {
@@ -52,8 +52,8 @@ class DataSourceTests: XCTestCase {
     spot.component.items[0].kind = "custom"
     spot.component.items[0].size.height = 0.0
     itemCell1 = spot.spotDataSource!.collectionView(spot.collectionView, cellForItemAt: IndexPath(item: 0, section: 0))
-    let ItemConfigurable = itemCell1 as! CustomGridCell
-    XCTAssertEqual(spot.component.items[0].size.height, ItemConfigurable.preferredViewSize.height)
+    let itemConfigurable = itemCell1 as! CustomGridCell
+    XCTAssertEqual(spot.component.items[0].size.height, itemConfigurable.preferredViewSize.height)
   }
 
   func testDataSourceForGridableDefaultHeader() {
