@@ -45,6 +45,26 @@ class TestSpot: XCTestCase {
     XCTAssertEqual(spot.view.contentSize, listSpot.view.contentSize)
   }
 
+  func testCompareHybridGridSpotWithCoreType() {
+    let items = [Item(title: "A"), Item(title: "B")]
+    let component = Component(kind: Component.Kind.grid.string, items: items, hybrid: true)
+    let gridComponent = Component(kind: Component.Kind.grid.string, items: items)
+    let spot = Spot(component: component)
+    let gridSpot = GridSpot(component: gridComponent)
+
+    XCTAssertTrue(type(of: spot.view) == type(of: gridSpot.view))
+
+    spot.setup(CGSize(width: 100, height: 100))
+    gridSpot.setup(CGSize(width: 100, height: 100))
+    gridSpot.layout(CGSize(width: 100, height: 100))
+    gridSpot.view.layoutSubviews()
+
+    XCTAssertEqual(spot.items[0].size, gridSpot.items[0].size)
+    XCTAssertEqual(spot.items[1].size, gridSpot.items[0].size)
+    XCTAssertEqual(spot.view.frame, gridSpot.view.frame)
+    XCTAssertEqual(spot.view.contentSize, gridSpot.view.contentSize)
+  }
+
   func testHybridListSpotWithHeaderAndFooter() {
     let component = Component(
       header: "Header",
