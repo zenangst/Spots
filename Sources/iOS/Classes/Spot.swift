@@ -125,6 +125,8 @@ public class Spot: NSObject, Spotable {
     } else if let collectionView = self.collectionView {
       layoutCollectionView(collectionView, with: size)
     }
+
+    view.layoutSubviews()
   }
 
   fileprivate func setupTableView(_ tableView: TableView, with size: CGSize) {
