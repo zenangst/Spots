@@ -84,4 +84,24 @@ class TestSpot: XCTestCase {
     XCTAssertEqual(spot.view.frame.size, CGSize(width: 100, height: 100))
     XCTAssertEqual(spot.view.contentSize, CGSize(width: 100, height: 276))
   }
+
+  func testCompareHybridCarouselSpotWithCoreType() {
+    let items = [Item(title: "A"), Item(title: "B")]
+    let component = Component(kind: Component.Kind.carousel.string, items: items, hybrid: true)
+    let carouselComponent = Component(kind: Component.Kind.carousel.string, items: items)
+    let spot = Spot(component: component)
+    let carouselSpot = CarouselSpot(component: carouselComponent)
+
+    XCTAssertTrue(type(of: spot.view) == type(of: carouselSpot.view))
+
+    spot.setup(CGSize(width: 100, height: 100))
+    carouselSpot.setup(CGSize(width: 100, height: 100))
+    carouselSpot.layout(CGSize(width: 100, height: 100))
+    carouselSpot.view.layoutSubviews()
+
+    XCTAssertEqual(spot.items[0].size, carouselSpot.items[0].size)
+    XCTAssertEqual(spot.items[1].size, carouselSpot.items[0].size)
+    XCTAssertEqual(spot.view.frame, carouselSpot.view.frame)
+    XCTAssertEqual(spot.view.contentSize, carouselSpot.view.contentSize)
+  }
 }
