@@ -227,6 +227,19 @@ public class Spot: NSObject, Spotable {
     Configuration.views.defaultItem = Registry.Item.classType(view)
   }
 
+  public func sizeForItem(at indexPath: IndexPath) -> CGSize {
+    var width: CGFloat = 0.0
+    var height: CGFloat = 0.0
+
+    width  <- item(at: indexPath)?.size.width
+    height <- item(at: indexPath)?.size.height
+
+    return CGSize(
+      width: floor(width),
+      height: ceil(height)
+    )
+  }
+
   public func register() {
 
   }
