@@ -1,5 +1,3 @@
-import Brick
-
 /// A JSON to UI parser to produce components for Controller
 public struct Parser {
 

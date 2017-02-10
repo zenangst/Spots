@@ -1,5 +1,4 @@
 import Cocoa
-import Brick
 
 extension Gridable {
 
@@ -132,7 +131,7 @@ extension Gridable {
       : item.kind
 
     guard let (_, collectionItem) = Self.grids.make(kind),
-      let view = collectionItem as? SpotConfigurable else { return }
+      let view = collectionItem as? ItemConfigurable else { return }
 
     view.configure(&item)
 

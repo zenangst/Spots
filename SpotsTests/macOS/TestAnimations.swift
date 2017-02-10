@@ -1,7 +1,6 @@
 @testable import Spots
 import Cocoa
 import XCTest
-import Brick
 
 class AnimationTests: XCTestCase {
 

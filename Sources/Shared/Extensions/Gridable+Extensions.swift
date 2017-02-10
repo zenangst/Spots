@@ -3,7 +3,6 @@
 #else
   import UIKit
 #endif
-import Brick
 
 /// A Spotable extension for Gridable objects
 public extension Spotable where Self : Gridable {

@@ -1,7 +1,6 @@
 // swiftlint:disable weak_delegate
 
 import UIKit
-import Brick
 
 /// A CarouselSpot, a collection view based Spotable object that lays out its items in a horizontal order
 open class CarouselSpot: NSObject, Gridable {
@@ -38,7 +37,7 @@ open class CarouselSpot: NSObject, Gridable {
   }
 
   /// A configuration closure
-  open var configure: ((SpotConfigurable) -> Void)? {
+  open var configure: ((ItemConfigurable) -> Void)? {
     didSet {
       configureClosureDidChange()
     }

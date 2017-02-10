@@ -96,7 +96,7 @@ extension DataSource: UICollectionViewDataSource {
         let customView = view {
         cell.configure(with: customView)
 
-        if let configurableView = customView as? SpotConfigurable {
+        if let configurableView = customView as? ItemConfigurable {
           configurableView.configure(&spot.component.items[indexPath.item])
 
           if spot.component.items[indexPath.item].size.height == 0.0 {
@@ -110,7 +110,7 @@ extension DataSource: UICollectionViewDataSource {
     case let cell as Composable:
       let compositeSpots = spot.compositeSpots.filter({ $0.itemIndex == indexPath.item })
       cell.configure(&spot.component.items[indexPath.item], compositeSpots: compositeSpots)
-    case let cell as SpotConfigurable:
+    case let cell as ItemConfigurable:
       cell.configure(&spot.component.items[indexPath.item])
 
       if spot.component.items[indexPath.item].size.height == 0.0 {
@@ -165,7 +165,7 @@ extension DataSource: UITableViewDataSource {
         let customView = view {
         cell.configure(with: customView)
 
-        if let configurableView = customView as? SpotConfigurable {
+        if let configurableView = customView as? ItemConfigurable {
           configurableView.configure(&spot.component.items[indexPath.item])
 
           if spot.component.items[indexPath.item].size.height == 0.0 {
@@ -179,7 +179,7 @@ extension DataSource: UITableViewDataSource {
     case let cell as Composable:
       let compositeSpots = spot.compositeSpots.filter({ $0.itemIndex == indexPath.item })
       cell.configure(&spot.component.items[indexPath.item], compositeSpots: compositeSpots)
-    case let cell as SpotConfigurable:
+    case let cell as ItemConfigurable:
       cell.configure(&spot.component.items[indexPath.item])
 
       if spot.component.items[indexPath.item].size.height == 0.0 {

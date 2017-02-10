@@ -1,9 +1,8 @@
 @testable import Spots
 import Foundation
 import XCTest
-import Brick
 
-class ItemExtensionsTests : XCTestCase {
+class ItemExtensionsTests: XCTestCase {
 
   func testEvaluateChanges() {
     /*
@@ -11,14 +10,14 @@ class ItemExtensionsTests : XCTestCase {
      */
 
     var oldJSON: [[String : Any]] = [
-      ["title" : "foo"],
-      ["title" : "bar"],
+      ["title": "foo"],
+      ["title": "bar"],
     ]
 
     var newJSON: [[String : Any]] = [
-      ["title" : "foo"],
-      ["title" : "bar"],
-      ["title" : "baz"]
+      ["title": "foo"],
+      ["title": "bar"],
+      ["title": "baz"]
     ]
 
     var newModels = newJSON.map { Item($0) }
@@ -52,12 +51,12 @@ class ItemExtensionsTests : XCTestCase {
      Check that kind takes precedence over title
      */
     oldJSON = [
-      ["title" : "foo", "kind" : "course-item"],
-      ["title" : "bar", "kind" : "list-item"],
+      ["title": "foo", "kind": "course-item"],
+      ["title": "bar", "kind": "list-item"],
     ]
     newJSON = [
-      ["title" : "foo1", "kind" : "course-item"],
-      ["title" : "bar1", "kind" : "grid-item"],
+      ["title": "foo1", "kind": "course-item"],
+      ["title": "bar1", "kind": "grid-item"],
     ]
 
     newModels = newJSON.map { Item($0) }
@@ -78,12 +77,12 @@ class ItemExtensionsTests : XCTestCase {
      */
 
     oldJSON = [
-      ["text" : "foo"],
-      ["text" : "bar"]
+      ["text": "foo"],
+      ["text": "bar"]
     ]
     newJSON = [
-      ["text" : "foo"],
-      ["text" : "baz"]
+      ["text": "foo"],
+      ["text": "baz"]
     ]
 
     newModels = newJSON.map { Item($0) }

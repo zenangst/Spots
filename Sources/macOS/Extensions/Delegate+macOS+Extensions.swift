@@ -141,8 +141,8 @@ extension Delegate: NSTableViewDelegate {
         resolvedView = wrapper
       }
 
-      (customView as? SpotConfigurable)?.configure(&spot.component.items[row])
-    case let view as SpotConfigurable:
+      (customView as? ItemConfigurable)?.configure(&spot.component.items[row])
+    case let view as ItemConfigurable:
       view.configure(&spot.component.items[row])
     default:
       break

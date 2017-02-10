@@ -4,8 +4,6 @@
   import UIKit
 #endif
 
-import Brick
-
 extension SpotsProtocol {
 
   public typealias CompareClosure = ((_ lhs: [Component], _ rhs: [Component]) -> Bool)

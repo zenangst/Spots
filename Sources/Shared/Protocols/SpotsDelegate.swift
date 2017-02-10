@@ -1,5 +1,3 @@
-import Brick
-
 /// A generic delegate for Spots
 public protocol SpotsDelegate: class {
 

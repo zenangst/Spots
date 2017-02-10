@@ -1,9 +1,8 @@
 @testable import Spots
 import Foundation
 import XCTest
-import Brick
 
-class SpotableTests : XCTestCase {
+class SpotableTests: XCTestCase {
 
   func testAppendingMultipleItemsToSpot() {
     let listSpot = ListSpot(component: Component(title: "Component", span: 1.0))

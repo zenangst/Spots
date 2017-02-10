@@ -1,5 +1,3 @@
-import Brick
-
 // MARK: - SpotsDelegate extension
 public extension SpotsDelegate {
 

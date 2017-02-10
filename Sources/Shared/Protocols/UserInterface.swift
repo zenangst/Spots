@@ -1,5 +1,3 @@
-import Brick
-
 /// A protocol used for composition inside Spotable objects
 public protocol UserInterface: class {
 

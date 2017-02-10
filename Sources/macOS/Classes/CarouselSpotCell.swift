@@ -1,7 +1,6 @@
 import Cocoa
-import Brick
 
-class CarouselSpotCell: NSCollectionViewItem, SpotConfigurable {
+class CarouselSpotCell: NSCollectionViewItem, ItemConfigurable {
 
   var preferredViewSize: CGSize = CGSize(width: 0, height: 120)
 

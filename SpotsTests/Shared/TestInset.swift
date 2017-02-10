@@ -4,10 +4,10 @@ import XCTest
 class TestInset: XCTestCase {
 
   let json: [String : Any] = [
-    "top" : 1.0,
-    "left" : 2.0,
-    "bottom" : 3.0,
-    "right" : 4.0
+    "top": 1.0,
+    "left": 2.0,
+    "bottom": 3.0,
+    "right": 4.0
   ]
 
   func testDefaultValues() {

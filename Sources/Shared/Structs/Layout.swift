@@ -1,6 +1,5 @@
 import Foundation
 import Tailor
-import Brick
 
 #if os(OSX)
   import Cocoa

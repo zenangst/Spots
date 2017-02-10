@@ -4,8 +4,6 @@
   import UIKit
 #endif
 
-import Brick
-
 /// A Spotable extension for Viewable objects
 public extension Spotable where Self : Viewable {
 
@@ -40,9 +38,9 @@ public extension Spotable where Self : Viewable {
       if case let Registry.Item.classType(classType)? = T.views.storage[item.kind], T.views.storage.keys.contains(item.kind) {
         let view = classType.init()
 
-        if let spotConfigurable = view as? SpotConfigurable {
-          spotConfigurable.configure(&component.items[index])
-          view.frame.size = spotConfigurable.preferredViewSize
+        if let itemConfigurable = view as? ItemConfigurable {
+          itemConfigurable.configure(&component.items[index])
+          view.frame.size = itemConfigurable.preferredViewSize
         }
 
         scrollView.addSubview(view)
@@ -75,8 +73,8 @@ public extension Spotable where Self : Viewable {
     guard case let Registry.Item.classType(classType)? = dynamic.views.storage[item.kind], dynamic.views.storage.keys.contains(item.kind) else { return }
 
     let view = classType.init()
-    (view as? SpotConfigurable)?.configure(&component.items[index])
-    if let size = (view as? SpotConfigurable)?.preferredViewSize {
+    (view as? ItemConfigurable)?.configure(&component.items[index])
+    if let size = (view as? ItemConfigurable)?.preferredViewSize {
       view.frame.size = size
     }
 
@@ -96,8 +94,8 @@ public extension Spotable where Self : Viewable {
       guard case let Registry.Item.classType(classType)? = dynamic.views.storage[item.kind], dynamic.views.storage.keys.contains(item.kind) else { return }
 
       let view = classType.init()
-      (view as? SpotConfigurable)?.configure(&component.items[index])
-      if let size = (view as? SpotConfigurable)?.preferredViewSize {
+      (view as? ItemConfigurable)?.configure(&component.items[index])
+      if let size = (view as? ItemConfigurable)?.preferredViewSize {
         view.frame.size = size
       }
 
@@ -118,8 +116,8 @@ public extension Spotable where Self : Viewable {
     guard case let Registry.Item.classType(classType)? = dynamic.views.storage[item.kind], dynamic.views.storage.keys.contains(item.kind) else { return }
 
     let view = classType.init()
-    (view as? SpotConfigurable)?.configure(&component.items[index])
-    if let size = (view as? SpotConfigurable)?.preferredViewSize {
+    (view as? ItemConfigurable)?.configure(&component.items[index])
+    if let size = (view as? ItemConfigurable)?.preferredViewSize {
       view.frame.size = size
     }
     #if os(iOS)
@@ -142,8 +140,8 @@ public extension Spotable where Self : Viewable {
       guard case let Registry.Item.classType(classType)? = dynamic.views.storage[item.kind], dynamic.views.storage.keys.contains(item.kind) else { return }
 
       let view = classType.init()
-      (view as? SpotConfigurable)?.configure(&component.items[index])
-      if let size = (view as? SpotConfigurable)?.preferredViewSize {
+      (view as? ItemConfigurable)?.configure(&component.items[index])
+      if let size = (view as? ItemConfigurable)?.preferredViewSize {
         view.frame.size = size
       }
       #if os(iOS)
@@ -160,7 +158,7 @@ public extension Spotable where Self : Viewable {
   /// - parameter animation:  A Animation that is used when performing the mutation (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue when the view model has been removed.
   func update(_ item: Item, index: Int, withAnimation animation: Animation = .none, completion: Completion = nil) {
-    guard let view = scrollView.subviews[index] as? SpotConfigurable else { return }
+    guard let view = scrollView.subviews[index] as? ItemConfigurable else { return }
 
     component.items[index] = item
     view.configure(&component.items[index])

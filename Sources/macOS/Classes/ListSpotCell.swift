@@ -1,7 +1,6 @@
 import Cocoa
-import Brick
 
-class ListSpotCell: NSTableRowView, SpotConfigurable {
+class ListSpotCell: NSTableRowView, ItemConfigurable {
 
   var preferredViewSize: CGSize = CGSize(width: 0, height: 120)
 

@@ -19,7 +19,7 @@ public class Spot: NSObject, Spotable {
   public var componentKind: Component.Kind = .list
   public var compositeSpots: [CompositeSpot] = []
 
-  public var configure: ((SpotConfigurable) -> Void)? {
+  public var configure: ((ItemConfigurable) -> Void)? {
     didSet {
       configureClosureDidChange()
     }

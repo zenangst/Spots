@@ -1,5 +1,4 @@
 @testable import Spots
-import Brick
 import Foundation
 import XCTest
 
@@ -29,7 +28,7 @@ class CarouselSpotTests: XCTestCase {
   }
 
   func testDictionaryRepresentation() {
-    let component = Component(title: "CarouselSpot", kind: "carousel", span: 3, meta: ["headerHeight" : 44.0])
+    let component = Component(title: "CarouselSpot", kind: "carousel", span: 3, meta: ["headerHeight": 44.0])
     let spot = CarouselSpot(component: component)
     XCTAssertEqual(component.dictionary["index"] as? Int, spot.dictionary["index"] as? Int)
     XCTAssertEqual(component.dictionary["title"] as? String, spot.dictionary["title"] as? String)
@@ -49,10 +48,10 @@ class CarouselSpotTests: XCTestCase {
     XCTAssertEqual(carouselSpot.identifier(at: indexPath), CarouselSpot.views.defaultIdentifier)
 
     CarouselSpot.views.defaultItem = Registry.Item.classType(CarouselSpotCell.self)
-    XCTAssertEqual(carouselSpot.identifier(at: indexPath),CarouselSpot.views.defaultIdentifier)
+    XCTAssertEqual(carouselSpot.identifier(at: indexPath), CarouselSpot.views.defaultIdentifier)
 
     CarouselSpot.views.defaultItem = Registry.Item.classType(CarouselSpotCell.self)
-    XCTAssertEqual(carouselSpot.identifier(at: indexPath),CarouselSpot.views.defaultIdentifier)
+    XCTAssertEqual(carouselSpot.identifier(at: indexPath), CarouselSpot.views.defaultIdentifier)
 
     CarouselSpot.views["custom-item-kind"] = Registry.Item.classType(CarouselSpotCell.self)
     XCTAssertEqual(carouselSpot.identifier(at: indexPath), "custom-item-kind")
@@ -63,10 +62,10 @@ class CarouselSpotTests: XCTestCase {
 
   func testMetaMapping() {
     var json: [String : Any] = [
-      "meta" : [
-        "item-spacing" : 25.0,
-        "line-spacing" : 10.0,
-        "dynamic-span" :  true
+      "meta": [
+        "item-spacing": 25.0,
+        "line-spacing": 10.0,
+        "dynamic-span": true
       ]
     ]
 
@@ -81,10 +80,10 @@ class CarouselSpotTests: XCTestCase {
     XCTAssertEqual(spot.dynamicSpan, true)
 
     json = [
-      "meta" : [
-        "item-spacing" : 12.5,
-        "line-spacing" : 7.5,
-        "dynamic-span" :  false
+      "meta": [
+        "item-spacing": 12.5,
+        "line-spacing": 7.5,
+        "dynamic-span": false
       ]
     ]
 
@@ -101,26 +100,26 @@ class CarouselSpotTests: XCTestCase {
 
   func testCarouselSetupWithSimpleStructure() {
     let json: [String : Any] = [
-      "items" : [
-        ["title" : "foo",
-          "size" : [
-            "width" : 120.0,
-            "height" : 180.0]
+      "items": [
+        ["title": "foo",
+          "size": [
+            "width": 120.0,
+            "height": 180.0]
         ],
-        ["title" : "bar",
-          "size" : [
-            "width" : 120.0,
-            "height" : 180.0]
+        ["title": "bar",
+          "size": [
+            "width": 120.0,
+            "height": 180.0]
         ],
-        ["title" : "baz",
-          "size" : [
-            "width" : 120,
-            "height" : 180]
+        ["title": "baz",
+          "size": [
+            "width": 120,
+            "height": 180]
         ],
       ],
-      "meta" : [
-        "item-spacing" : 25.0,
-        "line-spacing" : 10.0
+      "meta": [
+        "item-spacing": 25.0,
+        "line-spacing": 10.0
       ]
     ]
 
@@ -148,14 +147,14 @@ class CarouselSpotTests: XCTestCase {
 
   func testCarouselSetupWithPagination() {
     let json: [String : Any] = [
-      "items" : [
-        ["title" : "foo", "kind" : "carousel"],
-        ["title" : "bar", "kind" : "carousel"],
-        ["title" : "baz", "kind" : "carousel"],
-        ["title" : "bazar", "kind" : "carousel"]
+      "items": [
+        ["title": "foo", "kind": "carousel"],
+        ["title": "bar", "kind": "carousel"],
+        ["title": "baz", "kind": "carousel"],
+        ["title": "bazar", "kind": "carousel"]
       ],
-      "interaction" : Interaction(paginate: .page).dictionary,
-      "layout" : Layout(
+      "interaction": Interaction(paginate: .page).dictionary,
+      "layout": Layout(
         span: 4.0,
         dynamicSpan: false,
         pageIndicatorPlacement: .below
@@ -206,14 +205,14 @@ class CarouselSpotTests: XCTestCase {
 
   func testPageIndicatorOverlayPlacement() {
     let json: [String : Any] = [
-      "items" : [
-        ["title" : "foo", "kind" : "carousel"],
-        ["title" : "bar", "kind" : "carousel"],
-        ["title" : "baz", "kind" : "carousel"],
-        ["title" : "bazar", "kind" : "carousel"]
+      "items": [
+        ["title": "foo", "kind": "carousel"],
+        ["title": "bar", "kind": "carousel"],
+        ["title": "baz", "kind": "carousel"],
+        ["title": "bazar", "kind": "carousel"]
       ],
-      "interaction" : Interaction(paginate: .page).dictionary,
-      "layout" : Layout(
+      "interaction": Interaction(paginate: .page).dictionary,
+      "layout": Layout(
         span: 4.0,
         dynamicSpan: false,
         pageIndicatorPlacement: .overlay
@@ -241,87 +240,87 @@ class CarouselSpotTests: XCTestCase {
     // Assert that no height has been added for a page indicator
     XCTAssertEqual(spot.view.frame.height, 88)
   }
-    
+
   func testPaginatedCarouselSnapping() {
     class CollectionViewMock: UICollectionView {
       var itemSize = CGSize.zero
-      
+
       override func indexPathForItem(at point: CGPoint) -> IndexPath? {
         return IndexPath(item: Int(point.x / itemSize.width), section: 0)
       }
     }
-    
+
     let json: [String : Any] = [
-      "items" : [
+      "items": [
         [
-          "title" : "title",
-          "kind" : "carousel",
+          "title": "title",
+          "kind": "carousel",
           "size": [
             "width": 200.0,
             "height": 100.0
           ]
         ],
         [
-          "title" : "title",
-          "kind" : "carousel",
+          "title": "title",
+          "kind": "carousel",
           "size": [
             "width": 200.0,
             "height": 100.0
           ]
         ],
         [
-          "title" : "title",
-          "kind" : "carousel",
+          "title": "title",
+          "kind": "carousel",
           "size": [
             "width": 200.0,
             "height": 100.0
           ]
         ],
         [
-          "title" : "title",
-          "kind" : "carousel",
+          "title": "title",
+          "kind": "carousel",
           "size": [
             "width": 200.0,
             "height": 100.0
           ]
         ]
       ],
-      "interaction" : Interaction(paginate: .page).dictionary,
-      "layout" : Layout(
+      "interaction": Interaction(paginate: .page).dictionary,
+      "layout": Layout(
         span: 0,
         dynamicSpan: false,
         pageIndicatorPlacement: .below,
         itemSpacing: 0
       ).dictionary
     ]
-    
+
     let layout = CollectionLayout()
     let collectionView = CollectionViewMock(frame: .zero, collectionViewLayout: layout)
     collectionView.itemSize = CGSize(width: 200, height: 100)
-    
+
     let component = Component(json)
     let spot = CarouselSpot(component: component, collectionView: collectionView, layout: layout)
     let parentSize = CGSize(width: 300, height: 100)
-    
+
     spot.setup(parentSize)
     spot.layout(parentSize)
     spot.prepareItems()
     spot.view.layoutSubviews()
-    
+
     // Make sure our mocked item size is correct
     XCTAssertEqual(collectionView.itemSize, spot.items[0].size)
-    
+
     // When scrolling, make sure the closest item is centered
     var originalPoint = CGPoint(x: 350, y: 0)
     let targetContentOffset = UnsafeMutablePointer(mutating: &originalPoint)
     collectionView.delegate!.scrollViewWillEndDragging!(collectionView, withVelocity: .zero, targetContentOffset: targetContentOffset)
     XCTAssertEqual(targetContentOffset.pointee.x, 350)
-    
+
     // When scrolling back to origin, no centering should occur
     targetContentOffset.pointee.x = 0
     collectionView.delegate!.scrollViewWillEndDragging!(collectionView, withVelocity: .zero, targetContentOffset: targetContentOffset)
     XCTAssertEqual(targetContentOffset.pointee.x, 0)
-    
+
     // Make sure an out of bounds content offset is not manipulated
     targetContentOffset.pointee.x = 100000
     targetContentOffset.pointee.y = 100000

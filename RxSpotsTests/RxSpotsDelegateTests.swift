@@ -2,7 +2,6 @@ import XCTest
 import Spots
 import RxSpots
 import RxSwift
-import Brick
 
 class RxSpotsDelegateTests: XCTestCase {
 
