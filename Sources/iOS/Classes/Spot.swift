@@ -225,6 +225,30 @@ public class Spot: NSObject, Spotable {
     Configuration.views.defaultItem = Registry.Item.classType(view)
   }
 
+  private func configurePageControl() {
+    guard let placement = component.layout?.pageIndicatorPlacement else {
+      pageControl.removeFromSuperview()
+      return
+    }
+
+    pageControl.numberOfPages = component.items.count
+    pageControl.frame.origin.x = 0
+    pageControl.frame.size.height = 22
+
+    switch placement {
+    case .below:
+      pageControl.frame.size.width = backgroundView.frame.width
+      pageControl.pageIndicatorTintColor = .lightGray
+      pageControl.currentPageIndicatorTintColor = .gray
+      backgroundView.addSubview(pageControl)
+    case .overlay:
+      pageControl.frame.size.width = view.frame.width
+      pageControl.pageIndicatorTintColor = nil
+      pageControl.currentPageIndicatorTintColor = nil
+      view.addSubview(pageControl)
+    }
+  }
+
   public func sizeForItem(at indexPath: IndexPath) -> CGSize {
     return CGSize(
       width:  item(at: indexPath)?.size.width  ?? 0.0,
