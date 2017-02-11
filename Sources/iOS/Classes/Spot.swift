@@ -63,6 +63,11 @@ public class Spot: NSObject, Spotable {
     } else {
       let collectionViewLayout = CollectionLayout()
       let collectionView = CollectionView(frame: CGRect.zero, collectionViewLayout: collectionViewLayout)
+
+      if componentKind == .carousel {
+        collectionViewLayout.scrollDirection = .horizontal
+      }
+
       self.view = collectionView
     }
 
