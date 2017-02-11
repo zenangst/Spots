@@ -173,7 +173,55 @@ public class Spot: NSObject, Spotable {
   }
 
   fileprivate func setupHorizontalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
+    guard let layout = collectionView.collectionViewLayout as? GridableLayout else {
+      return
+    }
 
+    collectionView.isScrollEnabled = true
+    prepareItems()
+    configurePageControl()
+
+    if collectionView.contentSize.height > 0 {
+      collectionView.frame.size.height = collectionView.contentSize.height
+    } else {
+      var newCollectionViewHeight: CGFloat = 0.0
+
+      newCollectionViewHeight <- component.items.sorted(by: {
+        $0.size.height > $1.size.height
+      }).first?.size.height
+
+      collectionView.frame.size.height = newCollectionViewHeight
+
+      if collectionView.frame.size.height > 0 {
+        collectionView.frame.size.height += layout.sectionInset.top + layout.sectionInset.bottom
+      }
+    }
+
+    if !component.header.isEmpty,
+      let resolve = Configuration.views.make(component.header),
+      let view = resolve.view {
+      layout.headerReferenceSize.width = collectionView.frame.size.width
+      layout.headerReferenceSize.height = view.frame.size.height
+    }
+
+    CarouselSpot.configure?(collectionView, layout)
+
+    collectionView.frame.size.height += layout.headerReferenceSize.height
+
+    if let componentLayout = component.layout {
+      collectionView.frame.size.height += CGFloat(componentLayout.inset.top + componentLayout.inset.bottom)
+    }
+
+    if let pageIndicatorPlacement = component.layout?.pageIndicatorPlacement {
+      switch pageIndicatorPlacement {
+      case .below:
+        layout.sectionInset.bottom += pageControl.frame.height
+        pageControl.frame.origin.y = collectionView.frame.height
+      case .overlay:
+        let verticalAdjustment = CGFloat(2)
+        pageControl.frame.origin.y = collectionView.frame.height - pageControl.frame.height - verticalAdjustment
+      }
+    }
   }
 
   fileprivate func setupVerticalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
