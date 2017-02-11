@@ -103,4 +103,24 @@ class TestSpot: XCTestCase {
     XCTAssertEqual(spot.view.frame, carouselSpot.view.frame)
     XCTAssertEqual(spot.view.contentSize, carouselSpot.view.contentSize)
   }
+
+  func testHybridCarouselSpotWithHeaderAndFooter() {
+    let component = Component(
+      header: "Header",
+      footer: "Footer",
+      kind: Component.Kind.carousel.string,
+      items: [
+        Item(title: "A"),
+        Item(title: "B"),
+        Item(title: "C"),
+        Item(title: "D")
+      ],
+      hybrid: true
+    )
+    let spot = Spot(component: component)
+    spot.setup(CGSize(width: 100, height: 100))
+
+    XCTAssertEqual(spot.view.frame.size, CGSize(width: 100, height: 188))
+    XCTAssertEqual(spot.view.contentSize, CGSize(width: 352, height: 188))
+  }
 }
