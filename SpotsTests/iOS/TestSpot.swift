@@ -22,7 +22,17 @@ class TestSpot: XCTestCase {
     XCTAssertTrue(spot.view.isEqual(spot.tableView))
     XCTAssertEqual(spot.items[0].size, CGSize(width: UIScreen.main.bounds.width, height: 44))
     XCTAssertEqual(spot.items[1].size, CGSize(width: UIScreen.main.bounds.width, height: 44))
-    XCTAssertEqual(spot.view.contentSize, CGSize(width: 100, height: 88))
+    XCTAssertEqual(spot.view.frame.size, CGSize(width: 100, height: 100))
+
+    /// tvOS adds 14 pixels to each item in a table view.
+    /// So for tvOS, the calculation would look like this:
+    /// let contentSize.height = item.reduce(0, { $0 + $1.item.size.height + 14 })
+    #if os(tvOS)
+      let expectedContentSizeHeight: CGFloat = 116
+    #elseif os(iOS)
+      let expectedContentSizeHeight: CGFloat = 88
+    #endif
+    XCTAssertEqual(spot.view.contentSize, CGSize(width: 100, height: expectedContentSizeHeight))
   }
 
   func testCompareHybridListSpotWithCoreType() {
@@ -37,6 +47,7 @@ class TestSpot: XCTestCase {
     spot.setup(CGSize(width: 100, height: 100))
     listSpot.setup(CGSize(width: 100, height: 100))
     listSpot.layout(CGSize(width: 100, height: 100))
+    listSpot.view.layoutSubviews()
 
     XCTAssertEqual(spot.items[0].size, listSpot.items[0].size)
     XCTAssertEqual(spot.items[1].size, listSpot.items[0].size)
@@ -64,26 +75,6 @@ class TestSpot: XCTestCase {
     XCTAssertEqual(spot.view.contentSize, gridSpot.view.contentSize)
   }
 
-  func testHybridListSpotWithHeaderAndFooter() {
-    let component = Component(
-      header: "Header",
-      footer: "Footer",
-      kind: Component.Kind.list.string,
-      items: [
-        Item(title: "A"),
-        Item(title: "B"),
-        Item(title: "C"),
-        Item(title: "D")
-      ],
-      hybrid: true
-    )
-    let spot = Spot(component: component)
-    spot.setup(CGSize(width: 100, height: 100))
-
-    XCTAssertEqual(spot.view.frame.size, CGSize(width: 100, height: 100))
-    XCTAssertEqual(spot.view.contentSize, CGSize(width: 100, height: 276))
-  }
-
   func testCompareHybridCarouselSpotWithCoreType() {
     let items = [Item(title: "A"), Item(title: "B")]
     let component = Component(kind: Component.Kind.carousel.string, items: items, hybrid: true)
@@ -102,6 +93,35 @@ class TestSpot: XCTestCase {
     XCTAssertEqual(spot.items[1].size, carouselSpot.items[0].size)
     XCTAssertEqual(spot.view.frame, carouselSpot.view.frame)
     XCTAssertEqual(spot.view.contentSize, carouselSpot.view.contentSize)
+  }
+
+  func testHybridListSpotWithHeaderAndFooter() {
+    let component = Component(
+      header: "Header",
+      footer: "Footer",
+      kind: Component.Kind.list.string,
+      items: [
+        Item(title: "A"),
+        Item(title: "B"),
+        Item(title: "C"),
+        Item(title: "D")
+      ],
+      hybrid: true
+    )
+    let spot = Spot(component: component)
+    spot.setup(CGSize(width: 100, height: 100))
+
+    XCTAssertEqual(spot.view.frame.size, CGSize(width: 100, height: 100))
+
+    /// tvOS adds 14 pixels to each item in a table view.
+    /// So for tvOS, the calculation would look like this:
+    /// let contentSize.height = item.reduce(0, { $0 + $1.item.size.height + 14 })
+    #if os(tvOS)
+      let expectedContentSizeHeight: CGFloat = 332
+    #elseif os(iOS)
+      let expectedContentSizeHeight: CGFloat = 276
+    #endif
+    XCTAssertEqual(spot.view.contentSize, CGSize(width: 100, height: expectedContentSizeHeight))
   }
 
   func testHybridCarouselSpotWithHeaderAndFooter() {
