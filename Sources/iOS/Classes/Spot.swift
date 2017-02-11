@@ -253,7 +253,11 @@ public class Spot: NSObject, Spotable {
 
   fileprivate func layoutCollectionView(_ collectionView: CollectionView, with size: CGSize) {
     prepareItems()
-    layoutVerticalCollectionView(collectionView, with: size)
+    if (collectionView.collectionViewLayout as? GridableLayout)?.scrollDirection == .horizontal {
+      layoutHorizontalCollectionView(collectionView, with: size)
+    } else {
+      layoutVerticalCollectionView(collectionView, with: size)
+    }
   }
 
   fileprivate func layoutTableView(_ tableView: TableView, with size: CGSize) {
