@@ -266,7 +266,15 @@ public class Spot: NSObject, Spotable {
   }
 
   fileprivate func layoutHorizontalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
+    guard let collectionViewLayout = collectionView.collectionViewLayout as? GridableLayout else {
+      return
+    }
 
+    collectionViewLayout.prepare()
+    collectionViewLayout.invalidateLayout()
+
+    collectionView.frame.size.width = size.width
+    collectionView.frame.size.height = collectionViewLayout.contentSize.height
   }
 
   fileprivate func layoutVerticalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
