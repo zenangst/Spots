@@ -138,7 +138,6 @@ open class ListSpot: NSObject, Listable {
     }
 
     scrollView.contentView.addSubview(tableView)
-    prepareItems()
     configureLayout(component)
     registerDefault(view: ListSpotItem.self)
     registerComposite(view: ListComposite.self)
@@ -189,6 +188,8 @@ open class ListSpot: NSObject, Listable {
       component.items[$0.offset].size.width = size.width
     }
 
+    tableView.frame.size = size
+    prepareItems()
     tableView.dataSource = spotDataSource
     tableView.delegate = spotDelegate
     tableView.target = self
