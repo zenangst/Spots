@@ -80,7 +80,6 @@ open class ListSpot: NSObject, Listable {
     registerDefault(view: ListSpotCell.self)
     registerComposite(view: ListComposite.self)
     setupTableView()
-    prepareItems()
   }
 
   /// A convenience init for initializing a ListSpot with a custom tableview, title and a kind.
@@ -139,6 +138,8 @@ open class ListSpot: NSObject, Listable {
     tableView.contentSize = CGSize(
       width: tableView.frame.size.width,
       height: height - tableView.contentInset.top - tableView.contentInset.bottom)
+
+    prepareItems()
 
     ListSpot.configure?(tableView)
   }
