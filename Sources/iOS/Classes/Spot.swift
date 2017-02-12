@@ -130,15 +130,6 @@ public class Spot: NSObject, Spotable {
   }
 
   fileprivate func setupTableView(_ tableView: TableView, with size: CGSize) {
-    guard let layout = component.layout else {
-      return
-    }
-
-    /// Prepare items with the help of span.
-    if layout.span >= 1.0 {
-      prepareItems()
-    }
-
     tableView.dataSource = spotDataSource
     tableView.delegate = spotDelegate
     tableView.rowHeight = UITableViewAutomaticDimension
@@ -146,10 +137,7 @@ public class Spot: NSObject, Spotable {
     tableView.frame.size.width = round(size.width - (tableView.contentInset.left))
     tableView.frame.origin.x = round(size.width / 2 - tableView.frame.width / 2)
 
-    /// Prepare items based of UI element frame.
-    if layout.span < 1.0 {
-      prepareItems()
-    }
+    prepareItems()
 
     var height: CGFloat = 0.0
     for item in component.items {
