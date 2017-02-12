@@ -63,6 +63,11 @@ public class Spot: NSObject, Spotable {
     } else {
       let collectionViewLayout = CollectionLayout()
       let collectionView = CollectionView(frame: CGRect.zero, collectionViewLayout: collectionViewLayout)
+
+      if componentKind == .carousel {
+        collectionViewLayout.scrollDirection = .horizontal
+      }
+
       self.view = collectionView
     }
 
@@ -72,6 +77,7 @@ public class Spot: NSObject, Spotable {
       switch componentKind {
       case .carousel:
         self.component.layout = CarouselSpot.layout
+        registerDefaultIfNeeded(view: CarouselSpotCell.self)
       case .grid:
         self.component.layout = GridSpot.layout
         registerDefaultIfNeeded(view: GridSpotCell.self)
@@ -124,25 +130,14 @@ public class Spot: NSObject, Spotable {
   }
 
   fileprivate func setupTableView(_ tableView: TableView, with size: CGSize) {
-    guard let layout = component.layout else {
-      return
-    }
-
-    /// Prepare items with the help of span.
-    if layout.span >= 1.0 {
-      prepareItems()
-    }
-
     tableView.dataSource = spotDataSource
     tableView.delegate = spotDelegate
+    tableView.rowHeight = UITableViewAutomaticDimension
     tableView.frame.size = size
     tableView.frame.size.width = round(size.width - (tableView.contentInset.left))
     tableView.frame.origin.x = round(size.width / 2 - tableView.frame.width / 2)
 
-    /// Prepare items based of UI element frame.
-    if layout.span < 1.0 {
-      prepareItems()
-    }
+    prepareItems()
 
     var height: CGFloat = 0.0
     for item in component.items {
@@ -152,6 +147,13 @@ public class Spot: NSObject, Spotable {
     tableView.contentSize = CGSize(
       width: tableView.frame.size.width,
       height: height - tableView.contentInset.top - tableView.contentInset.bottom)
+
+    /// On iOS 8 and prior, the second cell always receives the same height as the first cell. Setting estimatedRowHeight magically fixes this issue. The value being set is not relevant.
+    if #available(iOS 9, *) {
+      return
+    } else {
+      tableView.estimatedRowHeight = 10
+    }
   }
 
   fileprivate func setupCollectionView(_ collectionView: CollectionView, with size: CGSize) {
@@ -159,11 +161,63 @@ public class Spot: NSObject, Spotable {
     collectionView.dataSource = spotDataSource
     collectionView.delegate = spotDelegate
 
-    setupVerticalCollectionView(collectionView, with: size)
+    if (collectionView.collectionViewLayout as? GridableLayout)?.scrollDirection == .horizontal {
+      setupHorizontalCollectionView(collectionView, with: size)
+    } else {
+      setupVerticalCollectionView(collectionView, with: size)
+    }
   }
 
   fileprivate func setupHorizontalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
+    guard let layout = collectionView.collectionViewLayout as? GridableLayout else {
+      return
+    }
 
+    collectionView.isScrollEnabled = true
+    prepareItems()
+    configurePageControl()
+
+    if collectionView.contentSize.height > 0 {
+      collectionView.frame.size.height = collectionView.contentSize.height
+    } else {
+      var newCollectionViewHeight: CGFloat = 0.0
+
+      newCollectionViewHeight <- component.items.sorted(by: {
+        $0.size.height > $1.size.height
+      }).first?.size.height
+
+      collectionView.frame.size.height = newCollectionViewHeight
+
+      if collectionView.frame.size.height > 0 {
+        collectionView.frame.size.height += layout.sectionInset.top + layout.sectionInset.bottom
+      }
+    }
+
+    if !component.header.isEmpty,
+      let resolve = Configuration.views.make(component.header),
+      let view = resolve.view {
+      layout.headerReferenceSize.width = collectionView.frame.size.width
+      layout.headerReferenceSize.height = view.frame.size.height
+    }
+
+    CarouselSpot.configure?(collectionView, layout)
+
+    collectionView.frame.size.height += layout.headerReferenceSize.height
+
+    if let componentLayout = component.layout {
+      collectionView.frame.size.height += CGFloat(componentLayout.inset.top + componentLayout.inset.bottom)
+    }
+
+    if let pageIndicatorPlacement = component.layout?.pageIndicatorPlacement {
+      switch pageIndicatorPlacement {
+      case .below:
+        layout.sectionInset.bottom += pageControl.frame.height
+        pageControl.frame.origin.y = collectionView.frame.height
+      case .overlay:
+        let verticalAdjustment = CGFloat(2)
+        pageControl.frame.origin.y = collectionView.frame.height - pageControl.frame.height - verticalAdjustment
+      }
+    }
   }
 
   fileprivate func setupVerticalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
@@ -195,7 +249,11 @@ public class Spot: NSObject, Spotable {
 
   fileprivate func layoutCollectionView(_ collectionView: CollectionView, with size: CGSize) {
     prepareItems()
-    layoutVerticalCollectionView(collectionView, with: size)
+    if (collectionView.collectionViewLayout as? GridableLayout)?.scrollDirection == .horizontal {
+      layoutHorizontalCollectionView(collectionView, with: size)
+    } else {
+      layoutVerticalCollectionView(collectionView, with: size)
+    }
   }
 
   fileprivate func layoutTableView(_ tableView: TableView, with size: CGSize) {
@@ -204,7 +262,15 @@ public class Spot: NSObject, Spotable {
   }
 
   fileprivate func layoutHorizontalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
+    guard let collectionViewLayout = collectionView.collectionViewLayout as? GridableLayout else {
+      return
+    }
 
+    collectionViewLayout.prepare()
+    collectionViewLayout.invalidateLayout()
+
+    collectionView.frame.size.width = size.width
+    collectionView.frame.size.height = collectionViewLayout.contentSize.height
   }
 
   fileprivate func layoutVerticalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
@@ -223,6 +289,30 @@ public class Spot: NSObject, Spotable {
     }
 
     Configuration.views.defaultItem = Registry.Item.classType(view)
+  }
+
+  private func configurePageControl() {
+    guard let placement = component.layout?.pageIndicatorPlacement else {
+      pageControl.removeFromSuperview()
+      return
+    }
+
+    pageControl.numberOfPages = component.items.count
+    pageControl.frame.origin.x = 0
+    pageControl.frame.size.height = 22
+
+    switch placement {
+    case .below:
+      pageControl.frame.size.width = backgroundView.frame.width
+      pageControl.pageIndicatorTintColor = .lightGray
+      pageControl.currentPageIndicatorTintColor = .gray
+      backgroundView.addSubview(pageControl)
+    case .overlay:
+      pageControl.frame.size.width = view.frame.width
+      pageControl.pageIndicatorTintColor = nil
+      pageControl.currentPageIndicatorTintColor = nil
+      view.addSubview(pageControl)
+    }
   }
 
   public func sizeForItem(at indexPath: IndexPath) -> CGSize {

@@ -24,6 +24,13 @@ public extension Listable {
     tableView.frame.size.height = componentSize.height
   }
 
+  public func sizeForItem(at indexPath: IndexPath) -> CGSize {
+    return CGSize(
+      width:  item(at: indexPath)?.size.width  ?? 0.0,
+      height: item(at: indexPath)?.size.height ?? 0.0
+    )
+  }
+
   /// Scroll to Item matching predicate
   ///
   /// - parameter includeElement: A filter predicate to find a view model

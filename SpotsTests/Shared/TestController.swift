@@ -638,7 +638,7 @@ class ControllerTests: XCTestCase {
     var diff = Item.evaluate(newItems, oldModels: oldItems)
 
     XCTAssertEqual(diff![0], .text)
-    XCTAssertEqual(diff![1], .size)
+    XCTAssertEqual(diff![1], .none)
     XCTAssertEqual(diff![2], .text)
     XCTAssertEqual(diff![3], .text)
     XCTAssertEqual(diff![4], .subtitle)
