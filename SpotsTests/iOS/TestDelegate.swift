@@ -55,6 +55,7 @@ class DelegateTests: XCTestCase {
 
   func testTableViewHeightForRowOnListable() {
     let spot = ListSpot(component: Component(span: 1, items: [Item(title: "title 1")]))
+    spot.setup(CGSize(width: 100, height: 100))
     XCTAssertEqual(spot.spotDelegate?.tableView(spot.tableView, heightForRowAt: IndexPath(row: 0, section: 0)), 44.0)
     XCTAssertEqual(spot.spotDelegate?.tableView(spot.tableView, heightForRowAt: IndexPath(row: 1, section: 0)), 0.0)
   }
