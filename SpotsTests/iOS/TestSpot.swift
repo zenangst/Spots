@@ -51,6 +51,8 @@ class TestSpot: XCTestCase {
 
     XCTAssertEqual(spot.items[0].size, listSpot.items[0].size)
     XCTAssertEqual(spot.items[1].size, listSpot.items[0].size)
+    XCTAssertEqual(spot.sizeForItem(at: IndexPath(item: 0, section: 0)), listSpot.sizeForItem(at: IndexPath(item: 0, section: 0)))
+    XCTAssertEqual(spot.sizeForItem(at: IndexPath(item: 1, section: 0)), listSpot.sizeForItem(at: IndexPath(item: 1, section: 0)))
     XCTAssertEqual(spot.view.frame, listSpot.view.frame)
     XCTAssertEqual(spot.view.contentSize, listSpot.view.contentSize)
   }
@@ -71,6 +73,8 @@ class TestSpot: XCTestCase {
 
     XCTAssertEqual(spot.items[0].size, gridSpot.items[0].size)
     XCTAssertEqual(spot.items[1].size, gridSpot.items[0].size)
+    XCTAssertEqual(spot.sizeForItem(at: IndexPath(item: 0, section: 0)), gridSpot.sizeForItem(at: IndexPath(item: 0, section: 0)))
+    XCTAssertEqual(spot.sizeForItem(at: IndexPath(item: 1, section: 0)), gridSpot.sizeForItem(at: IndexPath(item: 1, section: 0)))
     XCTAssertEqual(spot.view.frame, gridSpot.view.frame)
     XCTAssertEqual(spot.view.contentSize, gridSpot.view.contentSize)
   }
@@ -91,6 +95,8 @@ class TestSpot: XCTestCase {
 
     XCTAssertEqual(spot.items[0].size, carouselSpot.items[0].size)
     XCTAssertEqual(spot.items[1].size, carouselSpot.items[0].size)
+    XCTAssertEqual(spot.sizeForItem(at: IndexPath(item: 0, section: 0)), carouselSpot.sizeForItem(at: IndexPath(item: 0, section: 0)))
+    XCTAssertEqual(spot.sizeForItem(at: IndexPath(item: 1, section: 0)), carouselSpot.sizeForItem(at: IndexPath(item: 1, section: 0)))
     XCTAssertEqual(spot.view.frame, carouselSpot.view.frame)
     XCTAssertEqual(spot.view.contentSize, carouselSpot.view.contentSize)
   }
