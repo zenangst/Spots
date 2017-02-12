@@ -55,7 +55,11 @@ class FactoryTests: XCTestCase {
       )
     ]
 
-    let spots = initialComponents.map { Factory.resolve(component: $0) }
+    let spots: [Spotable] = initialComponents.map {
+      let spot = Factory.resolve(component: $0)
+      spot.setup(CGSize(width: 100, height: 100))
+      return spot
+    }
 
     /// Validate factory process
     XCTAssertEqual(spots.count, 1)
@@ -66,6 +70,6 @@ class FactoryTests: XCTestCase {
     XCTAssertEqual(spots.first!.component.items[0].title, "Fullname")
     XCTAssertEqual(spots.first!.component.items[0].subtitle, "Job title")
     XCTAssertEqual(spots.first!.component.items[0].kind, "image")
-    XCTAssertEqual(spots.first!.component.items[0].size, CGSize(width: UIScreen.main.bounds.width, height: 44))
+    XCTAssertEqual(spots.first!.component.items[0].size, CGSize(width: 100, height: 44))
   }
 }
