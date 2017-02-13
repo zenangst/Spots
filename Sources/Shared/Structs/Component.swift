@@ -222,7 +222,7 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
               footer: String = "",
               kind: String = "",
               layout: Layout? = nil,
-              interaction: Interaction = Interaction([:]),
+              interaction: Interaction = .init(),
               span: Double? = nil,
               items: [Item] = [],
               meta: [String : Any] = [:],
