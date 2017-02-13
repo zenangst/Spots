@@ -77,7 +77,7 @@ class LayoutTests: XCTestCase {
   }
 
   func testConfigureWithJSON() {
-    var layout = Layout([:])
+    var layout = Layout()
 
     XCTAssertNotEqual(layout.span, 4.0)
     XCTAssertNotEqual(layout.itemSpacing, 8.0)

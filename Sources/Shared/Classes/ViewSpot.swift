@@ -10,7 +10,7 @@ open class ViewSpot: NSObject, Spotable, Viewable {
     return scrollView
   }
 
-  public static var layout: Layout = Layout([:])
+  public static var layout: Layout = .init()
 
   /// Reload spot with ItemChanges.
   ///

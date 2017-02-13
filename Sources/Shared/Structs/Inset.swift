@@ -48,7 +48,7 @@ public struct Inset: Mappable, Equatable {
   ///
   /// - Parameter block: A mutating closure.
   public init(_ block: (inout Inset) -> Void) {
-    self.init([:])
+    self.init()
     block(&self)
   }
 

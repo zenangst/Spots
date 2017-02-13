@@ -5,8 +5,8 @@ import UIKit
 /// A CarouselSpot, a collection view based Spotable object that lays out its items in a horizontal order
 open class CarouselSpot: NSObject, Gridable {
 
-  public static var layout: Layout = Layout([:])
-  public static var interaction: Interaction = Interaction([:])
+  public static var layout: Layout = .init()
+  public static var interaction: Interaction = .init()
 
   /// Child spots
   public var compositeSpots: [CompositeSpot] = []

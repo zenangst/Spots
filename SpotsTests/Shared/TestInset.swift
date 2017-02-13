@@ -20,7 +20,7 @@ class TestInset: XCTestCase {
   }
 
   func testJSONMapping() {
-    var contentInset = Inset([:])
+    var contentInset = Inset()
     contentInset.configure(withJSON: json)
 
     XCTAssertEqual(contentInset, Inset(top: 1, left: 2, bottom: 3, right: 4))

@@ -100,7 +100,7 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
   }
 
   public init(_ block: (inout Layout) -> Void) {
-    self.init([:])
+    self.init()
     block(&self)
   }
 
