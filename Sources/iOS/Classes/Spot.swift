@@ -14,6 +14,7 @@ public class Spot: NSObject, Spotable {
 
   weak public var focusDelegate: SpotsFocusDelegate?
   weak public var delegate: SpotsDelegate?
+  weak public var carouselScrollDelegate: CarouselScrollDelegate?
 
   public var component: Component
   public var componentKind: Component.Kind = .list
