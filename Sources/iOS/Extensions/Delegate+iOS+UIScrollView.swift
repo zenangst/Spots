@@ -57,8 +57,6 @@ extension Delegate: UIScrollViewDelegate {
     }
   }
 
-  #if os(iOS)
-
   public func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
     guard let spot = spot as? CarouselSpot else {
       return
@@ -66,8 +64,6 @@ extension Delegate: UIScrollViewDelegate {
 
     spot.carouselScrollDelegate?.spotableCarouselDidEndScrollingAnimated(spot)
   }
-
-  #endif
 
   /// Tells the delegate when the user finishes scrolling the content.
   ///
