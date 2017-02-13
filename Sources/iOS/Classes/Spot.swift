@@ -163,7 +163,7 @@ public class Spot: NSObject, Spotable {
     collectionView.dataSource = spotDataSource
     collectionView.delegate = spotDelegate
 
-    if (collectionView.collectionViewLayout as? GridableLayout)?.scrollDirection == .horizontal {
+    if component.interaction.scrollsHorizontally {
       setupHorizontalCollectionView(collectionView, with: size)
     } else {
       setupVerticalCollectionView(collectionView, with: size)
@@ -251,7 +251,7 @@ public class Spot: NSObject, Spotable {
 
   fileprivate func layoutCollectionView(_ collectionView: CollectionView, with size: CGSize) {
     prepareItems()
-    if (collectionView.collectionViewLayout as? GridableLayout)?.scrollDirection == .horizontal {
+    if component.interaction.scrollsHorizontally {
       layoutHorizontalCollectionView(collectionView, with: size)
     } else {
       layoutVerticalCollectionView(collectionView, with: size)
