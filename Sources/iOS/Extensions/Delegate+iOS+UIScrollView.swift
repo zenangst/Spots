@@ -63,11 +63,11 @@ extension Delegate: UIScrollViewDelegate {
   #if os(iOS)
 
   public func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-  guard let spot = spot as? CarouselSpot else {
-  return
-  }
+    guard let spot = spot as? CarouselSpot else {
+      return
+    }
 
-  spot.carouselScrollDelegate?.spotableCarouselDidEndScrollingAnimated(spot)
+    spot.carouselScrollDelegate?.spotableCarouselDidEndScrollingAnimated(spot)
   }
 
   #endif
