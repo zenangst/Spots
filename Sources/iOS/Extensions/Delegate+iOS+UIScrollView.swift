@@ -3,9 +3,6 @@ import UIKit
 /// A scroll view extension on CarouselSpot to handle scrolling specifically for this object.
 extension Delegate: UIScrollViewDelegate {
 
-  /// Tells the delegate when the user scrolls the content view within the receiver.
-  ///
-  /// - parameter scrollView: The scroll-view object in which the scrolling occurred.
   public func scrollViewDidScroll(_ scrollView: UIScrollView) {
     guard let spot = spot,
       let collectionView = spot.userInterface as? CollectionView,
