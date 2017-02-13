@@ -1,6 +1,14 @@
 import Foundation
 import Tailor
 
+/// Indicates if the UI has vertical or horizontal scrolling.
+///
+/// - horizontal: UI uses horizontal scrolling.
+/// - vertical: UI uses vertical scrolling.
+enum ScrollDirection: String {
+  case horizontal, vertical
+}
+
 /// A user interaction struct used for mapping behavior to a Spotable object.
 /// Note: `paginate` is currently only available on iOS.
 public struct Interaction: Mappable {
