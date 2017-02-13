@@ -210,6 +210,7 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
   /// - parameter header: Determines which header item that should be used for the component.
   /// - parameter kind: The type of Component that should be used.
   /// - parameter layout: Configures the layout properties for the component.
+  /// - parameter interaction: Configures the interaction properties for the component.
   /// - parameter span: Configures the layout span for the component.
   /// - parameter items: A collection of view models
   /// - parameter meta: A key-value dictionary for any additional information
