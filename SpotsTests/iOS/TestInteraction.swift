@@ -49,7 +49,7 @@ class InteractionTests: XCTestCase {
     interaction = Interaction(json)
     XCTAssertEqual(interaction.paginate, .disabled)
 
-    interaction = Interaction([:])
+    interaction = Interaction()
     XCTAssertEqual(interaction.paginate, .disabled)
   }
 

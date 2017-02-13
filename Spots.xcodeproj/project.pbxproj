@@ -307,6 +307,7 @@
 		BDB8D5961E4DFBB200220BC3 /* Tailor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478E91C440726006EBA49 /* Tailor.framework */; };
 		BDB8D5971E4DFBBA00220BC3 /* Tailor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478F71C44076B006EBA49 /* Tailor.framework */; };
 		BDB8D5981E4DFBC300220BC3 /* Tailor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDD63FAB1D941A80008E885A /* Tailor.framework */; };
+		BDB8D59A1E51C4FE00220BC3 /* Delegate+iOS+UIScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB8D5991E51C4FE00220BC3 /* Delegate+iOS+UIScrollView.swift */; };
 		BDCFCD421DCA7EFF0047E84C /* TestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCFCD401DCA7EFF0047E84C /* TestController.swift */; };
 		BDCFCD431DCA7EFF0047E84C /* TestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCFCD401DCA7EFF0047E84C /* TestController.swift */; };
 		BDCFCD441DCA7F830047E84C /* TestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCFCD401DCA7EFF0047E84C /* TestController.swift */; };
@@ -539,6 +540,7 @@
 		BDB538321C444D460005E498 /* Playground-iOS.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Playground-iOS.playground"; sourceTree = "<group>"; };
 		BDB648551D75EF150041449A /* Info-tvOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-tvOS.plist"; sourceTree = "<group>"; };
 		BDB8D5921E4DFADC00220BC3 /* TestItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestItem.swift; sourceTree = "<group>"; };
+		BDB8D5991E51C4FE00220BC3 /* Delegate+iOS+UIScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Delegate+iOS+UIScrollView.swift"; sourceTree = "<group>"; };
 		BDCFCD401DCA7EFF0047E84C /* TestController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestController.swift; sourceTree = "<group>"; };
 		BDD63FAB1D941A80008E885A /* Tailor.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Tailor.framework; path = Carthage/Build/tvOS/Tailor.framework; sourceTree = "<group>"; };
 		BDD9ABCA1DB533CE005D8C04 /* TestGridComposite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestGridComposite.swift; sourceTree = "<group>"; };
@@ -712,6 +714,7 @@
 				BDAD849F1E3E701C008289AE /* UICollectionView+UserInterface.swift */,
 				BDAD84A01E3E701C008289AE /* UITableView+UserInterface.swift */,
 				BDAD84A11E3E701C008289AE /* UIViewController+Extensions.swift */,
+				BDB8D5991E51C4FE00220BC3 /* Delegate+iOS+UIScrollView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1663,6 +1666,7 @@
 				BDAD84BE1E3E701C008289AE /* ListSpotCell.swift in Sources */,
 				BDAD85ED1E3E7032008289AE /* StateCache.swift in Sources */,
 				BDAD84C21E3E701C008289AE /* RowSpot.swift in Sources */,
+				BDB8D59A1E51C4FE00220BC3 /* Delegate+iOS+UIScrollView.swift in Sources */,
 				BDAD85B71E3E7032008289AE /* ScrollDelegate.swift in Sources */,
 				BD24030C1E4B981A005BAA19 /* Spot.swift in Sources */,
 				BDAD85A21E3E7032008289AE /* Wrappable+Extensions.swift in Sources */,

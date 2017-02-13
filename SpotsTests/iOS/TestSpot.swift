@@ -49,6 +49,7 @@ class TestSpot: XCTestCase {
     listSpot.layout(CGSize(width: 100, height: 100))
     listSpot.view.layoutSubviews()
 
+    XCTAssertEqual(spot.component.interaction.scrollDirection, listSpot.component.interaction.scrollDirection)
     XCTAssertEqual(spot.items[0].size, listSpot.items[0].size)
     XCTAssertEqual(spot.items[1].size, listSpot.items[0].size)
     XCTAssertEqual(spot.sizeForItem(at: IndexPath(item: 0, section: 0)), listSpot.sizeForItem(at: IndexPath(item: 0, section: 0)))
@@ -71,6 +72,7 @@ class TestSpot: XCTestCase {
     gridSpot.layout(CGSize(width: 100, height: 100))
     gridSpot.view.layoutSubviews()
 
+    XCTAssertEqual(spot.component.interaction.scrollDirection, gridSpot.component.interaction.scrollDirection)
     XCTAssertEqual(spot.items[0].size, gridSpot.items[0].size)
     XCTAssertEqual(spot.items[1].size, gridSpot.items[0].size)
     XCTAssertEqual(spot.sizeForItem(at: IndexPath(item: 0, section: 0)), gridSpot.sizeForItem(at: IndexPath(item: 0, section: 0)))
@@ -93,6 +95,7 @@ class TestSpot: XCTestCase {
     carouselSpot.layout(CGSize(width: 100, height: 100))
     carouselSpot.view.layoutSubviews()
 
+    XCTAssertEqual(spot.component.interaction.scrollDirection, carouselSpot.component.interaction.scrollDirection)
     XCTAssertEqual(spot.items[0].size, carouselSpot.items[0].size)
     XCTAssertEqual(spot.items[1].size, carouselSpot.items[0].size)
     XCTAssertEqual(spot.sizeForItem(at: IndexPath(item: 0, section: 0)), carouselSpot.sizeForItem(at: IndexPath(item: 0, section: 0)))

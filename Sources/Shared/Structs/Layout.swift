@@ -82,7 +82,7 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
   ///   - itemSpacing: Sets minimum item spacing for the component.
   ///   - lineSpacing: Sets minimum lines spacing for items in component.
   ///   - inset: An inset struct used to insert margins for the component.
-  public init(span: Double = 0.0, dynamicSpan: Bool = false, dynamicHeight: Bool = true, pageIndicatorPlacement: PageIndicatorPlacement? = nil, itemSpacing: Double = 0.0, lineSpacing: Double = 0.0, inset: Inset = Inset()) {
+  public init(span: Double = 0.0, dynamicSpan: Bool = false, dynamicHeight: Bool = true, pageIndicatorPlacement: PageIndicatorPlacement? = nil, itemSpacing: Double = 0.0, lineSpacing: Double = 0.0, inset: Inset = .init()) {
     self.span = span
     self.dynamicSpan = dynamicSpan
     self.dynamicHeight = dynamicHeight
@@ -100,7 +100,7 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
   }
 
   public init(_ block: (inout Layout) -> Void) {
-    self.init([:])
+    self.init()
     block(&self)
   }
 

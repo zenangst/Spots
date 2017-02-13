@@ -5,8 +5,8 @@ import UIKit
 /// A CarouselSpot, a collection view based Spotable object that lays out its items in a horizontal order
 open class CarouselSpot: NSObject, Gridable {
 
-  public static var layout: Layout = Layout([:])
-  public static var interaction: Interaction = Interaction([:])
+  public static var layout: Layout = .init()
+  public static var interaction: Interaction = .init()
 
   /// Child spots
   public var compositeSpots: [CompositeSpot] = []
@@ -81,9 +81,7 @@ open class CarouselSpot: NSObject, Gridable {
       self.component.layout = type(of: self).layout
     }
 
-    if self.component.interaction == nil {
-      self.component.interaction = type(of: self).interaction
-    }
+    self.component.interaction.scrollDirection = .horizontal
 
     collectionView.showsHorizontalScrollIndicator = false
     collectionView.showsVerticalScrollIndicator = false
@@ -234,97 +232,5 @@ open class CarouselSpot: NSObject, Gridable {
       pageControl.currentPageIndicatorTintColor = nil
       collectionView.addSubview(pageControl)
     }
-  }
-}
-
-/// A scroll view extension on CarouselSpot to handle scrolling specifically for this object.
-extension Delegate: UIScrollViewDelegate {
-
-  /// Tells the delegate when the user scrolls the content view within the receiver.
-  ///
-  /// - parameter scrollView: The scroll-view object in which the scrolling occurred.
-  public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-    guard let spot = spot as? CarouselSpot else {
-      return
-    }
-
-    /// This will restrict the scroll view to only scroll horizontally.
-    let constrainedYOffset = spot.collectionView.contentSize.height - spot.collectionView.frame.size.height
-    if constrainedYOffset >= 0.0 {
-      spot.collectionView.contentOffset.y = constrainedYOffset
-    }
-
-    spot.carouselScrollDelegate?.spotableCarouselDidScroll(spot)
-
-    if spot.component.layout?.pageIndicatorPlacement == .overlay {
-      spot.pageControl.frame.origin.x = scrollView.contentOffset.x
-    }
-  }
-
-  public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-    guard let spot = spot as? CarouselSpot else {
-      return
-    }
-
-    let itemIndex = Int(scrollView.contentOffset.x / scrollView.frame.width)
-
-    guard itemIndex >= 0 else {
-      return
-    }
-
-    guard itemIndex < spot.items.count else {
-      return
-    }
-
-    spot.pageControl.currentPage = itemIndex
-  }
-
-  #if os(iOS)
-
-  public func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-    guard let spot = spot as? CarouselSpot else {
-      return
-    }
-
-    spot.carouselScrollDelegate?.spotableCarouselDidEndScrollingAnimated(spot)
-  }
-
-  #endif
-
-  /// Tells the delegate when the user finishes scrolling the content.
-  ///
-  /// - parameter scrollView:          The scroll-view object where the user ended the touch.
-  /// - parameter velocity:            The velocity of the scroll view (in points) at the moment the touch was released.
-  /// - parameter targetContentOffset: The expected offset when the scrolling action decelerates to a stop.
-  public func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-    guard let spot = spot as? CarouselSpot else {
-      return
-    }
-
-    #if os(iOS)
-      guard spot.component.interaction?.paginate == .page else {
-        return
-      }
-    #endif
-
-    let pointXUpperBound = spot.layout.collectionViewContentSize.width - scrollView.frame.width / 2
-    var point = targetContentOffset.pointee
-    point.x += scrollView.frame.width / 2
-    var indexPath: IndexPath?
-
-    while indexPath == nil && point.x < pointXUpperBound {
-      indexPath = spot.collectionView.indexPathForItem(at: point)
-      point.x += max(spot.layout.minimumInteritemSpacing, 1)
-    }
-
-    guard let centerIndexPath = indexPath else {
-      return
-    }
-
-    guard let centerLayoutAttributes = spot.layout.layoutAttributesForItem(at: centerIndexPath) else {
-      return
-    }
-
-    targetContentOffset.pointee.x = centerLayoutAttributes.frame.midX - scrollView.frame.width / 2
   }
 }

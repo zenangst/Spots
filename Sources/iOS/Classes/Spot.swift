@@ -14,6 +14,7 @@ public class Spot: NSObject, Spotable {
 
   weak public var focusDelegate: SpotsFocusDelegate?
   weak public var delegate: SpotsDelegate?
+  weak public var carouselScrollDelegate: CarouselScrollDelegate?
 
   public var component: Component
   public var componentKind: Component.Kind = .list
@@ -65,6 +66,7 @@ public class Spot: NSObject, Spotable {
       let collectionView = CollectionView(frame: CGRect.zero, collectionViewLayout: collectionViewLayout)
 
       if componentKind == .carousel {
+        self.component.interaction.scrollDirection = .horizontal
         collectionViewLayout.scrollDirection = .horizontal
       }
 
@@ -161,9 +163,10 @@ public class Spot: NSObject, Spotable {
     collectionView.dataSource = spotDataSource
     collectionView.delegate = spotDelegate
 
-    if (collectionView.collectionViewLayout as? GridableLayout)?.scrollDirection == .horizontal {
+    switch component.interaction.scrollDirection {
+    case .horizontal:
       setupHorizontalCollectionView(collectionView, with: size)
-    } else {
+    case .vertical:
       setupVerticalCollectionView(collectionView, with: size)
     }
   }
@@ -174,7 +177,6 @@ public class Spot: NSObject, Spotable {
     }
 
     collectionView.isScrollEnabled = true
-    prepareItems()
     configurePageControl()
 
     if collectionView.contentSize.height > 0 {
@@ -249,9 +251,11 @@ public class Spot: NSObject, Spotable {
 
   fileprivate func layoutCollectionView(_ collectionView: CollectionView, with size: CGSize) {
     prepareItems()
-    if (collectionView.collectionViewLayout as? GridableLayout)?.scrollDirection == .horizontal {
+
+    switch component.interaction.scrollDirection {
+    case .horizontal:
       layoutHorizontalCollectionView(collectionView, with: size)
-    } else {
+    case .vertical:
       layoutVerticalCollectionView(collectionView, with: size)
     }
   }
@@ -268,7 +272,6 @@ public class Spot: NSObject, Spotable {
 
     collectionViewLayout.prepare()
     collectionViewLayout.invalidateLayout()
-
     collectionView.frame.size.width = size.width
     collectionView.frame.size.height = collectionViewLayout.contentSize.height
   }

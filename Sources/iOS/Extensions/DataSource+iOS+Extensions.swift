@@ -172,6 +172,7 @@ extension DataSource: UITableViewDataSource {
             spot.component.items[indexPath.item].size = configurableView.preferredViewSize
           }
 
+          spot.configure?(configurableView)
         } else {
           spot.component.items[indexPath.item].size.height = customView.frame.size.height
         }
