@@ -273,7 +273,6 @@ public class Spot: NSObject, Spotable {
 
     collectionViewLayout.prepare()
     collectionViewLayout.invalidateLayout()
-
     collectionView.frame.size.width = size.width
     collectionView.frame.size.height = collectionViewLayout.contentSize.height
   }
