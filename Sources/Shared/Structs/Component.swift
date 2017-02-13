@@ -96,7 +96,7 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
   /// The header identifier
   public var header: String = ""
   /// User interaction properties
-  public var interaction: Interaction?
+  public var interaction: Interaction
   /// The footer identifier
   public var footer: String = ""
   /// Layout properties
@@ -151,10 +151,7 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
       JSONComponents[Key.layout] = layout.dictionary
     }
 
-    if let interaction = interaction {
-      JSONComponents[Key.interaction] = interaction.dictionary
-    }
-
+    JSONComponents[Key.interaction] = interaction.dictionary
     JSONComponents[Key.identifier.string] = identifier
 
     if !title.isEmpty { JSONComponents[Key.title.string] = title }
@@ -192,6 +189,8 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
 
       if let interactionDictionary: [String : Any] = map.property(Interaction.rootKey) {
         self.interaction = Interaction(interactionDictionary)
+      } else {
+        self.interaction = Interaction()
       }
     }
 
@@ -222,7 +221,7 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
               footer: String = "",
               kind: String = "",
               layout: Layout? = nil,
-              interaction: Interaction? = nil,
+              interaction: Interaction = Interaction([:]),
               span: Double? = nil,
               items: [Item] = [],
               meta: [String : Any] = [:],
