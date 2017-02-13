@@ -35,6 +35,33 @@ class TestSpot: XCTestCase {
     XCTAssertEqual(spot.view.contentSize, CGSize(width: 100, height: expectedContentSizeHeight))
   }
 
+  func testSpotCache() {
+    let item = Item(title: "test")
+    let spot = Spot(cacheKey: "test-spot-cache")
+
+    XCTAssertEqual(spot.component.items.count, 0)
+    spot.append(item) {
+      spot.cache()
+    }
+
+    var exception: XCTestExpectation? = self.expectation(description: "Wait for cache")
+    Dispatch.after(seconds: 0.25) {
+      guard let cacheKey = spot.stateCache?.key else {
+        XCTFail()
+        return
+      }
+
+      let cachedSpot = Spot(cacheKey: cacheKey)
+      XCTAssertEqual(cachedSpot.component.items.count, 1)
+      cachedSpot.stateCache?.clear()
+      exception?.fulfill()
+      exception = nil
+
+      Helper.clearCache(for: cachedSpot.stateCache)
+    }
+    waitForExpectations(timeout: 0.5, handler: nil)
+  }
+
   func testCompareHybridListSpotWithCoreType() {
     let items = [Item(title: "A"), Item(title: "B")]
     let component = Component(kind: Component.Kind.list.string, items: items, hybrid: true)
