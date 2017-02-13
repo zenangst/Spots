@@ -66,7 +66,7 @@ public class Spot: NSObject, Spotable {
       let collectionView = CollectionView(frame: CGRect.zero, collectionViewLayout: collectionViewLayout)
 
       if componentKind == .carousel {
-        self.component.interaction.scrollsHorizontally = true
+        self.component.interaction.scrollDirection = .horizontal
         collectionViewLayout.scrollDirection = .horizontal
       }
 
@@ -163,9 +163,10 @@ public class Spot: NSObject, Spotable {
     collectionView.dataSource = spotDataSource
     collectionView.delegate = spotDelegate
 
-    if component.interaction.scrollsHorizontally {
+    switch component.interaction.scrollDirection {
+    case .horizontal:
       setupHorizontalCollectionView(collectionView, with: size)
-    } else {
+    case .vertical:
       setupVerticalCollectionView(collectionView, with: size)
     }
   }
@@ -251,9 +252,11 @@ public class Spot: NSObject, Spotable {
 
   fileprivate func layoutCollectionView(_ collectionView: CollectionView, with size: CGSize) {
     prepareItems()
-    if component.interaction.scrollsHorizontally {
+
+    switch component.interaction.scrollDirection {
+    case .horizontal:
       layoutHorizontalCollectionView(collectionView, with: size)
-    } else {
+    case .vertical:
       layoutVerticalCollectionView(collectionView, with: size)
     }
   }

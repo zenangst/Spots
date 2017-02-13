@@ -81,7 +81,7 @@ open class CarouselSpot: NSObject, Gridable {
       self.component.layout = type(of: self).layout
     }
 
-    self.component.interaction.scrollsHorizontally = true
+    self.component.interaction.scrollDirection = .horizontal
 
     collectionView.showsHorizontalScrollIndicator = false
     collectionView.showsVerticalScrollIndicator = false

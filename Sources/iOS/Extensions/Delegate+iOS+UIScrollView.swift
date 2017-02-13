@@ -9,7 +9,7 @@ extension Delegate: UIScrollViewDelegate {
   public func scrollViewDidScroll(_ scrollView: UIScrollView) {
     guard let spot = spot,
       let collectionView = spot.userInterface as? CollectionView,
-      spot.component.interaction.scrollsHorizontally else {
+      spot.component.interaction.scrollDirection == .horizontal else {
         return
     }
 
@@ -36,7 +36,7 @@ extension Delegate: UIScrollViewDelegate {
   }
 
   public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-    guard let spot = spot, spot.component.interaction.scrollsHorizontally else {
+    guard let spot = spot, spot.component.interaction.scrollDirection == .horizontal else {
       return
     }
 
@@ -81,7 +81,7 @@ extension Delegate: UIScrollViewDelegate {
     guard let spot = spot,
       let collectionView = spot.userInterface as? CollectionView,
       let collectionViewLayout = collectionView.collectionViewLayout as? CollectionLayout,
-      spot.component.interaction.scrollsHorizontally else {
+      spot.component.interaction.scrollDirection == .horizontal else {
         return
     }
 
