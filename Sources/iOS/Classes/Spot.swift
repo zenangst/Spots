@@ -177,7 +177,6 @@ public class Spot: NSObject, Spotable {
     }
 
     collectionView.isScrollEnabled = true
-    prepareItems()
     configurePageControl()
 
     if collectionView.contentSize.height > 0 {
