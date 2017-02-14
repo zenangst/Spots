@@ -45,7 +45,7 @@ class TestSpot: XCTestCase {
     }
 
     var exception: XCTestExpectation? = self.expectation(description: "Wait for cache")
-    Dispatch.after(seconds: 0.25) {
+    Dispatch.after(seconds: 2.5) {
       guard let cacheKey = spot.stateCache?.key else {
         XCTFail()
         return
@@ -59,7 +59,7 @@ class TestSpot: XCTestCase {
 
       cachedSpot.stateCache?.clear()
     }
-    waitForExpectations(timeout: 0.5, handler: nil)
+    waitForExpectations(timeout: 10.0, handler: nil)
   }
 
   func testCompareHybridListSpotWithCoreType() {
