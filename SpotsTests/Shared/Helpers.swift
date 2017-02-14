@@ -53,9 +53,14 @@ extension Controller {
 
 struct Helper {
   static func clearCache(for stateCache: StateCache?) {
-    if FileManager().fileExists(atPath: stateCache!.path) {
+    guard let stateCache = stateCache else {
+      XCTFail()
+      return
+    }
+
+    if FileManager().fileExists(atPath: stateCache.path) {
       do {
-        try? FileManager().removeItem(atPath: stateCache!.path)
+        try? FileManager().removeItem(atPath: stateCache.path)
       }
     }
   }
