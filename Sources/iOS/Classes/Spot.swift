@@ -232,8 +232,6 @@ public class Spot: NSObject, Spotable {
     configureCollectionViewHeader(collectionView, with: size)
 
     GridSpot.configure?(collectionView, collectionViewLayout)
-
-
   }
 
   fileprivate func configureCollectionViewHeader(_ collectionView: CollectionView, with size: CGSize) {
