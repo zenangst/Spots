@@ -52,6 +52,7 @@ class TestSpot: XCTestCase {
       }
 
       let cachedSpot = Spot(cacheKey: cacheKey)
+      XCTAssertEqual(cachedSpot.component.items[0].title, "test")
       XCTAssertEqual(cachedSpot.component.items.count, 1)
       cachedSpot.stateCache?.clear()
       exception?.fulfill()
