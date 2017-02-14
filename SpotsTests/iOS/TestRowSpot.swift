@@ -63,11 +63,10 @@ class RowSpotTests: XCTestCase {
   func testAppendItem() {
     let item = Item(title: "test")
     let spot = RowSpot(component: Component(span: 1))
-    var exception: XCTestExpectation? = self.expectation(description: "Append item")
+    let expectation = self.expectation(description: "Append item")
     spot.append(item) {
       XCTAssert(spot.component.items.first! == item)
-      exception?.fulfill()
-      exception = nil
+      expectation.fulfill()
     }
     waitForExpectations(timeout: 0.5, handler: nil)
   }
@@ -75,11 +74,10 @@ class RowSpotTests: XCTestCase {
   func testAppendItems() {
     let items = [Item(title: "test"), Item(title: "test 2")]
     let spot = RowSpot(component: Component(span: 1))
-    var exception: XCTestExpectation? = self.expectation(description: "Append items")
+    let expectation = self.expectation(description: "Append items")
     spot.append(items) {
       XCTAssert(spot.component.items == items)
-      exception?.fulfill()
-      exception = nil
+      expectation.fulfill()
     }
     waitForExpectations(timeout: 10.0, handler: nil)
   }
@@ -87,11 +85,10 @@ class RowSpotTests: XCTestCase {
   func testInsertItem() {
     let item = Item(title: "test")
     let spot = RowSpot(component: Component(span: 1))
-    var exception: XCTestExpectation? = self.expectation(description: "Insert item")
+    let expectation = self.expectation(description: "Insert item")
     spot.insert(item, index: 0) {
       XCTAssert(spot.component.items.first! == item)
-      exception?.fulfill()
-      exception = nil
+      expectation.fulfill()
     }
     waitForExpectations(timeout: 0.5, handler: nil)
   }
@@ -99,11 +96,10 @@ class RowSpotTests: XCTestCase {
   func testPrependItems() {
     let items = [Item(title: "test"), Item(title: "test 2")]
     let spot = RowSpot(component: Component(span: 1))
-    var exception: XCTestExpectation? = self.expectation(description: "Prepend items")
+    let expectation = self.expectation(description: "Prepend items")
     spot.prepend(items) {
       XCTAssert(spot.component.items == items)
-      exception?.fulfill()
-      exception = nil
+      expectation.fulfill()
     }
     waitForExpectations(timeout: 0.5, handler: nil)
   }
@@ -126,13 +122,12 @@ class RowSpotTests: XCTestCase {
       self.cachedSpot.cache()
     }
 
-    var exception: XCTestExpectation? = self.expectation(description: "Wait for cache")
+    let expectation = self.expectation(description: "Wait for cache")
     Dispatch.after(seconds: 0.25) {
       let cachedSpot = RowSpot(cacheKey: self.cachedSpot.stateCache!.key)
       XCTAssertEqual(cachedSpot.component.items.count, 1)
       cachedSpot.stateCache?.clear()
-      exception?.fulfill()
-      exception = nil
+      expectation.fulfill()
     }
     waitForExpectations(timeout: 0.5, handler: nil)
   }

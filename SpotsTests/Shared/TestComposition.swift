@@ -341,7 +341,7 @@ class CompositionTests: XCTestCase {
       )
     ]
 
-    let exception = self.expectation(description: "Reload controller with components replaceSpot")
+    let expectation = self.expectation(description: "Reload controller with components replaceSpot")
     var reloadTimes: Int = 0
 
     controller.reloadIfNeeded(newComponents) {
@@ -393,7 +393,7 @@ class CompositionTests: XCTestCase {
 
       XCTAssertEqual(reloadTimes, 1)
 
-      exception.fulfill()
+      expectation.fulfill()
     }
     waitForExpectations(timeout: 1.0, handler: nil)
   }
@@ -492,7 +492,7 @@ class CompositionTests: XCTestCase {
       )
     ]
 
-    let exception = self.expectation(description: "Reload controller with components newSpot")
+    let expectation = self.expectation(description: "Reload controller with components newSpot")
     var reloadTimes: Int = 0
 
     controller.reloadIfNeeded(newComponents) {
@@ -543,7 +543,7 @@ class CompositionTests: XCTestCase {
 
       XCTAssertEqual(reloadTimes, 1)
 
-      exception.fulfill()
+      expectation.fulfill()
     }
     waitForExpectations(timeout: 1.0, handler: nil)
   }
@@ -807,7 +807,7 @@ class CompositionTests: XCTestCase {
       )
     ]
 
-    let exception: XCTestExpectation = self.expectation(description: "Reload controller with components triggering reloadMore")
+    let expectation: XCTestExpectation = self.expectation(description: "Reload controller with components triggering reloadMore")
     var reloadTimes: Int = 0
 
     controller.reloadIfNeeded(newComponents) {
@@ -862,7 +862,7 @@ class CompositionTests: XCTestCase {
 
       XCTAssertEqual(reloadTimes, 1)
 
-      exception.fulfill()
+      expectation.fulfill()
     }
     waitForExpectations(timeout: 1.0, handler: nil)
   }
@@ -1043,7 +1043,7 @@ class CompositionTests: XCTestCase {
       )
     ]
 
-    var exception: XCTestExpectation? = self.expectation(description: "Reload controller with components  triggering reloadLess")
+    let expectation = self.expectation(description: "Reload controller with components  triggering reloadLess")
     var reloadTimes: Int = 0
 
     controller.reloadIfNeeded(newComponents) {
@@ -1077,8 +1077,7 @@ class CompositionTests: XCTestCase {
 
       XCTAssertEqual(reloadTimes, 1)
 
-      exception?.fulfill()
-      exception = nil
+      expectation.fulfill()
     }
     waitForExpectations(timeout: 1.0, handler: nil)
   }

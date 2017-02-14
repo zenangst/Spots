@@ -56,13 +56,12 @@ class ListSpotTests: XCTestCase {
       self.cachedSpot.cache()
     }
 
-    var exception: XCTestExpectation? = self.expectation(description: "Wait for cache")
+    let expectation = self.expectation(description: "Wait for cache")
     Dispatch.after(seconds: 0.25) {
       let cachedSpot = ListSpot(cacheKey: self.cachedSpot.stateCache!.key)
       XCTAssertEqual(cachedSpot.component.items.count, 1)
       cachedSpot.stateCache?.clear()
-      exception?.fulfill()
-      exception = nil
+      expectation.fulfill()
     }
     waitForExpectations(timeout: 0.5, handler: nil)
   }

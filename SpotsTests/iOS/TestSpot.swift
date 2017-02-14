@@ -44,7 +44,7 @@ class TestSpot: XCTestCase {
       spot.cache()
     }
 
-    var exception: XCTestExpectation? = self.expectation(description: "Wait for cache")
+    let expectation = self.expectation(description: "Wait for cache")
     Dispatch.after(seconds: 2.5) {
       guard let cacheKey = spot.stateCache?.key else {
         XCTFail()
@@ -55,8 +55,7 @@ class TestSpot: XCTestCase {
       XCTAssertEqual(cachedSpot.component.items[0].title, "test")
       XCTAssertEqual(cachedSpot.component.items.count, 1)
       cachedSpot.stateCache?.clear()
-      exception?.fulfill()
-      exception = nil
+      expectation.fulfill()
 
       cachedSpot.stateCache?.clear()
     }
