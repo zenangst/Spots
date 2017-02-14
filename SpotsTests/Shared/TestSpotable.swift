@@ -20,12 +20,12 @@ class SpotableTests: XCTestCase {
       }
     }
 
-    let exception = self.expectation(description: "Wait until done")
+    let expectation = self.expectation(description: "Wait until done")
     Dispatch.after(seconds: 1.0) {
       XCTAssertEqual(listSpot.items.count, 500)
-      exception.fulfill()
+      expectation.fulfill()
     }
-    waitForExpectations(timeout: 1.5, handler: nil)
+    waitForExpectations(timeout: 10.0, handler: nil)
   }
 
   func testAppendingMultipleItemsToSpotInController() {
@@ -44,12 +44,12 @@ class SpotableTests: XCTestCase {
       }
     }
 
-    let exception = self.expectation(description: "Wait until done")
+    let expectation = self.expectation(description: "Wait until done")
     Dispatch.after(seconds: 1.0) {
       XCTAssertEqual(controller.spots[0].items.count, 500)
-      exception.fulfill()
+      expectation.fulfill()
     }
-    waitForExpectations(timeout: 1.5, handler: nil)
+    waitForExpectations(timeout: 10.0, handler: nil)
   }
 
   func testResolvingUIFromGridableSpot() {
