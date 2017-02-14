@@ -1,4 +1,5 @@
 @testable import Spots
+import XCTest
 #if os(OSX)
 import Foundation
 #else
