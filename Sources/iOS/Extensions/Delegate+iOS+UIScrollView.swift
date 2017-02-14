@@ -87,6 +87,7 @@ extension Delegate: UIScrollViewDelegate {
     let pointXUpperBound = collectionViewLayout.collectionViewContentSize.width - scrollView.frame.width / 2
     var point = targetContentOffset.pointee
     point.x += scrollView.frame.width / 2
+    point.y = scrollView.frame.midY
     var indexPath: IndexPath?
 
     while indexPath == nil && point.x < pointXUpperBound {
