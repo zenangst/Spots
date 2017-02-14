@@ -395,7 +395,7 @@ class CompositionTests: XCTestCase {
 
       expectation.fulfill()
     }
-    waitForExpectations(timeout: 1.0, handler: nil)
+    waitForExpectations(timeout: 10.0, handler: nil)
   }
 
   func testReloadWithComponentsUsingCompositionTriggeringNewSpot() {
@@ -545,7 +545,7 @@ class CompositionTests: XCTestCase {
 
       expectation.fulfill()
     }
-    waitForExpectations(timeout: 1.0, handler: nil)
+    waitForExpectations(timeout: 10.0, handler: nil)
   }
 
   func testReloadWithComponentsUsingCompositionTriggeringReloadMore() {
@@ -864,7 +864,7 @@ class CompositionTests: XCTestCase {
 
       expectation.fulfill()
     }
-    waitForExpectations(timeout: 1.0, handler: nil)
+    waitForExpectations(timeout: 10.0, handler: nil)
   }
 
   func testReloadWithComponentsUsingCompositionTriggeringReloadLess() {
@@ -1079,6 +1079,6 @@ class CompositionTests: XCTestCase {
 
       expectation.fulfill()
     }
-    waitForExpectations(timeout: 1.0, handler: nil)
+    waitForExpectations(timeout: 10.0, handler: nil)
   }
 }

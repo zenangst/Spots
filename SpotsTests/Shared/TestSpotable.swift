@@ -25,7 +25,7 @@ class SpotableTests: XCTestCase {
       XCTAssertEqual(listSpot.items.count, 500)
       expectation.fulfill()
     }
-    waitForExpectations(timeout: 1.5, handler: nil)
+    waitForExpectations(timeout: 10.0, handler: nil)
   }
 
   func testAppendingMultipleItemsToSpotInController() {
@@ -49,7 +49,7 @@ class SpotableTests: XCTestCase {
       XCTAssertEqual(controller.spots[0].items.count, 500)
       expectation.fulfill()
     }
-    waitForExpectations(timeout: 1.5, handler: nil)
+    waitForExpectations(timeout: 10.0, handler: nil)
   }
 
   func testResolvingUIFromGridableSpot() {

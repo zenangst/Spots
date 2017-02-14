@@ -68,7 +68,7 @@ class RowSpotTests: XCTestCase {
       XCTAssert(spot.component.items.first! == item)
       expectation.fulfill()
     }
-    waitForExpectations(timeout: 0.5, handler: nil)
+    waitForExpectations(timeout: 10.0, handler: nil)
   }
 
   func testAppendItems() {
@@ -90,7 +90,7 @@ class RowSpotTests: XCTestCase {
       XCTAssert(spot.component.items.first! == item)
       expectation.fulfill()
     }
-    waitForExpectations(timeout: 0.5, handler: nil)
+    waitForExpectations(timeout: 10.0, handler: nil)
   }
 
   func testPrependItems() {
@@ -101,7 +101,7 @@ class RowSpotTests: XCTestCase {
       XCTAssert(spot.component.items == items)
       expectation.fulfill()
     }
-    waitForExpectations(timeout: 0.5, handler: nil)
+    waitForExpectations(timeout: 10.0, handler: nil)
   }
 
   func testSpotCollectionDelegate() {
@@ -129,7 +129,7 @@ class RowSpotTests: XCTestCase {
       cachedSpot.stateCache?.clear()
       expectation.fulfill()
     }
-    waitForExpectations(timeout: 0.5, handler: nil)
+    waitForExpectations(timeout: 10.0, handler: nil)
   }
 
   func testSpotConfigurationClosure() {

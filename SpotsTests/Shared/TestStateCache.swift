@@ -35,7 +35,7 @@ class StateCacheTests: XCTestCase {
       XCTAssertEqual(self.controller.stateCache!.load().count, 1)
       expectation.fulfill()
     }
-    waitForExpectations(timeout: 1.0, handler: nil)
+    waitForExpectations(timeout: 10.0, handler: nil)
   }
 
   func testRemovingStateCacheFromController() {
@@ -45,7 +45,7 @@ class StateCacheTests: XCTestCase {
       XCTAssertEqual(self.controller.stateCache!.cacheExists, false)
       expectation.fulfill()
     }
-    waitForExpectations(timeout: 1.0, handler: nil)
+    waitForExpectations(timeout: 10.0, handler: nil)
   }
 
   func testCacheWithEmptyKey() {
@@ -77,6 +77,6 @@ class StateCacheTests: XCTestCase {
 
       expectation.fulfill()
     }
-    waitForExpectations(timeout: 1.0, handler: nil)
+    waitForExpectations(timeout: 10.0, handler: nil)
   }
 }

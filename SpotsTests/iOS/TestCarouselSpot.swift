@@ -338,7 +338,7 @@ class CarouselSpotTests: XCTestCase {
       XCTAssert(spot.component.items.first! == item)
       expectation.fulfill()
     }
-    waitForExpectations(timeout: 1.0, handler: nil)
+    waitForExpectations(timeout: 10.0, handler: nil)
   }
 
   func testAppendItems() {
@@ -349,7 +349,7 @@ class CarouselSpotTests: XCTestCase {
       XCTAssert(spot.component.items == items)
       expectation.fulfill()
     }
-    waitForExpectations(timeout: 1.0, handler: nil)
+    waitForExpectations(timeout: 10.0, handler: nil)
   }
 
   func testInsertItem() {
@@ -360,7 +360,7 @@ class CarouselSpotTests: XCTestCase {
       XCTAssert(spot.component.items.first! == item)
       expectation.fulfill()
     }
-    waitForExpectations(timeout: 1.0, handler: nil)
+    waitForExpectations(timeout: 10.0, handler: nil)
   }
 
   func testPrependItems() {
@@ -371,7 +371,7 @@ class CarouselSpotTests: XCTestCase {
       XCTAssert(spot.component.items == items)
       expectation.fulfill()
     }
-    waitForExpectations(timeout: 1.0, handler: nil)
+    waitForExpectations(timeout: 10.0, handler: nil)
   }
 
   func testSpotCache() {
@@ -390,7 +390,7 @@ class CarouselSpotTests: XCTestCase {
       cachedSpot.stateCache?.clear()
       expectation.fulfill()
     }
-    waitForExpectations(timeout: 0.5, handler: nil)
+    waitForExpectations(timeout: 10.0, handler: nil)
   }
 
   func testSpotConfigurationClosure() {
