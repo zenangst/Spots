@@ -8,7 +8,7 @@ class ListSpotTests: XCTestCase {
 
   override func setUp() {
     cachedSpot = ListSpot(cacheKey: "cached-list-spot")
-    Helper.clearCache(for: cachedSpot.stateCache)
+    cachedSpot.stateCache?.clear()
   }
 
   override func tearDown() {

@@ -57,7 +57,7 @@ class TestSpot: XCTestCase {
       exception?.fulfill()
       exception = nil
 
-      Helper.clearCache(for: cachedSpot.stateCache)
+      cachedSpot.stateCache?.clear()
     }
     waitForExpectations(timeout: 0.5, handler: nil)
   }
