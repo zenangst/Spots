@@ -10,7 +10,8 @@ class GridSpotTests: XCTestCase {
   override func setUp() {
     spot = GridSpot(component: Component(span: 1.0))
     cachedSpot = GridSpot(cacheKey: "cached-grid-spot")
-    Helper.clearCache(for: cachedSpot.stateCache)
+    XCTAssertNotNil(cachedSpot.stateCache)
+    cachedSpot.stateCache?.clear()
   }
 
   override func tearDown() {

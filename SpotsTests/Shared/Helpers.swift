@@ -51,14 +51,6 @@ extension Controller {
   }
 }
 
-struct Helper {
-  static func clearCache(for stateCache: StateCache?) {
-    if FileManager().fileExists(atPath: stateCache!.path) {
-      try! FileManager().removeItem(atPath: stateCache!.path)
-    }
-  }
-}
-
 #if !os(OSX)
   class HeaderView: UIView, ItemConfigurable, Componentable {
 

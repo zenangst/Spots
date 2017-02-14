@@ -104,6 +104,13 @@ public class Spot: NSObject, Spotable {
     self.spotDelegate = Delegate(spot: self)
   }
 
+  public convenience init(cacheKey: String) {
+    let stateCache = StateCache(key: cacheKey)
+
+    self.init(component: Component(stateCache.load()))
+    self.stateCache = stateCache
+  }
+
   deinit {
     spotDataSource = nil
     spotDelegate = nil
@@ -195,12 +202,7 @@ public class Spot: NSObject, Spotable {
       }
     }
 
-    if !component.header.isEmpty,
-      let resolve = Configuration.views.make(component.header),
-      let view = resolve.view {
-      layout.headerReferenceSize.width = collectionView.frame.size.width
-      layout.headerReferenceSize.height = view.frame.size.height
-    }
+    configureCollectionViewHeader(collectionView, with: size)
 
     CarouselSpot.configure?(collectionView, layout)
 
@@ -227,7 +229,15 @@ public class Spot: NSObject, Spotable {
       return
     }
 
+    configureCollectionViewHeader(collectionView, with: size)
+
     GridSpot.configure?(collectionView, collectionViewLayout)
+  }
+
+  fileprivate func configureCollectionViewHeader(_ collectionView: CollectionView, with size: CGSize) {
+    guard let collectionViewLayout = collectionView.collectionViewLayout as? GridableLayout else {
+      return
+    }
 
     guard !component.header.isEmpty else {
       return
