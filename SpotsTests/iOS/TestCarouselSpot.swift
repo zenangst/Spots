@@ -10,6 +10,7 @@ class CarouselSpotTests: XCTestCase {
   override func setUp() {
     spot = CarouselSpot(component: Component(span: 1.0))
     cachedSpot = CarouselSpot(cacheKey: "cached-carousel-spot")
+    XCTAssertNotNil(cachedSpot.stateCache)
     cachedSpot.stateCache?.clear()
   }
 

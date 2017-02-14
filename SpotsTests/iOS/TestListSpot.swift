@@ -8,6 +8,7 @@ class ListSpotTests: XCTestCase {
 
   override func setUp() {
     cachedSpot = ListSpot(cacheKey: "cached-list-spot")
+    XCTAssertNotNil(cachedSpot.stateCache)
     cachedSpot.stateCache?.clear()
   }
 
