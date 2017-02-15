@@ -147,7 +147,9 @@ extension DataSource: UITableViewDataSource {
   ///
   /// - returns: The number of rows in section.
   public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    guard let spot = spot else { return 0 }
+    guard let spot = spot else {
+      return 0
+    }
 
     return spot.component.items.count
   }
