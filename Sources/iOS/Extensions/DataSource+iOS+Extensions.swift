@@ -1,5 +1,40 @@
 import UIKit
 
+extension DataSource {
+
+  func prepareWrappableView(_ view: Wrappable, atIndex index: Int, in spot: Spotable, parentFrame: CGRect = CGRect.zero) {
+    if let (_, customView) = Configuration.views.make(spot.component.items[index].kind, parentFrame: parentFrame),
+      let wrappedView = customView {
+      view.configure(with: wrappedView)
+
+      if let configurableView = customView as? ItemConfigurable {
+        configurableView.configure(&spot.component.items[index])
+
+        if spot.component.items[index].size.height == 0.0 {
+          spot.component.items[index].size = configurableView.preferredViewSize
+        }
+      } else {
+        spot.component.items[index].size.height = wrappedView.frame.size.height
+      }
+    }
+  }
+
+  func prepareComposableView(_ view: Composable, atIndex index: Int, in spot: Spotable) {
+    let compositeSpots = spot.compositeSpots.filter({ $0.itemIndex == index })
+    view.configure(&spot.component.items[index], compositeSpots: compositeSpots)
+  }
+
+  func prepareItemConfigurableView(_ view: ItemConfigurable, atIndex index: Int, in spot: Spotable) {
+    view.configure(&spot.component.items[index])
+
+    if spot.component.items[index].size.height == 0.0 {
+      spot.component.items[index].size = view.preferredViewSize
+    }
+
+    spot.configure?(view)
+  }
+}
+
 extension DataSource: UICollectionViewDataSource {
 
   /// Asks the data source for the number of items in the specified section. (required)
@@ -82,42 +117,22 @@ extension DataSource: UICollectionViewDataSource {
   /// - returns: The number of rows in section.
   public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     guard let spot = spot, indexPath.item < spot.component.items.count else {
-        return UICollectionViewCell()
+      return UICollectionViewCell()
     }
 
     spot.component.items[indexPath.item].index = indexPath.item
 
     let reuseIdentifier = spot.identifier(at: indexPath)
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier,
+                                                  for: indexPath)
 
     switch cell {
     case let cell as GridWrapper:
-      if let (_, view) = Configuration.views.make(spot.component.items[indexPath.item].kind, parentFrame: cell.bounds),
-        let customView = view {
-        cell.configure(with: customView)
-
-        if let configurableView = customView as? ItemConfigurable {
-          configurableView.configure(&spot.component.items[indexPath.item])
-
-          if spot.component.items[indexPath.item].size.height == 0.0 {
-            spot.component.items[indexPath.item].size = configurableView.preferredViewSize
-          }
-
-        } else {
-          spot.component.items[indexPath.item].size.height = customView.frame.size.height
-        }
-      }
+      prepareWrappableView(cell, atIndex: indexPath.item, in: spot, parentFrame: cell.bounds)
     case let cell as Composable:
-      let compositeSpots = spot.compositeSpots.filter({ $0.itemIndex == indexPath.item })
-      cell.configure(&spot.component.items[indexPath.item], compositeSpots: compositeSpots)
+      prepareComposableView(cell, atIndex: indexPath.item, in: spot)
     case let cell as ItemConfigurable:
-      cell.configure(&spot.component.items[indexPath.item])
-
-      if spot.component.items[indexPath.item].size.height == 0.0 {
-        spot.component.items[indexPath.item].size = cell.preferredViewSize
-      }
-
-      spot.configure?(cell)
+      prepareItemConfigurableView(cell, atIndex: indexPath.item, in: spot)
     default:
       break
     }
@@ -135,7 +150,9 @@ extension DataSource: UITableViewDataSource {
   ///
   /// - returns: The number of rows in section.
   public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    guard let spot = spot else { return 0 }
+    guard let spot = spot else {
+      return 0
+    }
 
     return spot.component.items.count
   }
@@ -156,38 +173,16 @@ extension DataSource: UITableViewDataSource {
     }
 
     let reuseIdentifier = spot.identifier(at: indexPath)
-    let cell: UITableViewCell = tableView
-      .dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
+    let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier,
+                                                              for: indexPath)
 
     switch cell {
     case let cell as ListWrapper:
-      if let (_, view) = Configuration.views.make(spot.component.items[indexPath.item].kind, parentFrame: cell.bounds),
-        let customView = view {
-        cell.configure(with: customView)
-
-        if let configurableView = customView as? ItemConfigurable {
-          configurableView.configure(&spot.component.items[indexPath.item])
-
-          if spot.component.items[indexPath.item].size.height == 0.0 {
-            spot.component.items[indexPath.item].size = configurableView.preferredViewSize
-          }
-
-          spot.configure?(configurableView)
-        } else {
-          spot.component.items[indexPath.item].size.height = customView.frame.size.height
-        }
-      }
+      prepareWrappableView(cell, atIndex: indexPath.item, in: spot, parentFrame: cell.bounds)
     case let cell as Composable:
-      let compositeSpots = spot.compositeSpots.filter({ $0.itemIndex == indexPath.item })
-      cell.configure(&spot.component.items[indexPath.item], compositeSpots: compositeSpots)
+      prepareComposableView(cell, atIndex: indexPath.row, in: spot)
     case let cell as ItemConfigurable:
-      cell.configure(&spot.component.items[indexPath.item])
-
-      if spot.component.items[indexPath.item].size.height == 0.0 {
-        spot.component.items[indexPath.item].size = cell.preferredViewSize
-      }
-
-      spot.configure?(cell)
+      prepareItemConfigurableView(cell, atIndex: indexPath.item, in: spot)
     default:
       break
     }
