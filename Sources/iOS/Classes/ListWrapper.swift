@@ -33,12 +33,12 @@ class ListWrapper: UITableViewCell, Wrappable, Cell {
   // MARK: - View state
 
   override func setHighlighted(_ highlighted: Bool, animated: Bool) {
-    super.setHighlighted(highlighted, animated: animated)
+    super.setHighlighted(false, animated: false)
     (wrappedView as? ViewStateDelegate)?.viewStateDidChange(viewState)
   }
 
   override func setSelected(_ selected: Bool, animated: Bool) {
-    super.setSelected(selected, animated: animated)
+    super.setSelected(false, animated: false)
     (wrappedView as? ViewStateDelegate)?.viewStateDidChange(viewState)
   }
 }
