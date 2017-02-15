@@ -170,8 +170,8 @@ extension DataSource: UITableViewDataSource {
     }
 
     let reuseIdentifier = spot.identifier(at: indexPath)
-    let cell: UITableViewCell = tableView
-      .dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
+    let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier,
+                                                              for: indexPath)
 
     switch cell {
     case let cell as ListWrapper:
