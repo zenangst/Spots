@@ -5,7 +5,6 @@ public extension Wrappable {
       previousView.removeFromSuperview()
     }
 
-    view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     view.frame = bounds
     self.wrappedView = view
     configureWrappedView()
