@@ -92,7 +92,7 @@ extension DataSource: UICollectionViewDataSource {
 
     switch cell {
     case let cell as GridWrapper:
-      if let (_, view) = Configuration.views.make(spot.component.items[indexPath.item].kind),
+      if let (_, view) = Configuration.views.make(spot.component.items[indexPath.item].kind, parentFrame: cell.bounds),
         let customView = view {
         cell.configure(with: customView)
 
@@ -161,7 +161,7 @@ extension DataSource: UITableViewDataSource {
 
     switch cell {
     case let cell as ListWrapper:
-      if let (_, view) = Configuration.views.make(spot.component.items[indexPath.item].kind),
+      if let (_, view) = Configuration.views.make(spot.component.items[indexPath.item].kind, parentFrame: cell.bounds),
         let customView = view {
         cell.configure(with: customView)
 

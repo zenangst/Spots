@@ -5,9 +5,11 @@ public extension Wrappable {
       previousView.removeFromSuperview()
     }
 
-    configureWrappedView()
-    contentView.addSubview(view)
+    view.frame = bounds
     self.wrappedView = view
+    configureWrappedView()
+
+    contentView.addSubview(view)
   }
 
   func configureWrappedView() {}
