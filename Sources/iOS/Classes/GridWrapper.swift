@@ -1,6 +1,6 @@
 import UIKit
 
-class GridWrapper: UICollectionViewCell, Wrappable {
+class GridWrapper: UICollectionViewCell, Wrappable, Cell {
 
   weak var wrappedView: View?
 
@@ -28,5 +28,19 @@ class GridWrapper: UICollectionViewCell, Wrappable {
 
   override func prepareForReuse() {
     wrappedView?.removeFromSuperview()
+  }
+
+  // MARK: - View state
+
+  override var isSelected: Bool {
+    didSet {
+      (wrappedView as? ViewStateDelegate)?.viewStateDidChange(viewState)
+    }
+  }
+
+  override var isHighlighted: Bool {
+    didSet {
+      (wrappedView as? ViewStateDelegate)?.viewStateDidChange(viewState)
+    }
   }
 }

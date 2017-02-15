@@ -356,6 +356,18 @@
 		D58478E71C440645006EBA49 /* TestComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D584782B1C43FF34006EBA49 /* TestComponent.swift */; };
 		D58478ED1C440726006EBA49 /* Tailor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478E91C440726006EBA49 /* Tailor.framework */; };
 		D58478F91C44076B006EBA49 /* Tailor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478F71C44076B006EBA49 /* Tailor.framework */; };
+		D5D282671E54710D004BF251 /* ViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D282661E54710D004BF251 /* ViewState.swift */; };
+		D5D282681E54710D004BF251 /* ViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D282661E54710D004BF251 /* ViewState.swift */; };
+		D5D282691E54710D004BF251 /* ViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D282661E54710D004BF251 /* ViewState.swift */; };
+		D5D2826B1E547219004BF251 /* ViewStateDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D2826A1E547219004BF251 /* ViewStateDelegate.swift */; };
+		D5D2826C1E547219004BF251 /* ViewStateDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D2826A1E547219004BF251 /* ViewStateDelegate.swift */; };
+		D5D2826D1E547219004BF251 /* ViewStateDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D2826A1E547219004BF251 /* ViewStateDelegate.swift */; };
+		D5D2826F1E5474E0004BF251 /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D2826E1E5474E0004BF251 /* Cell.swift */; };
+		D5D282701E5474E0004BF251 /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D2826E1E5474E0004BF251 /* Cell.swift */; };
+		D5D282711E5474E0004BF251 /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D2826E1E5474E0004BF251 /* Cell.swift */; };
+		D5D282731E54773C004BF251 /* TestListWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D282721E54773C004BF251 /* TestListWrapper.swift */; };
+		D5D282741E547742004BF251 /* TestListWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D282721E54773C004BF251 /* TestListWrapper.swift */; };
+		D5D282761E547D1D004BF251 /* TestGridWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D282751E547D1D004BF251 /* TestGridWrapper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -576,6 +588,11 @@
 		D58478E91C440726006EBA49 /* Tailor.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Tailor.framework; path = Carthage/Build/iOS/Tailor.framework; sourceTree = "<group>"; };
 		D58478EC1C440726006EBA49 /* Cache.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cache.framework; path = Carthage/Build/iOS/Cache.framework; sourceTree = "<group>"; };
 		D58478F71C44076B006EBA49 /* Tailor.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Tailor.framework; path = Carthage/Build/Mac/Tailor.framework; sourceTree = "<group>"; };
+		D5D282661E54710D004BF251 /* ViewState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewState.swift; sourceTree = "<group>"; };
+		D5D2826A1E547219004BF251 /* ViewStateDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewStateDelegate.swift; sourceTree = "<group>"; };
+		D5D2826E1E5474E0004BF251 /* Cell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cell.swift; sourceTree = "<group>"; };
+		D5D282721E54773C004BF251 /* TestListWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestListWrapper.swift; sourceTree = "<group>"; };
+		D5D282751E547D1D004BF251 /* TestGridWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestGridWrapper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -823,6 +840,7 @@
 				BDAD85321E3E7032008289AE /* Paginate.swift */,
 				BDAD85331E3E7032008289AE /* RegistryType.swift */,
 				52CD42791E4477C800187E09 /* PageIndicatorPlacement.swift */,
+				D5D282661E54710D004BF251 /* ViewState.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -871,6 +889,8 @@
 				BDAD85511E3E7032008289AE /* UserInterface.swift */,
 				BDAD85521E3E7032008289AE /* Viewable.swift */,
 				BDAD85531E3E7032008289AE /* Wrappable.swift */,
+				D5D2826A1E547219004BF251 /* ViewStateDelegate.swift */,
+				D5D2826E1E5474E0004BF251 /* Cell.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -1038,6 +1058,8 @@
 				BD4295571D81D45D00E07E1C /* TestViewSpot.swift */,
 				BD21C2511E4358B900FE2B26 /* TestGridableLayout.swift */,
 				BD42CA841E4C9B2600A86E3B /* TestSpot.swift */,
+				D5D282721E54773C004BF251 /* TestListWrapper.swift */,
+				D5D282751E547D1D004BF251 /* TestGridWrapper.swift */,
 			);
 			path = iOS;
 			sourceTree = "<group>";
@@ -1543,6 +1565,7 @@
 				BDAD85DD1E3E7032008289AE /* GridableMeta.swift in Sources */,
 				BDAD85F21E3E7032008289AE /* TypeAlias.swift in Sources */,
 				BDAD85C51E3E7032008289AE /* SpotsFocusDelegate.swift in Sources */,
+				D5D282711E5474E0004BF251 /* Cell.swift in Sources */,
 				BDAD85771E3E7032008289AE /* RegistryType.swift in Sources */,
 				BDAD85DA1E3E7032008289AE /* Dispatch.swift in Sources */,
 				BDAD84C11E3E701C008289AE /* ListWrapper.swift in Sources */,
@@ -1558,6 +1581,8 @@
 				BDAD858F1E3E7032008289AE /* Spotable+Mutation.swift in Sources */,
 				BDAD85CE1E3E7032008289AE /* Viewable.swift in Sources */,
 				BDAD85831E3E7032008289AE /* Item+Extensions.swift in Sources */,
+				D5D2826D1E547219004BF251 /* ViewStateDelegate.swift in Sources */,
+				D5D282691E54710D004BF251 /* ViewState.swift in Sources */,
 				BDAD85CB1E3E7032008289AE /* UserInterface.swift in Sources */,
 				BDDCF6F11E4DF93D004B38C4 /* DictionaryConvertible.swift in Sources */,
 				BDAD84E11E3E701C008289AE /* UITableView+UserInterface.swift in Sources */,
@@ -1606,6 +1631,7 @@
 				BD4295501D81CE4F00E07E1C /* TestGridSpot.swift in Sources */,
 				BDB8D5951E4DFADC00220BC3 /* TestItem.swift in Sources */,
 				BDA8DAF61DCF3AED00A4A8DD /* TestRowSpot.swift in Sources */,
+				D5D282741E547742004BF251 /* TestListWrapper.swift in Sources */,
 				BD4295531D81D32400E07E1C /* TestListSpot.swift in Sources */,
 				BD21C2551E4358CE00FE2B26 /* TestGridableLayout.swift in Sources */,
 				BDEFF5531DD1DA8000FC0537 /* TestDelegate.swift in Sources */,
@@ -1688,6 +1714,7 @@
 				BDAD85EA1E3E7032008289AE /* Registry.swift in Sources */,
 				BDAD85C61E3E7032008289AE /* SpotsProtocol.swift in Sources */,
 				BDAD85E41E3E7032008289AE /* Layout.swift in Sources */,
+				D5D2826F1E5474E0004BF251 /* Cell.swift in Sources */,
 				BDAD85D51E3E7032008289AE /* Configuration.swift in Sources */,
 				BDAD858A1E3E7032008289AE /* Spotable+Extensions.swift in Sources */,
 				BDAD85931E3E7032008289AE /* SpotsDelegate+Extensions.swift in Sources */,
@@ -1703,6 +1730,8 @@
 				BDAD85AB1E3E7032008289AE /* Composable.swift in Sources */,
 				BDAD84B61E3E701C008289AE /* GridWrapper.swift in Sources */,
 				BDDCF6E01E4DF927004B38C4 /* ItemConfigurable.swift in Sources */,
+				D5D2826B1E547219004BF251 /* ViewStateDelegate.swift in Sources */,
+				D5D282671E54710D004BF251 /* ViewState.swift in Sources */,
 				BDAD857E1E3E7032008289AE /* Gridable+Extensions.swift in Sources */,
 				BDAD84C61E3E701C008289AE /* SpotsContentView.swift in Sources */,
 				BDAD84E01E3E701C008289AE /* UITableView+UserInterface.swift in Sources */,
@@ -1740,6 +1769,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BD4295581D81D45D00E07E1C /* TestViewSpot.swift in Sources */,
+				D5D282761E547D1D004BF251 /* TestGridWrapper.swift in Sources */,
 				BD4295551D81D39700E07E1C /* TestCarouselSpot.swift in Sources */,
 				D58478571C43FFFD006EBA49 /* TestComponent.swift in Sources */,
 				BD43459B1E35EB7D0032EB3E /* TestInteraction.swift in Sources */,
@@ -1760,6 +1790,7 @@
 				BD01BD181DAEA7FC009C10FF /* TestListComposite.swift in Sources */,
 				BD677E8D1DC62575006D1654 /* TestUIViewControllerExtensions.swift in Sources */,
 				BD42CA851E4C9B2600A86E3B /* TestSpot.swift in Sources */,
+				D5D282731E54773C004BF251 /* TestListWrapper.swift in Sources */,
 				BD10D5251D7955AB00DF8E9B /* TestViewModelExtensions.swift in Sources */,
 				BDCFCD441DCA7F830047E84C /* TestController.swift in Sources */,
 				BDD9ABCE1DB53475005D8C04 /* TestCarouselComposite.swift in Sources */,
@@ -1819,6 +1850,7 @@
 				BDAD85D61E3E7032008289AE /* Configuration.swift in Sources */,
 				BDAD85C41E3E7032008289AE /* SpotsFocusDelegate.swift in Sources */,
 				BDAD857F1E3E7032008289AE /* Gridable+Extensions.swift in Sources */,
+				D5D282701E5474E0004BF251 /* Cell.swift in Sources */,
 				BDAD85B81E3E7032008289AE /* ScrollDelegate.swift in Sources */,
 				BDAD85271E3E7025008289AE /* SpotView.swift in Sources */,
 				BDAD851C1E3E7025008289AE /* Composable+macOS.swift in Sources */,
@@ -1834,6 +1866,8 @@
 				BDAD856D1E3E7032008289AE /* ViewSpot.swift in Sources */,
 				BDAD85821E3E7032008289AE /* Item+Extensions.swift in Sources */,
 				BDAD850D1E3E7025008289AE /* GridComposite.swift in Sources */,
+				D5D2826C1E547219004BF251 /* ViewStateDelegate.swift in Sources */,
+				D5D282681E54710D004BF251 /* ViewState.swift in Sources */,
 				BDDCF6F01E4DF93D004B38C4 /* DictionaryConvertible.swift in Sources */,
 				BDAD85611E3E7032008289AE /* CompositeSpot.swift in Sources */,
 				BDAD851D1E3E7025008289AE /* DataSource+macOS+Extensions.swift in Sources */,
