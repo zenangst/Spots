@@ -305,10 +305,13 @@ open class Controller: UIViewController, SpotsProtocol, SpotsFocusDelegate, UISc
       width: superview.frame.width,
       height: ceil(spot.view.frame.height))
     spot.focusDelegate = self
-    spot.registerAndPrepare()
 
-    if !spot.items.isEmpty {
-      spot.view.layoutIfNeeded()
+    if !(spot is Spot) {
+      spot.registerAndPrepare()
+
+      if !spot.items.isEmpty {
+        spot.view.layoutIfNeeded()
+      }
     }
   }
 
