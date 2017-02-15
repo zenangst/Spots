@@ -18,4 +18,10 @@ public struct Configuration {
     self.views.storage[identifier.string] = Registry.Item.classType(view)
   }
 
+  /// Register default view for the Spotable object
+  ///
+  /// - parameter view: The view type that should be used as the default view
+  public static func registerDefault(view: View.Type) {
+    views.defaultItem = Registry.Item.classType(view)
+  }
 }
