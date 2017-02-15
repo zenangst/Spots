@@ -121,8 +121,7 @@ extension DataSource: UICollectionViewDataSource {
     case let cell as GridWrapper:
       prepareWrappableView(cell, atIndex: indexPath.item, in: spot, parentFrame: cell.bounds)
     case let cell as Composable:
-      let compositeSpots = spot.compositeSpots.filter({ $0.itemIndex == indexPath.item })
-      cell.configure(&spot.component.items[indexPath.item], compositeSpots: compositeSpots)
+      prepareComposableView(cell, atIndex: indexPath.item, in: spot)
     case let cell as ItemConfigurable:
       cell.configure(&spot.component.items[indexPath.item])
 
@@ -176,8 +175,7 @@ extension DataSource: UITableViewDataSource {
     case let cell as ListWrapper:
       prepareWrappableView(cell, atIndex: indexPath.item, in: spot, parentFrame: cell.bounds)
     case let cell as Composable:
-      let compositeSpots = spot.compositeSpots.filter({ $0.itemIndex == indexPath.item })
-      cell.configure(&spot.component.items[indexPath.item], compositeSpots: compositeSpots)
+      prepareComposableView(cell, atIndex: indexPath.row, in: spot)
     case let cell as ItemConfigurable:
       cell.configure(&spot.component.items[indexPath.item])
 
