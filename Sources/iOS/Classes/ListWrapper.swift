@@ -12,8 +12,7 @@ class ListWrapper: UITableViewCell, Wrappable {
   }
   override func layoutSubviews() {
     super.layoutSubviews()
-
-    self.wrappedView?.frame = contentView.bounds
+    wrappedView?.frame.size = contentView.bounds.size
   }
 
   override func prepareForReuse() {
