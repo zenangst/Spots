@@ -2,6 +2,10 @@ import Cocoa
 
 class GridWrapper: NSCollectionViewItem, Wrappable {
 
+  public var bounds: CGRect {
+    return coreView.bounds
+  }
+
   weak var wrappedView: View?
 
   public var contentView: View {
