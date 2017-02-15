@@ -15,7 +15,6 @@ class ListWrapper: UITableViewCell, Wrappable {
   }
 
   func configureWrappedView() {
-
     if let cell = wrappedView as? UITableViewCell {
       cell.contentView.frame = contentView.frame
       cell.isUserInteractionEnabled = false
