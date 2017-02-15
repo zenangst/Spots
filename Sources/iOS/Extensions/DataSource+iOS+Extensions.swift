@@ -24,6 +24,16 @@ extension DataSource {
     let compositeSpots = spot.compositeSpots.filter({ $0.itemIndex == index })
     view.configure(&spot.component.items[index], compositeSpots: compositeSpots)
   }
+
+  func prepareItemConfigurableView(_ view: ItemConfigurable, atIndex index: Int, in spot: Spotable) {
+    view.configure(&spot.component.items[index])
+
+    if spot.component.items[index].size.height == 0.0 {
+      spot.component.items[index].size = view.preferredViewSize
+    }
+
+    spot.configure?(view)
+  }
 }
 
 extension DataSource: UICollectionViewDataSource {
