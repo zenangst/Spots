@@ -8,6 +8,7 @@ class ListWrapper: UITableViewCell, Wrappable, Cell {
     super.init(style: .default, reuseIdentifier: reuseIdentifier)
 
     backgroundColor = .clear
+    selectedBackgroundView = UIView()
   }
   
   required init?(coder aDecoder: NSCoder) {
