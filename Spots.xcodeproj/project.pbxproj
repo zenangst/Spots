@@ -367,6 +367,7 @@
 		D5D282711E5474E0004BF251 /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D2826E1E5474E0004BF251 /* Cell.swift */; };
 		D5D282731E54773C004BF251 /* TestListWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D282721E54773C004BF251 /* TestListWrapper.swift */; };
 		D5D282741E547742004BF251 /* TestListWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D282721E54773C004BF251 /* TestListWrapper.swift */; };
+		D5D282761E547D1D004BF251 /* TestGridWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D282751E547D1D004BF251 /* TestGridWrapper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -591,6 +592,7 @@
 		D5D2826A1E547219004BF251 /* ViewStateDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewStateDelegate.swift; sourceTree = "<group>"; };
 		D5D2826E1E5474E0004BF251 /* Cell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cell.swift; sourceTree = "<group>"; };
 		D5D282721E54773C004BF251 /* TestListWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestListWrapper.swift; sourceTree = "<group>"; };
+		D5D282751E547D1D004BF251 /* TestGridWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestGridWrapper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1057,6 +1059,7 @@
 				BD21C2511E4358B900FE2B26 /* TestGridableLayout.swift */,
 				BD42CA841E4C9B2600A86E3B /* TestSpot.swift */,
 				D5D282721E54773C004BF251 /* TestListWrapper.swift */,
+				D5D282751E547D1D004BF251 /* TestGridWrapper.swift */,
 			);
 			path = iOS;
 			sourceTree = "<group>";
@@ -1766,6 +1769,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BD4295581D81D45D00E07E1C /* TestViewSpot.swift in Sources */,
+				D5D282761E547D1D004BF251 /* TestGridWrapper.swift in Sources */,
 				BD4295551D81D39700E07E1C /* TestCarouselSpot.swift in Sources */,
 				D58478571C43FFFD006EBA49 /* TestComponent.swift in Sources */,
 				BD43459B1E35EB7D0032EB3E /* TestInteraction.swift in Sources */,
