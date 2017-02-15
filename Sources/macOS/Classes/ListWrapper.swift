@@ -1,6 +1,7 @@
 import Cocoa
 
 class ListWrapper: NSTableRowView, Wrappable {
+
   public var contentView: View {
     return self
   }
