@@ -346,6 +346,19 @@ open class Controller: UIViewController, SpotsProtocol, SpotsFocusDelegate, UISc
 /// An extension with private methods on Controller
 extension Controller {
 
+  /// It updates the delegates for all underlaying spotable objects inside the controller.
+  fileprivate  func updateDelegates() {
+    spots.forEach {
+      $0.delegate = delegate
+      $0.focusDelegate = self
+
+      $0.compositeSpots.forEach {
+        $0.spot.delegate = delegate
+        $0.spot.focusDelegate = self
+      }
+    }
+  }
+
   /// Resolve component at index path.
   ///
   /// - parameter indexPath: The index path of the component belonging to the Spotable object at that index.
