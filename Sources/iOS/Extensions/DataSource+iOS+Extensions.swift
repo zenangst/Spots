@@ -1,5 +1,26 @@
 import UIKit
 
+extension DataSource {
+
+  func prepareWrappableView(_ view: Wrappable, atIndex index: Int, in spot: Spotable, parentFrame: CGRect = CGRect.zero) {
+    if let (_, customView) = Configuration.views.make(spot.component.items[index].kind, parentFrame: parentFrame),
+      let wrappedView = customView {
+      view.configure(with: wrappedView)
+
+      if let configurableView = customView as? ItemConfigurable {
+        configurableView.configure(&spot.component.items[index])
+
+        if spot.component.items[index].size.height == 0.0 {
+          spot.component.items[index].size = configurableView.preferredViewSize
+        }
+
+      } else {
+        spot.component.items[index].size.height = wrappedView.frame.size.height
+      }
+    }
+  }
+}
+
 extension DataSource: UICollectionViewDataSource {
 
   /// Asks the data source for the number of items in the specified section. (required)
