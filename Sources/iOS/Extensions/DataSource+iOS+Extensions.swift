@@ -103,7 +103,7 @@ extension DataSource: UICollectionViewDataSource {
   /// - returns: The number of rows in section.
   public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     guard let spot = spot, indexPath.item < spot.component.items.count else {
-        return UICollectionViewCell()
+      return UICollectionViewCell()
     }
 
     spot.component.items[indexPath.item].index = indexPath.item
