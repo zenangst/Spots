@@ -43,17 +43,7 @@ open class Controller: UIViewController, SpotsProtocol, SpotsFocusDelegate, UISc
 
   /// A collection of Spotable objects.
   open var spots: [Spotable] {
-    didSet {
-      spots.forEach {
-        $0.delegate = delegate
-        $0.focusDelegate = self
-
-        $0.compositeSpots.forEach {
-          $0.spot.focusDelegate = self
-        }
-      }
-      delegate?.spotablesDidChange(spots)
-    }
+    didSet { spotsDidChange() }
   }
 
   /// An array of refresh positions to avoid refreshing multiple times when using infinite scrolling.
@@ -77,10 +67,7 @@ open class Controller: UIViewController, SpotsProtocol, SpotsFocusDelegate, UISc
 
   /// A delegate for when an item is tapped within a Spot.
   weak open var delegate: SpotsDelegate? {
-    didSet {
-      spots.forEach { $0.delegate = delegate }
-      delegate?.spotablesDidChange(spots)
-    }
+    didSet { spotsDelegateDidChange() }
   }
 
   #if os(iOS)
@@ -318,10 +305,15 @@ open class Controller: UIViewController, SpotsProtocol, SpotsFocusDelegate, UISc
       width: superview.frame.width,
       height: ceil(spot.view.frame.height))
     spot.focusDelegate = self
-    spot.registerAndPrepare()
 
-    if !spot.items.isEmpty {
-      spot.view.layoutIfNeeded()
+    /// Spot handles registering and preparing the items internally so there is no need to run this for that class.
+    /// This should be removed in the future when we decide to remove the core types.
+    if !(spot is Spot) {
+      spot.registerAndPrepare()
+
+      if !spot.items.isEmpty {
+        spot.view.layoutIfNeeded()
+      }
     }
   }
 
@@ -345,6 +337,30 @@ open class Controller: UIViewController, SpotsProtocol, SpotsFocusDelegate, UISc
 
 /// An extension with private methods on Controller
 extension Controller {
+
+  /// This method is triggered in `delegate.didSet`
+  fileprivate func spotsDelegateDidChange() {
+    updateDelegates()
+  }
+
+  /// This method is triggered in `spots.didSet{}`
+  fileprivate  func spotsDidChange() {
+    updateDelegates()
+    delegate?.spotablesDidChange(spots)
+  }
+
+  /// It updates the delegates for all underlaying spotable objects inside the controller.
+  fileprivate  func updateDelegates() {
+    spots.forEach {
+      $0.delegate = delegate
+      $0.focusDelegate = self
+
+      $0.compositeSpots.forEach {
+        $0.spot.delegate = delegate
+        $0.spot.focusDelegate = self
+      }
+    }
+  }
 
   /// Resolve component at index path.
   ///
