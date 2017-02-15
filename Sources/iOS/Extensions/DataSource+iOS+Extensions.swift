@@ -19,6 +19,11 @@ extension DataSource {
       }
     }
   }
+
+  func prepareComposableView(_ view: Composable, atIndex index: Int, in spot: Spotable) {
+    let compositeSpots = spot.compositeSpots.filter({ $0.itemIndex == index })
+    view.configure(&spot.component.items[index], compositeSpots: compositeSpots)
+  }
 }
 
 extension DataSource: UICollectionViewDataSource {
