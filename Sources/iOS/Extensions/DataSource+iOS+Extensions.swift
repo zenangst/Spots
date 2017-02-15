@@ -114,21 +114,7 @@ extension DataSource: UICollectionViewDataSource {
 
     switch cell {
     case let cell as GridWrapper:
-      if let (_, view) = Configuration.views.make(spot.component.items[indexPath.item].kind, parentFrame: cell.bounds),
-        let customView = view {
-        cell.configure(with: customView)
-
-        if let configurableView = customView as? ItemConfigurable {
-          configurableView.configure(&spot.component.items[indexPath.item])
-
-          if spot.component.items[indexPath.item].size.height == 0.0 {
-            spot.component.items[indexPath.item].size = configurableView.preferredViewSize
-          }
-
-        } else {
-          spot.component.items[indexPath.item].size.height = customView.frame.size.height
-        }
-      }
+      prepareWrappableView(cell, atIndex: indexPath.item, in: spot, parentFrame: cell.bounds)
     case let cell as Composable:
       let compositeSpots = spot.compositeSpots.filter({ $0.itemIndex == indexPath.item })
       cell.configure(&spot.component.items[indexPath.item], compositeSpots: compositeSpots)
@@ -183,22 +169,7 @@ extension DataSource: UITableViewDataSource {
 
     switch cell {
     case let cell as ListWrapper:
-      if let (_, view) = Configuration.views.make(spot.component.items[indexPath.item].kind, parentFrame: cell.bounds),
-        let customView = view {
-        cell.configure(with: customView)
-
-        if let configurableView = customView as? ItemConfigurable {
-          configurableView.configure(&spot.component.items[indexPath.item])
-
-          if spot.component.items[indexPath.item].size.height == 0.0 {
-            spot.component.items[indexPath.item].size = configurableView.preferredViewSize
-          }
-
-          spot.configure?(configurableView)
-        } else {
-          spot.component.items[indexPath.item].size.height = customView.frame.size.height
-        }
-      }
+      prepareWrappableView(cell, atIndex: indexPath.item, in: spot, parentFrame: cell.bounds)
     case let cell as Composable:
       let compositeSpots = spot.compositeSpots.filter({ $0.itemIndex == indexPath.item })
       cell.configure(&spot.component.items[indexPath.item], compositeSpots: compositeSpots)
