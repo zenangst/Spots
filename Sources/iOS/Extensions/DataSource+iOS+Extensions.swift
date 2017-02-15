@@ -133,13 +133,7 @@ extension DataSource: UICollectionViewDataSource {
     case let cell as Composable:
       prepareComposableView(cell, atIndex: indexPath.item, in: spot)
     case let cell as ItemConfigurable:
-      cell.configure(&spot.component.items[indexPath.item])
-
-      if spot.component.items[indexPath.item].size.height == 0.0 {
-        spot.component.items[indexPath.item].size = cell.preferredViewSize
-      }
-
-      spot.configure?(cell)
+      prepareItemConfigurableView(cell, atIndex: indexPath.item, in: spot)
     default:
       break
     }
@@ -189,13 +183,7 @@ extension DataSource: UITableViewDataSource {
     case let cell as Composable:
       prepareComposableView(cell, atIndex: indexPath.row, in: spot)
     case let cell as ItemConfigurable:
-      cell.configure(&spot.component.items[indexPath.item])
-
-      if spot.component.items[indexPath.item].size.height == 0.0 {
-        spot.component.items[indexPath.item].size = cell.preferredViewSize
-      }
-
-      spot.configure?(cell)
+      prepareItemConfigurableView(cell, atIndex: indexPath.item, in: spot)
     default:
       break
     }
