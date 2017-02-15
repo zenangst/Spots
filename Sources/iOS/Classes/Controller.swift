@@ -77,10 +77,7 @@ open class Controller: UIViewController, SpotsProtocol, SpotsFocusDelegate, UISc
 
   /// A delegate for when an item is tapped within a Spot.
   weak open var delegate: SpotsDelegate? {
-    didSet {
-      spots.forEach { $0.delegate = delegate }
-      delegate?.spotablesDidChange(spots)
-    }
+    didSet { spotsDelegateDidChange() }
   }
 
   #if os(iOS)
@@ -346,6 +343,10 @@ open class Controller: UIViewController, SpotsProtocol, SpotsFocusDelegate, UISc
 /// An extension with private methods on Controller
 extension Controller {
 
+  /// This method is triggered in `delegate.didSet`
+  fileprivate func spotsDelegateDidChange() {
+    updateDelegates()
+  }
   /// It updates the delegates for all underlaying spotable objects inside the controller.
   fileprivate  func updateDelegates() {
     spots.forEach {
