@@ -10,6 +10,7 @@ class ListWrapper: UITableViewCell, Wrappable {
       cell.isUserInteractionEnabled = false
     }
   }
+
   override func layoutSubviews() {
     super.layoutSubviews()
     wrappedView?.frame.size = contentView.bounds.size
