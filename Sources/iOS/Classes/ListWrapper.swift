@@ -22,15 +22,13 @@ class ListWrapper: UITableViewCell, Wrappable, Cell {
 
   // MARK: - View state
 
-  override var isSelected: Bool {
-    didSet {
-      (wrappedView as? ViewStateDelegate)?.viewStateDidChange(viewState)
-    }
+  override func setHighlighted(_ highlighted: Bool, animated: Bool) {
+    super.setHighlighted(highlighted, animated: animated)
+    (wrappedView as? ViewStateDelegate)?.viewStateDidChange(viewState)
   }
 
-  override var isHighlighted: Bool {
-    didSet {
-      (wrappedView as? ViewStateDelegate)?.viewStateDidChange(viewState)
-    }
+  override func setSelected(_ selected: Bool, animated: Bool) {
+    super.setSelected(selected, animated: animated)
+    (wrappedView as? ViewStateDelegate)?.viewStateDidChange(viewState)
   }
 }

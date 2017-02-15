@@ -365,6 +365,8 @@
 		D5D2826F1E5474E0004BF251 /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D2826E1E5474E0004BF251 /* Cell.swift */; };
 		D5D282701E5474E0004BF251 /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D2826E1E5474E0004BF251 /* Cell.swift */; };
 		D5D282711E5474E0004BF251 /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D2826E1E5474E0004BF251 /* Cell.swift */; };
+		D5D282731E54773C004BF251 /* TestListWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D282721E54773C004BF251 /* TestListWrapper.swift */; };
+		D5D282741E547742004BF251 /* TestListWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D282721E54773C004BF251 /* TestListWrapper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -588,6 +590,7 @@
 		D5D282661E54710D004BF251 /* ViewState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewState.swift; sourceTree = "<group>"; };
 		D5D2826A1E547219004BF251 /* ViewStateDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewStateDelegate.swift; sourceTree = "<group>"; };
 		D5D2826E1E5474E0004BF251 /* Cell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cell.swift; sourceTree = "<group>"; };
+		D5D282721E54773C004BF251 /* TestListWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestListWrapper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1053,6 +1056,7 @@
 				BD4295571D81D45D00E07E1C /* TestViewSpot.swift */,
 				BD21C2511E4358B900FE2B26 /* TestGridableLayout.swift */,
 				BD42CA841E4C9B2600A86E3B /* TestSpot.swift */,
+				D5D282721E54773C004BF251 /* TestListWrapper.swift */,
 			);
 			path = iOS;
 			sourceTree = "<group>";
@@ -1624,6 +1628,7 @@
 				BD4295501D81CE4F00E07E1C /* TestGridSpot.swift in Sources */,
 				BDB8D5951E4DFADC00220BC3 /* TestItem.swift in Sources */,
 				BDA8DAF61DCF3AED00A4A8DD /* TestRowSpot.swift in Sources */,
+				D5D282741E547742004BF251 /* TestListWrapper.swift in Sources */,
 				BD4295531D81D32400E07E1C /* TestListSpot.swift in Sources */,
 				BD21C2551E4358CE00FE2B26 /* TestGridableLayout.swift in Sources */,
 				BDEFF5531DD1DA8000FC0537 /* TestDelegate.swift in Sources */,
@@ -1781,6 +1786,7 @@
 				BD01BD181DAEA7FC009C10FF /* TestListComposite.swift in Sources */,
 				BD677E8D1DC62575006D1654 /* TestUIViewControllerExtensions.swift in Sources */,
 				BD42CA851E4C9B2600A86E3B /* TestSpot.swift in Sources */,
+				D5D282731E54773C004BF251 /* TestListWrapper.swift in Sources */,
 				BD10D5251D7955AB00DF8E9B /* TestViewModelExtensions.swift in Sources */,
 				BDCFCD441DCA7F830047E84C /* TestController.swift in Sources */,
 				BDD9ABCE1DB53475005D8C04 /* TestCarouselComposite.swift in Sources */,
