@@ -13,6 +13,8 @@ extension DataSource {
         if spot.component.items[index].size.height == 0.0 {
           spot.component.items[index].size = configurableView.preferredViewSize
         }
+
+        spot.configure?(configurableView)
       } else {
         spot.component.items[index].size.height = wrappedView.frame.size.height
       }
