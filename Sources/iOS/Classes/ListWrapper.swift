@@ -1,6 +1,6 @@
 import UIKit
 
-class ListWrapper: UITableViewCell, Wrappable {
+class ListWrapper: UITableViewCell, Wrappable, Cell {
 
   weak var wrappedView: View?
 
@@ -18,5 +18,19 @@ class ListWrapper: UITableViewCell, Wrappable {
 
   override func prepareForReuse() {
     wrappedView?.removeFromSuperview()
+  }
+
+  // MARK: - View state
+
+  override var isSelected: Bool {
+    didSet {
+      (wrappedView as? ViewStateDelegate)?.viewStateDidChange(viewState)
+    }
+  }
+
+  override var isHighlighted: Bool {
+    didSet {
+      (wrappedView as? ViewStateDelegate)?.viewStateDidChange(viewState)
+    }
   }
 }
