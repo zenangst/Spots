@@ -74,8 +74,8 @@ public struct Interaction: Mappable {
       self.paginate <- Paginate(rawValue: paginate)
     }
 
-    if let scrollBehavior: String = map.property(Key.scrollBehavior.rawValue) {
-      self.scrollBehavior <- ScrollingBehavior(rawValue: scrollBehavior)
+    if let scrollBehaviour: String = map.property(Key.scrollBehaviour.rawValue) {
+      self.scrollBehaviour <- ScrollBehaviour(rawValue: scrollBehavior)
     }
   }
 
