@@ -58,11 +58,37 @@ extension Delegate: UIScrollViewDelegate {
   }
 
   public func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-    guard let spot = spot as? CarouselSpot else {
+    guard let spot = spot,
+      let collectionView = spot.userInterface as? CollectionView,
+      let collectionViewLayout = collectionView.collectionViewLayout as? CollectionLayout,
+      spot.component.interaction.scrollDirection == .horizontal else {
+        return
+    }
+
+    #if os(iOS)
+      guard spot.component.interaction.paginate == .item else {
+        return
+      }
+    #endif
+
+    guard let centerIndexPath = getCenterIndexPath(in: collectionView,
+                                                   scrollView: scrollView,
+                                                   point: scrollView.contentOffset,
+                                                   contentSize: collectionViewLayout.contentSize,
+                                                   offset: collectionViewLayout.minimumInteritemSpacing) else {
+                                                    return
+    }
+
+    guard let item = spot.item(at: centerIndexPath.item) else {
       return
     }
 
-    spot.carouselScrollDelegate?.spotableCarouselDidEndScrollingAnimated(spot)
+    switch spot {
+    case let spot as CarouselSpot:
+      spot.carouselScrollDelegate?.spotableCarouselDidEndScrolling(spot, item: item, animated: true)
+    default:
+    break
+    }
   }
 
   /// Tells the delegate when the user finishes scrolling the content.
@@ -79,30 +105,70 @@ extension Delegate: UIScrollViewDelegate {
     }
 
     #if os(iOS)
-      guard spot.component.interaction.paginate == .page else {
+      guard spot.component.interaction.paginate == .item else {
         return
       }
     #endif
 
-    let pointXUpperBound = collectionViewLayout.collectionViewContentSize.width - scrollView.frame.width / 2
-    var point = targetContentOffset.pointee
+    var centerIndexPath: IndexPath?
+
+    centerIndexPath = getCenterIndexPath(in: collectionView,
+      scrollView: scrollView,
+      point: targetContentOffset.pointee,
+      contentSize: collectionViewLayout.contentSize,
+      offset: collectionViewLayout.minimumInteritemSpacing)
+
+    let widthBounds = scrollView.contentSize.width - scrollView.frame.size.width
+    let isBeyondBounds = targetContentOffset.pointee.x >= widthBounds && centerIndexPath == nil
+
+    if isBeyondBounds {
+      centerIndexPath = IndexPath(item: spot.items.count - 1, section: 0)
+    }
+
+    guard let foundIndexPath = centerIndexPath else {
+      return
+    }
+
+    guard let centerLayoutAttributes = collectionViewLayout.layoutAttributesForItem(at: foundIndexPath) else {
+      return
+    }
+
+    if let item = spot.item(at: foundIndexPath.item) {
+      switch spot {
+      case let spot as CarouselSpot:
+        spot.carouselScrollDelegate?.spotableCarouselDidEndScrolling(spot, item: item, animated: false)
+      default:
+        break
+      }
+    }
+
+    switch spot.component.interaction.scrollBehaviour {
+    case .passive:
+      targetContentOffset.pointee.x = centerLayoutAttributes.frame.midX - scrollView.frame.width / 2
+    case .snapping:
+      scrollView.setContentOffset(CGPoint(
+        x: centerLayoutAttributes.frame.midX - scrollView.frame.width / 2,
+        y: scrollView.contentOffset.y
+      ), animated: true)
+    }
+  }
+
+  fileprivate func getCenterIndexPath(in collectionView: UICollectionView, scrollView: UIScrollView, point: CGPoint, contentSize: CGSize, offset: CGFloat) -> IndexPath? {
+    let pointXUpperBound = contentSize.width - scrollView.frame.width / 2
+    var point = point
     point.x += scrollView.frame.width / 2
     point.y = scrollView.frame.midY
     var indexPath: IndexPath?
 
     while indexPath == nil && point.x < pointXUpperBound {
       indexPath = collectionView.indexPathForItem(at: point)
-      point.x += max(collectionViewLayout.minimumInteritemSpacing, 1)
+      point.x += max(offset, 1)
     }
 
     guard let centerIndexPath = indexPath else {
-      return
+      return nil
     }
 
-    guard let centerLayoutAttributes = collectionViewLayout.layoutAttributesForItem(at: centerIndexPath) else {
-      return
-    }
-
-    targetContentOffset.pointee.x = centerLayoutAttributes.frame.midX - scrollView.frame.width / 2
+    return centerIndexPath
   }
 }
