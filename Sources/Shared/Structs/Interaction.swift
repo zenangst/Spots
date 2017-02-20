@@ -75,7 +75,7 @@ public struct Interaction: Mappable {
     }
 
     if let scrollBehaviour: String = map.property(Key.scrollBehaviour.rawValue) {
-      self.scrollBehaviour <- ScrollBehaviour(rawValue: scrollBehavior)
+      self.scrollBehaviour <- ScrollBehaviour(rawValue: scrollBehaviour)
     }
   }
 
