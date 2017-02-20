@@ -9,6 +9,10 @@ enum ScrollDirection: String {
   case horizontal, vertical
 }
 
+public enum ScrollBehaviour: String {
+  case passive, snapping
+}
+
 /// A user interaction struct used for mapping behavior to a Spotable object.
 /// Note: `paginate` is currently only available on iOS.
 public struct Interaction: Mappable {
@@ -17,13 +21,15 @@ public struct Interaction: Mappable {
   ///
   /// - paginate: Used for mapping pagination behavior.
   enum Key: String {
-    case paginate
+    case paginate, scrollBehaviour = "scroll-behavior"
   }
 
   /// Delcares what kind of interaction should be used for pagination. See `Paginate` struct for more information.
   var paginate: Paginate = .disabled
   /// Indicates which scrolling direction will be used, default to false.
   var scrollDirection: ScrollDirection = .vertical
+  /// Declares what scrolling behavior should be used when a user interacts with the scroll view.
+  var scrollBehaviour: ScrollBehaviour = .passive
 
   /// The root key used when parsing JSON into a Interaction struct.
   static let rootKey: String = String(describing: Interaction.self).lowercased()
@@ -31,7 +37,8 @@ public struct Interaction: Mappable {
   /// A dictionary representation of the struct.
   public var dictionary: [String : Any] {
     return [
-      Key.paginate.rawValue: paginate.rawValue
+      Key.paginate.rawValue: paginate.rawValue,
+      Key.scrollBehaviour.rawValue: scrollBehaviour.rawValue
     ]
   }
 
@@ -43,8 +50,9 @@ public struct Interaction: Mappable {
   /// Default initializer for creating a Interaction struct.
   ///
   /// - Parameter paginate: Declares which pagination behavior that should be used, `.disabled` is default.
-  public init(paginate: Paginate = .disabled) {
+  public init(paginate: Paginate = .disabled, scrollBehavior: ScrollBehaviour = .passive) {
     self.paginate = paginate
+    self.scrollBehaviour = scrollBehavior
   }
 
   /// Initialize with a JSON payload.
@@ -64,6 +72,10 @@ public struct Interaction: Mappable {
       }
     } else if let paginate: String = map.property(Key.paginate.rawValue) {
       self.paginate <- Paginate(rawValue: paginate)
+    }
+
+    if let scrollBehavior: String = map.property(Key.scrollBehavior.rawValue) {
+      self.scrollBehavior <- ScrollingBehavior(rawValue: scrollBehavior)
     }
   }
 
