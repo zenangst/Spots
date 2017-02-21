@@ -66,7 +66,7 @@ extension Delegate: UIScrollViewDelegate {
     }
 
     #if os(iOS)
-      guard spot.component.interaction.paginate == .item else {
+      guard spot.component.interaction.paginate != .disabled else {
         return
       }
     #endif
@@ -107,7 +107,7 @@ extension Delegate: UIScrollViewDelegate {
     }
 
     #if os(iOS)
-      guard spot.component.interaction.paginate == .item else {
+      guard spot.component.interaction.paginate != .disabled else {
         return
       }
     #endif
