@@ -198,10 +198,6 @@ open class CarouselSpot: NSObject, Gridable {
       collectionView.frame.size.height += CGFloat(componentLayout.inset.top + componentLayout.inset.bottom)
     }
 
-    collectionView.decelerationRate = component.interaction.scrollBehaviour == .snapping
-      ? UIScrollViewDecelerationRateNormal
-      : UIScrollViewDecelerationRateFast
-
     if let pageIndicatorPlacement = component.layout?.pageIndicatorPlacement {
       switch pageIndicatorPlacement {
       case .below:
