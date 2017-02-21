@@ -61,15 +61,10 @@ extension Delegate: UIScrollViewDelegate {
     guard let spot = spot,
       let collectionView = spot.userInterface as? CollectionView,
       let collectionViewLayout = collectionView.collectionViewLayout as? CollectionLayout,
-      spot.component.interaction.scrollDirection == .horizontal else {
+      spot.component.interaction.scrollDirection == .horizontal,
+      spot.component.interaction.paginate != .disabled else {
         return
     }
-
-    #if os(iOS)
-      guard spot.component.interaction.paginate != .disabled else {
-        return
-      }
-    #endif
 
     guard let centerIndexPath = getCenterIndexPath(in: collectionView,
                                                    scrollView: scrollView,
@@ -102,15 +97,10 @@ extension Delegate: UIScrollViewDelegate {
     guard let spot = spot,
       let collectionView = spot.userInterface as? CollectionView,
       let collectionViewLayout = collectionView.collectionViewLayout as? CollectionLayout,
-      spot.component.interaction.scrollDirection == .horizontal else {
+      spot.component.interaction.scrollDirection == .horizontal,
+      spot.component.interaction.paginate != .disabled else {
         return
     }
-
-    #if os(iOS)
-      guard spot.component.interaction.paginate != .disabled else {
-        return
-      }
-    #endif
 
     var centerIndexPath: IndexPath?
 
