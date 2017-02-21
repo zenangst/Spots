@@ -146,15 +146,7 @@ extension Delegate: UIScrollViewDelegate {
       }
     }
 
-    switch spot.component.interaction.scrollBehaviour {
-    case .passive:
-      targetContentOffset.pointee.x = centerLayoutAttributes.frame.midX - scrollView.frame.width / 2
-    case .snapping:
-      scrollView.setContentOffset(CGPoint(
-        x: centerLayoutAttributes.frame.midX - scrollView.frame.width / 2,
-        y: scrollView.contentOffset.y
-      ), animated: true)
-    }
+    targetContentOffset.pointee.x = centerLayoutAttributes.frame.midX - scrollView.frame.width / 2
   }
 
   fileprivate func getCenterIndexPath(in collectionView: UICollectionView, scrollView: UIScrollView, point: CGPoint, contentSize: CGSize, offset: CGFloat) -> IndexPath? {
