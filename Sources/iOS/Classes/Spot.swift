@@ -185,7 +185,9 @@ public class Spot: NSObject, Spotable {
     }
 
     collectionView.isScrollEnabled = true
-    collectionView.isPagingEnabled = component.interaction.paginate == .page
+    #if os(iOS)
+      collectionView.isPagingEnabled = component.interaction.paginate == .page
+    #endif
     configurePageControl()
 
     if collectionView.contentSize.height > 0 {
