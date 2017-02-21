@@ -86,6 +86,8 @@ extension Delegate: UIScrollViewDelegate {
     switch spot {
     case let spot as CarouselSpot:
       spot.carouselScrollDelegate?.spotableCarouselDidEndScrolling(spot, item: item, animated: true)
+    case let spot as Spot:
+      spot.carouselScrollDelegate?.spotableCarouselDidEndScrolling(spot, item: item, animated: true)
     default:
     break
     }
@@ -136,6 +138,8 @@ extension Delegate: UIScrollViewDelegate {
     if let item = spot.item(at: foundIndexPath.item) {
       switch spot {
       case let spot as CarouselSpot:
+        spot.carouselScrollDelegate?.spotableCarouselDidEndScrolling(spot, item: item, animated: false)
+      case let spot as Spot:
         spot.carouselScrollDelegate?.spotableCarouselDidEndScrolling(spot, item: item, animated: false)
       default:
         break
