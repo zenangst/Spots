@@ -286,7 +286,7 @@ class CarouselSpotTests: XCTestCase {
           ]
         ]
       ],
-      "interaction": Interaction(paginate: .page).dictionary,
+      "interaction": Interaction(paginate: .item).dictionary,
       "layout": Layout(
         span: 0,
         dynamicSpan: false,
