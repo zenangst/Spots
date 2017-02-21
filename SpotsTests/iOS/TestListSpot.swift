@@ -81,4 +81,24 @@ class ListSpotTests: XCTestCase {
     }
     XCTAssertEqual(invokeCount, 2)
   }
+
+  func testAccessibilityForDefaultCells() {
+    let cell = ListSpotCell(style: .default, reuseIdentifier: "reuse")
+    var item = Item(title: "Title", subtitle: "Subtitle")
+    cell.configure(&item)
+
+    XCTAssertTrue(cell.isAccessibilityElement)
+    XCTAssertEqual(cell.accessibilityIdentifier, "Title")
+    XCTAssertEqual(cell.accessibilityLabel, "Title.Subtitle")
+
+    // If disabling accessibility, properties should not be set when reconfiguring the cell
+    cell.isAccessibilityElement = false
+    cell.accessibilityIdentifier = nil
+    cell.accessibilityLabel = nil
+    cell.configure(&item)
+
+    XCTAssertFalse(cell.isAccessibilityElement)
+    XCTAssertNil(cell.accessibilityIdentifier)
+    XCTAssertNil(cell.accessibilityLabel)
+  }
 }
