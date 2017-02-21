@@ -59,15 +59,17 @@ extension Delegate: UIScrollViewDelegate {
 
   public func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
     performPaginatedScrolling { spot, collectionView, collectionViewLayout in
-      guard let centerIndexPath = getCenterIndexPath(in: collectionView,
-                                                     scrollView: scrollView,
-                                                     point: scrollView.contentOffset,
-                                                     contentSize: collectionViewLayout.contentSize,
-                                                     offset: collectionViewLayout.minimumInteritemSpacing) else {
-                                                      return
+      let centerIndexPath = getCenterIndexPath(in: collectionView,
+                                               scrollView: scrollView,
+                                               point: scrollView.contentOffset,
+                                               contentSize: collectionViewLayout.contentSize,
+                                               offset: collectionViewLayout.minimumInteritemSpacing)
+
+      guard let foundCenterIndex = centerIndexPath else {
+        return
       }
 
-      guard let item = spot.item(at: centerIndexPath.item) else {
+      guard let item = spot.item(at: foundCenterIndex.item) else {
         return
       }
 
