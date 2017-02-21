@@ -110,11 +110,13 @@ extension Delegate: UIScrollViewDelegate {
       contentSize: collectionViewLayout.contentSize,
       offset: collectionViewLayout.minimumInteritemSpacing)
 
-    let widthBounds = scrollView.contentSize.width - scrollView.frame.size.width
-    let isBeyondBounds = targetContentOffset.pointee.x >= widthBounds && centerIndexPath == nil
+    if spot.component.interaction.paginate == .page {
+      let widthBounds = scrollView.contentSize.width - scrollView.frame.size.width
+      let isBeyondBounds = targetContentOffset.pointee.x >= widthBounds && centerIndexPath == nil
 
-    if isBeyondBounds {
-      centerIndexPath = IndexPath(item: spot.items.count - 1, section: 0)
+      if isBeyondBounds {
+        centerIndexPath = IndexPath(item: spot.items.count - 1, section: 0)
+      }
     }
 
     guard let foundIndexPath = centerIndexPath else {
