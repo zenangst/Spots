@@ -96,7 +96,6 @@ extension DataSource: UICollectionViewDataSource {
       if let (_, resolvedView) = Configuration.views.make(identifier),
         let customView = resolvedView {
         view.configure(with: customView)
-
         view.frame.size.height = viewHeight
         view.frame.size.width = collectionView.frame.size.width
 
