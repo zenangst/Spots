@@ -89,7 +89,7 @@ extension Delegate: UIScrollViewDelegate {
     case let spot as Spot:
       spot.carouselScrollDelegate?.spotableCarouselDidEndScrolling(spot, item: item, animated: true)
     default:
-    break
+      break
     }
   }
 
