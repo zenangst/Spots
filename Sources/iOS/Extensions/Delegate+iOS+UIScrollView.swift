@@ -4,56 +4,50 @@ import UIKit
 extension Delegate: UIScrollViewDelegate {
 
   public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-    guard let spot = spot,
-      let collectionView = spot.userInterface as? CollectionView,
-      spot.component.interaction.scrollDirection == .horizontal else {
-        return
-    }
-
-    /// This will restrict the scroll view to only scroll horizontally.
-    let constrainedYOffset = collectionView.contentSize.height - collectionView.frame.size.height
-    if constrainedYOffset >= 0.0 {
-      collectionView.contentOffset.y = constrainedYOffset
-    }
-
-    switch spot {
-    case let spot as Spot:
-      spot.carouselScrollDelegate?.spotableCarouselDidScroll(spot)
-      if spot.component.layout?.pageIndicatorPlacement == .overlay {
-        spot.pageControl.frame.origin.x = scrollView.contentOffset.x
+    performPaginatedScrolling { spot, collectionView, _ in
+      /// This will restrict the scroll view to only scroll horizontally.
+      let constrainedYOffset = collectionView.contentSize.height - collectionView.frame.size.height
+      if constrainedYOffset >= 0.0 {
+        collectionView.contentOffset.y = constrainedYOffset
       }
-    case let spot as CarouselSpot:
-      spot.carouselScrollDelegate?.spotableCarouselDidScroll(spot)
-      if spot.component.layout?.pageIndicatorPlacement == .overlay {
-        spot.pageControl.frame.origin.x = scrollView.contentOffset.x
+
+      switch spot {
+      case let spot as Spot:
+        spot.carouselScrollDelegate?.spotableCarouselDidScroll(spot)
+        if spot.component.layout?.pageIndicatorPlacement == .overlay {
+          spot.pageControl.frame.origin.x = scrollView.contentOffset.x
+        }
+      case let spot as CarouselSpot:
+        spot.carouselScrollDelegate?.spotableCarouselDidScroll(spot)
+        if spot.component.layout?.pageIndicatorPlacement == .overlay {
+          spot.pageControl.frame.origin.x = scrollView.contentOffset.x
+        }
+      default:
+        break
       }
-    default:
-      break
     }
   }
 
   public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-    guard let spot = spot, spot.component.interaction.scrollDirection == .horizontal else {
-      return
-    }
+    spot?.horizontalScrolling { spot in
+      let itemIndex = Int(scrollView.contentOffset.x / scrollView.frame.width)
 
-    let itemIndex = Int(scrollView.contentOffset.x / scrollView.frame.width)
+      guard itemIndex >= 0 else {
+        return
+      }
 
-    guard itemIndex >= 0 else {
-      return
-    }
+      guard itemIndex < spot.items.count else {
+        return
+      }
 
-    guard itemIndex < spot.items.count else {
-      return
-    }
-
-    switch spot {
-    case let spot as Spot:
-      spot.pageControl.currentPage = itemIndex
-    case let spot as CarouselSpot:
-      spot.pageControl.currentPage = itemIndex
-    default:
-      break
+      switch spot {
+      case let spot as Spot:
+        spot.pageControl.currentPage = itemIndex
+      case let spot as CarouselSpot:
+        spot.pageControl.currentPage = itemIndex
+      default:
+        assertionFailure("Spotable object is not eligible for page control.")
+      }
     }
   }
 
@@ -79,7 +73,7 @@ extension Delegate: UIScrollViewDelegate {
       case let spot as Spot:
         spot.carouselScrollDelegate?.spotableCarouselDidEndScrolling(spot, item: item, animated: true)
       default:
-        break
+        assertionFailure("Spotable object is not eligible for horizontal scrolling.")
       }
     }
   }
@@ -123,7 +117,7 @@ extension Delegate: UIScrollViewDelegate {
         case let spot as Spot:
           spot.carouselScrollDelegate?.spotableCarouselDidEndScrolling(spot, item: item, animated: false)
         default:
-          break
+          assertionFailure("Spotable object is not eligible for horizontal scrolling.")
         }
       }
 
@@ -132,15 +126,14 @@ extension Delegate: UIScrollViewDelegate {
   }
 
   fileprivate func performPaginatedScrolling(_ closure: (_ spot: Spotable, _ collectionView: UICollectionView, _ collectionViewLayout: CollectionLayout) -> Void) {
-    guard let spot = spot,
-      let collectionView = spot.userInterface as? CollectionView,
-      let collectionViewLayout = collectionView.collectionViewLayout as? CollectionLayout,
-      spot.component.interaction.scrollDirection == .horizontal,
-      spot.component.interaction.paginate != .disabled else {
-        return
-    }
+    spot?.horizontalScrolling { spot in
+      guard let collectionView = spot.userInterface as? CollectionView,
+        let collectionViewLayout = collectionView.collectionViewLayout as? CollectionLayout else {
+          return
+      }
 
-    closure(spot, collectionView, collectionViewLayout)
+      closure(spot, collectionView, collectionViewLayout)
+    }
   }
 
   fileprivate func getCenterIndexPath(in collectionView: UICollectionView, scrollView: UIScrollView, point: CGPoint, contentSize: CGSize, offset: CGFloat) -> IndexPath? {
