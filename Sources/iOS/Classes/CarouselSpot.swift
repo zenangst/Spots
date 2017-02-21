@@ -162,6 +162,7 @@ open class CarouselSpot: NSObject, Gridable {
     collectionView.dataSource = spotDataSource
     collectionView.delegate = spotDelegate
     collectionView.backgroundView = backgroundView
+    collectionView.isPagingEnabled = component.interaction.paginate == .page
   }
 
   /// Setup Spotable component with base size
