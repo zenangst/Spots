@@ -119,7 +119,7 @@ extension Delegate: UIScrollViewDelegate {
     let pointXUpperBound = round(contentSize.width - scrollView.frame.width / 2)
     var point = point
     point.x += scrollView.frame.width / 2
-    point.y = scrollView.frame.midY
+    point.y = scrollView.frame.height / 2
     var indexPath: IndexPath?
 
     while indexPath == nil && point.x < pointXUpperBound {
