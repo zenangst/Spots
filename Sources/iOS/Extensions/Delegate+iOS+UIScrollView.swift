@@ -137,7 +137,7 @@ extension Delegate: UIScrollViewDelegate {
   }
 
   fileprivate func getCenterIndexPath(in collectionView: UICollectionView, scrollView: UIScrollView, point: CGPoint, contentSize: CGSize, offset: CGFloat) -> IndexPath? {
-    let pointXUpperBound = contentSize.width - scrollView.frame.width / 2
+    let pointXUpperBound = round(contentSize.width - scrollView.frame.width / 2)
     var point = point
     point.x += scrollView.frame.width / 2
     point.y = scrollView.frame.midY
