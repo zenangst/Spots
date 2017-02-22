@@ -40,14 +40,7 @@ extension Delegate: UIScrollViewDelegate {
         return
       }
 
-      switch spot {
-      case let spot as Spot:
-        spot.pageControl.currentPage = itemIndex
-      case let spot as CarouselSpot:
-        spot.pageControl.currentPage = itemIndex
-      default:
-        assertionFailure("Spotable object is not eligible for page control.")
-      }
+      spot.pageControl.currentPage = itemIndex
     }
   }
 
@@ -67,14 +60,7 @@ extension Delegate: UIScrollViewDelegate {
         return
       }
 
-      switch spot {
-      case let spot as CarouselSpot:
-        spot.carouselScrollDelegate?.spotableCarouselDidEndScrolling(spot, item: item, animated: true)
-      case let spot as Spot:
-        spot.carouselScrollDelegate?.spotableCarouselDidEndScrolling(spot, item: item, animated: true)
-      default:
-        assertionFailure("Spotable object is not eligible for horizontal scrolling.")
-      }
+      spot.carouselScrollDelegate?.spotableCarouselDidEndScrolling(spot, item: item, animated: true)
     }
   }
 
@@ -111,14 +97,7 @@ extension Delegate: UIScrollViewDelegate {
       }
 
       if let item = spot.item(at: foundIndexPath.item) {
-        switch spot {
-        case let spot as CarouselSpot:
-          spot.carouselScrollDelegate?.spotableCarouselDidEndScrolling(spot, item: item, animated: false)
-        case let spot as Spot:
-          spot.carouselScrollDelegate?.spotableCarouselDidEndScrolling(spot, item: item, animated: false)
-        default:
-          assertionFailure("Spotable object is not eligible for horizontal scrolling.")
-        }
+        spot.carouselScrollDelegate?.spotableCarouselDidEndScrolling(spot, item: item, animated: false)
       }
 
       targetContentOffset.pointee.x = centerLayoutAttributes.frame.midX - scrollView.frame.width / 2
