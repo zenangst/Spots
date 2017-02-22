@@ -70,7 +70,6 @@ extension DataSource: UICollectionViewDataSource {
     }
 
     let identifier: String
-    var viewHeight: CGFloat = 0.0
 
     switch kind {
     case UICollectionElementKindSectionHeader:
