@@ -3,7 +3,7 @@
 import UIKit
 import Tailor
 
-public class Spot: NSObject, Spotable {
+public class Spot: NSObject, Spotable, SpotHorizontallyScrollable {
 
   public static var layout: Layout = Layout(span: 1.0)
   public static var headers: Registry = Registry()
@@ -185,6 +185,9 @@ public class Spot: NSObject, Spotable {
     }
 
     collectionView.isScrollEnabled = true
+    #if os(iOS)
+      collectionView.isPagingEnabled = component.interaction.paginate == .page
+    #endif
     configurePageControl()
 
     if collectionView.contentSize.height > 0 {
