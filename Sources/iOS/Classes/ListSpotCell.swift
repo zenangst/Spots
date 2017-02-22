@@ -1,6 +1,10 @@
 import UIKit
 
 /// A boilerplate cell for ListSpot
+///
+/// Accessibility: This class is per default an accessibility element, and gets its attributes
+/// from any `Item` that it's configured with. You can override this behavior at any point, and
+/// disable accessibility by setting `isAccessibilityElement = false` on the cell.
 open class ListSpotCell: UITableViewCell, ItemConfigurable {
 
   /// The preferred view size for the view, width will be ignored for ListSpot cells
@@ -16,6 +20,7 @@ open class ListSpotCell: UITableViewCell, ItemConfigurable {
   /// - returns: An initialized UITableViewCell object or nil if the object could not be created.
   public override init(style: UITableViewCellStyle, reuseIdentifier: String!) {
     super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
+    isAccessibilityElement = true
   }
 
   /// Init with coder
@@ -41,5 +46,16 @@ open class ListSpotCell: UITableViewCell, ItemConfigurable {
 
     item.size.height = item.size.height > 0.0 ? item.size.height : preferredViewSize.height
     self.item = item
+
+    assignAccesibilityAttributes(from: item)
+  }
+
+  private func assignAccesibilityAttributes(from item: Item) {
+    guard isAccessibilityElement else {
+      return
+    }
+
+    accessibilityIdentifier = item.title
+    accessibilityLabel = item.title + "." + item.subtitle
   }
 }
