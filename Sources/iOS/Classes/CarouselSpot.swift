@@ -356,7 +356,7 @@ extension Delegate: UIScrollViewDelegate {
         spot.pageControl.currentPage = Int(floatIndex)
       }
     #endif
-    
+
     paginatedEndScrolling()
   }
 }

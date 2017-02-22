@@ -31,7 +31,6 @@ extension DataSource: UICollectionViewDataSource {
     }
 
     let identifier: String
-    var viewHeight: CGFloat = 0.0
 
     switch kind {
     case UICollectionElementKindSectionHeader:
@@ -40,10 +39,8 @@ extension DataSource: UICollectionViewDataSource {
       } else {
         identifier = spot.component.header
       }
-      viewHeight = spot.layout.headerReferenceSize.height
     case UICollectionElementKindSectionFooter:
       identifier = spot.component.footer
-      viewHeight = spot.layout.footerHeight
     default:
       return UICollectionReusableView()
     }

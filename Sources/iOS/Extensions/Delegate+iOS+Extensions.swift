@@ -111,7 +111,7 @@ extension Delegate: UITableViewDelegate {
       switch view {
       case let view as ListHeaderFooterWrapper:
         if let (_, resolvedView) = Configuration.views.make(spot.component.header),
-          let customView = resolvedView {
+          let _ = resolvedView {
           if let componentView = resolvedView as? Componentable {
             view.frame.size.height = componentView.preferredHeaderHeight
           }
@@ -142,7 +142,7 @@ extension Delegate: UITableViewDelegate {
       switch view {
       case let view as ListHeaderFooterWrapper:
         if let (_, resolvedView) = Configuration.views.make(spot.component.footer),
-          let customView = resolvedView {
+          let _ = resolvedView {
           if let componentView = resolvedView as? Componentable {
             view.frame.size.height = componentView.preferredHeaderHeight
           }
