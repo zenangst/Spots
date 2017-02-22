@@ -500,13 +500,4 @@ public extension Spotable {
   public func beforeUpdate() {}
   public func afterUpdate() {}
   func configure(with layout: Layout) {}
-
-  func didScrollHorizontally(handler: (SpotHorizontallyScrollable) -> Void) {
-    guard let spot = self as? SpotHorizontallyScrollable,
-      component.interaction.scrollDirection == .horizontal else {
-      return
-    }
-
-    handler(spot)
-  }
 }
