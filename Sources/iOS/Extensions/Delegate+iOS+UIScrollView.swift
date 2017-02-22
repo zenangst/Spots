@@ -29,7 +29,7 @@ extension Delegate: UIScrollViewDelegate {
   }
 
   public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-    spot?.horizontalScrolling { spot in
+    spot?.didScrollHorizontally { spot in
       let itemIndex = Int(scrollView.contentOffset.x / scrollView.frame.width)
 
       guard itemIndex >= 0 else {
@@ -125,14 +125,14 @@ extension Delegate: UIScrollViewDelegate {
     }
   }
 
-  fileprivate func performPaginatedScrolling(_ closure: (_ spot: Spotable, _ collectionView: UICollectionView, _ collectionViewLayout: CollectionLayout) -> Void) {
-    spot?.horizontalScrolling { spot in
+  fileprivate func performPaginatedScrolling(_ handler: (Spotable, UICollectionView, CollectionLayout) -> Void) {
+    spot?.didScrollHorizontally { spot in
       guard let collectionView = spot.userInterface as? CollectionView,
         let collectionViewLayout = collectionView.collectionViewLayout as? CollectionLayout else {
           return
       }
 
-      closure(spot, collectionView, collectionViewLayout)
+      handler(spot, collectionView, collectionViewLayout)
     }
   }
 
