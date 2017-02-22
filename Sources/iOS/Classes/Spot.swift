@@ -47,37 +47,15 @@ public class Spot: NSObject, Spotable, SpotHorizontallyScrollable {
     return userInterface as? CollectionView
   }
 
-  public required init(component: Component) {
-    var component = component
-    if component.kind.isEmpty {
-      component.kind = Spot.defaultKind
-    }
-
+  public required init(component: Component, view: ScrollView, kind: Component.Kind) {
     self.component = component
-
-    if let componentKind = Component.Kind(rawValue: component.kind) {
-      self.componentKind = componentKind
-    }
-
-    if componentKind == .list {
-      self.view = TableView()
-    } else {
-      let collectionViewLayout = CollectionLayout()
-      let collectionView = CollectionView(frame: CGRect.zero, collectionViewLayout: collectionViewLayout)
-
-      if componentKind == .carousel {
-        collectionView.showsHorizontalScrollIndicator = false
-        self.component.interaction.scrollDirection = .horizontal
-        collectionViewLayout.scrollDirection = .horizontal
-      }
-
-      self.view = collectionView
-    }
+    self.componentKind = kind
+    self.view = view
 
     super.init()
 
     if component.layout == nil {
-      switch componentKind {
+      switch kind {
       case .carousel:
         self.component.layout = CarouselSpot.layout
         registerDefaultIfNeeded(view: CarouselSpotCell.self)
@@ -103,6 +81,20 @@ public class Spot: NSObject, Spotable, SpotHorizontallyScrollable {
 
     self.spotDataSource = DataSource(spot: self)
     self.spotDelegate = Delegate(spot: self)
+  }
+
+  public required convenience init(component: Component) {
+    var component = component
+    if component.kind.isEmpty {
+      component.kind = Spot.defaultKind
+    }
+
+    let kind = Component.Kind(rawValue: component.kind) ?? .list
+    let view = kind == .list
+      ? TableView()
+      : CollectionView(frame: CGRect.zero, collectionViewLayout: CollectionLayout())
+
+    self.init(component: component, view: view, kind: kind)
   }
 
   public convenience init(cacheKey: String) {
@@ -171,6 +163,11 @@ public class Spot: NSObject, Spotable, SpotHorizontallyScrollable {
     collectionView.dataSource = spotDataSource
     collectionView.delegate = spotDelegate
 
+    if componentKind == .carousel {
+      collectionView.showsHorizontalScrollIndicator = false
+      self.component.interaction.scrollDirection = .horizontal
+    }
+
     switch component.interaction.scrollDirection {
     case .horizontal:
       setupHorizontalCollectionView(collectionView, with: size)
@@ -185,6 +182,7 @@ public class Spot: NSObject, Spotable, SpotHorizontallyScrollable {
     }
 
     collectionView.isScrollEnabled = true
+    layout.scrollDirection = .horizontal
     #if os(iOS)
       collectionView.isPagingEnabled = component.interaction.paginate == .page
     #endif
