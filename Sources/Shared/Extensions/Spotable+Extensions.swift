@@ -501,11 +501,12 @@ public extension Spotable {
   public func afterUpdate() {}
   func configure(with layout: Layout) {}
 
-  func didScrollHorizontally(handler: (Spotable) -> Void) {
-    guard component.interaction.scrollDirection == .horizontal else {
+  func didScrollHorizontally(handler: (SpotHorizontallyScrollable) -> Void) {
+    guard let spot = self as? SpotHorizontallyScrollable,
+      component.interaction.scrollDirection == .horizontal else {
       return
     }
 
-    handler(self)
+    handler(spot)
   }
 }
