@@ -15,6 +15,7 @@ script:
 - set -o pipefail && xcodebuild -project Spots.xcodeproj -scheme "Spots-Mac" -sdk macosx -enableCodeCoverage YES test | xcpretty
 - set -o pipefail && xcodebuild -project Spots.xcodeproj -scheme "Spots-tvOS" -destination 'platform=tvOS Simulator,name=Apple TV 1080p,OS=10.0' clean build | xcpretty
 - set -o pipefail && xcodebuild -project Spots.xcodeproj -scheme "Spots-tvOS" -destination 'platform=tvOS Simulator,name=Apple TV 1080p,OS=10.0' -enableCodeCoverage YES test | xcpretty
+- bundle exec danger
 
 after_success:
 - bash <(curl -s https://codecov.io/bash)
