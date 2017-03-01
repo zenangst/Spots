@@ -104,6 +104,41 @@ public extension Spotable {
 
   func prepare(items: [Item]) -> [Item] {
     var preparedItems = items
+    var spanWidth: CGFloat?
+
+    if let layout = component.layout {
+      if layout.span > 0.0 {
+        #if os(OSX)
+          if let gridable = self as? Gridable,
+            let layout = gridable.layout as? FlowLayout,
+            let componentLayout = component.layout {
+            let newWidth = gridable.collectionView.frame.width / CGFloat(componentLayout.span) - layout.sectionInset.left - layout.sectionInset.right
+
+            if newWidth > 0.0 {
+              spanWidth = newWidth
+            }
+          } else if let spot = self as? Spot,
+            let layout = spot.collectionView?.collectionViewLayout as? FlowLayout,
+            let componentLayout = component.layout {
+            let newWidth = spot.view.frame.width / CGFloat(componentLayout.span) - layout.sectionInset.left - layout.sectionInset.right
+
+            if newWidth > 0.0 {
+              spanWidth = newWidth
+            }
+          }
+        #else
+          var spotWidth: CGFloat
+
+          if view.frame.size.width == 0.0 {
+            spotWidth = UIScreen.main.bounds.width - CGFloat(layout.inset.left + layout.inset.right)
+          } else {
+            spotWidth = view.frame.size.width - CGFloat(layout.inset.left + layout.inset.right)
+          }
+
+          spanWidth = (spotWidth / CGFloat(layout.span)) - CGFloat(layout.itemSpacing)
+        #endif
+      }
+    }
 
     preparedItems.enumerated().forEach { (index: Int, item: Item) in
 
@@ -112,30 +147,8 @@ public extension Spotable {
         preparedItems[index] = configuredItem
       }
 
-      if let layout = component.layout {
-        if layout.span > 0.0 {
-          #if os(OSX)
-            if let gridable = self as? Gridable,
-              let layout = gridable.layout as? FlowLayout,
-              let componentLayout = component.layout {
-              let newWidth = gridable.collectionView.frame.width / CGFloat(componentLayout.span) - layout.sectionInset.left - layout.sectionInset.right
-
-              if newWidth > 0.0 {
-                preparedItems[index].size.width = newWidth
-              }
-            }
-          #else
-            var spotWidth: CGFloat
-
-            if view.frame.size.width == 0.0 {
-              spotWidth = UIScreen.main.bounds.width - CGFloat(layout.inset.left + layout.inset.right)
-            } else {
-              spotWidth = view.frame.size.width - CGFloat(layout.inset.left + layout.inset.right)
-            }
-
-            preparedItems[index].size.width = (spotWidth / CGFloat(layout.span)) - CGFloat(layout.itemSpacing)
-          #endif
-        }
+      if let spanWidth = spanWidth {
+        preparedItems[index].size.width = spanWidth
       }
     }
 
