@@ -119,13 +119,14 @@ public extension Spotable {
     }
 
     preparedItems.enumerated().forEach { (index: Int, item: Item) in
+      var item = item
+      if let spanWidth = spanWidth {
+        item.size.width = spanWidth
+      }
+
       if let configuredItem = configure(item: item, at: index, usesViewSize: true) {
         preparedItems[index].index = index
         preparedItems[index] = configuredItem
-      }
-
-      if let spanWidth = spanWidth {
-        preparedItems[index].size.width = spanWidth
       }
     }
 
