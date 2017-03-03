@@ -119,13 +119,14 @@ public extension Spotable {
     }
 
     preparedItems.enumerated().forEach { (index: Int, item: Item) in
+      var item = item
+      if let spanWidth = spanWidth {
+        item.size.width = spanWidth
+      }
+
       if let configuredItem = configure(item: item, at: index, usesViewSize: true) {
         preparedItems[index].index = index
         preparedItems[index] = configuredItem
-      }
-
-      if let spanWidth = spanWidth {
-        preparedItems[index].size.width = spanWidth
       }
     }
 
@@ -222,8 +223,13 @@ public extension Spotable {
     var item = item
     item.index = index
 
+    var fullWidth: CGFloat = item.size.width
+
     #if !os(OSX)
-      let fullWidth: CGFloat = UIScreen.main.bounds.width
+      if fullWidth == 0.0 {
+        fullWidth = UIScreen.main.bounds.width
+      }
+
       let kind = identifier(at: index)
       let view: View?
 
@@ -242,7 +248,10 @@ public extension Spotable {
       prepare(kind: kind, view: view as Any, item: &item)
     #else
       let spotableKind = self
-      let fullWidth = view.superview?.frame.size.width ?? view.frame.size.width
+
+      if fullWidth == 0.0 {
+        fullWidth = view.superview?.frame.size.width ?? view.frame.size.width
+      }
 
       switch spotableKind {
       case let grid as Gridable:
@@ -272,12 +281,6 @@ public extension Spotable {
         }
       }
     #endif
-
-    if let layout = component.layout, index < component.items.count && index > -1 &&
-      self is Gridable &&
-      (layout.span > 0.0 || item.size.width == 0) && fullWidth > 0.0 {
-      item.size.width = fullWidth / CGFloat(layout.span)
-    }
 
     return item
   }
