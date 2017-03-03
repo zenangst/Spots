@@ -223,8 +223,13 @@ public extension Spotable {
     var item = item
     item.index = index
 
+    var fullWidth: CGFloat = item.size.width
+
     #if !os(OSX)
-      let fullWidth: CGFloat = UIScreen.main.bounds.width
+      if fullWidth == 0.0 {
+        fullWidth = UIScreen.main.bounds.width
+      }
+
       let kind = identifier(at: index)
       let view: View?
 
@@ -243,7 +248,10 @@ public extension Spotable {
       prepare(kind: kind, view: view as Any, item: &item)
     #else
       let spotableKind = self
-      let fullWidth = view.superview?.frame.size.width ?? view.frame.size.width
+
+      if fullWidth == 0.0 {
+        fullWidth = view.superview?.frame.size.width ?? view.frame.size.width
+      }
 
       switch spotableKind {
       case let grid as Gridable:
