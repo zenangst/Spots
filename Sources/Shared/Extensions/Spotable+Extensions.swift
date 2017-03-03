@@ -273,12 +273,6 @@ public extension Spotable {
       }
     #endif
 
-    if let layout = component.layout, index < component.items.count && index > -1 &&
-      self is Gridable &&
-      (layout.span > 0.0 || item.size.width == 0) && fullWidth > 0.0 {
-      item.size.width = fullWidth / CGFloat(layout.span)
-    }
-
     return item
   }
 
