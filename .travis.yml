@@ -7,7 +7,6 @@ cache:
 
 before_install:
   - bundle install
-  - brew install swiftlint
   - travis_wait 35; bin/bootstrap-if-needed
 
 script:
