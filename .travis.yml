@@ -6,7 +6,9 @@ cache:
   - Carthage
 
 before_install:
-- travis_wait 35; bin/bootstrap-if-needed
+  - bundle install
+  - brew install swiftlint
+  - travis_wait 35; bin/bootstrap-if-needed
 
 script:
 - set -o pipefail && xcodebuild -project Spots.xcodeproj -scheme "Spots-iOS" -sdk iphonesimulator clean build | xcpretty
