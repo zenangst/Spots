@@ -1,7 +1,7 @@
 import UIKit
 import Tailor
 
-extension Spot {
+extension Component {
 
   func setupHorizontalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
     guard let layout = collectionView.collectionViewLayout as? GridableLayout else {
@@ -33,7 +33,7 @@ extension Spot {
 
     configureCollectionViewHeader(collectionView, with: size)
 
-    CarouselSpot.configure?(collectionView, layout)
+    CarouselComponent.configure?(collectionView, layout)
 
     collectionView.frame.size.height += layout.headerReferenceSize.height
 

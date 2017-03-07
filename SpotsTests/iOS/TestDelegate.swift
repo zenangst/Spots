@@ -17,7 +17,7 @@ class DelegateTests: XCTestCase {
 
   func testCollectionViewDelegateSelection() {
     let delegate = TestDelegate()
-    let spot = GridSpot(model: ComponentModel(span: 1, items: [
+    let spot = GridComponent(model: ComponentModel(span: 1, items: [
       Item(title: "title 1")
       ]))
     spot.delegate = delegate
@@ -31,7 +31,7 @@ class DelegateTests: XCTestCase {
   }
 
   func testCollectionViewCanFocus() {
-    let spot = GridSpot(model: ComponentModel(span: 1, items: [Item(title: "title 1")]))
+    let spot = GridComponent(model: ComponentModel(span: 1, items: [Item(title: "title 1")]))
     XCTAssertEqual(spot.spotDelegate?.collectionView(spot.collectionView, canFocusItemAt: IndexPath(item: 0, section: 0)), true)
     XCTAssertEqual(spot.spotDelegate?.collectionView(spot.collectionView, canFocusItemAt: IndexPath(item: 1, section: 0)), false)
   }
@@ -40,7 +40,7 @@ class DelegateTests: XCTestCase {
 
   func testTableViewDelegateSelection() {
     let delegate = TestDelegate()
-    let spot = ListSpot(model: ComponentModel(span: 1, items: [
+    let spot = ListComponent(model: ComponentModel(span: 1, items: [
       Item(title: "title 1")
       ]))
     spot.delegate = delegate
@@ -54,15 +54,15 @@ class DelegateTests: XCTestCase {
   }
 
   func testTableViewHeightForRowOnListable() {
-    let spot = ListSpot(model: ComponentModel(span: 1, items: [Item(title: "title 1")]))
+    let spot = ListComponent(model: ComponentModel(span: 1, items: [Item(title: "title 1")]))
     spot.setup(CGSize(width: 100, height: 100))
     XCTAssertEqual(spot.spotDelegate?.tableView(spot.tableView, heightForRowAt: IndexPath(row: 0, section: 0)), 44.0)
     XCTAssertEqual(spot.spotDelegate?.tableView(spot.tableView, heightForRowAt: IndexPath(row: 1, section: 0)), 0.0)
   }
 
   func testDelegateTitleForHeader() {
-    ListSpot.register(header: CustomListHeaderView.self, identifier: "list")
-    let spot = ListSpot(model: ComponentModel(
+    ListComponent.register(header: CustomListHeaderView.self, identifier: "list")
+    let spot = ListComponent(model: ComponentModel(
       title: "title",
       header: "list",
       span: 1,

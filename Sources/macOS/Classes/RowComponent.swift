@@ -2,7 +2,7 @@
 
 import Cocoa
 
-open class RowSpot: NSObject, Gridable {
+open class RowComponent: NSObject, Gridable {
 
   /// Return collection view as a scroll view
   ///
@@ -14,7 +14,7 @@ open class RowSpot: NSObject, Gridable {
   public static var layout: Layout = Layout(span: 1.0)
 
   /// Child spots
-  public var compositeSpots: [CompositeSpot] = []
+  public var compositeComponents: [CompositeComponent] = []
 
   /// An enum layout type
   ///
@@ -142,7 +142,7 @@ open class RowSpot: NSObject, Gridable {
   var spotDelegate: Delegate?
 
   /**
-   A required initializer for creating a RowSpot
+   A required initializer for creating a RowComponent
 
    - parameter component: A component struct
    */
@@ -154,7 +154,7 @@ open class RowSpot: NSObject, Gridable {
     }
 
     self.collectionView = CollectionView()
-    self.layout = RowSpot.setupLayout(model)
+    self.layout = RowComponent.setupLayout(model)
     super.init()
     self.userInterface = collectionView
     self.model.layout?.configure(spot: self)
@@ -165,7 +165,7 @@ open class RowSpot: NSObject, Gridable {
       self.model.kind = ComponentModel.Kind.grid.string
     }
 
-    registerDefault(view: RowSpotItem.self)
+    registerDefault(view: RowComponentItem.self)
     registerComposite(view: GridComposite.self)
     registerAndPrepare()
     setupCollectionView()
@@ -179,17 +179,17 @@ open class RowSpot: NSObject, Gridable {
   }
 
   /**
-   A convenience init for initializing a RowSpot with a title and a kind
+   A convenience init for initializing a RowComponent with a title and a kind
 
-   - parameter title: A string that is used as a title for the RowSpot
+   - parameter title: A string that is used as a title for the RowComponent
    - parameter kind:  An identifier to determine which kind should be set on the ComponentModel
    */
   public convenience init(title: String = "", kind: String? = nil) {
-    self.init(model: ComponentModel(title: title, kind: kind ?? RowSpot.defaultKind.string))
+    self.init(model: ComponentModel(title: title, kind: kind ?? RowComponent.defaultKind.string))
   }
 
   /**
-   A convenience init for initializing a RowSpot
+   A convenience init for initializing a RowComponent
 
    - parameter cacheKey: A cache key
    */
@@ -211,7 +211,7 @@ open class RowSpot: NSObject, Gridable {
   /**
    A private method for configuring the layout for the collection view
 
-   - parameter component: The component for the RowSpot
+   - parameter component: The component for the RowComponent
 
    - returns: A NSCollectionView layout determined by the ComponentModel
    */
@@ -257,7 +257,7 @@ open class RowSpot: NSObject, Gridable {
   /**
    Layout with size
 
-   - parameter size: A CGSize from the RowSpot superview
+   - parameter size: A CGSize from the RowComponent superview
    */
   open func layout(_ size: CGSize) {
     layout.prepareForTransition(to: layout)
@@ -279,7 +279,7 @@ open class RowSpot: NSObject, Gridable {
     collectionView.frame.size.height = scrollView.frame.size.height - layoutInsets.top + layoutInsets.bottom
     collectionView.frame.size.width = size.width - layoutInsets.right
 
-    RowSpot.configure?(collectionView)
+    RowComponent.configure?(collectionView)
 
     if !model.title.isEmpty {
       configureTitleView(layoutInsets)
@@ -289,7 +289,7 @@ open class RowSpot: NSObject, Gridable {
   /**
    Perform setup with size
 
-   - parameter size: A CGSize from the RowSpot superview
+   - parameter size: A CGSize from the RowComponent superview
    */
   open func setup(_ size: CGSize) {
     var size = size

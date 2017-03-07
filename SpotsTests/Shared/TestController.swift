@@ -6,16 +6,16 @@ class ControllerTests: XCTestCase {
 
   func testSpotAtIndex() {
     let model = ComponentModel(title: "ComponentModel", span: 1.0)
-    let listSpot = ListSpot(model: model)
+    let listSpot = ListComponent(model: model)
     let controller = Controller(spot: listSpot)
     controller.preloadView()
 
-    XCTAssertEqual(controller.spot as? ListSpot, listSpot)
+    XCTAssertEqual(controller.spot as? ListComponent, listSpot)
   }
 
   func testUpdateSpotAtIndex() {
     let model = ComponentModel(title: "ComponentModel", span: 1.0)
-    let listSpot = ListSpot(model: model)
+    let listSpot = ListComponent(model: model)
     let controller = Controller(spot: listSpot)
     controller.preloadView()
     let items = [Item(title: "item1")]
@@ -27,9 +27,9 @@ class ControllerTests: XCTestCase {
     XCTAssert(controller.spot!.model.items == items)
   }
 
-  func testAppendItemInListSpot() {
+  func testAppendItemInListComponent() {
     let model = ComponentModel(title: "ComponentModel", kind: "list", span: 1.0)
-    let listSpot = ListSpot(model: model)
+    let listSpot = ListComponent(model: model)
     let controller = Controller(spot: listSpot)
     controller.preloadView()
 
@@ -46,9 +46,9 @@ class ControllerTests: XCTestCase {
     waitForExpectations(timeout: 10.0, handler: nil)
   }
 
-  func testAppendOneMoreItemInListSpot() {
+  func testAppendOneMoreItemInListComponent() {
     let model = ComponentModel(title: "ComponentModel", kind: "list", span: 1.0, items: [Item(title: "title1")])
-    let listSpot = ListSpot(model: model)
+    let listSpot = ListComponent(model: model)
     let controller = Controller(spot: listSpot)
     controller.preloadView()
 
@@ -65,9 +65,9 @@ class ControllerTests: XCTestCase {
     waitForExpectations(timeout: 10.0, handler: nil)
   }
 
-  func testAppendItemsInListSpot() {
+  func testAppendItemsInListComponent() {
     let model = ComponentModel(title: "ComponentModel", kind: "list", span: 1.0)
-    let listSpot = ListSpot(model: model)
+    let listSpot = ListComponent(model: model)
     let controller = Controller(spot: listSpot)
     controller.preloadView()
 
@@ -85,9 +85,9 @@ class ControllerTests: XCTestCase {
     waitForExpectations(timeout: 10.0, handler: nil)
   }
 
-  func testPrependItemsInListSpot() {
+  func testPrependItemsInListComponent() {
     let model = ComponentModel(title: "ComponentModel", kind: "list", span: 1.0)
-    let listSpot = ListSpot(model: model)
+    let listSpot = ListComponent(model: model)
     let controller = Controller(spot: listSpot)
     controller.preloadView()
 
@@ -105,13 +105,13 @@ class ControllerTests: XCTestCase {
     waitForExpectations(timeout: 10.0, handler: nil)
   }
 
-  func testPrependMoreItemsInListSpot() {
+  func testPrependMoreItemsInListComponent() {
     let model = ComponentModel(title: "ComponentModel", kind: "list", span: 1.0, items: [
       Item(title: "title1", kind: "list"),
       Item(title: "title2", kind: "list")
       ]
     )
-    let listSpot = ListSpot(model: model)
+    let listSpot = ListComponent(model: model)
     let controller = Controller(spot: listSpot)
 
     controller.preloadView()
@@ -133,13 +133,13 @@ class ControllerTests: XCTestCase {
     waitForExpectations(timeout: 10.0, handler: nil)
   }
 
-  func testDeleteItemInListSpot() {
+  func testDeleteItemInListComponent() {
     let model = ComponentModel(title: "ComponentModel", kind: "list", span: 1.0, items: [
       Item(title: "title1", kind: "list"),
       Item(title: "title2", kind: "list")
       ])
-    let initialListSpot = ListSpot(model: model)
-    let controller = Controller(spot: initialListSpot)
+    let initialListComponent = ListComponent(model: model)
+    let controller = Controller(spot: initialListComponent)
 
     controller.preloadView()
 
@@ -149,7 +149,7 @@ class ControllerTests: XCTestCase {
     XCTAssertEqual(firstItem?.index, 0)
 
     let expectation = self.expectation(description: "Test delete item")
-    let listSpot = (controller.spot as! ListSpot)
+    let listSpot = (controller.spot as! ListComponent)
     listSpot.delete(model.items.first!) {
       let lastItem = controller.spot!.model.items.first
 
@@ -162,13 +162,13 @@ class ControllerTests: XCTestCase {
     waitForExpectations(timeout: 10.0, handler: nil)
   }
 
-  func testDeleteItemsInListSpot() {
+  func testDeleteItemsInListComponent() {
     let model = ComponentModel(title: "ComponentModel", kind: "list", span: 1.0, items: [
       Item(title: "title1", kind: "list"),
       Item(title: "title2", kind: "list")
     ])
-    let initialListSpot = ListSpot(model: model)
-    let controller = Controller(spot: initialListSpot)
+    let initialListComponent = ListComponent(model: model)
+    let controller = Controller(spot: initialListComponent)
 
     controller.preloadView()
 
@@ -182,15 +182,15 @@ class ControllerTests: XCTestCase {
     waitForExpectations(timeout: 10.0, handler: nil)
   }
 
-  func testDeleteItemAtIndexInListSpot() {
+  func testDeleteItemAtIndexInListComponent() {
     let model = ComponentModel(title: "ComponentModel", kind: "list", span: 1.0, items: [
       Item(title: "title1", kind: "list"),
       Item(title: "title2", kind: "list"),
       Item(title: "title3", kind: "list"),
       Item(title: "title4", kind: "list")
       ])
-    let initialListSpot = ListSpot(model: model)
-    let controller = Controller(spot: initialListSpot)
+    let initialListComponent = ListComponent(model: model)
+    let controller = Controller(spot: initialListComponent)
 
     controller.preloadView()
 
@@ -206,15 +206,15 @@ class ControllerTests: XCTestCase {
     waitForExpectations(timeout: 10.0, handler: nil)
   }
 
-  func testDeleteItemsWithIndexesInListSpot() {
+  func testDeleteItemsWithIndexesInListComponent() {
     let model = ComponentModel(title: "ComponentModel", kind: "list", span: 1.0, items: [
       Item(title: "title1", kind: "list"),
       Item(title: "title2", kind: "list"),
       Item(title: "title3", kind: "list"),
       Item(title: "title4", kind: "list")
       ])
-    let initialListSpot = ListSpot(model: model)
-    let controller = Controller(spot: initialListSpot)
+    let initialListComponent = ListComponent(model: model)
+    let controller = Controller(spot: initialListComponent)
 
     controller.preloadView()
 
@@ -229,9 +229,9 @@ class ControllerTests: XCTestCase {
     waitForExpectations(timeout: 10.0, handler: nil)
   }
 
-  func testAppendItemInGridSpot() {
+  func testAppendItemInGridComponent() {
     let model = ComponentModel(title: "ComponentModel", kind: "grid", span: 1.0)
-    let listSpot = ListSpot(model: model)
+    let listSpot = ListComponent(model: model)
     let controller = Controller(spot: listSpot)
 
     controller.preloadView()
@@ -250,9 +250,9 @@ class ControllerTests: XCTestCase {
     waitForExpectations(timeout: 10.0, handler: nil)
   }
 
-  func testAppendItemsInGridSpot() {
+  func testAppendItemsInGridComponent() {
     let model = ComponentModel(title: "ComponentModel", kind: "grid", span: 1.0)
-    let listSpot = ListSpot(model: model)
+    let listSpot = ListComponent(model: model)
     let controller = Controller(spot: listSpot)
 
     controller.preloadView()
@@ -271,9 +271,9 @@ class ControllerTests: XCTestCase {
     waitForExpectations(timeout: 10.0, handler: nil)
   }
 
-  func testPrependItemsInGridSpot() {
+  func testPrependItemsInGridComponent() {
     let model = ComponentModel(title: "ComponentModel", kind: "grid", span: 1.0)
-    let listSpot = ListSpot(model: model)
+    let listSpot = ListComponent(model: model)
     let controller = Controller(spot: listSpot)
 
     controller.preloadView()
@@ -292,13 +292,13 @@ class ControllerTests: XCTestCase {
     waitForExpectations(timeout: 10.0, handler: nil)
   }
 
-  func testDeleteItemInGridSpot() {
+  func testDeleteItemInGridComponent() {
     let model = ComponentModel(title: "ComponentModel", kind: "grid", span: 1.0, items: [
       Item(title: "title1", kind: "grid"),
       Item(title: "title2", kind: "grid")
       ])
-    let initialListSpot = ListSpot(model: model)
-    let controller = Controller(spot: initialListSpot)
+    let initialListComponent = ListComponent(model: model)
+    let controller = Controller(spot: initialListComponent)
 
     controller.preloadView()
 
@@ -308,7 +308,7 @@ class ControllerTests: XCTestCase {
     XCTAssertEqual(firstItem?.index, 0)
 
     let expectation = self.expectation(description: "Test delete item")
-    let listSpot = (controller.spot as! ListSpot)
+    let listSpot = (controller.spot as! ListComponent)
     listSpot.delete(model.items.first!) {
       let lastItem = controller.spot!.model.items.first
 
@@ -321,9 +321,9 @@ class ControllerTests: XCTestCase {
     waitForExpectations(timeout: 10.0, handler: nil)
   }
 
-  func testAppendItemInCarouselSpot() {
+  func testAppendItemInCarouselComponent() {
     let model = ComponentModel(title: "ComponentModel", kind: "carousel", span: 1.0)
-    let listSpot = GridSpot(model: model)
+    let listSpot = GridComponent(model: model)
     let controller = Controller(spot: listSpot)
 
     controller.preloadView()
@@ -342,9 +342,9 @@ class ControllerTests: XCTestCase {
     waitForExpectations(timeout: 10.0, handler: nil)
   }
 
-  func testAppendItemsInCarouselSpot() {
+  func testAppendItemsInCarouselComponent() {
     let model = ComponentModel(title: "ComponentModel", kind: "carousel", span: 1.0)
-    let listSpot = GridSpot(model: model)
+    let listSpot = GridComponent(model: model)
     let controller = Controller(spot: listSpot)
 
     controller.preloadView()
@@ -364,9 +364,9 @@ class ControllerTests: XCTestCase {
     waitForExpectations(timeout: 10.0, handler: nil)
   }
 
-  func testPrependItemsInCarouselSpot() {
+  func testPrependItemsInCarouselComponent() {
     let model = ComponentModel(title: "ComponentModel", kind: "carousel", span: 1.0)
-    let listSpot = ListSpot(model: model)
+    let listSpot = ListComponent(model: model)
     let controller = Controller(spot: listSpot)
 
     controller.preloadView()
@@ -385,13 +385,13 @@ class ControllerTests: XCTestCase {
     waitForExpectations(timeout: 10.0, handler: nil)
   }
 
-  func testDeleteItemInCarouselSpot() {
+  func testDeleteItemInCarouselComponent() {
     let model = ComponentModel(title: "ComponentModel", kind: "carousel", span: 1.0, items: [
       Item(title: "title1", kind: "carousel"),
       Item(title: "title2", kind: "carousel")
       ])
-    let initialListSpot = ListSpot(model: model)
-    let controller = Controller(spot: initialListSpot)
+    let initialListComponent = ListComponent(model: model)
+    let controller = Controller(spot: initialListComponent)
 
     controller.preloadView()
 
@@ -401,7 +401,7 @@ class ControllerTests: XCTestCase {
     XCTAssertEqual(firstItem?.index, 0)
 
     let expectation = self.expectation(description: "Test delete item")
-    let listSpot = (controller.spot as! ListSpot)
+    let listSpot = (controller.spot as! ListComponent)
     listSpot.delete(model.items.first!) {
       let lastItem = controller.spot!.model.items.first
 
@@ -419,7 +419,7 @@ class ControllerTests: XCTestCase {
       Item(title: "title1", kind: "list"),
       Item(title: "title2", kind: "list")
       ])
-    let spot = ListSpot(model: model)
+    let spot = ListComponent(model: model)
 
     XCTAssert(spot.items == model.items)
 
@@ -430,31 +430,31 @@ class ControllerTests: XCTestCase {
   }
 
   func testFindAndFilterSpotWithClosure() {
-    let listSpot = ListSpot(model: ComponentModel(title: "ListSpot", span: 1.0))
-    let listSpot2 = ListSpot(model: ComponentModel(title: "ListSpot2", span: 1.0))
-    let gridSpot = GridSpot(model: ComponentModel(title: "GridSpot", span: 1.0, items: [Item(title: "Item")]))
+    let listSpot = ListComponent(model: ComponentModel(title: "ListComponent", span: 1.0))
+    let listSpot2 = ListComponent(model: ComponentModel(title: "ListComponent2", span: 1.0))
+    let gridSpot = GridComponent(model: ComponentModel(title: "GridComponent", span: 1.0, items: [Item(title: "Item")]))
     let controller = Controller(spots: [listSpot, listSpot2, gridSpot])
 
-    XCTAssertNotNil(controller.resolve(spot: { $1.model.title == "ListSpot" }))
-    XCTAssertNotNil(controller.resolve(spot: { $1.model.title == "GridSpot" }))
+    XCTAssertNotNil(controller.resolve(spot: { $1.model.title == "ListComponent" }))
+    XCTAssertNotNil(controller.resolve(spot: { $1.model.title == "GridComponent" }))
     XCTAssertNotNil(controller.resolve(spot: { $1 is Listable }))
     XCTAssertNotNil(controller.resolve(spot: { $1 is Gridable }))
     XCTAssertNotNil(controller.resolve(spot: { $1.items.filter { $0.title == "Item" }.first != nil }))
-    XCTAssertEqual(controller.resolve(spot: { $0.0 == 0 })?.model.title, "ListSpot")
-    XCTAssertEqual(controller.resolve(spot: { $0.0 == 1 })?.model.title, "ListSpot2")
-    XCTAssertEqual(controller.resolve(spot: { $0.0 == 2 })?.model.title, "GridSpot")
+    XCTAssertEqual(controller.resolve(spot: { $0.0 == 0 })?.model.title, "ListComponent")
+    XCTAssertEqual(controller.resolve(spot: { $0.0 == 1 })?.model.title, "ListComponent2")
+    XCTAssertEqual(controller.resolve(spot: { $0.0 == 2 })?.model.title, "GridComponent")
 
     XCTAssert(controller.filter(spots: { $0 is Listable }).count == 2)
   }
 
   func testJSONInitialiser() {
-    let spot = ListSpot(model: ComponentModel(span: 1.0))
+    let spot = ListComponent(model: ComponentModel(span: 1.0))
     spot.items = [Item(title: "First item")]
     let sourceController = Controller(spot: spot)
     let jsonController = Controller([
       "components": [
         ["kind": "list",
-         "layout": ListSpot.layout.dictionary,
+         "layout": ListComponent.layout.dictionary,
          "items": [
           ["title": "First item"]
           ]
@@ -560,32 +560,32 @@ class ControllerTests: XCTestCase {
     ]
 
     let controller = Controller(initialJSON)
-    XCTAssertTrue(controller.spots[0] is ListSpot)
+    XCTAssertTrue(controller.spots[0] is ListComponent)
     XCTAssertEqual(controller.spots[0].items.first?.title, "First list item")
     XCTAssertEqual(controller.spots[1].items.first?.title, "First list item")
-    XCTAssertTrue(controller.spots[1] is ListSpot)
+    XCTAssertTrue(controller.spots[1] is ListComponent)
     XCTAssertTrue(controller.spots.count == 2)
-    XCTAssertTrue(controller.spots[0].compositeSpots.count == 0)
+    XCTAssertTrue(controller.spots[0].compositeComponents.count == 0)
 
     let expectation = self.expectation(description: "Reload multiple times with JSON (if needed)")
 
     controller.reloadIfNeeded(newJSON) {
       XCTAssertEqual(controller.spots.count, 2)
-      XCTAssertTrue(controller.spots[0] is ListSpot)
-      XCTAssertTrue(controller.spots[1] is GridSpot)
+      XCTAssertTrue(controller.spots[0] is ListComponent)
+      XCTAssertTrue(controller.spots[1] is GridComponent)
       XCTAssertEqual(controller.spots[0].items.first?.title, "First list item 2")
       XCTAssertEqual(controller.spots[1].items.first?.title, "First list item")
 
       XCTAssertEqual(controller.spots[0].items[1].kind, "composite")
-      XCTAssertEqual(controller.spots[0].compositeSpots.count, 1)
+      XCTAssertEqual(controller.spots[0].compositeComponents.count, 1)
 
       controller.reloadIfNeeded(initialJSON) {
-        XCTAssertTrue(controller.spots[0] is ListSpot)
+        XCTAssertTrue(controller.spots[0] is ListComponent)
         XCTAssertEqual(controller.spots[0].items.first?.title, "First list item")
         XCTAssertEqual(controller.spots[1].items.first?.title, "First list item")
-        XCTAssertTrue(controller.spots[1] is ListSpot)
+        XCTAssertTrue(controller.spots[1] is ListComponent)
         XCTAssertTrue(controller.spots.count == 2)
-        XCTAssertTrue(controller.spots[0].compositeSpots.count == 0)
+        XCTAssertTrue(controller.spots[0].compositeComponents.count == 0)
         expectation.fulfill()
       }
     }
@@ -693,9 +693,9 @@ class ControllerTests: XCTestCase {
     XCTAssertEqual(initialComponentModels.count, newComponentModels.count)
 
     #if os(OSX)
-      var view: ListSpotItem? = controller.ui({ $0.kind == "image" })
+      var view: ListComponentItem? = controller.ui({ $0.kind == "image" })
     #else
-      var view: ListSpotCell? = controller.ui({ $0.kind == "image" })
+      var view: ListComponentCell? = controller.ui({ $0.kind == "image" })
       XCTAssertNil(view)
     #endif
 
@@ -703,7 +703,7 @@ class ControllerTests: XCTestCase {
 
     /// Reset layout margins for tvOS
     #if os(tvOS)
-      controller.spot(at: 0, ofType: ListSpot.self)?.tableView.layoutMargins = UIEdgeInsets.zero
+      controller.spot(at: 0, ofType: ListComponent.self)?.tableView.layoutMargins = UIEdgeInsets.zero
     #endif
 
     #if !os(OSX)

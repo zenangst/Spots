@@ -4,7 +4,7 @@
   import UIKit
 #endif
 
-open class ViewSpot: NSObject, Spotable, Viewable {
+open class ViewComponent: NSObject, Spotable, Viewable {
 
   public var view: View {
     return scrollView
@@ -38,7 +38,7 @@ open class ViewSpot: NSObject, Spotable, Viewable {
   weak public var focusDelegate: SpotsFocusDelegate?
 
   /// Child spots
-  public var compositeSpots: [CompositeSpot] = []
+  public var compositeComponents: [CompositeComponent] = []
 
   open lazy var scrollView: ScrollView = ScrollView()
 
@@ -74,14 +74,14 @@ open class ViewSpot: NSObject, Spotable, Viewable {
   }
 
   /**
-   A placeholder method, it is left empty as it holds no value for ViewSpot
+   A placeholder method, it is left empty as it holds no value for ViewComponent
    */
   open func deselect() {}
 
   // MARK: - Spotable
 
   /**
-  A placeholder method, it is left empty as it holds no value for ViewSpot
+  A placeholder method, it is left empty as it holds no value for ViewComponent
    */
   open func register() {}
 

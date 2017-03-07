@@ -1,6 +1,6 @@
 import Cocoa
 
-extension Spot {
+extension Component {
 
   func setupTableView(_ tableView: TableView, with size: CGSize) {
     scrollView.addSubview(tableView)

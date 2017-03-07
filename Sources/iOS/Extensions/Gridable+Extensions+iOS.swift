@@ -56,7 +56,7 @@ extension Gridable {
   ///
   /// - parameter size: A CGSize to set the width and height of the collection view
   public func layout(_ size: CGSize) {
-    if compositeSpots.isEmpty {
+    if compositeComponents.isEmpty {
       prepareItems()
     }
 
@@ -173,7 +173,7 @@ extension Gridable {
     self.headers.storage[identifier.string] = Registry.Item.nib(nib)
   }
 
-  /// Register default header for the CarouselSpot
+  /// Register default header for the CarouselComponent
   ///
   /// - parameter view: A header view
   public func registerDefaultHeader(header view: View.Type) {

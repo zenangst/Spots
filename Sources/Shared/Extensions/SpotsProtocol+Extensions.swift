@@ -57,7 +57,7 @@ public extension SpotsProtocol {
     for spot in spots {
       var spotJSON = spot.model.dictionary(amountOfItems)
       for item in spot.items where item.kind == "composite" {
-        let results = spot.compositeSpots
+        let results = spot.compositeComponents
           .filter({ $0.itemIndex == item.index })
 
         var newItem = item
@@ -91,7 +91,7 @@ public extension SpotsProtocol {
         return spot.ui(at: first.index)
       }
 
-      let cSpots = spot.compositeSpots.map { $0.spot }
+      let cSpots = spot.compositeComponents.map { $0.spot }
       for compositeSpot in cSpots {
         if let first = compositeSpot.items.filter(includeElement).first {
           return compositeSpot.ui(at: first.index)
@@ -110,7 +110,7 @@ public extension SpotsProtocol {
   public func filter(spots includeElement: (Spotable) -> Bool) -> [Spotable] {
     var result = spots.filter(includeElement)
 
-    let cSpots = spots.flatMap({ $0.compositeSpots.map { $0.spot } })
+    let cSpots = spots.flatMap({ $0.compositeComponents.map { $0.spot } })
     let compositeResults: [Spotable] = cSpots.filter(includeElement)
 
     result.append(contentsOf: compositeResults)
@@ -131,7 +131,7 @@ public extension SpotsProtocol {
         result.append((spot: spot, items: items))
       }
 
-      let childSpots = spot.compositeSpots.map { $0.spot }
+      let childSpots = spot.compositeComponents.map { $0.spot }
       for spot in childSpots {
         let items = spot.items.filter(includeElement)
         if !items.isEmpty {

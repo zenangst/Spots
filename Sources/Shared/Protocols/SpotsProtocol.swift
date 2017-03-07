@@ -53,7 +53,7 @@ public protocol SpotsProtocol: class {
   ///
   /// - parameter index: The index of the Spotable object
   /// - parameter spot:  The spotable object that is going to be setup
-  func setupSpot(at index: Int, spot: Spotable)
+  func setupComponent(at index: Int, spot: Spotable)
 
   ///  A generic look up method for resolving spots based on index
   ///

@@ -1,12 +1,6 @@
 import Cocoa
 
-open class FlippedView: NSView {
-  override open var isFlipped: Bool {
-    return true
-  }
-}
-
-open class RowSpotItem: NSCollectionViewItem, ItemConfigurable {
+open class GridComponentItem: NSCollectionViewItem, ItemConfigurable {
 
   open override var isSelected: Bool {
     didSet {

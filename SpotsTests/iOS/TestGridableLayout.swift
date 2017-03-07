@@ -13,7 +13,7 @@ class TestGridableLayout: XCTestCase {
         Item(title: "bar", size: CGSize(width: 50, height: 50))
       ]
     )
-    let carouselSpot = CarouselSpot(model: model)
+    let carouselSpot = CarouselComponent(model: model)
     carouselSpot.setup(parentSize)
     carouselSpot.layout(parentSize)
     carouselSpot.view.layoutSubviews()
@@ -32,7 +32,7 @@ class TestGridableLayout: XCTestCase {
         Item(title: "bar", size: CGSize(width: 50, height: 100))
       ]
     )
-    let carouselSpot = CarouselSpot(model: model)
+    let carouselSpot = CarouselComponent(model: model)
     carouselSpot.setup(parentSize)
     carouselSpot.layout(parentSize)
     carouselSpot.view.layoutSubviews()
@@ -52,7 +52,7 @@ class TestGridableLayout: XCTestCase {
         Item(title: "bar", size: itemSize)
       ]
     )
-    let carouselSpot = CarouselSpot(model: model)
+    let carouselSpot = CarouselComponent(model: model)
     carouselSpot.setup(parentSize)
     carouselSpot.layout(parentSize)
     carouselSpot.view.layoutSubviews()
@@ -91,7 +91,7 @@ class TestGridableLayout: XCTestCase {
         Item(title: "bar", size: itemSize)
       ]
     )
-    let carouselSpot = CarouselSpot(model: model)
+    let carouselSpot = CarouselComponent(model: model)
     carouselSpot.setup(parentSize)
     carouselSpot.layout(parentSize)
     carouselSpot.view.layoutSubviews()
@@ -118,7 +118,7 @@ class TestGridableLayout: XCTestCase {
       ]
     )
 
-    let spot = GridSpot(model: model)
+    let spot = GridComponent(model: model)
     spot.setup(parentSize)
     spot.layout(parentSize)
     spot.view.layoutSubviews()

@@ -165,22 +165,22 @@ class GridTopicCell: UICollectionViewCell, ItemConfigurable {
 }
 
 // Register spots
-CarouselSpot.register(view: GridTopicCell.self, identifier: Cell.Featured)
-GridSpot.register(view: GridTopicCell.self, identifier: Cell.Featured)
-ListSpot.register(header: ListHeaderView.self, identifier: "list")
-ListSpot.register(defaultView: ListCell.self)
+CarouselComponent.register(view: GridTopicCell.self, identifier: Cell.Featured)
+GridComponent.register(view: GridTopicCell.self, identifier: Cell.Featured)
+ListComponent.register(header: ListHeaderView.self, identifier: "list")
+ListComponent.register(defaultView: ListCell.self)
 
 // Configure spots controller
 Controller.configure = {
   $0.backgroundColor = UIColor.whiteColor()
 }
 
-CarouselSpot.configure = { collectionView, layout in
+CarouselComponent.configure = { collectionView, layout in
   collectionView.contentInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
 }
 
 // Configure List spots
-ListSpot.configure = { tableView in
+ListComponent.configure = { tableView in
   tableView.tableFooterView = UIView(frame: CGRect.zero)
 }
 
@@ -215,14 +215,10 @@ let gridItems = ComponentModel(span: 6, items: [
   ])
 
 let controller = Controller(spots: [
-  ListSpot(model: ComponentModel(title: "Carousel Spot", meta: ["headerHeight" : 44])),
-  CarouselSpot(carouselItems, top: 5, left: 0, bottom: 5, right: 0, itemSpacing: 0),
-  ListSpot(model: ComponentModel(title: "Grid Spot", meta: ["headerHeight" : 44])),
-  GridSpot(featuredOpensource, top: 10, left: 10, bottom: 20, right: 10, itemSpacing: -5),
-  ListSpot(model: listItems),
-  ListSpot(model: ComponentModel(title: "Grid Spot", meta: ["headerHeight" : 44])),
-  GridSpot(gridItems, top: 10, left: 10, bottom: 20, right: 10, itemSpacing: -5),
-  ]
-)
-
-XCPlaygroun
+  ListComponent(model: ComponentModel(title: "Carousel Spot", meta: ["headerHeight" : 44])),
+  CarouselComponent(carouselItems, top: 5, left: 0, bottom: 5, right: 0, itemSpacing: 0),
+  ListComponent(model: ComponentModel(title: "Grid Spot", meta: ["headerHeight" : 44])),
+  GridComponent(featuredOpensource, top: 10, left: 10, bottom: 20, right: 10, itemSpacing: -5),
+  ListComponent(model: listItems),
+  ListComponent(model: ComponentModel(title: "Grid Spot", meta: ["headerHeight" : 44])),
+  GridComponent(gridItems, top: 10, left:

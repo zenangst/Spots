@@ -16,13 +16,13 @@ class RxSpotsDelegateTests: XCTestCase {
   }
 
   func testDidSelectItem() {
-    let spot = ListSpot()
+    let spot = ListComponent()
     let item = Item(title: "Test")
     var isCalled = false
 
     delegateProxy.didSelectItem
       .bindNext({ spot, item in
-        isCalled = (spot is ListSpot) && item.title == "Test"
+        isCalled = (spot is ListComponent) && item.title == "Test"
       }).addDisposableTo(disposeBag)
 
     delegateProxy.spotable(spot, itemSelected: item)
@@ -30,13 +30,13 @@ class RxSpotsDelegateTests: XCTestCase {
   }
   
   func testDidChange() {
-    let listSpot = ListSpot()
-    let gridSpot = GridSpot()
+    let listSpot = ListComponent()
+    let gridSpot = GridComponent()
     var isCalled = false
 
     delegateProxy.didChange
       .bindNext({ spots in
-        isCalled = (spots[0] is ListSpot) && (spots[1] is GridSpot)
+        isCalled = (spots[0] is ListComponent) && (spots[1] is GridComponent)
       })
       .addDisposableTo(disposeBag)
 
@@ -45,14 +45,14 @@ class RxSpotsDelegateTests: XCTestCase {
   }
 
   func testWillDisplayView() {
-    let listSpot = ListSpot()
+    let listSpot = ListComponent()
     let spotView = SpotView()
     let item = Item(title: "Test")
     var isCalled = false
 
     delegateProxy.willDisplayView
       .bindNext({ spot, view, item in
-        isCalled = (spot is ListSpot) && (view == spotView) && item.title == "Test"
+        isCalled = (spot is ListComponent) && (view == spotView) && item.title == "Test"
       })
       .addDisposableTo(disposeBag)
 
@@ -61,14 +61,14 @@ class RxSpotsDelegateTests: XCTestCase {
   }
 
   func testDidEndDisplayingView() {
-    let listSpot = ListSpot()
+    let listSpot = ListComponent()
     let spotView = SpotView()
     let item = Item(title: "Test")
     var isCalled = false
 
     delegateProxy.didEndDisplayingView
       .bindNext({ spot, view, item in
-        isCalled = (spot is ListSpot) && (view == spotView) && item.title == "Test"
+        isCalled = (spot is ListComponent) && (view == spotView) && item.title == "Test"
       })
       .addDisposableTo(disposeBag)
 

@@ -1,7 +1,7 @@
 import Cocoa
 import Tailor
 
-extension Spot {
+extension Component {
 
   func setupHorizontalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
     var newCollectionViewHeight: CGFloat = 0.0
@@ -14,7 +14,7 @@ extension Spot {
     scrollView.hasHorizontalScroller = (model.items.count > 1)
 
     collectionView.frame.size.height = newCollectionViewHeight
-    CarouselSpot.configure?(collectionView)
+    CarouselComponent.configure?(collectionView)
   }
 
   func layoutHorizontalCollectionView(_ collectionView: CollectionView, with size: CGSize) {

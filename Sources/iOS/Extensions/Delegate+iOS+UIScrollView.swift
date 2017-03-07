@@ -1,6 +1,6 @@
 import UIKit
 
-/// A scroll view extension on CarouselSpot to handle scrolling specifically for this object.
+/// A scroll view extension on CarouselComponent to handle scrolling specifically for this object.
 extension Delegate: UIScrollViewDelegate {
 
   public func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -12,12 +12,12 @@ extension Delegate: UIScrollViewDelegate {
       }
 
       switch spot {
-      case let spot as Spot:
+      case let spot as Component:
         spot.carouselScrollDelegate?.spotableCarouselDidScroll(spot)
         if spot.model.layout?.pageIndicatorPlacement == .overlay {
           spot.pageControl.frame.origin.x = scrollView.contentOffset.x
         }
-      case let spot as CarouselSpot:
+      case let spot as CarouselComponent:
         spot.carouselScrollDelegate?.spotableCarouselDidScroll(spot)
         if spot.model.layout?.pageIndicatorPlacement == .overlay {
           spot.pageControl.frame.origin.x = scrollView.contentOffset.x

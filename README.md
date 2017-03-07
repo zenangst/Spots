@@ -90,7 +90,7 @@ This improves code reuse and helps to theme your app and ultimately keep your ap
 - Support custom Spots, all you need to do is to conform to `Spotable`
 - A rich public API for appending, prepending, inserting, updating or
 deleting `Item`s.
-- Features three different spots out-of-the-box; `CarouselSpot`, `GridSpot`, `ListSpot`
+- Features three different spots out-of-the-box; `CarouselComponent`, `GridComponent`, `ListComponent`
 - Static custom cell registrations for all `Spotable` objects.
 Write one view cell and use it across your application, when and where you
 want to use it.
@@ -120,7 +120,7 @@ So what if I don't have a backend that supports **Spots** view models? Not to wo
 
 As mentioned above, **Spots** features a view state cache. Instead of saving all your data in a database somewhere and perform queries every time to initiate a view controller, we went with a different and much simpler approach. If a **Controller** has a cache key and you call `save`, internally it will encode all underlaying **Spotable** objects and its children into a JSON file and store that to disk. The uniqueness of the file comes from the cache key, think of this like your screen identifier. The next time you construct a **Controller** with that cache key, it will try to load that from disk and display it the exact same way as it was before saving. The main benefit here is that you don’t have to worry about your object changing by updating to future versions of **Spots**.
 
-**ListSpot**, **GridSpot**, **CarouselSpot** also have support for view state caching because these components can be used separately without using **Controller**.
+**ListComponent**, **GridComponent**, **CarouselComponent** also have support for view state caching because these components can be used separately without using **Controller**.
 
 View state caching is optional but we encourage you to use it, as it renders the need to use a database as optional.
 
@@ -130,7 +130,7 @@ A common problem when developing for Apple's platforms is that you often have to
 
 `Item`s inside of a `Spotable` object have a property called `children`. In the case of Spots, children are `ComponentModel`'s that represent other `Spotable` objects. This means that you can easily add a grid, carousel or list inside any `Spotable` object of your choice. On larger screens this becomes incredibly useful as composition can be used as a sane way of laying out your views on screen without the need for child view controllers, unmaintainable auto layout or frame based implementations.
 
-You can create `Spotable` pseudo objects that handle layout, this is especially useful for `Gridable` objects like the `GridSpot`, where you can use `layout.span` to define how many objects should be displayed side-by-side.
+You can create `Spotable` pseudo objects that handle layout, this is especially useful for `Gridable` objects like the `GridComponent`, where you can use `layout.span` to define how many objects should be displayed side-by-side.
 
 Composition is supported on iOS, tvOS and macOS.
 
@@ -146,7 +146,7 @@ See [Installation](#installation) for how to enable live editing using CocoaPods
 
 At the top level of **Spots**, you have the **Controller** which is the replacement for your view controller.
 
-Inside of the **Controller**, you have a **SpotsScrollView** that handles the linear layout of the components that you add to your data source. It is also in charge of giving the user a unified scrolling experience. Scrolling is disabled on all underlaying components except for components that have horizontal scrolling (e.g **CarouselSpot**).
+Inside of the **Controller**, you have a **SpotsScrollView** that handles the linear layout of the components that you add to your data source. It is also in charge of giving the user a unified scrolling experience. Scrolling is disabled on all underlaying components except for components that have horizontal scrolling (e.g **CarouselComponent**).
 
 So how does scrolling work? Whenever a user scrolls, the **SpotsScrollView** computes the offset and size of its children. By using this technique you can easily create screens that contain lists, grids and carousels with a scrolling experience as smooth as proverbial butter. By dynamically changing the size and offset of the children, **SpotsScrollView** also ensures that reusable views are allocated and deallocated like you would expect them to.
 **SpotsScrollView** uses KVO on any view that gets added so if one component changes height or position, the entire layout will invalidate itself and redraw it like it was intended.
@@ -154,18 +154,18 @@ So how does scrolling work? Whenever a user scrolls, the **SpotsScrollView** com
 **Controller** uses one or more **Spotable** objects. **Spotable** is a protocol that all components use to make sure that all layout calculations can be performed. **Spots** comes with three different **Spotable** objects out-of-the-box.
 All **Spotable** objects are based around one core UI element.
 
-**ListSpot** is an object that conforms to **Listable**, it has a **ListAdapter** that works as both the data source and delegate for the **ListSpot**. For iOS, **Listable** uses **UITableView** as its UI component, and **NSTableView** on macOS.
+**ListComponent** is an object that conforms to **Listable**, it has a **ListAdapter** that works as both the data source and delegate for the **ListComponent**. For iOS, **Listable** uses **UITableView** as its UI component, and **NSTableView** on macOS.
 
-**GridSpot** is an object that conforms to **Gridable**, it uses a different adapter than **ListSpot** as it is based on collection views. The adapter used here is **CollectionAdapter**. On iOS and tvOS, **Gridable** uses **UICollectionView** as its UI component and **NSCollectionView** on macOS.
+**GridComponent** is an object that conforms to **Gridable**, it uses a different adapter than **ListComponent** as it is based on collection views. The adapter used here is **CollectionAdapter**. On iOS and tvOS, **Gridable** uses **UICollectionView** as its UI component and **NSCollectionView** on macOS.
 
-**CarouselSpot** is very similar to **GridSpot**, it shares the same **CollectionAdapter**, the main difference between them is that **CarouselSpot** has scrolling enabled and uses a process for laying its views out on screen.
+**CarouselComponent** is very similar to **GridComponent**, it shares the same **CollectionAdapter**, the main difference between them is that **CarouselComponent** has scrolling enabled and uses a process for laying its views out on screen.
 
 What all **Spotable** objects have in common is that all of them use the same **ComponentModel** struct to represent themselves. **ComponentModel** has a *kind* property that maps to the UI component that should be used. By just changing the *kind*, you can transform a *list* into a *grid* as fast has you can type it and hit save.
 
 They also share the same **Item** struct for its children.
 The child is a data container that includes the size of the view on screen and the remaining information to configure your view.
 
-To add your own view to **Spots**, you need the view to conform to **ItemConfigurable** and inherit from the core class that your component is based on (UITableViewCell on ListSpot, UICollectionViewCell on CarouselSpot and GridSpot).
+To add your own view to **Spots**, you need the view to conform to **ItemConfigurable** and inherit from the core class that your component is based on (UITableViewCell on ListComponent, UICollectionViewCell on CarouselComponent and GridComponent).
 **ItemConfigurable** requires you to implement one property and one method.
 
 We don’t like to dictate the terms of how you build your views, if you prefer to build them using `.nib` files, you should be free to do so, and with **Spots** you can. The only thing that differs is how you register the view on the component.
@@ -196,22 +196,22 @@ When your view conforms to **ItemConfigurable**, you need to register it with a 
 You register your view on the component that you want to display it in.
 
 ```swift
-ListSpot.register(view: MyAwesomeView.self, identifier: “my-awesome-view”)
+ListComponent.register(view: MyAwesomeView.self, identifier: “my-awesome-view”)
 ```
 
 For `nib`-based views, you register them like this.
 
 ```swift
-ListSpot.register(nib: UINib(nibName: "MyAwesomeView", bundle: NSBundle.mainBundle()), identifier: "my-awesome-view")
+ListComponent.register(nib: UINib(nibName: "MyAwesomeView", bundle: NSBundle.mainBundle()), identifier: "my-awesome-view")
 ```
 
 You can also register default views for your component, what it means is that it will be the fallback view for that view if the `identifier` cannot be resolved or the `identifier` is absent.
 
 ```swift
-ListSpot.register(defaultView: MyAwesomeView.self)
+ListComponent.register(defaultView: MyAwesomeView.self)
 ```
 
-As mentioned above, `ListSpot` is based on `UITableView` (and `NSTableView` in macOS).
+As mentioned above, `ListComponent` is based on `UITableView` (and `NSTableView` in macOS).
 
 By letting the data decide which views to use gives you the freedom of displaying anything anywhere, without cluttering your code with dirty if- or switch-statements that are hard to maintain and prone to introduce bugs.
 
@@ -290,7 +290,7 @@ let myContacts = ComponentModel(title: "My contacts", items: [
   Item(title: "Khoa Pham"),
   Item(title: "Christoffer Winterkvist")
 ])
-let listSpot = ListSpot(model: myContacts)
+let listSpot = ListComponent(model: myContacts)
 let controller = Controller(spots: [listSpot])
 
 navigationController?.pushViewController(controller, animated: true)

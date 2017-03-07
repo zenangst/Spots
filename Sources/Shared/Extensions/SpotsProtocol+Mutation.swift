@@ -128,35 +128,35 @@ extension SpotsProtocol {
     return changes
   }
 
-  fileprivate func replaceSpot(_ index: Int, newComponentModels: [ComponentModel], yOffset: inout CGFloat) {
+  fileprivate func replaceComponent(_ index: Int, newComponentModels: [ComponentModel], yOffset: inout CGFloat) {
     let spot = Factory.resolve(model: newComponentModels[index])
     let oldSpot = spots[index]
 
     /// Remove old composite spots from superview and empty container
-    for compositeSpot in oldSpot.compositeSpots {
+    for compositeSpot in oldSpot.compositeComponents {
       compositeSpot.spot.view.removeFromSuperview()
     }
-    oldSpot.compositeSpots = []
+    oldSpot.compositeComponents = []
 
     spot.view.frame = oldSpot.view.frame
 
     oldSpot.view.removeFromSuperview()
     spots[index] = spot
     scrollView.spotsContentView.insertSubview(spot.view, at: index)
-    setupSpot(at: index, spot: spot)
+    setupComponent(at: index, spot: spot)
 
     #if !os(OSX)
-      (spot as? CarouselSpot)?.layout.yOffset = yOffset
+      (spot as? CarouselComponent)?.layout.yOffset = yOffset
     #endif
     yOffset += spot.view.frame.size.height
   }
 
-  fileprivate func newSpot(_ index: Int, newComponentModels: [ComponentModel], yOffset: inout CGFloat) {
+  fileprivate func newComponent(_ index: Int, newComponentModels: [ComponentModel], yOffset: inout CGFloat) {
     let spot = Factory.resolve(model: newComponentModels[index])
     spots.append(spot)
-    setupSpot(at: index, spot: spot)
+    setupComponent(at: index, spot: spot)
     #if !os(OSX)
-      (spot as? CarouselSpot)?.layout.yOffset = yOffset
+      (spot as? CarouselComponent)?.layout.yOffset = yOffset
     #endif
     yOffset += spot.view.frame.size.height
   }
@@ -164,7 +164,7 @@ extension SpotsProtocol {
   /// Remove Spot at index
   ///
   /// - parameter index: The index of the Spotable object hat you want to remove
-  fileprivate func removeSpot(at index: Int) {
+  fileprivate func removeComponent(at index: Int) {
     guard index < spots.count else {
       return
     }
@@ -179,7 +179,7 @@ extension SpotsProtocol {
   /// - parameter closure:       A completion closure that is invoked when the setup of the new items is complete
   ///
   /// - returns: A boolean value that determines if the closure should run in `process(changes:)`
-  fileprivate func setupItemsForSpot(at index: Int, newComponentModels: [ComponentModel], withAnimation animation: Animation = .automatic, completion: Completion = nil) -> Bool {
+  fileprivate func setupItemsForComponent(at index: Int, newComponentModels: [ComponentModel], withAnimation animation: Animation = .automatic, completion: Completion = nil) -> Bool {
     guard let spot = self.spot(at: index, ofType: Spotable.self) else {
       return false
     }
@@ -204,10 +204,10 @@ extension SpotsProtocol {
     let changes: (ItemChanges) = Item.processChanges(diff)
 
     for index in changes.updatedChildren {
-      if index < tempSpot.compositeSpots.count {
-        spot.compositeSpots[index].spot.view.removeFromSuperview()
-        spot.compositeSpots[index] = tempSpot.compositeSpots[index]
-        spot.compositeSpots[index].parentSpot = spot
+      if index < tempSpot.compositeComponents.count {
+        spot.compositeComponents[index].spot.view.removeFromSuperview()
+        spot.compositeComponents[index] = tempSpot.compositeComponents[index]
+        spot.compositeComponents[index].parentSpot = spot
       }
     }
 
@@ -255,7 +255,7 @@ extension SpotsProtocol {
       spot.beforeUpdate()
 
       for item in newItems {
-        let results = spot.compositeSpots.filter({ $0.itemIndex == item.index })
+        let results = spot.compositeComponents.filter({ $0.itemIndex == item.index })
         for compositeSpot in results {
           offsets.append(compositeSpot.spot.view.contentOffset)
         }
@@ -272,9 +272,9 @@ extension SpotsProtocol {
           break
         }
 
-        let compositeSpots = weakSelf.spots[item.index].compositeSpots
+        let compositeComponents = weakSelf.spots[item.index].compositeComponents
           .filter({ $0.itemIndex == item.index })
-        for (index, compositeSpot) in compositeSpots.enumerated() {
+        for (index, compositeSpot) in compositeComponents.enumerated() {
           guard index < offsets.count else {
             continue
           }
@@ -313,7 +313,7 @@ extension SpotsProtocol {
         let components = Parser.parse(item.children).map { $0.model }
 
         let oldSpots = weakSelf.spots.flatMap({
-          $0.compositeSpots
+          $0.compositeComponents
         })
 
         for removedSpot in oldSpots {
@@ -321,8 +321,8 @@ extension SpotsProtocol {
             continue
           }
 
-          if let index = removedSpot.parentSpot?.compositeSpots.index(of: removedSpot) {
-            removedSpot.parentSpot?.compositeSpots.remove(at: index)
+          if let index = removedSpot.parentSpot?.compositeComponents.index(of: removedSpot) {
+            removedSpot.parentSpot?.compositeComponents.remove(at: index)
           }
         }
 
@@ -402,17 +402,17 @@ extension SpotsProtocol {
       for (index, change) in changes.enumerated() {
         switch change {
         case .identifier, .title, .kind, .layout, .header, .footer, .meta:
-          weakSelf.replaceSpot(index, newComponentModels: newComponentModels, yOffset: &yOffset)
+          weakSelf.replaceComponent(index, newComponentModels: newComponentModels, yOffset: &yOffset)
         case .new:
-          weakSelf.newSpot(index, newComponentModels: newComponentModels, yOffset: &yOffset)
+          weakSelf.newComponent(index, newComponentModels: newComponentModels, yOffset: &yOffset)
         case .removed:
-          weakSelf.removeSpot(at: index)
+          weakSelf.removeComponent(at: index)
         case .items:
           if index == lastItemChange {
             completion = finalCompletion
           }
 
-          runCompletion = weakSelf.setupItemsForSpot(at: index,
+          runCompletion = weakSelf.setupItemsForComponent(at: index,
                                                      newComponentModels: newComponentModels,
                                                      withAnimation: animation,
                                                      completion: completion)
@@ -463,7 +463,7 @@ extension SpotsProtocol {
       }
 
       var offsets = [CGPoint]()
-      let oldComposites = weakSelf.spots.flatMap { $0.compositeSpots }
+      let oldComposites = weakSelf.spots.flatMap { $0.compositeComponents }
 
       if newComponentModels.count == oldComponentModels.count {
         offsets = weakSelf.spots.map { $0.view.contentOffset }
@@ -479,7 +479,7 @@ extension SpotsProtocol {
       weakSelf.setupSpots(animated: animated)
       weakSelf.cache()
 
-      let newComposites = weakSelf.spots.flatMap { $0.compositeSpots }
+      let newComposites = weakSelf.spots.flatMap { $0.compositeComponents }
 
       for (index, compositeSpot) in oldComposites.enumerated() {
         if index == newComposites.count {
@@ -737,7 +737,7 @@ extension SpotsProtocol {
     }
   }
 
-  func setupAndLayoutSpot(spot: Spotable) {
+  func setupAndLayoutComponent(spot: Spotable) {
 
     switch spot {
     case let spot as Gridable:
@@ -763,7 +763,7 @@ extension SpotsProtocol {
 
   fileprivate func setupAndLayoutSpots() {
     for spot in spots {
-      setupAndLayoutSpot(spot: spot)
+      setupAndLayoutComponent(spot: spot)
     }
 
     #if !os(OSX)

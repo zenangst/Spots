@@ -1,16 +1,16 @@
 public struct Factory {
 
   /// The default spot for the Factory
-  public static var DefaultSpot: Spotable.Type = GridSpot.self
+  public static var DefaultSpot: Spotable.Type = GridComponent.self
 
   /// Defaults spots, it includes carousel, list, grid and view
   private static var spots: [String: Spotable.Type] = [
-    ComponentModel.Kind.carousel.string: CarouselSpot.self,
-    ComponentModel.Kind.list.string: ListSpot.self,
-    ComponentModel.Kind.grid.string: GridSpot.self,
-    ComponentModel.Kind.row.string: RowSpot.self,
-    ComponentModel.Kind.view.string: ViewSpot.self,
-    ComponentModel.Kind.spot.string: Spot.self
+    ComponentModel.Kind.carousel.string: CarouselComponent.self,
+    ComponentModel.Kind.list.string: ListComponent.self,
+    ComponentModel.Kind.grid.string: GridComponent.self,
+    ComponentModel.Kind.row.string: RowComponent.self,
+    ComponentModel.Kind.view.string: ViewComponent.self,
+    ComponentModel.Kind.spot.string: Component.self
   ]
 
   /// Register a spot for a specfic spot type

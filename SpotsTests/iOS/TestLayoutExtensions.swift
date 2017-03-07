@@ -20,8 +20,8 @@ class LayoutExtensionsTests: XCTestCase {
     ]
   ]
 
-  func testConfigureGridableSpot() {
-    let gridSpot = GridSpot(model: ComponentModel(span: 1))
+  func testConfigureGridableComponent() {
+    let gridSpot = GridComponent(model: ComponentModel(span: 1))
     let layout = Layout(json)
 
     layout.configure(spot: gridSpot)
@@ -35,8 +35,8 @@ class LayoutExtensionsTests: XCTestCase {
     XCTAssertEqual(gridSpot.view.contentInset.right, CGFloat(layout.inset.right))
   }
 
-  func testConfigureListableSpot() {
-    let listSpot = ListSpot(model: ComponentModel(span: 1))
+  func testConfigureListableComponent() {
+    let listSpot = ListComponent(model: ComponentModel(span: 1))
     let layout = Layout(json)
 
     layout.configure(spot: listSpot)

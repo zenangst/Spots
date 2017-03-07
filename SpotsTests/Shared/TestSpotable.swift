@@ -4,8 +4,8 @@ import XCTest
 
 class SpotableTests: XCTestCase {
 
-  func testAppendingMultipleItemsToSpot() {
-    let listSpot = ListSpot(model: ComponentModel(title: "ComponentModel", span: 1.0))
+  func testAppendingMultipleItemsToComponent() {
+    let listSpot = ListComponent(model: ComponentModel(title: "ComponentModel", span: 1.0))
     listSpot.setup(CGSize(width: 100, height: 100))
     var items: [Item] = []
 
@@ -29,7 +29,7 @@ class SpotableTests: XCTestCase {
   }
 
   func testAppendingMultipleItemsToSpotInController() {
-    let controller = Controller(spots: [ListSpot(model: ComponentModel(title: "ComponentModel", span: 1.0))])
+    let controller = Controller(spots: [ListComponent(model: ComponentModel(title: "ComponentModel", span: 1.0))])
     controller.prepareController()
     var items: [Item] = []
 
@@ -52,14 +52,14 @@ class SpotableTests: XCTestCase {
     waitForExpectations(timeout: 10.0, handler: nil)
   }
 
-  func testResolvingUIFromGridableSpot() {
+  func testResolvingUIFromGridableComponent() {
     let kind = "test-view"
 
     Configuration.register(view: TestView.self, identifier: kind)
 
     let parentSize = CGSize(width: 100, height: 100)
     let model = ComponentModel(items: [Item(title: "foo", kind: kind)])
-    let spot = GridSpot(model: model)
+    let spot = GridComponent(model: model)
     spot.view.frame.size = parentSize
     spot.setup(parentSize)
     spot.layout(parentSize)
@@ -74,14 +74,14 @@ class SpotableTests: XCTestCase {
     XCTAssertTrue(type(of: genericView) === TestView.self)
   }
 
-  func testResolvingUIFromListableSpot() {
+  func testResolvingUIFromListableComponent() {
     let kind = "test-view"
 
     Configuration.register(view: TestView.self, identifier: kind)
 
     let parentSize = CGSize(width: 100, height: 100)
     let model = ComponentModel(items: [Item(title: "foo", kind: kind)])
-    let spot = ListSpot(model: model)
+    let spot = ListComponent(model: model)
 
     spot.setup(parentSize)
     spot.layout(parentSize)

@@ -327,11 +327,11 @@ public extension Spotable {
   func prepare(composable: Composable, item: inout Item) {
     var height: CGFloat = 0.0
 
-    compositeSpots.filter({ $0.itemIndex == item.index }).forEach {
+    compositeComponents.filter({ $0.itemIndex == item.index }).forEach {
       $0.spot.view.removeFromSuperview()
 
-      if let index = compositeSpots.index(of: $0) {
-        compositeSpots.remove(at: index)
+      if let index = compositeComponents.index(of: $0) {
+        compositeComponents.remove(at: index)
       }
     }
 
@@ -340,7 +340,7 @@ public extension Spotable {
     let width = size.width
 
     spots.forEach { spot in
-      let compositeSpot = CompositeSpot(spot: spot,
+      let compositeSpot = CompositeComponent(spot: spot,
                                         parentSpot: self,
                                         itemIndex: item.index)
 
@@ -361,7 +361,7 @@ public extension Spotable {
 
       height += compositeSpot.spot.view.frame.size.height
 
-      compositeSpots.append(compositeSpot)
+      compositeComponents.append(compositeSpot)
     }
 
     item.size.height = height

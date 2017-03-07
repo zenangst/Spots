@@ -14,7 +14,7 @@ class TestSpot: XCTestCase {
   func testDefaultValues() {
     let items = [Item(title: "A"), Item(title: "B")]
     let model = ComponentModel(items: items, hybrid: true)
-    let spot = Spot(model: model)
+    let spot = Component(model: model)
 
     spot.setup(CGSize(width: 100, height: 100))
 
@@ -29,7 +29,7 @@ class TestSpot: XCTestCase {
 
   func testSpotCache() {
     let item = Item(title: "test")
-    let spot = Spot(cacheKey: "test-spot-cache")
+    let spot = Component(cacheKey: "test-spot-cache")
 
     XCTAssertEqual(spot.model.items.count, 0)
     spot.append(item) {
@@ -43,7 +43,7 @@ class TestSpot: XCTestCase {
         return
       }
 
-      let cachedSpot = Spot(cacheKey: cacheKey)
+      let cachedSpot = Component(cacheKey: cacheKey)
       XCTAssertEqual(cachedSpot.model.items[0].title, "test")
       XCTAssertEqual(cachedSpot.model.items.count, 1)
       cachedSpot.stateCache?.clear()
@@ -54,7 +54,7 @@ class TestSpot: XCTestCase {
     waitForExpectations(timeout: 10.0, handler: nil)
   }
 
-  func testHybridListSpotWithHeaderAndFooter() {
+  func testHybridListComponentWithHeaderAndFooter() {
     let model = ComponentModel(
       header: "Header",
       footer: "Footer",
@@ -67,14 +67,14 @@ class TestSpot: XCTestCase {
       ],
       hybrid: true
     )
-    let spot = Spot(model: model)
+    let spot = Component(model: model)
     spot.setup(CGSize(width: 100, height: 100))
 
     XCTAssertEqual(spot.view.frame.size, CGSize(width: 100, height: 460))
     XCTAssertEqual(spot.view.contentSize, CGSize(width: 100, height: 460))
   }
 
-  func testHybridGridSpotWithHeaderAndFooter() {
+  func testHybridGridComponentWithHeaderAndFooter() {
     let model = ComponentModel(
       header: "Header",
       footer: "Footer",
@@ -87,7 +87,7 @@ class TestSpot: XCTestCase {
       ],
       hybrid: true
     )
-    let spot = Spot(model: model)
+    let spot = Component(model: model)
     spot.setup(CGSize(width: 100, height: 100))
 
     XCTAssertEqual(spot.collectionView?.collectionViewLayout?.collectionViewContentSize, CGSize(width: 100, height: 200))
@@ -95,7 +95,7 @@ class TestSpot: XCTestCase {
     XCTAssertEqual(spot.view.contentSize, CGSize(width: 100, height: 300))
   }
 
-  func testHybridCarouselSpotWithHeaderAndFooter() {
+  func testHybridCarouselComponentWithHeaderAndFooter() {
     let model = ComponentModel(
       header: "Header",
       footer: "Footer",
@@ -108,7 +108,7 @@ class TestSpot: XCTestCase {
       ],
       hybrid: true
     )
-    let spot = Spot(model: model)
+    let spot = Component(model: model)
     spot.setup(CGSize(width: 100, height: 100))
 
     XCTAssertEqual(spot.view.frame.size, CGSize(width: 100, height: 150))

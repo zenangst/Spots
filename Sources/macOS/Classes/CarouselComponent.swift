@@ -2,7 +2,7 @@
 
 import Cocoa
 
-open class CarouselSpot: NSObject, Gridable {
+open class CarouselComponent: NSObject, Gridable {
 
   /// Return collection view as a scroll view
   open var view: ScrollView {
@@ -12,7 +12,7 @@ open class CarouselSpot: NSObject, Gridable {
   public static var layout: Layout = Layout()
 
   /// Child spots
-  public var compositeSpots: [CompositeSpot] = []
+  public var compositeComponents: [CompositeComponent] = []
 
   public struct Key {
     public static let minimumInteritemSpacing = "item-spacing"
@@ -59,7 +59,7 @@ open class CarouselSpot: NSObject, Gridable {
 
   open static var defaultKind: StringConvertible = ComponentModel.Kind.carousel.string
 
-  /// A SpotsDelegate that is used for the CarouselSpot
+  /// A SpotsDelegate that is used for the CarouselComponent
   open weak var delegate: SpotsDelegate?
 
   open var model: ComponentModel
@@ -105,7 +105,7 @@ open class CarouselSpot: NSObject, Gridable {
   var spotDataSource: DataSource?
   var spotDelegate: Delegate?
 
-  /// A required initializer to instantiate a CarouselSpot with a model.
+  /// A required initializer to instantiate a CarouselComponent with a model.
   ///
   /// - parameter component: A component
   ///
@@ -128,7 +128,7 @@ open class CarouselSpot: NSObject, Gridable {
       self.model.kind = ComponentModel.Kind.carousel.string
     }
 
-    registerDefault(view: CarouselSpotCell.self)
+    registerDefault(view: CarouselComponentCell.self)
     registerComposite(view: GridComposite.self)
     registerAndPrepare()
     setupCollectionView()
@@ -146,7 +146,7 @@ open class CarouselSpot: NSObject, Gridable {
     scrollView.documentView = collectionView
   }
 
-  /// Instantiate a CarouselSpot with a cache key.
+  /// Instantiate a CarouselComponent with a cache key.
   ///
   /// - parameter cacheKey: A unique cache key for the Spotable object.
   ///
@@ -224,7 +224,7 @@ open class CarouselSpot: NSObject, Gridable {
     }
 
     layout(size)
-    CarouselSpot.configure?(collectionView)
+    CarouselComponent.configure?(collectionView)
   }
 
   fileprivate func configureTitleView(_ layoutInsets: EdgeInsets) {

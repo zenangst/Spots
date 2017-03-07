@@ -1,6 +1,6 @@
 public extension CarouselScrollDelegate {
 
-  /// Invoked when ever a user scrolls a CarouselSpot.
+  /// Invoked when ever a user scrolls a CarouselComponent.
   ///
   /// - parameter spot: The spotable object that was scrolled.
   func spotableCarouselDidScroll(_ spot: Spotable) {}

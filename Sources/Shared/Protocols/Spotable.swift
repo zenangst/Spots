@@ -14,7 +14,7 @@ public protocol Spotable: class {
   static var layout: Layout { get set }
 
   /// Child spots
-  var compositeSpots: [CompositeSpot] { get set }
+  var compositeComponents: [CompositeComponent] { get set }
 
   #if !os(OSX)
     /// A SpotsFocusDelegate object

@@ -244,7 +244,7 @@ open class Controller: UIViewController, SpotsProtocol, SpotsFocusDelegate, UISc
     spots.forEach { spot in
       spot.layout(size)
 
-      spot.compositeSpots.forEach {
+      spot.compositeComponents.forEach {
         $0.spot.layout(spot.view.frame.size)
       }
     }
@@ -278,9 +278,9 @@ open class Controller: UIViewController, SpotsProtocol, SpotsFocusDelegate, UISc
     var yOffset: CGFloat = 0.0
 
     spots.enumerated().forEach { index, spot in
-      setupSpot(at: index, spot: spot)
+      setupComponent(at: index, spot: spot)
       animated?(spot.view)
-      (spot as? CarouselSpot)?.layout.yOffset = yOffset
+      (spot as? CarouselComponent)?.layout.yOffset = yOffset
       yOffset += spot.view.frame.size.height
     }
   }
@@ -289,7 +289,7 @@ open class Controller: UIViewController, SpotsProtocol, SpotsFocusDelegate, UISc
   ///
   /// - parameter index: The index of the Spotable object
   /// - parameter spot:  The spotable object that is going to be setup
-  open func setupSpot(at index: Int, spot: Spotable) {
+  open func setupComponent(at index: Int, spot: Spotable) {
     if spot.view.superview == nil {
       scrollView.spotsContentView.addSubview(spot.view)
     }
@@ -308,7 +308,7 @@ open class Controller: UIViewController, SpotsProtocol, SpotsFocusDelegate, UISc
 
     /// Spot handles registering and preparing the items internally so there is no need to run this for that class.
     /// This should be removed in the future when we decide to remove the core types.
-    if !(spot is Spot) {
+    if !(spot is Component) {
       spot.registerAndPrepare()
 
       if !spot.items.isEmpty {
@@ -355,7 +355,7 @@ extension Controller {
       $0.delegate = delegate
       $0.focusDelegate = self
 
-      $0.compositeSpots.forEach {
+      $0.compositeComponents.forEach {
         $0.spot.delegate = delegate
         $0.spot.focusDelegate = self
       }

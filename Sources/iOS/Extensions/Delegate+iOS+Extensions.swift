@@ -105,7 +105,7 @@ extension Delegate: UITableViewDelegate {
 
     if header == nil {
       let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: spot.model.header)
-      view?.frame.size.height = spot.model.meta(ListSpot.Key.headerHeight, 0.0)
+      view?.frame.size.height = spot.model.meta(ListComponent.Key.headerHeight, 0.0)
       view?.frame.size.width = tableView.frame.size.width
 
       switch view {
@@ -135,7 +135,7 @@ extension Delegate: UITableViewDelegate {
 
     if header == nil {
       let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: spot.model.footer)
-      view?.frame.size.height = spot.model.meta(ListSpot.Key.headerHeight, 0.0)
+      view?.frame.size.height = spot.model.meta(ListComponent.Key.headerHeight, 0.0)
       view?.frame.size.width = tableView.frame.size.width
 
       switch view {
@@ -219,12 +219,12 @@ extension Delegate: UITableViewDelegate {
   /// - parameter tableView: The table-view object asking for the view object.
   /// - parameter section: An index number identifying a section of tableView.
   ///
-  /// - returns: A view object to be displayed in the header of section based on the kind of the ListSpot and registered headers.
+  /// - returns: A view object to be displayed in the header of section based on the kind of the ListComponent and registered headers.
   public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
     guard let spot = spot, !spot.model.header.isEmpty else { return nil }
 
     let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: spot.model.header)
-    view?.frame.size.height = spot.model.meta(ListSpot.Key.headerHeight, 0.0)
+    view?.frame.size.height = spot.model.meta(ListComponent.Key.headerHeight, 0.0)
     view?.frame.size.width = tableView.frame.size.width
 
     switch view {
@@ -252,7 +252,7 @@ extension Delegate: UITableViewDelegate {
     guard let spot = spot, !spot.model.footer.isEmpty else { return nil }
 
     let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: spot.model.footer)
-    view?.frame.size.height = spot.model.meta(ListSpot.Key.headerHeight, 0.0)
+    view?.frame.size.height = spot.model.meta(ListComponent.Key.headerHeight, 0.0)
     view?.frame.size.width = tableView.frame.size.width
 
     switch view {

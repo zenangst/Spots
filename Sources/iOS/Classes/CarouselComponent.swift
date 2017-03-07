@@ -2,34 +2,34 @@
 
 import UIKit
 
-/// A CarouselSpot, a collection view based Spotable object that lays out its items in a horizontal order
-open class CarouselSpot: NSObject, Gridable, SpotHorizontallyScrollable {
+/// A CarouselComponent, a collection view based Spotable object that lays out its items in a horizontal order
+open class CarouselComponent: NSObject, Gridable, SpotHorizontallyScrollable {
 
   public static var layout: Layout = .init()
   public static var interaction: Interaction = .init()
 
   /// Child spots
-  public var compositeSpots: [CompositeSpot] = []
+  public var compositeComponents: [CompositeComponent] = []
 
   /// A SpotsFocusDelegate object
   weak public var focusDelegate: SpotsFocusDelegate?
 
-  /// A boolean value that affects the sizing of items when using span, if enabled and the item count is less than the span, the CarouselSpot will even out the space between the items to align them
+  /// A boolean value that affects the sizing of items when using span, if enabled and the item count is less than the span, the CarouselComponent will even out the space between the items to align them
   open var dynamicSpan = false
 
-  /// A Registry object that holds identifiers and classes for cells used in the CarouselSpot
+  /// A Registry object that holds identifiers and classes for cells used in the CarouselComponent
   open static var views: Registry = Registry()
 
   /// A configuration closure that is run in setup(_:)
   open static var configure: ((_ view: UICollectionView, _ layout: UICollectionViewFlowLayout) -> Void)?
 
-  /// A Registry object that holds identifiers and classes for headers used in the CarouselSpot
+  /// A Registry object that holds identifiers and classes for headers used in the CarouselComponent
   open static var headers = Registry()
 
-  /// A StateCache for the CarouselSpot
+  /// A StateCache for the CarouselComponent
   open fileprivate(set) var stateCache: StateCache?
 
-  /// A component struct used as configuration and data source for the CarouselSpot
+  /// A component struct used as configuration and data source for the CarouselComponent
   open var model: ComponentModel {
     didSet {
       configurePageControl()
@@ -43,10 +43,10 @@ open class CarouselSpot: NSObject, Gridable, SpotHorizontallyScrollable {
     }
   }
 
-  /// A CarouselScrollDelegate, used when a CarouselSpot scrolls
+  /// A CarouselScrollDelegate, used when a CarouselComponent scrolls
   open weak var carouselScrollDelegate: CarouselScrollDelegate?
 
-  /// A SpotsDelegate that is used for the CarouselSpot
+  /// A SpotsDelegate that is used for the CarouselComponent
   open weak var delegate: SpotsDelegate?
 
   /// A UIPageControl, enable by setting pageIndicator to true
@@ -55,7 +55,7 @@ open class CarouselSpot: NSObject, Gridable, SpotHorizontallyScrollable {
   /// A custom UICollectionViewFlowLayout
   open var layout: CollectionLayout
 
-  /// A UICollectionView, used as the main UI component for a CarouselSpot
+  /// A UICollectionView, used as the main UI component for a CarouselComponent
   open var collectionView: UICollectionView
 
   /// The collection views background view
@@ -65,7 +65,7 @@ open class CarouselSpot: NSObject, Gridable, SpotHorizontallyScrollable {
   var spotDataSource: DataSource?
   var spotDelegate: Delegate?
 
-  /// Initialize an instantiate of CarouselSpot
+  /// Initialize an instantiate of CarouselComponent
   ///
   /// - parameter component: A component
   /// - parameter collectionView: The collection view that the carousel should use for rendering
@@ -103,9 +103,9 @@ open class CarouselSpot: NSObject, Gridable, SpotHorizontallyScrollable {
       self.model.kind = ComponentModel.Kind.carousel.string
     }
 
-    registerDefault(view: CarouselSpotCell.self)
+    registerDefault(view: CarouselComponentCell.self)
     registerComposite(view: CarouselComposite.self)
-    registerDefaultHeader(header: CarouselSpotHeader.self)
+    registerDefaultHeader(header: CarouselComponentHeader.self)
     register()
     configureCollectionView()
   }
@@ -120,7 +120,7 @@ open class CarouselSpot: NSObject, Gridable, SpotHorizontallyScrollable {
     self.init(model: model, collectionView: collectionView, layout: layout)
   }
 
-  /// A convenience initializer for CarouselSpot with base configuration.
+  /// A convenience initializer for CarouselComponent with base configuration.
   ///
   /// - parameter component:   A ComponentModel.
   /// - parameter top:         Top section inset.
@@ -139,7 +139,7 @@ open class CarouselSpot: NSObject, Gridable, SpotHorizontallyScrollable {
     layout.minimumLineSpacing = lineSpacing
   }
 
-  /// Instantiate a CarouselSpot with a cache key.
+  /// Instantiate a CarouselComponent with a cache key.
   ///
   /// - parameter cacheKey: A unique cache key for the Spotable object.
   ///
@@ -193,7 +193,7 @@ open class CarouselSpot: NSObject, Gridable, SpotHorizontallyScrollable {
       layout.headerReferenceSize.height = resolve?.view?.frame.size.height ?? 0.0
     }
 
-    CarouselSpot.configure?(collectionView, layout)
+    CarouselComponent.configure?(collectionView, layout)
 
     collectionView.frame.size.height += layout.headerReferenceSize.height
 

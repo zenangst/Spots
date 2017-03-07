@@ -2,11 +2,11 @@
 import Foundation
 import XCTest
 
-class ViewSpotTests: XCTestCase {
+class ViewComponentTests: XCTestCase {
 
   func testDictionaryRepresentation() {
-    let model = ComponentModel(title: "ViewSpot", kind: "view", span: 3, meta: ["headerHeight": 44.0])
-    let spot = ViewSpot(model: model)
+    let model = ComponentModel(title: "ViewComponent", kind: "view", span: 3, meta: ["headerHeight": 44.0])
+    let spot = ViewComponent(model: model)
     XCTAssertEqual(model.dictionary["index"] as? Int, spot.dictionary["index"] as? Int)
     XCTAssertEqual(model.dictionary["title"] as? String, spot.dictionary["title"] as? String)
     XCTAssertEqual(model.dictionary["kind"] as? String, spot.dictionary["kind"] as? String)
