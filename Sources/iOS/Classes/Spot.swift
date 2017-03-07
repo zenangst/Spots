@@ -1,7 +1,6 @@
 // swiftlint:disable weak_delegate
 
 import UIKit
-import Tailor
 
 public class Spot: NSObject, Spotable, SpotHorizontallyScrollable {
 
@@ -131,33 +130,6 @@ public class Spot: NSObject, Spotable, SpotHorizontallyScrollable {
     view.layoutSubviews()
   }
 
-  fileprivate func setupTableView(_ tableView: TableView, with size: CGSize) {
-    tableView.dataSource = spotDataSource
-    tableView.delegate = spotDelegate
-    tableView.rowHeight = UITableViewAutomaticDimension
-    tableView.frame.size = size
-    tableView.frame.size.width = round(size.width - (tableView.contentInset.left))
-    tableView.frame.origin.x = round(size.width / 2 - tableView.frame.width / 2)
-
-    prepareItems()
-
-    var height: CGFloat = 0.0
-    for item in component.items {
-      height += item.size.height
-    }
-
-    tableView.contentSize = CGSize(
-      width: tableView.frame.size.width,
-      height: height - tableView.contentInset.top - tableView.contentInset.bottom)
-
-    /// On iOS 8 and prior, the second cell always receives the same height as the first cell. Setting estimatedRowHeight magically fixes this issue. The value being set is not relevant.
-    if #available(iOS 9, *) {
-      return
-    } else {
-      tableView.estimatedRowHeight = 10
-    }
-  }
-
   fileprivate func setupCollectionView(_ collectionView: CollectionView, with size: CGSize) {
     collectionView.frame.size = size
     collectionView.dataSource = spotDataSource
@@ -176,91 +148,6 @@ public class Spot: NSObject, Spotable, SpotHorizontallyScrollable {
     }
   }
 
-  fileprivate func setupHorizontalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
-    guard let layout = collectionView.collectionViewLayout as? GridableLayout else {
-      return
-    }
-
-    collectionView.isScrollEnabled = true
-    layout.scrollDirection = .horizontal
-    #if os(iOS)
-      collectionView.isPagingEnabled = component.interaction.paginate == .page
-    #endif
-    configurePageControl()
-
-    if collectionView.contentSize.height > 0 {
-      collectionView.frame.size.height = collectionView.contentSize.height
-    } else {
-      var newCollectionViewHeight: CGFloat = 0.0
-
-      newCollectionViewHeight <- component.items.sorted(by: {
-        $0.size.height > $1.size.height
-      }).first?.size.height
-
-      collectionView.frame.size.height = newCollectionViewHeight
-
-      if collectionView.frame.size.height > 0 {
-        collectionView.frame.size.height += layout.sectionInset.top + layout.sectionInset.bottom
-      }
-    }
-
-    configureCollectionViewHeader(collectionView, with: size)
-
-    CarouselSpot.configure?(collectionView, layout)
-
-    collectionView.frame.size.height += layout.headerReferenceSize.height
-
-    if let componentLayout = component.layout {
-      collectionView.frame.size.height += CGFloat(componentLayout.inset.top + componentLayout.inset.bottom)
-    }
-
-    if let pageIndicatorPlacement = component.layout?.pageIndicatorPlacement {
-      switch pageIndicatorPlacement {
-      case .below:
-        layout.sectionInset.bottom += pageControl.frame.height
-        pageControl.frame.origin.y = collectionView.frame.height
-      case .overlay:
-        let verticalAdjustment = CGFloat(2)
-        pageControl.frame.origin.y = collectionView.frame.height - pageControl.frame.height - verticalAdjustment
-      }
-    }
-  }
-
-  fileprivate func setupVerticalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
-    guard let collectionViewLayout = collectionView.collectionViewLayout as? GridableLayout else {
-      return
-    }
-
-    configureCollectionViewHeader(collectionView, with: size)
-
-    GridSpot.configure?(collectionView, collectionViewLayout)
-  }
-
-  fileprivate func configureCollectionViewHeader(_ collectionView: CollectionView, with size: CGSize) {
-    guard let collectionViewLayout = collectionView.collectionViewLayout as? GridableLayout else {
-      return
-    }
-
-    guard !component.header.isEmpty else {
-      return
-    }
-
-    guard let view = Configuration.views.make(component.header)?.view as? Componentable else {
-      return
-    }
-
-    collectionViewLayout.headerReferenceSize.width = collectionView.frame.size.width
-    collectionViewLayout.headerReferenceSize.height = view.frame.size.height
-
-    if collectionViewLayout.headerReferenceSize.width == 0.0 {
-      collectionViewLayout.headerReferenceSize.width = size.width
-    }
-
-    if collectionViewLayout.headerReferenceSize.height == 0.0 {
-      collectionViewLayout.headerReferenceSize.height = view.preferredHeaderHeight
-    }
-  }
-
   fileprivate func layoutCollectionView(_ collectionView: CollectionView, with size: CGSize) {
     prepareItems()
 
@@ -272,32 +159,6 @@ public class Spot: NSObject, Spotable, SpotHorizontallyScrollable {
     }
   }
 
-  fileprivate func layoutTableView(_ tableView: TableView, with size: CGSize) {
-    tableView.frame.size.width = round(size.width - (tableView.contentInset.left))
-    tableView.frame.origin.x = round(size.width / 2 - tableView.frame.width / 2)
-  }
-
-  fileprivate func layoutHorizontalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
-    guard let collectionViewLayout = collectionView.collectionViewLayout as? GridableLayout else {
-      return
-    }
-
-    collectionViewLayout.prepare()
-    collectionViewLayout.invalidateLayout()
-    collectionView.frame.size.width = size.width
-    collectionView.frame.size.height = collectionViewLayout.contentSize.height
-  }
-
-  fileprivate func layoutVerticalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
-    guard let collectionViewLayout = collectionView.collectionViewLayout as? GridableLayout else {
-      return
-    }
-
-    collectionViewLayout.prepare()
-    collectionViewLayout.invalidateLayout()
-    collectionView.frame.size = collectionViewLayout.collectionViewContentSize
-  }
-
   func registerDefaultIfNeeded(view: View.Type) {
     guard Configuration.views.storage[Configuration.views.defaultIdentifier] == nil else {
       return
@@ -306,7 +167,7 @@ public class Spot: NSObject, Spotable, SpotHorizontallyScrollable {
     Configuration.views.defaultItem = Registry.Item.classType(view)
   }
 
-  private func configurePageControl() {
+  func configurePageControl() {
     guard let placement = component.layout?.pageIndicatorPlacement else {
       pageControl.removeFromSuperview()
       return
