@@ -96,7 +96,7 @@ open class CarouselSpot: NSObject, Gridable {
     let lineView = NSView()
     lineView.frame.size.height = 1
     lineView.wantsLayer = true
-    lineView.layer?.backgroundColor = NSColor.gray.withAlphaComponentModel(0.2).cgColor
+    lineView.layer?.backgroundColor = NSColor.gray.withAlphaComponent(0.2).cgColor
 
     return lineView
   }()

@@ -11,7 +11,7 @@ open class RowSpotItem: NSCollectionViewItem, ItemConfigurable {
   open override var isSelected: Bool {
     didSet {
       if isSelected {
-        view.layer?.backgroundColor = NSColor.black.withAlphaComponentModel(0.85).cgColor
+        view.layer?.backgroundColor = NSColor.black.withAlphaComponent(0.85).cgColor
       } else {
         view.layer?.backgroundColor = NSColor.clear.cgColor
       }

@@ -16,7 +16,7 @@ class HeaderView: NSView, ItemConfigurable, Componentable {
     addSubview(titleLabel)
 
     wantsLayer = true
-    layer?.backgroundColor = NSColor.gray.withAlphaComponentModel(0.25).cgColor
+    layer?.backgroundColor = NSColor.gray.withAlphaComponent(0.25).cgColor
 
     configureConstraints()
   }
@@ -56,7 +56,7 @@ class TextView: NSView, ItemConfigurable {
     addSubview(titleLabel)
 
     wantsLayer = true
-    layer?.backgroundColor = NSColor.gray.withAlphaComponentModel(0.25).cgColor
+    layer?.backgroundColor = NSColor.gray.withAlphaComponent(0.25).cgColor
 
     configureConstraints()
   }
@@ -93,7 +93,7 @@ class FooterView: NSView, ItemConfigurable, Componentable {
     addSubview(titleLabel)
 
     wantsLayer = true
-    layer?.backgroundColor = NSColor.gray.withAlphaComponentModel(0.25).cgColor
+    layer?.backgroundColor = NSColor.gray.withAlphaComponent(0.25).cgColor
 
     configureConstraints()
   }

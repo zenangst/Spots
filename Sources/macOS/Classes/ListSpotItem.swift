@@ -9,7 +9,7 @@ open class ListSpotItem: NSTableRowView, ItemConfigurable {
   open override var isSelected: Bool {
     didSet {
       if isSelected {
-        layer?.backgroundColor = NSColor.black.withAlphaComponentModel(0.85).cgColor
+        layer?.backgroundColor = NSColor.black.withAlphaComponent(0.85).cgColor
       } else {
         layer?.backgroundColor = NSColor.black.cgColor
       }
@@ -45,7 +45,7 @@ open class ListSpotItem: NSTableRowView, ItemConfigurable {
     lineView.frame.size.height = 1
     lineView.wantsLayer = true
     lineView.layer = CALayer()
-    lineView.layer?.backgroundColor = NSColor.gray.withAlphaComponentModel(0.4).cgColor
+    lineView.layer?.backgroundColor = NSColor.gray.withAlphaComponent(0.4).cgColor
     lineView.autoresizingMask = .viewWidthSizable
 
     return lineView

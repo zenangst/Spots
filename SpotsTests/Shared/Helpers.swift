@@ -146,7 +146,7 @@ extension Controller {
       super.init(frame: frame)
       addSubview(titleLabel)
 
-      backgroundColor = UIColor.gray.withAlphaComponentModel(0.25)
+      backgroundColor = UIColor.gray.withAlphaComponent(0.25)
 
       configureConstraints()
     }
