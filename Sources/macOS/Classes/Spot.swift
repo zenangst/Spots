@@ -18,9 +18,6 @@ public class Spot: NSObject, Spotable {
   var headerView: View?
   var footerView: View?
 
-  var headerHeight = CGFloat(0.0)
-  var footerHeight = CGFloat(0.0)
-
   public var component: Component
   public var componentKind: Component.Kind = .list
   public var compositeSpots: [CompositeSpot] = []
@@ -78,6 +75,22 @@ public class Spot: NSObject, Spotable {
   open lazy var scrollView: ScrollView = ScrollView(documentView: self.documentView)
   open lazy var documentView: FlippedView = FlippedView()
 
+  var headerHeight: CGFloat {
+    guard let headerView = headerView else {
+      return 0.0
+    }
+
+    return headerView.frame.size.height
+  }
+
+  var footerHeight: CGFloat {
+    guard let footerView = footerView else {
+      return 0.0
+    }
+
+    return footerView.frame.size.height
+  }
+
   public var view: ScrollView {
     return scrollView
   }
@@ -132,6 +145,7 @@ public class Spot: NSObject, Spotable {
       userInterface = TableView()
     } else {
       let collectionView = CollectionView(frame: CGRect.zero)
+      collectionView.collectionViewLayout = GridableLayout()
       userInterface = collectionView
     }
 
@@ -175,6 +189,9 @@ public class Spot: NSObject, Spotable {
 
     scrollView.frame.size = size
 
+    setupHeader(kind: component.header)
+    setupFooter(kind: component.footer)
+
     if let tableView = self.tableView {
       documentView.addSubview(tableView)
       setupTableView(tableView, with: size)
@@ -193,7 +210,58 @@ public class Spot: NSObject, Spotable {
       layoutCollectionView(collectionView, with: size)
     }
 
+    layoutHeaderFooterViews(size)
+
     view.layoutSubviews()
+  }
+
+  fileprivate func layoutHeaderFooterViews(_ size: CGSize) {
+    headerView?.frame.size.width = size.width
+    footerView?.frame.size.width = size.width
+    footerView?.frame.origin.y = scrollView.frame.height - footerHeight
+
+    if let layout = component.layout {
+      headerView?.frame.origin.x = CGFloat(layout.inset.left)
+      footerView?.frame.origin.x = CGFloat(layout.inset.left)
+      headerView?.frame.size.width -= CGFloat(layout.inset.left + layout.inset.right)
+      footerView?.frame.size.width -= CGFloat(layout.inset.left + layout.inset.right)
+    }
+  }
+
+  fileprivate func setupHeader(kind: String) {
+    guard !component.header.isEmpty, headerView == nil else {
+      return
+    }
+
+    if let (_, headerView) = Configuration.views.make(component.header) {
+      if let headerView = headerView,
+        let componentable = headerView as? Componentable {
+        let size = CGSize(width: view.frame.width,
+                          height: componentable.preferredHeaderHeight)
+        componentable.configure(component)
+        headerView.frame.size = size
+        self.headerView = headerView
+        scrollView.addSubview(headerView)
+      }
+    }
+  }
+
+  fileprivate func setupFooter(kind: String) {
+    guard !component.footer.isEmpty, footerView == nil else {
+      return
+    }
+
+    if let (_, footerView) = Configuration.views.make(component.footer) {
+      if let footerView = footerView,
+        let componentable = footerView as? Componentable {
+        let size = CGSize(width: view.frame.width,
+                          height: componentable.preferredHeaderHeight)
+        componentable.configure(component)
+        footerView.frame.size = size
+        self.footerView = footerView
+        scrollView.addSubview(footerView)
+      }
+    }
   }
 
   fileprivate func setupTableView(_ tableView: TableView, with size: CGSize) {
@@ -237,6 +305,28 @@ public class Spot: NSObject, Spotable {
   }
 
   fileprivate func setupCollectionView(_ collectionView: CollectionView, with size: CGSize) {
+    if let componentLayout = self.component.layout,
+      let collectionViewLayout = collectionView.collectionViewLayout as? FlowLayout {
+      componentLayout.configure(collectionViewLayout: collectionViewLayout)
+    }
+
+    collectionView.frame.size = size
+
+    prepareItems()
+
+    collectionView.backgroundColors = [NSColor.clear]
+    collectionView.isSelectable = true
+    collectionView.allowsMultipleSelection = false
+    collectionView.allowsEmptySelection = true
+    collectionView.layer = CALayer()
+    collectionView.wantsLayer = true
+    collectionView.dataSource = spotDataSource
+    collectionView.delegate = spotDelegate
+
+    let backgroundView = NSView()
+    backgroundView.wantsLayer = true
+    collectionView.backgroundView = backgroundView
+
     switch componentKind {
     case .carousel:
       setupHorizontalCollectionView(collectionView, with: size)
@@ -246,15 +336,25 @@ public class Spot: NSObject, Spotable {
   }
 
   fileprivate func setupHorizontalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
+    var newCollectionViewHeight: CGFloat = 0.0
 
+    newCollectionViewHeight <- component.items.sorted(by: {
+      $0.size.height > $1.size.height
+    }).first?.size.height
+
+    scrollView.scrollingEnabled = (component.items.count > 1)
+    scrollView.hasHorizontalScroller = (component.items.count > 1)
+
+    collectionView.frame.size.height = newCollectionViewHeight
+    CarouselSpot.configure?(collectionView)
   }
 
   fileprivate func setupVerticalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
-
+    GridSpot.configure?(collectionView)
   }
 
   fileprivate func layoutTableView(_ tableView: TableView, with size: CGSize) {
-    tableView.frame.origin.y = headerHeight
+    tableView.frame.origin.y = headerView?.frame.size.height ?? 0.0
     tableView.sizeToFit()
     tableView.frame.size.width = size.width
 
@@ -275,11 +375,63 @@ public class Spot: NSObject, Spotable {
   }
 
   fileprivate func layoutHorizontalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
+    guard let collectionViewLayout = collectionView.collectionViewLayout else {
+      return
+    }
 
+    collectionViewLayout.prepare()
+    collectionViewLayout.invalidateLayout()
+
+    if let collectionViewContentSize = collectionView.collectionViewLayout?.collectionViewContentSize {
+      var newCollectionViewHeight: CGFloat = 0.0
+
+      newCollectionViewHeight <- component.items.sorted(by: {
+        $0.size.height > $1.size.height
+      }).first?.size.height
+
+      var collectionViewContentSize = collectionViewContentSize
+
+      if let layout = component.layout {
+        collectionViewContentSize.width += CGFloat(layout.inset.left)
+      }
+
+      collectionView.frame.origin.y = headerHeight
+      collectionView.frame.size.width = collectionViewContentSize.width
+      collectionView.frame.size.height = newCollectionViewHeight
+
+      documentView.frame.size = collectionView.frame.size
+
+      if let layout = component.layout {
+        documentView.frame.size.width += CGFloat(layout.inset.right)
+      }
+
+      documentView.frame.size.height = collectionView.frame.size.height + headerHeight + footerHeight
+
+      scrollView.frame.size.width = size.width
+      scrollView.frame.size.height = documentView.frame.size.height
+      scrollView.scrollerInsets.bottom = footerHeight
+    }
   }
 
   fileprivate func layoutVerticalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
+    guard let collectionViewLayout = collectionView.collectionViewLayout else {
+      return
+    }
 
+    collectionView.frame.origin.y = headerHeight
+    collectionViewLayout.prepare()
+    collectionViewLayout.invalidateLayout()
+
+    if let collectionViewContentSize = collectionView.collectionViewLayout?.collectionViewContentSize {
+      var collectionViewContentSize = collectionViewContentSize
+      collectionViewContentSize.height += headerHeight + footerHeight
+      collectionView.frame.size.height = collectionViewContentSize.height
+      collectionView.frame.size.width = collectionViewContentSize.width
+
+      documentView.frame.size = collectionViewContentSize
+
+      scrollView.frame.size.height = collectionView.frame.height
+    }
   }
 
   func registerDefaultIfNeeded(view: View.Type) {
@@ -304,6 +456,40 @@ public class Spot: NSObject, Spotable {
         return
     }
     delegate?.spotable(self, itemSelected: item)
+  }
+
+  public func sizeForItem(at indexPath: IndexPath) -> CGSize {
+    if let collectionView = collectionView,
+      component.interaction.scrollDirection == .horizontal {
+      var width: CGFloat
+
+      if let layout = component.layout {
+        width = layout.span > 0
+          ? collectionView.frame.width / CGFloat(layout.span)
+          : collectionView.frame.width
+      } else {
+        width = collectionView.frame.width
+      }
+
+      if let layout = collectionView.collectionViewLayout as? NSCollectionViewFlowLayout {
+        width -= layout.sectionInset.left - layout.sectionInset.right
+        width -= layout.minimumInteritemSpacing
+        width -= layout.minimumLineSpacing
+      }
+
+      if component.items[indexPath.item].size.width == 0.0 {
+        component.items[indexPath.item].size.width = width
+      }
+
+      return CGSize(
+        width: ceil(component.items[indexPath.item].size.width),
+        height: ceil(component.items[indexPath.item].size.height))
+    } else {
+      return CGSize(
+        width:  item(at: indexPath)?.size.width  ?? 0.0,
+        height: item(at: indexPath)?.size.height ?? 0.0
+      )
+    }
   }
 
   public func register() {

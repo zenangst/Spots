@@ -70,7 +70,48 @@ class TestSpot: XCTestCase {
     let spot = Spot(component: component)
     spot.setup(CGSize(width: 100, height: 100))
 
-    XCTAssertEqual(spot.view.frame.size, CGSize(width: 100, height: 360))
-    XCTAssertEqual(spot.view.contentSize, CGSize(width: 100, height: 360))
+    XCTAssertEqual(spot.view.frame.size, CGSize(width: 100, height: 460))
+    XCTAssertEqual(spot.view.contentSize, CGSize(width: 100, height: 460))
+  }
+
+  func testHybridGridSpotWithHeaderAndFooter() {
+    let component = Component(
+      header: "Header",
+      footer: "Footer",
+      kind: Component.Kind.grid.string,
+      items: [
+        Item(title: "A", kind: "TextView"),
+        Item(title: "B", kind: "TextView"),
+        Item(title: "C", kind: "TextView"),
+        Item(title: "D", kind: "TextView")
+      ],
+      hybrid: true
+    )
+    let spot = Spot(component: component)
+    spot.setup(CGSize(width: 100, height: 100))
+
+    XCTAssertEqual(spot.collectionView?.collectionViewLayout?.collectionViewContentSize, CGSize(width: 100, height: 200))
+    XCTAssertEqual(spot.view.frame.size, CGSize(width: 100, height: 300))
+    XCTAssertEqual(spot.view.contentSize, CGSize(width: 100, height: 300))
+  }
+
+  func testHybridCarouselSpotWithHeaderAndFooter() {
+    let component = Component(
+      header: "Header",
+      footer: "Footer",
+      kind: Component.Kind.carousel.string,
+      items: [
+        Item(title: "A", kind: "TextView"),
+        Item(title: "B", kind: "TextView"),
+        Item(title: "C", kind: "TextView"),
+        Item(title: "D", kind: "TextView")
+      ],
+      hybrid: true
+    )
+    let spot = Spot(component: component)
+    spot.setup(CGSize(width: 100, height: 100))
+
+    XCTAssertEqual(spot.view.frame.size, CGSize(width: 100, height: 150))
+    XCTAssertEqual(spot.view.contentSize, CGSize(width: 100, height: 150))
   }
 }
