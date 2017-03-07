@@ -9,7 +9,7 @@ open class CarouselComponent: NSObject, Gridable, SpotHorizontallyScrollable {
   public static var interaction: Interaction = .init()
 
   /// Child spots
-  public var compositeComponents: [CompositeSpot] = []
+  public var compositeComponents: [CompositeComponent] = []
 
   /// A SpotsFocusDelegate object
   weak public var focusDelegate: SpotsFocusDelegate?

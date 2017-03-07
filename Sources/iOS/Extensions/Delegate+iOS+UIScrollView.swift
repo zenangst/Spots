@@ -12,7 +12,7 @@ extension Delegate: UIScrollViewDelegate {
       }
 
       switch spot {
-      case let spot as Spot:
+      case let spot as Component:
         spot.carouselScrollDelegate?.spotableCarouselDidScroll(spot)
         if spot.model.layout?.pageIndicatorPlacement == .overlay {
           spot.pageControl.frame.origin.x = scrollView.contentOffset.x

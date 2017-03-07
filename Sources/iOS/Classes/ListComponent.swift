@@ -31,7 +31,7 @@ open class ListComponent: NSObject, Listable {
   weak public var focusDelegate: SpotsFocusDelegate?
 
   /// Child spots
-  public var compositeComponents: [CompositeSpot] = []
+  public var compositeComponents: [CompositeComponent] = []
 
   /// A configuration closure
   open var configure: ((ItemConfigurable) -> Void)? {

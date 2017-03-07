@@ -17,7 +17,7 @@ public class Component: NSObject, Spotable, SpotHorizontallyScrollable {
 
   public var model: ComponentModel
   public var componentKind: ComponentModel.Kind = .list
-  public var compositeComponents: [CompositeSpot] = []
+  public var compositeComponents: [CompositeComponent] = []
 
   public var configure: ((ItemConfigurable) -> Void)? {
     didSet {
@@ -85,7 +85,7 @@ public class Component: NSObject, Spotable, SpotHorizontallyScrollable {
   public required convenience init(model: ComponentModel) {
     var model = model
     if model.kind.isEmpty {
-      model.kind = Spot.defaultKind
+      model.kind = Component.defaultKind
     }
 
     let kind = ComponentModel.Kind(rawValue: model.kind) ?? .list

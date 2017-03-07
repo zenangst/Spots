@@ -308,7 +308,7 @@ open class Controller: UIViewController, SpotsProtocol, SpotsFocusDelegate, UISc
 
     /// Spot handles registering and preparing the items internally so there is no need to run this for that class.
     /// This should be removed in the future when we decide to remove the core types.
-    if !(spot is Spot) {
+    if !(spot is Component) {
       spot.registerAndPrepare()
 
       if !spot.items.isEmpty {

@@ -20,7 +20,7 @@ open class RowComponent: NSObject, Gridable {
   weak public var focusDelegate: SpotsFocusDelegate?
 
   /// Child spots
-  public var compositeComponents: [CompositeSpot] = []
+  public var compositeComponents: [CompositeComponent] = []
 
   /// A component struct used as configuration and data source for the RowComponent
   open var model: ComponentModel

@@ -7,7 +7,7 @@ public extension Composable where Self : View {
   ///
   ///  - parameter item:  The item that is currently being configured in the list
   ///  - parameter spots: A collection of Spotable objects created from the children of the item
-  func configure(_ item: inout Item, compositeComponents: [CompositeSpot]?) {
+  func configure(_ item: inout Item, compositeComponents: [CompositeComponent]?) {
     guard let compositeComponents = compositeComponents else {
       return
     }
