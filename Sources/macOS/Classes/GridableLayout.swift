@@ -14,7 +14,7 @@ public class GridableLayout: FlowLayout {
 
   open override func prepare() {
     guard let delegate = collectionView?.delegate as? Delegate,
-      let spot = delegate.spot
+      let component = delegate.component
       else {
         return
     }
@@ -23,14 +23,14 @@ public class GridableLayout: FlowLayout {
 
     switch scrollDirection {
     case .horizontal:
-      guard let firstItem = spot.items.first else { return }
+      guard let firstItem = component.items.first else { return }
 
-      contentSize.width = spot.items.reduce(0, { $0 + floor($1.size.width) })
-      contentSize.width += minimumInteritemSpacing * CGFloat(spot.items.count - 1)
+      contentSize.width = component.items.reduce(0, { $0 + floor($1.size.width) })
+      contentSize.width += minimumInteritemSpacing * CGFloat(component.items.count - 1)
 
       contentSize.height = firstItem.size.height
     case .vertical:
-      contentSize.width = spot.view.frame.width
+      contentSize.width = component.view.frame.width
       contentSize.height = super.collectionViewContentSize.height
     }
   }
@@ -38,13 +38,13 @@ public class GridableLayout: FlowLayout {
   public override func shouldInvalidateLayout(forBoundsChange newBounds: NSRect) -> Bool {
     guard let collectionView = collectionView,
       let delegate = collectionView.delegate as? Delegate,
-      let spot = delegate.spot else {
+      let component = delegate.component else {
         return false
     }
 
     var offset: CGFloat = 0.0
-    if let spot = spot as? Component {
-      offset += spot.headerHeight + spot.footerHeight
+    if let component = component as? Component {
+      offset += component.headerHeight + component.footerHeight
     }
 
     let shouldInvalidateLayout = newBounds.size.height != collectionView.frame.height + offset

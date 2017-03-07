@@ -128,8 +128,8 @@ import Tailor
 
     userInterface.register()
 
-    self.spotDataSource = DataSource(spot: self)
-    self.spotDelegate = Delegate(spot: self)
+    self.spotDataSource = DataSource(component: self)
+    self.spotDelegate = Delegate(component: self)
   }
 
   public required convenience init(model: ComponentModel) {

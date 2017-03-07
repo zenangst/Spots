@@ -78,8 +78,8 @@ public class Component: NSObject, CoreComponent, ComponentHorizontallyScrollable
       componentLayout.configure(collectionViewLayout: collectionViewLayout)
     }
 
-    self.spotDataSource = DataSource(spot: self)
-    self.spotDelegate = Delegate(spot: self)
+    self.spotDataSource = DataSource(component: self)
+    self.spotDelegate = Delegate(component: self)
   }
 
   public required convenience init(model: ComponentModel) {

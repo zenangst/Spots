@@ -96,8 +96,8 @@ open class CarouselComponent: NSObject, Gridable, ComponentHorizontallyScrollabl
     self.userInterface = collectionView
     self.model.layout?.configure(spot: self)
     self.dynamicSpan = self.model.layout?.dynamicSpan ?? false
-    self.spotDataSource = DataSource(spot: self)
-    self.spotDelegate = Delegate(spot: self)
+    self.spotDataSource = DataSource(component: self)
+    self.spotDelegate = Delegate(component: self)
 
     if model.kind.isEmpty {
       self.model.kind = ComponentModel.Kind.carousel.string

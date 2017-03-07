@@ -10,7 +10,7 @@ extension Delegate: NSCollectionViewDelegate {
      */
     Dispatch.after(seconds: 0.1) { [weak self] in
       guard let weakSelf = self, let first = indexPaths.first,
-        let spot = weakSelf.spot,
+        let spot = weakSelf.component,
         let item = spot.item(at: first.item), first.item < spot.items.count else {
           return
       }
@@ -27,7 +27,7 @@ extension Delegate: NSCollectionViewDelegate {
     let view = item
 
     guard
-      let spot = spot,
+      let spot = component,
       let item = spot.item(at: indexPath)
       else {
         return
@@ -45,7 +45,7 @@ extension Delegate: NSCollectionViewDelegate {
     let view = item
 
     guard
-      let spot = spot,
+      let spot = component,
       let item = spot.item(at: indexPath)
       else {
         return
@@ -58,7 +58,7 @@ extension Delegate: NSCollectionViewDelegate {
 extension Delegate: NSCollectionViewDelegateFlowLayout {
 
   public func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> NSSize {
-    guard let spot = spot else {
+    guard let spot = component else {
       return CGSize.zero
     }
     return spot.sizeForItem(at: indexPath)
@@ -68,7 +68,7 @@ extension Delegate: NSCollectionViewDelegateFlowLayout {
 extension Delegate: NSTableViewDelegate {
 
   public func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
-    guard let spot = spot,
+    guard let spot = component,
       let item = spot.item(at: row),
       row > -1 && row < spot.model.items.count
       else {
@@ -83,7 +83,7 @@ extension Delegate: NSTableViewDelegate {
   }
 
   public func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
-    guard let spot = spot else {
+    guard let spot = component else {
       return 1.0
     }
 
@@ -101,7 +101,7 @@ extension Delegate: NSTableViewDelegate {
   }
 
   public func tableView(_ tableView: NSTableView, rowViewForRow row: Int) -> NSTableRowView? {
-    guard let spot = spot, row >= 0 && row < spot.model.items.count else {
+    guard let spot = component, row >= 0 && row < spot.model.items.count else {
       return nil
     }
 
@@ -155,7 +155,7 @@ extension Delegate: NSTableViewDelegate {
 
   public func tableView(_ tableView: NSTableView, willDisplayCell cell: Any, for tableColumn: NSTableColumn?, row: Int) {
     guard
-      let spot = spot,
+      let spot = component,
       let item = spot.item(at: row),
       let view = cell as? View
       else {

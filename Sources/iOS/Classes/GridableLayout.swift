@@ -26,7 +26,7 @@ open class GridableLayout: UICollectionViewFlowLayout {
   /// Subclasses should always call super if they override.
   open override func prepare() {
     guard let delegate = collectionView?.delegate as? Delegate,
-      let spot = delegate.spot
+      let spot = delegate.component
       else {
         return
     }
@@ -128,7 +128,7 @@ open class GridableLayout: UICollectionViewFlowLayout {
   open override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
     guard let collectionView = collectionView,
       let dataSource = collectionView.dataSource as? DataSource,
-      let spot = dataSource.spot
+      let spot = dataSource.component
       else {
         return nil
     }

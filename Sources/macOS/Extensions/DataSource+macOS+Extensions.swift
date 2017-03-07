@@ -14,11 +14,11 @@ extension DataSource: NSCollectionViewDataSource {
   /// - parameter collectionView: The collection view requesting the information.
   /// - parameter numberOfItemsInSection: The index number of the section. Section indexes are zero based.
   public func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
-    guard let spot = spot else {
+    guard let component = component else {
       return 0
     }
 
-    return spot.model.items.count
+    return component.model.items.count
   }
 
   /// Asks your data source object to provide the item at the specified location in the collection view.
@@ -30,17 +30,17 @@ extension DataSource: NSCollectionViewDataSource {
   public func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
     let reuseIdentifier: String
 
-    guard let spot = spot else {
+    guard let component = component else {
       return NSCollectionViewItem()
     }
 
     /// This is to make sure that all views are registered on the collection view
-    spot.register()
+    component.register()
 
-    if let gridable = spot as? Gridable {
+    if let gridable = component as? Gridable {
       reuseIdentifier = gridable.identifier(at: indexPath.item)
     } else {
-      reuseIdentifier = spot.identifier(at: indexPath.item)
+      reuseIdentifier = component.identifier(at: indexPath.item)
     }
 
     let item = collectionView.makeItem(withIdentifier: reuseIdentifier, for: indexPath)
@@ -49,15 +49,15 @@ extension DataSource: NSCollectionViewDataSource {
     case let item as GridWrapper:
       if let (_, resolvedView) = Configuration.views.make(reuseIdentifier), let view = resolvedView {
         item.configure(with: view)
-        (view as? ItemConfigurable)?.configure(&spot.model.items[indexPath.item])
+        (view as? ItemConfigurable)?.configure(&component.model.items[indexPath.item])
       }
     case let item as Composable:
-      let spots = spot.compositeComponents.filter { $0.itemIndex == indexPath.item }
+      let spots = component.compositeComponents.filter { $0.itemIndex == indexPath.item }
       item.contentView.frame.size.width = collectionView.frame.size.width
-      item.contentView.frame.size.height = spot.computedHeight
-      item.configure(&spot.model.items[indexPath.item], compositeComponents: spots)
+      item.contentView.frame.size.height = component.computedHeight
+      item.configure(&component.model.items[indexPath.item], compositeComponents: spots)
     case let item as ItemConfigurable:
-      item.configure(&spot.model.items[indexPath.item])
+      item.configure(&component.model.items[indexPath.item])
     default:
       break
     }
@@ -72,11 +72,11 @@ extension DataSource: NSTableViewDataSource {
   ///
   /// - parameter tableView: The table view that sent the message.
   public func numberOfRows(in tableView: NSTableView) -> Int {
-    guard let spot = spot else {
+    guard let component = component else {
       return 0
     }
 
-    return spot.model.items.count
+    return component.model.items.count
   }
 
   /// Called by aTableView when the mouse button is released over a table view that previously decided to allow a drop.

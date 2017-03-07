@@ -1,9 +1,9 @@
 import Foundation
 
 public class Delegate: NSObject {
-  weak var spot: CoreComponent?
+  weak var component: CoreComponent?
 
-  init(spot: CoreComponent) {
-    self.spot = spot
+  init(component: CoreComponent) {
+    self.component = component
   }
 }

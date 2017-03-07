@@ -158,8 +158,8 @@ open class RowComponent: NSObject, Gridable {
     super.init()
     self.userInterface = collectionView
     self.model.layout?.configure(spot: self)
-    self.spotDataSource = DataSource(spot: self)
-    self.spotDelegate = Delegate(spot: self)
+    self.spotDataSource = DataSource(component: self)
+    self.spotDelegate = Delegate(component: self)
 
     if model.kind.isEmpty {
       self.model.kind = ComponentModel.Kind.grid.string

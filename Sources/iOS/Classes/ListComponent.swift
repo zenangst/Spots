@@ -70,8 +70,8 @@ open class ListComponent: NSObject, Listable {
     super.init()
     self.userInterface = self.tableView
     self.model.layout?.configure(spot: self)
-    self.spotDataSource = DataSource(spot: self)
-    self.spotDelegate = Delegate(spot: self)
+    self.spotDataSource = DataSource(component: self)
+    self.spotDelegate = Delegate(component: self)
 
     if model.kind.isEmpty {
       self.model.kind = ComponentModel.Kind.list.string
