@@ -206,12 +206,12 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
   /// Initializes a component and configures it with the provided parameters
   ///
   /// - parameter identifier: A optional string
-  /// - parameter title: The title for your UI component.
-  /// - parameter header: Determines which header item that should be used for the component.
+  /// - parameter title: The title for your UI model.
+  /// - parameter header: Determines which header item that should be used for the model.
   /// - parameter kind: The type of ComponentModel that should be used.
-  /// - parameter layout: Configures the layout properties for the component.
-  /// - parameter interaction: Configures the interaction properties for the component.
-  /// - parameter span: Configures the layout span for the component.
+  /// - parameter layout: Configures the layout properties for the model.
+  /// - parameter interaction: Configures the interaction properties for the model.
+  /// - parameter span: Configures the layout span for the model.
   /// - parameter items: A collection of view models
   /// - parameter meta: A key-value dictionary for any additional information
   ///
@@ -288,26 +288,26 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
   /// - parameter component: A ComponentModel used for comparison
   ///
   /// - returns: A ComponentModelDiff value, see ComponentModelDiff for values.
-  public func diff(component: ComponentModel) -> ComponentModelDiff {
+  public func diff(model: ComponentModel) -> ComponentModelDiff {
     // Determine if the UI component is the same, used when Controller needs to replace the entire UI component
-    if kind != component.kind { return .kind }
+    if kind != model.kind { return .kind }
     // Determine if the unqiue identifier for the component changed
-    if identifier != component.identifier { return .identifier }
+    if identifier != model.identifier { return .identifier }
     // Determine if the component layout changed, this can be used to trigger layout related processes
-    if layout != component.layout { return .layout }
+    if layout != model.layout { return .layout }
     // Determine if the header for the component has changed
-    if header != component.header { return .header }
+    if header != model.header { return .header }
     // Determine if the header for the component has changed
-    if footer != component.footer { return .footer }
+    if footer != model.footer { return .footer }
     // Check if meta data for the component changed, this can be up to the developer to decide what course of action to take.
-    if !(meta as NSDictionary).isEqual(to: component.meta) { return .meta }
+    if !(meta as NSDictionary).isEqual(to: model.meta) { return .meta }
     // Check if title changed
-    if title != component.title { return .title }
+    if title != model.title { return .title }
     // Check if the items have changed
-    if !(items === component.items) { return .items }
+    if !(items === model.items) { return .items }
     // Check children
     let lhsChildren = items.flatMap { $0.children }
-    let rhsChildren = component.items.flatMap { $0.children }
+    let rhsChildren = model.items.flatMap { $0.children }
 
     if !(lhsChildren as NSArray).isEqual(to: rhsChildren) {
       return .items

@@ -23,7 +23,7 @@ open class RowSpot: NSObject, Gridable {
   public var compositeSpots: [CompositeSpot] = []
 
   /// A component struct used as configuration and data source for the RowSpot
-  open var component: ComponentModel
+  open var model: ComponentModel
 
   /// A configuration closure
   open var configure: ((ItemConfigurable) -> Void)? {
@@ -53,26 +53,26 @@ open class RowSpot: NSObject, Gridable {
   var spotDataSource: DataSource?
   var spotDelegate: Delegate?
 
-  /// A required initializer to instantiate a RowSpot with a component.
+  /// A required initializer to instantiate a RowSpot with a model.
   ///
-  /// - parameter component: A component.
+  /// - parameter component: A model.
   ///
-  /// - returns: An initialized row spot with component.
-  public required init(component: ComponentModel) {
-    self.component = component
+  /// - returns: An initialized row spot with model.
+  public required init(model: ComponentModel) {
+    self.model = model
 
-    if self.component.layout == nil {
-      self.component.layout = type(of: self).layout
+    if self.model.layout == nil {
+      self.model.layout = type(of: self).layout
     }
 
     super.init()
     self.userInterface = collectionView
-    self.component.layout?.configure(spot: self)
+    self.model.layout?.configure(spot: self)
     self.spotDataSource = DataSource(spot: self)
     self.spotDelegate = Delegate(spot: self)
 
-    if component.kind.isEmpty {
-      self.component.kind = ComponentModel.Kind.row.string
+    if model.kind.isEmpty {
+      self.model.kind = ComponentModel.Kind.row.string
     }
 
     registerDefault(view: RowSpotCell.self)
@@ -93,7 +93,7 @@ open class RowSpot: NSObject, Gridable {
   public convenience init(cacheKey: String) {
     let stateCache = StateCache(key: cacheKey)
 
-    self.init(component: ComponentModel(stateCache.load()))
+    self.init(model: ComponentModel(stateCache.load()))
     self.stateCache = stateCache
   }
 

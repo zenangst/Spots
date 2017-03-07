@@ -5,8 +5,8 @@ extension Spot {
   func setupTableView(_ tableView: TableView, with size: CGSize) {
     scrollView.addSubview(tableView)
 
-    component.items.enumerated().forEach {
-      component.items[$0.offset].size.width = size.width
+    model.items.enumerated().forEach {
+      model.items[$0.offset].size.width = size.width
     }
 
     tableView.frame.size = size
@@ -47,7 +47,7 @@ extension Spot {
     tableView.sizeToFit()
     tableView.frame.size.width = size.width
 
-    if let layout = component.layout {
+    if let layout = model.layout {
       tableView.frame.origin.x = CGFloat(layout.inset.left)
       tableView.frame.size.width -= CGFloat(layout.inset.left + layout.inset.right)
     }

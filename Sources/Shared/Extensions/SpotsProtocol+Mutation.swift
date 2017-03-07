@@ -59,7 +59,7 @@ extension SpotsProtocol {
       }
 
       let oldSpots = weakSelf.spots
-      let oldComponentModels = oldSpots.map { $0.component }
+      let oldComponentModels = oldSpots.map { $0.model }
       var newComponentModels = components
 
       /// Prepare default layouts for new components based of previous Spotable kind.
@@ -107,20 +107,20 @@ extension SpotsProtocol {
   /// - parameter oldComponentModels: A collection of components
   ///
   /// - returns: A ComponentModelDiff struct
-  func generateChanges(from components: [ComponentModel], and oldComponentModels: [ComponentModel]) -> [ComponentModelDiff] {
+  func generateChanges(from models: [ComponentModel], and oldComponentModels: [ComponentModel]) -> [ComponentModelDiff] {
     let oldComponentModelCount = oldComponentModels.count
     var changes = [ComponentModelDiff]()
-    for (index, component) in components.enumerated() {
+    for (index, model) in models.enumerated() {
       if index >= oldComponentModelCount {
         changes.append(.new)
         continue
       }
 
-      changes.append(component.diff(component: oldComponentModels[index]))
+      changes.append(model.diff(model: oldComponentModels[index]))
     }
 
-    if oldComponentModelCount > components.count {
-      oldComponentModels[components.count..<oldComponentModels.count].forEach { _ in
+    if oldComponentModelCount > models.count {
+      oldComponentModels[models.count..<oldComponentModels.count].forEach { _ in
         changes.append(.removed)
       }
     }
@@ -129,7 +129,7 @@ extension SpotsProtocol {
   }
 
   fileprivate func replaceSpot(_ index: Int, newComponentModels: [ComponentModel], yOffset: inout CGFloat) {
-    let spot = Factory.resolve(component: newComponentModels[index])
+    let spot = Factory.resolve(model: newComponentModels[index])
     let oldSpot = spots[index]
 
     /// Remove old composite spots from superview and empty container
@@ -152,7 +152,7 @@ extension SpotsProtocol {
   }
 
   fileprivate func newSpot(_ index: Int, newComponentModels: [ComponentModel], yOffset: inout CGFloat) {
-    let spot = Factory.resolve(component: newComponentModels[index])
+    let spot = Factory.resolve(model: newComponentModels[index])
     spots.append(spot)
     setupSpot(at: index, spot: spot)
     #if !os(OSX)
@@ -184,7 +184,7 @@ extension SpotsProtocol {
       return false
     }
 
-    let tempSpot = Factory.resolve(component: newComponentModels[index])
+    let tempSpot = Factory.resolve(model: newComponentModels[index])
     tempSpot.view.frame = spot.view.frame
     tempSpot.setup(tempSpot.view.frame.size)
     tempSpot.layout(tempSpot.view.frame.size)
@@ -192,7 +192,7 @@ extension SpotsProtocol {
     tempSpot.view.layoutIfNeeded()
     tempSpot.registerAndPrepare()
 
-    tempSpot.component.size = CGSize(
+    tempSpot.model.size = CGSize(
       width: view.frame.width,
       height: ceil(tempSpot.view.frame.height))
 
@@ -310,14 +310,14 @@ extension SpotsProtocol {
 
       let executeClosure = newItems.count - 1
       for (index, item) in newItems.enumerated() {
-        let components = Parser.parse(item.children).map { $0.component }
+        let components = Parser.parse(item.children).map { $0.model }
 
         let oldSpots = weakSelf.spots.flatMap({
           $0.compositeSpots
         })
 
         for removedSpot in oldSpots {
-          guard !components.contains(removedSpot.spot.component) else {
+          guard !components.contains(removedSpot.spot.model) else {
             continue
           }
 
@@ -450,8 +450,8 @@ extension SpotsProtocol {
       }
 
       let newSpots: [Spotable] = Parser.parse(json)
-      let newComponentModels = newSpots.map { $0.component }
-      let oldComponentModels = weakSelf.spots.map { $0.component }
+      let newComponentModels = newSpots.map { $0.model }
+      let oldComponentModels = weakSelf.spots.map { $0.model }
 
       guard compare(newComponentModels, oldComponentModels) else {
         if let controller = self as? Controller {
@@ -753,7 +753,7 @@ extension SpotsProtocol {
       spot.collectionView.frame.size.height = spot.layout.collectionViewContentSize.height
     default:
       spot.setup(scrollView.frame.size)
-      spot.component.size = CGSize(
+      spot.model.size = CGSize(
         width: spot.view.frame.size.width,
         height: ceil(spot.view.frame.size.height))
       spot.layout(scrollView.frame.size)

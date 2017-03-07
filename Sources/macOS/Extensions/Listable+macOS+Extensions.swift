@@ -15,11 +15,11 @@ extension Listable {
     }
   }
 
-  func configureLayout(_ component: ComponentModel) {
-    let top: CGFloat = component.meta("inset-top", 0.0)
-    let left: CGFloat = component.meta("inset-left", 0.0)
-    let bottom: CGFloat = component.meta("inset-bottom", 0.0)
-    let right: CGFloat = component.meta("inset-right", 0.0)
+  func configureLayout(_ model: ComponentModel) {
+    let top: CGFloat = model.meta("inset-top", 0.0)
+    let left: CGFloat = model.meta("inset-left", 0.0)
+    let bottom: CGFloat = model.meta("inset-bottom", 0.0)
+    let right: CGFloat = model.meta("inset-right", 0.0)
 
     view.contentInsets = EdgeInsets(top: top, left: left, bottom: bottom, right: right)
   }
@@ -29,7 +29,7 @@ extension Listable {
   }
 
   @discardableResult public func selectFirst() -> Self {
-    guard let item = item(at: 0), !component.items.isEmpty else { return self }
+    guard let item = item(at: 0), !model.items.isEmpty else { return self }
     tableView.selectRowIndexes(IndexSet(integer: 0), byExtendingSelection: false)
     delegate?.spotable(self, itemSelected: item)
 

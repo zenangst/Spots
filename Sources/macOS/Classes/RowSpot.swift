@@ -93,7 +93,7 @@ open class RowSpot: NSObject, Gridable {
 
   open weak var delegate: SpotsDelegate?
 
-  open var component: ComponentModel
+  open var model: ComponentModel
   open var configure: ((ItemConfigurable) -> Void)? {
     didSet {
       guard let configure = configure else { return }
@@ -146,23 +146,23 @@ open class RowSpot: NSObject, Gridable {
 
    - parameter component: A component struct
    */
-  public required init(component: ComponentModel) {
-    self.component = component
+  public required init(model: ComponentModel) {
+    self.model = model
 
-    if self.component.layout == nil {
-      self.component.layout = type(of: self).layout
+    if self.model.layout == nil {
+      self.model.layout = type(of: self).layout
     }
 
     self.collectionView = CollectionView()
-    self.layout = RowSpot.setupLayout(component)
+    self.layout = RowSpot.setupLayout(model)
     super.init()
     self.userInterface = collectionView
-    self.component.layout?.configure(spot: self)
+    self.model.layout?.configure(spot: self)
     self.spotDataSource = DataSource(spot: self)
     self.spotDelegate = Delegate(spot: self)
 
-    if component.kind.isEmpty {
-      self.component.kind = ComponentModel.Kind.grid.string
+    if model.kind.isEmpty {
+      self.model.kind = ComponentModel.Kind.grid.string
     }
 
     registerDefault(view: RowSpotItem.self)
@@ -173,7 +173,7 @@ open class RowSpot: NSObject, Gridable {
     scrollView.addSubview(lineView)
     scrollView.contentView.addSubview(collectionView)
 
-    if let layout = layout as? NSCollectionViewFlowLayout, !component.title.isEmpty {
+    if let layout = layout as? NSCollectionViewFlowLayout, !model.title.isEmpty {
       configureTitleView(layout.sectionInset)
     }
   }
@@ -185,7 +185,7 @@ open class RowSpot: NSObject, Gridable {
    - parameter kind:  An identifier to determine which kind should be set on the ComponentModel
    */
   public convenience init(title: String = "", kind: String? = nil) {
-    self.init(component: ComponentModel(title: title, kind: kind ?? RowSpot.defaultKind.string))
+    self.init(model: ComponentModel(title: title, kind: kind ?? RowSpot.defaultKind.string))
   }
 
   /**
@@ -196,7 +196,7 @@ open class RowSpot: NSObject, Gridable {
   public convenience init(cacheKey: String) {
     let stateCache = StateCache(key: cacheKey)
 
-    self.init(component: ComponentModel(stateCache.load()))
+    self.init(model: ComponentModel(stateCache.load()))
     self.stateCache = stateCache
   }
 
@@ -215,17 +215,17 @@ open class RowSpot: NSObject, Gridable {
 
    - returns: A NSCollectionView layout determined by the ComponentModel
    */
-  fileprivate static func setupLayout(_ component: ComponentModel) -> NSCollectionViewLayout {
+  fileprivate static func setupLayout(_ model: ComponentModel) -> NSCollectionViewLayout {
     let layout: NSCollectionViewLayout
 
-    switch LayoutType(rawValue: component.meta(Key.layout, Default.defaultLayout)) ?? LayoutType.flow {
+    switch LayoutType(rawValue: model.meta(Key.layout, Default.defaultLayout)) ?? LayoutType.flow {
     case .grid:
       let gridLayout = NSCollectionViewGridLayout()
 
-      gridLayout.maximumItemSize = CGSize(width: component.meta(Key.gridLayoutMaximumItemWidth, Default.gridLayoutMaximumItemWidth),
-                                          height: component.meta(Key.gridLayoutMaximumItemHeight, Default.gridLayoutMaximumItemHeight))
-      gridLayout.minimumItemSize = CGSize(width: component.meta(Key.gridLayoutMinimumItemWidth, Default.gridLayoutMinimumItemWidth),
-                                          height: component.meta(Key.gridLayoutMinimumItemHeight, Default.gridLayoutMinimumItemHeight))
+      gridLayout.maximumItemSize = CGSize(width: model.meta(Key.gridLayoutMaximumItemWidth, Default.gridLayoutMaximumItemWidth),
+                                          height: model.meta(Key.gridLayoutMaximumItemHeight, Default.gridLayoutMaximumItemHeight))
+      gridLayout.minimumItemSize = CGSize(width: model.meta(Key.gridLayoutMinimumItemWidth, Default.gridLayoutMinimumItemWidth),
+                                          height: model.meta(Key.gridLayoutMinimumItemHeight, Default.gridLayoutMinimumItemHeight))
       layout = gridLayout
     case .left:
       let leftLayout = CollectionViewLeftLayout()
@@ -264,13 +264,13 @@ open class RowSpot: NSObject, Gridable {
 
     var layoutInsets = EdgeInsets()
     if let layout = layout as? NSCollectionViewFlowLayout {
-      layout.sectionInset.top = component.meta(GridableMeta.Key.sectionInsetTop, Default.sectionInsetTop) + titleView.frame.size.height + 8
+      layout.sectionInset.top = model.meta(GridableMeta.Key.sectionInsetTop, Default.sectionInsetTop) + titleView.frame.size.height + 8
       layoutInsets = layout.sectionInset
     }
 
     var layoutHeight = layout.collectionViewContentSize.height + layoutInsets.top + layoutInsets.bottom
 
-    if component.items.isEmpty {
+    if model.items.isEmpty {
       layoutHeight = size.height + layoutInsets.top + layoutInsets.bottom
     }
 
@@ -281,7 +281,7 @@ open class RowSpot: NSObject, Gridable {
 
     RowSpot.configure?(collectionView)
 
-    if !component.title.isEmpty {
+    if !model.title.isEmpty {
       configureTitleView(layoutInsets)
     }
   }
@@ -303,14 +303,14 @@ open class RowSpot: NSObject, Gridable {
    - parameter layoutInsets: EdgeInsets used to configure the title and line view size and origin
    */
   fileprivate func configureTitleView(_ layoutInsets: EdgeInsets) {
-    titleView.stringValue = component.title
-    titleView.font = NSFont.systemFont(ofSize: component.meta(Key.titleFontSize, Default.titleFontSize))
+    titleView.stringValue = model.title
+    titleView.font = NSFont.systemFont(ofSize: model.meta(Key.titleFontSize, Default.titleFontSize))
     titleView.sizeToFit()
     titleView.frame.size.width = collectionView.frame.width - layoutInsets.right - layoutInsets.left
-    lineView.frame.size.width = scrollView.frame.size.width - (component.meta(Key.titleLeftMargin, Default.titleLeftInset) * 2)
-    lineView.frame.origin.x = component.meta(Key.titleLeftMargin, Default.titleLeftInset)
+    lineView.frame.size.width = scrollView.frame.size.width - (model.meta(Key.titleLeftMargin, Default.titleLeftInset) * 2)
+    lineView.frame.origin.x = model.meta(Key.titleLeftMargin, Default.titleLeftInset)
     titleView.frame.origin.x = layoutInsets.left
-    titleView.frame.origin.x = component.meta(Key.titleLeftMargin, titleView.frame.origin.x)
+    titleView.frame.origin.x = model.meta(Key.titleLeftMargin, titleView.frame.origin.x)
     titleView.frame.origin.y = titleView.frame.size.height / 2
     lineView.frame.origin.y = titleView.frame.maxY + 8
   }

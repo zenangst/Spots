@@ -13,7 +13,7 @@ extension Spot {
     prepareItems()
 
     var height: CGFloat = 0.0
-    for item in component.items {
+    for item in model.items {
       height += item.size.height
     }
 

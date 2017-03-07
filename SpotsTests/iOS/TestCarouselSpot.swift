@@ -8,7 +8,7 @@ class CarouselSpotTests: XCTestCase {
   var cachedSpot: CarouselSpot!
 
   override func setUp() {
-    spot = CarouselSpot(component: ComponentModel(span: 1.0))
+    spot = CarouselSpot(model: ComponentModel(span: 1.0))
     cachedSpot = CarouselSpot(cacheKey: "cached-carousel-spot")
     XCTAssertNotNil(cachedSpot.stateCache)
     cachedSpot.stateCache?.clear()
@@ -20,8 +20,8 @@ class CarouselSpotTests: XCTestCase {
   }
 
   func testConvenienceInitWithSectionInsets() {
-    let component = ComponentModel(span: 1.0)
-    let spot = CarouselSpot(component,
+    let model = ComponentModel(span: 1.0)
+    let spot = CarouselSpot(model,
                         top: 5, left: 10, bottom: 5, right: 10, itemSpacing: 5)
 
     XCTAssertEqual(spot.layout.sectionInset, UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10))
@@ -29,21 +29,21 @@ class CarouselSpotTests: XCTestCase {
   }
 
   func testDictionaryRepresentation() {
-    let component = ComponentModel(title: "CarouselSpot", kind: "carousel", span: 3, meta: ["headerHeight": 44.0])
-    let spot = CarouselSpot(component: component)
-    XCTAssertEqual(component.dictionary["index"] as? Int, spot.dictionary["index"] as? Int)
-    XCTAssertEqual(component.dictionary["title"] as? String, spot.dictionary["title"] as? String)
-    XCTAssertEqual(component.dictionary["kind"] as? String, spot.dictionary["kind"] as? String)
-    XCTAssertEqual(component.dictionary["span"] as? Int, spot.dictionary["span"] as? Int)
+    let model = ComponentModel(title: "CarouselSpot", kind: "carousel", span: 3, meta: ["headerHeight": 44.0])
+    let spot = CarouselSpot(model: model)
+    XCTAssertEqual(model.dictionary["index"] as? Int, spot.dictionary["index"] as? Int)
+    XCTAssertEqual(model.dictionary["title"] as? String, spot.dictionary["title"] as? String)
+    XCTAssertEqual(model.dictionary["kind"] as? String, spot.dictionary["kind"] as? String)
+    XCTAssertEqual(model.dictionary["span"] as? Int, spot.dictionary["span"] as? Int)
     XCTAssertEqual(
-      (component.dictionary["meta"] as! [String : Any])["headerHeight"] as? CGFloat,
+      (model.dictionary["meta"] as! [String : Any])["headerHeight"] as? CGFloat,
       (spot.dictionary["meta"] as! [String : Any])["headerHeight"] as? CGFloat
     )
   }
 
   func testSafelyResolveKind() {
-    let component = ComponentModel(title: "CarouselSpot", kind: "custom-carousel", span: 1.0, items: [Item(title: "foo", kind: "custom-item-kind")])
-    let carouselSpot = CarouselSpot(component: component)
+    let model = ComponentModel(title: "CarouselSpot", kind: "custom-carousel", span: 1.0, items: [Item(title: "foo", kind: "custom-item-kind")])
+    let carouselSpot = CarouselSpot(model: model)
     let indexPath = IndexPath(row: 0, section: 0)
 
     XCTAssertEqual(carouselSpot.identifier(at: indexPath), CarouselSpot.views.defaultIdentifier)
@@ -72,8 +72,8 @@ class CarouselSpotTests: XCTestCase {
 
     ComponentModel.legacyMapping = true
 
-    var component = ComponentModel(json)
-    var spot = CarouselSpot(component: component)
+    var model = ComponentModel(json)
+    var spot = CarouselSpot(model: model)
     spot.setup(CGSize(width: 100, height: 100))
 
     XCTAssertEqual(spot.layout.minimumInteritemSpacing, 25.0)
@@ -88,8 +88,8 @@ class CarouselSpotTests: XCTestCase {
       ]
     ]
 
-    component = ComponentModel(json)
-    spot = CarouselSpot(component: component)
+    model = ComponentModel(json)
+    spot = CarouselSpot(model: model)
     spot.setup(CGSize(width: 100, height: 100))
 
     XCTAssertEqual(spot.layout.minimumInteritemSpacing, 12.5)
@@ -124,8 +124,8 @@ class CarouselSpotTests: XCTestCase {
       ]
     ]
 
-    let component = ComponentModel(json)
-    let spot = CarouselSpot(component: component)
+    let model = ComponentModel(json)
+    let spot = CarouselSpot(model: model)
     spot.setup(CGSize(width: 100, height: 100))
 
     // Test that spot height is equal to first item in the list
@@ -162,12 +162,12 @@ class CarouselSpotTests: XCTestCase {
       ).dictionary
     ]
 
-    let component = ComponentModel(json)
-    let spot = CarouselSpot(component: component)
+    let model = ComponentModel(json)
+    let spot = CarouselSpot(model: model)
     let parentSize = CGSize(width: 667, height: 225)
 
     // Check `span` mapping
-    XCTAssertEqual(spot.component.layout!.span, 4.0)
+    XCTAssertEqual(spot.model.layout!.span, 4.0)
 
     spot.setup(parentSize)
     spot.layout(parentSize)
@@ -220,8 +220,8 @@ class CarouselSpotTests: XCTestCase {
       ).dictionary
     ]
 
-    let component = ComponentModel(json)
-    let spot = CarouselSpot(component: component)
+    let model = ComponentModel(json)
+    let spot = CarouselSpot(model: model)
     let parentSize = CGSize(width: 667, height: 225)
 
     spot.setup(parentSize)
@@ -230,7 +230,7 @@ class CarouselSpotTests: XCTestCase {
     spot.view.layoutSubviews()
 
     // Sanity check, to make sure we have our page indicator in overlay mode
-    XCTAssertEqual(component.layout!.pageIndicatorPlacement, .overlay)
+    XCTAssertEqual(model.layout!.pageIndicatorPlacement, .overlay)
 
     // Assert item layout (derived from preferred view size)
     XCTAssertEqual(spot.items[0].size.height, 88)
@@ -299,8 +299,8 @@ class CarouselSpotTests: XCTestCase {
     let collectionView = CollectionViewMock(frame: .zero, collectionViewLayout: layout)
     collectionView.itemSize = CGSize(width: 200, height: 100)
 
-    let component = ComponentModel(json)
-    let spot = CarouselSpot(component: component, collectionView: collectionView, layout: layout)
+    let model = ComponentModel(json)
+    let spot = CarouselSpot(model: model, collectionView: collectionView, layout: layout)
     let parentSize = CGSize(width: 300, height: 100)
 
     spot.setup(parentSize)
@@ -332,10 +332,10 @@ class CarouselSpotTests: XCTestCase {
 
   func testAppendItem() {
     let item = Item(title: "test")
-    let spot = CarouselSpot(component: ComponentModel(span: 1))
+    let spot = CarouselSpot(model: ComponentModel(span: 1))
     let expectation = self.expectation(description: "Append item")
     spot.append(item) {
-      XCTAssert(spot.component.items.first! == item)
+      XCTAssert(spot.model.items.first! == item)
       expectation.fulfill()
     }
     waitForExpectations(timeout: 10.0, handler: nil)
@@ -343,10 +343,10 @@ class CarouselSpotTests: XCTestCase {
 
   func testAppendItems() {
     let items = [Item(title: "test"), Item(title: "test 2")]
-    let spot = CarouselSpot(component: ComponentModel(span: 1))
+    let spot = CarouselSpot(model: ComponentModel(span: 1))
     let expectation = self.expectation(description: "Append items")
     spot.append(items) {
-      XCTAssert(spot.component.items == items)
+      XCTAssert(spot.model.items == items)
       expectation.fulfill()
     }
     waitForExpectations(timeout: 10.0, handler: nil)
@@ -354,10 +354,10 @@ class CarouselSpotTests: XCTestCase {
 
   func testInsertItem() {
     let item = Item(title: "test")
-    let spot = CarouselSpot(component: ComponentModel(span: 1))
+    let spot = CarouselSpot(model: ComponentModel(span: 1))
     let expectation = self.expectation(description: "Insert item")
     spot.insert(item, index: 0) {
-      XCTAssert(spot.component.items.first! == item)
+      XCTAssert(spot.model.items.first! == item)
       expectation.fulfill()
     }
     waitForExpectations(timeout: 10.0, handler: nil)
@@ -365,10 +365,10 @@ class CarouselSpotTests: XCTestCase {
 
   func testPrependItems() {
     let items = [Item(title: "test"), Item(title: "test 2")]
-    let spot = CarouselSpot(component: ComponentModel(span: 1))
+    let spot = CarouselSpot(model: ComponentModel(span: 1))
     let expectation = self.expectation(description: "Prepend items")
     spot.prepend(items) {
-      XCTAssert(spot.component.items == items)
+      XCTAssert(spot.model.items == items)
       expectation.fulfill()
     }
     waitForExpectations(timeout: 10.0, handler: nil)
@@ -377,7 +377,7 @@ class CarouselSpotTests: XCTestCase {
   func testSpotCache() {
     let item = Item(title: "test")
 
-    XCTAssertEqual(cachedSpot.component.items.count, 0)
+    XCTAssertEqual(cachedSpot.model.items.count, 0)
     cachedSpot.append(item) {
       self.cachedSpot.cache()
     }
@@ -386,7 +386,7 @@ class CarouselSpotTests: XCTestCase {
     Dispatch.after(seconds: 0.25) { [weak self] in
       guard let weakSelf = self else { return }
       let cachedSpot = CarouselSpot(cacheKey: weakSelf.cachedSpot.stateCache!.key)
-      XCTAssertEqual(cachedSpot.component.items.count, 1)
+      XCTAssertEqual(cachedSpot.model.items.count, 1)
       cachedSpot.stateCache?.clear()
       expectation.fulfill()
     }
@@ -397,7 +397,7 @@ class CarouselSpotTests: XCTestCase {
     Configuration.register(view: TestView.self, identifier: "test-view")
 
     let items = [Item(title: "Item A", kind: "test-view"), Item(title: "Item B")]
-    let spot = CarouselSpot(component: ComponentModel(span: 0.0, items: items))
+    let spot = CarouselSpot(model: ComponentModel(span: 0.0, items: items))
     spot.setup(CGSize(width: 100, height: 100))
     spot.layout(CGSize(width: 100, height: 100))
     spot.view.layoutSubviews()

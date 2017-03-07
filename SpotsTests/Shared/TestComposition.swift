@@ -13,29 +13,29 @@ class CompositionTests: XCTestCase {
   #endif
 
   func testComponentModelCreation() {
-    var component = ComponentModel(
+    var model = ComponentModel(
       kind: ComponentModel.Kind.grid.rawValue,
       span: 1.0
     )
 
-    component.add(child: ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0))
+    model.add(child: ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0))
 
-    XCTAssertEqual(component.items.count, 1)
+    XCTAssertEqual(model.items.count, 1)
 
-    component.add(children: [
+    model.add(children: [
       ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0),
       ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0)
       ]
     )
 
-    XCTAssertEqual(component.items.count, 3)
+    XCTAssertEqual(model.items.count, 3)
   }
 
   func testSpotableCreation() {
     let layout = Layout().mutate { $0.span = 2.0 }
-    var component = ComponentModel(kind: ComponentModel.Kind.grid.rawValue, layout: layout)
+    var model = ComponentModel(kind: ComponentModel.Kind.grid.rawValue, layout: layout)
 
-    component.add(children: [
+    model.add(children: [
       ComponentModel(
         kind: ComponentModel.Kind.list.rawValue,
         span: 1.0,
@@ -55,25 +55,25 @@ class CompositionTests: XCTestCase {
       ]
     )
 
-    let spot = GridSpot(component: component)
+    let spot = GridSpot(model: model)
 
     XCTAssertEqual(spot.items.count, 2)
     XCTAssertEqual(spot.compositeSpots.count, 2)
-    XCTAssertEqual(spot.compositeSpots[0].spot.component.kind, ComponentModel.Kind.list.rawValue)
+    XCTAssertEqual(spot.compositeSpots[0].spot.model.kind, ComponentModel.Kind.list.rawValue)
     XCTAssertEqual(spot.compositeSpots[0].spot.items.count, 2)
     XCTAssertEqual(spot.compositeSpots[0].spot.items[0].title, "foo")
     XCTAssertEqual(spot.compositeSpots[0].spot.items[1].title, "bar")
 
-    XCTAssertEqual(spot.compositeSpots[1].spot.component.kind, ComponentModel.Kind.list.rawValue)
+    XCTAssertEqual(spot.compositeSpots[1].spot.model.kind, ComponentModel.Kind.list.rawValue)
     XCTAssertEqual(spot.compositeSpots[1].spot.items.count, 2)
     XCTAssertEqual(spot.compositeSpots[1].spot.items[0].title, "baz")
     XCTAssertEqual(spot.compositeSpots[1].spot.items[1].title, "bal")
   }
 
   func testUICreation() {
-    var component = ComponentModel(kind: ComponentModel.Kind.grid.rawValue, span: 2.0)
+    var model = ComponentModel(kind: ComponentModel.Kind.grid.rawValue, span: 2.0)
 
-    component.add(children: [
+    model.add(children: [
       ComponentModel(
         kind: ComponentModel.Kind.list.rawValue,
         span: 1,
@@ -93,7 +93,7 @@ class CompositionTests: XCTestCase {
       ]
     )
 
-    let spot = GridSpot(component: component)
+    let spot = GridSpot(model: model)
     spot.setup(CGSize(width: 200, height: 200))
     spot.layout(CGSize(width: 200, height: 200))
     spot.view.layoutSubviews()
@@ -107,7 +107,7 @@ class CompositionTests: XCTestCase {
     XCTAssertNotNil(composite)
     XCTAssertNotNil(itemConfigurable)
     XCTAssertEqual(composite?.contentView.subviews.count, 1)
-    XCTAssertTrue(spot.compositeSpots[0].parentSpot!.component == spot.component)
+    XCTAssertTrue(spot.compositeSpots[0].parentSpot!.model == spot.model)
     XCTAssertTrue(spot.compositeSpots[0].spot is Listable)
     XCTAssertEqual(spot.compositeSpots[0].spot.view.frame.size.height,
                    (itemConfigurable!.preferredViewSize.height + heightOffset) * CGFloat(spot.compositeSpots[0].spot.items.count))
@@ -117,7 +117,7 @@ class CompositionTests: XCTestCase {
 
     XCTAssertNotNil(composite)
     XCTAssertEqual(composite?.contentView.subviews.count, 1)
-    XCTAssertTrue(spot.compositeSpots[1].parentSpot!.component == spot.component)
+    XCTAssertTrue(spot.compositeSpots[1].parentSpot!.model == spot.model)
     XCTAssertTrue(spot.compositeSpots[1].spot is Listable)
     XCTAssertEqual(spot.compositeSpots[1].spot.view.frame.size.height,
                    (itemConfigurable!.preferredViewSize.height + heightOffset) * CGFloat(spot.compositeSpots[1].spot.items.count))
@@ -225,7 +225,7 @@ class CompositionTests: XCTestCase {
     XCTAssertNotNil(composite)
     XCTAssertNotNil(itemConfigurable)
     XCTAssertEqual(composite?.contentView.subviews.count, 1)
-    XCTAssertTrue(spots[0].compositeSpots[0].parentSpot!.component == spots[0].component)
+    XCTAssertTrue(spots[0].compositeSpots[0].parentSpot!.model == spots[0].model)
     XCTAssertTrue(spots[0].compositeSpots[0].spot is Listable)
     XCTAssertEqual(spots[0].compositeSpots[0].spot.items.count, 10)
     XCTAssertEqual(spots[0].compositeSpots[0].spot.view.frame.size.height,
@@ -235,7 +235,7 @@ class CompositionTests: XCTestCase {
 
     XCTAssertNotNil(itemConfigurable)
     XCTAssertEqual(composite?.contentView.subviews.count, 1)
-    XCTAssertTrue(spots[0].compositeSpots[1].parentSpot!.component == spots[0].component)
+    XCTAssertTrue(spots[0].compositeSpots[1].parentSpot!.model == spots[0].model)
     XCTAssertTrue(spots[0].compositeSpots[1].spot is Listable)
     XCTAssertEqual(spots[0].compositeSpots[1].spot.items.count, 10)
     XCTAssertEqual(spots[0].compositeSpots[1].spot.view.frame.size.height,
@@ -244,7 +244,7 @@ class CompositionTests: XCTestCase {
     XCTAssertNotNil(composite)
     XCTAssertNotNil(itemConfigurable)
     XCTAssertEqual(composite?.contentView.subviews.count, 1)
-    XCTAssertTrue(spots[1].compositeSpots[0].parentSpot!.component == spots[1].component)
+    XCTAssertTrue(spots[1].compositeSpots[0].parentSpot!.model == spots[1].model)
     XCTAssertTrue(spots[1].compositeSpots[0].spot is Listable)
     XCTAssertEqual(spots[1].compositeSpots[0].spot.items.count, 10)
     XCTAssertEqual(spots[1].compositeSpots[0].spot.view.frame.size.height,
@@ -254,7 +254,7 @@ class CompositionTests: XCTestCase {
 
     XCTAssertNotNil(itemConfigurable)
     XCTAssertEqual(composite?.contentView.subviews.count, 1)
-    XCTAssertTrue(spots[1].compositeSpots[1].parentSpot!.component == spots[1].component)
+    XCTAssertTrue(spots[1].compositeSpots[1].parentSpot!.model == spots[1].model)
     XCTAssertTrue(spots[1].compositeSpots[1].spot is Listable)
     XCTAssertEqual(spots[1].compositeSpots[1].spot.items.count, 10)
     XCTAssertEqual(spots[1].compositeSpots[1].spot.view.frame.size.height,
@@ -356,7 +356,7 @@ class CompositionTests: XCTestCase {
       XCTAssertNotNil(itemConfigurable)
       XCTAssertNotNil(composite?.contentView)
       XCTAssertEqual(composite?.contentView.subviews.count, 1)
-      XCTAssertTrue(spots[0].compositeSpots[0].parentSpot!.component == spots[0].component)
+      XCTAssertTrue(spots[0].compositeSpots[0].parentSpot!.model == spots[0].model)
       XCTAssertTrue(spots[0].compositeSpots[0].spot is Listable)
       XCTAssertEqual(spots[0].compositeSpots[0].spot.items.count, 10)
       XCTAssertEqual(spots[0].compositeSpots[0].spot.view.frame.size.height,
@@ -366,7 +366,7 @@ class CompositionTests: XCTestCase {
 
       XCTAssertNotNil(itemConfigurable)
       XCTAssertEqual(composite?.contentView.subviews.count, 1)
-      XCTAssertTrue(spots[0].compositeSpots[1].parentSpot!.component == spots[0].component)
+      XCTAssertTrue(spots[0].compositeSpots[1].parentSpot!.model == spots[0].model)
       XCTAssertTrue(spots[0].compositeSpots[1].spot is Listable)
       XCTAssertEqual(spots[0].compositeSpots[1].spot.items.count, 10)
       XCTAssertEqual(spots[0].compositeSpots[1].spot.view.frame.size.height,
@@ -375,7 +375,7 @@ class CompositionTests: XCTestCase {
       XCTAssertNotNil(composite)
       XCTAssertNotNil(itemConfigurable)
       XCTAssertEqual(composite?.contentView.subviews.count, 1)
-      XCTAssertTrue(spots[1].compositeSpots[0].parentSpot!.component == spots[1].component)
+      XCTAssertTrue(spots[1].compositeSpots[0].parentSpot!.model == spots[1].model)
       XCTAssertTrue(spots[1].compositeSpots[0].spot is Listable)
       XCTAssertEqual(spots[1].compositeSpots[0].spot.items.count, 10)
       XCTAssertEqual(spots[1].compositeSpots[0].spot.view.frame.size.height,
@@ -385,7 +385,7 @@ class CompositionTests: XCTestCase {
 
       XCTAssertNotNil(itemConfigurable)
       XCTAssertEqual(composite?.contentView.subviews.count, 1)
-      XCTAssertTrue(spots[1].compositeSpots[1].parentSpot!.component == spots[1].component)
+      XCTAssertTrue(spots[1].compositeSpots[1].parentSpot!.model == spots[1].model)
       XCTAssertTrue(spots[1].compositeSpots[1].spot is Listable)
       XCTAssertEqual(spots[1].compositeSpots[1].spot.items.count, 10)
       XCTAssertEqual(spots[1].compositeSpots[1].spot.view.frame.size.height,
@@ -506,7 +506,7 @@ class CompositionTests: XCTestCase {
       XCTAssertNotNil(composite)
       XCTAssertNotNil(itemConfigurable)
       XCTAssertEqual(composite?.contentView.subviews.count, 1)
-      XCTAssertTrue(spots[0].compositeSpots[0].parentSpot!.component == spots[0].component)
+      XCTAssertTrue(spots[0].compositeSpots[0].parentSpot!.model == spots[0].model)
       XCTAssertTrue(spots[0].compositeSpots[0].spot is Listable)
       XCTAssertEqual(spots[0].compositeSpots[0].spot.items.count, 10)
       XCTAssertEqual(spots[0].compositeSpots[0].spot.view.frame.size.height,
@@ -516,7 +516,7 @@ class CompositionTests: XCTestCase {
 
       XCTAssertNotNil(itemConfigurable)
       XCTAssertEqual(composite?.contentView.subviews.count, 1)
-      XCTAssertTrue(spots[0].compositeSpots[1].parentSpot!.component == spots[0].component)
+      XCTAssertTrue(spots[0].compositeSpots[1].parentSpot!.model == spots[0].model)
       XCTAssertTrue(spots[0].compositeSpots[1].spot is Listable)
       XCTAssertEqual(spots[0].compositeSpots[1].spot.items.count, 10)
       XCTAssertEqual(spots[0].compositeSpots[1].spot.view.frame.size.height,
@@ -525,7 +525,7 @@ class CompositionTests: XCTestCase {
       XCTAssertNotNil(composite)
       XCTAssertNotNil(itemConfigurable)
       XCTAssertEqual(composite?.contentView.subviews.count, 1)
-      XCTAssertTrue(spots[1].compositeSpots[0].parentSpot!.component == spots[1].component)
+      XCTAssertTrue(spots[1].compositeSpots[0].parentSpot!.model == spots[1].model)
       XCTAssertTrue(spots[1].compositeSpots[0].spot is Listable)
       XCTAssertEqual(spots[1].compositeSpots[0].spot.items.count, 10)
       XCTAssertEqual(spots[1].compositeSpots[0].spot.view.frame.size.height,
@@ -535,7 +535,7 @@ class CompositionTests: XCTestCase {
 
       XCTAssertNotNil(itemConfigurable)
       XCTAssertEqual(composite?.contentView.subviews.count, 1)
-      XCTAssertTrue(spots[1].compositeSpots[1].parentSpot!.component == spots[1].component)
+      XCTAssertTrue(spots[1].compositeSpots[1].parentSpot!.model == spots[1].model)
       XCTAssertTrue(spots[1].compositeSpots[1].spot is Listable)
       XCTAssertEqual(spots[1].compositeSpots[1].spot.items.count, 10)
       XCTAssertEqual(spots[1].compositeSpots[1].spot.view.frame.size.height,
@@ -647,7 +647,7 @@ class CompositionTests: XCTestCase {
     XCTAssertNotNil(composite)
     XCTAssertNotNil(itemConfigurable)
     XCTAssertEqual(composite?.contentView.subviews.count, 1)
-    XCTAssertTrue(spots[0].compositeSpots[0].parentSpot!.component == spots[0].component)
+    XCTAssertTrue(spots[0].compositeSpots[0].parentSpot!.model == spots[0].model)
     XCTAssertTrue(spots[0].compositeSpots[0].spot is Listable)
     XCTAssertEqual(spots[0].compositeSpots[0].spot.items.count, 10)
     XCTAssertEqual(spots[0].compositeSpots[0].spot.view.frame.size.height,
@@ -657,7 +657,7 @@ class CompositionTests: XCTestCase {
 
     XCTAssertNotNil(itemConfigurable)
     XCTAssertEqual(composite?.contentView.subviews.count, 1)
-    XCTAssertTrue(spots[0].compositeSpots[1].parentSpot!.component == spots[0].component)
+    XCTAssertTrue(spots[0].compositeSpots[1].parentSpot!.model == spots[0].model)
     XCTAssertTrue(spots[0].compositeSpots[1].spot is Listable)
     XCTAssertEqual(spots[0].compositeSpots[1].spot.items.count, 10)
     XCTAssertEqual(spots[0].compositeSpots[1].spot.view.frame.size.height,
@@ -666,7 +666,7 @@ class CompositionTests: XCTestCase {
     XCTAssertNotNil(composite)
     XCTAssertNotNil(itemConfigurable)
     XCTAssertEqual(composite?.contentView.subviews.count, 1)
-    XCTAssertTrue(spots[1].compositeSpots[0].parentSpot!.component == spots[1].component)
+    XCTAssertTrue(spots[1].compositeSpots[0].parentSpot!.model == spots[1].model)
     XCTAssertTrue(spots[1].compositeSpots[0].spot is Listable)
     XCTAssertEqual(spots[1].compositeSpots[0].spot.items.count, 10)
     XCTAssertEqual(spots[1].compositeSpots[0].spot.view.frame.size.height,
@@ -676,7 +676,7 @@ class CompositionTests: XCTestCase {
 
     XCTAssertNotNil(itemConfigurable)
     XCTAssertEqual(composite?.contentView.subviews.count, 1)
-    XCTAssertTrue(spots[1].compositeSpots[1].parentSpot!.component == spots[1].component)
+    XCTAssertTrue(spots[1].compositeSpots[1].parentSpot!.model == spots[1].model)
     XCTAssertTrue(spots[1].compositeSpots[1].spot is Listable)
     XCTAssertEqual(spots[1].compositeSpots[1].spot.items.count, 10)
     XCTAssertEqual(spots[1].compositeSpots[1].spot.view.frame.size.height,
@@ -823,7 +823,7 @@ class CompositionTests: XCTestCase {
       XCTAssertNotNil(composite)
       XCTAssertNotNil(itemConfigurable)
       XCTAssertEqual(composite?.contentView.subviews.count, 1)
-      XCTAssertTrue(spots[0].compositeSpots[0].parentSpot?.component == spots[0].component)
+      XCTAssertTrue(spots[0].compositeSpots[0].parentSpot?.model == spots[0].model)
       XCTAssertTrue(spots[0].compositeSpots[0].spot is Listable)
       XCTAssertEqual(spots[0].compositeSpots[0].spot.items.count, 11)
       XCTAssertEqual(spots[0].compositeSpots[0].spot.view.frame.size.height,
@@ -833,7 +833,7 @@ class CompositionTests: XCTestCase {
 
       XCTAssertNotNil(itemConfigurable)
       XCTAssertEqual(composite?.contentView.subviews.count, 1)
-      XCTAssertTrue(spots[0].compositeSpots[1].parentSpot!.component == spots[0].component)
+      XCTAssertTrue(spots[0].compositeSpots[1].parentSpot!.model == spots[0].model)
       XCTAssertTrue(spots[0].compositeSpots[1].spot is Listable)
       XCTAssertEqual(spots[0].compositeSpots[1].spot.items.count, 10)
       XCTAssertEqual(spots[0].compositeSpots[1].spot.view.frame.size.height,
@@ -844,7 +844,7 @@ class CompositionTests: XCTestCase {
       XCTAssertNotNil(composite)
       XCTAssertNotNil(itemConfigurable)
       XCTAssertEqual(composite?.contentView.subviews.count, 1)
-      XCTAssertTrue(spots[1].compositeSpots[0].parentSpot?.component == spots[1].component)
+      XCTAssertTrue(spots[1].compositeSpots[0].parentSpot?.model == spots[1].model)
       XCTAssertTrue(spots[1].compositeSpots[0].spot is Listable)
       XCTAssertEqual(spots[1].compositeSpots[0].spot.items.count, 11)
       XCTAssertEqual(spots[1].compositeSpots[0].spot.view.frame.size.height,
@@ -854,7 +854,7 @@ class CompositionTests: XCTestCase {
 
       XCTAssertNotNil(itemConfigurable)
       XCTAssertEqual(composite?.contentView.subviews.count, 1)
-      XCTAssertTrue(spots[1].compositeSpots[1].parentSpot!.component == spots[1].component)
+      XCTAssertTrue(spots[1].compositeSpots[1].parentSpot!.model == spots[1].model)
       XCTAssertTrue(spots[1].compositeSpots[1].spot is Listable)
       XCTAssertEqual(spots[1].compositeSpots[1].spot.items.count, 11)
       XCTAssertEqual(spots[1].compositeSpots[1].spot.view.frame.size.height,
@@ -966,7 +966,7 @@ class CompositionTests: XCTestCase {
     XCTAssertNotNil(composite)
     XCTAssertNotNil(itemConfigurable)
     XCTAssertEqual(composite?.contentView.subviews.count, 1)
-    XCTAssertTrue(spots[0].compositeSpots[0].parentSpot!.component == spots[0].component)
+    XCTAssertTrue(spots[0].compositeSpots[0].parentSpot!.model == spots[0].model)
     XCTAssertTrue(spots[0].compositeSpots[0].spot is Listable)
     XCTAssertEqual(spots[0].compositeSpots[0].spot.items.count, 10)
     XCTAssertEqual(spots[0].compositeSpots[0].spot.view.frame.size.height,
@@ -976,7 +976,7 @@ class CompositionTests: XCTestCase {
 
     XCTAssertNotNil(itemConfigurable)
     XCTAssertEqual(composite?.contentView.subviews.count, 1)
-    XCTAssertTrue(spots[0].compositeSpots[1].parentSpot!.component == spots[0].component)
+    XCTAssertTrue(spots[0].compositeSpots[1].parentSpot!.model == spots[0].model)
     XCTAssertTrue(spots[0].compositeSpots[1].spot is Listable)
     XCTAssertEqual(spots[0].compositeSpots[1].spot.items.count, 10)
     XCTAssertEqual(spots[0].compositeSpots[1].spot.view.frame.size.height,
@@ -985,7 +985,7 @@ class CompositionTests: XCTestCase {
     XCTAssertNotNil(composite)
     XCTAssertNotNil(itemConfigurable)
     XCTAssertEqual(composite?.contentView.subviews.count, 1)
-    XCTAssertTrue(spots[1].compositeSpots[0].parentSpot!.component == spots[1].component)
+    XCTAssertTrue(spots[1].compositeSpots[0].parentSpot!.model == spots[1].model)
     XCTAssertTrue(spots[1].compositeSpots[0].spot is Listable)
     XCTAssertEqual(spots[1].compositeSpots[0].spot.items.count, 10)
     XCTAssertEqual(spots[1].compositeSpots[0].spot.view.frame.size.height,
@@ -995,7 +995,7 @@ class CompositionTests: XCTestCase {
 
     XCTAssertNotNil(itemConfigurable)
     XCTAssertEqual(composite?.contentView.subviews.count, 1)
-    XCTAssertTrue(spots[1].compositeSpots[1].parentSpot!.component == spots[1].component)
+    XCTAssertTrue(spots[1].compositeSpots[1].parentSpot!.model == spots[1].model)
     XCTAssertTrue(spots[1].compositeSpots[1].spot is Listable)
     XCTAssertEqual(spots[1].compositeSpots[1].spot.items.count, 10)
     XCTAssertEqual(spots[1].compositeSpots[1].spot.view.frame.size.height,
@@ -1059,7 +1059,7 @@ class CompositionTests: XCTestCase {
       XCTAssertNotNil(composite)
       XCTAssertNotNil(itemConfigurable)
       XCTAssertEqual(composite?.contentView.subviews.count, 1)
-      XCTAssertTrue(spots[0].compositeSpots[0].parentSpot!.component == spots[0].component)
+      XCTAssertTrue(spots[0].compositeSpots[0].parentSpot!.model == spots[0].model)
       XCTAssertTrue(spots[0].compositeSpots[0].spot is Listable)
       XCTAssertEqual(spots[0].compositeSpots[0].spot.items.count, 10)
       XCTAssertEqual(spots[0].compositeSpots[0].spot.view.frame.size.height,
@@ -1069,7 +1069,7 @@ class CompositionTests: XCTestCase {
 
       XCTAssertNotNil(itemConfigurable)
       XCTAssertEqual(composite?.contentView.subviews.count, 1)
-      XCTAssertTrue(spots[0].compositeSpots[1].parentSpot!.component == spots[0].component)
+      XCTAssertTrue(spots[0].compositeSpots[1].parentSpot!.model == spots[0].model)
       XCTAssertTrue(spots[0].compositeSpots[1].spot is Listable)
       XCTAssertEqual(spots[0].compositeSpots[1].spot.items.count, 10)
       XCTAssertEqual(spots[0].compositeSpots[1].spot.view.frame.size.height,

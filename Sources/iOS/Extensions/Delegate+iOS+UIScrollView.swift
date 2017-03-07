@@ -14,12 +14,12 @@ extension Delegate: UIScrollViewDelegate {
       switch spot {
       case let spot as Spot:
         spot.carouselScrollDelegate?.spotableCarouselDidScroll(spot)
-        if spot.component.layout?.pageIndicatorPlacement == .overlay {
+        if spot.model.layout?.pageIndicatorPlacement == .overlay {
           spot.pageControl.frame.origin.x = scrollView.contentOffset.x
         }
       case let spot as CarouselSpot:
         spot.carouselScrollDelegate?.spotableCarouselDidScroll(spot)
-        if spot.component.layout?.pageIndicatorPlacement == .overlay {
+        if spot.model.layout?.pageIndicatorPlacement == .overlay {
           spot.pageControl.frame.origin.x = scrollView.contentOffset.x
         }
       default:
@@ -79,7 +79,7 @@ extension Delegate: UIScrollViewDelegate {
                                            contentSize: collectionViewLayout.contentSize,
                                            offset: collectionViewLayout.minimumInteritemSpacing)
 
-      if spot.component.interaction.paginate == .page {
+      if spot.model.interaction.paginate == .page {
         let widthBounds = scrollView.contentSize.width - scrollView.frame.size.width
         let isBeyondBounds = targetContentOffset.pointee.x >= widthBounds && centerIndexPath == nil
 

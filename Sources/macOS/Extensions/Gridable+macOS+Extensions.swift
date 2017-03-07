@@ -82,9 +82,9 @@ extension Gridable {
   public func sizeForItem(at indexPath: IndexPath) -> CGSize {
     var sectionInsets: CGFloat = 0.0
     if let layout = layout as? NSCollectionViewFlowLayout,
-    let componentLayout = component.layout,
+    let componentLayout = model.layout,
       componentLayout.span > 0 {
-      component.items[indexPath.item].size.width = (collectionView.frame.width / CGFloat(componentLayout.span)) - layout.sectionInset.left - layout.sectionInset.right
+      model.items[indexPath.item].size.width = (collectionView.frame.width / CGFloat(componentLayout.span)) - layout.sectionInset.left - layout.sectionInset.right
       sectionInsets = layout.sectionInset.left + layout.sectionInset.right
     }
 
@@ -145,8 +145,8 @@ extension Gridable {
       }
     }
 
-    if index < component.items.count {
-      component.items[index] = item
+    if index < model.items.count {
+      model.items[index] = item
     }
   }
 

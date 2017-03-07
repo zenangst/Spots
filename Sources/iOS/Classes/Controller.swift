@@ -299,9 +299,9 @@ open class Controller: UIViewController, SpotsProtocol, SpotsFocusDelegate, UISc
     }
 
     spot.view.frame.origin.x = 0.0
-    spot.component.index = index
+    spot.model.index = index
     spot.setup(superview.frame.size)
-    spot.component.size = CGSize(
+    spot.model.size = CGSize(
       width: superview.frame.width,
       height: ceil(spot.view.frame.height))
     spot.focusDelegate = self
@@ -368,7 +368,7 @@ extension Controller {
   ///
   /// - returns: A ComponentModel object at index path.
   fileprivate func component(at indexPath: IndexPath) -> ComponentModel {
-    return spot(at: indexPath).component
+    return spot(at: indexPath).model
   }
 
   /// Resolve spot at index path.

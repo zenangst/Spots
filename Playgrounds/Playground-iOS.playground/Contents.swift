@@ -88,10 +88,10 @@ public class ListHeaderView: UIView, Componentable {
     fatalError("init(coder:) has not been implemented")
   }
 
-  public func configure(component: ComponentModel) {
+  public func configure(model: ComponentModel) {
     backgroundColor = UIColor.whiteColor()
 
-    label.attributedText = NSAttributedString(string: component.title.uppercaseString,
+    label.attributedText = NSAttributedString(string: model.title.uppercaseString,
                                               attributes: [NSParagraphStyleAttributeName : paddedStyle])
   }
 }
@@ -215,12 +215,12 @@ let gridItems = ComponentModel(span: 6, items: [
   ])
 
 let controller = Controller(spots: [
-  ListSpot(component: ComponentModel(title: "Carousel Spot", meta: ["headerHeight" : 44])),
+  ListSpot(model: ComponentModel(title: "Carousel Spot", meta: ["headerHeight" : 44])),
   CarouselSpot(carouselItems, top: 5, left: 0, bottom: 5, right: 0, itemSpacing: 0),
-  ListSpot(component: ComponentModel(title: "Grid Spot", meta: ["headerHeight" : 44])),
+  ListSpot(model: ComponentModel(title: "Grid Spot", meta: ["headerHeight" : 44])),
   GridSpot(featuredOpensource, top: 10, left: 10, bottom: 20, right: 10, itemSpacing: -5),
-  ListSpot(component: listItems),
-  ListSpot(component: ComponentModel(title: "Grid Spot", meta: ["headerHeight" : 44])),
+  ListSpot(model: listItems),
+  ListSpot(model: ComponentModel(title: "Grid Spot", meta: ["headerHeight" : 44])),
   GridSpot(gridItems, top: 10, left: 10, bottom: 20, right: 10, itemSpacing: -5),
   ]
 )

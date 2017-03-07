@@ -18,7 +18,7 @@ public extension Listable {
     tableView.frame.size.width = size.width - (tableView.contentInset.left)
     tableView.frame.origin.x = size.width / 2 - tableView.frame.width / 2
 
-    guard let componentSize = component.size else {
+    guard let componentSize = model.size else {
       return
     }
     tableView.frame.size.height = componentSize.height
@@ -39,7 +39,7 @@ public extension Listable {
   public func scrollTo(_ includeElement: (Item) -> Bool) -> CGFloat {
     guard let item = items.filter(includeElement).first else { return 0.0 }
 
-    return component.items[0...item.index]
+    return model.items[0...item.index]
       .reduce(0, { $0 + $1.size.height })
   }
 

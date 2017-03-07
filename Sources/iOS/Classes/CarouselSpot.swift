@@ -30,7 +30,7 @@ open class CarouselSpot: NSObject, Gridable, SpotHorizontallyScrollable {
   open fileprivate(set) var stateCache: StateCache?
 
   /// A component struct used as configuration and data source for the CarouselSpot
-  open var component: ComponentModel {
+  open var model: ComponentModel {
     didSet {
       configurePageControl()
     }
@@ -74,14 +74,14 @@ open class CarouselSpot: NSObject, Gridable, SpotHorizontallyScrollable {
   /// - returns: An initialized carousel spot.
   ///
   /// In case you want to use a default collection view & layout, use `init(component:)`.
-  public init(component: ComponentModel, collectionView: UICollectionView, layout: CollectionLayout) {
-    self.component = component
+  public init(model: ComponentModel, collectionView: UICollectionView, layout: CollectionLayout) {
+    self.model = model
 
-    if self.component.layout == nil {
-      self.component.layout = type(of: self).layout
+    if self.model.layout == nil {
+      self.model.layout = type(of: self).layout
     }
 
-    self.component.interaction.scrollDirection = .horizontal
+    self.model.interaction.scrollDirection = .horizontal
 
     collectionView.showsHorizontalScrollIndicator = false
     collectionView.showsVerticalScrollIndicator = false
@@ -94,13 +94,13 @@ open class CarouselSpot: NSObject, Gridable, SpotHorizontallyScrollable {
 
     super.init()
     self.userInterface = collectionView
-    self.component.layout?.configure(spot: self)
-    self.dynamicSpan = self.component.layout?.dynamicSpan ?? false
+    self.model.layout?.configure(spot: self)
+    self.dynamicSpan = self.model.layout?.dynamicSpan ?? false
     self.spotDataSource = DataSource(spot: self)
     self.spotDelegate = Delegate(spot: self)
 
-    if component.kind.isEmpty {
-      self.component.kind = ComponentModel.Kind.carousel.string
+    if model.kind.isEmpty {
+      self.model.kind = ComponentModel.Kind.carousel.string
     }
 
     registerDefault(view: CarouselSpotCell.self)
@@ -113,11 +113,11 @@ open class CarouselSpot: NSObject, Gridable, SpotHorizontallyScrollable {
   /// Convenience initializer that creates an instance with a component
   ///
   /// - parameter component: The component model that the carousel should render
-  public required convenience init(component: ComponentModel) {
+  public required convenience init(model: ComponentModel) {
     let layout = GridableLayout()
     layout.scrollDirection = .horizontal
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-    self.init(component: component, collectionView: collectionView, layout: layout)
+    self.init(model: model, collectionView: collectionView, layout: layout)
   }
 
   /// A convenience initializer for CarouselSpot with base configuration.
@@ -131,8 +131,8 @@ open class CarouselSpot: NSObject, Gridable, SpotHorizontallyScrollable {
   /// - parameter lineSpacing: The line spacing used in the flow layout.
   ///
   /// - returns: An initialized carousel spot with configured layout.
-  public convenience init(_ component: ComponentModel, top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0, itemSpacing: CGFloat = 0, lineSpacing: CGFloat = 0) {
-    self.init(component: component)
+  public convenience init(_ model: ComponentModel, top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0, itemSpacing: CGFloat = 0, lineSpacing: CGFloat = 0) {
+    self.init(model: model)
 
     layout.sectionInset = UIEdgeInsets(top: top, left: left, bottom: bottom, right: right)
     layout.minimumInteritemSpacing = itemSpacing
@@ -146,7 +146,7 @@ open class CarouselSpot: NSObject, Gridable, SpotHorizontallyScrollable {
   /// - returns: An initialized carousel spot.
   public convenience init(cacheKey: String) {
     let stateCache = StateCache(key: cacheKey)
-    self.init(component: ComponentModel(stateCache.load()))
+    self.init(model: ComponentModel(stateCache.load()))
     self.stateCache = stateCache
   }
 
@@ -163,7 +163,7 @@ open class CarouselSpot: NSObject, Gridable, SpotHorizontallyScrollable {
     collectionView.delegate = spotDelegate
     collectionView.backgroundView = backgroundView
     #if os(iOS)
-      collectionView.isPagingEnabled = component.interaction.paginate == .page
+      collectionView.isPagingEnabled = model.interaction.paginate == .page
     #endif
   }
 
@@ -178,7 +178,7 @@ open class CarouselSpot: NSObject, Gridable, SpotHorizontallyScrollable {
     if collectionView.contentSize.height > 0 {
       collectionView.frame.size.height = collectionView.contentSize.height
     } else {
-      collectionView.frame.size.height = component.items.sorted(by: {
+      collectionView.frame.size.height = model.items.sorted(by: {
         $0.size.height > $1.size.height
       }).first?.size.height ?? 0
 
@@ -187,8 +187,8 @@ open class CarouselSpot: NSObject, Gridable, SpotHorizontallyScrollable {
       }
     }
 
-    if !component.header.isEmpty {
-      let resolve = type(of: self).headers.make(component.header)
+    if !model.header.isEmpty {
+      let resolve = type(of: self).headers.make(model.header)
       layout.headerReferenceSize.width = collectionView.frame.size.width
       layout.headerReferenceSize.height = resolve?.view?.frame.size.height ?? 0.0
     }
@@ -197,11 +197,11 @@ open class CarouselSpot: NSObject, Gridable, SpotHorizontallyScrollable {
 
     collectionView.frame.size.height += layout.headerReferenceSize.height
 
-    if let componentLayout = component.layout {
+    if let componentLayout = model.layout {
       collectionView.frame.size.height += CGFloat(componentLayout.inset.top + componentLayout.inset.bottom)
     }
 
-    if let pageIndicatorPlacement = component.layout?.pageIndicatorPlacement {
+    if let pageIndicatorPlacement = model.layout?.pageIndicatorPlacement {
       switch pageIndicatorPlacement {
       case .below:
         layout.sectionInset.bottom += pageControl.frame.height
@@ -214,12 +214,12 @@ open class CarouselSpot: NSObject, Gridable, SpotHorizontallyScrollable {
   }
 
   private func configurePageControl() {
-    guard let placement = component.layout?.pageIndicatorPlacement else {
+    guard let placement = model.layout?.pageIndicatorPlacement else {
       pageControl.removeFromSuperview()
       return
     }
 
-    pageControl.numberOfPages = component.items.count
+    pageControl.numberOfPages = model.items.count
     pageControl.frame.origin.x = 0
     pageControl.frame.size.height = 22
 

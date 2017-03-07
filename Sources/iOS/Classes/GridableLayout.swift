@@ -35,15 +35,15 @@ open class GridableLayout: UICollectionViewFlowLayout {
 
     var layoutAttributes = [UICollectionViewLayoutAttributes]()
 
-    if !spot.component.header.isEmpty {
+    if !spot.model.header.isEmpty {
 
       var view: View?
 
-      if let (_, header) = spot.type.headers.make(spot.component.header) {
+      if let (_, header) = spot.type.headers.make(spot.model.header) {
         view = header
       }
 
-      if view == nil, let (_, header) = Configuration.views.make(spot.component.header) {
+      if view == nil, let (_, header) = Configuration.views.make(spot.model.header) {
         view = header
       }
 
@@ -63,8 +63,8 @@ open class GridableLayout: UICollectionViewFlowLayout {
       }
     }
 
-    if !spot.component.footer.isEmpty,
-      let (_, view) = Configuration.views.make(spot.component.footer),
+    if !spot.model.footer.isEmpty,
+      let (_, view) = Configuration.views.make(spot.model.footer),
       let resolvedView = view {
 
       if let componentView = resolvedView as? Componentable {
@@ -86,7 +86,7 @@ open class GridableLayout: UICollectionViewFlowLayout {
 
       contentSize.height = firstItem.size.height + headerReferenceSize.height + footerHeight
 
-      if let componentLayout = spot.component.layout {
+      if let componentLayout = spot.model.layout {
         contentSize.height += CGFloat(componentLayout.inset.top + componentLayout.inset.bottom)
 
         #if os(iOS)

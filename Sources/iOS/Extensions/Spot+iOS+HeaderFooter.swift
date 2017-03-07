@@ -7,11 +7,11 @@ extension Spot {
       return
     }
 
-    guard !component.header.isEmpty else {
+    guard !model.header.isEmpty else {
       return
     }
 
-    guard let view = Configuration.views.make(component.header)?.view as? Componentable else {
+    guard let view = Configuration.views.make(model.header)?.view as? Componentable else {
       return
     }
 

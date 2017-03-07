@@ -13,8 +13,8 @@ class TestSpot: XCTestCase {
 
   func testDefaultValues() {
     let items = [Item(title: "A"), Item(title: "B")]
-    let component = ComponentModel(items: items, hybrid: true)
-    let spot = Spot(component: component)
+    let model = ComponentModel(items: items, hybrid: true)
+    let spot = Spot(model: model)
 
     spot.setup(CGSize(width: 100, height: 100))
 
@@ -39,7 +39,7 @@ class TestSpot: XCTestCase {
     let item = Item(title: "test")
     let spot = Spot(cacheKey: "test-spot-cache")
 
-    XCTAssertEqual(spot.component.items.count, 0)
+    XCTAssertEqual(spot.model.items.count, 0)
     spot.append(item) {
       spot.cache()
     }
@@ -52,8 +52,8 @@ class TestSpot: XCTestCase {
       }
 
       let cachedSpot = Spot(cacheKey: cacheKey)
-      XCTAssertEqual(cachedSpot.component.items[0].title, "test")
-      XCTAssertEqual(cachedSpot.component.items.count, 1)
+      XCTAssertEqual(cachedSpot.model.items[0].title, "test")
+      XCTAssertEqual(cachedSpot.model.items.count, 1)
       cachedSpot.stateCache?.clear()
       expectation.fulfill()
 
@@ -64,10 +64,10 @@ class TestSpot: XCTestCase {
 
   func testCompareHybridListSpotWithCoreType() {
     let items = [Item(title: "A"), Item(title: "B")]
-    let component = ComponentModel(kind: ComponentModel.Kind.list.string, items: items, hybrid: true)
+    let model = ComponentModel(kind: ComponentModel.Kind.list.string, items: items, hybrid: true)
     let listComponentModel = ComponentModel(kind: ComponentModel.Kind.list.string, items: items)
-    let spot = Spot(component: component)
-    let listSpot = ListSpot(component: listComponentModel)
+    let spot = Spot(model: model)
+    let listSpot = ListSpot(model: listComponentModel)
 
     XCTAssertTrue(type(of: spot.view) == type(of: listSpot.view))
 
@@ -76,7 +76,7 @@ class TestSpot: XCTestCase {
     listSpot.layout(CGSize(width: 100, height: 100))
     listSpot.view.layoutSubviews()
 
-    XCTAssertEqual(spot.component.interaction.scrollDirection, listSpot.component.interaction.scrollDirection)
+    XCTAssertEqual(spot.model.interaction.scrollDirection, listSpot.model.interaction.scrollDirection)
     XCTAssertEqual(spot.items[0].size, listSpot.items[0].size)
     XCTAssertEqual(spot.items[1].size, listSpot.items[0].size)
     XCTAssertEqual(spot.sizeForItem(at: IndexPath(item: 0, section: 0)), listSpot.sizeForItem(at: IndexPath(item: 0, section: 0)))
@@ -87,10 +87,10 @@ class TestSpot: XCTestCase {
 
   func testCompareHybridGridSpotWithCoreType() {
     let items = [Item(title: "A"), Item(title: "B")]
-    let component = ComponentModel(kind: ComponentModel.Kind.grid.string, items: items, hybrid: true)
+    let model = ComponentModel(kind: ComponentModel.Kind.grid.string, items: items, hybrid: true)
     let gridComponentModel = ComponentModel(kind: ComponentModel.Kind.grid.string, items: items)
-    let spot = Spot(component: component)
-    let gridSpot = GridSpot(component: gridComponentModel)
+    let spot = Spot(model: model)
+    let gridSpot = GridSpot(model: gridComponentModel)
 
     XCTAssertTrue(type(of: spot.view) == type(of: gridSpot.view))
 
@@ -99,7 +99,7 @@ class TestSpot: XCTestCase {
     gridSpot.layout(CGSize(width: 100, height: 100))
     gridSpot.view.layoutSubviews()
 
-    XCTAssertEqual(spot.component.interaction.scrollDirection, gridSpot.component.interaction.scrollDirection)
+    XCTAssertEqual(spot.model.interaction.scrollDirection, gridSpot.model.interaction.scrollDirection)
     XCTAssertEqual(spot.items[0].size, gridSpot.items[0].size)
     XCTAssertEqual(spot.items[1].size, gridSpot.items[0].size)
     XCTAssertEqual(spot.sizeForItem(at: IndexPath(item: 0, section: 0)), gridSpot.sizeForItem(at: IndexPath(item: 0, section: 0)))
@@ -110,10 +110,10 @@ class TestSpot: XCTestCase {
 
   func testCompareHybridCarouselSpotWithCoreType() {
     let items = [Item(title: "A"), Item(title: "B")]
-    let component = ComponentModel(kind: ComponentModel.Kind.carousel.string, items: items, hybrid: true)
+    let model = ComponentModel(kind: ComponentModel.Kind.carousel.string, items: items, hybrid: true)
     let carouselComponentModel = ComponentModel(kind: ComponentModel.Kind.carousel.string, items: items)
-    let spot = Spot(component: component)
-    let carouselSpot = CarouselSpot(component: carouselComponentModel)
+    let spot = Spot(model: model)
+    let carouselSpot = CarouselSpot(model: carouselComponentModel)
 
     XCTAssertTrue(type(of: spot.view) == type(of: carouselSpot.view))
 
@@ -122,7 +122,7 @@ class TestSpot: XCTestCase {
     carouselSpot.layout(CGSize(width: 100, height: 100))
     carouselSpot.view.layoutSubviews()
 
-    XCTAssertEqual(spot.component.interaction.scrollDirection, carouselSpot.component.interaction.scrollDirection)
+    XCTAssertEqual(spot.model.interaction.scrollDirection, carouselSpot.model.interaction.scrollDirection)
     XCTAssertEqual(spot.items[0].size, carouselSpot.items[0].size)
     XCTAssertEqual(spot.items[1].size, carouselSpot.items[0].size)
     XCTAssertEqual(spot.sizeForItem(at: IndexPath(item: 0, section: 0)), carouselSpot.sizeForItem(at: IndexPath(item: 0, section: 0)))
@@ -132,7 +132,7 @@ class TestSpot: XCTestCase {
   }
 
   func testHybridListSpotWithHeaderAndFooter() {
-    let component = ComponentModel(
+    let model = ComponentModel(
       header: "Header",
       footer: "Footer",
       kind: ComponentModel.Kind.list.string,
@@ -144,7 +144,7 @@ class TestSpot: XCTestCase {
       ],
       hybrid: true
     )
-    let spot = Spot(component: component)
+    let spot = Spot(model: model)
     spot.setup(CGSize(width: 100, height: 100))
 
     XCTAssertEqual(spot.view.frame.size, CGSize(width: 100, height: 100))
@@ -161,7 +161,7 @@ class TestSpot: XCTestCase {
   }
 
   func testHybridCarouselSpotWithHeaderAndFooter() {
-    let component = ComponentModel(
+    let model = ComponentModel(
       header: "Header",
       footer: "Footer",
       kind: ComponentModel.Kind.carousel.string,
@@ -173,7 +173,7 @@ class TestSpot: XCTestCase {
       ],
       hybrid: true
     )
-    let spot = Spot(component: component)
+    let spot = Spot(model: model)
     spot.setup(CGSize(width: 100, height: 100))
 
     XCTAssertEqual(spot.view.frame.size, CGSize(width: 100, height: 188))
