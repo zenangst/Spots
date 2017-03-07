@@ -1,6 +1,6 @@
 import Cocoa
 
-extension Component {
+internal extension Component {
 
   func setupTableView(_ tableView: TableView, with size: CGSize) {
     scrollView.addSubview(tableView)

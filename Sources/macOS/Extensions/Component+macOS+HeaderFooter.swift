@@ -1,6 +1,6 @@
 import Cocoa
 
-extension Component {
+internal extension Component {
 
   func setupHeader(kind: String) {
     guard !model.header.isEmpty, headerView == nil else {

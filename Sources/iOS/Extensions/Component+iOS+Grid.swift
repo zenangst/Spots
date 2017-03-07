@@ -1,6 +1,6 @@
 import UIKit
 
-extension Component {
+internal extension Component {
 
   func setupVerticalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
     guard let collectionViewLayout = collectionView.collectionViewLayout as? GridableLayout else {

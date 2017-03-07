@@ -1,7 +1,7 @@
 import Cocoa
 import Tailor
 
-extension Component {
+internal extension Component {
 
   func setupHorizontalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
     var newCollectionViewHeight: CGFloat = 0.0
