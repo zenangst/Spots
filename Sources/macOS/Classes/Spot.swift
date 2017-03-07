@@ -197,6 +197,8 @@ public class Spot: NSObject, Spotable {
       layoutCollectionView(collectionView, with: size)
     }
 
+    layoutHeaderFooterViews(size)
+
     view.layoutSubviews()
   }
 
