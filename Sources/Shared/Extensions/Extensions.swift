@@ -34,7 +34,7 @@ extension Dictionary where Key: ExpressibleByStringLiteral {
 
    - returns: The value associated with the given key
    */
-  subscript(key: Item.Key) -> Value? {
+  subscript(key: ContentModel.Key) -> Value? {
     set(value) {
       guard let key = key.string as? Key else { return }
       self[key] = value
