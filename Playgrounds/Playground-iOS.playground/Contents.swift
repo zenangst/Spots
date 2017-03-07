@@ -19,7 +19,7 @@ public class ListCell: UITableViewCell, ItemConfigurable {
 
   lazy var selectedView: UIView = {
     let view = UIView()
-    view.backgroundColor = UIColor.darkGrayColor().colorWithAlphaComponent(0.4)
+    view.backgroundColor = UIColor.darkGrayColor().colorWithAlphaComponentModel(0.4)
 
     return view
   }()
@@ -58,7 +58,7 @@ public class ListCell: UITableViewCell, ItemConfigurable {
   }
 }
 
-public class ListHeaderView: UIView, Componentable {
+public class ListHeaderView: UIView, ComponentModelable {
 
   public var defaultHeight: CGFloat = 44
 
@@ -88,7 +88,7 @@ public class ListHeaderView: UIView, Componentable {
     fatalError("init(coder:) has not been implemented")
   }
 
-  public func configure(component: Component) {
+  public func configure(component: ComponentModel) {
     backgroundColor = UIColor.whiteColor()
 
     label.attributedText = NSAttributedString(string: component.title.uppercaseString,
@@ -146,7 +146,7 @@ class GridTopicCell: UICollectionViewCell, ItemConfigurable {
   }
 
   func configure(inout item: Item) {
-    contentView.backgroundColor = item.meta("color", UIColor.whiteColor()).colorWithAlphaComponent(0.4)
+    contentView.backgroundColor = item.meta("color", UIColor.whiteColor()).colorWithAlphaComponentModel(0.4)
 
     blurView.width = contentView.width
     blurView.height = 48
@@ -184,28 +184,28 @@ ListSpot.configure = { tableView in
   tableView.tableFooterView = UIView(frame: CGRect.zero)
 }
 
-let carouselItems = Component(items: [
+let carouselItems = ComponentModel(items: [
   Item(title: "UX", kind: Cell.Featured, meta: ["color" : UIColor.blackColor()]),
   Item(title: "Persistency", kind: Cell.Featured, meta: ["color" : UIColor.grayColor()]),
   Item(title: "Networking", kind: Cell.Featured, meta: ["color" : UIColor.greenColor()]),
   Item(title: "Navigation", kind: Cell.Featured, meta: ["color" : UIColor.redColor()])
   ])
 
-let listItems = Component(title: "List Spot", items: [
+let listItems = ComponentModel(title: "List Spot", items: [
   Item(title: "Vadym Markov", subtitle: "iOS Developer", action: "1"),
   Item(title: "Ramon Gilabert Llop", subtitle: "iOS Developer", action: "2"),
   Item(title: "Khoa Pham", subtitle: "iOS Developer", action: "3"),
   Item(title: "Christoffer Winterkvist", subtitle: "iOS Developer", action: "4")
   ], meta: ["headerHeight" : 44])
 
-let featuredOpensource = Component(span: 4, items: [
+let featuredOpensource = ComponentModel(span: 4, items: [
   Item(title: "Whisper", kind: Cell.Featured, meta: ["color" : UIColor.blueColor()]),
   Item(title: "Sync", kind: Cell.Featured, meta: ["color" : UIColor.orangeColor()]),
   Item(title: "Presentation", kind: Cell.Featured, meta: ["color" : UIColor.yellowColor()]),
   Item(title: "HUE", kind: Cell.Featured, meta: ["color" : UIColor.redColor()]),
   ])
 
-let gridItems = Component(span: 6, items: [
+let gridItems = ComponentModel(span: 6, items: [
   Item(title: "ImagePicker", kind: Cell.Featured, meta: ["color" : UIColor.darkGrayColor()]),
   Item(title: "Sugar", kind: Cell.Featured, meta: ["color" : UIColor.redColor()]),
   Item(title: "Cache", kind: Cell.Featured, meta: ["color" : UIColor.greenColor()]),
@@ -215,14 +215,14 @@ let gridItems = Component(span: 6, items: [
   ])
 
 let controller = Controller(spots: [
-  ListSpot(component: Component(title: "Carousel Spot", meta: ["headerHeight" : 44])),
+  ListSpot(component: ComponentModel(title: "Carousel Spot", meta: ["headerHeight" : 44])),
   CarouselSpot(carouselItems, top: 5, left: 0, bottom: 5, right: 0, itemSpacing: 0),
-  ListSpot(component: Component(title: "Grid Spot", meta: ["headerHeight" : 44])),
+  ListSpot(component: ComponentModel(title: "Grid Spot", meta: ["headerHeight" : 44])),
   GridSpot(featuredOpensource, top: 10, left: 10, bottom: 20, right: 10, itemSpacing: -5),
   ListSpot(component: listItems),
-  ListSpot(component: Component(title: "Grid Spot", meta: ["headerHeight" : 44])),
+  ListSpot(component: ComponentModel(title: "Grid Spot", meta: ["headerHeight" : 44])),
   GridSpot(gridItems, top: 10, left: 10, bottom: 20, right: 10, itemSpacing: -5),
   ]
 )
 
-XCPlaygroundPage.currentPage.liveView = controller.view
+X

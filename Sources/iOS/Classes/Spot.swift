@@ -7,7 +7,7 @@ public class Spot: NSObject, Spotable, SpotHorizontallyScrollable {
   public static var layout: Layout = Layout(span: 1.0)
   public static var headers: Registry = Registry()
   public static var views: Registry = Registry()
-  public static var defaultKind: String = Component.Kind.list.string
+  public static var defaultKind: String = ComponentModel.Kind.list.string
 
   open static var configure: ((_ view: View) -> Void)?
 
@@ -15,8 +15,8 @@ public class Spot: NSObject, Spotable, SpotHorizontallyScrollable {
   weak public var delegate: SpotsDelegate?
   weak public var carouselScrollDelegate: CarouselScrollDelegate?
 
-  public var component: Component
-  public var componentKind: Component.Kind = .list
+  public var component: ComponentModel
+  public var componentKind: ComponentModel.Kind = .list
   public var compositeSpots: [CompositeSpot] = []
 
   public var configure: ((ItemConfigurable) -> Void)? {
@@ -46,7 +46,7 @@ public class Spot: NSObject, Spotable, SpotHorizontallyScrollable {
     return userInterface as? CollectionView
   }
 
-  public required init(component: Component, view: ScrollView, kind: Component.Kind) {
+  public required init(component: ComponentModel, view: ScrollView, kind: ComponentModel.Kind) {
     self.component = component
     self.componentKind = kind
     self.view = view
@@ -82,13 +82,13 @@ public class Spot: NSObject, Spotable, SpotHorizontallyScrollable {
     self.spotDelegate = Delegate(spot: self)
   }
 
-  public required convenience init(component: Component) {
+  public required convenience init(component: ComponentModel) {
     var component = component
     if component.kind.isEmpty {
       component.kind = Spot.defaultKind
     }
 
-    let kind = Component.Kind(rawValue: component.kind) ?? .list
+    let kind = ComponentModel.Kind(rawValue: component.kind) ?? .list
     let view = kind == .list
       ? TableView()
       : CollectionView(frame: CGRect.zero, collectionViewLayout: CollectionLayout())
@@ -99,7 +99,7 @@ public class Spot: NSObject, Spotable, SpotHorizontallyScrollable {
   public convenience init(cacheKey: String) {
     let stateCache = StateCache(key: cacheKey)
 
-    self.init(component: Component(stateCache.load()))
+    self.init(component: ComponentModel(stateCache.load()))
     self.stateCache = stateCache
   }
 

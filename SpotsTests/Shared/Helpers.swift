@@ -52,7 +52,7 @@ extension Controller {
 }
 
 #if !os(OSX)
-  class HeaderView: UIView, ItemConfigurable, Componentable {
+  class HeaderView: UIView, ItemConfigurable, ComponentModelable {
 
     public var preferredHeaderHeight: CGFloat = 50.0
 
@@ -87,12 +87,12 @@ extension Controller {
       titleLabel.text = item.title
     }
 
-    func configure(_ component: Component) {
+    func configure(_ component: ComponentModel) {
       titleLabel.text = component.title
     }
   }
 
-  class FooterView: UIView, ItemConfigurable, Componentable {
+  class FooterView: UIView, ItemConfigurable, ComponentModelable {
 
     var preferredHeaderHeight: CGFloat = 50
 
@@ -127,7 +127,7 @@ extension Controller {
       titleLabel.text = item.title
     }
 
-    func configure(_ component: Component) {
+    func configure(_ component: ComponentModel) {
       titleLabel.text = "This is a footer"
     }
   }
@@ -146,7 +146,7 @@ extension Controller {
       super.init(frame: frame)
       addSubview(titleLabel)
 
-      backgroundColor = UIColor.gray.withAlphaComponent(0.25)
+      backgroundColor = UIColor.gray.withAlphaComponentModel(0.25)
 
       configureConstraints()
     }
@@ -177,10 +177,10 @@ extension Controller {
     }
   }
 
-  class CustomListHeaderView: UITableViewHeaderFooterView, Componentable {
+  class CustomListHeaderView: UITableViewHeaderFooterView, ComponentModelable {
     var preferredHeaderHeight: CGFloat = 88
 
-    func configure(_ component: Component) {
+    func configure(_ component: ComponentModel) {
       textLabel?.text = component.title
     }
   }
@@ -192,13 +192,13 @@ extension Controller {
     func configure(_ item: inout Item) {}
   }
 
-  class CustomGridHeaderView: UICollectionReusableView, Componentable {
+  class CustomGridHeaderView: UICollectionReusableView, ComponentModelable {
 
     var preferredHeaderHeight: CGFloat = 88
 
     lazy var textLabel = UILabel()
 
-    func configure(_ component: Component) {
+    func configure(_ component: ComponentModel) {
       textLabel.text = component.title
     }
   }

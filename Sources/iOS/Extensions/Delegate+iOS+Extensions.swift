@@ -111,10 +111,10 @@ extension Delegate: UITableViewDelegate {
       switch view {
       case let view as ListHeaderFooterWrapper:
         if let (_, resolvedView) = Configuration.views.make(spot.component.header),
-          let componentView = resolvedView as? Componentable {
+          let componentView = resolvedView as? ComponentModelable {
           view.frame.size.height = componentView.preferredHeaderHeight
         }
-      case let view as Componentable:
+      case let view as ComponentModelable:
         view.configure(spot.component)
       default:
         break
@@ -123,7 +123,7 @@ extension Delegate: UITableViewDelegate {
       return view?.frame.size.height ?? 0.0
     }
 
-    return (header?.view as? Componentable)?.preferredHeaderHeight ?? 0.0
+    return (header?.view as? ComponentModelable)?.preferredHeaderHeight ?? 0.0
   }
 
   public func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -141,10 +141,10 @@ extension Delegate: UITableViewDelegate {
       switch view {
       case let view as ListHeaderFooterWrapper:
         if let (_, resolvedView) = Configuration.views.make(spot.component.footer),
-          let componentView = resolvedView as? Componentable {
+          let componentView = resolvedView as? ComponentModelable {
             view.frame.size.height = componentView.preferredHeaderHeight
         }
-      case let view as Componentable:
+      case let view as ComponentModelable:
         view.configure(spot.component)
       default:
         break
@@ -153,7 +153,7 @@ extension Delegate: UITableViewDelegate {
       return view?.frame.size.height ?? 0.0
     }
 
-    return (header?.view as? Componentable)?.preferredHeaderHeight ?? 0.0
+    return (header?.view as? ComponentModelable)?.preferredHeaderHeight ?? 0.0
   }
 
   /// Asks the data source for the title of the header of the specified section of the table view.
@@ -161,7 +161,7 @@ extension Delegate: UITableViewDelegate {
   /// - parameter tableView: The table-view object asking for the title.
   /// - parameter section: An index number identifying a section of tableView.
   ///
-  /// - returns: A string to use as the title of the section header. Will return `nil` if title is not present on Component
+  /// - returns: A string to use as the title of the section header. Will return `nil` if title is not present on ComponentModel
   @nonobjc public func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
     guard let spot = spot else {
       return nil
@@ -233,13 +233,13 @@ extension Delegate: UITableViewDelegate {
         let customView = resolvedView {
         view.configure(with: customView)
 
-        if let componentView = customView as? Componentable {
+        if let componentView = customView as? ComponentModelable {
           componentView.configure(spot.component)
           customView.frame.size = view.frame.size
           customView.frame.size.height = componentView.preferredHeaderHeight
         }
       }
-      case let view as Componentable:
+      case let view as ComponentModelable:
       view.configure(spot.component)
       default:
         break
@@ -261,13 +261,13 @@ extension Delegate: UITableViewDelegate {
         let customView = resolvedView {
         view.configure(with: customView)
 
-        if let componentView = resolvedView as? Componentable {
+        if let componentView = resolvedView as? ComponentModelable {
           componentView.configure(spot.component)
           customView.frame.size = view.frame.size
           customView.frame.size.height = componentView.preferredHeaderHeight
         }
       }
-    case let view as Componentable:
+    case let view as ComponentModelable:
       view.configure(spot.component)
     default:
       break

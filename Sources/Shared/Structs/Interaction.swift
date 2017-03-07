@@ -58,7 +58,7 @@ public struct Interaction: Mappable {
   ///
   /// - Parameter map: A JSON dictionary.
   public mutating func configure(withJSON map: [String : Any]) {
-    if Component.legacyMapping {
+    if ComponentModel.legacyMapping {
       if let _: Bool = map.property(Key.paginate.rawValue) {
         self.paginate = .page
       }

@@ -108,7 +108,7 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
   ///
   /// - Parameter map: A JSON dictionary.
   public mutating func configure(withJSON map: [String : Any]) {
-    switch Component.legacyMapping {
+    switch ComponentModel.legacyMapping {
     case true:
       self.inset = Inset(map)
     case false:

@@ -5,7 +5,7 @@ import XCTest
 class SpotableTests: XCTestCase {
 
   func testAppendingMultipleItemsToSpot() {
-    let listSpot = ListSpot(component: Component(title: "Component", span: 1.0))
+    let listSpot = ListSpot(component: ComponentModel(title: "ComponentModel", span: 1.0))
     listSpot.setup(CGSize(width: 100, height: 100))
     var items: [Item] = []
 
@@ -29,7 +29,7 @@ class SpotableTests: XCTestCase {
   }
 
   func testAppendingMultipleItemsToSpotInController() {
-    let controller = Controller(spots: [ListSpot(component: Component(title: "Component", span: 1.0))])
+    let controller = Controller(spots: [ListSpot(component: ComponentModel(title: "ComponentModel", span: 1.0))])
     controller.prepareController()
     var items: [Item] = []
 
@@ -58,7 +58,7 @@ class SpotableTests: XCTestCase {
     Configuration.register(view: TestView.self, identifier: kind)
 
     let parentSize = CGSize(width: 100, height: 100)
-    let component = Component(items: [Item(title: "foo", kind: kind)])
+    let component = ComponentModel(items: [Item(title: "foo", kind: kind)])
     let spot = GridSpot(component: component)
     spot.view.frame.size = parentSize
     spot.setup(parentSize)
@@ -80,7 +80,7 @@ class SpotableTests: XCTestCase {
     Configuration.register(view: TestView.self, identifier: kind)
 
     let parentSize = CGSize(width: 100, height: 100)
-    let component = Component(items: [Item(title: "foo", kind: kind)])
+    let component = ComponentModel(items: [Item(title: "foo", kind: kind)])
     let spot = ListSpot(component: component)
 
     spot.setup(parentSize)

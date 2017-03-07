@@ -17,7 +17,7 @@ class ListSpotTests: XCTestCase {
   }
 
   func testDictionaryRepresentation() {
-    let component = Component(title: "ListSpot", kind: "list", span: 3, meta: ["headerHeight": 44.0])
+    let component = ComponentModel(title: "ListSpot", kind: "list", span: 3, meta: ["headerHeight": 44.0])
     let spot = ListSpot(component: component)
     XCTAssertEqual(component.dictionary["index"] as? Int, spot.dictionary["index"] as? Int)
     XCTAssertEqual(component.dictionary["title"] as? String, spot.dictionary["title"] as? String)
@@ -30,7 +30,7 @@ class ListSpotTests: XCTestCase {
   }
 
   func testSafelyResolveKind() {
-    let component = Component(title: "ListSpot", kind: "custom-list", span: 1.0, items: [Item(title: "foo", kind: "custom-item-kind")])
+    let component = ComponentModel(title: "ListSpot", kind: "custom-list", span: 1.0, items: [Item(title: "foo", kind: "custom-item-kind")])
     let listSpot = ListSpot(component: component)
     let indexPath = IndexPath(row: 0, section: 0)
 
@@ -70,7 +70,7 @@ class ListSpotTests: XCTestCase {
     Configuration.register(view: TestView.self, identifier: "test-view")
 
     let items = [Item(title: "Item A", kind: "test-view"), Item(title: "Item B")]
-    let spot = ListSpot(component: Component(span: 0.0, items: items))
+    let spot = ListSpot(component: ComponentModel(span: 0.0, items: items))
     spot.setup(CGSize(width: 100, height: 100))
     spot.layout(CGSize(width: 100, height: 100))
     spot.view.layoutSubviews()

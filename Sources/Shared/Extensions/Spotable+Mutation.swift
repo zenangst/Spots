@@ -503,14 +503,14 @@ public extension Spotable {
         return
       }
 
-      let newComponent = Component(json)
+      let newComponentModel = ComponentModel(json)
 
-      guard weakSelf.component != newComponent else {
+      guard weakSelf.component != newComponentModel else {
         weakSelf.cache()
         return
       }
 
-      weakSelf.component = newComponent
+      weakSelf.component = newComponentModel
       weakSelf.reload(nil, withAnimation: animation) { [weak self] in
         guard let weakSelf = self else {
           return

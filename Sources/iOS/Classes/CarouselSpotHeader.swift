@@ -1,12 +1,12 @@
 import UIKit
 
 /// A Carousel Spot Header
-public class CarouselSpotHeader: UICollectionReusableView, Componentable {
+public class CarouselSpotHeader: UICollectionReusableView, ComponentModelable {
 
   /// The preferred header height for the view
   public var preferredHeaderHeight: CGFloat = 120
 
-  /// A UILabel that uses Component title for its text
+  /// A UILabel that uses ComponentModel title for its text
   public lazy var titleLabel = UILabel()
 
   /// Initializes and returns a newly allocated view object with the specified frame rectangle.
@@ -27,10 +27,10 @@ public class CarouselSpotHeader: UICollectionReusableView, Componentable {
     fatalError("init(coder:) has not been implemented")
   }
 
-  /// Configure reusuable header view with Component.
+  /// Configure reusuable header view with ComponentModel.
   ///
-  /// - parameter component: A Component struct used for configuring the view.
-  public func configure(_ component: Component) {
+  /// - parameter component: A ComponentModel struct used for configuring the view.
+  public func configure(_ component: ComponentModel) {
     titleLabel.text = component.title
   }
 }

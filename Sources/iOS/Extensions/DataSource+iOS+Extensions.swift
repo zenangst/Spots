@@ -99,9 +99,9 @@ extension DataSource: UICollectionViewDataSource {
         view.frame.size.height = viewHeight
         view.frame.size.width = collectionView.frame.size.width
 
-        (customView as? Componentable)?.configure(spot.component)
+        (customView as? ComponentModelable)?.configure(spot.component)
       }
-    case let view as Componentable:
+    case let view as ComponentModelable:
       view.configure(spot.component)
     default:
       break

@@ -93,7 +93,7 @@ open class RowSpot: NSObject, Gridable {
 
   open weak var delegate: SpotsDelegate?
 
-  open var component: Component
+  open var component: ComponentModel
   open var configure: ((ItemConfigurable) -> Void)? {
     didSet {
       guard let configure = configure else { return }
@@ -132,7 +132,7 @@ open class RowSpot: NSObject, Gridable {
     let lineView = NSView()
     lineView.frame.size.height = 1
     lineView.wantsLayer = true
-    lineView.layer?.backgroundColor = NSColor.gray.withAlphaComponent(0.2).cgColor
+    lineView.layer?.backgroundColor = NSColor.gray.withAlphaComponentModel(0.2).cgColor
 
     return lineView
   }()
@@ -146,7 +146,7 @@ open class RowSpot: NSObject, Gridable {
 
    - parameter component: A component struct
    */
-  public required init(component: Component) {
+  public required init(component: ComponentModel) {
     self.component = component
 
     if self.component.layout == nil {
@@ -162,7 +162,7 @@ open class RowSpot: NSObject, Gridable {
     self.spotDelegate = Delegate(spot: self)
 
     if component.kind.isEmpty {
-      self.component.kind = Component.Kind.grid.string
+      self.component.kind = ComponentModel.Kind.grid.string
     }
 
     registerDefault(view: RowSpotItem.self)
@@ -182,10 +182,10 @@ open class RowSpot: NSObject, Gridable {
    A convenience init for initializing a RowSpot with a title and a kind
 
    - parameter title: A string that is used as a title for the RowSpot
-   - parameter kind:  An identifier to determine which kind should be set on the Component
+   - parameter kind:  An identifier to determine which kind should be set on the ComponentModel
    */
   public convenience init(title: String = "", kind: String? = nil) {
-    self.init(component: Component(title: title, kind: kind ?? RowSpot.defaultKind.string))
+    self.init(component: ComponentModel(title: title, kind: kind ?? RowSpot.defaultKind.string))
   }
 
   /**
@@ -196,7 +196,7 @@ open class RowSpot: NSObject, Gridable {
   public convenience init(cacheKey: String) {
     let stateCache = StateCache(key: cacheKey)
 
-    self.init(component: Component(stateCache.load()))
+    self.init(component: ComponentModel(stateCache.load()))
     self.stateCache = stateCache
   }
 
@@ -213,9 +213,9 @@ open class RowSpot: NSObject, Gridable {
 
    - parameter component: The component for the RowSpot
 
-   - returns: A NSCollectionView layout determined by the Component
+   - returns: A NSCollectionView layout determined by the ComponentModel
    */
-  fileprivate static func setupLayout(_ component: Component) -> NSCollectionViewLayout {
+  fileprivate static func setupLayout(_ component: ComponentModel) -> NSCollectionViewLayout {
     let layout: NSCollectionViewLayout
 
     switch LayoutType(rawValue: component.meta(Key.layout, Default.defaultLayout)) ?? LayoutType.flow {

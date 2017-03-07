@@ -1,7 +1,7 @@
 import Cocoa
 import Spots
 
-class HeaderView: NSView, ItemConfigurable, Componentable {
+class HeaderView: NSView, ItemConfigurable, ComponentModelable {
 
   var preferredHeaderHeight: CGFloat = 50
   var preferredViewSize: CGSize = CGSize(width: 200, height: 50)
@@ -16,7 +16,7 @@ class HeaderView: NSView, ItemConfigurable, Componentable {
     addSubview(titleLabel)
 
     wantsLayer = true
-    layer?.backgroundColor = NSColor.gray.withAlphaComponent(0.25).cgColor
+    layer?.backgroundColor = NSColor.gray.withAlphaComponentModel(0.25).cgColor
 
     configureConstraints()
   }
@@ -37,7 +37,7 @@ class HeaderView: NSView, ItemConfigurable, Componentable {
     titleLabel.stringValue = item.title
   }
 
-  func configure(_ component: Component) {
+  func configure(_ component: ComponentModel) {
     titleLabel.stringValue = component.title
   }
 }
@@ -56,7 +56,7 @@ class TextView: NSView, ItemConfigurable {
     addSubview(titleLabel)
 
     wantsLayer = true
-    layer?.backgroundColor = NSColor.gray.withAlphaComponent(0.25).cgColor
+    layer?.backgroundColor = NSColor.gray.withAlphaComponentModel(0.25).cgColor
 
     configureConstraints()
   }
@@ -78,7 +78,7 @@ class TextView: NSView, ItemConfigurable {
   }
 }
 
-class FooterView: NSView, ItemConfigurable, Componentable {
+class FooterView: NSView, ItemConfigurable, ComponentModelable {
 
   var preferredHeaderHeight: CGFloat = 50
   var preferredViewSize: CGSize = CGSize(width: 200, height: 50)
@@ -93,7 +93,7 @@ class FooterView: NSView, ItemConfigurable, Componentable {
     addSubview(titleLabel)
 
     wantsLayer = true
-    layer?.backgroundColor = NSColor.gray.withAlphaComponent(0.25).cgColor
+    layer?.backgroundColor = NSColor.gray.withAlphaComponentModel(0.25).cgColor
 
     configureConstraints()
   }
@@ -114,7 +114,7 @@ class FooterView: NSView, ItemConfigurable, Componentable {
     titleLabel.stringValue = item.title
   }
 
-  func configure(_ component: Component) {
+  func configure(_ component: ComponentModel) {
     titleLabel.stringValue = component.title
   }
 }

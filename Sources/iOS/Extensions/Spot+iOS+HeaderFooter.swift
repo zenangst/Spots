@@ -11,7 +11,7 @@ extension Spot {
       return
     }
 
-    guard let view = Configuration.views.make(component.header)?.view as? Componentable else {
+    guard let view = Configuration.views.make(component.header)?.view as? ComponentModelable else {
       return
     }
 

@@ -7,7 +7,7 @@ class TestGridableLayout: XCTestCase {
   let parentSize = CGSize(width: 100, height: 100)
 
   func testContentSizeForHorizontalLayoutsWithoutInsets() {
-    let component = Component(
+    let component = ComponentModel(
       items: [
         Item(title: "foo", size: CGSize(width: 50, height: 50)),
         Item(title: "bar", size: CGSize(width: 50, height: 50))
@@ -23,7 +23,7 @@ class TestGridableLayout: XCTestCase {
   }
 
   func testContentSizeForHorizontalLayoutsWithInsets() {
-    let component = Component(
+    let component = ComponentModel(
       layout: Layout(
         inset: Inset(top: 25, left: 25, bottom: 25, right: 25)
       ),
@@ -43,7 +43,7 @@ class TestGridableLayout: XCTestCase {
 
   func testLayoutAttributesForElementInHorizontalLayoutWithInsets() {
     let itemSize = CGSize(width: 50, height: 100)
-    let component = Component(
+    let component = ComponentModel(
       layout: Layout(
         inset: Inset(top: 25, left: 25, bottom: 25, right: 25)
       ),
@@ -82,7 +82,7 @@ class TestGridableLayout: XCTestCase {
 
   func testLayoutAttributesForElementInHorizontalLayoutWithItemSpacing() {
     let itemSize = CGSize(width: 50, height: 100)
-    let component = Component(
+    let component = ComponentModel(
       layout: Layout(
         itemSpacing: 10.0
       ),
@@ -105,7 +105,7 @@ class TestGridableLayout: XCTestCase {
 
   func testLayoutAttributesForElementInVerticalLayoutWithInsets() {
     let itemSize = CGSize(width: 25, height: 25)
-    let component = Component(
+    let component = ComponentModel(
       layout: Layout(
         itemSpacing: 0,
         inset: Inset(top: 10, left: 30, bottom: 40, right: 20)
