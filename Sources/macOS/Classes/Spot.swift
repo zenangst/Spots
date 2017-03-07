@@ -75,6 +75,22 @@ public class Spot: NSObject, Spotable {
   open lazy var scrollView: ScrollView = ScrollView(documentView: self.documentView)
   open lazy var documentView: FlippedView = FlippedView()
 
+  var headerHeight: CGFloat {
+    guard let headerView = headerView else {
+      return 0.0
+    }
+
+    return headerView.frame.size.height
+  }
+
+  var footerHeight: CGFloat {
+    guard let footerView = footerView else {
+      return 0.0
+    }
+
+    return footerView.frame.size.height
+  }
+
   public var view: ScrollView {
     return scrollView
   }
@@ -200,9 +216,6 @@ public class Spot: NSObject, Spotable {
   }
 
   fileprivate func layoutHeaderFooterViews(_ size: CGSize) {
-    let headerHeight = headerView?.frame.size.height ?? 0.0
-    let footerHeight = footerView?.frame.size.height ?? 0.0
-
     headerView?.frame.size.width = size.width
     footerView?.frame.size.width = size.width
     footerView?.frame.origin.y = scrollView.frame.height - footerHeight
@@ -351,9 +364,6 @@ public class Spot: NSObject, Spotable {
       tableView.frame.size.width -= CGFloat(layout.inset.left + layout.inset.right)
     }
 
-    let headerHeight = headerView?.frame.size.height ?? 0.0
-    let footerHeight = footerView?.frame.size.height ?? 0.0
-
     scrollView.frame.size.height = tableView.frame.height + headerHeight + footerHeight
   }
 
@@ -374,9 +384,6 @@ public class Spot: NSObject, Spotable {
     collectionViewLayout.invalidateLayout()
 
     if let collectionViewContentSize = collectionView.collectionViewLayout?.collectionViewContentSize {
-
-      let headerHeight = headerView?.frame.size.height ?? 0.0
-      let footerHeight = footerView?.frame.size.height ?? 0.0
       var newCollectionViewHeight: CGFloat = 0.0
 
       newCollectionViewHeight <- component.items.sorted(by: {
@@ -411,9 +418,6 @@ public class Spot: NSObject, Spotable {
     guard let collectionViewLayout = collectionView.collectionViewLayout else {
       return
     }
-
-    let headerHeight = headerView?.frame.size.height ?? 0.0
-    let footerHeight = footerView?.frame.size.height ?? 0.0
 
     collectionView.frame.origin.y = headerHeight
     collectionViewLayout.prepare()
