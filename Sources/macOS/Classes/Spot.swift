@@ -341,7 +341,7 @@ public class Spot: NSObject, Spotable {
   }
 
   fileprivate func setupVerticalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
-
+    GridSpot.configure?(collectionView)
   }
 
   fileprivate func layoutTableView(_ tableView: TableView, with size: CGSize) {
