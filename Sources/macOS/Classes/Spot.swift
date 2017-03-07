@@ -75,11 +75,8 @@ public class Spot: NSObject, Spotable {
     }
   }
 
-  open lazy var scrollView: ScrollView = {
-    let scrollView = ScrollView()
-    scrollView.documentView = NSView()
-    return scrollView
-  }()
+  open lazy var scrollView: ScrollView = ScrollView(documentView: self.documentView)
+  open lazy var documentView: FlippedView = FlippedView()
 
   public var view: ScrollView {
     return scrollView
