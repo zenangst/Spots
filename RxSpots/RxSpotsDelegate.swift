@@ -56,7 +56,7 @@ public final class RxComponentDelegate: DelegateProxy, DelegateProxyType, Compon
     componentWillDisplayView.onNext(component, view, item)
   }
 
-  public func spotable(_ component: CoreComponent, didEndDisplaying view: ComponentView, item: Item) {
+  public func component(_ component: CoreComponent, didEndDisplaying view: ComponentView, item: Item) {
     componentDidEndDisplayingView.onNext(component, view, item)
   }
 }
