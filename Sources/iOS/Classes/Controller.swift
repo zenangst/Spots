@@ -346,7 +346,7 @@ extension Controller {
   /// This method is triggered in `spots.didSet{}`
   fileprivate  func spotsDidChange() {
     updateDelegates()
-    delegate?.spotablesDidChange(spots)
+    delegate?.componentsDidChange(spots)
   }
 
   /// It updates the delegates for all underlaying spotable objects inside the controller.

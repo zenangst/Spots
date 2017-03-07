@@ -21,7 +21,7 @@ extension Delegate: UICollectionViewDelegate {
   /// - parameter indexPath: The index path of the cell that was selected.
   public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     guard let spot = spot, let item = spot.item(at: indexPath) else { return }
-    spot.delegate?.spotable(spot, itemSelected: item)
+    spot.delegate?.component(spot, itemSelected: item)
   }
 
   /// Tells the delegate that the specified cell is about to be displayed in the collection view.
@@ -34,7 +34,7 @@ extension Delegate: UICollectionViewDelegate {
       return
     }
 
-    spot.delegate?.spotable(spot, willDisplay: cell, item: item)
+    spot.delegate?.component(spot, willDisplay: cell, item: item)
   }
 
   /// Tells the delegate that the specified cell was removed from the collection view.
@@ -48,7 +48,7 @@ extension Delegate: UICollectionViewDelegate {
       return
     }
 
-    spot.delegate?.spotable(spot, didEndDisplaying: cell, item: item)
+    spot.delegate?.component(spot, didEndDisplaying: cell, item: item)
   }
 
   /// Asks the delegate whether the item at the specified index path can be focused.
@@ -183,7 +183,7 @@ extension Delegate: UITableViewDelegate {
       tableView.deselectRow(at: indexPath, animated: true)
     #endif
     if let spot = spot, let item = spot.item(at: indexPath) {
-      spot.delegate?.spotable(spot, itemSelected: item)
+      spot.delegate?.component(spot, itemSelected: item)
     }
   }
 
@@ -198,7 +198,7 @@ extension Delegate: UITableViewDelegate {
       return
     }
 
-    spot.delegate?.spotable(spot, willDisplay: cell, item: item)
+    spot.delegate?.component(spot, willDisplay: cell, item: item)
   }
 
   /// Tells the delegate that the specified cell was removed from the table.
@@ -211,7 +211,7 @@ extension Delegate: UITableViewDelegate {
       return
     }
 
-    spot.delegate?.spotable(spot, didEndDisplaying: cell, item: item)
+    spot.delegate?.component(spot, didEndDisplaying: cell, item: item)
   }
 
   /// Asks the delegate for a view object to display in the header of the specified section of the table view.

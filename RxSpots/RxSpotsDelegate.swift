@@ -12,10 +12,10 @@ import RxCocoa
 public final class RxComponentDelegate: DelegateProxy, DelegateProxyType, ComponentDelegate {
 
   // Delegate methods subjects
-  private let spotDidSelectItem = PublishSubject<(Spotable, Item)>()
-  private let spotDidChange = PublishSubject<[Spotable]>()
-  private let spotWillDisplayView = PublishSubject<(Spotable, SpotView, Item)>()
-  private let spotDidEndDisplayingView = PublishSubject<(Spotable, SpotView, Item)>()
+  private let componentDidSelectItem = PublishSubject<(Spotable, Item)>()
+  private let componentsDidChange = PublishSubject<[Spotable]>()
+  private let componentWillDisplayView = PublishSubject<(Spotable, SpotView, Item)>()
+  private let componentDidEndDisplayingView = PublishSubject<(Spotable, SpotView, Item)>()
 
   // Delegate method observables
   public let didSelectItem: Observable<(Spotable, Item)>
@@ -36,28 +36,28 @@ public final class RxComponentDelegate: DelegateProxy, DelegateProxyType, Compon
   }
 
   public required init(parentObject: AnyObject) {
-    didSelectItem = spotDidSelectItem.observeOn(MainScheduler.instance)
-    didChange = spotDidChange.observeOn(MainScheduler.instance)
-    willDisplayView = spotWillDisplayView.observeOn(MainScheduler.instance)
-    didEndDisplayingView = spotDidEndDisplayingView.observeOn(MainScheduler.instance)
+    didSelectItem = componentDidSelectItem.observeOn(MainScheduler.instance)
+    didChange = componentsDidChange.observeOn(MainScheduler.instance)
+    willDisplayView = componentWillDisplayView.observeOn(MainScheduler.instance)
+    didEndDisplayingView = componentDidEndDisplayingView.observeOn(MainScheduler.instance)
 
     super.init(parentObject: parentObject)
   }
 
-  public func spotable(_ spot: Spotable, itemSelected item: Item) {
-    spotDidSelectItem.onNext(spot, item)
+  public func component(_ component: Spotable, itemSelected item: Item) {
+    componentDidSelectItem.onNext(component, item)
   }
 
-  public func spotablesDidChange(_ spots: [Spotable]) {
-    spotDidChange.onNext(spots)
+  public func componentsDidChange(_ components: [Spotable]) {
+    componentsDidChange.onNext(components)
   }
 
-  public func spotable(_ spot: Spotable, willDisplay view: SpotView, item: Item) {
-    spotWillDisplayView.onNext(spot, view, item)
+  public func component(_ component: Spotable, willDisplay view: SpotView, item: Item) {
+    componentWillDisplayView.onNext(component, view, item)
   }
 
-  public func spotable(_ spot: Spotable, didEndDisplaying view: SpotView, item: Item) {
-    spotDidEndDisplayingView.onNext(spot, view, item)
+  public func spotable(_ component: Spotable, didEndDisplaying view: SpotView, item: Item) {
+    componentDidEndDisplayingView.onNext(component, view, item)
   }
 }
 

@@ -33,7 +33,7 @@ extension Delegate: NSCollectionViewDelegate {
         return
     }
 
-    spot.delegate?.spotable(spot, willDisplay: view, item: item)
+    spot.delegate?.component(spot, willDisplay: view, item: item)
   }
 
   /// Notifies the delegate that the specified item was removed from the collection view.
@@ -51,7 +51,7 @@ extension Delegate: NSCollectionViewDelegate {
         return
     }
 
-    spot.delegate?.spotable(spot, didEndDisplaying: view, item: item)
+    spot.delegate?.component(spot, didEndDisplaying: view, item: item)
   }
 }
 
@@ -162,7 +162,7 @@ extension Delegate: NSTableViewDelegate {
         return
     }
 
-    spot.delegate?.spotable(spot, willDisplay: view, item: item)
+    spot.delegate?.component(spot, willDisplay: view, item: item)
   }
 
   public func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
