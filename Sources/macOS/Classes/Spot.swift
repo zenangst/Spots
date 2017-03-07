@@ -254,7 +254,16 @@ public class Spot: NSObject, Spotable {
   }
 
   fileprivate func layoutTableView(_ tableView: TableView, with size: CGSize) {
+    tableView.frame.origin.y = headerHeight
+    tableView.sizeToFit()
+    tableView.frame.size.width = size.width
 
+    if let layout = component.layout {
+      tableView.frame.origin.x = CGFloat(layout.inset.left)
+      tableView.frame.size.width -= CGFloat(layout.inset.left + layout.inset.right)
+    }
+
+    scrollView.frame.size.height = tableView.frame.height + headerHeight + footerHeight
   }
 
   fileprivate func layoutCollectionView(_ collectionView: CollectionView, with size: CGSize) {
