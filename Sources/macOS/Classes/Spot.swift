@@ -298,6 +298,12 @@ public class Spot: NSObject, Spotable {
     delegate?.spotable(self, itemSelected: item)
   }
 
+  open func action(_ sender: Any?) {
+    guard let tableView = tableView,
+      let item = item(at: tableView.clickedRow) else {
+        return
+    }
+    delegate?.spotable(self, itemSelected: item)
   }
 
   public func register() {
