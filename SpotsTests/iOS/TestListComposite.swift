@@ -7,13 +7,13 @@ class ListCompositeTests: XCTestCase {
   func testListComposite() {
     let view = ListComposite()
     var item = Item()
-    let gridSpot = CompositeComponent(spot: GridComponent(model: ComponentModel(span: 1)), itemIndex: 0)
+    let gridSpot = CompositeComponent(component: GridComponent(model: ComponentModel(span: 1)), itemIndex: 0)
     view.configure(&item, compositeComponents: [gridSpot])
 
     XCTAssertTrue(view.contentView.subviews.count == 1)
 
-    let carouselSpot = CompositeComponent(spot: CarouselComponent(model: ComponentModel(span: 1)), itemIndex: 0)
-    let listSpot = CompositeComponent(spot: ListComponent(model: ComponentModel(span: 1)), itemIndex: 0)
+    let carouselSpot = CompositeComponent(component: CarouselComponent(model: ComponentModel(span: 1)), itemIndex: 0)
+    let listSpot = CompositeComponent(component: ListComponent(model: ComponentModel(span: 1)), itemIndex: 0)
     view.configure(&item, compositeComponents: [carouselSpot, listSpot])
 
     XCTAssertTrue(view.contentView.subviews.count == 3)
