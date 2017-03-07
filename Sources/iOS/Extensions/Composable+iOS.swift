@@ -23,21 +23,21 @@ public extension Composable where Self : View {
     #endif
 
     compositeComponents.enumerated().forEach { _, compositeSpot in
-      compositeSpot.spot.setup(size)
-      compositeSpot.spot.model.size = CGSize(
+      compositeSpot.component.setup(size)
+      compositeSpot.component.model.size = CGSize(
         width: width,
-        height: ceil(compositeSpot.spot.view.frame.size.height))
-      compositeSpot.spot.layout(size)
-      compositeSpot.spot.view.layoutIfNeeded()
+        height: ceil(compositeSpot.component.view.frame.size.height))
+      compositeSpot.component.layout(size)
+      compositeSpot.component.view.layoutIfNeeded()
 
-      compositeSpot.spot.view.frame.origin.y = height
+      compositeSpot.component.view.frame.origin.y = height
       /// Disable scrolling for listable objects
-      compositeSpot.spot.view.isScrollEnabled = !(compositeSpot.spot is Listable)
-      compositeSpot.spot.view.frame.size.height = compositeSpot.spot.view.contentSize.height
+      compositeSpot.component.view.isScrollEnabled = !(compositeSpot.component is Listable)
+      compositeSpot.component.view.frame.size.height = compositeSpot.component.view.contentSize.height
 
-      height += compositeSpot.spot.view.contentSize.height
+      height += compositeSpot.component.view.contentSize.height
 
-      contentView.addSubview(compositeSpot.spot.view)
+      contentView.addSubview(compositeSpot.component.view)
     }
 
     item.size.height = height

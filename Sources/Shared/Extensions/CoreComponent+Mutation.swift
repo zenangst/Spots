@@ -283,8 +283,8 @@ public extension CoreComponent {
                                    compositeComponents: compositeComponents)
         } else {
           for compositeSpot in weakSelf.compositeComponents {
-            compositeSpot.spot.setup(weakSelf.view.frame.size)
-            compositeSpot.spot.reload([])
+            compositeSpot.component.setup(weakSelf.view.frame.size)
+            compositeSpot.component.reload([])
           }
         }
 

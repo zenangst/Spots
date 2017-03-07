@@ -241,11 +241,11 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
     scrollView.frame.size = size
     scrollView.spotsContentView.frame.size = size
 
-    spots.forEach { spot in
-      spot.layout(size)
+    spots.forEach { component in
+      component.layout(size)
 
-      spot.compositeComponents.forEach {
-        $0.spot.layout(spot.view.frame.size)
+      component.compositeComponents.forEach {
+        $0.component.layout(component.view.frame.size)
       }
     }
   }
@@ -356,8 +356,8 @@ extension Controller {
       $0.focusDelegate = self
 
       $0.compositeComponents.forEach {
-        $0.spot.delegate = delegate
-        $0.spot.focusDelegate = self
+        $0.component.delegate = delegate
+        $0.component.focusDelegate = self
       }
     }
   }

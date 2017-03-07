@@ -134,7 +134,7 @@ extension SpotsProtocol {
 
     /// Remove old composite spots from superview and empty container
     for compositeSpot in oldSpot.compositeComponents {
-      compositeSpot.spot.view.removeFromSuperview()
+      compositeSpot.component.view.removeFromSuperview()
     }
     oldSpot.compositeComponents = []
 
@@ -205,9 +205,9 @@ extension SpotsProtocol {
 
     for index in changes.updatedChildren {
       if index < tempSpot.compositeComponents.count {
-        spot.compositeComponents[index].spot.view.removeFromSuperview()
+        spot.compositeComponents[index].component.view.removeFromSuperview()
         spot.compositeComponents[index] = tempSpot.compositeComponents[index]
-        spot.compositeComponents[index].parentSpot = spot
+        spot.compositeComponents[index].parentComponent = spot
       }
     }
 
@@ -257,7 +257,7 @@ extension SpotsProtocol {
       for item in newItems {
         let results = spot.compositeComponents.filter({ $0.itemIndex == item.index })
         for compositeSpot in results {
-          offsets.append(compositeSpot.spot.view.contentOffset)
+          offsets.append(compositeSpot.component.view.contentOffset)
         }
       }
 
@@ -279,7 +279,7 @@ extension SpotsProtocol {
             continue
           }
 
-          compositeSpot.spot.view.contentOffset = offsets[index]
+          compositeSpot.component.view.contentOffset = offsets[index]
         }
       }
 
@@ -317,12 +317,12 @@ extension SpotsProtocol {
         })
 
         for removedSpot in oldSpots {
-          guard !components.contains(removedSpot.spot.model) else {
+          guard !components.contains(removedSpot.component.model) else {
             continue
           }
 
-          if let index = removedSpot.parentSpot?.compositeComponents.index(of: removedSpot) {
-            removedSpot.parentSpot?.compositeComponents.remove(at: index)
+          if let index = removedSpot.componentSpot?.compositeComponents.index(of: removedSpot) {
+            removedSpot.componentSpot?.compositeComponents.remove(at: index)
           }
         }
 
@@ -486,7 +486,7 @@ extension SpotsProtocol {
           break
         }
 
-        newComposites[index].spot.view.contentOffset = compositeSpot.spot.view.contentOffset
+        newComposites[index].component.view.contentOffset = compositeSpot.component.view.contentOffset
       }
 
       completion?()

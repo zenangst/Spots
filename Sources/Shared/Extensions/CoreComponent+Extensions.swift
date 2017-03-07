@@ -328,7 +328,7 @@ public extension CoreComponent {
     var height: CGFloat = 0.0
 
     compositeComponents.filter({ $0.itemIndex == item.index }).forEach {
-      $0.spot.view.removeFromSuperview()
+      $0.component.view.removeFromSuperview()
 
       if let index = compositeComponents.index(of: $0) {
         compositeComponents.remove(at: index)
@@ -340,26 +340,26 @@ public extension CoreComponent {
     let width = size.width
 
     spots.forEach { spot in
-      let compositeSpot = CompositeComponent(spot: spot,
-                                        parentSpot: self,
-                                        itemIndex: item.index)
+      let compositeSpot = CompositeComponent(component: spot,
+                                             parentComponent: self,
+                                             itemIndex: item.index)
 
-      compositeSpot.spot.setup(size)
-      compositeSpot.spot.model.size = CGSize(
+      compositeSpot.component.setup(size)
+      compositeSpot.component.model.size = CGSize(
         width: width,
-        height: ceil(compositeSpot.spot.view.frame.size.height))
-      compositeSpot.spot.layout(size)
-      compositeSpot.spot.view.layoutIfNeeded()
-      compositeSpot.spot.view.frame.origin.y = height
+        height: ceil(compositeSpot.component.view.frame.size.height))
+      compositeSpot.component.layout(size)
+      compositeSpot.component.view.layoutIfNeeded()
+      compositeSpot.component.view.frame.origin.y = height
 
       #if !os(OSX)
         /// Disable scrolling for listable objects
-        compositeSpot.spot.view.isScrollEnabled = !(compositeSpot.spot is Listable)
+        compositeSpot.component.view.isScrollEnabled = !(compositeSpot.component is Listable)
       #endif
 
-      compositeSpot.spot.view.frame.size.height = compositeSpot.spot.view.contentSize.height
+      compositeSpot.component.view.frame.size.height = compositeSpot.component.view.contentSize.height
 
-      height += compositeSpot.spot.view.frame.size.height
+      height += compositeSpot.component.view.frame.size.height
 
       compositeComponents.append(compositeSpot)
     }

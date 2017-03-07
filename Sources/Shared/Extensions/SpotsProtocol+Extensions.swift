@@ -64,7 +64,7 @@ public extension SpotsProtocol {
         var children = [[String: Any]]()
 
         for compositeSpot in results {
-          children.append(compositeSpot.spot.dictionary)
+          children.append(compositeSpot.component.dictionary)
         }
 
         newItem.children = children
@@ -91,7 +91,7 @@ public extension SpotsProtocol {
         return spot.ui(at: first.index)
       }
 
-      let cSpots = spot.compositeComponents.map { $0.spot }
+      let cSpots = spot.compositeComponents.map { $0.component }
       for compositeSpot in cSpots {
         if let first = compositeSpot.items.filter(includeElement).first {
           return compositeSpot.ui(at: first.index)
@@ -110,7 +110,7 @@ public extension SpotsProtocol {
   public func filter(spots includeElement: (CoreComponent) -> Bool) -> [CoreComponent] {
     var result = spots.filter(includeElement)
 
-    let cSpots = spots.flatMap({ $0.compositeComponents.map { $0.spot } })
+    let cSpots = spots.flatMap({ $0.compositeComponents.map { $0.component } })
     let compositeResults: [CoreComponent] = cSpots.filter(includeElement)
 
     result.append(contentsOf: compositeResults)
@@ -131,7 +131,7 @@ public extension SpotsProtocol {
         result.append((spot: spot, items: items))
       }
 
-      let childSpots = spot.compositeComponents.map { $0.spot }
+      let childSpots = spot.compositeComponents.map { $0.component }
       for spot in childSpots {
         let items = spot.items.filter(includeElement)
         if !items.isEmpty {
