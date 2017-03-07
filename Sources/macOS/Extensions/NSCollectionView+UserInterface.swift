@@ -6,7 +6,10 @@ extension NSCollectionView: UserInterface {
     for (identifier, item) in Configuration.views.storage {
       switch item {
       case .classType(_):
-        register(GridWrapper.self, forItemWithIdentifier: identifier)
+        register(GridWrapper.self,
+                 forItemWithIdentifier: identifier)
+        register(GridWrapper.self,
+                 forItemWithIdentifier: Configuration.views.defaultIdentifier)
       case .nib(let nib):
         register(nib, forItemWithIdentifier: identifier)
       }
