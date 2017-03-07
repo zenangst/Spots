@@ -14,7 +14,7 @@ extension Delegate: NSCollectionViewDelegate {
         let item = spot.item(at: first.item), first.item < spot.items.count else {
           return
       }
-      spot.delegate?.spotable(spot, itemSelected: item)
+      spot.delegate?.component(spot, itemSelected: item)
     }
   }
 
@@ -76,7 +76,7 @@ extension Delegate: NSTableViewDelegate {
     }
 
     if spot.model.meta(ListComponent.Key.doubleAction, type: Bool.self) != true {
-      spot.delegate?.spotable(spot, itemSelected: item)
+      spot.delegate?.component(spot, itemSelected: item)
     }
 
     return true
