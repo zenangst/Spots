@@ -3,7 +3,7 @@
 import UIKit
 
 /// A CarouselComponent, a collection view based CoreComponent object that lays out its items in a horizontal order
-open class CarouselComponent: NSObject, Gridable, SpotHorizontallyScrollable {
+open class CarouselComponent: NSObject, Gridable, ComponentHorizontallyScrollable {
 
   public static var layout: Layout = .init()
   public static var interaction: Interaction = .init()
