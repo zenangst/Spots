@@ -19,7 +19,7 @@ public class ListCell: UITableViewCell, ItemConfigurable {
 
   lazy var selectedView: UIView = {
     let view = UIView()
-    view.backgroundColor = UIColor.darkGrayColor().colorWithAlphaComponentModel(0.4)
+    view.backgroundColor = UIColor.darkGrayColor().colorWithAlphaComponent(0.4)
 
     return view
   }()
@@ -146,7 +146,7 @@ class GridTopicCell: UICollectionViewCell, ItemConfigurable {
   }
 
   func configure(inout item: Item) {
-    contentView.backgroundColor = item.meta("color", UIColor.whiteColor()).colorWithAlphaComponentModel(0.4)
+    contentView.backgroundColor = item.meta("color", UIColor.whiteColor()).colorWithAlphaComponent(0.4)
 
     blurView.width = contentView.width
     blurView.height = 48
@@ -225,4 +225,4 @@ let controller = Controller(spots: [
   ]
 )
 
-X
+XCPlaygroun
