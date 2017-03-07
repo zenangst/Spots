@@ -1,6 +1,6 @@
 import UIKit
 
-/// A custom flow layout used in GridSpot and CarouselSpot
+/// A custom flow layout used in GridComponent and CarouselComponent
 open class GridableLayout: UICollectionViewFlowLayout {
 
   /// The content size for the Gridable object

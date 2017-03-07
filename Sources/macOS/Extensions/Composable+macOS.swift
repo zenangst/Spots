@@ -7,8 +7,8 @@ public extension Composable {
   ///
   ///  - parameter item:  The item that is currently being configured in the list
   ///  - parameter spots: A collection of Spotable objects created from the children of the item
-  func configure(_ item: inout Item, compositeSpots: [CompositeSpot]?) {
-    guard let compositeSpots = compositeSpots else {
+  func configure(_ item: inout Item, compositeComponents: [CompositeComponent]?) {
+    guard let compositeComponents = compositeComponents else {
       return
     }
 
@@ -16,7 +16,7 @@ public extension Composable {
     let width = contentView.frame.width
     var height: CGFloat = 0.0
 
-    compositeSpots.enumerated().forEach { _, compositeSpot in
+    compositeComponents.enumerated().forEach { _, compositeSpot in
       compositeSpot.spot.setup(size)
       compositeSpot.spot.layout(size)
 

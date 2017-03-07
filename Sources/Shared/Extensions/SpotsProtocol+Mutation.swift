@@ -133,10 +133,10 @@ extension SpotsProtocol {
     let oldSpot = spots[index]
 
     /// Remove old composite spots from superview and empty container
-    for compositeSpot in oldSpot.compositeSpots {
+    for compositeSpot in oldSpot.compositeComponents {
       compositeSpot.spot.view.removeFromSuperview()
     }
-    oldSpot.compositeSpots = []
+    oldSpot.compositeComponents = []
 
     spot.view.frame = oldSpot.view.frame
 
@@ -146,7 +146,7 @@ extension SpotsProtocol {
     setupSpot(at: index, spot: spot)
 
     #if !os(OSX)
-      (spot as? CarouselSpot)?.layout.yOffset = yOffset
+      (spot as? CarouselComponent)?.layout.yOffset = yOffset
     #endif
     yOffset += spot.view.frame.size.height
   }
@@ -156,7 +156,7 @@ extension SpotsProtocol {
     spots.append(spot)
     setupSpot(at: index, spot: spot)
     #if !os(OSX)
-      (spot as? CarouselSpot)?.layout.yOffset = yOffset
+      (spot as? CarouselComponent)?.layout.yOffset = yOffset
     #endif
     yOffset += spot.view.frame.size.height
   }
@@ -204,10 +204,10 @@ extension SpotsProtocol {
     let changes: (ItemChanges) = Item.processChanges(diff)
 
     for index in changes.updatedChildren {
-      if index < tempSpot.compositeSpots.count {
-        spot.compositeSpots[index].spot.view.removeFromSuperview()
-        spot.compositeSpots[index] = tempSpot.compositeSpots[index]
-        spot.compositeSpots[index].parentSpot = spot
+      if index < tempSpot.compositeComponents.count {
+        spot.compositeComponents[index].spot.view.removeFromSuperview()
+        spot.compositeComponents[index] = tempSpot.compositeComponents[index]
+        spot.compositeComponents[index].parentSpot = spot
       }
     }
 
@@ -255,7 +255,7 @@ extension SpotsProtocol {
       spot.beforeUpdate()
 
       for item in newItems {
-        let results = spot.compositeSpots.filter({ $0.itemIndex == item.index })
+        let results = spot.compositeComponents.filter({ $0.itemIndex == item.index })
         for compositeSpot in results {
           offsets.append(compositeSpot.spot.view.contentOffset)
         }
@@ -272,9 +272,9 @@ extension SpotsProtocol {
           break
         }
 
-        let compositeSpots = weakSelf.spots[item.index].compositeSpots
+        let compositeComponents = weakSelf.spots[item.index].compositeComponents
           .filter({ $0.itemIndex == item.index })
-        for (index, compositeSpot) in compositeSpots.enumerated() {
+        for (index, compositeSpot) in compositeComponents.enumerated() {
           guard index < offsets.count else {
             continue
           }
@@ -313,7 +313,7 @@ extension SpotsProtocol {
         let components = Parser.parse(item.children).map { $0.model }
 
         let oldSpots = weakSelf.spots.flatMap({
-          $0.compositeSpots
+          $0.compositeComponents
         })
 
         for removedSpot in oldSpots {
@@ -321,8 +321,8 @@ extension SpotsProtocol {
             continue
           }
 
-          if let index = removedSpot.parentSpot?.compositeSpots.index(of: removedSpot) {
-            removedSpot.parentSpot?.compositeSpots.remove(at: index)
+          if let index = removedSpot.parentSpot?.compositeComponents.index(of: removedSpot) {
+            removedSpot.parentSpot?.compositeComponents.remove(at: index)
           }
         }
 
@@ -463,7 +463,7 @@ extension SpotsProtocol {
       }
 
       var offsets = [CGPoint]()
-      let oldComposites = weakSelf.spots.flatMap { $0.compositeSpots }
+      let oldComposites = weakSelf.spots.flatMap { $0.compositeComponents }
 
       if newComponentModels.count == oldComponentModels.count {
         offsets = weakSelf.spots.map { $0.view.contentOffset }
@@ -479,7 +479,7 @@ extension SpotsProtocol {
       weakSelf.setupSpots(animated: animated)
       weakSelf.cache()
 
-      let newComposites = weakSelf.spots.flatMap { $0.compositeSpots }
+      let newComposites = weakSelf.spots.flatMap { $0.compositeComponents }
 
       for (index, compositeSpot) in oldComposites.enumerated() {
         if index == newComposites.count {

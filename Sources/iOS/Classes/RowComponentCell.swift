@@ -1,6 +1,6 @@
 import UIKit
 
-/// A default cell for the RowSpot
+/// A default cell for the RowComponent
 public class RowSpotCell: UICollectionViewCell, ItemConfigurable {
 
   /// The preferred view size for the view

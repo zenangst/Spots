@@ -31,7 +31,7 @@ public extension Spotable where Self : Gridable {
   public func setup(_ size: CGSize) {
     collectionView.frame.size.width = size.width
     #if !os(OSX)
-      GridSpot.configure?(collectionView, layout)
+      GridComponent.configure?(collectionView, layout)
 
       if let resolve = type(of: self).headers.make(model.header),
         let view = resolve.view as? Componentable,

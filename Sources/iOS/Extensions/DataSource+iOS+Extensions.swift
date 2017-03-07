@@ -22,8 +22,8 @@ extension DataSource {
   }
 
   func prepareComposableView(_ view: Composable, atIndex index: Int, in spot: Spotable) {
-    let compositeSpots = spot.compositeSpots.filter({ $0.itemIndex == index })
-    view.configure(&spot.model.items[index], compositeSpots: compositeSpots)
+    let compositeComponents = spot.compositeComponents.filter({ $0.itemIndex == index })
+    view.configure(&spot.model.items[index], compositeComponents: compositeComponents)
   }
 
   func prepareItemConfigurableView(_ view: ItemConfigurable, atIndex index: Int, in spot: Spotable) {

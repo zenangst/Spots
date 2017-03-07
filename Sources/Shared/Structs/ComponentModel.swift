@@ -52,13 +52,13 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
 
   /// An enum for identifing the ComponentModel kind
   public enum Kind: String {
-    /// The identifier for CarouselSpot
+    /// The identifier for CarouselComponent
     case carousel
-    /// The identifier for GridSpot
+    /// The identifier for GridComponent
     case grid
-    /// The identifier for ListSpot
+    /// The identifier for ListComponent
     case list
-    /// The identifier for RowSpot
+    /// The identifier for RowComponent
     case row
     /// The identifier for ViewSpot
     case view

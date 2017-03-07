@@ -20,7 +20,7 @@ public class Spot: NSObject, Spotable {
 
   public var model: ComponentModel
   public var componentKind: ComponentModel.Kind = .list
-  public var compositeSpots: [CompositeSpot] = []
+  public var compositeComponents: [CompositeComponent] = []
   public var configure: ((ItemConfigurable) -> Void)?
   public var spotDelegate: Delegate?
   public var spotDataSource: DataSource?
@@ -113,14 +113,14 @@ public class Spot: NSObject, Spotable {
     if model.layout == nil {
       switch kind {
       case .carousel:
-        self.model.layout = CarouselSpot.layout
+        self.model.layout = CarouselComponent.layout
       case .grid:
-        self.model.layout = GridSpot.layout
+        self.model.layout = GridComponent.layout
       case .list:
-        self.model.layout = ListSpot.layout
-        registerDefaultIfNeeded(view: ListSpotItem.self)
+        self.model.layout = ListComponent.layout
+        registerDefaultIfNeeded(view: ListComponentItem.self)
       case .row:
-        self.model.layout = RowSpot.layout
+        self.model.layout = RowComponent.layout
       default:
         break
       }

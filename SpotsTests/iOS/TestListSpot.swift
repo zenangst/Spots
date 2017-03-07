@@ -2,12 +2,12 @@
 import Foundation
 import XCTest
 
-class ListSpotTests: XCTestCase {
+class ListComponentTests: XCTestCase {
 
-  var cachedSpot: ListSpot!
+  var cachedSpot: ListComponent!
 
   override func setUp() {
-    cachedSpot = ListSpot(cacheKey: "cached-list-spot")
+    cachedSpot = ListComponent(cacheKey: "cached-list-spot")
     XCTAssertNotNil(cachedSpot.stateCache)
     cachedSpot.stateCache?.clear()
   }
@@ -17,8 +17,8 @@ class ListSpotTests: XCTestCase {
   }
 
   func testDictionaryRepresentation() {
-    let model = ComponentModel(title: "ListSpot", kind: "list", span: 3, meta: ["headerHeight": 44.0])
-    let spot = ListSpot(model: model)
+    let model = ComponentModel(title: "ListComponent", kind: "list", span: 3, meta: ["headerHeight": 44.0])
+    let spot = ListComponent(model: model)
     XCTAssertEqual(model.dictionary["index"] as? Int, spot.dictionary["index"] as? Int)
     XCTAssertEqual(model.dictionary["title"] as? String, spot.dictionary["title"] as? String)
     XCTAssertEqual(model.dictionary["kind"] as? String, spot.dictionary["kind"] as? String)
@@ -30,22 +30,22 @@ class ListSpotTests: XCTestCase {
   }
 
   func testSafelyResolveKind() {
-    let model = ComponentModel(title: "ListSpot", kind: "custom-list", span: 1.0, items: [Item(title: "foo", kind: "custom-item-kind")])
-    let listSpot = ListSpot(model: model)
+    let model = ComponentModel(title: "ListComponent", kind: "custom-list", span: 1.0, items: [Item(title: "foo", kind: "custom-item-kind")])
+    let listSpot = ListComponent(model: model)
     let indexPath = IndexPath(row: 0, section: 0)
 
-    XCTAssertEqual(listSpot.identifier(at: indexPath), ListSpot.views.defaultIdentifier)
+    XCTAssertEqual(listSpot.identifier(at: indexPath), ListComponent.views.defaultIdentifier)
 
-    ListSpot.views.defaultItem = Registry.Item.classType(ListSpotCell.self)
-    XCTAssertEqual(listSpot.identifier(at: indexPath), ListSpot.views.defaultIdentifier)
+    ListComponent.views.defaultItem = Registry.Item.classType(ListComponentCell.self)
+    XCTAssertEqual(listSpot.identifier(at: indexPath), ListComponent.views.defaultIdentifier)
 
-    ListSpot.views.defaultItem = Registry.Item.classType(ListSpotCell.self)
-    XCTAssertEqual(listSpot.identifier(at: indexPath), ListSpot.views.defaultIdentifier)
+    ListComponent.views.defaultItem = Registry.Item.classType(ListComponentCell.self)
+    XCTAssertEqual(listSpot.identifier(at: indexPath), ListComponent.views.defaultIdentifier)
 
-    ListSpot.views["custom-item-kind"] = Registry.Item.classType(ListSpotCell.self)
+    ListComponent.views["custom-item-kind"] = Registry.Item.classType(ListComponentCell.self)
     XCTAssertEqual(listSpot.identifier(at: indexPath), "custom-item-kind")
 
-    ListSpot.views.storage.removeAll()
+    ListComponent.views.storage.removeAll()
   }
 
   func testSpotCache() {
@@ -58,7 +58,7 @@ class ListSpotTests: XCTestCase {
 
     let expectation = self.expectation(description: "Wait for cache")
     Dispatch.after(seconds: 0.25) {
-      let cachedSpot = ListSpot(cacheKey: self.cachedSpot.stateCache!.key)
+      let cachedSpot = ListComponent(cacheKey: self.cachedSpot.stateCache!.key)
       XCTAssertEqual(cachedSpot.model.items.count, 1)
       cachedSpot.stateCache?.clear()
       expectation.fulfill()
@@ -70,7 +70,7 @@ class ListSpotTests: XCTestCase {
     Configuration.register(view: TestView.self, identifier: "test-view")
 
     let items = [Item(title: "Item A", kind: "test-view"), Item(title: "Item B")]
-    let spot = ListSpot(model: ComponentModel(span: 0.0, items: items))
+    let spot = ListComponent(model: ComponentModel(span: 0.0, items: items))
     spot.setup(CGSize(width: 100, height: 100))
     spot.layout(CGSize(width: 100, height: 100))
     spot.view.layoutSubviews()
@@ -83,7 +83,7 @@ class ListSpotTests: XCTestCase {
   }
 
   func testAccessibilityForDefaultCells() {
-    let cell = ListSpotCell(style: .default, reuseIdentifier: "reuse")
+    let cell = ListComponentCell(style: .default, reuseIdentifier: "reuse")
     var item = Item(title: "Title", subtitle: "Subtitle")
     cell.configure(&item)
 

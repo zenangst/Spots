@@ -3,7 +3,7 @@
 import UIKit
 
 /// A Spotable object that uses UITableView to render its items
-open class ListSpot: NSObject, Listable {
+open class ListComponent: NSObject, Listable {
 
   public static var layout: Layout = Layout(span: 1.0)
 
@@ -15,23 +15,23 @@ open class ListSpot: NSObject, Listable {
     public static let separator = "separator"
   }
 
-  /// A Registry object that holds identifiers and classes for cells used in the ListSpot
+  /// A Registry object that holds identifiers and classes for cells used in the ListComponent
   open static var views: Registry = Registry()
 
   /// A configuration closure that is run in setup(_:)
   open static var configure: ((_ view: UITableView) -> Void)?
 
-  /// A Registry object that holds identifiers and classes for headers used in the ListSpot
+  /// A Registry object that holds identifiers and classes for headers used in the ListComponent
   open static var headers = Registry()
 
-  /// A component struct used as configuration and data source for the ListSpot
+  /// A component struct used as configuration and data source for the ListComponent
   open var model: ComponentModel
 
   /// A SpotsFocusDelegate object
   weak public var focusDelegate: SpotsFocusDelegate?
 
   /// Child spots
-  public var compositeSpots: [CompositeSpot] = []
+  public var compositeComponents: [CompositeSpot] = []
 
   /// A configuration closure
   open var configure: ((ItemConfigurable) -> Void)? {
@@ -40,13 +40,13 @@ open class ListSpot: NSObject, Listable {
     }
   }
 
-  /// A SpotsDelegate that is used for the ListSpot
+  /// A SpotsDelegate that is used for the ListComponent
   open weak var delegate: SpotsDelegate?
 
-  /// A UITableView, used as the main UI component for a ListSpot
+  /// A UITableView, used as the main UI component for a ListComponent
   open lazy var tableView = UITableView()
 
-  /// A StateCache for the ListSpot
+  /// A StateCache for the ListComponent
   open fileprivate(set) var stateCache: StateCache?
 
   public var userInterface: UserInterface?
@@ -55,7 +55,7 @@ open class ListSpot: NSObject, Listable {
 
   // MARK: - Initializers
 
-  /// A required initializer to instantiate a ListSpot with a model.
+  /// A required initializer to instantiate a ListComponent with a model.
   ///
   /// - parameter component: A model.
   ///
@@ -77,15 +77,15 @@ open class ListSpot: NSObject, Listable {
       self.model.kind = ComponentModel.Kind.list.string
     }
 
-    registerDefault(view: ListSpotCell.self)
+    registerDefault(view: ListComponentCell.self)
     registerComposite(view: ListComposite.self)
     setupTableView()
   }
 
-  /// A convenience init for initializing a ListSpot with a custom tableview, title and a kind.
+  /// A convenience init for initializing a ListComponent with a custom tableview, title and a kind.
   ///
   /// - parameter tableView: A UITableView.
-  /// - parameter title:     A string that is used as a title for the ListSpot.
+  /// - parameter title:     A string that is used as a title for the ListComponent.
   /// - parameter kind:      An identifier to determine which kind should be set on the ComponentModel.
   /// - parameter kind:      An identifier to determine which kind should be set on the ComponentModel.
   ///
@@ -102,7 +102,7 @@ open class ListSpot: NSObject, Listable {
     setupTableView()
   }
 
-  /// Instantiate a ListSpot with a cache key.
+  /// Instantiate a ListComponent with a cache key.
   ///
   /// - parameter cacheKey: A unique cache key for the Spotable object.
   ///
@@ -141,7 +141,7 @@ open class ListSpot: NSObject, Listable {
 
     prepareItems()
 
-    ListSpot.configure?(tableView)
+    ListComponent.configure?(tableView)
   }
 
   deinit {

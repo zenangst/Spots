@@ -1,26 +1,28 @@
 import UIKit
 
-/// A default cell for the CarouselSpot
-public class CarouselSpotCell: UICollectionViewCell, ItemConfigurable {
+/// A default cell for the GridComponent
+public class GridComponentCell: UICollectionViewCell, ItemConfigurable {
 
-  /// The preferred view size for the cell
-  public var preferredViewSize: CGSize = CGSize(width: 88, height: 88)
+  /// The preferred view size for the view
+  public var preferredViewSize = CGSize(width: 88, height: 88)
   /// A weak referenced Item struct
   public var item: Item?
 
-  /// A UILabel that will use Item.title as text
+  /// A UILabel that uses the Item's title as its text
   public var label: UILabel = {
-    let label = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
+    let label = UILabel()
+    label.frame = CGRect(x: 0, y: 0, width: 200, height: 200)
     label.textAlignment = .center
+    label.autoresizingMask = [.flexibleWidth]
 
     return label
   }()
 
-  /// A UIImageView that will use Item.image as its image
-  lazy public var imageView: UIImageView = {
+  /// A UIImageView that uses the Item's image property for its image
+  public lazy var imageView: UIImageView = {
     let imageView = UIImageView()
-    imageView.autoresizingMask = [.flexibleWidth]
     imageView.contentMode = .scaleAspectFill
+    imageView.autoresizingMask = [.flexibleWidth]
 
     return imageView
   }()

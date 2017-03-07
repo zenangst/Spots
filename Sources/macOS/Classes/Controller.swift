@@ -247,7 +247,7 @@ open class Controller: NSViewController, SpotsProtocol {
       spot.layout(CGSize(width: view.frame.width,
         height: spot.computedHeight))
 
-      for compositeSpot in spot.compositeSpots {
+      for compositeSpot in spot.compositeComponents {
         compositeSpot.spot.setup(CGSize(width: view.frame.width,
                                         height: compositeSpot.spot.computedHeight))
       }

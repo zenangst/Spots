@@ -1,6 +1,6 @@
 import Cocoa
 
-class GridSpotCell: NSCollectionViewItem, ItemConfigurable {
+class GridComponentCell: NSCollectionViewItem, ItemConfigurable {
 
   var preferredViewSize: CGSize = CGSize(width: 0, height: 120)
 

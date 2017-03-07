@@ -2,7 +2,7 @@
 
 import Cocoa
 
-open class GridSpot: NSObject, Gridable {
+open class GridComponent: NSObject, Gridable {
 
   /// Return collection view as a scroll view
   open var view: ScrollView {
@@ -12,7 +12,7 @@ open class GridSpot: NSObject, Gridable {
   public static var layout: Layout = Layout()
 
   /// Child spots
-  public var compositeSpots: [CompositeSpot] = []
+  public var compositeComponents: [CompositeComponent] = []
 
   /// An enum layout type
   ///
@@ -140,7 +140,7 @@ open class GridSpot: NSObject, Gridable {
   var spotDelegate: Delegate?
 
   /**
-   A required initializer for creating a GridSpot
+   A required initializer for creating a GridComponent
 
    - parameter component: A component struct
    */
@@ -152,7 +152,7 @@ open class GridSpot: NSObject, Gridable {
     }
 
     self.collectionView = CollectionView()
-    self.layout = GridSpot.setupLayout(model)
+    self.layout = GridComponent.setupLayout(model)
     super.init()
     self.userInterface = collectionView
     self.model.layout?.configure(spot: self)
@@ -163,7 +163,7 @@ open class GridSpot: NSObject, Gridable {
       self.model.kind = ComponentModel.Kind.grid.string
     }
 
-    registerDefault(view: GridSpotCell.self)
+    registerDefault(view: GridComponentCell.self)
     registerComposite(view: GridComposite.self)
     registerAndPrepare()
     setupCollectionView()
@@ -199,7 +199,7 @@ open class GridSpot: NSObject, Gridable {
   /**
    A private method for configuring the layout for the collection view
 
-   - parameter component: The component for the GridSpot
+   - parameter component: The component for the GridComponent
 
    - returns: A NSCollectionView layout determined by the ComponentModel
    */
@@ -249,7 +249,7 @@ open class GridSpot: NSObject, Gridable {
   /**
    Layout with size
 
-   - parameter size: A CGSize from the GridSpot superview
+   - parameter size: A CGSize from the GridComponent superview
    */
   open func layout(_ size: CGSize) {
     layout.prepareForTransition(to: layout)
@@ -278,14 +278,14 @@ open class GridSpot: NSObject, Gridable {
   /**
    Perform setup with size
 
-   - parameter size: A CGSize from the GridSpot superview
+   - parameter size: A CGSize from the GridComponent superview
    */
   open func setup(_ size: CGSize) {
     var size = size
     size.height = layout.collectionViewContentSize.height
     layout.invalidateLayout()
     layout(size)
-    GridSpot.configure?(collectionView)
+    GridComponent.configure?(collectionView)
   }
 
   /**

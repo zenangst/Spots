@@ -2,27 +2,27 @@
 
 import UIKit
 
-/// A RowSpot, a collection view based Spotable object that lays out its items in a vertical order based of the item sizes
-open class RowSpot: NSObject, Gridable {
+/// A GridComponent, a collection view based Spotable object that lays out its items in a vertical order based of the item sizes
+open class GridComponent: NSObject, Gridable {
 
-  public static var layout: Layout = Layout(span: 1.0)
+  public static var layout = Layout(span: 0.0)
 
-  /// A Registry object that holds identifiers and classes for cells used in the RowSpot
+  /// A Registry object that holds identifiers and classes for cells used in the GridComponent
   open static var views: Registry = Registry()
 
   /// A configuration closure that is run in setup(_:)
   open static var configure: ((_ view: UICollectionView, _ layout: UICollectionViewFlowLayout) -> Void)?
 
-  /// A Registry object that holds identifiers and classes for headers used in the RowSpot
+  /// A Registry object that holds identifiers and classes for headers used in the GridComponent
   open static var headers = Registry()
 
   /// A SpotsFocusDelegate object
   weak public var focusDelegate: SpotsFocusDelegate?
 
   /// Child spots
-  public var compositeSpots: [CompositeSpot] = []
+  public var compositeComponents: [CompositeSpot] = []
 
-  /// A component struct used as configuration and data source for the RowSpot
+  /// A component struct used as configuration and data source for the GridComponent
   open var model: ComponentModel
 
   /// A configuration closure
@@ -32,19 +32,20 @@ open class RowSpot: NSObject, Gridable {
     }
   }
 
-  /// A SpotsDelegate that is used for the RowSpot
+  /// A SpotsDelegate that is used for the GridComponent
   open weak var delegate: SpotsDelegate?
 
   /// A custom UICollectionViewFlowLayout
   open lazy var layout: CollectionLayout = CollectionLayout()
 
-  /// A StateCache for the RowSpot
+  /// A StateCache for the GridComponent
   open fileprivate(set) var stateCache: StateCache?
 
-  /// A UICollectionView, used as the main UI component for a RowSpot
+  /// A UICollectionView, used as the main UI component for a GridComponent
   open lazy var collectionView: UICollectionView = { [unowned self] in
     let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: self.layout)
     collectionView.isScrollEnabled = false
+    collectionView.clipsToBounds = false
 
     return collectionView
     }()
@@ -53,11 +54,11 @@ open class RowSpot: NSObject, Gridable {
   var spotDataSource: DataSource?
   var spotDelegate: Delegate?
 
-  /// A required initializer to instantiate a RowSpot with a model.
+  /// A required initializer to instantiate a GridComponent with a model.
   ///
   /// - parameter component: A model.
   ///
-  /// - returns: An initialized row spot with model.
+  /// - returns: An initialized grid spot with model.
   public required init(model: ComponentModel) {
     self.model = model
 
@@ -72,24 +73,34 @@ open class RowSpot: NSObject, Gridable {
     self.spotDelegate = Delegate(spot: self)
 
     if model.kind.isEmpty {
-      self.model.kind = ComponentModel.Kind.row.string
+      self.model.kind = ComponentModel.Kind.grid.string
     }
 
-    registerDefault(view: RowSpotCell.self)
+    registerDefault(view: GridComponentCell.self)
     registerComposite(view: GridComposite.self)
-    prepareItems()
+    registerAndPrepare()
     configureCollectionView()
 
-    if RowSpot.views.composite == nil {
-      RowSpot.views.composite = Registry.Item.classType(GridComposite.self)
+    if GridComponent.views.composite == nil {
+      GridComponent.views.composite =  Registry.Item.classType(GridComposite.self)
     }
   }
 
-  /// Instantiate a RowSpot with a cache key.
+  /// A convenience init for initializing a Gridspot with a title and a kind.
+  ///
+  ///  - parameter title: A string that is used as a title for the GridComponent.
+  ///  - parameter kind:  An identifier to determine which kind should be set on the ComponentModel.
+  ///
+  /// - returns: An initialized grid spot with computed component using title and kind.
+  public convenience init(title: String = "", kind: String? = nil) {
+    self.init(model: ComponentModel(title: title, kind: kind ?? "", span: 0.0))
+  }
+
+  /// Instantiate a GridComponent with a cache key.
   ///
   /// - parameter cacheKey: A unique cache key for the Spotable object
   ///
-  /// - returns: An initialized row spot.
+  /// - returns: An initialized grid spot.
   public convenience init(cacheKey: String) {
     let stateCache = StateCache(key: cacheKey)
 
@@ -97,16 +108,16 @@ open class RowSpot: NSObject, Gridable {
     self.stateCache = stateCache
   }
 
-  deinit {
-    spotDataSource = nil
-    spotDelegate = nil
-    userInterface = nil
-  }
-
   /// Configure collection view with data source, delegate and background view
   public func configureCollectionView() {
     register()
     collectionView.dataSource = spotDataSource
     collectionView.delegate = spotDelegate
+  }
+
+  deinit {
+    spotDataSource = nil
+    spotDelegate = nil
+    userInterface = nil
   }
 }

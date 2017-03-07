@@ -38,7 +38,7 @@ open class ViewSpot: NSObject, Spotable, Viewable {
   weak public var focusDelegate: SpotsFocusDelegate?
 
   /// Child spots
-  public var compositeSpots: [CompositeSpot] = []
+  public var compositeComponents: [CompositeComponent] = []
 
   open lazy var scrollView: ScrollView = ScrollView()
 

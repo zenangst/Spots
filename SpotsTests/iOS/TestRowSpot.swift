@@ -4,12 +4,12 @@ import XCTest
 
 class RowSpotTests: XCTestCase {
 
-  var spot: RowSpot!
-  var cachedSpot: RowSpot!
+  var spot: RowComponent!
+  var cachedSpot: RowComponent!
 
   override func setUp() {
-    spot = RowSpot(model: ComponentModel(span: 1))
-    cachedSpot = RowSpot(cacheKey: "cached-row-spot")
+    spot = RowComponent(model: ComponentModel(span: 1))
+    cachedSpot = RowComponent(cacheKey: "cached-row-spot")
     XCTAssertNotNil(cachedSpot.stateCache)
     cachedSpot.stateCache?.clear()
   }
@@ -21,7 +21,7 @@ class RowSpotTests: XCTestCase {
 
   func testConvenienceInitWithSectionInsets() {
     let model = ComponentModel(span: 1)
-    let spot = RowSpot(model,
+    let spot = RowComponent(model,
                         top: 5, left: 10, bottom: 5, right: 10, itemSpacing: 5)
 
     XCTAssertEqual(spot.layout.sectionInset, UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10))
@@ -29,8 +29,8 @@ class RowSpotTests: XCTestCase {
   }
 
   func testDictionaryRepresentation() {
-    let model = ComponentModel(title: "RowSpot", kind: "row", span: 3, meta: ["headerHeight": 44.0])
-    let spot = RowSpot(model: model)
+    let model = ComponentModel(title: "RowComponent", kind: "row", span: 3, meta: ["headerHeight": 44.0])
+    let spot = RowComponent(model: model)
     XCTAssertEqual(model.dictionary["index"] as? Int, spot.dictionary["index"] as? Int)
     XCTAssertEqual(model.dictionary["title"] as? String, spot.dictionary["title"] as? String)
     XCTAssertEqual(model.dictionary["kind"] as? String, spot.dictionary["kind"] as? String)
@@ -42,27 +42,27 @@ class RowSpotTests: XCTestCase {
   }
 
   func testSafelyResolveKind() {
-    let model = ComponentModel(title: "RowSpot", kind: "custom-grid", span: 1, items: [Item(title: "foo", kind: "custom-item-kind")])
-    let rowSpot = RowSpot(model: model)
+    let model = ComponentModel(title: "RowComponent", kind: "custom-grid", span: 1, items: [Item(title: "foo", kind: "custom-item-kind")])
+    let rowSpot = RowComponent(model: model)
     let indexPath = IndexPath(row: 0, section: 0)
 
-    XCTAssertEqual(rowSpot.identifier(at: indexPath), RowSpot.views.defaultIdentifier)
+    XCTAssertEqual(rowSpot.identifier(at: indexPath), RowComponent.views.defaultIdentifier)
 
-    RowSpot.views.defaultItem = Registry.Item.classType(GridSpotCell.self)
-    XCTAssertEqual(rowSpot.identifier(at: indexPath), RowSpot.views.defaultIdentifier)
+    RowComponent.views.defaultItem = Registry.Item.classType(GridComponentCell.self)
+    XCTAssertEqual(rowSpot.identifier(at: indexPath), RowComponent.views.defaultIdentifier)
 
-    RowSpot.views.defaultItem = Registry.Item.classType(GridSpotCell.self)
-    XCTAssertEqual(rowSpot.identifier(at: indexPath), RowSpot.views.defaultIdentifier)
+    RowComponent.views.defaultItem = Registry.Item.classType(GridComponentCell.self)
+    XCTAssertEqual(rowSpot.identifier(at: indexPath), RowComponent.views.defaultIdentifier)
 
-    RowSpot.views["custom-item-kind"] = Registry.Item.classType(GridSpotCell.self)
+    RowComponent.views["custom-item-kind"] = Registry.Item.classType(GridComponentCell.self)
     XCTAssertEqual(rowSpot.identifier(at: indexPath), "custom-item-kind")
 
-    RowSpot.views.storage.removeAll()
+    RowComponent.views.storage.removeAll()
   }
 
   func testAppendItem() {
     let item = Item(title: "test")
-    let spot = RowSpot(model: ComponentModel(span: 1))
+    let spot = RowComponent(model: ComponentModel(span: 1))
     let expectation = self.expectation(description: "Append item")
     spot.append(item) {
       XCTAssert(spot.model.items.first! == item)
@@ -73,7 +73,7 @@ class RowSpotTests: XCTestCase {
 
   func testAppendItems() {
     let items = [Item(title: "test"), Item(title: "test 2")]
-    let spot = RowSpot(model: ComponentModel(span: 1))
+    let spot = RowComponent(model: ComponentModel(span: 1))
     let expectation = self.expectation(description: "Append items")
     spot.append(items) {
       XCTAssert(spot.model.items == items)
@@ -84,7 +84,7 @@ class RowSpotTests: XCTestCase {
 
   func testInsertItem() {
     let item = Item(title: "test")
-    let spot = RowSpot(model: ComponentModel(span: 1))
+    let spot = RowComponent(model: ComponentModel(span: 1))
     let expectation = self.expectation(description: "Insert item")
     spot.insert(item, index: 0) {
       XCTAssert(spot.model.items.first! == item)
@@ -95,7 +95,7 @@ class RowSpotTests: XCTestCase {
 
   func testPrependItems() {
     let items = [Item(title: "test"), Item(title: "test 2")]
-    let spot = RowSpot(model: ComponentModel(span: 1))
+    let spot = RowComponent(model: ComponentModel(span: 1))
     let expectation = self.expectation(description: "Prepend items")
     spot.prepend(items) {
       XCTAssert(spot.model.items == items)
@@ -106,7 +106,7 @@ class RowSpotTests: XCTestCase {
 
   func testSpotCollectionDelegate() {
     let items = [Item(title: "Test item")]
-    let spot = RowSpot(model: ComponentModel(span: 1, items: items))
+    let spot = RowComponent(model: ComponentModel(span: 1, items: items))
     spot.view.frame.size = CGSize(width: 100, height: 100)
     spot.view.layoutSubviews()
 
@@ -124,7 +124,7 @@ class RowSpotTests: XCTestCase {
 
     let expectation = self.expectation(description: "Wait for cache")
     Dispatch.after(seconds: 0.25) {
-      let cachedSpot = RowSpot(cacheKey: self.cachedSpot.stateCache!.key)
+      let cachedSpot = RowComponent(cacheKey: self.cachedSpot.stateCache!.key)
       XCTAssertEqual(cachedSpot.model.items.count, 1)
       cachedSpot.stateCache?.clear()
       expectation.fulfill()
@@ -136,7 +136,7 @@ class RowSpotTests: XCTestCase {
     Configuration.register(view: TestView.self, identifier: "test-view")
 
     let items = [Item(title: "Item A", kind: "test-view"), Item(title: "Item B")]
-    let spot = RowSpot(model: ComponentModel(span: 0.0, items: items))
+    let spot = RowComponent(model: ComponentModel(span: 0.0, items: items))
     spot.setup(CGSize(width: 100, height: 100))
     spot.layout(CGSize(width: 100, height: 100))
     spot.view.layoutSubviews()

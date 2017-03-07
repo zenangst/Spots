@@ -38,7 +38,7 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
   public var lineSpacing: Double = 0.0
   /// Defines how many items to show per row for `Gridable` components.
   public var span: Double = 0.0
-  /// If enabled and the item count is less than the span, the CarouselSpot will even out the space between the items to align them.
+  /// If enabled and the item count is less than the span, the CarouselComponent will even out the space between the items to align them.
   public var dynamicSpan: Bool = false
   /// Defines if the component uses computed content height or relies on `view.frame.height`.
   public var dynamicHeight: Bool = true

@@ -17,7 +17,7 @@ public class Spot: NSObject, Spotable, SpotHorizontallyScrollable {
 
   public var model: ComponentModel
   public var componentKind: ComponentModel.Kind = .list
-  public var compositeSpots: [CompositeSpot] = []
+  public var compositeComponents: [CompositeSpot] = []
 
   public var configure: ((ItemConfigurable) -> Void)? {
     didSet {
@@ -56,16 +56,16 @@ public class Spot: NSObject, Spotable, SpotHorizontallyScrollable {
     if model.layout == nil {
       switch kind {
       case .carousel:
-        self.model.layout = CarouselSpot.layout
-        registerDefaultIfNeeded(view: CarouselSpotCell.self)
+        self.model.layout = CarouselComponent.layout
+        registerDefaultIfNeeded(view: CarouselComponentCell.self)
       case .grid:
-        self.model.layout = GridSpot.layout
-        registerDefaultIfNeeded(view: GridSpotCell.self)
+        self.model.layout = GridComponent.layout
+        registerDefaultIfNeeded(view: GridComponentCell.self)
       case .list:
-        self.model.layout = ListSpot.layout
-        registerDefaultIfNeeded(view: ListSpotCell.self)
+        self.model.layout = ListComponent.layout
+        registerDefaultIfNeeded(view: ListComponentCell.self)
       case .row:
-        self.model.layout = RowSpot.layout
+        self.model.layout = RowComponent.layout
       default:
         break
       }

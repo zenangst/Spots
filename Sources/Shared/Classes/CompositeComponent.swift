@@ -1,4 +1,4 @@
-public struct CompositeSpot: Equatable {
+public struct CompositeComponent: Equatable {
   /// Returns a Boolean value indicating whether two values are equal.
   ///
   /// Equality is the inverse of inequality. For any values `a` and `b`,
@@ -7,7 +7,7 @@ public struct CompositeSpot: Equatable {
   /// - Parameters:
   ///   - lhs: A value to compare.
   ///   - rhs: Another value to compare.
-  public static func == (lhs: CompositeSpot, rhs: CompositeSpot) -> Bool {
+  public static func == (lhs: CompositeComponent, rhs: CompositeComponent) -> Bool {
     return lhs.itemIndex == rhs.itemIndex
   }
 

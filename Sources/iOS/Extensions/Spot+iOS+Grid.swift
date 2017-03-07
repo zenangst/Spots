@@ -9,7 +9,7 @@ extension Spot {
 
     configureCollectionViewHeader(collectionView, with: size)
 
-    GridSpot.configure?(collectionView, collectionViewLayout)
+    GridComponent.configure?(collectionView, collectionViewLayout)
   }
 
   func layoutVerticalCollectionView(_ collectionView: CollectionView, with size: CGSize) {

@@ -1,6 +1,6 @@
 import Cocoa
 
-class CarouselSpotCell: NSCollectionViewItem, ItemConfigurable {
+class CarouselComponentCell: NSCollectionViewItem, ItemConfigurable {
 
   var preferredViewSize: CGSize = CGSize(width: 0, height: 120)
 

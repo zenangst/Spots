@@ -33,7 +33,7 @@ extension Spot {
 
     configureCollectionViewHeader(collectionView, with: size)
 
-    CarouselSpot.configure?(collectionView, layout)
+    CarouselComponent.configure?(collectionView, layout)
 
     collectionView.frame.size.height += layout.headerReferenceSize.height
 

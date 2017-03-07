@@ -62,12 +62,12 @@ class TestSpot: XCTestCase {
     waitForExpectations(timeout: 10.0, handler: nil)
   }
 
-  func testCompareHybridListSpotWithCoreType() {
+  func testCompareHybridListComponentWithCoreType() {
     let items = [Item(title: "A"), Item(title: "B")]
     let model = ComponentModel(kind: ComponentModel.Kind.list.string, items: items, hybrid: true)
     let listComponentModel = ComponentModel(kind: ComponentModel.Kind.list.string, items: items)
     let spot = Spot(model: model)
-    let listSpot = ListSpot(model: listComponentModel)
+    let listSpot = ListComponent(model: listComponentModel)
 
     XCTAssertTrue(type(of: spot.view) == type(of: listSpot.view))
 
@@ -85,12 +85,12 @@ class TestSpot: XCTestCase {
     XCTAssertEqual(spot.view.contentSize, listSpot.view.contentSize)
   }
 
-  func testCompareHybridGridSpotWithCoreType() {
+  func testCompareHybridGridComponentWithCoreType() {
     let items = [Item(title: "A"), Item(title: "B")]
     let model = ComponentModel(kind: ComponentModel.Kind.grid.string, items: items, hybrid: true)
     let gridComponentModel = ComponentModel(kind: ComponentModel.Kind.grid.string, items: items)
     let spot = Spot(model: model)
-    let gridSpot = GridSpot(model: gridComponentModel)
+    let gridSpot = GridComponent(model: gridComponentModel)
 
     XCTAssertTrue(type(of: spot.view) == type(of: gridSpot.view))
 
@@ -108,12 +108,12 @@ class TestSpot: XCTestCase {
     XCTAssertEqual(spot.view.contentSize, gridSpot.view.contentSize)
   }
 
-  func testCompareHybridCarouselSpotWithCoreType() {
+  func testCompareHybridCarouselComponentWithCoreType() {
     let items = [Item(title: "A"), Item(title: "B")]
     let model = ComponentModel(kind: ComponentModel.Kind.carousel.string, items: items, hybrid: true)
     let carouselComponentModel = ComponentModel(kind: ComponentModel.Kind.carousel.string, items: items)
     let spot = Spot(model: model)
-    let carouselSpot = CarouselSpot(model: carouselComponentModel)
+    let carouselSpot = CarouselComponent(model: carouselComponentModel)
 
     XCTAssertTrue(type(of: spot.view) == type(of: carouselSpot.view))
 
@@ -131,7 +131,7 @@ class TestSpot: XCTestCase {
     XCTAssertEqual(spot.view.contentSize, carouselSpot.view.contentSize)
   }
 
-  func testHybridListSpotWithHeaderAndFooter() {
+  func testHybridListComponentWithHeaderAndFooter() {
     let model = ComponentModel(
       header: "Header",
       footer: "Footer",
@@ -160,7 +160,7 @@ class TestSpot: XCTestCase {
     XCTAssertEqual(spot.view.contentSize, CGSize(width: 100, height: expectedContentSizeHeight))
   }
 
-  func testHybridCarouselSpotWithHeaderAndFooter() {
+  func testHybridCarouselComponentWithHeaderAndFooter() {
     let model = ComponentModel(
       header: "Header",
       footer: "Footer",

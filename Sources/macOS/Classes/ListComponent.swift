@@ -2,7 +2,7 @@
 
 import Cocoa
 
-open class ListSpot: NSObject, Listable {
+open class ListComponent: NSObject, Listable {
 
   /// Return collection view as a scroll view
   open var view: ScrollView {
@@ -12,7 +12,7 @@ open class ListSpot: NSObject, Listable {
   public static var layout: Layout = Layout(span: 1.0)
 
   /// Child spots
-  public var compositeSpots: [CompositeSpot] = []
+  public var compositeComponents: [CompositeComponent] = []
 
   public struct Key {
     public static let titleSeparator = "title-separator"
@@ -42,13 +42,13 @@ open class ListSpot: NSObject, Listable {
   /// A Registry struct that contains all register components, used for resolving what UI component to use
   open static var views = Registry()
   open static var configure: ((_ view: NSTableView) -> Void)?
-  open static var defaultView: View.Type = ListSpotItem.self
+  open static var defaultView: View.Type = ListComponentItem.self
   open static var defaultKind: StringConvertible = ComponentModel.Kind.list.string
 
-  /// A SpotsDelegate that is used for the ListSpot
+  /// A SpotsDelegate that is used for the ListComponent
   open weak var delegate: SpotsDelegate?
 
-  /// A component struct used as configuration and data source for the ListSpot
+  /// A component struct used as configuration and data source for the ListComponent
   open var model: ComponentModel
   open var configure: ((ItemConfigurable) -> Void)? {
     didSet {
@@ -139,7 +139,7 @@ open class ListSpot: NSObject, Listable {
 
     scrollView.contentView.addSubview(tableView)
     configureLayout(model)
-    registerDefault(view: ListSpotItem.self)
+    registerDefault(view: ListComponentItem.self)
     registerComposite(view: ListComposite.self)
   }
 
@@ -207,7 +207,7 @@ open class ListSpot: NSObject, Listable {
     }
 
     layout(size)
-    ListSpot.configure?(tableView)
+    ListComponent.configure?(tableView)
   }
 
   fileprivate func configureTitleView() {

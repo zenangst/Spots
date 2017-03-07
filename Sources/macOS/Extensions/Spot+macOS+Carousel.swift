@@ -14,7 +14,7 @@ extension Spot {
     scrollView.hasHorizontalScroller = (model.items.count > 1)
 
     collectionView.frame.size.height = newCollectionViewHeight
-    CarouselSpot.configure?(collectionView)
+    CarouselComponent.configure?(collectionView)
   }
 
   func layoutHorizontalCollectionView(_ collectionView: CollectionView, with size: CGSize) {

@@ -1,7 +1,7 @@
 import UIKit
 
 /// A Carousel Spot Header
-public class CarouselSpotHeader: UICollectionReusableView, Componentable {
+public class CarouselComponentHeader: UICollectionReusableView, Componentable {
 
   /// The preferred header height for the view
   public var preferredHeaderHeight: CGFloat = 120

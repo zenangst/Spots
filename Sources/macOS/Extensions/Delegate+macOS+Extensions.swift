@@ -75,7 +75,7 @@ extension Delegate: NSTableViewDelegate {
         return false
     }
 
-    if spot.model.meta(ListSpot.Key.doubleAction, type: Bool.self) != true {
+    if spot.model.meta(ListComponent.Key.doubleAction, type: Bool.self) != true {
       spot.delegate?.spotable(spot, itemSelected: item)
     }
 
@@ -128,10 +128,10 @@ extension Delegate: NSTableViewDelegate {
 
     switch resolvedView {
     case let view as Composable:
-      let spots = spot.compositeSpots.filter { $0.itemIndex == row }
+      let spots = spot.compositeComponents.filter { $0.itemIndex == row }
       view.contentView.frame.size.width = tableView.frame.size.width
       view.contentView.frame.size.height = spot.computedHeight
-      view.configure(&spot.model.items[row], compositeSpots: spots)
+      view.configure(&spot.model.items[row], compositeComponents: spots)
     case let view as View:
       let customView = view
 

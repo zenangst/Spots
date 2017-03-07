@@ -54,7 +54,7 @@ class TestSpot: XCTestCase {
     waitForExpectations(timeout: 10.0, handler: nil)
   }
 
-  func testHybridListSpotWithHeaderAndFooter() {
+  func testHybridListComponentWithHeaderAndFooter() {
     let model = ComponentModel(
       header: "Header",
       footer: "Footer",
@@ -74,7 +74,7 @@ class TestSpot: XCTestCase {
     XCTAssertEqual(spot.view.contentSize, CGSize(width: 100, height: 460))
   }
 
-  func testHybridGridSpotWithHeaderAndFooter() {
+  func testHybridGridComponentWithHeaderAndFooter() {
     let model = ComponentModel(
       header: "Header",
       footer: "Footer",
@@ -95,7 +95,7 @@ class TestSpot: XCTestCase {
     XCTAssertEqual(spot.view.contentSize, CGSize(width: 100, height: 300))
   }
 
-  func testHybridCarouselSpotWithHeaderAndFooter() {
+  func testHybridCarouselComponentWithHeaderAndFooter() {
     let model = ComponentModel(
       header: "Header",
       footer: "Footer",

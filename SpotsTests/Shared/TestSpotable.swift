@@ -5,7 +5,7 @@ import XCTest
 class SpotableTests: XCTestCase {
 
   func testAppendingMultipleItemsToSpot() {
-    let listSpot = ListSpot(model: ComponentModel(title: "ComponentModel", span: 1.0))
+    let listSpot = ListComponent(model: ComponentModel(title: "ComponentModel", span: 1.0))
     listSpot.setup(CGSize(width: 100, height: 100))
     var items: [Item] = []
 
@@ -29,7 +29,7 @@ class SpotableTests: XCTestCase {
   }
 
   func testAppendingMultipleItemsToSpotInController() {
-    let controller = Controller(spots: [ListSpot(model: ComponentModel(title: "ComponentModel", span: 1.0))])
+    let controller = Controller(spots: [ListComponent(model: ComponentModel(title: "ComponentModel", span: 1.0))])
     controller.prepareController()
     var items: [Item] = []
 
@@ -59,7 +59,7 @@ class SpotableTests: XCTestCase {
 
     let parentSize = CGSize(width: 100, height: 100)
     let model = ComponentModel(items: [Item(title: "foo", kind: kind)])
-    let spot = GridSpot(model: model)
+    let spot = GridComponent(model: model)
     spot.view.frame.size = parentSize
     spot.setup(parentSize)
     spot.layout(parentSize)
@@ -81,7 +81,7 @@ class SpotableTests: XCTestCase {
 
     let parentSize = CGSize(width: 100, height: 100)
     let model = ComponentModel(items: [Item(title: "foo", kind: kind)])
-    let spot = ListSpot(model: model)
+    let spot = ListComponent(model: model)
 
     spot.setup(parentSize)
     spot.layout(parentSize)

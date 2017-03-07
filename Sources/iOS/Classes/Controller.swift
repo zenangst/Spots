@@ -244,7 +244,7 @@ open class Controller: UIViewController, SpotsProtocol, SpotsFocusDelegate, UISc
     spots.forEach { spot in
       spot.layout(size)
 
-      spot.compositeSpots.forEach {
+      spot.compositeComponents.forEach {
         $0.spot.layout(spot.view.frame.size)
       }
     }
@@ -280,7 +280,7 @@ open class Controller: UIViewController, SpotsProtocol, SpotsFocusDelegate, UISc
     spots.enumerated().forEach { index, spot in
       setupSpot(at: index, spot: spot)
       animated?(spot.view)
-      (spot as? CarouselSpot)?.layout.yOffset = yOffset
+      (spot as? CarouselComponent)?.layout.yOffset = yOffset
       yOffset += spot.view.frame.size.height
     }
   }
@@ -355,7 +355,7 @@ extension Controller {
       $0.delegate = delegate
       $0.focusDelegate = self
 
-      $0.compositeSpots.forEach {
+      $0.compositeComponents.forEach {
         $0.spot.delegate = delegate
         $0.spot.focusDelegate = self
       }
