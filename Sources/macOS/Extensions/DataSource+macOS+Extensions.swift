@@ -18,7 +18,7 @@ extension DataSource: NSCollectionViewDataSource {
       return 0
     }
 
-    return spot.component.items.count
+    return spot.model.items.count
   }
 
   /// Asks your data source object to provide the item at the specified location in the collection view.
@@ -49,15 +49,15 @@ extension DataSource: NSCollectionViewDataSource {
     case let item as GridWrapper:
       if let (_, resolvedView) = Configuration.views.make(reuseIdentifier), let view = resolvedView {
         item.configure(with: view)
-        (view as? ItemConfigurable)?.configure(&spot.component.items[indexPath.item])
+        (view as? ItemConfigurable)?.configure(&spot.model.items[indexPath.item])
       }
     case let item as Composable:
       let spots = spot.compositeSpots.filter { $0.itemIndex == indexPath.item }
       item.contentView.frame.size.width = collectionView.frame.size.width
       item.contentView.frame.size.height = spot.computedHeight
-      item.configure(&spot.component.items[indexPath.item], compositeSpots: spots)
+      item.configure(&spot.model.items[indexPath.item], compositeSpots: spots)
     case let item as ItemConfigurable:
-      item.configure(&spot.component.items[indexPath.item])
+      item.configure(&spot.model.items[indexPath.item])
     default:
       break
     }
@@ -76,7 +76,7 @@ extension DataSource: NSTableViewDataSource {
       return 0
     }
 
-    return spot.component.items.count
+    return spot.model.items.count
   }
 
   /// Called by aTableView when the mouse button is released over a table view that previously decided to allow a drop.

@@ -290,7 +290,7 @@ let myContacts = ComponentModel(title: "My contacts", items: [
   Item(title: "Khoa Pham"),
   Item(title: "Christoffer Winterkvist")
 ])
-let listSpot = ListSpot(component: myContacts)
+let listSpot = ListSpot(model: myContacts)
 let controller = Controller(spots: [listSpot])
 
 navigationController?.pushViewController(controller, animated: true)
@@ -462,7 +462,7 @@ Custom data that you are free to use as you like in your implementation.
 ```
 
 - **.index**
-Calculated value to determine the index it has inside of the component.
+Calculated value to determine the index it has inside of the model.
 - **.title**
 The headline for your data, in a `UITableViewCell` it is normally used for `textLabel.text` but you are free to use it as you like.
 - **.subtitle**

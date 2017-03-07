@@ -11,7 +11,7 @@ extension Spot {
     collectionView.isScrollEnabled = true
     layout.scrollDirection = .horizontal
     #if os(iOS)
-      collectionView.isPagingEnabled = component.interaction.paginate == .page
+      collectionView.isPagingEnabled = model.interaction.paginate == .page
     #endif
     configurePageControl()
 
@@ -20,7 +20,7 @@ extension Spot {
     } else {
       var newCollectionViewHeight: CGFloat = 0.0
 
-      newCollectionViewHeight <- component.items.sorted(by: {
+      newCollectionViewHeight <- model.items.sorted(by: {
         $0.size.height > $1.size.height
       }).first?.size.height
 
@@ -37,11 +37,11 @@ extension Spot {
 
     collectionView.frame.size.height += layout.headerReferenceSize.height
 
-    if let componentLayout = component.layout {
+    if let componentLayout = model.layout {
       collectionView.frame.size.height += CGFloat(componentLayout.inset.top + componentLayout.inset.bottom)
     }
 
-    if let pageIndicatorPlacement = component.layout?.pageIndicatorPlacement {
+    if let pageIndicatorPlacement = model.layout?.pageIndicatorPlacement {
       switch pageIndicatorPlacement {
       case .below:
         layout.sectionInset.bottom += pageControl.frame.height

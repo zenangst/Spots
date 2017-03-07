@@ -15,5 +15,5 @@ public protocol Componentable {
   /// Configure object with ComponentModel struct.
   ///
   /// - parameter component: The component that should be used for configuration.
-  func configure(_ component: ComponentModel)
+  func configure(_ model: ComponentModel)
 }

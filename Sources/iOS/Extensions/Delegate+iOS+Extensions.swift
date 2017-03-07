@@ -95,27 +95,27 @@ extension Delegate: UITableViewDelegate {
   /// - parameter tableView: The table-view object requesting this information.
   /// - parameter heightForHeaderInSection: An index number identifying a section of tableView.
   ///
-  /// - returns: Returns the `headerHeight` found in `component.meta`, otherwise 0.0.
+  /// - returns: Returns the `headerHeight` found in `model.meta`, otherwise 0.0.
   public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
     guard let spot = spot else {
       return 0.0
     }
 
-    let header = spot.type.headers.make(spot.component.header)
+    let header = spot.type.headers.make(spot.model.header)
 
     if header == nil {
-      let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: spot.component.header)
-      view?.frame.size.height = spot.component.meta(ListSpot.Key.headerHeight, 0.0)
+      let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: spot.model.header)
+      view?.frame.size.height = spot.model.meta(ListSpot.Key.headerHeight, 0.0)
       view?.frame.size.width = tableView.frame.size.width
 
       switch view {
       case let view as ListHeaderFooterWrapper:
-        if let (_, resolvedView) = Configuration.views.make(spot.component.header),
+        if let (_, resolvedView) = Configuration.views.make(spot.model.header),
           let componentView = resolvedView as? Componentable {
           view.frame.size.height = componentView.preferredHeaderHeight
         }
       case let view as Componentable:
-        view.configure(spot.component)
+        view.configure(spot.model)
       default:
         break
       }
@@ -131,21 +131,21 @@ extension Delegate: UITableViewDelegate {
       return 0.0
     }
 
-    let header = spot.type.headers.make(spot.component.footer)
+    let header = spot.type.headers.make(spot.model.footer)
 
     if header == nil {
-      let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: spot.component.footer)
-      view?.frame.size.height = spot.component.meta(ListSpot.Key.headerHeight, 0.0)
+      let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: spot.model.footer)
+      view?.frame.size.height = spot.model.meta(ListSpot.Key.headerHeight, 0.0)
       view?.frame.size.width = tableView.frame.size.width
 
       switch view {
       case let view as ListHeaderFooterWrapper:
-        if let (_, resolvedView) = Configuration.views.make(spot.component.footer),
+        if let (_, resolvedView) = Configuration.views.make(spot.model.footer),
           let componentView = resolvedView as? Componentable {
             view.frame.size.height = componentView.preferredHeaderHeight
         }
       case let view as Componentable:
-        view.configure(spot.component)
+        view.configure(spot.model)
       default:
         break
       }
@@ -167,11 +167,11 @@ extension Delegate: UITableViewDelegate {
       return nil
     }
 
-    if let _ = spot.type.headers.make(spot.component.header) {
+    if let _ = spot.type.headers.make(spot.model.header) {
       return nil
     }
 
-    return !spot.component.title.isEmpty ? spot.component.title : nil
+    return !spot.model.title.isEmpty ? spot.model.title : nil
   }
 
   /// Tells the delegate that the specified row is now selected.
@@ -221,26 +221,26 @@ extension Delegate: UITableViewDelegate {
   ///
   /// - returns: A view object to be displayed in the header of section based on the kind of the ListSpot and registered headers.
   public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-    guard let spot = spot, !spot.component.header.isEmpty else { return nil }
+    guard let spot = spot, !spot.model.header.isEmpty else { return nil }
 
-    let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: spot.component.header)
-    view?.frame.size.height = spot.component.meta(ListSpot.Key.headerHeight, 0.0)
+    let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: spot.model.header)
+    view?.frame.size.height = spot.model.meta(ListSpot.Key.headerHeight, 0.0)
     view?.frame.size.width = tableView.frame.size.width
 
     switch view {
       case let view as ListHeaderFooterWrapper:
-      if let (_, resolvedView) = Configuration.views.make(spot.component.header),
+      if let (_, resolvedView) = Configuration.views.make(spot.model.header),
         let customView = resolvedView {
         view.configure(with: customView)
 
         if let componentView = customView as? Componentable {
-          componentView.configure(spot.component)
+          componentView.configure(spot.model)
           customView.frame.size = view.frame.size
           customView.frame.size.height = componentView.preferredHeaderHeight
         }
       }
       case let view as Componentable:
-      view.configure(spot.component)
+      view.configure(spot.model)
       default:
         break
     }
@@ -249,26 +249,26 @@ extension Delegate: UITableViewDelegate {
   }
 
   public func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-    guard let spot = spot, !spot.component.footer.isEmpty else { return nil }
+    guard let spot = spot, !spot.model.footer.isEmpty else { return nil }
 
-    let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: spot.component.footer)
-    view?.frame.size.height = spot.component.meta(ListSpot.Key.headerHeight, 0.0)
+    let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: spot.model.footer)
+    view?.frame.size.height = spot.model.meta(ListSpot.Key.headerHeight, 0.0)
     view?.frame.size.width = tableView.frame.size.width
 
     switch view {
     case let view as ListHeaderFooterWrapper:
-      if let (_, resolvedView) = Configuration.views.make(spot.component.footer),
+      if let (_, resolvedView) = Configuration.views.make(spot.model.footer),
         let customView = resolvedView {
         view.configure(with: customView)
 
         if let componentView = resolvedView as? Componentable {
-          componentView.configure(spot.component)
+          componentView.configure(spot.model)
           customView.frame.size = view.frame.size
           customView.frame.size.height = componentView.preferredHeaderHeight
         }
       }
     case let view as Componentable:
-      view.configure(spot.component)
+      view.configure(spot.model)
     default:
       break
     }
@@ -303,7 +303,7 @@ extension Delegate: UITableViewDelegate {
       return 0.0
     }
 
-    spot.component.size = CGSize(
+    spot.model.size = CGSize(
       width: tableView.frame.size.width,
       height: tableView.frame.size.height)
 

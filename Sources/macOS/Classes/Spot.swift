@@ -18,7 +18,7 @@ public class Spot: NSObject, Spotable {
   var headerView: View?
   var footerView: View?
 
-  public var component: ComponentModel
+  public var model: ComponentModel
   public var componentKind: ComponentModel.Kind = .list
   public var compositeSpots: [CompositeSpot] = []
   public var configure: ((ItemConfigurable) -> Void)?
@@ -103,24 +103,24 @@ public class Spot: NSObject, Spotable {
     return userInterface as? CollectionView
   }
 
-  public required init(component: ComponentModel, userInterface: UserInterface, kind: ComponentModel.Kind) {
-    self.component = component
+  public required init(model: ComponentModel, userInterface: UserInterface, kind: ComponentModel.Kind) {
+    self.model = model
     self.componentKind = kind
     self.userInterface = userInterface
 
     super.init()
 
-    if component.layout == nil {
+    if model.layout == nil {
       switch kind {
       case .carousel:
-        self.component.layout = CarouselSpot.layout
+        self.model.layout = CarouselSpot.layout
       case .grid:
-        self.component.layout = GridSpot.layout
+        self.model.layout = GridSpot.layout
       case .list:
-        self.component.layout = ListSpot.layout
+        self.model.layout = ListSpot.layout
         registerDefaultIfNeeded(view: ListSpotItem.self)
       case .row:
-        self.component.layout = RowSpot.layout
+        self.model.layout = RowSpot.layout
       default:
         break
       }
@@ -132,13 +132,13 @@ public class Spot: NSObject, Spotable {
     self.spotDelegate = Delegate(spot: self)
   }
 
-  public required convenience init(component: ComponentModel) {
-    var component = component
-    if component.kind.isEmpty {
-      component.kind = Spot.defaultKind
+  public required convenience init(model: ComponentModel) {
+    var model = model
+    if model.kind.isEmpty {
+      model.kind = Spot.defaultKind
     }
 
-    let kind = ComponentModel.Kind(rawValue: component.kind) ?? .list
+    let kind = ComponentModel.Kind(rawValue: model.kind) ?? .list
     let userInterface: UserInterface
 
     if kind == .list {
@@ -149,10 +149,10 @@ public class Spot: NSObject, Spotable {
       userInterface = collectionView
     }
 
-    self.init(component: component, userInterface: userInterface, kind: kind)
+    self.init(model: model, userInterface: userInterface, kind: kind)
 
     if componentKind == .carousel {
-      self.component.interaction.scrollDirection = .horizontal
+      self.model.interaction.scrollDirection = .horizontal
       (collectionView?.collectionViewLayout as? FlowLayout)?.scrollDirection = .horizontal
     }
   }
@@ -160,7 +160,7 @@ public class Spot: NSObject, Spotable {
   public convenience init(cacheKey: String) {
     let stateCache = StateCache(key: cacheKey)
 
-    self.init(component: ComponentModel(stateCache.load()))
+    self.init(model: ComponentModel(stateCache.load()))
     self.stateCache = stateCache
   }
 
@@ -189,8 +189,8 @@ public class Spot: NSObject, Spotable {
 
     scrollView.frame.size = size
 
-    setupHeader(kind: component.header)
-    setupFooter(kind: component.footer)
+    setupHeader(kind: model.header)
+    setupFooter(kind: model.footer)
 
     if let tableView = self.tableView {
       documentView.addSubview(tableView)
@@ -216,7 +216,7 @@ public class Spot: NSObject, Spotable {
   }
 
   fileprivate func setupCollectionView(_ collectionView: CollectionView, with size: CGSize) {
-    if let componentLayout = self.component.layout,
+    if let componentLayout = self.model.layout,
       let collectionViewLayout = collectionView.collectionViewLayout as? FlowLayout {
       componentLayout.configure(collectionViewLayout: collectionViewLayout)
     }
@@ -280,10 +280,10 @@ public class Spot: NSObject, Spotable {
 
   public func sizeForItem(at indexPath: IndexPath) -> CGSize {
     if let collectionView = collectionView,
-      component.interaction.scrollDirection == .horizontal {
+      model.interaction.scrollDirection == .horizontal {
       var width: CGFloat
 
-      if let layout = component.layout {
+      if let layout = model.layout {
         width = layout.span > 0
           ? collectionView.frame.width / CGFloat(layout.span)
           : collectionView.frame.width
@@ -297,13 +297,13 @@ public class Spot: NSObject, Spotable {
         width -= layout.minimumLineSpacing
       }
 
-      if component.items[indexPath.item].size.width == 0.0 {
-        component.items[indexPath.item].size.width = width
+      if model.items[indexPath.item].size.width == 0.0 {
+        model.items[indexPath.item].size.width = width
       }
 
       return CGSize(
-        width: ceil(component.items[indexPath.item].size.width),
-        height: ceil(component.items[indexPath.item].size.height))
+        width: ceil(model.items[indexPath.item].size.width),
+        height: ceil(model.items[indexPath.item].size.height))
     } else {
       return CGSize(
         width:  item(at: indexPath)?.size.width  ?? 0.0,

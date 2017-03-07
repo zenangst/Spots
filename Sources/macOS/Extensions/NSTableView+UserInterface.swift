@@ -30,7 +30,7 @@ extension NSTableView: UserInterface {
     indexes.forEach { index in
       if let view = rowView(atRow: index, makeIfNecessary: false) as? ItemConfigurable,
       let adapter = dataSource as? Listable {
-        var item = adapter.component.items[index]
+        var item = adapter.model.items[index]
         view.configure(&item)
       }
     }
@@ -67,7 +67,7 @@ extension NSTableView: UserInterface {
           continue
       }
 
-      var item = adapter.component.items[index]
+      var item = adapter.model.items[index]
       view.configure(&item)
     }
 

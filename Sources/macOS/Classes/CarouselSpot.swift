@@ -62,7 +62,7 @@ open class CarouselSpot: NSObject, Gridable {
   /// A SpotsDelegate that is used for the CarouselSpot
   open weak var delegate: SpotsDelegate?
 
-  open var component: ComponentModel
+  open var model: ComponentModel
   open var configure: ((ItemConfigurable) -> Void)? {
     didSet {
       guard let configure = configure else { return }
@@ -105,27 +105,27 @@ open class CarouselSpot: NSObject, Gridable {
   var spotDataSource: DataSource?
   var spotDelegate: Delegate?
 
-  /// A required initializer to instantiate a CarouselSpot with a component.
+  /// A required initializer to instantiate a CarouselSpot with a model.
   ///
   /// - parameter component: A component
   ///
   /// - returns: An initialized carousel spot.
-  public required init(component: ComponentModel) {
-    self.component = component
+  public required init(model: ComponentModel) {
+    self.model = model
 
-    if self.component.layout == nil {
-      self.component.layout = type(of: self).layout
+    if self.model.layout == nil {
+      self.model.layout = type(of: self).layout
     }
 
     self.collectionView = CollectionView()
     super.init()
     self.userInterface = collectionView
-    self.component.layout?.configure(spot: self)
+    self.model.layout?.configure(spot: self)
     self.spotDataSource = DataSource(spot: self)
     self.spotDelegate = Delegate(spot: self)
 
-    if component.kind.isEmpty {
-      self.component.kind = ComponentModel.Kind.carousel.string
+    if model.kind.isEmpty {
+      self.model.kind = ComponentModel.Kind.carousel.string
     }
 
     registerDefault(view: CarouselSpotCell.self)
@@ -136,7 +136,7 @@ open class CarouselSpot: NSObject, Gridable {
     if let layout = layout as? FlowLayout {
       layout.scrollDirection = .horizontal
 
-      if !component.title.isEmpty {
+      if !model.title.isEmpty {
         configureTitleView(layout.sectionInset)
       }
     }
@@ -154,7 +154,7 @@ open class CarouselSpot: NSObject, Gridable {
   public convenience init(cacheKey: String) {
     let stateCache = StateCache(key: cacheKey)
 
-    self.init(component: ComponentModel(stateCache.load()))
+    self.init(model: ComponentModel(stateCache.load()))
     self.stateCache = stateCache
   }
 
@@ -182,29 +182,29 @@ open class CarouselSpot: NSObject, Gridable {
     var layoutInsets = EdgeInsets()
 
     if let layout = layout as? NSCollectionViewFlowLayout {
-      layout.sectionInset.top = component.meta(GridableMeta.Key.sectionInsetTop, Default.sectionInsetTop) + titleView.frame.size.height + 8
+      layout.sectionInset.top = model.meta(GridableMeta.Key.sectionInsetTop, Default.sectionInsetTop) + titleView.frame.size.height + 8
       layoutInsets = layout.sectionInset
     }
 
-    scrollView.frame.size.height = (component.items.first?.size.height ?? layoutInsets.top) + layoutInsets.top + layoutInsets.bottom
+    scrollView.frame.size.height = (model.items.first?.size.height ?? layoutInsets.top) + layoutInsets.top + layoutInsets.bottom
     collectionView.frame.size.height = scrollView.frame.size.height
     gradientLayer?.frame.size.height = scrollView.frame.size.height
 
-    if !component.title.isEmpty {
+    if !model.title.isEmpty {
       configureTitleView(layoutInsets)
     }
 
-    if let componentLayout = component.layout {
+    if let componentLayout = model.layout {
       if componentLayout.span > 0 {
-        component.items.enumerated().forEach {
-          component.items[$0.offset].size.width = size.width / CGFloat(componentLayout.span)
+        model.items.enumerated().forEach {
+          model.items[$0.offset].size.width = size.width / CGFloat(componentLayout.span)
         }
       } else if componentLayout.span == 1 {
         scrollView.frame.size.width = size.width - layoutInsets.right
-        scrollView.scrollingEnabled = (component.items.count > 1)
-        scrollView.hasHorizontalScroller = (component.items.count > 1)
-        component.items.enumerated().forEach {
-          component.items[$0.offset].size.width = size.width / CGFloat(componentLayout.span)
+        scrollView.scrollingEnabled = (model.items.count > 1)
+        scrollView.hasHorizontalScroller = (model.items.count > 1)
+        model.items.enumerated().forEach {
+          model.items[$0.offset].size.width = size.width / CGFloat(componentLayout.span)
         }
         layout.invalidateLayout()
       }
@@ -215,10 +215,10 @@ open class CarouselSpot: NSObject, Gridable {
   ///
   /// - parameter size: The size of the superview
   open func setup(_ size: CGSize) {
-    if let layout = component.layout {
+    if let layout = model.layout {
       if layout.span > 0 {
-        component.items.enumerated().forEach {
-          component.items[$0.offset].size.width = size.width / CGFloat(layout.span)
+        model.items.enumerated().forEach {
+          model.items[$0.offset].size.width = size.width / CGFloat(layout.span)
         }
       }
     }
@@ -228,16 +228,16 @@ open class CarouselSpot: NSObject, Gridable {
   }
 
   fileprivate func configureTitleView(_ layoutInsets: EdgeInsets) {
-    titleView.stringValue = component.title
+    titleView.stringValue = model.title
     titleView.sizeToFit()
-    titleView.font = NSFont.systemFont(ofSize: component.meta(Key.titleFontSize, Default.titleFontSize))
+    titleView.font = NSFont.systemFont(ofSize: model.meta(Key.titleFontSize, Default.titleFontSize))
     titleView.sizeToFit()
     titleView.frame.size.width = collectionView.frame.width - layoutInsets.right - layoutInsets.left
-    lineView.frame.size.width = scrollView.frame.size.width - (component.meta(Key.titleLeftMargin, titleView.frame.origin.x) * 2)
-    lineView.frame.origin.x = component.meta(Key.titleLeftMargin, titleView.frame.origin.x)
-    titleView.frame.origin.x = collectionView.frame.origin.x + component.meta(Key.titleLeftInset, Default.titleLeftInset)
-    titleView.frame.origin.x = component.meta(Key.titleLeftMargin, titleView.frame.origin.x)
-    titleView.frame.origin.y = component.meta(Key.titleTopInset, Default.titleTopInset) - component.meta(Key.titleBottomInset, Default.titleBottomInset)
+    lineView.frame.size.width = scrollView.frame.size.width - (model.meta(Key.titleLeftMargin, titleView.frame.origin.x) * 2)
+    lineView.frame.origin.x = model.meta(Key.titleLeftMargin, titleView.frame.origin.x)
+    titleView.frame.origin.x = collectionView.frame.origin.x + model.meta(Key.titleLeftInset, Default.titleLeftInset)
+    titleView.frame.origin.x = model.meta(Key.titleLeftMargin, titleView.frame.origin.x)
+    titleView.frame.origin.y = model.meta(Key.titleTopInset, Default.titleTopInset) - model.meta(Key.titleBottomInset, Default.titleBottomInset)
     lineView.frame.origin.y = titleView.frame.maxY + 5
     collectionView.frame.size.height = scrollView.frame.size.height + titleView.frame.size.height
   }
@@ -246,7 +246,7 @@ open class CarouselSpot: NSObject, Gridable {
 
     var width: CGFloat
 
-    if let layout = component.layout {
+    if let layout = model.layout {
       width = layout.span > 0
         ? collectionView.frame.width / CGFloat(layout.span)
         : collectionView.frame.width
@@ -260,12 +260,12 @@ open class CarouselSpot: NSObject, Gridable {
       width -= layout.minimumLineSpacing
     }
 
-    if component.items[indexPath.item].size.width == 0.0 {
-      component.items[indexPath.item].size.width = width
+    if model.items[indexPath.item].size.width == 0.0 {
+      model.items[indexPath.item].size.width = width
     }
 
     return CGSize(
-      width: ceil(component.items[indexPath.item].size.width),
-      height: ceil(component.items[indexPath.item].size.height))
+      width: ceil(model.items[indexPath.item].size.width),
+      height: ceil(model.items[indexPath.item].size.height))
   }
 }

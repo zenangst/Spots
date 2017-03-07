@@ -15,7 +15,7 @@ public class Spot: NSObject, Spotable, SpotHorizontallyScrollable {
   weak public var delegate: SpotsDelegate?
   weak public var carouselScrollDelegate: CarouselScrollDelegate?
 
-  public var component: ComponentModel
+  public var model: ComponentModel
   public var componentKind: ComponentModel.Kind = .list
   public var compositeSpots: [CompositeSpot] = []
 
@@ -46,26 +46,26 @@ public class Spot: NSObject, Spotable, SpotHorizontallyScrollable {
     return userInterface as? CollectionView
   }
 
-  public required init(component: ComponentModel, view: ScrollView, kind: ComponentModel.Kind) {
-    self.component = component
+  public required init(model: ComponentModel, view: ScrollView, kind: ComponentModel.Kind) {
+    self.model = model
     self.componentKind = kind
     self.view = view
 
     super.init()
 
-    if component.layout == nil {
+    if model.layout == nil {
       switch kind {
       case .carousel:
-        self.component.layout = CarouselSpot.layout
+        self.model.layout = CarouselSpot.layout
         registerDefaultIfNeeded(view: CarouselSpotCell.self)
       case .grid:
-        self.component.layout = GridSpot.layout
+        self.model.layout = GridSpot.layout
         registerDefaultIfNeeded(view: GridSpotCell.self)
       case .list:
-        self.component.layout = ListSpot.layout
+        self.model.layout = ListSpot.layout
         registerDefaultIfNeeded(view: ListSpotCell.self)
       case .row:
-        self.component.layout = RowSpot.layout
+        self.model.layout = RowSpot.layout
       default:
         break
       }
@@ -73,7 +73,7 @@ public class Spot: NSObject, Spotable, SpotHorizontallyScrollable {
 
     userInterface?.register()
 
-    if let componentLayout = self.component.layout,
+    if let componentLayout = self.model.layout,
       let collectionViewLayout = collectionView?.collectionViewLayout as? GridableLayout {
       componentLayout.configure(collectionViewLayout: collectionViewLayout)
     }
@@ -82,24 +82,24 @@ public class Spot: NSObject, Spotable, SpotHorizontallyScrollable {
     self.spotDelegate = Delegate(spot: self)
   }
 
-  public required convenience init(component: ComponentModel) {
-    var component = component
-    if component.kind.isEmpty {
-      component.kind = Spot.defaultKind
+  public required convenience init(model: ComponentModel) {
+    var model = model
+    if model.kind.isEmpty {
+      model.kind = Spot.defaultKind
     }
 
-    let kind = ComponentModel.Kind(rawValue: component.kind) ?? .list
+    let kind = ComponentModel.Kind(rawValue: model.kind) ?? .list
     let view = kind == .list
       ? TableView()
       : CollectionView(frame: CGRect.zero, collectionViewLayout: CollectionLayout())
 
-    self.init(component: component, view: view, kind: kind)
+    self.init(model: model, view: view, kind: kind)
   }
 
   public convenience init(cacheKey: String) {
     let stateCache = StateCache(key: cacheKey)
 
-    self.init(component: ComponentModel(stateCache.load()))
+    self.init(model: ComponentModel(stateCache.load()))
     self.stateCache = stateCache
   }
 
@@ -137,10 +137,10 @@ public class Spot: NSObject, Spotable, SpotHorizontallyScrollable {
 
     if componentKind == .carousel {
       collectionView.showsHorizontalScrollIndicator = false
-      self.component.interaction.scrollDirection = .horizontal
+      self.model.interaction.scrollDirection = .horizontal
     }
 
-    switch component.interaction.scrollDirection {
+    switch model.interaction.scrollDirection {
     case .horizontal:
       setupHorizontalCollectionView(collectionView, with: size)
     case .vertical:
@@ -151,7 +151,7 @@ public class Spot: NSObject, Spotable, SpotHorizontallyScrollable {
   fileprivate func layoutCollectionView(_ collectionView: CollectionView, with size: CGSize) {
     prepareItems()
 
-    switch component.interaction.scrollDirection {
+    switch model.interaction.scrollDirection {
     case .horizontal:
       layoutHorizontalCollectionView(collectionView, with: size)
     case .vertical:
@@ -168,12 +168,12 @@ public class Spot: NSObject, Spotable, SpotHorizontallyScrollable {
   }
 
   func configurePageControl() {
-    guard let placement = component.layout?.pageIndicatorPlacement else {
+    guard let placement = model.layout?.pageIndicatorPlacement else {
       pageControl.removeFromSuperview()
       return
     }
 
-    pageControl.numberOfPages = component.items.count
+    pageControl.numberOfPages = model.items.count
     pageControl.frame.origin.x = 0
     pageControl.frame.size.height = 22
 

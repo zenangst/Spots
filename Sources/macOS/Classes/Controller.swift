@@ -224,16 +224,16 @@ open class Controller: NSViewController, SpotsProtocol {
       scrollView.spotsContentView.addSubview(spot.view)
     }
 
-    spots[index].component.index = index
+    spots[index].model.index = index
     spot.registerAndPrepare()
 
     var height = spot.computedHeight
-    if let componentSize = spot.component.size, componentSize.height > height {
+    if let componentSize = spot.model.size, componentSize.height > height {
       height = componentSize.height
     }
 
     spot.setup(CGSize(width: view.frame.width, height: height))
-    spot.component.size = CGSize(
+    spot.model.size = CGSize(
       width: view.frame.width,
       height: ceil(spot.view.frame.height))
 
@@ -264,7 +264,7 @@ open class Controller: NSViewController, SpotsProtocol {
 
   public func windowDidResize(_ notification: Notification) {
     for case let spot as Gridable in spots {
-      guard let layout = spot.component.layout, layout.span > 1 else {
+      guard let layout = spot.model.layout, layout.span > 1 else {
         continue
       }
 
@@ -275,7 +275,7 @@ open class Controller: NSViewController, SpotsProtocol {
 
   public func windowDidEndLiveResize(_ notification: Notification) {
     for case let spot as Gridable in spots {
-      guard let layout = spot.component.layout, layout.span > 1 else {
+      guard let layout = spot.model.layout, layout.span > 1 else {
         continue
       }
 

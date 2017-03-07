@@ -55,7 +55,7 @@ public extension SpotsProtocol {
     var result = [[String: Any]]()
 
     for spot in spots {
-      var spotJSON = spot.component.dictionary(amountOfItems)
+      var spotJSON = spot.model.dictionary(amountOfItems)
       for item in spot.items where item.kind == "composite" {
         let results = spot.compositeSpots
           .filter({ $0.itemIndex == item.index })
@@ -199,7 +199,7 @@ public extension SpotsProtocol {
   ///
   /// - returns: A ComponentModel object at index path.
   fileprivate func component(at indexPath: IndexPath) -> ComponentModel {
-    return spot(at: indexPath).component
+    return spot(at: indexPath).model
   }
 
   /**

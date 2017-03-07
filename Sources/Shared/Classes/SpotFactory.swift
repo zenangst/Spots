@@ -26,14 +26,14 @@ public struct Factory {
   /// - parameter component: A compontent struct used for crafting the spotable object.
   ///
   /// - returns: A spotable object.
-  public static func resolve(component: ComponentModel) -> Spotable {
-    var resolvedKind = component.kind
-    if component.isHybrid {
+  public static func resolve(model: ComponentModel) -> Spotable {
+    var resolvedKind = model.kind
+    if model.isHybrid {
       resolvedKind = ComponentModel.Kind.spot.string
     }
 
     let spot: Spotable.Type = spots[resolvedKind] ?? DefaultSpot
 
-    return spot.init(component: component)
+    return spot.init(model: model)
   }
 }

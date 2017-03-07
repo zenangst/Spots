@@ -32,14 +32,14 @@ public extension Spotable where Self : Viewable {
   }
 
   fileprivate func prepareSpot<T: Viewable>(_ spot: T) {
-    if component.kind.isEmpty { component.kind = "view" }
+    if model.kind.isEmpty { model.kind = "view" }
 
-    component.items.forEach { (item: Item) in
+    model.items.forEach { (item: Item) in
       if case let Registry.Item.classType(classType)? = T.views.storage[item.kind], T.views.storage.keys.contains(item.kind) {
         let view = classType.init()
 
         if let itemConfigurable = view as? ItemConfigurable {
-          itemConfigurable.configure(&component.items[index])
+          itemConfigurable.configure(&model.items[index])
           view.frame.size = itemConfigurable.preferredViewSize
         }
 
@@ -49,15 +49,15 @@ public extension Spotable where Self : Viewable {
   }
 
   func setup(_ size: CGSize) {
-    let height = component.items.reduce(0, { $0 + $1.size.height })
+    let height = model.items.reduce(0, { $0 + $1.size.height })
     let size = CGSize(width: size.width, height: height)
     view.frame.size = size
     #if os(iOS)
       scrollView.contentSize = size
     #endif
 
-    component.items.enumerated().forEach {
-      component.items[$0.offset].size.width = size.width
+    model.items.enumerated().forEach {
+      model.items[$0.offset].size.width = size.width
       scrollView.subviews[$0.offset].frame.size.width = size.width
     }
   }
@@ -73,13 +73,13 @@ public extension Spotable where Self : Viewable {
     guard case let Registry.Item.classType(classType)? = dynamic.views.storage[item.kind], dynamic.views.storage.keys.contains(item.kind) else { return }
 
     let view = classType.init()
-    (view as? ItemConfigurable)?.configure(&component.items[index])
+    (view as? ItemConfigurable)?.configure(&model.items[index])
     if let size = (view as? ItemConfigurable)?.preferredViewSize {
       view.frame.size = size
     }
 
     scrollView.addSubview(view)
-    component.items.append(item)
+    model.items.append(item)
   }
 
   /// Append a collection of items to collection with animation
@@ -94,13 +94,13 @@ public extension Spotable where Self : Viewable {
       guard case let Registry.Item.classType(classType)? = dynamic.views.storage[item.kind], dynamic.views.storage.keys.contains(item.kind) else { return }
 
       let view = classType.init()
-      (view as? ItemConfigurable)?.configure(&component.items[index])
+      (view as? ItemConfigurable)?.configure(&model.items[index])
       if let size = (view as? ItemConfigurable)?.preferredViewSize {
         view.frame.size = size
       }
 
       scrollView.addSubview(view)
-      component.items.append(item)
+      model.items.append(item)
     }
   }
 
@@ -116,14 +116,14 @@ public extension Spotable where Self : Viewable {
     guard case let Registry.Item.classType(classType)? = dynamic.views.storage[item.kind], dynamic.views.storage.keys.contains(item.kind) else { return }
 
     let view = classType.init()
-    (view as? ItemConfigurable)?.configure(&component.items[index])
+    (view as? ItemConfigurable)?.configure(&model.items[index])
     if let size = (view as? ItemConfigurable)?.preferredViewSize {
       view.frame.size = size
     }
     #if os(iOS)
       scrollView.insertSubview(view, at: index)
     #endif
-    component.items.insert(item, at: index)
+    model.items.insert(item, at: index)
   }
 
   /// Prepend a collection items to the collection with animation
@@ -132,7 +132,7 @@ public extension Spotable where Self : Viewable {
   /// - parameter animation:  A Animation that is used when performing the mutation (currently not in use)
   /// - parameter completion: A completion closure that is executed in the main queue.
   func prepend(_ items: [Item], withAnimation animation: Animation = .none, completion: Completion = nil) {
-    component.items.insert(contentsOf: items, at: 0)
+    model.items.insert(contentsOf: items, at: 0)
 
     for item in items.reversed() {
       let dynamic = type(of: self)
@@ -140,14 +140,14 @@ public extension Spotable where Self : Viewable {
       guard case let Registry.Item.classType(classType)? = dynamic.views.storage[item.kind], dynamic.views.storage.keys.contains(item.kind) else { return }
 
       let view = classType.init()
-      (view as? ItemConfigurable)?.configure(&component.items[index])
+      (view as? ItemConfigurable)?.configure(&model.items[index])
       if let size = (view as? ItemConfigurable)?.preferredViewSize {
         view.frame.size = size
       }
       #if os(iOS)
         scrollView.insertSubview(view, at: index)
       #endif
-      component.items.insert(item, at: 0)
+      model.items.insert(item, at: 0)
     }
   }
 
@@ -160,8 +160,8 @@ public extension Spotable where Self : Viewable {
   func update(_ item: Item, index: Int, withAnimation animation: Animation = .none, completion: Completion = nil) {
     guard let view = scrollView.subviews[index] as? ItemConfigurable else { return }
 
-    component.items[index] = item
-    view.configure(&component.items[index])
+    model.items[index] = item
+    view.configure(&model.items[index])
   }
 
   /// Delete item from collection with animation
@@ -170,14 +170,14 @@ public extension Spotable where Self : Viewable {
   /// - parameter animation:  The animation that should be used (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue.
   public func delete(_ item: Item, withAnimation animation: Animation = .none, completion: Completion = nil) {
-    guard let index = component.items.index(where: { $0 == item })
+    guard let index = model.items.index(where: { $0 == item })
       else {
         completion?()
         return
     }
 
     Dispatch.main { [weak self] in
-      self?.component.items.remove(at: index)
+      self?.model.items.remove(at: index)
       self?.scrollView.subviews[index].removeFromSuperview()
     }
   }
@@ -188,11 +188,11 @@ public extension Spotable where Self : Viewable {
   /// - parameter animation:  The animation that should be used (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue.
   public func delete(_ items: [Item], withAnimation animation: Animation = .none, completion: Completion = nil) {
-    let count = component.items.count
+    let count = model.items.count
 
     Dispatch.main { [weak self] in
       for (index, _) in items.enumerated() {
-        self?.component.items.remove(at: count - index)
+        self?.model.items.remove(at: count - index)
         self?.scrollView.subviews[count - index].removeFromSuperview()
       }
     }
@@ -206,7 +206,7 @@ public extension Spotable where Self : Viewable {
   func delete(_ index: Int, withAnimation animation: Animation = .none, completion: Completion = nil) {
     guard index >= 0 && index <= scrollView.subviews.count else { return }
 
-    component.items.remove(at: index)
+    model.items.remove(at: index)
     scrollView.subviews[index].removeFromSuperview()
   }
 
@@ -216,10 +216,10 @@ public extension Spotable where Self : Viewable {
   /// - parameter animation:  The animation that should be used (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue when the view model has been removed.
   func delete(_ indexes: [Int], withAnimation animation: Animation = .none, completion: Completion) {
-    for (index, _) in component.items.enumerated() {
+    for (index, _) in model.items.enumerated() {
       guard index >= 0 && index <= scrollView.subviews.count else { return }
 
-      component.items.remove(at: index)
+      model.items.remove(at: index)
       scrollView.subviews[index].removeFromSuperview()
     }
   }

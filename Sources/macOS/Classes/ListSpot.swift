@@ -49,7 +49,7 @@ open class ListSpot: NSObject, Listable {
   open weak var delegate: SpotsDelegate?
 
   /// A component struct used as configuration and data source for the ListSpot
-  open var component: ComponentModel
+  open var model: ComponentModel
   open var configure: ((ItemConfigurable) -> Void)? {
     didSet {
       guard let configure = configure else { return }
@@ -120,25 +120,25 @@ open class ListSpot: NSObject, Listable {
   var spotDataSource: DataSource?
   var spotDelegate: Delegate?
 
-  public required init(component: ComponentModel) {
-    self.component = component
+  public required init(model: ComponentModel) {
+    self.model = model
 
-    if self.component.layout == nil {
-      self.component.layout = type(of: self).layout
+    if self.model.layout == nil {
+      self.model.layout = type(of: self).layout
     }
 
     super.init()
     self.userInterface = tableView
-    self.component.layout?.configure(spot: self)
+    self.model.layout?.configure(spot: self)
     self.spotDataSource = DataSource(spot: self)
     self.spotDelegate = Delegate(spot: self)
 
-    if component.kind.isEmpty {
-      self.component.kind = ComponentModel.Kind.list.string
+    if model.kind.isEmpty {
+      self.model.kind = ComponentModel.Kind.list.string
     }
 
     scrollView.contentView.addSubview(tableView)
-    configureLayout(component)
+    configureLayout(model)
     registerDefault(view: ListSpotItem.self)
     registerComposite(view: ListComposite.self)
   }
@@ -146,7 +146,7 @@ open class ListSpot: NSObject, Listable {
   public convenience init(cacheKey: String) {
     let stateCache = StateCache(key: cacheKey)
 
-    self.init(component: ComponentModel(stateCache.load()))
+    self.init(model: ComponentModel(stateCache.load()))
     self.stateCache = stateCache
   }
 
@@ -159,22 +159,22 @@ open class ListSpot: NSObject, Listable {
   }
 
   open func doubleAction(_ sender: Any?) {
-    guard let item = item(at: tableView.clickedRow), component.meta(Key.doubleAction, type: Bool.self) == true else { return }
+    guard let item = item(at: tableView.clickedRow), model.meta(Key.doubleAction, type: Bool.self) == true else { return }
     delegate?.spotable(self, itemSelected: item)
   }
 
   open func action(_ sender: Any?) {
-    guard let item = item(at: tableView.clickedRow), component.meta(Key.doubleAction, false) == false else { return }
+    guard let item = item(at: tableView.clickedRow), model.meta(Key.doubleAction, false) == false else { return }
     delegate?.spotable(self, itemSelected: item)
   }
 
   open func layout(_ size: CGSize) {
-    scrollView.contentInsets.top = component.meta(Key.contentInsetsTop, Default.contentInsetsTop)
-    scrollView.contentInsets.left = component.meta(Key.contentInsetsLeft, Default.contentInsetsLeft)
-    scrollView.contentInsets.bottom = component.meta(Key.contentInsetsBottom, Default.contentInsetsBottom)
-    scrollView.contentInsets.right = component.meta(Key.contentInsetsRight, Default.contentInsetsRight)
+    scrollView.contentInsets.top = model.meta(Key.contentInsetsTop, Default.contentInsetsTop)
+    scrollView.contentInsets.left = model.meta(Key.contentInsetsLeft, Default.contentInsetsLeft)
+    scrollView.contentInsets.bottom = model.meta(Key.contentInsetsBottom, Default.contentInsetsBottom)
+    scrollView.contentInsets.right = model.meta(Key.contentInsetsRight, Default.contentInsetsRight)
 
-    if !component.title.isEmpty {
+    if !model.title.isEmpty {
       configureTitleView()
     }
 
@@ -184,8 +184,8 @@ open class ListSpot: NSObject, Listable {
   }
 
   open func setup(_ size: CGSize) {
-    component.items.enumerated().forEach {
-      component.items[$0.offset].size.width = size.width
+    model.items.enumerated().forEach {
+      model.items[$0.offset].size.width = size.width
     }
 
     tableView.frame.size = size
@@ -198,9 +198,9 @@ open class ListSpot: NSObject, Listable {
     tableView.doubleAction = #selector(self.doubleAction(_:))
     tableView.sizeToFit()
 
-    if !component.title.isEmpty {
+    if !model.title.isEmpty {
       scrollView.addSubview(titleView)
-      if component.meta(Key.titleSeparator, Default.titleSeparator) {
+      if model.meta(Key.titleSeparator, Default.titleSeparator) {
         scrollView.addSubview(lineView)
       }
       configureTitleView()
@@ -211,16 +211,16 @@ open class ListSpot: NSObject, Listable {
   }
 
   fileprivate func configureTitleView() {
-    titleView.stringValue = component.title
-    titleView.font = NSFont.systemFont(ofSize: component.meta(Key.titleFontSize, Default.titleFontSize))
+    titleView.stringValue = model.title
+    titleView.font = NSFont.systemFont(ofSize: model.meta(Key.titleFontSize, Default.titleFontSize))
     titleView.sizeToFit()
     titleView.isEnabled = false
-    titleView.frame.origin.x = tableView.frame.origin.x + component.meta(Key.titleLeftInset, Default.titleLeftInset)
+    titleView.frame.origin.x = tableView.frame.origin.x + model.meta(Key.titleLeftInset, Default.titleLeftInset)
     scrollView.contentInsets.top += titleView.frame.size.height * 2
     titleView.frame.origin.y = titleView.frame.size.height / 2
 
-    lineView.frame.size.width = scrollView.frame.size.width - (component.meta(Key.titleLeftInset, Default.titleLeftInset) * 2)
-    lineView.frame.origin.x = component.meta(Key.titleLeftInset, Default.titleLeftInset)
+    lineView.frame.size.width = scrollView.frame.size.width - (model.meta(Key.titleLeftInset, Default.titleLeftInset) * 2)
+    lineView.frame.origin.x = model.meta(Key.titleLeftInset, Default.titleLeftInset)
     lineView.frame.origin.y = titleView.frame.maxY + 8
   }
 

@@ -17,21 +17,21 @@ class ListSpotTests: XCTestCase {
   }
 
   func testDictionaryRepresentation() {
-    let component = ComponentModel(title: "ListSpot", kind: "list", span: 3, meta: ["headerHeight": 44.0])
-    let spot = ListSpot(component: component)
-    XCTAssertEqual(component.dictionary["index"] as? Int, spot.dictionary["index"] as? Int)
-    XCTAssertEqual(component.dictionary["title"] as? String, spot.dictionary["title"] as? String)
-    XCTAssertEqual(component.dictionary["kind"] as? String, spot.dictionary["kind"] as? String)
-    XCTAssertEqual(component.dictionary["span"] as? Int, spot.dictionary["span"] as? Int)
+    let model = ComponentModel(title: "ListSpot", kind: "list", span: 3, meta: ["headerHeight": 44.0])
+    let spot = ListSpot(model: model)
+    XCTAssertEqual(model.dictionary["index"] as? Int, spot.dictionary["index"] as? Int)
+    XCTAssertEqual(model.dictionary["title"] as? String, spot.dictionary["title"] as? String)
+    XCTAssertEqual(model.dictionary["kind"] as? String, spot.dictionary["kind"] as? String)
+    XCTAssertEqual(model.dictionary["span"] as? Int, spot.dictionary["span"] as? Int)
     XCTAssertEqual(
-      (component.dictionary["meta"] as! [String : Any])["headerHeight"] as? CGFloat,
+      (model.dictionary["meta"] as! [String : Any])["headerHeight"] as? CGFloat,
       (spot.dictionary["meta"] as! [String : Any])["headerHeight"] as? CGFloat
     )
   }
 
   func testSafelyResolveKind() {
-    let component = ComponentModel(title: "ListSpot", kind: "custom-list", span: 1.0, items: [Item(title: "foo", kind: "custom-item-kind")])
-    let listSpot = ListSpot(component: component)
+    let model = ComponentModel(title: "ListSpot", kind: "custom-list", span: 1.0, items: [Item(title: "foo", kind: "custom-item-kind")])
+    let listSpot = ListSpot(model: model)
     let indexPath = IndexPath(row: 0, section: 0)
 
     XCTAssertEqual(listSpot.identifier(at: indexPath), ListSpot.views.defaultIdentifier)
@@ -51,7 +51,7 @@ class ListSpotTests: XCTestCase {
   func testSpotCache() {
     let item = Item(title: "test")
 
-    XCTAssertEqual(cachedSpot.component.items.count, 0)
+    XCTAssertEqual(cachedSpot.model.items.count, 0)
     cachedSpot.append(item) {
       self.cachedSpot.cache()
     }
@@ -59,7 +59,7 @@ class ListSpotTests: XCTestCase {
     let expectation = self.expectation(description: "Wait for cache")
     Dispatch.after(seconds: 0.25) {
       let cachedSpot = ListSpot(cacheKey: self.cachedSpot.stateCache!.key)
-      XCTAssertEqual(cachedSpot.component.items.count, 1)
+      XCTAssertEqual(cachedSpot.model.items.count, 1)
       cachedSpot.stateCache?.clear()
       expectation.fulfill()
     }
@@ -70,7 +70,7 @@ class ListSpotTests: XCTestCase {
     Configuration.register(view: TestView.self, identifier: "test-view")
 
     let items = [Item(title: "Item A", kind: "test-view"), Item(title: "Item B")]
-    let spot = ListSpot(component: ComponentModel(span: 0.0, items: items))
+    let spot = ListSpot(model: ComponentModel(span: 0.0, items: items))
     spot.setup(CGSize(width: 100, height: 100))
     spot.layout(CGSize(width: 100, height: 100))
     spot.view.layoutSubviews()

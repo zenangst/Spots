@@ -15,7 +15,7 @@ public struct Parser {
     }
 
     return components.map {
-      Factory.resolve(component: $0)
+      Factory.resolve(model: $0)
     }
   }
 
@@ -28,15 +28,15 @@ public struct Parser {
   public static func parse(_ json: [String : Any], key: String = "components") -> [ComponentModel] {
     guard let payloads = json[key] as? [[String : Any]] else { return [] }
 
-    var components = [ComponentModel]()
+    var models = [ComponentModel]()
 
     for (index, payload) in payloads.enumerated() {
-      var component = ComponentModel(payload)
-      component.index = index
-      components.append(component)
+      var model = ComponentModel(payload)
+      model.index = index
+      models.append(model)
     }
 
-    return components
+    return models
   }
 
   /// Parse JSON into a collection of ComponentModels.
@@ -60,13 +60,13 @@ public struct Parser {
     guard let json = json else { return [] }
 
     return json.map {
-      Factory.resolve(component: ComponentModel($0))
+      Factory.resolve(model: ComponentModel($0))
     }
   }
 
-  public static func parse(_ components: [ComponentModel]) -> [Spotable] {
-    return components.map {
-      Factory.resolve(component: $0)
+  public static func parse(_ models: [ComponentModel]) -> [Spotable] {
+    return models.map {
+      Factory.resolve(model: $0)
     }
   }
 

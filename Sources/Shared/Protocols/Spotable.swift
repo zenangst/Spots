@@ -29,7 +29,7 @@ public protocol Spotable: class {
   /// A computed value for the size of the Spotable object
   var computedHeight: CGFloat { get }
   /// The component of a Spotable object
-  var component: ComponentModel { get set }
+  var model: ComponentModel { get set }
   /// A configuration closure for a ItemConfigurable object
   var configure: ((ItemConfigurable) -> Void)? { get set }
   /// A cache for a Spotable object
@@ -53,7 +53,7 @@ public protocol Spotable: class {
   /// - parameter component: The component that the Spotable object should be initialized with.
   ///
   /// - returns: An initialized Spotable object.
-  init(component: ComponentModel)
+  init(model: ComponentModel)
 
   /// Setup Spotable object with size
   func setup(_ size: CGSize)

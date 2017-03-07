@@ -75,13 +75,13 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
   /// Default initializer for creating a Layout struct.
   ///
   /// - Parameters:
-  ///   - span: The span that should be used for the component.
+  ///   - span: The span that should be used for the model.
   ///   - dynamicSpan: Enable or disable dynamic span.
   ///   - dynamicHeight: Enable or disable dynamic height.
-  ///   - pageIndicatorPlacement: Where any page indicator (if any) should be displayed in the component.
-  ///   - itemSpacing: Sets minimum item spacing for the component.
-  ///   - lineSpacing: Sets minimum lines spacing for items in component.
-  ///   - inset: An inset struct used to insert margins for the component.
+  ///   - pageIndicatorPlacement: Where any page indicator (if any) should be displayed in the model.
+  ///   - itemSpacing: Sets minimum item spacing for the model.
+  ///   - lineSpacing: Sets minimum lines spacing for items in model.
+  ///   - inset: An inset struct used to insert margins for the model.
   public init(span: Double = 0.0, dynamicSpan: Bool = false, dynamicHeight: Bool = true, pageIndicatorPlacement: PageIndicatorPlacement? = nil, itemSpacing: Double = 0.0, lineSpacing: Double = 0.0, inset: Inset = .init()) {
     self.span = span
     self.dynamicSpan = dynamicSpan

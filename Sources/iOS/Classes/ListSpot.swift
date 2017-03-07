@@ -25,7 +25,7 @@ open class ListSpot: NSObject, Listable {
   open static var headers = Registry()
 
   /// A component struct used as configuration and data source for the ListSpot
-  open var component: ComponentModel
+  open var model: ComponentModel
 
   /// A SpotsFocusDelegate object
   weak public var focusDelegate: SpotsFocusDelegate?
@@ -55,26 +55,26 @@ open class ListSpot: NSObject, Listable {
 
   // MARK: - Initializers
 
-  /// A required initializer to instantiate a ListSpot with a component.
+  /// A required initializer to instantiate a ListSpot with a model.
   ///
-  /// - parameter component: A component.
+  /// - parameter component: A model.
   ///
-  /// - returns: An initialized list spot with component.
-  public required init(component: ComponentModel) {
-    self.component = component
+  /// - returns: An initialized list spot with model.
+  public required init(model: ComponentModel) {
+    self.model = model
 
-    if self.component.layout == nil {
-      self.component.layout = type(of: self).layout
+    if self.model.layout == nil {
+      self.model.layout = type(of: self).layout
     }
 
     super.init()
     self.userInterface = self.tableView
-    self.component.layout?.configure(spot: self)
+    self.model.layout?.configure(spot: self)
     self.spotDataSource = DataSource(spot: self)
     self.spotDelegate = Delegate(spot: self)
 
-    if component.kind.isEmpty {
-      self.component.kind = ComponentModel.Kind.list.string
+    if model.kind.isEmpty {
+      self.model.kind = ComponentModel.Kind.list.string
     }
 
     registerDefault(view: ListSpotCell.self)
@@ -89,10 +89,10 @@ open class ListSpot: NSObject, Listable {
   /// - parameter kind:      An identifier to determine which kind should be set on the ComponentModel.
   /// - parameter kind:      An identifier to determine which kind should be set on the ComponentModel.
   ///
-  /// - returns: An initialized list spot with component.
+  /// - returns: An initialized list spot with model.
   public convenience init(tableView: UITableView? = nil, title: String = "",
                           kind: String = "list", header: String = "") {
-    self.init(component: ComponentModel(title: title, header: header, kind: kind, span: 1.0))
+    self.init(model: ComponentModel(title: title, header: header, kind: kind, span: 1.0))
 
     if let tableView = tableView {
       self.tableView = tableView
@@ -110,7 +110,7 @@ open class ListSpot: NSObject, Listable {
   public convenience init(cacheKey: String, tableView: UITableView? = nil) {
     let stateCache = StateCache(key: cacheKey)
 
-    self.init(component: ComponentModel(stateCache.load()))
+    self.init(model: ComponentModel(stateCache.load()))
     self.stateCache = stateCache
 
     if let tableView = tableView {
@@ -127,8 +127,8 @@ open class ListSpot: NSObject, Listable {
   ///
   /// - parameter size: The size of the superview.
   open func setup(_ size: CGSize) {
-    var height: CGFloat = component.meta(Key.headerHeight, 0.0)
-    for item in component.items {
+    var height: CGFloat = model.meta(Key.headerHeight, 0.0)
+    for item in model.items {
       height += item.size.height
     }
 
@@ -158,7 +158,7 @@ open class ListSpot: NSObject, Listable {
     tableView.rowHeight = UITableViewAutomaticDimension
 
     #if os(iOS)
-      if let separator = component.meta(Key.separator, type: Bool.self) {
+      if let separator = model.meta(Key.separator, type: Bool.self) {
         tableView.separatorStyle = separator
           ? .singleLine
           : .none

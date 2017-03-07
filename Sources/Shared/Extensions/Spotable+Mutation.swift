@@ -19,8 +19,8 @@ public extension Spotable {
         return
       }
 
-      let numberOfItems = weakSelf.component.items.count
-      weakSelf.component.items.append(item)
+      let numberOfItems = weakSelf.model.items.count
+      weakSelf.model.items.append(item)
 
       if numberOfItems == 0 {
         weakSelf.userInterface?.reloadDataSource()
@@ -55,9 +55,9 @@ public extension Spotable {
       }
 
       var indexes = [Int]()
-      let numberOfItems = weakSelf.component.items.count
+      let numberOfItems = weakSelf.model.items.count
 
-      weakSelf.component.items.append(contentsOf: items)
+      weakSelf.model.items.append(contentsOf: items)
 
       items.enumerated().forEach {
         indexes.append(numberOfItems + $0.offset)
@@ -91,10 +91,10 @@ public extension Spotable {
         return
       }
 
-      let numberOfItems = weakSelf.component.items.count
+      let numberOfItems = weakSelf.model.items.count
       var indexes = [Int]()
 
-      weakSelf.component.items.insert(contentsOf: items, at: 0)
+      weakSelf.model.items.insert(contentsOf: items, at: 0)
 
       items.enumerated().forEach {
         if numberOfItems > 0 {
@@ -134,10 +134,10 @@ public extension Spotable {
         return
       }
 
-      let numberOfItems = weakSelf.component.items.count
+      let numberOfItems = weakSelf.model.items.count
       var indexes = [Int]()
 
-      weakSelf.component.items.insert(item, at: index)
+      weakSelf.model.items.insert(item, at: index)
 
       if numberOfItems > 0 {
         indexes.append(index)
@@ -165,12 +165,12 @@ public extension Spotable {
   func delete(_ item: Item, withAnimation animation: Animation = .automatic, completion: Completion) {
     Dispatch.main { [weak self] in
       guard let weakSelf = self,
-        let index = weakSelf.component.items.index(where: { $0 == item }) else {
+        let index = weakSelf.model.items.index(where: { $0 == item }) else {
           completion?()
           return
       }
 
-      weakSelf.component.items.remove(at: index)
+      weakSelf.model.items.remove(at: index)
       weakSelf.userInterface?.delete([index], withAnimation: animation, completion: nil)
       weakSelf.afterUpdate()
       weakSelf.sanitize {
@@ -201,7 +201,7 @@ public extension Spotable {
       }
 
       indexes.sorted(by: { $0 > $1 }).forEach {
-        weakSelf.component.items.remove(at: $0)
+        weakSelf.model.items.remove(at: $0)
       }
 
       weakSelf.userInterface?.delete(indexPaths, withAnimation: animation, completion: nil)
@@ -225,7 +225,7 @@ public extension Spotable {
         return
       }
 
-      weakSelf.component.items.remove(at: index)
+      weakSelf.model.items.remove(at: index)
       weakSelf.userInterface?.delete([index], withAnimation: animation, completion: nil)
       weakSelf.afterUpdate()
       weakSelf.sanitize {
@@ -248,7 +248,7 @@ public extension Spotable {
       }
 
       indexes.sorted(by: { $0 > $1 }).forEach {
-        weakSelf.component.items.remove(at: $0)
+        weakSelf.model.items.remove(at: $0)
       }
 
       weakSelf.userInterface?.delete(indexes, withAnimation: animation, completion: nil)
@@ -348,7 +348,7 @@ public extension Spotable {
             weakSelf.configureItem(at: index, usesViewSize: true)
           }
         } else {
-          for (index, _) in weakSelf.component.items.enumerated() {
+          for (index, _) in weakSelf.model.items.enumerated() {
             weakSelf.configureItem(at: index, usesViewSize: true)
           }
         }
@@ -427,16 +427,16 @@ public extension Spotable {
   /// A collection of view models
   var items: [Item] {
     set(items) {
-      component.items = items
+      model.items = items
     }
     get {
-      return component.items
+      return model.items
     }
   }
 
   /// Return a dictionary representation of Spotable object
   public var dictionary: [String : Any] {
-    return component.dictionary
+    return model.dictionary
   }
 
   /// Reloads a spot only if it changes
@@ -505,12 +505,12 @@ public extension Spotable {
 
       let newComponentModel = ComponentModel(json)
 
-      guard weakSelf.component != newComponentModel else {
+      guard weakSelf.model != newComponentModel else {
         weakSelf.cache()
         return
       }
 
-      weakSelf.component = newComponentModel
+      weakSelf.model = newComponentModel
       weakSelf.reload(nil, withAnimation: animation) { [weak self] in
         guard let weakSelf = self else {
           return

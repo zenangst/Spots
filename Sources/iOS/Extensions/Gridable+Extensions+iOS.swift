@@ -2,7 +2,7 @@ import UIKit
 
 extension Gridable {
 
-  /// A computed CGFloat of the total height of all items inside of a component.
+  /// A computed CGFloat of the total height of all items inside of a model.
   public var computedHeight: CGFloat {
     guard usesDynamicHeight else {
       return self.view.frame.height
@@ -27,8 +27,8 @@ extension Gridable {
   /// - parameter bottom: The bottom UIEdgeInset for the layout.
   /// - parameter right: The right UIEdgeInset for the layout.
   /// - parameter itemSpacing: The minimumInteritemSpacing for the layout.
-  public init(_ component: ComponentModel, top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0, itemSpacing: CGFloat = 0) {
-    self.init(component: component)
+  public init(_ model: ComponentModel, top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0, itemSpacing: CGFloat = 0) {
+    self.init(model: model)
 
     layout.sectionInset = EdgeInsets(top: top, left: left, bottom: bottom, right: right)
     layout.minimumInteritemSpacing = itemSpacing
@@ -60,7 +60,7 @@ extension Gridable {
       prepareItems()
     }
 
-    component.layout?.configure(spot: self)
+    model.layout?.configure(spot: self)
     layout.prepare()
     layout.invalidateLayout()
 

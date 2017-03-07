@@ -6,12 +6,12 @@ extension Spot {
   func setupHorizontalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
     var newCollectionViewHeight: CGFloat = 0.0
 
-    newCollectionViewHeight <- component.items.sorted(by: {
+    newCollectionViewHeight <- model.items.sorted(by: {
       $0.size.height > $1.size.height
     }).first?.size.height
 
-    scrollView.scrollingEnabled = (component.items.count > 1)
-    scrollView.hasHorizontalScroller = (component.items.count > 1)
+    scrollView.scrollingEnabled = (model.items.count > 1)
+    scrollView.hasHorizontalScroller = (model.items.count > 1)
 
     collectionView.frame.size.height = newCollectionViewHeight
     CarouselSpot.configure?(collectionView)
@@ -28,13 +28,13 @@ extension Spot {
     if let collectionViewContentSize = collectionView.collectionViewLayout?.collectionViewContentSize {
       var newCollectionViewHeight: CGFloat = 0.0
 
-      newCollectionViewHeight <- component.items.sorted(by: {
+      newCollectionViewHeight <- model.items.sorted(by: {
         $0.size.height > $1.size.height
       }).first?.size.height
 
       var collectionViewContentSize = collectionViewContentSize
 
-      if let layout = component.layout {
+      if let layout = model.layout {
         collectionViewContentSize.width += CGFloat(layout.inset.left)
       }
 
@@ -44,7 +44,7 @@ extension Spot {
 
       documentView.frame.size = collectionView.frame.size
 
-      if let layout = component.layout {
+      if let layout = model.layout {
         documentView.frame.size.width += CGFloat(layout.inset.right)
       }
 

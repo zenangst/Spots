@@ -20,7 +20,7 @@ public extension Composable {
       compositeSpot.spot.setup(size)
       compositeSpot.spot.layout(size)
 
-      compositeSpot.spot.component.size = CGSize(
+      compositeSpot.spot.model.size = CGSize(
         width: width,
         height: ceil(compositeSpot.spot.view.frame.size.height))
 

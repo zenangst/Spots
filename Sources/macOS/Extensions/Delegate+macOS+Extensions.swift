@@ -70,12 +70,12 @@ extension Delegate: NSTableViewDelegate {
   public func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
     guard let spot = spot,
       let item = spot.item(at: row),
-      row > -1 && row < spot.component.items.count
+      row > -1 && row < spot.model.items.count
       else {
         return false
     }
 
-    if spot.component.meta(ListSpot.Key.doubleAction, type: Bool.self) != true {
+    if spot.model.meta(ListSpot.Key.doubleAction, type: Bool.self) != true {
       spot.delegate?.spotable(spot, itemSelected: item)
     }
 
@@ -87,11 +87,11 @@ extension Delegate: NSTableViewDelegate {
       return 1.0
     }
 
-    spot.component.size = CGSize(
+    spot.model.size = CGSize(
       width: tableView.frame.width,
       height: tableView.frame.height)
 
-    let height = row < spot.component.items.count
+    let height = row < spot.model.items.count
       ? spot.item(at: row)?.size.height ?? 0
       : 1.0
 
@@ -101,7 +101,7 @@ extension Delegate: NSTableViewDelegate {
   }
 
   public func tableView(_ tableView: NSTableView, rowViewForRow row: Int) -> NSTableRowView? {
-    guard let spot = spot, row >= 0 && row < spot.component.items.count else {
+    guard let spot = spot, row >= 0 && row < spot.model.items.count else {
       return nil
     }
 
@@ -131,7 +131,7 @@ extension Delegate: NSTableViewDelegate {
       let spots = spot.compositeSpots.filter { $0.itemIndex == row }
       view.contentView.frame.size.width = tableView.frame.size.width
       view.contentView.frame.size.height = spot.computedHeight
-      view.configure(&spot.component.items[row], compositeSpots: spots)
+      view.configure(&spot.model.items[row], compositeSpots: spots)
     case let view as View:
       let customView = view
 
@@ -141,9 +141,9 @@ extension Delegate: NSTableViewDelegate {
         resolvedView = wrapper
       }
 
-      (customView as? ItemConfigurable)?.configure(&spot.component.items[row])
+      (customView as? ItemConfigurable)?.configure(&spot.model.items[row])
     case let view as ItemConfigurable:
-      view.configure(&spot.component.items[row])
+      view.configure(&spot.model.items[row])
     default:
       break
     }

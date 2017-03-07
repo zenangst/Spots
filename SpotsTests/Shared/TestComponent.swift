@@ -107,8 +107,8 @@ class ComponentModelTests: XCTestCase {
     let lhs: [ComponentModel] = Parser.parse(initialJSON)
     let rhs: [ComponentModel] = Parser.parse(newJSON)
 
-    XCTAssertTrue(lhs.first?.diff(component: rhs.first!) == .items)
-    XCTAssertTrue(lhs[1].diff(component: rhs[1]) == .kind)
+    XCTAssertTrue(lhs.first?.diff(model: rhs.first!) == .items)
+    XCTAssertTrue(lhs[1].diff(model: rhs[1]) == .kind)
   }
 
   func testComponentModelExtensions() {

@@ -87,8 +87,8 @@ extension Controller {
       titleLabel.text = item.title
     }
 
-    func configure(_ component: ComponentModel) {
-      titleLabel.text = component.title
+    func configure(_ model: ComponentModel) {
+      titleLabel.text = model.title
     }
   }
 
@@ -127,7 +127,7 @@ extension Controller {
       titleLabel.text = item.title
     }
 
-    func configure(_ component: ComponentModel) {
+    func configure(_ model: ComponentModel) {
       titleLabel.text = "This is a footer"
     }
   }
@@ -180,8 +180,8 @@ extension Controller {
   class CustomListHeaderView: UITableViewHeaderFooterView, Componentable {
     var preferredHeaderHeight: CGFloat = 88
 
-    func configure(_ component: ComponentModel) {
-      textLabel?.text = component.title
+    func configure(_ model: ComponentModel) {
+      textLabel?.text = model.title
     }
   }
 
@@ -198,8 +198,8 @@ extension Controller {
 
     lazy var textLabel = UILabel()
 
-    func configure(_ component: ComponentModel) {
-      textLabel.text = component.title
+    func configure(_ model: ComponentModel) {
+      textLabel.text = model.title
     }
   }
 #endif

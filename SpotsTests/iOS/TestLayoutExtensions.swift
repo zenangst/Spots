@@ -21,7 +21,7 @@ class LayoutExtensionsTests: XCTestCase {
   ]
 
   func testConfigureGridableSpot() {
-    let gridSpot = GridSpot(component: ComponentModel(span: 1))
+    let gridSpot = GridSpot(model: ComponentModel(span: 1))
     let layout = Layout(json)
 
     layout.configure(spot: gridSpot)
@@ -36,7 +36,7 @@ class LayoutExtensionsTests: XCTestCase {
   }
 
   func testConfigureListableSpot() {
-    let listSpot = ListSpot(component: ComponentModel(span: 1))
+    let listSpot = ListSpot(model: ComponentModel(span: 1))
     let layout = Layout(json)
 
     layout.configure(spot: listSpot)

@@ -33,9 +33,9 @@ public extension Spotable where Self : Gridable {
     #if !os(OSX)
       GridSpot.configure?(collectionView, layout)
 
-      if let resolve = type(of: self).headers.make(component.header),
+      if let resolve = type(of: self).headers.make(model.header),
         let view = resolve.view as? Componentable,
-        !component.header.isEmpty {
+        !model.header.isEmpty {
 
         layout.headerReferenceSize.width = collectionView.frame.size.width
         layout.headerReferenceSize.height = view.frame.size.height
@@ -52,7 +52,7 @@ public extension Spotable where Self : Gridable {
     #endif
     layout.prepare()
 
-    component.size = collectionView.frame.size
+    model.size = collectionView.frame.size
   }
 
   /// Layout with size

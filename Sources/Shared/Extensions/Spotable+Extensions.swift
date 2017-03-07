@@ -9,15 +9,15 @@ public extension Spotable {
 
   /// A computed value for the current index
   public var index: Int {
-    return component.index
+    return model.index
   }
 
   public var usesDynamicHeight: Bool {
     get {
-      return component.layout?.dynamicHeight ?? true
+      return model.layout?.dynamicHeight ?? true
     }
     set {
-      component.layout?.dynamicHeight = newValue
+      model.layout?.dynamicHeight = newValue
     }
   }
 
@@ -32,13 +32,13 @@ public extension Spotable {
       let superViewHeight = self.view.superview?.frame.size.height ?? UIScreen.main.bounds.height
     #endif
 
-    for item in component.items {
+    for item in model.items {
       height += item.size.height
 
       #if !os(OSX)
         /// tvOS adds spacing between cells (it seems to be locked to 14 pixels in height).
         #if os(tvOS)
-          if component.kind == ComponentModel.Kind.list.string {
+          if model.kind == ComponentModel.Kind.list.string {
             height += 14
           }
         #endif
@@ -52,7 +52,7 @@ public extension Spotable {
 
     /// Add extra height to make room for focus shadow
     #if os(tvOS)
-      if component.kind == ComponentModel.Kind.list.string {
+      if model.kind == ComponentModel.Kind.list.string {
         height += 28
       }
     #endif
@@ -99,14 +99,14 @@ public extension Spotable {
 
   /// Prepare items in component
   func prepareItems() {
-    component.items = prepare(items: component.items)
+    model.items = prepare(items: model.items)
   }
 
   func prepare(items: [Item]) -> [Item] {
     var preparedItems = items
     var spanWidth: CGFloat?
 
-    if let layout = component.layout, layout.span > 0.0 {
+    if let layout = model.layout, layout.span > 0.0 {
       var spotWidth: CGFloat = view.frame.size.width - CGFloat(layout.inset.left + layout.inset.right)
 
       #if !os(OSX)
@@ -139,11 +139,11 @@ public extension Spotable {
   ///
   /// - returns: An optional Item that corresponds to the index.
   public func item(at index: Int) -> Item? {
-    guard index < component.items.count && index > -1 else {
+    guard index < model.items.count && index > -1 else {
       return nil
     }
 
-    return component.items[index]
+    return model.items[index]
   }
 
   /// Resolve item at index path.
@@ -216,7 +216,7 @@ public extension Spotable {
         return
     }
 
-    component.items[index] = configuredItem
+    model.items[index] = configuredItem
   }
 
   func configure(item: Item, at index: Int, usesViewSize: Bool = false) -> Item? {
@@ -345,7 +345,7 @@ public extension Spotable {
                                         itemIndex: item.index)
 
       compositeSpot.spot.setup(size)
-      compositeSpot.spot.component.size = CGSize(
+      compositeSpot.spot.model.size = CGSize(
         width: width,
         height: ceil(compositeSpot.spot.view.frame.size.height))
       compositeSpot.spot.layout(size)
@@ -458,7 +458,7 @@ public extension Spotable {
     }
   }
 
-  /// Register a composite view for the Spotable component.
+  /// Register a composite view for the Spotable model.
   ///
   /// - parameter view: The view type that should be used as the composite view for the Spotable object.
   func registerComposite(view: View.Type) {
