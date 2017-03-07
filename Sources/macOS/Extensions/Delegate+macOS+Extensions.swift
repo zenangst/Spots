@@ -11,7 +11,7 @@ extension Delegate: NSCollectionViewDelegate {
     Dispatch.after(seconds: 0.1) { [weak self] in
       guard let weakSelf = self, let first = indexPaths.first,
         let component = weakSelf.component,
-        let item = component.item(at: first.item), first.item < spot.items.count else {
+        let item = component.item(at: first.item), first.item < component.items.count else {
           return
       }
       component.delegate?.component(component, itemSelected: item)
@@ -45,68 +45,70 @@ extension Delegate: NSCollectionViewDelegate {
     let view = item
 
     guard
-      let spot = component,
-      let item = spot.item(at: indexPath)
+      let component = component,
+      let item = component.item(at: indexPath)
       else {
         return
     }
 
-    spot.delegate?.component(spot, didEndDisplaying: view, item: item)
+    component.delegate?.component(component, didEndDisplaying: view, item: item)
   }
 }
 
 extension Delegate: NSCollectionViewDelegateFlowLayout {
 
   public func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> NSSize {
-    guard let spot = component else {
+    guard let component = component else {
       return CGSize.zero
     }
-    return spot.sizeForItem(at: indexPath)
+    return component.sizeForItem(at: indexPath)
   }
 }
 
 extension Delegate: NSTableViewDelegate {
 
   public func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
-    guard let spot = component,
-      let item = spot.item(at: row),
-      row > -1 && row < spot.model.items.count
+    guard let component = component,
+      let item = component.item(at: row),
+      row > -1 && row < component.model.items.count
       else {
         return false
     }
 
-    if spot.model.meta(ListComponent.Key.doubleAction, type: Bool.self) != true {
-      spot.delegate?.component(spot, itemSelected: item)
+    if component.model.meta(ListComponent.Key.doubleAction, type: Bool.self) != true {
+      component.delegate?.component(component, itemSelected: item)
     }
 
     return true
   }
 
   public func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
-    guard let spot = component else {
+    guard let component = component else {
       return 1.0
     }
 
-    spot.model.size = CGSize(
+    component.model.size = CGSize(
       width: tableView.frame.width,
       height: tableView.frame.height)
 
-    let height = row < spot.model.items.count
-      ? spot.item(at: row)?.size.height ?? 0
+    let height = row < component.model.items.count
+      ? component.item(at: row)?.size.height ?? 0
       : 1.0
 
-    if height == 0 { return 1.0 }
+    if height == 0 {
+      return 1.0
+    }
 
     return height
   }
 
   public func tableView(_ tableView: NSTableView, rowViewForRow row: Int) -> NSTableRowView? {
-    guard let spot = component, row >= 0 && row < spot.model.items.count else {
+    guard let component = component, row >= 0 && row < component.model.items.count else {
       return nil
     }
 
-    let reuseIdentifier = spot.identifier(at: row)
-    var craftedView = spot.type.views.make(reuseIdentifier)
+    let reuseIdentifier = component.identifier(at: row)
+    var craftedView = component.type.views.make(reuseIdentifier)
 
     if craftedView == nil {
       craftedView = Configuration.views.make(reuseIdentifier)
@@ -128,10 +130,10 @@ extension Delegate: NSTableViewDelegate {
 
     switch resolvedView {
     case let view as Composable:
-      let spots = spot.compositeComponents.filter { $0.itemIndex == row }
+      let components = component.compositeComponents.filter { $0.itemIndex == row }
       view.contentView.frame.size.width = tableView.frame.size.width
-      view.contentView.frame.size.height = spot.computedHeight
-      view.configure(&spot.model.items[row], compositeComponents: spots)
+      view.contentView.frame.size.height = component.computedHeight
+      view.configure(&component.model.items[row], compositeComponents: components)
     case let view as View:
       let customView = view
 
@@ -141,9 +143,9 @@ extension Delegate: NSTableViewDelegate {
         resolvedView = wrapper
       }
 
-      (customView as? ItemConfigurable)?.configure(&spot.model.items[row])
+      (customView as? ItemConfigurable)?.configure(&component.model.items[row])
     case let view as ItemConfigurable:
-      view.configure(&spot.model.items[row])
+      view.configure(&component.model.items[row])
     default:
       break
     }
@@ -155,14 +157,14 @@ extension Delegate: NSTableViewDelegate {
 
   public func tableView(_ tableView: NSTableView, willDisplayCell cell: Any, for tableColumn: NSTableColumn?, row: Int) {
     guard
-      let spot = component,
-      let item = spot.item(at: row),
+      let component = component,
+      let item = component.item(at: row),
       let view = cell as? View
       else {
         return
     }
 
-    spot.delegate?.component(spot, willDisplay: view, item: item)
+    component.delegate?.component(component, willDisplay: view, item: item)
   }
 
   public func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {

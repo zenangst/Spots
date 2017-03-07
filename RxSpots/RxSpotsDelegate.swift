@@ -28,8 +28,8 @@ public final class RxComponentDelegate: DelegateProxy, DelegateProxyType, Compon
   }
 
   public class func setCurrentDelegate(_ delegate: AnyObject?, toObject object: AnyObject) {
-    if let spot = object as? CoreComponent {
-      spot.delegate = delegate as? ComponentDelegate
+    if let component = object as? CoreComponent {
+      component.delegate = delegate as? ComponentDelegate
     } else if let controller = object as? Controller {
       controller.delegate = delegate as? ComponentDelegate
     }

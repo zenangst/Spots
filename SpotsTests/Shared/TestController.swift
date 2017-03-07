@@ -419,14 +419,14 @@ class ControllerTests: XCTestCase {
       Item(title: "title1", kind: "list"),
       Item(title: "title2", kind: "list")
       ])
-    let spot = ListComponent(model: model)
+    let component = ListComponent(model: model)
 
-    XCTAssert(spot.items == model.items)
+    XCTAssert(component.items == model.items)
 
     let newItems = [Item(title: "title3", kind: "list")]
-    spot.items = newItems
-    XCTAssertFalse(spot.items == model.items)
-    XCTAssert(spot.items == newItems)
+    component.items = newItems
+    XCTAssertFalse(component.items == model.items)
+    XCTAssert(component.items == newItems)
   }
 
   func testFindAndFilterSpotWithClosure() {
@@ -448,9 +448,9 @@ class ControllerTests: XCTestCase {
   }
 
   func testJSONInitialiser() {
-    let spot = ListComponent(model: ComponentModel(span: 1.0))
-    spot.items = [Item(title: "First item")]
-    let sourceController = Controller(spot: spot)
+    let component = ListComponent(model: ComponentModel(span: 1.0))
+    component.items = [Item(title: "First item")]
+    let sourceController = Controller(spot: component)
     let jsonController = Controller([
       "components": [
         ["kind": "list",

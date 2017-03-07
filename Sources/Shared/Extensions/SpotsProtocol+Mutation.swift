@@ -129,7 +129,7 @@ extension SpotsProtocol {
   }
 
   fileprivate func replaceComponent(_ index: Int, newComponentModels: [ComponentModel], yOffset: inout CGFloat) {
-    let spot = Factory.resolve(model: newComponentModels[index])
+    let component = Factory.resolve(model: newComponentModels[index])
     let oldSpot = spots[index]
 
     /// Remove old composite spots from superview and empty container
@@ -138,27 +138,27 @@ extension SpotsProtocol {
     }
     oldSpot.compositeComponents = []
 
-    spot.view.frame = oldSpot.view.frame
+    component.view.frame = oldSpot.view.frame
 
     oldSpot.view.removeFromSuperview()
-    spots[index] = spot
-    scrollView.spotsContentView.insertSubview(spot.view, at: index)
-    setupComponent(at: index, spot: spot)
+    spots[index] = component
+    scrollView.spotsContentView.insertSubview(component.view, at: index)
+    setupComponent(at: index, spot: component)
 
     #if !os(OSX)
       (spot as? CarouselComponent)?.layout.yOffset = yOffset
     #endif
-    yOffset += spot.view.frame.size.height
+    yOffset += component.view.frame.size.height
   }
 
   fileprivate func newComponent(_ index: Int, newComponentModels: [ComponentModel], yOffset: inout CGFloat) {
-    let spot = Factory.resolve(model: newComponentModels[index])
-    spots.append(spot)
-    setupComponent(at: index, spot: spot)
+    let component = Factory.resolve(model: newComponentModels[index])
+    spots.append(component)
+    setupComponent(at: index, spot: component)
     #if !os(OSX)
       (spot as? CarouselComponent)?.layout.yOffset = yOffset
     #endif
-    yOffset += spot.view.frame.size.height
+    yOffset += component.view.frame.size.height
   }
 
   /// Remove Spot at index
@@ -180,12 +180,12 @@ extension SpotsProtocol {
   ///
   /// - returns: A boolean value that determines if the closure should run in `process(changes:)`
   fileprivate func setupItemsForComponent(at index: Int, newComponentModels: [ComponentModel], withAnimation animation: Animation = .automatic, completion: Completion = nil) -> Bool {
-    guard let spot = self.spot(at: index, ofType: CoreComponent.self) else {
+    guard let component = self.spot(at: index, ofType: CoreComponent.self) else {
       return false
     }
 
     let tempSpot = Factory.resolve(model: newComponentModels[index])
-    tempSpot.view.frame = spot.view.frame
+    tempSpot.view.frame = component.view.frame
     tempSpot.setup(tempSpot.view.frame.size)
     tempSpot.layout(tempSpot.view.frame.size)
     tempSpot.view.frame.size.height = tempSpot.computedHeight
@@ -196,7 +196,7 @@ extension SpotsProtocol {
       width: view.frame.width,
       height: ceil(tempSpot.view.frame.height))
 
-    guard let diff = Item.evaluate(tempSpot.items, oldModels: spot.items) else {
+    guard let diff = Item.evaluate(tempSpot.items, oldModels: component.items) else {
       return true
     }
 
@@ -205,28 +205,28 @@ extension SpotsProtocol {
 
     for index in changes.updatedChildren {
       if index < tempSpot.compositeComponents.count {
-        spot.compositeComponents[index].component.view.removeFromSuperview()
-        spot.compositeComponents[index] = tempSpot.compositeComponents[index]
-        spot.compositeComponents[index].parentComponent = spot
+        component.compositeComponents[index].component.view.removeFromSuperview()
+        component.compositeComponents[index] = tempSpot.compositeComponents[index]
+        component.compositeComponents[index].parentComponent = component
       }
     }
 
-    if newItems.count == spot.items.count {
-      reload(with: changes, in: spot, newItems: newItems, animation: animation) { [weak self] in
+    if newItems.count == component.items.count {
+      reload(with: changes, in: component, newItems: newItems, animation: animation) { [weak self] in
         if let weakSelf = self, let completion = completion {
           weakSelf.setupAndLayoutSpots()
           completion()
         }
       }
-    } else if newItems.count < spot.items.count {
-      reload(with: changes, in: spot, lessItems: newItems, animation: animation) { [weak self] in
+    } else if newItems.count < component.items.count {
+      reload(with: changes, in: component, lessItems: newItems, animation: animation) { [weak self] in
         if let weakSelf = self, let completion = completion {
           weakSelf.setupAndLayoutSpots()
           completion()
         }
       }
-    } else if newItems.count > spot.items.count {
-      reload(with: changes, in: spot, moreItems: newItems, animation: animation) { [weak self] in
+    } else if newItems.count > component.items.count {
+      reload(with: changes, in: component, moreItems: newItems, animation: animation) { [weak self] in
         if let weakSelf = self, let completion = completion {
           weakSelf.setupAndLayoutSpots()
           completion()
@@ -540,12 +540,14 @@ extension SpotsProtocol {
    - parameter closure: A transform closure to perform the proper modification to the target spot before updating the internals
    */
   public func update(spotAtIndex index: Int = 0, withAnimation animation: Animation = .automatic, withCompletion completion: Completion = nil, _ closure: (_ spot: CoreComponent) -> Void) {
-    guard let spot = spot(at: index, ofType: CoreComponent.self) else {
+    guard let component = spot(at: index, ofType: CoreComponent.self) else {
       completion?()
-      return }
-    closure(spot)
-    spot.refreshIndexes()
-    spot.prepareItems()
+      return
+    }
+
+    closure(component)
+    component.refreshIndexes()
+    component.prepareItems()
 
     Dispatch.main { [weak self] in
       guard let weakSelf = self else { return }
@@ -553,17 +555,17 @@ extension SpotsProtocol {
       #if !os(OSX)
         if animation != .none {
           let isScrolling = weakSelf.scrollView.isDragging == true || weakSelf.scrollView.isTracking == true
-          if let superview = spot.view.superview, !isScrolling {
-            spot.view.frame.size.height = superview.frame.height
+          if let superview = component.view.superview, !isScrolling {
+            component.view.frame.size.height = superview.frame.height
           }
         }
       #endif
 
-      spot.reload(nil, withAnimation: animation) {
-        spot.updateHeight {
-          spot.afterUpdate()
+      component.reload(nil, withAnimation: animation) {
+        component.updateHeight {
+          component.afterUpdate()
           completion?()
-          spot.view.layoutIfNeeded()
+          component.view.layoutIfNeeded()
         }
       }
     }
@@ -578,7 +580,7 @@ extension SpotsProtocol {
    - parameter completion: A completion closure that is run when the update is completed
    */
   public func updateIfNeeded(spotAtIndex index: Int = 0, items: [Item], withAnimation animation: Animation = .automatic, completion: Completion = nil) {
-    guard let spot = spot(at: index, ofType: CoreComponent.self), !(spot.items == items) else {
+    guard let component = spot(at: index, ofType: CoreComponent.self), !(component.items == items) else {
       scrollView.layoutSubviews()
       completion?()
       return

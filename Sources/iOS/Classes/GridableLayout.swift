@@ -26,7 +26,7 @@ open class GridableLayout: UICollectionViewFlowLayout {
   /// Subclasses should always call super if they override.
   open override func prepare() {
     guard let delegate = collectionView?.delegate as? Delegate,
-      let spot = delegate.component
+      let component = delegate.component
       else {
         return
     }
@@ -35,15 +35,15 @@ open class GridableLayout: UICollectionViewFlowLayout {
 
     var layoutAttributes = [UICollectionViewLayoutAttributes]()
 
-    if !spot.model.header.isEmpty {
+    if !component.model.header.isEmpty {
 
       var view: View?
 
-      if let (_, header) = spot.type.headers.make(spot.model.header) {
+      if let (_, header) = component.type.headers.make(component.model.header) {
         view = header
       }
 
-      if view == nil, let (_, header) = Configuration.views.make(spot.model.header) {
+      if view == nil, let (_, header) = Configuration.views.make(component.model.header) {
         view = header
       }
 
@@ -63,8 +63,8 @@ open class GridableLayout: UICollectionViewFlowLayout {
       }
     }
 
-    if !spot.model.footer.isEmpty,
-      let (_, view) = Configuration.views.make(spot.model.footer),
+    if !component.model.footer.isEmpty,
+      let (_, view) = Configuration.views.make(component.model.footer),
       let resolvedView = view {
 
       if let componentView = resolvedView as? Componentable {
@@ -79,14 +79,14 @@ open class GridableLayout: UICollectionViewFlowLayout {
 
     switch scrollDirection {
     case .horizontal:
-      guard let firstItem = spot.items.first else { return }
+      guard let firstItem = component.items.first else { return }
 
-      contentSize.width = spot.items.reduce(0, { $0 + floor($1.size.width) })
-      contentSize.width += minimumInteritemSpacing * CGFloat(spot.items.count - 1)
+      contentSize.width = component.items.reduce(0, { $0 + floor($1.size.width) })
+      contentSize.width += minimumInteritemSpacing * CGFloat(component.items.count - 1)
 
       contentSize.height = firstItem.size.height + headerReferenceSize.height + footerHeight
 
-      if let componentLayout = spot.model.layout {
+      if let componentLayout = component.model.layout {
         contentSize.height += CGFloat(componentLayout.inset.top + componentLayout.inset.bottom)
 
         #if os(iOS)
@@ -96,7 +96,7 @@ open class GridableLayout: UICollectionViewFlowLayout {
         #endif
       }
     case .vertical:
-      contentSize.width = spot.view.frame.width - spot.view.contentInset.left - spot.view.contentInset.right
+      contentSize.width = component.view.frame.width - component.view.contentInset.left - component.view.contentInset.right
       contentSize.height = super.collectionViewContentSize.height
     }
   }
@@ -128,7 +128,7 @@ open class GridableLayout: UICollectionViewFlowLayout {
   open override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
     guard let collectionView = collectionView,
       let dataSource = collectionView.dataSource as? DataSource,
-      let spot = dataSource.component
+      let component = dataSource.component
       else {
         return nil
     }
@@ -158,7 +158,7 @@ open class GridableLayout: UICollectionViewFlowLayout {
           itemAttribute.frame.origin.x = collectionView.contentOffset.x
           attributes.append(itemAttribute)
         default:
-          itemAttribute.size = spot.sizeForItem(at: itemAttribute.indexPath)
+          itemAttribute.size = component.sizeForItem(at: itemAttribute.indexPath)
 
           if scrollDirection == .horizontal {
             itemAttribute.frame.origin.y = headerReferenceSize.height + sectionInset.top

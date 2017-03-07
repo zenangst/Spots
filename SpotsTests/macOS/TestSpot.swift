@@ -87,12 +87,12 @@ class TestSpot: XCTestCase {
       ],
       hybrid: true
     )
-    let spot = Component(model: model)
-    spot.setup(CGSize(width: 100, height: 100))
+    let component = Component(model: model)
+    component.setup(CGSize(width: 100, height: 100))
 
-    XCTAssertEqual(spot.collectionView?.collectionViewLayout?.collectionViewContentSize, CGSize(width: 100, height: 200))
-    XCTAssertEqual(spot.view.frame.size, CGSize(width: 100, height: 300))
-    XCTAssertEqual(spot.view.contentSize, CGSize(width: 100, height: 300))
+    XCTAssertEqual(component.collectionView?.collectionViewLayout?.collectionViewContentSize, CGSize(width: 100, height: 200))
+    XCTAssertEqual(component.view.frame.size, CGSize(width: 100, height: 300))
+    XCTAssertEqual(component.view.contentSize, CGSize(width: 100, height: 300))
   }
 
   func testHybridCarouselComponentWithHeaderAndFooter() {
@@ -108,10 +108,10 @@ class TestSpot: XCTestCase {
       ],
       hybrid: true
     )
-    let spot = Component(model: model)
-    spot.setup(CGSize(width: 100, height: 100))
+    let component = Component(model: model)
+    component.setup(CGSize(width: 100, height: 100))
 
-    XCTAssertEqual(spot.view.frame.size, CGSize(width: 100, height: 150))
-    XCTAssertEqual(spot.view.contentSize, CGSize(width: 100, height: 150))
+    XCTAssertEqual(component.view.frame.size, CGSize(width: 100, height: 150))
+    XCTAssertEqual(component.view.contentSize, CGSize(width: 100, height: 150))
   }
 }

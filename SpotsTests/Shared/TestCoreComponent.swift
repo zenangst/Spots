@@ -59,13 +59,13 @@ class CoreComponentTests: XCTestCase {
 
     let parentSize = CGSize(width: 100, height: 100)
     let model = ComponentModel(items: [Item(title: "foo", kind: kind)])
-    let spot = GridComponent(model: model)
-    spot.view.frame.size = parentSize
-    spot.setup(parentSize)
-    spot.layout(parentSize)
-    spot.view.layoutIfNeeded()
+    let component = GridComponent(model: model)
+    component.view.frame.size = parentSize
+    component.setup(parentSize)
+    component.layout(parentSize)
+    component.view.layoutIfNeeded()
 
-    guard let genericView: View = spot.ui(at: 0) else {
+    guard let genericView: View = component.ui(at: 0) else {
       XCTFail()
       return
     }
@@ -81,13 +81,13 @@ class CoreComponentTests: XCTestCase {
 
     let parentSize = CGSize(width: 100, height: 100)
     let model = ComponentModel(items: [Item(title: "foo", kind: kind)])
-    let spot = ListComponent(model: model)
+    let component = ListComponent(model: model)
 
-    spot.setup(parentSize)
-    spot.layout(parentSize)
-    spot.view.layoutSubviews()
+    component.setup(parentSize)
+    component.layout(parentSize)
+    component.view.layoutSubviews()
 
-    guard let genericView: View = spot.ui(at: 0) else {
+    guard let genericView: View = component.ui(at: 0) else {
       XCTFail()
       return
     }

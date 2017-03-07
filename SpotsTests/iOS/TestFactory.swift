@@ -16,16 +16,16 @@ class FactoryTests: XCTestCase {
     Factory.register(kind: "merry-go-round", spot: CarouselComponent.self)
 
     let model = ComponentModel(json)
-    var spot = Factory.resolve(model: model)
+    var component = Factory.resolve(model: model)
 
-    XCTAssertTrue(spot.model == model)
-    XCTAssertTrue(spot is CarouselComponent)
+    XCTAssertTrue(component.model == model)
+    XCTAssertTrue(component is CarouselComponent)
 
     Factory.register(kind: "merry-go-round", spot: GridComponent.self)
-    spot = Factory.resolve(model: model)
+    component = Factory.resolve(model: model)
 
-    XCTAssertTrue(spot.model == model)
-    XCTAssertTrue(spot is GridComponent)
+    XCTAssertTrue(component.model == model)
+    XCTAssertTrue(component is GridComponent)
   }
 
   func testDefaultResolve() {
@@ -33,10 +33,10 @@ class FactoryTests: XCTestCase {
     newJson["type"] = "weirdo" as AnyObject?
 
     let model = ComponentModel(newJson)
-    let spot = Factory.resolve(model: model)
+    let component = Factory.resolve(model: model)
 
-    XCTAssertTrue(spot.model == model)
-    XCTAssertTrue(spot is GridComponent)
+    XCTAssertTrue(component.model == model)
+    XCTAssertTrue(component is GridComponent)
   }
 
   func testFactoryParsingComponentModels() {
@@ -55,21 +55,21 @@ class FactoryTests: XCTestCase {
       )
     ]
 
-    let spots: [CoreComponent] = initialComponentModels.map {
-      let spot = Factory.resolve(model: $0)
-      spot.setup(CGSize(width: 100, height: 100))
-      return spot
+    let components: [CoreComponent] = initialComponentModels.map {
+      let component = Factory.resolve(model: $0)
+      component.setup(CGSize(width: 100, height: 100))
+      return component
     }
 
     /// Validate factory process
-    XCTAssertEqual(spots.count, 1)
-    XCTAssert(spots.first is ListComponent)
+    XCTAssertEqual(components.count, 1)
+    XCTAssert(components.first is ListComponent)
 
     /// Test first item in the first component of the first spot
-    XCTAssertEqual(spots.first!.model.kind, "list")
-    XCTAssertEqual(spots.first!.model.items[0].title, "Fullname")
-    XCTAssertEqual(spots.first!.model.items[0].subtitle, "Job title")
-    XCTAssertEqual(spots.first!.model.items[0].kind, "image")
-    XCTAssertEqual(spots.first!.model.items[0].size, CGSize(width: 100, height: 44))
+    XCTAssertEqual(components.first!.model.kind, "list")
+    XCTAssertEqual(components.first!.model.items[0].title, "Fullname")
+    XCTAssertEqual(components.first!.model.items[0].subtitle, "Job title")
+    XCTAssertEqual(components.first!.model.items[0].kind, "image")
+    XCTAssertEqual(components.first!.model.items[0].size, CGSize(width: 100, height: 44))
   }
 }
