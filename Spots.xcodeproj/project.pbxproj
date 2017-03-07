@@ -812,9 +812,9 @@
 				BDAD85031E3E7025008289AE /* NSTableView+UserInterface.swift */,
 				BD9ECEB61E6EC6B4003E4388 /* Spot+macOS+Carousel.swift */,
 				BD9ECEB91E6EC6D1003E4388 /* Spot+macOS+Grid.swift */,
+				BD9ECEBB1E6EC82D003E4388 /* Spot+macOS+HeaderFooter.swift */,
 				BD9ECEB41E6EC6A7003E4388 /* Spot+macOS+List.swift */,
 				BDAD85041E3E7025008289AE /* Viewable+macOS.swift */,
-				BD9ECEBB1E6EC82D003E4388 /* Spot+macOS+HeaderFooter.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
