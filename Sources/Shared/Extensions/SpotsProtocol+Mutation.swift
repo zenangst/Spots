@@ -321,8 +321,8 @@ extension SpotsProtocol {
             continue
           }
 
-          if let index = removedSpot.componentSpot?.compositeComponents.index(of: removedSpot) {
-            removedSpot.componentSpot?.compositeComponents.remove(at: index)
+          if let index = removedSpot.parentComponent?.compositeComponents.index(of: removedSpot) {
+            removedSpot.parentComponent?.compositeComponents.remove(at: index)
           }
         }
 
