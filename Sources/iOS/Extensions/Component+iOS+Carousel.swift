@@ -1,7 +1,7 @@
 import UIKit
 import Tailor
 
-internal extension Component {
+extension Component {
 
   func setupHorizontalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
     guard let layout = collectionView.collectionViewLayout as? GridableLayout else {

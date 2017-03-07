@@ -1,6 +1,6 @@
 import UIKit
 
-internal extension Component {
+extension Component {
 
   func setupTableView(_ tableView: TableView, with size: CGSize) {
     tableView.dataSource = spotDataSource

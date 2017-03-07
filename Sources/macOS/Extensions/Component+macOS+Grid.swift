@@ -1,6 +1,6 @@
 import Cocoa
 
-internal extension Component {
+extension Component {
 
   func setupVerticalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
     GridComponent.configure?(collectionView)
