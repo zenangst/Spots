@@ -214,6 +214,25 @@ public class Spot: NSObject, Spotable {
       }
     }
   }
+
+  fileprivate func setupFooter(kind: String) {
+    guard !component.footer.isEmpty, footerView == nil else {
+      return
+    }
+
+    if let (_, footerView) = Configuration.views.make(component.footer) {
+      if let footerView = footerView,
+        let componentable = footerView as? Componentable {
+        let size = CGSize(width: view.frame.width,
+                          height: componentable.preferredHeaderHeight)
+        componentable.configure(component)
+        footerView.frame.size = size
+        self.footerView = footerView
+        scrollView.addSubview(footerView)
+      }
+    }
+  }
+
   fileprivate func setupTableView(_ tableView: TableView, with size: CGSize) {
     scrollView.addSubview(tableView)
 
