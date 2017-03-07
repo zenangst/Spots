@@ -200,6 +200,21 @@ public class Spot: NSObject, Spotable {
     view.layoutSubviews()
   }
 
+  fileprivate func layoutHeaderFooterViews(_ size: CGSize) {
+    let headerHeight = headerView?.frame.size.height ?? 0.0
+    let footerHeight = footerView?.frame.size.height ?? 0.0
+
+    headerView?.frame.size.width = size.width
+    footerView?.frame.size.width = size.width
+    footerView?.frame.origin.y = scrollView.frame.height - footerHeight
+
+    if let layout = component.layout {
+      headerView?.frame.origin.x = CGFloat(layout.inset.left)
+      footerView?.frame.origin.x = CGFloat(layout.inset.left)
+      headerView?.frame.size.width -= CGFloat(layout.inset.left + layout.inset.right)
+      footerView?.frame.size.width -= CGFloat(layout.inset.left + layout.inset.right)
+    }
+  }
 
   fileprivate func setupHeader(kind: String) {
     guard !component.header.isEmpty, headerView == nil else {
