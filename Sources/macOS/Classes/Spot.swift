@@ -282,7 +282,21 @@ public class Spot: NSObject, Spotable {
 
   }
 
+  func registerDefaultIfNeeded(view: View.Type) {
+    guard Configuration.views.storage[Configuration.views.defaultIdentifier] == nil else {
+      return
     }
+
+    Configuration.views.defaultItem = Registry.Item.classType(view)
+  }
+
+  open func doubleAction(_ sender: Any?) {
+    guard let tableView = tableView,
+      let item = item(at: tableView.clickedRow) else {
+      return
+    }
+    delegate?.spotable(self, itemSelected: item)
+  }
 
   }
 
