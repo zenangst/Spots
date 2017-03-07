@@ -169,7 +169,7 @@
 		BDAD85241E3E7025008289AE /* NSScrollView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD85021E3E7025008289AE /* NSScrollView+Extensions.swift */; };
 		BDAD85251E3E7025008289AE /* NSTableView+UserInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD85031E3E7025008289AE /* NSTableView+UserInterface.swift */; };
 		BDAD85261E3E7025008289AE /* Viewable+macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD85041E3E7025008289AE /* Viewable+macOS.swift */; };
-		BDAD85271E3E7025008289AE /* SpotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD85061E3E7025008289AE /* SpotView.swift */; };
+		BDAD85271E3E7025008289AE /* ComponentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD85061E3E7025008289AE /* ComponentView.swift */; };
 		BDAD85281E3E7025008289AE /* GridRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD85081E3E7025008289AE /* GridRegistry.swift */; };
 		BDAD85601E3E7032008289AE /* CompositeComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD852B1E3E7032008289AE /* CompositeComponent.swift */; };
 		BDAD85611E3E7032008289AE /* CompositeComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD852B1E3E7032008289AE /* CompositeComponent.swift */; };
@@ -528,7 +528,7 @@
 		BDAD85021E3E7025008289AE /* NSScrollView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSScrollView+Extensions.swift"; sourceTree = "<group>"; };
 		BDAD85031E3E7025008289AE /* NSTableView+UserInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSTableView+UserInterface.swift"; sourceTree = "<group>"; };
 		BDAD85041E3E7025008289AE /* Viewable+macOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Viewable+macOS.swift"; sourceTree = "<group>"; };
-		BDAD85061E3E7025008289AE /* SpotView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotView.swift; sourceTree = "<group>"; };
+		BDAD85061E3E7025008289AE /* ComponentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentView.swift; sourceTree = "<group>"; };
 		BDAD85081E3E7025008289AE /* GridRegistry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = GridRegistry.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		BDAD852B1E3E7032008289AE /* CompositeComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositeComponent.swift; sourceTree = "<group>"; };
 		BDAD852C1E3E7032008289AE /* DataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
@@ -838,7 +838,7 @@
 		BDAD85051E3E7025008289AE /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				BDAD85061E3E7025008289AE /* SpotView.swift */,
+				BDAD85061E3E7025008289AE /* ComponentView.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -1919,7 +1919,7 @@
 				BDAD857F1E3E7032008289AE /* Gridable+Extensions.swift in Sources */,
 				D5D282701E5474E0004BF251 /* Cell.swift in Sources */,
 				BDAD85B81E3E7032008289AE /* ScrollDelegate.swift in Sources */,
-				BDAD85271E3E7025008289AE /* SpotView.swift in Sources */,
+				BDAD85271E3E7025008289AE /* ComponentView.swift in Sources */,
 				BDAD851C1E3E7025008289AE /* Composable+macOS.swift in Sources */,
 				BDAD850F1E3E7025008289AE /* GridComponentCell.swift in Sources */,
 				BDAD859A1E3E7032008289AE /* SpotsProtocol+LiveEditing.swift in Sources */,
