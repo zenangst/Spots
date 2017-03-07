@@ -132,6 +132,7 @@ public class Spot: NSObject, Spotable {
       userInterface = TableView()
     } else {
       let collectionView = CollectionView(frame: CGRect.zero)
+      collectionView.collectionViewLayout = GridableLayout()
       userInterface = collectionView
     }
 
