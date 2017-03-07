@@ -90,26 +90,22 @@ public class Spot: NSObject, Spotable {
     return userInterface as? CollectionView
   }
 
-  public required init(component: Component) {
-    var component = component
-    if component.kind.isEmpty {
-      component.kind = Spot.defaultKind
-    }
-
+  public required init(component: Component, userInterface: UserInterface, kind: Component.Kind) {
     self.component = component
+    self.componentKind = kind
+    self.userInterface = userInterface
 
-    if let componentKind = Component.Kind(rawValue: component.kind) {
-      self.componentKind = componentKind
-    }
+    super.init()
 
     if component.layout == nil {
-      switch componentKind {
+      switch kind {
       case .carousel:
         self.component.layout = CarouselSpot.layout
       case .grid:
         self.component.layout = GridSpot.layout
       case .list:
         self.component.layout = ListSpot.layout
+        registerDefaultIfNeeded(view: ListSpotItem.self)
       case .row:
         self.component.layout = RowSpot.layout
       default:
@@ -117,13 +113,33 @@ public class Spot: NSObject, Spotable {
       }
     }
 
-    super.init()
+    userInterface.register()
 
     self.spotDataSource = DataSource(spot: self)
     self.spotDelegate = Delegate(spot: self)
+  }
 
-    if let componentLayout = component.layout {
-      configure(with: componentLayout)
+  public required convenience init(component: Component) {
+    var component = component
+    if component.kind.isEmpty {
+      component.kind = Spot.defaultKind
+    }
+
+    let kind = Component.Kind(rawValue: component.kind) ?? .list
+    let userInterface: UserInterface
+
+    if kind == .list {
+      userInterface = TableView()
+    } else {
+      let collectionView = CollectionView(frame: CGRect.zero)
+      userInterface = collectionView
+    }
+
+    self.init(component: component, userInterface: userInterface, kind: kind)
+
+    if componentKind == .carousel {
+      self.component.interaction.scrollDirection = .horizontal
+      (collectionView?.collectionViewLayout as? FlowLayout)?.scrollDirection = .horizontal
     }
   }
 
