@@ -14,15 +14,15 @@ class TestSpot: XCTestCase {
   func testDefaultValues() {
     let items = [Item(title: "A"), Item(title: "B")]
     let model = ComponentModel(items: items, hybrid: true)
-    let spot = Component(model: model)
+    let component = Component(model: model)
 
-    spot.setup(CGSize(width: 100, height: 100))
+    component.setup(CGSize(width: 100, height: 100))
 
-    XCTAssertTrue(spot.view is TableView)
-    XCTAssertTrue(spot.view.isEqual(spot.tableView))
-    XCTAssertEqual(spot.items[0].size, CGSize(width: 100, height: 44))
-    XCTAssertEqual(spot.items[1].size, CGSize(width: 100, height: 44))
-    XCTAssertEqual(spot.view.frame.size, CGSize(width: 100, height: 100))
+    XCTAssertTrue(component.view is TableView)
+    XCTAssertTrue(component.view.isEqual(component.tableView))
+    XCTAssertEqual(component.items[0].size, CGSize(width: 100, height: 44))
+    XCTAssertEqual(component.items[1].size, CGSize(width: 100, height: 44))
+    XCTAssertEqual(component.view.frame.size, CGSize(width: 100, height: 100))
 
     /// tvOS adds 14 pixels to each item in a table view.
     /// So for tvOS, the calculation would look like this:
@@ -32,7 +32,7 @@ class TestSpot: XCTestCase {
     #elseif os(iOS)
       let expectedContentSizeHeight: CGFloat = 88
     #endif
-    XCTAssertEqual(spot.view.contentSize, CGSize(width: 100, height: expectedContentSizeHeight))
+    XCTAssertEqual(component.view.contentSize, CGSize(width: 100, height: expectedContentSizeHeight))
   }
 
   func testSpotCache() {
