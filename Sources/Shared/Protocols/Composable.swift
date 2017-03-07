@@ -7,6 +7,6 @@ public protocol Composable: class {
   /// Configure a Composable with an item and a collection of CoreComponent objects
   ///
   /// - parameter item:  The Item struct that is Composable
-  /// - parameter spots: A collection of CoreComponent objects that should be used to configure the child
+  /// - parameter components: A collection of CoreComponent objects that should be used to configure the child
   func configure(_ item: inout Item, compositeComponents: [CompositeComponent]?)
 }

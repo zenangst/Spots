@@ -6,7 +6,7 @@ public extension Composable where Self : View {
   /// A configuration method to configure the Composable view with a collection of CoreComponent objects
   ///
   ///  - parameter item:  The item that is currently being configured in the list
-  ///  - parameter spots: A collection of CoreComponent objects created from the children of the item
+  ///  - parameter components: A collection of CoreComponent objects created from the children of the item
   func configure(_ item: inout Item, compositeComponents: [CompositeComponent]?) {
     guard let compositeComponents = compositeComponents else {
       return

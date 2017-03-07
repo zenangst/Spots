@@ -3,8 +3,8 @@ public struct Factory {
   /// The default spot for the Factory
   public static var DefaultSpot: CoreComponent.Type = GridComponent.self
 
-  /// Defaults spots, it includes carousel, list, grid and view
-  private static var spots: [String: CoreComponent.Type] = [
+  /// Defaults components, it includes carousel, list, grid and view
+  private static var components: [String: CoreComponent.Type] = [
     ComponentModel.Kind.carousel.string: CarouselComponent.self,
     ComponentModel.Kind.list.string: ListComponent.self,
     ComponentModel.Kind.grid.string: GridComponent.self,
@@ -18,7 +18,7 @@ public struct Factory {
   /// - parameter kind: The reusable identifier that will be used to indentify your view
   /// - parameter spot: A generic spotable type
   public static func register<T: CoreComponent>(kind: String, spot: T.Type) {
-    spots[kind] = spot
+    components[kind] = spot
   }
 
   /// Craft spotable object from component struct
@@ -32,7 +32,7 @@ public struct Factory {
       resolvedKind = ComponentModel.Kind.spot.string
     }
 
-    let spot: CoreComponent.Type = spots[resolvedKind] ?? DefaultSpot
+    let spot: CoreComponent.Type = components[resolvedKind] ?? DefaultSpot
 
     return spot.init(model: model)
   }

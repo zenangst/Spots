@@ -323,7 +323,7 @@ public extension CoreComponent {
   /// - parameter composable:        A composable object
   /// - parameter usesViewSize:      A boolean value to determine if the view uses the views height
   ///
-  /// - returns: The height for the item based of the composable spots
+  /// - returns: The height for the item based of the composable components
   func prepare(composable: Composable, item: inout Item) {
     var height: CGFloat = 0.0
 
@@ -335,11 +335,11 @@ public extension CoreComponent {
       }
     }
 
-    let spots: [CoreComponent] = Parser.parse(item)
+    let components: [CoreComponent] = Parser.parse(item)
     let size = view.frame.size
     let width = size.width
 
-    spots.forEach { spot in
+    components.forEach { spot in
       let compositeSpot = CompositeComponent(component: spot,
                                              parentComponent: self,
                                              itemIndex: item.index)

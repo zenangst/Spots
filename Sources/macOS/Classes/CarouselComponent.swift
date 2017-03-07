@@ -11,7 +11,7 @@ open class CarouselComponent: NSObject, Gridable {
 
   public static var layout: Layout = Layout()
 
-  /// Child spots
+  /// Child components
   public var compositeComponents: [CompositeComponent] = []
 
   public struct Key {

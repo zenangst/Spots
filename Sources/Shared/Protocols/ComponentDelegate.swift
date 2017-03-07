@@ -7,7 +7,7 @@ public protocol ComponentDelegate: class {
   /// - parameter itemSelected: The data for the view that is going to be displayed.
   func component(_ component: CoreComponent, itemSelected item: Item)
 
-  /// A delegate method that is triggered when spots is changed.
+  /// A delegate method that is triggered when components is changed.
   ///
   /// - parameter components: New collection of CoreComponent objects
   func componentsDidChange(_ components: [CoreComponent])

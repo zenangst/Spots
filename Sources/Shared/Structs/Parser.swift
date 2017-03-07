@@ -75,7 +75,7 @@ public struct Parser {
   ///
   ///  - returns: A collection of CoreComponent objects
   public static func parse(_ item: Item) -> [CoreComponent] {
-    let spots: [CoreComponent] = Parser.parse(item.children)
-    return spots
+    let components: [CoreComponent] = Parser.parse(item.children)
+    return components
   }
 }

@@ -19,7 +19,7 @@ open class GridComponent: NSObject, Gridable {
   /// A SpotsFocusDelegate object
   weak public var focusDelegate: ComponentFocusDelegate?
 
-  /// Child spots
+  /// Child components
   public var compositeComponents: [CompositeComponent] = []
 
   /// A component struct used as configuration and data source for the GridComponent

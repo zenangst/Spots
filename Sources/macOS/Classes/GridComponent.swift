@@ -11,7 +11,7 @@ open class GridComponent: NSObject, Gridable {
 
   public static var layout: Layout = Layout()
 
-  /// Child spots
+  /// Child components
   public var compositeComponents: [CompositeComponent] = []
 
   /// An enum layout type

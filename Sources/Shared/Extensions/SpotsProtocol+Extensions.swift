@@ -54,7 +54,7 @@ public extension SpotsProtocol {
   public func dictionary(_ amountOfItems: Int? = nil) -> [String : Any] {
     var result = [[String: Any]]()
 
-    for spot in spots {
+    for spot in components {
       var spotJSON = spot.model.dictionary(amountOfItems)
       for item in spot.items where item.kind == "composite" {
         let results = spot.compositeComponents
@@ -86,7 +86,7 @@ public extension SpotsProtocol {
   ///
   /// - returns: An optional object with inferred type.
   public func ui<T>(_ includeElement: (Item) -> Bool) -> T? {
-    for spot in spots {
+    for spot in components {
       if let first = spot.items.filter(includeElement).first {
         return spot.ui(at: first.index)
       }
@@ -107,10 +107,10 @@ public extension SpotsProtocol {
   /// - parameter includeElement: A filter predicate to find a spot
   ///
   /// - returns: A collection of CoreComponent objects that match the includeElements predicate
-  public func filter(spots includeElement: (CoreComponent) -> Bool) -> [CoreComponent] {
-    var result = spots.filter(includeElement)
+  public func filter(components includeElement: (CoreComponent) -> Bool) -> [CoreComponent] {
+    var result = components.filter(includeElement)
 
-    let cSpots = spots.flatMap({ $0.compositeComponents.map { $0.component } })
+    let cSpots = components.flatMap({ $0.compositeComponents.map { $0.component } })
     let compositeResults: [CoreComponent] = cSpots.filter(includeElement)
 
     result.append(contentsOf: compositeResults)
@@ -125,7 +125,7 @@ public extension SpotsProtocol {
   /// - returns: A collection of tuples containing spotable objects with the matching items that were found.
   public func filter(items includeElement: (Item) -> Bool) -> [(spot: CoreComponent, items: [Item])] {
     var result = [(spot: CoreComponent, items: [Item])]()
-    for spot in spots {
+    for spot in components {
       let items = spot.items.filter(includeElement)
       if !items.isEmpty {
         result.append((spot: spot, items: items))
@@ -153,7 +153,7 @@ public extension SpotsProtocol {
 
     var initialHeight: CGFloat = 0.0
     if index > 0 {
-      initialHeight += spots[0..<index].reduce(0, { $0 + $1.computedHeight })
+      initialHeight += components[0..<index].reduce(0, { $0 + $1.computedHeight })
     }
     if spot(at: index, ofType: CoreComponent.self)?.computedHeight > scrollView.frame.height - scrollView.contentInset.bottom - initialHeight {
       let y = itemY - scrollView.frame.size.height + scrollView.contentInset.bottom + initialHeight
@@ -207,6 +207,6 @@ public extension SpotsProtocol {
    - returns: A CoreComponent object at index path
    **/
   fileprivate func spot(at indexPath: IndexPath) -> CoreComponent {
-    return spots[indexPath.item]
+    return components[indexPath.item]
   }
 }

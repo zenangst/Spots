@@ -52,10 +52,10 @@ extension DataSource: NSCollectionViewDataSource {
         (view as? ItemConfigurable)?.configure(&component.model.items[indexPath.item])
       }
     case let item as Composable:
-      let spots = component.compositeComponents.filter { $0.itemIndex == indexPath.item }
+      let components = component.compositeComponents.filter { $0.itemIndex == indexPath.item }
       item.contentView.frame.size.width = collectionView.frame.size.width
       item.contentView.frame.size.height = component.computedHeight
-      item.configure(&component.model.items[indexPath.item], compositeComponents: spots)
+      item.configure(&component.model.items[indexPath.item], compositeComponents: components)
     case let item as ItemConfigurable:
       item.configure(&component.model.items[indexPath.item])
     default:

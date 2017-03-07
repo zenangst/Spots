@@ -13,7 +13,7 @@ public protocol CoreComponent: class {
   static var views: Registry { get set }
   static var layout: Layout { get set }
 
-  /// Child spots
+  /// Child components
   var compositeComponents: [CompositeComponent] { get set }
 
   #if !os(OSX)

@@ -17,7 +17,7 @@ open class SpotsScrollView: NSScrollView {
   }
 
   /// The document view of SpotsScrollView.
-  lazy open var spotsContentView: SpotsContentView = {
+  lazy open var componentsContentView: SpotsContentView = {
     let contentView = SpotsContentView()
     contentView.autoresizingMask = [.viewWidthSizable, .viewHeightSizable]
     contentView.autoresizesSubviews = true
@@ -27,7 +27,7 @@ open class SpotsScrollView: NSScrollView {
 
   override init(frame frameRect: NSRect) {
     super.init(frame: frameRect)
-    self.documentView = spotsContentView
+    self.documentView = componentsContentView
     drawsBackground = false
   }
 

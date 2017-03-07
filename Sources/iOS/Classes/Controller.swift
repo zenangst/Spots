@@ -12,7 +12,7 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
   public var focusedItemIndex: Int?
 
   /// A closure that is called when the controller is reloaded with components
-  public static var spotsDidReloadComponentModels: ((Controller) -> Void)?
+  public static var componentsDidReloadComponentModels: ((Controller) -> Void)?
 
   /// A notification enum
   ///
@@ -42,8 +42,8 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
   open fileprivate(set) var initialInset: UIEdgeInsets = UIEdgeInsets.zero
 
   /// A collection of CoreComponent objects.
-  open var spots: [CoreComponent] {
-    didSet { spotsDidChange() }
+  open var components: [CoreComponent] {
+    didSet { componentsDidChange() }
   }
 
   /// An array of refresh positions to avoid refreshing multiple times when using infinite scrolling.
@@ -67,7 +67,7 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
 
   /// A delegate for when an item is tapped within a Spot.
   weak open var delegate: ComponentDelegate? {
-    didSet { spotsDelegateDidChange() }
+    didSet { componentsDelegateDidChange() }
   }
 
   #if os(iOS)
@@ -95,11 +95,11 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
 
   /// A required initializer for initializing a controller with CoreComponent objects
   ///
-  /// - parameter spots: A collection of CoreComponent objects that should be setup and be added to the view hierarchy.
+  /// - parameter components: A collection of CoreComponent objects that should be setup and be added to the view hierarchy.
   ///
   /// - returns: An initalized controller.
-  public required init(spots: [CoreComponent] = []) {
-    self.spots = spots
+  public required init(components: [CoreComponent] = []) {
+    self.components = components
     super.init(nibName: nil, bundle: nil)
 
     NotificationCenter.default.addObserver(self, selector:#selector(self.deviceDidRotate(_:)), name: NSNotification.Name(rawValue: NotificationKeys.deviceDidRotateNotification.rawValue), object: nil)
@@ -111,7 +111,7 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
   ///
   /// - returns: An initialized controller containing one object.
   public convenience init(spot: CoreComponent) {
-    self.init(spots: [spot])
+    self.init(components: [spot])
   }
 
   /// Initialize a new controller using JSON.
@@ -120,7 +120,7 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
   ///
   /// - returns: An initialized controller with CoreComponent objects built from JSON.
   public convenience init(_ json: [String : Any]) {
-    self.init(spots: Parser.parse(json))
+    self.init(components: Parser.parse(json))
   }
 
   /// Initialize a new controller with a cache key.
@@ -130,7 +130,7 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
   /// - returns: An initialized controller with a cache.
   public convenience init(cacheKey: String) {
     let stateCache = StateCache(key: cacheKey)
-    self.init(spots: Parser.parse(stateCache.load()))
+    self.init(components: Parser.parse(stateCache.load()))
     self.stateCache = stateCache
   }
 
@@ -153,14 +153,14 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
     scrollView.delegate = nil
   }
 
-  ///  A generic look up method for resolving spots based on index
+  ///  A generic look up method for resolving components based on index
   ///
   /// - parameter index: The index of the spot that you are trying to resolve.
   /// - parameter type: The generic type for the spot you are trying to resolve.
   ///
   /// - returns: An optional CoreComponent object of inferred type.
   open func spot<T>(at index: Int = 0, ofType type: T.Type) -> T? {
-    return spots.filter({ $0.index == index }).first as? T
+    return components.filter({ $0.index == index }).first as? T
   }
 
   /// A look up method for resolving a spot at index as a CoreComponent object.
@@ -169,16 +169,16 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
   ///
   /// - returns: An optional CoreComponent object.
   open func spot(at index: Int = 0) -> CoreComponent? {
-    return spots.filter({ $0.index == index }).first
+    return components.filter({ $0.index == index }).first
   }
 
-  /// A generic look up method for resolving spots using a closure
+  /// A generic look up method for resolving components using a closure
   ///
   /// - parameter closure: A closure to perform actions on a spotable object
   ///
   /// - returns: An optional CoreComponent object
   open func resolve(spot closure: (_ index: Int, _ spot: CoreComponent) -> Bool) -> CoreComponent? {
-    for (index, spot) in spots.enumerated()
+    for (index, spot) in components.enumerated()
       where closure(index, spot) {
         return spot
     }
@@ -239,9 +239,9 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
   /// - parameter size: The size that should be used to configure the views.
   func configure(withSize size: CGSize) {
     scrollView.frame.size = size
-    scrollView.spotsContentView.frame.size = size
+    scrollView.componentsContentView.frame.size = size
 
-    spots.forEach { component in
+    components.forEach { component in
       component.layout(size)
 
       component.compositeComponents.forEach {
@@ -258,7 +258,7 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
     super.viewWillTransition(to: size, with: coordinator)
 
     #if os(iOS)
-      guard spots_shouldAutorotate() else { return }
+      guard components_shouldAutorotate() else { return }
     #endif
 
     coordinator.animate(alongsideTransition: { (UIViewControllerTransitionCoordinatorContext) in
@@ -277,7 +277,7 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
   open func setupSpots(animated: ((_ view: UIView) -> Void)? = nil) {
     var yOffset: CGFloat = 0.0
 
-    spots.enumerated().forEach { index, spot in
+    components.enumerated().forEach { index, spot in
       setupComponent(at: index, spot: spot)
       animated?(spot.view)
       (spot as? CarouselComponent)?.layout.yOffset = yOffset
@@ -291,7 +291,7 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
   /// - parameter spot:  The spotable object that is going to be setup
   open func setupComponent(at index: Int, spot: CoreComponent) {
     if spot.view.superview == nil {
-      scrollView.spotsContentView.addSubview(spot.view)
+      scrollView.componentsContentView.addSubview(spot.view)
     }
 
     guard let superview = spot.view.superview else {
@@ -325,7 +325,7 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
     Dispatch.main { [weak self] in
       guard let weakSelf = self else { return }
       weakSelf.refreshPositions.removeAll()
-      weakSelf.refreshDelegate?.spotablesDidReload(weakSelf.spots, refreshControl: refreshControl) {
+      weakSelf.refreshDelegate?.spotablesDidReload(weakSelf.components, refreshControl: refreshControl) {
         refreshControl.endRefreshing()
       }
     }
@@ -339,19 +339,19 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
 extension Controller {
 
   /// This method is triggered in `delegate.didSet`
-  fileprivate func spotsDelegateDidChange() {
+  fileprivate func componentsDelegateDidChange() {
     updateDelegates()
   }
 
-  /// This method is triggered in `spots.didSet{}`
-  fileprivate  func spotsDidChange() {
+  /// This method is triggered in `components.didSet{}`
+  fileprivate  func componentsDidChange() {
     updateDelegates()
-    delegate?.componentsDidChange(spots)
+    delegate?.componentsDidChange(components)
   }
 
   /// It updates the delegates for all underlaying spotable objects inside the controller.
   fileprivate  func updateDelegates() {
-    spots.forEach {
+    components.forEach {
       $0.delegate = delegate
       $0.focusDelegate = self
 
@@ -377,6 +377,6 @@ extension Controller {
   ///
   /// - returns: A CoreComponent object.
   fileprivate func spot(at indexPath: IndexPath) -> CoreComponent {
-    return spots[indexPath.item]
+    return components[indexPath.item]
   }
 }

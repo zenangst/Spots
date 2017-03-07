@@ -17,7 +17,7 @@ extension Controller {
       : 1
     let itemOffset = (size.height - scrollView.bounds.size.height * 2) > 0
       ? scrollView.bounds.size.height * 2
-      : (spots.last?.model.items.last?.size.height ?? 0) * 6
+      : (components.last?.model.items.last?.size.height ?? 0) * 6
     let shouldFetch = !refreshing &&
       size.height > scrollView.bounds.height &&
       offset.y > size.height - scrollView.bounds.height * multiplier &&

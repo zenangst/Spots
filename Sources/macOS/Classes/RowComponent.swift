@@ -13,7 +13,7 @@ open class RowComponent: NSObject, Gridable {
 
   public static var layout: Layout = Layout(span: 1.0)
 
-  /// Child spots
+  /// Child components
   public var compositeComponents: [CompositeComponent] = []
 
   /// An enum layout type

@@ -29,7 +29,7 @@ class CoreComponentTests: XCTestCase {
   }
 
   func testAppendingMultipleItemsToSpotInController() {
-    let controller = Controller(spots: [ListComponent(model: ComponentModel(title: "ComponentModel", span: 1.0))])
+    let controller = Controller(components: [ListComponent(model: ComponentModel(title: "ComponentModel", span: 1.0))])
     controller.prepareController()
     var items: [Item] = []
 
@@ -40,13 +40,13 @@ class CoreComponentTests: XCTestCase {
     measure {
       for _ in 0..<5 {
         controller.append(items, spotIndex: 0, withAnimation: .automatic, completion: nil)
-        controller.spots.forEach { $0.view.layoutSubviews() }
+        controller.components.forEach { $0.view.layoutSubviews() }
       }
     }
 
     let expectation = self.expectation(description: "Wait until done")
     Dispatch.after(seconds: 1.0) {
-      XCTAssertEqual(controller.spots[0].items.count, 500)
+      XCTAssertEqual(controller.components[0].items.count, 500)
       expectation.fulfill()
     }
     waitForExpectations(timeout: 10.0, handler: nil)

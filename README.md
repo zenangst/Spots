@@ -54,13 +54,13 @@ Data source and delegate setup is handled by **Spots**, so there is no need for 
 * [Usage](#usage)
 * [View models in the Cloud](#view-models-in-the-cloud)
 * [Programmatic approach](#programmatic-approach)
-* [Controller](#spotscontroller)
+* [Controller](#componentscontroller)
 * [Delegates](#delegates)
-*  [ComponentDelegate](#spotsdelegate)
-*  [SpotsRefreshDelegate](#spotsrefreshdelegate)
-*  [SpotsScrollDelegate](#spotsscrolldelegate)
-*  [SpotsCarouselScrollDelegate](#spotscarouselscrolldelegate)
-* [The many faces of Spots](#the-many-faces-of-spots)
+*  [ComponentDelegate](#componentsdelegate)
+*  [SpotsRefreshDelegate](#componentsrefreshdelegate)
+*  [SpotsScrollDelegate](#componentsscrolldelegate)
+*  [SpotsCarouselScrollDelegate](#componentscarouselscrolldelegate)
+* [The many faces of Spots](#the-many-faces-of-components)
 * [JSON structure](#json-structure)
 * [Models](#models)
 * [ComponentModel](#component)
@@ -90,7 +90,7 @@ This improves code reuse and helps to theme your app and ultimately keep your ap
 - Support custom Spots, all you need to do is to conform to `CoreComponent`
 - A rich public API for appending, prepending, inserting, updating or
 deleting `Item`s.
-- Features three different spots out-of-the-box; `CarouselComponent`, `GridComponent`, `ListComponent`
+- Features three different components out-of-the-box; `CarouselComponent`, `GridComponent`, `ListComponent`
 - Static custom cell registrations for all `CoreComponent` objects.
 Write one view cell and use it across your application, when and where you
 want to use it.
@@ -291,7 +291,7 @@ let myContacts = ComponentModel(title: "My contacts", items: [
   Item(title: "Christoffer Winterkvist")
 ])
 let listSpot = ListComponent(model: myContacts)
-let controller = Controller(spots: [listSpot])
+let controller = Controller(components: [listSpot])
 
 navigationController?.pushViewController(controller, animated: true)
 ```
@@ -306,23 +306,23 @@ The `Controller` inherits from `UIViewController` and `NSViewController` but it 
 ```swift
 public protocol ComponentDelegate: class {
   func spotDidSelectItem(spot: CoreComponent, item: Item)
-  func spotsDidChange(spots: [CoreComponent])
+  func componentsDidChange(components: [CoreComponent])
 }
 ```
 
 `spotDidSelectItem` is triggered when a user taps on an item inside of a `CoreComponent` object. It returns both the `spot` and the `item` to add context to what UI element was touched.
 
-`spotsDidChange` notifies the delegate when the internal `.spots` property changes.
+`componentsDidChange` notifies the delegate when the internal `.components` property changes.
 
 ### SpotsRefreshDelegate
 
 ```swift
 public protocol SpotsRefreshDelegate: class {
-  func spotsDidReload(refreshControl: UIRefreshControl, completion: (() -> Void)?)
+  func componentsDidReload(refreshControl: UIRefreshControl, completion: (() -> Void)?)
 }
 ```
 
-`spotsDidReload` is triggered when a user pulls the `SpotsScrollView` offset above its initial bounds.
+`componentsDidReload` is triggered when a user pulls the `SpotsScrollView` offset above its initial bounds.
 
 ### SpotsScrollDelegate
 

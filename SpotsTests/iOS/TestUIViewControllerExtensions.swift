@@ -7,7 +7,7 @@ class UIViewControllerExtensionsTests: XCTestCase {
   var controller: Controller!
 
   override func setUp() {
-    controller = Controller(spots: [])
+    controller = Controller(components: [])
   }
 
   override func tearDown() {
@@ -15,12 +15,12 @@ class UIViewControllerExtensionsTests: XCTestCase {
   }
 
   func testShouldAutorotateOnController() {
-    XCTAssertEqual(controller.spots_shouldAutorotate(), true)
+    XCTAssertEqual(controller.components_shouldAutorotate(), true)
   }
 
   func testShouldAutorotateOnChildController() {
     let parentController = UIViewController()
     parentController.addChildViewController(controller)
-    XCTAssertEqual(controller.spots_shouldAutorotate(), true)
+    XCTAssertEqual(controller.components_shouldAutorotate(), true)
   }
 }

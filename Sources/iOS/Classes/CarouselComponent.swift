@@ -8,7 +8,7 @@ open class CarouselComponent: NSObject, Gridable, ComponentHorizontallyScrollabl
   public static var layout: Layout = .init()
   public static var interaction: Interaction = .init()
 
-  /// Child spots
+  /// Child components
   public var compositeComponents: [CompositeComponent] = []
 
   /// A SpotsFocusDelegate object

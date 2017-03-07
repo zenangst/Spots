@@ -16,14 +16,14 @@ extension SpotsProtocol {
    - parameter completion: A completion block that is run when the reloading is done
    */
   public func reload(_ animated: Bool = true, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
-    var spotsLeft = spots.count
+    var componentsLeft = components.count
 
     Dispatch.main { [weak self] in
-      self?.spots.forEach { spot in
+      self?.components.forEach { spot in
         spot.reload([], withAnimation: animation) {
-          spotsLeft -= 1
+          componentsLeft -= 1
 
-          if spotsLeft == 0 {
+          if componentsLeft == 0 {
             completion?()
           }
         }
@@ -36,17 +36,17 @@ extension SpotsProtocol {
   /// - parameter components: A collection of components that gets parsed into UI elements
   /// - parameter compare: A closure that is used for comparing a ComponentModel collections
   /// - parameter animated: An animation closure that can be used to perform custom animations when reloading
-  /// - parameter completion: A closure that will be run after reload has been performed on all spots
+  /// - parameter completion: A closure that will be run after reload has been performed on all components
   public func reloadIfNeeded(_ components: [ComponentModel],
                              compare: @escaping CompareClosure = { lhs, rhs in return lhs !== rhs },
                              withAnimation animation: Animation = .automatic,
                              completion: Completion = nil) {
     guard !components.isEmpty else {
       Dispatch.main { [weak self] in
-        self?.spots.forEach {
+        self?.components.forEach {
           $0.view.removeFromSuperview()
         }
-        self?.spots = []
+        self?.components = []
         completion?()
       }
       return
@@ -58,7 +58,7 @@ extension SpotsProtocol {
         return
       }
 
-      let oldSpots = weakSelf.spots
+      let oldSpots = weakSelf.components
       let oldComponentModels = oldSpots.map { $0.model }
       var newComponentModels = components
 
@@ -78,7 +78,7 @@ extension SpotsProtocol {
         Dispatch.main {
           weakSelf.scrollView.layoutViews()
           if let controller = self as? Controller {
-            Controller.spotsDidReloadComponentModels?(controller)
+            Controller.componentsDidReloadComponentModels?(controller)
           }
           completion?()
         }
@@ -92,7 +92,7 @@ extension SpotsProtocol {
           weakSelf.scrollView.layoutSubviews()
           weakSelf.cache()
           if let controller = self as? Controller {
-            Controller.spotsDidReloadComponentModels?(controller)
+            Controller.componentsDidReloadComponentModels?(controller)
           }
 
           completion?()
@@ -130,9 +130,9 @@ extension SpotsProtocol {
 
   fileprivate func replaceComponent(_ index: Int, newComponentModels: [ComponentModel], yOffset: inout CGFloat) {
     let component = Factory.resolve(model: newComponentModels[index])
-    let oldSpot = spots[index]
+    let oldSpot = components[index]
 
-    /// Remove old composite spots from superview and empty container
+    /// Remove old composite components from superview and empty container
     for compositeSpot in oldSpot.compositeComponents {
       compositeSpot.component.view.removeFromSuperview()
     }
@@ -141,8 +141,8 @@ extension SpotsProtocol {
     component.view.frame = oldSpot.view.frame
 
     oldSpot.view.removeFromSuperview()
-    spots[index] = component
-    scrollView.spotsContentView.insertSubview(component.view, at: index)
+    components[index] = component
+    scrollView.componentsContentView.insertSubview(component.view, at: index)
     setupComponent(at: index, spot: component)
 
     #if !os(OSX)
@@ -153,7 +153,7 @@ extension SpotsProtocol {
 
   fileprivate func newComponent(_ index: Int, newComponentModels: [ComponentModel], yOffset: inout CGFloat) {
     let component = Factory.resolve(model: newComponentModels[index])
-    spots.append(component)
+    components.append(component)
     setupComponent(at: index, spot: component)
     #if !os(OSX)
       (spot as? CarouselComponent)?.layout.yOffset = yOffset
@@ -165,10 +165,10 @@ extension SpotsProtocol {
   ///
   /// - parameter index: The index of the CoreComponent object hat you want to remove
   fileprivate func removeComponent(at index: Int) {
-    guard index < spots.count else {
+    guard index < components.count else {
       return
     }
-    spots[index].view.removeFromSuperview()
+    components[index].view.removeFromSuperview()
   }
 
   /// Set up items for a CoreComponent object
@@ -268,11 +268,11 @@ extension SpotsProtocol {
       }
 
       for (index, item) in newItems.enumerated() {
-        guard index < weakSelf.spots.count else {
+        guard index < weakSelf.components.count else {
           break
         }
 
-        let compositeComponents = weakSelf.spots[item.index].compositeComponents
+        let compositeComponents = weakSelf.components[item.index].compositeComponents
           .filter({ $0.itemIndex == item.index })
         for (index, compositeSpot) in compositeComponents.enumerated() {
           guard index < offsets.count else {
@@ -312,7 +312,7 @@ extension SpotsProtocol {
       for (index, item) in newItems.enumerated() {
         let components = Parser.parse(item.children).map { $0.model }
 
-        let oldSpots = weakSelf.spots.flatMap({
+        let oldSpots = weakSelf.components.flatMap({
           $0.compositeComponents
         })
 
@@ -420,9 +420,9 @@ extension SpotsProtocol {
         }
       }
 
-      for removedSpot in weakSelf.spots where removedSpot.view.superview == nil {
-        if let index = weakSelf.spots.index(where: { removedSpot.view.isEqual($0.view) }) {
-          weakSelf.spots.remove(at: index)
+      for removedSpot in weakSelf.components where removedSpot.view.superview == nil {
+        if let index = weakSelf.components.index(where: { removedSpot.view.isEqual($0.view) }) {
+          weakSelf.components.remove(at: index)
         }
       }
 
@@ -438,7 +438,7 @@ extension SpotsProtocol {
   /// - parameter json: A JSON dictionary that gets parsed into UI elements
   /// - parameter compare: A closure that is used for comparing a ComponentModel collections
   /// - parameter animated: An animation closure that can be used to perform custom animations when reloading
-  /// - parameter completion: A closure that will be run after reload has been performed on all spots
+  /// - parameter completion: A closure that will be run after reload has been performed on all components
   public func reloadIfNeeded(_ json: [String : Any],
                              compare: @escaping CompareClosure = { lhs, rhs in return lhs !== rhs },
                              animated: ((_ view: View) -> Void)? = nil,
@@ -451,11 +451,11 @@ extension SpotsProtocol {
 
       let newSpots: [CoreComponent] = Parser.parse(json)
       let newComponentModels = newSpots.map { $0.model }
-      let oldComponentModels = weakSelf.spots.map { $0.model }
+      let oldComponentModels = weakSelf.components.map { $0.model }
 
       guard compare(newComponentModels, oldComponentModels) else {
         if let controller = self as? Controller {
-          Controller.spotsDidReloadComponentModels?(controller)
+          Controller.componentsDidReloadComponentModels?(controller)
         }
         weakSelf.cache()
         completion?()
@@ -463,13 +463,13 @@ extension SpotsProtocol {
       }
 
       var offsets = [CGPoint]()
-      let oldComposites = weakSelf.spots.flatMap { $0.compositeComponents }
+      let oldComposites = weakSelf.components.flatMap { $0.compositeComponents }
 
       if newComponentModels.count == oldComponentModels.count {
-        offsets = weakSelf.spots.map { $0.view.contentOffset }
+        offsets = weakSelf.components.map { $0.view.contentOffset }
       }
 
-      weakSelf.spots = newSpots
+      weakSelf.components = newSpots
 
       if weakSelf.scrollView.superview == nil {
         weakSelf.view.addSubview(weakSelf.scrollView)
@@ -479,7 +479,7 @@ extension SpotsProtocol {
       weakSelf.setupSpots(animated: animated)
       weakSelf.cache()
 
-      let newComposites = weakSelf.spots.flatMap { $0.compositeComponents }
+      let newComposites = weakSelf.components.flatMap { $0.compositeComponents }
 
       for (index, compositeSpot) in oldComposites.enumerated() {
         if index == newComposites.count {
@@ -496,7 +496,7 @@ extension SpotsProtocol {
       }
 
       if let controller = self as? Controller {
-        Controller.spotsDidReloadComponentModels?(controller)
+        Controller.componentsDidReloadComponentModels?(controller)
       }
 
       weakSelf.scrollView.layoutSubviews()
@@ -507,7 +507,7 @@ extension SpotsProtocol {
   ///
   ///- parameter json: A JSON dictionary that gets parsed into UI elements
   ///- parameter animated: An animation closure that can be used to perform custom animations when reloading
-  ///- parameter completion: A closure that will be run after reload has been performed on all spots
+  ///- parameter completion: A closure that will be run after reload has been performed on all components
   public func reload(_ json: [String : Any], animated: ((_ view: View) -> Void)? = nil, completion: Completion = nil) {
     Dispatch.main { [weak self] in
       guard let weakSelf = self else {
@@ -515,7 +515,7 @@ extension SpotsProtocol {
         return
       }
 
-      weakSelf.spots = Parser.parse(json)
+      weakSelf.components = Parser.parse(json)
       weakSelf.cache()
 
       if weakSelf.scrollView.superview == nil {
@@ -527,7 +527,7 @@ extension SpotsProtocol {
 
       completion?()
       if let controller = weakSelf as? Controller {
-        Controller.spotsDidReloadComponentModels?(controller)
+        Controller.componentsDidReloadComponentModels?(controller)
       }
       weakSelf.scrollView.layoutSubviews()
     }
@@ -726,7 +726,7 @@ extension SpotsProtocol {
       guard let weakSelf = self else { return }
       weakSelf.refreshPositions.removeAll()
 
-      weakSelf.refreshDelegate?.spotablesDidReload(weakSelf.spots, refreshControl: refreshControl) {
+      weakSelf.refreshDelegate?.spotablesDidReload(weakSelf.components, refreshControl: refreshControl) {
         refreshControl.endRefreshing()
       }
     }
@@ -734,7 +734,7 @@ extension SpotsProtocol {
   #endif
 
   fileprivate func reloadSpotsScrollView() {
-    scrollView.spotsContentView.subviews.forEach {
+    scrollView.componentsContentView.subviews.forEach {
       $0.removeFromSuperview()
     }
   }
@@ -764,7 +764,7 @@ extension SpotsProtocol {
   }
 
   fileprivate func setupAndLayoutSpots() {
-    for spot in spots {
+    for spot in components {
       setupAndLayoutComponent(spot: spot)
     }
 

@@ -7,15 +7,15 @@ public enum ControllerBackground {
 open class Controller: NSViewController, SpotsProtocol {
 
   /// A closure that is called when the controller is reloaded with components
-  public static var spotsDidReloadComponentModels: ((Controller) -> Void)?
+  public static var componentsDidReloadComponentModels: ((Controller) -> Void)?
 
   open static var configure: ((_ container: SpotsScrollView) -> Void)?
 
   /// A collection of CoreComponent objects
-  open var spots: [CoreComponent] {
+  open var components: [CoreComponent] {
     didSet {
-      spots.forEach { $0.delegate = delegate }
-      delegate?.componentsDidChange(spots)
+      components.forEach { $0.delegate = delegate }
+      delegate?.componentsDidChange(components)
     }
   }
 
@@ -44,10 +44,10 @@ open class Controller: NSViewController, SpotsProtocol {
   /// A delegate for when an item is tapped within a Spot
   weak public var delegate: ComponentDelegate? {
     didSet {
-      spots.forEach {
+      components.forEach {
         $0.delegate = delegate
       }
-      delegate?.componentsDidChange(spots)
+      delegate?.componentsDidChange(components)
     }
   }
 
@@ -63,11 +63,11 @@ open class Controller: NSViewController, SpotsProtocol {
   fileprivate let backgroundType: ControllerBackground
 
   /**
-   - parameter spots: An array of CoreComponent objects
+   - parameter components: An array of CoreComponent objects
    - parameter backgroundType: The type of background that the Controller should use, .Regular or .Dynamic
    */
-  public required init(spots: [CoreComponent] = [], backgroundType: ControllerBackground = .regular) {
-    self.spots = spots
+  public required init(components: [CoreComponent] = [], backgroundType: ControllerBackground = .regular) {
+    self.components = components
     self.backgroundType = backgroundType
     super.init(nibName: nil, bundle: nil)!
 
@@ -83,7 +83,7 @@ open class Controller: NSViewController, SpotsProtocol {
    */
   public convenience init(cacheKey: String) {
     let stateCache = StateCache(key: cacheKey)
-    self.init(spots: Parser.parse(stateCache.load()))
+    self.init(components: Parser.parse(stateCache.load()))
     self.stateCache = stateCache
   }
 
@@ -91,14 +91,14 @@ open class Controller: NSViewController, SpotsProtocol {
    - parameter spot: A CoreComponent object
    */
   public convenience init(spot: CoreComponent) {
-    self.init(spots: [spot])
+    self.init(components: [spot])
   }
 
   /**
    - parameter json: A JSON dictionary that gets parsed into UI elements
    */
   public convenience init(_ json: [String : Any]) {
-    self.init(spots: Parser.parse(json))
+    self.init(components: Parser.parse(json))
   }
 
   /**
@@ -106,7 +106,7 @@ open class Controller: NSViewController, SpotsProtocol {
    */
   deinit {
     NotificationCenter.default.removeObserver(self)
-    spots.forEach { $0.delegate = nil }
+    components.forEach { $0.delegate = nil }
     delegate = nil
     scrollDelegate = nil
   }
@@ -120,14 +120,14 @@ open class Controller: NSViewController, SpotsProtocol {
     fatalError("init(coder:) has not been implemented")
   }
 
-  ///  A generic look up method for resolving spots based on index
+  ///  A generic look up method for resolving components based on index
   ///
   /// - parameter index: The index of the spot that you are trying to resolve.
   /// - parameter type: The generic type for the spot you are trying to resolve.
   ///
   /// - returns: An optional CoreComponent object of inferred type.
   open func spot<T>(at index: Int = 0, ofType type: T.Type) -> T? {
-    return spots.filter({ $0.index == index }).first as? T
+    return components.filter({ $0.index == index }).first as? T
   }
 
   /// A look up method for resolving a spot at index as a CoreComponent object.
@@ -136,18 +136,18 @@ open class Controller: NSViewController, SpotsProtocol {
   ///
   /// - returns: An optional CoreComponent object.
   open func spot(at index: Int = 0) -> CoreComponent? {
-    return spots.filter({ $0.index == index }).first
+    return components.filter({ $0.index == index }).first
   }
 
   /**
-   A generic look up method for resolving spots using a closure
+   A generic look up method for resolving components using a closure
 
    - parameter closure: A closure to perform actions on a spotable object
 
    - returns: An optional CoreComponent object
    */
   public func resolve(spot closure: (_ index: Int, _ spot: CoreComponent) -> Bool) -> CoreComponent? {
-    for (index, spot) in spots.enumerated()
+    for (index, spot) in components.enumerated()
       where closure(index, spot) {
         return spot
     }
@@ -191,17 +191,17 @@ open class Controller: NSViewController, SpotsProtocol {
   open override func viewDidAppear() {
     super.viewDidAppear()
 
-    for spot in spots {
+    for spot in components {
       spot.layout(scrollView.frame.size)
     }
   }
 
-  public func reloadSpots(spots: [CoreComponent], closure: (() -> Void)?) {
-    for spot in self.spots {
+  public func reloadSpots(components: [CoreComponent], closure: (() -> Void)?) {
+    for spot in self.components {
       spot.delegate = nil
       spot.view.removeFromSuperview()
     }
-    self.spots = spots
+    self.components = components
     delegate = nil
 
     setupSpots()
@@ -213,7 +213,7 @@ open class Controller: NSViewController, SpotsProtocol {
    - parameter animated: An optional animation closure that runs when a spot is being rendered
    */
   public func setupSpots(animated: ((_ view: View) -> Void)? = nil) {
-    spots.enumerated().forEach { index, spot in
+    components.enumerated().forEach { index, spot in
       setupComponent(at: index, spot: spot)
       animated?(spot.view)
     }
@@ -221,10 +221,10 @@ open class Controller: NSViewController, SpotsProtocol {
 
   public func setupComponent(at index: Int, spot: CoreComponent) {
     if spot.view.superview == nil {
-      scrollView.spotsContentView.addSubview(spot.view)
+      scrollView.componentsContentView.addSubview(spot.view)
     }
 
-    spots[index].model.index = index
+    components[index].model.index = index
     spot.registerAndPrepare()
 
     var height = spot.computedHeight
@@ -243,7 +243,7 @@ open class Controller: NSViewController, SpotsProtocol {
   open override func viewDidLayout() {
     super.viewDidLayout()
 
-    for spot in spots {
+    for spot in components {
       spot.layout(CGSize(width: view.frame.width,
         height: spot.computedHeight))
 
@@ -255,7 +255,7 @@ open class Controller: NSViewController, SpotsProtocol {
   }
 
   public func deselectAllExcept(selectedSpot: CoreComponent) {
-    for spot in spots {
+    for spot in components {
       if selectedSpot.view != spot.view {
         spot.deselect()
       }
@@ -263,7 +263,7 @@ open class Controller: NSViewController, SpotsProtocol {
   }
 
   public func windowDidResize(_ notification: Notification) {
-    for case let spot as Gridable in spots {
+    for case let spot as Gridable in components {
       guard let layout = spot.model.layout, layout.span > 1 else {
         continue
       }
@@ -274,7 +274,7 @@ open class Controller: NSViewController, SpotsProtocol {
   }
 
   public func windowDidEndLiveResize(_ notification: Notification) {
-    for case let spot as Gridable in spots {
+    for case let spot as Gridable in components {
       guard let layout = spot.model.layout, layout.span > 1 else {
         continue
       }
