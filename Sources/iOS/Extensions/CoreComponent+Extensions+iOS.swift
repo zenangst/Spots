@@ -1,7 +1,7 @@
 extension CoreComponent {
 
-  func didScrollHorizontally(handler: (SpotHorizontallyScrollable) -> Void) {
-    guard let spot = self as? SpotHorizontallyScrollable,
+  func didScrollHorizontally(handler: (ComponentHorizontallyScrollable) -> Void) {
+    guard let spot = self as? ComponentHorizontallyScrollable,
       model.interaction.scrollDirection == .horizontal else {
         return
     }

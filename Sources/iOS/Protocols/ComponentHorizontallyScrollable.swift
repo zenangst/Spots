@@ -1,6 +1,6 @@
 import UIKit
 
-public protocol SpotHorizontallyScrollable: CoreComponent {
+public protocol ComponentHorizontallyScrollable: CoreComponent {
 
   var carouselScrollDelegate: CarouselScrollDelegate? { get set }
   var pageControl: UIPageControl { get }

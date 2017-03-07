@@ -104,7 +104,7 @@ extension Delegate: UIScrollViewDelegate {
     }
   }
 
-  fileprivate func performPaginatedScrolling(_ handler: (SpotHorizontallyScrollable, UICollectionView, CollectionLayout) -> Void) {
+  fileprivate func performPaginatedScrolling(_ handler: (ComponentHorizontallyScrollable, UICollectionView, CollectionLayout) -> Void) {
     spot?.didScrollHorizontally { spot in
       guard let collectionView = spot.userInterface as? CollectionView,
         let collectionViewLayout = collectionView.collectionViewLayout as? CollectionLayout else {
