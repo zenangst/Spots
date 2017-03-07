@@ -46,7 +46,7 @@ class RxComponentDelegateTests: XCTestCase {
 
   func testWillDisplayView() {
     let listSpot = ListComponent()
-    let spotView = SpotView()
+    let spotView = ComponentView()
     let item = Item(title: "Test")
     var isCalled = false
 
@@ -62,7 +62,7 @@ class RxComponentDelegateTests: XCTestCase {
 
   func testDidEndDisplayingView() {
     let listSpot = ListComponent()
-    let spotView = SpotView()
+    let spotView = ComponentView()
     let item = Item(title: "Test")
     var isCalled = false
 

@@ -14,14 +14,14 @@ public final class RxComponentDelegate: DelegateProxy, DelegateProxyType, Compon
   // Delegate methods subjects
   private let componentDidSelectItem = PublishSubject<(Spotable, Item)>()
   private let componentsDidChange = PublishSubject<[Spotable]>()
-  private let componentWillDisplayView = PublishSubject<(Spotable, SpotView, Item)>()
-  private let componentDidEndDisplayingView = PublishSubject<(Spotable, SpotView, Item)>()
+  private let componentWillDisplayView = PublishSubject<(Spotable, ComponentView, Item)>()
+  private let componentDidEndDisplayingView = PublishSubject<(Spotable, ComponentView, Item)>()
 
   // Delegate method observables
   public let didSelectItem: Observable<(Spotable, Item)>
   public let didChange: Observable<[Spotable]>
-  public let willDisplayView: Observable<(Spotable, SpotView, Item)>
-  public let didEndDisplayingView: Observable<(Spotable, SpotView, Item)>
+  public let willDisplayView: Observable<(Spotable, ComponentView, Item)>
+  public let didEndDisplayingView: Observable<(Spotable, ComponentView, Item)>
 
   public class func currentDelegateFor(_ object: AnyObject) -> AnyObject? {
     return (object as? Spotable)?.delegate ?? (object as? Controller)?.delegate
@@ -52,11 +52,11 @@ public final class RxComponentDelegate: DelegateProxy, DelegateProxyType, Compon
     componentsDidChange.onNext(components)
   }
 
-  public func component(_ component: Spotable, willDisplay view: SpotView, item: Item) {
+  public func component(_ component: Spotable, willDisplay view: ComponentView, item: Item) {
     componentWillDisplayView.onNext(component, view, item)
   }
 
-  public func spotable(_ component: Spotable, didEndDisplaying view: SpotView, item: Item) {
+  public func spotable(_ component: Spotable, didEndDisplaying view: ComponentView, item: Item) {
     componentDidEndDisplayingView.onNext(component, view, item)
   }
 }
