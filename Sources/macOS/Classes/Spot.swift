@@ -305,7 +305,6 @@ public class Spot: NSObject, Spotable {
   }
 
   fileprivate func setupCollectionView(_ collectionView: CollectionView, with size: CGSize) {
-
     if let componentLayout = self.component.layout,
       let collectionViewLayout = collectionView.collectionViewLayout as? FlowLayout {
       componentLayout.configure(collectionViewLayout: collectionViewLayout)
