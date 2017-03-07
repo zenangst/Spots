@@ -891,17 +891,17 @@
 		BDAD85341E3E7032008289AE /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				BDDCF6E91E4DF936004B38C4 /* Extensions.swift */,
 				BDAD85351E3E7032008289AE /* CarouselScrollDelegate+Extensions.swift */,
 				BDAD85361E3E7032008289AE /* Component+Extension.swift */,
+				BDAD853E1E3E7032008289AE /* ComponentDelegate+Extensions.swift */,
+				BDDCF6E91E4DF936004B38C4 /* Extensions.swift */,
 				BDAD85371E3E7032008289AE /* Gridable+Extensions.swift */,
 				BDAD85381E3E7032008289AE /* Item+Extensions.swift */,
+				BDAD853D1E3E7032008289AE /* ItemConfigurable+Extensions.swift */,
 				BDAD85391E3E7032008289AE /* Listable+Extension.swift */,
 				BDAD853A1E3E7032008289AE /* ScrollDelegate+Extensions.swift */,
 				BDAD853B1E3E7032008289AE /* Spotable+Extensions.swift */,
 				BDAD853C1E3E7032008289AE /* Spotable+Mutation.swift */,
-				BDAD853D1E3E7032008289AE /* ItemConfigurable+Extensions.swift */,
-				BDAD853E1E3E7032008289AE /* ComponentDelegate+Extensions.swift */,
 				BDAD853F1E3E7032008289AE /* SpotsProtocol+Extensions.swift */,
 				BDAD85401E3E7032008289AE /* SpotsProtocol+LiveEditing.swift */,
 				BDAD85411E3E7032008289AE /* SpotsProtocol+Mutation.swift */,
@@ -914,26 +914,26 @@
 		BDAD85441E3E7032008289AE /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				BDDCF6EE1E4DF93D004B38C4 /* DictionaryConvertible.swift */,
-				BDDCF6E41E4DF92F004B38C4 /* StringConvertible.swift */,
-				BDDCF6DF1E4DF927004B38C4 /* ItemConfigurable.swift */,
-				BDDCF6DA1E4DF91F004B38C4 /* Indexable.swift */,
 				BDAD85451E3E7032008289AE /* CarouselScrollDelegate.swift */,
+				D5D2826E1E5474E0004BF251 /* Cell.swift */,
 				BDAD85461E3E7032008289AE /* Componentable.swift */,
+				BDAD854E1E3E7032008289AE /* ComponentDelegate.swift */,
+				BDAD854F1E3E7032008289AE /* ComponentFocusDelegate.swift */,
 				BDAD85471E3E7032008289AE /* Composable.swift */,
+				BDDCF6EE1E4DF93D004B38C4 /* DictionaryConvertible.swift */,
 				BDAD85481E3E7032008289AE /* Gridable.swift */,
+				BDDCF6DA1E4DF91F004B38C4 /* Indexable.swift */,
+				BDDCF6DF1E4DF927004B38C4 /* ItemConfigurable.swift */,
 				BDAD85491E3E7032008289AE /* Listable.swift */,
 				BDAD854A1E3E7032008289AE /* RefreshDelegate.swift */,
 				BDAD854B1E3E7032008289AE /* ScrollDelegate.swift */,
 				BDAD854C1E3E7032008289AE /* Spotable.swift */,
-				BDAD854E1E3E7032008289AE /* ComponentDelegate.swift */,
-				BDAD854F1E3E7032008289AE /* ComponentFocusDelegate.swift */,
 				BDAD85501E3E7032008289AE /* SpotsProtocol.swift */,
+				BDDCF6E41E4DF92F004B38C4 /* StringConvertible.swift */,
 				BDAD85511E3E7032008289AE /* UserInterface.swift */,
 				BDAD85521E3E7032008289AE /* Viewable.swift */,
-				BDAD85531E3E7032008289AE /* Wrappable.swift */,
 				D5D2826A1E547219004BF251 /* ViewStateDelegate.swift */,
-				D5D2826E1E5474E0004BF251 /* Cell.swift */,
+				BDAD85531E3E7032008289AE /* Wrappable.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
