@@ -3,7 +3,7 @@
 import Cocoa
 import Tailor
 
-public class Spot: NSObject, Spotable {
+public class Component: NSObject, Spotable {
 
   public static var layout: Layout = Layout(span: 1.0)
   public static var headers: Registry = Registry()
@@ -135,7 +135,7 @@ public class Spot: NSObject, Spotable {
   public required convenience init(model: ComponentModel) {
     var model = model
     if model.kind.isEmpty {
-      model.kind = Spot.defaultKind
+      model.kind = Component.defaultKind
     }
 
     let kind = ComponentModel.Kind(rawValue: model.kind) ?? .list

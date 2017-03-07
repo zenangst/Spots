@@ -1,6 +1,6 @@
 import Cocoa
 
-extension Spot {
+extension Component {
 
   func setupVerticalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
     GridComponent.configure?(collectionView)

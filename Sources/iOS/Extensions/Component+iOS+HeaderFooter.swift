@@ -1,6 +1,6 @@
 import UIKit
 
-extension Spot {
+extension Component {
 
   func configureCollectionViewHeader(_ collectionView: CollectionView, with size: CGSize) {
     guard let collectionViewLayout = collectionView.collectionViewLayout as? GridableLayout else {

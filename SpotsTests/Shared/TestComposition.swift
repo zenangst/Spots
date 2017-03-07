@@ -126,7 +126,7 @@ class CompositionTests: XCTestCase {
     XCTAssertNil(composite)
   }
 
-  func testReloadWithComponentModelsUsingCompositionTriggeringReplaceSpot() {
+  func testReloadWithComponentModelsUsingCompositionTriggeringReplaceComponent() {
     let initialComponentModels: [ComponentModel] = [
       ComponentModel(kind: ComponentModel.Kind.grid.rawValue,
                 span: 2.0,
@@ -398,7 +398,7 @@ class CompositionTests: XCTestCase {
     waitForExpectations(timeout: 10.0, handler: nil)
   }
 
-  func testReloadWithComponentModelsUsingCompositionTriggeringNewSpot() {
+  func testReloadWithComponentModelsUsingCompositionTriggeringNewComponent() {
     let initialComponentModels: [ComponentModel] = []
     let controller = Controller(spots: Parser.parse(initialComponentModels))
     controller.prepareController()

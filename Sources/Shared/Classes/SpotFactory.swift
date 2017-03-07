@@ -9,8 +9,8 @@ public struct Factory {
     ComponentModel.Kind.list.string: ListComponent.self,
     ComponentModel.Kind.grid.string: GridComponent.self,
     ComponentModel.Kind.row.string: RowComponent.self,
-    ComponentModel.Kind.view.string: ViewSpot.self,
-    ComponentModel.Kind.spot.string: Spot.self
+    ComponentModel.Kind.view.string: ViewComponent.self,
+    ComponentModel.Kind.spot.string: Component.self
   ]
 
   /// Register a spot for a specfic spot type

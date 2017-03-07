@@ -128,7 +128,7 @@ extension SpotsProtocol {
     return changes
   }
 
-  fileprivate func replaceSpot(_ index: Int, newComponentModels: [ComponentModel], yOffset: inout CGFloat) {
+  fileprivate func replaceComponent(_ index: Int, newComponentModels: [ComponentModel], yOffset: inout CGFloat) {
     let spot = Factory.resolve(model: newComponentModels[index])
     let oldSpot = spots[index]
 
@@ -143,7 +143,7 @@ extension SpotsProtocol {
     oldSpot.view.removeFromSuperview()
     spots[index] = spot
     scrollView.spotsContentView.insertSubview(spot.view, at: index)
-    setupSpot(at: index, spot: spot)
+    setupComponent(at: index, spot: spot)
 
     #if !os(OSX)
       (spot as? CarouselComponent)?.layout.yOffset = yOffset
@@ -151,10 +151,10 @@ extension SpotsProtocol {
     yOffset += spot.view.frame.size.height
   }
 
-  fileprivate func newSpot(_ index: Int, newComponentModels: [ComponentModel], yOffset: inout CGFloat) {
+  fileprivate func newComponent(_ index: Int, newComponentModels: [ComponentModel], yOffset: inout CGFloat) {
     let spot = Factory.resolve(model: newComponentModels[index])
     spots.append(spot)
-    setupSpot(at: index, spot: spot)
+    setupComponent(at: index, spot: spot)
     #if !os(OSX)
       (spot as? CarouselComponent)?.layout.yOffset = yOffset
     #endif
@@ -164,7 +164,7 @@ extension SpotsProtocol {
   /// Remove Spot at index
   ///
   /// - parameter index: The index of the Spotable object hat you want to remove
-  fileprivate func removeSpot(at index: Int) {
+  fileprivate func removeComponent(at index: Int) {
     guard index < spots.count else {
       return
     }
@@ -179,7 +179,7 @@ extension SpotsProtocol {
   /// - parameter closure:       A completion closure that is invoked when the setup of the new items is complete
   ///
   /// - returns: A boolean value that determines if the closure should run in `process(changes:)`
-  fileprivate func setupItemsForSpot(at index: Int, newComponentModels: [ComponentModel], withAnimation animation: Animation = .automatic, completion: Completion = nil) -> Bool {
+  fileprivate func setupItemsForComponent(at index: Int, newComponentModels: [ComponentModel], withAnimation animation: Animation = .automatic, completion: Completion = nil) -> Bool {
     guard let spot = self.spot(at: index, ofType: Spotable.self) else {
       return false
     }
@@ -402,17 +402,17 @@ extension SpotsProtocol {
       for (index, change) in changes.enumerated() {
         switch change {
         case .identifier, .title, .kind, .layout, .header, .footer, .meta:
-          weakSelf.replaceSpot(index, newComponentModels: newComponentModels, yOffset: &yOffset)
+          weakSelf.replaceComponent(index, newComponentModels: newComponentModels, yOffset: &yOffset)
         case .new:
-          weakSelf.newSpot(index, newComponentModels: newComponentModels, yOffset: &yOffset)
+          weakSelf.newComponent(index, newComponentModels: newComponentModels, yOffset: &yOffset)
         case .removed:
-          weakSelf.removeSpot(at: index)
+          weakSelf.removeComponent(at: index)
         case .items:
           if index == lastItemChange {
             completion = finalCompletion
           }
 
-          runCompletion = weakSelf.setupItemsForSpot(at: index,
+          runCompletion = weakSelf.setupItemsForComponent(at: index,
                                                      newComponentModels: newComponentModels,
                                                      withAnimation: animation,
                                                      completion: completion)
@@ -737,7 +737,7 @@ extension SpotsProtocol {
     }
   }
 
-  func setupAndLayoutSpot(spot: Spotable) {
+  func setupAndLayoutComponent(spot: Spotable) {
 
     switch spot {
     case let spot as Gridable:
@@ -763,7 +763,7 @@ extension SpotsProtocol {
 
   fileprivate func setupAndLayoutSpots() {
     for spot in spots {
-      setupAndLayoutSpot(spot: spot)
+      setupAndLayoutComponent(spot: spot)
     }
 
     #if !os(OSX)

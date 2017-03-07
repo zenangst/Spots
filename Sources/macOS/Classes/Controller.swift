@@ -214,12 +214,12 @@ open class Controller: NSViewController, SpotsProtocol {
    */
   public func setupSpots(animated: ((_ view: View) -> Void)? = nil) {
     spots.enumerated().forEach { index, spot in
-      setupSpot(at: index, spot: spot)
+      setupComponent(at: index, spot: spot)
       animated?(spot.view)
     }
   }
 
-  public func setupSpot(at index: Int, spot: Spotable) {
+  public func setupComponent(at index: Int, spot: Spotable) {
     if spot.view.superview == nil {
       scrollView.spotsContentView.addSubview(spot.view)
     }

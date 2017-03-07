@@ -4,7 +4,7 @@ import XCTest
 
 class SpotableTests: XCTestCase {
 
-  func testAppendingMultipleItemsToSpot() {
+  func testAppendingMultipleItemsToComponent() {
     let listSpot = ListComponent(model: ComponentModel(title: "ComponentModel", span: 1.0))
     listSpot.setup(CGSize(width: 100, height: 100))
     var items: [Item] = []
@@ -52,7 +52,7 @@ class SpotableTests: XCTestCase {
     waitForExpectations(timeout: 10.0, handler: nil)
   }
 
-  func testResolvingUIFromGridableSpot() {
+  func testResolvingUIFromGridableComponent() {
     let kind = "test-view"
 
     Configuration.register(view: TestView.self, identifier: kind)
@@ -74,7 +74,7 @@ class SpotableTests: XCTestCase {
     XCTAssertTrue(type(of: genericView) === TestView.self)
   }
 
-  func testResolvingUIFromListableSpot() {
+  func testResolvingUIFromListableComponent() {
     let kind = "test-view"
 
     Configuration.register(view: TestView.self, identifier: kind)

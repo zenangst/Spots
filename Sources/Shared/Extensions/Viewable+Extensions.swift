@@ -28,10 +28,10 @@ public extension Spotable where Self : Viewable {
    Called when the Gridable object is being prepared, it is required by Spotable
    */
   public func prepare() {
-    prepareSpot(self)
+    prepareComponent(self)
   }
 
-  fileprivate func prepareSpot<T: Viewable>(_ spot: T) {
+  fileprivate func prepareComponent<T: Viewable>(_ spot: T) {
     if model.kind.isEmpty { model.kind = "view" }
 
     model.items.forEach { (item: Item) in

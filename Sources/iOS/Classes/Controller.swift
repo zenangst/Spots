@@ -278,7 +278,7 @@ open class Controller: UIViewController, SpotsProtocol, SpotsFocusDelegate, UISc
     var yOffset: CGFloat = 0.0
 
     spots.enumerated().forEach { index, spot in
-      setupSpot(at: index, spot: spot)
+      setupComponent(at: index, spot: spot)
       animated?(spot.view)
       (spot as? CarouselComponent)?.layout.yOffset = yOffset
       yOffset += spot.view.frame.size.height
@@ -289,7 +289,7 @@ open class Controller: UIViewController, SpotsProtocol, SpotsFocusDelegate, UISc
   ///
   /// - parameter index: The index of the Spotable object
   /// - parameter spot:  The spotable object that is going to be setup
-  open func setupSpot(at index: Int, spot: Spotable) {
+  open func setupComponent(at index: Int, spot: Spotable) {
     if spot.view.superview == nil {
       scrollView.spotsContentView.addSubview(spot.view)
     }

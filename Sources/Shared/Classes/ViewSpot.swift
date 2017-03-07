@@ -4,7 +4,7 @@
   import UIKit
 #endif
 
-open class ViewSpot: NSObject, Spotable, Viewable {
+open class ViewComponent: NSObject, Spotable, Viewable {
 
   public var view: View {
     return scrollView
@@ -74,14 +74,14 @@ open class ViewSpot: NSObject, Spotable, Viewable {
   }
 
   /**
-   A placeholder method, it is left empty as it holds no value for ViewSpot
+   A placeholder method, it is left empty as it holds no value for ViewComponent
    */
   open func deselect() {}
 
   // MARK: - Spotable
 
   /**
-  A placeholder method, it is left empty as it holds no value for ViewSpot
+  A placeholder method, it is left empty as it holds no value for ViewComponent
    */
   open func register() {}
 

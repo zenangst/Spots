@@ -43,7 +43,7 @@ public class GridableLayout: FlowLayout {
     }
 
     var offset: CGFloat = 0.0
-    if let spot = spot as? Spot {
+    if let spot = spot as? Component {
       offset += spot.headerHeight + spot.footerHeight
     }
 

@@ -60,7 +60,7 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
     case list
     /// The identifier for RowComponent
     case row
-    /// The identifier for ViewSpot
+    /// The identifier for ViewComponent
     case view
     /// The identifier for Spot
     case spot
