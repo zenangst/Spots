@@ -13,7 +13,7 @@ import Tailor
   open static var configure: ((_ view: View) -> Void)?
 
   weak public var focusDelegate: SpotsFocusDelegate?
-  weak public var delegate: SpotsDelegate?
+  weak public var delegate: ComponentDelegate?
 
   var headerView: View?
   var footerView: View?
@@ -267,7 +267,7 @@ import Tailor
       let item = item(at: tableView.clickedRow) else {
       return
     }
-    delegate?.spotable(self, itemSelected: item)
+    delegate?.component(self, itemSelected: item)
   }
 
   open func action(_ sender: Any?) {
@@ -275,7 +275,7 @@ import Tailor
       let item = item(at: tableView.clickedRow) else {
         return
     }
-    delegate?.spotable(self, itemSelected: item)
+    delegate?.component(self, itemSelected: item)
   }
 
   public func sizeForItem(at indexPath: IndexPath) -> CGSize {

@@ -40,8 +40,8 @@ open class ListComponent: NSObject, Listable {
     }
   }
 
-  /// A SpotsDelegate that is used for the ListComponent
-  open weak var delegate: SpotsDelegate?
+  /// A ComponentDelegate that is used for the ListComponent
+  open weak var delegate: ComponentDelegate?
 
   /// A UITableView, used as the main UI component for a ListComponent
   open lazy var tableView = UITableView()

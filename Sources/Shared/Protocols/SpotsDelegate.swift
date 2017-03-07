@@ -1,5 +1,5 @@
 /// A generic delegate for Spots
-public protocol SpotsDelegate: class {
+public protocol ComponentDelegate: class {
 
   /// A delegate method that is triggered when ever a cell is tapped by the user.
   ///

@@ -66,7 +66,7 @@ open class Controller: UIViewController, SpotsProtocol, SpotsFocusDelegate, UISc
   public var stateCache: StateCache?
 
   /// A delegate for when an item is tapped within a Spot.
-  weak open var delegate: SpotsDelegate? {
+  weak open var delegate: ComponentDelegate? {
     didSet { spotsDelegateDidChange() }
   }
 

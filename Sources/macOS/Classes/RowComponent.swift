@@ -91,7 +91,7 @@ open class RowComponent: NSObject, Gridable {
   open static var defaultGrid: NSCollectionViewItem.Type = NSCollectionViewItem.self
   open static var defaultKind: StringConvertible = LayoutType.grid.rawValue
 
-  open weak var delegate: SpotsDelegate?
+  open weak var delegate: ComponentDelegate?
 
   open var model: ComponentModel
   open var configure: ((ItemConfigurable) -> Void)? {

@@ -42,7 +42,7 @@ open class Controller: NSViewController, SpotsProtocol {
   #endif
 
   /// A delegate for when an item is tapped within a Spot
-  weak public var delegate: SpotsDelegate? {
+  weak public var delegate: ComponentDelegate? {
     didSet {
       spots.forEach {
         $0.delegate = delegate

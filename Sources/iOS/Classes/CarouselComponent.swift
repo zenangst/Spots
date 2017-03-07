@@ -46,8 +46,8 @@ open class CarouselComponent: NSObject, Gridable, SpotHorizontallyScrollable {
   /// A CarouselScrollDelegate, used when a CarouselComponent scrolls
   open weak var carouselScrollDelegate: CarouselScrollDelegate?
 
-  /// A SpotsDelegate that is used for the CarouselComponent
-  open weak var delegate: SpotsDelegate?
+  /// A ComponentDelegate that is used for the CarouselComponent
+  open weak var delegate: ComponentDelegate?
 
   /// A UIPageControl, enable by setting pageIndicator to true
   open lazy var pageControl = UIPageControl()

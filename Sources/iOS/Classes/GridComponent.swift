@@ -32,8 +32,8 @@ open class GridComponent: NSObject, Gridable {
     }
   }
 
-  /// A SpotsDelegate that is used for the GridComponent
-  open weak var delegate: SpotsDelegate?
+  /// A ComponentDelegate that is used for the GridComponent
+  open weak var delegate: ComponentDelegate?
 
   /// A custom UICollectionViewFlowLayout
   open lazy var layout: CollectionLayout = CollectionLayout()

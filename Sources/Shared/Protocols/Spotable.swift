@@ -21,8 +21,8 @@ public protocol Spotable: class {
     weak var focusDelegate: SpotsFocusDelegate? { get set }
   #endif
 
-  /// A SpotsDelegate object
-  weak var delegate: SpotsDelegate? { get set }
+  /// A ComponentDelegate object
+  weak var delegate: ComponentDelegate? { get set }
 
   /// The index of a Spotable object
   var index: Int { get }

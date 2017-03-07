@@ -14,8 +14,8 @@ public protocol SpotsProtocol: class {
   var stateCache: StateCache? { get set }
   /// The internal SpotsScrollView
   var scrollView: SpotsScrollView { get }
-  /// A delegate that conforms to SpotsDelegate
-  var delegate: SpotsDelegate? { get }
+  /// A delegate that conforms to ComponentDelegate
+  var delegate: ComponentDelegate? { get }
   /// A collection of Spotable objects
   var spots: [Spotable] { get set }
   /// An array of refresh position to avoid calling multiple refreshes

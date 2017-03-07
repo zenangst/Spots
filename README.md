@@ -56,7 +56,7 @@ Data source and delegate setup is handled by **Spots**, so there is no need for 
 * [Programmatic approach](#programmatic-approach)
 * [Controller](#spotscontroller)
 * [Delegates](#delegates)
-*  [SpotsDelegate](#spotsdelegate)
+*  [ComponentDelegate](#spotsdelegate)
 *  [SpotsRefreshDelegate](#spotsrefreshdelegate)
 *  [SpotsScrollDelegate](#spotsscrolldelegate)
 *  [SpotsCarouselScrollDelegate](#spotscarouselscrolldelegate)
@@ -301,10 +301,10 @@ The `Controller` inherits from `UIViewController` and `NSViewController` but it 
 
 ## Delegates
 
-### SpotsDelegate
+### ComponentDelegate
 
 ```swift
-public protocol SpotsDelegate: class {
+public protocol ComponentDelegate: class {
   func spotDidSelectItem(spot: Spotable, item: Item)
   func spotsDidChange(spots: [Spotable])
 }

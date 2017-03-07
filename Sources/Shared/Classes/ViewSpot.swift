@@ -29,7 +29,7 @@ open class ViewComponent: NSObject, Spotable, Viewable {
   open static var defaultView: View.Type = View.self
   open static var defaultKind: StringConvertible = "view"
 
-  open weak var delegate: SpotsDelegate?
+  open weak var delegate: ComponentDelegate?
   open var model: ComponentModel
   open var index = 0
   open var configure: ((ItemConfigurable) -> Void)?

@@ -2,7 +2,7 @@
 import Foundation
 import XCTest
 
-class TestDelegate: SpotsDelegate {
+class TestDelegate: ComponentDelegate {
   var countsInvoked = 0
 
   func spotable(_ spot: Spotable, itemSelected item: Item) {

@@ -59,8 +59,8 @@ open class CarouselComponent: NSObject, Gridable {
 
   open static var defaultKind: StringConvertible = ComponentModel.Kind.carousel.string
 
-  /// A SpotsDelegate that is used for the CarouselComponent
-  open weak var delegate: SpotsDelegate?
+  /// A ComponentDelegate that is used for the CarouselComponent
+  open weak var delegate: ComponentDelegate?
 
   open var model: ComponentModel
   open var configure: ((ItemConfigurable) -> Void)? {

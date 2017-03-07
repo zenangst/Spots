@@ -7,9 +7,9 @@ import RxCocoa
 // MARK: - Delegate proxy
 
 /**
- Delegate proxy for SpotsDelegate
+ Delegate proxy for ComponentDelegate
  */
-public final class RxSpotsDelegate: DelegateProxy, DelegateProxyType, SpotsDelegate {
+public final class RxComponentDelegate: DelegateProxy, DelegateProxyType, ComponentDelegate {
 
   // Delegate methods subjects
   private let spotDidSelectItem = PublishSubject<(Spotable, Item)>()
@@ -29,9 +29,9 @@ public final class RxSpotsDelegate: DelegateProxy, DelegateProxyType, SpotsDeleg
 
   public class func setCurrentDelegate(_ delegate: AnyObject?, toObject object: AnyObject) {
     if let spot = object as? Spotable {
-      spot.delegate = delegate as? SpotsDelegate
+      spot.delegate = delegate as? ComponentDelegate
     } else if let controller = object as? Controller {
-      controller.delegate = delegate as? SpotsDelegate
+      controller.delegate = delegate as? ComponentDelegate
     }
   }
 
@@ -65,14 +65,14 @@ public final class RxSpotsDelegate: DelegateProxy, DelegateProxyType, SpotsDeleg
 
 extension Reactive where Base: Spotable {
 
-  public var delegate: RxSpotsDelegate {
-    return RxSpotsDelegate.proxyForObject(base)
+  public var delegate: RxComponentDelegate {
+    return RxComponentDelegate.proxyForObject(base)
   }
 }
 
 extension Reactive where Base: SpotsProtocol {
 
-  public var delegate: RxSpotsDelegate {
-    return RxSpotsDelegate.proxyForObject(base)
+  public var delegate: RxComponentDelegate {
+    return RxComponentDelegate.proxyForObject(base)
   }
 }

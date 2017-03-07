@@ -12,7 +12,7 @@ public class Component: NSObject, Spotable, SpotHorizontallyScrollable {
   open static var configure: ((_ view: View) -> Void)?
 
   weak public var focusDelegate: SpotsFocusDelegate?
-  weak public var delegate: SpotsDelegate?
+  weak public var delegate: ComponentDelegate?
   weak public var carouselScrollDelegate: CarouselScrollDelegate?
 
   public var model: ComponentModel

@@ -45,8 +45,8 @@ open class ListComponent: NSObject, Listable {
   open static var defaultView: View.Type = ListComponentItem.self
   open static var defaultKind: StringConvertible = ComponentModel.Kind.list.string
 
-  /// A SpotsDelegate that is used for the ListComponent
-  open weak var delegate: SpotsDelegate?
+  /// A ComponentDelegate that is used for the ListComponent
+  open weak var delegate: ComponentDelegate?
 
   /// A component struct used as configuration and data source for the ListComponent
   open var model: ComponentModel
@@ -160,12 +160,12 @@ open class ListComponent: NSObject, Listable {
 
   open func doubleAction(_ sender: Any?) {
     guard let item = item(at: tableView.clickedRow), model.meta(Key.doubleAction, type: Bool.self) == true else { return }
-    delegate?.spotable(self, itemSelected: item)
+    delegate?.component(self, itemSelected: item)
   }
 
   open func action(_ sender: Any?) {
     guard let item = item(at: tableView.clickedRow), model.meta(Key.doubleAction, false) == false else { return }
-    delegate?.spotable(self, itemSelected: item)
+    delegate?.component(self, itemSelected: item)
   }
 
   open func layout(_ size: CGSize) {

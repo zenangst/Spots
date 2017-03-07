@@ -222,9 +222,9 @@
 		BDAD85901E3E7032008289AE /* ItemConfigurable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD853D1E3E7032008289AE /* ItemConfigurable+Extensions.swift */; };
 		BDAD85911E3E7032008289AE /* ItemConfigurable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD853D1E3E7032008289AE /* ItemConfigurable+Extensions.swift */; };
 		BDAD85921E3E7032008289AE /* ItemConfigurable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD853D1E3E7032008289AE /* ItemConfigurable+Extensions.swift */; };
-		BDAD85931E3E7032008289AE /* SpotsDelegate+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD853E1E3E7032008289AE /* SpotsDelegate+Extensions.swift */; };
-		BDAD85941E3E7032008289AE /* SpotsDelegate+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD853E1E3E7032008289AE /* SpotsDelegate+Extensions.swift */; };
-		BDAD85951E3E7032008289AE /* SpotsDelegate+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD853E1E3E7032008289AE /* SpotsDelegate+Extensions.swift */; };
+		BDAD85931E3E7032008289AE /* ComponentDelegate+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD853E1E3E7032008289AE /* ComponentDelegate+Extensions.swift */; };
+		BDAD85941E3E7032008289AE /* ComponentDelegate+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD853E1E3E7032008289AE /* ComponentDelegate+Extensions.swift */; };
+		BDAD85951E3E7032008289AE /* ComponentDelegate+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD853E1E3E7032008289AE /* ComponentDelegate+Extensions.swift */; };
 		BDAD85961E3E7032008289AE /* SpotsProtocol+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD853F1E3E7032008289AE /* SpotsProtocol+Extensions.swift */; };
 		BDAD85971E3E7032008289AE /* SpotsProtocol+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD853F1E3E7032008289AE /* SpotsProtocol+Extensions.swift */; };
 		BDAD85981E3E7032008289AE /* SpotsProtocol+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD853F1E3E7032008289AE /* SpotsProtocol+Extensions.swift */; };
@@ -547,7 +547,7 @@
 		BDAD853B1E3E7032008289AE /* Spotable+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Spotable+Extensions.swift"; sourceTree = "<group>"; };
 		BDAD853C1E3E7032008289AE /* Spotable+Mutation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Spotable+Mutation.swift"; sourceTree = "<group>"; };
 		BDAD853D1E3E7032008289AE /* ItemConfigurable+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ItemConfigurable+Extensions.swift"; sourceTree = "<group>"; };
-		BDAD853E1E3E7032008289AE /* SpotsDelegate+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SpotsDelegate+Extensions.swift"; sourceTree = "<group>"; };
+		BDAD853E1E3E7032008289AE /* ComponentDelegate+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ComponentDelegate+Extensions.swift"; sourceTree = "<group>"; };
 		BDAD853F1E3E7032008289AE /* SpotsProtocol+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SpotsProtocol+Extensions.swift"; sourceTree = "<group>"; };
 		BDAD85401E3E7032008289AE /* SpotsProtocol+LiveEditing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SpotsProtocol+LiveEditing.swift"; sourceTree = "<group>"; };
 		BDAD85411E3E7032008289AE /* SpotsProtocol+Mutation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SpotsProtocol+Mutation.swift"; sourceTree = "<group>"; };
@@ -901,7 +901,7 @@
 				BDAD853B1E3E7032008289AE /* Spotable+Extensions.swift */,
 				BDAD853C1E3E7032008289AE /* Spotable+Mutation.swift */,
 				BDAD853D1E3E7032008289AE /* ItemConfigurable+Extensions.swift */,
-				BDAD853E1E3E7032008289AE /* SpotsDelegate+Extensions.swift */,
+				BDAD853E1E3E7032008289AE /* ComponentDelegate+Extensions.swift */,
 				BDAD853F1E3E7032008289AE /* SpotsProtocol+Extensions.swift */,
 				BDAD85401E3E7032008289AE /* SpotsProtocol+LiveEditing.swift */,
 				BDAD85411E3E7032008289AE /* SpotsProtocol+Mutation.swift */,
@@ -1644,7 +1644,7 @@
 				BDAD84E11E3E701C008289AE /* UITableView+UserInterface.swift in Sources */,
 				BDAD85711E3E7032008289AE /* Animation.swift in Sources */,
 				BDAD85D71E3E7032008289AE /* Configuration.swift in Sources */,
-				BDAD85951E3E7032008289AE /* SpotsDelegate+Extensions.swift in Sources */,
+				BDAD85951E3E7032008289AE /* ComponentDelegate+Extensions.swift in Sources */,
 				BDAD84C31E3E701C008289AE /* RowComponent.swift in Sources */,
 				BDAD84C51E3E701C008289AE /* RowComponentCell.swift in Sources */,
 				BDAD84B51E3E701C008289AE /* GridComponentCell.swift in Sources */,
@@ -1778,7 +1778,7 @@
 				D5D2826F1E5474E0004BF251 /* Cell.swift in Sources */,
 				BDAD85D51E3E7032008289AE /* Configuration.swift in Sources */,
 				BDAD858A1E3E7032008289AE /* Spotable+Extensions.swift in Sources */,
-				BDAD85931E3E7032008289AE /* SpotsDelegate+Extensions.swift in Sources */,
+				BDAD85931E3E7032008289AE /* ComponentDelegate+Extensions.swift in Sources */,
 				BD9ECEC41E6EC8B8003E4388 /* Component+iOS+List.swift in Sources */,
 				BDAD85961E3E7032008289AE /* SpotsProtocol+Extensions.swift in Sources */,
 				BDAD856F1E3E7032008289AE /* Animation.swift in Sources */,
@@ -1949,7 +1949,7 @@
 				BDAD851E1E3E7025008289AE /* Delegate+macOS+Extensions.swift in Sources */,
 				BDAD85A91E3E7032008289AE /* Componentable.swift in Sources */,
 				BD9ECEBA1E6EC6D1003E4388 /* Component+macOS+Grid.swift in Sources */,
-				BDAD85941E3E7032008289AE /* SpotsDelegate+Extensions.swift in Sources */,
+				BDAD85941E3E7032008289AE /* ComponentDelegate+Extensions.swift in Sources */,
 				BDAD850B1E3E7025008289AE /* CollectionViewLeftLayout.swift in Sources */,
 				BDAD85761E3E7032008289AE /* RegistryType.swift in Sources */,
 				BDAD850C1E3E7025008289AE /* Controller.swift in Sources */,

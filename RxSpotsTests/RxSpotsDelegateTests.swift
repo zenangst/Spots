@@ -3,16 +3,16 @@ import Spots
 import RxSpots
 import RxSwift
 
-class RxSpotsDelegateTests: XCTestCase {
+class RxComponentDelegateTests: XCTestCase {
 
-  var delegateProxy: RxSpotsDelegate!
+  var delegateProxy: RxComponentDelegate!
   private let disposeBag = DisposeBag()
 
   override func setUp() {
     super.setUp()
     let controller = Controller()
 
-    delegateProxy = RxSpotsDelegate(parentObject: controller)
+    delegateProxy = RxComponentDelegate(parentObject: controller)
   }
 
   func testDidSelectItem() {

@@ -1,5 +1,5 @@
-// MARK: - SpotsDelegate extension
-public extension SpotsDelegate {
+// MARK: - ComponentDelegate extension
+public extension ComponentDelegate {
 
   /// Triggered when ever a user taps on an item
   ///
