@@ -57,12 +57,12 @@ open class CarouselSpot: NSObject, Gridable {
 
   open static var defaultView: View.Type = NSView.self
 
-  open static var defaultKind: StringConvertible = Component.Kind.carousel.string
+  open static var defaultKind: StringConvertible = ComponentModel.Kind.carousel.string
 
   /// A SpotsDelegate that is used for the CarouselSpot
   open weak var delegate: SpotsDelegate?
 
-  open var component: Component
+  open var component: ComponentModel
   open var configure: ((ContentConfigurable) -> Void)? {
     didSet {
       guard let configure = configure else { return }
@@ -110,7 +110,7 @@ open class CarouselSpot: NSObject, Gridable {
   /// - parameter component: A component
   ///
   /// - returns: An initialized carousel spot.
-  public required init(component: Component) {
+  public required init(component: ComponentModel) {
     self.component = component
 
     if self.component.layout == nil {
@@ -125,7 +125,7 @@ open class CarouselSpot: NSObject, Gridable {
     self.spotDelegate = Delegate(spot: self)
 
     if component.kind.isEmpty {
-      self.component.kind = Component.Kind.carousel.string
+      self.component.kind = ComponentModel.Kind.carousel.string
     }
 
     registerDefault(view: CarouselSpotCell.self)
@@ -154,7 +154,7 @@ open class CarouselSpot: NSObject, Gridable {
   public convenience init(cacheKey: String) {
     let stateCache = StateCache(key: cacheKey)
 
-    self.init(component: Component(stateCache.load()))
+    self.init(component: ComponentModel(stateCache.load()))
     self.stateCache = stateCache
   }
 

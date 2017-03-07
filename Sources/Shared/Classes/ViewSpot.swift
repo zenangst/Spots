@@ -30,7 +30,7 @@ open class ViewSpot: NSObject, Spotable, Viewable {
   open static var defaultKind: StringConvertible = "view"
 
   open weak var delegate: SpotsDelegate?
-  open var component: Component
+  open var component: ComponentModel
   open var index = 0
   open var configure: ((ContentConfigurable) -> Void)?
 
@@ -46,7 +46,7 @@ open class ViewSpot: NSObject, Spotable, Viewable {
 
   public var userInterface: UserInterface?
 
-  public required init(component: Component) {
+  public required init(component: ComponentModel) {
     self.component = component
 
     if self.component.layout == nil {

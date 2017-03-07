@@ -15,7 +15,7 @@ class FactoryTests: XCTestCase {
   func testRegisterAndResolve() {
     Factory.register(kind: "merry-go-round", spot: CarouselSpot.self)
 
-    let component = Component(json)
+    let component = ComponentModel(json)
     var spot = Factory.resolve(component: component)
 
     XCTAssertTrue(spot.component == component)
@@ -32,16 +32,16 @@ class FactoryTests: XCTestCase {
     var newJson = json
     newJson["type"] = "weirdo" as AnyObject?
 
-    let component = Component(newJson)
+    let component = ComponentModel(newJson)
     let spot = Factory.resolve(component: component)
 
     XCTAssertTrue(spot.component == component)
     XCTAssertTrue(spot is GridSpot)
   }
 
-  func testFactoryParsingComponents() {
-    let initialComponents = [
-      Component(
+  func testFactoryParsingComponentModels() {
+    let initialComponentModels = [
+      ComponentModel(
         kind: "list",
         span: 1.0,
         items: [
@@ -55,7 +55,7 @@ class FactoryTests: XCTestCase {
       )
     ]
 
-    let spots: [Spotable] = initialComponents.map {
+    let spots: [Spotable] = initialComponentModels.map {
       let spot = Factory.resolve(component: $0)
       spot.setup(CGSize(width: 100, height: 100))
       return spot

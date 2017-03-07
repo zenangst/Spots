@@ -38,7 +38,7 @@ public extension Spotable {
       #if !os(OSX)
         /// tvOS adds spacing between cells (it seems to be locked to 14 pixels in height).
         #if os(tvOS)
-          if component.kind == Component.Kind.list.string {
+          if component.kind == ComponentModel.Kind.list.string {
             height += 14
           }
         #endif
@@ -52,7 +52,7 @@ public extension Spotable {
 
     /// Add extra height to make room for focus shadow
     #if os(tvOS)
-      if component.kind == Component.Kind.list.string {
+      if component.kind == ComponentModel.Kind.list.string {
         height += 28
       }
     #endif
@@ -159,7 +159,7 @@ public extension Spotable {
     #endif
   }
 
-  /// Update the height of the UI Component
+  /// Update the height of the UI ComponentModel
   ///
   /// - parameter completion: A completion closure that will be run in the main queue when the size has been updated.
   public func updateHeight(_ completion: Completion = nil) {

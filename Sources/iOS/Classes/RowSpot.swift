@@ -23,7 +23,7 @@ open class RowSpot: NSObject, Gridable {
   public var compositeSpots: [CompositeSpot] = []
 
   /// A component struct used as configuration and data source for the RowSpot
-  open var component: Component
+  open var component: ComponentModel
 
   /// A configuration closure
   open var configure: ((ContentConfigurable) -> Void)? {
@@ -58,7 +58,7 @@ open class RowSpot: NSObject, Gridable {
   /// - parameter component: A component.
   ///
   /// - returns: An initialized row spot with component.
-  public required init(component: Component) {
+  public required init(component: ComponentModel) {
     self.component = component
 
     if self.component.layout == nil {
@@ -72,7 +72,7 @@ open class RowSpot: NSObject, Gridable {
     self.spotDelegate = Delegate(spot: self)
 
     if component.kind.isEmpty {
-      self.component.kind = Component.Kind.row.string
+      self.component.kind = ComponentModel.Kind.row.string
     }
 
     registerDefault(view: RowSpotCell.self)
@@ -93,7 +93,7 @@ open class RowSpot: NSObject, Gridable {
   public convenience init(cacheKey: String) {
     let stateCache = StateCache(key: cacheKey)
 
-    self.init(component: Component(stateCache.load()))
+    self.init(component: ComponentModel(stateCache.load()))
     self.stateCache = stateCache
   }
 

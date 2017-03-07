@@ -7,7 +7,7 @@ public enum ControllerBackground {
 open class Controller: NSViewController, SpotsProtocol {
 
   /// A closure that is called when the controller is reloaded with components
-  public static var spotsDidReloadComponents: ((Controller) -> Void)?
+  public static var spotsDidReloadComponentModels: ((Controller) -> Void)?
 
   open static var configure: ((_ container: SpotsScrollView) -> Void)?
 

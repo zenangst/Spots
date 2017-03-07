@@ -43,13 +43,13 @@ open class ListSpot: NSObject, Listable {
   open static var views = Registry()
   open static var configure: ((_ view: NSTableView) -> Void)?
   open static var defaultView: View.Type = ListSpotItem.self
-  open static var defaultKind: StringConvertible = Component.Kind.list.string
+  open static var defaultKind: StringConvertible = ComponentModel.Kind.list.string
 
   /// A SpotsDelegate that is used for the ListSpot
   open weak var delegate: SpotsDelegate?
 
   /// A component struct used as configuration and data source for the ListSpot
-  open var component: Component
+  open var component: ComponentModel
   open var configure: ((ContentConfigurable) -> Void)? {
     didSet {
       guard let configure = configure else { return }
@@ -120,7 +120,7 @@ open class ListSpot: NSObject, Listable {
   var spotDataSource: DataSource?
   var spotDelegate: Delegate?
 
-  public required init(component: Component) {
+  public required init(component: ComponentModel) {
     self.component = component
 
     if self.component.layout == nil {
@@ -134,7 +134,7 @@ open class ListSpot: NSObject, Listable {
     self.spotDelegate = Delegate(spot: self)
 
     if component.kind.isEmpty {
-      self.component.kind = Component.Kind.list.string
+      self.component.kind = ComponentModel.Kind.list.string
     }
 
     scrollView.contentView.addSubview(tableView)
@@ -146,7 +146,7 @@ open class ListSpot: NSObject, Listable {
   public convenience init(cacheKey: String) {
     let stateCache = StateCache(key: cacheKey)
 
-    self.init(component: Component(stateCache.load()))
+    self.init(component: ComponentModel(stateCache.load()))
     self.stateCache = stateCache
   }
 

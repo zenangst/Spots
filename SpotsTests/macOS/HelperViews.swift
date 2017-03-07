@@ -37,7 +37,7 @@ class HeaderView: NSView, ContentConfigurable, Componentable {
     titleLabel.stringValue = item.title
   }
 
-  func configure(_ component: Component) {
+  func configure(_ component: ComponentModel) {
     titleLabel.stringValue = component.title
   }
 }
@@ -114,7 +114,7 @@ class FooterView: NSView, ContentConfigurable, Componentable {
     titleLabel.stringValue = item.title
   }
 
-  func configure(_ component: Component) {
+  func configure(_ component: ComponentModel) {
     titleLabel.stringValue = component.title
   }
 }

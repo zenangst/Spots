@@ -63,7 +63,7 @@ Data source and delegate setup is handled by **Spots**, so there is no need for 
 * [The many faces of Spots](#the-many-faces-of-spots)
 * [JSON structure](#json-structure)
 * [Models](#models)
-* [Component](#component)
+* [ComponentModel](#component)
 * [Item](#item)
 * [Installation](#installation)
 * [Dependencies](#dependencies)
@@ -128,7 +128,7 @@ View state caching is optional but we encourage you to use it, as it renders the
 
 A common problem when developing for Apple's platforms is that you often have to choose between which core framework component to base your foundation on. Depending on what you need then and there. This is a not a problem in itself, it becomes a problem when you need to iterate and combine two of them together, like displaying a collection view inside of a table view. This is where composition comes in. Spots supports composition out-of-the box and it is super easy to use and iterate on.
 
-`Item`s inside of a `Spotable` object have a property called `children`. In the case of Spots, children are `Component`'s that represent other `Spotable` objects. This means that you can easily add a grid, carousel or list inside any `Spotable` object of your choice. On larger screens this becomes incredibly useful as composition can be used as a sane way of laying out your views on screen without the need for child view controllers, unmaintainable auto layout or frame based implementations.
+`Item`s inside of a `Spotable` object have a property called `children`. In the case of Spots, children are `ComponentModel`'s that represent other `Spotable` objects. This means that you can easily add a grid, carousel or list inside any `Spotable` object of your choice. On larger screens this becomes incredibly useful as composition can be used as a sane way of laying out your views on screen without the need for child view controllers, unmaintainable auto layout or frame based implementations.
 
 You can create `Spotable` pseudo objects that handle layout, this is especially useful for `Gridable` objects like the `GridSpot`, where you can use `layout.span` to define how many objects should be displayed side-by-side.
 
@@ -160,7 +160,7 @@ All **Spotable** objects are based around one core UI element.
 
 **CarouselSpot** is very similar to **GridSpot**, it shares the same **CollectionAdapter**, the main difference between them is that **CarouselSpot** has scrolling enabled and uses a process for laying its views out on screen.
 
-What all **Spotable** objects have in common is that all of them use the same **Component** struct to represent themselves. **Component** has a *kind* property that maps to the UI component that should be used. By just changing the *kind*, you can transform a *list* into a *grid* as fast has you can type it and hit save.
+What all **Spotable** objects have in common is that all of them use the same **ComponentModel** struct to represent themselves. **ComponentModel** has a *kind* property that maps to the UI component that should be used. By just changing the *kind*, you can transform a *list* into a *grid* as fast has you can type it and hit save.
 
 They also share the same **Item** struct for its children.
 The child is a data container that includes the size of the view on screen and the remaining information to configure your view.
@@ -221,9 +221,9 @@ It is very common that you need to modify your data source and tell your UI comp
 
 On **Controller** you have simple methods like `reload(withAnimation, completion)` that tells all the **Spotable** objects to reload.
 
-You can reload **Controller** using a collection of **Component**’s. Internally it will perform a diffing process to pinpoint what changed, in this process it cascades down from component level to item level, and checks all the moving parts, to perform the most appropriate update operation depending on the change. At item level, it will check if the items size changed, if not it will scale down to only run the `configure` method on the view that was affected. This is what we call hard and soft updates, it will reduce the amount of *blinking* that you can normally see in iOS.
+You can reload **Controller** using a collection of **ComponentModel**’s. Internally it will perform a diffing process to pinpoint what changed, in this process it cascades down from component level to item level, and checks all the moving parts, to perform the most appropriate update operation depending on the change. At item level, it will check if the items size changed, if not it will scale down to only run the `configure` method on the view that was affected. This is what we call hard and soft updates, it will reduce the amount of *blinking* that you can normally see in iOS.
 
-A **Controller** can also be reloaded using JSON. It behaves a bit differently than `reloadIfNeeded(withComponents)` as it will create new component and diff them towards each other to find out if something changed. If something changed, it will simply replace the old objects with the new ones.
+A **Controller** can also be reloaded using JSON. It behaves a bit differently than `reloadIfNeeded(withComponentModels)` as it will create new component and diff them towards each other to find out if something changed. If something changed, it will simply replace the old objects with the new ones.
 
 The difference between `reload` and `reloadIfNeeded` methods is that they will only run if change is needed, just like the naming implies.
 
@@ -239,7 +239,7 @@ All methods take an `Item` as their first argument, the second is the index of t
 
 #### Available in version 5.8.x >
 
-Configuring layout for different components can be tricky, Spots helps to solve this problem with a neat and tidy `Layout` struct that lives on `Component`. It is used to customize your UI related elements. It can set `contentInset`, `sectionInset` and collection view related properties like `minimumInteritemSpacing` and `minimumLineSpacing`. It works great both programmatical and with JSON. It is supported on all three platforms.
+Configuring layout for different components can be tricky, Spots helps to solve this problem with a neat and tidy `Layout` struct that lives on `ComponentModel`. It is used to customize your UI related elements. It can set `contentInset`, `sectionInset` and collection view related properties like `minimumInteritemSpacing` and `minimumLineSpacing`. It works great both programmatical and with JSON. It is supported on all three platforms.
 
 ```swift
 let layout = Layout() {
@@ -265,10 +265,10 @@ let jsonLayout = Layout(
 )
 ```
 
-**NOTE** If you update to a newer version of Spots, you might want to enable `legacyMapping` on `Component`.
+**NOTE** If you update to a newer version of Spots, you might want to enable `legacyMapping` on `ComponentModel`.
 
 ```swift
-Component.legacyMapping = true
+ComponentModel.legacyMapping = true
 ```
 
 ## Usage
@@ -283,7 +283,7 @@ The JSON data will be parsed into view model data and your view controller is re
 
 ### Programmatic approach
 ```swift
-let myContacts = Component(title: "My contacts", items: [
+let myContacts = ComponentModel(title: "My contacts", items: [
   Item(title: "John Hyperseed"),
   Item(title: "Vadym Markov"),
   Item(title: "Ramon Gilabert Llop"),
@@ -419,10 +419,10 @@ Because the framework can be used in a wide variety of ways, we have decided to 
 
 ## Models
 
-### Component
+### ComponentModel
 
 ```swift
-  public struct Component: Mappable {
+  public struct ComponentModel: Mappable {
   public var index = 0
   public var title = ""
   public var kind = ""
@@ -516,9 +516,9 @@ end
 ## Dependencies
 
 - **[Cache](https://github.com/hyperoslo/Cache)**
-Used for `Component` and `Item` caching when initializing a `Controller` or `Spotable` object with a cache key.
+Used for `ComponentModel` and `Item` caching when initializing a `Controller` or `Spotable` object with a cache key.
 - **[Tailor](https://github.com/zenangst/Tailor)**
-To seamlessly map JSON to both `Component` and `Item`.
+To seamlessly map JSON to both `ComponentModel` and `Item`.
 
 ## Author
 
@@ -530,7 +530,7 @@ We would love you to contribute to **Spots**, check the [CONTRIBUTING](https://g
 
 ## Credits
 
-- The idea behind Spot came from [John Sundell](https://github.com/johnsundell)'s tech talk "Components & View Models in the Cloud - how Spotify builds native, dynamic UIs".
+- The idea behind Spot came from [John Sundell](https://github.com/johnsundell)'s tech talk "ComponentModels & View Models in the Cloud - how Spotify builds native, dynamic UIs".
 - [Ole Begemanns](https://github.com/ole/) implementation of [OLEContainerScrollView](https://github.com/ole/OLEContainerScrollView) is the basis for `SpotsScrollView`, we salute you.
 Reference: http://oleb.net/blog/2014/05/scrollviews-inside-scrollviews/
 

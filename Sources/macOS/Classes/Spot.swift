@@ -8,7 +8,7 @@ public class Spot: NSObject, Spotable {
   public static var layout: Layout = Layout(span: 1.0)
   public static var headers: Registry = Registry()
   public static var views: Registry = Registry()
-  public static var defaultKind: String = Component.Kind.list.string
+  public static var defaultKind: String = ComponentModel.Kind.list.string
 
   open static var configure: ((_ view: View) -> Void)?
 
@@ -18,8 +18,8 @@ public class Spot: NSObject, Spotable {
   var headerView: View?
   var footerView: View?
 
-  public var component: Component
-  public var componentKind: Component.Kind = .list
+  public var component: ComponentModel
+  public var componentKind: ComponentModel.Kind = .list
   public var compositeSpots: [CompositeSpot] = []
   public var configure: ((ContentConfigurable) -> Void)?
   public var spotDelegate: Delegate?
@@ -103,7 +103,7 @@ public class Spot: NSObject, Spotable {
     return userInterface as? CollectionView
   }
 
-  public required init(component: Component, userInterface: UserInterface, kind: Component.Kind) {
+  public required init(component: ComponentModel, userInterface: UserInterface, kind: ComponentModel.Kind) {
     self.component = component
     self.componentKind = kind
     self.userInterface = userInterface
@@ -132,13 +132,13 @@ public class Spot: NSObject, Spotable {
     self.spotDelegate = Delegate(spot: self)
   }
 
-  public required convenience init(component: Component) {
+  public required convenience init(component: ComponentModel) {
     var component = component
     if component.kind.isEmpty {
       component.kind = Spot.defaultKind
     }
 
-    let kind = Component.Kind(rawValue: component.kind) ?? .list
+    let kind = ComponentModel.Kind(rawValue: component.kind) ?? .list
     let userInterface: UserInterface
 
     if kind == .list {
@@ -160,7 +160,7 @@ public class Spot: NSObject, Spotable {
   public convenience init(cacheKey: String) {
     let stateCache = StateCache(key: cacheKey)
 
-    self.init(component: Component(stateCache.load()))
+    self.init(component: ComponentModel(stateCache.load()))
     self.stateCache = stateCache
   }
 

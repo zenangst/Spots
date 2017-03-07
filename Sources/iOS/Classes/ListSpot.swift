@@ -25,7 +25,7 @@ open class ListSpot: NSObject, Listable {
   open static var headers = Registry()
 
   /// A component struct used as configuration and data source for the ListSpot
-  open var component: Component
+  open var component: ComponentModel
 
   /// A SpotsFocusDelegate object
   weak public var focusDelegate: SpotsFocusDelegate?
@@ -60,7 +60,7 @@ open class ListSpot: NSObject, Listable {
   /// - parameter component: A component.
   ///
   /// - returns: An initialized list spot with component.
-  public required init(component: Component) {
+  public required init(component: ComponentModel) {
     self.component = component
 
     if self.component.layout == nil {
@@ -74,7 +74,7 @@ open class ListSpot: NSObject, Listable {
     self.spotDelegate = Delegate(spot: self)
 
     if component.kind.isEmpty {
-      self.component.kind = Component.Kind.list.string
+      self.component.kind = ComponentModel.Kind.list.string
     }
 
     registerDefault(view: ListSpotCell.self)
@@ -86,13 +86,13 @@ open class ListSpot: NSObject, Listable {
   ///
   /// - parameter tableView: A UITableView.
   /// - parameter title:     A string that is used as a title for the ListSpot.
-  /// - parameter kind:      An identifier to determine which kind should be set on the Component.
-  /// - parameter kind:      An identifier to determine which kind should be set on the Component.
+  /// - parameter kind:      An identifier to determine which kind should be set on the ComponentModel.
+  /// - parameter kind:      An identifier to determine which kind should be set on the ComponentModel.
   ///
   /// - returns: An initialized list spot with component.
   public convenience init(tableView: UITableView? = nil, title: String = "",
                           kind: String = "list", header: String = "") {
-    self.init(component: Component(title: title, header: header, kind: kind, span: 1.0))
+    self.init(component: ComponentModel(title: title, header: header, kind: kind, span: 1.0))
 
     if let tableView = tableView {
       self.tableView = tableView
@@ -110,7 +110,7 @@ open class ListSpot: NSObject, Listable {
   public convenience init(cacheKey: String, tableView: UITableView? = nil) {
     let stateCache = StateCache(key: cacheKey)
 
-    self.init(component: Component(stateCache.load()))
+    self.init(component: ComponentModel(stateCache.load()))
     self.stateCache = stateCache
 
     if let tableView = tableView {
