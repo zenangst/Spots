@@ -455,6 +455,40 @@ public class Spot: NSObject, Spotable {
     delegate?.spotable(self, itemSelected: item)
   }
 
+  public func sizeForItem(at indexPath: IndexPath) -> CGSize {
+    if let collectionView = collectionView,
+      component.interaction.scrollDirection == .horizontal {
+      var width: CGFloat
+
+      if let layout = component.layout {
+        width = layout.span > 0
+          ? collectionView.frame.width / CGFloat(layout.span)
+          : collectionView.frame.width
+      } else {
+        width = collectionView.frame.width
+      }
+
+      if let layout = collectionView.collectionViewLayout as? NSCollectionViewFlowLayout {
+        width -= layout.sectionInset.left - layout.sectionInset.right
+        width -= layout.minimumInteritemSpacing
+        width -= layout.minimumLineSpacing
+      }
+
+      if component.items[indexPath.item].size.width == 0.0 {
+        component.items[indexPath.item].size.width = width
+      }
+
+      return CGSize(
+        width: ceil(component.items[indexPath.item].size.width),
+        height: ceil(component.items[indexPath.item].size.height))
+    } else {
+      return CGSize(
+        width:  item(at: indexPath)?.size.width  ?? 0.0,
+        height: item(at: indexPath)?.size.height ?? 0.0
+      )
+    }
+  }
+
   public func register() {
 
   }
