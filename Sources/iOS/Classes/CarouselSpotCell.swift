@@ -6,7 +6,7 @@ public class CarouselSpotCell: UICollectionViewCell, ItemConfigurable {
   /// The preferred view size for the cell
   public var preferredViewSize: CGSize = CGSize(width: 88, height: 88)
   /// A weak referenced Item struct
-  public var item: Item?
+  public var item: ContentModel?
 
   /// A UILabel that will use Item.title as text
   public var label: UILabel = {
@@ -46,7 +46,7 @@ public class CarouselSpotCell: UICollectionViewCell, ItemConfigurable {
   /// Configure cell with Item struct
   ///
   /// - parameter item: The Item struct that is used for configuring the view.
-  public func configure(_ item: inout Item) {
+  public func configure(_ item: inout ContentModel) {
     imageView.image = UIImage(named: item.image)
     imageView.frame = contentView.frame
     label.text = item.title

@@ -7,5 +7,5 @@ public protocol CarouselScrollDelegate: class {
 
   /// - parameter spot: Object that comforms to the Spotable protocol
   /// - parameter item: The last view model in the component
-  func spotableCarouselDidEndScrolling(_ spot: Spotable, item: Item, animated: Bool)
+  func spotableCarouselDidEndScrolling(_ spot: Spotable, item: ContentModel, animated: Bool)
 }

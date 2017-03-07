@@ -42,7 +42,7 @@ class RowSpotTests: XCTestCase {
   }
 
   func testSafelyResolveKind() {
-    let component = Component(title: "RowSpot", kind: "custom-grid", span: 1, items: [Item(title: "foo", kind: "custom-item-kind")])
+    let component = Component(title: "RowSpot", kind: "custom-grid", span: 1, items: [ContentModel(title: "foo", kind: "custom-item-kind")])
     let rowSpot = RowSpot(component: component)
     let indexPath = IndexPath(row: 0, section: 0)
 
@@ -61,7 +61,7 @@ class RowSpotTests: XCTestCase {
   }
 
   func testAppendItem() {
-    let item = Item(title: "test")
+    let item = ContentModel(title: "test")
     let spot = RowSpot(component: Component(span: 1))
     let expectation = self.expectation(description: "Append item")
     spot.append(item) {
@@ -72,7 +72,7 @@ class RowSpotTests: XCTestCase {
   }
 
   func testAppendItems() {
-    let items = [Item(title: "test"), Item(title: "test 2")]
+    let items = [ContentModel(title: "test"), ContentModel(title: "test 2")]
     let spot = RowSpot(component: Component(span: 1))
     let expectation = self.expectation(description: "Append items")
     spot.append(items) {
@@ -83,7 +83,7 @@ class RowSpotTests: XCTestCase {
   }
 
   func testInsertItem() {
-    let item = Item(title: "test")
+    let item = ContentModel(title: "test")
     let spot = RowSpot(component: Component(span: 1))
     let expectation = self.expectation(description: "Insert item")
     spot.insert(item, index: 0) {
@@ -94,7 +94,7 @@ class RowSpotTests: XCTestCase {
   }
 
   func testPrependItems() {
-    let items = [Item(title: "test"), Item(title: "test 2")]
+    let items = [ContentModel(title: "test"), ContentModel(title: "test 2")]
     let spot = RowSpot(component: Component(span: 1))
     let expectation = self.expectation(description: "Prepend items")
     spot.prepend(items) {
@@ -105,7 +105,7 @@ class RowSpotTests: XCTestCase {
   }
 
   func testSpotCollectionDelegate() {
-    let items = [Item(title: "Test item")]
+    let items = [ContentModel(title: "Test item")]
     let spot = RowSpot(component: Component(span: 1, items: items))
     spot.view.frame.size = CGSize(width: 100, height: 100)
     spot.view.layoutSubviews()
@@ -115,7 +115,7 @@ class RowSpotTests: XCTestCase {
   }
 
   func testSpotCache() {
-    let item = Item(title: "test")
+    let item = ContentModel(title: "test")
 
     XCTAssertEqual(cachedSpot.component.items.count, 0)
     cachedSpot.append(item) {
@@ -135,7 +135,7 @@ class RowSpotTests: XCTestCase {
   func testSpotConfigurationClosure() {
     Configuration.register(view: TestView.self, identifier: "test-view")
 
-    let items = [Item(title: "Item A", kind: "test-view"), Item(title: "Item B")]
+    let items = [ContentModel(title: "Item A", kind: "test-view"), ContentModel(title: "Item B")]
     let spot = RowSpot(component: Component(span: 0.0, items: items))
     spot.setup(CGSize(width: 100, height: 100))
     spot.layout(CGSize(width: 100, height: 100))

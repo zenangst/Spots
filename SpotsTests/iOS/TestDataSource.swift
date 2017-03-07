@@ -7,8 +7,8 @@ class DataSourceTests: XCTestCase {
   func testDataSourceForListableObject() {
     ListSpot.register(view: CustomListCell.self, identifier: "custom")
     let spot = ListSpot(component: Component(span: 1.0, items: [
-      Item(title: "title 1"),
-      Item(title: "title 2")
+      ContentModel(title: "title 1"),
+      ContentModel(title: "title 2")
       ]))
 
     var itemCell1 = spot.spotDataSource!.tableView(spot.tableView, cellForRowAt: IndexPath(row: 0, section: 0))
@@ -34,8 +34,8 @@ class DataSourceTests: XCTestCase {
   func testDataSourceForGridableObject() {
     GridSpot.register(view: CustomGridCell.self, identifier: "custom")
     let spot = GridSpot(component: Component(span: 1.0, items: [
-      Item(title: "title 1"),
-      Item(title: "title 2")
+      ContentModel(title: "title 1"),
+      ContentModel(title: "title 2")
       ]))
 
     var itemCell1 = spot.spotDataSource!.collectionView(spot.collectionView, cellForItemAt: IndexPath(item: 0, section: 0))
@@ -62,8 +62,8 @@ class DataSourceTests: XCTestCase {
       header: "",
       span: 1.0,
       items: [
-        Item(title: "title 1"),
-        Item(title: "title 2")
+        ContentModel(title: "title 1"),
+        ContentModel(title: "title 2")
       ]))
     spot.view.frame.size = CGSize(width: 100, height: 100)
     spot.layout.headerReferenceSize = CGSize(width: 100, height: 48)
@@ -80,8 +80,8 @@ class DataSourceTests: XCTestCase {
       header: "custom-header",
       span: 1.0,
       items: [
-        Item(title: "title 1"),
-        Item(title: "title 2")
+        ContentModel(title: "title 1"),
+        ContentModel(title: "title 2")
       ]))
     spot.view.frame.size = CGSize(width: 100, height: 100)
     spot.layout.headerReferenceSize = CGSize(width: 100, height: 48)

@@ -8,5 +8,5 @@ public protocol Composable: class {
   ///
   /// - parameter item:  The Item struct that is Composable
   /// - parameter spots: A collection of Spotable objects that should be used to configure the child
-  func configure(_ item: inout Item, compositeSpots: [CompositeSpot]?)
+  func configure(_ item: inout ContentModel, compositeSpots: [CompositeSpot]?)
 }

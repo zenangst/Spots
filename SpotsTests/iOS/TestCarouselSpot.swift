@@ -42,7 +42,7 @@ class CarouselSpotTests: XCTestCase {
   }
 
   func testSafelyResolveKind() {
-    let component = Component(title: "CarouselSpot", kind: "custom-carousel", span: 1.0, items: [Item(title: "foo", kind: "custom-item-kind")])
+    let component = Component(title: "CarouselSpot", kind: "custom-carousel", span: 1.0, items: [ContentModel(title: "foo", kind: "custom-item-kind")])
     let carouselSpot = CarouselSpot(component: component)
     let indexPath = IndexPath(row: 0, section: 0)
 
@@ -331,7 +331,7 @@ class CarouselSpotTests: XCTestCase {
   }
 
   func testAppendItem() {
-    let item = Item(title: "test")
+    let item = ContentModel(title: "test")
     let spot = CarouselSpot(component: Component(span: 1))
     let expectation = self.expectation(description: "Append item")
     spot.append(item) {
@@ -342,7 +342,7 @@ class CarouselSpotTests: XCTestCase {
   }
 
   func testAppendItems() {
-    let items = [Item(title: "test"), Item(title: "test 2")]
+    let items = [ContentModel(title: "test"), ContentModel(title: "test 2")]
     let spot = CarouselSpot(component: Component(span: 1))
     let expectation = self.expectation(description: "Append items")
     spot.append(items) {
@@ -353,7 +353,7 @@ class CarouselSpotTests: XCTestCase {
   }
 
   func testInsertItem() {
-    let item = Item(title: "test")
+    let item = ContentModel(title: "test")
     let spot = CarouselSpot(component: Component(span: 1))
     let expectation = self.expectation(description: "Insert item")
     spot.insert(item, index: 0) {
@@ -364,7 +364,7 @@ class CarouselSpotTests: XCTestCase {
   }
 
   func testPrependItems() {
-    let items = [Item(title: "test"), Item(title: "test 2")]
+    let items = [ContentModel(title: "test"), ContentModel(title: "test 2")]
     let spot = CarouselSpot(component: Component(span: 1))
     let expectation = self.expectation(description: "Prepend items")
     spot.prepend(items) {
@@ -375,7 +375,7 @@ class CarouselSpotTests: XCTestCase {
   }
 
   func testSpotCache() {
-    let item = Item(title: "test")
+    let item = ContentModel(title: "test")
 
     XCTAssertEqual(cachedSpot.component.items.count, 0)
     cachedSpot.append(item) {
@@ -396,7 +396,7 @@ class CarouselSpotTests: XCTestCase {
   func testSpotConfigurationClosure() {
     Configuration.register(view: TestView.self, identifier: "test-view")
 
-    let items = [Item(title: "Item A", kind: "test-view"), Item(title: "Item B")]
+    let items = [ContentModel(title: "Item A", kind: "test-view"), ContentModel(title: "Item B")]
     let spot = CarouselSpot(component: Component(span: 0.0, items: items))
     spot.setup(CGSize(width: 100, height: 100))
     spot.layout(CGSize(width: 100, height: 100))

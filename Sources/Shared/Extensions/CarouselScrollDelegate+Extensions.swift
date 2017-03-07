@@ -8,5 +8,5 @@ public extension CarouselScrollDelegate {
   /// - parameter spot: Object that comforms to the Spotable protocol
   /// - parameter item: The last view model in the component
   /// - parameter animated: Indicates if the scrolling animated or not.
-  func spotableCarouselDidEndScrolling(_ spot: Spotable, item: Item, animated: Bool) {}
+  func spotableCarouselDidEndScrolling(_ spot: Spotable, item: ContentModel, animated: Bool) {}
 }

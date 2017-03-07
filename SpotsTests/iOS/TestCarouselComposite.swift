@@ -6,7 +6,7 @@ class CarouselCompositeTests: XCTestCase {
 
   func testCarouselComposite() {
     let view = CarouselComposite()
-    var item = Item()
+    var item = ContentModel()
     let gridSpot = CompositeSpot(spot: GridSpot(component: Component(span: 1)), itemIndex: 0)
     view.configure(&item, compositeSpots: [gridSpot])
 

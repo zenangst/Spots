@@ -102,7 +102,7 @@ public extension Spotable {
     component.items = prepare(items: component.items)
   }
 
-  func prepare(items: [Item]) -> [Item] {
+  func prepare(items: [ContentModel]) -> [ContentModel] {
     var preparedItems = items
     var spanWidth: CGFloat?
 
@@ -118,7 +118,7 @@ public extension Spotable {
       spanWidth = (spotWidth / CGFloat(layout.span)) - CGFloat(layout.itemSpacing)
     }
 
-    preparedItems.enumerated().forEach { (index: Int, item: Item) in
+    preparedItems.enumerated().forEach { (index: Int, item: ContentModel) in
       var item = item
       if let spanWidth = spanWidth {
         item.size.width = spanWidth
@@ -138,7 +138,7 @@ public extension Spotable {
   /// - parameter index: The index of the item that should be resolved.
   ///
   /// - returns: An optional Item that corresponds to the index.
-  public func item(at index: Int) -> Item? {
+  public func item(at index: Int) -> ContentModel? {
     guard index < component.items.count && index > -1 else {
       return nil
     }
@@ -151,7 +151,7 @@ public extension Spotable {
   /// - parameter indexPath: The index path of the item that should be resolved.
   ///
   /// - returns: An optional Item that corresponds to the index path.
-  public func item(at indexPath: IndexPath) -> Item? {
+  public func item(at indexPath: IndexPath) -> ContentModel? {
     #if os(OSX)
       return item(at: indexPath.item)
     #else
@@ -201,7 +201,7 @@ public extension Spotable {
   /// - parameter includeElement: A filter predicate to find a view model
   ///
   /// - returns: A calculate CGFloat based on what the includeElement matches
-  public func scrollTo(_ includeElement: (Item) -> Bool) -> CGFloat {
+  public func scrollTo(_ includeElement: (ContentModel) -> Bool) -> CGFloat {
     return 0.0
   }
 
@@ -219,7 +219,7 @@ public extension Spotable {
     component.items[index] = configuredItem
   }
 
-  func configure(item: Item, at index: Int, usesViewSize: Bool = false) -> Item? {
+  func configure(item: ContentModel, at index: Int, usesViewSize: Bool = false) -> ContentModel? {
     var item = item
     item.index = index
 
@@ -285,7 +285,7 @@ public extension Spotable {
     return item
   }
 
-  func prepare(kind: String, view: Any, item: inout Item) {
+  func prepare(kind: String, view: Any, item: inout ContentModel) {
     switch view {
     case let view as Composable:
       prepare(composable: view, item: &item)
@@ -324,7 +324,7 @@ public extension Spotable {
   /// - parameter usesViewSize:      A boolean value to determine if the view uses the views height
   ///
   /// - returns: The height for the item based of the composable spots
-  func prepare(composable: Composable, item: inout Item) {
+  func prepare(composable: Composable, item: inout ContentModel) {
     var height: CGFloat = 0.0
 
     compositeSpots.filter({ $0.itemIndex == item.index }).forEach {
@@ -372,7 +372,7 @@ public extension Spotable {
   /// - Parameters:
   ///   - item: The item struct that is being configured.
   ///   - view: The view used for fallback size for the item.
-  private func setFallbackViewSize(to item: inout Item, with view: ItemConfigurable) {
+  private func setFallbackViewSize(to item: inout ContentModel, with view: ItemConfigurable) {
     let hasExplicitHeight: Bool = item.size.height == 0.0
 
     if hasExplicitHeight {

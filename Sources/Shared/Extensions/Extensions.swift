@@ -23,7 +23,7 @@ extension Dictionary where Key: ExpressibleByStringLiteral {
 
    - returns: A generic type if casting succeeds, otherwise it returns nil
    */
-  func property<T>(_ name: Item.Key) -> T? {
+  func property<T>(_ name: ContentModel.Key) -> T? {
     return property(name.string)
   }
 

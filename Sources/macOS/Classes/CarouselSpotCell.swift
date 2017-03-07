@@ -8,7 +8,7 @@ class CarouselSpotCell: NSCollectionViewItem, ItemConfigurable {
     view = NSView()
   }
 
-  func configure(_ item: inout Item) {
+  func configure(_ item: inout ContentModel) {
     view.wantsLayer = true
     view.layer?.backgroundColor = NSColor.red.cgColor
   }

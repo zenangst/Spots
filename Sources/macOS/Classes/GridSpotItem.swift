@@ -67,7 +67,7 @@ open class GridSpotItem: NSCollectionViewItem, ItemConfigurable {
     view.layer?.backgroundColor = NSColor.clear.cgColor
   }
 
-  open func configure( _ item: inout Item) {
+  open func configure( _ item: inout ContentModel) {
     titleLabel.stringValue = item.title
     titleLabel.frame.origin.x = 8
     titleLabel.sizeToFit()

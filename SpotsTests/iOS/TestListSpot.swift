@@ -30,7 +30,7 @@ class ListSpotTests: XCTestCase {
   }
 
   func testSafelyResolveKind() {
-    let component = Component(title: "ListSpot", kind: "custom-list", span: 1.0, items: [Item(title: "foo", kind: "custom-item-kind")])
+    let component = Component(title: "ListSpot", kind: "custom-list", span: 1.0, items: [ContentModel(title: "foo", kind: "custom-item-kind")])
     let listSpot = ListSpot(component: component)
     let indexPath = IndexPath(row: 0, section: 0)
 
@@ -49,7 +49,7 @@ class ListSpotTests: XCTestCase {
   }
 
   func testSpotCache() {
-    let item = Item(title: "test")
+    let item = ContentModel(title: "test")
 
     XCTAssertEqual(cachedSpot.component.items.count, 0)
     cachedSpot.append(item) {
@@ -69,7 +69,7 @@ class ListSpotTests: XCTestCase {
   func testSpotConfigurationClosure() {
     Configuration.register(view: TestView.self, identifier: "test-view")
 
-    let items = [Item(title: "Item A", kind: "test-view"), Item(title: "Item B")]
+    let items = [ContentModel(title: "Item A", kind: "test-view"), ContentModel(title: "Item B")]
     let spot = ListSpot(component: Component(span: 0.0, items: items))
     spot.setup(CGSize(width: 100, height: 100))
     spot.layout(CGSize(width: 100, height: 100))
@@ -84,7 +84,7 @@ class ListSpotTests: XCTestCase {
 
   func testAccessibilityForDefaultCells() {
     let cell = ListSpotCell(style: .default, reuseIdentifier: "reuse")
-    var item = Item(title: "Title", subtitle: "Subtitle")
+    var item = ContentModel(title: "Title", subtitle: "Subtitle")
     cell.configure(&item)
 
     XCTAssertTrue(cell.isAccessibilityElement)

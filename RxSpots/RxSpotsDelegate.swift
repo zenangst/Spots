@@ -12,16 +12,16 @@ import RxCocoa
 public final class RxSpotsDelegate: DelegateProxy, DelegateProxyType, SpotsDelegate {
 
   // Delegate methods subjects
-  private let spotDidSelectItem = PublishSubject<(Spotable, Item)>()
+  private let spotDidSelectItem = PublishSubject<(Spotable, ContentModel)>()
   private let spotDidChange = PublishSubject<[Spotable]>()
-  private let spotWillDisplayView = PublishSubject<(Spotable, SpotView, Item)>()
-  private let spotDidEndDisplayingView = PublishSubject<(Spotable, SpotView, Item)>()
+  private let spotWillDisplayView = PublishSubject<(Spotable, SpotView, ContentModel)>()
+  private let spotDidEndDisplayingView = PublishSubject<(Spotable, SpotView, ContentModel)>()
 
   // Delegate method observables
-  public let didSelectItem: Observable<(Spotable, Item)>
+  public let didSelectItem: Observable<(Spotable, ContentModel)>
   public let didChange: Observable<[Spotable]>
-  public let willDisplayView: Observable<(Spotable, SpotView, Item)>
-  public let didEndDisplayingView: Observable<(Spotable, SpotView, Item)>
+  public let willDisplayView: Observable<(Spotable, SpotView, ContentModel)>
+  public let didEndDisplayingView: Observable<(Spotable, SpotView, ContentModel)>
 
   public class func currentDelegateFor(_ object: AnyObject) -> AnyObject? {
     return (object as? Spotable)?.delegate ?? (object as? Controller)?.delegate
@@ -44,7 +44,7 @@ public final class RxSpotsDelegate: DelegateProxy, DelegateProxyType, SpotsDeleg
     super.init(parentObject: parentObject)
   }
 
-  public func spotable(_ spot: Spotable, itemSelected item: Item) {
+  public func spotable(_ spot: Spotable, itemSelected item: ContentModel) {
     spotDidSelectItem.onNext(spot, item)
   }
 
@@ -52,11 +52,11 @@ public final class RxSpotsDelegate: DelegateProxy, DelegateProxyType, SpotsDeleg
     spotDidChange.onNext(spots)
   }
 
-  public func spotable(_ spot: Spotable, willDisplay view: SpotView, item: Item) {
+  public func spotable(_ spot: Spotable, willDisplay view: SpotView, item: ContentModel) {
     spotWillDisplayView.onNext(spot, view, item)
   }
 
-  public func spotable(_ spot: Spotable, didEndDisplaying view: SpotView, item: Item) {
+  public func spotable(_ spot: Spotable, didEndDisplaying view: SpotView, item: ContentModel) {
     spotDidEndDisplayingView.onNext(spot, view, item)
   }
 }

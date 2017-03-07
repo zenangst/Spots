@@ -12,9 +12,9 @@ public enum ItemDiff {
   case identifier, index, title, subtitle, text, image, kind, action, meta, children, relations, size, new, removed, none
 }
 
-public extension Item {
+public extension ContentModel {
 
-  static func evaluate(_ newModels: [Item], oldModels: [Item]) -> [ItemDiff]? {
+  static func evaluate(_ newModels: [ContentModel], oldModels: [ContentModel]) -> [ItemDiff]? {
     guard !(oldModels === newModels) else {
       return nil
     }
@@ -88,7 +88,7 @@ public extension Item {
 
    - returns: An `ItemDiff` enum key
    */
-  public func diff(_ oldItem: Item) -> ItemDiff {
+  public func diff(_ oldItem: ContentModel) -> ItemDiff {
 
     let oldChildComponents: [Component] = oldItem.children.map { Component($0) }
     let newChildComponents: [Component] = children.map { Component($0) }

@@ -6,7 +6,7 @@ public class GridSpotCell: UICollectionViewCell, ItemConfigurable {
   /// The preferred view size for the view
   public var preferredViewSize = CGSize(width: 88, height: 88)
   /// A weak referenced Item struct
-  public var item: Item?
+  public var item: ContentModel?
 
   /// A UILabel that uses the Item's title as its text
   public var label: UILabel = {
@@ -48,7 +48,7 @@ public class GridSpotCell: UICollectionViewCell, ItemConfigurable {
   /// Configure cell with Item struct
   ///
   /// - parameter item: The Item struct that is used for configuring the view.
-  public func configure(_ item: inout Item) {
+  public func configure(_ item: inout ContentModel) {
     imageView.image = UIImage(named: item.image)
     imageView.frame = contentView.frame
     label.text = item.title

@@ -19,10 +19,10 @@ class TestItem: XCTestCase {
       "domain": "I"
     ]
   ]
-  var item: Item!
+  var item: ContentModel!
 
   override func setUp() {
-    item = Item(data)
+    item = ContentModel(data)
   }
 
   func testItemMapping() {
@@ -38,7 +38,7 @@ class TestItem: XCTestCase {
 
   func testRelations() {
     data["relations"] = ["Items": [data, data, data]]
-    item = Item(data)
+    item = ContentModel(data)
 
     XCTAssertEqual(item.relations["Items"]!.count, 3)
     XCTAssertEqual(item.relations["Items"]!.first!.title, data["title"] as? String)
@@ -53,7 +53,7 @@ class TestItem: XCTestCase {
     XCTAssertEqual(item.relations["Items"]!.last!.kind, data["kind"] as? String)
     XCTAssertEqual(item.relations["Items"]!.last!.action, data["action"] as? String)
 
-    let item2: Item! = item
+    let item2: ContentModel! = item
     XCTAssertTrue(item2 == item)
 
     item.relations["Items"]![2].title = "new"
@@ -67,7 +67,7 @@ class TestItem: XCTestCase {
   func testMetaDataCreatedFromObject() {
     var data: [String : Any] = ["id": 11, "name": "Name"]
 
-    item = Item(meta: Meta(data))
+    item = ContentModel(meta: Meta(data))
 
     XCTAssertEqual(item.meta("id", 0), data["id"] as? Int)
     XCTAssertEqual(item.meta("name", ""), data["name"] as? String)
@@ -75,7 +75,7 @@ class TestItem: XCTestCase {
 
   func testMetaInstance() {
     var data: [String : Any] = ["id": 11, "name": "Name"]
-    item = Item(meta: Meta(data))
+    item = ContentModel(meta: Meta(data))
     let result: Meta = item.metaInstance()
 
     XCTAssertEqual(result.id, data["id"] as? Int)
@@ -83,46 +83,46 @@ class TestItem: XCTestCase {
   }
 
   func testItemEquality() {
-    var left = Item(identifier: "foo".hashValue)
-    var right = Item(identifier: "foo".hashValue)
+    var left = ContentModel(identifier: "foo".hashValue)
+    var right = ContentModel(identifier: "foo".hashValue)
 
     XCTAssertTrue(left === right)
 
-    left = Item(identifier: "foo".hashValue)
-    right = Item(identifier: "bar".hashValue)
+    left = ContentModel(identifier: "foo".hashValue)
+    right = ContentModel(identifier: "bar".hashValue)
 
     XCTAssertFalse(left === right)
 
-    left = Item(title: "foo", size: CGSize(width: 40, height: 40))
-    right = Item(title: "foo", size: CGSize(width: 40, height: 40))
+    left = ContentModel(title: "foo", size: CGSize(width: 40, height: 40))
+    right = ContentModel(title: "foo", size: CGSize(width: 40, height: 40))
 
     XCTAssertTrue(left === right)
 
-    left = Item(title: "foo", size: CGSize(width: 40, height: 40))
-    right = Item(title: "foo", size: CGSize(width: 60, height: 60))
+    left = ContentModel(title: "foo", size: CGSize(width: 40, height: 40))
+    right = ContentModel(title: "foo", size: CGSize(width: 60, height: 60))
 
     XCTAssertFalse(left === right)
   }
 
   func testItemCollectionEquality() {
     var left = [
-      Item(title: "foo", size: CGSize(width: 40, height: 40)),
-      Item(title: "foo", size: CGSize(width: 40, height: 40))
+      ContentModel(title: "foo", size: CGSize(width: 40, height: 40)),
+      ContentModel(title: "foo", size: CGSize(width: 40, height: 40))
     ]
     var right = [
-      Item(title: "foo", size: CGSize(width: 40, height: 40)),
-      Item(title: "foo", size: CGSize(width: 40, height: 40))
+      ContentModel(title: "foo", size: CGSize(width: 40, height: 40)),
+      ContentModel(title: "foo", size: CGSize(width: 40, height: 40))
     ]
 
     XCTAssertTrue(left === right)
 
     left = [
-      Item(title: "foo", size: CGSize(width: 40, height: 40)),
-      Item(title: "foo", size: CGSize(width: 60, height: 40))
+      ContentModel(title: "foo", size: CGSize(width: 40, height: 40)),
+      ContentModel(title: "foo", size: CGSize(width: 60, height: 40))
     ]
     right = [
-      Item(title: "foo", size: CGSize(width: 40, height: 40)),
-      Item(title: "foo", size: CGSize(width: 40, height: 40))
+      ContentModel(title: "foo", size: CGSize(width: 40, height: 40)),
+      ContentModel(title: "foo", size: CGSize(width: 40, height: 40))
     ]
 
     XCTAssertFalse(left === right)
@@ -130,9 +130,9 @@ class TestItem: XCTestCase {
 
   func testItemDictionary() {
     data["relations"] = ["Items": [data, data]]
-    item = Item(data)
+    item = ContentModel(data)
 
-    let newItem: Item! = Item(item.dictionary)
+    let newItem: ContentModel! = ContentModel(item.dictionary)
 
     XCTAssertTrue(newItem == item)
 
@@ -154,25 +154,25 @@ class TestItem: XCTestCase {
   }
 
   func testCompareChildren() {
-    let sameItem = Item(data)
+    let sameItem = ContentModel(data)
     var newData: [String : Any] = data
     newData["children"] = [["child 1": "Anna"]]
-    let otherItem = Item(newData)
+    let otherItem = ContentModel(newData)
 
     XCTAssertTrue(item === sameItem)
     XCTAssertFalse(item === otherItem)
 
     data["relations"] = ["Items": [data, data, data]]
 
-    item = Item(data)
-    var item2 = Item(data)
+    item = ContentModel(data)
+    var item2 = ContentModel(data)
     XCTAssertTrue(compareRelations(item, item2))
 
     item2.relations["Items"]![2].title = "new"
     XCTAssertFalse(compareRelations(item, item2))
 
     data["relations"] = ["Items": [data, data]]
-    item2 = Item(data)
+    item2 = ContentModel(data)
     XCTAssertFalse(compareRelations(item, item2))
   }
 }

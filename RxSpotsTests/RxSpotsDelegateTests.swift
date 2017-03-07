@@ -17,7 +17,7 @@ class RxSpotsDelegateTests: XCTestCase {
 
   func testDidSelectItem() {
     let spot = ListSpot()
-    let item = Item(title: "Test")
+    let item = ContentModel(title: "Test")
     var isCalled = false
 
     delegateProxy.didSelectItem
@@ -47,7 +47,7 @@ class RxSpotsDelegateTests: XCTestCase {
   func testWillDisplayView() {
     let listSpot = ListSpot()
     let spotView = SpotView()
-    let item = Item(title: "Test")
+    let item = ContentModel(title: "Test")
     var isCalled = false
 
     delegateProxy.willDisplayView
@@ -63,7 +63,7 @@ class RxSpotsDelegateTests: XCTestCase {
   func testDidEndDisplayingView() {
     let listSpot = ListSpot()
     let spotView = SpotView()
-    let item = Item(title: "Test")
+    let item = ContentModel(title: "Test")
     var isCalled = false
 
     delegateProxy.didEndDisplayingView

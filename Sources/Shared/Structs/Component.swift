@@ -102,7 +102,7 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
   /// Layout properties
   public var layout: Layout?
   /// A collection of view models
-  public var items: [Item] = [Item]()
+  public var items: [ContentModel] = [ContentModel]()
   /// The width and height of the component, usually calculated and updated by the UI component
   public var size: CGSize?
   /// A key-value dictionary for any additional information
@@ -224,7 +224,7 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
               layout: Layout? = nil,
               interaction: Interaction = .init(),
               span: Double? = nil,
-              items: [Item] = [],
+              items: [ContentModel] = [],
               meta: [String : Any] = [:],
               hybrid: Bool = false) {
     self.identifier = identifier
@@ -317,7 +317,7 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
   }
 
   mutating public func add(child: Component) {
-    var item = Item(kind: "composite")
+    var item = ContentModel(kind: "composite")
     item.children = [child.dictionary]
     items.append(item)
   }

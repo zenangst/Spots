@@ -12,7 +12,7 @@ class TestSpot: XCTestCase {
   }
 
   func testDefaultValues() {
-    let items = [Item(title: "A"), Item(title: "B")]
+    let items = [ContentModel(title: "A"), ContentModel(title: "B")]
     let component = Component(items: items, hybrid: true)
     let spot = Spot(component: component)
 
@@ -28,7 +28,7 @@ class TestSpot: XCTestCase {
   }
 
   func testSpotCache() {
-    let item = Item(title: "test")
+    let item = ContentModel(title: "test")
     let spot = Spot(cacheKey: "test-spot-cache")
 
     XCTAssertEqual(spot.component.items.count, 0)
@@ -60,10 +60,10 @@ class TestSpot: XCTestCase {
       footer: "Footer",
       kind: Component.Kind.list.string,
       items: [
-        Item(title: "A"),
-        Item(title: "B"),
-        Item(title: "C"),
-        Item(title: "D")
+        ContentModel(title: "A"),
+        ContentModel(title: "B"),
+        ContentModel(title: "C"),
+        ContentModel(title: "D")
       ],
       hybrid: true
     )
@@ -80,10 +80,10 @@ class TestSpot: XCTestCase {
       footer: "Footer",
       kind: Component.Kind.grid.string,
       items: [
-        Item(title: "A", kind: "TextView"),
-        Item(title: "B", kind: "TextView"),
-        Item(title: "C", kind: "TextView"),
-        Item(title: "D", kind: "TextView")
+        ContentModel(title: "A", kind: "TextView"),
+        ContentModel(title: "B", kind: "TextView"),
+        ContentModel(title: "C", kind: "TextView"),
+        ContentModel(title: "D", kind: "TextView")
       ],
       hybrid: true
     )
@@ -101,10 +101,10 @@ class TestSpot: XCTestCase {
       footer: "Footer",
       kind: Component.Kind.carousel.string,
       items: [
-        Item(title: "A", kind: "TextView"),
-        Item(title: "B", kind: "TextView"),
-        Item(title: "C", kind: "TextView"),
-        Item(title: "D", kind: "TextView")
+        ContentModel(title: "A", kind: "TextView"),
+        ContentModel(title: "B", kind: "TextView"),
+        ContentModel(title: "C", kind: "TextView"),
+        ContentModel(title: "D", kind: "TextView")
       ],
       hybrid: true
     )

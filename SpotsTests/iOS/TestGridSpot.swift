@@ -42,7 +42,7 @@ class GridSpotTests: XCTestCase {
   }
 
   func testSafelyResolveKind() {
-    let component = Component(title: "GridSpot", kind: "custom-grid", span: 1.0, items: [Item(title: "foo", kind: "custom-item-kind")])
+    let component = Component(title: "GridSpot", kind: "custom-grid", span: 1.0, items: [ContentModel(title: "foo", kind: "custom-item-kind")])
     let rowSpot = GridSpot(component: component)
     let indexPath = IndexPath(row: 0, section: 0)
 
@@ -61,7 +61,7 @@ class GridSpotTests: XCTestCase {
   }
 
   func testAppendItem() {
-    let item = Item(title: "test")
+    let item = ContentModel(title: "test")
     let spot = GridSpot(component: Component(span: 1.0))
     let expectation = self.expectation(description: "Append item")
     spot.append(item) {
@@ -72,7 +72,7 @@ class GridSpotTests: XCTestCase {
   }
 
   func testAppendItems() {
-    let items = [Item(title: "test"), Item(title: "test 2")]
+    let items = [ContentModel(title: "test"), ContentModel(title: "test 2")]
     let spot = GridSpot(component: Component(span: 1.0))
     let expectation = self.expectation(description: "Append items")
     spot.append(items) {
@@ -83,7 +83,7 @@ class GridSpotTests: XCTestCase {
   }
 
   func testInsertItem() {
-    let item = Item(title: "test")
+    let item = ContentModel(title: "test")
     let spot = GridSpot(component: Component(span: 1.0))
     let expectation = self.expectation(description: "Insert item")
     spot.insert(item, index: 0) {
@@ -94,7 +94,7 @@ class GridSpotTests: XCTestCase {
   }
 
   func testPrependItems() {
-    let items = [Item(title: "test"), Item(title: "test 2")]
+    let items = [ContentModel(title: "test"), ContentModel(title: "test 2")]
     let spot = GridSpot(component: Component(span: 1.0))
     let expectation = self.expectation(description: "Prepend items")
     spot.prepend(items) {
@@ -105,7 +105,7 @@ class GridSpotTests: XCTestCase {
   }
 
   func testSpotCollectionDelegate() {
-    let items = [Item(title: "Test item")]
+    let items = [ContentModel(title: "Test item")]
     let spot = GridSpot(component: Component(span: 0.0, items: items))
     spot.view.frame.size = CGSize(width: 100, height: 100)
     spot.view.layoutSubviews()
@@ -115,7 +115,7 @@ class GridSpotTests: XCTestCase {
   }
 
   func testSpotCache() {
-    let item = Item(title: "test")
+    let item = ContentModel(title: "test")
 
     XCTAssertEqual(cachedSpot.component.items.count, 0)
     cachedSpot.append(item) { [weak self] in
@@ -135,7 +135,7 @@ class GridSpotTests: XCTestCase {
   func testSpotConfigurationClosure() {
     Configuration.register(view: TestView.self, identifier: "test-view")
 
-    let items = [Item(title: "Item A", kind: "test-view"), Item(title: "Item B")]
+    let items = [ContentModel(title: "Item A", kind: "test-view"), ContentModel(title: "Item B")]
     let spot = GridSpot(component: Component(span: 0.0, items: items))
     spot.setup(CGSize(width: 100, height: 100))
     spot.layout(CGSize(width: 100, height: 100))

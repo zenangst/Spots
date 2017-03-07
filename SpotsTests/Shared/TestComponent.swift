@@ -27,7 +27,7 @@ class ComponentTests: XCTestCase {
     XCTAssertEqual(jsonComponent.items.first?.title, "item1")
 
     let layout = Layout(json["layout"] as! [String : Any])
-    let item = Item(title: "item1")
+    let item = ContentModel(title: "item1")
 
     // Test component created programmatically
     let codeComponent = Component(
@@ -57,7 +57,7 @@ class ComponentTests: XCTestCase {
       meta: json["meta"] as! [String : String])
     XCTAssertTrue(jsonComponent == codeComponent)
 
-    codeComponent.items.append(Item(title: "item2"))
+    codeComponent.items.append(ContentModel(title: "item2"))
     XCTAssertTrue(jsonComponent == codeComponent)
   }
 

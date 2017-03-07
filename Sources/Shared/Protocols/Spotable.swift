@@ -65,14 +65,14 @@ public protocol Spotable: class {
   /// - parameter item: The view model that you want to append.
   /// - parameter animation:  The animation that should be used (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue.
-  func append(_ item: Item, withAnimation animation: Animation, completion: Completion)
+  func append(_ item: ContentModel, withAnimation animation: Animation, completion: Completion)
 
   /// Append a collection of items to collection with animation
   ///
   /// - parameter items:      A collection of view models that you want to insert
   /// - parameter animation:  The animation that should be used (currently not in use)
   /// - parameter completion: A completion closure that is executed in the main queue.
-  func append(_ items: [Item], withAnimation animation: Animation, completion: Completion)
+  func append(_ items: [ContentModel], withAnimation animation: Animation, completion: Completion)
 
   /// Insert item into collection at index.
   ///
@@ -80,28 +80,28 @@ public protocol Spotable: class {
   /// - parameter index:      The index where the new Item should be inserted.
   /// - parameter animation:  A Animation that is used when performing the mutation (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue.
-  func insert(_ item: Item, index: Int, withAnimation animation: Animation, completion: Completion)
+  func insert(_ item: ContentModel, index: Int, withAnimation animation: Animation, completion: Completion)
 
   /// Prepend a collection items to the collection with animation
   ///
   /// - parameter items:      A collection of view model that you want to prepend
   /// - parameter animation:  A Animation that is used when performing the mutation (currently not in use)
   /// - parameter completion: A completion closure that is executed in the main queue.
-  func prepend(_ items: [Item], withAnimation animation: Animation, completion: Completion)
+  func prepend(_ items: [ContentModel], withAnimation animation: Animation, completion: Completion)
 
   /// Delete item from collection with animation
   ///
   /// - parameter item:       The view model that you want to remove.
   /// - parameter animation:  The animation that should be used (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue.
-  func delete(_ item: Item, withAnimation animation: Animation, completion: Completion)
+  func delete(_ item: ContentModel, withAnimation animation: Animation, completion: Completion)
 
   /// Delete items from collection with animation
   ///
   /// - parameter items:      A collection of view models that you want to delete.
   /// - parameter animation:  The animation that should be used (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue.
-  func delete(_ item: [Item], withAnimation animation: Animation, completion: Completion)
+  func delete(_ item: [ContentModel], withAnimation animation: Animation, completion: Completion)
 
   /// Delete item at index with animation
   ///
@@ -123,14 +123,14 @@ public protocol Spotable: class {
   /// - parameter index:      The index of the view model, defaults to 0.
   /// - parameter animation:  A Animation that is used when performing the mutation (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue when the view model has been removed.
-  func update(_ item: Item, index: Int, withAnimation animation: Animation, completion: Completion)
+  func update(_ item: ContentModel, index: Int, withAnimation animation: Animation, completion: Completion)
 
   /// Reloads a spot only if it changes
   ///
   /// - parameter items:      A collection of Items
   /// - parameter animation:  The animation that should be used (only works for Listable objects)
   /// - parameter completion: A completion closure that is performed when all mutations are performed
-  func reloadIfNeeded(_ items: [Item], withAnimation animation: Animation, completion: Completion)
+  func reloadIfNeeded(_ items: [ContentModel], withAnimation animation: Animation, completion: Completion)
 
   /// Reload spot with ItemChanges.
   ///
@@ -160,7 +160,7 @@ public protocol Spotable: class {
   /// - parameter includeElement: A filter predicate to find a view model
   ///
   /// - returns: A calculate CGFloat based on what the includeElement matches
-  func scrollTo(_ includeElement: (Item) -> Bool) -> CGFloat
+  func scrollTo(_ includeElement: (ContentModel) -> Bool) -> CGFloat
 
   func sizeForItem(at indexPath: IndexPath) -> CGSize
 

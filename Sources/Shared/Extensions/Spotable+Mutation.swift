@@ -12,7 +12,7 @@ public extension Spotable {
   /// - parameter item: The view model that you want to append.
   /// - parameter animation:  The animation that should be used (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue.
-  func append(_ item: Item, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
+  func append(_ item: ContentModel, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     Dispatch.main { [weak self] in
       guard let weakSelf = self else {
         completion?()
@@ -47,7 +47,7 @@ public extension Spotable {
   /// - parameter items:      A collection of view models that you want to insert
   /// - parameter animation:  The animation that should be used (currently not in use)
   /// - parameter completion: A completion closure that is executed in the main queue.
-  func append(_ items: [Item], withAnimation animation: Animation = .automatic, completion: Completion = nil) {
+  func append(_ items: [ContentModel], withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     Dispatch.main { [weak self] in
       guard let weakSelf = self else {
         completion?()
@@ -84,7 +84,7 @@ public extension Spotable {
   /// - parameter items:      A collection of view model that you want to prepend
   /// - parameter animation:  A Animation that is used when performing the mutation (currently not in use)
   /// - parameter completion: A completion closure that is executed in the main queue.
-  func prepend(_ items: [Item], withAnimation animation: Animation = .automatic, completion: Completion = nil) {
+  func prepend(_ items: [ContentModel], withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     Dispatch.main { [weak self] in
       guard let weakSelf = self else {
         completion?()
@@ -127,7 +127,7 @@ public extension Spotable {
   /// - parameter index:      The index where the new Item should be inserted.
   /// - parameter animation:  A Animation that is used when performing the mutation (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue.
-  func insert(_ item: Item, index: Int, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
+  func insert(_ item: ContentModel, index: Int, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     Dispatch.main { [weak self] in
       guard let weakSelf = self else {
         completion?()
@@ -162,7 +162,7 @@ public extension Spotable {
   /// - parameter item:       The view model that you want to remove.
   /// - parameter animation:  The animation that should be used (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue.
-  func delete(_ item: Item, withAnimation animation: Animation = .automatic, completion: Completion) {
+  func delete(_ item: ContentModel, withAnimation animation: Animation = .automatic, completion: Completion) {
     Dispatch.main { [weak self] in
       guard let weakSelf = self,
         let index = weakSelf.component.items.index(where: { $0 == item }) else {
@@ -185,7 +185,7 @@ public extension Spotable {
   /// - parameter items:      A collection of view models that you want to delete.
   /// - parameter animation:  The animation that should be used (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue.
-  func delete(_ items: [Item], withAnimation animation: Animation = .automatic, completion: Completion = nil) {
+  func delete(_ items: [ContentModel], withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     Dispatch.main { [weak self] in
       guard let weakSelf = self else {
         completion?()
@@ -266,7 +266,7 @@ public extension Spotable {
   /// - parameter index:      The index of the view model, defaults to 0.
   /// - parameter animation:  A Animation that is used when performing the mutation (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue when the view model has been removed.
-  func update(_ item: Item, index: Int, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
+  func update(_ item: ContentModel, index: Int, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     Dispatch.main { [weak self] in
       guard let weakSelf = self,
         let oldItem = weakSelf.item(at: index) else {
@@ -425,7 +425,7 @@ public extension Spotable {
   }
 
   /// A collection of view models
-  var items: [Item] {
+  var items: [ContentModel] {
     set(items) {
       component.items = items
     }
@@ -444,7 +444,7 @@ public extension Spotable {
   /// - parameter items:      A collection of Items
   /// - parameter animation:  The animation that should be used (only works for Listable objects)
   /// - parameter completion: A completion closure that is performed when all mutations are performed
-  public func reloadIfNeeded(_ items: [Item], withAnimation animation: Animation = .automatic, completion: Completion = nil) {
+  public func reloadIfNeeded(_ items: [ContentModel], withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     Dispatch.interactive { [weak self] in
       guard let weakSelf = self else {
         completion?()
