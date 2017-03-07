@@ -10,11 +10,11 @@ extension Delegate: NSCollectionViewDelegate {
      */
     Dispatch.after(seconds: 0.1) { [weak self] in
       guard let weakSelf = self, let first = indexPaths.first,
-        let spot = weakSelf.component,
-        let item = spot.item(at: first.item), first.item < spot.items.count else {
+        let component = weakSelf.component,
+        let item = component.item(at: first.item), first.item < spot.items.count else {
           return
       }
-      spot.delegate?.component(spot, itemSelected: item)
+      component.delegate?.component(component, itemSelected: item)
     }
   }
 
@@ -27,13 +27,13 @@ extension Delegate: NSCollectionViewDelegate {
     let view = item
 
     guard
-      let spot = component,
-      let item = spot.item(at: indexPath)
+      let component = component,
+      let item = component.item(at: indexPath)
       else {
         return
     }
 
-    spot.delegate?.component(spot, willDisplay: view, item: item)
+    component.delegate?.component(component, willDisplay: view, item: item)
   }
 
   /// Notifies the delegate that the specified item was removed from the collection view.
