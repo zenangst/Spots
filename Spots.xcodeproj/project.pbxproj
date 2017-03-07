@@ -267,9 +267,9 @@
 		BDAD85C01E3E7032008289AE /* ComponentDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD854E1E3E7032008289AE /* ComponentDelegate.swift */; };
 		BDAD85C11E3E7032008289AE /* ComponentDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD854E1E3E7032008289AE /* ComponentDelegate.swift */; };
 		BDAD85C21E3E7032008289AE /* ComponentDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD854E1E3E7032008289AE /* ComponentDelegate.swift */; };
-		BDAD85C31E3E7032008289AE /* SpotsFocusDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD854F1E3E7032008289AE /* SpotsFocusDelegate.swift */; };
-		BDAD85C41E3E7032008289AE /* SpotsFocusDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD854F1E3E7032008289AE /* SpotsFocusDelegate.swift */; };
-		BDAD85C51E3E7032008289AE /* SpotsFocusDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD854F1E3E7032008289AE /* SpotsFocusDelegate.swift */; };
+		BDAD85C31E3E7032008289AE /* ComponentFocusDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD854F1E3E7032008289AE /* ComponentFocusDelegate.swift */; };
+		BDAD85C41E3E7032008289AE /* ComponentFocusDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD854F1E3E7032008289AE /* ComponentFocusDelegate.swift */; };
+		BDAD85C51E3E7032008289AE /* ComponentFocusDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD854F1E3E7032008289AE /* ComponentFocusDelegate.swift */; };
 		BDAD85C61E3E7032008289AE /* SpotsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD85501E3E7032008289AE /* SpotsProtocol.swift */; };
 		BDAD85C71E3E7032008289AE /* SpotsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD85501E3E7032008289AE /* SpotsProtocol.swift */; };
 		BDAD85C81E3E7032008289AE /* SpotsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD85501E3E7032008289AE /* SpotsProtocol.swift */; };
@@ -562,7 +562,7 @@
 		BDAD854B1E3E7032008289AE /* ScrollDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollDelegate.swift; sourceTree = "<group>"; };
 		BDAD854C1E3E7032008289AE /* Spotable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spotable.swift; sourceTree = "<group>"; };
 		BDAD854E1E3E7032008289AE /* ComponentDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentDelegate.swift; sourceTree = "<group>"; };
-		BDAD854F1E3E7032008289AE /* SpotsFocusDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsFocusDelegate.swift; sourceTree = "<group>"; };
+		BDAD854F1E3E7032008289AE /* ComponentFocusDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentFocusDelegate.swift; sourceTree = "<group>"; };
 		BDAD85501E3E7032008289AE /* SpotsProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsProtocol.swift; sourceTree = "<group>"; };
 		BDAD85511E3E7032008289AE /* UserInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInterface.swift; sourceTree = "<group>"; };
 		BDAD85521E3E7032008289AE /* Viewable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Viewable.swift; sourceTree = "<group>"; };
@@ -927,7 +927,7 @@
 				BDAD854B1E3E7032008289AE /* ScrollDelegate.swift */,
 				BDAD854C1E3E7032008289AE /* Spotable.swift */,
 				BDAD854E1E3E7032008289AE /* ComponentDelegate.swift */,
-				BDAD854F1E3E7032008289AE /* SpotsFocusDelegate.swift */,
+				BDAD854F1E3E7032008289AE /* ComponentFocusDelegate.swift */,
 				BDAD85501E3E7032008289AE /* SpotsProtocol.swift */,
 				BDAD85511E3E7032008289AE /* UserInterface.swift */,
 				BDAD85521E3E7032008289AE /* Viewable.swift */,
@@ -1619,7 +1619,7 @@
 				BDAD84A31E3E701C008289AE /* CarouselComposite.swift in Sources */,
 				BDAD85DD1E3E7032008289AE /* GridableMeta.swift in Sources */,
 				BDAD85F21E3E7032008289AE /* TypeAlias.swift in Sources */,
-				BDAD85C51E3E7032008289AE /* SpotsFocusDelegate.swift in Sources */,
+				BDAD85C51E3E7032008289AE /* ComponentFocusDelegate.swift in Sources */,
 				D5D282711E5474E0004BF251 /* Cell.swift in Sources */,
 				BDAD85771E3E7032008289AE /* RegistryType.swift in Sources */,
 				BDAD85DA1E3E7032008289AE /* Dispatch.swift in Sources */,
@@ -1783,7 +1783,7 @@
 				BDAD85961E3E7032008289AE /* SpotsProtocol+Extensions.swift in Sources */,
 				BDAD856F1E3E7032008289AE /* Animation.swift in Sources */,
 				BDAD85B11E3E7032008289AE /* Listable.swift in Sources */,
-				BDAD85C31E3E7032008289AE /* SpotsFocusDelegate.swift in Sources */,
+				BDAD85C31E3E7032008289AE /* ComponentFocusDelegate.swift in Sources */,
 				BDAD84A41E3E701C008289AE /* CarouselComponent.swift in Sources */,
 				BDAD85811E3E7032008289AE /* Item+Extensions.swift in Sources */,
 				BDAD84E21E3E701C008289AE /* UIViewController+Extensions.swift in Sources */,
@@ -1914,7 +1914,7 @@
 				BDAD85971E3E7032008289AE /* SpotsProtocol+Extensions.swift in Sources */,
 				BDAD85E21E3E7032008289AE /* Interaction.swift in Sources */,
 				BDAD85D61E3E7032008289AE /* Configuration.swift in Sources */,
-				BDAD85C41E3E7032008289AE /* SpotsFocusDelegate.swift in Sources */,
+				BDAD85C41E3E7032008289AE /* ComponentFocusDelegate.swift in Sources */,
 				BD165A3B1E6EAF310023AF82 /* GridableLayout.swift in Sources */,
 				BDAD857F1E3E7032008289AE /* Gridable+Extensions.swift in Sources */,
 				D5D282701E5474E0004BF251 /* Cell.swift in Sources */,

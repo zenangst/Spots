@@ -18,7 +18,7 @@ public protocol Spotable: class {
 
   #if !os(OSX)
     /// A SpotsFocusDelegate object
-    weak var focusDelegate: SpotsFocusDelegate? { get set }
+    weak var focusDelegate: ComponentFocusDelegate? { get set }
   #endif
 
   /// A ComponentDelegate object

@@ -12,7 +12,7 @@ import Tailor
 
   open static var configure: ((_ view: View) -> Void)?
 
-  weak public var focusDelegate: SpotsFocusDelegate?
+  weak public var focusDelegate: ComponentFocusDelegate?
   weak public var delegate: ComponentDelegate?
 
   var headerView: View?

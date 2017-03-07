@@ -28,7 +28,7 @@ open class ListComponent: NSObject, Listable {
   open var model: ComponentModel
 
   /// A SpotsFocusDelegate object
-  weak public var focusDelegate: SpotsFocusDelegate?
+  weak public var focusDelegate: ComponentFocusDelegate?
 
   /// Child spots
   public var compositeComponents: [CompositeComponent] = []

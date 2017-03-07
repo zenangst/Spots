@@ -17,7 +17,7 @@ open class GridComponent: NSObject, Gridable {
   open static var headers = Registry()
 
   /// A SpotsFocusDelegate object
-  weak public var focusDelegate: SpotsFocusDelegate?
+  weak public var focusDelegate: ComponentFocusDelegate?
 
   /// Child spots
   public var compositeComponents: [CompositeComponent] = []

@@ -2,7 +2,7 @@ import UIKit
 import Cache
 
 /// A controller powered by Spotable objects
-open class Controller: UIViewController, SpotsProtocol, SpotsFocusDelegate, UIScrollViewDelegate {
+open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, UIScrollViewDelegate {
 
   open var contentView: View {
     return view

@@ -12,7 +12,7 @@ open class CarouselComponent: NSObject, Gridable, SpotHorizontallyScrollable {
   public var compositeComponents: [CompositeComponent] = []
 
   /// A SpotsFocusDelegate object
-  weak public var focusDelegate: SpotsFocusDelegate?
+  weak public var focusDelegate: ComponentFocusDelegate?
 
   /// A boolean value that affects the sizing of items when using span, if enabled and the item count is less than the span, the CarouselComponent will even out the space between the items to align them
   open var dynamicSpan = false
