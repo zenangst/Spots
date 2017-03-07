@@ -1,6 +1,6 @@
 import Cocoa
 
-open class ListSpotItem: NSTableRowView, ItemConfigurable {
+open class ListSpotItem: NSTableRowView, ContentConfigurable {
 
   override open var isFlipped: Bool {
     return true

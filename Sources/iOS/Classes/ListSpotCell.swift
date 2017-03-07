@@ -5,7 +5,7 @@ import UIKit
 /// Accessibility: This class is per default an accessibility element, and gets its attributes
 /// from any `Item` that it's configured with. You can override this behavior at any point, and
 /// disable accessibility by setting `isAccessibilityElement = false` on the cell.
-open class ListSpotCell: UITableViewCell, ItemConfigurable {
+open class ListSpotCell: UITableViewCell, ContentConfigurable {
 
   /// The preferred view size for the view, width will be ignored for ListSpot cells
   open var preferredViewSize = CGSize(width: 0, height: 44)

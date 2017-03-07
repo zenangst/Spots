@@ -49,14 +49,14 @@ extension DataSource: NSCollectionViewDataSource {
     case let item as GridWrapper:
       if let (_, resolvedView) = Configuration.views.make(reuseIdentifier), let view = resolvedView {
         item.configure(with: view)
-        (view as? ItemConfigurable)?.configure(&spot.component.items[indexPath.item])
+        (view as? ContentConfigurable)?.configure(&spot.component.items[indexPath.item])
       }
     case let item as Composable:
       let spots = spot.compositeSpots.filter { $0.itemIndex == indexPath.item }
       item.contentView.frame.size.width = collectionView.frame.size.width
       item.contentView.frame.size.height = spot.computedHeight
       item.configure(&spot.component.items[indexPath.item], compositeSpots: spots)
-    case let item as ItemConfigurable:
+    case let item as ContentConfigurable:
       item.configure(&spot.component.items[indexPath.item])
     default:
       break

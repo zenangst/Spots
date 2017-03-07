@@ -12,7 +12,7 @@ enum Cell: String, StringConvertible {
   }
 }
 
-public class ListCell: UITableViewCell, ItemConfigurable {
+public class ListCell: UITableViewCell, ContentConfigurable {
 
   public var preferredViewSize: CGSize(width: 0, height: 60)
   public var item: Item?
@@ -96,7 +96,7 @@ public class ListHeaderView: UIView, Componentable {
   }
 }
 
-class GridTopicCell: UICollectionViewCell, ItemConfigurable {
+class GridTopicCell: UICollectionViewCell, ContentConfigurable {
 
   var preferredViewSize: CGSize(width: 125, height: 160)
 
@@ -225,4 +225,4 @@ let controller = Controller(spots: [
   ]
 )
 
-XCPlaygroundPage.currentPage.liveView = controller.view
+XCPlaygroundPage.currentPage.liveView = controller

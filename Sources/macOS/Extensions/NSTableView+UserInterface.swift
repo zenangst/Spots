@@ -28,7 +28,7 @@ extension NSTableView: UserInterface {
      - "For NSView-based table views, this method drops the view-cells in the table row, but not the NSTableRowView instances."
     */
     indexes.forEach { index in
-      if let view = rowView(atRow: index, makeIfNecessary: false) as? ItemConfigurable,
+      if let view = rowView(atRow: index, makeIfNecessary: false) as? ContentConfigurable,
       let adapter = dataSource as? Listable {
         var item = adapter.component.items[index]
         view.configure(&item)
@@ -62,7 +62,7 @@ extension NSTableView: UserInterface {
     insertRows(at: insertionsSets as IndexSet, withAnimation: animation.tableViewAnimation)
 
     for index in reloadSets {
-      guard let view = rowView(atRow: index, makeIfNecessary: false) as? ItemConfigurable,
+      guard let view = rowView(atRow: index, makeIfNecessary: false) as? ContentConfigurable,
         let adapter = dataSource as? Listable else {
           continue
       }

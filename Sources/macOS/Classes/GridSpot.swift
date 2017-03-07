@@ -92,10 +92,10 @@ open class GridSpot: NSObject, Gridable {
   open weak var delegate: SpotsDelegate?
 
   open var component: Component
-  open var configure: ((ItemConfigurable) -> Void)? {
+  open var configure: ((ContentConfigurable) -> Void)? {
     didSet {
       guard let configure = configure else { return }
-      for case let cell as ItemConfigurable in collectionView.visibleItems() {
+      for case let cell as ContentConfigurable in collectionView.visibleItems() {
         configure(cell)
       }
     }

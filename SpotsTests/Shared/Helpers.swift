@@ -52,7 +52,7 @@ extension Controller {
 }
 
 #if !os(OSX)
-  class HeaderView: UIView, ItemConfigurable, Componentable {
+  class HeaderView: UIView, ContentConfigurable, Componentable {
 
     public var preferredHeaderHeight: CGFloat = 50.0
 
@@ -92,7 +92,7 @@ extension Controller {
     }
   }
 
-  class FooterView: UIView, ItemConfigurable, Componentable {
+  class FooterView: UIView, ContentConfigurable, Componentable {
 
     var preferredHeaderHeight: CGFloat = 50
 
@@ -132,7 +132,7 @@ extension Controller {
     }
   }
 
-  class TextView: UIView, ItemConfigurable {
+  class TextView: UIView, ContentConfigurable {
 
     var preferredViewSize: CGSize = CGSize(width: 200, height: 50)
 
@@ -168,7 +168,7 @@ extension Controller {
     }
   }
 
-  class CustomListCell: UITableViewCell, ItemConfigurable {
+  class CustomListCell: UITableViewCell, ContentConfigurable {
 
     var preferredViewSize: CGSize = CGSize(width: 0, height: 44)
 
@@ -185,7 +185,7 @@ extension Controller {
     }
   }
 
-  class CustomGridCell: UICollectionViewCell, ItemConfigurable {
+  class CustomGridCell: UICollectionViewCell, ContentConfigurable {
 
     var preferredViewSize: CGSize = CGSize(width: 0, height: 44)
 
@@ -204,7 +204,7 @@ extension Controller {
   }
 #endif
 
-class TestView: View, ItemConfigurable {
+class TestView: View, ContentConfigurable {
   var preferredViewSize: CGSize = CGSize(width: 50, height: 50)
 
   func configure(_ item: inout Item) {

@@ -19,7 +19,7 @@ public class Spot: NSObject, Spotable, SpotHorizontallyScrollable {
   public var componentKind: Component.Kind = .list
   public var compositeSpots: [CompositeSpot] = []
 
-  public var configure: ((ItemConfigurable) -> Void)? {
+  public var configure: ((ContentConfigurable) -> Void)? {
     didSet {
       configureClosureDidChange()
     }
