@@ -31,7 +31,7 @@ class CompositionTests: XCTestCase {
     XCTAssertEqual(model.items.count, 3)
   }
 
-  func testSpotableCreation() {
+  func testCoreComponentCreation() {
     let layout = Layout().mutate { $0.span = 2.0 }
     var model = ComponentModel(kind: ComponentModel.Kind.grid.rawValue, layout: layout)
 

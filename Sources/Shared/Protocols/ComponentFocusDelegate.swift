@@ -1,4 +1,4 @@
 public protocol ComponentFocusDelegate: class {
-  var focusedSpot: Spotable? { get set }
+  var focusedSpot: CoreComponent? { get set }
   var focusedItemIndex: Int? { get set }
 }

@@ -9,7 +9,7 @@ enum ScrollDirection: String {
   case horizontal, vertical
 }
 
-/// A user interaction struct used for mapping behavior to a Spotable object.
+/// A user interaction struct used for mapping behavior to a CoreComponent object.
 /// Note: `paginate` is currently only available on iOS.
 public struct Interaction: Mappable {
 

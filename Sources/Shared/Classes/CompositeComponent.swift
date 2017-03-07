@@ -11,11 +11,11 @@ public struct CompositeComponent: Equatable {
     return lhs.itemIndex == rhs.itemIndex
   }
 
-  weak var parentSpot: Spotable?
-  var spot: Spotable
+  weak var parentSpot: CoreComponent?
+  var spot: CoreComponent
   var itemIndex: Int
 
-  init(spot: Spotable, parentSpot: Spotable? = nil, itemIndex: Int) {
+  init(spot: CoreComponent, parentSpot: CoreComponent? = nil, itemIndex: Int) {
     self.itemIndex = itemIndex
     self.parentSpot = parentSpot
     self.spot = spot

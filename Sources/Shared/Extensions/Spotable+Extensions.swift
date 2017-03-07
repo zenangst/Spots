@@ -4,8 +4,8 @@
   import UIKit
 #endif
 
-// MARK: - Spotable extension
-public extension Spotable {
+// MARK: - CoreComponent extension
+public extension CoreComponent {
 
   /// A computed value for the current index
   public var index: Int {
@@ -81,10 +81,10 @@ public extension Spotable {
   }
   #endif
 
-  /// A helper method to return self as a Spotable type.
+  /// A helper method to return self as a CoreComponent type.
   ///
-  /// - returns: Self as a Spotable type
-  public var type: Spotable.Type {
+  /// - returns: Self as a CoreComponent type
+  public var type: CoreComponent.Type {
     return type(of: self)
   }
 
@@ -335,7 +335,7 @@ public extension Spotable {
       }
     }
 
-    let spots: [Spotable] = Parser.parse(item)
+    let spots: [CoreComponent] = Parser.parse(item)
     let size = view.frame.size
     let width = size.width
 
@@ -418,7 +418,7 @@ public extension Spotable {
   ///
   /// - parameter index: The index of the item that needs resolving.
   ///
-  /// - returns: A string identifier for the view, defaults to the `defaultIdentifier` on the Spotable object.
+  /// - returns: A string identifier for the view, defaults to the `defaultIdentifier` on the CoreComponent object.
   public func identifier(at index: Int) -> String {
     if let item = item(at: index), type.views.storage[item.kind] != nil {
       return item.kind
@@ -433,13 +433,13 @@ public extension Spotable {
     return type.views.defaultIdentifier
   }
 
-  /// Register and prepare all items in the Spotable object.
+  /// Register and prepare all items in the CoreComponent object.
   func registerAndPrepare() {
     register()
     prepareItems()
   }
 
-  /// Update height and refresh indexes for the Spotable object.
+  /// Update height and refresh indexes for the CoreComponent object.
   ///
   /// - parameter completion: A completion closure that will be run when the computations are complete.
   public func sanitize(completion: Completion = nil) {
@@ -449,7 +449,7 @@ public extension Spotable {
     }
   }
 
-  /// Register default view for the Spotable object
+  /// Register default view for the CoreComponent object
   ///
   /// - parameter view: The view type that should be used as the default view
   func registerDefault(view: View.Type) {
@@ -458,16 +458,16 @@ public extension Spotable {
     }
   }
 
-  /// Register a composite view for the Spotable model.
+  /// Register a composite view for the CoreComponent model.
   ///
-  /// - parameter view: The view type that should be used as the composite view for the Spotable object.
+  /// - parameter view: The view type that should be used as the composite view for the CoreComponent object.
   func registerComposite(view: View.Type) {
     if type(of: self).views.composite == nil {
       type(of: self).views.composite = Registry.Item.classType(view)
     }
   }
 
-  /// Register a nib file with identifier on the Spotable object.
+  /// Register a nib file with identifier on the CoreComponent object.
   ///
   /// - parameter nib:        A Nib file that should be used for identifier
   /// - parameter identifier: A StringConvertible identifier for the registered nib.
@@ -483,9 +483,9 @@ public extension Spotable {
     self.views.storage[identifier.string] = Registry.Item.classType(view)
   }
 
-  /// Register a default view for the Spotable object.
+  /// Register a default view for the CoreComponent object.
   ///
-  /// - parameter view: The view type that should be used as the default view for the Spotable object.
+  /// - parameter view: The view type that should be used as the default view for the CoreComponent object.
   public static func register(defaultView view: View.Type) {
     self.views.defaultItem = Registry.Item.classType(view)
   }

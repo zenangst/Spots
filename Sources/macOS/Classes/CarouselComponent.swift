@@ -148,7 +148,7 @@ open class CarouselComponent: NSObject, Gridable {
 
   /// Instantiate a CarouselComponent with a cache key.
   ///
-  /// - parameter cacheKey: A unique cache key for the Spotable object.
+  /// - parameter cacheKey: A unique cache key for the CoreComponent object.
   ///
   /// - returns: An initialized carousel spot.
   public convenience init(cacheKey: String) {
@@ -211,7 +211,7 @@ open class CarouselComponent: NSObject, Gridable {
     }
   }
 
-  /// Setup Spotable component with base size
+  /// Setup CoreComponent component with base size
   ///
   /// - parameter size: The size of the superview
   open func setup(_ size: CGSize) {

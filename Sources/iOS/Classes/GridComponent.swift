@@ -2,7 +2,7 @@
 
 import UIKit
 
-/// A GridComponent, a collection view based Spotable object that lays out its items in a vertical order based of the item sizes
+/// A GridComponent, a collection view based CoreComponent object that lays out its items in a vertical order based of the item sizes
 open class GridComponent: NSObject, Gridable {
 
   public static var layout = Layout(span: 0.0)
@@ -98,7 +98,7 @@ open class GridComponent: NSObject, Gridable {
 
   /// Instantiate a GridComponent with a cache key.
   ///
-  /// - parameter cacheKey: A unique cache key for the Spotable object
+  /// - parameter cacheKey: A unique cache key for the CoreComponent object
   ///
   /// - returns: An initialized grid spot.
   public convenience init(cacheKey: String) {

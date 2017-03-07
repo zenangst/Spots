@@ -2,7 +2,7 @@
 
 import UIKit
 
-/// A Spotable object that uses UITableView to render its items
+/// A CoreComponent object that uses UITableView to render its items
 open class ListComponent: NSObject, Listable {
 
   public static var layout: Layout = Layout(span: 1.0)
@@ -104,7 +104,7 @@ open class ListComponent: NSObject, Listable {
 
   /// Instantiate a ListComponent with a cache key.
   ///
-  /// - parameter cacheKey: A unique cache key for the Spotable object.
+  /// - parameter cacheKey: A unique cache key for the CoreComponent object.
   ///
   /// - returns: An initialized list spot.
   public convenience init(cacheKey: String, tableView: UITableView? = nil) {
@@ -123,7 +123,7 @@ open class ListComponent: NSObject, Listable {
 
   // MARK: - Setup
 
-  /// Setup Spotable component with base size.
+  /// Setup CoreComponent component with base size.
   ///
   /// - parameter size: The size of the superview.
   open func setup(_ size: CGSize) {

@@ -1,6 +1,6 @@
 import UIKit
 
-// MARK: - Extensions for Spotable objects that also confirm to Listable
+// MARK: - Extensions for CoreComponent objects that also confirm to Listable
 public extension Listable {
 
   /// Return table view as a scroll view

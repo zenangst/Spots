@@ -11,8 +11,8 @@ open class Controller: NSViewController, SpotsProtocol {
 
   open static var configure: ((_ container: SpotsScrollView) -> Void)?
 
-  /// A collection of Spotable objects
-  open var spots: [Spotable] {
+  /// A collection of CoreComponent objects
+  open var spots: [CoreComponent] {
     didSet {
       spots.forEach { $0.delegate = delegate }
       delegate?.componentsDidChange(spots)
@@ -24,7 +24,7 @@ open class Controller: NSViewController, SpotsProtocol {
   }
 
   /// A convenience method for resolving the first spot
-  open var spot: Spotable? {
+  open var spot: CoreComponent? {
     return spot(at: 0)
   }
 
@@ -63,10 +63,10 @@ open class Controller: NSViewController, SpotsProtocol {
   fileprivate let backgroundType: ControllerBackground
 
   /**
-   - parameter spots: An array of Spotable objects
+   - parameter spots: An array of CoreComponent objects
    - parameter backgroundType: The type of background that the Controller should use, .Regular or .Dynamic
    */
-  public required init(spots: [Spotable] = [], backgroundType: ControllerBackground = .regular) {
+  public required init(spots: [CoreComponent] = [], backgroundType: ControllerBackground = .regular) {
     self.spots = spots
     self.backgroundType = backgroundType
     super.init(nibName: nil, bundle: nil)!
@@ -88,9 +88,9 @@ open class Controller: NSViewController, SpotsProtocol {
   }
 
   /**
-   - parameter spot: A Spotable object
+   - parameter spot: A CoreComponent object
    */
-  public convenience init(spot: Spotable) {
+  public convenience init(spot: CoreComponent) {
     self.init(spots: [spot])
   }
 
@@ -125,17 +125,17 @@ open class Controller: NSViewController, SpotsProtocol {
   /// - parameter index: The index of the spot that you are trying to resolve.
   /// - parameter type: The generic type for the spot you are trying to resolve.
   ///
-  /// - returns: An optional Spotable object of inferred type.
+  /// - returns: An optional CoreComponent object of inferred type.
   open func spot<T>(at index: Int = 0, ofType type: T.Type) -> T? {
     return spots.filter({ $0.index == index }).first as? T
   }
 
-  /// A look up method for resolving a spot at index as a Spotable object.
+  /// A look up method for resolving a spot at index as a CoreComponent object.
   ///
   /// - parameter index: The index of the spot that you are trying to resolve.
   ///
-  /// - returns: An optional Spotable object.
-  open func spot(at index: Int = 0) -> Spotable? {
+  /// - returns: An optional CoreComponent object.
+  open func spot(at index: Int = 0) -> CoreComponent? {
     return spots.filter({ $0.index == index }).first
   }
 
@@ -144,9 +144,9 @@ open class Controller: NSViewController, SpotsProtocol {
 
    - parameter closure: A closure to perform actions on a spotable object
 
-   - returns: An optional Spotable object
+   - returns: An optional CoreComponent object
    */
-  public func resolve(spot closure: (_ index: Int, _ spot: Spotable) -> Bool) -> Spotable? {
+  public func resolve(spot closure: (_ index: Int, _ spot: CoreComponent) -> Bool) -> CoreComponent? {
     for (index, spot) in spots.enumerated()
       where closure(index, spot) {
         return spot
@@ -196,7 +196,7 @@ open class Controller: NSViewController, SpotsProtocol {
     }
   }
 
-  public func reloadSpots(spots: [Spotable], closure: (() -> Void)?) {
+  public func reloadSpots(spots: [CoreComponent], closure: (() -> Void)?) {
     for spot in self.spots {
       spot.delegate = nil
       spot.view.removeFromSuperview()
@@ -219,7 +219,7 @@ open class Controller: NSViewController, SpotsProtocol {
     }
   }
 
-  public func setupComponent(at index: Int, spot: Spotable) {
+  public func setupComponent(at index: Int, spot: CoreComponent) {
     if spot.view.superview == nil {
       scrollView.spotsContentView.addSubview(spot.view)
     }
@@ -254,7 +254,7 @@ open class Controller: NSViewController, SpotsProtocol {
     }
   }
 
-  public func deselectAllExcept(selectedSpot: Spotable) {
+  public func deselectAllExcept(selectedSpot: CoreComponent) {
     for spot in spots {
       if selectedSpot.view != spot.view {
         spot.deselect()

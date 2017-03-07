@@ -4,8 +4,8 @@
   import UIKit
 #endif
 
-/// A Spotable extension for Viewable objects
-public extension Spotable where Self : Viewable {
+/// A CoreComponent extension for Viewable objects
+public extension CoreComponent where Self : Viewable {
 
   /**
    - returns: UIScrollView: A UIScrollView container for your view
@@ -25,7 +25,7 @@ public extension Spotable where Self : Viewable {
   }
 
   /**
-   Called when the Gridable object is being prepared, it is required by Spotable
+   Called when the Gridable object is being prepared, it is required by CoreComponent
    */
   public func prepare() {
     prepareComponent(self)

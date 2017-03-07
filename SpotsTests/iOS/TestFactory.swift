@@ -55,7 +55,7 @@ class FactoryTests: XCTestCase {
       )
     ]
 
-    let spots: [Spotable] = initialComponentModels.map {
+    let spots: [CoreComponent] = initialComponentModels.map {
       let spot = Factory.resolve(model: $0)
       spot.setup(CGSize(width: 100, height: 100))
       return spot

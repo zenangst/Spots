@@ -5,7 +5,7 @@
 #endif
 
 /// Gridable is protocol for Spots that are based on collection views.
-public protocol Gridable: Spotable {
+public protocol Gridable: CoreComponent {
 
   /// The layout object used to initialize the collection spot controller.
   var layout: CollectionLayout { get }

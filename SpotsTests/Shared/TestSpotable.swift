@@ -2,7 +2,7 @@
 import Foundation
 import XCTest
 
-class SpotableTests: XCTestCase {
+class CoreComponentTests: XCTestCase {
 
   func testAppendingMultipleItemsToComponent() {
     let listSpot = ListComponent(model: ComponentModel(title: "ComponentModel", span: 1.0))

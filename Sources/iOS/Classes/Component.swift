@@ -2,7 +2,7 @@
 
 import UIKit
 
-public class Component: NSObject, Spotable, SpotHorizontallyScrollable {
+public class Component: NSObject, CoreComponent, SpotHorizontallyScrollable {
 
   public static var layout: Layout = Layout(span: 1.0)
   public static var headers: Registry = Registry()

@@ -4,8 +4,8 @@
   import UIKit
 #endif
 
-// MARK: - Spotable extension
-public extension Spotable {
+// MARK: - CoreComponent extension
+public extension CoreComponent {
 
   /// Append item to collection with animation
   ///
@@ -434,7 +434,7 @@ public extension Spotable {
     }
   }
 
-  /// Return a dictionary representation of Spotable object
+  /// Return a dictionary representation of CoreComponent object
   public var dictionary: [String : Any] {
     return model.dictionary
   }
@@ -493,7 +493,7 @@ public extension Spotable {
     }
   }
 
-  /// Reload Spotable object with JSON if contents changed
+  /// Reload CoreComponent object with JSON if contents changed
   ///
   /// - parameter json:      A JSON dictionary
   /// - parameter animation:  A Animation that is used when performing the mutation (only works for Listable objects)

@@ -2,7 +2,7 @@ import Foundation
 import Cache
 import CryptoSwift
 
-/// A StateCache struct used for Controller and Spotable object caching
+/// A StateCache struct used for Controller and CoreComponent object caching
 public struct StateCache {
 
   /// A unique identifer string for the StateCache

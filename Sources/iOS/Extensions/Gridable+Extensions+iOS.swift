@@ -114,7 +114,7 @@ extension Gridable {
     completion()
   }
 
-  // MARK: - Spotable
+  // MARK: - CoreComponent
 
   /// Register all views in Registry on UICollectionView
   public func register() {

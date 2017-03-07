@@ -1,14 +1,14 @@
 import UIKit
 import Cache
 
-/// A controller powered by Spotable objects
+/// A controller powered by CoreComponent objects
 open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, UIScrollViewDelegate {
 
   open var contentView: View {
     return view
   }
 
-  public weak var focusedSpot: Spotable?
+  public weak var focusedSpot: CoreComponent?
   public var focusedItemIndex: Int?
 
   /// A closure that is called when the controller is reloaded with components
@@ -41,8 +41,8 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
   /// Initial content offset for Controller, defaults to UIEdgeInsetsZero.
   open fileprivate(set) var initialInset: UIEdgeInsets = UIEdgeInsets.zero
 
-  /// A collection of Spotable objects.
-  open var spots: [Spotable] {
+  /// A collection of CoreComponent objects.
+  open var spots: [CoreComponent] {
     didSet { spotsDidChange() }
   }
 
@@ -51,8 +51,8 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
   /// A bool value to indicate if the Controller is refeshing.
   public var refreshing = false
   /// A convenience method for resolving the first spot.
-  public var spot: Spotable? {
-    return spot(at: 0, ofType: Spotable.self)
+  public var spot: CoreComponent? {
+    return spot(at: 0, ofType: CoreComponent.self)
   }
 
   #if DEVMODE
@@ -93,12 +93,12 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
 
   // MARK: Initializer
 
-  /// A required initializer for initializing a controller with Spotable objects
+  /// A required initializer for initializing a controller with CoreComponent objects
   ///
-  /// - parameter spots: A collection of Spotable objects that should be setup and be added to the view hierarchy.
+  /// - parameter spots: A collection of CoreComponent objects that should be setup and be added to the view hierarchy.
   ///
   /// - returns: An initalized controller.
-  public required init(spots: [Spotable] = []) {
+  public required init(spots: [CoreComponent] = []) {
     self.spots = spots
     super.init(nibName: nil, bundle: nil)
 
@@ -107,10 +107,10 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
 
   /// Initialize a new controller with a single spot
   ///
-  /// - parameter spot: A Spotable object
+  /// - parameter spot: A CoreComponent object
   ///
   /// - returns: An initialized controller containing one object.
-  public convenience init(spot: Spotable) {
+  public convenience init(spot: CoreComponent) {
     self.init(spots: [spot])
   }
 
@@ -118,7 +118,7 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
   ///
   /// - parameter json: A JSON dictionary that gets parsed into UI elements.
   ///
-  /// - returns: An initialized controller with Spotable objects built from JSON.
+  /// - returns: An initialized controller with CoreComponent objects built from JSON.
   public convenience init(_ json: [String : Any]) {
     self.init(spots: Parser.parse(json))
   }
@@ -158,17 +158,17 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
   /// - parameter index: The index of the spot that you are trying to resolve.
   /// - parameter type: The generic type for the spot you are trying to resolve.
   ///
-  /// - returns: An optional Spotable object of inferred type.
+  /// - returns: An optional CoreComponent object of inferred type.
   open func spot<T>(at index: Int = 0, ofType type: T.Type) -> T? {
     return spots.filter({ $0.index == index }).first as? T
   }
 
-  /// A look up method for resolving a spot at index as a Spotable object.
+  /// A look up method for resolving a spot at index as a CoreComponent object.
   ///
   /// - parameter index: The index of the spot that you are trying to resolve.
   ///
-  /// - returns: An optional Spotable object.
-  open func spot(at index: Int = 0) -> Spotable? {
+  /// - returns: An optional CoreComponent object.
+  open func spot(at index: Int = 0) -> CoreComponent? {
     return spots.filter({ $0.index == index }).first
   }
 
@@ -176,8 +176,8 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
   ///
   /// - parameter closure: A closure to perform actions on a spotable object
   ///
-  /// - returns: An optional Spotable object
-  open func resolve(spot closure: (_ index: Int, _ spot: Spotable) -> Bool) -> Spotable? {
+  /// - returns: An optional CoreComponent object
+  open func resolve(spot closure: (_ index: Int, _ spot: CoreComponent) -> Bool) -> CoreComponent? {
     for (index, spot) in spots.enumerated()
       where closure(index, spot) {
         return spot
@@ -271,7 +271,7 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
     }
   }
 
-  /// Set up Spotable objects.
+  /// Set up CoreComponent objects.
   ///
   /// - parameter animated: An optional animation closure that is invoked when setting up the spot.
   open func setupSpots(animated: ((_ view: UIView) -> Void)? = nil) {
@@ -287,9 +287,9 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
 
   /// Set up Spot at index
   ///
-  /// - parameter index: The index of the Spotable object
+  /// - parameter index: The index of the CoreComponent object
   /// - parameter spot:  The spotable object that is going to be setup
-  open func setupComponent(at index: Int, spot: Spotable) {
+  open func setupComponent(at index: Int, spot: CoreComponent) {
     if spot.view.superview == nil {
       scrollView.spotsContentView.addSubview(spot.view)
     }
@@ -364,7 +364,7 @@ extension Controller {
 
   /// Resolve component at index path.
   ///
-  /// - parameter indexPath: The index path of the component belonging to the Spotable object at that index.
+  /// - parameter indexPath: The index path of the component belonging to the CoreComponent object at that index.
   ///
   /// - returns: A ComponentModel object at index path.
   fileprivate func component(at indexPath: IndexPath) -> ComponentModel {
@@ -375,8 +375,8 @@ extension Controller {
   ///
   /// - parameter indexPath: The index path of the spotable object.
   ///
-  /// - returns: A Spotable object.
-  fileprivate func spot(at indexPath: IndexPath) -> Spotable {
+  /// - returns: A CoreComponent object.
+  fileprivate func spot(at indexPath: IndexPath) -> CoreComponent {
     return spots[indexPath.item]
   }
 }

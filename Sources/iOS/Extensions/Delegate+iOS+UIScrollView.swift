@@ -23,7 +23,7 @@ extension Delegate: UIScrollViewDelegate {
           spot.pageControl.frame.origin.x = scrollView.contentOffset.x
         }
       default:
-        assertionFailure("Spotable object is not eligible for horizontal scrolling.")
+        assertionFailure("CoreComponent object is not eligible for horizontal scrolling.")
       }
     }
   }

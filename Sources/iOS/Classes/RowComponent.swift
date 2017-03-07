@@ -2,7 +2,7 @@
 
 import UIKit
 
-/// A RowComponent, a collection view based Spotable object that lays out its items in a vertical order based of the item sizes
+/// A RowComponent, a collection view based CoreComponent object that lays out its items in a vertical order based of the item sizes
 open class RowComponent: NSObject, Gridable {
 
   public static var layout: Layout = Layout(span: 1.0)
@@ -87,7 +87,7 @@ open class RowComponent: NSObject, Gridable {
 
   /// Instantiate a RowComponent with a cache key.
   ///
-  /// - parameter cacheKey: A unique cache key for the Spotable object
+  /// - parameter cacheKey: A unique cache key for the CoreComponent object
   ///
   /// - returns: An initialized row spot.
   public convenience init(cacheKey: String) {

@@ -5,7 +5,7 @@ import XCTest
 class TestDelegate: ComponentDelegate {
   var countsInvoked = 0
 
-  func spotable(_ spot: Spotable, itemSelected item: Item) {
+  func spotable(_ spot: CoreComponent, itemSelected item: Item) {
     spot.model.items[item.index].meta["selected"] = true
     countsInvoked += 1
   }

@@ -414,7 +414,7 @@ class ControllerTests: XCTestCase {
     waitForExpectations(timeout: 10.0, handler: nil)
   }
 
-  func testComputedPropertiesOnSpotable() {
+  func testComputedPropertiesOnCoreComponent() {
     let model = ComponentModel(title: "ComponentModel", kind: "list", span: 1.0, items: [
       Item(title: "title1", kind: "list"),
       Item(title: "title2", kind: "list")

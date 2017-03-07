@@ -80,18 +80,18 @@ Data source and delegate setup is handled by **Spots**, so there is no need for 
 - Supports displaying multiple collections, tables and regular views in the same container.
 - Features both infinity scrolling and pull to refresh (on iOS), all you have to do is to
 setup delegates that conform to the public protocols on `Controller`.
-- No need to implement your own data source, every `Spotable` object has their
+- No need to implement your own data source, every `CoreComponent` object has their
 own set of `Item`’s.
 which is maintained internally and is there at your disposable if you decide to
 make changes to them.
 - Easy configuration of collection views, table views and any custom spot
 implementation that you add.
 This improves code reuse and helps to theme your app and ultimately keep your application consistent.
-- Support custom Spots, all you need to do is to conform to `Spotable`
+- Support custom Spots, all you need to do is to conform to `CoreComponent`
 - A rich public API for appending, prepending, inserting, updating or
 deleting `Item`s.
 - Features three different spots out-of-the-box; `CarouselComponent`, `GridComponent`, `ListComponent`
-- Static custom cell registrations for all `Spotable` objects.
+- Static custom cell registrations for all `CoreComponent` objects.
 Write one view cell and use it across your application, when and where you
 want to use it.
 - Cell height caching, this improves performance as each cell has its height stored as a calculated value.
@@ -118,7 +118,7 @@ So what if I don't have a backend that supports **Spots** view models? Not to wo
 
 ## View state caching
 
-As mentioned above, **Spots** features a view state cache. Instead of saving all your data in a database somewhere and perform queries every time to initiate a view controller, we went with a different and much simpler approach. If a **Controller** has a cache key and you call `save`, internally it will encode all underlaying **Spotable** objects and its children into a JSON file and store that to disk. The uniqueness of the file comes from the cache key, think of this like your screen identifier. The next time you construct a **Controller** with that cache key, it will try to load that from disk and display it the exact same way as it was before saving. The main benefit here is that you don’t have to worry about your object changing by updating to future versions of **Spots**.
+As mentioned above, **Spots** features a view state cache. Instead of saving all your data in a database somewhere and perform queries every time to initiate a view controller, we went with a different and much simpler approach. If a **Controller** has a cache key and you call `save`, internally it will encode all underlaying **CoreComponent** objects and its children into a JSON file and store that to disk. The uniqueness of the file comes from the cache key, think of this like your screen identifier. The next time you construct a **Controller** with that cache key, it will try to load that from disk and display it the exact same way as it was before saving. The main benefit here is that you don’t have to worry about your object changing by updating to future versions of **Spots**.
 
 **ListComponent**, **GridComponent**, **CarouselComponent** also have support for view state caching because these components can be used separately without using **Controller**.
 
@@ -128,9 +128,9 @@ View state caching is optional but we encourage you to use it, as it renders the
 
 A common problem when developing for Apple's platforms is that you often have to choose between which core framework component to base your foundation on. Depending on what you need then and there. This is a not a problem in itself, it becomes a problem when you need to iterate and combine two of them together, like displaying a collection view inside of a table view. This is where composition comes in. Spots supports composition out-of-the box and it is super easy to use and iterate on.
 
-`Item`s inside of a `Spotable` object have a property called `children`. In the case of Spots, children are `ComponentModel`'s that represent other `Spotable` objects. This means that you can easily add a grid, carousel or list inside any `Spotable` object of your choice. On larger screens this becomes incredibly useful as composition can be used as a sane way of laying out your views on screen without the need for child view controllers, unmaintainable auto layout or frame based implementations.
+`Item`s inside of a `CoreComponent` object have a property called `children`. In the case of Spots, children are `ComponentModel`'s that represent other `CoreComponent` objects. This means that you can easily add a grid, carousel or list inside any `CoreComponent` object of your choice. On larger screens this becomes incredibly useful as composition can be used as a sane way of laying out your views on screen without the need for child view controllers, unmaintainable auto layout or frame based implementations.
 
-You can create `Spotable` pseudo objects that handle layout, this is especially useful for `Gridable` objects like the `GridComponent`, where you can use `layout.span` to define how many objects should be displayed side-by-side.
+You can create `CoreComponent` pseudo objects that handle layout, this is especially useful for `Gridable` objects like the `GridComponent`, where you can use `layout.span` to define how many objects should be displayed side-by-side.
 
 Composition is supported on iOS, tvOS and macOS.
 
@@ -151,8 +151,8 @@ Inside of the **Controller**, you have a **SpotsScrollView** that handles the li
 So how does scrolling work? Whenever a user scrolls, the **SpotsScrollView** computes the offset and size of its children. By using this technique you can easily create screens that contain lists, grids and carousels with a scrolling experience as smooth as proverbial butter. By dynamically changing the size and offset of the children, **SpotsScrollView** also ensures that reusable views are allocated and deallocated like you would expect them to.
 **SpotsScrollView** uses KVO on any view that gets added so if one component changes height or position, the entire layout will invalidate itself and redraw it like it was intended.
 
-**Controller** uses one or more **Spotable** objects. **Spotable** is a protocol that all components use to make sure that all layout calculations can be performed. **Spots** comes with three different **Spotable** objects out-of-the-box.
-All **Spotable** objects are based around one core UI element.
+**Controller** uses one or more **CoreComponent** objects. **CoreComponent** is a protocol that all components use to make sure that all layout calculations can be performed. **Spots** comes with three different **CoreComponent** objects out-of-the-box.
+All **CoreComponent** objects are based around one core UI element.
 
 **ListComponent** is an object that conforms to **Listable**, it has a **ListAdapter** that works as both the data source and delegate for the **ListComponent**. For iOS, **Listable** uses **UITableView** as its UI component, and **NSTableView** on macOS.
 
@@ -160,7 +160,7 @@ All **Spotable** objects are based around one core UI element.
 
 **CarouselComponent** is very similar to **GridComponent**, it shares the same **CollectionAdapter**, the main difference between them is that **CarouselComponent** has scrolling enabled and uses a process for laying its views out on screen.
 
-What all **Spotable** objects have in common is that all of them use the same **ComponentModel** struct to represent themselves. **ComponentModel** has a *kind* property that maps to the UI component that should be used. By just changing the *kind*, you can transform a *list* into a *grid* as fast has you can type it and hit save.
+What all **CoreComponent** objects have in common is that all of them use the same **ComponentModel** struct to represent themselves. **ComponentModel** has a *kind* property that maps to the UI component that should be used. By just changing the *kind*, you can transform a *list* into a *grid* as fast has you can type it and hit save.
 
 They also share the same **Item** struct for its children.
 The child is a data container that includes the size of the view on screen and the remaining information to configure your view.
@@ -219,7 +219,7 @@ By letting the data decide which views to use gives you the freedom of displayin
 
 It is very common that you need to modify your data source and tell your UI component to either insert, update or delete depending on the action that you performed. This process can be cumbersome, so to help you out, **Spots** has some great convenience methods to help you with this process.
 
-On **Controller** you have simple methods like `reload(withAnimation, completion)` that tells all the **Spotable** objects to reload.
+On **Controller** you have simple methods like `reload(withAnimation, completion)` that tells all the **CoreComponent** objects to reload.
 
 You can reload **Controller** using a collection of **ComponentModel**’s. Internally it will perform a diffing process to pinpoint what changed, in this process it cascades down from component level to item level, and checks all the moving parts, to perform the most appropriate update operation depending on the change. At item level, it will check if the items size changed, if not it will scale down to only run the `configure` method on the view that was affected. This is what we call hard and soft updates, it will reduce the amount of *blinking* that you can normally see in iOS.
 
@@ -228,12 +228,12 @@ A **Controller** can also be reloaded using JSON. It behaves a bit differently t
 The difference between `reload` and `reloadIfNeeded` methods is that they will only run if change is needed, just like the naming implies.
 
 If you need more fine-grained control by pinpointing an individual spot, we got you covered on this as well. **Controller** has an update method that takes the spot index as its first argument, followed by an animation label to specify which animation to use when doing the update.
-The remaining arguments are one mutation closure where you get the **Spotable** object and can perform your updates, and finally one completion closure that will run when your update is performed both on the data source and the UI component.
+The remaining arguments are one mutation closure where you get the **CoreComponent** object and can perform your updates, and finally one completion closure that will run when your update is performed both on the data source and the UI component.
 This method has a corresponding method called `updateIfNeeded`, which applies the update if needed.
 
 You can also `append` `prepend`, `insert`, `update` or `delete` with a series to similar methods that are publicly available on **Controller**.
 
-All methods take an `Item` as their first argument, the second is the index of the **Spotable** object that you want to update. Just like `reload` and `update`, it also has an animation label to give you control over what animation should be used. As an added bonus, these methods also work with multiple items, so instead of passing just one item, you can pass a collection of items that you want to `append`, `prepend` etc.
+All methods take an `Item` as their first argument, the second is the index of the **CoreComponent** object that you want to update. Just like `reload` and `update`, it also has an animation label to give you control over what animation should be used. As an added bonus, these methods also work with multiple items, so instead of passing just one item, you can pass a collection of items that you want to `append`, `prepend` etc.
 
 ## Layout
 
@@ -305,12 +305,12 @@ The `Controller` inherits from `UIViewController` and `NSViewController` but it 
 
 ```swift
 public protocol ComponentDelegate: class {
-  func spotDidSelectItem(spot: Spotable, item: Item)
-  func spotsDidChange(spots: [Spotable])
+  func spotDidSelectItem(spot: CoreComponent, item: Item)
+  func spotsDidChange(spots: [CoreComponent])
 }
 ```
 
-`spotDidSelectItem` is triggered when a user taps on an item inside of a `Spotable` object. It returns both the `spot` and the `item` to add context to what UI element was touched.
+`spotDidSelectItem` is triggered when a user taps on an item inside of a `CoreComponent` object. It returns both the `spot` and the `item` to add context to what UI element was touched.
 
 `spotsDidChange` notifies the delegate when the internal `.spots` property changes.
 
@@ -341,7 +341,7 @@ public protocol SpotsScrollDelegate: class {
 
 ```swift
 public protocol SpotsCarouselScrollDelegate: class {
-  func spotDidEndScrolling(spot: Spotable, item: Item)
+  func spotDidEndScrolling(spot: CoreComponent, item: Item)
 }
 ```
 
@@ -516,7 +516,7 @@ end
 ## Dependencies
 
 - **[Cache](https://github.com/hyperoslo/Cache)**
-Used for `ComponentModel` and `Item` caching when initializing a `Controller` or `Spotable` object with a cache key.
+Used for `ComponentModel` and `Item` caching when initializing a `Controller` or `CoreComponent` object with a cache key.
 - **[Tailor](https://github.com/zenangst/Tailor)**
 To seamlessly map JSON to both `ComponentModel` and `Item`.
 

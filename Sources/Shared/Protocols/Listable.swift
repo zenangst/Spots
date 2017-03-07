@@ -1,5 +1,5 @@
 /// Listable is protocol for Spots that are based on table views-
-public protocol Listable: Spotable {
+public protocol Listable: CoreComponent {
 
   #if !os(OSX)
   /// The headers that should be used on the Listable object, only available on macOS.

@@ -2,7 +2,7 @@
 
 import UIKit
 
-/// A CarouselComponent, a collection view based Spotable object that lays out its items in a horizontal order
+/// A CarouselComponent, a collection view based CoreComponent object that lays out its items in a horizontal order
 open class CarouselComponent: NSObject, Gridable, SpotHorizontallyScrollable {
 
   public static var layout: Layout = .init()
@@ -141,7 +141,7 @@ open class CarouselComponent: NSObject, Gridable, SpotHorizontallyScrollable {
 
   /// Instantiate a CarouselComponent with a cache key.
   ///
-  /// - parameter cacheKey: A unique cache key for the Spotable object.
+  /// - parameter cacheKey: A unique cache key for the CoreComponent object.
   ///
   /// - returns: An initialized carousel spot.
   public convenience init(cacheKey: String) {
@@ -167,7 +167,7 @@ open class CarouselComponent: NSObject, Gridable, SpotHorizontallyScrollable {
     #endif
   }
 
-  /// Setup Spotable component with base size
+  /// Setup CoreComponent component with base size
   ///
   /// - parameter size: The size of the superview
   open func setup(_ size: CGSize) {

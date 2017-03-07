@@ -2,7 +2,7 @@ import UIKit
 
 extension DataSource {
 
-  func prepareWrappableView(_ view: Wrappable, atIndex index: Int, in spot: Spotable, parentFrame: CGRect = CGRect.zero) {
+  func prepareWrappableView(_ view: Wrappable, atIndex index: Int, in spot: CoreComponent, parentFrame: CGRect = CGRect.zero) {
     if let (_, customView) = Configuration.views.make(spot.model.items[index].kind, parentFrame: parentFrame),
       let wrappedView = customView {
       view.configure(with: wrappedView)
@@ -21,12 +21,12 @@ extension DataSource {
     }
   }
 
-  func prepareComposableView(_ view: Composable, atIndex index: Int, in spot: Spotable) {
+  func prepareComposableView(_ view: Composable, atIndex index: Int, in spot: CoreComponent) {
     let compositeComponents = spot.compositeComponents.filter({ $0.itemIndex == index })
     view.configure(&spot.model.items[index], compositeComponents: compositeComponents)
   }
 
-  func prepareItemConfigurableView(_ view: ItemConfigurable, atIndex index: Int, in spot: Spotable) {
+  func prepareItemConfigurableView(_ view: ItemConfigurable, atIndex index: Int, in spot: CoreComponent) {
     view.configure(&spot.model.items[index])
 
     if spot.model.items[index].size.height == 0.0 {
