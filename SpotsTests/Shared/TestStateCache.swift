@@ -26,9 +26,9 @@ class StateCacheTests: XCTestCase {
     /// Check that cache is empty
     XCTAssertEqual(controller.stateCache!.load().count, 0)
 
-    controller.spots = [ListComponent(model: ComponentModel(span: 1.0))]
+    controller.components = [ListComponent(model: ComponentModel(span: 1.0))]
 
-    let expectation = self.expectation(description: "Append item to Spotable object")
+    let expectation = self.expectation(description: "Append item to CoreComponent object")
     controller.append(Item(title: "foo"), spotIndex: 0, withAnimation: .automatic) {
       self.controller.cache()
       /// Check that the cache was saved to disk

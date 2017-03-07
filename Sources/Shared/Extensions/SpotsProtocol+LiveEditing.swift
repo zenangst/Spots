@@ -41,7 +41,7 @@ import Cache
               weakSelf.scrollView.contentOffset = offset
 
               var yOffset: CGFloat = 0.0
-              for spot in weakSelf.spots {
+              for spot in weakSelf.components {
                 #if !os(OSX)
                 (spot as? CarouselComponent)?.layout.yOffset = yOffset
                 #endif
@@ -49,12 +49,12 @@ import Cache
               }
 
               #if !os(OSX)
-              for case let gridable as CarouselComponent in weakSelf.spots {
+              for case let gridable as CarouselComponent in weakSelf.components {
                 gridable.layout.yOffset = gridable.view.frame.origin.y
               }
               #endif
             }
-            print("🎍 SPOTS reloaded: \(weakSelf.spots.count) -> items: \(weakSelf.spots.reduce(0, { $0.1.items.count }))")
+            print("🎍 SPOTS reloaded: \(weakSelf.components.count) -> items: \(weakSelf.components.reduce(0, { $0.1.items.count }))")
             weakSelf.liveEditing(stateCache: weakSelf.stateCache)
           }
         } catch _ {

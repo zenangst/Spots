@@ -2,7 +2,7 @@
 
 import UIKit
 
-/// A GridComponent, a collection view based Spotable object that lays out its items in a vertical order based of the item sizes
+/// A GridComponent, a collection view based CoreComponent object that lays out its items in a vertical order based of the item sizes
 open class GridComponent: NSObject, Gridable {
 
   public static var layout = Layout(span: 0.0)
@@ -17,9 +17,9 @@ open class GridComponent: NSObject, Gridable {
   open static var headers = Registry()
 
   /// A SpotsFocusDelegate object
-  weak public var focusDelegate: SpotsFocusDelegate?
+  weak public var focusDelegate: ComponentFocusDelegate?
 
-  /// Child spots
+  /// Child components
   public var compositeComponents: [CompositeComponent] = []
 
   /// A component struct used as configuration and data source for the GridComponent
@@ -32,8 +32,8 @@ open class GridComponent: NSObject, Gridable {
     }
   }
 
-  /// A SpotsDelegate that is used for the GridComponent
-  open weak var delegate: SpotsDelegate?
+  /// A ComponentDelegate that is used for the GridComponent
+  open weak var delegate: ComponentDelegate?
 
   /// A custom UICollectionViewFlowLayout
   open lazy var layout: CollectionLayout = CollectionLayout()
@@ -69,8 +69,8 @@ open class GridComponent: NSObject, Gridable {
     super.init()
     self.userInterface = collectionView
     self.model.layout?.configure(spot: self)
-    self.spotDataSource = DataSource(spot: self)
-    self.spotDelegate = Delegate(spot: self)
+    self.spotDataSource = DataSource(component: self)
+    self.spotDelegate = Delegate(component: self)
 
     if model.kind.isEmpty {
       self.model.kind = ComponentModel.Kind.grid.string
@@ -98,7 +98,7 @@ open class GridComponent: NSObject, Gridable {
 
   /// Instantiate a GridComponent with a cache key.
   ///
-  /// - parameter cacheKey: A unique cache key for the Spotable object
+  /// - parameter cacheKey: A unique cache key for the CoreComponent object
   ///
   /// - returns: An initialized grid spot.
   public convenience init(cacheKey: String) {

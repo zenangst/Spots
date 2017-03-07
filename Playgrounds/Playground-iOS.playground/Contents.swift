@@ -164,13 +164,13 @@ class GridTopicCell: UICollectionViewCell, ItemConfigurable {
   }
 }
 
-// Register spots
+// Register components
 CarouselComponent.register(view: GridTopicCell.self, identifier: Cell.Featured)
 GridComponent.register(view: GridTopicCell.self, identifier: Cell.Featured)
 ListComponent.register(header: ListHeaderView.self, identifier: "list")
 ListComponent.register(defaultView: ListCell.self)
 
-// Configure spots controller
+// Configure components controller
 Controller.configure = {
   $0.backgroundColor = UIColor.whiteColor()
 }
@@ -179,7 +179,7 @@ CarouselComponent.configure = { collectionView, layout in
   collectionView.contentInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
 }
 
-// Configure List spots
+// Configure List components
 ListComponent.configure = { tableView in
   tableView.tableFooterView = UIView(frame: CGRect.zero)
 }
@@ -214,11 +214,11 @@ let gridItems = ComponentModel(span: 6, items: [
   Item(title: "Pages", kind: Cell.Featured, meta: ["color" : UIColor.redColor()])
   ])
 
-let controller = Controller(spots: [
+let controller = Controller(components: [
   ListComponent(model: ComponentModel(title: "Carousel Spot", meta: ["headerHeight" : 44])),
   CarouselComponent(carouselItems, top: 5, left: 0, bottom: 5, right: 0, itemSpacing: 0),
   ListComponent(model: ComponentModel(title: "Grid Spot", meta: ["headerHeight" : 44])),
   GridComponent(featuredOpensource, top: 10, left: 10, bottom: 20, right: 10, itemSpacing: -5),
   ListComponent(model: listItems),
   ListComponent(model: ComponentModel(title: "Grid Spot", meta: ["headerHeight" : 44])),
-  GridComponent(gridItems, top: 10, left:
+  GridComponent(gridIt

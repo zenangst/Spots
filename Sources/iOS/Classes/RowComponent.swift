@@ -2,7 +2,7 @@
 
 import UIKit
 
-/// A RowComponent, a collection view based Spotable object that lays out its items in a vertical order based of the item sizes
+/// A RowComponent, a collection view based CoreComponent object that lays out its items in a vertical order based of the item sizes
 open class RowComponent: NSObject, Gridable {
 
   public static var layout: Layout = Layout(span: 1.0)
@@ -17,9 +17,9 @@ open class RowComponent: NSObject, Gridable {
   open static var headers = Registry()
 
   /// A SpotsFocusDelegate object
-  weak public var focusDelegate: SpotsFocusDelegate?
+  weak public var focusDelegate: ComponentFocusDelegate?
 
-  /// Child spots
+  /// Child components
   public var compositeComponents: [CompositeComponent] = []
 
   /// A component struct used as configuration and data source for the RowComponent
@@ -32,8 +32,8 @@ open class RowComponent: NSObject, Gridable {
     }
   }
 
-  /// A SpotsDelegate that is used for the RowComponent
-  open weak var delegate: SpotsDelegate?
+  /// A ComponentDelegate that is used for the RowComponent
+  open weak var delegate: ComponentDelegate?
 
   /// A custom UICollectionViewFlowLayout
   open lazy var layout: CollectionLayout = CollectionLayout()
@@ -68,8 +68,8 @@ open class RowComponent: NSObject, Gridable {
     super.init()
     self.userInterface = collectionView
     self.model.layout?.configure(spot: self)
-    self.spotDataSource = DataSource(spot: self)
-    self.spotDelegate = Delegate(spot: self)
+    self.spotDataSource = DataSource(component: self)
+    self.spotDelegate = Delegate(component: self)
 
     if model.kind.isEmpty {
       self.model.kind = ComponentModel.Kind.row.string
@@ -87,7 +87,7 @@ open class RowComponent: NSObject, Gridable {
 
   /// Instantiate a RowComponent with a cache key.
   ///
-  /// - parameter cacheKey: A unique cache key for the Spotable object
+  /// - parameter cacheKey: A unique cache key for the CoreComponent object
   ///
   /// - returns: An initialized row spot.
   public convenience init(cacheKey: String) {

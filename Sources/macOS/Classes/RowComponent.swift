@@ -13,7 +13,7 @@ open class RowComponent: NSObject, Gridable {
 
   public static var layout: Layout = Layout(span: 1.0)
 
-  /// Child spots
+  /// Child components
   public var compositeComponents: [CompositeComponent] = []
 
   /// An enum layout type
@@ -91,7 +91,7 @@ open class RowComponent: NSObject, Gridable {
   open static var defaultGrid: NSCollectionViewItem.Type = NSCollectionViewItem.self
   open static var defaultKind: StringConvertible = LayoutType.grid.rawValue
 
-  open weak var delegate: SpotsDelegate?
+  open weak var delegate: ComponentDelegate?
 
   open var model: ComponentModel
   open var configure: ((ItemConfigurable) -> Void)? {
@@ -158,8 +158,8 @@ open class RowComponent: NSObject, Gridable {
     super.init()
     self.userInterface = collectionView
     self.model.layout?.configure(spot: self)
-    self.spotDataSource = DataSource(spot: self)
-    self.spotDelegate = Delegate(spot: self)
+    self.spotDataSource = DataSource(component: self)
+    self.spotDelegate = Delegate(component: self)
 
     if model.kind.isEmpty {
       self.model.kind = ComponentModel.Kind.grid.string

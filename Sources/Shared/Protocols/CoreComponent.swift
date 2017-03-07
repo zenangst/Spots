@@ -5,7 +5,7 @@
 #endif
 
 /// A class protocol that is used for all components inside of Controller
-public protocol Spotable: class {
+public protocol CoreComponent: class {
 
   #if !os(OSX)
   static var headers: Registry { get set }
@@ -13,49 +13,49 @@ public protocol Spotable: class {
   static var views: Registry { get set }
   static var layout: Layout { get set }
 
-  /// Child spots
+  /// Child components
   var compositeComponents: [CompositeComponent] { get set }
 
   #if !os(OSX)
     /// A SpotsFocusDelegate object
-    weak var focusDelegate: SpotsFocusDelegate? { get set }
+    weak var focusDelegate: ComponentFocusDelegate? { get set }
   #endif
 
-  /// A SpotsDelegate object
-  weak var delegate: SpotsDelegate? { get set }
+  /// A ComponentDelegate object
+  weak var delegate: ComponentDelegate? { get set }
 
-  /// The index of a Spotable object
+  /// The index of a CoreComponent object
   var index: Int { get }
-  /// A computed value for the size of the Spotable object
+  /// A computed value for the size of the CoreComponent object
   var computedHeight: CGFloat { get }
-  /// The component of a Spotable object
+  /// The component of a CoreComponent object
   var model: ComponentModel { get set }
   /// A configuration closure for a ItemConfigurable object
   var configure: ((ItemConfigurable) -> Void)? { get set }
-  /// A cache for a Spotable object
+  /// A cache for a CoreComponent object
   var stateCache: StateCache? { get }
   /// Indicator to calculate the height based on content
   var usesDynamicHeight: Bool { get }
   /// The user interface that will be used to represent the spotable object.
   var userInterface: UserInterface? { get }
-  /// Return a Spotable object as a UIScrollView
+  /// Return a CoreComponent object as a UIScrollView
   var view: ScrollView { get }
 
   #if os(OSX)
-    /// The current responder for the Spotable object, only available on macOS.
+    /// The current responder for the CoreComponent object, only available on macOS.
     var responder: NSResponder { get }
-    /// The next responder for the Spotable object, only available on macOS.
+    /// The next responder for the CoreComponent object, only available on macOS.
     var nextResponder: NSResponder? { get set }
   #endif
 
-  /// Initialize a Spotable object with a ComponentModel.
+  /// Initialize a CoreComponent object with a ComponentModel.
   ///
-  /// - parameter component: The component that the Spotable object should be initialized with.
+  /// - parameter component: The component that the CoreComponent object should be initialized with.
   ///
-  /// - returns: An initialized Spotable object.
+  /// - returns: An initialized CoreComponent object.
   init(model: ComponentModel)
 
-  /// Setup Spotable object with size
+  /// Setup CoreComponent object with size
   func setup(_ size: CGSize)
 
   func ui<T>(at index: Int) -> T?
@@ -152,7 +152,7 @@ public protocol Spotable: class {
   ///
   func layout(_ size: CGSize)
 
-  /// Perform internal preperations for a Spotable object
+  /// Perform internal preperations for a CoreComponent object
   func register()
 
   /// Scroll to Item matching predicate

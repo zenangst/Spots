@@ -2,7 +2,7 @@
 
 import UIKit
 
-/// A Spotable object that uses UITableView to render its items
+/// A CoreComponent object that uses UITableView to render its items
 open class ListComponent: NSObject, Listable {
 
   public static var layout: Layout = Layout(span: 1.0)
@@ -28,9 +28,9 @@ open class ListComponent: NSObject, Listable {
   open var model: ComponentModel
 
   /// A SpotsFocusDelegate object
-  weak public var focusDelegate: SpotsFocusDelegate?
+  weak public var focusDelegate: ComponentFocusDelegate?
 
-  /// Child spots
+  /// Child components
   public var compositeComponents: [CompositeComponent] = []
 
   /// A configuration closure
@@ -40,8 +40,8 @@ open class ListComponent: NSObject, Listable {
     }
   }
 
-  /// A SpotsDelegate that is used for the ListComponent
-  open weak var delegate: SpotsDelegate?
+  /// A ComponentDelegate that is used for the ListComponent
+  open weak var delegate: ComponentDelegate?
 
   /// A UITableView, used as the main UI component for a ListComponent
   open lazy var tableView = UITableView()
@@ -70,8 +70,8 @@ open class ListComponent: NSObject, Listable {
     super.init()
     self.userInterface = self.tableView
     self.model.layout?.configure(spot: self)
-    self.spotDataSource = DataSource(spot: self)
-    self.spotDelegate = Delegate(spot: self)
+    self.spotDataSource = DataSource(component: self)
+    self.spotDelegate = Delegate(component: self)
 
     if model.kind.isEmpty {
       self.model.kind = ComponentModel.Kind.list.string
@@ -104,7 +104,7 @@ open class ListComponent: NSObject, Listable {
 
   /// Instantiate a ListComponent with a cache key.
   ///
-  /// - parameter cacheKey: A unique cache key for the Spotable object.
+  /// - parameter cacheKey: A unique cache key for the CoreComponent object.
   ///
   /// - returns: An initialized list spot.
   public convenience init(cacheKey: String, tableView: UITableView? = nil) {
@@ -123,7 +123,7 @@ open class ListComponent: NSObject, Listable {
 
   // MARK: - Setup
 
-  /// Setup Spotable component with base size.
+  /// Setup CoreComponent component with base size.
   ///
   /// - parameter size: The size of the superview.
   open func setup(_ size: CGSize) {

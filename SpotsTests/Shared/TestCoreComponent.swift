@@ -2,7 +2,7 @@
 import Foundation
 import XCTest
 
-class SpotableTests: XCTestCase {
+class CoreComponentTests: XCTestCase {
 
   func testAppendingMultipleItemsToComponent() {
     let listSpot = ListComponent(model: ComponentModel(title: "ComponentModel", span: 1.0))
@@ -29,7 +29,7 @@ class SpotableTests: XCTestCase {
   }
 
   func testAppendingMultipleItemsToSpotInController() {
-    let controller = Controller(spots: [ListComponent(model: ComponentModel(title: "ComponentModel", span: 1.0))])
+    let controller = Controller(components: [ListComponent(model: ComponentModel(title: "ComponentModel", span: 1.0))])
     controller.prepareController()
     var items: [Item] = []
 
@@ -40,13 +40,13 @@ class SpotableTests: XCTestCase {
     measure {
       for _ in 0..<5 {
         controller.append(items, spotIndex: 0, withAnimation: .automatic, completion: nil)
-        controller.spots.forEach { $0.view.layoutSubviews() }
+        controller.components.forEach { $0.view.layoutSubviews() }
       }
     }
 
     let expectation = self.expectation(description: "Wait until done")
     Dispatch.after(seconds: 1.0) {
-      XCTAssertEqual(controller.spots[0].items.count, 500)
+      XCTAssertEqual(controller.components[0].items.count, 500)
       expectation.fulfill()
     }
     waitForExpectations(timeout: 10.0, handler: nil)
@@ -59,13 +59,13 @@ class SpotableTests: XCTestCase {
 
     let parentSize = CGSize(width: 100, height: 100)
     let model = ComponentModel(items: [Item(title: "foo", kind: kind)])
-    let spot = GridComponent(model: model)
-    spot.view.frame.size = parentSize
-    spot.setup(parentSize)
-    spot.layout(parentSize)
-    spot.view.layoutIfNeeded()
+    let component = GridComponent(model: model)
+    component.view.frame.size = parentSize
+    component.setup(parentSize)
+    component.layout(parentSize)
+    component.view.layoutIfNeeded()
 
-    guard let genericView: View = spot.ui(at: 0) else {
+    guard let genericView: View = component.ui(at: 0) else {
       XCTFail()
       return
     }
@@ -81,13 +81,13 @@ class SpotableTests: XCTestCase {
 
     let parentSize = CGSize(width: 100, height: 100)
     let model = ComponentModel(items: [Item(title: "foo", kind: kind)])
-    let spot = ListComponent(model: model)
+    let component = ListComponent(model: model)
 
-    spot.setup(parentSize)
-    spot.layout(parentSize)
-    spot.view.layoutSubviews()
+    component.setup(parentSize)
+    component.layout(parentSize)
+    component.view.layoutSubviews()
 
-    guard let genericView: View = spot.ui(at: 0) else {
+    guard let genericView: View = component.ui(at: 0) else {
       XCTFail()
       return
     }

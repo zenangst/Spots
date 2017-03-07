@@ -51,7 +51,7 @@ extension Gridable {
     }
   }
 
-  // MARK: - Spotable
+  // MARK: - CoreComponent
 
   public func register() {
     for (identifier, item) in Configuration.views.storage {
@@ -172,7 +172,7 @@ extension Gridable {
     self.grids.storage[self.grids.defaultIdentifier] = GridRegistry.Item.classType(defaultView)
   }
 
-  /// Register default view for the Spotable object
+  /// Register default view for the CoreComponent object
   ///
   /// - parameter view: The view type that should be used as the default view
   func registerDefault(view: NSCollectionViewItem.Type) {

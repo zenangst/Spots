@@ -37,7 +37,7 @@ public typealias Completion = (() -> Void)?
   }
 #else
   /// A type alias to reference a view passed to delegate method
-  public typealias SpotView = UIView
+  public typealias ComponentView = UIView
   /// A type alias to reference a normal platform view
   public typealias View = UIView
   /// A type alias to reference a normal scroll view

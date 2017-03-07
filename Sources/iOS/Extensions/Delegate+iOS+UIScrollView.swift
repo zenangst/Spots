@@ -23,13 +23,13 @@ extension Delegate: UIScrollViewDelegate {
           spot.pageControl.frame.origin.x = scrollView.contentOffset.x
         }
       default:
-        assertionFailure("Spotable object is not eligible for horizontal scrolling.")
+        assertionFailure("CoreComponent object is not eligible for horizontal scrolling.")
       }
     }
   }
 
   public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-    spot?.didScrollHorizontally { spot in
+    component?.didScrollHorizontally { spot in
       let itemIndex = Int(scrollView.contentOffset.x / scrollView.frame.width)
 
       guard itemIndex >= 0 else {
@@ -104,8 +104,8 @@ extension Delegate: UIScrollViewDelegate {
     }
   }
 
-  fileprivate func performPaginatedScrolling(_ handler: (SpotHorizontallyScrollable, UICollectionView, CollectionLayout) -> Void) {
-    spot?.didScrollHorizontally { spot in
+  fileprivate func performPaginatedScrolling(_ handler: (ComponentHorizontallyScrollable, UICollectionView, CollectionLayout) -> Void) {
+    component?.didScrollHorizontally { spot in
       guard let collectionView = spot.userInterface as? CollectionView,
         let collectionViewLayout = collectionView.collectionViewLayout as? CollectionLayout else {
           return

@@ -18,14 +18,14 @@ class ListComponentTests: XCTestCase {
 
   func testDictionaryRepresentation() {
     let model = ComponentModel(title: "ListComponent", kind: "list", span: 3, meta: ["headerHeight": 44.0])
-    let spot = ListComponent(model: model)
-    XCTAssertEqual(model.dictionary["index"] as? Int, spot.dictionary["index"] as? Int)
-    XCTAssertEqual(model.dictionary["title"] as? String, spot.dictionary["title"] as? String)
-    XCTAssertEqual(model.dictionary["kind"] as? String, spot.dictionary["kind"] as? String)
-    XCTAssertEqual(model.dictionary["span"] as? Int, spot.dictionary["span"] as? Int)
+    let component = ListComponent(model: model)
+    XCTAssertEqual(model.dictionary["index"] as? Int, component.dictionary["index"] as? Int)
+    XCTAssertEqual(model.dictionary["title"] as? String, component.dictionary["title"] as? String)
+    XCTAssertEqual(model.dictionary["kind"] as? String, component.dictionary["kind"] as? String)
+    XCTAssertEqual(model.dictionary["span"] as? Int, component.dictionary["span"] as? Int)
     XCTAssertEqual(
       (model.dictionary["meta"] as! [String : Any])["headerHeight"] as? CGFloat,
-      (spot.dictionary["meta"] as! [String : Any])["headerHeight"] as? CGFloat
+      (component.dictionary["meta"] as! [String : Any])["headerHeight"] as? CGFloat
     )
   }
 
@@ -70,13 +70,13 @@ class ListComponentTests: XCTestCase {
     Configuration.register(view: TestView.self, identifier: "test-view")
 
     let items = [Item(title: "Item A", kind: "test-view"), Item(title: "Item B")]
-    let spot = ListComponent(model: ComponentModel(span: 0.0, items: items))
-    spot.setup(CGSize(width: 100, height: 100))
-    spot.layout(CGSize(width: 100, height: 100))
-    spot.view.layoutSubviews()
+    let component = ListComponent(model: ComponentModel(span: 0.0, items: items))
+    component.setup(CGSize(width: 100, height: 100))
+    component.layout(CGSize(width: 100, height: 100))
+    component.view.layoutSubviews()
 
     var invokeCount = 0
-    spot.configure = { view in
+    component.configure = { view in
       invokeCount += 1
     }
     XCTAssertEqual(invokeCount, 2)

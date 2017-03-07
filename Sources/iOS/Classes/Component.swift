@@ -2,7 +2,7 @@
 
 import UIKit
 
-public class Component: NSObject, Spotable, SpotHorizontallyScrollable {
+public class Component: NSObject, CoreComponent, ComponentHorizontallyScrollable {
 
   public static var layout: Layout = Layout(span: 1.0)
   public static var headers: Registry = Registry()
@@ -11,8 +11,8 @@ public class Component: NSObject, Spotable, SpotHorizontallyScrollable {
 
   open static var configure: ((_ view: View) -> Void)?
 
-  weak public var focusDelegate: SpotsFocusDelegate?
-  weak public var delegate: SpotsDelegate?
+  weak public var focusDelegate: ComponentFocusDelegate?
+  weak public var delegate: ComponentDelegate?
   weak public var carouselScrollDelegate: CarouselScrollDelegate?
 
   public var model: ComponentModel
@@ -78,8 +78,8 @@ public class Component: NSObject, Spotable, SpotHorizontallyScrollable {
       componentLayout.configure(collectionViewLayout: collectionViewLayout)
     }
 
-    self.spotDataSource = DataSource(spot: self)
-    self.spotDelegate = Delegate(spot: self)
+    self.spotDataSource = DataSource(component: self)
+    self.spotDelegate = Delegate(component: self)
   }
 
   public required convenience init(model: ComponentModel) {

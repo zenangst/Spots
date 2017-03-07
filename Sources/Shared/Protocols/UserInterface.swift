@@ -1,4 +1,4 @@
-/// A protocol used for composition inside Spotable objects
+/// A protocol used for composition inside CoreComponent objects
 public protocol UserInterface: class {
 
   #if !os(OSX)

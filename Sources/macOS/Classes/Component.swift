@@ -3,7 +3,7 @@
 import Cocoa
 import Tailor
 
-@objc(SpotsComponent) public class Component: NSObject, Spotable {
+@objc(SpotsComponent) public class Component: NSObject, CoreComponent {
 
   public static var layout: Layout = Layout(span: 1.0)
   public static var headers: Registry = Registry()
@@ -12,8 +12,8 @@ import Tailor
 
   open static var configure: ((_ view: View) -> Void)?
 
-  weak public var focusDelegate: SpotsFocusDelegate?
-  weak public var delegate: SpotsDelegate?
+  weak public var focusDelegate: ComponentFocusDelegate?
+  weak public var delegate: ComponentDelegate?
 
   var headerView: View?
   var footerView: View?
@@ -128,8 +128,8 @@ import Tailor
 
     userInterface.register()
 
-    self.spotDataSource = DataSource(spot: self)
-    self.spotDelegate = Delegate(spot: self)
+    self.spotDataSource = DataSource(component: self)
+    self.spotDelegate = Delegate(component: self)
   }
 
   public required convenience init(model: ComponentModel) {
@@ -267,7 +267,7 @@ import Tailor
       let item = item(at: tableView.clickedRow) else {
       return
     }
-    delegate?.spotable(self, itemSelected: item)
+    delegate?.component(self, itemSelected: item)
   }
 
   open func action(_ sender: Any?) {
@@ -275,7 +275,7 @@ import Tailor
       let item = item(at: tableView.clickedRow) else {
         return
     }
-    delegate?.spotable(self, itemSelected: item)
+    delegate?.component(self, itemSelected: item)
   }
 
   public func sizeForItem(at indexPath: IndexPath) -> CGSize {

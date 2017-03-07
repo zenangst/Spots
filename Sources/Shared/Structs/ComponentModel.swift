@@ -22,7 +22,7 @@ public enum ComponentModelDiff {
   case identifier, title, kind, layout, header, footer, meta, items, new, removed, none
 }
 
-/// The ComponentModel struct is used to configure a Spotable object
+/// The ComponentModel struct is used to configure a CoreComponent object
 public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
 
   public static var legacyMapping: Bool = false

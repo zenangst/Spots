@@ -1,13 +1,13 @@
 /// A JSON to UI parser to produce components for Controller
 public struct Parser {
 
-  /// Parse JSON into a collection of Spotable objects with key.
+  /// Parse JSON into a collection of CoreComponent objects with key.
   ///
   /// - parameter json: A JSON dictionary of components and items.
   /// - parameter key: The key that should be used for parsing JSON, defaults to `components`.
   ///
   /// - returns: A collection of spotable objects
-  public static func parse(_ json: [String : Any], key: String = "components") -> [Spotable] {
+  public static func parse(_ json: [String : Any], key: String = "components") -> [CoreComponent] {
     var components: [ComponentModel] = parse(json, key: key)
 
     for (index, _) in components.enumerated() {
@@ -51,12 +51,12 @@ public struct Parser {
     return Parser.parse(payload)
   }
 
-  /// Parse JSON into a collection of Spotable objects.
+  /// Parse JSON into a collection of CoreComponent objects.
   ///
   /// - parameter json: A JSON dictionary of components and items.
   ///
   /// - returns: A collection of spotable objects
-  public static func parse(_ json: [[String : Any]]?) -> [Spotable] {
+  public static func parse(_ json: [[String : Any]]?) -> [CoreComponent] {
     guard let json = json else { return [] }
 
     return json.map {
@@ -64,18 +64,18 @@ public struct Parser {
     }
   }
 
-  public static func parse(_ models: [ComponentModel]) -> [Spotable] {
+  public static func parse(_ models: [ComponentModel]) -> [CoreComponent] {
     return models.map {
       Factory.resolve(model: $0)
     }
   }
 
-  /// Parse view model children into Spotable objects
+  /// Parse view model children into CoreComponent objects
   /// - parameter item: A view model with children
   ///
-  ///  - returns: A collection of Spotable objects
-  public static func parse(_ item: Item) -> [Spotable] {
-    let spots: [Spotable] = Parser.parse(item.children)
-    return spots
+  ///  - returns: A collection of CoreComponent objects
+  public static func parse(_ item: Item) -> [CoreComponent] {
+    let components: [CoreComponent] = Parser.parse(item.children)
+    return components
   }
 }

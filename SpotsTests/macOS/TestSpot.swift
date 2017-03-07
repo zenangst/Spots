@@ -14,31 +14,31 @@ class TestSpot: XCTestCase {
   func testDefaultValues() {
     let items = [Item(title: "A"), Item(title: "B")]
     let model = ComponentModel(items: items, hybrid: true)
-    let spot = Component(model: model)
+    let component = Component(model: model)
 
-    spot.setup(CGSize(width: 100, height: 100))
+    component.setup(CGSize(width: 100, height: 100))
 
-    XCTAssertNotNil(spot.view)
-    XCTAssertNotNil(spot.tableView)
-    XCTAssertEqual(spot.items[0].size, CGSize(width: 100, height: 88))
-    XCTAssertEqual(spot.items[1].size, CGSize(width: 100, height: 88))
-    XCTAssertEqual(spot.view.frame.size, CGSize(width: 100, height: 180))
+    XCTAssertNotNil(component.view)
+    XCTAssertNotNil(component.tableView)
+    XCTAssertEqual(component.items[0].size, CGSize(width: 100, height: 88))
+    XCTAssertEqual(component.items[1].size, CGSize(width: 100, height: 88))
+    XCTAssertEqual(component.view.frame.size, CGSize(width: 100, height: 180))
     let expectedContentSizeHeight: CGFloat = 180
-    XCTAssertEqual(spot.view.contentSize, CGSize(width: 100, height: expectedContentSizeHeight))
+    XCTAssertEqual(component.view.contentSize, CGSize(width: 100, height: expectedContentSizeHeight))
   }
 
   func testSpotCache() {
     let item = Item(title: "test")
-    let spot = Component(cacheKey: "test-spot-cache")
+    let component = Component(cacheKey: "test-spot-cache")
 
-    XCTAssertEqual(spot.model.items.count, 0)
-    spot.append(item) {
-      spot.cache()
+    XCTAssertEqual(component.model.items.count, 0)
+    component.append(item) {
+      component.cache()
     }
 
     let expectation = self.expectation(description: "Wait for cache")
     Dispatch.after(seconds: 2.5) {
-      guard let cacheKey = spot.stateCache?.key else {
+      guard let cacheKey = component.stateCache?.key else {
         XCTFail()
         return
       }
@@ -67,11 +67,11 @@ class TestSpot: XCTestCase {
       ],
       hybrid: true
     )
-    let spot = Component(model: model)
-    spot.setup(CGSize(width: 100, height: 100))
+    let component = Component(model: model)
+    component.setup(CGSize(width: 100, height: 100))
 
-    XCTAssertEqual(spot.view.frame.size, CGSize(width: 100, height: 460))
-    XCTAssertEqual(spot.view.contentSize, CGSize(width: 100, height: 460))
+    XCTAssertEqual(component.view.frame.size, CGSize(width: 100, height: 460))
+    XCTAssertEqual(component.view.contentSize, CGSize(width: 100, height: 460))
   }
 
   func testHybridGridComponentWithHeaderAndFooter() {
@@ -87,12 +87,12 @@ class TestSpot: XCTestCase {
       ],
       hybrid: true
     )
-    let spot = Component(model: model)
-    spot.setup(CGSize(width: 100, height: 100))
+    let component = Component(model: model)
+    component.setup(CGSize(width: 100, height: 100))
 
-    XCTAssertEqual(spot.collectionView?.collectionViewLayout?.collectionViewContentSize, CGSize(width: 100, height: 200))
-    XCTAssertEqual(spot.view.frame.size, CGSize(width: 100, height: 300))
-    XCTAssertEqual(spot.view.contentSize, CGSize(width: 100, height: 300))
+    XCTAssertEqual(component.collectionView?.collectionViewLayout?.collectionViewContentSize, CGSize(width: 100, height: 200))
+    XCTAssertEqual(component.view.frame.size, CGSize(width: 100, height: 300))
+    XCTAssertEqual(component.view.contentSize, CGSize(width: 100, height: 300))
   }
 
   func testHybridCarouselComponentWithHeaderAndFooter() {
@@ -108,10 +108,10 @@ class TestSpot: XCTestCase {
       ],
       hybrid: true
     )
-    let spot = Component(model: model)
-    spot.setup(CGSize(width: 100, height: 100))
+    let component = Component(model: model)
+    component.setup(CGSize(width: 100, height: 100))
 
-    XCTAssertEqual(spot.view.frame.size, CGSize(width: 100, height: 150))
-    XCTAssertEqual(spot.view.contentSize, CGSize(width: 100, height: 150))
+    XCTAssertEqual(component.view.frame.size, CGSize(width: 100, height: 150))
+    XCTAssertEqual(component.view.contentSize, CGSize(width: 100, height: 150))
   }
 }

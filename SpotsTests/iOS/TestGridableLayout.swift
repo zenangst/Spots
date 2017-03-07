@@ -118,12 +118,12 @@ class TestGridableLayout: XCTestCase {
       ]
     )
 
-    let spot = GridComponent(model: model)
-    spot.setup(parentSize)
-    spot.layout(parentSize)
-    spot.view.layoutSubviews()
+    let component = GridComponent(model: model)
+    component.setup(parentSize)
+    component.layout(parentSize)
+    component.view.layoutSubviews()
 
-    let layoutAttributes = spot.layout.layoutAttributesForElements(in: CGRect(origin: CGPoint.zero, size: parentSize))
+    let layoutAttributes = component.layout.layoutAttributesForElements(in: CGRect(origin: CGPoint.zero, size: parentSize))
 
     let expectedFrameA = CGRect(
       origin: CGPoint(
@@ -168,6 +168,6 @@ class TestGridableLayout: XCTestCase {
       height: model.layout!.inset.top + model.layout!.inset.bottom + Double(itemSize.height) * 2
     )
 
-    XCTAssertEqual(spot.layout.collectionViewContentSize, expectedContentSize)
+    XCTAssertEqual(component.layout.collectionViewContentSize, expectedContentSize)
   }
 }

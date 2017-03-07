@@ -11,7 +11,7 @@ open class CarouselComponent: NSObject, Gridable {
 
   public static var layout: Layout = Layout()
 
-  /// Child spots
+  /// Child components
   public var compositeComponents: [CompositeComponent] = []
 
   public struct Key {
@@ -59,8 +59,8 @@ open class CarouselComponent: NSObject, Gridable {
 
   open static var defaultKind: StringConvertible = ComponentModel.Kind.carousel.string
 
-  /// A SpotsDelegate that is used for the CarouselComponent
-  open weak var delegate: SpotsDelegate?
+  /// A ComponentDelegate that is used for the CarouselComponent
+  open weak var delegate: ComponentDelegate?
 
   open var model: ComponentModel
   open var configure: ((ItemConfigurable) -> Void)? {
@@ -121,8 +121,8 @@ open class CarouselComponent: NSObject, Gridable {
     super.init()
     self.userInterface = collectionView
     self.model.layout?.configure(spot: self)
-    self.spotDataSource = DataSource(spot: self)
-    self.spotDelegate = Delegate(spot: self)
+    self.spotDataSource = DataSource(component: self)
+    self.spotDelegate = Delegate(component: self)
 
     if model.kind.isEmpty {
       self.model.kind = ComponentModel.Kind.carousel.string
@@ -148,7 +148,7 @@ open class CarouselComponent: NSObject, Gridable {
 
   /// Instantiate a CarouselComponent with a cache key.
   ///
-  /// - parameter cacheKey: A unique cache key for the Spotable object.
+  /// - parameter cacheKey: A unique cache key for the CoreComponent object.
   ///
   /// - returns: An initialized carousel spot.
   public convenience init(cacheKey: String) {
@@ -211,7 +211,7 @@ open class CarouselComponent: NSObject, Gridable {
     }
   }
 
-  /// Setup Spotable component with base size
+  /// Setup CoreComponent component with base size
   ///
   /// - parameter size: The size of the superview
   open func setup(_ size: CGSize) {

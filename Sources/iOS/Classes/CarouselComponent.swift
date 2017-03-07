@@ -2,17 +2,17 @@
 
 import UIKit
 
-/// A CarouselComponent, a collection view based Spotable object that lays out its items in a horizontal order
-open class CarouselComponent: NSObject, Gridable, SpotHorizontallyScrollable {
+/// A CarouselComponent, a collection view based CoreComponent object that lays out its items in a horizontal order
+open class CarouselComponent: NSObject, Gridable, ComponentHorizontallyScrollable {
 
   public static var layout: Layout = .init()
   public static var interaction: Interaction = .init()
 
-  /// Child spots
+  /// Child components
   public var compositeComponents: [CompositeComponent] = []
 
   /// A SpotsFocusDelegate object
-  weak public var focusDelegate: SpotsFocusDelegate?
+  weak public var focusDelegate: ComponentFocusDelegate?
 
   /// A boolean value that affects the sizing of items when using span, if enabled and the item count is less than the span, the CarouselComponent will even out the space between the items to align them
   open var dynamicSpan = false
@@ -46,8 +46,8 @@ open class CarouselComponent: NSObject, Gridable, SpotHorizontallyScrollable {
   /// A CarouselScrollDelegate, used when a CarouselComponent scrolls
   open weak var carouselScrollDelegate: CarouselScrollDelegate?
 
-  /// A SpotsDelegate that is used for the CarouselComponent
-  open weak var delegate: SpotsDelegate?
+  /// A ComponentDelegate that is used for the CarouselComponent
+  open weak var delegate: ComponentDelegate?
 
   /// A UIPageControl, enable by setting pageIndicator to true
   open lazy var pageControl = UIPageControl()
@@ -96,8 +96,8 @@ open class CarouselComponent: NSObject, Gridable, SpotHorizontallyScrollable {
     self.userInterface = collectionView
     self.model.layout?.configure(spot: self)
     self.dynamicSpan = self.model.layout?.dynamicSpan ?? false
-    self.spotDataSource = DataSource(spot: self)
-    self.spotDelegate = Delegate(spot: self)
+    self.spotDataSource = DataSource(component: self)
+    self.spotDelegate = Delegate(component: self)
 
     if model.kind.isEmpty {
       self.model.kind = ComponentModel.Kind.carousel.string
@@ -141,7 +141,7 @@ open class CarouselComponent: NSObject, Gridable, SpotHorizontallyScrollable {
 
   /// Instantiate a CarouselComponent with a cache key.
   ///
-  /// - parameter cacheKey: A unique cache key for the Spotable object.
+  /// - parameter cacheKey: A unique cache key for the CoreComponent object.
   ///
   /// - returns: An initialized carousel spot.
   public convenience init(cacheKey: String) {
@@ -167,7 +167,7 @@ open class CarouselComponent: NSObject, Gridable, SpotHorizontallyScrollable {
     #endif
   }
 
-  /// Setup Spotable component with base size
+  /// Setup CoreComponent component with base size
   ///
   /// - parameter size: The size of the superview
   open func setup(_ size: CGSize) {

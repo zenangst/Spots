@@ -4,35 +4,35 @@ import XCTest
 
 class ParserTests: XCTestCase {
 
-  func testParsingJSONIntoSpotableObjects() {
+  func testParsingJSONIntoCoreComponentObjects() {
     let json: [String : Any] = [
       "components": [["title": "test"], ["title": "test"]]
     ]
 
-    let objects: [Spotable] = Parser.parse(json)
+    let objects: [CoreComponent] = Parser.parse(json)
     XCTAssertTrue(objects.count == 2)
   }
 
-  func testParsingJSONIntoSpotableObjectsWithCustomKey() {
+  func testParsingJSONIntoCoreComponentObjectsWithCustomKey() {
     let json: [String : Any] = [
       "custom-key": [["title": "test"], ["title": "test"]]
     ]
 
-    let objects: [Spotable] = Parser.parse(json, key: "custom-key")
+    let objects: [CoreComponent] = Parser.parse(json, key: "custom-key")
     XCTAssertTrue(objects.count == 2)
   }
 
-  func testParsingJSONIntoSpotableObjectsWithoutKey() {
+  func testParsingJSONIntoCoreComponentObjectsWithoutKey() {
     let json: [[String : Any]] = [
       ["title": "test"], ["title": "test"]
     ]
 
-    let objects: [Spotable] = Parser.parse(json)
+    let objects: [CoreComponent] = Parser.parse(json)
     XCTAssertTrue(objects.count == 2)
   }
 
-  func testParsingJSONIntoSpotableObjectsWithEmptyJSON() {
-    let objects: [Spotable] = Parser.parse(nil)
+  func testParsingJSONIntoCoreComponentObjectsWithEmptyJSON() {
+    let objects: [CoreComponent] = Parser.parse(nil)
     XCTAssertTrue(objects.count == 0)
   }
 

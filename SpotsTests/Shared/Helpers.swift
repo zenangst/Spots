@@ -25,7 +25,7 @@ extension Controller {
   func prepareController() {
     preloadView()
     viewDidAppear()
-    spots.forEach {
+    components.forEach {
       $0.view.layoutSubviews()
     }
   }

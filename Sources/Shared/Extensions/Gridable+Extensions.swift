@@ -4,8 +4,8 @@
   import UIKit
 #endif
 
-/// A Spotable extension for Gridable objects
-public extension Spotable where Self : Gridable {
+/// A CoreComponent extension for Gridable objects
+public extension CoreComponent where Self : Gridable {
 
   #if os(OSX)
   /// Return collection view as a scroll view
@@ -25,7 +25,7 @@ public extension Spotable where Self : Gridable {
   }
   #endif
 
-  /// Setup Spotable component with base size
+  /// Setup CoreComponent component with base size
   ///
   /// - parameter size: The size of the superview
   public func setup(_ size: CGSize) {

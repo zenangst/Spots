@@ -3,76 +3,76 @@ import Spots
 import RxSpots
 import RxSwift
 
-class RxSpotsDelegateTests: XCTestCase {
+class RxComponentDelegateTests: XCTestCase {
 
-  var delegateProxy: RxSpotsDelegate!
+  var delegateProxy: RxComponentDelegate!
   private let disposeBag = DisposeBag()
 
   override func setUp() {
     super.setUp()
     let controller = Controller()
 
-    delegateProxy = RxSpotsDelegate(parentObject: controller)
+    delegateProxy = RxComponentDelegate(parentObject: controller)
   }
 
   func testDidSelectItem() {
-    let spot = ListComponent()
+    let component = ListComponent()
     let item = Item(title: "Test")
     var isCalled = false
 
     delegateProxy.didSelectItem
-      .bindNext({ spot, item in
-        isCalled = (spot is ListComponent) && item.title == "Test"
+      .bindNext({ component, item in
+        isCalled = (component is ListComponent) && item.title == "Test"
       }).addDisposableTo(disposeBag)
 
-    delegateProxy.spotable(spot, itemSelected: item)
+    delegateProxy.component(component, itemSelected: item)
     XCTAssertTrue(isCalled)
   }
   
   func testDidChange() {
-    let listSpot = ListComponent()
-    let gridSpot = GridComponent()
+    let listComponent = ListComponent()
+    let gridComponent = GridComponent()
     var isCalled = false
 
     delegateProxy.didChange
-      .bindNext({ spots in
-        isCalled = (spots[0] is ListComponent) && (spots[1] is GridComponent)
+      .bindNext({ components in
+        isCalled = (components[0] is ListComponent) && (components[1] is GridComponent)
       })
       .addDisposableTo(disposeBag)
 
-    delegateProxy.spotablesDidChange([listSpot, gridSpot])
+    delegateProxy.componentsDidChange([listComponent, gridComponent])
     XCTAssertTrue(isCalled)
   }
 
   func testWillDisplayView() {
-    let listSpot = ListComponent()
-    let spotView = SpotView()
+    let listComponent = ListComponent()
+    let componentView = ComponentView()
     let item = Item(title: "Test")
     var isCalled = false
 
     delegateProxy.willDisplayView
-      .bindNext({ spot, view, item in
-        isCalled = (spot is ListComponent) && (view == spotView) && item.title == "Test"
+      .bindNext({ component, view, item in
+        isCalled = (component is ListComponent) && (view == componentView) && item.title == "Test"
       })
       .addDisposableTo(disposeBag)
 
-    delegateProxy.spotable(listSpot, willDisplay: spotView, item: item)
+    delegateProxy.component(listComponent, willDisplay: componentView, item: item)
     XCTAssertTrue(isCalled)
   }
 
   func testDidEndDisplayingView() {
-    let listSpot = ListComponent()
-    let spotView = SpotView()
+    let listComponent = ListComponent()
+    let componentView = ComponentView()
     let item = Item(title: "Test")
     var isCalled = false
 
     delegateProxy.didEndDisplayingView
-      .bindNext({ spot, view, item in
-        isCalled = (spot is ListComponent) && (view == spotView) && item.title == "Test"
+      .bindNext({ component, view, item in
+        isCalled = (component is ListComponent) && (view == componentView) && item.title == "Test"
       })
       .addDisposableTo(disposeBag)
 
-    delegateProxy.spotable(listSpot, didEndDisplaying: spotView, item: item)
+    delegateProxy.component(listComponent, didEndDisplaying: componentView, item: item)
     XCTAssertTrue(isCalled)
   }
 }

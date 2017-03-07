@@ -7,7 +7,7 @@ import Tailor
   import UIKit
 #endif
 
-/// A layout struct used for mapping layout to a Spotable object.
+/// A layout struct used for mapping layout to a CoreComponent object.
 public struct Layout: Mappable, DictionaryConvertible, Equatable {
 
   /// A string based enum for keys used when encoding and decoding the struct from and to JSON.
@@ -135,7 +135,7 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
 
   /// Configure scroll view with layout
   ///
-  /// - Parameter spot: The Spotable object that should be configured.
+  /// - Parameter spot: The CoreComponent object that should be configured.
   public func configure(spot: Listable) {
     inset.configure(scrollView: spot.view)
   }
