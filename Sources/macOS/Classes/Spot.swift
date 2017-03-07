@@ -15,6 +15,12 @@ public class Spot: NSObject, Spotable {
   weak public var focusDelegate: SpotsFocusDelegate?
   weak public var delegate: SpotsDelegate?
 
+  var headerView: View?
+  var footerView: View?
+
+  var headerHeight = CGFloat(0.0)
+  var footerHeight = CGFloat(0.0)
+
   public var component: Component
   public var componentKind: Component.Kind = .list
   public var compositeSpots: [CompositeSpot] = []
@@ -69,11 +75,8 @@ public class Spot: NSObject, Spotable {
     }
   }
 
-  open lazy var scrollView: ScrollView = {
-    let scrollView = ScrollView()
-    scrollView.documentView = NSView()
-    return scrollView
-  }()
+  open lazy var scrollView: ScrollView = ScrollView(documentView: self.documentView)
+  open lazy var documentView: FlippedView = FlippedView()
 
   public var view: ScrollView {
     return scrollView
@@ -87,26 +90,22 @@ public class Spot: NSObject, Spotable {
     return userInterface as? CollectionView
   }
 
-  public required init(component: Component) {
-    var component = component
-    if component.kind.isEmpty {
-      component.kind = Spot.defaultKind
-    }
-
+  public required init(component: Component, userInterface: UserInterface, kind: Component.Kind) {
     self.component = component
+    self.componentKind = kind
+    self.userInterface = userInterface
 
-    if let componentKind = Component.Kind(rawValue: component.kind) {
-      self.componentKind = componentKind
-    }
+    super.init()
 
     if component.layout == nil {
-      switch componentKind {
+      switch kind {
       case .carousel:
         self.component.layout = CarouselSpot.layout
       case .grid:
         self.component.layout = GridSpot.layout
       case .list:
         self.component.layout = ListSpot.layout
+        registerDefaultIfNeeded(view: ListSpotItem.self)
       case .row:
         self.component.layout = RowSpot.layout
       default:
@@ -114,14 +113,41 @@ public class Spot: NSObject, Spotable {
       }
     }
 
-    super.init()
+    userInterface.register()
 
     self.spotDataSource = DataSource(spot: self)
     self.spotDelegate = Delegate(spot: self)
+  }
 
-    if let componentLayout = component.layout {
-      configure(with: componentLayout)
+  public required convenience init(component: Component) {
+    var component = component
+    if component.kind.isEmpty {
+      component.kind = Spot.defaultKind
     }
+
+    let kind = Component.Kind(rawValue: component.kind) ?? .list
+    let userInterface: UserInterface
+
+    if kind == .list {
+      userInterface = TableView()
+    } else {
+      let collectionView = CollectionView(frame: CGRect.zero)
+      userInterface = collectionView
+    }
+
+    self.init(component: component, userInterface: userInterface, kind: kind)
+
+    if componentKind == .carousel {
+      self.component.interaction.scrollDirection = .horizontal
+      (collectionView?.collectionViewLayout as? FlowLayout)?.scrollDirection = .horizontal
+    }
+  }
+
+  public convenience init(cacheKey: String) {
+    let stateCache = StateCache(key: cacheKey)
+
+    self.init(component: Component(stateCache.load()))
+    self.stateCache = stateCache
   }
 
   deinit {
@@ -145,15 +171,69 @@ public class Spot: NSObject, Spotable {
   }
 
   public func setup(_ size: CGSize) {
+    type(of: self).configure?(view)
 
+    scrollView.frame.size = size
+
+    if let tableView = self.tableView {
+      documentView.addSubview(tableView)
+      setupTableView(tableView, with: size)
+    } else if let collectionView = self.collectionView {
+      documentView.addSubview(collectionView)
+      setupCollectionView(collectionView, with: size)
+    }
+
+    layout(size)
   }
 
   public func layout(_ size: CGSize) {
+    if let tableView = self.tableView {
+      layoutTableView(tableView, with: size)
+    } else if let collectionView = self.collectionView {
+      layoutCollectionView(collectionView, with: size)
+    }
 
+    view.layoutSubviews()
   }
 
   fileprivate func setupTableView(_ tableView: TableView, with size: CGSize) {
+    scrollView.addSubview(tableView)
 
+    component.items.enumerated().forEach {
+      component.items[$0.offset].size.width = size.width
+    }
+
+    tableView.frame.size = size
+
+    prepareItems()
+
+    tableView.dataSource = spotDataSource
+    tableView.delegate = spotDelegate
+    tableView.backgroundColor = NSColor.clear
+    tableView.allowsColumnReordering = false
+    tableView.allowsColumnResizing = false
+    tableView.allowsColumnSelection = false
+    tableView.allowsEmptySelection = true
+    tableView.allowsMultipleSelection = false
+    tableView.headerView = nil
+    tableView.selectionHighlightStyle = .none
+    tableView.allowsTypeSelect = true
+    tableView.focusRingType = .none
+    tableView.target = self
+    tableView.action = #selector(self.action(_:))
+    tableView.doubleAction = #selector(self.doubleAction(_:))
+    tableView.sizeToFit()
+
+    guard tableView.tableColumns.isEmpty else {
+      return
+    }
+
+    let column = NSTableColumn(identifier: "tableview-column")
+    column.maxWidth = 250
+    column.width = 250
+    column.minWidth = 150
+
+    tableView.addTableColumn(column)
   }
 
   fileprivate func setupCollectionView(_ collectionView: CollectionView, with size: CGSize) {
@@ -174,7 +254,16 @@ public class Spot: NSObject, Spotable {
   }
 
   fileprivate func layoutTableView(_ tableView: TableView, with size: CGSize) {
+    tableView.frame.origin.y = headerHeight
+    tableView.sizeToFit()
+    tableView.frame.size.width = size.width
 
+    if let layout = component.layout {
+      tableView.frame.origin.x = CGFloat(layout.inset.left)
+      tableView.frame.size.width -= CGFloat(layout.inset.left + layout.inset.right)
+    }
+
+    scrollView.frame.size.height = tableView.frame.height + headerHeight + footerHeight
   }
 
   fileprivate func layoutCollectionView(_ collectionView: CollectionView, with size: CGSize) {
@@ -191,6 +280,30 @@ public class Spot: NSObject, Spotable {
 
   fileprivate func layoutVerticalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
 
+  }
+
+  func registerDefaultIfNeeded(view: View.Type) {
+    guard Configuration.views.storage[Configuration.views.defaultIdentifier] == nil else {
+      return
+    }
+
+    Configuration.views.defaultItem = Registry.Item.classType(view)
+  }
+
+  open func doubleAction(_ sender: Any?) {
+    guard let tableView = tableView,
+      let item = item(at: tableView.clickedRow) else {
+      return
+    }
+    delegate?.spotable(self, itemSelected: item)
+  }
+
+  open func action(_ sender: Any?) {
+    guard let tableView = tableView,
+      let item = item(at: tableView.clickedRow) else {
+        return
+    }
+    delegate?.spotable(self, itemSelected: item)
   }
 
   public func register() {
