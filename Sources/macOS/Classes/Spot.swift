@@ -18,9 +18,6 @@ public class Spot: NSObject, Spotable {
   var headerView: View?
   var footerView: View?
 
-  var headerHeight = CGFloat(0.0)
-  var footerHeight = CGFloat(0.0)
-
   public var component: Component
   public var componentKind: Component.Kind = .list
   public var compositeSpots: [CompositeSpot] = []
@@ -345,7 +342,7 @@ public class Spot: NSObject, Spotable {
   }
 
   fileprivate func layoutTableView(_ tableView: TableView, with size: CGSize) {
-    tableView.frame.origin.y = headerHeight
+    tableView.frame.origin.y = headerView?.frame.size.height ?? 0.0
     tableView.sizeToFit()
     tableView.frame.size.width = size.width
 
@@ -353,6 +350,9 @@ public class Spot: NSObject, Spotable {
       tableView.frame.origin.x = CGFloat(layout.inset.left)
       tableView.frame.size.width -= CGFloat(layout.inset.left + layout.inset.right)
     }
+
+    let headerHeight = headerView?.frame.size.height ?? 0.0
+    let footerHeight = footerView?.frame.size.height ?? 0.0
 
     scrollView.frame.size.height = tableView.frame.height + headerHeight + footerHeight
   }
