@@ -30,7 +30,7 @@ open class CarouselSpot: NSObject, Gridable, SpotHorizontallyScrollable {
   open fileprivate(set) var stateCache: StateCache?
 
   /// A component struct used as configuration and data source for the CarouselSpot
-  open var component: Component {
+  open var component: ComponentModel {
     didSet {
       configurePageControl()
     }
@@ -74,7 +74,7 @@ open class CarouselSpot: NSObject, Gridable, SpotHorizontallyScrollable {
   /// - returns: An initialized carousel spot.
   ///
   /// In case you want to use a default collection view & layout, use `init(component:)`.
-  public init(component: Component, collectionView: UICollectionView, layout: CollectionLayout) {
+  public init(component: ComponentModel, collectionView: UICollectionView, layout: CollectionLayout) {
     self.component = component
 
     if self.component.layout == nil {
@@ -100,7 +100,7 @@ open class CarouselSpot: NSObject, Gridable, SpotHorizontallyScrollable {
     self.spotDelegate = Delegate(spot: self)
 
     if component.kind.isEmpty {
-      self.component.kind = Component.Kind.carousel.string
+      self.component.kind = ComponentModel.Kind.carousel.string
     }
 
     registerDefault(view: CarouselSpotCell.self)
@@ -113,7 +113,7 @@ open class CarouselSpot: NSObject, Gridable, SpotHorizontallyScrollable {
   /// Convenience initializer that creates an instance with a component
   ///
   /// - parameter component: The component model that the carousel should render
-  public required convenience init(component: Component) {
+  public required convenience init(component: ComponentModel) {
     let layout = GridableLayout()
     layout.scrollDirection = .horizontal
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -122,7 +122,7 @@ open class CarouselSpot: NSObject, Gridable, SpotHorizontallyScrollable {
 
   /// A convenience initializer for CarouselSpot with base configuration.
   ///
-  /// - parameter component:   A Component.
+  /// - parameter component:   A ComponentModel.
   /// - parameter top:         Top section inset.
   /// - parameter left:        Left section inset.
   /// - parameter bottom:      Bottom section inset.
@@ -131,7 +131,7 @@ open class CarouselSpot: NSObject, Gridable, SpotHorizontallyScrollable {
   /// - parameter lineSpacing: The line spacing used in the flow layout.
   ///
   /// - returns: An initialized carousel spot with configured layout.
-  public convenience init(_ component: Component, top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0, itemSpacing: CGFloat = 0, lineSpacing: CGFloat = 0) {
+  public convenience init(_ component: ComponentModel, top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0, itemSpacing: CGFloat = 0, lineSpacing: CGFloat = 0) {
     self.init(component: component)
 
     layout.sectionInset = UIEdgeInsets(top: top, left: left, bottom: bottom, right: right)
@@ -146,7 +146,7 @@ open class CarouselSpot: NSObject, Gridable, SpotHorizontallyScrollable {
   /// - returns: An initialized carousel spot.
   public convenience init(cacheKey: String) {
     let stateCache = StateCache(key: cacheKey)
-    self.init(component: Component(stateCache.load()))
+    self.init(component: ComponentModel(stateCache.load()))
     self.stateCache = stateCache
   }
 

@@ -8,7 +8,7 @@ class RowSpotTests: XCTestCase {
   var cachedSpot: RowSpot!
 
   override func setUp() {
-    spot = RowSpot(component: Component(span: 1))
+    spot = RowSpot(component: ComponentModel(span: 1))
     cachedSpot = RowSpot(cacheKey: "cached-row-spot")
     XCTAssertNotNil(cachedSpot.stateCache)
     cachedSpot.stateCache?.clear()
@@ -20,7 +20,7 @@ class RowSpotTests: XCTestCase {
   }
 
   func testConvenienceInitWithSectionInsets() {
-    let component = Component(span: 1)
+    let component = ComponentModel(span: 1)
     let spot = RowSpot(component,
                         top: 5, left: 10, bottom: 5, right: 10, itemSpacing: 5)
 
@@ -29,7 +29,7 @@ class RowSpotTests: XCTestCase {
   }
 
   func testDictionaryRepresentation() {
-    let component = Component(title: "RowSpot", kind: "row", span: 3, meta: ["headerHeight": 44.0])
+    let component = ComponentModel(title: "RowSpot", kind: "row", span: 3, meta: ["headerHeight": 44.0])
     let spot = RowSpot(component: component)
     XCTAssertEqual(component.dictionary["index"] as? Int, spot.dictionary["index"] as? Int)
     XCTAssertEqual(component.dictionary["title"] as? String, spot.dictionary["title"] as? String)

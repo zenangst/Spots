@@ -8,7 +8,7 @@ class GridSpotTests: XCTestCase {
   var cachedSpot: GridSpot!
 
   override func setUp() {
-    spot = GridSpot(component: Component(span: 1.0))
+    spot = GridSpot(component: ComponentModel(span: 1.0))
     cachedSpot = GridSpot(cacheKey: "cached-grid-spot")
     XCTAssertNotNil(cachedSpot.stateCache)
     cachedSpot.stateCache?.clear()
@@ -21,6 +21,7 @@ class GridSpotTests: XCTestCase {
 
   func testConvenienceInitWithSectionInsets() {
     let component = Component(span: 1.0)
+    let component = ComponentModel(span: 1.0)
     let spot = GridSpot(component,
                        top: 5, left: 10, bottom: 5, right: 10, itemSpacing: 5)
 
@@ -30,6 +31,7 @@ class GridSpotTests: XCTestCase {
 
   func testDictionaryRepresentation() {
     let component = Component(title: "GridSpot", kind: "row", span: 3, meta: ["headerHeight": 44.0])
+    let component = ComponentModel(title: "GridSpot", kind: "row", span: 3, meta: ["headerHeight": 44.0])
     let spot = GridSpot(component: component)
     XCTAssertEqual(component.dictionary["index"] as? Int, spot.dictionary["index"] as? Int)
     XCTAssertEqual(component.dictionary["title"] as? String, spot.dictionary["title"] as? String)
@@ -43,6 +45,7 @@ class GridSpotTests: XCTestCase {
 
   func testSafelyResolveKind() {
     let component = Component(title: "GridSpot", kind: "custom-grid", span: 1.0, items: [ContentModel(title: "foo", kind: "custom-item-kind")])
+    let component = ComponentModel(title: "GridSpot", kind: "custom-grid", span: 1.0, items: [Item(title: "foo", kind: "custom-item-kind")])
     let rowSpot = GridSpot(component: component)
     let indexPath = IndexPath(row: 0, section: 0)
 

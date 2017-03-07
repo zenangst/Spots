@@ -69,9 +69,9 @@ public extension SpotsProtocol {
 
         newItem.children = children
 
-        var newItems = spotJSON[Component.Key.items] as? [[String : Any]]
+        var newItems = spotJSON[ComponentModel.Key.items] as? [[String : Any]]
         newItems?[item.index] = newItem.dictionary
-        spotJSON[Component.Key.items] = newItems
+        spotJSON[ComponentModel.Key.items] = newItems
       }
 
       result.append(spotJSON)
@@ -197,8 +197,8 @@ public extension SpotsProtocol {
   ///
   /// - parameter indexPath: The index path of the component belonging to the Spotable object at that index.
   ///
-  /// - returns: A Component object at index path.
-  fileprivate func component(at indexPath: IndexPath) -> Component {
+  /// - returns: A ComponentModel object at index path.
+  fileprivate func component(at indexPath: IndexPath) -> ComponentModel {
     return spot(at: indexPath).component
   }
 

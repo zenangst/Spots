@@ -15,7 +15,7 @@ extension Listable {
     }
   }
 
-  func configureLayout(_ component: Component) {
+  func configureLayout(_ component: ComponentModel) {
     let top: CGFloat = component.meta("inset-top", 0.0)
     let left: CGFloat = component.meta("inset-left", 0.0)
     let bottom: CGFloat = component.meta("inset-bottom", 0.0)

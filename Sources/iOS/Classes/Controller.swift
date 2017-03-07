@@ -12,7 +12,7 @@ open class Controller: UIViewController, SpotsProtocol, SpotsFocusDelegate, UISc
   public var focusedItemIndex: Int?
 
   /// A closure that is called when the controller is reloaded with components
-  public static var spotsDidReloadComponents: ((Controller) -> Void)?
+  public static var spotsDidReloadComponentModels: ((Controller) -> Void)?
 
   /// A notification enum
   ///
@@ -366,8 +366,8 @@ extension Controller {
   ///
   /// - parameter indexPath: The index path of the component belonging to the Spotable object at that index.
   ///
-  /// - returns: A Component object at index path.
-  fileprivate func component(at indexPath: IndexPath) -> Component {
+  /// - returns: A ComponentModel object at index path.
+  fileprivate func component(at indexPath: IndexPath) -> ComponentModel {
     return spot(at: indexPath).component
   }
 

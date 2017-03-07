@@ -161,7 +161,7 @@ extension Delegate: UITableViewDelegate {
   /// - parameter tableView: The table-view object asking for the title.
   /// - parameter section: An index number identifying a section of tableView.
   ///
-  /// - returns: A string to use as the title of the section header. Will return `nil` if title is not present on Component
+  /// - returns: A string to use as the title of the section header. Will return `nil` if title is not present on ComponentModel
   @nonobjc public func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
     guard let spot = spot else {
       return nil

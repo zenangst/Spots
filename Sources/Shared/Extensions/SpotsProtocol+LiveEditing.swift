@@ -35,7 +35,7 @@ import Cache
             weakSelf.source = nil
 
             let offset = weakSelf.scrollView.contentOffset
-            let components: [Component] = Parser.parse(json)
+            let components: [ComponentModel] = Parser.parse(json)
 
             weakSelf.reloadIfNeeded(components) {
               weakSelf.scrollView.contentOffset = offset

@@ -90,11 +90,11 @@ public extension ContentModel {
    */
   public func diff(_ oldItem: ContentModel) -> ItemDiff {
 
-    let oldChildComponents: [Component] = oldItem.children.map { Component($0) }
-    let newChildComponents: [Component] = children.map { Component($0) }
+    let oldChildComponentModels: [ComponentModel] = oldItem.children.map { ComponentModel($0) }
+    let newChildComponentModels: [ComponentModel] = children.map { ComponentModel($0) }
 
     if kind != oldItem.kind { return .kind }
-    if newChildComponents !== oldChildComponents { return .children }
+    if newChildComponentModels !== oldChildComponentModels { return .children }
     if identifier != oldItem.identifier { return .identifier }
     if title != oldItem.title { return .title }
     if subtitle != oldItem.subtitle { return .subtitle }

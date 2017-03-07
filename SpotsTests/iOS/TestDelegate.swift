@@ -17,8 +17,8 @@ class DelegateTests: XCTestCase {
 
   func testCollectionViewDelegateSelection() {
     let delegate = TestDelegate()
-    let spot = GridSpot(component: Component(span: 1, items: [
-      ContentModel(title: "title 1")
+    let spot = GridSpot(component: ComponentModel(span: 1, items: [
+      Item(title: "title 1")
       ]))
     spot.delegate = delegate
     spot.spotDelegate?.collectionView(spot.collectionView, didSelectItemAt: IndexPath(item: 0, section: 0))
@@ -31,7 +31,7 @@ class DelegateTests: XCTestCase {
   }
 
   func testCollectionViewCanFocus() {
-    let spot = GridSpot(component: Component(span: 1, items: [ContentModel(title: "title 1")]))
+    let spot = GridSpot(component: ComponentModel(span: 1, items: [Item(title: "title 1")]))
     XCTAssertEqual(spot.spotDelegate?.collectionView(spot.collectionView, canFocusItemAt: IndexPath(item: 0, section: 0)), true)
     XCTAssertEqual(spot.spotDelegate?.collectionView(spot.collectionView, canFocusItemAt: IndexPath(item: 1, section: 0)), false)
   }
@@ -40,8 +40,8 @@ class DelegateTests: XCTestCase {
 
   func testTableViewDelegateSelection() {
     let delegate = TestDelegate()
-    let spot = ListSpot(component: Component(span: 1, items: [
-      ContentModel(title: "title 1")
+    let spot = ListSpot(component: ComponentModel(span: 1, items: [
+      Item(title: "title 1")
       ]))
     spot.delegate = delegate
     spot.spotDelegate?.tableView(spot.tableView, didSelectRowAt: IndexPath(item: 0, section: 0))
@@ -54,7 +54,7 @@ class DelegateTests: XCTestCase {
   }
 
   func testTableViewHeightForRowOnListable() {
-    let spot = ListSpot(component: Component(span: 1, items: [ContentModel(title: "title 1")]))
+    let spot = ListSpot(component: ComponentModel(span: 1, items: [Item(title: "title 1")]))
     spot.setup(CGSize(width: 100, height: 100))
     XCTAssertEqual(spot.spotDelegate?.tableView(spot.tableView, heightForRowAt: IndexPath(row: 0, section: 0)), 44.0)
     XCTAssertEqual(spot.spotDelegate?.tableView(spot.tableView, heightForRowAt: IndexPath(row: 1, section: 0)), 0.0)
@@ -62,7 +62,7 @@ class DelegateTests: XCTestCase {
 
   func testDelegateTitleForHeader() {
     ListSpot.register(header: CustomListHeaderView.self, identifier: "list")
-    let spot = ListSpot(component: Component(
+    let spot = ListSpot(component: ComponentModel(
       title: "title",
       header: "list",
       span: 1,

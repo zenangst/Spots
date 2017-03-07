@@ -23,7 +23,7 @@ open class GridSpot: NSObject, Gridable {
   public var compositeSpots: [CompositeSpot] = []
 
   /// A component struct used as configuration and data source for the GridSpot
-  open var component: Component
+  open var component: ComponentModel
 
   /// A configuration closure
   open var configure: ((ItemConfigurable) -> Void)? {
@@ -59,7 +59,7 @@ open class GridSpot: NSObject, Gridable {
   /// - parameter component: A component.
   ///
   /// - returns: An initialized grid spot with component.
-  public required init(component: Component) {
+  public required init(component: ComponentModel) {
     self.component = component
 
     if self.component.layout == nil {
@@ -73,7 +73,7 @@ open class GridSpot: NSObject, Gridable {
     self.spotDelegate = Delegate(spot: self)
 
     if component.kind.isEmpty {
-      self.component.kind = Component.Kind.grid.string
+      self.component.kind = ComponentModel.Kind.grid.string
     }
 
     registerDefault(view: GridSpotCell.self)
@@ -89,11 +89,11 @@ open class GridSpot: NSObject, Gridable {
   /// A convenience init for initializing a Gridspot with a title and a kind.
   ///
   ///  - parameter title: A string that is used as a title for the GridSpot.
-  ///  - parameter kind:  An identifier to determine which kind should be set on the Component.
+  ///  - parameter kind:  An identifier to determine which kind should be set on the ComponentModel.
   ///
   /// - returns: An initialized grid spot with computed component using title and kind.
   public convenience init(title: String = "", kind: String? = nil) {
-    self.init(component: Component(title: title, kind: kind ?? "", span: 0.0))
+    self.init(component: ComponentModel(title: title, kind: kind ?? "", span: 0.0))
   }
 
   /// Instantiate a GridSpot with a cache key.
@@ -104,7 +104,7 @@ open class GridSpot: NSObject, Gridable {
   public convenience init(cacheKey: String) {
     let stateCache = StateCache(key: cacheKey)
 
-    self.init(component: Component(stateCache.load()))
+    self.init(component: ComponentModel(stateCache.load()))
     self.stateCache = stateCache
   }
 

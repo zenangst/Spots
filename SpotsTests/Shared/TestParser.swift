@@ -36,30 +36,30 @@ class ParserTests: XCTestCase {
     XCTAssertTrue(objects.count == 0)
   }
 
-  func testParsingJSONIntoComponents() {
+  func testParsingJSONIntoComponentModels() {
     let json: [String : Any] = [
       "components": [["title": "test"], ["title": "test"]]
     ]
 
-    let components: [Component] = Parser.parse(json)
+    let components: [ComponentModel] = Parser.parse(json)
     XCTAssertTrue(components.count == 2)
   }
 
-  func testParsingJSONIntoComponentsWithCustomKey() {
+  func testParsingJSONIntoComponentModelsWithCustomKey() {
     let json: [String : Any] = [
       "objects": [["title": "test"], ["title": "test"]]
     ]
 
-    let components: [Component] = Parser.parse(json, key: "objects")
+    let components: [ComponentModel] = Parser.parse(json, key: "objects")
     XCTAssertTrue(components.count == 2)
   }
 
-  func testParsingJSONIntoComponentsWithFaultyCustomKey() {
+  func testParsingJSONIntoComponentModelsWithFaultyCustomKey() {
     let json: [String : Any] = [
       "components": [["title": "test"], ["title": "test"]]
     ]
 
-    let components: [Component] = Parser.parse(json, key: "objects")
+    let components: [ComponentModel] = Parser.parse(json, key: "objects")
     XCTAssertTrue(components.count == 0)
   }
 }

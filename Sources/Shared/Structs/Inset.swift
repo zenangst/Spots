@@ -56,7 +56,7 @@ public struct Inset: Mappable, Equatable {
   ///
   /// - Parameter map: A JSON dictionary that will be mapped into the content insets.
   public init(_ map: [String : Any]) {
-    switch Component.legacyMapping {
+    switch ComponentModel.legacyMapping {
     case true:
       self.top    <- map.property(GridableMeta.Key.contentInsetTop)
       self.left   <- map.property(GridableMeta.Key.contentInsetLeft)

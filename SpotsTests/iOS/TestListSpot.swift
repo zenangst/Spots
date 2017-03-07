@@ -17,7 +17,7 @@ class ListSpotTests: XCTestCase {
   }
 
   func testDictionaryRepresentation() {
-    let component = Component(title: "ListSpot", kind: "list", span: 3, meta: ["headerHeight": 44.0])
+    let component = ComponentModel(title: "ListSpot", kind: "list", span: 3, meta: ["headerHeight": 44.0])
     let spot = ListSpot(component: component)
     XCTAssertEqual(component.dictionary["index"] as? Int, spot.dictionary["index"] as? Int)
     XCTAssertEqual(component.dictionary["title"] as? String, spot.dictionary["title"] as? String)

@@ -6,9 +6,9 @@ class DataSourceTests: XCTestCase {
 
   func testDataSourceForListableObject() {
     ListSpot.register(view: CustomListCell.self, identifier: "custom")
-    let spot = ListSpot(component: Component(span: 1.0, items: [
-      ContentModel(title: "title 1"),
-      ContentModel(title: "title 2")
+    let spot = ListSpot(component: ComponentModel(span: 1.0, items: [
+      Item(title: "title 1"),
+      Item(title: "title 2")
       ]))
 
     var itemCell1 = spot.spotDataSource!.tableView(spot.tableView, cellForRowAt: IndexPath(row: 0, section: 0))
@@ -33,9 +33,9 @@ class DataSourceTests: XCTestCase {
 
   func testDataSourceForGridableObject() {
     GridSpot.register(view: CustomGridCell.self, identifier: "custom")
-    let spot = GridSpot(component: Component(span: 1.0, items: [
-      ContentModel(title: "title 1"),
-      ContentModel(title: "title 2")
+    let spot = GridSpot(component: ComponentModel(span: 1.0, items: [
+      Item(title: "title 1"),
+      Item(title: "title 2")
       ]))
 
     var itemCell1 = spot.spotDataSource!.collectionView(spot.collectionView, cellForItemAt: IndexPath(item: 0, section: 0))
@@ -58,7 +58,7 @@ class DataSourceTests: XCTestCase {
 
   func testDataSourceForGridableDefaultHeader() {
     GridSpot.register(defaultHeader: CustomGridHeaderView.self)
-    let spot = GridSpot(component: Component(
+    let spot = GridSpot(component: ComponentModel(
       header: "",
       span: 1.0,
       items: [
@@ -76,7 +76,7 @@ class DataSourceTests: XCTestCase {
 
   func testDataSourceForGridableCustomHeader() {
     GridSpot.register(header: CustomGridHeaderView.self, identifier: "custom-header")
-    let spot = GridSpot(component: Component(
+    let spot = GridSpot(component: ComponentModel(
       header: "custom-header",
       span: 1.0,
       items: [

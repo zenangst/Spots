@@ -6,14 +6,14 @@ class GridCompositeTests: XCTestCase {
 
   func testGridComposite() {
     let view = GridComposite()
-    var item = ContentModel()
-    let gridSpot = CompositeSpot(spot: GridSpot(component: Component(span: 1)), itemIndex: 0)
+    var item = Item()
+    let gridSpot = CompositeSpot(spot: GridSpot(component: ComponentModel(span: 1)), itemIndex: 0)
     view.configure(&item, compositeSpots: [gridSpot])
 
     XCTAssertTrue(view.contentView.subviews.count == 1)
 
-    let carouselSpot = CompositeSpot(spot: CarouselSpot(component: Component(span: 1)), itemIndex: 0)
-    let listSpot = CompositeSpot(spot: ListSpot(component: Component(span: 1)), itemIndex: 0)
+    let carouselSpot = CompositeSpot(spot: CarouselSpot(component: ComponentModel(span: 1)), itemIndex: 0)
+    let listSpot = CompositeSpot(spot: ListSpot(component: ComponentModel(span: 1)), itemIndex: 0)
     view.configure(&item, compositeSpots: [carouselSpot, listSpot])
 
     XCTAssertTrue(view.contentView.subviews.count == 3)

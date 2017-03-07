@@ -67,7 +67,7 @@ class TestSpot: XCTestCase {
     let component = Component(kind: Component.Kind.list.string, items: items, hybrid: true)
     let listComponent = Component(kind: Component.Kind.list.string, items: items)
     let spot = Spot(component: component)
-    let listSpot = ListSpot(component: listComponent)
+    let listSpot = ListSpot(component: listComponentModel)
 
     XCTAssertTrue(type(of: spot.view) == type(of: listSpot.view))
 
@@ -90,7 +90,7 @@ class TestSpot: XCTestCase {
     let component = Component(kind: Component.Kind.grid.string, items: items, hybrid: true)
     let gridComponent = Component(kind: Component.Kind.grid.string, items: items)
     let spot = Spot(component: component)
-    let gridSpot = GridSpot(component: gridComponent)
+    let gridSpot = GridSpot(component: gridComponentModel)
 
     XCTAssertTrue(type(of: spot.view) == type(of: gridSpot.view))
 
@@ -113,7 +113,7 @@ class TestSpot: XCTestCase {
     let component = Component(kind: Component.Kind.carousel.string, items: items, hybrid: true)
     let carouselComponent = Component(kind: Component.Kind.carousel.string, items: items)
     let spot = Spot(component: component)
-    let carouselSpot = CarouselSpot(component: carouselComponent)
+    let carouselSpot = CarouselSpot(component: carouselComponentModel)
 
     XCTAssertTrue(type(of: spot.view) == type(of: carouselSpot.view))
 
@@ -132,10 +132,10 @@ class TestSpot: XCTestCase {
   }
 
   func testHybridListSpotWithHeaderAndFooter() {
-    let component = Component(
+    let component = ComponentModel(
       header: "Header",
       footer: "Footer",
-      kind: Component.Kind.list.string,
+      kind: ComponentModel.Kind.list.string,
       items: [
         ContentModel(title: "A"),
         ContentModel(title: "B"),
@@ -161,10 +161,10 @@ class TestSpot: XCTestCase {
   }
 
   func testHybridCarouselSpotWithHeaderAndFooter() {
-    let component = Component(
+    let component = ComponentModel(
       header: "Header",
       footer: "Footer",
-      kind: Component.Kind.carousel.string,
+      kind: ComponentModel.Kind.carousel.string,
       items: [
         ContentModel(title: "A"),
         ContentModel(title: "B"),

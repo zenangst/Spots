@@ -12,8 +12,8 @@ public protocol Componentable {
   /// A structure that contains the location and dimensions of a rectangle.
   var frame: CGRect { get }
 
-  /// Configure object with Component struct.
+  /// Configure object with ComponentModel struct.
   ///
   /// - parameter component: The component that should be used for configuration.
-  func configure(_ component: Component)
+  func configure(_ component: ComponentModel)
 }
