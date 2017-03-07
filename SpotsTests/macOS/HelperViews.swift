@@ -33,7 +33,7 @@ class HeaderView: NSView, ItemConfigurable, Componentable {
     titleLabel.centerYAnchor.constraint(equalTo: titleLabel.superview!.centerYAnchor).isActive = true
   }
 
-  func configure(_ item: inout Item) {
+  func configure(_ item: inout ContentModel) {
     titleLabel.stringValue = item.title
   }
 
@@ -73,7 +73,7 @@ class TextView: NSView, ItemConfigurable {
     titleLabel.centerYAnchor.constraint(equalTo: titleLabel.superview!.centerYAnchor).isActive = true
   }
 
-  func configure(_ item: inout Item) {
+  func configure(_ item: inout ContentModel) {
     titleLabel.stringValue = item.title
   }
 }
@@ -110,7 +110,7 @@ class FooterView: NSView, ItemConfigurable, Componentable {
     titleLabel.centerYAnchor.constraint(equalTo: titleLabel.superview!.centerYAnchor).isActive = true
   }
 
-  func configure(_ item: inout Item) {
+  func configure(_ item: inout ContentModel) {
     titleLabel.stringValue = item.title
   }
 

@@ -74,7 +74,7 @@ public struct Parser {
   /// - parameter item: A view model with children
   ///
   ///  - returns: A collection of Spotable objects
-  public static func parse(_ item: Item) -> [Spotable] {
+  public static func parse(_ item: ContentModel) -> [Spotable] {
     let spots: [Spotable] = Parser.parse(item.children)
     return spots
   }

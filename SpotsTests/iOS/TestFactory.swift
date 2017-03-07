@@ -45,12 +45,12 @@ class FactoryTests: XCTestCase {
         kind: "list",
         span: 1.0,
         items: [
-          Item(title: "Fullname", subtitle: "Job title", kind: "image"),
-          Item(title: "Follow", kind: "toggle", meta: ["dynamic-height": true]),
-          Item(title: "First name", subtitle: "Input first name", kind: "info"),
-          Item(title: "Last name", subtitle: "Input last name", kind: "info"),
-          Item(title: "Twitter", subtitle: "@twitter", kind: "info"),
-          Item(title: "", subtitle: "Biography", kind: "core", meta: ["dynamic-height": true])
+          ContentModel(title: "Fullname", subtitle: "Job title", kind: "image"),
+          ContentModel(title: "Follow", kind: "toggle", meta: ["dynamic-height": true]),
+          ContentModel(title: "First name", subtitle: "Input first name", kind: "info"),
+          ContentModel(title: "Last name", subtitle: "Input last name", kind: "info"),
+          ContentModel(title: "Twitter", subtitle: "@twitter", kind: "info"),
+          ContentModel(title: "", subtitle: "Biography", kind: "core", meta: ["dynamic-height": true])
         ]
       )
     ]

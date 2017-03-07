@@ -202,7 +202,7 @@ extension Gridable {
   /// Scroll to a specific item based on predicate.
   ///
   /// - parameter predicate: A predicate closure to determine which item to scroll to
-  public func scrollTo(_ predicate: (Item) -> Bool) {
+  public func scrollTo(_ predicate: (ContentModel) -> Bool) {
     if let index = items.index(where: predicate) {
       let pageWidth: CGFloat = collectionView.frame.size.width - layout.sectionInset.right
         + layout.sectionInset.left

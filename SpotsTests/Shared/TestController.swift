@@ -18,7 +18,7 @@ class ControllerTests: XCTestCase {
     let listSpot = ListSpot(component: component)
     let controller = Controller(spot: listSpot)
     controller.preloadView()
-    let items = [Item(title: "item1")]
+    let items = [ContentModel(title: "item1")]
 
     controller.update { spot in
       spot.component.items = items
@@ -35,7 +35,7 @@ class ControllerTests: XCTestCase {
 
     XCTAssertEqual(controller.spot!.component.items.count, 0)
 
-    let item = Item(title: "title1", kind: "list")
+    let item = ContentModel(title: "title1", kind: "list")
     let expectation = self.expectation(description: "Test append item")
     controller.append(item, spotIndex: 0) {
       XCTAssertEqual(controller.spot!.component.items.count, 1)
@@ -54,7 +54,7 @@ class ControllerTests: XCTestCase {
 
     XCTAssertEqual(controller.spot!.component.items.count, 1)
 
-    let item = Item(title: "title2", kind: "list")
+    let item = ContentModel(title: "title2", kind: "list")
     let expectation = self.expectation(description: "Test append item")
     controller.append(item, spotIndex: 0) {
       XCTAssertEqual(controller.spot!.component.items.count, 2)
@@ -72,8 +72,8 @@ class ControllerTests: XCTestCase {
     controller.preloadView()
 
     let items = [
-      Item(title: "title1", kind: "list"),
-      Item(title: "title2", kind: "list")
+      ContentModel(title: "title1", kind: "list"),
+      ContentModel(title: "title2", kind: "list")
     ]
     let expectation = self.expectation(description: "Test append items")
     controller.append(items, spotIndex: 0) {
@@ -92,8 +92,8 @@ class ControllerTests: XCTestCase {
     controller.preloadView()
 
     let items = [
-      Item(title: "title1", kind: "list"),
-      Item(title: "title2", kind: "list")
+      ContentModel(title: "title1", kind: "list"),
+      ContentModel(title: "title2", kind: "list")
     ]
     let expectation = self.expectation(description: "Test prepend items")
     controller.prepend(items, spotIndex: 0) {
@@ -117,8 +117,8 @@ class ControllerTests: XCTestCase {
     controller.preloadView()
 
     let items = [
-      Item(title: "title3", kind: "list"),
-      Item(title: "title4", kind: "list")
+      ContentModel(title: "title3", kind: "list"),
+      ContentModel(title: "title4", kind: "list")
     ]
     let expectation = self.expectation(description: "Test prepend items")
     controller.prepend(items, spotIndex: 0) {
@@ -238,7 +238,7 @@ class ControllerTests: XCTestCase {
 
     XCTAssert(controller.spot!.component.items.count == 0)
 
-    let item = Item(title: "title1", kind: "grid")
+    let item = ContentModel(title: "title1", kind: "grid")
     let expectation = self.expectation(description: "Test append item")
 
     controller.append(item, spotIndex: 0) {
@@ -258,8 +258,8 @@ class ControllerTests: XCTestCase {
     controller.preloadView()
 
     let items = [
-      Item(title: "title1", kind: "grid"),
-      Item(title: "title2", kind: "grid")
+      ContentModel(title: "title1", kind: "grid"),
+      ContentModel(title: "title2", kind: "grid")
     ]
     let expectation = self.expectation(description: "Test append items")
     controller.append(items, spotIndex: 0) {
@@ -279,8 +279,8 @@ class ControllerTests: XCTestCase {
     controller.preloadView()
 
     let items = [
-      Item(title: "title1", kind: "grid"),
-      Item(title: "title2", kind: "grid")
+      ContentModel(title: "title1", kind: "grid"),
+      ContentModel(title: "title2", kind: "grid")
     ]
     let expectation = self.expectation(description: "Test prepend items")
     controller.prepend(items, spotIndex: 0) {
@@ -330,7 +330,7 @@ class ControllerTests: XCTestCase {
 
     XCTAssert(controller.spot!.component.items.count == 0)
 
-    let item = Item(title: "title1", kind: "carousel")
+    let item = ContentModel(title: "title1", kind: "carousel")
     let expectation = self.expectation(description: "Test append item")
 
     controller.append(item, spotIndex: 0) {
@@ -350,8 +350,8 @@ class ControllerTests: XCTestCase {
     controller.preloadView()
 
     let items = [
-      Item(title: "title1", kind: "carousel"),
-      Item(title: "title2", kind: "carousel")
+      ContentModel(title: "title1", kind: "carousel"),
+      ContentModel(title: "title2", kind: "carousel")
     ]
     let expectation = self.expectation(description: "Test append items")
 
@@ -372,8 +372,8 @@ class ControllerTests: XCTestCase {
     controller.preloadView()
 
     let items = [
-      Item(title: "title1", kind: "carousel"),
-      Item(title: "title2", kind: "carousel")
+      ContentModel(title: "title1", kind: "carousel"),
+      ContentModel(title: "title2", kind: "carousel")
     ]
     let expectation = self.expectation(description: "Test prepend items")
     controller.prepend(items, spotIndex: 0) {
@@ -423,7 +423,7 @@ class ControllerTests: XCTestCase {
 
     XCTAssert(spot.items == component.items)
 
-    let newItems = [Item(title: "title3", kind: "list")]
+    let newItems = [ContentModel(title: "title3", kind: "list")]
     spot.items = newItems
     XCTAssertFalse(spot.items == component.items)
     XCTAssert(spot.items == newItems)
@@ -598,12 +598,12 @@ class ControllerTests: XCTestCase {
         kind: "list",
         span: 1.0,
         items: [
-          Item(title: "Fullname", subtitle: "Job title", kind: "image"),
-          Item(title: "Follow", kind: "toggle", meta: ["dynamic-height": true]),
-          Item(title: "First name", subtitle: "Input first name", kind: "info"),
-          Item(title: "Last name", subtitle: "Input last name", kind: "info"),
-          Item(title: "Twitter", subtitle: "@twitter", kind: "info"),
-          Item(title: "", subtitle: "Biography", kind: "core", meta: ["dynamic-height": true])
+          ContentModel(title: "Fullname", subtitle: "Job title", kind: "image"),
+          ContentModel(title: "Follow", kind: "toggle", meta: ["dynamic-height": true]),
+          ContentModel(title: "First name", subtitle: "Input first name", kind: "info"),
+          ContentModel(title: "Last name", subtitle: "Input last name", kind: "info"),
+          ContentModel(title: "Twitter", subtitle: "@twitter", kind: "info"),
+          ContentModel(title: "", subtitle: "Biography", kind: "core", meta: ["dynamic-height": true])
         ]
       )
     ]
@@ -613,12 +613,12 @@ class ControllerTests: XCTestCase {
         kind: "list",
         span: 1.0,
         items: [
-          Item(title: "Fullname", subtitle: "Job title", text: "Bot", kind: "image"),
-          Item(title: "Follow", kind: "toggle", meta: ["dynamic-height": true]),
-          Item(title: "First name", subtitle: "Input first name", text: "John", kind: "info"),
-          Item(title: "Last name", subtitle: "Input last name", text: "Hyperseed", kind: "info"),
-          Item(title: "Twitter", subtitle: "@johnhyperseed", kind: "info"),
-          Item(subtitle: "Biography", text: "John Hyperseed is a bot", kind: "core", meta: ["dynamic-height": true])
+          ContentModel(title: "Fullname", subtitle: "Job title", text: "Bot", kind: "image"),
+          ContentModel(title: "Follow", kind: "toggle", meta: ["dynamic-height": true]),
+          ContentModel(title: "First name", subtitle: "Input first name", text: "John", kind: "info"),
+          ContentModel(title: "Last name", subtitle: "Input last name", text: "Hyperseed", kind: "info"),
+          ContentModel(title: "Twitter", subtitle: "@johnhyperseed", kind: "info"),
+          ContentModel(subtitle: "Biography", text: "John Hyperseed is a bot", kind: "core", meta: ["dynamic-height": true])
         ]
       )
     ]
@@ -635,7 +635,7 @@ class ControllerTests: XCTestCase {
     /// Test what changed on the items
     let newItems = newComponentModels.first!.items
     let oldItems = controller.spots.first!.items
-    var diff = Item.evaluate(newItems, oldModels: oldItems)
+    var diff = ContentModel.evaluate(newItems, oldModels: oldItems)
 
     XCTAssertEqual(diff![0], .text)
     XCTAssertEqual(diff![1], .none)
@@ -651,12 +651,12 @@ class ControllerTests: XCTestCase {
         kind: "list",
         span: 1.0,
         items: [
-          Item(title: "Fullname", subtitle: "Job title", kind: "image"),
-          Item(title: "Follow", kind: "toggle", meta: ["dynamic-height": true]),
-          Item(title: "First name", subtitle: "Input first name", kind: "info"),
-          Item(title: "Last name", subtitle: "Input last name", kind: "info"),
-          Item(title: "Twitter", subtitle: "@twitter", kind: "info"),
-          Item(title: "", subtitle: "Biography", kind: "core", meta: ["dynamic-height": true])
+          ContentModel(title: "Fullname", subtitle: "Job title", kind: "image"),
+          ContentModel(title: "Follow", kind: "toggle", meta: ["dynamic-height": true]),
+          ContentModel(title: "First name", subtitle: "Input first name", kind: "info"),
+          ContentModel(title: "Last name", subtitle: "Input last name", kind: "info"),
+          ContentModel(title: "Twitter", subtitle: "@twitter", kind: "info"),
+          ContentModel(title: "", subtitle: "Biography", kind: "core", meta: ["dynamic-height": true])
         ]
       )
     ]
@@ -666,12 +666,12 @@ class ControllerTests: XCTestCase {
         kind: "list",
         span: 1.0,
         items: [
-          Item(title: "Fullname", subtitle: "Job title", text: "Bot", kind: "image"),
-          Item(title: "Follow", kind: "toggle", meta: ["dynamic-height": true]),
-          Item(title: "First name", subtitle: "Input first name", text: "John", kind: "info"),
-          Item(title: "Last name", subtitle: "Input last name", text: "Hyperseed", kind: "info"),
-          Item(title: "Twitter", subtitle: "@johnhyperseed", kind: "info"),
-          Item(subtitle: "Biography", text: "John Hyperseed is a bot", kind: "core", meta: ["dynamic-height": true])
+          ContentModel(title: "Fullname", subtitle: "Job title", text: "Bot", kind: "image"),
+          ContentModel(title: "Follow", kind: "toggle", meta: ["dynamic-height": true]),
+          ContentModel(title: "First name", subtitle: "Input first name", text: "John", kind: "info"),
+          ContentModel(title: "Last name", subtitle: "Input last name", text: "Hyperseed", kind: "info"),
+          ContentModel(title: "Twitter", subtitle: "@johnhyperseed", kind: "info"),
+          ContentModel(subtitle: "Biography", text: "John Hyperseed is a bot", kind: "core", meta: ["dynamic-height": true])
         ]
       )
     ]
@@ -849,12 +849,12 @@ class ControllerTests: XCTestCase {
         kind: "list",
         span: 1.0,
         items: [
-          Item(title: "Fullname", subtitle: "Job title", kind: "image"),
-          Item(title: "Follow", kind: "toggle", meta: ["dynamic-height": true]),
-          Item(title: "First name", subtitle: "Input first name", kind: "info"),
-          Item(title: "Last name", subtitle: "Input last name", kind: "info"),
-          Item(title: "Twitter", subtitle: "@twitter", kind: "info"),
-          Item(title: "", subtitle: "Biography", kind: "core", meta: ["dynamic-height": true])
+          ContentModel(title: "Fullname", subtitle: "Job title", kind: "image"),
+          ContentModel(title: "Follow", kind: "toggle", meta: ["dynamic-height": true]),
+          ContentModel(title: "First name", subtitle: "Input first name", kind: "info"),
+          ContentModel(title: "Last name", subtitle: "Input last name", kind: "info"),
+          ContentModel(title: "Twitter", subtitle: "@twitter", kind: "info"),
+          ContentModel(title: "", subtitle: "Biography", kind: "core", meta: ["dynamic-height": true])
         ]
       )
     ]
@@ -864,12 +864,12 @@ class ControllerTests: XCTestCase {
         kind: "list",
         span: 1.0,
         items: [
-          Item(title: "Fullname", subtitle: "Job title", text: "Bot", kind: "image"),
-          Item(title: "Follow", kind: "toggle", meta: ["dynamic-height": true]),
-          Item(title: "First name", subtitle: "Input first name", text: "John", kind: "info"),
-          Item(title: "Last name", subtitle: "Input last name", text: "Hyperseed", kind: "info"),
-          Item(title: "Twitter", subtitle: "@johnhyperseed", kind: "info"),
-          Item(subtitle: "Biography", text: "John Hyperseed is a bot", kind: "core", meta: ["dynamic-height": true])
+          ContentModel(title: "Fullname", subtitle: "Job title", text: "Bot", kind: "image"),
+          ContentModel(title: "Follow", kind: "toggle", meta: ["dynamic-height": true]),
+          ContentModel(title: "First name", subtitle: "Input first name", text: "John", kind: "info"),
+          ContentModel(title: "Last name", subtitle: "Input last name", text: "Hyperseed", kind: "info"),
+          ContentModel(title: "Twitter", subtitle: "@johnhyperseed", kind: "info"),
+          ContentModel(subtitle: "Biography", text: "John Hyperseed is a bot", kind: "core", meta: ["dynamic-height": true])
         ]
       )
     ]

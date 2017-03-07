@@ -335,9 +335,9 @@
 		BDD9ABCC1DB533CE005D8C04 /* TestGridComposite.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD9ABCA1DB533CE005D8C04 /* TestGridComposite.swift */; };
 		BDD9ABCE1DB53475005D8C04 /* TestCarouselComposite.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD9ABCD1DB53475005D8C04 /* TestCarouselComposite.swift */; };
 		BDD9ABCF1DB53475005D8C04 /* TestCarouselComposite.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD9ABCD1DB53475005D8C04 /* TestCarouselComposite.swift */; };
-		BDDCF6D61E4DF911004B38C4 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDCF6D51E4DF911004B38C4 /* Item.swift */; };
-		BDDCF6D71E4DF911004B38C4 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDCF6D51E4DF911004B38C4 /* Item.swift */; };
-		BDDCF6D81E4DF911004B38C4 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDCF6D51E4DF911004B38C4 /* Item.swift */; };
+		BDDCF6D61E4DF911004B38C4 /* ContentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDCF6D51E4DF911004B38C4 /* ContentModel.swift */; };
+		BDDCF6D71E4DF911004B38C4 /* ContentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDCF6D51E4DF911004B38C4 /* ContentModel.swift */; };
+		BDDCF6D81E4DF911004B38C4 /* ContentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDCF6D51E4DF911004B38C4 /* ContentModel.swift */; };
 		BDDCF6DB1E4DF91F004B38C4 /* Indexable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDCF6DA1E4DF91F004B38C4 /* Indexable.swift */; };
 		BDDCF6DC1E4DF91F004B38C4 /* Indexable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDCF6DA1E4DF91F004B38C4 /* Indexable.swift */; };
 		BDDCF6DD1E4DF91F004B38C4 /* Indexable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDCF6DA1E4DF91F004B38C4 /* Indexable.swift */; };
@@ -589,7 +589,7 @@
 		BDD63FAB1D941A80008E885A /* Tailor.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Tailor.framework; path = Carthage/Build/tvOS/Tailor.framework; sourceTree = "<group>"; };
 		BDD9ABCA1DB533CE005D8C04 /* TestGridComposite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestGridComposite.swift; sourceTree = "<group>"; };
 		BDD9ABCD1DB53475005D8C04 /* TestCarouselComposite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestCarouselComposite.swift; sourceTree = "<group>"; };
-		BDDCF6D51E4DF911004B38C4 /* Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		BDDCF6D51E4DF911004B38C4 /* ContentModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentModel.swift; sourceTree = "<group>"; };
 		BDDCF6DA1E4DF91F004B38C4 /* Indexable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Indexable.swift; sourceTree = "<group>"; };
 		BDDCF6DF1E4DF927004B38C4 /* ItemConfigurable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemConfigurable.swift; sourceTree = "<group>"; };
 		BDDCF6E41E4DF92F004B38C4 /* StringConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringConvertible.swift; sourceTree = "<group>"; };
@@ -941,7 +941,7 @@
 		BDAD85541E3E7032008289AE /* Structs */ = {
 			isa = PBXGroup;
 			children = (
-				BDDCF6D51E4DF911004B38C4 /* Item.swift */,
+				BDDCF6D51E4DF911004B38C4 /* ContentModel.swift */,
 				BDAD85551E3E7032008289AE /* ComponentModel.swift */,
 				BDAD85561E3E7032008289AE /* Configuration.swift */,
 				BDAD85571E3E7032008289AE /* Dispatch.swift */,
@@ -1579,7 +1579,7 @@
 				BDDCF6E71E4DF92F004B38C4 /* StringConvertible.swift in Sources */,
 				BDAD85C21E3E7032008289AE /* SpotsDelegate.swift in Sources */,
 				BDAD85EF1E3E7032008289AE /* StateCache.swift in Sources */,
-				BDDCF6D81E4DF911004B38C4 /* Item.swift in Sources */,
+				BDDCF6D81E4DF911004B38C4 /* ContentModel.swift in Sources */,
 				BDDCF6E21E4DF927004B38C4 /* ItemConfigurable.swift in Sources */,
 				BDB1F8B41E5D921F0064F64B /* Spotable+Extensions+iOS.swift in Sources */,
 				BDAD84AB1E3E701C008289AE /* Controller.swift in Sources */,
@@ -1742,7 +1742,7 @@
 				BD9ECEC71E6EC8C4003E4388 /* Spot+iOS+HeaderFooter.swift in Sources */,
 				BDAD84B21E3E701C008289AE /* GridSpot.swift in Sources */,
 				BDAD84D21E3E701C008289AE /* Delegate+iOS+Extensions.swift in Sources */,
-				BDDCF6D61E4DF911004B38C4 /* Item.swift in Sources */,
+				BDDCF6D61E4DF911004B38C4 /* ContentModel.swift in Sources */,
 				BDAD85C01E3E7032008289AE /* SpotsDelegate.swift in Sources */,
 				BDAD84CC1E3E701C008289AE /* Composable+iOS.swift in Sources */,
 				BDAD85751E3E7032008289AE /* RegistryType.swift in Sources */,
@@ -1876,7 +1876,7 @@
 				BDDCF6E61E4DF92F004B38C4 /* StringConvertible.swift in Sources */,
 				BDAD85101E3E7025008289AE /* GridSpotItem.swift in Sources */,
 				BDAD859D1E3E7032008289AE /* SpotsProtocol+Mutation.swift in Sources */,
-				BDDCF6D71E4DF911004B38C4 /* Item.swift in Sources */,
+				BDDCF6D71E4DF911004B38C4 /* ContentModel.swift in Sources */,
 				BDDCF6E11E4DF927004B38C4 /* ItemConfigurable.swift in Sources */,
 				BDAD851F1E3E7025008289AE /* Gridable+macOS+Extensions.swift in Sources */,
 				BDAD85261E3E7025008289AE /* Viewable+macOS.swift in Sources */,

@@ -5,7 +5,7 @@ import XCTest
 class TestDelegate: SpotsDelegate {
   var countsInvoked = 0
 
-  func spotable(_ spot: Spotable, itemSelected item: Item) {
+  func spotable(_ spot: Spotable, itemSelected item: ContentModel) {
     spot.component.items[item.index].meta["selected"] = true
     countsInvoked += 1
   }
@@ -67,8 +67,8 @@ class DelegateTests: XCTestCase {
       header: "list",
       span: 1,
       items: [
-        Item(title: "title 1"),
-        Item(title: "title 2")
+        ContentModel(title: "title 1"),
+        ContentModel(title: "title 2")
       ]))
     spot.view.frame.size = CGSize(width: 100, height: 100)
     spot.view.layoutSubviews()

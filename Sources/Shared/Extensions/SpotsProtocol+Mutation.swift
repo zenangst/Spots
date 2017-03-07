@@ -196,12 +196,12 @@ extension SpotsProtocol {
       width: view.frame.width,
       height: ceil(tempSpot.view.frame.height))
 
-    guard let diff = Item.evaluate(tempSpot.items, oldModels: spot.items) else {
+    guard let diff = ContentModel.evaluate(tempSpot.items, oldModels: spot.items) else {
       return true
     }
 
     let newItems = tempSpot.items
-    let changes: (ItemChanges) = Item.processChanges(diff)
+    let changes: (ItemChanges) = ContentModel.processChanges(diff)
 
     for index in changes.updatedChildren {
       if index < tempSpot.compositeSpots.count {
@@ -246,7 +246,7 @@ extension SpotsProtocol {
   /// - parameter closure:   A completion closure.
   private func reload(with changes: (ItemChanges),
                       in spot: Spotable,
-                      newItems: [Item],
+                      newItems: [ContentModel],
                       animation: Animation,
                       completion: (() -> Void)? = nil) {
     var offsets = [CGPoint]()
@@ -296,7 +296,7 @@ extension SpotsProtocol {
   /// - parameter closure:   A completion closure.
   private func reload(with changes: (ItemChanges),
                       in spot: Spotable,
-                      lessItems newItems: [Item],
+                      lessItems newItems: [ContentModel],
                       animation: Animation,
                       completion: (() -> Void)? = nil) {
     spot.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: {
@@ -351,7 +351,7 @@ extension SpotsProtocol {
   /// - parameter closure:   A completion closure.
   private func reload(with changes: (ItemChanges),
                       in spot: Spotable,
-                      moreItems newItems: [Item],
+                      moreItems newItems: [ContentModel],
                       animation: Animation,
                       completion: (() -> Void)? = nil) {
     spot.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: {
@@ -577,7 +577,7 @@ extension SpotsProtocol {
    - parameter animation: A Animation struct that determines which animation that should be used to perform the update
    - parameter completion: A completion closure that is run when the update is completed
    */
-  public func updateIfNeeded(spotAtIndex index: Int = 0, items: [Item], withAnimation animation: Animation = .automatic, completion: Completion = nil) {
+  public func updateIfNeeded(spotAtIndex index: Int = 0, items: [ContentModel], withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     guard let spot = spot(at: index, ofType: Spotable.self), !(spot.items == items) else {
       scrollView.layoutSubviews()
       completion?()
@@ -597,7 +597,7 @@ extension SpotsProtocol {
    - parameter animation: A Animation struct that determines which animation that should be used to perform the update
    - parameter completion: A completion closure that will run after the spot has performed updates internally
    */
-  public func append(_ item: Item, spotIndex: Int = 0, withAnimation animation: Animation = .none, completion: Completion = nil) {
+  public func append(_ item: ContentModel, spotIndex: Int = 0, withAnimation animation: Animation = .none, completion: Completion = nil) {
     spot(at: spotIndex, ofType: Spotable.self)?.append(item, withAnimation: animation) { [weak self] in
       completion?()
       self?.scrollView.layoutSubviews()
@@ -611,7 +611,7 @@ extension SpotsProtocol {
    - parameter animation: A Animation struct that determines which animation that should be used to perform the update
    - parameter completion: A completion closure that will run after the spot has performed updates internally
    */
-  public func append(_ items: [Item], spotIndex: Int = 0, withAnimation animation: Animation = .none, completion: Completion = nil) {
+  public func append(_ items: [ContentModel], spotIndex: Int = 0, withAnimation animation: Animation = .none, completion: Completion = nil) {
     spot(at: spotIndex, ofType: Spotable.self)?.append(items, withAnimation: animation) { [weak self] in
       completion?()
       self?.scrollView.layoutSubviews()
@@ -625,7 +625,7 @@ extension SpotsProtocol {
    - parameter animation: A Animation struct that determines which animation that should be used to perform the update
    - parameter completion: A completion closure that will run after the spot has performed updates internally
    */
-  public func prepend(_ items: [Item], spotIndex: Int = 0, withAnimation animation: Animation = .none, completion: Completion = nil) {
+  public func prepend(_ items: [ContentModel], spotIndex: Int = 0, withAnimation animation: Animation = .none, completion: Completion = nil) {
     spot(at: spotIndex, ofType: Spotable.self)?.prepend(items, withAnimation: animation) { [weak self] in
       completion?()
       self?.scrollView.layoutSubviews()
@@ -640,7 +640,7 @@ extension SpotsProtocol {
    - parameter animation: A Animation struct that determines which animation that should be used to perform the update
    - parameter completion: A completion closure that will run after the spot has performed updates internally
    */
-  public func insert(_ item: Item, index: Int = 0, spotIndex: Int, withAnimation animation: Animation = .none, completion: Completion = nil) {
+  public func insert(_ item: ContentModel, index: Int = 0, spotIndex: Int, withAnimation animation: Animation = .none, completion: Completion = nil) {
     spot(at: spotIndex, ofType: Spotable.self)?.insert(item, index: index, withAnimation: animation) { [weak self] in
       completion?()
       self?.scrollView.layoutSubviews()
@@ -655,7 +655,7 @@ extension SpotsProtocol {
   /// - parameter spotIndex:  The index of the spot that you want to update into.
   /// - parameter animation:  A Animation struct that determines which animation that should be used to perform the update.
   /// - parameter completion: A completion closure that will run after the spot has performed updates internally.
-  public func update(_ item: Item, index: Int = 0, spotIndex: Int, withAnimation animation: Animation = .none, completion: Completion = nil) {
+  public func update(_ item: ContentModel, index: Int = 0, spotIndex: Int, withAnimation animation: Animation = .none, completion: Completion = nil) {
     guard let oldItem = spot(at: spotIndex, ofType: Spotable.self)?.item(at: index), item != oldItem
       else {
         completion?()

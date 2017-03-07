@@ -9,7 +9,7 @@ import Tailor
 /**
  A value type struct, it conforms to the Mappable protocol so that it can be instantiated with JSON
  */
-public struct Item: Mappable, Indexable, DictionaryConvertible {
+public struct ContentModel: Mappable, Indexable, DictionaryConvertible {
 
   /**
    An enum with all the string keys used in the view model
@@ -58,7 +58,7 @@ public struct Item: Mappable, Indexable, DictionaryConvertible {
   /// A key-value dictionary for any additional information
   public var meta = [String: Any]()
   /// A key-value dictionary for related view models
-  public var relations = [String: [Item]]()
+  public var relations = [String: [ContentModel]]()
 
   /// A dictionary representation of the view model
   public var dictionary: [String : Any] {
@@ -122,15 +122,15 @@ public struct Item: Mappable, Indexable, DictionaryConvertible {
     meta     <- map.property(Key.meta)
     children = map[.children] as? [[String : Any]] ?? []
 
-    if let relation = map[.relations] as? [String : [Item]] {
+    if let relation = map[.relations] as? [String : [ContentModel]] {
       relations = relation
     }
 
     if let relations = map[.relations] as? [String : [[String : Any]]] {
-      var newRelations = [String: [Item]]()
+      var newRelations = [String: [ContentModel]]()
       relations.forEach { key, array in
-        if newRelations[key] == nil { newRelations[key] = [Item]() }
-        array.forEach { newRelations[key]?.append(Item($0)) }
+        if newRelations[key] == nil { newRelations[key] = [ContentModel]() }
+        array.forEach { newRelations[key]?.append(ContentModel($0)) }
 
         self.relations = newRelations
       }
@@ -158,7 +158,7 @@ public struct Item: Mappable, Indexable, DictionaryConvertible {
               size: CGSize = CGSize(width: 0, height: 0),
               meta: [String : Any] = [:],
               children: [DictionaryConvertible] = [],
-              relations: [String : [Item]] = [:]) {
+              relations: [String : [ContentModel]] = [:]) {
     self.identifier = identifier
     self.title = title
     self.subtitle = subtitle
@@ -188,7 +188,7 @@ public struct Item: Mappable, Indexable, DictionaryConvertible {
               action: String? = nil,
               size: CGSize = CGSize(width: 0, height: 0),
               meta: Mappable,
-              relations: [String : [Item]] = [:]) {
+              relations: [String : [ContentModel]] = [:]) {
     self.init(identifier: identifier,
               title: title,
               subtitle: subtitle,
@@ -242,7 +242,7 @@ public struct Item: Mappable, Indexable, DictionaryConvertible {
    - parameter key: String
    - parameter index: The index of the object inside of `self.relations`
    */
-  public func relation(_ key: String, _ index: Int) -> Item? {
+  public func relation(_ key: String, _ index: Int) -> ContentModel? {
     if let items = relations[key], index < items.count {
       return items[index]
     } else {
@@ -266,7 +266,7 @@ public struct Item: Mappable, Indexable, DictionaryConvertible {
  - parameter rhs: Right hand collection of Items
  - returns: A boolean value, true if both Item are equal
  */
-public func == (lhs: [Item], rhs: [Item]) -> Bool {
+public func == (lhs: [ContentModel], rhs: [ContentModel]) -> Bool {
   var equal = lhs.count == rhs.count
 
   if !equal { return false }
@@ -284,7 +284,7 @@ public func == (lhs: [Item], rhs: [Item]) -> Bool {
  - parameter rhs: Right hand collection of Items
  - returns: A boolean value, true if both Item are equal
  */
-public func === (lhs: [Item], rhs: [Item]) -> Bool {
+public func === (lhs: [ContentModel], rhs: [ContentModel]) -> Bool {
   var equal = lhs.count == rhs.count
 
   if !equal { return false }
@@ -306,7 +306,7 @@ public func === (lhs: [Item], rhs: [Item]) -> Bool {
 
  - returns: A boolean value, true if both Item are equal
  */
-public func == (lhs: Item, rhs: Item) -> Bool {
+public func == (lhs: ContentModel, rhs: ContentModel) -> Bool {
   return lhs.identifier == rhs.identifier &&
     lhs.title == rhs.title &&
     lhs.subtitle == rhs.subtitle &&
@@ -325,7 +325,7 @@ public func == (lhs: Item, rhs: Item) -> Bool {
 
  - returns: A boolean value, true if both Item are not equal
  */
-public func != (lhs: [Item], rhs: [Item]) -> Bool {
+public func != (lhs: [ContentModel], rhs: [ContentModel]) -> Bool {
   return !(lhs == rhs)
 }
 
@@ -337,7 +337,7 @@ public func != (lhs: [Item], rhs: [Item]) -> Bool {
 
  - returns: A boolean value, true if both Item are equal
  */
-public func === (lhs: Item, rhs: Item) -> Bool {
+public func === (lhs: ContentModel, rhs: ContentModel) -> Bool {
   let equal = lhs.identifier == rhs.identifier &&
     lhs.title == rhs.title &&
     lhs.subtitle == rhs.subtitle &&
@@ -359,7 +359,7 @@ public func === (lhs: Item, rhs: Item) -> Bool {
  - parameter rhs: Right hand collection of Items
  - returns: A boolean value, true if both Item are not equal
  */
-public func !== (lhs: [Item], rhs: [Item]) -> Bool {
+public func !== (lhs: [ContentModel], rhs: [ContentModel]) -> Bool {
   return !(lhs === rhs)
 }
 
@@ -370,11 +370,11 @@ public func !== (lhs: [Item], rhs: [Item]) -> Bool {
 
  - returns: A boolean value, false if both Item are equal
  */
-public func != (lhs: Item, rhs: Item) -> Bool {
+public func != (lhs: ContentModel, rhs: ContentModel) -> Bool {
   return !(lhs == rhs)
 }
 
-func compareRelations(_ lhs: Item, _ rhs: Item) -> Bool {
+func compareRelations(_ lhs: ContentModel, _ rhs: ContentModel) -> Bool {
   guard lhs.relations.count == rhs.relations.count else {
     return false
   }

@@ -23,7 +23,7 @@ extension Dictionary where Key: ExpressibleByStringLiteral {
 
    - returns: A generic type if casting succeeds, otherwise it returns nil
    */
-  func property<T>(_ name: Item.Key) -> T? {
+  func property<T>(_ name: ContentModel.Key) -> T? {
     return property(name.string)
   }
 
@@ -34,7 +34,7 @@ extension Dictionary where Key: ExpressibleByStringLiteral {
 
    - returns: The value associated with the given key
    */
-  subscript(key: Item.Key) -> Value? {
+  subscript(key: ContentModel.Key) -> Value? {
     set(value) {
       guard let key = key.string as? Key else { return }
       self[key] = value

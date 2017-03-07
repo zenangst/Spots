@@ -85,7 +85,7 @@ public extension SpotsProtocol {
   /// - parameter includeElement: A filter predicate used to match the UI that should be resolved.
   ///
   /// - returns: An optional object with inferred type.
-  public func ui<T>(_ includeElement: (Item) -> Bool) -> T? {
+  public func ui<T>(_ includeElement: (ContentModel) -> Bool) -> T? {
     for spot in spots {
       if let first = spot.items.filter(includeElement).first {
         return spot.ui(at: first.index)
@@ -123,8 +123,8 @@ public extension SpotsProtocol {
   /// - parameter includeElement: The predicate that the item has to match.
   ///
   /// - returns: A collection of tuples containing spotable objects with the matching items that were found.
-  public func filter(items includeElement: (Item) -> Bool) -> [(spot: Spotable, items: [Item])] {
-    var result = [(spot: Spotable, items: [Item])]()
+  public func filter(items includeElement: (ContentModel) -> Bool) -> [(spot: Spotable, items: [ContentModel])] {
+    var result = [(spot: Spotable, items: [ContentModel])]()
     for spot in spots {
       let items = spot.items.filter(includeElement)
       if !items.isEmpty {
@@ -148,7 +148,7 @@ public extension SpotsProtocol {
   ///
   /// - parameter index:          The index of the spot that you want to scroll
   /// - parameter includeElement: A filter predicate to find a view model
-  public func scrollTo(spotIndex index: Int = 0, includeElement: (Item) -> Bool) {
+  public func scrollTo(spotIndex index: Int = 0, includeElement: (ContentModel) -> Bool) {
     guard let itemY = spot(at: index, ofType: Spotable.self)?.scrollTo(includeElement) else { return }
 
     var initialHeight: CGFloat = 0.0

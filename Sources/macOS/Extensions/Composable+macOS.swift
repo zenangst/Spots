@@ -7,7 +7,7 @@ public extension Composable {
   ///
   ///  - parameter item:  The item that is currently being configured in the list
   ///  - parameter spots: A collection of Spotable objects created from the children of the item
-  func configure(_ item: inout Item, compositeSpots: [CompositeSpot]?) {
+  func configure(_ item: inout ContentModel, compositeSpots: [CompositeSpot]?) {
     guard let compositeSpots = compositeSpots else {
       return
     }
@@ -42,7 +42,7 @@ public extension Composable {
   /// - parameter item: A view model with children
   ///
   ///  - returns: A collection of Spotable objects
-  public func parse(_ item: Item) -> [Spotable] {
+  public func parse(_ item: ContentModel) -> [Spotable] {
     let spots = Parser.parse(item.children)
     return spots
   }

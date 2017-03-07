@@ -13,7 +13,7 @@ public protocol ItemConfigurable: class {
 
    - parameter item: A inout Item so that the ItemConfigurable object can configure the view model width and height based on its UI components
   */
-  func configure(_ item: inout Item)
+  func configure(_ item: inout ContentModel)
 
   func prepareForReuse()
 }

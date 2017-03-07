@@ -10,7 +10,7 @@ open class ListSpotCell: UITableViewCell, ItemConfigurable {
   /// The preferred view size for the view, width will be ignored for ListSpot cells
   open var preferredViewSize = CGSize(width: 0, height: 44)
   /// An optional reference to the current item
-  open var item: Item?
+  open var item: ContentModel?
 
   /// Initializes a table cell with a style and a reuse identifier and returns it to the caller.
   ///
@@ -33,7 +33,7 @@ open class ListSpotCell: UITableViewCell, ItemConfigurable {
   /// Configure cell with Item struct
   ///
   /// - parameter item: The Item struct that is used for configuring the view.
-  open func configure(_ item: inout Item) {
+  open func configure(_ item: inout ContentModel) {
     if let action = item.action, !action.isEmpty {
       accessoryType = .disclosureIndicator
     } else {
@@ -50,7 +50,7 @@ open class ListSpotCell: UITableViewCell, ItemConfigurable {
     assignAccesibilityAttributes(from: item)
   }
 
-  private func assignAccesibilityAttributes(from item: Item) {
+  private func assignAccesibilityAttributes(from item: ContentModel) {
     guard isAccessibilityElement else {
       return
     }

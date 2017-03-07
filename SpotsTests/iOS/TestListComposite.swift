@@ -6,8 +6,8 @@ class ListCompositeTests: XCTestCase {
 
   func testListComposite() {
     let view = ListComposite()
-    var item = Item()
-    let gridSpot = CompositeSpot(spot: GridSpot(component: ComponentModel(span: 1)), itemIndex: 0)
+    var item = ContentModel()
+    let gridSpot = CompositeSpot(spot: GridSpot(component: Component(span: 1)), itemIndex: 0)
     view.configure(&item, compositeSpots: [gridSpot])
 
     XCTAssertTrue(view.contentView.subviews.count == 1)

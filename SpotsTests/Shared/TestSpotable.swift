@@ -7,10 +7,10 @@ class SpotableTests: XCTestCase {
   func testAppendingMultipleItemsToSpot() {
     let listSpot = ListSpot(component: ComponentModel(title: "ComponentModel", span: 1.0))
     listSpot.setup(CGSize(width: 100, height: 100))
-    var items: [Item] = []
+    var items: [ContentModel] = []
 
     for i in 0..<10 {
-      items.append(Item(title: "Item: \(i)"))
+      items.append(ContentModel(title: "Item: \(i)"))
     }
 
     measure {
@@ -31,10 +31,10 @@ class SpotableTests: XCTestCase {
   func testAppendingMultipleItemsToSpotInController() {
     let controller = Controller(spots: [ListSpot(component: ComponentModel(title: "ComponentModel", span: 1.0))])
     controller.prepareController()
-    var items: [Item] = []
+    var items: [ContentModel] = []
 
     for i in 0..<10 {
-      items.append(Item(title: "Item: \(i)"))
+      items.append(ContentModel(title: "Item: \(i)"))
     }
 
     measure {

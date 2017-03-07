@@ -12,8 +12,8 @@ class TestSpot: XCTestCase {
   }
 
   func testDefaultValues() {
-    let items = [Item(title: "A"), Item(title: "B")]
-    let component = ComponentModel(items: items, hybrid: true)
+    let items = [ContentModel(title: "A"), ContentModel(title: "B")]
+    let component = Component(items: items, hybrid: true)
     let spot = Spot(component: component)
 
     spot.setup(CGSize(width: 100, height: 100))
@@ -36,7 +36,7 @@ class TestSpot: XCTestCase {
   }
 
   func testSpotCache() {
-    let item = Item(title: "test")
+    let item = ContentModel(title: "test")
     let spot = Spot(cacheKey: "test-spot-cache")
 
     XCTAssertEqual(spot.component.items.count, 0)
@@ -63,9 +63,9 @@ class TestSpot: XCTestCase {
   }
 
   func testCompareHybridListSpotWithCoreType() {
-    let items = [Item(title: "A"), Item(title: "B")]
-    let component = ComponentModel(kind: ComponentModel.Kind.list.string, items: items, hybrid: true)
-    let listComponentModel = ComponentModel(kind: ComponentModel.Kind.list.string, items: items)
+    let items = [ContentModel(title: "A"), ContentModel(title: "B")]
+    let component = Component(kind: Component.Kind.list.string, items: items, hybrid: true)
+    let listComponent = Component(kind: Component.Kind.list.string, items: items)
     let spot = Spot(component: component)
     let listSpot = ListSpot(component: listComponentModel)
 
@@ -86,9 +86,9 @@ class TestSpot: XCTestCase {
   }
 
   func testCompareHybridGridSpotWithCoreType() {
-    let items = [Item(title: "A"), Item(title: "B")]
-    let component = ComponentModel(kind: ComponentModel.Kind.grid.string, items: items, hybrid: true)
-    let gridComponentModel = ComponentModel(kind: ComponentModel.Kind.grid.string, items: items)
+    let items = [ContentModel(title: "A"), ContentModel(title: "B")]
+    let component = Component(kind: Component.Kind.grid.string, items: items, hybrid: true)
+    let gridComponent = Component(kind: Component.Kind.grid.string, items: items)
     let spot = Spot(component: component)
     let gridSpot = GridSpot(component: gridComponentModel)
 
@@ -109,9 +109,9 @@ class TestSpot: XCTestCase {
   }
 
   func testCompareHybridCarouselSpotWithCoreType() {
-    let items = [Item(title: "A"), Item(title: "B")]
-    let component = ComponentModel(kind: ComponentModel.Kind.carousel.string, items: items, hybrid: true)
-    let carouselComponentModel = ComponentModel(kind: ComponentModel.Kind.carousel.string, items: items)
+    let items = [ContentModel(title: "A"), ContentModel(title: "B")]
+    let component = Component(kind: Component.Kind.carousel.string, items: items, hybrid: true)
+    let carouselComponent = Component(kind: Component.Kind.carousel.string, items: items)
     let spot = Spot(component: component)
     let carouselSpot = CarouselSpot(component: carouselComponentModel)
 
@@ -137,10 +137,10 @@ class TestSpot: XCTestCase {
       footer: "Footer",
       kind: ComponentModel.Kind.list.string,
       items: [
-        Item(title: "A"),
-        Item(title: "B"),
-        Item(title: "C"),
-        Item(title: "D")
+        ContentModel(title: "A"),
+        ContentModel(title: "B"),
+        ContentModel(title: "C"),
+        ContentModel(title: "D")
       ],
       hybrid: true
     )
@@ -166,10 +166,10 @@ class TestSpot: XCTestCase {
       footer: "Footer",
       kind: ComponentModel.Kind.carousel.string,
       items: [
-        Item(title: "A"),
-        Item(title: "B"),
-        Item(title: "C"),
-        Item(title: "D")
+        ContentModel(title: "A"),
+        ContentModel(title: "B"),
+        ContentModel(title: "C"),
+        ContentModel(title: "D")
       ],
       hybrid: true
     )

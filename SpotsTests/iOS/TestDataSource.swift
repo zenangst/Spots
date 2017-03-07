@@ -62,8 +62,8 @@ class DataSourceTests: XCTestCase {
       header: "",
       span: 1.0,
       items: [
-        Item(title: "title 1"),
-        Item(title: "title 2")
+        ContentModel(title: "title 1"),
+        ContentModel(title: "title 2")
       ]))
     spot.view.frame.size = CGSize(width: 100, height: 100)
     spot.layout.headerReferenceSize = CGSize(width: 100, height: 48)
@@ -80,8 +80,8 @@ class DataSourceTests: XCTestCase {
       header: "custom-header",
       span: 1.0,
       items: [
-        Item(title: "title 1"),
-        Item(title: "title 2")
+        ContentModel(title: "title 1"),
+        ContentModel(title: "title 2")
       ]))
     spot.view.frame.size = CGSize(width: 100, height: 100)
     spot.layout.headerReferenceSize = CGSize(width: 100, height: 48)

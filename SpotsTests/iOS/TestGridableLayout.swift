@@ -9,8 +9,8 @@ class TestGridableLayout: XCTestCase {
   func testContentSizeForHorizontalLayoutsWithoutInsets() {
     let component = ComponentModel(
       items: [
-        Item(title: "foo", size: CGSize(width: 50, height: 50)),
-        Item(title: "bar", size: CGSize(width: 50, height: 50))
+        ContentModel(title: "foo", size: CGSize(width: 50, height: 50)),
+        ContentModel(title: "bar", size: CGSize(width: 50, height: 50))
       ]
     )
     let carouselSpot = CarouselSpot(component: component)
@@ -28,8 +28,8 @@ class TestGridableLayout: XCTestCase {
         inset: Inset(top: 25, left: 25, bottom: 25, right: 25)
       ),
       items: [
-        Item(title: "foo", size: CGSize(width: 50, height: 100)),
-        Item(title: "bar", size: CGSize(width: 50, height: 100))
+        ContentModel(title: "foo", size: CGSize(width: 50, height: 100)),
+        ContentModel(title: "bar", size: CGSize(width: 50, height: 100))
       ]
     )
     let carouselSpot = CarouselSpot(component: component)
@@ -48,8 +48,8 @@ class TestGridableLayout: XCTestCase {
         inset: Inset(top: 25, left: 25, bottom: 25, right: 25)
       ),
       items: [
-        Item(title: "foo", size: itemSize),
-        Item(title: "bar", size: itemSize)
+        ContentModel(title: "foo", size: itemSize),
+        ContentModel(title: "bar", size: itemSize)
       ]
     )
     let carouselSpot = CarouselSpot(component: component)
@@ -87,8 +87,8 @@ class TestGridableLayout: XCTestCase {
         itemSpacing: 10.0
       ),
       items: [
-        Item(title: "foo", size: itemSize),
-        Item(title: "bar", size: itemSize)
+        ContentModel(title: "foo", size: itemSize),
+        ContentModel(title: "bar", size: itemSize)
       ]
     )
     let carouselSpot = CarouselSpot(component: component)
@@ -111,10 +111,10 @@ class TestGridableLayout: XCTestCase {
         inset: Inset(top: 10, left: 30, bottom: 40, right: 20)
       ),
       items: [
-        Item(title: "A", size: itemSize),
-        Item(title: "B", size: itemSize),
-        Item(title: "C", size: itemSize),
-        Item(title: "D", size: itemSize)
+        ContentModel(title: "A", size: itemSize),
+        ContentModel(title: "B", size: itemSize),
+        ContentModel(title: "C", size: itemSize),
+        ContentModel(title: "D", size: itemSize)
       ]
     )
 

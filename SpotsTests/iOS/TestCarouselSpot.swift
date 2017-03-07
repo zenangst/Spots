@@ -375,7 +375,7 @@ class CarouselSpotTests: XCTestCase {
   }
 
   func testSpotCache() {
-    let item = Item(title: "test")
+    let item = ContentModel(title: "test")
 
     XCTAssertEqual(cachedSpot.component.items.count, 0)
     cachedSpot.append(item) {

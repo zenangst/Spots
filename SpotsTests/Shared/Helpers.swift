@@ -83,7 +83,7 @@ extension Controller {
       titleLabel.centerYAnchor.constraint(equalTo: titleLabel.superview!.centerYAnchor).isActive = true
     }
 
-    func configure(_ item: inout Item) {
+    func configure(_ item: inout ContentModel) {
       titleLabel.text = item.title
     }
 
@@ -123,7 +123,7 @@ extension Controller {
       titleLabel.centerYAnchor.constraint(equalTo: titleLabel.superview!.centerYAnchor).isActive = true
     }
 
-    func configure(_ item: inout Item) {
+    func configure(_ item: inout ContentModel) {
       titleLabel.text = item.title
     }
 
@@ -163,7 +163,7 @@ extension Controller {
       titleLabel.centerYAnchor.constraint(equalTo: titleLabel.superview!.centerYAnchor).isActive = true
     }
 
-    func configure(_ item: inout Item) {
+    func configure(_ item: inout ContentModel) {
       titleLabel.text = item.title
     }
   }
@@ -172,7 +172,7 @@ extension Controller {
 
     var preferredViewSize: CGSize = CGSize(width: 0, height: 44)
 
-    func configure(_ item: inout Item) {
+    func configure(_ item: inout ContentModel) {
       textLabel?.text = item.text
     }
   }
@@ -189,7 +189,7 @@ extension Controller {
 
     var preferredViewSize: CGSize = CGSize(width: 0, height: 44)
 
-    func configure(_ item: inout Item) {}
+    func configure(_ item: inout ContentModel) {}
   }
 
   class CustomGridHeaderView: UICollectionReusableView, Componentable {
@@ -207,7 +207,7 @@ extension Controller {
 class TestView: View, ItemConfigurable {
   var preferredViewSize: CGSize = CGSize(width: 50, height: 50)
 
-  func configure(_ item: inout Item) {
+  func configure(_ item: inout ContentModel) {
 
   }
 }
