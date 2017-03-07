@@ -3,7 +3,7 @@
 import Cocoa
 import Tailor
 
-public class Component: NSObject, Spotable {
+@objc(SpotsComponent) public class Component: NSObject, Spotable {
 
   public static var layout: Layout = Layout(span: 1.0)
   public static var headers: Registry = Registry()
