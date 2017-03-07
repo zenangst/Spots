@@ -295,6 +295,29 @@ public class Spot: NSObject, Spotable {
   }
 
   fileprivate func setupCollectionView(_ collectionView: CollectionView, with size: CGSize) {
+
+    if let componentLayout = self.component.layout,
+      let collectionViewLayout = collectionView.collectionViewLayout as? FlowLayout {
+      componentLayout.configure(collectionViewLayout: collectionViewLayout)
+    }
+
+    collectionView.frame.size = size
+
+    prepareItems()
+
+    collectionView.backgroundColors = [NSColor.clear]
+    collectionView.isSelectable = true
+    collectionView.allowsMultipleSelection = false
+    collectionView.allowsEmptySelection = true
+    collectionView.layer = CALayer()
+    collectionView.wantsLayer = true
+    collectionView.dataSource = spotDataSource
+    collectionView.delegate = spotDelegate
+
+    let backgroundView = NSView()
+    backgroundView.wantsLayer = true
+    collectionView.backgroundView = backgroundView
+
     switch componentKind {
     case .carousel:
       setupHorizontalCollectionView(collectionView, with: size)
