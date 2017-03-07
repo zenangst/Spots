@@ -199,16 +199,6 @@ public class Spot: NSObject, Spotable, SpotHorizontallyScrollable {
     }
   }
 
-  fileprivate func setupVerticalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
-    guard let collectionViewLayout = collectionView.collectionViewLayout as? GridableLayout else {
-      return
-    }
-
-    configureCollectionViewHeader(collectionView, with: size)
-
-    GridSpot.configure?(collectionView, collectionViewLayout)
-  }
-
   fileprivate func layoutCollectionView(_ collectionView: CollectionView, with size: CGSize) {
     prepareItems()
 
@@ -229,16 +219,6 @@ public class Spot: NSObject, Spotable, SpotHorizontallyScrollable {
     collectionViewLayout.invalidateLayout()
     collectionView.frame.size.width = size.width
     collectionView.frame.size.height = collectionViewLayout.contentSize.height
-  }
-
-  fileprivate func layoutVerticalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
-    guard let collectionViewLayout = collectionView.collectionViewLayout as? GridableLayout else {
-      return
-    }
-
-    collectionViewLayout.prepare()
-    collectionViewLayout.invalidateLayout()
-    collectionView.frame.size = collectionViewLayout.collectionViewContentSize
   }
 
   func registerDefaultIfNeeded(view: View.Type) {

@@ -1,9 +1,24 @@
-//
-//  Spot+iOS+Grid.swift
-//  Spots
-//
-//  Created by Christoffer Winterkvist on 3/7/17.
-//  Copyright © 2017 Hyper Interaktiv AS. All rights reserved.
-//
+import UIKit
 
-import Foundation
+extension Spot {
+
+  func setupVerticalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
+    guard let collectionViewLayout = collectionView.collectionViewLayout as? GridableLayout else {
+      return
+    }
+
+    configureCollectionViewHeader(collectionView, with: size)
+
+    GridSpot.configure?(collectionView, collectionViewLayout)
+  }
+
+  func layoutVerticalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
+    guard let collectionViewLayout = collectionView.collectionViewLayout as? GridableLayout else {
+      return
+    }
+
+    collectionViewLayout.prepare()
+    collectionViewLayout.invalidateLayout()
+    collectionView.frame.size = collectionViewLayout.collectionViewContentSize
+  }
+}
