@@ -9,7 +9,7 @@ extension Spot {
 
     if let (_, headerView) = Configuration.views.make(component.header) {
       if let headerView = headerView,
-        let componentable = headerView as? ComponentModelable {
+        let componentable = headerView as? Componentable {
         let size = CGSize(width: view.frame.width,
                           height: componentable.preferredHeaderHeight)
         componentable.configure(component)
@@ -27,7 +27,7 @@ extension Spot {
 
     if let (_, footerView) = Configuration.views.make(component.footer) {
       if let footerView = footerView,
-        let componentable = footerView as? ComponentModelable {
+        let componentable = footerView as? Componentable {
         let size = CGSize(width: view.frame.width,
                           height: componentable.preferredHeaderHeight)
         componentable.configure(component)

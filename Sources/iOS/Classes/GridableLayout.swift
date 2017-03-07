@@ -48,7 +48,7 @@ open class GridableLayout: UICollectionViewFlowLayout {
       }
 
       if let resolvedView = view {
-        if let componentView = resolvedView as? ComponentModelable {
+        if let componentView = resolvedView as? Componentable {
           headerReferenceSize.height = componentView.preferredHeaderHeight
         }
 
@@ -67,7 +67,7 @@ open class GridableLayout: UICollectionViewFlowLayout {
       let (_, view) = Configuration.views.make(spot.component.footer),
       let resolvedView = view {
 
-      if let componentView = resolvedView as? ComponentModelable {
+      if let componentView = resolvedView as? Componentable {
         footerHeight = componentView.preferredHeaderHeight
       }
 

@@ -52,7 +52,7 @@ extension Controller {
 }
 
 #if !os(OSX)
-  class HeaderView: UIView, ItemConfigurable, ComponentModelable {
+  class HeaderView: UIView, ItemConfigurable, Componentable {
 
     public var preferredHeaderHeight: CGFloat = 50.0
 
@@ -92,7 +92,7 @@ extension Controller {
     }
   }
 
-  class FooterView: UIView, ItemConfigurable, ComponentModelable {
+  class FooterView: UIView, ItemConfigurable, Componentable {
 
     var preferredHeaderHeight: CGFloat = 50
 
@@ -177,7 +177,7 @@ extension Controller {
     }
   }
 
-  class CustomListHeaderView: UITableViewHeaderFooterView, ComponentModelable {
+  class CustomListHeaderView: UITableViewHeaderFooterView, Componentable {
     var preferredHeaderHeight: CGFloat = 88
 
     func configure(_ component: ComponentModel) {
@@ -192,7 +192,7 @@ extension Controller {
     func configure(_ item: inout Item) {}
   }
 
-  class CustomGridHeaderView: UICollectionReusableView, ComponentModelable {
+  class CustomGridHeaderView: UICollectionReusableView, Componentable {
 
     var preferredHeaderHeight: CGFloat = 88
 

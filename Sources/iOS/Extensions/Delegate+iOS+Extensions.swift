@@ -111,10 +111,10 @@ extension Delegate: UITableViewDelegate {
       switch view {
       case let view as ListHeaderFooterWrapper:
         if let (_, resolvedView) = Configuration.views.make(spot.component.header),
-          let componentView = resolvedView as? ComponentModelable {
+          let componentView = resolvedView as? Componentable {
           view.frame.size.height = componentView.preferredHeaderHeight
         }
-      case let view as ComponentModelable:
+      case let view as Componentable:
         view.configure(spot.component)
       default:
         break
@@ -123,7 +123,7 @@ extension Delegate: UITableViewDelegate {
       return view?.frame.size.height ?? 0.0
     }
 
-    return (header?.view as? ComponentModelable)?.preferredHeaderHeight ?? 0.0
+    return (header?.view as? Componentable)?.preferredHeaderHeight ?? 0.0
   }
 
   public func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -141,10 +141,10 @@ extension Delegate: UITableViewDelegate {
       switch view {
       case let view as ListHeaderFooterWrapper:
         if let (_, resolvedView) = Configuration.views.make(spot.component.footer),
-          let componentView = resolvedView as? ComponentModelable {
+          let componentView = resolvedView as? Componentable {
             view.frame.size.height = componentView.preferredHeaderHeight
         }
-      case let view as ComponentModelable:
+      case let view as Componentable:
         view.configure(spot.component)
       default:
         break
@@ -153,7 +153,7 @@ extension Delegate: UITableViewDelegate {
       return view?.frame.size.height ?? 0.0
     }
 
-    return (header?.view as? ComponentModelable)?.preferredHeaderHeight ?? 0.0
+    return (header?.view as? Componentable)?.preferredHeaderHeight ?? 0.0
   }
 
   /// Asks the data source for the title of the header of the specified section of the table view.
@@ -233,13 +233,13 @@ extension Delegate: UITableViewDelegate {
         let customView = resolvedView {
         view.configure(with: customView)
 
-        if let componentView = customView as? ComponentModelable {
+        if let componentView = customView as? Componentable {
           componentView.configure(spot.component)
           customView.frame.size = view.frame.size
           customView.frame.size.height = componentView.preferredHeaderHeight
         }
       }
-      case let view as ComponentModelable:
+      case let view as Componentable:
       view.configure(spot.component)
       default:
         break
@@ -261,13 +261,13 @@ extension Delegate: UITableViewDelegate {
         let customView = resolvedView {
         view.configure(with: customView)
 
-        if let componentView = resolvedView as? ComponentModelable {
+        if let componentView = resolvedView as? Componentable {
           componentView.configure(spot.component)
           customView.frame.size = view.frame.size
           customView.frame.size.height = componentView.preferredHeaderHeight
         }
       }
-    case let view as ComponentModelable:
+    case let view as Componentable:
       view.configure(spot.component)
     default:
       break

@@ -4,9 +4,9 @@
   import UIKit
 #endif
 
-/// A protocol for ComponentModelable objects.
-public protocol ComponentModelable {
-  /// The preferred header height for the ComponentModelable object.
+/// A protocol for Componentable objects.
+public protocol Componentable {
+  /// The preferred header height for the Componentable object.
   var preferredHeaderHeight: CGFloat { get }
 
   /// A structure that contains the location and dimensions of a rectangle.

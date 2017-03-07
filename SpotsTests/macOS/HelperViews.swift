@@ -1,7 +1,7 @@
 import Cocoa
 import Spots
 
-class HeaderView: NSView, ItemConfigurable, ComponentModelable {
+class HeaderView: NSView, ItemConfigurable, Componentable {
 
   var preferredHeaderHeight: CGFloat = 50
   var preferredViewSize: CGSize = CGSize(width: 200, height: 50)
@@ -78,7 +78,7 @@ class TextView: NSView, ItemConfigurable {
   }
 }
 
-class FooterView: NSView, ItemConfigurable, ComponentModelable {
+class FooterView: NSView, ItemConfigurable, Componentable {
 
   var preferredHeaderHeight: CGFloat = 50
   var preferredViewSize: CGSize = CGSize(width: 200, height: 50)

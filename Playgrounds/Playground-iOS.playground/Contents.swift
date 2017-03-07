@@ -19,7 +19,7 @@ public class ListCell: UITableViewCell, ItemConfigurable {
 
   lazy var selectedView: UIView = {
     let view = UIView()
-    view.backgroundColor = UIColor.darkGrayColor().colorWithAlphaComponent(0.4)
+    view.backgroundColor = UIColor.darkGray.colorWithAlphaComponent(0.4)
 
     return view
   }()
@@ -58,7 +58,7 @@ public class ListCell: UITableViewCell, ItemConfigurable {
   }
 }
 
-public class ListHeaderView: UIView, ComponentModelable {
+public class ListHeaderView: UIView, Componentable {
 
   public var defaultHeight: CGFloat = 44
 
