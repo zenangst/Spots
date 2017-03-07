@@ -66,6 +66,7 @@
 		BD9ECEB71E6EC6B4003E4388 /* Spot+macOS+Carousel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9ECEB61E6EC6B4003E4388 /* Spot+macOS+Carousel.swift */; };
 		BD9ECEB81E6EC6BC003E4388 /* Spot+macOS+List.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9ECEB41E6EC6A7003E4388 /* Spot+macOS+List.swift */; };
 		BD9ECEBA1E6EC6D1003E4388 /* Spot+macOS+Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9ECEB91E6EC6D1003E4388 /* Spot+macOS+Grid.swift */; };
+		BD9ECEBC1E6EC82D003E4388 /* Spot+macOS+HeaderFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9ECEBB1E6EC82D003E4388 /* Spot+macOS+HeaderFooter.swift */; };
 		BDA8DAF51DCF3AED00A4A8DD /* TestRowSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA8DAF41DCF3AED00A4A8DD /* TestRowSpot.swift */; };
 		BDA8DAF61DCF3AED00A4A8DD /* TestRowSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA8DAF41DCF3AED00A4A8DD /* TestRowSpot.swift */; };
 		BDAD84A21E3E701C008289AE /* CarouselComposite.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD84801E3E701B008289AE /* CarouselComposite.swift */; };
@@ -452,6 +453,7 @@
 		BD9ECEB41E6EC6A7003E4388 /* Spot+macOS+List.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Spot+macOS+List.swift"; sourceTree = "<group>"; };
 		BD9ECEB61E6EC6B4003E4388 /* Spot+macOS+Carousel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Spot+macOS+Carousel.swift"; sourceTree = "<group>"; };
 		BD9ECEB91E6EC6D1003E4388 /* Spot+macOS+Grid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Spot+macOS+Grid.swift"; sourceTree = "<group>"; };
+		BD9ECEBB1E6EC82D003E4388 /* Spot+macOS+HeaderFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Spot+macOS+HeaderFooter.swift"; sourceTree = "<group>"; };
 		BDA8DAF41DCF3AED00A4A8DD /* TestRowSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestRowSpot.swift; sourceTree = "<group>"; };
 		BDAD84801E3E701B008289AE /* CarouselComposite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselComposite.swift; sourceTree = "<group>"; };
 		BDAD84811E3E701B008289AE /* CarouselSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselSpot.swift; sourceTree = "<group>"; };
@@ -812,6 +814,7 @@
 				BD9ECEB91E6EC6D1003E4388 /* Spot+macOS+Grid.swift */,
 				BD9ECEB41E6EC6A7003E4388 /* Spot+macOS+List.swift */,
 				BDAD85041E3E7025008289AE /* Viewable+macOS.swift */,
+				BD9ECEBB1E6EC82D003E4388 /* Spot+macOS+HeaderFooter.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1875,6 +1878,7 @@
 				BDAD85141E3E7025008289AE /* ListSpotCell.swift in Sources */,
 				52CD427B1E4477C800187E09 /* PageIndicatorPlacement.swift in Sources */,
 				BDAD85AC1E3E7032008289AE /* Composable.swift in Sources */,
+				BD9ECEBC1E6EC82D003E4388 /* Spot+macOS+HeaderFooter.swift in Sources */,
 				BDAD85DF1E3E7032008289AE /* Inset.swift in Sources */,
 				BDAD85A31E3E7032008289AE /* Wrappable+Extensions.swift in Sources */,
 				BDAD85121E3E7025008289AE /* ListComposite.swift in Sources */,
