@@ -408,7 +408,27 @@ public class Spot: NSObject, Spotable {
   }
 
   fileprivate func layoutVerticalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
+    guard let collectionViewLayout = collectionView.collectionViewLayout else {
+      return
+    }
 
+    let headerHeight = headerView?.frame.size.height ?? 0.0
+    let footerHeight = footerView?.frame.size.height ?? 0.0
+
+    collectionView.frame.origin.y = headerHeight
+    collectionViewLayout.prepare()
+    collectionViewLayout.invalidateLayout()
+
+    if let collectionViewContentSize = collectionView.collectionViewLayout?.collectionViewContentSize {
+      var collectionViewContentSize = collectionViewContentSize
+      collectionViewContentSize.height += headerHeight + footerHeight
+      collectionView.frame.size.height = collectionViewContentSize.height
+      collectionView.frame.size.width = collectionViewContentSize.width
+
+      documentView.frame.size = collectionViewContentSize
+
+      scrollView.frame.size.height = collectionView.frame.height
+    }
   }
 
   func registerDefaultIfNeeded(view: View.Type) {
