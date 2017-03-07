@@ -6,7 +6,7 @@
 
 extension SpotsProtocol {
 
-  public typealias CompareClosure = ((_ lhs: [Component], _ rhs: [Component]) -> Bool)
+  public typealias CompareClosure = ((_ lhs: [ComponentModel], _ rhs: [ComponentModel]) -> Bool)
 
   /**
    Reload all Spotable objects
@@ -34,10 +34,10 @@ extension SpotsProtocol {
   /// Reload if needed using JSON
   ///
   /// - parameter components: A collection of components that gets parsed into UI elements
-  /// - parameter compare: A closure that is used for comparing a Component collections
+  /// - parameter compare: A closure that is used for comparing a ComponentModel collections
   /// - parameter animated: An animation closure that can be used to perform custom animations when reloading
   /// - parameter completion: A closure that will be run after reload has been performed on all spots
-  public func reloadIfNeeded(_ components: [Component],
+  public func reloadIfNeeded(_ components: [ComponentModel],
                              compare: @escaping CompareClosure = { lhs, rhs in return lhs !== rhs },
                              withAnimation animation: Animation = .automatic,
                              completion: Completion = nil) {
@@ -59,40 +59,40 @@ extension SpotsProtocol {
       }
 
       let oldSpots = weakSelf.spots
-      let oldComponents = oldSpots.map { $0.component }
-      var newComponents = components
+      let oldComponentModels = oldSpots.map { $0.component }
+      var newComponentModels = components
 
       /// Prepare default layouts for new components based of previous Spotable kind.
-      for (index, _) in newComponents.enumerated() {
-        guard index < oldComponents.count else {
+      for (index, _) in newComponentModels.enumerated() {
+        guard index < oldComponentModels.count else {
           break
         }
 
-        if newComponents[index].layout == nil {
-          newComponents[index].layout = type(of: oldSpots[index]).layout
+        if newComponentModels[index].layout == nil {
+          newComponentModels[index].layout = type(of: oldSpots[index]).layout
         }
       }
 
-      guard compare(newComponents, oldComponents) else {
+      guard compare(newComponentModels, oldComponentModels) else {
         weakSelf.cache()
         Dispatch.main {
           weakSelf.scrollView.layoutViews()
           if let controller = self as? Controller {
-            Controller.spotsDidReloadComponents?(controller)
+            Controller.spotsDidReloadComponentModels?(controller)
           }
           completion?()
         }
         return
       }
 
-      let changes = weakSelf.generateChanges(from: newComponents, and: oldComponents)
+      let changes = weakSelf.generateChanges(from: newComponentModels, and: oldComponentModels)
 
-      weakSelf.process(changes: changes, components: newComponents, withAnimation: animation) {
+      weakSelf.process(changes: changes, components: newComponentModels, withAnimation: animation) {
         Dispatch.main {
           weakSelf.scrollView.layoutSubviews()
           weakSelf.cache()
           if let controller = self as? Controller {
-            Controller.spotsDidReloadComponents?(controller)
+            Controller.spotsDidReloadComponentModels?(controller)
           }
 
           completion?()
@@ -104,23 +104,23 @@ extension SpotsProtocol {
   /// Generate a change set by comparing two component collections
   ///
   /// - parameter components:    A collection of components
-  /// - parameter oldComponents: A collection of components
+  /// - parameter oldComponentModels: A collection of components
   ///
-  /// - returns: A ComponentDiff struct
-  func generateChanges(from components: [Component], and oldComponents: [Component]) -> [ComponentDiff] {
-    let oldComponentCount = oldComponents.count
-    var changes = [ComponentDiff]()
+  /// - returns: A ComponentModelDiff struct
+  func generateChanges(from components: [ComponentModel], and oldComponentModels: [ComponentModel]) -> [ComponentModelDiff] {
+    let oldComponentModelCount = oldComponentModels.count
+    var changes = [ComponentModelDiff]()
     for (index, component) in components.enumerated() {
-      if index >= oldComponentCount {
+      if index >= oldComponentModelCount {
         changes.append(.new)
         continue
       }
 
-      changes.append(component.diff(component: oldComponents[index]))
+      changes.append(component.diff(component: oldComponentModels[index]))
     }
 
-    if oldComponentCount > components.count {
-      oldComponents[components.count..<oldComponents.count].forEach { _ in
+    if oldComponentModelCount > components.count {
+      oldComponentModels[components.count..<oldComponentModels.count].forEach { _ in
         changes.append(.removed)
       }
     }
@@ -128,8 +128,8 @@ extension SpotsProtocol {
     return changes
   }
 
-  fileprivate func replaceSpot(_ index: Int, newComponents: [Component], yOffset: inout CGFloat) {
-    let spot = Factory.resolve(component: newComponents[index])
+  fileprivate func replaceSpot(_ index: Int, newComponentModels: [ComponentModel], yOffset: inout CGFloat) {
+    let spot = Factory.resolve(component: newComponentModels[index])
     let oldSpot = spots[index]
 
     /// Remove old composite spots from superview and empty container
@@ -151,8 +151,8 @@ extension SpotsProtocol {
     yOffset += spot.view.frame.size.height
   }
 
-  fileprivate func newSpot(_ index: Int, newComponents: [Component], yOffset: inout CGFloat) {
-    let spot = Factory.resolve(component: newComponents[index])
+  fileprivate func newSpot(_ index: Int, newComponentModels: [ComponentModel], yOffset: inout CGFloat) {
+    let spot = Factory.resolve(component: newComponentModels[index])
     spots.append(spot)
     setupSpot(at: index, spot: spot)
     #if !os(OSX)
@@ -174,17 +174,17 @@ extension SpotsProtocol {
   /// Set up items for a Spotable object
   ///
   /// - parameter index:         The index of the Spotable object
-  /// - parameter newComponents: A collection of new components
+  /// - parameter newComponentModels: A collection of new components
   /// - parameter animation:     A Animation that is used to determine which animation to use when performing the update
   /// - parameter closure:       A completion closure that is invoked when the setup of the new items is complete
   ///
   /// - returns: A boolean value that determines if the closure should run in `process(changes:)`
-  fileprivate func setupItemsForSpot(at index: Int, newComponents: [Component], withAnimation animation: Animation = .automatic, completion: Completion = nil) -> Bool {
+  fileprivate func setupItemsForSpot(at index: Int, newComponentModels: [ComponentModel], withAnimation animation: Animation = .automatic, completion: Completion = nil) -> Bool {
     guard let spot = self.spot(at: index, ofType: Spotable.self) else {
       return false
     }
 
-    let tempSpot = Factory.resolve(component: newComponents[index])
+    let tempSpot = Factory.resolve(component: newComponentModels[index])
     tempSpot.view.frame = spot.view.frame
     tempSpot.setup(tempSpot.view.frame.size)
     tempSpot.layout(tempSpot.view.frame.size)
@@ -376,8 +376,8 @@ extension SpotsProtocol {
     scrollView.layoutSubviews()
   }
 
-  func process(changes: [ComponentDiff],
-               components newComponents: [Component],
+  func process(changes: [ComponentModelDiff],
+               components newComponentModels: [ComponentModel],
                withAnimation animation: Animation = .automatic,
                completion: Completion = nil) {
     Dispatch.main { [weak self] in
@@ -402,9 +402,9 @@ extension SpotsProtocol {
       for (index, change) in changes.enumerated() {
         switch change {
         case .identifier, .title, .kind, .layout, .header, .footer, .meta:
-          weakSelf.replaceSpot(index, newComponents: newComponents, yOffset: &yOffset)
+          weakSelf.replaceSpot(index, newComponentModels: newComponentModels, yOffset: &yOffset)
         case .new:
-          weakSelf.newSpot(index, newComponents: newComponents, yOffset: &yOffset)
+          weakSelf.newSpot(index, newComponentModels: newComponentModels, yOffset: &yOffset)
         case .removed:
           weakSelf.removeSpot(at: index)
         case .items:
@@ -413,7 +413,7 @@ extension SpotsProtocol {
           }
 
           runCompletion = weakSelf.setupItemsForSpot(at: index,
-                                                     newComponents: newComponents,
+                                                     newComponentModels: newComponentModels,
                                                      withAnimation: animation,
                                                      completion: completion)
         case .none: continue
@@ -436,7 +436,7 @@ extension SpotsProtocol {
   ///Reload if needed using JSON
   ///
   /// - parameter json: A JSON dictionary that gets parsed into UI elements
-  /// - parameter compare: A closure that is used for comparing a Component collections
+  /// - parameter compare: A closure that is used for comparing a ComponentModel collections
   /// - parameter animated: An animation closure that can be used to perform custom animations when reloading
   /// - parameter completion: A closure that will be run after reload has been performed on all spots
   public func reloadIfNeeded(_ json: [String : Any],
@@ -450,12 +450,12 @@ extension SpotsProtocol {
       }
 
       let newSpots: [Spotable] = Parser.parse(json)
-      let newComponents = newSpots.map { $0.component }
-      let oldComponents = weakSelf.spots.map { $0.component }
+      let newComponentModels = newSpots.map { $0.component }
+      let oldComponentModels = weakSelf.spots.map { $0.component }
 
-      guard compare(newComponents, oldComponents) else {
+      guard compare(newComponentModels, oldComponentModels) else {
         if let controller = self as? Controller {
-          Controller.spotsDidReloadComponents?(controller)
+          Controller.spotsDidReloadComponentModels?(controller)
         }
         weakSelf.cache()
         completion?()
@@ -465,7 +465,7 @@ extension SpotsProtocol {
       var offsets = [CGPoint]()
       let oldComposites = weakSelf.spots.flatMap { $0.compositeSpots }
 
-      if newComponents.count == oldComponents.count {
+      if newComponentModels.count == oldComponentModels.count {
         offsets = weakSelf.spots.map { $0.view.contentOffset }
       }
 
@@ -496,7 +496,7 @@ extension SpotsProtocol {
       }
 
       if let controller = self as? Controller {
-        Controller.spotsDidReloadComponents?(controller)
+        Controller.spotsDidReloadComponentModels?(controller)
       }
 
       weakSelf.scrollView.layoutSubviews()
@@ -527,7 +527,7 @@ extension SpotsProtocol {
 
       completion?()
       if let controller = weakSelf as? Controller {
-        Controller.spotsDidReloadComponents?(controller)
+        Controller.spotsDidReloadComponentModels?(controller)
       }
       weakSelf.scrollView.layoutSubviews()
     }

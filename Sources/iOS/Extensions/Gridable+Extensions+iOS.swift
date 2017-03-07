@@ -21,13 +21,13 @@ extension Gridable {
 
   /// Initializes a Gridable container and configures the Spot with the provided component and optional layout properties.
   ///
-  /// - parameter component: A Component model.
+  /// - parameter component: A ComponentModel model.
   /// - parameter top: The top UIEdgeInset for the layout.
   /// - parameter left: The left UIEdgeInset for the layout.
   /// - parameter bottom: The bottom UIEdgeInset for the layout.
   /// - parameter right: The right UIEdgeInset for the layout.
   /// - parameter itemSpacing: The minimumInteritemSpacing for the layout.
-  public init(_ component: Component, top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0, itemSpacing: CGFloat = 0) {
+  public init(_ component: ComponentModel, top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0, itemSpacing: CGFloat = 0) {
     self.init(component: component)
 
     layout.sectionInset = EdgeInsets(top: top, left: left, bottom: bottom, right: right)

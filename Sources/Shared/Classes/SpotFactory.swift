@@ -5,12 +5,12 @@ public struct Factory {
 
   /// Defaults spots, it includes carousel, list, grid and view
   private static var spots: [String: Spotable.Type] = [
-    Component.Kind.carousel.string: CarouselSpot.self,
-    Component.Kind.list.string: ListSpot.self,
-    Component.Kind.grid.string: GridSpot.self,
-    Component.Kind.row.string: RowSpot.self,
-    Component.Kind.view.string: ViewSpot.self,
-    Component.Kind.spot.string: Spot.self
+    ComponentModel.Kind.carousel.string: CarouselSpot.self,
+    ComponentModel.Kind.list.string: ListSpot.self,
+    ComponentModel.Kind.grid.string: GridSpot.self,
+    ComponentModel.Kind.row.string: RowSpot.self,
+    ComponentModel.Kind.view.string: ViewSpot.self,
+    ComponentModel.Kind.spot.string: Spot.self
   ]
 
   /// Register a spot for a specfic spot type
@@ -26,10 +26,10 @@ public struct Factory {
   /// - parameter component: A compontent struct used for crafting the spotable object.
   ///
   /// - returns: A spotable object.
-  public static func resolve(component: Component) -> Spotable {
+  public static func resolve(component: ComponentModel) -> Spotable {
     var resolvedKind = component.kind
     if component.isHybrid {
-      resolvedKind = Component.Kind.spot.string
+      resolvedKind = ComponentModel.Kind.spot.string
     }
 
     let spot: Spotable.Type = spots[resolvedKind] ?? DefaultSpot

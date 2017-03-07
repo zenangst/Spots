@@ -58,9 +58,9 @@ class InteractionTests: XCTestCase {
       "paginate": true
     ]
 
-    Component.legacyMapping = true
+    ComponentModel.legacyMapping = true
     let interaction = Interaction(json)
-    Component.legacyMapping = false
+    ComponentModel.legacyMapping = false
 
     XCTAssertTrue(interaction.paginate == .page)
   }

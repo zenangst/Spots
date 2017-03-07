@@ -12,19 +12,19 @@ class CompositionTests: XCTestCase {
   let heightOffset: CGFloat = 2
   #endif
 
-  func testComponentCreation() {
-    var component = Component(
-      kind: Component.Kind.grid.rawValue,
+  func testComponentModelCreation() {
+    var component = ComponentModel(
+      kind: ComponentModel.Kind.grid.rawValue,
       span: 1.0
     )
 
-    component.add(child: Component(kind: Component.Kind.list.rawValue, span: 1.0))
+    component.add(child: ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0))
 
     XCTAssertEqual(component.items.count, 1)
 
     component.add(children: [
-      Component(kind: Component.Kind.list.rawValue, span: 1.0),
-      Component(kind: Component.Kind.list.rawValue, span: 1.0)
+      ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0),
+      ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0)
       ]
     )
 
@@ -33,19 +33,19 @@ class CompositionTests: XCTestCase {
 
   func testSpotableCreation() {
     let layout = Layout().mutate { $0.span = 2.0 }
-    var component = Component(kind: Component.Kind.grid.rawValue, layout: layout)
+    var component = ComponentModel(kind: ComponentModel.Kind.grid.rawValue, layout: layout)
 
     component.add(children: [
-      Component(
-        kind: Component.Kind.list.rawValue,
+      ComponentModel(
+        kind: ComponentModel.Kind.list.rawValue,
         span: 1.0,
         items: [
           Item(title: "foo"),
           Item(title: "bar")
         ]
       ),
-      Component(
-        kind: Component.Kind.list.rawValue,
+      ComponentModel(
+        kind: ComponentModel.Kind.list.rawValue,
         span: 1.0,
         items: [
           Item(title: "baz"),
@@ -59,31 +59,31 @@ class CompositionTests: XCTestCase {
 
     XCTAssertEqual(spot.items.count, 2)
     XCTAssertEqual(spot.compositeSpots.count, 2)
-    XCTAssertEqual(spot.compositeSpots[0].spot.component.kind, Component.Kind.list.rawValue)
+    XCTAssertEqual(spot.compositeSpots[0].spot.component.kind, ComponentModel.Kind.list.rawValue)
     XCTAssertEqual(spot.compositeSpots[0].spot.items.count, 2)
     XCTAssertEqual(spot.compositeSpots[0].spot.items[0].title, "foo")
     XCTAssertEqual(spot.compositeSpots[0].spot.items[1].title, "bar")
 
-    XCTAssertEqual(spot.compositeSpots[1].spot.component.kind, Component.Kind.list.rawValue)
+    XCTAssertEqual(spot.compositeSpots[1].spot.component.kind, ComponentModel.Kind.list.rawValue)
     XCTAssertEqual(spot.compositeSpots[1].spot.items.count, 2)
     XCTAssertEqual(spot.compositeSpots[1].spot.items[0].title, "baz")
     XCTAssertEqual(spot.compositeSpots[1].spot.items[1].title, "bal")
   }
 
   func testUICreation() {
-    var component = Component(kind: Component.Kind.grid.rawValue, span: 2.0)
+    var component = ComponentModel(kind: ComponentModel.Kind.grid.rawValue, span: 2.0)
 
     component.add(children: [
-      Component(
-        kind: Component.Kind.list.rawValue,
+      ComponentModel(
+        kind: ComponentModel.Kind.list.rawValue,
         span: 1,
         items: [
           Item(title: "foo"),
           Item(title: "bar")
         ]
       ),
-      Component(
-        kind: Component.Kind.list.rawValue,
+      ComponentModel(
+        kind: ComponentModel.Kind.list.rawValue,
         span: 1,
         items: [
           Item(title: "baz"),
@@ -126,14 +126,14 @@ class CompositionTests: XCTestCase {
     XCTAssertNil(composite)
   }
 
-  func testReloadWithComponentsUsingCompositionTriggeringReplaceSpot() {
-    let initialComponents: [Component] = [
-      Component(kind: Component.Kind.grid.rawValue,
+  func testReloadWithComponentModelsUsingCompositionTriggeringReplaceSpot() {
+    let initialComponentModels: [ComponentModel] = [
+      ComponentModel(kind: ComponentModel.Kind.grid.rawValue,
                 span: 2.0,
                 items: [
                   Item(kind: "composite", children:
                     [
-                      Component(kind: Component.Kind.list.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -150,7 +150,7 @@ class CompositionTests: XCTestCase {
                   ),
                   Item(kind: "composite", children:
                     [
-                      Component(kind: Component.Kind.list.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -167,12 +167,12 @@ class CompositionTests: XCTestCase {
                   )
         ]
       ),
-      Component(kind: Component.Kind.grid.rawValue,
+      ComponentModel(kind: ComponentModel.Kind.grid.rawValue,
                 span: 2.0,
                 items: [
                   Item(kind: "composite", children:
                     [
-                      Component(kind: Component.Kind.list.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -189,7 +189,7 @@ class CompositionTests: XCTestCase {
                   ),
                   Item(kind: "composite", children:
                     [
-                      Component(kind: Component.Kind.list.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -208,7 +208,7 @@ class CompositionTests: XCTestCase {
       )
     ]
 
-    let controller = Controller(spots: Parser.parse(initialComponents))
+    let controller = Controller(spots: Parser.parse(initialComponentModels))
     controller.prepareController()
     controller.view.layoutIfNeeded()
 
@@ -260,13 +260,13 @@ class CompositionTests: XCTestCase {
     XCTAssertEqual(spots[1].compositeSpots[1].spot.view.frame.size.height,
                    (itemConfigurable!.preferredViewSize.height + heightOffset) * CGFloat(spots[1].compositeSpots[1].spot.items.count))
 
-    let newComponents: [Component] = [
-      Component(kind: Component.Kind.grid.rawValue,
+    let newComponentModels: [ComponentModel] = [
+      ComponentModel(kind: ComponentModel.Kind.grid.rawValue,
                 span: 1.0,
                 items: [
                   Item(kind: "composite", children:
                     [
-                      Component(kind: Component.Kind.list.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -283,7 +283,7 @@ class CompositionTests: XCTestCase {
                   ),
                   Item(kind: "composite", children:
                     [
-                      Component(kind: Component.Kind.list.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -300,12 +300,12 @@ class CompositionTests: XCTestCase {
                   )
         ]
       ),
-      Component(kind: Component.Kind.grid.rawValue,
+      ComponentModel(kind: ComponentModel.Kind.grid.rawValue,
                 span: 3.0,
                 items: [
                   Item(kind: "composite", children:
                     [
-                      Component(kind: Component.Kind.list.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -322,7 +322,7 @@ class CompositionTests: XCTestCase {
                   ),
                   Item(kind: "composite", children:
                     [
-                      Component(kind: Component.Kind.list.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -344,7 +344,7 @@ class CompositionTests: XCTestCase {
     let expectation = self.expectation(description: "Reload controller with components replaceSpot")
     var reloadTimes: Int = 0
 
-    controller.reloadIfNeeded(newComponents) {
+    controller.reloadIfNeeded(newComponentModels) {
       reloadTimes += 1
 
       let spots = controller.spots
@@ -398,9 +398,9 @@ class CompositionTests: XCTestCase {
     waitForExpectations(timeout: 10.0, handler: nil)
   }
 
-  func testReloadWithComponentsUsingCompositionTriggeringNewSpot() {
-    let initialComponents: [Component] = []
-    let controller = Controller(spots: Parser.parse(initialComponents))
+  func testReloadWithComponentModelsUsingCompositionTriggeringNewSpot() {
+    let initialComponentModels: [ComponentModel] = []
+    let controller = Controller(spots: Parser.parse(initialComponentModels))
     controller.prepareController()
     controller.view.layoutIfNeeded()
 
@@ -411,13 +411,13 @@ class CompositionTests: XCTestCase {
     var composite: Composable?
     var itemConfigurable: ItemConfigurable?
 
-    let newComponents: [Component] = [
-      Component(kind: Component.Kind.grid.rawValue,
+    let newComponentModels: [ComponentModel] = [
+      ComponentModel(kind: ComponentModel.Kind.grid.rawValue,
                 span: 1.0,
                 items: [
                   Item(kind: "composite", children:
                     [
-                      Component(kind: Component.Kind.list.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -434,7 +434,7 @@ class CompositionTests: XCTestCase {
                   ),
                   Item(kind: "composite", children:
                     [
-                      Component(kind: Component.Kind.list.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -451,12 +451,12 @@ class CompositionTests: XCTestCase {
                   )
         ]
       ),
-      Component(kind: Component.Kind.grid.rawValue,
+      ComponentModel(kind: ComponentModel.Kind.grid.rawValue,
                 span: 3.0,
                 items: [
                   Item(kind: "composite", children:
                     [
-                      Component(kind: Component.Kind.list.rawValue, items: [
+                      ComponentModel(kind: ComponentModel.Kind.list.rawValue, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -473,7 +473,7 @@ class CompositionTests: XCTestCase {
                   ),
                   Item(kind: "composite", children:
                     [
-                      Component(kind: Component.Kind.list.rawValue, items: [
+                      ComponentModel(kind: ComponentModel.Kind.list.rawValue, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -495,7 +495,7 @@ class CompositionTests: XCTestCase {
     let expectation = self.expectation(description: "Reload controller with components newSpot")
     var reloadTimes: Int = 0
 
-    controller.reloadIfNeeded(newComponents) {
+    controller.reloadIfNeeded(newComponentModels) {
       reloadTimes += 1
 
       let spots = controller.spots
@@ -548,14 +548,14 @@ class CompositionTests: XCTestCase {
     waitForExpectations(timeout: 10.0, handler: nil)
   }
 
-  func testReloadWithComponentsUsingCompositionTriggeringReloadMore() {
-    let initialComponents: [Component] = [
-      Component(kind: Component.Kind.grid.rawValue,
+  func testReloadWithComponentModelsUsingCompositionTriggeringReloadMore() {
+    let initialComponentModels: [ComponentModel] = [
+      ComponentModel(kind: ComponentModel.Kind.grid.rawValue,
                 span: 2.0,
                 items: [
                   Item(kind: "composite", children:
                     [
-                      Component(kind: Component.Kind.list.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -572,7 +572,7 @@ class CompositionTests: XCTestCase {
                   ),
                   Item(kind: "composite", children:
                     [
-                      Component(kind: Component.Kind.list.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -589,12 +589,12 @@ class CompositionTests: XCTestCase {
                   )
         ]
       ),
-      Component(kind: Component.Kind.grid.rawValue,
+      ComponentModel(kind: ComponentModel.Kind.grid.rawValue,
                 span: 2.0,
                 items: [
                   Item(kind: "composite", children:
                     [
-                      Component(kind: Component.Kind.list.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -611,7 +611,7 @@ class CompositionTests: XCTestCase {
                   ),
                   Item(kind: "composite", children:
                     [
-                      Component(kind: Component.Kind.list.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -630,7 +630,7 @@ class CompositionTests: XCTestCase {
       )
     ]
 
-    let controller = Controller(spots: Parser.parse(initialComponents))
+    let controller = Controller(spots: Parser.parse(initialComponentModels))
     controller.prepareController()
     controller.view.layoutIfNeeded()
 
@@ -682,13 +682,13 @@ class CompositionTests: XCTestCase {
     XCTAssertEqual(spots[1].compositeSpots[1].spot.view.frame.size.height,
                    (itemConfigurable!.preferredViewSize.height + heightOffset) * CGFloat(spots[1].compositeSpots[1].spot.items.count))
 
-    let newComponents: [Component] = [
-      Component(kind: Component.Kind.grid.rawValue,
+    let newComponentModels: [ComponentModel] = [
+      ComponentModel(kind: ComponentModel.Kind.grid.rawValue,
                 span: 2.0,
                 items: [
                   Item(kind: "composite", children:
                     [
-                      Component(kind: Component.Kind.list.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -706,7 +706,7 @@ class CompositionTests: XCTestCase {
                   ),
                   Item(kind: "composite", children:
                     [
-                      Component(kind: Component.Kind.list.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -723,12 +723,12 @@ class CompositionTests: XCTestCase {
                   )
         ]
       ),
-      Component(kind: Component.Kind.grid.rawValue,
+      ComponentModel(kind: ComponentModel.Kind.grid.rawValue,
                 span: 2.0,
                 items: [
                   Item(kind: "composite", children:
                     [
-                      Component(kind: Component.Kind.list.rawValue, items: [
+                      ComponentModel(kind: ComponentModel.Kind.list.rawValue, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -746,7 +746,7 @@ class CompositionTests: XCTestCase {
                   ),
                   Item(kind: "composite", children:
                     [
-                      Component(kind: Component.Kind.list.rawValue, items: [
+                      ComponentModel(kind: ComponentModel.Kind.list.rawValue, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -764,12 +764,12 @@ class CompositionTests: XCTestCase {
                   )
         ]
       ),
-      Component(kind: Component.Kind.grid.rawValue,
+      ComponentModel(kind: ComponentModel.Kind.grid.rawValue,
                 span: 2.0,
                 items: [
                   Item(kind: "composite", children:
                     [
-                      Component(kind: Component.Kind.list.rawValue, items: [
+                      ComponentModel(kind: ComponentModel.Kind.list.rawValue, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -787,7 +787,7 @@ class CompositionTests: XCTestCase {
                   ),
                   Item(kind: "composite", children:
                     [
-                      Component(kind: Component.Kind.list.rawValue, items: [
+                      ComponentModel(kind: ComponentModel.Kind.list.rawValue, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -810,7 +810,7 @@ class CompositionTests: XCTestCase {
     let expectation: XCTestExpectation = self.expectation(description: "Reload controller with components triggering reloadMore")
     var reloadTimes: Int = 0
 
-    controller.reloadIfNeeded(newComponents) {
+    controller.reloadIfNeeded(newComponentModels) {
       reloadTimes += 1
 
       let spots = controller.spots
@@ -867,14 +867,14 @@ class CompositionTests: XCTestCase {
     waitForExpectations(timeout: 10.0, handler: nil)
   }
 
-  func testReloadWithComponentsUsingCompositionTriggeringReloadLess() {
-    let initialComponents: [Component] = [
-      Component(kind: Component.Kind.grid.rawValue,
+  func testReloadWithComponentModelsUsingCompositionTriggeringReloadLess() {
+    let initialComponentModels: [ComponentModel] = [
+      ComponentModel(kind: ComponentModel.Kind.grid.rawValue,
                 span: 2.0,
                 items: [
                   Item(kind: "composite", children:
                     [
-                      Component(kind: Component.Kind.list.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -891,7 +891,7 @@ class CompositionTests: XCTestCase {
                   ),
                   Item(kind: "composite", children:
                     [
-                      Component(kind: Component.Kind.list.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -908,12 +908,12 @@ class CompositionTests: XCTestCase {
                   )
         ]
       ),
-      Component(kind: Component.Kind.grid.rawValue,
+      ComponentModel(kind: ComponentModel.Kind.grid.rawValue,
                 span: 2.0,
                 items: [
                   Item(kind: "composite", children:
                     [
-                      Component(kind: Component.Kind.list.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -930,7 +930,7 @@ class CompositionTests: XCTestCase {
                   ),
                   Item(kind: "composite", children:
                     [
-                      Component(kind: Component.Kind.list.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -949,7 +949,7 @@ class CompositionTests: XCTestCase {
       )
     ]
 
-    let controller = Controller(spots: Parser.parse(initialComponents))
+    let controller = Controller(spots: Parser.parse(initialComponentModels))
     controller.prepareController()
     controller.view.layoutIfNeeded()
 
@@ -1001,13 +1001,13 @@ class CompositionTests: XCTestCase {
     XCTAssertEqual(spots[1].compositeSpots[1].spot.view.frame.size.height,
                    (itemConfigurable!.preferredViewSize.height + heightOffset) * CGFloat(spots[1].compositeSpots[1].spot.items.count))
 
-    let newComponents: [Component] = [
-      Component(kind: Component.Kind.grid.rawValue,
+    let newComponentModels: [ComponentModel] = [
+      ComponentModel(kind: ComponentModel.Kind.grid.rawValue,
                 span: 2.0,
                 items: [
                   Item(kind: "composite", children:
                     [
-                      Component(kind: Component.Kind.list.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -1024,7 +1024,7 @@ class CompositionTests: XCTestCase {
                   ),
                   Item(kind: "composite", children:
                     [
-                      Component(kind: Component.Kind.list.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -1046,7 +1046,7 @@ class CompositionTests: XCTestCase {
     let expectation = self.expectation(description: "Reload controller with components  triggering reloadLess")
     var reloadTimes: Int = 0
 
-    controller.reloadIfNeeded(newComponents) {
+    controller.reloadIfNeeded(newComponentModels) {
       reloadTimes += 1
 
       let spots = controller.spots

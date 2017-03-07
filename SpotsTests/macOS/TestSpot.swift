@@ -13,7 +13,7 @@ class TestSpot: XCTestCase {
 
   func testDefaultValues() {
     let items = [Item(title: "A"), Item(title: "B")]
-    let component = Component(items: items, hybrid: true)
+    let component = ComponentModel(items: items, hybrid: true)
     let spot = Spot(component: component)
 
     spot.setup(CGSize(width: 100, height: 100))
@@ -55,10 +55,10 @@ class TestSpot: XCTestCase {
   }
 
   func testHybridListSpotWithHeaderAndFooter() {
-    let component = Component(
+    let component = ComponentModel(
       header: "Header",
       footer: "Footer",
-      kind: Component.Kind.list.string,
+      kind: ComponentModel.Kind.list.string,
       items: [
         Item(title: "A"),
         Item(title: "B"),
@@ -75,10 +75,10 @@ class TestSpot: XCTestCase {
   }
 
   func testHybridGridSpotWithHeaderAndFooter() {
-    let component = Component(
+    let component = ComponentModel(
       header: "Header",
       footer: "Footer",
-      kind: Component.Kind.grid.string,
+      kind: ComponentModel.Kind.grid.string,
       items: [
         Item(title: "A", kind: "TextView"),
         Item(title: "B", kind: "TextView"),
@@ -96,10 +96,10 @@ class TestSpot: XCTestCase {
   }
 
   func testHybridCarouselSpotWithHeaderAndFooter() {
-    let component = Component(
+    let component = ComponentModel(
       header: "Header",
       footer: "Footer",
-      kind: Component.Kind.carousel.string,
+      kind: ComponentModel.Kind.carousel.string,
       items: [
         Item(title: "A", kind: "TextView"),
         Item(title: "B", kind: "TextView"),

@@ -18,12 +18,12 @@ import Tailor
 /// - new:        Indicates that the component is new
 /// - removed:    Indicates that the component was removed
 /// - none:       Indicates that nothing did change
-public enum ComponentDiff {
+public enum ComponentModelDiff {
   case identifier, title, kind, layout, header, footer, meta, items, new, removed, none
 }
 
-/// The Component struct is used to configure a Spotable object
-public struct Component: Mappable, Equatable, DictionaryConvertible {
+/// The ComponentModel struct is used to configure a Spotable object
+public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
 
   public static var legacyMapping: Bool = false
 
@@ -50,7 +50,7 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
     }
   }
 
-  /// An enum for identifing the Component kind
+  /// An enum for identifing the ComponentModel kind
   public enum Kind: String {
     /// The identifier for CarouselSpot
     case carousel
@@ -107,7 +107,7 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
   public var size: CGSize?
   /// A key-value dictionary for any additional information
   public var meta = [String: Any]()
-  /// Delcares if the Component uses core types or Spot class as it's base class.
+  /// Delcares if the ComponentModel uses core types or Spot class as it's base class.
   public var isHybrid: Bool = false
 
   /// A dictionary representation of the component
@@ -115,11 +115,11 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
     return dictionary()
   }
 
-  /// A method that creates a dictionary representation of the Component
+  /// A method that creates a dictionary representation of the ComponentModel
   ///
   /// - parameter amountOfItems: An optional Int that is used to limit the amount of items that should be transformed into JSON
   ///
-  /// - returns: A dictionary representation of the Component
+  /// - returns: A dictionary representation of the ComponentModel
   public func dictionary(_ amountOfItems: Int? = nil) -> [String : Any] {
     var width: CGFloat = 0
     var height: CGFloat = 0
@@ -137,7 +137,7 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
       JSONItems = items.map { $0.dictionary }
     }
 
-    var JSONComponents: [String : Any] = [
+    var JSONComponentModels: [String : Any] = [
       Key.index.string: index,
       Key.kind.string: kind,
       Key.size.string: [
@@ -148,20 +148,20 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
       ]
 
     if let layout = layout {
-      JSONComponents[Key.layout] = layout.dictionary
+      JSONComponentModels[Key.layout] = layout.dictionary
     }
 
-    JSONComponents[Key.interaction] = interaction.dictionary
-    JSONComponents[Key.identifier.string] = identifier
+    JSONComponentModels[Key.interaction] = interaction.dictionary
+    JSONComponentModels[Key.identifier.string] = identifier
 
-    if !title.isEmpty { JSONComponents[Key.title.string] = title }
-    if !header.isEmpty { JSONComponents[Key.header.string] = header }
-    if !footer.isEmpty { JSONComponents[Key.footer.string] = footer }
-    if !meta.isEmpty { JSONComponents[Key.meta.string] = meta }
+    if !title.isEmpty { JSONComponentModels[Key.title.string] = title }
+    if !header.isEmpty { JSONComponentModels[Key.header.string] = header }
+    if !footer.isEmpty { JSONComponentModels[Key.footer.string] = footer }
+    if !meta.isEmpty { JSONComponentModels[Key.meta.string] = meta }
 
-    JSONComponents[Key.hybrid.string] = isHybrid
+    JSONComponentModels[Key.hybrid.string] = isHybrid
 
-    return JSONComponents
+    return JSONComponentModels
   }
 
   /// Initializes a component with a JSON dictionary and maps the keys of the dictionary to its corresponding values.
@@ -179,7 +179,7 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
     self.meta      <- map.property("meta")
     self.isHybrid  <- map.property("hybrid")
 
-    if Component.legacyMapping {
+    if ComponentModel.legacyMapping {
       self.layout = Layout(map.property("meta") ?? [:])
       self.interaction = Interaction(map.property("meta") ?? [:])
     } else {
@@ -208,7 +208,7 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
   /// - parameter identifier: A optional string
   /// - parameter title: The title for your UI component.
   /// - parameter header: Determines which header item that should be used for the component.
-  /// - parameter kind: The type of Component that should be used.
+  /// - parameter kind: The type of ComponentModel that should be used.
   /// - parameter layout: Configures the layout properties for the component.
   /// - parameter interaction: Configures the interaction properties for the component.
   /// - parameter span: Configures the layout span for the component.
@@ -242,7 +242,7 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
       self.layout = Layout(span: span)
     }
 
-    if Component.legacyMapping {
+    if ComponentModel.legacyMapping {
       self.layout?.configure(withJSON: meta)
     }
   }
@@ -285,10 +285,10 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
 
   ///Compare two components
   ///
-  /// - parameter component: A Component used for comparison
+  /// - parameter component: A ComponentModel used for comparison
   ///
-  /// - returns: A ComponentDiff value, see ComponentDiff for values.
-  public func diff(component: Component) -> ComponentDiff {
+  /// - returns: A ComponentModelDiff value, see ComponentModelDiff for values.
+  public func diff(component: ComponentModel) -> ComponentModelDiff {
     // Determine if the UI component is the same, used when Controller needs to replace the entire UI component
     if kind != component.kind { return .kind }
     // Determine if the unqiue identifier for the component changed
@@ -316,13 +316,13 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
     return .none
   }
 
-  mutating public func add(child: Component) {
+  mutating public func add(child: ComponentModel) {
     var item = Item(kind: "composite")
     item.children = [child.dictionary]
     items.append(item)
   }
 
-  mutating public func add(children: [Component]) {
+  mutating public func add(children: [ComponentModel]) {
     for child in children {
       add(child: child)
     }
@@ -332,7 +332,7 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
     self.layout = layout
   }
 
-  mutating public func configure(with layout: Layout) -> Component {
+  mutating public func configure(with layout: Layout) -> ComponentModel {
     var copy = self
     copy.layout = layout
     return copy
@@ -341,12 +341,12 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
 
 // Compare a collection of view models
 
-/// A collection of Component Equatable implementation
+/// A collection of ComponentModel Equatable implementation
 /// - parameter lhs: Left hand component
 /// - parameter rhs: Right hand component
 ///
-/// - returns: A boolean value, true if both Components are equal
-public func == (lhs: [Component], rhs: [Component]) -> Bool {
+/// - returns: A boolean value, true if both ComponentModels are equal
+public func == (lhs: [ComponentModel], rhs: [ComponentModel]) -> Bool {
   var equal = lhs.count == rhs.count
 
   if !equal { return false }
@@ -361,13 +361,13 @@ public func == (lhs: [Component], rhs: [Component]) -> Bool {
   return equal
 }
 
-/// Compare two collections of Components to see if they are truly equal
+/// Compare two collections of ComponentModels to see if they are truly equal
 ///
 /// - parameter lhs: Left hand component
 /// - parameter rhs: Right hand component
 ///
 /// - returns: A boolean value, true if both collections are equal
-public func === (lhs: [Component], rhs: [Component]) -> Bool {
+public func === (lhs: [ComponentModel], rhs: [ComponentModel]) -> Bool {
   var equal = lhs.count == rhs.count
 
   if !equal { return false }
@@ -387,8 +387,8 @@ public func === (lhs: [Component], rhs: [Component]) -> Bool {
 /// - parameter lhs: Left hand component
 /// - parameter rhs: Right hand component
 ///
-/// - returns: A boolean value, true if both Components are no equal
-public func != (lhs: [Component], rhs: [Component]) -> Bool {
+/// - returns: A boolean value, true if both ComponentModels are no equal
+public func != (lhs: [ComponentModel], rhs: [ComponentModel]) -> Bool {
   return !(lhs == rhs)
 }
 
@@ -397,8 +397,8 @@ public func != (lhs: [Component], rhs: [Component]) -> Bool {
 /// - parameter lhs: Left hand component
 /// - parameter rhs: Right hand component
 ///
-/// - returns: A boolean value, true if both Components are no equal
-public func !== (lhs: [Component], rhs: [Component]) -> Bool {
+/// - returns: A boolean value, true if both ComponentModels are no equal
+public func !== (lhs: [ComponentModel], rhs: [ComponentModel]) -> Bool {
   return !(lhs === rhs)
 }
 
@@ -409,8 +409,8 @@ public func !== (lhs: [Component], rhs: [Component]) -> Bool {
 /// - parameter lhs: Left hand component
 /// - parameter rhs: Right hand component
 ///
-/// - returns: A boolean value, true if both Components are no equal
-public func == (lhs: Component, rhs: Component) -> Bool {
+/// - returns: A boolean value, true if both ComponentModels are no equal
+public func == (lhs: ComponentModel, rhs: ComponentModel) -> Bool {
   guard lhs.identifier == rhs.identifier else { return false }
 
   return lhs.title == rhs.title &&
@@ -426,12 +426,12 @@ public func == (lhs: Component, rhs: Component) -> Bool {
 /// - parameter lhs: Left hand component
 /// - parameter rhs: Right hand component
 ///
-/// - returns: A boolean value, true if both Components are no equal
-public func === (lhs: Component, rhs: Component) -> Bool {
+/// - returns: A boolean value, true if both ComponentModels are no equal
+public func === (lhs: ComponentModel, rhs: ComponentModel) -> Bool {
   guard lhs.identifier == rhs.identifier else { return false }
 
-  let lhsChildren = lhs.items.flatMap { $0.children.flatMap({ Component($0) }) }
-  let rhsChildren = rhs.items.flatMap { $0.children.flatMap({ Component($0) }) }
+  let lhsChildren = lhs.items.flatMap { $0.children.flatMap({ ComponentModel($0) }) }
+  let rhsChildren = rhs.items.flatMap { $0.children.flatMap({ ComponentModel($0) }) }
 
   return lhs.title == rhs.title &&
     lhs.kind == rhs.kind &&
@@ -448,8 +448,8 @@ public func === (lhs: Component, rhs: Component) -> Bool {
 /// - parameter lhs: Left hand component
 /// - parameter rhs: Right hand component
 ///
-/// - returns: A boolean value, true if both Components are no equal
-public func != (lhs: Component, rhs: Component) -> Bool {
+/// - returns: A boolean value, true if both ComponentModels are no equal
+public func != (lhs: ComponentModel, rhs: ComponentModel) -> Bool {
   return !(lhs == rhs)
 }
 
@@ -458,7 +458,7 @@ public func != (lhs: Component, rhs: Component) -> Bool {
 /// - parameter lhs: Left hand component
 /// - parameter rhs: Right hand component
 ///
-/// - returns: A boolean value, true if both Components are no equal
-public func !== (lhs: Component, rhs: Component) -> Bool {
+/// - returns: A boolean value, true if both ComponentModels are no equal
+public func !== (lhs: ComponentModel, rhs: ComponentModel) -> Bool {
   return !(lhs === rhs)
 }

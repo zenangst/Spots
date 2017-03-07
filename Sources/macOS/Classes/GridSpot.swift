@@ -91,7 +91,7 @@ open class GridSpot: NSObject, Gridable {
 
   open weak var delegate: SpotsDelegate?
 
-  open var component: Component
+  open var component: ComponentModel
   open var configure: ((ItemConfigurable) -> Void)? {
     didSet {
       guard let configure = configure else { return }
@@ -144,7 +144,7 @@ open class GridSpot: NSObject, Gridable {
 
    - parameter component: A component struct
    */
-  public required init(component: Component) {
+  public required init(component: ComponentModel) {
     self.component = component
 
     if self.component.layout == nil {
@@ -160,7 +160,7 @@ open class GridSpot: NSObject, Gridable {
     self.spotDelegate = Delegate(spot: self)
 
     if component.kind.isEmpty {
-      self.component.kind = Component.Kind.grid.string
+      self.component.kind = ComponentModel.Kind.grid.string
     }
 
     registerDefault(view: GridSpotCell.self)
@@ -184,7 +184,7 @@ open class GridSpot: NSObject, Gridable {
   public convenience init(cacheKey: String) {
     let stateCache = StateCache(key: cacheKey)
 
-    self.init(component: Component(stateCache.load()))
+    self.init(component: ComponentModel(stateCache.load()))
     self.stateCache = stateCache
   }
 
@@ -201,9 +201,9 @@ open class GridSpot: NSObject, Gridable {
 
    - parameter component: The component for the GridSpot
 
-   - returns: A NSCollectionView layout determined by the Component
+   - returns: A NSCollectionView layout determined by the ComponentModel
    */
-  fileprivate static func setupLayout(_ component: Component) -> NSCollectionViewLayout {
+  fileprivate static func setupLayout(_ component: ComponentModel) -> NSCollectionViewLayout {
     let layout: NSCollectionViewLayout
 
     switch LayoutType(rawValue: component.meta(Key.layout, Default.defaultLayout)) ?? LayoutType.flow {
