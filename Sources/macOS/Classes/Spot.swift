@@ -327,7 +327,17 @@ public class Spot: NSObject, Spotable {
   }
 
   fileprivate func setupHorizontalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
+    var newCollectionViewHeight: CGFloat = 0.0
 
+    newCollectionViewHeight <- component.items.sorted(by: {
+      $0.size.height > $1.size.height
+    }).first?.size.height
+
+    scrollView.scrollingEnabled = (component.items.count > 1)
+    scrollView.hasHorizontalScroller = (component.items.count > 1)
+
+    collectionView.frame.size.height = newCollectionViewHeight
+    CarouselSpot.configure?(collectionView)
   }
 
   fileprivate func setupVerticalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
