@@ -124,6 +124,13 @@ public class Spot: NSObject, Spotable {
     }
   }
 
+  public convenience init(cacheKey: String) {
+    let stateCache = StateCache(key: cacheKey)
+
+    self.init(component: Component(stateCache.load()))
+    self.stateCache = stateCache
+  }
+
   deinit {
     spotDataSource = nil
     spotDelegate = nil
