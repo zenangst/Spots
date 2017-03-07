@@ -282,28 +282,8 @@ public class Spot: NSObject, Spotable {
 
   }
 
-  fileprivate static func setupLayout(_ component: Component) -> NSCollectionViewLayout {
-    let layout: NSCollectionViewLayout
-
-    switch LayoutType(rawValue: component.meta(Key.layout, Default.defaultLayout)) ?? LayoutType.flow {
-    case .grid:
-      let gridLayout = NSCollectionViewGridLayout()
-
-      gridLayout.maximumItemSize = CGSize(width: component.meta(Key.gridLayoutMaximumItemWidth, Default.gridLayoutMaximumItemWidth),
-                                          height: component.meta(Key.gridLayoutMaximumItemHeight, Default.gridLayoutMaximumItemHeight))
-      gridLayout.minimumItemSize = CGSize(width: component.meta(Key.gridLayoutMinimumItemWidth, Default.gridLayoutMinimumItemWidth),
-                                          height: component.meta(Key.gridLayoutMinimumItemHeight, Default.gridLayoutMinimumItemHeight))
-      layout = gridLayout
-    case .left:
-      let leftLayout = CollectionViewLeftLayout()
-      layout = leftLayout
-    default:
-      let flowLayout = GridableLayout()
-      flowLayout.scrollDirection = .vertical
-      layout = flowLayout
     }
 
-    return layout
   }
 
   public func register() {
