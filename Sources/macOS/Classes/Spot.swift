@@ -176,6 +176,9 @@ public class Spot: NSObject, Spotable {
 
     scrollView.frame.size = size
 
+    setupHeader(kind: component.header)
+    setupFooter(kind: component.footer)
+
     if let tableView = self.tableView {
       documentView.addSubview(tableView)
       setupTableView(tableView, with: size)
@@ -196,6 +199,7 @@ public class Spot: NSObject, Spotable {
 
     view.layoutSubviews()
   }
+
 
   fileprivate func setupHeader(kind: String) {
     guard !component.header.isEmpty, headerView == nil else {
