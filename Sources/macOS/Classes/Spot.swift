@@ -18,6 +18,9 @@ public class Spot: NSObject, Spotable {
   var headerView: View?
   var footerView: View?
 
+  var headerHeight = CGFloat(0.0)
+  var footerHeight = CGFloat(0.0)
+
   public var component: Component
   public var componentKind: Component.Kind = .list
   public var compositeSpots: [CompositeSpot] = []
