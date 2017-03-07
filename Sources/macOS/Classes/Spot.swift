@@ -171,7 +171,19 @@ public class Spot: NSObject, Spotable {
   }
 
   public func setup(_ size: CGSize) {
+    type(of: self).configure?(view)
 
+    scrollView.frame.size = size
+
+    if let tableView = self.tableView {
+      documentView.addSubview(tableView)
+      setupTableView(tableView, with: size)
+    } else if let collectionView = self.collectionView {
+      documentView.addSubview(collectionView)
+      setupCollectionView(collectionView, with: size)
+    }
+
+    layout(size)
   }
 
   public func layout(_ size: CGSize) {
