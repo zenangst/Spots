@@ -15,6 +15,9 @@ public class Spot: NSObject, Spotable {
   weak public var focusDelegate: SpotsFocusDelegate?
   weak public var delegate: SpotsDelegate?
 
+  var headerView: View?
+  var footerView: View?
+
   public var component: Component
   public var componentKind: Component.Kind = .list
   public var compositeSpots: [CompositeSpot] = []
