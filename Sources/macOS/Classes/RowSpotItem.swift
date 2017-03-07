@@ -6,7 +6,7 @@ open class FlippedView: NSView {
   }
 }
 
-open class RowSpotItem: NSCollectionViewItem, ItemConfigurable {
+open class RowSpotItem: NSCollectionViewItem, ContentConfigurable {
 
   open override var isSelected: Bool {
     didSet {

@@ -34,7 +34,7 @@ open class ListSpot: NSObject, Listable {
   public var compositeSpots: [CompositeSpot] = []
 
   /// A configuration closure
-  open var configure: ((ItemConfigurable) -> Void)? {
+  open var configure: ((ContentConfigurable) -> Void)? {
     didSet {
       configureClosureDidChange()
     }

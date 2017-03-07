@@ -1,7 +1,7 @@
 import UIKit
 
 /// A default cell for the RowSpot
-public class RowSpotCell: UICollectionViewCell, ItemConfigurable {
+public class RowSpotCell: UICollectionViewCell, ContentConfigurable {
 
   /// The preferred view size for the view
   public var preferredViewSize = CGSize(width: 88, height: 44)

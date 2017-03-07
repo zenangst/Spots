@@ -1,6 +1,6 @@
 import Cocoa
 
-class ListSpotCell: NSTableRowView, ItemConfigurable {
+class ListSpotCell: NSTableRowView, ContentConfigurable {
 
   var preferredViewSize: CGSize = CGSize(width: 0, height: 120)
 

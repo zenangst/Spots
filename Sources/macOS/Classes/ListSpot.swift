@@ -50,12 +50,12 @@ open class ListSpot: NSObject, Listable {
 
   /// A component struct used as configuration and data source for the ListSpot
   open var component: ComponentModel
-  open var configure: ((ItemConfigurable) -> Void)? {
+  open var configure: ((ContentConfigurable) -> Void)? {
     didSet {
       guard let configure = configure else { return }
       let range = tableView.rows(in: scrollView.contentView.visibleRect)
       (range.location..<range.length).forEach { i in
-        if let view = tableView.rowView(atRow: i, makeIfNecessary: false) as? ItemConfigurable {
+        if let view = tableView.rowView(atRow: i, makeIfNecessary: false) as? ContentConfigurable {
           configure(view)
         }
       }

@@ -38,7 +38,7 @@ public extension Spotable where Self : Viewable {
       if case let Registry.Item.classType(classType)? = T.views.storage[item.kind], T.views.storage.keys.contains(item.kind) {
         let view = classType.init()
 
-        if let itemConfigurable = view as? ItemConfigurable {
+        if let itemConfigurable = view as? ContentConfigurable {
           itemConfigurable.configure(&component.items[index])
           view.frame.size = itemConfigurable.preferredViewSize
         }
@@ -73,8 +73,8 @@ public extension Spotable where Self : Viewable {
     guard case let Registry.Item.classType(classType)? = dynamic.views.storage[item.kind], dynamic.views.storage.keys.contains(item.kind) else { return }
 
     let view = classType.init()
-    (view as? ItemConfigurable)?.configure(&component.items[index])
-    if let size = (view as? ItemConfigurable)?.preferredViewSize {
+    (view as? ContentConfigurable)?.configure(&component.items[index])
+    if let size = (view as? ContentConfigurable)?.preferredViewSize {
       view.frame.size = size
     }
 
@@ -94,8 +94,8 @@ public extension Spotable where Self : Viewable {
       guard case let Registry.Item.classType(classType)? = dynamic.views.storage[item.kind], dynamic.views.storage.keys.contains(item.kind) else { return }
 
       let view = classType.init()
-      (view as? ItemConfigurable)?.configure(&component.items[index])
-      if let size = (view as? ItemConfigurable)?.preferredViewSize {
+      (view as? ContentConfigurable)?.configure(&component.items[index])
+      if let size = (view as? ContentConfigurable)?.preferredViewSize {
         view.frame.size = size
       }
 
@@ -116,8 +116,8 @@ public extension Spotable where Self : Viewable {
     guard case let Registry.Item.classType(classType)? = dynamic.views.storage[item.kind], dynamic.views.storage.keys.contains(item.kind) else { return }
 
     let view = classType.init()
-    (view as? ItemConfigurable)?.configure(&component.items[index])
-    if let size = (view as? ItemConfigurable)?.preferredViewSize {
+    (view as? ContentConfigurable)?.configure(&component.items[index])
+    if let size = (view as? ContentConfigurable)?.preferredViewSize {
       view.frame.size = size
     }
     #if os(iOS)
@@ -140,8 +140,8 @@ public extension Spotable where Self : Viewable {
       guard case let Registry.Item.classType(classType)? = dynamic.views.storage[item.kind], dynamic.views.storage.keys.contains(item.kind) else { return }
 
       let view = classType.init()
-      (view as? ItemConfigurable)?.configure(&component.items[index])
-      if let size = (view as? ItemConfigurable)?.preferredViewSize {
+      (view as? ContentConfigurable)?.configure(&component.items[index])
+      if let size = (view as? ContentConfigurable)?.preferredViewSize {
         view.frame.size = size
       }
       #if os(iOS)
@@ -158,7 +158,7 @@ public extension Spotable where Self : Viewable {
   /// - parameter animation:  A Animation that is used when performing the mutation (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue when the view model has been removed.
   func update(_ item: Item, index: Int, withAnimation animation: Animation = .none, completion: Completion = nil) {
-    guard let view = scrollView.subviews[index] as? ItemConfigurable else { return }
+    guard let view = scrollView.subviews[index] as? ContentConfigurable else { return }
 
     component.items[index] = item
     view.configure(&component.items[index])

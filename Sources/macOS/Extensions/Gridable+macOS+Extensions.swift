@@ -131,7 +131,7 @@ extension Gridable {
       : item.kind
 
     guard let (_, collectionItem) = Self.grids.make(kind),
-      let view = collectionItem as? ItemConfigurable else { return }
+      let view = collectionItem as? ContentConfigurable else { return }
 
     view.configure(&item)
 

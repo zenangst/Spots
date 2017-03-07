@@ -26,7 +26,7 @@ open class GridSpot: NSObject, Gridable {
   open var component: ComponentModel
 
   /// A configuration closure
-  open var configure: ((ItemConfigurable) -> Void)? {
+  open var configure: ((ContentConfigurable) -> Void)? {
     didSet {
       configureClosureDidChange()
     }

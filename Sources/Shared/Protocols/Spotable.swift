@@ -30,8 +30,8 @@ public protocol Spotable: class {
   var computedHeight: CGFloat { get }
   /// The component of a Spotable object
   var component: ComponentModel { get set }
-  /// A configuration closure for a ItemConfigurable object
-  var configure: ((ItemConfigurable) -> Void)? { get set }
+  /// A configuration closure for a ContentConfigurable object
+  var configure: ((ContentConfigurable) -> Void)? { get set }
   /// A cache for a Spotable object
   var stateCache: StateCache? { get }
   /// Indicator to calculate the height based on content

@@ -1,6 +1,6 @@
 import Cocoa
 
-open class GridSpotItem: NSCollectionViewItem, ItemConfigurable {
+open class GridSpotItem: NSCollectionViewItem, ContentConfigurable {
 
   open override var isSelected: Bool {
     didSet {

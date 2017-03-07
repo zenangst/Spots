@@ -21,7 +21,7 @@ public class Spot: NSObject, Spotable {
   public var component: ComponentModel
   public var componentKind: ComponentModel.Kind = .list
   public var compositeSpots: [CompositeSpot] = []
-  public var configure: ((ItemConfigurable) -> Void)?
+  public var configure: ((ContentConfigurable) -> Void)?
   public var spotDelegate: Delegate?
   public var spotDataSource: DataSource?
   public var stateCache: StateCache?

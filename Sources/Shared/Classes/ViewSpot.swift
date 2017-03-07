@@ -32,7 +32,7 @@ open class ViewSpot: NSObject, Spotable, Viewable {
   open weak var delegate: SpotsDelegate?
   open var component: ComponentModel
   open var index = 0
-  open var configure: ((ItemConfigurable) -> Void)?
+  open var configure: ((ContentConfigurable) -> Void)?
 
   /// A SpotsFocusDelegate object
   weak public var focusDelegate: SpotsFocusDelegate?

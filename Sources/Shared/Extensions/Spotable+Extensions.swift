@@ -68,10 +68,10 @@ public extension Spotable {
 
     userInterface?.visibleViews.forEach { view in
       switch view {
-      case let view as ItemConfigurable:
+      case let view as ContentConfigurable:
         configure(view)
       case let view as Wrappable:
-        if let wrappedView = view.wrappedView as? ItemConfigurable {
+        if let wrappedView = view.wrappedView as? ContentConfigurable {
           configure(wrappedView)
         }
       default:
@@ -289,7 +289,7 @@ public extension Spotable {
     switch view {
     case let view as Composable:
       prepare(composable: view, item: &item)
-    case let view as ItemConfigurable:
+    case let view as ContentConfigurable:
       view.configure(&item)
       setFallbackViewSize(to: &item, with: view)
     default:
@@ -305,7 +305,7 @@ public extension Spotable {
     // Set initial size for view
     view.frame.size.width = view.frame.size.width
 
-    if let itemConfigurable = view as? ItemConfigurable, view.frame.size.height == 0.0 {
+    if let itemConfigurable = view as? ContentConfigurable, view.frame.size.height == 0.0 {
       view.frame.size = itemConfigurable.preferredViewSize
     }
 
@@ -372,7 +372,7 @@ public extension Spotable {
   /// - Parameters:
   ///   - item: The item struct that is being configured.
   ///   - view: The view used for fallback size for the item.
-  private func setFallbackViewSize(to item: inout Item, with view: ItemConfigurable) {
+  private func setFallbackViewSize(to item: inout Item, with view: ContentConfigurable) {
     let hasExplicitHeight: Bool = item.size.height == 0.0
 
     if hasExplicitHeight {

@@ -87,7 +87,7 @@ public struct Registry {
       #if !os(OSX)
         let cacheIdentifier: String = "\(registryType.rawValue)-\(identifier)"
         if let view = cache.object(forKey: cacheIdentifier as NSString) {
-          (view as? ItemConfigurable)?.prepareForReuse()
+          (view as? ContentConfigurable)?.prepareForReuse()
           return (type: registryType, view: view)
         }
       #endif

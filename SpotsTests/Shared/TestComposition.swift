@@ -99,7 +99,7 @@ class CompositionTests: XCTestCase {
     spot.view.layoutSubviews()
 
     var composite: Composable?
-    var itemConfigurable: ItemConfigurable?
+    var itemConfigurable: ContentConfigurable?
 
     composite = spot.ui(at: 0)
     itemConfigurable = spot.compositeSpots[0].spot.ui(at: 0)
@@ -217,7 +217,7 @@ class CompositionTests: XCTestCase {
     XCTAssertEqual(spots.count, 2)
 
     var composite: Composable?
-    var itemConfigurable: ItemConfigurable?
+    var itemConfigurable: ContentConfigurable?
 
     composite = spots[0].ui(at: 0)
     itemConfigurable = spots[0].compositeSpots[0].spot.ui(at: 0)
@@ -409,7 +409,7 @@ class CompositionTests: XCTestCase {
     XCTAssertEqual(spots.count, 0)
 
     var composite: Composable?
-    var itemConfigurable: ItemConfigurable?
+    var itemConfigurable: ContentConfigurable?
 
     let newComponentModels: [ComponentModel] = [
       ComponentModel(kind: ComponentModel.Kind.grid.rawValue,
@@ -639,7 +639,7 @@ class CompositionTests: XCTestCase {
     XCTAssertEqual(spots.count, 2)
 
     var composite: Composable?
-    var itemConfigurable: ItemConfigurable?
+    var itemConfigurable: ContentConfigurable?
 
     composite = spots[0].ui(at: 0)
     itemConfigurable = spots[0].compositeSpots[0].spot.ui(at: 0)
@@ -958,7 +958,7 @@ class CompositionTests: XCTestCase {
     XCTAssertEqual(spots.count, 2)
 
     var composite: Composable?
-    var itemConfigurable: ItemConfigurable?
+    var itemConfigurable: ContentConfigurable?
 
     composite = spots[0].ui(at: 0)
     itemConfigurable = spots[0].compositeSpots[0].spot.ui(at: 0)

@@ -7,7 +7,7 @@ extension DataSource {
       let wrappedView = customView {
       view.configure(with: wrappedView)
 
-      if let configurableView = customView as? ItemConfigurable {
+      if let configurableView = customView as? ContentConfigurable {
         configurableView.configure(&spot.component.items[index])
 
         if spot.component.items[index].size.height == 0.0 {
@@ -26,7 +26,7 @@ extension DataSource {
     view.configure(&spot.component.items[index], compositeSpots: compositeSpots)
   }
 
-  func prepareItemConfigurableView(_ view: ItemConfigurable, atIndex index: Int, in spot: Spotable) {
+  func prepareContentConfigurableView(_ view: ContentConfigurable, atIndex index: Int, in spot: Spotable) {
     view.configure(&spot.component.items[index])
 
     if spot.component.items[index].size.height == 0.0 {
@@ -132,8 +132,8 @@ extension DataSource: UICollectionViewDataSource {
       prepareWrappableView(cell, atIndex: indexPath.item, in: spot, parentFrame: cell.bounds)
     case let cell as Composable:
       prepareComposableView(cell, atIndex: indexPath.item, in: spot)
-    case let cell as ItemConfigurable:
-      prepareItemConfigurableView(cell, atIndex: indexPath.item, in: spot)
+    case let cell as ContentConfigurable:
+      prepareContentConfigurableView(cell, atIndex: indexPath.item, in: spot)
     default:
       break
     }
@@ -182,8 +182,8 @@ extension DataSource: UITableViewDataSource {
       prepareWrappableView(cell, atIndex: indexPath.item, in: spot, parentFrame: cell.bounds)
     case let cell as Composable:
       prepareComposableView(cell, atIndex: indexPath.row, in: spot)
-    case let cell as ItemConfigurable:
-      prepareItemConfigurableView(cell, atIndex: indexPath.item, in: spot)
+    case let cell as ContentConfigurable:
+      prepareContentConfigurableView(cell, atIndex: indexPath.item, in: spot)
     default:
       break
     }

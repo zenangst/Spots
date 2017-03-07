@@ -1,7 +1,7 @@
 import UIKit
 
 /// A default cell for the GridSpot
-public class GridSpotCell: UICollectionViewCell, ItemConfigurable {
+public class GridSpotCell: UICollectionViewCell, ContentConfigurable {
 
   /// The preferred view size for the view
   public var preferredViewSize = CGSize(width: 88, height: 88)
