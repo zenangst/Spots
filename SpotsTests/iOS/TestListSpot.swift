@@ -7,7 +7,7 @@ class ListComponentTests: XCTestCase {
   var cachedSpot: ListComponent!
 
   override func setUp() {
-    cachedSpot = ListComponent(cacheKey: "cached-list-spot")
+    cachedSpot = ListComponent(cacheKey: "cached-list-component")
     XCTAssertNotNil(cachedSpot.stateCache)
     cachedSpot.stateCache?.clear()
   }
@@ -31,19 +31,19 @@ class ListComponentTests: XCTestCase {
 
   func testSafelyResolveKind() {
     let model = ComponentModel(title: "ListComponent", kind: "custom-list", span: 1.0, items: [Item(title: "foo", kind: "custom-item-kind")])
-    let listSpot = ListComponent(model: model)
+    let listComponent = ListComponent(model: model)
     let indexPath = IndexPath(row: 0, section: 0)
 
-    XCTAssertEqual(listSpot.identifier(at: indexPath), ListComponent.views.defaultIdentifier)
+    XCTAssertEqual(listComponent.identifier(at: indexPath), ListComponent.views.defaultIdentifier)
 
     ListComponent.views.defaultItem = Registry.Item.classType(ListComponentCell.self)
-    XCTAssertEqual(listSpot.identifier(at: indexPath), ListComponent.views.defaultIdentifier)
+    XCTAssertEqual(listComponent.identifier(at: indexPath), ListComponent.views.defaultIdentifier)
 
     ListComponent.views.defaultItem = Registry.Item.classType(ListComponentCell.self)
-    XCTAssertEqual(listSpot.identifier(at: indexPath), ListComponent.views.defaultIdentifier)
+    XCTAssertEqual(listComponent.identifier(at: indexPath), ListComponent.views.defaultIdentifier)
 
     ListComponent.views["custom-item-kind"] = Registry.Item.classType(ListComponentCell.self)
-    XCTAssertEqual(listSpot.identifier(at: indexPath), "custom-item-kind")
+    XCTAssertEqual(listComponent.identifier(at: indexPath), "custom-item-kind")
 
     ListComponent.views.storage.removeAll()
   }

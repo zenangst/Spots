@@ -9,7 +9,7 @@ class GridComponentTests: XCTestCase {
 
   override func setUp() {
     component = GridComponent(model: ComponentModel(span: 1.0))
-    cachedComponent = GridComponent(cacheKey: "cached-grid-spot")
+    cachedComponent = GridComponent(cacheKey: "cached-grid-component")
     XCTAssertNotNil(cachedComponent.stateCache)
     cachedComponent.stateCache?.clear()
   }

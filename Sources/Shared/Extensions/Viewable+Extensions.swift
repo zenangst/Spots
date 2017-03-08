@@ -31,7 +31,7 @@ public extension CoreComponent where Self : Viewable {
     prepareComponent(self)
   }
 
-  fileprivate func prepareComponent<T: Viewable>(_ spot: T) {
+  fileprivate func prepareComponent<T: Viewable>(_ component: T) {
     if model.kind.isEmpty { model.kind = "view" }
 
     model.items.forEach { (item: Item) in
@@ -224,7 +224,7 @@ public extension CoreComponent where Self : Viewable {
     }
   }
 
-  /// Reloads a spot only if it changes
+  /// Reloads a component only if it changes
   ///
   /// - parameter items:      A collection of Items
   /// - parameter animation:  The animation that should be used (only works for Listable objects)

@@ -6,7 +6,7 @@ public struct Parser {
   /// - parameter json: A JSON dictionary of components and items.
   /// - parameter key: The key that should be used for parsing JSON, defaults to `components`.
   ///
-  /// - returns: A collection of spotable objects
+  /// - returns: A collection of components
   public static func parse(_ json: [String : Any], key: String = "components") -> [CoreComponent] {
     var components: [ComponentModel] = parse(json, key: key)
 
@@ -55,7 +55,7 @@ public struct Parser {
   ///
   /// - parameter json: A JSON dictionary of components and items.
   ///
-  /// - returns: A collection of spotable objects
+  /// - returns: A collection of components
   public static func parse(_ json: [[String : Any]]?) -> [CoreComponent] {
     guard let json = json else { return [] }
 

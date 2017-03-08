@@ -62,8 +62,8 @@ open class CarouselComponent: NSObject, Gridable, ComponentHorizontallyScrollabl
   open lazy var backgroundView = UIView()
 
   public var userInterface: UserInterface?
-  var spotDataSource: DataSource?
-  var spotDelegate: Delegate?
+  var componentDataSource: DataSource?
+  var componentDelegate: Delegate?
 
   /// Initialize an instantiate of CarouselComponent
   ///
@@ -71,7 +71,7 @@ open class CarouselComponent: NSObject, Gridable, ComponentHorizontallyScrollabl
   /// - parameter collectionView: The collection view that the carousel should use for rendering
   /// - parameter layout: The object that the carousel should use for item layout
   ///
-  /// - returns: An initialized carousel spot.
+  /// - returns: An initialized carousel component.
   ///
   /// In case you want to use a default collection view & layout, use `init(component:)`.
   public init(model: ComponentModel, collectionView: UICollectionView, layout: CollectionLayout) {
@@ -94,10 +94,10 @@ open class CarouselComponent: NSObject, Gridable, ComponentHorizontallyScrollabl
 
     super.init()
     self.userInterface = collectionView
-    self.model.layout?.configure(spot: self)
+    self.model.layout?.configure(component: self)
     self.dynamicSpan = self.model.layout?.dynamicSpan ?? false
-    self.spotDataSource = DataSource(component: self)
-    self.spotDelegate = Delegate(component: self)
+    self.componentDataSource = DataSource(component: self)
+    self.componentDelegate = Delegate(component: self)
 
     if model.kind.isEmpty {
       self.model.kind = ComponentModel.Kind.carousel.string
@@ -130,7 +130,7 @@ open class CarouselComponent: NSObject, Gridable, ComponentHorizontallyScrollabl
   /// - parameter itemSpacing: The item spacing used in the flow layout.
   /// - parameter lineSpacing: The line spacing used in the flow layout.
   ///
-  /// - returns: An initialized carousel spot with configured layout.
+  /// - returns: An initialized carousel component with configured layout.
   public convenience init(_ model: ComponentModel, top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0, itemSpacing: CGFloat = 0, lineSpacing: CGFloat = 0) {
     self.init(model: model)
 
@@ -143,7 +143,7 @@ open class CarouselComponent: NSObject, Gridable, ComponentHorizontallyScrollabl
   ///
   /// - parameter cacheKey: A unique cache key for the CoreComponent object.
   ///
-  /// - returns: An initialized carousel spot.
+  /// - returns: An initialized carousel component.
   public convenience init(cacheKey: String) {
     let stateCache = StateCache(key: cacheKey)
     self.init(model: ComponentModel(stateCache.load()))
@@ -151,16 +151,16 @@ open class CarouselComponent: NSObject, Gridable, ComponentHorizontallyScrollabl
   }
 
   deinit {
-    spotDataSource = nil
-    spotDelegate = nil
+    componentDataSource = nil
+    componentDelegate = nil
     userInterface = nil
   }
 
   /// Configure collection view with data source, delegate and background view
   public func configureCollectionView() {
     register()
-    collectionView.dataSource = spotDataSource
-    collectionView.delegate = spotDelegate
+    collectionView.dataSource = componentDataSource
+    collectionView.delegate = componentDelegate
     collectionView.backgroundView = backgroundView
     #if os(iOS)
       collectionView.isPagingEnabled = model.interaction.paginate == .page

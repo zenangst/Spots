@@ -62,8 +62,8 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
     case row
     /// The identifier for ViewComponent
     case view
-    /// The identifier for Spot
-    case spot
+    /// The identifier for Component
+    case component
 
     /// The lowercase raw value of the case
     public var string: String {
@@ -90,7 +90,7 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
   public var index: Int = 0
   /// The title for the component
   public var title: String = ""
-  /// Determines which spotable component that should be used
+  /// Determines which component that should be used.
   /// Default kinds are: list, grid and carousel
   public var kind: String = ""
   /// The header identifier

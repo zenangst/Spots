@@ -5,8 +5,8 @@ import XCTest
 class CoreComponentTests: XCTestCase {
 
   func testAppendingMultipleItemsToComponent() {
-    let listSpot = ListComponent(model: ComponentModel(title: "ComponentModel", span: 1.0))
-    listSpot.setup(CGSize(width: 100, height: 100))
+    let listComponent = ListComponent(model: ComponentModel(title: "ComponentModel", span: 1.0))
+    listComponent.setup(CGSize(width: 100, height: 100))
     var items: [Item] = []
 
     for i in 0..<10 {
@@ -15,14 +15,14 @@ class CoreComponentTests: XCTestCase {
 
     measure {
       for _ in 0..<5 {
-        listSpot.append(items)
-        listSpot.view.layoutSubviews()
+        listComponent.append(items)
+        listComponent.view.layoutSubviews()
       }
     }
 
     let expectation = self.expectation(description: "Wait until done")
     Dispatch.after(seconds: 1.0) {
-      XCTAssertEqual(listSpot.items.count, 500)
+      XCTAssertEqual(listComponent.items.count, 500)
       expectation.fulfill()
     }
     waitForExpectations(timeout: 10.0, handler: nil)
@@ -39,7 +39,7 @@ class CoreComponentTests: XCTestCase {
 
     measure {
       for _ in 0..<5 {
-        controller.append(items, spotIndex: 0, withAnimation: .automatic, completion: nil)
+        controller.append(items, componentIndex: 0, withAnimation: .automatic, completion: nil)
         controller.components.forEach { $0.view.layoutSubviews() }
       }
     }

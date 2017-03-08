@@ -51,14 +51,14 @@ open class GridComponent: NSObject, Gridable {
     }()
 
   public var userInterface: UserInterface?
-  var spotDataSource: DataSource?
-  var spotDelegate: Delegate?
+  var componentDataSource: DataSource?
+  var componentDelegate: Delegate?
 
   /// A required initializer to instantiate a GridComponent with a model.
   ///
   /// - parameter component: A model.
   ///
-  /// - returns: An initialized grid spot with model.
+  /// - returns: An initialized grid component with model.
   public required init(model: ComponentModel) {
     self.model = model
 
@@ -68,9 +68,9 @@ open class GridComponent: NSObject, Gridable {
 
     super.init()
     self.userInterface = collectionView
-    self.model.layout?.configure(spot: self)
-    self.spotDataSource = DataSource(component: self)
-    self.spotDelegate = Delegate(component: self)
+    self.model.layout?.configure(component: self)
+    self.componentDataSource = DataSource(component: self)
+    self.componentDelegate = Delegate(component: self)
 
     if model.kind.isEmpty {
       self.model.kind = ComponentModel.Kind.grid.string
@@ -86,12 +86,12 @@ open class GridComponent: NSObject, Gridable {
     }
   }
 
-  /// A convenience init for initializing a Gridspot with a title and a kind.
+  /// A convenience init for initializing a gridComponent with a title and a kind.
   ///
   ///  - parameter title: A string that is used as a title for the GridComponent.
   ///  - parameter kind:  An identifier to determine which kind should be set on the ComponentModel.
   ///
-  /// - returns: An initialized grid spot with computed component using title and kind.
+  /// - returns: An initialized grid component with computed component using title and kind.
   public convenience init(title: String = "", kind: String? = nil) {
     self.init(model: ComponentModel(title: title, kind: kind ?? "", span: 0.0))
   }
@@ -100,7 +100,7 @@ open class GridComponent: NSObject, Gridable {
   ///
   /// - parameter cacheKey: A unique cache key for the CoreComponent object
   ///
-  /// - returns: An initialized grid spot.
+  /// - returns: An initialized grid component.
   public convenience init(cacheKey: String) {
     let stateCache = StateCache(key: cacheKey)
 
@@ -111,13 +111,13 @@ open class GridComponent: NSObject, Gridable {
   /// Configure collection view with data source, delegate and background view
   public func configureCollectionView() {
     register()
-    collectionView.dataSource = spotDataSource
-    collectionView.delegate = spotDelegate
+    collectionView.dataSource = componentDataSource
+    collectionView.delegate = componentDelegate
   }
 
   deinit {
-    spotDataSource = nil
-    spotDelegate = nil
+    componentDataSource = nil
+    componentDelegate = nil
     userInterface = nil
   }
 }

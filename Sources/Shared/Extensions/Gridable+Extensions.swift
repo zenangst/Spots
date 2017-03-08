@@ -64,6 +64,6 @@ public extension CoreComponent where Self : Gridable {
   }
 
   public func configure(with layout: Layout) {
-    layout.configure(spot: self)
+    layout.configure(component: self)
   }
 }

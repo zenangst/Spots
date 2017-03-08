@@ -50,9 +50,9 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
   public var refreshPositions = [CGFloat]()
   /// A bool value to indicate if the Controller is refeshing.
   public var refreshing = false
-  /// A convenience method for resolving the first spot.
-  public var spot: CoreComponent? {
-    return spot(at: 0, ofType: CoreComponent.self)
+  /// A convenience method for resolving the first component.
+  public var component: CoreComponent? {
+    return component(at: 0, ofType: CoreComponent.self)
   }
 
   #if DEVMODE
@@ -102,16 +102,20 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
     self.components = components
     super.init(nibName: nil, bundle: nil)
 
-    NotificationCenter.default.addObserver(self, selector:#selector(self.deviceDidRotate(_:)), name: NSNotification.Name(rawValue: NotificationKeys.deviceDidRotateNotification.rawValue), object: nil)
+    let notificationName = NSNotification.Name(rawValue: NotificationKeys.deviceDidRotateNotification.rawValue)
+    NotificationCenter.default.addObserver(self,
+                                           selector:#selector(self.deviceDidRotate(_:)),
+                                           name: notificationName,
+                                           object: nil)
   }
 
-  /// Initialize a new controller with a single spot
+  /// Initialize a new controller with a single component
   ///
-  /// - parameter spot: A CoreComponent object
+  /// - parameter component: A CoreComponent object
   ///
   /// - returns: An initialized controller containing one object.
-  public convenience init(spot: CoreComponent) {
-    self.init(components: [spot])
+  public convenience init(component: CoreComponent) {
+    self.init(components: [component])
   }
 
   /// Initialize a new controller using JSON.
@@ -155,32 +159,32 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
 
   ///  A generic look up method for resolving components based on index
   ///
-  /// - parameter index: The index of the spot that you are trying to resolve.
-  /// - parameter type: The generic type for the spot you are trying to resolve.
+  /// - parameter index: The index of the component that you are trying to resolve.
+  /// - parameter type: The generic type for the component you are trying to resolve.
   ///
   /// - returns: An optional CoreComponent object of inferred type.
-  open func spot<T>(at index: Int = 0, ofType type: T.Type) -> T? {
+  open func component<T>(at index: Int = 0, ofType type: T.Type) -> T? {
     return components.filter({ $0.index == index }).first as? T
   }
 
-  /// A look up method for resolving a spot at index as a CoreComponent object.
+  /// A look up method for resolving a component at index as a CoreComponent object.
   ///
-  /// - parameter index: The index of the spot that you are trying to resolve.
+  /// - parameter index: The index of the component that you are trying to resolve.
   ///
   /// - returns: An optional CoreComponent object.
-  open func spot(at index: Int = 0) -> CoreComponent? {
+  open func component(at index: Int = 0) -> CoreComponent? {
     return components.filter({ $0.index == index }).first
   }
 
   /// A generic look up method for resolving components using a closure
   ///
-  /// - parameter closure: A closure to perform actions on a spotable object
+  /// - parameter closure: A closure to perform actions on a component.
   ///
   /// - returns: An optional CoreComponent object
-  open func resolve(spot closure: (_ index: Int, _ spot: CoreComponent) -> Bool) -> CoreComponent? {
-    for (index, spot) in components.enumerated()
-      where closure(index, spot) {
-        return spot
+  open func resolve(component closure: (_ index: Int, _ component: CoreComponent) -> Bool) -> CoreComponent? {
+    for (index, component) in components.enumerated()
+      where closure(index, component) {
+        return component
     }
     return nil
   }
@@ -199,7 +203,7 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
 
   // MARK: - View Life Cycle
 
-  /// Called after the spot controller's view is loaded into memory.
+  /// Called after the component controller's view is loaded into memory.
   open override func viewDidLoad() {
     super.viewDidLoad()
 
@@ -209,12 +213,12 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
     scrollView.clipsToBounds = true
     scrollView.delegate = self
 
-    setupSpots()
+    setupComponents()
 
     Controller.configure?(scrollView)
   }
 
-  /// Notifies the spot controller that its view is about to be added to a view hierarchy.
+  /// Notifies the component controller that its view is about to be added to a view hierarchy.
   ///
   /// - parameter animated: If true, the view is being added to the window using an animation.
   open override func viewWillAppear(_ animated: Bool) {
@@ -226,7 +230,7 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
     }
 
     #if os(iOS)
-      refreshControl.addTarget(self, action: #selector(refreshSpots(_:)), for: .valueChanged)
+      refreshControl.addTarget(self, action: #selector(refreshComponent(_:)), for: .valueChanged)
 
       guard let _ = refreshDelegate, refreshControl.superview == nil
         else { return }
@@ -273,46 +277,46 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
 
   /// Set up CoreComponent objects.
   ///
-  /// - parameter animated: An optional animation closure that is invoked when setting up the spot.
-  open func setupSpots(animated: ((_ view: UIView) -> Void)? = nil) {
+  /// - parameter animated: An optional animation closure that is invoked when setting up the component.
+  open func setupComponents(animated: ((_ view: UIView) -> Void)? = nil) {
     var yOffset: CGFloat = 0.0
 
-    components.enumerated().forEach { index, spot in
-      setupComponent(at: index, spot: spot)
-      animated?(spot.view)
-      (spot as? CarouselComponent)?.layout.yOffset = yOffset
-      yOffset += spot.view.frame.size.height
+    components.enumerated().forEach { index, component in
+      setupComponent(at: index, component: component)
+      animated?(component.view)
+      (component as? CarouselComponent)?.layout.yOffset = yOffset
+      yOffset += component.view.frame.size.height
     }
   }
 
   /// Set up Spot at index
   ///
   /// - parameter index: The index of the CoreComponent object
-  /// - parameter spot:  The spotable object that is going to be setup
-  open func setupComponent(at index: Int, spot: CoreComponent) {
-    if spot.view.superview == nil {
-      scrollView.componentsContentView.addSubview(spot.view)
+  /// - parameter component:  The component that is going to be setup
+  open func setupComponent(at index: Int, component: CoreComponent) {
+    if component.view.superview == nil {
+      scrollView.componentsContentView.addSubview(component.view)
     }
 
-    guard let superview = spot.view.superview else {
+    guard let superview = component.view.superview else {
       return
     }
 
-    spot.view.frame.origin.x = 0.0
-    spot.model.index = index
-    spot.setup(superview.frame.size)
-    spot.model.size = CGSize(
+    component.view.frame.origin.x = 0.0
+    component.model.index = index
+    component.setup(superview.frame.size)
+    component.model.size = CGSize(
       width: superview.frame.width,
-      height: ceil(spot.view.frame.height))
-    spot.focusDelegate = self
+      height: ceil(component.view.frame.height))
+    component.focusDelegate = self
 
     /// Spot handles registering and preparing the items internally so there is no need to run this for that class.
     /// This should be removed in the future when we decide to remove the core types.
-    if !(spot is Component) {
-      spot.registerAndPrepare()
+    if !(component is Component) {
+      component.registerAndPrepare()
 
-      if !spot.items.isEmpty {
-        spot.view.layoutIfNeeded()
+      if !component.items.isEmpty {
+        component.view.layoutIfNeeded()
       }
     }
   }
@@ -321,11 +325,13 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
   /// Refresh action for UIRefreshControl
   ///
   /// - parameter refreshControl: The refresh control used to refresh the controller.
-  open func refreshSpots(_ refreshControl: UIRefreshControl) {
+  open func refreshComponent(_ refreshControl: UIRefreshControl) {
     Dispatch.main { [weak self] in
-      guard let weakSelf = self else { return }
+      guard let weakSelf = self else {
+        return
+      }
       weakSelf.refreshPositions.removeAll()
-      weakSelf.refreshDelegate?.spotablesDidReload(weakSelf.components, refreshControl: refreshControl) {
+      weakSelf.refreshDelegate?.componentsDidReload(weakSelf.components, refreshControl: refreshControl) {
         refreshControl.endRefreshing()
       }
     }
@@ -349,7 +355,7 @@ extension Controller {
     delegate?.componentsDidChange(components)
   }
 
-  /// It updates the delegates for all underlaying spotable objects inside the controller.
+  /// It updates the delegates for all underlaying components inside the controller.
   fileprivate  func updateDelegates() {
     components.forEach {
       $0.delegate = delegate
@@ -368,15 +374,15 @@ extension Controller {
   ///
   /// - returns: A ComponentModel object at index path.
   fileprivate func component(at indexPath: IndexPath) -> ComponentModel {
-    return spot(at: indexPath).model
+    return component(at: indexPath).model
   }
 
-  /// Resolve spot at index path.
+  /// Resolve component at index path.
   ///
-  /// - parameter indexPath: The index path of the spotable object.
+  /// - parameter indexPath: The index path of The component.
   ///
   /// - returns: A CoreComponent object.
-  fileprivate func spot(at indexPath: IndexPath) -> CoreComponent {
+  fileprivate func component(at indexPath: IndexPath) -> CoreComponent {
     return components[indexPath.item]
   }
 }

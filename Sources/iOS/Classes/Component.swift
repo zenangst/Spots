@@ -25,8 +25,8 @@ public class Component: NSObject, CoreComponent, ComponentHorizontallyScrollable
     }
   }
 
-  public var spotDelegate: Delegate?
-  public var spotDataSource: DataSource?
+  public var componentDelegate: Delegate?
+  public var componentDataSource: DataSource?
   public var stateCache: StateCache?
 
   public var userInterface: UserInterface? {
@@ -78,8 +78,8 @@ public class Component: NSObject, CoreComponent, ComponentHorizontallyScrollable
       componentLayout.configure(collectionViewLayout: collectionViewLayout)
     }
 
-    self.spotDataSource = DataSource(component: self)
-    self.spotDelegate = Delegate(component: self)
+    self.componentDataSource = DataSource(component: self)
+    self.componentDelegate = Delegate(component: self)
   }
 
   public required convenience init(model: ComponentModel) {
@@ -104,8 +104,8 @@ public class Component: NSObject, CoreComponent, ComponentHorizontallyScrollable
   }
 
   deinit {
-    spotDataSource = nil
-    spotDelegate = nil
+    componentDataSource = nil
+    componentDelegate = nil
   }
 
   public func setup(_ size: CGSize) {
@@ -132,8 +132,8 @@ public class Component: NSObject, CoreComponent, ComponentHorizontallyScrollable
 
   fileprivate func setupCollectionView(_ collectionView: CollectionView, with size: CGSize) {
     collectionView.frame.size = size
-    collectionView.dataSource = spotDataSource
-    collectionView.delegate = spotDelegate
+    collectionView.dataSource = componentDataSource
+    collectionView.delegate = componentDelegate
 
     if componentKind == .carousel {
       collectionView.showsHorizontalScrollIndicator = false

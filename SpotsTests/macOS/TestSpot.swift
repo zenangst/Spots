@@ -29,7 +29,7 @@ class TestSpot: XCTestCase {
 
   func testSpotCache() {
     let item = Item(title: "test")
-    let component = Component(cacheKey: "test-spot-cache")
+    let component = Component(cacheKey: "test-component-cache")
 
     XCTAssertEqual(component.model.items.count, 0)
     component.append(item) {

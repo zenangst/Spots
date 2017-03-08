@@ -102,14 +102,14 @@ open class CarouselComponent: NSObject, Gridable {
   }()
 
   public var userInterface: UserInterface?
-  var spotDataSource: DataSource?
-  var spotDelegate: Delegate?
+  var componentDataSource: DataSource?
+  var componentDelegate: Delegate?
 
   /// A required initializer to instantiate a CarouselComponent with a model.
   ///
   /// - parameter component: A component
   ///
-  /// - returns: An initialized carousel spot.
+  /// - returns: An initialized carousel component.
   public required init(model: ComponentModel) {
     self.model = model
 
@@ -120,9 +120,9 @@ open class CarouselComponent: NSObject, Gridable {
     self.collectionView = CollectionView()
     super.init()
     self.userInterface = collectionView
-    self.model.layout?.configure(spot: self)
-    self.spotDataSource = DataSource(component: self)
-    self.spotDelegate = Delegate(component: self)
+    self.model.layout?.configure(component: self)
+    self.componentDataSource = DataSource(component: self)
+    self.componentDelegate = Delegate(component: self)
 
     if model.kind.isEmpty {
       self.model.kind = ComponentModel.Kind.carousel.string
@@ -150,7 +150,7 @@ open class CarouselComponent: NSObject, Gridable {
   ///
   /// - parameter cacheKey: A unique cache key for the CoreComponent object.
   ///
-  /// - returns: An initialized carousel spot.
+  /// - returns: An initialized carousel component.
   public convenience init(cacheKey: String) {
     let stateCache = StateCache(key: cacheKey)
 
@@ -161,8 +161,8 @@ open class CarouselComponent: NSObject, Gridable {
   deinit {
     collectionView.delegate = nil
     collectionView.dataSource = nil
-    spotDataSource = nil
-    spotDelegate = nil
+    componentDataSource = nil
+    componentDelegate = nil
     userInterface = nil
   }
 
@@ -173,8 +173,8 @@ open class CarouselComponent: NSObject, Gridable {
 
     let view = NSView()
     collectionView.backgroundView = view
-    collectionView.dataSource = spotDataSource
-    collectionView.delegate = spotDelegate
+    collectionView.dataSource = componentDataSource
+    collectionView.delegate = componentDelegate
     collectionView.collectionViewLayout = layout
   }
 

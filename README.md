@@ -84,7 +84,7 @@ setup delegates that conform to the public protocols on `Controller`.
 own set of `Item`’s.
 which is maintained internally and is there at your disposable if you decide to
 make changes to them.
-- Easy configuration of collection views, table views and any custom spot
+- Easy configuration of collection views, table views and any custom component
 implementation that you add.
 This improves code reuse and helps to theme your app and ultimately keep your application consistent.
 - Support custom Spots, all you need to do is to conform to `CoreComponent`
@@ -227,7 +227,7 @@ A **Controller** can also be reloaded using JSON. It behaves a bit differently t
 
 The difference between `reload` and `reloadIfNeeded` methods is that they will only run if change is needed, just like the naming implies.
 
-If you need more fine-grained control by pinpointing an individual spot, we got you covered on this as well. **Controller** has an update method that takes the spot index as its first argument, followed by an animation label to specify which animation to use when doing the update.
+If you need more fine-grained control by pinpointing an individual component, we got you covered on this as well. **Controller** has an update method that takes the component index as its first argument, followed by an animation label to specify which animation to use when doing the update.
 The remaining arguments are one mutation closure where you get the **CoreComponent** object and can perform your updates, and finally one completion closure that will run when your update is performed both on the data source and the UI component.
 This method has a corresponding method called `updateIfNeeded`, which applies the update if needed.
 
@@ -290,8 +290,8 @@ let myContacts = ComponentModel(title: "My contacts", items: [
   Item(title: "Khoa Pham"),
   Item(title: "Christoffer Winterkvist")
 ])
-let listSpot = ListComponent(model: myContacts)
-let controller = Controller(components: [listSpot])
+let listComponent = ListComponent(model: myContacts)
+let controller = Controller(components: [listComponent])
 
 navigationController?.pushViewController(controller, animated: true)
 ```
@@ -305,12 +305,12 @@ The `Controller` inherits from `UIViewController` and `NSViewController` but it 
 
 ```swift
 public protocol ComponentDelegate: class {
-  func spotDidSelectItem(spot: CoreComponent, item: Item)
+  func componentDidSelectItem(component: CoreComponent, item: Item)
   func componentsDidChange(components: [CoreComponent])
 }
 ```
 
-`spotDidSelectItem` is triggered when a user taps on an item inside of a `CoreComponent` object. It returns both the `spot` and the `item` to add context to what UI element was touched.
+`componentDidSelectItem` is triggered when a user taps on an item inside of a `CoreComponent` object. It returns both the `component` and the `item` to add context to what UI element was touched.
 
 `componentsDidChange` notifies the delegate when the internal `.components` property changes.
 
@@ -328,24 +328,24 @@ public protocol SpotsRefreshDelegate: class {
 
 ```swift
 public protocol SpotsScrollDelegate: class {
-  func spotDidReachBeginning(completion: Completion)
-  func spotDidReachEnd(completion: (() -> Void)?)
+  func componentDidReachBeginning(completion: Completion)
+  func componentDidReachEnd(completion: (() -> Void)?)
 }
 ```
 
-`spotDidReachBeginning` notifies the delegate when the scrollview has reached the top. This has a default implementation and is rendered optional for anything that conform to `SpotsScrollDelegate`.
+`componentDidReachBeginning` notifies the delegate when the scrollview has reached the top. This has a default implementation and is rendered optional for anything that conform to `SpotsScrollDelegate`.
 
-`spotDidReachEnd` is triggered when the user scrolls to the end of the `SpotsScrollView`, this can be used to implement infinite scrolling.
+`componentDidReachEnd` is triggered when the user scrolls to the end of the `SpotsScrollView`, this can be used to implement infinite scrolling.
 
 ### SpotsCarouselScrollDelegate
 
 ```swift
 public protocol SpotsCarouselScrollDelegate: class {
-  func spotDidEndScrolling(spot: CoreComponent, item: Item)
+  func componentDidEndScrolling(component: CoreComponent, item: Item)
 }
 ```
 
-`spotDidEndScrolling` is triggered when a user ends scrolling in a carousel, it returns item that is being displayed and the spot to give you the context that you need.
+`componentDidEndScrolling` is triggered when a user ends scrolling in a carousel, it returns item that is being displayed and the component to give you the context that you need.
 
 ## The many faces of Spots
 
@@ -434,11 +434,11 @@ Because the framework can be used in a wide variety of ways, we have decided to 
 ```
 
 - **.index**
-Calculated value to determine the index it has inside of the spot.
+Calculated value to determine the index it has inside of the component.
 - **.title**
 This is used as a title in table view view.
 - **.kind**
-Determines which spot should be used. `carousel`, `list`, `grid` are there by default but you can register your own.
+Determines which component should be used. `carousel`, `list`, `grid` are there by default but you can register your own.
 - **.span**
 Determines the amount of views that should fit on one row, by default it is set to zero and uses the default flow layout to render collection based views.
 - **.size**

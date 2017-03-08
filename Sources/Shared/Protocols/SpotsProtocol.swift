@@ -27,8 +27,8 @@ public protocol SpotsProtocol: class {
   var view: View! { get }
   #endif
 
-  /// The first spotable object in the controller.
-  var spot: CoreComponent? { get }
+  /// The first component in the controller.
+  var component: CoreComponent? { get }
 
   /// A dictionary representation of the controller
   var dictionary: [String : Any] { get }
@@ -46,29 +46,29 @@ public protocol SpotsProtocol: class {
 
   /// Set up CoreComponent objects.
   ///
-  /// - parameter animated: An optional animation closure that is invoked when setting up the spot.
-  func setupSpots(animated: ((_ view: View) -> Void)?)
+  /// - parameter animated: An optional animation closure that is invoked when setting up the component.
+  func setupComponents(animated: ((_ view: View) -> Void)?)
 
   /// Set up Spot at index
   ///
   /// - parameter index: The index of the CoreComponent object
-  /// - parameter spot:  The spotable object that is going to be setup
-  func setupComponent(at index: Int, spot: CoreComponent)
+  /// - parameter component:  The component that is going to be setup
+  func setupComponent(at index: Int, component: CoreComponent)
 
   ///  A generic look up method for resolving components based on index
   ///
-  /// - parameter index: The index of the spot that you are trying to resolve.
-  /// - parameter type: The generic type for the spot you are trying to resolve.
+  /// - parameter index: The index of the component that you are trying to resolve.
+  /// - parameter type: The generic type for the component you are trying to resolve.
   ///
   /// - returns: An optional CoreComponent object of inferred type.
-  func spot<T>(at index: Int, ofType type: T.Type) -> T?
+  func component<T>(at index: Int, ofType type: T.Type) -> T?
 
   /// A generic look up method for resolving components using a closure
   ///
-  /// - parameter closure: A closure to perform actions on a spotable object
+  /// - parameter closure: A closure to perform actions on a component
   ///
   /// - returns: An optional CoreComponent object
-  func resolve(spot closure: (_ index: Int, _ spot: CoreComponent) -> Bool) -> CoreComponent?
+  func resolve(component closure: (_ index: Int, _ component: CoreComponent) -> Bool) -> CoreComponent?
 
   #if os(OSX)
   init(components: [CoreComponent], backgroundType: ControllerBackground)

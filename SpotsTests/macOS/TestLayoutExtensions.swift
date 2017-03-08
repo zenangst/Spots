@@ -15,30 +15,30 @@ class LayoutExtensionsTests: XCTestCase {
   ]
 
   func testConfigureGridableComponent() {
-    let gridSpot = GridComponent(model: ComponentModel(span: 1))
-    let gridableLayout = gridSpot.layout as? FlowLayout
+    let gridComponent = GridComponent(model: ComponentModel(span: 1))
+    let gridableLayout = gridComponent.layout as? FlowLayout
     let layout = Layout(json)
 
-    layout.configure(spot: gridSpot)
+    layout.configure(component: gridComponent)
 
     XCTAssertEqual(gridableLayout?.minimumInteritemSpacing, CGFloat(layout.itemSpacing))
     XCTAssertEqual(gridableLayout?.minimumLineSpacing, CGFloat(layout.lineSpacing))
 
-    XCTAssertEqual(gridSpot.view.contentInsets.top, CGFloat(layout.inset.top))
-    XCTAssertEqual(gridSpot.view.contentInsets.left, CGFloat(layout.inset.left))
-    XCTAssertEqual(gridSpot.view.contentInsets.bottom, CGFloat(layout.inset.bottom))
-    XCTAssertEqual(gridSpot.view.contentInsets.right, CGFloat(layout.inset.right))
+    XCTAssertEqual(gridComponent.view.contentInsets.top, CGFloat(layout.inset.top))
+    XCTAssertEqual(gridComponent.view.contentInsets.left, CGFloat(layout.inset.left))
+    XCTAssertEqual(gridComponent.view.contentInsets.bottom, CGFloat(layout.inset.bottom))
+    XCTAssertEqual(gridComponent.view.contentInsets.right, CGFloat(layout.inset.right))
   }
 
   func testConfigureListableComponent() {
-    let listSpot = ListComponent(model: ComponentModel(span: 1))
+    let listComponent = ListComponent(model: ComponentModel(span: 1))
     let layout = Layout(json)
 
-    layout.configure(spot: listSpot)
+    layout.configure(component: listComponent)
 
-    XCTAssertEqual(listSpot.view.contentInsets.top, CGFloat(layout.inset.top))
-    XCTAssertEqual(listSpot.view.contentInsets.left, CGFloat(layout.inset.left))
-    XCTAssertEqual(listSpot.view.contentInsets.bottom, CGFloat(layout.inset.bottom))
-    XCTAssertEqual(listSpot.view.contentInsets.right, CGFloat(layout.inset.right))
+    XCTAssertEqual(listComponent.view.contentInsets.top, CGFloat(layout.inset.top))
+    XCTAssertEqual(listComponent.view.contentInsets.left, CGFloat(layout.inset.left))
+    XCTAssertEqual(listComponent.view.contentInsets.bottom, CGFloat(layout.inset.bottom))
+    XCTAssertEqual(listComponent.view.contentInsets.right, CGFloat(layout.inset.right))
   }
 }

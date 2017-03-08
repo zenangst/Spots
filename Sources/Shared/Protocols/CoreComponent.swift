@@ -36,7 +36,7 @@ public protocol CoreComponent: class {
   var stateCache: StateCache? { get }
   /// Indicator to calculate the height based on content
   var usesDynamicHeight: Bool { get }
-  /// The user interface that will be used to represent the spotable object.
+  /// The user interface that will be used to represent The component.
   var userInterface: UserInterface? { get }
   /// Return a CoreComponent object as a UIScrollView
   var view: ScrollView { get }
@@ -125,14 +125,14 @@ public protocol CoreComponent: class {
   /// - parameter completion: A completion closure that is executed in the main queue when the view model has been removed.
   func update(_ item: Item, index: Int, withAnimation animation: Animation, completion: Completion)
 
-  /// Reloads a spot only if it changes
+  /// Reloads a component only if it changes
   ///
   /// - parameter items:      A collection of Items
   /// - parameter animation:  The animation that should be used (only works for Listable objects)
   /// - parameter completion: A completion closure that is performed when all mutations are performed
   func reloadIfNeeded(_ items: [Item], withAnimation animation: Animation, completion: Completion)
 
-  /// Reload spot with ItemChanges.
+  /// Reload component with ItemChanges.
   ///
   /// - parameter changes:          A collection of changes: inserations, updates, reloads, deletions and updated children.
   /// - parameter animation:        A Animation that is used when performing the mutation.
@@ -165,7 +165,7 @@ public protocol CoreComponent: class {
   func sizeForItem(at indexPath: IndexPath) -> CGSize
 
   #if os(OSX)
-  /// Unselect any selected views inside of the spotable object.
+  /// Unselect any selected views inside of The component.
   func deselect()
   #endif
 

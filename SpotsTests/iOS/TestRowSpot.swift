@@ -9,7 +9,7 @@ class RowSpotTests: XCTestCase {
 
   override func setUp() {
     component = RowComponent(model: ComponentModel(span: 1))
-    cachedSpot = RowComponent(cacheKey: "cached-row-spot")
+    cachedSpot = RowComponent(cacheKey: "cached-row-component")
     XCTAssertNotNil(cachedSpot.stateCache)
     cachedSpot.stateCache?.clear()
   }
@@ -43,19 +43,19 @@ class RowSpotTests: XCTestCase {
 
   func testSafelyResolveKind() {
     let model = ComponentModel(title: "RowComponent", kind: "custom-grid", span: 1, items: [Item(title: "foo", kind: "custom-item-kind")])
-    let rowSpot = RowComponent(model: model)
+    let rowComponent = RowComponent(model: model)
     let indexPath = IndexPath(row: 0, section: 0)
 
-    XCTAssertEqual(rowSpot.identifier(at: indexPath), RowComponent.views.defaultIdentifier)
+    XCTAssertEqual(rowComponent.identifier(at: indexPath), RowComponent.views.defaultIdentifier)
 
     RowComponent.views.defaultItem = Registry.Item.classType(GridComponentCell.self)
-    XCTAssertEqual(rowSpot.identifier(at: indexPath), RowComponent.views.defaultIdentifier)
+    XCTAssertEqual(rowComponent.identifier(at: indexPath), RowComponent.views.defaultIdentifier)
 
     RowComponent.views.defaultItem = Registry.Item.classType(GridComponentCell.self)
-    XCTAssertEqual(rowSpot.identifier(at: indexPath), RowComponent.views.defaultIdentifier)
+    XCTAssertEqual(rowComponent.identifier(at: indexPath), RowComponent.views.defaultIdentifier)
 
     RowComponent.views["custom-item-kind"] = Registry.Item.classType(GridComponentCell.self)
-    XCTAssertEqual(rowSpot.identifier(at: indexPath), "custom-item-kind")
+    XCTAssertEqual(rowComponent.identifier(at: indexPath), "custom-item-kind")
 
     RowComponent.views.storage.removeAll()
   }

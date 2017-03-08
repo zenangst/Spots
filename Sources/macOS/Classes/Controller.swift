@@ -23,9 +23,9 @@ open class Controller: NSViewController, SpotsProtocol {
     return view
   }
 
-  /// A convenience method for resolving the first spot
-  open var spot: CoreComponent? {
-    return spot(at: 0)
+  /// A convenience method for resolving the first component
+  open var component: CoreComponent? {
+    return component(at: 0)
   }
 
   /// An array of refresh positions to avoid refreshing multiple times when using infinite scrolling
@@ -88,10 +88,10 @@ open class Controller: NSViewController, SpotsProtocol {
   }
 
   /**
-   - parameter spot: A CoreComponent object
+   - parameter component: A CoreComponent object
    */
-  public convenience init(spot: CoreComponent) {
-    self.init(components: [spot])
+  public convenience init(component: CoreComponent) {
+    self.init(components: [component])
   }
 
   /**
@@ -122,34 +122,34 @@ open class Controller: NSViewController, SpotsProtocol {
 
   ///  A generic look up method for resolving components based on index
   ///
-  /// - parameter index: The index of the spot that you are trying to resolve.
-  /// - parameter type: The generic type for the spot you are trying to resolve.
+  /// - parameter index: The index of the component that you are trying to resolve.
+  /// - parameter type: The generic type for the component you are trying to resolve.
   ///
   /// - returns: An optional CoreComponent object of inferred type.
-  open func spot<T>(at index: Int = 0, ofType type: T.Type) -> T? {
+  open func component<T>(at index: Int = 0, ofType type: T.Type) -> T? {
     return components.filter({ $0.index == index }).first as? T
   }
 
-  /// A look up method for resolving a spot at index as a CoreComponent object.
+  /// A look up method for resolving a component at index as a CoreComponent object.
   ///
-  /// - parameter index: The index of the spot that you are trying to resolve.
+  /// - parameter index: The index of the component that you are trying to resolve.
   ///
   /// - returns: An optional CoreComponent object.
-  open func spot(at index: Int = 0) -> CoreComponent? {
+  open func component(at index: Int = 0) -> CoreComponent? {
     return components.filter({ $0.index == index }).first
   }
 
   /**
    A generic look up method for resolving components using a closure
 
-   - parameter closure: A closure to perform actions on a spotable object
+   - parameter closure: A closure to perform actions on a component
 
    - returns: An optional CoreComponent object
    */
-  public func resolve(spot closure: (_ index: Int, _ spot: CoreComponent) -> Bool) -> CoreComponent? {
-    for (index, spot) in components.enumerated()
-      where closure(index, spot) {
-        return spot
+  public func resolve(component closure: (_ index: Int, _ component: CoreComponent) -> Bool) -> CoreComponent? {
+    for (index, component) in components.enumerated()
+      where closure(index, component) {
+        return component
     }
     return nil
   }
@@ -184,103 +184,103 @@ open class Controller: NSViewController, SpotsProtocol {
     scrollView.hasVerticalScroller = true
     scrollView.autoresizingMask = [.viewWidthSizable, .viewHeightSizable]
 
-    setupSpots()
+    setupComponents()
     Controller.configure?(scrollView)
   }
 
   open override func viewDidAppear() {
     super.viewDidAppear()
 
-    for spot in components {
-      spot.layout(scrollView.frame.size)
+    for component in components {
+      component.layout(scrollView.frame.size)
     }
   }
 
   public func reloadSpots(components: [CoreComponent], closure: (() -> Void)?) {
-    for spot in self.components {
-      spot.delegate = nil
-      spot.view.removeFromSuperview()
+    for component in self.components {
+      component.delegate = nil
+      component.view.removeFromSuperview()
     }
     self.components = components
     delegate = nil
 
-    setupSpots()
+    setupComponents()
     closure?()
     scrollView.layoutSubviews()
   }
 
   /**
-   - parameter animated: An optional animation closure that runs when a spot is being rendered
+   - parameter animated: An optional animation closure that runs when a component is being rendered
    */
-  public func setupSpots(animated: ((_ view: View) -> Void)? = nil) {
-    components.enumerated().forEach { index, spot in
-      setupComponent(at: index, spot: spot)
-      animated?(spot.view)
+  public func setupComponents(animated: ((_ view: View) -> Void)? = nil) {
+    components.enumerated().forEach { index, component in
+      setupComponent(at: index, component: component)
+      animated?(component.view)
     }
   }
 
-  public func setupComponent(at index: Int, spot: CoreComponent) {
-    if spot.view.superview == nil {
-      scrollView.componentsContentView.addSubview(spot.view)
+  public func setupComponent(at index: Int, component: CoreComponent) {
+    if component.view.superview == nil {
+      scrollView.componentsContentView.addSubview(component.view)
     }
 
     components[index].model.index = index
-    spot.registerAndPrepare()
+    component.registerAndPrepare()
 
-    var height = spot.computedHeight
-    if let componentSize = spot.model.size, componentSize.height > height {
+    var height = component.computedHeight
+    if let componentSize = component.model.size, componentSize.height > height {
       height = componentSize.height
     }
 
-    spot.setup(CGSize(width: view.frame.width, height: height))
-    spot.model.size = CGSize(
+    component.setup(CGSize(width: view.frame.width, height: height))
+    component.model.size = CGSize(
       width: view.frame.width,
-      height: ceil(spot.view.frame.height))
+      height: ceil(component.view.frame.height))
 
-    (spot as? Gridable)?.layout(CGSize(width: view.frame.width, height: height))
+    (component as? Gridable)?.layout(CGSize(width: view.frame.width, height: height))
   }
 
   open override func viewDidLayout() {
     super.viewDidLayout()
 
-    for spot in components {
-      spot.layout(CGSize(width: view.frame.width,
-        height: spot.computedHeight))
+    for component in components {
+      component.layout(CGSize(width: view.frame.width,
+        height: component.computedHeight))
 
-      for compositeSpot in spot.compositeComponents {
-        compositeSpot.component.setup(CGSize(width: view.frame.width,
-                                        height: compositeSpot.component.computedHeight))
+      for compositeComponent in component.compositeComponents {
+        compositeComponent.component.setup(CGSize(width: view.frame.width,
+                                        height: compositeComponent.component.computedHeight))
       }
     }
   }
 
-  public func deselectAllExcept(selectedSpot: CoreComponent) {
-    for spot in components {
-      if selectedSpot.view != spot.view {
-        spot.deselect()
+  public func deselectAllExcept(selectedComponent: CoreComponent) {
+    for component in components {
+      if selectedComponent.view != component.view {
+        component.deselect()
       }
     }
   }
 
   public func windowDidResize(_ notification: Notification) {
-    for case let spot as Gridable in components {
-      guard let layout = spot.model.layout, layout.span > 1 else {
+    for case let component as Gridable in components {
+      guard let layout = component.model.layout, layout.span > 1 else {
         continue
       }
 
-      spot.layout.prepareForTransition(from: spot.layout)
-      spot.layout.invalidateLayout()
+      component.layout.prepareForTransition(from: component.layout)
+      component.layout.invalidateLayout()
     }
   }
 
   public func windowDidEndLiveResize(_ notification: Notification) {
-    for case let spot as Gridable in components {
-      guard let layout = spot.model.layout, layout.span > 1 else {
+    for case let component as Gridable in components {
+      guard let layout = component.model.layout, layout.span > 1 else {
         continue
       }
 
-      spot.layout.prepareForTransition(to: spot.layout)
-      spot.layout.invalidateLayout()
+      component.layout.prepareForTransition(to: component.layout)
+      component.layout.invalidateLayout()
     }
   }
 
@@ -288,7 +288,9 @@ open class Controller: NSViewController, SpotsProtocol {
     guard let scrollView = notification.object as? SpotsScrollView,
       let delegate = scrollDelegate,
       let _ = NSApplication.shared().mainWindow, !refreshing && scrollView.contentOffset.y > 0
-      else { return }
+      else {
+        return
+    }
 
     let offset = scrollView.contentOffset
     let totalHeight = scrollView.documentView?.frame.size.height ?? 0

@@ -107,15 +107,15 @@ public extension CoreComponent {
     var spanWidth: CGFloat?
 
     if let layout = model.layout, layout.span > 0.0 {
-      var spotWidth: CGFloat = view.frame.size.width - CGFloat(layout.inset.left + layout.inset.right)
+      var componentWidth: CGFloat = view.frame.size.width - CGFloat(layout.inset.left + layout.inset.right)
 
       #if !os(OSX)
         if view.frame.size.width == 0.0 {
-          spotWidth = UIScreen.main.bounds.width - CGFloat(layout.inset.left + layout.inset.right)
+          componentWidth = UIScreen.main.bounds.width - CGFloat(layout.inset.left + layout.inset.right)
         }
       #endif
 
-      spanWidth = (spotWidth / CGFloat(layout.span)) - CGFloat(layout.itemSpacing)
+      spanWidth = (componentWidth / CGFloat(layout.span)) - CGFloat(layout.itemSpacing)
     }
 
     preparedItems.enumerated().forEach { (index: Int, item: Item) in
@@ -171,9 +171,9 @@ public extension CoreComponent {
         return
       }
 
-      let spotHeight = weakSelf.computedHeight
+      let componentHeight = weakSelf.computedHeight
       Dispatch.main { [weak self] in
-        self?.view.frame.size.height = spotHeight
+        self?.view.frame.size.height = componentHeight
         completion?()
       }
     }
@@ -191,7 +191,7 @@ public extension CoreComponent {
     completion?()
   }
 
-  /// Caches the current state of the spot
+  /// Caches the current state of the component
   public func cache() {
     stateCache?.save(dictionary)
   }
@@ -247,13 +247,13 @@ public extension CoreComponent {
 
       prepare(kind: kind, view: view as Any, item: &item)
     #else
-      let spotableKind = self
+      let componentKind = self
 
       if fullWidth == 0.0 {
         fullWidth = view.superview?.frame.size.width ?? view.frame.size.width
       }
 
-      switch spotableKind {
+      switch componentKind {
       case let grid as Gridable:
         var kind = item.kind.isEmpty || type(of: grid).grids.storage[item.kind] == nil
           ? identifier(at: index)
@@ -339,8 +339,8 @@ public extension CoreComponent {
     let size = view.frame.size
     let width = size.width
 
-    components.forEach { spot in
-      let compositeSpot = CompositeComponent(component: spot,
+    components.forEach { component in
+      let compositeSpot = CompositeComponent(component: component,
                                              parentComponent: self,
                                              itemIndex: item.index)
 

@@ -3,8 +3,8 @@ import UIKit
 extension Component {
 
   func setupTableView(_ tableView: TableView, with size: CGSize) {
-    tableView.dataSource = spotDataSource
-    tableView.delegate = spotDelegate
+    tableView.dataSource = componentDataSource
+    tableView.delegate = componentDelegate
     tableView.rowHeight = UITableViewAutomaticDimension
     tableView.frame.size = size
     tableView.frame.size.width = round(size.width - (tableView.contentInset.left))

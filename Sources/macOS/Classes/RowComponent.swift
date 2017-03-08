@@ -138,8 +138,8 @@ open class RowComponent: NSObject, Gridable {
   }()
 
   public var userInterface: UserInterface?
-  var spotDataSource: DataSource?
-  var spotDelegate: Delegate?
+  var componentDataSource: DataSource?
+  var componentDelegate: Delegate?
 
   /**
    A required initializer for creating a RowComponent
@@ -157,9 +157,9 @@ open class RowComponent: NSObject, Gridable {
     self.layout = RowComponent.setupLayout(model)
     super.init()
     self.userInterface = collectionView
-    self.model.layout?.configure(spot: self)
-    self.spotDataSource = DataSource(component: self)
-    self.spotDelegate = Delegate(component: self)
+    self.model.layout?.configure(component: self)
+    self.componentDataSource = DataSource(component: self)
+    self.componentDelegate = Delegate(component: self)
 
     if model.kind.isEmpty {
       self.model.kind = ComponentModel.Kind.grid.string
@@ -203,8 +203,8 @@ open class RowComponent: NSObject, Gridable {
   deinit {
     collectionView.delegate = nil
     collectionView.dataSource = nil
-    spotDataSource = nil
-    spotDelegate = nil
+    componentDataSource = nil
+    componentDelegate = nil
     userInterface = nil
   }
 
@@ -249,8 +249,8 @@ open class RowComponent: NSObject, Gridable {
     collectionView.allowsEmptySelection = true
     collectionView.layer = CALayer()
     collectionView.wantsLayer = true
-    collectionView.dataSource = spotDataSource
-    collectionView.delegate = spotDelegate
+    collectionView.dataSource = componentDataSource
+    collectionView.delegate = componentDelegate
     collectionView.collectionViewLayout = layout
   }
 
