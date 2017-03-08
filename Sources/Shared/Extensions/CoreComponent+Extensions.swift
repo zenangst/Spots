@@ -164,14 +164,14 @@ public extension CoreComponent {
   /// - parameter completion: A completion closure that will be run in the main queue when the size has been updated.
   public func updateHeight(_ completion: Completion = nil) {
     Dispatch.interactive { [weak self] in
-      guard let weakSelf = self else {
+      guard let strongSelf = self else {
         Dispatch.main {
           completion?()
         }
         return
       }
 
-      let componentHeight = weakSelf.computedHeight
+      let componentHeight = strongSelf.computedHeight
       Dispatch.main { [weak self] in
         self?.view.frame.size.height = componentHeight
         completion?()

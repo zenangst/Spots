@@ -327,11 +327,11 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
   /// - parameter refreshControl: The refresh control used to refresh the controller.
   open func refreshComponent(_ refreshControl: UIRefreshControl) {
     Dispatch.main { [weak self] in
-      guard let weakSelf = self else {
+      guard let strongSelf = self else {
         return
       }
-      weakSelf.refreshPositions.removeAll()
-      weakSelf.refreshDelegate?.componentsDidReload(weakSelf.components, refreshControl: refreshControl) {
+      strongSelf.refreshPositions.removeAll()
+      strongSelf.refreshDelegate?.componentsDidReload(strongSelf.components, refreshControl: refreshControl) {
         refreshControl.endRefreshing()
       }
     }

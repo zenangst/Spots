@@ -22,7 +22,7 @@ import Cache
 
       source?.setEventHandler(handler: { [weak self] in
         // Check that file still exists, otherwise cancel observering
-        guard let weakSelf = self, FileManager.default.fileExists(atPath: filePath) else {
+        guard let strongSelf = self, FileManager.default.fileExists(atPath: filePath) else {
           self?.source?.cancel()
           self?.source = nil
           return
@@ -31,17 +31,17 @@ import Cache
         do {
           if let data = NSData(contentsOfFile: filePath),
             let json = try JSONSerialization.jsonObject(with: data as Data, options: .mutableContainers) as? [String : Any] {
-            weakSelf.source?.cancel()
-            weakSelf.source = nil
+            strongSelf.source?.cancel()
+            strongSelf.source = nil
 
-            let offset = weakSelf.scrollView.contentOffset
+            let offset = strongSelf.scrollView.contentOffset
             let components: [ComponentModel] = Parser.parse(json)
 
-            weakSelf.reloadIfNeeded(components) {
-              weakSelf.scrollView.contentOffset = offset
+            strongSelf.reloadIfNeeded(components) {
+              strongSelf.scrollView.contentOffset = offset
 
               var yOffset: CGFloat = 0.0
-              for component in weakSelf.components {
+              for component in strongSelf.components {
                 #if !os(OSX)
                 (component as? CarouselComponent)?.layout.yOffset = yOffset
                 #endif
@@ -49,19 +49,19 @@ import Cache
               }
 
               #if !os(OSX)
-              for case let gridable as CarouselComponent in weakSelf.components {
+              for case let gridable as CarouselComponent in strongSelf.components {
                 gridable.layout.yOffset = gridable.view.frame.origin.y
               }
               #endif
             }
-            print("🎍 SPOTS reloaded: \(weakSelf.components.count) -> items: \(weakSelf.components.reduce(0, { $0.1.items.count }))")
-            weakSelf.liveEditing(stateCache: weakSelf.stateCache)
+            print("🎍 SPOTS reloaded: \(strongSelf.components.count) -> items: \(strongSelf.components.reduce(0, { $0.1.items.count }))")
+            strongSelf.liveEditing(stateCache: strongSelf.stateCache)
           }
         } catch _ {
-          weakSelf.source = nil
+          strongSelf.source = nil
 
           print("⛔️ Error: could not parse file")
-          weakSelf.liveEditing(stateCache: weakSelf.stateCache)
+          strongSelf.liveEditing(stateCache: strongSelf.stateCache)
         }
       })
 
