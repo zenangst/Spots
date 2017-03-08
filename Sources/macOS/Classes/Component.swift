@@ -22,8 +22,8 @@ import Tailor
   public var componentKind: ComponentModel.Kind = .list
   public var compositeComponents: [CompositeComponent] = []
   public var configure: ((ItemConfigurable) -> Void)?
-  public var spotDelegate: Delegate?
-  public var spotDataSource: DataSource?
+  public var componentDelegate: Delegate?
+  public var componentDataSource: DataSource?
   public var stateCache: StateCache?
   public var userInterface: UserInterface?
   open var gradientLayer: CAGradientLayer?
@@ -128,8 +128,8 @@ import Tailor
 
     userInterface.register()
 
-    self.spotDataSource = DataSource(component: self)
-    self.spotDelegate = Delegate(component: self)
+    self.componentDataSource = DataSource(component: self)
+    self.componentDelegate = Delegate(component: self)
   }
 
   public required convenience init(model: ComponentModel) {
@@ -165,8 +165,8 @@ import Tailor
   }
 
   deinit {
-    spotDataSource = nil
-    spotDelegate = nil
+    componentDataSource = nil
+    componentDelegate = nil
     userInterface = nil
   }
 
@@ -176,11 +176,11 @@ import Tailor
 
   fileprivate func configureDataSourceAndDelegate() {
     if let tableView = self.tableView {
-      tableView.dataSource = spotDataSource
-      tableView.delegate = spotDelegate
+      tableView.dataSource = componentDataSource
+      tableView.delegate = componentDelegate
     } else if let collectionView = self.collectionView {
-      collectionView.dataSource = spotDataSource
-      collectionView.delegate = spotDelegate
+      collectionView.dataSource = componentDataSource
+      collectionView.delegate = componentDelegate
     }
   }
 
@@ -231,8 +231,8 @@ import Tailor
     collectionView.allowsEmptySelection = true
     collectionView.layer = CALayer()
     collectionView.wantsLayer = true
-    collectionView.dataSource = spotDataSource
-    collectionView.delegate = spotDelegate
+    collectionView.dataSource = componentDataSource
+    collectionView.delegate = componentDelegate
 
     let backgroundView = NSView()
     backgroundView.wantsLayer = true

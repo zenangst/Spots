@@ -50,8 +50,8 @@ open class RowComponent: NSObject, Gridable {
     }()
 
   public var userInterface: UserInterface?
-  var spotDataSource: DataSource?
-  var spotDelegate: Delegate?
+  var componentDataSource: DataSource?
+  var componentDelegate: Delegate?
 
   /// A required initializer to instantiate a RowComponent with a model.
   ///
@@ -68,8 +68,8 @@ open class RowComponent: NSObject, Gridable {
     super.init()
     self.userInterface = collectionView
     self.model.layout?.configure(component: self)
-    self.spotDataSource = DataSource(component: self)
-    self.spotDelegate = Delegate(component: self)
+    self.componentDataSource = DataSource(component: self)
+    self.componentDelegate = Delegate(component: self)
 
     if model.kind.isEmpty {
       self.model.kind = ComponentModel.Kind.row.string
@@ -98,15 +98,15 @@ open class RowComponent: NSObject, Gridable {
   }
 
   deinit {
-    spotDataSource = nil
-    spotDelegate = nil
+    componentDataSource = nil
+    componentDelegate = nil
     userInterface = nil
   }
 
   /// Configure collection view with data source, delegate and background view
   public func configureCollectionView() {
     register()
-    collectionView.dataSource = spotDataSource
-    collectionView.delegate = spotDelegate
+    collectionView.dataSource = componentDataSource
+    collectionView.delegate = componentDelegate
   }
 }

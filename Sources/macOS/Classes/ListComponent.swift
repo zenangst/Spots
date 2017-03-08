@@ -117,8 +117,8 @@ open class ListComponent: NSObject, Listable {
   }()
 
   public var userInterface: UserInterface?
-  var spotDataSource: DataSource?
-  var spotDelegate: Delegate?
+  var componentDataSource: DataSource?
+  var componentDelegate: Delegate?
 
   public required init(model: ComponentModel) {
     self.model = model
@@ -130,8 +130,8 @@ open class ListComponent: NSObject, Listable {
     super.init()
     self.userInterface = tableView
     self.model.layout?.configure(component: self)
-    self.spotDataSource = DataSource(component: self)
-    self.spotDelegate = Delegate(component: self)
+    self.componentDataSource = DataSource(component: self)
+    self.componentDelegate = Delegate(component: self)
 
     if model.kind.isEmpty {
       self.model.kind = ComponentModel.Kind.list.string
@@ -153,8 +153,8 @@ open class ListComponent: NSObject, Listable {
   deinit {
     tableView.delegate = nil
     tableView.dataSource = nil
-    spotDataSource = nil
-    spotDelegate = nil
+    componentDataSource = nil
+    componentDelegate = nil
     userInterface = nil
   }
 
@@ -190,8 +190,8 @@ open class ListComponent: NSObject, Listable {
 
     tableView.frame.size = size
     prepareItems()
-    tableView.dataSource = spotDataSource
-    tableView.delegate = spotDelegate
+    tableView.dataSource = componentDataSource
+    tableView.delegate = componentDelegate
     tableView.target = self
     tableView.addTableColumn(tableColumn)
     tableView.action = #selector(self.action(_:))

@@ -62,8 +62,8 @@ open class CarouselComponent: NSObject, Gridable, ComponentHorizontallyScrollabl
   open lazy var backgroundView = UIView()
 
   public var userInterface: UserInterface?
-  var spotDataSource: DataSource?
-  var spotDelegate: Delegate?
+  var componentDataSource: DataSource?
+  var componentDelegate: Delegate?
 
   /// Initialize an instantiate of CarouselComponent
   ///
@@ -96,8 +96,8 @@ open class CarouselComponent: NSObject, Gridable, ComponentHorizontallyScrollabl
     self.userInterface = collectionView
     self.model.layout?.configure(component: self)
     self.dynamicSpan = self.model.layout?.dynamicSpan ?? false
-    self.spotDataSource = DataSource(component: self)
-    self.spotDelegate = Delegate(component: self)
+    self.componentDataSource = DataSource(component: self)
+    self.componentDelegate = Delegate(component: self)
 
     if model.kind.isEmpty {
       self.model.kind = ComponentModel.Kind.carousel.string
@@ -151,16 +151,16 @@ open class CarouselComponent: NSObject, Gridable, ComponentHorizontallyScrollabl
   }
 
   deinit {
-    spotDataSource = nil
-    spotDelegate = nil
+    componentDataSource = nil
+    componentDelegate = nil
     userInterface = nil
   }
 
   /// Configure collection view with data source, delegate and background view
   public func configureCollectionView() {
     register()
-    collectionView.dataSource = spotDataSource
-    collectionView.delegate = spotDelegate
+    collectionView.dataSource = componentDataSource
+    collectionView.delegate = componentDelegate
     collectionView.backgroundView = backgroundView
     #if os(iOS)
       collectionView.isPagingEnabled = model.interaction.paginate == .page

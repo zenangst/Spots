@@ -102,8 +102,8 @@ open class CarouselComponent: NSObject, Gridable {
   }()
 
   public var userInterface: UserInterface?
-  var spotDataSource: DataSource?
-  var spotDelegate: Delegate?
+  var componentDataSource: DataSource?
+  var componentDelegate: Delegate?
 
   /// A required initializer to instantiate a CarouselComponent with a model.
   ///
@@ -121,8 +121,8 @@ open class CarouselComponent: NSObject, Gridable {
     super.init()
     self.userInterface = collectionView
     self.model.layout?.configure(component: self)
-    self.spotDataSource = DataSource(component: self)
-    self.spotDelegate = Delegate(component: self)
+    self.componentDataSource = DataSource(component: self)
+    self.componentDelegate = Delegate(component: self)
 
     if model.kind.isEmpty {
       self.model.kind = ComponentModel.Kind.carousel.string
@@ -161,8 +161,8 @@ open class CarouselComponent: NSObject, Gridable {
   deinit {
     collectionView.delegate = nil
     collectionView.dataSource = nil
-    spotDataSource = nil
-    spotDelegate = nil
+    componentDataSource = nil
+    componentDelegate = nil
     userInterface = nil
   }
 
@@ -173,8 +173,8 @@ open class CarouselComponent: NSObject, Gridable {
 
     let view = NSView()
     collectionView.backgroundView = view
-    collectionView.dataSource = spotDataSource
-    collectionView.delegate = spotDelegate
+    collectionView.dataSource = componentDataSource
+    collectionView.delegate = componentDelegate
     collectionView.collectionViewLayout = layout
   }
 

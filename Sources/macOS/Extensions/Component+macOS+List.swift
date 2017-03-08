@@ -13,8 +13,8 @@ extension Component {
 
     prepareItems()
 
-    tableView.dataSource = spotDataSource
-    tableView.delegate = spotDelegate
+    tableView.dataSource = componentDataSource
+    tableView.delegate = componentDelegate
     tableView.backgroundColor = NSColor.clear
     tableView.allowsColumnReordering = false
     tableView.allowsColumnResizing = false
