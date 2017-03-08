@@ -3,11 +3,11 @@ public extension ComponentDelegate {
 
   /// Triggered when ever a user taps on an item
   ///
-  /// - parameter component: The spotable object that the item belongs to.
+  /// - parameter component: The component that the item belongs to.
   /// - parameter item: The item struct that the user tapped on.
   func component(_ component: CoreComponent, itemSelected item: Item) {}
 
-  /// Invoked when ever the collection of spotable objects changes on the Controller.
+  /// Invoked when ever the collection of components changes on the Controller.
   ///
   /// - parameter components: The collection of new CoreComponent objects.
   func componentsDidChange(_ components: [CoreComponent]) {}

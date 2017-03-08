@@ -13,13 +13,13 @@ class TestGridableLayout: XCTestCase {
         Item(title: "bar", size: CGSize(width: 50, height: 50))
       ]
     )
-    let carouselSpot = CarouselComponent(model: model)
-    carouselSpot.setup(parentSize)
-    carouselSpot.layout(parentSize)
-    carouselSpot.view.layoutSubviews()
+    let carouselComponent = CarouselComponent(model: model)
+    carouselComponent.setup(parentSize)
+    carouselComponent.layout(parentSize)
+    carouselComponent.view.layoutSubviews()
 
-    XCTAssertEqual(carouselSpot.layout.contentSize, CGSize(width: 100, height: 50))
-    XCTAssertEqual(carouselSpot.view.frame.size, CGSize(width: 100, height: 50))
+    XCTAssertEqual(carouselComponent.layout.contentSize, CGSize(width: 100, height: 50))
+    XCTAssertEqual(carouselComponent.view.frame.size, CGSize(width: 100, height: 50))
   }
 
   func testContentSizeForHorizontalLayoutsWithInsets() {
@@ -32,13 +32,13 @@ class TestGridableLayout: XCTestCase {
         Item(title: "bar", size: CGSize(width: 50, height: 100))
       ]
     )
-    let carouselSpot = CarouselComponent(model: model)
-    carouselSpot.setup(parentSize)
-    carouselSpot.layout(parentSize)
-    carouselSpot.view.layoutSubviews()
+    let carouselComponent = CarouselComponent(model: model)
+    carouselComponent.setup(parentSize)
+    carouselComponent.layout(parentSize)
+    carouselComponent.view.layoutSubviews()
 
-    XCTAssertEqual(carouselSpot.layout.contentSize, CGSize(width: 100, height: 150))
-    XCTAssertEqual(carouselSpot.view.frame.size, CGSize(width: 100, height: 150))
+    XCTAssertEqual(carouselComponent.layout.contentSize, CGSize(width: 100, height: 150))
+    XCTAssertEqual(carouselComponent.view.frame.size, CGSize(width: 100, height: 150))
   }
 
   func testLayoutAttributesForElementInHorizontalLayoutWithInsets() {
@@ -52,12 +52,12 @@ class TestGridableLayout: XCTestCase {
         Item(title: "bar", size: itemSize)
       ]
     )
-    let carouselSpot = CarouselComponent(model: model)
-    carouselSpot.setup(parentSize)
-    carouselSpot.layout(parentSize)
-    carouselSpot.view.layoutSubviews()
+    let carouselComponent = CarouselComponent(model: model)
+    carouselComponent.setup(parentSize)
+    carouselComponent.layout(parentSize)
+    carouselComponent.view.layoutSubviews()
 
-    let layoutAttributes = carouselSpot.layout.layoutAttributesForElements(in: CGRect(origin: CGPoint.zero, size: parentSize))
+    let layoutAttributes = carouselComponent.layout.layoutAttributesForElements(in: CGRect(origin: CGPoint.zero, size: parentSize))
 
     let expectedFrameA = CGRect(
       origin: CGPoint(
@@ -91,12 +91,12 @@ class TestGridableLayout: XCTestCase {
         Item(title: "bar", size: itemSize)
       ]
     )
-    let carouselSpot = CarouselComponent(model: model)
-    carouselSpot.setup(parentSize)
-    carouselSpot.layout(parentSize)
-    carouselSpot.view.layoutSubviews()
+    let carouselComponent = CarouselComponent(model: model)
+    carouselComponent.setup(parentSize)
+    carouselComponent.layout(parentSize)
+    carouselComponent.view.layoutSubviews()
 
-    let layoutAttributes = carouselSpot.layout.layoutAttributesForElements(in: CGRect(origin: CGPoint.zero, size: parentSize))
+    let layoutAttributes = carouselComponent.layout.layoutAttributesForElements(in: CGRect(origin: CGPoint.zero, size: parentSize))
 
     XCTAssertEqual(layoutAttributes?.count, 2)
     XCTAssertEqual(layoutAttributes?[0].frame, CGRect(origin: CGPoint(x: 0.0, y: model.layout!.inset.top), size: itemSize))

@@ -67,7 +67,7 @@ open class RowComponent: NSObject, Gridable {
 
     super.init()
     self.userInterface = collectionView
-    self.model.layout?.configure(spot: self)
+    self.model.layout?.configure(component: self)
     self.spotDataSource = DataSource(component: self)
     self.spotDelegate = Delegate(component: self)
 
@@ -75,7 +75,7 @@ open class RowComponent: NSObject, Gridable {
       self.model.kind = ComponentModel.Kind.row.string
     }
 
-    registerDefault(view: RowSpotCell.self)
+    registerDefault(view: RowComponentCell.self)
     registerComposite(view: GridComposite.self)
     prepareItems()
     configureCollectionView()

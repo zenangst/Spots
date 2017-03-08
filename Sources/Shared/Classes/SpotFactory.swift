@@ -16,14 +16,14 @@ public struct Factory {
   /// Register a spot for a specfic spot type
   ///
   /// - parameter kind: The reusable identifier that will be used to indentify your view
-  /// - parameter spot: A generic spotable type
+  /// - parameter component: A generic spotable type
   public static func register<T: CoreComponent>(kind: String, spot: T.Type) {
     components[kind] = spot
   }
 
   /// Craft spotable object from component struct
   ///
-  /// - parameter component: A compontent struct used for crafting the spotable object.
+  /// - parameter component: A compontent struct used for crafting The component.
   ///
   /// - returns: A spotable object.
   public static func resolve(model: ComponentModel) -> CoreComponent {

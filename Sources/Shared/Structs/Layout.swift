@@ -135,9 +135,9 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
 
   /// Configure scroll view with layout
   ///
-  /// - Parameter spot: The CoreComponent object that should be configured.
-  public func configure(spot: Listable) {
-    inset.configure(scrollView: spot.view)
+  /// - parameter component: The CoreComponent object that should be configured.
+  public func configure(component: Listable) {
+    inset.configure(scrollView: component.view)
   }
 
   /// Compare Layout structs.

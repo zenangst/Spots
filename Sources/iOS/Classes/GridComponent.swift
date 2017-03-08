@@ -68,7 +68,7 @@ open class GridComponent: NSObject, Gridable {
 
     super.init()
     self.userInterface = collectionView
-    self.model.layout?.configure(spot: self)
+    self.model.layout?.configure(component: self)
     self.spotDataSource = DataSource(component: self)
     self.spotDelegate = Delegate(component: self)
 
@@ -86,7 +86,7 @@ open class GridComponent: NSObject, Gridable {
     }
   }
 
-  /// A convenience init for initializing a Gridspot with a title and a kind.
+  /// A convenience init for initializing a gridComponent with a title and a kind.
   ///
   ///  - parameter title: A string that is used as a title for the GridComponent.
   ///  - parameter kind:  An identifier to determine which kind should be set on the ComponentModel.

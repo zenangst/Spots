@@ -143,10 +143,10 @@ extension SpotsProtocol {
     oldSpot.view.removeFromSuperview()
     components[index] = component
     scrollView.componentsContentView.insertSubview(component.view, at: index)
-    setupComponent(at: index, spot: component)
+    setupComponent(at: index, component: component)
 
     #if !os(OSX)
-      (spot as? CarouselComponent)?.layout.yOffset = yOffset
+      (component as? CarouselComponent)?.layout.yOffset = yOffset
     #endif
     yOffset += component.view.frame.size.height
   }
@@ -154,9 +154,9 @@ extension SpotsProtocol {
   fileprivate func newComponent(_ index: Int, newComponentModels: [ComponentModel], yOffset: inout CGFloat) {
     let component = Factory.resolve(model: newComponentModels[index])
     components.append(component)
-    setupComponent(at: index, spot: component)
+    setupComponent(at: index, component: component)
     #if !os(OSX)
-      (spot as? CarouselComponent)?.layout.yOffset = yOffset
+      (component as? CarouselComponent)?.layout.yOffset = yOffset
     #endif
     yOffset += component.view.frame.size.height
   }
@@ -180,7 +180,7 @@ extension SpotsProtocol {
   ///
   /// - returns: A boolean value that determines if the closure should run in `process(changes:)`
   fileprivate func setupItemsForComponent(at index: Int, newComponentModels: [ComponentModel], withAnimation animation: Animation = .automatic, completion: Completion = nil) -> Bool {
-    guard let component = self.spot(at: index, ofType: CoreComponent.self) else {
+    guard let component = self.component(at: index, ofType: CoreComponent.self) else {
       return false
     }
 
@@ -240,7 +240,7 @@ extension SpotsProtocol {
   /// Reload CoreComponent object with changes and new items.
   ///
   /// - parameter changes:   A ItemChanges tuple.
-  /// - parameter spot:      The spotable object that should be updated.
+  /// - parameter component:      The component that should be updated.
   /// - parameter newItems:  The new items that should be used to updated the data source.
   /// - parameter animation: The animation that should be used when updating.
   /// - parameter closure:   A completion closure.
@@ -290,7 +290,7 @@ extension SpotsProtocol {
   /// Reload CoreComponent object with less items
   ///
   /// - parameter changes:   A ItemChanges tuple.
-  /// - parameter spot:      The spotable object that should be updated.
+  /// - parameter component:      The component that should be updated.
   /// - parameter newItems:  The new items that should be used to updated the data source.
   /// - parameter animation: The animation that should be used when updating.
   /// - parameter closure:   A completion closure.
@@ -345,7 +345,7 @@ extension SpotsProtocol {
   /// Reload CoreComponent object with more items
   ///
   /// - parameter changes:   A ItemChanges tuple.
-  /// - parameter spot:      The spotable object that should be updated.
+  /// - parameter component:      The component that should be updated.
   /// - parameter newItems:  The new items that should be used to updated the data source.
   /// - parameter animation: The animation that should be used when updating.
   /// - parameter closure:   A completion closure.
@@ -476,7 +476,7 @@ extension SpotsProtocol {
       }
 
       weakSelf.reloadSpotsScrollView()
-      weakSelf.setupSpots(animated: animated)
+      weakSelf.setupComponents(animated: animated)
       weakSelf.cache()
 
       let newComposites = weakSelf.components.flatMap { $0.compositeComponents }
@@ -523,7 +523,7 @@ extension SpotsProtocol {
       }
 
       weakSelf.reloadSpotsScrollView()
-      weakSelf.setupSpots(animated: animated)
+      weakSelf.setupComponents(animated: animated)
 
       completion?()
       if let controller = weakSelf as? Controller {
@@ -539,8 +539,8 @@ extension SpotsProtocol {
    - parameter completion: A completion closure that is performed when the update is completed
    - parameter closure: A transform closure to perform the proper modification to the target spot before updating the internals
    */
-  public func update(spotAtIndex index: Int = 0, withAnimation animation: Animation = .automatic, withCompletion completion: Completion = nil, _ closure: (_ spot: CoreComponent) -> Void) {
-    guard let component = spot(at: index, ofType: CoreComponent.self) else {
+  public func update(spotAtIndex index: Int = 0, withAnimation animation: Animation = .automatic, withCompletion completion: Completion = nil, _ closure: (_ component: CoreComponent) -> Void) {
+    guard let component = component(at: index, ofType: CoreComponent.self) else {
       completion?()
       return
     }
@@ -572,7 +572,7 @@ extension SpotsProtocol {
   }
 
   /**
-   Updates spot only if the passed view models are not the same with the current ones.
+   Updates component only if the passed view models are not the same with the current ones.
 
    - parameter spotAtIndex: The index of the spot that you want to perform updates on
    - parameter items: An array of view models
@@ -580,7 +580,7 @@ extension SpotsProtocol {
    - parameter completion: A completion closure that is run when the update is completed
    */
   public func updateIfNeeded(spotAtIndex index: Int = 0, items: [Item], withAnimation animation: Animation = .automatic, completion: Completion = nil) {
-    guard let component = spot(at: index, ofType: CoreComponent.self), !(component.items == items) else {
+    guard let component = component(at: index, ofType: CoreComponent.self), !(component.items == items) else {
       scrollView.layoutSubviews()
       completion?()
       return
@@ -600,11 +600,11 @@ extension SpotsProtocol {
    - parameter completion: A completion closure that will run after the spot has performed updates internally
    */
   public func append(_ item: Item, spotIndex: Int = 0, withAnimation animation: Animation = .none, completion: Completion = nil) {
-    spot(at: spotIndex, ofType: CoreComponent.self)?.append(item, withAnimation: animation) { [weak self] in
+    component(at: spotIndex, ofType: CoreComponent.self)?.append(item, withAnimation: animation) { [weak self] in
       completion?()
       self?.scrollView.layoutSubviews()
     }
-    spot(at: spotIndex, ofType: CoreComponent.self)?.refreshIndexes()
+    component(at: spotIndex, ofType: CoreComponent.self)?.refreshIndexes()
   }
 
   /**
@@ -614,11 +614,11 @@ extension SpotsProtocol {
    - parameter completion: A completion closure that will run after the spot has performed updates internally
    */
   public func append(_ items: [Item], spotIndex: Int = 0, withAnimation animation: Animation = .none, completion: Completion = nil) {
-    spot(at: spotIndex, ofType: CoreComponent.self)?.append(items, withAnimation: animation) { [weak self] in
+    component(at: spotIndex, ofType: CoreComponent.self)?.append(items, withAnimation: animation) { [weak self] in
       completion?()
       self?.scrollView.layoutSubviews()
     }
-    spot(at: spotIndex, ofType: CoreComponent.self)?.refreshIndexes()
+    component(at: spotIndex, ofType: CoreComponent.self)?.refreshIndexes()
   }
 
   /**
@@ -628,11 +628,11 @@ extension SpotsProtocol {
    - parameter completion: A completion closure that will run after the spot has performed updates internally
    */
   public func prepend(_ items: [Item], spotIndex: Int = 0, withAnimation animation: Animation = .none, completion: Completion = nil) {
-    spot(at: spotIndex, ofType: CoreComponent.self)?.prepend(items, withAnimation: animation) { [weak self] in
+    component(at: spotIndex, ofType: CoreComponent.self)?.prepend(items, withAnimation: animation) { [weak self] in
       completion?()
       self?.scrollView.layoutSubviews()
     }
-    spot(at: spotIndex, ofType: CoreComponent.self)?.refreshIndexes()
+    component(at: spotIndex, ofType: CoreComponent.self)?.refreshIndexes()
   }
 
   /**
@@ -643,11 +643,11 @@ extension SpotsProtocol {
    - parameter completion: A completion closure that will run after the spot has performed updates internally
    */
   public func insert(_ item: Item, index: Int = 0, spotIndex: Int, withAnimation animation: Animation = .none, completion: Completion = nil) {
-    spot(at: spotIndex, ofType: CoreComponent.self)?.insert(item, index: index, withAnimation: animation) { [weak self] in
+    component(at: spotIndex, ofType: CoreComponent.self)?.insert(item, index: index, withAnimation: animation) { [weak self] in
       completion?()
       self?.scrollView.layoutSubviews()
     }
-    spot(at: spotIndex, ofType: CoreComponent.self)?.refreshIndexes()
+    component(at: spotIndex, ofType: CoreComponent.self)?.refreshIndexes()
   }
 
   /// Update item at index inside a specific CoreComponent object
@@ -658,7 +658,7 @@ extension SpotsProtocol {
   /// - parameter animation:  A Animation struct that determines which animation that should be used to perform the update.
   /// - parameter completion: A completion closure that will run after the spot has performed updates internally.
   public func update(_ item: Item, index: Int = 0, spotIndex: Int, withAnimation animation: Animation = .none, completion: Completion = nil) {
-    guard let oldItem = spot(at: spotIndex, ofType: CoreComponent.self)?.item(at: index), item != oldItem
+    guard let oldItem = component(at: spotIndex, ofType: CoreComponent.self)?.item(at: index), item != oldItem
       else {
         completion?()
         return
@@ -670,7 +670,7 @@ extension SpotsProtocol {
       }
     #endif
 
-    spot(at: spotIndex, ofType: CoreComponent.self)?.update(item, index: index, withAnimation: animation) { [weak self] in
+    component(at: spotIndex, ofType: CoreComponent.self)?.update(item, index: index, withAnimation: animation) { [weak self] in
       completion?()
       self?.scrollView.layoutSubviews()
       #if os(iOS)
@@ -688,10 +688,10 @@ extension SpotsProtocol {
    - parameter completion: A completion closure that will run after the spot has performed updates internally
    */
   public func update(_ indexes: [Int], spotIndex: Int = 0, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
-    spot(at: spotIndex, ofType: CoreComponent.self)?.reload(indexes, withAnimation: animation) {
+    component(at: spotIndex, ofType: CoreComponent.self)?.reload(indexes, withAnimation: animation) {
       completion?()
     }
-    spot(at: spotIndex, ofType: CoreComponent.self)?.refreshIndexes()
+    component(at: spotIndex, ofType: CoreComponent.self)?.refreshIndexes()
   }
 
   /**
@@ -701,10 +701,10 @@ extension SpotsProtocol {
    - parameter completion: A completion closure that will run after the spot has performed updates internally
    */
   public func delete(_ index: Int, spotIndex: Int = 0, withAnimation animation: Animation = .none, completion: Completion = nil) {
-    spot(at: spotIndex, ofType: CoreComponent.self)?.delete(index, withAnimation: animation) {
+    component(at: spotIndex, ofType: CoreComponent.self)?.delete(index, withAnimation: animation) {
       completion?()
     }
-    spot(at: spotIndex, ofType: CoreComponent.self)?.refreshIndexes()
+    component(at: spotIndex, ofType: CoreComponent.self)?.refreshIndexes()
   }
 
   /**
@@ -714,10 +714,10 @@ extension SpotsProtocol {
    - parameter completion: A completion closure that will run after the spot has performed updates internally
    */
   public func delete(_ indexes: [Int], spotIndex: Int = 0, withAnimation animation: Animation = .none, completion: Completion = nil) {
-    spot(at: spotIndex, ofType: CoreComponent.self)?.delete(indexes, withAnimation: animation) {
+    component(at: spotIndex, ofType: CoreComponent.self)?.delete(indexes, withAnimation: animation) {
       completion?()
     }
-    spot(at: spotIndex, ofType: CoreComponent.self)?.refreshIndexes()
+    component(at: spotIndex, ofType: CoreComponent.self)?.refreshIndexes()
   }
 
   #if os(iOS)
@@ -726,7 +726,7 @@ extension SpotsProtocol {
       guard let weakSelf = self else { return }
       weakSelf.refreshPositions.removeAll()
 
-      weakSelf.refreshDelegate?.spotablesDidReload(weakSelf.components, refreshControl: refreshControl) {
+      weakSelf.refreshDelegate?.componentsDidReload(weakSelf.components, refreshControl: refreshControl) {
         refreshControl.endRefreshing()
       }
     }

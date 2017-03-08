@@ -13,6 +13,6 @@ public protocol RefreshDelegate: class {
   /// - parameter refreshControl: A UIRefreshControl
   /// - parameter completion: A completion closure that should be triggered when the update is completed
   #if os(iOS)
-  func spotablesDidReload(_ components: [CoreComponent], refreshControl: UIRefreshControl, completion: Completion)
+  func componentsDidReload(_ components: [CoreComponent], refreshControl: UIRefreshControl, completion: Completion)
   #endif
 }

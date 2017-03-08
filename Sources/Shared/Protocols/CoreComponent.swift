@@ -36,7 +36,7 @@ public protocol CoreComponent: class {
   var stateCache: StateCache? { get }
   /// Indicator to calculate the height based on content
   var usesDynamicHeight: Bool { get }
-  /// The user interface that will be used to represent the spotable object.
+  /// The user interface that will be used to represent The component.
   var userInterface: UserInterface? { get }
   /// Return a CoreComponent object as a UIScrollView
   var view: ScrollView { get }
@@ -165,7 +165,7 @@ public protocol CoreComponent: class {
   func sizeForItem(at indexPath: IndexPath) -> CGSize
 
   #if os(OSX)
-  /// Unselect any selected views inside of the spotable object.
+  /// Unselect any selected views inside of The component.
   func deselect()
   #endif
 

@@ -290,8 +290,8 @@ let myContacts = ComponentModel(title: "My contacts", items: [
   Item(title: "Khoa Pham"),
   Item(title: "Christoffer Winterkvist")
 ])
-let listSpot = ListComponent(model: myContacts)
-let controller = Controller(components: [listSpot])
+let listComponent = ListComponent(model: myContacts)
+let controller = Controller(components: [listComponent])
 
 navigationController?.pushViewController(controller, animated: true)
 ```

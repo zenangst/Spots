@@ -32,7 +32,7 @@ public struct StateCache {
     return FileManager.default.fileExists(atPath: path)
   }
 
-  /// Remove state cache for all controllers and spotable objects.
+  /// Remove state cache for all controllers and components.
   public static func removeAll() {
     let path = Cache<JSON>(name: "\(StateCache.cacheName)/\(bundleIdentifer)").path
     do {

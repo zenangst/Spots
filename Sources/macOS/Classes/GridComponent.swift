@@ -155,7 +155,7 @@ open class GridComponent: NSObject, Gridable {
     self.layout = GridComponent.setupLayout(model)
     super.init()
     self.userInterface = collectionView
-    self.model.layout?.configure(spot: self)
+    self.model.layout?.configure(component: self)
     self.spotDataSource = DataSource(component: self)
     self.spotDelegate = Delegate(component: self)
 
@@ -177,7 +177,7 @@ open class GridComponent: NSObject, Gridable {
   }
 
   /**
-   A convenience init for initializing a Gridspot
+   A convenience init for initializing a gridComponent
 
    - parameter cacheKey: A cache key
    */

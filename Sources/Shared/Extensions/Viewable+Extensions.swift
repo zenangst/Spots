@@ -31,7 +31,7 @@ public extension CoreComponent where Self : Viewable {
     prepareComponent(self)
   }
 
-  fileprivate func prepareComponent<T: Viewable>(_ spot: T) {
+  fileprivate func prepareComponent<T: Viewable>(_ component: T) {
     if model.kind.isEmpty { model.kind = "view" }
 
     model.items.forEach { (item: Item) in

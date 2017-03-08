@@ -94,7 +94,7 @@ open class CarouselComponent: NSObject, Gridable, ComponentHorizontallyScrollabl
 
     super.init()
     self.userInterface = collectionView
-    self.model.layout?.configure(spot: self)
+    self.model.layout?.configure(component: self)
     self.dynamicSpan = self.model.layout?.dynamicSpan ?? false
     self.spotDataSource = DataSource(component: self)
     self.spotDelegate = Delegate(component: self)

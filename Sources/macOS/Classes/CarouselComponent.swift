@@ -120,7 +120,7 @@ open class CarouselComponent: NSObject, Gridable {
     self.collectionView = CollectionView()
     super.init()
     self.userInterface = collectionView
-    self.model.layout?.configure(spot: self)
+    self.model.layout?.configure(component: self)
     self.spotDataSource = DataSource(component: self)
     self.spotDelegate = Delegate(component: self)
 

@@ -122,7 +122,7 @@ public extension SpotsProtocol {
   ///
   /// - parameter includeElement: The predicate that the item has to match.
   ///
-  /// - returns: A collection of tuples containing spotable objects with the matching items that were found.
+  /// - returns: A collection of tuples containing components with the matching items that were found.
   public func filter(items includeElement: (Item) -> Bool) -> [(spot: CoreComponent, items: [Item])] {
     var result = [(spot: CoreComponent, items: [Item])]()
     for spot in components {
@@ -149,13 +149,13 @@ public extension SpotsProtocol {
   /// - parameter index:          The index of the spot that you want to scroll
   /// - parameter includeElement: A filter predicate to find a view model
   public func scrollTo(spotIndex index: Int = 0, includeElement: (Item) -> Bool) {
-    guard let itemY = spot(at: index, ofType: CoreComponent.self)?.scrollTo(includeElement) else { return }
+    guard let itemY = component(at: index, ofType: CoreComponent.self)?.scrollTo(includeElement) else { return }
 
     var initialHeight: CGFloat = 0.0
     if index > 0 {
       initialHeight += components[0..<index].reduce(0, { $0 + $1.computedHeight })
     }
-    if spot(at: index, ofType: CoreComponent.self)?.computedHeight > scrollView.frame.height - scrollView.contentInset.bottom - initialHeight {
+    if component(at: index, ofType: CoreComponent.self)?.computedHeight > scrollView.frame.height - scrollView.contentInset.bottom - initialHeight {
       let y = itemY - scrollView.frame.size.height + scrollView.contentInset.bottom + initialHeight
       scrollView.setContentOffset(CGPoint(x: CGFloat(0.0), y: y), animated: true)
     }
@@ -199,14 +199,14 @@ public extension SpotsProtocol {
   ///
   /// - returns: A ComponentModel object at index path.
   fileprivate func component(at indexPath: IndexPath) -> ComponentModel {
-    return spot(at: indexPath).model
+    return component(at: indexPath).model
   }
 
   /**
    - parameter indexPath: The index path of the spot you want to lookup
    - returns: A CoreComponent object at index path
    **/
-  fileprivate func spot(at indexPath: IndexPath) -> CoreComponent {
+  fileprivate func component(at indexPath: IndexPath) -> CoreComponent {
     return components[indexPath.item]
   }
 }

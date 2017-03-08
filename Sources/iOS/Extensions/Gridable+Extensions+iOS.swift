@@ -60,7 +60,7 @@ extension Gridable {
       prepareItems()
     }
 
-    model.layout?.configure(spot: self)
+    model.layout?.configure(component: self)
     layout.prepare()
     layout.invalidateLayout()
 

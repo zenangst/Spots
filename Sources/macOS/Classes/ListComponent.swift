@@ -129,7 +129,7 @@ open class ListComponent: NSObject, Listable {
 
     super.init()
     self.userInterface = tableView
-    self.model.layout?.configure(spot: self)
+    self.model.layout?.configure(component: self)
     self.spotDataSource = DataSource(component: self)
     self.spotDelegate = Delegate(component: self)
 
