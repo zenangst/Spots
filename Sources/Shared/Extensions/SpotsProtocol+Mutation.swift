@@ -53,12 +53,12 @@ extension SpotsProtocol {
     }
 
     Dispatch.interactive { [weak self] in
-      guard let weakSelf = self else {
+      guard let strongSelf = self else {
         completion?()
         return
       }
 
-      let oldSpots = weakSelf.components
+      let oldSpots = strongSelf.components
       let oldComponentModels = oldSpots.map { $0.model }
       var newComponentModels = components
 
@@ -74,9 +74,9 @@ extension SpotsProtocol {
       }
 
       guard compare(newComponentModels, oldComponentModels) else {
-        weakSelf.cache()
+        strongSelf.cache()
         Dispatch.main {
-          weakSelf.scrollView.layoutViews()
+          strongSelf.scrollView.layoutViews()
           if let controller = self as? Controller {
             Controller.componentsDidReloadComponentModels?(controller)
           }
@@ -85,12 +85,12 @@ extension SpotsProtocol {
         return
       }
 
-      let changes = weakSelf.generateChanges(from: newComponentModels, and: oldComponentModels)
+      let changes = strongSelf.generateChanges(from: newComponentModels, and: oldComponentModels)
 
-      weakSelf.process(changes: changes, components: newComponentModels, withAnimation: animation) {
+      strongSelf.process(changes: changes, components: newComponentModels, withAnimation: animation) {
         Dispatch.main {
-          weakSelf.scrollView.layoutSubviews()
-          weakSelf.cache()
+          strongSelf.scrollView.layoutSubviews()
+          strongSelf.cache()
           if let controller = self as? Controller {
             Controller.componentsDidReloadComponentModels?(controller)
           }
@@ -213,22 +213,22 @@ extension SpotsProtocol {
 
     if newItems.count == component.items.count {
       reload(with: changes, in: component, newItems: newItems, animation: animation) { [weak self] in
-        if let weakSelf = self, let completion = completion {
-          weakSelf.setupAndLayoutSpots()
+        if let strongSelf = self, let completion = completion {
+          strongSelf.setupAndLayoutSpots()
           completion()
         }
       }
     } else if newItems.count < component.items.count {
       reload(with: changes, in: component, lessItems: newItems, animation: animation) { [weak self] in
-        if let weakSelf = self, let completion = completion {
-          weakSelf.setupAndLayoutSpots()
+        if let strongSelf = self, let completion = completion {
+          strongSelf.setupAndLayoutSpots()
           completion()
         }
       }
     } else if newItems.count > component.items.count {
       reload(with: changes, in: component, moreItems: newItems, animation: animation) { [weak self] in
-        if let weakSelf = self, let completion = completion {
-          weakSelf.setupAndLayoutSpots()
+        if let strongSelf = self, let completion = completion {
+          strongSelf.setupAndLayoutSpots()
           completion()
         }
       }
@@ -263,16 +263,16 @@ extension SpotsProtocol {
 
       component.items = newItems
     }) { [weak self] in
-      guard let weakSelf = self else {
+      guard let strongSelf = self else {
         return
       }
 
       for (index, item) in newItems.enumerated() {
-        guard index < weakSelf.components.count else {
+        guard index < strongSelf.components.count else {
           break
         }
 
-        let compositeComponents = weakSelf.components[item.index].compositeComponents
+        let compositeComponents = strongSelf.components[item.index].compositeComponents
           .filter({ $0.itemIndex == item.index })
         for (index, compositeSpot) in compositeComponents.enumerated() {
           guard index < offsets.count else {
@@ -303,7 +303,7 @@ extension SpotsProtocol {
       component.beforeUpdate()
       component.items = newItems
     }) { [weak self] in
-      guard let weakSelf = self, !newItems.isEmpty else {
+      guard let strongSelf = self, !newItems.isEmpty else {
         self?.finishReloading(component: component, withCompletion: completion)
         return
       }
@@ -312,7 +312,7 @@ extension SpotsProtocol {
       for (index, item) in newItems.enumerated() {
         let components = Parser.parse(item.children).map { $0.model }
 
-        let oldSpots = weakSelf.components.flatMap({
+        let oldSpots = strongSelf.components.flatMap({
           $0.compositeComponents
         })
 
@@ -329,13 +329,13 @@ extension SpotsProtocol {
         if !component.items.filter({ !$0.children.isEmpty }).isEmpty {
           component.beforeUpdate()
           component.reload(nil, withAnimation: animation) {
-            weakSelf.finishReloading(component: component, withCompletion: completion)
+            strongSelf.finishReloading(component: component, withCompletion: completion)
           }
         } else {
           component.beforeUpdate()
           component.update(item, index: index, withAnimation: animation) {
             guard index == executeClosure else { return }
-            weakSelf.finishReloading(component: component, withCompletion: completion)
+            strongSelf.finishReloading(component: component, withCompletion: completion)
           }
         }
       }
@@ -381,7 +381,7 @@ extension SpotsProtocol {
                withAnimation animation: Animation = .automatic,
                completion: Completion = nil) {
     Dispatch.main { [weak self] in
-      guard let weakSelf = self else {
+      guard let strongSelf = self else {
         completion?()
         return
       }
@@ -402,17 +402,17 @@ extension SpotsProtocol {
       for (index, change) in changes.enumerated() {
         switch change {
         case .identifier, .title, .kind, .layout, .header, .footer, .meta:
-          weakSelf.replaceComponent(index, newComponentModels: newComponentModels, yOffset: &yOffset)
+          strongSelf.replaceComponent(index, newComponentModels: newComponentModels, yOffset: &yOffset)
         case .new:
-          weakSelf.newComponent(index, newComponentModels: newComponentModels, yOffset: &yOffset)
+          strongSelf.newComponent(index, newComponentModels: newComponentModels, yOffset: &yOffset)
         case .removed:
-          weakSelf.removeComponent(at: index)
+          strongSelf.removeComponent(at: index)
         case .items:
           if index == lastItemChange {
             completion = finalCompletion
           }
 
-          runCompletion = weakSelf.setupItemsForComponent(at: index,
+          runCompletion = strongSelf.setupItemsForComponent(at: index,
                                                      newComponentModels: newComponentModels,
                                                      withAnimation: animation,
                                                      completion: completion)
@@ -420,14 +420,14 @@ extension SpotsProtocol {
         }
       }
 
-      for removedSpot in weakSelf.components where removedSpot.view.superview == nil {
-        if let index = weakSelf.components.index(where: { removedSpot.view.isEqual($0.view) }) {
-          weakSelf.components.remove(at: index)
+      for removedSpot in strongSelf.components where removedSpot.view.superview == nil {
+        if let index = strongSelf.components.index(where: { removedSpot.view.isEqual($0.view) }) {
+          strongSelf.components.remove(at: index)
         }
       }
 
       if runCompletion {
-        weakSelf.setupAndLayoutSpots()
+        strongSelf.setupAndLayoutSpots()
         finalCompletion?()
       }
     }
@@ -444,42 +444,42 @@ extension SpotsProtocol {
                              animated: ((_ view: View) -> Void)? = nil,
                              completion: Completion = nil) {
     Dispatch.main { [weak self] in
-      guard let weakSelf = self else {
+      guard let strongSelf = self else {
         completion?()
         return
       }
 
       let newSpots: [CoreComponent] = Parser.parse(json)
       let newComponentModels = newSpots.map { $0.model }
-      let oldComponentModels = weakSelf.components.map { $0.model }
+      let oldComponentModels = strongSelf.components.map { $0.model }
 
       guard compare(newComponentModels, oldComponentModels) else {
         if let controller = self as? Controller {
           Controller.componentsDidReloadComponentModels?(controller)
         }
-        weakSelf.cache()
+        strongSelf.cache()
         completion?()
         return
       }
 
       var offsets = [CGPoint]()
-      let oldComposites = weakSelf.components.flatMap { $0.compositeComponents }
+      let oldComposites = strongSelf.components.flatMap { $0.compositeComponents }
 
       if newComponentModels.count == oldComponentModels.count {
-        offsets = weakSelf.components.map { $0.view.contentOffset }
+        offsets = strongSelf.components.map { $0.view.contentOffset }
       }
 
-      weakSelf.components = newSpots
+      strongSelf.components = newSpots
 
-      if weakSelf.scrollView.superview == nil {
-        weakSelf.view.addSubview(weakSelf.scrollView)
+      if strongSelf.scrollView.superview == nil {
+        strongSelf.view.addSubview(strongSelf.scrollView)
       }
 
-      weakSelf.reloadSpotsScrollView()
-      weakSelf.setupComponents(animated: animated)
-      weakSelf.cache()
+      strongSelf.reloadSpotsScrollView()
+      strongSelf.setupComponents(animated: animated)
+      strongSelf.cache()
 
-      let newComposites = weakSelf.components.flatMap { $0.compositeComponents }
+      let newComposites = strongSelf.components.flatMap { $0.compositeComponents }
 
       for (index, compositeSpot) in oldComposites.enumerated() {
         if index == newComposites.count {
@@ -499,7 +499,7 @@ extension SpotsProtocol {
         Controller.componentsDidReloadComponentModels?(controller)
       }
 
-      weakSelf.scrollView.layoutSubviews()
+      strongSelf.scrollView.layoutSubviews()
     }
   }
 
@@ -510,26 +510,26 @@ extension SpotsProtocol {
   ///- parameter completion: A closure that will be run after reload has been performed on all components
   public func reload(_ json: [String : Any], animated: ((_ view: View) -> Void)? = nil, completion: Completion = nil) {
     Dispatch.main { [weak self] in
-      guard let weakSelf = self else {
+      guard let strongSelf = self else {
         completion?()
         return
       }
 
-      weakSelf.components = Parser.parse(json)
-      weakSelf.cache()
+      strongSelf.components = Parser.parse(json)
+      strongSelf.cache()
 
-      if weakSelf.scrollView.superview == nil {
-        weakSelf.view.addSubview(weakSelf.scrollView)
+      if strongSelf.scrollView.superview == nil {
+        strongSelf.view.addSubview(strongSelf.scrollView)
       }
 
-      weakSelf.reloadSpotsScrollView()
-      weakSelf.setupComponents(animated: animated)
+      strongSelf.reloadSpotsScrollView()
+      strongSelf.setupComponents(animated: animated)
 
       completion?()
-      if let controller = weakSelf as? Controller {
+      if let controller = strongSelf as? Controller {
         Controller.componentsDidReloadComponentModels?(controller)
       }
-      weakSelf.scrollView.layoutSubviews()
+      strongSelf.scrollView.layoutSubviews()
     }
   }
 
@@ -550,11 +550,11 @@ extension SpotsProtocol {
     component.prepareItems()
 
     Dispatch.main { [weak self] in
-      guard let weakSelf = self else { return }
+      guard let strongSelf = self else { return }
 
       #if !os(OSX)
         if animation != .none {
-          let isScrolling = weakSelf.scrollView.isDragging == true || weakSelf.scrollView.isTracking == true
+          let isScrolling = strongSelf.scrollView.isDragging == true || strongSelf.scrollView.isTracking == true
           if let superview = component.view.superview, !isScrolling {
             component.view.frame.size.height = superview.frame.height
           }
@@ -723,10 +723,10 @@ extension SpotsProtocol {
   #if os(iOS)
   public func refreshSpots(_ refreshControl: UIRefreshControl) {
     Dispatch.main { [weak self] in
-      guard let weakSelf = self else { return }
-      weakSelf.refreshPositions.removeAll()
+      guard let strongSelf = self else { return }
+      strongSelf.refreshPositions.removeAll()
 
-      weakSelf.refreshDelegate?.componentsDidReload(weakSelf.components, refreshControl: refreshControl) {
+      strongSelf.refreshDelegate?.componentsDidReload(strongSelf.components, refreshControl: refreshControl) {
         refreshControl.endRefreshing()
       }
     }

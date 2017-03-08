@@ -384,8 +384,8 @@ class CarouselComponentTests: XCTestCase {
 
     let expectation = self.expectation(description: "Wait for cache")
     Dispatch.after(seconds: 0.25) { [weak self] in
-      guard let weakSelf = self else { return }
-      let cachedSpot = CarouselComponent(cacheKey: weakSelf.cachedSpot.stateCache!.key)
+      guard let strongSelf = self else { return }
+      let cachedSpot = CarouselComponent(cacheKey: strongSelf.cachedSpot.stateCache!.key)
       XCTAssertEqual(cachedSpot.model.items.count, 1)
       cachedSpot.stateCache?.clear()
       expectation.fulfill()

@@ -14,27 +14,27 @@ public extension CoreComponent {
   /// - parameter completion: A completion closure that is executed in the main queue.
   func append(_ item: Item, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     Dispatch.main { [weak self] in
-      guard let weakSelf = self else {
+      guard let strongSelf = self else {
         completion?()
         return
       }
 
-      let numberOfItems = weakSelf.model.items.count
-      weakSelf.model.items.append(item)
+      let numberOfItems = strongSelf.model.items.count
+      strongSelf.model.items.append(item)
 
       if numberOfItems == 0 {
-        weakSelf.userInterface?.reloadDataSource()
-        weakSelf.updateHeight {
-          weakSelf.afterUpdate()
+        strongSelf.userInterface?.reloadDataSource()
+        strongSelf.updateHeight {
+          strongSelf.afterUpdate()
           completion?()
         }
       } else {
         Dispatch.main {
-          weakSelf.configureItem(at: numberOfItems, usesViewSize: true)
-          weakSelf.userInterface?.insert([numberOfItems], withAnimation: animation, completion: nil)
-          weakSelf.updateHeight {
-            weakSelf.afterUpdate()
-            weakSelf.view.superview?.layoutSubviews()
+          strongSelf.configureItem(at: numberOfItems, usesViewSize: true)
+          strongSelf.userInterface?.insert([numberOfItems], withAnimation: animation, completion: nil)
+          strongSelf.updateHeight {
+            strongSelf.afterUpdate()
+            strongSelf.view.superview?.layoutSubviews()
             completion?()
           }
         }
@@ -49,30 +49,30 @@ public extension CoreComponent {
   /// - parameter completion: A completion closure that is executed in the main queue.
   func append(_ items: [Item], withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     Dispatch.main { [weak self] in
-      guard let weakSelf = self else {
+      guard let strongSelf = self else {
         completion?()
         return
       }
 
       var indexes = [Int]()
-      let numberOfItems = weakSelf.model.items.count
+      let numberOfItems = strongSelf.model.items.count
 
-      weakSelf.model.items.append(contentsOf: items)
+      strongSelf.model.items.append(contentsOf: items)
 
       items.enumerated().forEach {
         indexes.append(numberOfItems + $0.offset)
-        weakSelf.configureItem(at: numberOfItems + $0.offset, usesViewSize: true)
+        strongSelf.configureItem(at: numberOfItems + $0.offset, usesViewSize: true)
       }
 
       if numberOfItems > 0 {
-        weakSelf.userInterface?.insert(indexes, withAnimation: animation, completion: nil)
-        weakSelf.updateHeight {
+        strongSelf.userInterface?.insert(indexes, withAnimation: animation, completion: nil)
+        strongSelf.updateHeight {
           completion?()
         }
       } else {
-        weakSelf.userInterface?.reloadDataSource()
-        weakSelf.updateHeight {
-          weakSelf.view.superview?.layoutSubviews()
+        strongSelf.userInterface?.reloadDataSource()
+        strongSelf.updateHeight {
+          strongSelf.view.superview?.layoutSubviews()
           completion?()
         }
       }
@@ -86,35 +86,35 @@ public extension CoreComponent {
   /// - parameter completion: A completion closure that is executed in the main queue.
   func prepend(_ items: [Item], withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     Dispatch.main { [weak self] in
-      guard let weakSelf = self else {
+      guard let strongSelf = self else {
         completion?()
         return
       }
 
-      let numberOfItems = weakSelf.model.items.count
+      let numberOfItems = strongSelf.model.items.count
       var indexes = [Int]()
 
-      weakSelf.model.items.insert(contentsOf: items, at: 0)
+      strongSelf.model.items.insert(contentsOf: items, at: 0)
 
       items.enumerated().forEach {
         if numberOfItems > 0 {
           indexes.append(items.count - 1 - $0.offset)
         }
-        weakSelf.configureItem(at: $0.offset, usesViewSize: true)
+        strongSelf.configureItem(at: $0.offset, usesViewSize: true)
       }
 
       if !indexes.isEmpty {
-        weakSelf.userInterface?.insert(indexes, withAnimation: animation) {
-          weakSelf.afterUpdate()
-          weakSelf.sanitize {
+        strongSelf.userInterface?.insert(indexes, withAnimation: animation) {
+          strongSelf.afterUpdate()
+          strongSelf.sanitize {
             completion?()
           }
         }
       } else {
-        weakSelf.userInterface?.reloadDataSource()
-        weakSelf.afterUpdate()
-        weakSelf.sanitize {
-          weakSelf.view.superview?.layoutSubviews()
+        strongSelf.userInterface?.reloadDataSource()
+        strongSelf.afterUpdate()
+        strongSelf.sanitize {
+          strongSelf.view.superview?.layoutSubviews()
           completion?()
         }
       }
@@ -129,29 +129,29 @@ public extension CoreComponent {
   /// - parameter completion: A completion closure that is executed in the main queue.
   func insert(_ item: Item, index: Int, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     Dispatch.main { [weak self] in
-      guard let weakSelf = self else {
+      guard let strongSelf = self else {
         completion?()
         return
       }
 
-      let numberOfItems = weakSelf.model.items.count
+      let numberOfItems = strongSelf.model.items.count
       var indexes = [Int]()
 
-      weakSelf.model.items.insert(item, at: index)
+      strongSelf.model.items.insert(item, at: index)
 
       if numberOfItems > 0 {
         indexes.append(index)
       }
 
       if numberOfItems > 0 {
-        weakSelf.configureItem(at: numberOfItems, usesViewSize: true)
-        weakSelf.userInterface?.insert(indexes, withAnimation: animation, completion: nil)
+        strongSelf.configureItem(at: numberOfItems, usesViewSize: true)
+        strongSelf.userInterface?.insert(indexes, withAnimation: animation, completion: nil)
       } else {
-        weakSelf.userInterface?.reloadDataSource()
+        strongSelf.userInterface?.reloadDataSource()
       }
-      weakSelf.afterUpdate()
-      weakSelf.sanitize {
-        weakSelf.view.superview?.layoutSubviews()
+      strongSelf.afterUpdate()
+      strongSelf.sanitize {
+        strongSelf.view.superview?.layoutSubviews()
         completion?()
       }
     }
@@ -164,17 +164,17 @@ public extension CoreComponent {
   /// - parameter completion: A completion closure that is executed in the main queue.
   func delete(_ item: Item, withAnimation animation: Animation = .automatic, completion: Completion) {
     Dispatch.main { [weak self] in
-      guard let weakSelf = self,
-        let index = weakSelf.model.items.index(where: { $0 == item }) else {
+      guard let strongSelf = self,
+        let index = strongSelf.model.items.index(where: { $0 == item }) else {
           completion?()
           return
       }
 
-      weakSelf.model.items.remove(at: index)
-      weakSelf.userInterface?.delete([index], withAnimation: animation, completion: nil)
-      weakSelf.afterUpdate()
-      weakSelf.sanitize {
-        weakSelf.view.superview?.layoutSubviews()
+      strongSelf.model.items.remove(at: index)
+      strongSelf.userInterface?.delete([index], withAnimation: animation, completion: nil)
+      strongSelf.afterUpdate()
+      strongSelf.sanitize {
+        strongSelf.view.superview?.layoutSubviews()
         completion?()
       }
     }
@@ -187,7 +187,7 @@ public extension CoreComponent {
   /// - parameter completion: A completion closure that is executed in the main queue.
   func delete(_ items: [Item], withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     Dispatch.main { [weak self] in
-      guard let weakSelf = self else {
+      guard let strongSelf = self else {
         completion?()
         return
       }
@@ -201,13 +201,13 @@ public extension CoreComponent {
       }
 
       indexes.sorted(by: { $0 > $1 }).forEach {
-        weakSelf.model.items.remove(at: $0)
+        strongSelf.model.items.remove(at: $0)
       }
 
-      weakSelf.userInterface?.delete(indexPaths, withAnimation: animation, completion: nil)
-      weakSelf.afterUpdate()
-      weakSelf.sanitize {
-        weakSelf.view.superview?.layoutSubviews()
+      strongSelf.userInterface?.delete(indexPaths, withAnimation: animation, completion: nil)
+      strongSelf.afterUpdate()
+      strongSelf.sanitize {
+        strongSelf.view.superview?.layoutSubviews()
         completion?()
       }
     }
@@ -220,16 +220,16 @@ public extension CoreComponent {
   /// - parameter completion: A completion closure that is executed in the main queue when the view model has been removed.
   func delete(_ index: Int, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     Dispatch.main { [weak self] in
-      guard let weakSelf = self else {
+      guard let strongSelf = self else {
         completion?()
         return
       }
 
-      weakSelf.model.items.remove(at: index)
-      weakSelf.userInterface?.delete([index], withAnimation: animation, completion: nil)
-      weakSelf.afterUpdate()
-      weakSelf.sanitize {
-        weakSelf.view.superview?.layoutSubviews()
+      strongSelf.model.items.remove(at: index)
+      strongSelf.userInterface?.delete([index], withAnimation: animation, completion: nil)
+      strongSelf.afterUpdate()
+      strongSelf.sanitize {
+        strongSelf.view.superview?.layoutSubviews()
         completion?()
       }
     }
@@ -242,19 +242,19 @@ public extension CoreComponent {
   /// - parameter completion: A completion closure that is executed in the main queue when the view model has been removed.
   func delete(_ indexes: [Int], withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     Dispatch.main { [weak self] in
-      guard let weakSelf = self else {
+      guard let strongSelf = self else {
         completion?()
         return
       }
 
       indexes.sorted(by: { $0 > $1 }).forEach {
-        weakSelf.model.items.remove(at: $0)
+        strongSelf.model.items.remove(at: $0)
       }
 
-      weakSelf.userInterface?.delete(indexes, withAnimation: animation, completion: nil)
-      weakSelf.afterUpdate()
-      weakSelf.sanitize {
-        weakSelf.view.superview?.layoutSubviews()
+      strongSelf.userInterface?.delete(indexes, withAnimation: animation, completion: nil)
+      strongSelf.afterUpdate()
+      strongSelf.sanitize {
+        strongSelf.view.superview?.layoutSubviews()
         completion?()
       }
     }
@@ -268,55 +268,55 @@ public extension CoreComponent {
   /// - parameter completion: A completion closure that is executed in the main queue when the view model has been removed.
   func update(_ item: Item, index: Int, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     Dispatch.main { [weak self] in
-      guard let weakSelf = self,
-        let oldItem = weakSelf.item(at: index) else {
+      guard let strongSelf = self,
+        let oldItem = strongSelf.item(at: index) else {
           completion?()
           return
       }
 
-      weakSelf.items[index] = item
+      strongSelf.items[index] = item
 
-      if weakSelf.items[index].kind == "composite" {
-        if let compositeView: Composable? = weakSelf.userInterface?.view(at: index) {
-          let compositeComponents = weakSelf.compositeComponents.filter { $0.itemIndex == item.index }
-          compositeView?.configure(&weakSelf.items[index],
+      if strongSelf.items[index].kind == "composite" {
+        if let compositeView: Composable? = strongSelf.userInterface?.view(at: index) {
+          let compositeComponents = strongSelf.compositeComponents.filter { $0.itemIndex == item.index }
+          compositeView?.configure(&strongSelf.items[index],
                                    compositeComponents: compositeComponents)
         } else {
-          for compositeSpot in weakSelf.compositeComponents {
-            compositeSpot.component.setup(weakSelf.view.frame.size)
+          for compositeSpot in strongSelf.compositeComponents {
+            compositeSpot.component.setup(strongSelf.view.frame.size)
             compositeSpot.component.reload([])
           }
         }
 
-        weakSelf.view.superview?.layoutSubviews()
-        weakSelf.afterUpdate()
+        strongSelf.view.superview?.layoutSubviews()
+        strongSelf.afterUpdate()
         completion?()
         return
       } else {
-        weakSelf.configureItem(at: index, usesViewSize: true)
-        let newItem = weakSelf.items[index]
+        strongSelf.configureItem(at: index, usesViewSize: true)
+        let newItem = strongSelf.items[index]
 
         if newItem.kind != oldItem.kind || newItem.size.height != oldItem.size.height {
-          if let cell: ItemConfigurable = weakSelf.userInterface?.view(at: index), animation != .none {
-            weakSelf.userInterface?.beginUpdates()
-            cell.configure(&weakSelf.items[index])
-            weakSelf.userInterface?.endUpdates()
+          if let cell: ItemConfigurable = strongSelf.userInterface?.view(at: index), animation != .none {
+            strongSelf.userInterface?.beginUpdates()
+            cell.configure(&strongSelf.items[index])
+            strongSelf.userInterface?.endUpdates()
           } else {
-            weakSelf.userInterface?.reload([index], withAnimation: animation, completion: nil)
+            strongSelf.userInterface?.reload([index], withAnimation: animation, completion: nil)
           }
-          weakSelf.afterUpdate()
-          weakSelf.updateHeight {
-            weakSelf.view.superview?.layoutSubviews()
+          strongSelf.afterUpdate()
+          strongSelf.updateHeight {
+            strongSelf.view.superview?.layoutSubviews()
             completion?()
           }
           return
-        } else if let cell: ItemConfigurable = weakSelf.userInterface?.view(at: index) {
-          cell.configure(&weakSelf.items[index])
-          weakSelf.view.superview?.layoutSubviews()
+        } else if let cell: ItemConfigurable = strongSelf.userInterface?.view(at: index) {
+          cell.configure(&strongSelf.items[index])
+          strongSelf.view.superview?.layoutSubviews()
           completion?()
         } else {
-          weakSelf.afterUpdate()
-          weakSelf.view.superview?.layoutSubviews()
+          strongSelf.afterUpdate()
+          strongSelf.view.superview?.layoutSubviews()
           completion?()
         }
       }
@@ -330,41 +330,41 @@ public extension CoreComponent {
   /// - parameter completion: A completion closure that is performed when all mutations are performed
   func reload(_ indexes: [Int]? = nil, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     Dispatch.interactive { [weak self] in
-      guard let weakSelf = self else {
+      guard let strongSelf = self else {
         completion?()
         return
       }
 
-      weakSelf.refreshIndexes()
+      strongSelf.refreshIndexes()
 
       Dispatch.main {
-        guard let weakSelf = self else {
+        guard let strongSelf = self else {
           completion?()
           return
         }
 
         if let indexes = indexes {
           indexes.forEach { index  in
-            weakSelf.configureItem(at: index, usesViewSize: true)
+            strongSelf.configureItem(at: index, usesViewSize: true)
           }
         } else {
-          for (index, _) in weakSelf.model.items.enumerated() {
-            weakSelf.configureItem(at: index, usesViewSize: true)
+          for (index, _) in strongSelf.model.items.enumerated() {
+            strongSelf.configureItem(at: index, usesViewSize: true)
           }
         }
 
         if let indexes = indexes {
-          weakSelf.userInterface?.reload(indexes, withAnimation: animation, completion: completion)
+          strongSelf.userInterface?.reload(indexes, withAnimation: animation, completion: completion)
           return
         } else {
           if animation != .none {
-            weakSelf.userInterface?.reloadSection(0, withAnimation: animation, completion: completion)
+            strongSelf.userInterface?.reloadSection(0, withAnimation: animation, completion: completion)
             return
           } else {
-            weakSelf.userInterface?.reloadDataSource()
+            strongSelf.userInterface?.reloadDataSource()
           }
         }
-        weakSelf.view.superview?.layoutSubviews()
+        strongSelf.view.superview?.layoutSubviews()
         completion?()
       }
     }
@@ -378,20 +378,20 @@ public extension CoreComponent {
   /// - parameter completion:       A completion closure that runs when your updates are done.
   public func reloadIfNeeded(_ changes: ItemChanges, withAnimation animation: Animation = .automatic, updateDataSource: () -> Void, completion: Completion) {
     userInterface?.process((insertions: changes.insertions, reloads: changes.reloads, deletions: changes.deletions, childUpdates: changes.updatedChildren), withAnimation: animation, updateDataSource: updateDataSource) { [weak self] in
-      guard let weakSelf = self else {
+      guard let strongSelf = self else {
         completion?()
         return
       }
 
       if changes.updates.isEmpty {
-        weakSelf.process(changes.updatedChildren, withAnimation: animation) {
-          weakSelf.layout(weakSelf.view.bounds.size)
+        strongSelf.process(changes.updatedChildren, withAnimation: animation) {
+          strongSelf.layout(strongSelf.view.bounds.size)
           completion?()
         }
       } else {
-        weakSelf.process(changes.updates, withAnimation: animation) {
-          weakSelf.process(changes.updatedChildren, withAnimation: animation) {
-            weakSelf.layout(weakSelf.view.bounds.size)
+        strongSelf.process(changes.updates, withAnimation: animation) {
+          strongSelf.process(changes.updatedChildren, withAnimation: animation) {
+            strongSelf.layout(strongSelf.view.bounds.size)
             completion?()
           }
         }
@@ -446,34 +446,34 @@ public extension CoreComponent {
   /// - parameter completion: A completion closure that is performed when all mutations are performed
   public func reloadIfNeeded(_ items: [Item], withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     Dispatch.interactive { [weak self] in
-      guard let weakSelf = self else {
+      guard let strongSelf = self else {
         completion?()
         return
       }
 
-      if weakSelf.items == items {
+      if strongSelf.items == items {
         Dispatch.main {
-          weakSelf.cache()
+          strongSelf.cache()
           completion?()
-          weakSelf.view.superview?.layoutSubviews()
+          strongSelf.view.superview?.layoutSubviews()
         }
         return
       }
 
       Dispatch.main { [weak self] in
-        guard let weakSelf = self else {
+        guard let strongSelf = self else {
           completion?()
           return
         }
 
         var indexes: [Int]? = nil
-        let oldItems = weakSelf.items
-        weakSelf.items = items
+        let oldItems = strongSelf.items
+        strongSelf.items = items
 
         if items.count == oldItems.count {
           for (index, item) in items.enumerated() {
             guard !(item == oldItems[index]) else {
-              weakSelf.items[index].size = oldItems[index].size
+              strongSelf.items[index].size = oldItems[index].size
               continue
             }
 
@@ -482,10 +482,10 @@ public extension CoreComponent {
           }
         }
 
-        weakSelf.reload(indexes, withAnimation: animation) {
-          weakSelf.updateHeight {
-            weakSelf.afterUpdate()
-            weakSelf.cache()
+        strongSelf.reload(indexes, withAnimation: animation) {
+          strongSelf.updateHeight {
+            strongSelf.afterUpdate()
+            strongSelf.cache()
             completion?()
           }
         }
@@ -499,25 +499,25 @@ public extension CoreComponent {
   /// - parameter animation:  A Animation that is used when performing the mutation (only works for Listable objects)
   public func reloadIfNeeded(_ json: [String : Any], withAnimation animation: Animation = .automatic) {
     Dispatch.interactive { [weak self] in
-      guard let weakSelf = self else {
+      guard let strongSelf = self else {
         return
       }
 
       let newComponentModel = ComponentModel(json)
 
-      guard weakSelf.model != newComponentModel else {
-        weakSelf.cache()
+      guard strongSelf.model != newComponentModel else {
+        strongSelf.cache()
         return
       }
 
-      weakSelf.model = newComponentModel
-      weakSelf.reload(nil, withAnimation: animation) { [weak self] in
-        guard let weakSelf = self else {
+      strongSelf.model = newComponentModel
+      strongSelf.reload(nil, withAnimation: animation) { [weak self] in
+        guard let strongSelf = self else {
           return
         }
-        weakSelf.afterUpdate()
-        weakSelf.view.superview?.layoutSubviews()
-        weakSelf.cache()
+        strongSelf.afterUpdate()
+        strongSelf.view.superview?.layoutSubviews()
+        strongSelf.cache()
       }
     }
   }

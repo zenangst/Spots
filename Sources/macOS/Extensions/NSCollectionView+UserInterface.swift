@@ -38,8 +38,8 @@ extension NSCollectionView: UserInterface {
     let set = Set<IndexPath>(indexPaths)
 
     performBatchUpdates({ [weak self] in
-      guard let weakSelf = self else { return }
-      weakSelf.insertItems(at: set as Set<IndexPath>)
+      guard let strongSelf = self else { return }
+      strongSelf.insertItems(at: set as Set<IndexPath>)
     }) { _ in
       completion?()
     }
@@ -72,8 +72,8 @@ extension NSCollectionView: UserInterface {
     let set = Set<IndexPath>(indexPaths)
 
     performBatchUpdates({ [weak self] in
-      guard let weakSelf = self else { return }
-      weakSelf.deleteItems(at: set as Set<IndexPath>)
+      guard let strongSelf = self else { return }
+      strongSelf.deleteItems(at: set as Set<IndexPath>)
     }) { _ in
       completion?()
     }
@@ -114,8 +114,8 @@ extension NSCollectionView: UserInterface {
    **/
   public func reloadSection(_ section: Int, withAnimation animation: Animation, completion: (() -> Void)?) {
     performBatchUpdates({ [weak self] in
-      guard let weakSelf = self else { return }
-      weakSelf.reloadSections(IndexSet(integer: section))
+      guard let strongSelf = self else { return }
+      strongSelf.reloadSections(IndexSet(integer: section))
     }) { _ in
       completion?()
     }
