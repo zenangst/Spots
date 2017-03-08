@@ -1,6 +1,6 @@
 public struct Factory {
 
-  /// The default spot for the Factory
+  /// The default component for the Factory
   public static var DefaultSpot: CoreComponent.Type = GridComponent.self
 
   /// Defaults components, it includes carousel, list, grid and view
@@ -10,30 +10,30 @@ public struct Factory {
     ComponentModel.Kind.grid.string: GridComponent.self,
     ComponentModel.Kind.row.string: RowComponent.self,
     ComponentModel.Kind.view.string: ViewComponent.self,
-    ComponentModel.Kind.spot.string: Component.self
+    ComponentModel.Kind.component.string: Component.self
   ]
 
-  /// Register a spot for a specfic spot type
+  /// Register a component for a specfic component type
   ///
   /// - parameter kind: The reusable identifier that will be used to indentify your view
-  /// - parameter component: A generic spotable type
-  public static func register<T: CoreComponent>(kind: String, spot: T.Type) {
-    components[kind] = spot
+  /// - parameter component: A generic component type.
+  public static func register<T: CoreComponent>(kind: String, component: T.Type) {
+    components[kind] = component
   }
 
-  /// Craft spotable object from component struct
+  /// Craft component from component model
   ///
   /// - parameter component: A compontent struct used for crafting The component.
   ///
-  /// - returns: A spotable object.
+  /// - returns: A component.
   public static func resolve(model: ComponentModel) -> CoreComponent {
     var resolvedKind = model.kind
     if model.isHybrid {
-      resolvedKind = ComponentModel.Kind.spot.string
+      resolvedKind = ComponentModel.Kind.component.string
     }
 
-    let spot: CoreComponent.Type = components[resolvedKind] ?? DefaultSpot
+    let component: CoreComponent.Type = components[resolvedKind] ?? DefaultSpot
 
-    return spot.init(model: model)
+    return component.init(model: model)
   }
 }

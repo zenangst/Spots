@@ -20,8 +20,8 @@ class ControllerTests: XCTestCase {
     controller.preloadView()
     let items = [Item(title: "item1")]
 
-    controller.update { spot in
-      spot.model.items = items
+    controller.update { component in
+      component.model.items = items
     }
 
     XCTAssert(controller.component!.model.items == items)
@@ -37,7 +37,8 @@ class ControllerTests: XCTestCase {
 
     let item = Item(title: "title1", kind: "list")
     let expectation = self.expectation(description: "Test append item")
-    controller.append(item, spotIndex: 0) {
+
+    controller.append(item, componentIndex: 0) {
       XCTAssertEqual(controller.component!.model.items.count, 1)
       XCTAssert(controller.component!.model.items.first! == item)
       expectation.fulfill()
@@ -56,7 +57,7 @@ class ControllerTests: XCTestCase {
 
     let item = Item(title: "title2", kind: "list")
     let expectation = self.expectation(description: "Test append item")
-    controller.append(item, spotIndex: 0) {
+    controller.append(item, componentIndex: 0) {
       XCTAssertEqual(controller.component!.model.items.count, 2)
       XCTAssert(controller.component!.model.items.last! == item)
       expectation.fulfill()
@@ -76,7 +77,7 @@ class ControllerTests: XCTestCase {
       Item(title: "title2", kind: "list")
     ]
     let expectation = self.expectation(description: "Test append items")
-    controller.append(items, spotIndex: 0) {
+    controller.append(items, componentIndex: 0) {
       XCTAssert(controller.component!.model.items.count > 0)
       XCTAssert(controller.component!.model.items == items)
       expectation.fulfill()
@@ -96,7 +97,7 @@ class ControllerTests: XCTestCase {
       Item(title: "title2", kind: "list")
     ]
     let expectation = self.expectation(description: "Test prepend items")
-    controller.prepend(items, spotIndex: 0) {
+    controller.prepend(items, componentIndex: 0) {
       XCTAssertEqual(controller.component!.model.items.count, 2)
       XCTAssert(controller.component!.model.items == items)
       expectation.fulfill()
@@ -121,7 +122,7 @@ class ControllerTests: XCTestCase {
       Item(title: "title4", kind: "list")
     ]
     let expectation = self.expectation(description: "Test prepend items")
-    controller.prepend(items, spotIndex: 0) {
+    controller.prepend(items, componentIndex: 0) {
       XCTAssertEqual(controller.component!.model.items.count, 4)
       XCTAssertEqual(controller.component!.model.items[0].title, "title3")
       XCTAssertEqual(controller.component!.model.items[1].title, "title4")
@@ -241,7 +242,7 @@ class ControllerTests: XCTestCase {
     let item = Item(title: "title1", kind: "grid")
     let expectation = self.expectation(description: "Test append item")
 
-    controller.append(item, spotIndex: 0) {
+    controller.append(item, componentIndex: 0) {
       XCTAssert(controller.component!.model.items.count == 1)
       XCTAssert(controller.component!.model.items.first! == item)
       expectation.fulfill()
@@ -262,7 +263,7 @@ class ControllerTests: XCTestCase {
       Item(title: "title2", kind: "grid")
     ]
     let expectation = self.expectation(description: "Test append items")
-    controller.append(items, spotIndex: 0) {
+    controller.append(items, componentIndex: 0) {
       XCTAssert(controller.component!.model.items.count > 0)
       XCTAssert(controller.component!.model.items == items)
       expectation.fulfill()
@@ -283,7 +284,7 @@ class ControllerTests: XCTestCase {
       Item(title: "title2", kind: "grid")
     ]
     let expectation = self.expectation(description: "Test prepend items")
-    controller.prepend(items, spotIndex: 0) {
+    controller.prepend(items, componentIndex: 0) {
       XCTAssertEqual(controller.component!.model.items.count, 2)
       XCTAssert(controller.component!.model.items == items)
       expectation.fulfill()
@@ -333,7 +334,7 @@ class ControllerTests: XCTestCase {
     let item = Item(title: "title1", kind: "carousel")
     let expectation = self.expectation(description: "Test append item")
 
-    controller.append(item, spotIndex: 0) {
+    controller.append(item, componentIndex: 0) {
       XCTAssert(controller.component!.model.items.count == 1)
       XCTAssert(controller.component!.model.items.first! == item)
       expectation.fulfill()
@@ -355,7 +356,7 @@ class ControllerTests: XCTestCase {
     ]
     let expectation = self.expectation(description: "Test append items")
 
-    controller.append(items, spotIndex: 0) {
+    controller.append(items, componentIndex: 0) {
       XCTAssert(controller.component!.model.items.count > 0)
       XCTAssert(controller.component!.model.items == items)
       expectation.fulfill()
@@ -376,7 +377,7 @@ class ControllerTests: XCTestCase {
       Item(title: "title2", kind: "carousel")
     ]
     let expectation = self.expectation(description: "Test prepend items")
-    controller.prepend(items, spotIndex: 0) {
+    controller.prepend(items, componentIndex: 0) {
       XCTAssertEqual(controller.component!.model.items.count, 2)
       XCTAssert(controller.component!.model.items == items)
       expectation.fulfill()
@@ -682,7 +683,7 @@ class ControllerTests: XCTestCase {
     let controller = Controller(components: components)
     XCTAssertEqual(controller.components.count, 1)
 
-    /// Test first item in the first component of the first spot inside of the controller
+    /// Test first item in the first component of the first component inside of the controller
     XCTAssertEqual(controller.components.first!.model.kind, components.first!.model.kind)
     XCTAssertEqual(controller.components.first!.model.items[0].title, components.first!.model.items[0].title)
     XCTAssertEqual(controller.components.first!.model.items[0].subtitle, components.first!.model.items[0].subtitle)

@@ -1,6 +1,6 @@
 import Cocoa
 
-/// A view registry that is used internally when resolving kind to the corresponding spot.
+/// A view registry that is used internally when resolving kind to the corresponding component.
 public struct GridRegistry {
 
   public enum Item {

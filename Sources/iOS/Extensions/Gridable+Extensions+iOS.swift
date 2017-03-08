@@ -70,10 +70,10 @@ extension Gridable {
 
   /// Perform animation before mutation
   ///
-  /// - parameter spotAnimation: The animation that you want to apply
+  /// - parameter componentAnimation: The animation that you want to apply
   /// - parameter withIndex: The index of the cell
   /// - parameter completion: A completion block that runs after applying the animation
-  public func perform(_ spotAnimation: Animation, withIndex index: Int, completion: () -> Void) {
+  public func perform(_ componentAnimation: Animation, withIndex index: Int, completion: () -> Void) {
     guard let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0))
       else {
         completion()
@@ -82,7 +82,7 @@ extension Gridable {
 
     let animation = CABasicAnimation()
 
-    switch spotAnimation {
+    switch componentAnimation {
     case .top:
       animation.keyPath = "position.y"
       animation.toValue = -cell.frame.height

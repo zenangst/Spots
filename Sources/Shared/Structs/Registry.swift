@@ -6,7 +6,7 @@ import Foundation
   import CoreGraphics
 #endif
 
-/// A registry that is used internally when resolving kind to the corresponding spot.
+/// A registry that is used internally when resolving kind to the corresponding component.
 public struct Registry {
 
   var useCache: Bool = false

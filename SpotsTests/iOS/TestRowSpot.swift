@@ -9,7 +9,7 @@ class RowSpotTests: XCTestCase {
 
   override func setUp() {
     component = RowComponent(model: ComponentModel(span: 1))
-    cachedSpot = RowComponent(cacheKey: "cached-row-spot")
+    cachedSpot = RowComponent(cacheKey: "cached-row-component")
     XCTAssertNotNil(cachedSpot.stateCache)
     cachedSpot.stateCache?.clear()
   }

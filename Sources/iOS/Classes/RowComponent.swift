@@ -57,7 +57,7 @@ open class RowComponent: NSObject, Gridable {
   ///
   /// - parameter component: A model.
   ///
-  /// - returns: An initialized row spot with model.
+  /// - returns: An initialized row component with model.
   public required init(model: ComponentModel) {
     self.model = model
 
@@ -89,7 +89,7 @@ open class RowComponent: NSObject, Gridable {
   ///
   /// - parameter cacheKey: A unique cache key for the CoreComponent object
   ///
-  /// - returns: An initialized row spot.
+  /// - returns: An initialized row component.
   public convenience init(cacheKey: String) {
     let stateCache = StateCache(key: cacheKey)
 

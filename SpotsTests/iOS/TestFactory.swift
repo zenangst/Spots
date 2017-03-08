@@ -13,7 +13,7 @@ class FactoryTests: XCTestCase {
   ]
 
   func testRegisterAndResolve() {
-    Factory.register(kind: "merry-go-round", spot: CarouselComponent.self)
+    Factory.register(kind: "merry-go-round", component: CarouselComponent.self)
 
     let model = ComponentModel(json)
     var component = Factory.resolve(model: model)
@@ -21,7 +21,7 @@ class FactoryTests: XCTestCase {
     XCTAssertTrue(component.model == model)
     XCTAssertTrue(component is CarouselComponent)
 
-    Factory.register(kind: "merry-go-round", spot: GridComponent.self)
+    Factory.register(kind: "merry-go-round", component: GridComponent.self)
     component = Factory.resolve(model: model)
 
     XCTAssertTrue(component.model == model)
@@ -65,7 +65,7 @@ class FactoryTests: XCTestCase {
     XCTAssertEqual(components.count, 1)
     XCTAssert(components.first is ListComponent)
 
-    /// Test first item in the first component of the first spot
+    /// Test first item in the first component of the first component
     XCTAssertEqual(components.first!.model.kind, "list")
     XCTAssertEqual(components.first!.model.items[0].title, "Fullname")
     XCTAssertEqual(components.first!.model.items[0].subtitle, "Job title")

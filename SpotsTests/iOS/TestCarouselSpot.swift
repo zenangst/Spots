@@ -9,7 +9,7 @@ class CarouselComponentTests: XCTestCase {
 
   override func setUp() {
     component = CarouselComponent(model: ComponentModel(span: 1.0))
-    cachedSpot = CarouselComponent(cacheKey: "cached-carousel-spot")
+    cachedSpot = CarouselComponent(cacheKey: "cached-carousel-component")
     XCTAssertNotNil(cachedSpot.stateCache)
     cachedSpot.stateCache?.clear()
   }
@@ -128,7 +128,7 @@ class CarouselComponentTests: XCTestCase {
     let component = CarouselComponent(model: model)
     component.setup(CGSize(width: 100, height: 100))
 
-    // Test that spot height is equal to first item in the list
+    // Test that component height is equal to first item in the list
     XCTAssertEqual(component.items.count, 3)
     XCTAssertEqual(component.items[0].title, "foo")
     XCTAssertEqual(component.items[1].title, "bar")
@@ -176,7 +176,7 @@ class CarouselComponentTests: XCTestCase {
 
     let width = component.view.bounds.width / 4
 
-    // Test that spot height is equal to first item in the list
+    // Test that component height is equal to first item in the list
     XCTAssertEqual(component.items.count, 4)
     XCTAssertEqual(component.items[0].title, "foo")
     XCTAssertEqual(component.items[1].title, "bar")

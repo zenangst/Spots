@@ -7,7 +7,7 @@ import Foundation
 /// A refresh delegate for handling reloading of a Spot
 public protocol RefreshDelegate: class {
 
-  /// A delegate method for when your spot controller was refreshed using pull to refresh
+  /// A delegate method for when your component controller was refreshed using pull to refresh
   ///
   /// - parameter components: A collection of CoreComponent objects
   /// - parameter refreshControl: A UIRefreshControl

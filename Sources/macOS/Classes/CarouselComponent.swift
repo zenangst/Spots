@@ -109,7 +109,7 @@ open class CarouselComponent: NSObject, Gridable {
   ///
   /// - parameter component: A component
   ///
-  /// - returns: An initialized carousel spot.
+  /// - returns: An initialized carousel component.
   public required init(model: ComponentModel) {
     self.model = model
 
@@ -150,7 +150,7 @@ open class CarouselComponent: NSObject, Gridable {
   ///
   /// - parameter cacheKey: A unique cache key for the CoreComponent object.
   ///
-  /// - returns: An initialized carousel spot.
+  /// - returns: An initialized carousel component.
   public convenience init(cacheKey: String) {
     let stateCache = StateCache(key: cacheKey)
 

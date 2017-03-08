@@ -58,7 +58,7 @@ open class GridComponent: NSObject, Gridable {
   ///
   /// - parameter component: A model.
   ///
-  /// - returns: An initialized grid spot with model.
+  /// - returns: An initialized grid component with model.
   public required init(model: ComponentModel) {
     self.model = model
 
@@ -91,7 +91,7 @@ open class GridComponent: NSObject, Gridable {
   ///  - parameter title: A string that is used as a title for the GridComponent.
   ///  - parameter kind:  An identifier to determine which kind should be set on the ComponentModel.
   ///
-  /// - returns: An initialized grid spot with computed component using title and kind.
+  /// - returns: An initialized grid component with computed component using title and kind.
   public convenience init(title: String = "", kind: String? = nil) {
     self.init(model: ComponentModel(title: title, kind: kind ?? "", span: 0.0))
   }
@@ -100,7 +100,7 @@ open class GridComponent: NSObject, Gridable {
   ///
   /// - parameter cacheKey: A unique cache key for the CoreComponent object
   ///
-  /// - returns: An initialized grid spot.
+  /// - returns: An initialized grid component.
   public convenience init(cacheKey: String) {
     let stateCache = StateCache(key: cacheKey)
 

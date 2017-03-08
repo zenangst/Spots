@@ -7,7 +7,7 @@
 /// Gridable is protocol for Spots that are based on collection views.
 public protocol Gridable: CoreComponent {
 
-  /// The layout object used to initialize the collection spot controller.
+  /// The layout object used to initialize the collection component controller.
   var layout: CollectionLayout { get }
   /// The collection view object managed by this gridable object.
   var collectionView: CollectionView { get }

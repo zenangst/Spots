@@ -7,7 +7,7 @@ class ListComponentTests: XCTestCase {
   var cachedSpot: ListComponent!
 
   override func setUp() {
-    cachedSpot = ListComponent(cacheKey: "cached-list-spot")
+    cachedSpot = ListComponent(cacheKey: "cached-list-component")
     XCTAssertNotNil(cachedSpot.stateCache)
     cachedSpot.stateCache?.clear()
   }

@@ -54,10 +54,10 @@ public extension SpotsProtocol {
   public func dictionary(_ amountOfItems: Int? = nil) -> [String : Any] {
     var result = [[String: Any]]()
 
-    for spot in components {
-      var spotJSON = spot.model.dictionary(amountOfItems)
-      for item in spot.items where item.kind == "composite" {
-        let results = spot.compositeComponents
+    for component in components {
+      var componentJSON = component.model.dictionary(amountOfItems)
+      for item in component.items where item.kind == "composite" {
+        let results = component.compositeComponents
           .filter({ $0.itemIndex == item.index })
 
         var newItem = item
@@ -69,12 +69,12 @@ public extension SpotsProtocol {
 
         newItem.children = children
 
-        var newItems = spotJSON[ComponentModel.Key.items] as? [[String : Any]]
+        var newItems = componentJSON[ComponentModel.Key.items] as? [[String : Any]]
         newItems?[item.index] = newItem.dictionary
-        spotJSON[ComponentModel.Key.items] = newItems
+        componentJSON[ComponentModel.Key.items] = newItems
       }
 
-      result.append(spotJSON)
+      result.append(componentJSON)
     }
 
     return ["components": result as AnyObject ]
@@ -86,12 +86,12 @@ public extension SpotsProtocol {
   ///
   /// - returns: An optional object with inferred type.
   public func ui<T>(_ includeElement: (Item) -> Bool) -> T? {
-    for spot in components {
-      if let first = spot.items.filter(includeElement).first {
-        return spot.ui(at: first.index)
+    for component in components {
+      if let first = component.items.filter(includeElement).first {
+        return component.ui(at: first.index)
       }
 
-      let cSpots = spot.compositeComponents.map { $0.component }
+      let cSpots = component.compositeComponents.map { $0.component }
       for compositeSpot in cSpots {
         if let first = compositeSpot.items.filter(includeElement).first {
           return compositeSpot.ui(at: first.index)
@@ -104,7 +104,7 @@ public extension SpotsProtocol {
 
   /// Filter CoreComponent objects inside of controller
   ///
-  /// - parameter includeElement: A filter predicate to find a spot
+  /// - parameter includeElement: A filter predicate to find a component
   ///
   /// - returns: A collection of CoreComponent objects that match the includeElements predicate
   public func filter(components includeElement: (CoreComponent) -> Bool) -> [CoreComponent] {
@@ -123,19 +123,19 @@ public extension SpotsProtocol {
   /// - parameter includeElement: The predicate that the item has to match.
   ///
   /// - returns: A collection of tuples containing components with the matching items that were found.
-  public func filter(items includeElement: (Item) -> Bool) -> [(spot: CoreComponent, items: [Item])] {
-    var result = [(spot: CoreComponent, items: [Item])]()
-    for spot in components {
-      let items = spot.items.filter(includeElement)
+  public func filter(items includeElement: (Item) -> Bool) -> [(component: CoreComponent, items: [Item])] {
+    var result = [(component: CoreComponent, items: [Item])]()
+    for component in components {
+      let items = component.items.filter(includeElement)
       if !items.isEmpty {
-        result.append((spot: spot, items: items))
+        result.append((component: component, items: items))
       }
 
-      let childSpots = spot.compositeComponents.map { $0.component }
-      for spot in childSpots {
-        let items = spot.items.filter(includeElement)
+      let childSpots = component.compositeComponents.map { $0.component }
+      for component in childSpots {
+        let items = component.items.filter(includeElement)
         if !items.isEmpty {
-          result.append((spot: spot, items: items))
+          result.append((component: component, items: items))
         }
       }
     }
@@ -146,9 +146,9 @@ public extension SpotsProtocol {
 #if os(iOS)
   /// Scroll to the index of a CoreComponent object, only available on iOS.
   ///
-  /// - parameter index:          The index of the spot that you want to scroll
+  /// - parameter index:          The index of the component that you want to scroll
   /// - parameter includeElement: A filter predicate to find a view model
-  public func scrollTo(spotIndex index: Int = 0, includeElement: (Item) -> Bool) {
+  public func scrollTo(componentIndex index: Int = 0, includeElement: (Item) -> Bool) {
     guard let itemY = component(at: index, ofType: CoreComponent.self)?.scrollTo(includeElement) else { return }
 
     var initialHeight: CGFloat = 0.0
@@ -203,7 +203,7 @@ public extension SpotsProtocol {
   }
 
   /**
-   - parameter indexPath: The index path of the spot you want to lookup
+   - parameter indexPath: The index path of the component you want to lookup
    - returns: A CoreComponent object at index path
    **/
   fileprivate func component(at indexPath: IndexPath) -> CoreComponent {

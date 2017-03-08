@@ -50,7 +50,7 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
   public var refreshPositions = [CGFloat]()
   /// A bool value to indicate if the Controller is refeshing.
   public var refreshing = false
-  /// A convenience method for resolving the first spot.
+  /// A convenience method for resolving the first component.
   public var component: CoreComponent? {
     return component(at: 0, ofType: CoreComponent.self)
   }
@@ -109,7 +109,7 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
                                            object: nil)
   }
 
-  /// Initialize a new controller with a single spot
+  /// Initialize a new controller with a single component
   ///
   /// - parameter component: A CoreComponent object
   ///
@@ -159,17 +159,17 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
 
   ///  A generic look up method for resolving components based on index
   ///
-  /// - parameter index: The index of the spot that you are trying to resolve.
-  /// - parameter type: The generic type for the spot you are trying to resolve.
+  /// - parameter index: The index of the component that you are trying to resolve.
+  /// - parameter type: The generic type for the component you are trying to resolve.
   ///
   /// - returns: An optional CoreComponent object of inferred type.
   open func component<T>(at index: Int = 0, ofType type: T.Type) -> T? {
     return components.filter({ $0.index == index }).first as? T
   }
 
-  /// A look up method for resolving a spot at index as a CoreComponent object.
+  /// A look up method for resolving a component at index as a CoreComponent object.
   ///
-  /// - parameter index: The index of the spot that you are trying to resolve.
+  /// - parameter index: The index of the component that you are trying to resolve.
   ///
   /// - returns: An optional CoreComponent object.
   open func component(at index: Int = 0) -> CoreComponent? {
@@ -178,7 +178,7 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
 
   /// A generic look up method for resolving components using a closure
   ///
-  /// - parameter closure: A closure to perform actions on a spotable object
+  /// - parameter closure: A closure to perform actions on a component.
   ///
   /// - returns: An optional CoreComponent object
   open func resolve(component closure: (_ index: Int, _ component: CoreComponent) -> Bool) -> CoreComponent? {
@@ -203,7 +203,7 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
 
   // MARK: - View Life Cycle
 
-  /// Called after the spot controller's view is loaded into memory.
+  /// Called after the component controller's view is loaded into memory.
   open override func viewDidLoad() {
     super.viewDidLoad()
 
@@ -218,7 +218,7 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
     Controller.configure?(scrollView)
   }
 
-  /// Notifies the spot controller that its view is about to be added to a view hierarchy.
+  /// Notifies the component controller that its view is about to be added to a view hierarchy.
   ///
   /// - parameter animated: If true, the view is being added to the window using an animation.
   open override func viewWillAppear(_ animated: Bool) {
@@ -377,7 +377,7 @@ extension Controller {
     return component(at: indexPath).model
   }
 
-  /// Resolve spot at index path.
+  /// Resolve component at index path.
   ///
   /// - parameter indexPath: The index path of The component.
   ///

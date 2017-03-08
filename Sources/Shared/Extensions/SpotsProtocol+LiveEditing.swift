@@ -41,11 +41,11 @@ import Cache
               weakSelf.scrollView.contentOffset = offset
 
               var yOffset: CGFloat = 0.0
-              for spot in weakSelf.components {
+              for component in weakSelf.components {
                 #if !os(OSX)
-                (spot as? CarouselComponent)?.layout.yOffset = yOffset
+                (component as? CarouselComponent)?.layout.yOffset = yOffset
                 #endif
-                yOffset += spot.view.frame.size.height
+                yOffset += component.view.frame.size.height
               }
 
               #if !os(OSX)

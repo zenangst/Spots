@@ -39,7 +39,7 @@ class CoreComponentTests: XCTestCase {
 
     measure {
       for _ in 0..<5 {
-        controller.append(items, spotIndex: 0, withAnimation: .automatic, completion: nil)
+        controller.append(items, componentIndex: 0, withAnimation: .automatic, completion: nil)
         controller.components.forEach { $0.view.layoutSubviews() }
       }
     }

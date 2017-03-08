@@ -12,7 +12,7 @@ open class ViewComponent: NSObject, CoreComponent, Viewable {
 
   public static var layout: Layout = .init()
 
-  /// Reload spot with ItemChanges.
+  /// Reload component with ItemChanges.
   ///
   /// - parameter changes:          A collection of changes: inserations, updates, reloads, deletions and updated children.
   /// - parameter animation:        A Animation that is used when performing the mutation.

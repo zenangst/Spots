@@ -59,7 +59,7 @@ open class ListComponent: NSObject, Listable {
   ///
   /// - parameter component: A model.
   ///
-  /// - returns: An initialized list spot with model.
+  /// - returns: An initialized list component with model.
   public required init(model: ComponentModel) {
     self.model = model
 
@@ -89,7 +89,7 @@ open class ListComponent: NSObject, Listable {
   /// - parameter kind:      An identifier to determine which kind should be set on the ComponentModel.
   /// - parameter kind:      An identifier to determine which kind should be set on the ComponentModel.
   ///
-  /// - returns: An initialized list spot with model.
+  /// - returns: An initialized list component with model.
   public convenience init(tableView: UITableView? = nil, title: String = "",
                           kind: String = "list", header: String = "") {
     self.init(model: ComponentModel(title: title, header: header, kind: kind, span: 1.0))
@@ -106,7 +106,7 @@ open class ListComponent: NSObject, Listable {
   ///
   /// - parameter cacheKey: A unique cache key for the CoreComponent object.
   ///
-  /// - returns: An initialized list spot.
+  /// - returns: An initialized list component.
   public convenience init(cacheKey: String, tableView: UITableView? = nil) {
     let stateCache = StateCache(key: cacheKey)
 

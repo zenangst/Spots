@@ -323,7 +323,7 @@ public extension CoreComponent {
     }
   }
 
-  /// Reloads a spot only if it changes
+  /// Reloads a component only if it changes
   ///
   /// - parameter items:      A collection of Items
   /// - parameter animation:  The animation that should be used (only works for Listable objects)
@@ -370,7 +370,7 @@ public extension CoreComponent {
     }
   }
 
-  /// Reload spot with ItemChanges.
+  /// Reload component with ItemChanges.
   ///
   /// - parameter changes:          A collection of changes: inserations, updates, reloads, deletions and updated children.
   /// - parameter animation:        A Animation that is used when performing the mutation.
@@ -439,7 +439,7 @@ public extension CoreComponent {
     return model.dictionary
   }
 
-  /// Reloads a spot only if it changes
+  /// Reloads a component only if it changes
   ///
   /// - parameter items:      A collection of Items
   /// - parameter animation:  The animation that should be used (only works for Listable objects)

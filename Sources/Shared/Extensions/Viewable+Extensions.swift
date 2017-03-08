@@ -224,7 +224,7 @@ public extension CoreComponent where Self : Viewable {
     }
   }
 
-  /// Reloads a spot only if it changes
+  /// Reloads a component only if it changes
   ///
   /// - parameter items:      A collection of Items
   /// - parameter animation:  The animation that should be used (only works for Listable objects)
