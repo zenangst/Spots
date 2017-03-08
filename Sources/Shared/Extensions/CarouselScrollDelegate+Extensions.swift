@@ -8,5 +8,5 @@ public extension CarouselScrollDelegate {
   /// - parameter component: Object that comforms to the CoreComponent protocol
   /// - parameter item: The last view model in the component
   /// - parameter animated: Indicates if the scrolling animated or not.
-  func component(_ component: CoreComponent, item: Item, animated: Bool) {}
+  func componentCarouselDidEndScrolling(_ component: CoreComponent, item: Item, animated: Bool) {}
 }
