@@ -20,7 +20,7 @@ extension Gridable {
   public func refreshHeight(_ completion: (() -> Void)? = nil) {
     Dispatch.after(seconds: 0.2) { [weak self] in
       guard let strongSelf = self,
-        let collectionView = weakSelf.collectionView else {
+        let collectionView = self?.collectionView else {
           completion?()
           return
       }
