@@ -1,6 +1,6 @@
 import Cocoa
 
-class ListWrapper: NSTableRowView, Wrappable {
+class ListWrapper: NSTableRowView, Wrappable, Cell {
 
   public var contentView: View {
     return self
@@ -20,5 +20,17 @@ class ListWrapper: NSTableRowView, Wrappable {
 
   override func prepareForReuse() {
     wrappedView?.removeFromSuperview()
+  }
+
+  override var isSelected: Bool {
+    didSet {
+      (wrappedView as? ViewStateDelegate)?.viewStateDidChange(viewState)
+    }
+  }
+
+  var isHighlighted: Bool = false {
+    didSet {
+      (wrappedView as? ViewStateDelegate)?.viewStateDidChange(viewState)
+    }
   }
 }
