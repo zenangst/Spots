@@ -237,7 +237,10 @@ open class Controller: NSViewController, SpotsProtocol {
       width: view.frame.width,
       height: ceil(component.view.frame.height))
 
-    (component as? Gridable)?.layout(CGSize(width: view.frame.width, height: height))
+    let size = CGSize(width: view.frame.width, height: height)
+
+    (component as? Component)?.layout(size)
+    (component as? Gridable)?.layout(size)
   }
 
   open override func viewDidLayout() {
@@ -263,24 +266,41 @@ open class Controller: NSViewController, SpotsProtocol {
   }
 
   public func windowDidResize(_ notification: Notification) {
-    for case let component as Gridable in components {
-      guard let layout = component.model.layout, layout.span > 1 else {
-        continue
+    components.forEach { component in
+      layoutComponent(component)
+    }
+    scrollView.layoutSubviews()
+  }
+
+  public func windowDidEndLiveResize(_ notification: Notification) {
+    components.forEach { component in
+      layoutComponent(component)
+    }
+  }
+
+  fileprivate func layoutComponent(_ component: CoreComponent) {
+    switch component {
+    case let component as Component:
+      if component.userInterface is CollectionView {
+        guard let layout = component.model.layout, layout.span >= 1 else {
+          break
+        }
+
+        component.setup(component.view.frame.size)
+      } else if component.userInterface is TableView {
+        let size = CGSize(width: view.frame.size.width, height: component.view.frame.size.height)
+        component.layout(size)
+      }
+
+    case let component as Gridable:
+      guard let layout = component.model.layout, layout.span >= 1 else {
+        break
       }
 
       component.layout.prepareForTransition(from: component.layout)
       component.layout.invalidateLayout()
-    }
-  }
-
-  public func windowDidEndLiveResize(_ notification: Notification) {
-    for case let component as Gridable in components {
-      guard let layout = component.model.layout, layout.span > 1 else {
-        continue
-      }
-
-      component.layout.prepareForTransition(to: component.layout)
-      component.layout.invalidateLayout()
+    default:
+      break
     }
   }
 
