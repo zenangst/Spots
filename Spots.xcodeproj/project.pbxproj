@@ -361,6 +361,8 @@
 		BDEFF5501DD1C85300FC0537 /* TestDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEFF54E1DD1C85300FC0537 /* TestDataSource.swift */; };
 		BDEFF5521DD1DA8000FC0537 /* TestDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEFF5511DD1DA8000FC0537 /* TestDelegate.swift */; };
 		BDEFF5531DD1DA8000FC0537 /* TestDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEFF5511DD1DA8000FC0537 /* TestDelegate.swift */; };
+		BDFC474F1E747B2B008700BF /* TestGridWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFC474C1E747B2B008700BF /* TestGridWrapper.swift */; };
+		BDFC47521E747B2B008700BF /* TestListWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFC474D1E747B2B008700BF /* TestListWrapper.swift */; };
 		D55B7AF91E423122000125C8 /* Tailor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478E91C440726006EBA49 /* Tailor.framework */; };
 		D55B7B081E4231A4000125C8 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D55B7B071E4231A4000125C8 /* RxCocoa.framework */; };
 		D55B7B0C1E4234C3000125C8 /* RxSpotsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B7B0A1E423417000125C8 /* RxSpotsDelegate.swift */; };
@@ -600,6 +602,8 @@
 		BDEED2E71D8446400030B475 /* TestSpotsScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSpotsScrollView.swift; sourceTree = "<group>"; };
 		BDEFF54E1DD1C85300FC0537 /* TestDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestDataSource.swift; sourceTree = "<group>"; };
 		BDEFF5511DD1DA8000FC0537 /* TestDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestDelegate.swift; sourceTree = "<group>"; };
+		BDFC474C1E747B2B008700BF /* TestGridWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestGridWrapper.swift; sourceTree = "<group>"; };
+		BDFC474D1E747B2B008700BF /* TestListWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestListWrapper.swift; sourceTree = "<group>"; };
 		D55B7B021E423122000125C8 /* RxSpots.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxSpots.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D55B7B041E42315A000125C8 /* Rx-Info-iOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Rx-Info-iOS.plist"; sourceTree = "<group>"; };
 		D55B7B071E4231A4000125C8 /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = Carthage/Build/iOS/RxCocoa.framework; sourceTree = "<group>"; };
@@ -999,6 +1003,8 @@
 		BDDF2CCE1DC7C4FC00B766BA /* macOS */ = {
 			isa = PBXGroup;
 			children = (
+				BDFC474C1E747B2B008700BF /* TestGridWrapper.swift */,
+				BDFC474D1E747B2B008700BF /* TestListWrapper.swift */,
 				BDDF2CCF1DC7C50700B766BA /* TestAnimations.swift */,
 				BD45D98E1E30935500C2D6B2 /* TestLayoutExtensions.swift */,
 				BD165A361E6EAAA60023AF82 /* TestSpot.swift */,
@@ -1981,11 +1987,13 @@
 				BD9AB9F61E44AD9700085677 /* TestCoreComponent.swift in Sources */,
 				BDCFCD421DCA7EFF0047E84C /* TestController.swift in Sources */,
 				BD165A371E6EAAA60023AF82 /* TestSpot.swift in Sources */,
+				BDFC474F1E747B2B008700BF /* TestGridWrapper.swift in Sources */,
 				BD01BD121DAEA523009C10FF /* TestParser.swift in Sources */,
 				BD45D98F1E30935500C2D6B2 /* TestLayoutExtensions.swift in Sources */,
 				BD45D9881E30906300C2D6B2 /* TestLayout.swift in Sources */,
 				BD45D9961E30A8A000C2D6B2 /* TestInset.swift in Sources */,
 				BD6FBEF11E12B5F000AA58BD /* TestComposition.swift in Sources */,
+				BDFC47521E747B2B008700BF /* TestListWrapper.swift in Sources */,
 				BDB8D5941E4DFADC00220BC3 /* TestItem.swift in Sources */,
 				BDDF2CD01DC7C50700B766BA /* TestAnimations.swift in Sources */,
 				BD677E8A1DC61EFC006D1654 /* TestStateCache.swift in Sources */,

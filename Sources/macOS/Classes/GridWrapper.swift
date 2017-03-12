@@ -1,6 +1,6 @@
 import Cocoa
 
-class GridWrapper: NSCollectionViewItem, Wrappable {
+class GridWrapper: NSCollectionViewItem, Wrappable, Cell {
 
   public var bounds: CGRect {
     return coreView.bounds
@@ -28,5 +28,17 @@ class GridWrapper: NSCollectionViewItem, Wrappable {
 
   override func prepareForReuse() {
     wrappedView?.removeFromSuperview()
+  }
+
+  override var isSelected: Bool {
+    didSet {
+      (wrappedView as? ViewStateDelegate)?.viewStateDidChange(viewState)
+    }
+  }
+
+  var isHighlighted: Bool = false {
+    didSet {
+      (wrappedView as? ViewStateDelegate)?.viewStateDidChange(viewState)
+    }
   }
 }
