@@ -43,13 +43,16 @@ extension Component {
   }
 
   func layoutTableView(_ tableView: TableView, with size: CGSize) {
+    scrollView.frame.size.width = size.width
     tableView.frame.origin.y = headerView?.frame.size.height ?? 0.0
     tableView.sizeToFit()
     tableView.frame.size.width = size.width
 
     if let layout = model.layout {
+      tableView.frame.origin.y += CGFloat(layout.inset.bottom)
       tableView.frame.origin.x = CGFloat(layout.inset.left)
       tableView.frame.size.width -= CGFloat(layout.inset.left + layout.inset.right)
+      tableView.frame.size.height += CGFloat(layout.inset.bottom)
     }
 
     scrollView.frame.size.height = tableView.frame.height + headerHeight + footerHeight
