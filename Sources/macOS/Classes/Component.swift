@@ -192,6 +192,8 @@ import Tailor
     setupHeader(kind: model.header)
     setupFooter(kind: model.footer)
 
+    configureDataSourceAndDelegate()
+
     if let tableView = self.tableView {
       documentView.addSubview(tableView)
       setupTableView(tableView, with: size)
@@ -231,8 +233,6 @@ import Tailor
     collectionView.allowsEmptySelection = true
     collectionView.layer = CALayer()
     collectionView.wantsLayer = true
-    collectionView.dataSource = componentDataSource
-    collectionView.delegate = componentDelegate
 
     let backgroundView = NSView()
     backgroundView.wantsLayer = true
