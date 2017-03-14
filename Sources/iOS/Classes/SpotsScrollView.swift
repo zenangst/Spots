@@ -24,7 +24,7 @@ open class SpotsScrollView: UIScrollView {
   }
 
   /// A container view that works as a proxy layer for scroll view
-  open var componentsContentView: SpotsContentView = SpotsContentView()
+  open var contentView: SpotsContentView = SpotsContentView()
 
   /// A deinitiazlier that removes all subviews from contentView
   deinit {
@@ -43,8 +43,8 @@ open class SpotsScrollView: UIScrollView {
   /// - returns: An initialized components scroll view
   override init(frame: CGRect) {
     super.init(frame: frame)
-    componentsContentView.autoresizingMask = self.autoresizingMask
-    addSubview(componentsContentView)
+    contentView.autoresizingMask = self.autoresizingMask
+    addSubview(contentView)
   }
 
   /// Returns an object initialized from data in a given unarchiver.
@@ -60,10 +60,10 @@ open class SpotsScrollView: UIScrollView {
   func didAddSubviewToContainer(_ subview: UIView) {
     subview.autoresizingMask = UIViewAutoresizing()
 
-    guard componentsContentView.subviews.index(of: subview) != nil else { return }
+    guard contentView.subviews.index(of: subview) != nil else { return }
 
     subviewsInLayoutOrder.removeAll()
-    for subview in componentsContentView.subviews {
+    for subview in contentView.subviews {
       subviewsInLayoutOrder.append(subview)
       observeView(view: subview)
     }
@@ -108,10 +108,10 @@ open class SpotsScrollView: UIScrollView {
       return
     }
 
-    if view is UIScrollView && view.superview == componentsContentView {
+    if view is UIScrollView && view.superview == contentView {
       view.addObserver(self, forKeyPath: #keyPath(contentSize), options: .old, context: subviewContext)
       view.addObserver(self, forKeyPath: #keyPath(contentOffset), options: .old, context: subviewContext)
-    } else if view.superview == componentsContentView {
+    } else if view.superview == contentView {
       view.addObserver(self, forKeyPath: #keyPath(frame), options: .old, context: subviewContext)
       view.addObserver(self, forKeyPath: #keyPath(bounds), options: .old, context: subviewContext)
     }
@@ -183,8 +183,8 @@ open class SpotsScrollView: UIScrollView {
   func layoutViews() {
     guard let superview = superview else { return }
 
-    componentsContentView.frame = bounds
-    componentsContentView.bounds = CGRect(origin: contentOffset, size: bounds.size)
+    contentView.frame = bounds
+    contentView.bounds = CGRect(origin: contentOffset, size: bounds.size)
 
     var yOffsetOfCurrentSubview: CGFloat = 0.0
 
@@ -205,7 +205,7 @@ open class SpotsScrollView: UIScrollView {
         let remainingContentHeight = fmax(scrollView.contentSize.height - contentOffset.y, 0.0)
 
         frame.size.height = ceil(fmin(remainingBoundsHeight, remainingContentHeight))
-        frame.size.width = ceil(componentsContentView.frame.size.width)
+        frame.size.width = ceil(contentView.frame.size.width)
 
         scrollView.frame = frame.integral
         scrollView.contentOffset = CGPoint(x: Int(contentOffset.x), y: Int(contentOffset.y))
@@ -215,7 +215,7 @@ open class SpotsScrollView: UIScrollView {
         var frame = subview.frame
         frame.origin.x = 0
         frame.origin.y = yOffsetOfCurrentSubview
-        frame.size.width = componentsContentView.bounds.size.width
+        frame.size.width = contentView.bounds.size.width
         subview.frame = frame
 
         yOffsetOfCurrentSubview += frame.size.height
