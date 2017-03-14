@@ -142,7 +142,7 @@ extension SpotsProtocol {
 
     oldSpot.view.removeFromSuperview()
     components[index] = component
-    scrollView.contentView.insertSubview(component.view, at: index)
+    scrollView.componentsView.insertSubview(component.view, at: index)
     setupComponent(at: index, component: component)
 
     #if !os(OSX)
@@ -734,7 +734,7 @@ extension SpotsProtocol {
   #endif
 
   fileprivate func reloadSpotsScrollView() {
-    scrollView.contentView.subviews.forEach {
+    scrollView.componentsView.subviews.forEach {
       $0.removeFromSuperview()
     }
   }
