@@ -243,7 +243,7 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
   /// - parameter size: The size that should be used to configure the views.
   func configure(withSize size: CGSize) {
     scrollView.frame.size = size
-    scrollView.componentsContentView.frame.size = size
+    scrollView.componentsView.frame.size = size
 
     components.forEach { component in
       component.layout(size)
@@ -295,7 +295,7 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
   /// - parameter component:  The component that is going to be setup
   open func setupComponent(at index: Int, component: CoreComponent) {
     if component.view.superview == nil {
-      scrollView.componentsContentView.addSubview(component.view)
+      scrollView.componentsView.addSubview(component.view)
     }
 
     guard let superview = component.view.superview else {

@@ -221,7 +221,7 @@ open class Controller: NSViewController, SpotsProtocol {
 
   public func setupComponent(at index: Int, component: CoreComponent) {
     if component.view.superview == nil {
-      scrollView.componentsContentView.addSubview(component.view)
+      scrollView.componentsView.addSubview(component.view)
     }
 
     components[index].model.index = index
