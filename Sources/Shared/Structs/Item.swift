@@ -321,6 +321,112 @@ public func == (lhs: Item, rhs: Item) -> Bool {
 /**
  Item Equatable implementation
  - parameter lhs: Left hand Item
+ - parameter rhs: Right hand Optional Item
+
+ - returns: A boolean value, true if both Item are equal
+ */
+public func == (lhs: Item, rhs: Item?) -> Bool {
+  guard let rhs = rhs else {
+    return false
+  }
+
+  return lhs == rhs
+}
+
+/**
+ Item Equatable implementation
+ - parameter lhs: Left hand Optional Item
+ - parameter rhs: Right hand Item
+
+ - returns: A boolean value, true if both Item are equal
+ */
+public func == (lhs: Item?, rhs: Item) -> Bool {
+  guard let lhs = lhs else {
+    return false
+  }
+
+  return lhs == rhs
+}
+
+/**
+ Item Equatable implementation
+ - parameter lhs: Left hand Optional Item
+ - parameter rhs: Right hand Optional Item
+
+ - returns: A boolean value, true if both Item are equal
+ */
+public func == (lhs: Item?, rhs: Item?) -> Bool {
+  if let lhs = lhs, let rhs = rhs {
+    return lhs == rhs
+  }
+
+  if let lhs = lhs {
+    return lhs == rhs
+  }
+
+  if let rhs = rhs {
+    return lhs == rhs
+  }
+
+  return true
+}
+
+/**
+ Item Equatable implementation
+ - parameter lhs: Left hand Optional Item
+ - parameter rhs: Right hand Item
+
+ - returns: A boolean value, true if both Item are not equal
+ */
+public func != (lhs: Item, rhs: Item?) -> Bool {
+  guard let rhs = rhs else {
+    return false
+  }
+
+  return !(lhs == rhs)
+}
+
+/**
+ Item Equatable implementation
+ - parameter lhs: Left hand Item
+ - parameter rhs: Right hand Optional Item
+
+ - returns: A boolean value, true if both Item are not equal
+ */
+public func != (lhs: Item?, rhs: Item) -> Bool {
+  guard let lhs = lhs else {
+    return false
+  }
+
+  return !(lhs == rhs)
+}
+
+/**
+ Item Equatable implementation
+ - parameter lhs: Left hand Optional Item
+ - parameter rhs: Right hand Optional Item
+
+ - returns: A boolean value, true if both Item are not equal
+ */
+public func != (lhs: Item?, rhs: Item?) -> Bool {
+  if let lhs = lhs, let rhs = rhs {
+    return !(lhs == rhs)
+  }
+
+  if let lhs = lhs {
+    return !(lhs == rhs)
+  }
+
+  if let rhs = rhs {
+    return !(lhs == rhs)
+  }
+
+  return false
+}
+
+/**
+ Item Equatable implementation
+ - parameter lhs: Left hand Item
  - parameter rhs: Right hand Item
 
  - returns: A boolean value, true if both Item are not equal
