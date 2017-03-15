@@ -94,11 +94,11 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
   /// Default kinds are: list, grid and carousel
   public var kind: String = ""
   /// The header identifier
-  public var header: String = ""
+  public var header: Item?
   /// User interaction properties
   public var interaction: Interaction
   /// The footer identifier
-  public var footer: String = ""
+  public var footer: Item?
   /// Layout properties
   public var layout: Layout?
   /// A collection of view models
@@ -154,9 +154,18 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
     JSONComponentModels[Key.interaction] = interaction.dictionary
     JSONComponentModels[Key.identifier.string] = identifier
 
-    if !title.isEmpty { JSONComponentModels[Key.title.string] = title }
-    if !header.isEmpty { JSONComponentModels[Key.header.string] = header }
-    if !footer.isEmpty { JSONComponentModels[Key.footer.string] = footer }
+    if !title.isEmpty {
+      JSONComponentModels[Key.title.string] = title
+    }
+
+    if let header = header {
+      JSONComponentModels[Key.header.string] = header.dictionary
+    }
+
+    if let footer = footer {
+      JSONComponentModels[Key.footer.string] = footer.dictionary
+    }
+
     if !meta.isEmpty { JSONComponentModels[Key.meta.string] = meta }
 
     JSONComponentModels[Key.hybrid.string] = isHybrid
@@ -173,8 +182,8 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
     self.identifier = map.property("identifier")
     self.title     <- map.property("title")
     self.kind      <- map.property("kind")
-    self.header    <- map.property("header")
-    self.footer    <- map.property("footer")
+    self.header    <- map.relation("header")
+    self.footer    <- map.relation("footer")
     self.items     <- map.relations("items")
     self.meta      <- map.property("meta")
     self.isHybrid  <- map.property("hybrid")
@@ -218,8 +227,8 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
   /// - returns: An initialized component
   public init(identifier: String? = nil,
               title: String = "",
-              header: String = "",
-              footer: String = "",
+              header: Item? = nil,
+              footer: Item? = nil,
               kind: String = "",
               layout: Layout? = nil,
               interaction: Interaction = .init(),
@@ -411,7 +420,10 @@ public func !== (lhs: [ComponentModel], rhs: [ComponentModel]) -> Bool {
 ///
 /// - returns: A boolean value, true if both ComponentModels are no equal
 public func == (lhs: ComponentModel, rhs: ComponentModel) -> Bool {
-  guard lhs.identifier == rhs.identifier else { return false }
+
+  guard lhs.identifier == rhs.identifier else {
+    return false
+  }
 
   return lhs.title == rhs.title &&
     lhs.kind == rhs.kind &&
