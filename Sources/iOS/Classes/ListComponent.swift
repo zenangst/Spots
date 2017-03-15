@@ -91,7 +91,7 @@ open class ListComponent: NSObject, Listable {
   ///
   /// - returns: An initialized list component with model.
   public convenience init(tableView: UITableView? = nil, title: String = "",
-                          kind: String = "list", header: String = "") {
+                          kind: String = "list", header: Item) {
     self.init(model: ComponentModel(title: title, header: header, kind: kind, span: 1.0))
 
     if let tableView = tableView {

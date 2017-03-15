@@ -7,11 +7,11 @@ extension Component {
       return
     }
 
-    guard !model.header.isEmpty else {
+    guard let header = model.header else {
       return
     }
 
-    guard let view = Configuration.views.make(model.header)?.view as? Componentable else {
+    guard let view = Configuration.views.make(header.kind)?.view as? Componentable else {
       return
     }
 

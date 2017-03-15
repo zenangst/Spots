@@ -33,9 +33,9 @@ public extension CoreComponent where Self : Gridable {
     #if !os(OSX)
       GridComponent.configure?(collectionView, layout)
 
-      if let resolve = type(of: self).headers.make(model.header),
-        let view = resolve.view as? Componentable,
-        !model.header.isEmpty {
+      if let kind = model.header?.kind,
+        let resolve = type(of: self).headers.make(kind),
+        let view = resolve.view as? Componentable {
 
         layout.headerReferenceSize.width = collectionView.frame.size.width
         layout.headerReferenceSize.height = view.frame.size.height

@@ -2,12 +2,12 @@ import Cocoa
 
 extension Component {
 
-  func setupHeader(kind: String) {
-    guard !model.header.isEmpty, headerView == nil else {
+  func setupHeader(with model: ComponentModel) {
+    guard let header = model.header, headerView == nil else {
       return
     }
 
-    if let (_, headerView) = Configuration.views.make(model.header) {
+    if let (_, headerView) = Configuration.views.make(header.kind) {
       if let headerView = headerView,
         let componentable = headerView as? Componentable {
         let size = CGSize(width: view.frame.width,
@@ -20,12 +20,12 @@ extension Component {
     }
   }
 
-  func setupFooter(kind: String) {
-    guard !model.footer.isEmpty, footerView == nil else {
+  func setupFooter(with model: ComponentModel) {
+    guard let footer = model.footer, footerView == nil else {
       return
     }
 
-    if let (_, footerView) = Configuration.views.make(model.footer) {
+    if let (_, footerView) = Configuration.views.make(footer.kind) {
       if let footerView = footerView,
         let componentable = footerView as? Componentable {
         let size = CGSize(width: view.frame.width,

@@ -187,8 +187,8 @@ open class CarouselComponent: NSObject, Gridable, ComponentHorizontallyScrollabl
       }
     }
 
-    if !model.header.isEmpty {
-      let resolve = type(of: self).headers.make(model.header)
+    if let header = model.header {
+      let resolve = type(of: self).headers.make(header.kind)
       layout.headerReferenceSize.width = collectionView.frame.size.width
       layout.headerReferenceSize.height = resolve?.view?.frame.size.height ?? 0.0
     }

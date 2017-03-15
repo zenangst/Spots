@@ -74,14 +74,17 @@ extension DataSource: UICollectionViewDataSource {
 
     switch kind {
     case UICollectionElementKindSectionHeader:
-      if component.model.header.isEmpty {
+      let kind = component.model.header?.kind ?? ""
+
+      if kind.isEmpty {
         identifier = component.type.headers.defaultIdentifier
       } else {
-        identifier = component.model.header
+        identifier = kind
       }
       viewHeight = collectionViewLayout.headerReferenceSize.height
     case UICollectionElementKindSectionFooter:
-      identifier = component.model.footer
+      let kind = component.model.footer?.kind ?? ""
+      identifier = kind
       viewHeight = collectionViewLayout.footerHeight
     default:
       return UICollectionReusableView()
