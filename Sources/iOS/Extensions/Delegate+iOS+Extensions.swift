@@ -112,11 +112,14 @@ extension Delegate: UITableViewDelegate {
       switch view {
       case let view as ListHeaderFooterWrapper:
         if let (_, resolvedView) = Configuration.views.make(kind),
-          let componentView = resolvedView as? Componentable {
-          view.frame.size.height = componentView.preferredHeaderHeight
+          let componentView = resolvedView as? ItemConfigurable {
+          view.frame.size.height = componentView.preferredViewSize.height
         }
-      case let view as Componentable:
-        view.configure(component.model)
+      case let view as ItemConfigurable:
+        if var item = component.model.header {
+          view.configure(&item)
+          component.model.header = item
+        }
       default:
         break
       }
@@ -124,7 +127,7 @@ extension Delegate: UITableViewDelegate {
       return view?.frame.size.height ?? 0.0
     }
 
-    return (header?.view as? Componentable)?.preferredHeaderHeight ?? 0.0
+    return (header?.view as? ItemConfigurable)?.preferredViewSize.height ?? 0.0
   }
 
   public func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -143,11 +146,14 @@ extension Delegate: UITableViewDelegate {
       switch view {
       case let view as ListHeaderFooterWrapper:
         if let (_, resolvedView) = Configuration.views.make(kind),
-          let componentView = resolvedView as? Componentable {
-            view.frame.size.height = componentView.preferredHeaderHeight
+          let componentView = resolvedView as? ItemConfigurable {
+            view.frame.size.height = componentView.preferredViewSize.height
         }
-      case let view as Componentable:
-        view.configure(component.model)
+      case let view as ItemConfigurable:
+        if var item = component.model.footer {
+          view.configure(&item)
+          component.model.footer = item
+        }
       default:
         break
       }
@@ -155,7 +161,7 @@ extension Delegate: UITableViewDelegate {
       return view?.frame.size.height ?? 0.0
     }
 
-    return (header?.view as? Componentable)?.preferredHeaderHeight ?? 0.0
+    return (header?.view as? ItemConfigurable)?.preferredViewSize.height ?? 0.0
   }
 
   /// Asks the data source for the title of the header of the specified section of the table view.
@@ -239,14 +245,20 @@ extension Delegate: UITableViewDelegate {
         let customView = resolvedView {
         view.configure(with: customView)
 
-        if let componentView = customView as? Componentable {
-          componentView.configure(component.model)
+        if let componentView = customView as? ItemConfigurable {
           customView.frame.size = view.frame.size
-          customView.frame.size.height = componentView.preferredHeaderHeight
+          if var item = component.model.header {
+            customView.frame.size.height = componentView.preferredViewSize.height
+            componentView.configure(&item)
+            component.model.header = item
+          }
         }
       }
-      case let view as Componentable:
-      view.configure(component.model)
+      case let view as ItemConfigurable:
+        if var item = component.model.header {
+          view.configure(&item)
+          component.model.header = item
+        }
       default:
         break
     }
@@ -270,14 +282,20 @@ extension Delegate: UITableViewDelegate {
         let customView = resolvedView {
         view.configure(with: customView)
 
-        if let componentView = resolvedView as? Componentable {
-          componentView.configure(component.model)
+        if let componentView = customView as? ItemConfigurable {
           customView.frame.size = view.frame.size
-          customView.frame.size.height = componentView.preferredHeaderHeight
+          if var item = component.model.footer {
+            customView.frame.size.height = componentView.preferredViewSize.height
+            componentView.configure(&item)
+            component.model.footer = item
+          }
         }
       }
-    case let view as Componentable:
-      view.configure(component.model)
+    case let view as ItemConfigurable:
+      if var item = component.model.footer {
+        view.configure(&item)
+        component.model.footer = item
+      }
     default:
       break
     }

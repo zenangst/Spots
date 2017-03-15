@@ -52,9 +52,7 @@ extension Controller {
 }
 
 #if !os(OSX)
-  class HeaderView: UIView, ItemConfigurable, Componentable {
-
-    public var preferredHeaderHeight: CGFloat = 50.0
+  class HeaderView: UIView, ItemConfigurable {
 
     var preferredViewSize: CGSize = CGSize(width: 200, height: 50)
 
@@ -85,16 +83,10 @@ extension Controller {
 
     func configure(_ item: inout Item) {
       titleLabel.text = item.title
-    }
-
-    func configure(_ model: ComponentModel) {
-      titleLabel.text = model.title
     }
   }
 
-  class FooterView: UIView, ItemConfigurable, Componentable {
-
-    var preferredHeaderHeight: CGFloat = 50
+  class FooterView: UIView, ItemConfigurable {
 
     var preferredViewSize: CGSize = CGSize(width: 200, height: 50)
 
@@ -125,10 +117,6 @@ extension Controller {
 
     func configure(_ item: inout Item) {
       titleLabel.text = item.title
-    }
-
-    func configure(_ model: ComponentModel) {
-      titleLabel.text = "This is a footer"
     }
   }
 
@@ -177,11 +165,11 @@ extension Controller {
     }
   }
 
-  class CustomListHeaderView: UITableViewHeaderFooterView, Componentable {
-    var preferredHeaderHeight: CGFloat = 88
+  class CustomListHeaderView: UITableViewHeaderFooterView, ItemConfigurable {
+    var preferredViewSize: CGSize = CGSize(width: 0, height: 88)
 
-    func configure(_ model: ComponentModel) {
-      textLabel?.text = model.title
+    func configure(_ item: inout Item) {
+      textLabel?.text = item.title
     }
   }
 
@@ -192,14 +180,14 @@ extension Controller {
     func configure(_ item: inout Item) {}
   }
 
-  class CustomGridHeaderView: UICollectionReusableView, Componentable {
+  class CustomGridHeaderView: UICollectionReusableView, ItemConfigurable {
 
-    var preferredHeaderHeight: CGFloat = 88
+    var preferredViewSize: CGSize = CGSize(width: 0, height: 88)
 
     lazy var textLabel = UILabel()
 
-    func configure(_ model: ComponentModel) {
-      textLabel.text = model.title
+    func configure(_ item: inout Item) {
+      textLabel.text = item.title
     }
   }
 #endif

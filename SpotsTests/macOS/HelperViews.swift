@@ -1,9 +1,8 @@
 import Cocoa
 import Spots
 
-class HeaderView: NSView, ItemConfigurable, Componentable {
+class HeaderView: NSView, ItemConfigurable {
 
-  var preferredHeaderHeight: CGFloat = 50
   var preferredViewSize: CGSize = CGSize(width: 200, height: 50)
 
   lazy var titleLabel: NSTextField = {
@@ -35,10 +34,6 @@ class HeaderView: NSView, ItemConfigurable, Componentable {
 
   func configure(_ item: inout Item) {
     titleLabel.stringValue = item.title
-  }
-
-  func configure(_ model: ComponentModel) {
-    titleLabel.stringValue = model.title
   }
 }
 
@@ -78,9 +73,8 @@ class TextView: NSView, ItemConfigurable {
   }
 }
 
-class FooterView: NSView, ItemConfigurable, Componentable {
+class FooterView: NSView, ItemConfigurable {
 
-  var preferredHeaderHeight: CGFloat = 50
   var preferredViewSize: CGSize = CGSize(width: 200, height: 50)
 
   lazy var titleLabel: NSTextField = {
@@ -112,9 +106,5 @@ class FooterView: NSView, ItemConfigurable, Componentable {
 
   func configure(_ item: inout Item) {
     titleLabel.stringValue = item.title
-  }
-
-  func configure(_ model: ComponentModel) {
-    titleLabel.stringValue = model.title
   }
 }

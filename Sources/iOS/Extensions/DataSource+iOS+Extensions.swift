@@ -69,12 +69,14 @@ extension DataSource: UICollectionViewDataSource {
         return UICollectionReusableView()
     }
 
+    let headerFooterItem: Item?
     let identifier: String
     var viewHeight: CGFloat = 0.0
 
     switch kind {
     case UICollectionElementKindSectionHeader:
-      let kind = component.model.header?.kind ?? ""
+      headerFooterItem = component.model.header
+      let kind = headerFooterItem?.kind ?? ""
 
       if kind.isEmpty {
         identifier = component.type.headers.defaultIdentifier
@@ -82,11 +84,17 @@ extension DataSource: UICollectionViewDataSource {
         identifier = kind
       }
       viewHeight = collectionViewLayout.headerReferenceSize.height
+
     case UICollectionElementKindSectionFooter:
-      let kind = component.model.footer?.kind ?? ""
+      headerFooterItem = component.model.footer
+      let kind = headerFooterItem?.kind ?? ""
       identifier = kind
       viewHeight = collectionViewLayout.footerHeight
     default:
+      return UICollectionReusableView()
+    }
+
+    guard var resolvedItem = headerFooterItem else {
       return UICollectionReusableView()
     }
 
@@ -102,10 +110,10 @@ extension DataSource: UICollectionViewDataSource {
         view.frame.size.height = viewHeight
         view.frame.size.width = collectionView.frame.size.width
 
-        (customView as? Componentable)?.configure(component.model)
+        (customView as? ItemConfigurable)?.configure(&resolvedItem)
       }
-    case let view as Componentable:
-      view.configure(component.model)
+    case let view as ItemConfigurable:
+      view.configure(&resolvedItem)
     default:
       break
     }

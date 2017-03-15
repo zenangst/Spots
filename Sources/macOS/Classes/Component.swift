@@ -189,8 +189,8 @@ import Tailor
 
     scrollView.frame.size = size
 
-    setupHeader(with: model)
-    setupFooter(with: model)
+    setupHeader(with: &model)
+    setupFooter(with: &model)
 
     if let tableView = self.tableView {
       documentView.addSubview(tableView)

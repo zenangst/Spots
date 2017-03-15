@@ -11,7 +11,7 @@ extension Component {
       return
     }
 
-    guard let view = Configuration.views.make(header.kind)?.view as? Componentable else {
+    guard let view = Configuration.views.make(header.kind)?.view else {
       return
     }
 
@@ -22,8 +22,12 @@ extension Component {
       collectionViewLayout.headerReferenceSize.width = size.width
     }
 
+    guard let itemConfigurableView = view as? ItemConfigurable else {
+      return
+    }
+
     if collectionViewLayout.headerReferenceSize.height == 0.0 {
-      collectionViewLayout.headerReferenceSize.height = view.preferredHeaderHeight
+      collectionViewLayout.headerReferenceSize.height = itemConfigurableView.preferredViewSize.height
     }
   }
 }
