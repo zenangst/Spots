@@ -304,10 +304,17 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
     if identifier != model.identifier { return .identifier }
     // Determine if the component layout changed, this can be used to trigger layout related processes
     if layout != model.layout { return .layout }
+
     // Determine if the header for the component has changed
-    if header != model.header { return .header }
+    if !optionalCompare(lhs: header, rhs: model.header) {
+      return .header
+    }
+
     // Determine if the header for the component has changed
-    if footer != model.footer { return .footer }
+    if !optionalCompare(lhs: footer, rhs: model.footer) {
+      return .footer
+    }
+
     // Check if meta data for the component changed, this can be up to the developer to decide what course of action to take.
     if !(meta as NSDictionary).isEqual(to: model.meta) { return .meta }
     // Check if title changed
@@ -420,17 +427,29 @@ public func !== (lhs: [ComponentModel], rhs: [ComponentModel]) -> Bool {
 ///
 /// - returns: A boolean value, true if both ComponentModels are no equal
 public func == (lhs: ComponentModel, rhs: ComponentModel) -> Bool {
-
   guard lhs.identifier == rhs.identifier else {
     return false
   }
 
-  return lhs.title == rhs.title &&
+  let headersAreEqual = optionalCompare(lhs: lhs.header, rhs: rhs.header)
+  let footersAreEqual = optionalCompare(lhs: lhs.footer, rhs: rhs.footer)
+
+  let result = headersAreEqual == true &&
+    footersAreEqual == true &&
+    lhs.title == rhs.title &&
     lhs.kind == rhs.kind &&
     lhs.layout == rhs.layout &&
-    lhs.header == rhs.header &&
-    lhs.footer == rhs.footer &&
     (lhs.meta as NSDictionary).isEqual(rhs.meta as NSDictionary)
+
+  return result
+}
+
+private func optionalCompare(lhs: Item?, rhs: Item?) -> Bool {
+  guard let lhsItem = lhs, let rhsItem = rhs else {
+    return lhs == nil && rhs == nil
+  }
+
+  return lhsItem == rhsItem
 }
 
 /// Check if to components are truly equal
@@ -445,11 +464,14 @@ public func === (lhs: ComponentModel, rhs: ComponentModel) -> Bool {
   let lhsChildren = lhs.items.flatMap { $0.children.flatMap({ ComponentModel($0) }) }
   let rhsChildren = rhs.items.flatMap { $0.children.flatMap({ ComponentModel($0) }) }
 
-  return lhs.title == rhs.title &&
+  let headersAreEqual = optionalCompare(lhs: lhs.header, rhs: rhs.header)
+  let footersAreEqual = optionalCompare(lhs: lhs.footer, rhs: rhs.footer)
+
+  return headersAreEqual &&
+    footersAreEqual &&
+    lhs.title == rhs.title &&
     lhs.kind == rhs.kind &&
     lhs.layout == rhs.layout &&
-    lhs.header == rhs.header &&
-    lhs.footer == rhs.footer &&
     (lhs.meta as NSDictionary).isEqual(rhs.meta as NSDictionary) &&
     lhsChildren === rhsChildren &&
     lhs.items == rhs.items
