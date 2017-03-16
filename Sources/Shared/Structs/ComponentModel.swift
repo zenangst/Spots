@@ -320,14 +320,17 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
     if !(meta as NSDictionary).isEqual(to: model.meta) {
       return .meta
     }
+
     // Check if title changed
     if title != model.title {
       return .title
     }
+
     // Check if the items have changed
     if !(items === model.items) {
       return .items
     }
+    
     // Check children
     let lhsChildren = items.flatMap { $0.children }
     let rhsChildren = model.items.flatMap { $0.children }
