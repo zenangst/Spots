@@ -107,12 +107,13 @@ extension DataSource: UICollectionViewDataSource {
 
     switch view {
     case let view as GridHeaderFooterWrapper:
-      if let resolvedView = Configuration.views.make(identifier)?.view  {
-        view.configure(with: resolvedView)
+      if let resolvedView = Configuration.views.make(identifier)?.view,
+        let customView = resolvedView {
+        view.configure(with: customView)
         view.frame.size.height = viewHeight
         view.frame.size.width = collectionView.frame.size.width
 
-        (resolvedView as? ItemConfigurable)?.configure(&resolvedItem)
+        (customView as? ItemConfigurable)?.configure(&resolvedItem)
       }
     case let view as ItemConfigurable:
       view.configure(&resolvedItem)
