@@ -39,9 +39,11 @@ open class GridableLayout: UICollectionViewFlowLayout {
 
       var view: View?
 
-      if let header = component.type.headers.make(headerKind)?.view {
+      if let (_, header) = component.type.headers.make(headerKind) {
         view = header
-      } else if view == nil, let header = Configuration.views.make(headerKind)?.view {
+      }
+
+      if view == nil, let (_, header) = Configuration.views.make(headerKind) {
         view = header
       }
 
@@ -62,7 +64,8 @@ open class GridableLayout: UICollectionViewFlowLayout {
     }
 
     if let footerKind = component.model.footer?.kind, !footerKind.isEmpty,
-      let resolvedView = Configuration.views.make(footerKind)?.view {
+      let (_, view) = Configuration.views.make(footerKind),
+      let resolvedView = view {
 
       if let componentView = resolvedView as? ItemConfigurable {
         footerHeight = componentView.preferredViewSize.height
