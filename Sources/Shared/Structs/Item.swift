@@ -380,7 +380,7 @@ public func == (lhs: Item?, rhs: Item?) -> Bool {
  */
 public func != (lhs: Item, rhs: Item?) -> Bool {
   guard let rhs = rhs else {
-    return false
+    return true
   }
 
   return !(lhs == rhs)
@@ -395,7 +395,7 @@ public func != (lhs: Item, rhs: Item?) -> Bool {
  */
 public func != (lhs: Item?, rhs: Item) -> Bool {
   guard let lhs = lhs else {
-    return false
+    return true
   }
 
   return !(lhs == rhs)
