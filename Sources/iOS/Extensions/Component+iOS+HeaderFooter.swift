@@ -22,12 +22,12 @@ extension Component {
       collectionViewLayout.headerReferenceSize.width = size.width
     }
 
-    guard let itemConfigurableView = view as? ItemConfigurable else {
-      return
+    guard let itemConfigurableView = view as? ItemConfigurable,
+      collectionViewLayout.headerReferenceSize.height == 0.0 else {
+        return
     }
 
-    if collectionViewLayout.headerReferenceSize.height == 0.0 {
-      collectionViewLayout.headerReferenceSize.height = itemConfigurableView.preferredViewSize.height
-    }
+
+    collectionViewLayout.headerReferenceSize.height = itemConfigurableView.preferredViewSize.height
   }
 }
