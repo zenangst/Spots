@@ -321,21 +321,6 @@ public func == (lhs: Item, rhs: Item) -> Bool {
 /**
  Item Equatable implementation
  - parameter lhs: Left hand Item
- - parameter rhs: Right hand Optional Item
-
- - returns: A boolean value, true if both Item are equal
- */
-public func == (lhs: Item, rhs: Item?) -> Bool {
-  guard let rhs = rhs else {
-    return false
-  }
-
-  return lhs == rhs
-}
-
-/**
- Item Equatable implementation
- - parameter lhs: Left hand Item
  - parameter rhs: Right hand Item
 
  - returns: A boolean value, true if both Item are not equal
