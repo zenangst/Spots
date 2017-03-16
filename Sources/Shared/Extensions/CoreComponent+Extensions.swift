@@ -235,7 +235,7 @@ public extension CoreComponent {
 
       if let resolvedView = Self.views.make(kind, parentFrame: self.view.bounds)?.view {
         view = resolvedView
-      } else if let resolvedView = Configuration.views.make(kind, parentFrame: self.view.bounds).view? {
+      } else if let resolvedView = Configuration.views.make(kind, parentFrame: self.view.bounds)?.view {
         view = resolvedView
       } else {
         return nil
