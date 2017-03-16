@@ -164,4 +164,50 @@ class ComponentModelTests: XCTestCase {
     XCTAssertEqual(json.property(ComponentModel.Key.height), "height")
     XCTAssertEqual(json.property(ComponentModel.Key.width), "width")
   }
+
+  func testComponentModelCompareWithHeadersAndFooters() {
+    var lhs = ComponentModel(header: Item(title: "foo"), footer: Item(title: "foo"))
+    var rhs = ComponentModel(header: Item(title: "foo"), footer: Item(title: "foo"))
+
+    XCTAssertTrue(lhs == rhs)
+    XCTAssertTrue(lhs === rhs)
+    XCTAssertFalse(lhs != rhs)
+    XCTAssertFalse(lhs !== rhs)
+    XCTAssertEqual(lhs.diff(model: rhs), ComponentModelDiff.none)
+
+    rhs.header = nil
+    XCTAssertFalse(lhs == rhs)
+    XCTAssertFalse(lhs === rhs)
+    XCTAssertTrue(lhs != rhs)
+    XCTAssertTrue(lhs !== rhs)
+    XCTAssertEqual(lhs.diff(model: rhs), ComponentModelDiff.header)
+
+    lhs.header = nil
+    XCTAssertTrue(lhs == rhs)
+    XCTAssertTrue(lhs === rhs)
+    XCTAssertFalse(lhs != rhs)
+    XCTAssertFalse(lhs !== rhs)
+    XCTAssertEqual(lhs.diff(model: rhs), ComponentModelDiff.none)
+
+    lhs = ComponentModel(header: Item(title: "bar"), footer: Item(title: "bar"))
+    XCTAssertFalse(lhs == rhs)
+    XCTAssertFalse(lhs === rhs)
+    XCTAssertTrue(lhs != rhs)
+    XCTAssertTrue(lhs !== rhs)
+    XCTAssertEqual(lhs.diff(model: rhs), ComponentModelDiff.header)
+
+    rhs = ComponentModel(header: Item(title: "foo"), footer: Item(title: "foo"))
+    XCTAssertFalse(lhs == rhs)
+    XCTAssertFalse(lhs === rhs)
+    XCTAssertTrue(lhs != rhs)
+    XCTAssertTrue(lhs !== rhs)
+    XCTAssertEqual(lhs.diff(model: rhs), ComponentModelDiff.header)
+
+    rhs = ComponentModel(header: Item(title: "bar"), footer: Item(title: "foo"))
+    XCTAssertFalse(lhs == rhs)
+    XCTAssertFalse(lhs === rhs)
+    XCTAssertTrue(lhs != rhs)
+    XCTAssertTrue(lhs !== rhs)
+    XCTAssertEqual(lhs.diff(model: rhs), ComponentModelDiff.footer)
+  }
 }
