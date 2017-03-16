@@ -297,4 +297,17 @@ class ComponentModelTests: XCTestCase {
     XCTAssertNotEqual(lhs, rhs)
     XCTAssertEqual(lhs.diff(model: rhs), ComponentModelDiff.meta)
   }
+
+  func testCompareCollectionOfComponentModels() {
+    let lhs = [ComponentModel(title: "foo")]
+    var rhs = [ComponentModel(title: "bar")]
+
+    XCTAssertFalse(lhs == rhs)
+
+    rhs = [ComponentModel(title: "foo")]
+    XCTAssertTrue(lhs == rhs)
+
+    rhs.append(ComponentModel(title: "bar"))
+    XCTAssertFalse(lhs == rhs)
+  }
 }
