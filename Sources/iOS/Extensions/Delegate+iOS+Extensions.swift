@@ -91,11 +91,11 @@ extension Delegate: UICollectionViewDelegate {
 extension Delegate: UITableViewDelegate {
 
   fileprivate func heightForItem(_ item: inout Item) -> CGFloat {
-    guard let kind: String = item.kind, !kind.isEmpty else {
+    guard !item.kind.isEmpty else {
       return 0.0
     }
 
-    guard let resolvedView = Configuration.views.make(kind)?.view else {
+    guard let resolvedView = Configuration.views.make(item.kind)?.view else {
       return 0.0
     }
 
@@ -104,7 +104,6 @@ extension Delegate: UITableViewDelegate {
     }
 
     itemConfigurable.configure(&item)
-
 
     guard resolvedView.frame.size.height != 0.0 else {
       return itemConfigurable.preferredViewSize.height
