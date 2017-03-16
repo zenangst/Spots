@@ -90,6 +90,29 @@ extension Delegate: UICollectionViewDelegate {
 
 extension Delegate: UITableViewDelegate {
 
+  fileprivate func heightForItem(_ item: inout Item) -> CGFloat {
+    guard let kind: String = item.kind, !kind.isEmpty else {
+      return 0.0
+    }
+
+    guard let resolvedView = Configuration.views.make(kind)?.view else {
+      return 0.0
+    }
+
+    guard let itemConfigurable = resolvedView as? ItemConfigurable else {
+      return resolvedView.frame.size.height
+    }
+
+    itemConfigurable.configure(&item)
+
+
+    guard resolvedView.frame.size.height != 0.0 else {
+      return itemConfigurable.preferredViewSize.height
+    }
+
+    return resolvedView.frame.size.height
+  }
+
   /// Asks the delegate for the height to use for the header of a particular section.
   ///
   /// - parameter tableView: The table-view object requesting this information.
@@ -105,7 +128,7 @@ extension Delegate: UITableViewDelegate {
       return 0.0
     }
 
-    let height = component.heightForItem(&item)
+    let height = heightForItem(&item)
     component.model.header = item
 
     return height
@@ -120,7 +143,7 @@ extension Delegate: UITableViewDelegate {
       return 0.0
     }
 
-    let height = component.heightForItem(&item)
+    let height = heightForItem(&item)
     component.model.footer = item
 
     return height
