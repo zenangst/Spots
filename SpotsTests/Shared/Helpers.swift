@@ -52,6 +52,19 @@ extension Controller {
 }
 
 #if !os(OSX)
+
+  class RegularView: UIView {
+    override init(frame: CGRect) {
+      var frame = frame
+      frame.size.height = 44
+      super.init(frame: frame)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+      fatalError("init(coder:) has not been implemented")
+    }
+  }
+
   class HeaderView: UIView, ItemConfigurable {
 
     var preferredViewSize: CGSize = CGSize(width: 200, height: 50)
