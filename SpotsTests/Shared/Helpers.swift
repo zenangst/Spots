@@ -65,6 +65,23 @@ extension Controller {
     }
   }
 
+  class ItemConfigurableView: UIView, ItemConfigurable {
+
+    var preferredViewSize: CGSize = CGSize(width: 200, height: 50)
+
+    override init(frame: CGRect) {
+      super.init(frame: frame)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+      fatalError("init(coder:) has not been implemented")
+    }
+
+    func configure(_ item: inout Item) {
+      frame.size.height = 75
+    }
+  }
+
   class HeaderView: UIView, ItemConfigurable {
 
     var preferredViewSize: CGSize = CGSize(width: 200, height: 50)

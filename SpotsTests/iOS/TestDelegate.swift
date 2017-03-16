@@ -96,6 +96,7 @@ class DelegateTests: XCTestCase {
 
   func testTableViewHeaderHeight() {
     Configuration.register(view: RegularView.self, identifier: "regular-header")
+    Configuration.register(view: ItemConfigurableView.self, identifier: "item-configurable-header")
     Configuration.register(view: CustomListHeaderView.self, identifier: "custom-header")
 
     let component = Component(model: ComponentModel(header: Item(kind: "custom-header")))
@@ -129,6 +130,11 @@ class DelegateTests: XCTestCase {
 
     XCTAssertEqual(delegate.tableView(tableView, heightForHeaderInSection: 0), 0)
 
+    component.model.header = Item(kind: "item-configurable-header")
+    tableView.reloadDataSource()
+
+    XCTAssertEqual(delegate.tableView(tableView, heightForHeaderInSection: 0), 75)
+
     delegate.component = nil
     tableView.reloadDataSource()
     XCTAssertEqual(delegate.tableView(tableView, heightForFooterInSection: 0), 0)
@@ -136,6 +142,7 @@ class DelegateTests: XCTestCase {
 
   func testTableViewFooterHeight() {
     Configuration.register(view: RegularView.self, identifier: "regular-footer")
+    Configuration.register(view: ItemConfigurableView.self, identifier: "item-configurable-footer")
     Configuration.register(view: CustomListHeaderView.self, identifier: "custom-footer")
 
     let component = Component(model: ComponentModel(footer: Item(kind: "custom-footer")))
@@ -168,6 +175,11 @@ class DelegateTests: XCTestCase {
     tableView.reloadDataSource()
 
     XCTAssertEqual(delegate.tableView(tableView, heightForFooterInSection: 0), 0)
+
+    component.model.header = Item(kind: "item-configurable-footer")
+    tableView.reloadDataSource()
+
+    XCTAssertEqual(delegate.tableView(tableView, heightForHeaderInSection: 0), 75)
 
     delegate.component = nil
     tableView.reloadDataSource()
