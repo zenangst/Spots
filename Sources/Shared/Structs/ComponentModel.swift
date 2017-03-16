@@ -158,13 +158,8 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
       JSONComponentModels[Key.title.string] = title
     }
 
-    if let header = header {
-      JSONComponentModels[Key.header.string] = header.dictionary
-    }
-
-    if let footer = footer {
-      JSONComponentModels[Key.footer.string] = footer.dictionary
-    }
+    JSONComponentModels[Key.header.string] = header?.dictionary
+    JSONComponentModels[Key.footer.string] = footer?.dictionary
 
     if !meta.isEmpty { JSONComponentModels[Key.meta.string] = meta }
 
