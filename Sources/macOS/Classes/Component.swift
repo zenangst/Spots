@@ -189,8 +189,8 @@ import Tailor
 
     scrollView.frame.size = size
 
-    setupHeader(kind: model.header)
-    setupFooter(kind: model.footer)
+    setupHeader(with: &model)
+    setupFooter(with: &model)
 
     configureDataSourceAndDelegate()
 

@@ -94,11 +94,11 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
   /// Default kinds are: list, grid and carousel
   public var kind: String = ""
   /// The header identifier
-  public var header: String = ""
+  public var header: Item?
   /// User interaction properties
   public var interaction: Interaction
   /// The footer identifier
-  public var footer: String = ""
+  public var footer: Item?
   /// Layout properties
   public var layout: Layout?
   /// A collection of view models
@@ -154,9 +154,13 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
     JSONComponentModels[Key.interaction] = interaction.dictionary
     JSONComponentModels[Key.identifier.string] = identifier
 
-    if !title.isEmpty { JSONComponentModels[Key.title.string] = title }
-    if !header.isEmpty { JSONComponentModels[Key.header.string] = header }
-    if !footer.isEmpty { JSONComponentModels[Key.footer.string] = footer }
+    if !title.isEmpty {
+      JSONComponentModels[Key.title.string] = title
+    }
+
+    JSONComponentModels[Key.header.string] = header?.dictionary
+    JSONComponentModels[Key.footer.string] = footer?.dictionary
+
     if !meta.isEmpty { JSONComponentModels[Key.meta.string] = meta }
 
     JSONComponentModels[Key.hybrid.string] = isHybrid
@@ -173,8 +177,8 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
     self.identifier = map.property("identifier")
     self.title     <- map.property("title")
     self.kind      <- map.property("kind")
-    self.header    <- map.property("header")
-    self.footer    <- map.property("footer")
+    self.header    <- map.relation("header")
+    self.footer    <- map.relation("footer")
     self.items     <- map.relations("items")
     self.meta      <- map.property("meta")
     self.isHybrid  <- map.property("hybrid")
@@ -218,8 +222,8 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
   /// - returns: An initialized component
   public init(identifier: String? = nil,
               title: String = "",
-              header: String = "",
-              footer: String = "",
+              header: Item? = nil,
+              footer: Item? = nil,
               kind: String = "",
               layout: Layout? = nil,
               interaction: Interaction = .init(),
@@ -290,21 +294,43 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
   /// - returns: A ComponentModelDiff value, see ComponentModelDiff for values.
   public func diff(model: ComponentModel) -> ComponentModelDiff {
     // Determine if the UI component is the same, used when Controller needs to replace the entire UI component
-    if kind != model.kind { return .kind }
+    if kind != model.kind {
+      return .kind
+    }
     // Determine if the unqiue identifier for the component changed
-    if identifier != model.identifier { return .identifier }
+    if identifier != model.identifier {
+      return .identifier
+    }
     // Determine if the component layout changed, this can be used to trigger layout related processes
-    if layout != model.layout { return .layout }
+    if layout != model.layout {
+      return .layout
+    }
+
     // Determine if the header for the component has changed
-    if header != model.header { return .header }
+    if !optionalCompare(lhs: header, rhs: model.header) {
+      return .header
+    }
+
     // Determine if the header for the component has changed
-    if footer != model.footer { return .footer }
+    if !optionalCompare(lhs: footer, rhs: model.footer) {
+      return .footer
+    }
+
     // Check if meta data for the component changed, this can be up to the developer to decide what course of action to take.
-    if !(meta as NSDictionary).isEqual(to: model.meta) { return .meta }
+    if !(meta as NSDictionary).isEqual(to: model.meta) {
+      return .meta
+    }
+
     // Check if title changed
-    if title != model.title { return .title }
+    if title != model.title {
+      return .title
+    }
+
     // Check if the items have changed
-    if !(items === model.items) { return .items }
+    if !(items === model.items) {
+      return .items
+    }
+
     // Check children
     let lhsChildren = items.flatMap { $0.children }
     let rhsChildren = model.items.flatMap { $0.children }
@@ -349,7 +375,9 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
 public func == (lhs: [ComponentModel], rhs: [ComponentModel]) -> Bool {
   var equal = lhs.count == rhs.count
 
-  if !equal { return false }
+  if !equal {
+    return false
+  }
 
   for (index, item) in lhs.enumerated() {
     if item != rhs[index] {
@@ -370,7 +398,9 @@ public func == (lhs: [ComponentModel], rhs: [ComponentModel]) -> Bool {
 public func === (lhs: [ComponentModel], rhs: [ComponentModel]) -> Bool {
   var equal = lhs.count == rhs.count
 
-  if !equal { return false }
+  if !equal {
+    return false
+  }
 
   for (index, item) in lhs.enumerated() {
     if item !== rhs[index] {
@@ -411,14 +441,29 @@ public func !== (lhs: [ComponentModel], rhs: [ComponentModel]) -> Bool {
 ///
 /// - returns: A boolean value, true if both ComponentModels are no equal
 public func == (lhs: ComponentModel, rhs: ComponentModel) -> Bool {
-  guard lhs.identifier == rhs.identifier else { return false }
+  guard lhs.identifier == rhs.identifier else {
+    return false
+  }
 
-  return lhs.title == rhs.title &&
+  let headersAreEqual = optionalCompare(lhs: lhs.header, rhs: rhs.header)
+  let footersAreEqual = optionalCompare(lhs: lhs.footer, rhs: rhs.footer)
+
+  let result = headersAreEqual == true &&
+    footersAreEqual == true &&
+    lhs.title == rhs.title &&
     lhs.kind == rhs.kind &&
     lhs.layout == rhs.layout &&
-    lhs.header == rhs.header &&
-    lhs.footer == rhs.footer &&
     (lhs.meta as NSDictionary).isEqual(rhs.meta as NSDictionary)
+
+  return result
+}
+
+private func optionalCompare(lhs: Item?, rhs: Item?) -> Bool {
+  guard let lhsItem = lhs, let rhsItem = rhs else {
+    return lhs == nil && rhs == nil
+  }
+
+  return lhsItem == rhsItem
 }
 
 /// Check if to components are truly equal
@@ -428,16 +473,21 @@ public func == (lhs: ComponentModel, rhs: ComponentModel) -> Bool {
 ///
 /// - returns: A boolean value, true if both ComponentModels are no equal
 public func === (lhs: ComponentModel, rhs: ComponentModel) -> Bool {
-  guard lhs.identifier == rhs.identifier else { return false }
+  guard lhs.identifier == rhs.identifier else {
+    return false
+  }
 
   let lhsChildren = lhs.items.flatMap { $0.children.flatMap({ ComponentModel($0) }) }
   let rhsChildren = rhs.items.flatMap { $0.children.flatMap({ ComponentModel($0) }) }
 
-  return lhs.title == rhs.title &&
+  let headersAreEqual = optionalCompare(lhs: lhs.header, rhs: rhs.header)
+  let footersAreEqual = optionalCompare(lhs: lhs.footer, rhs: rhs.footer)
+
+  return headersAreEqual &&
+    footersAreEqual &&
+    lhs.title == rhs.title &&
     lhs.kind == rhs.kind &&
     lhs.layout == rhs.layout &&
-    lhs.header == rhs.header &&
-    lhs.footer == rhs.footer &&
     (lhs.meta as NSDictionary).isEqual(rhs.meta as NSDictionary) &&
     lhsChildren === rhsChildren &&
     lhs.items == rhs.items

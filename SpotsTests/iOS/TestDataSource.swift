@@ -59,7 +59,7 @@ class DataSourceTests: XCTestCase {
   func testDataSourceForGridableDefaultHeader() {
     GridComponent.register(defaultHeader: CustomGridHeaderView.self)
     let component = GridComponent(model: ComponentModel(
-      header: "",
+      header: Item(kind: ""),
       span: 1.0,
       items: [
         Item(title: "title 1"),
@@ -77,7 +77,7 @@ class DataSourceTests: XCTestCase {
   func testDataSourceForGridableCustomHeader() {
     GridComponent.register(header: CustomGridHeaderView.self, identifier: "custom-header")
     let component = GridComponent(model: ComponentModel(
-      header: "custom-header",
+      header: Item(kind: "custom-header"),
       span: 1.0,
       items: [
         Item(title: "title 1"),

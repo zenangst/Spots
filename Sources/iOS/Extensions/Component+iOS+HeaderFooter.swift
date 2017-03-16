@@ -7,11 +7,11 @@ extension Component {
       return
     }
 
-    guard !model.header.isEmpty else {
+    guard let header = model.header else {
       return
     }
 
-    guard let view = Configuration.views.make(model.header)?.view as? Componentable else {
+    guard let view = Configuration.views.make(header.kind)?.view else {
       return
     }
 
@@ -22,8 +22,11 @@ extension Component {
       collectionViewLayout.headerReferenceSize.width = size.width
     }
 
-    if collectionViewLayout.headerReferenceSize.height == 0.0 {
-      collectionViewLayout.headerReferenceSize.height = view.preferredHeaderHeight
+    guard let itemConfigurableView = view as? ItemConfigurable,
+      collectionViewLayout.headerReferenceSize.height == 0.0 else {
+        return
     }
+
+    collectionViewLayout.headerReferenceSize.height = itemConfigurableView.preferredViewSize.height
   }
 }

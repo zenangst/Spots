@@ -64,7 +64,7 @@ class DelegateTests: XCTestCase {
     ListComponent.register(header: CustomListHeaderView.self, identifier: "list")
     let component = ListComponent(model: ComponentModel(
       title: "title",
-      header: "list",
+      header: Item(kind: "list"),
       span: 1,
       items: [
         Item(title: "title 1"),
@@ -81,7 +81,7 @@ class DelegateTests: XCTestCase {
     XCTAssertEqual(title, nil)
 
     /// Expect to return title if header is empty.
-    component.model.header = ""
+    component.model.header = nil
     title = component.componentDelegate?.tableView(component.tableView, titleForHeaderInSection: 0)
     XCTAssertEqual(title, component.model.title)
 

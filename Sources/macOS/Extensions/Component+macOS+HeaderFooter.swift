@@ -2,17 +2,18 @@ import Cocoa
 
 extension Component {
 
-  func setupHeader(kind: String) {
-    guard !model.header.isEmpty, headerView == nil else {
+  func setupHeader(with model: inout ComponentModel) {
+    guard var header = model.header, headerView == nil else {
       return
     }
 
-    if let (_, headerView) = Configuration.views.make(model.header) {
+    if let (_, headerView) = Configuration.views.make(header.kind) {
       if let headerView = headerView,
-        let componentable = headerView as? Componentable {
+        let componentable = headerView as? ItemConfigurable {
         let size = CGSize(width: view.frame.width,
-                          height: componentable.preferredHeaderHeight)
-        componentable.configure(model)
+                          height: componentable.preferredViewSize.height)
+        componentable.configure(&header)
+        model.header = header
         headerView.frame.size = size
         self.headerView = headerView
         scrollView.addSubview(headerView)
@@ -20,17 +21,18 @@ extension Component {
     }
   }
 
-  func setupFooter(kind: String) {
-    guard !model.footer.isEmpty, footerView == nil else {
+  func setupFooter(with model: inout ComponentModel) {
+    guard var footer = model.footer, footerView == nil else {
       return
     }
 
-    if let (_, footerView) = Configuration.views.make(model.footer) {
+    if let (_, footerView) = Configuration.views.make(footer.kind) {
       if let footerView = footerView,
-        let componentable = footerView as? Componentable {
+        let componentable = footerView as? ItemConfigurable {
         let size = CGSize(width: view.frame.width,
-                          height: componentable.preferredHeaderHeight)
-        componentable.configure(model)
+                          height: componentable.preferredViewSize.height)
+        componentable.configure(&footer)
+        model.footer = footer
         footerView.frame.size = size
         self.footerView = footerView
         scrollView.addSubview(footerView)

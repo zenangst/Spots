@@ -56,8 +56,8 @@ class TestSpot: XCTestCase {
 
   func testHybridListComponentWithHeaderAndFooter() {
     let model = ComponentModel(
-      header: "Header",
-      footer: "Footer",
+      header: Item(title: "Header", kind: "Header"),
+      footer: Item(title: "Footer", kind: "Footer"),
       kind: ComponentModel.Kind.list.string,
       items: [
         Item(title: "A"),
@@ -76,8 +76,8 @@ class TestSpot: XCTestCase {
 
   func testHybridGridComponentWithHeaderAndFooter() {
     let model = ComponentModel(
-      header: "Header",
-      footer: "Footer",
+      header: Item(title: "Header", kind: "Header"),
+      footer: Item(title: "Footer", kind: "Footer"),
       kind: ComponentModel.Kind.grid.string,
       items: [
         Item(title: "A", kind: "TextView"),
@@ -97,8 +97,8 @@ class TestSpot: XCTestCase {
 
   func testHybridCarouselComponentWithHeaderAndFooter() {
     let model = ComponentModel(
-      header: "Header",
-      footer: "Footer",
+      header: Item(title: "Header", kind: "Header"),
+      footer: Item(title: "Footer", kind: "Footer"),
       kind: ComponentModel.Kind.carousel.string,
       items: [
         Item(title: "A", kind: "TextView"),

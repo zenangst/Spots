@@ -35,21 +35,21 @@ open class GridableLayout: UICollectionViewFlowLayout {
 
     var layoutAttributes = [UICollectionViewLayoutAttributes]()
 
-    if !component.model.header.isEmpty {
+    if let headerKind = component.model.header?.kind, !headerKind.isEmpty {
 
       var view: View?
 
-      if let (_, header) = component.type.headers.make(component.model.header) {
+      if let (_, header) = component.type.headers.make(headerKind) {
         view = header
       }
 
-      if view == nil, let (_, header) = Configuration.views.make(component.model.header) {
+      if view == nil, let (_, header) = Configuration.views.make(headerKind) {
         view = header
       }
 
       if let resolvedView = view {
-        if let componentView = resolvedView as? Componentable {
-          headerReferenceSize.height = componentView.preferredHeaderHeight
+        if let componentView = resolvedView as? ItemConfigurable {
+          headerReferenceSize.height = componentView.preferredViewSize.height
         }
 
         let headerAttribute = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, with: IndexPath(item: 0, section: 0))
@@ -63,12 +63,12 @@ open class GridableLayout: UICollectionViewFlowLayout {
       }
     }
 
-    if !component.model.footer.isEmpty,
-      let (_, view) = Configuration.views.make(component.model.footer),
+    if let footerKind = component.model.footer?.kind, !footerKind.isEmpty,
+      let (_, view) = Configuration.views.make(footerKind),
       let resolvedView = view {
 
-      if let componentView = resolvedView as? Componentable {
-        footerHeight = componentView.preferredHeaderHeight
+      if let componentView = resolvedView as? ItemConfigurable {
+        footerHeight = componentView.preferredViewSize.height
       }
 
       let footerAttribute = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, with: IndexPath(item: 0, section: 0))

@@ -62,15 +62,75 @@ class ComponentModelTests: XCTestCase {
   }
 
   func testComponentModelDictionary() {
-    let jsonComponentModel = ComponentModel(json)
+    let json: [String: Any] = [
+      "title": "title",
+      "header": [
+        "title" : "title",
+        "subtitle" : "subtitle",
+        "text" : "text",
+        "kind" : "header-kind"
+      ],
+      "footer": [
+        "title" : "title",
+        "subtitle" : "subtitle",
+        "text" : "text",
+        "kind" : "footer-kind"
+      ],
+      "items" : [
+        ["title" : "foo1"],
+        ["title" : "foo2"],
+        ["title" : "foo3"],
+        ["title" : "foo4"],
+        ["title" : "foo5"]
+      ]
+    ]
 
-    XCTAssertEqual(jsonComponentModel.dictionary["title"] as? String, json["title"] as? String)
-    XCTAssertEqual(jsonComponentModel.dictionary["kind"] as? String, json["kind"] as? String)
-    XCTAssertEqual(jsonComponentModel.dictionary["span"] as? Double, json["span"] as? Double)
+    let model = ComponentModel(json)
+    let dictionary = model.dictionary
 
-    XCTAssertEqual((jsonComponentModel.dictionary["items"] as! [[String : Any]])[0]["title"] as? String,
-                   ((json["items"] as! [AnyObject])[0] as! [String : Any])["title"] as? String)
-    XCTAssertEqual((jsonComponentModel.dictionary["items"] as! [[String : Any]]).count, (json["items"]! as AnyObject).count)
+    guard let headerDictionary = dictionary["header"] as? [String: Any] else {
+      XCTFail("Could not find header dictionary")
+      return
+    }
+
+    XCTAssertEqual(headerDictionary["title"] as? String, "title")
+    XCTAssertEqual(headerDictionary["subtitle"] as? String, "subtitle")
+    XCTAssertEqual(headerDictionary["text"] as? String, "text")
+    XCTAssertEqual(headerDictionary["kind"] as? String, "header-kind")
+
+    guard let footerDictionary = dictionary["footer"] as? [String: Any] else {
+      XCTFail("Could not find footer dictionary")
+      return
+    }
+
+    XCTAssertEqual(footerDictionary["title"] as? String, "title")
+    XCTAssertEqual(footerDictionary["subtitle"] as? String, "subtitle")
+    XCTAssertEqual(footerDictionary["text"] as? String, "text")
+    XCTAssertEqual(footerDictionary["kind"] as? String, "footer-kind")
+
+    guard let itemsArray = dictionary["items"] as? [[String: Any]] else {
+      XCTFail("Could not find items array")
+      return
+    }
+
+    XCTAssertEqual(itemsArray.count, 5)
+    XCTAssertEqual(itemsArray[0]["title"] as? String, "foo1")
+    XCTAssertEqual(itemsArray[1]["title"] as? String, "foo2")
+    XCTAssertEqual(itemsArray[2]["title"] as? String, "foo3")
+    XCTAssertEqual(itemsArray[3]["title"] as? String, "foo4")
+    XCTAssertEqual(itemsArray[4]["title"] as? String, "foo5")
+
+    let truncatedDictionary = model.dictionary(3)
+
+    guard let truncatedItemsArray = truncatedDictionary["items"] as? [[String: Any]] else {
+      XCTFail("Could not find truncated items array")
+      return
+    }
+
+    XCTAssertEqual(truncatedItemsArray.count, 3)
+    XCTAssertEqual(truncatedItemsArray[0]["title"] as? String, "foo1")
+    XCTAssertEqual(truncatedItemsArray[1]["title"] as? String, "foo2")
+    XCTAssertEqual(truncatedItemsArray[2]["title"] as? String, "foo3")
   }
 
   func testComponentModelDiffing() {
@@ -163,5 +223,104 @@ class ComponentModelTests: XCTestCase {
     XCTAssertEqual(json.property(ComponentModel.Key.size), "size")
     XCTAssertEqual(json.property(ComponentModel.Key.height), "height")
     XCTAssertEqual(json.property(ComponentModel.Key.width), "width")
+  }
+
+  func testComponentModelCompareWithHeadersAndFooters() {
+    var lhs = ComponentModel(header: Item(title: "foo"), footer: Item(title: "foo"))
+    var rhs = ComponentModel(header: Item(title: "foo"), footer: Item(title: "foo"))
+
+    XCTAssertTrue(lhs == rhs)
+    XCTAssertTrue(lhs === rhs)
+    XCTAssertFalse(lhs != rhs)
+    XCTAssertFalse(lhs !== rhs)
+    XCTAssertEqual(lhs.diff(model: rhs), ComponentModelDiff.none)
+
+    rhs.header = nil
+    XCTAssertFalse(lhs == rhs)
+    XCTAssertFalse(lhs === rhs)
+    XCTAssertTrue(lhs != rhs)
+    XCTAssertTrue(lhs !== rhs)
+    XCTAssertEqual(lhs.diff(model: rhs), ComponentModelDiff.header)
+
+    lhs.header = nil
+    XCTAssertTrue(lhs == rhs)
+    XCTAssertTrue(lhs === rhs)
+    XCTAssertFalse(lhs != rhs)
+    XCTAssertFalse(lhs !== rhs)
+    XCTAssertEqual(lhs.diff(model: rhs), ComponentModelDiff.none)
+
+    lhs = ComponentModel(header: Item(title: "bar"), footer: Item(title: "bar"))
+    XCTAssertFalse(lhs == rhs)
+    XCTAssertFalse(lhs === rhs)
+    XCTAssertTrue(lhs != rhs)
+    XCTAssertTrue(lhs !== rhs)
+    XCTAssertEqual(lhs.diff(model: rhs), ComponentModelDiff.header)
+
+    rhs = ComponentModel(header: Item(title: "foo"), footer: Item(title: "foo"))
+    XCTAssertFalse(lhs == rhs)
+    XCTAssertFalse(lhs === rhs)
+    XCTAssertTrue(lhs != rhs)
+    XCTAssertTrue(lhs !== rhs)
+    XCTAssertEqual(lhs.diff(model: rhs), ComponentModelDiff.header)
+
+    rhs = ComponentModel(header: Item(title: "bar"), footer: Item(title: "foo"))
+    XCTAssertFalse(lhs == rhs)
+    XCTAssertFalse(lhs === rhs)
+    XCTAssertTrue(lhs != rhs)
+    XCTAssertTrue(lhs !== rhs)
+    XCTAssertEqual(lhs.diff(model: rhs), ComponentModelDiff.footer)
+  }
+
+  func testComponentModelCompareWithIdentifier() {
+    let lhs = ComponentModel(identifier: "foo")
+    var rhs = ComponentModel(identifier: "foo")
+
+    XCTAssertEqual(lhs, rhs)
+    XCTAssertEqual(lhs.diff(model: rhs), ComponentModelDiff.none)
+
+    rhs.identifier = "bar"
+
+    XCTAssertNotEqual(lhs, rhs)
+    XCTAssertEqual(lhs.diff(model: rhs), ComponentModelDiff.identifier)
+  }
+
+  func testComponentModelCompareWithTitle() {
+    let lhs = ComponentModel(title: "foo")
+    var rhs = ComponentModel(title: "foo")
+
+    XCTAssertEqual(lhs, rhs)
+    XCTAssertEqual(lhs.diff(model: rhs), ComponentModelDiff.none)
+
+    rhs.title = "bar"
+
+    XCTAssertNotEqual(lhs, rhs)
+    XCTAssertEqual(lhs.diff(model: rhs), ComponentModelDiff.title)
+  }
+
+  func testComponentModelCompareWithMeta() {
+    let meta = ["foo" : "bar"]
+    let lhs = ComponentModel(meta: meta)
+    var rhs = ComponentModel(meta: meta)
+
+    XCTAssertEqual(lhs, rhs)
+    XCTAssertEqual(lhs.diff(model: rhs), ComponentModelDiff.none)
+
+    rhs.meta = ["bar" : "baz"]
+
+    XCTAssertNotEqual(lhs, rhs)
+    XCTAssertEqual(lhs.diff(model: rhs), ComponentModelDiff.meta)
+  }
+
+  func testCompareCollectionOfComponentModels() {
+    let lhs = [ComponentModel(title: "foo")]
+    var rhs = [ComponentModel(title: "bar")]
+
+    XCTAssertFalse(lhs == rhs)
+
+    rhs = [ComponentModel(title: "foo")]
+    XCTAssertTrue(lhs == rhs)
+
+    rhs.append(ComponentModel(title: "bar"))
+    XCTAssertFalse(lhs == rhs)
   }
 }
