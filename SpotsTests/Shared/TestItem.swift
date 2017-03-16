@@ -175,4 +175,61 @@ class TestItem: XCTestCase {
     item2 = Item(data)
     XCTAssertFalse(compareRelations(item, item2))
   }
+
+  func testComparingItemWithOptionalItem() {
+    let lhs: Item = Item(title: "foo")
+    var rhs: Item? = Item(title: "foo")
+
+    XCTAssertTrue(lhs == rhs)
+    XCTAssertFalse(lhs != rhs)
+
+    rhs = Item(title: "bar")
+    
+    XCTAssertFalse(lhs == rhs)
+    XCTAssertTrue(lhs != rhs)
+
+    rhs = nil
+
+    XCTAssertFalse(lhs == rhs)
+    XCTAssertTrue(lhs != rhs)
+  }
+
+  func testComparingOptionalItemWithItem() {
+    var lhs: Item? = Item(title: "foo")
+    let rhs: Item = Item(title: "foo")
+
+    XCTAssertTrue(lhs == rhs)
+    XCTAssertFalse(lhs != rhs)
+
+    lhs = Item(title: "bar")
+    XCTAssertFalse(lhs == rhs)
+    XCTAssertTrue(lhs != rhs)
+
+    lhs = nil
+    XCTAssertFalse(lhs == rhs)
+    XCTAssertTrue(lhs != rhs)
+  }
+
+  func testCompareOptionalItems() {
+    var lhs: Item? = Item(title: "foo")
+    var rhs: Item? = Item(title: "foo")
+
+    XCTAssertTrue(lhs == rhs)
+    XCTAssertFalse(lhs != rhs)
+
+    lhs = Item(title: "bar")
+    XCTAssertFalse(lhs == rhs)
+    XCTAssertTrue(lhs != rhs)
+
+    lhs = nil
+    XCTAssertFalse(lhs == rhs)
+    XCTAssertTrue(lhs != rhs)
+
+    rhs = nil
+    XCTAssertTrue(lhs == rhs)
+    XCTAssertFalse(lhs != rhs)
+
+    lhs = Item(title: "bar")
+
+  }
 }
