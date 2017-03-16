@@ -490,7 +490,7 @@ public extension CoreComponent {
     self.views.defaultItem = Registry.Item.classType(view)
   }
 
-  public func heightForItem(_ item: inout Item, component: CoreComponent) -> CGFloat {
+  public func heightForItem(_ item: inout Item) -> CGFloat {
     guard let kind: String = item.kind, !kind.isEmpty else {
       return 0.0
     }

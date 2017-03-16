@@ -105,7 +105,7 @@ extension Delegate: UITableViewDelegate {
       return 0.0
     }
 
-    let height = heightForItem(&item, component: component)
+    let height = component.heightForItem(&item)
     component.model.header = item
 
     return height
@@ -120,7 +120,7 @@ extension Delegate: UITableViewDelegate {
       return 0.0
     }
 
-    let height = heightForItem(&item, component: component)
+    let height = component.heightForItem(&item)
     component.model.footer = item
 
     return height
