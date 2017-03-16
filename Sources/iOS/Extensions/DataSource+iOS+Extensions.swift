@@ -4,14 +4,18 @@ extension DataSource {
 
   func prepareWrappableView(_ view: Wrappable, atIndex index: Int, in component: CoreComponent, parentFrame: CGRect = CGRect.zero) {
 
-    guard let wrappedView = Configuration.views.make(component.model.items[index].kind, parentFrame: parentFrame)?.view
+    guard let customView = Configuration.views.make(component.model.items[index].kind, parentFrame: parentFrame)?.view
       else {
         return
     }
 
+    guard let wrappedView = customView else {
+      return
+    }
+
     view.configure(with: wrappedView)
 
-    if let configurableView = wrappedView as? ItemConfigurable {
+    if let configurableView = customView as? ItemConfigurable {
       configurableView.configure(&component.model.items[index])
 
       if component.model.items[index].size.height == 0.0 {
