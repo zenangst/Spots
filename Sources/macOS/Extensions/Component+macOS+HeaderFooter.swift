@@ -7,21 +7,18 @@ extension Component {
       return
     }
 
-    guard let headerView = Configuration.views.make(header.kind)?.view else {
-      return
+    if let (_, headerView) = Configuration.views.make(header.kind) {
+      if let headerView = headerView,
+        let componentable = headerView as? ItemConfigurable {
+        let size = CGSize(width: view.frame.width,
+                          height: componentable.preferredViewSize.height)
+        componentable.configure(&header)
+        model.header = header
+        headerView.frame.size = size
+        self.headerView = headerView
+        scrollView.addSubview(headerView)
+      }
     }
-
-    guard let itemConfigurable = headerView as? ItemConfigurable else {
-      return
-    }
-
-    let size = CGSize(width: view.frame.width,
-                      height: itemConfigurable.preferredViewSize.height)
-    itemConfigurable.configure(&header)
-    model.header = header
-    headerView.frame.size = size
-    self.headerView = headerView
-    scrollView.addSubview(headerView)
   }
 
   func setupFooter(with model: inout ComponentModel) {
@@ -29,21 +26,18 @@ extension Component {
       return
     }
 
-    guard let footerView = Configuration.views.make(footer.kind)?.view else {
-      return
+    if let (_, footerView) = Configuration.views.make(footer.kind) {
+      if let footerView = footerView,
+        let componentable = footerView as? ItemConfigurable {
+        let size = CGSize(width: view.frame.width,
+                          height: componentable.preferredViewSize.height)
+        componentable.configure(&footer)
+        model.footer = footer
+        footerView.frame.size = size
+        self.footerView = footerView
+        scrollView.addSubview(footerView)
+      }
     }
-
-    guard let itemConfigurable = footerView as? ItemConfigurable else {
-      return
-    }
-
-    let size = CGSize(width: view.frame.width,
-                      height: itemConfigurable.preferredViewSize.height)
-    itemConfigurable.configure(&footer)
-    model.footer = footer
-    footerView.frame.size = size
-    self.footerView = footerView
-    scrollView.addSubview(footerView)
   }
 
   func layoutHeaderFooterViews(_ size: CGSize) {

@@ -131,10 +131,8 @@ extension Gridable {
       ? Self.grids.defaultIdentifier
       : item.kind
 
-    guard let collectionItem = Self.grids.make(kind)?.item,
-      let view = collectionItem as? ItemConfigurable else {
-        return
-    }
+    guard let (_, collectionItem) = Self.grids.make(kind),
+      let view = collectionItem as? ItemConfigurable else { return }
 
     view.configure(&item)
 
