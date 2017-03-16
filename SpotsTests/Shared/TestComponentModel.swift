@@ -62,15 +62,75 @@ class ComponentModelTests: XCTestCase {
   }
 
   func testComponentModelDictionary() {
-    let jsonComponentModel = ComponentModel(json)
+    let json: [String: Any] = [
+      "title": "title",
+      "header": [
+        "title" : "title",
+        "subtitle" : "subtitle",
+        "text" : "text",
+        "kind" : "header-kind"
+      ],
+      "footer": [
+        "title" : "title",
+        "subtitle" : "subtitle",
+        "text" : "text",
+        "kind" : "footer-kind"
+      ],
+      "items" : [
+        ["title" : "foo1"],
+        ["title" : "foo2"],
+        ["title" : "foo3"],
+        ["title" : "foo4"],
+        ["title" : "foo5"]
+      ]
+    ]
 
-    XCTAssertEqual(jsonComponentModel.dictionary["title"] as? String, json["title"] as? String)
-    XCTAssertEqual(jsonComponentModel.dictionary["kind"] as? String, json["kind"] as? String)
-    XCTAssertEqual(jsonComponentModel.dictionary["span"] as? Double, json["span"] as? Double)
+    let model = ComponentModel(json)
+    let dictionary = model.dictionary
 
-    XCTAssertEqual((jsonComponentModel.dictionary["items"] as! [[String : Any]])[0]["title"] as? String,
-                   ((json["items"] as! [AnyObject])[0] as! [String : Any])["title"] as? String)
-    XCTAssertEqual((jsonComponentModel.dictionary["items"] as! [[String : Any]]).count, (json["items"]! as AnyObject).count)
+    guard let headerDictionary = dictionary["header"] as? [String: Any] else {
+      XCTFail("Could not find header dictionary")
+      return
+    }
+
+    XCTAssertEqual(headerDictionary["title"] as? String, "title")
+    XCTAssertEqual(headerDictionary["subtitle"] as? String, "subtitle")
+    XCTAssertEqual(headerDictionary["text"] as? String, "text")
+    XCTAssertEqual(headerDictionary["kind"] as? String, "header-kind")
+
+    guard let footerDictionary = dictionary["footer"] as? [String: Any] else {
+      XCTFail("Could not find footer dictionary")
+      return
+    }
+
+    XCTAssertEqual(footerDictionary["title"] as? String, "title")
+    XCTAssertEqual(footerDictionary["subtitle"] as? String, "subtitle")
+    XCTAssertEqual(footerDictionary["text"] as? String, "text")
+    XCTAssertEqual(footerDictionary["kind"] as? String, "footer-kind")
+
+    guard let itemsArray = dictionary["items"] as? [[String: Any]] else {
+      XCTFail("Could not find items array")
+      return
+    }
+
+    XCTAssertEqual(itemsArray.count, 5)
+    XCTAssertEqual(itemsArray[0]["title"] as? String, "foo1")
+    XCTAssertEqual(itemsArray[1]["title"] as? String, "foo2")
+    XCTAssertEqual(itemsArray[2]["title"] as? String, "foo3")
+    XCTAssertEqual(itemsArray[3]["title"] as? String, "foo4")
+    XCTAssertEqual(itemsArray[4]["title"] as? String, "foo5")
+
+    let truncatedDictionary = model.dictionary(3)
+
+    guard let truncatedItemsArray = truncatedDictionary["items"] as? [[String: Any]] else {
+      XCTFail("Could not find truncated items array")
+      return
+    }
+
+    XCTAssertEqual(truncatedItemsArray.count, 3)
+    XCTAssertEqual(truncatedItemsArray[0]["title"] as? String, "foo1")
+    XCTAssertEqual(truncatedItemsArray[1]["title"] as? String, "foo2")
+    XCTAssertEqual(truncatedItemsArray[2]["title"] as? String, "foo3")
   }
 
   func testComponentModelDiffing() {
