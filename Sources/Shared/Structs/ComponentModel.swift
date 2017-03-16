@@ -330,7 +330,7 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
     if !(items === model.items) {
       return .items
     }
-    
+
     // Check children
     let lhsChildren = items.flatMap { $0.children }
     let rhsChildren = model.items.flatMap { $0.children }
