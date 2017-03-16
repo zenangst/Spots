@@ -294,11 +294,17 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
   /// - returns: A ComponentModelDiff value, see ComponentModelDiff for values.
   public func diff(model: ComponentModel) -> ComponentModelDiff {
     // Determine if the UI component is the same, used when Controller needs to replace the entire UI component
-    if kind != model.kind { return .kind }
+    if kind != model.kind {
+      return .kind
+    }
     // Determine if the unqiue identifier for the component changed
-    if identifier != model.identifier { return .identifier }
+    if identifier != model.identifier {
+      return .identifier
+    }
     // Determine if the component layout changed, this can be used to trigger layout related processes
-    if layout != model.layout { return .layout }
+    if layout != model.layout {
+      return .layout
+    }
 
     // Determine if the header for the component has changed
     if !optionalCompare(lhs: header, rhs: model.header) {
@@ -311,11 +317,17 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
     }
 
     // Check if meta data for the component changed, this can be up to the developer to decide what course of action to take.
-    if !(meta as NSDictionary).isEqual(to: model.meta) { return .meta }
+    if !(meta as NSDictionary).isEqual(to: model.meta) {
+      return .meta
+    }
     // Check if title changed
-    if title != model.title { return .title }
+    if title != model.title {
+      return .title
+    }
     // Check if the items have changed
-    if !(items === model.items) { return .items }
+    if !(items === model.items) {
+      return .items
+    }
     // Check children
     let lhsChildren = items.flatMap { $0.children }
     let rhsChildren = model.items.flatMap { $0.children }
