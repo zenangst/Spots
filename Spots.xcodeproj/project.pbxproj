@@ -59,7 +59,7 @@
 		BD6FBEF01E12B5F000AA58BD /* TestComposition.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6FBEEF1E12B5F000AA58BD /* TestComposition.swift */; };
 		BD6FBEF11E12B5F000AA58BD /* TestComposition.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6FBEEF1E12B5F000AA58BD /* TestComposition.swift */; };
 		BD6FBEF21E12B5F000AA58BD /* TestComposition.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6FBEEF1E12B5F000AA58BD /* TestComposition.swift */; };
-		BD7397381D718CDB000AF2DE /* TestComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D584782B1C43FF34006EBA49 /* TestComponent.swift */; };
+		BD7397381D718CDB000AF2DE /* TestComponentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D584782B1C43FF34006EBA49 /* TestComponentModel.swift */; };
 		BD73973A1D718CDB000AF2DE /* TestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58478281C43FF34006EBA49 /* TestFactory.swift */; };
 		BD7397401D718CDB000AF2DE /* Spots.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478091C43FEB8006EBA49 /* Spots.framework */; };
 		BD9AB9F61E44AD9700085677 /* TestCoreComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD677E841DC616B2006D1654 /* TestCoreComponent.swift */; };
@@ -369,9 +369,9 @@
 		D55B7B4F1E423C65000125C8 /* RxSpotsDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B7B4E1E423C65000125C8 /* RxSpotsDelegateTests.swift */; };
 		D58478141C43FEB9006EBA49 /* Spots.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478091C43FEB8006EBA49 /* Spots.framework */; };
 		D58478531C43FFEB006EBA49 /* TestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58478281C43FF34006EBA49 /* TestFactory.swift */; };
-		D58478571C43FFFD006EBA49 /* TestComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D584782B1C43FF34006EBA49 /* TestComponent.swift */; };
+		D58478571C43FFFD006EBA49 /* TestComponentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D584782B1C43FF34006EBA49 /* TestComponentModel.swift */; };
 		D58478D21C440568006EBA49 /* Spots.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478C81C440567006EBA49 /* Spots.framework */; };
-		D58478E71C440645006EBA49 /* TestComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D584782B1C43FF34006EBA49 /* TestComponent.swift */; };
+		D58478E71C440645006EBA49 /* TestComponentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D584782B1C43FF34006EBA49 /* TestComponentModel.swift */; };
 		D58478ED1C440726006EBA49 /* Tailor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478E91C440726006EBA49 /* Tailor.framework */; };
 		D58478F91C44076B006EBA49 /* Tailor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478F71C44076B006EBA49 /* Tailor.framework */; };
 		D5D282671E54710D004BF251 /* ViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D282661E54710D004BF251 /* ViewState.swift */; };
@@ -612,7 +612,7 @@
 		D58478241C43FF34006EBA49 /* Info-iOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
 		D58478261C43FF34006EBA49 /* Info-iOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
 		D58478281C43FF34006EBA49 /* TestFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestFactory.swift; sourceTree = "<group>"; };
-		D584782B1C43FF34006EBA49 /* TestComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestComponent.swift; sourceTree = "<group>"; };
+		D584782B1C43FF34006EBA49 /* TestComponentModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestComponentModel.swift; sourceTree = "<group>"; };
 		D584784F1C43FFA1006EBA49 /* Info-macOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-macOS.plist"; sourceTree = "<group>"; };
 		D58478511C43FFA8006EBA49 /* Info-macOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-macOS.plist"; sourceTree = "<group>"; };
 		D58478C81C440567006EBA49 /* Spots.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Spots.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1122,7 +1122,7 @@
 			isa = PBXGroup;
 			children = (
 				BD677E8E1DC65D63006D1654 /* Helpers.swift */,
-				D584782B1C43FF34006EBA49 /* TestComponent.swift */,
+				D584782B1C43FF34006EBA49 /* TestComponentModel.swift */,
 				BD6FBEEF1E12B5F000AA58BD /* TestComposition.swift */,
 				BDCFCD401DCA7EFF0047E84C /* TestController.swift */,
 				BD45D9861E30906300C2D6B2 /* TestLayout.swift */,
@@ -1685,7 +1685,7 @@
 				BDCFCD431DCA7EFF0047E84C /* TestController.swift in Sources */,
 				BD677E8B1DC61EFC006D1654 /* TestStateCache.swift in Sources */,
 				BD4295591D81D45D00E07E1C /* TestViewSpot.swift in Sources */,
-				BD7397381D718CDB000AF2DE /* TestComponent.swift in Sources */,
+				BD7397381D718CDB000AF2DE /* TestComponentModel.swift in Sources */,
 				BD42CA861E4C9B2600A86E3B /* TestSpot.swift in Sources */,
 				BD4295501D81CE4F00E07E1C /* TestGridSpot.swift in Sources */,
 				BDB8D5951E4DFADC00220BC3 /* TestItem.swift in Sources */,
@@ -1835,7 +1835,7 @@
 				BD4295581D81D45D00E07E1C /* TestViewSpot.swift in Sources */,
 				D5D282761E547D1D004BF251 /* TestGridWrapper.swift in Sources */,
 				BD4295551D81D39700E07E1C /* TestCarouselSpot.swift in Sources */,
-				D58478571C43FFFD006EBA49 /* TestComponent.swift in Sources */,
+				D58478571C43FFFD006EBA49 /* TestComponentModel.swift in Sources */,
 				BD43459B1E35EB7D0032EB3E /* TestInteraction.swift in Sources */,
 				BD45D98B1E30909700C2D6B2 /* TestLayoutExtensions.swift in Sources */,
 				BD42954F1D81CE4F00E07E1C /* TestGridSpot.swift in Sources */,
@@ -1972,7 +1972,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D58478E71C440645006EBA49 /* TestComponent.swift in Sources */,
+				D58478E71C440645006EBA49 /* TestComponentModel.swift in Sources */,
 				BD677E901DC65D63006D1654 /* Helpers.swift in Sources */,
 				BD10D5261D7955AC00DF8E9B /* TestViewModelExtensions.swift in Sources */,
 				BD165A391E6EAD750023AF82 /* HelperViews.swift in Sources */,
