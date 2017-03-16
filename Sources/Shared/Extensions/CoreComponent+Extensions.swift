@@ -490,6 +490,29 @@ public extension CoreComponent {
     self.views.defaultItem = Registry.Item.classType(view)
   }
 
+  public func heightForItem(_ item: inout Item, component: CoreComponent) -> CGFloat {
+    guard let kind: String = item.kind, !kind.isEmpty else {
+      return 0.0
+    }
+
+    guard let resolvedView = Configuration.views.make(kind)?.view else {
+      return 0.0
+    }
+
+    guard let itemConfigurable = resolvedView as? ItemConfigurable else {
+      return resolvedView.frame.size.height
+    }
+
+    itemConfigurable.configure(&item)
+
+
+    guard resolvedView.frame.size.height != 0.0 else {
+      return itemConfigurable.preferredViewSize.height
+    }
+
+    return resolvedView.frame.size.height
+  }
+
   public func beforeUpdate() {}
   public func afterUpdate() {}
   func configure(with layout: Layout) {}
