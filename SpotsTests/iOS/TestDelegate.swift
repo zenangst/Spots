@@ -92,6 +92,85 @@ class DelegateTests: XCTestCase {
 
     view = component.componentDelegate?.tableView(component.tableView, viewForHeaderInSection: 0)
     XCTAssertEqual(view, nil)
+  }
 
+  func testTableViewHeaderHeight() {
+    Configuration.register(view: RegularView.self, identifier: "regular-header")
+    Configuration.register(view: CustomListHeaderView.self, identifier: "custom-header")
+
+    let component = Component(model: ComponentModel(header: Item(kind: "custom-header")))
+    component.setup(CGSize(width: 100, height: 100))
+    component.view.layoutSubviews()
+
+    guard let tableView = component.tableView else {
+      XCTFail("Unable to resolve table view.")
+      return
+    }
+
+    guard let delegate = component.componentDelegate else {
+      XCTFail("Unable to resolve delegate.")
+      return
+    }
+
+    XCTAssertEqual(delegate.tableView(tableView, heightForHeaderInSection: 0), 88)
+
+    component.model.header = nil
+    tableView.reloadDataSource()
+
+    XCTAssertEqual(delegate.tableView(tableView, heightForHeaderInSection: 0), 0)
+
+    component.model.header = Item(kind: "regular-header")
+    tableView.reloadDataSource()
+
+    XCTAssertEqual(delegate.tableView(tableView, heightForHeaderInSection: 0), 44)
+
+    component.model.header = Item(kind: "")
+    tableView.reloadDataSource()
+
+    XCTAssertEqual(delegate.tableView(tableView, heightForHeaderInSection: 0), 0)
+
+    delegate.component = nil
+    tableView.reloadDataSource()
+    XCTAssertEqual(delegate.tableView(tableView, heightForFooterInSection: 0), 0)
+  }
+
+  func testTableViewFooterHeight() {
+    Configuration.register(view: RegularView.self, identifier: "regular-footer")
+    Configuration.register(view: CustomListHeaderView.self, identifier: "custom-footer")
+
+    let component = Component(model: ComponentModel(footer: Item(kind: "custom-footer")))
+    component.setup(CGSize(width: 100, height: 100))
+    component.view.layoutSubviews()
+
+    guard let tableView = component.tableView else {
+      XCTFail("Unable to resolve table view.")
+      return
+    }
+
+    guard let delegate = component.componentDelegate else {
+      XCTFail("Unable to resolve delegate.")
+      return
+    }
+
+    XCTAssertEqual(delegate.tableView(tableView, heightForFooterInSection: 0), 88)
+
+    component.model.footer = nil
+    tableView.reloadDataSource()
+
+    XCTAssertEqual(delegate.tableView(tableView, heightForFooterInSection: 0), 0)
+
+    component.model.footer = Item(kind: "regular-footer")
+    tableView.reloadDataSource()
+
+    XCTAssertEqual(delegate.tableView(tableView, heightForFooterInSection: 0), 44)
+
+    component.model.footer = Item(kind: "")
+    tableView.reloadDataSource()
+
+    XCTAssertEqual(delegate.tableView(tableView, heightForFooterInSection: 0), 0)
+
+    delegate.component = nil
+    tableView.reloadDataSource()
+    XCTAssertEqual(delegate.tableView(tableView, heightForFooterInSection: 0), 0)
   }
 }
