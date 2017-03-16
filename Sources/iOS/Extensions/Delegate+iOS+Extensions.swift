@@ -161,7 +161,10 @@ extension Delegate: UITableViewDelegate {
       return view?.frame.size.height ?? 0.0
     }
 
-    return (header?.view as? ItemConfigurable)?.preferredViewSize.height ?? 0.0
+    let height = heightForItem(&item, component: component)
+    component.model.footer = item
+
+    return height
   }
 
   /// Asks the data source for the title of the header of the specified section of the table view.
@@ -335,6 +338,29 @@ extension Delegate: UITableViewDelegate {
       height: tableView.frame.size.height)
 
     return component.item(at: indexPath)?.size.height ?? 0
+  }
+
+  private func heightForItem(_ item: inout Item, component: CoreComponent) -> CGFloat {
+    guard let kind: String = item.kind, !kind.isEmpty else {
+      return 0.0
+    }
+
+    guard let resolvedView = Configuration.views.make(kind)?.view else {
+      return 0.0
+    }
+
+    guard let itemConfigurable = resolvedView as? ItemConfigurable else {
+      return resolvedView.frame.size.height
+    }
+
+    itemConfigurable.configure(&item)
+    
+
+    guard resolvedView.frame.size.height != 0.0 else {
+      return itemConfigurable.preferredViewSize.height
+    }
+
+    return resolvedView.frame.size.height
   }
 }
 
