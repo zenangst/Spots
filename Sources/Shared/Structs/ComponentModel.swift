@@ -375,7 +375,9 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
 public func == (lhs: [ComponentModel], rhs: [ComponentModel]) -> Bool {
   var equal = lhs.count == rhs.count
 
-  if !equal { return false }
+  if !equal {
+    return false
+  }
 
   for (index, item) in lhs.enumerated() {
     if item != rhs[index] {
@@ -396,7 +398,9 @@ public func == (lhs: [ComponentModel], rhs: [ComponentModel]) -> Bool {
 public func === (lhs: [ComponentModel], rhs: [ComponentModel]) -> Bool {
   var equal = lhs.count == rhs.count
 
-  if !equal { return false }
+  if !equal {
+    return false
+  }
 
   for (index, item) in lhs.enumerated() {
     if item !== rhs[index] {
@@ -469,7 +473,9 @@ private func optionalCompare(lhs: Item?, rhs: Item?) -> Bool {
 ///
 /// - returns: A boolean value, true if both ComponentModels are no equal
 public func === (lhs: ComponentModel, rhs: ComponentModel) -> Bool {
-  guard lhs.identifier == rhs.identifier else { return false }
+  guard lhs.identifier == rhs.identifier else {
+    return false
+  }
 
   let lhsChildren = lhs.items.flatMap { $0.children.flatMap({ ComponentModel($0) }) }
   let rhsChildren = rhs.items.flatMap { $0.children.flatMap({ ComponentModel($0) }) }
