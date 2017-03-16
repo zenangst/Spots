@@ -111,7 +111,7 @@ extension Delegate: UITableViewDelegate {
 
       switch view {
       case let view as ListHeaderFooterWrapper:
-        if let (_, resolvedView) = Configuration.views.make(kind),
+        if let resolvedView = Configuration.views.make(kind)?.view,
           let componentView = resolvedView as? ItemConfigurable {
           view.frame.size.height = componentView.preferredViewSize.height
         }
@@ -145,9 +145,9 @@ extension Delegate: UITableViewDelegate {
 
       switch view {
       case let view as ListHeaderFooterWrapper:
-        if let (_, resolvedView) = Configuration.views.make(kind),
+        if let resolvedView = Configuration.views.make(kind)?.view,
           let componentView = resolvedView as? ItemConfigurable {
-            view.frame.size.height = componentView.preferredViewSize.height
+          view.frame.size.height = componentView.preferredViewSize.height
         }
       case let view as ItemConfigurable:
         if var item = component.model.footer {
@@ -241,14 +241,13 @@ extension Delegate: UITableViewDelegate {
 
     switch view {
       case let view as ListHeaderFooterWrapper:
-      if let (_, resolvedView) = Configuration.views.make(kind),
-        let customView = resolvedView {
-        view.configure(with: customView)
+      if let resolvedView = Configuration.views.make(kind)?.view {
+        view.configure(with: resolvedView)
 
-        if let componentView = customView as? ItemConfigurable {
-          customView.frame.size = view.frame.size
+        if let componentView = resolvedView as? ItemConfigurable {
+          resolvedView.frame.size = view.frame.size
           if var item = component.model.header {
-            customView.frame.size.height = componentView.preferredViewSize.height
+            resolvedView.frame.size.height = componentView.preferredViewSize.height
             componentView.configure(&item)
             component.model.header = item
           }
@@ -278,14 +277,13 @@ extension Delegate: UITableViewDelegate {
 
     switch view {
     case let view as ListHeaderFooterWrapper:
-      if let (_, resolvedView) = Configuration.views.make(kind),
-        let customView = resolvedView {
-        view.configure(with: customView)
+      if let resolvedView = Configuration.views.make(kind)?.view {
+        view.configure(with: resolvedView)
 
-        if let componentView = customView as? ItemConfigurable {
-          customView.frame.size = view.frame.size
+        if let componentView = resolvedView as? ItemConfigurable {
+          resolvedView.frame.size = view.frame.size
           if var item = component.model.footer {
-            customView.frame.size.height = componentView.preferredViewSize.height
+            resolvedView.frame.size.height = componentView.preferredViewSize.height
             componentView.configure(&item)
             component.model.footer = item
           }

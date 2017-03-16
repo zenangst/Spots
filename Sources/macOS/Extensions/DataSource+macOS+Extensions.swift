@@ -47,7 +47,7 @@ extension DataSource: NSCollectionViewDataSource {
 
     switch item {
     case let item as GridWrapper:
-      if let (_, resolvedView) = Configuration.views.make(reuseIdentifier), let view = resolvedView {
+      if let view = Configuration.views.make(reuseIdentifier)?.view {
         item.configure(with: view)
         (view as? ItemConfigurable)?.configure(&component.model.items[indexPath.item])
       }

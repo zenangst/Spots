@@ -233,9 +233,9 @@ public extension CoreComponent {
       let kind = identifier(at: index)
       let view: View?
 
-      if let (_, resolvedView) = Self.views.make(kind, parentFrame: self.view.bounds) {
+      if let resolvedView = Self.views.make(kind, parentFrame: self.view.bounds)?.view {
         view = resolvedView
-      } else if let (_, resolvedView) = Configuration.views.make(kind, parentFrame: self.view.bounds) {
+      } else if let resolvedView = Configuration.views.make(kind, parentFrame: self.view.bounds).view? {
         view = resolvedView
       } else {
         return nil
@@ -263,18 +263,18 @@ public extension CoreComponent {
           kind = type(of: grid).grids.defaultIdentifier
         }
 
-        if let (_, resolvedView) = type(of: grid).grids.make(kind) {
-          prepare(kind: kind, view: resolvedView as Any, item: &item)
-        } else if let (_, resolvedView) = Configuration.views.make(kind, parentFrame: self.view.frame) {
+        if let resolvedItem = type(of: grid).grids.make(kind)?.item {
+          prepare(kind: kind, view: resolvedItem as Any, item: &item)
+        } else if let resolvedView = Configuration.views.make(kind, parentFrame: self.view.frame)?.view {
           prepare(kind: kind, view: resolvedView as Any, item: &item)
         } else {
           return nil
         }
       default:
         let kind = identifier(at: index)
-        if let (_, resolvedView) = Self.views.make(kind, parentFrame: self.view.frame) {
+        if let resolvedView = Self.views.make(kind, parentFrame: self.view.frame)?.view {
           prepare(kind: kind, view: resolvedView as Any, item: &item)
-        } else if let (_, resolvedView) = Configuration.views.make(kind, parentFrame: self.view.frame) {
+        } else if let resolvedView = Configuration.views.make(kind, parentFrame: self.view.frame)?.view {
           prepare(kind: kind, view: resolvedView as Any, item: &item)
         } else {
           return nil

@@ -3,21 +3,28 @@ import UIKit
 extension DataSource {
 
   func prepareWrappableView(_ view: Wrappable, atIndex index: Int, in component: CoreComponent, parentFrame: CGRect = CGRect.zero) {
-    if let (_, customView) = Configuration.views.make(component.model.items[index].kind, parentFrame: parentFrame),
-      let wrappedView = customView {
-      view.configure(with: wrappedView)
 
-      if let configurableView = customView as? ItemConfigurable {
-        configurableView.configure(&component.model.items[index])
+    guard let customView = Configuration.views.make(component.model.items[index].kind, parentFrame: parentFrame)?.view
+      else {
+        return
+    }
 
-        if component.model.items[index].size.height == 0.0 {
-          component.model.items[index].size = configurableView.preferredViewSize
-        }
+    guard let wrappedView = customView else {
+      return
+    }
 
-        component.configure?(configurableView)
-      } else {
-        component.model.items[index].size.height = wrappedView.frame.size.height
+    view.configure(with: wrappedView)
+
+    if let configurableView = customView as? ItemConfigurable {
+      configurableView.configure(&component.model.items[index])
+
+      if component.model.items[index].size.height == 0.0 {
+        component.model.items[index].size = configurableView.preferredViewSize
       }
+
+      component.configure?(configurableView)
+    } else {
+      component.model.items[index].size.height = wrappedView.frame.size.height
     }
   }
 
@@ -104,7 +111,7 @@ extension DataSource: UICollectionViewDataSource {
 
     switch view {
     case let view as GridHeaderFooterWrapper:
-      if let (_, resolvedView) = Configuration.views.make(identifier),
+      if let resolvedView = Configuration.views.make(identifier)?.view,
         let customView = resolvedView {
         view.configure(with: customView)
         view.frame.size.height = viewHeight
