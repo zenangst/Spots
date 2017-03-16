@@ -40,7 +40,7 @@ extension Gridable {
   ///
   /// - returns: Size of the object at index path as CGSize
   public func sizeForItem(at indexPath: IndexPath) -> CGSize {
-    let width = (item(at: indexPath)?.size.width ?? 0)
+    let width  = item(at: indexPath)?.size.width  ?? 0
     let height = item(at: indexPath)?.size.height ?? 0
 
     // Never return a negative width
