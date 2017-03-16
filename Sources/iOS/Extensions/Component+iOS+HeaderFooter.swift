@@ -27,7 +27,6 @@ extension Component {
         return
     }
 
-
     collectionViewLayout.headerReferenceSize.height = itemConfigurableView.preferredViewSize.height
   }
 }
