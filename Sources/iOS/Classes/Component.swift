@@ -125,6 +125,7 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     }
 
     layout(size)
+    configurePageControl()
   }
 
   public func layout(_ size: CGSize) {
