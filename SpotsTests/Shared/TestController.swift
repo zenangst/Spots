@@ -709,7 +709,11 @@ class ControllerTests: XCTestCase {
 
     #if !os(OSX)
       view = controller.ui({ $0.kind == "image" })
-      XCTAssertNotNil(view)
+
+      guard view != nil else {
+        XCTFail("Unable to resolve view.")
+        return
+      }
     #endif
 
     XCTAssertEqual(controller.components.first!.model.items[0].title, initialComponentModels.first!.items[0].title)

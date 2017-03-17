@@ -8,6 +8,7 @@ class TestGridableLayout: XCTestCase {
 
   func testContentSizeForHorizontalLayoutsWithoutInsets() {
     let model = ComponentModel(
+      kind: "carousel",
       items: [
         Item(title: "foo", size: CGSize(width: 50, height: 50)),
         Item(title: "bar", size: CGSize(width: 50, height: 50))
@@ -18,7 +19,12 @@ class TestGridableLayout: XCTestCase {
     carouselComponent.layout(parentSize)
     carouselComponent.view.layoutSubviews()
 
-    XCTAssertEqual(carouselComponent.layout.contentSize, CGSize(width: 100, height: 50))
+    guard let collectionView = carouselComponent.collectionView else {
+      XCTFail("Unable to resolve collection view layout.")
+      return
+    }
+
+    XCTAssertEqual(collectionView.contentSize, CGSize(width: 100, height: 50))
     XCTAssertEqual(carouselComponent.view.frame.size, CGSize(width: 100, height: 50))
   }
 
@@ -37,7 +43,12 @@ class TestGridableLayout: XCTestCase {
     carouselComponent.layout(parentSize)
     carouselComponent.view.layoutSubviews()
 
-    XCTAssertEqual(carouselComponent.layout.contentSize, CGSize(width: 100, height: 150))
+    guard let collectionView = carouselComponent.collectionView else {
+      XCTFail("Unable to resolve collection view layout.")
+      return
+    }
+
+    XCTAssertEqual(collectionView.contentSize, CGSize(width: 100, height: 150))
     XCTAssertEqual(carouselComponent.view.frame.size, CGSize(width: 100, height: 150))
   }
 
@@ -57,7 +68,12 @@ class TestGridableLayout: XCTestCase {
     carouselComponent.layout(parentSize)
     carouselComponent.view.layoutSubviews()
 
-    let layoutAttributes = carouselComponent.layout.layoutAttributesForElements(in: CGRect(origin: CGPoint.zero, size: parentSize))
+    guard let collectionViewLayout = carouselComponent.collectionView?.collectionViewLayout as? FlowLayout else {
+      XCTFail("Unable to resolve collection view layout.")
+      return
+    }
+
+    let layoutAttributes = collectionViewLayout.layoutAttributesForElements(in: CGRect(origin: CGPoint.zero, size: parentSize))
 
     let expectedFrameA = CGRect(
       origin: CGPoint(
@@ -96,7 +112,12 @@ class TestGridableLayout: XCTestCase {
     carouselComponent.layout(parentSize)
     carouselComponent.view.layoutSubviews()
 
-    let layoutAttributes = carouselComponent.layout.layoutAttributesForElements(in: CGRect(origin: CGPoint.zero, size: parentSize))
+    guard let collectionViewLayout = carouselComponent.collectionView?.collectionViewLayout as? FlowLayout else {
+      XCTFail("Unable to resolve collection view layout.")
+      return
+    }
+
+    let layoutAttributes = collectionViewLayout.layoutAttributesForElements(in: CGRect(origin: CGPoint.zero, size: parentSize))
 
     XCTAssertEqual(layoutAttributes?.count, 2)
     XCTAssertEqual(layoutAttributes?[0].frame, CGRect(origin: CGPoint(x: 0.0, y: model.layout!.inset.top), size: itemSize))
@@ -123,7 +144,12 @@ class TestGridableLayout: XCTestCase {
     component.layout(parentSize)
     component.view.layoutSubviews()
 
-    let layoutAttributes = component.layout.layoutAttributesForElements(in: CGRect(origin: CGPoint.zero, size: parentSize))
+    guard let collectionViewLayout = component.collectionView?.collectionViewLayout as? FlowLayout else {
+      XCTFail("Unable to resolve collection view layout.")
+      return
+    }
+
+    let layoutAttributes = collectionViewLayout.layoutAttributesForElements(in: CGRect(origin: CGPoint.zero, size: parentSize))
 
     let expectedFrameA = CGRect(
       origin: CGPoint(
@@ -168,6 +194,11 @@ class TestGridableLayout: XCTestCase {
       height: model.layout!.inset.top + model.layout!.inset.bottom + Double(itemSize.height) * 2
     )
 
-    XCTAssertEqual(component.layout.collectionViewContentSize, expectedContentSize)
+    if let collectionViewLayout = component.collectionView?.collectionViewLayout as? FlowLayout {
+      XCTFail("Unable to resolve collection view layout.")
+      return
+    }
+
+    XCTAssertEqual(collectionViewLayout.collectionViewContentSize, expectedContentSize)
   }
 }

@@ -185,8 +185,7 @@ extension DataSource: UITableViewDataSource {
     }
 
     let reuseIdentifier = component.identifier(at: indexPath)
-    let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier,
-                                                              for: indexPath)
+    let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier)!
 
     switch cell {
     case let cell as ListWrapper:

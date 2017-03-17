@@ -20,17 +20,22 @@ class GridComponentTests: XCTestCase {
   }
 
   func testConvenienceInitWithSectionInsets() {
-    let model = ComponentModel(span: 1.0)
-    let component = GridComponent(model,
-                       top: 5, left: 10, bottom: 5, right: 10, itemSpacing: 5)
+    let layout = Layout(itemSpacing: 5, inset: Inset(top: 5, left: 10, bottom: 5, right: 10))
+    let model = ComponentModel(kind: "grid", layout: layout, span: 1.0)
+    let component = Component(model: model)
 
-    XCTAssertEqual(component.layout.sectionInset, UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10))
-    XCTAssertEqual(component.layout.minimumInteritemSpacing, 5)
+    guard let collectionViewLayout = component.collectionView?.collectionViewLayout as? UICollectionViewFlowLayout else {
+      XCTFail("Unable to resolve collection view layout")
+      return
+    }
+
+    XCTAssertEqual(collectionViewLayout.sectionInset, UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10))
+    XCTAssertEqual(collectionViewLayout.minimumInteritemSpacing, 5)
   }
 
   func testDictionaryRepresentation() {
     let model = ComponentModel(title: "GridComponent", kind: "row", span: 3, meta: ["headerHeight": 44.0])
-    let component = GridComponent(model: model)
+    let component = Component(model: model)
     XCTAssertEqual(model.dictionary["index"] as? Int, component.dictionary["index"] as? Int)
     XCTAssertEqual(model.dictionary["title"] as? String, component.dictionary["title"] as? String)
     XCTAssertEqual(model.dictionary["kind"] as? String, component.dictionary["kind"] as? String)
@@ -110,7 +115,12 @@ class GridComponentTests: XCTestCase {
     component.view.frame.size = CGSize(width: 100, height: 100)
     component.view.layoutSubviews()
 
-    let cell = component.collectionView.cellForItem(at: IndexPath(item: 0, section: 0))
+    guard let collectionView = component.collectionView else {
+      XCTFail("Unable to resolve collection view.")
+      return
+    }
+
+    let cell = collectionView.cellForItem(at: IndexPath(item: 0, section: 0))
     XCTAssertEqual(cell?.frame.size, CGSize(width: 88, height: 88))
   }
 

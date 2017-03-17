@@ -20,12 +20,17 @@ class CarouselComponentTests: XCTestCase {
   }
 
   func testConvenienceInitWithSectionInsets() {
-    let model = ComponentModel(span: 1.0)
-    let component = CarouselComponent(model,
-                        top: 5, left: 10, bottom: 5, right: 10, itemSpacing: 5)
+    let layout = Layout(itemSpacing: 5, inset: Inset(top: 5, left: 10, bottom: 5, right: 5))
+    let model = ComponentModel(kind: "grid", layout: layout, span: 1.0)
+    let component = CarouselComponent(model: model)
 
-    XCTAssertEqual(component.layout.sectionInset, UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10))
-    XCTAssertEqual(component.layout.minimumInteritemSpacing, 5)
+    guard let collectionViewLayout = component.collectionView?.collectionViewLayout as? UICollectionViewFlowLayout else {
+      XCTFail("Unable to resolve collection view layout")
+      return
+    }
+
+    XCTAssertEqual(collectionViewLayout.sectionInset, UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 5))
+    XCTAssertEqual(collectionViewLayout.minimumInteritemSpacing, 5)
   }
 
   func testDictionaryRepresentation() {
@@ -63,6 +68,7 @@ class CarouselComponentTests: XCTestCase {
 
   func testMetaMapping() {
     var json: [String : Any] = [
+      "kind" : "carousel",
       "meta": [
         "item-spacing": 25.0,
         "line-spacing": 10.0,
@@ -76,11 +82,17 @@ class CarouselComponentTests: XCTestCase {
     var component = CarouselComponent(model: model)
     component.setup(CGSize(width: 100, height: 100))
 
-    XCTAssertEqual(component.layout.minimumInteritemSpacing, 25.0)
-    XCTAssertEqual(component.layout.minimumLineSpacing, 10.0)
-    XCTAssertEqual(component.dynamicSpan, true)
+    guard let collectionViewLayout = component.collectionView?.collectionViewLayout as? UICollectionViewFlowLayout else {
+      XCTFail("Unable to resolve collection view layout")
+      return
+    }
+
+    XCTAssertEqual(collectionViewLayout.minimumInteritemSpacing, 25.0)
+    XCTAssertEqual(collectionViewLayout.minimumLineSpacing, 10.0)
+    XCTAssertEqual(component.model.layout?.dynamicSpan, true)
 
     json = [
+      "kind" : "carousel",
       "meta": [
         "item-spacing": 12.5,
         "line-spacing": 7.5,
@@ -92,15 +104,21 @@ class CarouselComponentTests: XCTestCase {
     component = CarouselComponent(model: model)
     component.setup(CGSize(width: 100, height: 100))
 
-    XCTAssertEqual(component.layout.minimumInteritemSpacing, 12.5)
-    XCTAssertEqual(component.layout.minimumLineSpacing, 7.5)
-    XCTAssertEqual(component.dynamicSpan, false)
+    guard let secondCollectionViewLayout = component.collectionView?.collectionViewLayout as? UICollectionViewFlowLayout else {
+      XCTFail("Unable to resolve collection view layout")
+      return
+    }
+
+    XCTAssertEqual(secondCollectionViewLayout.minimumInteritemSpacing, 12.5)
+    XCTAssertEqual(secondCollectionViewLayout.minimumLineSpacing, 7.5)
+    XCTAssertEqual(component.model.layout?.dynamicSpan, false)
 
     ComponentModel.legacyMapping = false
   }
 
   func testCarouselSetupWithSimpleStructure() {
     let json: [String : Any] = [
+      "kind" : "carousel",
       "items": [
         ["title": "foo",
           "size": [
@@ -128,6 +146,16 @@ class CarouselComponentTests: XCTestCase {
     let component = CarouselComponent(model: model)
     component.setup(CGSize(width: 100, height: 100))
 
+    guard let collectionView = component.collectionView else {
+      XCTFail("Unable to resolve collection view.")
+      return
+    }
+
+    guard let collectionViewLayout = collectionView.collectionViewLayout as? FlowLayout  else {
+      XCTFail("Unable to resolve collection view layout.")
+      return
+    }
+
     // Test that component height is equal to first item in the list
     XCTAssertEqual(component.items.count, 3)
     XCTAssertEqual(component.items[0].title, "foo")
@@ -138,16 +166,17 @@ class CarouselComponentTests: XCTestCase {
     XCTAssertEqual(component.view.frame.size.height, 180)
 
     // Check default value of `paginate`
-    XCTAssertFalse(component.collectionView.isPagingEnabled)
+    XCTAssertFalse(collectionView.isPagingEnabled)
 
     // Check that header height gets added to the calculation
-    component.layout.headerReferenceSize.height = 20
+    collectionViewLayout.headerReferenceSize.height = 20
     component.setup(CGSize(width: 100, height: 100))
     XCTAssertEqual(component.view.frame.size.height, 200)
   }
 
   func testCarouselSetupWithPagination() {
     let json: [String : Any] = [
+      "kind" : "carousel",
       "items": [
         ["title": "foo", "kind": "carousel"],
         ["title": "bar", "kind": "carousel"],
@@ -195,8 +224,13 @@ class CarouselComponentTests: XCTestCase {
     XCTAssertEqual(component.view.frame.size.height, 110)
     XCTAssertEqual(component.view.contentSize.height, 110)
 
+    guard let collectionViewLayout = component.collectionView?.collectionViewLayout as? FlowLayout else {
+      XCTFail("Unable to resolve collection view layout.")
+      return
+    }
+
     // Check that header height gets added to the calculation
-    component.layout.headerReferenceSize.height = 20
+    collectionViewLayout.headerReferenceSize.height = 20
     component.setup(CGSize(width: 667, height: 225))
     component.layout(CGSize(width: 667, height: 225))
     component.view.layoutSubviews()
@@ -300,11 +334,12 @@ class CarouselComponentTests: XCTestCase {
     collectionView.itemSize = CGSize(width: 200, height: 100)
 
     let model = ComponentModel(json)
-    let component = CarouselComponent(model: model, collectionView: collectionView, layout: layout)
+    let component = CarouselComponent(model: model, view: collectionView, kind: .carousel)
     let parentSize = CGSize(width: 300, height: 100)
 
     component.setup(parentSize)
     component.layout(parentSize)
+    component.collectionView?.collectionViewLayout = layout
     component.prepareItems()
     component.view.layoutSubviews()
 
@@ -397,7 +432,7 @@ class CarouselComponentTests: XCTestCase {
     Configuration.register(view: TestView.self, identifier: "test-view")
 
     let items = [Item(title: "Item A", kind: "test-view"), Item(title: "Item B")]
-    let component = CarouselComponent(model: ComponentModel(span: 0.0, items: items))
+    let component = CarouselComponent(model: ComponentModel(kind: "carousel", span: 0.0, items: items))
     component.setup(CGSize(width: 100, height: 100))
     component.layout(CGSize(width: 100, height: 100))
     component.view.layoutSubviews()

@@ -21,13 +21,18 @@ class LayoutExtensionsTests: XCTestCase {
   ]
 
   func testConfigureGridableComponent() {
-    let gridComponent = GridComponent(model: ComponentModel(span: 1))
+    let gridComponent = GridComponent(model: ComponentModel(kind: "grid", span: 1))
     let layout = Layout(json)
 
     layout.configure(component: gridComponent)
 
-    XCTAssertEqual(gridComponent.layout.minimumInteritemSpacing, CGFloat(layout.itemSpacing))
-    XCTAssertEqual(gridComponent.layout.minimumLineSpacing, CGFloat(layout.lineSpacing))
+    guard let collectionViewLayout = gridComponent.collectionView?.collectionViewLayout as? UICollectionViewFlowLayout else {
+      XCTFail("Unable to resolve collection view layout")
+      return
+    }
+
+    XCTAssertEqual(collectionViewLayout.minimumInteritemSpacing, CGFloat(layout.itemSpacing))
+    XCTAssertEqual(collectionViewLayout.minimumLineSpacing, CGFloat(layout.lineSpacing))
 
     XCTAssertEqual(gridComponent.view.contentInset.top, CGFloat(layout.inset.top))
     XCTAssertEqual(gridComponent.view.contentInset.left, CGFloat(layout.inset.left))
@@ -36,7 +41,7 @@ class LayoutExtensionsTests: XCTestCase {
   }
 
   func testConfigureListableComponent() {
-    let listComponent = ListComponent(model: ComponentModel(span: 1))
+    let listComponent = ListComponent(model: ComponentModel(kind: "list", span: 1))
     let layout = Layout(json)
 
     layout.configure(component: listComponent)

@@ -6,7 +6,7 @@ public class Component: NSObject, CoreComponent, ComponentHorizontallyScrollable
 
   public static var layout: Layout = Layout(span: 1.0)
   public static var headers: Registry = Registry()
-  public static var views: Registry = Registry()
+  public static var views: Registry = Configuration.views
   public static var defaultKind: String = ComponentModel.Kind.list.string
 
   open static var configure: ((_ view: View) -> Void)?
@@ -54,22 +54,25 @@ public class Component: NSObject, CoreComponent, ComponentHorizontallyScrollable
     super.init()
 
     if model.layout == nil {
-      switch kind {
-      case .carousel:
-        self.model.layout = CarouselComponent.layout
-        registerDefaultIfNeeded(view: CarouselComponentCell.self)
-      case .grid:
-        self.model.layout = GridComponent.layout
-        registerDefaultIfNeeded(view: GridComponentCell.self)
-      case .list:
-        self.model.layout = ListComponent.layout
-        registerDefaultIfNeeded(view: ListComponentCell.self)
-      case .row:
-        self.model.layout = RowComponent.layout
-      default:
-        break
-      }
+      self.model.layout = GridComponent.layout
     }
+
+    switch kind {
+    case .carousel:
+      registerDefaultIfNeeded(view: CarouselComponentCell.self)
+    case .grid:
+      registerDefaultIfNeeded(view: GridComponentCell.self)
+    case .list:
+      registerDefaultIfNeeded(view: ListComponentCell.self)
+    case .row:
+      registerDefaultIfNeeded(view: RowComponentCell.self)
+    default:
+      break
+    }
+
+    Configuration.register(view: CarouselComponentCell.self, identifier: String(describing: CarouselComponentCell.self))
+    Configuration.register(view: GridComponentCell.self, identifier: String(describing: GridComponentCell.self))
+    Configuration.register(view: ListComponentCell.self, identifier: String(describing: ListComponentCell.self))
 
     userInterface?.register()
 

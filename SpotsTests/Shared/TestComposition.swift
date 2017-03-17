@@ -58,6 +58,12 @@ class CompositionTests: XCTestCase {
     let component = GridComponent(model: model)
 
     XCTAssertEqual(component.items.count, 2)
+
+    guard component.compositeComponents.count == 2 else {
+      XCTFail("Could not find composite components")
+      return
+    }
+
     XCTAssertEqual(component.compositeComponents.count, 2)
     XCTAssertEqual(component.compositeComponents[0].component.model.kind, ComponentModel.Kind.list.rawValue)
     XCTAssertEqual(component.compositeComponents[0].component.items.count, 2)
@@ -102,6 +108,12 @@ class CompositionTests: XCTestCase {
     var itemConfigurable: ItemConfigurable?
 
     composite = component.ui(at: 0)
+
+    guard component.compositeComponents.count > 1 else {
+      XCTFail("Unable to find composite components.")
+      return
+    }
+
     itemConfigurable = component.compositeComponents[0].component.ui(at: 0)
 
     XCTAssertNotNil(composite)
@@ -220,6 +232,17 @@ class CompositionTests: XCTestCase {
     var itemConfigurable: ItemConfigurable?
 
     composite = components[0].ui(at: 0)
+
+    guard components.count == 2 else {
+      XCTFail("Component count is incorrect.")
+      return
+    }
+
+    guard components[0].compositeComponents.count == 2 else {
+      XCTFail("Could not find composite components.")
+      return
+    }
+
     itemConfigurable = components[0].compositeComponents[0].component.ui(at: 0)
 
     XCTAssertNotNil(composite)
@@ -501,6 +524,17 @@ class CompositionTests: XCTestCase {
       let components = controller.components
 
       composite = components[0].ui(at: 0)
+
+      guard components.count == 2 else {
+        XCTFail("Component count is incorrect.")
+        return
+      }
+
+      guard components[0].compositeComponents.count == 2 else {
+        XCTFail("Could not find composite components.")
+        return
+      }
+
       itemConfigurable = components[0].compositeComponents[0].component.ui(at: 0)
 
       XCTAssertNotNil(composite)
@@ -521,6 +555,11 @@ class CompositionTests: XCTestCase {
       XCTAssertEqual(components[0].compositeComponents[1].component.items.count, 10)
       XCTAssertEqual(components[0].compositeComponents[1].component.view.frame.size.height,
                      ((itemConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(components[0].compositeComponents[1].component.items.count))
+
+      guard components[1].compositeComponents.count == 2 else {
+        XCTFail("Could not find composite components.")
+        return
+      }
 
       XCTAssertNotNil(composite)
       XCTAssertNotNil(itemConfigurable)
@@ -642,6 +681,17 @@ class CompositionTests: XCTestCase {
     var itemConfigurable: ItemConfigurable?
 
     composite = components[0].ui(at: 0)
+
+    guard components.count == 2 else {
+      XCTFail("Component count is incorrect.")
+      return
+    }
+
+    guard components[0].compositeComponents.count == 2 else {
+      XCTFail("Could not find composite components.")
+      return
+    }
+
     itemConfigurable = components[0].compositeComponents[0].component.ui(at: 0)
 
     XCTAssertNotNil(composite)
@@ -961,6 +1011,17 @@ class CompositionTests: XCTestCase {
     var itemConfigurable: ItemConfigurable?
 
     composite = components[0].ui(at: 0)
+
+    guard components.count == 2 else {
+      XCTFail("Could not find all components.")
+      return
+    }
+
+    guard components[0].compositeComponents.count == 2 else {
+      XCTFail("Unable to find composite components.")
+      return
+    }
+
     itemConfigurable = components[0].compositeComponents[0].component.ui(at: 0)
 
     XCTAssertNotNil(composite)

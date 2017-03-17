@@ -21,19 +21,31 @@ class DelegateTests: XCTestCase {
       Item(title: "title 1")
       ]))
     component.delegate = delegate
-    component.componentDelegate?.collectionView(component.collectionView, didSelectItemAt: IndexPath(item: 0, section: 0))
+
+    guard let collectionView = component.collectionView else {
+      XCTFail("Unable to resolve collection view.")
+      return
+    }
+
+    component.componentDelegate?.collectionView(collectionView, didSelectItemAt: IndexPath(item: 0, section: 0))
 
     XCTAssertEqual(component.model.items[0].meta["selected"] as? Bool, true)
     XCTAssertEqual(delegate.countsInvoked, 1)
 
-    component.componentDelegate?.collectionView(component.collectionView, didSelectItemAt: IndexPath(item: 1, section: 0))
+    component.componentDelegate?.collectionView(collectionView, didSelectItemAt: IndexPath(item: 1, section: 0))
     XCTAssertEqual(delegate.countsInvoked, 1)
   }
 
   func testCollectionViewCanFocus() {
     let component = GridComponent(model: ComponentModel(span: 1, items: [Item(title: "title 1")]))
-    XCTAssertEqual(component.componentDelegate?.collectionView(component.collectionView, canFocusItemAt: IndexPath(item: 0, section: 0)), true)
-    XCTAssertEqual(component.componentDelegate?.collectionView(component.collectionView, canFocusItemAt: IndexPath(item: 1, section: 0)), false)
+
+    guard let collectionView = component.collectionView else {
+      XCTFail("Unable to resolve collection view.")
+      return
+    }
+
+    XCTAssertEqual(component.componentDelegate?.collectionView(collectionView, canFocusItemAt: IndexPath(item: 0, section: 0)), true)
+    XCTAssertEqual(component.componentDelegate?.collectionView(collectionView, canFocusItemAt: IndexPath(item: 1, section: 0)), false)
   }
 
   // MARK: - UITableView
@@ -44,24 +56,36 @@ class DelegateTests: XCTestCase {
       Item(title: "title 1")
       ]))
     component.delegate = delegate
-    component.componentDelegate?.tableView(component.tableView, didSelectRowAt: IndexPath(item: 0, section: 0))
+
+    guard let tableView = component.tableView else {
+      XCTFail("Unable to resolve table view.")
+      return
+    }
+
+    component.componentDelegate?.tableView(tableView, didSelectRowAt: IndexPath(item: 0, section: 0))
 
     XCTAssertEqual(component.model.items[0].meta["selected"] as? Bool, true)
     XCTAssertEqual(delegate.countsInvoked, 1)
 
-    component.componentDelegate?.tableView(component.tableView, didSelectRowAt: IndexPath(item: 1, section: 0))
+    component.componentDelegate?.tableView(tableView, didSelectRowAt: IndexPath(item: 1, section: 0))
     XCTAssertEqual(delegate.countsInvoked, 1)
   }
 
   func testTableViewHeightForRowOnListable() {
     let component = ListComponent(model: ComponentModel(span: 1, items: [Item(title: "title 1")]))
     component.setup(CGSize(width: 100, height: 100))
-    XCTAssertEqual(component.componentDelegate?.tableView(component.tableView, heightForRowAt: IndexPath(row: 0, section: 0)), 44.0)
-    XCTAssertEqual(component.componentDelegate?.tableView(component.tableView, heightForRowAt: IndexPath(row: 1, section: 0)), 0.0)
+
+    guard let tableView = component.tableView else {
+      XCTFail("Unable to resolve table view.")
+      return
+    }
+
+    XCTAssertEqual(component.componentDelegate?.tableView(tableView, heightForRowAt: IndexPath(row: 0, section: 0)), 44.0)
+    XCTAssertEqual(component.componentDelegate?.tableView(tableView, heightForRowAt: IndexPath(row: 1, section: 0)), 0.0)
   }
 
   func testDelegateTitleForHeader() {
-    ListComponent.register(header: CustomListHeaderView.self, identifier: "list")
+//    ListComponent.register(header: CustomListHeaderView.self, identifier: "list")
     let component = ListComponent(model: ComponentModel(
       title: "title",
       header: Item(kind: "list"),
@@ -73,24 +97,29 @@ class DelegateTests: XCTestCase {
     component.view.frame.size = CGSize(width: 100, height: 100)
     component.view.layoutSubviews()
 
-    var view = component.componentDelegate?.tableView(component.tableView, viewForHeaderInSection: 0)
+    guard let tableView = component.tableView else {
+      XCTFail("Unable to resolve table view.")
+      return
+    }
+
+    var view = component.componentDelegate?.tableView(tableView, viewForHeaderInSection: 0)
     XCTAssert(view is CustomListHeaderView)
 
     /// Expect to return nil if header is in use.
-    var title = component.componentDelegate?.tableView(component.tableView, titleForHeaderInSection: 0)
+    var title = component.componentDelegate?.tableView(tableView, titleForHeaderInSection: 0)
     XCTAssertEqual(title, nil)
 
     /// Expect to return title if header is empty.
     component.model.header = nil
-    title = component.componentDelegate?.tableView(component.tableView, titleForHeaderInSection: 0)
+    title = component.componentDelegate?.tableView(tableView, titleForHeaderInSection: 0)
     XCTAssertEqual(title, component.model.title)
 
     /// Expect to return nil if title and header is empty.
     component.model.title = ""
-    title = component.componentDelegate?.tableView(component.tableView, titleForHeaderInSection: 0)
+    title = component.componentDelegate?.tableView(tableView, titleForHeaderInSection: 0)
     XCTAssertEqual(title, nil)
 
-    view = component.componentDelegate?.tableView(component.tableView, viewForHeaderInSection: 0)
+    view = component.componentDelegate?.tableView(tableView, viewForHeaderInSection: 0)
     XCTAssertEqual(view, nil)
   }
 
