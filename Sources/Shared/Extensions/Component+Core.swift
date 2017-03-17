@@ -408,7 +408,13 @@ public extension Component {
   ///
   /// - returns: A string identifier for the view, defaults to the `defaultIdentifier` on the Component object.
   public func identifier(at index: Int) -> String {
-    if let item = item(at: index), type.views.storage[item.kind] != nil {
+    if let item = item(at: index), item.kind.contains("composite") {
+      if userInterface is TableView {
+        return "list-composite"
+      } else {
+        return "grid-composite"
+      }
+    } else if let item = item(at: index), type.views.storage[item.kind] != nil {
       return item.kind
     } else if let item = item(at: index), Configuration.views.storage[item.kind] != nil {
       return item.kind
