@@ -104,7 +104,7 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
   /// A collection of view models
   public var items: [Item] = [Item]()
   /// The width and height of the component, usually calculated and updated by the UI component
-  public var size: CGSize?
+  public var size: CGSize? = .zero
   /// A key-value dictionary for any additional information
   public var meta = [String: Any]()
   /// Delcares if the ComponentModel uses core types or Spot class as it's base class.
