@@ -31,8 +31,6 @@ public extension CoreComponent where Self : Gridable {
   public func setup(_ size: CGSize) {
     collectionView.frame.size.width = size.width
     #if !os(OSX)
-      GridComponent.configure?(collectionView, layout)
-
       if let kind = model.header?.kind,
         let (_, resolvedView) = type(of: self).headers.make(kind),
         let view = resolvedView {

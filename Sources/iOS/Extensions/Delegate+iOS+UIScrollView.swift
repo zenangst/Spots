@@ -17,11 +17,6 @@ extension Delegate: UIScrollViewDelegate {
         if component.model.layout?.pageIndicatorPlacement == .overlay {
           component.pageControl.frame.origin.x = scrollView.contentOffset.x
         }
-      case let component as CarouselComponent:
-        component.carouselScrollDelegate?.componentCarouselDidScroll(component)
-        if component.model.layout?.pageIndicatorPlacement == .overlay {
-          component.pageControl.frame.origin.x = scrollView.contentOffset.x
-        }
       default:
         assertionFailure("CoreComponent object is not eligible for horizontal scrolling.")
       }

@@ -145,9 +145,6 @@ extension SpotsProtocol {
     scrollView.componentsView.insertSubview(component.view, at: index)
     setupComponent(at: index, component: component)
 
-    #if !os(OSX)
-      (component as? CarouselComponent)?.layout.yOffset = yOffset
-    #endif
     yOffset += component.view.frame.size.height
   }
 
@@ -155,9 +152,7 @@ extension SpotsProtocol {
     let component = Factory.resolve(model: newComponentModels[index])
     components.append(component)
     setupComponent(at: index, component: component)
-    #if !os(OSX)
-      (component as? CarouselComponent)?.layout.yOffset = yOffset
-    #endif
+
     yOffset += component.view.frame.size.height
   }
 

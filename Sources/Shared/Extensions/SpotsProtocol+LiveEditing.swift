@@ -39,20 +39,6 @@ import Cache
 
             strongSelf.reloadIfNeeded(components) {
               strongSelf.scrollView.contentOffset = offset
-
-              var yOffset: CGFloat = 0.0
-              for component in strongSelf.components {
-                #if !os(OSX)
-                (component as? CarouselComponent)?.layout.yOffset = yOffset
-                #endif
-                yOffset += component.view.frame.size.height
-              }
-
-              #if !os(OSX)
-              for case let gridable as CarouselComponent in strongSelf.components {
-                gridable.layout.yOffset = gridable.view.frame.origin.y
-              }
-              #endif
             }
             print("🎍 SPOTS reloaded: \(strongSelf.components.count) -> items: \(strongSelf.components.reduce(0, { $0.1.items.count }))")
             strongSelf.liveEditing(stateCache: strongSelf.stateCache)

@@ -33,8 +33,6 @@ extension Component {
 
     configureCollectionViewHeader(collectionView, with: size)
 
-    CarouselComponent.configure?(collectionView, layout)
-
     collectionView.frame.size.height += layout.headerReferenceSize.height
 
     if let componentLayout = model.layout {

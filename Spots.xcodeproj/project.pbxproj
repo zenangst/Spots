@@ -79,8 +79,6 @@
 		BDA8DAF61DCF3AED00A4A8DD /* TestRowSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA8DAF41DCF3AED00A4A8DD /* TestRowSpot.swift */; };
 		BDAD84A21E3E701C008289AE /* CarouselComposite.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD84801E3E701B008289AE /* CarouselComposite.swift */; };
 		BDAD84A31E3E701C008289AE /* CarouselComposite.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD84801E3E701B008289AE /* CarouselComposite.swift */; };
-		BDAD84A41E3E701C008289AE /* CarouselComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD84811E3E701B008289AE /* CarouselComponent.swift */; };
-		BDAD84A51E3E701C008289AE /* CarouselComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD84811E3E701B008289AE /* CarouselComponent.swift */; };
 		BDAD84A61E3E701C008289AE /* CarouselComponentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD84821E3E701B008289AE /* CarouselComponentCell.swift */; };
 		BDAD84A71E3E701C008289AE /* CarouselComponentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD84821E3E701B008289AE /* CarouselComponentCell.swift */; };
 		BDAD84A81E3E701C008289AE /* CarouselSpotHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD84831E3E701B008289AE /* CarouselSpotHeader.swift */; };
@@ -93,8 +91,6 @@
 		BDAD84AF1E3E701C008289AE /* GridComposite.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD84861E3E701B008289AE /* GridComposite.swift */; };
 		BDAD84B01E3E701C008289AE /* GridHeaderFooterWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD84871E3E701C008289AE /* GridHeaderFooterWrapper.swift */; };
 		BDAD84B11E3E701C008289AE /* GridHeaderFooterWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD84871E3E701C008289AE /* GridHeaderFooterWrapper.swift */; };
-		BDAD84B21E3E701C008289AE /* GridComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD84881E3E701C008289AE /* GridComponent.swift */; };
-		BDAD84B31E3E701C008289AE /* GridComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD84881E3E701C008289AE /* GridComponent.swift */; };
 		BDAD84B41E3E701C008289AE /* GridComponentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD84891E3E701C008289AE /* GridComponentCell.swift */; };
 		BDAD84B51E3E701C008289AE /* GridComponentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD84891E3E701C008289AE /* GridComponentCell.swift */; };
 		BDAD84B61E3E701C008289AE /* GridWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD848A1E3E701C008289AE /* GridWrapper.swift */; };
@@ -103,14 +99,10 @@
 		BDAD84B91E3E701C008289AE /* ListComposite.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD848B1E3E701C008289AE /* ListComposite.swift */; };
 		BDAD84BA1E3E701C008289AE /* ListHeaderFooterWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD848C1E3E701C008289AE /* ListHeaderFooterWrapper.swift */; };
 		BDAD84BB1E3E701C008289AE /* ListHeaderFooterWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD848C1E3E701C008289AE /* ListHeaderFooterWrapper.swift */; };
-		BDAD84BC1E3E701C008289AE /* ListComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD848D1E3E701C008289AE /* ListComponent.swift */; };
-		BDAD84BD1E3E701C008289AE /* ListComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD848D1E3E701C008289AE /* ListComponent.swift */; };
 		BDAD84BE1E3E701C008289AE /* ListComponentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD848E1E3E701C008289AE /* ListComponentCell.swift */; };
 		BDAD84BF1E3E701C008289AE /* ListComponentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD848E1E3E701C008289AE /* ListComponentCell.swift */; };
 		BDAD84C01E3E701C008289AE /* ListWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD848F1E3E701C008289AE /* ListWrapper.swift */; };
 		BDAD84C11E3E701C008289AE /* ListWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD848F1E3E701C008289AE /* ListWrapper.swift */; };
-		BDAD84C21E3E701C008289AE /* RowComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD84901E3E701C008289AE /* RowComponent.swift */; };
-		BDAD84C31E3E701C008289AE /* RowComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD84901E3E701C008289AE /* RowComponent.swift */; };
 		BDAD84C41E3E701C008289AE /* RowComponentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD84911E3E701C008289AE /* RowComponentCell.swift */; };
 		BDAD84C51E3E701C008289AE /* RowComponentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD84911E3E701C008289AE /* RowComponentCell.swift */; };
 		BDAD84C61E3E701C008289AE /* SpotsContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD84921E3E701C008289AE /* SpotsContentView.swift */; };
@@ -183,9 +175,6 @@
 		BDAD85691E3E7032008289AE /* SpotFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD852E1E3E7032008289AE /* SpotFactory.swift */; };
 		BDAD856A1E3E7032008289AE /* SpotFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD852E1E3E7032008289AE /* SpotFactory.swift */; };
 		BDAD856B1E3E7032008289AE /* SpotFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD852E1E3E7032008289AE /* SpotFactory.swift */; };
-		BDAD856C1E3E7032008289AE /* ViewSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD852F1E3E7032008289AE /* ViewSpot.swift */; };
-		BDAD856D1E3E7032008289AE /* ViewSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD852F1E3E7032008289AE /* ViewSpot.swift */; };
-		BDAD856E1E3E7032008289AE /* ViewSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD852F1E3E7032008289AE /* ViewSpot.swift */; };
 		BDAD856F1E3E7032008289AE /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD85311E3E7032008289AE /* Animation.swift */; };
 		BDAD85701E3E7032008289AE /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD85311E3E7032008289AE /* Animation.swift */; };
 		BDAD85711E3E7032008289AE /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD85311E3E7032008289AE /* Animation.swift */; };
@@ -467,22 +456,18 @@
 		BD9ECEC61E6EC8C4003E4388 /* Component+iOS+HeaderFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Component+iOS+HeaderFooter.swift"; sourceTree = "<group>"; };
 		BDA8DAF41DCF3AED00A4A8DD /* TestRowSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestRowSpot.swift; sourceTree = "<group>"; };
 		BDAD84801E3E701B008289AE /* CarouselComposite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselComposite.swift; sourceTree = "<group>"; };
-		BDAD84811E3E701B008289AE /* CarouselComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselComponent.swift; sourceTree = "<group>"; };
 		BDAD84821E3E701B008289AE /* CarouselComponentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselComponentCell.swift; sourceTree = "<group>"; };
 		BDAD84831E3E701B008289AE /* CarouselSpotHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselSpotHeader.swift; sourceTree = "<group>"; };
 		BDAD84841E3E701B008289AE /* Controller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Controller.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		BDAD84851E3E701B008289AE /* GridableLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridableLayout.swift; sourceTree = "<group>"; };
 		BDAD84861E3E701B008289AE /* GridComposite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridComposite.swift; sourceTree = "<group>"; };
 		BDAD84871E3E701C008289AE /* GridHeaderFooterWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridHeaderFooterWrapper.swift; sourceTree = "<group>"; };
-		BDAD84881E3E701C008289AE /* GridComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = GridComponent.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		BDAD84891E3E701C008289AE /* GridComponentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = GridComponentCell.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		BDAD848A1E3E701C008289AE /* GridWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridWrapper.swift; sourceTree = "<group>"; };
 		BDAD848B1E3E701C008289AE /* ListComposite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListComposite.swift; sourceTree = "<group>"; };
 		BDAD848C1E3E701C008289AE /* ListHeaderFooterWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListHeaderFooterWrapper.swift; sourceTree = "<group>"; };
-		BDAD848D1E3E701C008289AE /* ListComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListComponent.swift; sourceTree = "<group>"; };
 		BDAD848E1E3E701C008289AE /* ListComponentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListComponentCell.swift; sourceTree = "<group>"; };
 		BDAD848F1E3E701C008289AE /* ListWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListWrapper.swift; sourceTree = "<group>"; };
-		BDAD84901E3E701C008289AE /* RowComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RowComponent.swift; sourceTree = "<group>"; };
 		BDAD84911E3E701C008289AE /* RowComponentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RowComponentCell.swift; sourceTree = "<group>"; };
 		BDAD84921E3E701C008289AE /* SpotsContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsContentView.swift; sourceTree = "<group>"; };
 		BDAD84931E3E701C008289AE /* SpotsScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsScrollView.swift; sourceTree = "<group>"; };
@@ -533,7 +518,6 @@
 		BDAD852C1E3E7032008289AE /* DataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
 		BDAD852D1E3E7032008289AE /* Delegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Delegate.swift; sourceTree = "<group>"; };
 		BDAD852E1E3E7032008289AE /* SpotFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotFactory.swift; sourceTree = "<group>"; };
-		BDAD852F1E3E7032008289AE /* ViewSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewSpot.swift; sourceTree = "<group>"; };
 		BDAD85311E3E7032008289AE /* Animation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
 		BDAD85321E3E7032008289AE /* Paginate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Paginate.swift; sourceTree = "<group>"; };
 		BDAD85331E3E7032008289AE /* RegistryType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistryType.swift; sourceTree = "<group>"; };
@@ -569,9 +553,9 @@
 		BDAD85561E3E7032008289AE /* Configuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Configuration.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		BDAD85571E3E7032008289AE /* Dispatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dispatch.swift; sourceTree = "<group>"; };
 		BDAD85581E3E7032008289AE /* GridableMeta.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridableMeta.swift; sourceTree = "<group>"; };
-		BDAD85591E3E7032008289AE /* Inset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Inset.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		BDAD85591E3E7032008289AE /* Inset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Inset.swift; sourceTree = "<group>"; };
 		BDAD855A1E3E7032008289AE /* Interaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Interaction.swift; sourceTree = "<group>"; };
-		BDAD855B1E3E7032008289AE /* Layout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Layout.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		BDAD855B1E3E7032008289AE /* Layout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Layout.swift; sourceTree = "<group>"; };
 		BDAD855C1E3E7032008289AE /* Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
 		BDAD855D1E3E7032008289AE /* Registry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Registry.swift; sourceTree = "<group>"; };
 		BDAD855E1E3E7032008289AE /* StateCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateCache.swift; sourceTree = "<group>"; };
@@ -726,22 +710,18 @@
 			isa = PBXGroup;
 			children = (
 				BDAD84801E3E701B008289AE /* CarouselComposite.swift */,
-				BDAD84811E3E701B008289AE /* CarouselComponent.swift */,
 				BDAD84821E3E701B008289AE /* CarouselComponentCell.swift */,
 				BDAD84831E3E701B008289AE /* CarouselSpotHeader.swift */,
 				BDAD84841E3E701B008289AE /* Controller.swift */,
 				BDAD84851E3E701B008289AE /* GridableLayout.swift */,
 				BDAD84861E3E701B008289AE /* GridComposite.swift */,
 				BDAD84871E3E701C008289AE /* GridHeaderFooterWrapper.swift */,
-				BDAD84881E3E701C008289AE /* GridComponent.swift */,
 				BDAD84891E3E701C008289AE /* GridComponentCell.swift */,
 				BDAD848A1E3E701C008289AE /* GridWrapper.swift */,
 				BDAD848B1E3E701C008289AE /* ListComposite.swift */,
 				BDAD848C1E3E701C008289AE /* ListHeaderFooterWrapper.swift */,
-				BDAD848D1E3E701C008289AE /* ListComponent.swift */,
 				BDAD848E1E3E701C008289AE /* ListComponentCell.swift */,
 				BDAD848F1E3E701C008289AE /* ListWrapper.swift */,
-				BDAD84901E3E701C008289AE /* RowComponent.swift */,
 				BDAD84911E3E701C008289AE /* RowComponentCell.swift */,
 				BD24030B1E4B981A005BAA19 /* Component.swift */,
 				BDAD84921E3E701C008289AE /* SpotsContentView.swift */,
@@ -871,7 +851,6 @@
 				BDAD852C1E3E7032008289AE /* DataSource.swift */,
 				BDAD852D1E3E7032008289AE /* Delegate.swift */,
 				BDAD852E1E3E7032008289AE /* SpotFactory.swift */,
-				BDAD852F1E3E7032008289AE /* ViewSpot.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1576,7 +1555,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				BDAD84BB1E3E701C008289AE /* ListHeaderFooterWrapper.swift in Sources */,
-				BDAD84BD1E3E701C008289AE /* ListComponent.swift in Sources */,
 				BDDCF6E71E4DF92F004B38C4 /* StringConvertible.swift in Sources */,
 				BDAD85C21E3E7032008289AE /* ComponentDelegate.swift in Sources */,
 				BDAD85EF1E3E7032008289AE /* StateCache.swift in Sources */,
@@ -1632,7 +1610,6 @@
 				BDAD85BC1E3E7032008289AE /* CoreComponent.swift in Sources */,
 				BDAD85E31E3E7032008289AE /* Interaction.swift in Sources */,
 				BD24030D1E4B981A005BAA19 /* Component.swift in Sources */,
-				BDAD84A51E3E701C008289AE /* CarouselComponent.swift in Sources */,
 				BDAD84AD1E3E701C008289AE /* GridableLayout.swift in Sources */,
 				BDAD858F1E3E7032008289AE /* CoreComponent+Mutation.swift in Sources */,
 				BDAD85CE1E3E7032008289AE /* Viewable.swift in Sources */,
@@ -1645,12 +1622,9 @@
 				BDAD85711E3E7032008289AE /* Animation.swift in Sources */,
 				BDAD85D71E3E7032008289AE /* Configuration.swift in Sources */,
 				BDAD85951E3E7032008289AE /* ComponentDelegate+Extensions.swift in Sources */,
-				BDAD84C31E3E701C008289AE /* RowComponent.swift in Sources */,
 				BDAD84C51E3E701C008289AE /* RowComponentCell.swift in Sources */,
 				BDAD84B51E3E701C008289AE /* GridComponentCell.swift in Sources */,
-				BDAD84B31E3E701C008289AE /* GridComponent.swift in Sources */,
 				BD9ECEC21E6EC8AF003E4388 /* Component+iOS+Grid.swift in Sources */,
-				BDAD856E1E3E7032008289AE /* ViewSpot.swift in Sources */,
 				BDAD85651E3E7032008289AE /* DataSource.swift in Sources */,
 				BDAD84E31E3E701C008289AE /* UIViewController+Extensions.swift in Sources */,
 				BDAD84DB1E3E701C008289AE /* Layout+iOS.swift in Sources */,
@@ -1739,7 +1713,6 @@
 				BDDCF6EA1E4DF936004B38C4 /* Extensions.swift in Sources */,
 				BDAD84DA1E3E701C008289AE /* Layout+iOS.swift in Sources */,
 				BD9ECEC71E6EC8C4003E4388 /* Component+iOS+HeaderFooter.swift in Sources */,
-				BDAD84B21E3E701C008289AE /* GridComponent.swift in Sources */,
 				BDAD84D21E3E701C008289AE /* Delegate+iOS+Extensions.swift in Sources */,
 				BDDCF6D61E4DF911004B38C4 /* Item.swift in Sources */,
 				BDAD85C01E3E7032008289AE /* ComponentDelegate.swift in Sources */,
@@ -1751,13 +1724,11 @@
 				BDAD85CC1E3E7032008289AE /* Viewable.swift in Sources */,
 				BDAD84BE1E3E701C008289AE /* ListComponentCell.swift in Sources */,
 				BDAD85ED1E3E7032008289AE /* StateCache.swift in Sources */,
-				BDAD84C21E3E701C008289AE /* RowComponent.swift in Sources */,
 				BDB8D59A1E51C4FE00220BC3 /* Delegate+iOS+UIScrollView.swift in Sources */,
 				BDAD85B71E3E7032008289AE /* ScrollDelegate.swift in Sources */,
 				BD24030C1E4B981A005BAA19 /* Component.swift in Sources */,
 				BDAD85A21E3E7032008289AE /* Wrappable+Extensions.swift in Sources */,
 				BDAD85841E3E7032008289AE /* Listable+Extension.swift in Sources */,
-				BDAD856C1E3E7032008289AE /* ViewSpot.swift in Sources */,
 				BDAD85661E3E7032008289AE /* Delegate.swift in Sources */,
 				BDAD85721E3E7032008289AE /* Paginate.swift in Sources */,
 				BDAD84D61E3E701C008289AE /* Inset+iOS.swift in Sources */,
@@ -1783,7 +1754,6 @@
 				BDAD856F1E3E7032008289AE /* Animation.swift in Sources */,
 				BDAD85B11E3E7032008289AE /* Listable.swift in Sources */,
 				BDAD85C31E3E7032008289AE /* ComponentFocusDelegate.swift in Sources */,
-				BDAD84A41E3E701C008289AE /* CarouselComponent.swift in Sources */,
 				BDAD85811E3E7032008289AE /* Item+Extensions.swift in Sources */,
 				BDAD84E21E3E701C008289AE /* UIViewController+Extensions.swift in Sources */,
 				BDAD84A21E3E701C008289AE /* CarouselComposite.swift in Sources */,
@@ -1805,7 +1775,6 @@
 				BDAD85871E3E7032008289AE /* ScrollDelegate+Extensions.swift in Sources */,
 				BD9ECEC11E6EC8AF003E4388 /* Component+iOS+Grid.swift in Sources */,
 				BDAD85601E3E7032008289AE /* CompositeComponent.swift in Sources */,
-				BDAD84BC1E3E701C008289AE /* ListComponent.swift in Sources */,
 				52CD427A1E4477C800187E09 /* PageIndicatorPlacement.swift in Sources */,
 				BDAD84DC1E3E701C008289AE /* Listable+Extensions+iOS.swift in Sources */,
 				BDAD85781E3E7032008289AE /* CarouselScrollDelegate+Extensions.swift in Sources */,
@@ -1929,7 +1898,6 @@
 				BD2403111E4B9A02005BAA19 /* Component.swift in Sources */,
 				BDAD85191E3E7025008289AE /* RowComponentItem.swift in Sources */,
 				BDAD85EE1E3E7032008289AE /* StateCache.swift in Sources */,
-				BDAD856D1E3E7032008289AE /* ViewSpot.swift in Sources */,
 				BDAD85821E3E7032008289AE /* Item+Extensions.swift in Sources */,
 				BDAD850D1E3E7025008289AE /* GridComposite.swift in Sources */,
 				D5D2826C1E547219004BF251 /* ViewStateDelegate.swift in Sources */,

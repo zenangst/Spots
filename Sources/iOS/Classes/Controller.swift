@@ -279,13 +279,9 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
   ///
   /// - parameter animated: An optional animation closure that is invoked when setting up the component.
   open func setupComponents(animated: ((_ view: UIView) -> Void)? = nil) {
-    var yOffset: CGFloat = 0.0
-
     components.enumerated().forEach { index, component in
       setupComponent(at: index, component: component)
       animated?(component.view)
-      (component as? CarouselComponent)?.layout.yOffset = yOffset
-      yOffset += component.view.frame.size.height
     }
   }
 

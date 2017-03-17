@@ -6,6 +6,14 @@
 
 /// A type alias for a anonymous completion
 public typealias Completion = (() -> Void)?
+//@available(*, deprecated, message: "Use Component instead.")
+public typealias CarouselComponent = Component
+//@available(*, deprecated, message: "Use Component instead.")
+public typealias ListComponent = Component
+//@available(*, deprecated, message: "Use Component instead.")
+public typealias GridComponent = Component
+//@available(*, deprecated, message: "Use Component instead.")
+public typealias RowComponent = Component
 
 #if os(OSX)
   /// A type alias to reference a normal platform view
