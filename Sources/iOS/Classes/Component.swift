@@ -4,7 +4,7 @@ import UIKit
 
 public class Component: NSObject, ComponentHorizontallyScrollable {
 
-  public static var layout: Layout = Layout(span: 1.0)
+  public static var layout: Layout = Layout(span: 0.0)
   public static var headers: Registry = Registry()
   public static var views: Registry = Configuration.views
   public static var defaultKind: String = ComponentModel.Kind.grid.string
