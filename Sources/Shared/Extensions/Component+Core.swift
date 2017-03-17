@@ -240,6 +240,7 @@ public extension Component {
       }
 
       if let view = view {
+        view.frame.size.width = self.view.bounds.width
         prepare(view: view)
       }
 
