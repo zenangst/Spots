@@ -2,7 +2,7 @@
 
 import UIKit
 
-public class Component: NSObject, CoreComponent, ComponentHorizontallyScrollable {
+public class Component: NSObject, ComponentHorizontallyScrollable {
 
   public static var layout: Layout = Layout(span: 1.0)
   public static var headers: Registry = Registry()
@@ -59,12 +59,16 @@ public class Component: NSObject, CoreComponent, ComponentHorizontallyScrollable
 
     switch kind {
     case .carousel:
-      registerDefaultIfNeeded(view: CarouselComponentCell.self)
+      Configuration.register(view: GridComposite.self, identifier: "composite")
+      registerDefaultIfNeeded(view: GridComponentCell.self)
     case .grid:
+      Configuration.register(view: GridComposite.self, identifier: "composite")
       registerDefaultIfNeeded(view: GridComponentCell.self)
     case .list:
+      Configuration.register(view: ListComposite.self, identifier: "composite")
       registerDefaultIfNeeded(view: ListComponentCell.self)
     case .row:
+      Configuration.register(view: GridComposite.self, identifier: "composite")
       registerDefaultIfNeeded(view: RowComponentCell.self)
     default:
       break
@@ -163,10 +167,6 @@ public class Component: NSObject, CoreComponent, ComponentHorizontallyScrollable
   }
 
   func registerDefaultIfNeeded(view: View.Type) {
-    guard Configuration.views.storage[Configuration.views.defaultIdentifier] == nil else {
-      return
-    }
-
     Configuration.views.defaultItem = Registry.Item.classType(view)
   }
 

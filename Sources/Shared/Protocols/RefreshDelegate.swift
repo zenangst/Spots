@@ -9,10 +9,10 @@ public protocol RefreshDelegate: class {
 
   /// A delegate method for when your component controller was refreshed using pull to refresh
   ///
-  /// - parameter components: A collection of CoreComponent objects
+  /// - parameter components: A collection of Component objects
   /// - parameter refreshControl: A UIRefreshControl
   /// - parameter completion: A completion closure that should be triggered when the update is completed
   #if os(iOS)
-  func componentsDidReload(_ components: [CoreComponent], refreshControl: UIRefreshControl, completion: Completion)
+  func componentsDidReload(_ components: [Component], refreshControl: UIRefreshControl, completion: Completion)
   #endif
 }

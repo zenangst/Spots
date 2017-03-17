@@ -4,8 +4,8 @@
   import UIKit
 #endif
 
-// MARK: - CoreComponent extension
-public extension CoreComponent {
+// MARK: - Component extension
+public extension Component {
 
   /// A computed value for the current index
   public var index: Int {
@@ -81,10 +81,10 @@ public extension CoreComponent {
   }
   #endif
 
-  /// A helper method to return self as a CoreComponent type.
+  /// A helper method to return self as a Component type.
   ///
-  /// - returns: Self as a CoreComponent type
-  public var type: CoreComponent.Type {
+  /// - returns: Self as a Component type
+  public var type: Component.Type {
     return type(of: self)
   }
 
@@ -233,9 +233,7 @@ public extension CoreComponent {
       let kind = identifier(at: index)
       let view: View?
 
-      if let (_, resolvedView) = Self.views.make(kind, parentFrame: self.view.bounds) {
-        view = resolvedView
-      } else if let (_, resolvedView) = Configuration.views.make(kind, parentFrame: self.view.bounds) {
+      if let (_, resolvedView) = Configuration.views.make(kind, parentFrame: self.view.bounds) {
         view = resolvedView
       } else {
         return nil
@@ -335,7 +333,7 @@ public extension CoreComponent {
       }
     }
 
-    let components: [CoreComponent] = Parser.parse(item)
+    let components: [Component] = Parser.parse(item)
     let size = view.frame.size
     let width = size.width
 
@@ -348,13 +346,12 @@ public extension CoreComponent {
       compositeSpot.component.model.size = CGSize(
         width: width,
         height: ceil(compositeSpot.component.view.frame.size.height))
-      compositeSpot.component.layout(size)
       compositeSpot.component.view.layoutIfNeeded()
       compositeSpot.component.view.frame.origin.y = height
 
       #if !os(OSX)
         /// Disable scrolling for listable objects
-        compositeSpot.component.view.isScrollEnabled = !(compositeSpot.component is Listable)
+        compositeSpot.component.view.isScrollEnabled = !(compositeSpot.component.view is TableView)
       #endif
 
       compositeSpot.component.view.frame.size.height = compositeSpot.component.view.contentSize.height
@@ -392,21 +389,12 @@ public extension CoreComponent {
     }
   }
 
-  /// Update and return the size for the item at index path.
-  ///
-  /// - parameter indexPath: indexPath: An NSIndexPath.
-  ///
-  /// - returns: CGSize of the item at index path.
-  public func sizeForItem(at indexPath: IndexPath) -> CGSize {
-    return view.frame.size
-  }
-
   /// Get identifier for item at index path
   ///
   /// - parameter indexPath: The index path for the item
   ///
   /// - returns: The identifier string of the item at index path
-  func identifier(at indexPath: IndexPath) -> String {
+  func identifier(for indexPath: IndexPath) -> String {
     #if os(OSX)
       return identifier(at: indexPath.item)
     #else
@@ -418,7 +406,7 @@ public extension CoreComponent {
   ///
   /// - parameter index: The index of the item that needs resolving.
   ///
-  /// - returns: A string identifier for the view, defaults to the `defaultIdentifier` on the CoreComponent object.
+  /// - returns: A string identifier for the view, defaults to the `defaultIdentifier` on the Component object.
   public func identifier(at index: Int) -> String {
     if let item = item(at: index), type.views.storage[item.kind] != nil {
       return item.kind
@@ -433,13 +421,13 @@ public extension CoreComponent {
     return type.views.defaultIdentifier
   }
 
-  /// Register and prepare all items in the CoreComponent object.
+  /// Register and prepare all items in the Component object.
   func registerAndPrepare() {
     register()
     prepareItems()
   }
 
-  /// Update height and refresh indexes for the CoreComponent object.
+  /// Update height and refresh indexes for the Component object.
   ///
   /// - parameter completion: A completion closure that will be run when the computations are complete.
   public func sanitize(completion: Completion = nil) {
@@ -449,7 +437,7 @@ public extension CoreComponent {
     }
   }
 
-  /// Register default view for the CoreComponent object
+  /// Register default view for the Component object
   ///
   /// - parameter view: The view type that should be used as the default view
   func registerDefault(view: View.Type) {
@@ -458,16 +446,16 @@ public extension CoreComponent {
     }
   }
 
-  /// Register a composite view for the CoreComponent model.
+  /// Register a composite view for the Component model.
   ///
-  /// - parameter view: The view type that should be used as the composite view for the CoreComponent object.
+  /// - parameter view: The view type that should be used as the composite view for the Component object.
   func registerComposite(view: View.Type) {
     if type(of: self).views.composite == nil {
       type(of: self).views.composite = Registry.Item.classType(view)
     }
   }
 
-  /// Register a nib file with identifier on the CoreComponent object.
+  /// Register a nib file with identifier on the Component object.
   ///
   /// - parameter nib:        A Nib file that should be used for identifier
   /// - parameter identifier: A StringConvertible identifier for the registered nib.
@@ -483,9 +471,9 @@ public extension CoreComponent {
     self.views.storage[identifier.string] = Registry.Item.classType(view)
   }
 
-  /// Register a default view for the CoreComponent object.
+  /// Register a default view for the Component object.
   ///
-  /// - parameter view: The view type that should be used as the default view for the CoreComponent object.
+  /// - parameter view: The view type that should be used as the default view for the Component object.
   public static func register(defaultView view: View.Type) {
     self.views.defaultItem = Registry.Item.classType(view)
   }

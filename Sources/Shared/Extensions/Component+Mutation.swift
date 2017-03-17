@@ -4,8 +4,8 @@
   import UIKit
 #endif
 
-// MARK: - CoreComponent extension
-public extension CoreComponent {
+// MARK: - Component extension
+public extension Component {
 
   /// Append item to collection with animation
   ///
@@ -434,7 +434,7 @@ public extension CoreComponent {
     }
   }
 
-  /// Return a dictionary representation of CoreComponent object
+  /// Return a dictionary representation of Component object
   public var dictionary: [String : Any] {
     return model.dictionary
   }
@@ -493,7 +493,7 @@ public extension CoreComponent {
     }
   }
 
-  /// Reload CoreComponent object with JSON if contents changed
+  /// Reload Component object with JSON if contents changed
   ///
   /// - parameter json:      A JSON dictionary
   /// - parameter animation:  A Animation that is used when performing the mutation (only works for Listable objects)

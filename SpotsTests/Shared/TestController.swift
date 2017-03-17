@@ -432,20 +432,20 @@ class ControllerTests: XCTestCase {
 
   func testFindAndFilterSpotWithClosure() {
     let listComponent = ListComponent(model: ComponentModel(title: "ListComponent", span: 1.0))
-    let listComponent2 = ListComponent(model: ComponentModel(title: "ListComponent2", span: 1.0))
-    let gridComponent = GridComponent(model: ComponentModel(title: "GridComponent", span: 1.0, items: [Item(title: "Item")]))
+    let listComponent2 = ListComponent(model: ComponentModel(title: "ListComponent2", kind: "list", span: 1.0))
+    let gridComponent = GridComponent(model: ComponentModel(title: "GridComponent", kind: "grid", span: 1.0, items: [Item(title: "Item")]))
     let controller = Controller(components: [listComponent, listComponent2, gridComponent])
 
     XCTAssertNotNil(controller.resolve(component: { $1.model.title == "ListComponent" }))
     XCTAssertNotNil(controller.resolve(component: { $1.model.title == "GridComponent" }))
-    XCTAssertNotNil(controller.resolve(component: { $1 is Listable }))
-    XCTAssertNotNil(controller.resolve(component: { $1 is Gridable }))
+    XCTAssertNotNil(controller.resolve(component: { $1.view is TableView }))
+    XCTAssertNotNil(controller.resolve(component: { $1.view is CollectionView }))
     XCTAssertNotNil(controller.resolve(component: { $1.items.filter { $0.title == "Item" }.first != nil }))
     XCTAssertEqual(controller.resolve(component: { $0.0 == 0 })?.model.title, "ListComponent")
     XCTAssertEqual(controller.resolve(component: { $0.0 == 1 })?.model.title, "ListComponent2")
     XCTAssertEqual(controller.resolve(component: { $0.0 == 2 })?.model.title, "GridComponent")
 
-    XCTAssert(controller.filter(components: { $0 is Listable }).count == 2)
+    XCTAssert(controller.filter(components: { $0.view is TableView }).count == 2)
   }
 
   func testJSONInitialiser() {

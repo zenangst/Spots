@@ -35,7 +35,7 @@ public struct Registry {
 
   /// The default identifier for the registry
   var defaultIdentifier: String {
-    guard let defaultItem = defaultItem else {
+    guard defaultItem != nil else {
       return ""
     }
     return "default"

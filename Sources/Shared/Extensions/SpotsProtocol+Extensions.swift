@@ -48,7 +48,7 @@ public extension SpotsProtocol {
 
   /// Produce a dictionary representation of the controller.
   ///
-  /// - parameter amountOfItems: An optional Int used for getting a subset of items to cache, it set, it will save the amount of items for each CoreComponent object based on this value.
+  /// - parameter amountOfItems: An optional Int used for getting a subset of items to cache, it set, it will save the amount of items for each Component object based on this value.
   ///
   /// - returns: A dictionary representation of the controller.
   public func dictionary(_ amountOfItems: Int? = nil) -> [String : Any] {
@@ -102,16 +102,16 @@ public extension SpotsProtocol {
     return nil
   }
 
-  /// Filter CoreComponent objects inside of controller
+  /// Filter Component objects inside of controller
   ///
   /// - parameter includeElement: A filter predicate to find a component
   ///
-  /// - returns: A collection of CoreComponent objects that match the includeElements predicate
-  public func filter(components includeElement: (CoreComponent) -> Bool) -> [CoreComponent] {
+  /// - returns: A collection of Component objects that match the includeElements predicate
+  public func filter(components includeElement: (Component) -> Bool) -> [Component] {
     var result = components.filter(includeElement)
 
     let cSpots = components.flatMap({ $0.compositeComponents.map { $0.component } })
-    let compositeResults: [CoreComponent] = cSpots.filter(includeElement)
+    let compositeResults: [Component] = cSpots.filter(includeElement)
 
     result.append(contentsOf: compositeResults)
 
@@ -123,8 +123,8 @@ public extension SpotsProtocol {
   /// - parameter includeElement: The predicate that the item has to match.
   ///
   /// - returns: A collection of tuples containing components with the matching items that were found.
-  public func filter(items includeElement: (Item) -> Bool) -> [(component: CoreComponent, items: [Item])] {
-    var result = [(component: CoreComponent, items: [Item])]()
+  public func filter(items includeElement: (Item) -> Bool) -> [(component: Component, items: [Item])] {
+    var result = [(component: Component, items: [Item])]()
     for component in components {
       let items = component.items.filter(includeElement)
       if !items.isEmpty {
@@ -144,18 +144,18 @@ public extension SpotsProtocol {
   }
 
 #if os(iOS)
-  /// Scroll to the index of a CoreComponent object, only available on iOS.
+  /// Scroll to the index of a Component object, only available on iOS.
   ///
   /// - parameter index:          The index of the component that you want to scroll
   /// - parameter includeElement: A filter predicate to find a view model
   public func scrollTo(componentIndex index: Int = 0, includeElement: (Item) -> Bool) {
-    guard let itemY = component(at: index, ofType: CoreComponent.self)?.scrollTo(includeElement) else { return }
+    guard let itemY = component(at: index)?.scrollTo(includeElement) else { return }
 
     var initialHeight: CGFloat = 0.0
     if index > 0 {
       initialHeight += components[0..<index].reduce(0, { $0 + $1.computedHeight })
     }
-    if component(at: index, ofType: CoreComponent.self)?.computedHeight > scrollView.frame.height - scrollView.contentInset.bottom - initialHeight {
+    if component(at: index)?.computedHeight > scrollView.frame.height - scrollView.contentInset.bottom - initialHeight {
       let y = itemY - scrollView.frame.size.height + scrollView.contentInset.bottom + initialHeight
       scrollView.setContentOffset(CGPoint(x: CGFloat(0.0), y: y), animated: true)
     }
@@ -172,7 +172,7 @@ public extension SpotsProtocol {
 
   /// Caches the current state of the controller
   ///
-  /// - parameter items: An optional integer that is used to reduce the amount of items that should be cached per CoreComponent object when saving the view state to disk
+  /// - parameter items: An optional integer that is used to reduce the amount of items that should be cached per Component object when saving the view state to disk
   public func cache(_ items: Int? = nil) {
     #if DEVMODE
       liveEditing(stateCache: stateCache)
@@ -195,18 +195,13 @@ public extension SpotsProtocol {
 
   /// Resolve component at index path.
   ///
-  /// - parameter indexPath: The index path of the component belonging to the CoreComponent object at that index.
+  /// - parameter indexPath: The index path of the component belonging to the Component object at that index.
   ///
   /// - returns: A ComponentModel object at index path.
-  fileprivate func component(at indexPath: IndexPath) -> ComponentModel {
-    return component(at: indexPath).model
-  }
-
-  /**
-   - parameter indexPath: The index path of the component you want to lookup
-   - returns: A CoreComponent object at index path
-   **/
-  fileprivate func component(at indexPath: IndexPath) -> CoreComponent {
-    return components[indexPath.item]
+  func component(at index: Int) -> Component? {
+    guard index >= 0 && index < components.count else {
+      return nil
+    }
+    return components[index]
   }
 }

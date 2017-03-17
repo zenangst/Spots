@@ -23,11 +23,6 @@ open class Controller: NSViewController, SpotsProtocol {
     return view
   }
 
-  /// A convenience method for resolving the first component
-  open var component: CoreComponent? {
-    return component(at: 0)
-  }
-
   /// An array of refresh positions to avoid refreshing multiple times when using infinite scrolling
   open var refreshPositions = [CGFloat]()
 

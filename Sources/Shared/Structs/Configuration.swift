@@ -2,7 +2,7 @@ public struct Configuration {
 
   public static var views: Registry = Registry(useCache: false)
 
-  /// Register a nib file with identifier on the CoreComponent object.
+  /// Register a nib file with identifier on the component.
   ///
   /// - parameter nib:        A Nib file that should be used for identifier
   /// - parameter identifier: A StringConvertible identifier for the registered nib.
@@ -18,7 +18,7 @@ public struct Configuration {
     self.views.storage[identifier.string] = Registry.Item.classType(view)
   }
 
-  /// Register default view for the CoreComponent object
+  /// Register default view for the component.
   ///
   /// - parameter view: The view type that should be used as the default view
   public static func registerDefault(view: View.Type) {

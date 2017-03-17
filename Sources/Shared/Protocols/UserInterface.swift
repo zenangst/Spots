@@ -1,4 +1,4 @@
-/// A protocol used for composition inside CoreComponent objects
+/// A protocol used for composition inside Component objects
 public protocol UserInterface: class {
 
   #if !os(OSX)

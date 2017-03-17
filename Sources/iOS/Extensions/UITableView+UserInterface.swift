@@ -2,6 +2,8 @@ import UIKit
 
 extension UITableView: UserInterface {
   public func register() {
+    register(ListComposite.self, forCellReuseIdentifier: "composite")
+
     for (identifier, item) in Configuration.views.storage {
       switch item {
       case .classType(_):

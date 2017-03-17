@@ -1,7 +1,7 @@
 import UIKit
 import QuartzCore
 
-/// The core foundation scroll view inside of Spots that manages the linear layout of all CoreComponent objects
+/// The core foundation scroll view inside of Spots that manages the linear layout of all Component objects
 open class SpotsScrollView: UIScrollView {
 
   /// A KVO context used to monitor changes in contentSize, frames and bounds

@@ -1,6 +1,6 @@
 import UIKit
 
-/// A proxy cell that is used for composite views inside other CoreComponent objects
+/// A proxy cell that is used for composite views inside other component objects
 class CarouselComposite: UICollectionViewCell, Composable {
 
   /// Performs any clean up necessary to prepare the view for use again.

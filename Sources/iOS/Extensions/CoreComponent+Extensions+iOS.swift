@@ -1,11 +1,10 @@
-extension CoreComponent {
+extension Component {
 
-  func didScrollHorizontally(handler: (ComponentHorizontallyScrollable) -> Void) {
-    guard let component = self as? ComponentHorizontallyScrollable,
-      model.interaction.scrollDirection == .horizontal else {
+  func didScrollHorizontally(handler: (Component) -> Void) {
+    guard model.interaction.scrollDirection == .horizontal else {
         return
     }
 
-    handler(component)
+    handler(self)
   }
 }

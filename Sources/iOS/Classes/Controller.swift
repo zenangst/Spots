@@ -1,14 +1,14 @@
 import UIKit
 import Cache
 
-/// A controller powered by CoreComponent objects
+/// A controller powered by Component objects
 open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, UIScrollViewDelegate {
 
   open var contentView: View {
     return view
   }
 
-  public weak var focusedSpot: CoreComponent?
+  public weak var focusedSpot: Component?
   public var focusedItemIndex: Int?
 
   /// A closure that is called when the controller is reloaded with components
@@ -41,8 +41,8 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
   /// Initial content offset for Controller, defaults to UIEdgeInsetsZero.
   open fileprivate(set) var initialInset: UIEdgeInsets = UIEdgeInsets.zero
 
-  /// A collection of CoreComponent objects.
-  open var components: [CoreComponent] {
+  /// A collection of Component objects.
+  open var components: [Component] {
     didSet { componentsDidChange() }
   }
 
@@ -50,9 +50,10 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
   public var refreshPositions = [CGFloat]()
   /// A bool value to indicate if the Controller is refeshing.
   public var refreshing = false
+
   /// A convenience method for resolving the first component.
-  public var component: CoreComponent? {
-    return component(at: 0, ofType: CoreComponent.self)
+  public var component: Component? {
+    return component(at: 0)
   }
 
   #if DEVMODE
@@ -93,12 +94,12 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
 
   // MARK: Initializer
 
-  /// A required initializer for initializing a controller with CoreComponent objects
+  /// A required initializer for initializing a controller with Component objects
   ///
-  /// - parameter components: A collection of CoreComponent objects that should be setup and be added to the view hierarchy.
+  /// - parameter components: A collection of Component objects that should be setup and be added to the view hierarchy.
   ///
   /// - returns: An initalized controller.
-  public required init(components: [CoreComponent] = []) {
+  public required init(components: [Component] = []) {
     self.components = components
     super.init(nibName: nil, bundle: nil)
 
@@ -111,10 +112,10 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
 
   /// Initialize a new controller with a single component
   ///
-  /// - parameter component: A CoreComponent object
+  /// - parameter component: A Component object
   ///
   /// - returns: An initialized controller containing one object.
-  public convenience init(component: CoreComponent) {
+  public convenience init(component: Component) {
     self.init(components: [component])
   }
 
@@ -122,7 +123,7 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
   ///
   /// - parameter json: A JSON dictionary that gets parsed into UI elements.
   ///
-  /// - returns: An initialized controller with CoreComponent objects built from JSON.
+  /// - returns: An initialized controller with Component objects built from JSON.
   public convenience init(_ json: [String : Any]) {
     self.init(components: Parser.parse(json))
   }
@@ -162,17 +163,17 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
   /// - parameter index: The index of the component that you are trying to resolve.
   /// - parameter type: The generic type for the component you are trying to resolve.
   ///
-  /// - returns: An optional CoreComponent object of inferred type.
+  /// - returns: An optional Component object of inferred type.
   open func component<T>(at index: Int = 0, ofType type: T.Type) -> T? {
     return components.filter({ $0.index == index }).first as? T
   }
 
-  /// A look up method for resolving a component at index as a CoreComponent object.
+  /// A look up method for resolving a component at index as a Component object.
   ///
   /// - parameter index: The index of the component that you are trying to resolve.
   ///
-  /// - returns: An optional CoreComponent object.
-  open func component(at index: Int = 0) -> CoreComponent? {
+  /// - returns: An optional Component object.
+  open func component(at index: Int = 0) -> Component? {
     return components.filter({ $0.index == index }).first
   }
 
@@ -180,8 +181,8 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
   ///
   /// - parameter closure: A closure to perform actions on a component.
   ///
-  /// - returns: An optional CoreComponent object
-  open func resolve(component closure: (_ index: Int, _ component: CoreComponent) -> Bool) -> CoreComponent? {
+  /// - returns: An optional Component object
+  open func resolve(component closure: (_ index: Int, _ component: Component) -> Bool) -> Component? {
     for (index, component) in components.enumerated()
       where closure(index, component) {
         return component
@@ -275,7 +276,7 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
     }
   }
 
-  /// Set up CoreComponent objects.
+  /// Set up Component objects.
   ///
   /// - parameter animated: An optional animation closure that is invoked when setting up the component.
   open func setupComponents(animated: ((_ view: UIView) -> Void)? = nil) {
@@ -287,9 +288,9 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
 
   /// Set up Spot at index
   ///
-  /// - parameter index: The index of the CoreComponent object
+  /// - parameter index: The index of the Component object
   /// - parameter component:  The component that is going to be setup
-  open func setupComponent(at index: Int, component: CoreComponent) {
+  open func setupComponent(at index: Int, component: Component) {
     if component.view.superview == nil {
       scrollView.componentsView.addSubview(component.view)
     }
@@ -305,16 +306,6 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
       width: superview.frame.width,
       height: ceil(component.view.frame.height))
     component.focusDelegate = self
-
-    /// Spot handles registering and preparing the items internally so there is no need to run this for that class.
-    /// This should be removed in the future when we decide to remove the core types.
-    if !(component is Component) {
-      component.registerAndPrepare()
-
-      if !component.items.isEmpty {
-        component.view.layoutIfNeeded()
-      }
-    }
   }
 
   #if os(iOS)
@@ -366,7 +357,7 @@ extension Controller {
 
   /// Resolve component at index path.
   ///
-  /// - parameter indexPath: The index path of the component belonging to the CoreComponent object at that index.
+  /// - parameter indexPath: The index path of the component belonging to the Component object at that index.
   ///
   /// - returns: A ComponentModel object at index path.
   fileprivate func component(at indexPath: IndexPath) -> ComponentModel {
@@ -377,8 +368,8 @@ extension Controller {
   ///
   /// - parameter indexPath: The index path of The component.
   ///
-  /// - returns: A CoreComponent object.
-  fileprivate func component(at indexPath: IndexPath) -> CoreComponent {
+  /// - returns: A Component object.
+  fileprivate func component(at indexPath: IndexPath) -> Component {
     return components[indexPath.item]
   }
 }

@@ -107,17 +107,6 @@ extension Gridable {
     return size
   }
 
-  public func identifier(at index: Int) -> String {
-
-    if let item = item(at: index), type(of: self).grids.storage[item.kind] != nil {
-      return item.kind
-    } else if let item = item(at: index), Configuration.views.storage[item.kind] != nil {
-      return item.kind
-    } else {
-      return type(of: self).grids.defaultIdentifier
-    }
-  }
-
   /// Prepares a view model item before being used by the UI component
   ///
   /// - parameter index:        The index of the view model

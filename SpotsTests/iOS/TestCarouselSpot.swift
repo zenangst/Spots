@@ -338,9 +338,7 @@ class CarouselComponentTests: XCTestCase {
     let parentSize = CGSize(width: 300, height: 100)
 
     component.setup(parentSize)
-    component.layout(parentSize)
     component.collectionView?.collectionViewLayout = layout
-    component.prepareItems()
     component.view.layoutSubviews()
 
     // Make sure our mocked item size is correct

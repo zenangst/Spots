@@ -56,6 +56,7 @@ class CompositionTests: XCTestCase {
     )
 
     let component = GridComponent(model: model)
+    component.prepareItems()
 
     XCTAssertEqual(component.items.count, 2)
 
@@ -115,6 +116,11 @@ class CompositionTests: XCTestCase {
     }
 
     itemConfigurable = component.compositeComponents[0].component.ui(at: 0)
+
+    guard itemConfigurable != nil else {
+      XCTFail("Unable to resolve view.")
+      return
+    }
 
     XCTAssertNotNil(composite)
     XCTAssertNotNil(itemConfigurable)
@@ -244,6 +250,11 @@ class CompositionTests: XCTestCase {
     }
 
     itemConfigurable = components[0].compositeComponents[0].component.ui(at: 0)
+
+    guard itemConfigurable != nil else {
+      XCTFail("Unable to resolve view.")
+      return
+    }
 
     XCTAssertNotNil(composite)
     XCTAssertNotNil(itemConfigurable)
@@ -694,6 +705,11 @@ class CompositionTests: XCTestCase {
 
     itemConfigurable = components[0].compositeComponents[0].component.ui(at: 0)
 
+    guard itemConfigurable != nil else {
+      XCTFail("Unable to resolve view.")
+      return
+    }
+
     XCTAssertNotNil(composite)
     XCTAssertNotNil(itemConfigurable)
     XCTAssertEqual(composite?.contentView.subviews.count, 1)
@@ -1022,7 +1038,10 @@ class CompositionTests: XCTestCase {
       return
     }
 
-    itemConfigurable = components[0].compositeComponents[0].component.ui(at: 0)
+    guard components[0].compositeComponents[0].component.ui(at: 0) != nil else {
+      XCTFail("Unable to find composite components.")
+      return
+    }
 
     XCTAssertNotNil(composite)
     XCTAssertNotNil(itemConfigurable)

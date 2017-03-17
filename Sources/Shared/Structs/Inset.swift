@@ -1,6 +1,6 @@
 import Tailor
 
-/// A content inset struct used for configuring layout on CoreComponent objects.
+/// A content inset struct used for configuring layout on Component objects.
 public struct Inset: Mappable, Equatable {
 
   /// The root key for the JSON dictionary.
