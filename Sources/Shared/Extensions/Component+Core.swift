@@ -301,7 +301,7 @@ public extension Component {
   /// - parameter view: The view that is going to be prepared.
   func prepare(view: View) {
     // Set initial size for view
-    view.frame.size.width = view.frame.size.width
+    self.view.frame.size.width = view.frame.size.width
 
     if let itemConfigurable = view as? ItemConfigurable, view.frame.size.height == 0.0 {
       view.frame.size = itemConfigurable.preferredViewSize
