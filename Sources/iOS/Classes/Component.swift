@@ -150,6 +150,17 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     switch model.interaction.scrollDirection {
     case .horizontal:
       setupHorizontalCollectionView(collectionView, with: size)
+
+      if let pageIndicatorPlacement = model.layout?.pageIndicatorPlacement, let layout = collectionView.collectionViewLayout as? FlowLayout {
+        switch pageIndicatorPlacement {
+        case .below:
+          layout.sectionInset.bottom += pageControl.frame.height
+          pageControl.frame.origin.y = collectionView.frame.height
+        case .overlay:
+          let verticalAdjustment = CGFloat(2)
+          pageControl.frame.origin.y = collectionView.frame.height - pageControl.frame.height - verticalAdjustment
+        }
+      }
     case .vertical:
       setupVerticalCollectionView(collectionView, with: size)
     }
