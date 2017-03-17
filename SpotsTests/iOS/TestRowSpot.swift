@@ -52,16 +52,16 @@ class RowSpotTests: XCTestCase {
     let rowComponent = RowComponent(model: model)
     let indexPath = IndexPath(row: 0, section: 0)
 
-    XCTAssertEqual(rowComponent.identifier(at: indexPath), RowComponent.views.defaultIdentifier)
+    XCTAssertEqual(rowComponent.identifier(for: indexPath), RowComponent.views.defaultIdentifier)
 
     RowComponent.views.defaultItem = Registry.Item.classType(GridComponentCell.self)
-    XCTAssertEqual(rowComponent.identifier(at: indexPath), RowComponent.views.defaultIdentifier)
+    XCTAssertEqual(rowComponent.identifier(for: indexPath), RowComponent.views.defaultIdentifier)
 
     RowComponent.views.defaultItem = Registry.Item.classType(GridComponentCell.self)
-    XCTAssertEqual(rowComponent.identifier(at: indexPath), RowComponent.views.defaultIdentifier)
+    XCTAssertEqual(rowComponent.identifier(for: indexPath), RowComponent.views.defaultIdentifier)
 
     RowComponent.views["custom-item-kind"] = Registry.Item.classType(GridComponentCell.self)
-    XCTAssertEqual(rowComponent.identifier(at: indexPath), "custom-item-kind")
+    XCTAssertEqual(rowComponent.identifier(for: indexPath), "custom-item-kind")
 
     RowComponent.views.storage.removeAll()
   }

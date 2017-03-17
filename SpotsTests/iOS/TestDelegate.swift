@@ -5,7 +5,7 @@ import XCTest
 class TestDelegate: ComponentDelegate {
   var countsInvoked = 0
 
-  func component(_ component: CoreComponent, itemSelected item: Item) {
+  func component(_ component: Component, itemSelected item: Item) {
     component.model.items[item.index].meta["selected"] = true
     countsInvoked += 1
   }

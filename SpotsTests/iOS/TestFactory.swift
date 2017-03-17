@@ -19,13 +19,13 @@ class FactoryTests: XCTestCase {
     var component = Factory.resolve(model: model)
 
     XCTAssertTrue(component.model == model)
-    XCTAssertTrue(component is CarouselComponent)
+    XCTAssertTrue(component.view is CollectionView)
 
     Factory.register(kind: "merry-go-round", component: GridComponent.self)
     component = Factory.resolve(model: model)
 
     XCTAssertTrue(component.model == model)
-    XCTAssertTrue(component is GridComponent)
+    XCTAssertTrue(component.view is CollectionView)
   }
 
   func testDefaultResolve() {
@@ -55,7 +55,7 @@ class FactoryTests: XCTestCase {
       )
     ]
 
-    let components: [CoreComponent] = initialComponentModels.map {
+    let components: [Component] = initialComponentModels.map {
       let component = Factory.resolve(model: $0)
       component.setup(CGSize(width: 100, height: 100))
       return component
@@ -63,7 +63,7 @@ class FactoryTests: XCTestCase {
 
     /// Validate factory process
     XCTAssertEqual(components.count, 1)
-    XCTAssert(components.first is ListComponent)
+    XCTAssert(components.first?.view is TableView)
 
     /// Test first item in the first component of the first component
     XCTAssertEqual(components.first!.model.kind, "list")

@@ -51,16 +51,16 @@ class CarouselComponentTests: XCTestCase {
     let carouselComponent = CarouselComponent(model: model)
     let indexPath = IndexPath(row: 0, section: 0)
 
-    XCTAssertEqual(carouselComponent.identifier(at: indexPath), CarouselComponent.views.defaultIdentifier)
+    XCTAssertEqual(carouselComponent.identifier(for: indexPath), CarouselComponent.views.defaultIdentifier)
 
     CarouselComponent.views.defaultItem = Registry.Item.classType(CarouselComponentCell.self)
-    XCTAssertEqual(carouselComponent.identifier(at: indexPath), CarouselComponent.views.defaultIdentifier)
+    XCTAssertEqual(carouselComponent.identifier(for: indexPath), CarouselComponent.views.defaultIdentifier)
 
     CarouselComponent.views.defaultItem = Registry.Item.classType(CarouselComponentCell.self)
-    XCTAssertEqual(carouselComponent.identifier(at: indexPath), CarouselComponent.views.defaultIdentifier)
+    XCTAssertEqual(carouselComponent.identifier(for: indexPath), CarouselComponent.views.defaultIdentifier)
 
     CarouselComponent.views["custom-item-kind"] = Registry.Item.classType(CarouselComponentCell.self)
-    XCTAssertEqual(carouselComponent.identifier(at: indexPath), "custom-item-kind")
+    XCTAssertEqual(carouselComponent.identifier(for: indexPath), "custom-item-kind")
 
     CarouselComponent.views.purge()
     CarouselComponent.views.storage.removeAll()

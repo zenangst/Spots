@@ -10,7 +10,7 @@ class ControllerTests: XCTestCase {
     let controller = Controller(component: listComponent)
     controller.preloadView()
 
-    XCTAssertEqual(controller.component as? ListComponent, listComponent)
+    XCTAssertEqual(controller.component, listComponent)
   }
 
   func testUpdateSpotAtIndex() {
@@ -150,7 +150,7 @@ class ControllerTests: XCTestCase {
     XCTAssertEqual(firstItem?.index, 0)
 
     let expectation = self.expectation(description: "Test delete item")
-    let listComponent = (controller.component as! ListComponent)
+    let listComponent = controller.component!
     listComponent.delete(model.items.first!) {
       let lastItem = controller.component!.model.items.first
 
@@ -309,7 +309,7 @@ class ControllerTests: XCTestCase {
     XCTAssertEqual(firstItem?.index, 0)
 
     let expectation = self.expectation(description: "Test delete item")
-    let listComponent = (controller.component as! ListComponent)
+    let listComponent = controller.component!
     listComponent.delete(model.items.first!) {
       let lastItem = controller.component!.model.items.first
 
@@ -402,7 +402,7 @@ class ControllerTests: XCTestCase {
     XCTAssertEqual(firstItem?.index, 0)
 
     let expectation = self.expectation(description: "Test delete item")
-    let listComponent = (controller.component as! ListComponent)
+    let listComponent = controller.component!
     listComponent.delete(model.items.first!) {
       let lastItem = controller.component!.model.items.first
 

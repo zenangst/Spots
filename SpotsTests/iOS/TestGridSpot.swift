@@ -51,16 +51,16 @@ class GridComponentTests: XCTestCase {
     let rowComponent = GridComponent(model: model)
     let indexPath = IndexPath(row: 0, section: 0)
 
-    XCTAssertEqual(rowComponent.identifier(at: indexPath), GridComponent.views.defaultIdentifier)
+    XCTAssertEqual(rowComponent.identifier(for: indexPath), GridComponent.views.defaultIdentifier)
 
     GridComponent.views.defaultItem = Registry.Item.classType(GridComponentCell.self)
-    XCTAssertEqual(rowComponent.identifier(at: indexPath), GridComponent.views.defaultIdentifier)
+    XCTAssertEqual(rowComponent.identifier(for: indexPath), GridComponent.views.defaultIdentifier)
 
     GridComponent.views.defaultItem = Registry.Item.classType(GridComponentCell.self)
-    XCTAssertEqual(rowComponent.identifier(at: indexPath), GridComponent.views.defaultIdentifier)
+    XCTAssertEqual(rowComponent.identifier(for: indexPath), GridComponent.views.defaultIdentifier)
 
     GridComponent.views["custom-item-kind"] = Registry.Item.classType(GridComponentCell.self)
-    XCTAssertEqual(rowComponent.identifier(at: indexPath), "custom-item-kind")
+    XCTAssertEqual(rowComponent.identifier(for: indexPath), "custom-item-kind")
 
     GridComponent.views.storage.removeAll()
   }
