@@ -141,6 +141,7 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     collectionView.frame.size = size
     collectionView.dataSource = componentDataSource
     collectionView.delegate = componentDelegate
+    collectionView.backgroundView = backgroundView
 
     if componentKind == .carousel {
       collectionView.showsHorizontalScrollIndicator = false
