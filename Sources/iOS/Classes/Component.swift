@@ -59,16 +59,12 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
 
     switch kind {
     case .carousel:
-      Configuration.register(view: GridComposite.self, identifier: "composite")
       registerDefaultIfNeeded(view: GridComponentCell.self)
     case .grid:
-      Configuration.register(view: GridComposite.self, identifier: "composite")
       registerDefaultIfNeeded(view: GridComponentCell.self)
     case .list:
-      Configuration.register(view: ListComposite.self, identifier: "composite")
       registerDefaultIfNeeded(view: ListComponentCell.self)
     case .row:
-      Configuration.register(view: GridComposite.self, identifier: "composite")
       registerDefaultIfNeeded(view: RowComponentCell.self)
     default:
       break
