@@ -2,9 +2,14 @@ import UIKit
 
 extension UITableView: UserInterface {
   public func register() {
+    Configuration.register(view: ListComposite.self, identifier: "list-composite")
     register(ListComposite.self, forCellReuseIdentifier: "composite")
 
     for (identifier, item) in Configuration.views.storage {
+      if identifier.contains("composite") {
+        continue
+      }
+
       switch item {
       case .classType(_):
         register(ListHeaderFooterWrapper.self, forHeaderFooterViewReuseIdentifier: identifier)

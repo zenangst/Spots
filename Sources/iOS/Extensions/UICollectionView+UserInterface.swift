@@ -3,7 +3,14 @@ import UIKit
 extension UICollectionView: UserInterface {
 
   public func register() {
+    Configuration.register(view: GridComposite.self, identifier: "grid-composite")
+    register(GridComposite.self, forCellWithReuseIdentifier: "grid-composite")
+
     for (identifier, item) in Configuration.views.storage {
+      if identifier.contains("composite") {
+        continue
+      }
+
       switch item {
       case .classType(_):
         register(GridHeaderFooterWrapper.self,
