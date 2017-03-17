@@ -431,7 +431,7 @@ class ControllerTests: XCTestCase {
   }
 
   func testFindAndFilterSpotWithClosure() {
-    let listComponent = ListComponent(model: ComponentModel(title: "ListComponent", span: 1.0))
+    let listComponent = ListComponent(model: ComponentModel(title: "ListComponent", kind: "list", span: 1.0))
     let listComponent2 = ListComponent(model: ComponentModel(title: "ListComponent2", kind: "list", span: 1.0))
     let gridComponent = GridComponent(model: ComponentModel(title: "GridComponent", kind: "grid", span: 1.0, items: [Item(title: "Item")]))
     let controller = Controller(components: [listComponent, listComponent2, gridComponent])
@@ -445,17 +445,17 @@ class ControllerTests: XCTestCase {
     XCTAssertEqual(controller.resolve(component: { $0.0 == 1 })?.model.title, "ListComponent2")
     XCTAssertEqual(controller.resolve(component: { $0.0 == 2 })?.model.title, "GridComponent")
 
-    XCTAssert(controller.filter(components: { $0.view is TableView }).count == 2)
+    XCTAssertEqual(controller.filter(components: { $0.view is TableView }).count, 2)
+    XCTAssertEqual(controller.filter(components: { $0.view is CollectionView }).count, 1)
   }
 
   func testJSONInitialiser() {
-    let component = ListComponent(model: ComponentModel(span: 1.0))
+    let component = ListComponent(model: ComponentModel(kind: "list"))
     component.items = [Item(title: "First item")]
     let sourceController = Controller(component: component)
     let jsonController = Controller([
       "components": [
         ["kind": "list",
-         "layout": ListComponent.layout.dictionary,
          "items": [
           ["title": "First item"]
           ]
@@ -704,7 +704,7 @@ class ControllerTests: XCTestCase {
 
     /// Reset layout margins for tvOS
     #if os(tvOS)
-      controller.component(at: 0, ofType: ListComponent.self)?.tableView.layoutMargins = UIEdgeInsets.zero
+      controller.component(at: 0)?.tableView?.layoutMargins = UIEdgeInsets.zero
     #endif
 
     #if !os(OSX)

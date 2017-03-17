@@ -13,7 +13,7 @@ class TestSpot: XCTestCase {
 
   func testDefaultValues() {
     let items = [Item(title: "A"), Item(title: "B")]
-    let model = ComponentModel(items: items, hybrid: true)
+    let model = ComponentModel(kind: "list", items: items, hybrid: true)
     let component = Component(model: model)
 
     component.setup(CGSize(width: 100, height: 100))

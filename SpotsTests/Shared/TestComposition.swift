@@ -102,8 +102,6 @@ class CompositionTests: XCTestCase {
 
     let component = GridComponent(model: model)
     component.setup(CGSize(width: 200, height: 200))
-    component.layout(CGSize(width: 200, height: 200))
-    component.view.layoutSubviews()
 
     var composite: Composable?
     var itemConfigurable: ItemConfigurable?

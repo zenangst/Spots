@@ -52,7 +52,7 @@ class DelegateTests: XCTestCase {
 
   func testTableViewDelegateSelection() {
     let delegate = TestDelegate()
-    let component = ListComponent(model: ComponentModel(span: 1, items: [
+    let component = ListComponent(model: ComponentModel(kind: "list", span: 1, items: [
       Item(title: "title 1")
       ]))
     component.delegate = delegate
@@ -72,7 +72,7 @@ class DelegateTests: XCTestCase {
   }
 
   func testTableViewHeightForRowOnListable() {
-    let component = ListComponent(model: ComponentModel(span: 1, items: [Item(title: "title 1")]))
+    let component = ListComponent(model: ComponentModel(kind: "list", span: 1, items: [Item(title: "title 1")]))
     component.setup(CGSize(width: 100, height: 100))
 
     guard let tableView = component.tableView else {
@@ -85,16 +85,17 @@ class DelegateTests: XCTestCase {
   }
 
   func testDelegateTitleForHeader() {
-//    ListComponent.register(header: CustomListHeaderView.self, identifier: "list")
+    Configuration.register(view: CustomListHeaderView.self, identifier: "list")
     let component = ListComponent(model: ComponentModel(
       title: "title",
       header: Item(kind: "list"),
+      kind: "list",
       span: 1,
       items: [
         Item(title: "title 1"),
         Item(title: "title 2")
       ]))
-    component.view.frame.size = CGSize(width: 100, height: 100)
+    component.setup(CGSize(width: 100, height: 100))
     component.view.layoutSubviews()
 
     guard let tableView = component.tableView else {
@@ -102,8 +103,8 @@ class DelegateTests: XCTestCase {
       return
     }
 
-    var view = component.componentDelegate?.tableView(tableView, viewForHeaderInSection: 0)
-    XCTAssert(view is CustomListHeaderView)
+    var view = component.componentDelegate?.tableView(tableView, viewForHeaderInSection: 0) as? ListHeaderFooterWrapper
+    XCTAssert(view?.wrappedView is CustomListHeaderView)
 
     /// Expect to return nil if header is in use.
     var title = component.componentDelegate?.tableView(tableView, titleForHeaderInSection: 0)
@@ -119,7 +120,7 @@ class DelegateTests: XCTestCase {
     title = component.componentDelegate?.tableView(tableView, titleForHeaderInSection: 0)
     XCTAssertEqual(title, nil)
 
-    view = component.componentDelegate?.tableView(tableView, viewForHeaderInSection: 0)
+    view = component.componentDelegate?.tableView(tableView, viewForHeaderInSection: 0) as! ListHeaderFooterWrapper?
     XCTAssertEqual(view, nil)
   }
 
@@ -128,7 +129,7 @@ class DelegateTests: XCTestCase {
     Configuration.register(view: ItemConfigurableView.self, identifier: "item-configurable-header")
     Configuration.register(view: CustomListHeaderView.self, identifier: "custom-header")
 
-    let component = Component(model: ComponentModel(header: Item(kind: "custom-header")))
+    let component = Component(model: ComponentModel(header: Item(kind: "custom-header"), kind: "list"))
     component.setup(CGSize(width: 100, height: 100))
     component.view.layoutSubviews()
 
@@ -174,7 +175,7 @@ class DelegateTests: XCTestCase {
     Configuration.register(view: ItemConfigurableView.self, identifier: "item-configurable-footer")
     Configuration.register(view: CustomListHeaderView.self, identifier: "custom-footer")
 
-    let component = Component(model: ComponentModel(footer: Item(kind: "custom-footer")))
+    let component = Component(model: ComponentModel(footer: Item(kind: "custom-footer"), kind: "list"))
     component.setup(CGSize(width: 100, height: 100))
     component.view.layoutSubviews()
 

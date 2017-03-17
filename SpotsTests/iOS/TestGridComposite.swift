@@ -13,7 +13,7 @@ class GridCompositeTests: XCTestCase {
     XCTAssertTrue(view.contentView.subviews.count == 1)
 
     let carouselComponent = CompositeComponent(component: CarouselComponent(model: ComponentModel(span: 1)), itemIndex: 0)
-    let listComponent = CompositeComponent(component: ListComponent(model: ComponentModel(span: 1)), itemIndex: 0)
+    let listComponent = CompositeComponent(component: ListComponent(model: ComponentModel(kind: "list", span: 1)), itemIndex: 0)
     view.configure(&item, compositeComponents: [carouselComponent, listComponent])
 
     XCTAssertTrue(view.contentView.subviews.count == 3)

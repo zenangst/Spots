@@ -111,8 +111,8 @@ class GridComponentTests: XCTestCase {
 
   func testSpotCollectionDelegate() {
     let items = [Item(title: "Test item")]
-    let component = GridComponent(model: ComponentModel(span: 0.0, items: items))
-    component.view.frame.size = CGSize(width: 100, height: 100)
+    let component = GridComponent(model: ComponentModel(kind: "grid", span: 0.0, items: items))
+    component.setup(CGSize(width: 100, height: 100))
     component.view.layoutSubviews()
 
     guard let collectionView = component.collectionView else {
@@ -155,6 +155,6 @@ class GridComponentTests: XCTestCase {
     component.configure = { view in
       invokeCount += 1
     }
-    XCTAssertEqual(invokeCount, 2)
+    XCTAssertEqual(invokeCount, 1)
   }
 }

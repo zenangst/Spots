@@ -199,7 +199,6 @@ class CarouselComponentTests: XCTestCase {
     XCTAssertEqual(component.model.layout!.span, 4.0)
 
     component.setup(parentSize)
-    component.layout(parentSize)
     component.prepareItems()
     component.view.layoutSubviews()
 
@@ -320,6 +319,7 @@ class CarouselComponentTests: XCTestCase {
           ]
         ]
       ],
+      "kind" : "carousel",
       "interaction": Interaction(paginate: .item).dictionary,
       "layout": Layout(
         span: 0,
@@ -432,13 +432,11 @@ class CarouselComponentTests: XCTestCase {
     let items = [Item(title: "Item A", kind: "test-view"), Item(title: "Item B")]
     let component = CarouselComponent(model: ComponentModel(kind: "carousel", span: 0.0, items: items))
     component.setup(CGSize(width: 100, height: 100))
-    component.layout(CGSize(width: 100, height: 100))
-    component.view.layoutSubviews()
 
     var invokeCount = 0
     component.configure = { view in
       invokeCount += 1
     }
-    XCTAssertEqual(invokeCount, 2)
+    XCTAssertEqual(invokeCount, 1)
   }
 }

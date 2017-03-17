@@ -16,7 +16,6 @@ class TestGridableLayout: XCTestCase {
     )
     let carouselComponent = CarouselComponent(model: model)
     carouselComponent.setup(parentSize)
-    carouselComponent.layout(parentSize)
     carouselComponent.view.layoutSubviews()
 
     guard let collectionView = carouselComponent.collectionView else {
@@ -30,6 +29,7 @@ class TestGridableLayout: XCTestCase {
 
   func testContentSizeForHorizontalLayoutsWithInsets() {
     let model = ComponentModel(
+      kind: "carousel",
       layout: Layout(
         inset: Inset(top: 25, left: 25, bottom: 25, right: 25)
       ),
@@ -55,6 +55,7 @@ class TestGridableLayout: XCTestCase {
   func testLayoutAttributesForElementInHorizontalLayoutWithInsets() {
     let itemSize = CGSize(width: 50, height: 100)
     let model = ComponentModel(
+      kind: "carousel",
       layout: Layout(
         inset: Inset(top: 25, left: 25, bottom: 25, right: 25)
       ),
@@ -65,7 +66,6 @@ class TestGridableLayout: XCTestCase {
     )
     let carouselComponent = CarouselComponent(model: model)
     carouselComponent.setup(parentSize)
-    carouselComponent.layout(parentSize)
     carouselComponent.view.layoutSubviews()
 
     guard let collectionViewLayout = carouselComponent.collectionView?.collectionViewLayout as? FlowLayout else {
@@ -99,6 +99,7 @@ class TestGridableLayout: XCTestCase {
   func testLayoutAttributesForElementInHorizontalLayoutWithItemSpacing() {
     let itemSize = CGSize(width: 50, height: 100)
     let model = ComponentModel(
+      kind: "carousel",
       layout: Layout(
         itemSpacing: 10.0
       ),
@@ -109,7 +110,6 @@ class TestGridableLayout: XCTestCase {
     )
     let carouselComponent = CarouselComponent(model: model)
     carouselComponent.setup(parentSize)
-    carouselComponent.layout(parentSize)
     carouselComponent.view.layoutSubviews()
 
     guard let collectionViewLayout = carouselComponent.collectionView?.collectionViewLayout as? FlowLayout else {
