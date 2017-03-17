@@ -3,7 +3,8 @@ import UIKit
 extension DataSource {
 
   func prepareWrappableView(_ view: Wrappable, atIndex index: Int, in component: Component, parentFrame: CGRect = CGRect.zero) {
-    if let (_, customView) = Configuration.views.make(component.model.items[index].kind, parentFrame: parentFrame),
+    let identifier = component.identifier(at: index)
+    if let (_, customView) = Configuration.views.make(identifier, parentFrame: parentFrame),
       let wrappedView = customView {
       view.configure(with: wrappedView)
 
