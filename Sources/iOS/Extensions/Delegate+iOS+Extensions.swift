@@ -160,7 +160,7 @@ extension Delegate: UITableViewDelegate {
     }
 
     let kind: String = component.model.header?.kind ?? ""
-    guard component.type.headers.make(kind) == nil else {
+    guard Configuration.views.make(kind) == nil else {
       return nil
     }
 
