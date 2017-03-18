@@ -30,8 +30,8 @@ class RowSpotTests: XCTestCase {
     }
 
     /// TODO: Fix this
-    //XCTAssertEqual(collectionView.sectionInset, UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10))
-    //XCTAssertEqual(collectionViewLayout.minimumInteritemSpacing, 5)
+    XCTAssertEqual(collectionViewLayout.sectionInset, UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10))
+    XCTAssertEqual(collectionViewLayout.minimumInteritemSpacing, 5)
   }
 
   func testDictionaryRepresentation() {
