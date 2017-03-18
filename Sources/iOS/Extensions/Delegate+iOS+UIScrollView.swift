@@ -90,7 +90,13 @@ extension Delegate: UIScrollViewDelegate {
         component.carouselScrollDelegate?.componentCarouselDidEndScrolling(component, item: item, animated: false)
       }
 
-      targetContentOffset.pointee.x = centerLayoutAttributes.frame.midX - scrollView.frame.width / 2
+      let pointeeX = centerLayoutAttributes.frame.midX - scrollView.frame.width / 2
+
+      guard pointeeX > 0 else {
+        return
+      }
+
+      targetContentOffset.pointee.x = pointeeX
     }
   }
 
