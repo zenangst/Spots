@@ -486,6 +486,8 @@ public extension Component {
   }
 
   public func beforeUpdate() {}
-  public func afterUpdate() {}
+  public func afterUpdate() {
+    setup(view.frame.size)
+  }
   func configure(with layout: Layout) {}
 }
