@@ -194,11 +194,6 @@ class TestGridableLayout: XCTestCase {
       height: model.layout!.inset.top + model.layout!.inset.bottom + Double(itemSize.height) * 2
     )
 
-    if let collectionViewLayout = component.collectionView?.collectionViewLayout as? FlowLayout {
-      XCTFail("Unable to resolve collection view layout.")
-      return
-    }
-
     XCTAssertEqual(collectionViewLayout.collectionViewContentSize, expectedContentSize)
   }
 }
