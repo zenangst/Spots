@@ -24,8 +24,8 @@ class RowSpotTests: XCTestCase {
     let model = ComponentModel(kind: "row", layout: layout, span: 1)
     let component = RowComponent(model: model)
 
-    if let collectionView = component.collectionView {
-      XCTFail("Unable to resolve collection view layout.")
+    guard let collectionViewLayout = component.collectionView?.collectionViewLayout as? FlowLayout else {
+      XCTFail("Unable to resolve collection view.")
       return
     }
 
