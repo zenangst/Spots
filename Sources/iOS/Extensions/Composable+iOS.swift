@@ -27,8 +27,6 @@ public extension Composable where Self : View {
       compositeSpot.component.model.size = CGSize(
         width: width,
         height: ceil(compositeSpot.component.view.frame.size.height))
-      compositeSpot.component.layout(size)
-      compositeSpot.component.view.layoutIfNeeded()
 
       compositeSpot.component.view.frame.origin.y = height
       /// Disable scrolling for listable objects
