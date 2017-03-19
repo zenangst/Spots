@@ -56,7 +56,7 @@ class CompositionTests: XCTestCase {
     )
 
     let component = GridComponent(model: model)
-    component.prepareItems()
+    component.setup(CGSize(width: 100, height: 100))
 
     XCTAssertEqual(component.items.count, 2)
 
@@ -377,6 +377,7 @@ class CompositionTests: XCTestCase {
     var reloadTimes: Int = 0
 
     controller.reloadIfNeeded(newComponentModels) {
+
       reloadTimes += 1
 
       let components = controller.components
@@ -387,6 +388,11 @@ class CompositionTests: XCTestCase {
       XCTAssertNotNil(composite)
       XCTAssertNotNil(itemConfigurable)
       XCTAssertNotNil(composite?.contentView)
+
+      // TODO: This make the test pass, something is missing in the implementation.
+      // FIXME: This needs a fix internally.
+      //composite?.configure(&components[0].items[0], compositeComponents: [components[0].compositeComponents[0]])
+
       XCTAssertEqual(composite?.contentView.subviews.count, 1)
       XCTAssertTrue(components[0].compositeComponents[0].parentComponent!.model == components[0].model)
       XCTAssertTrue(components[0].compositeComponents[0].component.view is TableView)
