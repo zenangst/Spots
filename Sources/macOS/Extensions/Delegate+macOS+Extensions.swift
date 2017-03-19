@@ -75,7 +75,7 @@ extension Delegate: NSTableViewDelegate {
         return false
     }
 
-    if component.model.meta(ListComponent.Key.doubleAction, type: Bool.self) != true {
+    if component.model.meta("double-action", type: Bool.self) != true {
       component.delegate?.component(component, itemSelected: item)
     }
 

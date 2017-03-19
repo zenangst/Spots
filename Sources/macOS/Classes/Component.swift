@@ -3,7 +3,7 @@
 import Cocoa
 import Tailor
 
-@objc(SpotsComponent) public class Component: NSObject, CoreComponent {
+@objc(SpotsComponent) public class Component: NSObject {
 
   public static var layout: Layout = Layout(span: 1.0)
   public static var headers: Registry = Registry()
@@ -168,10 +168,6 @@ import Tailor
     componentDataSource = nil
     componentDelegate = nil
     userInterface = nil
-  }
-
-  public func configure(with layout: Layout) {
-
   }
 
   fileprivate func configureDataSourceAndDelegate() {

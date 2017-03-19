@@ -42,11 +42,7 @@ public class GridableLayout: FlowLayout {
         return false
     }
 
-    var offset: CGFloat = 0.0
-    if let component = component as? Component {
-      offset += component.headerHeight + component.footerHeight
-    }
-
+    let offset: CGFloat = component.headerHeight + component.footerHeight
     let shouldInvalidateLayout = newBounds.size.height != collectionView.frame.height + offset
 
     return shouldInvalidateLayout

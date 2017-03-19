@@ -125,36 +125,29 @@
 		BDAD84E11E3E701C008289AE /* UITableView+UserInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD84A01E3E701C008289AE /* UITableView+UserInterface.swift */; };
 		BDAD84E21E3E701C008289AE /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD84A11E3E701C008289AE /* UIViewController+Extensions.swift */; };
 		BDAD84E31E3E701C008289AE /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD84A11E3E701C008289AE /* UIViewController+Extensions.swift */; };
-		BDAD85091E3E7025008289AE /* CarouselComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD84E61E3E7025008289AE /* CarouselComponent.swift */; };
 		BDAD850A1E3E7025008289AE /* CarouselComponentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD84E71E3E7025008289AE /* CarouselComponentCell.swift */; };
 		BDAD850B1E3E7025008289AE /* CollectionViewLeftLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD84E81E3E7025008289AE /* CollectionViewLeftLayout.swift */; };
 		BDAD850C1E3E7025008289AE /* Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD84E91E3E7025008289AE /* Controller.swift */; };
 		BDAD850D1E3E7025008289AE /* GridComposite.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD84EA1E3E7025008289AE /* GridComposite.swift */; };
-		BDAD850E1E3E7025008289AE /* GridComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD84EB1E3E7025008289AE /* GridComponent.swift */; };
 		BDAD850F1E3E7025008289AE /* GridComponentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD84EC1E3E7025008289AE /* GridComponentCell.swift */; };
 		BDAD85101E3E7025008289AE /* GridComponentItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD84ED1E3E7025008289AE /* GridComponentItem.swift */; };
 		BDAD85111E3E7025008289AE /* GridWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD84EE1E3E7025008289AE /* GridWrapper.swift */; };
 		BDAD85121E3E7025008289AE /* ListComposite.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD84EF1E3E7025008289AE /* ListComposite.swift */; };
-		BDAD85131E3E7025008289AE /* ListComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD84F01E3E7025008289AE /* ListComponent.swift */; };
 		BDAD85141E3E7025008289AE /* ListComponentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD84F11E3E7025008289AE /* ListComponentCell.swift */; };
 		BDAD85151E3E7025008289AE /* ListComponentItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD84F21E3E7025008289AE /* ListComponentItem.swift */; };
 		BDAD85161E3E7025008289AE /* ListWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD84F31E3E7025008289AE /* ListWrapper.swift */; };
 		BDAD85171E3E7025008289AE /* NoScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD84F41E3E7025008289AE /* NoScrollView.swift */; };
-		BDAD85181E3E7025008289AE /* RowComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD84F51E3E7025008289AE /* RowComponent.swift */; };
 		BDAD85191E3E7025008289AE /* RowComponentItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD84F61E3E7025008289AE /* RowComponentItem.swift */; };
 		BDAD851A1E3E7025008289AE /* SpotsContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD84F71E3E7025008289AE /* SpotsContentView.swift */; };
 		BDAD851B1E3E7025008289AE /* SpotsScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD84F81E3E7025008289AE /* SpotsScrollView.swift */; };
 		BDAD851C1E3E7025008289AE /* Composable+macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD84FA1E3E7025008289AE /* Composable+macOS.swift */; };
 		BDAD851D1E3E7025008289AE /* DataSource+macOS+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD84FB1E3E7025008289AE /* DataSource+macOS+Extensions.swift */; };
 		BDAD851E1E3E7025008289AE /* Delegate+macOS+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD84FC1E3E7025008289AE /* Delegate+macOS+Extensions.swift */; };
-		BDAD851F1E3E7025008289AE /* Gridable+macOS+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD84FD1E3E7025008289AE /* Gridable+macOS+Extensions.swift */; };
 		BDAD85201E3E7025008289AE /* Inset+macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD84FE1E3E7025008289AE /* Inset+macOS.swift */; };
 		BDAD85211E3E7025008289AE /* Layout+macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD84FF1E3E7025008289AE /* Layout+macOS.swift */; };
-		BDAD85221E3E7025008289AE /* Listable+macOS+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD85001E3E7025008289AE /* Listable+macOS+Extensions.swift */; };
 		BDAD85231E3E7025008289AE /* NSCollectionView+UserInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD85011E3E7025008289AE /* NSCollectionView+UserInterface.swift */; };
 		BDAD85241E3E7025008289AE /* NSScrollView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD85021E3E7025008289AE /* NSScrollView+Extensions.swift */; };
 		BDAD85251E3E7025008289AE /* NSTableView+UserInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD85031E3E7025008289AE /* NSTableView+UserInterface.swift */; };
-		BDAD85261E3E7025008289AE /* Viewable+macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD85041E3E7025008289AE /* Viewable+macOS.swift */; };
 		BDAD85271E3E7025008289AE /* ComponentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD85061E3E7025008289AE /* ComponentView.swift */; };
 		BDAD85281E3E7025008289AE /* GridRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD85081E3E7025008289AE /* GridRegistry.swift */; };
 		BDAD85601E3E7032008289AE /* CompositeComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD852B1E3E7032008289AE /* CompositeComponent.swift */; };
@@ -455,36 +448,29 @@
 		BDAD849F1E3E701C008289AE /* UICollectionView+UserInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UICollectionView+UserInterface.swift"; sourceTree = "<group>"; };
 		BDAD84A01E3E701C008289AE /* UITableView+UserInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+UserInterface.swift"; sourceTree = "<group>"; };
 		BDAD84A11E3E701C008289AE /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
-		BDAD84E61E3E7025008289AE /* CarouselComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselComponent.swift; sourceTree = "<group>"; };
 		BDAD84E71E3E7025008289AE /* CarouselComponentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselComponentCell.swift; sourceTree = "<group>"; };
 		BDAD84E81E3E7025008289AE /* CollectionViewLeftLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewLeftLayout.swift; sourceTree = "<group>"; };
 		BDAD84E91E3E7025008289AE /* Controller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Controller.swift; sourceTree = "<group>"; };
 		BDAD84EA1E3E7025008289AE /* GridComposite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = GridComposite.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		BDAD84EB1E3E7025008289AE /* GridComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = GridComponent.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		BDAD84EC1E3E7025008289AE /* GridComponentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = GridComponentCell.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		BDAD84ED1E3E7025008289AE /* GridComponentItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = GridComponentItem.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		BDAD84EE1E3E7025008289AE /* GridWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridWrapper.swift; sourceTree = "<group>"; };
 		BDAD84EF1E3E7025008289AE /* ListComposite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ListComposite.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		BDAD84F01E3E7025008289AE /* ListComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListComponent.swift; sourceTree = "<group>"; };
 		BDAD84F11E3E7025008289AE /* ListComponentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListComponentCell.swift; sourceTree = "<group>"; };
 		BDAD84F21E3E7025008289AE /* ListComponentItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListComponentItem.swift; sourceTree = "<group>"; };
 		BDAD84F31E3E7025008289AE /* ListWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListWrapper.swift; sourceTree = "<group>"; };
 		BDAD84F41E3E7025008289AE /* NoScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoScrollView.swift; sourceTree = "<group>"; };
-		BDAD84F51E3E7025008289AE /* RowComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RowComponent.swift; sourceTree = "<group>"; };
 		BDAD84F61E3E7025008289AE /* RowComponentItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RowComponentItem.swift; sourceTree = "<group>"; };
 		BDAD84F71E3E7025008289AE /* SpotsContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsContentView.swift; sourceTree = "<group>"; };
 		BDAD84F81E3E7025008289AE /* SpotsScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsScrollView.swift; sourceTree = "<group>"; };
 		BDAD84FA1E3E7025008289AE /* Composable+macOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "Composable+macOS.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		BDAD84FB1E3E7025008289AE /* DataSource+macOS+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DataSource+macOS+Extensions.swift"; sourceTree = "<group>"; };
 		BDAD84FC1E3E7025008289AE /* Delegate+macOS+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Delegate+macOS+Extensions.swift"; sourceTree = "<group>"; };
-		BDAD84FD1E3E7025008289AE /* Gridable+macOS+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "Gridable+macOS+Extensions.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		BDAD84FE1E3E7025008289AE /* Inset+macOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Inset+macOS.swift"; sourceTree = "<group>"; };
 		BDAD84FF1E3E7025008289AE /* Layout+macOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Layout+macOS.swift"; sourceTree = "<group>"; };
-		BDAD85001E3E7025008289AE /* Listable+macOS+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "Listable+macOS+Extensions.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		BDAD85011E3E7025008289AE /* NSCollectionView+UserInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSCollectionView+UserInterface.swift"; sourceTree = "<group>"; };
 		BDAD85021E3E7025008289AE /* NSScrollView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSScrollView+Extensions.swift"; sourceTree = "<group>"; };
 		BDAD85031E3E7025008289AE /* NSTableView+UserInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSTableView+UserInterface.swift"; sourceTree = "<group>"; };
-		BDAD85041E3E7025008289AE /* Viewable+macOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Viewable+macOS.swift"; sourceTree = "<group>"; };
 		BDAD85061E3E7025008289AE /* ComponentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentView.swift; sourceTree = "<group>"; };
 		BDAD85081E3E7025008289AE /* GridRegistry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = GridRegistry.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		BDAD852B1E3E7032008289AE /* CompositeComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositeComponent.swift; sourceTree = "<group>"; };
@@ -733,22 +719,18 @@
 		BDAD84E51E3E7025008289AE /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				BDAD84E61E3E7025008289AE /* CarouselComponent.swift */,
 				BDAD84E71E3E7025008289AE /* CarouselComponentCell.swift */,
 				BDAD84E81E3E7025008289AE /* CollectionViewLeftLayout.swift */,
 				BDAD84E91E3E7025008289AE /* Controller.swift */,
 				BDAD84EA1E3E7025008289AE /* GridComposite.swift */,
-				BDAD84EB1E3E7025008289AE /* GridComponent.swift */,
 				BDAD84EC1E3E7025008289AE /* GridComponentCell.swift */,
 				BDAD84ED1E3E7025008289AE /* GridComponentItem.swift */,
 				BDAD84EE1E3E7025008289AE /* GridWrapper.swift */,
 				BDAD84EF1E3E7025008289AE /* ListComposite.swift */,
-				BDAD84F01E3E7025008289AE /* ListComponent.swift */,
 				BDAD84F11E3E7025008289AE /* ListComponentCell.swift */,
 				BDAD84F21E3E7025008289AE /* ListComponentItem.swift */,
 				BDAD84F31E3E7025008289AE /* ListWrapper.swift */,
 				BDAD84F41E3E7025008289AE /* NoScrollView.swift */,
-				BDAD84F51E3E7025008289AE /* RowComponent.swift */,
 				BDAD84F61E3E7025008289AE /* RowComponentItem.swift */,
 				BD2403101E4B9A02005BAA19 /* Component.swift */,
 				BDAD84F71E3E7025008289AE /* SpotsContentView.swift */,
@@ -764,10 +746,8 @@
 				BDAD84FA1E3E7025008289AE /* Composable+macOS.swift */,
 				BDAD84FB1E3E7025008289AE /* DataSource+macOS+Extensions.swift */,
 				BDAD84FC1E3E7025008289AE /* Delegate+macOS+Extensions.swift */,
-				BDAD84FD1E3E7025008289AE /* Gridable+macOS+Extensions.swift */,
 				BDAD84FE1E3E7025008289AE /* Inset+macOS.swift */,
 				BDAD84FF1E3E7025008289AE /* Layout+macOS.swift */,
-				BDAD85001E3E7025008289AE /* Listable+macOS+Extensions.swift */,
 				BDAD85011E3E7025008289AE /* NSCollectionView+UserInterface.swift */,
 				BDAD85021E3E7025008289AE /* NSScrollView+Extensions.swift */,
 				BDAD85031E3E7025008289AE /* NSTableView+UserInterface.swift */,
@@ -775,7 +755,6 @@
 				BD9ECEB91E6EC6D1003E4388 /* Component+macOS+Grid.swift */,
 				BD9ECEBB1E6EC82D003E4388 /* Component+macOS+HeaderFooter.swift */,
 				BD9ECEB41E6EC6A7003E4388 /* Component+macOS+List.swift */,
-				BDAD85041E3E7025008289AE /* Viewable+macOS.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1785,23 +1764,18 @@
 				BDAD859D1E3E7032008289AE /* SpotsProtocol+Mutation.swift in Sources */,
 				BDDCF6D71E4DF911004B38C4 /* Item.swift in Sources */,
 				BDDCF6E11E4DF927004B38C4 /* ItemConfigurable.swift in Sources */,
-				BDAD851F1E3E7025008289AE /* Gridable+macOS+Extensions.swift in Sources */,
-				BDAD85261E3E7025008289AE /* Viewable+macOS.swift in Sources */,
 				BDAD85D01E3E7032008289AE /* Wrappable.swift in Sources */,
 				BDAD851B1E3E7025008289AE /* SpotsScrollView.swift in Sources */,
 				BDAD85EB1E3E7032008289AE /* Registry.swift in Sources */,
 				BDAD85BB1E3E7032008289AE /* CoreComponent.swift in Sources */,
 				BDAD85D91E3E7032008289AE /* Dispatch.swift in Sources */,
-				BDAD85091E3E7025008289AE /* CarouselComponent.swift in Sources */,
 				BDAD85F11E3E7032008289AE /* TypeAlias.swift in Sources */,
-				BDAD850E1E3E7025008289AE /* GridComponent.swift in Sources */,
 				BDAD85201E3E7025008289AE /* Inset+macOS.swift in Sources */,
 				BDAD85C71E3E7032008289AE /* SpotsProtocol.swift in Sources */,
 				BDAD858E1E3E7032008289AE /* Component+Mutation.swift in Sources */,
 				BDAD85241E3E7025008289AE /* NSScrollView+Extensions.swift in Sources */,
 				BDAD85E51E3E7032008289AE /* Layout.swift in Sources */,
 				BDAD85171E3E7025008289AE /* NoScrollView.swift in Sources */,
-				BDAD85221E3E7025008289AE /* Listable+macOS+Extensions.swift in Sources */,
 				BDAD85141E3E7025008289AE /* ListComponentCell.swift in Sources */,
 				52CD427B1E4477C800187E09 /* PageIndicatorPlacement.swift in Sources */,
 				BDAD85AC1E3E7032008289AE /* Composable.swift in Sources */,
@@ -1812,7 +1786,6 @@
 				BDDCF6DC1E4DF91F004B38C4 /* Indexable.swift in Sources */,
 				BDAD857C1E3E7032008289AE /* Component+Extension.swift in Sources */,
 				BDAD85281E3E7025008289AE /* GridRegistry.swift in Sources */,
-				BDAD85181E3E7025008289AE /* RowComponent.swift in Sources */,
 				BDAD85701E3E7032008289AE /* Animation.swift in Sources */,
 				BDAD85971E3E7032008289AE /* SpotsProtocol+Extensions.swift in Sources */,
 				BDAD85E21E3E7032008289AE /* Interaction.swift in Sources */,
@@ -1827,7 +1800,6 @@
 				BDAD859A1E3E7032008289AE /* SpotsProtocol+LiveEditing.swift in Sources */,
 				BDAD85231E3E7025008289AE /* NSCollectionView+UserInterface.swift in Sources */,
 				BDAD85641E3E7032008289AE /* DataSource.swift in Sources */,
-				BDAD85131E3E7025008289AE /* ListComponent.swift in Sources */,
 				BDAD85881E3E7032008289AE /* ScrollDelegate+Extensions.swift in Sources */,
 				BD2403111E4B9A02005BAA19 /* Component.swift in Sources */,
 				BDAD85191E3E7025008289AE /* RowComponentItem.swift in Sources */,

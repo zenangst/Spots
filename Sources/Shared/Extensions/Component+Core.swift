@@ -246,38 +246,15 @@ public extension Component {
 
       prepare(kind: kind, view: view as Any, item: &item)
     #else
-      let componentKind = self
-
       if fullWidth == 0.0 {
         fullWidth = view.superview?.frame.size.width ?? view.frame.size.width
       }
 
-      switch componentKind {
-      case let grid as Gridable:
-        var kind = item.kind.isEmpty || type(of: grid).grids.storage[item.kind] == nil
-          ? identifier(at: index)
-          : item.kind
-
-        if kind == "" {
-          kind = type(of: grid).grids.defaultIdentifier
-        }
-
-        if let (_, resolvedView) = type(of: grid).grids.make(kind) {
-          prepare(kind: kind, view: resolvedView as Any, item: &item)
-        } else if let (_, resolvedView) = Configuration.views.make(kind, parentFrame: self.view.frame) {
-          prepare(kind: kind, view: resolvedView as Any, item: &item)
-        } else {
-          return nil
-        }
-      default:
-        let kind = identifier(at: index)
-        if let (_, resolvedView) = Self.views.make(kind, parentFrame: self.view.frame) {
-          prepare(kind: kind, view: resolvedView as Any, item: &item)
-        } else if let (_, resolvedView) = Configuration.views.make(kind, parentFrame: self.view.frame) {
-          prepare(kind: kind, view: resolvedView as Any, item: &item)
-        } else {
-          return nil
-        }
+      let kind = identifier(at: index)
+      if let (_, resolvedView) = Configuration.views.make(kind, parentFrame: self.view.frame) {
+        prepare(kind: kind, view: resolvedView as Any, item: &item)
+      } else {
+        return nil
       }
     #endif
 

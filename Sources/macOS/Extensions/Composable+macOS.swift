@@ -30,8 +30,6 @@ public extension Composable {
 
       height += compositeSpot.component.view.contentSize.height
 
-      (compositeSpot.component as? Gridable)?.layout.invalidateLayout()
-
       contentView.addSubview(compositeSpot.component.view)
     }
 
@@ -42,7 +40,7 @@ public extension Composable {
   /// - parameter item: A view model with children
   ///
   ///  - returns: A collection of CoreComponent objects
-  public func parse(_ item: Item) -> [CoreComponent] {
+  public func parse(_ item: Item) -> [Component] {
     let components = Parser.parse(item.children)
     return components
   }

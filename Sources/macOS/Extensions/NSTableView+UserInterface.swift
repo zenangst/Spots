@@ -24,14 +24,19 @@ extension NSTableView: UserInterface {
   }
 
   public func reload(_ indexes: [Int], withAnimation animation: Animation = .automatic, completion: (() -> Void)? = nil) {
+    guard let component = (dataSource as? DataSource)?.component else {
+      return
+    }
+
     /** Manually handle reloading of the cell as reloadDataForRowIndexes does not seems to work with view based table views
      - "For NSView-based table views, this method drops the view-cells in the table row, but not the NSTableRowView instances."
     */
+
     indexes.forEach { index in
-      if let view = rowView(atRow: index, makeIfNecessary: false) as? ItemConfigurable,
-      let adapter = dataSource as? Listable {
-        var item = adapter.model.items[index]
+      if let view = rowView(atRow: index, makeIfNecessary: false) as? ItemConfigurable {
+        var item = component.model.items[index]
         view.configure(&item)
+        component.model.items[index] = item
       }
     }
 
@@ -49,6 +54,10 @@ extension NSTableView: UserInterface {
                       withAnimation animation: Animation = .automatic,
                       updateDataSource: () -> Void,
                       completion: ((()) -> Void)? = nil) {
+    guard let component = (dataSource as? DataSource)?.component else {
+      return
+    }
+
     let insertionsSets = NSMutableIndexSet()
     changes.insertions.forEach { insertionsSets.add($0) }
     let reloadSets = NSMutableIndexSet()
@@ -62,13 +71,13 @@ extension NSTableView: UserInterface {
     insertRows(at: insertionsSets as IndexSet, withAnimation: animation.tableViewAnimation)
 
     for index in reloadSets {
-      guard let view = rowView(atRow: index, makeIfNecessary: false) as? ItemConfigurable,
-        let adapter = dataSource as? Listable else {
-          continue
+      guard let view = rowView(atRow: index, makeIfNecessary: false) as? ItemConfigurable else {
+        continue
       }
 
-      var item = adapter.model.items[index]
+      var item = component.model.items[index]
       view.configure(&item)
+      component.model.items[index] = item
     }
 
     completion?()

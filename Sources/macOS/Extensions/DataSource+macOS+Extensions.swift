@@ -37,11 +37,7 @@ extension DataSource: NSCollectionViewDataSource {
     /// This is to make sure that all views are registered on the collection view
     component.register()
 
-    if let gridable = component as? Gridable {
-      reuseIdentifier = gridable.identifier(at: indexPath.item)
-    } else {
-      reuseIdentifier = component.identifier(at: indexPath.item)
-    }
+    reuseIdentifier = component.identifier(at: indexPath.item)
 
     let item = collectionView.makeItem(withIdentifier: reuseIdentifier, for: indexPath)
 
