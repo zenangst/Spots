@@ -5,7 +5,7 @@ import Tailor
 
 @objc(SpotsComponent) public class Component: NSObject {
 
-  public static var layout: Layout = Layout(span: 1.0)
+  public static var layout: Layout = Layout(span: 0.0)
   public static var headers: Registry = Registry()
   public static var views: Registry = Registry()
   public static var defaultKind: String = ComponentModel.Kind.list.string
