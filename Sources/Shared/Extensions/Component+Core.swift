@@ -251,10 +251,15 @@ public extension Component {
       }
 
       let kind = identifier(at: index)
-      if let (_, resolvedView) = Configuration.views.make(kind, parentFrame: self.view.frame) {
-        prepare(kind: kind, view: resolvedView as Any, item: &item)
+
+      if kind == "grid-composite" {
+        prepare(kind: kind, view: GridComposite() as Any, item: &item)
       } else {
-        return nil
+        if let (_, resolvedView) = Configuration.views.make(kind, parentFrame: self.view.frame) {
+          prepare(kind: kind, view: resolvedView as Any, item: &item)
+        } else {
+          return nil
+        }
       }
     #endif
 
