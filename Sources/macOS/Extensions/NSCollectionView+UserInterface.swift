@@ -3,7 +3,7 @@ import Cocoa
 extension NSCollectionView: UserInterface {
 
   public func register() {
-    register(GridComposite.self, forItemWithIdentifier: "composite")
+    register(GridComposite.self, forItemWithIdentifier: "grid-composite")
 
     for (identifier, item) in Configuration.views.storage {
       switch item {
