@@ -449,15 +449,15 @@ class ControllerTests: XCTestCase {
 
     XCTAssertNotNil(controller.resolve(component: { $1.model.title == "ListComponent" }))
     XCTAssertNotNil(controller.resolve(component: { $1.model.title == "GridComponent" }))
-    XCTAssertNotNil(controller.resolve(component: { $1.view is TableView }))
-    XCTAssertNotNil(controller.resolve(component: { $1.view is CollectionView }))
+    XCTAssertNotNil(controller.resolve(component: { $1.userInterface is TableView }))
+    XCTAssertNotNil(controller.resolve(component: { $1.userInterface is CollectionView }))
     XCTAssertNotNil(controller.resolve(component: { $1.items.filter { $0.title == "Item" }.first != nil }))
     XCTAssertEqual(controller.resolve(component: { $0.0 == 0 })?.model.title, "ListComponent")
     XCTAssertEqual(controller.resolve(component: { $0.0 == 1 })?.model.title, "ListComponent2")
     XCTAssertEqual(controller.resolve(component: { $0.0 == 2 })?.model.title, "GridComponent")
 
-    XCTAssertEqual(controller.filter(components: { $0.view is TableView }).count, 2)
-    XCTAssertEqual(controller.filter(components: { $0.view is CollectionView }).count, 1)
+    XCTAssertEqual(controller.filter(components: { $0.userInterface is TableView }).count, 2)
+    XCTAssertEqual(controller.filter(components: { $0.userInterface is CollectionView }).count, 1)
   }
 
   func testJSONInitialiser() {
@@ -572,10 +572,10 @@ class ControllerTests: XCTestCase {
     ]
 
     let controller = Controller(initialJSON)
-    XCTAssertTrue(controller.components[0] is ListComponent)
+    XCTAssertTrue(controller.components[0].userInterface is TableView)
     XCTAssertEqual(controller.components[0].items.first?.title, "First list item")
     XCTAssertEqual(controller.components[1].items.first?.title, "First list item")
-    XCTAssertTrue(controller.components[1] is ListComponent)
+    XCTAssertTrue(controller.components[1].userInterface is TableView)
     XCTAssertTrue(controller.components.count == 2)
     XCTAssertTrue(controller.components[0].compositeComponents.count == 0)
 
@@ -583,8 +583,8 @@ class ControllerTests: XCTestCase {
 
     controller.reloadIfNeeded(newJSON) {
       XCTAssertEqual(controller.components.count, 2)
-      XCTAssertTrue(controller.components[0] is ListComponent)
-      XCTAssertTrue(controller.components[1] is GridComponent)
+      XCTAssertTrue(controller.components[0].userInterface is TableView)
+      XCTAssertTrue(controller.components[1].userInterface is CollectionView)
       XCTAssertEqual(controller.components[0].items.first?.title, "First list item 2")
       XCTAssertEqual(controller.components[1].items.first?.title, "First list item")
 
@@ -592,10 +592,10 @@ class ControllerTests: XCTestCase {
       XCTAssertEqual(controller.components[0].compositeComponents.count, 1)
 
       controller.reloadIfNeeded(initialJSON) {
-        XCTAssertTrue(controller.components[0] is ListComponent)
+        XCTAssertTrue(controller.components[0].userInterface is TableView)
         XCTAssertEqual(controller.components[0].items.first?.title, "First list item")
         XCTAssertEqual(controller.components[1].items.first?.title, "First list item")
-        XCTAssertTrue(controller.components[1] is ListComponent)
+        XCTAssertTrue(controller.components[1].userInterface is TableView)
         XCTAssertTrue(controller.components.count == 2)
         XCTAssertTrue(controller.components[0].compositeComponents.count == 0)
         expectation.fulfill()
