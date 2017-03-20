@@ -232,11 +232,6 @@ class CompositionTests: XCTestCase {
 
     XCTAssertEqual(components.count, 2)
 
-    var composite: Composable?
-    var itemConfigurable: ItemConfigurable?
-
-    composite = components[0].ui(at: 0)
-
     guard components.count == 2 else {
       XCTFail("Component count is incorrect.")
       return
@@ -247,7 +242,8 @@ class CompositionTests: XCTestCase {
       return
     }
 
-    itemConfigurable = components[0].compositeComponents[0].component.ui(at: 0)
+    var composite: Composable? = components[0].ui(at: 0)
+    var itemConfigurable: ItemConfigurable? = components[0].compositeComponents[0].component.ui(at: 0)
 
     guard itemConfigurable != nil else {
       XCTFail("Unable to resolve view.")
