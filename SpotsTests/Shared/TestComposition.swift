@@ -1042,13 +1042,21 @@ class CompositionTests: XCTestCase {
       return
     }
 
-    guard components[0].compositeComponents[0].component.ui(at: 0) != nil else {
+    let ui: View? = components[0].compositeComponents[0].component.ui(at: 0)
+    itemConfigurable = components[0].compositeComponents[0].component.ui(at: 0)
+
+    guard ui != nil else {
       XCTFail("Unable to find composite components.")
       return
     }
 
     XCTAssertNotNil(composite)
-    XCTAssertNotNil(itemConfigurable)
+
+    guard itemConfigurable != nil else {
+      XCTFail("Unable to resolve item configurable view.")
+      return
+    }
+
     XCTAssertEqual(composite?.contentView.subviews.count, 1)
     XCTAssertTrue(components[0].compositeComponents[0].parentComponent!.model == components[0].model)
     XCTAssertTrue(components[0].compositeComponents[0].component.userInterface is TableView)
