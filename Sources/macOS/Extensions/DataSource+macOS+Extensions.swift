@@ -28,8 +28,6 @@ extension DataSource: NSCollectionViewDataSource {
   ///
   /// - returns: A configured item object. You must not return nil from this method.
   public func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
-    let reuseIdentifier: String
-
     guard let component = component else {
       return NSCollectionViewItem()
     }
@@ -37,7 +35,7 @@ extension DataSource: NSCollectionViewDataSource {
     /// This is to make sure that all views are registered on the collection view
     component.register()
 
-    reuseIdentifier = component.identifier(at: indexPath.item)
+    let reuseIdentifier = component.identifier(at: indexPath.item)
 
     let item = collectionView.makeItem(withIdentifier: reuseIdentifier, for: indexPath)
 
