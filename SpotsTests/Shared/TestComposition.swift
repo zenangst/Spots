@@ -389,10 +389,6 @@ class CompositionTests: XCTestCase {
       XCTAssertNotNil(itemConfigurable)
       XCTAssertNotNil(composite?.contentView)
 
-      // TODO: This make the test pass, something is missing in the implementation.
-      // FIXME: This needs a fix internally.
-      //composite?.configure(&components[0].items[0], compositeComponents: [components[0].compositeComponents[0]])
-
       XCTAssertEqual(composite?.contentView.subviews.count, 1)
       XCTAssertTrue(components[0].compositeComponents[0].parentComponent!.model == components[0].model)
       XCTAssertTrue(components[0].compositeComponents[0].component.userInterface is TableView)
