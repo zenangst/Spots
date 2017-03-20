@@ -167,7 +167,9 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   }
 
   fileprivate func layoutCollectionView(_ collectionView: CollectionView, with size: CGSize) {
-    prepareItems()
+    if compositeComponents.isEmpty {
+      prepareItems()
+    }
 
     switch model.interaction.scrollDirection {
     case .horizontal:
