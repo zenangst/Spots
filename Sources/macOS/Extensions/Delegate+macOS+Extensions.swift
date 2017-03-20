@@ -134,20 +134,18 @@ extension Delegate: NSTableViewDelegate {
       view.contentView.frame.size.width = tableView.frame.size.width
       view.contentView.frame.size.height = component.computedHeight
       view.configure(&component.model.items[row], compositeComponents: components)
-    case let view as View:
-      let customView = view
-
-      if !(view is NSTableRowView) {
-        let wrapper = ListWrapper()
-        wrapper.configure(with: view)
-        resolvedView = wrapper
-      }
-
-      (customView as? ItemConfigurable)?.configure(&component.model.items[row])
     case let view as ItemConfigurable:
       view.configure(&component.model.items[row])
     default:
-      break
+      if let customView = resolvedView {
+        if !(customView is NSTableRowView) {
+          let wrapper = ListWrapper()
+          wrapper.configure(with: customView)
+          resolvedView = wrapper
+        }
+
+        (customView as? ItemConfigurable)?.configure(&component.model.items[row])
+      }
     }
 
     (resolvedView as? NSTableRowView)?.identifier = reuseIdentifier
