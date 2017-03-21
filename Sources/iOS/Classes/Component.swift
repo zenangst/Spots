@@ -180,6 +180,10 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   }
 
   func registerDefaultIfNeeded(view: View.Type) {
+    guard Configuration.views.defaultItem == nil else {
+      return
+    }
+
     Configuration.views.defaultItem = Registry.Item.classType(view)
   }
 
