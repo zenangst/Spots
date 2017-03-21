@@ -7,7 +7,7 @@ extension UICollectionView: UserInterface {
     register(GridComposite.self, forCellWithReuseIdentifier: "grid-composite")
 
     for (identifier, item) in Configuration.views.storage {
-      if identifier.contains("composite") {
+      if identifier.contains(CompositeComponent.identifier) {
         continue
       }
 

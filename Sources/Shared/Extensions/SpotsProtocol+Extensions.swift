@@ -56,7 +56,7 @@ public extension SpotsProtocol {
 
     for component in components {
       var componentJSON = component.model.dictionary(amountOfItems)
-      for item in component.items where item.kind == "composite" {
+      for item in component.items where item.kind == CompositeComponent.identifier {
         let results = component.compositeComponents
           .filter({ $0.itemIndex == item.index })
 

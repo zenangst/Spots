@@ -552,7 +552,7 @@ class ControllerTests: XCTestCase {
          "items": [
           ["title": "First list item 2"],
           [
-            "kind": "composite",
+            "kind": CompositeComponent.identifier,
             "children": [
               ["kind": "grid",
                "items": [
@@ -588,7 +588,7 @@ class ControllerTests: XCTestCase {
       XCTAssertEqual(controller.components[0].items.first?.title, "First list item 2")
       XCTAssertEqual(controller.components[1].items.first?.title, "First list item")
 
-      XCTAssertEqual(controller.components[0].items[1].kind, "composite")
+      XCTAssertEqual(controller.components[0].items[1].kind, CompositeComponent.identifier)
       XCTAssertEqual(controller.components[0].compositeComponents.count, 1)
 
       controller.reloadIfNeeded(initialJSON) {

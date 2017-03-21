@@ -29,7 +29,7 @@ public struct Registry {
   /// A composite item
   var composite: Item? {
     didSet {
-      storage["composite"] = composite
+      storage[CompositeComponent.identifier] = composite
     }
   }
 

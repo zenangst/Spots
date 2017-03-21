@@ -147,7 +147,7 @@ class CompositionTests: XCTestCase {
       ComponentModel(kind: ComponentModel.Kind.grid.rawValue,
                 span: 2.0,
                 items: [
-                  Item(kind: "composite", children:
+                  Item(kind: CompositeComponent.identifier, children:
                     [
                       ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
@@ -164,7 +164,7 @@ class CompositionTests: XCTestCase {
                       )
                     ]
                   ),
-                  Item(kind: "composite", children:
+                  Item(kind: CompositeComponent.identifier, children:
                     [
                       ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
@@ -186,7 +186,7 @@ class CompositionTests: XCTestCase {
       ComponentModel(kind: ComponentModel.Kind.grid.rawValue,
                 span: 2.0,
                 items: [
-                  Item(kind: "composite", children:
+                  Item(kind: CompositeComponent.identifier, children:
                     [
                       ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
@@ -203,7 +203,7 @@ class CompositionTests: XCTestCase {
                       )
                     ]
                   ),
-                  Item(kind: "composite", children:
+                  Item(kind: CompositeComponent.identifier, children:
                     [
                       ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
@@ -292,7 +292,7 @@ class CompositionTests: XCTestCase {
       ComponentModel(kind: ComponentModel.Kind.grid.rawValue,
                 span: 1.0,
                 items: [
-                  Item(kind: "composite", children:
+                  Item(kind: CompositeComponent.identifier, children:
                     [
                       ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
@@ -309,7 +309,7 @@ class CompositionTests: XCTestCase {
                       )
                     ]
                   ),
-                  Item(kind: "composite", children:
+                  Item(kind: CompositeComponent.identifier, children:
                     [
                       ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
@@ -331,7 +331,7 @@ class CompositionTests: XCTestCase {
       ComponentModel(kind: ComponentModel.Kind.grid.rawValue,
                 span: 3.0,
                 items: [
-                  Item(kind: "composite", children:
+                  Item(kind: CompositeComponent.identifier, children:
                     [
                       ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
@@ -348,7 +348,7 @@ class CompositionTests: XCTestCase {
                       )
                     ]
                   ),
-                  Item(kind: "composite", children:
+                  Item(kind: CompositeComponent.identifier, children:
                     [
                       ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
@@ -445,7 +445,7 @@ class CompositionTests: XCTestCase {
       ComponentModel(kind: ComponentModel.Kind.grid.rawValue,
                 span: 1.0,
                 items: [
-                  Item(kind: "composite", children:
+                  Item(kind: CompositeComponent.identifier, children:
                     [
                       ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
@@ -462,7 +462,7 @@ class CompositionTests: XCTestCase {
                       )
                     ]
                   ),
-                  Item(kind: "composite", children:
+                  Item(kind: CompositeComponent.identifier, children:
                     [
                       ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
@@ -484,7 +484,7 @@ class CompositionTests: XCTestCase {
       ComponentModel(kind: ComponentModel.Kind.grid.rawValue,
                 span: 3.0,
                 items: [
-                  Item(kind: "composite", children:
+                  Item(kind: CompositeComponent.identifier, children:
                     [
                       ComponentModel(kind: ComponentModel.Kind.list.rawValue, items: [
                         Item(title: "Item 1"),
@@ -501,7 +501,7 @@ class CompositionTests: XCTestCase {
                       )
                     ]
                   ),
-                  Item(kind: "composite", children:
+                  Item(kind: CompositeComponent.identifier, children:
                     [
                       ComponentModel(kind: ComponentModel.Kind.list.rawValue, items: [
                         Item(title: "Item 1"),
@@ -599,7 +599,7 @@ class CompositionTests: XCTestCase {
       ComponentModel(kind: ComponentModel.Kind.grid.rawValue,
                 span: 2.0,
                 items: [
-                  Item(kind: "composite", children:
+                  Item(kind: CompositeComponent.identifier, children:
                     [
                       ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
@@ -616,7 +616,7 @@ class CompositionTests: XCTestCase {
                       )
                     ]
                   ),
-                  Item(kind: "composite", children:
+                  Item(kind: CompositeComponent.identifier, children:
                     [
                       ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
@@ -638,7 +638,7 @@ class CompositionTests: XCTestCase {
       ComponentModel(kind: ComponentModel.Kind.grid.rawValue,
                 span: 2.0,
                 items: [
-                  Item(kind: "composite", children:
+                  Item(kind: CompositeComponent.identifier, children:
                     [
                       ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
@@ -655,7 +655,7 @@ class CompositionTests: XCTestCase {
                       )
                     ]
                   ),
-                  Item(kind: "composite", children:
+                  Item(kind: CompositeComponent.identifier, children:
                     [
                       ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
@@ -748,7 +748,7 @@ class CompositionTests: XCTestCase {
       ComponentModel(kind: ComponentModel.Kind.grid.rawValue,
                 span: 2.0,
                 items: [
-                  Item(kind: "composite", children:
+                  Item(kind: CompositeComponent.identifier, children:
                     [
                       ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
@@ -766,7 +766,7 @@ class CompositionTests: XCTestCase {
                       )
                     ]
                   ),
-                  Item(kind: "composite", children:
+                  Item(kind: CompositeComponent.identifier, children:
                     [
                       ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
@@ -788,7 +788,7 @@ class CompositionTests: XCTestCase {
       ComponentModel(kind: ComponentModel.Kind.grid.rawValue,
                 span: 2.0,
                 items: [
-                  Item(kind: "composite", children:
+                  Item(kind: CompositeComponent.identifier, children:
                     [
                       ComponentModel(kind: ComponentModel.Kind.list.rawValue, items: [
                         Item(title: "Item 1"),
@@ -806,7 +806,7 @@ class CompositionTests: XCTestCase {
                       )
                     ]
                   ),
-                  Item(kind: "composite", children:
+                  Item(kind: CompositeComponent.identifier, children:
                     [
                       ComponentModel(kind: ComponentModel.Kind.list.rawValue, items: [
                         Item(title: "Item 1"),
@@ -829,7 +829,7 @@ class CompositionTests: XCTestCase {
       ComponentModel(kind: ComponentModel.Kind.grid.rawValue,
                 span: 2.0,
                 items: [
-                  Item(kind: "composite", children:
+                  Item(kind: CompositeComponent.identifier, children:
                     [
                       ComponentModel(kind: ComponentModel.Kind.list.rawValue, items: [
                         Item(title: "Item 1"),
@@ -847,7 +847,7 @@ class CompositionTests: XCTestCase {
                       )
                     ]
                   ),
-                  Item(kind: "composite", children:
+                  Item(kind: CompositeComponent.identifier, children:
                     [
                       ComponentModel(kind: ComponentModel.Kind.list.rawValue, items: [
                         Item(title: "Item 1"),
@@ -934,7 +934,7 @@ class CompositionTests: XCTestCase {
       ComponentModel(kind: ComponentModel.Kind.grid.rawValue,
                 span: 2.0,
                 items: [
-                  Item(kind: "composite", children:
+                  Item(kind: CompositeComponent.identifier, children:
                     [
                       ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
@@ -951,7 +951,7 @@ class CompositionTests: XCTestCase {
                       )
                     ]
                   ),
-                  Item(kind: "composite", children:
+                  Item(kind: CompositeComponent.identifier, children:
                     [
                       ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
@@ -973,7 +973,7 @@ class CompositionTests: XCTestCase {
       ComponentModel(kind: ComponentModel.Kind.grid.rawValue,
                 span: 2.0,
                 items: [
-                  Item(kind: "composite", children:
+                  Item(kind: CompositeComponent.identifier, children:
                     [
                       ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
@@ -990,7 +990,7 @@ class CompositionTests: XCTestCase {
                       )
                     ]
                   ),
-                  Item(kind: "composite", children:
+                  Item(kind: CompositeComponent.identifier, children:
                     [
                       ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
@@ -1089,7 +1089,7 @@ class CompositionTests: XCTestCase {
       ComponentModel(kind: ComponentModel.Kind.grid.rawValue,
                 span: 2.0,
                 items: [
-                  Item(kind: "composite", children:
+                  Item(kind: CompositeComponent.identifier, children:
                     [
                       ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),
@@ -1106,7 +1106,7 @@ class CompositionTests: XCTestCase {
                       )
                     ]
                   ),
-                  Item(kind: "composite", children:
+                  Item(kind: CompositeComponent.identifier, children:
                     [
                       ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
                         Item(title: "Item 1"),

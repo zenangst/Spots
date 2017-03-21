@@ -276,7 +276,7 @@ public extension Component {
 
       strongSelf.items[index] = item
 
-      if strongSelf.items[index].kind == "composite" {
+      if strongSelf.items[index].kind == CompositeComponent.identifier {
         if let compositeView: Composable? = strongSelf.userInterface?.view(at: index) {
           let compositeComponents = strongSelf.compositeComponents.filter { $0.itemIndex == item.index }
           compositeView?.configure(&strongSelf.items[index],

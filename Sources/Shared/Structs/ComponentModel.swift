@@ -343,7 +343,7 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
   }
 
   mutating public func add(child: ComponentModel) {
-    var item = Item(kind: "composite")
+    var item = Item(kind: CompositeComponent.identifier)
     item.children = [child.dictionary]
     items.append(item)
   }

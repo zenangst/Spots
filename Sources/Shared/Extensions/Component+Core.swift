@@ -263,7 +263,7 @@ public extension Component {
 
       let kind = identifier(at: index)
 
-      if kind.contains("composite") {
+      if kind.contains(CompositeComponent.identifier) {
         let composite: Composable
         if kind.contains("list") {
           composite = ListComposite()
@@ -410,7 +410,7 @@ public extension Component {
   ///
   /// - returns: A string identifier for the view, defaults to the `defaultIdentifier` on the Component object.
   public func identifier(at index: Int) -> String {
-    if let item = item(at: index), item.kind.contains("composite") {
+    if let item = item(at: index), item.kind.contains(CompositeComponent.identifier) {
       if userInterface is TableView {
         return "list-composite"
       } else {
