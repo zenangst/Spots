@@ -22,7 +22,7 @@ class RxComponentDelegateTests: XCTestCase {
 
     delegateProxy.didSelectItem
       .bindNext({ component, item in
-        isCalled = (component.tableView != nil) && item.title == "Test"
+        isCalled = (component.model.kind != ComponentModel.Kind.list) && item.title == "Test"
       }).addDisposableTo(disposeBag)
 
     delegateProxy.component(component, itemSelected: item)
@@ -36,7 +36,7 @@ class RxComponentDelegateTests: XCTestCase {
 
     delegateProxy.didChange
       .bindNext({ components in
-        isCalled = (components[0].tableView != nil) && (components[1].collectionView != nil)
+        isCalled = (components[0].kind != ComponentModel.Kind.list) && (components[1].collectionView != nil)
       })
       .addDisposableTo(disposeBag)
 
@@ -52,7 +52,7 @@ class RxComponentDelegateTests: XCTestCase {
 
     delegateProxy.willDisplayView
       .bindNext({ component, view, item in
-        isCalled = (component.tableView != nil) && (view == componentView) && item.title == "Test"
+        isCalled = (component.kind != ComponentModel.Kind.list) && (view == componentView) && item.title == "Test"
       })
       .addDisposableTo(disposeBag)
 
@@ -68,7 +68,7 @@ class RxComponentDelegateTests: XCTestCase {
 
     delegateProxy.didEndDisplayingView
       .bindNext({ component, view, item in
-        isCalled = (component.tableView != nil) && (view == componentView) && item.title == "Test"
+        isCalled = (component.model.kind != ComponentModel.Kind.list) && (view == componentView) && item.title == "Test"
       })
       .addDisposableTo(disposeBag)
 
