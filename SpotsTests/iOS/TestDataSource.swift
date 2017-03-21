@@ -81,38 +81,20 @@ class DataSourceTests: XCTestCase {
     XCTAssertEqual(component.model.items[0].size.height, itemConfigurable.preferredViewSize.height)
   }
 
-//  func testDataSourceForGridableDefaultHeader() {
-//    GridComponent.register(defaultHeader: CustomGridHeaderView.self)
-//    let component = GridComponent(model: ComponentModel(
-//      header: Item(kind: ""),
-//      span: 1.0,
-//      items: [
-//        Item(title: "title 1"),
-//        Item(title: "title 2")
-//      ]))
-//    component.view.frame.size = CGSize(width: 100, height: 100)
-//    component.layout.headerReferenceSize = CGSize(width: 100, height: 48)
-//    component.view.layoutSubviews()
-//
-//    let header = component.componentDataSource!.collectionView(component.collectionView, viewForSupplementaryElementOfKind: UICollectionElementKindSectionHeader, at: IndexPath(item: 0, section: 0))
-//    XCTAssertNotNil(header)
-//    XCTAssert(header is CustomGridHeaderView)
-//  }
-//
-//  func testDataSourceForGridableCustomHeader() {
-//    GridComponent.register(header: CustomGridHeaderView.self, identifier: "custom-header")
-//    let component = GridComponent(model: ComponentModel(
-//      header: Item(kind: "custom-header"),
-//      span: 1.0,
-//      items: [
-//        Item(title: "title 1"),
-//        Item(title: "title 2")
-//      ]))
-//    component.view.frame.size = CGSize(width: 100, height: 100)
-//    component.layout.headerReferenceSize = CGSize(width: 100, height: 48)
-//    component.view.layoutSubviews()
-//
-//    let header = component.componentDataSource!.collectionView(component.collectionView, viewForSupplementaryElementOfKind: UICollectionElementKindSectionHeader, at: IndexPath(item: 0, section: 0))
-//    XCTAssertNotNil(header)
-//  }
+  func testDataSourceForGridableCustomHeader() {
+    Configuration.register(view: CustomGridHeaderView.self, identifier: "custom-header")
+    let component = GridComponent(model: ComponentModel(
+      header: Item(kind: "custom-header"),
+      span: 1.0,
+      items: [
+        Item(title: "title 1"),
+        Item(title: "title 2")
+      ]))
+    component.setup(CGSize(width: 100, height: 100))
+    component.view.layoutSubviews()
+
+    let header = component.componentDataSource!.collectionView(component.collectionView!, viewForSupplementaryElementOfKind: UICollectionElementKindSectionHeader, at: IndexPath(item: 0, section: 0))
+    XCTAssertNotNil(header)
+    XCTAssertEqual(header.frame.size, CGSize(width: 100, height: 88))
+  }
 }
