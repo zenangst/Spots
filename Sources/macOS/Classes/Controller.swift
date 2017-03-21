@@ -169,8 +169,14 @@ open class Controller: NSViewController, SpotsProtocol {
     scrollView.hasVerticalScroller = true
     scrollView.autoresizingMask = [.viewWidthSizable, .viewHeightSizable]
 
-    setupComponents()
     Controller.configure?(scrollView)
+  }
+
+  open override func viewWillAppear() {
+    super.viewWillAppear()
+
+    setupComponents()
+    scrollView.layoutSubviews()
   }
 
   open override func viewDidAppear() {
