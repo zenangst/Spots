@@ -28,34 +28,45 @@ public extension Component {
     }
 
     var height: CGFloat = 0
-    #if !os(OSX)
-      let superViewHeight = self.view.superview?.frame.size.height ?? UIScreen.main.bounds.height
-    #endif
 
-    for item in model.items {
-      height += item.size.height
-
+    if tableView != nil {
       #if !os(OSX)
-        /// tvOS adds spacing between cells (it seems to be locked to 14 pixels in height).
-        #if os(tvOS)
-          if model.kind == ComponentModel.Kind.list.string {
-            height += 14
+        let superViewHeight = self.view.superview?.frame.size.height ?? UIScreen.main.bounds.height
+      #endif
+
+      for item in model.items {
+        height += item.size.height
+
+        #if !os(OSX)
+          /// tvOS adds spacing between cells (it seems to be locked to 14 pixels in height).
+          #if os(tvOS)
+            if model.kind == ComponentModel.Kind.list.string {
+              height += 14
+            }
+          #endif
+
+          if height > superViewHeight {
+            height = superViewHeight
+            break
           }
         #endif
+      }
 
-        if height > superViewHeight {
-          height = superViewHeight
-          break
+      /// Add extra height to make room for focus shadow
+      #if os(tvOS)
+        if model.kind == ComponentModel.Kind.list.string {
+          height += 28
         }
       #endif
-    }
-
-    /// Add extra height to make room for focus shadow
-    #if os(tvOS)
-      if model.kind == ComponentModel.Kind.list.string {
-        height += 28
+    } else if let collectionView = collectionView {
+      #if os(macOS)
+      if let collectionViewLayout = collectionView.collectionViewLayout {
+        height = collectionViewLayout.collectionViewContentSize.height
       }
-    #endif
+      #else
+        height = collectionView.collectionViewLayout.collectionViewContentSize.height
+      #endif
+    }
 
     return height
   }
@@ -252,9 +263,16 @@ public extension Component {
 
       let kind = identifier(at: index)
 
-      if kind == "grid-composite" {
-        let gridComposite = GridComposite()
-        prepare(composable: gridComposite, item: &item)
+      if kind.contains("composite") {
+        let composite: Composable
+        if kind.contains("list") {
+          composite = ListComposite()
+        } else {
+          composite = GridComposite()
+        }
+
+        composite.contentView.frame.size = view.frame.size
+        prepare(composable: composite, item: &item)
       } else {
         if let (_, resolvedView) = Configuration.views.make(kind, parentFrame: self.view.frame) {
           prepare(kind: kind, view: resolvedView as Any, item: &item)
@@ -469,8 +487,6 @@ public extension Component {
   }
 
   public func beforeUpdate() {}
-  public func afterUpdate() {
-    setup(view.frame.size)
-  }
+
   func configure(with layout: Layout) {}
 }
