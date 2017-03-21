@@ -156,6 +156,6 @@ class RowSpotTests: XCTestCase {
     component.configure = { view in
       invokeCount += 1
     }
-    XCTAssertEqual(invokeCount, 1)
+    XCTAssertEqual(invokeCount, 2)
   }
 }
