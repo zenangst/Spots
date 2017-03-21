@@ -424,16 +424,6 @@ public extension Component {
     }
   }
 
-  /// A collection of view models
-  var items: [Item] {
-    set(items) {
-      model.items = items
-    }
-    get {
-      return model.items
-    }
-  }
-
   /// Return a dictionary representation of Component object
   public var dictionary: [String : Any] {
     return model.dictionary
