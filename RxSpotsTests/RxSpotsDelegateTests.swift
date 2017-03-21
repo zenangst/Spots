@@ -36,7 +36,7 @@ class RxComponentDelegateTests: XCTestCase {
 
     delegateProxy.didChange
       .bindNext({ components in
-        isCalled = (components[0].kind == ComponentModel.Kind.list.string) && (components[1].collectionView != nil)
+        isCalled = (components[0].model.kind == ComponentModel.Kind.list.string) && (components[1].collectionView != nil)
       })
       .addDisposableTo(disposeBag)
 
@@ -52,7 +52,7 @@ class RxComponentDelegateTests: XCTestCase {
 
     delegateProxy.willDisplayView
       .bindNext({ component, view, item in
-        isCalled = (component.kind == ComponentModel.Kind.list.string) && (view == componentView) && item.title == "Test"
+        isCalled = (component.model.kind == ComponentModel.Kind.list.string) && (view == componentView) && item.title == "Test"
       })
       .addDisposableTo(disposeBag)
 
