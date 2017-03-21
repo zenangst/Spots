@@ -6,6 +6,7 @@
 
 /// A type alias for a anonymous completion
 public typealias Completion = (() -> Void)?
+public typealias RowComponent = Component
 
 #if os(OSX)
   /// A type alias to reference a normal platform view

@@ -12,6 +12,7 @@ class TestSpot: XCTestCase {
   }
 
   func testDefaultValues() {
+    Configuration.views.defaultItem = Registry.Item.classType(ListComponentCell.self)
     let items = [Item(title: "A"), Item(title: "B")]
     let model = ComponentModel(items: items, hybrid: true)
     let component = Component(model: model)
@@ -63,6 +64,7 @@ class TestSpot: XCTestCase {
   }
 
   func testCompareHybridListComponentWithCoreType() {
+    Configuration.views.defaultItem = Registry.Item.classType(ListComponentCell.self)
     let items = [Item(title: "A"), Item(title: "B")]
     let model = ComponentModel(kind: ComponentModel.Kind.list.string, items: items, hybrid: true)
     let listComponentModel = ComponentModel(kind: ComponentModel.Kind.list.string, items: items)
@@ -109,6 +111,7 @@ class TestSpot: XCTestCase {
   }
 
   func testCompareHybridCarouselComponentWithCoreType() {
+    Configuration.views.defaultItem = Registry.Item.classType(GridComponentCell.self)
     let items = [Item(title: "A"), Item(title: "B")]
     let model = ComponentModel(kind: ComponentModel.Kind.carousel.string, items: items, hybrid: true)
     let carouselComponentModel = ComponentModel(kind: ComponentModel.Kind.carousel.string, items: items)
@@ -132,6 +135,7 @@ class TestSpot: XCTestCase {
   }
 
   func testHybridListComponentWithHeaderAndFooter() {
+    Configuration.views.defaultItem = Registry.Item.classType(ListComponentCell.self)
     let model = ComponentModel(
       header: Item(kind: "Header"),
       footer: Item(kind: "Footer"),
@@ -161,6 +165,7 @@ class TestSpot: XCTestCase {
   }
 
   func testHybridCarouselComponentWithHeaderAndFooter() {
+    Configuration.views.defaultItem = Registry.Item.classType(GridComponentCell.self)
     let model = ComponentModel(
       header: Item(kind: "Header"),
       footer: Item(kind: "Footer"),

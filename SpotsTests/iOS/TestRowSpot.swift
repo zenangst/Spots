@@ -20,12 +20,18 @@ class RowSpotTests: XCTestCase {
   }
 
   func testConvenienceInitWithSectionInsets() {
-    let model = ComponentModel(span: 1)
-    let component = RowComponent(model,
-                        top: 5, left: 10, bottom: 5, right: 10, itemSpacing: 5)
+    let layout = Layout(itemSpacing: 5, inset: Inset(top: 5, left: 10, bottom: 5, right: 10))
+    let model = ComponentModel(kind: "row", layout: layout, span: 1)
+    let component = RowComponent(model: model)
 
-    XCTAssertEqual(component.layout.sectionInset, UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10))
-    XCTAssertEqual(component.layout.minimumInteritemSpacing, 5)
+    guard let collectionViewLayout = component.collectionView?.collectionViewLayout as? FlowLayout else {
+      XCTFail("Unable to resolve collection view.")
+      return
+    }
+
+    /// TODO: Fix this
+    XCTAssertEqual(collectionViewLayout.sectionInset, UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10))
+    XCTAssertEqual(collectionViewLayout.minimumInteritemSpacing, 5)
   }
 
   func testDictionaryRepresentation() {
@@ -42,6 +48,7 @@ class RowSpotTests: XCTestCase {
   }
 
   func testSafelyResolveKind() {
+    Configuration.views.defaultItem = Registry.Item.classType(GridComponentCell.self)
     let model = ComponentModel(title: "RowComponent", kind: "custom-grid", span: 1, items: [Item(title: "foo", kind: "custom-item-kind")])
     let rowComponent = RowComponent(model: model)
     let indexPath = IndexPath(row: 0, section: 0)
@@ -106,12 +113,16 @@ class RowSpotTests: XCTestCase {
 
   func testSpotCollectionDelegate() {
     let items = [Item(title: "Test item")]
-    let component = RowComponent(model: ComponentModel(span: 1, items: items))
-    component.view.frame.size = CGSize(width: 100, height: 100)
-    component.view.layoutSubviews()
+    let component = RowComponent(model: ComponentModel(kind: "row", span: 1, items: items))
+    component.setup(CGSize(width: 100, height: 100))
 
-    let cell = component.collectionView.cellForItem(at: IndexPath(item: 0, section: 0))
-    XCTAssertEqual(cell?.frame.size, CGSize(width: UIScreen.main.bounds.width, height: 44))
+    guard let collectionView = component.collectionView else {
+      XCTFail("Unable to resolve collection view.")
+      return
+    }
+
+    let cell = collectionView.cellForItem(at: IndexPath(item: 0, section: 0))
+    XCTAssertEqual(cell?.frame.size, CGSize(width: 100, height: 88))
   }
 
   func testSpotCache() {
@@ -136,7 +147,7 @@ class RowSpotTests: XCTestCase {
     Configuration.register(view: TestView.self, identifier: "test-view")
 
     let items = [Item(title: "Item A", kind: "test-view"), Item(title: "Item B")]
-    let component = RowComponent(model: ComponentModel(span: 0.0, items: items))
+    let component = RowComponent(model: ComponentModel(kind: "row", span: 1.0, items: items))
     component.setup(CGSize(width: 100, height: 100))
     component.layout(CGSize(width: 100, height: 100))
     component.view.layoutSubviews()
@@ -145,6 +156,6 @@ class RowSpotTests: XCTestCase {
     component.configure = { view in
       invokeCount += 1
     }
-    XCTAssertEqual(invokeCount, 2)
+    XCTAssertEqual(invokeCount, 1)
   }
 }
