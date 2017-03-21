@@ -48,6 +48,7 @@ class RowSpotTests: XCTestCase {
   }
 
   func testSafelyResolveKind() {
+    Configuration.views.defaultItem = Registry.Item.classType(GridComponentCell.self)
     let model = ComponentModel(title: "RowComponent", kind: "custom-grid", span: 1, items: [Item(title: "foo", kind: "custom-item-kind")])
     let rowComponent = RowComponent(model: model)
     let indexPath = IndexPath(row: 0, section: 0)
@@ -112,7 +113,7 @@ class RowSpotTests: XCTestCase {
 
   func testSpotCollectionDelegate() {
     let items = [Item(title: "Test item")]
-    let component = ListComponent(model: ComponentModel(span: 1, items: items))
+    let component = RowComponent(model: ComponentModel(kind: "row", span: 1, items: items))
     component.setup(CGSize(width: 100, height: 100))
 
     guard let collectionView = component.collectionView else {
@@ -146,7 +147,7 @@ class RowSpotTests: XCTestCase {
     Configuration.register(view: TestView.self, identifier: "test-view")
 
     let items = [Item(title: "Item A", kind: "test-view"), Item(title: "Item B")]
-    let component = RowComponent(model: ComponentModel(span: 0.0, items: items))
+    let component = RowComponent(model: ComponentModel(kind: "row", span: 1.0, items: items))
     component.setup(CGSize(width: 100, height: 100))
     component.layout(CGSize(width: 100, height: 100))
     component.view.layoutSubviews()
@@ -155,6 +156,6 @@ class RowSpotTests: XCTestCase {
     component.configure = { view in
       invokeCount += 1
     }
-    XCTAssertEqual(invokeCount, 2)
+    XCTAssertEqual(invokeCount, 1)
   }
 }
