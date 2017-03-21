@@ -11,7 +11,7 @@ before_install:
 script:
   - set -o pipefail && xcodebuild -project Spots.xcodeproj -scheme "Spots-macOS" -sdk macosx clean build
   - set -o pipefail && xcodebuild -project Spots.xcodeproj -scheme "Spots-macOS" -sdk macosx -enableCodeCoverage YES test
-  - bash <(curl -s https://codecov.io/bash) -cF osx
+  - bash <(curl -s https://codecov.io/bash) -cF osx -J 'Spots'
   - set -o pipefail && xcodebuild -project Spots.xcodeproj -scheme "Spots-iOS" -sdk iphonesimulator clean build
   - set -o pipefail && xcodebuild -project Spots.xcodeproj -scheme "Spots-iOS" -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 6,OS=10.0' -enableCodeCoverage YES test
   - set -o pipefail && xcodebuild -project Spots.xcodeproj -scheme "Spots-tvOS" -destination 'platform=tvOS Simulator,name=Apple TV 1080p,OS=10.0' clean build
