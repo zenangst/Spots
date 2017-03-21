@@ -1,4 +1,4 @@
-/// A protocol used for composition inside Component objects
+/// A protocol used for composition inside components.
 public protocol UserInterface: class {
 
   static var compositeIdentifier: String { get }

@@ -16,7 +16,7 @@ public protocol SpotsProtocol: class {
   var scrollView: SpotsScrollView { get }
   /// A delegate that conforms to ComponentDelegate
   var delegate: ComponentDelegate? { get }
-  /// A collection of Component objects
+  /// A collection of components.
   var components: [Component] { get set }
   /// An array of refresh position to avoid calling multiple refreshes
   var refreshPositions: [CGFloat] { get set }
@@ -62,9 +62,9 @@ public protocol SpotsProtocol: class {
   #if os(OSX)
   init(components: [Component], backgroundType: ControllerBackground)
   #else
-  /// A required initializer for initializing a controller with Component objects
+  /// A required initializer for initializing a controller with components.
   ///
-  /// - parameter components: A collection of Component objects that should be setup and be added to the view hierarchy.
+  /// - parameter components: A collection of components. that should be setup and be added to the view hierarchy.
   ///
   /// - returns: An initalized controller.
   init(components: [Component])

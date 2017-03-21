@@ -1,7 +1,7 @@
 /// A JSON to UI parser to produce components for Controller
 public struct Parser {
 
-  /// Parse JSON into a collection of Component objects with key.
+  /// Parse JSON into a collection of components with key.
   ///
   /// - parameter json: A JSON dictionary of components and items.
   /// - parameter key: The key that should be used for parsing JSON, defaults to `components`.
@@ -51,7 +51,7 @@ public struct Parser {
     return Parser.parse(payload)
   }
 
-  /// Parse JSON into a collection of Component objects.
+  /// Parse JSON into a collection of components.
   ///
   /// - parameter json: A JSON dictionary of components and items.
   ///
@@ -70,10 +70,10 @@ public struct Parser {
     }
   }
 
-  /// Parse view model children into Component objects
+  /// Parse view model children into components.
   /// - parameter item: A view model with children
   ///
-  ///  - returns: A collection of Component objects
+  ///  - returns: A collection of components.
   public static func parse(_ item: Item) -> [Component] {
     let components: [Component] = Parser.parse(item.children)
     return components

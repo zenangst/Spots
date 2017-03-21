@@ -9,7 +9,7 @@ extension SpotsProtocol {
   public typealias CompareClosure = ((_ lhs: [ComponentModel], _ rhs: [ComponentModel]) -> Bool)
 
   /**
-   Reload all Component objects
+   Reload all components.
 
    - parameter animated:   A boolean value that indicates if animations should be applied, defaults to true
    - parameter animation:  A ComponentAnimation struct that determines which animation that should be used for the updates

@@ -1,7 +1,7 @@
 import UIKit
 import Cache
 
-/// A controller powered by Component objects
+/// A controller powered by components.
 open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, UIScrollViewDelegate {
 
   open var contentView: View {
@@ -41,7 +41,7 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
   /// Initial content offset for Controller, defaults to UIEdgeInsetsZero.
   open fileprivate(set) var initialInset: UIEdgeInsets = UIEdgeInsets.zero
 
-  /// A collection of Component objects.
+  /// A collection of components.
   open var components: [Component] {
     didSet { componentsDidChange() }
   }
@@ -94,9 +94,9 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
 
   // MARK: Initializer
 
-  /// A required initializer for initializing a controller with Component objects
+  /// A required initializer for initializing a controller with components.
   ///
-  /// - parameter components: A collection of Component objects that should be setup and be added to the view hierarchy.
+  /// - parameter components: A collection of components. that should be setup and be added to the view hierarchy.
   ///
   /// - returns: An initalized controller.
   public required init(components: [Component] = []) {
@@ -123,7 +123,7 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
   ///
   /// - parameter json: A JSON dictionary that gets parsed into UI elements.
   ///
-  /// - returns: An initialized controller with Component objects built from JSON.
+  /// - returns: An initialized controller with components. built from JSON.
   public convenience init(_ json: [String : Any]) {
     self.init(components: Parser.parse(json))
   }
@@ -276,7 +276,7 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
     }
   }
 
-  /// Set up Component objects.
+  /// Set up components.
   ///
   /// - parameter animated: An optional animation closure that is invoked when setting up the component.
   open func setupComponents(animated: ((_ view: UIView) -> Void)? = nil) {

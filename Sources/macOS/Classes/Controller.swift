@@ -11,7 +11,7 @@ open class Controller: NSViewController, SpotsProtocol {
 
   open static var configure: ((_ container: SpotsScrollView) -> Void)?
 
-  /// A collection of CoreComponent objects
+  /// A collection of components.
   open var components: [Component] {
     didSet {
       components.forEach { $0.delegate = delegate }
@@ -58,7 +58,7 @@ open class Controller: NSViewController, SpotsProtocol {
   fileprivate let backgroundType: ControllerBackground
 
   /**
-   - parameter components: An array of CoreComponent objects
+   - parameter components: An array of components.
    - parameter backgroundType: The type of background that the Controller should use, .Regular or .Dynamic
    */
   public required init(components: [Component] = [], backgroundType: ControllerBackground = .regular) {

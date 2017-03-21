@@ -3,10 +3,10 @@ import Cocoa
 // MARK: - An extension on Composable views
 public extension Composable {
 
-  /// A configuration method to configure the Composable view with a collection of CoreComponent objects
+  /// A configuration method to configure the Composable view with a collection of components.
   ///
   ///  - parameter item:  The item that is currently being configured in the list
-  ///  - parameter components: A collection of CoreComponent objects created from the children of the item
+  ///  - parameter components: A collection of components. created from the children of the item
   func configure(_ item: inout Item, compositeComponents: [CompositeComponent]?) {
     guard let compositeComponents = compositeComponents else {
       return
@@ -37,10 +37,10 @@ public extension Composable {
     item.size.height = height
   }
 
-  /// Parse view model children into CoreComponent objects
+  /// Parse view model children into components.
   /// - parameter item: A view model with children
   ///
-  ///  - returns: A collection of CoreComponent objects
+  ///  - returns: A collection of components.
   public func parse(_ item: Item) -> [Component] {
     let components = Parser.parse(item.children)
     return components

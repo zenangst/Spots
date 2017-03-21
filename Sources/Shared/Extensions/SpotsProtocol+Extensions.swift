@@ -102,11 +102,11 @@ public extension SpotsProtocol {
     return nil
   }
 
-  /// Filter Component objects inside of controller
+  /// Filter components. inside of controller
   ///
   /// - parameter includeElement: A filter predicate to find a component
   ///
-  /// - returns: A collection of Component objects that match the includeElements predicate
+  /// - returns: A collection of components. that match the includeElements predicate
   public func filter(components includeElement: (Component) -> Bool) -> [Component] {
     var result = components.filter(includeElement)
 
