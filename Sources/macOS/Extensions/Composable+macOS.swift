@@ -18,7 +18,6 @@ public extension Composable {
 
     compositeComponents.enumerated().forEach { _, compositeSpot in
       compositeSpot.component.setup(size)
-      compositeSpot.component.layout(size)
 
       compositeSpot.component.model.size = CGSize(
         width: width,
