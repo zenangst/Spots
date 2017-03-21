@@ -308,6 +308,10 @@ import Tailor
     }
   }
 
+  public func afterUpdate() {
+    reload()
+  }
+
   public func register() {
 
   }

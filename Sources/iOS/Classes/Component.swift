@@ -214,6 +214,10 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     )
   }
 
+  public func afterUpdate() {
+    setup(view.frame.size)
+  }
+
   public func register() {
 
   }
