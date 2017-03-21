@@ -10,6 +10,10 @@ extension Component {
     tableView.frame.size.width = round(size.width - (tableView.contentInset.left))
     tableView.frame.origin.x = round(size.width / 2 - tableView.frame.width / 2)
 
+    #if os(tvOS)
+      tableView.layoutMargins = UIEdgeInsets.zero
+    #endif
+
     prepareItems()
 
     var height: CGFloat = 0.0
