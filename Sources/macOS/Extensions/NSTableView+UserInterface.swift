@@ -2,6 +2,10 @@ import Cocoa
 
 extension NSTableView: UserInterface {
 
+  public static var compositeIdentifier: String {
+    return "list-composite"
+  }
+
   public func register() {}
 
   public func view<T>(at index: Int) -> T? {

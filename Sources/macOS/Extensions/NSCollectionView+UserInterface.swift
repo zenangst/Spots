@@ -2,8 +2,12 @@ import Cocoa
 
 extension NSCollectionView: UserInterface {
 
+  public static var compositeIdentifier: String {
+    return "collection-composite"
+  }
+
   public func register() {
-    register(GridComposite.self, forItemWithIdentifier: "grid-composite")
+    register(GridComposite.self, forItemWithIdentifier: CollectionView.compositeIdentifier)
 
     for (identifier, item) in Configuration.views.storage {
       switch item {
