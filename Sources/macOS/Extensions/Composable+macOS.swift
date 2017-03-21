@@ -30,6 +30,8 @@ public extension Composable {
       height += compositeSpot.component.view.contentSize.height
 
       contentView.addSubview(compositeSpot.component.view)
+
+      compositeSpot.component.collectionView?.collectionViewLayout?.invalidateLayout()
     }
 
     item.size.height = height
