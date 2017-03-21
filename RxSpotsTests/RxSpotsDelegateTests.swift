@@ -16,13 +16,13 @@ class RxComponentDelegateTests: XCTestCase {
   }
 
   func testDidSelectItem() {
-    let component = ListComponent()
+    let component = Component(model: ComponentModel(kind: "list"))
     let item = Item(title: "Test")
     var isCalled = false
 
     delegateProxy.didSelectItem
       .bindNext({ component, item in
-        isCalled = (component is ListComponent) && item.title == "Test"
+        isCalled = (component.tableView != nil) && item.title == "Test"
       }).addDisposableTo(disposeBag)
 
     delegateProxy.component(component, itemSelected: item)
@@ -30,13 +30,13 @@ class RxComponentDelegateTests: XCTestCase {
   }
   
   func testDidChange() {
-    let listComponent = ListComponent()
-    let gridComponent = GridComponent()
+    let listComponent = Component(model: ComponentModel(kind: "list"))
+    let gridComponent = Component(model: ComponentModel(kind: "grid"))
     var isCalled = false
 
     delegateProxy.didChange
       .bindNext({ components in
-        isCalled = (components[0] is ListComponent) && (components[1] is GridComponent)
+        isCalled = (components[0].tableView != nil) && (components[1].collectionView != nil)
       })
       .addDisposableTo(disposeBag)
 
@@ -45,14 +45,14 @@ class RxComponentDelegateTests: XCTestCase {
   }
 
   func testWillDisplayView() {
-    let listComponent = ListComponent()
+    let listComponent = Component(model: ComponentModel(kind: "list"))
     let componentView = ComponentView()
     let item = Item(title: "Test")
     var isCalled = false
 
     delegateProxy.willDisplayView
       .bindNext({ component, view, item in
-        isCalled = (component is ListComponent) && (view == componentView) && item.title == "Test"
+        isCalled = (component.tableView != nil) && (view == componentView) && item.title == "Test"
       })
       .addDisposableTo(disposeBag)
 
@@ -61,14 +61,14 @@ class RxComponentDelegateTests: XCTestCase {
   }
 
   func testDidEndDisplayingView() {
-    let listComponent = ListComponent()
+    let listComponent = Component(model: ComponentModel(kind: "list"))
     let componentView = ComponentView()
     let item = Item(title: "Test")
     var isCalled = false
 
     delegateProxy.didEndDisplayingView
       .bindNext({ component, view, item in
-        isCalled = (component is ListComponent) && (view == componentView) && item.title == "Test"
+        isCalled = (component.tableView != nil) && (view == componentView) && item.title == "Test"
       })
       .addDisposableTo(disposeBag)
 
