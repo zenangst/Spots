@@ -129,7 +129,7 @@ extension SpotsProtocol {
   }
 
   fileprivate func replaceComponent(_ index: Int, newComponentModels: [ComponentModel], yOffset: inout CGFloat) {
-    let component = Factory.resolve(model: newComponentModels[index])
+    let component = Component(model: newComponentModels[index])
     let oldSpot = components[index]
 
     /// Remove old composite components from superview and empty container
@@ -149,7 +149,7 @@ extension SpotsProtocol {
   }
 
   fileprivate func newComponent(_ index: Int, newComponentModels: [ComponentModel], yOffset: inout CGFloat) {
-    let component = Factory.resolve(model: newComponentModels[index])
+    let component = Component(model: newComponentModels[index])
     components.append(component)
     setupComponent(at: index, component: component)
 
@@ -179,7 +179,7 @@ extension SpotsProtocol {
       return false
     }
 
-    let tempSpot = Factory.resolve(model: newComponentModels[index])
+    let tempSpot = Component(model: newComponentModels[index])
     tempSpot.view.frame = component.view.frame
     tempSpot.setup(tempSpot.view.frame.size)
     tempSpot.layout(tempSpot.view.frame.size)

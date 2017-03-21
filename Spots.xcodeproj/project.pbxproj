@@ -158,9 +158,6 @@
 		BDAD85661E3E7032008289AE /* Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD852D1E3E7032008289AE /* Delegate.swift */; };
 		BDAD85671E3E7032008289AE /* Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD852D1E3E7032008289AE /* Delegate.swift */; };
 		BDAD85681E3E7032008289AE /* Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD852D1E3E7032008289AE /* Delegate.swift */; };
-		BDAD85691E3E7032008289AE /* SpotFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD852E1E3E7032008289AE /* SpotFactory.swift */; };
-		BDAD856A1E3E7032008289AE /* SpotFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD852E1E3E7032008289AE /* SpotFactory.swift */; };
-		BDAD856B1E3E7032008289AE /* SpotFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD852E1E3E7032008289AE /* SpotFactory.swift */; };
 		BDAD856F1E3E7032008289AE /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD85311E3E7032008289AE /* Animation.swift */; };
 		BDAD85701E3E7032008289AE /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD85311E3E7032008289AE /* Animation.swift */; };
 		BDAD85711E3E7032008289AE /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD85311E3E7032008289AE /* Animation.swift */; };
@@ -474,7 +471,6 @@
 		BDAD852B1E3E7032008289AE /* CompositeComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositeComponent.swift; sourceTree = "<group>"; };
 		BDAD852C1E3E7032008289AE /* DataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
 		BDAD852D1E3E7032008289AE /* Delegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Delegate.swift; sourceTree = "<group>"; };
-		BDAD852E1E3E7032008289AE /* SpotFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotFactory.swift; sourceTree = "<group>"; };
 		BDAD85311E3E7032008289AE /* Animation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
 		BDAD85321E3E7032008289AE /* Paginate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Paginate.swift; sourceTree = "<group>"; };
 		BDAD85331E3E7032008289AE /* RegistryType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistryType.swift; sourceTree = "<group>"; };
@@ -791,7 +787,6 @@
 				BDAD852B1E3E7032008289AE /* CompositeComponent.swift */,
 				BDAD852C1E3E7032008289AE /* DataSource.swift */,
 				BDAD852D1E3E7032008289AE /* Delegate.swift */,
-				BDAD852E1E3E7032008289AE /* SpotFactory.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1522,7 +1517,6 @@
 				BDAD85E91E3E7032008289AE /* Parser.swift in Sources */,
 				BDAD859E1E3E7032008289AE /* SpotsProtocol+Mutation.swift in Sources */,
 				BDAD84D71E3E701C008289AE /* Inset+iOS.swift in Sources */,
-				BDAD856B1E3E7032008289AE /* SpotFactory.swift in Sources */,
 				BDAD84A31E3E701C008289AE /* CarouselComposite.swift in Sources */,
 				BDAD85DD1E3E7032008289AE /* GridableMeta.swift in Sources */,
 				BDAD85F21E3E7032008289AE /* TypeAlias.swift in Sources */,
@@ -1660,7 +1654,6 @@
 				BDAD85B41E3E7032008289AE /* RefreshDelegate.swift in Sources */,
 				BDAD859C1E3E7032008289AE /* SpotsProtocol+Mutation.swift in Sources */,
 				BDAD85D21E3E7032008289AE /* ComponentModel.swift in Sources */,
-				BDAD85691E3E7032008289AE /* SpotFactory.swift in Sources */,
 				BDAD85EA1E3E7032008289AE /* Registry.swift in Sources */,
 				BDAD85C61E3E7032008289AE /* SpotsProtocol.swift in Sources */,
 				BDAD85E41E3E7032008289AE /* Layout.swift in Sources */,
@@ -1828,7 +1821,6 @@
 				BDAD85161E3E7025008289AE /* ListWrapper.swift in Sources */,
 				BDAD85B51E3E7032008289AE /* RefreshDelegate.swift in Sources */,
 				BDAD85151E3E7025008289AE /* ListComponentItem.swift in Sources */,
-				BDAD856A1E3E7032008289AE /* SpotFactory.swift in Sources */,
 				BDAD85111E3E7025008289AE /* GridWrapper.swift in Sources */,
 				BDAD85CA1E3E7032008289AE /* UserInterface.swift in Sources */,
 				BDAD85DC1E3E7032008289AE /* GridableMeta.swift in Sources */,

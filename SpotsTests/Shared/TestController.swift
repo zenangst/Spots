@@ -635,7 +635,7 @@ class ControllerTests: XCTestCase {
       )
     ]
 
-    let components = initialComponentModels.map { Factory.resolve(model: $0) }
+    let components = initialComponentModels.map { Component(model: $0) }
     let controller = Controller(components: components)
 
     let oldComponentModels: [ComponentModel] = controller.components.map { $0.model }
@@ -689,7 +689,7 @@ class ControllerTests: XCTestCase {
       )
     ]
 
-    let components = initialComponentModels.map { Factory.resolve(model: $0) }
+    let components = initialComponentModels.map { Component(model: $0) }
 
     /// Validate setting up a controller
     let controller = Controller(components: components)
@@ -898,7 +898,7 @@ class ControllerTests: XCTestCase {
       expectation.fulfill()
     }
 
-    let components = initialComponentModels.map { Factory.resolve(model: $0) }
+    let components = initialComponentModels.map { Component(model: $0) }
     let controller = Controller(components: components)
 
     controller.prepareController()

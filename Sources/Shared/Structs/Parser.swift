@@ -14,8 +14,8 @@ public struct Parser {
       components[index].index = index
     }
 
-    return components.map {
-      Factory.resolve(model: $0)
+    return components.map { model in
+      Component(model: model)
     }
   }
 
@@ -59,14 +59,14 @@ public struct Parser {
   public static func parse(_ json: [[String : Any]]?) -> [Component] {
     guard let json = json else { return [] }
 
-    return json.map {
-      Factory.resolve(model: ComponentModel($0))
+    return json.map { model in
+      Component(model: ComponentModel(model))
     }
   }
 
   public static func parse(_ models: [ComponentModel]) -> [Component] {
-    return models.map {
-      Factory.resolve(model: $0)
+    return models.map { model in
+      Component(model: model)
     }
   }
 
