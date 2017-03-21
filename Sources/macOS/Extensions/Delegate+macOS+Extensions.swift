@@ -9,9 +9,11 @@ extension Delegate: NSCollectionViewDelegate {
      This can probably be fixed in a more convenient way in the future without delays.
      */
     Dispatch.after(seconds: 0.1) { [weak self] in
-      guard let strongSelf = self, let first = indexPaths.first,
+      guard let strongSelf = self,
+        let first = indexPaths.first,
         let component = strongSelf.component,
-        let item = component.item(at: first.item), first.item < component.items.count else {
+        let item = component.item(at: first.item), first.item < component.model.items.count
+        else {
           return
       }
       component.delegate?.component(component, itemSelected: item)

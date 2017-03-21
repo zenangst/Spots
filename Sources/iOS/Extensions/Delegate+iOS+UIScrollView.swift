@@ -74,7 +74,7 @@ extension Delegate: UIScrollViewDelegate {
         let isBeyondBounds = targetContentOffset.pointee.x >= widthBounds && centerIndexPath == nil
 
         if isBeyondBounds {
-          centerIndexPath = IndexPath(item: component.items.count - 1, section: 0)
+          centerIndexPath = IndexPath(item: component.model.items.count - 1, section: 0)
         }
       }
 

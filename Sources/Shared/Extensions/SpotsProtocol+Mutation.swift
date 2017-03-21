@@ -191,11 +191,11 @@ extension SpotsProtocol {
       width: view.frame.width,
       height: ceil(tempSpot.view.frame.height))
 
-    guard let diff = Item.evaluate(tempSpot.items, oldModels: component.items) else {
+    guard let diff = Item.evaluate(tempSpot.model.items, oldModels: component.model.items) else {
       return true
     }
 
-    let newItems = tempSpot.items
+    let newItems = tempSpot.model.items
     let changes: (ItemChanges) = Item.processChanges(diff)
 
     for index in changes.updatedChildren {
@@ -206,21 +206,21 @@ extension SpotsProtocol {
       }
     }
 
-    if newItems.count == component.items.count {
+    if newItems.count == component.model.items.count {
       reload(with: changes, in: component, newItems: newItems, animation: animation) { [weak self] in
         if let strongSelf = self, let completion = completion {
           strongSelf.completeUpdates()
           completion()
         }
       }
-    } else if newItems.count < component.items.count {
+    } else if newItems.count < component.model.items.count {
       reload(with: changes, in: component, lessItems: newItems, animation: animation) { [weak self] in
         if let strongSelf = self, let completion = completion {
           strongSelf.completeUpdates()
           completion()
         }
       }
-    } else if newItems.count > component.items.count {
+    } else if newItems.count > component.model.items.count {
       reload(with: changes, in: component, moreItems: newItems, animation: animation) { [weak self] in
         if let strongSelf = self, let completion = completion {
           strongSelf.completeUpdates()
@@ -256,7 +256,7 @@ extension SpotsProtocol {
         }
       }
 
-      component.items = newItems
+      component.model.items = newItems
     }) { [weak self] in
       guard let strongSelf = self else {
         return
@@ -296,7 +296,7 @@ extension SpotsProtocol {
                       completion: (() -> Void)? = nil) {
     component.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: {
       component.beforeUpdate()
-      component.items = newItems
+      component.model.items = newItems
     }) { [weak self] in
       guard let strongSelf = self, !newItems.isEmpty else {
         self?.finishReloading(component: component, withCompletion: completion)
@@ -321,7 +321,7 @@ extension SpotsProtocol {
           }
         }
 
-        if !component.items.filter({ !$0.children.isEmpty }).isEmpty {
+        if !component.model.items.filter({ !$0.children.isEmpty }).isEmpty {
           component.beforeUpdate()
           component.reload(nil, withAnimation: animation) {
             strongSelf.finishReloading(component: component, withCompletion: completion)
@@ -351,9 +351,9 @@ extension SpotsProtocol {
                       completion: (() -> Void)? = nil) {
     component.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: {
       component.beforeUpdate()
-      component.items = newItems
+      component.model.items = newItems
     }) {
-      if !component.items.filter({ !$0.children.isEmpty }).isEmpty {
+      if !component.model.items.filter({ !$0.children.isEmpty }).isEmpty {
         component.reload(nil, withAnimation: animation) { [weak self] in
           self?.finishReloading(component: component, withCompletion: completion)
         }
@@ -575,7 +575,7 @@ extension SpotsProtocol {
    - parameter completion: A completion closure that is run when the update is completed
    */
   public func updateIfNeeded(componentAtIndex index: Int = 0, items: [Item], withAnimation animation: Animation = .automatic, completion: Completion = nil) {
-    guard let component = component(at: index), !(component.items == items) else {
+    guard let component = component(at: index), !(component.model.items == items) else {
       scrollView.layoutSubviews()
       completion?()
       return
@@ -583,8 +583,8 @@ extension SpotsProtocol {
 
     update(componentAtIndex: index, withAnimation: animation, withCompletion: {
       completion?()
-    }, {
-      $0.items = items
+    }, { component in
+      component.model.items = items
     })
   }
 

@@ -274,12 +274,12 @@ public extension Component {
           return
       }
 
-      strongSelf.items[index] = item
+      strongSelf.model.items[index] = item
 
-      if strongSelf.items[index].kind == CompositeComponent.identifier {
+      if strongSelf.model.items[index].kind == CompositeComponent.identifier {
         if let compositeView: Composable? = strongSelf.userInterface?.view(at: index) {
           let compositeComponents = strongSelf.compositeComponents.filter { $0.itemIndex == item.index }
-          compositeView?.configure(&strongSelf.items[index],
+          compositeView?.configure(&strongSelf.model.items[index],
                                    compositeComponents: compositeComponents)
         } else {
           for compositeSpot in strongSelf.compositeComponents {
@@ -294,12 +294,12 @@ public extension Component {
         return
       } else {
         strongSelf.configureItem(at: index, usesViewSize: true)
-        let newItem = strongSelf.items[index]
+        let newItem = strongSelf.model.items[index]
 
         if newItem.kind != oldItem.kind || newItem.size.height != oldItem.size.height {
           if let cell: ItemConfigurable = strongSelf.userInterface?.view(at: index), animation != .none {
             strongSelf.userInterface?.beginUpdates()
-            cell.configure(&strongSelf.items[index])
+            cell.configure(&strongSelf.model.items[index])
             strongSelf.userInterface?.endUpdates()
           } else {
             strongSelf.userInterface?.reload([index], withAnimation: animation, completion: nil)
@@ -311,7 +311,7 @@ public extension Component {
           }
           return
         } else if let cell: ItemConfigurable = strongSelf.userInterface?.view(at: index) {
-          cell.configure(&strongSelf.items[index])
+          cell.configure(&strongSelf.model.items[index])
           strongSelf.view.superview?.layoutSubviews()
           completion?()
         } else {
@@ -441,7 +441,7 @@ public extension Component {
         return
       }
 
-      if strongSelf.items == items {
+      if strongSelf.model.items == items {
         Dispatch.main {
           strongSelf.cache()
           completion?()
@@ -457,13 +457,13 @@ public extension Component {
         }
 
         var indexes: [Int]? = nil
-        let oldItems = strongSelf.items
-        strongSelf.items = items
+        let oldItems = strongSelf.model.items
+        strongSelf.model.items = items
 
         if items.count == oldItems.count {
           for (index, item) in items.enumerated() {
             guard !(item == oldItems[index]) else {
-              strongSelf.items[index].size = oldItems[index].size
+              strongSelf.model.items[index].size = oldItems[index].size
               continue
             }
 
