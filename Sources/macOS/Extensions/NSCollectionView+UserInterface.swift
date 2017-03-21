@@ -94,6 +94,8 @@ extension NSCollectionView: UserInterface {
     let childUpdates = Set<IndexPath>(changes.childUpdates
       .map { IndexPath(item: $0, section: 0) })
 
+    updateDataSource()
+
     performBatchUpdates({ [weak self] in
       self?.deleteItems(at: deletionSets)
       self?.insertItems(at: insertionsSets)
