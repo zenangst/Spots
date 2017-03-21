@@ -1,6 +1,6 @@
 public struct CompositeComponent: Equatable {
 
-  static var identifier: String = "composite"
+  static let identifier: String = "composite"
 
   /// Returns a Boolean value indicating whether two values are equal.
   ///
