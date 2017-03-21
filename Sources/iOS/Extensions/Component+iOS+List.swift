@@ -11,7 +11,7 @@ extension Component {
     tableView.frame.origin.x = round(size.width / 2 - tableView.frame.width / 2)
 
     #if os(tvOS)
-      tableView.layoutMargins = UIEdgeInsets.zero
+      tableView.layoutMargins = .zero
     #endif
 
     prepareItems()

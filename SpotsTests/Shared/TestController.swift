@@ -716,7 +716,7 @@ class ControllerTests: XCTestCase {
 
     /// Reset layout margins for tvOS
     #if os(tvOS)
-      controller.component(at: 0)?.tableView?.layoutMargins = UIEdgeInsets.zero
+      controller.component(at: 0)?.tableView?.layoutMargins = .zero
     #endif
 
     #if !os(OSX)
