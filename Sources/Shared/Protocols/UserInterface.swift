@@ -1,6 +1,8 @@
 /// A protocol used for composition inside Component objects
 public protocol UserInterface: class {
 
+  static var compositeIdentifier: String { get }
+
   #if !os(OSX)
   var visibleViews: [View] { get }
 
