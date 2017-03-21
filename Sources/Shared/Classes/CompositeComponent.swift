@@ -1,4 +1,7 @@
 public struct CompositeComponent: Equatable {
+
+  static var identifier: String = "composite"
+
   /// Returns a Boolean value indicating whether two values are equal.
   ///
   /// Equality is the inverse of inequality. For any values `a` and `b`,
