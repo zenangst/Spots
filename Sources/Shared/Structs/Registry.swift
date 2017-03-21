@@ -34,9 +34,7 @@ public struct Registry {
   }
 
   /// The default identifier for the registry
-  var defaultIdentifier: String {
-    return String(describing: defaultItem)
-  }
+  var defaultIdentifier: String = "default"
 
   /// A subscripting method for getting a value from storage using a StringConvertible key
   ///
