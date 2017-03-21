@@ -72,6 +72,7 @@ class DelegateTests: XCTestCase {
   }
 
   func testTableViewHeightForRowOnListable() {
+    Configuration.registerDefault(view: ListComponentCell.self)
     let component = ListComponent(model: ComponentModel(kind: "list", span: 1, items: [Item(title: "title 1")]))
     component.setup(CGSize(width: 100, height: 100))
 

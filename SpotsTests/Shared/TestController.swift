@@ -658,6 +658,7 @@ class ControllerTests: XCTestCase {
   }
 
   func testReloadWithComponentModels() {
+    Configuration.registerDefault(view: ListComponentCell.self)
     let initialComponentModels = [
       ComponentModel(
         kind: "list",

@@ -110,6 +110,7 @@ class GridComponentTests: XCTestCase {
   }
 
   func testSpotCollectionDelegate() {
+    Configuration.registerDefault(view: GridComponentCell.self)
     let items = [Item(title: "Test item")]
     let component = GridComponent(model: ComponentModel(kind: "grid", span: 0.0, items: items))
     component.setup(CGSize(width: 100, height: 100))
