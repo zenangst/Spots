@@ -210,14 +210,8 @@ open class Controller: NSViewController, SpotsProtocol {
     }
 
     components[index].model.index = index
-    component.registerAndPrepare()
-
-    var height = component.computedHeight
-    if let componentSize = component.model.size, componentSize.height > height {
-      height = componentSize.height
-    }
-
-    component.setup(CGSize(width: view.frame.width, height: height))
+    component.register()
+    component.setup(CGSize(width: view.frame.width, height: view.frame.size.height))
     component.model.size = CGSize(
       width: view.frame.width,
       height: ceil(component.view.frame.height))
