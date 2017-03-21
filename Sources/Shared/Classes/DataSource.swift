@@ -1,9 +1,9 @@
 import Foundation
 
 public class DataSource: NSObject {
-  weak var component: CoreComponent?
+  weak var component: Component?
 
-  init(component: CoreComponent) {
+  init(component: Component) {
     self.component = component
   }
 }

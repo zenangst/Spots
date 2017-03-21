@@ -2,8 +2,9 @@ import UIKit
 
 extension DataSource {
 
-  func prepareWrappableView(_ view: Wrappable, atIndex index: Int, in component: CoreComponent, parentFrame: CGRect = CGRect.zero) {
-    if let (_, customView) = Configuration.views.make(component.model.items[index].kind, parentFrame: parentFrame),
+  func prepareWrappableView(_ view: Wrappable, atIndex index: Int, in component: Component, parentFrame: CGRect = CGRect.zero) {
+    let identifier = component.identifier(at: index)
+    if let (_, customView) = Configuration.views.make(identifier, parentFrame: parentFrame),
       let wrappedView = customView {
       view.configure(with: wrappedView)
 
@@ -21,12 +22,12 @@ extension DataSource {
     }
   }
 
-  func prepareComposableView(_ view: Composable, atIndex index: Int, in component: CoreComponent) {
+  func prepareComposableView(_ view: Composable, atIndex index: Int, in component: Component) {
     let compositeComponents = component.compositeComponents.filter({ $0.itemIndex == index })
     view.configure(&component.model.items[index], compositeComponents: compositeComponents)
   }
 
-  func prepareItemConfigurableView(_ view: ItemConfigurable, atIndex index: Int, in component: CoreComponent) {
+  func prepareItemConfigurableView(_ view: ItemConfigurable, atIndex index: Int, in component: Component) {
     view.configure(&component.model.items[index])
 
     if component.model.items[index].size.height == 0.0 {
@@ -79,7 +80,7 @@ extension DataSource: UICollectionViewDataSource {
       let kind = headerFooterItem?.kind ?? ""
 
       if kind.isEmpty {
-        identifier = component.type.headers.defaultIdentifier
+        return UICollectionReusableView()
       } else {
         identifier = kind
       }
@@ -134,7 +135,7 @@ extension DataSource: UICollectionViewDataSource {
 
     component.model.items[indexPath.item].index = indexPath.item
 
-    let reuseIdentifier = component.identifier(at: indexPath)
+    let reuseIdentifier = component.identifier(for: indexPath)
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier,
                                                   for: indexPath)
 
@@ -184,9 +185,8 @@ extension DataSource: UITableViewDataSource {
       component.model.items[indexPath.item].index = indexPath.row
     }
 
-    let reuseIdentifier = component.identifier(at: indexPath)
-    let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier,
-                                                              for: indexPath)
+    let reuseIdentifier = component.identifier(for: indexPath)
+    let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
 
     switch cell {
     case let cell as ListWrapper:

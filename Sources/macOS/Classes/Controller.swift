@@ -11,8 +11,8 @@ open class Controller: NSViewController, SpotsProtocol {
 
   open static var configure: ((_ container: SpotsScrollView) -> Void)?
 
-  /// A collection of CoreComponent objects
-  open var components: [CoreComponent] {
+  /// A collection of components.
+  open var components: [Component] {
     didSet {
       components.forEach { $0.delegate = delegate }
       delegate?.componentsDidChange(components)
@@ -21,11 +21,6 @@ open class Controller: NSViewController, SpotsProtocol {
 
   public var contentView: View {
     return view
-  }
-
-  /// A convenience method for resolving the first component
-  open var component: CoreComponent? {
-    return component(at: 0)
   }
 
   /// An array of refresh positions to avoid refreshing multiple times when using infinite scrolling
@@ -63,10 +58,10 @@ open class Controller: NSViewController, SpotsProtocol {
   fileprivate let backgroundType: ControllerBackground
 
   /**
-   - parameter components: An array of CoreComponent objects
+   - parameter components: An array of components.
    - parameter backgroundType: The type of background that the Controller should use, .Regular or .Dynamic
    */
-  public required init(components: [CoreComponent] = [], backgroundType: ControllerBackground = .regular) {
+  public required init(components: [Component] = [], backgroundType: ControllerBackground = .regular) {
     self.components = components
     self.backgroundType = backgroundType
     super.init(nibName: nil, bundle: nil)!
@@ -88,9 +83,9 @@ open class Controller: NSViewController, SpotsProtocol {
   }
 
   /**
-   - parameter component: A CoreComponent object
+   - parameter component: A Component object
    */
-  public convenience init(component: CoreComponent) {
+  public convenience init(component: Component) {
     self.init(components: [component])
   }
 
@@ -120,22 +115,12 @@ open class Controller: NSViewController, SpotsProtocol {
     fatalError("init(coder:) has not been implemented")
   }
 
-  ///  A generic look up method for resolving components based on index
-  ///
-  /// - parameter index: The index of the component that you are trying to resolve.
-  /// - parameter type: The generic type for the component you are trying to resolve.
-  ///
-  /// - returns: An optional CoreComponent object of inferred type.
-  open func component<T>(at index: Int = 0, ofType type: T.Type) -> T? {
-    return components.filter({ $0.index == index }).first as? T
-  }
-
-  /// A look up method for resolving a component at index as a CoreComponent object.
+  /// A look up method for resolving a component at index as a component.
   ///
   /// - parameter index: The index of the component that you are trying to resolve.
   ///
-  /// - returns: An optional CoreComponent object.
-  open func component(at index: Int = 0) -> CoreComponent? {
+  /// - returns: An optional component.
+  open func component(at index: Int = 0) -> Component? {
     return components.filter({ $0.index == index }).first
   }
 
@@ -146,7 +131,7 @@ open class Controller: NSViewController, SpotsProtocol {
 
    - returns: An optional CoreComponent object
    */
-  public func resolve(component closure: (_ index: Int, _ component: CoreComponent) -> Bool) -> CoreComponent? {
+  public func resolve(component closure: (_ index: Int, _ component: Component) -> Bool) -> Component? {
     for (index, component) in components.enumerated()
       where closure(index, component) {
         return component
@@ -184,8 +169,14 @@ open class Controller: NSViewController, SpotsProtocol {
     scrollView.hasVerticalScroller = true
     scrollView.autoresizingMask = [.viewWidthSizable, .viewHeightSizable]
 
-    setupComponents()
     Controller.configure?(scrollView)
+  }
+
+  open override func viewWillAppear() {
+    super.viewWillAppear()
+
+    setupComponents()
+    scrollView.layoutSubviews()
   }
 
   open override func viewDidAppear() {
@@ -196,7 +187,7 @@ open class Controller: NSViewController, SpotsProtocol {
     }
   }
 
-  public func reloadSpots(components: [CoreComponent], closure: (() -> Void)?) {
+  public func reloadSpots(components: [Component], closure: (() -> Void)?) {
     for component in self.components {
       component.delegate = nil
       component.view.removeFromSuperview()
@@ -219,28 +210,17 @@ open class Controller: NSViewController, SpotsProtocol {
     }
   }
 
-  public func setupComponent(at index: Int, component: CoreComponent) {
+  public func setupComponent(at index: Int, component: Component) {
     if component.view.superview == nil {
       scrollView.componentsView.addSubview(component.view)
     }
 
     components[index].model.index = index
-    component.registerAndPrepare()
-
-    var height = component.computedHeight
-    if let componentSize = component.model.size, componentSize.height > height {
-      height = componentSize.height
-    }
-
-    component.setup(CGSize(width: view.frame.width, height: height))
+    component.register()
+    component.setup(CGSize(width: view.frame.width, height: view.frame.size.height))
     component.model.size = CGSize(
       width: view.frame.width,
       height: ceil(component.view.frame.height))
-
-    let size = CGSize(width: view.frame.width, height: height)
-
-    (component as? Component)?.layout(size)
-    (component as? Gridable)?.layout(size)
   }
 
   open override func viewDidLayout() {
@@ -257,7 +237,7 @@ open class Controller: NSViewController, SpotsProtocol {
     }
   }
 
-  public func deselectAllExcept(selectedComponent: CoreComponent) {
+  public func deselectAllExcept(selectedComponent: Component) {
     for component in components {
       if selectedComponent.view != component.view {
         component.deselect()
@@ -278,29 +258,16 @@ open class Controller: NSViewController, SpotsProtocol {
     }
   }
 
-  fileprivate func layoutComponent(_ component: CoreComponent) {
-    switch component {
-    case let component as Component:
-      if component.userInterface is CollectionView {
-        guard let layout = component.model.layout, layout.span >= 1 else {
-          break
-        }
-
-        component.setup(component.view.frame.size)
-      } else if component.userInterface is TableView {
-        let size = CGSize(width: view.frame.size.width, height: component.view.frame.size.height)
-        component.layout(size)
-      }
-
-    case let component as Gridable:
+  fileprivate func layoutComponent(_ component: Component) {
+    if component.userInterface is CollectionView {
       guard let layout = component.model.layout, layout.span >= 1 else {
-        break
+        return
       }
 
-      component.layout.prepareForTransition(from: component.layout)
-      component.layout.invalidateLayout()
-    default:
-      break
+      component.setup(component.view.frame.size)
+    } else if component.userInterface is TableView {
+      let size = CGSize(width: view.frame.size.width, height: component.view.frame.size.height)
+      component.layout(size)
     }
   }
 

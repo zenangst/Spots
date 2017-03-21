@@ -12,23 +12,23 @@ import RxCocoa
 public final class RxComponentDelegate: DelegateProxy, DelegateProxyType, ComponentDelegate {
 
   // Delegate methods subjects
-  private let componentDidSelectItem = PublishSubject<(CoreComponent, Item)>()
-  private let componentsDidChange = PublishSubject<[CoreComponent]>()
-  private let componentWillDisplayView = PublishSubject<(CoreComponent, ComponentView, Item)>()
-  private let componentDidEndDisplayingView = PublishSubject<(CoreComponent, ComponentView, Item)>()
+  private let componentDidSelectItem = PublishSubject<(Component, Item)>()
+  private let componentsDidChange = PublishSubject<[Component]>()
+  private let componentWillDisplayView = PublishSubject<(Component, ComponentView, Item)>()
+  private let componentDidEndDisplayingView = PublishSubject<(Component, ComponentView, Item)>()
 
   // Delegate method observables
-  public let didSelectItem: Observable<(CoreComponent, Item)>
-  public let didChange: Observable<[CoreComponent]>
-  public let willDisplayView: Observable<(CoreComponent, ComponentView, Item)>
-  public let didEndDisplayingView: Observable<(CoreComponent, ComponentView, Item)>
+  public let didSelectItem: Observable<(Component, Item)>
+  public let didChange: Observable<[Component]>
+  public let willDisplayView: Observable<(Component, ComponentView, Item)>
+  public let didEndDisplayingView: Observable<(Component, ComponentView, Item)>
 
   public class func currentDelegateFor(_ object: AnyObject) -> AnyObject? {
-    return (object as? CoreComponent)?.delegate ?? (object as? Controller)?.delegate
+    return (object as? Component)?.delegate ?? (object as? Controller)?.delegate
   }
 
   public class func setCurrentDelegate(_ delegate: AnyObject?, toObject object: AnyObject) {
-    if let component = object as? CoreComponent {
+    if let component = object as? Component {
       component.delegate = delegate as? ComponentDelegate
     } else if let controller = object as? Controller {
       controller.delegate = delegate as? ComponentDelegate
@@ -44,26 +44,26 @@ public final class RxComponentDelegate: DelegateProxy, DelegateProxyType, Compon
     super.init(parentObject: parentObject)
   }
 
-  public func component(_ component: CoreComponent, itemSelected item: Item) {
+  public func component(_ component: Component, itemSelected item: Item) {
     componentDidSelectItem.onNext(component, item)
   }
 
-  public func componentsDidChange(_ components: [CoreComponent]) {
+  public func componentsDidChange(_ components: [Component]) {
     componentsDidChange.onNext(components)
   }
 
-  public func component(_ component: CoreComponent, willDisplay view: ComponentView, item: Item) {
+  public func component(_ component: Component, willDisplay view: ComponentView, item: Item) {
     componentWillDisplayView.onNext(component, view, item)
   }
 
-  public func component(_ component: CoreComponent, didEndDisplaying view: ComponentView, item: Item) {
+  public func component(_ component: Component, didEndDisplaying view: ComponentView, item: Item) {
     componentDidEndDisplayingView.onNext(component, view, item)
   }
 }
 
 // MARK: - Reactive extensions
 
-extension Reactive where Base: CoreComponent {
+extension Reactive where Base: Component {
 
   public var delegate: RxComponentDelegate {
     return RxComponentDelegate.proxyForObject(base)

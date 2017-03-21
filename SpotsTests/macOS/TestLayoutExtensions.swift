@@ -15,8 +15,8 @@ class LayoutExtensionsTests: XCTestCase {
   ]
 
   func testConfigureGridableComponent() {
-    let gridComponent = GridComponent(model: ComponentModel(span: 1))
-    let gridableLayout = gridComponent.layout as? FlowLayout
+    let gridComponent = GridComponent(model: ComponentModel(kind: "grid", span: 1))
+    let gridableLayout = gridComponent.collectionView?.collectionViewLayout as? FlowLayout
     let layout = Layout(json)
 
     layout.configure(component: gridComponent)

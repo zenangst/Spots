@@ -2,10 +2,10 @@ import Cocoa
 
 extension Layout {
 
-  public func configure(component: Gridable) {
+  public func configure(component: Component) {
     inset.configure(scrollView: component.view)
 
-    if let layout = component.layout as? FlowLayout {
+    if let layout = component.collectionView?.collectionViewLayout as? FlowLayout {
       layout.minimumInteritemSpacing = CGFloat(itemSpacing)
       layout.minimumLineSpacing = CGFloat(lineSpacing)
     }

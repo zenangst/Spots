@@ -34,16 +34,16 @@ class ListComponentTests: XCTestCase {
     let listComponent = ListComponent(model: model)
     let indexPath = IndexPath(row: 0, section: 0)
 
-    XCTAssertEqual(listComponent.identifier(at: indexPath), ListComponent.views.defaultIdentifier)
+    XCTAssertEqual(listComponent.identifier(for: indexPath), ListComponent.views.defaultIdentifier)
 
     ListComponent.views.defaultItem = Registry.Item.classType(ListComponentCell.self)
-    XCTAssertEqual(listComponent.identifier(at: indexPath), ListComponent.views.defaultIdentifier)
+    XCTAssertEqual(listComponent.identifier(for: indexPath), ListComponent.views.defaultIdentifier)
 
     ListComponent.views.defaultItem = Registry.Item.classType(ListComponentCell.self)
-    XCTAssertEqual(listComponent.identifier(at: indexPath), ListComponent.views.defaultIdentifier)
+    XCTAssertEqual(listComponent.identifier(for: indexPath), ListComponent.views.defaultIdentifier)
 
     ListComponent.views["custom-item-kind"] = Registry.Item.classType(ListComponentCell.self)
-    XCTAssertEqual(listComponent.identifier(at: indexPath), "custom-item-kind")
+    XCTAssertEqual(listComponent.identifier(for: indexPath), "custom-item-kind")
 
     ListComponent.views.storage.removeAll()
   }

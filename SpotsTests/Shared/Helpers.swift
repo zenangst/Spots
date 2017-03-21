@@ -24,6 +24,7 @@ extension Controller {
 
   func prepareController() {
     preloadView()
+    viewWillAppear()
     viewDidAppear()
     components.forEach {
       $0.view.layoutSubviews()
@@ -37,8 +38,12 @@ extension Controller {
     #endif
   }
   #if !os(OSX)
-  func viewDidAppear() {
+
+  func viewWillAppear() {
     viewWillAppear(true)
+  }
+
+  func viewDidAppear() {
     viewDidAppear(true)
   }
   #endif

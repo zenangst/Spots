@@ -1,6 +1,6 @@
 import Cocoa
 
-/// A proxy cell that is used for composite views inside other CoreComponent objects
+/// A proxy cell that is used for composite views inside other components.
 public class GridComposite: NSCollectionViewItem, Composable {
 
   /// A required content view, needed because of Composable extensions

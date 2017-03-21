@@ -11,19 +11,9 @@ extension Delegate: UIScrollViewDelegate {
         collectionView.contentOffset.y = constrainedYOffset
       }
 
-      switch component {
-      case let component as Component:
-        component.carouselScrollDelegate?.componentCarouselDidScroll(component)
-        if component.model.layout?.pageIndicatorPlacement == .overlay {
-          component.pageControl.frame.origin.x = scrollView.contentOffset.x
-        }
-      case let component as CarouselComponent:
-        component.carouselScrollDelegate?.componentCarouselDidScroll(component)
-        if component.model.layout?.pageIndicatorPlacement == .overlay {
-          component.pageControl.frame.origin.x = scrollView.contentOffset.x
-        }
-      default:
-        assertionFailure("CoreComponent object is not eligible for horizontal scrolling.")
+      component.carouselScrollDelegate?.componentCarouselDidScroll(component)
+      if component.model.layout?.pageIndicatorPlacement == .overlay {
+        component.pageControl.frame.origin.x = scrollView.contentOffset.x
       }
     }
   }
@@ -36,7 +26,7 @@ extension Delegate: UIScrollViewDelegate {
         return
       }
 
-      guard itemIndex < component.items.count else {
+      guard itemIndex < component.model.items.count else {
         return
       }
 
@@ -100,11 +90,17 @@ extension Delegate: UIScrollViewDelegate {
         component.carouselScrollDelegate?.componentCarouselDidEndScrolling(component, item: item, animated: false)
       }
 
-      targetContentOffset.pointee.x = centerLayoutAttributes.frame.midX - scrollView.frame.width / 2
+      let pointeeX = centerLayoutAttributes.frame.midX - scrollView.frame.width / 2
+
+      guard pointeeX > 0 else {
+        return
+      }
+
+      targetContentOffset.pointee.x = pointeeX
     }
   }
 
-  fileprivate func performPaginatedScrolling(_ handler: (ComponentHorizontallyScrollable, UICollectionView, CollectionLayout) -> Void) {
+  fileprivate func performPaginatedScrolling(_ handler: (Component, UICollectionView, CollectionLayout) -> Void) {
     component?.didScrollHorizontally { component in
       guard let collectionView = component.userInterface as? CollectionView,
         let collectionViewLayout = collectionView.collectionViewLayout as? CollectionLayout else {

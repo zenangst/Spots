@@ -3,9 +3,9 @@
 import Cocoa
 import Tailor
 
-@objc(SpotsComponent) public class Component: NSObject, CoreComponent {
+@objc(SpotsComponent) public class Component: NSObject {
 
-  public static var layout: Layout = Layout(span: 1.0)
+  public static var layout: Layout = Layout(span: 0.0)
   public static var headers: Registry = Registry()
   public static var views: Registry = Registry()
   public static var defaultKind: String = ComponentModel.Kind.list.string
@@ -118,13 +118,14 @@ import Tailor
         self.model.layout = GridComponent.layout
       case .list:
         self.model.layout = ListComponent.layout
-        registerDefaultIfNeeded(view: ListComponentItem.self)
       case .row:
         self.model.layout = RowComponent.layout
       default:
         break
       }
     }
+
+    registerDefaultIfNeeded(view: ListComponentItem.self)
 
     userInterface.register()
 
@@ -168,10 +169,6 @@ import Tailor
     componentDataSource = nil
     componentDelegate = nil
     userInterface = nil
-  }
-
-  public func configure(with layout: Layout) {
-
   }
 
   fileprivate func configureDataSourceAndDelegate() {
@@ -310,6 +307,19 @@ import Tailor
         height: item(at: indexPath)?.size.height ?? 0.0
       )
     }
+  }
+
+  public func afterUpdate() {
+    if let superview = view.superview {
+      let size = CGSize(width: superview.frame.width,
+                        height: view.frame.height)
+      layout(size)
+    }
+
+    guard !compositeComponents.isEmpty else {
+      return
+    }
+    reload()
   }
 
   public func register() {

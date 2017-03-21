@@ -9,7 +9,7 @@ class ParserTests: XCTestCase {
       "components": [["title": "test"], ["title": "test"]]
     ]
 
-    let objects: [CoreComponent] = Parser.parse(json)
+    let objects: [Component] = Parser.parse(json)
     XCTAssertTrue(objects.count == 2)
   }
 
@@ -18,7 +18,7 @@ class ParserTests: XCTestCase {
       "custom-key": [["title": "test"], ["title": "test"]]
     ]
 
-    let objects: [CoreComponent] = Parser.parse(json, key: "custom-key")
+    let objects: [Component] = Parser.parse(json, key: "custom-key")
     XCTAssertTrue(objects.count == 2)
   }
 
@@ -27,12 +27,12 @@ class ParserTests: XCTestCase {
       ["title": "test"], ["title": "test"]
     ]
 
-    let objects: [CoreComponent] = Parser.parse(json)
+    let objects: [Component] = Parser.parse(json)
     XCTAssertTrue(objects.count == 2)
   }
 
   func testParsingJSONIntoCoreComponentObjectsWithEmptyJSON() {
-    let objects: [CoreComponent] = Parser.parse(nil)
+    let objects: [Component] = Parser.parse(nil)
     XCTAssertTrue(objects.count == 0)
   }
 

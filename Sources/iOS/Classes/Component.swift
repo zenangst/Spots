@@ -2,12 +2,14 @@
 
 import UIKit
 
-public class Component: NSObject, CoreComponent, ComponentHorizontallyScrollable {
+public class Component: NSObject, ComponentHorizontallyScrollable {
 
-  public static var layout: Layout = Layout(span: 1.0)
+  public static var layout: Layout = Layout(span: 0.0)
   public static var headers: Registry = Registry()
-  public static var views: Registry = Registry()
-  public static var defaultKind: String = ComponentModel.Kind.list.string
+  public static var views: Registry = {
+    return Configuration.views
+  }()
+  public static var defaultKind: String = ComponentModel.Kind.grid.string
 
   open static var configure: ((_ view: View) -> Void)?
 
@@ -54,22 +56,25 @@ public class Component: NSObject, CoreComponent, ComponentHorizontallyScrollable
     super.init()
 
     if model.layout == nil {
-      switch kind {
-      case .carousel:
-        self.model.layout = CarouselComponent.layout
-        registerDefaultIfNeeded(view: CarouselComponentCell.self)
-      case .grid:
-        self.model.layout = GridComponent.layout
-        registerDefaultIfNeeded(view: GridComponentCell.self)
-      case .list:
-        self.model.layout = ListComponent.layout
-        registerDefaultIfNeeded(view: ListComponentCell.self)
-      case .row:
-        self.model.layout = RowComponent.layout
-      default:
-        break
-      }
+      self.model.layout = GridComponent.layout
     }
+
+    switch kind {
+    case .carousel:
+      registerDefaultIfNeeded(view: GridComponentCell.self)
+    case .grid:
+      registerDefaultIfNeeded(view: GridComponentCell.self)
+    case .list:
+      registerDefaultIfNeeded(view: ListComponentCell.self)
+    case .row:
+      registerDefaultIfNeeded(view: RowComponentCell.self)
+    default:
+      break
+    }
+
+    Configuration.register(view: CarouselComponentCell.self, identifier: String(describing: CarouselComponentCell.self))
+    Configuration.register(view: GridComponentCell.self, identifier: String(describing: GridComponentCell.self))
+    Configuration.register(view: ListComponentCell.self, identifier: String(describing: ListComponentCell.self))
 
     userInterface?.register()
 
@@ -118,6 +123,7 @@ public class Component: NSObject, CoreComponent, ComponentHorizontallyScrollable
     }
 
     layout(size)
+    configurePageControl()
   }
 
   public func layout(_ size: CGSize) {
@@ -134,6 +140,7 @@ public class Component: NSObject, CoreComponent, ComponentHorizontallyScrollable
     collectionView.frame.size = size
     collectionView.dataSource = componentDataSource
     collectionView.delegate = componentDelegate
+    collectionView.backgroundView = backgroundView
 
     if componentKind == .carousel {
       collectionView.showsHorizontalScrollIndicator = false
@@ -143,13 +150,26 @@ public class Component: NSObject, CoreComponent, ComponentHorizontallyScrollable
     switch model.interaction.scrollDirection {
     case .horizontal:
       setupHorizontalCollectionView(collectionView, with: size)
+
+      if let pageIndicatorPlacement = model.layout?.pageIndicatorPlacement, let layout = collectionView.collectionViewLayout as? FlowLayout {
+        switch pageIndicatorPlacement {
+        case .below:
+          layout.sectionInset.bottom += pageControl.frame.height
+          pageControl.frame.origin.y = collectionView.frame.height
+        case .overlay:
+          let verticalAdjustment = CGFloat(2)
+          pageControl.frame.origin.y = collectionView.frame.height - pageControl.frame.height - verticalAdjustment
+        }
+      }
     case .vertical:
       setupVerticalCollectionView(collectionView, with: size)
     }
   }
 
   fileprivate func layoutCollectionView(_ collectionView: CollectionView, with size: CGSize) {
-    prepareItems()
+    if compositeComponents.isEmpty {
+      prepareItems()
+    }
 
     switch model.interaction.scrollDirection {
     case .horizontal:
@@ -160,7 +180,7 @@ public class Component: NSObject, CoreComponent, ComponentHorizontallyScrollable
   }
 
   func registerDefaultIfNeeded(view: View.Type) {
-    guard Configuration.views.storage[Configuration.views.defaultIdentifier] == nil else {
+    guard Configuration.views.defaultItem == nil else {
       return
     }
 
@@ -196,6 +216,10 @@ public class Component: NSObject, CoreComponent, ComponentHorizontallyScrollable
       width:  item(at: indexPath)?.size.width  ?? 0.0,
       height: item(at: indexPath)?.size.height ?? 0.0
     )
+  }
+
+  public func afterUpdate() {
+    setup(view.frame.size)
   }
 
   public func register() {

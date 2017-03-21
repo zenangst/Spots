@@ -5,7 +5,7 @@ import XCTest
 class CoreComponentTests: XCTestCase {
 
   func testAppendingMultipleItemsToComponent() {
-    let listComponent = ListComponent(model: ComponentModel(title: "ComponentModel", span: 1.0))
+    let listComponent = ListComponent(model: ComponentModel(title: "ComponentModel", kind: "list", span: 1.0))
     listComponent.setup(CGSize(width: 100, height: 100))
     var items: [Item] = []
 
@@ -29,7 +29,7 @@ class CoreComponentTests: XCTestCase {
   }
 
   func testAppendingMultipleItemsToSpotInController() {
-    let controller = Controller(components: [ListComponent(model: ComponentModel(title: "ComponentModel", span: 1.0))])
+    let controller = Controller(components: [ListComponent(model: ComponentModel(title: "ComponentModel", kind: "list", span: 1.0))])
     controller.prepareController()
     var items: [Item] = []
 

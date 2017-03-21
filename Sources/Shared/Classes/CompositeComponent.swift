@@ -1,4 +1,7 @@
 public struct CompositeComponent: Equatable {
+
+  static let identifier: String = "composite"
+
   /// Returns a Boolean value indicating whether two values are equal.
   ///
   /// Equality is the inverse of inequality. For any values `a` and `b`,
@@ -11,11 +14,11 @@ public struct CompositeComponent: Equatable {
     return lhs.itemIndex == rhs.itemIndex
   }
 
-  weak var parentComponent: CoreComponent?
-  var component: CoreComponent
+  weak var parentComponent: Component?
+  var component: Component
   var itemIndex: Int
 
-  init(component: CoreComponent, parentComponent: CoreComponent? = nil, itemIndex: Int) {
+  init(component: Component, parentComponent: Component? = nil, itemIndex: Int) {
     self.itemIndex = itemIndex
     self.parentComponent = parentComponent
     self.component = component

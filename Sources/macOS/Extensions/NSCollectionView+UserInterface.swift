@@ -2,7 +2,13 @@ import Cocoa
 
 extension NSCollectionView: UserInterface {
 
+  public static var compositeIdentifier: String {
+    return "collection-composite"
+  }
+
   public func register() {
+    register(GridComposite.self, forItemWithIdentifier: CollectionView.compositeIdentifier)
+
     for (identifier, item) in Configuration.views.storage {
       switch item {
       case .classType(_):
@@ -91,6 +97,8 @@ extension NSCollectionView: UserInterface {
       .map { IndexPath(item: $0, section: 0) })
     let childUpdates = Set<IndexPath>(changes.childUpdates
       .map { IndexPath(item: $0, section: 0) })
+
+    updateDataSource()
 
     performBatchUpdates({ [weak self] in
       self?.deleteItems(at: deletionSets)

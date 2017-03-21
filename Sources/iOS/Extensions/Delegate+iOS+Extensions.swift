@@ -78,7 +78,7 @@ extension Delegate: UICollectionViewDelegate {
     }
 
     if let component = component,
-      component.items[indexPath.item].kind != "composite",
+      component.items[indexPath.item].kind != CompositeComponent.identifier,
       indexPath.item < component.items.count {
       component.focusDelegate?.focusedSpot = component
       component.focusDelegate?.focusedItemIndex = indexPath.item
@@ -160,7 +160,7 @@ extension Delegate: UITableViewDelegate {
     }
 
     let kind: String = component.model.header?.kind ?? ""
-    guard component.type.headers.make(kind) == nil else {
+    guard Configuration.views.make(kind) == nil else {
       return nil
     }
 
@@ -215,12 +215,18 @@ extension Delegate: UITableViewDelegate {
   /// - returns: A view object to be displayed in the header of section based on the kind of the ListComponent and registered headers.
   public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
     guard let component = component,
-      let kind = component.model.header?.kind else {
+      var item = component.model.header else {
         return nil
     }
 
+    let kind = item.kind
+
+    guard !item.kind.isEmpty else {
+      return nil
+    }
+
     let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: kind)
-    view?.frame.size.height = component.model.meta(ListComponent.Key.headerHeight, 0.0)
+    view?.frame.size.height = heightForItem(&item)
     view?.frame.size.width = tableView.frame.size.width
 
     switch view {
@@ -252,12 +258,18 @@ extension Delegate: UITableViewDelegate {
 
   public func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
     guard let component = component,
-      let kind = component.model.footer?.kind else {
+      var item = component.model.footer else {
         return nil
     }
 
+    let kind = item.kind
+
+    guard !item.kind.isEmpty else {
+      return nil
+    }
+
     let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: kind)
-    view?.frame.size.height = component.model.meta(ListComponent.Key.headerHeight, 0.0)
+    view?.frame.size.height = heightForItem(&item)
     view?.frame.size.width = tableView.frame.size.width
 
     switch view {
@@ -294,7 +306,7 @@ extension Delegate: UITableViewDelegate {
     }
 
     if let component = component,
-      component.items[indexPath.item].kind != "composite",
+      component.items[indexPath.item].kind != CompositeComponent.identifier,
       indexPath.item < component.items.count {
       component.focusDelegate?.focusedSpot = component
       component.focusDelegate?.focusedItemIndex = indexPath.item

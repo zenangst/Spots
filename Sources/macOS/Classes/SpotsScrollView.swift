@@ -122,7 +122,6 @@ open class SpotsScrollView: NSScrollView {
     }
 
     documentView?.setFrameSize(CGSize(width: frame.width, height: fmax(yOffsetOfCurrentSubview, frame.height)))
-    displayIfNeeded()
 
     if let view = superview {
       view.layout()

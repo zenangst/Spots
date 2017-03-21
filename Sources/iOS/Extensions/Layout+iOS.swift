@@ -2,16 +2,20 @@ import UIKit
 
 extension Layout {
 
-  public func configure(component: Gridable) {
-    component.layout.sectionInset = UIEdgeInsets(
+  public func configure(component: Component) {
+    guard let collectionViewLayout = component.collectionView?.collectionViewLayout as? FlowLayout else {
+      return
+    }
+
+    collectionViewLayout.sectionInset = UIEdgeInsets(
       top: CGFloat(inset.top),
       left: CGFloat(inset.left),
       bottom: CGFloat(inset.bottom),
       right: CGFloat(inset.right)
     )
 
-    component.layout.minimumInteritemSpacing = CGFloat(itemSpacing)
-    component.layout.minimumLineSpacing = CGFloat(lineSpacing)
+    collectionViewLayout.minimumInteritemSpacing = CGFloat(itemSpacing)
+    collectionViewLayout.minimumLineSpacing = CGFloat(lineSpacing)
   }
 
   public func configure(collectionViewLayout: CollectionLayout) {

@@ -22,7 +22,7 @@ public enum ComponentModelDiff {
   case identifier, title, kind, layout, header, footer, meta, items, new, removed, none
 }
 
-/// The ComponentModel struct is used to configure a CoreComponent object
+/// The ComponentModel struct is used to configure a Component object
 public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
 
   public static var legacyMapping: Bool = false
@@ -104,7 +104,7 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
   /// A collection of view models
   public var items: [Item] = [Item]()
   /// The width and height of the component, usually calculated and updated by the UI component
-  public var size: CGSize?
+  public var size: CGSize? = .zero
   /// A key-value dictionary for any additional information
   public var meta = [String: Any]()
   /// Delcares if the ComponentModel uses core types or Spot class as it's base class.
@@ -343,7 +343,7 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
   }
 
   mutating public func add(child: ComponentModel) {
-    var item = Item(kind: "composite")
+    var item = Item(kind: CompositeComponent.identifier)
     item.children = [child.dictionary]
     items.append(item)
   }
