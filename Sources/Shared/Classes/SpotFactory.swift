@@ -9,7 +9,6 @@ public struct Factory {
     ComponentModel.Kind.list.string: ListComponent.self,
     ComponentModel.Kind.grid.string: GridComponent.self,
     ComponentModel.Kind.row.string: RowComponent.self,
-    ComponentModel.Kind.view.string: ViewComponent.self,
     ComponentModel.Kind.component.string: Component.self
   ]
 
