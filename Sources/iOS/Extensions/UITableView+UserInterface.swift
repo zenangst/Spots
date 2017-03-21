@@ -1,9 +1,14 @@
 import UIKit
 
 extension UITableView: UserInterface {
+
+  public static var compositeIdentifier: String {
+    return "list-composite"
+  }
+
   public func register() {
-    Configuration.register(view: ListComposite.self, identifier: "list-composite")
-    register(ListComposite.self, forCellReuseIdentifier: "list-composite")
+    Configuration.register(view: ListComposite.self, identifier: TableView.compositeIdentifier)
+    register(ListComposite.self, forCellReuseIdentifier: TableView.compositeIdentifier)
 
     for (identifier, item) in Configuration.views.storage {
       if identifier.contains(CompositeComponent.identifier) {

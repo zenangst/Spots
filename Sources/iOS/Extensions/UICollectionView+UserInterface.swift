@@ -2,9 +2,13 @@ import UIKit
 
 extension UICollectionView: UserInterface {
 
+  public static var compositeIdentifier: String {
+    return "collection-composite"
+  }
+
   public func register() {
-    Configuration.register(view: GridComposite.self, identifier: "grid-composite")
-    register(GridComposite.self, forCellWithReuseIdentifier: "grid-composite")
+    Configuration.register(view: GridComposite.self, identifier: CollectionView.compositeIdentifier)
+    register(GridComposite.self, forCellWithReuseIdentifier: CollectionView.compositeIdentifier)
 
     for (identifier, item) in Configuration.views.storage {
       if identifier.contains(CompositeComponent.identifier) {
