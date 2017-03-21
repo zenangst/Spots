@@ -310,6 +310,15 @@ import Tailor
   }
 
   public func afterUpdate() {
+    if let superview = view.superview {
+      let size = CGSize(width: superview.frame.width,
+                        height: view.frame.height)
+      layout(size)
+    }
+
+    guard !compositeComponents.isEmpty else {
+      return
+    }
     reload()
   }
 
