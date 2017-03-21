@@ -118,13 +118,14 @@ import Tailor
         self.model.layout = GridComponent.layout
       case .list:
         self.model.layout = ListComponent.layout
-        registerDefaultIfNeeded(view: ListComponentItem.self)
       case .row:
         self.model.layout = RowComponent.layout
       default:
         break
       }
     }
+
+    registerDefaultIfNeeded(view: ListComponentItem.self)
 
     userInterface.register()
 
