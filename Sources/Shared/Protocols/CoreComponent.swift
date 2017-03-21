@@ -52,7 +52,7 @@
 //  ///
 //  /// - parameter component: The component that the Component object should be initialized with.
 //  ///
-//  /// - returns: An initialized Component object.
+//  /// - returns: An initialized component.
 //  init(model: ComponentModel)
 //
 //  /// Setup Component object with size

@@ -168,11 +168,11 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
     return components.filter({ $0.index == index }).first as? T
   }
 
-  /// A look up method for resolving a component at index as a Component object.
+  /// A look up method for resolving a component at index as a component.
   ///
   /// - parameter index: The index of the component that you are trying to resolve.
   ///
-  /// - returns: An optional Component object.
+  /// - returns: An optional component.
   open func component(at index: Int = 0) -> Component? {
     return components.filter({ $0.index == index }).first
   }
@@ -368,7 +368,7 @@ extension Controller {
   ///
   /// - parameter indexPath: The index path of The component.
   ///
-  /// - returns: A Component object.
+  /// - returns: A component.
   fileprivate func component(at indexPath: IndexPath) -> Component {
     return components[indexPath.item]
   }

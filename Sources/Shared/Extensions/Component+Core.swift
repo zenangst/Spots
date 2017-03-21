@@ -408,7 +408,7 @@ public extension Component {
   ///
   /// - parameter index: The index of the item that needs resolving.
   ///
-  /// - returns: A string identifier for the view, defaults to the `defaultIdentifier` on the Component object.
+  /// - returns: A string identifier for the view, defaults to the `defaultIdentifier` on the component.
   public func identifier(at index: Int) -> String {
     guard let userInterface = userInterface else {
       assertionFailure("Unable to resolve userinterface.")
@@ -430,13 +430,13 @@ public extension Component {
     return type.views.defaultIdentifier
   }
 
-  /// Register and prepare all items in the Component object.
+  /// Register and prepare all items in the component.
   func registerAndPrepare() {
     register()
     prepareItems()
   }
 
-  /// Update height and refresh indexes for the Component object.
+  /// Update height and refresh indexes for the component.
   ///
   /// - parameter completion: A completion closure that will be run when the computations are complete.
   public func sanitize(completion: Completion = nil) {
@@ -457,14 +457,14 @@ public extension Component {
 
   /// Register a composite view for the Component model.
   ///
-  /// - parameter view: The view type that should be used as the composite view for the Component object.
+  /// - parameter view: The view type that should be used as the composite view for the component.
   func registerComposite(view: View.Type) {
     if type(of: self).views.composite == nil {
       type(of: self).views.composite = Registry.Item.classType(view)
     }
   }
 
-  /// Register a nib file with identifier on the Component object.
+  /// Register a nib file with identifier on the component.
   ///
   /// - parameter nib:        A Nib file that should be used for identifier
   /// - parameter identifier: A StringConvertible identifier for the registered nib.
@@ -480,9 +480,9 @@ public extension Component {
     self.views.storage[identifier.string] = Registry.Item.classType(view)
   }
 
-  /// Register a default view for the Component object.
+  /// Register a default view for the component.
   ///
-  /// - parameter view: The view type that should be used as the default view for the Component object.
+  /// - parameter view: The view type that should be used as the default view for the component.
   public static func register(defaultView view: View.Type) {
     self.views.defaultItem = Registry.Item.classType(view)
   }

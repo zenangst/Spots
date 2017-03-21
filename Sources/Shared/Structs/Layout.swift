@@ -7,7 +7,7 @@ import Tailor
   import UIKit
 #endif
 
-/// A layout struct used for mapping layout to a Component object.
+/// A layout struct used for mapping layout to a component.
 public struct Layout: Mappable, DictionaryConvertible, Equatable {
 
   /// A string based enum for keys used when encoding and decoding the struct from and to JSON.
