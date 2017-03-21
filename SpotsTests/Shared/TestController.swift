@@ -8,7 +8,7 @@ class ControllerTests: XCTestCase {
     let model = ComponentModel(title: "ComponentModel", span: 1.0)
     let listComponent = ListComponent(model: model)
     let controller = Controller(component: listComponent)
-    controller.preloadView()
+    controller.prepareController()
 
     XCTAssertEqual(controller.components.first, listComponent)
   }
@@ -17,7 +17,7 @@ class ControllerTests: XCTestCase {
     let model = ComponentModel(title: "ComponentModel", span: 1.0)
     let listComponent = ListComponent(model: model)
     let controller = Controller(component: listComponent)
-    controller.preloadView()
+    controller.prepareController()
     let items = [Item(title: "item1")]
 
     controller.update { component in
@@ -36,7 +36,7 @@ class ControllerTests: XCTestCase {
     let model = ComponentModel(title: "ComponentModel", kind: "list", span: 1.0)
     let listComponent = ListComponent(model: model)
     let controller = Controller(component: listComponent)
-    controller.preloadView()
+    controller.prepareController()
 
     XCTAssertEqual(controller.components.first?.model.items.count, 0)
 
@@ -59,10 +59,10 @@ class ControllerTests: XCTestCase {
   }
 
   func testAppendOneMoreItemInListComponent() {
-    let model = ComponentModel(title: "ComponentModel", kind: "list", span: 1.0, items: [Item(title: "title1")])
+    let model = ComponentModel(title: "ComponentModel", kind: "list", items: [Item(title: "title1")])
     let listComponent = ListComponent(model: model)
     let controller = Controller(component: listComponent)
-    controller.preloadView()
+    controller.prepareController()
 
     XCTAssertEqual(controller.components.first!.model.items.count, 1)
 
@@ -81,7 +81,7 @@ class ControllerTests: XCTestCase {
     let model = ComponentModel(title: "ComponentModel", kind: "list", span: 1.0)
     let listComponent = ListComponent(model: model)
     let controller = Controller(component: listComponent)
-    controller.preloadView()
+    controller.prepareController()
 
     let items = [
       Item(title: "title1", kind: "list"),
@@ -101,7 +101,7 @@ class ControllerTests: XCTestCase {
     let model = ComponentModel(title: "ComponentModel", kind: "list", span: 1.0)
     let listComponent = ListComponent(model: model)
     let controller = Controller(component: listComponent)
-    controller.preloadView()
+    controller.prepareController()
 
     let items = [
       Item(title: "title1", kind: "list"),
@@ -126,7 +126,7 @@ class ControllerTests: XCTestCase {
     let listComponent = ListComponent(model: model)
     let controller = Controller(component: listComponent)
 
-    controller.preloadView()
+    controller.prepareController()
 
     let items = [
       Item(title: "title3", kind: "list"),
@@ -153,7 +153,7 @@ class ControllerTests: XCTestCase {
     let initialListComponent = ListComponent(model: model)
     let controller = Controller(component: initialListComponent)
 
-    controller.preloadView()
+    controller.prepareController()
 
     let firstItem = controller.components.first!.model.items.first
 
@@ -182,7 +182,7 @@ class ControllerTests: XCTestCase {
     let initialListComponent = ListComponent(model: model)
     let controller = Controller(component: initialListComponent)
 
-    controller.preloadView()
+    controller.prepareController()
 
     let items = controller.components.first!.items
     let expectation = self.expectation(description: "Test delete items")
@@ -204,7 +204,7 @@ class ControllerTests: XCTestCase {
     let initialListComponent = ListComponent(model: model)
     let controller = Controller(component: initialListComponent)
 
-    controller.preloadView()
+    controller.prepareController()
 
     let expectation = self.expectation(description: "Test delete items")
 
@@ -228,7 +228,7 @@ class ControllerTests: XCTestCase {
     let initialListComponent = ListComponent(model: model)
     let controller = Controller(component: initialListComponent)
 
-    controller.preloadView()
+    controller.prepareController()
 
     let expectation = self.expectation(description: "Test delete items")
 
@@ -246,7 +246,7 @@ class ControllerTests: XCTestCase {
     let listComponent = ListComponent(model: model)
     let controller = Controller(component: listComponent)
 
-    controller.preloadView()
+    controller.prepareController()
 
     XCTAssert(controller.components.first!.model.items.count == 0)
 
@@ -267,7 +267,7 @@ class ControllerTests: XCTestCase {
     let listComponent = ListComponent(model: model)
     let controller = Controller(component: listComponent)
 
-    controller.preloadView()
+    controller.prepareController()
 
     let items = [
       Item(title: "title1", kind: "grid"),
@@ -288,7 +288,7 @@ class ControllerTests: XCTestCase {
     let listComponent = ListComponent(model: model)
     let controller = Controller(component: listComponent)
 
-    controller.preloadView()
+    controller.prepareController()
 
     let items = [
       Item(title: "title1", kind: "grid"),
@@ -312,7 +312,7 @@ class ControllerTests: XCTestCase {
     let initialListComponent = ListComponent(model: model)
     let controller = Controller(component: initialListComponent)
 
-    controller.preloadView()
+    controller.prepareController()
 
     let firstItem = controller.components.first!.model.items.first
 
@@ -338,7 +338,7 @@ class ControllerTests: XCTestCase {
     let listComponent = GridComponent(model: model)
     let controller = Controller(component: listComponent)
 
-    controller.preloadView()
+    controller.prepareController()
 
     XCTAssert(controller.components.first!.model.items.count == 0)
 
@@ -359,7 +359,7 @@ class ControllerTests: XCTestCase {
     let listComponent = GridComponent(model: model)
     let controller = Controller(component: listComponent)
 
-    controller.preloadView()
+    controller.prepareController()
 
     let items = [
       Item(title: "title1", kind: "carousel"),
@@ -381,7 +381,7 @@ class ControllerTests: XCTestCase {
     let listComponent = ListComponent(model: model)
     let controller = Controller(component: listComponent)
 
-    controller.preloadView()
+    controller.prepareController()
 
     let items = [
       Item(title: "title1", kind: "carousel"),
@@ -405,7 +405,7 @@ class ControllerTests: XCTestCase {
     let initialListComponent = ListComponent(model: model)
     let controller = Controller(component: initialListComponent)
 
-    controller.preloadView()
+    controller.prepareController()
 
     let firstItem = controller.components.first!.model.items.first
 
