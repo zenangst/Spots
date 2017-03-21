@@ -215,9 +215,6 @@
 		BDAD85B71E3E7032008289AE /* ScrollDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD854B1E3E7032008289AE /* ScrollDelegate.swift */; };
 		BDAD85B81E3E7032008289AE /* ScrollDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD854B1E3E7032008289AE /* ScrollDelegate.swift */; };
 		BDAD85B91E3E7032008289AE /* ScrollDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD854B1E3E7032008289AE /* ScrollDelegate.swift */; };
-		BDAD85BA1E3E7032008289AE /* CoreComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD854C1E3E7032008289AE /* CoreComponent.swift */; };
-		BDAD85BB1E3E7032008289AE /* CoreComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD854C1E3E7032008289AE /* CoreComponent.swift */; };
-		BDAD85BC1E3E7032008289AE /* CoreComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD854C1E3E7032008289AE /* CoreComponent.swift */; };
 		BDAD85C01E3E7032008289AE /* ComponentDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD854E1E3E7032008289AE /* ComponentDelegate.swift */; };
 		BDAD85C11E3E7032008289AE /* ComponentDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD854E1E3E7032008289AE /* ComponentDelegate.swift */; };
 		BDAD85C21E3E7032008289AE /* ComponentDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD854E1E3E7032008289AE /* ComponentDelegate.swift */; };
@@ -490,7 +487,6 @@
 		BDAD85471E3E7032008289AE /* Composable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Composable.swift; sourceTree = "<group>"; };
 		BDAD854A1E3E7032008289AE /* RefreshDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshDelegate.swift; sourceTree = "<group>"; };
 		BDAD854B1E3E7032008289AE /* ScrollDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollDelegate.swift; sourceTree = "<group>"; };
-		BDAD854C1E3E7032008289AE /* CoreComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreComponent.swift; sourceTree = "<group>"; };
 		BDAD854E1E3E7032008289AE /* ComponentDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentDelegate.swift; sourceTree = "<group>"; };
 		BDAD854F1E3E7032008289AE /* ComponentFocusDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentFocusDelegate.swift; sourceTree = "<group>"; };
 		BDAD85501E3E7032008289AE /* SpotsProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsProtocol.swift; sourceTree = "<group>"; };
@@ -831,7 +827,6 @@
 				BDAD854E1E3E7032008289AE /* ComponentDelegate.swift */,
 				BDAD854F1E3E7032008289AE /* ComponentFocusDelegate.swift */,
 				BDAD85471E3E7032008289AE /* Composable.swift */,
-				BDAD854C1E3E7032008289AE /* CoreComponent.swift */,
 				BDDCF6EE1E4DF93D004B38C4 /* DictionaryConvertible.swift */,
 				BDDCF6DA1E4DF91F004B38C4 /* Indexable.swift */,
 				BDDCF6DF1E4DF927004B38C4 /* ItemConfigurable.swift */,
@@ -1530,7 +1525,6 @@
 				BDAD85D41E3E7032008289AE /* ComponentModel.swift in Sources */,
 				BDAD85F61E3E703A008289AE /* CollectionAdapter+tvOS.swift in Sources */,
 				BDAD84A71E3E701C008289AE /* CarouselComponentCell.swift in Sources */,
-				BDAD85BC1E3E7032008289AE /* CoreComponent.swift in Sources */,
 				BDAD85E31E3E7032008289AE /* Interaction.swift in Sources */,
 				BD24030D1E4B981A005BAA19 /* Component.swift in Sources */,
 				BDAD84AD1E3E701C008289AE /* GridableLayout.swift in Sources */,
@@ -1634,7 +1628,6 @@
 				BDAD85C01E3E7032008289AE /* ComponentDelegate.swift in Sources */,
 				BDAD84CC1E3E701C008289AE /* Composable+iOS.swift in Sources */,
 				BDAD85751E3E7032008289AE /* RegistryType.swift in Sources */,
-				BDAD85BA1E3E7032008289AE /* CoreComponent.swift in Sources */,
 				BDAD84C41E3E701C008289AE /* RowComponentCell.swift in Sources */,
 				BDAD84BE1E3E701C008289AE /* ListComponentCell.swift in Sources */,
 				BDAD85ED1E3E7032008289AE /* StateCache.swift in Sources */,
@@ -1754,7 +1747,6 @@
 				BDAD85D01E3E7032008289AE /* Wrappable.swift in Sources */,
 				BDAD851B1E3E7025008289AE /* SpotsScrollView.swift in Sources */,
 				BDAD85EB1E3E7032008289AE /* Registry.swift in Sources */,
-				BDAD85BB1E3E7032008289AE /* CoreComponent.swift in Sources */,
 				BDAD85D91E3E7032008289AE /* Dispatch.swift in Sources */,
 				BDAD85F11E3E7032008289AE /* TypeAlias.swift in Sources */,
 				BDAD85201E3E7025008289AE /* Inset+macOS.swift in Sources */,
