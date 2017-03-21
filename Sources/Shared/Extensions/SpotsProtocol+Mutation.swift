@@ -209,21 +209,21 @@ extension SpotsProtocol {
     if newItems.count == component.items.count {
       reload(with: changes, in: component, newItems: newItems, animation: animation) { [weak self] in
         if let strongSelf = self, let completion = completion {
-          strongSelf.setupAndLayoutSpots()
+          strongSelf.completeUpdates()
           completion()
         }
       }
     } else if newItems.count < component.items.count {
       reload(with: changes, in: component, lessItems: newItems, animation: animation) { [weak self] in
         if let strongSelf = self, let completion = completion {
-          strongSelf.setupAndLayoutSpots()
+          strongSelf.completeUpdates()
           completion()
         }
       }
     } else if newItems.count > component.items.count {
       reload(with: changes, in: component, moreItems: newItems, animation: animation) { [weak self] in
         if let strongSelf = self, let completion = completion {
-          strongSelf.setupAndLayoutSpots()
+          strongSelf.completeUpdates()
           completion()
         }
       }
@@ -422,7 +422,7 @@ extension SpotsProtocol {
       }
 
       if runCompletion {
-        strongSelf.setupAndLayoutSpots()
+        strongSelf.completeUpdates()
         finalCompletion?()
       }
     }
@@ -734,18 +734,9 @@ extension SpotsProtocol {
     }
   }
 
-  func setupAndLayoutComponent(component: Component) {
-    component.setup(scrollView.frame.size)
-    component.model.size = CGSize(
-      width: component.view.frame.size.width,
-      height: ceil(component.view.frame.size.height))
-    component.layout(scrollView.frame.size)
-    component.view.layoutSubviews()
-  }
-
-  fileprivate func setupAndLayoutSpots() {
+  fileprivate func completeUpdates() {
     for component in components {
-      setupAndLayoutComponent(component: component)
+      component.afterUpdate()
     }
 
     #if !os(OSX)
