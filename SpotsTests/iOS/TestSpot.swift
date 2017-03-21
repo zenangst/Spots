@@ -21,8 +21,8 @@ class TestSpot: XCTestCase {
 
     XCTAssertTrue(component.view is TableView)
     XCTAssertTrue(component.view.isEqual(component.tableView))
-    XCTAssertEqual(component.items[0].size, CGSize(width: 100, height: 44))
-    XCTAssertEqual(component.items[1].size, CGSize(width: 100, height: 44))
+    XCTAssertEqual(component.model.items[0].size, CGSize(width: 100, height: 44))
+    XCTAssertEqual(component.model.items[1].size, CGSize(width: 100, height: 44))
     XCTAssertEqual(component.view.frame.size, CGSize(width: 100, height: 100))
 
     /// tvOS adds 14 pixels to each item in a table view.
@@ -79,8 +79,8 @@ class TestSpot: XCTestCase {
     listComponent.view.layoutSubviews()
 
     XCTAssertEqual(component.model.interaction.scrollDirection, listComponent.model.interaction.scrollDirection)
-    XCTAssertEqual(component.items[0].size, listComponent.items[0].size)
-    XCTAssertEqual(component.items[1].size, listComponent.items[0].size)
+    XCTAssertEqual(component.model.items[0].size, listComponent.model.items[0].size)
+    XCTAssertEqual(component.model.items[1].size, listComponent.model.items[0].size)
     XCTAssertEqual(component.sizeForItem(at: IndexPath(item: 0, section: 0)), listComponent.sizeForItem(at: IndexPath(item: 0, section: 0)))
     XCTAssertEqual(component.sizeForItem(at: IndexPath(item: 1, section: 0)), listComponent.sizeForItem(at: IndexPath(item: 1, section: 0)))
     XCTAssertEqual(component.view.frame, listComponent.view.frame)
@@ -102,8 +102,8 @@ class TestSpot: XCTestCase {
     gridComponent.view.layoutSubviews()
 
     XCTAssertEqual(component.model.interaction.scrollDirection, gridComponent.model.interaction.scrollDirection)
-    XCTAssertEqual(component.items[0].size, gridComponent.items[0].size)
-    XCTAssertEqual(component.items[1].size, gridComponent.items[0].size)
+    XCTAssertEqual(component.model.items[0].size, gridComponent.model.items[0].size)
+    XCTAssertEqual(component.model.items[1].size, gridComponent.model.items[0].size)
     XCTAssertEqual(component.sizeForItem(at: IndexPath(item: 0, section: 0)), gridComponent.sizeForItem(at: IndexPath(item: 0, section: 0)))
     XCTAssertEqual(component.sizeForItem(at: IndexPath(item: 1, section: 0)), gridComponent.sizeForItem(at: IndexPath(item: 1, section: 0)))
     XCTAssertEqual(component.view.frame, gridComponent.view.frame)
@@ -126,8 +126,8 @@ class TestSpot: XCTestCase {
     carouselComponent.view.layoutSubviews()
 
     XCTAssertEqual(component.model.interaction.scrollDirection, carouselComponent.model.interaction.scrollDirection)
-    XCTAssertEqual(component.items[0].size, carouselComponent.items[0].size)
-    XCTAssertEqual(component.items[1].size, carouselComponent.items[0].size)
+    XCTAssertEqual(component.model.items[0].size, carouselComponent.model.items[0].size)
+    XCTAssertEqual(component.model.items[1].size, carouselComponent.model.items[0].size)
     XCTAssertEqual(component.sizeForItem(at: IndexPath(item: 0, section: 0)), carouselComponent.sizeForItem(at: IndexPath(item: 0, section: 0)))
     XCTAssertEqual(component.sizeForItem(at: IndexPath(item: 1, section: 0)), carouselComponent.sizeForItem(at: IndexPath(item: 1, section: 0)))
     XCTAssertEqual(component.view.frame, carouselComponent.view.frame)

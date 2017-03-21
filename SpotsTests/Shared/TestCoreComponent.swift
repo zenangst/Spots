@@ -22,7 +22,7 @@ class CoreComponentTests: XCTestCase {
 
     let expectation = self.expectation(description: "Wait until done")
     Dispatch.after(seconds: 1.0) {
-      XCTAssertEqual(listComponent.items.count, 500)
+      XCTAssertEqual(listComponent.model.items.count, 500)
       expectation.fulfill()
     }
     waitForExpectations(timeout: 10.0, handler: nil)
@@ -46,7 +46,7 @@ class CoreComponentTests: XCTestCase {
 
     let expectation = self.expectation(description: "Wait until done")
     Dispatch.after(seconds: 1.0) {
-      XCTAssertEqual(controller.components[0].items.count, 500)
+      XCTAssertEqual(controller.components[0].model.items.count, 500)
       expectation.fulfill()
     }
     waitForExpectations(timeout: 10.0, handler: nil)

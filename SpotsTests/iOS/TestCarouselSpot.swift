@@ -157,12 +157,12 @@ class CarouselComponentTests: XCTestCase {
     }
 
     // Test that component height is equal to first item in the list
-    XCTAssertEqual(component.items.count, 3)
-    XCTAssertEqual(component.items[0].title, "foo")
-    XCTAssertEqual(component.items[1].title, "bar")
-    XCTAssertEqual(component.items[2].title, "baz")
-    XCTAssertEqual(component.items.first?.size.width, 120)
-    XCTAssertEqual(component.items.first?.size.height, 180)
+    XCTAssertEqual(component.model.items.count, 3)
+    XCTAssertEqual(component.model.items[0].title, "foo")
+    XCTAssertEqual(component.model.items[1].title, "bar")
+    XCTAssertEqual(component.model.items[2].title, "baz")
+    XCTAssertEqual(component.model.items.first?.size.width, 120)
+    XCTAssertEqual(component.model.items.first?.size.height, 180)
     XCTAssertEqual(component.view.frame.size.height, 180)
 
     // Check default value of `paginate`
@@ -205,19 +205,19 @@ class CarouselComponentTests: XCTestCase {
     let width = component.view.bounds.width / 4
 
     // Test that component height is equal to first item in the list
-    XCTAssertEqual(component.items.count, 4)
-    XCTAssertEqual(component.items[0].title, "foo")
-    XCTAssertEqual(component.items[1].title, "bar")
-    XCTAssertEqual(component.items[2].title, "baz")
-    XCTAssertEqual(component.items[3].title, "bazar")
-    XCTAssertEqual(component.items[0].size.width, width)
-    XCTAssertEqual(component.items[0].size.height, 88)
-    XCTAssertEqual(component.items[1].size.width, width)
-    XCTAssertEqual(component.items[1].size.height, 88)
-    XCTAssertEqual(component.items[2].size.width, width)
-    XCTAssertEqual(component.items[2].size.height, 88)
-    XCTAssertEqual(component.items[3].size.width, width)
-    XCTAssertEqual(component.items[3].size.height, 88)
+    XCTAssertEqual(component.model.items.count, 4)
+    XCTAssertEqual(component.model.items[0].title, "foo")
+    XCTAssertEqual(component.model.items[1].title, "bar")
+    XCTAssertEqual(component.model.items[2].title, "baz")
+    XCTAssertEqual(component.model.items[3].title, "bazar")
+    XCTAssertEqual(component.model.items[0].size.width, width)
+    XCTAssertEqual(component.model.items[0].size.height, 88)
+    XCTAssertEqual(component.model.items[1].size.width, width)
+    XCTAssertEqual(component.model.items[1].size.height, 88)
+    XCTAssertEqual(component.model.items[2].size.width, width)
+    XCTAssertEqual(component.model.items[2].size.height, 88)
+    XCTAssertEqual(component.model.items[3].size.width, width)
+    XCTAssertEqual(component.model.items[3].size.height, 88)
 
     // Assert that height has been added for the page indicator
     XCTAssertEqual(component.view.frame.size.height, 110)
@@ -266,10 +266,10 @@ class CarouselComponentTests: XCTestCase {
     XCTAssertEqual(model.layout!.pageIndicatorPlacement, .overlay)
 
     // Assert item layout (derived from preferred view size)
-    XCTAssertEqual(component.items[0].size.height, 88)
-    XCTAssertEqual(component.items[1].size.height, 88)
-    XCTAssertEqual(component.items[2].size.height, 88)
-    XCTAssertEqual(component.items[3].size.height, 88)
+    XCTAssertEqual(component.model.items[0].size.height, 88)
+    XCTAssertEqual(component.model.items[1].size.height, 88)
+    XCTAssertEqual(component.model.items[2].size.height, 88)
+    XCTAssertEqual(component.model.items[3].size.height, 88)
 
     // Assert that no height has been added for a page indicator
     XCTAssertEqual(component.view.frame.height, 88)
@@ -342,7 +342,7 @@ class CarouselComponentTests: XCTestCase {
     component.view.layoutSubviews()
 
     // Make sure our mocked item size is correct
-    XCTAssertEqual(collectionView.itemSize, component.items[0].size)
+    XCTAssertEqual(collectionView.itemSize, component.model.items[0].size)
 
     // When scrolling, make sure the closest item is centered
     var originalPoint = CGPoint(x: 350, y: 0)
