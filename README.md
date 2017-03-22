@@ -344,7 +344,9 @@ Because the framework can be used in a wide variety of ways, we have decided to 
           "kind":"HeaderView"
          },
          "kind":"list",
-         "span":"1",
+         "layout":{
+           "span":"1"
+         },
          "items":[
             {
                "title":"John Hyperseed",
