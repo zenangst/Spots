@@ -339,8 +339,11 @@ Because the framework can be used in a wide variety of ways, we have decided to 
 {
    "components":[
       {
-         "title":"Hyper iOS",
-         "type":"list",
+         "header":{
+          "title":"Hyper iOS",
+          "kind":"HeaderView"
+         },
+         "kind":"list",
          "span":"1",
          "items":[
             {
@@ -364,13 +367,13 @@ Because the framework can be used in a wide variety of ways, we have decided to 
                }
             },
             {
-               "title":"Ramon Gilabert Llop",
+               "title":"John Sundell",
                "subtitle":"iOS Developer",
                "image":"{image url}",
                "type":"profile",
                "action":"profile:3",
                "meta":{
-                  "nationality":"Catalan"
+                  "nationality":"Swedish"
                }
             },
             {
