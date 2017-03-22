@@ -225,4 +225,23 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   public func register() {
 
   }
+
+  fileprivate func configureClosureDidChange() {
+    guard let configure = configure else {
+      return
+    }
+
+    userInterface?.visibleViews.forEach { view in
+      switch view {
+      case let view as ItemConfigurable:
+        configure(view)
+      case let view as Wrappable:
+        if let wrappedView = view.wrappedView as? ItemConfigurable {
+          configure(wrappedView)
+        }
+      default:
+        break
+      }
+    }
+  }
 }
