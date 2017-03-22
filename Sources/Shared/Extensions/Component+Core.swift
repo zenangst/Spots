@@ -71,6 +71,25 @@ public extension Component {
     return height
   }
 
+  func configureClosureDidChange() {
+    guard let configure = configure else {
+      return
+    }
+
+    userInterface?.visibleViews.forEach { view in
+      switch view {
+      case let view as ItemConfigurable:
+        configure(view)
+      case let view as Wrappable:
+        if let wrappedView = view.wrappedView as? ItemConfigurable {
+          configure(wrappedView)
+        }
+      default:
+        break
+      }
+    }
+  }
+
   /// A helper method to return self as a Component type.
   ///
   /// - returns: Self as a Component type
