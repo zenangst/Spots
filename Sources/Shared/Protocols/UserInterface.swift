@@ -3,9 +3,9 @@ public protocol UserInterface: class {
 
   static var compositeIdentifier: String { get }
 
-  #if !os(OSX)
   var visibleViews: [View] { get }
 
+  #if !os(OSX)
   /// The index of the current selected item
   @available(iOS 9.0, *)
   var selectedIndex: Int { get }
