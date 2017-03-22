@@ -259,15 +259,18 @@ The JSON data will be parsed into view model data and your view controller is re
 
 ### Programmatic approach
 ```swift
-let myContacts = ComponentModel(title: "My contacts", items: [
-  Item(title: "John Hyperseed"),
-  Item(title: "Vadym Markov"),
-  Item(title: "Ramon Gilabert Llop"),
-  Item(title: "Khoa Pham"),
-  Item(title: "Christoffer Winterkvist")
-])
-let listComponent = ListComponent(model: myContacts)
-let controller = Controller(components: [listComponent])
+let contactModel = ComponentModel(
+  header: Item(title: "Contacts"), 
+  items: [
+    Item(title: "John Hyperseed"),
+    Item(title: "Vadym Markov"),
+    Item(title: "John Sundell"),
+    Item(title: "Khoa Pham"),
+    Item(title: "Christoffer Winterkvist")
+  ]
+)
+let component = Component(model: contactModel)
+let controller = Controller(components: [component])
 
 navigationController?.pushViewController(controller, animated: true)
 ```
