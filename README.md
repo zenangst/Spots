@@ -224,19 +224,32 @@ All methods take an `Item` as their first argument, the second is the index of t
 Configuring layout for different components can be tricky, Spots helps to solve this problem with a neat and tidy `Layout` struct that lives on `ComponentModel`. It is used to customize your UI related elements. It can set `sectionInset` and collection view related properties like `minimumInteritemSpacing` and `minimumLineSpacing`. It works great both programmatical and with JSON. It is supported on all three platforms.
 
 ```swift
-let layout = Layout() {
-  $0.span = 3.0
-  $0.itemSpacing = 10.0
-  $0.lineSpacing = 0.0
-  $0.inset = Inset(top: 0, left: 0, bottom: 0, right: 0)
-}
 
-let jsonLayout = Layout(
+/// Programmatic approach
+let layout = Layout(
+  span: 3.0,
+  dynamicSpan: false,
+  dynamicHeight: true,
+  pageIndicatorPlacement:  .below,
+  itemSpacing: 1.0,
+  lineSpacing: 1.0,
+  inset: Inset(
+    "top"    : 10,
+    "left"   : 10,
+    "bottom" : 10,
+    "right"  : 10
+  )
+)
+
+/// A layout built from JSON
+let json = Layout(
   [
     "span" : 3.0,
-    "item-spacing" : 10.0,
-    "line-spacing" : 0.0,
-    "dynamic-span" : true,
+    "dynamic-span" : false,
+    "dynamic-height" : true,
+    "page-indicator-placement" : "below",
+    "item-spacing" : 1.0,
+    "line-spacing" : 1.0,
     "inset" : [
       "top" : 10.0,
       "left" : 10.0,
