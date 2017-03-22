@@ -66,56 +66,6 @@ class CarouselComponentTests: XCTestCase {
     CarouselComponent.views.storage.removeAll()
   }
 
-  func testMetaMapping() {
-    var json: [String : Any] = [
-      "kind" : "carousel",
-      "meta": [
-        "item-spacing": 25.0,
-        "line-spacing": 10.0,
-        "dynamic-span": true
-      ]
-    ]
-
-    ComponentModel.legacyMapping = true
-
-    var model = ComponentModel(json)
-    var component = CarouselComponent(model: model)
-    component.setup(CGSize(width: 100, height: 100))
-
-    guard let collectionViewLayout = component.collectionView?.collectionViewLayout as? UICollectionViewFlowLayout else {
-      XCTFail("Unable to resolve collection view layout")
-      return
-    }
-
-    XCTAssertEqual(collectionViewLayout.minimumInteritemSpacing, 25.0)
-    XCTAssertEqual(collectionViewLayout.minimumLineSpacing, 10.0)
-    XCTAssertEqual(component.model.layout?.dynamicSpan, true)
-
-    json = [
-      "kind" : "carousel",
-      "meta": [
-        "item-spacing": 12.5,
-        "line-spacing": 7.5,
-        "dynamic-span": false
-      ]
-    ]
-
-    model = ComponentModel(json)
-    component = CarouselComponent(model: model)
-    component.setup(CGSize(width: 100, height: 100))
-
-    guard let secondCollectionViewLayout = component.collectionView?.collectionViewLayout as? UICollectionViewFlowLayout else {
-      XCTFail("Unable to resolve collection view layout")
-      return
-    }
-
-    XCTAssertEqual(secondCollectionViewLayout.minimumInteritemSpacing, 12.5)
-    XCTAssertEqual(secondCollectionViewLayout.minimumLineSpacing, 7.5)
-    XCTAssertEqual(component.model.layout?.dynamicSpan, false)
-
-    ComponentModel.legacyMapping = false
-  }
-
   func testCarouselSetupWithSimpleStructure() {
     let json: [String : Any] = [
       "kind" : "carousel",
