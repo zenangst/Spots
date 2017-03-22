@@ -49,6 +49,7 @@ Data source and delegate setup is handled by **Spots**, so there is no need for 
 * [View state caching](#view-state-caching)
 * [Live editing](#live-editing)
 * [How does it work?](#how-does-it-work)
+* [Working with views](#working-with-views)
 * [Performing mutation](#performing-mutation)
 * [Layout](#layout)
 * [Usage](#usage)
@@ -149,6 +150,8 @@ So how does scrolling work? Whenever a user scrolls, the **SpotsScrollView** com
 **SpotsScrollView** uses KVO on any view that gets added so if one component changes height or position, the entire layout will invalidate itself and redraw it like it was intended.
 
 **Controller** uses one or more **Component**. **Component** can be described as a UI container factory that configures what kind of interface should be displayed based of what model data you send it. At it's code, it uses `ComponentModel` which in turns contains model data like; layout, interaction and UI data. **Component** gets it's super-powers from protocol extensions. Powers like mutation, layout processing and convenience methods for accessing data. 
+
+## Working with views
 
 To add your own view to **Spots**, you need the view to conform to **ItemConfigurable** which means that you have to implement `preferredViewSize` size property and `configure(_ item: inout Item)` which is used to configure your view. You register the view on `Configuration` by giving the view it's own unique identifier.
 
