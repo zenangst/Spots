@@ -95,4 +95,18 @@ class CoreComponentTests: XCTestCase {
     XCTAssertFalse(type(of: genericView) === ListWrapper.self)
     XCTAssertTrue(type(of: genericView) === TestView.self)
   }
+
+  func testComponentConfigurationClosure() {
+    Configuration.register(view: TestView.self, identifier: "test-view")
+
+    let items = [Item(title: "Item A", kind: "test-view"), Item(title: "Item B")]
+    let component = CarouselComponent(model: ComponentModel(kind: "carousel", span: 0.0, items: items))
+    component.setup(CGSize(width: 100, height: 100))
+
+    var invokeCount = 0
+    component.configure = { view in
+      invokeCount += 1
+    }
+    XCTAssertEqual(invokeCount, 2)
+  }
 }
