@@ -43,7 +43,7 @@ extension Delegate: UICollectionViewDelegate {
   /// - parameter cell: The cell object that was removed.
   /// - parameter indexPath: The index path of the data item that the cell represented.
   public func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-    guard let component = component, indexPath.item < component.items.count,
+    guard let component = component, indexPath.item < component.model.items.count,
       let item = component.item(at: indexPath) else {
       return
     }
@@ -78,8 +78,8 @@ extension Delegate: UICollectionViewDelegate {
     }
 
     if let component = component,
-      component.items[indexPath.item].kind != CompositeComponent.identifier,
-      indexPath.item < component.items.count {
+      component.model.items[indexPath.item].kind != CompositeComponent.identifier,
+      indexPath.item < component.model.items.count {
       component.focusDelegate?.focusedSpot = component
       component.focusDelegate?.focusedItemIndex = indexPath.item
     }
@@ -306,8 +306,8 @@ extension Delegate: UITableViewDelegate {
     }
 
     if let component = component,
-      component.items[indexPath.item].kind != CompositeComponent.identifier,
-      indexPath.item < component.items.count {
+      component.model.items[indexPath.item].kind != CompositeComponent.identifier,
+      indexPath.item < component.model.items.count {
       component.focusDelegate?.focusedSpot = component
       component.focusDelegate?.focusedItemIndex = indexPath.item
     }

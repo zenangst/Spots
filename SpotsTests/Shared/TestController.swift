@@ -184,7 +184,7 @@ class ControllerTests: XCTestCase {
 
     controller.prepareController()
 
-    let items = controller.components.first!.items
+    let items = controller.components.first!.model.items
     let expectation = self.expectation(description: "Test delete items")
 
     controller.components[0].delete(items, withAnimation: .none) {
@@ -433,12 +433,12 @@ class ControllerTests: XCTestCase {
       ])
     let component = ListComponent(model: model)
 
-    XCTAssert(component.items == model.items)
+    XCTAssert(component.model.items == model.items)
 
     let newItems = [Item(title: "title3", kind: "list")]
-    component.items = newItems
-    XCTAssertFalse(component.items == model.items)
-    XCTAssert(component.items == newItems)
+    component.model.items = newItems
+    XCTAssertFalse(component.model.items == model.items)
+    XCTAssert(component.model.items == newItems)
   }
 
   func testFindAndFilterSpotWithClosure() {
@@ -451,7 +451,7 @@ class ControllerTests: XCTestCase {
     XCTAssertNotNil(controller.resolve(component: { $1.model.title == "GridComponent" }))
     XCTAssertNotNil(controller.resolve(component: { $1.userInterface is TableView }))
     XCTAssertNotNil(controller.resolve(component: { $1.userInterface is CollectionView }))
-    XCTAssertNotNil(controller.resolve(component: { $1.items.filter { $0.title == "Item" }.first != nil }))
+    XCTAssertNotNil(controller.resolve(component: { $1.model.items.filter { $0.title == "Item" }.first != nil }))
     XCTAssertEqual(controller.resolve(component: { $0.0 == 0 })?.model.title, "ListComponent")
     XCTAssertEqual(controller.resolve(component: { $0.0 == 1 })?.model.title, "ListComponent2")
     XCTAssertEqual(controller.resolve(component: { $0.0 == 2 })?.model.title, "GridComponent")
@@ -462,7 +462,7 @@ class ControllerTests: XCTestCase {
 
   func testJSONInitialiser() {
     let component = ListComponent(model: ComponentModel(kind: "list"))
-    component.items = [Item(title: "First item")]
+    component.model.items = [Item(title: "First item")]
     let sourceController = Controller(component: component)
     let jsonController = Controller([
       "components": [
@@ -573,8 +573,8 @@ class ControllerTests: XCTestCase {
 
     let controller = Controller(initialJSON)
     XCTAssertTrue(controller.components[0].userInterface is TableView)
-    XCTAssertEqual(controller.components[0].items.first?.title, "First list item")
-    XCTAssertEqual(controller.components[1].items.first?.title, "First list item")
+    XCTAssertEqual(controller.components[0].model.items.first?.title, "First list item")
+    XCTAssertEqual(controller.components[1].model.items.first?.title, "First list item")
     XCTAssertTrue(controller.components[1].userInterface is TableView)
     XCTAssertTrue(controller.components.count == 2)
     XCTAssertTrue(controller.components[0].compositeComponents.count == 0)
@@ -585,16 +585,16 @@ class ControllerTests: XCTestCase {
       XCTAssertEqual(controller.components.count, 2)
       XCTAssertTrue(controller.components[0].userInterface is TableView)
       XCTAssertTrue(controller.components[1].userInterface is CollectionView)
-      XCTAssertEqual(controller.components[0].items.first?.title, "First list item 2")
-      XCTAssertEqual(controller.components[1].items.first?.title, "First list item")
+      XCTAssertEqual(controller.components[0].model.items.first?.title, "First list item 2")
+      XCTAssertEqual(controller.components[1].model.items.first?.title, "First list item")
 
-      XCTAssertEqual(controller.components[0].items[1].kind, CompositeComponent.identifier)
+      XCTAssertEqual(controller.components[0].model.items[1].kind, CompositeComponent.identifier)
       XCTAssertEqual(controller.components[0].compositeComponents.count, 1)
 
       controller.reloadIfNeeded(initialJSON) {
         XCTAssertTrue(controller.components[0].userInterface is TableView)
-        XCTAssertEqual(controller.components[0].items.first?.title, "First list item")
-        XCTAssertEqual(controller.components[1].items.first?.title, "First list item")
+        XCTAssertEqual(controller.components[0].model.items.first?.title, "First list item")
+        XCTAssertEqual(controller.components[1].model.items.first?.title, "First list item")
         XCTAssertTrue(controller.components[1].userInterface is TableView)
         XCTAssertTrue(controller.components.count == 2)
         XCTAssertTrue(controller.components[0].compositeComponents.count == 0)
@@ -646,7 +646,7 @@ class ControllerTests: XCTestCase {
 
     /// Test what changed on the items
     let newItems = newComponentModels.first!.items
-    let oldItems = controller.components.first!.items
+    let oldItems = controller.components.first!.model.items
     var diff = Item.evaluate(newItems, oldModels: oldItems)
 
     XCTAssertEqual(diff![0], .text)

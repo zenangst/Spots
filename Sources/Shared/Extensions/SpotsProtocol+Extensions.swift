@@ -56,7 +56,7 @@ public extension SpotsProtocol {
 
     for component in components {
       var componentJSON = component.model.dictionary(amountOfItems)
-      for item in component.items where item.kind == CompositeComponent.identifier {
+      for item in component.model.items where item.kind == CompositeComponent.identifier {
         let results = component.compositeComponents
           .filter({ $0.itemIndex == item.index })
 
@@ -87,13 +87,13 @@ public extension SpotsProtocol {
   /// - returns: An optional object with inferred type.
   public func ui<T>(_ includeElement: (Item) -> Bool) -> T? {
     for component in components {
-      if let first = component.items.filter(includeElement).first {
+      if let first = component.model.items.filter(includeElement).first {
         return component.ui(at: first.index)
       }
 
       let cSpots = component.compositeComponents.map { $0.component }
       for compositeSpot in cSpots {
-        if let first = compositeSpot.items.filter(includeElement).first {
+        if let first = compositeSpot.model.items.filter(includeElement).first {
           return compositeSpot.ui(at: first.index)
         }
       }
@@ -126,14 +126,14 @@ public extension SpotsProtocol {
   public func filter(items includeElement: (Item) -> Bool) -> [(component: Component, items: [Item])] {
     var result = [(component: Component, items: [Item])]()
     for component in components {
-      let items = component.items.filter(includeElement)
+      let items = component.model.items.filter(includeElement)
       if !items.isEmpty {
         result.append((component: component, items: items))
       }
 
       let childSpots = component.compositeComponents.map { $0.component }
       for component in childSpots {
-        let items = component.items.filter(includeElement)
+        let items = component.model.items.filter(includeElement)
         if !items.isEmpty {
           result.append((component: component, items: items))
         }

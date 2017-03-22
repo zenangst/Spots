@@ -192,13 +192,13 @@ public extension Component {
 
   /// Refresh indexes for all items to ensure that the indexes are unique and in ascending order.
   public func refreshIndexes(completion: Completion = nil) {
-    var updatedItems = items
+    var updatedItems = model.items
 
     updatedItems.enumerated().forEach {
       updatedItems[$0.offset].index = $0.offset
     }
 
-    items = updatedItems
+    model.items = updatedItems
     completion?()
   }
 

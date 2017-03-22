@@ -79,10 +79,10 @@ open class GridableLayout: UICollectionViewFlowLayout {
 
     switch scrollDirection {
     case .horizontal:
-      guard let firstItem = component.items.first else { return }
+      guard let firstItem = component.model.items.first else { return }
 
-      contentSize.width = component.items.reduce(0, { $0 + floor($1.size.width) })
-      contentSize.width += minimumInteritemSpacing * CGFloat(component.items.count - 1)
+      contentSize.width = component.model.items.reduce(0, { $0 + floor($1.size.width) })
+      contentSize.width += minimumInteritemSpacing * CGFloat(component.model.items.count - 1)
 
       contentSize.height = firstItem.size.height + headerReferenceSize.height + footerHeight
 
