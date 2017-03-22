@@ -49,7 +49,8 @@ Data source and delegate setup is handled by **Spots**, so there is no need for 
 * [View state caching](#view-state-caching)
 * [Live editing](#live-editing)
 * [How does it work?](#how-does-it-work)
-* [Working with views](#working-with-views)
+  * [Working with views](#working-with-views)
+  * [Working with headers and footer](#working-with-headers-and-footers)
 * [Performing mutation](#performing-mutation)
 * [Layout](#layout)
 * [Usage](#usage)
@@ -199,6 +200,28 @@ Configuration.register(defaultView: MyAwesomeView.self)
 ```
 
 By letting the data decide which views to use, gives you the freedom of displaying anything anywhere, without cluttering your code with dirty if- or switch-statements that are hard to maintain and prone to introduce bugs.
+
+## Working with headers and footers
+
+Adding headers and footers is just as easy as adding regular views into your view hierarchy.
+You register them in the same way and on your `ComponentModel`, you add a header or footer item.
+This way you get the same kind of functionality as if you were adding a regular view in your component.
+The tl;dr is that you can display pretty much anything anywhere.
+
+```swift
+let header = Item(
+  title: "My awesome header", 
+  kind: "default-header-view"
+)
+let footer = Item(
+  title: "Congrats, you made it to the end", 
+  kind: "default-footer-view"
+)
+let component = ComponentModel(
+  header: header,
+  footer: footer
+)
+``` 
 
 ## Performing mutation
 
