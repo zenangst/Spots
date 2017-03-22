@@ -25,8 +25,6 @@ public enum ComponentModelDiff {
 /// The ComponentModel struct is used to configure a Component object
 public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
 
-  public static var legacyMapping: Bool = false
-
   /// An enum with all the string keys used in the view model
   public enum Key: String, StringConvertible {
     case index
@@ -183,19 +181,14 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
     self.meta      <- map.property("meta")
     self.isHybrid  <- map.property("hybrid")
 
-    if ComponentModel.legacyMapping {
-      self.layout = Layout(map.property("meta") ?? [:])
-      self.interaction = Interaction(map.property("meta") ?? [:])
-    } else {
-      if let layoutDictionary: [String : Any] = map.property(Layout.rootKey) {
-        self.layout = Layout(layoutDictionary)
-      }
+    if let layoutDictionary: [String : Any] = map.property(Layout.rootKey) {
+      self.layout = Layout(layoutDictionary)
+    }
 
-      if let interactionDictionary: [String : Any] = map.property(Interaction.rootKey) {
-        self.interaction = Interaction(interactionDictionary)
-      } else {
-        self.interaction = Interaction()
-      }
+    if let interactionDictionary: [String : Any] = map.property(Interaction.rootKey) {
+      self.interaction = Interaction(interactionDictionary)
+    } else {
+      self.interaction = Interaction()
     }
 
     if self.layout == nil {
@@ -244,10 +237,6 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
 
     if let span = span, layout == nil {
       self.layout = Layout(span: span)
-    }
-
-    if ComponentModel.legacyMapping {
-      self.layout?.configure(withJSON: meta)
     }
   }
 
