@@ -2,6 +2,10 @@ import Cocoa
 
 extension NSTableView: UserInterface {
 
+  public var visibleViews: [View] {
+    return []
+  }
+
   public static var compositeIdentifier: String {
     return "list-composite"
   }

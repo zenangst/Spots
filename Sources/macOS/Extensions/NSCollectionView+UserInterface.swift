@@ -2,6 +2,10 @@ import Cocoa
 
 extension NSCollectionView: UserInterface {
 
+  public var visibleViews: [View] {
+    return []
+  }
+
   public static var compositeIdentifier: String {
     return "collection-composite"
   }
