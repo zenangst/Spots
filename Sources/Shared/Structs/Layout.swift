@@ -108,13 +108,7 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
   ///
   /// - Parameter map: A JSON dictionary.
   public mutating func configure(withJSON map: [String : Any]) {
-    switch ComponentModel.legacyMapping {
-    case true:
-      self.inset = Inset(map)
-    case false:
-      self.inset = Inset(map.property(Inset.rootKey) ?? [:])
-    }
-
+    self.inset = Inset(map.property(Inset.rootKey) ?? [:])
     self.itemSpacing <- map.property(Key.itemSpacing.rawValue)
     self.lineSpacing <- map.property(Key.lineSpacing.rawValue)
     self.dynamicSpan <- map.property(Key.dynamicSpan.rawValue)

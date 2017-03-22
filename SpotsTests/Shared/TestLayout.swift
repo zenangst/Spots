@@ -50,17 +50,6 @@ class LayoutTests: XCTestCase {
     XCTAssertEqual(layout.inset, Inset(top: 1, left: 2, bottom: 3, right: 4))
   }
 
-  func testLegacyJSONMapping() {
-    let layout = Layout(json)
-
-    XCTAssertEqual(layout.span, 4.0)
-    XCTAssertEqual(layout.itemSpacing, 8.0)
-    XCTAssertEqual(layout.lineSpacing, 6.0)
-    XCTAssertEqual(layout.dynamicSpan, true)
-    XCTAssertEqual(layout.dynamicHeight, true)
-    XCTAssertEqual(layout.inset, Inset(top: 1, left: 2, bottom: 3, right: 4))
-  }
-
   func testDictionary() {
     let layout = Layout(json)
     let layoutJSON = layout.dictionary
