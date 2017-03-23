@@ -10,7 +10,6 @@ extension NSCollectionView: UserInterface {
         continue
       }
 
-
       views.append(item.view)
     }
 
