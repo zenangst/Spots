@@ -154,7 +154,7 @@ So how does scrolling work? Whenever a user scrolls, the **SpotsScrollView** com
 
 ## Working with views
 
-To add your own view to **Spots**, you need the view to conform to **ItemConfigurable** which means that you have to implement `preferredViewSize` size property and `configure(_ item: inout Item)` which is used to configure your view. You register the view on `Configuration` by giving the view it's own unique identifier.
+To add your own view to **Spots**, you need the view to conform to **ItemConfigurable** which means that you have to implement `preferredViewSize` size property and the `configure(_ item: inout Item)` method. This is used to aggregate model data to your view. You register the view on `Configuration` by giving the view its own unique identifier.
 
 We don’t like to dictate the terms of how you build your views, if you prefer to build them using `.nib` files, you should be free to do so, and with **Spots** you can. The only thing that differs is how you register the view on the component.
 
