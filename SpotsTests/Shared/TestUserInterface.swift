@@ -56,6 +56,7 @@ class TestUserInterface: XCTestCase {
     XCTAssertEqual(component.userInterface?.visibleViews.count, 1)
 
     component.view.contentOffset.x = 50
+    // If we don't call layoutIfNeeded, then `visibleCells` won't update correctly.
     component.collectionView?.layoutIfNeeded()
 
     // Expect two views to be visible on screen because the x offset is half of a view.
