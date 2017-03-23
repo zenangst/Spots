@@ -21,7 +21,7 @@ class CarouselComponentTests: XCTestCase {
 
   func testConvenienceInitWithSectionInsets() {
     let layout = Layout(itemSpacing: 5, inset: Inset(top: 5, left: 10, bottom: 5, right: 5))
-    let model = ComponentModel(kind: "grid", layout: layout, span: 1.0)
+    let model = ComponentModel(kind: .grid, layout: layout, span: 1.0)
     let component = CarouselComponent(model: model)
 
     guard let collectionViewLayout = component.collectionView?.collectionViewLayout as? UICollectionViewFlowLayout else {
@@ -34,7 +34,7 @@ class CarouselComponentTests: XCTestCase {
   }
 
   func testDictionaryRepresentation() {
-    let model = ComponentModel(title: "CarouselComponent", kind: "carousel", span: 3, meta: ["headerHeight": 44.0])
+    let model = ComponentModel(title: "CarouselComponent", kind: .carousel, span: 3, meta: ["headerHeight": 44.0])
     let component = CarouselComponent(model: model)
     XCTAssertEqual(model.dictionary["index"] as? Int, component.dictionary["index"] as? Int)
     XCTAssertEqual(model.dictionary["title"] as? String, component.dictionary["title"] as? String)
@@ -47,7 +47,7 @@ class CarouselComponentTests: XCTestCase {
   }
 
   func testSafelyResolveKind() {
-    let model = ComponentModel(title: "CarouselComponent", kind: "custom-carousel", span: 1.0, items: [Item(title: "foo", kind: "custom-item-kind")])
+    let model = ComponentModel(title: "CarouselComponent", kind: .carousel, span: 1.0, items: [Item(title: "foo", kind: "custom-item-kind")])
     let carouselComponent = CarouselComponent(model: model)
     let indexPath = IndexPath(row: 0, section: 0)
 
@@ -125,6 +125,8 @@ class CarouselComponentTests: XCTestCase {
   }
 
   func testCarouselSetupWithPagination() {
+    Configuration.registerDefault(view: GridComponentCell.self)
+
     let json: [String : Any] = [
       "kind" : "carousel",
       "items": [
@@ -188,6 +190,7 @@ class CarouselComponentTests: XCTestCase {
   }
 
   func testPageIndicatorOverlayPlacement() {
+    Configuration.registerDefault(view: GridComponentCell.self)
     let json: [String : Any] = [
       "items": [
         ["title": "foo", "kind": "carousel"],
@@ -195,6 +198,7 @@ class CarouselComponentTests: XCTestCase {
         ["title": "baz", "kind": "carousel"],
         ["title": "bazar", "kind": "carousel"]
       ],
+      "kind" : "carousel",
       "interaction": Interaction(paginate: .page).dictionary,
       "layout": Layout(
         span: 4.0,

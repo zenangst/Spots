@@ -31,7 +31,7 @@ class RxComponentDelegateTests: XCTestCase {
   
   func testDidChange() {
     let listComponent = Component(model: ComponentModel(kind: "list"))
-    let gridComponent = Component(model: ComponentModel(kind: "grid"))
+    let gridComponent = Component(model: ComponentModel(kind: .grid))
     var isCalled = false
 
     delegateProxy.didChange

@@ -66,8 +66,6 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
       registerDefaultIfNeeded(view: ListComponentCell.self)
     case .row:
       registerDefaultIfNeeded(view: RowComponentCell.self)
-    default:
-      break
     }
 
     Configuration.register(view: CarouselComponentCell.self, identifier: String(describing: CarouselComponentCell.self))
