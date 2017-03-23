@@ -110,21 +110,16 @@ extension Delegate: NSTableViewDelegate {
     }
 
     let reuseIdentifier = component.identifier(at: row)
-    var craftedView = component.type.views.make(reuseIdentifier)
 
-    if craftedView == nil {
-      craftedView = Configuration.views.make(reuseIdentifier)
-    }
-
-    guard let cachedView = craftedView else {
+    guard let viewContainer = Configuration.views.make(reuseIdentifier) else {
       return nil
     }
 
     var resolvedView: View? = nil
-    if let type = cachedView.type {
+    if let type = viewContainer.type {
       switch type {
       case .regular:
-        resolvedView = cachedView.view
+        resolvedView = viewContainer.view
       case .nib:
         resolvedView = tableView.make(withIdentifier: reuseIdentifier, owner: nil)
       }
