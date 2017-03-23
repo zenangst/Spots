@@ -247,7 +247,7 @@ All methods take an `Item` as their first argument, the second is the index of t
 
 #### Available in version 5.8.x >
 
-Configuring layout for different components can be tricky, Spots helps to solve this problem with a neat and tidy `Layout` struct that lives on `ComponentModel`. It is used to customize your UI related elements. It can set `sectionInset` and collection view related properties like `minimumInteritemSpacing` and `minimumLineSpacing`. It works great both programmatical and with JSON. It is supported on all three platforms.
+Configuring layout for different components can be tricky, Spots helps to solve this problem with a neat and tidy `Layout` struct that lives on `ComponentModel`. It is used to customize your UI related elements. It can set `sectionInset` and collection view related properties like `minimumInteritemSpacing` and `minimumLineSpacing`. It works great both programmatically and with JSON. It is supported on all three platforms.
 
 ```swift
 
