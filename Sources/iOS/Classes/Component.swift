@@ -9,7 +9,7 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   public static var views: Registry = {
     return Configuration.views
   }()
-  public static var defaultKind: String = ComponentModel.Kind.grid.string
+  public static var defaultKind: ComponentKind = .grid
 
   open static var configure: ((_ view: View) -> Void)?
 
@@ -18,7 +18,6 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   weak public var carouselScrollDelegate: CarouselScrollDelegate?
 
   public var model: ComponentModel
-  public var componentKind: ComponentModel.Kind = .list
   public var compositeComponents: [CompositeComponent] = []
 
   public var configure: ((ItemConfigurable) -> Void)? {
@@ -48,9 +47,8 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     return userInterface as? CollectionView
   }
 
-  public required init(model: ComponentModel, view: ScrollView, kind: ComponentModel.Kind) {
+  public required init(model: ComponentModel, view: ScrollView, kind: ComponentKind = Component.defaultKind) {
     self.model = model
-    self.componentKind = kind
     self.view = view
 
     super.init()
@@ -88,17 +86,11 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   }
 
   public required convenience init(model: ComponentModel) {
-    var model = model
-    if model.kind.isEmpty {
-      model.kind = Component.defaultKind
-    }
-
-    let kind = ComponentModel.Kind(rawValue: model.kind) ?? .list
-    let view = kind == .list
+    let view = model.kind == .list
       ? TableView()
       : CollectionView(frame: CGRect.zero, collectionViewLayout: CollectionLayout())
 
-    self.init(model: model, view: view, kind: kind)
+    self.init(model: model, view: view, kind: model.kind)
   }
 
   public convenience init(cacheKey: String) {
@@ -142,7 +134,7 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     collectionView.delegate = componentDelegate
     collectionView.backgroundView = backgroundView
 
-    if componentKind == .carousel {
+    if model.kind == .carousel {
       collectionView.showsHorizontalScrollIndicator = false
       self.model.interaction.scrollDirection = .horizontal
     }
