@@ -40,7 +40,7 @@ import Cache
             strongSelf.reloadIfNeeded(components) {
               strongSelf.scrollView.contentOffset = offset
             }
-            print("🎍 SPOTS reloaded: \(strongSelf.components.count) -> items: \(strongSelf.components.reduce(0, { $0.1.items.count }))")
+            print("🎍 SPOTS reloaded: \(strongSelf.components.count) -> items: \(strongSelf.components.reduce(0, { $0.1.model.items.count }))")
             strongSelf.liveEditing(stateCache: strongSelf.stateCache)
           }
         } catch _ {
