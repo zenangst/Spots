@@ -415,17 +415,11 @@ public extension Component {
 
     if let item = item(at: index), item.kind.contains(CompositeComponent.identifier) {
       return type(of: userInterface).compositeIdentifier
-    } else if let item = item(at: index), type.views.storage[item.kind] != nil {
-      return item.kind
     } else if let item = item(at: index), Configuration.views.storage[item.kind] != nil {
       return item.kind
-    } else if type.views.defaultItem != nil {
-      return type.views.defaultIdentifier
-    } else if Configuration.views.defaultItem != nil {
+    } else {
       return Configuration.views.defaultIdentifier
     }
-
-    return type.views.defaultIdentifier
   }
 
   /// Register and prepare all items in the component.
