@@ -56,6 +56,7 @@ class TestUserInterface: XCTestCase {
     XCTAssertEqual(component.userInterface?.visibleViews.count, 1)
 
     component.view.contentOffset.x = 50
+    component.collectionView?.layoutIfNeeded()
 
     // Expect two views to be visible on screen because the x offset is half of a view.
     XCTAssertEqual(component.userInterface?.visibleViews.count, 2)
