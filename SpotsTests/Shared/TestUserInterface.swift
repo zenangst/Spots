@@ -54,5 +54,10 @@ class TestUserInterface: XCTestCase {
 
     /// Expect to only have one visible view as the carousel as a span set to one.
     XCTAssertEqual(component.userInterface?.visibleViews.count, 1)
+
+    component.view.contentOffset.x = 50
+
+    /// Expect two views to be visible on screen because the x offset is half of a view.
+    XCTAssertEqual(component.userInterface?.visibleViews.count, 2)
   }
 }
