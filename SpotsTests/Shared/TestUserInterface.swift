@@ -4,7 +4,7 @@ import XCTest
 class TestUserInterface: XCTestCase {
 
   func testEmptyComponent() {
-    let model = ComponentModel(kind: "list")
+    let model = ComponentModel(kind: .list)
     let component = Component(model: model)
     
     component.setup(with: CGSize(width: 100, height: 100))
@@ -19,7 +19,7 @@ class TestUserInterface: XCTestCase {
       Item(title: "bar"),
       Item(title: "baz")
     ]
-    let model = ComponentModel(kind: "list", items: items)
+    let model = ComponentModel(kind: .list, items: items)
     let component = Component(model: model)
     
     component.setup(with: CGSize(width: 200, height: 200))
@@ -33,7 +33,7 @@ class TestUserInterface: XCTestCase {
       Item(title: "bar"),
       Item(title: "baz")
     ]
-    let model = ComponentModel(kind: "grid", items: items)
+    let model = ComponentModel(kind: .grid, items: items)
     let component = Component(model: model)
     
     component.setup(with: CGSize(width: 100, height: 100))
@@ -48,7 +48,7 @@ class TestUserInterface: XCTestCase {
       Item(title: "baz")
     ]
     let layout = Layout(span: 1)
-    let model = ComponentModel(kind: "carousel", layout: layout, items: items)
+    let model = ComponentModel(kind: .carousel, layout: layout, items: items)
     let component = Component(model: model)
     
     component.setup(with: CGSize(width: 100, height: 100))
