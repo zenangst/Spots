@@ -415,17 +415,11 @@ public extension Component {
 
     if let item = item(at: index), item.kind.contains(CompositeComponent.identifier) {
       return type(of: userInterface).compositeIdentifier
-    } else if let item = item(at: index), type.views.storage[item.kind] != nil {
-      return item.kind
     } else if let item = item(at: index), Configuration.views.storage[item.kind] != nil {
       return item.kind
-    } else if type.views.defaultItem != nil {
-      return type.views.defaultIdentifier
-    } else if Configuration.views.defaultItem != nil {
+    } else {
       return Configuration.views.defaultIdentifier
     }
-
-    return type.views.defaultIdentifier
   }
 
   /// Register and prepare all items in the component.
@@ -442,47 +436,6 @@ public extension Component {
       self?.refreshIndexes()
       completion?()
     }
-  }
-
-  /// Register default view for the Component object
-  ///
-  /// - parameter view: The view type that should be used as the default view
-  func registerDefault(view: View.Type) {
-    if type(of: self).views.storage[type(of: self).views.defaultIdentifier] == nil {
-      type(of: self).views.defaultItem = Registry.Item.classType(view)
-    }
-  }
-
-  /// Register a composite view for the Component model.
-  ///
-  /// - parameter view: The view type that should be used as the composite view for the component.
-  func registerComposite(view: View.Type) {
-    if type(of: self).views.composite == nil {
-      type(of: self).views.composite = Registry.Item.classType(view)
-    }
-  }
-
-  /// Register a nib file with identifier on the component.
-  ///
-  /// - parameter nib:        A Nib file that should be used for identifier
-  /// - parameter identifier: A StringConvertible identifier for the registered nib.
-  public static func register(nib: Nib, identifier: StringConvertible) {
-    self.views.storage[identifier.string] = Registry.Item.nib(nib)
-  }
-
-  /// Register a view with an identifier
-  ///
-  /// - parameter view:       The view type that should be registered with an identifier.
-  /// - parameter identifier: A StringConvertible identifier for the registered view type.
-  public static func register(view: View.Type, identifier: StringConvertible) {
-    self.views.storage[identifier.string] = Registry.Item.classType(view)
-  }
-
-  /// Register a default view for the component.
-  ///
-  /// - parameter view: The view type that should be used as the default view for the component.
-  public static func register(defaultView view: View.Type) {
-    self.views.defaultItem = Registry.Item.classType(view)
   }
 
   public func beforeUpdate() {}

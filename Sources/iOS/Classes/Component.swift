@@ -6,10 +6,8 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
 
   public static var layout: Layout = Layout(span: 0.0)
   public static var headers: Registry = Registry()
-  public static var views: Registry = {
-    return Configuration.views
-  }()
   public static var defaultKind: ComponentKind = .grid
+
 
   open static var configure: ((_ view: View) -> Void)?
 

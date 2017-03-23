@@ -2,7 +2,7 @@
 import Foundation
 import XCTest
 
-class CarouselComponentTests: XCTestCase {
+class ComponentTests: XCTestCase {
 
   var component: CarouselComponent!
   var cachedSpot: CarouselComponent!
@@ -51,19 +51,16 @@ class CarouselComponentTests: XCTestCase {
     let carouselComponent = CarouselComponent(model: model)
     let indexPath = IndexPath(row: 0, section: 0)
 
-    XCTAssertEqual(carouselComponent.identifier(for: indexPath), CarouselComponent.views.defaultIdentifier)
+    XCTAssertEqual(carouselComponent.identifier(for: indexPath), Configuration.views.defaultIdentifier)
 
-    CarouselComponent.views.defaultItem = Registry.Item.classType(CarouselComponentCell.self)
-    XCTAssertEqual(carouselComponent.identifier(for: indexPath), CarouselComponent.views.defaultIdentifier)
+    Configuration.views.defaultItem = Registry.Item.classType(CarouselComponentCell.self)
+    XCTAssertEqual(carouselComponent.identifier(for: indexPath), Configuration.views.defaultIdentifier)
 
-    CarouselComponent.views.defaultItem = Registry.Item.classType(CarouselComponentCell.self)
-    XCTAssertEqual(carouselComponent.identifier(for: indexPath), CarouselComponent.views.defaultIdentifier)
+    Configuration.views.defaultItem = Registry.Item.classType(CarouselComponentCell.self)
+    XCTAssertEqual(carouselComponent.identifier(for: indexPath), Configuration.views.defaultIdentifier)
 
-    CarouselComponent.views["custom-item-kind"] = Registry.Item.classType(CarouselComponentCell.self)
+    Configuration.views["custom-item-kind"] = Registry.Item.classType(CarouselComponentCell.self)
     XCTAssertEqual(carouselComponent.identifier(for: indexPath), "custom-item-kind")
-
-    CarouselComponent.views.purge()
-    CarouselComponent.views.storage.removeAll()
   }
 
   func testCarouselSetupWithSimpleStructure() {

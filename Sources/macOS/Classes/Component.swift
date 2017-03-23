@@ -7,7 +7,6 @@ import Tailor
 
   public static var layout: Layout = Layout(span: 0.0)
   public static var headers: Registry = Registry()
-  public static var views: Registry = Registry()
   public static var defaultKind: ComponentKind = .list
 
   open static var configure: ((_ view: View) -> Void)?

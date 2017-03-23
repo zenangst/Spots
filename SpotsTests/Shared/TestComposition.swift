@@ -100,7 +100,7 @@ class CompositionTests: XCTestCase {
       ]
     )
 
-    let component = GridComponent(model: model)
+    let component = Component(model: model)
     component.setup(with: CGSize(width: 200, height: 200))
 
     var composite: Composable?
