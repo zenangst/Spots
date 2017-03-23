@@ -40,7 +40,7 @@ public extension Component {
         #if !os(OSX)
           /// tvOS adds spacing between cells (it seems to be locked to 14 pixels in height).
           #if os(tvOS)
-            if model.kind == ComponentModel.Kind.list.string {
+            if model.kind == .list {
               height += 14
             }
           #endif
@@ -54,7 +54,7 @@ public extension Component {
 
       /// Add extra height to make room for focus shadow
       #if os(tvOS)
-        if model.kind == ComponentModel.Kind.list.string {
+        if model.kind == .list {
           height += 28
         }
       #endif

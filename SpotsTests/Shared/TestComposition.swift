@@ -14,17 +14,17 @@ class CompositionTests: XCTestCase {
 
   func testComponentModelCreation() {
     var model = ComponentModel(
-      kind: ComponentModel.Kind.grid.rawValue,
+      kind: .grid,
       span: 1.0
     )
 
-    model.add(child: ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0))
+    model.add(child: ComponentModel(kind: .list, span: 1.0))
 
     XCTAssertEqual(model.items.count, 1)
 
     model.add(children: [
-      ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0),
-      ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0)
+      ComponentModel(kind: .list, span: 1.0),
+      ComponentModel(kind: .list, span: 1.0)
       ]
     )
 
@@ -33,11 +33,11 @@ class CompositionTests: XCTestCase {
 
   func testCoreComponentCreation() {
     let layout = Layout().mutate { $0.span = 2.0 }
-    var model = ComponentModel(kind: ComponentModel.Kind.grid.rawValue, layout: layout)
+    var model = ComponentModel(kind: .grid, layout: layout)
 
     model.add(children: [
       ComponentModel(
-        kind: ComponentModel.Kind.list.rawValue,
+        kind: .list,
         span: 1.0,
         items: [
           Item(title: "foo"),
@@ -45,7 +45,7 @@ class CompositionTests: XCTestCase {
         ]
       ),
       ComponentModel(
-        kind: ComponentModel.Kind.list.rawValue,
+        kind: .list,
         span: 1.0,
         items: [
           Item(title: "baz"),
@@ -66,23 +66,23 @@ class CompositionTests: XCTestCase {
     }
 
     XCTAssertEqual(component.compositeComponents.count, 2)
-    XCTAssertEqual(component.compositeComponents[0].component.model.kind, ComponentModel.Kind.list.rawValue)
+    XCTAssertEqual(component.compositeComponents[0].component.model.kind, ComponentKind.list)
     XCTAssertEqual(component.compositeComponents[0].component.model.items.count, 2)
     XCTAssertEqual(component.compositeComponents[0].component.model.items[0].title, "foo")
     XCTAssertEqual(component.compositeComponents[0].component.model.items[1].title, "bar")
 
-    XCTAssertEqual(component.compositeComponents[1].component.model.kind, ComponentModel.Kind.list.rawValue)
+    XCTAssertEqual(component.compositeComponents[1].component.model.kind, ComponentKind.list)
     XCTAssertEqual(component.compositeComponents[1].component.model.items.count, 2)
     XCTAssertEqual(component.compositeComponents[1].component.model.items[0].title, "baz")
     XCTAssertEqual(component.compositeComponents[1].component.model.items[1].title, "bal")
   }
 
   func testUICreation() {
-    var model = ComponentModel(kind: ComponentModel.Kind.grid.rawValue, span: 2.0)
+    var model = ComponentModel(kind: .grid, span: 2.0)
 
     model.add(children: [
       ComponentModel(
-        kind: ComponentModel.Kind.list.rawValue,
+        kind: .list,
         span: 1,
         items: [
           Item(title: "foo"),
@@ -90,7 +90,7 @@ class CompositionTests: XCTestCase {
         ]
       ),
       ComponentModel(
-        kind: ComponentModel.Kind.list.rawValue,
+        kind: .list,
         span: 1,
         items: [
           Item(title: "baz"),
@@ -144,12 +144,12 @@ class CompositionTests: XCTestCase {
 
   func testReloadWithComponentModelsUsingCompositionTriggeringReplaceComponent() {
     let initialComponentModels: [ComponentModel] = [
-      ComponentModel(kind: ComponentModel.Kind.grid.rawValue,
+      ComponentModel(kind: .grid,
                 span: 2.0,
                 items: [
                   Item(kind: CompositeComponent.identifier, children:
                     [
-                      ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: .list, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -166,7 +166,7 @@ class CompositionTests: XCTestCase {
                   ),
                   Item(kind: CompositeComponent.identifier, children:
                     [
-                      ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: .list, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -183,12 +183,12 @@ class CompositionTests: XCTestCase {
                   )
         ]
       ),
-      ComponentModel(kind: ComponentModel.Kind.grid.rawValue,
+      ComponentModel(kind: .grid,
                 span: 2.0,
                 items: [
                   Item(kind: CompositeComponent.identifier, children:
                     [
-                      ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: .list, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -205,7 +205,7 @@ class CompositionTests: XCTestCase {
                   ),
                   Item(kind: CompositeComponent.identifier, children:
                     [
-                      ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: .list, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -289,12 +289,12 @@ class CompositionTests: XCTestCase {
                    (itemConfigurable!.preferredViewSize.height + heightOffset) * CGFloat(components[1].compositeComponents[1].component.model.items.count))
 
     let newComponentModels: [ComponentModel] = [
-      ComponentModel(kind: ComponentModel.Kind.grid.rawValue,
+      ComponentModel(kind: .grid,
                 span: 1.0,
                 items: [
                   Item(kind: CompositeComponent.identifier, children:
                     [
-                      ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: .list, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -311,7 +311,7 @@ class CompositionTests: XCTestCase {
                   ),
                   Item(kind: CompositeComponent.identifier, children:
                     [
-                      ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: .list, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -328,12 +328,12 @@ class CompositionTests: XCTestCase {
                   )
         ]
       ),
-      ComponentModel(kind: ComponentModel.Kind.grid.rawValue,
+      ComponentModel(kind: .grid,
                 span: 3.0,
                 items: [
                   Item(kind: CompositeComponent.identifier, children:
                     [
-                      ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: .list, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -350,7 +350,7 @@ class CompositionTests: XCTestCase {
                   ),
                   Item(kind: CompositeComponent.identifier, children:
                     [
-                      ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: .list, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -442,12 +442,12 @@ class CompositionTests: XCTestCase {
     var itemConfigurable: ItemConfigurable?
 
     let newComponentModels: [ComponentModel] = [
-      ComponentModel(kind: ComponentModel.Kind.grid.rawValue,
+      ComponentModel(kind: .grid,
                 span: 1.0,
                 items: [
                   Item(kind: CompositeComponent.identifier, children:
                     [
-                      ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: .list, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -464,7 +464,7 @@ class CompositionTests: XCTestCase {
                   ),
                   Item(kind: CompositeComponent.identifier, children:
                     [
-                      ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: .list, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -481,12 +481,12 @@ class CompositionTests: XCTestCase {
                   )
         ]
       ),
-      ComponentModel(kind: ComponentModel.Kind.grid.rawValue,
+      ComponentModel(kind: .grid,
                 span: 3.0,
                 items: [
                   Item(kind: CompositeComponent.identifier, children:
                     [
-                      ComponentModel(kind: ComponentModel.Kind.list.rawValue, items: [
+                      ComponentModel(kind: .list, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -503,7 +503,7 @@ class CompositionTests: XCTestCase {
                   ),
                   Item(kind: CompositeComponent.identifier, children:
                     [
-                      ComponentModel(kind: ComponentModel.Kind.list.rawValue, items: [
+                      ComponentModel(kind: .list, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -596,12 +596,12 @@ class CompositionTests: XCTestCase {
 
   func testReloadWithComponentModelsUsingCompositionTriggeringReloadMore() {
     let initialComponentModels: [ComponentModel] = [
-      ComponentModel(kind: ComponentModel.Kind.grid.rawValue,
+      ComponentModel(kind: .grid,
                 span: 2.0,
                 items: [
                   Item(kind: CompositeComponent.identifier, children:
                     [
-                      ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: .list, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -618,7 +618,7 @@ class CompositionTests: XCTestCase {
                   ),
                   Item(kind: CompositeComponent.identifier, children:
                     [
-                      ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: .list, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -635,12 +635,12 @@ class CompositionTests: XCTestCase {
                   )
         ]
       ),
-      ComponentModel(kind: ComponentModel.Kind.grid.rawValue,
+      ComponentModel(kind: .grid,
                 span: 2.0,
                 items: [
                   Item(kind: CompositeComponent.identifier, children:
                     [
-                      ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: .list, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -657,7 +657,7 @@ class CompositionTests: XCTestCase {
                   ),
                   Item(kind: CompositeComponent.identifier, children:
                     [
-                      ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: .list, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -745,12 +745,12 @@ class CompositionTests: XCTestCase {
                    (itemConfigurable!.preferredViewSize.height + heightOffset) * CGFloat(components[1].compositeComponents[1].component.model.items.count))
 
     let newComponentModels: [ComponentModel] = [
-      ComponentModel(kind: ComponentModel.Kind.grid.rawValue,
+      ComponentModel(kind: .grid,
                 span: 2.0,
                 items: [
                   Item(kind: CompositeComponent.identifier, children:
                     [
-                      ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: .list, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -768,7 +768,7 @@ class CompositionTests: XCTestCase {
                   ),
                   Item(kind: CompositeComponent.identifier, children:
                     [
-                      ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: .list, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -785,12 +785,12 @@ class CompositionTests: XCTestCase {
                   )
         ]
       ),
-      ComponentModel(kind: ComponentModel.Kind.grid.rawValue,
+      ComponentModel(kind: .grid,
                 span: 2.0,
                 items: [
                   Item(kind: CompositeComponent.identifier, children:
                     [
-                      ComponentModel(kind: ComponentModel.Kind.list.rawValue, items: [
+                      ComponentModel(kind: .list, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -808,7 +808,7 @@ class CompositionTests: XCTestCase {
                   ),
                   Item(kind: CompositeComponent.identifier, children:
                     [
-                      ComponentModel(kind: ComponentModel.Kind.list.rawValue, items: [
+                      ComponentModel(kind: .list, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -826,12 +826,12 @@ class CompositionTests: XCTestCase {
                   )
         ]
       ),
-      ComponentModel(kind: ComponentModel.Kind.grid.rawValue,
+      ComponentModel(kind: .grid,
                 span: 2.0,
                 items: [
                   Item(kind: CompositeComponent.identifier, children:
                     [
-                      ComponentModel(kind: ComponentModel.Kind.list.rawValue, items: [
+                      ComponentModel(kind: .list, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -849,7 +849,7 @@ class CompositionTests: XCTestCase {
                   ),
                   Item(kind: CompositeComponent.identifier, children:
                     [
-                      ComponentModel(kind: ComponentModel.Kind.list.rawValue, items: [
+                      ComponentModel(kind: .list, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -931,12 +931,12 @@ class CompositionTests: XCTestCase {
 
   func testReloadWithComponentModelsUsingCompositionTriggeringReloadLess() {
     let initialComponentModels: [ComponentModel] = [
-      ComponentModel(kind: ComponentModel.Kind.grid.rawValue,
+      ComponentModel(kind: .grid,
                 span: 2.0,
                 items: [
                   Item(kind: CompositeComponent.identifier, children:
                     [
-                      ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: .list, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -953,7 +953,7 @@ class CompositionTests: XCTestCase {
                   ),
                   Item(kind: CompositeComponent.identifier, children:
                     [
-                      ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: .list, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -970,12 +970,12 @@ class CompositionTests: XCTestCase {
                   )
         ]
       ),
-      ComponentModel(kind: ComponentModel.Kind.grid.rawValue,
+      ComponentModel(kind: .grid,
                 span: 2.0,
                 items: [
                   Item(kind: CompositeComponent.identifier, children:
                     [
-                      ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: .list, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -992,7 +992,7 @@ class CompositionTests: XCTestCase {
                   ),
                   Item(kind: CompositeComponent.identifier, children:
                     [
-                      ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: .list, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -1086,12 +1086,12 @@ class CompositionTests: XCTestCase {
                    (itemConfigurable!.preferredViewSize.height + heightOffset) * CGFloat(components[1].compositeComponents[1].component.model.items.count))
 
     let newComponentModels: [ComponentModel] = [
-      ComponentModel(kind: ComponentModel.Kind.grid.rawValue,
+      ComponentModel(kind: .grid,
                 span: 2.0,
                 items: [
                   Item(kind: CompositeComponent.identifier, children:
                     [
-                      ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: .list, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -1108,7 +1108,7 @@ class CompositionTests: XCTestCase {
                   ),
                   Item(kind: CompositeComponent.identifier, children:
                     [
-                      ComponentModel(kind: ComponentModel.Kind.list.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: .list, span: 1.0, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),

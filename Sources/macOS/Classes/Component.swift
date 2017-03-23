@@ -7,7 +7,7 @@ import Tailor
 
   public static var layout: Layout = Layout(span: 0.0)
   public static var headers: Registry = Registry()
-  public static var defaultKind: String = ComponentModel.Kind.list.string
+  public static var defaultKind: ComponentKind = .list
 
   open static var configure: ((_ view: View) -> Void)?
 
@@ -18,7 +18,7 @@ import Tailor
   var footerView: View?
 
   public var model: ComponentModel
-  public var componentKind: ComponentModel.Kind = .list
+  public var componentKind: ComponentKind = .list
   public var compositeComponents: [CompositeComponent] = []
 
   public var configure: ((ItemConfigurable) -> Void)? {
@@ -108,7 +108,7 @@ import Tailor
     return userInterface as? CollectionView
   }
 
-  public required init(model: ComponentModel, userInterface: UserInterface, kind: ComponentModel.Kind) {
+  public required init(model: ComponentModel, userInterface: UserInterface, kind: ComponentKind = Component.defaultKind) {
     self.model = model
     self.componentKind = kind
     self.userInterface = userInterface
@@ -125,8 +125,6 @@ import Tailor
         self.model.layout = ListComponent.layout
       case .row:
         self.model.layout = RowComponent.layout
-      default:
-        break
       }
     }
 
@@ -139,15 +137,9 @@ import Tailor
   }
 
   public required convenience init(model: ComponentModel) {
-    var model = model
-    if model.kind.isEmpty {
-      model.kind = Component.defaultKind
-    }
-
-    let kind = ComponentModel.Kind(rawValue: model.kind) ?? .list
     let userInterface: UserInterface
 
-    if kind == .list {
+    if model.kind == .list {
       userInterface = TableView()
     } else {
       let collectionView = CollectionView(frame: CGRect.zero)
@@ -155,7 +147,7 @@ import Tailor
       userInterface = collectionView
     }
 
-    self.init(model: model, userInterface: userInterface, kind: kind)
+    self.init(model: model, userInterface: userInterface, kind: model.kind)
 
     if componentKind == .carousel {
       self.model.interaction.scrollDirection = .horizontal

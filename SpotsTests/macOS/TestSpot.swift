@@ -58,7 +58,7 @@ class TestSpot: XCTestCase {
     let model = ComponentModel(
       header: Item(title: "Header", kind: "Header"),
       footer: Item(title: "Footer", kind: "Footer"),
-      kind: ComponentModel.Kind.list.string,
+      kind: .list,
       items: [
         Item(title: "A"),
         Item(title: "B"),
@@ -78,7 +78,7 @@ class TestSpot: XCTestCase {
     let model = ComponentModel(
       header: Item(title: "Header", kind: "Header"),
       footer: Item(title: "Footer", kind: "Footer"),
-      kind: ComponentModel.Kind.grid.string,
+      kind: .grid,
       items: [
         Item(title: "A", kind: "TextView"),
         Item(title: "B", kind: "TextView"),
@@ -99,7 +99,7 @@ class TestSpot: XCTestCase {
     let model = ComponentModel(
       header: Item(title: "Header", kind: "Header"),
       footer: Item(title: "Footer", kind: "Footer"),
-      kind: ComponentModel.Kind.carousel.string,
+      kind: .carousel,
       items: [
         Item(title: "A", kind: "TextView"),
         Item(title: "B", kind: "TextView"),

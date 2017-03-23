@@ -22,6 +22,27 @@ public enum ComponentModelDiff {
   case identifier, title, kind, layout, header, footer, meta, items, new, removed, none
 }
 
+/// An enum for identifing the ComponentModel kind
+public enum ComponentKind: String, Equatable {
+  /// The identifier for CarouselComponent
+  case carousel
+  /// The identifier for GridComponent
+  case grid
+  /// The identifier for ListComponent
+  case list
+  /// The identifier for RowComponent
+  case row
+
+  /// The lowercase raw value of the case
+  public var string: String {
+    return rawValue.lowercased()
+  }
+
+  public static func == (lhs: ComponentKind, rhs: String) -> Bool {
+    return lhs.string == rhs
+  }
+}
+
 /// The ComponentModel struct is used to configure a Component object
 public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
 
@@ -48,27 +69,6 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
     }
   }
 
-  /// An enum for identifing the ComponentModel kind
-  public enum Kind: String {
-    /// The identifier for CarouselComponent
-    case carousel
-    /// The identifier for GridComponent
-    case grid
-    /// The identifier for ListComponent
-    case list
-    /// The identifier for RowComponent
-    case row
-    /// The identifier for ViewComponent
-    case view
-    /// The identifier for Component
-    case component
-
-    /// The lowercase raw value of the case
-    public var string: String {
-      return rawValue.lowercased()
-    }
-  }
-
   public var span: Double {
     get {
       return layout?.span ?? 0.0
@@ -90,7 +90,7 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
   public var title: String = ""
   /// Determines which component that should be used.
   /// Default kinds are: list, grid and carousel
-  public var kind: String = ""
+  public var kind: ComponentKind = .list
   /// The header identifier
   public var header: Item?
   /// User interaction properties
@@ -137,7 +137,7 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
 
     var JSONComponentModels: [String : Any] = [
       Key.index.string: index,
-      Key.kind.string: kind,
+      Key.kind.string: kind.string,
       Key.size.string: [
         Key.width.string: width,
         Key.height.string: height
@@ -174,7 +174,7 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
   public init(_ map: [String : Any]) {
     self.identifier = map.property("identifier")
     self.title     <- map.property("title")
-    self.kind      <- map.property("kind")
+    self.kind      <- map.enum("kind")
     self.header    <- map.relation("header")
     self.footer    <- map.relation("footer")
     self.items     <- map.relations("items")
@@ -217,7 +217,7 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
               title: String = "",
               header: Item? = nil,
               footer: Item? = nil,
-              kind: String = "",
+              kind: ComponentKind = .list,
               layout: Layout? = nil,
               interaction: Interaction = .init(),
               span: Double? = nil,
