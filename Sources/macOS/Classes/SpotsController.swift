@@ -183,7 +183,7 @@ open class SpotsController: NSViewController, SpotsProtocol {
     super.viewDidAppear()
 
     for component in components {
-      component.layout(scrollView.frame.size)
+      component.layout(with: scrollView.frame.size)
     }
   }
 
@@ -217,7 +217,7 @@ open class SpotsController: NSViewController, SpotsProtocol {
 
     components[index].model.index = index
     component.register()
-    component.setup(CGSize(width: view.frame.width, height: view.frame.size.height))
+    component.setup(with: CGSize(width: view.frame.width, height: view.frame.size.height))
     component.model.size = CGSize(
       width: view.frame.width,
       height: ceil(component.view.frame.height))
@@ -227,11 +227,11 @@ open class SpotsController: NSViewController, SpotsProtocol {
     super.viewDidLayout()
 
     for component in components {
-      component.layout(CGSize(width: view.frame.width,
+      component.layout(with: CGSize(width: view.frame.width,
         height: component.computedHeight))
 
       for compositeComponent in component.compositeComponents {
-        compositeComponent.component.setup(CGSize(width: view.frame.width,
+        compositeComponent.component.setup(with: CGSize(width: view.frame.width,
                                         height: compositeComponent.component.computedHeight))
       }
     }
@@ -264,10 +264,10 @@ open class SpotsController: NSViewController, SpotsProtocol {
         return
       }
 
-      component.setup(component.view.frame.size)
+      component.setup(with: component.view.frame.size)
     } else if component.userInterface is TableView {
       let size = CGSize(width: view.frame.size.width, height: component.view.frame.size.height)
-      component.layout(size)
+      component.layout(with: size)
     }
   }
 

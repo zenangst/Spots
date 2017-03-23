@@ -17,7 +17,7 @@ public extension Composable {
     var height: CGFloat = 0.0
 
     compositeComponents.enumerated().forEach { _, compositeSpot in
-      compositeSpot.component.setup(size)
+      compositeSpot.component.setup(with: size)
 
       compositeSpot.component.model.size = CGSize(
         width: width,

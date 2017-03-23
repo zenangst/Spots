@@ -94,7 +94,7 @@ class CarouselComponentTests: XCTestCase {
 
     let model = ComponentModel(json)
     let component = CarouselComponent(model: model)
-    component.setup(CGSize(width: 100, height: 100))
+    component.setup(with: CGSize(width: 100, height: 100))
 
     guard let collectionView = component.collectionView else {
       XCTFail("Unable to resolve collection view.")
@@ -120,7 +120,7 @@ class CarouselComponentTests: XCTestCase {
 
     // Check that header height gets added to the calculation
     collectionViewLayout.headerReferenceSize.height = 20
-    component.setup(CGSize(width: 100, height: 100))
+    component.setup(with: CGSize(width: 100, height: 100))
     XCTAssertEqual(component.view.frame.size.height, 200)
   }
 
@@ -148,7 +148,7 @@ class CarouselComponentTests: XCTestCase {
     // Check `span` mapping
     XCTAssertEqual(component.model.layout!.span, 4.0)
 
-    component.setup(parentSize)
+    component.setup(with: parentSize)
     component.prepareItems()
     component.view.layoutSubviews()
 
@@ -180,8 +180,8 @@ class CarouselComponentTests: XCTestCase {
 
     // Check that header height gets added to the calculation
     collectionViewLayout.headerReferenceSize.height = 20
-    component.setup(CGSize(width: 667, height: 225))
-    component.layout(CGSize(width: 667, height: 225))
+    component.setup(with: CGSize(width: 667, height: 225))
+    component.layout(with: CGSize(width: 667, height: 225))
     component.view.layoutSubviews()
     XCTAssertEqual(component.view.frame.size.height, 130)
     XCTAssertEqual(component.view.contentSize.height, 130)
@@ -207,8 +207,8 @@ class CarouselComponentTests: XCTestCase {
     let component = CarouselComponent(model: model)
     let parentSize = CGSize(width: 667, height: 225)
 
-    component.setup(parentSize)
-    component.layout(parentSize)
+    component.setup(with: parentSize)
+    component.layout(with: parentSize)
     component.prepareItems()
     component.view.layoutSubviews()
 
@@ -287,7 +287,7 @@ class CarouselComponentTests: XCTestCase {
     let component = CarouselComponent(model: model, view: collectionView, kind: .carousel)
     let parentSize = CGSize(width: 300, height: 100)
 
-    component.setup(parentSize)
+    component.setup(with: parentSize)
     component.collectionView?.collectionViewLayout = layout
     component.view.layoutSubviews()
 

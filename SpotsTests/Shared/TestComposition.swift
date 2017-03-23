@@ -56,7 +56,7 @@ class CompositionTests: XCTestCase {
     )
 
     let component = GridComponent(model: model)
-    component.setup(CGSize(width: 100, height: 100))
+    component.setup(with: CGSize(width: 100, height: 100))
 
     XCTAssertEqual(component.model.items.count, 2)
 
@@ -101,7 +101,7 @@ class CompositionTests: XCTestCase {
     )
 
     let component = GridComponent(model: model)
-    component.setup(CGSize(width: 200, height: 200))
+    component.setup(with: CGSize(width: 200, height: 200))
 
     var composite: Composable?
     var itemConfigurable: ItemConfigurable?

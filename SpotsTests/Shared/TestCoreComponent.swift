@@ -6,7 +6,7 @@ class CoreComponentTests: XCTestCase {
 
   func testAppendingMultipleItemsToComponent() {
     let listComponent = ListComponent(model: ComponentModel(title: "ComponentModel", kind: "list", span: 1.0))
-    listComponent.setup(CGSize(width: 100, height: 100))
+    listComponent.setup(with: CGSize(width: 100, height: 100))
     var items: [Item] = []
 
     for i in 0..<10 {
@@ -61,8 +61,8 @@ class CoreComponentTests: XCTestCase {
     let model = ComponentModel(items: [Item(title: "foo", kind: kind)])
     let component = GridComponent(model: model)
     component.view.frame.size = parentSize
-    component.setup(parentSize)
-    component.layout(parentSize)
+    component.setup(with: parentSize)
+    component.layout(with: parentSize)
     component.view.layoutIfNeeded()
 
     guard let genericView: View = component.ui(at: 0) else {
@@ -83,8 +83,8 @@ class CoreComponentTests: XCTestCase {
     let model = ComponentModel(items: [Item(title: "foo", kind: kind)])
     let component = ListComponent(model: model)
 
-    component.setup(parentSize)
-    component.layout(parentSize)
+    component.setup(with: parentSize)
+    component.layout(with: parentSize)
     component.view.layoutSubviews()
 
     guard let genericView: View = component.ui(at: 0) else {
@@ -101,7 +101,7 @@ class CoreComponentTests: XCTestCase {
 
     let items = [Item(title: "Item A", kind: "test-view"), Item(title: "Item B")]
     let component = CarouselComponent(model: ComponentModel(kind: "carousel", span: 0.0, items: items))
-    component.setup(CGSize(width: 100, height: 100))
+    component.setup(with: CGSize(width: 100, height: 100))
 
     var invokeCount = 0
     component.configure = { _ in
@@ -117,7 +117,7 @@ class CoreComponentTests: XCTestCase {
 
     let items = [Item(title: "Item A", kind: "test-view"), Item(title: "Item B")]
     let component = CarouselComponent(model: ComponentModel(kind: "list", items: items))
-    component.setup(CGSize(width: 100, height: 100))
+    component.setup(with: CGSize(width: 100, height: 100))
 
     var invokeCount = 0
     component.configure = { _ in

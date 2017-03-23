@@ -247,10 +247,10 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
     scrollView.componentsView.frame.size = size
 
     components.forEach { component in
-      component.layout(size)
+      component.layout(with: size)
 
       component.compositeComponents.forEach {
-        $0.component.layout(component.view.frame.size)
+        $0.component.layout(with: component.view.frame.size)
       }
     }
   }
@@ -301,7 +301,7 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
 
     component.view.frame.origin.x = 0.0
     component.model.index = index
-    component.setup(superview.frame.size)
+    component.setup(with: superview.frame.size)
     component.model.size = CGSize(
       width: superview.frame.width,
       height: ceil(component.view.frame.height))

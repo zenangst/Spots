@@ -74,7 +74,7 @@ class DelegateTests: XCTestCase {
   func testTableViewHeightForRowOnListable() {
     Configuration.registerDefault(view: ListComponentCell.self)
     let component = ListComponent(model: ComponentModel(kind: "list", span: 1, items: [Item(title: "title 1")]))
-    component.setup(CGSize(width: 100, height: 100))
+    component.setup(with: CGSize(width: 100, height: 100))
 
     guard let tableView = component.tableView else {
       XCTFail("Unable to resolve table view.")
@@ -96,7 +96,7 @@ class DelegateTests: XCTestCase {
         Item(title: "title 1"),
         Item(title: "title 2")
       ]))
-    component.setup(CGSize(width: 100, height: 100))
+    component.setup(with: CGSize(width: 100, height: 100))
     component.view.layoutSubviews()
 
     guard let tableView = component.tableView else {
@@ -131,7 +131,7 @@ class DelegateTests: XCTestCase {
     Configuration.register(view: CustomListHeaderView.self, identifier: "custom-header")
 
     let component = Component(model: ComponentModel(header: Item(kind: "custom-header"), kind: "list"))
-    component.setup(CGSize(width: 100, height: 100))
+    component.setup(with: CGSize(width: 100, height: 100))
     component.view.layoutSubviews()
 
     guard let tableView = component.tableView else {
@@ -177,7 +177,7 @@ class DelegateTests: XCTestCase {
     Configuration.register(view: CustomListHeaderView.self, identifier: "custom-footer")
 
     let component = Component(model: ComponentModel(footer: Item(kind: "custom-footer"), kind: "list"))
-    component.setup(CGSize(width: 100, height: 100))
+    component.setup(with: CGSize(width: 100, height: 100))
     component.view.layoutSubviews()
 
     guard let tableView = component.tableView else {

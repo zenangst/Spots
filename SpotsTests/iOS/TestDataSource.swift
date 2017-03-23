@@ -11,7 +11,7 @@ class DataSourceTests: XCTestCase {
       Item(title: "title 2")
       ]))
 
-    component.setup(CGSize(width: 100, height: 100))
+    component.setup(with: CGSize(width: 100, height: 100))
 
 
 
@@ -50,7 +50,7 @@ class DataSourceTests: XCTestCase {
       Item(title: "title 2")
       ]))
 
-    component.setup(CGSize(width: 100, height: 100))
+    component.setup(with: CGSize(width: 100, height: 100))
 
     guard let collectionView = component.collectionView else {
       XCTFail("Unable to resolve collection view.")
@@ -90,7 +90,7 @@ class DataSourceTests: XCTestCase {
         Item(title: "title 1"),
         Item(title: "title 2")
       ]))
-    component.setup(CGSize(width: 100, height: 100))
+    component.setup(with: CGSize(width: 100, height: 100))
     component.view.layoutSubviews()
 
     let header = component.componentDataSource!.collectionView(component.collectionView!, viewForSupplementaryElementOfKind: UICollectionElementKindSectionHeader, at: IndexPath(item: 0, section: 0))

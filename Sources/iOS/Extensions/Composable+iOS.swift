@@ -23,7 +23,7 @@ public extension Composable where Self : View {
     #endif
 
     compositeComponents.enumerated().forEach { _, compositeSpot in
-      compositeSpot.component.setup(size)
+      compositeSpot.component.setup(with: size)
       compositeSpot.component.model.size = CGSize(
         width: width,
         height: ceil(compositeSpot.component.view.frame.size.height))

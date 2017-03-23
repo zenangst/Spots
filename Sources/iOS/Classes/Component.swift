@@ -113,7 +113,7 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     componentDelegate = nil
   }
 
-  public func setup(_ size: CGSize) {
+  public func setup(with size: CGSize) {
     type(of: self).configure?(view)
 
     if let tableView = self.tableView {
@@ -122,11 +122,11 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
       setupCollectionView(collectionView, with: size)
     }
 
-    layout(size)
+    layout(with: size)
     configurePageControl()
   }
 
-  public func layout(_ size: CGSize) {
+  public func layout(with size: CGSize) {
     if let tableView = self.tableView {
       layoutTableView(tableView, with: size)
     } else if let collectionView = self.collectionView {
@@ -219,7 +219,7 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   }
 
   public func afterUpdate() {
-    setup(view.frame.size)
+    setup(with: view.frame.size)
   }
 
   public func register() {

@@ -7,7 +7,7 @@ class TestUserInterface: XCTestCase {
     let model = ComponentModel(kind: "list")
     let component = Component(model: model)
     
-    component.setup(CGSize(width: 100, height: 100))
+    component.setup(with: CGSize(width: 100, height: 100))
 
     XCTAssertEqual(component.userInterface?.visibleViews.count, 0)
   }
@@ -22,7 +22,7 @@ class TestUserInterface: XCTestCase {
     let model = ComponentModel(kind: "list", items: items)
     let component = Component(model: model)
     
-    component.setup(CGSize(width: 200, height: 200))
+    component.setup(with: CGSize(width: 200, height: 200))
 
     XCTAssertEqual(component.userInterface?.visibleViews.count, 3)
   }
@@ -36,7 +36,7 @@ class TestUserInterface: XCTestCase {
     let model = ComponentModel(kind: "grid", items: items)
     let component = Component(model: model)
     
-    component.setup(CGSize(width: 100, height: 100))
+    component.setup(with: CGSize(width: 100, height: 100))
 
     XCTAssertEqual(component.userInterface?.visibleViews.count, 3)
   }
@@ -51,7 +51,7 @@ class TestUserInterface: XCTestCase {
     let model = ComponentModel(kind: "carousel", layout: layout, items: items)
     let component = Component(model: model)
     
-    component.setup(CGSize(width: 100, height: 100))
+    component.setup(with: CGSize(width: 100, height: 100))
     // Expect to only have one visible view as the carousel as a span set to one.
     XCTAssertEqual(component.userInterface?.visibleViews.count, 1)
 

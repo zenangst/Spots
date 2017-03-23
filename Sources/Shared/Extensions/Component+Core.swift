@@ -342,7 +342,7 @@ public extension Component {
                                              parentComponent: self,
                                              itemIndex: item.index)
 
-      compositeSpot.component.setup(size)
+      compositeSpot.component.setup(with: size)
       compositeSpot.component.model.size = CGSize(
         width: width,
         height: ceil(compositeSpot.component.view.frame.size.height))

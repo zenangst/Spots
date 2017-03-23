@@ -17,7 +17,7 @@ class TestSpot: XCTestCase {
     let model = ComponentModel(kind: "list", items: items, hybrid: true)
     let component = Component(model: model)
 
-    component.setup(CGSize(width: 100, height: 100))
+    component.setup(with: CGSize(width: 100, height: 100))
 
     XCTAssertTrue(component.view is TableView)
     XCTAssertTrue(component.view.isEqual(component.tableView))
@@ -73,9 +73,9 @@ class TestSpot: XCTestCase {
 
     XCTAssertTrue(type(of: component.view) == type(of: listComponent.view))
 
-    component.setup(CGSize(width: 100, height: 100))
-    listComponent.setup(CGSize(width: 100, height: 100))
-    listComponent.layout(CGSize(width: 100, height: 100))
+    component.setup(with: CGSize(width: 100, height: 100))
+    listComponent.setup(with: CGSize(width: 100, height: 100))
+    listComponent.layout(with: CGSize(width: 100, height: 100))
     listComponent.view.layoutSubviews()
 
     XCTAssertEqual(component.model.interaction.scrollDirection, listComponent.model.interaction.scrollDirection)
@@ -96,9 +96,9 @@ class TestSpot: XCTestCase {
 
     XCTAssertTrue(type(of: component.view) == type(of: gridComponent.view))
 
-    component.setup(CGSize(width: 100, height: 100))
-    gridComponent.setup(CGSize(width: 100, height: 100))
-    gridComponent.layout(CGSize(width: 100, height: 100))
+    component.setup(with: CGSize(width: 100, height: 100))
+    gridComponent.setup(with: CGSize(width: 100, height: 100))
+    gridComponent.layout(with: CGSize(width: 100, height: 100))
     gridComponent.view.layoutSubviews()
 
     XCTAssertEqual(component.model.interaction.scrollDirection, gridComponent.model.interaction.scrollDirection)
@@ -120,9 +120,9 @@ class TestSpot: XCTestCase {
 
     XCTAssertTrue(type(of: component.view) == type(of: carouselComponent.view))
 
-    component.setup(CGSize(width: 100, height: 100))
-    carouselComponent.setup(CGSize(width: 100, height: 100))
-    carouselComponent.layout(CGSize(width: 100, height: 100))
+    component.setup(with: CGSize(width: 100, height: 100))
+    carouselComponent.setup(with: CGSize(width: 100, height: 100))
+    carouselComponent.layout(with: CGSize(width: 100, height: 100))
     carouselComponent.view.layoutSubviews()
 
     XCTAssertEqual(component.model.interaction.scrollDirection, carouselComponent.model.interaction.scrollDirection)
@@ -149,7 +149,7 @@ class TestSpot: XCTestCase {
       hybrid: true
     )
     let component = Component(model: model)
-    component.setup(CGSize(width: 100, height: 100))
+    component.setup(with: CGSize(width: 100, height: 100))
 
     XCTAssertEqual(component.view.frame.size, CGSize(width: 100, height: 100))
 
@@ -179,7 +179,7 @@ class TestSpot: XCTestCase {
       hybrid: true
     )
     let component = Component(model: model)
-    component.setup(CGSize(width: 100, height: 100))
+    component.setup(with: CGSize(width: 100, height: 100))
 
     XCTAssertEqual(component.view.frame.size, CGSize(width: 100, height: 188))
     XCTAssertEqual(component.view.contentSize, CGSize(width: 352, height: 188))
