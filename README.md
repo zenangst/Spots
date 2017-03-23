@@ -150,7 +150,7 @@ Inside of the **Controller**, you have a **SpotsScrollView** that handles the li
 So how does scrolling work? Whenever a user scrolls, the **SpotsScrollView** computes the offset and size of its children. By using this technique you can easily create screens that contain lists, grids and carousels with a scrolling experience as smooth as proverbial butter. By dynamically changing the size and offset of the children, **SpotsScrollView** also ensures that reusable views are allocated and deallocated like you would expect them to.
 **SpotsScrollView** uses KVO on any view that gets added so if one component changes height or position, the entire layout will invalidate itself and redraw it like it was intended.
 
-**Controller** uses one or more **Component**. **Component** can be described as a UI container factory that configures what kind of interface should be displayed based of what model data you send it. At it's code, it uses `ComponentModel` which in turns contains model data like; layout, interaction and UI data. **Component** gets it's super-powers from protocol extensions. Powers like mutation, layout processing and convenience methods for accessing data. 
+**Controller** supports multiple **Component**'s, each represent their own UI container and hold their own data source. Components all share the same data model called `ComponentModel`, it includes layout, interaction and view model data. **Component** gets its super-powers from protocol extensions, powers like mutation, layout processing and convenience methods for accessing model information.
 
 ## Working with views
 
