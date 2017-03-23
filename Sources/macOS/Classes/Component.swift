@@ -187,7 +187,7 @@ import Tailor
     }
   }
 
-  public func setup(_ size: CGSize) {
+  public func setup(with size: CGSize) {
     type(of: self).configure?(view)
 
     scrollView.frame.size = size
@@ -205,10 +205,10 @@ import Tailor
       setupCollectionView(collectionView, with: size)
     }
 
-    layout(size)
+    layout(with: size)
   }
 
-  public func layout(_ size: CGSize) {
+  public func layout(with size: CGSize) {
     if let tableView = self.tableView {
       layoutTableView(tableView, with: size)
     } else if let collectionView = self.collectionView {
@@ -319,7 +319,7 @@ import Tailor
     if let superview = view.superview {
       let size = CGSize(width: superview.frame.width,
                         height: view.frame.height)
-      layout(size)
+      layout(with: size)
     }
 
     guard !compositeComponents.isEmpty else {

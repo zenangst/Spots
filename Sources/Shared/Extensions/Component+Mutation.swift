@@ -283,7 +283,7 @@ public extension Component {
                                    compositeComponents: compositeComponents)
         } else {
           for compositeSpot in strongSelf.compositeComponents {
-            compositeSpot.component.setup(strongSelf.view.frame.size)
+            compositeSpot.component.setup(with: strongSelf.view.frame.size)
             compositeSpot.component.reload([])
           }
         }
@@ -385,13 +385,13 @@ public extension Component {
 
       if changes.updates.isEmpty {
         strongSelf.process(changes.updatedChildren, withAnimation: animation) {
-          strongSelf.layout(strongSelf.view.bounds.size)
+          strongSelf.layout(with: strongSelf.view.bounds.size)
           completion?()
         }
       } else {
         strongSelf.process(changes.updates, withAnimation: animation) {
           strongSelf.process(changes.updatedChildren, withAnimation: animation) {
-            strongSelf.layout(strongSelf.view.bounds.size)
+            strongSelf.layout(with: strongSelf.view.bounds.size)
             completion?()
           }
         }

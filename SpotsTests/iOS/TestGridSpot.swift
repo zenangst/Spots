@@ -113,7 +113,7 @@ class GridComponentTests: XCTestCase {
     Configuration.registerDefault(view: GridComponentCell.self)
     let items = [Item(title: "Test item")]
     let component = GridComponent(model: ComponentModel(kind: "grid", span: 0.0, items: items))
-    component.setup(CGSize(width: 100, height: 100))
+    component.setup(with: CGSize(width: 100, height: 100))
     component.view.layoutSubviews()
 
     guard let collectionView = component.collectionView else {
@@ -148,8 +148,8 @@ class GridComponentTests: XCTestCase {
 
     let items = [Item(title: "Item A", kind: "test-view"), Item(title: "Item B")]
     let component = GridComponent(model: ComponentModel(span: 0.0, items: items))
-    component.setup(CGSize(width: 100, height: 100))
-    component.layout(CGSize(width: 100, height: 100))
+    component.setup(with: CGSize(width: 100, height: 100))
+    component.layout(with: CGSize(width: 100, height: 100))
     component.view.layoutSubviews()
 
     var invokeCount = 0

@@ -16,7 +16,7 @@ class TestSpot: XCTestCase {
     let model = ComponentModel(items: items, hybrid: true)
     let component = Component(model: model)
 
-    component.setup(CGSize(width: 100, height: 100))
+    component.setup(with: CGSize(width: 100, height: 100))
 
     XCTAssertNotNil(component.view)
     XCTAssertNotNil(component.tableView)
@@ -68,7 +68,7 @@ class TestSpot: XCTestCase {
       hybrid: true
     )
     let component = Component(model: model)
-    component.setup(CGSize(width: 100, height: 100))
+    component.setup(with: CGSize(width: 100, height: 100))
 
     XCTAssertEqual(component.view.frame.size, CGSize(width: 100, height: 460))
     XCTAssertEqual(component.view.contentSize, CGSize(width: 100, height: 460))
@@ -88,7 +88,7 @@ class TestSpot: XCTestCase {
       hybrid: true
     )
     let component = Component(model: model)
-    component.setup(CGSize(width: 100, height: 100))
+    component.setup(with: CGSize(width: 100, height: 100))
 
     XCTAssertEqual(component.collectionView?.collectionViewLayout?.collectionViewContentSize, CGSize(width: 100, height: 200))
     XCTAssertEqual(component.view.frame.size, CGSize(width: 100, height: 300))
@@ -109,7 +109,7 @@ class TestSpot: XCTestCase {
       hybrid: true
     )
     let component = Component(model: model)
-    component.setup(CGSize(width: 100, height: 100))
+    component.setup(with: CGSize(width: 100, height: 100))
 
     XCTAssertEqual(component.view.frame.size, CGSize(width: 100, height: 150))
     XCTAssertEqual(component.view.contentSize, CGSize(width: 100, height: 150))

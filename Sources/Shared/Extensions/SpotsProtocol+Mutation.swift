@@ -181,8 +181,8 @@ extension SpotsProtocol {
 
     let tempSpot = Component(model: newComponentModels[index])
     tempSpot.view.frame = component.view.frame
-    tempSpot.setup(tempSpot.view.frame.size)
-    tempSpot.layout(tempSpot.view.frame.size)
+    tempSpot.setup(with: tempSpot.view.frame.size)
+    tempSpot.layout(with: tempSpot.view.frame.size)
     tempSpot.view.frame.size.height = tempSpot.computedHeight
     tempSpot.view.layoutIfNeeded()
     tempSpot.registerAndPrepare()

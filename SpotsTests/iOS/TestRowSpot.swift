@@ -114,7 +114,7 @@ class RowSpotTests: XCTestCase {
   func testSpotCollectionDelegate() {
     let items = [Item(title: "Test item")]
     let component = RowComponent(model: ComponentModel(kind: "row", span: 1, items: items))
-    component.setup(CGSize(width: 100, height: 100))
+    component.setup(with: CGSize(width: 100, height: 100))
 
     guard let collectionView = component.collectionView else {
       XCTFail("Unable to resolve collection view.")
@@ -148,8 +148,8 @@ class RowSpotTests: XCTestCase {
 
     let items = [Item(title: "Item A", kind: "test-view"), Item(title: "Item B")]
     let component = RowComponent(model: ComponentModel(kind: "row", span: 1.0, items: items))
-    component.setup(CGSize(width: 100, height: 100))
-    component.layout(CGSize(width: 100, height: 100))
+    component.setup(with: CGSize(width: 100, height: 100))
+    component.layout(with: CGSize(width: 100, height: 100))
     component.view.layoutSubviews()
 
     var invokeCount = 0

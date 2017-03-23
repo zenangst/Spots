@@ -15,7 +15,7 @@ class TestGridableLayout: XCTestCase {
       ]
     )
     let carouselComponent = CarouselComponent(model: model)
-    carouselComponent.setup(parentSize)
+    carouselComponent.setup(with: parentSize)
     carouselComponent.view.layoutSubviews()
 
     guard let collectionView = carouselComponent.collectionView else {
@@ -39,8 +39,8 @@ class TestGridableLayout: XCTestCase {
       ]
     )
     let carouselComponent = CarouselComponent(model: model)
-    carouselComponent.setup(parentSize)
-    carouselComponent.layout(parentSize)
+    carouselComponent.setup(with: parentSize)
+    carouselComponent.layout(with: parentSize)
     carouselComponent.view.layoutSubviews()
 
     guard let collectionView = carouselComponent.collectionView else {
@@ -65,7 +65,7 @@ class TestGridableLayout: XCTestCase {
       ]
     )
     let carouselComponent = CarouselComponent(model: model)
-    carouselComponent.setup(parentSize)
+    carouselComponent.setup(with: parentSize)
     carouselComponent.view.layoutSubviews()
 
     guard let collectionViewLayout = carouselComponent.collectionView?.collectionViewLayout as? FlowLayout else {
@@ -109,7 +109,7 @@ class TestGridableLayout: XCTestCase {
       ]
     )
     let carouselComponent = CarouselComponent(model: model)
-    carouselComponent.setup(parentSize)
+    carouselComponent.setup(with: parentSize)
     carouselComponent.view.layoutSubviews()
 
     guard let collectionViewLayout = carouselComponent.collectionView?.collectionViewLayout as? FlowLayout else {
@@ -140,8 +140,8 @@ class TestGridableLayout: XCTestCase {
     )
 
     let component = GridComponent(model: model)
-    component.setup(parentSize)
-    component.layout(parentSize)
+    component.setup(with: parentSize)
+    component.layout(with: parentSize)
     component.view.layoutSubviews()
 
     guard let collectionViewLayout = component.collectionView?.collectionViewLayout as? FlowLayout else {
