@@ -82,7 +82,7 @@ Data source and delegate setup is handled by **Spots**, so there is no need for 
 - Supports displaying multiple collections, tables and regular views in the same container.
 - Features both infinity scrolling and pull to refresh (on iOS), all you have to do is to
 setup delegates that conform to the public protocols on `Controller`.
-- No need to implement your own data source, every `Component` has their
+- No need to implement your own data source, every `Component` has its
 own set of `Item`’s.
 which is maintained internally and is there at your disposable if you decide to
 make changes to them.
