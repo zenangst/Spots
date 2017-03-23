@@ -199,7 +199,7 @@ You can also register default views for your component, what it means is that it
 Configuration.register(defaultView: MyAwesomeView.self)
 ```
 
-By letting the data decide which views to use, gives you the freedom of displaying anything anywhere, without cluttering your code with dirty if- or switch-statements that are hard to maintain and prone to introduce bugs.
+By letting the model data identifiers decide which views to use gives you the freedom of displaying anything anywhere, without cluttering your code with dirty if- or switch-statements that are hard to maintain.
 
 ## Working with headers and footers
 
