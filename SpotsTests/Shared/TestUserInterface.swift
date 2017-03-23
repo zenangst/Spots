@@ -13,6 +13,7 @@ class TestUserInterface: XCTestCase {
   }
 
   func testVisibleViewsOnListComponent() {
+    Configuration.views.defaultItem = nil
     let items = [
       Item(title: "foo"),
       Item(title: "bar"),
