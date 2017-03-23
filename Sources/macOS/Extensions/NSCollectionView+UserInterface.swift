@@ -6,7 +6,7 @@ extension NSCollectionView: UserInterface {
     var views = [View]()
 
     for item in visibleItems() {
-      guard visibleRect.contains(item.view.frame.origin) else {
+      guard visibleRect.intersects(item.view.frame) else {
         continue
       }
 
