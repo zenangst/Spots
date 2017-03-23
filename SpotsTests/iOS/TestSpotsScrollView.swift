@@ -5,7 +5,7 @@ import XCTest
 class SpotsScrollViewTests: XCTestCase {
 
   var bounds: CGRect!
-  var controller: Controller!
+  var controller: SpotsController!
 
   var initialJSON: [String : Any] {
     let listItems: [[String : Any]] = [
@@ -52,7 +52,7 @@ class SpotsScrollViewTests: XCTestCase {
   override func setUp() {
     super.setUp()
     bounds = CGRect(origin: CGPoint.zero, size: CGSize(width: 375, height: 667))
-    controller = Controller(initialJSON)
+    controller = SpotsController(initialJSON)
     controller.preloadView()
     controller.view.autoresizingMask = []
     controller.view.frame.size = bounds.size

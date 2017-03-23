@@ -24,13 +24,13 @@ public final class RxComponentDelegate: DelegateProxy, DelegateProxyType, Compon
   public let didEndDisplayingView: Observable<(Component, ComponentView, Item)>
 
   public class func currentDelegateFor(_ object: AnyObject) -> AnyObject? {
-    return (object as? Component)?.delegate ?? (object as? Controller)?.delegate
+    return (object as? Component)?.delegate ?? (object as? SpotsController)?.delegate
   }
 
   public class func setCurrentDelegate(_ delegate: AnyObject?, toObject object: AnyObject) {
     if let component = object as? Component {
       component.delegate = delegate as? ComponentDelegate
-    } else if let controller = object as? Controller {
+    } else if let controller = object as? SpotsController {
       controller.delegate = delegate as? ComponentDelegate
     }
   }

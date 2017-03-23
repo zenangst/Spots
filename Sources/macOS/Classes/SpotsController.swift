@@ -4,10 +4,10 @@ public enum ControllerBackground {
   case regular, dynamic
 }
 
-open class Controller: NSViewController, SpotsProtocol {
+open class SpotsController: NSViewController, SpotsProtocol {
 
   /// A closure that is called when the controller is reloaded with components
-  public static var componentsDidReloadComponentModels: ((Controller) -> Void)?
+  public static var componentsDidReloadComponentModels: ((SpotsController) -> Void)?
 
   open static var configure: ((_ container: SpotsScrollView) -> Void)?
 
@@ -66,7 +66,7 @@ open class Controller: NSViewController, SpotsProtocol {
     self.backgroundType = backgroundType
     super.init(nibName: nil, bundle: nil)!
 
-    NotificationCenter.default.addObserver(self, selector: #selector(Controller.scrollViewDidScroll(_:)), name: NSNotification.Name.NSScrollViewDidLiveScroll, object: scrollView)
+    NotificationCenter.default.addObserver(self, selector: #selector(SpotsController.scrollViewDidScroll(_:)), name: NSNotification.Name.NSScrollViewDidLiveScroll, object: scrollView)
 
     NotificationCenter.default.addObserver(self, selector: #selector(windowDidResize(_:)), name: NSNotification.Name.NSWindowDidResize, object: nil)
 
@@ -169,7 +169,7 @@ open class Controller: NSViewController, SpotsProtocol {
     scrollView.hasVerticalScroller = true
     scrollView.autoresizingMask = [.viewWidthSizable, .viewHeightSizable]
 
-    Controller.configure?(scrollView)
+    SpotsController.configure?(scrollView)
   }
 
   open override func viewWillAppear() {

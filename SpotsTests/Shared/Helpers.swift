@@ -20,7 +20,7 @@ extension Meta: Mappable {
   }
 }
 
-extension Controller {
+extension SpotsController {
 
   func prepareController() {
     preloadView()

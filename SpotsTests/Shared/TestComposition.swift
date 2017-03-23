@@ -224,7 +224,7 @@ class CompositionTests: XCTestCase {
       )
     ]
 
-    let controller = Controller(components: Parser.parse(initialComponentModels))
+    let controller = SpotsController(components: Parser.parse(initialComponentModels))
     controller.prepareController()
     controller.view.layoutIfNeeded()
 
@@ -430,7 +430,7 @@ class CompositionTests: XCTestCase {
 
   func testReloadWithComponentModelsUsingCompositionTriggeringNewComponent() {
     let initialComponentModels: [ComponentModel] = []
-    let controller = Controller(components: Parser.parse(initialComponentModels))
+    let controller = SpotsController(components: Parser.parse(initialComponentModels))
     controller.prepareController()
     controller.view.layoutIfNeeded()
 
@@ -676,7 +676,7 @@ class CompositionTests: XCTestCase {
       )
     ]
 
-    let controller = Controller(components: Parser.parse(initialComponentModels))
+    let controller = SpotsController(components: Parser.parse(initialComponentModels))
     controller.prepareController()
     controller.view.layoutIfNeeded()
 
@@ -1011,7 +1011,7 @@ class CompositionTests: XCTestCase {
       )
     ]
 
-    let controller = Controller(components: Parser.parse(initialComponentModels))
+    let controller = SpotsController(components: Parser.parse(initialComponentModels))
     controller.prepareController()
     controller.view.layoutIfNeeded()
 

@@ -10,7 +10,7 @@ class RxComponentDelegateTests: XCTestCase {
 
   override func setUp() {
     super.setUp()
-    let controller = Controller()
+    let controller = SpotsController()
 
     delegateProxy = RxComponentDelegate(parentObject: controller)
   }

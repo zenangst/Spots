@@ -77,8 +77,8 @@ extension SpotsProtocol {
         strongSelf.cache()
         Dispatch.main {
           strongSelf.scrollView.layoutViews()
-          if let controller = self as? Controller {
-            Controller.componentsDidReloadComponentModels?(controller)
+          if let controller = self as? SpotsController {
+            SpotsController.componentsDidReloadComponentModels?(controller)
           }
           completion?()
         }
@@ -91,8 +91,8 @@ extension SpotsProtocol {
         Dispatch.main {
           strongSelf.scrollView.layoutSubviews()
           strongSelf.cache()
-          if let controller = self as? Controller {
-            Controller.componentsDidReloadComponentModels?(controller)
+          if let controller = self as? SpotsController {
+            SpotsController.componentsDidReloadComponentModels?(controller)
           }
 
           completion?()
@@ -449,8 +449,8 @@ extension SpotsProtocol {
       let oldComponentModels = strongSelf.components.map { $0.model }
 
       guard compare(newComponentModels, oldComponentModels) else {
-        if let controller = self as? Controller {
-          Controller.componentsDidReloadComponentModels?(controller)
+        if let controller = self as? SpotsController {
+          SpotsController.componentsDidReloadComponentModels?(controller)
         }
         strongSelf.cache()
         completion?()
@@ -490,8 +490,8 @@ extension SpotsProtocol {
         newSpots[$0.offset].view.contentOffset = $0.element
       }
 
-      if let controller = self as? Controller {
-        Controller.componentsDidReloadComponentModels?(controller)
+      if let controller = self as? SpotsController {
+        SpotsController.componentsDidReloadComponentModels?(controller)
       }
 
       strongSelf.scrollView.layoutSubviews()
@@ -521,8 +521,8 @@ extension SpotsProtocol {
       strongSelf.setupComponents(animated: animated)
 
       completion?()
-      if let controller = strongSelf as? Controller {
-        Controller.componentsDidReloadComponentModels?(controller)
+      if let controller = strongSelf as? SpotsController {
+        SpotsController.componentsDidReloadComponentModels?(controller)
       }
       strongSelf.scrollView.layoutSubviews()
     }

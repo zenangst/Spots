@@ -5,11 +5,11 @@ import XCTest
 class StateCacheTests: XCTestCase {
 
   let cacheKey: String = "state-cache-test"
-  var controller: Controller!
+  var controller: SpotsController!
 
   override func setUp() {
     StateCache.removeAll()
-    controller = Controller(cacheKey: cacheKey)
+    controller = SpotsController(cacheKey: cacheKey)
   }
 
   override func tearDown() {
