@@ -49,6 +49,8 @@ Data source and delegate setup is handled by **Spots**, so there is no need for 
 * [View state caching](#view-state-caching)
 * [Live editing](#live-editing)
 * [How does it work?](#how-does-it-work)
+  * [Working with views](#working-with-views)
+  * [Working with headers and footer](#working-with-headers-and-footers)
 * [Performing mutation](#performing-mutation)
 * [Layout](#layout)
 * [Usage](#usage)
@@ -56,10 +58,10 @@ Data source and delegate setup is handled by **Spots**, so there is no need for 
 * [Programmatic approach](#programmatic-approach)
 * [Controller](#componentscontroller)
 * [Delegates](#delegates)
-*  [ComponentDelegate](#componentsdelegate)
-*  [SpotsRefreshDelegate](#componentsrefreshdelegate)
-*  [SpotsScrollDelegate](#componentsscrolldelegate)
-*  [SpotsCarouselScrollDelegate](#componentscarouselscrolldelegate)
+  * [ComponentDelegate](#componentdelegate)
+  * [RefreshDelegate](#refreshdelegate)
+  * [ScrollDelegate](#scrolldelegate)
+  * [CarouselScrollDelegate](#carouselscrolldelegate)
 * [The many faces of Spots](#the-many-faces-of-components)
 * [JSON structure](#json-structure)
 * [Models](#models)
@@ -80,26 +82,23 @@ Data source and delegate setup is handled by **Spots**, so there is no need for 
 - Supports displaying multiple collections, tables and regular views in the same container.
 - Features both infinity scrolling and pull to refresh (on iOS), all you have to do is to
 setup delegates that conform to the public protocols on `Controller`.
-- No need to implement your own data source, every `CoreComponent` object has their
+- No need to implement your own data source, every `Component` has its
 own set of `Item`’s.
 which is maintained internally and is there at your disposable if you decide to
 make changes to them.
-- Easy configuration of collection views, table views and any custom component
-implementation that you add.
+- Easy configuration for registering views.
 This improves code reuse and helps to theme your app and ultimately keep your application consistent.
-- Support custom Spots, all you need to do is to conform to `CoreComponent`
 - A rich public API for appending, prepending, inserting, updating or
 deleting `Item`s.
-- Features three different components out-of-the-box; `CarouselComponent`, `GridComponent`, `ListComponent`
-- Static custom cell registrations for all `CoreComponent` objects.
-Write one view cell and use it across your application, when and where you
-want to use it.
-- Cell height caching, this improves performance as each cell has its height stored as a calculated value.
+- Has built-in support for regular views inside of both collection and table views.
+Write one view and use it across your application, when and where you want to use it.
+- Supports view states such as normal, highlighted and selected.
+- View height caching that improves performance as each view has its height stored as a calculated value.
 on the view model.
-- Supports multiple cell types inside the same data source, no more ugly if-statements in your implementation;
+- Supports multiple views inside the same data source, no more ugly if-statements in your implementation;
 - Soft & hard updates to UI components.
 - Supports both views made programmatically and nib-based views.
-**Spots** handles this for you by using a cell registry.
+**Spots** handles this for you by using a view registry.
 
 ## Origin Story
 
@@ -120,7 +119,7 @@ So what if I don't have a backend that supports **Spots** view models? Not to wo
 
 As mentioned above, **Spots** features a view state cache. Instead of saving all your data in a database somewhere and perform queries every time to initiate a view controller, we went with a different and much simpler approach. If a **Controller** has a cache key and you call `save`, internally it will encode all underlaying **CoreComponent** objects and its children into a JSON file and store that to disk. The uniqueness of the file comes from the cache key, think of this like your screen identifier. The next time you construct a **Controller** with that cache key, it will try to load that from disk and display it the exact same way as it was before saving. The main benefit here is that you don’t have to worry about your object changing by updating to future versions of **Spots**.
 
-**ListComponent**, **GridComponent**, **CarouselComponent** also have support for view state caching because these components can be used separately without using **Controller**.
+**Component** also supports view state caching, this gives you fine-grained control over the information that you want cache.
 
 View state caching is optional but we encourage you to use it, as it renders the need to use a database as optional.
 
@@ -128,9 +127,9 @@ View state caching is optional but we encourage you to use it, as it renders the
 
 A common problem when developing for Apple's platforms is that you often have to choose between which core framework component to base your foundation on. Depending on what you need then and there. This is a not a problem in itself, it becomes a problem when you need to iterate and combine two of them together, like displaying a collection view inside of a table view. This is where composition comes in. Spots supports composition out-of-the box and it is super easy to use and iterate on.
 
-`Item`s inside of a `CoreComponent` object have a property called `children`. In the case of Spots, children are `ComponentModel`'s that represent other `CoreComponent` objects. This means that you can easily add a grid, carousel or list inside any `CoreComponent` object of your choice. On larger screens this becomes incredibly useful as composition can be used as a sane way of laying out your views on screen without the need for child view controllers, unmaintainable auto layout or frame based implementations.
+`Item`s inside of a `Component` have a property called `children`. In the case of Spots, children are `ComponentModel`'s that represent other `Component` objects. This means that you can easily add a grid, carousel or list inside any `Component` of your choice. On larger screens this becomes incredibly useful as composition can be used as a sane way of laying out your views on screen without the need for child view controllers, unmaintainable auto layout or frame based implementations.
 
-You can create `CoreComponent` pseudo objects that handle layout, this is especially useful for `Gridable` objects like the `GridComponent`, where you can use `layout.span` to define how many objects should be displayed side-by-side.
+You can create `Component` pseudo objects that handle layout, this is especially useful for `Component`'s that use a grid-based layout, where you can use the layout to use `span` to define how many objects should be displayed side-by-side.
 
 Composition is supported on iOS, tvOS and macOS.
 
@@ -146,27 +145,16 @@ See [Installation](#installation) for how to enable live editing using CocoaPods
 
 At the top level of **Spots**, you have the **Controller** which is the replacement for your view controller.
 
-Inside of the **Controller**, you have a **SpotsScrollView** that handles the linear layout of the components that you add to your data source. It is also in charge of giving the user a unified scrolling experience. Scrolling is disabled on all underlaying components except for components that have horizontal scrolling (e.g **CarouselComponent**).
+Inside of the **Controller**, you have a **SpotsScrollView** that handles the linear layout of the components that you add to your data source. It is also in charge of giving the user a unified scrolling experience. Scrolling is disabled on all underlaying components except for components that have horizontal scrolling.
 
 So how does scrolling work? Whenever a user scrolls, the **SpotsScrollView** computes the offset and size of its children. By using this technique you can easily create screens that contain lists, grids and carousels with a scrolling experience as smooth as proverbial butter. By dynamically changing the size and offset of the children, **SpotsScrollView** also ensures that reusable views are allocated and deallocated like you would expect them to.
 **SpotsScrollView** uses KVO on any view that gets added so if one component changes height or position, the entire layout will invalidate itself and redraw it like it was intended.
 
-**Controller** uses one or more **CoreComponent** objects. **CoreComponent** is a protocol that all components use to make sure that all layout calculations can be performed. **Spots** comes with three different **CoreComponent** objects out-of-the-box.
-All **CoreComponent** objects are based around one core UI element.
+**Controller** supports multiple **Component**'s, each represent their own UI container and hold their own data source. Components all share the same data model called `ComponentModel`, it includes layout, interaction and view model data. **Component** gets its super-powers from protocol extensions, powers like mutation, layout processing and convenience methods for accessing model information.
 
-**ListComponent** is an object that conforms to **Listable**, it has a **ListAdapter** that works as both the data source and delegate for the **ListComponent**. For iOS, **Listable** uses **UITableView** as its UI component, and **NSTableView** on macOS.
+## Working with views
 
-**GridComponent** is an object that conforms to **Gridable**, it uses a different adapter than **ListComponent** as it is based on collection views. The adapter used here is **CollectionAdapter**. On iOS and tvOS, **Gridable** uses **UICollectionView** as its UI component and **NSCollectionView** on macOS.
-
-**CarouselComponent** is very similar to **GridComponent**, it shares the same **CollectionAdapter**, the main difference between them is that **CarouselComponent** has scrolling enabled and uses a process for laying its views out on screen.
-
-What all **CoreComponent** objects have in common is that all of them use the same **ComponentModel** struct to represent themselves. **ComponentModel** has a *kind* property that maps to the UI component that should be used. By just changing the *kind*, you can transform a *list* into a *grid* as fast has you can type it and hit save.
-
-They also share the same **Item** struct for its children.
-The child is a data container that includes the size of the view on screen and the remaining information to configure your view.
-
-To add your own view to **Spots**, you need the view to conform to **ItemConfigurable** and inherit from the core class that your component is based on (UITableViewCell on ListComponent, UICollectionViewCell on CarouselComponent and GridComponent).
-**ItemConfigurable** requires you to implement one property and one method.
+To add your own view to **Spots**, you need the view to conform to **ItemConfigurable** which means that you have to implement `preferredViewSize` size property and the `configure(_ item: inout Item)` method. This is used to aggregate model data to your view. You register the view on `Configuration` by giving the view its own unique identifier.
 
 We don’t like to dictate the terms of how you build your views, if you prefer to build them using `.nib` files, you should be free to do so, and with **Spots** you can. The only thing that differs is how you register the view on the component.
 
@@ -182,7 +170,7 @@ Using different heights for different objects can be a hassle in iOS, tvOS and m
 
 e.g
 ```swift
-func configure(inout item: Item) {
+func configure(_ item: inout Item) {
   textLabel.text = item.title
   textLabel.sizeToFit()
   item.size.height = textLabel.frame.size.height
@@ -196,24 +184,44 @@ When your view conforms to **ItemConfigurable**, you need to register it with a 
 You register your view on the component that you want to display it in.
 
 ```swift
-ListComponent.register(view: MyAwesomeView.self, identifier: “my-awesome-view”)
+Configuration.register(view: MyAwesomeView.self, identifier: “my-awesome-view”)
 ```
 
 For `nib`-based views, you register them like this.
 
 ```swift
-ListComponent.register(nib: UINib(nibName: "MyAwesomeView", bundle: NSBundle.mainBundle()), identifier: "my-awesome-view")
+Configuration.register(nib: UINib(nibName: "MyAwesomeView", bundle: .main), identifier: "my-awesome-view")
 ```
 
 You can also register default views for your component, what it means is that it will be the fallback view for that view if the `identifier` cannot be resolved or the `identifier` is absent.
 
 ```swift
-ListComponent.register(defaultView: MyAwesomeView.self)
+Configuration.register(defaultView: MyAwesomeView.self)
 ```
 
-As mentioned above, `ListComponent` is based on `UITableView` (and `NSTableView` in macOS).
+By letting the model data identifiers decide which views to use gives you the freedom of displaying anything anywhere, without cluttering your code with dirty if- or switch-statements that are hard to maintain.
 
-By letting the data decide which views to use gives you the freedom of displaying anything anywhere, without cluttering your code with dirty if- or switch-statements that are hard to maintain and prone to introduce bugs.
+## Working with headers and footers
+
+Adding headers and footers is just as easy as adding regular views into your view hierarchy.
+You register them in the same way on your `ComponentModel` by adding a header or footer item.
+This way you get the same kind of functionality as if you were adding a regular view in your component.
+The tl;dr is that you can display pretty much anything anywhere.
+
+```swift
+let header = Item(
+  title: "My awesome header", 
+  kind: "default-header-view"
+)
+let footer = Item(
+  title: "Congrats, you made it to the end", 
+  kind: "default-footer-view"
+)
+let component = ComponentModel(
+  header: header,
+  footer: footer
+)
+``` 
 
 ## Performing mutation
 
@@ -223,7 +231,7 @@ On **Controller** you have simple methods like `reload(withAnimation, completion
 
 You can reload **Controller** using a collection of **ComponentModel**’s. Internally it will perform a diffing process to pinpoint what changed, in this process it cascades down from component level to item level, and checks all the moving parts, to perform the most appropriate update operation depending on the change. At item level, it will check if the items size changed, if not it will scale down to only run the `configure` method on the view that was affected. This is what we call hard and soft updates, it will reduce the amount of *blinking* that you can normally see in iOS.
 
-A **Controller** can also be reloaded using JSON. It behaves a bit differently than `reloadIfNeeded(withComponentModels)` as it will create new component and diff them towards each other to find out if something changed. If something changed, it will simply replace the old objects with the new ones.
+A **Controller** can also be reloaded using JSON. It behaves a bit differently than `reloadIfNeeded(components)` as it will create new components and diff them towards each other to find out if something changed. If something changed, it will simply replace the old objects with the new ones.
 
 The difference between `reload` and `reloadIfNeeded` methods is that they will only run if change is needed, just like the naming implies.
 
@@ -239,22 +247,35 @@ All methods take an `Item` as their first argument, the second is the index of t
 
 #### Available in version 5.8.x >
 
-Configuring layout for different components can be tricky, Spots helps to solve this problem with a neat and tidy `Layout` struct that lives on `ComponentModel`. It is used to customize your UI related elements. It can set `contentInset`, `sectionInset` and collection view related properties like `minimumInteritemSpacing` and `minimumLineSpacing`. It works great both programmatical and with JSON. It is supported on all three platforms.
+Configuring layout for different components can be tricky, Spots helps to solve this problem with a neat and tidy `Layout` struct that lives on `ComponentModel`. It is used to customize your UI related elements. It can set `sectionInset` and collection view related properties like `minimumInteritemSpacing` and `minimumLineSpacing`. It works great both programmatically and with JSON. It is supported on all three platforms.
 
 ```swift
-let layout = Layout() {
-  $0.span = 3.0
-  $0.itemSpacing = 10.0
-  $0.lineSpacing = 0.0
-  $0.inset = Inset(top: 0, left: 0, bottom: 0, right: 0)
-}
 
-let jsonLayout = Layout(
+/// Programmatic approach
+let layout = Layout(
+  span: 3.0,
+  dynamicSpan: false,
+  dynamicHeight: true,
+  pageIndicatorPlacement: .below,
+  itemSpacing: 1.0,
+  lineSpacing: 1.0,
+  inset: Inset(
+    top    : 10,
+    left   : 10,
+    bottom : 10,
+    right  : 10
+  )
+)
+
+/// A layout built from JSON
+let json = Layout(
   [
     "span" : 3.0,
-    "item-spacing" : 10.0,
-    "line-spacing" : 0.0,
-    "dynamic-span" : true,
+    "dynamic-span" : false,
+    "dynamic-height" : true,
+    "page-indicator-placement" : "below",
+    "item-spacing" : 1.0,
+    "line-spacing" : 1.0,
     "inset" : [
       "top" : 10.0,
       "left" : 10.0,
@@ -263,12 +284,6 @@ let jsonLayout = Layout(
     ]
   ]
 )
-```
-
-**NOTE** If you update to a newer version of Spots, you might want to enable `legacyMapping` on `ComponentModel`.
-
-```swift
-ComponentModel.legacyMapping = true
 ```
 
 ## Usage
@@ -283,15 +298,18 @@ The JSON data will be parsed into view model data and your view controller is re
 
 ### Programmatic approach
 ```swift
-let myContacts = ComponentModel(title: "My contacts", items: [
-  Item(title: "John Hyperseed"),
-  Item(title: "Vadym Markov"),
-  Item(title: "Ramon Gilabert Llop"),
-  Item(title: "Khoa Pham"),
-  Item(title: "Christoffer Winterkvist")
-])
-let listComponent = ListComponent(model: myContacts)
-let controller = Controller(components: [listComponent])
+let contactModel = ComponentModel(
+  header: Item(title: "Contacts"), 
+  items: [
+    Item(title: "John Hyperseed"),
+    Item(title: "Vadym Markov"),
+    Item(title: "John Sundell"),
+    Item(title: "Khoa Pham"),
+    Item(title: "Christoffer Winterkvist")
+  ]
+)
+let component = Component(model: contactModel)
+let controller = Controller(components: [component])
 
 navigationController?.pushViewController(controller, animated: true)
 ```
@@ -305,47 +323,50 @@ The `Controller` inherits from `UIViewController` and `NSViewController` but it 
 
 ```swift
 public protocol ComponentDelegate: class {
-  func componentDidSelectItem(component: CoreComponent, item: Item)
-  func componentsDidChange(components: [CoreComponent])
+  func component(_ component: Component, itemSelected item: Item)
+  func componentsDidChange(_ components: [Component])
+  func component(_ component: Component, willDisplay view: ComponentView, item: Item)
+  func component(_ component: Component, didEndDisplaying view: ComponentView, item: Item)
 }
 ```
 
-`componentDidSelectItem` is triggered when a user taps on an item inside of a `CoreComponent` object. It returns both the `component` and the `item` to add context to what UI element was touched.
+`component(_ component: Component, itemSelected item: Item)` is triggered when a user taps on an item inside of a `Component`. It returns both the `component` and the `item` to add context to what UI element was selected.
 
 `componentsDidChange` notifies the delegate when the internal `.components` property changes.
 
-### SpotsRefreshDelegate
+### RefreshDelegate (only supported on iOS)
 
 ```swift
-public protocol SpotsRefreshDelegate: class {
-  func componentsDidReload(refreshControl: UIRefreshControl, completion: (() -> Void)?)
+public protocol RefreshDelegate: class {
+  func componentsDidReload(_ components: [Component], refreshControl: UIRefreshControl, completion: Completion)
 }
 ```
 
 `componentsDidReload` is triggered when a user pulls the `SpotsScrollView` offset above its initial bounds.
 
-### SpotsScrollDelegate
+### ScrollDelegate
 
 ```swift
-public protocol SpotsScrollDelegate: class {
-  func componentDidReachBeginning(completion: Completion)
-  func componentDidReachEnd(completion: (() -> Void)?)
+public protocol ScrollDelegate: class {
+  func didReachBeginning(in scrollView: ScrollableView, completion: Completion)
+  func didReachEnd(in scrollView: ScrollableView, completion: Completion)
 }
 ```
 
-`componentDidReachBeginning` notifies the delegate when the scrollview has reached the top. This has a default implementation and is rendered optional for anything that conform to `SpotsScrollDelegate`.
+`didReachBeginning` notifies the delegate when the scrollview has reached the top. This has a default implementation and is rendered optional for anything that conform to `SpotsScrollDelegate`.
 
-`componentDidReachEnd` is triggered when the user scrolls to the end of the `SpotsScrollView`, this can be used to implement infinite scrolling.
+`didReachEnd` is triggered when the user scrolls to the end of the `SpotsScrollView`, this can be used to implement infinite scrolling.
 
-### SpotsCarouselScrollDelegate
+### CarouselScrollDelegate
 
 ```swift
-public protocol SpotsCarouselScrollDelegate: class {
-  func componentDidEndScrolling(component: CoreComponent, item: Item)
+public protocol CarouselScrollDelegate: class {
+  func componentCarouselDidScroll(_ component: Component)
+  func componentCarouselDidEndScrolling(_ component: Component, item: Item, animated: Bool)
 }
 ```
 
-`componentDidEndScrolling` is triggered when a user ends scrolling in a carousel, it returns item that is being displayed and the component to give you the context that you need.
+`componentCarouselDidEndScrolling` is triggered when a user ends scrolling in a carousel, it returns item that is being displayed and the component to give you the context that you need.
 
 ## The many faces of Spots
 
@@ -357,9 +378,14 @@ Because the framework can be used in a wide variety of ways, we have decided to 
 {
    "components":[
       {
-         "title":"Hyper iOS",
-         "type":"list",
-         "span":"1",
+         "header":{
+          "title":"Hyper iOS",
+          "kind":"HeaderView"
+         },
+         "kind":"list",
+         "layout":{
+           "span":"1"
+         },
          "items":[
             {
                "title":"John Hyperseed",
@@ -382,13 +408,13 @@ Because the framework can be used in a wide variety of ways, we have decided to 
                }
             },
             {
-               "title":"Ramon Gilabert Llop",
+               "title":"John Sundell",
                "subtitle":"iOS Developer",
                "image":"{image url}",
                "type":"profile",
                "action":"profile:3",
                "meta":{
-                  "nationality":"Catalan"
+                  "nationality":"Swedish"
                }
             },
             {
