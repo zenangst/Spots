@@ -540,7 +540,6 @@
 		D55B7B071E4231A4000125C8 /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = Carthage/Build/iOS/RxCocoa.framework; sourceTree = "<group>"; };
 		D55B7B0A1E423417000125C8 /* RxSpotsDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxSpotsDelegate.swift; sourceTree = "<group>"; };
 		D55B7B481E423B86000125C8 /* RxSpots-iOS-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "RxSpots-iOS-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		D55B7B491E423B86000125C8 /* Spots-iOS-Tests copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Spots-iOS-Tests copy-Info.plist"; path = "/Users/vadym/Development/hyper/ios/opensource/Spots/Spots-iOS-Tests copy-Info.plist"; sourceTree = "<absolute>"; };
 		D55B7B4E1E423C65000125C8 /* RxSpotsDelegateTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxSpotsDelegateTests.swift; sourceTree = "<group>"; };
 		D58478091C43FEB8006EBA49 /* Spots.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Spots.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D58478131C43FEB9006EBA49 /* Spots-iOS-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Spots-iOS-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -961,7 +960,6 @@
 				D55B7B091E4233FC000125C8 /* RxSpots */,
 				D58478251C43FF34006EBA49 /* SpotsTests */,
 				D55B7B061E4231A3000125C8 /* Frameworks */,
-				D55B7B491E423B86000125C8 /* Spots-iOS-Tests copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
