@@ -71,8 +71,7 @@ public extension Component {
     return height
   }
 
-  #if !os(OSX)
-  public func configureClosureDidChange() {
+  func configureClosureDidChange() {
     guard let configure = configure else {
       return
     }
@@ -90,7 +89,6 @@ public extension Component {
       }
     }
   }
-  #endif
 
   /// A helper method to return self as a Component type.
   ///

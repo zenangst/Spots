@@ -2,6 +2,28 @@ import Cocoa
 
 extension NSCollectionView: UserInterface {
 
+  public var visibleViews: [View] {
+    var views = [View]()
+
+    for item in visibleItems() {
+      guard visibleRect.intersects(item.view.frame) else {
+        continue
+      }
+
+      switch item {
+        case let wrapper as Wrappable:
+          guard let view = wrapper.wrappedView else {
+            continue
+          }
+          views.append(view)
+        default:
+          views.append(item.view)
+      }
+    }
+
+    return views
+  }
+
   public static var compositeIdentifier: String {
     return "collection-composite"
   }

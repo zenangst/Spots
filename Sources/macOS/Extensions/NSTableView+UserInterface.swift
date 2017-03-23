@@ -2,6 +2,21 @@ import Cocoa
 
 extension NSTableView: UserInterface {
 
+  public var visibleViews: [View] {
+    let rows = self.rows(in: visibleRect)
+    var views = [View]()
+
+    for row in rows.location..<rows.length-rows.location {
+      guard let view = rowView(atRow: row, makeIfNecessary: false) else {
+        continue
+      }
+
+      views.append(resolveVisibleView(view))
+    }
+
+    return views
+  }
+
   public static var compositeIdentifier: String {
     return "list-composite"
   }

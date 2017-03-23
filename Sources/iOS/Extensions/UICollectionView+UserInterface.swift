@@ -34,7 +34,11 @@ extension UICollectionView: UserInterface {
   }
 
   public var visibleViews: [View] {
-    return visibleCells
+    let views = visibleCells.map { view in
+      resolveVisibleView(view)
+    }
+
+    return views
   }
 
   /// The index of the current selected item
