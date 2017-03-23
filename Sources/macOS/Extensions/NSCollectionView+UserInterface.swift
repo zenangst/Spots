@@ -3,7 +3,17 @@ import Cocoa
 extension NSCollectionView: UserInterface {
 
   public var visibleViews: [View] {
-    return []
+    var views = [View]()
+
+    for case let wrapper as GridWrapper in visibleItems() {
+      guard let view = wrapper.wrappedView else {
+        continue
+      }
+
+      views.append(view)
+    }
+
+    return views
   }
 
   public static var compositeIdentifier: String {
