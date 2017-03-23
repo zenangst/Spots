@@ -29,7 +29,7 @@ class CoreComponentTests: XCTestCase {
   }
 
   func testAppendingMultipleItemsToSpotInController() {
-    let controller = Controller(components: [ListComponent(model: ComponentModel(title: "ComponentModel", kind: "list", span: 1.0))])
+    let controller = SpotsController(components: [ListComponent(model: ComponentModel(title: "ComponentModel", kind: "list", span: 1.0))])
     controller.prepareController()
     var items: [Item] = []
 

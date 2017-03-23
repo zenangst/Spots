@@ -9,7 +9,7 @@ import Cache
 public protocol SpotsProtocol: class {
 
   /// A closure that is called when the controller is reloaded with components
-  static var componentsDidReloadComponentModels: ((_ controller: Controller) -> Void)? { get set }
+  static var componentsDidReloadComponentModels: ((_ controller: SpotsController) -> Void)? { get set }
   /// A StateCache object
   var stateCache: StateCache? { get set }
   /// The internal SpotsScrollView
