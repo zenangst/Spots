@@ -204,7 +204,7 @@ By letting the model data identifiers decide which views to use gives you the fr
 ## Working with headers and footers
 
 Adding headers and footers is just as easy as adding regular views into your view hierarchy.
-You register them in the same way and on your `ComponentModel`, you add a header or footer item.
+You register them in the same way on your `ComponentModel` by adding a header or footer item.
 This way you get the same kind of functionality as if you were adding a regular view in your component.
 The tl;dr is that you can display pretty much anything anywhere.
 
