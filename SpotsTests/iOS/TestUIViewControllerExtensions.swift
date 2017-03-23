@@ -4,10 +4,10 @@ import XCTest
 
 class UIViewControllerExtensionsTests: XCTestCase {
 
-  var controller: Controller!
+  var controller: SpotsController!
 
   override func setUp() {
-    controller = Controller(components: [])
+    controller = SpotsController(components: [])
   }
 
   override func tearDown() {

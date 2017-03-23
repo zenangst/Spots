@@ -2,12 +2,12 @@
 import Foundation
 import XCTest
 
-class ControllerTests: XCTestCase {
+class SpotsControllerTests: XCTestCase {
 
   func testSpotAtIndex() {
     let model = ComponentModel(title: "ComponentModel", span: 1.0)
     let listComponent = ListComponent(model: model)
-    let controller = Controller(component: listComponent)
+    let controller = SpotsController(component: listComponent)
     controller.prepareController()
 
     XCTAssertEqual(controller.components.first, listComponent)
@@ -16,7 +16,7 @@ class ControllerTests: XCTestCase {
   func testUpdateSpotAtIndex() {
     let model = ComponentModel(title: "ComponentModel", span: 1.0)
     let listComponent = ListComponent(model: model)
-    let controller = Controller(component: listComponent)
+    let controller = SpotsController(component: listComponent)
     controller.prepareController()
     let items = [Item(title: "item1")]
 
@@ -35,7 +35,7 @@ class ControllerTests: XCTestCase {
   func testAppendItemInListComponent() {
     let model = ComponentModel(title: "ComponentModel", kind: "list", span: 1.0)
     let listComponent = ListComponent(model: model)
-    let controller = Controller(component: listComponent)
+    let controller = SpotsController(component: listComponent)
     controller.prepareController()
 
     XCTAssertEqual(controller.components.first?.model.items.count, 0)
@@ -61,7 +61,7 @@ class ControllerTests: XCTestCase {
   func testAppendOneMoreItemInListComponent() {
     let model = ComponentModel(title: "ComponentModel", kind: "list", items: [Item(title: "title1")])
     let listComponent = ListComponent(model: model)
-    let controller = Controller(component: listComponent)
+    let controller = SpotsController(component: listComponent)
     controller.prepareController()
 
     XCTAssertEqual(controller.components.first!.model.items.count, 1)
@@ -80,7 +80,7 @@ class ControllerTests: XCTestCase {
   func testAppendItemsInListComponent() {
     let model = ComponentModel(title: "ComponentModel", kind: "list", span: 1.0)
     let listComponent = ListComponent(model: model)
-    let controller = Controller(component: listComponent)
+    let controller = SpotsController(component: listComponent)
     controller.prepareController()
 
     let items = [
@@ -100,7 +100,7 @@ class ControllerTests: XCTestCase {
   func testPrependItemsInListComponent() {
     let model = ComponentModel(title: "ComponentModel", kind: "list", span: 1.0)
     let listComponent = ListComponent(model: model)
-    let controller = Controller(component: listComponent)
+    let controller = SpotsController(component: listComponent)
     controller.prepareController()
 
     let items = [
@@ -124,7 +124,7 @@ class ControllerTests: XCTestCase {
       ]
     )
     let listComponent = ListComponent(model: model)
-    let controller = Controller(component: listComponent)
+    let controller = SpotsController(component: listComponent)
 
     controller.prepareController()
 
@@ -151,7 +151,7 @@ class ControllerTests: XCTestCase {
       Item(title: "title2", kind: "list")
       ])
     let initialListComponent = ListComponent(model: model)
-    let controller = Controller(component: initialListComponent)
+    let controller = SpotsController(component: initialListComponent)
 
     controller.prepareController()
 
@@ -180,7 +180,7 @@ class ControllerTests: XCTestCase {
       Item(title: "title2", kind: "list")
     ])
     let initialListComponent = ListComponent(model: model)
-    let controller = Controller(component: initialListComponent)
+    let controller = SpotsController(component: initialListComponent)
 
     controller.prepareController()
 
@@ -202,7 +202,7 @@ class ControllerTests: XCTestCase {
       Item(title: "title4", kind: "list")
       ])
     let initialListComponent = ListComponent(model: model)
-    let controller = Controller(component: initialListComponent)
+    let controller = SpotsController(component: initialListComponent)
 
     controller.prepareController()
 
@@ -226,7 +226,7 @@ class ControllerTests: XCTestCase {
       Item(title: "title4", kind: "list")
       ])
     let initialListComponent = ListComponent(model: model)
-    let controller = Controller(component: initialListComponent)
+    let controller = SpotsController(component: initialListComponent)
 
     controller.prepareController()
 
@@ -244,7 +244,7 @@ class ControllerTests: XCTestCase {
   func testAppendItemInGridComponent() {
     let model = ComponentModel(title: "ComponentModel", kind: "grid", span: 1.0)
     let listComponent = ListComponent(model: model)
-    let controller = Controller(component: listComponent)
+    let controller = SpotsController(component: listComponent)
 
     controller.prepareController()
 
@@ -265,7 +265,7 @@ class ControllerTests: XCTestCase {
   func testAppendItemsInGridComponent() {
     let model = ComponentModel(title: "ComponentModel", kind: "grid", span: 1.0)
     let listComponent = ListComponent(model: model)
-    let controller = Controller(component: listComponent)
+    let controller = SpotsController(component: listComponent)
 
     controller.prepareController()
 
@@ -286,7 +286,7 @@ class ControllerTests: XCTestCase {
   func testPrependItemsInGridComponent() {
     let model = ComponentModel(title: "ComponentModel", kind: "grid", span: 1.0)
     let listComponent = ListComponent(model: model)
-    let controller = Controller(component: listComponent)
+    let controller = SpotsController(component: listComponent)
 
     controller.prepareController()
 
@@ -310,7 +310,7 @@ class ControllerTests: XCTestCase {
       Item(title: "title2", kind: "grid")
       ])
     let initialListComponent = ListComponent(model: model)
-    let controller = Controller(component: initialListComponent)
+    let controller = SpotsController(component: initialListComponent)
 
     controller.prepareController()
 
@@ -336,7 +336,7 @@ class ControllerTests: XCTestCase {
   func testAppendItemInCarouselComponent() {
     let model = ComponentModel(title: "ComponentModel", kind: "carousel", span: 1.0)
     let listComponent = GridComponent(model: model)
-    let controller = Controller(component: listComponent)
+    let controller = SpotsController(component: listComponent)
 
     controller.prepareController()
 
@@ -357,7 +357,7 @@ class ControllerTests: XCTestCase {
   func testAppendItemsInCarouselComponent() {
     let model = ComponentModel(title: "ComponentModel", kind: "carousel", span: 1.0)
     let listComponent = GridComponent(model: model)
-    let controller = Controller(component: listComponent)
+    let controller = SpotsController(component: listComponent)
 
     controller.prepareController()
 
@@ -379,7 +379,7 @@ class ControllerTests: XCTestCase {
   func testPrependItemsInCarouselComponent() {
     let model = ComponentModel(title: "ComponentModel", kind: "carousel", span: 1.0)
     let listComponent = ListComponent(model: model)
-    let controller = Controller(component: listComponent)
+    let controller = SpotsController(component: listComponent)
 
     controller.prepareController()
 
@@ -403,7 +403,7 @@ class ControllerTests: XCTestCase {
       Item(title: "title2", kind: "carousel")
       ])
     let initialListComponent = ListComponent(model: model)
-    let controller = Controller(component: initialListComponent)
+    let controller = SpotsController(component: initialListComponent)
 
     controller.prepareController()
 
@@ -445,7 +445,7 @@ class ControllerTests: XCTestCase {
     let listComponent = ListComponent(model: ComponentModel(title: "ListComponent", kind: "list", span: 1.0))
     let listComponent2 = ListComponent(model: ComponentModel(title: "ListComponent2", kind: "list", span: 1.0))
     let gridComponent = GridComponent(model: ComponentModel(title: "GridComponent", kind: "grid", span: 1.0, items: [Item(title: "Item")]))
-    let controller = Controller(components: [listComponent, listComponent2, gridComponent])
+    let controller = SpotsController(components: [listComponent, listComponent2, gridComponent])
 
     XCTAssertNotNil(controller.resolve(component: { $1.model.title == "ListComponent" }))
     XCTAssertNotNil(controller.resolve(component: { $1.model.title == "GridComponent" }))
@@ -463,8 +463,8 @@ class ControllerTests: XCTestCase {
   func testJSONInitialiser() {
     let component = ListComponent(model: ComponentModel(kind: "list"))
     component.model.items = [Item(title: "First item")]
-    let sourceController = Controller(component: component)
-    let jsonController = Controller([
+    let sourceController = SpotsController(component: component)
+    let jsonController = SpotsController([
       "components": [
         ["kind": "list",
          "items": [
@@ -487,7 +487,7 @@ class ControllerTests: XCTestCase {
         ]
       ]
     ]
-    let jsonController = Controller(initialJSON)
+    let jsonController = SpotsController(initialJSON)
 
     XCTAssert(jsonController.components.first!.model.kind == "list")
     XCTAssert(jsonController.components.first!.model.items.count == 1)
@@ -524,8 +524,8 @@ class ControllerTests: XCTestCase {
         ]
       ]
     ]
-    let firstController = Controller(initialJSON)
-    let secondController = Controller(firstController.dictionary)
+    let firstController = SpotsController(initialJSON)
+    let secondController = SpotsController(firstController.dictionary)
 
     XCTAssertTrue(firstController.components.first!.model == secondController.components.first!.model)
   }
@@ -571,7 +571,7 @@ class ControllerTests: XCTestCase {
       ]
     ]
 
-    let controller = Controller(initialJSON)
+    let controller = SpotsController(initialJSON)
     XCTAssertTrue(controller.components[0].userInterface is TableView)
     XCTAssertEqual(controller.components[0].model.items.first?.title, "First list item")
     XCTAssertEqual(controller.components[1].model.items.first?.title, "First list item")
@@ -636,7 +636,7 @@ class ControllerTests: XCTestCase {
     ]
 
     let components = initialComponentModels.map { Component(model: $0) }
-    let controller = Controller(components: components)
+    let controller = SpotsController(components: components)
 
     let oldComponentModels: [ComponentModel] = controller.components.map { $0.model }
 
@@ -692,7 +692,7 @@ class ControllerTests: XCTestCase {
     let components = initialComponentModels.map { Component(model: $0) }
 
     /// Validate setting up a controller
-    let controller = Controller(components: components)
+    let controller = SpotsController(components: components)
     XCTAssertEqual(controller.components.count, 1)
 
     /// Test first item in the first component of the first component inside of the controller
@@ -893,13 +893,13 @@ class ControllerTests: XCTestCase {
 
     let expectation = self.expectation(description: "Wait for componentsDidReloadComponentModels to be called")
 
-    Controller.componentsDidReloadComponentModels = { controller in
+    SpotsController.componentsDidReloadComponentModels = { controller in
       XCTAssert(true)
       expectation.fulfill()
     }
 
     let components = initialComponentModels.map { Component(model: $0) }
-    let controller = Controller(components: components)
+    let controller = SpotsController(components: components)
 
     controller.prepareController()
     controller.reloadIfNeeded(newComponentModels)

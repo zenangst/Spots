@@ -2,7 +2,7 @@ import UIKit
 import Cache
 
 /// A controller powered by components.
-open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, UIScrollViewDelegate {
+open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDelegate, UIScrollViewDelegate {
 
   open var contentView: View {
     return view
@@ -12,7 +12,7 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
   public var focusedItemIndex: Int?
 
   /// A closure that is called when the controller is reloaded with components
-  public static var componentsDidReloadComponentModels: ((Controller) -> Void)?
+  public static var componentsDidReloadComponentModels: ((SpotsController) -> Void)?
 
   /// A notification enum
   ///
@@ -216,7 +216,7 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
 
     setupComponents()
 
-    Controller.configure?(scrollView)
+    SpotsController.configure?(scrollView)
   }
 
   /// Notifies the component controller that its view is about to be added to a view hierarchy.
@@ -329,7 +329,7 @@ open class Controller: UIViewController, SpotsProtocol, ComponentFocusDelegate, 
 // MARK: - Private methods
 
 /// An extension with private methods on Controller
-extension Controller {
+extension SpotsController {
 
   /// This method is triggered in `delegate.didSet`
   fileprivate func componentsDelegateDidChange() {
