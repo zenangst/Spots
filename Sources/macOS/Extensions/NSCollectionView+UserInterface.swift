@@ -10,7 +10,15 @@ extension NSCollectionView: UserInterface {
         continue
       }
 
-      views.append(item.view)
+      switch item {
+        case let wrapper as GridWrapper:
+          guard let view = wrapper.wrappedView else {
+            continue
+          }
+          views.append(view)
+        default:
+          views.append(item.view)
+      }
     }
 
     return views
