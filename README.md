@@ -93,7 +93,7 @@ deleting `Item`s.
 - Has built-in support for regular views inside of both collection and table views.
 Write one view and use it across your application, when and where you want to use it.
 - Supports view states such as normal, highlighted and selected.
-- View height caching, this improves performance as each view has its height stored as a calculated value.
+- View height caching that improves performance as each view has its height stored as a calculated value.
 on the view model.
 - Supports multiple views inside the same data source, no more ugly if-statements in your implementation;
 - Soft & hard updates to UI components.
