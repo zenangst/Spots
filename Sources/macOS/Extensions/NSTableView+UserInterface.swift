@@ -7,11 +7,19 @@ extension NSTableView: UserInterface {
     var views = [View]()
 
     for row in rows.location..<rows.length-rows.location {
-      guard let view = rowView(atRow: row, makeIfNecessary: false) else {
+      guard let resolvedRowView = rowView(atRow: row, makeIfNecessary: false) else {
         continue
       }
 
-      views.append(view)
+      switch resolvedRowView {
+        case let wrapper as Wrappable:
+          guard let view = wrapper.wrappedView else {
+            continue
+          }
+          views.append(view)
+        default:
+          views.append(resolvedRowView)
+      }
     }
 
     return views

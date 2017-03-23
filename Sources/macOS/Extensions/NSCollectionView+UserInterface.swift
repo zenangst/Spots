@@ -11,7 +11,7 @@ extension NSCollectionView: UserInterface {
       }
 
       switch item {
-        case let wrapper as GridWrapper:
+        case let wrapper as Wrappable:
           guard let view = wrapper.wrappedView else {
             continue
           }
