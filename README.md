@@ -256,14 +256,14 @@ let layout = Layout(
   span: 3.0,
   dynamicSpan: false,
   dynamicHeight: true,
-  pageIndicatorPlacement:  .below,
+  pageIndicatorPlacement: .below,
   itemSpacing: 1.0,
   lineSpacing: 1.0,
   inset: Inset(
-    "top"    : 10,
-    "left"   : 10,
-    "bottom" : 10,
-    "right"  : 10
+    top    : 10,
+    left   : 10,
+    bottom : 10,
+    right  : 10
   )
 )
 
