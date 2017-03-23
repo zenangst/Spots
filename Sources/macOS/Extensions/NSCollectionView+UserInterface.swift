@@ -5,12 +5,13 @@ extension NSCollectionView: UserInterface {
   public var visibleViews: [View] {
     var views = [View]()
 
-    for case let wrapper as GridWrapper in visibleItems() {
-      guard let view = wrapper.wrappedView else {
+    for item in visibleItems() {
+      guard visibleRect.contains(item.view.frame.origin) else {
         continue
       }
 
-      views.append(view)
+
+      views.append(item.view)
     }
 
     return views
