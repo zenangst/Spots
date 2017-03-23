@@ -22,7 +22,7 @@ class TestUserInterface: XCTestCase {
     let model = ComponentModel(kind: "list", items: items)
     let component = Component(model: model)
     
-    component.setup(CGSize(width: 100, height: 100))
+    component.setup(CGSize(width: 200, height: 200))
 
     XCTAssertEqual(component.userInterface?.visibleViews.count, 3)
   }
