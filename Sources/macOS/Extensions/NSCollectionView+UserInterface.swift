@@ -10,7 +10,15 @@ extension NSCollectionView: UserInterface {
         continue
       }
 
-      views.append(resolveVisibleView(item.view))
+      switch item {
+        case let wrapper as Wrappable:
+          guard let view = wrapper.wrappedView else {
+            continue
+          }
+          views.append(view)
+        default:
+          views.append(item.view)
+      }
     }
 
     return views
