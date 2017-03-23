@@ -21,7 +21,13 @@ import Tailor
   public var model: ComponentModel
   public var componentKind: ComponentModel.Kind = .list
   public var compositeComponents: [CompositeComponent] = []
-  public var configure: ((ItemConfigurable) -> Void)?
+
+  public var configure: ((ItemConfigurable) -> Void)? {
+    didSet {
+      configureClosureDidChange()
+    }
+  }
+
   public var componentDelegate: Delegate?
   public var componentDataSource: DataSource?
   public var stateCache: StateCache?
