@@ -104,7 +104,7 @@ class CoreComponentTests: XCTestCase {
     component.setup(CGSize(width: 100, height: 100))
 
     var invokeCount = 0
-    component.configure = { view in
+    component.configure = { _ in
       invokeCount += 1
     }
 
@@ -120,7 +120,7 @@ class CoreComponentTests: XCTestCase {
     component.setup(CGSize(width: 100, height: 100))
 
     var invokeCount = 0
-    component.configure = { view in
+    component.configure = { _ in
       invokeCount += 1
     }
     XCTAssertEqual(invokeCount, 2)
