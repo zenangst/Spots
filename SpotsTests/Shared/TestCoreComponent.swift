@@ -108,7 +108,7 @@ class CoreComponentTests: XCTestCase {
       invokeCount += 1
     }
 
-    /// This should be invoked twice, once for each view.
+    // This should be invoked twice, once for each view.
     XCTAssertEqual(invokeCount, 2)
   }
 
@@ -123,6 +123,8 @@ class CoreComponentTests: XCTestCase {
     component.configure = { _ in
       invokeCount += 1
     }
+
+    // This should be invoked twice, once for each view.
     XCTAssertEqual(invokeCount, 2)
   }
 }
