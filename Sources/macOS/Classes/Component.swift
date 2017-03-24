@@ -158,7 +158,7 @@ import Tailor
       }
     }
 
-    registerDefaultIfNeeded(view: ListComponentItem.self)
+    registerDefaultIfNeeded(view: DefaultItemView.self)
 
     userInterface.register()
 
