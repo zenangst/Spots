@@ -7,11 +7,6 @@
 // MARK: - Component extension
 public extension Component {
 
-  /// A computed value for the current index
-  public var index: Int {
-    return model.index
-  }
-
   public var usesDynamicHeight: Bool {
     get {
       return model.layout?.dynamicHeight ?? true
