@@ -50,7 +50,6 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
   public enum Key: String, StringConvertible {
     case index
     case identifier
-    case title
     case header
     case kind
     case meta
@@ -86,8 +85,6 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
   public var identifier: String?
   /// The index of the Item when appearing in a list, should be computed and continuously updated by the data source
   public var index: Int = 0
-  /// The title for the component
-  public var title: String = ""
   /// Determines which component that should be used.
   /// Default kinds are: list, grid and carousel
   public var kind: ComponentKind = .list
@@ -152,10 +149,6 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
     JSONComponentModels[Key.interaction] = interaction.dictionary
     JSONComponentModels[Key.identifier.string] = identifier
 
-    if !title.isEmpty {
-      JSONComponentModels[Key.title.string] = title
-    }
-
     JSONComponentModels[Key.header.string] = header?.dictionary
     JSONComponentModels[Key.footer.string] = footer?.dictionary
 
@@ -173,7 +166,6 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
   /// - returns: An initialized component using JSON.
   public init(_ map: [String : Any]) {
     self.identifier = map.property("identifier")
-    self.title     <- map.property("title")
     self.kind      <- map.enum("kind")
     self.header    <- map.relation("header")
     self.footer    <- map.relation("footer")
@@ -202,8 +194,7 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
 
   /// Initializes a component and configures it with the provided parameters
   ///
-  /// - parameter identifier: A optional string
-  /// - parameter title: The title for your UI model.
+  /// - parameter identifier: A optional string.
   /// - parameter header: Determines which header item that should be used for the model.
   /// - parameter kind: The type of ComponentModel that should be used.
   /// - parameter layout: Configures the layout properties for the model.
@@ -214,7 +205,6 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
   ///
   /// - returns: An initialized component
   public init(identifier: String? = nil,
-              title: String = "",
               header: Item? = nil,
               footer: Item? = nil,
               kind: ComponentKind = .list,
@@ -225,7 +215,6 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
               meta: [String : Any] = [:],
               hybrid: Bool = false) {
     self.identifier = identifier
-    self.title = title
     self.kind = kind
     self.layout = layout
     self.interaction = interaction
@@ -308,11 +297,6 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
     // Check if meta data for the component changed, this can be up to the developer to decide what course of action to take.
     if !(meta as NSDictionary).isEqual(to: model.meta) {
       return .meta
-    }
-
-    // Check if title changed
-    if title != model.title {
-      return .title
     }
 
     // Check if the items have changed
@@ -439,7 +423,6 @@ public func == (lhs: ComponentModel, rhs: ComponentModel) -> Bool {
 
   let result = headersAreEqual == true &&
     footersAreEqual == true &&
-    lhs.title == rhs.title &&
     lhs.kind == rhs.kind &&
     lhs.layout == rhs.layout &&
     (lhs.meta as NSDictionary).isEqual(rhs.meta as NSDictionary)
@@ -474,7 +457,6 @@ public func === (lhs: ComponentModel, rhs: ComponentModel) -> Bool {
 
   return headersAreEqual &&
     footersAreEqual &&
-    lhs.title == rhs.title &&
     lhs.kind == rhs.kind &&
     lhs.layout == rhs.layout &&
     (lhs.meta as NSDictionary).isEqual(rhs.meta as NSDictionary) &&
