@@ -14,7 +14,7 @@ struct PlatformDefaults {
 
 public struct Configuration {
 
-  public static var views: Registry = Registry(useCache: false)
+  public static var views: Registry = .init(useCache: false)
 
   /// Register a nib file with identifier on the component.
   ///
