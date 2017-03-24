@@ -3,6 +3,15 @@
 #else
   import UIKit
 #endif
+
+struct PlatformDefaults {
+  #if os(macOS)
+  static let defaultHeight: CGFloat = 88
+  #else
+  static let defaultHeight: CGFloat = 44
+  #endif
+}
+
 public struct Configuration {
 
   public static var views: Registry = Registry(useCache: false)
