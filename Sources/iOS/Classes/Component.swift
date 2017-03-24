@@ -7,7 +7,6 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   /// The default layout that should be used for components.
   /// It will default to this one if `Layout` is abscent during init.
   public static var layout: Layout = Layout(span: 0.0)
-  public static var headers: Registry = Registry()
   /// The default component kind that should be used.
   public static var defaultKind: ComponentKind = .grid
   /// A configuration closure that can be used to pinpoint configuration of
@@ -267,9 +266,5 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   /// This method is invoked after mutations has been performed on a component.
   public func afterUpdate() {
     setup(with: view.frame.size)
-  }
-
-  public func register() {
-
   }
 }

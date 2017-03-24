@@ -216,7 +216,6 @@ open class SpotsController: NSViewController, SpotsProtocol {
     }
 
     components[index].model.index = index
-    component.register()
     component.setup(with: CGSize(width: view.frame.width, height: view.frame.size.height))
     component.model.size = CGSize(
       width: view.frame.width,

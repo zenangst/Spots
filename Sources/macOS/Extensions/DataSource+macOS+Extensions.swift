@@ -32,9 +32,6 @@ extension DataSource: NSCollectionViewDataSource {
       return NSCollectionViewItem()
     }
 
-    /// This is to make sure that all views are registered on the collection view
-    component.register()
-
     let reuseIdentifier = component.identifier(at: indexPath.item)
 
     let item = collectionView.makeItem(withIdentifier: reuseIdentifier, for: indexPath)

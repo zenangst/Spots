@@ -422,12 +422,6 @@ public extension Component {
     }
   }
 
-  /// Register and prepare all items in the component.
-  func registerAndPrepare() {
-    register()
-    prepareItems()
-  }
-
   /// Update height and refresh indexes for the component.
   ///
   /// - parameter completion: A completion closure that will be run when the computations are complete.
