@@ -10,11 +10,9 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   public static var headers: Registry = Registry()
   /// The default component kind that should be used.
   public static var defaultKind: ComponentKind = .grid
-
   /// A configuration closure that can be used to pinpoint configuration of
   /// views used inside of the component.
   open static var configure: ((_ view: View) -> Void)?
-
   /// A focus delegate that returns which component is focused.
   weak public var focusDelegate: ComponentFocusDelegate?
   /// A component delegate, used for interaction and to pick up on mutation made to
@@ -29,14 +27,12 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   /// A collection of composite components, dynamically constructed and mutated based of
   /// the contents of the `.model`.
   public var compositeComponents: [CompositeComponent] = []
-
   /// A configuration closure that will be invoked when views are added to the component.
   public var configure: ((ItemConfigurable) -> Void)? {
     didSet {
       configureClosureDidChange()
     }
   }
-
   /// The delegate for the user interface that the component uses to render itself.
   /// Similar to a normal table or collection view delegate.
   public var componentDelegate: Delegate?
@@ -45,30 +41,25 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   public var componentDataSource: DataSource?
   /// A state cache that can be used to keep state across sessions.
   public var stateCache: StateCache?
-
   /// A computed value that returns the current view as a UserInterface.
   /// UserInterface supports `UITableView` and `UICollectionView`.
   public var userInterface: UserInterface? {
     return self.view as? UserInterface
   }
-
   /// A regular UIPageControl that is used inside horizontal collection views.
   /// It is enabled by setting `pageIndicatorPlacement` on `Layout`.
   open lazy var pageControl = UIPageControl()
+  /// A background view that gets added to `UICollectionView`.
   open lazy var backgroundView = UIView()
-
   /// This returns the current user interface as a UIScrollView.
   /// It would either be UICollectionView or UITableView.
   /// If you need to target one specific view it is preferred to use `.tableView` and `.collectionView`.
   public var view: ScrollView
-
-
   /// A computed variable that casts the current `userInterface` into a `UITableView`.
   /// It will return `nil` if the model kind is not `.list`.
   public var tableView: TableView? {
     return userInterface as? TableView
   }
-
   /// A computed variable that casts the current `userInterface` into a `UICollectionView`.
   /// It will return `nil` if the model kind is `.list`.
   public var collectionView: CollectionView? {
