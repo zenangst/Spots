@@ -19,7 +19,7 @@ import Tailor
 /// - removed:    Indicates that the component was removed
 /// - none:       Indicates that nothing did change
 public enum ComponentModelDiff {
-  case identifier, title, kind, layout, header, footer, meta, items, new, removed, none
+  case identifier, kind, layout, header, footer, meta, items, new, removed, none
 }
 
 /// An enum for identifing the ComponentModel kind
