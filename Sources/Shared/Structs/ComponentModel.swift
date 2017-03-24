@@ -30,19 +30,6 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
     }
   }
 
-  public var span: Double {
-    get {
-      return layout?.span ?? 0.0
-    }
-    set {
-      if layout == nil {
-        self.layout = Layout(span: newValue)
-      } else {
-        self.layout?.span = newValue
-      }
-    }
-  }
-
   /// Identifier
   public var identifier: String?
   /// The index of the Item when appearing in a list, should be computed and continuously updated by the data source
@@ -142,10 +129,6 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
       self.interaction = Interaction()
     }
 
-    if self.layout == nil {
-      self.span <- map.property("span")
-    }
-
     let width: Double = map.resolve(keyPath: "size.width") ?? 0.0
     let height: Double = map.resolve(keyPath: "size.height") ?? 0.0
     size = CGSize(width: width, height: height)
@@ -168,7 +151,6 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
               kind: ComponentKind = .list,
               layout: Layout? = nil,
               interaction: Interaction = .init(),
-              span: Double? = nil,
               items: [Item] = [],
               meta: [String : Any] = [:],
               hybrid: Bool = false) {
@@ -180,10 +162,7 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
     self.footer = footer
     self.items = items
     self.meta = meta
-
-    if let span = span, layout == nil {
-      self.layout = Layout(span: span)
-    }
+    self.layout = layout
   }
 
   // MARK: - Helpers
