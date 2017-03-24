@@ -148,25 +148,6 @@ extension Delegate: UITableViewDelegate {
     return height
   }
 
-  /// Asks the data source for the title of the header of the specified section of the table view.
-  ///
-  /// - parameter tableView: The table-view object asking for the title.
-  /// - parameter section: An index number identifying a section of tableView.
-  ///
-  /// - returns: A string to use as the title of the section header. Will return `nil` if title is not present on ComponentModel
-  @nonobjc public func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    guard let component = component else {
-      return nil
-    }
-
-    let kind: String = component.model.header?.kind ?? ""
-    guard Configuration.views.make(kind) == nil else {
-      return nil
-    }
-
-    return !component.model.title.isEmpty ? component.model.title : nil
-  }
-
   /// Tells the delegate that the specified row is now selected.
   ///
   /// - parameter tableView: A table-view object informing the delegate about the new row selection.
