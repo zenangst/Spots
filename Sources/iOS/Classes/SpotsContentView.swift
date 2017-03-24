@@ -9,7 +9,9 @@ open class SpotsContentView: UIView {
   override open func didAddSubview(_ subview: UIView) {
     super.didAddSubview(subview)
 
-    guard let containerScrollView = superview as? SpotsScrollView else { return }
+    guard let containerScrollView = superview as? SpotsScrollView else {
+      return
+    }
     containerScrollView.didAddSubviewToContainer(subview)
   }
 
@@ -19,7 +21,9 @@ open class SpotsContentView: UIView {
   override open func willRemoveSubview(_ subview: UIView) {
     super.willRemoveSubview(subview)
 
-    guard let containerScrollView = superview as? SpotsScrollView else { return }
+    guard let containerScrollView = superview as? SpotsScrollView else {
+      return
+    }
     containerScrollView.willRemoveSubview(subview)
   }
 }

@@ -60,7 +60,9 @@ open class SpotsScrollView: UIScrollView {
   func didAddSubviewToContainer(_ subview: UIView) {
     subview.autoresizingMask = UIViewAutoresizing()
 
-    guard componentsView.subviews.index(of: subview) != nil else { return }
+    guard componentsView.subviews.index(of: subview) != nil else {
+      return
+    }
 
     subviewsInLayoutOrder.removeAll()
     for subview in componentsView.subviews {
@@ -142,11 +144,15 @@ open class SpotsScrollView: UIScrollView {
   /// - parameter change:  A dictionary that describes the changes that have been made to the value of the property at the key path keyPath relative to object.
   /// - parameter context: The value that was provided when the receiver was registered to receive key-value observation notifications.
   open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-    guard let keyPath = keyPath else { return }
+    guard let keyPath = keyPath else {
+      return
+    }
 
     if let change = change, context == subviewContext {
       if let scrollView = object as? UIScrollView {
-        guard let newValue = change[NSKeyValueChangeKey.oldKey] else { return }
+        guard let newValue = change[NSKeyValueChangeKey.oldKey] else {
+          return
+        }
         if #keyPath(contentSize) == keyPath {
 
           let newContentSize = scrollView.contentSize
@@ -181,7 +187,9 @@ open class SpotsScrollView: UIScrollView {
 
   /// Layout views in linear order based of view index in `subviewsInLayoutOrder`
   func layoutViews() {
-    guard let superview = superview else { return }
+    guard let superview = superview else {
+      return
+    }
 
     componentsView.frame = bounds
     componentsView.bounds = CGRect(origin: contentOffset, size: bounds.size)
@@ -238,7 +246,9 @@ open class SpotsScrollView: UIScrollView {
     let initialContentOffset = contentOffset
     layoutViews()
 
-    guard !initialContentOffset.equalTo(contentOffset) else { return }
+    guard !initialContentOffset.equalTo(contentOffset) else {
+      return
+    }
     setNeedsLayout()
     layoutIfNeeded()
   }

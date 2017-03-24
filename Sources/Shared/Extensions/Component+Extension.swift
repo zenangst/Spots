@@ -27,11 +27,15 @@ extension Dictionary where Key: ExpressibleByStringLiteral {
   /// - returns: The value associated with the given key
   subscript(key: ComponentModel.Key) -> Value? {
     set(value) {
-      guard let key = key.string as? Key else { return }
+      guard let key = key.string as? Key else {
+        return
+      }
       self[key] = value
     }
     get {
-      guard let key = key.string as? Key else { return nil }
+      guard let key = key.string as? Key else {
+        return nil
+      }
       return self[key]
     }
   }

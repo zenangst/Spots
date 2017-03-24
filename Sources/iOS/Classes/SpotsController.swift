@@ -234,7 +234,9 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
       refreshControl.addTarget(self, action: #selector(refreshComponent(_:)), for: .valueChanged)
 
       guard let _ = refreshDelegate, refreshControl.superview == nil
-        else { return }
+        else {
+          return
+      }
       scrollView.insertSubview(refreshControl, at: 0)
     #endif
   }
@@ -263,7 +265,9 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
     super.viewWillTransition(to: size, with: coordinator)
 
     #if os(iOS)
-      guard components_shouldAutorotate() else { return }
+      guard components_shouldAutorotate() else {
+        return
+      }
     #endif
 
     coordinator.animate(alongsideTransition: { (UIViewControllerTransitionCoordinatorContext) in

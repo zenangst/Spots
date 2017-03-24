@@ -101,7 +101,9 @@ open class SpotsController: NSViewController, SpotsProtocol {
    */
   deinit {
     NotificationCenter.default.removeObserver(self)
-    components.forEach { $0.delegate = nil }
+    components.forEach { component in
+      component.delegate = nil
+    }
     delegate = nil
     scrollDelegate = nil
   }
