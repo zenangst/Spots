@@ -5,10 +5,10 @@ import UIKit
 /// Accessibility: This class is per default an accessibility element, and gets its attributes
 /// from any `Item` that it's configured with. You can override this behavior at any point, and
 /// disable accessibility by setting `isAccessibilityElement = false` on the cell.
-open class ListComponentCell: UITableViewCell, ItemConfigurable {
+open class DefaultItemView: UITableViewCell, ItemConfigurable {
 
   /// The preferred view size for the view, width will be ignored for ListComponent cells
-  open var preferredViewSize = CGSize(width: 0, height: 44)
+  open var preferredViewSize = Configuration.defaultViewSize
   /// An optional reference to the current item
   open var item: Item?
 

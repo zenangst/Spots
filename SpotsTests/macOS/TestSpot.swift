@@ -12,6 +12,7 @@ class TestSpot: XCTestCase {
   }
 
   func testDefaultValues() {
+    Configuration.defaultViewSize = .init(width: 0, height: PlatformDefaults.defaultHeight)
     let items = [Item(title: "A"), Item(title: "B")]
     let model = ComponentModel(items: items, hybrid: true)
     let component = Component(model: model)

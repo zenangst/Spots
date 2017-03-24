@@ -1,34 +1,24 @@
 import Cocoa
 
-open class FlippedView: NSView {
+open class DefaultItemView: NSTableRowView, ItemConfigurable {
+
   override open var isFlipped: Bool {
     return true
   }
-}
-
-open class RowComponentItem: NSCollectionViewItem, ItemConfigurable {
 
   open override var isSelected: Bool {
     didSet {
       if isSelected {
-        view.layer?.backgroundColor = NSColor.black.withAlphaComponent(0.85).cgColor
+        layer?.backgroundColor = NSColor.black.withAlphaComponent(0.85).cgColor
       } else {
-        view.layer?.backgroundColor = NSColor.clear.cgColor
+        layer?.backgroundColor = NSColor.black.cgColor
       }
     }
   }
 
-  open var preferredViewSize = CGSize(width: 0, height: 88)
-  open var customView = FlippedView()
+  open var preferredViewSize = Configuration.defaultViewSize
 
-  open lazy var customImageView: NSImageView = {
-    let customImageView = NSImageView()
-    customImageView.autoresizingMask = .viewWidthSizable
-
-    return customImageView
-  }()
-
-  open lazy var titleLabel: NSTextField = {
+  lazy var titleLabel: NSTextField = {
     let titleLabel = NSTextField()
     titleLabel.isEditable = false
     titleLabel.isSelectable = false
@@ -39,7 +29,7 @@ open class RowComponentItem: NSCollectionViewItem, ItemConfigurable {
     return titleLabel
   }()
 
-  open lazy var subtitleLabel: NSTextField = {
+  lazy var subtitleLabel: NSTextField = {
     let subtitleLabel = NSTextField()
     subtitleLabel.isEditable = false
     subtitleLabel.isSelectable = false
@@ -50,37 +40,41 @@ open class RowComponentItem: NSCollectionViewItem, ItemConfigurable {
     return subtitleLabel
   }()
 
-  override init?(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-    super.init(nibName: nil, bundle: nil)
+  lazy var lineView: NSView = {
+    let lineView = NSView()
+    lineView.frame.size.height = 1
+    lineView.wantsLayer = true
+    lineView.layer = CALayer()
+    lineView.layer?.backgroundColor = NSColor.gray.withAlphaComponent(0.4).cgColor
+    lineView.autoresizingMask = .viewWidthSizable
 
-    imageView = customImageView
+    return lineView
+  }()
 
-    view.addSubview(customImageView)
-    view.addSubview(titleLabel)
-    view.addSubview(subtitleLabel)
+  override init(frame frameRect: NSRect) {
+    super.init(frame: frameRect)
+
+    wantsLayer = true
+    layer = CALayer()
+    layer?.backgroundColor = NSColor.black.cgColor
+
+    addSubview(titleLabel)
+    addSubview(subtitleLabel)
+    addSubview(lineView)
   }
 
-  required public init?(coder: NSCoder) {
+  public required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
-  }
-
-  open override func loadView() {
-    view = customView
-  }
-
-  override open func viewDidLoad() {
-    view.wantsLayer = true
-    view.layer?.backgroundColor = NSColor.clear.cgColor
   }
 
   open func configure( _ item: inout Item) {
     titleLabel.stringValue = item.title
     titleLabel.frame.origin.x = 8
+
     titleLabel.sizeToFit()
     if !item.subtitle.isEmpty {
       titleLabel.frame.origin.y = 8
       titleLabel.font = NSFont.boldSystemFont(ofSize: 14)
-      titleLabel.sizeToFit()
     } else {
       titleLabel.frame.origin.y = item.size.height / 2 - titleLabel.frame.size.height / 2
     }
@@ -89,5 +83,7 @@ open class RowComponentItem: NSCollectionViewItem, ItemConfigurable {
     subtitleLabel.stringValue = item.subtitle
     subtitleLabel.sizeToFit()
     subtitleLabel.frame.origin.y = titleLabel.frame.origin.y + subtitleLabel.frame.height
+
+    lineView.frame.origin.y = item.size.height + 1
   }
 }

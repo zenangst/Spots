@@ -12,7 +12,7 @@ class TestSpot: XCTestCase {
   }
 
   func testDefaultValues() {
-    Configuration.views.defaultItem = Registry.Item.classType(ListComponentCell.self)
+    Configuration.defaultViewSize = .init(width: 0, height: 44)
     let items = [Item(title: "A"), Item(title: "B")]
     let model = ComponentModel(kind: .list, items: items, hybrid: true)
     let component = Component(model: model)
@@ -64,7 +64,7 @@ class TestSpot: XCTestCase {
   }
 
   func testCompareHybridListComponentWithCoreType() {
-    Configuration.views.defaultItem = Registry.Item.classType(ListComponentCell.self)
+    Configuration.defaultViewSize = .init(width: 0, height: 44)
     let items = [Item(title: "A"), Item(title: "B")]
     let model = ComponentModel(kind: .list, items: items, hybrid: true)
     let listComponentModel = ComponentModel(kind: .list, items: items)
@@ -111,7 +111,7 @@ class TestSpot: XCTestCase {
   }
 
   func testCompareHybridCarouselComponentWithCoreType() {
-    Configuration.views.defaultItem = Registry.Item.classType(GridComponentCell.self)
+    Configuration.defaultViewSize = .init(width: 88, height: 88)
     let items = [Item(title: "A"), Item(title: "B")]
     let model = ComponentModel(kind: .carousel, items: items, hybrid: true)
     let carouselComponentModel = ComponentModel(kind: .carousel, items: items)
@@ -135,7 +135,7 @@ class TestSpot: XCTestCase {
   }
 
   func testHybridListComponentWithHeaderAndFooter() {
-    Configuration.views.defaultItem = Registry.Item.classType(ListComponentCell.self)
+    Configuration.defaultViewSize = .init(width: 88, height: 44)
     let model = ComponentModel(
       header: Item(kind: "Header"),
       footer: Item(kind: "Footer"),
@@ -165,7 +165,7 @@ class TestSpot: XCTestCase {
   }
 
   func testHybridCarouselComponentWithHeaderAndFooter() {
-    Configuration.views.defaultItem = Registry.Item.classType(GridComponentCell.self)
+    Configuration.defaultViewSize = .init(width: 88, height: 88)
     let model = ComponentModel(
       header: Item(kind: "Header"),
       footer: Item(kind: "Footer"),
