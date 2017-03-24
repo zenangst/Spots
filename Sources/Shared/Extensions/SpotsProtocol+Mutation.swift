@@ -396,7 +396,7 @@ extension SpotsProtocol {
 
       for (index, change) in changes.enumerated() {
         switch change {
-        case .identifier, .title, .kind, .layout, .header, .footer, .meta:
+        case .identifier, .kind, .layout, .header, .footer, .meta:
           strongSelf.replaceComponent(index, newComponentModels: newComponentModels, yOffset: &yOffset)
         case .new:
           strongSelf.newComponent(index, newComponentModels: newComponentModels, yOffset: &yOffset)

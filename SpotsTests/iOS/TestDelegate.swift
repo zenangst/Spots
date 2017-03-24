@@ -85,46 +85,6 @@ class DelegateTests: XCTestCase {
     XCTAssertEqual(component.componentDelegate?.tableView(tableView, heightForRowAt: IndexPath(row: 1, section: 0)), 0.0)
   }
 
-  func testDelegateTitleForHeader() {
-    Configuration.register(view: CustomListHeaderView.self, identifier: "list")
-    let component = ListComponent(model: ComponentModel(
-      title: "title",
-      header: Item(kind: "list"),
-      kind: .list,
-      span: 1,
-      items: [
-        Item(title: "title 1"),
-        Item(title: "title 2")
-      ]))
-    component.setup(with: CGSize(width: 100, height: 100))
-    component.view.layoutSubviews()
-
-    guard let tableView = component.tableView else {
-      XCTFail("Unable to resolve table view.")
-      return
-    }
-
-    var view = component.componentDelegate?.tableView(tableView, viewForHeaderInSection: 0) as? ListHeaderFooterWrapper
-    XCTAssert(view?.wrappedView is CustomListHeaderView)
-
-    /// Expect to return nil if header is in use.
-    var title = component.componentDelegate?.tableView(tableView, titleForHeaderInSection: 0)
-    XCTAssertEqual(title, nil)
-
-    /// Expect to return title if header is empty.
-    component.model.header = nil
-    title = component.componentDelegate?.tableView(tableView, titleForHeaderInSection: 0)
-    XCTAssertEqual(title, component.model.title)
-
-    /// Expect to return nil if title and header is empty.
-    component.model.title = ""
-    title = component.componentDelegate?.tableView(tableView, titleForHeaderInSection: 0)
-    XCTAssertEqual(title, nil)
-
-    view = component.componentDelegate?.tableView(tableView, viewForHeaderInSection: 0) as! ListHeaderFooterWrapper?
-    XCTAssertEqual(view, nil)
-  }
-
   func testTableViewHeaderHeight() {
     Configuration.register(view: RegularView.self, identifier: "regular-header")
     Configuration.register(view: ItemConfigurableView.self, identifier: "item-configurable-header")

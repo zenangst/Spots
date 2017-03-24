@@ -5,7 +5,6 @@ import XCTest
 class ComponentModelTests: XCTestCase {
 
   let json: [String : Any] = [
-    "title": "title1",
     "kind": "list",
     "layout": [
       "span": 1.0
@@ -17,7 +16,6 @@ class ComponentModelTests: XCTestCase {
   func testInit() {
     // Test component created with JSON
     let jsonComponentModel = ComponentModel(json)
-    XCTAssertEqual(jsonComponentModel.title, json["title"] as? String)
     XCTAssertEqual(jsonComponentModel.kind.string, json["kind"] as? String)
     XCTAssertEqual(jsonComponentModel.layout?.span, (json["layout"] as? [String : Any])?["span"] as? Double)
 
@@ -31,13 +29,11 @@ class ComponentModelTests: XCTestCase {
 
     // Test component created programmatically
     let codeComponentModel = ComponentModel(
-      title: json["title"] as! String,
       kind: ComponentKind(rawValue: json["kind"] as! String)!,
       layout: layout,
       items: [item],
       meta: json["meta"] as! [String : String])
 
-    XCTAssertEqual(codeComponentModel.title, json["title"] as? String)
     XCTAssertEqual(codeComponentModel.kind.string, json["kind"] as? String)
     XCTAssertEqual(codeComponentModel.layout?.span, (json["layout"] as? [String : Any])?["span"] as? Double)
 
@@ -51,7 +47,6 @@ class ComponentModelTests: XCTestCase {
   func testEquatable() {
     let jsonComponentModel = ComponentModel(json)
     var codeComponentModel = ComponentModel(
-      title: json["title"] as! String,
       kind: ComponentKind(rawValue: json["kind"] as! String)!,
       span: (json["layout"] as? [String : Any])?["span"] as? Double,
       meta: json["meta"] as! [String : String])
@@ -284,17 +279,26 @@ class ComponentModelTests: XCTestCase {
     XCTAssertEqual(lhs.diff(model: rhs), ComponentModelDiff.identifier)
   }
 
-  func testComponentModelCompareWithTitle() {
-    let lhs = ComponentModel(title: "foo")
-    var rhs = ComponentModel(title: "foo")
+  func testComponentModelsCompareOperators() {
+    let lhs = [ComponentModel(identifier: "foo")]
+    var rhs = [ComponentModel(identifier: "foo")]
 
-    XCTAssertEqual(lhs, rhs)
-    XCTAssertEqual(lhs.diff(model: rhs), ComponentModelDiff.none)
+    // Expect the collections to be equal.
+    XCTAssertTrue(lhs === rhs)
+    XCTAssertTrue(lhs == rhs)
+    XCTAssertFalse(lhs != rhs)
 
-    rhs.title = "bar"
+    // Expect the collections to not be equal because the identifiers differ.
+    rhs = [ComponentModel(identifier: "bar")]
+    XCTAssertFalse(lhs === rhs)
+    XCTAssertFalse(lhs == rhs)
+    XCTAssertTrue(lhs != rhs)
 
-    XCTAssertNotEqual(lhs, rhs)
-    XCTAssertEqual(lhs.diff(model: rhs), ComponentModelDiff.title)
+    // Expect the collections to not be equal as the object count differs.
+    rhs = [ComponentModel(identifier: "foo"), ComponentModel(identifier: "foo")]
+    XCTAssertFalse(lhs === rhs)
+    XCTAssertFalse(lhs == rhs)
+    XCTAssertTrue(lhs != rhs)
   }
 
   func testComponentModelCompareWithMeta() {
@@ -309,18 +313,5 @@ class ComponentModelTests: XCTestCase {
 
     XCTAssertNotEqual(lhs, rhs)
     XCTAssertEqual(lhs.diff(model: rhs), ComponentModelDiff.meta)
-  }
-
-  func testCompareCollectionOfComponentModels() {
-    let lhs = [ComponentModel(title: "foo")]
-    var rhs = [ComponentModel(title: "bar")]
-
-    XCTAssertFalse(lhs == rhs)
-
-    rhs = [ComponentModel(title: "foo")]
-    XCTAssertTrue(lhs == rhs)
-
-    rhs.append(ComponentModel(title: "bar"))
-    XCTAssertFalse(lhs == rhs)
   }
 }
