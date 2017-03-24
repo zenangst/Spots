@@ -17,7 +17,7 @@ class DelegateTests: XCTestCase {
 
   func testCollectionViewDelegateSelection() {
     let delegate = TestDelegate()
-    let component = GridComponent(model: ComponentModel(kind: .grid, span: 1, items: [
+    let component = GridComponent(model: ComponentModel(kind: .grid, layout: Layout(span: 1), items: [
       Item(title: "title 1")
       ]))
     component.delegate = delegate
@@ -37,7 +37,7 @@ class DelegateTests: XCTestCase {
   }
 
   func testCollectionViewCanFocus() {
-    let component = GridComponent(model: ComponentModel(kind: .grid, span: 1, items: [Item(title: "title 1")]))
+    let component = GridComponent(model: ComponentModel(kind: .grid, layout: Layout(span: 1), items: [Item(title: "title 1")]))
 
     guard let collectionView = component.collectionView else {
       XCTFail("Unable to resolve collection view.")
@@ -52,7 +52,7 @@ class DelegateTests: XCTestCase {
 
   func testTableViewDelegateSelection() {
     let delegate = TestDelegate()
-    let component = ListComponent(model: ComponentModel(kind: .list, span: 1, items: [
+    let component = ListComponent(model: ComponentModel(kind: .list, layout: Layout(span: 1), items: [
       Item(title: "title 1")
       ]))
     component.delegate = delegate
@@ -73,7 +73,7 @@ class DelegateTests: XCTestCase {
 
   func testTableViewHeightForRowOnListable() {
     Configuration.registerDefault(view: ListComponentCell.self)
-    let component = ListComponent(model: ComponentModel(kind: .list, span: 1, items: [Item(title: "title 1")]))
+    let component = ListComponent(model: ComponentModel(kind: .list, layout: Layout(span: 1), items: [Item(title: "title 1")]))
     component.setup(with: CGSize(width: 100, height: 100))
 
     guard let tableView = component.tableView else {

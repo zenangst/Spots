@@ -15,16 +15,16 @@ class CompositionTests: XCTestCase {
   func testComponentModelCreation() {
     var model = ComponentModel(
       kind: .grid,
-      span: 1.0
+      layout: Layout(span: 1.0)
     )
 
-    model.add(child: ComponentModel(kind: .list, span: 1.0))
+    model.add(child: ComponentModel(kind: .list, layout: Layout(span: 1.0)))
 
     XCTAssertEqual(model.items.count, 1)
 
     model.add(children: [
-      ComponentModel(kind: .list, span: 1.0),
-      ComponentModel(kind: .list, span: 1.0)
+      ComponentModel(kind: .list, layout: Layout(span: 1.0)),
+      ComponentModel(kind: .list, layout: Layout(span: 1.0))
       ]
     )
 
@@ -38,7 +38,7 @@ class CompositionTests: XCTestCase {
     model.add(children: [
       ComponentModel(
         kind: .list,
-        span: 1.0,
+        layout: Layout(span: 1.0),
         items: [
           Item(title: "foo"),
           Item(title: "bar")
@@ -46,7 +46,7 @@ class CompositionTests: XCTestCase {
       ),
       ComponentModel(
         kind: .list,
-        span: 1.0,
+        layout: Layout(span: 1.0),
         items: [
           Item(title: "baz"),
           Item(title: "bal")
@@ -78,12 +78,12 @@ class CompositionTests: XCTestCase {
   }
 
   func testUICreation() {
-    var model = ComponentModel(kind: .grid, span: 2.0)
+    var model = ComponentModel(kind: .grid, layout: Layout(span: 2.0))
 
     model.add(children: [
       ComponentModel(
         kind: .list,
-        span: 1,
+        layout: Layout(span: 1.0),
         items: [
           Item(title: "foo"),
           Item(title: "bar")
@@ -91,7 +91,7 @@ class CompositionTests: XCTestCase {
       ),
       ComponentModel(
         kind: .list,
-        span: 1,
+        layout: Layout(span: 1.0),
         items: [
           Item(title: "baz"),
           Item(title: "bal")
@@ -145,11 +145,11 @@ class CompositionTests: XCTestCase {
   func testReloadWithComponentModelsUsingCompositionTriggeringReplaceComponent() {
     let initialComponentModels: [ComponentModel] = [
       ComponentModel(kind: .grid,
-                span: 2.0,
+                layout: Layout(span: 2.0),
                 items: [
                   Item(kind: CompositeComponent.identifier, children:
                     [
-                      ComponentModel(kind: .list, span: 1.0, items: [
+                      ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -166,7 +166,7 @@ class CompositionTests: XCTestCase {
                   ),
                   Item(kind: CompositeComponent.identifier, children:
                     [
-                      ComponentModel(kind: .list, span: 1.0, items: [
+                      ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -184,11 +184,11 @@ class CompositionTests: XCTestCase {
         ]
       ),
       ComponentModel(kind: .grid,
-                span: 2.0,
+                layout: Layout(span: 2.0),
                 items: [
                   Item(kind: CompositeComponent.identifier, children:
                     [
-                      ComponentModel(kind: .list, span: 1.0, items: [
+                      ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -205,7 +205,7 @@ class CompositionTests: XCTestCase {
                   ),
                   Item(kind: CompositeComponent.identifier, children:
                     [
-                      ComponentModel(kind: .list, span: 1.0, items: [
+                      ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -290,11 +290,11 @@ class CompositionTests: XCTestCase {
 
     let newComponentModels: [ComponentModel] = [
       ComponentModel(kind: .grid,
-                span: 1.0,
+                layout: Layout(span: 1.0),
                 items: [
                   Item(kind: CompositeComponent.identifier, children:
                     [
-                      ComponentModel(kind: .list, span: 1.0, items: [
+                      ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -311,7 +311,7 @@ class CompositionTests: XCTestCase {
                   ),
                   Item(kind: CompositeComponent.identifier, children:
                     [
-                      ComponentModel(kind: .list, span: 1.0, items: [
+                      ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -329,11 +329,11 @@ class CompositionTests: XCTestCase {
         ]
       ),
       ComponentModel(kind: .grid,
-                span: 3.0,
+                layout: Layout(span: 3.0),
                 items: [
                   Item(kind: CompositeComponent.identifier, children:
                     [
-                      ComponentModel(kind: .list, span: 1.0, items: [
+                      ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -350,7 +350,7 @@ class CompositionTests: XCTestCase {
                   ),
                   Item(kind: CompositeComponent.identifier, children:
                     [
-                      ComponentModel(kind: .list, span: 1.0, items: [
+                      ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -443,11 +443,11 @@ class CompositionTests: XCTestCase {
 
     let newComponentModels: [ComponentModel] = [
       ComponentModel(kind: .grid,
-                span: 1.0,
+                layout: Layout(span: 1.0),
                 items: [
                   Item(kind: CompositeComponent.identifier, children:
                     [
-                      ComponentModel(kind: .list, span: 1.0, items: [
+                      ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -464,7 +464,7 @@ class CompositionTests: XCTestCase {
                   ),
                   Item(kind: CompositeComponent.identifier, children:
                     [
-                      ComponentModel(kind: .list, span: 1.0, items: [
+                      ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -482,7 +482,7 @@ class CompositionTests: XCTestCase {
         ]
       ),
       ComponentModel(kind: .grid,
-                span: 3.0,
+                layout: Layout(span: 3.0),
                 items: [
                   Item(kind: CompositeComponent.identifier, children:
                     [
@@ -597,11 +597,11 @@ class CompositionTests: XCTestCase {
   func testReloadWithComponentModelsUsingCompositionTriggeringReloadMore() {
     let initialComponentModels: [ComponentModel] = [
       ComponentModel(kind: .grid,
-                span: 2.0,
+                layout: Layout(span: 2.0),
                 items: [
                   Item(kind: CompositeComponent.identifier, children:
                     [
-                      ComponentModel(kind: .list, span: 1.0, items: [
+                      ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -618,7 +618,7 @@ class CompositionTests: XCTestCase {
                   ),
                   Item(kind: CompositeComponent.identifier, children:
                     [
-                      ComponentModel(kind: .list, span: 1.0, items: [
+                      ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -636,11 +636,11 @@ class CompositionTests: XCTestCase {
         ]
       ),
       ComponentModel(kind: .grid,
-                span: 2.0,
+                layout: Layout(span: 2.0),
                 items: [
                   Item(kind: CompositeComponent.identifier, children:
                     [
-                      ComponentModel(kind: .list, span: 1.0, items: [
+                      ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -657,7 +657,7 @@ class CompositionTests: XCTestCase {
                   ),
                   Item(kind: CompositeComponent.identifier, children:
                     [
-                      ComponentModel(kind: .list, span: 1.0, items: [
+                      ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -746,11 +746,11 @@ class CompositionTests: XCTestCase {
 
     let newComponentModels: [ComponentModel] = [
       ComponentModel(kind: .grid,
-                span: 2.0,
+                layout: Layout(span: 2.0),
                 items: [
                   Item(kind: CompositeComponent.identifier, children:
                     [
-                      ComponentModel(kind: .list, span: 1.0, items: [
+                      ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -768,7 +768,7 @@ class CompositionTests: XCTestCase {
                   ),
                   Item(kind: CompositeComponent.identifier, children:
                     [
-                      ComponentModel(kind: .list, span: 1.0, items: [
+                      ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -786,7 +786,7 @@ class CompositionTests: XCTestCase {
         ]
       ),
       ComponentModel(kind: .grid,
-                span: 2.0,
+                layout: Layout(span: 2.0),
                 items: [
                   Item(kind: CompositeComponent.identifier, children:
                     [
@@ -827,7 +827,7 @@ class CompositionTests: XCTestCase {
         ]
       ),
       ComponentModel(kind: .grid,
-                span: 2.0,
+                layout: Layout(span: 2.0),
                 items: [
                   Item(kind: CompositeComponent.identifier, children:
                     [
@@ -932,11 +932,11 @@ class CompositionTests: XCTestCase {
   func testReloadWithComponentModelsUsingCompositionTriggeringReloadLess() {
     let initialComponentModels: [ComponentModel] = [
       ComponentModel(kind: .grid,
-                span: 2.0,
+                layout: Layout(span: 2.0),
                 items: [
                   Item(kind: CompositeComponent.identifier, children:
                     [
-                      ComponentModel(kind: .list, span: 1.0, items: [
+                      ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -953,7 +953,7 @@ class CompositionTests: XCTestCase {
                   ),
                   Item(kind: CompositeComponent.identifier, children:
                     [
-                      ComponentModel(kind: .list, span: 1.0, items: [
+                      ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -971,11 +971,11 @@ class CompositionTests: XCTestCase {
         ]
       ),
       ComponentModel(kind: .grid,
-                span: 2.0,
+                layout: Layout(span: 2.0),
                 items: [
                   Item(kind: CompositeComponent.identifier, children:
                     [
-                      ComponentModel(kind: .list, span: 1.0, items: [
+                      ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -992,7 +992,7 @@ class CompositionTests: XCTestCase {
                   ),
                   Item(kind: CompositeComponent.identifier, children:
                     [
-                      ComponentModel(kind: .list, span: 1.0, items: [
+                      ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -1087,11 +1087,11 @@ class CompositionTests: XCTestCase {
 
     let newComponentModels: [ComponentModel] = [
       ComponentModel(kind: .grid,
-                span: 2.0,
+                layout: Layout(span: 2.0),
                 items: [
                   Item(kind: CompositeComponent.identifier, children:
                     [
-                      ComponentModel(kind: .list, span: 1.0, items: [
+                      ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -1108,7 +1108,7 @@ class CompositionTests: XCTestCase {
                   ),
                   Item(kind: CompositeComponent.identifier, children:
                     [
-                      ComponentModel(kind: .list, span: 1.0, items: [
+                      ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),

@@ -46,9 +46,10 @@ class ComponentModelTests: XCTestCase {
 
   func testEquatable() {
     let jsonComponentModel = ComponentModel(json)
+    let layout = Layout(json["layout"] as! [String: Any])
     var codeComponentModel = ComponentModel(
       kind: ComponentKind(rawValue: json["kind"] as! String)!,
-      span: (json["layout"] as? [String : Any])?["span"] as? Double,
+      layout: layout,
       meta: json["meta"] as! [String : String])
     XCTAssertTrue(jsonComponentModel == codeComponentModel)
 
