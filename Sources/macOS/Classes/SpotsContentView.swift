@@ -19,7 +19,9 @@ open class SpotsContentView: NSView {
     super.didAddSubview(subview)
 
     guard let clipView = superview,
-      let containerScrollView = clipView.superview as? SpotsScrollView else { return }
+      let containerScrollView = clipView.superview as? SpotsScrollView else {
+        return
+    }
     containerScrollView.didAddSubviewToContainer(subview)
   }
 
@@ -32,7 +34,9 @@ open class SpotsContentView: NSView {
     super.willRemoveSubview(subview)
 
     guard let clipView = superview,
-      let containerScrollView = clipView.superview as? SpotsScrollView else { return }
+      let containerScrollView = clipView.superview as? SpotsScrollView else {
+        return
+    }
     containerScrollView.willRemoveSubview(subview)
   }
 }

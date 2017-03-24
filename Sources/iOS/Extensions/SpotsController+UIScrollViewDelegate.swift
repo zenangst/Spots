@@ -23,7 +23,9 @@ extension SpotsController {
       offset.y > size.height - scrollView.bounds.height * multiplier &&
       !refreshPositions.contains(size.height - itemOffset)
 
-    guard let delegate = scrollDelegate else { return }
+    guard let delegate = scrollDelegate else {
+      return
+    }
 
     if scrollView.contentOffset.y < 0 && !refreshing {
       refreshing = true

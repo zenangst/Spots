@@ -115,7 +115,9 @@ open class SpotsScrollView: NSScrollView {
       }
     }
 
-    guard frame.height > 0 && frame.width > 100 else { return }
+    guard frame.height > 0 && frame.width > 100 else {
+      return
+    }
 
     if frame.origin.y < 0 {
       yOffsetOfCurrentSubview -= frame.origin.y

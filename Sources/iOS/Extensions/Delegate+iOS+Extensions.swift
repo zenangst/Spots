@@ -20,7 +20,9 @@ extension Delegate: UICollectionViewDelegate {
   /// - parameter collectionView: The collection view object that is notifying you of the selection change.
   /// - parameter indexPath: The index path of the cell that was selected.
   public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    guard let component = component, let item = component.item(at: indexPath) else { return }
+    guard let component = component, let item = component.item(at: indexPath) else {
+      return
+    }
     component.delegate?.component(component, itemSelected: item)
   }
 

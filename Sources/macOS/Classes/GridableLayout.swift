@@ -23,7 +23,9 @@ public class GridableLayout: FlowLayout {
 
     switch scrollDirection {
     case .horizontal:
-      guard let firstItem = component.model.items.first else { return }
+      guard let firstItem = component.model.items.first else {
+        return
+      }
 
       contentSize.width = component.model.items.reduce(0, { $0 + floor($1.size.width) })
       contentSize.width += minimumInteritemSpacing * CGFloat(component.model.items.count - 1)

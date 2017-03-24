@@ -156,7 +156,9 @@ extension UICollectionView: UserInterface {
     let indexPaths = indexes.map { IndexPath(item: $0, section: 0) }
 
     performBatchUpdates({ [weak self] in
-      guard let strongSelf = self else { return }
+      guard let strongSelf = self else {
+        return
+      }
       strongSelf.deleteItems(at: indexPaths)
       }) { _ in }
     completion?()
@@ -203,7 +205,9 @@ extension UICollectionView: UserInterface {
   public func reloadSection(_ section: Int = 0, withAnimation animation: Animation = .automatic, completion: (() -> Void)? = nil) {
     UIView.performWithoutAnimation {
       performBatchUpdates({ [weak self] in
-        guard let strongSelf = self else { return }
+        guard let strongSelf = self else {
+          return
+        }
         strongSelf.reloadSections(IndexSet(integer: section))
       }) { _ in
         completion?()

@@ -329,7 +329,9 @@ extension SpotsProtocol {
         } else {
           component.beforeUpdate()
           component.update(item, index: index, withAnimation: animation) {
-            guard index == executeClosure else { return }
+            guard index == executeClosure else {
+              return
+            }
             strongSelf.finishReloading(component: component, withCompletion: completion)
           }
         }
@@ -545,7 +547,9 @@ extension SpotsProtocol {
     component.prepareItems()
 
     Dispatch.main { [weak self] in
-      guard let strongSelf = self else { return }
+      guard let strongSelf = self else {
+        return
+      }
 
       #if !os(OSX)
         if animation != .none {
@@ -718,7 +722,9 @@ extension SpotsProtocol {
   #if os(iOS)
   public func refreshSpots(_ refreshControl: UIRefreshControl) {
     Dispatch.main { [weak self] in
-      guard let strongSelf = self else { return }
+      guard let strongSelf = self else {
+        return
+      }
       strongSelf.refreshPositions.removeAll()
 
       strongSelf.refreshDelegate?.componentsDidReload(strongSelf.components, refreshControl: refreshControl) {

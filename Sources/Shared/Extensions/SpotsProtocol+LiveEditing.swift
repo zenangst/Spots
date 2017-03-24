@@ -13,7 +13,9 @@ import Cache
     ///
     /// - parameter filePath: A file path string, pointing to the file that should be monitored.
     private func monitor(filePath: String) {
-      guard FileManager.default.fileExists(atPath: filePath) else { return }
+      guard FileManager.default.fileExists(atPath: filePath) else {
+        return
+      }
 
       let eventMask: DispatchSource.FileSystemEvent = [.delete, .write, .extend, .attrib, .link, .rename, .revoke]
       source = DispatchSource.makeFileSystemObjectSource(fileDescriptor: Int32(open(filePath, O_EVTONLY)),
@@ -59,9 +61,13 @@ import Cache
     /// - parameter stateCache: An optional StateCache, used for resolving which file should be monitored.
     func liveEditing(stateCache: StateCache?) {
       #if (arch(i386) || arch(x86_64)) && os(iOS)
-        guard let stateCache = stateCache, source == nil else { return }
+        guard let stateCache = stateCache, source == nil else {
+          return
+        }
       #else
-        guard let stateCache = stateCache else { return }
+        guard let stateCache = stateCache else {
+          return
+        }
       #endif
       CacheJSONOptions.writeOptions = .prettyPrinted
       print("🎍 SPOTS: Caching...")
