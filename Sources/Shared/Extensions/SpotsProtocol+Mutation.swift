@@ -185,7 +185,7 @@ extension SpotsProtocol {
     tempSpot.layout(with: tempSpot.view.frame.size)
     tempSpot.view.frame.size.height = tempSpot.computedHeight
     tempSpot.view.layoutIfNeeded()
-    tempSpot.registerAndPrepare()
+    tempSpot.prepareItems()
 
     tempSpot.model.size = CGSize(
       width: view.frame.width,
