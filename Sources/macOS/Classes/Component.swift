@@ -318,8 +318,4 @@ import Tailor
     }
     reload()
   }
-
-  public func register() {
-
-  }
 }
