@@ -123,7 +123,7 @@ open class SpotsController: NSViewController, SpotsProtocol {
   ///
   /// - returns: An optional component.
   open func component(at index: Int = 0) -> Component? {
-    return components.filter({ $0.index == index }).first
+    return components.filter({ $0.model.index == index }).first
   }
 
   /**

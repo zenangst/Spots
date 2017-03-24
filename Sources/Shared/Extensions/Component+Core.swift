@@ -7,23 +7,9 @@
 // MARK: - Component extension
 public extension Component {
 
-  /// A computed value for the current index
-  public var index: Int {
-    return model.index
-  }
-
-  public var usesDynamicHeight: Bool {
-    get {
-      return model.layout?.dynamicHeight ?? true
-    }
-    set {
-      model.layout?.dynamicHeight = newValue
-    }
-  }
-
   /// A computed CGFloat of the total height of all items inside of a component
   public var computedHeight: CGFloat {
-    guard usesDynamicHeight else {
+    guard model.layout?.dynamicHeight == true else {
       return self.view.frame.height
     }
 
