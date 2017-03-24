@@ -58,6 +58,15 @@
 		BD6FBEF21E12B5F000AA58BD /* TestComposition.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6FBEEF1E12B5F000AA58BD /* TestComposition.swift */; };
 		BD7397381D718CDB000AF2DE /* TestComponentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D584782B1C43FF34006EBA49 /* TestComponentModel.swift */; };
 		BD7397401D718CDB000AF2DE /* Spots.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478091C43FEB8006EBA49 /* Spots.framework */; };
+		BD77D1F41E8537E80075A3FC /* ComponentModelDiff.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD77D1F31E8537E80075A3FC /* ComponentModelDiff.swift */; };
+		BD77D1F51E8537E80075A3FC /* ComponentModelDiff.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD77D1F31E8537E80075A3FC /* ComponentModelDiff.swift */; };
+		BD77D1F61E8537E80075A3FC /* ComponentModelDiff.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD77D1F31E8537E80075A3FC /* ComponentModelDiff.swift */; };
+		BD77D1F81E8538080075A3FC /* ComponentModelKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD77D1F71E8538080075A3FC /* ComponentModelKind.swift */; };
+		BD77D1F91E8538080075A3FC /* ComponentModelKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD77D1F71E8538080075A3FC /* ComponentModelKind.swift */; };
+		BD77D1FA1E8538080075A3FC /* ComponentModelKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD77D1F71E8538080075A3FC /* ComponentModelKind.swift */; };
+		BD77D1FC1E85382D0075A3FC /* ComponentModel+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD77D1FB1E85382D0075A3FC /* ComponentModel+Equatable.swift */; };
+		BD77D1FD1E85382D0075A3FC /* ComponentModel+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD77D1FB1E85382D0075A3FC /* ComponentModel+Equatable.swift */; };
+		BD77D1FE1E85382D0075A3FC /* ComponentModel+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD77D1FB1E85382D0075A3FC /* ComponentModel+Equatable.swift */; };
 		BD9AB9F61E44AD9700085677 /* TestCoreComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD677E841DC616B2006D1654 /* TestCoreComponent.swift */; };
 		BD9ECEB71E6EC6B4003E4388 /* Component+macOS+Carousel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9ECEB61E6EC6B4003E4388 /* Component+macOS+Carousel.swift */; };
 		BD9ECEB81E6EC6BC003E4388 /* Component+macOS+List.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9ECEB41E6EC6A7003E4388 /* Component+macOS+List.swift */; };
@@ -405,6 +414,9 @@
 		BD6FBEEF1E12B5F000AA58BD /* TestComposition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestComposition.swift; sourceTree = "<group>"; };
 		BD73972F1D718CD2000AF2DE /* Spots.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Spots.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD7397461D718CDB000AF2DE /* Spots-tvOS-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Spots-tvOS-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BD77D1F31E8537E80075A3FC /* ComponentModelDiff.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentModelDiff.swift; sourceTree = "<group>"; };
+		BD77D1F71E8538080075A3FC /* ComponentModelKind.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentModelKind.swift; sourceTree = "<group>"; };
+		BD77D1FB1E85382D0075A3FC /* ComponentModel+Equatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ComponentModel+Equatable.swift"; sourceTree = "<group>"; };
 		BD9ECEB41E6EC6A7003E4388 /* Component+macOS+List.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Component+macOS+List.swift"; sourceTree = "<group>"; };
 		BD9ECEB61E6EC6B4003E4388 /* Component+macOS+Carousel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Component+macOS+Carousel.swift"; sourceTree = "<group>"; };
 		BD9ECEB91E6EC6D1003E4388 /* Component+macOS+Grid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Component+macOS+Grid.swift"; sourceTree = "<group>"; };
@@ -789,9 +801,11 @@
 			isa = PBXGroup;
 			children = (
 				BDAD85311E3E7032008289AE /* Animation.swift */,
+				BD77D1F31E8537E80075A3FC /* ComponentModelDiff.swift */,
+				BD77D1F71E8538080075A3FC /* ComponentModelKind.swift */,
+				52CD42791E4477C800187E09 /* PageIndicatorPlacement.swift */,
 				BDAD85321E3E7032008289AE /* Paginate.swift */,
 				BDAD85331E3E7032008289AE /* RegistryType.swift */,
-				52CD42791E4477C800187E09 /* PageIndicatorPlacement.swift */,
 				D5D282661E54710D004BF251 /* ViewState.swift */,
 			);
 			path = Enums;
@@ -805,6 +819,7 @@
 				BDAD85361E3E7032008289AE /* Component+Extension.swift */,
 				BDAD853C1E3E7032008289AE /* Component+Mutation.swift */,
 				BDAD853E1E3E7032008289AE /* ComponentDelegate+Extensions.swift */,
+				BD77D1FB1E85382D0075A3FC /* ComponentModel+Equatable.swift */,
 				BDDCF6E91E4DF936004B38C4 /* Extensions.swift */,
 				BDAD85381E3E7032008289AE /* Item+Extensions.swift */,
 				BDAD853D1E3E7032008289AE /* ItemConfigurable+Extensions.swift */,
@@ -812,8 +827,8 @@
 				BDAD853F1E3E7032008289AE /* SpotsProtocol+Extensions.swift */,
 				BDAD85401E3E7032008289AE /* SpotsProtocol+LiveEditing.swift */,
 				BDAD85411E3E7032008289AE /* SpotsProtocol+Mutation.swift */,
-				BDAD85431E3E7032008289AE /* Wrappable+Extensions.swift */,
 				BD0AF3511E83CC53008795C3 /* UserInterface+Extensions.swift */,
+				BDAD85431E3E7032008289AE /* Wrappable+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1488,6 +1503,7 @@
 				BDAD85B91E3E7032008289AE /* ScrollDelegate.swift in Sources */,
 				BDAD84BF1E3E701C008289AE /* ListComponentCell.swift in Sources */,
 				BDAD84B91E3E701C008289AE /* ListComposite.swift in Sources */,
+				BD77D1F61E8537E80075A3FC /* ComponentModelDiff.swift in Sources */,
 				BDAD85E01E3E7032008289AE /* Inset.swift in Sources */,
 				BDAD84CD1E3E701C008289AE /* Composable+iOS.swift in Sources */,
 				BDAD85921E3E7032008289AE /* ItemConfigurable+Extensions.swift in Sources */,
@@ -1517,6 +1533,7 @@
 				BDAD85771E3E7032008289AE /* RegistryType.swift in Sources */,
 				BDAD85DA1E3E7032008289AE /* Dispatch.swift in Sources */,
 				BDAD84C11E3E701C008289AE /* ListWrapper.swift in Sources */,
+				BD77D1FA1E8538080075A3FC /* ComponentModelKind.swift in Sources */,
 				BD9ECEC51E6EC8B8003E4388 /* Component+iOS+List.swift in Sources */,
 				BDAD84D11E3E701C008289AE /* DataSource+iOS+Extensions.swift in Sources */,
 				BDAD85D41E3E7032008289AE /* ComponentModel.swift in Sources */,
@@ -1536,6 +1553,7 @@
 				BDAD85D71E3E7032008289AE /* Configuration.swift in Sources */,
 				BDAD85951E3E7032008289AE /* ComponentDelegate+Extensions.swift in Sources */,
 				BDAD84C51E3E701C008289AE /* RowComponentCell.swift in Sources */,
+				BD77D1FE1E85382D0075A3FC /* ComponentModel+Equatable.swift in Sources */,
 				BDAD84B51E3E701C008289AE /* GridComponentCell.swift in Sources */,
 				BD9ECEC21E6EC8AF003E4388 /* Component+iOS+Grid.swift in Sources */,
 				BDAD85651E3E7032008289AE /* DataSource.swift in Sources */,
@@ -1624,6 +1642,7 @@
 				BDAD85C01E3E7032008289AE /* ComponentDelegate.swift in Sources */,
 				BDAD84CC1E3E701C008289AE /* Composable+iOS.swift in Sources */,
 				BDAD85751E3E7032008289AE /* RegistryType.swift in Sources */,
+				BD77D1F41E8537E80075A3FC /* ComponentModelDiff.swift in Sources */,
 				BDAD84C41E3E701C008289AE /* RowComponentCell.swift in Sources */,
 				BDAD84BE1E3E701C008289AE /* ListComponentCell.swift in Sources */,
 				BDAD85ED1E3E7032008289AE /* StateCache.swift in Sources */,
@@ -1653,6 +1672,7 @@
 				BD9ECEC41E6EC8B8003E4388 /* Component+iOS+List.swift in Sources */,
 				BDAD85961E3E7032008289AE /* SpotsProtocol+Extensions.swift in Sources */,
 				BDAD856F1E3E7032008289AE /* Animation.swift in Sources */,
+				BD77D1F81E8538080075A3FC /* ComponentModelKind.swift in Sources */,
 				BDAD85C31E3E7032008289AE /* ComponentFocusDelegate.swift in Sources */,
 				BDAD85811E3E7032008289AE /* Item+Extensions.swift in Sources */,
 				BDAD84E21E3E701C008289AE /* UIViewController+Extensions.swift in Sources */,
@@ -1672,6 +1692,7 @@
 				BDDCF6DB1E4DF91F004B38C4 /* Indexable.swift in Sources */,
 				BDAD84B81E3E701C008289AE /* ListComposite.swift in Sources */,
 				BDAD85871E3E7032008289AE /* ScrollDelegate+Extensions.swift in Sources */,
+				BD77D1FC1E85382D0075A3FC /* ComponentModel+Equatable.swift in Sources */,
 				BD9ECEC11E6EC8AF003E4388 /* Component+iOS+Grid.swift in Sources */,
 				BDAD85601E3E7032008289AE /* CompositeComponent.swift in Sources */,
 				52CD427A1E4477C800187E09 /* PageIndicatorPlacement.swift in Sources */,
@@ -1775,6 +1796,7 @@
 				BDAD85641E3E7032008289AE /* DataSource.swift in Sources */,
 				BDAD85881E3E7032008289AE /* ScrollDelegate+Extensions.swift in Sources */,
 				BD2403111E4B9A02005BAA19 /* Component.swift in Sources */,
+				BD77D1FD1E85382D0075A3FC /* ComponentModel+Equatable.swift in Sources */,
 				BDAD85191E3E7025008289AE /* RowComponentItem.swift in Sources */,
 				BDAD85EE1E3E7032008289AE /* StateCache.swift in Sources */,
 				BDAD85821E3E7032008289AE /* Item+Extensions.swift in Sources */,
@@ -1782,6 +1804,7 @@
 				D5D2826C1E547219004BF251 /* ViewStateDelegate.swift in Sources */,
 				D5D282681E54710D004BF251 /* ViewState.swift in Sources */,
 				BDDCF6F01E4DF93D004B38C4 /* DictionaryConvertible.swift in Sources */,
+				BD77D1F51E8537E80075A3FC /* ComponentModelDiff.swift in Sources */,
 				BDAD85611E3E7032008289AE /* CompositeComponent.swift in Sources */,
 				BDAD851D1E3E7025008289AE /* DataSource+macOS+Extensions.swift in Sources */,
 				BD0AF3531E83CC53008795C3 /* UserInterface+Extensions.swift in Sources */,
@@ -1798,6 +1821,7 @@
 				BDAD85941E3E7032008289AE /* ComponentDelegate+Extensions.swift in Sources */,
 				BDAD850B1E3E7025008289AE /* CollectionViewLeftLayout.swift in Sources */,
 				BDAD85761E3E7032008289AE /* RegistryType.swift in Sources */,
+				BD77D1F91E8538080075A3FC /* ComponentModelKind.swift in Sources */,
 				BDAD850C1E3E7025008289AE /* SpotsController.swift in Sources */,
 				BDAD85D31E3E7032008289AE /* ComponentModel.swift in Sources */,
 				BDDCF6EB1E4DF936004B38C4 /* Extensions.swift in Sources */,
