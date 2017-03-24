@@ -1,6 +1,6 @@
 import Cocoa
 
-open class ListComponentItem: NSTableRowView, ItemConfigurable {
+open class DefaultItemView: NSTableRowView, ItemConfigurable {
 
   override open var isFlipped: Bool {
     return true
@@ -16,7 +16,7 @@ open class ListComponentItem: NSTableRowView, ItemConfigurable {
     }
   }
 
-  open var preferredViewSize = CGSize(width: 0, height: 88)
+  open var preferredViewSize = Configuration.defaultViewSize
 
   lazy var titleLabel: NSTextField = {
     let titleLabel = NSTextField()
