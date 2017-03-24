@@ -279,6 +279,25 @@ class ComponentModelTests: XCTestCase {
     XCTAssertEqual(lhs.diff(model: rhs), ComponentModelDiff.identifier)
   }
 
+  func testComponentModelsCompareOperators() {
+    let lhs = [ComponentModel(identifier: "foo")]
+    var rhs = [ComponentModel(identifier: "foo")]
+
+    // Expect the collections to be equal.
+    XCTAssertTrue(lhs == rhs)
+    XCTAssertFalse(lhs != rhs)
+
+    // Expect the collections to not be equal because the identifiers differ.
+    rhs = [ComponentModel(identifier: "bar")]
+    XCTAssertFalse(lhs == rhs)
+    XCTAssertTrue(lhs != rhs)
+
+    // Expect the collections to not be equal as the object count differs.
+    rhs = [ComponentModel(identifier: "foo"), ComponentModel(identifier: "foo")]
+    XCTAssertFalse(lhs == rhs)
+    XCTAssertTrue(lhs != rhs)
+  }
+
   func testComponentModelCompareWithMeta() {
     let meta = ["foo" : "bar"]
     let lhs = ComponentModel(meta: meta)
