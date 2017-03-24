@@ -126,7 +126,7 @@ import Tailor
   public var tableView: TableView? {
     return userInterface as? TableView
   }
-  /// A computed variable that casts the current `userInterface` into a `UICollectionView`.
+  /// A computed variable that casts the current `userInterface` into a `NSCollectionView`.
   /// It will return `nil` if the model kind is `.list`.
   public var collectionView: CollectionView? {
     return userInterface as? CollectionView
