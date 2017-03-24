@@ -1,3 +1,8 @@
+#if os(macOS)
+  import Foundation
+#else
+  import UIKit
+#endif
 public struct Configuration {
 
   public static var views: Registry = Registry(useCache: false)
