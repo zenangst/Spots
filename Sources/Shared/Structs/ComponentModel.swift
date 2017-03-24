@@ -61,7 +61,6 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
     case width
     case height
     case footer
-    case hybrid
 
     public var string: String {
       return rawValue.lowercased()
@@ -102,8 +101,6 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
   public var size: CGSize? = .zero
   /// A key-value dictionary for any additional information
   public var meta = [String: Any]()
-  /// Delcares if the ComponentModel uses core types or Spot class as it's base class.
-  public var isHybrid: Bool = false
 
   /// A dictionary representation of the component
   public var dictionary: [String : Any] {
@@ -152,9 +149,9 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
     JSONComponentModels[Key.header.string] = header?.dictionary
     JSONComponentModels[Key.footer.string] = footer?.dictionary
 
-    if !meta.isEmpty { JSONComponentModels[Key.meta.string] = meta }
-
-    JSONComponentModels[Key.hybrid.string] = isHybrid
+    if !meta.isEmpty {
+      JSONComponentModels[Key.meta.string] = meta
+    }
 
     return JSONComponentModels
   }
@@ -171,7 +168,6 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
     self.footer    <- map.relation("footer")
     self.items     <- map.relations("items")
     self.meta      <- map.property("meta")
-    self.isHybrid  <- map.property("hybrid")
 
     if let layoutDictionary: [String : Any] = map.property(Layout.rootKey) {
       self.layout = Layout(layoutDictionary)
@@ -201,7 +197,6 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
   /// - parameter interaction: Configures the interaction properties for the model.
   /// - parameter span: Configures the layout span for the model.
   /// - parameter items: A collection of view models
-  /// - parameter meta: A key-value dictionary for any additional information
   ///
   /// - returns: An initialized component
   public init(identifier: String? = nil,
@@ -222,7 +217,6 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
     self.footer = footer
     self.items = items
     self.meta = meta
-    self.isHybrid = hybrid
 
     if let span = span, layout == nil {
       self.layout = Layout(span: span)
