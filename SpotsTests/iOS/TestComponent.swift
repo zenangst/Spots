@@ -34,10 +34,9 @@ class ComponentTests: XCTestCase {
   }
 
   func testDictionaryRepresentation() {
-    let model = ComponentModel(title: "CarouselComponent", kind: .carousel, span: 3, meta: ["headerHeight": 44.0])
+    let model = ComponentModel(kind: .carousel, span: 3, meta: ["headerHeight": 44.0])
     let component = CarouselComponent(model: model)
     XCTAssertEqual(model.dictionary["index"] as? Int, component.dictionary["index"] as? Int)
-    XCTAssertEqual(model.dictionary["title"] as? String, component.dictionary["title"] as? String)
     XCTAssertEqual(model.dictionary["kind"] as? String, component.dictionary["kind"] as? String)
     XCTAssertEqual(model.dictionary["span"] as? Int, component.dictionary["span"] as? Int)
     XCTAssertEqual(
@@ -47,7 +46,7 @@ class ComponentTests: XCTestCase {
   }
 
   func testSafelyResolveKind() {
-    let model = ComponentModel(title: "CarouselComponent", kind: .carousel, span: 1.0, items: [Item(title: "foo", kind: "custom-item-kind")])
+    let model = ComponentModel(kind: .carousel, span: 1.0, items: [Item(title: "foo", kind: "custom-item-kind")])
     let carouselComponent = CarouselComponent(model: model)
     let indexPath = IndexPath(row: 0, section: 0)
 
