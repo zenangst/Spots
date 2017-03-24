@@ -165,7 +165,7 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
   ///
   /// - returns: An optional Component object of inferred type.
   open func component<T>(at index: Int = 0, ofType type: T.Type) -> T? {
-    return components.filter({ $0.index == index }).first as? T
+    return components.filter({ $0.model.index == index }).first as? T
   }
 
   /// A look up method for resolving a component at index as a component.
@@ -174,7 +174,7 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
   ///
   /// - returns: An optional component.
   open func component(at index: Int = 0) -> Component? {
-    return components.filter({ $0.index == index }).first
+    return components.filter({ $0.model.index == index }).first
   }
 
   /// A generic look up method for resolving components using a closure
