@@ -81,20 +81,7 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
       self.model.layout = GridComponent.layout
     }
 
-    switch kind {
-    case .carousel:
-      registerDefaultIfNeeded(view: GridComponentCell.self)
-    case .grid:
-      registerDefaultIfNeeded(view: GridComponentCell.self)
-    case .list:
-      registerDefaultIfNeeded(view: ListComponentCell.self)
-    case .row:
-      registerDefaultIfNeeded(view: RowComponentCell.self)
-    }
-
-    Configuration.register(view: CarouselComponentCell.self, identifier: String(describing: CarouselComponentCell.self))
-    Configuration.register(view: GridComponentCell.self, identifier: String(describing: GridComponentCell.self))
-    Configuration.register(view: ListComponentCell.self, identifier: String(describing: ListComponentCell.self))
+    registerDefaultIfNeeded(view: DefaultItemView.self)
 
     userInterface?.register()
 
