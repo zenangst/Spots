@@ -309,22 +309,35 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
     return .none
   }
 
+  /// Add child component for composition.
+  ///
+  /// - Parameter child: The child component model that will be added.
   mutating public func add(child: ComponentModel) {
     var item = Item(kind: CompositeComponent.identifier)
     item.children = [child.dictionary]
     items.append(item)
   }
 
+  /// Add child components for composition.
+  ///
+  /// - Parameter children: A collection of component models that will be added.
   mutating public func add(children: [ComponentModel]) {
     for child in children {
       add(child: child)
     }
   }
 
+  /// Add layout to component.
+  ///
+  /// - Parameter layout: A layout model.
   mutating public func add(layout: Layout) {
     self.layout = layout
   }
 
+  /// Perform mutations on the existing layout
+  ///
+  /// - Parameter layout: The layout that will be used on the component model.
+  /// - Returns: The component that was mutated.
   mutating public func configure(with layout: Layout) -> ComponentModel {
     var copy = self
     copy.layout = layout
