@@ -5,7 +5,7 @@ import UIKit
 public class Component: NSObject, ComponentHorizontallyScrollable {
 
   /// The default layout that should be used for components.
-  /// It will default to this one if `Layout` is abscent during init.
+  /// It will default to this one if `Layout` is absent during init.
   public static var layout: Layout = Layout(span: 0.0)
   /// The default component kind that should be used.
   public static var defaultKind: ComponentKind = .grid
