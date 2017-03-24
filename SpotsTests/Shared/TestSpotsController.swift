@@ -658,7 +658,8 @@ class SpotsControllerTests: XCTestCase {
   }
 
   func testReloadWithComponentModels() {
-    Configuration.registerDefault(view: ListComponentCell.self)
+    Configuration.registerDefault(view: DefaultItemView.self)
+    Configuration.defaultViewSize = .init(width: 0, height: 44)
     let initialComponentModels = [
       ComponentModel(
         kind: .list,
@@ -705,12 +706,8 @@ class SpotsControllerTests: XCTestCase {
     XCTAssertTrue(initialComponentModels !== newComponentModels)
     XCTAssertEqual(initialComponentModels.count, newComponentModels.count)
 
-    #if os(OSX)
-      var view: ListComponentItem? = controller.ui({ $0.kind == "image" })
-    #else
-      var view: ListComponentCell? = controller.ui({ $0.kind == "image" })
-      XCTAssertNil(view)
-    #endif
+    var view: DefaultItemView? = controller.ui({ $0.kind == "image" })
+    XCTAssertNil(view)
 
     controller.prepareController()
 

@@ -52,13 +52,13 @@ class ComponentTests: XCTestCase {
 
     XCTAssertEqual(carouselComponent.identifier(for: indexPath), Configuration.views.defaultIdentifier)
 
-    Configuration.views.defaultItem = Registry.Item.classType(CarouselComponentCell.self)
+    Configuration.views.defaultItem = Registry.Item.classType(CustomListCell.self)
     XCTAssertEqual(carouselComponent.identifier(for: indexPath), Configuration.views.defaultIdentifier)
 
-    Configuration.views.defaultItem = Registry.Item.classType(CarouselComponentCell.self)
+    Configuration.views.defaultItem = Registry.Item.classType(CustomGridCell.self)
     XCTAssertEqual(carouselComponent.identifier(for: indexPath), Configuration.views.defaultIdentifier)
 
-    Configuration.views["custom-item-kind"] = Registry.Item.classType(CarouselComponentCell.self)
+    Configuration.views["custom-item-kind"] = Registry.Item.classType(CustomGridCell.self)
     XCTAssertEqual(carouselComponent.identifier(for: indexPath), "custom-item-kind")
   }
 
@@ -121,7 +121,7 @@ class ComponentTests: XCTestCase {
   }
 
   func testCarouselSetupWithPagination() {
-    Configuration.registerDefault(view: GridComponentCell.self)
+    Configuration.defaultViewSize = .init(width: 88, height: 88)
 
     let json: [String : Any] = [
       "kind" : "carousel",
@@ -185,7 +185,7 @@ class ComponentTests: XCTestCase {
   }
 
   func testPageIndicatorOverlayPlacement() {
-    Configuration.registerDefault(view: GridComponentCell.self)
+    Configuration.defaultViewSize = .init(width: 88, height: 88)
     let json: [String : Any] = [
       "items": [
         ["title": "foo", "kind": "carousel"],
