@@ -701,6 +701,7 @@
 				BDAD84E81E3E7025008289AE /* CollectionViewLeftLayout.swift */,
 				BD2403101E4B9A02005BAA19 /* Component.swift */,
 				BDAD84F21E3E7025008289AE /* DefaultItemView.swift */,
+				BD5FC7DE1E857AD900D03038 /* FlippedView.swift */,
 				BD165A3A1E6EAF310023AF82 /* GridableLayout.swift */,
 				BDAD84EA1E3E7025008289AE /* GridComposite.swift */,
 				BDAD84EE1E3E7025008289AE /* GridWrapper.swift */,
@@ -710,7 +711,6 @@
 				BDAD84F71E3E7025008289AE /* SpotsContentView.swift */,
 				BDAD84E91E3E7025008289AE /* SpotsController.swift */,
 				BDAD84F81E3E7025008289AE /* SpotsScrollView.swift */,
-				BD5FC7DE1E857AD900D03038 /* FlippedView.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
