@@ -235,9 +235,6 @@
 		BDAD85D81E3E7032008289AE /* Dispatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD85571E3E7032008289AE /* Dispatch.swift */; };
 		BDAD85D91E3E7032008289AE /* Dispatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD85571E3E7032008289AE /* Dispatch.swift */; };
 		BDAD85DA1E3E7032008289AE /* Dispatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD85571E3E7032008289AE /* Dispatch.swift */; };
-		BDAD85DB1E3E7032008289AE /* GridableMeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD85581E3E7032008289AE /* GridableMeta.swift */; };
-		BDAD85DC1E3E7032008289AE /* GridableMeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD85581E3E7032008289AE /* GridableMeta.swift */; };
-		BDAD85DD1E3E7032008289AE /* GridableMeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD85581E3E7032008289AE /* GridableMeta.swift */; };
 		BDAD85DE1E3E7032008289AE /* Inset.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD85591E3E7032008289AE /* Inset.swift */; };
 		BDAD85DF1E3E7032008289AE /* Inset.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD85591E3E7032008289AE /* Inset.swift */; };
 		BDAD85E01E3E7032008289AE /* Inset.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD85591E3E7032008289AE /* Inset.swift */; };
@@ -488,7 +485,6 @@
 		BDAD85551E3E7032008289AE /* ComponentModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ComponentModel.swift; sourceTree = "<group>"; };
 		BDAD85561E3E7032008289AE /* Configuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Configuration.swift; sourceTree = "<group>"; };
 		BDAD85571E3E7032008289AE /* Dispatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dispatch.swift; sourceTree = "<group>"; };
-		BDAD85581E3E7032008289AE /* GridableMeta.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridableMeta.swift; sourceTree = "<group>"; };
 		BDAD85591E3E7032008289AE /* Inset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Inset.swift; sourceTree = "<group>"; };
 		BDAD855A1E3E7032008289AE /* Interaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Interaction.swift; sourceTree = "<group>"; };
 		BDAD855B1E3E7032008289AE /* Layout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Layout.swift; sourceTree = "<group>"; };
@@ -837,7 +833,6 @@
 				BDAD85551E3E7032008289AE /* ComponentModel.swift */,
 				BDAD85561E3E7032008289AE /* Configuration.swift */,
 				BDAD85571E3E7032008289AE /* Dispatch.swift */,
-				BDAD85581E3E7032008289AE /* GridableMeta.swift */,
 				BDAD85591E3E7032008289AE /* Inset.swift */,
 				BDAD855A1E3E7032008289AE /* Interaction.swift */,
 				BDAD855B1E3E7032008289AE /* Layout.swift */,
@@ -1500,7 +1495,6 @@
 				BDAD859E1E3E7032008289AE /* SpotsProtocol+Mutation.swift in Sources */,
 				BDAD84D71E3E701C008289AE /* Inset+iOS.swift in Sources */,
 				BDAD84A31E3E701C008289AE /* CarouselComposite.swift in Sources */,
-				BDAD85DD1E3E7032008289AE /* GridableMeta.swift in Sources */,
 				BDAD85F21E3E7032008289AE /* TypeAlias.swift in Sources */,
 				BDAD85C51E3E7032008289AE /* ComponentFocusDelegate.swift in Sources */,
 				D5D282711E5474E0004BF251 /* Cell.swift in Sources */,
@@ -1627,7 +1621,6 @@
 				BDAD84C81E3E701C008289AE /* SpotsScrollView.swift in Sources */,
 				BDAD85F01E3E7032008289AE /* TypeAlias.swift in Sources */,
 				BDAD84A81E3E701C008289AE /* CarouselSpotHeader.swift in Sources */,
-				BDAD85DB1E3E7032008289AE /* GridableMeta.swift in Sources */,
 				BDAD85B41E3E7032008289AE /* RefreshDelegate.swift in Sources */,
 				BDAD859C1E3E7032008289AE /* SpotsProtocol+Mutation.swift in Sources */,
 				BDAD85D21E3E7032008289AE /* ComponentModel.swift in Sources */,
@@ -1797,7 +1790,6 @@
 				BDAD85151E3E7025008289AE /* DefaultItemView.swift in Sources */,
 				BDAD85111E3E7025008289AE /* GridWrapper.swift in Sources */,
 				BDAD85CA1E3E7032008289AE /* UserInterface.swift in Sources */,
-				BDAD85DC1E3E7032008289AE /* GridableMeta.swift in Sources */,
 				BDAD85A61E3E7032008289AE /* CarouselScrollDelegate.swift in Sources */,
 				BD5FC7DF1E857AD900D03038 /* FlippedView.swift in Sources */,
 			);
