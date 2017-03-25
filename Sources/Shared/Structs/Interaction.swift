@@ -54,8 +54,9 @@ public struct Interaction: Mappable {
   /// Default initializer for creating a Interaction struct.
   ///
   /// - Parameter paginate: Declares which pagination behavior that should be used, `.disabled` is default.
-  public init(paginate: Paginate = .disabled) {
+  public init(paginate: Paginate = .disabled, clickInteraction: ClickInteraction = .single) {
     self.paginate = paginate
+    self.clickInteraction = clickInteraction
   }
 
   /// Initialize with a JSON payload.
