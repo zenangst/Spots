@@ -26,7 +26,7 @@ class StateCacheTests: XCTestCase {
     /// Check that cache is empty
     XCTAssertEqual(controller.stateCache!.load().count, 0)
 
-    controller.components = [ListComponent(model: ComponentModel(layout: Layout(span: 1.0)))]
+    controller.components = [Component(model: ComponentModel(layout: Layout(span: 1.0)))]
 
     let expectation = self.expectation(description: "Append item to CoreComponent object")
     controller.append(Item(title: "foo"), componentIndex: 0, withAnimation: .automatic) {

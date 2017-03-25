@@ -14,7 +14,7 @@ class TestGridableLayout: XCTestCase {
         Item(title: "bar", size: CGSize(width: 50, height: 50))
       ]
     )
-    let carouselComponent = CarouselComponent(model: model)
+    let carouselComponent = Component(model: model)
     carouselComponent.setup(with: parentSize)
     carouselComponent.view.layoutSubviews()
 
@@ -38,7 +38,7 @@ class TestGridableLayout: XCTestCase {
         Item(title: "bar", size: CGSize(width: 50, height: 100))
       ]
     )
-    let carouselComponent = CarouselComponent(model: model)
+    let carouselComponent = Component(model: model)
     carouselComponent.setup(with: parentSize)
     carouselComponent.layout(with: parentSize)
     carouselComponent.view.layoutSubviews()
@@ -64,7 +64,7 @@ class TestGridableLayout: XCTestCase {
         Item(title: "bar", size: itemSize)
       ]
     )
-    let carouselComponent = CarouselComponent(model: model)
+    let carouselComponent = Component(model: model)
     carouselComponent.setup(with: parentSize)
     carouselComponent.view.layoutSubviews()
 
@@ -108,7 +108,7 @@ class TestGridableLayout: XCTestCase {
         Item(title: "bar", size: itemSize)
       ]
     )
-    let carouselComponent = CarouselComponent(model: model)
+    let carouselComponent = Component(model: model)
     carouselComponent.setup(with: parentSize)
     carouselComponent.view.layoutSubviews()
 
@@ -140,7 +140,7 @@ class TestGridableLayout: XCTestCase {
       ]
     )
 
-    let component = GridComponent(model: model)
+    let component = Component(model: model)
     component.setup(with: parentSize)
     component.layout(with: parentSize)
     component.view.layoutSubviews()

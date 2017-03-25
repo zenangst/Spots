@@ -6,7 +6,7 @@ class SpotsControllerTests: XCTestCase {
 
   func testSpotAtIndex() {
     let model = ComponentModel(layout: Layout(span: 1.0))
-    let listComponent = ListComponent(model: model)
+    let listComponent = Component(model: model)
     let controller = SpotsController(component: listComponent)
     controller.prepareController()
 
@@ -15,7 +15,7 @@ class SpotsControllerTests: XCTestCase {
 
   func testUpdateSpotAtIndex() {
     let model = ComponentModel(layout: Layout(span: 1.0))
-    let listComponent = ListComponent(model: model)
+    let listComponent = Component(model: model)
     let controller = SpotsController(component: listComponent)
     controller.prepareController()
     let items = [Item(title: "item1")]
@@ -32,9 +32,9 @@ class SpotsControllerTests: XCTestCase {
     XCTAssert(firstItems == items)
   }
 
-  func testAppendItemInListComponent() {
+  func testAppendItemInComponent() {
     let model = ComponentModel(kind: .list, layout: Layout(span: 1.0))
-    let listComponent = ListComponent(model: model)
+    let listComponent = Component(model: model)
     let controller = SpotsController(component: listComponent)
     controller.prepareController()
 
@@ -58,9 +58,9 @@ class SpotsControllerTests: XCTestCase {
     waitForExpectations(timeout: 10.0, handler: nil)
   }
 
-  func testAppendOneMoreItemInListComponent() {
+  func testAppendOneMoreItemInComponent() {
     let model = ComponentModel(kind: .list, items: [Item(title: "title1")])
-    let listComponent = ListComponent(model: model)
+    let listComponent = Component(model: model)
     let controller = SpotsController(component: listComponent)
     controller.prepareController()
 
@@ -77,9 +77,9 @@ class SpotsControllerTests: XCTestCase {
     waitForExpectations(timeout: 10.0, handler: nil)
   }
 
-  func testAppendItemsInListComponent() {
+  func testAppendItemsInComponent() {
     let model = ComponentModel(kind: .list, layout: Layout(span: 1.0))
-    let listComponent = ListComponent(model: model)
+    let listComponent = Component(model: model)
     let controller = SpotsController(component: listComponent)
     controller.prepareController()
 
@@ -97,9 +97,9 @@ class SpotsControllerTests: XCTestCase {
     waitForExpectations(timeout: 10.0, handler: nil)
   }
 
-  func testPrependItemsInListComponent() {
+  func testPrependItemsInComponent() {
     let model = ComponentModel(kind: .list, layout: Layout(span: 1.0))
-    let listComponent = ListComponent(model: model)
+    let listComponent = Component(model: model)
     let controller = SpotsController(component: listComponent)
     controller.prepareController()
 
@@ -117,13 +117,13 @@ class SpotsControllerTests: XCTestCase {
     waitForExpectations(timeout: 10.0, handler: nil)
   }
 
-  func testPrependMoreItemsInListComponent() {
+  func testPrependMoreItemsInComponent() {
     let model = ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
       Item(title: "title1", kind: "list"),
       Item(title: "title2", kind: "list")
       ]
     )
-    let listComponent = ListComponent(model: model)
+    let listComponent = Component(model: model)
     let controller = SpotsController(component: listComponent)
 
     controller.prepareController()
@@ -145,12 +145,12 @@ class SpotsControllerTests: XCTestCase {
     waitForExpectations(timeout: 10.0, handler: nil)
   }
 
-  func testDeleteItemInListComponent() {
+  func testDeleteItemInComponent() {
     let model = ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
       Item(title: "title1", kind: "list"),
       Item(title: "title2", kind: "list")
       ])
-    let initialListComponent = ListComponent(model: model)
+    let initialListComponent = Component(model: model)
     let controller = SpotsController(component: initialListComponent)
 
     controller.prepareController()
@@ -174,12 +174,12 @@ class SpotsControllerTests: XCTestCase {
     waitForExpectations(timeout: 10.0, handler: nil)
   }
 
-  func testDeleteItemsInListComponent() {
+  func testDeleteItemsInComponent() {
     let model = ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
       Item(title: "title1", kind: "list"),
       Item(title: "title2", kind: "list")
     ])
-    let initialListComponent = ListComponent(model: model)
+    let initialListComponent = Component(model: model)
     let controller = SpotsController(component: initialListComponent)
 
     controller.prepareController()
@@ -194,14 +194,14 @@ class SpotsControllerTests: XCTestCase {
     waitForExpectations(timeout: 10.0, handler: nil)
   }
 
-  func testDeleteItemAtIndexInListComponent() {
+  func testDeleteItemAtIndexInComponent() {
     let model = ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
       Item(title: "title1", kind: "list"),
       Item(title: "title2", kind: "list"),
       Item(title: "title3", kind: "list"),
       Item(title: "title4", kind: "list")
       ])
-    let initialListComponent = ListComponent(model: model)
+    let initialListComponent = Component(model: model)
     let controller = SpotsController(component: initialListComponent)
 
     controller.prepareController()
@@ -218,14 +218,14 @@ class SpotsControllerTests: XCTestCase {
     waitForExpectations(timeout: 10.0, handler: nil)
   }
 
-  func testDeleteItemsWithIndexesInListComponent() {
+  func testDeleteItemsWithIndexesInComponent() {
     let model = ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
       Item(title: "title1", kind: "list"),
       Item(title: "title2", kind: "list"),
       Item(title: "title3", kind: "list"),
       Item(title: "title4", kind: "list")
       ])
-    let initialListComponent = ListComponent(model: model)
+    let initialListComponent = Component(model: model)
     let controller = SpotsController(component: initialListComponent)
 
     controller.prepareController()
@@ -243,7 +243,7 @@ class SpotsControllerTests: XCTestCase {
 
   func testAppendItemInGridComponent() {
     let model = ComponentModel(kind: .grid, layout: Layout(span: 1))
-    let listComponent = ListComponent(model: model)
+    let listComponent = Component(model: model)
     let controller = SpotsController(component: listComponent)
 
     controller.prepareController()
@@ -264,7 +264,7 @@ class SpotsControllerTests: XCTestCase {
 
   func testAppendItemsInGridComponent() {
     let model = ComponentModel(kind: .grid, layout: Layout(span: 1))
-    let listComponent = ListComponent(model: model)
+    let listComponent = Component(model: model)
     let controller = SpotsController(component: listComponent)
 
     controller.prepareController()
@@ -285,7 +285,7 @@ class SpotsControllerTests: XCTestCase {
 
   func testPrependItemsInGridComponent() {
     let model = ComponentModel(kind: .grid, layout: Layout(span: 1))
-    let listComponent = ListComponent(model: model)
+    let listComponent = Component(model: model)
     let controller = SpotsController(component: listComponent)
 
     controller.prepareController()
@@ -309,7 +309,7 @@ class SpotsControllerTests: XCTestCase {
       Item(title: "title1", kind: "grid"),
       Item(title: "title2", kind: "grid")
       ])
-    let initialListComponent = ListComponent(model: model)
+    let initialListComponent = Component(model: model)
     let controller = SpotsController(component: initialListComponent)
 
     controller.prepareController()
@@ -335,7 +335,7 @@ class SpotsControllerTests: XCTestCase {
 
   func testAppendItemInCarouselComponent() {
     let model = ComponentModel(kind: .carousel, layout: Layout(span: 1.0))
-    let listComponent = GridComponent(model: model)
+    let listComponent = Component(model: model)
     let controller = SpotsController(component: listComponent)
 
     controller.prepareController()
@@ -356,7 +356,7 @@ class SpotsControllerTests: XCTestCase {
 
   func testAppendItemsInCarouselComponent() {
     let model = ComponentModel(kind: .carousel, layout: Layout(span: 1.0))
-    let listComponent = GridComponent(model: model)
+    let listComponent = Component(model: model)
     let controller = SpotsController(component: listComponent)
 
     controller.prepareController()
@@ -378,7 +378,7 @@ class SpotsControllerTests: XCTestCase {
 
   func testPrependItemsInCarouselComponent() {
     let model = ComponentModel(kind: .carousel, layout: Layout(span: 1.0))
-    let listComponent = ListComponent(model: model)
+    let listComponent = Component(model: model)
     let controller = SpotsController(component: listComponent)
 
     controller.prepareController()
@@ -402,7 +402,7 @@ class SpotsControllerTests: XCTestCase {
       Item(title: "title1", kind: "carousel"),
       Item(title: "title2", kind: "carousel")
       ])
-    let initialListComponent = ListComponent(model: model)
+    let initialListComponent = Component(model: model)
     let controller = SpotsController(component: initialListComponent)
 
     controller.prepareController()
@@ -431,7 +431,7 @@ class SpotsControllerTests: XCTestCase {
       Item(title: "title1", kind: "list"),
       Item(title: "title2", kind: "list")
       ])
-    let component = ListComponent(model: model)
+    let component = Component(model: model)
 
     XCTAssert(component.model.items == model.items)
 
@@ -442,9 +442,9 @@ class SpotsControllerTests: XCTestCase {
   }
 
   func testFindAndFilterComponentWithClosure() {
-    let listComponent = ListComponent(model: ComponentModel(identifier: "ListComponent", kind: .list, layout: Layout(span: 1.0)))
-    let listComponent2 = ListComponent(model: ComponentModel(identifier: "ListComponent2", kind: .list, layout: Layout(span: 1.0)))
-    let gridComponent = GridComponent(model: ComponentModel(identifier: "GridComponent", kind: .grid, layout: Layout(span: 1.0), items: [Item(title: "Item")]))
+    let listComponent = Component(model: ComponentModel(identifier: "ListComponent", kind: .list, layout: Layout(span: 1.0)))
+    let listComponent2 = Component(model: ComponentModel(identifier: "ListComponent2", kind: .list, layout: Layout(span: 1.0)))
+    let gridComponent = Component(model: ComponentModel(identifier: "GridComponent", kind: .grid, layout: Layout(span: 1.0), items: [Item(title: "Item")]))
     let controller = SpotsController(components: [listComponent, listComponent2, gridComponent])
 
     XCTAssertNotNil(controller.resolve(component: { $1.model.identifier == "ListComponent" }))
@@ -461,7 +461,7 @@ class SpotsControllerTests: XCTestCase {
   }
 
   func testJSONInitialiser() {
-    let component = ListComponent(model: ComponentModel(kind: .list))
+    let component = Component(model: ComponentModel(kind: .list))
     component.model.items = [Item(title: "First item")]
     let sourceController = SpotsController(component: component)
     let jsonController = SpotsController([

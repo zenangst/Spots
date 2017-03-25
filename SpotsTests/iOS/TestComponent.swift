@@ -4,12 +4,12 @@ import XCTest
 
 class ComponentTests: XCTestCase {
 
-  var component: CarouselComponent!
-  var cachedSpot: CarouselComponent!
+  var component: Component!
+  var cachedSpot: Component!
 
   override func setUp() {
-    component = CarouselComponent(model: ComponentModel(layout: Layout(span: 1)))
-    cachedSpot = CarouselComponent(cacheKey: "cached-carousel-component")
+    component = Component(model: ComponentModel(layout: Layout(span: 1)))
+    cachedSpot = Component(cacheKey: "cached-carousel-component")
     XCTAssertNotNil(cachedSpot.stateCache)
     cachedSpot.stateCache?.clear()
   }
@@ -22,7 +22,7 @@ class ComponentTests: XCTestCase {
   func testConvenienceInitWithSectionInsets() {
     let layout = Layout(span: 1, itemSpacing: 5, inset: Inset(top: 5, left: 10, bottom: 5, right: 5))
     let model = ComponentModel(kind: .grid, layout: layout)
-    let component = CarouselComponent(model: model)
+    let component = Component(model: model)
 
     guard let collectionViewLayout = component.collectionView?.collectionViewLayout as? UICollectionViewFlowLayout else {
       XCTFail("Unable to resolve collection view layout")
@@ -35,7 +35,7 @@ class ComponentTests: XCTestCase {
 
   func testDictionaryRepresentation() {
     let model = ComponentModel(kind: .carousel, layout: Layout(span: 3), meta: ["headerHeight": 44.0])
-    let component = CarouselComponent(model: model)
+    let component = Component(model: model)
     XCTAssertEqual(model.dictionary["index"] as? Int, component.dictionary["index"] as? Int)
     XCTAssertEqual(model.dictionary["kind"] as? String, component.dictionary["kind"] as? String)
     XCTAssertEqual(model.dictionary["span"] as? Int, component.dictionary["span"] as? Int)
@@ -47,7 +47,7 @@ class ComponentTests: XCTestCase {
 
   func testSafelyResolveKind() {
     let model = ComponentModel(kind: .carousel, layout: Layout(span: 1.0), items: [Item(title: "foo", kind: "custom-item-kind")])
-    let carouselComponent = CarouselComponent(model: model)
+    let carouselComponent = Component(model: model)
     let indexPath = IndexPath(row: 0, section: 0)
 
     XCTAssertEqual(carouselComponent.identifier(for: indexPath), Configuration.views.defaultIdentifier)
@@ -89,7 +89,7 @@ class ComponentTests: XCTestCase {
     ]
 
     let model = ComponentModel(json)
-    let component = CarouselComponent(model: model)
+    let component = Component(model: model)
     component.setup(with: CGSize(width: 100, height: 100))
 
     guard let collectionView = component.collectionView else {
@@ -139,7 +139,7 @@ class ComponentTests: XCTestCase {
     ]
 
     let model = ComponentModel(json)
-    let component = CarouselComponent(model: model)
+    let component = Component(model: model)
     let parentSize = CGSize(width: 667, height: 225)
 
     // Check `span` mapping
@@ -202,7 +202,7 @@ class ComponentTests: XCTestCase {
     ]
 
     let model = ComponentModel(json)
-    let component = CarouselComponent(model: model)
+    let component = Component(model: model)
     let parentSize = CGSize(width: 667, height: 225)
 
     component.setup(with: parentSize)
@@ -282,7 +282,7 @@ class ComponentTests: XCTestCase {
     collectionView.itemSize = CGSize(width: 200, height: 100)
 
     let model = ComponentModel(json)
-    let component = CarouselComponent(model: model, view: collectionView, kind: .carousel)
+    let component = Component(model: model, view: collectionView, kind: .carousel)
     let parentSize = CGSize(width: 300, height: 100)
 
     component.setup(with: parentSize)
@@ -313,7 +313,7 @@ class ComponentTests: XCTestCase {
 
   func testAppendItem() {
     let item = Item(title: "test")
-    let component = CarouselComponent(model: ComponentModel(layout: Layout(span: 1)))
+    let component = Component(model: ComponentModel(layout: Layout(span: 1)))
     let expectation = self.expectation(description: "Append item")
     component.append(item) {
       XCTAssert(component.model.items.first! == item)
@@ -324,7 +324,7 @@ class ComponentTests: XCTestCase {
 
   func testAppendItems() {
     let items = [Item(title: "test"), Item(title: "test 2")]
-    let component = CarouselComponent(model: ComponentModel(layout: Layout(span: 1)))
+    let component = Component(model: ComponentModel(layout: Layout(span: 1)))
     let expectation = self.expectation(description: "Append items")
     component.append(items) {
       XCTAssert(component.model.items == items)
@@ -335,7 +335,7 @@ class ComponentTests: XCTestCase {
 
   func testInsertItem() {
     let item = Item(title: "test")
-    let component = CarouselComponent(model: ComponentModel(layout: Layout(span: 1)))
+    let component = Component(model: ComponentModel(layout: Layout(span: 1)))
     let expectation = self.expectation(description: "Insert item")
     component.insert(item, index: 0) {
       XCTAssert(component.model.items.first! == item)
@@ -346,7 +346,7 @@ class ComponentTests: XCTestCase {
 
   func testPrependItems() {
     let items = [Item(title: "test"), Item(title: "test 2")]
-    let component = CarouselComponent(model: ComponentModel(layout: Layout(span: 1)))
+    let component = Component(model: ComponentModel(layout: Layout(span: 1)))
     let expectation = self.expectation(description: "Prepend items")
     component.prepend(items) {
       XCTAssert(component.model.items == items)
@@ -368,7 +368,7 @@ class ComponentTests: XCTestCase {
       guard let strongSelf = self else {
         return
       }
-      let cachedSpot = CarouselComponent(cacheKey: strongSelf.cachedSpot.stateCache!.key)
+      let cachedSpot = Component(cacheKey: strongSelf.cachedSpot.stateCache!.key)
       XCTAssertEqual(cachedSpot.model.items.count, 1)
       cachedSpot.stateCache?.clear()
       expectation.fulfill()
