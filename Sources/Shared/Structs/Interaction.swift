@@ -73,6 +73,10 @@ public struct Interaction: Mappable {
     if let paginate: String = map.property(Key.paginate.rawValue) {
       self.paginate <- Paginate(rawValue: paginate)
     }
+
+    if let clickInteraction: String = map.property(Key.clickInteraction.rawValue) {
+      self.clickInteraction <- ClickInteraction(rawValue: clickInteraction)
+    }
   }
 
   /// Compare Interaction structs.
