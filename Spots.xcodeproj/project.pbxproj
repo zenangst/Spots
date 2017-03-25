@@ -300,6 +300,7 @@
 		BDDF2CCC1DC7C23500B766BA /* TestAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDF2CCB1DC7C23500B766BA /* TestAnimations.swift */; };
 		BDDF2CCD1DC7C23500B766BA /* TestAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDF2CCB1DC7C23500B766BA /* TestAnimations.swift */; };
 		BDDF2CD01DC7C50700B766BA /* TestAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDF2CCF1DC7C50700B766BA /* TestAnimations.swift */; };
+		BDEA327C1E86FC850044B056 /* TestClickInteraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA327B1E86FC850044B056 /* TestClickInteraction.swift */; };
 		BDEED2E81D8446400030B475 /* TestSpotsScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEED2E71D8446400030B475 /* TestSpotsScrollView.swift */; };
 		BDEFF54F1DD1C85300FC0537 /* TestDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEFF54E1DD1C85300FC0537 /* TestDataSource.swift */; };
 		BDEFF5501DD1C85300FC0537 /* TestDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEFF54E1DD1C85300FC0537 /* TestDataSource.swift */; };
@@ -511,6 +512,7 @@
 		BDDCF6EE1E4DF93D004B38C4 /* DictionaryConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionaryConvertible.swift; sourceTree = "<group>"; };
 		BDDF2CCB1DC7C23500B766BA /* TestAnimations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestAnimations.swift; sourceTree = "<group>"; };
 		BDDF2CCF1DC7C50700B766BA /* TestAnimations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestAnimations.swift; sourceTree = "<group>"; };
+		BDEA327B1E86FC850044B056 /* TestClickInteraction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestClickInteraction.swift; sourceTree = "<group>"; };
 		BDEED2E71D8446400030B475 /* TestSpotsScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSpotsScrollView.swift; sourceTree = "<group>"; };
 		BDEFF54E1DD1C85300FC0537 /* TestDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestDataSource.swift; sourceTree = "<group>"; };
 		BDEFF5511DD1DA8000FC0537 /* TestDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestDelegate.swift; sourceTree = "<group>"; };
@@ -891,6 +893,7 @@
 				BD45D98E1E30935500C2D6B2 /* TestLayoutExtensions.swift */,
 				BD165A361E6EAAA60023AF82 /* TestSpot.swift */,
 				BD165A381E6EAD750023AF82 /* HelperViews.swift */,
+				BDEA327B1E86FC850044B056 /* TestClickInteraction.swift */,
 			);
 			path = macOS;
 			sourceTree = "<group>";
@@ -1815,6 +1818,7 @@
 				BD6FBEF11E12B5F000AA58BD /* TestComposition.swift in Sources */,
 				BDFC47521E747B2B008700BF /* TestListWrapper.swift in Sources */,
 				BDB8D5941E4DFADC00220BC3 /* TestItem.swift in Sources */,
+				BDEA327C1E86FC850044B056 /* TestClickInteraction.swift in Sources */,
 				BDDF2CD01DC7C50700B766BA /* TestAnimations.swift in Sources */,
 				BD677E8A1DC61EFC006D1654 /* TestStateCache.swift in Sources */,
 			);
