@@ -41,6 +41,7 @@ public struct Interaction: Mappable {
   /// A dictionary representation of the struct.
   public var dictionary: [String : Any] {
     return [
+      Key.clickInteraction.rawValue: clickInteraction.rawValue,
       Key.paginate.rawValue: paginate.rawValue
     ]
   }
