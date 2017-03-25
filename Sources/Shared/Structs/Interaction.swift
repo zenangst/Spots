@@ -82,7 +82,8 @@ public struct Interaction: Mappable {
   ///   - rhs: Right hand side Interaction
   /// - Returns: A boolean value that is true if all properties are equal on the struct.
   public static func == (lhs: Interaction, rhs: Interaction) -> Bool {
-    return lhs.paginate == rhs.paginate
+    return lhs.paginate == rhs.paginate &&
+      lhs.clickInteraction == rhs.clickInteraction
   }
 
   /// Compare Interaction structs.
