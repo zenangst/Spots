@@ -32,6 +32,8 @@ public struct Interaction: Mappable {
   var paginate: Paginate = .disabled
   /// Indicates which scrolling direction will be used, default to false.
   var scrollDirection: ScrollDirection = .vertical
+  /// Indicates what kind click interaction the element should use.
+  var clickInteraction: ClickInteraction = .single
 
   /// The root key used when parsing JSON into a Interaction struct.
   static let rootKey: String = String(describing: Interaction.self).lowercased()
