@@ -310,6 +310,11 @@ import Tailor
       let item = item(at: tableView.clickedRow) else {
       return
     }
+
+    guard model.interaction.clickInteraction == .double else {
+      return
+    }
+
     delegate?.component(self, itemSelected: item)
   }
 
@@ -321,6 +326,11 @@ import Tailor
       let item = item(at: tableView.clickedRow) else {
         return
     }
+
+    guard model.interaction.clickInteraction == .single else {
+      return
+    }
+
     delegate?.component(self, itemSelected: item)
   }
 
