@@ -9,6 +9,14 @@ enum ScrollDirection: String {
   case horizontal, vertical
 }
 
+/// Configures what kind of click behavior the component should use.
+///
+/// - single: Single mouse click.
+/// - double: Double mouse click (only supported on components that use table views).
+public enum ClickInteraction: String {
+  case single, double
+}
+
 /// A user interaction struct used for mapping behavior to a component.
 /// Note: `paginate` is currently only available on iOS.
 public struct Interaction: Mappable {
