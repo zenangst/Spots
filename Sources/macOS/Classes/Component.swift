@@ -146,16 +146,7 @@ import Tailor
     super.init()
 
     if model.layout == nil {
-      switch kind {
-      case .carousel:
-        self.model.layout = CarouselComponent.layout
-      case .grid:
-        self.model.layout = GridComponent.layout
-      case .list:
-        self.model.layout = ListComponent.layout
-      case .row:
-        self.model.layout = RowComponent.layout
-      }
+      self.model.layout = Component.layout
     }
 
     registerDefaultIfNeeded(view: DefaultItemView.self)

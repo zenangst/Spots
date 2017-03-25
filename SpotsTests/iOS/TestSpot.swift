@@ -69,7 +69,7 @@ class TestSpot: XCTestCase {
     let model = ComponentModel(kind: .list, items: items, hybrid: true)
     let listComponentModel = ComponentModel(kind: .list, items: items)
     let component = Component(model: model)
-    let listComponent = ListComponent(model: listComponentModel)
+    let listComponent = Component(model: listComponentModel)
 
     XCTAssertTrue(type(of: component.view) == type(of: listComponent.view))
 
@@ -92,7 +92,7 @@ class TestSpot: XCTestCase {
     let model = ComponentModel(kind: ComponentKind.grid, items: items, hybrid: true)
     let gridComponentModel = ComponentModel(kind: ComponentKind.grid, items: items)
     let component = Component(model: model)
-    let gridComponent = GridComponent(model: gridComponentModel)
+    let gridComponent = Component(model: gridComponentModel)
 
     XCTAssertTrue(type(of: component.view) == type(of: gridComponent.view))
 
@@ -116,7 +116,7 @@ class TestSpot: XCTestCase {
     let model = ComponentModel(kind: .carousel, items: items, hybrid: true)
     let carouselComponentModel = ComponentModel(kind: .carousel, items: items)
     let component = Component(model: model)
-    let carouselComponent = CarouselComponent(model: carouselComponentModel)
+    let carouselComponent = Component(model: carouselComponentModel)
 
     XCTAssertTrue(type(of: component.view) == type(of: carouselComponent.view))
 

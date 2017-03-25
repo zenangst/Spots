@@ -55,7 +55,7 @@ class CompositionTests: XCTestCase {
       ]
     )
 
-    let component = GridComponent(model: model)
+    let component = Component(model: model)
     component.setup(with: CGSize(width: 100, height: 100))
 
     XCTAssertEqual(component.model.items.count, 2)

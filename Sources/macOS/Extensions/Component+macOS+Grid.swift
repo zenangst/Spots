@@ -3,7 +3,7 @@ import Cocoa
 extension Component {
 
   func setupVerticalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
-    GridComponent.configure?(collectionView)
+    Component.configure?(collectionView)
   }
 
   func layoutVerticalCollectionView(_ collectionView: CollectionView, with size: CGSize) {

@@ -78,7 +78,7 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     super.init()
 
     if model.layout == nil {
-      self.model.layout = GridComponent.layout
+      self.model.layout = Component.layout
     }
 
     registerDefaultIfNeeded(view: DefaultItemView.self)

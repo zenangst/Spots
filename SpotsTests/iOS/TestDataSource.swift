@@ -6,7 +6,7 @@ class DataSourceTests: XCTestCase {
 
   func testDataSourceForListableObject() {
     Configuration.register(view: CustomListCell.self, identifier: "custom")
-    let component = ListComponent(model: ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
+    let component = Component(model: ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
       Item(title: "title 1"),
       Item(title: "title 2")
       ]))
@@ -45,7 +45,7 @@ class DataSourceTests: XCTestCase {
 
   func testDataSourceForGridableObject() {
     Configuration.register(view: CustomGridCell.self, identifier: "custom")
-    let component = GridComponent(model: ComponentModel(kind: .grid, layout: Layout(span: 1.0), items: [
+    let component = Component(model: ComponentModel(kind: .grid, layout: Layout(span: 1.0), items: [
       Item(title: "title 1"),
       Item(title: "title 2")
       ]))
@@ -83,7 +83,7 @@ class DataSourceTests: XCTestCase {
 
   func testDataSourceForGridableCustomHeader() {
     Configuration.register(view: CustomGridHeaderView.self, identifier: "custom-header")
-    let component = GridComponent(model: ComponentModel(
+    let component = Component(model: ComponentModel(
       header: Item(kind: "custom-header"),
       kind: .grid,
       layout: Layout(span: 1.0),

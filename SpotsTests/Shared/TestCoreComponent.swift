@@ -5,7 +5,7 @@ import XCTest
 class CoreComponentTests: XCTestCase {
 
   func testAppendingMultipleItemsToComponent() {
-    let listComponent = ListComponent(model: ComponentModel(kind: .list, layout: Layout(span: 1)))
+    let listComponent = Component(model: ComponentModel(kind: .list, layout: Layout(span: 1)))
     listComponent.setup(with: CGSize(width: 100, height: 100))
     var items: [Item] = []
 
@@ -29,7 +29,7 @@ class CoreComponentTests: XCTestCase {
   }
 
   func testAppendingMultipleItemsToSpotInController() {
-    let controller = SpotsController(components: [ListComponent(model: ComponentModel(kind: .list, layout: Layout(span: 1.0)))])
+    let controller = SpotsController(components: [Component(model: ComponentModel(kind: .list, layout: Layout(span: 1.0)))])
     controller.prepareController()
     var items: [Item] = []
 
@@ -59,7 +59,7 @@ class CoreComponentTests: XCTestCase {
 
     let parentSize = CGSize(width: 100, height: 100)
     let model = ComponentModel(items: [Item(title: "foo", kind: kind)])
-    let component = GridComponent(model: model)
+    let component = Component(model: model)
     component.view.frame.size = parentSize
     component.setup(with: parentSize)
     component.layout(with: parentSize)
@@ -81,7 +81,7 @@ class CoreComponentTests: XCTestCase {
 
     let parentSize = CGSize(width: 100, height: 100)
     let model = ComponentModel(items: [Item(title: "foo", kind: kind)])
-    let component = ListComponent(model: model)
+    let component = Component(model: model)
 
     component.setup(with: parentSize)
     component.layout(with: parentSize)
@@ -100,7 +100,7 @@ class CoreComponentTests: XCTestCase {
     Configuration.register(view: TestView.self, identifier: "test-view")
 
     let items = [Item(title: "Item A", kind: "test-view"), Item(title: "Item B")]
-    let component = CarouselComponent(model: ComponentModel(kind: .carousel, layout: Layout(span: 0.0), items: items))
+    let component = Component(model: ComponentModel(kind: .carousel, layout: Layout(span: 0.0), items: items))
     component.setup(with: CGSize(width: 100, height: 100))
 
     var invokeCount = 0
@@ -116,7 +116,7 @@ class CoreComponentTests: XCTestCase {
     Configuration.register(view: TestView.self, identifier: "test-view")
 
     let items = [Item(title: "Item A", kind: "test-view"), Item(title: "Item B")]
-    let component = CarouselComponent(model: ComponentModel(kind: .list, items: items))
+    let component = Component(model: ComponentModel(kind: .list, items: items))
     component.setup(with: CGSize(width: 100, height: 100))
 
     var invokeCount = 0

@@ -21,7 +21,7 @@ class LayoutExtensionsTests: XCTestCase {
   ]
 
   func testConfigureGridableComponent() {
-    let gridComponent = GridComponent(model: ComponentModel(kind: .grid, layout: Layout(span: 1)))
+    let gridComponent = Component(model: ComponentModel(kind: .grid, layout: Layout(span: 1)))
     let layout = Layout(json)
 
     layout.configure(component: gridComponent)
@@ -41,7 +41,7 @@ class LayoutExtensionsTests: XCTestCase {
   }
 
   func testConfigureListableComponent() {
-    let listComponent = ListComponent(model: ComponentModel(kind: .list, layout: Layout(span: 1)))
+    let listComponent = Component(model: ComponentModel(kind: .list, layout: Layout(span: 1)))
     let layout = Layout(json)
 
     layout.configure(component: listComponent)
