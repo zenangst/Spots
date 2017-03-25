@@ -1,14 +1,13 @@
 @testable import Spots
 import Foundation
 import XCTest
-import Brick
 
 class UIViewControllerExtensionsTests: XCTestCase {
 
-  var controller: Controller!
+  var controller: SpotsController!
 
   override func setUp() {
-    controller = Controller(spots: [])
+    controller = SpotsController(components: [])
   }
 
   override func tearDown() {
@@ -16,12 +15,12 @@ class UIViewControllerExtensionsTests: XCTestCase {
   }
 
   func testShouldAutorotateOnController() {
-    XCTAssertEqual(controller.spots_shouldAutorotate(), true)
+    XCTAssertEqual(controller.components_shouldAutorotate(), true)
   }
 
   func testShouldAutorotateOnChildController() {
     let parentController = UIViewController()
     parentController.addChildViewController(controller)
-    XCTAssertEqual(controller.spots_shouldAutorotate(), true)
+    XCTAssertEqual(controller.components_shouldAutorotate(), true)
   }
 }

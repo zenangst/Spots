@@ -1,7 +1,7 @@
 import UIKit
 import QuartzCore
 
-/// The core foundation scroll view inside of Spots that manages the linear layout of all Spotable objects
+/// The core foundation scroll view inside of Spots that manages the linear layout of all components.
 open class SpotsScrollView: UIScrollView {
 
   /// A KVO context used to monitor changes in contentSize, frames and bounds
@@ -24,7 +24,7 @@ open class SpotsScrollView: UIScrollView {
   }
 
   /// A container view that works as a proxy layer for scroll view
-  open var spotsContentView: SpotsContentView = SpotsContentView()
+  open var componentsView: SpotsContentView = SpotsContentView()
 
   /// A deinitiazlier that removes all subviews from contentView
   deinit {
@@ -40,11 +40,11 @@ open class SpotsScrollView: UIScrollView {
   /// - parameter frame: The frame rectangle for the view, measured in points. The origin of the frame is relative to the superview in which you plan to add it.
   ///  This method uses the frame rectangle to set the center and bounds properties accordingly.
   ///
-  /// - returns: An initialized spots scroll view
+  /// - returns: An initialized components scroll view
   override init(frame: CGRect) {
     super.init(frame: frame)
-    spotsContentView.autoresizingMask = self.autoresizingMask
-    addSubview(spotsContentView)
+    componentsView.autoresizingMask = self.autoresizingMask
+    addSubview(componentsView)
   }
 
   /// Returns an object initialized from data in a given unarchiver.
@@ -60,10 +60,12 @@ open class SpotsScrollView: UIScrollView {
   func didAddSubviewToContainer(_ subview: UIView) {
     subview.autoresizingMask = UIViewAutoresizing()
 
-    guard spotsContentView.subviews.index(of: subview) != nil else { return }
+    guard componentsView.subviews.index(of: subview) != nil else {
+      return
+    }
 
     subviewsInLayoutOrder.removeAll()
-    for subview in spotsContentView.subviews {
+    for subview in componentsView.subviews {
       subviewsInLayoutOrder.append(subview)
       observeView(view: subview)
     }
@@ -108,10 +110,10 @@ open class SpotsScrollView: UIScrollView {
       return
     }
 
-    if view is UIScrollView && view.superview == spotsContentView {
+    if view is UIScrollView && view.superview == componentsView {
       view.addObserver(self, forKeyPath: #keyPath(contentSize), options: .old, context: subviewContext)
       view.addObserver(self, forKeyPath: #keyPath(contentOffset), options: .old, context: subviewContext)
-    } else if view.superview == spotsContentView {
+    } else if view.superview == componentsView {
       view.addObserver(self, forKeyPath: #keyPath(frame), options: .old, context: subviewContext)
       view.addObserver(self, forKeyPath: #keyPath(bounds), options: .old, context: subviewContext)
     }
@@ -142,11 +144,15 @@ open class SpotsScrollView: UIScrollView {
   /// - parameter change:  A dictionary that describes the changes that have been made to the value of the property at the key path keyPath relative to object.
   /// - parameter context: The value that was provided when the receiver was registered to receive key-value observation notifications.
   open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-    guard let keyPath = keyPath else { return }
+    guard let keyPath = keyPath else {
+      return
+    }
 
     if let change = change, context == subviewContext {
       if let scrollView = object as? UIScrollView {
-        guard let newValue = change[NSKeyValueChangeKey.oldKey] else { return }
+        guard let newValue = change[NSKeyValueChangeKey.oldKey] else {
+          return
+        }
         if #keyPath(contentSize) == keyPath {
 
           let newContentSize = scrollView.contentSize
@@ -181,10 +187,12 @@ open class SpotsScrollView: UIScrollView {
 
   /// Layout views in linear order based of view index in `subviewsInLayoutOrder`
   func layoutViews() {
-    guard let superview = superview else { return }
+    guard let superview = superview else {
+      return
+    }
 
-    spotsContentView.frame = bounds
-    spotsContentView.bounds = CGRect(origin: contentOffset, size: bounds.size)
+    componentsView.frame = bounds
+    componentsView.bounds = CGRect(origin: contentOffset, size: bounds.size)
 
     var yOffsetOfCurrentSubview: CGFloat = 0.0
 
@@ -205,17 +213,17 @@ open class SpotsScrollView: UIScrollView {
         let remainingContentHeight = fmax(scrollView.contentSize.height - contentOffset.y, 0.0)
 
         frame.size.height = ceil(fmin(remainingBoundsHeight, remainingContentHeight))
-        frame.size.width = ceil(spotsContentView.frame.size.width)
+        frame.size.width = ceil(componentsView.frame.size.width)
 
         scrollView.frame = frame.integral
         scrollView.contentOffset = CGPoint(x: Int(contentOffset.x), y: Int(contentOffset.y))
 
-        yOffsetOfCurrentSubview += scrollView.contentSize.height + scrollView.contentInset.top + scrollView.contentInset.bottom
+        yOffsetOfCurrentSubview += scrollView.contentSize.height
       } else {
         var frame = subview.frame
         frame.origin.x = 0
         frame.origin.y = yOffsetOfCurrentSubview
-        frame.size.width = spotsContentView.bounds.size.width
+        frame.size.width = componentsView.bounds.size.width
         subview.frame = frame
 
         yOffsetOfCurrentSubview += frame.size.height
@@ -238,7 +246,9 @@ open class SpotsScrollView: UIScrollView {
     let initialContentOffset = contentOffset
     layoutViews()
 
-    guard !initialContentOffset.equalTo(contentOffset) else { return }
+    guard !initialContentOffset.equalTo(contentOffset) else {
+      return
+    }
     setNeedsLayout()
     layoutIfNeeded()
   }

@@ -4,7 +4,6 @@
   import Foundation
 #endif
 
-import Brick
 import Cache
 
 /// Compare method for generic types that conform to Comparable
@@ -49,33 +48,33 @@ public extension SpotsProtocol {
 
   /// Produce a dictionary representation of the controller.
   ///
-  /// - parameter amountOfItems: An optional Int used for getting a subset of items to cache, it set, it will save the amount of items for each Spotable object based on this value.
+  /// - parameter amountOfItems: An optional Int used for getting a subset of items to cache, it set, it will save the amount of items for each Component object based on this value.
   ///
   /// - returns: A dictionary representation of the controller.
   public func dictionary(_ amountOfItems: Int? = nil) -> [String : Any] {
     var result = [[String: Any]]()
 
-    for spot in spots {
-      var spotJSON = spot.component.dictionary(amountOfItems)
-      for item in spot.items where item.kind == "composite" {
-        let results = spot.compositeSpots
+    for component in components {
+      var componentJSON = component.model.dictionary(amountOfItems)
+      for item in component.model.items where item.kind == CompositeComponent.identifier {
+        let results = component.compositeComponents
           .filter({ $0.itemIndex == item.index })
 
         var newItem = item
         var children = [[String: Any]]()
 
         for compositeSpot in results {
-          children.append(compositeSpot.spot.dictionary)
+          children.append(compositeSpot.component.dictionary)
         }
 
         newItem.children = children
 
-        var newItems = spotJSON[Component.Key.Items] as? [[String : Any]]
+        var newItems = componentJSON[ComponentModel.Key.items] as? [[String : Any]]
         newItems?[item.index] = newItem.dictionary
-        spotJSON[Component.Key.Items] = newItems
+        componentJSON[ComponentModel.Key.items] = newItems
       }
 
-      result.append(spotJSON)
+      result.append(componentJSON)
     }
 
     return ["components": result as AnyObject ]
@@ -87,14 +86,14 @@ public extension SpotsProtocol {
   ///
   /// - returns: An optional object with inferred type.
   public func ui<T>(_ includeElement: (Item) -> Bool) -> T? {
-    for spot in spots {
-      if let first = spot.items.filter(includeElement).first {
-        return spot.ui(at: first.index)
+    for component in components {
+      if let first = component.model.items.filter(includeElement).first {
+        return component.ui(at: first.index)
       }
 
-      let cSpots = spot.compositeSpots.map { $0.spot }
+      let cSpots = component.compositeComponents.map { $0.component }
       for compositeSpot in cSpots {
-        if let first = compositeSpot.items.filter(includeElement).first {
+        if let first = compositeSpot.model.items.filter(includeElement).first {
           return compositeSpot.ui(at: first.index)
         }
       }
@@ -103,16 +102,16 @@ public extension SpotsProtocol {
     return nil
   }
 
-  /// Filter Spotable objects inside of controller
+  /// Filter components. inside of controller
   ///
-  /// - parameter includeElement: A filter predicate to find a spot
+  /// - parameter includeElement: A filter predicate to find a component
   ///
-  /// - returns: A collection of Spotable objects that match the includeElements predicate
-  public func filter(spots includeElement: (Spotable) -> Bool) -> [Spotable] {
-    var result = spots.filter(includeElement)
+  /// - returns: A collection of components. that match the includeElements predicate
+  public func filter(components includeElement: (Component) -> Bool) -> [Component] {
+    var result = components.filter(includeElement)
 
-    let cSpots = spots.flatMap({ $0.compositeSpots.map { $0.spot } })
-    let compositeResults: [Spotable] = cSpots.filter(includeElement)
+    let cSpots = components.flatMap({ $0.compositeComponents.map { $0.component } })
+    let compositeResults: [Component] = cSpots.filter(includeElement)
 
     result.append(contentsOf: compositeResults)
 
@@ -123,20 +122,20 @@ public extension SpotsProtocol {
   ///
   /// - parameter includeElement: The predicate that the item has to match.
   ///
-  /// - returns: A collection of tuples containing spotable objects with the matching items that were found.
-  public func filter(items includeElement: (Item) -> Bool) -> [(spot: Spotable, items: [Item])] {
-    var result = [(spot: Spotable, items: [Item])]()
-    for spot in spots {
-      let items = spot.items.filter(includeElement)
+  /// - returns: A collection of tuples containing components with the matching items that were found.
+  public func filter(items includeElement: (Item) -> Bool) -> [(component: Component, items: [Item])] {
+    var result = [(component: Component, items: [Item])]()
+    for component in components {
+      let items = component.model.items.filter(includeElement)
       if !items.isEmpty {
-        result.append((spot: spot, items: items))
+        result.append((component: component, items: items))
       }
 
-      let childSpots = spot.compositeSpots.map { $0.spot }
-      for spot in childSpots {
-        let items = spot.items.filter(includeElement)
+      let childSpots = component.compositeComponents.map { $0.component }
+      for component in childSpots {
+        let items = component.model.items.filter(includeElement)
         if !items.isEmpty {
-          result.append((spot: spot, items: items))
+          result.append((component: component, items: items))
         }
       }
     }
@@ -145,18 +144,20 @@ public extension SpotsProtocol {
   }
 
 #if os(iOS)
-  /// Scroll to the index of a Spotable object, only available on iOS.
+  /// Scroll to the index of a Component object, only available on iOS.
   ///
-  /// - parameter index:          The index of the spot that you want to scroll
+  /// - parameter index:          The index of the component that you want to scroll
   /// - parameter includeElement: A filter predicate to find a view model
-  public func scrollTo(spotIndex index: Int = 0, includeElement: (Item) -> Bool) {
-    guard let itemY = spot(at: index, ofType: Spotable.self)?.scrollTo(includeElement) else { return }
+  public func scrollTo(componentIndex index: Int = 0, includeElement: (Item) -> Bool) {
+    guard let itemY = component(at: index)?.scrollTo(includeElement) else {
+      return
+    }
 
     var initialHeight: CGFloat = 0.0
     if index > 0 {
-      initialHeight += spots[0..<index].reduce(0, { $0 + $1.computedHeight })
+      initialHeight += components[0..<index].reduce(0, { $0 + $1.computedHeight })
     }
-    if spot(at: index, ofType: Spotable.self)?.computedHeight > scrollView.frame.height - scrollView.contentInset.bottom - initialHeight {
+    if component(at: index)?.computedHeight > scrollView.frame.height - scrollView.contentInset.bottom - initialHeight {
       let y = itemY - scrollView.frame.size.height + scrollView.contentInset.bottom + initialHeight
       scrollView.setContentOffset(CGPoint(x: CGFloat(0.0), y: y), animated: true)
     }
@@ -173,7 +174,7 @@ public extension SpotsProtocol {
 
   /// Caches the current state of the controller
   ///
-  /// - parameter items: An optional integer that is used to reduce the amount of items that should be cached per Spotable object when saving the view state to disk
+  /// - parameter items: An optional integer that is used to reduce the amount of items that should be cached per Component object when saving the view state to disk
   public func cache(_ items: Int? = nil) {
     #if DEVMODE
       liveEditing(stateCache: stateCache)
@@ -196,18 +197,13 @@ public extension SpotsProtocol {
 
   /// Resolve component at index path.
   ///
-  /// - parameter indexPath: The index path of the component belonging to the Spotable object at that index.
+  /// - parameter indexPath: The index path of the component belonging to the Component object at that index.
   ///
-  /// - returns: A Component object at index path.
-  fileprivate func component(at indexPath: IndexPath) -> Component {
-    return spot(at: indexPath).component
-  }
-
-  /**
-   - parameter indexPath: The index path of the spot you want to lookup
-   - returns: A Spotable object at index path
-   **/
-  fileprivate func spot(at indexPath: IndexPath) -> Spotable {
-    return spots[indexPath.item]
+  /// - returns: A ComponentModel object at index path.
+  func component(at index: Int) -> Component? {
+    guard index >= 0 && index < components.count else {
+      return nil
+    }
+    return components[index]
   }
 }

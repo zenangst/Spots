@@ -2,6 +2,45 @@ import UIKit
 
 extension UICollectionView: UserInterface {
 
+  public static var compositeIdentifier: String {
+    return "collection-composite"
+  }
+
+  public func register() {
+    Configuration.register(view: GridComposite.self, identifier: CollectionView.compositeIdentifier)
+    register(GridComposite.self, forCellWithReuseIdentifier: CollectionView.compositeIdentifier)
+
+    for (identifier, item) in Configuration.views.storage {
+      if identifier.contains(CompositeComponent.identifier) {
+        continue
+      }
+
+      switch item {
+      case .classType(_):
+        register(GridHeaderFooterWrapper.self,
+                 forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
+                 withReuseIdentifier: identifier)
+        register(GridHeaderFooterWrapper.self,
+                 forSupplementaryViewOfKind: UICollectionElementKindSectionFooter,
+                 withReuseIdentifier: identifier)
+        register(GridWrapper.self,
+                 forCellWithReuseIdentifier: identifier)
+        register(GridWrapper.self,
+                 forCellWithReuseIdentifier: Configuration.views.defaultIdentifier)
+      case .nib(let nib):
+        register(nib, forCellWithReuseIdentifier: identifier)
+      }
+    }
+  }
+
+  public var visibleViews: [View] {
+    let views = visibleCells.map { view in
+      resolveVisibleView(view)
+    }
+
+    return views
+  }
+
   /// The index of the current selected item
   @available(iOS 9.0, *)
   public var selectedIndex: Int {
@@ -52,8 +91,19 @@ extension UICollectionView: UserInterface {
     deselectItem(at: IndexPath(row: index, section: 0), animated: animated)
   }
 
+  /// Resolve a view at index
+  ///
+  /// - Parameter index: The item index that should be used to resolve the view.
+  /// - Returns: The view that is resolved at the index casted into the inferred type.
   public func view<T>(at index: Int) -> T? {
-    return cellForItem(at: IndexPath(item: index, section: 0)) as? T
+    let view = cellForItem(at: IndexPath(item: index, section: 0))
+
+    switch view {
+    case let view as GridWrapper:
+      return view.wrappedView as? T
+    default:
+      return view as? T
+    }
   }
 
   public func beginUpdates() {}
@@ -106,8 +156,10 @@ extension UICollectionView: UserInterface {
     let indexPaths = indexes.map { IndexPath(item: $0, section: 0) }
 
     performBatchUpdates({ [weak self] in
-      guard let weakSelf = self else { return }
-      weakSelf.deleteItems(at: indexPaths)
+      guard let strongSelf = self else {
+        return
+      }
+      strongSelf.deleteItems(at: indexPaths)
       }) { _ in }
     completion?()
   }
@@ -120,9 +172,9 @@ extension UICollectionView: UserInterface {
   ///  - parameter updateDataSource: A closure that is used to update the data source before performing the updates on the UI
   ///  - parameter completion:       A completion closure that will run when both data source and UI is updated
   public func process(_ changes: (insertions: [Int], reloads: [Int], deletions: [Int], childUpdates: [Int]),
-               withAnimation animation: Animation = .automatic,
-                             updateDataSource: () -> Void,
-                             completion: ((()) -> Void)? = nil) {
+                      withAnimation animation: Animation = .automatic,
+                      updateDataSource: () -> Void,
+                      completion: ((()) -> Void)? = nil) {
     let insertions = changes.insertions.map { IndexPath(row: $0, section: 0) }
     let reloads = changes.reloads.map { IndexPath(row: $0, section: 0) }
     let deletions = changes.deletions.map { IndexPath(row: $0, section: 0) }
@@ -153,8 +205,10 @@ extension UICollectionView: UserInterface {
   public func reloadSection(_ section: Int = 0, withAnimation animation: Animation = .automatic, completion: (() -> Void)? = nil) {
     UIView.performWithoutAnimation {
       performBatchUpdates({ [weak self] in
-        guard let weakSelf = self else { return }
-        weakSelf.reloadSections(IndexSet(integer: section))
+        guard let strongSelf = self else {
+          return
+        }
+        strongSelf.reloadSections(IndexSet(integer: section))
       }) { _ in
         completion?()
       }

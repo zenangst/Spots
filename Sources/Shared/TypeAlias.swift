@@ -6,6 +6,14 @@
 
 /// A type alias for a anonymous completion
 public typealias Completion = (() -> Void)?
+@available(*, deprecated, message: "Use Component instead.")
+public typealias CarouselComponent = Component
+@available(*, deprecated, message: "Use Component instead.")
+public typealias ListComponent = Component
+@available(*, deprecated, message: "Use Component instead.")
+public typealias GridComponent = Component
+@available(*, deprecated, message: "Use Component instead.")
+public typealias RowComponent = Component
 
 #if os(OSX)
   /// A type alias to reference a normal platform view
@@ -37,7 +45,7 @@ public typealias Completion = (() -> Void)?
   }
 #else
   /// A type alias to reference a view passed to delegate method
-  public typealias SpotView = UIView
+  public typealias ComponentView = UIView
   /// A type alias to reference a normal platform view
   public typealias View = UIView
   /// A type alias to reference a normal scroll view

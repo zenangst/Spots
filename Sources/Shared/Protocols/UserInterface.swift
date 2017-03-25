@@ -1,7 +1,9 @@
-import Brick
-
-/// A protocol used for composition inside Spotable objects
+/// A protocol used for composition inside components.
 public protocol UserInterface: class {
+
+  static var compositeIdentifier: String { get }
+
+  var visibleViews: [View] { get }
 
   #if !os(OSX)
   /// The index of the current selected item
@@ -83,4 +85,7 @@ public protocol UserInterface: class {
   func endUpdates()
   /// A proxy method to call reloadData
   func reloadDataSource()
+
+  /// Register all views from Configuration on user interface object.
+  func register()
 }

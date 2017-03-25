@@ -2,6 +2,38 @@ import UIKit
 
 extension UITableView: UserInterface {
 
+  public static var compositeIdentifier: String {
+    return "list-composite"
+  }
+
+  public func register() {
+    Configuration.register(view: ListComposite.self, identifier: TableView.compositeIdentifier)
+    register(ListComposite.self, forCellReuseIdentifier: TableView.compositeIdentifier)
+
+    for (identifier, item) in Configuration.views.storage {
+      if identifier.contains(CompositeComponent.identifier) {
+        continue
+      }
+
+      switch item {
+      case .classType(_):
+        register(ListHeaderFooterWrapper.self, forHeaderFooterViewReuseIdentifier: identifier)
+        register(ListWrapper.self, forCellReuseIdentifier: Configuration.views.defaultIdentifier)
+        register(ListWrapper.self, forCellReuseIdentifier: identifier)
+      case .nib(let nib):
+        register(nib, forCellReuseIdentifier: identifier)
+      }
+    }
+  }
+
+  public var visibleViews: [View] {
+    let views = visibleCells.map { view in
+      resolveVisibleView(view)
+    }
+
+    return views
+  }
+
   public var selectedIndex: Int {
     return indexPathForSelectedRow?.row ?? 0
   }
@@ -52,7 +84,14 @@ extension UITableView: UserInterface {
   }
 
   public func view<T>(at index: Int) -> T? {
-    return cellForRow(at: IndexPath(row: index, section: 0)) as? T
+    let view = cellForRow(at: IndexPath(row: index, section: 0))
+
+    switch view {
+    case let view as ListWrapper:
+      return view.wrappedView as? T
+    default:
+      return view as? T
+    }
   }
 
   public func reloadDataSource() {
@@ -121,9 +160,9 @@ extension UITableView: UserInterface {
   /// - parameter updateDataSource: A closure that is used to update the data source before performing the updates on the UI
   /// - parameter completion:       A completion closure that will run when both data source and UI is updated
   public func process(_ changes: (insertions: [Int], reloads: [Int], deletions: [Int], childUpdates: [Int]),
-               withAnimation animation: Animation = .automatic,
-               updateDataSource: () -> Void,
-               completion: ((()) -> Void)? = nil) {
+                      withAnimation animation: Animation = .automatic,
+                      updateDataSource: () -> Void,
+                      completion: ((()) -> Void)? = nil) {
     let insertions = changes.insertions.map { IndexPath(row: $0, section: 0) }
     let reloads = changes.reloads.map { IndexPath(row: $0, section: 0) }
     let deletions = changes.deletions.map { IndexPath(row: $0, section: 0) }

@@ -1,16 +1,15 @@
 @testable import Spots
 import Foundation
 import XCTest
-import Brick
 
-class StateCacheTests : XCTestCase {
+class StateCacheTests: XCTestCase {
 
   let cacheKey: String = "state-cache-test"
-  var controller: Controller!
+  var controller: SpotsController!
 
   override func setUp() {
     StateCache.removeAll()
-    controller = Controller(cacheKey: cacheKey)
+    controller = SpotsController(cacheKey: cacheKey)
   }
 
   override func tearDown() {
@@ -27,26 +26,26 @@ class StateCacheTests : XCTestCase {
     /// Check that cache is empty
     XCTAssertEqual(controller.stateCache!.load().count, 0)
 
-    controller.spots = [ListSpot(component: Component(span: 1.0))]
+    controller.components = [Component(model: ComponentModel(layout: Layout(span: 1.0)))]
 
-    let exception = self.expectation(description: "Append item to Spotable object")
-    controller.append(Item(title: "foo"), spotIndex: 0, withAnimation: .automatic) {
+    let expectation = self.expectation(description: "Append item to CoreComponent object")
+    controller.append(Item(title: "foo"), componentIndex: 0, withAnimation: .automatic) {
       self.controller.cache()
       /// Check that the cache was saved to disk
       XCTAssertEqual(self.controller.stateCache!.load().count, 1)
-      exception.fulfill()
+      expectation.fulfill()
     }
-    waitForExpectations(timeout: 1.0, handler: nil)
+    waitForExpectations(timeout: 10.0, handler: nil)
   }
 
   func testRemovingStateCacheFromController() {
-    let exception = self.expectation(description: "Clear state cache")
+    let expectation = self.expectation(description: "Clear state cache")
     controller.stateCache?.clear {
       XCTAssertEqual(self.controller.stateCache!.load().count, 0)
       XCTAssertEqual(self.controller.stateCache!.cacheExists, false)
-      exception.fulfill()
+      expectation.fulfill()
     }
-    waitForExpectations(timeout: 1.0, handler: nil)
+    waitForExpectations(timeout: 10.0, handler: nil)
   }
 
   func testCacheWithEmptyKey() {
@@ -60,15 +59,14 @@ class StateCacheTests : XCTestCase {
     let cacheTwo = StateCache(key: "two")
     let path = cacheOne.path
 
-    [cacheOne, cacheTwo].forEach { $0.save(["foo" : "bar"]) }
+    [cacheOne, cacheTwo].forEach { $0.save(["foo": "bar"]) }
 
-    let exception = self.expectation(description: "Wait for cache")
-    Dispatch.delay(for: 0.5) {
+    let expectation = self.expectation(description: "Wait for cache")
+    Dispatch.after(seconds: 0.5) {
       do {
         let files = try FileManager.default.contentsOfDirectory(atPath: path)
         XCTAssertEqual(files.count, 2)
       } catch {}
-
 
       StateCache.removeAll()
 
@@ -77,8 +75,8 @@ class StateCacheTests : XCTestCase {
         XCTAssertEqual(files.count, 0)
       } catch {}
 
-      exception.fulfill()
+      expectation.fulfill()
     }
-    waitForExpectations(timeout: 1.0, handler: nil)
+    waitForExpectations(timeout: 10.0, handler: nil)
   }
 }

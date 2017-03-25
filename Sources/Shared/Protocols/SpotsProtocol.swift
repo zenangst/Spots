@@ -4,21 +4,20 @@
   import UIKit
 #endif
 
-import Brick
 import Cache
 
 public protocol SpotsProtocol: class {
 
   /// A closure that is called when the controller is reloaded with components
-  static var spotsDidReloadComponents: ((_ controller: Controller) -> Void)? { get set }
+  static var componentsDidReloadComponentModels: ((_ controller: SpotsController) -> Void)? { get set }
   /// A StateCache object
   var stateCache: StateCache? { get set }
   /// The internal SpotsScrollView
   var scrollView: SpotsScrollView { get }
-  /// A delegate that conforms to SpotsDelegate
-  var delegate: SpotsDelegate? { get }
-  /// A collection of Spotable objects
-  var spots: [Spotable] { get set }
+  /// A delegate that conforms to ComponentDelegate
+  var delegate: ComponentDelegate? { get }
+  /// A collection of components.
+  var components: [Component] { get set }
   /// An array of refresh position to avoid calling multiple refreshes
   var refreshPositions: [CGFloat] { get set }
   /// A view controller view
@@ -27,9 +26,6 @@ public protocol SpotsProtocol: class {
   #else
   var view: View! { get }
   #endif
-
-  /// The first spotable object in the controller.
-  var spot: Spotable? { get }
 
   /// A dictionary representation of the controller
   var dictionary: [String : Any] { get }
@@ -45,40 +41,32 @@ public protocol SpotsProtocol: class {
   var source: DispatchSourceFileSystemObject? { get set }
   #endif
 
-  /// Set up Spotable objects.
+  /// Set up components.
   ///
-  /// - parameter animated: An optional animation closure that is invoked when setting up the spot.
-  func setupSpots(animated: ((_ view: View) -> Void)?)
+  /// - parameter animated: An optional animation closure that is invoked when setting up the component.
+  func setupComponents(animated: ((_ view: View) -> Void)?)
 
   /// Set up Spot at index
   ///
-  /// - parameter index: The index of the Spotable object
-  /// - parameter spot:  The spotable object that is going to be setup
-  func setupSpot(at index: Int, spot: Spotable)
+  /// - parameter index: The index of the component.
+  /// - parameter component:  The component that is going to be setup
+  func setupComponent(at index: Int, component: Component)
 
-  ///  A generic look up method for resolving spots based on index
+  /// A generic look up method for resolving components using a closure
   ///
-  /// - parameter index: The index of the spot that you are trying to resolve.
-  /// - parameter type: The generic type for the spot you are trying to resolve.
+  /// - parameter closure: A closure to perform actions on a component
   ///
-  /// - returns: An optional Spotable object of inferred type.
-  func spot<T>(at index: Int, ofType type: T.Type) -> T?
-
-  /// A generic look up method for resolving spots using a closure
-  ///
-  /// - parameter closure: A closure to perform actions on a spotable object
-  ///
-  /// - returns: An optional Spotable object
-  func resolve(spot closure: (_ index: Int, _ spot: Spotable) -> Bool) -> Spotable?
+  /// - returns: An optional Component object
+  func resolve(component closure: (_ index: Int, _ component: Component) -> Bool) -> Component?
 
   #if os(OSX)
-  init(spots: [Spotable], backgroundType: ControllerBackground)
+  init(components: [Component], backgroundType: ControllerBackground)
   #else
-  /// A required initializer for initializing a controller with Spotable objects
+  /// A required initializer for initializing a controller with components.
   ///
-  /// - parameter spots: A collection of Spotable objects that should be setup and be added to the view hierarchy.
+  /// - parameter components: A collection of components. that should be setup and be added to the view hierarchy.
   ///
   /// - returns: An initalized controller.
-  init(spots: [Spotable])
+  init(components: [Component])
   #endif
 }

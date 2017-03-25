@@ -1,6 +1,6 @@
 import UIKit
 
-/// A custom flow layout used in GridSpot and CarouselSpot
+/// A custom flow layout used in GridComponent and CarouselComponent
 open class GridableLayout: UICollectionViewFlowLayout {
 
   /// The content size for the Gridable object
@@ -26,7 +26,7 @@ open class GridableLayout: UICollectionViewFlowLayout {
   /// Subclasses should always call super if they override.
   open override func prepare() {
     guard let delegate = collectionView?.delegate as? Delegate,
-      let spot = delegate.spot as? Gridable
+      let component = delegate.component
       else {
         return
     }
@@ -35,21 +35,10 @@ open class GridableLayout: UICollectionViewFlowLayout {
 
     var layoutAttributes = [UICollectionViewLayoutAttributes]()
 
-    if !spot.component.header.isEmpty {
-
-      var view: View?
-
-      if let (_, header) = spot.type.headers.make(spot.component.header) {
-        view = header
-      }
-
-      if view == nil, let (_, header) = Configuration.views.make(spot.component.header) {
-        view = header
-      }
-
-      if let resolvedView = view {
-        if let componentView = resolvedView as? Componentable {
-          headerReferenceSize.height = componentView.preferredHeaderHeight
+    if let headerKind = component.model.header?.kind, !headerKind.isEmpty {
+      if let headerView = Configuration.views.make(headerKind)?.view {
+        if let componentView = headerView as? ItemConfigurable {
+          headerReferenceSize.height = componentView.preferredViewSize.height
         }
 
         let headerAttribute = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, with: IndexPath(item: 0, section: 0))
@@ -63,12 +52,11 @@ open class GridableLayout: UICollectionViewFlowLayout {
       }
     }
 
-    if !spot.component.footer.isEmpty,
-      let (_, view) = Configuration.views.make(spot.component.footer),
-      let resolvedView = view {
+    if let footerKind = component.model.footer?.kind, !footerKind.isEmpty,
+      let footerView = Configuration.views.make(footerKind)?.view {
 
-      if let componentView = resolvedView as? Componentable {
-        footerHeight = componentView.preferredHeaderHeight
+      if let componentView = footerView as? ItemConfigurable {
+        footerHeight = componentView.preferredViewSize.height
       }
 
       let footerAttribute = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, with: IndexPath(item: 0, section: 0))
@@ -77,18 +65,28 @@ open class GridableLayout: UICollectionViewFlowLayout {
 
     self.layoutAttributes = layoutAttributes
 
-    if scrollDirection == .horizontal {
-      guard let firstItem = spot.items.first else { return }
+    switch scrollDirection {
+    case .horizontal:
+      guard let firstItem = component.model.items.first else {
+        return
+      }
 
-      contentSize.width = spot.items.reduce(0, { $0 + $1.size.width })
-      contentSize.width += CGFloat(spot.items.count) * (minimumInteritemSpacing)
-      contentSize.width += sectionInset.left + (sectionInset.right / 2) - 3
-      contentSize.width = ceil(contentSize.width)
+      contentSize.width = component.model.items.reduce(0, { $0 + floor($1.size.width) })
+      contentSize.width += minimumInteritemSpacing * CGFloat(component.model.items.count - 1)
 
       contentSize.height = firstItem.size.height + headerReferenceSize.height + footerHeight
-      contentSize.height += sectionInset.top + sectionInset.bottom
-    } else {
-      contentSize.width = spot.collectionView.frame.width - spot.collectionView.contentInset.left - spot.collectionView.contentInset.right
+
+      if let componentLayout = component.model.layout {
+        contentSize.height += CGFloat(componentLayout.inset.top + componentLayout.inset.bottom)
+
+        #if os(iOS)
+        if let pageControl = collectionView?.backgroundView?.subviews.filter({ $0 is UIPageControl }).first {
+          contentSize.height += pageControl.frame.size.height
+        }
+        #endif
+      }
+    case .vertical:
+      contentSize.width = component.view.frame.width - component.view.contentInset.left - component.view.contentInset.right
       contentSize.height = super.collectionViewContentSize.height
     }
   }
@@ -112,14 +110,6 @@ open class GridableLayout: UICollectionViewFlowLayout {
     }
   }
 
-  open override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-    guard let attribute = super.layoutAttributesForItem(at: indexPath) else {
-      return nil
-    }
-
-    return attribute
-  }
-
   /// Returns the layout attributes for all of the cells and views in the specified rectangle.
   ///
   /// - parameter rect: The rectangle (specified in the collection view’s coordinate system) containing the target views.
@@ -128,7 +118,7 @@ open class GridableLayout: UICollectionViewFlowLayout {
   open override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
     guard let collectionView = collectionView,
       let dataSource = collectionView.dataSource as? DataSource,
-      let spot = dataSource.spot
+      let component = dataSource.component
       else {
         return nil
     }
@@ -158,10 +148,10 @@ open class GridableLayout: UICollectionViewFlowLayout {
           itemAttribute.frame.origin.x = collectionView.contentOffset.x
           attributes.append(itemAttribute)
         default:
-          itemAttribute.size = spot.sizeForItem(at: itemAttribute.indexPath)
+          itemAttribute.size = component.sizeForItem(at: itemAttribute.indexPath)
 
           if scrollDirection == .horizontal {
-            itemAttribute.frame.origin.y = headerReferenceSize.height
+            itemAttribute.frame.origin.y = headerReferenceSize.height + sectionInset.top
             itemAttribute.frame.origin.x = offset
             offset += itemAttribute.size.width + minimumInteritemSpacing
           }
@@ -184,6 +174,6 @@ open class GridableLayout: UICollectionViewFlowLayout {
   ///
   /// - returns: Always returns true
   open override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
-    return true
+    return newBounds.size.height >= contentSize.height
   }
 }

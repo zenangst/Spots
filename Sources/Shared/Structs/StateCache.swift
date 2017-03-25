@@ -2,7 +2,7 @@ import Foundation
 import Cache
 import CryptoSwift
 
-/// A StateCache struct used for Controller and Spotable object caching
+/// A StateCache struct used for Controller and Component object caching
 public struct StateCache {
 
   /// A unique identifer string for the StateCache
@@ -32,7 +32,7 @@ public struct StateCache {
     return FileManager.default.fileExists(atPath: path)
   }
 
-  /// Remove state cache for all controllers and spotable objects.
+  /// Remove state cache for all controllers and components.
   public static func removeAll() {
     let path = Cache<JSON>(name: "\(StateCache.cacheName)/\(bundleIdentifer)").path
     do {

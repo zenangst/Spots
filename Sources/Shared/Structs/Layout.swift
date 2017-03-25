@@ -1,6 +1,5 @@
 import Foundation
 import Tailor
-import Brick
 
 #if os(OSX)
   import Cocoa
@@ -8,113 +7,148 @@ import Brick
   import UIKit
 #endif
 
+/// A layout struct used for mapping layout to a component.
 public struct Layout: Mappable, DictionaryConvertible, Equatable {
 
-  enum Keys: String {
+  /// A string based enum for keys used when encoding and decoding the struct from and to JSON.
+  ///
+  /// - itemSpacing: Used to set `minimumInteritemSpacing` on collection view based UI.
+  /// - lineSpacing: Used to set `minimumLineSpacing` on collection view based UI.
+  /// - span: Used to set which span the component should use.
+  /// - dynamicSpan: Used to map dynamic span.
+  /// - dynamicHeight: Used to map if component should use dynamic height.
+  /// - pageIndicator: Used to map if component should display a page indicator.
+  enum Key: String {
     case itemSpacing = "item-spacing"
     case lineSpacing = "line-spacing"
-    case span = "span"
+    case span
     case dynamicSpan = "dynamic-span"
+    case dynamicHeight = "dynamic-height"
+    case pageIndicator = "page-indicator"
   }
 
-  static let rootKey: String = "layout"
+  static let rootKey: String = String(describing: Layout.self).lowercased()
 
-  public var contentInset: ContentInset = ContentInset()
-  public var sectionInset: SectionInset = SectionInset()
+  public var inset: Inset = Inset()
   /// For a vertically scrolling grid, this value represents the minimum spacing between items in the same row.
   /// For a horizontally scrolling grid, this value represents the minimum spacing between items in the same column.
   public var itemSpacing: Double = 0.0
   /// For a vertically scrolling layout, the value represents the minimum spacing between successive rows.
   /// For a horizontally scrolling layout, the value represents the minimum spacing between successive columns.
   public var lineSpacing: Double = 0.0
+  /// Defines how many items to show per row for `Gridable` components.
   public var span: Double = 0.0
+  /// If enabled and the item count is less than the span, the CarouselComponent will even out the space between the items to align them.
   public var dynamicSpan: Bool = false
+  /// Defines if the component uses computed content height or relies on `view.frame.height`.
+  public var dynamicHeight: Bool = true
+  /// The placement of any page indicator (`nil` if no indicator should be displayed)
+  public var pageIndicatorPlacement: PageIndicatorPlacement?
 
+  /// A dictionary representation of the struct.
   public var dictionary: [String : Any] {
-    return [
-      ContentInset.rootKey: contentInset.dictionary,
-      SectionInset.rootKey: sectionInset.dictionary,
-      Keys.itemSpacing.rawValue: itemSpacing,
-      Keys.lineSpacing.rawValue: lineSpacing,
-      Keys.span.rawValue: span,
-      Keys.dynamicSpan.rawValue: dynamicSpan
+    var dictionary: [String : Any] = [
+      Inset.rootKey: inset.dictionary,
+      Key.itemSpacing.rawValue: itemSpacing,
+      Key.lineSpacing.rawValue: lineSpacing,
+      Key.span.rawValue: span,
+      Key.dynamicSpan.rawValue: dynamicSpan,
+      Key.dynamicHeight.rawValue: dynamicHeight
     ]
+
+    if let pageIndicatorPlacement = pageIndicatorPlacement {
+      dictionary[Key.pageIndicator.rawValue] = pageIndicatorPlacement.rawValue
+    }
+
+    return dictionary
   }
 
+  /// A convenience initializer with default values.
   public init() {
     self.span = 0.0
     self.dynamicSpan = false
     self.itemSpacing = 0.0
     self.lineSpacing = 0.0
-    self.sectionInset = SectionInset()
-    self.contentInset = ContentInset()
+    self.inset = Inset()
   }
 
-  public init(span: Double = 0.0, dynamicSpan: Bool = false, itemSpacing: Double = 0.0, lineSpacing: Double = 0.0, sectionInset: SectionInset = SectionInset(), contentInset: ContentInset = ContentInset()) {
+  /// Default initializer for creating a Layout struct.
+  ///
+  /// - Parameters:
+  ///   - span: The span that should be used for the model.
+  ///   - dynamicSpan: Enable or disable dynamic span.
+  ///   - dynamicHeight: Enable or disable dynamic height.
+  ///   - pageIndicatorPlacement: Where any page indicator (if any) should be displayed in the model.
+  ///   - itemSpacing: Sets minimum item spacing for the model.
+  ///   - lineSpacing: Sets minimum lines spacing for items in model.
+  ///   - inset: An inset struct used to insert margins for the model.
+  public init(span: Double = 0.0, dynamicSpan: Bool = false, dynamicHeight: Bool = true, pageIndicatorPlacement: PageIndicatorPlacement? = nil, itemSpacing: Double = 0.0, lineSpacing: Double = 0.0, inset: Inset = .init()) {
     self.span = span
     self.dynamicSpan = dynamicSpan
+    self.dynamicHeight = dynamicHeight
     self.itemSpacing = itemSpacing
     self.lineSpacing = lineSpacing
-    self.sectionInset = sectionInset
-    self.contentInset = contentInset
+    self.inset = inset
+    self.pageIndicatorPlacement = pageIndicatorPlacement
   }
 
+  /// Initialize with a JSON payload.
+  ///
+  /// - Parameter map: A JSON dictionary.
   public init(_ map: [String : Any] = [:]) {
-    switch Component.legacyMapping {
-    case true:
-      self.sectionInset = SectionInset(map)
-      self.contentInset = ContentInset(map)
-    case false:
-      self.sectionInset = SectionInset(map.property(SectionInset.rootKey) ?? [:])
-      self.contentInset = ContentInset(map.property(ContentInset.rootKey) ?? [:])
-    }
-
-    self.itemSpacing <- map.property(Keys.itemSpacing.rawValue)
-    self.lineSpacing <- map.property(Keys.lineSpacing.rawValue)
-    self.dynamicSpan <- map.property(Keys.dynamicSpan.rawValue)
-    self.span <- map.property(Keys.span.rawValue)
+    configure(withJSON: map)
   }
 
   public init(_ block: (inout Layout) -> Void) {
-    self.init([:])
+    self.init()
     block(&self)
   }
 
+  /// Configure struct with a JSON dictionary.
+  ///
+  /// - Parameter map: A JSON dictionary.
   public mutating func configure(withJSON map: [String : Any]) {
-    switch Component.legacyMapping {
-    case true:
-      self.sectionInset = SectionInset(map)
-      self.contentInset = ContentInset(map)
-    case false:
-      self.sectionInset = SectionInset(map.property(SectionInset.rootKey) ?? [:])
-      self.contentInset = ContentInset(map.property(ContentInset.rootKey) ?? [:])
-    }
-
-    self.itemSpacing <- map.property(Keys.itemSpacing.rawValue)
-    self.lineSpacing <- map.property(Keys.lineSpacing.rawValue)
-    self.dynamicSpan <- map.property(Keys.dynamicSpan.rawValue)
-    self.span <- map.property(Keys.span.rawValue)
+    self.inset = Inset(map.property(Inset.rootKey) ?? [:])
+    self.itemSpacing <- map.property(Key.itemSpacing.rawValue)
+    self.lineSpacing <- map.property(Key.lineSpacing.rawValue)
+    self.dynamicSpan <- map.property(Key.dynamicSpan.rawValue)
+    self.dynamicHeight <- map.property(Key.dynamicHeight.rawValue)
+    self.span <- map.property(Key.span.rawValue)
+    self.pageIndicatorPlacement <- map.enum(Key.pageIndicator.rawValue)
   }
 
+  /// Perform mutation with closure.
+  ///
+  /// - Parameter closure: A mutation closure used to change values for a layout.
+  /// - Returns: A mutated Layout struct.
   public func mutate(_ closure: (inout Layout) -> Void) -> Layout {
     var copy = self
     closure(&copy)
     return copy
   }
 
-  public func configure(spot: Listable) {
-    contentInset.configure(scrollView: spot.render())
-  }
-
+  /// Compare Layout structs.
+  ///
+  /// - Parameters:
+  ///   - lhs: Left hand side Layout
+  ///   - rhs: Right hand side Layout
+  /// - Returns: A boolean value that is true if all properties are equal on the struct.
   public static func == (lhs: Layout, rhs: Layout) -> Bool {
-    return lhs.contentInset == rhs.contentInset &&
-    lhs.sectionInset == rhs.sectionInset &&
+    return lhs.inset == rhs.inset &&
     lhs.itemSpacing == rhs.itemSpacing &&
     lhs.lineSpacing == rhs.lineSpacing &&
     lhs.span == rhs.span &&
-    lhs.dynamicSpan == rhs.dynamicSpan
+    lhs.dynamicSpan == rhs.dynamicSpan &&
+    lhs.dynamicHeight == rhs.dynamicHeight &&
+    lhs.pageIndicatorPlacement == rhs.pageIndicatorPlacement
   }
 
+  /// Compare Layout structs.
+  ///
+  /// - Parameters:
+  ///   - lhs: Left hand side Layout
+  ///   - rhs: Right hand side Layout
+  /// - Returns: A boolean value that is true if all properties are not equal on the struct.
   public static func != (lhs: Layout, rhs: Layout) -> Bool {
     return !(lhs == rhs)
   }

@@ -1,19 +1,33 @@
 @testable import Spots
-import Brick
 #if os(OSX)
 import Foundation
 #else
 import UIKit
 #endif
 
+import Tailor
 
-extension Controller {
+struct Meta {
+  var id = 0
+  var name: String?
+}
+
+extension Meta: Mappable {
+
+  init(_ map: [String : Any]) {
+    id = map.property("id") ?? 0
+    name = map.property("name") ?? ""
+  }
+}
+
+extension SpotsController {
 
   func prepareController() {
     preloadView()
+    viewWillAppear()
     viewDidAppear()
-    spots.forEach {
-      $0.render().layoutSubviews()
+    components.forEach {
+      $0.view.layoutSubviews()
     }
   }
 
@@ -24,8 +38,12 @@ extension Controller {
     #endif
   }
   #if !os(OSX)
-  func viewDidAppear() {
+
+  func viewWillAppear() {
     viewWillAppear(true)
+  }
+
+  func viewDidAppear() {
     viewDidAppear(true)
   }
   #endif
@@ -38,16 +56,142 @@ extension Controller {
   }
 }
 
-struct Helper {
-  static func clearCache(for stateCache: StateCache?) {
-    if FileManager().fileExists(atPath: stateCache!.path) {
-      try! FileManager().removeItem(atPath: stateCache!.path)
+#if !os(OSX)
+
+  class RegularView: UIView {
+    override init(frame: CGRect) {
+      var frame = frame
+      frame.size.height = 44
+      super.init(frame: frame)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+      fatalError("init(coder:) has not been implemented")
     }
   }
-}
 
-#if !os(OSX)
-  class CustomListCell: UITableViewCell, SpotConfigurable {
+  class ItemConfigurableView: UIView, ItemConfigurable {
+
+    var preferredViewSize: CGSize = CGSize(width: 200, height: 50)
+
+    override init(frame: CGRect) {
+      super.init(frame: frame)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+      fatalError("init(coder:) has not been implemented")
+    }
+
+    func configure(_ item: inout Item) {
+      frame.size.height = 75
+    }
+  }
+
+  class HeaderView: UIView, ItemConfigurable {
+
+    var preferredViewSize: CGSize = CGSize(width: 200, height: 50)
+
+    lazy var titleLabel: UILabel = {
+      let label = UILabel()
+      label.textAlignment = .center
+      return label
+    }()
+
+    override init(frame: CGRect) {
+      super.init(frame: frame)
+      addSubview(titleLabel)
+
+      configureConstraints()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+      fatalError("init(coder:) has not been implemented")
+    }
+
+    func configureConstraints() {
+      titleLabel.translatesAutoresizingMaskIntoConstraints = false
+      titleLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
+      titleLabel.leftAnchor.constraint(equalTo: titleLabel.superview!.leftAnchor).isActive = true
+      titleLabel.rightAnchor.constraint(equalTo: titleLabel.superview!.rightAnchor).isActive = true
+      titleLabel.centerYAnchor.constraint(equalTo: titleLabel.superview!.centerYAnchor).isActive = true
+    }
+
+    func configure(_ item: inout Item) {
+      titleLabel.text = item.title
+    }
+  }
+
+  class FooterView: UIView, ItemConfigurable {
+
+    var preferredViewSize: CGSize = CGSize(width: 200, height: 50)
+
+    lazy var titleLabel: UILabel = {
+      let label = UILabel()
+      label.textAlignment = .center
+      return label
+    }()
+
+    override init(frame: CGRect) {
+      super.init(frame: frame)
+      addSubview(titleLabel)
+
+      configureConstraints()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+      fatalError("init(coder:) has not been implemented")
+    }
+
+    func configureConstraints() {
+      titleLabel.translatesAutoresizingMaskIntoConstraints = false
+      titleLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
+      titleLabel.leftAnchor.constraint(equalTo: titleLabel.superview!.leftAnchor).isActive = true
+      titleLabel.rightAnchor.constraint(equalTo: titleLabel.superview!.rightAnchor).isActive = true
+      titleLabel.centerYAnchor.constraint(equalTo: titleLabel.superview!.centerYAnchor).isActive = true
+    }
+
+    func configure(_ item: inout Item) {
+      titleLabel.text = item.title
+    }
+  }
+
+  class TextView: UIView, ItemConfigurable {
+
+    var preferredViewSize: CGSize = CGSize(width: 200, height: 50)
+
+    lazy var titleLabel: UILabel = {
+      let label = UILabel()
+      label.textAlignment = .center
+      return label
+    }()
+
+    override init(frame: CGRect) {
+      super.init(frame: frame)
+      addSubview(titleLabel)
+
+      backgroundColor = UIColor.gray.withAlphaComponent(0.25)
+
+      configureConstraints()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+      fatalError("init(coder:) has not been implemented")
+    }
+
+    func configureConstraints() {
+      titleLabel.translatesAutoresizingMaskIntoConstraints = false
+      titleLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
+      titleLabel.leftAnchor.constraint(equalTo: titleLabel.superview!.leftAnchor).isActive = true
+      titleLabel.rightAnchor.constraint(equalTo: titleLabel.superview!.rightAnchor).isActive = true
+      titleLabel.centerYAnchor.constraint(equalTo: titleLabel.superview!.centerYAnchor).isActive = true
+    }
+
+    func configure(_ item: inout Item) {
+      titleLabel.text = item.title
+    }
+  }
+
+  class CustomListCell: UITableViewCell, ItemConfigurable {
 
     var preferredViewSize: CGSize = CGSize(width: 0, height: 44)
 
@@ -56,29 +200,37 @@ struct Helper {
     }
   }
 
-  class CustomListHeaderView: UITableViewHeaderFooterView, Componentable {
-    var preferredHeaderHeight: CGFloat = 88
+  class CustomListHeaderView: UITableViewHeaderFooterView, ItemConfigurable {
+    var preferredViewSize: CGSize = CGSize(width: 0, height: 88)
 
-    func configure(_ component: Component) {
-      textLabel?.text = component.title
+    func configure(_ item: inout Item) {
+      textLabel?.text = item.title
     }
   }
 
-  class CustomGridCell: UICollectionViewCell, SpotConfigurable {
+  class CustomGridCell: UICollectionViewCell, ItemConfigurable {
 
     var preferredViewSize: CGSize = CGSize(width: 0, height: 44)
 
     func configure(_ item: inout Item) {}
   }
 
-  class CustomGridHeaderView: UICollectionReusableView, Componentable {
+  class CustomGridHeaderView: UICollectionReusableView, ItemConfigurable {
 
-    var preferredHeaderHeight: CGFloat = 88
+    var preferredViewSize: CGSize = CGSize(width: 0, height: 88)
 
     lazy var textLabel = UILabel()
 
-    func configure(_ component: Component) {
-      textLabel.text = component.title
+    func configure(_ item: inout Item) {
+      textLabel.text = item.title
     }
   }
 #endif
+
+class TestView: View, ItemConfigurable {
+  var preferredViewSize: CGSize = CGSize(width: 50, height: 50)
+
+  func configure(_ item: inout Item) {
+
+  }
+}

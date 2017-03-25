@@ -1,15 +1,14 @@
 import UIKit
-import Brick
 
 // MARK: - An extension on Composable views
 public extension Composable where Self : View {
 
-  /// A configuration method to configure the Composable view with a collection of Spotable objects
+  /// A configuration method to configure the Composable view with a collection of components.
   ///
   ///  - parameter item:  The item that is currently being configured in the list
-  ///  - parameter spots: A collection of Spotable objects created from the children of the item
-  func configure(_ item: inout Item, compositeSpots: [CompositeSpot]?) {
-    guard let compositeSpots = compositeSpots else {
+  ///  - parameter components: A collection of components. created from the children of the item
+  func configure(_ item: inout Item, compositeComponents: [CompositeComponent]?) {
+    guard let compositeComponents = compositeComponents else {
       return
     }
 
@@ -23,22 +22,20 @@ public extension Composable where Self : View {
       }
     #endif
 
-    compositeSpots.enumerated().forEach { _, compositeSpot in
-      compositeSpot.spot.setup(size)
-      compositeSpot.spot.component.size = CGSize(
+    compositeComponents.enumerated().forEach { _, compositeSpot in
+      compositeSpot.component.setup(with: size)
+      compositeSpot.component.model.size = CGSize(
         width: width,
-        height: ceil(compositeSpot.spot.render().frame.size.height))
-      compositeSpot.spot.layout(size)
-      compositeSpot.spot.render().layoutIfNeeded()
+        height: ceil(compositeSpot.component.view.frame.size.height))
 
-      compositeSpot.spot.render().frame.origin.y = height
+      compositeSpot.component.view.frame.origin.y = height
       /// Disable scrolling for listable objects
-      compositeSpot.spot.render().isScrollEnabled = !(compositeSpot.spot is Listable)
-      compositeSpot.spot.render().frame.size.height = compositeSpot.spot.render().contentSize.height
+      compositeSpot.component.view.isScrollEnabled = !(compositeSpot.component.view is TableView)
+      compositeSpot.component.view.frame.size.height = compositeSpot.component.view.contentSize.height
 
-      height += compositeSpot.spot.render().contentSize.height
+      height += compositeSpot.component.view.contentSize.height
 
-      contentView.addSubview(compositeSpot.spot.render())
+      contentView.addSubview(compositeSpot.component.view)
     }
 
     item.size.height = height

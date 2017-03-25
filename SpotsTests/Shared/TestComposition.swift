@@ -1,7 +1,6 @@
 @testable import Spots
 import Foundation
 import XCTest
-import Brick
 
 class CompositionTests: XCTestCase {
 
@@ -13,41 +12,41 @@ class CompositionTests: XCTestCase {
   let heightOffset: CGFloat = 2
   #endif
 
-  func testComponentCreation() {
-    var component = Component(
-      kind: Component.Kind.Grid.rawValue,
-      span: 1.0
+  func testComponentModelCreation() {
+    var model = ComponentModel(
+      kind: .grid,
+      layout: Layout(span: 1.0)
     )
 
-    component.add(child: Component(kind: Component.Kind.List.rawValue, span: 1.0))
+    model.add(child: ComponentModel(kind: .list, layout: Layout(span: 1.0)))
 
-    XCTAssertEqual(component.items.count, 1)
+    XCTAssertEqual(model.items.count, 1)
 
-    component.add(children: [
-      Component(kind: Component.Kind.List.rawValue, span: 1.0),
-      Component(kind: Component.Kind.List.rawValue, span: 1.0)
+    model.add(children: [
+      ComponentModel(kind: .list, layout: Layout(span: 1.0)),
+      ComponentModel(kind: .list, layout: Layout(span: 1.0))
       ]
     )
 
-    XCTAssertEqual(component.items.count, 3)
+    XCTAssertEqual(model.items.count, 3)
   }
 
-  func testSpotableCreation() {
+  func testCoreComponentCreation() {
     let layout = Layout().mutate { $0.span = 2.0 }
-    var component = Component(kind: Component.Kind.Grid.rawValue, layout: layout)
+    var model = ComponentModel(kind: .grid, layout: layout)
 
-    component.add(children: [
-      Component(
-        kind: Component.Kind.List.rawValue,
-        span: 1.0,
+    model.add(children: [
+      ComponentModel(
+        kind: .list,
+        layout: Layout(span: 1.0),
         items: [
           Item(title: "foo"),
           Item(title: "bar")
         ]
       ),
-      Component(
-        kind: Component.Kind.List.rawValue,
-        span: 1.0,
+      ComponentModel(
+        kind: .list,
+        layout: Layout(span: 1.0),
         items: [
           Item(title: "baz"),
           Item(title: "bal")
@@ -56,36 +55,43 @@ class CompositionTests: XCTestCase {
       ]
     )
 
-    let spot = GridSpot(component: component)
+    let component = Component(model: model)
+    component.setup(with: CGSize(width: 100, height: 100))
 
-    XCTAssertEqual(spot.items.count, 2)
-    XCTAssertEqual(spot.compositeSpots.count, 2)
-    XCTAssertEqual(spot.compositeSpots[0].spot.component.kind, Component.Kind.List.rawValue)
-    XCTAssertEqual(spot.compositeSpots[0].spot.items.count, 2)
-    XCTAssertEqual(spot.compositeSpots[0].spot.items[0].title, "foo")
-    XCTAssertEqual(spot.compositeSpots[0].spot.items[1].title, "bar")
+    XCTAssertEqual(component.model.items.count, 2)
 
-    XCTAssertEqual(spot.compositeSpots[1].spot.component.kind, Component.Kind.List.rawValue)
-    XCTAssertEqual(spot.compositeSpots[1].spot.items.count, 2)
-    XCTAssertEqual(spot.compositeSpots[1].spot.items[0].title, "baz")
-    XCTAssertEqual(spot.compositeSpots[1].spot.items[1].title, "bal")
+    guard component.compositeComponents.count == 2 else {
+      XCTFail("Could not find composite components")
+      return
+    }
+
+    XCTAssertEqual(component.compositeComponents.count, 2)
+    XCTAssertEqual(component.compositeComponents[0].component.model.kind, ComponentKind.list)
+    XCTAssertEqual(component.compositeComponents[0].component.model.items.count, 2)
+    XCTAssertEqual(component.compositeComponents[0].component.model.items[0].title, "foo")
+    XCTAssertEqual(component.compositeComponents[0].component.model.items[1].title, "bar")
+
+    XCTAssertEqual(component.compositeComponents[1].component.model.kind, ComponentKind.list)
+    XCTAssertEqual(component.compositeComponents[1].component.model.items.count, 2)
+    XCTAssertEqual(component.compositeComponents[1].component.model.items[0].title, "baz")
+    XCTAssertEqual(component.compositeComponents[1].component.model.items[1].title, "bal")
   }
 
   func testUICreation() {
-    var component = Component(kind: Component.Kind.Grid.rawValue, span: 2.0)
+    var model = ComponentModel(kind: .grid, layout: Layout(span: 2.0))
 
-    component.add(children: [
-      Component(
-        kind: Component.Kind.List.rawValue,
-        span: 1,
+    model.add(children: [
+      ComponentModel(
+        kind: .list,
+        layout: Layout(span: 1.0),
         items: [
           Item(title: "foo"),
           Item(title: "bar")
         ]
       ),
-      Component(
-        kind: Component.Kind.List.rawValue,
-        span: 1,
+      ComponentModel(
+        kind: .list,
+        layout: Layout(span: 1.0),
         items: [
           Item(title: "baz"),
           Item(title: "bal")
@@ -94,46 +100,56 @@ class CompositionTests: XCTestCase {
       ]
     )
 
-    let spot = GridSpot(component: component)
-    spot.render().frame.size = CGSize(width: 200, height: 200)
-    spot.render().layoutIfNeeded()
+    let component = Component(model: model)
+    component.setup(with: CGSize(width: 200, height: 200))
 
     var composite: Composable?
-    var spotConfigurable: SpotConfigurable?
+    var itemConfigurable: ItemConfigurable?
 
-    composite = spot.ui(at: 0)
-    spotConfigurable = spot.compositeSpots[0].spot.ui(at: 0)
+    composite = component.ui(at: 0)
+
+    guard component.compositeComponents.count > 1 else {
+      XCTFail("Unable to find composite components.")
+      return
+    }
+
+    itemConfigurable = component.compositeComponents[0].component.ui(at: 0)
+
+    guard itemConfigurable != nil else {
+      XCTFail("Unable to resolve view.")
+      return
+    }
 
     XCTAssertNotNil(composite)
-    XCTAssertNotNil(spotConfigurable)
+    XCTAssertNotNil(itemConfigurable)
     XCTAssertEqual(composite?.contentView.subviews.count, 1)
-    XCTAssertTrue(spot.compositeSpots[0].parentSpot!.component == spot.component)
-    XCTAssertTrue(spot.compositeSpots[0].spot is Listable)
-    XCTAssertEqual(spot.compositeSpots[0].spot.render().frame.size.height,
-                   (spotConfigurable!.preferredViewSize.height + heightOffset) * CGFloat(spot.compositeSpots[0].spot.items.count))
+    XCTAssertTrue(component.compositeComponents[0].parentComponent!.model == component.model)
+    XCTAssertTrue(component.compositeComponents[0].component.userInterface is TableView)
+    XCTAssertEqual(component.compositeComponents[0].component.view.frame.size.height,
+                   (itemConfigurable!.preferredViewSize.height + heightOffset) * CGFloat(component.compositeComponents[0].component.model.items.count))
 
-    composite = spot.ui(at: 1)
-    spotConfigurable = spot.compositeSpots[0].spot.ui(at: 1)
+    composite = component.ui(at: 1)
+    itemConfigurable = component.compositeComponents[0].component.ui(at: 1)
 
     XCTAssertNotNil(composite)
     XCTAssertEqual(composite?.contentView.subviews.count, 1)
-    XCTAssertTrue(spot.compositeSpots[1].parentSpot!.component == spot.component)
-    XCTAssertTrue(spot.compositeSpots[1].spot is Listable)
-    XCTAssertEqual(spot.compositeSpots[1].spot.render().frame.size.height,
-                   (spotConfigurable!.preferredViewSize.height + heightOffset) * CGFloat(spot.compositeSpots[1].spot.items.count))
+    XCTAssertTrue(component.compositeComponents[1].parentComponent!.model == component.model)
+    XCTAssertTrue(component.compositeComponents[1].component.userInterface is TableView)
+    XCTAssertEqual(component.compositeComponents[1].component.view.frame.size.height,
+                   (itemConfigurable!.preferredViewSize.height + heightOffset) * CGFloat(component.compositeComponents[1].component.model.items.count))
 
-    composite = spot.ui(at: 2)
+    composite = component.ui(at: 2)
     XCTAssertNil(composite)
   }
 
-  func testReloadWithComponentsUsingCompositionTriggeringReplaceSpot() {
-    let initialComponents: [Component] = [
-      Component(kind: Component.Kind.Grid.rawValue,
-                span: 2.0,
+  func testReloadWithComponentModelsUsingCompositionTriggeringReplaceComponent() {
+    let initialComponentModels: [ComponentModel] = [
+      ComponentModel(kind: .grid,
+                layout: Layout(span: 2.0),
                 items: [
-                  Item(kind: "composite", children:
+                  Item(kind: CompositeComponent.identifier, children:
                     [
-                      Component(kind: Component.Kind.List.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -148,9 +164,9 @@ class CompositionTests: XCTestCase {
                       )
                     ]
                   ),
-                  Item(kind: "composite", children:
+                  Item(kind: CompositeComponent.identifier, children:
                     [
-                      Component(kind: Component.Kind.List.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -167,12 +183,12 @@ class CompositionTests: XCTestCase {
                   )
         ]
       ),
-      Component(kind: Component.Kind.Grid.rawValue,
-                span: 2.0,
+      ComponentModel(kind: .grid,
+                layout: Layout(span: 2.0),
                 items: [
-                  Item(kind: "composite", children:
+                  Item(kind: CompositeComponent.identifier, children:
                     [
-                      Component(kind: Component.Kind.List.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -187,9 +203,9 @@ class CompositionTests: XCTestCase {
                       )
                     ]
                   ),
-                  Item(kind: "composite", children:
+                  Item(kind: CompositeComponent.identifier, children:
                     [
-                      Component(kind: Component.Kind.List.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -208,65 +224,77 @@ class CompositionTests: XCTestCase {
       )
     ]
 
-    let controller = Controller(spots: Parser.parse(initialComponents))
+    let controller = SpotsController(components: Parser.parse(initialComponentModels))
     controller.prepareController()
     controller.view.layoutIfNeeded()
 
-    let spots = controller.spots
+    let components = controller.components
 
-    XCTAssertEqual(spots.count, 2)
+    XCTAssertEqual(components.count, 2)
 
-    var composite: Composable?
-    var spotConfigurable: SpotConfigurable?
+    guard components.count == 2 else {
+      XCTFail("Component count is incorrect.")
+      return
+    }
 
-    composite = spots[0].ui(at: 0)
-    spotConfigurable = spots[0].compositeSpots[0].spot.ui(at: 0)
+    guard components[0].compositeComponents.count == 2 else {
+      XCTFail("Could not find composite components.")
+      return
+    }
 
-    XCTAssertNotNil(composite)
-    XCTAssertNotNil(spotConfigurable)
-    XCTAssertEqual(composite?.contentView.subviews.count, 1)
-    XCTAssertTrue(spots[0].compositeSpots[0].parentSpot!.component == spots[0].component)
-    XCTAssertTrue(spots[0].compositeSpots[0].spot is Listable)
-    XCTAssertEqual(spots[0].compositeSpots[0].spot.items.count, 10)
-    XCTAssertEqual(spots[0].compositeSpots[0].spot.render().frame.size.height,
-                   (spotConfigurable!.preferredViewSize.height + heightOffset) * CGFloat(spots[0].compositeSpots[0].spot.items.count))
+    var composite: Composable? = components[0].ui(at: 0)
+    var itemConfigurable: ItemConfigurable? = components[0].compositeComponents[0].component.ui(at: 0)
 
-    spotConfigurable = spots[0].compositeSpots[1].spot.ui(at: 0)
-
-    XCTAssertNotNil(spotConfigurable)
-    XCTAssertEqual(composite?.contentView.subviews.count, 1)
-    XCTAssertTrue(spots[0].compositeSpots[1].parentSpot!.component == spots[0].component)
-    XCTAssertTrue(spots[0].compositeSpots[1].spot is Listable)
-    XCTAssertEqual(spots[0].compositeSpots[1].spot.items.count, 10)
-    XCTAssertEqual(spots[0].compositeSpots[1].spot.render().frame.size.height,
-                   (spotConfigurable!.preferredViewSize.height + heightOffset) * CGFloat(spots[0].compositeSpots[1].spot.items.count))
+    guard itemConfigurable != nil else {
+      XCTFail("Unable to resolve view.")
+      return
+    }
 
     XCTAssertNotNil(composite)
-    XCTAssertNotNil(spotConfigurable)
+    XCTAssertNotNil(itemConfigurable)
     XCTAssertEqual(composite?.contentView.subviews.count, 1)
-    XCTAssertTrue(spots[1].compositeSpots[0].parentSpot!.component == spots[1].component)
-    XCTAssertTrue(spots[1].compositeSpots[0].spot is Listable)
-    XCTAssertEqual(spots[1].compositeSpots[0].spot.items.count, 10)
-    XCTAssertEqual(spots[1].compositeSpots[0].spot.render().frame.size.height,
-                   (spotConfigurable!.preferredViewSize.height + heightOffset) * CGFloat(spots[1].compositeSpots[0].spot.items.count))
+    XCTAssertTrue(components[0].compositeComponents[0].parentComponent!.model == components[0].model)
+    XCTAssertTrue(components[0].compositeComponents[0].component.userInterface is TableView)
+    XCTAssertEqual(components[0].compositeComponents[0].component.model.items.count, 10)
+    XCTAssertEqual(components[0].compositeComponents[0].component.view.frame.size.height,
+                   (itemConfigurable!.preferredViewSize.height + heightOffset) * CGFloat(components[0].compositeComponents[0].component.model.items.count))
 
-    spotConfigurable = spots[0].compositeSpots[1].spot.ui(at: 0)
+    itemConfigurable = components[0].compositeComponents[1].component.ui(at: 0)
 
-    XCTAssertNotNil(spotConfigurable)
+    XCTAssertNotNil(itemConfigurable)
     XCTAssertEqual(composite?.contentView.subviews.count, 1)
-    XCTAssertTrue(spots[1].compositeSpots[1].parentSpot!.component == spots[1].component)
-    XCTAssertTrue(spots[1].compositeSpots[1].spot is Listable)
-    XCTAssertEqual(spots[1].compositeSpots[1].spot.items.count, 10)
-    XCTAssertEqual(spots[1].compositeSpots[1].spot.render().frame.size.height,
-                   (spotConfigurable!.preferredViewSize.height + heightOffset) * CGFloat(spots[1].compositeSpots[1].spot.items.count))
+    XCTAssertTrue(components[0].compositeComponents[1].parentComponent!.model == components[0].model)
+    XCTAssertTrue(components[0].compositeComponents[1].component.userInterface is TableView)
+    XCTAssertEqual(components[0].compositeComponents[1].component.model.items.count, 10)
+    XCTAssertEqual(components[0].compositeComponents[1].component.view.frame.size.height,
+                   (itemConfigurable!.preferredViewSize.height + heightOffset) * CGFloat(components[0].compositeComponents[1].component.model.items.count))
 
-    let newComponents: [Component] = [
-      Component(kind: Component.Kind.Grid.rawValue,
-                span: 1.0,
+    XCTAssertNotNil(composite)
+    XCTAssertNotNil(itemConfigurable)
+    XCTAssertEqual(composite?.contentView.subviews.count, 1)
+    XCTAssertTrue(components[1].compositeComponents[0].parentComponent!.model == components[1].model)
+    XCTAssertTrue(components[1].compositeComponents[0].component.userInterface is TableView)
+    XCTAssertEqual(components[1].compositeComponents[0].component.model.items.count, 10)
+    XCTAssertEqual(components[1].compositeComponents[0].component.view.frame.size.height,
+                   (itemConfigurable!.preferredViewSize.height + heightOffset) * CGFloat(components[1].compositeComponents[0].component.model.items.count))
+
+    itemConfigurable = components[0].compositeComponents[1].component.ui(at: 0)
+
+    XCTAssertNotNil(itemConfigurable)
+    XCTAssertEqual(composite?.contentView.subviews.count, 1)
+    XCTAssertTrue(components[1].compositeComponents[1].parentComponent!.model == components[1].model)
+    XCTAssertTrue(components[1].compositeComponents[1].component.userInterface is TableView)
+    XCTAssertEqual(components[1].compositeComponents[1].component.model.items.count, 10)
+    XCTAssertEqual(components[1].compositeComponents[1].component.view.frame.size.height,
+                   (itemConfigurable!.preferredViewSize.height + heightOffset) * CGFloat(components[1].compositeComponents[1].component.model.items.count))
+
+    let newComponentModels: [ComponentModel] = [
+      ComponentModel(kind: .grid,
+                layout: Layout(span: 1.0),
                 items: [
-                  Item(kind: "composite", children:
+                  Item(kind: CompositeComponent.identifier, children:
                     [
-                      Component(kind: Component.Kind.List.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -281,9 +309,9 @@ class CompositionTests: XCTestCase {
                       )
                     ]
                   ),
-                  Item(kind: "composite", children:
+                  Item(kind: CompositeComponent.identifier, children:
                     [
-                      Component(kind: Component.Kind.List.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -300,12 +328,12 @@ class CompositionTests: XCTestCase {
                   )
         ]
       ),
-      Component(kind: Component.Kind.Grid.rawValue,
-                span: 3.0,
+      ComponentModel(kind: .grid,
+                layout: Layout(span: 3.0),
                 items: [
-                  Item(kind: "composite", children:
+                  Item(kind: CompositeComponent.identifier, children:
                     [
-                      Component(kind: Component.Kind.List.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -320,9 +348,9 @@ class CompositionTests: XCTestCase {
                       )
                     ]
                   ),
-                  Item(kind: "composite", children:
+                  Item(kind: CompositeComponent.identifier, children:
                     [
-                      Component(kind: Component.Kind.List.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -341,82 +369,85 @@ class CompositionTests: XCTestCase {
       )
     ]
 
-    let exception = self.expectation(description: "Reload controller with components replaceSpot")
+    let expectation = self.expectation(description: "Reload controller with components replaceSpot")
     var reloadTimes: Int = 0
 
-    controller.reloadIfNeeded(newComponents) {
+    controller.reloadIfNeeded(newComponentModels) {
+
       reloadTimes += 1
 
-      let spots = controller.spots
+      let components = controller.components
 
-      composite = spots[0].ui(at: 0)
-      spotConfigurable = spots[0].compositeSpots[0].spot.ui(at: 0)
-
-      XCTAssertNotNil(composite)
-      XCTAssertNotNil(spotConfigurable)
-      XCTAssertEqual(composite?.contentView.subviews.count, 1)
-      XCTAssertTrue(spots[0].compositeSpots[0].parentSpot!.component == spots[0].component)
-      XCTAssertTrue(spots[0].compositeSpots[0].spot is Listable)
-      XCTAssertEqual(spots[0].compositeSpots[0].spot.items.count, 10)
-      XCTAssertEqual(spots[0].compositeSpots[0].spot.render().frame.size.height,
-                     ((spotConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(spots[0].compositeSpots[0].spot.items.count))
-
-      spotConfigurable = spots[0].compositeSpots[1].spot.ui(at: 0)
-
-      XCTAssertNotNil(spotConfigurable)
-      XCTAssertEqual(composite?.contentView.subviews.count, 1)
-      XCTAssertTrue(spots[0].compositeSpots[1].parentSpot!.component == spots[0].component)
-      XCTAssertTrue(spots[0].compositeSpots[1].spot is Listable)
-      XCTAssertEqual(spots[0].compositeSpots[1].spot.items.count, 10)
-      XCTAssertEqual(spots[0].compositeSpots[1].spot.render().frame.size.height,
-                     ((spotConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(spots[0].compositeSpots[1].spot.items.count))
+      composite = components[0].ui(at: 0)
+      itemConfigurable = components[0].compositeComponents[0].component.ui(at: 0)
 
       XCTAssertNotNil(composite)
-      XCTAssertNotNil(spotConfigurable)
-      XCTAssertEqual(composite?.contentView.subviews.count, 1)
-      XCTAssertTrue(spots[1].compositeSpots[0].parentSpot!.component == spots[1].component)
-      XCTAssertTrue(spots[1].compositeSpots[0].spot is Listable)
-      XCTAssertEqual(spots[1].compositeSpots[0].spot.items.count, 10)
-      XCTAssertEqual(spots[1].compositeSpots[0].spot.render().frame.size.height,
-                     ((spotConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(spots[1].compositeSpots[0].spot.items.count))
+      XCTAssertNotNil(itemConfigurable)
+      XCTAssertNotNil(composite?.contentView)
 
-      spotConfigurable = spots[0].compositeSpots[1].spot.ui(at: 0)
-
-      XCTAssertNotNil(spotConfigurable)
       XCTAssertEqual(composite?.contentView.subviews.count, 1)
-      XCTAssertTrue(spots[1].compositeSpots[1].parentSpot!.component == spots[1].component)
-      XCTAssertTrue(spots[1].compositeSpots[1].spot is Listable)
-      XCTAssertEqual(spots[1].compositeSpots[1].spot.items.count, 10)
-      XCTAssertEqual(spots[1].compositeSpots[1].spot.render().frame.size.height,
-                     ((spotConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(spots[1].compositeSpots[1].spot.items.count))
+      XCTAssertTrue(components[0].compositeComponents[0].parentComponent!.model == components[0].model)
+      XCTAssertTrue(components[0].compositeComponents[0].component.userInterface is TableView)
+      XCTAssertEqual(components[0].compositeComponents[0].component.model.items.count, 10)
+      XCTAssertEqual(components[0].compositeComponents[0].component.view.frame.size.height,
+                     ((itemConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(components[0].compositeComponents[0].component.model.items.count))
+
+      itemConfigurable = components[0].compositeComponents[1].component.ui(at: 0)
+
+      XCTAssertNotNil(itemConfigurable)
+      XCTAssertEqual(composite?.contentView.subviews.count, 1)
+      XCTAssertTrue(components[0].compositeComponents[1].parentComponent!.model == components[0].model)
+      XCTAssertTrue(components[0].compositeComponents[1].component.userInterface is TableView)
+      XCTAssertEqual(components[0].compositeComponents[1].component.model.items.count, 10)
+      XCTAssertEqual(components[0].compositeComponents[1].component.view.frame.size.height,
+                     ((itemConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(components[0].compositeComponents[1].component.model.items.count))
+
+      XCTAssertNotNil(composite)
+      XCTAssertNotNil(itemConfigurable)
+      XCTAssertEqual(composite?.contentView.subviews.count, 1)
+      XCTAssertTrue(components[1].compositeComponents[0].parentComponent!.model == components[1].model)
+      XCTAssertTrue(components[1].compositeComponents[0].component.userInterface is TableView)
+      XCTAssertEqual(components[1].compositeComponents[0].component.model.items.count, 10)
+      XCTAssertEqual(components[1].compositeComponents[0].component.view.frame.size.height,
+                     ((itemConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(components[1].compositeComponents[0].component.model.items.count))
+
+      itemConfigurable = components[0].compositeComponents[1].component.ui(at: 0)
+
+      XCTAssertNotNil(itemConfigurable)
+      XCTAssertEqual(composite?.contentView.subviews.count, 1)
+      XCTAssertTrue(components[1].compositeComponents[1].parentComponent!.model == components[1].model)
+      XCTAssertTrue(components[1].compositeComponents[1].component.userInterface is TableView)
+      XCTAssertEqual(components[1].compositeComponents[1].component.model.items.count, 10)
+      XCTAssertEqual(components[1].compositeComponents[1].component.view.frame.size.height,
+                     ((itemConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(components[1].compositeComponents[1].component.model.items.count))
 
       XCTAssertEqual(reloadTimes, 1)
 
-      exception.fulfill()
+      expectation.fulfill()
     }
-    waitForExpectations(timeout: 1.0, handler: nil)
+    waitForExpectations(timeout: 10.0, handler: nil)
   }
 
-  func testReloadWithComponentsUsingCompositionTriggeringNewSpot() {
-    let initialComponents: [Component] = []
-    let controller = Controller(spots: Parser.parse(initialComponents))
+  func testReloadWithComponentModelsUsingCompositionTriggeringNewComponent() {
+    let initialComponentModels: [ComponentModel] = []
+    let controller = SpotsController(components: Parser.parse(initialComponentModels))
     controller.prepareController()
     controller.view.layoutIfNeeded()
 
-    let spots = controller.spots
+    let components = controller.components
 
-    XCTAssertEqual(spots.count, 0)
+    XCTAssertEqual(components.count, 0)
 
     var composite: Composable?
-    var spotConfigurable: SpotConfigurable?
+    var itemConfigurable: ItemConfigurable?
 
-    let newComponents: [Component] = [
-      Component(kind: Component.Kind.Grid.rawValue,
-                span: 1.0,
+    let newComponentModels: [ComponentModel] = [
+      ComponentModel(kind: .grid,
+                layout: Layout(span: 1.0),
                 items: [
-                  Item(kind: "composite", children:
+                  Item(kind: CompositeComponent.identifier, children:
                     [
-                      Component(kind: Component.Kind.List.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -431,9 +462,9 @@ class CompositionTests: XCTestCase {
                       )
                     ]
                   ),
-                  Item(kind: "composite", children:
+                  Item(kind: CompositeComponent.identifier, children:
                     [
-                      Component(kind: Component.Kind.List.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -450,12 +481,12 @@ class CompositionTests: XCTestCase {
                   )
         ]
       ),
-      Component(kind: Component.Kind.Grid.rawValue,
-                span: 3.0,
+      ComponentModel(kind: .grid,
+                layout: Layout(span: 3.0),
                 items: [
-                  Item(kind: "composite", children:
+                  Item(kind: CompositeComponent.identifier, children:
                     [
-                      Component(kind: Component.Kind.List.rawValue, items: [
+                      ComponentModel(kind: .list, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -470,9 +501,9 @@ class CompositionTests: XCTestCase {
                       )
                     ]
                   ),
-                  Item(kind: "composite", children:
+                  Item(kind: CompositeComponent.identifier, children:
                     [
-                      Component(kind: Component.Kind.List.rawValue, items: [
+                      ComponentModel(kind: .list, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -491,70 +522,86 @@ class CompositionTests: XCTestCase {
       )
     ]
 
-    let exception = self.expectation(description: "Reload controller with components newSpot")
+    let expectation = self.expectation(description: "Reload controller with components newSpot")
     var reloadTimes: Int = 0
 
-    controller.reloadIfNeeded(newComponents) {
+    controller.reloadIfNeeded(newComponentModels) {
       reloadTimes += 1
 
-      let spots = controller.spots
+      let components = controller.components
 
-      composite = spots[0].ui(at: 0)
-      spotConfigurable = spots[0].compositeSpots[0].spot.ui(at: 0)
+      composite = components[0].ui(at: 0)
 
-      XCTAssertNotNil(composite)
-      XCTAssertNotNil(spotConfigurable)
-      XCTAssertEqual(composite?.contentView.subviews.count, 1)
-      XCTAssertTrue(spots[0].compositeSpots[0].parentSpot!.component == spots[0].component)
-      XCTAssertTrue(spots[0].compositeSpots[0].spot is Listable)
-      XCTAssertEqual(spots[0].compositeSpots[0].spot.items.count, 10)
-      XCTAssertEqual(spots[0].compositeSpots[0].spot.render().frame.size.height,
-                     ((spotConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(spots[0].compositeSpots[0].spot.items.count))
+      guard components.count == 2 else {
+        XCTFail("Component count is incorrect.")
+        return
+      }
 
-      spotConfigurable = spots[0].compositeSpots[1].spot.ui(at: 0)
+      guard components[0].compositeComponents.count == 2 else {
+        XCTFail("Could not find composite components.")
+        return
+      }
 
-      XCTAssertNotNil(spotConfigurable)
-      XCTAssertEqual(composite?.contentView.subviews.count, 1)
-      XCTAssertTrue(spots[0].compositeSpots[1].parentSpot!.component == spots[0].component)
-      XCTAssertTrue(spots[0].compositeSpots[1].spot is Listable)
-      XCTAssertEqual(spots[0].compositeSpots[1].spot.items.count, 10)
-      XCTAssertEqual(spots[0].compositeSpots[1].spot.render().frame.size.height,
-                     ((spotConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(spots[0].compositeSpots[1].spot.items.count))
+      itemConfigurable = components[0].compositeComponents[0].component.ui(at: 0)
 
       XCTAssertNotNil(composite)
-      XCTAssertNotNil(spotConfigurable)
+      XCTAssertNotNil(itemConfigurable)
       XCTAssertEqual(composite?.contentView.subviews.count, 1)
-      XCTAssertTrue(spots[1].compositeSpots[0].parentSpot!.component == spots[1].component)
-      XCTAssertTrue(spots[1].compositeSpots[0].spot is Listable)
-      XCTAssertEqual(spots[1].compositeSpots[0].spot.items.count, 10)
-      XCTAssertEqual(spots[1].compositeSpots[0].spot.render().frame.size.height,
-                     ((spotConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(spots[1].compositeSpots[0].spot.items.count))
+      XCTAssertTrue(components[0].compositeComponents[0].parentComponent!.model == components[0].model)
+      XCTAssertTrue(components[0].compositeComponents[0].component.userInterface is TableView)
+      XCTAssertEqual(components[0].compositeComponents[0].component.model.items.count, 10)
+      XCTAssertEqual(components[0].compositeComponents[0].component.view.frame.size.height,
+                     ((itemConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(components[0].compositeComponents[0].component.model.items.count))
 
-      spotConfigurable = spots[0].compositeSpots[1].spot.ui(at: 0)
+      itemConfigurable = components[0].compositeComponents[1].component.ui(at: 0)
 
-      XCTAssertNotNil(spotConfigurable)
+      XCTAssertNotNil(itemConfigurable)
       XCTAssertEqual(composite?.contentView.subviews.count, 1)
-      XCTAssertTrue(spots[1].compositeSpots[1].parentSpot!.component == spots[1].component)
-      XCTAssertTrue(spots[1].compositeSpots[1].spot is Listable)
-      XCTAssertEqual(spots[1].compositeSpots[1].spot.items.count, 10)
-      XCTAssertEqual(spots[1].compositeSpots[1].spot.render().frame.size.height,
-                     ((spotConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(spots[1].compositeSpots[1].spot.items.count))
+      XCTAssertTrue(components[0].compositeComponents[1].parentComponent!.model == components[0].model)
+      XCTAssertTrue(components[0].compositeComponents[1].component.userInterface is TableView)
+      XCTAssertEqual(components[0].compositeComponents[1].component.model.items.count, 10)
+      XCTAssertEqual(components[0].compositeComponents[1].component.view.frame.size.height,
+                     ((itemConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(components[0].compositeComponents[1].component.model.items.count))
+
+      guard components[1].compositeComponents.count == 2 else {
+        XCTFail("Could not find composite components.")
+        return
+      }
+
+      XCTAssertNotNil(composite)
+      XCTAssertNotNil(itemConfigurable)
+      XCTAssertEqual(composite?.contentView.subviews.count, 1)
+      XCTAssertTrue(components[1].compositeComponents[0].parentComponent!.model == components[1].model)
+      XCTAssertTrue(components[1].compositeComponents[0].component.userInterface is TableView)
+      XCTAssertEqual(components[1].compositeComponents[0].component.model.items.count, 10)
+      XCTAssertEqual(components[1].compositeComponents[0].component.view.frame.size.height,
+                     ((itemConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(components[1].compositeComponents[0].component.model.items.count))
+
+      itemConfigurable = components[0].compositeComponents[1].component.ui(at: 0)
+
+      XCTAssertNotNil(itemConfigurable)
+      XCTAssertEqual(composite?.contentView.subviews.count, 1)
+      XCTAssertTrue(components[1].compositeComponents[1].parentComponent!.model == components[1].model)
+      XCTAssertTrue(components[1].compositeComponents[1].component.userInterface is TableView)
+      XCTAssertEqual(components[1].compositeComponents[1].component.model.items.count, 10)
+      XCTAssertEqual(components[1].compositeComponents[1].component.view.frame.size.height,
+                     ((itemConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(components[1].compositeComponents[1].component.model.items.count))
 
       XCTAssertEqual(reloadTimes, 1)
 
-      exception.fulfill()
+      expectation.fulfill()
     }
-    waitForExpectations(timeout: 1.0, handler: nil)
+    waitForExpectations(timeout: 10.0, handler: nil)
   }
 
-  func testReloadWithComponentsUsingCompositionTriggeringReloadMore() {
-    let initialComponents: [Component] = [
-      Component(kind: Component.Kind.Grid.rawValue,
-                span: 2.0,
+  func testReloadWithComponentModelsUsingCompositionTriggeringReloadMore() {
+    let initialComponentModels: [ComponentModel] = [
+      ComponentModel(kind: .grid,
+                layout: Layout(span: 2.0),
                 items: [
-                  Item(kind: "composite", children:
+                  Item(kind: CompositeComponent.identifier, children:
                     [
-                      Component(kind: Component.Kind.List.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -569,9 +616,9 @@ class CompositionTests: XCTestCase {
                       )
                     ]
                   ),
-                  Item(kind: "composite", children:
+                  Item(kind: CompositeComponent.identifier, children:
                     [
-                      Component(kind: Component.Kind.List.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -588,12 +635,12 @@ class CompositionTests: XCTestCase {
                   )
         ]
       ),
-      Component(kind: Component.Kind.Grid.rawValue,
-                span: 2.0,
+      ComponentModel(kind: .grid,
+                layout: Layout(span: 2.0),
                 items: [
-                  Item(kind: "composite", children:
+                  Item(kind: CompositeComponent.identifier, children:
                     [
-                      Component(kind: Component.Kind.List.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -608,9 +655,9 @@ class CompositionTests: XCTestCase {
                       )
                     ]
                   ),
-                  Item(kind: "composite", children:
+                  Item(kind: CompositeComponent.identifier, children:
                     [
-                      Component(kind: Component.Kind.List.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -629,65 +676,81 @@ class CompositionTests: XCTestCase {
       )
     ]
 
-    let controller = Controller(spots: Parser.parse(initialComponents))
+    let controller = SpotsController(components: Parser.parse(initialComponentModels))
     controller.prepareController()
     controller.view.layoutIfNeeded()
 
-    let spots = controller.spots
+    let components = controller.components
 
-    XCTAssertEqual(spots.count, 2)
+    XCTAssertEqual(components.count, 2)
 
     var composite: Composable?
-    var spotConfigurable: SpotConfigurable?
+    var itemConfigurable: ItemConfigurable?
 
-    composite = spots[0].ui(at: 0)
-    spotConfigurable = spots[0].compositeSpots[0].spot.ui(at: 0)
+    composite = components[0].ui(at: 0)
 
-    XCTAssertNotNil(composite)
-    XCTAssertNotNil(spotConfigurable)
-    XCTAssertEqual(composite?.contentView.subviews.count, 1)
-    XCTAssertTrue(spots[0].compositeSpots[0].parentSpot!.component == spots[0].component)
-    XCTAssertTrue(spots[0].compositeSpots[0].spot is Listable)
-    XCTAssertEqual(spots[0].compositeSpots[0].spot.items.count, 10)
-    XCTAssertEqual(spots[0].compositeSpots[0].spot.render().frame.size.height,
-                   (spotConfigurable!.preferredViewSize.height + heightOffset) * CGFloat(spots[0].compositeSpots[0].spot.items.count))
+    guard components.count == 2 else {
+      XCTFail("Component count is incorrect.")
+      return
+    }
 
-    spotConfigurable = spots[0].compositeSpots[1].spot.ui(at: 0)
+    guard components[0].compositeComponents.count == 2 else {
+      XCTFail("Could not find composite components.")
+      return
+    }
 
-    XCTAssertNotNil(spotConfigurable)
-    XCTAssertEqual(composite?.contentView.subviews.count, 1)
-    XCTAssertTrue(spots[0].compositeSpots[1].parentSpot!.component == spots[0].component)
-    XCTAssertTrue(spots[0].compositeSpots[1].spot is Listable)
-    XCTAssertEqual(spots[0].compositeSpots[1].spot.items.count, 10)
-    XCTAssertEqual(spots[0].compositeSpots[1].spot.render().frame.size.height,
-                   (spotConfigurable!.preferredViewSize.height + heightOffset) * CGFloat(spots[0].compositeSpots[1].spot.items.count))
+    itemConfigurable = components[0].compositeComponents[0].component.ui(at: 0)
+
+    guard itemConfigurable != nil else {
+      XCTFail("Unable to resolve view.")
+      return
+    }
 
     XCTAssertNotNil(composite)
-    XCTAssertNotNil(spotConfigurable)
+    XCTAssertNotNil(itemConfigurable)
     XCTAssertEqual(composite?.contentView.subviews.count, 1)
-    XCTAssertTrue(spots[1].compositeSpots[0].parentSpot!.component == spots[1].component)
-    XCTAssertTrue(spots[1].compositeSpots[0].spot is Listable)
-    XCTAssertEqual(spots[1].compositeSpots[0].spot.items.count, 10)
-    XCTAssertEqual(spots[1].compositeSpots[0].spot.render().frame.size.height,
-                   (spotConfigurable!.preferredViewSize.height + heightOffset) * CGFloat(spots[1].compositeSpots[0].spot.items.count))
+    XCTAssertTrue(components[0].compositeComponents[0].parentComponent!.model == components[0].model)
+    XCTAssertTrue(components[0].compositeComponents[0].component.userInterface is TableView)
+    XCTAssertEqual(components[0].compositeComponents[0].component.model.items.count, 10)
+    XCTAssertEqual(components[0].compositeComponents[0].component.view.frame.size.height,
+                   (itemConfigurable!.preferredViewSize.height + heightOffset) * CGFloat(components[0].compositeComponents[0].component.model.items.count))
 
-    spotConfigurable = spots[0].compositeSpots[1].spot.ui(at: 0)
+    itemConfigurable = components[0].compositeComponents[1].component.ui(at: 0)
 
-    XCTAssertNotNil(spotConfigurable)
+    XCTAssertNotNil(itemConfigurable)
     XCTAssertEqual(composite?.contentView.subviews.count, 1)
-    XCTAssertTrue(spots[1].compositeSpots[1].parentSpot!.component == spots[1].component)
-    XCTAssertTrue(spots[1].compositeSpots[1].spot is Listable)
-    XCTAssertEqual(spots[1].compositeSpots[1].spot.items.count, 10)
-    XCTAssertEqual(spots[1].compositeSpots[1].spot.render().frame.size.height,
-                   (spotConfigurable!.preferredViewSize.height + heightOffset) * CGFloat(spots[1].compositeSpots[1].spot.items.count))
+    XCTAssertTrue(components[0].compositeComponents[1].parentComponent!.model == components[0].model)
+    XCTAssertTrue(components[0].compositeComponents[1].component.userInterface is TableView)
+    XCTAssertEqual(components[0].compositeComponents[1].component.model.items.count, 10)
+    XCTAssertEqual(components[0].compositeComponents[1].component.view.frame.size.height,
+                   (itemConfigurable!.preferredViewSize.height + heightOffset) * CGFloat(components[0].compositeComponents[1].component.model.items.count))
 
-    let newComponents: [Component] = [
-      Component(kind: Component.Kind.Grid.rawValue,
-                span: 2.0,
+    XCTAssertNotNil(composite)
+    XCTAssertNotNil(itemConfigurable)
+    XCTAssertEqual(composite?.contentView.subviews.count, 1)
+    XCTAssertTrue(components[1].compositeComponents[0].parentComponent!.model == components[1].model)
+    XCTAssertTrue(components[1].compositeComponents[0].component.userInterface is TableView)
+    XCTAssertEqual(components[1].compositeComponents[0].component.model.items.count, 10)
+    XCTAssertEqual(components[1].compositeComponents[0].component.view.frame.size.height,
+                   (itemConfigurable!.preferredViewSize.height + heightOffset) * CGFloat(components[1].compositeComponents[0].component.model.items.count))
+
+    itemConfigurable = components[0].compositeComponents[1].component.ui(at: 0)
+
+    XCTAssertNotNil(itemConfigurable)
+    XCTAssertEqual(composite?.contentView.subviews.count, 1)
+    XCTAssertTrue(components[1].compositeComponents[1].parentComponent!.model == components[1].model)
+    XCTAssertTrue(components[1].compositeComponents[1].component.userInterface is TableView)
+    XCTAssertEqual(components[1].compositeComponents[1].component.model.items.count, 10)
+    XCTAssertEqual(components[1].compositeComponents[1].component.view.frame.size.height,
+                   (itemConfigurable!.preferredViewSize.height + heightOffset) * CGFloat(components[1].compositeComponents[1].component.model.items.count))
+
+    let newComponentModels: [ComponentModel] = [
+      ComponentModel(kind: .grid,
+                layout: Layout(span: 2.0),
                 items: [
-                  Item(kind: "composite", children:
+                  Item(kind: CompositeComponent.identifier, children:
                     [
-                      Component(kind: Component.Kind.List.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -703,9 +766,9 @@ class CompositionTests: XCTestCase {
                       )
                     ]
                   ),
-                  Item(kind: "composite", children:
+                  Item(kind: CompositeComponent.identifier, children:
                     [
-                      Component(kind: Component.Kind.List.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -722,12 +785,12 @@ class CompositionTests: XCTestCase {
                   )
         ]
       ),
-      Component(kind: Component.Kind.Grid.rawValue,
-                span: 2.0,
+      ComponentModel(kind: .grid,
+                layout: Layout(span: 2.0),
                 items: [
-                  Item(kind: "composite", children:
+                  Item(kind: CompositeComponent.identifier, children:
                     [
-                      Component(kind: Component.Kind.List.rawValue, items: [
+                      ComponentModel(kind: .list, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -743,9 +806,9 @@ class CompositionTests: XCTestCase {
                       )
                     ]
                   ),
-                  Item(kind: "composite", children:
+                  Item(kind: CompositeComponent.identifier, children:
                     [
-                      Component(kind: Component.Kind.List.rawValue, items: [
+                      ComponentModel(kind: .list, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -763,12 +826,12 @@ class CompositionTests: XCTestCase {
                   )
         ]
       ),
-      Component(kind: Component.Kind.Grid.rawValue,
-                span: 2.0,
+      ComponentModel(kind: .grid,
+                layout: Layout(span: 2.0),
                 items: [
-                  Item(kind: "composite", children:
+                  Item(kind: CompositeComponent.identifier, children:
                     [
-                      Component(kind: Component.Kind.List.rawValue, items: [
+                      ComponentModel(kind: .list, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -784,9 +847,9 @@ class CompositionTests: XCTestCase {
                       )
                     ]
                   ),
-                  Item(kind: "composite", children:
+                  Item(kind: CompositeComponent.identifier, children:
                     [
-                      Component(kind: Component.Kind.List.rawValue, items: [
+                      ComponentModel(kind: .list, items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -806,74 +869,74 @@ class CompositionTests: XCTestCase {
       )
     ]
 
-    let exception: XCTestExpectation = self.expectation(description: "Reload controller with components triggering reloadMore")
+    let expectation: XCTestExpectation = self.expectation(description: "Reload controller with components triggering reloadMore")
     var reloadTimes: Int = 0
 
-    controller.reloadIfNeeded(newComponents) {
+    controller.reloadIfNeeded(newComponentModels) {
       reloadTimes += 1
 
-      let spots = controller.spots
+      let components = controller.components
 
-      XCTAssertEqual(spots.count, 3)
+      XCTAssertEqual(components.count, 3)
 
-      composite = spots[0].ui(at: 0)
-      spotConfigurable = spots[0].compositeSpots[0].spot.ui(at: 0)
-
-      XCTAssertNotNil(composite)
-      XCTAssertNotNil(spotConfigurable)
-      XCTAssertEqual(composite?.contentView.subviews.count, 1)
-      XCTAssertTrue(spots[0].compositeSpots[0].parentSpot?.component == spots[0].component)
-      XCTAssertTrue(spots[0].compositeSpots[0].spot is Listable)
-      XCTAssertEqual(spots[0].compositeSpots[0].spot.items.count, 11)
-      XCTAssertEqual(spots[0].compositeSpots[0].spot.render().frame.size.height,
-                     ((spotConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(spots[0].compositeSpots[0].spot.items.count))
-
-      spotConfigurable = spots[0].compositeSpots[1].spot.ui(at: 0)
-
-      XCTAssertNotNil(spotConfigurable)
-      XCTAssertEqual(composite?.contentView.subviews.count, 1)
-      XCTAssertTrue(spots[0].compositeSpots[1].parentSpot!.component == spots[0].component)
-      XCTAssertTrue(spots[0].compositeSpots[1].spot is Listable)
-      XCTAssertEqual(spots[0].compositeSpots[1].spot.items.count, 10)
-      XCTAssertEqual(spots[0].compositeSpots[1].spot.render().frame.size.height,
-                     ((spotConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(spots[0].compositeSpots[1].spot.items.count))
-
-      spotConfigurable = spots[1].compositeSpots[0].spot.ui(at: 0)
+      composite = components[0].ui(at: 0)
+      itemConfigurable = components[0].compositeComponents[0].component.ui(at: 0)
 
       XCTAssertNotNil(composite)
-      XCTAssertNotNil(spotConfigurable)
+      XCTAssertNotNil(itemConfigurable)
       XCTAssertEqual(composite?.contentView.subviews.count, 1)
-      XCTAssertTrue(spots[1].compositeSpots[0].parentSpot?.component == spots[1].component)
-      XCTAssertTrue(spots[1].compositeSpots[0].spot is Listable)
-      XCTAssertEqual(spots[1].compositeSpots[0].spot.items.count, 11)
-      XCTAssertEqual(spots[1].compositeSpots[0].spot.render().frame.size.height,
-                     ((spotConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(spots[1].compositeSpots[0].spot.items.count))
+      XCTAssertTrue(components[0].compositeComponents[0].parentComponent?.model == components[0].model)
+      XCTAssertTrue(components[0].compositeComponents[0].component.userInterface is TableView)
+      XCTAssertEqual(components[0].compositeComponents[0].component.model.items.count, 11)
+      XCTAssertEqual(components[0].compositeComponents[0].component.view.frame.size.height,
+                     ((itemConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(components[0].compositeComponents[0].component.model.items.count))
 
-      spotConfigurable = spots[1].compositeSpots[1].spot.ui(at: 0)
+      itemConfigurable = components[0].compositeComponents[1].component.ui(at: 0)
 
-      XCTAssertNotNil(spotConfigurable)
+      XCTAssertNotNil(itemConfigurable)
       XCTAssertEqual(composite?.contentView.subviews.count, 1)
-      XCTAssertTrue(spots[1].compositeSpots[1].parentSpot!.component == spots[1].component)
-      XCTAssertTrue(spots[1].compositeSpots[1].spot is Listable)
-      XCTAssertEqual(spots[1].compositeSpots[1].spot.items.count, 11)
-      XCTAssertEqual(spots[1].compositeSpots[1].spot.render().frame.size.height,
-                     ((spotConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(spots[1].compositeSpots[1].spot.items.count))
+      XCTAssertTrue(components[0].compositeComponents[1].parentComponent!.model == components[0].model)
+      XCTAssertTrue(components[0].compositeComponents[1].component.userInterface is TableView)
+      XCTAssertEqual(components[0].compositeComponents[1].component.model.items.count, 10)
+      XCTAssertEqual(components[0].compositeComponents[1].component.view.frame.size.height,
+                     ((itemConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(components[0].compositeComponents[1].component.model.items.count))
+
+      itemConfigurable = components[1].compositeComponents[0].component.ui(at: 0)
+
+      XCTAssertNotNil(composite)
+      XCTAssertNotNil(itemConfigurable)
+      XCTAssertEqual(composite?.contentView.subviews.count, 1)
+      XCTAssertTrue(components[1].compositeComponents[0].parentComponent?.model == components[1].model)
+      XCTAssertTrue(components[1].compositeComponents[0].component.userInterface is TableView)
+      XCTAssertEqual(components[1].compositeComponents[0].component.model.items.count, 11)
+      XCTAssertEqual(components[1].compositeComponents[0].component.view.frame.size.height,
+                     ((itemConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(components[1].compositeComponents[0].component.model.items.count))
+
+      itemConfigurable = components[1].compositeComponents[1].component.ui(at: 0)
+
+      XCTAssertNotNil(itemConfigurable)
+      XCTAssertEqual(composite?.contentView.subviews.count, 1)
+      XCTAssertTrue(components[1].compositeComponents[1].parentComponent!.model == components[1].model)
+      XCTAssertTrue(components[1].compositeComponents[1].component.userInterface is TableView)
+      XCTAssertEqual(components[1].compositeComponents[1].component.model.items.count, 11)
+      XCTAssertEqual(components[1].compositeComponents[1].component.view.frame.size.height,
+                     ((itemConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(components[1].compositeComponents[1].component.model.items.count))
 
       XCTAssertEqual(reloadTimes, 1)
 
-      exception.fulfill()
+      expectation.fulfill()
     }
-    waitForExpectations(timeout: 1.0, handler: nil)
+    waitForExpectations(timeout: 10.0, handler: nil)
   }
 
-  func testReloadWithComponentsUsingCompositionTriggeringReloadLess() {
-    let initialComponents: [Component] = [
-      Component(kind: Component.Kind.Grid.rawValue,
-                span: 2.0,
+  func testReloadWithComponentModelsUsingCompositionTriggeringReloadLess() {
+    let initialComponentModels: [ComponentModel] = [
+      ComponentModel(kind: .grid,
+                layout: Layout(span: 2.0),
                 items: [
-                  Item(kind: "composite", children:
+                  Item(kind: CompositeComponent.identifier, children:
                     [
-                      Component(kind: Component.Kind.List.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -888,9 +951,9 @@ class CompositionTests: XCTestCase {
                       )
                     ]
                   ),
-                  Item(kind: "composite", children:
+                  Item(kind: CompositeComponent.identifier, children:
                     [
-                      Component(kind: Component.Kind.List.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -907,12 +970,12 @@ class CompositionTests: XCTestCase {
                   )
         ]
       ),
-      Component(kind: Component.Kind.Grid.rawValue,
-                span: 2.0,
+      ComponentModel(kind: .grid,
+                layout: Layout(span: 2.0),
                 items: [
-                  Item(kind: "composite", children:
+                  Item(kind: CompositeComponent.identifier, children:
                     [
-                      Component(kind: Component.Kind.List.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -927,9 +990,9 @@ class CompositionTests: XCTestCase {
                       )
                     ]
                   ),
-                  Item(kind: "composite", children:
+                  Item(kind: CompositeComponent.identifier, children:
                     [
-                      Component(kind: Component.Kind.List.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -948,65 +1011,87 @@ class CompositionTests: XCTestCase {
       )
     ]
 
-    let controller = Controller(spots: Parser.parse(initialComponents))
+    let controller = SpotsController(components: Parser.parse(initialComponentModels))
     controller.prepareController()
     controller.view.layoutIfNeeded()
 
-    let spots = controller.spots
+    let components = controller.components
 
-    XCTAssertEqual(spots.count, 2)
+    XCTAssertEqual(components.count, 2)
 
     var composite: Composable?
-    var spotConfigurable: SpotConfigurable?
+    var itemConfigurable: ItemConfigurable?
 
-    composite = spots[0].ui(at: 0)
-    spotConfigurable = spots[0].compositeSpots[0].spot.ui(at: 0)
+    composite = components[0].ui(at: 0)
 
-    XCTAssertNotNil(composite)
-    XCTAssertNotNil(spotConfigurable)
-    XCTAssertEqual(composite?.contentView.subviews.count, 1)
-    XCTAssertTrue(spots[0].compositeSpots[0].parentSpot!.component == spots[0].component)
-    XCTAssertTrue(spots[0].compositeSpots[0].spot is Listable)
-    XCTAssertEqual(spots[0].compositeSpots[0].spot.items.count, 10)
-    XCTAssertEqual(spots[0].compositeSpots[0].spot.render().frame.size.height,
-                   (spotConfigurable!.preferredViewSize.height + heightOffset) * CGFloat(spots[0].compositeSpots[0].spot.items.count))
+    guard components.count == 2 else {
+      XCTFail("Could not find all components.")
+      return
+    }
 
-    spotConfigurable = spots[0].compositeSpots[1].spot.ui(at: 0)
+    guard components[0].compositeComponents.count == 2 else {
+      XCTFail("Unable to find composite components.")
+      return
+    }
 
-    XCTAssertNotNil(spotConfigurable)
-    XCTAssertEqual(composite?.contentView.subviews.count, 1)
-    XCTAssertTrue(spots[0].compositeSpots[1].parentSpot!.component == spots[0].component)
-    XCTAssertTrue(spots[0].compositeSpots[1].spot is Listable)
-    XCTAssertEqual(spots[0].compositeSpots[1].spot.items.count, 10)
-    XCTAssertEqual(spots[0].compositeSpots[1].spot.render().frame.size.height,
-                   (spotConfigurable!.preferredViewSize.height + heightOffset) * CGFloat(spots[0].compositeSpots[1].spot.items.count))
+    let ui: View? = components[0].compositeComponents[0].component.ui(at: 0)
+    itemConfigurable = components[0].compositeComponents[0].component.ui(at: 0)
+
+    guard ui != nil else {
+      XCTFail("Unable to find composite components.")
+      return
+    }
 
     XCTAssertNotNil(composite)
-    XCTAssertNotNil(spotConfigurable)
+
+    guard itemConfigurable != nil else {
+      XCTFail("Unable to resolve item configurable view.")
+      return
+    }
+
     XCTAssertEqual(composite?.contentView.subviews.count, 1)
-    XCTAssertTrue(spots[1].compositeSpots[0].parentSpot!.component == spots[1].component)
-    XCTAssertTrue(spots[1].compositeSpots[0].spot is Listable)
-    XCTAssertEqual(spots[1].compositeSpots[0].spot.items.count, 10)
-    XCTAssertEqual(spots[1].compositeSpots[0].spot.render().frame.size.height,
-                   (spotConfigurable!.preferredViewSize.height + heightOffset) * CGFloat(spots[1].compositeSpots[0].spot.items.count))
+    XCTAssertTrue(components[0].compositeComponents[0].parentComponent!.model == components[0].model)
+    XCTAssertTrue(components[0].compositeComponents[0].component.userInterface is TableView)
+    XCTAssertEqual(components[0].compositeComponents[0].component.model.items.count, 10)
+    XCTAssertEqual(components[0].compositeComponents[0].component.view.frame.size.height,
+                   (itemConfigurable!.preferredViewSize.height + heightOffset) * CGFloat(components[0].compositeComponents[0].component.model.items.count))
 
-    spotConfigurable = spots[0].compositeSpots[1].spot.ui(at: 0)
+    itemConfigurable = components[0].compositeComponents[1].component.ui(at: 0)
 
-    XCTAssertNotNil(spotConfigurable)
+    XCTAssertNotNil(itemConfigurable)
     XCTAssertEqual(composite?.contentView.subviews.count, 1)
-    XCTAssertTrue(spots[1].compositeSpots[1].parentSpot!.component == spots[1].component)
-    XCTAssertTrue(spots[1].compositeSpots[1].spot is Listable)
-    XCTAssertEqual(spots[1].compositeSpots[1].spot.items.count, 10)
-    XCTAssertEqual(spots[1].compositeSpots[1].spot.render().frame.size.height,
-                   (spotConfigurable!.preferredViewSize.height + heightOffset) * CGFloat(spots[1].compositeSpots[1].spot.items.count))
+    XCTAssertTrue(components[0].compositeComponents[1].parentComponent!.model == components[0].model)
+    XCTAssertTrue(components[0].compositeComponents[1].component.userInterface is TableView)
+    XCTAssertEqual(components[0].compositeComponents[1].component.model.items.count, 10)
+    XCTAssertEqual(components[0].compositeComponents[1].component.view.frame.size.height,
+                   (itemConfigurable!.preferredViewSize.height + heightOffset) * CGFloat(components[0].compositeComponents[1].component.model.items.count))
 
-    let newComponents: [Component] = [
-      Component(kind: Component.Kind.Grid.rawValue,
-                span: 2.0,
+    XCTAssertNotNil(composite)
+    XCTAssertNotNil(itemConfigurable)
+    XCTAssertEqual(composite?.contentView.subviews.count, 1)
+    XCTAssertTrue(components[1].compositeComponents[0].parentComponent!.model == components[1].model)
+    XCTAssertTrue(components[1].compositeComponents[0].component.userInterface is TableView)
+    XCTAssertEqual(components[1].compositeComponents[0].component.model.items.count, 10)
+    XCTAssertEqual(components[1].compositeComponents[0].component.view.frame.size.height,
+                   (itemConfigurable!.preferredViewSize.height + heightOffset) * CGFloat(components[1].compositeComponents[0].component.model.items.count))
+
+    itemConfigurable = components[0].compositeComponents[1].component.ui(at: 0)
+
+    XCTAssertNotNil(itemConfigurable)
+    XCTAssertEqual(composite?.contentView.subviews.count, 1)
+    XCTAssertTrue(components[1].compositeComponents[1].parentComponent!.model == components[1].model)
+    XCTAssertTrue(components[1].compositeComponents[1].component.userInterface is TableView)
+    XCTAssertEqual(components[1].compositeComponents[1].component.model.items.count, 10)
+    XCTAssertEqual(components[1].compositeComponents[1].component.view.frame.size.height,
+                   (itemConfigurable!.preferredViewSize.height + heightOffset) * CGFloat(components[1].compositeComponents[1].component.model.items.count))
+
+    let newComponentModels: [ComponentModel] = [
+      ComponentModel(kind: .grid,
+                layout: Layout(span: 2.0),
                 items: [
-                  Item(kind: "composite", children:
+                  Item(kind: CompositeComponent.identifier, children:
                     [
-                      Component(kind: Component.Kind.List.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -1021,9 +1106,9 @@ class CompositionTests: XCTestCase {
                       )
                     ]
                   ),
-                  Item(kind: "composite", children:
+                  Item(kind: CompositeComponent.identifier, children:
                     [
-                      Component(kind: Component.Kind.List.rawValue, span: 1.0, items: [
+                      ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -1042,43 +1127,42 @@ class CompositionTests: XCTestCase {
       )
     ]
 
-    var exception: XCTestExpectation? = self.expectation(description: "Reload controller with components  triggering reloadLess")
+    let expectation = self.expectation(description: "Reload controller with components  triggering reloadLess")
     var reloadTimes: Int = 0
 
-    controller.reloadIfNeeded(newComponents) {
+    controller.reloadIfNeeded(newComponentModels) {
       reloadTimes += 1
 
-      let spots = controller.spots
+      let components = controller.components
 
-      XCTAssertEqual(spots.count, 1)
+      XCTAssertEqual(components.count, 1)
 
-      composite = spots[0].ui(at: 0)
-      spotConfigurable = spots[0].compositeSpots[0].spot.ui(at: 0)
+      composite = components[0].ui(at: 0)
+      itemConfigurable = components[0].compositeComponents[0].component.ui(at: 0)
 
       XCTAssertNotNil(composite)
-      XCTAssertNotNil(spotConfigurable)
+      XCTAssertNotNil(itemConfigurable)
       XCTAssertEqual(composite?.contentView.subviews.count, 1)
-      XCTAssertTrue(spots[0].compositeSpots[0].parentSpot!.component == spots[0].component)
-      XCTAssertTrue(spots[0].compositeSpots[0].spot is Listable)
-      XCTAssertEqual(spots[0].compositeSpots[0].spot.items.count, 10)
-      XCTAssertEqual(spots[0].compositeSpots[0].spot.render().frame.size.height,
-                     ((spotConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(spots[0].compositeSpots[0].spot.items.count))
+      XCTAssertTrue(components[0].compositeComponents[0].parentComponent!.model == components[0].model)
+      XCTAssertTrue(components[0].compositeComponents[0].component.userInterface is TableView)
+      XCTAssertEqual(components[0].compositeComponents[0].component.model.items.count, 10)
+      XCTAssertEqual(components[0].compositeComponents[0].component.view.frame.size.height,
+                     ((itemConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(components[0].compositeComponents[0].component.model.items.count))
 
-      spotConfigurable = spots[0].compositeSpots[1].spot.ui(at: 0)
+      itemConfigurable = components[0].compositeComponents[1].component.ui(at: 0)
 
-      XCTAssertNotNil(spotConfigurable)
+      XCTAssertNotNil(itemConfigurable)
       XCTAssertEqual(composite?.contentView.subviews.count, 1)
-      XCTAssertTrue(spots[0].compositeSpots[1].parentSpot!.component == spots[0].component)
-      XCTAssertTrue(spots[0].compositeSpots[1].spot is Listable)
-      XCTAssertEqual(spots[0].compositeSpots[1].spot.items.count, 10)
-      XCTAssertEqual(spots[0].compositeSpots[1].spot.render().frame.size.height,
-                     ((spotConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(spots[0].compositeSpots[1].spot.items.count))
-      
+      XCTAssertTrue(components[0].compositeComponents[1].parentComponent!.model == components[0].model)
+      XCTAssertTrue(components[0].compositeComponents[1].component.userInterface is TableView)
+      XCTAssertEqual(components[0].compositeComponents[1].component.model.items.count, 10)
+      XCTAssertEqual(components[0].compositeComponents[1].component.view.frame.size.height,
+                     ((itemConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(components[0].compositeComponents[1].component.model.items.count))
+
       XCTAssertEqual(reloadTimes, 1)
-      
-      exception?.fulfill()
-      exception = nil
+
+      expectation.fulfill()
     }
-    waitForExpectations(timeout: 1.0, handler: nil)
+    waitForExpectations(timeout: 10.0, handler: nil)
   }
 }

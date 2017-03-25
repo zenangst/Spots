@@ -1,9 +1,9 @@
 import Foundation
 
 public class DataSource: NSObject {
-  weak var spot: Spotable?
+  weak var component: Component?
 
-  init(spot: Spotable) {
-    self.spot = spot
+  init(component: Component) {
+    self.component = component
   }
 }

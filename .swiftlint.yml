@@ -40,3 +40,6 @@ function_body_length:
   warning: 50
 reporter: "xcode"
 missing_docs: internal
+large_tuple:
+  warning: 4
+  error: 5
