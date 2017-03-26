@@ -36,26 +36,32 @@ class InteractionTests: XCTestCase {
     XCTAssertEqual(interaction.paginate, .page)
 
     json = [
-      "paginate": "item"
+      "paginate": "item",
+      "mouseClick" : "single"
     ]
 
     interaction = Interaction(json)
     XCTAssertEqual(interaction.paginate, .item)
+    XCTAssertEqual(interaction.mouseClick, .single)
 
     json = [
-      "paginate": "disabled"
+      "paginate": "disabled",
+      "mouseClick": "double"
     ]
 
     interaction = Interaction(json)
     XCTAssertEqual(interaction.paginate, .disabled)
+    XCTAssertEqual(interaction.mouseClick, .double)
 
     interaction = Interaction()
     XCTAssertEqual(interaction.paginate, .disabled)
+    XCTAssertEqual(interaction.mouseClick, .single)
   }
 
   func testDictionary() {
     let json: [String : Any] = [
-      "paginate": "page"
+      "paginate": "page",
+      "mouseClick" : "single"
     ]
 
     let interaction = Interaction(json)
