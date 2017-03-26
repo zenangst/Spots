@@ -232,7 +232,7 @@ open class SpotsController: NSViewController, SpotsProtocol {
         height: component.computedHeight))
 
       for compositeComponent in component.compositeComponents {
-        compositeComponent.component.setup(with: CGSize(width: view.frame.width,
+        compositeComponent.component.layout(with: CGSize(width: view.frame.width,
                                         height: compositeComponent.component.computedHeight))
       }
     }
