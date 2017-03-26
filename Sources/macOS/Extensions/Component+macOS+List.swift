@@ -11,7 +11,7 @@ extension Component {
 
     tableView.frame.size = size
 
-    prepareItems()
+    prepareItems(clean: false)
 
     tableView.backgroundColor = NSColor.clear
     tableView.allowsColumnReordering = false

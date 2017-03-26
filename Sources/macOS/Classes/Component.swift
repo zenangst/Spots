@@ -257,7 +257,7 @@ import Tailor
 
     collectionView.frame.size = size
 
-    prepareItems()
+    prepareItems(clean: false)
 
     collectionView.backgroundColors = [NSColor.clear]
     collectionView.isSelectable = true
