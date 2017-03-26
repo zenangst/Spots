@@ -305,7 +305,7 @@ import Tailor
   /// This method is invoked when a double click is performed on a view.
   ///
   /// - Parameter sender: The view that was tapped.
-  open func doubleAction(_ sender: Any?) {
+  open func doubleMouseClick(_ sender: Any?) {
     guard let tableView = tableView,
       let item = item(at: tableView.clickedRow) else {
       return
@@ -321,7 +321,7 @@ import Tailor
   /// This method is invoked when a single click is performed on a view.
   ///
   /// - Parameter sender: The view that was tapped.
-  open func action(_ sender: Any?) {
+  open func singleMouseClick(_ sender: Any?) {
     guard let tableView = tableView,
       let item = item(at: tableView.clickedRow) else {
         return

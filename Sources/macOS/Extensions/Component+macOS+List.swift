@@ -24,8 +24,8 @@ extension Component {
     tableView.allowsTypeSelect = true
     tableView.focusRingType = .none
     tableView.target = self
-    tableView.action = #selector(self.action(_:))
-    tableView.doubleAction = #selector(self.doubleAction(_:))
+    tableView.action = #selector(self.singleMouseClick(_:))
+    tableView.doubleAction = #selector(self.doubleMouseClick(_:))
     tableView.sizeToFit()
 
     guard tableView.tableColumns.isEmpty else {

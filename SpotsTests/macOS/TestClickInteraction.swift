@@ -47,21 +47,21 @@ class TestClickInteraction: XCTestCase {
     tableView.rowClicked = 0
 
     /// Expect that the component delegate will be called once.
-    component.action(nil)
+    component.singleMouseClick(nil)
     XCTAssertEqual(mockDelegate.invocation, 1)
 
     /// Expect that the invocation count is still one after double clicking.
-    component.doubleAction(nil)
+    component.doubleMouseClick(nil)
     XCTAssertEqual(mockDelegate.invocation, 1)
 
     /// Expect that the invocation is unchanged when the configuration is set
     /// to only accept double clicks.
     component.model.interaction.clickInteraction = .double
-    component.action(nil)
+    component.singleMouseClick(nil)
     XCTAssertEqual(mockDelegate.invocation, 1)
 
     /// Expect that invocation is two because it is inline with the configuration.
-    component.doubleAction(nil)
+    component.doubleMouseClick(nil)
     XCTAssertEqual(mockDelegate.invocation, 2)
   }
 
