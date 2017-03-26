@@ -160,10 +160,10 @@ import Tailor
   /// A convenience init for creating a component with a `ComponentModel`.
   ///
   /// - Parameter model: A component model that is used for constructing and configurating the component.
-  public required convenience init(model: ComponentModel) {
-    let userInterface: UserInterface
+  public required convenience init(model: ComponentModel, userInterface: UserInterface? = nil) {
+    var userInterface: UserInterface! = userInterface
 
-    if model.kind == .list {
+    if userInterface == nil, model.kind == .list {
       userInterface = TableView()
     } else {
       let collectionView = CollectionView(frame: CGRect.zero)
