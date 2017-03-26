@@ -311,7 +311,7 @@ import Tailor
       return
     }
 
-    guard model.interaction.clickInteraction == .double else {
+    guard model.interaction.mouseClick == .double else {
       return
     }
 
@@ -327,7 +327,7 @@ import Tailor
         return
     }
 
-    guard model.interaction.clickInteraction == .single else {
+    guard model.interaction.mouseClick == .single else {
       return
     }
 

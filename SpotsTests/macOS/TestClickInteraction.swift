@@ -24,12 +24,12 @@ class MockComponentDelegate: NSObject, ComponentDelegate {
   }
 }
 
-class TestClickInteraction: XCTestCase {
+class TestMouseClick: XCTestCase {
 
-  func testClickInteraction() {
+  func testMouseClick() {
     let mockTableView = MockTableView()
     let mockDelegate = MockComponentDelegate()
-    let interaction = Interaction(clickInteraction: .single)
+    let interaction = Interaction(mouseClick: .single)
     let model = ComponentModel(kind: .list, interaction: interaction, items: [
       Item(title: "foo")
       ]
@@ -56,7 +56,7 @@ class TestClickInteraction: XCTestCase {
 
     /// Expect that the invocation is unchanged when the configuration is set
     /// to only accept double clicks.
-    component.model.interaction.clickInteraction = .double
+    component.model.interaction.mouseClick = .double
     component.singleMouseClick(nil)
     XCTAssertEqual(mockDelegate.invocation, 1)
 

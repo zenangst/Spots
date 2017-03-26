@@ -13,7 +13,7 @@ enum ScrollDirection: String {
 ///
 /// - single: Single mouse click.
 /// - double: Double mouse click (only supported on components that use table views).
-public enum ClickInteraction: String {
+public enum MouseClick: String {
   case single, double
 }
 
@@ -25,7 +25,7 @@ public struct Interaction: Mappable {
   ///
   /// - paginate: Used for mapping pagination behavior.
   enum Key: String {
-    case paginate, clickInteraction
+    case paginate, mouseClick
   }
 
   /// Delcares what kind of interaction should be used for pagination. See `Paginate` struct for more information.
@@ -33,7 +33,7 @@ public struct Interaction: Mappable {
   /// Indicates which scrolling direction will be used, default to false.
   var scrollDirection: ScrollDirection = .vertical
   /// Indicates what kind click interaction the element should use.
-  var clickInteraction: ClickInteraction = .single
+  var mouseClick: MouseClick = .single
 
   /// The root key used when parsing JSON into a Interaction struct.
   static let rootKey: String = String(describing: Interaction.self).lowercased()
@@ -41,7 +41,7 @@ public struct Interaction: Mappable {
   /// A dictionary representation of the struct.
   public var dictionary: [String : Any] {
     return [
-      Key.clickInteraction.rawValue: clickInteraction.rawValue,
+      Key.mouseClick.rawValue: mouseClick.rawValue,
       Key.paginate.rawValue: paginate.rawValue
     ]
   }
@@ -54,9 +54,9 @@ public struct Interaction: Mappable {
   /// Default initializer for creating a Interaction struct.
   ///
   /// - Parameter paginate: Declares which pagination behavior that should be used, `.disabled` is default.
-  public init(paginate: Paginate = .disabled, clickInteraction: ClickInteraction = .single) {
+  public init(paginate: Paginate = .disabled, mouseClick: MouseClick = .single) {
     self.paginate = paginate
-    self.clickInteraction = clickInteraction
+    self.mouseClick = mouseClick
   }
 
   /// Initialize with a JSON payload.
@@ -74,8 +74,8 @@ public struct Interaction: Mappable {
       self.paginate <- Paginate(rawValue: paginate)
     }
 
-    if let clickInteraction: String = map.property(Key.clickInteraction.rawValue) {
-      self.clickInteraction <- ClickInteraction(rawValue: clickInteraction)
+    if let mouseClick: String = map.property(Key.mouseClick.rawValue) {
+      self.mouseClick <- MouseClick(rawValue: mouseClick)
     }
   }
 
@@ -87,7 +87,7 @@ public struct Interaction: Mappable {
   /// - Returns: A boolean value that is true if all properties are equal on the struct.
   public static func == (lhs: Interaction, rhs: Interaction) -> Bool {
     return lhs.paginate == rhs.paginate &&
-      lhs.clickInteraction == rhs.clickInteraction
+      lhs.mouseClick == rhs.mouseClick
   }
 
   /// Compare Interaction structs.
