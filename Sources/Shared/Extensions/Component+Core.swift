@@ -93,11 +93,11 @@ public extension Component {
   }
 
   /// Prepare items in component
-  func prepareItems() {
-    model.items = prepare(items: model.items)
+  func prepareItems(clean: Bool = true) {
+    model.items = prepare(items: model.items, clean: clean)
   }
 
-  func prepare(items: [Item]) -> [Item] {
+  func prepare(items: [Item], clean: Bool) -> [Item] {
     var preparedItems = items
     var spanWidth: CGFloat?
 
@@ -119,7 +119,7 @@ public extension Component {
         item.size.width = spanWidth
       }
 
-      if let configuredItem = configure(item: item, at: index, usesViewSize: true) {
+      if let configuredItem = configure(item: item, at: index, usesViewSize: true, clean: clean) {
         preparedItems[index].index = index
         preparedItems[index] = configuredItem
       }
@@ -204,9 +204,9 @@ public extension Component {
   ///
   /// - parameter index:        The index of the view model
   /// - parameter usesViewSize: A boolean value to determine if the view uses the views height
-  public func configureItem(at index: Int, usesViewSize: Bool = false) {
+  public func configureItem(at index: Int, usesViewSize: Bool = false, clean: Bool = true) {
     guard let item = item(at: index),
-      let configuredItem = configure(item: item, at: index, usesViewSize: usesViewSize)
+      let configuredItem = configure(item: item, at: index, usesViewSize: usesViewSize, clean: clean)
       else {
         return
     }
@@ -214,7 +214,7 @@ public extension Component {
     model.items[index] = configuredItem
   }
 
-  func configure(item: Item, at index: Int, usesViewSize: Bool = false) -> Item? {
+  func configure(item: Item, at index: Int, usesViewSize: Bool = false, clean: Bool) -> Item? {
     var item = item
     item.index = index
 
@@ -239,7 +239,7 @@ public extension Component {
         prepare(view: view)
       }
 
-      prepare(kind: kind, view: view as Any, item: &item)
+      prepare(kind: kind, view: view as Any, item: &item, clean: clean)
     #else
       if fullWidth == 0.0 {
         fullWidth = view.superview?.frame.size.width ?? view.frame.size.width
@@ -256,10 +256,10 @@ public extension Component {
         }
 
         composite.contentView.frame.size = view.frame.size
-        prepare(composable: composite, item: &item)
+        prepare(composable: composite, item: &item, clean: clean)
       } else {
         if let (_, resolvedView) = Configuration.views.make(kind, parentFrame: self.view.frame) {
-          prepare(kind: kind, view: resolvedView as Any, item: &item)
+          prepare(kind: kind, view: resolvedView as Any, item: &item, clean: clean)
         } else {
           return nil
         }
@@ -269,10 +269,10 @@ public extension Component {
     return item
   }
 
-  func prepare(kind: String, view: Any, item: inout Item) {
+  func prepare(kind: String, view: Any, item: inout Item, clean: Bool) {
     switch view {
     case let view as Composable:
-      prepare(composable: view, item: &item)
+      prepare(composable: view, item: &item, clean: clean)
     case let view as ItemConfigurable:
       view.configure(&item)
       setFallbackViewSize(to: &item, with: view)
@@ -308,14 +308,16 @@ public extension Component {
   /// - parameter usesViewSize:      A boolean value to determine if the view uses the views height
   ///
   /// - returns: The height for the item based of the composable components
-  func prepare(composable: Composable, item: inout Item) {
+  func prepare(composable: Composable, item: inout Item, clean: Bool) {
     var height: CGFloat = 0.0
 
-    compositeComponents.filter({ $0.itemIndex == item.index }).forEach {
-      $0.component.view.removeFromSuperview()
+    if clean {
+      compositeComponents.filter({ $0.itemIndex == item.index }).forEach {
+        $0.component.view.removeFromSuperview()
 
-      if let index = compositeComponents.index(of: $0) {
-        compositeComponents.remove(at: index)
+        if let index = compositeComponents.index(of: $0) {
+          compositeComponents.remove(at: index)
+        }
       }
     }
 
