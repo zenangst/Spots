@@ -1,6 +1,20 @@
 @testable import Spots
 import XCTest
 
+class MockTableView: NSTableView {
+
+  var rowClicked: Int = -1
+
+  override var clickedRow: Int {
+
+    if rowView(atRow: rowClicked, makeIfNecessary: false) != nil {
+      return rowClicked
+    } else {
+      return -1
+    }
+  }
+}
+
 class MockComponentDelegate: NSObject, ComponentDelegate {
 
   var invocation: Int = 0
@@ -13,20 +27,24 @@ class MockComponentDelegate: NSObject, ComponentDelegate {
 class TestClickInteraction: XCTestCase {
 
   func testClickInteraction() {
+    let mockTableView = MockTableView()
     let mockDelegate = MockComponentDelegate()
     let interaction = Interaction(clickInteraction: .single)
     let model = ComponentModel(kind: .list, interaction: interaction, items: [
       Item(title: "foo")
       ]
     )
-    let component = Component(model: model)
+    let component = Component(model: model, userInterface: mockTableView)
+    component.setup(with: CGSize(width: 100, height: 100))
     
     component.delegate = mockDelegate
 
-    guard let tableView = component.tableView else {
+    guard let tableView = component.tableView as? MockTableView else {
       XCTFail("Unable to resolve table view.")
       return
     }
+
+    tableView.rowClicked = 0
 
     /// Expect that the component delegate will be called once.
     component.action(nil)
