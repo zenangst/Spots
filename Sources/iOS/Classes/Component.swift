@@ -71,7 +71,7 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   ///   - model: A `ComponentModel` that is used to configure the interaction, behavior and look-and-feel of the component.
   ///   - view: A scroll view, should either be a `UITableView` or `UICollectionView`.
   ///   - kind: The `kind` defines which user interface the component should render (either UICollectionView or UITableView).
-  public required init(model: ComponentModel, view: ScrollView, kind: ComponentKind = Component.defaultKind) {
+  public required init(model: ComponentModel, view: ScrollView) {
     self.model = model
     self.view = view
 
@@ -102,7 +102,7 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
       ? TableView()
       : CollectionView(frame: CGRect.zero, collectionViewLayout: CollectionLayout())
 
-    self.init(model: model, view: view, kind: model.kind)
+    self.init(model: model, view: view)
   }
 
   /// A convenience init for creating a component with view state functionality.
