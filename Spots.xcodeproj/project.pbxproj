@@ -256,7 +256,7 @@
 		BDAD85F01E3E7032008289AE /* TypeAlias.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD855F1E3E7032008289AE /* TypeAlias.swift */; };
 		BDAD85F11E3E7032008289AE /* TypeAlias.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD855F1E3E7032008289AE /* TypeAlias.swift */; };
 		BDAD85F21E3E7032008289AE /* TypeAlias.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD855F1E3E7032008289AE /* TypeAlias.swift */; };
-		BDAD85F61E3E703A008289AE /* CollectionAdapter+tvOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD85F51E3E703A008289AE /* CollectionAdapter+tvOS.swift */; };
+		BDAD85F61E3E703A008289AE /* Component+tvOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD85F51E3E703A008289AE /* Component+tvOS.swift */; };
 		BDB1F8AF1E5D91BE0064F64B /* ComponentHorizontallyScrollable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB1F8AE1E5D91BE0064F64B /* ComponentHorizontallyScrollable.swift */; };
 		BDB1F8B01E5D91BE0064F64B /* ComponentHorizontallyScrollable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB1F8AE1E5D91BE0064F64B /* ComponentHorizontallyScrollable.swift */; };
 		BDB1F8B31E5D921F0064F64B /* CoreComponent+Extensions+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB1F8B21E5D921F0064F64B /* CoreComponent+Extensions+iOS.swift */; };
@@ -492,7 +492,7 @@
 		BDAD855D1E3E7032008289AE /* Registry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Registry.swift; sourceTree = "<group>"; };
 		BDAD855E1E3E7032008289AE /* StateCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateCache.swift; sourceTree = "<group>"; };
 		BDAD855F1E3E7032008289AE /* TypeAlias.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeAlias.swift; sourceTree = "<group>"; };
-		BDAD85F51E3E703A008289AE /* CollectionAdapter+tvOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CollectionAdapter+tvOS.swift"; sourceTree = "<group>"; };
+		BDAD85F51E3E703A008289AE /* Component+tvOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Component+tvOS.swift"; sourceTree = "<group>"; };
 		BDB1F8AE1E5D91BE0064F64B /* ComponentHorizontallyScrollable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentHorizontallyScrollable.swift; sourceTree = "<group>"; };
 		BDB1F8B21E5D921F0064F64B /* CoreComponent+Extensions+iOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CoreComponent+Extensions+iOS.swift"; sourceTree = "<group>"; };
 		BDB648551D75EF150041449A /* Info-tvOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-tvOS.plist"; sourceTree = "<group>"; };
@@ -854,7 +854,7 @@
 		BDAD85F41E3E703A008289AE /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				BDAD85F51E3E703A008289AE /* CollectionAdapter+tvOS.swift */,
+				BDAD85F51E3E703A008289AE /* Component+tvOS.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1505,7 +1505,7 @@
 				BD9ECEC51E6EC8B8003E4388 /* Component+iOS+List.swift in Sources */,
 				BDAD84D11E3E701C008289AE /* DataSource+iOS+Extensions.swift in Sources */,
 				BDAD85D41E3E7032008289AE /* ComponentModel.swift in Sources */,
-				BDAD85F61E3E703A008289AE /* CollectionAdapter+tvOS.swift in Sources */,
+				BDAD85F61E3E703A008289AE /* Component+tvOS.swift in Sources */,
 				BDAD85E31E3E7032008289AE /* Interaction.swift in Sources */,
 				BD24030D1E4B981A005BAA19 /* Component.swift in Sources */,
 				BDAD84AD1E3E701C008289AE /* GridableLayout.swift in Sources */,
