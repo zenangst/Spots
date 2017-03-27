@@ -7,8 +7,6 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   /// The default layout that should be used for components.
   /// It will default to this one if `Layout` is absent during init.
   public static var layout: Layout = Layout(span: 0.0)
-  /// The default component kind that should be used.
-  public static var defaultKind: ComponentKind = .grid
   /// A configuration closure that can be used to pinpoint configuration of
   /// views used inside of the component.
   open static var configure: ((_ view: View) -> Void)?
@@ -71,7 +69,7 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   ///   - model: A `ComponentModel` that is used to configure the interaction, behavior and look-and-feel of the component.
   ///   - view: A scroll view, should either be a `UITableView` or `UICollectionView`.
   ///   - kind: The `kind` defines which user interface the component should render (either UICollectionView or UITableView).
-  public required init(model: ComponentModel, view: ScrollView, kind: ComponentKind = Component.defaultKind) {
+  public required init(model: ComponentModel, view: ScrollView) {
     self.model = model
     self.view = view
 
@@ -102,7 +100,7 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
       ? TableView()
       : CollectionView(frame: CGRect.zero, collectionViewLayout: CollectionLayout())
 
-    self.init(model: model, view: view, kind: model.kind)
+    self.init(model: model, view: view)
   }
 
   /// A convenience init for creating a component with view state functionality.
