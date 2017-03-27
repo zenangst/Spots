@@ -14,6 +14,7 @@ struct PlatformDefaults {
 
 public struct Configuration {
 
+  public static var defaultComponentKind: ComponentKind = .grid
   public static var defaultViewSize: CGSize = .init(width: 0, height: PlatformDefaults.defaultHeight)
   public static var views: Registry = .init(useCache: false)
 
