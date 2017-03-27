@@ -519,14 +519,22 @@ extension SpotsProtocol {
         strongSelf.view.addSubview(strongSelf.scrollView)
       }
 
+      let previousContentOffset = strongSelf.scrollView.contentOffset
+
       strongSelf.reloadSpotsScrollView()
       strongSelf.setupComponents(animated: animated)
+      strongSelf.components.forEach { component in
+        component.afterUpdate()
+      }
 
       completion?()
+
       if let controller = strongSelf as? SpotsController {
         SpotsController.componentsDidReloadComponentModels?(controller)
       }
+
       strongSelf.scrollView.layoutSubviews()
+      strongSelf.scrollView.contentOffset = previousContentOffset
     }
   }
 
