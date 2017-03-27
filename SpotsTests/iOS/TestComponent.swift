@@ -282,7 +282,7 @@ class ComponentTests: XCTestCase {
     collectionView.itemSize = CGSize(width: 200, height: 100)
 
     let model = ComponentModel(json)
-    let component = Component(model: model, view: collectionView, kind: .carousel)
+    let component = Component(model: model, view: collectionView)
     let parentSize = CGSize(width: 300, height: 100)
 
     component.setup(with: parentSize)
