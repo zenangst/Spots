@@ -11,7 +11,8 @@ class TestSpot: XCTestCase {
     Configuration.register(view: FooterView.self, identifier: "Footer")
   }
 
-  func testDefaultValues() {
+  func testDefaultValuesWithList() {
+    Configuration.defaultComponentKind = .list
     Configuration.defaultViewSize = .init(width: 0, height: PlatformDefaults.defaultHeight)
     let items = [Item(title: "A"), Item(title: "B")]
     let model = ComponentModel(items: items)
