@@ -25,7 +25,6 @@ import Tailor
   /// The component model, it contains all the information for configuring `Component`
   /// interaction, behaviour and look-and-feel. See `ComponentModel` for more information.
   public var model: ComponentModel
-  public var componentKind: ComponentKind = .list
   /// A collection of composite components, dynamically constructed and mutated based of
   /// the contents of the `.model`.
   public var compositeComponents: [CompositeComponent] = []
@@ -138,9 +137,8 @@ import Tailor
   ///   - model: A `ComponentModel` that is used to configure the interaction, behavior and look-and-feel of the component.
   ///   - view: A scroll view, should either be a `NSTableView` or `NSCollectionView`.
   ///   - kind: The `kind` defines which user interface the component should render (either NSCollectionView or NSTableView).
-  public required init(model: ComponentModel, userInterface: UserInterface, kind: ComponentKind = Component.defaultKind) {
+  public required init(model: ComponentModel, userInterface: UserInterface) {
     self.model = model
-    self.componentKind = kind
     self.userInterface = userInterface
 
     super.init()
@@ -171,9 +169,9 @@ import Tailor
       userInterface = collectionView
     }
 
-    self.init(model: model, userInterface: userInterface, kind: model.kind)
+    self.init(model: model, userInterface: userInterface)
 
-    if componentKind == .carousel {
+    if model.kind == .carousel {
       self.model.interaction.scrollDirection = .horizontal
       (collectionView?.collectionViewLayout as? FlowLayout)?.scrollDirection = .horizontal
     }
@@ -270,7 +268,7 @@ import Tailor
     backgroundView.wantsLayer = true
     collectionView.backgroundView = backgroundView
 
-    switch componentKind {
+    switch model.kind {
     case .carousel:
       setupHorizontalCollectionView(collectionView, with: size)
     default:
@@ -284,7 +282,7 @@ import Tailor
   ///   - collectionView: The collection view that should be configured.
   ///   - size: The size that should be used for setting the new layout for the collection view.
   fileprivate func layoutCollectionView(_ collectionView: CollectionView, with size: CGSize) {
-    if componentKind == .carousel {
+    if model.kind == .carousel {
       layoutHorizontalCollectionView(collectionView, with: size)
     } else {
       layoutVerticalCollectionView(collectionView, with: size)
