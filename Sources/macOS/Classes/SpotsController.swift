@@ -247,7 +247,14 @@ open class SpotsController: NSViewController, SpotsProtocol {
   }
 
   public func windowDidResize(_ notification: Notification) {
-    components.forEach { component in
+    for component in components {
+      // Skip live resizing on views that use composite components.
+      // This is a huge performance improvement, the composite views will get their
+      // new size when the window is finish resizing (see windowDidEndLiveResize)
+      guard component.compositeComponents.isEmpty else {
+        continue
+      }
+
       layoutComponent(component)
     }
     scrollView.layoutSubviews()

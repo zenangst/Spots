@@ -1,6 +1,6 @@
 import UIKit
 
-extension CarouselComponent {
+extension Component {
   /// Asks the delegate if the specified item should be selected.
   ///
   /// - parameter collectionView: The collection view object that is asking whether the selection should change.
