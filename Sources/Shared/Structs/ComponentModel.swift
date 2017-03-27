@@ -152,8 +152,7 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
               layout: Layout? = nil,
               interaction: Interaction = .init(),
               items: [Item] = [],
-              meta: [String : Any] = [:],
-              hybrid: Bool = false) {
+              meta: [String : Any] = [:]) {
     self.identifier = identifier
     self.kind = kind
     self.layout = layout

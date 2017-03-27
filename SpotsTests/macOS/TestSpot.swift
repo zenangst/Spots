@@ -14,7 +14,7 @@ class TestSpot: XCTestCase {
   func testDefaultValues() {
     Configuration.defaultViewSize = .init(width: 0, height: PlatformDefaults.defaultHeight)
     let items = [Item(title: "A"), Item(title: "B")]
-    let model = ComponentModel(items: items, hybrid: true)
+    let model = ComponentModel(items: items)
     let component = Component(model: model)
 
     component.setup(with: CGSize(width: 100, height: 100))
@@ -65,8 +65,7 @@ class TestSpot: XCTestCase {
         Item(title: "B"),
         Item(title: "C"),
         Item(title: "D")
-      ],
-      hybrid: true
+      ]
     )
     let component = Component(model: model)
     component.setup(with: CGSize(width: 100, height: 100))
@@ -85,8 +84,7 @@ class TestSpot: XCTestCase {
         Item(title: "B", kind: "TextView"),
         Item(title: "C", kind: "TextView"),
         Item(title: "D", kind: "TextView")
-      ],
-      hybrid: true
+      ]
     )
     let component = Component(model: model)
     component.setup(with: CGSize(width: 100, height: 100))
@@ -106,8 +104,7 @@ class TestSpot: XCTestCase {
         Item(title: "B", kind: "TextView"),
         Item(title: "C", kind: "TextView"),
         Item(title: "D", kind: "TextView")
-      ],
-      hybrid: true
+      ]
     )
     let component = Component(model: model)
     component.setup(with: CGSize(width: 100, height: 100))

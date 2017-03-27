@@ -14,7 +14,7 @@ class TestSpot: XCTestCase {
   func testDefaultValues() {
     Configuration.defaultViewSize = .init(width: 0, height: 44)
     let items = [Item(title: "A"), Item(title: "B")]
-    let model = ComponentModel(kind: .list, items: items, hybrid: true)
+    let model = ComponentModel(kind: .list, items: items)
     let component = Component(model: model)
 
     component.setup(with: CGSize(width: 100, height: 100))
@@ -66,7 +66,7 @@ class TestSpot: XCTestCase {
   func testCompareHybridListComponentWithCoreType() {
     Configuration.defaultViewSize = .init(width: 0, height: 44)
     let items = [Item(title: "A"), Item(title: "B")]
-    let model = ComponentModel(kind: .list, items: items, hybrid: true)
+    let model = ComponentModel(kind: .list, items: items)
     let listComponentModel = ComponentModel(kind: .list, items: items)
     let component = Component(model: model)
     let listComponent = Component(model: listComponentModel)
@@ -89,7 +89,7 @@ class TestSpot: XCTestCase {
 
   func testCompareHybridGridComponentWithCoreType() {
     let items = [Item(title: "A"), Item(title: "B")]
-    let model = ComponentModel(kind: ComponentKind.grid, items: items, hybrid: true)
+    let model = ComponentModel(kind: ComponentKind.grid, items: items)
     let gridComponentModel = ComponentModel(kind: ComponentKind.grid, items: items)
     let component = Component(model: model)
     let gridComponent = Component(model: gridComponentModel)
@@ -113,7 +113,7 @@ class TestSpot: XCTestCase {
   func testCompareHybridCarouselComponentWithCoreType() {
     Configuration.defaultViewSize = .init(width: 88, height: 88)
     let items = [Item(title: "A"), Item(title: "B")]
-    let model = ComponentModel(kind: .carousel, items: items, hybrid: true)
+    let model = ComponentModel(kind: .carousel, items: items)
     let carouselComponentModel = ComponentModel(kind: .carousel, items: items)
     let component = Component(model: model)
     let carouselComponent = Component(model: carouselComponentModel)
@@ -145,8 +145,7 @@ class TestSpot: XCTestCase {
         Item(title: "B"),
         Item(title: "C"),
         Item(title: "D")
-      ],
-      hybrid: true
+      ]
     )
     let component = Component(model: model)
     component.setup(with: CGSize(width: 100, height: 100))
@@ -175,8 +174,7 @@ class TestSpot: XCTestCase {
         Item(title: "B"),
         Item(title: "C"),
         Item(title: "D")
-      ],
-      hybrid: true
+      ]
     )
     let component = Component(model: model)
     component.setup(with: CGSize(width: 100, height: 100))
