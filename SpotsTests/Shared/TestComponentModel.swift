@@ -44,6 +44,19 @@ class ComponentModelTests: XCTestCase {
     XCTAssert(jsonComponentModel == codeComponentModel)
   }
 
+  func testConfifugrationDefaultKind() {
+    Configuration.defaultComponentKind = .list
+    let firstModel = ComponentModel()
+    XCTAssertEqual(firstModel.kind, .list)
+
+    Configuration.defaultComponentKind = .grid
+    let secondModel = ComponentModel()
+    XCTAssertEqual(secondModel.kind, .grid)
+
+    // Reset configuration to the default
+    Configuration.defaultComponentKind = .grid
+  }
+
   func testEquatable() {
     let jsonComponentModel = ComponentModel(json)
     let layout = Layout(json["layout"] as! [String: Any])
