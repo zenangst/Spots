@@ -148,7 +148,7 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
   public init(identifier: String? = nil,
               header: Item? = nil,
               footer: Item? = nil,
-              kind: ComponentKind = .list,
+              kind: ComponentKind = Configuration.defaultComponentKind,
               layout: Layout? = nil,
               interaction: Interaction = .init(),
               items: [Item] = [],
