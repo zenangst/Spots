@@ -8,7 +8,7 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   /// It will default to this one if `Layout` is absent during init.
   public static var layout: Layout = Layout(span: 0.0)
   /// The default component kind that should be used.
-  public static var defaultKind: ComponentKind = .grid
+  public static var defaultKind: ComponentKind = Configuration.defaultComponentKind
   /// A configuration closure that can be used to pinpoint configuration of
   /// views used inside of the component.
   open static var configure: ((_ view: View) -> Void)?
