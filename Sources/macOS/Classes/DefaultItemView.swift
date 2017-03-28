@@ -9,7 +9,7 @@ open class DefaultItemView: NSTableRowView, ItemConfigurable {
   open override var isSelected: Bool {
     didSet {
       if isSelected {
-        layer?.backgroundColor = NSColor.gray.withAlphaComponent(0.9).cgColor
+        layer?.backgroundColor = NSColor.gray.withAlphaComponent(0.3).cgColor
       } else {
         layer?.backgroundColor = NSColor.white.cgColor
       }
@@ -55,7 +55,7 @@ open class DefaultItemView: NSTableRowView, ItemConfigurable {
     lineView.frame.size.height = 1
     lineView.wantsLayer = true
     lineView.layer = CALayer()
-    lineView.layer?.backgroundColor = NSColor.gray.withAlphaComponent(0.4).cgColor
+    lineView.layer?.backgroundColor = NSColor.black.withAlphaComponent(0.4).cgColor
     lineView.autoresizingMask = .viewWidthSizable
 
     return lineView
@@ -84,6 +84,7 @@ open class DefaultItemView: NSTableRowView, ItemConfigurable {
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
     subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
     textLabel.translatesAutoresizingMaskIntoConstraints = false
+    lineView.translatesAutoresizingMaskIntoConstraints = false
 
     titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 8).isActive = true
     titleLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 8).isActive = true
@@ -96,6 +97,12 @@ open class DefaultItemView: NSTableRowView, ItemConfigurable {
     textLabel.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor, constant: 8).isActive = true
     textLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 8).isActive = true
     textLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -8).isActive = true
+    textLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 10)
+
+    lineView.heightAnchor.constraint(equalToConstant: 1).isActive = true
+    lineView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+    lineView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
+    lineView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
   }
 
   open func configure( _ item: inout Item) {
@@ -107,29 +114,11 @@ open class DefaultItemView: NSTableRowView, ItemConfigurable {
       $0.sizeToFit()
     }
 
-    let titleLabelSize = titleLabel.sizeThatFits(CGSize(width: item.size.width, height: 0.0))
-    let subtitleLabelSize = subtitleLabel.sizeThatFits(CGSize(width: item.size.width, height: 0.0))
-    let textLabelSize = textLabel.sizeThatFits(CGSize(width: item.size.width, height: 0.0))
+    let titleLabelSize = titleLabel.sizeThatFits(item.size)
+    let subtitleLabelSize = subtitleLabel.sizeThatFits(item.size)
+    let textLabelSize = textLabel.sizeThatFits(item.size)
 
-    item.size.height = [titleLabelSize, subtitleLabelSize, textLabelSize].reduce(0, { $0 + $1.height })
-    
-//    titleLabel.frame.origin.x = 8
-//    subtitleLabel.frame.origin.x = 8
-//    textLabel.frame.origin.x = 8
-//
-//    titleLabel.sizeToFit()
-//    subtitleLabel.sizeToFit()
-//    textLabel.sizeToFit()
-//
-//    if !item.subtitle.isEmpty {
-//      titleLabel.frame.origin.y = item.size.height / 2 - titleLabel.frame.size.height / 2 - subtitleLabel.frame.size.height / 2
-//      titleLabel.font = NSFont.boldSystemFont(ofSize: 14)
-//    } else {
-//      titleLabel.frame.origin.y = item.size.height / 2 - titleLabel.frame.size.height / 2
-//    }
-//
-//    subtitleLabel.frame.origin.y = titleLabel.frame.origin.y + subtitleLabel.frame.height
-
-    lineView.frame.origin.y = item.size.height + 1
+    item.size.height = [titleLabelSize, subtitleLabelSize, textLabelSize]
+      .reduce(32, { $0 + $1.height })
   }
 }

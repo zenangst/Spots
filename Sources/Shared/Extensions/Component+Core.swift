@@ -322,18 +322,22 @@ public extension Component {
     }
 
     let components: [Component] = Parser.parse(item)
-    let size = view.frame.size
+    var size = view.frame.size
+
+    if let layout = model.layout, layout.span > 0.0 {
+      var componentWidth: CGFloat = view.frame.size.width - CGFloat(layout.inset.left + layout.inset.right)
+      size.width = (componentWidth / CGFloat(layout.span)) - CGFloat(layout.itemSpacing)
+    }
+
+    size.width = round(size.width)
+
     let width = size.width
 
     components.forEach { component in
       let compositeSpot = CompositeComponent(component: component,
                                              parentComponent: self,
                                              itemIndex: item.index)
-
       compositeSpot.component.setup(with: size)
-      compositeSpot.component.model.size = CGSize(
-        width: width,
-        height: ceil(compositeSpot.component.view.frame.size.height))
       compositeSpot.component.view.layoutIfNeeded()
       compositeSpot.component.view.frame.origin.y = height
 
