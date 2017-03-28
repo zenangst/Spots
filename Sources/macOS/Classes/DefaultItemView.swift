@@ -1,64 +1,51 @@
 import Cocoa
 
-open class DefaultItemView: NSTableRowView, ItemConfigurable {
+open class DefaultItemView: View, ItemConfigurable, ViewStateDelegate {
 
-  override open var isFlipped: Bool {
-    return true
-  }
-
-  open override var isSelected: Bool {
-    didSet {
-      if isSelected {
-        layer?.backgroundColor = NSColor.gray.withAlphaComponent(0.3).cgColor
-      } else {
-        layer?.backgroundColor = NSColor.white.cgColor
-      }
-    }
-  }
+  open override var isFlipped: Bool { return true }
 
   open var preferredViewSize = Configuration.defaultViewSize
 
   lazy var titleLabel: NSTextField = {
-    let titleLabel = NSTextField()
-    titleLabel.isEditable = false
-    titleLabel.isSelectable = false
-    titleLabel.isBezeled = false
-    titleLabel.drawsBackground = false
+    let label = NSTextField()
+    label.isEditable = false
+    label.isSelectable = false
+    label.isBezeled = false
+    label.drawsBackground = false
 
-    return titleLabel
+    return label
   }()
 
   lazy var subtitleLabel: NSTextField = {
-    let subtitleLabel = NSTextField()
-    subtitleLabel.isEditable = false
-    subtitleLabel.isSelectable = false
-    subtitleLabel.isBezeled = false
-    subtitleLabel.textColor = NSColor.black.withAlphaComponent(0.9)
-    subtitleLabel.drawsBackground = false
+    let label = NSTextField()
+    label.isEditable = false
+    label.isSelectable = false
+    label.isBezeled = false
+    label.textColor = NSColor.black.withAlphaComponent(0.9)
+    label.drawsBackground = false
 
-    return subtitleLabel
+    return label
   }()
 
   lazy var textLabel: NSTextField = {
-    let textLabel = NSTextField()
-    textLabel.isEditable = false
-    textLabel.isSelectable = false
-    textLabel.isBezeled = false
-    textLabel.textColor = NSColor.black.withAlphaComponent(0.9)
-    textLabel.drawsBackground = false
+    let label = NSTextField()
+    label.isEditable = false
+    label.isSelectable = false
+    label.isBezeled = false
+    label.textColor = NSColor.black.withAlphaComponent(0.9)
+    label.drawsBackground = false
 
-    return textLabel
+    return label
   }()
 
   lazy var lineView: NSView = {
-    let lineView = NSView()
-    lineView.frame.size.height = 1
-    lineView.wantsLayer = true
-    lineView.layer = CALayer()
-    lineView.layer?.backgroundColor = NSColor.black.withAlphaComponent(0.4).cgColor
-    lineView.autoresizingMask = .viewWidthSizable
+    let view = NSView()
+    view.frame.size.height = 1
+    view.wantsLayer = true
+    view.layer?.backgroundColor = NSColor.black.withAlphaComponent(0.4).cgColor
+    view.autoresizingMask = .viewWidthSizable
 
-    return lineView
+    return view
   }()
 
   override init(frame frameRect: NSRect) {
@@ -97,7 +84,7 @@ open class DefaultItemView: NSTableRowView, ItemConfigurable {
     textLabel.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor, constant: 8).isActive = true
     textLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 8).isActive = true
     textLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -8).isActive = true
-    textLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 10)
+    textLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8).isActive = true
 
     lineView.heightAnchor.constraint(equalToConstant: 1).isActive = true
     lineView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
@@ -110,15 +97,23 @@ open class DefaultItemView: NSTableRowView, ItemConfigurable {
     subtitleLabel.stringValue = item.subtitle
     textLabel.stringValue = item.text
 
+    var height: CGFloat = 32
     [titleLabel, subtitleLabel, textLabel].forEach {
-      $0.sizeToFit()
+      let size = $0.sizeThatFits(item.size)
+      height += size.height
     }
 
-    let titleLabelSize = titleLabel.sizeThatFits(item.size)
-    let subtitleLabelSize = subtitleLabel.sizeThatFits(item.size)
-    let textLabelSize = textLabel.sizeThatFits(item.size)
+    item.size.height = height
+  }
 
-    item.size.height = [titleLabelSize, subtitleLabelSize, textLabelSize]
-      .reduce(32, { $0 + $1.height })
+  public func viewStateDidChange(_ viewState: ViewState) {
+    switch viewState {
+    case .highlighted:
+      layer?.backgroundColor = NSColor.gray.withAlphaComponent(0.3).cgColor
+    case .selected:
+      layer?.backgroundColor = NSColor.gray.withAlphaComponent(0.3).cgColor
+    case .normal:
+      layer?.backgroundColor = NSColor.white.cgColor
+    }
   }
 }
