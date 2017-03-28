@@ -156,10 +156,10 @@ import Tailor
   /// A convenience init for creating a component with a `ComponentModel`.
   ///
   /// - Parameter model: A component model that is used for constructing and configurating the component.
-  public required convenience init(model: ComponentModel) {
-    let userInterface: UserInterface
+  public required convenience init(model: ComponentModel, userInterface: UserInterface? = nil) {
+    var userInterface: UserInterface! = userInterface
 
-    if model.kind == .list {
+    if userInterface == nil, model.kind == .list {
       userInterface = TableView()
     } else {
       let collectionView = CollectionView(frame: CGRect.zero)
@@ -167,7 +167,7 @@ import Tailor
       userInterface = collectionView
     }
 
-    self.init(model: model, userInterface: userInterface)
+    self.init(model: model, userInterface: userInterface!)
 
     if model.kind == .carousel {
       self.model.interaction.scrollDirection = .horizontal
@@ -301,22 +301,32 @@ import Tailor
   /// This method is invoked when a double click is performed on a view.
   ///
   /// - Parameter sender: The view that was tapped.
-  open func doubleAction(_ sender: Any?) {
+  open func doubleMouseClick(_ sender: Any?) {
     guard let tableView = tableView,
       let item = item(at: tableView.clickedRow) else {
       return
     }
+
+    guard model.interaction.mouseClick == .double else {
+      return
+    }
+
     delegate?.component(self, itemSelected: item)
   }
 
   /// This method is invoked when a single click is performed on a view.
   ///
   /// - Parameter sender: The view that was tapped.
-  open func action(_ sender: Any?) {
+  open func singleMouseClick(_ sender: Any?) {
     guard let tableView = tableView,
       let item = item(at: tableView.clickedRow) else {
         return
     }
+
+    guard model.interaction.mouseClick == .single else {
+      return
+    }
+
     delegate?.component(self, itemSelected: item)
   }
 

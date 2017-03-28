@@ -69,21 +69,6 @@ extension Delegate: NSCollectionViewDelegateFlowLayout {
 
 extension Delegate: NSTableViewDelegate {
 
-  public func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
-    guard let component = component,
-      let item = component.item(at: row),
-      row > -1 && row < component.model.items.count
-      else {
-        return false
-    }
-
-    if component.model.meta("double-action", type: Bool.self) != true {
-      component.delegate?.component(component, itemSelected: item)
-    }
-
-    return true
-  }
-
   public func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
     guard let component = component else {
       return 1.0
