@@ -258,6 +258,8 @@ public extension Component {
         composite.contentView.frame.size = view.frame.size
         prepare(composable: composite, item: &item, clean: clean)
       } else {
+
+
         if let (_, resolvedView) = Configuration.views.make(kind, parentFrame: self.view.frame) {
           prepare(kind: kind, view: resolvedView as Any, item: &item, clean: clean)
         } else {
@@ -325,7 +327,7 @@ public extension Component {
     var size = view.frame.size
 
     if let layout = model.layout, layout.span > 0.0 {
-      var componentWidth: CGFloat = view.frame.size.width - CGFloat(layout.inset.left + layout.inset.right)
+      let componentWidth: CGFloat = view.frame.size.width - CGFloat(layout.inset.left + layout.inset.right)
       size.width = (componentWidth / CGFloat(layout.span)) - CGFloat(layout.itemSpacing)
     }
 
