@@ -2,35 +2,23 @@ import Cocoa
 
 class ListWrapper: NSTableRowView, Wrappable, Cell {
 
-  public var contentView: View {
-    return self
-  }
-
+  public var contentView: View { return self }
   weak var wrappedView: View?
 
-  func configureWrappedView() {
-    wrappedView?.autoresizingMask = [.viewWidthSizable, .viewHeightSizable]
+  override var isSelected: Bool {
+    didSet { (wrappedView as? ViewStateDelegate)?.viewStateDidChange(viewState) }
   }
 
-  override func layoutSubtreeIfNeeded() {
-    super.layoutSubtreeIfNeeded()
+  var isHighlighted: Bool = false {
+    didSet { (wrappedView as? ViewStateDelegate)?.viewStateDidChange(viewState) }
+  }
 
-    self.wrappedView?.frame = bounds
+  override func setFrameSize(_ newSize: NSSize) {
+    super.setFrameSize(newSize)
+    self.wrappedView?.frame.size = newSize
   }
 
   override func prepareForReuse() {
     wrappedView?.removeFromSuperview()
-  }
-
-  override var isSelected: Bool {
-    didSet {
-      (wrappedView as? ViewStateDelegate)?.viewStateDidChange(viewState)
-    }
-  }
-
-  var isHighlighted: Bool = false {
-    didSet {
-      (wrappedView as? ViewStateDelegate)?.viewStateDidChange(viewState)
-    }
   }
 }
