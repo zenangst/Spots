@@ -1,4 +1,4 @@
-github "krzyzanowskim/CryptoSwift" "0.6.7"
-github "ReactiveX/RxSwift" "3.2.0"
+github "ReactiveX/RxSwift" "3.3.1"
+github "hyperoslo/Cache" "2.2.2"
+github "krzyzanowskim/CryptoSwift" "0.6.8"
 github "zenangst/Tailor" "2.0.2"
-github "hyperoslo/Cache" "2.2.1"
