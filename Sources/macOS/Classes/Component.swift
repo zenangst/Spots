@@ -167,7 +167,7 @@ import Tailor
       userInterface = collectionView
     }
 
-    self.init(model: model, userInterface: userInterface)
+    self.init(model: model, userInterface: userInterface!)
 
     if model.kind == .carousel {
       self.model.interaction.scrollDirection = .horizontal
