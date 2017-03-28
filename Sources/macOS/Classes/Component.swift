@@ -376,13 +376,12 @@ public enum ComponentResize {
     switch type {
     case .live:
       if let tableView = tableView {
-        prepareItems(clean: false)
-        tableView.reloadDataSource()
         layout(with: size)
-
-        if tableView != nil {
-          layout(with: size)
+        tableView.beginUpdates()
+        for (index, _) in model.items.enumerated() {
+          configureItem(at: index, usesViewSize: false)
         }
+        tableView.endUpdates()
       } else {
         layout(with: size)
         prepareItems(clean: false)
