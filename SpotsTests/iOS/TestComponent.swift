@@ -377,6 +377,7 @@ class ComponentTests: XCTestCase {
   }
 
   func testComputedHeightForListComponent() {
+    Configuration.registerDefault(view: DefaultItemView.self)
     let items = [
       Item(title: "foo"),
       Item(title: "bar"),
@@ -387,10 +388,11 @@ class ComponentTests: XCTestCase {
     let component = Component(model: model)
     component.setup(with: .init(width: 100, height: 100))
 
-    XCTAssertEqual(component.computedHeight, PlatformDefaults.defaultHeight * CGFloat(items.count))
+    XCTAssertEqual(component.computedHeight, Configuration.defaultViewSize.height * CGFloat(items.count))
   }
 
   func testComputedHeightForGridComponent() {
+    Configuration.registerDefault(view: DefaultItemView.self)
     let layout = Layout(span: 1)
     let items = [
       Item(title: "foo"),
@@ -402,10 +404,11 @@ class ComponentTests: XCTestCase {
     let component = Component(model: model)
     component.setup(with: .init(width: 100, height: 100))
 
-    XCTAssertEqual(component.computedHeight, PlatformDefaults.defaultHeight * CGFloat(items.count))
+    XCTAssertEqual(component.computedHeight, Configuration.defaultViewSize.height * CGFloat(items.count))
   }
 
   func testComputedHeightForCarouselComponent() {
+    Configuration.registerDefault(view: DefaultItemView.self)
     let layout = Layout(span: 1)
     let items = [
       Item(title: "foo"),
@@ -417,6 +420,6 @@ class ComponentTests: XCTestCase {
     let component = Component(model: model)
     component.setup(with: .init(width: 100, height: 100))
 
-    XCTAssertEqual(component.computedHeight, PlatformDefaults.defaultHeight)
+    XCTAssertEqual(component.computedHeight, Configuration.defaultViewSize.height)
   }
 }
