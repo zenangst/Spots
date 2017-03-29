@@ -55,4 +55,18 @@ extension Component {
 
     scrollView.frame.size.height = tableView.frame.height + headerHeight + footerHeight
   }
+
+  func resizeTableView(_ tableView: TableView, with size: CGSize, type: ComponentResize) {
+    switch type {
+    case .live:
+        layout(with: size)
+        tableView.beginUpdates()
+        for (index, _) in model.items.enumerated() {
+          configureItem(at: index, usesViewSize: false)
+        }
+        tableView.endUpdates()
+    case .end:
+      layoutTableView(tableView, with: size)
+    }
+  }
 }

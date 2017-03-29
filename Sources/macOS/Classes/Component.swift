@@ -3,10 +3,6 @@
 import Cocoa
 import Tailor
 
-public enum ComponentResize {
-  case live, end
-}
-
 @objc(SpotsComponent) public class Component: NSObject {
 
   /// The default layout that should be used for components.
@@ -373,21 +369,10 @@ public enum ComponentResize {
   }
 
   public func didResize(size: CGSize, type: ComponentResize) {
-    switch type {
-    case .live:
-      if let tableView = tableView {
-        layout(with: size)
-        tableView.beginUpdates()
-        for (index, _) in model.items.enumerated() {
-          configureItem(at: index, usesViewSize: false)
-        }
-        tableView.endUpdates()
-      } else {
-        layout(with: size)
-        prepareItems(clean: false)
-      }
-    case .end:
-      layout(with: size)
+    if let tableView = tableView {
+      resizeTableView(tableView, with: size, type: type)
+    } else if let collectionView = collectionView {
+      resizeCollectionView(collectionView, with: size, type: type)
     }
   }
 

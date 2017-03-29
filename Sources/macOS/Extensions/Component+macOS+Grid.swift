@@ -26,4 +26,14 @@ extension Component {
       scrollView.frame.size.height = collectionView.frame.height
     }
   }
+
+  func resizeCollectionView(_ collectionView: CollectionView, with size: CGSize, type: ComponentResize) {
+    switch type {
+    case .live:
+      layout(with: size)
+      prepareItems(clean: false)
+    case .end:
+      layout(with: size)
+    }
+  }
 }
