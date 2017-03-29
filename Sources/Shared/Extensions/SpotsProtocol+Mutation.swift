@@ -180,13 +180,7 @@ extension SpotsProtocol {
     }
 
     let tempSpot = Component(model: newComponentModels[index])
-    tempSpot.view.frame = component.view.frame
-    tempSpot.setup(with: tempSpot.view.frame.size)
-    tempSpot.layout(with: tempSpot.view.frame.size)
-    tempSpot.view.frame.size.height = tempSpot.computedHeight
-    tempSpot.view.layoutIfNeeded()
-    tempSpot.prepareItems()
-
+    tempSpot.setup(with: component.view.frame.size)
     tempSpot.model.size = CGSize(
       width: view.frame.width,
       height: ceil(tempSpot.view.frame.height))

@@ -50,7 +50,18 @@ public extension Component {
         height = collectionViewLayout.collectionViewContentSize.height
       }
       #else
-        height = collectionView.collectionViewLayout.collectionViewContentSize.height
+        if let collectionViewLayout = collectionView.collectionViewLayout as? FlowLayout {
+          switch collectionViewLayout.scrollDirection {
+          case .horizontal:
+            if let firstItem = item(at: 0), firstItem.size.height > collectionViewLayout.collectionViewContentSize.height {
+              height = firstItem.size.height + collectionViewLayout.sectionInset.top + collectionViewLayout.sectionInset.bottom
+            } else {
+              height = collectionViewLayout.collectionViewContentSize.height
+            }
+          case .vertical:
+            height = collectionView.collectionViewLayout.collectionViewContentSize.height
+          }
+        }
       #endif
     }
 
@@ -410,6 +421,8 @@ public extension Component {
     }
   }
 
+  func beforeUpdate() {}
+
   /// Update height and refresh indexes for the component.
   ///
   /// - parameter completion: A completion closure that will be run when the computations are complete.
@@ -419,8 +432,6 @@ public extension Component {
       completion?()
     }
   }
-
-  public func beforeUpdate() {}
 
   func configure(with layout: Layout) {}
 }
