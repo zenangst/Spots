@@ -8,6 +8,7 @@ class ComponentTests: XCTestCase {
   var cachedSpot: Component!
 
   override func setUp() {
+    Configuration.registerDefault(view: DefaultItemView.self)
     component = Component(model: ComponentModel(layout: Layout(span: 1)))
     cachedSpot = Component(cacheKey: "cached-carousel-component")
     XCTAssertNotNil(cachedSpot.stateCache)
@@ -374,5 +375,49 @@ class ComponentTests: XCTestCase {
       expectation.fulfill()
     }
     waitForExpectations(timeout: 10.0, handler: nil)
+  }
+
+  func testComputedHeightForListComponent() {
+    let items = [
+      Item(title: "foo"),
+      Item(title: "bar"),
+      Item(title: "baz"),
+      Item(title: "foo")
+    ]
+    let model = ComponentModel(kind: .list, items: items)
+    let component = Component(model: model)
+    component.setup(with: .init(width: 100, height: 100))
+
+    XCTAssertEqual(component.computedHeight, Configuration.defaultViewSize.height * CGFloat(items.count))
+  }
+
+  func testComputedHeightForGridComponent() {
+    let layout = Layout(span: 1)
+    let items = [
+      Item(title: "foo"),
+      Item(title: "bar"),
+      Item(title: "baz"),
+      Item(title: "foo")
+    ]
+    let model = ComponentModel(kind: .grid, layout: layout, items: items)
+    let component = Component(model: model)
+    component.setup(with: .init(width: 100, height: 100))
+
+    XCTAssertEqual(component.computedHeight, Configuration.defaultViewSize.height * CGFloat(items.count))
+  }
+
+  func testComputedHeightForCarouselComponent() {
+    let layout = Layout(span: 1)
+    let items = [
+      Item(title: "foo"),
+      Item(title: "bar"),
+      Item(title: "baz"),
+      Item(title: "foo")
+    ]
+    let model = ComponentModel(kind: .carousel, layout: layout, items: items)
+    let component = Component(model: model)
+    component.setup(with: .init(width: 100, height: 100))
+
+    XCTAssertEqual(component.computedHeight, Configuration.defaultViewSize.height)
   }
 }

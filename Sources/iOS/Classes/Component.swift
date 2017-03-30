@@ -248,8 +248,16 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     )
   }
 
+  /// This method is invoked before mutations are performed on a component.
+  /// Not used at the moment.
+  func beforeUpdate() {}
+
   /// This method is invoked after mutations has been performed on a component.
   public func afterUpdate() {
-    setup(with: view.frame.size)
+    if compositeComponents.isEmpty {
+      layout(with: view.frame.size)
+    } else {
+      setup(with: view.frame.size)
+    }
   }
 }

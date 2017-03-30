@@ -385,13 +385,11 @@ public extension Component {
 
       if changes.updates.isEmpty {
         strongSelf.process(changes.updatedChildren, withAnimation: animation) {
-          strongSelf.layout(with: strongSelf.view.bounds.size)
           completion?()
         }
       } else {
         strongSelf.process(changes.updates, withAnimation: animation) {
           strongSelf.process(changes.updatedChildren, withAnimation: animation) {
-            strongSelf.layout(with: strongSelf.view.bounds.size)
             completion?()
           }
         }
