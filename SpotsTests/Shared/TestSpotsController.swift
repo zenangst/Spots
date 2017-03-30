@@ -657,7 +657,7 @@ class SpotsControllerTests: XCTestCase {
     XCTAssertEqual(diff![5], .text)
   }
 
-  func testReloadWithComponentModels() {
+  func testReloadIfNeededWithComponentModels() {
     Configuration.registerDefault(view: DefaultItemView.self)
     Configuration.defaultViewSize = .init(width: 0, height: 44)
     let initialComponentModels = [
@@ -900,6 +900,26 @@ class SpotsControllerTests: XCTestCase {
 
     controller.prepareController()
     controller.reloadIfNeeded(newComponentModels)
+
+    waitForExpectations(timeout: 10.0, handler: nil)
+  }
+
+  func testReloadWithComponentModels() {
+    let controller = SpotsController(components: [])
+    let expectation = self.expectation(description: "Wait reload to complete")
+    let models = [
+      ComponentModel(header: Item(title: "foo")),
+      ComponentModel(items: [Item(title: "bar")]),
+      ComponentModel(footer: Item(title: "baz"))
+    ]
+
+    controller.reload(models) {
+      XCTAssertEqual(controller.components.count, 3)
+      XCTAssertTrue(controller.components[0].model.header! == Item(title: "foo"))
+      XCTAssertTrue(controller.components[1].model.items   == [Item(title: "bar")])
+      XCTAssertTrue(controller.components[2].model.footer! == Item(title: "baz"))
+      expectation.fulfill()
+    }
 
     waitForExpectations(timeout: 10.0, handler: nil)
   }
