@@ -657,7 +657,7 @@ class SpotsControllerTests: XCTestCase {
     XCTAssertEqual(diff![5], .text)
   }
 
-  func testReloadWithComponentModels() {
+  func testReloadIfNeededWithComponentModels() {
     Configuration.registerDefault(view: DefaultItemView.self)
     Configuration.defaultViewSize = .init(width: 0, height: 44)
     let initialComponentModels = [
