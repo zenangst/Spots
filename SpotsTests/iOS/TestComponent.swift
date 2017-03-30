@@ -8,6 +8,7 @@ class ComponentTests: XCTestCase {
   var cachedSpot: Component!
 
   override func setUp() {
+    Configuration.registerDefault(view: DefaultItemView.self)
     component = Component(model: ComponentModel(layout: Layout(span: 1)))
     cachedSpot = Component(cacheKey: "cached-carousel-component")
     XCTAssertNotNil(cachedSpot.stateCache)
@@ -377,7 +378,6 @@ class ComponentTests: XCTestCase {
   }
 
   func testComputedHeightForListComponent() {
-    Configuration.registerDefault(view: DefaultItemView.self)
     let items = [
       Item(title: "foo"),
       Item(title: "bar"),
@@ -392,7 +392,6 @@ class ComponentTests: XCTestCase {
   }
 
   func testComputedHeightForGridComponent() {
-    Configuration.registerDefault(view: DefaultItemView.self)
     let layout = Layout(span: 1)
     let items = [
       Item(title: "foo"),
@@ -408,7 +407,6 @@ class ComponentTests: XCTestCase {
   }
 
   func testComputedHeightForCarouselComponent() {
-    Configuration.registerDefault(view: DefaultItemView.self)
     let layout = Layout(span: 1)
     let items = [
       Item(title: "foo"),
