@@ -421,8 +421,6 @@ public extension Component {
     }
   }
 
-  func beforeUpdate() {}
-
   /// Update height and refresh indexes for the component.
   ///
   /// - parameter completion: A completion closure that will be run when the computations are complete.
