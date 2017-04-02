@@ -36,7 +36,8 @@ extension Delegate: UICollectionViewDelegate {
       return
     }
 
-    component.delegate?.component(component, willDisplay: cell, item: item)
+    let view = (cell as? Wrappable)?.wrappedView ?? cell
+    component.delegate?.component(component, willDisplay: view, item: item)
   }
 
   /// Tells the delegate that the specified cell was removed from the collection view.
@@ -50,7 +51,8 @@ extension Delegate: UICollectionViewDelegate {
       return
     }
 
-    component.delegate?.component(component, didEndDisplaying: cell, item: item)
+    let view = (cell as? Wrappable)?.wrappedView ?? cell
+    component.delegate?.component(component, didEndDisplaying: view, item: item)
   }
 
   /// Asks the delegate whether the item at the specified index path can be focused.
@@ -174,7 +176,8 @@ extension Delegate: UITableViewDelegate {
       return
     }
 
-    component.delegate?.component(component, willDisplay: cell, item: item)
+    let view = (cell as? Wrappable)?.wrappedView ?? cell
+    component.delegate?.component(component, willDisplay: view, item: item)
   }
 
   /// Tells the delegate that the specified cell was removed from the table.
@@ -187,7 +190,8 @@ extension Delegate: UITableViewDelegate {
       return
     }
 
-    component.delegate?.component(component, didEndDisplaying: cell, item: item)
+    let view = (cell as? Wrappable)?.wrappedView ?? cell
+    component.delegate?.component(component, didEndDisplaying: view, item: item)
   }
 
   /// Asks the delegate for a view object to display in the header of the specified section of the table view.

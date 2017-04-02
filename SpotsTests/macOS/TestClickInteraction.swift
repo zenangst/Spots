@@ -15,7 +15,7 @@ class MockTableView: NSTableView {
   }
 }
 
-class MockComponentDelegate: NSObject, ComponentDelegate {
+class MockClickComponentDelegate: NSObject, ComponentDelegate {
 
   var invocation: Int = 0
 
@@ -28,7 +28,7 @@ class TestMouseClick: XCTestCase {
 
   func testMouseClick() {
     let mockTableView = MockTableView()
-    let mockDelegate = MockComponentDelegate()
+    let mockDelegate = MockClickComponentDelegate()
     let interaction = Interaction(mouseClick: .single)
     let model = ComponentModel(kind: .list, interaction: interaction, items: [
       Item(title: "foo")
