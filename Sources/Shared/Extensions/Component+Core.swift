@@ -202,15 +202,6 @@ public extension Component {
     stateCache?.save(dictionary)
   }
 
-  /// Scroll to Item matching predicate
-  ///
-  /// - parameter includeElement: A filter predicate to find a view model
-  ///
-  /// - returns: A calculate CGFloat based on what the includeElement matches
-  public func scrollTo(_ includeElement: (Item) -> Bool) -> CGFloat {
-    return 0.0
-  }
-
   /// Prepares a view model item before being used by the UI component
   ///
   /// - parameter index:        The index of the view model
@@ -419,6 +410,25 @@ public extension Component {
     } else {
       return Configuration.views.defaultIdentifier
     }
+  }
+
+  /// Get offset of item
+  ///
+  /// - Parameter includeElement: A predicate closure to determine the offset of the item.
+  /// - Returns: The offset based of the model data.
+  public func itemOffset(_ includeElement: (Item) -> Bool) -> CGFloat {
+    guard let item = model.items.filter(includeElement).first else {
+      return 0.0
+    }
+
+    let offset: CGFloat
+    if model.interaction.scrollDirection == .horizontal {
+      offset = model.items[0..<item.index].reduce(0, { $0 + $1.size.width })
+    } else {
+      offset = model.items[0..<item.index].reduce(0, { $0 + $1.size.height })
+    }
+
+    return offset
   }
 
   /// Update height and refresh indexes for the component.
