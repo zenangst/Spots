@@ -247,6 +247,29 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     )
   }
 
+  /// Scroll to a specific item based on predicate.
+  ///
+  /// - parameter predicate: A predicate closure to determine which item to scroll to.
+  public func scrollTo(item predicate: ((Item) -> Bool), animated: Bool = true) {
+    guard let index = model.items.index(where: predicate) else {
+      return
+    }
+
+    if let collectionView = collectionView {
+      let scrollPosition: UICollectionViewScrollPosition
+
+      if model.interaction.scrollDirection == .horizontal {
+        scrollPosition = .centeredHorizontally
+      } else {
+        scrollPosition = .centeredVertically
+      }
+
+      collectionView.scrollToItem(at: .init(item: index, section: 0), at: scrollPosition, animated: animated)
+    } else if let tableView = tableView {
+      tableView.scrollToRow(at: .init(row: index, section: 0), at: .middle, animated: animated)
+    }
+  }
+
   /// This method is invoked before mutations are performed on a component.
   /// Not used at the moment.
   func beforeUpdate() {}

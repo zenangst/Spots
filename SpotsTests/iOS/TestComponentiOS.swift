@@ -2,7 +2,7 @@
 import Foundation
 import XCTest
 
-class ComponentTests: XCTestCase {
+class ComponentTestsOniOS: XCTestCase {
 
   var component: Component!
   var cachedSpot: Component!
@@ -419,5 +419,57 @@ class ComponentTests: XCTestCase {
     component.setup(with: .init(width: 100, height: 100))
 
     XCTAssertEqual(component.computedHeight, Configuration.defaultViewSize.height)
+  }
+
+  func testListScrollTo() {
+    let items = [
+      Item(title: "item1"),
+      Item(title: "item2"),
+      Item(title: "item3"),
+      Item(title: "item4"),
+      Item(title: "item5"),
+      Item(title: "item6")
+    ]
+    let model = ComponentModel(kind: .list,items: items)
+    let component = Component(model: model)
+    component.setup(with: CGSize(width: 100, height: 100))
+    component.scrollTo(item: { $0.title == "item5" }, animated: false)
+
+    XCTAssertEqual(component.view.contentOffset.y, 148)
+  }
+
+  func testGridScrollTo() {
+    let items = [
+      Item(title: "item1"),
+      Item(title: "item2"),
+      Item(title: "item3"),
+      Item(title: "item4"),
+      Item(title: "item5"),
+      Item(title: "item6")
+    ]
+    let model = ComponentModel(kind: .grid, items: items)
+    let component = Component(model: model)
+    component.setup(with: CGSize(width: 100, height: 100))
+    component.view.frame.size.height = 100
+    component.scrollTo(item: { $0.title == "item5" }, animated: false)
+
+    XCTAssertEqual(component.view.contentOffset.y, 148)
+  }
+
+  func testCarouselScrollTo() {
+    let items = [
+      Item(title: "item1"),
+      Item(title: "item2"),
+      Item(title: "item3"),
+      Item(title: "item4"),
+      Item(title: "item5"),
+      Item(title: "item6")
+    ]
+    let model = ComponentModel(kind: .carousel, items: items)
+    let component = Component(model: model)
+    component.setup(with: CGSize(width: 100, height: 100))
+    component.scrollTo(item: { $0.title == "item5" })
+
+    XCTAssertEqual(component.view.contentOffset.x, 400)
   }
 }
