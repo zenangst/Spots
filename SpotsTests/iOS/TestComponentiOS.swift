@@ -422,6 +422,7 @@ class ComponentTestsOniOS: XCTestCase {
   }
 
   func testListScrollTo() {
+    Configuration.registerDefault(view: DefaultItemView.self)
     let items = [
       Item(title: "item1"),
       Item(title: "item2"),
@@ -435,10 +436,11 @@ class ComponentTestsOniOS: XCTestCase {
     component.setup(with: CGSize(width: 100, height: 100))
     component.scrollTo(item: { $0.title == "item5" }, animated: false)
 
-    XCTAssertEqual(component.view.contentOffset.y, 148)
+    XCTAssertEqual(component.view.contentOffset.y, 346)
   }
 
   func testGridScrollTo() {
+    Configuration.registerDefault(view: DefaultItemView.self)
     let items = [
       Item(title: "item1"),
       Item(title: "item2"),
@@ -453,7 +455,7 @@ class ComponentTestsOniOS: XCTestCase {
     component.view.frame.size.height = 100
     component.scrollTo(item: { $0.title == "item5" }, animated: false)
 
-    XCTAssertEqual(component.view.contentOffset.y, 148)
+    XCTAssertEqual(component.view.contentOffset.y, 346)
   }
 
   func testCarouselScrollTo() {
