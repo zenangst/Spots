@@ -183,7 +183,7 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
 
     switch model.interaction.scrollDirection {
     case .horizontal:
-      if let pageIndicatorPlacement = model.layout?.pageIndicatorPlacement, let layout = collectionView.collectionViewLayout as? FlowLayout {
+      if let pageIndicatorPlacement = model.layout?.pageIndicatorPlacement {
         switch pageIndicatorPlacement {
         case .below:
           pageControl.frame.origin.y = collectionView.frame.height - pageControl.frame.height
