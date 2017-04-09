@@ -26,15 +26,13 @@ extension Delegate: NSCollectionViewDelegate {
   /// - parameter item: The item being added.
   /// - parameter indexPath: The index path of the item.
   public func collectionView(_ collectionView: NSCollectionView, willDisplay item: NSCollectionViewItem, forRepresentedObjectAt indexPath: IndexPath) {
-    let view = item
-
     guard
       let component = component,
+      let view = (item as? Wrappable)?.wrappedView,
       let item = component.item(at: indexPath)
       else {
         return
     }
-
     component.delegate?.component(component, willDisplay: view, item: item)
   }
 
@@ -44,10 +42,9 @@ extension Delegate: NSCollectionViewDelegate {
   /// - parameter item: The item that was removed.
   /// - parameter indexPath: The index path of the item.
   public func collectionView(_ collectionView: NSCollectionView, didEndDisplaying item: NSCollectionViewItem, forRepresentedObjectAt indexPath: IndexPath) {
-    let view = item
-
     guard
       let component = component,
+      let view = (item as? Wrappable)?.wrappedView,
       let item = component.item(at: indexPath)
       else {
         return
@@ -136,11 +133,12 @@ extension Delegate: NSTableViewDelegate {
     guard
       let component = component,
       let item = component.item(at: row),
-      let view = cell as? View
+      let cell = cell as? View
       else {
         return
     }
 
+    let view = (cell as? Wrappable)?.wrappedView ?? cell
     component.delegate?.component(component, willDisplay: view, item: item)
   }
 

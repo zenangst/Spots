@@ -149,7 +149,7 @@ public extension SpotsProtocol {
   /// - parameter index:          The index of the component that you want to scroll
   /// - parameter includeElement: A filter predicate to find a view model
   public func scrollTo(componentIndex index: Int = 0, includeElement: (Item) -> Bool) {
-    guard let itemY = component(at: index)?.scrollTo(includeElement) else {
+    guard let itemY = component(at: index)?.itemOffset(includeElement) else {
       return
     }
 

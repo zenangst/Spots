@@ -376,6 +376,8 @@ import Tailor
     }
   }
 
+  func beforeUpdate() {}
+
   /// This method is invoked after mutations has been performed on a component.
   public func afterUpdate() {
     if let superview = view.superview {

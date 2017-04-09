@@ -30,7 +30,7 @@
 		BD24030C1E4B981A005BAA19 /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD24030B1E4B981A005BAA19 /* Component.swift */; };
 		BD24030D1E4B981A005BAA19 /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD24030B1E4B981A005BAA19 /* Component.swift */; };
 		BD2403111E4B9A02005BAA19 /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2403101E4B9A02005BAA19 /* Component.swift */; };
-		BD4295551D81D39700E07E1C /* TestComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4295541D81D39700E07E1C /* TestComponent.swift */; };
+		BD4295551D81D39700E07E1C /* TestComponentiOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4295541D81D39700E07E1C /* TestComponentiOS.swift */; };
 		BD42CA851E4C9B2600A86E3B /* TestSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD42CA841E4C9B2600A86E3B /* TestSpot.swift */; };
 		BD42CA861E4C9B2600A86E3B /* TestSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD42CA841E4C9B2600A86E3B /* TestSpot.swift */; };
 		BD45D9871E30906300C2D6B2 /* TestLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD45D9861E30906300C2D6B2 /* TestLayout.swift */; };
@@ -44,8 +44,8 @@
 		BD45D9971E30A8A000C2D6B2 /* TestInset.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD45D9941E30A8A000C2D6B2 /* TestInset.swift */; };
 		BD5CF7371E8B7C57006CC281 /* ComponentResize.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5CF7361E8B7C57006CC281 /* ComponentResize.swift */; };
 		BD5FC7DF1E857AD900D03038 /* FlippedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5FC7DE1E857AD900D03038 /* FlippedView.swift */; };
-		BD677E851DC616B2006D1654 /* TestCoreComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD677E841DC616B2006D1654 /* TestCoreComponent.swift */; };
-		BD677E871DC616B2006D1654 /* TestCoreComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD677E841DC616B2006D1654 /* TestCoreComponent.swift */; };
+		BD677E851DC616B2006D1654 /* TestComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD677E841DC616B2006D1654 /* TestComponent.swift */; };
+		BD677E871DC616B2006D1654 /* TestComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD677E841DC616B2006D1654 /* TestComponent.swift */; };
 		BD677E891DC61EFC006D1654 /* TestStateCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD677E881DC61EFC006D1654 /* TestStateCache.swift */; };
 		BD677E8A1DC61EFC006D1654 /* TestStateCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD677E881DC61EFC006D1654 /* TestStateCache.swift */; };
 		BD677E8B1DC61EFC006D1654 /* TestStateCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD677E881DC61EFC006D1654 /* TestStateCache.swift */; };
@@ -67,7 +67,10 @@
 		BD77D1FC1E85382D0075A3FC /* ComponentModel+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD77D1FB1E85382D0075A3FC /* ComponentModel+Equatable.swift */; };
 		BD77D1FD1E85382D0075A3FC /* ComponentModel+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD77D1FB1E85382D0075A3FC /* ComponentModel+Equatable.swift */; };
 		BD77D1FE1E85382D0075A3FC /* ComponentModel+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD77D1FB1E85382D0075A3FC /* ComponentModel+Equatable.swift */; };
-		BD9AB9F61E44AD9700085677 /* TestCoreComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD677E841DC616B2006D1654 /* TestCoreComponent.swift */; };
+		BD91F3F61E90F74500F22943 /* TestComponentDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD91F3F51E90F74500F22943 /* TestComponentDelegate.swift */; };
+		BD91F3F71E90F74500F22943 /* TestComponentDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD91F3F51E90F74500F22943 /* TestComponentDelegate.swift */; };
+		BD91F3F81E90F74500F22943 /* TestComponentDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD91F3F51E90F74500F22943 /* TestComponentDelegate.swift */; };
+		BD9AB9F61E44AD9700085677 /* TestComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD677E841DC616B2006D1654 /* TestComponent.swift */; };
 		BD9ECEB71E6EC6B4003E4388 /* Component+macOS+Carousel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9ECEB61E6EC6B4003E4388 /* Component+macOS+Carousel.swift */; };
 		BD9ECEB81E6EC6BC003E4388 /* Component+macOS+List.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9ECEB41E6EC6A7003E4388 /* Component+macOS+List.swift */; };
 		BD9ECEBA1E6EC6D1003E4388 /* Component+macOS+Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9ECEB91E6EC6D1003E4388 /* Component+macOS+Grid.swift */; };
@@ -388,7 +391,7 @@
 		BD21C2511E4358B900FE2B26 /* TestGridableLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestGridableLayout.swift; sourceTree = "<group>"; };
 		BD24030B1E4B981A005BAA19 /* Component.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
 		BD2403101E4B9A02005BAA19 /* Component.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
-		BD4295541D81D39700E07E1C /* TestComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestComponent.swift; sourceTree = "<group>"; };
+		BD4295541D81D39700E07E1C /* TestComponentiOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestComponentiOS.swift; sourceTree = "<group>"; };
 		BD42CA841E4C9B2600A86E3B /* TestSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSpot.swift; sourceTree = "<group>"; };
 		BD45D9861E30906300C2D6B2 /* TestLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestLayout.swift; sourceTree = "<group>"; };
 		BD45D98A1E30909700C2D6B2 /* TestLayoutExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestLayoutExtensions.swift; sourceTree = "<group>"; };
@@ -398,7 +401,7 @@
 		BD45D9991E30B0F700C2D6B2 /* Spots.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; path = Spots.podspec; sourceTree = "<group>"; };
 		BD5CF7361E8B7C57006CC281 /* ComponentResize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentResize.swift; sourceTree = "<group>"; };
 		BD5FC7DE1E857AD900D03038 /* FlippedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlippedView.swift; sourceTree = "<group>"; };
-		BD677E841DC616B2006D1654 /* TestCoreComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestCoreComponent.swift; sourceTree = "<group>"; };
+		BD677E841DC616B2006D1654 /* TestComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestComponent.swift; sourceTree = "<group>"; };
 		BD677E881DC61EFC006D1654 /* TestStateCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestStateCache.swift; sourceTree = "<group>"; };
 		BD677E8C1DC62575006D1654 /* TestUIViewControllerExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestUIViewControllerExtensions.swift; sourceTree = "<group>"; };
 		BD677E8E1DC65D63006D1654 /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Helpers.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -408,6 +411,7 @@
 		BD77D1F31E8537E80075A3FC /* ComponentModelDiff.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentModelDiff.swift; sourceTree = "<group>"; };
 		BD77D1F71E8538080075A3FC /* ComponentModelKind.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentModelKind.swift; sourceTree = "<group>"; };
 		BD77D1FB1E85382D0075A3FC /* ComponentModel+Equatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ComponentModel+Equatable.swift"; sourceTree = "<group>"; };
+		BD91F3F51E90F74500F22943 /* TestComponentDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestComponentDelegate.swift; sourceTree = "<group>"; };
 		BD9ECEB41E6EC6A7003E4388 /* Component+macOS+List.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Component+macOS+List.swift"; sourceTree = "<group>"; };
 		BD9ECEB61E6EC6B4003E4388 /* Component+macOS+Carousel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Component+macOS+Carousel.swift"; sourceTree = "<group>"; };
 		BD9ECEB91E6EC6D1003E4388 /* Component+macOS+Grid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Component+macOS+Grid.swift"; sourceTree = "<group>"; };
@@ -997,7 +1001,7 @@
 			children = (
 				BDDF2CCB1DC7C23500B766BA /* TestAnimations.swift */,
 				BDD9ABCD1DB53475005D8C04 /* TestCarouselComposite.swift */,
-				BD4295541D81D39700E07E1C /* TestComponent.swift */,
+				BD4295541D81D39700E07E1C /* TestComponentiOS.swift */,
 				BDEFF54E1DD1C85300FC0537 /* TestDataSource.swift */,
 				BDEFF5511DD1DA8000FC0537 /* TestDelegate.swift */,
 				BDD9ABCA1DB533CE005D8C04 /* TestGridComposite.swift */,
@@ -1019,7 +1023,7 @@
 				BD677E8E1DC65D63006D1654 /* Helpers.swift */,
 				D584782B1C43FF34006EBA49 /* TestComponentModel.swift */,
 				BD6FBEEF1E12B5F000AA58BD /* TestComposition.swift */,
-				BD677E841DC616B2006D1654 /* TestCoreComponent.swift */,
+				BD677E841DC616B2006D1654 /* TestComponent.swift */,
 				BD45D9941E30A8A000C2D6B2 /* TestInset.swift */,
 				BDEA327E1E87A6FF0044B056 /* TestInteraction.swift */,
 				BDB8D5921E4DFADC00220BC3 /* TestItem.swift */,
@@ -1029,6 +1033,7 @@
 				BD677E881DC61EFC006D1654 /* TestStateCache.swift */,
 				BDCA3CF21E8295EB00A98A76 /* TestUserInterface.swift */,
 				BD10D5211D79533C00DF8E9B /* TestViewModelExtensions.swift */,
+				BD91F3F51E90F74500F22943 /* TestComponentDelegate.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -1572,7 +1577,7 @@
 				D5D282741E547742004BF251 /* TestListWrapper.swift in Sources */,
 				BD21C2551E4358CE00FE2B26 /* TestGridableLayout.swift in Sources */,
 				BDEFF5531DD1DA8000FC0537 /* TestDelegate.swift in Sources */,
-				BD677E871DC616B2006D1654 /* TestCoreComponent.swift in Sources */,
+				BD677E871DC616B2006D1654 /* TestComponent.swift in Sources */,
 				BDDF2CCD1DC7C23500B766BA /* TestAnimations.swift in Sources */,
 				BD01BD131DAEA523009C10FF /* TestParser.swift in Sources */,
 				BD01BD1A1DAEA7FD009C10FF /* TestListComposite.swift in Sources */,
@@ -1580,6 +1585,7 @@
 				BDCA3CF51E8295EB00A98A76 /* TestUserInterface.swift in Sources */,
 				BD677E911DC65D63006D1654 /* Helpers.swift in Sources */,
 				BDD9ABCF1DB53475005D8C04 /* TestCarouselComposite.swift in Sources */,
+				BD91F3F81E90F74500F22943 /* TestComponentDelegate.swift in Sources */,
 				BD6FBEF21E12B5F000AA58BD /* TestComposition.swift in Sources */,
 				BDD9ABCC1DB533CE005D8C04 /* TestGridComposite.swift in Sources */,
 				BD45D9971E30A8A000C2D6B2 /* TestInset.swift in Sources */,
@@ -1696,13 +1702,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				D5D282761E547D1D004BF251 /* TestGridWrapper.swift in Sources */,
-				BD4295551D81D39700E07E1C /* TestComponent.swift in Sources */,
+				BD4295551D81D39700E07E1C /* TestComponentiOS.swift in Sources */,
 				D58478571C43FFFD006EBA49 /* TestComponentModel.swift in Sources */,
 				BD45D98B1E30909700C2D6B2 /* TestLayoutExtensions.swift in Sources */,
 				BDDF2CCC1DC7C23500B766BA /* TestAnimations.swift in Sources */,
 				BDEED2E81D8446400030B475 /* TestSpotsScrollView.swift in Sources */,
 				BDEFF54F1DD1C85300FC0537 /* TestDataSource.swift in Sources */,
-				BD677E851DC616B2006D1654 /* TestCoreComponent.swift in Sources */,
+				BD677E851DC616B2006D1654 /* TestComponent.swift in Sources */,
 				BD45D9871E30906300C2D6B2 /* TestLayout.swift in Sources */,
 				BDB8D5931E4DFADC00220BC3 /* TestItem.swift in Sources */,
 				BD6FBEF01E12B5F000AA58BD /* TestComposition.swift in Sources */,
@@ -1711,6 +1717,7 @@
 				BD01BD111DAEA522009C10FF /* TestParser.swift in Sources */,
 				BD01BD181DAEA7FC009C10FF /* TestListComposite.swift in Sources */,
 				BD677E8D1DC62575006D1654 /* TestUIViewControllerExtensions.swift in Sources */,
+				BD91F3F61E90F74500F22943 /* TestComponentDelegate.swift in Sources */,
 				BD42CA851E4C9B2600A86E3B /* TestSpot.swift in Sources */,
 				D5D282731E54773C004BF251 /* TestListWrapper.swift in Sources */,
 				BD10D5251D7955AB00DF8E9B /* TestViewModelExtensions.swift in Sources */,
@@ -1817,11 +1824,12 @@
 			files = (
 				D58478E71C440645006EBA49 /* TestComponentModel.swift in Sources */,
 				BD677E901DC65D63006D1654 /* Helpers.swift in Sources */,
+				BD91F3F71E90F74500F22943 /* TestComponentDelegate.swift in Sources */,
 				BDCA3CF41E8295EB00A98A76 /* TestUserInterface.swift in Sources */,
 				BD10D5261D7955AC00DF8E9B /* TestViewModelExtensions.swift in Sources */,
 				BDEA32801E87A6FF0044B056 /* TestInteraction.swift in Sources */,
 				BD165A391E6EAD750023AF82 /* HelperViews.swift in Sources */,
-				BD9AB9F61E44AD9700085677 /* TestCoreComponent.swift in Sources */,
+				BD9AB9F61E44AD9700085677 /* TestComponent.swift in Sources */,
 				BDCFCD421DCA7EFF0047E84C /* TestSpotsController.swift in Sources */,
 				BD165A371E6EAAA60023AF82 /* TestSpot.swift in Sources */,
 				BDFC474F1E747B2B008700BF /* TestGridWrapper.swift in Sources */,

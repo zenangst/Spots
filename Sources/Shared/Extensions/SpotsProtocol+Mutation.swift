@@ -180,13 +180,7 @@ extension SpotsProtocol {
     }
 
     let tempSpot = Component(model: newComponentModels[index])
-    tempSpot.view.frame = component.view.frame
-    tempSpot.setup(with: tempSpot.view.frame.size)
-    tempSpot.layout(with: tempSpot.view.frame.size)
-    tempSpot.view.frame.size.height = tempSpot.computedHeight
-    tempSpot.view.layoutIfNeeded()
-    tempSpot.prepareItems()
-
+    tempSpot.setup(with: component.view.frame.size)
     tempSpot.model.size = CGSize(
       width: view.frame.width,
       height: ceil(tempSpot.view.frame.height))
@@ -497,6 +491,44 @@ extension SpotsProtocol {
       }
 
       strongSelf.scrollView.layoutSubviews()
+    }
+  }
+
+  /// Reload with component models
+  ///
+  ///- parameter component models: A collection of component models.
+  ///- parameter animated: An animation closure that can be used to perform custom animations when reloading
+  ///- parameter completion: A closure that will be run after reload has been performed on all components
+  public func reload(_ models: [ComponentModel], animated: ((_ view: View) -> Void)? = nil, completion: Completion = nil) {
+    Dispatch.main { [weak self] in
+      guard let strongSelf = self else {
+        completion?()
+        return
+      }
+
+      strongSelf.components = Parser.parse(models)
+      strongSelf.cache()
+
+      if strongSelf.scrollView.superview == nil {
+        strongSelf.view.addSubview(strongSelf.scrollView)
+      }
+
+      let previousContentOffset = strongSelf.scrollView.contentOffset
+
+      strongSelf.reloadSpotsScrollView()
+      strongSelf.setupComponents(animated: animated)
+      strongSelf.components.forEach { component in
+        component.afterUpdate()
+      }
+
+      completion?()
+
+      if let controller = strongSelf as? SpotsController {
+        SpotsController.componentsDidReloadComponentModels?(controller)
+      }
+
+      strongSelf.scrollView.layoutSubviews()
+      strongSelf.scrollView.contentOffset = previousContentOffset
     }
   }
 

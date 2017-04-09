@@ -166,17 +166,6 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     switch model.interaction.scrollDirection {
     case .horizontal:
       setupHorizontalCollectionView(collectionView, with: size)
-
-      if let pageIndicatorPlacement = model.layout?.pageIndicatorPlacement, let layout = collectionView.collectionViewLayout as? FlowLayout {
-        switch pageIndicatorPlacement {
-        case .below:
-          layout.sectionInset.bottom += pageControl.frame.height
-          pageControl.frame.origin.y = collectionView.frame.height
-        case .overlay:
-          let verticalAdjustment = CGFloat(2)
-          pageControl.frame.origin.y = collectionView.frame.height - pageControl.frame.height - verticalAdjustment
-        }
-      }
     case .vertical:
       setupVerticalCollectionView(collectionView, with: size)
     }
@@ -194,6 +183,16 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
 
     switch model.interaction.scrollDirection {
     case .horizontal:
+      if let pageIndicatorPlacement = model.layout?.pageIndicatorPlacement {
+        switch pageIndicatorPlacement {
+        case .below:
+          pageControl.frame.origin.y = collectionView.frame.height - pageControl.frame.height
+        case .overlay:
+          let verticalAdjustment = CGFloat(2)
+          pageControl.frame.origin.y = collectionView.frame.height - pageControl.frame.height - verticalAdjustment
+        }
+      }
+
       layoutHorizontalCollectionView(collectionView, with: size)
     case .vertical:
       layoutVerticalCollectionView(collectionView, with: size)
@@ -248,8 +247,39 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     )
   }
 
+  /// Scroll to a specific item based on predicate.
+  ///
+  /// - parameter predicate: A predicate closure to determine which item to scroll to.
+  public func scrollTo(item predicate: ((Item) -> Bool), animated: Bool = true) {
+    guard let index = model.items.index(where: predicate) else {
+      return
+    }
+
+    if let collectionView = collectionView {
+      let scrollPosition: UICollectionViewScrollPosition
+
+      if model.interaction.scrollDirection == .horizontal {
+        scrollPosition = .centeredHorizontally
+      } else {
+        scrollPosition = .centeredVertically
+      }
+
+      collectionView.scrollToItem(at: .init(item: index, section: 0), at: scrollPosition, animated: animated)
+    } else if let tableView = tableView {
+      tableView.scrollToRow(at: .init(row: index, section: 0), at: .middle, animated: animated)
+    }
+  }
+
+  /// This method is invoked before mutations are performed on a component.
+  /// Not used at the moment.
+  func beforeUpdate() {}
+
   /// This method is invoked after mutations has been performed on a component.
   public func afterUpdate() {
-    setup(with: view.frame.size)
+    if compositeComponents.isEmpty {
+      layout(with: view.frame.size)
+    } else {
+      setup(with: view.frame.size)
+    }
   }
 }

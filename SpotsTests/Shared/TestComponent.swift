@@ -2,7 +2,7 @@
 import Foundation
 import XCTest
 
-class CoreComponentTests: XCTestCase {
+class ComponentTests: XCTestCase {
 
   func testAppendingMultipleItemsToComponent() {
     let listComponent = Component(model: ComponentModel(kind: .list, layout: Layout(span: 1)))
@@ -126,5 +126,47 @@ class CoreComponentTests: XCTestCase {
 
     // This should be invoked twice, once for each view.
     XCTAssertEqual(invokeCount, 2)
+  }
+
+  func testListItemOffset() {
+    let items = [
+      Item(title: "foo"),
+      Item(title: "bar"),
+      Item(title: "baz")
+    ]
+    let model = ComponentModel(kind: .list,items: items)
+    let component = Component(model: model)
+    component.setup(with: CGSize(width: 100, height: 100))
+
+    XCTAssertEqual(component.itemOffset({ $0.title == "bar" }), PlatformDefaults.defaultHeight)
+    XCTAssertEqual(component.itemOffset({ $0.title == "bal" }), 0)
+  }
+
+  func testGridItemOffset() {
+    let items = [
+      Item(title: "foo"),
+      Item(title: "bar"),
+      Item(title: "baz")
+    ]
+    let model = ComponentModel(kind: .grid, items: items)
+    let component = Component(model: model)
+    component.setup(with: CGSize(width: 100, height: 100))
+
+    XCTAssertEqual(component.itemOffset({ $0.title == "bar" }), PlatformDefaults.defaultHeight)
+    XCTAssertEqual(component.itemOffset({ $0.title == "bal" }), 0)
+  }
+
+  func testCarouselItemOffset() {
+    let items = [
+      Item(title: "foo"),
+      Item(title: "bar"),
+      Item(title: "baz")
+    ]
+    let model = ComponentModel(kind: .carousel, items: items)
+    let component = Component(model: model)
+    component.setup(with: CGSize(width: 100, height: 100))
+
+    XCTAssertEqual(component.itemOffset({ $0.title == "bar" }), 100)
+    XCTAssertEqual(component.itemOffset({ $0.title == "bal" }), 0)
   }
 }

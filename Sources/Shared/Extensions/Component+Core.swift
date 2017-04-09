@@ -50,7 +50,18 @@ public extension Component {
         height = collectionViewLayout.collectionViewContentSize.height
       }
       #else
-        height = collectionView.collectionViewLayout.collectionViewContentSize.height
+        if let collectionViewLayout = collectionView.collectionViewLayout as? FlowLayout {
+          switch collectionViewLayout.scrollDirection {
+          case .horizontal:
+            if let firstItem = item(at: 0), firstItem.size.height > collectionViewLayout.collectionViewContentSize.height {
+              height = firstItem.size.height + collectionViewLayout.sectionInset.top + collectionViewLayout.sectionInset.bottom
+            } else {
+              height = collectionViewLayout.collectionViewContentSize.height
+            }
+          case .vertical:
+            height = collectionView.collectionViewLayout.collectionViewContentSize.height
+          }
+        }
       #endif
     }
 
@@ -189,15 +200,6 @@ public extension Component {
   /// Caches the current state of the component
   public func cache() {
     stateCache?.save(dictionary)
-  }
-
-  /// Scroll to Item matching predicate
-  ///
-  /// - parameter includeElement: A filter predicate to find a view model
-  ///
-  /// - returns: A calculate CGFloat based on what the includeElement matches
-  public func scrollTo(_ includeElement: (Item) -> Bool) -> CGFloat {
-    return 0.0
   }
 
   /// Prepares a view model item before being used by the UI component
@@ -416,6 +418,25 @@ public extension Component {
     }
   }
 
+  /// Get offset of item
+  ///
+  /// - Parameter includeElement: A predicate closure to determine the offset of the item.
+  /// - Returns: The offset based of the model data.
+  public func itemOffset(_ includeElement: (Item) -> Bool) -> CGFloat {
+    guard let item = model.items.filter(includeElement).first else {
+      return 0.0
+    }
+
+    let offset: CGFloat
+    if model.interaction.scrollDirection == .horizontal {
+      offset = model.items[0..<item.index].reduce(0, { $0 + $1.size.width })
+    } else {
+      offset = model.items[0..<item.index].reduce(0, { $0 + $1.size.height })
+    }
+
+    return offset
+  }
+
   /// Update height and refresh indexes for the component.
   ///
   /// - parameter completion: A completion closure that will be run when the computations are complete.
@@ -425,8 +446,6 @@ public extension Component {
       completion?()
     }
   }
-
-  public func beforeUpdate() {}
 
   func configure(with layout: Layout) {}
 }
