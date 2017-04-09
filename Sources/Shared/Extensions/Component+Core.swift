@@ -260,8 +260,6 @@ public extension Component {
         composite.contentView.frame.size = view.frame.size
         prepare(composable: composite, item: &item, clean: clean)
       } else {
-
-
         if let (_, resolvedView) = Configuration.views.make(kind, parentFrame: self.view.frame) {
           prepare(kind: kind, view: resolvedView as Any, item: &item, clean: clean)
         } else {
