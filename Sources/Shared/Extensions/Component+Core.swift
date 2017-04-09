@@ -333,8 +333,6 @@ public extension Component {
 
     size.width = round(size.width)
 
-    let width = size.width
-
     components.forEach { component in
       let compositeSpot = CompositeComponent(component: component,
                                              parentComponent: self,
