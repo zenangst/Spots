@@ -253,7 +253,7 @@ import Tailor
 
     collectionView.frame.size = size
 
-    prepareItems(clean: false)
+    prepareItems(clean: true)
 
     collectionView.backgroundColors = [NSColor.clear]
     collectionView.isSelectable = true
@@ -369,10 +369,14 @@ import Tailor
   }
 
   public func didResize(size: CGSize, type: ComponentResize) {
-    if let tableView = tableView {
-      resizeTableView(tableView, with: size, type: type)
-    } else if let collectionView = collectionView {
-      resizeCollectionView(collectionView, with: size, type: type)
+    if !compositeComponents.isEmpty && type == .end {
+      reload(nil)
+    } else {
+      if let tableView = tableView {
+        resizeTableView(tableView, with: size, type: type)
+      } else if let collectionView = collectionView {
+        resizeCollectionView(collectionView, with: size, type: type)
+      }
     }
   }
 

@@ -110,8 +110,14 @@ extension Delegate: NSTableViewDelegate {
     switch resolvedView {
     case let view as Composable:
       let components = component.compositeComponents.filter { $0.itemIndex == row }
-      view.contentView.frame.size.width = tableView.frame.size.width
-      view.contentView.frame.size.height = component.computedHeight
+
+      if let itemSize = component.item(at: 0)?.size {
+        view.contentView.frame.size = itemSize
+      } else {
+        view.contentView.frame.size.width = tableView.frame.size.width
+        view.contentView.frame.size.height = component.computedHeight
+      }
+
       view.configure(&component.model.items[row], compositeComponents: components)
     case let view as NSTableRowView:
       (view as? ItemConfigurable)?.configure(&component.model.items[row])

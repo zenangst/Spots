@@ -44,8 +44,14 @@ extension DataSource: NSCollectionViewDataSource {
       }
     case let item as Composable:
       let components = component.compositeComponents.filter { $0.itemIndex == indexPath.item }
-      item.contentView.frame.size.width = collectionView.frame.size.width
-      item.contentView.frame.size.height = component.computedHeight
+
+      if let itemSize = component.item(at: 0)?.size {
+        item.contentView.frame.size = itemSize
+      } else {
+        item.contentView.frame.size.width = collectionView.frame.size.width
+        item.contentView.frame.size.height = component.computedHeight
+      }
+
       item.configure(&component.model.items[indexPath.item], compositeComponents: components)
     case let item as ItemConfigurable:
       item.configure(&component.model.items[indexPath.item])

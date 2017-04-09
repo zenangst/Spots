@@ -62,6 +62,9 @@ public extension Component {
             height = collectionView.collectionViewLayout.collectionViewContentSize.height
           }
         }
+
+        height += headerView?.frame.size.height ?? 0
+        height += footerView?.frame.size.height ?? 0
       #endif
     }
 
@@ -337,8 +340,8 @@ public extension Component {
       let compositeSpot = CompositeComponent(component: component,
                                              parentComponent: self,
                                              itemIndex: item.index)
+
       compositeSpot.component.setup(with: size)
-      compositeSpot.component.view.layoutIfNeeded()
       compositeSpot.component.view.frame.origin.y = height
 
       #if !os(OSX)
@@ -350,7 +353,9 @@ public extension Component {
 
       height += compositeSpot.component.view.frame.size.height
 
-      compositeComponents.append(compositeSpot)
+      if clean {
+        compositeComponents.append(compositeSpot)
+      }
     }
 
     item.size.height = height

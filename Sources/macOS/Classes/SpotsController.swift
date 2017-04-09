@@ -178,7 +178,7 @@ open class SpotsController: NSViewController, SpotsProtocol {
     super.viewWillAppear()
 
     setupComponents()
-    scrollView.layoutSubviews()
+    scrollView.layoutViews()
   }
 
   open override func viewDidAppear() {
@@ -187,6 +187,8 @@ open class SpotsController: NSViewController, SpotsProtocol {
     for component in components {
       component.layout(with: scrollView.frame.size)
     }
+
+    scrollView.layoutViews()
   }
 
   public func reloadSpots(components: [Component], closure: (() -> Void)?) {
@@ -230,6 +232,12 @@ open class SpotsController: NSViewController, SpotsProtocol {
         component.deselect()
       }
     }
+  }
+
+  open override func viewDidLayout() {
+    super.viewDidLayout()
+
+    scrollView.layoutViews()
   }
 
   public func windowDidResize(_ notification: Notification) {

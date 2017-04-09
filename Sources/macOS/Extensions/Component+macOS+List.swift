@@ -11,7 +11,7 @@ extension Component {
 
     tableView.frame.size = size
 
-    prepareItems(clean: false)
+    prepareItems(clean: true)
 
     tableView.backgroundColor = NSColor.clear
     tableView.allowsColumnReordering = false
@@ -26,7 +26,6 @@ extension Component {
     tableView.target = self
     tableView.action = #selector(self.singleMouseClick(_:))
     tableView.doubleAction = #selector(self.doubleMouseClick(_:))
-    tableView.sizeToFit()
 
     guard tableView.tableColumns.isEmpty else {
       return
@@ -41,10 +40,11 @@ extension Component {
   }
 
   func layoutTableView(_ tableView: TableView, with size: CGSize) {
-    scrollView.frame.size.width = size.width
+    let size = tableView.sizeThatFits(size)
+    scrollView.frame.size.width = round(size.width)
     tableView.frame.origin.y = headerView?.frame.size.height ?? 0.0
-    tableView.sizeToFit()
-    tableView.frame.size.width = size.width
+    tableView.frame.size.width = round(size.width)
+    tableView.frame.size.height = size.height
 
     if let layout = model.layout {
       tableView.frame.origin.y += CGFloat(layout.inset.bottom)
@@ -59,12 +59,12 @@ extension Component {
   func resizeTableView(_ tableView: TableView, with size: CGSize, type: ComponentResize) {
     switch type {
     case .live:
-        layout(with: size)
-        tableView.beginUpdates()
-        for (index, _) in model.items.enumerated() {
-          configureItem(at: index, usesViewSize: false)
-        }
-        tableView.endUpdates()
+      layout(with: size)
+      tableView.beginUpdates()
+      for (index, _) in model.items.enumerated() {
+        configureItem(at: index, usesViewSize: false)
+      }
+      tableView.endUpdates()
     case .end:
       layoutTableView(tableView, with: size)
     }
