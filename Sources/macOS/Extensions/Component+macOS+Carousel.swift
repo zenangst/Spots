@@ -22,9 +22,6 @@ extension Component {
       return
     }
 
-    collectionViewLayout.prepare()
-    collectionViewLayout.invalidateLayout()
-
     if let collectionViewContentSize = collectionView.collectionViewLayout?.collectionViewContentSize {
       var newCollectionViewHeight: CGFloat = 0.0
 
@@ -44,15 +41,22 @@ extension Component {
 
       documentView.frame.size = collectionView.frame.size
 
-      if let layout = model.layout {
-        documentView.frame.size.width += CGFloat(layout.inset.right)
-      }
-
       documentView.frame.size.height = collectionView.frame.size.height + headerHeight + footerHeight
+
+      if let layout = model.layout {
+        collectionView.frame.size.height += CGFloat(layout.inset.top + layout.inset.bottom)
+        documentView.frame.size.height += CGFloat(layout.inset.top + layout.inset.bottom)
+        documentView.frame.size.width += CGFloat(layout.inset.right)
+
+        collectionViewLayout.invalidateLayout()
+      }
 
       scrollView.frame.size.width = size.width
       scrollView.frame.size.height = documentView.frame.size.height
       scrollView.scrollerInsets.bottom = footerHeight
+
+      collectionViewLayout.prepare()
+      collectionViewLayout.invalidateLayout()
     }
   }
 }
