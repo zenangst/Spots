@@ -29,11 +29,14 @@ public class GridableLayout: FlowLayout {
 
       contentSize.width = component.model.items.reduce(0, { $0 + floor($1.size.width) })
       contentSize.width += minimumInteritemSpacing * CGFloat(component.model.items.count - 1)
-
       contentSize.height = firstItem.size.height
     case .vertical:
       contentSize.width = component.view.frame.width
       contentSize.height = super.collectionViewContentSize.height
+    }
+
+    if let componentLayout = component.model.layout {
+      contentSize.height += CGFloat(componentLayout.inset.top + componentLayout.inset.bottom)
     }
   }
 
