@@ -285,6 +285,10 @@ import Tailor
     } else {
       layoutVerticalCollectionView(collectionView, with: size)
     }
+
+    if !compositeComponents.isEmpty {
+      prepareItems(clean: false)
+    }
   }
 
   /// Register a default item as fallback, only if it is not already defined.
