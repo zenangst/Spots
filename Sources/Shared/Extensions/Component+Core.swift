@@ -7,6 +7,11 @@
 // MARK: - Component extension
 public extension Component {
 
+  /// Return a dictionary representation of Component object
+  public var dictionary: [String : Any] {
+    return model.dictionary
+  }
+
   /// A computed CGFloat of the total height of all items inside of a component
   public var computedHeight: CGFloat {
     guard model.layout?.dynamicHeight == true else {

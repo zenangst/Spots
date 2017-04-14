@@ -229,8 +229,9 @@ extension SpotsController {
 
 class TestView: View, ItemConfigurable {
   var preferredViewSize: CGSize = CGSize(width: 50, height: 50)
+  var item: Item?
 
   func configure(_ item: inout Item) {
-
+    self.item = item
   }
 }

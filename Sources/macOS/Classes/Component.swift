@@ -23,6 +23,8 @@ import Tailor
   /// The component model, it contains all the information for configuring `Component`
   /// interaction, behaviour and look-and-feel. See `ComponentModel` for more information.
   public var model: ComponentModel
+  /// An engine that handles mutation of the component model data source.
+  public var manager: ComponentManager = ComponentManager()
   /// A collection of composite components, dynamically constructed and mutated based of
   /// the contents of the `.model`.
   public var compositeComponents: [CompositeComponent] = []
