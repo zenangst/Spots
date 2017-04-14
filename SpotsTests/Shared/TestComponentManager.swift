@@ -13,7 +13,7 @@ class TestComponentEngine: XCTestCase {
       Item(title: "bar"),
       Item(title: "baz")
     ]
-    let model = ComponentModel(kind: .grid, items: items)
+    let model = ComponentModel(kind: .list, items: items)
     component = Component(model: model)
     component.setup(with: .init(width: 1000, height: 1000))
   }
@@ -219,7 +219,7 @@ class TestComponentEngine: XCTestCase {
       Item(title: "baz")
     ]
 
-    component = Component(model: ComponentModel(kind: .grid, items: items))
+    component = Component(model: ComponentModel(kind: .list, items: items))
     component.setup(with: .init(width: 1000, height: 1000))
 
     view = component.ui(at: 0)
@@ -286,7 +286,7 @@ class TestComponentEngine: XCTestCase {
       childItem
     ]
 
-    component = Component(model: ComponentModel(kind: .grid, items: items))
+    component = Component(model: ComponentModel(kind: .list, items: items))
     component.setup(with: .init(width: 1000, height: 1000))
 
     let newItems = [
