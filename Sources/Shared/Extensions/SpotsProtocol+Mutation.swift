@@ -36,17 +36,6 @@ extension SpotsProtocol where Self : SpotsController {
                            completion: completion)
   }
 
-  func process(changes: [ComponentModelDiff],
-               components newComponentModels: [ComponentModel],
-               withAnimation animation: Animation = .automatic,
-               completion: Completion = nil) {
-    manager.process(changes: changes,
-                    controller: self,
-                    components: newComponentModels,
-                    withAnimation: animation,
-                    completion: completion)
-  }
-
   ///Reload if needed using JSON
   ///
   /// - parameter json: A JSON dictionary that gets parsed into UI elements
