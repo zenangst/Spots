@@ -19,6 +19,9 @@ open class SpotsController: NSViewController, SpotsProtocol {
     }
   }
 
+  /// A manager that handles the updating logic for the current controller.
+  public var manager: SpotsControllerManager = SpotsControllerManager()
+
   public var contentView: View {
     return view
   }

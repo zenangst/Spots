@@ -66,6 +66,9 @@
 		BD77D1FC1E85382D0075A3FC /* ComponentModel+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD77D1FB1E85382D0075A3FC /* ComponentModel+Equatable.swift */; };
 		BD77D1FD1E85382D0075A3FC /* ComponentModel+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD77D1FB1E85382D0075A3FC /* ComponentModel+Equatable.swift */; };
 		BD77D1FE1E85382D0075A3FC /* ComponentModel+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD77D1FB1E85382D0075A3FC /* ComponentModel+Equatable.swift */; };
+		BD798EF41EA28F200069EFB7 /* SpotsControllerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD798EF31EA28F200069EFB7 /* SpotsControllerManager.swift */; };
+		BD798EF51EA28F200069EFB7 /* SpotsControllerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD798EF31EA28F200069EFB7 /* SpotsControllerManager.swift */; };
+		BD798EF61EA28F200069EFB7 /* SpotsControllerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD798EF31EA28F200069EFB7 /* SpotsControllerManager.swift */; };
 		BD91F3F61E90F74500F22943 /* TestComponentDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD91F3F51E90F74500F22943 /* TestComponentDelegate.swift */; };
 		BD91F3F71E90F74500F22943 /* TestComponentDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD91F3F51E90F74500F22943 /* TestComponentDelegate.swift */; };
 		BD91F3F81E90F74500F22943 /* TestComponentDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD91F3F51E90F74500F22943 /* TestComponentDelegate.swift */; };
@@ -413,6 +416,7 @@
 		BD77D1F31E8537E80075A3FC /* ComponentModelDiff.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentModelDiff.swift; sourceTree = "<group>"; };
 		BD77D1F71E8538080075A3FC /* ComponentModelKind.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentModelKind.swift; sourceTree = "<group>"; };
 		BD77D1FB1E85382D0075A3FC /* ComponentModel+Equatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ComponentModel+Equatable.swift"; sourceTree = "<group>"; };
+		BD798EF31EA28F200069EFB7 /* SpotsControllerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsControllerManager.swift; sourceTree = "<group>"; };
 		BD91F3F51E90F74500F22943 /* TestComponentDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestComponentDelegate.swift; sourceTree = "<group>"; };
 		BD9ECEB41E6EC6A7003E4388 /* Component+macOS+List.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Component+macOS+List.swift"; sourceTree = "<group>"; };
 		BD9ECEB61E6EC6B4003E4388 /* Component+macOS+Carousel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Component+macOS+Carousel.swift"; sourceTree = "<group>"; };
@@ -766,6 +770,7 @@
 				BDAD852B1E3E7032008289AE /* CompositeComponent.swift */,
 				BDAD852C1E3E7032008289AE /* DataSource.swift */,
 				BDAD852D1E3E7032008289AE /* Delegate.swift */,
+				BD798EF31EA28F200069EFB7 /* SpotsControllerManager.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1524,6 +1529,7 @@
 				BDAD85711E3E7032008289AE /* Animation.swift in Sources */,
 				BDAD85D71E3E7032008289AE /* Configuration.swift in Sources */,
 				BDAD85951E3E7032008289AE /* ComponentDelegate+Extensions.swift in Sources */,
+				BD798EF61EA28F200069EFB7 /* SpotsControllerManager.swift in Sources */,
 				BD77D1FE1E85382D0075A3FC /* ComponentModel+Equatable.swift in Sources */,
 				BD9ECEC21E6EC8AF003E4388 /* Component+iOS+Grid.swift in Sources */,
 				BDAD85651E3E7032008289AE /* DataSource.swift in Sources */,
@@ -1662,6 +1668,7 @@
 				BDAD84B81E3E701C008289AE /* ListComposite.swift in Sources */,
 				BDAD85871E3E7032008289AE /* ScrollDelegate+Extensions.swift in Sources */,
 				BD77D1FC1E85382D0075A3FC /* ComponentModel+Equatable.swift in Sources */,
+				BD798EF41EA28F200069EFB7 /* SpotsControllerManager.swift in Sources */,
 				BD9ECEC11E6EC8AF003E4388 /* Component+iOS+Grid.swift in Sources */,
 				BDAD85601E3E7032008289AE /* CompositeComponent.swift in Sources */,
 				52CD427A1E4477C800187E09 /* PageIndicatorPlacement.swift in Sources */,
@@ -1776,6 +1783,7 @@
 				BDAD85611E3E7032008289AE /* CompositeComponent.swift in Sources */,
 				BDAD851D1E3E7025008289AE /* DataSource+macOS+Extensions.swift in Sources */,
 				BD0AF3531E83CC53008795C3 /* UserInterface+Extensions.swift in Sources */,
+				BD798EF51EA28F200069EFB7 /* SpotsControllerManager.swift in Sources */,
 				BDAD858B1E3E7032008289AE /* Component+Core.swift in Sources */,
 				BDAD85C11E3E7032008289AE /* ComponentDelegate.swift in Sources */,
 				BDAD85E81E3E7032008289AE /* Parser.swift in Sources */,

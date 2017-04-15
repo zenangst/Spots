@@ -640,7 +640,7 @@ class SpotsControllerTests: XCTestCase {
 
     let oldComponentModels: [ComponentModel] = controller.components.map { $0.model }
 
-    let changes = controller.generateChanges(from: newComponentModels, and: oldComponentModels)
+    let changes = controller.manager.generateChanges(from: newComponentModels, and: oldComponentModels)
     XCTAssertEqual(changes.count, 1)
     XCTAssertEqual(changes.first, .items)
 

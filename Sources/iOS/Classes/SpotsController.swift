@@ -41,6 +41,9 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
   /// Initial content offset for Controller, defaults to UIEdgeInsetsZero.
   open fileprivate(set) var initialInset: UIEdgeInsets = UIEdgeInsets.zero
 
+  /// A manager that handles the updating logic for the current controller.
+  public var manager: SpotsControllerManager = SpotsControllerManager()
+
   /// A collection of components.
   open var components: [Component] {
     didSet { componentsDidChange() }
