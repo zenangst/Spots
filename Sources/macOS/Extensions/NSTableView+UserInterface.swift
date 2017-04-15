@@ -101,7 +101,6 @@ extension NSTableView: UserInterface {
       }
 
       configure(view: view, with: &item)
-
       component.model.items[index] = item
     }
 
