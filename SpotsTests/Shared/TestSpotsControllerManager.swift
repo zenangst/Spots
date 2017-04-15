@@ -16,12 +16,13 @@ class TestSpotsControllerManager: XCTestCase {
     let model = ComponentModel(kind: .list, items: items)
     let component = Component(model: model)
     controller = SpotsController(components: [component])
+    controller.prepareController()
   }
 
   func testAppendItem() {
     let expectation = self.expectation(description: "Wait for completion")
     controller.append(Item(title: "baz1")) {
-      XCTAssertTrue(self.controller.component!.model.items == [
+      XCTAssertTrue(self.controller.components.first!.model.items == [
         Item(title: "foo"),
         Item(title: "bar"),
         Item(title: "baz"),
@@ -40,7 +41,7 @@ class TestSpotsControllerManager: XCTestCase {
       Item(title: "baz2")
     ]
     controller.append(items) {
-      XCTAssertTrue(self.controller.component!.model.items == [
+      XCTAssertTrue(self.controller.components.first!.model.items == [
         Item(title: "foo"),
         Item(title: "bar"),
         Item(title: "baz"),
@@ -60,7 +61,7 @@ class TestSpotsControllerManager: XCTestCase {
       Item(title: "baz2")
     ]
     controller.prepend(items) {
-      XCTAssertTrue(self.controller.component!.model.items == [
+      XCTAssertTrue(self.controller.components.first!.model.items == [
         Item(title: "baz1"),
         Item(title: "baz2"),
         Item(title: "foo"),
@@ -76,7 +77,7 @@ class TestSpotsControllerManager: XCTestCase {
   func testInsertItem() {
     let expectation = self.expectation(description: "Wait for completion")
     controller.insert(Item(title: "baz1"), index: 1, componentIndex: 0) {
-      XCTAssertTrue(self.controller.component!.model.items == [
+      XCTAssertTrue(self.controller.components.first!.model.items == [
         Item(title: "foo"),
         Item(title: "baz1"),
         Item(title: "bar"),
@@ -91,14 +92,14 @@ class TestSpotsControllerManager: XCTestCase {
   func testUpdateItem() {
     let expectation = self.expectation(description: "Wait for completion")
     controller.update(Item(title: "baz1"), index: 2, componentIndex: 0) {
-      XCTAssertTrue(self.controller.component!.model.items == [
+      XCTAssertTrue(self.controller.components.first!.model.items == [
         Item(title: "foo"),
         Item(title: "bar"),
         Item(title: "baz1")
         ])
 
       self.controller.update(Item(title: "baz1"), index: 2, componentIndex: 0) {
-        XCTAssertTrue(self.controller.component!.model.items == [
+        XCTAssertTrue(self.controller.components.first!.model.items == [
           Item(title: "foo"),
           Item(title: "bar"),
           Item(title: "baz1")
@@ -112,11 +113,11 @@ class TestSpotsControllerManager: XCTestCase {
   func testUpdateItemsWithIndexes() {
     let expectation = self.expectation(description: "Wait for completion")
 
-    controller.component!.model.items[0] = Item(title: "foo1")
-    controller.component!.model.items[1] = Item(title: "bar1")
+    controller.components[0].model.items[0] = Item(title: "foo1")
+    controller.components[0].model.items[1] = Item(title: "bar1")
 
     controller.update([0,1], componentIndex: 0) {
-      XCTAssertTrue(self.controller.component!.model.items == [
+      XCTAssertTrue(self.controller.components.first!.model.items == [
         Item(title: "foo1"),
         Item(title: "bar1"),
         Item(title: "baz")
@@ -130,7 +131,7 @@ class TestSpotsControllerManager: XCTestCase {
   func testDeleteItem() {
     let expectation = self.expectation(description: "Wait for completion")
     controller.delete(1) {
-      XCTAssertTrue(self.controller.component!.model.items == [
+      XCTAssertTrue(self.controller.components.first!.model.items == [
         Item(title: "foo"),
         Item(title: "baz")
         ])
@@ -144,7 +145,7 @@ class TestSpotsControllerManager: XCTestCase {
   func testDeleteItems() {
     let expectation = self.expectation(description: "Wait for completion")
     controller.delete([0,2]) {
-      XCTAssertTrue(self.controller.component!.model.items == [
+      XCTAssertTrue(self.controller.components.first!.model.items == [
         Item(title: "bar")
         ])
 
@@ -160,13 +161,13 @@ class TestSpotsControllerManager: XCTestCase {
       Item(title: "baz2")
     ]
     controller.updateIfNeeded(componentAtIndex: 0, items: items) {
-      XCTAssertTrue(self.controller.component!.model.items == [
+      XCTAssertTrue(self.controller.components.first!.model.items == [
         Item(title: "baz1"),
         Item(title: "baz2")
         ])
 
       self.controller.updateIfNeeded(componentAtIndex: 0, items: items) {
-        XCTAssertTrue(self.controller.component!.model.items == [
+        XCTAssertTrue(self.controller.components.first!.model.items == [
           Item(title: "baz1"),
           Item(title: "baz2")
           ])
