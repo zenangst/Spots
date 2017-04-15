@@ -343,11 +343,13 @@ public class ComponentManager {
 
       if changes.updates.isEmpty {
         strongSelf.process(changes.updatedChildren, component: component, withAnimation: animation) {
+          component.view.layoutSubviews()
           completion?()
         }
       } else {
         strongSelf.process(changes.updates, component: component, withAnimation: animation) {
           strongSelf.process(changes.updatedChildren, component: component, withAnimation: animation) {
+            component.view.layoutSubviews()
             completion?()
           }
         }
