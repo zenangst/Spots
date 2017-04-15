@@ -51,12 +51,14 @@ extension NSTableView: UserInterface {
      - "For NSView-based table views, this method drops the view-cells in the table row, but not the NSTableRowView instances."
     */
 
-    indexes.forEach { index in
-      if let view = rowView(atRow: index, makeIfNecessary: false) as? ItemConfigurable {
-        var item = component.model.items[index]
-        view.configure(&item)
-        component.model.items[index] = item
+    for index in indexes {
+      guard let view = rowView(atRow: index, makeIfNecessary: false) else {
+        continue
       }
+
+      var item = component.model.items[index]
+      configure(view: view, with: &item)
+      component.model.items[index] = item
     }
 
     completion?()
@@ -90,12 +92,15 @@ extension NSTableView: UserInterface {
     insertRows(at: insertionsSets as IndexSet, withAnimation: animation.tableViewAnimation)
 
     for index in reloadSets {
-      guard let view = rowView(atRow: index, makeIfNecessary: false) as? ItemConfigurable else {
+      guard let view = rowView(atRow: index, makeIfNecessary: false) else {
         continue
       }
 
-      var item = component.model.items[index]
-      view.configure(&item)
+      guard var item = component.item(at: index) else {
+        continue
+      }
+
+      configure(view: view, with: &item)
       component.model.items[index] = item
     }
 
@@ -117,5 +122,16 @@ extension NSTableView: UserInterface {
     closure()
     endUpdates()
     endClosure?()
+  }
+
+  fileprivate func configure(view: View, with item: inout Item) {
+    switch view {
+    case let wrapper as Wrappable:
+      (wrapper.wrappedView as? ItemConfigurable)?.configure(&item)
+    case let itemConfigurable as ItemConfigurable:
+      itemConfigurable.configure(&item)
+    default:
+      break
+    }
   }
 }
