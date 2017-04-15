@@ -119,8 +119,8 @@ extension Delegate: NSTableViewDelegate {
       if let view = resolvedView, !(view is NSTableRowView) {
         let wrapper = ListWrapper()
         wrapper.configure(with: view)
+        (view as? ItemConfigurable)?.configure(&component.model.items[row])
         resolvedView = wrapper
-        (resolvedView as? ItemConfigurable)?.configure(&component.model.items[row])
       }
     }
 
