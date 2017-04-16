@@ -198,9 +198,9 @@
 		BDAD85991E3E7032008289AE /* SpotsProtocol+LiveEditing.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD85401E3E7032008289AE /* SpotsProtocol+LiveEditing.swift */; };
 		BDAD859A1E3E7032008289AE /* SpotsProtocol+LiveEditing.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD85401E3E7032008289AE /* SpotsProtocol+LiveEditing.swift */; };
 		BDAD859B1E3E7032008289AE /* SpotsProtocol+LiveEditing.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD85401E3E7032008289AE /* SpotsProtocol+LiveEditing.swift */; };
-		BDAD859C1E3E7032008289AE /* SpotsProtocol+Mutation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD85411E3E7032008289AE /* SpotsProtocol+Mutation.swift */; };
-		BDAD859D1E3E7032008289AE /* SpotsProtocol+Mutation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD85411E3E7032008289AE /* SpotsProtocol+Mutation.swift */; };
-		BDAD859E1E3E7032008289AE /* SpotsProtocol+Mutation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD85411E3E7032008289AE /* SpotsProtocol+Mutation.swift */; };
+		BDAD859C1E3E7032008289AE /* SpotsController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD85411E3E7032008289AE /* SpotsController+Extensions.swift */; };
+		BDAD859D1E3E7032008289AE /* SpotsController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD85411E3E7032008289AE /* SpotsController+Extensions.swift */; };
+		BDAD859E1E3E7032008289AE /* SpotsController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD85411E3E7032008289AE /* SpotsController+Extensions.swift */; };
 		BDAD85A21E3E7032008289AE /* Wrappable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD85431E3E7032008289AE /* Wrappable+Extensions.swift */; };
 		BDAD85A31E3E7032008289AE /* Wrappable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD85431E3E7032008289AE /* Wrappable+Extensions.swift */; };
 		BDAD85A41E3E7032008289AE /* Wrappable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD85431E3E7032008289AE /* Wrappable+Extensions.swift */; };
@@ -486,7 +486,7 @@
 		BDAD853E1E3E7032008289AE /* ComponentDelegate+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ComponentDelegate+Extensions.swift"; sourceTree = "<group>"; };
 		BDAD853F1E3E7032008289AE /* SpotsProtocol+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SpotsProtocol+Extensions.swift"; sourceTree = "<group>"; };
 		BDAD85401E3E7032008289AE /* SpotsProtocol+LiveEditing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SpotsProtocol+LiveEditing.swift"; sourceTree = "<group>"; };
-		BDAD85411E3E7032008289AE /* SpotsProtocol+Mutation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SpotsProtocol+Mutation.swift"; sourceTree = "<group>"; };
+		BDAD85411E3E7032008289AE /* SpotsController+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SpotsController+Extensions.swift"; sourceTree = "<group>"; };
 		BDAD85431E3E7032008289AE /* Wrappable+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Wrappable+Extensions.swift"; sourceTree = "<group>"; };
 		BDAD85451E3E7032008289AE /* CarouselScrollDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselScrollDelegate.swift; sourceTree = "<group>"; };
 		BDAD85471E3E7032008289AE /* Composable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Composable.swift; sourceTree = "<group>"; };
@@ -808,7 +808,7 @@
 				BDAD853A1E3E7032008289AE /* ScrollDelegate+Extensions.swift */,
 				BDAD853F1E3E7032008289AE /* SpotsProtocol+Extensions.swift */,
 				BDAD85401E3E7032008289AE /* SpotsProtocol+LiveEditing.swift */,
-				BDAD85411E3E7032008289AE /* SpotsProtocol+Mutation.swift */,
+				BDAD85411E3E7032008289AE /* SpotsController+Extensions.swift */,
 				BD0AF3511E83CC53008795C3 /* UserInterface+Extensions.swift */,
 				BDAD85431E3E7032008289AE /* Wrappable+Extensions.swift */,
 			);
@@ -1507,7 +1507,7 @@
 				BDAD84CF1E3E701C008289AE /* SpotsController+UIScrollViewDelegate.swift in Sources */,
 				BDDCF6DD1E4DF91F004B38C4 /* Indexable.swift in Sources */,
 				BDAD85E91E3E7032008289AE /* Parser.swift in Sources */,
-				BDAD859E1E3E7032008289AE /* SpotsProtocol+Mutation.swift in Sources */,
+				BDAD859E1E3E7032008289AE /* SpotsController+Extensions.swift in Sources */,
 				BDAD84D71E3E701C008289AE /* Inset+iOS.swift in Sources */,
 				BDAD84A31E3E701C008289AE /* CarouselComposite.swift in Sources */,
 				BDAD85F21E3E7032008289AE /* TypeAlias.swift in Sources */,
@@ -1642,7 +1642,7 @@
 				BDAD85F01E3E7032008289AE /* TypeAlias.swift in Sources */,
 				BDAD84A81E3E701C008289AE /* CarouselSpotHeader.swift in Sources */,
 				BDAD85B41E3E7032008289AE /* RefreshDelegate.swift in Sources */,
-				BDAD859C1E3E7032008289AE /* SpotsProtocol+Mutation.swift in Sources */,
+				BDAD859C1E3E7032008289AE /* SpotsController+Extensions.swift in Sources */,
 				BDAD85D21E3E7032008289AE /* ComponentModel.swift in Sources */,
 				BDAD85EA1E3E7032008289AE /* Registry.swift in Sources */,
 				BDAD85C61E3E7032008289AE /* SpotsProtocol.swift in Sources */,
@@ -1741,7 +1741,7 @@
 			files = (
 				BDAD85731E3E7032008289AE /* Paginate.swift in Sources */,
 				BDDCF6E61E4DF92F004B38C4 /* StringConvertible.swift in Sources */,
-				BDAD859D1E3E7032008289AE /* SpotsProtocol+Mutation.swift in Sources */,
+				BDAD859D1E3E7032008289AE /* SpotsController+Extensions.swift in Sources */,
 				BDDCF6D71E4DF911004B38C4 /* Item.swift in Sources */,
 				BDDCF6E11E4DF927004B38C4 /* ItemConfigurable.swift in Sources */,
 				BDAD85D01E3E7032008289AE /* Wrappable.swift in Sources */,

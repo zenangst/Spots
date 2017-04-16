@@ -4,7 +4,7 @@
   import UIKit
 #endif
 
-extension SpotsProtocol where Self : SpotsController {
+extension SpotsController {
 
   public typealias CompareClosure = ((_ lhs: [ComponentModel], _ rhs: [ComponentModel]) -> Bool)
 
