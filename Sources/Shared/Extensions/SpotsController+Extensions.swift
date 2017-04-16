@@ -1,240 +1,136 @@
-#if os(OSX)
-  import Foundation
-#else
+#if os(iOS)
   import UIKit
+#else
+  import Foundation
 #endif
 
-extension SpotsController {
+import Cache
 
-  public typealias CompareClosure = ((_ lhs: [ComponentModel], _ rhs: [ComponentModel]) -> Bool)
+// MARK: - SpotsProtocol extension
+public extension SpotsController {
 
-  /**
-   Reload all components.
-
-   - parameter animated:   A boolean value that indicates if animations should be applied, defaults to true
-   - parameter animation:  A ComponentAnimation struct that determines which animation that should be used for the updates
-   - parameter completion: A completion block that is run when the reloading is done
-   */
-  public func reload(_ animated: Bool = true, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
-    manager.reload(controller: self, withAnimation: animation, completion: completion)
+  /// A convenience property for getting a dictionary representation of the controller wihtout item reduction.
+  public var dictionary: [String : Any] {
+    return dictionary()
   }
 
-  /// Reload if needed using JSON
+  /// Produce a dictionary representation of the controller.
   ///
-  /// - parameter components: A collection of components that gets parsed into UI elements
-  /// - parameter compare: A closure that is used for comparing a ComponentModel collections
-  /// - parameter animated: An animation closure that can be used to perform custom animations when reloading
-  /// - parameter completion: A closure that will be run after reload has been performed on all components
-  public func reloadIfNeeded(_ components: [ComponentModel],
-                             compare: @escaping CompareClosure = { lhs, rhs in return lhs !== rhs },
-                             withAnimation animation: Animation = .automatic,
-                             completion: Completion = nil) {
-    manager.reloadIfNeeded(components: components,
-                           controller: self,
-                           compare: compare,
-                           withAnimation: animation,
-                           completion: completion)
-  }
-
-  ///Reload if needed using JSON
+  /// - parameter amountOfItems: An optional Int used for getting a subset of items to cache, it set, it will save the amount of items for each Component object based on this value.
   ///
-  /// - parameter json: A JSON dictionary that gets parsed into UI elements
-  /// - parameter compare: A closure that is used for comparing a ComponentModel collections
-  /// - parameter animated: An animation closure that can be used to perform custom animations when reloading
-  /// - parameter completion: A closure that will be run after reload has been performed on all components
-  public func reloadIfNeeded(_ json: [String : Any],
-                             compare: @escaping CompareClosure = { lhs, rhs in return lhs !== rhs },
-                             animated: ((_ view: View) -> Void)? = nil,
-                             completion: Completion = nil) {
-    manager.reloadIfNeeded(json,
-                           controller: self,
-                           compare: compare,
-                           animated: animated,
-                           completion: completion)
-  }
+  /// - returns: A dictionary representation of the controller.
+  public func dictionary(_ amountOfItems: Int? = nil) -> [String : Any] {
+    var result = [[String: Any]]()
 
-  /// Reload with component models
-  ///
-  ///- parameter component models: A collection of component models.
-  ///- parameter animated: An animation closure that can be used to perform custom animations when reloading
-  ///- parameter completion: A closure that will be run after reload has been performed on all components
-  public func reload(_ models: [ComponentModel], animated: ((_ view: View) -> Void)? = nil, completion: Completion = nil) {
-    manager.reload(models: models,
-                   controller: self,
-                   animated: animated,
-                   completion: completion)
-  }
+    for component in components {
+      var componentJSON = component.model.dictionary(amountOfItems)
+      for item in component.model.items where item.kind == CompositeComponent.identifier {
+        let results = component.compositeComponents
+          .filter({ $0.itemIndex == item.index })
 
-  /// Reload with JSON
-  ///
-  ///- parameter json: A JSON dictionary that gets parsed into UI elements
-  ///- parameter animated: An animation closure that can be used to perform custom animations when reloading
-  ///- parameter completion: A closure that will be run after reload has been performed on all components
-  public func reload(_ json: [String : Any], animated: ((_ view: View) -> Void)? = nil, completion: Completion = nil) {
-    manager.reload(json: json,
-                   controller: self,
-                   animated: animated,
-                   completion: completion)
-  }
+        var newItem = item
+        var children = [[String: Any]]()
 
-  /**
-   - parameter componentAtIndex: The index of the component that you want to perform updates on
-   - parameter animation: A Animation struct that determines which animation that should be used to perform the update
-   - parameter completion: A completion closure that is performed when the update is completed
-   - parameter closure: A transform closure to perform the proper modification to the target component before updating the internals
-   */
-  public func update(componentAtIndex index: Int = 0, withAnimation animation: Animation = .automatic, withCompletion completion: Completion = nil, _ closure: (_ component: Component) -> Void) {
-    manager.update(componentAtIndex: index,
-                   controller: self,
-                   withAnimation: animation,
-                   withCompletion: completion,
-                   closure)
-  }
+        for compositeSpot in results {
+          children.append(compositeSpot.component.dictionary)
+        }
 
-  /**
-   Updates component only if the passed view models are not the same with the current ones.
+        newItem.children = children
 
-   - parameter componentAtIndex: The index of the component that you want to perform updates on
-   - parameter items: An array of view models
-   - parameter animation: A Animation struct that determines which animation that should be used to perform the update
-   - parameter completion: A completion closure that is run when the update is completed
-   */
-  public func updateIfNeeded(componentAtIndex index: Int = 0, items: [Item], withAnimation animation: Animation = .automatic, completion: Completion = nil) {
-    manager.updateIfNeeded(componentAtIndex: index,
-                           controller: self,
-                           items: items,
-                           withAnimation: animation,
-                           completion: completion)
-  }
-
-  /**
-   - parameter item: The view model that you want to append
-   - parameter componentIndex: The index of the component that you want to append to, defaults to 0
-   - parameter animation: A Animation struct that determines which animation that should be used to perform the update
-   - parameter completion: A completion closure that will run after the component has performed updates internally
-   */
-  public func append(_ item: Item, componentIndex: Int = 0, withAnimation animation: Animation = .none, completion: Completion = nil) {
-    manager.append(item,
-                   componentIndex: componentIndex,
-                   controller: self,
-                   withAnimation: animation,
-                   completion: completion)
-  }
-
-  /**
-   - parameter items: A collection of view models
-   - parameter componentIndex: The index of the component that you want to append to, defaults to 0
-   - parameter animation: A Animation struct that determines which animation that should be used to perform the update
-   - parameter completion: A completion closure that will run after the component has performed updates internally
-   */
-  public func append(_ items: [Item], componentIndex: Int = 0, withAnimation animation: Animation = .none, completion: Completion = nil) {
-    manager.append(items,
-                   componentIndex: componentIndex,
-                   controller: self,
-                   withAnimation: animation,
-                   completion: completion)
-  }
-
-  /**
-   - parameter items: A collection of view models
-   - parameter componentIndex: The index of the component that you want to prepend to, defaults to 0
-   - parameter animation: A Animation struct that determines which animation that should be used to perform the update
-   - parameter completion: A completion closure that will run after the component has performed updates internally
-   */
-  public func prepend(_ items: [Item], componentIndex: Int = 0, withAnimation animation: Animation = .none, completion: Completion = nil) {
-    manager.prepend(items,
-                   componentIndex: componentIndex,
-                   controller: self,
-                   withAnimation: animation,
-                   completion: completion)
-  }
-
-  /**
-   - parameter item: The view model that you want to insert
-   - parameter index: The index that you want to insert the view model at
-   - parameter componentIndex: The index of the component that you want to insert into
-   - parameter animation: A Animation struct that determines which animation that should be used to perform the update
-   - parameter completion: A completion closure that will run after the component has performed updates internally
-   */
-  public func insert(_ item: Item, index: Int = 0, componentIndex: Int, withAnimation animation: Animation = .none, completion: Completion = nil) {
-    manager.insert(item,
-                   index: index,
-                   componentIndex: componentIndex,
-                   controller: self,
-                   withAnimation: animation,
-                   completion: completion)
-  }
-
-  /// Update item at index inside a specific Component object
-  ///
-  /// - parameter item:       The view model that you want to update.
-  /// - parameter index:      The index that you want to insert the view model at.
-  /// - parameter componentIndex:  The index of the component that you want to update into.
-  /// - parameter animation:  A Animation struct that determines which animation that should be used to perform the update.
-  /// - parameter completion: A completion closure that will run after the component has performed updates internally.
-  public func update(_ item: Item, index: Int = 0, componentIndex: Int, withAnimation animation: Animation = .none, completion: Completion = nil) {
-    manager.update(item,
-                   index: index,
-                   componentIndex: componentIndex,
-                   controller: self,
-                   withAnimation: animation,
-                   completion: completion)
-  }
-
-  /**
-   - parameter indexes: An integer array of indexes that you want to update
-   - parameter componentIndex: The index of the component that you want to update into
-   - parameter animation: A Animation struct that determines which animation that should be used to perform the update
-   - parameter completion: A completion closure that will run after the component has performed updates internally
-   */
-  public func update(_ indexes: [Int], componentIndex: Int = 0, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
-    manager.update(indexes,
-                   componentIndex: componentIndex,
-                   controller: self,
-                   withAnimation: animation,
-                   completion: completion)
-  }
-
-  /**
-   - parameter index: The index of the view model that you want to remove
-   - parameter componentIndex: The index of the component that you want to remove into
-   - parameter animation: A Animation struct that determines which animation that should be used to perform the update
-   - parameter completion: A completion closure that will run after the component has performed updates internally
-   */
-  public func delete(_ index: Int, componentIndex: Int = 0, withAnimation animation: Animation = .none, completion: Completion = nil) {
-    manager.delete(index,
-                   componentIndex: componentIndex,
-                   controller: self,
-                   withAnimation: animation,
-                   completion: completion)
-  }
-
-  /**
-   - parameter indexes: A collection of indexes for view models that you want to remove
-   - parameter componentIndex: The index of the component that you want to remove into
-   - parameter animation: A Animation struct that determines which animation that should be used to perform the update
-   - parameter completion: A completion closure that will run after the component has performed updates internally
-   */
-  public func delete(_ indexes: [Int], componentIndex: Int = 0, withAnimation animation: Animation = .none, completion: Completion = nil) {
-    manager.delete(indexes,
-                   componentIndex: componentIndex,
-                   controller: self,
-                   withAnimation: animation,
-                   completion: completion)
-  }
-
-  #if os(iOS)
-  public func refreshSpots(_ refreshControl: UIRefreshControl) {
-    Dispatch.main { [weak self] in
-      guard let strongSelf = self else {
-        return
+        var newItems = componentJSON[ComponentModel.Key.items] as? [[String : Any]]
+        newItems?[item.index] = newItem.dictionary
+        componentJSON[ComponentModel.Key.items] = newItems
       }
-      strongSelf.refreshPositions.removeAll()
 
-      strongSelf.refreshDelegate?.componentsDidReload(strongSelf.components, refreshControl: refreshControl) {
-        refreshControl.endRefreshing()
+      result.append(componentJSON)
+    }
+
+    return ["components": result as AnyObject ]
+  }
+
+  /// Resolve UI component based on a predicate.
+  ///
+  /// - parameter includeElement: A filter predicate used to match the UI that should be resolved.
+  ///
+  /// - returns: An optional object with inferred type.
+  public func ui<T>(_ includeElement: (Item) -> Bool) -> T? {
+    for component in components {
+      if let first = component.model.items.filter(includeElement).first {
+        return component.ui(at: first.index)
+      }
+
+      let cSpots = component.compositeComponents.map { $0.component }
+      for compositeSpot in cSpots {
+        if let first = compositeSpot.model.items.filter(includeElement).first {
+          return compositeSpot.ui(at: first.index)
+        }
       }
     }
+
+    return nil
   }
-  #endif
+
+  /// Filter components. inside of controller
+  ///
+  /// - parameter includeElement: A filter predicate to find a component
+  ///
+  /// - returns: A collection of components. that match the includeElements predicate
+  public func filter(components includeElement: (Component) -> Bool) -> [Component] {
+    var result = components.filter(includeElement)
+
+    let cSpots = components.flatMap({ $0.compositeComponents.map { $0.component } })
+    let compositeResults: [Component] = cSpots.filter(includeElement)
+
+    result.append(contentsOf: compositeResults)
+
+    return result
+  }
+
+  /// Filter items based on predicate.
+  ///
+  /// - parameter includeElement: The predicate that the item has to match.
+  ///
+  /// - returns: A collection of tuples containing components with the matching items that were found.
+  public func filter(items includeElement: (Item) -> Bool) -> [(component: Component, items: [Item])] {
+    var result = [(component: Component, items: [Item])]()
+    for component in components {
+      let items = component.model.items.filter(includeElement)
+      if !items.isEmpty {
+        result.append((component: component, items: items))
+      }
+
+      let childSpots = component.compositeComponents.map { $0.component }
+      for component in childSpots {
+        let items = component.model.items.filter(includeElement)
+        if !items.isEmpty {
+          result.append((component: component, items: items))
+        }
+      }
+    }
+
+    return result
+  }
+
+  /// Caches the current state of the controller
+  ///
+  /// - parameter items: An optional integer that is used to reduce the amount of items that should be cached per Component object when saving the view state to disk
+  public func cache(_ items: Int? = nil) {
+    #if DEVMODE
+      liveEditing(stateCache: stateCache)
+    #endif
+
+    stateCache?.save(dictionary(items))
+  }
+
+  /// Resolve component at index path.
+  ///
+  /// - parameter indexPath: The index path of the component belonging to the Component object at that index.
+  ///
+  /// - returns: A ComponentModel object at index path.
+  func component(at index: Int) -> Component? {
+    guard index >= 0 && index < components.count else {
+      return nil
+    }
+    return components[index]
+  }
 }
