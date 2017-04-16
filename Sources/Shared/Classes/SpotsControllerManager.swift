@@ -60,8 +60,8 @@ public class SpotsControllerManager {
         return
       }
 
-      let oldSpots = controller.components
-      let oldComponentModels = oldSpots.map { $0.model }
+      let oldComponents = controller.components
+      let oldComponentModels = oldComponents.map { $0.model }
       var newComponentModels = components
 
       /// Prepare default layouts for new components based of previous Component kind.
@@ -71,7 +71,7 @@ public class SpotsControllerManager {
         }
 
         if newComponentModels[index].layout == nil {
-          newComponentModels[index].layout = type(of: oldSpots[index]).layout
+          newComponentModels[index].layout = type(of: oldComponents[index]).layout
         }
       }
 
@@ -127,17 +127,17 @@ public class SpotsControllerManager {
 
   fileprivate func replaceComponent(atIndex index: Int, controller: SpotsController, newComponentModels: [ComponentModel], yOffset: inout CGFloat) {
     let component = Component(model: newComponentModels[index])
-    let oldSpot = controller.components[index]
+    let oldComponent = controller.components[index]
 
     /// Remove old composite components from superview and empty container
-    for compositeSpot in oldSpot.compositeComponents {
-      compositeSpot.component.view.removeFromSuperview()
+    for compositeComponent in oldComponent.compositeComponents {
+      compositeComponent.component.view.removeFromSuperview()
     }
-    oldSpot.compositeComponents = []
+    oldComponent.compositeComponents = []
 
-    component.view.frame = oldSpot.view.frame
+    component.view.frame = oldComponent.view.frame
 
-    oldSpot.view.removeFromSuperview()
+    oldComponent.view.removeFromSuperview()
     controller.components[index] = component
     controller.scrollView.componentsView.insertSubview(component.view, at: index)
     controller.setupComponent(at: index, component: component)
@@ -153,7 +153,7 @@ public class SpotsControllerManager {
     yOffset += component.view.frame.size.height
   }
 
-  /// Remove Spot at index
+  /// Remove component at index
   ///
   /// - parameter index: The index of the Component object hat you want to remove
   fileprivate func removeComponent(atIndex index: Int, controller: SpotsController) {
@@ -176,23 +176,23 @@ public class SpotsControllerManager {
       return false
     }
 
-    let tempSpot = Component(model: newComponentModels[index])
-    tempSpot.setup(with: component.view.frame.size)
-    tempSpot.model.size = CGSize(
+    let tempComponent = Component(model: newComponentModels[index])
+    tempComponent.setup(with: component.view.frame.size)
+    tempComponent.model.size = CGSize(
       width: controller.view.frame.width,
-      height: ceil(tempSpot.view.frame.height))
+      height: ceil(tempComponent.view.frame.height))
 
-    guard let diff = Item.evaluate(tempSpot.model.items, oldModels: component.model.items) else {
+    guard let diff = Item.evaluate(tempComponent.model.items, oldModels: component.model.items) else {
       return true
     }
 
-    let newItems = tempSpot.model.items
+    let newItems = tempComponent.model.items
     let changes: (ItemChanges) = Item.processChanges(diff)
 
     for index in changes.updatedChildren {
-      if index < tempSpot.compositeComponents.count {
+      if index < tempComponent.compositeComponents.count {
         component.compositeComponents[index].component.view.removeFromSuperview()
-        component.compositeComponents[index] = tempSpot.compositeComponents[index]
+        component.compositeComponents[index] = tempComponent.compositeComponents[index]
         component.compositeComponents[index].parentComponent = component
       }
     }
@@ -243,8 +243,8 @@ public class SpotsControllerManager {
 
       for item in newItems {
         let results = component.compositeComponents.filter({ $0.itemIndex == item.index })
-        for compositeSpot in results {
-          offsets.append(compositeSpot.component.view.contentOffset)
+        for compositeComponent in results {
+          offsets.append(compositeComponent.component.view.contentOffset)
         }
       }
 
@@ -261,12 +261,12 @@ public class SpotsControllerManager {
 
         let compositeComponents = controller.components[item.index].compositeComponents
           .filter({ $0.itemIndex == item.index })
-        for (index, compositeSpot) in compositeComponents.enumerated() {
+        for (index, compositeComponent) in compositeComponents.enumerated() {
           guard index < offsets.count else {
             continue
           }
 
-          compositeSpot.component.view.contentOffset = offsets[index]
+          compositeComponent.component.view.contentOffset = offsets[index]
         }
       }
 
@@ -300,17 +300,17 @@ public class SpotsControllerManager {
       for (index, item) in newItems.enumerated() {
         let components = Parser.parse(item.children).map { $0.model }
 
-        let oldSpots = controller.components.flatMap({
+        let oldComponents = controller.components.flatMap({
           $0.compositeComponents
         })
 
-        for removedSpot in oldSpots {
-          guard !components.contains(removedSpot.component.model) else {
+        for removedComponent in oldComponents {
+          guard !components.contains(removedComponent.component.model) else {
             continue
           }
 
-          if let index = removedSpot.parentComponent?.compositeComponents.index(of: removedSpot) {
-            removedSpot.parentComponent?.compositeComponents.remove(at: index)
+          if let index = removedComponent.parentComponent?.compositeComponents.index(of: removedComponent) {
+            removedComponent.parentComponent?.compositeComponents.remove(at: index)
           }
         }
 
@@ -413,8 +413,8 @@ public class SpotsControllerManager {
         }
       }
 
-      for removedSpot in controller.components where removedSpot.view.superview == nil {
-        if let index = controller.components.index(where: { removedSpot.view.isEqual($0.view) }) {
+      for removedComponent in controller.components where removedComponent.view.superview == nil {
+        if let index = controller.components.index(where: { removedComponent.view.isEqual($0.view) }) {
           controller.components.remove(at: index)
         }
       }
@@ -443,8 +443,8 @@ public class SpotsControllerManager {
         return
       }
 
-      let newSpots: [Component] = Parser.parse(json)
-      let newComponentModels = newSpots.map { $0.model }
+      let newComponents: [Component] = Parser.parse(json)
+      let newComponentModels = newComponents.map { $0.model }
       let oldComponentModels = controller.components.map { $0.model }
 
       guard compare(newComponentModels, oldComponentModels) else {
@@ -461,7 +461,7 @@ public class SpotsControllerManager {
         offsets = controller.components.map { $0.view.contentOffset }
       }
 
-      controller.components = newSpots
+      controller.components = newComponents
 
       if controller.scrollView.superview == nil {
         controller.view.addSubview(controller.scrollView)
@@ -473,18 +473,18 @@ public class SpotsControllerManager {
 
       let newComposites = controller.components.flatMap { $0.compositeComponents }
 
-      for (index, compositeSpot) in oldComposites.enumerated() {
+      for (index, compositeComponent) in oldComposites.enumerated() {
         if index == newComposites.count {
           break
         }
 
-        newComposites[index].component.view.contentOffset = compositeSpot.component.view.contentOffset
+        newComposites[index].component.view.contentOffset = compositeComponent.component.view.contentOffset
       }
 
       completion?()
 
       offsets.enumerated().forEach {
-        newSpots[$0.offset].view.contentOffset = $0.element
+        newComponents[$0.offset].view.contentOffset = $0.element
       }
 
       controller.scrollView.layoutSubviews()
