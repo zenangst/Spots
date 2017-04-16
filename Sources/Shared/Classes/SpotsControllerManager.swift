@@ -7,12 +7,12 @@
 
 public class SpotsControllerManager {
 
+  /// A comparison closure type alias for comparing collections of component models.
   public typealias CompareClosure = ((_ lhs: [ComponentModel], _ rhs: [ComponentModel]) -> Bool)
 
   /**
    Reload all components.
 
-   - parameter animated:   A boolean value that indicates if animations should be applied, defaults to true
    - parameter animation:  A ComponentAnimation struct that determines which animation that should be used for the updates
    - parameter completion: A completion block that is run when the reloading is done
    */
@@ -125,6 +125,13 @@ public class SpotsControllerManager {
     return changes
   }
 
+  /// Replace component at index
+  ///
+  /// - Parameters:
+  ///   - index: The index of the component
+  ///   - controller: A SpotsController
+  ///   - newComponentModels: The new component model that should replace the existing component.
+  ///   - yOffset: The y offset of the component.
   fileprivate func replaceComponent(atIndex index: Int, controller: SpotsController, newComponentModels: [ComponentModel], yOffset: inout CGFloat) {
     let component = Component(model: newComponentModels[index])
     let oldComponent = controller.components[index]
@@ -145,6 +152,13 @@ public class SpotsControllerManager {
     yOffset += component.view.frame.size.height
   }
 
+  /// Insert new component at index.
+  ///
+  /// - Parameters:
+  ///   - index: The index of the component
+  ///   - controller: A SpotsController instance.
+  ///   - newComponentModels: The new component model that should replace the existing component.
+  ///   - yOffset: The y offset of the component.
   fileprivate func newComponent(atIndex index: Int, controller: SpotsController, newComponentModels: [ComponentModel], yOffset: inout CGFloat) {
     let component = Component(model: newComponentModels[index])
     controller.components.append(component)
@@ -155,7 +169,9 @@ public class SpotsControllerManager {
 
   /// Remove component at index
   ///
-  /// - parameter index: The index of the Component object hat you want to remove
+  /// - Parameters:
+  ///   - index: The index of the component that should be removed.
+  ///   - controller: A SpotsController instance.
   fileprivate func removeComponent(atIndex index: Int, controller: SpotsController) {
     guard index < controller.components.count else {
       return
@@ -166,6 +182,7 @@ public class SpotsControllerManager {
   /// Set up items for a Component object
   ///
   /// - parameter index:         The index of the Component object
+  /// - parameter controller:    A SpotsController instance.
   /// - parameter newComponentModels: A collection of new components
   /// - parameter animation:     A Animation that is used to determine which animation to use when performing the update
   /// - parameter closure:       A completion closure that is invoked when the setup of the new items is complete
@@ -226,6 +243,7 @@ public class SpotsControllerManager {
   /// Reload Component object with changes and new items.
   ///
   /// - parameter changes:   A ItemChanges tuple.
+  /// - parameter controller:    A SpotsController instance.
   /// - parameter component:      The component that should be updated.
   /// - parameter newItems:  The new items that should be used to updated the data source.
   /// - parameter animation: The animation that should be used when updating.
@@ -277,6 +295,7 @@ public class SpotsControllerManager {
   /// Reload Component object with less items
   ///
   /// - parameter changes:   A ItemChanges tuple.
+  /// - parameter controller:    A SpotsController instance.
   /// - parameter component:      The component that should be updated.
   /// - parameter newItems:  The new items that should be used to updated the data source.
   /// - parameter animation: The animation that should be used when updating.
@@ -335,6 +354,7 @@ public class SpotsControllerManager {
   /// Reload Component object with more items
   ///
   /// - parameter changes:   A ItemChanges tuple.
+  /// - parameter controller:    A SpotsController instance.
   /// - parameter component:      The component that should be updated.
   /// - parameter newItems:  The new items that should be used to updated the data source.
   /// - parameter animation: The animation that should be used when updating.
@@ -367,6 +387,14 @@ public class SpotsControllerManager {
     controller.scrollView.layoutSubviews()
   }
 
+  /// Process a collection of component model diffs.
+  ///
+  /// - Parameters:
+  ///   - changes: A collection of component model diffs.
+  ///   - controller: A SpotsController instance.
+  ///   - newComponentModels: A collection of new component models.
+  ///   - animation: The animation that should be used when updating the components.
+  ///   - completion: A completion closure that is run when the process is done.
   func process(changes: [ComponentModelDiff],
                controller: SpotsController,
                components newComponentModels: [ComponentModel],
@@ -429,6 +457,7 @@ public class SpotsControllerManager {
   ///Reload if needed using JSON
   ///
   /// - parameter json: A JSON dictionary that gets parsed into UI elements
+  /// - parameter controller: A SpotsController instance.
   /// - parameter compare: A closure that is used for comparing a ComponentModel collections
   /// - parameter animated: An animation closure that can be used to perform custom animations when reloading
   /// - parameter completion: A closure that will be run after reload has been performed on all components
@@ -467,7 +496,7 @@ public class SpotsControllerManager {
         controller.view.addSubview(controller.scrollView)
       }
 
-      strongSelf.reloadSpotsScrollView(controller: controller)
+      strongSelf.cleanUpComponentView(controller: controller)
       controller.setupComponents(animated: animated)
       controller.cache()
 
@@ -495,6 +524,7 @@ public class SpotsControllerManager {
   /// Reload with component models
   ///
   ///- parameter component models: A collection of component models.
+  ///- parameter controller: A SpotsController instance.
   ///- parameter animated: An animation closure that can be used to perform custom animations when reloading
   ///- parameter completion: A closure that will be run after reload has been performed on all components
   public func reload(models: [ComponentModel], controller: SpotsController, animated: ((_ view: View) -> Void)? = nil, completion: Completion = nil) {
@@ -513,7 +543,7 @@ public class SpotsControllerManager {
 
       let previousContentOffset = controller.scrollView.contentOffset
 
-      strongSelf.reloadSpotsScrollView(controller: controller)
+      strongSelf.cleanUpComponentView(controller: controller)
       controller.setupComponents(animated: animated)
       controller.components.forEach { component in
         component.afterUpdate()
@@ -529,6 +559,7 @@ public class SpotsControllerManager {
   /// Reload with JSON
   ///
   ///- parameter json: A JSON dictionary that gets parsed into UI elements
+  ///- parameter controller: A SpotsController instance.
   ///- parameter animated: An animation closure that can be used to perform custom animations when reloading
   ///- parameter completion: A closure that will be run after reload has been performed on all components
   public func reload(json: [String : Any], controller: SpotsController, animated: ((_ view: View) -> Void)? = nil, completion: Completion = nil) {
@@ -547,7 +578,7 @@ public class SpotsControllerManager {
 
       let previousContentOffset = controller.scrollView.contentOffset
 
-      strongSelf.reloadSpotsScrollView(controller: controller)
+      strongSelf.cleanUpComponentView(controller: controller)
       controller.setupComponents(animated: animated)
       controller.components.forEach { component in
         component.afterUpdate()
@@ -561,10 +592,11 @@ public class SpotsControllerManager {
   }
 
   /**
-   - parameter componentAtIndex: The index of the component that you want to perform updates on
-   - parameter animation: A Animation struct that determines which animation that should be used to perform the update
-   - parameter completion: A completion closure that is performed when the update is completed
-   - parameter closure: A transform closure to perform the proper modification to the target component before updating the internals
+   - parameter componentAtIndex: The index of the component that you want to perform updates on.
+   - parameter controller: A SpotsController instance.
+   - parameter animation: A Animation struct that determines which animation that should be used to perform the update.
+   - parameter completion: A completion closure that is performed when the update is completed.
+   - parameter closure: A transform closure to perform the proper modification to the target component before updating the internals.
    */
   public func update(componentAtIndex index: Int = 0, controller: SpotsController, withAnimation animation: Animation = .automatic, withCompletion completion: Completion = nil, _ closure: (_ component: Component) -> Void) {
     guard let component = controller.component(at: index) else {
@@ -600,6 +632,7 @@ public class SpotsControllerManager {
    Updates component only if the passed view models are not the same with the current ones.
 
    - parameter componentAtIndex: The index of the component that you want to perform updates on
+   - parameter controller: A SpotsController instance.
    - parameter items: An array of view models
    - parameter animation: A Animation struct that determines which animation that should be used to perform the update
    - parameter completion: A completion closure that is run when the update is completed
@@ -621,6 +654,7 @@ public class SpotsControllerManager {
   /**
    - parameter item: The view model that you want to append
    - parameter componentIndex: The index of the component that you want to append to, defaults to 0
+   - parameter controller: A SpotsController instance.
    - parameter animation: A Animation struct that determines which animation that should be used to perform the update
    - parameter completion: A completion closure that will run after the component has performed updates internally
    */
@@ -635,6 +669,7 @@ public class SpotsControllerManager {
   /**
    - parameter items: A collection of view models
    - parameter componentIndex: The index of the component that you want to append to, defaults to 0
+   - parameter controller: A SpotsController instance.
    - parameter animation: A Animation struct that determines which animation that should be used to perform the update
    - parameter completion: A completion closure that will run after the component has performed updates internally
    */
@@ -649,6 +684,7 @@ public class SpotsControllerManager {
   /**
    - parameter items: A collection of view models
    - parameter componentIndex: The index of the component that you want to prepend to, defaults to 0
+   - parameter controller: A SpotsController instance.
    - parameter animation: A Animation struct that determines which animation that should be used to perform the update
    - parameter completion: A completion closure that will run after the component has performed updates internally
    */
@@ -664,6 +700,7 @@ public class SpotsControllerManager {
    - parameter item: The view model that you want to insert
    - parameter index: The index that you want to insert the view model at
    - parameter componentIndex: The index of the component that you want to insert into
+   - parameter controller: A SpotsController instance.
    - parameter animation: A Animation struct that determines which animation that should be used to perform the update
    - parameter completion: A completion closure that will run after the component has performed updates internally
    */
@@ -680,6 +717,7 @@ public class SpotsControllerManager {
   /// - parameter item:       The view model that you want to update.
   /// - parameter index:      The index that you want to insert the view model at.
   /// - parameter componentIndex:  The index of the component that you want to update into.
+  /// - parameter controller: A SpotsController instance.
   /// - parameter animation:  A Animation struct that determines which animation that should be used to perform the update.
   /// - parameter completion: A completion closure that will run after the component has performed updates internally.
   public func update(_ item: Item, index: Int = 0, componentIndex: Int, controller: SpotsController, withAnimation animation: Animation = .none, completion: Completion = nil) {
@@ -709,6 +747,7 @@ public class SpotsControllerManager {
   /**
    - parameter indexes: An integer array of indexes that you want to update
    - parameter componentIndex: The index of the component that you want to update into
+   - parameter controller: A SpotsController instance.
    - parameter animation: A Animation struct that determines which animation that should be used to perform the update
    - parameter completion: A completion closure that will run after the component has performed updates internally
    */
@@ -722,6 +761,7 @@ public class SpotsControllerManager {
   /**
    - parameter index: The index of the view model that you want to remove
    - parameter componentIndex: The index of the component that you want to remove into
+   - parameter controller: A SpotsController instance.
    - parameter animation: A Animation struct that determines which animation that should be used to perform the update
    - parameter completion: A completion closure that will run after the component has performed updates internally
    */
@@ -735,6 +775,7 @@ public class SpotsControllerManager {
   /**
    - parameter indexes: A collection of indexes for view models that you want to remove
    - parameter componentIndex: The index of the component that you want to remove into
+   - parameter controller: A SpotsController instance.
    - parameter animation: A Animation struct that determines which animation that should be used to perform the update
    - parameter completion: A completion closure that will run after the component has performed updates internally
    */
@@ -745,12 +786,18 @@ public class SpotsControllerManager {
     controller.component(at: componentIndex)?.refreshIndexes()
   }
 
-  fileprivate func reloadSpotsScrollView(controller: SpotsController) {
+  /// Remove all views from components view.
+  ///
+  /// - Parameter controller: A SpotsController instance.
+  fileprivate func cleanUpComponentView(controller: SpotsController) {
     controller.scrollView.componentsView.subviews.forEach {
       $0.removeFromSuperview()
     }
   }
 
+  /// Complete updates for controller.
+  ///
+  /// - Parameter controller: A SpotsController instance.
   fileprivate func completeUpdates(controller: SpotsController) {
     for component in controller.components {
       component.afterUpdate()
