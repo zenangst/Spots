@@ -41,6 +41,9 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
   /// Initial content offset for Controller, defaults to UIEdgeInsetsZero.
   open fileprivate(set) var initialInset: UIEdgeInsets = UIEdgeInsets.zero
 
+  /// A manager that handles the updating logic for the current controller.
+  public var manager: SpotsControllerManager = SpotsControllerManager()
+
   /// A collection of components.
   open var components: [Component] {
     didSet { componentsDidChange() }
@@ -156,25 +159,6 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
 
     // http://stackoverflow.com/questions/3686803/uiscrollview-exc-bad-access-crash-in-ios-sdk
     scrollView.delegate = nil
-  }
-
-  ///  A generic look up method for resolving components based on index
-  ///
-  /// - parameter index: The index of the component that you are trying to resolve.
-  /// - parameter type: The generic type for the component you are trying to resolve.
-  ///
-  /// - returns: An optional Component object of inferred type.
-  open func component<T>(at index: Int = 0, ofType type: T.Type) -> T? {
-    return components.filter({ $0.model.index == index }).first as? T
-  }
-
-  /// A look up method for resolving a component at index as a component.
-  ///
-  /// - parameter index: The index of the component that you are trying to resolve.
-  ///
-  /// - returns: An optional component.
-  open func component(at index: Int = 0) -> Component? {
-    return components.filter({ $0.model.index == index }).first
   }
 
   /// A generic look up method for resolving components using a closure

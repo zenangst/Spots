@@ -19,6 +19,9 @@ open class SpotsController: NSViewController, SpotsProtocol {
     }
   }
 
+  /// A manager that handles the updating logic for the current controller.
+  public var manager: SpotsControllerManager = SpotsControllerManager()
+
   public var contentView: View {
     return view
   }
@@ -115,15 +118,6 @@ open class SpotsController: NSViewController, SpotsProtocol {
    */
   public required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
-  }
-
-  /// A look up method for resolving a component at index as a component.
-  ///
-  /// - parameter index: The index of the component that you are trying to resolve.
-  ///
-  /// - returns: An optional component.
-  open func component(at index: Int = 0) -> Component? {
-    return components.filter({ $0.model.index == index }).first
   }
 
   /**

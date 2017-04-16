@@ -18,6 +18,8 @@ public protocol SpotsProtocol: class {
   var delegate: ComponentDelegate? { get }
   /// A collection of components.
   var components: [Component] { get set }
+  /// A manager that handles the updating logic for the current controller.
+  var manager: SpotsControllerManager { get set }
   /// An array of refresh position to avoid calling multiple refreshes
   var refreshPositions: [CGFloat] { get set }
   /// A view controller view
