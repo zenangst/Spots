@@ -876,4 +876,12 @@ class SpotsControllerTests: XCTestCase {
 
     waitForExpectations(timeout: 10.0, handler: nil)
   }
+
+  func testComponentAtIndex() {
+    let model = ComponentModel(kind: .list)
+    let component = Component(model: model)
+    let controller = SpotsController(components: [component])
+
+    XCTAssertEqual(controller.component(at: 0), component)
+  }
 }
