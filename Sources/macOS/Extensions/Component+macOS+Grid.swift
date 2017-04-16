@@ -33,7 +33,12 @@ extension Component {
       layout(with: size)
       prepareItems(clean: false)
     case .end:
-      layout(with: size)
+      if model.interaction.scrollDirection == .horizontal {
+        prepareItems(clean: false)
+        layout(with: size)
+      } else {
+        layout(with: size)
+      }
     }
   }
 }

@@ -59,12 +59,11 @@ extension Component {
   func resizeTableView(_ tableView: TableView, with size: CGSize, type: ComponentResize) {
     switch type {
     case .live:
-      layout(with: size)
+      prepareItems(clean: false)
       tableView.beginUpdates()
-      for (index, _) in model.items.enumerated() {
-        configureItem(at: index, usesViewSize: false)
-      }
+      tableView.reloadSection(0, withAnimation: .none, completion: nil)
       tableView.endUpdates()
+      layout(with: size)
     case .end:
       layoutTableView(tableView, with: size)
     }
