@@ -1,22 +1,9 @@
 import Tailor
 
-// MARK: - Array
-
-public extension Array where Element : Indexable {
-
-  mutating func refreshIndexes() {
-    enumerated().forEach {
-      self[$0.offset].index = $0.offset
-    }
-  }
-}
-
-// MARK: - Dictionary
-
 /**
  A dictionary extension to work with custom Key type
  */
-extension Dictionary where Key: ExpressibleByStringLiteral {
+public extension Dictionary where Key: ExpressibleByStringLiteral {
 
   /**
    - parameter name: The name of the property that you want to map
@@ -47,29 +34,5 @@ extension Dictionary where Key: ExpressibleByStringLiteral {
       }
       return self[key]
     }
-  }
-}
-
-// MARK: - Mappable
-
-extension Mappable {
-
-  /**
-   - returns: A key-value dictionary.
-   */
-  var metaProperties: [String : Any] {
-    var properties = [String: Any]()
-
-    for tuple in Mirror(reflecting: self).children {
-      guard let key = tuple.label else { continue }
-
-      if let value = Mirror(reflecting: tuple.value).descendant("Some") {
-        properties[key] = value
-      } else {
-        properties[key] = tuple.value
-      }
-    }
-
-    return properties
   }
 }
