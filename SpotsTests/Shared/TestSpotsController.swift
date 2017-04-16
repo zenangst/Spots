@@ -857,53 +857,6 @@ class SpotsControllerTests: XCTestCase {
     waitForExpectations(timeout: 10.0, handler: nil)
   }
 
-  func testSpotsDidReloadComponentModels() {
-    let initialComponentModels = [
-      ComponentModel(
-        kind: .list,
-        layout: Layout(span: 1.0),
-        items: [
-          Item(title: "Fullname", subtitle: "Job title", kind: "image"),
-          Item(title: "Follow", kind: "toggle", meta: ["dynamic-height": true]),
-          Item(title: "First name", subtitle: "Input first name", kind: "info"),
-          Item(title: "Last name", subtitle: "Input last name", kind: "info"),
-          Item(title: "Twitter", subtitle: "@twitter", kind: "info"),
-          Item(title: "", subtitle: "Biography", kind: "core", meta: ["dynamic-height": true])
-        ]
-      )
-    ]
-
-    let newComponentModels = [
-      ComponentModel(
-        kind: .list,
-        layout: Layout(span: 1.0),
-        items: [
-          Item(title: "Fullname", subtitle: "Job title", text: "Bot", kind: "image"),
-          Item(title: "Follow", kind: "toggle", meta: ["dynamic-height": true]),
-          Item(title: "First name", subtitle: "Input first name", text: "John", kind: "info"),
-          Item(title: "Last name", subtitle: "Input last name", text: "Hyperseed", kind: "info"),
-          Item(title: "Twitter", subtitle: "@johnhyperseed", kind: "info"),
-          Item(subtitle: "Biography", text: "John Hyperseed is a bot", kind: "core", meta: ["dynamic-height": true])
-        ]
-      )
-    ]
-
-    let expectation = self.expectation(description: "Wait for componentsDidReloadComponentModels to be called")
-
-    SpotsController.componentsDidReloadComponentModels = { controller in
-      XCTAssert(true)
-      expectation.fulfill()
-    }
-
-    let components = initialComponentModels.map { Component(model: $0) }
-    let controller = SpotsController(components: components)
-
-    controller.prepareController()
-    controller.reloadIfNeeded(newComponentModels)
-
-    waitForExpectations(timeout: 10.0, handler: nil)
-  }
-
   func testReloadWithComponentModels() {
     let controller = SpotsController(components: [])
     let expectation = self.expectation(description: "Wait reload to complete")
