@@ -7,7 +7,7 @@
 import Cache
 
 #if DEVMODE
-  public extension SpotsProtocol {
+  public extension SpotsController {
 
     /// Monitor changes made to a file at file path.
     ///
