@@ -400,4 +400,47 @@ class TestSpotsControllerManager: XCTestCase {
 
     waitForExpectations(timeout: 10.0, handler: nil)
   }
+
+  func testReloadWithMoreItems() {
+    let newItems = [Item(title: "foo"), Item(title: "bar"), Item(title: "baz")]
+    var newComponent = controller.components[0].model
+    newComponent.items.append(contentsOf: newItems)
+
+    let expectation = self.expectation(description: "Wait for exception to be fulfilled.")
+    controller.reloadIfNeeded([newComponent]) {
+      let items = [
+        Item(title: "foo"),
+        Item(title: "bar"),
+        Item(title: "baz"),
+        Item(title: "foo"),
+        Item(title: "bar"),
+        Item(title: "baz")
+      ]
+      XCTAssertTrue(self.controller.components[0].model.items == items)
+
+      newComponent.items = []
+      self.controller.reloadIfNeeded([newComponent]) {
+        XCTAssertTrue(self.controller.components[0].model.items.isEmpty)
+
+        let items = [
+          Item(title: "foo"),
+          Item(title: "bar"),
+          Item(title: "baz")
+        ]
+        newComponent.items = items
+        self.controller.reloadIfNeeded([newComponent]) {
+
+          let items = [
+            Item(title: "foo"),
+            Item(title: "bar"),
+            Item(title: "baz")
+          ]
+          XCTAssertTrue(self.controller.components[0].model.items == items)
+
+          expectation.fulfill()
+        }
+      }
+    }
+    waitForExpectations(timeout: 10.0, handler: nil)
+  }
 }
