@@ -120,15 +120,6 @@ open class SpotsController: NSViewController, SpotsProtocol {
     fatalError("init(coder:) has not been implemented")
   }
 
-  /// A look up method for resolving a component at index as a component.
-  ///
-  /// - parameter index: The index of the component that you are trying to resolve.
-  ///
-  /// - returns: An optional component.
-  open func component(at index: Int = 0) -> Component? {
-    return components.filter({ $0.model.index == index }).first
-  }
-
   /**
    A generic look up method for resolving components using a closure
 

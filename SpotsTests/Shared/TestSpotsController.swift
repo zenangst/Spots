@@ -878,10 +878,14 @@ class SpotsControllerTests: XCTestCase {
   }
 
   func testComponentAtIndex() {
-    let model = ComponentModel(kind: .list)
-    let component = Component(model: model)
-    let controller = SpotsController(components: [component])
+    let listModel = ComponentModel(kind: .list)
+    let gridModel = ComponentModel(kind: .grid)
+    let listComponent = Component(model: listModel)
+    let gridComponent = Component(model: gridModel)
+    let controller = SpotsController(components: [listComponent, gridComponent])
 
-    XCTAssertEqual(controller.component(at: 0), component)
+    XCTAssertEqual(controller.component(at: 0), listComponent)
+    XCTAssertEqual(controller.component(at: 1), gridComponent)
+    XCTAssertEqual(controller.component(at: 2), nil)
   }
 }

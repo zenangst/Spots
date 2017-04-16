@@ -161,25 +161,6 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
     scrollView.delegate = nil
   }
 
-  ///  A generic look up method for resolving components based on index
-  ///
-  /// - parameter index: The index of the component that you are trying to resolve.
-  /// - parameter type: The generic type for the component you are trying to resolve.
-  ///
-  /// - returns: An optional Component object of inferred type.
-  open func component<T>(at index: Int = 0, ofType type: T.Type) -> T? {
-    return components.filter({ $0.model.index == index }).first as? T
-  }
-
-  /// A look up method for resolving a component at index as a component.
-  ///
-  /// - parameter index: The index of the component that you are trying to resolve.
-  ///
-  /// - returns: An optional component.
-  open func component(at index: Int = 0) -> Component? {
-    return components.filter({ $0.model.index == index }).first
-  }
-
   /// A generic look up method for resolving components using a closure
   ///
   /// - parameter closure: A closure to perform actions on a component.
