@@ -43,7 +43,6 @@ extension Component {
       collectionView.frame.size.height += CGFloat(layout.inset.top + layout.inset.bottom)
       documentView.frame.size.height += CGFloat(layout.inset.top + layout.inset.bottom)
       documentView.frame.size.width += CGFloat(layout.inset.left + layout.inset.right)
-      documentView.frame.size.width += collectionViewLayout.minimumLineSpacing * CGFloat(model.items.count - 1)
     }
 
     scrollView.frame.size.width = size.width
@@ -52,5 +51,16 @@ extension Component {
 
     collectionViewLayout.prepare()
     collectionViewLayout.invalidateLayout()
+  }
+
+  func resizeHorizontalCollectionView(_ collectionView: CollectionView, with size: CGSize, type: ComponentResize) {
+    switch type {
+    case .live:
+      layout(with: size)
+      prepareItems(clean: false)
+    case .end:
+      layout(with: size)
+      prepareItems(clean: false)
+    }
   }
 }

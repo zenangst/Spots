@@ -27,18 +27,13 @@ extension Component {
     }
   }
 
-  func resizeCollectionView(_ collectionView: CollectionView, with size: CGSize, type: ComponentResize) {
+  func resizeVerticalCollectionView(_ collectionView: CollectionView, with size: CGSize, type: ComponentResize) {
     switch type {
     case .live:
       layout(with: size)
       prepareItems(clean: false)
     case .end:
-      if model.interaction.scrollDirection == .horizontal {
-        prepareItems(clean: false)
-        layout(with: size)
-      } else {
-        layout(with: size)
-      }
+      layout(with: size)
     }
   }
 }

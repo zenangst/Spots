@@ -293,6 +293,14 @@ import Tailor
     }
   }
 
+  fileprivate func resizeCollectionView(_ collectionView: CollectionView, with size: CGSize, type: ComponentResize) {
+    if model.kind == .carousel {
+      resizeHorizontalCollectionView(collectionView, with: size, type: type)
+    } else {
+      resizeVerticalCollectionView(collectionView, with: size, type: type)
+    }
+  }
+
   /// Register a default item as fallback, only if it is not already defined.
   ///
   /// - Parameter view: The view that should be registred as the default view.
@@ -341,37 +349,10 @@ import Tailor
   /// - Parameter indexPath: The index path of the item that should be resolved.
   /// - Returns: A `CGSize` based of the `Item`'s width and height.
   public func sizeForItem(at indexPath: IndexPath) -> CGSize {
-    if let collectionView = collectionView,
-      model.interaction.scrollDirection == .horizontal {
-      var width: CGFloat
-
-      if let layout = model.layout {
-        width = layout.span > 0
-          ? collectionView.frame.width / CGFloat(layout.span)
-          : collectionView.frame.width
-      } else {
-        width = collectionView.frame.width
-      }
-
-      if let layout = collectionView.collectionViewLayout as? NSCollectionViewFlowLayout {
-        width -= layout.sectionInset.left - layout.sectionInset.right
-        width -= layout.minimumInteritemSpacing
-        width -= layout.minimumLineSpacing
-      }
-
-      if model.items[indexPath.item].size.width == 0.0 {
-        model.items[indexPath.item].size.width = width
-      }
-
-      return CGSize(
-        width: ceil(model.items[indexPath.item].size.width),
-        height: ceil(model.items[indexPath.item].size.height))
-    } else {
-      return CGSize(
-        width:  item(at: indexPath)?.size.width  ?? 0.0,
-        height: item(at: indexPath)?.size.height ?? 0.0
-      )
-    }
+    return CGSize(
+      width:  item(at: indexPath)?.size.width  ?? 0.0,
+      height: item(at: indexPath)?.size.height ?? 0.0
+    )
   }
 
   public func didResize(size: CGSize, type: ComponentResize) {
