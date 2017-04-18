@@ -2,7 +2,7 @@
 import Foundation
 import XCTest
 
-class TestDelegate: ComponentDelegate {
+class MockComponentiOSDelegate: ComponentDelegate {
   var countsInvoked = 0
 
   func component(_ component: Component, itemSelected item: Item) {
@@ -11,12 +11,12 @@ class TestDelegate: ComponentDelegate {
   }
 }
 
-class DelegateTests: XCTestCase {
+class ComponentDelegateiOSTests: XCTestCase {
 
   // MARK: - UICollectionView
 
   func testCollectionViewDelegateSelection() {
-    let delegate = TestDelegate()
+    let delegate = MockComponentiOSDelegate()
     let component = Component(model: ComponentModel(kind: .grid, layout: Layout(span: 1), items: [
       Item(title: "title 1")
       ]))
@@ -51,7 +51,7 @@ class DelegateTests: XCTestCase {
   // MARK: - UITableView
 
   func testTableViewDelegateSelection() {
-    let delegate = TestDelegate()
+    let delegate = MockComponentiOSDelegate()
     let component = Component(model: ComponentModel(kind: .list, layout: Layout(span: 1), items: [
       Item(title: "title 1")
       ]))

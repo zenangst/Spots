@@ -37,6 +37,11 @@ extension Delegate: UICollectionViewDelegate {
     }
 
     let view = (cell as? Wrappable)?.wrappedView ?? cell
+
+    if let itemConfigurable = view as? ItemConfigurable {
+      component.configure?(itemConfigurable)
+    }
+
     component.delegate?.component(component, willDisplay: view, item: item)
   }
 
@@ -177,6 +182,11 @@ extension Delegate: UITableViewDelegate {
     }
 
     let view = (cell as? Wrappable)?.wrappedView ?? cell
+
+    if let itemConfigurable = view as? ItemConfigurable {
+      component.configure?(itemConfigurable)
+    }
+
     component.delegate?.component(component, willDisplay: view, item: item)
   }
 

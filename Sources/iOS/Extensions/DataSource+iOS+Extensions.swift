@@ -14,8 +14,6 @@ extension DataSource {
         if component.model.items[index].size.height == 0.0 {
           component.model.items[index].size = configurableView.preferredViewSize
         }
-
-        component.configure?(configurableView)
       } else {
         component.model.items[index].size.height = wrappedView.frame.size.height
       }

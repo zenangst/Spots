@@ -2,6 +2,8 @@
 import Foundation
 import XCTest
 
+class ComponentDelegateMock: ComponentDelegate {}
+
 class SpotsControllerTests: XCTestCase {
 
   func testSpotAtIndex() {
@@ -887,5 +889,18 @@ class SpotsControllerTests: XCTestCase {
     XCTAssertEqual(controller.component(at: 0), listComponent)
     XCTAssertEqual(controller.component(at: 1), gridComponent)
     XCTAssertEqual(controller.component(at: 2), nil)
+  }
+
+  func testUpdatingDelegates() {
+    let listModel = ComponentModel(kind: .list)
+    let gridModel = ComponentModel(kind: .grid)
+    let listComponent = Component(model: listModel)
+    let gridComponent = Component(model: gridModel)
+    let controller = SpotsController(components: [listComponent, gridComponent])
+    let mockDelegate = ComponentDelegateMock()
+    controller.delegate = mockDelegate
+
+    XCTAssertTrue(mockDelegate === listComponent.delegate!)
+    XCTAssertTrue(mockDelegate === gridComponent.delegate!)
   }
 }
