@@ -33,6 +33,11 @@ extension Delegate: NSCollectionViewDelegate {
       else {
         return
     }
+
+    if let itemConfigurable = view as? ItemConfigurable {
+      component.configure?(itemConfigurable)
+    }
+
     component.delegate?.component(component, willDisplay: view, item: item)
   }
 
@@ -120,12 +125,20 @@ extension Delegate: NSTableViewDelegate {
 
       view.configure(&component.model.items[row], compositeComponents: components)
     case let view as NSTableRowView:
-      (view as? ItemConfigurable)?.configure(&component.model.items[row])
+      if let itemConfigurable = view as? ItemConfigurable {
+        itemConfigurable.configure(&component.model.items[row])
+        component.configure?(itemConfigurable)
+      }
     default:
       if let view = resolvedView, !(view is NSTableRowView) {
         let wrapper = ListWrapper()
         wrapper.configure(with: view)
-        (view as? ItemConfigurable)?.configure(&component.model.items[row])
+
+        if let itemConfigurable = view as? ItemConfigurable {
+          itemConfigurable.configure(&component.model.items[row])
+          component.configure?(itemConfigurable)
+        }
+
         resolvedView = wrapper
       }
     }
@@ -145,6 +158,7 @@ extension Delegate: NSTableViewDelegate {
     }
 
     let view = (cell as? Wrappable)?.wrappedView ?? cell
+
     component.delegate?.component(component, willDisplay: view, item: item)
   }
 
