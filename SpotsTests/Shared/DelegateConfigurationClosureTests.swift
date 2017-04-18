@@ -41,7 +41,6 @@ class DelegateConfigurationClosureTests: XCTestCase {
 
     var invocations: Int = 0
 
-    /// Verify that the configuration closure is called again when you reassign it.
     component.configure = { item in
       invocations += 1
     }
@@ -49,6 +48,7 @@ class DelegateConfigurationClosureTests: XCTestCase {
     component.setup(with: CGSize(width: 200, height: 200))
     XCTAssertEqual(invocations, 3)
 
+    /// Verify that the configuration closure is called again when you reassign it.
     component.configure = { item in
       invocations += 1
     }
