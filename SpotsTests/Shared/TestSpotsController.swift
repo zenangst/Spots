@@ -2,7 +2,7 @@
 import Foundation
 import XCTest
 
-class MockComponentDelegate: NSObject, ComponentDelegate {}
+class MockComponentDelegate: ComponentDelegate {}
 
 class SpotsControllerTests: XCTestCase {
 
@@ -900,7 +900,7 @@ class SpotsControllerTests: XCTestCase {
     let mockDelegate = MockComponentDelegate()
     controller.delegate = mockDelegate
 
-    XCTAssertTrue(mockDelegate.isEqual(listComponent.delegate!))
-    XCTAssertTrue(mockDelegate.isEqual(gridComponent.delegate!))
+    XCTAssertTrue(mockDelegate === listComponent.delegate!)
+    XCTAssertTrue(mockDelegate === gridComponent.delegate!)
   }
 }
