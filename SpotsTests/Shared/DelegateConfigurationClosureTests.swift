@@ -1,9 +1,9 @@
 import XCTest
 import Spots
 
-class TestDelegate: XCTestCase {
+class DelegateConfigurationClosureTests: XCTestCase {
 
-  func testWillDisplayInList() {
+  func testConfigureCalledOncePerSetupInListComponent() {
     let items = [
       Item(title: "foo"),
       Item(title: "bar"),
@@ -22,6 +22,7 @@ class TestDelegate: XCTestCase {
 
     XCTAssertEqual(invocations, 3)
 
+    /// Verify that the configuration closure is called again when you reassign it.
     component.configure = { item in
       invocations += 1
     }
@@ -29,7 +30,7 @@ class TestDelegate: XCTestCase {
     XCTAssertEqual(invocations, 6)
   }
 
-  func testWillDisplayInGrid() {
+  func testConfigureCalledOncePerSetupInGridComponent() {
     let items = [
       Item(title: "foo"),
       Item(title: "bar"),
@@ -40,6 +41,7 @@ class TestDelegate: XCTestCase {
 
     var invocations: Int = 0
 
+    /// Verify that the configuration closure is called again when you reassign it.
     component.configure = { item in
       invocations += 1
     }

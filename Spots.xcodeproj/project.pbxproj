@@ -40,9 +40,9 @@
 		BD24030C1E4B981A005BAA19 /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD24030B1E4B981A005BAA19 /* Component.swift */; };
 		BD24030D1E4B981A005BAA19 /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD24030B1E4B981A005BAA19 /* Component.swift */; };
 		BD2403111E4B9A02005BAA19 /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2403101E4B9A02005BAA19 /* Component.swift */; };
-		BD31BB9D1EA6209C00D1FC8A /* TestDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD31BB991EA6208600D1FC8A /* TestDelegate.swift */; };
-		BD31BB9E1EA6209D00D1FC8A /* TestDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD31BB991EA6208600D1FC8A /* TestDelegate.swift */; };
-		BD31BB9F1EA6209E00D1FC8A /* TestDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD31BB991EA6208600D1FC8A /* TestDelegate.swift */; };
+		BD31BB9D1EA6209C00D1FC8A /* DelegateConfigurationClosureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD31BB991EA6208600D1FC8A /* DelegateConfigurationClosureTests.swift */; };
+		BD31BB9E1EA6209D00D1FC8A /* DelegateConfigurationClosureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD31BB991EA6208600D1FC8A /* DelegateConfigurationClosureTests.swift */; };
+		BD31BB9F1EA6209E00D1FC8A /* DelegateConfigurationClosureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD31BB991EA6208600D1FC8A /* DelegateConfigurationClosureTests.swift */; };
 		BD4295551D81D39700E07E1C /* TestComponentiOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4295541D81D39700E07E1C /* TestComponentiOS.swift */; };
 		BD42CA851E4C9B2600A86E3B /* TestSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD42CA841E4C9B2600A86E3B /* TestSpot.swift */; };
 		BD42CA861E4C9B2600A86E3B /* TestSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD42CA841E4C9B2600A86E3B /* TestSpot.swift */; };
@@ -411,7 +411,7 @@
 		BD21C2511E4358B900FE2B26 /* TestGridableLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestGridableLayout.swift; sourceTree = "<group>"; };
 		BD24030B1E4B981A005BAA19 /* Component.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
 		BD2403101E4B9A02005BAA19 /* Component.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
-		BD31BB991EA6208600D1FC8A /* TestDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestDelegate.swift; sourceTree = "<group>"; };
+		BD31BB991EA6208600D1FC8A /* DelegateConfigurationClosureTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DelegateConfigurationClosureTests.swift; sourceTree = "<group>"; };
 		BD4295541D81D39700E07E1C /* TestComponentiOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestComponentiOS.swift; sourceTree = "<group>"; };
 		BD42CA841E4C9B2600A86E3B /* TestSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSpot.swift; sourceTree = "<group>"; };
 		BD45D9861E30906300C2D6B2 /* TestLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestLayout.swift; sourceTree = "<group>"; };
@@ -1026,22 +1026,22 @@
 		D584782A1C43FF34006EBA49 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				BD31BB991EA6208600D1FC8A /* DelegateConfigurationClosureTests.swift */,
 				BD677E8E1DC65D63006D1654 /* Helpers.swift */,
+				BD677E841DC616B2006D1654 /* TestComponent.swift */,
+				BDE44B121EA0F0C90021EAC8 /* TestComponentManager.swift */,
 				D584782B1C43FF34006EBA49 /* TestComponentModel.swift */,
 				BD6FBEEF1E12B5F000AA58BD /* TestComposition.swift */,
-				BD677E841DC616B2006D1654 /* TestComponent.swift */,
 				BD45D9941E30A8A000C2D6B2 /* TestInset.swift */,
 				BDEA327E1E87A6FF0044B056 /* TestInteraction.swift */,
 				BDB8D5921E4DFADC00220BC3 /* TestItem.swift */,
 				BD45D9861E30906300C2D6B2 /* TestLayout.swift */,
 				BD01BD0D1DAEA464009C10FF /* TestParser.swift */,
 				BDCFCD401DCA7EFF0047E84C /* TestSpotsController.swift */,
+				BD798EF71EA2A1320069EFB7 /* TestSpotsControllerManager.swift */,
 				BD677E881DC61EFC006D1654 /* TestStateCache.swift */,
 				BDCA3CF21E8295EB00A98A76 /* TestUserInterface.swift */,
 				BD10D5211D79533C00DF8E9B /* TestViewModelExtensions.swift */,
-				BDE44B121EA0F0C90021EAC8 /* TestComponentManager.swift */,
-				BD798EF71EA2A1320069EFB7 /* TestSpotsControllerManager.swift */,
-				BD31BB991EA6208600D1FC8A /* TestDelegate.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -1602,7 +1602,7 @@
 				BD6FBEF21E12B5F000AA58BD /* TestComposition.swift in Sources */,
 				BDD9ABCC1DB533CE005D8C04 /* TestGridComposite.swift in Sources */,
 				BD45D9971E30A8A000C2D6B2 /* TestInset.swift in Sources */,
-				BD31BB9F1EA6209E00D1FC8A /* TestDelegate.swift in Sources */,
+				BD31BB9F1EA6209E00D1FC8A /* DelegateConfigurationClosureTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1734,7 +1734,7 @@
 				BD677E891DC61EFC006D1654 /* TestStateCache.swift in Sources */,
 				BD677E8F1DC65D63006D1654 /* Helpers.swift in Sources */,
 				BD01BD111DAEA522009C10FF /* TestParser.swift in Sources */,
-				BD31BB9D1EA6209C00D1FC8A /* TestDelegate.swift in Sources */,
+				BD31BB9D1EA6209C00D1FC8A /* DelegateConfigurationClosureTests.swift in Sources */,
 				BD01BD181DAEA7FC009C10FF /* TestListComposite.swift in Sources */,
 				BD5FE3461EA6222D0008749C /* TestComponentDelegate+iOS.swift in Sources */,
 				BD677E8D1DC62575006D1654 /* TestUIViewControllerExtensions.swift in Sources */,
@@ -1851,7 +1851,7 @@
 				BDEA32801E87A6FF0044B056 /* TestInteraction.swift in Sources */,
 				BD165A391E6EAD750023AF82 /* HelperViews.swift in Sources */,
 				BD9AB9F61E44AD9700085677 /* TestComponent.swift in Sources */,
-				BD31BB9E1EA6209D00D1FC8A /* TestDelegate.swift in Sources */,
+				BD31BB9E1EA6209D00D1FC8A /* DelegateConfigurationClosureTests.swift in Sources */,
 				BDCFCD421DCA7EFF0047E84C /* TestSpotsController.swift in Sources */,
 				BDE44B171EA0F0E50021EAC8 /* TestComponentManager.swift in Sources */,
 				BD165A371E6EAAA60023AF82 /* TestSpot.swift in Sources */,
