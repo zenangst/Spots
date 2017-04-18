@@ -2,7 +2,7 @@
 import Foundation
 import XCTest
 
-class MockComponentDelegate: ComponentDelegate {}
+class ComponentDelegateMock: ComponentDelegate {}
 
 class SpotsControllerTests: XCTestCase {
 
@@ -897,7 +897,7 @@ class SpotsControllerTests: XCTestCase {
     let listComponent = Component(model: listModel)
     let gridComponent = Component(model: gridModel)
     let controller = SpotsController(components: [listComponent, gridComponent])
-    let mockDelegate = MockComponentDelegate()
+    let mockDelegate = ComponentDelegateMock()
     controller.delegate = mockDelegate
 
     XCTAssertTrue(mockDelegate === listComponent.delegate!)
