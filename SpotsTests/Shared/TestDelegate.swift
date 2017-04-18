@@ -21,6 +21,12 @@ class TestDelegate: XCTestCase {
     component.setup(with: CGSize(width: 200, height: 200))
 
     XCTAssertEqual(invocations, 3)
+
+    component.configure = { item in
+      invocations += 1
+    }
+
+    XCTAssertEqual(invocations, 6)
   }
 
   func testWillDisplayInGrid() {
@@ -40,5 +46,11 @@ class TestDelegate: XCTestCase {
 
     component.setup(with: CGSize(width: 200, height: 200))
     XCTAssertEqual(invocations, 3)
+
+    component.configure = { item in
+      invocations += 1
+    }
+
+    XCTAssertEqual(invocations, 6)
   }
 }
