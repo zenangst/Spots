@@ -439,7 +439,7 @@ public extension Component {
   /// Update height and refresh indexes for the component.
   ///
   /// - parameter completion: A completion closure that will be run when the computations are complete.
-  public func sanitize(completion: Completion = nil) {
+  public func updateHeightAndIndexes(completion: Completion = nil) {
     updateHeight { [weak self] in
       self?.refreshIndexes()
       completion?()

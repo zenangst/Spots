@@ -9,21 +9,17 @@ public class ComponentManager {
   /// - parameter animation:  The animation that should be used (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue.
   public func append(item: Item, component: Component, withAnimation animation: Animation = .automatic, completion: Completion) {
-    Dispatch.main {
+    Dispatch.main { [weak self] in
       let numberOfItems = component.model.items.count
       component.model.items.append(item)
 
       if numberOfItems == 0 {
         component.userInterface?.reloadDataSource()
-        component.updateHeight { [weak self] in
-          self?.finishComponentOperation(component, sanitize: false, completion: completion)
-        }
+        self?.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
       } else {
         component.configureItem(at: numberOfItems, usesViewSize: true)
         component.userInterface?.insert([numberOfItems], withAnimation: animation) {
-          component.updateHeight { [weak self] in
-            self?.finishComponentOperation(component, sanitize: false, completion: completion)
-          }
+          self?.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
         }
       }
     }
@@ -36,7 +32,7 @@ public class ComponentManager {
   /// - parameter animation:  The animation that should be used (currently not in use)
   /// - parameter completion: A completion closure that is executed in the main queue.
   public func append(items: [Item], component: Component, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
-    Dispatch.main {
+    Dispatch.main { [weak self] in
       var indexes = [Int]()
       let numberOfItems = component.model.items.count
 
@@ -48,16 +44,12 @@ public class ComponentManager {
       }
 
       if numberOfItems > 0 {
-        component.userInterface?.insert(indexes, withAnimation: animation, completion: nil)
-        component.updateHeight {
-          component.view.superview?.layoutSubviews()
-          completion?()
+        component.userInterface?.insert(indexes, withAnimation: animation) {
+          self?.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
         }
       } else {
         component.userInterface?.reloadDataSource()
-        component.updateHeight { [weak self] in
-          self?.finishComponentOperation(component, sanitize: false, completion: completion)
-        }
+        self?.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
       }
     }
   }
@@ -84,11 +76,11 @@ public class ComponentManager {
 
       if !indexes.isEmpty {
         component.userInterface?.insert(indexes, withAnimation: animation) {
-          self?.finishComponentOperation(component, sanitize: true, completion: completion)
+          self?.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
         }
       } else {
         component.userInterface?.reloadDataSource()
-        self?.finishComponentOperation(component, sanitize: true, completion: completion)
+        self?.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
       }
     }
   }
@@ -114,11 +106,11 @@ public class ComponentManager {
       if numberOfItems > 0 {
         component.configureItem(at: numberOfItems, usesViewSize: true)
         component.userInterface?.insert(indexes, withAnimation: animation) {
-          self?.finishComponentOperation(component, sanitize: true, completion: completion)
+          self?.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
         }
       } else {
         component.userInterface?.reloadDataSource()
-        self?.finishComponentOperation(component, sanitize: true, completion: completion)
+        self?.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
       }
     }
   }
@@ -138,7 +130,7 @@ public class ComponentManager {
 
       component.model.items.remove(at: index)
       component.userInterface?.delete([index], withAnimation: animation) { [weak self] in
-        self?.finishComponentOperation(component, sanitize: true, completion: completion)
+        self?.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
       }
     }
   }
@@ -164,7 +156,7 @@ public class ComponentManager {
       }
 
       component.userInterface?.delete(indexPaths, withAnimation: animation) { [weak self] in
-        self?.finishComponentOperation(component, sanitize: true, completion: completion)
+        self?.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
       }
     }
   }
@@ -179,7 +171,7 @@ public class ComponentManager {
     Dispatch.main {
       component.model.items.remove(at: index)
       component.userInterface?.delete([index], withAnimation: animation) { [weak self] in
-        self?.finishComponentOperation(component, sanitize: true, completion: completion)
+        self?.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
       }
     }
   }
@@ -197,7 +189,7 @@ public class ComponentManager {
       }
 
       component.userInterface?.delete(indexes, withAnimation: animation) { [weak self] in
-        self?.finishComponentOperation(component, sanitize: true, completion: completion)
+        self?.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
       }
     }
   }
@@ -230,7 +222,7 @@ public class ComponentManager {
           }
         }
 
-        self?.finishComponentOperation(component, sanitize: false, completion: completion)
+        self?.finishComponentOperation(component, updateHeightAndIndexes: false, completion: completion)
         return
       } else {
         component.configureItem(at: index, usesViewSize: true)
@@ -244,15 +236,14 @@ public class ComponentManager {
           } else {
             component.userInterface?.reload([index], withAnimation: animation, completion: nil)
           }
-          component.updateHeight {
-            self?.finishComponentOperation(component, sanitize: false, completion: completion)
-          }
+
+          self?.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
           return
         } else if let cell: ItemConfigurable = component.userInterface?.view(at: index) {
           cell.configure(&component.model.items[index])
-          self?.finishComponentOperation(component, sanitize: false, completion: completion)
+          self?.finishComponentOperation(component, updateHeightAndIndexes: false, completion: completion)
         } else {
-          self?.finishComponentOperation(component, sanitize: false, completion: completion)
+          self?.finishComponentOperation(component, updateHeightAndIndexes: false, completion: completion)
         }
       }
     }
@@ -280,13 +271,13 @@ public class ComponentManager {
 
         if let indexes = indexes {
           component.userInterface?.reload(indexes, withAnimation: animation) {
-            self?.finishComponentOperation(component, sanitize: false, completion: completion)
+            self?.finishComponentOperation(component, updateHeightAndIndexes: false, completion: completion)
           }
           return
         } else {
           if animation != .none {
             component.userInterface?.reloadSection(0, withAnimation: animation) {
-              self?.finishComponentOperation(component, sanitize: false, completion: completion)
+              self?.finishComponentOperation(component, updateHeightAndIndexes: false, completion: completion)
             }
             return
           } else {
@@ -294,7 +285,7 @@ public class ComponentManager {
           }
         }
 
-        self?.finishComponentOperation(component, sanitize: false, completion: completion)
+        self?.finishComponentOperation(component, updateHeightAndIndexes: false, completion: completion)
       }
     }
   }
@@ -315,12 +306,12 @@ public class ComponentManager {
 
       if changes.updates.isEmpty {
         strongSelf.process(changes.updatedChildren, component: component, withAnimation: animation) {
-          strongSelf.finishComponentOperation(component, sanitize: false, completion: completion)
+          strongSelf.finishComponentOperation(component, updateHeightAndIndexes: false, completion: completion)
         }
       } else {
         strongSelf.process(changes.updates, component: component, withAnimation: animation) {
           strongSelf.process(changes.updatedChildren, component: component, withAnimation: animation) {
-            strongSelf.finishComponentOperation(component, sanitize: false, completion: completion)
+            strongSelf.finishComponentOperation(component, updateHeightAndIndexes: false, completion: completion)
           }
         }
       }
@@ -367,9 +358,7 @@ public class ComponentManager {
         }
 
         strongSelf.reload(indexes: indexes, component: component, withAnimation: animation) {
-          component.updateHeight { [weak self] in
-            self?.finishComponentOperation(component, sanitize: false, completion: completion)
-          }
+          strongSelf.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
         }
       }
     }
@@ -391,7 +380,7 @@ public class ComponentManager {
 
       component.model = newComponentModel
       component.reload(nil, withAnimation: animation) { [weak self] in
-        self?.finishComponentOperation(component, sanitize: false, completion: completion)
+        self?.finishComponentOperation(component, updateHeightAndIndexes: false, completion: completion)
       }
     }
   }
@@ -426,11 +415,11 @@ public class ComponentManager {
   ///
   /// - Parameters:
   ///   - component: A component object that has been modified.
-  ///   - sanitize: Determines if the indexes should be recalculated for the items.
+  ///   - updateHeightAndIndexes: Determines if the height and indexes should be refreshed.
   ///   - completion: A completion closure that is run when the operation is done.
-  private func finishComponentOperation(_ component: Component, sanitize: Bool, completion: Completion) {
-    if sanitize {
-      component.sanitize {
+  private func finishComponentOperation(_ component: Component, updateHeightAndIndexes: Bool, completion: Completion) {
+    if updateHeightAndIndexes {
+      component.updateHeightAndIndexes {
         component.afterUpdate()
         component.view.superview?.layoutSubviews()
         completion?()
