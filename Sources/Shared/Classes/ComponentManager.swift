@@ -9,25 +9,17 @@ public class ComponentManager {
   /// - parameter animation:  The animation that should be used (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue.
   public func append(item: Item, component: Component, withAnimation animation: Animation = .automatic, completion: Completion) {
-    Dispatch.main {
+    Dispatch.main { [weak self] in
       let numberOfItems = component.model.items.count
       component.model.items.append(item)
 
       if numberOfItems == 0 {
         component.userInterface?.reloadDataSource()
-        component.updateHeight {
-          component.afterUpdate()
-          completion?()
-        }
+        self?.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
       } else {
-        Dispatch.main {
-          component.configureItem(at: numberOfItems, usesViewSize: true)
-          component.userInterface?.insert([numberOfItems], withAnimation: animation, completion: nil)
-          component.updateHeight {
-            component.afterUpdate()
-            component.view.superview?.layoutSubviews()
-            completion?()
-          }
+        component.configureItem(at: numberOfItems, usesViewSize: true)
+        component.userInterface?.insert([numberOfItems], withAnimation: animation) {
+          self?.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
         }
       }
     }
@@ -40,7 +32,7 @@ public class ComponentManager {
   /// - parameter animation:  The animation that should be used (currently not in use)
   /// - parameter completion: A completion closure that is executed in the main queue.
   public func append(items: [Item], component: Component, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
-    Dispatch.main {
+    Dispatch.main { [weak self] in
       var indexes = [Int]()
       let numberOfItems = component.model.items.count
 
@@ -52,16 +44,12 @@ public class ComponentManager {
       }
 
       if numberOfItems > 0 {
-        component.userInterface?.insert(indexes, withAnimation: animation, completion: nil)
-        component.updateHeight {
-          completion?()
+        component.userInterface?.insert(indexes, withAnimation: animation) {
+          self?.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
         }
       } else {
         component.userInterface?.reloadDataSource()
-        component.updateHeight {
-          component.view.superview?.layoutSubviews()
-          completion?()
-        }
+        self?.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
       }
     }
   }
@@ -73,7 +61,7 @@ public class ComponentManager {
   /// - parameter animation:  A Animation that is used when performing the mutation (currently not in use)
   /// - parameter completion: A completion closure that is executed in the main queue.
   public func prepend(items: [Item], component: Component, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
-    Dispatch.main {
+    Dispatch.main { [weak self] in
       let numberOfItems = component.model.items.count
       var indexes = [Int]()
 
@@ -88,18 +76,11 @@ public class ComponentManager {
 
       if !indexes.isEmpty {
         component.userInterface?.insert(indexes, withAnimation: animation) {
-          component.afterUpdate()
-          component.sanitize {
-            completion?()
-          }
+          self?.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
         }
       } else {
         component.userInterface?.reloadDataSource()
-        component.afterUpdate()
-        component.sanitize {
-          component.view.superview?.layoutSubviews()
-          completion?()
-        }
+        self?.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
       }
     }
   }
@@ -112,7 +93,7 @@ public class ComponentManager {
   /// - parameter animation:  A Animation that is used when performing the mutation (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue.
   public func insert(item: Item, atIndex index: Int, component: Component, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
-    Dispatch.main {
+    Dispatch.main { [weak self] in
       let numberOfItems = component.model.items.count
       var indexes = [Int]()
 
@@ -124,14 +105,12 @@ public class ComponentManager {
 
       if numberOfItems > 0 {
         component.configureItem(at: numberOfItems, usesViewSize: true)
-        component.userInterface?.insert(indexes, withAnimation: animation, completion: nil)
+        component.userInterface?.insert(indexes, withAnimation: animation) {
+          self?.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
+        }
       } else {
         component.userInterface?.reloadDataSource()
-      }
-      component.afterUpdate()
-      component.sanitize {
-        component.view.superview?.layoutSubviews()
-        completion?()
+        self?.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
       }
     }
   }
@@ -150,11 +129,8 @@ public class ComponentManager {
       }
 
       component.model.items.remove(at: index)
-      component.userInterface?.delete([index], withAnimation: animation, completion: nil)
-      component.afterUpdate()
-      component.sanitize {
-        component.view.superview?.layoutSubviews()
-        completion?()
+      component.userInterface?.delete([index], withAnimation: animation) { [weak self] in
+        self?.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
       }
     }
   }
@@ -179,11 +155,8 @@ public class ComponentManager {
         component.model.items.remove(at: $0)
       }
 
-      component.userInterface?.delete(indexPaths, withAnimation: animation, completion: nil)
-      component.afterUpdate()
-      component.sanitize {
-        component.view.superview?.layoutSubviews()
-        completion?()
+      component.userInterface?.delete(indexPaths, withAnimation: animation) { [weak self] in
+        self?.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
       }
     }
   }
@@ -197,11 +170,8 @@ public class ComponentManager {
   public func delete(atIndex index: Int, component: Component, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     Dispatch.main {
       component.model.items.remove(at: index)
-      component.userInterface?.delete([index], withAnimation: animation, completion: nil)
-      component.afterUpdate()
-      component.sanitize {
-        component.view.superview?.layoutSubviews()
-        completion?()
+      component.userInterface?.delete([index], withAnimation: animation) { [weak self] in
+        self?.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
       }
     }
   }
@@ -218,11 +188,8 @@ public class ComponentManager {
         component.model.items.remove(at: $0)
       }
 
-      component.userInterface?.delete(indexes, withAnimation: animation, completion: nil)
-      component.afterUpdate()
-      component.sanitize {
-        component.view.superview?.layoutSubviews()
-        completion?()
+      component.userInterface?.delete(indexes, withAnimation: animation) { [weak self] in
+        self?.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
       }
     }
   }
@@ -235,7 +202,7 @@ public class ComponentManager {
   /// - parameter animation:  A Animation that is used when performing the mutation (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue when the view model has been removed.
   public func update(item: Item, atIndex index: Int, component: Component, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
-    Dispatch.main {
+    Dispatch.main { [weak self] in
       guard let oldItem = component.item(at: index) else {
         completion?()
         return
@@ -255,9 +222,7 @@ public class ComponentManager {
           }
         }
 
-        component.view.superview?.layoutSubviews()
-        component.afterUpdate()
-        completion?()
+        self?.finishComponentOperation(component, updateHeightAndIndexes: false, completion: completion)
         return
       } else {
         component.configureItem(at: index, usesViewSize: true)
@@ -271,20 +236,14 @@ public class ComponentManager {
           } else {
             component.userInterface?.reload([index], withAnimation: animation, completion: nil)
           }
-          component.afterUpdate()
-          component.updateHeight {
-            component.view.superview?.layoutSubviews()
-            completion?()
-          }
+
+          self?.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
           return
         } else if let cell: ItemConfigurable = component.userInterface?.view(at: index) {
           cell.configure(&component.model.items[index])
-          component.view.superview?.layoutSubviews()
-          completion?()
+          self?.finishComponentOperation(component, updateHeightAndIndexes: false, completion: completion)
         } else {
-          component.afterUpdate()
-          component.view.superview?.layoutSubviews()
-          completion?()
+          self?.finishComponentOperation(component, updateHeightAndIndexes: false, completion: completion)
         }
       }
     }
@@ -299,7 +258,7 @@ public class ComponentManager {
   public func reload(indexes: [Int]? = nil, component: Component, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     Dispatch.interactive {
       component.refreshIndexes()
-      Dispatch.main {
+      Dispatch.main { [weak self] in
         if let indexes = indexes {
           indexes.forEach { index  in
             component.configureItem(at: index, usesViewSize: true)
@@ -311,18 +270,22 @@ public class ComponentManager {
         }
 
         if let indexes = indexes {
-          component.userInterface?.reload(indexes, withAnimation: animation, completion: completion)
+          component.userInterface?.reload(indexes, withAnimation: animation) {
+            self?.finishComponentOperation(component, updateHeightAndIndexes: false, completion: completion)
+          }
           return
         } else {
           if animation != .none {
-            component.userInterface?.reloadSection(0, withAnimation: animation, completion: completion)
+            component.userInterface?.reloadSection(0, withAnimation: animation) {
+              self?.finishComponentOperation(component, updateHeightAndIndexes: false, completion: completion)
+            }
             return
           } else {
             component.userInterface?.reloadDataSource()
           }
         }
-        component.view.superview?.layoutSubviews()
-        completion?()
+
+        self?.finishComponentOperation(component, updateHeightAndIndexes: false, completion: completion)
       }
     }
   }
@@ -343,14 +306,12 @@ public class ComponentManager {
 
       if changes.updates.isEmpty {
         strongSelf.process(changes.updatedChildren, component: component, withAnimation: animation) {
-          component.view.layoutSubviews()
-          completion?()
+          strongSelf.finishComponentOperation(component, updateHeightAndIndexes: false, completion: completion)
         }
       } else {
         strongSelf.process(changes.updates, component: component, withAnimation: animation) {
           strongSelf.process(changes.updatedChildren, component: component, withAnimation: animation) {
-            component.view.layoutSubviews()
-            completion?()
+            strongSelf.finishComponentOperation(component, updateHeightAndIndexes: false, completion: completion)
           }
         }
       }
@@ -367,9 +328,7 @@ public class ComponentManager {
     Dispatch.interactive {
       if component.model.items == items {
         Dispatch.main {
-          component.cache()
           completion?()
-          component.view.superview?.layoutSubviews()
         }
         return
       }
@@ -391,17 +350,15 @@ public class ComponentManager {
               continue
             }
 
-            if indexes == nil { indexes = [Int]() }
+            if indexes == nil {
+              indexes = [Int]()
+            }
             indexes?.append(index)
           }
         }
 
         strongSelf.reload(indexes: indexes, component: component, withAnimation: animation) {
-          component.updateHeight {
-            component.afterUpdate()
-            component.cache()
-            completion?()
-          }
+          strongSelf.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
         }
       }
     }
@@ -417,17 +374,13 @@ public class ComponentManager {
       let newComponentModel = ComponentModel(json)
 
       guard component.model != newComponentModel else {
-        component.cache()
         completion?()
         return
       }
 
       component.model = newComponentModel
-      component.reload(nil, withAnimation: animation) {
-        component.afterUpdate()
-        component.view.superview?.layoutSubviews()
-        component.cache()
-        completion?()
+      component.reload(nil, withAnimation: animation) { [weak self] in
+        self?.finishComponentOperation(component, updateHeightAndIndexes: false, completion: completion)
       }
     }
   }
@@ -438,7 +391,7 @@ public class ComponentManager {
   /// - parameter component: The component that should be mutated.
   /// - parameter animation:  A Animation that is used when performing the mutation.
   /// - parameter completion: A completion closure that is run when the updates are finished.
-  fileprivate func process(_ updates: [Int], component: Component, withAnimation animation: Animation, completion: Completion) {
+  private func process(_ updates: [Int], component: Component, withAnimation animation: Animation, completion: Completion) {
     guard !updates.isEmpty else {
       completion?()
       return
@@ -455,6 +408,26 @@ public class ComponentManager {
           completion?()
         }
       }
+    }
+  }
+
+  /// Finish component operation.
+  ///
+  /// - Parameters:
+  ///   - component: A component object that has been modified.
+  ///   - updateHeightAndIndexes: Determines if the height and indexes should be refreshed.
+  ///   - completion: A completion closure that is run when the operation is done.
+  private func finishComponentOperation(_ component: Component, updateHeightAndIndexes: Bool, completion: Completion) {
+    if updateHeightAndIndexes {
+      component.updateHeightAndIndexes {
+        component.afterUpdate()
+        component.view.superview?.layoutSubviews()
+        completion?()
+      }
+    } else {
+      component.afterUpdate()
+      component.view.superview?.layoutSubviews()
+      completion?()
     }
   }
 }
