@@ -256,7 +256,7 @@ public class ComponentManager {
   /// - parameter animation:  The animation that should be used (only works for Listable objects)
   /// - parameter completion: A completion closure that is performed when all mutations are performed
   public func reload(indexes: [Int]? = nil, component: Component, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
-    Dispatch.interactive {
+    Dispatch.main {
       component.refreshIndexes()
       Dispatch.main { [weak self] in
         if let indexes = indexes {
@@ -306,12 +306,12 @@ public class ComponentManager {
 
       if changes.updates.isEmpty {
         strongSelf.process(changes.updatedChildren, component: component, withAnimation: animation) {
-          strongSelf.finishComponentOperation(component, updateHeightAndIndexes: false, completion: completion)
+          strongSelf.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
         }
       } else {
         strongSelf.process(changes.updates, component: component, withAnimation: animation) {
           strongSelf.process(changes.updatedChildren, component: component, withAnimation: animation) {
-            strongSelf.finishComponentOperation(component, updateHeightAndIndexes: false, completion: completion)
+            strongSelf.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
           }
         }
       }
