@@ -634,9 +634,7 @@ public class SpotsControllerManager {
    */
   public func append(_ item: Item, componentIndex: Int = 0, controller: SpotsController, withAnimation animation: Animation = .none, completion: Completion = nil) {
     resolveComponent(atIndex: componentIndex, controller: controller, completion: completion) { component in
-      component.append(item,
-                       withAnimation: animation,
-                       completion: completion)
+      component.append(item, withAnimation: animation, completion: completion)
     }
   }
 
@@ -649,9 +647,7 @@ public class SpotsControllerManager {
    */
   public func append(_ items: [Item], componentIndex: Int = 0, controller: SpotsController, withAnimation animation: Animation = .none, completion: Completion = nil) {
     resolveComponent(atIndex: componentIndex, controller: controller, completion: completion) { component in
-      component.append(items,
-                        withAnimation: animation,
-                        completion: completion)
+      component.append(items, withAnimation: animation, completion: completion)
     }
   }
 
@@ -664,9 +660,7 @@ public class SpotsControllerManager {
    */
   public func prepend(_ items: [Item], componentIndex: Int = 0, controller: SpotsController, withAnimation animation: Animation = .none, completion: Completion = nil) {
     resolveComponent(atIndex: componentIndex, controller: controller, completion: completion) { component in
-      component.prepend(items,
-               withAnimation: animation,
-               completion: completion)
+      component.prepend(items, withAnimation: animation, completion: completion)
     }
   }
 
@@ -680,10 +674,7 @@ public class SpotsControllerManager {
    */
   public func insert(_ item: Item, index: Int = 0, componentIndex: Int, controller: SpotsController, withAnimation animation: Animation = .none, completion: Completion = nil) {
     resolveComponent(atIndex: componentIndex, controller: controller, completion: completion) { component in
-      component.insert(item,
-                       index: index,
-                       withAnimation: animation,
-                       completion: completion)
+      component.insert(item, index: index, withAnimation: animation, completion: completion)
     }
   }
 
@@ -734,9 +725,7 @@ public class SpotsControllerManager {
    */
   public func update(_ indexes: [Int], componentIndex: Int = 0, controller: SpotsController, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     resolveComponent(atIndex: componentIndex, controller: controller, completion: completion) { component in
-      component.reload(indexes,
-                       withAnimation: animation,
-                       completion: completion)
+      component.reload(indexes, withAnimation: animation, completion: completion)
     }
   }
 
@@ -749,9 +738,7 @@ public class SpotsControllerManager {
    */
   public func delete(_ index: Int, componentIndex: Int = 0, controller: SpotsController, withAnimation animation: Animation = .none, completion: Completion = nil) {
     resolveComponent(atIndex: componentIndex, controller: controller, completion: completion) { component in
-      component.delete(index,
-                       withAnimation: animation,
-                       completion: completion)
+      component.delete(index, withAnimation: animation, completion: completion)
     }
   }
 
@@ -764,9 +751,7 @@ public class SpotsControllerManager {
    */
   public func delete(_ indexes: [Int], componentIndex: Int = 0, controller: SpotsController, withAnimation animation: Animation = .none, completion: Completion = nil) {
     resolveComponent(atIndex: componentIndex, controller: controller, completion: completion) { component in
-      component.delete(indexes,
-                       withAnimation: animation,
-                       completion: completion)
+      component.delete(indexes, withAnimation: animation, completion: completion)
     }
   }
 
