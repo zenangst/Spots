@@ -763,9 +763,11 @@ public class SpotsControllerManager {
    - parameter completion: A completion closure that will run after the component has performed updates internally
    */
   public func delete(_ indexes: [Int], componentIndex: Int = 0, controller: SpotsController, withAnimation animation: Animation = .none, completion: Completion = nil) {
-    controller.component(at: componentIndex)?.delete(indexes,
-                                                     withAnimation: animation,
-                                                     completion: completion)
+    resolveComponent(atIndex: componentIndex, controller: controller, completion: completion) { component in
+      component.delete(indexes,
+                       withAnimation: animation,
+                       completion: completion)
+    }
   }
 
   private func resolveComponent(atIndex componentIndex: Int, controller: SpotsController, completion: Completion, closure: (Component) -> Void) {
