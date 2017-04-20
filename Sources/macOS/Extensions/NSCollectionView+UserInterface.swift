@@ -29,7 +29,7 @@ extension NSCollectionView: UserInterface {
   }
 
   public func register() {
-    register(GridComposite.self, forItemWithIdentifier: CollectionView.compositeIdentifier)
+    register(GridWrapper.self, forItemWithIdentifier: CollectionView.compositeIdentifier)
 
     for (identifier, item) in Configuration.views.storage {
       switch item {

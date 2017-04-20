@@ -7,8 +7,8 @@ extension UICollectionView: UserInterface {
   }
 
   public func register() {
-    Configuration.register(view: GridComposite.self, identifier: CollectionView.compositeIdentifier)
-    register(GridComposite.self, forCellWithReuseIdentifier: CollectionView.compositeIdentifier)
+    Configuration.register(view: GridWrapper.self, identifier: CollectionView.compositeIdentifier)
+    register(GridWrapper.self, forCellWithReuseIdentifier: CollectionView.compositeIdentifier)
 
     for (identifier, item) in Configuration.views.storage {
       if identifier.contains(CompositeComponent.identifier) {

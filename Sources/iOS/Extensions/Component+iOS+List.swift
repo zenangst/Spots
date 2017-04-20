@@ -14,11 +14,17 @@ extension Component {
       tableView.layoutMargins = .zero
     #endif
 
-    prepareItems()
+    prepareItems(clean: true)
 
     var height: CGFloat = 0.0
-    for item in model.items {
-      height += item.size.height
+
+    if parentComponent != nil {
+      height = computedHeight
+      tableView.frame.size.height = height
+    } else {
+      for item in model.items {
+        height += item.size.height
+      }
     }
 
     tableView.contentSize = CGSize(

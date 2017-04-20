@@ -14,16 +14,11 @@ public struct CompositeComponent: Equatable {
     return lhs.itemIndex == rhs.itemIndex
   }
 
-  weak var parentComponent: Component?
   var component: Component
   var itemIndex: Int
 
-  init(component: Component, parentComponent: Component? = nil, itemIndex: Int) {
+  init(component: Component, itemIndex: Int) {
     self.itemIndex = itemIndex
-    self.parentComponent = parentComponent
     self.component = component
-    #if !os(OSX)
-    self.component.focusDelegate = parentComponent?.focusDelegate
-    #endif
   }
 }

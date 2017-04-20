@@ -20,6 +20,12 @@ import Tailor
   var headerView: View?
   /// A reference to the footer view that should be used for the component.
   var footerView: View?
+  /// A parent component used for composition.
+  public var parentComponent: Component? {
+    didSet {
+      self.view.frame.size.height = self.computedHeight
+    }
+  }
   /// The component model, it contains all the information for configuring `Component`
   /// interaction, behaviour and look-and-feel. See `ComponentModel` for more information.
   public var model: ComponentModel
@@ -137,7 +143,7 @@ import Tailor
   ///   - model: A `ComponentModel` that is used to configure the interaction, behavior and look-and-feel of the component.
   ///   - view: A scroll view, should either be a `NSTableView` or `NSCollectionView`.
   ///   - kind: The `kind` defines which user interface the component should render (either NSCollectionView or NSTableView).
-  public required init(model: ComponentModel, userInterface: UserInterface) {
+  public required init(model: ComponentModel, userInterface: UserInterface, parentComponent: Component? = nil) {
     self.model = model
     self.userInterface = userInterface
 
@@ -255,7 +261,7 @@ import Tailor
 
     collectionView.frame.size = size
 
-    prepareItems(clean: false)
+    prepareItems(clean: true)
 
     collectionView.backgroundColors = [NSColor.clear]
     collectionView.isSelectable = true

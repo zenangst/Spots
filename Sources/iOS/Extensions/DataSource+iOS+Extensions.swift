@@ -1,41 +1,5 @@
 import UIKit
 
-extension DataSource {
-
-  func prepareWrappableView(_ view: Wrappable, atIndex index: Int, in component: Component, parentFrame: CGRect = CGRect.zero) {
-    let identifier = component.identifier(at: index)
-    if let (_, customView) = Configuration.views.make(identifier, parentFrame: parentFrame),
-      let wrappedView = customView {
-      view.configure(with: wrappedView)
-
-      if let configurableView = customView as? ItemConfigurable {
-        configurableView.configure(&component.model.items[index])
-
-        if component.model.items[index].size.height == 0.0 {
-          component.model.items[index].size = configurableView.preferredViewSize
-        }
-      } else {
-        component.model.items[index].size.height = wrappedView.frame.size.height
-      }
-    }
-  }
-
-  func prepareComposableView(_ view: Composable, atIndex index: Int, in component: Component) {
-    let compositeComponents = component.compositeComponents.filter({ $0.itemIndex == index })
-    view.configure(&component.model.items[index], compositeComponents: compositeComponents)
-  }
-
-  func prepareItemConfigurableView(_ view: ItemConfigurable, atIndex index: Int, in component: Component) {
-    view.configure(&component.model.items[index])
-
-    if component.model.items[index].size.height == 0.0 {
-      component.model.items[index].size = view.preferredViewSize
-    }
-
-    component.configure?(view)
-  }
-}
-
 extension DataSource: UICollectionViewDataSource {
 
   /// Asks the data source for the number of items in the specified section. (required)
@@ -134,19 +98,8 @@ extension DataSource: UICollectionViewDataSource {
     component.model.items[indexPath.item].index = indexPath.item
 
     let reuseIdentifier = component.identifier(for: indexPath)
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier,
-                                                  for: indexPath)
-
-    switch cell {
-    case let cell as GridWrapper:
-      prepareWrappableView(cell, atIndex: indexPath.item, in: component, parentFrame: cell.bounds)
-    case let cell as Composable:
-      prepareComposableView(cell, atIndex: indexPath.item, in: component)
-    case let cell as ItemConfigurable:
-      prepareItemConfigurableView(cell, atIndex: indexPath.item, in: component)
-    default:
-      break
-    }
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
+    viewPreparer.prepareView(cell, atIndex: indexPath.item, in: component, parentFrame: cell.bounds)
 
     return cell
   }
@@ -185,17 +138,7 @@ extension DataSource: UITableViewDataSource {
 
     let reuseIdentifier = component.identifier(for: indexPath)
     let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
-
-    switch cell {
-    case let cell as ListWrapper:
-      prepareWrappableView(cell, atIndex: indexPath.item, in: component, parentFrame: cell.bounds)
-    case let cell as Composable:
-      prepareComposableView(cell, atIndex: indexPath.row, in: component)
-    case let cell as ItemConfigurable:
-      prepareItemConfigurableView(cell, atIndex: indexPath.item, in: component)
-    default:
-      break
-    }
+    viewPreparer.prepareView(cell, atIndex: indexPath.row, in: component, parentFrame: cell.bounds)
 
     return cell
   }
