@@ -358,7 +358,7 @@ public class SpotsControllerManager {
       if !component.model.items.filter({ !$0.children.isEmpty }).isEmpty {
         component.reload(nil, withAnimation: animation, completion: completion)
       } else {
-        component.updateHeight(completion)
+        completion?()
       }
     }
   }

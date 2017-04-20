@@ -274,9 +274,7 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
 
   /// This method is invoked after mutations has been performed on a component.
   public func afterUpdate() {
-    if compositeComponents.isEmpty {
-      layout(with: view.frame.size)
-    } else {
+    if !compositeComponents.isEmpty {
       setup(with: view.frame.size)
     }
   }

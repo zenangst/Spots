@@ -441,8 +441,7 @@ public extension Component {
   /// - parameter completion: A completion closure that will be run when the computations are complete.
   public func updateHeightAndIndexes(completion: Completion = nil) {
     updateHeight { [weak self] in
-      self?.refreshIndexes()
-      completion?()
+      self?.refreshIndexes(completion: completion)
     }
   }
 
