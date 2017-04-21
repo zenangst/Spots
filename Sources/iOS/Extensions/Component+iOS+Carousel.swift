@@ -63,7 +63,7 @@ extension Component {
     guard let pageIndicatorPlacement = model.layout?.pageIndicatorPlacement else {
       return
     }
-    
+
     switch pageIndicatorPlacement {
     case .below:
       collectionViewLayout.sectionInset.bottom += pageControl.frame.height

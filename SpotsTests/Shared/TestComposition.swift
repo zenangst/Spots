@@ -4,14 +4,6 @@ import XCTest
 
 class CompositionTests: XCTestCase {
 
-  #if os(tvOS)
-  let heightOffset: CGFloat = 0
-  #elseif os(iOS)
-  let heightOffset: CGFloat = 0
-  #else
-  let heightOffset: CGFloat = 2
-  #endif
-
   func testComponentModelCreation() {
     var model = ComponentModel(
       kind: .grid,
@@ -103,7 +95,7 @@ class CompositionTests: XCTestCase {
     let component = Component(model: model)
     component.setup(with: CGSize(width: 200, height: 200))
 
-    var composite: Composable?
+    var composite: View?
     var itemConfigurable: ItemConfigurable?
 
     composite = component.ui(at: 0)
@@ -122,21 +114,19 @@ class CompositionTests: XCTestCase {
 
     XCTAssertNotNil(composite)
     XCTAssertNotNil(itemConfigurable)
-    XCTAssertEqual(composite?.contentView.subviews.count, 1)
-    XCTAssertTrue(component.compositeComponents[0].parentComponent!.model == component.model)
+    XCTAssertTrue(component.compositeComponents[0].component.parentComponent!.model == component.model)
     XCTAssertTrue(component.compositeComponents[0].component.userInterface is TableView)
     XCTAssertEqual(component.compositeComponents[0].component.view.frame.size.height,
-                   (itemConfigurable!.preferredViewSize.height + heightOffset) * CGFloat(component.compositeComponents[0].component.model.items.count))
+                   component.model.items[1].size.height)
 
     composite = component.ui(at: 1)
     itemConfigurable = component.compositeComponents[0].component.ui(at: 1)
 
     XCTAssertNotNil(composite)
-    XCTAssertEqual(composite?.contentView.subviews.count, 1)
-    XCTAssertTrue(component.compositeComponents[1].parentComponent!.model == component.model)
+    XCTAssertTrue(component.compositeComponents[1].component.parentComponent!.model == component.model)
     XCTAssertTrue(component.compositeComponents[1].component.userInterface is TableView)
     XCTAssertEqual(component.compositeComponents[1].component.view.frame.size.height,
-                   (itemConfigurable!.preferredViewSize.height + heightOffset) * CGFloat(component.compositeComponents[1].component.model.items.count))
+                   component.model.items[1].size.height)
 
     composite = component.ui(at: 2)
     XCTAssertNil(composite)
@@ -242,7 +232,7 @@ class CompositionTests: XCTestCase {
       return
     }
 
-    var composite: Composable? = components[0].ui(at: 0)
+    var composite: View? = components[0].ui(at: 0)
     var itemConfigurable: ItemConfigurable? = components[0].compositeComponents[0].component.ui(at: 0)
 
     guard itemConfigurable != nil else {
@@ -252,41 +242,41 @@ class CompositionTests: XCTestCase {
 
     XCTAssertNotNil(composite)
     XCTAssertNotNil(itemConfigurable)
-    XCTAssertEqual(composite?.contentView.subviews.count, 1)
-    XCTAssertTrue(components[0].compositeComponents[0].parentComponent!.model == components[0].model)
+//    XCTAssertEqual(composite?.contentView.subviews.count, 1)
+    XCTAssertTrue(components[0].compositeComponents[0].component.parentComponent!.model == components[0].model)
     XCTAssertTrue(components[0].compositeComponents[0].component.userInterface is TableView)
     XCTAssertEqual(components[0].compositeComponents[0].component.model.items.count, 10)
     XCTAssertEqual(components[0].compositeComponents[0].component.view.frame.size.height,
-                   (itemConfigurable!.preferredViewSize.height + heightOffset) * CGFloat(components[0].compositeComponents[0].component.model.items.count))
+                   components[0].model.items[0].size.height)
 
     itemConfigurable = components[0].compositeComponents[1].component.ui(at: 0)
 
     XCTAssertNotNil(itemConfigurable)
-    XCTAssertEqual(composite?.contentView.subviews.count, 1)
-    XCTAssertTrue(components[0].compositeComponents[1].parentComponent!.model == components[0].model)
+//    XCTAssertEqual(composite?.contentView.subviews.count, 1)
+    XCTAssertTrue(components[0].compositeComponents[1].component.parentComponent!.model == components[0].model)
     XCTAssertTrue(components[0].compositeComponents[1].component.userInterface is TableView)
     XCTAssertEqual(components[0].compositeComponents[1].component.model.items.count, 10)
     XCTAssertEqual(components[0].compositeComponents[1].component.view.frame.size.height,
-                   (itemConfigurable!.preferredViewSize.height + heightOffset) * CGFloat(components[0].compositeComponents[1].component.model.items.count))
+                  components[0].model.items[1].size.height)
 
     XCTAssertNotNil(composite)
     XCTAssertNotNil(itemConfigurable)
-    XCTAssertEqual(composite?.contentView.subviews.count, 1)
-    XCTAssertTrue(components[1].compositeComponents[0].parentComponent!.model == components[1].model)
+//    XCTAssertEqual(composite?.contentView.subviews.count, 1)
+    XCTAssertTrue(components[1].compositeComponents[0].component.parentComponent!.model == components[1].model)
     XCTAssertTrue(components[1].compositeComponents[0].component.userInterface is TableView)
     XCTAssertEqual(components[1].compositeComponents[0].component.model.items.count, 10)
     XCTAssertEqual(components[1].compositeComponents[0].component.view.frame.size.height,
-                   (itemConfigurable!.preferredViewSize.height + heightOffset) * CGFloat(components[1].compositeComponents[0].component.model.items.count))
+                   components[1].model.items[0].size.height)
 
     itemConfigurable = components[0].compositeComponents[1].component.ui(at: 0)
 
     XCTAssertNotNil(itemConfigurable)
-    XCTAssertEqual(composite?.contentView.subviews.count, 1)
-    XCTAssertTrue(components[1].compositeComponents[1].parentComponent!.model == components[1].model)
+//    XCTAssertEqual(composite?.contentView.subviews.count, 1)
+    XCTAssertTrue(components[1].compositeComponents[1].component.parentComponent!.model == components[1].model)
     XCTAssertTrue(components[1].compositeComponents[1].component.userInterface is TableView)
     XCTAssertEqual(components[1].compositeComponents[1].component.model.items.count, 10)
     XCTAssertEqual(components[1].compositeComponents[1].component.view.frame.size.height,
-                   (itemConfigurable!.preferredViewSize.height + heightOffset) * CGFloat(components[1].compositeComponents[1].component.model.items.count))
+                   components[1].model.items[1].size.height)
 
     let newComponentModels: [ComponentModel] = [
       ComponentModel(kind: .grid,
@@ -383,43 +373,43 @@ class CompositionTests: XCTestCase {
 
       XCTAssertNotNil(composite)
       XCTAssertNotNil(itemConfigurable)
-      XCTAssertNotNil(composite?.contentView)
+//      XCTAssertNotNil(composite?.contentView)
 
-      XCTAssertEqual(composite?.contentView.subviews.count, 1)
-      XCTAssertTrue(components[0].compositeComponents[0].parentComponent!.model == components[0].model)
+//      XCTAssertEqual(composite?.contentView.subviews.count, 1)
+      XCTAssertTrue(components[0].compositeComponents[0].component.parentComponent!.model == components[0].model)
       XCTAssertTrue(components[0].compositeComponents[0].component.userInterface is TableView)
       XCTAssertEqual(components[0].compositeComponents[0].component.model.items.count, 10)
       XCTAssertEqual(components[0].compositeComponents[0].component.view.frame.size.height,
-                     ((itemConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(components[0].compositeComponents[0].component.model.items.count))
+                     components[0].model.items[0].size.height)
 
       itemConfigurable = components[0].compositeComponents[1].component.ui(at: 0)
 
       XCTAssertNotNil(itemConfigurable)
-      XCTAssertEqual(composite?.contentView.subviews.count, 1)
-      XCTAssertTrue(components[0].compositeComponents[1].parentComponent!.model == components[0].model)
+//      XCTAssertEqual(composite?.contentView.subviews.count, 1)
+      XCTAssertTrue(components[0].compositeComponents[1].component.parentComponent!.model == components[0].model)
       XCTAssertTrue(components[0].compositeComponents[1].component.userInterface is TableView)
       XCTAssertEqual(components[0].compositeComponents[1].component.model.items.count, 10)
       XCTAssertEqual(components[0].compositeComponents[1].component.view.frame.size.height,
-                     ((itemConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(components[0].compositeComponents[1].component.model.items.count))
+                     components[0].model.items[1].size.height)
 
       XCTAssertNotNil(composite)
       XCTAssertNotNil(itemConfigurable)
-      XCTAssertEqual(composite?.contentView.subviews.count, 1)
-      XCTAssertTrue(components[1].compositeComponents[0].parentComponent!.model == components[1].model)
+//      XCTAssertEqual(composite?.contentView.subviews.count, 1)
+      XCTAssertTrue(components[1].compositeComponents[0].component.parentComponent!.model == components[1].model)
       XCTAssertTrue(components[1].compositeComponents[0].component.userInterface is TableView)
       XCTAssertEqual(components[1].compositeComponents[0].component.model.items.count, 10)
       XCTAssertEqual(components[1].compositeComponents[0].component.view.frame.size.height,
-                     ((itemConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(components[1].compositeComponents[0].component.model.items.count))
+                     components[1].model.items[0].size.height)
 
       itemConfigurable = components[0].compositeComponents[1].component.ui(at: 0)
 
       XCTAssertNotNil(itemConfigurable)
-      XCTAssertEqual(composite?.contentView.subviews.count, 1)
-      XCTAssertTrue(components[1].compositeComponents[1].parentComponent!.model == components[1].model)
+//      XCTAssertEqual(composite?.contentView.subviews.count, 1)
+      XCTAssertTrue(components[1].compositeComponents[1].component.parentComponent!.model == components[1].model)
       XCTAssertTrue(components[1].compositeComponents[1].component.userInterface is TableView)
       XCTAssertEqual(components[1].compositeComponents[1].component.model.items.count, 10)
       XCTAssertEqual(components[1].compositeComponents[1].component.view.frame.size.height,
-                     ((itemConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(components[1].compositeComponents[1].component.model.items.count))
+                     components[1].model.items[1].size.height)
 
       XCTAssertEqual(reloadTimes, 1)
 
@@ -438,7 +428,7 @@ class CompositionTests: XCTestCase {
 
     XCTAssertEqual(components.count, 0)
 
-    var composite: Composable?
+    var composite: View?
     var itemConfigurable: ItemConfigurable?
 
     let newComponentModels: [ComponentModel] = [
@@ -546,22 +536,18 @@ class CompositionTests: XCTestCase {
 
       XCTAssertNotNil(composite)
       XCTAssertNotNil(itemConfigurable)
-      XCTAssertEqual(composite?.contentView.subviews.count, 1)
-      XCTAssertTrue(components[0].compositeComponents[0].parentComponent!.model == components[0].model)
+      XCTAssertTrue(components[0].compositeComponents[0].component.parentComponent!.model == components[0].model)
       XCTAssertTrue(components[0].compositeComponents[0].component.userInterface is TableView)
       XCTAssertEqual(components[0].compositeComponents[0].component.model.items.count, 10)
-      XCTAssertEqual(components[0].compositeComponents[0].component.view.frame.size.height,
-                     ((itemConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(components[0].compositeComponents[0].component.model.items.count))
+      XCTAssertEqual(components[0].compositeComponents[0].component.view.frame.size.height, components[0].compositeComponents[0].component.computedHeight)
 
       itemConfigurable = components[0].compositeComponents[1].component.ui(at: 0)
 
       XCTAssertNotNil(itemConfigurable)
-      XCTAssertEqual(composite?.contentView.subviews.count, 1)
-      XCTAssertTrue(components[0].compositeComponents[1].parentComponent!.model == components[0].model)
+      XCTAssertTrue(components[0].compositeComponents[1].component.parentComponent!.model == components[0].model)
       XCTAssertTrue(components[0].compositeComponents[1].component.userInterface is TableView)
       XCTAssertEqual(components[0].compositeComponents[1].component.model.items.count, 10)
-      XCTAssertEqual(components[0].compositeComponents[1].component.view.frame.size.height,
-                     ((itemConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(components[0].compositeComponents[1].component.model.items.count))
+      XCTAssertEqual(components[0].compositeComponents[1].component.view.frame.size.height, components[0].compositeComponents[0].component.computedHeight)
 
       guard components[1].compositeComponents.count == 2 else {
         XCTFail("Could not find composite components.")
@@ -570,22 +556,18 @@ class CompositionTests: XCTestCase {
 
       XCTAssertNotNil(composite)
       XCTAssertNotNil(itemConfigurable)
-      XCTAssertEqual(composite?.contentView.subviews.count, 1)
-      XCTAssertTrue(components[1].compositeComponents[0].parentComponent!.model == components[1].model)
+      XCTAssertTrue(components[1].compositeComponents[0].component.parentComponent!.model == components[1].model)
       XCTAssertTrue(components[1].compositeComponents[0].component.userInterface is TableView)
       XCTAssertEqual(components[1].compositeComponents[0].component.model.items.count, 10)
-      XCTAssertEqual(components[1].compositeComponents[0].component.view.frame.size.height,
-                     ((itemConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(components[1].compositeComponents[0].component.model.items.count))
+      XCTAssertEqual(components[1].compositeComponents[0].component.view.frame.size.height, components[1].compositeComponents[0].component.computedHeight)
 
       itemConfigurable = components[0].compositeComponents[1].component.ui(at: 0)
 
       XCTAssertNotNil(itemConfigurable)
-      XCTAssertEqual(composite?.contentView.subviews.count, 1)
-      XCTAssertTrue(components[1].compositeComponents[1].parentComponent!.model == components[1].model)
+      XCTAssertTrue(components[1].compositeComponents[1].component.parentComponent!.model == components[1].model)
       XCTAssertTrue(components[1].compositeComponents[1].component.userInterface is TableView)
       XCTAssertEqual(components[1].compositeComponents[1].component.model.items.count, 10)
-      XCTAssertEqual(components[1].compositeComponents[1].component.view.frame.size.height,
-                     ((itemConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(components[1].compositeComponents[1].component.model.items.count))
+      XCTAssertEqual(components[1].compositeComponents[1].component.view.frame.size.height, components[1].compositeComponents[1].component.computedHeight)
 
       XCTAssertEqual(reloadTimes, 1)
 
@@ -684,7 +666,7 @@ class CompositionTests: XCTestCase {
 
     XCTAssertEqual(components.count, 2)
 
-    var composite: Composable?
+    var composite: View?
     var itemConfigurable: ItemConfigurable?
 
     composite = components[0].ui(at: 0)
@@ -708,41 +690,37 @@ class CompositionTests: XCTestCase {
 
     XCTAssertNotNil(composite)
     XCTAssertNotNil(itemConfigurable)
-    XCTAssertEqual(composite?.contentView.subviews.count, 1)
-    XCTAssertTrue(components[0].compositeComponents[0].parentComponent!.model == components[0].model)
+    XCTAssertTrue(components[0].compositeComponents[0].component.parentComponent!.model == components[0].model)
     XCTAssertTrue(components[0].compositeComponents[0].component.userInterface is TableView)
     XCTAssertEqual(components[0].compositeComponents[0].component.model.items.count, 10)
     XCTAssertEqual(components[0].compositeComponents[0].component.view.frame.size.height,
-                   (itemConfigurable!.preferredViewSize.height + heightOffset) * CGFloat(components[0].compositeComponents[0].component.model.items.count))
+                   components[0].model.items[0].size.height)
 
     itemConfigurable = components[0].compositeComponents[1].component.ui(at: 0)
 
     XCTAssertNotNil(itemConfigurable)
-    XCTAssertEqual(composite?.contentView.subviews.count, 1)
-    XCTAssertTrue(components[0].compositeComponents[1].parentComponent!.model == components[0].model)
+    XCTAssertTrue(components[0].compositeComponents[1].component.parentComponent!.model == components[0].model)
     XCTAssertTrue(components[0].compositeComponents[1].component.userInterface is TableView)
     XCTAssertEqual(components[0].compositeComponents[1].component.model.items.count, 10)
     XCTAssertEqual(components[0].compositeComponents[1].component.view.frame.size.height,
-                   (itemConfigurable!.preferredViewSize.height + heightOffset) * CGFloat(components[0].compositeComponents[1].component.model.items.count))
+                   components[0].model.items[1].size.height)
 
     XCTAssertNotNil(composite)
     XCTAssertNotNil(itemConfigurable)
-    XCTAssertEqual(composite?.contentView.subviews.count, 1)
-    XCTAssertTrue(components[1].compositeComponents[0].parentComponent!.model == components[1].model)
+    XCTAssertTrue(components[1].compositeComponents[0].component.parentComponent!.model == components[1].model)
     XCTAssertTrue(components[1].compositeComponents[0].component.userInterface is TableView)
     XCTAssertEqual(components[1].compositeComponents[0].component.model.items.count, 10)
     XCTAssertEqual(components[1].compositeComponents[0].component.view.frame.size.height,
-                   (itemConfigurable!.preferredViewSize.height + heightOffset) * CGFloat(components[1].compositeComponents[0].component.model.items.count))
+                   components[1].model.items[0].size.height)
 
     itemConfigurable = components[0].compositeComponents[1].component.ui(at: 0)
 
     XCTAssertNotNil(itemConfigurable)
-    XCTAssertEqual(composite?.contentView.subviews.count, 1)
-    XCTAssertTrue(components[1].compositeComponents[1].parentComponent!.model == components[1].model)
+    XCTAssertTrue(components[1].compositeComponents[1].component.parentComponent!.model == components[1].model)
     XCTAssertTrue(components[1].compositeComponents[1].component.userInterface is TableView)
     XCTAssertEqual(components[1].compositeComponents[1].component.model.items.count, 10)
     XCTAssertEqual(components[1].compositeComponents[1].component.view.frame.size.height,
-                   (itemConfigurable!.preferredViewSize.height + heightOffset) * CGFloat(components[1].compositeComponents[1].component.model.items.count))
+                   components[1].model.items[1].size.height)
 
     let newComponentModels: [ComponentModel] = [
       ComponentModel(kind: .grid,
@@ -884,43 +862,39 @@ class CompositionTests: XCTestCase {
 
       XCTAssertNotNil(composite)
       XCTAssertNotNil(itemConfigurable)
-      XCTAssertEqual(composite?.contentView.subviews.count, 1)
-      XCTAssertTrue(components[0].compositeComponents[0].parentComponent?.model == components[0].model)
+      XCTAssertTrue(components[0].compositeComponents[0].component.parentComponent?.model == components[0].model)
       XCTAssertTrue(components[0].compositeComponents[0].component.userInterface is TableView)
       XCTAssertEqual(components[0].compositeComponents[0].component.model.items.count, 11)
       XCTAssertEqual(components[0].compositeComponents[0].component.view.frame.size.height,
-                     ((itemConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(components[0].compositeComponents[0].component.model.items.count))
+                     components[0].model.items[0].size.height)
 
       itemConfigurable = components[0].compositeComponents[1].component.ui(at: 0)
 
       XCTAssertNotNil(itemConfigurable)
-      XCTAssertEqual(composite?.contentView.subviews.count, 1)
-      XCTAssertTrue(components[0].compositeComponents[1].parentComponent!.model == components[0].model)
+      XCTAssertTrue(components[0].compositeComponents[1].component.parentComponent!.model == components[0].model)
       XCTAssertTrue(components[0].compositeComponents[1].component.userInterface is TableView)
       XCTAssertEqual(components[0].compositeComponents[1].component.model.items.count, 10)
       XCTAssertEqual(components[0].compositeComponents[1].component.view.frame.size.height,
-                     ((itemConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(components[0].compositeComponents[1].component.model.items.count))
+                     components[0].model.items[1].size.height)
 
       itemConfigurable = components[1].compositeComponents[0].component.ui(at: 0)
 
       XCTAssertNotNil(composite)
       XCTAssertNotNil(itemConfigurable)
-      XCTAssertEqual(composite?.contentView.subviews.count, 1)
-      XCTAssertTrue(components[1].compositeComponents[0].parentComponent?.model == components[1].model)
+      XCTAssertTrue(components[1].compositeComponents[0].component.parentComponent?.model == components[1].model)
       XCTAssertTrue(components[1].compositeComponents[0].component.userInterface is TableView)
       XCTAssertEqual(components[1].compositeComponents[0].component.model.items.count, 11)
       XCTAssertEqual(components[1].compositeComponents[0].component.view.frame.size.height,
-                     ((itemConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(components[1].compositeComponents[0].component.model.items.count))
+                     components[1].model.items[0].size.height)
 
       itemConfigurable = components[1].compositeComponents[1].component.ui(at: 0)
 
       XCTAssertNotNil(itemConfigurable)
-      XCTAssertEqual(composite?.contentView.subviews.count, 1)
-      XCTAssertTrue(components[1].compositeComponents[1].parentComponent!.model == components[1].model)
+      XCTAssertTrue(components[1].compositeComponents[1].component.parentComponent!.model == components[1].model)
       XCTAssertTrue(components[1].compositeComponents[1].component.userInterface is TableView)
       XCTAssertEqual(components[1].compositeComponents[1].component.model.items.count, 11)
       XCTAssertEqual(components[1].compositeComponents[1].component.view.frame.size.height,
-                     ((itemConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(components[1].compositeComponents[1].component.model.items.count))
+                     components[1].model.items[1].size.height)
 
       XCTAssertEqual(reloadTimes, 1)
 
@@ -1019,7 +993,7 @@ class CompositionTests: XCTestCase {
 
     XCTAssertEqual(components.count, 2)
 
-    var composite: Composable?
+    var composite: View?
     var itemConfigurable: ItemConfigurable?
 
     composite = components[0].ui(at: 0)
@@ -1049,41 +1023,37 @@ class CompositionTests: XCTestCase {
       return
     }
 
-    XCTAssertEqual(composite?.contentView.subviews.count, 1)
-    XCTAssertTrue(components[0].compositeComponents[0].parentComponent!.model == components[0].model)
+    XCTAssertTrue(components[0].compositeComponents[0].component.parentComponent!.model == components[0].model)
     XCTAssertTrue(components[0].compositeComponents[0].component.userInterface is TableView)
     XCTAssertEqual(components[0].compositeComponents[0].component.model.items.count, 10)
     XCTAssertEqual(components[0].compositeComponents[0].component.view.frame.size.height,
-                   (itemConfigurable!.preferredViewSize.height + heightOffset) * CGFloat(components[0].compositeComponents[0].component.model.items.count))
+                   components[0].model.items[0].size.height)
 
     itemConfigurable = components[0].compositeComponents[1].component.ui(at: 0)
 
     XCTAssertNotNil(itemConfigurable)
-    XCTAssertEqual(composite?.contentView.subviews.count, 1)
-    XCTAssertTrue(components[0].compositeComponents[1].parentComponent!.model == components[0].model)
+    XCTAssertTrue(components[0].compositeComponents[1].component.parentComponent!.model == components[0].model)
     XCTAssertTrue(components[0].compositeComponents[1].component.userInterface is TableView)
     XCTAssertEqual(components[0].compositeComponents[1].component.model.items.count, 10)
     XCTAssertEqual(components[0].compositeComponents[1].component.view.frame.size.height,
-                   (itemConfigurable!.preferredViewSize.height + heightOffset) * CGFloat(components[0].compositeComponents[1].component.model.items.count))
+                   components[0].model.items[1].size.height)
 
     XCTAssertNotNil(composite)
     XCTAssertNotNil(itemConfigurable)
-    XCTAssertEqual(composite?.contentView.subviews.count, 1)
-    XCTAssertTrue(components[1].compositeComponents[0].parentComponent!.model == components[1].model)
+    XCTAssertTrue(components[1].compositeComponents[0].component.parentComponent!.model == components[1].model)
     XCTAssertTrue(components[1].compositeComponents[0].component.userInterface is TableView)
     XCTAssertEqual(components[1].compositeComponents[0].component.model.items.count, 10)
     XCTAssertEqual(components[1].compositeComponents[0].component.view.frame.size.height,
-                   (itemConfigurable!.preferredViewSize.height + heightOffset) * CGFloat(components[1].compositeComponents[0].component.model.items.count))
+                   components[1].model.items[0].size.height)
 
     itemConfigurable = components[0].compositeComponents[1].component.ui(at: 0)
 
     XCTAssertNotNil(itemConfigurable)
-    XCTAssertEqual(composite?.contentView.subviews.count, 1)
-    XCTAssertTrue(components[1].compositeComponents[1].parentComponent!.model == components[1].model)
+    XCTAssertTrue(components[1].compositeComponents[1].component.parentComponent!.model == components[1].model)
     XCTAssertTrue(components[1].compositeComponents[1].component.userInterface is TableView)
     XCTAssertEqual(components[1].compositeComponents[1].component.model.items.count, 10)
     XCTAssertEqual(components[1].compositeComponents[1].component.view.frame.size.height,
-                   (itemConfigurable!.preferredViewSize.height + heightOffset) * CGFloat(components[1].compositeComponents[1].component.model.items.count))
+                   components[1].model.items[1].size.height)
 
     let newComponentModels: [ComponentModel] = [
       ComponentModel(kind: .grid,
@@ -1142,22 +1112,20 @@ class CompositionTests: XCTestCase {
 
       XCTAssertNotNil(composite)
       XCTAssertNotNil(itemConfigurable)
-      XCTAssertEqual(composite?.contentView.subviews.count, 1)
-      XCTAssertTrue(components[0].compositeComponents[0].parentComponent!.model == components[0].model)
+      XCTAssertTrue(components[0].compositeComponents[0].component.parentComponent!.model == components[0].model)
       XCTAssertTrue(components[0].compositeComponents[0].component.userInterface is TableView)
       XCTAssertEqual(components[0].compositeComponents[0].component.model.items.count, 10)
       XCTAssertEqual(components[0].compositeComponents[0].component.view.frame.size.height,
-                     ((itemConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(components[0].compositeComponents[0].component.model.items.count))
+                     components[0].model.items[0].size.height)
 
       itemConfigurable = components[0].compositeComponents[1].component.ui(at: 0)
 
       XCTAssertNotNil(itemConfigurable)
-      XCTAssertEqual(composite?.contentView.subviews.count, 1)
-      XCTAssertTrue(components[0].compositeComponents[1].parentComponent!.model == components[0].model)
+      XCTAssertTrue(components[0].compositeComponents[1].component.parentComponent!.model == components[0].model)
       XCTAssertTrue(components[0].compositeComponents[1].component.userInterface is TableView)
       XCTAssertEqual(components[0].compositeComponents[1].component.model.items.count, 10)
       XCTAssertEqual(components[0].compositeComponents[1].component.view.frame.size.height,
-                     ((itemConfigurable?.preferredViewSize.height ?? 0.0) + self.heightOffset) * CGFloat(components[0].compositeComponents[1].component.model.items.count))
+                     components[0].model.items[1].size.height)
 
       XCTAssertEqual(reloadTimes, 1)
 

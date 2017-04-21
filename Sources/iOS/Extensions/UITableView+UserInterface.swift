@@ -7,8 +7,8 @@ extension UITableView: UserInterface {
   }
 
   public func register() {
-    Configuration.register(view: ListComposite.self, identifier: TableView.compositeIdentifier)
-    register(ListComposite.self, forCellReuseIdentifier: TableView.compositeIdentifier)
+    Configuration.register(view: ListWrapper.self, identifier: TableView.compositeIdentifier)
+    register(ListWrapper.self, forCellReuseIdentifier: TableView.compositeIdentifier)
 
     for (identifier, item) in Configuration.views.storage {
       if identifier.contains(CompositeComponent.identifier) {

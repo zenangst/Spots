@@ -208,7 +208,7 @@ public class SpotsControllerManager {
       if index < tempComponent.compositeComponents.count {
         component.compositeComponents[index].component.view.removeFromSuperview()
         component.compositeComponents[index] = tempComponent.compositeComponents[index]
-        component.compositeComponents[index].parentComponent = component
+        component.compositeComponents[index].component.parentComponent = component
       }
     }
 
@@ -319,8 +319,8 @@ public class SpotsControllerManager {
             continue
           }
 
-          if let index = removedComponent.parentComponent?.compositeComponents.index(of: removedComponent) {
-            removedComponent.parentComponent?.compositeComponents.remove(at: index)
+          if let index = removedComponent.component.parentComponent?.compositeComponents.index(of: removedComponent) {
+            removedComponent.component.parentComponent?.compositeComponents.remove(at: index)
           }
         }
 

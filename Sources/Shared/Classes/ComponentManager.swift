@@ -211,17 +211,11 @@ public class ComponentManager {
       component.model.items[index] = item
 
       if component.model.items[index].kind == CompositeComponent.identifier {
-        if let compositeView: Composable? = component.userInterface?.view(at: index) {
-          let compositeComponents = component.compositeComponents.filter { $0.itemIndex == item.index }
-          compositeView?.configure(&component.model.items[index],
-                                   compositeComponents: compositeComponents)
-        } else {
-          for compositeSpot in component.compositeComponents {
-            compositeSpot.component.setup(with: component.view.frame.size)
-            compositeSpot.component.reload([])
+        for compositeSpot in component.compositeComponents {
+          compositeSpot.component.reload([]) {
+            component.model.items[index].size.height = compositeSpot.component.computedHeight
           }
         }
-
         self?.finishComponentOperation(component, updateHeightAndIndexes: false, completion: completion)
         return
       } else {
@@ -419,15 +413,28 @@ public class ComponentManager {
   ///   - completion: A completion closure that is run when the operation is done.
   private func finishComponentOperation(_ component: Component, updateHeightAndIndexes: Bool, completion: Completion) {
     if updateHeightAndIndexes {
-      component.updateHeightAndIndexes {
+      component.updateHeightAndIndexes { [weak self] in
         component.afterUpdate()
         component.view.superview?.layoutSubviews()
         completion?()
+        self?.refreshHeightInParentComponent(component)
       }
     } else {
       component.afterUpdate()
       component.view.superview?.layoutSubviews()
       completion?()
+      refreshHeightInParentComponent(component)
+    }
+  }
+
+  /// Refresh height in parent component.
+  ///
+  /// - Parameter component: A composite component.
+  private func refreshHeightInParentComponent(_ component: Component) {
+    if let parentComponent = component.parentComponent {
+      for compositeComponent in parentComponent.compositeComponents {
+        parentComponent.model.items[compositeComponent.itemIndex].size.height = compositeComponent.component.computedHeight
+      }
     }
   }
 }

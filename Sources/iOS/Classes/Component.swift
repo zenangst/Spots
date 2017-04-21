@@ -3,7 +3,6 @@
 import UIKit
 
 public class Component: NSObject, ComponentHorizontallyScrollable {
-
   /// The default layout that should be used for components.
   /// It will default to this one if `Layout` is absent during init.
   public static var layout: Layout = Layout(span: 0.0)
@@ -18,6 +17,13 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   /// A horizontal scroll view delegate that will invoke methods when a user scrolls
   /// a collection view with horizontal scrolling.
   weak public var carouselScrollDelegate: CarouselScrollDelegate?
+  /// A parent component used for composition.
+  public var parentComponent: Component? {
+    didSet {
+      self.view.frame.size.height = self.computedHeight
+      self.focusDelegate = parentComponent?.focusDelegate
+    }
+  }
   /// The component model, it contains all the information for configuring `Component`
   /// interaction, behaviour and look-and-feel. See `ComponentModel` for more information.
   public var model: ComponentModel
@@ -71,9 +77,10 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   ///   - model: A `ComponentModel` that is used to configure the interaction, behavior and look-and-feel of the component.
   ///   - view: A scroll view, should either be a `UITableView` or `UICollectionView`.
   ///   - kind: The `kind` defines which user interface the component should render (either UICollectionView or UITableView).
-  public required init(model: ComponentModel, view: ScrollView) {
+  public required init(model: ComponentModel, view: ScrollView, parentComponent: Component? = nil) {
     self.model = model
     self.view = view
+    self.parentComponent = parentComponent
 
     super.init()
 
@@ -180,7 +187,7 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   ///   - size: The size that should be used for setting the new layout for the collection view.
   fileprivate func layoutCollectionView(_ collectionView: CollectionView, with size: CGSize) {
     if compositeComponents.isEmpty {
-      prepareItems()
+      prepareItems(recreateComposites: true)
     }
 
     switch model.interaction.scrollDirection {
