@@ -413,15 +413,28 @@ public class ComponentManager {
   ///   - completion: A completion closure that is run when the operation is done.
   private func finishComponentOperation(_ component: Component, updateHeightAndIndexes: Bool, completion: Completion) {
     if updateHeightAndIndexes {
-      component.updateHeightAndIndexes {
+      component.updateHeightAndIndexes { [weak self] in
         component.afterUpdate()
         component.view.superview?.layoutSubviews()
         completion?()
+        self?.refreshHeightInParentComponent(component)
       }
     } else {
       component.afterUpdate()
       component.view.superview?.layoutSubviews()
       completion?()
+      refreshHeightInParentComponent(component)
+    }
+  }
+
+  /// Refresh height in parent component.
+  ///
+  /// - Parameter component: A composite component.
+  private func refreshHeightInParentComponent(_ component: Component) {
+    if let parentComponent = component.parentComponent {
+      for compositeComponent in parentComponent.compositeComponents {
+        parentComponent.model.items[compositeComponent.itemIndex].size.height = compositeComponent.component.computedHeight
+      }
     }
   }
 }
