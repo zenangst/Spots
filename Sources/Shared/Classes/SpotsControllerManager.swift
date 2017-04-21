@@ -76,7 +76,6 @@ public class SpotsControllerManager {
       }
 
       guard compare(newComponentModels, oldComponentModels) else {
-        controller.cache()
         Dispatch.main {
           controller.scrollView.layoutViews()
           SpotsController.componentsDidReloadComponentModels?(controller)
@@ -90,7 +89,6 @@ public class SpotsControllerManager {
       strongSelf.process(changes: changes, controller: controller, components: newComponentModels, withAnimation: animation) {
         Dispatch.main {
           controller.scrollView.layoutSubviews()
-          controller.cache()
           SpotsController.componentsDidReloadComponentModels?(controller)
           completion?()
         }
@@ -210,31 +208,31 @@ public class SpotsControllerManager {
       if index < tempComponent.compositeComponents.count {
         component.compositeComponents[index].component.view.removeFromSuperview()
         component.compositeComponents[index] = tempComponent.compositeComponents[index]
-        component.compositeComponents[index].parentComponent = component
+        component.compositeComponents[index].component.parentComponent = component
       }
     }
 
     if newItems.count == component.model.items.count {
-      reload(with: changes, controller: controller, in: component, newItems: newItems, animation: animation) { [weak self] in
-        if let strongSelf = self, let completion = completion {
-          strongSelf.completeUpdates(controller: controller)
-          completion()
-        }
-      }
+      reload(with: changes,
+             controller: controller,
+             in: component,
+             newItems: newItems,
+             animation: animation,
+             completion: completion)
     } else if newItems.count < component.model.items.count {
-      reload(with: changes, controller: controller, in: component, lessItems: newItems, animation: animation) { [weak self] in
-        if let strongSelf = self, let completion = completion {
-          strongSelf.completeUpdates(controller: controller)
-          completion()
-        }
-      }
+      reload(with: changes,
+             controller: controller,
+             in: component,
+             lessItems: newItems,
+             animation: animation,
+             completion: completion)
     } else if newItems.count > component.model.items.count {
-      reload(with: changes, controller: controller, in: component, moreItems: newItems, animation: animation) { [weak self] in
-        if let strongSelf = self, let completion = completion {
-          strongSelf.completeUpdates(controller: controller)
-          completion()
-        }
-      }
+      reload(with: changes,
+             controller: controller,
+             in: component,
+             moreItems: newItems,
+             animation: animation,
+             completion: completion)
     }
 
     return false
@@ -257,8 +255,6 @@ public class SpotsControllerManager {
     var offsets = [CGPoint]()
 
     component.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: {
-      component.beforeUpdate()
-
       for item in newItems {
         let results = component.compositeComponents.filter({ $0.itemIndex == item.index })
         for compositeComponent in results {
@@ -267,11 +263,7 @@ public class SpotsControllerManager {
       }
 
       component.model.items = newItems
-    }) { [weak self] in
-      guard let strongSelf = self else {
-        return
-      }
-
+    }) {
       for (index, item) in newItems.enumerated() {
         guard index < controller.components.count else {
           break
@@ -288,7 +280,7 @@ public class SpotsControllerManager {
         }
       }
 
-      strongSelf.finishReloading(component: component, controller: controller, withCompletion: completion)
+      completion?()
     }
   }
 
@@ -307,11 +299,10 @@ public class SpotsControllerManager {
                       animation: Animation,
                       completion: (() -> Void)? = nil) {
     component.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: {
-      component.beforeUpdate()
       component.model.items = newItems
-    }) { [weak self] in
-      guard let strongSelf = self, !newItems.isEmpty else {
-        self?.finishReloading(component: component, controller: controller, withCompletion: completion)
+    }) {
+      guard !newItems.isEmpty else {
+        completion?()
         return
       }
 
@@ -328,23 +319,19 @@ public class SpotsControllerManager {
             continue
           }
 
-          if let index = removedComponent.parentComponent?.compositeComponents.index(of: removedComponent) {
-            removedComponent.parentComponent?.compositeComponents.remove(at: index)
+          if let index = removedComponent.component.parentComponent?.compositeComponents.index(of: removedComponent) {
+            removedComponent.component.parentComponent?.compositeComponents.remove(at: index)
           }
         }
 
         if !component.model.items.filter({ !$0.children.isEmpty }).isEmpty {
-          component.beforeUpdate()
-          component.reload(nil, withAnimation: animation) {
-            strongSelf.finishReloading(component: component, controller: controller, withCompletion: completion)
-          }
+          component.reload(nil, withAnimation: animation, completion: completion)
         } else {
-          component.beforeUpdate()
           component.update(item, index: index, withAnimation: animation) {
             guard index == executeClosure else {
               return
             }
-            strongSelf.finishReloading(component: component, controller: controller, withCompletion: completion)
+            completion?()
           }
         }
       }
@@ -366,25 +353,14 @@ public class SpotsControllerManager {
                       animation: Animation,
                       completion: (() -> Void)? = nil) {
     component.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: {
-      component.beforeUpdate()
       component.model.items = newItems
     }) {
       if !component.model.items.filter({ !$0.children.isEmpty }).isEmpty {
-        component.reload(nil, withAnimation: animation) { [weak self] in
-          self?.finishReloading(component: component, controller: controller, withCompletion: completion)
-        }
+        component.reload(nil, withAnimation: animation, completion: completion)
       } else {
-        component.updateHeight { [weak self] in
-          self?.finishReloading(component: component, controller: controller, withCompletion: completion)
-        }
+        completion?()
       }
     }
-  }
-
-  private func finishReloading(component: Component, controller: SpotsController, withCompletion completion: Completion = nil) {
-    component.afterUpdate()
-    completion?()
-    controller.scrollView.layoutSubviews()
   }
 
   /// Process a collection of component model diffs.
@@ -448,7 +424,6 @@ public class SpotsControllerManager {
       }
 
       if runCompletion {
-        strongSelf.completeUpdates(controller: controller)
         finalCompletion?()
       }
     }
@@ -477,7 +452,6 @@ public class SpotsControllerManager {
       let oldComponentModels = controller.components.map { $0.model }
 
       guard compare(newComponentModels, oldComponentModels) else {
-        controller.cache()
         SpotsController.componentsDidReloadComponentModels?(controller)
         completion?()
         return
@@ -498,7 +472,6 @@ public class SpotsControllerManager {
 
       strongSelf.cleanUpComponentView(controller: controller)
       controller.setupComponents(animated: animated)
-      controller.cache()
 
       let newComposites = controller.components.flatMap { $0.compositeComponents }
 
@@ -535,7 +508,6 @@ public class SpotsControllerManager {
       }
 
       controller.components = Parser.parse(models)
-      controller.cache()
 
       if controller.scrollView.superview == nil {
         controller.view.addSubview(controller.scrollView)
@@ -570,7 +542,6 @@ public class SpotsControllerManager {
       }
 
       controller.components = Parser.parse(json)
-      controller.cache()
 
       if controller.scrollView.superview == nil {
         controller.view.addSubview(controller.scrollView)
@@ -600,12 +571,12 @@ public class SpotsControllerManager {
    */
   public func update(componentAtIndex index: Int = 0, controller: SpotsController, withAnimation animation: Animation = .automatic, withCompletion completion: Completion = nil, _ closure: (_ component: Component) -> Void) {
     guard let component = controller.component(at: index) else {
+      assertionFailure("Could not resolve component at index: \(index).")
       completion?()
       return
     }
 
     closure(component)
-    component.refreshIndexes()
     component.prepareItems()
 
     Dispatch.main {
@@ -618,13 +589,7 @@ public class SpotsControllerManager {
         }
       #endif
 
-      component.reload(nil, withAnimation: animation) {
-        component.updateHeight {
-          component.afterUpdate()
-          completion?()
-          component.view.layoutIfNeeded()
-        }
-      }
+      component.reload(nil, withAnimation: animation, completion: completion)
     }
   }
 
@@ -638,7 +603,14 @@ public class SpotsControllerManager {
    - parameter completion: A completion closure that is run when the update is completed
    */
   public func updateIfNeeded(componentAtIndex index: Int = 0, controller: SpotsController, items: [Item], withAnimation animation: Animation = .automatic, completion: Completion = nil) {
-    guard let component = controller.component(at: index), !(component.model.items == items) else {
+    guard let component = controller.component(at: index) else {
+      assertionFailure("Could not resolve component at index: \(index).")
+      controller.scrollView.layoutSubviews()
+      completion?()
+      return
+    }
+
+    guard !(component.model.items == items) else {
       controller.scrollView.layoutSubviews()
       completion?()
       return
@@ -659,11 +631,9 @@ public class SpotsControllerManager {
    - parameter completion: A completion closure that will run after the component has performed updates internally
    */
   public func append(_ item: Item, componentIndex: Int = 0, controller: SpotsController, withAnimation animation: Animation = .none, completion: Completion = nil) {
-    controller.component(at: componentIndex)?.append(item, withAnimation: animation) {
-      controller.scrollView.layoutSubviews()
-      completion?()
+    resolveComponent(atIndex: componentIndex, controller: controller, completion: completion) { component in
+      component.append(item, withAnimation: animation, completion: completion)
     }
-    controller.component(at: componentIndex)?.refreshIndexes()
   }
 
   /**
@@ -674,11 +644,9 @@ public class SpotsControllerManager {
    - parameter completion: A completion closure that will run after the component has performed updates internally
    */
   public func append(_ items: [Item], componentIndex: Int = 0, controller: SpotsController, withAnimation animation: Animation = .none, completion: Completion = nil) {
-    controller.component(at: componentIndex)?.append(items, withAnimation: animation) {
-      controller.scrollView.layoutSubviews()
-      completion?()
+    resolveComponent(atIndex: componentIndex, controller: controller, completion: completion) { component in
+      component.append(items, withAnimation: animation, completion: completion)
     }
-    controller.component(at: componentIndex)?.refreshIndexes()
   }
 
   /**
@@ -689,11 +657,9 @@ public class SpotsControllerManager {
    - parameter completion: A completion closure that will run after the component has performed updates internally
    */
   public func prepend(_ items: [Item], componentIndex: Int = 0, controller: SpotsController, withAnimation animation: Animation = .none, completion: Completion = nil) {
-    controller.component(at: componentIndex)?.prepend(items, withAnimation: animation) {
-      controller.scrollView.layoutSubviews()
-      completion?()
+    resolveComponent(atIndex: componentIndex, controller: controller, completion: completion) { component in
+      component.prepend(items, withAnimation: animation, completion: completion)
     }
-    controller.component(at: componentIndex)?.refreshIndexes()
   }
 
   /**
@@ -705,11 +671,9 @@ public class SpotsControllerManager {
    - parameter completion: A completion closure that will run after the component has performed updates internally
    */
   public func insert(_ item: Item, index: Int = 0, componentIndex: Int, controller: SpotsController, withAnimation animation: Animation = .none, completion: Completion = nil) {
-    controller.component(at: componentIndex)?.insert(item, index: index, withAnimation: animation) {
-      controller.scrollView.layoutSubviews()
-      completion?()
+    resolveComponent(atIndex: componentIndex, controller: controller, completion: completion) { component in
+      component.insert(item, index: index, withAnimation: animation, completion: completion)
     }
-    controller.component(at: componentIndex)?.refreshIndexes()
   }
 
   /// Update item at index inside a specific Component object
@@ -721,10 +685,15 @@ public class SpotsControllerManager {
   /// - parameter animation:  A Animation struct that determines which animation that should be used to perform the update.
   /// - parameter completion: A completion closure that will run after the component has performed updates internally.
   public func update(_ item: Item, index: Int = 0, componentIndex: Int, controller: SpotsController, withAnimation animation: Animation = .none, completion: Completion = nil) {
-    guard let oldItem = controller.component(at: componentIndex)?.item(at: index), item != oldItem
+    guard let oldItem = controller.component(at: componentIndex)?.item(at: index)
       else {
         completion?()
         return
+    }
+
+    guard item != oldItem else {
+      completion?()
+      return
     }
 
     #if os(iOS)
@@ -733,14 +702,15 @@ public class SpotsControllerManager {
       }
     #endif
 
-    controller.component(at: componentIndex)?.update(item, index: index, withAnimation: animation) {
-      controller.scrollView.layoutSubviews()
-      completion?()
-      #if os(iOS)
-        if animation == .none {
-          CATransaction.commit()
-        }
-      #endif
+    resolveComponent(atIndex: componentIndex, controller: controller, completion: completion) { component in
+      component.update(item, index: index, withAnimation: animation) {
+        completion?()
+        #if os(iOS)
+          if animation == .none {
+            CATransaction.commit()
+          }
+        #endif
+      }
     }
   }
 
@@ -752,10 +722,9 @@ public class SpotsControllerManager {
    - parameter completion: A completion closure that will run after the component has performed updates internally
    */
   public func update(_ indexes: [Int], componentIndex: Int = 0, controller: SpotsController, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
-    controller.component(at: componentIndex)?.reload(indexes, withAnimation: animation) {
-      completion?()
+    resolveComponent(atIndex: componentIndex, controller: controller, completion: completion) { component in
+      component.reload(indexes, withAnimation: animation, completion: completion)
     }
-    controller.component(at: componentIndex)?.refreshIndexes()
   }
 
   /**
@@ -766,10 +735,9 @@ public class SpotsControllerManager {
    - parameter completion: A completion closure that will run after the component has performed updates internally
    */
   public func delete(_ index: Int, componentIndex: Int = 0, controller: SpotsController, withAnimation animation: Animation = .none, completion: Completion = nil) {
-    controller.component(at: componentIndex)?.delete(index, withAnimation: animation) {
-      completion?()
+    resolveComponent(atIndex: componentIndex, controller: controller, completion: completion) { component in
+      component.delete(index, withAnimation: animation, completion: completion)
     }
-    controller.component(at: componentIndex)?.refreshIndexes()
   }
 
   /**
@@ -780,31 +748,27 @@ public class SpotsControllerManager {
    - parameter completion: A completion closure that will run after the component has performed updates internally
    */
   public func delete(_ indexes: [Int], componentIndex: Int = 0, controller: SpotsController, withAnimation animation: Animation = .none, completion: Completion = nil) {
-    controller.component(at: componentIndex)?.delete(indexes, withAnimation: animation) {
-      completion?()
+    resolveComponent(atIndex: componentIndex, controller: controller, completion: completion) { component in
+      component.delete(indexes, withAnimation: animation, completion: completion)
     }
-    controller.component(at: componentIndex)?.refreshIndexes()
+  }
+
+  private func resolveComponent(atIndex componentIndex: Int, controller: SpotsController, completion: Completion, closure: (Component) -> Void) {
+    guard let component = controller.component(at: componentIndex) else {
+      assertionFailure("Could not resolve component at index: \(componentIndex).")
+      completion?()
+      return
+    }
+
+    closure(component)
   }
 
   /// Remove all views from components view.
   ///
   /// - Parameter controller: A SpotsController instance.
-  fileprivate func cleanUpComponentView(controller: SpotsController) {
+  private func cleanUpComponentView(controller: SpotsController) {
     controller.scrollView.componentsView.subviews.forEach {
       $0.removeFromSuperview()
     }
-  }
-
-  /// Complete updates for controller.
-  ///
-  /// - Parameter controller: A SpotsController instance.
-  fileprivate func completeUpdates(controller: SpotsController) {
-    for component in controller.components {
-      component.afterUpdate()
-    }
-
-    #if !os(OSX)
-      controller.scrollView.layoutSubviews()
-    #endif
   }
 }

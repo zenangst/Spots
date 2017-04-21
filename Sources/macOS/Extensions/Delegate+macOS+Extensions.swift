@@ -113,17 +113,8 @@ extension Delegate: NSTableViewDelegate {
     }
 
     switch resolvedView {
-    case let view as Composable:
-      let components = component.compositeComponents.filter { $0.itemIndex == row }
-
-      if let itemSize = component.item(at: 0)?.size {
-        view.contentView.frame.size = itemSize
-      } else {
-        view.contentView.frame.size.width = tableView.frame.size.width
-        view.contentView.frame.size.height = component.computedHeight
-      }
-
-      view.configure(&component.model.items[row], compositeComponents: components)
+    case let item as Wrappable:
+      viewPreparer.prepareWrappableView(item, atIndex: row, in: component, parentFrame: item.bounds)
     case let view as NSTableRowView:
       if let itemConfigurable = view as? ItemConfigurable {
         itemConfigurable.configure(&component.model.items[row])

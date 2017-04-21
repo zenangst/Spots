@@ -37,22 +37,8 @@ extension DataSource: NSCollectionViewDataSource {
     let item = collectionView.makeItem(withIdentifier: reuseIdentifier, for: indexPath)
 
     switch item {
-    case let item as GridWrapper:
-      if let (_, resolvedView) = Configuration.views.make(reuseIdentifier), let view = resolvedView {
-        item.configure(with: view)
-        (view as? ItemConfigurable)?.configure(&component.model.items[indexPath.item])
-      }
-    case let item as Composable:
-      let components = component.compositeComponents.filter { $0.itemIndex == indexPath.item }
-
-      if let itemSize = component.item(at: 0)?.size {
-        item.contentView.frame.size = itemSize
-      } else {
-        item.contentView.frame.size.width = collectionView.frame.size.width
-        item.contentView.frame.size.height = component.computedHeight
-      }
-
-      item.configure(&component.model.items[indexPath.item], compositeComponents: components)
+    case let item as Wrappable:
+      viewPreparer.prepareWrappableView(item, atIndex: indexPath.item, in: component, parentFrame: item.bounds)
     case let item as ItemConfigurable:
       item.configure(&component.model.items[indexPath.item])
     default:

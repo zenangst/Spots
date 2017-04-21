@@ -112,11 +112,11 @@ public extension Component {
   }
 
   /// Prepare items in component
-  func prepareItems(clean: Bool = true) {
-    model.items = prepare(items: model.items, clean: clean)
+  func prepareItems(recreateComposites: Bool = true) {
+    model.items = prepare(items: model.items, recreateComposites: recreateComposites)
   }
 
-  func prepare(items: [Item], clean: Bool) -> [Item] {
+  func prepare(items: [Item], recreateComposites: Bool) -> [Item] {
     var preparedItems = items
     var spanWidth: CGFloat?
 
@@ -138,7 +138,7 @@ public extension Component {
         item.size.width = spanWidth
       }
 
-      if let configuredItem = configure(item: item, at: index, usesViewSize: true, clean: clean) {
+      if let configuredItem = configure(item: item, at: index, usesViewSize: true, clean: recreateComposites) {
         preparedItems[index].index = index
         preparedItems[index] = configuredItem
       }
@@ -229,13 +229,13 @@ public extension Component {
     item.index = index
 
     var fullWidth: CGFloat = item.size.width
+    let kind = identifier(at: index)
 
     #if !os(OSX)
       if fullWidth == 0.0 {
         fullWidth = UIScreen.main.bounds.width
       }
 
-      let kind = identifier(at: index)
       let view: View?
 
       if let (_, resolvedView) = Configuration.views.make(kind, parentFrame: self.view.bounds) {
@@ -255,20 +255,17 @@ public extension Component {
         fullWidth = view.superview?.frame.size.width ?? view.frame.size.width
       }
 
-      let kind = identifier(at: index)
-
       if kind.contains(CompositeComponent.identifier) {
-        let composite: Composable
+        let wrappable: Wrappable
         if kind.contains("list") {
-          composite = ListComposite()
+          wrappable = ListWrapper()
         } else {
-          composite = GridComposite()
+          wrappable = GridWrapper()
         }
 
-        composite.contentView.frame.size = view.frame.size
-        prepare(composable: composite, item: &item, clean: clean)
+        prepare(kind: kind, view: wrappable as Any, item: &item, clean: clean)
       } else {
-        if let (_, resolvedView) = Configuration.views.make(kind, parentFrame: self.view.frame) {
+        if let resolvedView = Configuration.views.make(kind, parentFrame: self.view.frame)?.view {
           prepare(kind: kind, view: resolvedView as Any, item: &item, clean: clean)
         } else {
           return nil
@@ -280,14 +277,11 @@ public extension Component {
   }
 
   func prepare(kind: String, view: Any, item: inout Item, clean: Bool) {
-    switch view {
-    case let view as Composable:
-      prepare(composable: view, item: &item, clean: clean)
-    case let view as ItemConfigurable:
+    if let view = view as? Wrappable, kind.contains(CompositeComponent.identifier) {
+      prepare(wrappable: view, item: &item, clean: clean)
+    } else if let view = view as? ItemConfigurable {
       view.configure(&item)
       setFallbackViewSize(to: &item, with: view)
-    default:
-      break
     }
   }
 
@@ -318,7 +312,7 @@ public extension Component {
   /// - parameter usesViewSize:      A boolean value to determine if the view uses the views height
   ///
   /// - returns: The height for the item based of the composable components
-  func prepare(composable: Composable, item: inout Item, clean: Bool) {
+  func prepare(wrappable: Wrappable, item: inout Item, clean: Bool) {
     var height: CGFloat = 0.0
 
     if clean {
@@ -343,20 +337,16 @@ public extension Component {
 
     components.forEach { component in
       let compositeSpot = CompositeComponent(component: component,
-                                             parentComponent: self,
                                              itemIndex: item.index)
-
+      compositeSpot.component.parentComponent = self
       compositeSpot.component.setup(with: size)
-      compositeSpot.component.view.frame.origin.y = height
 
       #if !os(OSX)
         /// Disable scrolling for listable objects
         compositeSpot.component.view.isScrollEnabled = !(compositeSpot.component.view is TableView)
       #endif
 
-      compositeSpot.component.view.frame.size.height = compositeSpot.component.view.contentSize.height
-
-      height += compositeSpot.component.view.frame.size.height
+      height += compositeSpot.component.computedHeight
 
       if clean {
         compositeComponents.append(compositeSpot)
@@ -446,10 +436,9 @@ public extension Component {
   /// Update height and refresh indexes for the component.
   ///
   /// - parameter completion: A completion closure that will be run when the computations are complete.
-  public func sanitize(completion: Completion = nil) {
+  public func updateHeightAndIndexes(completion: Completion = nil) {
     updateHeight { [weak self] in
-      self?.refreshIndexes()
-      completion?()
+      self?.refreshIndexes(completion: completion)
     }
   }
 
