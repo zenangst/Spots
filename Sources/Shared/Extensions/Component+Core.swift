@@ -109,11 +109,11 @@ public extension Component {
   }
 
   /// Prepare items in component
-  func prepareItems(clean: Bool = true) {
-    model.items = prepare(items: model.items, clean: clean)
+  func prepareItems(recreateComposites: Bool = true) {
+    model.items = prepare(items: model.items, recreateComposites: recreateComposites)
   }
 
-  func prepare(items: [Item], clean: Bool) -> [Item] {
+  func prepare(items: [Item], recreateComposites: Bool) -> [Item] {
     var preparedItems = items
     var spanWidth: CGFloat?
 
@@ -135,7 +135,7 @@ public extension Component {
         item.size.width = spanWidth
       }
 
-      if let configuredItem = configure(item: item, at: index, usesViewSize: true, clean: clean) {
+      if let configuredItem = configure(item: item, at: index, usesViewSize: true, clean: recreateComposites) {
         preparedItems[index].index = index
         preparedItems[index] = configuredItem
       }

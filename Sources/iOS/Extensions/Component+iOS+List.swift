@@ -14,7 +14,7 @@ extension Component {
       tableView.layoutMargins = .zero
     #endif
 
-    prepareItems(clean: true)
+    prepareItems(recreateComposites: true)
 
     var height: CGFloat = 0.0
 

@@ -187,7 +187,7 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   ///   - size: The size that should be used for setting the new layout for the collection view.
   fileprivate func layoutCollectionView(_ collectionView: CollectionView, with size: CGSize) {
     if compositeComponents.isEmpty {
-      prepareItems(clean: true)
+      prepareItems(recreateComposites: true)
     }
 
     switch model.interaction.scrollDirection {
