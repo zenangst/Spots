@@ -57,10 +57,10 @@ extension Component {
     switch type {
     case .live:
       layout(with: size)
-      prepareItems(clean: false)
+      prepareItems(recreateComposites: false)
     case .end:
       layout(with: size)
-      prepareItems(clean: false)
+      prepareItems(recreateComposites: false)
     }
   }
 }

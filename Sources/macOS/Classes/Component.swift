@@ -295,7 +295,7 @@ import Tailor
     }
 
     if !compositeComponents.isEmpty {
-      prepareItems(clean: false)
+      prepareItems(recreateComposites: false)
     }
   }
 

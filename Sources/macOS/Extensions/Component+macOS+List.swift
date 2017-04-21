@@ -66,7 +66,7 @@ extension Component {
   func resizeTableView(_ tableView: TableView, with size: CGSize, type: ComponentResize) {
     switch type {
     case .live:
-      prepareItems(clean: false)
+      prepareItems(recreateComposites: false)
       tableView.beginUpdates()
       tableView.reloadSection(0, withAnimation: .none, completion: nil)
       tableView.endUpdates()
