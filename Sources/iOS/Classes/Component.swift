@@ -196,10 +196,6 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     collectionView.showsHorizontalScrollIndicator = false
     collectionView.showsVerticalScrollIndicator = false
 
-    if #available(iOS 10, *) {
-      collectionView.isPrefetchingEnabled = false
-    }
-
     guard model.kind == .carousel else {
       return
     }
