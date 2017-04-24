@@ -9,24 +9,28 @@ extension Component {
 
     if let (_, headerView) = Configuration.views.make(header.kind) {
       if let headerView = headerView,
-        let componentable = headerView as? ItemConfigurable {
+        let itemConfigurable = headerView as? ItemConfigurable {
         let size = CGSize(width: view.frame.width,
-                          height: componentable.preferredViewSize.height)
-        componentable.configure(&header)
+                          height: itemConfigurable.preferredViewSize.height)
+        itemConfigurable.configure(&header)
         model.header = header
         headerView.frame.size = size
+        headerView.layer.zPosition = 100
 
         if let layout = model.layout {
           switch layout.headerMode {
-            case .sticky:
-            headerView.layer.zPosition = 100
-            case .default:
-            headerView.layer.zPosition = -1
+          case .sticky:
+            if model.kind != .list {
+              view.addSubview(headerView)
+            }
+          case .default:
+            if model.kind != .list {
+              backgroundView.addSubview(headerView)
+            }
           }
         }
 
         self.headerView = headerView
-        backgroundView.addSubview(headerView)
       }
     }
   }
@@ -38,15 +42,18 @@ extension Component {
 
     if let (_, footerView) = Configuration.views.make(footer.kind) {
       if let footerView = footerView,
-        let componentable = footerView as? ItemConfigurable {
+        let itemConfigurable = footerView as? ItemConfigurable {
         let size = CGSize(width: view.frame.width,
-                          height: componentable.preferredViewSize.height)
-        componentable.configure(&footer)
+                          height: itemConfigurable.preferredViewSize.height)
+        itemConfigurable.configure(&footer)
         model.footer = footer
         footerView.frame.size = size
-        footerView.layer.zPosition = -1
+        footerView.layer.zPosition = 99
         self.footerView = footerView
-        backgroundView.addSubview(footerView)
+
+        if model.kind != .list {
+          view.addSubview(footerView)
+        }
       }
     }
   }
@@ -54,7 +61,12 @@ extension Component {
   func layoutHeaderFooterViews(_ size: CGSize) {
     headerView?.frame.size.width = size.width
     footerView?.frame.size.width = size.width
-    footerView?.frame.origin.y = view.frame.height - footerHeight
+
+    if let collectionView = collectionView, model.kind == .carousel {
+      footerView?.frame.origin.y = collectionView.collectionViewLayout.collectionViewContentSize.height - footerHeight
+    } else {
+      footerView?.frame.origin.y = view.frame.size.height - footerHeight
+    }
 
     if let layout = model.layout {
       headerView?.frame.origin.x = CGFloat(layout.inset.left)
@@ -62,33 +74,5 @@ extension Component {
       headerView?.frame.size.width -= CGFloat(layout.inset.left + layout.inset.right)
       footerView?.frame.size.width -= CGFloat(layout.inset.left + layout.inset.right)
     }
-  }
-
-  func configureCollectionViewHeader(_ collectionView: CollectionView, with size: CGSize) {
-    guard let collectionViewLayout = collectionView.collectionViewLayout as? GridableLayout else {
-      return
-    }
-
-    guard let header = model.header else {
-      return
-    }
-
-    guard let view = Configuration.views.make(header.kind)?.view else {
-      return
-    }
-
-    collectionViewLayout.headerReferenceSize.width = collectionView.frame.size.width
-    collectionViewLayout.headerReferenceSize.height = view.frame.size.height
-
-    if collectionViewLayout.headerReferenceSize.width == 0.0 {
-      collectionViewLayout.headerReferenceSize.width = size.width
-    }
-
-    guard let itemConfigurableView = view as? ItemConfigurable,
-      collectionViewLayout.headerReferenceSize.height == 0.0 else {
-        return
-    }
-
-    collectionViewLayout.headerReferenceSize.height = itemConfigurableView.preferredViewSize.height
   }
 }

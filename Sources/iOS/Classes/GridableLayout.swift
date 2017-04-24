@@ -8,14 +8,20 @@ open class GridableLayout: UICollectionViewFlowLayout {
   /// The y offset for the Gridable object
   open var yOffset: CGFloat?
 
-  var footerHeight: CGFloat = 0.0
-
   private var layoutAttributes: [UICollectionViewLayoutAttributes]?
 
   // Subclasses must override this method and use it to return the width and height of the collection view’s content. These values represent the width and height of all the content, not just the content that is currently visible. The collection view uses this information to configure its own content size to facilitate scrolling.
   open override var collectionViewContentSize: CGSize {
+    guard let delegate = collectionView?.delegate as? Delegate,
+      let component = delegate.component
+      else {
+        return CGSize.zero
+    }
+
     if scrollDirection != .horizontal {
-      contentSize.height = super.collectionViewContentSize.height + footerHeight
+      contentSize.height = super.collectionViewContentSize.height
+      contentSize.height += component.headerHeight
+      contentSize.height += component.footerHeight
     }
 
     return contentSize
@@ -68,25 +74,8 @@ open class GridableLayout: UICollectionViewFlowLayout {
     case .vertical:
       contentSize.width = component.view.frame.width - component.view.contentInset.left - component.view.contentInset.right
       contentSize.height = super.collectionViewContentSize.height
-    }
-  }
-
-  /// Invalidates the current layout and triggers a layout update.
-  open override func invalidateLayout() {
-    guard let collectionView = collectionView else {
-      return
-    }
-
-    super.invalidateLayout()
-
-    if scrollDirection == .horizontal &&
-      (collectionView.frame.size.height <= contentSize.height ||
-      collectionView.contentOffset.y > 0) {
-      return
-    }
-
-    if let y = yOffset, collectionView.isDragging && headerReferenceSize.height > 0.0 {
-      collectionView.frame.origin.y = y
+      contentSize.height += component.headerHeight
+      contentSize.height += component.footerHeight
     }
   }
 
@@ -116,16 +105,18 @@ open class GridableLayout: UICollectionViewFlowLayout {
         itemAttribute.size = component.sizeForItem(at: itemAttribute.indexPath)
 
         if scrollDirection == .horizontal {
-          itemAttribute.frame.origin.y = headerReferenceSize.height + sectionInset.top
+          itemAttribute.frame.origin.y = component.headerHeight + sectionInset.top
           itemAttribute.frame.origin.x = offset
           offset += itemAttribute.size.width + minimumInteritemSpacing
+        } else {
+          itemAttribute.frame.origin.y += component.headerHeight
         }
 
         attributes.append(itemAttribute)
       }
     }
 
-    if let y = yOffset, headerReferenceSize.height > 0.0 {
+    if let y = yOffset, component.headerHeight > 0.0 {
       collectionView.frame.origin.y = y
     }
 

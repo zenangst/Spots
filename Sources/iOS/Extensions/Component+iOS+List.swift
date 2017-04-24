@@ -27,6 +27,9 @@ extension Component {
       }
     }
 
+    height += headerHeight
+    height += footerHeight
+
     tableView.contentSize = CGSize(
       width: tableView.frame.size.width,
       height: height - tableView.contentInset.top - tableView.contentInset.bottom)

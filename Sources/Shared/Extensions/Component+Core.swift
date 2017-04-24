@@ -70,6 +70,9 @@ public extension Component {
       #endif
     }
 
+    height += headerHeight
+    height += footerHeight
+
     return height
   }
 

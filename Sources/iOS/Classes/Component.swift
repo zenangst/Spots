@@ -155,8 +155,8 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
 
     view.frame.size = size
 
-    setupHeader(with: &model)
     setupFooter(with: &model)
+    setupHeader(with: &model)
 
     if let tableView = self.tableView {
       setupTableView(tableView, with: size)
@@ -200,17 +200,13 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
       collectionView.isPrefetchingEnabled = false
     }
 
-    if model.kind == .carousel {
-      collectionView.showsHorizontalScrollIndicator = false
-      self.model.interaction.scrollDirection = .horizontal
+    guard model.kind == .carousel else {
+      return
     }
 
-    switch model.interaction.scrollDirection {
-    case .horizontal:
-      setupHorizontalCollectionView(collectionView, with: size)
-    case .vertical:
-      setupVerticalCollectionView(collectionView, with: size)
-    }
+    collectionView.showsHorizontalScrollIndicator = false
+    self.model.interaction.scrollDirection = .horizontal
+    setupHorizontalCollectionView(collectionView, with: size)
   }
 
   /// Set new frame to collection view and invalidate the layout.

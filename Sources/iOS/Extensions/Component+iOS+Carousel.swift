@@ -31,10 +31,6 @@ extension Component {
       }
     }
 
-    configureCollectionViewHeader(collectionView, with: size)
-
-    collectionView.frame.size.height += collectionViewLayout.headerReferenceSize.height
-
     if let componentLayout = model.layout {
       collectionView.frame.size.height += CGFloat(componentLayout.inset.top + componentLayout.inset.bottom)
     }

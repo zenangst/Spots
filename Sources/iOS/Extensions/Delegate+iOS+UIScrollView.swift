@@ -4,32 +4,43 @@ import UIKit
 extension Delegate: UIScrollViewDelegate {
 
   public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-    /// This will restrict the scroll view to only scroll horizontally.
-    let constrainedYOffset = scrollView.contentSize.height - scrollView.frame.size.height
-    if constrainedYOffset >= 0.0 {
-      scrollView.contentOffset.y = constrainedYOffset
-    }
-
     if let component = component {
+      /// This will restrict the scroll view to only scroll horizontally.
+      let constrainedYOffset = scrollView.contentSize.height - scrollView.frame.size.height
+      if constrainedYOffset >= 0.0 && component.model.interaction.scrollDirection == .horizontal {
+        scrollView.contentOffset.y = constrainedYOffset
+      }
+
+      let xOffset = CGFloat(component.model.layout?.inset.left ?? 0.0) + scrollView.contentOffset.x
+
+      if let footerView = component.footerView {
+        footerView.frame.origin.y = scrollView.contentSize.height - footerView.frame.size.height
+        footerView.frame.origin.x = xOffset
+      }
+
       if let headerView = component.headerView {
         if let layout = component.model.layout {
           switch layout.headerMode {
           case .sticky:
-            if scrollView.contentOffset.y > 0.0 {
-              headerView.frame.origin.y = 0.0
-            } else {
-              headerView.frame.origin.y = scrollView.contentOffset.y
+            if let footerView = component.footerView {
+              let footerFrame = scrollView.convert(footerView.frame, to: scrollView)
+
+              print(scrollView.contentOffset.y)
+              print(headerView.frame.origin.y)
+
+              if headerView.frame.intersects(footerFrame) && scrollView.contentOffset.y >= headerView.frame.origin.y {
+                break
+              }
             }
+
+            headerView.frame.origin.y = scrollView.contentOffset.y
           case .default:
             headerView.frame.origin.y = -scrollView.contentOffset.y
           }
         } else {
           headerView.frame.origin.y = -scrollView.contentOffset.y
         }
-      }
-
-      if let footerView = component.footerView {
-        footerView.frame.origin.y = scrollView.contentSize.height - footerView.frame.size.height - scrollView.contentOffset.y
+        headerView.frame.origin.x = xOffset
       }
     }
 
