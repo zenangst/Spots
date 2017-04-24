@@ -25,6 +25,7 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
     case dynamicSpan = "dynamic-span"
     case dynamicHeight = "dynamic-height"
     case pageIndicator = "page-indicator"
+    case headerMode = "header-mode"
   }
 
   static let rootKey: String = String(describing: Layout.self).lowercased()
@@ -44,6 +45,8 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
   public var dynamicHeight: Bool = true
   /// The placement of any page indicator (`nil` if no indicator should be displayed)
   public var pageIndicatorPlacement: PageIndicatorPlacement?
+  /// Header stickiness
+  public var headerMode: HeaderMode = .default
 
   /// A dictionary representation of the struct.
   public var dictionary: [String : Any] {
@@ -53,7 +56,8 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
       Key.lineSpacing.rawValue: lineSpacing,
       Key.span.rawValue: span,
       Key.dynamicSpan.rawValue: dynamicSpan,
-      Key.dynamicHeight.rawValue: dynamicHeight
+      Key.dynamicHeight.rawValue: dynamicHeight,
+      Key.headerMode.rawValue: headerMode.rawValue
     ]
 
     if let pageIndicatorPlacement = pageIndicatorPlacement {
@@ -70,6 +74,7 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
     self.itemSpacing = 0.0
     self.lineSpacing = 0.0
     self.inset = Inset()
+    self.headerMode = .default
   }
 
   /// Default initializer for creating a Layout struct.
@@ -82,7 +87,7 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
   ///   - itemSpacing: Sets minimum item spacing for the model.
   ///   - lineSpacing: Sets minimum lines spacing for items in model.
   ///   - inset: An inset struct used to insert margins for the model.
-  public init(span: Double = 0.0, dynamicSpan: Bool = false, dynamicHeight: Bool = true, pageIndicatorPlacement: PageIndicatorPlacement? = nil, itemSpacing: Double = 0.0, lineSpacing: Double = 0.0, inset: Inset = .init()) {
+  public init(span: Double = 0.0, dynamicSpan: Bool = false, dynamicHeight: Bool = true, pageIndicatorPlacement: PageIndicatorPlacement? = nil, itemSpacing: Double = 0.0, lineSpacing: Double = 0.0, inset: Inset = .init(), headerMode: HeaderMode = .default) {
     self.span = span
     self.dynamicSpan = dynamicSpan
     self.dynamicHeight = dynamicHeight
@@ -90,6 +95,7 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
     self.lineSpacing = lineSpacing
     self.inset = inset
     self.pageIndicatorPlacement = pageIndicatorPlacement
+    self.headerMode = headerMode
   }
 
   /// Initialize with a JSON payload.
@@ -115,6 +121,7 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
     self.dynamicHeight <- map.property(Key.dynamicHeight.rawValue)
     self.span <- map.property(Key.span.rawValue)
     self.pageIndicatorPlacement <- map.enum(Key.pageIndicator.rawValue)
+    self.headerMode <- map.enum(Key.headerMode.rawValue)
   }
 
   /// Perform mutation with closure.
@@ -140,7 +147,8 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
     lhs.span == rhs.span &&
     lhs.dynamicSpan == rhs.dynamicSpan &&
     lhs.dynamicHeight == rhs.dynamicHeight &&
-    lhs.pageIndicatorPlacement == rhs.pageIndicatorPlacement
+    lhs.pageIndicatorPlacement == rhs.pageIndicatorPlacement &&
+    lhs.headerMode == rhs.headerMode
   }
 
   /// Compare Layout structs.

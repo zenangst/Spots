@@ -4,13 +4,36 @@ import UIKit
 extension Delegate: UIScrollViewDelegate {
 
   public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-    performPaginatedScrolling { component, collectionView, _ in
-      /// This will restrict the scroll view to only scroll horizontally.
-      let constrainedYOffset = collectionView.contentSize.height - collectionView.frame.size.height
-      if constrainedYOffset >= 0.0 {
-        collectionView.contentOffset.y = constrainedYOffset
+    /// This will restrict the scroll view to only scroll horizontally.
+    let constrainedYOffset = scrollView.contentSize.height - scrollView.frame.size.height
+    if constrainedYOffset >= 0.0 {
+      scrollView.contentOffset.y = constrainedYOffset
+    }
+
+    if let component = component {
+      if let headerView = component.headerView {
+        if let layout = component.model.layout {
+          switch layout.headerMode {
+          case .sticky:
+            if scrollView.contentOffset.y > 0.0 {
+              headerView.frame.origin.y = 0.0
+            } else {
+              headerView.frame.origin.y = scrollView.contentOffset.y
+            }
+          case .default:
+            headerView.frame.origin.y = -scrollView.contentOffset.y
+          }
+        } else {
+          headerView.frame.origin.y = -scrollView.contentOffset.y
+        }
       }
 
+      if let footerView = component.footerView {
+        footerView.frame.origin.y = scrollView.contentSize.height - footerView.frame.size.height - scrollView.contentOffset.y
+      }
+    }
+
+    performPaginatedScrolling { component, collectionView, _ in
       component.carouselScrollDelegate?.componentCarouselDidScroll(component)
       if component.model.layout?.pageIndicatorPlacement == .overlay {
         component.pageControl.frame.origin.x = scrollView.contentOffset.x

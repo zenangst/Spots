@@ -14,6 +14,10 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   /// A component delegate, used for interaction and to pick up on mutation made to
   /// `self.components`. See `ComponentDelegate` for more information.
   weak public var delegate: ComponentDelegate?
+  /// A reference to the header view that should be used for the component.
+  var headerView: View?
+  /// A reference to the footer view that should be used for the component.
+  var footerView: View?
   /// A horizontal scroll view delegate that will invoke methods when a user scrolls
   /// a collection view with horizontal scrolling.
   weak public var carouselScrollDelegate: CarouselScrollDelegate?
@@ -59,6 +63,22 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   /// This returns the current user interface as a UIScrollView.
   /// It would either be UICollectionView or UITableView.
   /// If you need to target one specific view it is preferred to use `.tableView` and `.collectionView`.
+  /// The height of the header view.
+  var headerHeight: CGFloat {
+    guard let headerView = headerView else {
+      return 0.0
+    }
+
+    return headerView.frame.size.height
+  }
+  /// The height of the footer view.
+  var footerHeight: CGFloat {
+    guard let footerView = footerView else {
+      return 0.0
+    }
+
+    return footerView.frame.size.height
+  }
   public var view: ScrollView
   /// A computed variable that casts the current `userInterface` into a `UITableView`.
   /// It will return `nil` if the model kind is not `.list`.
@@ -133,6 +153,11 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   public func setup(with size: CGSize) {
     type(of: self).configure?(view)
 
+    view.frame.size = size
+
+    setupHeader(with: &model)
+    setupFooter(with: &model)
+
     if let tableView = self.tableView {
       setupTableView(tableView, with: size)
     } else if let collectionView = self.collectionView {
@@ -153,6 +178,8 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
       layoutCollectionView(collectionView, with: size)
     }
 
+    layoutHeaderFooterViews(size)
+
     view.layoutSubviews()
   }
 
@@ -166,6 +193,10 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     collectionView.dataSource = componentDataSource
     collectionView.delegate = componentDelegate
     collectionView.backgroundView = backgroundView
+
+    if #available(iOS 10, *) {
+      collectionView.isPrefetchingEnabled = false
+    }
 
     if model.kind == .carousel {
       collectionView.showsHorizontalScrollIndicator = false
