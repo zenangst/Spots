@@ -213,8 +213,6 @@ import Tailor
   ///
   /// - Parameter size: A `CGSize` that is used to set the frame of the user interface.
   public func setup(with size: CGSize) {
-    type(of: self).configure?(view)
-
     scrollView.frame.size = size
 
     setupHeader(with: &model)
@@ -223,9 +221,11 @@ import Tailor
     configureDataSourceAndDelegate()
 
     if let tableView = self.tableView {
+      Component.configure?(tableView)
       documentView.addSubview(tableView)
       setupTableView(tableView, with: size)
     } else if let collectionView = self.collectionView {
+      Component.configure?(collectionView)
       documentView.addSubview(collectionView)
       setupCollectionView(collectionView, with: size)
     }
