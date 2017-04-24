@@ -43,9 +43,13 @@ public class GridableLayout: FlowLayout {
       contentSize.width += minimumInteritemSpacing * CGFloat(component.model.items.count)
 
       contentSize.height = firstItem.size.height
+      contentSize.height += component.headerHeight
+      contentSize.height += component.footerHeight
     case .vertical:
       contentSize.width = component.view.frame.width
       contentSize.height = super.collectionViewContentSize.height
+      contentSize.height += component.headerHeight
+      contentSize.height += component.footerHeight
     }
 
     if let componentLayout = component.model.layout {
@@ -75,25 +79,22 @@ public class GridableLayout: FlowLayout {
           continue
       }
 
-      switch itemAttribute.representedElementCategory {
-      case .item:
-        guard let indexPath = itemAttribute.indexPath else {
-          continue
-        }
-
-        itemAttribute.size = component.sizeForItem(at: indexPath)
-
-        if scrollDirection == .horizontal {
-          itemAttribute.frame.origin.y = headerReferenceSize.height + sectionInset.top
-          itemAttribute.frame.origin.x = offset
-
-          offset += itemAttribute.size.width + minimumInteritemSpacing
-        }
-
-        attributes.append(itemAttribute)
-      default:
-        break
+      guard let indexPath = itemAttribute.indexPath else {
+        continue
       }
+
+      itemAttribute.size = component.sizeForItem(at: indexPath)
+
+      if scrollDirection == .horizontal {
+        itemAttribute.frame.origin.y = component.headerHeight + sectionInset.top
+        itemAttribute.frame.origin.x = offset
+
+        offset += itemAttribute.size.width + minimumInteritemSpacing
+      } else {
+        itemAttribute.frame.origin.y += component.headerHeight
+      }
+
+      attributes.append(itemAttribute)
     }
 
     return attributes
