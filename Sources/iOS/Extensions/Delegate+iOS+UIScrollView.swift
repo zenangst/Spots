@@ -4,13 +4,44 @@ import UIKit
 extension Delegate: UIScrollViewDelegate {
 
   public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-    performPaginatedScrolling { component, collectionView, _ in
+    if let component = component {
       /// This will restrict the scroll view to only scroll horizontally.
-      let constrainedYOffset = collectionView.contentSize.height - collectionView.frame.size.height
-      if constrainedYOffset >= 0.0 {
-        collectionView.contentOffset.y = constrainedYOffset
+      let constrainedYOffset = scrollView.contentSize.height - scrollView.frame.size.height
+      if constrainedYOffset >= 0.0 && component.model.interaction.scrollDirection == .horizontal {
+        scrollView.contentOffset.y = constrainedYOffset
       }
 
+      let xOffset = CGFloat(component.model.layout?.inset.left ?? 0.0) + scrollView.contentOffset.x
+
+      if let footerView = component.footerView {
+        footerView.frame.origin.y = scrollView.contentSize.height - footerView.frame.size.height
+        footerView.frame.origin.x = xOffset
+      }
+
+      if let headerView = component.headerView {
+        if let layout = component.model.layout {
+          switch layout.headerMode {
+          case .sticky:
+            if let footerView = component.footerView {
+              let footerFrame = scrollView.convert(footerView.frame, to: scrollView)
+
+              if headerView.frame.intersects(footerFrame) && scrollView.contentOffset.y >= headerView.frame.origin.y {
+                break
+              }
+            }
+
+            headerView.frame.origin.y = scrollView.contentOffset.y
+          case .default:
+            headerView.frame.origin.y = -scrollView.contentOffset.y
+          }
+        } else {
+          headerView.frame.origin.y = -scrollView.contentOffset.y
+        }
+        headerView.frame.origin.x = xOffset
+      }
+    }
+
+    performPaginatedScrolling { component, _, _ in
       component.carouselScrollDelegate?.componentCarouselDidScroll(component)
       if component.model.layout?.pageIndicatorPlacement == .overlay {
         component.pageControl.frame.origin.x = scrollView.contentOffset.x

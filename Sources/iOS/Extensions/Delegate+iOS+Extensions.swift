@@ -99,28 +99,6 @@ extension Delegate: UICollectionViewDelegate {
 
 extension Delegate: UITableViewDelegate {
 
-  fileprivate func heightForItem(_ item: inout Item) -> CGFloat {
-    guard !item.kind.isEmpty else {
-      return 0.0
-    }
-
-    guard let resolvedView = Configuration.views.make(item.kind)?.view else {
-      return 0.0
-    }
-
-    guard let itemConfigurable = resolvedView as? ItemConfigurable else {
-      return resolvedView.frame.size.height
-    }
-
-    itemConfigurable.configure(&item)
-
-    guard resolvedView.frame.size.height != 0.0 else {
-      return itemConfigurable.preferredViewSize.height
-    }
-
-    return resolvedView.frame.size.height
-  }
-
   /// Asks the delegate for the height to use for the header of a particular section.
   ///
   /// - parameter tableView: The table-view object requesting this information.
@@ -128,33 +106,11 @@ extension Delegate: UITableViewDelegate {
   ///
   /// - returns: Returns the `headerHeight` found in `model.meta`, otherwise 0.0.
   public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    guard let component = component else {
-      return 0.0
-    }
-
-    guard var item: Item = component.model.header else {
-      return 0.0
-    }
-
-    let height = heightForItem(&item)
-    component.model.header = item
-
-    return height
+    return component?.headerHeight ?? 0.0
   }
 
   public func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-    guard let component = component else {
-      return 0.0
-    }
-
-    guard var item: Item = component.model.footer else {
-      return 0.0
-    }
-
-    let height = heightForItem(&item)
-    component.model.footer = item
-
-    return height
+    return component?.footerHeight ?? 0.0
   }
 
   /// Tells the delegate that the specified row is now selected.
@@ -204,96 +160,12 @@ extension Delegate: UITableViewDelegate {
     component.delegate?.component(component, didEndDisplaying: view, item: item)
   }
 
-  /// Asks the delegate for a view object to display in the header of the specified section of the table view.
-  ///
-  /// - parameter tableView: The table-view object asking for the view object.
-  /// - parameter section: An index number identifying a section of tableView.
-  ///
-  /// - returns: A view object to be displayed in the header of section based on the kind of the ListComponent and registered headers.
   public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-    guard let component = component,
-      var item = component.model.header else {
-        return nil
-    }
-
-    let kind = item.kind
-
-    guard !item.kind.isEmpty else {
-      return nil
-    }
-
-    let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: kind)
-    view?.frame.size.height = heightForItem(&item)
-    view?.frame.size.width = tableView.frame.size.width
-
-    switch view {
-      case let view as ListHeaderFooterWrapper:
-      if let (_, resolvedView) = Configuration.views.make(kind),
-        let customView = resolvedView {
-        view.configure(with: customView)
-
-        if let componentView = customView as? ItemConfigurable {
-          customView.frame.size = view.frame.size
-          if var item = component.model.header {
-            customView.frame.size.height = componentView.preferredViewSize.height
-            componentView.configure(&item)
-            component.model.header = item
-          }
-        }
-      }
-      case let view as ItemConfigurable:
-        if var item = component.model.header {
-          view.configure(&item)
-          component.model.header = item
-        }
-      default:
-        break
-    }
-
-    return view
+    return component?.headerView ?? nil
   }
 
   public func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-    guard let component = component,
-      var item = component.model.footer else {
-        return nil
-    }
-
-    let kind = item.kind
-
-    guard !item.kind.isEmpty else {
-      return nil
-    }
-
-    let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: kind)
-    view?.frame.size.height = heightForItem(&item)
-    view?.frame.size.width = tableView.frame.size.width
-
-    switch view {
-    case let view as ListHeaderFooterWrapper:
-      if let (_, resolvedView) = Configuration.views.make(kind),
-        let customView = resolvedView {
-        view.configure(with: customView)
-
-        if let componentView = customView as? ItemConfigurable {
-          customView.frame.size = view.frame.size
-          if var item = component.model.footer {
-            customView.frame.size.height = componentView.preferredViewSize.height
-            componentView.configure(&item)
-            component.model.footer = item
-          }
-        }
-      }
-    case let view as ItemConfigurable:
-      if var item = component.model.footer {
-        view.configure(&item)
-        component.model.footer = item
-      }
-    default:
-      break
-    }
-
-    return view
+    return component?.footerView ?? nil
   }
 
   @available(iOS 9.0, *)

@@ -94,8 +94,7 @@ class DataSourceTests: XCTestCase {
     component.setup(with: CGSize(width: 100, height: 100))
     component.view.layoutSubviews()
 
-    let header = component.componentDataSource!.collectionView(component.collectionView!, viewForSupplementaryElementOfKind: UICollectionElementKindSectionHeader, at: IndexPath(item: 0, section: 0))
-    XCTAssertNotNil(header)
-    XCTAssertEqual(header.frame.size, CGSize(width: 100, height: 88))
+    XCTAssertNotNil(component.headerView)
+    XCTAssertEqual(component.headerView?.frame.size, CGSize(width: 100, height: 88))
   }
 }
