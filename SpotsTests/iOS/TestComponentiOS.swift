@@ -98,11 +98,6 @@ class ComponentTestsOniOS: XCTestCase {
       return
     }
 
-    guard let collectionViewLayout = collectionView.collectionViewLayout as? FlowLayout  else {
-      XCTFail("Unable to resolve collection view layout.")
-      return
-    }
-
     // Test that component height is equal to first item in the list
     XCTAssertEqual(component.model.items.count, 3)
     XCTAssertEqual(component.model.items[0].title, "foo")
@@ -116,7 +111,7 @@ class ComponentTestsOniOS: XCTestCase {
     XCTAssertFalse(collectionView.isPagingEnabled)
 
     // Check that header height gets added to the calculation
-    collectionViewLayout.headerReferenceSize.height = 20
+    component.headerView = UIView(frame: CGRect(x: 0, y:0, width: 200, height: 20))
     component.setup(with: CGSize(width: 100, height: 100))
     XCTAssertEqual(component.view.frame.size.height, 200)
   }
@@ -171,13 +166,8 @@ class ComponentTestsOniOS: XCTestCase {
     XCTAssertEqual(component.view.frame.size.height, 110)
     XCTAssertEqual(component.view.contentSize.height, 110)
 
-    guard let collectionViewLayout = component.collectionView?.collectionViewLayout as? FlowLayout else {
-      XCTFail("Unable to resolve collection view layout.")
-      return
-    }
-
     // Check that header height gets added to the calculation
-    collectionViewLayout.headerReferenceSize.height = 20
+    component.headerView = UIView(frame: CGRect(x: 0, y:0, width: 200, height: 20))
     component.setup(with: CGSize(width: 667, height: 225))
     component.layout(with: CGSize(width: 667, height: 225))
     component.view.layoutSubviews()

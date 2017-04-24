@@ -45,6 +45,9 @@
 		BD4295551D81D39700E07E1C /* TestComponentiOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4295541D81D39700E07E1C /* TestComponentiOS.swift */; };
 		BD42CA851E4C9B2600A86E3B /* TestSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD42CA841E4C9B2600A86E3B /* TestSpot.swift */; };
 		BD42CA861E4C9B2600A86E3B /* TestSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD42CA841E4C9B2600A86E3B /* TestSpot.swift */; };
+		BD44D1E31EADC48200F7205E /* HeaderMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD44D1E21EADC48200F7205E /* HeaderMode.swift */; };
+		BD44D1E41EADC48200F7205E /* HeaderMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD44D1E21EADC48200F7205E /* HeaderMode.swift */; };
+		BD44D1E51EADC48200F7205E /* HeaderMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD44D1E21EADC48200F7205E /* HeaderMode.swift */; };
 		BD45D9871E30906300C2D6B2 /* TestLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD45D9861E30906300C2D6B2 /* TestLayout.swift */; };
 		BD45D9881E30906300C2D6B2 /* TestLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD45D9861E30906300C2D6B2 /* TestLayout.swift */; };
 		BD45D9891E30906300C2D6B2 /* TestLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD45D9861E30906300C2D6B2 /* TestLayout.swift */; };
@@ -399,6 +402,7 @@
 		BD31BB991EA6208600D1FC8A /* DelegateConfigurationClosureTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DelegateConfigurationClosureTests.swift; sourceTree = "<group>"; };
 		BD4295541D81D39700E07E1C /* TestComponentiOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestComponentiOS.swift; sourceTree = "<group>"; };
 		BD42CA841E4C9B2600A86E3B /* TestSpot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSpot.swift; sourceTree = "<group>"; };
+		BD44D1E21EADC48200F7205E /* HeaderMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderMode.swift; sourceTree = "<group>"; };
 		BD45D9861E30906300C2D6B2 /* TestLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestLayout.swift; sourceTree = "<group>"; };
 		BD45D98A1E30909700C2D6B2 /* TestLayoutExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestLayoutExtensions.swift; sourceTree = "<group>"; };
 		BD45D98E1E30935500C2D6B2 /* TestLayoutExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestLayoutExtensions.swift; sourceTree = "<group>"; };
@@ -781,6 +785,7 @@
 				BDAD85321E3E7032008289AE /* Paginate.swift */,
 				BDAD85331E3E7032008289AE /* RegistryType.swift */,
 				D5D282661E54710D004BF251 /* ViewState.swift */,
+				BD44D1E21EADC48200F7205E /* HeaderMode.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -1543,6 +1548,7 @@
 				BDAD857A1E3E7032008289AE /* CarouselScrollDelegate+Extensions.swift in Sources */,
 				BDAD84B11E3E701C008289AE /* GridHeaderFooterWrapper.swift in Sources */,
 				BDAD85981E3E7032008289AE /* SpotsController+Extensions.swift in Sources */,
+				BD44D1E51EADC48200F7205E /* HeaderMode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1666,6 +1672,7 @@
 				52CD427A1E4477C800187E09 /* PageIndicatorPlacement.swift in Sources */,
 				BDAD85781E3E7032008289AE /* CarouselScrollDelegate+Extensions.swift in Sources */,
 				BDDCF6EF1E4DF93D004B38C4 /* DictionaryConvertible.swift in Sources */,
+				BD44D1E31EADC48200F7205E /* HeaderMode.swift in Sources */,
 				BD9ECEBE1E6EC8A5003E4388 /* Component+iOS+Carousel.swift in Sources */,
 				BDE44B0F1EA0E5E80021EAC8 /* ComponentManager.swift in Sources */,
 				BDAD85C91E3E7032008289AE /* UserInterface.swift in Sources */,
@@ -1778,6 +1785,7 @@
 				BD9ECEB71E6EC6B4003E4388 /* Component+macOS+Carousel.swift in Sources */,
 				BDAD851A1E3E7025008289AE /* SpotsContentView.swift in Sources */,
 				BD9ECEB81E6EC6BC003E4388 /* Component+macOS+List.swift in Sources */,
+				BD44D1E41EADC48200F7205E /* HeaderMode.swift in Sources */,
 				BDAD851E1E3E7025008289AE /* Delegate+macOS+Extensions.swift in Sources */,
 				BD9ECEBA1E6EC6D1003E4388 /* Component+macOS+Grid.swift in Sources */,
 				BDAD85941E3E7032008289AE /* ComponentDelegate+Extensions.swift in Sources */,
