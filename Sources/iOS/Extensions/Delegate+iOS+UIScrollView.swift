@@ -25,9 +25,6 @@ extension Delegate: UIScrollViewDelegate {
             if let footerView = component.footerView {
               let footerFrame = scrollView.convert(footerView.frame, to: scrollView)
 
-              print(scrollView.contentOffset.y)
-              print(headerView.frame.origin.y)
-
               if headerView.frame.intersects(footerFrame) && scrollView.contentOffset.y >= headerView.frame.origin.y {
                 break
               }
