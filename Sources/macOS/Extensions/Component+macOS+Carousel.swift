@@ -20,6 +20,9 @@ extension Component {
       return
     }
 
+    collectionViewLayout.prepare()
+    collectionViewLayout.invalidateLayout()
+
     guard let collectionViewContentSize = collectionView.collectionViewLayout?.collectionViewContentSize else {
       return
     }
@@ -35,7 +38,6 @@ extension Component {
     collectionView.frame.size.height = newCollectionViewHeight
 
     documentView.frame.size = collectionView.frame.size
-
     documentView.frame.size.height = collectionView.frame.size.height + headerHeight + footerHeight
 
     if let layout = model.layout {
@@ -47,9 +49,6 @@ extension Component {
     scrollView.frame.size.width = size.width
     scrollView.frame.size.height = documentView.frame.size.height
     scrollView.scrollerInsets.bottom = footerHeight
-
-    collectionViewLayout.prepare()
-    collectionViewLayout.invalidateLayout()
   }
 
   func resizeHorizontalCollectionView(_ collectionView: CollectionView, with size: CGSize, type: ComponentResize) {
