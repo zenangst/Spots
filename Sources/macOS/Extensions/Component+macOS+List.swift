@@ -26,7 +26,6 @@ extension Component {
     tableView.target = self
     tableView.action = #selector(self.singleMouseClick(_:))
     tableView.doubleAction = #selector(self.doubleMouseClick(_:))
-    tableView.sizeToFit()
 
     guard tableView.tableColumns.isEmpty else {
       return
@@ -41,10 +40,12 @@ extension Component {
   }
 
   func layoutTableView(_ tableView: TableView, with size: CGSize) {
-    scrollView.frame.size.width = size.width
+    let size = tableView.sizeThatFits(size)
+    scrollView.frame.size.width = round(size.width)
     tableView.frame.origin.y = headerView?.frame.size.height ?? 0.0
 
     if parentComponent != nil {
+      tableView.frame.size.width = round(size.width)
       tableView.frame.size.height = computedHeight
     } else {
       tableView.sizeToFit()
@@ -60,5 +61,18 @@ extension Component {
     }
 
     scrollView.frame.size.height = tableView.frame.height + headerHeight + footerHeight
+  }
+
+  func resizeTableView(_ tableView: TableView, with size: CGSize, type: ComponentResize) {
+    switch type {
+    case .live:
+      prepareItems(recreateComposites: false)
+      tableView.beginUpdates()
+      tableView.reloadSection(0, withAnimation: .none, completion: nil)
+      tableView.endUpdates()
+      layout(with: size)
+    case .end:
+      layoutTableView(tableView, with: size)
+    }
   }
 }

@@ -213,8 +213,6 @@ import Tailor
   ///
   /// - Parameter size: A `CGSize` that is used to set the frame of the user interface.
   public func setup(with size: CGSize) {
-    type(of: self).configure?(view)
-
     scrollView.frame.size = size
 
     setupHeader(with: &model)
@@ -223,9 +221,11 @@ import Tailor
     configureDataSourceAndDelegate()
 
     if let tableView = self.tableView {
+      Component.configure?(tableView)
       documentView.addSubview(tableView)
       setupTableView(tableView, with: size)
     } else if let collectionView = self.collectionView {
+      Component.configure?(collectionView)
       documentView.addSubview(collectionView)
       setupCollectionView(collectionView, with: size)
     }
@@ -293,6 +293,18 @@ import Tailor
     } else {
       layoutVerticalCollectionView(collectionView, with: size)
     }
+
+    if !compositeComponents.isEmpty {
+      prepareItems(recreateComposites: false)
+    }
+  }
+
+  fileprivate func resizeCollectionView(_ collectionView: CollectionView, with size: CGSize, type: ComponentResize) {
+    if model.kind == .carousel {
+      resizeHorizontalCollectionView(collectionView, with: size, type: type)
+    } else {
+      resizeVerticalCollectionView(collectionView, with: size, type: type)
+    }
   }
 
   /// Register a default item as fallback, only if it is not already defined.
@@ -343,36 +355,21 @@ import Tailor
   /// - Parameter indexPath: The index path of the item that should be resolved.
   /// - Returns: A `CGSize` based of the `Item`'s width and height.
   public func sizeForItem(at indexPath: IndexPath) -> CGSize {
-    if let collectionView = collectionView,
-      model.interaction.scrollDirection == .horizontal {
-      var width: CGFloat
+    return CGSize(
+      width:  item(at: indexPath)?.size.width  ?? 0.0,
+      height: item(at: indexPath)?.size.height ?? 0.0
+    )
+  }
 
-      if let layout = model.layout {
-        width = layout.span > 0
-          ? collectionView.frame.width / CGFloat(layout.span)
-          : collectionView.frame.width
-      } else {
-        width = collectionView.frame.width
-      }
-
-      if let layout = collectionView.collectionViewLayout as? NSCollectionViewFlowLayout {
-        width -= layout.sectionInset.left - layout.sectionInset.right
-        width -= layout.minimumInteritemSpacing
-        width -= layout.minimumLineSpacing
-      }
-
-      if model.items[indexPath.item].size.width == 0.0 {
-        model.items[indexPath.item].size.width = width
-      }
-
-      return CGSize(
-        width: ceil(model.items[indexPath.item].size.width),
-        height: ceil(model.items[indexPath.item].size.height))
+  public func didResize(size: CGSize, type: ComponentResize) {
+    if !compositeComponents.isEmpty && type == .end {
+      reload(nil)
     } else {
-      return CGSize(
-        width:  item(at: indexPath)?.size.width  ?? 0.0,
-        height: item(at: indexPath)?.size.height ?? 0.0
-      )
+      if let tableView = tableView {
+        resizeTableView(tableView, with: size, type: type)
+      } else if let collectionView = collectionView {
+        resizeCollectionView(collectionView, with: size, type: type)
+      }
     }
   }
 

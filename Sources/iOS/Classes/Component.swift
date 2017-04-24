@@ -151,7 +151,7 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   ///
   /// - Parameter size: A `CGSize` that is used to set the frame of the user interface.
   public func setup(with size: CGSize) {
-    type(of: self).configure?(view)
+    Component.configure?(view)
 
     view.frame.size = size
 

@@ -51,9 +51,12 @@ public extension Component {
       #endif
     } else if let collectionView = collectionView {
       #if os(macOS)
-      if let collectionViewLayout = collectionView.collectionViewLayout {
-        height = collectionViewLayout.collectionViewContentSize.height
-      }
+        if let collectionViewLayout = collectionView.collectionViewLayout {
+          height = collectionViewLayout.collectionViewContentSize.height
+        }
+
+          height += headerView?.frame.size.height ?? 0
+          height += footerView?.frame.size.height ?? 0
       #else
         if let collectionViewLayout = collectionView.collectionViewLayout as? FlowLayout {
           switch collectionViewLayout.scrollDirection {
@@ -323,7 +326,14 @@ public extension Component {
     }
 
     let components: [Component] = Parser.parse(item)
-    let size = view.frame.size
+    var size = view.frame.size
+
+    if let layout = model.layout, layout.span > 0.0 {
+      let componentWidth: CGFloat = view.frame.size.width - CGFloat(layout.inset.left + layout.inset.right)
+      size.width = (componentWidth / CGFloat(layout.span)) - CGFloat(layout.itemSpacing)
+    }
+
+    size.width = round(size.width)
 
     components.forEach { component in
       let compositeSpot = CompositeComponent(component: component,

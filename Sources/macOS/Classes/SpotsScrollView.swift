@@ -5,6 +5,8 @@ open class SpotsScrollView: NSScrollView {
   /// A KVO context used to monitor changes in contentSize, frames and bounds
   let subviewContext: UnsafeMutableRawPointer? = UnsafeMutableRawPointer(mutating: nil)
 
+  public var inset: Inset?
+
   /// A collection of NSView's that resemble the order of the views in the scroll view.
   fileprivate var subviewsInLayoutOrder = [NSView]()
 
@@ -88,7 +90,7 @@ open class SpotsScrollView: NSScrollView {
   }
 
   func layoutViews() {
-    var yOffsetOfCurrentSubview: CGFloat = 0.0
+    var yOffsetOfCurrentSubview: CGFloat = CGFloat(self.inset?.top ?? 0.0)
 
     for subview in subviewsInLayoutOrder {
       if let scrollView = subview as? ScrollView {
@@ -100,6 +102,12 @@ open class SpotsScrollView: NSScrollView {
         }
 
         frame.size.width = ceil(contentView.frame.size.width)
+
+        if let inset = self.inset {
+          frame.size.width -= CGFloat(inset.left + inset.right)
+          frame.origin.x = CGFloat(inset.left)
+        }
+
         scrollView.frame = frame
         scrollView.contentOffset = contentOffset
 
@@ -109,11 +117,20 @@ open class SpotsScrollView: NSScrollView {
         if self.contentOffset.y <= yOffsetOfCurrentSubview {
           frame.origin.y = yOffsetOfCurrentSubview
         }
+
         frame.origin.x = 0.0
+
+        if let inset = self.inset {
+          frame.size.width -= CGFloat(inset.left + inset.right)
+          frame.origin.x -= CGFloat(inset.left)
+        }
+
         subview.frame = frame
         yOffsetOfCurrentSubview += subview.frame.height
       }
     }
+
+    yOffsetOfCurrentSubview -= CGFloat(self.inset?.bottom ?? 0.0)
 
     guard frame.height > 0 && frame.width > 100 else {
       return
@@ -123,7 +140,9 @@ open class SpotsScrollView: NSScrollView {
       yOffsetOfCurrentSubview -= frame.origin.y
     }
 
-    documentView?.setFrameSize(CGSize(width: frame.width, height: fmax(yOffsetOfCurrentSubview, frame.height)))
+    let frameComparison: CGFloat = frame.height - contentInsets.top - CGFloat(self.inset?.bottom ?? 0.0)
+
+    documentView?.setFrameSize(CGSize(width: frame.width, height: fmax(yOffsetOfCurrentSubview, frameComparison)))
 
     if let view = superview {
       view.layout()

@@ -44,12 +44,5 @@ extension Component {
     headerView?.frame.size.width = size.width
     footerView?.frame.size.width = size.width
     footerView?.frame.origin.y = scrollView.frame.height - footerHeight
-
-    if let layout = model.layout {
-      headerView?.frame.origin.x = CGFloat(layout.inset.left)
-      footerView?.frame.origin.x = CGFloat(layout.inset.left)
-      headerView?.frame.size.width -= CGFloat(layout.inset.left + layout.inset.right)
-      footerView?.frame.size.width -= CGFloat(layout.inset.left + layout.inset.right)
-    }
   }
 }

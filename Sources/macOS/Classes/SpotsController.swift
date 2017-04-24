@@ -172,7 +172,7 @@ open class SpotsController: NSViewController, SpotsProtocol {
     super.viewWillAppear()
 
     setupComponents()
-    scrollView.layoutSubviews()
+    scrollView.layoutViews()
   }
 
   open override func viewDidAppear() {
@@ -181,6 +181,8 @@ open class SpotsController: NSViewController, SpotsProtocol {
     for component in components {
       component.layout(with: scrollView.frame.size)
     }
+
+    scrollView.layoutViews()
   }
 
   public func reloadSpots(components: [Component], closure: (() -> Void)?) {
@@ -218,20 +220,6 @@ open class SpotsController: NSViewController, SpotsProtocol {
       height: ceil(component.view.frame.height))
   }
 
-  open override func viewDidLayout() {
-    super.viewDidLayout()
-
-    for component in components {
-      component.layout(with: CGSize(width: view.frame.width,
-        height: component.computedHeight))
-
-      for compositeComponent in component.compositeComponents {
-        compositeComponent.component.setup(with: CGSize(width: view.frame.width,
-                                        height: compositeComponent.component.computedHeight))
-      }
-    }
-  }
-
   public func deselectAllExcept(selectedComponent: Component) {
     for component in components {
       if selectedComponent.view != component.view {
@@ -240,24 +228,30 @@ open class SpotsController: NSViewController, SpotsProtocol {
     }
   }
 
-  public func windowDidResize(_ notification: Notification) {
+  open override func viewDidLayout() {
+    super.viewDidLayout()
+
+    scrollView.layoutViews()
+  }
+
+  open func windowDidResize(_ notification: Notification) {
     for component in components {
       // Skip live resizing on views that use composite components.
       // This is a huge performance improvement, the composite views will get their
       // new size when the window is finish resizing (see windowDidEndLiveResize)
-      guard component.compositeComponents.isEmpty else {
-        continue
-      }
-
-      layoutComponent(component)
+//      guard component.compositeComponents.isEmpty else {
+//        continue
+//      }
+      component.didResize(size: view.frame.size, type: .live)
     }
     scrollView.layoutSubviews()
   }
 
   public func windowDidEndLiveResize(_ notification: Notification) {
     components.forEach { component in
-      layoutComponent(component)
+      component.didResize(size: view.frame.size, type: .end)
     }
+    scrollView.layoutSubviews()
   }
 
   fileprivate func layoutComponent(_ component: Component) {
