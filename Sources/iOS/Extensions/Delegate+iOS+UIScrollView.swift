@@ -41,7 +41,7 @@ extension Delegate: UIScrollViewDelegate {
       }
     }
 
-    performPaginatedScrolling { component, collectionView, _ in
+    performPaginatedScrolling { component, _, _ in
       component.carouselScrollDelegate?.componentCarouselDidScroll(component)
       if component.model.layout?.pageIndicatorPlacement == .overlay {
         component.pageControl.frame.origin.x = scrollView.contentOffset.x
