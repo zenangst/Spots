@@ -193,6 +193,8 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     collectionView.dataSource = componentDataSource
     collectionView.delegate = componentDelegate
     collectionView.backgroundView = backgroundView
+    collectionView.showsHorizontalScrollIndicator = false
+    collectionView.showsVerticalScrollIndicator = false
 
     if #available(iOS 10, *) {
       collectionView.isPrefetchingEnabled = false
