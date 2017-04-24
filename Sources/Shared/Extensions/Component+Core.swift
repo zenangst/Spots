@@ -51,9 +51,12 @@ public extension Component {
       #endif
     } else if let collectionView = collectionView {
       #if os(macOS)
-      if let collectionViewLayout = collectionView.collectionViewLayout {
-        height = collectionViewLayout.collectionViewContentSize.height
-      }
+        if let collectionViewLayout = collectionView.collectionViewLayout {
+          height = collectionViewLayout.collectionViewContentSize.height
+        }
+
+          height += headerView?.frame.size.height ?? 0
+          height += footerView?.frame.size.height ?? 0
       #else
         if let collectionViewLayout = collectionView.collectionViewLayout as? FlowLayout {
           switch collectionViewLayout.scrollDirection {
@@ -67,9 +70,6 @@ public extension Component {
             height = collectionView.collectionViewLayout.collectionViewContentSize.height
           }
         }
-
-        height += headerView?.frame.size.height ?? 0
-        height += footerView?.frame.size.height ?? 0
       #endif
     }
 
