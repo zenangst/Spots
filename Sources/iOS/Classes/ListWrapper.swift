@@ -9,6 +9,7 @@ public class ListWrapper: UITableViewCell, Wrappable, Cell {
 
     backgroundColor = .clear
     selectedBackgroundView = UIView()
+    selectionStyle = .none
   }
 
   required public init?(coder aDecoder: NSCoder) {
