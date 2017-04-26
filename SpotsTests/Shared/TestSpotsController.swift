@@ -6,6 +6,10 @@ class ComponentDelegateMock: ComponentDelegate {}
 
 class SpotsControllerTests: XCTestCase {
 
+  override func setUp() {
+    Configuration.views.purge()
+  }
+
   func testSpotAtIndex() {
     let model = ComponentModel(layout: Layout(span: 1.0))
     let listComponent = Component(model: model)

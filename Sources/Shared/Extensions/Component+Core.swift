@@ -114,6 +114,7 @@ public extension Component {
   /// Prepare items in component
   func prepareItems(recreateComposites: Bool = true) {
     model.items = prepare(items: model.items, recreateComposites: recreateComposites)
+    Configuration.views.purge()
   }
 
   func prepare(items: [Item], recreateComposites: Bool) -> [Item] {
