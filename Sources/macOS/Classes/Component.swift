@@ -267,7 +267,6 @@ import Tailor
     collectionView.isSelectable = true
     collectionView.allowsMultipleSelection = false
     collectionView.allowsEmptySelection = true
-    collectionView.layer = CALayer()
     collectionView.wantsLayer = true
 
     let backgroundView = NSView()
