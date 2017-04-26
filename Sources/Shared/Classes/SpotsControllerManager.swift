@@ -572,6 +572,7 @@ public class SpotsControllerManager {
   public func update(componentAtIndex index: Int = 0, controller: SpotsController, withAnimation animation: Animation = .automatic, withCompletion completion: Completion = nil, _ closure: (_ component: Component) -> Void) {
     guard let component = controller.component(at: index) else {
       assertionFailure("Could not resolve component at index: \(index).")
+      controller.scrollView.layoutSubviews()
       completion?()
       return
     }
@@ -589,7 +590,10 @@ public class SpotsControllerManager {
         }
       #endif
 
-      component.reload(nil, withAnimation: animation, completion: completion)
+      component.reload(nil, withAnimation: animation) {
+        controller.scrollView.layoutSubviews()
+        completion?()
+      }
     }
   }
 
@@ -617,6 +621,7 @@ public class SpotsControllerManager {
     }
 
     update(componentAtIndex: index, controller: controller, withAnimation: animation, withCompletion: {
+      controller.scrollView.layoutSubviews()
       completion?()
     }, { component in
       component.model.items = items
