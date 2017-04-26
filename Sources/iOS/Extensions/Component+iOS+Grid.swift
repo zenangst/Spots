@@ -9,6 +9,12 @@ extension Component {
 
     collectionViewLayout.prepare()
     collectionViewLayout.invalidateLayout()
-    collectionView.frame.size = collectionViewLayout.collectionViewContentSize
+
+    if collectionViewLayout.collectionViewContentSize.height > UIScreen.main.bounds.height {
+      collectionView.frame.size.width = collectionViewLayout.collectionViewContentSize.width
+      collectionView.frame.size.height = UIScreen.main.bounds.size.height
+    } else {
+      collectionView.frame.size = collectionViewLayout.collectionViewContentSize
+    }
   }
 }
