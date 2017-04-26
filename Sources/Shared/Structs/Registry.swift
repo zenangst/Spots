@@ -9,8 +9,6 @@ import Foundation
 /// A registry that is used internally when resolving kind to the corresponding component.
 public struct Registry {
 
-  var useCache: Bool = false
-
   public enum Item {
     case classType(View.Type)
     case nib(Nib)
@@ -60,10 +58,6 @@ public struct Registry {
   /// A cache that stores instances of created views
   fileprivate var cache: NSCache = NSCache<NSString, View>()
 
-  init(useCache: Bool = true) {
-    self.useCache = useCache
-  }
-
   /**
    Empty the current view cache
    */
@@ -77,7 +71,7 @@ public struct Registry {
    - parameter identifier: A reusable identifier for the view
    - returns: A tuple with an optional registry type and view
    */
-  func make(_ identifier: String, parentFrame: CGRect = CGRect.zero) -> (type: RegistryType?, view: View?)? {
+  func make(_ identifier: String, parentFrame: CGRect = CGRect.zero, useCache: Bool = false) -> (type: RegistryType?, view: View?)? {
     guard let item = storage[identifier] else { return nil }
 
     let registryType: RegistryType
@@ -87,13 +81,13 @@ public struct Registry {
     case .classType(let classType):
       registryType = .regular
 
-      #if !os(OSX)
+      if useCache {
         let cacheIdentifier: String = "\(registryType.rawValue)-\(identifier)"
         if let view = cache.object(forKey: cacheIdentifier as NSString) {
           (view as? ItemConfigurable)?.prepareForReuse()
           return (type: registryType, view: view)
         }
-      #endif
+      }
 
       view = classType.init(frame: parentFrame)
     case .nib(let nib):

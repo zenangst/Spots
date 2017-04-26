@@ -16,7 +16,7 @@ public struct Configuration {
 
   public static var defaultComponentKind: ComponentKind = .grid
   public static var defaultViewSize: CGSize = .init(width: 0, height: PlatformDefaults.defaultHeight)
-  public static var views: Registry = .init(useCache: false)
+  public static var views: Registry = .init()
 
   /// Register a nib file with identifier on the component.
   ///

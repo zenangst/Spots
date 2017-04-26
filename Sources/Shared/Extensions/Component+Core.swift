@@ -114,6 +114,7 @@ public extension Component {
   /// Prepare items in component
   func prepareItems(recreateComposites: Bool = true) {
     model.items = prepare(items: model.items, recreateComposites: recreateComposites)
+    Configuration.views.purge()
   }
 
   func prepare(items: [Item], recreateComposites: Bool) -> [Item] {
@@ -138,7 +139,7 @@ public extension Component {
         item.size.width = spanWidth
       }
 
-      if let configuredItem = configure(item: item, at: index, usesViewSize: true, clean: recreateComposites) {
+      if let configuredItem = configure(item: item, at: index, usesViewSize: true, recreateComposites: recreateComposites) {
         preparedItems[index].index = index
         preparedItems[index] = configuredItem
       }
@@ -214,9 +215,9 @@ public extension Component {
   ///
   /// - parameter index:        The index of the view model
   /// - parameter usesViewSize: A boolean value to determine if the view uses the views height
-  public func configureItem(at index: Int, usesViewSize: Bool = false, clean: Bool = true) {
+  public func configureItem(at index: Int, usesViewSize: Bool = false, recreateComposites: Bool = true) {
     guard let item = item(at: index),
-      let configuredItem = configure(item: item, at: index, usesViewSize: usesViewSize, clean: clean)
+      let configuredItem = configure(item: item, at: index, usesViewSize: usesViewSize, recreateComposites: recreateComposites)
       else {
         return
     }
@@ -224,7 +225,7 @@ public extension Component {
     model.items[index] = configuredItem
   }
 
-  func configure(item: Item, at index: Int, usesViewSize: Bool = false, clean: Bool) -> Item? {
+  func configure(item: Item, at index: Int, usesViewSize: Bool = false, recreateComposites: Bool) -> Item? {
     var item = item
     item.index = index
 
@@ -238,7 +239,7 @@ public extension Component {
 
       let view: View?
 
-      if let (_, resolvedView) = Configuration.views.make(kind, parentFrame: self.view.bounds) {
+      if let resolvedView = Configuration.views.make(kind, parentFrame: self.view.bounds, useCache: true)?.view {
         view = resolvedView
       } else {
         return nil
@@ -249,7 +250,7 @@ public extension Component {
         prepare(view: view)
       }
 
-      prepare(kind: kind, view: view as Any, item: &item, clean: clean)
+      prepare(kind: kind, view: view as Any, item: &item, recreateComposites: recreateComposites)
     #else
       if fullWidth == 0.0 {
         fullWidth = view.superview?.frame.size.width ?? view.frame.size.width
@@ -263,10 +264,10 @@ public extension Component {
           wrappable = GridWrapper()
         }
 
-        prepare(kind: kind, view: wrappable as Any, item: &item, clean: clean)
+        prepare(kind: kind, view: wrappable as Any, item: &item, recreateComposites: recreateComposites)
       } else {
-        if let resolvedView = Configuration.views.make(kind, parentFrame: self.view.frame)?.view {
-          prepare(kind: kind, view: resolvedView as Any, item: &item, clean: clean)
+        if let resolvedView = Configuration.views.make(kind, parentFrame: self.view.frame, useCache: true)?.view {
+          prepare(kind: kind, view: resolvedView as Any, item: &item, recreateComposites: recreateComposites)
         } else {
           return nil
         }
@@ -276,9 +277,9 @@ public extension Component {
     return item
   }
 
-  func prepare(kind: String, view: Any, item: inout Item, clean: Bool) {
+  func prepare(kind: String, view: Any, item: inout Item, recreateComposites: Bool) {
     if let view = view as? Wrappable, kind.contains(CompositeComponent.identifier) {
-      prepare(wrappable: view, item: &item, clean: clean)
+      prepare(wrappable: view, item: &item, recreateComposites: recreateComposites)
     } else if let view = view as? ItemConfigurable {
       view.configure(&item)
       setFallbackViewSize(to: &item, with: view)
@@ -312,10 +313,10 @@ public extension Component {
   /// - parameter usesViewSize:      A boolean value to determine if the view uses the views height
   ///
   /// - returns: The height for the item based of the composable components
-  func prepare(wrappable: Wrappable, item: inout Item, clean: Bool) {
+  func prepare(wrappable: Wrappable, item: inout Item, recreateComposites: Bool) {
     var height: CGFloat = 0.0
 
-    if clean {
+    if recreateComposites {
       compositeComponents.filter({ $0.itemIndex == item.index }).forEach {
         $0.component.view.removeFromSuperview()
 
@@ -348,7 +349,7 @@ public extension Component {
 
       height += compositeSpot.component.computedHeight
 
-      if clean {
+      if recreateComposites {
         compositeComponents.append(compositeSpot)
       }
     }
