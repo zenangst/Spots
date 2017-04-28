@@ -356,8 +356,12 @@ public class SpotsControllerManager {
       component.model.items = newItems
     }) {
       if !component.model.items.filter({ !$0.children.isEmpty }).isEmpty {
-        component.reload(nil, withAnimation: animation, completion: completion)
+        component.reload(nil, withAnimation: animation) {
+          controller.scrollView.layoutSubviews()
+          completion?()
+        }
       } else {
+        controller.scrollView.layoutSubviews()
         completion?()
       }
     }
@@ -424,6 +428,7 @@ public class SpotsControllerManager {
       }
 
       if runCompletion {
+        controller.scrollView.layoutSubviews()
         finalCompletion?()
       }
     }

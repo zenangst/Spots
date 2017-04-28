@@ -110,6 +110,7 @@ extension UICollectionView: UserInterface {
   public func endUpdates() {}
   public func reloadDataSource() {
     reloadData()
+    updateContentSize()
   }
 
   /// A convenience method for performing inserts on a UICollectionView
@@ -123,6 +124,7 @@ extension UICollectionView: UserInterface {
     performBatchUpdates({
       self.insertItems(at: indexPaths)
     }, completion: nil)
+    updateContentSize()
     completion?()
   }
 
@@ -143,6 +145,7 @@ extension UICollectionView: UserInterface {
     default:
       reloadItems(at: indexPaths)
       collectionViewLayout.finalizeCollectionViewUpdates()
+      updateContentSize()
       completion?()
     }
   }
@@ -161,6 +164,8 @@ extension UICollectionView: UserInterface {
       }
       strongSelf.deleteItems(at: indexPaths)
       }) { _ in }
+
+    updateContentSize()
     completion?()
   }
 
@@ -196,7 +201,17 @@ extension UICollectionView: UserInterface {
         self.deleteItems(at: deletions)
       }) { _ in }
     }
+
+    updateContentSize()
     completion?()
+  }
+
+  func updateContentSize() {
+    guard let collectionViewContentSize = (collectionViewLayout as? UICollectionViewFlowLayout)?.collectionViewContentSize else {
+      return
+    }
+
+    self.contentSize = collectionViewContentSize
   }
 
   ///  A convenience method for reloading a section
