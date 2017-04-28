@@ -292,10 +292,6 @@ import Tailor
     } else {
       layoutVerticalCollectionView(collectionView, with: size)
     }
-
-    if !compositeComponents.isEmpty {
-      prepareItems(recreateComposites: false)
-    }
   }
 
   fileprivate func resizeCollectionView(_ collectionView: CollectionView, with size: CGSize, type: ComponentResize) {
@@ -379,10 +375,5 @@ import Tailor
                         height: view.frame.height)
       layout(with: size)
     }
-
-    guard !compositeComponents.isEmpty else {
-      return
-    }
-    reload()
   }
 }
