@@ -106,6 +106,7 @@
 		BD9ECEC51E6EC8B8003E4388 /* Component+iOS+List.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9ECEC31E6EC8B8003E4388 /* Component+iOS+List.swift */; };
 		BD9ECEC71E6EC8C4003E4388 /* Component+iOS+HeaderFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9ECEC61E6EC8C4003E4388 /* Component+iOS+HeaderFooter.swift */; };
 		BD9ECEC81E6EC8C4003E4388 /* Component+iOS+HeaderFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9ECEC61E6EC8C4003E4388 /* Component+iOS+HeaderFooter.swift */; };
+		BDA25E901EB5070F002B21C0 /* Wrappable+macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA25E8F1EB5070F002B21C0 /* Wrappable+macOS.swift */; };
 		BDAD84A81E3E701C008289AE /* CarouselSpotHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD84831E3E701B008289AE /* CarouselSpotHeader.swift */; };
 		BDAD84A91E3E701C008289AE /* CarouselSpotHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD84831E3E701B008289AE /* CarouselSpotHeader.swift */; };
 		BDAD84AA1E3E701C008289AE /* SpotsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD84841E3E701B008289AE /* SpotsController.swift */; };
@@ -432,6 +433,7 @@
 		BD9ECEC01E6EC8AF003E4388 /* Component+iOS+Grid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Component+iOS+Grid.swift"; sourceTree = "<group>"; };
 		BD9ECEC31E6EC8B8003E4388 /* Component+iOS+List.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Component+iOS+List.swift"; sourceTree = "<group>"; };
 		BD9ECEC61E6EC8C4003E4388 /* Component+iOS+HeaderFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Component+iOS+HeaderFooter.swift"; sourceTree = "<group>"; };
+		BDA25E8F1EB5070F002B21C0 /* Wrappable+macOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Wrappable+macOS.swift"; sourceTree = "<group>"; };
 		BDAD84831E3E701B008289AE /* CarouselSpotHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselSpotHeader.swift; sourceTree = "<group>"; };
 		BDAD84841E3E701B008289AE /* SpotsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SpotsController.swift; sourceTree = "<group>"; };
 		BDAD84851E3E701B008289AE /* GridableLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridableLayout.swift; sourceTree = "<group>"; };
@@ -737,6 +739,7 @@
 				BD9ECEB91E6EC6D1003E4388 /* Component+macOS+Grid.swift */,
 				BD9ECEBB1E6EC82D003E4388 /* Component+macOS+HeaderFooter.swift */,
 				BD9ECEB41E6EC6A7003E4388 /* Component+macOS+List.swift */,
+				BDA25E8F1EB5070F002B21C0 /* Wrappable+macOS.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1772,6 +1775,7 @@
 				D5D2826C1E547219004BF251 /* ViewStateDelegate.swift in Sources */,
 				D5D282681E54710D004BF251 /* ViewState.swift in Sources */,
 				BD1F9E1A1EA39F2E009C018B /* Dictionary+Extensions.swift in Sources */,
+				BDA25E901EB5070F002B21C0 /* Wrappable+macOS.swift in Sources */,
 				BDDCF6F01E4DF93D004B38C4 /* DictionaryConvertible.swift in Sources */,
 				BD77D1F51E8537E80075A3FC /* ComponentModelDiff.swift in Sources */,
 				BDAD85611E3E7032008289AE /* CompositeComponent.swift in Sources */,
