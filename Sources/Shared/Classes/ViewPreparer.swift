@@ -20,8 +20,8 @@ class ViewPreparer {
   func prepareWrappableView(_ view: Wrappable, atIndex index: Int, in component: Component, parentFrame: CGRect = CGRect.zero) {
     let identifier = component.identifier(at: index)
 
-    if identifier.contains(CompositeComponent.identifier), index < component.compositeComponents.count {
-      let composite = component.compositeComponents[index]
+    if identifier.contains(CompositeComponent.identifier),
+      let composite = component.compositeComponents.filter({ $0.itemIndex == index }).first {
       view.configure(with: composite.component.view)
       component.model.items[index].size.height = composite.component.computedHeight
     } else if let (_, customView) = Configuration.views.make(identifier, parentFrame: parentFrame),
