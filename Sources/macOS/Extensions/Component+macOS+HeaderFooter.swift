@@ -42,6 +42,11 @@ extension Component {
 
   func layoutHeaderFooterViews(_ size: CGSize) {
     headerView?.frame.size.width = size.width
+
+    if let layout = model.layout {
+      headerView?.frame.origin.y = CGFloat(layout.inset.top)
+    }
+
     footerView?.frame.size.width = size.width
     footerView?.frame.origin.y = scrollView.frame.height - footerHeight
   }
