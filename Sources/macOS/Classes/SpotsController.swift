@@ -270,36 +270,25 @@ open class SpotsController: NSViewController, SpotsProtocol {
   open func scrollViewDidScroll(_ notification: NSNotification) {
     guard let scrollView = notification.object as? SpotsScrollView,
       let delegate = scrollDelegate,
-      let _ = NSApplication.shared().mainWindow, !refreshing && scrollView.contentOffset.y > 0
+      let _ = NSApplication.shared().mainWindow
       else {
         return
     }
 
-    let offset = scrollView.contentOffset
-    let totalHeight = scrollView.documentView?.frame.size.height ?? 0
-    let multiplier: CGFloat = !refreshPositions.isEmpty
-      ? CGFloat(1 + refreshPositions.count)
-      : 1.5
-    let currentOffset = offset.y + scrollView.frame.size.height
-    let shouldFetch = currentOffset > totalHeight - scrollView.frame.size.height * multiplier + scrollView.frame.origin.y &&
-      !refreshPositions.contains(currentOffset)
-
-    // Scroll did reach top
-    if scrollView.contentOffset.y < 0 &&
-      !refreshing {
-      refreshing = true
-      delegate.didReachBeginning(in: scrollView) {
-        self.refreshing = false
+    if let indicatorValue = scrollView.verticalScroller?.floatValue {
+      if indicatorValue > 0.9 {
+        refreshing = true
+        delegate.didReachEnd(in: scrollView) {
+          self.refreshing = false
+        }
+      } else if indicatorValue < 0.1 {
+        refreshing = true
+        delegate.didReachBeginning(in: scrollView) {
+          self.refreshing = false
+        }
       }
-    }
 
-    if shouldFetch {
-      // Infinite scrolling
-      refreshing = true
-      refreshPositions.append(currentOffset)
-      delegate.didReachEnd(in: scrollView) {
-        self.refreshing = false
-      }
+      return
     }
   }
 }
