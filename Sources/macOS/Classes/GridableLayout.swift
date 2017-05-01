@@ -40,7 +40,15 @@ public class GridableLayout: FlowLayout {
       }
 
       contentSize.width = component.model.items.reduce(0, { $0 + floor($1.size.width) })
-      contentSize.width += minimumInteritemSpacing * CGFloat(component.model.items.count - 1)
+
+      let countOffset: Int
+      if let leftInset = component.model.layout?.inset.left, leftInset > 0.0 {
+        countOffset = 0
+      } else {
+        countOffset = 1
+      }
+
+      contentSize.width += minimumInteritemSpacing * CGFloat(component.model.items.count - countOffset)
 
       contentSize.height = firstItem.size.height
       contentSize.height += component.headerHeight
