@@ -33,7 +33,6 @@ extension Component {
       $0.size.height > $1.size.height
     }).first?.size.height
 
-    collectionView.frame.origin.y = headerHeight
     collectionView.frame.size.width = collectionViewContentSize.width
     collectionView.frame.size.height = newCollectionViewHeight
 
@@ -43,8 +42,10 @@ extension Component {
     if let layout = model.layout {
       collectionView.frame.size.height += CGFloat(layout.inset.top + layout.inset.bottom)
       documentView.frame.size.height += CGFloat(layout.inset.top + layout.inset.bottom)
-      documentView.frame.size.width += CGFloat(layout.inset.left + layout.inset.right)
+      documentView.frame.size.width += CGFloat(layout.inset.right)
     }
+
+    collectionView.frame.size.height += headerHeight
 
     scrollView.frame.size.width = size.width
     scrollView.frame.size.height = documentView.frame.size.height

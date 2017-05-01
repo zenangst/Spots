@@ -40,7 +40,7 @@ public class GridableLayout: FlowLayout {
       }
 
       contentSize.width = component.model.items.reduce(0, { $0 + floor($1.size.width) })
-      contentSize.width += minimumInteritemSpacing * CGFloat(component.model.items.count)
+      contentSize.width += minimumInteritemSpacing * CGFloat(component.model.items.count - 1)
 
       contentSize.height = firstItem.size.height
       contentSize.height += component.headerHeight
