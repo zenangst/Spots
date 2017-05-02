@@ -6,7 +6,9 @@ class GridWrapper: NSCollectionViewItem, Wrappable, Cell {
     return coreView.bounds
   }
 
-  weak var wrappedView: View?
+  weak var wrappedView: View? {
+    didSet { wrappableViewChanged() }
+  }
 
   public var contentView: View {
     return coreView
@@ -40,5 +42,25 @@ class GridWrapper: NSCollectionViewItem, Wrappable, Cell {
     didSet {
       (wrappedView as? ViewStateDelegate)?.viewStateDidChange(viewState)
     }
+  }
+
+  override func mouseEntered(with event: NSEvent) {
+    super.mouseEntered(with: event)
+
+    guard !isSelected else {
+      return
+    }
+
+    (wrappedView as? ViewStateDelegate)?.viewStateDidChange(.hover)
+  }
+
+  override func mouseExited(with event: NSEvent) {
+    super.mouseExited(with: event)
+
+    guard !isHighlighted && !isSelected else {
+      return
+    }
+
+    (wrappedView as? ViewStateDelegate)?.viewStateDidChange(.normal)
   }
 }
