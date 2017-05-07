@@ -82,9 +82,8 @@ public class GridableLayout: FlowLayout {
     var offset: CGFloat = sectionInset.left
 
     for attribute in newAttributes {
-      guard let itemAttribute = attribute.copy() as? NSCollectionViewLayoutAttributes
-        else {
-          continue
+      guard let itemAttribute = attribute.copy() as? NSCollectionViewLayoutAttributes else {
+        continue
       }
 
       guard let indexPath = itemAttribute.indexPath else {

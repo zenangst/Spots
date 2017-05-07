@@ -12,6 +12,10 @@ extension Component {
     scrollView.scrollingEnabled = (model.items.count > 1)
     scrollView.hasHorizontalScroller = (model.items.count > 1)
 
+    if let layout = model.layout {
+      newCollectionViewHeight += CGFloat(layout.inset.top + layout.inset.bottom)
+    }
+
     collectionView.frame.size.height = newCollectionViewHeight
   }
 
