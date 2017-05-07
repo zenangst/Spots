@@ -11,6 +11,7 @@ extension Component {
       return
     }
 
+    collectionView.frame.size.width = size.width
     collectionView.frame.origin.y = headerHeight
     collectionViewLayout.prepare()
     collectionViewLayout.invalidateLayout()
@@ -28,10 +29,13 @@ extension Component {
   }
 
   func resizeVerticalCollectionView(_ collectionView: CollectionView, with size: CGSize, type: ComponentResize) {
+
+    collectionView.collectionViewLayout?.invalidateLayout()
+
     switch type {
     case .live:
-      layout(with: size)
       prepareItems(recreateComposites: false)
+      layout(with: size)
     case .end:
       layout(with: size)
     }

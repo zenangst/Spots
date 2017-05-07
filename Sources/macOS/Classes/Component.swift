@@ -350,10 +350,24 @@ import Tailor
   /// - Parameter indexPath: The index path of the item that should be resolved.
   /// - Returns: A `CGSize` based of the `Item`'s width and height.
   public func sizeForItem(at indexPath: IndexPath) -> CGSize {
-    return CGSize(
-      width:  item(at: indexPath)?.size.width  ?? 0.0,
-      height: item(at: indexPath)?.size.height ?? 0.0
+    var size = CGSize(
+      width:  round(item(at: indexPath)?.size.width ?? 0.0),
+      height: round(item(at: indexPath)?.size.height ?? 0.0)
     )
+
+    // Make sure that the item width never exceeds the frame view width.
+    // If it does exceed the maximum width, the layout span will be used to reduce the size to make sure
+    // that all items fit on the same row.
+    if let layout = model.layout, layout.span > 0 {
+      let maxWidth = size.width * CGFloat(layout.span) + CGFloat(layout.inset.left) + CGFloat(layout.inset.right)
+
+      if maxWidth > view.frame.size.width {
+        size.width -= CGFloat(layout.span)
+        size.width = round(size.width)
+      }
+    }
+
+    return size
   }
 
   public func didResize(size: CGSize, type: ComponentResize) {

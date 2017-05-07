@@ -33,7 +33,6 @@ extension DataSource: NSCollectionViewDataSource {
     }
 
     let reuseIdentifier = component.identifier(at: indexPath.item)
-
     let item = collectionView.makeItem(withIdentifier: reuseIdentifier, for: indexPath)
 
     switch item {
