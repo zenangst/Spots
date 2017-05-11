@@ -112,12 +112,12 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
   ///
   /// - returns: An initialized component using JSON.
   public init(_ map: [String : Any]) {
-    self.identifier = map.property("identifier")
-    self.kind      <- map.enum("kind")
-    self.header    <- map.relation("header")
-    self.footer    <- map.relation("footer")
-    self.items     <- map.relations("items")
-    self.meta      <- map.property("meta")
+    self.identifier = map.string(Key.identifier.rawValue)
+    self.kind <- map.enum(Key.kind.rawValue)
+    self.header = map.relation(Key.header.rawValue)
+    self.footer = map.relation(Key.footer.rawValue)
+    self.items <- map.relations(Key.items.rawValue)
+    self.meta <- map.property(Key.meta.rawValue)
 
     if let layoutDictionary: [String : Any] = map.property(Layout.rootKey) {
       self.layout = Layout(layoutDictionary)

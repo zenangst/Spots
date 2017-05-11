@@ -115,12 +115,12 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
   /// - Parameter map: A JSON dictionary.
   public mutating func configure(withJSON map: [String : Any]) {
     self.inset = Inset(map.property(Inset.rootKey) ?? [:])
-    self.itemSpacing <- map.property(Key.itemSpacing.rawValue)
-    self.lineSpacing <- map.property(Key.lineSpacing.rawValue)
-    self.dynamicSpan <- map.property(Key.dynamicSpan.rawValue)
+    self.itemSpacing <- map.double(Key.itemSpacing.rawValue)
+    self.lineSpacing <- map.double(Key.lineSpacing.rawValue)
+    self.dynamicSpan <- map.boolean(Key.dynamicSpan.rawValue)
     self.dynamicHeight <- map.property(Key.dynamicHeight.rawValue)
-    self.span <- map.property(Key.span.rawValue)
-    self.pageIndicatorPlacement <- map.enum(Key.pageIndicator.rawValue)
+    self.span <- map.double(Key.span.rawValue)
+    self.pageIndicatorPlacement = map.enum(Key.pageIndicator.rawValue)
     self.headerMode <- map.enum(Key.headerMode.rawValue)
   }
 

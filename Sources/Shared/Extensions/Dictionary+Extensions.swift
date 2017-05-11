@@ -6,15 +6,6 @@ import Tailor
 public extension Dictionary where Key: ExpressibleByStringLiteral {
 
   /**
-   - parameter name: The name of the property that you want to map
-
-   - returns: A generic type if casting succeeds, otherwise it returns nil
-   */
-  func property<T>(_ name: Item.Key) -> T? {
-    return property(name.string)
-  }
-
-  /**
    Access the value associated with the given key.
 
    - parameter key: The key associated with the value you want to get
