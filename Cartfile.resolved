@@ -1,4 +1,4 @@
-github "ReactiveX/RxSwift" "3.4.1"
+github "ReactiveX/RxSwift" "3.3.1"
 github "hyperoslo/Cache" "2.2.2"
 github "krzyzanowskim/CryptoSwift" "0.6.9"
 github "zenangst/Tailor" "2.2.1"
