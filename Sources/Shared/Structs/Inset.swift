@@ -56,20 +56,20 @@ public struct Inset: Mappable, Equatable {
   ///
   /// - Parameter map: A JSON dictionary that will be mapped into the content insets.
   public init(_ map: [String : Any]) {
-    self.top    <- map.property(Key.top.rawValue)
-    self.left   <- map.property(Key.left.rawValue)
-    self.bottom <- map.property(Key.bottom.rawValue)
-    self.right  <- map.property(Key.right.rawValue)
+    self.top    <- map.double(Key.top.rawValue)
+    self.left   <- map.double(Key.left.rawValue)
+    self.bottom <- map.double(Key.bottom.rawValue)
+    self.right  <- map.double(Key.right.rawValue)
   }
 
   /// Configure struct with a JSON dictionary.
   ///
   /// - Parameter JSON: A JSON dictionary that will be used to configure the content insets.
   public mutating func configure(withJSON JSON: [String : Any]) {
-    self.top    <- JSON.property(Key.top.rawValue)
-    self.left   <- JSON.property(Key.left.rawValue)
-    self.bottom <- JSON.property(Key.bottom.rawValue)
-    self.right  <- JSON.property(Key.right.rawValue)
+    self.top    <- JSON.double(Key.top.rawValue)
+    self.left   <- JSON.double(Key.left.rawValue)
+    self.bottom <- JSON.double(Key.bottom.rawValue)
+    self.right  <- JSON.double(Key.right.rawValue)
   }
 
   /// Check if to content insets are equal.

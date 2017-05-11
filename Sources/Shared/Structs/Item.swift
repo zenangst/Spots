@@ -111,15 +111,15 @@ public struct Item: Mappable, Indexable, DictionaryConvertible {
    - parameter map: A JSON dictionary
    */
   public init(_ map: [String : Any]) {
-    index    <- map.property(Key.index)
-    identifier = map.property(Key.identifier)
-    title    <- map.property(Key.title)
-    subtitle <- map.property(Key.subtitle)
-    text     <- map.property(Key.text)
-    image    <- map.property(Key.image)
-    kind     <- map.property(Key.kind)
-    action   = map.property(Key.action) ?? nil
-    meta     <- map.property(Key.meta)
+    index    <- map.int(Key.index.rawValue)
+    identifier <- map.int(Key.identifier.rawValue)
+    title    <- map.string(Key.title.rawValue)
+    subtitle <- map.string(Key.subtitle.rawValue)
+    text     <- map.string(Key.text.rawValue)
+    image    <- map.string(Key.image.rawValue)
+    kind     <- map.string(Key.kind.rawValue)
+    action   = map.string(Key.action.rawValue)
+    meta     <- map.property(Key.meta.rawValue)
     children = map[.children] as? [[String : Any]] ?? []
 
     if let relation = map[.relations] as? [String : [Item]] {
