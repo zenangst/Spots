@@ -8,7 +8,7 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   public static var layout: Layout = Layout(span: 0.0)
   /// A configuration closure that can be used to pinpoint configuration of
   /// views used inside of the component.
-  open static var configure: ((_ view: View) -> Void)?
+  open static var configure: ((Component) -> Void)?
   /// A focus delegate that returns which component is focused.
   weak public var focusDelegate: ComponentFocusDelegate?
   /// A component delegate, used for interaction and to pick up on mutation made to
@@ -151,8 +151,6 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   ///
   /// - Parameter size: A `CGSize` that is used to set the frame of the user interface.
   public func setup(with size: CGSize) {
-    Component.configure?(view)
-
     view.frame.size = size
 
     setupFooter(with: &model)
@@ -166,6 +164,7 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
 
     layout(with: size)
     configurePageControl()
+    Component.configure?(self)
   }
 
   /// Configure the view frame with a given size.

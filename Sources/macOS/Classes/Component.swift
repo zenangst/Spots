@@ -10,7 +10,7 @@ import Tailor
   public static var layout: Layout = Layout(span: 0.0)
   /// A configuration closure that can be used to pinpoint configuration of
   /// views used inside of the component.
-  open static var configure: ((_ view: View) -> Void)?
+  open static var configure: ((Component) -> Void)?
   /// A focus delegate that returns which component is focused.
   weak public var focusDelegate: ComponentFocusDelegate?
   /// A component delegate, used for interaction and to pick up on mutation made to
@@ -221,16 +221,15 @@ import Tailor
     configureDataSourceAndDelegate()
 
     if let tableView = self.tableView {
-      Component.configure?(tableView)
       documentView.addSubview(tableView)
       setupTableView(tableView, with: size)
     } else if let collectionView = self.collectionView {
-      Component.configure?(collectionView)
       documentView.addSubview(collectionView)
       setupCollectionView(collectionView, with: size)
     }
 
     layout(with: size)
+    Component.configure?(self)
   }
 
   /// Configure the view frame with a given size.
@@ -277,7 +276,7 @@ import Tailor
     case .carousel:
       setupHorizontalCollectionView(collectionView, with: size)
     default:
-      setupVerticalCollectionView(collectionView, with: size)
+      break
     }
   }
 

@@ -2,10 +2,6 @@ import Cocoa
 
 extension Component {
 
-  func setupVerticalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
-    Component.configure?(collectionView)
-  }
-
   func layoutVerticalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
     guard let collectionViewLayout = collectionView.collectionViewLayout else {
       return
