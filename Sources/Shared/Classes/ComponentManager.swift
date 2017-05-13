@@ -2,6 +2,8 @@ import Foundation
 
 public class ComponentManager {
 
+  var itemManager: ItemManager = ItemManager()
+
   /// Append item to collection with animation
   ///
   /// - parameter item: The view model that you want to append.
@@ -17,7 +19,7 @@ public class ComponentManager {
         component.userInterface?.reloadDataSource()
         self?.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
       } else {
-        component.configureItem(at: numberOfItems, usesViewSize: true)
+        self?.itemManager.configureItem(at: numberOfItems, component: component, usesViewSize: true)
         component.userInterface?.insert([numberOfItems], withAnimation: animation) {
           self?.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
         }
@@ -40,7 +42,8 @@ public class ComponentManager {
 
       items.enumerated().forEach {
         indexes.append(numberOfItems + $0.offset)
-        component.configureItem(at: numberOfItems + $0.offset, usesViewSize: true)
+
+        self?.itemManager.configureItem(at: numberOfItems + $0.offset, component: component, usesViewSize: true)
       }
 
       if numberOfItems > 0 {
@@ -71,7 +74,7 @@ public class ComponentManager {
         if numberOfItems > 0 {
           indexes.append(items.count - 1 - $0.offset)
         }
-        component.configureItem(at: $0.offset, usesViewSize: true)
+        self?.itemManager.configureItem(at: $0.offset, component: component, usesViewSize: true)
       }
 
       if !indexes.isEmpty {
@@ -104,7 +107,7 @@ public class ComponentManager {
       }
 
       if numberOfItems > 0 {
-        component.configureItem(at: numberOfItems, usesViewSize: true)
+        self?.itemManager.configureItem(at: numberOfItems, component: component, usesViewSize: true)
         component.userInterface?.insert(indexes, withAnimation: animation) {
           self?.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
         }
@@ -219,7 +222,7 @@ public class ComponentManager {
         self?.finishComponentOperation(component, updateHeightAndIndexes: false, completion: completion)
         return
       } else {
-        component.configureItem(at: index, usesViewSize: true)
+        self?.itemManager.configureItem(at: index, component: component, usesViewSize: true)
         let newItem = component.model.items[index]
 
         if newItem.kind != oldItem.kind || newItem.size.height != oldItem.size.height {
@@ -255,11 +258,11 @@ public class ComponentManager {
       Dispatch.main { [weak self] in
         if let indexes = indexes {
           indexes.forEach { index  in
-            component.configureItem(at: index, usesViewSize: true)
+            self?.itemManager.configureItem(at: index, component: component, usesViewSize: true)
           }
         } else {
           for (index, _) in component.model.items.enumerated() {
-            component.configureItem(at: index, usesViewSize: true)
+            self?.itemManager.configureItem(at: index, component: component, usesViewSize: true)
           }
         }
 
