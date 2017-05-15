@@ -95,6 +95,10 @@ public extension Component {
     }
   }
 
+  public func prepareItems(recreateComposites: Bool = true) {
+    manager.itemManager.prepareItems(component: self, recreateComposites: recreateComposites)
+  }
+
   /// A helper method to return self as a Component type.
   ///
   /// - returns: Self as a Component type
@@ -109,43 +113,6 @@ public extension Component {
   /// - returns: An optional view of inferred type
   public func ui<T>(at index: Int) -> T? {
     return userInterface?.view(at: index)
-  }
-
-  /// Prepare items in component
-  func prepareItems(recreateComposites: Bool = true) {
-    model.items = prepare(items: model.items, recreateComposites: recreateComposites)
-    Configuration.views.purge()
-  }
-
-  func prepare(items: [Item], recreateComposites: Bool) -> [Item] {
-    var preparedItems = items
-    var spanWidth: CGFloat?
-
-    if let layout = model.layout, layout.span > 0.0 {
-      var componentWidth: CGFloat = view.frame.size.width - CGFloat(layout.inset.left + layout.inset.right)
-
-      #if !os(OSX)
-        if view.frame.size.width == 0.0 {
-          componentWidth = UIScreen.main.bounds.width - CGFloat(layout.inset.left + layout.inset.right)
-        }
-      #endif
-
-      spanWidth = (componentWidth / CGFloat(layout.span)) - CGFloat(layout.itemSpacing)
-    }
-
-    preparedItems.enumerated().forEach { (index: Int, item: Item) in
-      var item = item
-      if let spanWidth = spanWidth {
-        item.size.width = spanWidth
-      }
-
-      if let configuredItem = configure(item: item, at: index, usesViewSize: true, recreateComposites: recreateComposites) {
-        preparedItems[index].index = index
-        preparedItems[index] = configuredItem
-      }
-    }
-
-    return preparedItems
   }
 
   /// Resolve item at index.
@@ -209,177 +176,6 @@ public extension Component {
   /// Caches the current state of the component
   public func cache() {
     stateCache?.save(dictionary)
-  }
-
-  /// Prepares a view model item before being used by the UI component
-  ///
-  /// - parameter index:        The index of the view model
-  /// - parameter usesViewSize: A boolean value to determine if the view uses the views height
-  public func configureItem(at index: Int, usesViewSize: Bool = false, recreateComposites: Bool = true) {
-    guard let item = item(at: index),
-      let configuredItem = configure(item: item, at: index, usesViewSize: usesViewSize, recreateComposites: recreateComposites)
-      else {
-        return
-    }
-
-    model.items[index] = configuredItem
-  }
-
-  func configure(item: Item, at index: Int, usesViewSize: Bool = false, recreateComposites: Bool) -> Item? {
-    var item = item
-    item.index = index
-
-    var fullWidth: CGFloat = item.size.width
-    let kind = identifier(at: index)
-
-    #if !os(OSX)
-      if fullWidth == 0.0 {
-        fullWidth = UIScreen.main.bounds.width
-      }
-
-      let view: View?
-
-      if let resolvedView = Configuration.views.make(kind, parentFrame: self.view.bounds, useCache: true)?.view {
-        view = resolvedView
-      } else {
-        return nil
-      }
-
-      if let view = view {
-        view.frame.size.width = self.view.bounds.width
-        prepare(view: view)
-      }
-
-      prepare(kind: kind, view: view as Any, item: &item, recreateComposites: recreateComposites)
-    #else
-      if fullWidth == 0.0 {
-        fullWidth = view.superview?.frame.size.width ?? view.frame.size.width
-      }
-
-      if kind.contains(CompositeComponent.identifier) {
-        let wrappable: Wrappable
-        if kind.contains("list") {
-          wrappable = ListWrapper()
-        } else {
-          wrappable = GridWrapper()
-        }
-
-        prepare(kind: kind, view: wrappable as Any, item: &item, recreateComposites: recreateComposites)
-      } else {
-        if let resolvedView = Configuration.views.make(kind, parentFrame: self.view.frame, useCache: true)?.view {
-          prepare(kind: kind, view: resolvedView as Any, item: &item, recreateComposites: recreateComposites)
-        } else {
-          return nil
-        }
-      }
-    #endif
-
-    return item
-  }
-
-  func prepare(kind: String, view: Any, item: inout Item, recreateComposites: Bool) {
-    if let view = view as? Wrappable, kind.contains(CompositeComponent.identifier) {
-      prepare(wrappable: view, item: &item, recreateComposites: recreateComposites)
-    } else if let view = view as? ItemConfigurable {
-      view.configure(&item)
-      setFallbackViewSize(to: &item, with: view)
-    }
-  }
-
-  #if !os(OSX)
-  /// Prepare view frame for item
-  ///
-  /// - parameter view: The view that is going to be prepared.
-  func prepare(view: View) {
-    // Set initial size for view
-    self.view.frame.size.width = view.frame.size.width
-
-    if let itemConfigurable = view as? ItemConfigurable, view.frame.size.height == 0.0 {
-      view.frame.size = itemConfigurable.preferredViewSize
-    }
-
-    if view.frame.size.width == 0.0 {
-      view.frame.size.width = UIScreen.main.bounds.size.width
-    }
-
-    (view as? UITableViewCell)?.contentView.frame = view.bounds
-    (view as? UICollectionViewCell)?.contentView.frame = view.bounds
-  }
-  #endif
-
-  /// Prepares a composable view and returns the height for the item
-  ///
-  /// - parameter composable:        A composable object
-  /// - parameter usesViewSize:      A boolean value to determine if the view uses the views height
-  ///
-  /// - returns: The height for the item based of the composable components
-  func prepare(wrappable: Wrappable, item: inout Item, recreateComposites: Bool) {
-    var height: CGFloat = 0.0
-
-    if recreateComposites {
-      compositeComponents.filter({ $0.itemIndex == item.index }).forEach {
-        $0.component.view.removeFromSuperview()
-
-        if let index = compositeComponents.index(of: $0) {
-          compositeComponents.remove(at: index)
-        }
-      }
-    }
-
-    let components: [Component] = Parser.parse(item)
-    var size = view.frame.size
-
-    if let layout = model.layout, layout.span > 0.0 {
-      let componentWidth: CGFloat = view.frame.size.width - CGFloat(layout.inset.left + layout.inset.right)
-      size.width = (componentWidth / CGFloat(layout.span)) - CGFloat(layout.itemSpacing)
-    }
-
-    size.width = round(size.width)
-
-    components.forEach { component in
-      let compositeSpot = CompositeComponent(component: component,
-                                             itemIndex: item.index)
-      compositeSpot.component.parentComponent = self
-      compositeSpot.component.setup(with: size)
-
-      #if !os(OSX)
-        /// Disable scrolling for listable objects
-        compositeSpot.component.view.isScrollEnabled = !(compositeSpot.component.view is TableView)
-      #endif
-
-      height += compositeSpot.component.computedHeight
-
-      if recreateComposites {
-        compositeComponents.append(compositeSpot)
-      }
-    }
-
-    item.size.height = height
-  }
-
-  /// Set fallback size to view
-  ///
-  /// - Parameters:
-  ///   - item: The item struct that is being configured.
-  ///   - view: The view used for fallback size for the item.
-  private func setFallbackViewSize(to item: inout Item, with view: ItemConfigurable) {
-    let hasExplicitHeight: Bool = item.size.height == 0.0
-
-    if hasExplicitHeight {
-      item.size.height = view.preferredViewSize.height
-    }
-
-    if item.size.width == 0.0 {
-      item.size.width  = view.preferredViewSize.width
-    }
-
-    if let superview = self.view.superview, item.size.width == 0.0 {
-      item.size.width = superview.frame.width
-    }
-
-    if let view = view as? View, item.size.width == 0.0 {
-      item.size.width = view.bounds.width
-    }
   }
 
   /// Get identifier for item at index path
