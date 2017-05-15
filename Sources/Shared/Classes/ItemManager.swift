@@ -108,7 +108,7 @@ public class ItemManager {
     if let view = view as? Wrappable, kind.contains(CompositeComponent.identifier) {
       prepare(component: component, wrappable: view, item: &item, recreateComposites: recreateComposites)
     } else if let view = view as? ItemConfigurable {
-      view.configure(&item)
+      view.configure(with: item)
       setFallbackViewSize(component: component, item: &item, with: view)
     }
   }

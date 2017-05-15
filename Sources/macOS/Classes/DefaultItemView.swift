@@ -67,7 +67,7 @@ open class DefaultItemView: NSTableRowView, ItemConfigurable {
     fatalError("init(coder:) has not been implemented")
   }
 
-  open func configure( _ item: inout Item) {
+  open func configure(with item: Item) {
     titleLabel.stringValue = item.title
     titleLabel.frame.origin.x = 8
 

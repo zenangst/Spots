@@ -29,11 +29,15 @@ class ViewPreparer {
       view.configure(with: wrappedView)
 
       if let configurableView = customView as? ItemConfigurable {
-        configurableView.configure(&component.model.items[index])
+        configurableView.configure(with: component.model.items[index])
+        if let dynamicView = configurableView as? DynamicSizeView {
+          component.model.items[index].size = dynamicView.computeSize(for: component.model.items[index])
+        }
 
         if component.model.items[index].size.height == 0.0 {
           component.model.items[index].size = configurableView.preferredViewSize
         }
+
       } else {
         component.model.items[index].size.height = wrappedView.frame.size.height
       }
@@ -41,11 +45,16 @@ class ViewPreparer {
   }
 
   func prepareItemConfigurableView(_ view: ItemConfigurable, atIndex index: Int, in component: Component) {
-    view.configure(&component.model.items[index])
+    view.configure(with: component.model.items[index])
+
+    if let dynamicView = view as? DynamicSizeView {
+      component.model.items[index].size = dynamicView.computeSize(for: component.model.items[index])
+    }
 
     if component.model.items[index].size.height == 0.0 {
       component.model.items[index].size = view.preferredViewSize
     }
+
     component.configure?(view)
   }
 }

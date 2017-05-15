@@ -3,7 +3,7 @@ import Cocoa
 extension Component {
 
   func setupHeader(with model: inout ComponentModel) {
-    guard var header = model.header, headerView == nil else {
+    guard let header = model.header, headerView == nil else {
       return
     }
 
@@ -12,7 +12,7 @@ extension Component {
         let componentable = headerView as? ItemConfigurable {
         let size = CGSize(width: view.frame.width,
                           height: componentable.preferredViewSize.height)
-        componentable.configure(&header)
+        componentable.configure(with: header)
         model.header = header
         headerView.frame.size = size
         self.headerView = headerView
@@ -22,7 +22,7 @@ extension Component {
   }
 
   func setupFooter(with model: inout ComponentModel) {
-    guard var footer = model.footer, footerView == nil else {
+    guard let footer = model.footer, footerView == nil else {
       return
     }
 
@@ -31,7 +31,7 @@ extension Component {
         let componentable = footerView as? ItemConfigurable {
         let size = CGSize(width: view.frame.width,
                           height: componentable.preferredViewSize.height)
-        componentable.configure(&footer)
+        componentable.configure(with: footer)
         model.footer = footer
         footerView.frame.size = size
         self.footerView = footerView

@@ -226,9 +226,14 @@ public class ComponentManager {
         let newItem = component.model.items[index]
 
         if newItem.kind != oldItem.kind || newItem.size.height != oldItem.size.height {
-          if let cell: ItemConfigurable = component.userInterface?.view(at: index), animation != .none {
+          if let view: ItemConfigurable = component.userInterface?.view(at: index), animation != .none {
             component.userInterface?.beginUpdates()
-            cell.configure(&component.model.items[index])
+            view.configure(with: component.model.items[index])
+
+            if let dynamicView = view as? DynamicSizeView {
+              component.model.items[item.index].size = dynamicView.computeSize(for: component.model.items[item.index])
+            }
+
             component.userInterface?.endUpdates()
           } else {
             component.userInterface?.reload([index], withAnimation: animation, completion: nil)
@@ -236,8 +241,12 @@ public class ComponentManager {
 
           self?.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
           return
-        } else if let cell: ItemConfigurable = component.userInterface?.view(at: index) {
-          cell.configure(&component.model.items[index])
+        } else if let view: ItemConfigurable = component.userInterface?.view(at: index) {
+          view.configure(with: component.model.items[index])
+          if let dynamicView = view as? DynamicSizeView {
+            component.model.items[item.index].size = dynamicView.computeSize(for: component.model.items[item.index])
+          }
+
           self?.finishComponentOperation(component, updateHeightAndIndexes: false, completion: completion)
         } else {
           self?.finishComponentOperation(component, updateHeightAndIndexes: false, completion: completion)

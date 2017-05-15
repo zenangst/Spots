@@ -5,7 +5,7 @@ import UIKit
 /// Accessibility: This class is per default an accessibility element, and gets its attributes
 /// from any `Item` that it's configured with. You can override this behavior at any point, and
 /// disable accessibility by setting `isAccessibilityElement = false` on the cell.
-open class DefaultItemView: UITableViewCell, ItemConfigurable {
+open class DefaultItemView: UITableViewCell, ItemConfigurable, DynamicSizeView {
 
   /// The preferred view size for the view, width will be ignored for ListComponent cells
   open var preferredViewSize = Configuration.defaultViewSize
@@ -33,7 +33,7 @@ open class DefaultItemView: UITableViewCell, ItemConfigurable {
   /// Configure cell with Item struct
   ///
   /// - parameter item: The Item struct that is used for configuring the view.
-  open func configure(_ item: inout Item) {
+  open func configure(with item: Item) {
     if let action = item.action, !action.isEmpty {
       accessoryType = .disclosureIndicator
     } else {
@@ -44,10 +44,18 @@ open class DefaultItemView: UITableViewCell, ItemConfigurable {
     textLabel?.text = item.title
     imageView?.image = UIImage(named: item.image)
 
-    item.size.height = item.size.height > 0.0 ? item.size.height : preferredViewSize.height
     self.item = item
 
     assignAccesibilityAttributes(from: item)
+  }
+
+  public func computeSize(for item: Item) -> CGSize {
+    let itemHeight = item.size.height > 0.0 ? item.size.height : preferredViewSize.height
+
+    return .init(
+      width: item.size.width,
+      height: itemHeight
+    )
   }
 
   private func assignAccesibilityAttributes(from item: Item) {

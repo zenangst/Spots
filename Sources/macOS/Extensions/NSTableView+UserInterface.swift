@@ -129,9 +129,9 @@ extension NSTableView: UserInterface {
   fileprivate func configure(view: View, with item: inout Item) {
     switch view {
     case let wrapper as Wrappable:
-      (wrapper.wrappedView as? ItemConfigurable)?.configure(&item)
+      (wrapper.wrappedView as? ItemConfigurable)?.configure(with: item)
     case let itemConfigurable as ItemConfigurable:
-      itemConfigurable.configure(&item)
+      itemConfigurable.configure(with: item)
     default:
       break
     }

@@ -90,6 +90,9 @@
 		BD798EF81EA2A1320069EFB7 /* TestSpotsControllerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD798EF71EA2A1320069EFB7 /* TestSpotsControllerManager.swift */; };
 		BD798EF91EA2A1320069EFB7 /* TestSpotsControllerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD798EF71EA2A1320069EFB7 /* TestSpotsControllerManager.swift */; };
 		BD798EFA1EA2A1320069EFB7 /* TestSpotsControllerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD798EF71EA2A1320069EFB7 /* TestSpotsControllerManager.swift */; };
+		BD82F0751ECA294700B76CD2 /* DynamicSizeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD82F0741ECA294700B76CD2 /* DynamicSizeView.swift */; };
+		BD82F0761ECA294700B76CD2 /* DynamicSizeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD82F0741ECA294700B76CD2 /* DynamicSizeView.swift */; };
+		BD82F0771ECA294700B76CD2 /* DynamicSizeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD82F0741ECA294700B76CD2 /* DynamicSizeView.swift */; };
 		BD99824C1EA93684000A6FD4 /* ViewPreparer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD99824B1EA93684000A6FD4 /* ViewPreparer.swift */; };
 		BD99824D1EA93684000A6FD4 /* ViewPreparer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD99824B1EA93684000A6FD4 /* ViewPreparer.swift */; };
 		BD99824E1EA93684000A6FD4 /* ViewPreparer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD99824B1EA93684000A6FD4 /* ViewPreparer.swift */; };
@@ -427,6 +430,7 @@
 		BD77D1FB1E85382D0075A3FC /* ComponentModel+Equatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ComponentModel+Equatable.swift"; sourceTree = "<group>"; };
 		BD798EF31EA28F200069EFB7 /* SpotsControllerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsControllerManager.swift; sourceTree = "<group>"; };
 		BD798EF71EA2A1320069EFB7 /* TestSpotsControllerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSpotsControllerManager.swift; sourceTree = "<group>"; };
+		BD82F0741ECA294700B76CD2 /* DynamicSizeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicSizeView.swift; sourceTree = "<group>"; };
 		BD99824B1EA93684000A6FD4 /* ViewPreparer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewPreparer.swift; sourceTree = "<group>"; };
 		BD9ECEB41E6EC6A7003E4388 /* Component+macOS+List.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Component+macOS+List.swift"; sourceTree = "<group>"; };
 		BD9ECEB61E6EC6B4003E4388 /* Component+macOS+Carousel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Component+macOS+Carousel.swift"; sourceTree = "<group>"; };
@@ -839,6 +843,7 @@
 				BDAD85511E3E7032008289AE /* UserInterface.swift */,
 				D5D2826A1E547219004BF251 /* ViewStateDelegate.swift */,
 				BDAD85531E3E7032008289AE /* Wrappable.swift */,
+				BD82F0741ECA294700B76CD2 /* DynamicSizeView.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -1542,6 +1547,7 @@
 				BDAD84E31E3E701C008289AE /* UIViewController+Extensions.swift in Sources */,
 				BDAD84DB1E3E701C008289AE /* Layout+iOS.swift in Sources */,
 				BDAD85EC1E3E7032008289AE /* Registry.swift in Sources */,
+				BD82F0771ECA294700B76CD2 /* DynamicSizeView.swift in Sources */,
 				BDE44B111EA0E5E80021EAC8 /* ComponentManager.swift in Sources */,
 				BDAD85D11E3E7032008289AE /* Wrappable.swift in Sources */,
 				BD9ECEBF1E6EC8A5003E4388 /* Component+iOS+Carousel.swift in Sources */,
@@ -1621,6 +1627,7 @@
 				BDB1F8B31E5D921F0064F64B /* CoreComponent+Extensions+iOS.swift in Sources */,
 				BDAD84DA1E3E701C008289AE /* Layout+iOS.swift in Sources */,
 				BD9ECEC71E6EC8C4003E4388 /* Component+iOS+HeaderFooter.swift in Sources */,
+				BD82F0751ECA294700B76CD2 /* DynamicSizeView.swift in Sources */,
 				BDAD84D21E3E701C008289AE /* Delegate+iOS+Extensions.swift in Sources */,
 				BDDCF6D61E4DF911004B38C4 /* Item.swift in Sources */,
 				BDAD85C01E3E7032008289AE /* ComponentDelegate.swift in Sources */,
@@ -1761,6 +1768,7 @@
 				BDAD85A31E3E7032008289AE /* Wrappable+Extensions.swift in Sources */,
 				BDDCF6DC1E4DF91F004B38C4 /* Indexable.swift in Sources */,
 				BDAD857C1E3E7032008289AE /* Component+Extensions.swift in Sources */,
+				BD82F0761ECA294700B76CD2 /* DynamicSizeView.swift in Sources */,
 				BDAD85701E3E7032008289AE /* Animation.swift in Sources */,
 				BDAD85971E3E7032008289AE /* SpotsController+Extensions.swift in Sources */,
 				BDAD85E21E3E7032008289AE /* Interaction.swift in Sources */,

@@ -30,7 +30,7 @@ public class CarouselComponentHeader: UICollectionReusableView, ItemConfigurable
   /// Configure reusuable header view with ComponentModel.
   ///
   /// - parameter component: A ComponentModel struct used for configuring the view.
-  public func configure(_ item: inout Item) {
+  public func configure(with item: Item) {
     titleLabel.text = item.title
   }
 }

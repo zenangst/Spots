@@ -32,7 +32,7 @@ class HeaderView: NSView, ItemConfigurable {
     titleLabel.centerYAnchor.constraint(equalTo: titleLabel.superview!.centerYAnchor).isActive = true
   }
 
-  func configure(_ item: inout Item) {
+  func configure(with item: Item) {
     titleLabel.stringValue = item.title
   }
 }
@@ -68,7 +68,7 @@ class TextView: NSView, ItemConfigurable {
     titleLabel.centerYAnchor.constraint(equalTo: titleLabel.superview!.centerYAnchor).isActive = true
   }
 
-  func configure(_ item: inout Item) {
+  func configure(with item: Item) {
     titleLabel.stringValue = item.title
   }
 }
@@ -104,7 +104,7 @@ class FooterView: NSView, ItemConfigurable {
     titleLabel.centerYAnchor.constraint(equalTo: titleLabel.superview!.centerYAnchor).isActive = true
   }
 
-  func configure(_ item: inout Item) {
+  func configure(with item: Item) {
     titleLabel.stringValue = item.title
   }
 }

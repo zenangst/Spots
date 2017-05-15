@@ -1,8 +1,8 @@
 @testable import Spots
 #if os(OSX)
-import Foundation
+  import Foundation
 #else
-import UIKit
+  import UIKit
 #endif
 
 import Tailor
@@ -50,8 +50,8 @@ extension SpotsController {
 
   func scrollTo(_ point: CGPoint) {
     #if !os(OSX)
-    scrollView.setContentOffset(point, animated: false)
-    scrollView.layoutSubviews()
+      scrollView.setContentOffset(point, animated: false)
+      scrollView.layoutSubviews()
     #endif
   }
 }
@@ -64,7 +64,7 @@ extension SpotsController {
       frame.size.height = 44
       super.init(frame: frame)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
       fatalError("init(coder:) has not been implemented")
     }
@@ -82,7 +82,7 @@ extension SpotsController {
       fatalError("init(coder:) has not been implemented")
     }
 
-    func configure(_ item: inout Item) {
+    func configure(with item: Item) {
       frame.size.height = 75
     }
   }
@@ -116,7 +116,7 @@ extension SpotsController {
       titleLabel.centerYAnchor.constraint(equalTo: titleLabel.superview!.centerYAnchor).isActive = true
     }
 
-    func configure(_ item: inout Item) {
+    func configure(with item: Item) {
       titleLabel.text = item.title
     }
   }
@@ -150,7 +150,7 @@ extension SpotsController {
       titleLabel.centerYAnchor.constraint(equalTo: titleLabel.superview!.centerYAnchor).isActive = true
     }
 
-    func configure(_ item: inout Item) {
+    func configure(with item: Item) {
       titleLabel.text = item.title
     }
   }
@@ -186,7 +186,7 @@ extension SpotsController {
       titleLabel.centerYAnchor.constraint(equalTo: titleLabel.superview!.centerYAnchor).isActive = true
     }
 
-    func configure(_ item: inout Item) {
+    func configure(with item: Item) {
       titleLabel.text = item.title
     }
   }
@@ -195,7 +195,7 @@ extension SpotsController {
 
     var preferredViewSize: CGSize = CGSize(width: 0, height: 44)
 
-    func configure(_ item: inout Item) {
+    func configure(with item: Item) {
       textLabel?.text = item.text
     }
   }
@@ -203,7 +203,7 @@ extension SpotsController {
   class CustomListHeaderView: UITableViewHeaderFooterView, ItemConfigurable {
     var preferredViewSize: CGSize = CGSize(width: 0, height: 88)
 
-    func configure(_ item: inout Item) {
+    func configure(with item: Item) {
       textLabel?.text = item.title
     }
   }
@@ -212,7 +212,7 @@ extension SpotsController {
 
     var preferredViewSize: CGSize = CGSize(width: 0, height: 44)
 
-    func configure(_ item: inout Item) {}
+    func configure(with item: Item) {}
   }
 
   class CustomGridHeaderView: UICollectionReusableView, ItemConfigurable {
@@ -221,7 +221,7 @@ extension SpotsController {
 
     lazy var textLabel = UILabel()
 
-    func configure(_ item: inout Item) {
+    func configure(with item: Item) {
       textLabel.text = item.title
     }
   }
@@ -230,8 +230,8 @@ extension SpotsController {
 class TestView: View, ItemConfigurable {
   var preferredViewSize: CGSize = CGSize(width: 50, height: 50)
   var item: Item?
-
-  func configure(_ item: inout Item) {
+  
+  func configure(with item: Item) {
     self.item = item
   }
 }
