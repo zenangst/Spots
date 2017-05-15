@@ -2,7 +2,7 @@ import Foundation
 
 public class ComponentManager {
 
-  var itemManager: ItemManager = ItemManager()
+  let itemManager = ItemManager()
 
   /// Append item to collection with animation
   ///
