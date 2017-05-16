@@ -1,5 +1,15 @@
 import Foundation
 
+/// ComponentManager handles mutating operations on a `Component`.
+/// You can invoke these methods directly on `Component` as they are proxied
+/// in `Component+Mutation` extension. They can also be invoked by accessing `.manager`
+/// on `Component`. `SpotsControllerManager` relies highly on `ComponentManager` to perform
+/// mutation from a controller level. All mutating operations have a completion closure that
+/// will be invoked after model and user interface are synced.
+///
+/// Usage: component.append(Item(title: "new item"), withAnimation: .fade) {
+///   ...
+/// }
 public class ComponentManager {
 
   let itemManager = ItemManager()
