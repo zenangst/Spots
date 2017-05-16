@@ -109,6 +109,11 @@ public class ItemManager {
       prepare(component: component, wrappable: view, item: &item, recreateComposites: recreateComposites)
     } else if let view = view as? ItemConfigurable {
       view.configure(with: item)
+
+      if let dynamicSizeView = view as? DynamicSizeView {
+        item.size = dynamicSizeView.computeSize(for: item)
+      }
+
       setFallbackViewSize(component: component, item: &item, with: view)
     }
   }
