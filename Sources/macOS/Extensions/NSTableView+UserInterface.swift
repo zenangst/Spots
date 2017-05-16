@@ -37,10 +37,11 @@ extension NSTableView: UserInterface {
   }
 
   public func insert(_ indexes: [Int], withAnimation animation: Animation = .automatic, completion: (() -> Void)? = nil) {
-    let indexPaths = NSMutableIndexSet()
-    indexes.forEach { indexPaths.add($0) }
-    performUpdates({ insertRows(at: indexPaths as IndexSet, withAnimation: animation.tableViewAnimation) },
-                   endClosure: completion)
+    var indexSet = IndexSet()
+    indexes.forEach { indexSet.insert($0) }
+    performUpdates({
+      insertRows(at: indexSet, withAnimation: animation.tableViewAnimation)
+    }, endClosure: completion)
 
   }
 
@@ -67,10 +68,11 @@ extension NSTableView: UserInterface {
   }
 
   public func delete(_ indexes: [Int], withAnimation animation: Animation = .automatic, completion: (() -> Void)? = nil) {
-    let indexPaths = NSMutableIndexSet()
-    indexes.forEach { indexPaths.add($0) }
-    performUpdates({ removeRows(at: indexPaths as IndexSet, withAnimation: animation.tableViewAnimation) },
-                   endClosure: completion)
+    var indexSet = IndexSet()
+    indexes.forEach { indexSet.insert($0) }
+    performUpdates({
+      removeRows(at: indexSet, withAnimation: animation.tableViewAnimation)
+    }, endClosure: completion)
   }
 
   public func process(_ changes: (insertions: [Int], reloads: [Int], deletions: [Int], childUpdates: [Int]),
