@@ -225,7 +225,9 @@ public class ComponentManager {
         self?.itemManager.configureItem(at: index, component: component, usesViewSize: true)
         let newItem = component.model.items[index]
 
-        if newItem.kind != oldItem.kind || newItem.size.height != oldItem.size.height {
+        if newItem.kind != oldItem.kind {
+          component.userInterface?.reload([index], withAnimation: animation, completion: nil)
+        } else if newItem.size.height != oldItem.size.height {
           if let view: ItemConfigurable = component.userInterface?.view(at: index), animation != .none {
             component.userInterface?.beginUpdates()
             view.configure(with: component.model.items[index])
