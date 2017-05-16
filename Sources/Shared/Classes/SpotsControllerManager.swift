@@ -14,8 +14,8 @@
 /// or delete components or items that changed. This is supported on a `ComponentModel` level.
 /// It can also pinpoint updates on a specific component by supplying the component index of the `Component`
 /// that you which to mutate. `SpotsController` has a protocol extension which makes these method directly accessable
-/// on the controller (see `SpotsController+SpotsControllerManager`). 
-/// The `SpotsControllerManager` lives on `SpotsController` and is publicly accessable via `.manager`. 
+/// on the controller (see `SpotsController+SpotsControllerManager`).  `SpotsControllerManager` lives on `SpotsController`.
+/// It is created during init and is publicly accessable via `.manager`. 
 ///
 /// Usage:
 ///
