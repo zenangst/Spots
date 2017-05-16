@@ -103,7 +103,7 @@ class ComponentTestsOniOS: XCTestCase {
     XCTAssertEqual(component.model.items[0].title, "foo")
     XCTAssertEqual(component.model.items[1].title, "bar")
     XCTAssertEqual(component.model.items[2].title, "baz")
-    XCTAssertEqual(component.model.items.first?.size.width, 120)
+    XCTAssertEqual(component.model.items.first?.size.width, 100)
     XCTAssertEqual(component.model.items.first?.size.height, 180)
     XCTAssertEqual(component.view.frame.size.height, 180)
 

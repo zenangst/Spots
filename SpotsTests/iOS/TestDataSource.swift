@@ -40,7 +40,8 @@ class DataSourceTests: XCTestCase {
       return
     }
 
-    XCTAssertEqual(component.model.items[0].size.height, itemConfigurable.preferredViewSize.height)
+    XCTAssertNotNil(itemConfigurable)
+    XCTAssertEqual(component.model.items[0].size.height, 44)
   }
 
   func testDataSourceForGridableObject() {
@@ -78,7 +79,8 @@ class DataSourceTests: XCTestCase {
     component.model.items[0].size.height = 0.0
     itemCell1 = dataSource.collectionView(collectionView, cellForItemAt: IndexPath(item: 0, section: 0)) as? GridWrapper
     let itemConfigurable = itemCell1?.wrappedView as! CustomGridCell
-    XCTAssertEqual(component.model.items[0].size.height, itemConfigurable.preferredViewSize.height)
+    XCTAssertNotNil(itemConfigurable)
+    XCTAssertEqual(component.model.items[0].size.height, 44)
   }
 
   func testDataSourceForGridableCustomHeader() {

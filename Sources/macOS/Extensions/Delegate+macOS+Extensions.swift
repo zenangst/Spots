@@ -118,11 +118,7 @@ extension Delegate: NSTableViewDelegate {
     case let view as NSTableRowView:
       if let itemConfigurable = view as? ItemConfigurable {
         itemConfigurable.configure(with: component.model.items[row])
-
-        if let dynamicView = itemConfigurable as? DynamicSizeView {
-          component.model.items[row].size = dynamicView.computeSize(for: component.model.items[row])
-        }
-
+        component.model.items[row].size.height = itemConfigurable.computeSize(for: component.model.items[row]).height
         component.configure?(itemConfigurable)
       }
     default:
@@ -132,11 +128,8 @@ extension Delegate: NSTableViewDelegate {
 
         if let itemConfigurable = view as? ItemConfigurable {
           itemConfigurable.configure(with: component.model.items[row])
+          component.model.items[row].size.height = itemConfigurable.computeSize(for: component.model.items[row]).height
           component.configure?(itemConfigurable)
-        }
-
-        if let dynamicView = view as? DynamicSizeView {
-          component.model.items[row].size = dynamicView.computeSize(for: component.model.items[row])
         }
 
         resolvedView = wrapper

@@ -231,20 +231,14 @@ public class ComponentManager {
           if let view: ItemConfigurable = component.userInterface?.view(at: index), animation != .none {
             component.userInterface?.beginUpdates()
             view.configure(with: component.model.items[index])
-
-            if let dynamicView = view as? DynamicSizeView {
-              component.model.items[item.index].size = dynamicView.computeSize(for: component.model.items[item.index])
-            }
-
+            component.model.items[item.index].size.height = view.computeSize(for: component.model.items[item.index]).height
             component.userInterface?.endUpdates()
           } else {
             component.userInterface?.reload([index], withAnimation: animation, completion: nil)
           }
         } else if let view: ItemConfigurable = component.userInterface?.view(at: index) {
           view.configure(with: component.model.items[index])
-          if let dynamicView = view as? DynamicSizeView {
-            component.model.items[item.index].size = dynamicView.computeSize(for: component.model.items[item.index])
-          }
+          component.model.items[item.index].size.height = view.computeSize(for: component.model.items[item.index]).height
         }
 
         self?.finishComponentOperation(component, updateHeightAndIndexes: false, completion: completion)

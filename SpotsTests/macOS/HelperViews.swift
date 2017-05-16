@@ -3,8 +3,6 @@ import Spots
 
 class HeaderView: NSView, ItemConfigurable {
 
-  var preferredViewSize: CGSize = CGSize(width: 200, height: 50)
-
   lazy var titleLabel: NSTextField = {
     let label = NSTextField()
     return label
@@ -30,6 +28,10 @@ class HeaderView: NSView, ItemConfigurable {
     titleLabel.leftAnchor.constraint(equalTo: titleLabel.superview!.leftAnchor).isActive = true
     titleLabel.rightAnchor.constraint(equalTo: titleLabel.superview!.rightAnchor).isActive = true
     titleLabel.centerYAnchor.constraint(equalTo: titleLabel.superview!.centerYAnchor).isActive = true
+  }
+
+  func computeSize(for item: Item) -> CGSize {
+    return CGSize(width: 200, height: 50)
   }
 
   func configure(with item: Item) {
@@ -39,8 +41,6 @@ class HeaderView: NSView, ItemConfigurable {
 
 class TextView: NSView, ItemConfigurable {
 
-  var preferredViewSize: CGSize = CGSize(width: 200, height: 50)
-
   lazy var titleLabel: NSTextField = {
     let label = NSTextField()
     return label
@@ -70,13 +70,15 @@ class TextView: NSView, ItemConfigurable {
 
   func configure(with item: Item) {
     titleLabel.stringValue = item.title
+  }
+
+  func computeSize(for item: Item) -> CGSize {
+    return CGSize(width: 200, height: 50)
   }
 }
 
 class FooterView: NSView, ItemConfigurable {
 
-  var preferredViewSize: CGSize = CGSize(width: 200, height: 50)
-
   lazy var titleLabel: NSTextField = {
     let label = NSTextField()
     return label
@@ -107,4 +109,9 @@ class FooterView: NSView, ItemConfigurable {
   func configure(with item: Item) {
     titleLabel.stringValue = item.title
   }
+
+  func computeSize(for item: Item) -> CGSize {
+    return CGSize(width: 200, height: 50)
+  }
+
 }

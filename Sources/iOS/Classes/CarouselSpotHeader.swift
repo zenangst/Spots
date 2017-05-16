@@ -3,9 +3,6 @@ import UIKit
 /// A Carousel Spot Header
 public class CarouselComponentHeader: UICollectionReusableView, ItemConfigurable {
 
-  /// The preferred header size for the view
-  public var preferredViewSize: CGSize = CGSize(width: 0, height: 120)
-
   /// A UILabel that uses ComponentModel title for its text
   public lazy var titleLabel = UILabel()
 
@@ -32,5 +29,9 @@ public class CarouselComponentHeader: UICollectionReusableView, ItemConfigurable
   /// - parameter component: A ComponentModel struct used for configuring the view.
   public func configure(with item: Item) {
     titleLabel.text = item.title
+  }
+
+  public func computeSize(for item: Item) -> CGSize {
+    return CGSize(width: 0, height: 120)
   }
 }

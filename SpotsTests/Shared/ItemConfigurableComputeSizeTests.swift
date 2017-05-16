@@ -9,73 +9,71 @@ import Spots
   typealias GridView = UICollectionViewCell
 #endif
 
-class DynamicWrappedViewMock: View, ItemConfigurable, DynamicSizeView {
+class WrappedViewMock: View, ItemConfigurable {
 
-  var preferredViewSize: CGSize = CGSize(width: 100, height: 100)
+  func configure(with item: Item) {}
 
   func computeSize(for item: Item) -> CGSize {
     return CGSize(width: 200, height: 200)
   }
-
-  func configure(with item: Item) {}
 }
 
-class DynamicListViewMock: ListView, ItemConfigurable, DynamicSizeView {
+class ListViewMock: ListView, ItemConfigurable {
 
-  var preferredViewSize: CGSize = CGSize(width: 100, height: 100)
+  func configure(with item: Item) {}
 
   func computeSize(for item: Item) -> CGSize {
     return CGSize(width: 300, height: 300)
   }
-
-  func configure(with item: Item) {}
 }
 
-class DynamicGridViewMock: GridView, ItemConfigurable, DynamicSizeView {
+class GridViewMock: GridView, ItemConfigurable {
 
-  var preferredViewSize: CGSize = CGSize(width: 100, height: 100)
+  func configure(with item: Item) {}
 
   func computeSize(for item: Item) -> CGSize {
     return CGSize(width: 150, height: 150)
   }
-
-  func configure(with item: Item) {}
 }
 
 
-class DynamicSizeViewTests: XCTestCase {
+class ItemConfigurableComputeSizeTests: XCTestCase {
 
   enum Identifier: String {
     case wrapped, list, grid
+
+    var identifier: String {
+      return "\(String(describing: ItemConfigurableComputeSizeTests.self))-\(self.rawValue)"
+    }
   }
 
   override func setUp() {
-    Configuration.register(view: DynamicWrappedViewMock.self, identifier: Identifier.wrapped.rawValue)
-    Configuration.register(view: DynamicListViewMock.self, identifier: Identifier.list.rawValue)
-    Configuration.register(view: DynamicGridViewMock.self, identifier: Identifier.grid.rawValue)
+    Configuration.register(view: WrappedViewMock.self, identifier: Identifier.wrapped.identifier)
+    Configuration.register(view: ListViewMock.self, identifier: Identifier.list.identifier)
+    Configuration.register(view: GridViewMock.self, identifier: Identifier.grid.identifier)
   }
 
   func testWrappedDynamicViewInGrid() {
-    let component = createComponent(kind: .grid, items: [Item(kind: Identifier.wrapped.rawValue)])
+    let component = createComponent(kind: .grid, items: [Item(kind: Identifier.wrapped.identifier)])
     XCTAssertEqual(component.model.items[0].size, CGSize(width: 200, height: 200))
   }
 
   func testWrappedDynamicViewInList() {
-    let component = createComponent(kind: .list, items: [Item(kind: Identifier.wrapped.rawValue)])
+    let component = createComponent(kind: .list, items: [Item(kind: Identifier.wrapped.identifier)])
     XCTAssertEqual(component.model.items[0].size, CGSize(width: 200, height: 200))
   }
 
   func testDynamicListView() {
-    let component = createComponent(kind: .list, items: [Item(kind: Identifier.list.rawValue)])
-    XCTAssertEqual(component.model.items[0].size, CGSize(width: 300, height: 300))
+    let component = createComponent(kind: .list, items: [Item(kind: Identifier.list.identifier)])
+    XCTAssertEqual(component.model.items[0].size, CGSize(width: 200, height: 300))
 
-    let type: DynamicListViewMock? = component.ui(at: 0)
+    let type: ListViewMock? = component.ui(at: 0)
     XCTAssertNotNil(type)
     let expectation = self.expectation(description: "Wait for component update")
-    component.update(Item(kind: Identifier.wrapped.rawValue), index: 0) {
-      XCTAssertEqual(component.model.items[0].kind, Identifier.wrapped.rawValue)
+    component.update(Item(kind: Identifier.wrapped.identifier), index: 0) {
+      XCTAssertEqual(component.model.items[0].kind, Identifier.wrapped.identifier)
       XCTAssertEqual(component.model.items[0].size, CGSize(width: 200, height: 200))
-      let type: DynamicWrappedViewMock? = component.ui(at: 0)
+      let type: WrappedViewMock? = component.ui(at: 0)
       XCTAssertNotNil(type)
       expectation.fulfill()
     }
@@ -84,14 +82,14 @@ class DynamicSizeViewTests: XCTestCase {
   }
 
   func testDynamicGridView() {
-    let component = createComponent(kind: .grid, items: [Item(kind: Identifier.grid.rawValue)])
+    let component = createComponent(kind: .grid, items: [Item(kind: Identifier.grid.identifier)])
     XCTAssertEqual(component.model.items[0].size, CGSize(width: 150, height: 150))
 
     let expectation = self.expectation(description: "Wait for component update")
-    component.update(Item(kind: Identifier.wrapped.rawValue), index: 0) {
-      XCTAssertEqual(component.model.items[0].kind, Identifier.wrapped.rawValue)
+    component.update(Item(kind: Identifier.wrapped.identifier), index: 0) {
+      XCTAssertEqual(component.model.items[0].kind, Identifier.wrapped.identifier)
       XCTAssertEqual(component.model.items[0].size, CGSize(width: 200, height: 200))
-      let type: DynamicWrappedViewMock? = component.ui(at: 0)
+      let type: WrappedViewMock? = component.ui(at: 0)
       XCTAssertNotNil(type)
       expectation.fulfill()
     }

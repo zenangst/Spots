@@ -5,10 +5,8 @@ import UIKit
 /// Accessibility: This class is per default an accessibility element, and gets its attributes
 /// from any `Item` that it's configured with. You can override this behavior at any point, and
 /// disable accessibility by setting `isAccessibilityElement = false` on the cell.
-open class DefaultItemView: UITableViewCell, ItemConfigurable, DynamicSizeView {
+open class DefaultItemView: UITableViewCell, ItemConfigurable {
 
-  /// The preferred view size for the view, width will be ignored for ListComponent cells
-  open var preferredViewSize = Configuration.defaultViewSize
   /// An optional reference to the current item
   open var item: Item?
 
@@ -50,10 +48,10 @@ open class DefaultItemView: UITableViewCell, ItemConfigurable, DynamicSizeView {
   }
 
   public func computeSize(for item: Item) -> CGSize {
-    let itemHeight = item.size.height > 0.0 ? item.size.height : preferredViewSize.height
+    let itemHeight = item.size.height > 0.0 ? item.size.height : Configuration.defaultViewSize.height
 
     return .init(
-      width: item.size.width,
+      width: Configuration.defaultViewSize.width,
       height: itemHeight
     )
   }

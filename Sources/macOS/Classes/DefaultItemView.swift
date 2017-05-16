@@ -16,8 +16,6 @@ open class DefaultItemView: NSTableRowView, ItemConfigurable {
     }
   }
 
-  open var preferredViewSize = Configuration.defaultViewSize
-
   lazy var titleLabel: NSTextField = {
     let titleLabel = NSTextField()
     titleLabel.isEditable = false
@@ -65,6 +63,10 @@ open class DefaultItemView: NSTableRowView, ItemConfigurable {
 
   public required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
+  }
+
+  open func computeSize(for item: Item) -> CGSize {
+    return Configuration.defaultViewSize
   }
 
   open func configure(with item: Item) {

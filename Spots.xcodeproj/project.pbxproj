@@ -61,9 +61,9 @@
 		BD5FC7DF1E857AD900D03038 /* FlippedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5FC7DE1E857AD900D03038 /* FlippedView.swift */; };
 		BD5FE3451EA6222C0008749C /* TestComponentDelegate+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEFF5511DD1DA8000FC0537 /* TestComponentDelegate+iOS.swift */; };
 		BD5FE3461EA6222D0008749C /* TestComponentDelegate+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEFF5511DD1DA8000FC0537 /* TestComponentDelegate+iOS.swift */; };
-		BD650CF61ECAC2C100DFD220 /* DynamicSizeViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD650CF51ECAC2C100DFD220 /* DynamicSizeViewTests.swift */; };
-		BD650CF71ECAC2C100DFD220 /* DynamicSizeViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD650CF51ECAC2C100DFD220 /* DynamicSizeViewTests.swift */; };
-		BD650CF81ECAC2C100DFD220 /* DynamicSizeViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD650CF51ECAC2C100DFD220 /* DynamicSizeViewTests.swift */; };
+		BD650CF61ECAC2C100DFD220 /* ItemConfigurableComputeSizeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD650CF51ECAC2C100DFD220 /* ItemConfigurableComputeSizeTests.swift */; };
+		BD650CF71ECAC2C100DFD220 /* ItemConfigurableComputeSizeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD650CF51ECAC2C100DFD220 /* ItemConfigurableComputeSizeTests.swift */; };
+		BD650CF81ECAC2C100DFD220 /* ItemConfigurableComputeSizeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD650CF51ECAC2C100DFD220 /* ItemConfigurableComputeSizeTests.swift */; };
 		BD677E851DC616B2006D1654 /* TestComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD677E841DC616B2006D1654 /* TestComponent.swift */; };
 		BD677E871DC616B2006D1654 /* TestComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD677E841DC616B2006D1654 /* TestComponent.swift */; };
 		BD677E891DC61EFC006D1654 /* TestStateCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD677E881DC61EFC006D1654 /* TestStateCache.swift */; };
@@ -93,9 +93,6 @@
 		BD798EF81EA2A1320069EFB7 /* TestSpotsControllerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD798EF71EA2A1320069EFB7 /* TestSpotsControllerManager.swift */; };
 		BD798EF91EA2A1320069EFB7 /* TestSpotsControllerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD798EF71EA2A1320069EFB7 /* TestSpotsControllerManager.swift */; };
 		BD798EFA1EA2A1320069EFB7 /* TestSpotsControllerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD798EF71EA2A1320069EFB7 /* TestSpotsControllerManager.swift */; };
-		BD82F0751ECA294700B76CD2 /* DynamicSizeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD82F0741ECA294700B76CD2 /* DynamicSizeView.swift */; };
-		BD82F0761ECA294700B76CD2 /* DynamicSizeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD82F0741ECA294700B76CD2 /* DynamicSizeView.swift */; };
-		BD82F0771ECA294700B76CD2 /* DynamicSizeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD82F0741ECA294700B76CD2 /* DynamicSizeView.swift */; };
 		BD99824C1EA93684000A6FD4 /* ViewPreparer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD99824B1EA93684000A6FD4 /* ViewPreparer.swift */; };
 		BD99824D1EA93684000A6FD4 /* ViewPreparer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD99824B1EA93684000A6FD4 /* ViewPreparer.swift */; };
 		BD99824E1EA93684000A6FD4 /* ViewPreparer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD99824B1EA93684000A6FD4 /* ViewPreparer.swift */; };
@@ -421,7 +418,7 @@
 		BD45D9991E30B0F700C2D6B2 /* Spots.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; path = Spots.podspec; sourceTree = "<group>"; };
 		BD5CF7361E8B7C57006CC281 /* ComponentResize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentResize.swift; sourceTree = "<group>"; };
 		BD5FC7DE1E857AD900D03038 /* FlippedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlippedView.swift; sourceTree = "<group>"; };
-		BD650CF51ECAC2C100DFD220 /* DynamicSizeViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicSizeViewTests.swift; sourceTree = "<group>"; };
+		BD650CF51ECAC2C100DFD220 /* ItemConfigurableComputeSizeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemConfigurableComputeSizeTests.swift; sourceTree = "<group>"; };
 		BD677E841DC616B2006D1654 /* TestComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestComponent.swift; sourceTree = "<group>"; };
 		BD677E881DC61EFC006D1654 /* TestStateCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestStateCache.swift; sourceTree = "<group>"; };
 		BD677E8C1DC62575006D1654 /* TestUIViewControllerExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestUIViewControllerExtensions.swift; sourceTree = "<group>"; };
@@ -434,7 +431,6 @@
 		BD77D1FB1E85382D0075A3FC /* ComponentModel+Equatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ComponentModel+Equatable.swift"; sourceTree = "<group>"; };
 		BD798EF31EA28F200069EFB7 /* SpotsControllerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsControllerManager.swift; sourceTree = "<group>"; };
 		BD798EF71EA2A1320069EFB7 /* TestSpotsControllerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSpotsControllerManager.swift; sourceTree = "<group>"; };
-		BD82F0741ECA294700B76CD2 /* DynamicSizeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicSizeView.swift; sourceTree = "<group>"; };
 		BD99824B1EA93684000A6FD4 /* ViewPreparer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewPreparer.swift; sourceTree = "<group>"; };
 		BD9ECEB41E6EC6A7003E4388 /* Component+macOS+List.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Component+macOS+List.swift"; sourceTree = "<group>"; };
 		BD9ECEB61E6EC6B4003E4388 /* Component+macOS+Carousel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Component+macOS+Carousel.swift"; sourceTree = "<group>"; };
@@ -847,7 +843,6 @@
 				BDAD85511E3E7032008289AE /* UserInterface.swift */,
 				D5D2826A1E547219004BF251 /* ViewStateDelegate.swift */,
 				BDAD85531E3E7032008289AE /* Wrappable.swift */,
-				BD82F0741ECA294700B76CD2 /* DynamicSizeView.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -1027,6 +1022,7 @@
 			children = (
 				BD31BB991EA6208600D1FC8A /* DelegateConfigurationClosureTests.swift */,
 				BD677E8E1DC65D63006D1654 /* Helpers.swift */,
+				BD650CF51ECAC2C100DFD220 /* ItemConfigurableComputeSizeTests.swift */,
 				BD677E841DC616B2006D1654 /* TestComponent.swift */,
 				BDE44B121EA0F0C90021EAC8 /* TestComponentManager.swift */,
 				D584782B1C43FF34006EBA49 /* TestComponentModel.swift */,
@@ -1041,7 +1037,6 @@
 				BD677E881DC61EFC006D1654 /* TestStateCache.swift */,
 				BDCA3CF21E8295EB00A98A76 /* TestUserInterface.swift */,
 				BD10D5211D79533C00DF8E9B /* TestViewModelExtensions.swift */,
-				BD650CF51ECAC2C100DFD220 /* DynamicSizeViewTests.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -1552,7 +1547,6 @@
 				BDAD84E31E3E701C008289AE /* UIViewController+Extensions.swift in Sources */,
 				BDAD84DB1E3E701C008289AE /* Layout+iOS.swift in Sources */,
 				BDAD85EC1E3E7032008289AE /* Registry.swift in Sources */,
-				BD82F0771ECA294700B76CD2 /* DynamicSizeView.swift in Sources */,
 				BDE44B111EA0E5E80021EAC8 /* ComponentManager.swift in Sources */,
 				BDAD85D11E3E7032008289AE /* Wrappable.swift in Sources */,
 				BD9ECEBF1E6EC8A5003E4388 /* Component+iOS+Carousel.swift in Sources */,
@@ -1579,7 +1573,7 @@
 				BD45D98C1E30909700C2D6B2 /* TestLayoutExtensions.swift in Sources */,
 				BDE44B181EA0F0E60021EAC8 /* TestComponentManager.swift in Sources */,
 				BDEFF5501DD1C85300FC0537 /* TestDataSource.swift in Sources */,
-				BD650CF81ECAC2C100DFD220 /* DynamicSizeViewTests.swift in Sources */,
+				BD650CF81ECAC2C100DFD220 /* ItemConfigurableComputeSizeTests.swift in Sources */,
 				BD45D9891E30906300C2D6B2 /* TestLayout.swift in Sources */,
 				BDCFCD431DCA7EFF0047E84C /* TestSpotsController.swift in Sources */,
 				BD677E8B1DC61EFC006D1654 /* TestStateCache.swift in Sources */,
@@ -1633,7 +1627,6 @@
 				BDB1F8B31E5D921F0064F64B /* CoreComponent+Extensions+iOS.swift in Sources */,
 				BDAD84DA1E3E701C008289AE /* Layout+iOS.swift in Sources */,
 				BD9ECEC71E6EC8C4003E4388 /* Component+iOS+HeaderFooter.swift in Sources */,
-				BD82F0751ECA294700B76CD2 /* DynamicSizeView.swift in Sources */,
 				BDAD84D21E3E701C008289AE /* Delegate+iOS+Extensions.swift in Sources */,
 				BDDCF6D61E4DF911004B38C4 /* Item.swift in Sources */,
 				BDAD85C01E3E7032008289AE /* ComponentDelegate.swift in Sources */,
@@ -1736,7 +1729,7 @@
 				BD677E8D1DC62575006D1654 /* TestUIViewControllerExtensions.swift in Sources */,
 				BD42CA851E4C9B2600A86E3B /* TestSpot.swift in Sources */,
 				BD798EF81EA2A1320069EFB7 /* TestSpotsControllerManager.swift in Sources */,
-				BD650CF61ECAC2C100DFD220 /* DynamicSizeViewTests.swift in Sources */,
+				BD650CF61ECAC2C100DFD220 /* ItemConfigurableComputeSizeTests.swift in Sources */,
 				D5D282731E54773C004BF251 /* TestListWrapper.swift in Sources */,
 				BD10D5251D7955AB00DF8E9B /* TestViewModelExtensions.swift in Sources */,
 				BDCFCD441DCA7F830047E84C /* TestSpotsController.swift in Sources */,
@@ -1775,7 +1768,6 @@
 				BDAD85A31E3E7032008289AE /* Wrappable+Extensions.swift in Sources */,
 				BDDCF6DC1E4DF91F004B38C4 /* Indexable.swift in Sources */,
 				BDAD857C1E3E7032008289AE /* Component+Extensions.swift in Sources */,
-				BD82F0761ECA294700B76CD2 /* DynamicSizeView.swift in Sources */,
 				BDAD85701E3E7032008289AE /* Animation.swift in Sources */,
 				BDAD85971E3E7032008289AE /* SpotsController+Extensions.swift in Sources */,
 				BDAD85E21E3E7032008289AE /* Interaction.swift in Sources */,
@@ -1844,7 +1836,7 @@
 				D58478E71C440645006EBA49 /* TestComponentModel.swift in Sources */,
 				BD677E901DC65D63006D1654 /* Helpers.swift in Sources */,
 				BDCA3CF41E8295EB00A98A76 /* TestUserInterface.swift in Sources */,
-				BD650CF71ECAC2C100DFD220 /* DynamicSizeViewTests.swift in Sources */,
+				BD650CF71ECAC2C100DFD220 /* ItemConfigurableComputeSizeTests.swift in Sources */,
 				BD10D5261D7955AC00DF8E9B /* TestViewModelExtensions.swift in Sources */,
 				BDEA32801E87A6FF0044B056 /* TestInteraction.swift in Sources */,
 				BD165A391E6EAD750023AF82 /* HelperViews.swift in Sources */,
