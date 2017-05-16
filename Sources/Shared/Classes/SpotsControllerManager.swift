@@ -5,6 +5,31 @@
   import UIKit
 #endif
 
+/// SpotsControllerManager handles mutation on a controller level.
+/// It relays mutating operations to `ComponentManger` when the affected `Component` has been resolved.
+/// It supports both reloading with JSON payloads and with collections of `ComponentModel`'s.
+/// Similar to `ComponentManager`, each mutating operation has a completion that will be invoked when
+/// the operation reaches its end, this way you can respond to chained mutations on a controller level.
+/// `SpotsControllerManager` also supports model diffing, which means that it will only insert, update, reload
+/// or delete components or items that changed. This is supported on a `ComponentModel` level.
+/// It can also pinpoint updates on a specific component by supplying the component index of the `Component`
+/// that you which to mutate. `SpotsController` has a protocol extension which makes these method directly accessable
+/// on the controller (see `SpotsController+SpotsControllerManager`).  `SpotsControllerManager` lives on `SpotsController`.
+/// It is created during init and is publicly accessable via `.manager`. 
+///
+/// Usage:
+///
+/// 
+/// ```
+/// // Reload with a collection of `ComponentModel`s
+/// controller.reloadIfNeeded(components: [componentModel, ...]) {}
+/// ```
+/// // Updating the item at index 0
+/// ```
+/// controller.update(item: Item(...), index: 0) {}
+///
+/// ```
+///
 public class SpotsControllerManager {
 
   /// A comparison closure type alias for comparing collections of component models.
