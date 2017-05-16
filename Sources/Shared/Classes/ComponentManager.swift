@@ -238,19 +238,14 @@ public class ComponentManager {
           } else {
             component.userInterface?.reload([index], withAnimation: animation, completion: nil)
           }
-
-          self?.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
-          return
         } else if let view: ItemConfigurable = component.userInterface?.view(at: index) {
           view.configure(with: component.model.items[index])
           if let dynamicView = view as? DynamicSizeView {
             component.model.items[item.index].size = dynamicView.computeSize(for: component.model.items[item.index])
           }
-
-          self?.finishComponentOperation(component, updateHeightAndIndexes: false, completion: completion)
-        } else {
-          self?.finishComponentOperation(component, updateHeightAndIndexes: false, completion: completion)
         }
+
+        self?.finishComponentOperation(component, updateHeightAndIndexes: false, completion: completion)
       }
     }
   }
