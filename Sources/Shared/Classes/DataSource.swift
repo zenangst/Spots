@@ -9,8 +9,8 @@ import Foundation
 public class DataSource: NSObject {
   /// The component that the data source belongs to.
   weak var component: Component?
-  /// A view prepare class that ensure that all views displayed for this data source
-  /// is properly configured with the model data. See `ItemConfigurable` for more information
+  /// An object that ensures that all views displayed for this data source are properly
+  /// configured with the model data. See `ItemConfigurable` for more information
   /// about how to configure your views.
   var viewPreparer = ViewPreparer()
 
