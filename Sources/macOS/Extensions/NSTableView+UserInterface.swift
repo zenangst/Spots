@@ -52,7 +52,14 @@ extension NSTableView: UserInterface {
 
     /** Manually handle reloading of the cell as reloadDataForRowIndexes does not seems to work with view based table views
      - "For NSView-based table views, this method drops the view-cells in the table row, but not the NSTableRowView instances."
-    */
+     */
+    var indexSet = IndexSet()
+    indexes.forEach { indexSet.insert($0) }
+
+    performUpdates({
+      removeRows(at: indexSet, withAnimation: animation.tableViewAnimation)
+      insertRows(at: indexSet, withAnimation: animation.tableViewAnimation)
+    })
 
     for index in indexes {
       guard let view = rowView(atRow: index, makeIfNecessary: false) else {
