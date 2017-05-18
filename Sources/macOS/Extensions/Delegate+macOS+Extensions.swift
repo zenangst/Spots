@@ -117,7 +117,8 @@ extension Delegate: NSTableViewDelegate {
       viewPreparer.prepareWrappableView(item, atIndex: row, in: component, parentFrame: item.bounds)
     case let view as NSTableRowView:
       if let itemConfigurable = view as? ItemConfigurable {
-        itemConfigurable.configure(&component.model.items[row])
+        itemConfigurable.configure(with: component.model.items[row])
+        component.model.items[row].size.height = itemConfigurable.computeSize(for: component.model.items[row]).height
         component.configure?(itemConfigurable)
       }
     default:
@@ -126,7 +127,8 @@ extension Delegate: NSTableViewDelegate {
         wrapper.configure(with: view)
 
         if let itemConfigurable = view as? ItemConfigurable {
-          itemConfigurable.configure(&component.model.items[row])
+          itemConfigurable.configure(with: component.model.items[row])
+          component.model.items[row].size.height = itemConfigurable.computeSize(for: component.model.items[row]).height
           component.configure?(itemConfigurable)
         }
 

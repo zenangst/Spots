@@ -6,6 +6,11 @@ class TestGridableLayout: XCTestCase {
 
   let parentSize = CGSize(width: 100, height: 100)
 
+  override func setUp() {
+    Configuration.registerDefault(view: DefaultItemView.self)
+    Configuration.views.purge()
+  }
+
   func testContentSizeForHorizontalLayoutsWithoutInsets() {
     let model = ComponentModel(
       kind: .carousel,
@@ -16,7 +21,6 @@ class TestGridableLayout: XCTestCase {
     )
     let carouselComponent = Component(model: model)
     carouselComponent.setup(with: parentSize)
-    carouselComponent.view.layoutSubviews()
 
     guard let collectionView = carouselComponent.collectionView else {
       XCTFail("Unable to resolve collection view layout.")
@@ -28,6 +32,7 @@ class TestGridableLayout: XCTestCase {
   }
 
   func testContentSizeForHorizontalLayoutsWithInsets() {
+
     let model = ComponentModel(
       kind: .carousel,
       layout: Layout(
@@ -40,8 +45,6 @@ class TestGridableLayout: XCTestCase {
     )
     let carouselComponent = Component(model: model)
     carouselComponent.setup(with: parentSize)
-    carouselComponent.layout(with: parentSize)
-    carouselComponent.view.layoutSubviews()
 
     guard let collectionView = carouselComponent.collectionView else {
       XCTFail("Unable to resolve collection view layout.")
@@ -66,7 +69,6 @@ class TestGridableLayout: XCTestCase {
     )
     let carouselComponent = Component(model: model)
     carouselComponent.setup(with: parentSize)
-    carouselComponent.view.layoutSubviews()
 
     guard let collectionViewLayout = carouselComponent.collectionView?.collectionViewLayout as? FlowLayout else {
       XCTFail("Unable to resolve collection view layout.")
@@ -110,7 +112,6 @@ class TestGridableLayout: XCTestCase {
     )
     let carouselComponent = Component(model: model)
     carouselComponent.setup(with: parentSize)
-    carouselComponent.view.layoutSubviews()
 
     guard let collectionViewLayout = carouselComponent.collectionView?.collectionViewLayout as? FlowLayout else {
       XCTFail("Unable to resolve collection view layout.")
@@ -142,8 +143,6 @@ class TestGridableLayout: XCTestCase {
 
     let component = Component(model: model)
     component.setup(with: parentSize)
-    component.layout(with: parentSize)
-    component.view.layoutSubviews()
 
     guard let collectionViewLayout = component.collectionView?.collectionViewLayout as? FlowLayout else {
       XCTFail("Unable to resolve collection view layout.")

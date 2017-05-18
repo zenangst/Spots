@@ -37,10 +37,11 @@ extension NSTableView: UserInterface {
   }
 
   public func insert(_ indexes: [Int], withAnimation animation: Animation = .automatic, completion: (() -> Void)? = nil) {
-    let indexPaths = NSMutableIndexSet()
-    indexes.forEach { indexPaths.add($0) }
-    performUpdates({ insertRows(at: indexPaths as IndexSet, withAnimation: animation.tableViewAnimation) },
-                   endClosure: completion)
+    var indexSet = IndexSet()
+    indexes.forEach { indexSet.insert($0) }
+    performUpdates({
+      insertRows(at: indexSet, withAnimation: animation.tableViewAnimation)
+    }, endClosure: completion)
 
   }
 
@@ -51,7 +52,14 @@ extension NSTableView: UserInterface {
 
     /** Manually handle reloading of the cell as reloadDataForRowIndexes does not seems to work with view based table views
      - "For NSView-based table views, this method drops the view-cells in the table row, but not the NSTableRowView instances."
-    */
+     */
+    var indexSet = IndexSet()
+    indexes.forEach { indexSet.insert($0) }
+
+    performUpdates({
+      removeRows(at: indexSet, withAnimation: animation.tableViewAnimation)
+      insertRows(at: indexSet, withAnimation: animation.tableViewAnimation)
+    })
 
     for index in indexes {
       guard let view = rowView(atRow: index, makeIfNecessary: false) else {
@@ -67,10 +75,11 @@ extension NSTableView: UserInterface {
   }
 
   public func delete(_ indexes: [Int], withAnimation animation: Animation = .automatic, completion: (() -> Void)? = nil) {
-    let indexPaths = NSMutableIndexSet()
-    indexes.forEach { indexPaths.add($0) }
-    performUpdates({ removeRows(at: indexPaths as IndexSet, withAnimation: animation.tableViewAnimation) },
-                   endClosure: completion)
+    var indexSet = IndexSet()
+    indexes.forEach { indexSet.insert($0) }
+    performUpdates({
+      removeRows(at: indexSet, withAnimation: animation.tableViewAnimation)
+    }, endClosure: completion)
   }
 
   public func process(_ changes: (insertions: [Int], reloads: [Int], deletions: [Int], childUpdates: [Int]),
@@ -129,9 +138,9 @@ extension NSTableView: UserInterface {
   fileprivate func configure(view: View, with item: inout Item) {
     switch view {
     case let wrapper as Wrappable:
-      (wrapper.wrappedView as? ItemConfigurable)?.configure(&item)
+      (wrapper.wrappedView as? ItemConfigurable)?.configure(with: item)
     case let itemConfigurable as ItemConfigurable:
-      itemConfigurable.configure(&item)
+      itemConfigurable.configure(with: item)
     default:
       break
     }

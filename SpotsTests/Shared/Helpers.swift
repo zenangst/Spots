@@ -1,8 +1,8 @@
 @testable import Spots
 #if os(OSX)
-import Foundation
+  import Foundation
 #else
-import UIKit
+  import UIKit
 #endif
 
 import Tailor
@@ -50,8 +50,8 @@ extension SpotsController {
 
   func scrollTo(_ point: CGPoint) {
     #if !os(OSX)
-    scrollView.setContentOffset(point, animated: false)
-    scrollView.layoutSubviews()
+      scrollView.setContentOffset(point, animated: false)
+      scrollView.layoutSubviews()
     #endif
   }
 }
@@ -64,15 +64,13 @@ extension SpotsController {
       frame.size.height = 44
       super.init(frame: frame)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
       fatalError("init(coder:) has not been implemented")
     }
   }
 
   class ItemConfigurableView: UIView, ItemConfigurable {
-
-    var preferredViewSize: CGSize = CGSize(width: 200, height: 50)
 
     override init(frame: CGRect) {
       super.init(frame: frame)
@@ -82,8 +80,12 @@ extension SpotsController {
       fatalError("init(coder:) has not been implemented")
     }
 
-    func configure(_ item: inout Item) {
+    func configure(with item: Item) {
       frame.size.height = 75
+    }
+
+    func computeSize(for item: Item) -> CGSize {
+      return CGSize(width: 200, height: 50)
     }
   }
 
@@ -116,8 +118,12 @@ extension SpotsController {
       titleLabel.centerYAnchor.constraint(equalTo: titleLabel.superview!.centerYAnchor).isActive = true
     }
 
-    func configure(_ item: inout Item) {
+    func configure(with item: Item) {
       titleLabel.text = item.title
+    }
+
+    func computeSize(for item: Item) -> CGSize {
+      return CGSize(width: 200, height: 50)
     }
   }
 
@@ -150,8 +156,12 @@ extension SpotsController {
       titleLabel.centerYAnchor.constraint(equalTo: titleLabel.superview!.centerYAnchor).isActive = true
     }
 
-    func configure(_ item: inout Item) {
+    func configure(with item: Item) {
       titleLabel.text = item.title
+    }
+
+    func computeSize(for item: Item) -> CGSize {
+      return CGSize(width: 200, height: 50)
     }
   }
 
@@ -186,52 +196,65 @@ extension SpotsController {
       titleLabel.centerYAnchor.constraint(equalTo: titleLabel.superview!.centerYAnchor).isActive = true
     }
 
-    func configure(_ item: inout Item) {
+    func configure(with item: Item) {
       titleLabel.text = item.title
+    }
+
+    func computeSize(for item: Item) -> CGSize {
+      return CGSize(width: 200, height: 50)
     }
   }
 
   class CustomListCell: UITableViewCell, ItemConfigurable {
-
-    var preferredViewSize: CGSize = CGSize(width: 0, height: 44)
-
-    func configure(_ item: inout Item) {
+    func configure(with item: Item) {
       textLabel?.text = item.text
+    }
+
+    func computeSize(for item: Item) -> CGSize {
+      return CGSize(width: 0, height: 44)
     }
   }
 
   class CustomListHeaderView: UITableViewHeaderFooterView, ItemConfigurable {
-    var preferredViewSize: CGSize = CGSize(width: 0, height: 88)
-
-    func configure(_ item: inout Item) {
+    func configure(with item: Item) {
       textLabel?.text = item.title
+    }
+
+    func computeSize(for item: Item) -> CGSize {
+      return CGSize(width: 0, height: 88)
     }
   }
 
   class CustomGridCell: UICollectionViewCell, ItemConfigurable {
 
-    var preferredViewSize: CGSize = CGSize(width: 0, height: 44)
-
-    func configure(_ item: inout Item) {}
+    func configure(with item: Item) {}
+    
+    func computeSize(for item: Item) -> CGSize {
+      return CGSize(width: 0, height: 44)
+    }
   }
 
   class CustomGridHeaderView: UICollectionReusableView, ItemConfigurable {
-
-    var preferredViewSize: CGSize = CGSize(width: 0, height: 88)
-
     lazy var textLabel = UILabel()
 
-    func configure(_ item: inout Item) {
+    func computeSize(for item: Item) -> CGSize {
+      return CGSize(width: 0, height: 88)
+    }
+
+    func configure(with item: Item) {
       textLabel.text = item.title
     }
   }
 #endif
 
 class TestView: View, ItemConfigurable {
-  var preferredViewSize: CGSize = CGSize(width: 50, height: 50)
   var item: Item?
-
-  func configure(_ item: inout Item) {
+  
+  func configure(with item: Item) {
     self.item = item
+  }
+
+  func computeSize(for item: Item) -> CGSize {
+    return CGSize(width: 50, height: 50)
   }
 }

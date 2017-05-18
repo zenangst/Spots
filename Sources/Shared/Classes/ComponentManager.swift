@@ -238,23 +238,23 @@ public class ComponentManager {
         self?.itemManager.configureItem(at: index, component: component, usesViewSize: true)
         let newItem = component.model.items[index]
 
-        if newItem.kind != oldItem.kind || newItem.size.height != oldItem.size.height {
-          if let cell: ItemConfigurable = component.userInterface?.view(at: index), animation != .none {
+        if newItem.kind != oldItem.kind {
+          component.userInterface?.reload([index], withAnimation: animation, completion: nil)
+        } else if newItem.size.height != oldItem.size.height {
+          if let view: ItemConfigurable = component.userInterface?.view(at: index), animation != .none {
             component.userInterface?.beginUpdates()
-            cell.configure(&component.model.items[index])
+            view.configure(with: component.model.items[index])
+            component.model.items[item.index].size.height = view.computeSize(for: component.model.items[item.index]).height
             component.userInterface?.endUpdates()
           } else {
             component.userInterface?.reload([index], withAnimation: animation, completion: nil)
           }
-
-          self?.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
-          return
-        } else if let cell: ItemConfigurable = component.userInterface?.view(at: index) {
-          cell.configure(&component.model.items[index])
-          self?.finishComponentOperation(component, updateHeightAndIndexes: false, completion: completion)
-        } else {
-          self?.finishComponentOperation(component, updateHeightAndIndexes: false, completion: completion)
+        } else if let view: ItemConfigurable = component.userInterface?.view(at: index) {
+          view.configure(with: component.model.items[index])
+          component.model.items[item.index].size.height = view.computeSize(for: component.model.items[item.index]).height
         }
+
+        self?.finishComponentOperation(component, updateHeightAndIndexes: false, completion: completion)
       }
     }
   }

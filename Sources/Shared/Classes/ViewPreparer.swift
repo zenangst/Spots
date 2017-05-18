@@ -23,7 +23,7 @@ class ViewPreparer {
     case let view as Wrappable:
       prepareWrappableView(view, atIndex: index, in: component, parentFrame: parentFrame)
     case let view as ItemConfigurable:
-      prepareItemConfigurableView(view, atIndex: index, in: component)
+      prepareItemConfigurableView(view, atIndex: index, in: component, configureView: true)
     default:
       assertionFailure("Unable to prepare view.")
     }
@@ -46,16 +46,10 @@ class ViewPreparer {
       let composite = component.compositeComponents.filter({ $0.itemIndex == index }).first {
       view.configure(with: composite.component.view)
       component.model.items[index].size.height = composite.component.computedHeight
-    } else if let (_, customView) = Configuration.views.make(identifier, parentFrame: parentFrame),
-      let wrappedView = customView {
+    } else if let wrappedView = Configuration.views.make(identifier, parentFrame: parentFrame)?.view {
       view.configure(with: wrappedView)
-
-      if let configurableView = customView as? ItemConfigurable {
-        configurableView.configure(&component.model.items[index])
-
-        if component.model.items[index].size.height == 0.0 {
-          component.model.items[index].size = configurableView.preferredViewSize
-        }
+      if let configurableView = wrappedView as? ItemConfigurable {
+        prepareItemConfigurableView(configurableView, atIndex: index, in: component, configureView: false)
       } else {
         component.model.items[index].size.height = wrappedView.frame.size.height
       }
@@ -69,12 +63,15 @@ class ViewPreparer {
   ///   - view: The view that should be prepared.
   ///   - index: The index of the item on the model.
   ///   - component: The component that the item belongs to.
-  func prepareItemConfigurableView(_ view: ItemConfigurable, atIndex index: Int, in component: Component) {
-    view.configure(&component.model.items[index])
+  func prepareItemConfigurableView(_ view: ItemConfigurable, atIndex index: Int, in component: Component, configureView: Bool = false) {
+    view.configure(with: component.model.items[index])
 
     if component.model.items[index].size.height == 0.0 {
-      component.model.items[index].size = view.preferredViewSize
+      component.model.items[index].size = view.computeSize(for: component.model.items[index])
     }
-    component.configure?(view)
+
+    if configureView {
+      component.configure?(view)
+    }
   }
 }

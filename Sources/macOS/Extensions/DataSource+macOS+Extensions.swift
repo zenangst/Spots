@@ -39,7 +39,7 @@ extension DataSource: NSCollectionViewDataSource {
     case let item as Wrappable:
       viewPreparer.prepareWrappableView(item, atIndex: indexPath.item, in: component, parentFrame: item.bounds)
     case let item as ItemConfigurable:
-      item.configure(&component.model.items[indexPath.item])
+      item.configure(with: component.model.items[indexPath.item])
     default:
       break
     }

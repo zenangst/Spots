@@ -74,7 +74,7 @@ public class ItemManager {
 
       if let view = view {
         view.frame.size.width = component.view.bounds.width
-        prepare(component: component, view: view)
+        prepare(component: component, item: item, view: view)
       }
 
       prepare(component: component, kind: kind, view: view as Any, item: &item, recreateComposites: recreateComposites)
@@ -108,7 +108,8 @@ public class ItemManager {
     if let view = view as? Wrappable, kind.contains(CompositeComponent.identifier) {
       prepare(component: component, wrappable: view, item: &item, recreateComposites: recreateComposites)
     } else if let view = view as? ItemConfigurable {
-      view.configure(&item)
+      view.configure(with: item)
+      item.size.height = view.computeSize(for: item).height
       setFallbackViewSize(component: component, item: &item, with: view)
     }
   }
@@ -117,12 +118,12 @@ public class ItemManager {
   /// Prepare view frame for item
   ///
   /// - parameter view: The view that is going to be prepared.
-  func prepare(component: Component, view: View) {
+  func prepare(component: Component, item: Item, view: View) {
     // Set initial size for view
     component.view.frame.size.width = view.frame.size.width
 
     if let itemConfigurable = view as? ItemConfigurable, view.frame.size.height == 0.0 {
-      view.frame.size = itemConfigurable.preferredViewSize
+      view.frame.size.height = itemConfigurable.computeSize(for: item).height
     }
 
     if view.frame.size.width == 0.0 {
@@ -193,18 +194,18 @@ public class ItemManager {
     let hasExplicitHeight: Bool = item.size.height == 0.0
 
     if hasExplicitHeight {
-      item.size.height = view.preferredViewSize.height
+      item.size.height = view.computeSize(for: item).height
     }
 
     if item.size.width == 0.0 {
-      item.size.width  = view.preferredViewSize.width
+      item.size.width  = view.computeSize(for: item).width
     }
 
     if let superview = component.view.superview, item.size.width == 0.0 {
       item.size.width = superview.frame.width
     }
 
-    if let view = view as? View, item.size.width == 0.0 {
+    if let view = view as? View, item.size.width == 0.0 || item.size.width > view.bounds.width {
       item.size.width = view.bounds.width
     }
   }
