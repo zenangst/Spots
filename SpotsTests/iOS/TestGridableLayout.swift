@@ -232,7 +232,6 @@ class TestGridableLayout: XCTestCase {
     component.setup(with: CGSize(width: 100, height: 100))
     XCTAssertEqual(component.view.contentSize, CGSize(width: 1500, height: 44))
 
-
     model = ComponentModel(kind: .carousel, layout: Layout(itemsPerRow: 2), items: items)
     component = Component(model: model)
     component.setup(with: CGSize(width: 100, height: 100))
