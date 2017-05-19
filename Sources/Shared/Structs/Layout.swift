@@ -65,6 +65,7 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
   public var dictionary: [String : Any] {
     var dictionary: [String : Any] = [
       Inset.rootKey: inset.dictionary,
+      Key.itemsPerRow.rawValue: itemsPerRow,
       Key.itemSpacing.rawValue: itemSpacing,
       Key.lineSpacing.rawValue: lineSpacing,
       Key.span.rawValue: span,
