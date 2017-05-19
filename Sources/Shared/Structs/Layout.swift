@@ -39,6 +39,15 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
   /// For a horizontally scrolling layout, the value represents the minimum spacing between successive columns.
   public var lineSpacing: Double = 0.0
 
+  /// Items per row is used in horizontal `Component`'s to configure how many items should be displayed
+  /// in per row. It defaults two 1, which means that all items end up on the same row.
+  /// 
+  /// Example with `itemsPerRow` set to 1.
+  /// |item 1|item 2|item 3|item 4|
+  ///
+  /// Example with `itemsPerRow` set to 2.
+  /// |item 1|item 3|
+  /// |item 2|item 4|
   public var itemsPerRow: Int = 1
 
   /// Defines how many items to show per row for `Gridable` components.
