@@ -48,7 +48,7 @@ public class GridableLayout: FlowLayout {
       }
 
       for (index, item) in component.model.items.enumerated() {
-        guard index % layout.itemsPerRow == layout.itemsPerRow - 1 else {
+        guard layout.itemsPerRow == 1 || index % layout.itemsPerRow == layout.itemsPerRow - 1 else {
           continue
         }
 
