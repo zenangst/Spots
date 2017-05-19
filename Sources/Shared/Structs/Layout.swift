@@ -20,6 +20,7 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
   /// - pageIndicator: Used to map if component should display a page indicator.
   enum Key: String {
     case itemSpacing = "item-spacing"
+    case itemsPerRow = "items-per-row"
     case lineSpacing = "line-spacing"
     case span
     case dynamicSpan = "dynamic-span"
@@ -37,6 +38,9 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
   /// For a vertically scrolling layout, the value represents the minimum spacing between successive rows.
   /// For a horizontally scrolling layout, the value represents the minimum spacing between successive columns.
   public var lineSpacing: Double = 0.0
+
+  public var itemsPerRow: Int = 1
+
   /// Defines how many items to show per row for `Gridable` components.
   public var span: Double = 0.0
   /// If enabled and the item count is less than the span, the CarouselComponent will even out the space between the items to align them.
@@ -73,6 +77,7 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
     self.dynamicSpan = false
     self.itemSpacing = 0.0
     self.lineSpacing = 0.0
+    self.itemsPerRow = 1
     self.inset = Inset()
     self.headerMode = .default
   }
@@ -87,11 +92,12 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
   ///   - itemSpacing: Sets minimum item spacing for the model.
   ///   - lineSpacing: Sets minimum lines spacing for items in model.
   ///   - inset: An inset struct used to insert margins for the model.
-  public init(span: Double = 0.0, dynamicSpan: Bool = false, dynamicHeight: Bool = true, pageIndicatorPlacement: PageIndicatorPlacement? = nil, itemSpacing: Double = 0.0, lineSpacing: Double = 0.0, inset: Inset = .init(), headerMode: HeaderMode = .default) {
+  public init(span: Double = 0.0, dynamicSpan: Bool = false, dynamicHeight: Bool = true, pageIndicatorPlacement: PageIndicatorPlacement? = nil, itemsPerRow: Int = 1, itemSpacing: Double = 0.0, lineSpacing: Double = 0.0, inset: Inset = .init(), headerMode: HeaderMode = .default) {
     self.span = span
     self.dynamicSpan = dynamicSpan
     self.dynamicHeight = dynamicHeight
     self.itemSpacing = itemSpacing
+    self.itemsPerRow = itemsPerRow
     self.lineSpacing = lineSpacing
     self.inset = inset
     self.pageIndicatorPlacement = pageIndicatorPlacement
@@ -115,6 +121,7 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
   /// - Parameter map: A JSON dictionary.
   public mutating func configure(withJSON map: [String : Any]) {
     self.inset = Inset(map.property(Inset.rootKey) ?? [:])
+    self.itemsPerRow <- map.int(Key.itemsPerRow.rawValue)
     self.itemSpacing <- map.double(Key.itemSpacing.rawValue)
     self.lineSpacing <- map.double(Key.lineSpacing.rawValue)
     self.dynamicSpan <- map.boolean(Key.dynamicSpan.rawValue)
@@ -143,6 +150,7 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
   public static func == (lhs: Layout, rhs: Layout) -> Bool {
     return lhs.inset == rhs.inset &&
     lhs.itemSpacing == rhs.itemSpacing &&
+    lhs.itemsPerRow == rhs.itemsPerRow &&
     lhs.lineSpacing == rhs.lineSpacing &&
     lhs.span == rhs.span &&
     lhs.dynamicSpan == rhs.dynamicSpan &&
