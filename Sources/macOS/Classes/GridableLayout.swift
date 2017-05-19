@@ -47,7 +47,7 @@ public class GridableLayout: FlowLayout {
       }
 
       for (index, item) in component.model.items.enumerated() {
-        guard layout.itemsPerRow == 1 || index % layout.itemsPerRow == layout.itemsPerRow - 1 else {
+        guard indexEligibleForItemsPerRow(index: index, itemsPerRow: layout.itemsPerRow) else {
           continue
         }
 
@@ -110,7 +110,7 @@ public class GridableLayout: FlowLayout {
 
         itemAttribute.frame.origin.x = nextX
 
-        if layout.itemsPerRow == 1 || indexPath.item % layout.itemsPerRow == layout.itemsPerRow - 1 {
+        if indexEligibleForItemsPerRow(index: indexPath.item, itemsPerRow: layout.itemsPerRow) {
           nextX += itemAttribute.size.width + minimumInteritemSpacing
           nextY = 0
         } else {
@@ -137,5 +137,16 @@ public class GridableLayout: FlowLayout {
     let shouldInvalidateLayout = newBounds.size.height != collectionView.frame.height + offset
 
     return shouldInvalidateLayout
+  }
+
+  /// Check if the current index is eligible for performing itemsPerRow calculations.
+  /// If `itemsPerRow` is set to 1, it will always return `true`.
+  ///
+  /// - Parameters:
+  ///   - index: The index that should be checked if it is eligible or not.
+  ///   - itemsPerRow: The amount of items that should appear on per row, see `itemsPerRow on `Layout`.
+  /// - Returns: True if `index` is equal to the remainder of `itemsPerRow` or `itemsPerRow` is set to 1.
+  private func indexEligibleForItemsPerRow(index: Int, itemsPerRow: Int) -> Bool {
+    return itemsPerRow == 1 || index % itemsPerRow == itemsPerRow - 1
   }
 }
