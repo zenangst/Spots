@@ -4,17 +4,18 @@ import Tailor
 extension Component {
   func setupHorizontalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
     var newCollectionViewHeight: CGFloat = 0.0
-
     newCollectionViewHeight <- model.items.sorted(by: {
       $0.size.height > $1.size.height
     }).first?.size.height
 
-    scrollView.scrollingEnabled = (model.items.count > 1)
-    scrollView.hasHorizontalScroller = (model.items.count > 1)
-
     if let layout = model.layout {
+      newCollectionViewHeight *= CGFloat(layout.itemsPerRow)
+      newCollectionViewHeight += headerHeight
       newCollectionViewHeight += CGFloat(layout.inset.top + layout.inset.bottom)
     }
+
+    scrollView.scrollingEnabled = (model.items.count > 1)
+    scrollView.hasHorizontalScroller = (model.items.count > 1)
 
     collectionView.frame.size.height = newCollectionViewHeight
   }
@@ -32,10 +33,15 @@ extension Component {
     }
 
     var newCollectionViewHeight: CGFloat = 0.0
-
     newCollectionViewHeight <- model.items.sorted(by: {
       $0.size.height > $1.size.height
     }).first?.size.height
+
+    if let layout = model.layout {
+      newCollectionViewHeight *= CGFloat(layout.itemsPerRow)
+      newCollectionViewHeight += headerHeight
+      newCollectionViewHeight += CGFloat(layout.inset.top + layout.inset.bottom)
+    }
 
     collectionView.frame.size.width = collectionViewContentSize.width
     collectionView.frame.size.height = newCollectionViewHeight
@@ -44,8 +50,6 @@ extension Component {
     documentView.frame.size.height = collectionView.frame.size.height + headerHeight + footerHeight
 
     if let layout = model.layout {
-      collectionView.frame.size.height += CGFloat(layout.inset.top + layout.inset.bottom)
-      documentView.frame.size.height += CGFloat(layout.inset.top + layout.inset.bottom)
       documentView.frame.size.width += CGFloat(layout.inset.right)
     }
 

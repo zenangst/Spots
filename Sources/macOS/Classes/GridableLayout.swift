@@ -16,7 +16,8 @@ public class GridableLayout: FlowLayout {
 
   open override func prepare() {
     guard let delegate = collectionView?.delegate as? Delegate,
-      let component = delegate.component
+      let component = delegate.component,
+      let layout = component.model.layout
       else {
         return
     }
@@ -35,24 +36,28 @@ public class GridableLayout: FlowLayout {
 
     switch scrollDirection {
     case .horizontal:
-      guard let firstItem = component.model.items.first else {
-        return
+      contentSize = .zero
+
+      if let firstItem = component.model.items.first {
+        contentSize.height = firstItem.size.height * CGFloat(layout.itemsPerRow)
+
+        if component.model.items.count % layout.itemsPerRow == 1 {
+          contentSize.width += firstItem.size.width + minimumLineSpacing
+        }
       }
 
-      contentSize.width = component.model.items.reduce(0, { $0 + floor($1.size.width) })
+      for (index, item) in component.model.items.enumerated() {
+        guard indexEligibleForItemsPerRow(index: index, itemsPerRow: layout.itemsPerRow) else {
+          continue
+        }
 
-      let countOffset: Int
-      if let leftInset = component.model.layout?.inset.left, leftInset > 0.0 {
-        countOffset = 0
-      } else {
-        countOffset = 1
+        contentSize.width += item.size.width + minimumInteritemSpacing
       }
 
-      contentSize.width += minimumInteritemSpacing * CGFloat(component.model.items.count - countOffset)
-
-      contentSize.height = firstItem.size.height
       contentSize.height += component.headerHeight
       contentSize.height += component.footerHeight
+      contentSize.width -= minimumInteritemSpacing
+      contentSize.width += CGFloat(layout.inset.right)
     case .vertical:
       contentSize.width = component.view.frame.width
       contentSize.height = super.collectionViewContentSize.height
@@ -60,9 +65,7 @@ public class GridableLayout: FlowLayout {
       contentSize.height += component.footerHeight
     }
 
-    if let componentLayout = component.model.layout {
-      contentSize.height += CGFloat(componentLayout.inset.top + componentLayout.inset.bottom)
-    }
+    contentSize.height += CGFloat(layout.inset.top + layout.inset.bottom)
   }
 
   public override func layoutAttributesForElements(in rect: NSRect) -> [NSCollectionViewLayoutAttributes] {
@@ -70,7 +73,8 @@ public class GridableLayout: FlowLayout {
 
     guard let collectionView = collectionView,
       let dataSource = collectionView.dataSource as? DataSource,
-      let component = dataSource.component
+      let component = dataSource.component,
+      let layout = component.model.layout
       else {
         return attributes
     }
@@ -79,7 +83,8 @@ public class GridableLayout: FlowLayout {
       return attributes
     }
 
-    var offset: CGFloat = sectionInset.left
+    var nextX: CGFloat = sectionInset.left
+    var nextY: CGFloat = 0.0
 
     for attribute in newAttributes {
       guard let itemAttribute = attribute.copy() as? NSCollectionViewLayoutAttributes else {
@@ -93,10 +98,24 @@ public class GridableLayout: FlowLayout {
       itemAttribute.size = component.sizeForItem(at: indexPath)
 
       if scrollDirection == .horizontal {
-        itemAttribute.frame.origin.y = component.headerHeight + sectionInset.top
-        itemAttribute.frame.origin.x = offset
+        if layout.itemsPerRow > 1 {
+          if indexPath.item % Int(layout.itemsPerRow) == 0 {
+            itemAttribute.frame.origin.y += sectionInset.top + component.headerHeight
+          } else {
+            itemAttribute.frame.origin.y = nextY
+          }
+        } else {
+          itemAttribute.frame.origin.y += component.headerHeight
+        }
 
-        offset += itemAttribute.size.width + minimumInteritemSpacing
+        itemAttribute.frame.origin.x = nextX
+
+        if indexEligibleForItemsPerRow(index: indexPath.item, itemsPerRow: layout.itemsPerRow) {
+          nextX += itemAttribute.size.width + minimumInteritemSpacing
+          nextY = 0
+        } else {
+          nextY = itemAttribute.frame.maxY
+        }
       } else {
         itemAttribute.frame.origin.y += component.headerHeight
       }
@@ -118,5 +137,16 @@ public class GridableLayout: FlowLayout {
     let shouldInvalidateLayout = newBounds.size.height != collectionView.frame.height + offset
 
     return shouldInvalidateLayout
+  }
+
+  /// Check if the current index is eligible for performing itemsPerRow calculations.
+  /// If `itemsPerRow` is set to 1, it will always return `true`.
+  ///
+  /// - Parameters:
+  ///   - index: The index that should be checked if it is eligible or not.
+  ///   - itemsPerRow: The amount of items that should appear on per row, see `itemsPerRow on `Layout`.
+  /// - Returns: True if `index` is equal to the remainder of `itemsPerRow` or `itemsPerRow` is set to 1.
+  private func indexEligibleForItemsPerRow(index: Int, itemsPerRow: Int) -> Bool {
+    return itemsPerRow == 1 || index % itemsPerRow == itemsPerRow - 1
   }
 }
