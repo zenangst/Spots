@@ -278,6 +278,8 @@
 		BDB1F8B31E5D921F0064F64B /* CoreComponent+Extensions+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB1F8B21E5D921F0064F64B /* CoreComponent+Extensions+iOS.swift */; };
 		BDB1F8B41E5D921F0064F64B /* CoreComponent+Extensions+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB1F8B21E5D921F0064F64B /* CoreComponent+Extensions+iOS.swift */; };
 		BDB1FCBA1ECEE6140042ED61 /* GridableLayoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB1FCB91ECEE6140042ED61 /* GridableLayoutTests.swift */; };
+		BDB1FCBC1ED060FF0042ED61 /* ComponentCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB1FCBB1ED060FF0042ED61 /* ComponentCollectionView.swift */; };
+		BDB1FCBD1ED060FF0042ED61 /* ComponentCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB1FCBB1ED060FF0042ED61 /* ComponentCollectionView.swift */; };
 		BDB8D5931E4DFADC00220BC3 /* TestItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB8D5921E4DFADC00220BC3 /* TestItem.swift */; };
 		BDB8D5941E4DFADC00220BC3 /* TestItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB8D5921E4DFADC00220BC3 /* TestItem.swift */; };
 		BDB8D5951E4DFADC00220BC3 /* TestItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB8D5921E4DFADC00220BC3 /* TestItem.swift */; };
@@ -516,6 +518,7 @@
 		BDB1F8AE1E5D91BE0064F64B /* ComponentHorizontallyScrollable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentHorizontallyScrollable.swift; sourceTree = "<group>"; };
 		BDB1F8B21E5D921F0064F64B /* CoreComponent+Extensions+iOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CoreComponent+Extensions+iOS.swift"; sourceTree = "<group>"; };
 		BDB1FCB91ECEE6140042ED61 /* GridableLayoutTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridableLayoutTests.swift; sourceTree = "<group>"; };
+		BDB1FCBB1ED060FF0042ED61 /* ComponentCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentCollectionView.swift; sourceTree = "<group>"; };
 		BDB648551D75EF150041449A /* Info-tvOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-tvOS.plist"; sourceTree = "<group>"; };
 		BDB8D5921E4DFADC00220BC3 /* TestItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestItem.swift; sourceTree = "<group>"; };
 		BDB8D5991E51C4FE00220BC3 /* Delegate+iOS+UIScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Delegate+iOS+UIScrollView.swift"; sourceTree = "<group>"; };
@@ -681,6 +684,7 @@
 				BDAD84841E3E701B008289AE /* SpotsController.swift */,
 				BDAD84931E3E701C008289AE /* SpotsScrollView.swift */,
 				BD1D17241EA89A36000DBCF8 /* SpotsRefreshControl.swift */,
+				BDB1FCBB1ED060FF0042ED61 /* ComponentCollectionView.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1497,6 +1501,7 @@
 				BD9ECEC81E6EC8C4003E4388 /* Component+iOS+HeaderFooter.swift in Sources */,
 				BDAD85E61E3E7032008289AE /* Layout.swift in Sources */,
 				BDAD85B91E3E7032008289AE /* ScrollDelegate.swift in Sources */,
+				BDB1FCBD1ED060FF0042ED61 /* ComponentCollectionView.swift in Sources */,
 				BDAD84BF1E3E701C008289AE /* DefaultItemView.swift in Sources */,
 				BD77D1F61E8537E80075A3FC /* ComponentModelDiff.swift in Sources */,
 				BDAD85E01E3E7032008289AE /* Inset.swift in Sources */,
@@ -1681,6 +1686,7 @@
 				BDAD84E01E3E701C008289AE /* UITableView+UserInterface.swift in Sources */,
 				BDAD85DE1E3E7032008289AE /* Inset.swift in Sources */,
 				BDDCF6E51E4DF92F004B38C4 /* StringConvertible.swift in Sources */,
+				BDB1FCBC1ED060FF0042ED61 /* ComponentCollectionView.swift in Sources */,
 				BDAD84CE1E3E701C008289AE /* SpotsController+UIScrollViewDelegate.swift in Sources */,
 				BDDCF6DB1E4DF91F004B38C4 /* Indexable.swift in Sources */,
 				BDAD85871E3E7032008289AE /* ScrollDelegate+Extensions.swift in Sources */,

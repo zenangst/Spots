@@ -127,9 +127,11 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   public required convenience init(model: ComponentModel) {
     let view = model.kind == .list
       ? TableView()
-      : CollectionView(frame: CGRect.zero, collectionViewLayout: CollectionLayout())
+      : ComponentCollectionView(frame: .zero, collectionViewLayout: CollectionLayout())
 
     self.init(model: model, view: view)
+
+    (collectionView as? ComponentCollectionView)?.component = self
   }
 
   /// A convenience init for creating a component with view state functionality.
@@ -165,6 +167,11 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     layout(with: size)
     configurePageControl()
     Component.configure?(self)
+
+    if let layout = model.layout, layout.infiniteScrolling {
+      let size = sizeForItem(at: IndexPath(item: 0, section: 0))
+      collectionView?.contentOffset.x = size.width + CGFloat(layout.itemSpacing)
+    }
   }
 
   /// Configure the view frame with a given size.
@@ -180,6 +187,30 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     layoutHeaderFooterViews(size)
 
     view.layoutSubviews()
+  }
+
+  func layoutSubviews() {
+    handleInfiniteScrolling()
+  }
+
+  private func handleInfiniteScrolling() {
+    guard let layout = model.layout,
+      let collectionViewLayout = collectionView?.collectionViewLayout
+      else {
+        return
+    }
+
+    view.backgroundColor = .white
+
+    let contentWidth = view.contentSize.width - view.frame.size.width
+    /// TODO: Uncomment this
+//    let offset = CGFloat(layout.inset.left + layout.inset.right + layout.itemSpacing) * 2
+
+//    if view.contentOffset.x < 0.0 {
+//      view.contentOffset.x = contentWidth
+//    } else if view.contentOffset.x > contentWidth {
+//      view.contentOffset.x = 0.0
+//    }
   }
 
   /// Setup a collection view with a specific size.

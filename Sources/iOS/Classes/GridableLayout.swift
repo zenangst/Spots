@@ -70,6 +70,14 @@ open class GridableLayout: UICollectionViewFlowLayout {
         }
 
         contentSize.width += item.size.width + minimumInteritemSpacing
+
+        if layout.infiniteScrolling && index == 0 {
+          contentSize.width += item.size.width + minimumInteritemSpacing
+        }
+
+        if layout.infiniteScrolling && index == component.model.items.count - 1 {
+          contentSize.width += item.size.width + minimumInteritemSpacing + CGFloat(layout.inset.right)
+        }
       }
 
       contentSize.height += component.headerHeight
@@ -113,13 +121,29 @@ open class GridableLayout: UICollectionViewFlowLayout {
     var nextY: CGFloat = 0.0
 
     if let newAttributes = self.layoutAttributes {
-      for attribute in newAttributes {
+      for (index, attribute) in newAttributes.enumerated() {
         guard let itemAttribute = attribute.copy() as? UICollectionViewLayoutAttributes
           else {
             continue
         }
 
-        itemAttribute.size = component.sizeForItem(at: itemAttribute.indexPath)
+        if layout.infiniteScrolling {
+
+          /// TODO: Handle last index path
+          if index >= component.model.items.count {
+            itemAttribute.size = component.sizeForItem(at: IndexPath(item: index - component.model.items.count, section: 0))
+          } else {
+            itemAttribute.size = component.sizeForItem(at: itemAttribute.indexPath)
+          }
+
+//          if layout.infiniteScrolling && index == component.model.items.count {
+//            itemAttribute.size = component.sizeForItem(at: IndexPath(item: 0, section: 0))
+//          } else if layout.infiniteScrolling && index == newAttributes.count - 1 {
+//            itemAttribute.size = component.sizeForItem(at: IndexPath(item: 0, section: 0))
+//          }
+        } else {
+          itemAttribute.size = component.sizeForItem(at: itemAttribute.indexPath)
+        }
 
         if scrollDirection == .horizontal {
           if layout.itemsPerRow > 1 {

@@ -10,8 +10,25 @@ extension DataSource: UICollectionViewDataSource {
   /// - returns: The number of rows in section.
   @available(iOS 6.0, *)
   public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    guard let component = component else {
-      return 0
+    guard let component = component,
+      let layout = component.model.layout else {
+        return 0
+    }
+
+    if layout.infiniteScrolling {
+      var additionalIndexes: Int = 0
+      var remainingWidth: CGFloat = 0
+      for item in component.model.items {
+        remainingWidth += item.size.width
+
+        if remainingWidth > collectionView.frame.size.width {
+          break
+        }
+
+        additionalIndexes += 1
+      }
+
+      return component.model.items.count + additionalIndexes
     }
 
     return component.model.items.count
@@ -24,15 +41,37 @@ extension DataSource: UICollectionViewDataSource {
   ///
   /// - returns: The number of rows in section.
   public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    guard let component = component, indexPath.item < component.model.items.count else {
-      return UICollectionViewCell()
+    guard let component = component,
+      let layout = component.model.layout else {
+        return UICollectionViewCell()
     }
 
-    component.model.items[indexPath.item].index = indexPath.item
+    let index: Int
+    let currentIndexPath: IndexPath
 
-    let reuseIdentifier = component.identifier(for: indexPath)
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
-    viewPreparer.prepareView(cell, atIndex: indexPath.item, in: component, parentFrame: cell.bounds)
+    if layout.infiniteScrolling {
+
+      if indexPath.item == 0 {
+        index = component.model.items.count - 1
+        currentIndexPath = indexPath
+      } else if indexPath.item == component.model.items.count {
+        index = component.model.items.count - 1
+        currentIndexPath = IndexPath(item: index, section: 0)
+      } else if indexPath.item > component.model.items.count {
+        index = component.model.items.count - indexPath.item
+        currentIndexPath = IndexPath(item: index, section: 0)
+      } else {
+        index = indexPath.item - 1
+        currentIndexPath = IndexPath(item: index, section: 0)
+      }
+    } else {
+      index = indexPath.item
+      currentIndexPath = indexPath
+    }
+
+    let reuseIdentifier = component.identifier(for: currentIndexPath)
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: currentIndexPath)
+    viewPreparer.prepareView(cell, atIndex: index, in: component, parentFrame: cell.bounds)
 
     return cell
   }
