@@ -134,7 +134,6 @@ open class GridableLayout: UICollectionViewFlowLayout {
 
         if layout.infiniteScrolling {
           if index >= component.model.items.count {
-
             itemAttribute.size = component.sizeForItem(at: IndexPath(item: index - component.model.items.count, section: 0))
           } else {
             itemAttribute.size = component.sizeForItem(at: itemAttribute.indexPath)
