@@ -10,8 +10,7 @@ extension DataSource: UICollectionViewDataSource {
   /// - returns: The number of rows in section.
   @available(iOS 6.0, *)
   public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    guard let component = component,
-      let layout = component.model.layout else {
+    guard let component = component, let layout = component.model.layout else {
         return 0
     }
 
