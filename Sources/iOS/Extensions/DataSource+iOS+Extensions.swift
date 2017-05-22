@@ -48,10 +48,18 @@ extension DataSource: UICollectionViewDataSource {
     let currentIndexPath: IndexPath
 
     if layout.infiniteScrolling {
+      /// Compute the first and last item in the list, it should start with the last
+      /// item instead of the first on the model. The last item in the list should
+      /// also be resolved to the last on the model.
       if indexPath.item == 0 || indexPath.item == component.model.items.count {
         currentIndexPath = IndexPath(item: component.model.items.count - 1, section: 0)
+      /// Properly resolve padded items.
+      /// Example with the last three items being padded.
+      /// |19|20|0|1|2|
       } else if indexPath.item > component.model.items.count {
         currentIndexPath = IndexPath(item: indexPath.item - component.model.items.count - 1, section: 0)
+      /// Resolve the regular items with an offset of -1 because the first item of the
+      /// data source is equal to the last item.
       } else {
         currentIndexPath = IndexPath(item: indexPath.item - 1, section: 0)
       }
