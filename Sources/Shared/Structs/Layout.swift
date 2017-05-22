@@ -62,9 +62,11 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
   /// Header stickiness
   public var headerMode: HeaderMode = .default
   /// Infinite scrolling behavior for horizontal collection views.
-  /// When enabled, the first index path will be added to the end and when the user reaches
-  /// the end while scrolling it will jump to the first index path to emulate that the carousel
-  /// never ends.
+  /// When enabled, the data source gets padded with index paths to create the
+  /// illusion that the component goes to infinity. When it does get to the
+  /// end it will jump to the beginning of the content offset and vice versa.
+  /// See `Component.handleInfiniteScrolling()` for more information.
+  /// Note: Only available iOS and tvOS. 
   public var infiniteScrolling: Bool = false
 
   /// A dictionary representation of the struct.
