@@ -2,7 +2,7 @@
 import Foundation
 import XCTest
 
-class ComponentTests: XCTestCase {
+class ComponentSharedTests: XCTestCase {
 
   func testAppendingMultipleItemsToComponent() {
     let listComponent = Component(model: ComponentModel(kind: .list, layout: Layout(span: 1)))

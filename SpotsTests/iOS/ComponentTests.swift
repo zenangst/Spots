@@ -63,4 +63,14 @@ class ComponentTests: XCTestCase {
     }
     waitForExpectations(timeout: 10.0, handler: nil)
   }
+
+  func testComponentInfiniteScrolling() {
+    let items = (0...20).map { Item(title: "\($0)") }
+    let model = ComponentModel(kind: .carousel, layout: Layout(infiniteScrolling: true), items: items)
+    let component = Component(model: model)
+    component.setup(with: .init(width: 100, height: 100))
+    component.view.contentOffset.x = 1000
+
+    
+  }
 }
