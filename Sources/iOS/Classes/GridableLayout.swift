@@ -70,13 +70,18 @@ open class GridableLayout: UICollectionViewFlowLayout {
         }
 
         contentSize.width += item.size.width + minimumInteritemSpacing
+      }
 
-        if layout.infiniteScrolling && index == 0 {
-          contentSize.width += item.size.width + minimumInteritemSpacing
-        }
+      if layout.infiniteScrolling {
+        let dataSourceCount = collectionView?.numberOfItems(inSection: 0) ?? 0
 
-        if layout.infiniteScrolling && index == component.model.items.count - 1 {
-          contentSize.width += item.size.width + minimumInteritemSpacing + CGFloat(layout.inset.right)
+        if dataSourceCount > component.model.items.count {
+          for index in component.model.items.count..<dataSourceCount {
+            let indexPath = IndexPath(item: index - component.model.items.count, section: 0)
+            contentSize.width += component.sizeForItem(at: indexPath).width + minimumInteritemSpacing
+          }
+
+          contentSize.width += CGFloat(layout.inset.right)
         }
       }
 
@@ -128,19 +133,12 @@ open class GridableLayout: UICollectionViewFlowLayout {
         }
 
         if layout.infiniteScrolling {
-
-          /// TODO: Handle last index path
           if index >= component.model.items.count {
+
             itemAttribute.size = component.sizeForItem(at: IndexPath(item: index - component.model.items.count, section: 0))
           } else {
             itemAttribute.size = component.sizeForItem(at: itemAttribute.indexPath)
           }
-
-//          if layout.infiniteScrolling && index == component.model.items.count {
-//            itemAttribute.size = component.sizeForItem(at: IndexPath(item: 0, section: 0))
-//          } else if layout.infiniteScrolling && index == newAttributes.count - 1 {
-//            itemAttribute.size = component.sizeForItem(at: IndexPath(item: 0, section: 0))
-//          }
         } else {
           itemAttribute.size = component.sizeForItem(at: itemAttribute.indexPath)
         }
