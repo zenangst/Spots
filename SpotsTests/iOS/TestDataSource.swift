@@ -99,4 +99,23 @@ class DataSourceTests: XCTestCase {
     XCTAssertNotNil(component.headerView)
     XCTAssertEqual(component.headerView?.frame.size, CGSize(width: 100, height: 88))
   }
+
+  func testInfiniteScrollingDataSource() {
+    let items = (0...20).map { Item(title: "\($0)") }
+    let model = ComponentModel(kind: .carousel, layout: Layout(infiniteScrolling: true), items: items)
+    let component = Component(model: model)
+    component.setup(with: .init(width: 100, height: 100))
+
+    guard let collectionView = component.collectionView else {
+      XCTFail("Unable to resolve data source")
+      return
+    }
+
+    guard let dataSource = component.componentDataSource else {
+      XCTFail("Unable to resolve data source")
+      return
+    }
+
+    XCTAssertEqual(dataSource.collectionView(collectionView, numberOfItemsInSection: 0), 22)
+  }
 }
