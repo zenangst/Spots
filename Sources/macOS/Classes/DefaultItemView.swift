@@ -65,10 +65,6 @@ open class DefaultItemView: NSTableRowView, ItemConfigurable {
     fatalError("init(coder:) has not been implemented")
   }
 
-  open func computeSize(for item: Item) -> CGSize {
-    return Configuration.defaultViewSize
-  }
-
   open func configure(with item: Item) {
     titleLabel.stringValue = item.title
     titleLabel.frame.origin.x = 8
@@ -87,5 +83,9 @@ open class DefaultItemView: NSTableRowView, ItemConfigurable {
     subtitleLabel.frame.origin.y = titleLabel.frame.origin.y + subtitleLabel.frame.height
 
     lineView.frame.origin.y = item.size.height + 1
+  }
+
+  open func computeSize(for item: Item) -> CGSize {
+    return Configuration.defaultViewSize
   }
 }

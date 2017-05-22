@@ -47,7 +47,7 @@ open class DefaultItemView: UITableViewCell, ItemConfigurable {
     assignAccesibilityAttributes(from: item)
   }
 
-  public func computeSize(for item: Item) -> CGSize {
+  open func computeSize(for item: Item) -> CGSize {
     let itemHeight = item.size.height > 0.0 ? item.size.height : Configuration.defaultViewSize.height
 
     return .init(
