@@ -4,6 +4,10 @@ import XCTest
 
 class DataSourceTests: XCTestCase {
 
+  override func setUp() {
+    Configuration.register(view: CustomGridCell.self, identifier: "custom")
+  }
+
   func testDataSourceForListableObject() {
     Configuration.register(view: CustomListCell.self, identifier: "custom")
     let component = Component(model: ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
@@ -12,8 +16,6 @@ class DataSourceTests: XCTestCase {
       ]))
 
     component.setup(with: CGSize(width: 100, height: 100))
-
-
 
     guard let tableView = component.tableView else {
       XCTFail("Unable to resolve table view.")
@@ -45,7 +47,6 @@ class DataSourceTests: XCTestCase {
   }
 
   func testDataSourceForGridableObject() {
-    Configuration.register(view: CustomGridCell.self, identifier: "custom")
     let component = Component(model: ComponentModel(kind: .grid, layout: Layout(span: 1.0), items: [
       Item(title: "title 1"),
       Item(title: "title 2")
@@ -101,7 +102,7 @@ class DataSourceTests: XCTestCase {
   }
 
   func testInfiniteScrollingDataSource() {
-    let items = (0...20).map { Item(title: "\($0)") }
+    let items = (0...20).map { Item(title: "\($0)", kind: "custom") }
     let model = ComponentModel(kind: .carousel, layout: Layout(infiniteScrolling: true), items: items)
     let component = Component(model: model)
     component.setup(with: .init(width: 100, height: 100))
