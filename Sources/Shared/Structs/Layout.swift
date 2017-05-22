@@ -27,6 +27,7 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
     case dynamicHeight = "dynamic-height"
     case pageIndicator = "page-indicator"
     case headerMode = "header-mode"
+    case infiniteScrolling = "infinite-scrolling"
   }
 
   static let rootKey: String = String(describing: Layout.self).lowercased()
@@ -60,6 +61,13 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
   public var pageIndicatorPlacement: PageIndicatorPlacement?
   /// Header stickiness
   public var headerMode: HeaderMode = .default
+  /// Infinite scrolling behavior for horizontal collection views.
+  /// When enabled, the data source gets padded with index paths to create the
+  /// illusion that the component goes to infinity. When it does get to the
+  /// end it will jump to the beginning of the content offset and vice versa.
+  /// See `Component.handleInfiniteScrolling()` for more information.
+  /// Note: Only available iOS and tvOS. 
+  public var infiniteScrolling: Bool = false
 
   /// A dictionary representation of the struct.
   public var dictionary: [String : Any] {
@@ -71,7 +79,8 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
       Key.span.rawValue: span,
       Key.dynamicSpan.rawValue: dynamicSpan,
       Key.dynamicHeight.rawValue: dynamicHeight,
-      Key.headerMode.rawValue: headerMode.rawValue
+      Key.headerMode.rawValue: headerMode.rawValue,
+      Key.infiniteScrolling.rawValue: infiniteScrolling
     ]
 
     if let pageIndicatorPlacement = pageIndicatorPlacement {
@@ -90,6 +99,7 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
     self.itemsPerRow = 1
     self.inset = Inset()
     self.headerMode = .default
+    self.infiniteScrolling = false
   }
 
   /// Default initializer for creating a Layout struct.
@@ -102,7 +112,7 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
   ///   - itemSpacing: Sets minimum item spacing for the model.
   ///   - lineSpacing: Sets minimum lines spacing for items in model.
   ///   - inset: An inset struct used to insert margins for the model.
-  public init(span: Double = 0.0, dynamicSpan: Bool = false, dynamicHeight: Bool = true, pageIndicatorPlacement: PageIndicatorPlacement? = nil, itemsPerRow: Int = 1, itemSpacing: Double = 0.0, lineSpacing: Double = 0.0, inset: Inset = .init(), headerMode: HeaderMode = .default) {
+  public init(span: Double = 0.0, dynamicSpan: Bool = false, dynamicHeight: Bool = true, pageIndicatorPlacement: PageIndicatorPlacement? = nil, itemsPerRow: Int = 1, itemSpacing: Double = 0.0, lineSpacing: Double = 0.0, inset: Inset = .init(), headerMode: HeaderMode = .default, infiniteScrolling: Bool = false) {
     self.span = span
     self.dynamicSpan = dynamicSpan
     self.dynamicHeight = dynamicHeight
@@ -112,6 +122,7 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
     self.inset = inset
     self.pageIndicatorPlacement = pageIndicatorPlacement
     self.headerMode = headerMode
+    self.infiniteScrolling = infiniteScrolling
   }
 
   /// Initialize with a JSON payload.
@@ -139,6 +150,7 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
     self.span <- map.double(Key.span.rawValue)
     self.pageIndicatorPlacement = map.enum(Key.pageIndicator.rawValue)
     self.headerMode <- map.enum(Key.headerMode.rawValue)
+    self.infiniteScrolling <- map.boolean(Key.headerMode.rawValue)
   }
 
   /// Perform mutation with closure.
@@ -166,7 +178,8 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
     lhs.dynamicSpan == rhs.dynamicSpan &&
     lhs.dynamicHeight == rhs.dynamicHeight &&
     lhs.pageIndicatorPlacement == rhs.pageIndicatorPlacement &&
-    lhs.headerMode == rhs.headerMode
+    lhs.headerMode == rhs.headerMode &&
+    lhs.infiniteScrolling == rhs.infiniteScrolling
   }
 
   /// Compare Layout structs.

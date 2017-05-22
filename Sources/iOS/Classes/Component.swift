@@ -127,9 +127,11 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   public required convenience init(model: ComponentModel) {
     let view = model.kind == .list
       ? TableView()
-      : CollectionView(frame: CGRect.zero, collectionViewLayout: CollectionLayout())
+      : ComponentCollectionView(frame: .zero, collectionViewLayout: CollectionLayout())
 
     self.init(model: model, view: view)
+
+    (collectionView as? ComponentCollectionView)?.component = self
   }
 
   /// A convenience init for creating a component with view state functionality.
@@ -165,6 +167,11 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     layout(with: size)
     configurePageControl()
     Component.configure?(self)
+
+    if let layout = model.layout, layout.infiniteScrolling {
+      let size = sizeForItem(at: IndexPath(item: 0, section: 0))
+      collectionView?.contentOffset.x = size.width + CGFloat(layout.itemSpacing)
+    }
   }
 
   /// Configure the view frame with a given size.
@@ -180,6 +187,28 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     layoutHeaderFooterViews(size)
 
     view.layoutSubviews()
+  }
+
+  /// This method is invoked by `ComponentCollectionView.layoutSubviews()`.
+  /// It is used to invoke `handleInfiniteScrolling` when the users scrolls a horizontal
+  /// `Component` with `infiniteScrolling` enabled.
+  func layoutSubviews() {
+    guard model.kind == .carousel, model.layout?.infiniteScrolling == true else {
+      return
+    }
+
+    handleInfiniteScrolling()
+  }
+
+  /// Manipulates the x content offset when `infiniteScrolling` is enabled on the `Component`.
+  /// The `.x` offset is changed when the user reaches the beginning or the end of a `Component`.
+  private func handleInfiniteScrolling() {
+    let contentWidth = view.contentSize.width - view.frame.size.width
+    if view.contentOffset.x < 0.0 {
+      view.contentOffset.x = contentWidth
+    } else if view.contentOffset.x > contentWidth {
+      view.contentOffset.x = 0.0
+    }
   }
 
   /// Setup a collection view with a specific size.

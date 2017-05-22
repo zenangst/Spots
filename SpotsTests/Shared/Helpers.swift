@@ -211,7 +211,7 @@ extension SpotsController {
     }
 
     func computeSize(for item: Item) -> CGSize {
-      return CGSize(width: 0, height: 44)
+      return CGSize(width: 50, height: 44)
     }
   }
 
@@ -230,7 +230,7 @@ extension SpotsController {
     func configure(with item: Item) {}
     
     func computeSize(for item: Item) -> CGSize {
-      return CGSize(width: 0, height: 44)
+      return CGSize(width: 50, height: 44)
     }
   }
 

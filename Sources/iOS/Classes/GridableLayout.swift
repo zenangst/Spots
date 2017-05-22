@@ -72,6 +72,19 @@ open class GridableLayout: UICollectionViewFlowLayout {
         contentSize.width += item.size.width + minimumInteritemSpacing
       }
 
+      if layout.infiniteScrolling {
+        let dataSourceCount = collectionView?.numberOfItems(inSection: 0) ?? 0
+
+        if dataSourceCount > component.model.items.count {
+          for index in component.model.items.count..<dataSourceCount {
+            let indexPath = IndexPath(item: index - component.model.items.count, section: 0)
+            contentSize.width += component.sizeForItem(at: indexPath).width + minimumInteritemSpacing
+          }
+
+          contentSize.width += CGFloat(layout.inset.right)
+        }
+      }
+
       contentSize.height += component.headerHeight
       contentSize.height += component.footerHeight
       contentSize.width -= minimumInteritemSpacing
@@ -113,13 +126,21 @@ open class GridableLayout: UICollectionViewFlowLayout {
     var nextY: CGFloat = 0.0
 
     if let newAttributes = self.layoutAttributes {
-      for attribute in newAttributes {
+      for (index, attribute) in newAttributes.enumerated() {
         guard let itemAttribute = attribute.copy() as? UICollectionViewLayoutAttributes
           else {
             continue
         }
 
-        itemAttribute.size = component.sizeForItem(at: itemAttribute.indexPath)
+        if layout.infiniteScrolling {
+          if index >= component.model.items.count {
+            itemAttribute.size = component.sizeForItem(at: IndexPath(item: index - component.model.items.count, section: 0))
+          } else {
+            itemAttribute.size = component.sizeForItem(at: itemAttribute.indexPath)
+          }
+        } else {
+          itemAttribute.size = component.sizeForItem(at: itemAttribute.indexPath)
+        }
 
         if scrollDirection == .horizontal {
           if layout.itemsPerRow > 1 {
