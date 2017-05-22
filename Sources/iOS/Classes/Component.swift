@@ -189,28 +189,26 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     view.layoutSubviews()
   }
 
+  /// This method is invoked by `ComponentCollectionView.layoutSubviews()`.
+  /// It is used to invoke `handleInfiniteScrolling` when the users scrolls a horizontal
+  /// `Component` with `infiniteScrolling` enabled.
   func layoutSubviews() {
+    guard model.kind == .carousel, model.layout?.infiniteScrolling == true else {
+      return
+    }
+
     handleInfiniteScrolling()
   }
 
+  /// Manipulates the x content offset when `infiniteScrolling` is enabled on the `Component`.
+  /// The `.x` offset is changed when the user reaches the beginning or the end of a `Component`.
   private func handleInfiniteScrolling() {
-    guard let layout = model.layout,
-      let collectionViewLayout = collectionView?.collectionViewLayout
-      else {
-        return
-    }
-
-    view.backgroundColor = .white
-
     let contentWidth = view.contentSize.width - view.frame.size.width
-    /// TODO: Uncomment this
-//    let offset = CGFloat(layout.inset.left + layout.inset.right + layout.itemSpacing) * 2
-
-//    if view.contentOffset.x < 0.0 {
-//      view.contentOffset.x = contentWidth
-//    } else if view.contentOffset.x > contentWidth {
-//      view.contentOffset.x = 0.0
-//    }
+    if view.contentOffset.x < 0.0 {
+      view.contentOffset.x = contentWidth
+    } else if view.contentOffset.x > contentWidth {
+      view.contentOffset.x = 0.0
+    }
   }
 
   /// Setup a collection view with a specific size.
