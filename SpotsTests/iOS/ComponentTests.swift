@@ -69,8 +69,19 @@ class ComponentTests: XCTestCase {
     let model = ComponentModel(kind: .carousel, layout: Layout(infiniteScrolling: true), items: items)
     let component = Component(model: model)
     component.setup(with: .init(width: 100, height: 100))
-    component.view.contentOffset.x = 1000
+    component.view.contentOffset.x = 2000
+    /// Manually invoke layout subviews to invoke handling of `infiniteScrolling`.
+    component.layoutSubviews()
+    XCTAssertEqual(component.view.contentOffset.x, 2000)
 
-    
+    /// Expect the content offset to go back to zero because it went all the way to the right.
+    component.view.contentOffset.x = 2100
+    component.layoutSubviews()
+    XCTAssertEqual(component.view.contentOffset.x, 0)
+
+    /// Expect the content offset to go to the last item as the offset went all the way to the left.
+    component.view.contentOffset.x = -1.0
+    component.layoutSubviews()
+    XCTAssertEqual(component.view.contentOffset.x, 2000)
   }
 }
