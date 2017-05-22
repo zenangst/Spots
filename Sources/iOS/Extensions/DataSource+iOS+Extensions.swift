@@ -21,7 +21,7 @@ extension DataSource: UICollectionViewDataSource {
       for item in component.model.items {
         remainingWidth += item.size.width
 
-        if remainingWidth > collectionView.frame.size.width {
+        if remainingWidth >= collectionView.frame.size.width {
           break
         }
 
