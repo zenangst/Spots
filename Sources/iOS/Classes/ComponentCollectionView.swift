@@ -2,7 +2,7 @@ import UIKit
 
 class ComponentCollectionView: UICollectionView {
 
-  var component: Component?
+  weak var component: Component?
 
   override func layoutSubviews() {
     super.layoutSubviews()
