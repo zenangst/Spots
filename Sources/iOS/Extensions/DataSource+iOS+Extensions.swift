@@ -46,32 +46,23 @@ extension DataSource: UICollectionViewDataSource {
         return UICollectionViewCell()
     }
 
-    let index: Int
     let currentIndexPath: IndexPath
 
     if layout.infiniteScrolling {
-
-      if indexPath.item == 0 {
-        index = component.model.items.count - 1
-        currentIndexPath = indexPath
-      } else if indexPath.item == component.model.items.count {
-        index = component.model.items.count - 1
-        currentIndexPath = IndexPath(item: index, section: 0)
+      if indexPath.item == 0 || indexPath.item == component.model.items.count {
+        currentIndexPath = IndexPath(item: component.model.items.count - 1, section: 0)
       } else if indexPath.item > component.model.items.count {
-        index = component.model.items.count - indexPath.item
-        currentIndexPath = IndexPath(item: index, section: 0)
+        currentIndexPath = IndexPath(item: indexPath.item - component.model.items.count - 1, section: 0)
       } else {
-        index = indexPath.item - 1
-        currentIndexPath = IndexPath(item: index, section: 0)
+        currentIndexPath = IndexPath(item: indexPath.item - 1, section: 0)
       }
     } else {
-      index = indexPath.item
       currentIndexPath = indexPath
     }
 
     let reuseIdentifier = component.identifier(for: currentIndexPath)
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: currentIndexPath)
-    viewPreparer.prepareView(cell, atIndex: index, in: component, parentFrame: cell.bounds)
+    viewPreparer.prepareView(cell, atIndex: currentIndexPath.item, in: component, parentFrame: cell.bounds)
 
     return cell
   }
