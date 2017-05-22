@@ -58,6 +58,13 @@ extension DataSource: UICollectionViewDataSource {
       }
     } else {
       currentIndexPath = indexPath
+
+      /// Safe guard to avoid crash when requesting an index path that is out of bounds.
+      /// Discussion: This is legacy and I don't think this should be here, I'll leave
+      /// it for now as we have tests for it.
+      if indexPath.item >= component.model.items.count {
+        return UICollectionViewCell()
+      }
     }
 
     let reuseIdentifier = component.identifier(for: currentIndexPath)
