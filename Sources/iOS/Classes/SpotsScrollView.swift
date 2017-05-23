@@ -7,8 +7,8 @@ open class SpotsScrollView: UIScrollView {
   /// When enabled, single components will be stretched to get the current height of the parent view.
   /// This can be enabled globally by setting `Configuration.strechSingleComponent` to `true`.
   ///
-  ///  Enabled    Disabled
   /// ```
+  ///  Enabled    Disabled
   ///  --------   --------
   /// ||¯¯¯¯¯¯|| ||¯¯¯¯¯¯||
   /// ||      || ||      ||
@@ -23,8 +23,8 @@ open class SpotsScrollView: UIScrollView {
   /// When enabled, the last `Component` in the collection will be stretched to occupy the remaining space.
   /// This can be enabled globally by setting `Configuration.stretchLastComponent` to `true`.
   ///
-  ///  Enabled    Disabled
   /// ```
+  ///  Enabled    Disabled
   ///  --------   --------
   /// ||¯¯¯¯¯¯|| ||¯¯¯¯¯¯||
   /// ||      || ||      ||
