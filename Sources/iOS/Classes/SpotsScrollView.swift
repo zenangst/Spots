@@ -19,7 +19,7 @@ open class SpotsScrollView: UIScrollView {
   ///  --------   --------
   /// ```
   ///
-  var stretchSingleComponent = Configuration.stretchSingleComponent
+  public var stretchSingleComponent = Configuration.stretchSingleComponent
   /// When enabled, the last `Component` in the collection will be stretched to occupy the remaining space.
   /// This can be enabled globally by setting `Configuration.stretchLastComponent` to `true`.
   ///
@@ -35,7 +35,7 @@ open class SpotsScrollView: UIScrollView {
   /// ||______|| |        |
   ///  --------   --------
   /// ```
-  var stretchLastComponent = Configuration.stretchLastComponent
+  public var stretchLastComponent = Configuration.stretchLastComponent
 
   /// A KVO context used to monitor changes in contentSize, frames and bounds
   let subviewContext: UnsafeMutableRawPointer? = UnsafeMutableRawPointer(mutating: nil)
