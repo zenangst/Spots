@@ -232,7 +232,7 @@ public class ComponentManager {
       if component.model.items[index].kind == CompositeComponent.identifier {
         for compositeSpot in component.compositeComponents {
           compositeSpot.component.reload([]) {
-            component.model.items[index].size.height = compositeSpot.component.computedHeight
+            component.model.items[item.index].size.height = compositeSpot.component.computedHeight
           }
         }
         self?.finishComponentOperation(component, updateHeightAndIndexes: false, completion: completion)
@@ -247,7 +247,7 @@ public class ComponentManager {
           if let view: ItemConfigurable = component.userInterface?.view(at: index), animation != .none {
             component.userInterface?.beginUpdates()
             view.configure(with: component.model.items[index])
-            component.model.items[index].size.height = view.computeSize(for: component.model.items[index]).height
+            component.model.items[item.index].size.height = view.computeSize(for: component.model.items[item.index]).height
             component.userInterface?.endUpdates()
           } else {
             component.userInterface?.reload([index], withAnimation: animation, completion: nil)
