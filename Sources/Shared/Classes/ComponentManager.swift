@@ -224,6 +224,9 @@ public class ComponentManager {
         return
       }
 
+      var item = item
+      item.index = index
+      var updateHeightAndIndexes: Bool = false
       component.model.items[index] = item
 
       if component.model.items[index].kind == CompositeComponent.identifier {
@@ -244,17 +247,19 @@ public class ComponentManager {
           if let view: ItemConfigurable = component.userInterface?.view(at: index), animation != .none {
             component.userInterface?.beginUpdates()
             view.configure(with: component.model.items[index])
-            component.model.items[item.index].size.height = view.computeSize(for: component.model.items[item.index]).height
+            component.model.items[index].size.height = view.computeSize(for: component.model.items[index]).height
             component.userInterface?.endUpdates()
           } else {
             component.userInterface?.reload([index], withAnimation: animation, completion: nil)
           }
+
+          updateHeightAndIndexes = true
         } else if let view: ItemConfigurable = component.userInterface?.view(at: index) {
           view.configure(with: component.model.items[index])
-          component.model.items[item.index].size.height = view.computeSize(for: component.model.items[item.index]).height
+          component.model.items[index].size.height = view.computeSize(for: component.model.items[index]).height
         }
 
-        self?.finishComponentOperation(component, updateHeightAndIndexes: false, completion: completion)
+        self?.finishComponentOperation(component, updateHeightAndIndexes: updateHeightAndIndexes, completion: completion)
       }
     }
   }
