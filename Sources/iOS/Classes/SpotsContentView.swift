@@ -1,6 +1,16 @@
 import UIKit
 
-/// A container view for KVO inside SpotsScrollView
+/// SpotsContentView is a container view that lives on `SpotsScrollView`.
+/// All views that gets added to the view hierarchy using a `SpotsController`
+/// reside in `SpotsContentView`, in that scenario it is the parent of all `Component` views.
+/// When a view is added, it will invoke `didAddSubviewToContainer` on `SpotsScrollView` to
+/// start monitoring the view using KVO. When a view will be removed `willRemoveSubview` is
+/// invoked on `SpotsScrollView` to remove any KVO setup for the view on question.
+/// When a `Component` performs any mutating operation, it will end up calling `afterUpdate`
+/// which calls `layoutSubviews` on its parent. The parent being `SpotsContentView`. That
+/// method then relays the invocation to call `layoutViews` on `SpotsScrollView. This will
+/// cause the `SpotsScrollView` layout operation to be called, causing the layout to be
+/// invalidated and re-rendered.
 open class SpotsContentView: UIView {
 
   /// Tells the view that a subview was added.
