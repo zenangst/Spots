@@ -21,7 +21,7 @@ open class SpotsScrollView: UIScrollView {
   ///
   var stretchSingleComponent = Configuration.stretchSingleComponent
   /// When enabled, the last `Component` in the collection will be stretched to occupy the remaining space.
-  /// This can be enabled globally by setting `Configuration.stretchSingleComponent` to `true`.
+  /// This can be enabled globally by setting `Configuration.stretchLastComponent` to `true`.
   ///
   ///  Enabled    Disabled
   /// ```
