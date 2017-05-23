@@ -15,12 +15,8 @@ struct PlatformDefaults {
 public struct Configuration {
 
   #if !os(macOS)
-  /// Default setting for stretching a single `Component` to occupy the full height of `SpotsScrollView`.
-  /// See `SpotsScrollView.stretchSingleComponent` for more details.
-  /// Note: Available on iOS and tvOS
-  public static var stretchSingleComponent: Bool = false
   /// Default setting for stretching the last `Component` to occupy the full height of `SpotsScrollView`.
-  /// See `SpotsScrollView.stretchSingleComponent` for more details.
+  /// See `SpotsScrollView.stretchLastComponent` for more details.
   /// Note: Available on iOS and tvOS
   public static var stretchLastComponent: Bool = false
   #endif

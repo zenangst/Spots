@@ -4,22 +4,6 @@ import QuartzCore
 /// The core foundation scroll view inside of Spots that manages the linear layout of all components.
 open class SpotsScrollView: UIScrollView {
 
-  /// When enabled, single components will be stretched to get the current height of the parent view.
-  /// This can be enabled globally by setting `Configuration.strechSingleComponent` to `true`.
-  ///
-  /// ```
-  ///  Enabled    Disabled
-  ///  --------   --------
-  /// ||¯¯¯¯¯¯|| ||¯¯¯¯¯¯||
-  /// ||      || ||      ||
-  /// ||      || ||______||
-  /// ||      || |        |
-  /// ||      || |        |
-  /// ||______|| |        |
-  ///  --------   --------
-  /// ```
-  ///
-  public var stretchSingleComponent = Configuration.stretchSingleComponent
   /// When enabled, the last `Component` in the collection will be stretched to occupy the remaining space.
   /// This can be enabled globally by setting `Configuration.stretchLastComponent` to `true`.
   ///
@@ -221,13 +205,6 @@ open class SpotsScrollView: UIScrollView {
   /// Layout views in linear order based of view index in `subviewsInLayoutOrder`
   func layoutViews() {
     guard let superview = superview else {
-      return
-    }
-
-    guard !stretchSingleComponent || subviewsInLayoutOrder.count > 1 else {
-      if let firstSubview = subviewsInLayoutOrder.first {
-        firstSubview.frame.size = self.frame.size
-      }
       return
     }
 
