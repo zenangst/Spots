@@ -173,23 +173,6 @@ class SpotsScrollViewTests: XCTestCase {
     XCTAssertEqual(controller.scrollView.componentsView.subviews[3].frame.height, 0)
   }
 
-  func testStretchSingleComponent() {
-    let items = [Item(), Item()]
-    let model = ComponentModel(items: items)
-    let component = Component(model: model)
-    let controller = SpotsController(components: [component])
-    controller.prepareController()
-
-    /// The single component should not be stretched to use the same height as the parent.
-    controller.scrollView.layoutSubviews()
-    XCTAssertNotEqual(controller.scrollView.frame.size.height, controller.components.first!.view.frame.size.height)
-
-    /// The single component should be stretched to use the same height as the parent.
-    controller.scrollView.stretchSingleComponent = true
-    controller.scrollView.layoutSubviews()
-    XCTAssertEqual(controller.scrollView.frame.size, controller.components.first!.view.frame.size)
-  }
-
   func testStetchLastComponent() {
     let items = [Item(), Item()]
     let model = ComponentModel(items: items)
