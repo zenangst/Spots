@@ -26,4 +26,14 @@ open class SpotsContentView: UIView {
     }
     containerScrollView.willRemoveSubview(subview)
   }
+
+  open override func layoutSubviews() {
+    super.layoutSubviews()
+
+    guard let containerScrollView = superview as? SpotsScrollView else {
+      return
+    }
+
+    containerScrollView.layoutViews()
+  }
 }
