@@ -4,6 +4,39 @@ import QuartzCore
 /// The core foundation scroll view inside of Spots that manages the linear layout of all components.
 open class SpotsScrollView: UIScrollView {
 
+  /// When enabled, single components will be stretched to get the current height of the parent view.
+  /// This can be enabled globally by setting `Configuration.strechSingleComponent` to `true`.
+  ///
+  ///  Enabled    Disabled
+  /// ```
+  ///  --------   --------
+  /// ||¯¯¯¯¯¯|| ||¯¯¯¯¯¯||
+  /// ||      || ||      ||
+  /// ||      || ||______||
+  /// ||      || |        |
+  /// ||      || |        |
+  /// ||______|| |        |
+  ///  --------   --------
+  /// ```
+  ///
+  var stretchSingleComponent = Configuration.stretchSingleComponent
+  /// When enabled, the last `Component` in the collection will be stretched to occupy the remaining space.
+  /// This can be enabled globally by setting `Configuration.stretchSingleComponent` to `true`.
+  ///
+  ///  Enabled    Disabled
+  /// ```
+  ///  --------   --------
+  /// ||¯¯¯¯¯¯|| ||¯¯¯¯¯¯||
+  /// ||      || ||      ||
+  /// ||______|| ||______||
+  /// ||¯¯¯¯¯¯|| ||¯¯¯¯¯¯||
+  /// ||      || ||      ||
+  /// ||      || ||______||
+  /// ||______|| |        |
+  ///  --------   --------
+  /// ```
+  var stretchLastComponent = Configuration.stretchLastComponent
+
   /// A KVO context used to monitor changes in contentSize, frames and bounds
   let subviewContext: UnsafeMutableRawPointer? = UnsafeMutableRawPointer(mutating: nil)
 
@@ -191,10 +224,19 @@ open class SpotsScrollView: UIScrollView {
       return
     }
 
+    guard !stretchSingleComponent || subviewsInLayoutOrder.count > 1 else {
+      if let firstSubview = subviewsInLayoutOrder.first {
+        firstSubview.frame.size = self.frame.size
+      }
+      return
+    }
+
     componentsView.frame = bounds
     componentsView.bounds = CGRect(origin: contentOffset, size: bounds.size)
 
     var yOffsetOfCurrentSubview: CGFloat = 0.0
+
+    let lastView = subviewsInLayoutOrder.last
 
     for subview in subviewsInLayoutOrder {
       if let scrollView = subview as? UIScrollView {
@@ -212,7 +254,13 @@ open class SpotsScrollView: UIScrollView {
         let remainingBoundsHeight = fmax(bounds.maxY - frame.minY, 0.0)
         let remainingContentHeight = fmax(scrollView.contentSize.height - contentOffset.y, 0.0)
 
-        frame.size.height = ceil(fmin(remainingBoundsHeight, remainingContentHeight))
+        if stretchLastComponent && scrollView.isEqual(lastView) {
+          let newHeight = self.frame.size.height - scrollView.frame.origin.y + self.contentOffset.y
+          frame.size.height = newHeight
+        } else {
+          frame.size.height = ceil(fmin(remainingBoundsHeight, remainingContentHeight))
+        }
+
         frame.size.width = ceil(componentsView.frame.size.width)
 
         scrollView.frame = frame.integral

@@ -172,4 +172,45 @@ class SpotsScrollViewTests: XCTestCase {
     XCTAssertEqual((controller.scrollView.componentsView.subviews[3] as? UIScrollView)!.contentSize.height, 320)
     XCTAssertEqual(controller.scrollView.componentsView.subviews[3].frame.height, 0)
   }
+
+  func testStretchSingleComponent() {
+    let items = [Item(), Item()]
+    let model = ComponentModel(items: items)
+    let component = Component(model: model)
+    let controller = SpotsController(components: [component])
+    controller.prepareController()
+
+    /// The single component should not be stretched to use the same height as the parent.
+    controller.scrollView.layoutSubviews()
+    XCTAssertNotEqual(controller.scrollView.frame.size.height, controller.components.first!.view.frame.size.height)
+
+    /// The single component should be stretched to use the same height as the parent.
+    controller.scrollView.stretchSingleComponent = true
+    controller.scrollView.layoutSubviews()
+    XCTAssertEqual(controller.scrollView.frame.size, controller.components.first!.view.frame.size)
+  }
+
+  func testStetchLastComponent() {
+    let items = [Item(), Item()]
+    let model = ComponentModel(items: items)
+    let controller = SpotsController(components: [Component(model: model), Component(model: model), Component(model: model)])
+    controller.prepareController()
+    controller.scrollView.layoutSubviews()
+
+    /// The first and the last component should be equal in height
+    XCTAssertEqual(controller.components.first?.view.frame.size, controller.components.last?.view.frame.size)
+
+    controller.scrollView.stretchLastComponent = true
+    controller.scrollView.layoutSubviews()
+
+    /// The first and last component should not be equal as the last one should be stretched.
+    XCTAssertNotEqual(controller.components.first?.view.frame.size, controller.components.last?.view.frame.size)
+
+    var totalComponentHeight: CGFloat = 0.0
+    for component in controller.components {
+      totalComponentHeight += component.view.frame.size.height
+    }
+
+    XCTAssertEqual(controller.scrollView.frame.size.height, totalComponentHeight)
+  }
 }
