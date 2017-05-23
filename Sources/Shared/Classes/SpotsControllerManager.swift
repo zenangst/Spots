@@ -644,18 +644,10 @@ public class SpotsControllerManager {
       return
     }
 
-    guard !(component.model.items == items) else {
+    component.reloadIfNeeded(items, withAnimation: animation) { 
       controller.scrollView.layoutSubviews()
       completion?()
-      return
     }
-
-    update(componentAtIndex: index, controller: controller, withAnimation: animation, withCompletion: {
-      controller.scrollView.layoutSubviews()
-      completion?()
-    }, { component in
-      component.model.items = items
-    })
   }
 
   /**
