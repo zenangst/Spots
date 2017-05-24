@@ -216,51 +216,11 @@ public class SpotsControllerManager {
       return false
     }
 
-    let tempComponent = Component(model: newComponentModels[index])
-    tempComponent.setup(with: component.view.frame.size)
-    tempComponent.model.size = CGSize(
-      width: controller.view.frame.width,
-      height: ceil(tempComponent.view.frame.height))
-
-    guard let diff = Item.evaluate(tempComponent.model.items, oldModels: component.model.items) else {
-      return true
-    }
-
-    let newItems = tempComponent.model.items
-    let changes: (ItemChanges) = Item.processChanges(diff)
-
-    for index in changes.updatedChildren {
-      if index < tempComponent.compositeComponents.count {
-        component.compositeComponents[index].component.view.removeFromSuperview()
-        component.compositeComponents[index] = tempComponent.compositeComponents[index]
-        component.compositeComponents[index].component.parentComponent = component
-      }
-    }
-
-    if newItems.count == component.model.items.count {
-      reload(with: changes,
-             controller: controller,
-             in: component,
-             newItems: newItems,
-             animation: animation,
-             completion: completion)
-    } else if newItems.count < component.model.items.count {
-      reload(with: changes,
-             controller: controller,
-             in: component,
-             lessItems: newItems,
-             animation: animation,
-             completion: completion)
-    } else if newItems.count > component.model.items.count {
-      reload(with: changes,
-             controller: controller,
-             in: component,
-             moreItems: newItems,
-             animation: animation,
-             completion: completion)
-    }
-
-    return false
+    return updateComponentModel(newComponentModels[index],
+                                on: component,
+                                in: controller,
+                                withAnimation: animation,
+                                completion: completion)
   }
 
   /// Reload Component object with changes and new items.
@@ -437,7 +397,7 @@ public class SpotsControllerManager {
             completion = finalCompletion
           }
 
-          runCompletion = strongSelf.setupItemsForComponent(atIndex: index,
+          runCompletion = !strongSelf.setupItemsForComponent(atIndex: index,
                                                             controller: controller,
                                                             newComponentModels: newComponentModels,
                                                             withAnimation: animation,
@@ -644,8 +604,17 @@ public class SpotsControllerManager {
       return
     }
 
-    component.reloadIfNeeded(items, withAnimation: animation) { 
+    var newModel = component.model
+    newModel.items = items
+
+    let didUpdate = updateComponentModel(newModel, on: component, in: controller, withAnimation: animation) {
       controller.scrollView.layoutSubviews()
+      completion?()
+    }
+
+    /// `updateComponentWithModel` will not invoke the completion closure if there are no updates.
+    /// Therefor we need to invoke it manually here.
+    if !didUpdate {
       completion?()
     }
   }
@@ -797,5 +766,64 @@ public class SpotsControllerManager {
     controller.scrollView.componentsView.subviews.forEach {
       $0.removeFromSuperview()
     }
+  }
+
+  /// Update `Component` with new `ComponentModel` based of changes from `Item`'s diff.
+  /// This is used when reloading a `SpotsController` with a collection of `ComponentModel`'s.
+  /// It is also used in `updateIfNeeded` to update with more precision, and only if it is needed.
+  ///
+  /// - Parameters:
+  ///   - model: The new model that
+  ///   - component: The component that should be updated.
+  ///   - controller: The controller that the component belongs to.
+  ///   - animation: The animation that should be used when performing the update.
+  ///   - completion: A completion closure that will run if updates where performed.
+  /// - Returns: Will return `true` if updates where performed, otherwise `false`.
+  @discardableResult private func updateComponentModel(_ model: ComponentModel, on component: Component, in controller: SpotsController, withAnimation animation: Animation = .automatic, completion: Completion) -> Bool {
+    let tempComponent = Component(model: model)
+    tempComponent.setup(with: component.view.frame.size)
+    tempComponent.model.size = CGSize(
+      width: controller.view.frame.width,
+      height: ceil(tempComponent.view.frame.height))
+
+    guard let diff = Item.evaluate(tempComponent.model.items, oldModels: component.model.items) else {
+      return false
+    }
+
+    let newItems = tempComponent.model.items
+    let changes: (ItemChanges) = Item.processChanges(diff)
+
+    for index in changes.updatedChildren {
+      if index < tempComponent.compositeComponents.count {
+        component.compositeComponents[index].component.view.removeFromSuperview()
+        component.compositeComponents[index] = tempComponent.compositeComponents[index]
+        component.compositeComponents[index].component.parentComponent = component
+      }
+    }
+
+    if newItems.count == component.model.items.count {
+      reload(with: changes,
+             controller: controller,
+             in: component,
+             newItems: newItems,
+             animation: animation,
+             completion: completion)
+    } else if newItems.count < component.model.items.count {
+      reload(with: changes,
+             controller: controller,
+             in: component,
+             lessItems: newItems,
+             animation: animation,
+             completion: completion)
+    } else if newItems.count > component.model.items.count {
+      reload(with: changes,
+             controller: controller,
+             in: component,
+             moreItems: newItems,
+             animation: animation,
+             completion: completion)
+    }
+
+    return true
   }
 }
