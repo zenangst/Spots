@@ -216,11 +216,11 @@ public class SpotsControllerManager {
       return false
     }
 
-    return updateComponentWithModel(newComponentModels[index],
-                                    component: component,
-                                    controller: controller,
-                                    withAnimation: animation,
-                                    completion: completion)
+    return updateComponentModel(newComponentModels[index],
+                                on: component,
+                                in: controller,
+                                withAnimation: animation,
+                                completion: completion)
   }
 
   /// Reload Component object with changes and new items.
@@ -607,7 +607,7 @@ public class SpotsControllerManager {
     var newModel = component.model
     newModel.items = items
 
-    let didUpdate = updateComponentWithModel(newModel, component: component, controller: controller, withAnimation: animation) {
+    let didUpdate = updateComponentModel(newModel, on: component, in: controller, withAnimation: animation) {
       controller.scrollView.layoutSubviews()
       completion?()
     }
@@ -779,7 +779,7 @@ public class SpotsControllerManager {
   ///   - animation: The animation that should be used when performing the update.
   ///   - completion: A completion closure that will run if updates where performed.
   /// - Returns: Will return `true` if updates where performed, otherwise `false`.
-  @discardableResult private func updateComponentWithModel(_ model: ComponentModel, component: Component, controller: SpotsController, withAnimation animation: Animation = .automatic, completion: Completion) -> Bool {
+  @discardableResult private func updateComponentModel(_ model: ComponentModel, on component: Component, in controller: SpotsController, withAnimation animation: Animation = .automatic, completion: Completion) -> Bool {
     let tempComponent = Component(model: model)
     tempComponent.setup(with: component.view.frame.size)
     tempComponent.model.size = CGSize(
