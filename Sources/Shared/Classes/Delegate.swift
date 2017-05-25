@@ -3,7 +3,7 @@ import Foundation
 /// `Delegate` works as the delegate for both table views and collection views.
 /// It does this by implementing all of the necessary methods on either implementation
 /// using protocol extensions (`Delegate+iOS+Extensions`, `Delegate+macOS+Extensions`).
-/// Each `Component` have their own `Delegate`, it is also responsible to relying appropriate
+/// Each Component has its own `Delegate`, its responsible for relying appropriate
 /// invocations to `ComponentDelegate`, `ComponentFocusDelegate` etc.
 /// `Delegate` is created in the init method for `Component`.
 public class Delegate: NSObject {
