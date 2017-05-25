@@ -14,12 +14,9 @@ struct PlatformDefaults {
 
 public struct Configuration {
 
-  #if !os(macOS)
   /// Default setting for stretching the last `Component` to occupy the full height of `SpotsScrollView`.
   /// See `SpotsScrollView.stretchLastComponent` for more details.
-  /// Note: Available on iOS and tvOS
   public static var stretchLastComponent: Bool = false
-  #endif
 
   public static var defaultComponentKind: ComponentKind = .grid
   public static var defaultViewSize: CGSize = .init(width: 0, height: PlatformDefaults.defaultHeight)

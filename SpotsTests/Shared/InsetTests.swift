@@ -1,7 +1,7 @@
 @testable import Spots
 import XCTest
 
-class TestInset: XCTestCase {
+class InsetTests: XCTestCase {
 
   let json: [String : Any] = [
     "top": 1.0,
@@ -17,6 +17,15 @@ class TestInset: XCTestCase {
     XCTAssertEqual(contentInset.left, 0.0)
     XCTAssertEqual(contentInset.bottom, 0.0)
     XCTAssertEqual(contentInset.right, 0.0)
+  }
+
+  func testPaddingInit() {
+    let contentInset = Inset(padding: 10)
+
+    XCTAssertEqual(contentInset.top, 10.0)
+    XCTAssertEqual(contentInset.left, 10.0)
+    XCTAssertEqual(contentInset.bottom, 10.0)
+    XCTAssertEqual(contentInset.right, 10.0)
   }
 
   func testJSONMapping() {
