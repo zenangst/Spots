@@ -141,7 +141,7 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
     self.span <- map.double(Key.span.rawValue)
     self.pageIndicatorPlacement = map.enum(Key.pageIndicator.rawValue)
     self.headerMode <- map.enum(Key.headerMode.rawValue)
-    self.infiniteScrolling <- map.boolean(Key.headerMode.rawValue)
+    self.infiniteScrolling <- map.boolean(Key.infiniteScrolling.rawValue)
   }
 
   /// Perform mutation with closure.
