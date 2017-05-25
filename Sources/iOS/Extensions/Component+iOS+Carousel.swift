@@ -1,5 +1,4 @@
 import UIKit
-import Tailor
 
 extension Component {
 
@@ -18,12 +17,7 @@ extension Component {
     if collectionView.contentSize.height > 0 {
       collectionView.frame.size.height = collectionView.contentSize.height
     } else {
-      var newCollectionViewHeight: CGFloat = 0.0
-
-      newCollectionViewHeight <- model.items.sorted(by: {
-        $0.size.height > $1.size.height
-      }).first?.size.height
-
+      let newCollectionViewHeight: CGFloat = model.items.sorted(by: { $0.size.height > $1.size.height }).first?.size.height ?? 0.0
       collectionView.frame.size.height = newCollectionViewHeight
 
       if collectionView.frame.size.height > 0 {

@@ -1,5 +1,4 @@
 import Cocoa
-import Tailor
 
 extension Component {
   func setupHorizontalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
@@ -54,10 +53,9 @@ extension Component {
   }
 
   private func calculateCollectionViewHeight() -> CGFloat {
-    var newCollectionViewHeight: CGFloat = 0.0
-    newCollectionViewHeight <- model.items.sorted(by: {
+    var newCollectionViewHeight: CGFloat = model.items.sorted(by: {
       $0.size.height > $1.size.height
-    }).first?.size.height
+    }).first?.size.height ?? 0.0
 
     if let layout = model.layout {
       newCollectionViewHeight *= CGFloat(layout.itemsPerRow)
