@@ -44,6 +44,19 @@ public struct Inset: Mappable, Equatable {
     self.right = right
   }
 
+  /// A convenience initializer with default values.
+  public init() {}
+
+  /// A convenience init for initializing a content inset with the same values for all properties.
+  ///
+  /// - Parameter padding: The amount of inset that should be set for all direction.
+  public init(padding: Double = 0.0) {
+    self.top = padding
+    self.left = padding
+    self.bottom = padding
+    self.right = padding
+  }
+
   /// A convenience init for initializing a content inset using block syntax.
   ///
   /// - Parameter block: A mutating closure.

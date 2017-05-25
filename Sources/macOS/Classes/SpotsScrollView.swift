@@ -2,6 +2,23 @@ import Cocoa
 
 open class SpotsScrollView: NSScrollView {
 
+  /// When enabled, the last `Component` in the collection will be stretched to occupy the remaining space.
+  /// This can be enabled globally by setting `Configuration.stretchLastComponent` to `true`.
+  ///
+  /// ```
+  ///  Enabled    Disabled
+  ///  --------   --------
+  /// ||¯¯¯¯¯¯|| ||¯¯¯¯¯¯||
+  /// ||      || ||      ||
+  /// ||______|| ||______||
+  /// ||¯¯¯¯¯¯|| ||¯¯¯¯¯¯||
+  /// ||      || ||      ||
+  /// ||      || ||______||
+  /// ||______|| |        |
+  ///  --------   --------
+  /// ```
+  public var stretchLastComponent = Configuration.stretchLastComponent
+
   /// A KVO context used to monitor changes in contentSize, frames and bounds
   let subviewContext: UnsafeMutableRawPointer? = UnsafeMutableRawPointer(mutating: nil)
 
@@ -91,6 +108,7 @@ open class SpotsScrollView: NSScrollView {
 
   func layoutViews() {
     var yOffsetOfCurrentSubview: CGFloat = CGFloat(self.inset?.top ?? 0.0)
+    let lastView = subviewsInLayoutOrder.last
 
     for subview in subviewsInLayoutOrder {
       if let scrollView = subview as? ScrollView {
@@ -106,6 +124,14 @@ open class SpotsScrollView: NSScrollView {
         if let inset = self.inset {
           frame.size.width -= CGFloat(inset.left + inset.right)
           frame.origin.x = CGFloat(inset.left)
+        }
+
+        if stretchLastComponent && scrollView.isEqual(lastView) {
+          let newHeight = self.frame.size.height - scrollView.frame.origin.y + self.contentOffset.y
+
+          if newHeight >= frame.size.height {
+            frame.size.height = newHeight
+          }
         }
 
         scrollView.frame = frame
