@@ -1,6 +1,6 @@
 import Cocoa
 
-public class GridableLayout: FlowLayout {
+public class ComponentFlowLayout: FlowLayout {
 
   public var contentSize = CGSize.zero
 

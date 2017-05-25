@@ -171,7 +171,7 @@ import Tailor
       userInterface = TableView()
     } else {
       let collectionView = CollectionView(frame: CGRect.zero)
-      collectionView.collectionViewLayout = GridableLayout()
+      collectionView.collectionViewLayout = ComponentFlowLayout()
       userInterface = collectionView
     }
 

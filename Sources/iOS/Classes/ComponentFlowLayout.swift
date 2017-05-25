@@ -1,7 +1,7 @@
 import UIKit
 
 /// A custom flow layout used in GridComponent and CarouselComponent
-open class GridableLayout: UICollectionViewFlowLayout {
+open class ComponentFlowLayout: UICollectionViewFlowLayout {
 
   /// The content size for the Gridable object
   public var contentSize = CGSize.zero

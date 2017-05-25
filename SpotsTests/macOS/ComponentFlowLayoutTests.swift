@@ -11,7 +11,7 @@ class ItemsPerRowViewMock: View, ItemConfigurable {
   }
 }
 
-class TestGridableLayout: XCTestCase {
+class ComponentFlowLayoutTests: XCTestCase {
 
   override func setUp() {
     Configuration.registerDefault(view: ItemsPerRowViewMock.self)
@@ -43,22 +43,22 @@ class TestGridableLayout: XCTestCase {
     component = Component(model: model)
     component.setup(with: CGSize(width: 100, height: 100))
 
-    var gridableLayout = component.collectionView?.collectionViewLayout as? GridableLayout
-    XCTAssertEqual(gridableLayout?.contentSize, CGSize(width: 1500, height: 50))
+    var componentFlowLayout = component.collectionView?.collectionViewLayout as? ComponentFlowLayout
+    XCTAssertEqual(componentFlowLayout?.contentSize, CGSize(width: 1500, height: 50))
 
     model = ComponentModel(kind: .carousel, layout: Layout(itemsPerRow: 2), items: items)
     component = Component(model: model)
     component.setup(with: CGSize(width: 100, height: 100))
-    gridableLayout = component.collectionView?.collectionViewLayout as? GridableLayout
+    componentFlowLayout = component.collectionView?.collectionViewLayout as? ComponentFlowLayout
 
-    XCTAssertEqual(gridableLayout?.contentSize, CGSize(width: 800, height: 100))
+    XCTAssertEqual(componentFlowLayout?.contentSize, CGSize(width: 800, height: 100))
 
     model = ComponentModel(kind: .carousel, layout: Layout(itemsPerRow: 3), items: items)
     component = Component(model: model)
     component.setup(with: CGSize(width: 100, height: 100))
-    gridableLayout = component.collectionView?.collectionViewLayout as? GridableLayout
+    componentFlowLayout = component.collectionView?.collectionViewLayout as? ComponentFlowLayout
 
-    XCTAssertEqual(gridableLayout?.contentSize, CGSize(width: 500, height: 150))
+    XCTAssertEqual(componentFlowLayout?.contentSize, CGSize(width: 500, height: 150))
   }
   
 }

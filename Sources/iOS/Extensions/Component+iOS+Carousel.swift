@@ -4,7 +4,7 @@ import Tailor
 extension Component {
 
   func setupHorizontalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
-    guard let collectionViewLayout = collectionView.collectionViewLayout as? GridableLayout else {
+    guard let collectionViewLayout = collectionView.collectionViewLayout as? ComponentFlowLayout else {
       return
     }
 
@@ -37,7 +37,7 @@ extension Component {
   }
 
   func layoutHorizontalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
-    guard let collectionViewLayout = collectionView.collectionViewLayout as? GridableLayout else {
+    guard let collectionViewLayout = collectionView.collectionViewLayout as? ComponentFlowLayout else {
       return
     }
 

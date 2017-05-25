@@ -57,7 +57,7 @@ public typealias RowComponent = Component
   /// A type alias to reference a nib file
   public typealias Nib = UINib
   /// A type alias to reference a collection layout
-  public typealias CollectionLayout = GridableLayout
+  public typealias CollectionLayout = ComponentFlowLayout
   /// A type alias to reference a collection flow layout
   public typealias FlowLayout = UICollectionViewFlowLayout
   /// A type alias to reference a edge insets

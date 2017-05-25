@@ -212,7 +212,7 @@ extension Delegate: UICollectionViewDelegateFlowLayout {
   /// - parameter section:              The index number of the section whose line spacing is needed.
   /// - returns: The minimum space (measured in points) to apply between successive lines in a section.
   public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-    if let layout = collectionView.collectionViewLayout as? GridableLayout {
+    if let layout = collectionView.collectionViewLayout as? ComponentFlowLayout {
       return layout.minimumLineSpacing
     } else {
       return 0
@@ -227,7 +227,7 @@ extension Delegate: UICollectionViewDelegateFlowLayout {
   ///
   /// - returns: The margins to apply to items in the section.
   public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-    if let layout = collectionView.collectionViewLayout as? GridableLayout {
+    if let layout = collectionView.collectionViewLayout as? ComponentFlowLayout {
       guard layout.scrollDirection == .horizontal else {
         return layout.sectionInset
       }
