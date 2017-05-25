@@ -5,7 +5,7 @@ import XCTest
 class ComponentSharedTests: XCTestCase {
 
   override func setUp() {
-    Configuration.defaultViewSize = .init(width: 0, height: 88)
+    Configuration.defaultViewSize = .init(width: 0, height: PlatformDefaults.defaultHeight)
     Configuration.registerDefault(view: DefaultItemView.self)
     Configuration.views.purge()
   }
