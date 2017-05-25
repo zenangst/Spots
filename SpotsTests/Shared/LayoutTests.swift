@@ -14,29 +14,43 @@ class LayoutTests: XCTestCase {
       "left": 2.0,
       "bottom": 3.0,
       "right": 4.0
-    ]
+    ],
+    "header-mode": "sticky",
+    "infinite-scrolling": true
   ]
 
   func testDefaultValues() {
     let layout = Layout()
 
     XCTAssertEqual(layout.span, 0.0)
+    XCTAssertEqual(layout.itemsPerRow, 1)
     XCTAssertEqual(layout.itemSpacing, 0.0)
     XCTAssertEqual(layout.lineSpacing, 0.0)
     XCTAssertEqual(layout.dynamicSpan, false)
     XCTAssertEqual(layout.dynamicHeight, true)
     XCTAssertEqual(layout.inset, Inset())
+    XCTAssertEqual(layout.headerMode, .default)
+    XCTAssertEqual(layout.pageIndicatorPlacement, nil)
+    XCTAssertEqual(layout.infiniteScrolling, false)
   }
 
   func testRegularInit() {
-    let layout = Layout(span: 2.0, dynamicSpan: true, dynamicHeight: true, itemSpacing: 20.0, lineSpacing: 20.0, inset: Inset(top: 10.0))
+    let layout = Layout(span: 2.0,
+                        dynamicSpan: true,
+                        dynamicHeight: true,
+                        itemSpacing: 20.0,
+                        lineSpacing: 20.0,
+                        inset: Inset(top: 10.0),
+                        headerMode: .sticky,
+                        infiniteScrolling: true)
 
     XCTAssertEqual(layout.span, 2.0)
     XCTAssertEqual(layout.itemSpacing, 20.0)
     XCTAssertEqual(layout.lineSpacing, 20.0)
     XCTAssertEqual(layout.dynamicSpan, true)
     XCTAssertEqual(layout.dynamicHeight, true)
-    XCTAssertEqual(layout.inset, Inset(top: 10.0))
+    XCTAssertEqual(layout.headerMode, .sticky)
+    XCTAssertEqual(layout.infiniteScrolling, true)
   }
 
   func testJSONMapping() {
@@ -48,6 +62,8 @@ class LayoutTests: XCTestCase {
     XCTAssertEqual(layout.dynamicSpan, true)
     XCTAssertEqual(layout.dynamicHeight, true)
     XCTAssertEqual(layout.inset, Inset(top: 1, left: 2, bottom: 3, right: 4))
+    XCTAssertEqual(layout.headerMode, .sticky)
+    XCTAssertEqual(layout.infiniteScrolling, true)
   }
 
   func testDictionary() {
@@ -63,6 +79,8 @@ class LayoutTests: XCTestCase {
     XCTAssertEqual((layoutJSON["inset"] as? [String : Double])?["left"], layout.inset.left)
     XCTAssertEqual((layoutJSON["inset"] as? [String : Double])?["bottom"], layout.inset.bottom)
     XCTAssertEqual((layoutJSON["inset"] as? [String : Double])?["right"], layout.inset.right)
+    XCTAssertEqual(layoutJSON["header-mode"] as? String, layout.headerMode.rawValue)
+    XCTAssertEqual(layoutJSON["infinite-scrolling"] as? Bool, layout.infiniteScrolling)
   }
 
   func testConfigureWithJSON() {

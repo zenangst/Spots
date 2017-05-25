@@ -48,9 +48,9 @@
 		BD44D1E31EADC48200F7205E /* HeaderMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD44D1E21EADC48200F7205E /* HeaderMode.swift */; };
 		BD44D1E41EADC48200F7205E /* HeaderMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD44D1E21EADC48200F7205E /* HeaderMode.swift */; };
 		BD44D1E51EADC48200F7205E /* HeaderMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD44D1E21EADC48200F7205E /* HeaderMode.swift */; };
-		BD45D9871E30906300C2D6B2 /* TestLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD45D9861E30906300C2D6B2 /* TestLayout.swift */; };
-		BD45D9881E30906300C2D6B2 /* TestLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD45D9861E30906300C2D6B2 /* TestLayout.swift */; };
-		BD45D9891E30906300C2D6B2 /* TestLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD45D9861E30906300C2D6B2 /* TestLayout.swift */; };
+		BD45D9871E30906300C2D6B2 /* LayoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD45D9861E30906300C2D6B2 /* LayoutTests.swift */; };
+		BD45D9881E30906300C2D6B2 /* LayoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD45D9861E30906300C2D6B2 /* LayoutTests.swift */; };
+		BD45D9891E30906300C2D6B2 /* LayoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD45D9861E30906300C2D6B2 /* LayoutTests.swift */; };
 		BD45D98B1E30909700C2D6B2 /* TestLayoutExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD45D98A1E30909700C2D6B2 /* TestLayoutExtensions.swift */; };
 		BD45D98C1E30909700C2D6B2 /* TestLayoutExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD45D98A1E30909700C2D6B2 /* TestLayoutExtensions.swift */; };
 		BD45D98F1E30935500C2D6B2 /* TestLayoutExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD45D98E1E30935500C2D6B2 /* TestLayoutExtensions.swift */; };
@@ -413,7 +413,7 @@
 		BD4295541D81D39700E07E1C /* TestComponentiOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestComponentiOS.swift; sourceTree = "<group>"; };
 		BD42CA841E4C9B2600A86E3B /* ComponentTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentTests.swift; sourceTree = "<group>"; };
 		BD44D1E21EADC48200F7205E /* HeaderMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderMode.swift; sourceTree = "<group>"; };
-		BD45D9861E30906300C2D6B2 /* TestLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestLayout.swift; sourceTree = "<group>"; };
+		BD45D9861E30906300C2D6B2 /* LayoutTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutTests.swift; sourceTree = "<group>"; };
 		BD45D98A1E30909700C2D6B2 /* TestLayoutExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestLayoutExtensions.swift; sourceTree = "<group>"; };
 		BD45D98E1E30935500C2D6B2 /* TestLayoutExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestLayoutExtensions.swift; sourceTree = "<group>"; };
 		BD45D9941E30A8A000C2D6B2 /* TestInset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestInset.swift; sourceTree = "<group>"; };
@@ -1031,13 +1031,13 @@
 				BD31BB991EA6208600D1FC8A /* DelegateConfigurationClosureTests.swift */,
 				BD677E8E1DC65D63006D1654 /* Helpers.swift */,
 				BD650CF51ECAC2C100DFD220 /* ItemConfigurableComputeSizeTests.swift */,
+				BD45D9861E30906300C2D6B2 /* LayoutTests.swift */,
 				BDE44B121EA0F0C90021EAC8 /* TestComponentManager.swift */,
 				D584782B1C43FF34006EBA49 /* TestComponentModel.swift */,
 				BD6FBEEF1E12B5F000AA58BD /* TestComposition.swift */,
 				BD45D9941E30A8A000C2D6B2 /* TestInset.swift */,
 				BDEA327E1E87A6FF0044B056 /* TestInteraction.swift */,
 				BDB8D5921E4DFADC00220BC3 /* TestItem.swift */,
-				BD45D9861E30906300C2D6B2 /* TestLayout.swift */,
 				BD01BD0D1DAEA464009C10FF /* TestParser.swift */,
 				BDCFCD401DCA7EFF0047E84C /* TestSpotsController.swift */,
 				BD798EF71EA2A1320069EFB7 /* TestSpotsControllerManager.swift */,
@@ -1582,7 +1582,7 @@
 				BDE44B181EA0F0E60021EAC8 /* TestComponentManager.swift in Sources */,
 				BDEFF5501DD1C85300FC0537 /* TestDataSource.swift in Sources */,
 				BD650CF81ECAC2C100DFD220 /* ItemConfigurableComputeSizeTests.swift in Sources */,
-				BD45D9891E30906300C2D6B2 /* TestLayout.swift in Sources */,
+				BD45D9891E30906300C2D6B2 /* LayoutTests.swift in Sources */,
 				BDCFCD431DCA7EFF0047E84C /* TestSpotsController.swift in Sources */,
 				BD677E8B1DC61EFC006D1654 /* TestStateCache.swift in Sources */,
 				BD7397381D718CDB000AF2DE /* TestComponentModel.swift in Sources */,
@@ -1727,7 +1727,7 @@
 				BDEED2E81D8446400030B475 /* TestSpotsScrollView.swift in Sources */,
 				BDEFF54F1DD1C85300FC0537 /* TestDataSource.swift in Sources */,
 				BD677E851DC616B2006D1654 /* ComponentSharedTests.swift in Sources */,
-				BD45D9871E30906300C2D6B2 /* TestLayout.swift in Sources */,
+				BD45D9871E30906300C2D6B2 /* LayoutTests.swift in Sources */,
 				BDB8D5931E4DFADC00220BC3 /* TestItem.swift in Sources */,
 				BD6FBEF01E12B5F000AA58BD /* TestComposition.swift in Sources */,
 				BD677E891DC61EFC006D1654 /* TestStateCache.swift in Sources */,
@@ -1858,7 +1858,7 @@
 				BDFC474F1E747B2B008700BF /* TestGridWrapper.swift in Sources */,
 				BD01BD121DAEA523009C10FF /* TestParser.swift in Sources */,
 				BD45D98F1E30935500C2D6B2 /* TestLayoutExtensions.swift in Sources */,
-				BD45D9881E30906300C2D6B2 /* TestLayout.swift in Sources */,
+				BD45D9881E30906300C2D6B2 /* LayoutTests.swift in Sources */,
 				BD45D9961E30A8A000C2D6B2 /* TestInset.swift in Sources */,
 				BD6FBEF11E12B5F000AA58BD /* TestComposition.swift in Sources */,
 				BDFC47521E747B2B008700BF /* TestListWrapper.swift in Sources */,
