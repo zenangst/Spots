@@ -43,6 +43,7 @@ public class GridableLayout: FlowLayout {
 
         if component.model.items.count % layout.itemsPerRow == 1 {
           contentSize.width += firstItem.size.width + minimumLineSpacing
+          contentSize.height += CGFloat(layout.lineSpacing)
         }
       }
 
@@ -114,7 +115,7 @@ public class GridableLayout: FlowLayout {
           nextX += itemAttribute.size.width + minimumInteritemSpacing
           nextY = 0
         } else {
-          nextY = itemAttribute.frame.maxY
+          nextY = itemAttribute.frame.maxY + CGFloat(layout.lineSpacing)
         }
       } else {
         itemAttribute.frame.origin.y += component.headerHeight

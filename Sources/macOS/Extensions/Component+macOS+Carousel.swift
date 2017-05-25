@@ -3,16 +3,7 @@ import Tailor
 
 extension Component {
   func setupHorizontalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
-    var newCollectionViewHeight: CGFloat = 0.0
-    newCollectionViewHeight <- model.items.sorted(by: {
-      $0.size.height > $1.size.height
-    }).first?.size.height
-
-    if let layout = model.layout {
-      newCollectionViewHeight *= CGFloat(layout.itemsPerRow)
-      newCollectionViewHeight += headerHeight
-      newCollectionViewHeight += CGFloat(layout.inset.top + layout.inset.bottom)
-    }
+    let newCollectionViewHeight = calculateCollectionViewHeight()
 
     scrollView.scrollingEnabled = (model.items.count > 1)
     scrollView.hasHorizontalScroller = (model.items.count > 1)
@@ -32,16 +23,7 @@ extension Component {
       return
     }
 
-    var newCollectionViewHeight: CGFloat = 0.0
-    newCollectionViewHeight <- model.items.sorted(by: {
-      $0.size.height > $1.size.height
-    }).first?.size.height
-
-    if let layout = model.layout {
-      newCollectionViewHeight *= CGFloat(layout.itemsPerRow)
-      newCollectionViewHeight += headerHeight
-      newCollectionViewHeight += CGFloat(layout.inset.top + layout.inset.bottom)
-    }
+    let newCollectionViewHeight = calculateCollectionViewHeight()
 
     collectionView.frame.size.width = collectionViewContentSize.width
     collectionView.frame.size.height = newCollectionViewHeight
@@ -69,5 +51,24 @@ extension Component {
       layout(with: size)
       prepareItems(recreateComposites: false)
     }
+  }
+
+  private func calculateCollectionViewHeight() -> CGFloat {
+    var newCollectionViewHeight: CGFloat = 0.0
+    newCollectionViewHeight <- model.items.sorted(by: {
+      $0.size.height > $1.size.height
+    }).first?.size.height
+
+    if let layout = model.layout {
+      newCollectionViewHeight *= CGFloat(layout.itemsPerRow)
+      newCollectionViewHeight += headerHeight
+      newCollectionViewHeight += CGFloat(layout.inset.top + layout.inset.bottom)
+
+      if layout.itemsPerRow > 1 {
+        newCollectionViewHeight += CGFloat(layout.lineSpacing * Double(layout.itemsPerRow - 2))
+      }
+    }
+
+    return newCollectionViewHeight
   }
 }
