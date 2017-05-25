@@ -91,16 +91,7 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
   }
 
   /// A convenience initializer with default values.
-  public init() {
-    self.span = 0.0
-    self.dynamicSpan = false
-    self.itemSpacing = 0.0
-    self.lineSpacing = 0.0
-    self.itemsPerRow = 1
-    self.inset = Inset()
-    self.headerMode = .default
-    self.infiniteScrolling = false
-  }
+  public init() {}
 
   /// Default initializer for creating a Layout struct.
   ///
@@ -150,7 +141,7 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
     self.span <- map.double(Key.span.rawValue)
     self.pageIndicatorPlacement = map.enum(Key.pageIndicator.rawValue)
     self.headerMode <- map.enum(Key.headerMode.rawValue)
-    self.infiniteScrolling <- map.boolean(Key.headerMode.rawValue)
+    self.infiniteScrolling <- map.boolean(Key.infiniteScrolling.rawValue)
   }
 
   /// Perform mutation with closure.
