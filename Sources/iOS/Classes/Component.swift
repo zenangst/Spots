@@ -113,7 +113,7 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     userInterface?.register()
 
     if let componentLayout = self.model.layout,
-      let collectionViewLayout = collectionView?.collectionViewLayout as? GridableLayout {
+      let collectionViewLayout = collectionView?.collectionViewLayout as? ComponentFlowLayout {
       componentLayout.configure(collectionViewLayout: collectionViewLayout)
     }
 

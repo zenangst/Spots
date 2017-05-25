@@ -16,13 +16,13 @@ class LayoutExtensionsTests: XCTestCase {
 
   func testConfigureGridableComponent() {
     let gridComponent = Component(model: ComponentModel(kind: .grid, layout: Layout(span: 1)))
-    let gridableLayout = gridComponent.collectionView?.collectionViewLayout as? FlowLayout
+    let componentFlowLayout = gridComponent.collectionView?.collectionViewLayout as? FlowLayout
     let layout = Layout(json)
 
     layout.configure(component: gridComponent)
 
-    XCTAssertEqual(gridableLayout?.minimumInteritemSpacing, CGFloat(layout.itemSpacing))
-    XCTAssertEqual(gridableLayout?.minimumLineSpacing, CGFloat(layout.lineSpacing))
+    XCTAssertEqual(componentFlowLayout?.minimumInteritemSpacing, CGFloat(layout.itemSpacing))
+    XCTAssertEqual(componentFlowLayout?.minimumLineSpacing, CGFloat(layout.lineSpacing))
 
     XCTAssertEqual(gridComponent.view.contentInsets.top, CGFloat(layout.inset.top))
     XCTAssertEqual(gridComponent.view.contentInsets.left, CGFloat(layout.inset.left))

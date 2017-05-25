@@ -11,7 +11,7 @@ class ItemsPerRowViewMock: View, ItemConfigurable {
   }
 }
 
-class TestGridableLayout: XCTestCase {
+class ComponentFlowLayoutTests: XCTestCase {
 
   let parentSize = CGSize(width: 100, height: 100)
 

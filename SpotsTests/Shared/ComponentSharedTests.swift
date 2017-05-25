@@ -4,6 +4,12 @@ import XCTest
 
 class ComponentSharedTests: XCTestCase {
 
+  override func setUp() {
+    Configuration.defaultViewSize = .init(width: 0, height: PlatformDefaults.defaultHeight)
+    Configuration.registerDefault(view: DefaultItemView.self)
+    Configuration.views.purge()
+  }
+
   func testAppendingMultipleItemsToComponent() {
     let listComponent = Component(model: ComponentModel(kind: .list, layout: Layout(span: 1)))
     listComponent.setup(with: CGSize(width: 100, height: 100))
