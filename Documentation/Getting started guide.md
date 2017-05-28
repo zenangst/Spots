@@ -10,7 +10,7 @@ This is what we will end up with at the end of the guide:
 Lets build a small demo application called `MyContacts` to show what it is liked to work with `Spots` in an application.
 
 The first thing that we need to do is adapt and register your views so that `Spots` can resolve them.
-To use views in `Spots`, they need to conform to `ItemConfigurable`. It is a very lean protocol that has two required methods. The first is `configure(with item: Item)`, this is where our view gets the model information so that we can properly set texts to your label etc. The second function is `computeSize(for item: Item) -> CGSize`. This is used to give back an approriate size for the view. It could return a static value or be computed based of the content coming from the model.
+To use views in `Spots`, they need to conform to `ItemConfigurable`. It is a very lean protocol that has two required methods. The first is `configure(with item: Item)`, this is where our view gets the model information so that we can properly set texts to your label etc. The second function is `computeSize(for item: Item) -> CGSize`. This is used to give back an appropriate size for the view. It could return a static value or be computed based of the content coming from the model.
 
 Lets kick things of by making a `ContactView` that will be used to show contact information in a list.
 
@@ -52,7 +52,7 @@ class ContactView: UIView, ItemConfigurable {
 }
 ```
 
-## Registrering a view.
+## Registering a view.
 
 Next up is to register the view in `Spots` so that it can be resolved and used when the `Component` will render its data. This is done early on in the applications live-cycle to ensure that all views are properly registered before trying to use them inside of a `Component`. This is really easy, you pass the views type and an identifier to `Configuration` and that's it.
 
@@ -60,7 +60,7 @@ Next up is to register the view in `Spots` so that it can be resolved and used w
 Configuration.register(view: ContactView.self, identifier: "Contact")
 ```
 
-You can also register a default view that will be used if the current identifier cannot be resolved. This is how we would register `ContactView` as the defualt in our application.
+You can also register a default view that will be used if the current identifier cannot be resolved. This is how we would register `ContactView` as the default in our application.
 
 ```swift
 Configuration.registerDefault(view: ContactView.self)
@@ -90,7 +90,7 @@ let model = ComponentModel(kind: .list, items: [
 ])
 ```
 
-One interesting thing to point out is the `kind`. In our case we want a simple `UITableView`, in `Spots` they are referred to as lists. `kind` can also be `grid` or `carousel`. When using `grid`, a `UICollectionView` will be used to render the component. The same goes for `.carousel`, but as the name implies, the user interaction and layout will be horizontal when using `.carousel` instead of `.grid`. Note that the views registrered on `Spots` are not required to inherit from `UICollectionViewCell` or `UITableViewCell`. Internally they will be wrapped in either `ListWrapper` or `GridWrapper`.
+One interesting thing to point out is the `kind`. In our case we want a simple `UITableView`, in `Spots` they are referred to as lists. `kind` can also be `grid` or `carousel`. When using `grid`, a `UICollectionView` will be used to render the component. The same goes for `.carousel`, but as the name implies, the user interaction and layout will be horizontal when using `.carousel` instead of `.grid`. Note that the views registered on `Spots` are not required to inherit from `UICollectionViewCell` or `UITableViewCell`. Internally they will be wrapped in either `ListWrapper` or `GridWrapper`.
 
 ## Creating a component.
 
@@ -172,7 +172,7 @@ If we run the application, this is what we end up with.
 
 ## Adding an additional component.
 
-Right now the application doesn't really look like much, so lets add another component into the mix to see how that can improve on how the application looks and feels. If this were a real application, it would be nice to get a quick overview of which contacts that where recenctly used. Lets add a carousel component at the top to see what that would look like.
+Right now the application doesn't really look like much, so lets add another component into the mix to see how that can improve on how the application looks and feels. If this were a real application, it would be nice to get a quick overview of which contacts that where recently used. Lets add a carousel component at the top to see what that would look like.
 
 Lets start by repeating some of our initial steps, so lets create a new view called `RecentContactView` and register it on `Spots`.
 
@@ -224,7 +224,7 @@ class RecentContactView: UIView, ItemConfigurable {
 }
 ```
 
-As you can see, this view looks very simliar to the `ContactView`. More work was put into the styling of the title label and it returns a different size. Lets go ahead and register this view on `Spots`.
+As you can see, this view looks very similar to the `ContactView`. More work was put into the styling of the title label and it returns a different size. Lets go ahead and register this view on `Spots`.
 
 ```swift
 Configuration.register(view: RecentContactView.self, identifier: "Recent")
@@ -451,7 +451,7 @@ Note that we made some slight changes to the `Layout` object on `recentModel`. W
 
 ### The final result.
 
-So our final verison of `AppDelegate` ended up looking like this.
+So our final version of `AppDelegate` ended up looking like this.
 
 ```swift
 import UIKit
