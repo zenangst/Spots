@@ -59,7 +59,6 @@ extension Component {
 
     if let layout = model.layout {
       newCollectionViewHeight *= CGFloat(layout.itemsPerRow)
-      newCollectionViewHeight += headerHeight
       newCollectionViewHeight += CGFloat(layout.inset.top + layout.inset.bottom)
 
       if layout.itemsPerRow > 1 {
