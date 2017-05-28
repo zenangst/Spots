@@ -11,11 +11,8 @@ extension Delegate: UIScrollViewDelegate {
         scrollView.contentOffset.y = constrainedYOffset
       }
 
-      let xOffset = CGFloat(component.model.layout?.inset.left ?? 0.0) + scrollView.contentOffset.x
-
       if let footerView = component.footerView {
         footerView.frame.origin.y = scrollView.contentSize.height - footerView.frame.size.height
-        footerView.frame.origin.x = xOffset
       }
 
       if let headerView = component.headerView {
@@ -37,7 +34,6 @@ extension Delegate: UIScrollViewDelegate {
         } else {
           headerView.frame.origin.y = -scrollView.contentOffset.y
         }
-        headerView.frame.origin.x = xOffset
       }
     }
 
