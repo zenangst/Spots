@@ -168,7 +168,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 If we run the application, this is what we end up with.
 
-<img src="https://github.com/zenangst/Spots/blob/326fd8d6433dce8c3b9f68e9872d98314974e37a/Documentation/Resources/getting-started-first-run.png?raw=true" height="250"/>
+<img src="https://github.com/zenangst/Spots/blob/326fd8d6433dce8c3b9f68e9872d98314974e37a/Documentation/Resources/getting-started-first-run.png?raw=true" height="350"/>
 
 ## Adding an additional component.
 
@@ -351,7 +351,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
 ```
 
-<img src="https://github.com/zenangst/Spots/blob/326fd8d6433dce8c3b9f68e9872d98314974e37a/Documentation/Resources/getting-started-two-components.png?raw=true" height="250"/>
+<img src="https://github.com/zenangst/Spots/blob/326fd8d6433dce8c3b9f68e9872d98314974e37a/Documentation/Resources/getting-started-two-components.png?raw=true" height="350"/>
 
 The application is starting to take shape but we could still use some more information to the describe what is shown to the users so lets do just that.
 
@@ -531,4 +531,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 And when we run the application, this is what we see.
 
-<img src="https://github.com/zenangst/Spots/blob/326fd8d6433dce8c3b9f68e9872d98314974e37a/Documentation/Resources/getting-started-final-result.png?raw=true" height="250"/>
+<img src="https://github.com/zenangst/Spots/blob/326fd8d6433dce8c3b9f68e9872d98314974e37a/Documentation/Resources/getting-started-final-result.png?raw=true" height="350"/>
