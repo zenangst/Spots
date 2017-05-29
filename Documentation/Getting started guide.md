@@ -8,7 +8,7 @@ This is what we will end up with at the end of the guide:
 
 ## Making views.
 
-Lets build a small demo application called `MyContacts` to show what it is liked to work with `Spots` in an application.
+Lets build a small demo application called `MyContacts` to show what it is like to work with `Spots` in an application.
 
 The first thing that we need to do is adapt and register your views so that `Spots` can resolve them.
 To use views in `Spots`, they need to conform to `ItemConfigurable`. It is a very lean protocol that has two required methods. The first is `configure(with item: Item)`, this is where our view gets the model information so that we can properly set texts to your label etc. The second function is `computeSize(for item: Item) -> CGSize`. This is used to give back an appropriate size for the view. It could return a static value or be computed based of the content coming from the model.
@@ -55,7 +55,7 @@ class ContactView: UIView, ItemConfigurable {
 
 ## Registering a view.
 
-Next up is to register the view in `Spots` so that it can be resolved and used when the `Component` will render its data. This is done early on in the applications live-cycle to ensure that all views are properly registered before trying to use them inside of a `Component`. This is really easy, you pass the views type and an identifier to `Configuration` and that's it.
+Next up is to register the view in `Spots` so that it can be resolved and used when the `Component` will render its data. This is done early on in the applications life-cycle to ensure that all views are properly registered before trying to use them inside of a `Component`. This is really easy, you pass the views type and an identifier to `Configuration` and that's it.
 
 ```swift
 Configuration.register(view: ContactView.self, identifier: "Contact")
@@ -102,7 +102,7 @@ During `Component`'s initialization, it will either create a `UICollectionView` 
 let component = Component(model: model)
 ```
 
-Thats it, thats all you need to do to create a `Component` with a `UITableView` as its rendering foundation.
+That's all you need to do to create a `Component` with a `UITableView` as its rendering foundation.
 
 ## Creating a spots controller.
 
@@ -172,9 +172,9 @@ If we run the application, this is what we end up with.
 
 ## Adding an additional component.
 
-Right now the application doesn't really look like much, so lets add another component into the mix to see how that can improve on how the application looks and feels. If this were a real application, it would be nice to get a quick overview of which contacts that where recently used. Lets add a carousel component at the top to see what that would look like.
+Right now the application doesn't really look like much, so lets add another component into the mix to see how that can improve on how the application looks and feels. If this were a real application, it would be nice to get a quick overview of contacts that were recently used. Lets add a carousel component at the top to see what that would look like.
 
-Lets start by repeating some of our initial steps, so lets create a new view called `RecentContactView` and register it on `Spots`.
+Let's start by repeating some of our initial steps, so lets create a new view called `RecentContactView` and register it on `Spots`.
 
 ```swift
 import UIKit
@@ -224,7 +224,7 @@ class RecentContactView: UIView, ItemConfigurable {
 }
 ```
 
-As you can see, this view looks very similar to the `ContactView`. More work was put into the styling of the title label and it returns a different size. Lets go ahead and register this view on `Spots`.
+As you can see, this view looks very similar to the `ContactView`. More work was put into the styling of the title label and it returns a different size. Let's go ahead and register this view on `Spots`.
 
 ```swift
 Configuration.register(view: RecentContactView.self, identifier: "Recent")
@@ -261,7 +261,7 @@ let controller = SpotsController(components: [recentComponent, contactsComponent
 
 Because we want `recentComponent` to be displayed before the `contactsComponent`, we simply just add it at the top and that is how it will be displayed on screen.
 
-We are now ready to run the application again to take another peek at what our application looks like, but before we do, we want to make one additional configuration for the carousel component. Lets set the background for carousels in our application to use a light gray color to clearly show where one component ends and the other beings.
+We are now ready to run the application again to take another peek at what our application looks like, but before we do, we want to make one additional configuration for the carousel component. Let's set the background for carousels in our application to use a light gray color to clearly show where one component ends and the other begins.
 
 This is done by assigning a configuration closure on `Component`. It is a static closure that will be invoked during each `Component`'s setup method.
 
