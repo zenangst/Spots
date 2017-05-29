@@ -265,7 +265,7 @@ We are now ready to run the application again to take another peek at what our a
 
 This is done by assigning a configuration closure on `Component`. It is a static closure that will be invoked during each `Component`'s setup method.
 
-```switch
+```swift
 Component.configure = { component in
   switch component.model.kind {
   case .carousel:
