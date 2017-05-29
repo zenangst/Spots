@@ -42,6 +42,7 @@ Data source and delegate setup is handled by **Spots**, so there is no need for 
 <img src="https://raw.githubusercontent.com/hyperoslo/Spots/master/Images/icon_v5.png" alt="Spots Icon" align="right" />
 
 * [Key features](#key-features)
+* [Getting started with Spots](#getting-started-with-spots)
 * [Origin Story](#origin-story)
 * [Universal support](#universal-support)
 * [Why JSON?](#why-json)
@@ -99,6 +100,10 @@ on the view model.
 - Soft & hard updates to UI components.
 - Supports both views made programmatically and nib-based views.
 **Spots** handles this for you by using a view registry.
+
+## Getting started with Spots
+
+If you are looking for a way to get started with `Spots`, we recommend taking a look at our [Getting started guide](https://github.com/hyperoslo/Spots/blob/master/Documentation/Getting%20started%20guide.md).
 
 ## Origin Story
 
