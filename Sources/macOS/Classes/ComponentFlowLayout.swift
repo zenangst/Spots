@@ -106,7 +106,8 @@ public class ComponentFlowLayout: FlowLayout {
             itemAttribute.frame.origin.y = nextY
           }
         } else {
-          itemAttribute.frame.origin.y += component.headerHeight
+          itemAttribute.frame.origin.y = component.headerView?.frame.maxY ?? component.headerHeight
+          itemAttribute.frame.origin.y += CGFloat(layout.inset.top)
         }
 
         itemAttribute.frame.origin.x = nextX
@@ -118,7 +119,7 @@ public class ComponentFlowLayout: FlowLayout {
           nextY = itemAttribute.frame.maxY + CGFloat(layout.lineSpacing)
         }
       } else {
-        itemAttribute.frame.origin.y += component.headerHeight
+        itemAttribute.frame.origin.y += CGFloat(layout.inset.top)
       }
 
       attributes.append(itemAttribute)

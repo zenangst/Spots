@@ -69,12 +69,5 @@ extension Component {
     } else {
       footerView?.frame.origin.y = view.frame.size.height - footerHeight
     }
-
-    if let layout = model.layout {
-      headerView?.frame.origin.x = CGFloat(layout.inset.left)
-      footerView?.frame.origin.x = CGFloat(layout.inset.left)
-      headerView?.frame.size.width -= CGFloat(layout.inset.left + layout.inset.right)
-      footerView?.frame.size.width -= CGFloat(layout.inset.left + layout.inset.right)
-    }
   }
 }

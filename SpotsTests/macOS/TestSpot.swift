@@ -110,7 +110,9 @@ class TestSpot: XCTestCase {
     let component = Component(model: model)
     component.setup(with: CGSize(width: 100, height: 100))
 
-    XCTAssertEqual(component.view.frame.size, CGSize(width: 100, height: 200))
-    XCTAssertEqual(component.view.contentSize, CGSize(width: 100, height: 200))
+    // Items are 50 in height, headers and footer share the same height of 50
+    // hence the total height being 150.
+    XCTAssertEqual(component.view.frame.size, CGSize(width: 100, height: 150))
+    XCTAssertEqual(component.view.contentSize, CGSize(width: 100, height: 150))
   }
 }
