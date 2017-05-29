@@ -8,12 +8,12 @@ This is what we will end up with at the end of the guide:
 
 ## Making views.
 
-Lets build a small demo application called `MyContacts` to show what it is like to work with `Spots` in an application.
+Let's build a small demo application called `MyContacts` to show what it is like to work with `Spots` in an application.
 
 The first thing that we need to do is adapt and register your views so that `Spots` can resolve them.
 To use views in `Spots`, they need to conform to `ItemConfigurable`. It is a very lean protocol that has two required methods. The first is `configure(with item: Item)`, this is where our view gets the model information so that we can properly set texts to your label etc. The second function is `computeSize(for item: Item) -> CGSize`. This is used to give back an appropriate size for the view. It could return a static value or be computed based of the content coming from the model.
 
-Lets kick things of by making a `ContactView` that will be used to show contact information in a list.
+Let's kick things of by making a `ContactView` that will be used to show contact information in a list.
 
 ```swift
 import UIKit
@@ -70,7 +70,7 @@ Configuration.registerDefault(view: ContactView.self)
 ## Creating a component model.
 
 We now have to create some model data for our `Component`.
-All components in `Spots` share the same data model, it is called `ComponentModel`. The `ComponentModel` is used as the data source for any UI object that will be used inside of `Spots`. Lets create a small component model to be used in our application.
+All components in `Spots` share the same data model, it is called `ComponentModel`. The `ComponentModel` is used as the data source for any UI object that will be used inside of `Spots`. Let's create a small component model to be used in our application.
 
 ```swift
 let model = ComponentModel(kind: .list, items: [
@@ -115,7 +115,7 @@ let controller = SpotsController(components: [component])
 ## The result.
 
 Because `SpotsController` is just like any other view controller, you display it in the exact same way as you would any other controller that you have in your application.
-Lets wrap it in a `UINavigation` controller so that we get a nice navigation bar at the top.
+Let's wrap it in a `UINavigation` controller so that we get a nice navigation bar at the top.
 
 This is what our `ApplicationDelegate` ended up looking like.
 
@@ -172,9 +172,9 @@ If we run the application, this is what we end up with.
 
 ## Adding an additional component.
 
-Right now the application doesn't really look like much, so lets add another component into the mix to see how that can improve on how the application looks and feels. If this were a real application, it would be nice to get a quick overview of contacts that were recently used. Lets add a carousel component at the top to see what that would look like.
+Right now the application doesn't really look like much, so let's add another component into the mix to see how that can improve on how the application looks and feels. If this were a real application, it would be nice to get a quick overview of contacts that were recently used. Let's add a carousel component at the top to see what that would look like.
 
-Let's start by repeating some of our initial steps, so lets create a new view called `RecentContactView` and register it on `Spots`.
+Let's start by repeating some of our initial steps, so let's create a new view called `RecentContactView` and register it on `Spots`.
 
 ```swift
 import UIKit
@@ -353,12 +353,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 <img src="https://github.com/zenangst/Spots/blob/326fd8d6433dce8c3b9f68e9872d98314974e37a/Documentation/Resources/getting-started-two-components.png?raw=true" height="350"/>
 
-The application is starting to take shape but we could still use some more information to the describe what is shown to the users so lets do just that.
+The application is starting to take shape but we could still use some more information to the describe what is shown to the users so let's do just that.
 
 ## Adding a header view.
 
 Adding headers to a `Component` is just as easy as adding an additional item to a list.
-Lets make one more view that can work as our header view in this application.
+Let's make one more view that can work as our header view in this application.
 
 ```swift
 import UIKit
@@ -412,7 +412,7 @@ We register headers in the exact same way as you do any other view.
 Configuration.register(view: HeaderView.self, identifier: "Header")
 ```
 
-Now lets add it to the component models.
+Now let's add it to the component models.
 
 ```swift
 let recentModel = ComponentModel(
