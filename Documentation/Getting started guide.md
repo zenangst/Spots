@@ -355,7 +355,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 The application is starting to take shape but we could still use some more information to the describe what is shown to the users so lets do just that.
 
-### Adding a header view.
+## Adding a header view.
 
 Adding headers to a `Component` is just as easy as adding an additional item to a list.
 Lets make one more view that can work as our header view in this application.
@@ -449,7 +449,7 @@ let contactsModel = ComponentModel(
 
 Note that we made some slight changes to the `Layout` object on `recentModel`. We removed the `top` inset to make the content fit nicely together with the header.
 
-### The final result.
+## The final result.
 
 So our final version of `AppDelegate` ended up looking like this.
 
