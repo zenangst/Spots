@@ -114,6 +114,9 @@
 		BDA3D96C1EC6F1A400141227 /* ItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA3D96B1EC6F1A400141227 /* ItemManager.swift */; };
 		BDA3D96D1EC6F1A400141227 /* ItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA3D96B1EC6F1A400141227 /* ItemManager.swift */; };
 		BDA3D96E1EC6F1A400141227 /* ItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA3D96B1EC6F1A400141227 /* ItemManager.swift */; };
+		BDA5EEC01EDD78BD00B18214 /* ComponentFlowLayoutSharedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA5EEBE1EDD77DD00B18214 /* ComponentFlowLayoutSharedTests.swift */; };
+		BDA5EEC11EDD78BE00B18214 /* ComponentFlowLayoutSharedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA5EEBE1EDD77DD00B18214 /* ComponentFlowLayoutSharedTests.swift */; };
+		BDA5EEC21EDD78BF00B18214 /* ComponentFlowLayoutSharedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA5EEBE1EDD77DD00B18214 /* ComponentFlowLayoutSharedTests.swift */; };
 		BDAD84A81E3E701C008289AE /* CarouselSpotHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD84831E3E701B008289AE /* CarouselSpotHeader.swift */; };
 		BDAD84A91E3E701C008289AE /* CarouselSpotHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD84831E3E701B008289AE /* CarouselSpotHeader.swift */; };
 		BDAD84AA1E3E701C008289AE /* SpotsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD84841E3E701B008289AE /* SpotsController.swift */; };
@@ -447,6 +450,7 @@
 		BD9ECEC61E6EC8C4003E4388 /* Component+iOS+HeaderFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Component+iOS+HeaderFooter.swift"; sourceTree = "<group>"; };
 		BDA25E8F1EB5070F002B21C0 /* Wrappable+macOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Wrappable+macOS.swift"; sourceTree = "<group>"; };
 		BDA3D96B1EC6F1A400141227 /* ItemManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemManager.swift; sourceTree = "<group>"; };
+		BDA5EEBE1EDD77DD00B18214 /* ComponentFlowLayoutSharedTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentFlowLayoutSharedTests.swift; sourceTree = "<group>"; };
 		BDAD84831E3E701B008289AE /* CarouselSpotHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselSpotHeader.swift; sourceTree = "<group>"; };
 		BDAD84841E3E701B008289AE /* SpotsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SpotsController.swift; sourceTree = "<group>"; };
 		BDAD84851E3E701B008289AE /* ComponentFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentFlowLayout.swift; sourceTree = "<group>"; };
@@ -1047,6 +1051,7 @@
 				BD677E881DC61EFC006D1654 /* TestStateCache.swift */,
 				BDCA3CF21E8295EB00A98A76 /* TestUserInterface.swift */,
 				BD10D5211D79533C00DF8E9B /* TestViewModelExtensions.swift */,
+				BDA5EEBE1EDD77DD00B18214 /* ComponentFlowLayoutSharedTests.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -1602,6 +1607,7 @@
 				BDCA3CF51E8295EB00A98A76 /* TestUserInterface.swift in Sources */,
 				BD677E911DC65D63006D1654 /* Helpers.swift in Sources */,
 				BD798EFA1EA2A1320069EFB7 /* TestSpotsControllerManager.swift in Sources */,
+				BDA5EEC21EDD78BF00B18214 /* ComponentFlowLayoutSharedTests.swift in Sources */,
 				BD6FBEF21E12B5F000AA58BD /* TestComposition.swift in Sources */,
 				BD45D9971E30A8A000C2D6B2 /* InsetTests.swift in Sources */,
 				BD31BB9F1EA6209E00D1FC8A /* DelegateConfigurationClosureTests.swift in Sources */,
@@ -1730,6 +1736,7 @@
 				BDEED2E81D8446400030B475 /* TestSpotsScrollView.swift in Sources */,
 				BDEFF54F1DD1C85300FC0537 /* TestDataSource.swift in Sources */,
 				BD677E851DC616B2006D1654 /* ComponentSharedTests.swift in Sources */,
+				BDA5EEC01EDD78BD00B18214 /* ComponentFlowLayoutSharedTests.swift in Sources */,
 				BD45D9871E30906300C2D6B2 /* LayoutTests.swift in Sources */,
 				BDB8D5931E4DFADC00220BC3 /* TestItem.swift in Sources */,
 				BD6FBEF01E12B5F000AA58BD /* TestComposition.swift in Sources */,
@@ -1851,6 +1858,7 @@
 				BD6CB2661ED77F8200FC78C8 /* SpotsScrollViewTests.swift in Sources */,
 				BD650CF71ECAC2C100DFD220 /* ItemConfigurableComputeSizeTests.swift in Sources */,
 				BD10D5261D7955AC00DF8E9B /* TestViewModelExtensions.swift in Sources */,
+				BDA5EEC11EDD78BE00B18214 /* ComponentFlowLayoutSharedTests.swift in Sources */,
 				BDEA32801E87A6FF0044B056 /* TestInteraction.swift in Sources */,
 				BD165A391E6EAD750023AF82 /* HelperViews.swift in Sources */,
 				BD9AB9F61E44AD9700085677 /* ComponentSharedTests.swift in Sources */,

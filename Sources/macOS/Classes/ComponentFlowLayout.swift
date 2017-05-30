@@ -58,7 +58,7 @@ public class ComponentFlowLayout: FlowLayout {
       contentSize.height += component.headerHeight
       contentSize.height += component.footerHeight
       contentSize.width -= minimumInteritemSpacing
-      contentSize.width += CGFloat(layout.inset.right)
+      contentSize.width += CGFloat(layout.inset.left + layout.inset.right)
     case .vertical:
       contentSize.width = component.view.frame.width
       contentSize.height = super.collectionViewContentSize.height

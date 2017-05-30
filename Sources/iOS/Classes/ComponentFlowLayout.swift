@@ -88,7 +88,7 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
       contentSize.height += component.headerHeight
       contentSize.height += component.footerHeight
       contentSize.width -= minimumInteritemSpacing
-      contentSize.width += CGFloat(layout.inset.right)
+      contentSize.width += CGFloat(layout.inset.left + layout.inset.right)
 
       if let componentLayout = component.model.layout {
         contentSize.height += CGFloat(componentLayout.inset.top + componentLayout.inset.bottom)

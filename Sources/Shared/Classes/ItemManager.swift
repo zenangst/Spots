@@ -16,9 +16,8 @@ public class ItemManager {
     var spanWidth: CGFloat?
 
     if let layout = component.model.layout, layout.span > 0.0 {
-      var componentWidth: CGFloat = component.view.frame.size.width - CGFloat(layout.inset.left + layout.inset.right)
-      componentWidth -= CGFloat(layout.itemSpacing * Double(items.count - 1))
-      spanWidth = componentWidth / CGFloat(layout.span)
+      let componentWidth: CGFloat = component.view.frame.size.width - CGFloat(layout.inset.left + layout.inset.right)
+      spanWidth = (componentWidth / CGFloat(layout.span)) - CGFloat(layout.itemSpacing)
     }
 
     preparedItems.enumerated().forEach { (index: Int, item: Item) in
