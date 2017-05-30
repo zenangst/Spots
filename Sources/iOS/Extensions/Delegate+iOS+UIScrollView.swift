@@ -13,12 +13,14 @@ extension Delegate: UIScrollViewDelegate {
 
       if let footerView = component.footerView {
         footerView.frame.origin.y = scrollView.contentSize.height - footerView.frame.size.height
+        footerView.frame.origin.x = scrollView.contentOffset.x
       }
 
       if let headerView = component.headerView {
         if let layout = component.model.layout {
           switch layout.headerMode {
           case .sticky:
+            headerView.frame.origin.x = scrollView.contentOffset.x
             if let footerView = component.footerView {
               let footerFrame = scrollView.convert(footerView.frame, to: scrollView)
 
@@ -29,6 +31,7 @@ extension Delegate: UIScrollViewDelegate {
 
             headerView.frame.origin.y = scrollView.contentOffset.y
           case .default:
+            headerView.frame.origin.x = 0
             headerView.frame.origin.y = -scrollView.contentOffset.y
           }
         } else {
