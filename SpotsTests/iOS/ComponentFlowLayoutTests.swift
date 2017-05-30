@@ -60,7 +60,7 @@ class ComponentFlowLayoutTests: XCTestCase {
       return
     }
 
-    XCTAssertEqual(collectionView.contentSize, CGSize(width: 125, height: 150))
+    XCTAssertEqual(collectionView.contentSize, CGSize(width: 150, height: 150))
     XCTAssertEqual(carouselComponent.view.frame.size, CGSize(width: 100, height: 150))
   }
 
