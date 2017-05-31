@@ -19,3 +19,18 @@ extension String: StringConvertible {
     return self
   }
 }
+
+/**
+ A protocol extension on RawRepresentable to make it conform to StringConvertible
+ */
+extension StringConvertible where Self: RawRepresentable, Self.RawValue == String {
+
+  /**
+   The required implementation for RawRepresentable to make it conform to StringConvertible
+
+   - returns: rawValue as string
+   */
+  public var string: String {
+    return rawValue
+  }
+}
