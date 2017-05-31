@@ -136,6 +136,10 @@ pod 'Spots'
 github "hyperoslo/Spots"
 ```
 
+## Changelog
+
+Looking for a change log? You can find it [here](https://github.com/hyperoslo/Spots/blob/master/CHANGELOG.md)
+
 ## Dependencies
 
 - **[Cache](https://github.com/hyperoslo/Cache)**
