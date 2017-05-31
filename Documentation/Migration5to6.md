@@ -62,6 +62,10 @@ func configure(with item: Item)
 
 * `GridableLayout` has been renamed to `ComponentFlowLayout`.
 
+* `render()` on `Component` is no longer a method but a property called `view`.
+
+* `.spots` on `SpotsController` has been renamed to `.components`.
+
 We have come a long way and a lot of work went into making 6.0.0.
 If dare to look into everything that changed, you can use this diff.
 It is quiet large so you have been warned, happy migration.
