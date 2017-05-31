@@ -136,7 +136,7 @@ pod 'Spots'
 github "hyperoslo/Spots"
 ```
 
-## Changlog
+## Changelog
 
 Looking for a change log? You can find it [here](https://github.com/hyperoslo/Spots/blob/master/CHANGELOG.md)
 
