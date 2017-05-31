@@ -1,6 +1,13 @@
 # Changes between 5.8.x and 6.0.0
 
-A lot has changed in 6.0.0, to affectedly move forward we had to break things and for this we apologize. Here is a list of what we changed.
+### tl;dr
+
+* Bug fixes and improvements 🤓
+
+### Summary
+
+A lot has changed in 6.0.0, to affectedly move forward we had to break things. 
+Here is a summary of what we changed.
 
 * One of the biggest improvements that we have done in `6.x.x` is that your views no longer have to inherit from the UI component that you decide to use. This means that your views can be in both `UITableView` and `UICollectionView` without having to provide two versions on the same view with different inheritance. This is now handled internally by wrapping your view in either a `GridWrapper` or `ListWrapper`. This is totally transparent for you when working with views in your app. 
 
@@ -54,10 +61,6 @@ func configure(with item: Item)
 * `Composable` has been removed. This is now handled with `CompositeComponent`.
 
 * `GridableLayout` has been renamed to `ComponentFlowLayout`.
-
-### tl;dr
-
-* Bug fixes and improvements 🤓
 
 We have come a long way and a lot of work went into making 6.0.0.
 If dare to look into everything that changed, you can use this diff.
