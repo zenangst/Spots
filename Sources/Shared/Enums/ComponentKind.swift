@@ -6,8 +6,6 @@ public enum ComponentKind: String, Equatable {
   case grid
   /// The identifier for ListComponent
   case list
-  /// The identifier for RowComponent
-  case row
 
   /// The lowercase raw value of the case
   public var string: String {
