@@ -2,6 +2,7 @@ import UIKit
 
 extension SpotsController {
 
+  #if os(iOS)
   /// Refresh all components and reset all refresh positions.
   ///
   /// - Parameter refreshControl: A UIRefreshControl.
@@ -17,6 +18,7 @@ extension SpotsController {
       }
     }
   }
+  #endif
 
   /// Scroll to the index of a Component object, only available on iOS.
   ///
