@@ -78,7 +78,7 @@ Use the following links to dive a bit deeper into how Spots works.
 * [Delegates](https://github.com/hyperoslo/Spots/blob/master/Documentation/Delegates.md)
 * [Live Editing](https://github.com/hyperoslo/Spots/blob/master/Documentation/Live%20Editing.md)
 * [JSON Structure](https://github.com/hyperoslo/Spots/blob/master/Documentation/JSON%20Structure.md)
-* [Models](https://github.com/hyperoslo/Spots/blob/master/Documentation/Live%20Editing.md)
+* [Models](https://github.com/hyperoslo/Spots/blob/master/Documentation/Models.md)
 * [Performing mutation](https://github.com/hyperoslo/Spots/blob/master/Documentation/Performing%20mutation.md)
 * [Working with layout](https://github.com/hyperoslo/Spots/blob/master/Documentation/Layout.md)
 * [Working with the SpotsController](https://github.com/hyperoslo/Spots/blob/master/Documentation/SpotsController.md)
