@@ -1,3 +1,4 @@
+#if os(iOS)
 import UIKit
 
 /// A custom refresh control that makes sure that endRefreshing is only called
@@ -13,3 +14,4 @@ class SpotsRefreshControl: UIRefreshControl {
     }
   }
 }
+#endif
