@@ -389,7 +389,9 @@ public class ComponentManager {
       let newComponentModel = ComponentModel(json)
 
       guard component.model != newComponentModel else {
-        completion?()
+        Dispatch.main {
+          completion?()
+        }
         return
       }
 
