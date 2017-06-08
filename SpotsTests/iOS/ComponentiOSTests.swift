@@ -2,17 +2,17 @@
 import Foundation
 import XCTest
 
-class ComponentTestsOniOS: XCTestCase {
+class ComponentiOSTests: XCTestCase {
 
   var component: Component!
   var cachedSpot: Component!
 
   override func setUp() {
+    Configuration.views.purge()
     Configuration.registerDefault(view: DefaultItemView.self)
     component = Component(model: ComponentModel(layout: Layout(span: 1)))
     cachedSpot = Component(cacheKey: "cached-carousel-component")
     XCTAssertNotNil(cachedSpot.stateCache)
-    cachedSpot.stateCache?.clear()
   }
 
   override func tearDown() {
@@ -414,19 +414,19 @@ class ComponentTestsOniOS: XCTestCase {
   func testListScrollTo() {
     Configuration.registerDefault(view: DefaultItemView.self)
     let items = [
-      Item(title: "item1"),
-      Item(title: "item2"),
-      Item(title: "item3"),
-      Item(title: "item4"),
-      Item(title: "item5"),
-      Item(title: "item6")
+      Item(title: "item1", size: CGSize(width: 100, height: 44)),
+      Item(title: "item2", size: CGSize(width: 100, height: 44)),
+      Item(title: "item3", size: CGSize(width: 100, height: 44)),
+      Item(title: "item4", size: CGSize(width: 100, height: 44)),
+      Item(title: "item5", size: CGSize(width: 100, height: 44)),
+      Item(title: "item6", size: CGSize(width: 100, height: 44))
     ]
     let model = ComponentModel(kind: .list,items: items)
     let component = Component(model: model)
     component.setup(with: CGSize(width: 100, height: 100))
     component.scrollTo(item: { $0.title == "item5" }, animated: false)
 
-    XCTAssertEqual(component.view.contentOffset.y, 346)
+    XCTAssertEqual(component.view.contentOffset.y, 148)
   }
 
   func testGridScrollTo() {

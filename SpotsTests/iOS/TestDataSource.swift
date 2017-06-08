@@ -32,6 +32,8 @@ class DataSourceTests: XCTestCase {
     let itemCell3 = component.componentDataSource!.tableView(tableView, cellForRowAt: IndexPath(row: 2, section: 0))
     XCTAssertNotNil(itemCell3)
 
+    component.tableView?.reloadData()
+
     /// Check that preferred view size is applied if height is 0.0
     component.model.items[0].kind = "custom"
     component.model.items[0].size.height = 0.0
