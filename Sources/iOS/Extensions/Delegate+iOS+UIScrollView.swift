@@ -3,12 +3,43 @@ import UIKit
 /// A scroll view extension on CarouselComponent to handle scrolling specifically for this object.
 extension Delegate: UIScrollViewDelegate {
 
+  public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+    if let spotsScrollView = scrollView.superview?.superview as? SpotsScrollView {
+      let spotsScrollGesture = spotsScrollView.panGestureRecognizer
+      let componentGesture = scrollView.panGestureRecognizer
+      let spotsScrollState = spotsScrollGesture.state
+      let componentState = componentGesture.state
+
+      // Let component take precedence and disable scrolling in SpotsScrollView by deactivating
+      // its pan gesture. It will be re-enable during the scrolling of the component.
+      // See `func scrollViewDidScroll(_ scrollView: UIScrollView)`
+      if spotsScrollState == .possible && componentState == .began {
+        spotsScrollGesture.isEnabled = false
+      } else if componentState == .began && (spotsScrollState == .began || spotsScrollState == .changed) {
+        // If the `SpotsScrollView` state is trying to scroll it should take precedence over the component.
+        // It usually means that user is trying to scroll either up or down.
+        componentGesture.isEnabled = false
+      }
+    }
+  }
+
   public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    if let spotsScrollView = scrollView.superview?.superview as? SpotsScrollView {
+      spotsScrollView.panGestureRecognizer.isEnabled = true
+    }
+
     if let component = component {
-      /// This will restrict the scroll view to only scroll horizontally.
-      let constrainedYOffset = scrollView.contentSize.height - scrollView.frame.size.height
-      if constrainedYOffset >= 0.0 && component.model.interaction.scrollDirection == .horizontal {
-        scrollView.contentOffset.y = constrainedYOffset
+      let isScrolling = scrollView.isTracking || scrollView.isDragging || scrollView.isDecelerating
+      if isScrolling && component.model.interaction.scrollDirection == .horizontal {
+        if let window = scrollView.window {
+          let frame = scrollView.convert(scrollView.frame, to: window)
+          let constrainedY = scrollView.contentSize.height - scrollView.frame.size.height
+          if frame.maxY > window.frame.size.height {
+            scrollView.contentOffset.y = 0.0
+          } else {
+            scrollView.contentOffset.y = constrainedY
+          }
+        }
       }
 
       if let footerView = component.footerView {

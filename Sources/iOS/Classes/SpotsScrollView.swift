@@ -2,7 +2,7 @@ import UIKit
 import QuartzCore
 
 /// The core foundation scroll view inside of Spots that manages the linear layout of all components.
-open class SpotsScrollView: UIScrollView {
+open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
 
   /// When enabled, the last `Component` in the collection will be stretched to occupy the remaining space.
   /// This can be enabled globally by setting `Configuration.stretchLastComponent` to `true`.
@@ -309,5 +309,9 @@ open class SpotsScrollView: UIScrollView {
   private func compare(rect lhs: CGRect, to rhs: CGRect?) -> Bool {
     guard let rhs = rhs else { return false }
     return lhs.integral.equalTo(rhs.integral)
+  }
+
+  public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    return true
   }
 }
