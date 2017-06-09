@@ -1,6 +1,7 @@
 disabled_rules:
   - nesting
   - missing_docs
+  - large_tuple
 opt_in_rules:
   - empty_count
 included:

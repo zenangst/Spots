@@ -166,6 +166,14 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
       self.layout = Layout(layoutDictionary)
     }
 
+    if self.layout == nil {
+      if self.kind == "list" {
+        self.layout = Layout(["span": 1.0])
+      } else {
+        self.layout = Layout([:])
+      }
+    }
+
     let width: Double = map.resolve(keyPath: "size.width") ?? 0.0
     let height: Double = map.resolve(keyPath: "size.height") ?? 0.0
     size = CGSize(width: width, height: height)
@@ -205,6 +213,10 @@ public struct Component: Mappable, Equatable, DictionaryConvertible {
 
     if Component.legacyMapping {
       self.layout?.configure(withJSON: meta)
+    }
+
+    if self.layout == nil {
+      self.layout = Layout([:])
     }
   }
 
