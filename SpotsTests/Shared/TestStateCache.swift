@@ -17,7 +17,7 @@ class StateCacheTests: XCTestCase {
   }
 
   func testStateCacheName() {
-    XCTAssertEqual(controller.stateCache!.fileName(), "1602c56d3ac0f61e5129b5915cccca7b")
+    XCTAssertEqual(controller.stateCache!.fileName(), "1602c56d3ac0f61e5129b5915cccca7b".uppercased())
   }
 
   func testStateCacheOnController() {

@@ -1,6 +1,6 @@
 import Foundation
 import Cache
-import CryptoSwift
+import SwiftHash
 
 /// A StateCache struct used for Controller and Component object caching
 public struct StateCache {
@@ -20,7 +20,7 @@ public struct StateCache {
   }()
 
   /// A JSON Cache object
-  let cache = Cache<JSON>(name: "\(StateCache.cacheName)/\(bundleIdentifer)")
+  let cache = SpecializedCache<JSON>(name: "\(StateCache.cacheName)/\(bundleIdentifer)")
 
   /// The path of the cache
   var path: String {
@@ -34,7 +34,7 @@ public struct StateCache {
 
   /// Remove state cache for all controllers and components.
   public static func removeAll() {
-    let path = Cache<JSON>(name: "\(StateCache.cacheName)/\(bundleIdentifer)").path
+    let path = SpecializedCache<JSON>(name: "\(StateCache.cacheName)/\(bundleIdentifer)").path
     do {
       try FileManager.default.removeItem(atPath: path)
     } catch {
@@ -60,36 +60,30 @@ public struct StateCache {
   /// - parameter json: A JSON object
   public func save(_ json: [String : Any]) {
     let expiry = Expiry.date(Date().addingTimeInterval(60 * 60 * 24 * 3))
-    SyncCache(cache).add(key, object: JSON.dictionary(json), expiry: expiry)
+    try? cache.addObject(JSON.dictionary(json), forKey: key, expiry: expiry)
   }
 
   /// Load JSON from cache
   ///
   /// - returns: A Swift dictionary
   public func load() -> [String : Any] {
-    return SyncCache(cache).object(key)?.object as? [String : Any] ?? [:]
+    guard let cachedDictionary = cache.object(forKey: key)?.object as? [String: Any] else {
+      return [:]
+    }
+
+    return cachedDictionary
   }
 
   /// Clear the current StateCache
   public func clear(completion: (() -> Void)? = nil) {
-    cache.remove(key) {
-      completion?()
-    }
+    try? cache.clear()
+    completion?()
   }
 
   /// The StateCache file name
   ///
   /// - returns: An md5 representation of the StateCache's file name, computed from the StateCache key
   func fileName() -> String {
-    if let digest = key.data(using: String.Encoding.utf8)?.md5() {
-      var string = ""
-      for byte in digest {
-        string += String(format:"%02x", byte)
-      }
-
-      return string
-    }
-
-    return ""
+    return MD5(key)
   }
 }

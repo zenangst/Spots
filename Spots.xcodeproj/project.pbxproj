@@ -42,7 +42,7 @@
 		BD31BB9D1EA6209C00D1FC8A /* DelegateConfigurationClosureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD31BB991EA6208600D1FC8A /* DelegateConfigurationClosureTests.swift */; };
 		BD31BB9E1EA6209D00D1FC8A /* DelegateConfigurationClosureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD31BB991EA6208600D1FC8A /* DelegateConfigurationClosureTests.swift */; };
 		BD31BB9F1EA6209E00D1FC8A /* DelegateConfigurationClosureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD31BB991EA6208600D1FC8A /* DelegateConfigurationClosureTests.swift */; };
-		BD4295551D81D39700E07E1C /* TestComponentiOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4295541D81D39700E07E1C /* TestComponentiOS.swift */; };
+		BD4295551D81D39700E07E1C /* ComponentiOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4295541D81D39700E07E1C /* ComponentiOSTests.swift */; };
 		BD42CA851E4C9B2600A86E3B /* ComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD42CA841E4C9B2600A86E3B /* ComponentTests.swift */; };
 		BD42CA861E4C9B2600A86E3B /* ComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD42CA841E4C9B2600A86E3B /* ComponentTests.swift */; };
 		BD44D1E31EADC48200F7205E /* HeaderMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD44D1E21EADC48200F7205E /* HeaderMode.swift */; };
@@ -414,7 +414,7 @@
 		BD24030B1E4B981A005BAA19 /* Component.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
 		BD2403101E4B9A02005BAA19 /* Component.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
 		BD31BB991EA6208600D1FC8A /* DelegateConfigurationClosureTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DelegateConfigurationClosureTests.swift; sourceTree = "<group>"; };
-		BD4295541D81D39700E07E1C /* TestComponentiOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestComponentiOS.swift; sourceTree = "<group>"; };
+		BD4295541D81D39700E07E1C /* ComponentiOSTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentiOSTests.swift; sourceTree = "<group>"; };
 		BD42CA841E4C9B2600A86E3B /* ComponentTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentTests.swift; sourceTree = "<group>"; };
 		BD44D1E21EADC48200F7205E /* HeaderMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderMode.swift; sourceTree = "<group>"; };
 		BD45D9861E30906300C2D6B2 /* LayoutTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutTests.swift; sourceTree = "<group>"; };
@@ -900,13 +900,6 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
-		BDB538311C444D460005E498 /* Playgrounds */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Playgrounds;
-			sourceTree = "<group>";
-		};
 		BDD63FAA1D941A4A008E885A /* Frameworks-tvOS */ = {
 			isa = PBXGroup;
 			children = (
@@ -964,7 +957,6 @@
 				BDD63FAA1D941A4A008E885A /* Frameworks-tvOS */,
 				D58478F11C44072B006EBA49 /* Frameworks-iOS */,
 				D58479001C44078B006EBA49 /* Frameworks-macOS */,
-				BDB538311C444D460005E498 /* Playgrounds */,
 				D584780A1C43FEB8006EBA49 /* Products */,
 				BD38DC2C1D1854D700094941 /* Sources */,
 				D58478231C43FF34006EBA49 /* Spots */,
@@ -1020,7 +1012,7 @@
 				BD42CA841E4C9B2600A86E3B /* ComponentTests.swift */,
 				BDDF2CCB1DC7C23500B766BA /* TestAnimations.swift */,
 				BDEFF5511DD1DA8000FC0537 /* TestComponentDelegate+iOS.swift */,
-				BD4295541D81D39700E07E1C /* TestComponentiOS.swift */,
+				BD4295541D81D39700E07E1C /* ComponentiOSTests.swift */,
 				BDEFF54E1DD1C85300FC0537 /* TestDataSource.swift */,
 				D5D282751E547D1D004BF251 /* TestGridWrapper.swift */,
 				BD45D98A1E30909700C2D6B2 /* TestLayoutExtensions.swift */,
@@ -1729,7 +1721,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D5D282761E547D1D004BF251 /* TestGridWrapper.swift in Sources */,
-				BD4295551D81D39700E07E1C /* TestComponentiOS.swift in Sources */,
+				BD4295551D81D39700E07E1C /* ComponentiOSTests.swift in Sources */,
 				D58478571C43FFFD006EBA49 /* TestComponentModel.swift in Sources */,
 				BD45D98B1E30909700C2D6B2 /* TestLayoutExtensions.swift in Sources */,
 				BDDF2CCC1DC7C23500B766BA /* TestAnimations.swift in Sources */,
