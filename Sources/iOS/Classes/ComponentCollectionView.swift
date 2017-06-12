@@ -3,7 +3,7 @@ import UIKit
 /// ComponentCollectionView is a very simple subclass of UICollectionView.
 /// The purpose of this class is to forward `layoutSubviews` to the `Component`.
 /// This is used to perform infinite scrolling for horizontal layouts.
-class ComponentCollectionView: UICollectionView {
+class ComponentCollectionView: UICollectionView, UIGestureRecognizerDelegate {
 
   /// The component that the collection view belongs too.
   weak var component: Component?
