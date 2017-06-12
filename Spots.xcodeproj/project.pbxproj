@@ -294,6 +294,8 @@
 		BDCA3CF31E8295EB00A98A76 /* TestUserInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCA3CF21E8295EB00A98A76 /* TestUserInterface.swift */; };
 		BDCA3CF41E8295EB00A98A76 /* TestUserInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCA3CF21E8295EB00A98A76 /* TestUserInterface.swift */; };
 		BDCA3CF51E8295EB00A98A76 /* TestUserInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCA3CF21E8295EB00A98A76 /* TestUserInterface.swift */; };
+		BDCBE3851EEEFF1E00BB2514 /* ScrollViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCBE3841EEEFF1E00BB2514 /* ScrollViewManager.swift */; };
+		BDCBE3861EEEFF1E00BB2514 /* ScrollViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCBE3841EEEFF1E00BB2514 /* ScrollViewManager.swift */; };
 		BDCFCD421DCA7EFF0047E84C /* TestSpotsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCFCD401DCA7EFF0047E84C /* TestSpotsController.swift */; };
 		BDCFCD431DCA7EFF0047E84C /* TestSpotsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCFCD401DCA7EFF0047E84C /* TestSpotsController.swift */; };
 		BDCFCD441DCA7F830047E84C /* TestSpotsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCFCD401DCA7EFF0047E84C /* TestSpotsController.swift */; };
@@ -529,6 +531,7 @@
 		BDB8D5921E4DFADC00220BC3 /* TestItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestItem.swift; sourceTree = "<group>"; };
 		BDB8D5991E51C4FE00220BC3 /* Delegate+iOS+UIScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Delegate+iOS+UIScrollView.swift"; sourceTree = "<group>"; };
 		BDCA3CF21E8295EB00A98A76 /* TestUserInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestUserInterface.swift; sourceTree = "<group>"; };
+		BDCBE3841EEEFF1E00BB2514 /* ScrollViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewManager.swift; sourceTree = "<group>"; };
 		BDCFCD401DCA7EFF0047E84C /* TestSpotsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSpotsController.swift; sourceTree = "<group>"; };
 		BDD63FAB1D941A80008E885A /* Tailor.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Tailor.framework; path = Carthage/Build/tvOS/Tailor.framework; sourceTree = "<group>"; };
 		BDDCF6D51E4DF911004B38C4 /* Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
@@ -691,6 +694,7 @@
 				BD1D17241EA89A36000DBCF8 /* SpotsRefreshControl.swift */,
 				BDAD84931E3E701C008289AE /* SpotsScrollView.swift */,
 				BDB1FCBB1ED060FF0042ED61 /* ComponentCollectionView.swift */,
+				BDCBE3841EEEFF1E00BB2514 /* ScrollViewManager.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1507,6 +1511,7 @@
 				BDAD85E01E3E7032008289AE /* Inset.swift in Sources */,
 				BDAD85921E3E7032008289AE /* ItemConfigurable+Extensions.swift in Sources */,
 				BDAD858C1E3E7032008289AE /* Component+Core.swift in Sources */,
+				BDCBE3861EEEFF1E00BB2514 /* ScrollViewManager.swift in Sources */,
 				BDAD84A91E3E701C008289AE /* CarouselSpotHeader.swift in Sources */,
 				BDAD85741E3E7032008289AE /* Paginate.swift in Sources */,
 				BDAD859B1E3E7032008289AE /* SpotsController+LiveEditing.swift in Sources */,
@@ -1667,6 +1672,7 @@
 				BDAD858A1E3E7032008289AE /* Component+Core.swift in Sources */,
 				BDAD85931E3E7032008289AE /* ComponentDelegate+Extensions.swift in Sources */,
 				BD9ECEC41E6EC8B8003E4388 /* Component+iOS+List.swift in Sources */,
+				BDCBE3851EEEFF1E00BB2514 /* ScrollViewManager.swift in Sources */,
 				BD1F9E151EA39F02009C018B /* Array+Extensions.swift in Sources */,
 				BDAD85961E3E7032008289AE /* SpotsController+Extensions.swift in Sources */,
 				BDAD856F1E3E7032008289AE /* Animation.swift in Sources */,
