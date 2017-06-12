@@ -145,19 +145,15 @@ public extension Component {
   ///
   /// - parameter completion: A completion closure that will be run in the main queue when the size has been updated.
   public func updateHeight(_ completion: Completion = nil) {
-    Dispatch.interactive { [weak self] in
-      guard let strongSelf = self else {
-        Dispatch.main {
-          completion?()
-        }
+    Dispatch.main { [weak self] in
+      guard let `self` = self else {
+        completion?()
         return
       }
 
-      let componentHeight = strongSelf.computedHeight
-      Dispatch.main { [weak self] in
-        self?.view.frame.size.height = componentHeight
-        completion?()
-      }
+      let componentHeight = self.computedHeight
+      self.view.frame.size.height = componentHeight
+      completion?()
     }
   }
 
