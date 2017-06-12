@@ -151,7 +151,9 @@ extension Delegate: UIScrollViewDelegate {
         component.carouselScrollDelegate?.componentCarouselDidEndScrolling(component, item: item, animated: false)
       }
 
-      let pointeeX = centerLayoutAttributes.frame.midX - scrollView.frame.width / 2
+      let minimumItemSpacing = collectionViewLayout.minimumInteritemSpacing * CGFloat(foundIndexPath.item)
+      let componentWidth = scrollView.frame.width - collectionViewLayout.sectionInset.left
+      let pointeeX = centerLayoutAttributes.frame.midX - componentWidth / 2 - minimumItemSpacing
 
       guard pointeeX > 0 else {
         return
