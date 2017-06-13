@@ -166,6 +166,7 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
         }
 
         attributes.append(itemAttribute)
+        self.layoutAttributes?[index] = itemAttribute
       }
     }
 
