@@ -13,11 +13,14 @@ public class Delegate: NSObject {
   /// configured with the model data. See `ItemConfigurable` for more information
   /// about how to configure your views.
   var viewPreparer = ViewPreparer()
+
+  #if !os(macOS)
   /// The scroll view manager handles constraining horizontal components.
   /// They should not be vertically scrollable even if the content size exceeds the
   /// content size height. It also handles maintaining the position of headers and footers
   /// in components.
   var scrollViewManager = ScrollViewManager()
+  #endif
 
   /// Initialize a new instance of a delegate with a component.
   ///
