@@ -8,7 +8,7 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
   /// The y offset for the Gridable object
   open var yOffset: CGFloat?
 
-  private var layoutAttributes: [UICollectionViewLayoutAttributes]?
+  private(set) var layoutAttributes: [UICollectionViewLayoutAttributes]?
 
   // Subclasses must override this method and use it to return the width and height of the collection view’s content. These values represent the width and height of all the content, not just the content that is currently visible. The collection view uses this information to configure its own content size to facilitate scrolling.
   open override var collectionViewContentSize: CGSize {
