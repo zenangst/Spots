@@ -272,8 +272,8 @@ class ComponentiOSTests: XCTestCase {
     let collectionView = CollectionViewMock(frame: .zero, collectionViewLayout: layout)
     collectionView.itemSize = CGSize(width: 200, height: 100)
 
-    let model = ComponentModel(json)
-    let component = Component(model: model, view: collectionView)
+    var model = ComponentModel(json)
+    var component = Component(model: model, view: collectionView)
     let parentSize = CGSize(width: 300, height: 100)
 
     component.setup(with: parentSize)
@@ -300,6 +300,36 @@ class ComponentiOSTests: XCTestCase {
     collectionView.delegate!.scrollViewWillEndDragging!(collectionView, withVelocity: .zero, targetContentOffset: targetContentOffset)
     XCTAssertEqual(targetContentOffset.pointee.x, 100000)
     XCTAssertEqual(targetContentOffset.pointee.y, 100000)
+
+    // Make sure that minimum item spacing is taken into account when snapping to an item.
+    model.layout?.itemSpacing = 10
+    model.layout?.span = 2
+    collectionView.itemSize = CGSize(width: 140, height: 100)
+    component = Component(model: model, view: collectionView)
+    component.setup(with: parentSize)
+    component.collectionView?.collectionViewLayout = layout
+    component.view.layoutSubviews()
+
+    // Make sure our mocked item size is correct
+    XCTAssertEqual(collectionView.itemSize, component.model.items[0].size)
+
+    // The first item should not snap
+    targetContentOffset.pointee.x = 50
+    collectionView.delegate!.scrollViewWillEndDragging!(collectionView, withVelocity: .zero, targetContentOffset: targetContentOffset)
+    XCTAssertEqual(targetContentOffset.pointee.x, 70)
+
+    // The second item should use snapping but it should also take minimum item spacing into account.
+    targetContentOffset.pointee.x = 140
+    collectionView.delegate!.scrollViewWillEndDragging!(collectionView, withVelocity: .zero, targetContentOffset: targetContentOffset)
+    XCTAssertEqual(targetContentOffset.pointee.x, 220)
+
+    // Make sure an out of bounds content offset is not manipulated
+    targetContentOffset.pointee.x = 100000
+    targetContentOffset.pointee.y = 100000
+    collectionView.delegate!.scrollViewWillEndDragging!(collectionView, withVelocity: .zero, targetContentOffset: targetContentOffset)
+    XCTAssertEqual(targetContentOffset.pointee.x, 100000)
+    XCTAssertEqual(targetContentOffset.pointee.y, 100000)
+
   }
 
   func testAppendItem() {
