@@ -30,7 +30,7 @@ extension Delegate: UIScrollViewDelegate {
 
     if let component = component {
       if component.model.interaction.scrollDirection == .horizontal {
-        scrollViewManager.constrainScrollViewYOffset(scrollView, in: component)
+        scrollViewManager.constrainScrollViewYOffset(scrollView)
       }
 
       if let footerView = component.footerView {
