@@ -9,6 +9,7 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
   open var yOffset: CGFloat?
 
   private var layoutAttributes: [UICollectionViewLayoutAttributes]?
+  private(set) var cachedFrames = [CGRect]()
 
   // Subclasses must override this method and use it to return the width and height of the collection view’s content. These values represent the width and height of all the content, not just the content that is currently visible. The collection view uses this information to configure its own content size to facilitate scrolling.
   open override var collectionViewContentSize: CGSize {
@@ -166,6 +167,14 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
         }
 
         attributes.append(itemAttribute)
+
+        if let itemAttributeCopy = itemAttribute.copy() as? UICollectionViewLayoutAttributes {
+          if index >= cachedFrames.count {
+            cachedFrames.append(itemAttribute.frame)
+          } else {
+            cachedFrames[index] = itemAttribute.frame
+          }
+        }
       }
     }
 
