@@ -119,13 +119,15 @@ extension Delegate: UIScrollViewDelegate {
         component.carouselScrollDelegate?.componentCarouselDidEndScrolling(component, item: item, animated: false)
       }
 
-      let pointeeX = centerLayoutAttributes.frame.midX - scrollView.frame.size.width / 2
+      let newPointeeX = centerLayoutAttributes.frame.midX - scrollView.frame.size.width / 2
 
-      guard pointeeX > 0 && foundIndexPath.item > 0 else {
+      // Only snap to item if new value exceeds zero or that the index path
+      // at center is larger than zero.
+      guard newPointeeX > 0 && foundIndexPath.item > 0 else {
         return
       }
 
-      targetContentOffset.pointee.x = pointeeX
+      targetContentOffset.pointee.x = newPointeeX
     }
   }
 
