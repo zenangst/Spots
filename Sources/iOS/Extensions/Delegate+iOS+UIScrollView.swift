@@ -110,23 +110,18 @@ extension Delegate: UIScrollViewDelegate {
         }
       }
 
-      guard let foundIndexPath = centerIndexPath else {
-        return
-      }
-
-      guard let centerLayoutAttributes = collectionViewLayout.layoutAttributesForItem(at: foundIndexPath) else {
-        return
+      guard let foundIndexPath = centerIndexPath,
+        let centerLayoutAttributes = collectionViewLayout.layoutAttributes?[foundIndexPath.item] else {
+          return
       }
 
       if let item = component.item(at: foundIndexPath.item) {
         component.carouselScrollDelegate?.componentCarouselDidEndScrolling(component, item: item, animated: false)
       }
 
-      let minimumItemSpacing = collectionViewLayout.minimumInteritemSpacing * CGFloat(foundIndexPath.item)
-      let componentWidth = scrollView.frame.width - collectionViewLayout.sectionInset.left
-      let pointeeX = centerLayoutAttributes.frame.midX - componentWidth / 2 - minimumItemSpacing
+      let pointeeX = centerLayoutAttributes.frame.midX - scrollView.frame.size.width / 2
 
-      guard pointeeX > 0 else {
+      guard pointeeX > 0 && foundIndexPath.item > 0 else {
         return
       }
 
@@ -146,6 +141,10 @@ extension Delegate: UIScrollViewDelegate {
   }
 
   fileprivate func getCenterIndexPath(in collectionView: UICollectionView, scrollView: UIScrollView, point: CGPoint, contentSize: CGSize, offset: CGFloat) -> IndexPath? {
+    guard point.x > 0.0 else {
+      return IndexPath(item: 0, section: 0)
+    }
+
     let pointXUpperBound = round(contentSize.width - scrollView.frame.width / 2)
     var point = point
     point.x += scrollView.frame.width / 2
