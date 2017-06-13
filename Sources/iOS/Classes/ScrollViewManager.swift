@@ -10,14 +10,14 @@ class ScrollViewManager {
   ///
   /// - Parameters:
   ///   - scrollView: The scroll view of the component that should be constrained.
-  func constrainScrollViewYOffset(_ scrollView: UIScrollView) {
+  func constrainScrollViewYOffset(_ scrollView: UIScrollView, parentScrollView: UIScrollView? = nil) {
     let isScrolling = scrollView.isTracking || scrollView.isDragging || scrollView.isDecelerating
 
     guard isScrolling else {
       return
     }
 
-    guard let spotsScrollView = scrollView.superview?.superview as? SpotsScrollView else {
+    guard let parentScrollView = parentScrollView else {
       return
     }
 
@@ -29,7 +29,7 @@ class ScrollViewManager {
 
     // The scroll view is located at the top of its parent and does not have its full size.
     // Use computed constrainted Y offset instead of allowing the user to scroll vertically.
-    if spotsScrollView.contentOffset.y >= scrollView.frame.origin.y {
+    if parentScrollView.contentOffset.y >= scrollView.frame.origin.y {
       scrollView.contentOffset.y = constrainedY
     } else {
       // The scroll view is not fully visible and located at the end of its parent.
