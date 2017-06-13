@@ -29,45 +29,16 @@ extension Delegate: UIScrollViewDelegate {
     }
 
     if let component = component {
-      let isScrolling = scrollView.isTracking || scrollView.isDragging || scrollView.isDecelerating
-      if isScrolling && component.model.interaction.scrollDirection == .horizontal {
-        if let window = scrollView.window {
-          let frame = scrollView.convert(scrollView.frame, to: window)
-          let constrainedY = scrollView.contentSize.height - scrollView.frame.size.height
-          if frame.maxY > window.frame.size.height {
-            scrollView.contentOffset.y = 0.0
-          } else {
-            scrollView.contentOffset.y = constrainedY
-          }
-        }
+      if component.model.interaction.scrollDirection == .horizontal {
+        scrollViewManager.constrainScrollViewYOffset(scrollView, parentScrollView: scrollView.superview?.superview as? ScrollView)
       }
 
       if let footerView = component.footerView {
-        footerView.frame.origin.y = scrollView.contentSize.height - footerView.frame.size.height
-        footerView.frame.origin.x = scrollView.contentOffset.x
+        scrollViewManager.positionFooterView(footerView, in: scrollView)
       }
 
       if let headerView = component.headerView {
-        if let layout = component.model.layout {
-          switch layout.headerMode {
-          case .sticky:
-            headerView.frame.origin.x = scrollView.contentOffset.x
-            if let footerView = component.footerView {
-              let footerFrame = scrollView.convert(footerView.frame, to: scrollView)
-
-              if headerView.frame.intersects(footerFrame) && scrollView.contentOffset.y >= headerView.frame.origin.y {
-                break
-              }
-            }
-
-            headerView.frame.origin.y = scrollView.contentOffset.y
-          case .default:
-            headerView.frame.origin.x = 0
-            headerView.frame.origin.y = -scrollView.contentOffset.y
-          }
-        } else {
-          headerView.frame.origin.y = -scrollView.contentOffset.y
-        }
+        scrollViewManager.positionHeaderView(headerView, footerView: component.footerView, in: scrollView, with: component.model.layout)
       }
     }
 
