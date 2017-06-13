@@ -110,8 +110,7 @@ extension Delegate: UIScrollViewDelegate {
         }
       }
 
-      guard let foundIndexPath = centerIndexPath,
-        let centerLayoutAttributes = collectionViewLayout.layoutAttributes?[foundIndexPath.item] else {
+      guard let foundIndexPath = centerIndexPath else {
           return
       }
 
@@ -119,7 +118,8 @@ extension Delegate: UIScrollViewDelegate {
         component.carouselScrollDelegate?.componentCarouselDidEndScrolling(component, item: item, animated: false)
       }
 
-      let newPointeeX = centerLayoutAttributes.frame.midX - scrollView.frame.size.width / 2
+      let itemFrame = collectionViewLayout.cachedFrames[foundIndexPath.item]
+      let newPointeeX = itemFrame.midX - scrollView.frame.size.width / 2
 
       // Only snap to item if new value exceeds zero or that the index path
       // at center is larger than zero.
