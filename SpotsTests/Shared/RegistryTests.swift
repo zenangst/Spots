@@ -23,7 +23,7 @@ class RegistryTests: XCTestCase {
   func testCreatingView() {
     let frame = CGRect(origin: .zero, size: .init(width: 50, height: 50))
     let item = Item(title: "foo", kind: "registry-mock")
-    let view: RegistryViewMock? = Configuration.views.makeView(from: item, frame: frame)
+    let view: RegistryViewMock? = Configuration.views.makeView(from: item, with: frame)
 
     XCTAssertNotNil(view)
     XCTAssertEqual(view?.frame, frame)
