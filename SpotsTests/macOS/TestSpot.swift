@@ -48,10 +48,10 @@ class TestSpot: XCTestCase {
       let cachedSpot = Component(cacheKey: cacheKey)
       XCTAssertEqual(cachedSpot.model.items[0].title, "test")
       XCTAssertEqual(cachedSpot.model.items.count, 1)
-      cachedSpot.stateCache?.clear(keepingRootDirectory: true)
+      cachedSpot.stateCache?.clear()
       expectation.fulfill()
 
-      cachedSpot.stateCache?.clear(keepingRootDirectory: true)
+      cachedSpot.stateCache?.clear()
     }
     waitForExpectations(timeout: 10.0, handler: nil)
   }
