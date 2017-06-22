@@ -168,12 +168,10 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
 
         attributes.append(itemAttribute)
 
-        if let itemAttributeCopy = itemAttribute.copy() as? UICollectionViewLayoutAttributes {
-          if index >= cachedFrames.count {
-            cachedFrames.append(itemAttribute.frame)
-          } else {
-            cachedFrames[index] = itemAttribute.frame
-          }
+        if index >= cachedFrames.count {
+          cachedFrames.append(itemAttribute.frame)
+        } else {
+          cachedFrames[index] = itemAttribute.frame
         }
       }
     }
