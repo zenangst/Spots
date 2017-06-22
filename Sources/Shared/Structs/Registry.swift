@@ -113,4 +113,17 @@ public struct Registry {
 
     return (type: registryType, view: view)
   }
+
+  /// Construct a view from an `Item`.
+  ///
+  /// - Parameters:
+  ///   - item: An `Item` struct used to create the view.
+  ///   - frame: The frame that should be applied to the view.
+  /// - Returns: An optional view created based of the `Item`.
+  public func makeView<T: View>(from item: Spots.Item, with frame: CGRect) -> T? {
+    let view = make(item.kind)?.view as? T
+    (view as? ItemConfigurable)?.configure(with: item)
+    view?.frame = frame
+    return view
+  }
 }
