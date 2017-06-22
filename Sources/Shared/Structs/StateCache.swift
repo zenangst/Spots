@@ -76,7 +76,7 @@ public struct StateCache {
 
   /// Clear the current StateCache
   public func clear(completion: (() -> Void)? = nil) {
-    try? cache.clear()
+    try? cache.clear(keepingRootDirectory: true)
     completion?()
   }
 
