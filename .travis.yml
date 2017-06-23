@@ -6,7 +6,7 @@ cache:
     - Carthage
 
 before_install:
-  - travis_wait 35; bin/bootstrap-if-needed
+  - carthage bootstrap --platform macOS
 
 script:
   - set -o pipefail && xcodebuild -project Spots.xcodeproj -scheme "Spots-macOS" -sdk macosx clean build
