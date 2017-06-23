@@ -27,7 +27,7 @@ Pod::Spec.new do |s|
   s.subspec "RxSwift" do |ss|
     ss.source_files = "RxSpots/**/*"
     ss.dependency "Spots/Core"
-    ss.dependency "RxCocoa", "~> 3.2.0"
+    ss.dependency "RxCocoa", "~> 3.0"
   end
 
   s.pod_target_xcconfig = { 'SWIFT_VERSION' => '3.0' }
