@@ -1,6 +1,6 @@
 machine:
   xcode:
-    version: "8.3"
+    version: "8.3.3"
 
 dependencies:
   override:
@@ -11,6 +11,8 @@ dependencies:
 
 test:
   override:
+    - set -o pipefail && xcodebuild -project Spots.xcodeproj -scheme "Spots-macOS" -sdk macosx clean build
+    - set -o pipefail && xcodebuild -project Spots.xcodeproj -scheme "Spots-macOS" -sdk macosx -enableCodeCoverage YES test
     - set -o pipefail && xcodebuild -project Spots.xcodeproj -scheme "Spots-iOS" -sdk iphonesimulator clean build
     - set -o pipefail && xcodebuild -project Spots.xcodeproj -scheme "Spots-iOS" -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 6,OS=10.0' -enableCodeCoverage YES test
     - bash <(curl -s https://codecov.io/bash) -cF ios -J 'Spots'
