@@ -118,7 +118,7 @@ extension Delegate: NSTableViewDelegate {
     case let view as NSTableRowView:
       if let itemConfigurable = view as? ItemConfigurable {
         itemConfigurable.configure(with: component.model.items[row])
-        component.model.items[row].size.height = itemConfigurable.computeSize(for: component.model.items[row]).height
+        component.model.items[row].size.height = itemConfigurable.computeSize(for: component.model.items[row], containerSize: component.view.frame.size).height
         component.configure?(itemConfigurable)
       }
     default:
@@ -128,7 +128,7 @@ extension Delegate: NSTableViewDelegate {
 
         if let itemConfigurable = view as? ItemConfigurable {
           itemConfigurable.configure(with: component.model.items[row])
-          component.model.items[row].size.height = itemConfigurable.computeSize(for: component.model.items[row]).height
+          component.model.items[row].size.height = itemConfigurable.computeSize(for: component.model.items[row], containerSize: view.frame.size).height
           component.configure?(itemConfigurable)
         }
 
