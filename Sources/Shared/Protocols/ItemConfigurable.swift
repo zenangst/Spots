@@ -18,14 +18,15 @@ public protocol ItemConfigurable: class {
   /// Usage:
   ///
   /// ```
-  /// func computeSize(for item: Item) -> CGSize  {
+  /// func computeSize(for item: Item, containerSize: CGSize) -> CGSize  {
   ///   return textLabel.sizeThatFits(item.size)
   /// }
   /// ```
   ///
   /// - Parameter item: The item model for the view.
+  /// - Parameter containerSize: The size of the container, usually UITableView or UICollectionView
   /// - Returns: A `CGSize` that gets passed back to the data source.
-  func computeSize(for item: Item) -> CGSize
+  func computeSize(for item: Item, containerSize: CGSize) -> CGSize
 
   func prepareForReuse()
 }
