@@ -9,7 +9,7 @@ import Spots
   typealias GridView = UICollectionViewCell
 #endif
 
-class WrappedViewMock: View, ItemConfigurable {
+fileprivate class WrappedViewMock: View, ItemConfigurable {
 
   func configure(with item: Item) {}
 
@@ -18,7 +18,7 @@ class WrappedViewMock: View, ItemConfigurable {
   }
 }
 
-class ListViewMock: ListView, ItemConfigurable {
+fileprivate class ListViewMock: ListView, ItemConfigurable {
 
   func configure(with item: Item) {}
 
@@ -27,7 +27,7 @@ class ListViewMock: ListView, ItemConfigurable {
   }
 }
 
-class GridViewMock: GridView, ItemConfigurable {
+fileprivate class GridViewMock: GridView, ItemConfigurable {
 
   func configure(with item: Item) {}
 
@@ -35,7 +35,6 @@ class GridViewMock: GridView, ItemConfigurable {
     return CGSize(width: 150, height: 150)
   }
 }
-
 
 class ItemConfigurableComputeSizeTests: XCTestCase {
 
