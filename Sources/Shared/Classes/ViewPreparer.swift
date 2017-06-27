@@ -67,7 +67,7 @@ class ViewPreparer {
     view.configure(with: component.model.items[index])
 
     if component.model.items[index].size.height == 0.0 {
-      component.model.items[index].size = view.computeSize(for: component.model.items[index])
+      component.model.items[index].size = view.computeSize(for: component.model.items[index], containerSize: component.view.frame.size)
     }
 
     if configureView {

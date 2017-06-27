@@ -10,7 +10,7 @@ extension Component {
     if let headerView = Configuration.views.make(header.kind)?.view {
       if let itemConfigurable = headerView as? ItemConfigurable {
         let size = CGSize(width: view.frame.width,
-                          height: itemConfigurable.computeSize(for: header).height)
+                          height: itemConfigurable.computeSize(for: header, containerSize: view.frame.size).height)
         headerView.frame.size = size
         itemConfigurable.configure(with: header)
 
@@ -44,7 +44,7 @@ extension Component {
     if let footerView = Configuration.views.make(footer.kind)?.view {
       if let itemConfigurable = footerView as? ItemConfigurable {
         let size = CGSize(width: view.frame.width,
-                          height: itemConfigurable.computeSize(for: footer).height)
+                          height: itemConfigurable.computeSize(for: footer, containerSize: view.frame.size).height)
         footerView.frame.size = size
         itemConfigurable.configure(with: footer)
       }

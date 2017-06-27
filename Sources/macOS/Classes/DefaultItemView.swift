@@ -85,7 +85,7 @@ open class DefaultItemView: NSTableRowView, ItemConfigurable {
     lineView.frame.origin.y = item.size.height + 1
   }
 
-  open func computeSize(for item: Item) -> CGSize {
+  open func computeSize(for item: Item, containerSize: CGSize) -> CGSize {
     return Configuration.defaultViewSize
   }
 }

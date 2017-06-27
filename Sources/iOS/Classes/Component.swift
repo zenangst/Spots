@@ -79,7 +79,10 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
 
     return footerView.frame.size.height
   }
+
+  /// The underlying view for this component, usually UITableView or UICollectionView
   public var view: ScrollView
+
   /// A computed variable that casts the current `userInterface` into a `UITableView`.
   /// It will return `nil` if the model kind is not `.list`.
   public var tableView: TableView? {

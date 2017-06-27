@@ -247,7 +247,7 @@ public class ComponentManager {
           if let view: ItemConfigurable = component.userInterface?.view(at: index), animation != .none {
             component.userInterface?.beginUpdates()
             view.configure(with: component.model.items[index])
-            component.model.items[index].size.height = view.computeSize(for: component.model.items[index]).height
+            component.model.items[index].size.height = view.computeSize(for: component.model.items[index], containerSize: component.view.frame.size).height
             component.userInterface?.endUpdates()
           } else {
             component.userInterface?.reload([index], withAnimation: animation, completion: nil)
@@ -256,7 +256,7 @@ public class ComponentManager {
           updateHeightAndIndexes = true
         } else if let view: ItemConfigurable = component.userInterface?.view(at: index) {
           view.configure(with: component.model.items[index])
-          component.model.items[index].size.height = view.computeSize(for: component.model.items[index]).height
+          component.model.items[index].size.height = view.computeSize(for: component.model.items[index], containerSize: component.view.frame.size).height
         }
 
         self?.finishComponentOperation(component, updateHeightAndIndexes: updateHeightAndIndexes, completion: completion)

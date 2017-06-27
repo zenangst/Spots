@@ -31,7 +31,7 @@ public class CarouselComponentHeader: UICollectionReusableView, ItemConfigurable
     titleLabel.text = item.title
   }
 
-  public func computeSize(for item: Item) -> CGSize {
+  public func computeSize(for item: Item, containerSize: CGSize) -> CGSize {
     return CGSize(width: 0, height: 120)
   }
 }

@@ -9,38 +9,46 @@ import Spots
   typealias GridView = UICollectionViewCell
 #endif
 
-class WrappedViewMock: View, ItemConfigurable {
+fileprivate class WrappedViewMock: View, ItemConfigurable {
 
   func configure(with item: Item) {}
 
-  func computeSize(for item: Item) -> CGSize {
+  func computeSize(for item: Item, containerSize: CGSize) -> CGSize {
     return CGSize(width: 200, height: 200)
   }
 }
 
-class ListViewMock: ListView, ItemConfigurable {
+fileprivate class ListViewMock: ListView, ItemConfigurable {
 
   func configure(with item: Item) {}
 
-  func computeSize(for item: Item) -> CGSize {
+  func computeSize(for item: Item, containerSize: CGSize) -> CGSize {
     return CGSize(width: 300, height: 300)
   }
 }
 
-class GridViewMock: GridView, ItemConfigurable {
+fileprivate class GridViewMock: GridView, ItemConfigurable {
 
   func configure(with item: Item) {}
 
-  func computeSize(for item: Item) -> CGSize {
+  func computeSize(for item: Item, containerSize: CGSize) -> CGSize {
     return CGSize(width: 150, height: 150)
   }
 }
 
+fileprivate class ContainerSizeAwaredViewMock: View, ItemConfigurable {
+
+  func configure(with item: Item) {}
+
+  func computeSize(for item: Item, containerSize: CGSize) -> CGSize {
+    return CGSize(width: containerSize.width, height: 50)
+  }
+}
 
 class ItemConfigurableComputeSizeTests: XCTestCase {
 
   enum Identifier: String {
-    case wrapped, list, grid
+    case wrapped, list, grid, containerSizeAwareWrapped
 
     var identifier: String {
       return "\(String(describing: ItemConfigurableComputeSizeTests.self))-\(self.rawValue)"
@@ -50,6 +58,8 @@ class ItemConfigurableComputeSizeTests: XCTestCase {
   override func setUp() {
     Configuration.register(view: WrappedViewMock.self, identifier: Identifier.wrapped.identifier)
     Configuration.register(view: ListViewMock.self, identifier: Identifier.list.identifier)
+    Configuration.register(view: ContainerSizeAwaredViewMock.self,
+                           identifier: Identifier.containerSizeAwareWrapped.identifier)
     Configuration.register(view: GridViewMock.self, identifier: Identifier.grid.identifier)
   }
 
@@ -90,6 +100,24 @@ class ItemConfigurableComputeSizeTests: XCTestCase {
       XCTAssertEqual(component.model.items[0].kind, Identifier.wrapped.identifier)
       XCTAssertEqual(component.model.items[0].size, CGSize(width: 200, height: 200))
       let type: WrappedViewMock? = component.ui(at: 0)
+      XCTAssertNotNil(type)
+      expectation.fulfill()
+    }
+
+    waitForExpectations(timeout: 10.0, handler: nil)
+  }
+
+  func testContainerSizeAwared() {
+    let component = createComponent(kind: .list, items: [Item(kind: Identifier.containerSizeAwareWrapped.identifier)])
+    XCTAssertEqual(component.model.items[0].size, CGSize(width: 200, height: 50))
+
+    let type: ContainerSizeAwaredViewMock? = component.ui(at: 0)
+    XCTAssertNotNil(type)
+    let expectation = self.expectation(description: "Wait for component update")
+    component.update(Item(kind: Identifier.containerSizeAwareWrapped.identifier), index: 0) {
+      XCTAssertEqual(component.model.items[0].kind, Identifier.containerSizeAwareWrapped.identifier)
+      XCTAssertEqual(component.model.items[0].size, CGSize(width: 200, height: 50))
+      let type: ContainerSizeAwaredViewMock? = component.ui(at: 0)
       XCTAssertNotNil(type)
       expectation.fulfill()
     }

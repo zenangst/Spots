@@ -6,7 +6,7 @@ class ItemsPerRowViewMock: View, ItemConfigurable {
 
   func configure(with item: Item) {}
 
-  func computeSize(for item: Item) -> CGSize {
+  func computeSize(for item: Item, containerSize: CGSize) -> CGSize {
     return CGSize(width: 100, height: 50)
   }
 }
