@@ -84,7 +84,7 @@ extension SpotsController {
       frame.size.height = 75
     }
 
-    func computeSize(for item: Item) -> CGSize {
+    func computeSize(for item: Item, containerSize: CGSize) -> CGSize {
       return CGSize(width: 200, height: 50)
     }
   }
@@ -122,7 +122,7 @@ extension SpotsController {
       titleLabel.text = item.title
     }
 
-    func computeSize(for item: Item) -> CGSize {
+    func computeSize(for item: Item, containerSize: CGSize) -> CGSize {
       return CGSize(width: 200, height: 50)
     }
   }
@@ -160,7 +160,7 @@ extension SpotsController {
       titleLabel.text = item.title
     }
 
-    func computeSize(for item: Item) -> CGSize {
+    func computeSize(for item: Item, containerSize: CGSize) -> CGSize {
       return CGSize(width: 200, height: 50)
     }
   }
@@ -200,7 +200,7 @@ extension SpotsController {
       titleLabel.text = item.title
     }
 
-    func computeSize(for item: Item) -> CGSize {
+    func computeSize(for item: Item, containerSize: CGSize) -> CGSize {
       return CGSize(width: 200, height: 50)
     }
   }
@@ -210,7 +210,7 @@ extension SpotsController {
       textLabel?.text = item.text
     }
 
-    func computeSize(for item: Item) -> CGSize {
+    func computeSize(for item: Item, containerSize: CGSize) -> CGSize {
       return CGSize(width: 50, height: 44)
     }
   }
@@ -220,7 +220,7 @@ extension SpotsController {
       textLabel?.text = item.title
     }
 
-    func computeSize(for item: Item) -> CGSize {
+    func computeSize(for item: Item, containerSize: CGSize) -> CGSize {
       return CGSize(width: 0, height: 88)
     }
   }
@@ -229,7 +229,7 @@ extension SpotsController {
 
     func configure(with item: Item) {}
     
-    func computeSize(for item: Item) -> CGSize {
+    func computeSize(for item: Item, containerSize: CGSize) -> CGSize {
       return CGSize(width: 50, height: 44)
     }
   }
@@ -237,7 +237,7 @@ extension SpotsController {
   class CustomGridHeaderView: UICollectionReusableView, ItemConfigurable {
     lazy var textLabel = UILabel()
 
-    func computeSize(for item: Item) -> CGSize {
+    func computeSize(for item: Item, containerSize: CGSize) -> CGSize {
       return CGSize(width: 0, height: 88)
     }
 
@@ -254,7 +254,7 @@ class TestView: View, ItemConfigurable {
     self.item = item
   }
 
-  func computeSize(for item: Item) -> CGSize {
+  func computeSize(for item: Item, containerSize: CGSize) -> CGSize {
     return CGSize(width: 50, height: 50)
   }
 }

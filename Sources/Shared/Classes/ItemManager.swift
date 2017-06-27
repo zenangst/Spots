@@ -102,7 +102,7 @@ public class ItemManager {
       prepare(component: component, wrappable: view, item: &item, recreateComposites: recreateComposites)
     } else if let view = view as? ItemConfigurable {
       view.configure(with: item)
-      item.size.height = view.computeSize(for: item).height
+      item.size.height = view.computeSize(for: item, containerSize: component.view.frame.size).height
       setFallbackViewSize(component: component, item: &item, with: view)
     }
   }
@@ -116,7 +116,7 @@ public class ItemManager {
     component.view.frame.size.width = view.frame.size.width
 
     if let itemConfigurable = view as? ItemConfigurable, view.frame.size.height == 0.0 {
-      view.frame.size.height = itemConfigurable.computeSize(for: item).height
+      view.frame.size.height = itemConfigurable.computeSize(for: item, containerSize: component.view.frame.size).height
     }
 
     if view.frame.size.width == 0.0 {
@@ -187,11 +187,11 @@ public class ItemManager {
     let hasExplicitHeight: Bool = item.size.height == 0.0
 
     if hasExplicitHeight {
-      item.size.height = view.computeSize(for: item).height
+      item.size.height = view.computeSize(for: item, containerSize: component.view.frame.size).height
     }
 
     if item.size.width == 0.0 {
-      item.size.width  = view.computeSize(for: item).width
+      item.size.width  = view.computeSize(for: item, containerSize: component.view.frame.size).width
     }
 
     if let superview = component.view.superview, item.size.width == 0.0 {
