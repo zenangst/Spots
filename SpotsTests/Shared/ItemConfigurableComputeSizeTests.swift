@@ -13,7 +13,7 @@ class WrappedViewMock: View, ItemConfigurable {
 
   func configure(with item: Item) {}
 
-  func computeSize(for item: Item) -> CGSize {
+  func computeSize(for item: Item, containerSize: CGSize) -> CGSize {
     return CGSize(width: 200, height: 200)
   }
 }
@@ -22,7 +22,7 @@ class ListViewMock: ListView, ItemConfigurable {
 
   func configure(with item: Item) {}
 
-  func computeSize(for item: Item) -> CGSize {
+  func computeSize(for item: Item, containerSize: CGSize) -> CGSize {
     return CGSize(width: 300, height: 300)
   }
 }
@@ -31,7 +31,7 @@ class GridViewMock: GridView, ItemConfigurable {
 
   func configure(with item: Item) {}
 
-  func computeSize(for item: Item) -> CGSize {
+  func computeSize(for item: Item, containerSize: CGSize) -> CGSize {
     return CGSize(width: 150, height: 150)
   }
 }
