@@ -27,12 +27,13 @@ public class ComponentManager {
     Dispatch.main { [weak self] in
       let numberOfItems = component.model.items.count
       component.model.items.append(item)
+      self?.itemManager.configureItem(at: numberOfItems, component: component)
 
       if numberOfItems == 0 {
-        component.userInterface?.reloadDataSource()
-        self?.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
+        component.userInterface?.reloadSection(0, withAnimation: animation) {
+          self?.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
+        }
       } else {
-        self?.itemManager.configureItem(at: numberOfItems, component: component, usesViewSize: true)
         component.userInterface?.insert([numberOfItems], withAnimation: animation) {
           self?.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
         }
