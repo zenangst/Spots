@@ -16,7 +16,11 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
     guard let delegate = collectionView?.delegate as? Delegate,
       let component = delegate.component
       else {
-        return CGSize.zero
+        return .zero
+    }
+
+    guard !component.model.items.isEmpty else {
+      return .zero
     }
 
     if scrollDirection != .horizontal {
