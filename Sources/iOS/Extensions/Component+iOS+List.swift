@@ -6,6 +6,7 @@ extension Component {
     tableView.dataSource = componentDataSource
     tableView.delegate = componentDelegate
     tableView.rowHeight = UITableViewAutomaticDimension
+    tableView.layer.masksToBounds = false
     tableView.frame.size = size
     tableView.frame.size.width = round(size.width - (tableView.contentInset.left))
     tableView.frame.origin.x = round(size.width / 2 - tableView.frame.width / 2)
