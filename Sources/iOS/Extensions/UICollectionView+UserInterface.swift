@@ -119,12 +119,13 @@ extension UICollectionView: UserInterface {
   ///  - parameter section: The section you want to update
   ///  - parameter completion: A completion block for when the updates are done
   public func insert(_ indexes: [Int], withAnimation animation: Animation = .automatic, completion: (() -> Void)? = nil) {
+    applyAnimation(animation: animation)
     let indexPaths: [IndexPath] = indexes.map { IndexPath(item: $0, section: 0) }
-
     performBatchUpdates({
       self.insertItems(at: indexPaths)
     }, completion: nil)
     updateContentSize()
+    removeAnimation()
     completion?()
   }
 
@@ -134,18 +135,21 @@ extension UICollectionView: UserInterface {
   ///  - parameter section: The section you want to update
   ///  - parameter completion: A completion block for when the updates are done
   public func reload(_ indexes: [Int], withAnimation animation: Animation = .automatic, completion: (() -> Void)? = nil) {
+    applyAnimation(animation: animation)
     let indexPaths = indexes.map { IndexPath(item: $0, section: 0) }
 
     switch animation {
       case .none:
         UIView.performWithoutAnimation {
           reloadItems(at: indexPaths)
+          removeAnimation()
           completion?()
       }
     default:
       reloadItems(at: indexPaths)
       collectionViewLayout.finalizeCollectionViewUpdates()
       updateContentSize()
+      removeAnimation()
       completion?()
     }
   }
@@ -156,6 +160,7 @@ extension UICollectionView: UserInterface {
   ///  - parameter section: The section you want to update
   ///  - parameter completion: A completion block for when the updates are done
   public func delete(_ indexes: [Int], withAnimation animation: Animation = .automatic, completion: (() -> Void)? = nil) {
+    applyAnimation(animation: animation)
     let indexPaths = indexes.map { IndexPath(item: $0, section: 0) }
 
     performBatchUpdates({ [weak self] in
@@ -166,6 +171,7 @@ extension UICollectionView: UserInterface {
       }) { _ in }
 
     updateContentSize()
+    removeAnimation()
     completion?()
   }
 
@@ -180,6 +186,7 @@ extension UICollectionView: UserInterface {
                       withAnimation animation: Animation = .automatic,
                       updateDataSource: () -> Void,
                       completion: ((()) -> Void)? = nil) {
+    applyAnimation(animation: animation)
     let insertions = changes.insertions.map { IndexPath(row: $0, section: 0) }
     let reloads = changes.reloads.map { IndexPath(row: $0, section: 0) }
     let deletions = changes.deletions.map { IndexPath(row: $0, section: 0) }
@@ -203,6 +210,7 @@ extension UICollectionView: UserInterface {
     }
 
     updateContentSize()
+    removeAnimation()
     completion?()
   }
 
@@ -228,5 +236,21 @@ extension UICollectionView: UserInterface {
         completion?()
       }
     }
+  }
+
+  private func applyAnimation(animation: Animation) {
+    guard let componentFlowLayout = collectionViewLayout as? ComponentFlowLayout else {
+      return
+    }
+
+    componentFlowLayout.animation = animation
+  }
+
+  private func removeAnimation() {
+    guard let componentFlowLayout = collectionViewLayout as? ComponentFlowLayout else {
+      return
+    }
+
+    componentFlowLayout.animation = nil
   }
 }
