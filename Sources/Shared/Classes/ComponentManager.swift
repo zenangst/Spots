@@ -28,15 +28,8 @@ public class ComponentManager {
       let numberOfItems = component.model.items.count
       component.model.items.append(item)
       self?.itemManager.configureItem(at: numberOfItems, component: component)
-
-      if numberOfItems == 0 {
-        component.userInterface?.reloadSection(0, withAnimation: animation) {
-          self?.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
-        }
-      } else {
-        component.userInterface?.insert([numberOfItems], withAnimation: animation) {
-          self?.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
-        }
+      component.userInterface?.insert([numberOfItems], withAnimation: animation) {
+        self?.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
       }
     }
   }
