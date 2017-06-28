@@ -8,6 +8,7 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
   /// The y offset for the Gridable object
   open var yOffset: CGFloat?
 
+  private var indexPathsToAnimate = [IndexPath]()
   private var layoutAttributes: [UICollectionViewLayoutAttributes]?
   private(set) var cachedFrames = [CGRect]()
 
@@ -182,9 +183,73 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
 
     if let y = yOffset, component.headerHeight > 0.0 {
       collectionView.frame.origin.y = y
+  open override func initialLayoutAttributesForAppearingItem(at itemIndexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+    guard let attributes = super.initialLayoutAttributesForAppearingItem(at: itemIndexPath) else {
+      return nil
+    }
+
+    guard indexPathsToAnimate.contains(itemIndexPath) else {
+      return nil
+    }
+
+    if let index = indexPathsToAnimate.index(of: itemIndexPath) {
+      indexPathsToAnimate.remove(at: index)
+    }
+
+    attributes.alpha = 0.0
+    attributes.transform = .init(scaleX: 0.2, y: 0.2)
+    attributes.zIndex = -1
+
+    if let collectionView = collectionView {
+      attributes.center = .init(x: collectionView.bounds.midX, y: collectionView.bounds.midY)
     }
 
     return attributes
+  }
+
+  open override func finalLayoutAttributesForDisappearingItem(at itemIndexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+    guard let attributes = super.finalLayoutAttributesForDisappearingItem(at: itemIndexPath) else {
+      return nil
+    }
+
+    guard indexPathsToAnimate.contains(itemIndexPath) else {
+      return nil
+    }
+
+    if let index = indexPathsToAnimate.index(of: itemIndexPath) {
+      indexPathsToAnimate.remove(at: index)
+    }
+
+    attributes.zIndex = -1
+    attributes.alpha = 0.0
+    attributes.transform = .init(scaleX: 0.1, y: 0.1)
+
+    if let collectionView = collectionView {
+      attributes.center = .init(x: collectionView.bounds.midX, y: collectionView.bounds.midY)
+    }
+
+    return attributes
+  }
+
+  open override func prepare(forCollectionViewUpdates updateItems: [UICollectionViewUpdateItem]) {
+    super.prepare(forCollectionViewUpdates: updateItems)
+
+    var currentIndexPath: IndexPath?
+    for updateItem in updateItems {
+      switch updateItem.updateAction {
+      case .insert:
+        currentIndexPath = updateItem.indexPathAfterUpdate
+      case .delete:
+        currentIndexPath = updateItem.indexPathBeforeUpdate
+      default:
+        currentIndexPath = nil
+      }
+
+      if let indexPath = currentIndexPath {
+        indexPathsToAnimate.append(indexPath)
+      }
+    }
+
   }
 
   /// Asks the layout object if the new bounds require a layout update.
