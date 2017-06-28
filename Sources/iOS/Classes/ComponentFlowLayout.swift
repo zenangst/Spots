@@ -183,6 +183,11 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
 
     if let y = yOffset, component.headerHeight > 0.0 {
       collectionView.frame.origin.y = y
+    }
+
+    return attributes
+  }
+
   open override func initialLayoutAttributesForAppearingItem(at itemIndexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
     guard let attributes = super.initialLayoutAttributesForAppearingItem(at: itemIndexPath) else {
       return nil
