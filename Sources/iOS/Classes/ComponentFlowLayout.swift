@@ -3,11 +3,16 @@ import UIKit
 /// A custom flow layout used in GridComponent and CarouselComponent
 open class ComponentFlowLayout: UICollectionViewFlowLayout {
 
+  enum AnimationType {
+    case insert, delete
+  }
+
   /// The content size for the Gridable object
   public var contentSize = CGSize.zero
   /// The y offset for the Gridable object
   open var yOffset: CGFloat?
 
+  var animation: Animation?
   private var indexPathsToAnimate = [IndexPath]()
   private var layoutAttributes: [UICollectionViewLayoutAttributes]?
   private(set) var cachedFrames = [CGRect]()
@@ -201,13 +206,11 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
       indexPathsToAnimate.remove(at: index)
     }
 
-    attributes.alpha = 0.0
-    attributes.transform = .init(scaleX: 0.2, y: 0.2)
-    attributes.zIndex = -1
-
-    if let collectionView = collectionView {
-      attributes.center = .init(x: collectionView.bounds.midX, y: collectionView.bounds.midY)
+    guard let animation = animation else {
+      return nil
     }
+
+    applyAnimation(animation, type: .insert, to: attributes)
 
     return attributes
   }
@@ -225,13 +228,11 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
       indexPathsToAnimate.remove(at: index)
     }
 
-    attributes.zIndex = -1
-    attributes.alpha = 0.0
-    attributes.transform = .init(scaleX: 0.1, y: 0.1)
-
-    if let collectionView = collectionView {
-      attributes.center = .init(x: collectionView.bounds.midX, y: collectionView.bounds.midY)
+    guard let animation = animation else {
+      return nil
     }
+
+    applyAnimation(animation, type: .delete, to: attributes)
 
     return attributes
   }
@@ -254,7 +255,85 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
         indexPathsToAnimate.append(indexPath)
       }
     }
+  }
 
+  fileprivate func applyAnimationFix(_ type: ComponentFlowLayout.AnimationType, _ attributes: UICollectionViewLayoutAttributes) {
+    // Add y offset to the first item in the row, otherwise it won't animate.
+    if type == .insert && attributes.frame.origin.x == sectionInset.left {
+      // To make it more accurate we can use a smaller offset for items that are not the
+      // first item in the first row.
+      let offset: CGFloat = attributes.indexPath.item > 0 ? 0.1 : sectionInset.left
+      attributes.center = .init(x: attributes.center.x, y: attributes.center.y - offset)
+    }
+  }
+
+  private func applyAnimation(_ animation: Animation, type: AnimationType, to attributes: UICollectionViewLayoutAttributes) {
+    guard let collectionView = collectionView,
+      let delegate = collectionView.delegate as? Delegate,
+      let component = delegate.component else {
+        return
+    }
+
+    let excludedAnimationTypes: [Animation] = [.top, .bottom]
+
+    if !excludedAnimationTypes.contains(animation) {
+      applyAnimationFix(type, attributes)
+    }
+
+    switch animation {
+    case .fade:
+      attributes.alpha = 0.0
+    case .right:
+      attributes.center.x = type == .insert ? collectionView.bounds.minX : collectionView.bounds.maxX
+    case .left:
+      attributes.center.x = type == .insert ? collectionView.bounds.maxX : collectionView.bounds.minX
+    case .top:
+      attributes.center.y = attributes.center.y - attributes.frame.size.height
+    case .bottom:
+      if attributes.frame.origin.x == sectionInset.left {
+        switch type {
+        case .insert:
+          attributes.center = .init(x: attributes.frame.midX,
+                                    y: attributes.center.y + attributes.frame.size.height)
+        case .delete:
+          attributes.center = .init(x: attributes.frame.midX,
+                                    y: attributes.center.y + attributes.frame.size.height)
+        }
+      } else {
+        attributes.center.y = attributes.center.y + attributes.frame.size.height
+      }
+    case .none:
+      attributes.alpha = 1.0
+    case .middle:
+      switch type {
+      case .insert:
+        attributes.frame.origin = .init(x: collectionView.bounds.midX,
+                                        y: collectionView.bounds.midY)
+      case .delete:
+        break
+      }
+    case .automatic:
+      switch type {
+      case .insert:
+        if component.model.items.count == 1 {
+          attributes.alpha = 0.0
+          return
+        }
+      case .delete:
+        if component.model.items.count == 0 {
+          attributes.alpha = 0.0
+          return
+        }
+      }
+
+      attributes.zIndex = -1
+      attributes.alpha = 1.0
+      let offset = sectionInset.top > 2 ? sectionInset.top : 2
+      attributes.center = .init(x: attributes.center.x,
+                                y: attributes.center.y - attributes.frame.size.height)
+
+
+    }
   }
 
   /// Asks the layout object if the new bounds require a layout update.
