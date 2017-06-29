@@ -226,6 +226,7 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     collectionView.backgroundView = backgroundView
     collectionView.showsHorizontalScrollIndicator = false
     collectionView.showsVerticalScrollIndicator = false
+    collectionView.layer.masksToBounds = false
 
     guard model.kind == .carousel else {
       return
