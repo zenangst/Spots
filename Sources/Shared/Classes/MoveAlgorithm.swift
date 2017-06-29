@@ -2,7 +2,7 @@ import Foundation
 
 /// MoveAlgorithm returns a dictionary with results.
 /// The key for each value represents the previous index the the value represents the new index.
-class MoveAlgorithm {
+final class MoveAlgorithm {
 
   /// Calculate dictionary containing from and to indexes for the affected entries.
   ///
