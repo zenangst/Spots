@@ -23,7 +23,7 @@ public class ItemManager {
     preparedItems.enumerated().forEach { (index: Int, item: Item) in
       var item = item
       if let spanWidth = spanWidth {
-        item.size.width = floor(spanWidth)
+        item.size.width = spanWidth
       }
 
       if let configuredItem = configure(component: component, item: item, at: index, usesViewSize: true, recreateComposites: recreateComposites) {
@@ -46,7 +46,7 @@ public class ItemManager {
       var configuredItem = configuredItem
       let componentWidth: CGFloat = component.view.frame.size.width - CGFloat(layout.inset.left + layout.inset.right)
       let spanWidth = (componentWidth / CGFloat(layout.span)) - CGFloat(layout.itemSpacing)
-      configuredItem.size.width = floor(spanWidth)
+      configuredItem.size.width = spanWidth
       component.model.items[index] = configuredItem
     } else {
       component.model.items[index] = configuredItem

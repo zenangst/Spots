@@ -116,7 +116,7 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
     self.kind <- map.enum(Key.kind.rawValue)
     self.header = map.relation(Key.header.rawValue)
     self.footer = map.relation(Key.footer.rawValue)
-    self.items <- map.relations(Key.items.rawValue)
+    self.items <- map.relations(Key.items.rawValue)?.refreshIndexes()
     self.meta <- map.property(Key.meta.rawValue)
 
     if let layoutDictionary: [String : Any] = map.property(Layout.rootKey) {
@@ -159,7 +159,7 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
     self.interaction = interaction
     self.header = header
     self.footer = footer
-    self.items = items
+    self.items = items.refreshIndexes()
     self.meta = meta
     self.layout = layout
   }

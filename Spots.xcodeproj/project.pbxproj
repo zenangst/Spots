@@ -39,6 +39,9 @@
 		BD24030C1E4B981A005BAA19 /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD24030B1E4B981A005BAA19 /* Component.swift */; };
 		BD24030D1E4B981A005BAA19 /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD24030B1E4B981A005BAA19 /* Component.swift */; };
 		BD2403111E4B9A02005BAA19 /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2403101E4B9A02005BAA19 /* Component.swift */; };
+		BD30491D1F041C7E00D9EECB /* MoveAlgorithmTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD30491C1F041C7E00D9EECB /* MoveAlgorithmTests.swift */; };
+		BD30491E1F041C7E00D9EECB /* MoveAlgorithmTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD30491C1F041C7E00D9EECB /* MoveAlgorithmTests.swift */; };
+		BD30491F1F041C7E00D9EECB /* MoveAlgorithmTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD30491C1F041C7E00D9EECB /* MoveAlgorithmTests.swift */; };
 		BD31BB9D1EA6209C00D1FC8A /* DelegateConfigurationClosureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD31BB991EA6208600D1FC8A /* DelegateConfigurationClosureTests.swift */; };
 		BD31BB9E1EA6209D00D1FC8A /* DelegateConfigurationClosureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD31BB991EA6208600D1FC8A /* DelegateConfigurationClosureTests.swift */; };
 		BD31BB9F1EA6209E00D1FC8A /* DelegateConfigurationClosureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD31BB991EA6208600D1FC8A /* DelegateConfigurationClosureTests.swift */; };
@@ -292,6 +295,9 @@
 		BDB8D5971E4DFBBA00220BC3 /* Tailor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478F71C44076B006EBA49 /* Tailor.framework */; };
 		BDB8D5981E4DFBC300220BC3 /* Tailor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDD63FAB1D941A80008E885A /* Tailor.framework */; };
 		BDB8D59A1E51C4FE00220BC3 /* Delegate+iOS+UIScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB8D5991E51C4FE00220BC3 /* Delegate+iOS+UIScrollView.swift */; };
+		BDC5F3791F041A6500EA6A2C /* MoveAlgorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC5F3781F041A6500EA6A2C /* MoveAlgorithm.swift */; };
+		BDC5F37A1F041A6500EA6A2C /* MoveAlgorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC5F3781F041A6500EA6A2C /* MoveAlgorithm.swift */; };
+		BDC5F37B1F041A6500EA6A2C /* MoveAlgorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC5F3781F041A6500EA6A2C /* MoveAlgorithm.swift */; };
 		BDCA3CF31E8295EB00A98A76 /* TestUserInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCA3CF21E8295EB00A98A76 /* TestUserInterface.swift */; };
 		BDCA3CF41E8295EB00A98A76 /* TestUserInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCA3CF21E8295EB00A98A76 /* TestUserInterface.swift */; };
 		BDCA3CF51E8295EB00A98A76 /* TestUserInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCA3CF21E8295EB00A98A76 /* TestUserInterface.swift */; };
@@ -419,6 +425,7 @@
 		BD21C2511E4358B900FE2B26 /* ComponentFlowLayoutTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentFlowLayoutTests.swift; sourceTree = "<group>"; };
 		BD24030B1E4B981A005BAA19 /* Component.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
 		BD2403101E4B9A02005BAA19 /* Component.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
+		BD30491C1F041C7E00D9EECB /* MoveAlgorithmTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveAlgorithmTests.swift; sourceTree = "<group>"; };
 		BD31BB991EA6208600D1FC8A /* DelegateConfigurationClosureTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DelegateConfigurationClosureTests.swift; sourceTree = "<group>"; };
 		BD3B4A8C1EEFAB7B007ABD3B /* ScrollViewManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewManagerTests.swift; sourceTree = "<group>"; };
 		BD4295541D81D39700E07E1C /* ComponentiOSTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentiOSTests.swift; sourceTree = "<group>"; };
@@ -499,7 +506,7 @@
 		BDAD85331E3E7032008289AE /* RegistryType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistryType.swift; sourceTree = "<group>"; };
 		BDAD85351E3E7032008289AE /* CarouselScrollDelegate+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CarouselScrollDelegate+Extensions.swift"; sourceTree = "<group>"; };
 		BDAD85361E3E7032008289AE /* Component+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Component+Extensions.swift"; sourceTree = "<group>"; };
-		BDAD85381E3E7032008289AE /* Item+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "Item+Extensions.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		BDAD85381E3E7032008289AE /* Item+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "Item+Extensions.swift"; sourceTree = "<group>"; };
 		BDAD853A1E3E7032008289AE /* ScrollDelegate+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ScrollDelegate+Extensions.swift"; sourceTree = "<group>"; };
 		BDAD853B1E3E7032008289AE /* Component+Core.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Component+Core.swift"; sourceTree = "<group>"; };
 		BDAD853C1E3E7032008289AE /* Component+Mutation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Component+Mutation.swift"; sourceTree = "<group>"; };
@@ -535,6 +542,7 @@
 		BDB648551D75EF150041449A /* Info-tvOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-tvOS.plist"; sourceTree = "<group>"; };
 		BDB8D5921E4DFADC00220BC3 /* TestItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestItem.swift; sourceTree = "<group>"; };
 		BDB8D5991E51C4FE00220BC3 /* Delegate+iOS+UIScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Delegate+iOS+UIScrollView.swift"; sourceTree = "<group>"; };
+		BDC5F3781F041A6500EA6A2C /* MoveAlgorithm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveAlgorithm.swift; sourceTree = "<group>"; };
 		BDCA3CF21E8295EB00A98A76 /* TestUserInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestUserInterface.swift; sourceTree = "<group>"; };
 		BDCBE3841EEEFF1E00BB2514 /* ScrollViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewManager.swift; sourceTree = "<group>"; };
 		BDCFCD401DCA7EFF0047E84C /* TestSpotsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSpotsController.swift; sourceTree = "<group>"; };
@@ -805,6 +813,7 @@
 				BD798EF31EA28F200069EFB7 /* SpotsControllerManager.swift */,
 				BD99824B1EA93684000A6FD4 /* ViewPreparer.swift */,
 				BDA3D96B1EC6F1A400141227 /* ItemManager.swift */,
+				BDC5F3781F041A6500EA6A2C /* MoveAlgorithm.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1056,6 +1065,7 @@
 				BD677E881DC61EFC006D1654 /* TestStateCache.swift */,
 				BDCA3CF21E8295EB00A98A76 /* TestUserInterface.swift */,
 				BD10D5211D79533C00DF8E9B /* TestViewModelExtensions.swift */,
+				BD30491C1F041C7E00D9EECB /* MoveAlgorithmTests.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -1536,6 +1546,7 @@
 				BDAD859E1E3E7032008289AE /* SpotsController+SpotsControllerManager.swift in Sources */,
 				BDAD84D71E3E701C008289AE /* Inset+iOS.swift in Sources */,
 				BD1F9E1B1EA39F2E009C018B /* Dictionary+Extensions.swift in Sources */,
+				BDC5F37B1F041A6500EA6A2C /* MoveAlgorithm.swift in Sources */,
 				BDAD85F21E3E7032008289AE /* TypeAlias.swift in Sources */,
 				BDAD85C51E3E7032008289AE /* ComponentFocusDelegate.swift in Sources */,
 				D5D282711E5474E0004BF251 /* Cell.swift in Sources */,
@@ -1616,6 +1627,7 @@
 				BD6FBEF21E12B5F000AA58BD /* TestComposition.swift in Sources */,
 				BDE3864C1EFAEA5200320A6D /* RegistryTests.swift in Sources */,
 				BD45D9971E30A8A000C2D6B2 /* InsetTests.swift in Sources */,
+				BD30491F1F041C7E00D9EECB /* MoveAlgorithmTests.swift in Sources */,
 				BD31BB9F1EA6209E00D1FC8A /* DelegateConfigurationClosureTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1694,6 +1706,7 @@
 				BDAD84B61E3E701C008289AE /* GridWrapper.swift in Sources */,
 				BD1F9E191EA39F2E009C018B /* Dictionary+Extensions.swift in Sources */,
 				BDA3D96C1EC6F1A400141227 /* ItemManager.swift in Sources */,
+				BDC5F3791F041A6500EA6A2C /* MoveAlgorithm.swift in Sources */,
 				BDDCF6E01E4DF927004B38C4 /* ItemConfigurable.swift in Sources */,
 				BD99824C1EA93684000A6FD4 /* ViewPreparer.swift in Sources */,
 				D5D2826B1E547219004BF251 /* ViewStateDelegate.swift in Sources */,
@@ -1739,6 +1752,7 @@
 				BD4295551D81D39700E07E1C /* ComponentiOSTests.swift in Sources */,
 				D58478571C43FFFD006EBA49 /* TestComponentModel.swift in Sources */,
 				BD45D98B1E30909700C2D6B2 /* TestLayoutExtensions.swift in Sources */,
+				BD30491D1F041C7E00D9EECB /* MoveAlgorithmTests.swift in Sources */,
 				BDDF2CCC1DC7C23500B766BA /* TestAnimations.swift in Sources */,
 				BDEED2E81D8446400030B475 /* TestSpotsScrollView.swift in Sources */,
 				BDEFF54F1DD1C85300FC0537 /* TestDataSource.swift in Sources */,
@@ -1824,6 +1838,7 @@
 				BDAD85611E3E7032008289AE /* CompositeComponent.swift in Sources */,
 				BDAD851D1E3E7025008289AE /* DataSource+macOS+Extensions.swift in Sources */,
 				BD0AF3531E83CC53008795C3 /* UserInterface+Extensions.swift in Sources */,
+				BDC5F37A1F041A6500EA6A2C /* MoveAlgorithm.swift in Sources */,
 				BD798EF51EA28F200069EFB7 /* SpotsControllerManager.swift in Sources */,
 				BDAD858B1E3E7032008289AE /* Component+Core.swift in Sources */,
 				BDAD85C11E3E7032008289AE /* ComponentDelegate.swift in Sources */,
@@ -1879,6 +1894,7 @@
 				BD165A371E6EAAA60023AF82 /* TestSpot.swift in Sources */,
 				BDFC474F1E747B2B008700BF /* TestGridWrapper.swift in Sources */,
 				BD01BD121DAEA523009C10FF /* TestParser.swift in Sources */,
+				BD30491E1F041C7E00D9EECB /* MoveAlgorithmTests.swift in Sources */,
 				BD45D98F1E30935500C2D6B2 /* TestLayoutExtensions.swift in Sources */,
 				BD45D9881E30906300C2D6B2 /* LayoutTests.swift in Sources */,
 				BD45D9961E30A8A000C2D6B2 /* InsetTests.swift in Sources */,

@@ -4,7 +4,7 @@ import UIKit
 open class ComponentFlowLayout: UICollectionViewFlowLayout {
 
   enum AnimationType {
-    case insert, delete
+    case insert, delete, move
   }
 
   /// The content size for the Gridable object
@@ -14,6 +14,7 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
 
   var animation: Animation?
   private var indexPathsToAnimate = [IndexPath]()
+  private var indexPathsToMove = [IndexPath]()
   private var layoutAttributes: [UICollectionViewLayoutAttributes]?
   private(set) var cachedFrames = [CGRect]()
 
@@ -199,6 +200,11 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
     }
 
     guard indexPathsToAnimate.contains(itemIndexPath) else {
+      if let index = indexPathsToMove.index(of: itemIndexPath) {
+        indexPathsToMove.remove(at: index)
+        attributes.alpha = 1.0
+        return attributes
+      }
       return nil
     }
 
@@ -221,6 +227,11 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
     }
 
     guard indexPathsToAnimate.contains(itemIndexPath) else {
+      if let index = indexPathsToMove.index(of: itemIndexPath) {
+        indexPathsToMove.remove(at: index)
+        attributes.alpha = 1.0
+        return attributes
+      }
       return nil
     }
 
@@ -247,6 +258,11 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
         currentIndexPath = updateItem.indexPathAfterUpdate
       case .delete:
         currentIndexPath = updateItem.indexPathBeforeUpdate
+      case .move:
+        currentIndexPath = nil
+
+        indexPathsToMove.append(updateItem.indexPathBeforeUpdate!)
+        indexPathsToMove.append(updateItem.indexPathAfterUpdate!)
       default:
         currentIndexPath = nil
       }
@@ -274,6 +290,10 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
         return
     }
 
+    if type == .move {
+      return
+    }
+
     let excludedAnimationTypes: [Animation] = [.top, .bottom]
 
     if !excludedAnimationTypes.contains(animation) {
@@ -288,19 +308,13 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
     case .left:
       attributes.center.x = type == .insert ? collectionView.bounds.maxX : collectionView.bounds.minX
     case .top:
-      attributes.center.y = attributes.center.y - attributes.frame.size.height
+      attributes.center.y += attributes.frame.size.height
     case .bottom:
       if attributes.frame.origin.x == sectionInset.left {
-        switch type {
-        case .insert:
-          attributes.center = .init(x: attributes.frame.midX,
-                                    y: attributes.center.y + attributes.frame.size.height)
-        case .delete:
-          attributes.center = .init(x: attributes.frame.midX,
-                                    y: attributes.center.y + attributes.frame.size.height)
-        }
+        attributes.center = .init(x: attributes.frame.midX,
+                                  y: attributes.center.y + attributes.frame.size.height)
       } else {
-        attributes.center.y = attributes.center.y + attributes.frame.size.height
+        attributes.center.y += attributes.frame.size.height
       }
     case .none:
       attributes.alpha = 1.0
@@ -309,7 +323,7 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
       case .insert:
         attributes.frame.origin = .init(x: collectionView.bounds.midX,
                                         y: collectionView.bounds.midY)
-      case .delete:
+      default:
         break
       }
     case .automatic:
@@ -320,19 +334,18 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
           return
         }
       case .delete:
-        if component.model.items.count == 0 {
+        if component.model.items.isEmpty {
           attributes.alpha = 0.0
           return
         }
+      default:
+        break
       }
 
       attributes.zIndex = -1
       attributes.alpha = 1.0
-      let offset = sectionInset.top > 2 ? sectionInset.top : 2
       attributes.center = .init(x: attributes.center.x,
                                 y: attributes.center.y - attributes.frame.size.height)
-
-
     }
   }
 

@@ -655,12 +655,47 @@ class SpotsControllerTests: XCTestCase {
     let oldItems = controller.components.first!.model.items
     var diff = Item.evaluate(newItems, oldModels: oldItems)
 
-    XCTAssertEqual(diff![0], .text)
-    XCTAssertEqual(diff![1], .none)
-    XCTAssertEqual(diff![2], .text)
-    XCTAssertEqual(diff![3], .text)
-    XCTAssertEqual(diff![4], .subtitle)
-    XCTAssertEqual(diff![5], .text)
+    switch diff![0] {
+    case .text:
+      XCTAssert(true)
+    default:
+      XCTFail("Wrong diff result")
+    }
+
+    switch diff![1] {
+    case .none:
+      XCTAssert(true)
+    default:
+      XCTFail("Wrong diff result")
+    }
+
+    switch diff![2] {
+    case .text:
+      XCTAssert(true)
+    default:
+      XCTFail("Wrong diff result")
+    }
+
+    switch diff![3] {
+    case .text:
+      XCTAssert(true)
+    default:
+      XCTFail("Wrong diff result")
+    }
+
+    switch diff![4] {
+    case .subtitle:
+      XCTAssert(true)
+    default:
+      XCTFail("Wrong diff result")
+    }
+
+    switch diff![5] {
+    case .text:
+      XCTAssert(true)
+    default:
+      XCTFail("Wrong diff result")
+    }
   }
 
   func testReloadIfNeededWithComponentModels() {
@@ -730,6 +765,8 @@ class SpotsControllerTests: XCTestCase {
         XCTFail("Unable to resolve view.")
         return
       }
+
+      let expectedFrame = view!.frame
     #endif
 
     XCTAssertEqual(firstComponent.model.items[0].title, initialComponentModels.first!.items[0].title)
@@ -805,7 +842,7 @@ class SpotsControllerTests: XCTestCase {
       XCTAssertNotEqual(firstComponent.model.items[0].size, newComponentModels.first!.items[0].size)
       #if !os(OSX)
         XCTAssertEqual(firstComponent.model.items[0].size, CGSize(width: controller.view.frame.width, height: view!.computeSize(for: firstComponent.model.items[0], containerSize: firstComponent.view.frame.size).height))
-        XCTAssertEqual(firstComponent.model.items[0].size, view!.frame.size)
+        XCTAssertEqual(firstComponent.model.items[0].size, expectedFrame.size)
       #endif
 
       XCTAssertEqual(firstComponent.model.items[1].title, newComponentModels.first!.items[1].title)
@@ -815,7 +852,7 @@ class SpotsControllerTests: XCTestCase {
       XCTAssertNotEqual(firstComponent.model.items[1].size, newComponentModels.first!.items[1].size)
       #if !os(OSX)
         XCTAssertEqual(firstComponent.model.items[1].size, CGSize(width: controller.view.frame.width, height: view!.computeSize(for: firstComponent.model.items[1], containerSize: firstComponent.view.frame.size).height))
-        XCTAssertEqual(firstComponent.model.items[1].size, view!.frame.size)
+        XCTAssertEqual(firstComponent.model.items[1].size, expectedFrame.size)
       #endif
 
       XCTAssertEqual(firstComponent.model.items[2].title, newComponentModels.first!.items[2].title)
@@ -825,7 +862,7 @@ class SpotsControllerTests: XCTestCase {
       XCTAssertNotEqual(firstComponent.model.items[2].size, newComponentModels.first!.items[2].size)
       #if !os(OSX)
         XCTAssertEqual(firstComponent.model.items[2].size, CGSize(width: controller.view.frame.width, height: view!.computeSize(for: firstComponent.model.items[2], containerSize: firstComponent.view.frame.size).height))
-        XCTAssertEqual(firstComponent.model.items[2].size, view!.frame.size)
+        XCTAssertEqual(firstComponent.model.items[2].size, expectedFrame.size)
       #endif
 
       XCTAssertEqual(firstComponent.model.items[3].title, newComponentModels.first!.items[3].title)
@@ -835,7 +872,7 @@ class SpotsControllerTests: XCTestCase {
       XCTAssertNotEqual(firstComponent.model.items[3].size, newComponentModels.first!.items[3].size)
       #if !os(OSX)
         XCTAssertEqual(firstComponent.model.items[3].size, CGSize(width: controller.view.frame.width, height: view!.computeSize(for: firstComponent.model.items[3], containerSize: firstComponent.view.frame.size).height))
-        XCTAssertEqual(firstComponent.model.items[3].size, view!.frame.size)
+        XCTAssertEqual(firstComponent.model.items[3].size, expectedFrame.size)
       #endif
 
       XCTAssertEqual(firstComponent.model.items[4].title, newComponentModels.first!.items[4].title)
@@ -845,7 +882,7 @@ class SpotsControllerTests: XCTestCase {
       XCTAssertNotEqual(firstComponent.model.items[4].size, newComponentModels.first!.items[4].size)
       #if !os(OSX)
         XCTAssertEqual(firstComponent.model.items[4].size, CGSize(width: controller.view.frame.width, height: view!.computeSize(for: firstComponent.model.items[4], containerSize: firstComponent.view.frame.size).height))
-        XCTAssertEqual(firstComponent.model.items[4].size, view!.frame.size)
+        XCTAssertEqual(firstComponent.model.items[4].size, expectedFrame.size)
       #endif
 
       XCTAssertEqual(firstComponent.model.items[5].title, newComponentModels.first!.items[5].title)
@@ -855,7 +892,7 @@ class SpotsControllerTests: XCTestCase {
       XCTAssertNotEqual(firstComponent.model.items[5].size, newComponentModels.first!.items[5].size)
       #if !os(OSX)
         XCTAssertEqual(firstComponent.model.items[5].size, CGSize(width: controller.view.frame.width, height: view!.computeSize(for: firstComponent.model.items[5], containerSize: firstComponent.view.frame.size).height))
-        XCTAssertEqual(firstComponent.model.items[5].size, view!.frame.size)
+        XCTAssertEqual(firstComponent.model.items[5].size, expectedFrame.size)
       #endif
 
       expectation.fulfill()

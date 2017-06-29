@@ -258,6 +258,21 @@ public struct Item: Mappable, Indexable, DictionaryConvertible {
   public mutating func update(kind: StringConvertible) {
     self.kind = kind.string
   }
+
+  /**
+   Check if Item's are truly equal by including size and index in comparison
+
+   - parameter lhs: Left hand Item
+   - parameter rhs: Right hand Item
+
+   - returns: A boolean value, true if both Item are equal
+   */
+  public func compareItemIncludingIndex(_ rhs: Item) -> Bool {
+    let lhs = self
+    let indexEqual = lhs.index == rhs.index
+    let trulyEqual = lhs === rhs
+    return indexEqual && trulyEqual
+  }
 }
 
 /**

@@ -20,15 +20,33 @@ class ItemExtensionsTests: XCTestCase {
       ["title": "baz"]
     ]
 
-    var newModels = newJSON.map { Item($0) }
-    var oldModels = oldJSON.map { Item($0) }
+    var newModels = newJSON.map { Item($0) }.refreshIndexes()
+    var oldModels = oldJSON.map { Item($0) }.refreshIndexes()
     XCTAssertEqual(newModels.count, 3)
     XCTAssertEqual(oldModels.count, 2)
 
     var changes = Item.evaluate(newModels, oldModels: oldModels)
-    XCTAssertEqual(changes![0], ItemDiff.none)
-    XCTAssertEqual(changes![1], ItemDiff.none)
-    XCTAssertEqual(changes![2], ItemDiff.new)
+
+    switch changes![0] {
+    case .none:
+      XCTAssert(true)
+    default:
+      XCTFail("Wrong diff result")
+    }
+
+    switch changes![1] {
+    case .none:
+      XCTAssert(true)
+    default:
+      XCTFail("Wrong diff result")
+    }
+
+    switch changes![2] {
+    case .new:
+      XCTAssert(true)
+    default:
+      XCTFail("Wrong diff result")
+    }
 
     var processedChanges = Item.processChanges(changes!)
     XCTAssertEqual(processedChanges.insertions.count, 1)
@@ -37,9 +55,27 @@ class ItemExtensionsTests: XCTestCase {
     XCTAssertEqual(processedChanges.deletions.count, 0)
 
     changes = Item.evaluate(oldModels, oldModels: newModels)
-    XCTAssertEqual(changes![0], ItemDiff.none)
-    XCTAssertEqual(changes![1], ItemDiff.none)
-    XCTAssertEqual(changes![2], ItemDiff.removed)
+
+    switch changes![0] {
+    case .none:
+      XCTAssert(true)
+    default:
+      XCTFail("Wrong diff result")
+    }
+
+    switch changes![1] {
+    case .none:
+      XCTAssert(true)
+    default:
+      XCTFail("Wrong diff result")
+    }
+
+    switch changes![2] {
+    case .removed:
+      XCTAssert(true)
+    default:
+      XCTFail("Wrong diff result")
+    }
 
     processedChanges = Item.processChanges(changes!)
     XCTAssertEqual(processedChanges.insertions.count, 0)
@@ -63,8 +99,20 @@ class ItemExtensionsTests: XCTestCase {
     oldModels = oldJSON.map { Item($0) }
 
     changes = Item.evaluate(newModels, oldModels: oldModels)
-    XCTAssertEqual(changes![0], ItemDiff.title)
-    XCTAssertEqual(changes![1], ItemDiff.kind)
+
+    switch changes![0] {
+    case .title:
+      XCTAssert(true)
+    default:
+      XCTFail("Wrong diff result")
+    }
+
+    switch changes![1] {
+    case .kind:
+      XCTAssert(true)
+    default:
+      XCTFail("Wrong diff result")
+    }
 
     processedChanges = Item.processChanges(changes!)
     XCTAssertEqual(processedChanges.insertions.count, 0)
@@ -88,8 +136,20 @@ class ItemExtensionsTests: XCTestCase {
     newModels = newJSON.map { Item($0) }
     oldModels = oldJSON.map { Item($0) }
     changes = Item.evaluate(newModels, oldModels: oldModels)
-    XCTAssertEqual(changes![0], ItemDiff.none)
-    XCTAssertEqual(changes![1], ItemDiff.text)
+
+    switch changes![0] {
+    case .none:
+      XCTAssert(true)
+    default:
+      XCTFail("Wrong diff result")
+    }
+
+    switch changes![1] {
+    case .text:
+      XCTAssert(true)
+    default:
+      XCTFail("Wrong diff result")
+    }
 
     processedChanges = Item.processChanges(changes!)
     XCTAssertEqual(processedChanges.insertions.count, 0)

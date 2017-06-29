@@ -1,3 +1,4 @@
+// swiftlint:disable large_tuple
 import UIKit
 
 extension UICollectionView: UserInterface {
@@ -120,9 +121,20 @@ extension UICollectionView: UserInterface {
   ///  - parameter completion: A completion block for when the updates are done
   public func insert(_ indexes: [Int], withAnimation animation: Animation = .automatic, completion: (() -> Void)? = nil) {
     applyAnimation(animation: animation)
-    let indexPaths: [IndexPath] = indexes.map { IndexPath(item: $0, section: 0) }
+    let indexPaths: [IndexPath] = indexes.map {
+      IndexPath(item: $0, section: 0)
+    }
+    let algorithm = MoveAlgorithm()
+    let movedItems = algorithm.calculateMoveForInsertedIndexes(indexes, numberOfItems: numberOfItems(inSection: 0))
+
     performBatchUpdates({
       self.insertItems(at: indexPaths)
+
+      for move in movedItems {
+        self.moveItem(at: IndexPath(item: move.key, section: 0),
+                      to: IndexPath(item: move.value, section: 0))
+      }
+
     }, completion: nil)
     updateContentSize()
     removeAnimation()
@@ -162,12 +174,19 @@ extension UICollectionView: UserInterface {
   public func delete(_ indexes: [Int], withAnimation animation: Animation = .automatic, completion: (() -> Void)? = nil) {
     applyAnimation(animation: animation)
     let indexPaths = indexes.map { IndexPath(item: $0, section: 0) }
+    let algorithm = MoveAlgorithm()
+    let movedItems = algorithm.calculateMoveForDeletedIndexes(indexes, numberOfItems: numberOfItems(inSection: 0))
 
     performBatchUpdates({ [weak self] in
       guard let strongSelf = self else {
         return
       }
+      for move in movedItems {
+        strongSelf.moveItem(at: IndexPath(item: move.key, section: 0),
+                            to: IndexPath(item: move.value, section: 0))
+      }
       strongSelf.deleteItems(at: indexPaths)
+
       }) { _ in }
 
     updateContentSize()
@@ -182,7 +201,7 @@ extension UICollectionView: UserInterface {
   /// - parameter section:          The section that will be updates
   ///  - parameter updateDataSource: A closure that is used to update the data source before performing the updates on the UI
   ///  - parameter completion:       A completion closure that will run when both data source and UI is updated
-  public func process(_ changes: (insertions: [Int], reloads: [Int], deletions: [Int], childUpdates: [Int]),
+  public func process(_ changes: (insertions: [Int], moved: [Int : Int], reloads: [Int], deletions: [Int], childUpdates: [Int]),
                       withAnimation animation: Animation = .automatic,
                       updateDataSource: () -> Void,
                       completion: ((()) -> Void)? = nil) {
@@ -196,16 +215,33 @@ extension UICollectionView: UserInterface {
     if insertions.isEmpty &&
       reloads.isEmpty &&
       deletions.isEmpty &&
+      changes.moved.isEmpty &&
       changes.childUpdates.isEmpty {
       completion?()
       return
     }
 
-    UIView.performWithoutAnimation {
+    if animation == .none {
+      UIView.performWithoutAnimation {
+        performBatchUpdates({
+          self.insertItems(at: insertions)
+          self.reloadItems(at: reloads)
+          self.deleteItems(at: deletions)
+          for move in changes.moved {
+            self.moveItem(at: IndexPath(item: move.key, section: 0),
+                          to: IndexPath(item: move.value, section: 0))
+          }
+        }) { _ in }
+      }
+    } else {
       performBatchUpdates({
         self.insertItems(at: insertions)
         self.reloadItems(at: reloads)
         self.deleteItems(at: deletions)
+        for move in changes.moved {
+          self.moveItem(at: IndexPath(item: move.key, section: 0),
+                        to: IndexPath(item: move.value, section: 0))
+        }
       }) { _ in }
     }
 
