@@ -106,9 +106,18 @@ extension UITableView: UserInterface {
   public func insert(_ indexes: [Int], withAnimation animation: Animation = .automatic, completion: (() -> Void)? = nil) {
     let indexPaths = indexes.map { IndexPath(row: $0, section: 0) }
 
-    if animation == .none { UIView.setAnimationsEnabled(false) }
-    performUpdates { insertRows(at: indexPaths, with: animation.tableViewAnimation) }
-    if animation == .none { UIView.setAnimationsEnabled(true) }
+    if animation == .none {
+      UIView.setAnimationsEnabled(false)
+    }
+
+    performUpdates {
+      insertRows(at: indexPaths, with: animation.tableViewAnimation)
+    }
+
+    if animation == .none {
+      UIView.setAnimationsEnabled(true)
+    }
+
     completion?()
   }
 
@@ -146,9 +155,19 @@ extension UITableView: UserInterface {
   /// - parameter animation: A constant that indicates how the reloading is to be animated
   public func delete(_ indexes: [Int], withAnimation animation: Animation = .automatic, completion: (() -> Void)? = nil) {
     let indexPaths = indexes.map { IndexPath(row: $0, section: 0) }
-    if animation == .none { UIView.setAnimationsEnabled(false) }
-    performUpdates { deleteRows(at: indexPaths, with: animation.tableViewAnimation) }
-    if animation == .none { UIView.setAnimationsEnabled(true) }
+
+    if animation == .none {
+      UIView.setAnimationsEnabled(false)
+    }
+
+    performUpdates {
+      deleteRows(at: indexPaths, with: animation.tableViewAnimation)
+    }
+
+    if animation == .none {
+      UIView.setAnimationsEnabled(true)
+    }
+
     completion?()
   }
 
@@ -198,9 +217,11 @@ extension UITableView: UserInterface {
     performUpdates {
       reloadSections(IndexSet(integer: section), with: animation.tableViewAnimation)
     }
+
     if animation == .none {
       UIView.setAnimationsEnabled(true)
     }
+
     completion?()
   }
 
