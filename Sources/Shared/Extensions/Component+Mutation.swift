@@ -106,7 +106,7 @@ public extension Component {
   /// - parameter updateDataSource: A closure to update your data source.
   /// - parameter completion:       A completion closure that runs when your updates are done.
   public func reloadIfNeeded(_ changes: ItemChanges, withAnimation animation: Animation = .automatic, updateDataSource: () -> Void, completion: Completion) {
-    manager.reloadIfNeeded(with: changes, component: self, updateDataSource: updateDataSource, completion: completion)
+    manager.reloadIfNeeded(with: changes, component: self, withAnimation: animation, updateDataSource: updateDataSource, completion: completion)
   }
 
   /// Reloads a component only if it changes
