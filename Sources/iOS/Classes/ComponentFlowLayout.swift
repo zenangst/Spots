@@ -273,6 +273,14 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
     }
   }
 
+  /// This method performs a small mutation to the attributes in order to make the first item
+  /// in the row animate properly.
+  ///
+  /// - Parameters:
+  ///   - type: The type of operation that is being performed, can be `.insert`, `.delete` or
+  ///           `.move`
+  ///   - attributes: The attributes for the collection view item that the collection view is
+  ///                 modifying.
   fileprivate func applyAnimationFix(_ type: ComponentFlowLayout.AnimationType, _ attributes: UICollectionViewLayoutAttributes) {
     // Add y offset to the first item in the row, otherwise it won't animate.
     if type == .insert && attributes.frame.origin.x == sectionInset.left {
@@ -283,6 +291,15 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
     }
   }
 
+  /// Apply animation to current operation
+  ///
+  /// - Parameters:
+  ///   - animation: The animation that should be applied for the operation. See `Animation`
+  ///                more information about the animations that are currently supported.
+  ///   - type: The type of operation that is being performed, can be `.insert`, `.delete` or
+  ///           `.move`
+  ///   - attributes: The attributes for the collection view item that the collection view is
+  ///                 modifying.
   private func applyAnimation(_ animation: Animation, type: AnimationType, to attributes: UICollectionViewLayoutAttributes) {
     guard let collectionView = collectionView,
       let delegate = collectionView.delegate as? Delegate,
