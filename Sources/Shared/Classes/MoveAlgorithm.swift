@@ -1,7 +1,15 @@
 import Foundation
 
+/// MoveAlgorithm returns a dictionary with results.
+/// The key for each value represents the previous index the the value represents the new index.
 class MoveAlgorithm {
 
+  /// Calculate dictionary containing from and to indexes for the affected entries.
+  ///
+  /// - Parameters:
+  ///   - indexes: The indexes that should be inserted from the collection.
+  ///   - numberOfItems: The total number of entries in the collection.
+  /// - Returns: A dictionary where key represent the old index and the value the new index.
   func calculateMoveForInsertedIndexes(_ indexes: [Int], numberOfItems: Int) -> [Int: Int] {
     let indexes = indexes.sorted(by: { $0 < $1 })
     var result = [Int: Int]()
