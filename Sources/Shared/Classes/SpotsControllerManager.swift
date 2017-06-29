@@ -79,6 +79,16 @@ public class SpotsControllerManager {
       return
     }
 
+    // Opt-out from performing any kind of diffing if the controller has no components.
+    if controller.components.isEmpty {
+      reload(models: components, controller: controller) {
+        controller.scrollView.layoutViews()
+        SpotsController.componentsDidReloadComponentModels?(controller)
+        completion?()
+      }
+      return
+    }
+
     Dispatch.interactive { [weak self] in
       guard let strongSelf = self else {
         completion?()
