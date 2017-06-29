@@ -1,3 +1,5 @@
+// swiftlint:disable large_tuple
+
 /// A protocol used for composition inside components.
 public protocol UserInterface: class {
 
@@ -67,7 +69,7 @@ public protocol UserInterface: class {
   /// - parameter section:          The section that will be updates
   /// - parameter updateDataSource: A closure that is used to update the data source before performing the updates on the UI
   /// - parameter completion:       A completion closure that will run when both data source and UI is updated
-  func process(_ changes: (insertions: [Int], reloads: [Int], deletions: [Int], childUpdates: [Int]),
+  func process(_ changes: (insertions: [Int], moved: [Int: Int], reloads: [Int], deletions: [Int], childUpdates: [Int]),
                withAnimation animation: Animation,
                updateDataSource: () -> Void,
                completion: ((()) -> Void)?)

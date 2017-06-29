@@ -42,7 +42,15 @@ public class ItemManager {
         return
     }
 
-    component.model.items[index] = configuredItem
+    if let layout = component.model.layout, layout.span > 0.0 {
+      var configuredItem = configuredItem
+      let componentWidth: CGFloat = component.view.frame.size.width - CGFloat(layout.inset.left + layout.inset.right)
+      let spanWidth = (componentWidth / CGFloat(layout.span)) - CGFloat(layout.itemSpacing)
+      configuredItem.size.width = spanWidth
+      component.model.items[index] = configuredItem
+    } else {
+      component.model.items[index] = configuredItem
+    }
   }
 
   func configure(component: Component, item: Item, at index: Int, usesViewSize: Bool = false, recreateComposites: Bool) -> Item? {

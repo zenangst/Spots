@@ -101,6 +101,7 @@ class TestComponentEngine: XCTestCase {
   func testPrependItemsWithExistingItems() {
     let model = ComponentModel(kind: .list, items: [Item(title: "f00")])
     let component = Component(model: model)
+    component.setup(with: CGSize(width: 100, height: 100))
     let expectation = self.expectation(description: "Wait for completion")
     let items = [
       Item(title: "foo"),

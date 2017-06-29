@@ -3,11 +3,18 @@ import UIKit
 /// A custom flow layout used in GridComponent and CarouselComponent
 open class ComponentFlowLayout: UICollectionViewFlowLayout {
 
+  enum AnimationType {
+    case insert, delete, move
+  }
+
   /// The content size for the Gridable object
   public var contentSize = CGSize.zero
   /// The y offset for the Gridable object
   open var yOffset: CGFloat?
 
+  var animation: Animation?
+  private var indexPathsToAnimate = [IndexPath]()
+  private var indexPathsToMove = [IndexPath]()
   private var layoutAttributes: [UICollectionViewLayoutAttributes]?
   private(set) var cachedFrames = [CGRect]()
 
@@ -185,6 +192,178 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
     }
 
     return attributes
+  }
+
+  open override func initialLayoutAttributesForAppearingItem(at itemIndexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+    guard let attributes = super.initialLayoutAttributesForAppearingItem(at: itemIndexPath) else {
+      return nil
+    }
+
+    guard indexPathsToAnimate.contains(itemIndexPath) else {
+      if let index = indexPathsToMove.index(of: itemIndexPath) {
+        indexPathsToMove.remove(at: index)
+        attributes.alpha = 1.0
+        return attributes
+      }
+      return nil
+    }
+
+    if let index = indexPathsToAnimate.index(of: itemIndexPath) {
+      indexPathsToAnimate.remove(at: index)
+    }
+
+    guard let animation = animation else {
+      return nil
+    }
+
+    applyAnimation(animation, type: .insert, to: attributes)
+
+    return attributes
+  }
+
+  open override func finalLayoutAttributesForDisappearingItem(at itemIndexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+    guard let attributes = super.finalLayoutAttributesForDisappearingItem(at: itemIndexPath) else {
+      return nil
+    }
+
+    guard indexPathsToAnimate.contains(itemIndexPath) else {
+      if let index = indexPathsToMove.index(of: itemIndexPath) {
+        indexPathsToMove.remove(at: index)
+        attributes.alpha = 1.0
+        return attributes
+      }
+      return nil
+    }
+
+    if let index = indexPathsToAnimate.index(of: itemIndexPath) {
+      indexPathsToAnimate.remove(at: index)
+    }
+
+    guard let animation = animation else {
+      return nil
+    }
+
+    applyAnimation(animation, type: .delete, to: attributes)
+
+    return attributes
+  }
+
+  open override func prepare(forCollectionViewUpdates updateItems: [UICollectionViewUpdateItem]) {
+    super.prepare(forCollectionViewUpdates: updateItems)
+
+    var currentIndexPath: IndexPath?
+    for updateItem in updateItems {
+      switch updateItem.updateAction {
+      case .insert:
+        currentIndexPath = updateItem.indexPathAfterUpdate
+      case .delete:
+        currentIndexPath = updateItem.indexPathBeforeUpdate
+      case .move:
+        currentIndexPath = nil
+
+        indexPathsToMove.append(updateItem.indexPathBeforeUpdate!)
+        indexPathsToMove.append(updateItem.indexPathAfterUpdate!)
+      default:
+        currentIndexPath = nil
+      }
+
+      if let indexPath = currentIndexPath {
+        indexPathsToAnimate.append(indexPath)
+      }
+    }
+  }
+
+  /// This method performs a small mutation to the attributes in order to make the first item
+  /// in the row animate properly.
+  ///
+  /// - Parameters:
+  ///   - type: The type of operation that is being performed, can be `.insert`, `.delete` or
+  ///           `.move`
+  ///   - attributes: The attributes for the collection view item that the collection view is
+  ///                 modifying.
+  fileprivate func applyAnimationFix(_ type: ComponentFlowLayout.AnimationType, _ attributes: UICollectionViewLayoutAttributes) {
+    // Add y offset to the first item in the row, otherwise it won't animate.
+    if type == .insert && attributes.frame.origin.x == sectionInset.left {
+      // To make it more accurate we can use a smaller offset for items that are not the
+      // first item in the first row.
+      let offset: CGFloat = attributes.indexPath.item > 0 ? 0.1 : sectionInset.left
+      attributes.center = .init(x: attributes.center.x, y: attributes.center.y - offset)
+    }
+  }
+
+  /// Apply animation to current operation
+  ///
+  /// - Parameters:
+  ///   - animation: The animation that should be applied for the operation. See `Animation`
+  ///                more information about the animations that are currently supported.
+  ///   - type: The type of operation that is being performed, can be `.insert`, `.delete` or
+  ///           `.move`
+  ///   - attributes: The attributes for the collection view item that the collection view is
+  ///                 modifying.
+  private func applyAnimation(_ animation: Animation, type: AnimationType, to attributes: UICollectionViewLayoutAttributes) {
+    guard let collectionView = collectionView,
+      let delegate = collectionView.delegate as? Delegate,
+      let component = delegate.component else {
+        return
+    }
+
+    if type == .move {
+      return
+    }
+
+    let excludedAnimationTypes: [Animation] = [.top, .bottom]
+
+    if !excludedAnimationTypes.contains(animation) {
+      applyAnimationFix(type, attributes)
+    }
+
+    switch animation {
+    case .fade:
+      attributes.alpha = 0.0
+    case .right:
+      attributes.center.x = type == .insert ? collectionView.bounds.minX : collectionView.bounds.maxX
+    case .left:
+      attributes.center.x = type == .insert ? collectionView.bounds.maxX : collectionView.bounds.minX
+    case .top:
+      attributes.center.y += attributes.frame.size.height
+    case .bottom:
+      if attributes.frame.origin.x == sectionInset.left {
+        attributes.center = .init(x: attributes.frame.midX,
+                                  y: attributes.center.y + attributes.frame.size.height)
+      } else {
+        attributes.center.y += attributes.frame.size.height
+      }
+    case .none:
+      attributes.alpha = 1.0
+    case .middle:
+      switch type {
+      case .insert:
+        attributes.frame.origin = .init(x: collectionView.bounds.midX,
+                                        y: collectionView.bounds.midY)
+      default:
+        break
+      }
+    case .automatic:
+      switch type {
+      case .insert:
+        if component.model.items.count == 1 {
+          attributes.alpha = 0.0
+          return
+        }
+      case .delete:
+        if component.model.items.isEmpty {
+          attributes.alpha = 0.0
+          return
+        }
+      default:
+        break
+      }
+
+      attributes.zIndex = -1
+      attributes.alpha = 1.0
+      attributes.center = .init(x: attributes.center.x,
+                                y: attributes.center.y - attributes.frame.size.height)
+    }
   }
 
   /// Asks the layout object if the new bounds require a layout update.

@@ -1,7 +1,7 @@
+// swiftlint:disable large_tuple
 import Cocoa
 
 extension NSCollectionView: UserInterface {
-
   public var visibleViews: [View] {
     var views = [View]()
 
@@ -62,6 +62,14 @@ extension NSCollectionView: UserInterface {
    - parameter completion: A completion block for when the updates are done
    **/
   public func insert(_ indexes: [Int], withAnimation animation: Animation = .automatic, completion: (() -> Void)? = nil) {
+    guard let dataSource = dataSource else {
+      assertionFailure("Data source could not be resolved.")
+      return
+    }
+
+    let numberOfRows = dataSource.collectionView(self, numberOfItemsInSection: 0) - indexes.count
+    let algorithm = MoveAlgorithm()
+    let movedItems = algorithm.calculateMoveForDeletedIndexes(indexes, numberOfItems: numberOfRows)
     let indexPaths = indexes.map { IndexPath(item: $0, section: 0) }
     let set = Set<IndexPath>(indexPaths)
 
@@ -70,6 +78,10 @@ extension NSCollectionView: UserInterface {
         return
       }
       strongSelf.insertItems(at: set as Set<IndexPath>)
+      for move in movedItems {
+        strongSelf.moveItem(at: IndexPath(item: move.key, section: 0),
+                            to: IndexPath(item: move.value, section: 0))
+      }
     }) { _ in
       completion?()
     }
@@ -85,10 +97,9 @@ extension NSCollectionView: UserInterface {
     let indexPaths = indexes.map { IndexPath(item: $0, section: 0) }
     let set = Set<IndexPath>(indexPaths)
 
-    //UIView.performWithoutAnimation {
-      self.reloadItems(at: set as Set<IndexPath>)
-      completion?()
-    //}
+    self.reloadItems(at: set as Set<IndexPath>)
+
+    completion?()
   }
 
   /**
@@ -98,7 +109,15 @@ extension NSCollectionView: UserInterface {
    - parameter completion: A completion block for when the updates are done
    **/
   public func delete(_ indexes: [Int], withAnimation animation: Animation = .automatic, completion: (() -> Void)? = nil) {
+    guard let dataSource = dataSource else {
+      assertionFailure("Data source could not be resolved.")
+      return
+    }
+
     let indexPaths = indexes.map { IndexPath(item: $0, section: 0) }
+    let numberOfRows = dataSource.collectionView(self, numberOfItemsInSection: 0)
+    let algorithm = MoveAlgorithm()
+    let movedItems = algorithm.calculateMoveForDeletedIndexes(indexes, numberOfItems: numberOfRows)
     let set = Set<IndexPath>(indexPaths)
 
     performBatchUpdates({ [weak self] in
@@ -106,12 +125,16 @@ extension NSCollectionView: UserInterface {
         return
       }
       strongSelf.deleteItems(at: set as Set<IndexPath>)
+      for move in movedItems {
+        strongSelf.moveItem(at: IndexPath(item: move.key, section: 0),
+                            to: IndexPath(item: move.value, section: 0))
+      }
     }) { _ in
       completion?()
     }
   }
 
-  public func process(_ changes: (insertions: [Int], reloads: [Int], deletions: [Int], childUpdates: [Int]),
+  public func process(_ changes: (insertions: [Int], moved: [Int : Int], reloads: [Int], deletions: [Int], childUpdates: [Int]),
                       withAnimation animation: Animation = .automatic,
                       updateDataSource: () -> Void,
                       completion: ((()) -> Void)? = nil) {
@@ -126,10 +149,25 @@ extension NSCollectionView: UserInterface {
 
     updateDataSource()
 
+    if insertionsSets.isEmpty &&
+      reloadSets.isEmpty &&
+      deletionSets.isEmpty &&
+      changes.moved.isEmpty &&
+      changes.childUpdates.isEmpty {
+      completion?()
+      return
+    }
+
     performBatchUpdates({ [weak self] in
       self?.deleteItems(at: deletionSets)
       self?.insertItems(at: insertionsSets)
       self?.reloadItems(at: reloadSets)
+
+      for move in changes.moved {
+        self?.moveItem(at: IndexPath(item: move.key, section: 0),
+                      to: IndexPath(item: move.value, section: 0))
+      }
+
       /// Use reload items for child updates, this might need improvements in the future.
       self?.reloadItems(at: childUpdates)
     }, completionHandler: nil)

@@ -2,6 +2,7 @@ import Foundation
 
 public typealias ItemChanges = (
   insertions: [Int],
+  moved: [Int : Int],
   updates: [Int],
   reloads: [Int],
   deletions: [Int],
@@ -9,7 +10,18 @@ public typealias ItemChanges = (
 )
 
 public enum ItemDiff {
-  case identifier, index, title, subtitle, text, image, kind, action, meta, children, relations, size, new, removed, none
+  case identifier, index, title, subtitle, text, image, kind, action, meta, children, relations, size, new, removed, none, move(Int, Int)
+}
+
+extension Array where Element == Item {
+
+  func refreshIndexes() -> [Item] {
+    var items = self
+    for (index, _) in items.enumerated() {
+      items[index].index = index
+    }
+    return items
+  }
 }
 
 public extension Item {
@@ -28,7 +40,14 @@ public extension Item {
           continue
         }
 
-        changes.append(element.diff(newModels[index]))
+        let oldItem = oldModels[index]
+        let diff = element.diff(newModels[index])
+
+        if let index = newModels.index(where: { $0.compareItemIncludingIndex(oldItem) }), oldItem.index != index {
+          changes.append(.move(oldItem.index, index))
+        } else {
+          changes.append(diff)
+        }
       }
     } else if oldModels.count < newModels.count {
       for (index, element) in newModels.enumerated() {
@@ -37,11 +56,25 @@ public extension Item {
           continue
         }
 
-        changes.append(element.diff(oldModels[index]))
+        let oldItem = oldModels[index]
+        let diff = element.diff(oldItem)
+
+        if let index = newModels.index(where: { $0.compareItemIncludingIndex(oldItem) }), oldItem.index != index {
+          changes.append(.move(oldItem.index, index))
+        } else {
+          changes.append(diff)
+        }
       }
     } else {
       for (index, element) in newModels.enumerated() {
-        changes.append(element.diff(oldModels[index]))
+        let oldItem = oldModels[index]
+        let diff = element.diff(oldItem)
+
+        if let index = newModels.index(where: { $0.compareItemIncludingIndex(oldItem) }), oldItem.index != index {
+          changes.append(.move(oldItem.index, index))
+        } else {
+          changes.append(diff)
+        }
       }
     }
 
@@ -61,6 +94,7 @@ public extension Item {
     var reloads = [Int]()
     var deletions = [Int]()
     var childrenUpdates = [Int]()
+    var moved = [Int: Int]()
 
     for (index, change) in changes.enumerated() {
       switch change {
@@ -72,13 +106,20 @@ public extension Item {
         insertions.append(index)
       case .removed:
         deletions.append(index)
+      case .move(let from, let to):
+        moved[from] = to
       case .none: break
       default:
         updates.append(index)
       }
     }
 
-    return (insertions: insertions, updates: updates, reloads: reloads, deletions: deletions, updatedChildren: childrenUpdates)
+    return (insertions: insertions,
+            moved: moved,
+            updates: updates,
+            reloads: reloads,
+            deletions: deletions,
+            updatedChildren: childrenUpdates)
   }
 
   /**
