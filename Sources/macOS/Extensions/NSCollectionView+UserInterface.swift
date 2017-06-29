@@ -126,8 +126,8 @@ extension NSCollectionView: UserInterface {
       }
       strongSelf.deleteItems(at: set as Set<IndexPath>)
       for move in movedItems {
-        moveItem(at: IndexPath(item: move.key, section: 0),
-                 to: IndexPath(item: move.value, section: 0))
+        strongSelf.moveItem(at: IndexPath(item: move.key, section: 0),
+                            to: IndexPath(item: move.value, section: 0))
       }
     }) { _ in
       completion?()
