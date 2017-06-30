@@ -123,9 +123,9 @@ extension UITableView: UserInterface {
 
     performUpdates {
       insertRows(at: indexPaths, with: animation.tableViewAnimation)
-      for move in movedItems {
-        moveRow(at: IndexPath(row: move.key, section: 0),
-                to: IndexPath(row: move.value, section: 0))
+      for (from, to) in movedItems {
+        moveRow(at: IndexPath(row: from, section: 0),
+                to: IndexPath(row: to, section: 0))
       }
     }
 
@@ -181,9 +181,9 @@ extension UITableView: UserInterface {
 
     performUpdates {
       deleteRows(at: indexPaths, with: animation.tableViewAnimation)
-      for move in movedItems {
-        moveRow(at: IndexPath(item: move.key, section: 0),
-                to: IndexPath(item: move.value, section: 0))
+      for (from, to) in movedItems {
+        moveRow(at: IndexPath(item: from, section: 0),
+                to: IndexPath(item: to, section: 0))
       }
     }
 

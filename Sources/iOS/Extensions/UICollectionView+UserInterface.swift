@@ -130,9 +130,9 @@ extension UICollectionView: UserInterface {
     performBatchUpdates({
       self.insertItems(at: indexPaths)
 
-      for move in movedItems {
-        self.moveItem(at: IndexPath(item: move.key, section: 0),
-                      to: IndexPath(item: move.value, section: 0))
+      for (from, to) in movedItems {
+        self.moveItem(at: IndexPath(item: from, section: 0),
+                      to: IndexPath(item: to, section: 0))
       }
 
     }, completion: nil)
@@ -181,9 +181,9 @@ extension UICollectionView: UserInterface {
       guard let strongSelf = self else {
         return
       }
-      for move in movedItems {
-        strongSelf.moveItem(at: IndexPath(item: move.key, section: 0),
-                            to: IndexPath(item: move.value, section: 0))
+      for (from, to) in movedItems {
+        strongSelf.moveItem(at: IndexPath(item: from, section: 0),
+                            to: IndexPath(item: to, section: 0))
       }
       strongSelf.deleteItems(at: indexPaths)
 
