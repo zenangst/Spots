@@ -81,11 +81,7 @@ public class SpotsControllerManager {
 
     // Opt-out from performing any kind of diffing if the controller has no components.
     if controller.components.isEmpty {
-      reload(models: components, controller: controller) {
-        controller.scrollView.layoutViews()
-        SpotsController.componentsDidReloadComponentModels?(controller)
-        completion?()
-      }
+      reload(models: components, controller: controller, completion: completion)
       return
     }
 
@@ -507,15 +503,19 @@ public class SpotsControllerManager {
         return
       }
 
+      // Opt-out of doing component cleanup if the controller has no components.
+      let performCleanup = !controller.components.isEmpty
+
       controller.components = Parser.parse(models)
 
-      if controller.scrollView.superview == nil {
-        controller.view.addSubview(controller.scrollView)
+      let previousContentOffset = controller.scrollView.contentOffset
+      if performCleanup {
+        if controller.scrollView.superview == nil {
+          controller.view.addSubview(controller.scrollView)
+        }
+        strongSelf.cleanUpComponentView(controller: controller)
       }
 
-      let previousContentOffset = controller.scrollView.contentOffset
-
-      strongSelf.cleanUpComponentView(controller: controller)
       controller.setupComponents(animated: animated)
       controller.components.forEach { component in
         component.afterUpdate()
@@ -523,7 +523,10 @@ public class SpotsControllerManager {
 
       SpotsController.componentsDidReloadComponentModels?(controller)
       controller.scrollView.layoutSubviews()
-      controller.scrollView.contentOffset = previousContentOffset
+
+      if performCleanup {
+        controller.scrollView.contentOffset = previousContentOffset
+      }
       completion?()
     }
   }
