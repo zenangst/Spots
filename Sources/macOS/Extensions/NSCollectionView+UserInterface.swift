@@ -78,9 +78,9 @@ extension NSCollectionView: UserInterface {
         return
       }
       strongSelf.insertItems(at: set as Set<IndexPath>)
-      for move in movedItems {
-        strongSelf.moveItem(at: IndexPath(item: move.key, section: 0),
-                            to: IndexPath(item: move.value, section: 0))
+      for (from, to) in movedItems {
+        strongSelf.moveItem(at: IndexPath(item: from, section: 0),
+                            to: IndexPath(item: to, section: 0))
       }
     }) { _ in
       completion?()
@@ -125,9 +125,9 @@ extension NSCollectionView: UserInterface {
         return
       }
       strongSelf.deleteItems(at: set as Set<IndexPath>)
-      for move in movedItems {
-        strongSelf.moveItem(at: IndexPath(item: move.key, section: 0),
-                            to: IndexPath(item: move.value, section: 0))
+      for (from, to) in movedItems {
+        strongSelf.moveItem(at: IndexPath(item: from, section: 0),
+                            to: IndexPath(item: to, section: 0))
       }
     }) { _ in
       completion?()

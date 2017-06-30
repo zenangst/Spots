@@ -54,8 +54,8 @@ extension NSTableView: UserInterface {
 
     performUpdates({
       insertRows(at: indexSet, withAnimation: animation.tableViewAnimation)
-      for move in movedItems {
-        moveRow(at: move.key, to: move.value)
+      for (from, to) in movedItems {
+        moveRow(at: from, to: to)
       }
     }, endClosure: completion)
 
@@ -103,9 +103,8 @@ extension NSTableView: UserInterface {
     indexes.forEach { indexSet.insert($0) }
 
     performUpdates({
-      for move in movedItems {
-        moveRow(at: move.key,
-                to: move.value)
+      for (from, to) in movedItems {
+        moveRow(at: from, to: to)
       }
       removeRows(at: indexSet, withAnimation: animation.tableViewAnimation)
     }, endClosure: completion)
