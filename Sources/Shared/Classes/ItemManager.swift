@@ -14,7 +14,7 @@ public class ItemManager {
   func prepare(component: Component, items: [Item], recreateComposites: Bool) -> [Item] {
     var preparedItems = items
     var spanWidth: CGFloat?
-    var shouldAdjustHeight = component.model.kind == .carousel ? true : false
+    var shouldAdjustHeight = component.model.kind == .carousel
     var largestHeight: CGFloat = 0.0
 
     if let layout = component.model.layout, layout.span > 0.0 {
@@ -64,7 +64,7 @@ public class ItemManager {
       component.model.items[index] = configuredItem
     }
 
-    guard component.model.kind == .carousel ? true : false else {
+    guard component.model.kind == .carousel else {
       return
     }
 
