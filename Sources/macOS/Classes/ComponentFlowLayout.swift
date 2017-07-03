@@ -277,9 +277,13 @@ public class ComponentFlowLayout: FlowLayout {
     case .middle:
       switch type {
       case .insert:
-        attributes.frame.size = .zero
+        attributes.size = .zero
         attributes.frame.origin = .init(x: attributes.frame.origin.x,
                                         y: attributes.frame.origin.y * 2)
+      case .delete:
+        attributes.frame.origin = .init(x: attributes.frame.origin.x,
+                                        y: attributes.frame.size.height / 2)
+        return
       default:
         break
       }
