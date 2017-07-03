@@ -69,7 +69,7 @@ extension NSCollectionView: UserInterface {
 
     let numberOfRows = dataSource.collectionView(self, numberOfItemsInSection: 0) - indexes.count
     let algorithm = MoveAlgorithm()
-    let movedItems = algorithm.calculateMoveForDeletedIndexes(indexes, numberOfItems: numberOfRows)
+    let movedItems = algorithm.calculateMoveForInsertedIndexes(indexes, numberOfItems: numberOfRows)
     let indexPaths = indexes.map { IndexPath(item: $0, section: 0) }
     let set = Set<IndexPath>(indexPaths)
 
