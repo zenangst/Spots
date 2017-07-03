@@ -67,18 +67,22 @@ extension NSCollectionView: UserInterface {
       return
     }
 
+    applyAnimation(animation: animation)
+
     let numberOfRows = dataSource.collectionView(self, numberOfItemsInSection: 0) - indexes.count
     let algorithm = MoveAlgorithm()
     let movedItems = algorithm.calculateMoveForInsertedIndexes(indexes, numberOfItems: numberOfRows)
     let indexPaths = indexes.map { IndexPath(item: $0, section: 0) }
     let set = Set<IndexPath>(indexPaths)
+    let instance = animation != .none ? animator() : self
 
-    performBatchUpdates({ [weak self] in
+    instance.performBatchUpdates({ [weak self] in
       guard let strongSelf = self else {
         return
       }
       strongSelf.insertItems(at: set as Set<IndexPath>)
       for (from, to) in movedItems {
+
         strongSelf.moveItem(at: IndexPath(item: from, section: 0),
                             to: IndexPath(item: to, section: 0))
       }
@@ -94,11 +98,11 @@ extension NSCollectionView: UserInterface {
    - parameter completion: A completion block for when the updates are done
    **/
   public func reload(_ indexes: [Int], withAnimation animation: Animation = .automatic, completion: (() -> Void)? = nil) {
+    applyAnimation(animation: animation)
     let indexPaths = indexes.map { IndexPath(item: $0, section: 0) }
     let set = Set<IndexPath>(indexPaths)
-
-    self.reloadItems(at: set as Set<IndexPath>)
-
+    let instance = animation != .none ? animator() : self
+    instance.reloadItems(at: set as Set<IndexPath>)
     completion?()
   }
 
@@ -114,13 +118,16 @@ extension NSCollectionView: UserInterface {
       return
     }
 
+    applyAnimation(animation: animation)
+
     let indexPaths = indexes.map { IndexPath(item: $0, section: 0) }
     let numberOfRows = dataSource.collectionView(self, numberOfItemsInSection: 0)
     let algorithm = MoveAlgorithm()
     let movedItems = algorithm.calculateMoveForDeletedIndexes(indexes, numberOfItems: numberOfRows)
     let set = Set<IndexPath>(indexPaths)
+    let instance = animation != .none ? animator() : self
 
-    performBatchUpdates({ [weak self] in
+    instance.performBatchUpdates({ [weak self] in
       guard let strongSelf = self else {
         return
       }
@@ -138,6 +145,7 @@ extension NSCollectionView: UserInterface {
                       withAnimation animation: Animation = .automatic,
                       updateDataSource: () -> Void,
                       completion: ((()) -> Void)? = nil) {
+    let instance = animation != .none ? animator() : self
     let deletionSets = Set<IndexPath>(changes.deletions
       .map { IndexPath(item: $0, section: 0) })
     let insertionsSets = Set<IndexPath>(changes.insertions
@@ -158,7 +166,9 @@ extension NSCollectionView: UserInterface {
       return
     }
 
-    performBatchUpdates({ [weak self] in
+    applyAnimation(animation: animation)
+
+    instance.performBatchUpdates({ [weak self] in
       self?.deleteItems(at: deletionSets)
       self?.insertItems(at: insertionsSets)
       self?.reloadItems(at: reloadSets)
@@ -171,8 +181,8 @@ extension NSCollectionView: UserInterface {
       /// Use reload items for child updates, this might need improvements in the future.
       self?.reloadItems(at: childUpdates)
     }, completionHandler: nil)
-
     completion?()
+    removeAnimation()
   }
 
   public func reloadDataSource() {
@@ -197,4 +207,20 @@ extension NSCollectionView: UserInterface {
 
   public func beginUpdates() {}
   public func endUpdates() {}
+
+  private func applyAnimation(animation: Animation) {
+    guard let componentFlowLayout = collectionViewLayout as? ComponentFlowLayout else {
+      return
+    }
+
+    componentFlowLayout.animation = animation
+  }
+
+  private func removeAnimation() {
+    guard let componentFlowLayout = collectionViewLayout as? ComponentFlowLayout else {
+      return
+    }
+
+    componentFlowLayout.animation = nil
+  }
 }
