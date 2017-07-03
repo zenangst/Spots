@@ -14,6 +14,8 @@ public class ItemManager {
   func prepare(component: Component, items: [Item], recreateComposites: Bool) -> [Item] {
     var preparedItems = items
     var spanWidth: CGFloat?
+    var shouldAdjustHeight = component.model.kind == .carousel ? true : false
+    var largestHeight: CGFloat = 0.0
 
     if let layout = component.model.layout, layout.span > 0.0 {
       let componentWidth: CGFloat = component.view.frame.size.width - CGFloat(layout.inset.left + layout.inset.right)
@@ -29,6 +31,16 @@ public class ItemManager {
       if let configuredItem = configure(component: component, item: item, at: index, usesViewSize: true, recreateComposites: recreateComposites) {
         preparedItems[index].index = index
         preparedItems[index] = configuredItem
+      }
+
+      if shouldAdjustHeight && preparedItems[index].size.height > largestHeight {
+        largestHeight = preparedItems[index].size.height
+      }
+    }
+
+    if shouldAdjustHeight {
+      for element in preparedItems.indices {
+        preparedItems[element].size.height = largestHeight
       }
     }
 
@@ -50,6 +62,16 @@ public class ItemManager {
       component.model.items[index] = configuredItem
     } else {
       component.model.items[index] = configuredItem
+    }
+
+    guard component.model.kind == .carousel ? true : false else {
+      return
+    }
+
+    if var largestHeight: CGFloat = component.model.items.sorted(by: { $0.size.height > $1.size.height }).first?.size.height {
+      for element in component.model.items.indices {
+        component.model.items[index].size.height = largestHeight
+      }
     }
   }
 
