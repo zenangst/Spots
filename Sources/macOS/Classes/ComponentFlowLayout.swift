@@ -277,8 +277,9 @@ public class ComponentFlowLayout: FlowLayout {
     case .middle:
       switch type {
       case .insert:
-        attributes.frame.origin = .init(x: collectionView.bounds.midX,
-                                        y: collectionView.bounds.midY)
+        attributes.frame.size = .zero
+        attributes.frame.origin = .init(x: attributes.frame.origin.x,
+                                        y: attributes.frame.origin.y * 2)
       default:
         break
       }
