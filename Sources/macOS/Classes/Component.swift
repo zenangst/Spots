@@ -243,8 +243,11 @@ import Tailor
     }
 
     layoutHeaderFooterViews(size)
-
     view.layoutSubviews()
+
+    if let layout = model.layout, model.items.isEmpty, !layout.showEmptyComponent {
+      view.frame.size.height = 0
+    }
   }
 
   /// Setup a collection view with a specific size.
