@@ -67,7 +67,7 @@ extension NSCollectionView: UserInterface {
       return
     }
 
-    applyAnimation(animation: animation)
+    applyAnimation(animation)
 
     let numberOfRows = dataSource.collectionView(self, numberOfItemsInSection: 0) - indexes.count
     let algorithm = MoveAlgorithm()
@@ -98,7 +98,7 @@ extension NSCollectionView: UserInterface {
    - parameter completion: A completion block for when the updates are done
    **/
   public func reload(_ indexes: [Int], withAnimation animation: Animation = .automatic, completion: (() -> Void)? = nil) {
-    applyAnimation(animation: animation)
+    applyAnimation(animation)
     let indexPaths = indexes.map { IndexPath(item: $0, section: 0) }
     let set = Set<IndexPath>(indexPaths)
     let instance = animation != .none ? animator() : self
@@ -118,7 +118,7 @@ extension NSCollectionView: UserInterface {
       return
     }
 
-    applyAnimation(animation: animation)
+    applyAnimation(animation)
 
     let indexPaths = indexes.map { IndexPath(item: $0, section: 0) }
     let numberOfRows = dataSource.collectionView(self, numberOfItemsInSection: 0)
@@ -166,7 +166,7 @@ extension NSCollectionView: UserInterface {
       return
     }
 
-    applyAnimation(animation: animation)
+    applyAnimation(animation)
 
     instance.performBatchUpdates({ [weak self] in
       self?.deleteItems(at: deletionSets)
@@ -208,7 +208,7 @@ extension NSCollectionView: UserInterface {
   public func beginUpdates() {}
   public func endUpdates() {}
 
-  private func applyAnimation(animation: Animation) {
+  private func applyAnimation(_ animation: Animation) {
     guard let componentFlowLayout = collectionViewLayout as? ComponentFlowLayout else {
       return
     }
