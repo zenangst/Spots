@@ -135,7 +135,7 @@ open class SpotsScrollView: NSScrollView {
           }
         }
 
-        let shouldAnimate = isAnimationsEnabled && window?.inLiveResize == Optional(false)
+        let shouldAnimate = isAnimationsEnabled && window?.inLiveResize == false
         if shouldAnimate {
           scrollView.animator().frame = frame
         } else {
