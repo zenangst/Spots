@@ -36,9 +36,9 @@ extension Component {
     switch type {
     case .live:
       prepareItems(recreateComposites: false)
-      layout(with: size)
+      layout(with: size, animated: false)
     case .end:
-      layout(with: size)
+      layout(with: size, animated: false)
     }
   }
 }

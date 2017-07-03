@@ -22,6 +22,7 @@ open class SpotsScrollView: NSScrollView {
   /// A KVO context used to monitor changes in contentSize, frames and bounds
   let subviewContext: UnsafeMutableRawPointer? = UnsafeMutableRawPointer(mutating: nil)
 
+  public var isAnimationsEnabled: Bool = false
   public var inset: Inset?
 
   /// A collection of NSView's that resemble the order of the views in the scroll view.
@@ -134,7 +135,13 @@ open class SpotsScrollView: NSScrollView {
           }
         }
 
-        scrollView.frame = frame
+        let shouldAnimate = isAnimationsEnabled && window?.inLiveResize == Optional(false)
+        if shouldAnimate {
+          scrollView.animator().frame = frame
+        } else {
+          scrollView.frame = frame
+        }
+
         scrollView.contentOffset = contentOffset
 
         yOffsetOfCurrentSubview += scrollView.frame.height

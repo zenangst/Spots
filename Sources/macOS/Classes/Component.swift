@@ -228,25 +228,38 @@ import Tailor
       setupCollectionView(collectionView, with: size)
     }
 
-    layout(with: size)
+    layout(with: size, animated: false)
     Component.configure?(self)
   }
 
   /// Configure the view frame with a given size.
   ///
   /// - Parameter size: A `CGSize` used to set a new size to the user interface.
-  public func layout(with size: CGSize) {
+  /// - Parameter animated: Determines if the `Component` should perform animation when
+  ///                       applying its new size.
+  public func layout(with size: CGSize, animated: Bool = true) {
     if let tableView = self.tableView {
-      layoutTableView(tableView, with: size)
+      let instance = animated ? tableView.animator() : tableView
+      layoutTableView(instance, with: size)
     } else if let collectionView = self.collectionView {
-      layoutCollectionView(collectionView, with: size)
+      let instance = animated ? collectionView.animator() : collectionView
+      layoutCollectionView(instance, with: size)
     }
 
     layoutHeaderFooterViews(size)
     view.layoutSubviews()
 
     if let layout = model.layout, model.items.isEmpty, !layout.showEmptyComponent {
-      view.frame.size.height = 0
+      if animated {
+        let viewAnimator = view.animator()
+        viewAnimator.frame.size.height = 0
+        DispatchQueue.main.asyncAfter(deadline: .now() + NSAnimationContext.current().duration) {
+          viewAnimator.superview?.animator().layoutSubviews()
+        }
+      } else {
+        view.frame.size.height = 0
+        view.superview?.layoutSubviews()
+      }
     }
   }
 

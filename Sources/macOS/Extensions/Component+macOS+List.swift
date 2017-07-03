@@ -70,7 +70,7 @@ extension Component {
       tableView.beginUpdates()
       tableView.reloadSection(0, withAnimation: .none, completion: nil)
       tableView.endUpdates()
-      layout(with: size)
+      layout(with: size, animated: false)
     case .end:
       layoutTableView(tableView, with: size)
     }

@@ -35,7 +35,7 @@ extension Component {
 
   func resizeHorizontalCollectionView(_ collectionView: CollectionView, with size: CGSize, type: ComponentResize) {
     prepareItems(recreateComposites: false)
-    layout(with: size)
+    layout(with: size, animated: false)
   }
 
   private func calculateCollectionViewHeight() -> CGFloat {
