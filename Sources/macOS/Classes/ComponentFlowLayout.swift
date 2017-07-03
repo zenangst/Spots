@@ -264,8 +264,7 @@ public class ComponentFlowLayout: FlowLayout {
     case .left:
       attributes.frame.origin.x = type == .insert ? collectionView.bounds.maxX : collectionView.bounds.minX
     case .top:
-      attributes.frame.origin.y += attributes.frame.size.height
-      break
+      attributes.frame.origin.y -= attributes.frame.size.height
     case .bottom:
       if attributes.frame.origin.x == sectionInset.left {
         attributes.frame.origin = .init(x: attributes.frame.origin.x,
