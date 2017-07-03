@@ -4,9 +4,6 @@ extension Component {
   func setupHorizontalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
     let newCollectionViewHeight = calculateCollectionViewHeight()
 
-    scrollView.scrollingEnabled = (model.items.count > 1)
-    scrollView.hasHorizontalScroller = (model.items.count > 1)
-
     collectionView.frame.size.height = newCollectionViewHeight
   }
 
