@@ -272,7 +272,6 @@ public class ComponentFlowLayout: FlowLayout {
       } else {
         attributes.frame.origin.y += attributes.frame.size.height
       }
-      break
     case .none:
       attributes.alpha = 1.0
     case .middle:
