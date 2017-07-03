@@ -68,9 +68,9 @@ public class ItemManager {
       return
     }
 
-    if var largestHeight: CGFloat = component.model.items.sorted(by: { $0.size.height > $1.size.height }).first?.size.height {
-      for element in component.model.items.indices {
-        component.model.items[index].size.height = largestHeight
+    if let largestHeight: CGFloat = component.model.items.sorted(by: { $0.size.height > $1.size.height }).first?.size.height {
+      for element in component.model.items.indices.enumerated() {
+        component.model.items[element.offset].size.height = largestHeight
       }
     }
   }
