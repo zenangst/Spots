@@ -251,10 +251,9 @@ import Tailor
 
     if let layout = model.layout, model.items.isEmpty, !layout.showEmptyComponent {
       if animated {
-        let viewAnimator = view.animator()
-        viewAnimator.frame.size.height = 0
-        DispatchQueue.main.asyncAfter(deadline: .now() + NSAnimationContext.current().duration) {
-          viewAnimator.superview?.animator().layoutSubviews()
+        view.animator().frame.size.height = 0
+        DispatchQueue.main.asyncAfter(deadline: .now() + NSAnimationContext.current().duration) { [weak self] in
+          self?.view.superview?.animator().layoutSubviews()
         }
       } else {
         view.frame.size.height = 0
