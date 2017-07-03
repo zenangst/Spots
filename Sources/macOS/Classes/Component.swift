@@ -390,6 +390,12 @@ import Tailor
       let size = CGSize(width: superview.frame.width,
                         height: view.frame.height)
       layout(with: size)
+
+      guard model.kind == .carousel else {
+        return
+      }
+      scrollView.scrollingEnabled = (model.items.count > 1)
+      scrollView.hasHorizontalScroller = (model.items.count > 1)
     }
   }
 }
