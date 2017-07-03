@@ -205,7 +205,6 @@ extension UICollectionView: UserInterface {
                       withAnimation animation: Animation = .automatic,
                       updateDataSource: () -> Void,
                       completion: ((()) -> Void)? = nil) {
-    applyAnimation(animation: animation)
     let insertions = changes.insertions.map { IndexPath(row: $0, section: 0) }
     let reloads = changes.reloads.map { IndexPath(row: $0, section: 0) }
     let deletions = changes.deletions.map { IndexPath(row: $0, section: 0) }
@@ -220,6 +219,8 @@ extension UICollectionView: UserInterface {
       completion?()
       return
     }
+
+    applyAnimation(animation: animation)
 
     if animation == .none {
       UIView.performWithoutAnimation {
