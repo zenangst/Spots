@@ -120,7 +120,7 @@ public class ComponentManager {
       }
 
       if numberOfItems > 0 {
-        self?.itemManager.configureItem(at: numberOfItems, component: component, usesViewSize: true)
+        self?.itemManager.configureItem(at: index, component: component, usesViewSize: true)
         component.userInterface?.insert(indexes, withAnimation: animation) {
           self?.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
         }
