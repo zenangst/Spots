@@ -6,6 +6,24 @@
 
 public class ItemManager {
 
+  /// Calculate the span width for an item inside of a `Component`.
+  /// Span width is the amount of spaces that an `Item` will get inside of a `Component`
+  /// that uses `span`. If a `Component` has a `span` of three, it will take the width
+  /// of the `Component` (minus insets) and divide it by three. And finally remove `itemSpacing`
+  /// as that should not go into the final items size.
+  ///
+  /// - Parameter component: The `Component` that the function will use as base for the calculation.
+  /// - Returns: Returns the new `Item` width based of the `Component` width, if the `Component` does
+  ///            not rely on `span`, it will return `nil`.
+  func calculateSpanWidth(for component: Component) -> CGFloat? {
+    guard let layout = component.model.layout, layout.span > 0.0 else {
+      return nil
+    }
+
+    let componentWidth: CGFloat = component.view.frame.size.width - CGFloat(layout.inset.left + layout.inset.right)
+    return (componentWidth / CGFloat(layout.span)) - CGFloat(layout.itemSpacing)
+  }
+
   func prepareItems(component: Component, recreateComposites: Bool = true) {
     component.model.items = prepare(component: component, items: component.model.items, recreateComposites: recreateComposites)
     Configuration.views.purge()
@@ -13,14 +31,9 @@ public class ItemManager {
 
   func prepare(component: Component, items: [Item], recreateComposites: Bool) -> [Item] {
     var preparedItems = items
-    var spanWidth: CGFloat?
+    var spanWidth: CGFloat? = calculateSpanWidth(for: component)
     var shouldAdjustHeight = component.model.kind == .carousel
     var largestHeight: CGFloat = 0.0
-
-    if let layout = component.model.layout, layout.span > 0.0 {
-      let componentWidth: CGFloat = component.view.frame.size.width - CGFloat(layout.inset.left + layout.inset.right)
-      spanWidth = (componentWidth / CGFloat(layout.span)) - CGFloat(layout.itemSpacing)
-    }
 
     preparedItems.enumerated().forEach { (index: Int, item: Item) in
       var item = item
@@ -49,20 +62,16 @@ public class ItemManager {
 
   public func configureItem(at index: Int, component: Component, usesViewSize: Bool = false, recreateComposites: Bool = true) {
     guard let item = component.item(at: index),
-      let configuredItem = configure(component: component, item: item, at: index, usesViewSize: usesViewSize, recreateComposites: recreateComposites)
+      var configuredItem = configure(component: component, item: item, at: index, usesViewSize: usesViewSize, recreateComposites: recreateComposites)
       else {
         return
     }
 
-    if let layout = component.model.layout, layout.span > 0.0 {
-      var configuredItem = configuredItem
-      let componentWidth: CGFloat = component.view.frame.size.width - CGFloat(layout.inset.left + layout.inset.right)
-      let spanWidth = (componentWidth / CGFloat(layout.span)) - CGFloat(layout.itemSpacing)
+    if let spanWidth = calculateSpanWidth(for: component) {
       configuredItem.size.width = spanWidth
-      component.model.items[index] = configuredItem
-    } else {
-      component.model.items[index] = configuredItem
     }
+
+    component.model.items[index] = configuredItem
 
     guard component.model.kind == .carousel else {
       return
@@ -180,9 +189,8 @@ public class ItemManager {
     let components: [Component] = Parser.parse(item)
     var size = component.view.frame.size
 
-    if let layout = component.model.layout, layout.span > 0.0 {
-      let componentWidth: CGFloat = component.view.frame.size.width - CGFloat(layout.inset.left + layout.inset.right)
-      size.width = (componentWidth / CGFloat(layout.span)) - CGFloat(layout.itemSpacing)
+    if let spanWidth = calculateSpanWidth(for: component) {
+      size.width = spanWidth
     }
 
     size.width = round(size.width)
