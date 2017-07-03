@@ -21,12 +21,13 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
   // Subclasses must override this method and use it to return the width and height of the collection view’s content. These values represent the width and height of all the content, not just the content that is currently visible. The collection view uses this information to configure its own content size to facilitate scrolling.
   open override var collectionViewContentSize: CGSize {
     guard let delegate = collectionView?.delegate as? Delegate,
-      let component = delegate.component
+      let component = delegate.component,
+      let layout = component.model.layout
       else {
         return .zero
     }
 
-    guard !component.model.items.isEmpty else {
+    guard !component.model.items.isEmpty, !layout.showEmptyComponent else {
       return .zero
     }
 
