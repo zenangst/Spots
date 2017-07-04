@@ -22,11 +22,12 @@ open class SpotsScrollView: NSScrollView {
   /// A KVO context used to monitor changes in contentSize, frames and bounds
   let subviewContext: UnsafeMutableRawPointer? = UnsafeMutableRawPointer(mutating: nil)
 
+  /// Toggles if animations should be enabled or not.
   public var isAnimationsEnabled: Bool = false
   public var inset: Inset?
 
   /// A collection of NSView's that resemble the order of the views in the scroll view.
-  fileprivate var subviewsInLayoutOrder = [NSView]()
+  fileprivate var observedViews = [NSView]()
 
   open var forceUpdate = false {
     didSet {
@@ -57,8 +58,8 @@ open class SpotsScrollView: NSScrollView {
 
   /// Cleanup observers.
   deinit {
-    subviewsInLayoutOrder.forEach {
-      $0.removeObserver(self, forKeyPath: #keyPath(frame), context: subviewContext)
+    for subview in observedViews {
+      unobserveView(subview)
     }
   }
 
@@ -69,24 +70,44 @@ open class SpotsScrollView: NSScrollView {
     return true
   }
 
+  private func observeView(_ view: NSView) {
+    guard observedViews.contains(where: { $0 == view }) else {
+      return
+    }
+
+    view.addObserver(self, forKeyPath: #keyPath(frame), options: .old, context: subviewContext)
+    observedViews.append(view)
+  }
+
+  private func unobserveView(_ view: NSView) {
+    guard let index = observedViews.index(where: { $0 == view }) else {
+      return
+    }
+
+    view.removeObserver(self, forKeyPath: #keyPath(frame), context: subviewContext)
+    observedViews.remove(at: index)
+  }
+
   /// A subview was added to the container.
   ///
   /// - Parameter subview: The subview that was added.
   func didAddSubviewToContainer(_ subview: View) {
-    subviewsInLayoutOrder.append(subview)
-    subview.addObserver(self, forKeyPath: #keyPath(frame), options: .old, context: subviewContext)
-    layoutSubtreeIfNeeded()
+    guard componentsView.subviews.index(of: subview) != nil else {
+      return
+    }
+
+    for subview in componentsView.subviews {
+      observeView(subview)
+    }
+    layoutViews(animated: true)
   }
 
   /// Will remove subview from container.
   ///
   /// - Parameter subview: The subview that will be removed.
   open override func willRemoveSubview(_ subview: View) {
-    if let index = subviewsInLayoutOrder.index(where: { $0 == subview }) {
-      subviewsInLayoutOrder.remove(at: index)
-      layoutSubtreeIfNeeded()
-      subview.removeObserver(self, forKeyPath: #keyPath(frame), context: subviewContext)
-    }
+    unobserveView(subview)
+    layoutViews(animated: true)
   }
 
   open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
@@ -107,11 +128,15 @@ open class SpotsScrollView: NSScrollView {
     layoutSubtreeIfNeeded()
   }
 
+  /// Layout all subviews in the collection ordered by `subviewsInLayoutOrder` on `SpotsContentView`.
+  ///
+  /// - Parameter animated: Determines if animations should be used when updating the frames of the
+  ///                       underlaying views.
   func layoutViews(animated: Bool = true) {
     var yOffsetOfCurrentSubview: CGFloat = CGFloat(self.inset?.top ?? 0.0)
-    let lastView = subviewsInLayoutOrder.last
+    let lastView = componentsView.subviewsInLayoutOrder.last
 
-    for subview in subviewsInLayoutOrder {
+    for subview in componentsView.subviewsInLayoutOrder {
       if let scrollView = subview as? ScrollView {
         var contentOffset = scrollView.contentOffset
         var frame = scrollView.frame

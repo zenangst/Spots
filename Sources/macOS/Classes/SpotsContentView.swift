@@ -2,12 +2,29 @@ import Cocoa
 
 open class SpotsContentView: NSView {
 
+  /// `Component` views that are ordered after the model indexes.
+  var subviewsInLayoutOrder = [NSView]()
+
   override open var isFlipped: Bool {
     return true
   }
 
+  /// Remove all stored subviews when the view is deallocated.
+  deinit {
+    subviewsInLayoutOrder.removeAll()
+  }
+
+  /// Insert view at specific index.
+  ///
+  /// - Parameters:
+  ///   - view: The view that should be inserted.
+  ///   - index: The index that the view should be inserted at.
   func insertSubview(_ view: View, at index: Int) {
     subviews.insert(view, at: index)
+    rebuildSubviewsInLayoutOrder()
+    spotsScrollView {
+      $0.layoutViews(animated: true)
+    }
   }
 
   /**
@@ -17,12 +34,8 @@ open class SpotsContentView: NSView {
    */
   override open func didAddSubview(_ subview: View) {
     super.didAddSubview(subview)
-
-    guard let clipView = superview,
-      let containerScrollView = clipView.superview as? SpotsScrollView else {
-        return
-    }
-    containerScrollView.didAddSubviewToContainer(subview)
+    rebuildSubviewsInLayoutOrder()
+    spotsScrollView { $0.didAddSubviewToContainer(subview) }
   }
 
   /**
@@ -32,12 +45,8 @@ open class SpotsContentView: NSView {
    */
   override open func willRemoveSubview(_ subview: View) {
     super.willRemoveSubview(subview)
-
-    guard let clipView = superview,
-      let containerScrollView = clipView.superview as? SpotsScrollView else {
-        return
-    }
-    containerScrollView.willRemoveSubview(subview)
+    rebuildSubviewsInLayoutOrder()
+    spotsScrollView { $0.willRemoveSubview(subview) }
   }
 
   /// The default implementation of this method does nothing on iOS 5.1 and earlier.
@@ -47,12 +56,26 @@ open class SpotsContentView: NSView {
   /// to trigger a re-rendering of all components.
   open override func layoutSubviews() {
     super.layoutSubviews()
+    spotsScrollView { $0.layoutViews(animated: false) }
+  }
 
+  /// Resolve `SpotsScrollView` based of the `SpotsContentView`'s superview.
+  ///
+  /// - Parameter closure: A closure that returns the resolved `SpotsScrollView`.
+  ///                      Note: The closure will not execute if the `SpotsScrollView` cannot
+  ///                      be resolved.
+  private func spotsScrollView(_ closure: (SpotsScrollView) -> Void) {
     guard let clipView = superview,
-      let containerScrollView = clipView.superview as? SpotsScrollView else {
+      let spotsScrollView = clipView.superview as? SpotsScrollView else {
         return
     }
 
-    containerScrollView.layoutViews()
+    closure(spotsScrollView)
+  }
+
+  /// Rebuild the `subviewsInLayoutOrder`.
+  private func rebuildSubviewsInLayoutOrder() {
+    subviewsInLayoutOrder.removeAll()
+    subviewsInLayoutOrder = subviews
   }
 }
