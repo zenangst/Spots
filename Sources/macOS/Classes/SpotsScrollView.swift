@@ -107,7 +107,7 @@ open class SpotsScrollView: NSScrollView {
     layoutSubtreeIfNeeded()
   }
 
-  func layoutViews() {
+  func layoutViews(animated: Bool = true) {
     var yOffsetOfCurrentSubview: CGFloat = CGFloat(self.inset?.top ?? 0.0)
     let lastView = subviewsInLayoutOrder.last
 
@@ -135,7 +135,7 @@ open class SpotsScrollView: NSScrollView {
           }
         }
 
-        let shouldAnimate = isAnimationsEnabled && window?.inLiveResize == false
+        let shouldAnimate = isAnimationsEnabled && window?.inLiveResize == false && animated
         if shouldAnimate {
           scrollView.animator().frame = frame
         } else {
@@ -185,6 +185,6 @@ open class SpotsScrollView: NSScrollView {
   open override func layoutSubtreeIfNeeded() {
     super.layoutSubtreeIfNeeded()
 
-    layoutViews()
+    layoutViews(animated: false)
   }
 }
