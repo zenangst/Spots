@@ -231,21 +231,21 @@ open class SpotsController: NSViewController, SpotsProtocol {
   open override func viewDidLayout() {
     super.viewDidLayout()
 
-    scrollView.layoutSubviews()
+    scrollView.layoutViews(animated: false)
   }
 
   open func windowDidResize(_ notification: Notification) {
     for component in components {
       component.didResize(size: view.frame.size, type: .live)
     }
-    scrollView.layoutSubviews()
+    scrollView.layoutViews(animated: false)
   }
 
   public func windowDidEndLiveResize(_ notification: Notification) {
     components.forEach { component in
       component.didResize(size: view.frame.size, type: .end)
     }
-    scrollView.layoutSubviews()
+    scrollView.layoutViews(animated: false)
   }
 
   fileprivate func layoutComponent(_ component: Component) {
