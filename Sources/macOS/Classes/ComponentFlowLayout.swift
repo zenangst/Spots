@@ -22,8 +22,7 @@ public class ComponentFlowLayout: FlowLayout {
 
   open override func prepare() {
     guard let delegate = collectionView?.delegate as? Delegate,
-      let component = delegate.component,
-      let layout = component.model.layout
+      let component = delegate.component
       else {
         return
     }
@@ -45,16 +44,16 @@ public class ComponentFlowLayout: FlowLayout {
       contentSize = .zero
 
       if let firstItem = component.model.items.first {
-        contentSize.height = firstItem.size.height * CGFloat(layout.itemsPerRow)
+        contentSize.height = firstItem.size.height * CGFloat(component.model.layout.itemsPerRow)
 
-        if component.model.items.count % layout.itemsPerRow == 1 {
+        if component.model.items.count % component.model.layout.itemsPerRow == 1 {
           contentSize.width += firstItem.size.width + minimumLineSpacing
-          contentSize.height += CGFloat(layout.lineSpacing)
+          contentSize.height += CGFloat(component.model.layout.lineSpacing)
         }
       }
 
       for (index, item) in component.model.items.enumerated() {
-        guard indexEligibleForItemsPerRow(index: index, itemsPerRow: layout.itemsPerRow) else {
+        guard indexEligibleForItemsPerRow(index: index, itemsPerRow: component.model.layout.itemsPerRow) else {
           continue
         }
 
@@ -64,7 +63,7 @@ public class ComponentFlowLayout: FlowLayout {
       contentSize.height += component.headerHeight
       contentSize.height += component.footerHeight
       contentSize.width -= minimumInteritemSpacing
-      contentSize.width += CGFloat(layout.inset.left + layout.inset.right)
+      contentSize.width += CGFloat(component.model.layout.inset.left + component.model.layout.inset.right)
     case .vertical:
       contentSize.width = component.view.frame.width
       contentSize.height = super.collectionViewContentSize.height
@@ -72,7 +71,7 @@ public class ComponentFlowLayout: FlowLayout {
       contentSize.height += component.footerHeight
     }
 
-    contentSize.height += CGFloat(layout.inset.top + layout.inset.bottom)
+    contentSize.height += CGFloat(component.model.layout.inset.top + component.model.layout.inset.bottom)
   }
 
   public override func layoutAttributesForElements(in rect: NSRect) -> [NSCollectionViewLayoutAttributes] {
@@ -80,8 +79,7 @@ public class ComponentFlowLayout: FlowLayout {
 
     guard let collectionView = collectionView,
       let dataSource = collectionView.dataSource as? DataSource,
-      let component = dataSource.component,
-      let layout = component.model.layout
+      let component = dataSource.component
       else {
         return attributes
     }
@@ -105,27 +103,27 @@ public class ComponentFlowLayout: FlowLayout {
       itemAttribute.size = component.sizeForItem(at: indexPath)
 
       if scrollDirection == .horizontal {
-        if layout.itemsPerRow > 1 {
-          if indexPath.item % Int(layout.itemsPerRow) == 0 {
+        if component.model.layout.itemsPerRow > 1 {
+          if indexPath.item % Int(component.model.layout.itemsPerRow) == 0 {
             itemAttribute.frame.origin.y += sectionInset.top + component.headerHeight
           } else {
             itemAttribute.frame.origin.y = nextY
           }
         } else {
           itemAttribute.frame.origin.y = component.headerView?.frame.maxY ?? component.headerHeight
-          itemAttribute.frame.origin.y += CGFloat(layout.inset.top)
+          itemAttribute.frame.origin.y += CGFloat(component.model.layout.inset.top)
         }
 
         itemAttribute.frame.origin.x = nextX
 
-        if indexEligibleForItemsPerRow(index: indexPath.item, itemsPerRow: layout.itemsPerRow) {
+        if indexEligibleForItemsPerRow(index: indexPath.item, itemsPerRow: component.model.layout.itemsPerRow) {
           nextX += itemAttribute.size.width + minimumInteritemSpacing
           nextY = 0
         } else {
-          nextY = itemAttribute.frame.maxY + CGFloat(layout.lineSpacing)
+          nextY = itemAttribute.frame.maxY + CGFloat(component.model.layout.lineSpacing)
         }
       } else {
-        itemAttribute.frame.origin.y += CGFloat(layout.inset.top)
+        itemAttribute.frame.origin.y += CGFloat(component.model.layout.inset.top)
       }
 
       attributes.append(itemAttribute)

@@ -88,16 +88,16 @@ class ComponentFlowLayoutTests: XCTestCase {
 
     let expectedFrameA = CGRect(
       origin: CGPoint(
-        x: model.layout!.inset.left,
-        y: model.layout!.inset.top
+        x: model.layout.inset.left,
+        y: model.layout.inset.top
       ),
       size: itemSize
     )
 
     let expectedFrameB = CGRect(
       origin: CGPoint(
-        x: model.layout!.inset.left + Double(itemSize.width),
-        y: model.layout!.inset.top
+        x: model.layout.inset.left + Double(itemSize.width),
+        y: model.layout.inset.top
       ),
       size: itemSize
     )
@@ -130,8 +130,8 @@ class ComponentFlowLayoutTests: XCTestCase {
     let layoutAttributes = collectionViewLayout.layoutAttributesForElements(in: CGRect(origin: CGPoint.zero, size: parentSize))
 
     XCTAssertEqual(layoutAttributes?.count, 2)
-    XCTAssertEqual(layoutAttributes?[0].frame, CGRect(origin: CGPoint(x: 0.0, y: model.layout!.inset.top), size: itemSize))
-    XCTAssertEqual(layoutAttributes?[1].frame, CGRect(origin: CGPoint(x: Double(itemSize.width) + model.layout!.itemSpacing, y: model.layout!.inset.top), size: itemSize))
+    XCTAssertEqual(layoutAttributes?[0].frame, CGRect(origin: CGPoint(x: 0.0, y: model.layout.inset.top), size: itemSize))
+    XCTAssertEqual(layoutAttributes?[1].frame, CGRect(origin: CGPoint(x: Double(itemSize.width) + model.layout.itemSpacing, y: model.layout.inset.top), size: itemSize))
   }
 
   func testLayoutAttributesForElementInVerticalLayoutWithInsets() {
@@ -162,32 +162,32 @@ class ComponentFlowLayoutTests: XCTestCase {
 
     let expectedFrameA = CGRect(
       origin: CGPoint(
-        x: model.layout!.inset.left,
-        y: model.layout!.inset.top
+        x: model.layout.inset.left,
+        y: model.layout.inset.top
       ),
       size: itemSize
     )
 
     let expectedFrameB = CGRect(
       origin: CGPoint(
-        x: model.layout!.inset.left + Double(itemSize.width),
-        y: model.layout!.inset.top
+        x: model.layout.inset.left + Double(itemSize.width),
+        y: model.layout.inset.top
       ),
       size: itemSize
     )
 
     let expectedFrameC = CGRect(
       origin: CGPoint(
-        x: model.layout!.inset.left,
-        y: model.layout!.inset.top + Double(itemSize.height)
+        x: model.layout.inset.left,
+        y: model.layout.inset.top + Double(itemSize.height)
       ),
       size: itemSize
     )
 
     let expectedFrameD = CGRect(
       origin: CGPoint(
-        x: model.layout!.inset.left + Double(itemSize.width),
-        y: model.layout!.inset.top + Double(itemSize.height)
+        x: model.layout.inset.left + Double(itemSize.width),
+        y: model.layout.inset.top + Double(itemSize.height)
       ),
       size: itemSize
     )
@@ -199,8 +199,8 @@ class ComponentFlowLayoutTests: XCTestCase {
     XCTAssertEqual(layoutAttributes?[3].frame, expectedFrameD)
 
     let expectedContentSize = CGSize(
-      width: model.layout!.inset.left + model.layout!.inset.right + Double(itemSize.width) * 2,
-      height: model.layout!.inset.top + model.layout!.inset.bottom + Double(itemSize.height) * 2
+      width: model.layout.inset.left + model.layout.inset.right + Double(itemSize.width) * 2,
+      height: model.layout.inset.top + model.layout.inset.bottom + Double(itemSize.height) * 2
     )
 
     XCTAssertEqual(collectionViewLayout.collectionViewContentSize, expectedContentSize)

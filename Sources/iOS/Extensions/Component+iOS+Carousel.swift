@@ -25,9 +25,7 @@ extension Component {
       }
     }
 
-    if let componentLayout = model.layout {
-      collectionView.frame.size.height += CGFloat(componentLayout.inset.top + componentLayout.inset.bottom)
-    }
+    collectionView.frame.size.height += CGFloat(model.layout.inset.top + model.layout.inset.bottom)
   }
 
   func layoutHorizontalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
@@ -50,7 +48,7 @@ extension Component {
   }
 
   private func configurePageControl(collectionView: UICollectionView, collectionViewLayout: UICollectionViewFlowLayout) {
-    guard let pageIndicatorPlacement = model.layout?.pageIndicatorPlacement else {
+    guard let pageIndicatorPlacement = model.layout.pageIndicatorPlacement else {
       return
     }
 

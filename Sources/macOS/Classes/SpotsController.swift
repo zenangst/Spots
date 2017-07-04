@@ -250,7 +250,7 @@ open class SpotsController: NSViewController, SpotsProtocol {
 
   fileprivate func layoutComponent(_ component: Component) {
     if component.userInterface is CollectionView {
-      guard let layout = component.model.layout, layout.span >= 1 else {
+      guard component.model.layout.span >= 1 else {
         return
       }
 

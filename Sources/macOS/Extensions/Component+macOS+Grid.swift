@@ -15,11 +15,7 @@ extension Component {
     if let collectionViewContentSize = collectionView.collectionViewLayout?.collectionViewContentSize {
       var collectionViewContentSize = collectionViewContentSize
       collectionViewContentSize.height += headerHeight + footerHeight
-
-      if let layout = model.layout {
-        collectionViewContentSize.height += CGFloat(layout.inset.top + layout.inset.bottom)
-      }
-
+      collectionViewContentSize.height += CGFloat(model.layout.inset.top + model.layout.inset.bottom)
       collectionView.frame.size.height = collectionViewContentSize.height
       collectionView.frame.size.width = collectionViewContentSize.width
 

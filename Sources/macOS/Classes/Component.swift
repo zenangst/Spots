@@ -4,10 +4,6 @@ import Cocoa
 import Tailor
 
 @objc(SpotsComponent) public class Component: NSObject {
-
-  /// The default layout that should be used for components.
-  /// It will default to this one if `Layout` is absent during init.
-  public static var layout: Layout = Layout(span: 0.0)
   /// A configuration closure that can be used to pinpoint configuration of
   /// views used inside of the component.
   open static var configure: ((Component) -> Void)?
@@ -148,13 +144,7 @@ import Tailor
     self.userInterface = userInterface
 
     super.init()
-
-    if model.layout == nil {
-      self.model.layout = Component.layout
-    }
-
     registerDefaultIfNeeded(view: DefaultItemView.self)
-
     userInterface.register()
 
     self.componentDataSource = DataSource(component: self)
@@ -249,7 +239,7 @@ import Tailor
     layoutHeaderFooterViews(size)
     view.layoutSubviews()
 
-    if let layout = model.layout, model.items.isEmpty, !layout.showEmptyComponent {
+    if model.items.isEmpty, !model.layout.showEmptyComponent {
       if animated {
         view.animator().frame.size.height = 0
         DispatchQueue.main.asyncAfter(deadline: .now() + NSAnimationContext.current().duration) { [weak self] in
@@ -268,9 +258,8 @@ import Tailor
   ///   - collectionView: The collection view that should be configured.
   ///   - size: The size that should be used for setting up the collection view.
   fileprivate func setupCollectionView(_ collectionView: CollectionView, with size: CGSize) {
-    if let componentLayout = self.model.layout,
-      let collectionViewLayout = collectionView.collectionViewLayout as? FlowLayout {
-      componentLayout.configure(collectionViewLayout: collectionViewLayout)
+    if let collectionViewLayout = collectionView.collectionViewLayout as? FlowLayout {
+      model.layout.configure(collectionViewLayout: collectionViewLayout)
     }
 
     collectionView.frame.size = size
@@ -372,11 +361,12 @@ import Tailor
     // Make sure that the item width never exceeds the frame view width.
     // If it does exceed the maximum width, the layout span will be used to reduce the size to make sure
     // that all items fit on the same row.
-    if let layout = model.layout, layout.span > 0 {
-      let maxWidth = size.width * CGFloat(layout.span) + CGFloat(layout.inset.left) + CGFloat(layout.inset.right)
+    if model.layout.span > 0 {
+      let inset = CGFloat(model.layout.inset.left + model.layout.inset.right)
+      let maxWidth = size.width * CGFloat(model.layout.span) + inset
 
       if maxWidth > view.frame.size.width {
-        size.width -= CGFloat(layout.span)
+        size.width -= CGFloat(model.layout.span)
         size.width = round(size.width)
       }
     }

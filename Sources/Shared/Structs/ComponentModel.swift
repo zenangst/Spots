@@ -44,7 +44,7 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
   /// The footer identifier
   public var footer: Item?
   /// Layout properties
-  public var layout: Layout?
+  public var layout: Layout
   /// A collection of view models
   public var items: [Item] = [Item]()
   /// The width and height of the component, usually calculated and updated by the UI component
@@ -89,10 +89,7 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
       Key.items.string: JSONItems
       ]
 
-    if let layout = layout {
-      JSONComponentModels[Key.layout] = layout.dictionary
-    }
-
+    JSONComponentModels[Key.layout] = layout.dictionary
     JSONComponentModels[Key.interaction] = interaction.dictionary
     JSONComponentModels[Key.identifier.string] = identifier
 
@@ -121,6 +118,8 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
 
     if let layoutDictionary: [String : Any] = map.property(Layout.rootKey) {
       self.layout = Layout(layoutDictionary)
+    } else {
+      self.layout = Layout()
     }
 
     if let interactionDictionary: [String : Any] = map.property(Interaction.rootKey) {
@@ -149,7 +148,7 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
               header: Item? = nil,
               footer: Item? = nil,
               kind: ComponentKind = Configuration.defaultComponentKind,
-              layout: Layout? = nil,
+              layout: Layout = Layout(),
               interaction: Interaction = .init(),
               items: [Item] = [],
               meta: [String : Any] = [:]) {
@@ -161,7 +160,6 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
     self.footer = footer
     self.items = items.refreshIndexes()
     self.meta = meta
-    self.layout = layout
   }
 
   // MARK: - Helpers

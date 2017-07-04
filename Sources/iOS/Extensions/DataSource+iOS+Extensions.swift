@@ -10,11 +10,11 @@ extension DataSource: UICollectionViewDataSource {
   /// - returns: The number of rows in section.
   @available(iOS 6.0, *)
   public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    guard let component = component, let layout = component.model.layout else {
-        return 0
+    guard let component = component else {
+      return 0
     }
 
-    if layout.infiniteScrolling {
+    if component.model.layout.infiniteScrolling {
       var additionalIndexes: Int = 0
       var remainingWidth: CGFloat = 0
       for item in component.model.items {
@@ -40,14 +40,13 @@ extension DataSource: UICollectionViewDataSource {
   ///
   /// - returns: The number of rows in section.
   public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    guard let component = component,
-      let layout = component.model.layout else {
-        return UICollectionViewCell()
+    guard let component = component else {
+      return UICollectionViewCell()
     }
 
     let currentIndexPath: IndexPath
 
-    if layout.infiniteScrolling {
+    if component.model.layout.infiniteScrolling {
       /// Compute the first and last item in the list, it should start with the last
       /// item instead of the first on the model. The last item in the list should
       /// also be resolved to the last on the model.
