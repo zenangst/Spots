@@ -14,7 +14,7 @@ public extension Component {
 
   /// A computed CGFloat of the total height of all items inside of a component
   public var computedHeight: CGFloat {
-    guard model.layout?.dynamicHeight == true else {
+    guard model.layout.dynamicHeight == true else {
       return self.view.frame.height
     }
 

@@ -19,16 +19,14 @@ extension Component {
 
       headerView.layer.zPosition = 100
 
-      if let layout = model.layout {
-        switch layout.headerMode {
-        case .sticky:
-          if model.kind != .list {
-            view.addSubview(headerView)
-          }
-        case .default:
-          if model.kind != .list {
-            backgroundView.addSubview(headerView)
-          }
+      switch model.layout.headerMode {
+      case .sticky:
+        if model.kind != .list {
+          view.addSubview(headerView)
+        }
+      case .default:
+        if model.kind != .list {
+          backgroundView.addSubview(headerView)
         }
       }
 

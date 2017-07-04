@@ -21,13 +21,12 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
   // Subclasses must override this method and use it to return the width and height of the collection view’s content. These values represent the width and height of all the content, not just the content that is currently visible. The collection view uses this information to configure its own content size to facilitate scrolling.
   open override var collectionViewContentSize: CGSize {
     guard let delegate = collectionView?.delegate as? Delegate,
-      let component = delegate.component,
-      let layout = component.model.layout
+      let component = delegate.component
       else {
         return .zero
     }
 
-    guard !component.model.items.isEmpty, !layout.showEmptyComponent else {
+    guard !component.model.items.isEmpty, !component.model.layout.showEmptyComponent else {
       return .zero
     }
 
@@ -45,8 +44,7 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
   /// Subclasses should always call super if they override.
   open override func prepare() {
     guard let delegate = collectionView?.delegate as? Delegate,
-      let component = delegate.component,
-      let layout = component.model.layout
+      let component = delegate.component
       else {
         return
     }
@@ -68,9 +66,9 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
       contentSize = .zero
 
       if let firstItem = component.model.items.first {
-        contentSize.height = (firstItem.size.height + minimumLineSpacing) * CGFloat(layout.itemsPerRow)
+        contentSize.height = (firstItem.size.height + minimumLineSpacing) * CGFloat(component.model.layout.itemsPerRow)
 
-        if component.model.items.count % layout.itemsPerRow == 1 {
+        if component.model.items.count % component.model.layout.itemsPerRow == 1 {
           contentSize.width += firstItem.size.width + minimumLineSpacing
         }
       }
@@ -78,14 +76,14 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
       contentSize.height -= minimumLineSpacing
 
       for (index, item) in component.model.items.enumerated() {
-        guard indexEligibleForItemsPerRow(index: index, itemsPerRow: layout.itemsPerRow) else {
+        guard indexEligibleForItemsPerRow(index: index, itemsPerRow: component.model.layout.itemsPerRow) else {
           continue
         }
 
         contentSize.width += item.size.width + minimumInteritemSpacing
       }
 
-      if layout.infiniteScrolling {
+      if component.model.layout.infiniteScrolling {
         let dataSourceCount = collectionView?.numberOfItems(inSection: 0) ?? 0
 
         if dataSourceCount > component.model.items.count {
@@ -94,24 +92,21 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
             contentSize.width += component.sizeForItem(at: indexPath).width + minimumInteritemSpacing
           }
 
-          contentSize.width += CGFloat(layout.inset.right)
+          contentSize.width += CGFloat(component.model.layout.inset.right)
         }
       }
 
       contentSize.height += component.headerHeight
       contentSize.height += component.footerHeight
+      contentSize.height += CGFloat(component.model.layout.inset.top + component.model.layout.inset.bottom)
       contentSize.width -= minimumInteritemSpacing
-      contentSize.width += CGFloat(layout.inset.left + layout.inset.right)
+      contentSize.width += CGFloat(component.model.layout.inset.left + component.model.layout.inset.right)
 
-      if let componentLayout = component.model.layout {
-        contentSize.height += CGFloat(componentLayout.inset.top + componentLayout.inset.bottom)
-
-        #if os(iOS)
+      #if os(iOS)
         if let pageControl = collectionView?.backgroundView?.subviews.filter({ $0 is UIPageControl }).first {
           contentSize.height += pageControl.frame.size.height
         }
-        #endif
-      }
+      #endif
     case .vertical:
       contentSize.width = component.view.frame.width - component.view.contentInset.left - component.view.contentInset.right
       contentSize.height = super.collectionViewContentSize.height
@@ -128,8 +123,7 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
   open override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
     guard let collectionView = collectionView,
       let dataSource = collectionView.dataSource as? DataSource,
-      let component = dataSource.component,
-      let layout = component.model.layout
+      let component = dataSource.component
       else {
         return nil
     }
@@ -145,7 +139,7 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
             continue
         }
 
-        if layout.infiniteScrolling {
+        if component.model.layout.infiniteScrolling {
           if index >= component.model.items.count {
             itemAttribute.size = component.sizeForItem(at: IndexPath(item: index - component.model.items.count, section: 0))
           } else {
@@ -156,8 +150,8 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
         }
 
         if scrollDirection == .horizontal {
-          if layout.itemsPerRow > 1 {
-            if itemAttribute.indexPath.item % layout.itemsPerRow == 0 {
+          if component.model.layout.itemsPerRow > 1 {
+            if itemAttribute.indexPath.item % component.model.layout.itemsPerRow == 0 {
               itemAttribute.frame.origin.y = component.headerHeight + sectionInset.top
             } else {
               itemAttribute.frame.origin.y = nextY
@@ -168,7 +162,7 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
 
           itemAttribute.frame.origin.x = nextX
 
-          if indexEligibleForItemsPerRow(index: itemAttribute.indexPath.item, itemsPerRow: layout.itemsPerRow) {
+          if indexEligibleForItemsPerRow(index: itemAttribute.indexPath.item, itemsPerRow: component.model.layout.itemsPerRow) {
             nextX += itemAttribute.size.width + minimumInteritemSpacing
             nextY = component.headerHeight + sectionInset.top
           } else {

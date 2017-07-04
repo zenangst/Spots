@@ -17,7 +17,7 @@ class ComponentModelTests: XCTestCase {
     // Test component created with JSON
     let jsonComponentModel = ComponentModel(json)
     XCTAssertEqual(jsonComponentModel.kind.string, json["kind"] as? String)
-    XCTAssertEqual(jsonComponentModel.layout?.span, (json["layout"] as? [String : Any])?["span"] as? Double)
+    XCTAssertEqual(jsonComponentModel.layout.span, (json["layout"] as? [String : Any])?["span"] as? Double)
 
     XCTAssert((jsonComponentModel.meta as NSDictionary).isEqual(json["meta"] as! NSDictionary))
     XCTAssert(jsonComponentModel.items.count == 1)
@@ -35,7 +35,7 @@ class ComponentModelTests: XCTestCase {
       meta: json["meta"] as! [String : String])
 
     XCTAssertEqual(codeComponentModel.kind.string, json["kind"] as? String)
-    XCTAssertEqual(codeComponentModel.layout?.span, (json["layout"] as? [String : Any])?["span"] as? Double)
+    XCTAssertEqual(codeComponentModel.layout.span, (json["layout"] as? [String : Any])?["span"] as? Double)
 
     XCTAssert((codeComponentModel.meta as NSDictionary).isEqual(json["meta"] as! NSDictionary))
     XCTAssert(codeComponentModel.items.count == 1)

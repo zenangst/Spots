@@ -3,9 +3,6 @@
 import UIKit
 
 public class Component: NSObject, ComponentHorizontallyScrollable {
-  /// The default layout that should be used for components.
-  /// It will default to this one if `Layout` is absent during init.
-  public static var layout: Layout = Layout(span: 0.0)
   /// A configuration closure that can be used to pinpoint configuration of
   /// views used inside of the component.
   open static var configure: ((Component) -> Void)?
@@ -104,20 +101,12 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     self.model = model
     self.view = view
     self.parentComponent = parentComponent
-
     super.init()
-
-    if model.layout == nil {
-      self.model.layout = Component.layout
-    }
-
     registerDefaultIfNeeded(view: DefaultItemView.self)
-
     userInterface?.register()
 
-    if let componentLayout = self.model.layout,
-      let collectionViewLayout = collectionView?.collectionViewLayout as? ComponentFlowLayout {
-      componentLayout.configure(collectionViewLayout: collectionViewLayout)
+    if let collectionViewLayout = collectionView?.collectionViewLayout as? ComponentFlowLayout {
+      model.layout.configure(collectionViewLayout: collectionViewLayout)
     }
 
     self.componentDataSource = DataSource(component: self)
@@ -171,9 +160,9 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     configurePageControl()
     Component.configure?(self)
 
-    if let layout = model.layout, layout.infiniteScrolling {
+    if model.layout.infiniteScrolling {
       let size = sizeForItem(at: IndexPath(item: 0, section: 0))
-      collectionView?.contentOffset.x = size.width + CGFloat(layout.itemSpacing)
+      collectionView?.contentOffset.x = size.width + CGFloat(model.layout.itemSpacing)
     }
   }
 
@@ -196,7 +185,7 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   /// It is used to invoke `handleInfiniteScrolling` when the users scrolls a horizontal
   /// `Component` with `infiniteScrolling` enabled.
   func layoutSubviews() {
-    guard model.kind == .carousel, model.layout?.infiniteScrolling == true else {
+    guard model.kind == .carousel, model.layout.infiniteScrolling == true else {
       return
     }
 
@@ -249,7 +238,7 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
 
     switch model.interaction.scrollDirection {
     case .horizontal:
-      if let pageIndicatorPlacement = model.layout?.pageIndicatorPlacement {
+      if let pageIndicatorPlacement = model.layout.pageIndicatorPlacement {
         switch pageIndicatorPlacement {
         case .below:
           pageControl.frame.origin.y = collectionView.frame.height - pageControl.frame.height
@@ -279,7 +268,7 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   /// Configure the page control for the component.
   /// Page control is only supported in horizontal collection views.
   func configurePageControl() {
-    guard let placement = model.layout?.pageIndicatorPlacement else {
+    guard let placement = model.layout.pageIndicatorPlacement else {
       pageControl.removeFromSuperview()
       return
     }

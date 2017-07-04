@@ -93,18 +93,7 @@ public class SpotsControllerManager {
 
       let oldComponents = controller.components
       let oldComponentModels = oldComponents.map { $0.model }
-      var newComponentModels = components
-
-      /// Prepare default layouts for new components based of previous Component kind.
-      for (index, _) in newComponentModels.enumerated() {
-        guard index < oldComponentModels.count else {
-          break
-        }
-
-        if newComponentModels[index].layout == nil {
-          newComponentModels[index].layout = type(of: oldComponents[index]).layout
-        }
-      }
+      let newComponentModels = components
 
       guard compare(newComponentModels, oldComponentModels) else {
         Dispatch.main {

@@ -43,13 +43,11 @@ extension Component {
       $0.size.height > $1.size.height
     }).first?.size.height ?? 0.0
 
-    if let layout = model.layout {
-      newCollectionViewHeight *= CGFloat(layout.itemsPerRow)
-      newCollectionViewHeight += CGFloat(layout.inset.top + layout.inset.bottom)
+    newCollectionViewHeight *= CGFloat(model.layout.itemsPerRow)
+    newCollectionViewHeight += CGFloat(model.layout.inset.top + model.layout.inset.bottom)
 
-      if layout.itemsPerRow > 1 {
-        newCollectionViewHeight += CGFloat(layout.lineSpacing * Double(layout.itemsPerRow - 2))
-      }
+    if model.layout.itemsPerRow > 1 {
+      newCollectionViewHeight += CGFloat(model.layout.lineSpacing * Double(model.layout.itemsPerRow - 2))
     }
 
     return newCollectionViewHeight

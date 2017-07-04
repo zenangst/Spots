@@ -98,7 +98,7 @@ public struct Registry {
       }
       #if os(OSX)
         var views: NSArray?
-        if nib.instantiate(withOwner: nil, topLevelObjects: &views!) {
+        if nib.instantiate(withOwner: nil, topLevelObjects: &views) {
           view = views?.filter({ $0 is NSTableRowView }).first as? View
         }
       #else
