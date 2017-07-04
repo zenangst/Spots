@@ -22,7 +22,7 @@ open class SpotsContentView: NSView {
   func insertSubview(_ view: View, at index: Int) {
     subviews.insert(view, at: index)
     rebuildSubviewsInLayoutOrder()
-    spotsScrollView { scrollView in
+    resolveSpotsScrollView { scrollView in
       scrollView.layoutViews(animated: true)
     }
   }
@@ -35,7 +35,7 @@ open class SpotsContentView: NSView {
   override open func didAddSubview(_ subview: View) {
     super.didAddSubview(subview)
     rebuildSubviewsInLayoutOrder()
-    spotsScrollView { scrollView in
+    resolveSpotsScrollView { scrollView in
       scrollView.didAddSubviewToContainer(subview)
     }
   }
@@ -48,7 +48,7 @@ open class SpotsContentView: NSView {
   override open func willRemoveSubview(_ subview: View) {
     super.willRemoveSubview(subview)
     rebuildSubviewsInLayoutOrder()
-    spotsScrollView { scrollView in
+    resolveSpotsScrollView { scrollView in
       scrollView.willRemoveSubview(subview)
     }
   }
@@ -60,7 +60,7 @@ open class SpotsContentView: NSView {
   /// to trigger a re-rendering of all components.
   open override func layoutSubviews() {
     super.layoutSubviews()
-    spotsScrollView { scrollView in
+    resolveSpotsScrollView { scrollView in
       scrollView.layoutViews(animated: false)
     }
   }
@@ -70,7 +70,7 @@ open class SpotsContentView: NSView {
   /// - Parameter closure: A closure that returns the resolved `SpotsScrollView`.
   ///                      Note: The closure will not execute if the `SpotsScrollView` cannot
   ///                      be resolved.
-  private func spotsScrollView(_ closure: (SpotsScrollView) -> Void) {
+  private func resolveSpotsScrollView(_ closure: (SpotsScrollView) -> Void) {
     guard let clipView = superview,
       let spotsScrollView = clipView.superview as? SpotsScrollView else {
         return
