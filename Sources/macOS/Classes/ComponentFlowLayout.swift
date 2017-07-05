@@ -249,7 +249,6 @@ public class ComponentFlowLayout: FlowLayout {
     }
 
     let excludedAnimationTypes: [Animation] = [.top, .bottom]
-
     if !excludedAnimationTypes.contains(animation) {
       applyAnimationFix(type, attributes)
     }
@@ -273,32 +272,25 @@ public class ComponentFlowLayout: FlowLayout {
     case .none:
       attributes.alpha = 1.0
     case .middle:
-      switch type {
-      case .insert:
+      if type == .insert {
         attributes.size = .zero
         attributes.frame.origin = .init(x: attributes.frame.origin.x,
                                         y: attributes.frame.origin.y * 2)
-      case .delete:
+      } else if type == .delete {
         attributes.frame.origin = .init(x: attributes.frame.origin.x,
                                         y: attributes.frame.size.height / 2)
-        return
-      default:
-        break
       }
     case .automatic:
-      switch type {
-      case .insert:
+      if type == .insert {
         if component.model.items.count == 1 {
           attributes.alpha = 0.0
           return
         }
-      case .delete:
+      } else if type == .delete {
         if component.model.items.isEmpty {
           attributes.alpha = 0.0
           return
         }
-      default:
-        break
       }
 
       attributes.zIndex = -1
