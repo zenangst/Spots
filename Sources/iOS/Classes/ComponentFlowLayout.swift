@@ -307,7 +307,6 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
     }
 
     let excludedAnimationTypes: [Animation] = [.top, .bottom]
-
     if !excludedAnimationTypes.contains(animation) {
       applyAnimationFix(type, attributes)
     }
@@ -331,27 +330,21 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
     case .none:
       attributes.alpha = 1.0
     case .middle:
-      switch type {
-      case .insert:
+      if type == .insert {
         attributes.frame.origin = .init(x: collectionView.bounds.midX,
                                         y: collectionView.bounds.midY)
-      default:
-        break
       }
     case .automatic:
-      switch type {
-      case .insert:
+      if type == .insert {
         if component.model.items.count == 1 {
           attributes.alpha = 0.0
           return
         }
-      case .delete:
+      } else if type == .delete {
         if component.model.items.isEmpty {
           attributes.alpha = 0.0
           return
         }
-      default:
-        break
       }
 
       attributes.zIndex = -1
