@@ -126,7 +126,13 @@ public class ComponentFlowLayout: FlowLayout {
         itemAttribute.frame.origin.y += CGFloat(component.model.layout.inset.top)
       }
 
-      attributes.append(itemAttribute)
+      if itemAttribute.frame.intersects(rect) {
+        attributes.append(itemAttribute)
+      }
+    }
+
+    if scrollDirection == .horizontal {
+      Swift.print(attributes.count)
     }
 
     return attributes

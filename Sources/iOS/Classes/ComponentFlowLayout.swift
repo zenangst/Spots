@@ -128,6 +128,14 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
         return nil
     }
 
+    // The collection view has to be larger than 1 pixel in height for the layout to proceed.
+    // If the collection view is smaller, it assumes that it is not visible on screen, most likely
+    // because the `Component` that the collection view belong to is either above or below
+    // the current view port.
+    guard collectionView.frame.size.height > 1 else {
+      return nil
+    }
+
     var attributes = [UICollectionViewLayoutAttributes]()
     var nextX: CGFloat = sectionInset.left
     var nextY: CGFloat = 0.0
@@ -172,7 +180,11 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
           itemAttribute.frame.origin.y += component.headerHeight
         }
 
-        attributes.append(itemAttribute)
+        // Only add item attributes if the item frame insects the rect passed into the method.
+        // This removes unwanted computation when a collection view scrolls.
+        if itemAttribute.frame.intersects(rect) {
+          attributes.append(itemAttribute)
+        }
 
         if index >= cachedFrames.count {
           cachedFrames.append(itemAttribute.frame)
