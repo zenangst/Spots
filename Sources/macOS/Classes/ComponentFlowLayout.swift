@@ -131,10 +131,6 @@ public class ComponentFlowLayout: FlowLayout {
       }
     }
 
-    if scrollDirection == .horizontal {
-      Swift.print(attributes.count)
-    }
-
     return attributes
   }
 
