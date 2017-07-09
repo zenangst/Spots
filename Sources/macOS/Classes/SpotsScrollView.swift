@@ -132,7 +132,13 @@ open class SpotsScrollView: NSScrollView {
   ///
   /// - Parameter animated: Determines if animations should be used when updating the frames of the
   ///                       underlaying views.
-  func layoutViews(animated: Bool = true) {
+  public func layoutViews(animated: Bool = true) {
+    if #available(OSX 10.12, *) {
+      // Workaround to fix the contentInset when using tabs.
+      frame.size.width -= 1
+      frame.size.width += 1
+    }
+
     var yOffsetOfCurrentSubview: CGFloat = CGFloat(self.inset?.top ?? 0.0)
     let lastView = componentsView.subviewsInLayoutOrder.last
 
