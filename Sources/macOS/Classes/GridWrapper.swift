@@ -44,6 +44,28 @@ class GridWrapper: NSCollectionViewItem, Wrappable, Cell {
     }
   }
 
+  override func mouseDown(with event: NSEvent) {
+    super.mouseDown(with: event)
+
+    guard let collectionView = collectionView,
+      let delegate = collectionView.delegate as? Delegate,
+      let component = delegate.component
+      else {
+        return
+    }
+
+    guard event.clickCount > 1 && component.model.interaction.mouseClick == .double else {
+      return
+    }
+
+    for index in collectionView.selectionIndexes {
+      guard let item = component.item(at: index) else {
+        continue
+      }
+      component.delegate?.component(component, itemSelected: item)
+    }
+  }
+
   override func mouseEntered(with event: NSEvent) {
     super.mouseEntered(with: event)
 
