@@ -47,8 +47,7 @@ class GridWrapper: NSCollectionViewItem, Wrappable, Cell {
   override func mouseDown(with event: NSEvent) {
     super.mouseDown(with: event)
 
-    guard let collectionView = collectionView,
-      let delegate = collectionView.delegate as? Delegate,
+    guard let delegate = collectionView.delegate as? Delegate,
       let component = delegate.component
       else {
         return
