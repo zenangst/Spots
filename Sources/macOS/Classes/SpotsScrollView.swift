@@ -133,6 +133,10 @@ open class SpotsScrollView: NSScrollView {
   /// - Parameter animated: Determines if animations should be used when updating the frames of the
   ///                       underlaying views.
   public func layoutViews(animated: Bool = true) {
+    guard superview != nil else {
+      return
+    }
+
     if #available(OSX 10.12, *) {
       // Workaround to fix the contentInset when using tabs.
       frame.size.width -= 1
