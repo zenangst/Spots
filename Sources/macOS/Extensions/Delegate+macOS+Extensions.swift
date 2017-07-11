@@ -16,7 +16,10 @@ extension Delegate: NSCollectionViewDelegate {
         else {
           return
       }
-      component.delegate?.component(component, itemSelected: item)
+
+      if component.model.interaction.mouseClick == .single {
+        component.delegate?.component(component, itemSelected: item)
+      }
     }
   }
 
