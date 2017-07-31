@@ -494,10 +494,10 @@ public class SpotsControllerManager {
 
       // Opt-out of doing component cleanup if the controller has no components.
       let performCleanup = !controller.components.isEmpty
+      let previousContentOffset = controller.scrollView.contentOffset
 
       controller.components = Parser.parse(models)
 
-      let previousContentOffset = controller.scrollView.contentOffset
       if performCleanup {
         if controller.scrollView.superview == nil {
           controller.view.addSubview(controller.scrollView)
