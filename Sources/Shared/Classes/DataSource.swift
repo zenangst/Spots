@@ -6,7 +6,7 @@ import Foundation
 /// Each `Component` have their own `DataSource`, basically it supplies a default set of
 /// implementations to use the `ComponentModel` as its source of truth. Mutating the data
 /// source is handled by the `ComponentManager` also located on the `Component`.
-public class DataSource: NSObject {
+public class DataSource: NSObject, ComponentResolvable {
   /// The component that the data source belongs to.
   weak var component: Component?
   /// An object that ensures that all views displayed for this data source are properly

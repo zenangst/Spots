@@ -6,7 +6,7 @@ import Foundation
 /// Each `Component` has its own `Delegate`, its responsible for relying appropriate
 /// invocations to `ComponentDelegate`, `ComponentFocusDelegate` etc.
 /// `Delegate` is created in the init method for `Component`.
-public class Delegate: NSObject {
+public class Delegate: NSObject, ComponentResolvable {
   /// The component that the delegate belongs to.
   weak var component: Component?
   /// An object that ensures that all views displayed for this data source are properly
