@@ -57,7 +57,7 @@ extension NSTableView: UserInterface {
       for (from, to) in movedItems {
         moveRow(at: from, to: to)
       }
-    }, endClosure: completion)
+    }, completion: completion)
 
   }
 
@@ -107,7 +107,7 @@ extension NSTableView: UserInterface {
         moveRow(at: from, to: to)
       }
       removeRows(at: indexSet, withAnimation: animation.tableViewAnimation)
-    }, endClosure: completion)
+    }, completion: completion)
   }
 
   public func process(_ changes: (insertions: [Int], moved: [Int : Int], reloads: [Int], deletions: [Int], childUpdates: [Int]),
@@ -170,11 +170,16 @@ extension NSTableView: UserInterface {
     reloadData()
   }
 
-  fileprivate func performUpdates( _ closure: () -> Void, endClosure: (() -> Void)? = nil) {
+  /// Perform batch updates on the data source.
+  ///
+  /// - Parameters:
+  ///   - updateClosure: An update closure that is invoked inbetween `beginUpdates` and `endUpdates`.
+  ///   - completion: An optional completion closure that is invoked after `endUpdates.
+  public func performUpdates( _ updateClosure: () -> Void, completion: (() -> Void)? = nil) {
     beginUpdates()
-    closure()
+    updateClosure()
     endUpdates()
-    endClosure?()
+    completion?()
   }
 
   fileprivate func configure(view: View, with item: inout Item) {

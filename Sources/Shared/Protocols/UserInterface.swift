@@ -81,10 +81,12 @@ public protocol UserInterface: class {
   /// - parameter completino: A completion closure that will run when the reload is done.
   func reloadSection(_ section: Int, withAnimation animation: Animation, completion: (() -> Void)?)
 
-  /// A method that is invoked before the update occures.
-  func beginUpdates()
-  /// A method that is invoked after the update occures.
-  func endUpdates()
+  /// Perform updates on the user interface.
+  ///
+  /// - Parameters:
+  ///   - updateClosure: An update closure that is invoked when the interface has began updating itself.
+  ///   - completion: An optional completion closure that is invoked when the update is done.
+  func performUpdates( _ updateClosure: () -> Void, completion: (() -> Void)?)
   /// A proxy method to call reloadData
   func reloadDataSource()
 

@@ -107,8 +107,6 @@ extension UICollectionView: UserInterface {
     }
   }
 
-  public func beginUpdates() {}
-  public func endUpdates() {}
   public func reloadDataSource() {
     reloadData()
     updateContentSize()
@@ -289,5 +287,18 @@ extension UICollectionView: UserInterface {
     }
 
     componentFlowLayout.animation = nil
+  }
+
+  /// Perform batch updates on the data source.
+  ///
+  /// - Parameters:
+  ///   - updateClosure: An update closure that contains everything that should be updated inside the `performBatchUpdates` method.
+  ///   - completion: An optional completion closure that is invoked inside the completion handler.
+  public func performUpdates( _ updateClosure: () -> Void, completion: (() -> Void)?) {
+    performBatchUpdates({
+      updateClosure()
+    }) { _ in
+      completion?()
+    }
   }
 }
