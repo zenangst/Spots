@@ -121,13 +121,13 @@ extension UITableView: UserInterface {
       UIView.setAnimationsEnabled(false)
     }
 
-    performUpdates {
+    performUpdates({
       insertRows(at: indexPaths, with: animation.tableViewAnimation)
       for (from, to) in movedItems {
         moveRow(at: IndexPath(row: from, section: 0),
                 to: IndexPath(row: to, section: 0))
       }
-    }
+    })
 
     if animation == .none {
       UIView.setAnimationsEnabled(true)
@@ -149,9 +149,9 @@ extension UITableView: UserInterface {
     }
 
     if !indexPaths.isEmpty {
-      performUpdates {
+      performUpdates({
         reloadRows(at: indexPaths, with: animation.tableViewAnimation)
-      }
+      })
     } else {
       reloadDataSource()
     }
@@ -179,13 +179,13 @@ extension UITableView: UserInterface {
       UIView.setAnimationsEnabled(false)
     }
 
-    performUpdates {
+    performUpdates({
       deleteRows(at: indexPaths, with: animation.tableViewAnimation)
       for (from, to) in movedItems {
         moveRow(at: IndexPath(item: from, section: 0),
                 to: IndexPath(item: to, section: 0))
       }
-    }
+    })
 
     if animation == .none {
       UIView.setAnimationsEnabled(true)
@@ -244,9 +244,9 @@ extension UITableView: UserInterface {
       UIView.setAnimationsEnabled(false)
     }
 
-    performUpdates {
+    performUpdates({
       reloadSections(IndexSet(integer: section), with: animation.tableViewAnimation)
-    }
+    })
 
     if animation == .none {
       UIView.setAnimationsEnabled(true)
@@ -255,12 +255,15 @@ extension UITableView: UserInterface {
     completion?()
   }
 
-  /// Perform updates with closure
+  /// Perform batch updates on the data source.
   ///
-  /// - parameter closure: A closure that contains the operations that should be performed within the context
-  fileprivate func performUpdates(_ closure: () -> Void) {
+  /// - Parameters:
+  ///   - updateClosure: An update closure that is invoked inbetween `beginUpdates` and `endUpdates`.
+  ///   - completion: An optional completion closure that is invoked after `endUpdates.
+  public func performUpdates( _ updateClosure: () -> Void, completion: (() -> Void)? = nil) {
     beginUpdates()
-    closure()
+    updateClosure()
     endUpdates()
+    completion?()
   }
 }

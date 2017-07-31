@@ -246,10 +246,10 @@ public class ComponentManager {
           component.userInterface?.reload([index], withAnimation: animation, completion: nil)
         } else if newItem.size.height != oldItem.size.height {
           if let view: ItemConfigurable = component.userInterface?.view(at: index), animation != .none {
-            component.userInterface?.beginUpdates()
-            view.configure(with: component.model.items[index])
-            component.model.items[index].size.height = view.computeSize(for: component.model.items[index], containerSize: component.view.frame.size).height
-            component.userInterface?.endUpdates()
+            component.userInterface?.performUpdates({
+              view.configure(with: component.model.items[index])
+              component.model.items[index].size.height = view.computeSize(for: component.model.items[index], containerSize: component.view.frame.size).height
+            }, completion: nil)
           } else {
             component.userInterface?.reload([index], withAnimation: animation, completion: nil)
           }
