@@ -2,13 +2,6 @@ import Cocoa
 
 extension DataSource: NSCollectionViewDataSource {
 
-  /// Asks your data source object to provide the total number of sections.
-  ///
-  /// - parameter collectionView: The collection view requesting the information.
-  @nonobjc public func numberOfSectionsInCollectionView(_ collectionView: NSCollectionView) -> Int {
-    return 1
-  }
-
   /// Asks your data source object to provide the number of items in the specified section.
   ///
   /// - parameter collectionView: The collection view requesting the information.
