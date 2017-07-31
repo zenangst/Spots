@@ -11,7 +11,7 @@ extension DataSource: UICollectionViewDataSource {
   @available(iOS 6.0, *)
   public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     guard let component = component else {
-      return 0
+      return numberOfItems
     }
 
     if component.model.layout.infiniteScrolling {
@@ -27,10 +27,10 @@ extension DataSource: UICollectionViewDataSource {
         additionalIndexes += 1
       }
 
-      return component.model.items.count + additionalIndexes
+      return numberOfItems + additionalIndexes
     }
 
-    return component.model.items.count
+    return numberOfItems
   }
 
   /// Asks the data source for the number of items in the specified section. (required)
