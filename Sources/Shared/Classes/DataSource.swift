@@ -14,6 +14,15 @@ public class DataSource: NSObject {
   /// about how to configure your views.
   var viewPreparer = ViewPreparer()
 
+  /// A computed value that holds the amount of items that the component model holds.
+  var numberOfItems: Int {
+    guard let component = component else {
+      return 0
+    }
+
+    return component.model.items.count
+  }
+
   /// Initialize a new instance of a data source with a component.
   ///
   /// - Parameter component: The component that the data source belongs to.

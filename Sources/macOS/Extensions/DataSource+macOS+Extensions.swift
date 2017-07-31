@@ -14,11 +14,7 @@ extension DataSource: NSCollectionViewDataSource {
   /// - parameter collectionView: The collection view requesting the information.
   /// - parameter numberOfItemsInSection: The index number of the section. Section indexes are zero based.
   public func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
-    guard let component = component else {
-      return 0
-    }
-
-    return component.model.items.count
+    return numberOfItems
   }
 
   /// Asks your data source object to provide the item at the specified location in the collection view.
