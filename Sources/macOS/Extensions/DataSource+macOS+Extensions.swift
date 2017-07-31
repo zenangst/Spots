@@ -43,11 +43,7 @@ extension DataSource: NSTableViewDataSource {
   ///
   /// - parameter tableView: The table view that sent the message.
   public func numberOfRows(in tableView: NSTableView) -> Int {
-    guard let component = component else {
-      return 0
-    }
-
-    return component.model.items.count
+    return numberOfItems
   }
 
   /// Called by aTableView when the mouse button is released over a table view that previously decided to allow a drop.
