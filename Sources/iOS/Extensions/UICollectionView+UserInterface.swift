@@ -292,12 +292,11 @@ extension UICollectionView: UserInterface {
   /// Perform batch updates on the data source.
   ///
   /// - Parameters:
-  ///   - updateClosure: An update closure that contains everything that should be updated inside the `performBatchUpdates` method.
+  ///   - updateClosure: An update closure that contains everything that should be updated just before `performBatchUpdates` is called.
   ///   - completion: An optional completion closure that is invoked inside the completion handler.
   public func performUpdates( _ updateClosure: () -> Void, completion: (() -> Void)?) {
-    performBatchUpdates({
-      updateClosure()
-    }) { _ in
+    updateClosure()
+    performBatchUpdates({}) { _ in
       completion?()
     }
   }
