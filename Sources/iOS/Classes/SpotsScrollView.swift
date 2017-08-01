@@ -245,9 +245,9 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
         // If it was, then we set it to zero again to not have frame heights jump between
         // one and zero when scrolling. Jump frame heights can cause rendering issues and
         // make `UICollectionView` not render corretly when you use multiple components.
-        let shouldResetFrameSizeToZero = frame.size.height == 0
+        let shouldResetFrameHeightToZero = frame.size.height == 0
         frame = frame.integral
-        if shouldResetFrameSizeToZero {
+        if shouldResetFrameHeightToZero {
           frame.size.height = 0
         }
 
