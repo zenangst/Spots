@@ -22,6 +22,7 @@ public class ComponentFlowLayout: FlowLayout {
 
   open override func prepare() {
     guard let delegate = collectionView?.delegate as? Delegate,
+      let dataSource = collectionView?.dataSource as? DataSource,
       let component = delegate.component
       else {
         return
@@ -31,7 +32,7 @@ public class ComponentFlowLayout: FlowLayout {
 
     var layoutAttributes = [NSCollectionViewLayoutAttributes]()
 
-    for index in 0..<(collectionView?.numberOfItems(inSection: 0) ?? 0) {
+    for index in 0..<dataSource.numberOfItems {
       if let itemAttribute = self.layoutAttributesForItem(at: IndexPath(item: index, section: 0)) {
         layoutAttributes.append(itemAttribute)
       }
