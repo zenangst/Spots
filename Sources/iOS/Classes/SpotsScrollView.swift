@@ -240,7 +240,18 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
 
         frame.size.width = ceil(componentsView.frame.size.width)
 
-        scrollView.frame = frame.integral
+        // Using `.integral` can sometimes set the height back to 1.
+        // To avoid this we check if the height is zero before we run `.integral`.
+        // If it was, then we set it to zero again to not have frame heights jump between
+        // one and zero when scrolling. Jump frame heights can cause rendering issues and
+        // make `UICollectionView` not render corretly when you use multiple components.
+        let shouldResetFrameSizeToZero = frame.size.height == 0
+        frame = frame.integral
+        if shouldResetFrameSizeToZero {
+          frame.size.height = 0
+        }
+
+        scrollView.frame = frame
         scrollView.contentOffset = CGPoint(x: Int(contentOffset.x), y: Int(contentOffset.y))
 
         yOffsetOfCurrentSubview += scrollView.contentSize.height
