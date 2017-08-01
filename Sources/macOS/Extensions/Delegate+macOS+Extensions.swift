@@ -13,7 +13,7 @@ extension Delegate: NSCollectionViewDelegate {
         return
       }
 
-      resolveComponentItem(at: indexPath, closure: { component, item in
+      self?.resolveComponentItem(at: indexPath, closure: { component, item in
         if component.model.interaction.mouseClick == .single {
           component.delegate?.component(component, itemSelected: item)
         }
