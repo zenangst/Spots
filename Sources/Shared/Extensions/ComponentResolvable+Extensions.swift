@@ -31,7 +31,7 @@ extension ComponentResolvable {
   /// - Parameters:
   ///   - indexPath: The index path of the item that should be resolved.
   ///   - closure: The resolved component and item gets passed into the closure.
-  func resolveComponentItem(at indexPath: IndexPath, closure: (Component, Item) -> Void) {
+  func resolveComponentItem(at indexPath: IndexPath, _ closure: (Component, Item) -> Void) {
     guard let component = component else {
       return
     }
