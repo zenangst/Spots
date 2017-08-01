@@ -10,9 +10,11 @@ extension Delegate: UICollectionViewDelegate {
   ///
   /// - returns: The width and height of the specified item. Both values must be greater than 0.
   @objc(collectionView:layout:sizeForItemAtIndexPath:) public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    guard let component = component else { return CGSize.zero }
+    let sizeForItem = resolveComponent({ component in
+      component.sizeForItem(at: indexPath)
+    }, fallback: .zero)
 
-    return component.sizeForItem(at: indexPath)
+    return sizeForItem
   }
 
   /// Tells the delegate that the item at the specified index path was selected.
@@ -20,10 +22,9 @@ extension Delegate: UICollectionViewDelegate {
   /// - parameter collectionView: The collection view object that is notifying you of the selection change.
   /// - parameter indexPath: The index path of the cell that was selected.
   public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    guard let component = component, let item = component.item(at: indexPath) else {
-      return
+    resolveComponentItem(at: indexPath) { component, item in
+      component.delegate?.component(component, itemSelected: item)
     }
-    component.delegate?.component(component, itemSelected: item)
   }
 
   /// Tells the delegate that the specified cell is about to be displayed in the collection view.
@@ -32,17 +33,15 @@ extension Delegate: UICollectionViewDelegate {
   /// - parameter cell: The cell object being added.
   /// - parameter indexPath: The index path of the data item that the cell represents.
   public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-    guard let component = component, let item = component.item(at: indexPath) else {
-      return
+    resolveComponentItem(at: indexPath) { component, item in
+      let view = (cell as? Wrappable)?.wrappedView ?? cell
+
+      if let itemConfigurable = view as? ItemConfigurable {
+        component.configure?(itemConfigurable)
+      }
+
+      component.delegate?.component(component, willDisplay: view, item: item)
     }
-
-    let view = (cell as? Wrappable)?.wrappedView ?? cell
-
-    if let itemConfigurable = view as? ItemConfigurable {
-      component.configure?(itemConfigurable)
-    }
-
-    component.delegate?.component(component, willDisplay: view, item: item)
   }
 
   /// Tells the delegate that the specified cell was removed from the collection view.
@@ -51,13 +50,10 @@ extension Delegate: UICollectionViewDelegate {
   /// - parameter cell: The cell object that was removed.
   /// - parameter indexPath: The index path of the data item that the cell represented.
   public func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-    guard let component = component, indexPath.item < component.model.items.count,
-      let item = component.item(at: indexPath) else {
-      return
+    resolveComponentItem(at: indexPath) { (component, item) in
+      let view = (cell as? Wrappable)?.wrappedView ?? cell
+      component.delegate?.component(component, didEndDisplaying: view, item: item)
     }
-
-    let view = (cell as? Wrappable)?.wrappedView ?? cell
-    component.delegate?.component(component, didEndDisplaying: view, item: item)
   }
 
   /// Asks the delegate whether the item at the specified index path can be focused.
@@ -67,10 +63,10 @@ extension Delegate: UICollectionViewDelegate {
   ///
   /// - returns: YES if the item can receive be focused or NO if it can not.
   public func collectionView(_ collectionView: UICollectionView, canFocusItemAt indexPath: IndexPath) -> Bool {
-    guard let component = component, let _ = component.item(at: indexPath) else {
-      return  false
-    }
-    return true
+    let canFocusItem = resolveComponent({ component in
+      return component.item(at: indexPath) != nil
+    }, fallback: false)
+    return canFocusItem
   }
 
   ///Asks the delegate whether a change in focus should occur.
@@ -121,7 +117,8 @@ extension Delegate: UITableViewDelegate {
     #if os(iOS)
       tableView.deselectRow(at: indexPath, animated: true)
     #endif
-    if let component = component, let item = component.item(at: indexPath) {
+
+    resolveComponentItem(at: indexPath) { component, item in
       component.delegate?.component(component, itemSelected: item)
     }
   }
@@ -133,17 +130,15 @@ extension Delegate: UITableViewDelegate {
   ///   - cell: A table-view cell object that tableView is going to use when drawing the row.
   ///   - indexPath: An index path locating the row in tableView.
   public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-    guard let component = component, let item = component.item(at: indexPath) else {
-      return
+    resolveComponentItem(at: indexPath) { (component, item) in
+      let view = (cell as? Wrappable)?.wrappedView ?? cell
+
+      if let itemConfigurable = view as? ItemConfigurable {
+        component.configure?(itemConfigurable)
+      }
+
+      component.delegate?.component(component, willDisplay: view, item: item)
     }
-
-    let view = (cell as? Wrappable)?.wrappedView ?? cell
-
-    if let itemConfigurable = view as? ItemConfigurable {
-      component.configure?(itemConfigurable)
-    }
-
-    component.delegate?.component(component, willDisplay: view, item: item)
   }
 
   /// Tells the delegate that the specified cell was removed from the table.
@@ -152,12 +147,10 @@ extension Delegate: UITableViewDelegate {
   /// - parameter cell: The cell that was removed.
   /// - parameter indexPath: The index path of the cell.
   public func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-    guard let component = component, let item = component.item(at: indexPath) else {
-      return
+    resolveComponentItem(at: indexPath) { (component, item) in
+      let view = (cell as? Wrappable)?.wrappedView ?? cell
+      component.delegate?.component(component, didEndDisplaying: view, item: item)
     }
-
-    let view = (cell as? Wrappable)?.wrappedView ?? cell
-    component.delegate?.component(component, didEndDisplaying: view, item: item)
   }
 
   public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -191,15 +184,15 @@ extension Delegate: UITableViewDelegate {
   ///
   /// - returns:  A nonnegative floating-point value that specifies the height (in points) that row should be based on the view model height, defaults to 0.0.
   public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    guard let component = component else {
-      return 0.0
-    }
+    let heightForRow: CGFloat = resolveComponent({ component in
+      component.model.size = CGSize(
+        width: tableView.frame.size.width,
+        height: tableView.frame.size.height)
 
-    component.model.size = CGSize(
-      width: tableView.frame.size.width,
-      height: tableView.frame.size.height)
+      return component.item(at: indexPath)?.size.height ?? 0
+    }, fallback: 0.0)
 
-    return component.item(at: indexPath)?.size.height ?? 0
+    return heightForRow
   }
 }
 

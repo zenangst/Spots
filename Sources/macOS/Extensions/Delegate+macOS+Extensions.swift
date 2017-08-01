@@ -9,16 +9,14 @@ extension Delegate: NSCollectionViewDelegate {
      This can probably be fixed in a more convenient way in the future without delays.
      */
     Dispatch.after(seconds: 0.1) { [weak self] in
-      guard let strongSelf = self,
-        let first = indexPaths.first,
-        let component = strongSelf.component,
-        let item = component.item(at: first.item), first.item < component.model.items.count
-        else {
-          return
+      guard let indexPath = indexPaths.first else {
+        return
       }
 
-      if component.model.interaction.mouseClick == .single {
-        component.delegate?.component(component, itemSelected: item)
+      self?.resolveComponentItem(at: indexPath) { component, item in
+        if component.model.interaction.mouseClick == .single {
+          component.delegate?.component(component, itemSelected: item)
+        }
       }
     }
   }
@@ -29,19 +27,17 @@ extension Delegate: NSCollectionViewDelegate {
   /// - parameter item: The item being added.
   /// - parameter indexPath: The index path of the item.
   public func collectionView(_ collectionView: NSCollectionView, willDisplay item: NSCollectionViewItem, forRepresentedObjectAt indexPath: IndexPath) {
-    guard
-      let component = component,
-      let view = (item as? Wrappable)?.wrappedView,
-      let item = component.item(at: indexPath)
-      else {
+    resolveComponentItem(at: indexPath) { component, resolvedItem in
+      guard let view = (item as? Wrappable)?.wrappedView else {
         return
-    }
+      }
 
-    if let itemConfigurable = view as? ItemConfigurable {
-      component.configure?(itemConfigurable)
-    }
+      if let itemConfigurable = view as? ItemConfigurable {
+        component.configure?(itemConfigurable)
+      }
 
-    component.delegate?.component(component, willDisplay: view, item: item)
+      component.delegate?.component(component, willDisplay: view, item: resolvedItem)
+    }
   }
 
   /// Notifies the delegate that the specified item was removed from the collection view.
@@ -50,48 +46,44 @@ extension Delegate: NSCollectionViewDelegate {
   /// - parameter item: The item that was removed.
   /// - parameter indexPath: The index path of the item.
   public func collectionView(_ collectionView: NSCollectionView, didEndDisplaying item: NSCollectionViewItem, forRepresentedObjectAt indexPath: IndexPath) {
-    guard
-      let component = component,
-      let view = (item as? Wrappable)?.wrappedView,
-      let item = component.item(at: indexPath)
-      else {
+    resolveComponentItem(at: indexPath) { component, resolvedItem in
+      guard let view = (item as? Wrappable)?.wrappedView else {
         return
-    }
+      }
 
-    component.delegate?.component(component, didEndDisplaying: view, item: item)
+      component.delegate?.component(component, didEndDisplaying: view, item: resolvedItem)
+    }
   }
 }
 
 extension Delegate: NSCollectionViewDelegateFlowLayout {
 
   public func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> NSSize {
-    guard let component = component else {
-      return CGSize.zero
-    }
-    return component.sizeForItem(at: indexPath)
+    let sizeForItem = resolveComponent({ $0.sizeForItem(at: indexPath) }, fallback: .zero)
+    return sizeForItem
   }
 }
 
 extension Delegate: NSTableViewDelegate {
 
   public func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
-    guard let component = component else {
-      return 1.0
-    }
+    let heightOfRow: CGFloat = resolveComponent({ component in
+      component.model.size = CGSize(
+        width: tableView.frame.width,
+        height: tableView.frame.height)
 
-    component.model.size = CGSize(
-      width: tableView.frame.width,
-      height: tableView.frame.height)
+      let height = row < component.model.items.count
+        ? component.item(at: row)?.size.height ?? 0
+        : 1.0
 
-    let height = row < component.model.items.count
-      ? component.item(at: row)?.size.height ?? 0
-      : 1.0
+      if height == 0 {
+        return 1.0
+      }
 
-    if height == 0 {
-      return 1.0
-    }
+      return height
+    }, fallback: 1.0)
 
-    return height
+    return heightOfRow
   }
 
   public func tableView(_ tableView: NSTableView, rowViewForRow row: Int) -> NSTableRowView? {
@@ -145,17 +137,15 @@ extension Delegate: NSTableViewDelegate {
   }
 
   public func tableView(_ tableView: NSTableView, willDisplayCell cell: Any, for tableColumn: NSTableColumn?, row: Int) {
-    guard
-      let component = component,
-      let item = component.item(at: row),
-      let cell = cell as? View
-      else {
-        return
+    resolveComponent { component in
+      guard let item = component.item(at: row),
+        let cell = cell as? View else {
+          return
+      }
+
+      let view = (cell as? Wrappable)?.wrappedView ?? cell
+      component.delegate?.component(component, willDisplay: view, item: item)
     }
-
-    let view = (cell as? Wrappable)?.wrappedView ?? cell
-
-    component.delegate?.component(component, willDisplay: view, item: item)
   }
 
   public func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
