@@ -2,23 +2,12 @@ import Cocoa
 
 extension DataSource: NSCollectionViewDataSource {
 
-  /// Asks your data source object to provide the total number of sections.
-  ///
-  /// - parameter collectionView: The collection view requesting the information.
-  @nonobjc public func numberOfSectionsInCollectionView(_ collectionView: NSCollectionView) -> Int {
-    return 1
-  }
-
   /// Asks your data source object to provide the number of items in the specified section.
   ///
   /// - parameter collectionView: The collection view requesting the information.
   /// - parameter numberOfItemsInSection: The index number of the section. Section indexes are zero based.
   public func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
-    guard let component = component else {
-      return 0
-    }
-
-    return component.model.items.count
+    return numberOfItems
   }
 
   /// Asks your data source object to provide the item at the specified location in the collection view.
@@ -54,11 +43,7 @@ extension DataSource: NSTableViewDataSource {
   ///
   /// - parameter tableView: The table view that sent the message.
   public func numberOfRows(in tableView: NSTableView) -> Int {
-    guard let component = component else {
-      return 0
-    }
-
-    return component.model.items.count
+    return numberOfItems
   }
 
   /// Called by aTableView when the mouse button is released over a table view that previously decided to allow a drop.
