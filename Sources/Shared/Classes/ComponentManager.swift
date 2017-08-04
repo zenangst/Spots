@@ -341,41 +341,23 @@ public class ComponentManager {
   /// - parameter animation:  The animation that should be used (only works for Listable objects)
   /// - parameter completion: A completion closure that is performed when all mutations are performed
   public func reloadIfNeeded(items: [Item], component: Component, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
-    Dispatch.interactive {
-      if component.model.items == items {
-        Dispatch.main {
-          completion?()
-        }
+    Dispatch.main { [weak self] in
+      guard let `self` = self else {
+        completion?()
         return
       }
 
-      Dispatch.main { [weak self] in
-        guard let strongSelf = self else {
-          completion?()
-          return
-        }
+      let oldItems = component.model.items
+      component.model.items = items
+      component.prepareItems(recreateComposites: true)
+      guard let diffs = Item.evaluate(component.model.items, oldModels: oldItems) else {
+        completion?()
+        return
+      }
 
-        var indexes: [Int]? = nil
-        let oldItems = component.model.items
-        component.model.items = items
-
-        if items.count == oldItems.count {
-          for (index, item) in items.enumerated() {
-            guard !(item == oldItems[index]) else {
-              component.model.items[index].size = oldItems[index].size
-              continue
-            }
-
-            if indexes == nil {
-              indexes = [Int]()
-            }
-            indexes?.append(index)
-          }
-        }
-
-        strongSelf.reload(indexes: indexes, component: component, withAnimation: animation) {
-          strongSelf.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
-        }
+      let changes = Item.processChanges(diffs)
+      component.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: {}) {
+        self.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
       }
     }
   }
