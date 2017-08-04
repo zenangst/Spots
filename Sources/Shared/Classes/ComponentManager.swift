@@ -342,7 +342,7 @@ public class ComponentManager {
   /// - parameter completion: A completion closure that is performed when all mutations are performed
   public func reloadIfNeeded(items: [Item], component: Component, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     Dispatch.main { [weak self] in
-      guard let strongSelf = self else {
+      guard let `self` = self else {
         completion?()
         return
       }
@@ -357,7 +357,7 @@ public class ComponentManager {
 
       let changes = Item.processChanges(diffs)
       component.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: {}) {
-        strongSelf.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
+        self.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
       }
     }
   }
