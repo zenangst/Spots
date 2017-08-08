@@ -1,7 +1,7 @@
 /// `Changes` is the result value of the `DiffManager` when comparing two collection of
 /// items. It contains insertions, updates, reload, deletions, child updates and move instructions.
 /// It is used in methods like `reloadIfNeeded` on controller and component level.
-struct Changes {
+public struct Changes {
   /// A collection of indexes that should be inserted.
   var insertions: Set<Int> = []
   /// A collection of indexes that should update.

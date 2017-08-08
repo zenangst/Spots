@@ -16,6 +16,7 @@ import Foundation
 public class ComponentManager {
 
   let itemManager = ItemManager()
+  let diffManager = DiffManager()
 
   /// Append item to collection with animation
   ///
@@ -313,20 +314,20 @@ public class ComponentManager {
   /// - parameter animation:        A Animation that is used when performing the mutation.
   /// - parameter updateDataSource: A closure to update your data source.
   /// - parameter completion:       A completion closure that runs when your updates are done.
-  public func reloadIfNeeded(with changes: ItemChanges, component: Component, withAnimation animation: Animation = .automatic, updateDataSource: () -> Void, completion: Completion) {
-    component.userInterface?.process((insertions: changes.insertions, moved: changes.moved, reloads: changes.reloads, deletions: changes.deletions, childUpdates: changes.updatedChildren), withAnimation: animation, updateDataSource: updateDataSource) { [weak self] in
+  public func reloadIfNeeded(with changes: Changes, component: Component, withAnimation animation: Animation = .automatic, updateDataSource: () -> Void, completion: Completion) {
+    component.userInterface?.processChanges(changes, withAnimation: animation, updateDataSource: updateDataSource) { [weak self] in
       guard let strongSelf = self else {
         completion?()
         return
       }
 
       if changes.updates.isEmpty {
-        strongSelf.process(changes.updatedChildren, component: component, withAnimation: animation) {
+        strongSelf.process(Array(changes.updates), component: component, withAnimation: animation) {
           strongSelf.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
         }
       } else {
-        strongSelf.process(changes.updates, component: component, withAnimation: animation) {
-          strongSelf.process(changes.updatedChildren, component: component, withAnimation: animation) {
+        strongSelf.process(Array(changes.updates), component: component, withAnimation: animation) {
+          strongSelf.process(Array(changes.childUpdates), component: component, withAnimation: animation) {
             strongSelf.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
           }
         }
@@ -350,12 +351,12 @@ public class ComponentManager {
       let oldItems = component.model.items
       component.model.items = items
       component.prepareItems(recreateComposites: true)
-      guard let diffs = Item.evaluate(component.model.items, oldModels: oldItems) else {
+
+      guard let changes = self.diffManager.compare(oldItems: oldItems, newItems: component.model.items) else {
         completion?()
         return
       }
 
-      let changes = Item.processChanges(diffs)
       component.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: {}) {
         self.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
       }

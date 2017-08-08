@@ -1,5 +1,5 @@
 import XCTest
-import Spots
+@testable import Spots
 
 class TestComponentEngine: XCTestCase {
 
@@ -297,20 +297,16 @@ class TestComponentEngine: XCTestCase {
       Item(title: "new with child")
     ]
 
-
-    guard let diff = Item.evaluate(newItems, oldModels: component.model.items)
-      else {
-        XCTFail("Unable to resolve diff")
-        return
+    guard let changes = DiffManager().compare(oldItems: component.model.items, newItems: newItems) else {
+      XCTFail("Unable to resolve diff")
+      return
     }
-
-    let changes: (ItemChanges) = Item.processChanges(diff)
 
     XCTAssertEqual(changes.insertions, [3])
     XCTAssertEqual(changes.updates, [0])
     XCTAssertEqual(changes.reloads, [1])
     XCTAssertEqual(changes.deletions, [])
-    XCTAssertEqual(changes.updatedChildren, [2])
+    XCTAssertEqual(changes.childUpdates, [2])
 
     let expectation = self.expectation(description: "Wait for completion")
     component.manager.reloadIfNeeded(with: changes, component: component, updateDataSource: {

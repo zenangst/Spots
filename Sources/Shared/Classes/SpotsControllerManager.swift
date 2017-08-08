@@ -226,7 +226,7 @@ public class SpotsControllerManager {
   /// - parameter newItems:  The new items that should be used to updated the data source.
   /// - parameter animation: The animation that should be used when updating.
   /// - parameter closure:   A completion closure.
-  private func reload(with changes: (ItemChanges),
+  private func reload(with changes: (Changes),
                       controller: SpotsController,
                       in component: Component,
                       newItems: [Item],
@@ -272,7 +272,7 @@ public class SpotsControllerManager {
   /// - parameter newItems:  The new items that should be used to updated the data source.
   /// - parameter animation: The animation that should be used when updating.
   /// - parameter closure:   A completion closure.
-  private func reload(with changes: (ItemChanges),
+  private func reload(with changes: Changes,
                       controller: SpotsController,
                       in component: Component,
                       lessItems newItems: [Item],
@@ -326,7 +326,7 @@ public class SpotsControllerManager {
   /// - parameter newItems:  The new items that should be used to updated the data source.
   /// - parameter animation: The animation that should be used when updating.
   /// - parameter closure:   A completion closure.
-  private func reload(with changes: (ItemChanges),
+  private func reload(with changes: Changes,
                       controller: SpotsController,
                       in component: Component,
                       moreItems newItems: [Item],
@@ -788,14 +788,13 @@ public class SpotsControllerManager {
       width: controller.view.frame.width,
       height: ceil(tempComponent.view.frame.height))
 
-    guard let diff = Item.evaluate(tempComponent.model.items, oldModels: component.model.items) else {
+    guard let changes = component.manager.diffManager.compare(oldItems: component.model.items, newItems: tempComponent.model.items) else {
       return false
     }
 
     let newItems = tempComponent.model.items
-    let changes: (ItemChanges) = Item.processChanges(diff)
 
-    for index in changes.updatedChildren {
+    for index in Array(changes.childUpdates) {
       if index < tempComponent.compositeComponents.count {
         component.compositeComponents[index].component.view.removeFromSuperview()
         component.compositeComponents[index] = tempComponent.compositeComponents[index]
