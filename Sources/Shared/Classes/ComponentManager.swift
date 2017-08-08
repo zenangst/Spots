@@ -349,16 +349,23 @@ public class ComponentManager {
       }
 
       let oldItems = component.model.items
+
       component.model.items = items
-      component.prepareItems(recreateComposites: true)
 
-      guard let changes = self.diffManager.compare(oldItems: oldItems, newItems: component.model.items) else {
-        completion?()
-        return
-      }
+      Dispatch.interactive {
+        component.prepareItems(recreateComposites: true)
+        guard let changes = self.diffManager.compare(oldItems: oldItems, newItems: component.model.items) else {
+          Dispatch.main {
+            completion?()
+          }
+          return
+        }
 
-      component.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: {}) {
-        self.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
+        Dispatch.main {
+          component.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: {}) {
+            self.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
+          }
+        }
       }
     }
   }
