@@ -56,18 +56,19 @@ class DiffManager {
   fileprivate func processMoreNewItems(_ newModels: [Item], _ oldModels: [Item]) -> [ItemDiff] {
     var changes = [ItemDiff]()
 
-    for (index, oldItem) in newModels.enumerated() {
+    for (index, newItem) in newModels.enumerated() {
       if index > oldModels.count - 1 {
         changes.append(.new)
         continue
       }
 
-      let diff = oldItem.diff(oldItem)
+      let oldItem = oldModels[index]
+      let itemDiff = diff(oldModel: oldItem, newModel: newItem)
 
       if let index = newModels.index(where: { $0.compareItemIncludingIndex(oldItem) }), oldItem.index != index {
         changes.append(.move(oldItem.index, index))
       } else {
-        changes.append(diff)
+        changes.append(itemDiff)
       }
     }
 
